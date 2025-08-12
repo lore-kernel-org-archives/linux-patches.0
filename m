@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF83A1E47AD;
-	Tue, 12 Aug 2025 19:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490241E47AD;
+	Tue, 12 Aug 2025 19:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026906; cv=none; b=HUvdzd+aHh9pGXhNo3TkDQQNjkaaGs4Y+6EtYRMjPcaI4GrPBMRl5jVND55/HnPSfQHhUDd+nQ5N5fPeLoixfidusMvEhuQaPW34sxLfxgOQ0LQ0cSqY35rRMSaw7PTdMLKjXaz2Jc8rMY9+TGy157Pktm5FSwDqnRXbN5hGZu0=
+	t=1755026909; cv=none; b=AtpVMwa0jFTnpLaH3fgvEmk5B1bYhlQRrO1qG7d3JdlTXdBElHExj+AmapyD0uXA7h87BTUjB/C0+zQoipM38pNzoMIMXqAIJFsePx8zKJOQgQKF7K+P6+WsM2jARIJ+hvxjVFg0yct06dBl7lfLs6XQSK52IDtSO+ce+zclPk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026906; c=relaxed/simple;
-	bh=44gAdj3Cjp5wicI3XyTDLQJ4tQwA3P2dxDwNwkmZygI=;
+	s=arc-20240116; t=1755026909; c=relaxed/simple;
+	bh=3EUDPORZtE8PVCb+SpLjiiUjLBm4c8GBR0KuJ4nsqNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6ryObrIt2tzzLm40LQx8eIjnLNaC9IVZdCN3PVrrnlAYKP/F/70GMt0TNX5ojL1Z/DDbwqm6mB4twMpY1SUI4UxT1Saom7hviqcG1UQc5oemuGXhfgX5uwheTvkt3Z8zH92xReq6aSwQad6RPoqxsczc65G4PWz/AZWGOF/Ksw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1i6fXl5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hb4dNT6GR7ChN9IFWq2F6eDIxfKShgz8tompZDfikWJ7r7SBj36NOBfxUGDu5sY6DHJm3aQkZO1mUQr3ete0myuscXlNBLluEZouW4/jBh8U8H6epH+ztZgxXXMwBiM2OnbqE7qv1b59h6AqkVmTeixhr3kZE8tZYKaGOhVTGww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xe42iBeY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1i6fXl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC41C4CEF0;
-	Tue, 12 Aug 2025 19:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xe42iBeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86BCC4CEF0;
+	Tue, 12 Aug 2025 19:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026905;
-	bh=44gAdj3Cjp5wicI3XyTDLQJ4tQwA3P2dxDwNwkmZygI=;
+	s=korg; t=1755026909;
+	bh=3EUDPORZtE8PVCb+SpLjiiUjLBm4c8GBR0KuJ4nsqNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1i6fXl5Me3s6qBALIGkTdMIvyEZA+RWGTv9Z1QwR7BE/tH8/WZnb1hhpnpDIExur
-	 6qYqjG0t72QX6qKRue+ZMtELXJuMOdr3jDsRoLBA1XXRRm1c/0wugmRyw3Ctr0I2ue
-	 gZs+ljSAHiSnLt4CeRXpdkMmBOjB478IlJDksry8=
+	b=xe42iBeYB0O60XAzOy9QVBLgBb1D90dlqRmXDDtMjB+JPEKyXeDzSMnegf0KW3pO9
+	 V9FhIjPID/AS8/6UsCq23sLTAJK30ZaDDUdWvGQbsWYdwo8TRDtHqTwNPCif3IxcAA
+	 jNOZylBPUMzo9WggBCjDfJ52CR0oY3nEedZEgyGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.15 441/480] selftests/perf_events: Add a mmap() correctness test
-Date: Tue, 12 Aug 2025 19:50:49 +0200
-Message-ID: <20250812174415.585671577@linuxfoundation.org>
+	Quang Le <quanglex97@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 442/480] net/packet: fix a race in packet_set_ring() and packet_notifier()
+Date: Tue, 12 Aug 2025 19:50:50 +0200
+Message-ID: <20250812174415.624318368@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -50,292 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Quang Le <quanglex97@gmail.com>
 
-commit 084d2ac4030c5919e85bba1f4af26e33491469cb upstream.
+commit 01d3c8417b9c1b884a8a981a3b886da556512f36 upstream.
 
-Exercise various mmap(), munmap() and mremap() invocations, which might
-cause a perf buffer mapping to be split or truncated.
+When packet_set_ring() releases po->bind_lock, another thread can
+run packet_notifier() and process an NETDEV_UP event.
 
-To avoid hard coding the perf event and having dependencies on
-architectures and configuration options, scan through event types in sysfs
-and try to open them. On success, try to mmap() and if that succeeds try to
-mmap() the AUX buffer.
+This race and the fix are both similar to that of commit 15fe076edea7
+("net/packet: fix a race in packet_bind() and packet_notifier()").
 
-In case that no AUX buffer supporting event is found, only test the base
-buffer mapping. If no mappable event is found or permissions are not
-sufficient, skip the tests.
+There too the packet_notifier NETDEV_UP event managed to run while a
+po->bind_lock critical section had to be temporarily released. And
+the fix was similarly to temporarily set po->num to zero to keep
+the socket unhooked until the lock is retaken.
 
-Reserve a PROT_NONE region for both rb and aux tests to allow testing the
-case where mremap unmaps beyond the end of a mapped VMA to prevent it from
-unmapping unrelated mappings.
+The po->bind_lock in packet_set_ring and packet_notifier precede the
+introduction of git history.
 
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Co-developed-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quang Le <quanglex97@gmail.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250801175423.2970334-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/perf_events/.gitignore |    1 
- tools/testing/selftests/perf_events/Makefile   |    2 
- tools/testing/selftests/perf_events/mmap.c     |  236 +++++++++++++++++++++++++
- 3 files changed, 238 insertions(+), 1 deletion(-)
- create mode 100644 tools/testing/selftests/perf_events/mmap.c
+ net/packet/af_packet.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/perf_events/.gitignore
-+++ b/tools/testing/selftests/perf_events/.gitignore
-@@ -2,3 +2,4 @@
- sigtrap_threads
- remove_on_exec
- watermark_signal
-+mmap
---- a/tools/testing/selftests/perf_events/Makefile
-+++ b/tools/testing/selftests/perf_events/Makefile
-@@ -2,5 +2,5 @@
- CFLAGS += -Wl,-no-as-needed -Wall $(KHDR_INCLUDES)
- LDFLAGS += -lpthread
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -4573,10 +4573,10 @@ static int packet_set_ring(struct sock *
+ 	spin_lock(&po->bind_lock);
+ 	was_running = packet_sock_flag(po, PACKET_SOCK_RUNNING);
+ 	num = po->num;
+-	if (was_running) {
+-		WRITE_ONCE(po->num, 0);
++	WRITE_ONCE(po->num, 0);
++	if (was_running)
+ 		__unregister_prot_hook(sk, false);
+-	}
++
+ 	spin_unlock(&po->bind_lock);
  
--TEST_GEN_PROGS := sigtrap_threads remove_on_exec watermark_signal
-+TEST_GEN_PROGS := sigtrap_threads remove_on_exec watermark_signal mmap
- include ../lib.mk
---- /dev/null
-+++ b/tools/testing/selftests/perf_events/mmap.c
-@@ -0,0 +1,236 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+#define _GNU_SOURCE
+ 	synchronize_net();
+@@ -4608,10 +4608,10 @@ static int packet_set_ring(struct sock *
+ 	mutex_unlock(&po->pg_vec_lock);
+ 
+ 	spin_lock(&po->bind_lock);
+-	if (was_running) {
+-		WRITE_ONCE(po->num, num);
++	WRITE_ONCE(po->num, num);
++	if (was_running)
+ 		register_prot_hook(sk);
+-	}
 +
-+#include <dirent.h>
-+#include <sched.h>
-+#include <stdbool.h>
-+#include <stdio.h>
-+#include <unistd.h>
-+
-+#include <sys/ioctl.h>
-+#include <sys/mman.h>
-+#include <sys/syscall.h>
-+#include <sys/types.h>
-+
-+#include <linux/perf_event.h>
-+
-+#include "../kselftest_harness.h"
-+
-+#define RB_SIZE		0x3000
-+#define AUX_SIZE	0x10000
-+#define AUX_OFFS	0x4000
-+
-+#define HOLE_SIZE	0x1000
-+
-+/* Reserve space for rb, aux with space for shrink-beyond-vma testing. */
-+#define REGION_SIZE	(2 * RB_SIZE + 2 * AUX_SIZE)
-+#define REGION_AUX_OFFS (2 * RB_SIZE)
-+
-+#define MAP_BASE	1
-+#define MAP_AUX		2
-+
-+#define EVENT_SRC_DIR	"/sys/bus/event_source/devices"
-+
-+FIXTURE(perf_mmap)
-+{
-+	int		fd;
-+	void		*ptr;
-+	void		*region;
-+};
-+
-+FIXTURE_VARIANT(perf_mmap)
-+{
-+	bool		aux;
-+	unsigned long	ptr_size;
-+};
-+
-+FIXTURE_VARIANT_ADD(perf_mmap, rb)
-+{
-+	.aux = false,
-+	.ptr_size = RB_SIZE,
-+};
-+
-+FIXTURE_VARIANT_ADD(perf_mmap, aux)
-+{
-+	.aux = true,
-+	.ptr_size = AUX_SIZE,
-+};
-+
-+static bool read_event_type(struct dirent *dent, __u32 *type)
-+{
-+	char typefn[512];
-+	FILE *fp;
-+	int res;
-+
-+	snprintf(typefn, sizeof(typefn), "%s/%s/type", EVENT_SRC_DIR, dent->d_name);
-+	fp = fopen(typefn, "r");
-+	if (!fp)
-+		return false;
-+
-+	res = fscanf(fp, "%u", type);
-+	fclose(fp);
-+	return res > 0;
-+}
-+
-+FIXTURE_SETUP(perf_mmap)
-+{
-+	struct perf_event_attr attr = {
-+		.size		= sizeof(attr),
-+		.disabled	= 1,
-+		.exclude_kernel	= 1,
-+		.exclude_hv	= 1,
-+	};
-+	struct perf_event_attr attr_ok = {};
-+	unsigned int eacces = 0, map = 0;
-+	struct perf_event_mmap_page *rb;
-+	struct dirent *dent;
-+	void *aux, *region;
-+	DIR *dir;
-+
-+	self->ptr = NULL;
-+
-+	dir = opendir(EVENT_SRC_DIR);
-+	if (!dir)
-+		SKIP(return, "perf not available.");
-+
-+	region = mmap(NULL, REGION_SIZE, PROT_NONE, MAP_ANON | MAP_PRIVATE, -1, 0);
-+	ASSERT_NE(region, MAP_FAILED);
-+	self->region = region;
-+
-+	// Try to find a suitable event on this system
-+	while ((dent = readdir(dir))) {
-+		int fd;
-+
-+		if (!read_event_type(dent, &attr.type))
-+			continue;
-+
-+		fd = syscall(SYS_perf_event_open, &attr, 0, -1, -1, 0);
-+		if (fd < 0) {
-+			if (errno == EACCES)
-+				eacces++;
-+			continue;
-+		}
-+
-+		// Check whether the event supports mmap()
-+		rb = mmap(region, RB_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, fd, 0);
-+		if (rb == MAP_FAILED) {
-+			close(fd);
-+			continue;
-+		}
-+
-+		if (!map) {
-+			// Save the event in case that no AUX capable event is found
-+			attr_ok = attr;
-+			map = MAP_BASE;
-+		}
-+
-+		if (!variant->aux)
-+			continue;
-+
-+		rb->aux_offset = AUX_OFFS;
-+		rb->aux_size = AUX_SIZE;
-+
-+		// Check whether it supports a AUX buffer
-+		aux = mmap(region + REGION_AUX_OFFS, AUX_SIZE, PROT_READ | PROT_WRITE,
-+			   MAP_SHARED | MAP_FIXED, fd, AUX_OFFS);
-+		if (aux == MAP_FAILED) {
-+			munmap(rb, RB_SIZE);
-+			close(fd);
-+			continue;
-+		}
-+
-+		attr_ok = attr;
-+		map = MAP_AUX;
-+		munmap(aux, AUX_SIZE);
-+		munmap(rb, RB_SIZE);
-+		close(fd);
-+		break;
-+	}
-+	closedir(dir);
-+
-+	if (!map) {
-+		if (!eacces)
-+			SKIP(return, "No mappable perf event found.");
-+		else
-+			SKIP(return, "No permissions for perf_event_open()");
-+	}
-+
-+	self->fd = syscall(SYS_perf_event_open, &attr_ok, 0, -1, -1, 0);
-+	ASSERT_NE(self->fd, -1);
-+
-+	rb = mmap(region, RB_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, self->fd, 0);
-+	ASSERT_NE(rb, MAP_FAILED);
-+
-+	if (!variant->aux) {
-+		self->ptr = rb;
-+		return;
-+	}
-+
-+	if (map != MAP_AUX)
-+		SKIP(return, "No AUX event found.");
-+
-+	rb->aux_offset = AUX_OFFS;
-+	rb->aux_size = AUX_SIZE;
-+	aux = mmap(region + REGION_AUX_OFFS, AUX_SIZE, PROT_READ | PROT_WRITE,
-+		   MAP_SHARED | MAP_FIXED, self->fd, AUX_OFFS);
-+	ASSERT_NE(aux, MAP_FAILED);
-+	self->ptr = aux;
-+}
-+
-+FIXTURE_TEARDOWN(perf_mmap)
-+{
-+	ASSERT_EQ(munmap(self->region, REGION_SIZE), 0);
-+	if (self->fd != -1)
-+		ASSERT_EQ(close(self->fd), 0);
-+}
-+
-+TEST_F(perf_mmap, remap)
-+{
-+	void *tmp, *ptr = self->ptr;
-+	unsigned long size = variant->ptr_size;
-+
-+	// Test the invalid remaps
-+	ASSERT_EQ(mremap(ptr, size, HOLE_SIZE, MREMAP_MAYMOVE), MAP_FAILED);
-+	ASSERT_EQ(mremap(ptr + HOLE_SIZE, size, HOLE_SIZE, MREMAP_MAYMOVE), MAP_FAILED);
-+	ASSERT_EQ(mremap(ptr + size - HOLE_SIZE, HOLE_SIZE, size, MREMAP_MAYMOVE), MAP_FAILED);
-+	// Shrink the end of the mapping such that we only unmap past end of the VMA,
-+	// which should succeed and poke a hole into the PROT_NONE region
-+	ASSERT_NE(mremap(ptr + size - HOLE_SIZE, size, HOLE_SIZE, MREMAP_MAYMOVE), MAP_FAILED);
-+
-+	// Remap the whole buffer to a new address
-+	tmp = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-+	ASSERT_NE(tmp, MAP_FAILED);
-+
-+	// Try splitting offset 1 hole size into VMA, this should fail
-+	ASSERT_EQ(mremap(ptr + HOLE_SIZE, size - HOLE_SIZE, size - HOLE_SIZE,
-+			 MREMAP_MAYMOVE | MREMAP_FIXED, tmp), MAP_FAILED);
-+	// Remapping the whole thing should succeed fine
-+	ptr = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, tmp);
-+	ASSERT_EQ(ptr, tmp);
-+	ASSERT_EQ(munmap(tmp, size), 0);
-+}
-+
-+TEST_F(perf_mmap, unmap)
-+{
-+	unsigned long size = variant->ptr_size;
-+
-+	// Try to poke holes into the mappings
-+	ASSERT_NE(munmap(self->ptr, HOLE_SIZE), 0);
-+	ASSERT_NE(munmap(self->ptr + HOLE_SIZE, HOLE_SIZE), 0);
-+	ASSERT_NE(munmap(self->ptr + size - HOLE_SIZE, HOLE_SIZE), 0);
-+}
-+
-+TEST_F(perf_mmap, map)
-+{
-+	unsigned long size = variant->ptr_size;
-+
-+	// Try to poke holes into the mappings by mapping anonymous memory over it
-+	ASSERT_EQ(mmap(self->ptr, HOLE_SIZE, PROT_READ | PROT_WRITE,
-+		       MAP_PRIVATE | MAP_ANON | MAP_FIXED, -1, 0), MAP_FAILED);
-+	ASSERT_EQ(mmap(self->ptr + HOLE_SIZE, HOLE_SIZE, PROT_READ | PROT_WRITE,
-+		       MAP_PRIVATE | MAP_ANON | MAP_FIXED, -1, 0), MAP_FAILED);
-+	ASSERT_EQ(mmap(self->ptr + size - HOLE_SIZE, HOLE_SIZE, PROT_READ | PROT_WRITE,
-+		       MAP_PRIVATE | MAP_ANON | MAP_FIXED, -1, 0), MAP_FAILED);
-+}
-+
-+TEST_HARNESS_MAIN
+ 	spin_unlock(&po->bind_lock);
+ 	if (pg_vec && (po->tp_version > TPACKET_V2)) {
+ 		/* Because we don't support block-based V3 on tx-ring */
 
 
