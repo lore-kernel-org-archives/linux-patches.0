@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1B42F5487;
-	Tue, 12 Aug 2025 18:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050B02F5E;
+	Tue, 12 Aug 2025 18:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021948; cv=none; b=K2varPTgEhHg2pZaO/j+DriCZ1qx5AZiR3am5wEZJ34bft0kogdO+SCNC5Ip0bX6ehA54SBBZvQ2Qer7wnykeTO3EuPfOtCmtUtq/Et2D16lTc4EJcx0zkAEFc3OmTRZr89wi7m4+483Dwclx/dR+bbSby51akpwN7ZM2HOUhOs=
+	t=1755021951; cv=none; b=cvvSAwyCZe7jMO8pJf6T2GXrYkZqkOwn49bY7I4BRh/VedvhWtvvziWfzUM+pcyYqIDrDadZlrXboetcOSfWrYLDYhUCW8SnIioOOvRgEfJrSs7oWS+St7xxEY4zKftthIjnRf8b/5iWsSaVP7D6YVpYrhURLQbnDSZqS/zoo4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021948; c=relaxed/simple;
-	bh=ipUJ5Xf6Q1vBoOBHJKl2C53DyNDYYPXwby318x6bVcE=;
+	s=arc-20240116; t=1755021951; c=relaxed/simple;
+	bh=+VVns0rzqzifyBh15vZEsiycIdhApH3BcgcvsM1Mo58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JynpoKRnv11HCkofpRxYexq4DQqFN3psW4PZyS2LYqGG1LoOJWQcdHoRKXcjOD8kFhTJs5U53u/OVePHN7JgfzZCP0pAhLxY/KG81vmrzmxdN2mAQ6yD/ze2eDdnOdBudpsN4Zs02YpsQXxpmziMwTSj6M/5YFAk4yPvUwENWeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARseTTjE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IHfhR2IlUHduFtS3Mbe8RfoyWOiHCeleeNWl4DmQHos2p+xhJR26He3H/vQCc6NzCn8wrAJ7ycypFg0pJTWduSugDtxkQnt7x1229YD/0snOAKaSCB1LIUNOvLdfGtR0OMfHszwppAl12WNGV6C+SDUhg4HsmPzc++ERjMnJuxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5OZJuct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARseTTjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED8FC4CEF0;
-	Tue, 12 Aug 2025 18:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5OZJuct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8A5C4CEF0;
+	Tue, 12 Aug 2025 18:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021947;
-	bh=ipUJ5Xf6Q1vBoOBHJKl2C53DyNDYYPXwby318x6bVcE=;
+	s=korg; t=1755021950;
+	bh=+VVns0rzqzifyBh15vZEsiycIdhApH3BcgcvsM1Mo58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARseTTjEI0ytuTcdnpnaT11t6c+xYn92Dx4vmvzZRY8RbyocE7HWr/AkXRikke42o
-	 RuCt3uwBLGrGC9AoYNymyvSEvDhumS8OaJTJ4XtamBnpqHx5LOrfxMG5OXXnMj0ne7
-	 PCYYGIZbD0rkCzq9ARB1YhBIxGppS85oNcc9j89Q=
+	b=t5OZJucte+mWF9t6DHJa29lBeR54KKKLL3wTFIvLlDN2+Ss6Xf+5MLGdvaghVYt07
+	 VzPg6mCybBbCjrPHnRzbH3trrQ6MdLzoAm8W5q1tnaAv5238DLe3OZHEnfrkG8yHYS
+	 iW0V6zkrY/FbPl8KaHvvbWPCIcW6SC65cZVUkrKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1aa90f0eb1fc3e77d969@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/369] fs/ntfs3: cancle set bad inode after removing name fails
-Date: Tue, 12 Aug 2025 19:25:07 +0200
-Message-ID: <20250812173015.131105628@linuxfoundation.org>
+Subject: [PATCH 6.12 011/369] ublk: use vmalloc for ublk_devices __queues
+Date: Tue, 12 Aug 2025 19:25:08 +0200
+Message-ID: <20250812173015.166921094@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,102 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit d99208b91933fd2a58ed9ed321af07dacd06ddc3 ]
+[ Upstream commit c2f48453b7806d41f5a3270f206a5cd5640ed207 ]
 
-The reproducer uses a file0 on a ntfs3 file system with a corrupted i_link.
-When renaming, the file0's inode is marked as a bad inode because the file
-name cannot be deleted.
+struct ublk_device's __queues points to an allocation with up to
+UBLK_MAX_NR_QUEUES (4096) queues, each of which have:
+- struct ublk_queue (48 bytes)
+- Tail array of up to UBLK_MAX_QUEUE_DEPTH (4096) struct ublk_io's,
+  32 bytes each
+This means the full allocation can exceed 512 MB, which may well be
+impossible to service with contiguous physical pages. Switch to
+kvcalloc() and kvfree(), since there is no need for physically
+contiguous memory.
 
-The underlying bug is that make_bad_inode() is called on a live inode.
-In some cases it's "icache lookup finds a normal inode, d_splice_alias()
-is called to attach it to dentry, while another thread decides to call
-make_bad_inode() on it - that would evict it from icache, but we'd already
-found it there earlier".
-In some it's outright "we have an inode attached to dentry - that's how we
-got it in the first place; let's call make_bad_inode() on it just for shits
-and giggles".
-
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Reported-by: syzbot+1aa90f0eb1fc3e77d969@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1aa90f0eb1fc3e77d969
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250620151008.3976463-2-csander@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c |  7 +++----
- fs/ntfs3/namei.c   | 10 +++-------
- fs/ntfs3/ntfs_fs.h |  3 +--
- 3 files changed, 7 insertions(+), 13 deletions(-)
+ drivers/block/ublk_drv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 608634361a30..ed38014d1750 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -3057,8 +3057,7 @@ int ni_add_name(struct ntfs_inode *dir_ni, struct ntfs_inode *ni,
-  * ni_rename - Remove one name and insert new name.
-  */
- int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
--	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de,
--	      bool *is_bad)
-+	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de)
- {
- 	int err;
- 	struct NTFS_DE *de2 = NULL;
-@@ -3081,8 +3080,8 @@ int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
- 	err = ni_add_name(new_dir_ni, ni, new_de);
- 	if (!err) {
- 		err = ni_remove_name(dir_ni, ni, de, &de2, &undo);
--		if (err && ni_remove_name(new_dir_ni, ni, new_de, &de2, &undo))
--			*is_bad = true;
-+		WARN_ON(err && ni_remove_name(new_dir_ni, ni, new_de, &de2,
-+			&undo));
- 	}
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 3b1a5cdd6311..defcc964ecab 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2116,7 +2116,7 @@ static void ublk_deinit_queues(struct ublk_device *ub)
  
- 	/*
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index abf7e81584a9..71a5a959a48c 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -244,7 +244,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
- 	struct ntfs_inode *ni = ntfs_i(inode);
- 	struct inode *new_inode = d_inode(new_dentry);
- 	struct NTFS_DE *de, *new_de;
--	bool is_same, is_bad;
-+	bool is_same;
- 	/*
- 	 * de		- memory of PATH_MAX bytes:
- 	 * [0-1024)	- original name (dentry->d_name)
-@@ -313,12 +313,8 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
- 	if (dir_ni != new_dir_ni)
- 		ni_lock_dir2(new_dir_ni);
+ 	for (i = 0; i < nr_queues; i++)
+ 		ublk_deinit_queue(ub, i);
+-	kfree(ub->__queues);
++	kvfree(ub->__queues);
+ }
  
--	is_bad = false;
--	err = ni_rename(dir_ni, new_dir_ni, ni, de, new_de, &is_bad);
--	if (is_bad) {
--		/* Restore after failed rename failed too. */
--		_ntfs_bad_inode(inode);
--	} else if (!err) {
-+	err = ni_rename(dir_ni, new_dir_ni, ni, de, new_de);
-+	if (!err) {
- 		simple_rename_timestamp(dir, dentry, new_dir, new_dentry);
- 		mark_inode_dirty(inode);
- 		mark_inode_dirty(dir);
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index cd8e8374bb5a..ff7f241a25b2 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -584,8 +584,7 @@ int ni_add_name(struct ntfs_inode *dir_ni, struct ntfs_inode *ni,
- 		struct NTFS_DE *de);
+ static int ublk_init_queues(struct ublk_device *ub)
+@@ -2127,7 +2127,7 @@ static int ublk_init_queues(struct ublk_device *ub)
+ 	int i, ret = -ENOMEM;
  
- int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
--	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de,
--	      bool *is_bad);
-+	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de);
+ 	ub->queue_size = ubq_size;
+-	ub->__queues = kcalloc(nr_queues, ubq_size, GFP_KERNEL);
++	ub->__queues = kvcalloc(nr_queues, ubq_size, GFP_KERNEL);
+ 	if (!ub->__queues)
+ 		return ret;
  
- bool ni_is_dirty(struct inode *inode);
- int ni_set_compress(struct inode *inode, bool compr);
 -- 
 2.39.5
 
