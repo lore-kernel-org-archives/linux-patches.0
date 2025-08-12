@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB142FAC11;
-	Tue, 12 Aug 2025 18:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0729B3F9D2;
+	Tue, 12 Aug 2025 18:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022443; cv=none; b=GJpK34SlVAotISbBW9MAW6hi8i1dveBOhb/wXUkiVDV9F+Vf8c211oS4G69UVXYd0RL/GK7hDfxxWKDYgdULIlWdz3tMYYnGD0WKqIuL0DXDhzMq3Tmj2V/kFQ5zAtRHDiXXYzJLIILLXjo1+YMonBTizaFJ102uF6oC7OfdDKE=
+	t=1755022446; cv=none; b=C9dppOBphAciA9XhQEcz6oJ8vkWlHBCZ89Zc0bSlzNpWSzgpADOGYcHx300NStaC9+L/6NePttQCesob31Ds3PEuC6imndf+0mBGUo7+lACNFDUYhUqtc0i56cbxYTdeZKQeqp0aG2UFOhmcZ+pcaRJhVsNo08RREOQghValAyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022443; c=relaxed/simple;
-	bh=aEHGeYFPia4As7OFs/TwoVi9Wuk5OcAI+PyL3nvXd/s=;
+	s=arc-20240116; t=1755022446; c=relaxed/simple;
+	bh=3iq1fGepwtavGwpuaZuSAzVURbHeX0ZLUEUl4UPMkUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcl73MTJ/+/PfO8JgZczE+5maWmo/NQZ6E2ufHTqJxJ1k7BNZ1QFQ72umE6N6oPwMQGAJpGE748npPhUHE/vaP9G62NcHmJEDPdkocSCRbNpnNlor9Bo7mGbj/ZIcbZ78zAEicwjhjajsbQWAOaInp4pDY6CXiolbXootGP3qlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrfYuu+v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f7ZQ9lCZvJCWJDp9D/slJvhsT63XOn2ZolX/DcVNrWXcJ4+fR2U9dhMGbMKR/Ictqij1H1I0ai+PIJtQ6vYdwDirlNmsZGe5ghI8VmqcELTHEdMkRo3OAL2S6MazKZwniB45g22JSxBX96etRlVy70S+VNcBD4zQp8h2d8CubYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpSfXmYj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrfYuu+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7325C4CEFA;
-	Tue, 12 Aug 2025 18:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpSfXmYj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69439C4CEF0;
+	Tue, 12 Aug 2025 18:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022442;
-	bh=aEHGeYFPia4As7OFs/TwoVi9Wuk5OcAI+PyL3nvXd/s=;
+	s=korg; t=1755022445;
+	bh=3iq1fGepwtavGwpuaZuSAzVURbHeX0ZLUEUl4UPMkUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrfYuu+vv7BMcWwiqUnhJJpIQFsbKOuoMweCsyTOgfqdQsEt5WeySQXgRtNcYh2VD
-	 R77glAXGgGtr5bwGL1KVnmTcfcuoqmuj7O+FW0NFHDTMZCH0Jw/WZvb4khZjaI1dXL
-	 1x1i2eCSrki5JwAfgbUZ5v8K+hqdcFrhPImBFAoU=
+	b=qpSfXmYjh3Jd2IyIJgQTSDouiaU0WbGFzNpFg6gEYNdkatYoNKCBu2CEV5qP0dbtm
+	 E42j8oes2wXSi/lFR32QIeZlThLwjkDpwDeJA23WwEgzw7qguMAuJqP+UYVXfwH7Dk
+	 e0DxjffQNaHnEsrc8jgL0u7zUlLnnMHICpnwwN9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/369] netfilter: xt_nfacct: dont assume acct name is null-terminated
-Date: Tue, 12 Aug 2025 19:27:16 +0200
-Message-ID: <20250812173020.004261376@linuxfoundation.org>
+Subject: [PATCH 6.12 157/369] crypto: marvell/cesa - Fix engine load inaccuracy
+Date: Tue, 12 Aug 2025 19:27:34 +0200
+Message-ID: <20250812173020.676915993@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,48 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit bf58e667af7d96c8eb9411f926a0a0955f41ce21 ]
+[ Upstream commit 442134ab30e75b7229c4bfc1ac5641d245cffe27 ]
 
-BUG: KASAN: slab-out-of-bounds in .. lib/vsprintf.c:721
-Read of size 1 at addr ffff88801eac95c8 by task syz-executor183/5851
-[..]
- string+0x231/0x2b0 lib/vsprintf.c:721
- vsnprintf+0x739/0xf00 lib/vsprintf.c:2874
- [..]
- nfacct_mt_checkentry+0xd2/0xe0 net/netfilter/xt_nfacct.c:41
- xt_check_match+0x3d1/0xab0 net/netfilter/x_tables.c:523
+If an error occurs during queueing the engine load will never be
+decremented.  Fix this by moving the engine load adjustment into
+the cleanup function.
 
-nfnl_acct_find_get() handles non-null input, but the error
-printk relied on its presence.
-
-Reported-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4ff165b9251e4d295690
-Tested-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
-Fixes: ceb98d03eac5 ("netfilter: xtables: add nfacct match to support extended accounting")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: bf8f91e71192 ("crypto: marvell - Add load balancing between engines")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_nfacct.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/marvell/cesa/cipher.c | 4 +++-
+ drivers/crypto/marvell/cesa/hash.c   | 5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/xt_nfacct.c b/net/netfilter/xt_nfacct.c
-index 7c6bf1c16813..0ca1cdfc4095 100644
---- a/net/netfilter/xt_nfacct.c
-+++ b/net/netfilter/xt_nfacct.c
-@@ -38,8 +38,8 @@ nfacct_mt_checkentry(const struct xt_mtchk_param *par)
+diff --git a/drivers/crypto/marvell/cesa/cipher.c b/drivers/crypto/marvell/cesa/cipher.c
+index 3876e3ce822f..eabed9d977df 100644
+--- a/drivers/crypto/marvell/cesa/cipher.c
++++ b/drivers/crypto/marvell/cesa/cipher.c
+@@ -75,9 +75,12 @@ mv_cesa_skcipher_dma_cleanup(struct skcipher_request *req)
+ static inline void mv_cesa_skcipher_cleanup(struct skcipher_request *req)
+ {
+ 	struct mv_cesa_skcipher_req *creq = skcipher_request_ctx(req);
++	struct mv_cesa_engine *engine = creq->base.engine;
  
- 	nfacct = nfnl_acct_find_get(par->net, info->name);
- 	if (nfacct == NULL) {
--		pr_info_ratelimited("accounting object `%s' does not exists\n",
--				    info->name);
-+		pr_info_ratelimited("accounting object `%.*s' does not exist\n",
-+				    NFACCT_NAME_MAX, info->name);
- 		return -ENOENT;
+ 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
+ 		mv_cesa_skcipher_dma_cleanup(req);
++
++	atomic_sub(req->cryptlen, &engine->load);
+ }
+ 
+ static void mv_cesa_skcipher_std_step(struct skcipher_request *req)
+@@ -212,7 +215,6 @@ mv_cesa_skcipher_complete(struct crypto_async_request *req)
+ 	struct mv_cesa_engine *engine = creq->base.engine;
+ 	unsigned int ivsize;
+ 
+-	atomic_sub(skreq->cryptlen, &engine->load);
+ 	ivsize = crypto_skcipher_ivsize(crypto_skcipher_reqtfm(skreq));
+ 
+ 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ) {
+diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
+index 6815eddc9068..e339ce7ad533 100644
+--- a/drivers/crypto/marvell/cesa/hash.c
++++ b/drivers/crypto/marvell/cesa/hash.c
+@@ -110,9 +110,12 @@ static inline void mv_cesa_ahash_dma_cleanup(struct ahash_request *req)
+ static inline void mv_cesa_ahash_cleanup(struct ahash_request *req)
+ {
+ 	struct mv_cesa_ahash_req *creq = ahash_request_ctx(req);
++	struct mv_cesa_engine *engine = creq->base.engine;
+ 
+ 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
+ 		mv_cesa_ahash_dma_cleanup(req);
++
++	atomic_sub(req->nbytes, &engine->load);
+ }
+ 
+ static void mv_cesa_ahash_last_cleanup(struct ahash_request *req)
+@@ -395,8 +398,6 @@ static void mv_cesa_ahash_complete(struct crypto_async_request *req)
+ 			}
+ 		}
  	}
- 	info->nfacct = nfacct;
+-
+-	atomic_sub(ahashreq->nbytes, &engine->load);
+ }
+ 
+ static void mv_cesa_ahash_prepare(struct crypto_async_request *req,
 -- 
 2.39.5
 
