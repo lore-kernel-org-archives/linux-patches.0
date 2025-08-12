@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2246294A17;
-	Tue, 12 Aug 2025 18:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E638294A17;
+	Tue, 12 Aug 2025 18:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024400; cv=none; b=P+JZi+L42ee7tf5shqqwo1zdIJth7MTL3k6kM0jzJnmsgd61ptpesYOmwA776JmmWArXuU5rtR3+XEoDf2RIR6+6i2+J1H4DtCFCEXd9o5emfLUhKtH7plo56LkyBoRTRvJVQfVcxpx0vtJmtj2eLVKeGOKJ0v3lPYstYyJ/Az0=
+	t=1755024404; cv=none; b=lFNpvauIHv+Sd08fZGLtAoJzgUvTC410asPfJoKGfBDqts5EEbbbzSEQQpRiaQaj2/B7jX9RN/hkewzLK7uTjDVDciQMo/9qPc3aHz50xTyJliC/Sx9rkGoLcvphExZzDKqmLPp8ujw38SKF3RmB48BQp6hjMWT4GItJOy7fkLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024400; c=relaxed/simple;
-	bh=mK2MmIur2JyfG2lf8U0M4N2pCb4r3EuVpiHh8oyKQ18=;
+	s=arc-20240116; t=1755024404; c=relaxed/simple;
+	bh=DFFejc6Dv+RjVxfVmnLYSOiQxVT8ebhp6npg9E8czw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JhvajoRVCf8uEatFyOrP5qIOgAx8zw35IrUc/3Ch6Bb7vm/ZZpT6TSNkPHDnOOD0nGUWbO9lCGQgl6T6I5pkBpBL332iGYD2Qq6SiO8yBWq3GpShACP1iWLku3jBy8C32AXcH+Csw7PofDW7SkhtcFrGXaiOfhki/mSPSOYIoN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KC9F/4v+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cyY9bEMdMBZOhzVe4YEPOlWUeTR+ieKOi9ixcpHnRuFzUrknZIBaUPpVwXF+Wsc3g2PmvT4pxL5iga0UkCxkdVX8aRRSeyDUfmqjZM3K0urwhrxzxjg4e2tLyS6nti8d3+gzsvrbJ6EZBx0eeZjM7nydjSjnqHE3lJ/TpzUE7pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUPTtjY+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KC9F/4v+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E70C4CEF0;
-	Tue, 12 Aug 2025 18:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUPTtjY+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D231C4CEF0;
+	Tue, 12 Aug 2025 18:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024400;
-	bh=mK2MmIur2JyfG2lf8U0M4N2pCb4r3EuVpiHh8oyKQ18=;
+	s=korg; t=1755024403;
+	bh=DFFejc6Dv+RjVxfVmnLYSOiQxVT8ebhp6npg9E8czw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KC9F/4v+CA9/KcjYGsvJiMhrUpeNr2iZeAFkJiEY8WnmNS5ptqh0uwRpS7pP++Wt9
-	 KALBB1VdM1CGegnjpMNo5pdgOPyqWAWt7igotzEG1r0AoOwKtFziTP0aMlfdAiHPUh
-	 7wwysLlIA/aZiz++8q2cNVqRQIWFeCK3X4A33//o=
+	b=oUPTtjY+CiHey9whvkFz51H1V9l7sOOtd7eGUR4NrFNPTEFFsfugvWA6ImXibCpf4
+	 BYv/AUviftY4Y/vLdkFAKimjPsuoOwZIxUCMRE5Y3WkPllh0G1Artxh8ogglZ7xvVd
+	 cA6BaEWU5QuF3I2+2C9Mk8uWkY1yoqSVX72sPXdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Parav Pandit <parav@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 363/627] perf sched: Fix memory leaks in perf sched latency
-Date: Tue, 12 Aug 2025 19:30:58 +0200
-Message-ID: <20250812173433.099200617@linuxfoundation.org>
+Subject: [PATCH 6.16 346/627] RDMA/uverbs: Check CAP_NET_RAW in user namespace for RAW QP create
+Date: Tue, 12 Aug 2025 19:30:41 +0200
+Message-ID: <20250812173432.453338289@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,88 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit e68b1c0098b959cb88afce5c93dd6a9324e6da78 ]
+[ Upstream commit a6dca091ba7646ff5304af660c94fa51b6696476 ]
 
-The work_atoms should be freed after use.  Add free_work_atoms() to
-make sure to release all.  It should use list_splice_init() when merging
-atoms to prevent accessing invalid pointers.
+Currently, the capability check is done in the default
+init_user_ns user namespace. When a process runs in a
+non default user namespace, such check fails. Due to this
+when a process is running using Podman, it fails to create
+the QP.
 
-Fixes: b1ffe8f3e0c96f552 ("perf sched: Finish latency => atom rename and misc cleanups")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250703014942.1369397-8-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Since the RDMA device is a resource within a network namespace,
+use the network namespace associated with the RDMA device to
+determine its owning user namespace.
+
+Fixes: 6d1e7ba241e9 ("IB/uverbs: Introduce create/destroy QP commands over ioctl")
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Link: https://patch.msgid.link/7b6b87505ccc28a1f7b4255af94d898d2df0fff5.1750963874.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/uverbs_std_types_qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 087d4eaba5f7..4bbebd6ef2e4 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -1111,6 +1111,21 @@ add_sched_in_event(struct work_atoms *atoms, u64 timestamp)
- 	atoms->nb_atoms++;
- }
- 
-+static void free_work_atoms(struct work_atoms *atoms)
-+{
-+	struct work_atom *atom, *tmp;
-+
-+	if (atoms == NULL)
-+		return;
-+
-+	list_for_each_entry_safe(atom, tmp, &atoms->work_list, list) {
-+		list_del(&atom->list);
-+		free(atom);
-+	}
-+	thread__zput(atoms->thread);
-+	free(atoms);
-+}
-+
- static int latency_switch_event(struct perf_sched *sched,
- 				struct evsel *evsel,
- 				struct perf_sample *sample,
-@@ -3426,13 +3441,13 @@ static void __merge_work_atoms(struct rb_root_cached *root, struct work_atoms *d
- 			this->total_runtime += data->total_runtime;
- 			this->nb_atoms += data->nb_atoms;
- 			this->total_lat += data->total_lat;
--			list_splice(&data->work_list, &this->work_list);
-+			list_splice_init(&data->work_list, &this->work_list);
- 			if (this->max_lat < data->max_lat) {
- 				this->max_lat = data->max_lat;
- 				this->max_lat_start = data->max_lat_start;
- 				this->max_lat_end = data->max_lat_end;
- 			}
--			zfree(&data);
-+			free_work_atoms(data);
- 			return;
- 		}
- 	}
-@@ -3511,7 +3526,6 @@ static int perf_sched__lat(struct perf_sched *sched)
- 		work_list = rb_entry(next, struct work_atoms, node);
- 		output_lat_thread(sched, work_list);
- 		next = rb_next(next);
--		thread__zput(work_list->thread);
- 	}
- 
- 	printf(" -----------------------------------------------------------------------------------------------------------------\n");
-@@ -3525,6 +3539,13 @@ static int perf_sched__lat(struct perf_sched *sched)
- 
- 	rc = 0;
- 
-+	while ((next = rb_first_cached(&sched->sorted_atom_root))) {
-+		struct work_atoms *data;
-+
-+		data = rb_entry(next, struct work_atoms, node);
-+		rb_erase_cached(next, &sched->sorted_atom_root);
-+		free_work_atoms(data);
-+	}
- out_free_cpus_switch_event:
- 	free_cpus_switch_event(sched);
- 	return rc;
+diff --git a/drivers/infiniband/core/uverbs_std_types_qp.c b/drivers/infiniband/core/uverbs_std_types_qp.c
+index 7b4773fa4bc0..be0730e8509e 100644
+--- a/drivers/infiniband/core/uverbs_std_types_qp.c
++++ b/drivers/infiniband/core/uverbs_std_types_qp.c
+@@ -133,7 +133,7 @@ static int UVERBS_HANDLER(UVERBS_METHOD_QP_CREATE)(
+ 		device = xrcd->device;
+ 		break;
+ 	case IB_UVERBS_QPT_RAW_PACKET:
+-		if (!capable(CAP_NET_RAW))
++		if (!rdma_uattrs_has_raw_cap(attrs))
+ 			return -EPERM;
+ 		fallthrough;
+ 	case IB_UVERBS_QPT_RC:
 -- 
 2.39.5
 
