@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593902CA9;
-	Tue, 12 Aug 2025 18:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59F12CA9;
+	Tue, 12 Aug 2025 18:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024547; cv=none; b=G43PzH+yqjY+8UnPchfanU2uEAKR/XWAybgKndXJSzQ0XBcZjSKMqv6nWYH5X08OExTiRb4smHnZfJDPHV15DREajBKAlmzkKCL/gcyDfF4FyTJ9sgndT9Wk1VBVmXyZRfFQeFbYcDBjLCX+m9N+knLzT2hTjOl2GvqfBqmov1k=
+	t=1755024551; cv=none; b=QjPAb4jjXHg4mCZZdjxujKwmVhGhBSQMXoqZ/cHChrezmYX0nA+TsehUsa6PaGMsMx+2Xo9/oQbcJKaV8C4lf5HJfA3e7b4V1NHPBWUf0Yv1IOSr3WdqZ2sMJQL4t34EC7xcIH9QI/pxz8XqlJbWuWfw3okirDZXQ5BY93XRRyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024547; c=relaxed/simple;
-	bh=DnTwO4gZ9nGklDH8Y0DwFw9dQVspBPr/VltsRmWDPss=;
+	s=arc-20240116; t=1755024551; c=relaxed/simple;
+	bh=miOjKqQbd1Zr7Wl2DaEQjIVTnKEGNK5VKkYEf9EeN8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NuOQGzYRlo9rgAI8t4OaAG+HsPnsv7PVfGYPAPq2L57yqjqnuxd1XVVlr6cK2IvCNfYGXGT3P2CER+1ugFPVY+UqJNbCJqmyYzKCYwVrb7YMNKRc7kIedWLFFivCgfGAY3FPUOmIk8c/hitdem6cdWtCv0j8beElmOC85b8UbAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEhbF+Cg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fs/HSRt/dPYI213PgAp4irWU+eAfn1FFVj8sCJJ7HKHfyjm6ZSI9S+QQxuL3ISNBvSdRmFTWXxQAokSWtyv7XaPUvPFqiQD+sZJ1t+sXvoI8iyOPBBL0DYB1f/Uu2o3/ocbHDqlklLMi6z6FB9L3VXwLj12xQ+EHh39fnGsC9kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xH1Qave+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEhbF+Cg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80F6C4CEF0;
-	Tue, 12 Aug 2025 18:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xH1Qave+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2972C4CEF0;
+	Tue, 12 Aug 2025 18:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024547;
-	bh=DnTwO4gZ9nGklDH8Y0DwFw9dQVspBPr/VltsRmWDPss=;
+	s=korg; t=1755024550;
+	bh=miOjKqQbd1Zr7Wl2DaEQjIVTnKEGNK5VKkYEf9EeN8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEhbF+CgqYfyRKcSiPV+q7zpAX90QZxbpUvDLjvbhVfZJNtS1zAAjthMznI8VsU5k
-	 Ja+fbfnQZoEm6T9gRa/45/7AX2C5CpHgu79R/ixSif4Dc82U9TF5ipgKxV6errQ6Bb
-	 q+3SNaxxz8el6//AGVCl+PGoaYlfrprHreNGT9oc=
+	b=xH1Qave+zTVBsj/pW/xTW62Pfs5WQkc4hzI9hJ1pze39wjQmjkyep7U08UyiLGA6N
+	 a3a+wqAWjGbNt10qFv4ry0o1b2//3uXnU7OkLVrP1p9npdVdXzfdD0aalvT6vpgtw7
+	 LDpe1F7urHbkqD5/qSR/09FvoGakOOnOr+BxhvQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	David Howells <dhowells@redhat.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 405/627] crypto: qat - fix virtual channel configuration for GEN6 devices
-Date: Tue, 12 Aug 2025 19:31:40 +0200
-Message-ID: <20250812173434.696987968@linuxfoundation.org>
+Subject: [PATCH 6.16 406/627] crypto: krb5 - Fix memory leak in krb5_test_one_prf()
+Date: Tue, 12 Aug 2025 19:31:41 +0200
+Message-ID: <20250812173434.733181365@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,89 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit e83cfb8ff1433cc832d31b8cac967a1eb79d5b44 ]
+[ Upstream commit b19f1ab8d5bf417e00d5855c62e061fb449b13c5 ]
 
-The TCVCMAP (Traffic Class to Virtual Channel Mapping) field in the
-PVC0CTL and PVC1CTL register controls how traffic classes are mapped to
-virtual channels in QAT GEN6 hardware.
+Fix a leak reported by kmemleak:
 
-The driver previously wrote a default TCVCMAP value to this register, but
-this configuration was incorrect.
+    unreferenced object 0xffff8880093bf7a0 (size 32):
+      comm "swapper/0", pid 1, jiffies 4294877529
+      hex dump (first 32 bytes):
+        9d 18 86 16 f6 38 52 fe 86 91 5b b8 40 b4 a8 86  .....8R...[.@...
+        ff 3e 6b b0 f8 19 b4 9b 89 33 93 d3 93 85 42 95  .>k......3....B.
+      backtrace (crc 8ba12f3b):
+        kmemleak_alloc+0x8d/0xa0
+        __kmalloc_noprof+0x3cd/0x4d0
+        prep_buf+0x36/0x70
+        load_buf+0x10d/0x1c0
+        krb5_test_one_prf+0x1e1/0x3c0
+        krb5_selftest.cold+0x7c/0x54c
+        crypto_krb5_init+0xd/0x20
+        do_one_initcall+0xa5/0x230
+        do_initcalls+0x213/0x250
+        kernel_init_freeable+0x220/0x260
+        kernel_init+0x1d/0x170
+        ret_from_fork+0x301/0x410
+        ret_from_fork_asm+0x1a/0x30
 
-Modify the TCVCMAP configuration to explicitly enable both VC0 and VC1,
-and map Traffic Classes 0 to 7 → VC0 and Traffic Class 8 → VC1.
-Replace FIELD_PREP() with FIELD_MODIFY() to ensure that only the intended
-TCVCMAP field is updated, preserving other bits in the register. This
-prevents unintended overwrites of unrelated configuration fields when
-modifying TC to VC mappings.
-
-Fixes: 17fd7514ae68 ("crypto: qat - add qat_6xxx driver")
-Signed-off-by: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Fixes: fc0cf10c04f4 ("crypto/krb5: Implement crypto self-testing")
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Acked-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c | 10 +++++-----
- drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.h |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ crypto/krb5/selftest.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c b/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c
-index 185a7ab92b7b..2207e5e576b2 100644
---- a/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c
-+++ b/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c
-@@ -520,8 +520,8 @@ static void set_vc_csr_for_bank(void __iomem *csr, u32 bank_number)
- 	 * driver must program the ringmodectl CSRs.
- 	 */
- 	value = ADF_CSR_RD(csr, ADF_GEN6_CSR_RINGMODECTL(bank_number));
--	value |= FIELD_PREP(ADF_GEN6_RINGMODECTL_TC_MASK, ADF_GEN6_RINGMODECTL_TC_DEFAULT);
--	value |= FIELD_PREP(ADF_GEN6_RINGMODECTL_TC_EN_MASK, ADF_GEN6_RINGMODECTL_TC_EN_OP1);
-+	FIELD_MODIFY(ADF_GEN6_RINGMODECTL_TC_MASK, &value, ADF_GEN6_RINGMODECTL_TC_DEFAULT);
-+	FIELD_MODIFY(ADF_GEN6_RINGMODECTL_TC_EN_MASK, &value, ADF_GEN6_RINGMODECTL_TC_EN_OP1);
- 	ADF_CSR_WR(csr, ADF_GEN6_CSR_RINGMODECTL(bank_number), value);
- }
+diff --git a/crypto/krb5/selftest.c b/crypto/krb5/selftest.c
+index 2a81a6315a0d..4519c572d37e 100644
+--- a/crypto/krb5/selftest.c
++++ b/crypto/krb5/selftest.c
+@@ -152,6 +152,7 @@ static int krb5_test_one_prf(const struct krb5_prf_test *test)
  
-@@ -537,7 +537,7 @@ static int set_vc_config(struct adf_accel_dev *accel_dev)
- 	 * Read PVC0CTL then write the masked values.
- 	 */
- 	pci_read_config_dword(pdev, ADF_GEN6_PVC0CTL_OFFSET, &value);
--	value |= FIELD_PREP(ADF_GEN6_PVC0CTL_TCVCMAP_MASK, ADF_GEN6_PVC0CTL_TCVCMAP_DEFAULT);
-+	FIELD_MODIFY(ADF_GEN6_PVC0CTL_TCVCMAP_MASK, &value, ADF_GEN6_PVC0CTL_TCVCMAP_DEFAULT);
- 	err = pci_write_config_dword(pdev, ADF_GEN6_PVC0CTL_OFFSET, value);
- 	if (err) {
- 		dev_err(&GET_DEV(accel_dev), "pci write to PVC0CTL failed\n");
-@@ -546,8 +546,8 @@ static int set_vc_config(struct adf_accel_dev *accel_dev)
- 
- 	/* Read PVC1CTL then write masked values */
- 	pci_read_config_dword(pdev, ADF_GEN6_PVC1CTL_OFFSET, &value);
--	value |= FIELD_PREP(ADF_GEN6_PVC1CTL_TCVCMAP_MASK, ADF_GEN6_PVC1CTL_TCVCMAP_DEFAULT);
--	value |= FIELD_PREP(ADF_GEN6_PVC1CTL_VCEN_MASK, ADF_GEN6_PVC1CTL_VCEN_ON);
-+	FIELD_MODIFY(ADF_GEN6_PVC1CTL_TCVCMAP_MASK, &value, ADF_GEN6_PVC1CTL_TCVCMAP_DEFAULT);
-+	FIELD_MODIFY(ADF_GEN6_PVC1CTL_VCEN_MASK, &value, ADF_GEN6_PVC1CTL_VCEN_ON);
- 	err = pci_write_config_dword(pdev, ADF_GEN6_PVC1CTL_OFFSET, value);
- 	if (err)
- 		dev_err(&GET_DEV(accel_dev), "pci write to PVC1CTL failed\n");
-diff --git a/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.h b/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.h
-index 78e2e2c5816e..8824958527c4 100644
---- a/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.h
-+++ b/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.h
-@@ -99,7 +99,7 @@
- #define ADF_GEN6_PVC0CTL_OFFSET			0x204
- #define ADF_GEN6_PVC0CTL_TCVCMAP_OFFSET		1
- #define ADF_GEN6_PVC0CTL_TCVCMAP_MASK		GENMASK(7, 1)
--#define ADF_GEN6_PVC0CTL_TCVCMAP_DEFAULT	0x7F
-+#define ADF_GEN6_PVC0CTL_TCVCMAP_DEFAULT	0x3F
- 
- /* VC1 Resource Control Register */
- #define ADF_GEN6_PVC1CTL_OFFSET			0x210
+ out:
+ 	clear_buf(&result);
++	clear_buf(&prf);
+ 	clear_buf(&octet);
+ 	clear_buf(&key);
+ 	return ret;
 -- 
 2.39.5
 
