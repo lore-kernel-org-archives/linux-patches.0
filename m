@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB712F83CB;
-	Tue, 12 Aug 2025 17:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643512D5C76;
+	Tue, 12 Aug 2025 17:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021353; cv=none; b=iEumixra43JWOh+LwzpfyDt2BSQQJpxV66ufno22UKYbCs52rnphVP6A42w1GA08wUWVJOwBX5ya5moS5hIhgTCtOUnTZAi2y8wp3XETQaLtFt23Z1GqDzVL9HOZLczGwFrwRrt1mQPR1hlsL+99fK++m85aXxOVx9To9CvQi+8=
+	t=1755021356; cv=none; b=IXXs3peMsBdxr5pVD4N5Fc54aWIMihQrJ8vy4pY7HCLkPvRFILzPUryMq9PD/+ak5KKYmu47PpK6X5vLcu8Qwh1tve8R7EDPlNgeibIEp4LRCJNwYk8QnehXr1z81jYHChPP3YDefYluzh9qJ+9AIguD0bjr0rx6osVb2hSvCP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021353; c=relaxed/simple;
-	bh=Ykv7PJ/WewdvA2jZB2f859xgAbFeLabP4VqT+nWnPxo=;
+	s=arc-20240116; t=1755021356; c=relaxed/simple;
+	bh=urZbPkhcQD0P7/pQVngsFstOkjPZuAYBJ3D/WvNwdOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6Vs8fcjizH93u2fuoxBnJZeE/rnptffthGid9fQq9zKWW/ajUfqEMx0Jb6b0gNdB8RQlvTuUDN5GcBUsH6IkTDM2b1970796rqa2v8nzGEJteXkGEiNlk5zqGmPDla7vbK1gPb8+5yLAVuuSVFhqGlmc/hY4VCtlVCQeyb1wmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6LOB1zt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TNs5th/kIMcw2aUmX+EhwYb5eLWnxFh0AdpT+C2NTRX454NA3t3g3qy/7oVtq+gef26HOt/TiyphL4VIopznMdX7FWM8FEnbIIu8cX1rbywrgUpt9m4rlGB2Xw3smiO/CByA/3eY5+mpKhVpKDGK6M/ijKvizboRsh1WOj1LoaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IhBFSzjg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6LOB1zt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AEDC4CEF1;
-	Tue, 12 Aug 2025 17:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhBFSzjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD19BC4CEF1;
+	Tue, 12 Aug 2025 17:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021353;
-	bh=Ykv7PJ/WewdvA2jZB2f859xgAbFeLabP4VqT+nWnPxo=;
+	s=korg; t=1755021356;
+	bh=urZbPkhcQD0P7/pQVngsFstOkjPZuAYBJ3D/WvNwdOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6LOB1ztQH1ZqJa1Qmx2o628tGOFp4/Kgf4rZiGIorCv7gAxmQ0HNj6QU6sM7Sq8z
-	 o7Jp5cDo0CJGr7gJz5lgvJ1hpsA8LnYcRJt4Afy6+ArW7ZKxwlMe46VdumBn0TcEzW
-	 pr4YEGIfnjGW57vG+6jpSmwdpmrbsylLUHxEW3Y0=
+	b=IhBFSzjgP3HBSol82uHVg/pFLTa3BAoKPgdooLEsMi+JWS4Rzz0/Rx4jr+MOe1zBi
+	 LROvpkAUfi8/s/u6Jf2qvChk0PGCz3Td2yrClqrlgVTYTwtatr5hVsKtT/OVQTvJXE
+	 ets4xBO1zEU4mKZrzvCCWsggTy8jcKqeLyfAq8Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Lazar <alazar@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 099/262] net/mlx5e: Clear Read-Only port buffer size in PBMC before update
-Date: Tue, 12 Aug 2025 19:28:07 +0200
-Message-ID: <20250812172957.304130944@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Bill Wendling <morbo@google.com>,
+	Jerome Glisse <jglisse@redhat.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 252/253] mm/hmm: move pmd_to_hmm_pfn_flags() to the respective #ifdeffery
+Date: Tue, 12 Aug 2025 19:30:40 +0200
+Message-ID: <20250812172959.588969467@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +52,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexei Lazar <alazar@nvidia.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit fd4b97246a23c1149479b88490946bcfbd28de63 ]
+commit 188cb385bbf04d486df3e52f28c47b3961f5f0c0 upstream.
 
-When updating the PBMC register, we read its current value,
-modify desired fields, then write it back.
+When pmd_to_hmm_pfn_flags() is unused, it prevents kernel builds with
+clang, `make W=1` and CONFIG_TRANSPARENT_HUGEPAGE=n:
 
-The port_buffer_size field within PBMC is Read-Only (RO).
-If this RO field contains a non-zero value when read,
-attempting to write it back will cause the entire PBMC
-register update to fail.
+  mm/hmm.c:186:29: warning: unused function 'pmd_to_hmm_pfn_flags' [-Wunused-function]
 
-This commit ensures port_buffer_size is explicitly cleared
-to zero after reading the PBMC register but before writing
-back the modified value.
-This allows updates to other fields in the PBMC register to succeed.
+Fix this by moving the function to the respective existing ifdeffery
+for its the only user.
 
-Fixes: 0696d60853d5 ("net/mlx5e: Receive buffer configuration")
-Signed-off-by: Alexei Lazar <alazar@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1753256672-337784-2-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+See also:
+
+  6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
+
+Link: https://lkml.kernel.org/r/20250710082403.664093-1-andriy.shevchenko@linux.intel.com
+Fixes: 992de9a8b751 ("mm/hmm: allow to mirror vma of a file on a DAX backed filesystem")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Jerome Glisse <jglisse@redhat.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/hmm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-index 8e25f4ef5ccc..5ae787656a7c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-@@ -331,6 +331,9 @@ static int port_set_buffer(struct mlx5e_priv *priv,
- 	if (err)
- 		goto out;
+--- a/mm/hmm.c
++++ b/mm/hmm.c
+@@ -173,6 +173,7 @@ static inline unsigned long hmm_pfn_flag
+ 	return order << HMM_PFN_ORDER_SHIFT;
+ }
  
-+	/* RO bits should be set to 0 on write */
-+	MLX5_SET(pbmc_reg, in, port_buffer_size, 0);
-+
- 	err = mlx5e_port_set_pbmc(mdev, in);
- out:
- 	kfree(in);
--- 
-2.39.5
-
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ static inline unsigned long pmd_to_hmm_pfn_flags(struct hmm_range *range,
+ 						 pmd_t pmd)
+ {
+@@ -183,7 +184,6 @@ static inline unsigned long pmd_to_hmm_p
+ 	       hmm_pfn_flags_order(PMD_SHIFT - PAGE_SHIFT);
+ }
+ 
+-#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ static int hmm_vma_handle_pmd(struct mm_walk *walk, unsigned long addr,
+ 			      unsigned long end, unsigned long hmm_pfns[],
+ 			      pmd_t pmd)
 
 
