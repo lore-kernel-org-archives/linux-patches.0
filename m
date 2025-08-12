@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD7D2FA0DB;
-	Tue, 12 Aug 2025 17:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A5A2F7449;
+	Tue, 12 Aug 2025 17:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021386; cv=none; b=Ktcv3kQjHdpJfPe7HWIIDZ1QZAmjYWZBErw1fvZGYo/aMEL54ss4+mSQMdcrGFGxZSBm9LIksWUSjDEBRapuq8jTUtykSr5UrPVyqbpy5EeenQcztwBCx4vC8z/m23+noPeWoEu7l+VfbonOr5DPzZZIjCi8T6Gwx/Vw7V3aRlE=
+	t=1755021390; cv=none; b=kCxdNawkUrf0dR7PLk4cM/YZjNKkNMt9oq2vgNr4qjWn1qIpPWcveO3Jb6jnBmSiKya0ERtH7/YrjgG1BPnYaP7dz/xUU2Av5RwC7di8m/bCVzQ38Ln6IRfRs3jDenkNi/8NQjzKL/ZGOXcW4GJEf7oKdKzQ3vl6xjxvmD80rjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021386; c=relaxed/simple;
-	bh=bMbGRzpw59ADrS9wyoapxWDBmI+r6T0Cihdb2ufN9zM=;
+	s=arc-20240116; t=1755021390; c=relaxed/simple;
+	bh=nhEt7OrlNAfhjCTAysMP2zYQsi2bYwIjt8+0sCT5M3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aXGT+Lhw3ASWqpftqwKXrctKqeGRF0ryZ+0HNKzbqAwj5pPIDnCD6uplFQufUExVgZTATi5wTvNdY489sMZKkURKnO94JL7F7bs4SoJST3GUeMqJQ8bS1Ao0VkICePIe5vWCXPxru7FdcqiXZGGrmZUzzLbHDwfgVVV9RUzNZSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgP1UEpn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=seBQ5Su2m5zwV2fYPtPTy6lhf+0bz7iPQMKfld+4p9zOQ9au0lnXpKbZ3kplZnD7CPZwwVKAMyI29YYgMkj903rw+kJotGdEq7UOSODH1KeVIRUspidDeYSRp2tbrpcB/R2HPGjF4ai6GWrU4cjhystSUm0iZbvXdGpjLfRpwe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ1ksHnm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgP1UEpn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE4FC4CEF0;
-	Tue, 12 Aug 2025 17:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ1ksHnm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC28C4CEF0;
+	Tue, 12 Aug 2025 17:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021385;
-	bh=bMbGRzpw59ADrS9wyoapxWDBmI+r6T0Cihdb2ufN9zM=;
+	s=korg; t=1755021389;
+	bh=nhEt7OrlNAfhjCTAysMP2zYQsi2bYwIjt8+0sCT5M3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgP1UEpnBZwly95pBElPK45UvQLg0c5Op6CLkpcU25atgVWR8nQz7W5442GAC5Dmx
-	 KkPwdNc9DPbCF+YZkqUB8n5128pHHscqSGBAg2DWS3F9fLLr6M6xtEaoAYBuqytxKo
-	 nQJd4OgnsXrJhCpMjzkhBDmq7UtoqFhBepQ6sSdM=
+	b=QJ1ksHnmnLghVm6LQShgiKxe6Mgs3aCJ9p4OOyNaFLKmOlvfljT6nFF6b/8FzC9TO
+	 VK5u3psqfQIVrs6T6assp0ROvKzBLpPdZFI7cEZfWUlH9ez9gRyNHWciNngMxatWaB
+	 md6HLlpnH8Pp/zL4fXjrhHP8rPhJvS398EoRUdH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Christoph Hellwig <hch@lst.de>,
+	Hans Zhang <18255117159@163.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 106/262] bpf/preload: Dont select USERMODE_DRIVER
-Date: Tue, 12 Aug 2025 19:28:14 +0200
-Message-ID: <20250812172957.604771197@linuxfoundation.org>
+Subject: [PATCH 6.6 107/262] PCI: rockchip-host: Fix "Unexpected Completion" log message
+Date: Tue, 12 Aug 2025 19:28:15 +0200
+Message-ID: <20250812172957.646647421@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -46,42 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 2b03164eee20eac7ce0fe3aa4fbda7efc1e5427a ]
+[ Upstream commit fcc5f586c4edbcc10de23fb9b8c0972a84e945cd ]
 
-The usermode driver framework is not used anymore by the BPF
-preload code.
+Fix the debug message for the PCIE_CORE_INT_UCR interrupt to clearly
+indicate "Unexpected Completion" instead of a duplicate "malformed TLP"
+message.
 
-Fixes: cb80ddc67152 ("bpf: Convert bpf_preload.ko to use light skeleton.")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/bpf/20250721-remove-usermode-driver-v1-1-0d0083334382@linutronix.de
+Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
+Signed-off-by: Hans Zhang <18255117159@163.com>
+[mani: added fixes tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://patch.msgid.link/20250607160201.807043-2-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/preload/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/controller/pcie-rockchip-host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/preload/Kconfig b/kernel/bpf/preload/Kconfig
-index c9d45c9d6918..f9b11d01c3b5 100644
---- a/kernel/bpf/preload/Kconfig
-+++ b/kernel/bpf/preload/Kconfig
-@@ -10,7 +10,6 @@ menuconfig BPF_PRELOAD
- 	# The dependency on !COMPILE_TEST prevents it from being enabled
- 	# in allmodconfig or allyesconfig configurations
- 	depends on !COMPILE_TEST
--	select USERMODE_DRIVER
- 	help
- 	  This builds kernel module with several embedded BPF programs that are
- 	  pinned into BPF FS mount point as human readable files that are
+diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
+index afbbdccd195d..6ff20d585396 100644
+--- a/drivers/pci/controller/pcie-rockchip-host.c
++++ b/drivers/pci/controller/pcie-rockchip-host.c
+@@ -436,7 +436,7 @@ static irqreturn_t rockchip_pcie_subsys_irq_handler(int irq, void *arg)
+ 			dev_dbg(dev, "malformed TLP received from the link\n");
+ 
+ 		if (sub_reg & PCIE_CORE_INT_UCR)
+-			dev_dbg(dev, "malformed TLP received from the link\n");
++			dev_dbg(dev, "Unexpected Completion received from the link\n");
+ 
+ 		if (sub_reg & PCIE_CORE_INT_FCE)
+ 			dev_dbg(dev, "an error was observed in the flow control advertisements from the other side\n");
 -- 
 2.39.5
 
