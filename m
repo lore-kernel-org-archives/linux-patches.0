@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB976BB5B;
-	Tue, 12 Aug 2025 18:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371746BB5B;
+	Tue, 12 Aug 2025 18:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024009; cv=none; b=R+fRF9e0gi3wrHukPh/4cqV3XxF4GdYjP5t6TE5WsS/xSzQggNl88XJ+2C8ehUw5AWW4ckP1M4yZ2YlQCA9B4E0/bDIZcFzvcwrPTTbrs98hjC3nKrgN9keA22bZLAZAI9C/xZxntWuFDfR8UNgCyVGExp6vKeTAx/BvIxuEvoE=
+	t=1755024013; cv=none; b=HW4qlBC0KsdZxsrSlh4IZKk4JtoZheB4lobH6bd/EzJI3N670I14xmGQvKDqva6qLsjk3gYI3//h+vsMEI/OLYVqqwNRoPjAcK5jubPURgzmvi+zRMXgqnh5hg6FUWJF1LJ7wjGyStZy2/nOpnq7Z4Xe5JzHm4ct7vIENTAtuxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024009; c=relaxed/simple;
-	bh=XV8CwznsuAm8xsKaGekypuv5wlYTUJW9F7EMYB5yRzM=;
+	s=arc-20240116; t=1755024013; c=relaxed/simple;
+	bh=OY7gIT7lHPzG5t74NPw1Mn0OlsSyxpFVC3DY78S5M6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gdanw5YOsknYo15HBkk488dPpaW5bcRDrBpfj6WdN88jqUozttLMORoLMz03Z98gO7duIXI+1I6+8RGUF2lhzaLWKNbuzyKn/Jc7zoZGrUGsgQbD9WGlGh7oHswsPkWqNAMudApy9bQcNXFTHyGFQtKHOYuArIr1MtWtVKMzii4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vi6J2M4g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDntm/sUJpYmxNNI2shZm8FCTu5hj7RsurPEzE2ZPYKnD3YUhl27kCVpHoot6G9HeYzve2Uz+yTPAHRLNFk92Lv9h/zEbHlk+uRfcKUqz95qR+1qcBNWVfHGygwcXq9+BBAz+IoAAix2lDZbpJQLNNgXTbwSjt5p4zvwKMyiY3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4+E6GTX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vi6J2M4g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18478C4CEF0;
-	Tue, 12 Aug 2025 18:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4+E6GTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F176C4CEF0;
+	Tue, 12 Aug 2025 18:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024009;
-	bh=XV8CwznsuAm8xsKaGekypuv5wlYTUJW9F7EMYB5yRzM=;
+	s=korg; t=1755024013;
+	bh=OY7gIT7lHPzG5t74NPw1Mn0OlsSyxpFVC3DY78S5M6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vi6J2M4gx6fByFqMSyviLQF2l91tZlSrGoSoa59kD8xJUfrqEwwYgzyo/MtPALF2E
-	 YFpCNwWDtXlEX86L/KpsWBAwnzNoPZdyO04PcdXZ1UnEDATGkmvl4GqE2zOmFu6l4+
-	 8qmYbz33cdmqK3pB7SxfaoQZ2b/LdWwPmZmuefZE=
+	b=Z4+E6GTXY47ypt+dMgjssO43IpmSGuB1vGvujwWVNSG8aPGe64TRDtlwOMSQqVHck
+	 cE/61CuEFSoces5WzGOIZlDonWS5sMPfhgeww1k3n8rWsyrXu5TRj7RR8uBIhbGcIN
+	 fIcIbb7lW0rMPEVuaCQChcSP5YwaeDKhXMfxUUQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bert Karwatzki <spasswolf@web.de>,
-	Remi Pommarel <repk@triplefau.lt>,
-	Johannes Berg <johannes.berg@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 239/627] wifi: mac80211: Check 802.11 encaps offloading in ieee80211_tx_h_select_key()
-Date: Tue, 12 Aug 2025 19:28:54 +0200
-Message-ID: <20250812173428.393755501@linuxfoundation.org>
+Subject: [PATCH 6.16 248/627] memcg_slabinfo: Fix use of PG_slab
+Date: Tue, 12 Aug 2025 19:29:03 +0200
+Message-ID: <20250812173428.737563680@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,42 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 4037c468d1b3c508d69e6df0ef47fdee3d440e39 ]
+[ Upstream commit 7f770e94d7936e8e35d4b4d5fa4618301b03ea33 ]
 
-With 802.11 encapsulation offloading, ieee80211_tx_h_select_key() is
-called on 802.3 frames. In that case do not try to use skb data as
-valid 802.11 headers.
+Check PGTY_slab instead of PG_slab.
 
-Reported-by: Bert Karwatzki <spasswolf@web.de>
-Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
-Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Link: https://patch.msgid.link/1af4b5b903a5fca5ebe67333d5854f93b2be5abe.1752765971.git.repk@triplefau.lt
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 4ffca5a96678 (mm: support only one page_type per page)
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Tested-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Link: https://patch.msgid.link/20250611155916.2579160-11-willy@infradead.org
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/cgroup/memcg_slabinfo.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 04f4d574401f..73304a5cf6fc 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -612,6 +612,12 @@ ieee80211_tx_h_select_key(struct ieee80211_tx_data *tx)
- 	else
- 		tx->key = NULL;
+diff --git a/tools/cgroup/memcg_slabinfo.py b/tools/cgroup/memcg_slabinfo.py
+index 270c28a0d098..6bf4bde77903 100644
+--- a/tools/cgroup/memcg_slabinfo.py
++++ b/tools/cgroup/memcg_slabinfo.py
+@@ -146,11 +146,11 @@ def detect_kernel_config():
  
-+	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) {
-+		if (tx->key && tx->key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE)
-+			info->control.hw_key = &tx->key->conf;
-+		return TX_CONTINUE;
-+	}
-+
- 	if (tx->key) {
- 		bool skip_hw = false;
  
+ def for_each_slab(prog):
+-    PGSlab = ~prog.constant('PG_slab')
++    slabtype = prog.constant('PGTY_slab')
+ 
+     for page in for_each_page(prog):
+         try:
+-            if page.page_type.value_() == PGSlab:
++            if (page.page_type.value_() >> 24) == slabtype:
+                 yield cast('struct slab *', page)
+         except FaultError:
+             pass
 -- 
 2.39.5
 
