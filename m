@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC333217736;
-	Tue, 12 Aug 2025 18:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B592DE6E9;
+	Tue, 12 Aug 2025 18:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021839; cv=none; b=LmYD/8eFLlTnI78ROj6K4IiJZH0Y6CxFRLBwNy4NvN5XRqHByeMNJOsj05brASdXBYuHcB29463/jVshDE1FFkaNgyG0F3uzUyKd1GtyynV5fMwThbpUeJrGr5PkIFj5/mkLaNE2PQzfqioLtjAs4EwgXad0myTB0kfL/zEf3hs=
+	t=1755021843; cv=none; b=vFoPj35nSjnOKPY1K60TCUrjM5ABYuhNb9VTu0dajzNTxRNZ0Ved+BEVahy37EfhvNAIZrIbHy+kkYDWIh51pOeJIQumVVaOzbMlLgQ9h8xrkC4jY956qnMe9YfPRvfv/6psigeIfuFKhe7ZoTCzW7XYappRKCvglIyyzy55Ipg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021839; c=relaxed/simple;
-	bh=mraxedJmANSE7TGDeZov1zWNkyn6EQWLswH0t0tCDo0=;
+	s=arc-20240116; t=1755021843; c=relaxed/simple;
+	bh=cti562yJVxveqlAVPWqF/CUbNzv4vI9E1twdKHxSeNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hNzixV7KaspmoXCam9wbzubBaIhvHu2gXsKaU7B8GY4w2m4vfJHP1my4uBtWOISFjx8x8qkHZDN2tVDwooF4tUNbnITVAf476dMV/gTzKSm4Jyt9S8C0AxjUEfxq9AuBBwuWhMMdgcxJ4nVAsg3kE2373JJPtTexg6YBHgvapF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgNGdNA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CTxUd3UeEnYJuIqu8tnzc6o8P39QuzccHouj86SBgFei/kHhylwawLsbd8ztxiA0utxEYIpWH/Ct60iNy7m4tNHqAI3wxLfC3LWIZwM5RUoVRPZs0K/Nef5c/0wBbc5vJaFXsgF+kC6C9NmvH39w76Po/Vpx2oj1F+R5Jfqfllo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKy4dzlD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgNGdNA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9B9C4CEF0;
-	Tue, 12 Aug 2025 18:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKy4dzlD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77300C4CEF7;
+	Tue, 12 Aug 2025 18:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021839;
-	bh=mraxedJmANSE7TGDeZov1zWNkyn6EQWLswH0t0tCDo0=;
+	s=korg; t=1755021843;
+	bh=cti562yJVxveqlAVPWqF/CUbNzv4vI9E1twdKHxSeNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgNGdNA84Q4VWKVRnJTwDlPx3WL4aVAunPgEFomTwJNfaCVt4OJ75v2Z40kqT3XpW
-	 MGGPFMwO5cn1Qnmht1KBovWUI1FEgohjMe1eXY2w/V2oLZiqJKLtMYG3VQDYw1fzO0
-	 p5tVGIdEZTYLdfRTTIcf9tz8eGettdMIuw6xxcqo=
+	b=bKy4dzlDnPmPkc8CCaQQXlXodcZdtFFzPVrHLQJBBph6WlVAS6diRM69iUUZ7/DL5
+	 YsfbdB5sBukAbIwc0KdNfypHH0wixL/5la2PT3CzdZE8W5ELhUaI+yNFD+OMf2BB8x
+	 nfSbFvcYPa3T9l2EZ9fTcfO4zfn+fql5kGrCNDmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 241/262] smb: server: Fix extension string in ksmbd_extract_shortname()
-Date: Tue, 12 Aug 2025 19:30:29 +0200
-Message-ID: <20250812173003.413719296@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 242/262] USB: serial: option: add Foxconn T99W709
+Date: Tue, 12 Aug 2025 19:30:30 +0200
+Message-ID: <20250812173003.456138205@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,38 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Slark Xiao <slark_xiao@163.com>
 
-commit 8e7d178d06e8937454b6d2f2811fa6a15656a214 upstream.
+commit ad1244e1ce18f8c1a5ebad8074bfcf10eacb0311 upstream.
 
-In ksmbd_extract_shortname(), strscpy() is incorrectly called with the
-length of the source string (excluding the NUL terminator) rather than
-the size of the destination buffer. This results in "__" being copied
-to 'extension' rather than "___" (two underscores instead of three).
+T99W709 is designed based on MTK T300(5G redcap) chip. There are
+7 serial ports to be enumerated: AP_LOG, GNSS, AP_META, AT,
+MD_META, NPT, DBG. RSVD(5) for ADB port.
 
-Use the destination buffer size instead to ensure that the string "___"
-(three underscores) is copied correctly.
+test evidence as below:
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e15f Rev=00.01
+S:  Manufacturer=MediaTek Inc.
+S:  Product=USB DATA CARD
+S:  SerialNumber=355511220000399
+C:  #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+I:  If#=0x6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
 
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
 Cc: stable@vger.kernel.org
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb_common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -515,7 +515,7 @@ int ksmbd_extract_shortname(struct ksmbd
- 
- 	p = strrchr(longname, '.');
- 	if (p == longname) { /*name starts with a dot*/
--		strscpy(extension, "___", strlen("___"));
-+		strscpy(extension, "___", sizeof(extension));
- 	} else {
- 		if (p) {
- 			p++;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
+ 	  .driver_info = RSVD(5) | RSVD(6) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
++	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
 
 
