@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B7E86331;
-	Tue, 12 Aug 2025 17:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D2286331;
+	Tue, 12 Aug 2025 17:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020619; cv=none; b=Dzx1P2TumRUvAiMOYIMPAAQArVmEWu959KcRry1SArzjKfZMGKXvHU/toOZDbpvYE0TGVyGgFubZvk8Px5MIpkuhDGyBN1vvWJiS1C2pT1mesShrp2dH6PQJmarxn7KrYlSmGxsbu3Jm67ksBienk4DgT/2BQ0VEQAVemn9AKkE=
+	t=1755020623; cv=none; b=TRdpzTusdFkSdDPPOEWh2WRKUiVijnYu5SrMkpS6f9pLsnuhB9lR2leCDAhyvVSLESchmb1l14PTuwPILoyTwJrYvRd52+XvlZ5342dQeSAm7CLfmEgTHcXY1JXRF8S5yntsTXRSy8ly1bgC9ydj0XaTdq9vtAHTiL+WQ3S/PTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020619; c=relaxed/simple;
-	bh=Rs8TUxt9qidyt74vPvSKejA6TXtCWJk8Qn/lTijG9tE=;
+	s=arc-20240116; t=1755020623; c=relaxed/simple;
+	bh=xpnVV7xE6RkO2oox1rBl3an9w29KaGv7MWeBonOuEHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqC81nsF4mRzJDiGZ7C7NMTlg624cMI/p0Y0ILZ9K1WwRMop40YqSgvm31aIZtpXUL0qbrV0ozXW0hfHhrsr6wwBi0A6bYOYpc70RNF5VteMJA7drv9t3HAfpzqZhiFc8Hqy41nvfHL85g0TNRLgbVRkdXVbS/IFph1/yoXu9dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCoyp3HX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jr1SAa4JUYvETnWDkMC3Pvq7sWvJDK0j0L7NXXYNUQJLW86AnSYbkpTo1JzE+FKlceXddtfR/LfU19PAkojamLYHvc2ZvDD6emRYIE0H1RVqtHlz+1Q3JRBHr5piM4FnPVR53vljfAzde/mv4eGIxNidKdRcsAY0qJiG9td36ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpmTeAia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCoyp3HX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E79C4CEF0;
-	Tue, 12 Aug 2025 17:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpmTeAia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5315C4CEF0;
+	Tue, 12 Aug 2025 17:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020619;
-	bh=Rs8TUxt9qidyt74vPvSKejA6TXtCWJk8Qn/lTijG9tE=;
+	s=korg; t=1755020623;
+	bh=xpnVV7xE6RkO2oox1rBl3an9w29KaGv7MWeBonOuEHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCoyp3HXvyYS7g+hdR/cXvH3zw649d2AsMqg30AfrDF0Dj7S8Q1opa0drkabGXoD8
-	 gy8iC2H2a5ZVhyXVQUnAwgZCRuoJuX7EF1bmujmwlO73ybv6TxnAzhcl2V699Igqa9
-	 5j3TZG16sv1ZJ5kKOTNR9X2qi1rVLZjS8PhghkGQ=
+	b=PpmTeAiaoYOQPb95Fn4gghvT9IYfKU8daye+qfDz1s9mGgTCc9HrzYeODpALawsIy
+	 Rbok/isWGeguWVLE4qqpIo/aSCzDMuuCiQ099pDedv4twCpbTeuB36AuOjHXyeO2gK
+	 iC14i6ozpQwKMqzWYdNu6KSewWcC8Hrvndp1e7nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Quentin Monnet <qmo@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/253] net: ipv6: ip6mr: Fix in/out netdev to pass to the FORWARD chain
-Date: Tue, 12 Aug 2025 19:28:08 +0200
-Message-ID: <20250812172952.984679840@linuxfoundation.org>
+Subject: [PATCH 6.1 101/253] bpftool: Fix memory leak in dump_xx_nlmsg on realloc failure
+Date: Tue, 12 Aug 2025 19:28:09 +0200
+Message-ID: <20250812172953.027066589@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -53,56 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 3365afd3abda5f6a54f4a822dad5c9314e94c3fc ]
+[ Upstream commit 99fe8af069a9fa5b09140518b1364e35713a642e ]
 
-The netfilter hook is invoked with skb->dev for input netdevice, and
-vif_dev for output netdevice. However at the point of invocation, skb->dev
-is already set to vif_dev, and MR-forwarded packets are reported with
-in=out:
+In function dump_xx_nlmsg(), when realloc() fails to allocate memory,
+the original pointer to the buffer is overwritten with NULL. This causes
+a memory leak because the previously allocated buffer becomes unreachable
+without being freed.
 
- # ip6tables -A FORWARD -j LOG --log-prefix '[forw]'
- # cd tools/testing/selftests/net/forwarding
- # ./router_multicast.sh
- # dmesg | fgrep '[forw]'
- [ 1670.248245] [forw]IN=v5 OUT=v5 [...]
-
-For reference, IPv4 MR code shows in and out as appropriate.
-Fix by caching skb->dev and using the updated value for output netdev.
-
-Fixes: 7bc570c8b4f7 ("[IPV6] MROUTE: Support multicast forwarding.")
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/3141ae8386fbe13fef4b793faa75e6bae58d798a.1750113335.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7900efc19214 ("tools/bpf: bpftool: improve output format for bpftool net")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/r/20250620012133.14819-1-chenyuan_fl@163.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6mr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/net.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 138f6aee70af..06f66531628f 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -2045,6 +2045,7 @@ static int ip6mr_forward2(struct net *net, struct mr_table *mrt,
- 			  struct sk_buff *skb, int vifi)
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index 526a332c48e6..7c9e86faab6c 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -353,17 +353,18 @@ static int dump_link_nlmsg(void *cookie, void *msg, struct nlattr **tb)
  {
- 	struct vif_device *vif = &mrt->vif_table[vifi];
-+	struct net_device *indev = skb->dev;
- 	struct net_device *vif_dev;
- 	struct ipv6hdr *ipv6h;
- 	struct dst_entry *dst;
-@@ -2107,7 +2108,7 @@ static int ip6mr_forward2(struct net *net, struct mr_table *mrt,
- 	IP6CB(skb)->flags |= IP6SKB_FORWARDED;
+ 	struct bpf_netdev_t *netinfo = cookie;
+ 	struct ifinfomsg *ifinfo = msg;
++	struct ip_devname_ifindex *tmp;
  
- 	return NF_HOOK(NFPROTO_IPV6, NF_INET_FORWARD,
--		       net, NULL, skb, skb->dev, vif_dev,
-+		       net, NULL, skb, indev, skb->dev,
- 		       ip6mr_forward2_finish);
+ 	if (netinfo->filter_idx > 0 && netinfo->filter_idx != ifinfo->ifi_index)
+ 		return 0;
  
- out_free:
+ 	if (netinfo->used_len == netinfo->array_len) {
+-		netinfo->devices = realloc(netinfo->devices,
+-			(netinfo->array_len + 16) *
+-			sizeof(struct ip_devname_ifindex));
+-		if (!netinfo->devices)
++		tmp = realloc(netinfo->devices,
++			(netinfo->array_len + 16) * sizeof(struct ip_devname_ifindex));
++		if (!tmp)
+ 			return -ENOMEM;
+ 
++		netinfo->devices = tmp;
+ 		netinfo->array_len += 16;
+ 	}
+ 	netinfo->devices[netinfo->used_len].ifindex = ifinfo->ifi_index;
+@@ -382,6 +383,7 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ {
+ 	struct bpf_tcinfo_t *tcinfo = cookie;
+ 	struct tcmsg *info = msg;
++	struct tc_kind_handle *tmp;
+ 
+ 	if (tcinfo->is_qdisc) {
+ 		/* skip clsact qdisc */
+@@ -393,11 +395,12 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ 	}
+ 
+ 	if (tcinfo->used_len == tcinfo->array_len) {
+-		tcinfo->handle_array = realloc(tcinfo->handle_array,
++		tmp = realloc(tcinfo->handle_array,
+ 			(tcinfo->array_len + 16) * sizeof(struct tc_kind_handle));
+-		if (!tcinfo->handle_array)
++		if (!tmp)
+ 			return -ENOMEM;
+ 
++		tcinfo->handle_array = tmp;
+ 		tcinfo->array_len += 16;
+ 	}
+ 	tcinfo->handle_array[tcinfo->used_len].handle = info->tcm_handle;
 -- 
 2.39.5
 
