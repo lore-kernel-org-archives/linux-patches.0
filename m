@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35052FAC02;
-	Tue, 12 Aug 2025 18:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F2F2FABF8;
+	Tue, 12 Aug 2025 18:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023328; cv=none; b=CvGndkCiNhIdlPAxu1gZ7a3xmHd9x1rObiN3CsgvWxoczIfYLMn06TmZRQDT7mB/aPgZn8Nts/KBiEAig2PTRvkd5EkpjkgmiWgROGkx9n677A+qivRZDxaAGc+Hw+lB2JvuRPkde4CMBvB1Mj84aPgpWquxfVj3Y3CiojBYQZE=
+	t=1755023332; cv=none; b=aurdJL8v9j5Lokx7V0Rfa3lspxea/Qsx3DzKKbcWosFvah41Rup9UZRCkC84KaI/4boZbWGy8GeNKDN1rmd23iVlkwWQQS6AItShmbCJuHIIFp+4n+VC9MCYx114X1Z0Ojr/ctxuvJmFKaR4dvmflnjRLzcCrTYYnNtIXTowXDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023328; c=relaxed/simple;
-	bh=y4ZIxUVCjrL6fYhMNPkn54DOsoK72K6npRbR83i+fmc=;
+	s=arc-20240116; t=1755023332; c=relaxed/simple;
+	bh=PCoCXkKZUe1i45X37PD7Hbpn/sziJEQoOQcwi6NeD4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGr/9fJNbG2+YcCju4bdh8QcCD8/5T3hKQtQT431+D/lQpsAUZtqTbidqjSWF2v/p9Ub45/4iE7CAK0Xaz35IwDcTE4iZXvq424qaogjJROgCQhMRUy+/zN0jK32ViWNzXxOa5WmTJ+3BCEB8KLpRjdVccpY/n5xso/V7BtuQAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQmVjaHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O1kpcZfstD4KCQRKk7/dkjhB5Z6dVYNiLBuuHDbgCdSh0roWOEMCWCIwx9/aSVSS2XLI4hCdkVs+9pf9SNZND/gJEt9dCFqYna5HJU+PCoMksrKFytSZV61VtNsgy55nJrDzCzIit4hoET+IgFkk5xTfaB57ZU5HG34bH+rkzys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8V5BhFh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQmVjaHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9556C4CEF0;
-	Tue, 12 Aug 2025 18:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8V5BhFh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C577C4CEF0;
+	Tue, 12 Aug 2025 18:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023328;
-	bh=y4ZIxUVCjrL6fYhMNPkn54DOsoK72K6npRbR83i+fmc=;
+	s=korg; t=1755023331;
+	bh=PCoCXkKZUe1i45X37PD7Hbpn/sziJEQoOQcwi6NeD4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQmVjaHEjUWbOpCxvcs/+nFZV3P5n0j8I6Wbloc0UKPNjnE6L//n8WmHx6c68TX2A
-	 L3VvC2kPgXSy2lWDuGxzKObjn0qSUgFO/Bq5yScZD/4a+Jd9vMKhYOGKvtAIoLvD2P
-	 Z6UqMvciRKDC82fhblrQF1Qm2UvfrPjgpLBZnHzk=
+	b=O8V5BhFhJIa8IUuGwqITHaadHho3ayjMkGo1ZsBLLBGKAmMqZe3BrGbPQDxlPXYSf
+	 lMM5vONpc5W1RWU5N0t9+sfLJbgVqRbgT9cZll0LFjSSrqncHlt/I5FfDd675qm4qW
+	 eJjb//y4thSYbBW+8qaUdOspZ6YQqLx1wcu7uYfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijuan Gao <lijuan.gao@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 047/627] arm64: dts: qcom: sa8775p: Correct the interrupt for remoteproc
-Date: Tue, 12 Aug 2025 19:25:42 +0200
-Message-ID: <20250812173421.126514670@linuxfoundation.org>
+Subject: [PATCH 6.16 048/627] arm64: dts: qcom: msm8976: Make blsp_dma controlled-remotely
+Date: Tue, 12 Aug 2025 19:25:43 +0200
+Message-ID: <20250812173421.162167322@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,88 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lijuan Gao <lijuan.gao@oss.qualcomm.com>
+From: André Apitzsch <git@apitzsch.eu>
 
-[ Upstream commit 7bd7209e9cb11c8864e601d915008da088476f0c ]
+[ Upstream commit 76270a18dbdf0bb50615f1b29d2cae8d683da01e ]
 
-Fix the incorrect IRQ numbers for ready and handover on sa8775p.
-The correct values are as follows:
+The blsp_dma controller is shared between the different subsystems,
+which is why it is already initialized by the firmware. We should not
+reinitialize it from Linux to avoid potential other users of the DMA
+engine to misbehave.
 
-Fatal interrupt - 0
-Ready interrupt - 1
-Handover interrupt - 2
-Stop acknowledge interrupt - 3
+In mainline this can be described using the "qcom,controlled-remotely"
+property. In the downstream/vendor kernel from Qualcomm there is an
+opposite "qcom,managed-locally" property. This property is *not* set
+for the qcom,sps-dma@7884000 and qcom,sps-dma@7ac4000 [1] so adding
+"qcom,controlled-remotely" upstream matches the behavior of the
+downstream/vendor kernel.
 
-Fixes: df54dcb34ff2e ("arm64: dts: qcom: sa8775p: add ADSP, CDSP and GPDSP nodes")
-Signed-off-by: Lijuan Gao <lijuan.gao@oss.qualcomm.com>
+Adding this fixes booting Longcheer L9360.
+
+[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26/arch/arm/boot/dts/qcom/msm8976.dtsi#L1149-1163
+
+Fixes: 0484d3ce0902 ("arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250612-correct_interrupt_for_remoteproc-v1-2-490ee6d92a1b@oss.qualcomm.com
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+Link: https://lore.kernel.org/r/20250615-bqx5plus-v2-1-72b45c84237d@apitzsch.eu
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8976.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 45f536633f64..f682a53e83e5 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -5571,8 +5571,8 @@ remoteproc_gpdsp0: remoteproc@20c00000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+index e2ac2fd6882f..2a3024638470 100644
+--- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+@@ -1331,6 +1331,7 @@ blsp1_dma: dma-controller@7884000 {
+ 			clock-names = "bam_clk";
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,controlled-remotely;
+ 		};
  
- 			interrupts-extended = <&intc GIC_SPI 768 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_gpdsp0_in 0 0>,
--					      <&smp2p_gpdsp0_in 2 0>,
- 					      <&smp2p_gpdsp0_in 1 0>,
-+					      <&smp2p_gpdsp0_in 2 0>,
- 					      <&smp2p_gpdsp0_in 3 0>;
- 			interrupt-names = "wdog", "fatal", "ready",
- 					  "handover", "stop-ack";
-@@ -5614,8 +5614,8 @@ remoteproc_gpdsp1: remoteproc@21c00000 {
+ 		blsp1_uart1: serial@78af000 {
+@@ -1451,6 +1452,7 @@ blsp2_dma: dma-controller@7ac4000 {
+ 			clock-names = "bam_clk";
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,controlled-remotely;
+ 		};
  
- 			interrupts-extended = <&intc GIC_SPI 624 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_gpdsp1_in 0 0>,
--					      <&smp2p_gpdsp1_in 2 0>,
- 					      <&smp2p_gpdsp1_in 1 0>,
-+					      <&smp2p_gpdsp1_in 2 0>,
- 					      <&smp2p_gpdsp1_in 3 0>;
- 			interrupt-names = "wdog", "fatal", "ready",
- 					  "handover", "stop-ack";
-@@ -5755,8 +5755,8 @@ remoteproc_cdsp0: remoteproc@26300000 {
- 
- 			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp0_in 0 IRQ_TYPE_EDGE_RISING>,
--					      <&smp2p_cdsp0_in 2 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp0_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_cdsp0_in 2 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp0_in 3 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "wdog", "fatal", "ready",
- 					  "handover", "stop-ack";
-@@ -5887,8 +5887,8 @@ remoteproc_cdsp1: remoteproc@2a300000 {
- 
- 			interrupts-extended = <&intc GIC_SPI 798 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp1_in 0 IRQ_TYPE_EDGE_RISING>,
--					      <&smp2p_cdsp1_in 2 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp1_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_cdsp1_in 2 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp1_in 3 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "wdog", "fatal", "ready",
- 					  "handover", "stop-ack";
-@@ -6043,8 +6043,8 @@ remoteproc_adsp: remoteproc@30000000 {
- 
- 			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
--					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "wdog", "fatal", "ready", "handover",
- 					  "stop-ack";
+ 		blsp2_uart2: serial@7af0000 {
 -- 
 2.39.5
 
