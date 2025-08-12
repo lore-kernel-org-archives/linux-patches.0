@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABEA2F5E;
-	Tue, 12 Aug 2025 18:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BF92F5E;
+	Tue, 12 Aug 2025 18:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021866; cv=none; b=lXNoXP8vtISqowhE275MsZ8jcUQkMrQjlYf6wV74sTik9wFtjmhTZigTAs3XGptcJqZZP3YuC6Ae+RfpirIIiixbOZvf4IB5hu4aeZRgHwrWxZP2gnG3Qgmowv12A78FIz4L6sQyrTPivOOsCEyb2rdnUh+luZHKsDzA4r6A+fg=
+	t=1755021870; cv=none; b=Foe+NKkjzwtc5rZRPL7ZsM0UY8W3oCuMnnOL02nlI/N3C7bDT7rfSO+RMUKs2/evhfwRl+dkS0JAMnJKfIx5a/Ly7x76oDIY8USp68dIgBwWP+bcayxEC08lF3c+La5nnbQFm7imzeyzpJcOivcdDnRGAT9iP9xCn83KwVdTR9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021866; c=relaxed/simple;
-	bh=tiL0Hoe2XcpC0Ph1/nF3+9bYaqClixfj07DYERSBeYQ=;
+	s=arc-20240116; t=1755021870; c=relaxed/simple;
+	bh=gD7MV7E8BYlWUB4hGzE7nzWXsTx2T15W1O/w4BwqCK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8Lr0DRqdR6QE8GybyvsVdzNtCSeKjWJdd8ejKFfQ94+OSPRzLfto1na9h8ildYOsP4YsNOuvF8UJ5LcMuG/4kjhPoXL1Moq6NjXG/w3e20Xnb3PNIVuWGPP8uZYIrwl/ziSxqPwZ5e54sUd/Wu6yNUrKjew9Q0X1kkD8zTAgDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlpFuJSO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TJTATkzydhFu+UYcDDrm9VNy4nMOq5QceBX1/RVCu2xO6nYnwR6EP31RTzm3MVyVnDsdVUx4Vq04VLoHzHz2bFVkAQkcAmLPIsLsstiArwxQVn/BZSseGEK5AWNwu4lJW8qAcsJYzOSek+ZeOl6n+4NeZms0D9FP5ctl6a7k9gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oe7vfvZa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlpFuJSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE86C4CEF0;
-	Tue, 12 Aug 2025 18:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oe7vfvZa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F754C4CEF0;
+	Tue, 12 Aug 2025 18:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021866;
-	bh=tiL0Hoe2XcpC0Ph1/nF3+9bYaqClixfj07DYERSBeYQ=;
+	s=korg; t=1755021870;
+	bh=gD7MV7E8BYlWUB4hGzE7nzWXsTx2T15W1O/w4BwqCK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZlpFuJSOLijN6C+jjKdH6kpV6sYAx+npn9xNh5BGXCraBCU88KGDRjpN1g0YzQoXQ
-	 oO0wIpaoH4g3I+5et3oM7aYgd+0vvujC8Rd5AHKT85dUT4CTa+DqTabvG2QHiwriaA
-	 O3w8S9uLwHXtxFvmTtwdPBpt/wuQsS62jSR+8uN0=
+	b=oe7vfvZaVF1TtUe72ZoK1xjOG9MET4sRJq7NSPqeUbQIWtYqSMihKulRWbhqsdr8f
+	 jaeLvi1quX1H/a9THP4fe3w7V9BI3eNO8Z5D+vWiwDKrn7X3nYgSu/G8HWDpcOC6++
+	 Fwb22agbLHHLVbTiKaWJ1TLOAjC83+RkCk0u6o6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Prakash Viswalingam <quic_prakashv@quicinc.com>,
 	Elliot Berman <quic_eberman@quicinc.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
 	Chen Ridong <chenridong@huawei.com>
-Subject: [PATCH 6.6 248/262] sched/core: Remove ifdeffery for saved_state
-Date: Tue, 12 Aug 2025 19:30:36 +0200
-Message-ID: <20250812173003.711890431@linuxfoundation.org>
+Subject: [PATCH 6.6 249/262] freezer,sched: Use saved_state to reduce some spurious wakeups
+Date: Tue, 12 Aug 2025 19:30:37 +0200
+Message-ID: <20250812173003.753251538@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -54,88 +55,170 @@ Content-Transfer-Encoding: 8bit
 
 From: Elliot Berman <quic_eberman@quicinc.com>
 
-commit fbaa6a181a4b1886cbf4214abdf9a2df68471510 upstream.
+commit 8f0eed4a78a81668bc78923ea09f51a7a663c2b0 upstream.
 
-In preparation for freezer to also use saved_state, remove the
-CONFIG_PREEMPT_RT compilation guard around saved_state.
+After commit f5d39b020809 ("freezer,sched: Rewrite core freezer logic"),
+tasks that transition directly from TASK_FREEZABLE to TASK_FROZEN  are
+always woken up on the thaw path. Prior to that commit, tasks could ask
+freezer to consider them "frozen enough" via freezer_do_not_count(). The
+commit replaced freezer_do_not_count() with a TASK_FREEZABLE state which
+allows freezer to immediately mark the task as TASK_FROZEN without
+waking up the task.  This is efficient for the suspend path, but on the
+thaw path, the task is always woken up even if the task didn't need to
+wake up and goes back to its TASK_(UN)INTERRUPTIBLE state. Although
+these tasks are capable of handling of the wakeup, we can observe a
+power/perf impact from the extra wakeup.
 
-On the arm64 platform I tested which did not have CONFIG_PREEMPT_RT,
-there was no statistically significant deviation by applying this patch.
+We observed on Android many tasks wait in the TASK_FREEZABLE state
+(particularly due to many of them being binder clients). We observed
+nearly 4x the number of tasks and a corresponding linear increase in
+latency and power consumption when thawing the system. The latency
+increased from ~15ms to ~50ms.
 
-Test methodology:
+Avoid the spurious wakeups by saving the state of TASK_FREEZABLE tasks.
+If the task was running before entering TASK_FROZEN state
+(__refrigerator()) or if the task received a wake up for the saved
+state, then the task is woken on thaw. saved_state from PREEMPT_RT locks
+can be re-used because freezer would not stomp on the rtlock wait flow:
+TASK_RTLOCK_WAIT isn't considered freezable.
 
-perf bench sched message -g 40 -l 40
-
+Reported-by: Prakash Viswalingam <quic_prakashv@quicinc.com>
 Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Chen Ridong <chenridong@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched.h |    2 --
- kernel/sched/core.c   |   10 ++--------
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ kernel/freezer.c    |   41 +++++++++++++++++++----------------------
+ kernel/sched/core.c |   21 +++++++++++++--------
+ 2 files changed, 32 insertions(+), 30 deletions(-)
 
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -753,10 +753,8 @@ struct task_struct {
+--- a/kernel/freezer.c
++++ b/kernel/freezer.c
+@@ -71,7 +71,11 @@ bool __refrigerator(bool check_kthr_stop
+ 	for (;;) {
+ 		bool freeze;
+ 
++		raw_spin_lock_irq(&current->pi_lock);
+ 		set_current_state(TASK_FROZEN);
++		/* unstale saved_state so that __thaw_task() will wake us up */
++		current->saved_state = TASK_RUNNING;
++		raw_spin_unlock_irq(&current->pi_lock);
+ 
+ 		spin_lock_irq(&freezer_lock);
+ 		freeze = freezing(current) && !(check_kthr_stop && kthread_should_stop());
+@@ -129,6 +133,7 @@ static int __set_task_frozen(struct task
+ 		WARN_ON_ONCE(debug_locks && p->lockdep_depth);
  #endif
- 	unsigned int			__state;
  
--#ifdef CONFIG_PREEMPT_RT
- 	/* saved state for "spinlock sleepers" */
- 	unsigned int			saved_state;
--#endif
- 
- 	/*
- 	 * This begins the randomizable portion of task_struct. Only
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -2238,17 +2238,15 @@ int __task_state_match(struct task_struc
- 	if (READ_ONCE(p->__state) & state)
- 		return 1;
- 
--#ifdef CONFIG_PREEMPT_RT
- 	if (READ_ONCE(p->saved_state) & state)
- 		return -1;
--#endif
-+
- 	return 0;
++	p->saved_state = p->__state;
+ 	WRITE_ONCE(p->__state, TASK_FROZEN);
+ 	return TASK_FROZEN;
  }
- 
- static __always_inline
- int task_state_match(struct task_struct *p, unsigned int state)
- {
--#ifdef CONFIG_PREEMPT_RT
- 	int match;
- 
- 	/*
-@@ -2260,9 +2258,6 @@ int task_state_match(struct task_struct
- 	raw_spin_unlock_irq(&p->pi_lock);
- 
- 	return match;
--#else
--	return __task_state_match(p, state);
--#endif
+@@ -170,42 +175,34 @@ bool freeze_task(struct task_struct *p)
  }
  
  /*
-@@ -4059,7 +4054,6 @@ bool ttwu_state_match(struct task_struct
+- * The special task states (TASK_STOPPED, TASK_TRACED) keep their canonical
+- * state in p->jobctl. If either of them got a wakeup that was missed because
+- * TASK_FROZEN, then their canonical state reflects that and the below will
+- * refuse to restore the special state and instead issue the wakeup.
++ * Restore the saved_state before the task entered freezer. For typical task
++ * in the __refrigerator(), saved_state == TASK_RUNNING so nothing happens
++ * here. For tasks which were TASK_NORMAL | TASK_FREEZABLE, their initial state
++ * is restored unless they got an expected wakeup (see ttwu_state_match()).
++ * Returns 1 if the task state was restored.
+  */
+-static int __set_task_special(struct task_struct *p, void *arg)
++static int __restore_freezer_state(struct task_struct *p, void *arg)
+ {
+-	unsigned int state = 0;
++	unsigned int state = p->saved_state;
  
- 	*success = !!(match = __task_state_match(p, state));
+-	if (p->jobctl & JOBCTL_TRACED)
+-		state = TASK_TRACED;
+-
+-	else if (p->jobctl & JOBCTL_STOPPED)
+-		state = TASK_STOPPED;
+-
+-	if (state)
++	if (state != TASK_RUNNING) {
+ 		WRITE_ONCE(p->__state, state);
++		return 1;
++	}
  
--#ifdef CONFIG_PREEMPT_RT
- 	/*
- 	 * Saved state preserves the task state across blocking on
- 	 * an RT lock.  If the state matches, set p::saved_state to
-@@ -4075,7 +4069,7 @@ bool ttwu_state_match(struct task_struct
- 	 */
- 	if (match < 0)
- 		p->saved_state = TASK_RUNNING;
--#endif
-+
- 	return match > 0;
+-	return state;
++	return 0;
  }
  
+ void __thaw_task(struct task_struct *p)
+ {
+-	unsigned long flags, flags2;
++	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&freezer_lock, flags);
+ 	if (WARN_ON_ONCE(freezing(p)))
+ 		goto unlock;
+ 
+-	if (lock_task_sighand(p, &flags2)) {
+-		/* TASK_FROZEN -> TASK_{STOPPED,TRACED} */
+-		bool ret = task_call_func(p, __set_task_special, NULL);
+-		unlock_task_sighand(p, &flags2);
+-		if (ret)
+-			goto unlock;
+-	}
++	if (task_call_func(p, __restore_freezer_state, NULL))
++		goto unlock;
+ 
+ 	wake_up_state(p, TASK_FROZEN);
+ unlock:
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -2251,7 +2251,7 @@ int task_state_match(struct task_struct
+ 
+ 	/*
+ 	 * Serialize against current_save_and_set_rtlock_wait_state() and
+-	 * current_restore_rtlock_saved_state().
++	 * current_restore_rtlock_saved_state(), and __refrigerator().
+ 	 */
+ 	raw_spin_lock_irq(&p->pi_lock);
+ 	match = __task_state_match(p, state);
+@@ -4034,13 +4034,17 @@ static void ttwu_queue(struct task_struc
+  * The caller holds p::pi_lock if p != current or has preemption
+  * disabled when p == current.
+  *
+- * The rules of PREEMPT_RT saved_state:
++ * The rules of saved_state:
+  *
+  *   The related locking code always holds p::pi_lock when updating
+  *   p::saved_state, which means the code is fully serialized in both cases.
+  *
+- *   The lock wait and lock wakeups happen via TASK_RTLOCK_WAIT. No other
+- *   bits set. This allows to distinguish all wakeup scenarios.
++ *   For PREEMPT_RT, the lock wait and lock wakeups happen via TASK_RTLOCK_WAIT.
++ *   No other bits set. This allows to distinguish all wakeup scenarios.
++ *
++ *   For FREEZER, the wakeup happens via TASK_FROZEN. No other bits set. This
++ *   allows us to prevent early wakeup of tasks before they can be run on
++ *   asymmetric ISA architectures (eg ARMv9).
+  */
+ static __always_inline
+ bool ttwu_state_match(struct task_struct *p, unsigned int state, int *success)
+@@ -4056,10 +4060,11 @@ bool ttwu_state_match(struct task_struct
+ 
+ 	/*
+ 	 * Saved state preserves the task state across blocking on
+-	 * an RT lock.  If the state matches, set p::saved_state to
+-	 * TASK_RUNNING, but do not wake the task because it waits
+-	 * for a lock wakeup. Also indicate success because from
+-	 * the regular waker's point of view this has succeeded.
++	 * an RT lock or TASK_FREEZABLE tasks.  If the state matches,
++	 * set p::saved_state to TASK_RUNNING, but do not wake the task
++	 * because it waits for a lock wakeup or __thaw_task(). Also
++	 * indicate success because from the regular waker's point of
++	 * view this has succeeded.
+ 	 *
+ 	 * After acquiring the lock the task will restore p::__state
+ 	 * from p::saved_state which ensures that the regular
 
 
