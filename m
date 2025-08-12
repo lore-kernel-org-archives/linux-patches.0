@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CA82868AF;
-	Tue, 12 Aug 2025 17:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6405268C73;
+	Tue, 12 Aug 2025 17:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021108; cv=none; b=amCQ0H9griiArHMfqph5fk0D6KKiDnFESNM+KJ0img/dZQgUj1Z+rMVgfSyWAv5fusFURu3i9zhJtlrgKzGCNwOmhIDgwfT9oh/n0LXDk+mN2U9wGAgUoWCwxsP+jMM+VuTHuJCHO1gFVw4EZlo3n1wv2yHCjHZ/dVhUwSniL8A=
+	t=1755021112; cv=none; b=MbEl8fGLhWzsFAdKBOwVDd671Yh3DaDzslyqchy+pOr5G6fqbp08hG9/H9t+B8A9X/7SqlyLJQSB3Oc/uGUrleSoSYvH7XMdJlJfI/2f+zddVLoN+Roa/08lWNKe4Br8uitlG6lT7AqePMmgggZvM37ZuICBmNNTq6kjPPM5D2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021108; c=relaxed/simple;
-	bh=NoSvVet8nOhxFuN39w6mCBgBkLQQTyNMjl40STqeEek=;
+	s=arc-20240116; t=1755021112; c=relaxed/simple;
+	bh=TxE9UeQhmfJyFG0uhkZqseaCQaDbdPs6yOyK5wOcIgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=msCHeQDFgBcqlHQYNRoZYjYG7uJfJoQx4K8Jq5ASwIVC/PS0Ay3/M+X1iHtZXHMs11wbLRXoo1MnoUZknyKHAAcbRfeem7XHRPGCA3/QOeTyxOwgq90rYyx+P6/q0DOCGXlO873XVt95AvYPeJsiizl6senRCygATPBdzeIMIRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h13Y9N+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gv5BrvYvL0Mz97thNdJxyOyQ5Yq7pdqY/+MTzoOBJcyq6cAUbvRnznMuh96oLiJxEX7Kd82HZFVlPj3Ef4eeC0uBx0Khbkvm0QFFdSYyNCMpa2vyoc99+Lv1uFJArkXdt2qkhH6b9t72TX8+oH3knsfJq22an6ZiojJ/m3k88bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpmxr//r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h13Y9N+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F128C4CEF0;
-	Tue, 12 Aug 2025 17:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpmxr//r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530E5C4CEF0;
+	Tue, 12 Aug 2025 17:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021108;
-	bh=NoSvVet8nOhxFuN39w6mCBgBkLQQTyNMjl40STqeEek=;
+	s=korg; t=1755021111;
+	bh=TxE9UeQhmfJyFG0uhkZqseaCQaDbdPs6yOyK5wOcIgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h13Y9N+QmhdMrlWCCxidM6gdh84j1q2OLFVJxD0eILjrW8lbpiBZA/OxGxi+jntcx
-	 xhjlMcrw7vH/+tlFftxOoTXcOrJzg51jeynvfP6IBY+oHMTBtQQx+tvlcoLgu/9va3
-	 Dos9vExpqfuTutGMRBynGFOkui6INkMJ5KMX+Vvw=
+	b=zpmxr//r5MM9eEQk7rt6wHV2KBC5RHBSRseC+LIe7oNDrXr8f7e0tgVDQhyfHe4M5
+	 ExV9bDRsTRu+HCrMFDzRXA2ASDVuPp9kw5MW3MCX85iECqfHIO27hrDCdrZMv2ofeo
+	 VduhIJTqmCJwX37kg+v4y0ClMHN9PjcqHnNGsNfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/253] pNFS/flexfiles: dont attempt pnfs on fatal DS errors
-Date: Tue, 12 Aug 2025 19:30:00 +0200
-Message-ID: <20250812172957.853620459@linuxfoundation.org>
+Subject: [PATCH 6.6 063/262] net: dst: annotate data-races around dst->input
+Date: Tue, 12 Aug 2025 19:27:31 +0200
+Message-ID: <20250812172955.670642353@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,178 +48,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f06bedfa62d57f7b67d44aacd6badad2e13a803f ]
+[ Upstream commit f1c5fd34891a1c242885f48c2e4dc52df180f311 ]
 
-When an applications get killed (SIGTERM/SIGINT) while pNFS client performs a connection
-to DS, client ends in an infinite loop of connect-disconnect. This
-source of the issue, it that flexfilelayoutdev#nfs4_ff_layout_prepare_ds gets an error
-on nfs4_pnfs_ds_connect with status ERESTARTSYS, which is set by rpc_signal_task, but
-the error is treated as transient, thus retried.
+dst_dev_put() can overwrite dst->input while other
+cpus might read this field (for instance from dst_input())
 
-The issue is reproducible with Ctrl+C the following script(there should be ~1000 files in
-a directory, client should must not have any connections to DSes):
+Add READ_ONCE()/WRITE_ONCE() annotations to suppress
+potential issues.
 
-```
-echo 3 > /proc/sys/vm/drop_caches
+We will likely need full RCU protection later.
 
-for i in *
-do
-   head -1 $i
-done
-```
-
-The change aims to propagate the nfs4_ff_layout_prepare_ds error state
-to the caller that can decide whatever this is a retryable error or not.
-
-Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Link: https://lore.kernel.org/r/20250627071751.189663-1-tigran.mkrtchyan@desy.de
-Fixes: 260f32adb88d ("pNFS/flexfiles: Check the result of nfs4_pnfs_ds_connect")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250630121934.3399505-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c    | 26 ++++++++++++++---------
- fs/nfs/flexfilelayout/flexfilelayoutdev.c |  6 +++---
- 2 files changed, 19 insertions(+), 13 deletions(-)
+ include/net/dst.h      | 2 +-
+ include/net/lwtunnel.h | 4 ++--
+ net/core/dst.c         | 2 +-
+ net/ipv4/route.c       | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index aa55b5df065b..5dd16f4ae74d 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -745,14 +745,14 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 16b7b99b5f30..ef7f88f01881 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -474,7 +474,7 @@ INDIRECT_CALLABLE_DECLARE(int ip_local_deliver(struct sk_buff *));
+ /* Input packet from network to transport.  */
+ static inline int dst_input(struct sk_buff *skb)
  {
- 	struct nfs4_ff_layout_segment *fls = FF_LAYOUT_LSEG(lseg);
- 	struct nfs4_ff_layout_mirror *mirror;
--	struct nfs4_pnfs_ds *ds;
-+	struct nfs4_pnfs_ds *ds = ERR_PTR(-EAGAIN);
- 	u32 idx;
+-	return INDIRECT_CALL_INET(skb_dst(skb)->input,
++	return INDIRECT_CALL_INET(READ_ONCE(skb_dst(skb)->input),
+ 				  ip6_input, ip_local_deliver, skb);
+ }
  
- 	/* mirrors are initially sorted by efficiency */
- 	for (idx = start_idx; idx < fls->mirror_array_cnt; idx++) {
- 		mirror = FF_LAYOUT_COMP(lseg, idx);
- 		ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
--		if (!ds)
-+		if (IS_ERR(ds))
- 			continue;
- 
- 		if (check_device &&
-@@ -760,10 +760,10 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
- 			continue;
- 
- 		*best_idx = idx;
--		return ds;
-+		break;
+diff --git a/include/net/lwtunnel.h b/include/net/lwtunnel.h
+index 53bd2d02a4f0..a4632a64daae 100644
+--- a/include/net/lwtunnel.h
++++ b/include/net/lwtunnel.h
+@@ -142,8 +142,8 @@ static inline void lwtunnel_set_redirect(struct dst_entry *dst)
+ 		dst->output = lwtunnel_output;
  	}
- 
--	return NULL;
-+	return ds;
+ 	if (lwtunnel_input_redirect(dst->lwtstate)) {
+-		dst->lwtstate->orig_input = dst->input;
+-		dst->input = lwtunnel_input;
++		dst->lwtstate->orig_input = READ_ONCE(dst->input);
++		WRITE_ONCE(dst->input, lwtunnel_input);
+ 	}
  }
+ #else
+diff --git a/net/core/dst.c b/net/core/dst.c
+index aad197e761cb..def3dbbd37e3 100644
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -150,7 +150,7 @@ void dst_dev_put(struct dst_entry *dst)
+ 	dst->obsolete = DST_OBSOLETE_DEAD;
+ 	if (dst->ops->ifdown)
+ 		dst->ops->ifdown(dst, dev);
+-	dst->input = dst_discard;
++	WRITE_ONCE(dst->input, dst_discard);
+ 	dst->output = dst_discard_out;
+ 	dst->dev = blackhole_netdev;
+ 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 8ee1ad2d8c13..f8538507ce3f 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1699,7 +1699,7 @@ struct rtable *rt_dst_clone(struct net_device *dev, struct rtable *rt)
+ 		else if (rt->rt_gw_family == AF_INET6)
+ 			new_rt->rt_gw6 = rt->rt_gw6;
  
- static struct nfs4_pnfs_ds *
-@@ -933,7 +933,7 @@ ff_layout_pg_init_write(struct nfs_pageio_descriptor *pgio,
- 	for (i = 0; i < pgio->pg_mirror_count; i++) {
- 		mirror = FF_LAYOUT_COMP(pgio->pg_lseg, i);
- 		ds = nfs4_ff_layout_prepare_ds(pgio->pg_lseg, mirror, true);
--		if (!ds) {
-+		if (IS_ERR(ds)) {
- 			if (!ff_layout_no_fallback_to_mds(pgio->pg_lseg))
- 				goto out_mds;
- 			pnfs_generic_pg_cleanup(pgio);
-@@ -1839,6 +1839,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
- 	u32 idx = hdr->pgio_mirror_idx;
- 	int vers;
- 	struct nfs_fh *fh;
-+	bool ds_fatal_error = false;
- 
- 	dprintk("--> %s ino %lu pgbase %u req %zu@%llu\n",
- 		__func__, hdr->inode->i_ino,
-@@ -1846,8 +1847,10 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
- 
- 	mirror = FF_LAYOUT_COMP(lseg, idx);
- 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
--	if (!ds)
-+	if (IS_ERR(ds)) {
-+		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
- 		goto out_failed;
-+	}
- 
- 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
- 						   hdr->inode);
-@@ -1888,7 +1891,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
- 	return PNFS_ATTEMPTED;
- 
- out_failed:
--	if (ff_layout_avoid_mds_available_ds(lseg))
-+	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
- 		return PNFS_TRY_AGAIN;
- 	trace_pnfs_mds_fallback_read_pagelist(hdr->inode,
- 			hdr->args.offset, hdr->args.count,
-@@ -1909,11 +1912,14 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
- 	int vers;
- 	struct nfs_fh *fh;
- 	u32 idx = hdr->pgio_mirror_idx;
-+	bool ds_fatal_error = false;
- 
- 	mirror = FF_LAYOUT_COMP(lseg, idx);
- 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, true);
--	if (!ds)
-+	if (IS_ERR(ds)) {
-+		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
- 		goto out_failed;
-+	}
- 
- 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
- 						   hdr->inode);
-@@ -1956,7 +1962,7 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
- 	return PNFS_ATTEMPTED;
- 
- out_failed:
--	if (ff_layout_avoid_mds_available_ds(lseg))
-+	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
- 		return PNFS_TRY_AGAIN;
- 	trace_pnfs_mds_fallback_write_pagelist(hdr->inode,
- 			hdr->args.offset, hdr->args.count,
-@@ -1998,7 +2004,7 @@ static int ff_layout_initiate_commit(struct nfs_commit_data *data, int how)
- 	idx = calc_ds_index_from_commit(lseg, data->ds_commit_index);
- 	mirror = FF_LAYOUT_COMP(lseg, idx);
- 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, true);
--	if (!ds)
-+	if (IS_ERR(ds))
- 		goto out_err;
- 
- 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
-diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-index d21c5ecfbf1c..95d5dca67145 100644
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -370,11 +370,11 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
- 			  struct nfs4_ff_layout_mirror *mirror,
- 			  bool fail_return)
- {
--	struct nfs4_pnfs_ds *ds = NULL;
-+	struct nfs4_pnfs_ds *ds;
- 	struct inode *ino = lseg->pls_layout->plh_inode;
- 	struct nfs_server *s = NFS_SERVER(ino);
- 	unsigned int max_payload;
--	int status;
-+	int status = -EAGAIN;
- 
- 	if (!ff_layout_init_mirror_ds(lseg->pls_layout, mirror))
- 		goto noconnect;
-@@ -412,7 +412,7 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
- 	ff_layout_send_layouterror(lseg);
- 	if (fail_return || !ff_layout_has_available_ds(lseg))
- 		pnfs_error_mark_layout_for_return(ino, lseg);
--	ds = NULL;
-+	ds = ERR_PTR(status);
- out:
- 	return ds;
- }
+-		new_rt->dst.input = rt->dst.input;
++		new_rt->dst.input = READ_ONCE(rt->dst.input);
+ 		new_rt->dst.output = rt->dst.output;
+ 		new_rt->dst.error = rt->dst.error;
+ 		new_rt->dst.lastuse = jiffies;
 -- 
 2.39.5
 
