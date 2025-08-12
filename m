@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3862F5E;
-	Tue, 12 Aug 2025 18:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C96B1EF38C;
+	Tue, 12 Aug 2025 18:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022028; cv=none; b=I5FIwuoFWz0s7Z/W9nDvyj5O25Gt73YLuzk5/gpOhqlS4VLMZPRu82+b+WhoiTt1YfKJ294xAPiGzhYlhN8MsryeWte91hKQc4bLYbu5yfWi4+gPzSM8uG+Zi3i/HL+ybbVcuUPRpRR+vFRjcRPQYrUxW8facUvr4+tJJ7GrWco=
+	t=1755022032; cv=none; b=fY4l+HvPJorJxVAtHQ4hvw0f88UbcQAenX0HvoeVIU0mUdtVz40Dkixoy6zpBQjiw4XuKnMHqZBBEUNKLm11/D48IwGpo+nCQuayjEh4iOW5BApHLHk1XisTx38yVS3rgWaqx7uGUath19n5XMgaZ7tD8HUNA63gvVqXW0OMahE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022028; c=relaxed/simple;
-	bh=34NmTKVINyiclWEVwpIFJqCBPfjEPywG/KdarvsW330=;
+	s=arc-20240116; t=1755022032; c=relaxed/simple;
+	bh=fONZAvpwSYFc2ebhFG5CoieefQhMQvwu83BSrttVrL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTWnpT4z50u/mJzMTM2Yysl9fwonmk2DWTfpkFARJ4xvVduKFA+9ymDCrcboGV5JT6ra4h0wCAyJVQj0Cj9f/1bCUqhoP9999gsKAaB1nwQmx0SKhyaUN55RDB6QybZXRcoTBFvX1+BDTtnR2MwVrP5WZK2lO1KbCM8ncJx17ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkRMudPN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ep9XKy7lM398P2DBOWYY6ehdfJd9aL+SORDaNI2gkpGcht+RDUIy6/fsqBN2UXt6vvW17UUPDOc7XlI8ZBIdx87MBhvsHb8fZTEWrYAwAw0KpO42U0qYAJYjuonq/BykjZbe189XU6PYe/REpLAYH9K6Lc1zZ2ktdl5ModZG6P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXDflS2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkRMudPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B93AC4CEF0;
-	Tue, 12 Aug 2025 18:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXDflS2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795EBC4CEF0;
+	Tue, 12 Aug 2025 18:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022028;
-	bh=34NmTKVINyiclWEVwpIFJqCBPfjEPywG/KdarvsW330=;
+	s=korg; t=1755022031;
+	bh=fONZAvpwSYFc2ebhFG5CoieefQhMQvwu83BSrttVrL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EkRMudPNHjnfgxX1mj8TT4Qgn101ccPCPC5b8hbbPP8FgB8jbERrOUSOOxbQGEhcb
-	 fCBBQfQvLyDA3OizAPQWpdXODHMZgMKw5cJYfeSbAgaCb22o1TPK02UQrSEuWLq1B2
-	 sIjDwK4oneoqLXTGPdB33oaXYAXUNS2oXbMzpuz8=
+	b=vXDflS2Yts3VuxK5YpbwJxby+xNrGhLCKAv94urACKwVak8SUMFdAyiZKbY+JJc9x
+	 pTtikbOi4AN7Gn1vmOUuQ7m8Bv7akOxR/8duHbCMPbuWdmifDLOnpWoHaApgJAF6aR
+	 d6tYzrXhRpBjEjuUcZ4WUWSK4yzZsxZ8LV7dL20g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	RubenKelevra <rubenkelevra@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/369] [ceph] parse_longname(): strrchr() expects NUL-terminated string
-Date: Tue, 12 Aug 2025 19:25:05 +0200
-Message-ID: <20250812173015.058691573@linuxfoundation.org>
+Subject: [PATCH 6.12 009/369] fs_context: fix parameter name in infofc() macro
+Date: Tue, 12 Aug 2025 19:25:06 +0200
+Message-ID: <20250812173015.093878835@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -45,94 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: RubenKelevra <rubenkelevra@gmail.com>
 
-[ Upstream commit 101841c38346f4ca41dc1802c867da990ffb32eb ]
+[ Upstream commit ffaf1bf3737f706e4e9be876de4bc3c8fc578091 ]
 
-... and parse_longname() is not guaranteed that.  That's the reason
-why it uses kmemdup_nul() to build the argument for kstrtou64();
-the problem is, kstrtou64() is not the only thing that need it.
+The macro takes a parameter called "p" but references "fc" internally.
+This happens to compile as long as callers pass a variable named fc,
+but breaks otherwise. Rename the first parameter to “fc” to match the
+usage and to be consistent with warnfc() / errorfc().
 
-Just get a NUL-terminated copy of the entire thing and be done
-with that...
-
-Fixes: dd66df0053ef "ceph: add support for encrypted snapshot names"
-Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: a3ff937b33d9 ("prefix-handling analogues of errorf() and friends")
+Signed-off-by: RubenKelevra <rubenkelevra@gmail.com>
+Link: https://lore.kernel.org/20250617230927.1790401-1-rubenkelevra@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/crypto.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ include/linux/fs_context.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
-index 3b3c4d8d401e..9c7062245880 100644
---- a/fs/ceph/crypto.c
-+++ b/fs/ceph/crypto.c
-@@ -215,35 +215,31 @@ static struct inode *parse_longname(const struct inode *parent,
- 	struct ceph_client *cl = ceph_inode_to_client(parent);
- 	struct inode *dir = NULL;
- 	struct ceph_vino vino = { .snap = CEPH_NOSNAP };
--	char *inode_number;
--	char *name_end;
--	int orig_len = *name_len;
-+	char *name_end, *inode_number;
- 	int ret = -EIO;
--
-+	/* NUL-terminate */
-+	char *str __free(kfree) = kmemdup_nul(name, *name_len, GFP_KERNEL);
-+	if (!str)
-+		return ERR_PTR(-ENOMEM);
- 	/* Skip initial '_' */
--	name++;
--	name_end = strrchr(name, '_');
-+	str++;
-+	name_end = strrchr(str, '_');
- 	if (!name_end) {
--		doutc(cl, "failed to parse long snapshot name: %s\n", name);
-+		doutc(cl, "failed to parse long snapshot name: %s\n", str);
- 		return ERR_PTR(-EIO);
- 	}
--	*name_len = (name_end - name);
-+	*name_len = (name_end - str);
- 	if (*name_len <= 0) {
- 		pr_err_client(cl, "failed to parse long snapshot name\n");
- 		return ERR_PTR(-EIO);
- 	}
+diff --git a/include/linux/fs_context.h b/include/linux/fs_context.h
+index 4b4bfef6f053..d86922b5435b 100644
+--- a/include/linux/fs_context.h
++++ b/include/linux/fs_context.h
+@@ -202,7 +202,7 @@ void logfc(struct fc_log *log, const char *prefix, char level, const char *fmt,
+  */
+ #define infof(fc, fmt, ...) __logfc(fc, 'i', fmt, ## __VA_ARGS__)
+ #define info_plog(p, fmt, ...) __plog(p, 'i', fmt, ## __VA_ARGS__)
+-#define infofc(p, fmt, ...) __plog((&(fc)->log), 'i', fmt, ## __VA_ARGS__)
++#define infofc(fc, fmt, ...) __plog((&(fc)->log), 'i', fmt, ## __VA_ARGS__)
  
- 	/* Get the inode number */
--	inode_number = kmemdup_nul(name_end + 1,
--				   orig_len - *name_len - 2,
--				   GFP_KERNEL);
--	if (!inode_number)
--		return ERR_PTR(-ENOMEM);
-+	inode_number = name_end + 1;
- 	ret = kstrtou64(inode_number, 10, &vino.ino);
- 	if (ret) {
--		doutc(cl, "failed to parse inode number: %s\n", name);
--		dir = ERR_PTR(ret);
--		goto out;
-+		doutc(cl, "failed to parse inode number: %s\n", str);
-+		return ERR_PTR(ret);
- 	}
- 
- 	/* And finally the inode */
-@@ -254,9 +250,6 @@ static struct inode *parse_longname(const struct inode *parent,
- 		if (IS_ERR(dir))
- 			doutc(cl, "can't find inode %s (%s)\n", inode_number, name);
- 	}
--
--out:
--	kfree(inode_number);
- 	return dir;
- }
- 
+ /**
+  * warnf - Store supplementary warning message
 -- 
 2.39.5
 
