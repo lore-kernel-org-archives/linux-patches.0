@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D2286331;
-	Tue, 12 Aug 2025 17:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA91086331;
+	Tue, 12 Aug 2025 17:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020623; cv=none; b=TRdpzTusdFkSdDPPOEWh2WRKUiVijnYu5SrMkpS6f9pLsnuhB9lR2leCDAhyvVSLESchmb1l14PTuwPILoyTwJrYvRd52+XvlZ5342dQeSAm7CLfmEgTHcXY1JXRF8S5yntsTXRSy8ly1bgC9ydj0XaTdq9vtAHTiL+WQ3S/PTc=
+	t=1755020626; cv=none; b=RZeDUhG9IsUbnrexN3QKESEuqs0G4vAwzH1xwOX8f5lXEY+ajzgyiL71L1/Fh/YRke4nwKu9d2hda+TK8xjfGUDvVDIyZDdHwZZ2YsQE/6XwppdvO2vmMP5Q6nYnU0rZ0kE3yaZWO7io9Xg71dwRkPIstGbq7NlSCa9o4heiPww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020623; c=relaxed/simple;
-	bh=xpnVV7xE6RkO2oox1rBl3an9w29KaGv7MWeBonOuEHE=;
+	s=arc-20240116; t=1755020626; c=relaxed/simple;
+	bh=jlGf7HlTcoWH/isAKP5gLp3CJOTUcXSFI8XEB1d6hDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jr1SAa4JUYvETnWDkMC3Pvq7sWvJDK0j0L7NXXYNUQJLW86AnSYbkpTo1JzE+FKlceXddtfR/LfU19PAkojamLYHvc2ZvDD6emRYIE0H1RVqtHlz+1Q3JRBHr5piM4FnPVR53vljfAzde/mv4eGIxNidKdRcsAY0qJiG9td36ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpmTeAia; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U6NfQwE2/MhwnVQCB0jnIU4LYcXWzFMdu/x6aKcAugQv1YdvL2ZIOz5u065ggek12CJPsVABERUaQ3hatVFUKbAvd9g9kHnrNa1sJmFG1VycdCDBOFVreViIzFivScwHzrn8pGZRgbzLXGaA+2BdpWfVvR9OrZzTgkzhoYoM+hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0cxRhbE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpmTeAia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5315C4CEF0;
-	Tue, 12 Aug 2025 17:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0cxRhbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2761FC4CEF0;
+	Tue, 12 Aug 2025 17:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020623;
-	bh=xpnVV7xE6RkO2oox1rBl3an9w29KaGv7MWeBonOuEHE=;
+	s=korg; t=1755020626;
+	bh=jlGf7HlTcoWH/isAKP5gLp3CJOTUcXSFI8XEB1d6hDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PpmTeAiaoYOQPb95Fn4gghvT9IYfKU8daye+qfDz1s9mGgTCc9HrzYeODpALawsIy
-	 Rbok/isWGeguWVLE4qqpIo/aSCzDMuuCiQ099pDedv4twCpbTeuB36AuOjHXyeO2gK
-	 iC14i6ozpQwKMqzWYdNu6KSewWcC8Hrvndp1e7nM=
+	b=J0cxRhbEKTRNEktgMX0TmO455MWzB7bTbAxp0FzAfCEjhRGUXkkedITwVyW8EhJsB
+	 3VAW+7OgJ9gZ88jQVN109f4jOKn4qogcAEdIhQMJCq0uKx15lY8vejwmCK3q+wWQcP
+	 ql5Vuiq3G/ncNy9cP+17GPIPILxPnfF/ZaXaTYcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Quentin Monnet <qmo@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Brahmajit Das <listout@listout.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/253] bpftool: Fix memory leak in dump_xx_nlmsg on realloc failure
-Date: Tue, 12 Aug 2025 19:28:09 +0200
-Message-ID: <20250812172953.027066589@linuxfoundation.org>
+Subject: [PATCH 6.1 092/253] samples: mei: Fix building on musl libc
+Date: Tue, 12 Aug 2025 19:28:00 +0200
+Message-ID: <20250812172952.647663958@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -52,75 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit 99fe8af069a9fa5b09140518b1364e35713a642e ]
+[ Upstream commit 239df3e4b4752524e7c0fb3417c218d8063654b4 ]
 
-In function dump_xx_nlmsg(), when realloc() fails to allocate memory,
-the original pointer to the buffer is overwritten with NULL. This causes
-a memory leak because the previously allocated buffer becomes unreachable
-without being freed.
+The header bits/wordsize.h is glibc specific and on building on musl
+with allyesconfig results in
 
-Fixes: 7900efc19214 ("tools/bpf: bpftool: improve output format for bpftool net")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/r/20250620012133.14819-1-chenyuan_fl@163.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+samples/mei/mei-amt-version.c:77:10: fatal error: bits/wordsize.h: No such file or directory
+   77 | #include <bits/wordsize.h>
+      |          ^~~~~~~~~~~~~~~~~
+
+mei-amt-version.c build file without bits/wordsize.h on musl and glibc.
+
+However on musl we get the follwing error without sys/time.h
+
+samples/mei/mei-amt-version.c: In function 'mei_recv_msg':
+samples/mei/mei-amt-version.c:159:24: error: storage size of 'tv' isn't known
+  159 |         struct timeval tv;
+      |                        ^~
+samples/mei/mei-amt-version.c:160:9: error: unknown type name 'fd_set'
+  160 |         fd_set set;
+      |         ^~~~~~
+samples/mei/mei-amt-version.c:168:9: error: implicit declaration of function 'FD_ZERO' [-Wimplicit-function-declaration]
+  168 |         FD_ZERO(&set);
+      |         ^~~~~~~
+samples/mei/mei-amt-version.c:169:9: error: implicit declaration of function 'FD_SET'; did you mean 'L_SET'? [-Wimplicit-function-declaration]
+  169 |         FD_SET(me->fd, &set);
+      |         ^~~~~~
+      |         L_SET
+samples/mei/mei-amt-version.c:170:14: error: implicit declaration of function 'select' [-Wimplicit-function-declaration]
+  170 |         rc = select(me->fd + 1, &set, NULL, NULL, &tv);
+      |              ^~~~~~
+samples/mei/mei-amt-version.c:171:23: error: implicit declaration of function 'FD_ISSET' [-Wimplicit-function-declaration]
+  171 |         if (rc > 0 && FD_ISSET(me->fd, &set)) {
+      |                       ^~~~~~~~
+samples/mei/mei-amt-version.c:159:24: warning: unused variable 'tv' [-Wunused-variable]
+  159 |         struct timeval tv;
+      |                        ^~
+
+Hence the the file has been included.
+
+Fixes: c52827cc4ddf ("staging/mei: add mei user space example")
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Link: https://lore.kernel.org/r/20250702135955.24955-1-listout@listout.xyz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/net.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ samples/mei/mei-amt-version.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
-index 526a332c48e6..7c9e86faab6c 100644
---- a/tools/bpf/bpftool/net.c
-+++ b/tools/bpf/bpftool/net.c
-@@ -353,17 +353,18 @@ static int dump_link_nlmsg(void *cookie, void *msg, struct nlattr **tb)
- {
- 	struct bpf_netdev_t *netinfo = cookie;
- 	struct ifinfomsg *ifinfo = msg;
-+	struct ip_devname_ifindex *tmp;
+diff --git a/samples/mei/mei-amt-version.c b/samples/mei/mei-amt-version.c
+index 867debd3b912..1d7254bcb44c 100644
+--- a/samples/mei/mei-amt-version.c
++++ b/samples/mei/mei-amt-version.c
+@@ -69,11 +69,11 @@
+ #include <string.h>
+ #include <fcntl.h>
+ #include <sys/ioctl.h>
++#include <sys/time.h>
+ #include <unistd.h>
+ #include <errno.h>
+ #include <stdint.h>
+ #include <stdbool.h>
+-#include <bits/wordsize.h>
+ #include <linux/mei.h>
  
- 	if (netinfo->filter_idx > 0 && netinfo->filter_idx != ifinfo->ifi_index)
- 		return 0;
- 
- 	if (netinfo->used_len == netinfo->array_len) {
--		netinfo->devices = realloc(netinfo->devices,
--			(netinfo->array_len + 16) *
--			sizeof(struct ip_devname_ifindex));
--		if (!netinfo->devices)
-+		tmp = realloc(netinfo->devices,
-+			(netinfo->array_len + 16) * sizeof(struct ip_devname_ifindex));
-+		if (!tmp)
- 			return -ENOMEM;
- 
-+		netinfo->devices = tmp;
- 		netinfo->array_len += 16;
- 	}
- 	netinfo->devices[netinfo->used_len].ifindex = ifinfo->ifi_index;
-@@ -382,6 +383,7 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
- {
- 	struct bpf_tcinfo_t *tcinfo = cookie;
- 	struct tcmsg *info = msg;
-+	struct tc_kind_handle *tmp;
- 
- 	if (tcinfo->is_qdisc) {
- 		/* skip clsact qdisc */
-@@ -393,11 +395,12 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
- 	}
- 
- 	if (tcinfo->used_len == tcinfo->array_len) {
--		tcinfo->handle_array = realloc(tcinfo->handle_array,
-+		tmp = realloc(tcinfo->handle_array,
- 			(tcinfo->array_len + 16) * sizeof(struct tc_kind_handle));
--		if (!tcinfo->handle_array)
-+		if (!tmp)
- 			return -ENOMEM;
- 
-+		tcinfo->handle_array = tmp;
- 		tcinfo->array_len += 16;
- 	}
- 	tcinfo->handle_array[tcinfo->used_len].handle = info->tcm_handle;
+ /*****************************************************************************
 -- 
 2.39.5
 
