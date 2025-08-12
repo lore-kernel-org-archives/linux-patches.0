@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEB92868AF;
-	Tue, 12 Aug 2025 17:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86702868AF;
+	Tue, 12 Aug 2025 17:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021083; cv=none; b=SEj/k/fZ93/pVMLm5HuWL1wPdajYdAvcW4m4SPGLgpilkm604LTBfzvGHcVZ1tYP5Et0n4thpMez4fap7kw5cCWVyiDNN6RvUFQgpIuoVNH3VBxr1aVNMBhUUqd4ks0LOOjGeRnzYTnb18ek7N1oLuqlVMnK3F6OilHH+lOwVqQ=
+	t=1755021086; cv=none; b=SEkIX2xmXV7xk7st3ClMKKneCIzW+qfIjIrUPr8dXvCfga6ryvEBSfvRVf0xs+NN+T/+XVBjcAfXBB7AUFxI4Kpn2/qMXqVszpqGMP1GBSRgEO4jQyiK5msnDz55yVAC3RBnyuxL+wi5Vu/bxJvMUa+80gk1H3aEzQV0vvpfmHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021083; c=relaxed/simple;
-	bh=KKowj8qTjl+83B5sqog4dOWNZe/6+SzoY+6rWTuNr9M=;
+	s=arc-20240116; t=1755021086; c=relaxed/simple;
+	bh=rLPmHNh3vlPqo3iKX1fASVz1Qy/WltCZYPxwFn/k/k4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gV7PX61hKqLTxsShKlJGA0JzSZ08FKSoZ14DeWycAPSZM8M3wkiIp4aCTIJiAWw9by97eizeVT83jFeHBM+qVVrIMx4AjNKFia9fWotDRDDL3HyArjoe+oo1BDd5qz9JaqxFNy/+bZPZ4e0TLfsOLKD577zQCzsIjTkoBhSW6QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA7VQ9De; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PLg2c+Kynf8hV+nihjnHVDHTyWYaM4UGscuYFIsZ6EqX0yfcVFt0KJbP2RhiADoxWddZLj1MixEeE1drZgyWuv9V4f3GqHjpllPWtjjRXQPwu1j5Qgm4z5GrWIzmNDmumyRuPr0LnW0uehirn/UKX0yteHUrkR6SXs8kJGtQP6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G72kcjZR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA7VQ9De"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374C7C4CEF0;
-	Tue, 12 Aug 2025 17:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G72kcjZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32075C4CEF0;
+	Tue, 12 Aug 2025 17:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021083;
-	bh=KKowj8qTjl+83B5sqog4dOWNZe/6+SzoY+6rWTuNr9M=;
+	s=korg; t=1755021086;
+	bh=rLPmHNh3vlPqo3iKX1fASVz1Qy/WltCZYPxwFn/k/k4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BA7VQ9De/Ie2O/0er1UXs1OjZOIFQDgxi8Cinbn3vGYmYGH+aZhTvEJqIfxix8EXK
-	 yPhvcSCiDyQIpSAdnBECF0mCPIeJdn6I5mRDwIPCPlFG1hRR1BethIrkpCvA9ODUPO
-	 FAsTd3Gc4MdnXeGANj1krwxsJtGAG/mhF0Bo7FHk=
+	b=G72kcjZRETmKkWc+5YCkiAgZyUGtHlZQK722trwv5I0NN/3a/TGw9SRrECDvk14CY
+	 lPz4N0LfUupuAIFlhWOLPZZkxUfjRDeGmdHKQMEDDRdvGwC8Ga07GwFTPD8A/NGaK8
+	 JX7dYlE4v9mth8Re1GCLYpcZj05uTI9jcHDLFmhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/262] iwlwifi: Add missing check for alloc_ordered_workqueue
-Date: Tue, 12 Aug 2025 19:27:27 +0200
-Message-ID: <20250812172955.498211640@linuxfoundation.org>
+Subject: [PATCH 6.1 209/253] powerpc/eeh: Rely on dev->link_active_reporting
+Date: Tue, 12 Aug 2025 19:29:57 +0200
+Message-ID: <20250812172957.717862465@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 90a0d9f339960448a3acc1437a46730f975efd6a ]
+[ Upstream commit 1541a21305ceb10fcf3f7cbb23f3e1a00bbf1789 ]
 
-Add check for the return value of alloc_ordered_workqueue since it may
-return NULL pointer.
+Use dev->link_active_reporting to determine whether Data Link Layer Link
+Active Reporting is available rather than re-retrieving the capability.
 
-Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://patch.msgid.link/20230110014848.28226-1-jiasheng@iscas.ac.cn
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://lore.kernel.org/r/alpine.DEB.2.21.2305310124100.59226@angie.orcam.me.uk
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Stable-dep-of: 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug safe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/main.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/eeh_pe.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/main.c b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-index a873be109f43..b490a88b97ca 100644
---- a/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-@@ -1048,9 +1048,11 @@ static void iwl_bg_restart(struct work_struct *data)
-  *
-  *****************************************************************************/
+diff --git a/arch/powerpc/kernel/eeh_pe.c b/arch/powerpc/kernel/eeh_pe.c
+index e4624d789629..7d1b50599dd6 100644
+--- a/arch/powerpc/kernel/eeh_pe.c
++++ b/arch/powerpc/kernel/eeh_pe.c
+@@ -671,9 +671,8 @@ static void eeh_bridge_check_link(struct eeh_dev *edev)
+ 	eeh_ops->write_config(edev, cap + PCI_EXP_LNKCTL, 2, val);
  
--static void iwl_setup_deferred_work(struct iwl_priv *priv)
-+static int iwl_setup_deferred_work(struct iwl_priv *priv)
- {
- 	priv->workqueue = alloc_ordered_workqueue(DRV_NAME, 0);
-+	if (!priv->workqueue)
-+		return -ENOMEM;
- 
- 	INIT_WORK(&priv->restart, iwl_bg_restart);
- 	INIT_WORK(&priv->beacon_update, iwl_bg_beacon_update);
-@@ -1067,6 +1069,8 @@ static void iwl_setup_deferred_work(struct iwl_priv *priv)
- 	timer_setup(&priv->statistics_periodic, iwl_bg_statistics_periodic, 0);
- 
- 	timer_setup(&priv->ucode_trace, iwl_bg_ucode_trace, 0);
-+
-+	return 0;
- }
- 
- void iwl_cancel_deferred_work(struct iwl_priv *priv)
-@@ -1456,7 +1460,9 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
- 	/********************
- 	 * 6. Setup services
- 	 ********************/
--	iwl_setup_deferred_work(priv);
-+	if (iwl_setup_deferred_work(priv))
-+		goto out_uninit_drv;
-+
- 	iwl_setup_rx_handlers(priv);
- 
- 	iwl_power_initialize(priv);
-@@ -1494,6 +1500,7 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
- 	iwl_cancel_deferred_work(priv);
- 	destroy_workqueue(priv->workqueue);
- 	priv->workqueue = NULL;
-+out_uninit_drv:
- 	iwl_uninit_drv(priv);
- out_free_eeprom_blob:
- 	kfree(priv->eeprom_blob);
+ 	/* Check link */
+-	eeh_ops->read_config(edev, cap + PCI_EXP_LNKCAP, 4, &val);
+-	if (!(val & PCI_EXP_LNKCAP_DLLLARC)) {
+-		eeh_edev_dbg(edev, "No link reporting capability (0x%08x) \n", val);
++	if (!edev->pdev->link_active_reporting) {
++		eeh_edev_dbg(edev, "No link reporting capability\n");
+ 		msleep(1000);
+ 		return;
+ 	}
 -- 
 2.39.5
 
