@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7B12E11BF;
-	Tue, 12 Aug 2025 19:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0664B2D47F4;
+	Tue, 12 Aug 2025 19:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025683; cv=none; b=E+CsMPugi+nZ4KrbEuZ0bz8h5EFiSSh9CsVE/eoGmjfQ6TSF12uFjWo7QZ0/TyHzsI/QJSm/+LQZiuF8uo+gq29sG70EaWv69d1tI6PlDiu31Dro65/LoXMr6P68L6xae2iiyjJMoRjlwdwByvVgJSix0A2PJEC+jHwnSdUrey4=
+	t=1755025687; cv=none; b=toYlXF2AzIbENDpHWMe+lAWl2dlFU2xMEEF3zOq2MD1NNprBLhZxBaCkRD61wIhepItL/QdikZ1IEk1BPMGfh0SZRBhOno0EA3q0IfhnVbM0KAVOje9mY+daAs/QhU/s6X7dlwLgg0Bw7dAziWrZBw3n4pU/CdvOylteP5/cbho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025683; c=relaxed/simple;
-	bh=w+tLfne1CBczTofRgYANJ0rTnWdfOOs6RBwPjNkid8I=;
+	s=arc-20240116; t=1755025687; c=relaxed/simple;
+	bh=uZ0Yem1O4XKgkusDjvrEc5hyzQD10r+jkILlz5zeMrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GalAr8sqaOJB80bvMELBMIIh+Id8ws7jIOg8sXFtuixn9UjIcUdRP3P8pgzH13KZHPMfUdOMXevAlooG3MLEHlYwR3YWtf0p32lXYUepRo2AcC40YAGfFoBw8xxZwf67NEiPKww0RUh84Cm9ig0sAQkPeLsGAOaaXJz41/ljaGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liVAFhCV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SFAr7rESIxax70T7/9yBJa32xUxQCzz/wKM+M6uDrocZm/oJA1s8V9qd8qG9mxp7MhHHZDLtZOLtwr7GttAYKoyV/qurVTSy4Ldw6eWlqcMm2YR28TclikrmvPXPxmjzzKbWDuv9l8mcvOo9Oj2zOgqsiXMYkJPXnv2Zu6bdCOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwlWuC4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liVAFhCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0B8C4CEF0;
-	Tue, 12 Aug 2025 19:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwlWuC4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A278C4CEF0;
+	Tue, 12 Aug 2025 19:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025683;
-	bh=w+tLfne1CBczTofRgYANJ0rTnWdfOOs6RBwPjNkid8I=;
+	s=korg; t=1755025686;
+	bh=uZ0Yem1O4XKgkusDjvrEc5hyzQD10r+jkILlz5zeMrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=liVAFhCVReCWFZvsHgzq0AdFSaXI9ethJ9fcu+GA5zFu91gFJdxiVaffBuKqztsL7
-	 QQQfx408tJn3oJAmsCcxnMgQKMGnpxzMi4EVJKx6fJrcbEOWIXnSweBUsJSyx6O1/v
-	 +UdZMeKqWfuwcx2sK21jBVcbKNNv/gwLWK/W/C7Y=
+	b=nwlWuC4M5+lNody5t5imqb5F4/TQKmEUdqlB8uky9oXj60FiUpEoTKC6qwHAgeR/q
+	 0yJaSN0fJkUSzjIqONesem++BfgI0w/f3pwvtk0z417sCzILprJgQf2vrM2S7kL0OY
+	 tp1Uwh124QOcBieHZroK4un0KAndKlWhqpr/qCzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 080/480] arm64: dts: imx8mn-beacon: Fix HS400 USDHC clock speed
-Date: Tue, 12 Aug 2025 19:44:48 +0200
-Message-ID: <20250812174400.751637416@linuxfoundation.org>
+Subject: [PATCH 6.15 081/480] arm64: dts: rockchip: Fix pinctrl node names for RK3528
+Date: Tue, 12 Aug 2025 19:44:49 +0200
+Message-ID: <20250812174400.791310949@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,39 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit e16ad6c79906bba5e2ac499492b6a5b29ab19d6c ]
+[ Upstream commit f2792bf1c7a54ef23fb3a84286b66f427bfc4853 ]
 
-The reference manual for the i.MX8MN states the clock rate in
-MMC mode is 1/2 of the input clock, therefore to properly run
-at HS400 rates, the input clock must be 400MHz to operate at
-200MHz.  Currently the clock is set to 200MHz which is half the
-rate it should be, so the throughput is half of what it should be
-for HS400 operation.
+Following warnings can be observed with CHECK_DTBS=y for the RK3528:
 
-Fixes: 36ca3c8ccb53 ("arm64: dts: imx: Add Beacon i.MX8M Nano development kit")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+  rk3528-pinctrl.dtsi:101.36-105.5: Warning (node_name_chars_strict):
+    /pinctrl/fephy/fephym0-led_dpx: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:108.38-112.5: Warning (node_name_chars_strict):
+    /pinctrl/fephy/fephym0-led_link: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:115.36-119.5: Warning (node_name_chars_strict):
+    /pinctrl/fephy/fephym0-led_spd: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:122.36-126.5: Warning (node_name_chars_strict):
+   /pinctrl/fephy/fephym1-led_dpx: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:129.38-133.5: Warning (node_name_chars_strict):
+    /pinctrl/fephy/fephym1-led_link: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:136.36-140.5: Warning (node_name_chars_strict):
+    /pinctrl/fephy/fephym1-led_spd: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:782.32-790.5: Warning (node_name_chars_strict):
+    /pinctrl/rgmii/rgmii-rx_bus2: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:793.32-801.5: Warning (node_name_chars_strict):
+    /pinctrl/rgmii/rgmii-tx_bus2: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:804.36-810.5: Warning (node_name_chars_strict):
+    /pinctrl/rgmii/rgmii-rgmii_clk: Character '_' not recommended in node name
+  rk3528-pinctrl.dtsi:813.36-823.5: Warning (node_name_chars_strict):
+    /pinctrl/rgmii/rgmii-rgmii_bus: Character '_' not recommended in node name
+
+Rename the affected nodes to fix these warnings.
+
+Fixes: a31fad19ae39 ("arm64: dts: rockchip: Add pinctrl and gpio nodes for RK3528")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20250621113859.2146400-1-jonas@kwiboo.se
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ .../boot/dts/rockchip/rk3528-pinctrl.dtsi     | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-index bb11590473a4..353d0c9ff35c 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-@@ -297,6 +297,8 @@ &usdhc3 {
- 	pinctrl-0 = <&pinctrl_usdhc3>;
- 	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
- 	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
-+	assigned-clocks = <&clk IMX8MN_CLK_USDHC3>;
-+	assigned-clock-rates = <400000000>;
- 	bus-width = <8>;
- 	non-removable;
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/rockchip/rk3528-pinctrl.dtsi b/arch/arm64/boot/dts/rockchip/rk3528-pinctrl.dtsi
+index ea051362fb26..59b75c91bbb7 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3528-pinctrl.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3528-pinctrl.dtsi
+@@ -98,42 +98,42 @@ eth_pins: eth-pins {
+ 
+ 	fephy {
+ 		/omit-if-no-ref/
+-		fephym0_led_dpx: fephym0-led_dpx {
++		fephym0_led_dpx: fephym0-led-dpx {
+ 			rockchip,pins =
+ 				/* fephy_led_dpx_m0 */
+ 				<4 RK_PB5 2 &pcfg_pull_none>;
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		fephym0_led_link: fephym0-led_link {
++		fephym0_led_link: fephym0-led-link {
+ 			rockchip,pins =
+ 				/* fephy_led_link_m0 */
+ 				<4 RK_PC0 2 &pcfg_pull_none>;
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		fephym0_led_spd: fephym0-led_spd {
++		fephym0_led_spd: fephym0-led-spd {
+ 			rockchip,pins =
+ 				/* fephy_led_spd_m0 */
+ 				<4 RK_PB7 2 &pcfg_pull_none>;
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		fephym1_led_dpx: fephym1-led_dpx {
++		fephym1_led_dpx: fephym1-led-dpx {
+ 			rockchip,pins =
+ 				/* fephy_led_dpx_m1 */
+ 				<2 RK_PA4 5 &pcfg_pull_none>;
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		fephym1_led_link: fephym1-led_link {
++		fephym1_led_link: fephym1-led-link {
+ 			rockchip,pins =
+ 				/* fephy_led_link_m1 */
+ 				<2 RK_PA6 5 &pcfg_pull_none>;
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		fephym1_led_spd: fephym1-led_spd {
++		fephym1_led_spd: fephym1-led-spd {
+ 			rockchip,pins =
+ 				/* fephy_led_spd_m1 */
+ 				<2 RK_PA5 5 &pcfg_pull_none>;
+@@ -779,7 +779,7 @@ rgmii_miim: rgmii-miim {
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		rgmii_rx_bus2: rgmii-rx_bus2 {
++		rgmii_rx_bus2: rgmii-rx-bus2 {
+ 			rockchip,pins =
+ 				/* rgmii_rxd0 */
+ 				<3 RK_PA3 2 &pcfg_pull_none>,
+@@ -790,7 +790,7 @@ rgmii_rx_bus2: rgmii-rx_bus2 {
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		rgmii_tx_bus2: rgmii-tx_bus2 {
++		rgmii_tx_bus2: rgmii-tx-bus2 {
+ 			rockchip,pins =
+ 				/* rgmii_txd0 */
+ 				<3 RK_PA1 2 &pcfg_pull_none_drv_level_2>,
+@@ -801,7 +801,7 @@ rgmii_tx_bus2: rgmii-tx_bus2 {
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		rgmii_rgmii_clk: rgmii-rgmii_clk {
++		rgmii_rgmii_clk: rgmii-rgmii-clk {
+ 			rockchip,pins =
+ 				/* rgmii_rxclk */
+ 				<3 RK_PA5 2 &pcfg_pull_none>,
+@@ -810,7 +810,7 @@ rgmii_rgmii_clk: rgmii-rgmii_clk {
+ 		};
+ 
+ 		/omit-if-no-ref/
+-		rgmii_rgmii_bus: rgmii-rgmii_bus {
++		rgmii_rgmii_bus: rgmii-rgmii-bus {
+ 			rockchip,pins =
+ 				/* rgmii_rxd2 */
+ 				<3 RK_PA7 2 &pcfg_pull_none>,
 -- 
 2.39.5
 
