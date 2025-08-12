@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C422222D2;
-	Tue, 12 Aug 2025 19:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438973FE7;
+	Tue, 12 Aug 2025 19:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025381; cv=none; b=IMjnZte17C9rlug2DKH3NID7exexfF9OzAJ6X1+3W6pk/RXGERlLPy3RLl6AZ8EDFfcp1VhOzXnFtEq1wldl8rTRL2GcXPlLX+KE80CQVSL3gGTvf+5nGA1J07C9pYcl6pQgNoaRTPfXKrBST1b39Q4gczA3+twzwuR0yCI4dNw=
+	t=1755025386; cv=none; b=Vbv5DOWkE6kOcdVCPgB5wSsnXz62K6udX4saHsex8PjQ0idaaiSKjiFpuejpsbNbcgDjY1N13NSNtd63caIihkQVytFcdO8QM6CPj8UEbO9NzdN2gP89ddDTz+nNfw2j3kmDwfL10Lx2Z2xlNNX4f3V9l4V0iZHECG7aEwDCzb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025381; c=relaxed/simple;
-	bh=za9MJEU9H4sIRvLGnWb5hnsfyGueYypY5odZaAMQAzI=;
+	s=arc-20240116; t=1755025386; c=relaxed/simple;
+	bh=bHmk9A7V++5TjbPlzGgg45SWVqdPB7VGyhBDoKYZaOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H2Qy8eQC9xZxGqgsvibQLfSLjG3Y8uae0fqReva91MLc6tbzsLfHQ/lrs12I0Mg0cX7157GbySHB7+f4y2OdrxGWqZ2rrmrzHGu362ugnofHq8HEPt5Fosw8eTQ48Lu/NCi+8+iWJPo7TDLWHusMCc7tDDu+xECPHJ6exJcZoAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBS+eLRK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eRr1p7S0Rl8ALt1wbJSaplds++d0BooECMPAe4fa31mZ8UIVrinREx2zwJYm+PhUd3/rjPlHnG6rQ8K5SSHGeAtY4PZlqrwxSWz080h7AxkAI++nAxA/tHS2H+p9JZL3PLhbrd7yvFWNqJAbRT0+gD3BI8nfcGsfcu5HIfaohQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKhqjtBK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBS+eLRK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6BCC4CEF0;
-	Tue, 12 Aug 2025 19:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKhqjtBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24951C4CEF0;
+	Tue, 12 Aug 2025 19:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025381;
-	bh=za9MJEU9H4sIRvLGnWb5hnsfyGueYypY5odZaAMQAzI=;
+	s=korg; t=1755025384;
+	bh=bHmk9A7V++5TjbPlzGgg45SWVqdPB7VGyhBDoKYZaOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBS+eLRKNUlD/CXtjdgK55R8bvzSxZpZ5zqZi2lp4vNwHxKnSzOOQt0jF3dMKtElM
-	 0TxTFwgQ56oXcbHE8QRc+XZv8FiPzSGJSFmrbtD9JQVYSQB628uGWgDyZKxwbOXG6/
-	 mbyABxYi07uVwYNKWFzJbdL5wp7Rst3xSUa8H0DA=
+	b=yKhqjtBK8i/OKS4Sp4ABDEmNMlMN+fbwG56psB42Js0gXWDnzTFR8PP2ak8SF0BMT
+	 hlbM6zJPmNq60d58lWGnmJ9VWT1YZ9VFIFzGQIIfWXJdUT8ZqH1va+n7OabJ9MiP59
+	 yo8JE28Tk+PnaQHahMy7QPjlrrMcnRRSpY1kTW/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	=?UTF-8?q?Jannik=20Gl=C3=BCckert?= <jannik.glueckert@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+	Chunjie Zhu <chunjie.zhu@cloud.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 024/480] kunit/fortify: Add back "volatile" for sizeof() constants
-Date: Tue, 12 Aug 2025 19:43:52 +0200
-Message-ID: <20250812174358.316615108@linuxfoundation.org>
+Subject: [PATCH 6.15 025/480] gfs2: No more self recovery
+Date: Tue, 12 Aug 2025 19:43:53 +0200
+Message-ID: <20250812174358.361175351@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -46,50 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 10299c07c94aa0997fa43523b53301e713a6415d ]
+[ Upstream commit deb016c1669002e48c431d6fd32ea1c20ef41756 ]
 
-It seems the Clang can see through OPTIMIZER_HIDE_VAR when the constant
-is coming from sizeof. Adding "volatile" back to these variables solves
-this false positive without reintroducing the issues that originally led
-to switching to OPTIMIZER_HIDE_VAR in the first place[1].
+When a node withdraws and it turns out that it is the only node that has
+the filesystem mounted, gfs2 currently tries to replay the local journal
+to bring the filesystem back into a consistent state.  Not only is that
+a very bad idea, it has also never worked because gfs2_recover_func()
+will refuse to do anything during a withdraw.
 
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2075 [1]
-Cc: Jannik Glückert <jannik.glueckert@gmail.com>
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Fixes: 6ee149f61bcc ("kunit/fortify: Replace "volatile" with OPTIMIZER_HIDE_VAR()")
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20250628234034.work.800-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+However, before even getting to this point, gfs2_recover_func()
+dereferences sdp->sd_jdesc->jd_inode.  This was a use-after-free before
+commit 04133b607a78 ("gfs2: Prevent double iput for journal on error")
+and is a NULL pointer dereference since then.
+
+Simply get rid of self recovery to fix that.
+
+Fixes: 601ef0d52e96 ("gfs2: Force withdraw to replay journals and wait for it to finish")
+Reported-by: Chunjie Zhu <chunjie.zhu@cloud.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/tests/fortify_kunit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/gfs2/util.c | 31 +++++++++++--------------------
+ 1 file changed, 11 insertions(+), 20 deletions(-)
 
-diff --git a/lib/tests/fortify_kunit.c b/lib/tests/fortify_kunit.c
-index 29ffc62a71e3..fc9c76f026d6 100644
---- a/lib/tests/fortify_kunit.c
-+++ b/lib/tests/fortify_kunit.c
-@@ -1003,8 +1003,8 @@ static void fortify_test_memcmp(struct kunit *test)
- {
- 	char one[] = "My mind is going ...";
- 	char two[] = "My mind is going ... I can feel it.";
--	size_t one_len = sizeof(one) - 1;
--	size_t two_len = sizeof(two) - 1;
-+	volatile size_t one_len = sizeof(one) - 1;
-+	volatile size_t two_len = sizeof(two) - 1;
+diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
+index 13be8d1d228b..ee198a261d4f 100644
+--- a/fs/gfs2/util.c
++++ b/fs/gfs2/util.c
+@@ -232,32 +232,23 @@ static void signal_our_withdraw(struct gfs2_sbd *sdp)
+ 	 */
+ 	ret = gfs2_glock_nq(&sdp->sd_live_gh);
  
- 	OPTIMIZER_HIDE_VAR(one_len);
- 	OPTIMIZER_HIDE_VAR(two_len);
++	gfs2_glock_put(live_gl); /* drop extra reference we acquired */
++	clear_bit(SDF_WITHDRAW_RECOVERY, &sdp->sd_flags);
++
+ 	/*
+ 	 * If we actually got the "live" lock in EX mode, there are no other
+-	 * nodes available to replay our journal. So we try to replay it
+-	 * ourselves. We hold the "live" glock to prevent other mounters
+-	 * during recovery, then just dequeue it and reacquire it in our
+-	 * normal SH mode. Just in case the problem that caused us to
+-	 * withdraw prevents us from recovering our journal (e.g. io errors
+-	 * and such) we still check if the journal is clean before proceeding
+-	 * but we may wait forever until another mounter does the recovery.
++	 * nodes available to replay our journal.
+ 	 */
+ 	if (ret == 0) {
+-		fs_warn(sdp, "No other mounters found. Trying to recover our "
+-			"own journal jid %d.\n", sdp->sd_lockstruct.ls_jid);
+-		if (gfs2_recover_journal(sdp->sd_jdesc, 1))
+-			fs_warn(sdp, "Unable to recover our journal jid %d.\n",
+-				sdp->sd_lockstruct.ls_jid);
+-		gfs2_glock_dq_wait(&sdp->sd_live_gh);
+-		gfs2_holder_reinit(LM_ST_SHARED,
+-				   LM_FLAG_NOEXP | GL_EXACT | GL_NOPID,
+-				   &sdp->sd_live_gh);
+-		gfs2_glock_nq(&sdp->sd_live_gh);
++		fs_warn(sdp, "No other mounters found.\n");
++		/*
++		 * We are about to release the lockspace.  By keeping live_gl
++		 * locked here, we ensure that the next mounter coming along
++		 * will be a "first" mounter which will perform recovery.
++		 */
++		goto skip_recovery;
+ 	}
+ 
+-	gfs2_glock_put(live_gl); /* drop extra reference we acquired */
+-	clear_bit(SDF_WITHDRAW_RECOVERY, &sdp->sd_flags);
+-
+ 	/*
+ 	 * At this point our journal is evicted, so we need to get a new inode
+ 	 * for it. Once done, we need to call gfs2_find_jhead which
 -- 
 2.39.5
 
