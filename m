@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8D01C1AAA;
-	Tue, 12 Aug 2025 19:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E8B2FE599;
+	Tue, 12 Aug 2025 19:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025270; cv=none; b=oBIE7ty1gMIL/ywebrK7Akqa/scy1Nwli0yv4ufHTf3LfLPXx16qUjf4DzQ0pAAnFR/p82YwsdrF3hLbcflfWtPenUwVu+8pokPoOkhod84suE+xNyi+az7h02C8xn0HQ0eG8+BYU1k+89yT2+nkYKc1XoHVx+9CvWHRBE2SP8Q=
+	t=1755025273; cv=none; b=nqNc7MxKQ8XJr/M02a2ND0uTvGZD1PKY4FyN6pDDD/EH/rVqWeI4l6Q66WnmuE59jwGRwUyk5gO+VSsMeiH4ZkG9qfG6wHqDJ69rbWf5FAHdAq6co8TneY7GUJpNoKur5EGjiVfP5N6y9u8qHLvWjuRCKgR5jYNTP8PSnw1oecA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025270; c=relaxed/simple;
-	bh=34nuTdTCswzBFmvYhIsb9o5SEspHbYT+LeV2yOOd/Wg=;
+	s=arc-20240116; t=1755025273; c=relaxed/simple;
+	bh=n6ZgCNJmPK2GHxEodiWTmb3yFSo9J3NvRSmFhqB08Wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sc7BzEmrNXym/3qXVqVCzYHrGxfS0I1snyyCoApTRd8TNmX/IsrJYQJjE7XbPy6yf/LDEnThxM7NAaArkAjexEd20d9//qkox32aPop/H/huAjx8gWEOYstyv9bvl989uXDry0WEVK2q8ck2VtAHZKGJtWfO7Srs/bhw28KVXQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AE/WzrX4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sP64XVghbGx1dJJxlU+3VN65BFxkASXi82OYjp9Y7KL1mA5dKNQcvbxJ4T0G/D63fguVxB04r1tSbkn9vOwwViWcSikCqPp3RLnowjBSoltqfc0HVMBBalFoqgQ0hXwmMuHkbeFD+ceh4tBUc8dGs5FpE/GzNwUI3KZBL4vtC2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIM+hkor; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AE/WzrX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A664C4CEF6;
-	Tue, 12 Aug 2025 19:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIM+hkor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C109FC4CEF0;
+	Tue, 12 Aug 2025 19:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025269;
-	bh=34nuTdTCswzBFmvYhIsb9o5SEspHbYT+LeV2yOOd/Wg=;
+	s=korg; t=1755025273;
+	bh=n6ZgCNJmPK2GHxEodiWTmb3yFSo9J3NvRSmFhqB08Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AE/WzrX4fWU9QVVeOuycVFbQ3hgdBkYC4uNmHjxkI8m2sYoJmx5fwfAzJaIobHNew
-	 1hbwKpOK2W0pGXA46mH4tPjfgSk4OjVYWLYfRGNVjO9s77yYYdSzQrcSm5OP3bc29W
-	 eGWPUS9WBpqdMXzWJtt5odIsI00sWIF4c6crsOyM=
+	b=QIM+hkorsVic8TUld7vf6BwhTqxFhYlZxdXoLdA2nC+kyyEebhkQhqDt7cdNoquHD
+	 RInIkyRlXxtPBE1EoYVZBOkIB0Xl900aqYfPEbiuu4yOulbHL9xbcsifJUT6wk6Veq
+	 iaxWmpaV/Qp0Y4ZnX54qCxzLRaIqKvSu56r8gfWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sjoerd Simons <sjoerd@collabora.com>,
-	Julien Massot <julien.massot@collabora.com>,
-	Jai Luthra <jai.luthra@linux.dev>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.16 619/627] media: ti: j721e-csi2rx: fix list_del corruption
-Date: Tue, 12 Aug 2025 19:35:14 +0200
-Message-ID: <20250812173455.427097860@linuxfoundation.org>
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Orlando Chamberlain <orlandoch.dev@gmail.com>,
+	Aditya Garg <gargaditya08@live.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.16 620/627] HID: apple: validate feature-report field count to prevent NULL pointer dereference
+Date: Tue, 12 Aug 2025 19:35:15 +0200
+Message-ID: <20250812173455.466885657@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,96 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julien Massot <julien.massot@collabora.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit ae42c6fe531425ef2f47e82f96851427d24bbf6b upstream.
+commit 1bb3363da862e0464ec050eea2fb5472a36ad86b upstream.
 
-If ti_csi2rx_start_dma() fails in ti_csi2rx_dma_callback(), the buffer is
-marked done with VB2_BUF_STATE_ERROR but is not removed from the DMA queue.
-This causes the same buffer to be retried in the next iteration, resulting
-in a double list_del() and eventual list corruption.
+A malicious HID device with quirk APPLE_MAGIC_BACKLIGHT can trigger a NULL
+pointer dereference whilst the power feature-report is toggled and sent to
+the device in apple_magic_backlight_report_set(). The power feature-report
+is expected to have two data fields, but if the descriptor declares one
+field then accessing field[1] and dereferencing it in
+apple_magic_backlight_report_set() becomes invalid
+since field[1] will be NULL.
 
-Fix this by removing the buffer from the queue before calling
-vb2_buffer_done() on error.
+An example of a minimal descriptor which can cause the crash is something
+like the following where the report with ID 3 (power report) only
+references a single 1-byte field. When hid core parses the descriptor it
+will encounter the final feature tag, allocate a hid_report (all members
+of field[] will be zeroed out), create field structure and populate it,
+increasing the maxfield to 1. The subsequent field[1] access and
+dereference causes the crash.
 
-This resolves a crash due to list_del corruption:
-[   37.811243] j721e-csi2rx 30102000.ticsi2rx: Failed to queue the next buffer for DMA
-[   37.832187]  slab kmalloc-2k start ffff00000255b000 pointer offset 1064 size 2048
-[   37.839761] list_del corruption. next->prev should be ffff00000255bc28, but was ffff00000255d428. (next=ffff00000255b428)
-[   37.850799] ------------[ cut here ]------------
-[   37.855424] kernel BUG at lib/list_debug.c:65!
-[   37.859876] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-[   37.866061] Modules linked in: i2c_dev usb_f_rndis u_ether libcomposite dwc3 udc_core usb_common aes_ce_blk aes_ce_cipher ghash_ce gf128mul sha1_ce cpufreq_dt dwc3_am62 phy_gmii_sel sa2ul
-[   37.882830] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.16.0-rc3+ #28 VOLUNTARY
-[   37.890851] Hardware name: Bosch STLA-GSRV2-B0 (DT)
-[   37.895737] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   37.902703] pc : __list_del_entry_valid_or_report+0xdc/0x114
-[   37.908390] lr : __list_del_entry_valid_or_report+0xdc/0x114
-[   37.914059] sp : ffff800080003db0
-[   37.917375] x29: ffff800080003db0 x28: 0000000000000007 x27: ffff800080e50000
-[   37.924521] x26: 0000000000000000 x25: ffff0000016abb50 x24: dead000000000122
-[   37.931666] x23: ffff0000016abb78 x22: ffff0000016ab080 x21: ffff800080003de0
-[   37.938810] x20: ffff00000255bc00 x19: ffff00000255b800 x18: 000000000000000a
-[   37.945956] x17: 20747562202c3832 x16: 6362353532303030 x15: 0720072007200720
-[   37.953101] x14: 0720072007200720 x13: 0720072007200720 x12: 00000000ffffffea
-[   37.960248] x11: ffff800080003b18 x10: 00000000ffffefff x9 : ffff800080f5b568
-[   37.967396] x8 : ffff800080f5b5c0 x7 : 0000000000017fe8 x6 : c0000000ffffefff
-[   37.974542] x5 : ffff00000fea6688 x4 : 0000000000000000 x3 : 0000000000000000
-[   37.981686] x2 : 0000000000000000 x1 : ffff800080ef2b40 x0 : 000000000000006d
-[   37.988832] Call trace:
-[   37.991281]  __list_del_entry_valid_or_report+0xdc/0x114 (P)
-[   37.996959]  ti_csi2rx_dma_callback+0x84/0x1c4
-[   38.001419]  udma_vchan_complete+0x1e0/0x344
-[   38.005705]  tasklet_action_common+0x118/0x310
-[   38.010163]  tasklet_action+0x30/0x3c
-[   38.013832]  handle_softirqs+0x10c/0x2e0
-[   38.017761]  __do_softirq+0x14/0x20
-[   38.021256]  ____do_softirq+0x10/0x20
-[   38.024931]  call_on_irq_stack+0x24/0x60
-[   38.028873]  do_softirq_own_stack+0x1c/0x40
-[   38.033064]  __irq_exit_rcu+0x130/0x15c
-[   38.036909]  irq_exit_rcu+0x10/0x20
-[   38.040403]  el1_interrupt+0x38/0x60
-[   38.043987]  el1h_64_irq_handler+0x18/0x24
-[   38.048091]  el1h_64_irq+0x6c/0x70
-[   38.051501]  default_idle_call+0x34/0xe0 (P)
-[   38.055783]  do_idle+0x1f8/0x250
-[   38.059021]  cpu_startup_entry+0x34/0x3c
-[   38.062951]  rest_init+0xb4/0xc0
-[   38.066186]  console_on_rootfs+0x0/0x6c
-[   38.070031]  __primary_switched+0x88/0x90
-[   38.074059] Code: b00037e0 91378000 f9400462 97e9bf49 (d4210000)
-[   38.080168] ---[ end trace 0000000000000000 ]---
-[   38.084795] Kernel panic - not syncing: Oops - BUG: Fatal exception in interrupt
-[   38.092197] SMP: stopping secondary CPUs
-[   38.096139] Kernel Offset: disabled
-[   38.099631] CPU features: 0x0000,00002000,02000801,0400420b
-[   38.105202] Memory Limit: none
-[   38.108260] ---[ end Kernel panic - not syncing: Oops - BUG: Fatal exception in interrupt ]---
+  Usage Page (Vendor Defined 0xFF00)
+  Usage (0x0F)
+  Collection (Application)
+    Report ID (1)
+    Usage (0x01)
+    Logical Minimum (0)
+    Logical Maximum (255)
+    Report Size (8)
+    Report Count (1)
+    Feature (Data,Var,Abs)
 
-Fixes: b4a3d877dc92 ("media: ti: Add CSI2RX support for J721E")
+    Usage (0x02)
+    Logical Maximum (32767)
+    Report Size (16)
+    Report Count (1)
+    Feature (Data,Var,Abs)
+
+    Report ID (3)
+    Usage (0x03)
+    Logical Minimum (0)
+    Logical Maximum (1)
+    Report Size (8)
+    Report Count (1)
+    Feature (Data,Var,Abs)
+  End Collection
+
+Here we see the KASAN splat when the kernel dereferences the
+NULL pointer and crashes:
+
+  [   15.164723] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP KASAN NOPTI
+  [   15.165691] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+  [   15.165691] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Not tainted 6.15.0 #31 PREEMPT(voluntary)
+  [   15.165691] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+  [   15.165691] RIP: 0010:apple_magic_backlight_report_set+0xbf/0x210
+  [   15.165691] Call Trace:
+  [   15.165691]  <TASK>
+  [   15.165691]  apple_probe+0x571/0xa20
+  [   15.165691]  hid_device_probe+0x2e2/0x6f0
+  [   15.165691]  really_probe+0x1ca/0x5c0
+  [   15.165691]  __driver_probe_device+0x24f/0x310
+  [   15.165691]  driver_probe_device+0x4a/0xd0
+  [   15.165691]  __device_attach_driver+0x169/0x220
+  [   15.165691]  bus_for_each_drv+0x118/0x1b0
+  [   15.165691]  __device_attach+0x1d5/0x380
+  [   15.165691]  device_initial_probe+0x12/0x20
+  [   15.165691]  bus_probe_device+0x13d/0x180
+  [   15.165691]  device_add+0xd87/0x1510
+  [...]
+
+To fix this issue we should validate the number of fields that the
+backlight and power reports have and if they do not have the required
+number of fields then bail.
+
+Fixes: 394ba612f941 ("HID: apple: Add support for magic keyboard backlight on T2 Macs")
 Cc: stable@vger.kernel.org
-Suggested-by: Sjoerd Simons <sjoerd@collabora.com>
-Signed-off-by: Sjoerd Simons <sjoerd@collabora.com>
-Signed-off-by: Julien Massot <julien.massot@collabora.com>
-Reviewed-by: Jai Luthra <jai.luthra@linux.dev>
-Tested-by: Dirk Behme <dirk.behme@de.bosch.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Reviewed-by: Orlando Chamberlain <orlandoch.dev@gmail.com>
+Tested-by: Aditya Garg <gargaditya08@live.com>
+Link: https://patch.msgid.link/20250713233008.15131-1-qasdev00@gmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-apple.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c
-+++ b/drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c
-@@ -619,6 +619,7 @@ static void ti_csi2rx_dma_callback(void
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -890,7 +890,8 @@ static int apple_magic_backlight_init(st
+ 	backlight->brightness = report_enum->report_id_hash[APPLE_MAGIC_REPORT_ID_BRIGHTNESS];
+ 	backlight->power = report_enum->report_id_hash[APPLE_MAGIC_REPORT_ID_POWER];
  
- 		if (ti_csi2rx_start_dma(csi, buf)) {
- 			dev_err(csi->dev, "Failed to queue the next buffer for DMA\n");
-+			list_del(&buf->list);
- 			vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_ERROR);
- 		} else {
- 			list_move_tail(&buf->list, &dma->submitted);
+-	if (!backlight->brightness || !backlight->power)
++	if (!backlight->brightness || backlight->brightness->maxfield < 2 ||
++	    !backlight->power || backlight->power->maxfield < 2)
+ 		return -ENODEV;
+ 
+ 	backlight->cdev.name = ":white:" LED_FUNCTION_KBD_BACKLIGHT;
 
 
