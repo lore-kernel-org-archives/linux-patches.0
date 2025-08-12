@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3893D994;
-	Tue, 12 Aug 2025 19:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FEB27703A;
+	Tue, 12 Aug 2025 19:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026398; cv=none; b=RbeD7HlfF7CQpW/rVEEjxj0aRanNZvroYq2gagvcYr9uRovG0ED9Qfz8sb1ChFd115tKA6/AzpsS5ldQyzEbd7cRMz0mADbkNOxiomGChj9ikrVNFSjghuYEgya75Z5+DSYmC2ZKXSyK6IsV9jcp43qiqh3Eo9g4SHqS+TqnGvM=
+	t=1755026401; cv=none; b=QsJhbewgALVFjYvmBRQrE5+zvnNuaAVGsFkwSH3ljHPnrl02dlNeAh47vcV7GohU5reUcze39CLdQsPq8CM2VZnfjMQk/hwlqDyA9EAlsE/ZOQJ5HcFEsX9sGVbWc3pW8l+kByvGUjWLs8NMTp4UekEahUzgcY+WZKW0KeiJokk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026398; c=relaxed/simple;
-	bh=ynRRDTty2VZ84+v1LgUOM4bG8ce+RNEc8Fs/VC6Q16M=;
+	s=arc-20240116; t=1755026401; c=relaxed/simple;
+	bh=YHUsia4wCUVIM4s8s1C+hlFAVPkCe14zuyUvkLNAGgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6zDtKVgknLAAhlZ2N20gXmsuy/fP42Wi5TgJzgMDmqJfY9y1xn0mwhBUucflx2XYCrEcyQq/TXorygjk2wJQp3Do83IOyJD+oEaZTDX1fiFv28FHje8ZeFeKu5GTxlYoDmSVTsyt8jySo4pN9FJY1q/NURTLMixyV+tupNZ8GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5PMj9hf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FmzXLB8vdBLdQBboc09sF8A/uPAsj4HK1oPep/qoarPEjwkQYG+vLCobrqHPe71qUlt2Y3YOviaKd5TduFdVwNjVqu9JwHyyu+FkNeOLv7n9P54Rw+3MSICxGzjBjyju0j0qivIs4DVH8B5FmhrMMOAgt9uNdWFWT0Z9gsfEzwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/7cEiM0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5PMj9hf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0076C4CEF0;
-	Tue, 12 Aug 2025 19:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/7cEiM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3109BC4CEF0;
+	Tue, 12 Aug 2025 19:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026398;
-	bh=ynRRDTty2VZ84+v1LgUOM4bG8ce+RNEc8Fs/VC6Q16M=;
+	s=korg; t=1755026401;
+	bh=YHUsia4wCUVIM4s8s1C+hlFAVPkCe14zuyUvkLNAGgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E5PMj9hftvX1QjR2H0thLjLWnS56+DZta6LOtHCno4miXGm4J8GYXuyR1/M502p6o
-	 dT1AVSgbRbTMM70knn1YBEWsWK9rSBAapKhOWxc6chv3qSuFdaIgbyklZFwp79Qxjm
-	 aj0AKhYrwB/biLS/NgbrROM6S9750HfA54K5DUFI=
+	b=V/7cEiM0fNxQSBl9Ia4V03fNPRwUrClUDUP6Hib8fBkx7tGtmus7LlW2CIYtLSNep
+	 lHahh/zNrMiAi/EmQkFexWNmqGBgjej26EtaRnSg7SP46NXKOK3c9EDPhFytbWnzGb
+	 reSQSkCUW9mZmAJfmtt1Aav/PqI/Uyke9UmKnH1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 324/480] vdpa/mlx5: Fix needs_teardown flag calculation
-Date: Tue, 12 Aug 2025 19:48:52 +0200
-Message-ID: <20250812174410.806214456@linuxfoundation.org>
+Subject: [PATCH 6.15 325/480] vhost-scsi: Fix log flooding with target does not exist errors
+Date: Tue, 12 Aug 2025 19:48:53 +0200
+Message-ID: <20250812174410.846341485@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -54,52 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 6f0f3d7fc4e05797b801ded4910a64d16db230e9 ]
+[ Upstream commit 69cd720a8a5e9ef0f05ce5dd8c9ea6e018245c82 ]
 
-needs_teardown is a device flag that indicates when virtual queues need
-to be recreated. This happens for certain configuration changes: queue
-size and some specific features.
+As part of the normal initiator side scanning the guest's scsi layer
+will loop over all possible targets and send an inquiry. Since the
+max number of targets for virtio-scsi is 256, this can result in 255
+error messages about targets not existing if you only have a single
+target. When there's more than 1 vhost-scsi device each with a single
+target, then you get N * 255 log messages.
 
-Currently, the needs_teardown state can be incorrectly reset by
-subsequent .set_vq_num() calls. For example, for 1 rx VQ with size 512
-and 1 tx VQ with size 256:
+It looks like the log message was added by accident in:
 
-.set_vq_num(0, 512) -> sets needs_teardown to true (rx queue has a
-                       non-default size)
-.set_vq_num(1, 256) -> sets needs_teardown to false (tx queue has a
-                       default size)
+commit 3f8ca2e115e5 ("vhost/scsi: Extract common handling code from
+control queue handler")
 
-This change takes into account the previous value of the needs_teardown
-flag when re-calculating it during VQ size configuration.
+when we added common helpers. Then in:
 
-Fixes: 0fe963d6fc16 ("vdpa/mlx5: Re-create HW VQs under certain conditions")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Tested-by: Si-Wei Liu<si-wei.liu@oracle.com>
-Message-Id: <20250604184802.2625300-1-dtatulea@nvidia.com>
+commit 09d7583294aa ("vhost/scsi: Use common handling code in request
+queue handler")
+
+we converted the scsi command processing path to use the new
+helpers so we started to see the extra log messages during scanning.
+
+The patches were just making some code common but added the vq_err
+call and I'm guessing the patch author forgot to enable the vq_err
+call (vq_err is implemented by pr_debug which defaults to off). So
+this patch removes the call since it's expected to hit this path
+during device discovery.
+
+Fixes: 09d7583294aa ("vhost/scsi: Use common handling code in request queue handler")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20250611210113.10912-1-michael.christie@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/net/mlx5_vnet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vhost/scsi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-index cccc49a08a1a..efb5fa694f1e 100644
---- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
-+++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-@@ -2491,7 +2491,7 @@ static void mlx5_vdpa_set_vq_num(struct vdpa_device *vdev, u16 idx, u32 num)
-         }
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 26bcf3a7f70c..5b112de79f27 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1148,10 +1148,8 @@ vhost_scsi_get_req(struct vhost_virtqueue *vq, struct vhost_scsi_ctx *vc,
+ 			/* validated at handler entry */
+ 			vs_tpg = vhost_vq_get_backend(vq);
+ 			tpg = READ_ONCE(vs_tpg[*vc->target]);
+-			if (unlikely(!tpg)) {
+-				vq_err(vq, "Target 0x%x does not exist\n", *vc->target);
++			if (unlikely(!tpg))
+ 				goto out;
+-			}
+ 		}
  
- 	mvq = &ndev->vqs[idx];
--	ndev->needs_teardown = num != mvq->num_ent;
-+	ndev->needs_teardown |= num != mvq->num_ent;
- 	mvq->num_ent = num;
- }
- 
+ 		if (tpgp)
 -- 
 2.39.5
 
