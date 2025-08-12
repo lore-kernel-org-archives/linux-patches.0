@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5402F291B;
-	Tue, 12 Aug 2025 18:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFC22F291B;
+	Tue, 12 Aug 2025 18:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024286; cv=none; b=TM+8nowu8teSgs3dFe7RFdQ0eQngjtOCSJnY8YcU8EwJEerL1aFg4Pt6hOddk+tbEpQh2GCvEQouqzy+6BBsp8U9k2dzZywZ3uMoz0w7zwrtrtG+B9vXuFM3N5Tk38Bqt4G9e4c7FfRvyqbz00y2i60uOqsDxCj+BshDRgoXJ4U=
+	t=1755024290; cv=none; b=H6VQWXp6gULVcYnCUxIkGv9qVIVNyFfWNnLuRvtxYLi2ASo+wuacDoTUImNCt7WepuJ+gG5Id2+nFBeZLGF4EI4hVIYfD2jAV6Oh3tBwwyG505tPkQBr+/289GN/my94mN20MUcurPCncizBiLVj8ZuKhKDKTx9Xhzetp6QC1NY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024286; c=relaxed/simple;
-	bh=qMZVtVyq3X/AV+eqwjZbigx9gtFQNV1A0svROlJhqrI=;
+	s=arc-20240116; t=1755024290; c=relaxed/simple;
+	bh=BsuAkzF+8xlr55FDes4gcyJ75CapleLTz5NRWsrEJxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmWgryYIYaY3Y2xcCGwSm4+uMwt7RxEN1KtJ4IHUbsqDCNEwMolv6DNo9QOs3bQX6NkJz/CdQ+4jEDGktXlOeJN2iHQrJVMpuhsofNENOzDxa3AROUSpjDf7ZJNB9z6/op0VxOPfsk8yZDgtOlUonGUtkk60gnvmYRP5pVzNSq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAvZM4GZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLQEjFW3m1pugkauO5HMoQAKAfZkMSIARy66DzZuww8eJXq6Y5gZHu3if4WjcDuW8aefnfhM7X4wjeSpBl9ik5aQC/EXef53sKm8yL2bqBwymjEvnHb+SYsgUhS8evbjXVoCccLjlSF3fTLwS6e7x3kDDKj88dB0ToSbzeU5uPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJgk1l24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAvZM4GZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1743BC4CEF0;
-	Tue, 12 Aug 2025 18:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJgk1l24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8953CC4CEF0;
+	Tue, 12 Aug 2025 18:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024286;
-	bh=qMZVtVyq3X/AV+eqwjZbigx9gtFQNV1A0svROlJhqrI=;
+	s=korg; t=1755024290;
+	bh=BsuAkzF+8xlr55FDes4gcyJ75CapleLTz5NRWsrEJxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAvZM4GZ1TT1sIw2IefyTCUBVUViyHVW9tC3SnmHhUaHcgJNsKaOvomZxXiHsYw1t
-	 Mp6KT+6QvoWsyCTqsZvd0LvLSXEaBwqsajneEu2QPZJAuhtxrwLthMBzO2LIx50eG+
-	 kqtBZtewhNbeZ0lKZipAPE87K31IodHHmDtDRUG4=
+	b=wJgk1l24DulvSbZqATk5a6OX6LMP8hmIwY0M/g0DNXx8Ex1tghCX59W8PLaR/f+/z
+	 WnZ0oN62BegF1b2qKke1v1EBwZdz+4qxZ8esGaDFjGVVz4zaCQHbIV/ReEnn+jiQIT
+	 sgQKOHoYZZnW4qe52vyoyFN7dIp5ESvREhnOAYPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Yao Zi <ziyao@disroot.org>,
+	Ze Huang <huangze@whut.edu.cn>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 311/627] mtd: fix possible integer overflow in erase_xfer()
-Date: Tue, 12 Aug 2025 19:30:06 +0200
-Message-ID: <20250812173431.135194665@linuxfoundation.org>
+Subject: [PATCH 6.16 329/627] pinctrl: canaan: k230: add NULL check in DT parse
+Date: Tue, 12 Aug 2025 19:30:24 +0200
+Message-ID: <20250812173431.812159463@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,39 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Ze Huang <huangze@whut.edu.cn>
 
-[ Upstream commit 9358bdb9f9f54d94ceafc650deffefd737d19fdd ]
+[ Upstream commit 65bd0be486390fc12a84eafaad78758c5e5a55e6 ]
 
-The expression '1 << EraseUnitSize' is evaluated in int, which causes
-a negative result when shifting by 31 - the upper bound of the valid
-range [10, 31], enforced by scan_header(). This leads to incorrect
-extension when storing the result in 'erase->len' (uint64_t), producing
-a large unexpected value.
+Add a NULL check for the return value of of_get_property() when
+retrieving the "pinmux" property in the group parser. This avoids
+a potential NULL pointer dereference if the property is missing
+from the device tree node.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+Also fix a typo ("sintenel") in the device ID match table comment,
+correcting it to "sentinel".
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 545887eab6f6 ("pinctrl: canaan: Add support for k230 SoC")
+Reported-by: Yao Zi <ziyao@disroot.org>
+Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+Link: https://lore.kernel.org/20250624-k230-return-check-v1-1-6b4fc5ba0c41@whut.edu.cn
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ftl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-k230.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/ftl.c b/drivers/mtd/ftl.c
-index 8c22064ead38..f2bd1984609c 100644
---- a/drivers/mtd/ftl.c
-+++ b/drivers/mtd/ftl.c
-@@ -344,7 +344,7 @@ static int erase_xfer(partition_t *part,
-             return -ENOMEM;
+diff --git a/drivers/pinctrl/pinctrl-k230.c b/drivers/pinctrl/pinctrl-k230.c
+index a9b4627b46b0..4976308e6237 100644
+--- a/drivers/pinctrl/pinctrl-k230.c
++++ b/drivers/pinctrl/pinctrl-k230.c
+@@ -477,6 +477,10 @@ static int k230_pinctrl_parse_groups(struct device_node *np,
+ 	grp->name = np->name;
  
-     erase->addr = xfer->Offset;
--    erase->len = 1 << part->header.EraseUnitSize;
-+    erase->len = 1ULL << part->header.EraseUnitSize;
+ 	list = of_get_property(np, "pinmux", &size);
++	if (!list) {
++		dev_err(dev, "failed to get pinmux property\n");
++		return -EINVAL;
++	}
+ 	size /= sizeof(*list);
  
-     ret = mtd_erase(part->mbd.mtd, erase);
-     if (!ret) {
+ 	grp->num_pins = size;
+@@ -623,7 +627,7 @@ static int k230_pinctrl_probe(struct platform_device *pdev)
+ 
+ static const struct of_device_id k230_dt_ids[] = {
+ 	{ .compatible = "canaan,k230-pinctrl", },
+-	{ /* sintenel */ }
++	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, k230_dt_ids);
+ 
 -- 
 2.39.5
 
