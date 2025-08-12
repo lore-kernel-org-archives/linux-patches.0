@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707C42FE582;
-	Tue, 12 Aug 2025 19:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06772D5A10;
+	Tue, 12 Aug 2025 19:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026827; cv=none; b=fzoFHDe+sDcpr0+6Mtx4WocdbVx3/n/6x+PMUWOj11vN0AKmso6/kg5w3+aTLk6gQVHJ7vLc2yjv4UTNzESLHHLrBgPqC0X4J8c8rJ3WeKczUD2Fk1uGGv1ZYGTIeVhmeLaf3x2GRY+tnDwojI+c+WaRNVUH7yslj5PcKWWFcjQ=
+	t=1755026830; cv=none; b=DTp3D463ASYx4mPzz5xhtmyIqzYeVB6HsysVjinw90g8I9nK6GEUe+18XwKWY3tNnCr1+mDf7faSy+cgmADqj2W3lf8YPqMaAP7mMJY+R+CLT4foUjQnlVytrNlnsFTuBD1N89VOCY8kIDaUJwV8H++gfs6vm8rUWi/V8amJk2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026827; c=relaxed/simple;
-	bh=5O6Q9l+99JHboXQibLDhUsBzvJhGhD7XDBNSDtj6lgg=;
+	s=arc-20240116; t=1755026830; c=relaxed/simple;
+	bh=h6gDYRSL8IRqGHO/exMKPQTzQfRFpR5OKEaaTAvhxks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RraMT8qpv/7Hfk9c0NH/37p5DSGkw2G4LPp4TglNghxfH/Gws652Yvj4aa998oo/eqEEsA5E7pKXM1VPfUUDKzN34/eznC/VGKSSje+gCLpbNe62Pw9dpsdPzOFnq9Lm94+RVhfoviSm0JApkNnV9+V2nWsxADapAJjCFLmF9Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zeoe1fMG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Le98KXu8FLpUQaiW9ttRb8041Nfw9FrGCOIq/UYTre9MKZ/MBPODrFLZ7B0h+XaNKsGXKw5cb2seLQn5j8RwZluKjJXWX8aT2lqn1bEkzGRPr+uTfaz9gsmJD54jYiTIJNR63miOx8B/ke7rdvOH0P2nEcn8iGlQOXYU9EfnKz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBe5JEbs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zeoe1fMG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FEBC4CEF4;
-	Tue, 12 Aug 2025 19:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBe5JEbs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F61FC4CEF0;
+	Tue, 12 Aug 2025 19:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026827;
-	bh=5O6Q9l+99JHboXQibLDhUsBzvJhGhD7XDBNSDtj6lgg=;
+	s=korg; t=1755026830;
+	bh=h6gDYRSL8IRqGHO/exMKPQTzQfRFpR5OKEaaTAvhxks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zeoe1fMG9Hu0y8q6C5ab7BwSbGoAdPaLkEpKfb1Lw/zBEI5dmJDN6gcI2Jy0ZyVAb
-	 4YvXh7UMrxgw0Q7n5Cx2OtuMfzh7m9hKAHCDYA4YKnA75p+s7EPld2IthVOtgb5Bi6
-	 01ESJJ4nosSzND7BkcBQO2OBbpc+6WHwZV6GSLH4=
+	b=LBe5JEbsAqYD6uqKGiUr8eQ9XqvUP9Kpqzf3LnMTrTd1dFKpftqAQibbziwFIiWXk
+	 Xe+sOR7mEFLNadymFhF8fAmD2Yd8kF+Eb68RepWG78xqYwO0e6Ef6PriGnY/LRkzQY
+	 ybwXOcx60BIhm2/wBLM+W5/Pd0wgJqph8Mw3K8uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenm Chen <zenmchen@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.15 453/480] Bluetooth: btusb: Add USB ID 3625:010b for TP-LINK Archer TX10UB Nano
-Date: Tue, 12 Aug 2025 19:51:01 +0200
-Message-ID: <20250812174416.081671241@linuxfoundation.org>
+	John Ernberg <john.ernberg@actia.se>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 454/480] net: usbnet: Avoid potential RCU stall on LINK_CHANGE event
+Date: Tue, 12 Aug 2025 19:51:02 +0200
+Message-ID: <20250812174416.119492029@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -50,79 +50,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: John Ernberg <john.ernberg@actia.se>
 
-commit d9da920233ec85af8b9c87154f2721a7dc4623f5 upstream.
+commit 0d9cfc9b8cb17dbc29a98792d36ec39a1cf1395f upstream.
 
-Add USB ID 3625:010b for TP-LINK Archer TX10UB Nano which is based on
-a Realtek RTL8851BU chip.
+The Gemalto Cinterion PLS83-W modem (cdc_ether) is emitting confusing link
+up and down events when the WWAN interface is activated on the modem-side.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below:
+Interrupt URBs will in consecutive polls grab:
+* Link Connected
+* Link Disconnected
+* Link Connected
 
-T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 9 Spd=480 MxCh= 0
-D: Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs= 1
-P: Vendor=3625 ProdID=010b Rev= 0.00
-S: Manufacturer=Realtek
-S: Product=802.11ax WLAN Adapter
-S: SerialNumber=00e04c000001
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
-A: FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=1ms
-E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 0 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 0 Ivl=1ms
-I: If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 9 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 9 Ivl=1ms
-I: If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 17 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 17 Ivl=1ms
-I: If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 25 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 25 Ivl=1ms
-I: If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 33 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 33 Ivl=1ms
-I: If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 49 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 49 Ivl=1ms
-I: If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 63 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=rtl8851bu
-E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Where the last Connected is then a stable link state.
 
+When the system is under load this may cause the unlink_urbs() work in
+__handle_link_change() to not complete before the next usbnet_link_change()
+call turns the carrier on again, allowing rx_submit() to queue new SKBs.
+
+In that event the URB queue is filled faster than it can drain, ending up
+in a RCU stall:
+
+    rcu: INFO: rcu_sched detected expedited stalls on CPUs/tasks: { 0-.... } 33108 jiffies s: 201 root: 0x1/.
+    rcu: blocking rcu_node structures (internal RCU debug):
+    Sending NMI from CPU 1 to CPUs 0:
+    NMI backtrace for cpu 0
+
+    Call trace:
+     arch_local_irq_enable+0x4/0x8
+     local_bh_enable+0x18/0x20
+     __netdev_alloc_skb+0x18c/0x1cc
+     rx_submit+0x68/0x1f8 [usbnet]
+     rx_alloc_submit+0x4c/0x74 [usbnet]
+     usbnet_bh+0x1d8/0x218 [usbnet]
+     usbnet_bh_tasklet+0x10/0x18 [usbnet]
+     tasklet_action_common+0xa8/0x110
+     tasklet_action+0x2c/0x34
+     handle_softirqs+0x2cc/0x3a0
+     __do_softirq+0x10/0x18
+     ____do_softirq+0xc/0x14
+     call_on_irq_stack+0x24/0x34
+     do_softirq_own_stack+0x18/0x20
+     __irq_exit_rcu+0xa8/0xb8
+     irq_exit_rcu+0xc/0x30
+     el1_interrupt+0x34/0x48
+     el1h_64_irq_handler+0x14/0x1c
+     el1h_64_irq+0x68/0x6c
+     _raw_spin_unlock_irqrestore+0x38/0x48
+     xhci_urb_dequeue+0x1ac/0x45c [xhci_hcd]
+     unlink1+0xd4/0xdc [usbcore]
+     usb_hcd_unlink_urb+0x70/0xb0 [usbcore]
+     usb_unlink_urb+0x24/0x44 [usbcore]
+     unlink_urbs.constprop.0.isra.0+0x64/0xa8 [usbnet]
+     __handle_link_change+0x34/0x70 [usbnet]
+     usbnet_deferred_kevent+0x1c0/0x320 [usbnet]
+     process_scheduled_works+0x2d0/0x48c
+     worker_thread+0x150/0x1dc
+     kthread+0xd8/0xe8
+     ret_from_fork+0x10/0x20
+
+Get around the problem by delaying the carrier on to the scheduled work.
+
+This needs a new flag to keep track of the necessary action.
+
+The carrier ok check cannot be removed as it remains required for the
+LINK_RESET event flow.
+
+Fixes: 4b49f58fff00 ("usbnet: handle link change")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: John Ernberg <john.ernberg@actia.se>
+Link: https://patch.msgid.link/20250723102526.1305339-1-john.ernberg@actia.se
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/usb/usbnet.c   |   11 ++++++++---
+ include/linux/usb/usbnet.h |    1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -516,6 +516,10 @@ static const struct usb_device_id quirks
- 	{ USB_DEVICE(0x0bda, 0xb850), .driver_info = BTUSB_REALTEK },
- 	{ USB_DEVICE(0x13d3, 0x3600), .driver_info = BTUSB_REALTEK },
- 
-+	/* Realtek 8851BU Bluetooth devices */
-+	{ USB_DEVICE(0x3625, 0x010b), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1122,6 +1122,9 @@ static void __handle_link_change(struct
+ 		 * tx queue is stopped by netcore after link becomes off
+ 		 */
+ 	} else {
++		if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
++			netif_carrier_on(dev->net);
 +
- 	/* Realtek 8852AE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0x2852), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
+ 		/* submitting URBs for reading packets */
+ 		tasklet_schedule(&dev->bh);
+ 	}
+@@ -2009,10 +2012,12 @@ EXPORT_SYMBOL(usbnet_manage_power);
+ void usbnet_link_change(struct usbnet *dev, bool link, bool need_reset)
+ {
+ 	/* update link after link is reseted */
+-	if (link && !need_reset)
+-		netif_carrier_on(dev->net);
+-	else
++	if (link && !need_reset) {
++		set_bit(EVENT_LINK_CARRIER_ON, &dev->flags);
++	} else {
++		clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags);
+ 		netif_carrier_off(dev->net);
++	}
+ 
+ 	if (need_reset && link)
+ 		usbnet_defer_kevent(dev, EVENT_LINK_RESET);
+--- a/include/linux/usb/usbnet.h
++++ b/include/linux/usb/usbnet.h
+@@ -76,6 +76,7 @@ struct usbnet {
+ #		define EVENT_LINK_CHANGE	11
+ #		define EVENT_SET_RX_MODE	12
+ #		define EVENT_NO_IP_ALIGN	13
++#		define EVENT_LINK_CARRIER_ON	14
+ /* This one is special, as it indicates that the device is going away
+  * there are cyclic dependencies between tasklet, timer and bh
+  * that must be broken
 
 
