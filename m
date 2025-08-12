@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202F62FDC4F;
-	Tue, 12 Aug 2025 18:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364532E9EDE;
+	Tue, 12 Aug 2025 18:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024080; cv=none; b=GhKi3xZZMcFe7yH4/w1evbctS5oKav1d60pt8Z0GeHd8dOC7X2TDKWzOnI6fpfshKGYxXHLyo943/DCZJIn08YFOMDPbWycZKDypDC9d71M44C7dwkXct7H4Ss+126MOKQwk9IhfJU+J2fwVCz6jYW4s9tq6gcxKykskh0wn1DY=
+	t=1755024083; cv=none; b=d0mK/PyszFSN+yvl4ZrBAmt9EgcHIWbnnmLSUYxCGHJsk6mMyciGXQ4Wj/JF+OPDSi95ES05ZUlRywFqh50zUcXjt9URUf8i3eoppp1/CjQQbVCZ3n4B6PdQQh9urj2i6r1cFx8zhqex9CB+9kRItaBmFwnj3hgP2ciAcqHXlO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024080; c=relaxed/simple;
-	bh=amfLlVlbKNislitfMwK+gq4rJw4v7oN98V8llIiLD6w=;
+	s=arc-20240116; t=1755024083; c=relaxed/simple;
+	bh=QLGKUq3UaOclg+gRxcqi0UmcvguF+taFouN4D97ugzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIx3f+A/DxCD8hmER937wgXNiE1QPm7lvnuuifTt129XWRKjIm59REr1gpUEKGmrp0VX8hGekO+Gqp6LpRa9P0Dmq5rojeuiYFkhK2HL+7fNzdntalopaTnHDMmQ+lKYYEurFg1NUjMM58d8R8St71TAqUwlrJtsYsU9Xk+kpOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Obx6wXSS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pucDZSBBHb+4dEhv0X4HT8v2nsYPl4IbM4SCwiRv2t8HAUma6LovotVTZqiRNDic7of3TyaCDQn+jV4ge1OPzYnuueF77gGEhpfWqNixNer5shtJHcGKNVJuzdJ3Tsax6ro3iKSNQVArvU1j9LqGzrxpFexC0wPosmClFV0Qyik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FioOQRq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Obx6wXSS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84827C4CEF0;
-	Tue, 12 Aug 2025 18:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FioOQRq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB39C4CEF0;
+	Tue, 12 Aug 2025 18:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024080;
-	bh=amfLlVlbKNislitfMwK+gq4rJw4v7oN98V8llIiLD6w=;
+	s=korg; t=1755024083;
+	bh=QLGKUq3UaOclg+gRxcqi0UmcvguF+taFouN4D97ugzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Obx6wXSSm7hfD6ZJwaqE4YrVmSKXKoBFIPVUidHK9rCVj2EE4u4grGq8Obt7Fg3u2
-	 Un8K0z1C6/alIg5p3NdNdvDO6Tg+KJq8yXCO96T+LgvuQsyVbfkZ5BU40MBXbLaoyG
-	 M+8DzxbBmi/NTH5xQH9NT+112iTuSbxmOTBTKHMM=
+	b=FioOQRq3PGRwZ/pk7zzSiNhySXC7p1gDo58rSQBMdu9PdeovRcYR+jgGzywREVN0Z
+	 Wevx25XVPYrkLu8/7ONuJcbv3dK8CEhGDCsz6MwXkEnfHvM7ADV7yDZ5TtFGkoQeUX
+	 BsiUys1gVQ4xVRiEY5NXi/XI2DdFF/hggbXL8ViU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Zahka <daniel.zahka@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 267/627] selftests: drv-net: tso: fix non-tunneled tso6 test case name
-Date: Tue, 12 Aug 2025 19:29:22 +0200
-Message-ID: <20250812173429.470080870@linuxfoundation.org>
+Subject: [PATCH 6.16 241/627] wifi: ath12k: fix endianness handling while accessing wmi service bit
+Date: Tue, 12 Aug 2025 19:28:56 +0200
+Message-ID: <20250812173428.466998248@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,100 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Zahka <daniel.zahka@gmail.com>
+From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
 
-[ Upstream commit b25b44cd178cc54277f2dc0ff3b3d5a37ae4b26b ]
+[ Upstream commit 8f1a078842d4af4877fb686f3907788024d0d1b7 ]
 
-The non-tunneled tso6 test case was showing up as:
-ok 8 tso.ipv4
+Currently there is no endian conversion in ath12k_wmi_tlv_services_parser()
+so the service bit parsing will be incorrect on a big endian platform and
+to fix this by using appropriate endian conversion.
 
-This is because of the way test_builder() uses the inner_ipver arg in
-test naming, and how test_info is iterated over in main(). Given that
-some tunnels not supported yet, e.g. ipip or sit, only support ipv4 or
-ipv6 as the inner network protocol, I think the best fix here is to
-call test_builder() in separate branches for tunneled and non-tunneled
-tests, and to make supported inner l3 types an explicit attribute of
-tunnel test cases.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00217-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-  # Detected qstat for LSO wire-packets
-  TAP version 13
-  1..14
-  ok 1 tso.ipv4
-  # Testing with mangleid enabled
-  ok 2 tso.vxlan4_ipv4
-  ok 3 tso.vxlan4_ipv6
-  # Testing with mangleid enabled
-  ok 4 tso.vxlan_csum4_ipv4
-  ok 5 tso.vxlan_csum4_ipv6
-  # Testing with mangleid enabled
-  ok 6 tso.gre4_ipv4
-  ok 7 tso.gre4_ipv6
-  ok 8 tso.ipv6
-  # Testing with mangleid enabled
-  ok 9 tso.vxlan6_ipv4
-  ok 10 tso.vxlan6_ipv6
-  # Testing with mangleid enabled
-  ok 11 tso.vxlan_csum6_ipv4
-  ok 12 tso.vxlan_csum6_ipv6
-  # Testing with mangleid enabled
-  ok 13 tso.gre6_ipv4
-  ok 14 tso.gre6_ipv6
-  # Totals: pass:14 fail:0 xfail:0 xpass:0 skip:0 error:0
-
-Fixes: 0d0f4174f6c8 ("selftests: drv-net: add a simple TSO test")
-Signed-off-by: Daniel Zahka <daniel.zahka@gmail.com>
-Link: https://patch.msgid.link/20250723184740.4075410-4-daniel.zahka@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 342527f35338 ("wifi: ath12k: Add support to parse new WMI event for 6 GHz regulatory")
+Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250717173539.2523396-2-tamizh.raja@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/hw/tso.py | 26 ++++++++++---------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/hw/tso.py b/tools/testing/selftests/drivers/net/hw/tso.py
-index 6461a83b3d0e..5fddb5056a20 100755
---- a/tools/testing/selftests/drivers/net/hw/tso.py
-+++ b/tools/testing/selftests/drivers/net/hw/tso.py
-@@ -227,14 +227,14 @@ def main() -> None:
-         query_nic_features(cfg)
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index e19803bfba75..745d017c5aa8 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -7491,7 +7491,7 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
+ 					  void *data)
+ {
+ 	const struct wmi_service_available_event *ev;
+-	u32 *wmi_ext2_service_bitmap;
++	__le32 *wmi_ext2_service_bitmap;
+ 	int i, j;
+ 	u16 expected_len;
  
-         test_info = (
--            # name,       v4/v6  ethtool_feature              tun:(type,     args)
--            ("",            "4", "tx-tcp-segmentation",           None),
--            ("",            "6", "tx-tcp6-segmentation",          None),
--            ("vxlan",       "4", "tx-udp_tnl-segmentation",       ("vxlan",  "id 100 dstport 4789 noudpcsum")),
--            ("vxlan",       "6", "tx-udp_tnl-segmentation",       ("vxlan",  "id 100 dstport 4789 udp6zerocsumtx udp6zerocsumrx")),
--            ("vxlan_csum",   "", "tx-udp_tnl-csum-segmentation",  ("vxlan",  "id 100 dstport 4789 udpcsum")),
--            ("gre",         "4", "tx-gre-segmentation",           ("gre",    "")),
--            ("gre",         "6", "tx-gre-segmentation",           ("ip6gre", "")),
-+            # name,       v4/v6  ethtool_feature               tun:(type, args, inner ip versions)
-+            ("",           "4", "tx-tcp-segmentation",         None),
-+            ("",           "6", "tx-tcp6-segmentation",        None),
-+            ("vxlan",      "4", "tx-udp_tnl-segmentation",     ("vxlan", "id 100 dstport 4789 noudpcsum", ("4", "6"))),
-+            ("vxlan",      "6", "tx-udp_tnl-segmentation",     ("vxlan", "id 100 dstport 4789 udp6zerocsumtx udp6zerocsumrx", ("4", "6"))),
-+            ("vxlan_csum", "", "tx-udp_tnl-csum-segmentation", ("vxlan", "id 100 dstport 4789 udpcsum", ("4", "6"))),
-+            ("gre",        "4", "tx-gre-segmentation",         ("gre",   "", ("4", "6"))),
-+            ("gre",        "6", "tx-gre-segmentation",         ("ip6gre","", ("4", "6"))),
-         )
+@@ -7523,12 +7523,12 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
+ 			   ev->wmi_service_segment_bitmap[3]);
+ 		break;
+ 	case WMI_TAG_ARRAY_UINT32:
+-		wmi_ext2_service_bitmap = (u32 *)ptr;
++		wmi_ext2_service_bitmap = (__le32 *)ptr;
+ 		for (i = 0, j = WMI_MAX_EXT_SERVICE;
+ 		     i < WMI_SERVICE_SEGMENT_BM_SIZE32 && j < WMI_MAX_EXT2_SERVICE;
+ 		     i++) {
+ 			do {
+-				if (wmi_ext2_service_bitmap[i] &
++				if (__le32_to_cpu(wmi_ext2_service_bitmap[i]) &
+ 				    BIT(j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32))
+ 					set_bit(j, ab->wmi_ab.svc_map);
+ 			} while (++j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32);
+@@ -7536,8 +7536,10 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
  
-         cases = []
-@@ -244,11 +244,13 @@ def main() -> None:
-                 if info[1] and outer_ipver != info[1]:
-                     continue
- 
--                cases.append(test_builder(info[0], cfg, outer_ipver, info[2],
--                                          tun=info[3], inner_ipver="4"))
-                 if info[3]:
--                    cases.append(test_builder(info[0], cfg, outer_ipver, info[2],
--                                              tun=info[3], inner_ipver="6"))
-+                    cases += [
-+                        test_builder(info[0], cfg, outer_ipver, info[2], info[3], inner_ipver)
-+                        for inner_ipver in info[3][2]
-+                    ]
-+                else:
-+                    cases.append(test_builder(info[0], cfg, outer_ipver, info[2], None, outer_ipver))
- 
-         ksft_run(cases=cases, args=(cfg, ))
-     ksft_exit()
+ 		ath12k_dbg(ab, ATH12K_DBG_WMI,
+ 			   "wmi_ext2_service_bitmap 0x%04x 0x%04x 0x%04x 0x%04x",
+-			   wmi_ext2_service_bitmap[0], wmi_ext2_service_bitmap[1],
+-			   wmi_ext2_service_bitmap[2], wmi_ext2_service_bitmap[3]);
++			   __le32_to_cpu(wmi_ext2_service_bitmap[0]),
++			   __le32_to_cpu(wmi_ext2_service_bitmap[1]),
++			   __le32_to_cpu(wmi_ext2_service_bitmap[2]),
++			   __le32_to_cpu(wmi_ext2_service_bitmap[3]));
+ 		break;
+ 	}
+ 	return 0;
 -- 
 2.39.5
 
