@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB86C21A43B;
-	Tue, 12 Aug 2025 19:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219DB26B0AE;
+	Tue, 12 Aug 2025 19:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026357; cv=none; b=KjvAHPHNr9kZVey1JYwV8UrqhThuF8UyUB7jzVjzyxJwm3XEVwubA2UAnHdtlKCkp2svBx/zfvgJHzvyuhBejAi0Oz8L1PO35VSNlc3z86f3QxpXRNtCZaFdkmOq5Qi1fN8aOAHPptl93PVPfALaaShhSDfEKMU4LKKrLI5CWUg=
+	t=1755026361; cv=none; b=XwSacDNPcC6ss09oZefH5jGVmCp6ycNdeyQI2dNPeYJrfO89RunvSQIlyrZL4/PYY05g57ibuEc2CRsy6RSsZBkiUELLzBJE0U+VWt97FRSs56qcqnyAn27d7UBHqFy32EhzF3fyRIqEYYbLK6qJgxjZkf7lEbj7uAqhx/6+T4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026357; c=relaxed/simple;
-	bh=sDKVnBAWw+VEjJlwU6qbIAbSYDnFekPiS8cxhoWJ6YM=;
+	s=arc-20240116; t=1755026361; c=relaxed/simple;
+	bh=IUfNuCNAcy3S0vxtKzQxfg4qMAEHkRkVQxoMfIVWaq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWeVnE6Z4REafqGXBPsYGo0KS/No/qESvlaDaYONmk9fbcaLPkoDEtzFc+KpJ5XqiG5hPJ4Kb9+XknVBx2AyFg3h/0nSJTGH531mjI+sK9+tmtH9nUCbeZU9AdbyY4gJE+6jQoDfQbWH1R7E9mKWcSmN56nfGchYkNicYKqPoBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrTo1vCL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krpn6ZgBHCIy9jbnfbNJJpYfsXGNRN1vzWD75mLxASBpUj1Rt/l/7+R7LwaU1BsvUTsX+A9JJURRXcyMPhCSzhwB/0M3OOuKS1iakKZtApdWbygJzIglH3qRLYr7xUrbq2AFZ3popIBcQufD1y2TL9F0bEcIGCCwXu98s21DsKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVvhNltn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrTo1vCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2913DC4CEF0;
-	Tue, 12 Aug 2025 19:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVvhNltn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E36C4CEF0;
+	Tue, 12 Aug 2025 19:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026357;
-	bh=sDKVnBAWw+VEjJlwU6qbIAbSYDnFekPiS8cxhoWJ6YM=;
+	s=korg; t=1755026361;
+	bh=IUfNuCNAcy3S0vxtKzQxfg4qMAEHkRkVQxoMfIVWaq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FrTo1vCLFoMik4HabMRim9gnz9Vd/XvBYWbeCrtH84BNrDzOeIduF9SrSNSqBCIUw
-	 4uP2DBa7WDzGc2bUUeicPo82D72B3coZJhtcrWrwDIU6QSzwXYnV+PaIccsgunrKqv
-	 SKrdF6GgIbmqsWD+w8t+aiUdHaHzDS+tlygi+2gY=
+	b=mVvhNltnO1SszNKKp7EEaKSBA8QXjt7wUjAn4i/7fLl0/YGsr7QNeKzmwdBz4GCeS
+	 gHEWi5QBNJ71G/Cdp6RNm9UCNGdizZ4a9eOwoVDTBSpX+aZtUVcg5XRM0Q3Typ6e27
+	 jT29jsboiO0g4jO6kHDxfqwE8PB5EbKurL0LXjAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 313/480] crypto: qat - fix seq_file position update in adf_ring_next()
-Date: Tue, 12 Aug 2025 19:48:41 +0200
-Message-ID: <20250812174410.343501257@linuxfoundation.org>
+Subject: [PATCH 6.15 314/480] fbdev: imxfb: Check fb_add_videomode to prevent null-ptr-deref
+Date: Tue, 12 Aug 2025 19:48:42 +0200
+Message-ID: <20250812174410.384121992@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,47 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 6908c5f4f066a0412c3d9a6f543a09fa7d87824b ]
+[ Upstream commit da11e6a30e0bb8e911288bdc443b3dc8f6a7cac7 ]
 
-The `adf_ring_next()` function in the QAT debug transport interface
-fails to correctly update the position index when reaching the end of
-the ring elements. This triggers the following kernel warning when
-reading ring files, such as
-/sys/kernel/debug/qat_c6xx_<D:B:D:F>/transport/bank_00/ring_00:
+fb_add_videomode() can fail with -ENOMEM when its internal kmalloc() cannot
+allocate a struct fb_modelist.  If that happens, the modelist stays empty but
+the driver continues to register.  Add a check for its return value to prevent
+poteintial null-ptr-deref, which is similar to the commit 17186f1f90d3 ("fbdev:
+Fix do_register_framebuffer to prevent null-ptr-deref in fb_videomode_to_var").
 
-   [27725.022965] seq_file: buggy .next function adf_ring_next [intel_qat] did not update position index
-
-Ensure that the `*pos` index is incremented before returning NULL when
-after the last element in the ring is found, satisfying the seq_file API
-requirements and preventing the warning.
-
-Fixes: a672a9dc872e ("crypto: qat - Intel(R) QAT transport code")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 1b6c79361ba5 ("video: imxfb: Add DT support")
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_transport_debug.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/imxfb.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c b/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
-index e2dd568b87b5..621b5d3dfcef 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
-@@ -31,8 +31,10 @@ static void *adf_ring_next(struct seq_file *sfile, void *v, loff_t *pos)
- 	struct adf_etr_ring_data *ring = sfile->private;
+diff --git a/drivers/video/fbdev/imxfb.c b/drivers/video/fbdev/imxfb.c
+index f30da32cdaed..a077bf346bdf 100644
+--- a/drivers/video/fbdev/imxfb.c
++++ b/drivers/video/fbdev/imxfb.c
+@@ -996,8 +996,13 @@ static int imxfb_probe(struct platform_device *pdev)
+ 	info->fix.smem_start = fbi->map_dma;
  
- 	if (*pos >= (ADF_SIZE_TO_RING_SIZE_IN_BYTES(ring->ring_size) /
--		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size)))
-+		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size))) {
-+		(*pos)++;
- 		return NULL;
+ 	INIT_LIST_HEAD(&info->modelist);
+-	for (i = 0; i < fbi->num_modes; i++)
+-		fb_add_videomode(&fbi->mode[i].mode, &info->modelist);
++	for (i = 0; i < fbi->num_modes; i++) {
++		ret = fb_add_videomode(&fbi->mode[i].mode, &info->modelist);
++		if (ret) {
++			dev_err(&pdev->dev, "Failed to add videomode\n");
++			goto failed_cmap;
++		}
 +	}
  
- 	return ring->base_addr +
- 		(ADF_MSG_SIZE_TO_BYTES(ring->msg_size) * (*pos)++);
+ 	/*
+ 	 * This makes sure that our colour bitfield
 -- 
 2.39.5
 
