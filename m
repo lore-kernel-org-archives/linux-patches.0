@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0603A6BB5B;
-	Tue, 12 Aug 2025 18:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AB1280037;
+	Tue, 12 Aug 2025 18:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022838; cv=none; b=czxsahkLQpHL0T+2iKvLqcyqUEzdZFoZ5lIR/+y3SkuEPeBYruIReN3BelHJa/kO20RvyXmakhxxSwmgrYJAP9YRXdlHxE9L/QSDObIbg5a/+rjAnQCkNHSgP3R8eDERDrieee2DRz+U+uUQpg8Xtww3sOwGnaUFz10q/uA3mGU=
+	t=1755022841; cv=none; b=Z9tbMs0n/8efnCToXCZXA3HvJTELGoydXgxx31Aj1tars7c9R2l9gyfpotsZHKjc8/MQPXgmNbodXi7mViXVMJGsLhSG965Ryl3mQhkjvwQwaWswnkNAiZxO5rdV87zCbwNhbKKB/euN7ih0APdRKuGKm7YSMd+kl4JpaqR6yi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022838; c=relaxed/simple;
-	bh=IOtoA3qcHhtfcBZCESWCO8ZhsUcKrRvPWl11LqAD3R0=;
+	s=arc-20240116; t=1755022841; c=relaxed/simple;
+	bh=Qci8POTMxmH5xZCw1Xc+80CQ25okeg+VlexHxP4BKRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKH3fxbb95LbDHvI+s7bw0cwqP0cQrO/4JWa4qQm0E9CfDCWLSqfimnhP36vluRgZhy51bmIyTbE9TuZpqnNROeyx3WcgbEOdtrMDQRqfGt6/ioDEYvzEeOefR+otsP6vYqVvXhS6zkX3qs5PQdyRXmg1H6Ar7oU1VTQcilQu1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gb62gLXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sIU7d+gJQakFzrVu/HiCb9z1ki9kDU3cDfgH2AoZPstnPxFyQWSH5VQW2tERqdJvEa7WN6DpUUDgPF2uz87ONk/Hg3GdPlYRz6u8cXKeVse3hBSFVhQzavPVjT9gxN+1jeZm5UxYAehGWiFzC+FldcJhVtw9t8mZKzcmFJDz2sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0JRaWW3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gb62gLXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C45C4CEF1;
-	Tue, 12 Aug 2025 18:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0JRaWW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3677C4CEF1;
+	Tue, 12 Aug 2025 18:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022837;
-	bh=IOtoA3qcHhtfcBZCESWCO8ZhsUcKrRvPWl11LqAD3R0=;
+	s=korg; t=1755022841;
+	bh=Qci8POTMxmH5xZCw1Xc+80CQ25okeg+VlexHxP4BKRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gb62gLXquQnyczYh720eotu4aI84FX1vf6M0LeCi7AmHO3Tx7+SMv+9d32xL2UenW
-	 6du6qP/qs0LmYqSTqrX8O6TowJO0tzTZFO2rUZ3UtNj6aAbY+Kz7auUOFlxHRQnf3N
-	 TiCtA0qfJ4/MZ3vBXXq1oFMDXoRpnRekiPvmCt90=
+	b=J0JRaWW3iBL3soV9CloCK9P/c7SBMq9q5et+DpjfiXn7zCs0RxcFRjVy0WYw1CHo9
+	 kQMjpz9p2l9gVs6kasu78XA+ESqGq1JxOo7rONzwkCKnKMPHqV95a5Zq9C8SsicLB3
+	 B8ngfpfklwQ88+G4ibBUB/3Kb57UbsFE62klH/nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Chris Mason <clm@meta.com>,
+	Beata Michalska <beata.michalska@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 273/369] kconfig: qconf: fix ConfigList::updateListAllforAll()
-Date: Tue, 12 Aug 2025 19:29:30 +0200
-Message-ID: <20250812173025.244480681@linuxfoundation.org>
+Subject: [PATCH 6.12 274/369] sched/psi: Fix psi_seq initialization
+Date: Tue, 12 Aug 2025 19:29:31 +0200
+Message-ID: <20250812173025.437395523@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -50,36 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 721bfe583c52ba1ea74b3736a31a9dcfe6dd6d95 ]
+[ Upstream commit 99b773d720aeea1ef2170dce5fcfa80649e26b78 ]
 
-ConfigList::updateListForAll() and ConfigList::updateListAllforAll()
-are identical.
+With the seqcount moved out of the group into a global psi_seq,
+re-initializing the seqcount on group creation is causing seqcount
+corruption.
 
-Commit f9b918fae678 ("kconfig: qconf: move ConfigView::updateList(All)
-to ConfigList class") was a misconversion.
-
-Fixes: f9b918fae678 ("kconfig: qconf: move ConfigView::updateList(All) to ConfigList class")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 570c8efd5eb7 ("sched/psi: Optimize psi_group_change() cpu_clock() usage")
+Reported-by: Chris Mason <clm@meta.com>
+Suggested-by: Beata Michalska <beata.michalska@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/qconf.cc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/psi.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/scripts/kconfig/qconf.cc b/scripts/kconfig/qconf.cc
-index e260cab1c2af..4b375abda772 100644
---- a/scripts/kconfig/qconf.cc
-+++ b/scripts/kconfig/qconf.cc
-@@ -481,7 +481,7 @@ void ConfigList::updateListAllForAll()
- 	while (it.hasNext()) {
- 		ConfigList *list = it.next();
+diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+index 81cfefc4d892..7d0f8fdd48a3 100644
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -172,7 +172,7 @@ struct psi_group psi_system = {
+ 	.pcpu = &system_group_pcpu,
+ };
  
--		list->updateList();
-+		list->updateListAll();
- 	}
- }
+-static DEFINE_PER_CPU(seqcount_t, psi_seq);
++static DEFINE_PER_CPU(seqcount_t, psi_seq) = SEQCNT_ZERO(psi_seq);
  
+ static inline void psi_write_begin(int cpu)
+ {
+@@ -200,11 +200,7 @@ static void poll_timer_fn(struct timer_list *t);
+ 
+ static void group_init(struct psi_group *group)
+ {
+-	int cpu;
+-
+ 	group->enabled = true;
+-	for_each_possible_cpu(cpu)
+-		seqcount_init(per_cpu_ptr(&psi_seq, cpu));
+ 	group->avg_last_update = sched_clock();
+ 	group->avg_next_update = group->avg_last_update + psi_period;
+ 	mutex_init(&group->avgs_lock);
 -- 
 2.39.5
 
