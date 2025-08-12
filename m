@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCE761FFE;
-	Tue, 12 Aug 2025 18:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2CC61FFE;
+	Tue, 12 Aug 2025 18:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023629; cv=none; b=VRgeGl7nVjN5WwKO+Yc6wdpVOvDgWh4yujYfn9wwf/Pp5OTGaG2j5I2WPPfUbni1oFDl8Ok6ii4fWa/MPvZrWgG2QhjS2eJSvbXiQt0x4IJCvkPIaJ00FabxMghYR2kDER88fhTb5w/jf3NhnA1trrymBA2Nmi7bPT40jdGyvT0=
+	t=1755023632; cv=none; b=kJ1HkWHmPPweizQ0W0lY0XJTE9+vrQq6oH2mjMQ3N4qH40uARz6ZMZWmLzY3/WZa+i81J/zRyBCmvixhk0HLOfK2sM9klj6z1Nc3DzZPoMM+OxfSupn2dg8jyQ+FHY+RHm5OmyiMgMTjptkxjUrEokSyp8EflOtemfYBgJLYQRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023629; c=relaxed/simple;
-	bh=B2D6e+46dIgFcTjTUpg/wFZcL9m94CgGe45WQuzQfjs=;
+	s=arc-20240116; t=1755023632; c=relaxed/simple;
+	bh=8WgV1UU30JQ0ZhzUZXwhwP5wQp+Ul5leQ0C0UidO/UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICdW/A/Wml3hQtNDfOmrQ74AUuhcvIw/Rf6pqR5fe4kKQIIlVOCwI+imcs0rxRRoJ7aw07Q+Zlo2h1IHSUQCdRo+ahxunrQN3pDxMaE71xJaARG8sb1N2Vm0eDCUBq9360Tf5cfWCzG+MAjI+Zjge7SpYBH/qaXq9FMPW4qoDI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOodMDBl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHghzJxFVdKD6ljpdkJajraw1LFXPilJxlteDlm2Y3LMSGYqDwDXE9pOz5Bdm197fSpdJee0FTyHA2UpwmoBRcnZhep1oFEIBRma/hzgFt+BpbwMLXpiAwdOLEnOSHAKwilpfgo4tmqpvFze5nCtq0iXrNyeYOBZH/TQ14KQLuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNmjH8/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOodMDBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D0CC4CEF0;
-	Tue, 12 Aug 2025 18:33:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNmjH8/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D28C4CEF0;
+	Tue, 12 Aug 2025 18:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023628;
-	bh=B2D6e+46dIgFcTjTUpg/wFZcL9m94CgGe45WQuzQfjs=;
+	s=korg; t=1755023632;
+	bh=8WgV1UU30JQ0ZhzUZXwhwP5wQp+Ul5leQ0C0UidO/UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MOodMDBlli6JTfdyM/GMQsfADZFWitLWDnwEwWkRRcZVAgQVCzm85UGrzmuO+Ez/1
-	 xEZeUtZgMzFFlinCQ3KtwWX5qkL5+plvZYRlBAm3acO+GiIi+AWASi9ytqkwtezuqa
-	 S4OeJB+41uXDzZQvBKccRvbHY6S2BZ7HGr14msUo=
+	b=gNmjH8/aSSaKrPEFS+Xpin6GBWO8Fv76BF3OgNP7nIf+JVGWNb91I2Hh6noQNDvFm
+	 gUYwFlhKORM2W5tTAkbnuz5q13CksnXeBuTC1ee5aCe5+40p8sXcYkT11nYzGcWt45
+	 Ql5ykJKDL463KBmQfvTjj9l+j6+AfNh/wALtJEIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fabio Estevam <festevam@gmail.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 102/627] arm64: dts: imx8mm-beacon: Fix HS400 USDHC clock speed
-Date: Tue, 12 Aug 2025 19:26:37 +0200
-Message-ID: <20250812173423.200418863@linuxfoundation.org>
+Subject: [PATCH 6.16 103/627] arm64: dts: imx8mn-beacon: Fix HS400 USDHC clock speed
+Date: Tue, 12 Aug 2025 19:26:38 +0200
+Message-ID: <20250812173423.235812367@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,33 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit f83f69097a302ed2a2775975ddcf12e6a5ac6ec3 ]
+[ Upstream commit e16ad6c79906bba5e2ac499492b6a5b29ab19d6c ]
 
-The reference manual for the i.MX8MM states the clock rate in
+The reference manual for the i.MX8MN states the clock rate in
 MMC mode is 1/2 of the input clock, therefore to properly run
 at HS400 rates, the input clock must be 400MHz to operate at
 200MHz.  Currently the clock is set to 200MHz which is half the
 rate it should be, so the throughput is half of what it should be
 for HS400 operation.
 
-Fixes: 593816fa2f35 ("arm64: dts: imx: Add Beacon i.MX8m-Mini development kit")
+Fixes: 36ca3c8ccb53 ("arm64: dts: imx: Add Beacon i.MX8M Nano development kit")
 Signed-off-by: Adam Ford <aford173@gmail.com>
 Reviewed-by: Fabio Estevam <festevam@gmail.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi | 2 ++
+ arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-index 21bcd82fd092..8287a7f66ed3 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-@@ -294,6 +294,8 @@ &usdhc3 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+index 67a99383a632..917b7d0007a7 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+@@ -305,6 +305,8 @@ &usdhc3 {
  	pinctrl-0 = <&pinctrl_usdhc3>;
  	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
  	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
-+	assigned-clocks = <&clk IMX8MM_CLK_USDHC3>;
++	assigned-clocks = <&clk IMX8MN_CLK_USDHC3>;
 +	assigned-clock-rates = <400000000>;
  	bus-width = <8>;
  	non-removable;
