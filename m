@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E7F247287;
-	Tue, 12 Aug 2025 18:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813C728000F;
+	Tue, 12 Aug 2025 18:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024662; cv=none; b=F46aJvj34MRKkvrHB/XldhJ6GrWa8yTabPgj0B5xFkZSH0U5lCqVKhzduqJZrl1nGjDU2Su5ElFkiQ47XAZpl1EUsnkCLQcFOJ2SQC7t7I6hK2eKosVYyxMbbCyB1X1Zovno05Egy0AiNi9TKICwCqVtM888p0qhQm6z6TfBZQU=
+	t=1755024665; cv=none; b=l3VXakmsSFNXndXUnRwjXEGzB+mlae+tr6rLVAyPqpRJS40DTE3QhZkkdk0UcsqYaBxmeUuqJq18GkpWSDgGIedRXCwE7OAVMh/5MsTwu6vQIbZ1guvYPfkqCRQIo2ZPf5kOn3iOrwGg8ZSmsVBoXhas9ZMPDYs9pttdAm/ICpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024662; c=relaxed/simple;
-	bh=aeyFVODnCGVxqzkOBj5bWh4KFNim57foklb7sZ/CUe0=;
+	s=arc-20240116; t=1755024665; c=relaxed/simple;
+	bh=cSmWOBcwLL6fEY36IUGm30RWWot5qbrcwKHzjkd1jhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGfVH6W1WoBg3uIvdXNWCYwsh97lSBdVok7h31QVSg3eV+5uWHUYEnPeitD1ZRSfYvV86qLRxG51E+IYYf5h3f5zNCuRxyqPHTqtLVkTJ1wyj5sP0evH4JnunPWrAmAEWJXKNUhObWWnpfaual1x743phm4iwc4tMBjIj5MT0Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2O18O3ns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pWMr5ZDQ9RrXD4/vZhvQoOkwLeqF/x0xeKCWoinnvWd7L1AIgCkIKBQss0I9HFT1mD1hdT8rrAW8xsmYhQvHr8/HPdPQuE1OjngwN/OEi1ifRZ5cqj7R3Jife+TqXfaZKa8mbT2KovsguHsGWLlh+pYWYmVib8TdTZ8Ic50gBZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+ETZ19T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2O18O3ns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53B9C4CEF0;
-	Tue, 12 Aug 2025 18:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+ETZ19T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0883EC4CEF0;
+	Tue, 12 Aug 2025 18:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024662;
-	bh=aeyFVODnCGVxqzkOBj5bWh4KFNim57foklb7sZ/CUe0=;
+	s=korg; t=1755024665;
+	bh=cSmWOBcwLL6fEY36IUGm30RWWot5qbrcwKHzjkd1jhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2O18O3nsbl43dybBzqOHsSOxoXH/IkU3mBv8bVkaPiCb5x4Af+FWvLkDoNR1kALh9
-	 LoiqWaP9AcGiYHyToXW020kX9pb2DbYNcYlhO+oMWQL/+nbEk8HWr/396vhw8lJEY7
-	 hR6HLLAtSCA+7gesIibE/GjFh3cRrXsVewDFPn8w=
+	b=p+ETZ19TXc3YouSL13VX1UXDUTPWqX8RykS8oxmIDWH1vjVr/ZpaLmmhaVvvB3+h/
+	 otY6LdteslnXkYyJTbAnxiiyXBunqXl2GBHumGdpmm2WsIzMuv7VMf8yq5oy4cgDVh
+	 V6gQPMp1l3T2gtQhlhVZzkd58t8tQNPZfw32unlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 439/627] ALSA: usb: scarlett2: Fix missing NULL check
-Date: Tue, 12 Aug 2025 19:32:14 +0200
-Message-ID: <20250812173435.978889278@linuxfoundation.org>
+Subject: [PATCH 6.16 440/627] perf record: Cache build-ID of hit DSOs only
+Date: Tue, 12 Aug 2025 19:32:15 +0200
+Message-ID: <20250812173436.015608650@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -50,41 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit df485a4b2b3ee5b35c80f990beb554e38a8a5fb1 ]
+[ Upstream commit 6235ce77749f45cac27f630337e2fdf04e8a6c73 ]
 
-scarlett2_input_select_ctl_info() sets up the string arrays allocated
-via kasprintf(), but it misses NULL checks, which may lead to NULL
-dereference Oops.  Let's add the proper NULL check.
+It post-processes samples to find which DSO has samples.  Based on that
+info, it can save used DSOs in the build-ID cache directory.  But for
+some reason, it saves all DSOs without checking the hit mark.  Skipping
+unused DSOs can give some speedup especially with --buildid-mmap being
+default.
 
-Fixes: 8eba063b5b2b ("ALSA: scarlett2: Simplify linked channel handling")
-Link: https://patch.msgid.link/20250731053714.29414-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+On my idle machine, `time perf record -a sleep 1` goes down from 3 sec
+to 1.5 sec with this change.
+
+Fixes: e29386c8f7d71fa5 ("perf record: Add --buildid-mmap option to enable PERF_RECORD_MMAP2's build id")
+Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lore.kernel.org/r/20250731070330.57116-1-namhyung@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett2.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/perf/util/build-id.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
-index 93589e86828a..c137e44f8f8c 100644
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -3971,8 +3971,13 @@ static int scarlett2_input_select_ctl_info(
- 		goto unlock;
+diff --git a/tools/perf/util/build-id.c b/tools/perf/util/build-id.c
+index e763e8d99a43..ee00313d5d7e 100644
+--- a/tools/perf/util/build-id.c
++++ b/tools/perf/util/build-id.c
+@@ -864,7 +864,7 @@ static int dso__cache_build_id(struct dso *dso, struct machine *machine,
+ 	char *allocated_name = NULL;
+ 	int ret = 0;
  
- 	/* Loop through each input */
--	for (i = 0; i < inputs; i++)
-+	for (i = 0; i < inputs; i++) {
- 		values[i] = kasprintf(GFP_KERNEL, "Input %d", i + 1);
-+		if (!values[i]) {
-+			err = -ENOMEM;
-+			goto unlock;
-+		}
-+	}
+-	if (!dso__has_build_id(dso))
++	if (!dso__has_build_id(dso) || !dso__hit(dso))
+ 		return 0;
  
- 	err = snd_ctl_enum_info(uinfo, 1, i,
- 				(const char * const *)values);
+ 	if (dso__is_kcore(dso)) {
 -- 
 2.39.5
 
