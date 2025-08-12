@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2176F13AA2F;
-	Tue, 12 Aug 2025 18:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB3F13AA2F;
+	Tue, 12 Aug 2025 18:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024259; cv=none; b=mDTDWPyHJPJcZTCF6qqVTzcRUNSGgSCxpuN6DHCbEZpSmi7KokM8IXmwCMfpFqZk6eBf1gBPt8QeKpWvbpm0zKAqUM0j1jo1/SlVwtOLc4VMIDbIGl3AjIwtfAI9ySWdmdxLmCBS1nqARgpFaGp5qIaf9r1IbD9sjsAN2J5S+b4=
+	t=1755024262; cv=none; b=fGdT82hnXK91ATQU7keuLvwYO4plDs3KEyqvpJ7rirdlN0yx4N+nUcuKbsFBIVFRJYcMKptdCU271hAMegKF3bLGaa+ywaB/eWDLrY9NFsMfOjMGPCNhpxKUsu9m7e77bb/d1RZWgEwe2Z0Ppj9FBCWAD7QrM6cppAh5E8i6+Eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024259; c=relaxed/simple;
-	bh=pAauepJRloQDRfFh4QTR2XirpFDONKN290OpfclVB9g=;
+	s=arc-20240116; t=1755024262; c=relaxed/simple;
+	bh=bKIbQQJdaYRFLL7Oz2Nth3t8kml3srC+OHabulpl9O4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WxMhs5WKXdhvn6meEcnJCqh0lH28Rx/0a5QSxQIQB7VldyzyKce+pbD6IALOycgxxyjhCJApcFtEaDkFmDheABXHe+MwF/ihUBAHeQgfYINp2i7QDz4TdC6zYZZf28YuE0sPMv0+X82pgce+LfF56coacB9FcryGghPPYpqh6Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zp90NixY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T1ekcq9E9NK/OQrxos+m/6z5EiJ86WQgOuzE6GtLCaAtriY3/0mn8L+xpGirbJ85EezsyM9yHd4wrvZ6sfblGdpvRX9j2A0CWd2ln8wyzEDDmlgkEWXfJ67V1kAtFea/Uk+wpDjmgBSE5IZdXLaqidQrL3vMjJ9gwZl7y0L+ciY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZKIV+ZO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zp90NixY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DE4C4CEF0;
-	Tue, 12 Aug 2025 18:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZKIV+ZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DC9C4CEF0;
+	Tue, 12 Aug 2025 18:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024259;
-	bh=pAauepJRloQDRfFh4QTR2XirpFDONKN290OpfclVB9g=;
+	s=korg; t=1755024262;
+	bh=bKIbQQJdaYRFLL7Oz2Nth3t8kml3srC+OHabulpl9O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zp90NixYL3IV0g7m2wDRI9sAL/jT2yWh2z8iFzCgwp1xbe3+/agfLIhYcKUhE5TbR
-	 aJbP0ZCK5A9AFqkPv+J6hk8iOT5QEl5iSJN0hRI9CBvK8u6h1qu0C1uAqHXi5hgmga
-	 VSUSF7UnA6oyM29ODvhI6W2dIvaoWFLE4vpF2iLY=
+	b=0ZKIV+ZOVU4RDTnuuJEg0LqXjAE0pFl/DLBiywROOR5AdqfDMvedF9xbLrItKzk0I
+	 V/+pmE945SdO72+iPV1r2rKotpZPD1m0TIV2oFFl7G1fCEj6j0r4BIZAjkKNl5QJoC
+	 z+ifeeqDeSpTH2BVIHV1nCW6QtIN6BWZw+89NFrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Antoine <t.antoine@uclouvain.be>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 321/627] power: supply: max1720x correct capacity computation
-Date: Tue, 12 Aug 2025 19:30:16 +0200
-Message-ID: <20250812173431.509538459@linuxfoundation.org>
+Subject: [PATCH 6.16 322/627] crypto: arm/aes-neonbs - work around gcc-15 warning
+Date: Tue, 12 Aug 2025 19:30:17 +0200
+Message-ID: <20250812173431.545368669@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -45,73 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Antoine <t.antoine@uclouvain.be>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 58ae036172b5f051a19a32eba94a3e5eb37bf47e ]
+[ Upstream commit d5fa96dc5590915f060fee3209143313e4f5b03b ]
 
->From the datasheet of the MAX17201/17205, the LSB should be "5.0μVh/RSENSE".
-The current computation sets it at 0.5mAh=5.0μVh/10mOhm, which does not take
-into account the value of rsense (which is in 10µV steps) which can be
-different from 10mOhm.
+I get a very rare -Wstringop-overread warning with gcc-15 for one function
+in aesbs_ctr_encrypt():
 
-Change the computation to fit the specs.
+arch/arm/crypto/aes-neonbs-glue.c: In function 'ctr_encrypt':
+arch/arm/crypto/aes-neonbs-glue.c:212:1446: error: '__builtin_memcpy' offset [17, 2147483647] is out of the bounds [0, 16] of object 'buf' with type 'u8[16]' {aka 'unsigned char[16]'} [-Werror=array-bounds=]
+  212 |                         src = dst = memcpy(buf + sizeof(buf) - bytes,
+arch/arm/crypto/aes-neonbs-glue.c: In function 'ctr_encrypt':
+arch/arm/crypto/aes-neonbs-glue.c:218:17: error: 'aesbs_ctr_encrypt' reading 1 byte from a region of size 0 [-Werror=stringop-overread]
+  218 |                 aesbs_ctr_encrypt(dst, src, ctx->rk, ctx->rounds, bytes, walk.iv);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 2 of type 'const u8[0]' {aka 'const unsigned char[]'}
+arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 3 of type 'const u8[0]' {aka 'const unsigned char[]'}
+arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 6 of type 'u8[0]' {aka 'unsigned char[]'}
+arch/arm/crypto/aes-neonbs-glue.c:36:17: note: in a call to function 'aesbs_ctr_encrypt'
+   36 | asmlinkage void aesbs_ctr_encrypt(u8 out[], u8 const in[], u8 const rk[],
 
-Fixes: 479b6d04964b ("power: supply: add support for MAX1720x standalone fuel gauge")
-Signed-off-by: Thomas Antoine <t.antoine@uclouvain.be>
-Link: https://lore.kernel.org/r/20250523-b4-gs101_max77759_fg-v4-1-b49904e35a34@uclouvain.be
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+This could happen in theory if walk.nbytes is larger than INT_MAX and gets
+converted to a negative local variable.
+
+Keep the type unsigned like the orignal nbytes to be sure there is no
+integer overflow.
+
+Fixes: c8bf850e991a ("crypto: arm/aes-neonbs-ctr - deal with non-multiples of AES block size")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max1720x_battery.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/arm/crypto/aes-neonbs-glue.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/max1720x_battery.c b/drivers/power/supply/max1720x_battery.c
-index ea3912fd1de8..68b5314ecf3a 100644
---- a/drivers/power/supply/max1720x_battery.c
-+++ b/drivers/power/supply/max1720x_battery.c
-@@ -288,9 +288,10 @@ static int max172xx_voltage_to_ps(unsigned int reg)
- 	return reg * 1250;	/* in uV */
- }
+diff --git a/arch/arm/crypto/aes-neonbs-glue.c b/arch/arm/crypto/aes-neonbs-glue.c
+index c60104dc1585..df5afe601e4a 100644
+--- a/arch/arm/crypto/aes-neonbs-glue.c
++++ b/arch/arm/crypto/aes-neonbs-glue.c
+@@ -206,7 +206,7 @@ static int ctr_encrypt(struct skcipher_request *req)
+ 	while (walk.nbytes > 0) {
+ 		const u8 *src = walk.src.virt.addr;
+ 		u8 *dst = walk.dst.virt.addr;
+-		int bytes = walk.nbytes;
++		unsigned int bytes = walk.nbytes;
  
--static int max172xx_capacity_to_ps(unsigned int reg)
-+static int max172xx_capacity_to_ps(unsigned int reg,
-+				   struct max1720x_device_info *info)
- {
--	return reg * 500;	/* in uAh */
-+	return reg * (500000 / info->rsense);	/* in uAh */
- }
- 
- /*
-@@ -394,11 +395,11 @@ static int max1720x_battery_get_property(struct power_supply *psy,
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 		ret = regmap_read(info->regmap, MAX172XX_DESIGN_CAP, &reg_val);
--		val->intval = max172xx_capacity_to_ps(reg_val);
-+		val->intval = max172xx_capacity_to_ps(reg_val, info);
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_AVG:
- 		ret = regmap_read(info->regmap, MAX172XX_REPCAP, &reg_val);
--		val->intval = max172xx_capacity_to_ps(reg_val);
-+		val->intval = max172xx_capacity_to_ps(reg_val, info);
- 		break;
- 	case POWER_SUPPLY_PROP_TIME_TO_EMPTY_AVG:
- 		ret = regmap_read(info->regmap, MAX172XX_TTE, &reg_val);
-@@ -422,7 +423,7 @@ static int max1720x_battery_get_property(struct power_supply *psy,
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL:
- 		ret = regmap_read(info->regmap, MAX172XX_FULL_CAP, &reg_val);
--		val->intval = max172xx_capacity_to_ps(reg_val);
-+		val->intval = max172xx_capacity_to_ps(reg_val, info);
- 		break;
- 	case POWER_SUPPLY_PROP_MODEL_NAME:
- 		ret = regmap_read(info->regmap, MAX172XX_DEV_NAME, &reg_val);
+ 		if (unlikely(bytes < AES_BLOCK_SIZE))
+ 			src = dst = memcpy(buf + sizeof(buf) - bytes,
 -- 
 2.39.5
 
