@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578F02CA9;
-	Tue, 12 Aug 2025 18:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5680291C1F;
+	Tue, 12 Aug 2025 18:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024414; cv=none; b=iGFsDNN4618dIzcL2SmM7pmQeb1InvbgjSTDqog+kHbkOg9TbvCbShbmcBO+IsopJ/h7E35eUOj5qsheuSfKlfKm8mKKfh2nl78kR4nhjruUbNU/GjdYEUCbfyVS9vBfN1l72A04NcjKqaLmiA9Uld5xreRjpSuMoSMgs+KP8Pc=
+	t=1755024417; cv=none; b=ngAJLx1YBBQLkiiy2s2i72fQJof+Vi52eTlsqW8bpTArnF/i8Rr8CWKcTtQ7KLr8j86JvyAGQ6nFZCZo0/bJBr8fAb1vgAeSsU14YfH5/ZUh+APonmxJGcym7lmnkR9KjBx/JtkvPSDVYIQbKu18Xlgay/FNvnSfHJigaBy1BG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024414; c=relaxed/simple;
-	bh=ycjv02oZjGVUy+11VuOhFWU+uMt82sWR7Teg9PA++xE=;
+	s=arc-20240116; t=1755024417; c=relaxed/simple;
+	bh=TR/wjBKtaYDCZygkWLKauHeaK2OprRzjJ3FRM4ho1jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egLichWdqZPQlYJo40A8Orvnk7AJaigT0ZvzGRthbTVjminvduP+p9ek7h02MEu1mPDCSzlvYvb4RIh8GQcTpCATowEVWVywx20ug7SbQuVAoHr5wIqb+ULoDz186JJPw6CGcbRTmgGIsdLGJyiqfa34JlJes7y64QkpYOBbrGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7mbpqu1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oqi4hQ/8wy1XXSvYVXuygvwR1QIANXTUOddsOpJUOx1qmjsKFxqIwpv0Ccva1mm4o9d/xKTWegNZs29Zze//OHcxSZNwfDP6rTg9wXotW/k63jVArrD/tdgJ2qwJwRB0yccgDoyrQrqL1K7RpjFxWSd7blEbcfYsJB59liPMXCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OufEnu9E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7mbpqu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FA9C4CEF0;
-	Tue, 12 Aug 2025 18:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OufEnu9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10815C4CEF0;
+	Tue, 12 Aug 2025 18:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024414;
-	bh=ycjv02oZjGVUy+11VuOhFWU+uMt82sWR7Teg9PA++xE=;
+	s=korg; t=1755024417;
+	bh=TR/wjBKtaYDCZygkWLKauHeaK2OprRzjJ3FRM4ho1jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K7mbpqu1STJ7VWngZBvghUeZs5gtA0fK0oIykobaZ7tWfUEKxd7TVrdHXI/Pei3vK
-	 gNpNhT4nOC+25XrCquO7fKn6dkbT2ObA7bHZK7DAsPBkWu+Fu+1bpgOZrhGM5+3pb7
-	 PSDiYP7pKb6k6kqIVMofSQ1Faj0/3tfx5mcOLtlM=
+	b=OufEnu9E34Rhn4ELk+bZY+Q+1iypQPOJIZwGX7vf2YjoSy6f+J6/TgBJevyZUJ9P0
+	 Vm0URMUKu8g/nvaAx0JwT1N7sOsIcR/6HZlUVUP1g+FD7zlOZ2D0hTjRPPMlqAx6R6
+	 UG22xMoGr9pDCGQWNAS3mv487QVVgvgVvQIHpsms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wenglianfa <wenglianfa@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"Pratik R. Sampat" <prsampat@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 366/627] RDMA/hns: Fix HW configurations not cleared in error flow
-Date: Tue, 12 Aug 2025 19:31:01 +0200
-Message-ID: <20250812173433.226666469@linuxfoundation.org>
+Subject: [PATCH 6.16 367/627] crypto: ccp - Fix locking on alloc failure handling
+Date: Tue, 12 Aug 2025 19:31:02 +0200
+Message-ID: <20250812173433.263723268@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,47 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wenglianfa <wenglianfa@huawei.com>
+From: Alexey Kardashevskiy <aik@amd.com>
 
-[ Upstream commit 998b41cb20b02c4e28ac558e4e7f8609d659ec05 ]
+[ Upstream commit b4abeccb8d39db7d9b51cb0098d6458760b30a75 ]
 
-hns_roce_clear_extdb_list_info() will eventually do some HW
-configurations through FW, and they need to be cleared by
-calling hns_roce_function_clear() when the initialization
-fails.
+The __snp_alloc_firmware_pages() helper allocates pages in the firmware
+state (alloc + rmpupdate). In case of failed rmpupdate, it tries
+reclaiming pages with already changed state. This requires calling
+the PSP firmware and since there is sev_cmd_mutex to guard such calls,
+the helper takes a "locked" parameter so specify if the lock needs to
+be held.
 
-Fixes: 7e78dd816e45 ("RDMA/hns: Clear extended doorbell info before using")
-Signed-off-by: wenglianfa <wenglianfa@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250703113905.3597124-3-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Most calls happen from snp_alloc_firmware_page() which executes without
+the lock. However
+
+commit 24512afa4336 ("crypto: ccp: Handle the legacy TMR allocation when SNP is enabled")
+
+switched sev_fw_alloc() from alloc_pages() (which does not call the PSP) to
+__snp_alloc_firmware_pages() (which does) but did not account for the fact
+that sev_fw_alloc() is called from __sev_platform_init_locked()
+(via __sev_platform_init_handle_tmr()) and executes with the lock held.
+
+Add a "locked" parameter to __snp_alloc_firmware_pages().
+Make sev_fw_alloc() use the new parameter to prevent potential deadlock in
+rmp_mark_pages_firmware() if rmpupdate() failed.
+
+Fixes: 24512afa4336 ("crypto: ccp: Handle the legacy TMR allocation when SNP is enabled")
+Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Pratik R. Sampat <prsampat@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/ccp/sev-dev.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 29068be052d9..2b04e25c6b09 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -3001,7 +3001,7 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 8fb94c5f006a..539c303beb3a 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -434,7 +434,7 @@ static int rmp_mark_pages_firmware(unsigned long paddr, unsigned int npages, boo
+ 	return rc;
+ }
  
- 	ret = get_hem_table(hr_dev);
- 	if (ret)
--		goto err_clear_extdb_failed;
-+		goto err_get_hem_table_failed;
+-static struct page *__snp_alloc_firmware_pages(gfp_t gfp_mask, int order)
++static struct page *__snp_alloc_firmware_pages(gfp_t gfp_mask, int order, bool locked)
+ {
+ 	unsigned long npages = 1ul << order, paddr;
+ 	struct sev_device *sev;
+@@ -453,7 +453,7 @@ static struct page *__snp_alloc_firmware_pages(gfp_t gfp_mask, int order)
+ 		return page;
  
- 	if (hr_dev->is_vf)
- 		return 0;
-@@ -3016,6 +3016,8 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
+ 	paddr = __pa((unsigned long)page_address(page));
+-	if (rmp_mark_pages_firmware(paddr, npages, false))
++	if (rmp_mark_pages_firmware(paddr, npages, locked))
+ 		return NULL;
  
- err_llm_init_failed:
- 	put_hem_table(hr_dev);
-+err_get_hem_table_failed:
-+	hns_roce_function_clear(hr_dev);
- err_clear_extdb_failed:
- 	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
- 		free_mr_exit(hr_dev);
+ 	return page;
+@@ -463,7 +463,7 @@ void *snp_alloc_firmware_page(gfp_t gfp_mask)
+ {
+ 	struct page *page;
+ 
+-	page = __snp_alloc_firmware_pages(gfp_mask, 0);
++	page = __snp_alloc_firmware_pages(gfp_mask, 0, false);
+ 
+ 	return page ? page_address(page) : NULL;
+ }
+@@ -498,7 +498,7 @@ static void *sev_fw_alloc(unsigned long len)
+ {
+ 	struct page *page;
+ 
+-	page = __snp_alloc_firmware_pages(GFP_KERNEL, get_order(len));
++	page = __snp_alloc_firmware_pages(GFP_KERNEL, get_order(len), true);
+ 	if (!page)
+ 		return NULL;
+ 
 -- 
 2.39.5
 
