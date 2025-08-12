@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167DB2F5E;
-	Tue, 12 Aug 2025 18:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB2A2FE571;
+	Tue, 12 Aug 2025 18:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021671; cv=none; b=PI3F7daMis3fmIrCzzpZJ1VAJ0G0FHy2mNub7qwJ5IFgk4PzsWyiHl1lqGI4mU/rbLFSKWjKT891tAu4x1prWblLgbS1OYvTF2p2svzZI6SuJ2tyyfsLBobpSufPMojEU0Fr02hsFKReETe9PbrA2rKWkOykYQBeRcJA0U1Afzk=
+	t=1755021674; cv=none; b=TfXFIg2GKmB0J/6UhMz+GlPFdpx7fMJQfUS2b2mp2ywG9brnQJGtFYOeUHj3TbbR19nd5cqxOND8fRPv3CyvKznLVVSTytuiSLdhN8Vy4R6SMOwHz7abgfPAlyVwDURcXDUBXP6D2SXuO7JEdrenBXfQJBgJdwcCv3liC0WxBWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021671; c=relaxed/simple;
-	bh=Zaq6zRZgk84gxPsdZgDo0Jj3M9VU1Wzyn+9vXK8aKMc=;
+	s=arc-20240116; t=1755021674; c=relaxed/simple;
+	bh=bjCge3zA8MoqHQGQbWrkN50pCoDOdpkwdCI2M/Mm7lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwZUtarpCsC4euBN0ykkUgBla4StHyEkpnJ5c/JHGRRjwhm0wDiUpE+gAbtxFIo80isEF2Pd9l6nKCaC6Hx/zDdgrg00TxFd6r92F5bwSghejBwg8+x52qoImbG/kLEjTJxJPGR191XrP4yAFU1QO4CAXr5MKFWEzpZo/7lrgkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyHng3E8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bs9T+LI8wp5CprdUfPKA0AZ3bBayvPJ6JJlz8Gvl/vQp+hs4GTQX2qEM/xfksDCJW4FMBjQhXExWXQNYdbR1fTqX8XITf5iOM/HqLVDsSaWrLfgyz/umqaV5QSiOTN1zzhoE2r3JVUJt9jYHkmIUTI0zHV2l70EoUYsOW4PavBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGRkbWc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyHng3E8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F7CC4CEF0;
-	Tue, 12 Aug 2025 18:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGRkbWc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B247AC4CEF0;
+	Tue, 12 Aug 2025 18:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021670;
-	bh=Zaq6zRZgk84gxPsdZgDo0Jj3M9VU1Wzyn+9vXK8aKMc=;
+	s=korg; t=1755021674;
+	bh=bjCge3zA8MoqHQGQbWrkN50pCoDOdpkwdCI2M/Mm7lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyHng3E8q5hQy7tA/zMASR8A+v7OLlfpTLhLi+bU5tMqnoiUstGmcpyLiQ7PJBL41
-	 RB31jlCgkuvGu7C/ftlTd7Xkxa8FNiCBDE1Q2hDiZApTtb9jcdaxqdRkzq2JrxOqBp
-	 DUvkyfgBePdZTvbI3zdRYobli4ns69NCgdQmTL+Y=
+	b=sGRkbWc5BG+LL770rDrXALwhQaWoH87PMsFJDIbAL5PpI0UfXG782ZGRgILbsMeuB
+	 XDUPYbQ/LXXXCcdWj0iQf4zlvgdPZqcldRpVR/NJnFxWk2Uu3Bsa79WPas7PQ++hFA
+	 7s/Ja//CmEcxz8tP4WyJebtVfJwpK4DEk1TnsLkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	Zixun LI <admin@hifiphile.com>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/262] mtd: rawnand: rockchip: Add missing check after DMA map
-Date: Tue, 12 Aug 2025 19:29:05 +0200
-Message-ID: <20250812172959.786558876@linuxfoundation.org>
+Subject: [PATCH 6.6 158/262] mtd: rawnand: atmel: set pmecc data setup time
+Date: Tue, 12 Aug 2025 19:29:06 +0200
+Message-ID: <20250812172959.831805592@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,59 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
 
-[ Upstream commit 3b36f86dc47261828f96f826077131a35dd825fd ]
+[ Upstream commit f552a7c7e0a14215cb8a6fd89e60fa3932a74786 ]
 
-The DMA map functions can fail and should be tested for errors.
+Setup the pmecc data setup time as 3 clock cycles for 133MHz as recommended
+by the datasheet.
 
-Fixes: 058e0e847d54 ("mtd: rawnand: rockchip: NFC driver for RK3308, RK2928 and others")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
+Reported-by: Zixun LI <admin@hifiphile.com>
+Closes: https://lore.kernel.org/all/c015bb20-6a57-4f63-8102-34b3d83e0f5b@microchip.com
+Suggested-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Signed-off-by: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/rockchip-nand-controller.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/mtd/nand/raw/atmel/pmecc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/rockchip-nand-controller.c b/drivers/mtd/nand/raw/rockchip-nand-controller.c
-index 2a95dd63b8c2..f68600ce5bfa 100644
---- a/drivers/mtd/nand/raw/rockchip-nand-controller.c
-+++ b/drivers/mtd/nand/raw/rockchip-nand-controller.c
-@@ -656,9 +656,16 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
+diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
+index 3c7dee1be21d..0b402823b619 100644
+--- a/drivers/mtd/nand/raw/atmel/pmecc.c
++++ b/drivers/mtd/nand/raw/atmel/pmecc.c
+@@ -143,6 +143,7 @@ struct atmel_pmecc_caps {
+ 	int nstrengths;
+ 	int el_offset;
+ 	bool correct_erased_chunks;
++	bool clk_ctrl;
+ };
  
- 	dma_data = dma_map_single(nfc->dev, (void *)nfc->page_buf,
- 				  mtd->writesize, DMA_TO_DEVICE);
-+	if (dma_mapping_error(nfc->dev, dma_data))
-+		return -ENOMEM;
+ struct atmel_pmecc {
+@@ -843,6 +844,10 @@ static struct atmel_pmecc *atmel_pmecc_create(struct platform_device *pdev,
+ 	if (IS_ERR(pmecc->regs.errloc))
+ 		return ERR_CAST(pmecc->regs.errloc);
+ 
++	/* pmecc data setup time */
++	if (caps->clk_ctrl)
++		writel(PMECC_CLK_133MHZ, pmecc->regs.base + ATMEL_PMECC_CLK);
 +
- 	dma_oob = dma_map_single(nfc->dev, nfc->oob_buf,
- 				 ecc->steps * oob_step,
- 				 DMA_TO_DEVICE);
-+	if (dma_mapping_error(nfc->dev, dma_oob)) {
-+		dma_unmap_single(nfc->dev, dma_data, mtd->writesize, DMA_TO_DEVICE);
-+		return -ENOMEM;
-+	}
+ 	/* Disable all interrupts before registering the PMECC handler. */
+ 	writel(0xffffffff, pmecc->regs.base + ATMEL_PMECC_IDR);
+ 	atmel_pmecc_reset(pmecc);
+@@ -896,6 +901,7 @@ static struct atmel_pmecc_caps at91sam9g45_caps = {
+ 	.strengths = atmel_pmecc_strengths,
+ 	.nstrengths = 5,
+ 	.el_offset = 0x8c,
++	.clk_ctrl = true,
+ };
  
- 	reinit_completion(&nfc->done);
- 	writel(INT_DMA, nfc->regs + nfc->cfg->int_en_off);
-@@ -772,9 +779,17 @@ static int rk_nfc_read_page_hwecc(struct nand_chip *chip, u8 *buf, int oob_on,
- 	dma_data = dma_map_single(nfc->dev, nfc->page_buf,
- 				  mtd->writesize,
- 				  DMA_FROM_DEVICE);
-+	if (dma_mapping_error(nfc->dev, dma_data))
-+		return -ENOMEM;
-+
- 	dma_oob = dma_map_single(nfc->dev, nfc->oob_buf,
- 				 ecc->steps * oob_step,
- 				 DMA_FROM_DEVICE);
-+	if (dma_mapping_error(nfc->dev, dma_oob)) {
-+		dma_unmap_single(nfc->dev, dma_data, mtd->writesize,
-+				 DMA_FROM_DEVICE);
-+		return -ENOMEM;
-+	}
- 
- 	/*
- 	 * The first blocks (4, 8 or 16 depending on the device)
+ static struct atmel_pmecc_caps sama5d4_caps = {
 -- 
 2.39.5
 
