@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB02C2FE57A;
-	Tue, 12 Aug 2025 18:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D3F2DFA3E;
+	Tue, 12 Aug 2025 18:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022648; cv=none; b=hJLaXMWo0Y0QdFN3fDASAJRIQYTWTY/lwtFEWPwcGt/7DSrY3lyPMmVCwi3Xj+PgfdMfJ6BvEJRUU+dAwJOwnIiTz3hb/R8goJGaeHL4q/H68Kr7l5Zg4OyrnAFFePb2Ngu+OS3w7zLVQbHFv92hQo1rIpdMyqEZCmmOyzto2A4=
+	t=1755022651; cv=none; b=mXTU82hTDBsPD1L2GIfoChpZEZFXvrYtDmdw+jmBqmln0PvT6rmBbx4DHNNEmqNjEhCrAITGDLZQrmE6gPk8lWjLWCvIQVivit4VBrNRbEilqOeEHcw/e1YQNXuUrPUuECsbRuOaHiDmUX5JGoU32eMpcKuXoQ4PvpxxRfe/6pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022648; c=relaxed/simple;
-	bh=a2Yugctz6Y4mcqn3Wg0ro3xG4R6AO6JyDqlvkyikF7o=;
+	s=arc-20240116; t=1755022651; c=relaxed/simple;
+	bh=IguVgSroqIDBfp0Q0498E4hd+aLzvVPXiYbRyMl0MYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyYSM5jbOjKRo1rO8FDtpxiwRNwAYSzHmDlHgCO2VLmWiFON+2X1cavsJlMEUblP80AGWDExGKUckjoEjdZUSfA9/+aNPfNfUAaKDOUuRxJZQUIpGb8Ftsg2YpprOs3zlYt/wpUuidjy0+NYqaLixwZBIVMtTOcyeAFvb6gO+0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyTfdVxf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nmNgiQzG6yOQJjFOkeZffsqRvJlLaVSgSvGJ9VcskIYAJXOsDGjwE508h5/CLySW8WgYEoFemSZSx4wbEdirVC9eH0tELTwtiHDzifNgmYt5uSfZP9U7nzhl0aLNX8SMGft840t1DGpBe5M5BdQoxNJTXJqyF78xF3zV7x86fDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGPLHMQR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyTfdVxf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A231C4CEF6;
-	Tue, 12 Aug 2025 18:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGPLHMQR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EC9C4CEF0;
+	Tue, 12 Aug 2025 18:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022647;
-	bh=a2Yugctz6Y4mcqn3Wg0ro3xG4R6AO6JyDqlvkyikF7o=;
+	s=korg; t=1755022651;
+	bh=IguVgSroqIDBfp0Q0498E4hd+aLzvVPXiYbRyMl0MYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyTfdVxfbDyb4X0ikFgK84LC1NqkQUl4JtCrvAQWNo42dM2oUqnDoWrFe7fxGStva
-	 DK+w7+FVT9Mnnr5zgwzSxcywETLPT84xUVP0vo2lyhZOkFzC/GroL3m/lGCvTskml+
-	 RiXDxL/wFCIxTNNavzQ+UuXX6VHJvkojAnwO9K5A=
+	b=BGPLHMQR8FWFDKL1Q2bZT4a0bD02Ox9ZysZCzQ/DoWauRrrJCPaZm3b97gNL4GbFz
+	 3tzQ1tu2QDY9YbjCEHih5831uO+12w7qmxBw2dknq+FQnsCEmRr9ZU/l47cN9O5PP+
+	 9ctglesc++yfF1QIFATnohurjnwqXLvZXexelc24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/369] Fix dma_unmap_sg() nents value
-Date: Tue, 12 Aug 2025 19:27:51 +0200
-Message-ID: <20250812173021.314257709@linuxfoundation.org>
+Subject: [PATCH 6.12 211/369] soundwire: stream: restore params when prepare ports fail
+Date: Tue, 12 Aug 2025 19:28:28 +0200
+Message-ID: <20250812173022.696183863@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -45,41 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 1db50f7b7a793670adcf062df9ff27798829d963 ]
+[ Upstream commit dba7d9dbfdc4389361ff3a910e767d3cfca22587 ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+The bus->params should be restored if the stream is failed to prepare.
+The issue exists since beginning. The Fixes tag just indicates the
+first commit that the commit can be applied to.
 
-Fixes: ed10435d3583 ("RDMA/erdma: Implement hierarchical MTT")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20250630092346.81017-2-fourier.thomas@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 17ed5bef49f4 ("soundwire: add missing newlines in dynamic debug logs")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://lore.kernel.org/r/20250626060952.405996-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_verbs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/soundwire/stream.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 51d619edb6c5..e56ba86d460e 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -597,7 +597,8 @@ static struct erdma_mtt *erdma_create_cont_mtt(struct erdma_dev *dev,
- static void erdma_destroy_mtt_buf_sg(struct erdma_dev *dev,
- 				     struct erdma_mtt *mtt)
- {
--	dma_unmap_sg(&dev->pdev->dev, mtt->sglist, mtt->nsg, DMA_TO_DEVICE);
-+	dma_unmap_sg(&dev->pdev->dev, mtt->sglist,
-+		     DIV_ROUND_UP(mtt->size, PAGE_SIZE), DMA_TO_DEVICE);
- 	vfree(mtt->sglist);
- }
+diff --git a/drivers/soundwire/stream.c b/drivers/soundwire/stream.c
+index 7aa4900dcf31..6c1e3aed8162 100644
+--- a/drivers/soundwire/stream.c
++++ b/drivers/soundwire/stream.c
+@@ -1414,7 +1414,7 @@ static int _sdw_prepare_stream(struct sdw_stream_runtime *stream,
+ 		if (ret < 0) {
+ 			dev_err(bus->dev, "Prepare port(s) failed ret = %d\n",
+ 				ret);
+-			return ret;
++			goto restore_params;
+ 		}
+ 	}
  
 -- 
 2.39.5
