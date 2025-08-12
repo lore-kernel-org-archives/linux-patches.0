@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4F961FFE;
-	Tue, 12 Aug 2025 18:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC5F2DBF5E;
+	Tue, 12 Aug 2025 18:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022685; cv=none; b=ttEdxFuP3KeI1AK9J9hng63SvHRaD2Mht3SpInw4X0myEbWll5J2DwFIF7GoFRmrLNepidAzVOJQJWBGBjrkdqY76slMNcAsQGnEtwzmal4lcftX2O/7Ixexs5ZwjSBMB+TEVmvL3OIl68kB59A0ZO6y1kJ/olArZGEp7Tvb7yw=
+	t=1755022688; cv=none; b=W4mbVavTaECnSxyvsbhUMCEgzGhv4Qb53iYTKvpiveQ+4t6y6cdEns863Owv0QpqkeICfLrLYyVVx4xhaGw9RSH2HBvMMQiOKda60xesjSVSm/awC+5RvtLknqcMh91HtUQpQuc/f+hXuaMwkgwYoU/1Q6X2VQ9iFv0YBjNf+0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022685; c=relaxed/simple;
-	bh=O9YjqYb2DuHXDoTA0NUGUqrYpUs0+XDsWTArw+HR3+g=;
+	s=arc-20240116; t=1755022688; c=relaxed/simple;
+	bh=KkD0PxD+TjM0lWl4DhxK6672ArDHeG0OwjRvYtevp4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGMioql+wQ/yYptBt0CHxo6RdxReL7HKjnBbCV1fqSffnyERyT1uNxIZrATVtq1FxbIXWN21H69/3so2nChUDuhmHlVlUWDyP89aYWQFzHLJZgC5h5oetCRpWdAbrz3dtiEKNU/N5KGRcew5lptZvDaXQVNjwyvnKoVVq6sVbMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKbIylPl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nVv7f+CbUdS0ejtVBccGmGgo5DeeVSJdRYVVriV3xBN3HS/ojB1u39XExi4UL9JcPnpTl9XYOCkGSsBBKeJHbbjChM1SCXrr/gyfOP9BHTaD1bLStbQ9DNcVbAGoY3LEPLDAxs3t/IQQkWlLn86fRW0CvuTwAJWYpDn/YUkj1xM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPjjcy8d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKbIylPl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7049C4CEF0;
-	Tue, 12 Aug 2025 18:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPjjcy8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD88C4CEF0;
+	Tue, 12 Aug 2025 18:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022685;
-	bh=O9YjqYb2DuHXDoTA0NUGUqrYpUs0+XDsWTArw+HR3+g=;
+	s=korg; t=1755022688;
+	bh=KkD0PxD+TjM0lWl4DhxK6672ArDHeG0OwjRvYtevp4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKbIylPlIiih+rHrFx5gxJDvfjU/JY0eJh5DBNTbVshSvgTxEPv06E/AtSUkExvDk
-	 6SuqoKuPITSe8/gA12AQEHmPx2jYm+xBMMY5tMSPiyE6VBLAfh3GzqE/cPL723Ih92
-	 DGE6slzH719vZ3Gtq6m4CWCXMffHYY2K6UKvEWLs=
+	b=YPjjcy8dAYIm1qW68w6pXOmVgpmC6E2ALC+jnoIVetxZvtgkfdcUUbkfhJEUih+ke
+	 yZG4RYZAbVeZMZ9gVyD/uusbTfvJ4wA/Nnni3fY9jMd97tKPJTva+f1TNazdbPj5Bm
+	 DHQbsKYQEJjqdVQe501c0wDu8kGIJjqUdOpLGyAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Zhan <zhanjun@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 229/369] selftests: ALSA: fix memory leak in utimer test
-Date: Tue, 12 Aug 2025 19:28:46 +0200
-Message-ID: <20250812173023.389527404@linuxfoundation.org>
+Subject: [PATCH 6.12 212/369] PCI: endpoint: pci-epf-vntb: Fix the incorrect usage of __iomem attribute
+Date: Tue, 12 Aug 2025 19:28:29 +0200
+Message-ID: <20250812173022.733244268@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,35 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Manivannan Sadhasivam <mani@kernel.org>
 
-[ Upstream commit 6260da046819b7bda828bacae148fc8856fdebd7 ]
+[ Upstream commit 61ae7f8694fb4b57a8c02a1a8d2b601806afc999 ]
 
-Free the malloc'd buffer in TEST_F(timer_f, utimer) to prevent
-memory leak.
+__iomem attribute is supposed to be used only with variables holding the
+MMIO pointer. But here, 'mw_addr' variable is just holding a 'void *'
+returned by pci_epf_alloc_space(). So annotating it with __iomem is clearly
+wrong. Hence, drop the attribute.
 
-Fixes: 1026392d10af ("selftests: ALSA: Cover userspace-driven timers with test")
-Reported-by: Jun Zhan <zhanjun@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://patch.msgid.link/DE4D931FCF54F3DB+20250731100222.65748-1-wangyuli@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This also fixes the below sparse warning:
+
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17: warning: incorrect type in assignment (different address spaces)
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17:    expected void [noderef] __iomem *mw_addr
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17:    got void *
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21: warning: incorrect type in assignment (different address spaces)
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21:    expected unsigned int [usertype] *epf_db
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21:    got void [noderef] __iomem *mw_addr
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38: warning: incorrect type in argument 2 (different address spaces)
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38:    expected void *addr
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38:    got void [noderef] __iomem *mw_addr
+
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250709125022.22524-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/utimer-test.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/alsa/utimer-test.c b/tools/testing/selftests/alsa/utimer-test.c
-index 32ee3ce57721..37964f311a33 100644
---- a/tools/testing/selftests/alsa/utimer-test.c
-+++ b/tools/testing/selftests/alsa/utimer-test.c
-@@ -135,6 +135,7 @@ TEST_F(timer_f, utimer) {
- 	pthread_join(ticking_thread, NULL);
- 	ASSERT_EQ(total_ticks, TICKS_COUNT);
- 	pclose(rfp);
-+	free(buf);
- }
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 3cddfdd04029..62d09a528e68 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -530,7 +530,7 @@ static int epf_ntb_db_bar_init(struct epf_ntb *ntb)
+ 	struct device *dev = &ntb->epf->dev;
+ 	int ret;
+ 	struct pci_epf_bar *epf_bar;
+-	void __iomem *mw_addr;
++	void *mw_addr;
+ 	enum pci_barno barno;
+ 	size_t size = sizeof(u32) * ntb->db_count;
  
- TEST(wrong_timers_test) {
 -- 
 2.39.5
 
