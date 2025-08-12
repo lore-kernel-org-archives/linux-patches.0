@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993562FDC55;
-	Tue, 12 Aug 2025 18:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B412FF152;
+	Tue, 12 Aug 2025 18:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024454; cv=none; b=etJ7TAbC7KGfXSObj7MZsncbaF8Utmi6CCKjvmCQraB10wqB/2YsZei8EkoNq6wY4329PBMXCoaK7SCxqUWtHoKRI9PAJhnKWIrvjY6dXGRKPXrXw+TGFoUSFLmEiq0fzUGB83H4BgYyIv4rVRU9se8//zswwvyEyIvUyQurIeg=
+	t=1755024457; cv=none; b=PoqpCrLeZHeBXfwpR1qcZt+1rds08SbFgesnACG7mLChgBsROYqLzntHDf/UMoATidqkejD5z87tK9O7L5acjEQ7Vd0V3BjtmbfsyJoR/KkFH2qXYnPIWCnBnQ1iZxZ7Bda7SH7u6tivLzWn0Qn/UYPtlp2dhuDSTGfnvUcaA2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024454; c=relaxed/simple;
-	bh=UlYgXNK6mYQA06C6dfB9jC7CQ80GoYkYoncOOAu5aWk=;
+	s=arc-20240116; t=1755024457; c=relaxed/simple;
+	bh=w4MUzgMp+P3d/lAo3qM7O+qyf4GhZHOgqnyrXdfm+hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1CQ8iIKycnFmeliMuAmEWpKxyc1cafucpNsTb3jagX8gDFIBw5Xs3Z0b+ICw9FV2AjnnhZqeGtIZBK4Y0tNEuBTVWLx1td60XWZcnGigMg8nhZRUFMHOtSmEaMUEL2uSOcD2e3TQwZQ9f86RA2lutYtMA1GGN56F0AeZn1Mph4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpBlylfp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qfxDnUuPbuDkWBmmL/j6xvU8ApipUCYrzQJFAyyD4dnz0cYO+lc8GMfuylNNXV1BYqJ0B+hFEzkWJQlDeVUgSVeTbVhyD0g21NTJdJgUCZU/EjDL89MK2p4dTfe8qTh0cZlQ+BwtSPpWAkzrkXK4BVMAdpKrSFCqjZnwmuzQJig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlCtuHLV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpBlylfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091AAC4CEF1;
-	Tue, 12 Aug 2025 18:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlCtuHLV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F50C4CEF1;
+	Tue, 12 Aug 2025 18:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024454;
-	bh=UlYgXNK6mYQA06C6dfB9jC7CQ80GoYkYoncOOAu5aWk=;
+	s=korg; t=1755024457;
+	bh=w4MUzgMp+P3d/lAo3qM7O+qyf4GhZHOgqnyrXdfm+hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpBlylfpYJFYhxrWUdBw9RgiOef5+FnaA7h9JgbG/TU3yZntBkmMX0A6ANnUPI32H
-	 LzadSVS3HVny/GrnQLRD7/cLRpISB89XxA/cNRXKUz6n1AIQ19rZex5d59OVaKQ7F4
-	 QxfcS/OIWhDxfGDGt4a8RgES7nLbAU1aFkCcnbwM=
+	b=TlCtuHLV5JCtHrm62ThXR/QDBG8Z9Z/CggfqaPCNCr23lu29n6I40Y4eVUbYSrLJC
+	 g/DV06HhoaWhzjDVN5JQQHWBe6skQPEKnEalGp86SfzAXDexkROzksIpw6mUPMP9g3
+	 go9VA0zDHuZXWRS2cHJTpj2uGqn+NM9SNtwnu2sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	"Kirill A. Shuemov" <kirill.shutemov@linux.intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Shiju Jose <shiju.jose@huawei.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 377/627] proc: use the same treatment to check proc_lseek as ones for proc_read_iter et.al
-Date: Tue, 12 Aug 2025 19:31:12 +0200
-Message-ID: <20250812173433.642373195@linuxfoundation.org>
+Subject: [PATCH 6.16 378/627] cxl/core: Introduce a new helper cxl_resource_contains_addr()
+Date: Tue, 12 Aug 2025 19:31:13 +0200
+Message-ID: <20250812173433.679636183@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -56,86 +55,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Li Ming <ming.li@zohomail.com>
 
-[ Upstream commit ff7ec8dc1b646296f8d94c39339e8d3833d16c05 ]
+[ Upstream commit 5b6031c832c2747d58d3f0130098d965ef050b9a ]
 
-Check pde->proc_ops->proc_lseek directly may cause UAF in rmmod scenario.
-It's a gap in proc_reg_open() after commit 654b33ada4ab("proc: fix UAF in
-proc_get_inode()").  Followed by AI Viro's suggestion, fix it in same
-manner.
+In CXL subsystem, many functions need to check an address availability
+by checking if the resource range contains the address. Providing a new
+helper function cxl_resource_contains_addr() to check if the resource
+range contains the input address.
 
-Link: https://lkml.kernel.org/r/20250607021353.1127963-1-wangzijie1@honor.com
-Fixes: 3f61631d47f1 ("take care to handle NULL ->proc_lseek()")
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reviewed-by: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Cc: Kirill A. Shuemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Li Ming <ming.li@zohomail.com>
+Tested-by: Shiju Jose <shiju.jose@huawei.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20250711032357.127355-2-ming.li@zohomail.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Stable-dep-of: 03ff65c02559 ("cxl/edac: Fix wrong dpa checking for PPR operation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/generic.c       | 2 ++
- fs/proc/inode.c         | 2 +-
- fs/proc/internal.h      | 5 +++++
- include/linux/proc_fs.h | 1 +
- 4 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/cxl/core/core.h | 1 +
+ drivers/cxl/core/hdm.c  | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/fs/proc/generic.c b/fs/proc/generic.c
-index a3e22803cddf..e0e50914ab25 100644
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -569,6 +569,8 @@ static void pde_set_flags(struct proc_dir_entry *pde)
- 	if (pde->proc_ops->proc_compat_ioctl)
- 		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
- #endif
-+	if (pde->proc_ops->proc_lseek)
-+		pde->flags |= PROC_ENTRY_proc_lseek;
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index 29b61828a847..6b78b10da3e1 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -80,6 +80,7 @@ int cxl_dpa_alloc(struct cxl_endpoint_decoder *cxled, u64 size);
+ int cxl_dpa_free(struct cxl_endpoint_decoder *cxled);
+ resource_size_t cxl_dpa_size(struct cxl_endpoint_decoder *cxled);
+ resource_size_t cxl_dpa_resource_start(struct cxl_endpoint_decoder *cxled);
++bool cxl_resource_contains_addr(const struct resource *res, const resource_size_t addr);
+ 
+ enum cxl_rcrb {
+ 	CXL_RCRB_DOWNSTREAM,
+diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+index ab1007495f6b..088caa6b6f74 100644
+--- a/drivers/cxl/core/hdm.c
++++ b/drivers/cxl/core/hdm.c
+@@ -547,6 +547,13 @@ resource_size_t cxl_dpa_resource_start(struct cxl_endpoint_decoder *cxled)
+ 	return base;
  }
  
- struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
-diff --git a/fs/proc/inode.c b/fs/proc/inode.c
-index 3604b616311c..129490151be1 100644
---- a/fs/proc/inode.c
-+++ b/fs/proc/inode.c
-@@ -473,7 +473,7 @@ static int proc_reg_open(struct inode *inode, struct file *file)
- 	typeof_member(struct proc_ops, proc_open) open;
- 	struct pde_opener *pdeo;
- 
--	if (!pde->proc_ops->proc_lseek)
-+	if (!pde_has_proc_lseek(pde))
- 		file->f_mode &= ~FMODE_LSEEK;
- 
- 	if (pde_is_permanent(pde)) {
-diff --git a/fs/proc/internal.h b/fs/proc/internal.h
-index 96122e91c645..3d48ffe72583 100644
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -99,6 +99,11 @@ static inline bool pde_has_proc_compat_ioctl(const struct proc_dir_entry *pde)
- #endif
- }
- 
-+static inline bool pde_has_proc_lseek(const struct proc_dir_entry *pde)
++bool cxl_resource_contains_addr(const struct resource *res, const resource_size_t addr)
 +{
-+	return pde->flags & PROC_ENTRY_proc_lseek;
++	struct resource _addr = DEFINE_RES_MEM(addr, 1);
++
++	return resource_contains(res, &_addr);
 +}
 +
- extern struct kmem_cache *proc_dir_entry_cache;
- void pde_free(struct proc_dir_entry *pde);
- 
-diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
-index ea62201c74c4..703d0c76cc9a 100644
---- a/include/linux/proc_fs.h
-+++ b/include/linux/proc_fs.h
-@@ -27,6 +27,7 @@ enum {
- 
- 	PROC_ENTRY_proc_read_iter	= 1U << 1,
- 	PROC_ENTRY_proc_compat_ioctl	= 1U << 2,
-+	PROC_ENTRY_proc_lseek		= 1U << 3,
- };
- 
- struct proc_ops {
+ int cxl_dpa_free(struct cxl_endpoint_decoder *cxled)
+ {
+ 	struct cxl_port *port = cxled_to_port(cxled);
 -- 
 2.39.5
 
