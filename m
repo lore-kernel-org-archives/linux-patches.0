@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5BE2CA9;
-	Tue, 12 Aug 2025 18:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CDC2FABFC;
+	Tue, 12 Aug 2025 18:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025048; cv=none; b=il7WJx1T1/nN0y/Ijot1mdpUm28tY10h94V3fAei2d44ss98b4uBT5RQbYKjpA/GDO9qh0CC3kY3fSHkIubsA1BYkzYNCZVy/Oa95VFRz9dL2cTKIXS3iFEQc6abDOxBqCowF5nEPcHGZOKSnnRqJHlE0WS+ZzZZiOAo+ZBSYW8=
+	t=1755025051; cv=none; b=FBEvS6mlra9wuMUwS5vmktzrpVLnH/ofEkN+MZ/xn+r+mnYU4Wm5Ca58LawlM95wmZU7TkT5J8gSD2oDELuKNL1tlqWCMVpRMMas6ejoSmnYY/7nS3U0sS1KXtvLvrB+LOg+CYzM2Dy2fM0LkTTo2IHxKEU5u0oDvn++GizsLo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025048; c=relaxed/simple;
-	bh=kFBYCLJ4nsrAr6czstJj7N0POiGsUbkavERGNGU5E2o=;
+	s=arc-20240116; t=1755025051; c=relaxed/simple;
+	bh=ZDMJdX4XlEsc0TJUxzfKDLO/QkXEve8kcCriNjhw58U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KuzQTtXnhGJnWTAGsM40cIqkVCKyy1VponVXqaWMkcYUVIvtBcwaAcLc/PWn+xA7/llC6YBOUePwFRhlUParbQHR0AKdBX70OmlYRQ+xG7jKpO7dmli9xoYvHOSU7nGCtGKFdC2n1KzyDKEuK+DDBmsKkUqY7qAaPAFR+TOL0jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOmG+SPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6lJx5E8VhqH2TIgobhHQxS1y/y8BAnDi14AM7HYivpFo8bODa7tikR60b2WJMt6Y8xrBiJ9yKh17Ltzsdu1wayKQdqtChe2OLFAtikMqzB+XCLesmBStjWDht3iU8UgiQR+R4umk8xRcYG3HzKkmln7pFVaOBKvx9E4Wvz42MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mK6VUoCu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOmG+SPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5493C4CEF0;
-	Tue, 12 Aug 2025 18:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mK6VUoCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E71C4CEF0;
+	Tue, 12 Aug 2025 18:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025047;
-	bh=kFBYCLJ4nsrAr6czstJj7N0POiGsUbkavERGNGU5E2o=;
+	s=korg; t=1755025050;
+	bh=ZDMJdX4XlEsc0TJUxzfKDLO/QkXEve8kcCriNjhw58U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOmG+SPGBo8MYwrWqTcnXP/yejsHw/7cZeNHY6Qlqse00fkFWXQI/XA/vyhgwWPX2
-	 JyAJ18Y8KGC4toAM50Qow1miYTFX1Jvf7LZp9oSfrmJ1MAWPYS4jr/OT30PbpHNgr8
-	 4L5dUQqrlHsz6xVr5FpN8txP5UpRq5ngFGTS0xJs=
+	b=mK6VUoCuc4dxc1m70na1aQ6RZTEuopPjXQ+dGoj5YeCvR2amMszGjO8Iz0DfKj0vq
+	 xffyirNFsTqO9AHyu9Bp6e+1HEWVxg7kaSExXVpIuIxg0HfqUbwp7XBCMk1P3qUnyE
+	 YyWJqbHwCNWIXhAFne+CF7hTmLLQJ7BJskgSOl5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baojun Xu <baojun.xu@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Meghana Malladi <m-malladi@ti.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 527/627] ASoC: tas2781: Fix the wrong step for TLV on tas2781
-Date: Tue, 12 Aug 2025 19:33:42 +0200
-Message-ID: <20250812173451.953554163@linuxfoundation.org>
+Subject: [PATCH 6.16 554/627] net: ti: icssg-prueth: Fix skb handling for XDP_PASS
+Date: Tue, 12 Aug 2025 19:34:09 +0200
+Message-ID: <20250812173452.975255138@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,34 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baojun Xu <baojun.xu@ti.com>
+From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit 9843cf7b6fd6f938c16fde51e86dd0e3ddbefb12 ]
+[ Upstream commit d942fe13f72bec92f6c689fbd74c5ec38228c16a ]
 
-The step for TLV on tas2781, should be 50 (-0.5dB).
+emac_rx_packet() is a common function for handling traffic
+for both xdp and non-xdp use cases. Use common logic for
+handling skb with or without xdp to prevent any incorrect
+packet processing. This patch fixes ping working with
+XDP_PASS for icssg driver.
 
-Fixes: 678f38eba1f2 ("ASoC: tas2781: Add Header file for tas2781 driver")
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20250801021618.64627-1-baojun.xu@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 62aa3246f4623 ("net: ti: icssg-prueth: Add XDP support")
+Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250803180216.3569139-1-m-malladi@ti.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/tas2781-tlv.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/ti/icssg/icssg_common.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/include/sound/tas2781-tlv.h b/include/sound/tas2781-tlv.h
-index d87263e43fdb..ef9b9f19d212 100644
---- a/include/sound/tas2781-tlv.h
-+++ b/include/sound/tas2781-tlv.h
-@@ -15,7 +15,7 @@
- #ifndef __TAS2781_TLV_H__
- #define __TAS2781_TLV_H__
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_common.c b/drivers/net/ethernet/ti/icssg/icssg_common.c
+index 12f25cec6255..57e5f1c88f50 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_common.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
+@@ -706,9 +706,9 @@ static int emac_rx_packet(struct prueth_emac *emac, u32 flow_id, u32 *xdp_state)
+ 	struct page_pool *pool;
+ 	struct sk_buff *skb;
+ 	struct xdp_buff xdp;
++	int headroom, ret;
+ 	u32 *psdata;
+ 	void *pa;
+-	int ret;
  
--static const __maybe_unused DECLARE_TLV_DB_SCALE(dvc_tlv, -10000, 100, 0);
-+static const __maybe_unused DECLARE_TLV_DB_SCALE(dvc_tlv, -10000, 50, 0);
- static const __maybe_unused DECLARE_TLV_DB_SCALE(amp_vol_tlv, 1100, 50, 0);
+ 	*xdp_state = 0;
+ 	pool = rx_chn->pg_pool;
+@@ -757,22 +757,23 @@ static int emac_rx_packet(struct prueth_emac *emac, u32 flow_id, u32 *xdp_state)
+ 		xdp_prepare_buff(&xdp, pa, PRUETH_HEADROOM, pkt_len, false);
  
- #endif
+ 		*xdp_state = emac_run_xdp(emac, &xdp, page, &pkt_len);
+-		if (*xdp_state == ICSSG_XDP_PASS)
+-			skb = xdp_build_skb_from_buff(&xdp);
+-		else
++		if (*xdp_state != ICSSG_XDP_PASS)
+ 			goto requeue;
++		headroom = xdp.data - xdp.data_hard_start;
++		pkt_len = xdp.data_end - xdp.data;
+ 	} else {
+-		/* prepare skb and send to n/w stack */
+-		skb = napi_build_skb(pa, PAGE_SIZE);
++		headroom = PRUETH_HEADROOM;
+ 	}
+ 
++	/* prepare skb and send to n/w stack */
++	skb = napi_build_skb(pa, PAGE_SIZE);
+ 	if (!skb) {
+ 		ndev->stats.rx_dropped++;
+ 		page_pool_recycle_direct(pool, page);
+ 		goto requeue;
+ 	}
+ 
+-	skb_reserve(skb, PRUETH_HEADROOM);
++	skb_reserve(skb, headroom);
+ 	skb_put(skb, pkt_len);
+ 	skb->dev = ndev;
+ 
 -- 
 2.39.5
 
