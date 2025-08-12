@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198D4221FAC;
-	Tue, 12 Aug 2025 17:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36B1221FAC;
+	Tue, 12 Aug 2025 17:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020897; cv=none; b=fpe3ghl/TpRk/itkpDnUsQq2pIjzFV1y4KLzR3LoBVABcaLmEyB9+ugl7EvA3KeXElAndeY+FCI4PcvSB3H7iSMrQChy05pVxYV8lg31Gt1DFzFdPwUuLmR3Mk/PVWKc8ykVaX2/Q3/Gh7kab6GX37kDPBcdfXYf/d0g4ClowaQ=
+	t=1755020901; cv=none; b=ro5MbSfRps4Zoo/N2EbsAA+H6Ki1qYJfCcS9Bu+59zcQkWumly++lu8wEfqIwzimiAEzSaqeQcNd2qM/Y+SY3/b0rcFY4rpjMxvf9cq1fNXwgNFMO1YVQKKHfNNUUi26BT5JGkW/HTItDEHKFafJqiEw27h5xl1EzCm5CJFYWJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020897; c=relaxed/simple;
-	bh=1nQHgsA1I79OY84Ma2AHcmF4LB3qhKmB9CdBuWp5A+Q=;
+	s=arc-20240116; t=1755020901; c=relaxed/simple;
+	bh=7tPF2yaygx/9wjMsGqoADMaDA/KEkBJsG3X8yTamlyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6ZpRiaw9XqdzjALcr0UbFwD8hqnM5nhD109RkZbwFkTkTw1oxgyeg7NZAMhzjvjfh2mLjweDYmpBZaTrNqB72VDeuN7Ir1XTNmLv2i6QdJaaLzqGHchNMe+SgeKTXsuEHbZAQ+O2v9qD9fEV1J1cKkqTjbINhQ0hRwb0qWu0/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dj1SshLr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PdM4+FGTgqUBLFF0mmu0navJmMH/SfxMUFsXLYdqqbnmrxFSuDesOIFBPzFhYR6/M+ogE4khmB/ND5PRkWTn7swaLF0LZdxNAcu1yYwqhAOD7k7D/oJxsXu5e7sZtLSzRGBUnhCWI+cWHz4JF0ixe+EZcw+2BSMPlK71pSj/daI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGBMu57W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dj1SshLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B35FC4CEF0;
-	Tue, 12 Aug 2025 17:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGBMu57W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E977C4CEF0;
+	Tue, 12 Aug 2025 17:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020897;
-	bh=1nQHgsA1I79OY84Ma2AHcmF4LB3qhKmB9CdBuWp5A+Q=;
+	s=korg; t=1755020900;
+	bh=7tPF2yaygx/9wjMsGqoADMaDA/KEkBJsG3X8yTamlyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dj1SshLrxRvuOdPaJU50tO4rBUVuY5OZKC1isMiiiw5YOG0yvX7K5i4krC+j8K6kF
-	 ehop8q4INeOfh+zuDTrYDy6h5F6wGB3YBxU7bisEKCqkb1SPzMjR9t9GukmoCAi4zg
-	 bVpbHrENE+QRacVLqgjacLLxpiFF/+njErOZdcD8=
+	b=kGBMu57WxGK/VnPNHD954j8hkQnwOk5QAgaX1+meTfC77RW/zRAv4ndVF38GGKMj2
+	 j53D/N9pb0s1ogr5YDQP7ntS+KQfuTdUkQnKBliPSOE29Dr4Dy0IejsWm4r3QfdJn9
+	 ITha1fOkr4n5vQNY7onw9NWBxjSKtPTIwLOyF0QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Lizhi Xu <lizhi.xu@windriver.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/262] Revert "vmci: Prevent the dispatching of uninitialized payloads"
-Date: Tue, 12 Aug 2025 19:26:58 +0200
-Message-ID: <20250812172954.251028433@linuxfoundation.org>
+Subject: [PATCH 6.1 184/253] module: Restore the moduleparam prefix length check
+Date: Tue, 12 Aug 2025 19:29:32 +0200
+Message-ID: <20250812172956.604917463@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit 8f5d9bed6122b8d96508436e5ad2498bb797eb6b ]
+[ Upstream commit bdc877ba6b7ff1b6d2ebeff11e63da4a50a54854 ]
 
-This reverts commit bfb4cf9fb97e4063f0aa62e9e398025fb6625031.
+The moduleparam code allows modules to provide their own definition of
+MODULE_PARAM_PREFIX, instead of using the default KBUILD_MODNAME ".".
 
-While the code "looks" correct, the compiler has no way to know that
-doing "fun" pointer math like this really isn't a write off the end of
-the structure as there is no hint anywhere that the structure has data
-at the end of it.
+Commit 730b69d22525 ("module: check kernel param length at compile time,
+not runtime") added a check to ensure the prefix doesn't exceed
+MODULE_NAME_LEN, as this is what param_sysfs_builtin() expects.
 
-This causes the following build warning:
+Later, commit 58f86cc89c33 ("VERIFY_OCTAL_PERMISSIONS: stricter checking
+for sysfs perms.") removed this check, but there is no indication this was
+intentional.
 
-In function 'fortify_memset_chk',
-    inlined from 'ctx_fire_notification.isra' at drivers/misc/vmw_vmci/vmci_context.c:254:3:
-include/linux/fortify-string.h:480:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  480 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Since the check is still useful for param_sysfs_builtin() to function
+properly, reintroduce it in __module_param_call(), but in a modernized form
+using static_assert().
 
-So revert it for now and it can come back in the future in a "sane" way
-that either correctly makes the structure know that there is trailing
-data, OR just the payload structure is properly referenced and zeroed
-out.
+While here, clean up the __module_param_call() comments. In particular,
+remove the comment "Default value instead of permissions?", which comes
+from commit 9774a1f54f17 ("[PATCH] Compile-time check re world-writeable
+module params"). This comment was related to the test variable
+__param_perm_check_##name, which was removed in the previously mentioned
+commit 58f86cc89c33.
 
-Fixes: bfb4cf9fb97e ("vmci: Prevent the dispatching of uninitialized payloads")
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Lizhi Xu <lizhi.xu@windriver.com>
-Link: https://lore.kernel.org/r/20250703171021.0aee1482@canb.auug.org.au
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 58f86cc89c33 ("VERIFY_OCTAL_PERMISSIONS: stricter checking for sysfs perms.")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Link: https://lore.kernel.org/r/20250630143535.267745-4-petr.pavlu@suse.com
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_context.c | 2 --
- 1 file changed, 2 deletions(-)
+ include/linux/moduleparam.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/misc/vmw_vmci/vmci_context.c b/drivers/misc/vmw_vmci/vmci_context.c
-index d566103caa27..f22b44827e92 100644
---- a/drivers/misc/vmw_vmci/vmci_context.c
-+++ b/drivers/misc/vmw_vmci/vmci_context.c
-@@ -251,8 +251,6 @@ static int ctx_fire_notification(u32 context_id, u32 priv_flags)
- 		ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 						  VMCI_CONTEXT_RESOURCE_ID);
- 		ev.msg.hdr.payload_size = sizeof(ev) - sizeof(ev.msg.hdr);
--		memset((char*)&ev.msg.hdr + sizeof(ev.msg.hdr), 0,
--			ev.msg.hdr.payload_size);
- 		ev.msg.event_data.event = VMCI_EVENT_CTX_REMOVED;
- 		ev.payload.context_id = context_id;
+diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
+index 962cd41a2cb5..061e19c94a6b 100644
+--- a/include/linux/moduleparam.h
++++ b/include/linux/moduleparam.h
+@@ -282,10 +282,9 @@ struct kparam_array
+ #define __moduleparam_const const
+ #endif
  
+-/* This is the fundamental function for registering boot/module
+-   parameters. */
++/* This is the fundamental function for registering boot/module parameters. */
+ #define __module_param_call(prefix, name, ops, arg, perm, level, flags)	\
+-	/* Default value instead of permissions? */			\
++	static_assert(sizeof(""prefix) - 1 <= MAX_PARAM_PREFIX_LEN);	\
+ 	static const char __param_str_##name[] = prefix #name;		\
+ 	static struct kernel_param __moduleparam_const __param_##name	\
+ 	__used __section("__param")					\
 -- 
 2.39.5
 
