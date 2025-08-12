@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191A0280037;
-	Tue, 12 Aug 2025 18:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4F961FFE;
+	Tue, 12 Aug 2025 18:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022682; cv=none; b=HPw2+WL0rLFHhAX/p2Hs9rS375+44YbSvlzKZ8LBa7o/UHSH6NZDoriGKx884jRORNC1fglHgtPZ2LbSG7f4afcuZ2Lqr4xSJJoEtXsZl7ItMvHd8HHlZqGY3vGaUmkFASieVITiEEcYUA32kSvdemapmKo0MjJUls8TLkss6Yc=
+	t=1755022685; cv=none; b=ttEdxFuP3KeI1AK9J9hng63SvHRaD2Mht3SpInw4X0myEbWll5J2DwFIF7GoFRmrLNepidAzVOJQJWBGBjrkdqY76slMNcAsQGnEtwzmal4lcftX2O/7Ixexs5ZwjSBMB+TEVmvL3OIl68kB59A0ZO6y1kJ/olArZGEp7Tvb7yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022682; c=relaxed/simple;
-	bh=q2HYOIx8WYGMS3KyYcGcxCLgC9ELia8iyWhoh1/ziUw=;
+	s=arc-20240116; t=1755022685; c=relaxed/simple;
+	bh=O9YjqYb2DuHXDoTA0NUGUqrYpUs0+XDsWTArw+HR3+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFwlcXa3wGfQHU3rH5lVwXJL0p6sN8lWhWQ2ccIu444PyP2rwfYGBj3MeY9aEY/igM9IqGRiLNXtfcqAhuHhsVdcEyuBTPTbB31ZmPK0JX+e96jX1Ouk+otxjmt2fcREuXubvDGCGTsoN86qnsvfTr/iAuF5rPLkbF6WW/qcU6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrOgxzic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGMioql+wQ/yYptBt0CHxo6RdxReL7HKjnBbCV1fqSffnyERyT1uNxIZrATVtq1FxbIXWN21H69/3so2nChUDuhmHlVlUWDyP89aYWQFzHLJZgC5h5oetCRpWdAbrz3dtiEKNU/N5KGRcew5lptZvDaXQVNjwyvnKoVVq6sVbMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKbIylPl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrOgxzic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720F8C4CEF0;
-	Tue, 12 Aug 2025 18:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKbIylPl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7049C4CEF0;
+	Tue, 12 Aug 2025 18:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022681;
-	bh=q2HYOIx8WYGMS3KyYcGcxCLgC9ELia8iyWhoh1/ziUw=;
+	s=korg; t=1755022685;
+	bh=O9YjqYb2DuHXDoTA0NUGUqrYpUs0+XDsWTArw+HR3+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrOgxzic0oJxzWz3YdtZKQEfOFGisVbxjjeGenQivoNKu2tnzm8spJZ+LbDG0Gm2j
-	 ayfN4wZpC2jm5g/iFrCqk0+Pbd8HW3aGRT1ZDYqpKSeQU3TeG4ezGwEqaifqo9QLiT
-	 Nv8xD+uv6TnA0qlx0E0k1kovqAcTOxCVcewIhsX8=
+	b=eKbIylPlIiih+rHrFx5gxJDvfjU/JY0eJh5DBNTbVshSvgTxEPv06E/AtSUkExvDk
+	 6SuqoKuPITSe8/gA12AQEHmPx2jYm+xBMMY5tMSPiyE6VBLAfh3GzqE/cPL723Ih92
+	 DGE6slzH719vZ3Gtq6m4CWCXMffHYY2K6UKvEWLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Laguna <lukasz.laguna@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Jun Zhan <zhanjun@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 228/369] drm/xe/vf: Disable CSC support on VF
-Date: Tue, 12 Aug 2025 19:28:45 +0200
-Message-ID: <20250812173023.338176089@linuxfoundation.org>
+Subject: [PATCH 6.12 229/369] selftests: ALSA: fix memory leak in utimer test
+Date: Tue, 12 Aug 2025 19:28:46 +0200
+Message-ID: <20250812173023.389527404@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,39 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Laguna <lukasz.laguna@intel.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit f62408efc8669b82541295a4611494c8c8c52684 ]
+[ Upstream commit 6260da046819b7bda828bacae148fc8856fdebd7 ]
 
-CSC is not accessible by VF drivers, so disable its support flag on VF
-to prevent further initialization attempts.
+Free the malloc'd buffer in TEST_F(timer_f, utimer) to prevent
+memory leak.
 
-Fixes: e02cea83d32d ("drm/xe/gsc: add Battlemage support")
-Signed-off-by: Lukasz Laguna <lukasz.laguna@intel.com>
-Cc: Alexander Usyskin <alexander.usyskin@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Link: https://lore.kernel.org/r/20250729123437.5933-1-lukasz.laguna@intel.com
-(cherry picked from commit 552dbba1caaf0cb40ce961806d757615e26ec668)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 1026392d10af ("selftests: ALSA: Cover userspace-driven timers with test")
+Reported-by: Jun Zhan <zhanjun@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://patch.msgid.link/DE4D931FCF54F3DB+20250731100222.65748-1-wangyuli@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_device.c | 1 +
+ tools/testing/selftests/alsa/utimer-test.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index 82da51a6616a..2e1d6d248d2e 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -549,6 +549,7 @@ static void update_device_info(struct xe_device *xe)
- 	/* disable features that are not available/applicable to VFs */
- 	if (IS_SRIOV_VF(xe)) {
- 		xe->info.probe_display = 0;
-+		xe->info.has_heci_cscfi = 0;
- 		xe->info.has_heci_gscfi = 0;
- 		xe->info.skip_guc_pc = 1;
- 		xe->info.skip_pcode = 1;
+diff --git a/tools/testing/selftests/alsa/utimer-test.c b/tools/testing/selftests/alsa/utimer-test.c
+index 32ee3ce57721..37964f311a33 100644
+--- a/tools/testing/selftests/alsa/utimer-test.c
++++ b/tools/testing/selftests/alsa/utimer-test.c
+@@ -135,6 +135,7 @@ TEST_F(timer_f, utimer) {
+ 	pthread_join(ticking_thread, NULL);
+ 	ASSERT_EQ(total_ticks, TICKS_COUNT);
+ 	pclose(rfp);
++	free(buf);
+ }
+ 
+ TEST(wrong_timers_test) {
 -- 
 2.39.5
 
