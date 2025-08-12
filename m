@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DDF260583;
-	Tue, 12 Aug 2025 19:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BD627781E;
+	Tue, 12 Aug 2025 19:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026087; cv=none; b=pOwCfgbVe+jIjFo5huP3egxLJwKe0tdH64SdWN55A9HuU7aIvfoj90uMU821aPTiHh3LuDBf2WOJxnL83yk/Tb7JVqihVdhw2UH1FTkQ4E4vlA1ufM3RIwSOlC0URt5tfN3tG6IhXAiDucvVlZPF1eqUGy5Vc7W+QMkTZh9JGIY=
+	t=1755026090; cv=none; b=BmsbC4nzETSj3CPxl7FTgE0mRDBKgCYHXKw+qd96psIs/p2FsI4ZusQTam8FvkWG1J2bIhGb6DVr921QmNNWjphpRjmMX1IiZsXrHeKwaacjpOB1nY6vZNRMqj2sCJilujg8U9J1qqN1OSasTQdqUOQj3K/x2+zkSrRWGG3KI1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026087; c=relaxed/simple;
-	bh=88CHSiOUisG1uuWUcDfroIuK54PIz4afGaqqIt6E6RY=;
+	s=arc-20240116; t=1755026090; c=relaxed/simple;
+	bh=5ciDEkzn0n4SPRdX4fUn7iE6NA3wGrPaUlXc7IUdFr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8na4Eh+ZXfXT2mLkMqi3paUAIFwq2Jrrx+iD9hfpLhcFZ18NhFZLqewlrF2pxqFP5vQF0P8hygqf/0zFDEBxs+l5xgPpYeXYzfcrKRWdi1PQ6i2u/qvx1HnZed87A0djMSgpgDzg0AY724DrTSsrqUZCISqeWCz/TMxm2Hr0os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5WKBRY/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aoAjby396WH5+FuHVl7Ppnfzweq4CzDq9xYz1Vq3+bhoqaOeeHXB3m19kQsRV1wld7U3BE/cUpK2L/suIWKIGGF3sHcFcVE7MSPh6nY47eXl3VbgR64fBxwrSxO03rQ8BgfR3wRxtBNMiFxclbqyeTA1gv/CFnovpZRDTNPK3lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ikr+u/W0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5WKBRY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D24DC4CEF0;
-	Tue, 12 Aug 2025 19:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ikr+u/W0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B57C4CEF0;
+	Tue, 12 Aug 2025 19:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026086;
-	bh=88CHSiOUisG1uuWUcDfroIuK54PIz4afGaqqIt6E6RY=;
+	s=korg; t=1755026090;
+	bh=5ciDEkzn0n4SPRdX4fUn7iE6NA3wGrPaUlXc7IUdFr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5WKBRY/r8wWMb605C75KYIZTCfD0tddJ1HPCvDF4VrBHaU8U+s0FeeUFAGR2Q0E8
-	 48vJrxcrlJEf1ZiX3RS4MXq8aPtqHMpJqP1u7U4qw537uUbtKVhmuEtDL1j8gRLNyv
-	 6+14tsUunz7z/HlAJFvojJS/oC2fpU/kcDEAXqW8=
+	b=Ikr+u/W0cv5pJcZ4X76hvJ63W0OZvR0kfEPI1h3t8c9D0a6fiqDWKJ8+AnuY7NdHE
+	 XK0RAMlo1w9KK43Aw6qhbcH12VpckAc8y9oqcWzTjAs5VoZoDU3WNrRtRNeUTumo9I
+	 nWGOe5TioUMzlw3Pf/EI4hn8MQFVI8WSnnVYTew8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	David Lechner <david@lechnology.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	James Cowgill <james.cowgill@blaize.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 233/480] clk: davinci: Add NULL check in davinci_lpsc_clk_register()
-Date: Tue, 12 Aug 2025 19:47:21 +0200
-Message-ID: <20250812174407.054522750@linuxfoundation.org>
+Subject: [PATCH 6.15 234/480] media: v4l2-ctrls: Fix H264 SEPARATE_COLOUR_PLANE check
+Date: Tue, 12 Aug 2025 19:47:22 +0200
+Message-ID: <20250812174407.098179149@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,43 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: James Cowgill <james.cowgill@blaize.com>
 
-[ Upstream commit 13de464f445d42738fe18c9a28bab056ba3a290a ]
+[ Upstream commit 803b9eabc649c778986449eb0596e5ffeb7a8aed ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-davinci_lpsc_clk_register() does not check for this case, which results
-in a NULL pointer dereference.
+The `separate_colour_plane_flag` element is only present in the SPS if
+`chroma_format_idc == 3`, so the corresponding flag should be disabled
+whenever that is not the case and not just on profiles where
+`chroma_format_idc` is not present.
 
-Add NULL check after devm_kasprintf() to prevent this issue and ensuring
-no resources are left allocated.
-
-Fixes: c6ed4d734bc7 ("clk: davinci: New driver for davinci PSC clocks")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://lore.kernel.org/r/20250401131341.26800-1-bsdhenrymartin@gmail.com
-Reviewed-by: David Lechner <david@lechnology.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: b32e48503df0 ("media: controls: Validate H264 stateless controls")
+Signed-off-by: James Cowgill <james.cowgill@blaize.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/davinci/psc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/davinci/psc.c b/drivers/clk/davinci/psc.c
-index b48322176c21..f3ee9397bb0c 100644
---- a/drivers/clk/davinci/psc.c
-+++ b/drivers/clk/davinci/psc.c
-@@ -277,6 +277,11 @@ davinci_lpsc_clk_register(struct device *dev, const char *name,
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+index 90d25329661e..b45809a82f9a 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -968,12 +968,12 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
  
- 	lpsc->pm_domain.name = devm_kasprintf(dev, GFP_KERNEL, "%s: %s",
- 					      best_dev_name(dev), name);
-+	if (!lpsc->pm_domain.name) {
-+		clk_hw_unregister(&lpsc->hw);
-+		kfree(lpsc);
-+		return ERR_PTR(-ENOMEM);
-+	}
- 	lpsc->pm_domain.attach_dev = davinci_psc_genpd_attach_dev;
- 	lpsc->pm_domain.detach_dev = davinci_psc_genpd_detach_dev;
- 	lpsc->pm_domain.flags = GENPD_FLAG_PM_CLK;
+ 			p_h264_sps->flags &=
+ 				~V4L2_H264_SPS_FLAG_QPPRIME_Y_ZERO_TRANSFORM_BYPASS;
+-
+-			if (p_h264_sps->chroma_format_idc < 3)
+-				p_h264_sps->flags &=
+-					~V4L2_H264_SPS_FLAG_SEPARATE_COLOUR_PLANE;
+ 		}
+ 
++		if (p_h264_sps->chroma_format_idc < 3)
++			p_h264_sps->flags &=
++				~V4L2_H264_SPS_FLAG_SEPARATE_COLOUR_PLANE;
++
+ 		if (p_h264_sps->flags & V4L2_H264_SPS_FLAG_FRAME_MBS_ONLY)
+ 			p_h264_sps->flags &=
+ 				~V4L2_H264_SPS_FLAG_MB_ADAPTIVE_FRAME_FIELD;
 -- 
 2.39.5
 
