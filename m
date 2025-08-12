@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2761DF27F;
-	Tue, 12 Aug 2025 18:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8412EF652;
+	Tue, 12 Aug 2025 18:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023348; cv=none; b=SIHRDaPh7TN6Zeninfywkov1umQiYr61vfRJ9HoUs0NhJl/K7GXFzSbs1NoNP/sf9ARC3MeRMnrfhiG7e5jOXfWrVEtgIZb/IqLFAC8jP14zrSg5d1J5Dp1nKfrZExE7GUt7XV0Q5E364QZh3cqgUcZkq6UeroDsCn27oa1AajQ=
+	t=1755023352; cv=none; b=gnd6iBLuLHFByA3NUWFCb6KnlcfkNhPQrmui0OwjOwBjUN8X9ewsfEd44kT2nQgbt97HUWwuU3g78/+CA/xyd2ee+OPEDQlew2gCDRkDJDj5uNm0qJIY4f4AZsaJk7hpKR4jyOlhGoRHWevO+mSXONLvR1u92M/fmBpFbacCDB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023348; c=relaxed/simple;
-	bh=OQFnwdE/hqIkAKBLQ4eddPGXeyjSxV/xPCoj44JPcQw=;
+	s=arc-20240116; t=1755023352; c=relaxed/simple;
+	bh=a3xQDm0Yq8FwMG4aA4LLPiVhVqwX4vW4wX3zB11AC80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b9188a9hrsNZnGLcpdT/XegUXcgk3NBAqdFLg42yIKXnANWK1B+3QdO2k+7kKATSXoHClriTcfVsXNCJkLGpmgRWvDKZzCypY+HYbjrKo9mntrsuMG36Phqu64IlVLcY03JuCJmIGc564GTgrPx1/9qQMhASvYF2Txdq5m1PWis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0vw5c3f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WNeQ+DgBmbjBEKYKDUICTy0sNLGznWiuoosOHZdaaiGhEUkYjJYIJfkmmK+Bp1zB/veT/7+WAUBk9596sZOpwaCq82KVR/s4chAnfcj60B9etGN9jlNOED4Y7W/DwT8HUyAd1vsk8DvSjq/TX0vbenzWlpac1/TEZu2kipZcpw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwdYdQJp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0vw5c3f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A8DC4CEF0;
-	Tue, 12 Aug 2025 18:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwdYdQJp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB8BC4CEF6;
+	Tue, 12 Aug 2025 18:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023348;
-	bh=OQFnwdE/hqIkAKBLQ4eddPGXeyjSxV/xPCoj44JPcQw=;
+	s=korg; t=1755023352;
+	bh=a3xQDm0Yq8FwMG4aA4LLPiVhVqwX4vW4wX3zB11AC80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0vw5c3fXOnjChpBxNvNFqYz9djpnrAy9lr9kDw8Ds6SLUS85S4dM3S8mDiaYOAxs
-	 f74xmon9LSDsroW0dXx6fgDbRT00JCBGx+ktd7+PpKa7TLEOelFvP4ab6g80J92T4m
-	 F/iY8bvB2Mbuqtt3JY6M971c+YB9cGms1VZkb79I=
+	b=vwdYdQJpGjmksrAk4sJHO7BhSXTvVFqrNS01nLrYPzcuP6YRcgpLucYTi0cyS4U5R
+	 d3Bpt7Az2GAOSylazoTRc5jVGBqwh5bMvwiDYB3Gy8jxYRdIoxam5W5ETjgfOp1TeV
+	 MRMoEG0ejlPKWuCD94lQJLFTN3n6jlB1M874jNGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 026/627] eventpoll: Fix semi-unbounded recursion
-Date: Tue, 12 Aug 2025 19:25:21 +0200
-Message-ID: <20250812173420.323333374@linuxfoundation.org>
+Subject: [PATCH 6.16 053/627] arm64: dts: rockchip: fix endpoint dtc warning for PX30 ISP
+Date: Tue, 12 Aug 2025 19:25:48 +0200
+Message-ID: <20250812173421.347090072@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,170 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-[ Upstream commit f2e467a48287c868818085aa35389a224d226732 ]
+[ Upstream commit 5ddb2d46852997a28f8d77153e225611a8268b74 ]
 
-Ensure that epoll instances can never form a graph deeper than
-EP_MAX_NESTS+1 links.
+dtc complains with the following message for DTSes which use the ISP:
 
-Currently, ep_loop_check_proc() ensures that the graph is loop-free and
-does some recursion depth checks, but those recursion depth checks don't
-limit the depth of the resulting tree for two reasons:
+arch/arm64/boot/dts/rockchip/px30.dtsi:1272.19-1276.6: Warning (graph_child_address): /isp@ff4a0000/ports/port@0: graph node has single child node 'endpoint@0', #address-cells/#size-cells are not necessary
 
- - They don't look upwards in the tree.
- - If there are multiple downwards paths of different lengths, only one of
-   the paths is actually considered for the depth check since commit
-   28d82dc1c4ed ("epoll: limit paths").
+Typically, it is expected from the device DTS(I) to update the SoC DTSI
+nodes if they have more than one endpoint, so let's assume there's only
+one endpoint in port@0 by default, instead of forcing board DTS(I)s to
+/delete-property/ address-cells and size-cells to make dtc happy.
 
-Essentially, the current recursion depth check in ep_loop_check_proc() just
-serves to prevent it from recursing too deeply while checking for loops.
+Because PX30 PP1516/EVB's endpoint@0 is the only endpoint and
+considering its parent node now has no address-cells property, dtc
+complains (same messages for PX30 EVB):
 
-A more thorough check is done in reverse_path_check() after the new graph
-edge has already been created; this checks, among other things, that no
-paths going upwards from any non-epoll file with a length of more than 5
-edges exist. However, this check does not apply to non-epoll files.
+arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi:447.29-451.6: Warning (avoid_default_addr_size): /isp@ff4a0000/ports/port@0/endpoint@0: Relying on default #address-cells value
+arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi:447.29-451.6: Warning (avoid_default_addr_size): /isp@ff4a0000/ports/port@0/endpoint@0: Relying on default #size-cells value
+arch/arm64/boot/dts/rockchip/px30-pp1516-ltk050h3146w-a2.dtb: Warning (avoid_unnecessary_addr_size): Failed prerequisite 'avoid_default_addr_size'
+arch/arm64/boot/dts/rockchip/px30-pp1516-ltk050h3146w-a2.dtb: Warning (unique_unit_address_if_enabled): Failed prerequisite 'avoid_default_addr_size'
+arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi:447.29-451.6: Warning (graph_endpoint): /isp@ff4a0000/ports/port@0/endpoint@0: graph node '#address-cells' is -1, must be 1
+arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi:447.29-451.6: Warning (graph_endpoint): /isp@ff4a0000/ports/port@0/endpoint@0: graph node '#size-cells' is -1, must be 0
+arch/arm64/boot/dts/rockchip/px30-pp1516-ltk050h3146w-a2.dtb: Warning (graph_child_address): Failed prerequisite 'graph_endpoint'
 
-As a result, it is possible to recurse to a depth of at least roughly 500,
-tested on v6.15. (I am unsure if deeper recursion is possible; and this may
-have changed with commit 8c44dac8add7 ("eventpoll: Fix priority inversion
-problem").)
+so we fix that by removing the reg property. dtc still complains (same
+messages for PX30 EVB):
 
-To fix it:
+arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi:447.29-450.6: Warning (unit_address_vs_reg): /isp@ff4a0000/ports/port@0/endpoint@0: node has a unit name, but no reg or ranges property
 
-1. In ep_loop_check_proc(), note the subtree depth of each visited node,
-and use subtree depths for the total depth calculation even when a subtree
-has already been visited.
-2. Add ep_get_upwards_depth_proc() for similarly determining the maximum
-depth of an upwards walk.
-3. In ep_loop_check(), use these values to limit the total path length
-between epoll nodes to EP_MAX_NESTS edges.
+so we also remove the @0 suffix off the node name.
 
-Fixes: 22bacca48a17 ("epoll: prevent creating circular epoll structures")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/20250711-epoll-recursion-fix-v1-1-fb2457c33292@google.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: ecb6cc0fd8cd ("eventpoll: fix sphinx documentation build warning")
+Fixes: 8df7b4537dfb ("arm64: dts: rockchip: add isp node for px30")
+Fixes: 474a77395be2 ("arm64: dts: rockchip: hook up camera on px30-evb")
+Fixes: 56198acdbf0d ("arm64: dts: rockchip: add px30-pp1516 base dtsi and board variants")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Link: https://lore.kernel.org/r/20250610-ringneck-haikou-video-demo-cam-v2-1-de1bf87e0732@cherry.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 60 ++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 46 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/rockchip/px30-evb.dts     | 3 +--
+ arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi | 3 +--
+ arch/arm64/boot/dts/rockchip/px30.dtsi        | 2 --
+ 3 files changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 0fbf5dfedb24..7a7b044daadc 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -218,6 +218,7 @@ struct eventpoll {
- 	/* used to optimize loop detection check */
- 	u64 gen;
- 	struct hlist_head refs;
-+	u8 loop_check_depth;
+diff --git a/arch/arm64/boot/dts/rockchip/px30-evb.dts b/arch/arm64/boot/dts/rockchip/px30-evb.dts
+index d93aaac7a42f..bfd724b73c9a 100644
+--- a/arch/arm64/boot/dts/rockchip/px30-evb.dts
++++ b/arch/arm64/boot/dts/rockchip/px30-evb.dts
+@@ -483,8 +483,7 @@ &isp {
  
- 	/*
- 	 * usage count, used together with epitem->dying to
-@@ -2140,23 +2141,24 @@ static int ep_poll(struct eventpoll *ep, struct epoll_event __user *events,
- }
+ 	ports {
+ 		port@0 {
+-			mipi_in_ucam: endpoint@0 {
+-				reg = <0>;
++			mipi_in_ucam: endpoint {
+ 				data-lanes = <1 2>;
+ 				remote-endpoint = <&ucam_out>;
+ 			};
+diff --git a/arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi b/arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi
+index 3f9a133d7373..b4bd4e34747c 100644
+--- a/arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi
++++ b/arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi
+@@ -444,8 +444,7 @@ &isp {
  
- /**
-- * ep_loop_check_proc - verify that adding an epoll file inside another
-- *                      epoll structure does not violate the constraints, in
-- *                      terms of closed loops, or too deep chains (which can
-- *                      result in excessive stack usage).
-+ * ep_loop_check_proc - verify that adding an epoll file @ep inside another
-+ *                      epoll file does not create closed loops, and
-+ *                      determine the depth of the subtree starting at @ep
-  *
-  * @ep: the &struct eventpoll to be currently checked.
-  * @depth: Current depth of the path being checked.
-  *
-- * Return: %zero if adding the epoll @file inside current epoll
-- *          structure @ep does not violate the constraints, or %-1 otherwise.
-+ * Return: depth of the subtree, or INT_MAX if we found a loop or went too deep.
-  */
- static int ep_loop_check_proc(struct eventpoll *ep, int depth)
- {
--	int error = 0;
-+	int result = 0;
- 	struct rb_node *rbp;
- 	struct epitem *epi;
+ 	ports {
+ 		port@0 {
+-			mipi_in_ucam: endpoint@0 {
+-				reg = <0>;
++			mipi_in_ucam: endpoint {
+ 				data-lanes = <1 2>;
+ 				remote-endpoint = <&ucam_out>;
+ 			};
+diff --git a/arch/arm64/boot/dts/rockchip/px30.dtsi b/arch/arm64/boot/dts/rockchip/px30.dtsi
+index feabdadfa440..8220c875415f 100644
+--- a/arch/arm64/boot/dts/rockchip/px30.dtsi
++++ b/arch/arm64/boot/dts/rockchip/px30.dtsi
+@@ -1271,8 +1271,6 @@ ports {
  
-+	if (ep->gen == loop_check_gen)
-+		return ep->loop_check_depth;
-+
- 	mutex_lock_nested(&ep->mtx, depth + 1);
- 	ep->gen = loop_check_gen;
- 	for (rbp = rb_first_cached(&ep->rbr); rbp; rbp = rb_next(rbp)) {
-@@ -2164,13 +2166,11 @@ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
- 		if (unlikely(is_file_epoll(epi->ffd.file))) {
- 			struct eventpoll *ep_tovisit;
- 			ep_tovisit = epi->ffd.file->private_data;
--			if (ep_tovisit->gen == loop_check_gen)
--				continue;
- 			if (ep_tovisit == inserting_into || depth > EP_MAX_NESTS)
--				error = -1;
-+				result = INT_MAX;
- 			else
--				error = ep_loop_check_proc(ep_tovisit, depth + 1);
--			if (error != 0)
-+				result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1);
-+			if (result > EP_MAX_NESTS)
- 				break;
- 		} else {
- 			/*
-@@ -2184,9 +2184,27 @@ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
- 			list_file(epi->ffd.file);
- 		}
- 	}
-+	ep->loop_check_depth = result;
- 	mutex_unlock(&ep->mtx);
- 
--	return error;
-+	return result;
-+}
-+
-+/**
-+ * ep_get_upwards_depth_proc - determine depth of @ep when traversed upwards
-+ */
-+static int ep_get_upwards_depth_proc(struct eventpoll *ep, int depth)
-+{
-+	int result = 0;
-+	struct epitem *epi;
-+
-+	if (ep->gen == loop_check_gen)
-+		return ep->loop_check_depth;
-+	hlist_for_each_entry_rcu(epi, &ep->refs, fllink)
-+		result = max(result, ep_get_upwards_depth_proc(epi->ep, depth + 1) + 1);
-+	ep->gen = loop_check_gen;
-+	ep->loop_check_depth = result;
-+	return result;
- }
- 
- /**
-@@ -2202,8 +2220,22 @@ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
-  */
- static int ep_loop_check(struct eventpoll *ep, struct eventpoll *to)
- {
-+	int depth, upwards_depth;
-+
- 	inserting_into = ep;
--	return ep_loop_check_proc(to, 0);
-+	/*
-+	 * Check how deep down we can get from @to, and whether it is possible
-+	 * to loop up to @ep.
-+	 */
-+	depth = ep_loop_check_proc(to, 0);
-+	if (depth > EP_MAX_NESTS)
-+		return -1;
-+	/* Check how far up we can go from @ep. */
-+	rcu_read_lock();
-+	upwards_depth = ep_get_upwards_depth_proc(ep, 0);
-+	rcu_read_unlock();
-+
-+	return (depth+1+upwards_depth > EP_MAX_NESTS) ? -1 : 0;
- }
- 
- static void clear_tfile_check_list(void)
+ 			port@0 {
+ 				reg = <0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 			};
+ 		};
+ 	};
 -- 
 2.39.5
 
