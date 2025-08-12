@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FCB27FB12;
-	Tue, 12 Aug 2025 18:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B9521ABD0;
+	Tue, 12 Aug 2025 18:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023964; cv=none; b=QztJH4mHbiKrMhcpghQ8PV54AHInZbUHR4UFDrEm/Io+hDtR0xdQwWPZKnr07qY3hQ4KeaJakU4fDgJq6VrW2FIg8nLZW9K8At3CvxaFxZDNOowPjtSMEhy5f29DYqF8YFuwh426xEEeOv9SycjLS/oskPWlVCxf8AszMx3HCeA=
+	t=1755023968; cv=none; b=mIA10O95+7874sGbrE0+RByCfBQlT6Thwdr0+jDpLRBj4I1ZUIP/7zddNPmC/FtLmBcxEpA4Le9wTTNSt3Thag2aRX8MzquAnIGsMZKLNfSGdb15LOgdmeo+gV35pND76/fFlVUrjrLSbw+T60aG+TWkpe6HTcWe23jtH4BZgRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023964; c=relaxed/simple;
-	bh=EL/haF2R2Z7oCE/dOKT63RZAM8+QD0/NOZqDf7G7Luk=;
+	s=arc-20240116; t=1755023968; c=relaxed/simple;
+	bh=RlWfVVCLGz68z8cYiH++68UWewCEvIHZQpM/dRmyWnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VP7oAzsNLeCKHq8nbUwZ7DxVo1Ie5YR8bXguMzP/+Qo+NAaNAXRCGVQuRluVb2XaqmpLSSFInEcEkFVxLEsa58/sOjURT8oxCkw8k7/fkawe1FJbiXCgVA1+f9wzfuD7fdmjMvc7wejGI4eRymw53b14AHO8sY3b+UBxZO4Zl9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yWLuAFI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GTLnrbQgMpn43jPM5BDQ6xy1QGUnXS9IlDvrgjo8CPVMwX/lLCcc4xSsi6cTUHIMXn+LCyVLbx5SSkdFrkUndjbzdGrE5kLcyS35nNQYVN76Y0T0Ugl2m2I2jNlGBDnnNScBtXTCApMigEfDkThDvW5UlOdRU5hAeFmNvyhtm9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRdPgGR3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yWLuAFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F1BC4CEF0;
-	Tue, 12 Aug 2025 18:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRdPgGR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D252C4CEF0;
+	Tue, 12 Aug 2025 18:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023964;
-	bh=EL/haF2R2Z7oCE/dOKT63RZAM8+QD0/NOZqDf7G7Luk=;
+	s=korg; t=1755023967;
+	bh=RlWfVVCLGz68z8cYiH++68UWewCEvIHZQpM/dRmyWnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1yWLuAFIIUzlyRXYl873OaGgodHFcp1zj0kHLnqf20rIgkUc9ebMTozli6M8q47bv
-	 ubH5q0mPIgLgh8F38DkRbC/ER9jtY5jelGmC4zZyitV75yc1PlJRc98yD9PLfyQayY
-	 M6aOa+JervZ1vcYwPU+FrvfBkwQ1tekNp1SX0m50=
+	b=FRdPgGR3u6Tz4B1T0qYq4uUroMetIHbFSjB223m5JDSUjfnyYjZgnx2OJkOYtmUV/
+	 yoIg1o3EpXAHRsr7LLahR9yUf063MpTorzFGDUrrio6288q9OFXGcN4hlnahT9Cyc/
+	 WBMuccKZXjato1zbJpnnlORHIpC9I70T0hR2VkpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Will Deacon <will@kernel.org>,
+	Cheng-jui Wang <cheng-jui.wang@mediatek.com>,
+	Lorry.Luo@mediatek.com,
+	weiyangyang@vivo.com,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 232/627] iommu/amd: Fix geometry.aperture_end for V2 tables
-Date: Tue, 12 Aug 2025 19:28:47 +0200
-Message-ID: <20250812173428.120590821@linuxfoundation.org>
+Subject: [PATCH 6.16 233/627] rcu: Fix delayed execution of hurry callbacks
+Date: Tue, 12 Aug 2025 19:28:48 +0200
+Message-ID: <20250812173428.163136554@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -47,89 +49,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
 
-[ Upstream commit 8637afa79cfa6123f602408cfafe8c9a73620ff1 ]
+[ Upstream commit 463d46044f04013306a4893242f65788b8a16b2e ]
 
-The AMD IOMMU documentation seems pretty clear that the V2 table follows
-the normal CPU expectation of sign extension. This is shown in
+We observed a regression in our customer’s environment after enabling
+CONFIG_LAZY_RCU. In the Android Update Engine scenario, where ioctl() is
+used heavily, we found that callbacks queued via call_rcu_hurry (such as
+percpu_ref_switch_to_atomic_rcu) can sometimes be delayed by up to 5
+seconds before execution. This occurs because the new grace period does
+not start immediately after the previous one completes.
 
-  Figure 25: AMD64 Long Mode 4-Kbyte Page Address Translation
+The root cause is that the wake_nocb_gp_defer() function now checks
+"rdp->nocb_defer_wakeup" instead of "rdp_gp->nocb_defer_wakeup". On CPUs
+that are not rcuog, "rdp->nocb_defer_wakeup" may always be
+RCU_NOCB_WAKE_NOT. This can cause "rdp_gp->nocb_defer_wakeup" to be
+downgraded and the "rdp_gp->nocb_timer" to be postponed by up to 10
+seconds, delaying the execution of hurry RCU callbacks.
 
-Where bits Sign-Extend [63:57] == [56]. This is typical for x86 which
-would have three regions in the page table: lower, non-canonical, upper.
+The trace log of one scenario we encountered is as follow:
+  // previous GP ends at this point
+  rcu_preempt   [000] d..1.   137.240210: rcu_grace_period: rcu_preempt 8369 end
+  rcu_preempt   [000] .....   137.240212: rcu_grace_period: rcu_preempt 8372 reqwait
+  // call_rcu_hurry enqueues "percpu_ref_switch_to_atomic_rcu", the callback waited on by UpdateEngine
+  update_engine [002] d..1.   137.301593: __call_rcu_common: wyy: unlikely p_ref = 00000000********. lazy = 0
+  // FirstQ on cpu 2 rdp_gp->nocb_timer is set to fire after 1 jiffy (4ms)
+  // and the rdp_gp->nocb_defer_wakeup is set to RCU_NOCB_WAKE
+  update_engine [002] d..2.   137.301595: rcu_nocb_wake: rcu_preempt 2 FirstQ on cpu2 with rdp_gp (cpu0).
+  // FirstBQ event on cpu2 during the 1 jiffy, make the timer postpond 10 seconds later.
+  // also, the rdp_gp->nocb_defer_wakeup is overwrite to RCU_NOCB_WAKE_LAZY
+  update_engine [002] d..1.   137.301601: rcu_nocb_wake: rcu_preempt 2 WakeEmptyIsDeferred
+  ...
+  ...
+  ...
+  // before the 10 seconds timeout, cpu0 received another call_rcu_hurry
+  // reset the timer to jiffies+1 and set the waketype = RCU_NOCB_WAKE.
+  kworker/u32:0 [000] d..2.   142.557564: rcu_nocb_wake: rcu_preempt 0 FirstQ
+  kworker/u32:0 [000] d..1.   142.557576: rcu_nocb_wake: rcu_preempt 0 WakeEmptyIsDeferred
+  kworker/u32:0 [000] d..1.   142.558296: rcu_nocb_wake: rcu_preempt 0 WakeNot
+  kworker/u32:0 [000] d..1.   142.558562: rcu_nocb_wake: rcu_preempt 0 WakeNot
+  // idle(do_nocb_deferred_wakeup) wake rcuog due to waketype == RCU_NOCB_WAKE
+  <idle>        [000] d..1.   142.558786: rcu_nocb_wake: rcu_preempt 0 DoWake
+  <idle>        [000] dN.1.   142.558839: rcu_nocb_wake: rcu_preempt 0 DeferredWake
+  rcuog/0       [000] .....   142.558871: rcu_nocb_wake: rcu_preempt 0 EndSleep
+  rcuog/0       [000] .....   142.558877: rcu_nocb_wake: rcu_preempt 0 Check
+  // finally rcuog request a new GP at this point (5 seconds after the FirstQ event)
+  rcuog/0       [000] d..2.   142.558886: rcu_grace_period: rcu_preempt 8372 newreq
+  rcu_preempt   [001] d..1.   142.559458: rcu_grace_period: rcu_preempt 8373 start
+  ...
+  rcu_preempt   [000] d..1.   142.564258: rcu_grace_period: rcu_preempt 8373 end
+  rcuop/2       [000] D..1.   142.566337: rcu_batch_start: rcu_preempt CBs=219 bl=10
+  // the hurry CB is invoked at this point
+  rcuop/2       [000] b....   142.566352: blk_queue_usage_counter_release: wyy: wakeup. p_ref = 00000000********.
 
-The manual describes that the V1 table does not sign extend in section
-2.2.4 Sharing AMD64 Processor and IOMMU Page Tables GPA-to-SPA
+This patch changes the condition to check "rdp_gp->nocb_defer_wakeup" in
+the lazy path. This prevents an already scheduled "rdp_gp->nocb_timer"
+from being postponed and avoids overwriting "rdp_gp->nocb_defer_wakeup"
+when it is not RCU_NOCB_WAKE_NOT.
 
-Further, Vasant has checked this and indicates the HW has an addtional
-behavior that the manual does not yet describe. The AMDv2 table does not
-have the sign extended behavior when attached to PASID 0, which may
-explain why this has gone unnoticed.
-
-The iommu domain geometry does not directly support sign extended page
-tables. The driver should report only one of the lower/upper spaces. Solve
-this by removing the top VA bit from the geometry to use only the lower
-space.
-
-This will also make the iommu_domain work consistently on all PASID 0 and
-PASID != 1.
-
-Adjust dma_max_address() to remove the top VA bit. It now returns:
-
-5 Level:
-  Before 0x1ffffffffffffff
-  After  0x0ffffffffffffff
-4 Level:
-  Before 0xffffffffffff
-  After  0x7fffffffffff
-
-Fixes: 11c439a19466 ("iommu/amd/pgtbl_v2: Fix domain max address")
-Link: https://lore.kernel.org/all/8858d4d6-d360-4ef0-935c-bfd13ea54f42@amd.com/
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/0-v2-0615cc99b88a+1ce-amdv2_geo_jgg@nvidia.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 3cb278e73be5 ("rcu: Make call_rcu() lazy to save power")
+Co-developed-by: Cheng-jui Wang <cheng-jui.wang@mediatek.com>
+Signed-off-by: Cheng-jui Wang <cheng-jui.wang@mediatek.com>
+Co-developed-by: Lorry.Luo@mediatek.com
+Signed-off-by: Lorry.Luo@mediatek.com
+Tested-by: weiyangyang@vivo.com
+Signed-off-by: weiyangyang@vivo.com
+Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ kernel/rcu/tree_nocb.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 8b8d3e843743..aea061f26de3 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2526,8 +2526,21 @@ static inline u64 dma_max_address(enum protection_domain_mode pgtable)
- 	if (pgtable == PD_MODE_V1)
- 		return ~0ULL;
- 
--	/* V2 with 4/5 level page table */
--	return ((1ULL << PM_LEVEL_SHIFT(amd_iommu_gpt_level)) - 1);
-+	/*
-+	 * V2 with 4/5 level page table. Note that "2.2.6.5 AMD64 4-Kbyte Page
-+	 * Translation" shows that the V2 table sign extends the top of the
-+	 * address space creating a reserved region in the middle of the
-+	 * translation, just like the CPU does. Further Vasant says the docs are
-+	 * incomplete and this only applies to non-zero PASIDs. If the AMDv2
-+	 * page table is assigned to the 0 PASID then there is no sign extension
-+	 * check.
-+	 *
-+	 * Since the IOMMU must have a fixed geometry, and the core code does
-+	 * not understand sign extended addressing, we have to chop off the high
-+	 * bit to get consistent behavior with attachments of the domain to any
-+	 * PASID.
-+	 */
-+	return ((1ULL << (PM_LEVEL_SHIFT(amd_iommu_gpt_level) - 1)) - 1);
- }
- 
- static bool amd_iommu_hd_support(struct amd_iommu *iommu)
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index b473ff056f49..711043e4eb54 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -276,7 +276,7 @@ static void wake_nocb_gp_defer(struct rcu_data *rdp, int waketype,
+ 	 * callback storms, no need to wake up too early.
+ 	 */
+ 	if (waketype == RCU_NOCB_WAKE_LAZY &&
+-	    rdp->nocb_defer_wakeup == RCU_NOCB_WAKE_NOT) {
++	    rdp_gp->nocb_defer_wakeup == RCU_NOCB_WAKE_NOT) {
+ 		mod_timer(&rdp_gp->nocb_timer, jiffies + rcu_get_jiffies_lazy_flush());
+ 		WRITE_ONCE(rdp_gp->nocb_defer_wakeup, waketype);
+ 	} else if (waketype == RCU_NOCB_WAKE_BYPASS) {
 -- 
 2.39.5
 
