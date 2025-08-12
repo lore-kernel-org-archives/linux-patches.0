@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B116D1FF7C5;
-	Tue, 12 Aug 2025 18:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05246280037;
+	Tue, 12 Aug 2025 18:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022890; cv=none; b=J9b1DBKzEd8QQbMADUxMpHuDQXeMuob3v9j73ZGt6E5pFxBPfCrXNi/NM6Fc20RbdT6oitOra3BX60GvWhFpI9XJlDaApDkSpNUIW8nn+EGKE9//MD5PHxJTZKUyD6EN4CLPVCutJC/zFYjed4KqIIVfLLUFGWoNPWzXe6leMI8=
+	t=1755022894; cv=none; b=UQmgH+KsvDtS7WJRXc4vI6ggNTDUYjBkSQxtqpQ6/dda/GEUWhwk6iPYTvgFdA3ue7ECmGNThrwsldHLrMPMqkZ1wJIHMiJpV1NrC4BvNfmHTHO57s0CcNumsisRp1L90Co/xM31uaw2q+2HRGV7SsuJWYIBtR7s3vycs7XBIR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022890; c=relaxed/simple;
-	bh=nOt6LPaLCoVVLwV0mB7bEYZXtS0T2cAHQEGchzkmd7M=;
+	s=arc-20240116; t=1755022894; c=relaxed/simple;
+	bh=/3aDhAy8kRBbEeTlBppajPawTC6Evnzs7i8vQduvSVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IiCkY4lcbxe8WHONdwJGDIpx2E2vhtJ7JxDLjKEfChPNkfoxbD8aue4sJyLuIlo1CsL5Xg/lK4ovF2DiB4wMBCQcbd0tHJgfyHKjbXQhGqVOSDYs2mrk2hvcDT7kqAvERgIrBC5IxLte9+sxwy2p2x1ye4SUo47Q4izgI1DIKZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fjd4LbZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjKLOZ+s2aba4/gaO9A2n0L+mFiF0uNFNcJobMJdi9O07iQ2PUS6B9HxpF2tT8P89jTya0bJ75Fi4Tnoca7VYoX6q4StynMTmCPsD5qEX6OpzlPezvQ+l23kM55oEhCDOISESAyLkPfHFc+mvt7tcabZ9RaZ1G5ye4AJRvZGY5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHTkuueS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fjd4LbZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E0AC4CEF0;
-	Tue, 12 Aug 2025 18:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHTkuueS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB41C4CEF0;
+	Tue, 12 Aug 2025 18:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022890;
-	bh=nOt6LPaLCoVVLwV0mB7bEYZXtS0T2cAHQEGchzkmd7M=;
+	s=korg; t=1755022893;
+	bh=/3aDhAy8kRBbEeTlBppajPawTC6Evnzs7i8vQduvSVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fjd4LbZLVDb3OXCJGhjfr3joEODAz9dgmHMncI+yVV45d4NdoF0P2bhL5YWJeYfCn
-	 bFd4MgzfJI27XHT3czxv4rT7oi0DyonMzID/RvUFN55Ka6Iw3fl3vxHe2ZMiQNyXki
-	 3OtT4K14ELx8yOfxtCyiZY+HDfWnS0/4caffVFfI=
+	b=xHTkuueSssY4incSLjmB8L+RLBShiXrHv2lB2qUpEPIomu8TwBSaOgW+PdwVenhFG
+	 8Z3UhubIOhmRCEvcsCSyBSH1YC/vhs2drrJx7ReLTsYsxLl+sVPqNrCu4aywUhL8GD
+	 yCvm6FW+EX5ejrnBpLJjOj+kuAEYI3qD8prKvBuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Luk=C3=A1=C5=A1=20Hejtm=C3=A1nek?= <xhejtman@ics.muni.cz>,
-	Santosh Pradhan <santosh.pradhan@gmail.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Daniel Wagner <dwagner@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 282/369] NFS: Fix wakeup of __nfs_lookup_revalidate() in unblock_revalidate()
-Date: Tue, 12 Aug 2025 19:29:39 +0200
-Message-ID: <20250812173027.097319678@linuxfoundation.org>
+Subject: [PATCH 6.12 291/369] nvmet: initialize discovery subsys after debugfs is initialized
+Date: Tue, 12 Aug 2025 19:29:48 +0200
+Message-ID: <20250812173027.679110519@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -46,45 +48,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-[ Upstream commit 1db3a48e83bb64a70bf27263b7002585574a9c2d ]
+[ Upstream commit 528589947c1802b9357c2a9b96d88cc4a11cd88b ]
 
-Use store_release_wake_up() to add the appropriate memory barrier before
-calling wake_up_var(&dentry->d_fsdata).
+During nvme target initialization discovery subsystem is initialized
+before "nvmet" debugfs directory is created. This results in discovery
+subsystem debugfs directory to be created in debugfs root directory.
 
-Reported-by: Lukáš Hejtmánek<xhejtman@ics.muni.cz>
-Suggested-by: Santosh Pradhan <santosh.pradhan@gmail.com>
-Link: https://lore.kernel.org/all/18945D18-3EDB-4771-B019-0335CE671077@ics.muni.cz/
-Fixes: 99bc9f2eb3f7 ("NFS: add barriers when testing for NFS_FSDATA_BLOCKED")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+nvmet_init() ->
+  nvmet_init_discovery() ->
+    nvmet_subsys_alloc() ->
+      nvmet_debugfs_subsys_setup()
+
+In other words, the codepath above is exeucted before nvmet_debugfs is
+created. We get /sys/kernel/debug/nqn.2014-08.org.nvmexpress.discovery
+instead of /sys/kernel/debug/nvmet/nqn.2014-08.org.nvmexpress.discovery.
+Move nvmet_init_discovery() call after nvmet_init_debugfs() to fix it.
+
+Fixes: 649fd41420a8 ("nvmet: add debugfs support")
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/nvme/target/core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index f9f4a92f63e9..bbc625e742aa 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -1837,9 +1837,7 @@ static void block_revalidate(struct dentry *dentry)
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 4606c8813666..cfde5b018048 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1714,24 +1714,24 @@ static int __init nvmet_init(void)
+ 	if (!nvmet_wq)
+ 		goto out_free_buffered_work_queue;
  
- static void unblock_revalidate(struct dentry *dentry)
- {
--	/* store_release ensures wait_var_event() sees the update */
--	smp_store_release(&dentry->d_fsdata, NULL);
--	wake_up_var(&dentry->d_fsdata);
-+	store_release_wake_up(&dentry->d_fsdata, NULL);
- }
+-	error = nvmet_init_discovery();
++	error = nvmet_init_debugfs();
+ 	if (error)
+ 		goto out_free_nvmet_work_queue;
  
- /*
+-	error = nvmet_init_debugfs();
++	error = nvmet_init_discovery();
+ 	if (error)
+-		goto out_exit_discovery;
++		goto out_exit_debugfs;
+ 
+ 	error = nvmet_init_configfs();
+ 	if (error)
+-		goto out_exit_debugfs;
++		goto out_exit_discovery;
+ 
+ 	return 0;
+ 
+-out_exit_debugfs:
+-	nvmet_exit_debugfs();
+ out_exit_discovery:
+ 	nvmet_exit_discovery();
++out_exit_debugfs:
++	nvmet_exit_debugfs();
+ out_free_nvmet_work_queue:
+ 	destroy_workqueue(nvmet_wq);
+ out_free_buffered_work_queue:
 -- 
 2.39.5
 
