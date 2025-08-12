@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CDC2FABFC;
-	Tue, 12 Aug 2025 18:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694822C21E3;
+	Tue, 12 Aug 2025 18:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025051; cv=none; b=FBEvS6mlra9wuMUwS5vmktzrpVLnH/ofEkN+MZ/xn+r+mnYU4Wm5Ca58LawlM95wmZU7TkT5J8gSD2oDELuKNL1tlqWCMVpRMMas6ejoSmnYY/7nS3U0sS1KXtvLvrB+LOg+CYzM2Dy2fM0LkTTo2IHxKEU5u0oDvn++GizsLo0=
+	t=1755025054; cv=none; b=KIZWIrILm74JeOeDaNC2xs4SQP+OAemyWTZN8wUHv9yDD05g72SgIj6Bn4yQ1K4GwlclficAt4HCjJm99K85pF/sDPiHSmvq4+87PYVZsJq3ukENPq+fPOAtbhxmBA8sUJU4dcbdT882vPn0r4ud8+3curn5fpQ2elsP691Fn7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025051; c=relaxed/simple;
-	bh=ZDMJdX4XlEsc0TJUxzfKDLO/QkXEve8kcCriNjhw58U=;
+	s=arc-20240116; t=1755025054; c=relaxed/simple;
+	bh=yZAIuE4mfVt9Fc8s3J+S7ad86KTD105cup/6+1lg5gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6lJx5E8VhqH2TIgobhHQxS1y/y8BAnDi14AM7HYivpFo8bODa7tikR60b2WJMt6Y8xrBiJ9yKh17Ltzsdu1wayKQdqtChe2OLFAtikMqzB+XCLesmBStjWDht3iU8UgiQR+R4umk8xRcYG3HzKkmln7pFVaOBKvx9E4Wvz42MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mK6VUoCu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jIytMG4yiAYmPKU9++yJo69Pw1Fi0Ko9jDP9bpRVJrux/r7XW0MZ49TJAPtB9tr1lwDN7Qpm1EPmsGMOy8BhdmuPxNXZ2Y6j5/5/4nA6FPnPwkwTUFnYS3qPSe30IxIST0cvkWudXK+gDoGXDcyFwbr1nMO10fAWeY2apW9uIbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPNYr8rh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mK6VUoCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E71C4CEF0;
-	Tue, 12 Aug 2025 18:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPNYr8rh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36CDC4CEF0;
+	Tue, 12 Aug 2025 18:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025050;
-	bh=ZDMJdX4XlEsc0TJUxzfKDLO/QkXEve8kcCriNjhw58U=;
+	s=korg; t=1755025054;
+	bh=yZAIuE4mfVt9Fc8s3J+S7ad86KTD105cup/6+1lg5gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mK6VUoCuc4dxc1m70na1aQ6RZTEuopPjXQ+dGoj5YeCvR2amMszGjO8Iz0DfKj0vq
-	 xffyirNFsTqO9AHyu9Bp6e+1HEWVxg7kaSExXVpIuIxg0HfqUbwp7XBCMk1P3qUnyE
-	 YyWJqbHwCNWIXhAFne+CF7hTmLLQJ7BJskgSOl5s=
+	b=vPNYr8rhTlyMt66L6jP0w4TbJDaYxg2/zzG8kMJNCUCS44/xUI8dBmMTOEVarnWcs
+	 MgcXgsGmQ3/WRlsZ4o43sV1TkDHG6q/heRUP97l/VivVl5XDdDwJZsbmRaFm6/rNxH
+	 TCDMegzrCwDv0lkSWZFi4t/4y5vqFR1DSvu0TFCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meghana Malladi <m-malladi@ti.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 554/627] net: ti: icssg-prueth: Fix skb handling for XDP_PASS
-Date: Tue, 12 Aug 2025 19:34:09 +0200
-Message-ID: <20250812173452.975255138@linuxfoundation.org>
+Subject: [PATCH 6.16 555/627] irqchip: Build IMX_MU_MSI only on ARM
+Date: Tue, 12 Aug 2025 19:34:10 +0200
+Message-ID: <20250812173453.012023440@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,71 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d942fe13f72bec92f6c689fbd74c5ec38228c16a ]
+[ Upstream commit 3b6a18f0da8720d612d8a682ea5c55870da068e0 ]
 
-emac_rx_packet() is a common function for handling traffic
-for both xdp and non-xdp use cases. Use common logic for
-handling skb with or without xdp to prevent any incorrect
-packet processing. This patch fixes ping working with
-XDP_PASS for icssg driver.
+Compile-testing IMX_MU_MSI on x86 without PCI_MSI support results in a
+build failure:
 
-Fixes: 62aa3246f4623 ("net: ti: icssg-prueth: Add XDP support")
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250803180216.3569139-1-m-malladi@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+drivers/gpio/gpio-sprd.c:8:
+include/linux/gpio/driver.h:41:33: error: field 'msiinfo' has incomplete type
+drivers/iommu/iommufd/viommu.c:4:
+include/linux/msi.h:528:33: error: field 'alloc_info' has incomplete type
+
+Tighten the dependency further to only allow compile testing on Arm.
+This could be refined further to allow certain x86 configs.
+
+This was submitted before to address a different build failure, which was
+fixed differently, but the problem has now returned in a different form.
+
+Fixes: 70afdab904d2d1e6 ("irqchip: Add IMX MU MSI controller driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250805160952.4006075-1-arnd@kernel.org
+Link: https://lore.kernel.org/all/20221215164109.761427-1-arnd@kernel.org/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_common.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/irqchip/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_common.c b/drivers/net/ethernet/ti/icssg/icssg_common.c
-index 12f25cec6255..57e5f1c88f50 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_common.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
-@@ -706,9 +706,9 @@ static int emac_rx_packet(struct prueth_emac *emac, u32 flow_id, u32 *xdp_state)
- 	struct page_pool *pool;
- 	struct sk_buff *skb;
- 	struct xdp_buff xdp;
-+	int headroom, ret;
- 	u32 *psdata;
- 	void *pa;
--	int ret;
- 
- 	*xdp_state = 0;
- 	pool = rx_chn->pg_pool;
-@@ -757,22 +757,23 @@ static int emac_rx_packet(struct prueth_emac *emac, u32 flow_id, u32 *xdp_state)
- 		xdp_prepare_buff(&xdp, pa, PRUETH_HEADROOM, pkt_len, false);
- 
- 		*xdp_state = emac_run_xdp(emac, &xdp, page, &pkt_len);
--		if (*xdp_state == ICSSG_XDP_PASS)
--			skb = xdp_build_skb_from_buff(&xdp);
--		else
-+		if (*xdp_state != ICSSG_XDP_PASS)
- 			goto requeue;
-+		headroom = xdp.data - xdp.data_hard_start;
-+		pkt_len = xdp.data_end - xdp.data;
- 	} else {
--		/* prepare skb and send to n/w stack */
--		skb = napi_build_skb(pa, PAGE_SIZE);
-+		headroom = PRUETH_HEADROOM;
- 	}
- 
-+	/* prepare skb and send to n/w stack */
-+	skb = napi_build_skb(pa, PAGE_SIZE);
- 	if (!skb) {
- 		ndev->stats.rx_dropped++;
- 		page_pool_recycle_direct(pool, page);
- 		goto requeue;
- 	}
- 
--	skb_reserve(skb, PRUETH_HEADROOM);
-+	skb_reserve(skb, headroom);
- 	skb_put(skb, pkt_len);
- 	skb->dev = ndev;
- 
+diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+index c3928ef79344..5f47e9a9c127 100644
+--- a/drivers/irqchip/Kconfig
++++ b/drivers/irqchip/Kconfig
+@@ -539,6 +539,7 @@ config IMX_MU_MSI
+ 	tristate "i.MX MU used as MSI controller"
+ 	depends on OF && HAS_IOMEM
+ 	depends on ARCH_MXC || COMPILE_TEST
++	depends on ARM || ARM64
+ 	default m if ARCH_MXC
+ 	select IRQ_DOMAIN
+ 	select IRQ_DOMAIN_HIERARCHY
 -- 
 2.39.5
 
