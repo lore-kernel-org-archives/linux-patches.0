@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EADE1E47AD;
-	Tue, 12 Aug 2025 19:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB9E1E47AD;
+	Tue, 12 Aug 2025 19:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026944; cv=none; b=NTM29ONn48wqQal9NKyFxZjzqsduIuzJAmN+UMUY2Q26//Kngb7RK1p4s7RGJhO64d07X3aEfy8aNFkk+6Xn7bwug72B3S2R2hgB5GkrAXsPAA2D+dfIE89jw7MN2yr+JdSSSUldn18SwgBvpIFuaErxWWH0qvqIiI+AB61cvAg=
+	t=1755026947; cv=none; b=kXAgj8aoIXMcPY4CXmml/q3H3kOTYSQIz+ogrJN9sIVzTa8AwhfEmKOS5/DBsoqWDLjxOOUa72qj1i855shWQvm98C+OZyqMhWxi3vl6wQMGd+v1qeEVQZECBGT0RDtzBTXycUZxqkPBdlil1nBC3F8M0D5uGG7XOWg/YhXiSgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026944; c=relaxed/simple;
-	bh=3ZJo11Aw3tj/49Z1pjljWQPFmfIk4RTToaiXfl+frlE=;
+	s=arc-20240116; t=1755026947; c=relaxed/simple;
+	bh=cJCC+pPSC/Bo/uZl57mS9lhnlfejCIok7Gp/O4683eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8A/fjQ+s4Q0LC+yjDwV++vyq8uc9RbZ8xJP/SJ61n7fc90m+rY1jg8jWDXUlbl7smc/1v+KK5CR5vX+Ug69Zs+yqiMOW8T5J9ytnj/KphsLLUMEESPk/Txbx/uC3OHZmKcKhMdJyzjDtGA89DV+zF6JDH29dQi8YlwuWt7b1rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXuco9rC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJ8GjMs3eCaPdSRwzlsARp50/+pdQzoU1/vSXeCUfLvmn23AG/WGHEqmTi8/fG6Kpo9P6O4KqJyM7RdOhRiQprZP9NhVo4CnafDG2me43rwkwihto7+6jhoPECXvCAY0VDPiTVlwop/TSjRO04ZfruQqeMfx5Ln5XwbyU95q5zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6dJdp3M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXuco9rC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB17AC4CEF0;
-	Tue, 12 Aug 2025 19:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6dJdp3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9818CC4CEF0;
+	Tue, 12 Aug 2025 19:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026944;
-	bh=3ZJo11Aw3tj/49Z1pjljWQPFmfIk4RTToaiXfl+frlE=;
+	s=korg; t=1755026947;
+	bh=cJCC+pPSC/Bo/uZl57mS9lhnlfejCIok7Gp/O4683eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXuco9rC+oj6uA4UmN59tEbhRe9hrjw0xrx24ZaOertA0GXr5Pegz/rNUN7ZGOP5N
-	 8uaPfNOoxQ2qzt+vYXY0Hd9EDy4h571WsxRNaLLKWaMLzdz8C+YuTjKpvGjxcGWCtW
-	 tPhRuY1Wp1rLpvMni4xHA1JiX3Plcljjd1Zi8iiA=
+	b=p6dJdp3MNOQnDxoQy0ETQp4xEywTFSjGstBfcpOrF3QzZjePKSekMvDY8KNEcC/Oc
+	 NFw9mvMdCVolkeWeHi6qSgYYU0njy+cGOjopNRiasYymXdHVIJga0A/B6NDPz1Alz/
+	 W4K621CmvoCkRpmN0szH+kLPMWHiQPVy41UemxLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suren Baghdasaryan <surenb@google.com>,
-	Jann Horn <jannh@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 480/480] mm: fix a UAF when vma->mm is freed after vma->vm_refcnt got dropped
-Date: Tue, 12 Aug 2025 19:51:28 +0200
-Message-ID: <20250812174417.167901301@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Akash Kumar <quic_akakum@quicinc.com>
+Subject: [PATCH 6.15 472/480] usb: gadget: uvc: Initialize frame-based format color matching descriptor
+Date: Tue, 12 Aug 2025 19:51:20 +0200
+Message-ID: <20250812174416.847102300@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -54,139 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suren Baghdasaryan <surenb@google.com>
+From: Akash Kumar <quic_akakum@quicinc.com>
 
-commit 9bbffee67ffd16360179327b57f3b1245579ef08 upstream.
+commit 323a80a1a5ace319a722909c006d5bdb2a35d273 upstream.
 
-By inducing delays in the right places, Jann Horn created a reproducer for
-a hard to hit UAF issue that became possible after VMAs were allowed to be
-recycled by adding SLAB_TYPESAFE_BY_RCU to their cache.
+Fix NULL pointer crash in uvcg_framebased_make due to uninitialized color
+matching descriptor for frame-based format which was added in
+commit f5e7bdd34aca ("usb: gadget: uvc: Allow creating new color matching
+descriptors") that added handling for uncompressed and mjpeg format.
 
-Race description is borrowed from Jann's discovery report:
-lock_vma_under_rcu() looks up a VMA locklessly with mas_walk() under
-rcu_read_lock().  At that point, the VMA may be concurrently freed, and it
-can be recycled by another process.  vma_start_read() then increments the
-vma->vm_refcnt (if it is in an acceptable range), and if this succeeds,
-vma_start_read() can return a recycled VMA.
+Crash is seen when userspace configuration (via configfs) does not
+explicitly define the color matching descriptor. If color_matching is not
+found, config_group_find_item() returns NULL. The code then jumps to
+out_put_cm, where it calls config_item_put(color_matching);. If
+color_matching is NULL, this will dereference a null pointer, leading to a
+crash.
 
-In this scenario where the VMA has been recycled, lock_vma_under_rcu()
-will then detect the mismatching ->vm_mm pointer and drop the VMA through
-vma_end_read(), which calls vma_refcount_put().  vma_refcount_put() drops
-the refcount and then calls rcuwait_wake_up() using a copy of vma->vm_mm.
-This is wrong: It implicitly assumes that the caller is keeping the VMA's
-mm alive, but in this scenario the caller has no relation to the VMA's mm,
-so the rcuwait_wake_up() can cause UAF.
+[    2.746440] Unable to handle kernel NULL pointer dereference at virtual address 000000000000008c
+[    2.756273] Mem abort info:
+[    2.760080]   ESR = 0x0000000096000005
+[    2.764872]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    2.771068]   SET = 0, FnV = 0
+[    2.771069]   EA = 0, S1PTW = 0
+[    2.771070]   FSC = 0x05: level 1 translation fault
+[    2.771071] Data abort info:
+[    2.771072]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+[    2.771073]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    2.771074]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    2.771075] user pgtable: 4k pages, 39-bit VAs, pgdp=00000000a3e59000
+[    2.771077] [000000000000008c] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
+[    2.771081] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+[    2.771084] Dumping ftrace buffer:
+[    2.771085]    (ftrace buffer empty)
+[    2.771138] CPU: 7 PID: 486 Comm: ln Tainted: G        W   E      6.6.58-android15
+[    2.771139] Hardware name: Qualcomm Technologies, Inc. SunP QRD HDK (DT)
+[    2.771140] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[    2.771141] pc : __uvcg_fill_strm+0x198/0x2cc
+[    2.771145] lr : __uvcg_iter_strm_cls+0xc8/0x17c
+[    2.771146] sp : ffffffc08140bbb0
+[    2.771146] x29: ffffffc08140bbb0 x28: ffffff803bc81380 x27: ffffff8023bbd250
+[    2.771147] x26: ffffff8023bbd250 x25: ffffff803c361348 x24: ffffff803d8e6768
+[    2.771148] x23: 0000000000000004 x22: 0000000000000003 x21: ffffffc08140bc48
+[    2.771149] x20: 0000000000000000 x19: ffffffc08140bc48 x18: ffffffe9f8cf4a00
+[    2.771150] x17: 000000001bf64ec3 x16: 000000001bf64ec3 x15: ffffff8023bbd250
+[    2.771151] x14: 000000000000000f x13: 004c4b40000f4240 x12: 000a2c2a00051615
+[    2.771152] x11: 000000000000004f x10: ffffffe9f76b40ec x9 : ffffffe9f7e389d0
+[    2.771153] x8 : ffffff803d0d31ce x7 : 000f4240000a2c2a x6 : 0005161500028b0a
+[    2.771154] x5 : ffffff803d0d31ce x4 : 0000000000000003 x3 : 0000000000000000
+[    2.771155] x2 : ffffffc08140bc50 x1 : ffffffc08140bc48 x0 : 0000000000000000
+[    2.771156] Call trace:
+[    2.771157]  __uvcg_fill_strm+0x198/0x2cc
+[    2.771157]  __uvcg_iter_strm_cls+0xc8/0x17c
+[    2.771158]  uvcg_streaming_class_allow_link+0x240/0x290
+[    2.771159]  configfs_symlink+0x1f8/0x630
+[    2.771161]  vfs_symlink+0x114/0x1a0
+[    2.771163]  do_symlinkat+0x94/0x28c
+[    2.771164]  __arm64_sys_symlinkat+0x54/0x70
+[    2.771164]  invoke_syscall+0x58/0x114
+[    2.771166]  el0_svc_common+0x80/0xe0
+[    2.771168]  do_el0_svc+0x1c/0x28
+[    2.771169]  el0_svc+0x3c/0x70
+[    2.771172]  el0t_64_sync_handler+0x68/0xbc
+[    2.771173]  el0t_64_sync+0x1a8/0x1ac
 
-The diagram depicting the race:
-T1         T2         T3
-==         ==         ==
-lock_vma_under_rcu
-  mas_walk
-          <VMA gets removed from mm>
-                      mmap
-                        <the same VMA is reallocated>
-  vma_start_read
-    __refcount_inc_not_zero_limited_acquire
-                      munmap
-                        __vma_enter_locked
-                          refcount_add_not_zero
-  vma_end_read
-    vma_refcount_put
-      __refcount_dec_and_test
-                          rcuwait_wait_event
-                            <finish operation>
-      rcuwait_wake_up [UAF]
+Initialize color matching descriptor for frame-based format to prevent
+NULL pointer crash by mirroring the handling done for uncompressed and
+mjpeg formats.
 
-Note that rcuwait_wait_event() in T3 does not block because refcount was
-already dropped by T1.  At this point T3 can exit and free the mm causing
-UAF in T1.
-
-To avoid this we move vma->vm_mm verification into vma_start_read() and
-grab vma->vm_mm to stabilize it before vma_refcount_put() operation.
-
-[surenb@google.com: v3]
-  Link: https://lkml.kernel.org/r/20250729145709.2731370-1-surenb@google.com
-Link: https://lkml.kernel.org/r/20250728175355.2282375-1-surenb@google.com
-Fixes: 3104138517fc ("mm: make vma cache SLAB_TYPESAFE_BY_RCU")
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-Reported-by: Jann Horn <jannh@google.com>
-Closes: https://lore.kernel.org/all/CAG48ez0-deFbVH=E3jbkWx=X3uVbd8nWeo6kbJPQ0KoUD+m2tA@mail.gmail.com/
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Acked-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Fixes: 7b5a58952fc3 ("usb: gadget: uvc: configfs: Add frame-based frame format support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Akash Kumar <quic_akakum@quicinc.com>
+Link: https://lore.kernel.org/r/20250718085138.1118788-1-quic_akakum@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h |   30 ++++++++++++++++++++++++++++++
- mm/memory.c        |    3 +--
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/uvc_configfs.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -33,6 +33,7 @@
- #include <linux/slab.h>
- #include <linux/cacheinfo.h>
- #include <linux/rcuwait.h>
-+#include <linux/sched/mm.h>
+--- a/drivers/usb/gadget/function/uvc_configfs.c
++++ b/drivers/usb/gadget/function/uvc_configfs.c
+@@ -2916,8 +2916,15 @@ static struct config_group *uvcg_frameba
+ 		'H',  '2',  '6',  '4', 0x00, 0x00, 0x10, 0x00,
+ 		0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71
+ 	};
++	struct uvcg_color_matching *color_match;
++	struct config_item *streaming;
+ 	struct uvcg_framebased *h;
  
- struct mempolicy;
- struct anon_vma;
-@@ -716,6 +717,10 @@ static inline void vma_refcount_put(stru
-  * reused and attached to a different mm before we lock it.
-  * Returns the vma on success, NULL on failure to lock and EAGAIN if vma got
-  * detached.
-+ *
-+ * WARNING! The vma passed to this function cannot be used if the function
-+ * fails to lock it because in certain cases RCU lock is dropped and then
-+ * reacquired. Once RCU lock is dropped the vma can be concurently freed.
-  */
- static inline struct vm_area_struct *vma_start_read(struct mm_struct *mm,
- 						    struct vm_area_struct *vma)
-@@ -745,6 +750,31 @@ static inline struct vm_area_struct *vma
- 	}
- 
- 	rwsem_acquire_read(&vma->vmlock_dep_map, 0, 1, _RET_IP_);
++	streaming = group->cg_item.ci_parent;
++	color_match = uvcg_format_get_default_color_match(streaming);
++	if (!color_match)
++		return ERR_PTR(-EINVAL);
 +
-+	/*
-+	 * If vma got attached to another mm from under us, that mm is not
-+	 * stable and can be freed in the narrow window after vma->vm_refcnt
-+	 * is dropped and before rcuwait_wake_up(mm) is called. Grab it before
-+	 * releasing vma->vm_refcnt.
-+	 */
-+	if (unlikely(vma->vm_mm != mm)) {
-+		/* Use a copy of vm_mm in case vma is freed after we drop vm_refcnt */
-+		struct mm_struct *other_mm = vma->vm_mm;
-+
-+		/*
-+		 * __mmdrop() is a heavy operation and we don't need RCU
-+		 * protection here. Release RCU lock during these operations.
-+		 * We reinstate the RCU read lock as the caller expects it to
-+		 * be held when this function returns even on error.
-+		 */
-+		rcu_read_unlock();
-+		mmgrab(other_mm);
-+		vma_refcount_put(vma);
-+		mmdrop(other_mm);
-+		rcu_read_lock();
-+		return NULL;
-+	}
-+
- 	/*
- 	 * Overflow of vm_lock_seq/mm_lock_seq might produce false locked result.
- 	 * False unlocked result is impossible because we modify and check
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -6554,8 +6554,7 @@ retry:
- 	 */
+ 	h = kzalloc(sizeof(*h), GFP_KERNEL);
+ 	if (!h)
+ 		return ERR_PTR(-ENOMEM);
+@@ -2936,6 +2943,9 @@ static struct config_group *uvcg_frameba
  
- 	/* Check if the vma we locked is the right one. */
--	if (unlikely(vma->vm_mm != mm ||
--		     address < vma->vm_start || address >= vma->vm_end))
-+	if (unlikely(address < vma->vm_start || address >= vma->vm_end))
- 		goto inval_end_read;
+ 	INIT_LIST_HEAD(&h->fmt.frames);
+ 	h->fmt.type = UVCG_FRAMEBASED;
++
++	h->fmt.color_matching = color_match;
++	color_match->refcnt++;
+ 	config_group_init_type_name(&h->fmt.group, name,
+ 				    &uvcg_framebased_type);
  
- 	rcu_read_unlock();
 
 
