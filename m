@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB26361FFE;
-	Tue, 12 Aug 2025 18:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95E061FFE;
+	Tue, 12 Aug 2025 18:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023774; cv=none; b=OZrKF5M4SBPxza8qkn1VJN1nes+wp0yRyTRR7I2u/I/DxHLqgmNF2BhMSN0gz59wip+nJeXudxSmUZ9zzIYF8HS7hy6QU3Ei30EhNWdCVazTRLTsqwcb6PxIX+v/3ARbBek8b4SCMg6ZD4/dMaqeFvtj7rwY8teI2QOrz90TK0c=
+	t=1755023777; cv=none; b=LcV04JNkPbWznx/McyknjKtjD8a133h4f8ceGCI84n2iaqbqDYas72fsCeYqaqPf0rfw/CiCDS0TkzMR2xKynvzJOHp4xQNP1oRNbid5LPXX4RJveCRdXJPuPZ6g1D6voyFZKhhhcW8uadfjLurNTUS2QBQEFp4LODIsla4J/Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023774; c=relaxed/simple;
-	bh=NZ9NfTGdvgmKvE8q/1YL/8qlbhAqK+ZSOiuViwyv0tc=;
+	s=arc-20240116; t=1755023777; c=relaxed/simple;
+	bh=pRH90TvtdM5KvJo3m/LOex0gqNqVr/a4gP//qrE0cMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JM4aVj4L2KFsD5Ohx8KL4bcHGvj8ZFJrmJFZg5LwI+QcLOMMwYG1SKpDO4jMN6QZOO3569lh3D8hxNl0lvEp1D47Dcy1HgsihZpbHhbKxT91dLHxuVv9S9HIkkC3LLxUQaxDPIwHuR3295XPE2bSVYH3jztyVlB4Gl0jG2jS0Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXPBc0pL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bjFPbLpkwDRb4IO1vJwmC+Gu53WG2KZraW8eOj9l5k1n7wteqqpLRy2RXPxIk4vzrBp4FHhpILK6Genq9rsTI9RhbFQQfOJtvoCmdlLZqcbp4rAcUtYNL+eIeVo96D30CNlSqKDULa5VEwW9+PAsCYwpGIobCModbAXI8W8WQVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiVVgmnI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXPBc0pL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47331C4CEF0;
-	Tue, 12 Aug 2025 18:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiVVgmnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31795C4CEF0;
+	Tue, 12 Aug 2025 18:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023774;
-	bh=NZ9NfTGdvgmKvE8q/1YL/8qlbhAqK+ZSOiuViwyv0tc=;
+	s=korg; t=1755023777;
+	bh=pRH90TvtdM5KvJo3m/LOex0gqNqVr/a4gP//qrE0cMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXPBc0pLBCSR7aFLeyj4Ax5rhz7Nm3ZSiSKez21aKalejvSDR6gIJsCsNev7Gotzl
-	 OcPZs1I9f092p+WEuSd3kUFy4/02Ok0gaEsbj40sUVojV1clSyH/+UFKnv2OKNOWkE
-	 kREtNuaBPg8+1336k6JSjz75ums4YHyWPl5MDZUg=
+	b=yiVVgmnI933PdQai+Vp3zNlJY5ahUzzXFCJ/eyRS4wUmqII6K0mkQqyQPazayG6mi
+	 sklkRHD+J06hKy3n3lhc5nd3PCDpwXQnqeF1kwtsAgnzbQVQMljah83f6OLrBCstHF
+	 drJYYG56fOf3xVUpWGegO0IYr+4EemgUY9bowLgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 178/627] kselftest/arm64: Fix check for setting new VLs in sve-ptrace
-Date: Tue, 12 Aug 2025 19:27:53 +0200
-Message-ID: <20250812173426.047848494@linuxfoundation.org>
+Subject: [PATCH 6.16 179/627] wifi: mt76: mt7925: fix off by one in mt7925_mcu_hw_scan()
+Date: Tue, 12 Aug 2025 19:27:54 +0200
+Message-ID: <20250812173426.091633228@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 867446f090589626497638f70b10be5e61a0b925 ]
+[ Upstream commit b3a431fe2e399b2e0cc5f43f7e9d63d63d3710ee ]
 
-The check that the new vector length we set was the expected one was typoed
-to an assignment statement which for some reason the compilers didn't spot,
-most likely due to the macros involved.
+The ssid->ssids[] and sreq->ssids[] arrays have MT7925_RNR_SCAN_MAX_BSSIDS
+elements so this >= needs to be > to prevent an out of bounds access.
 
-Fixes: a1d7111257cd ("selftests: arm64: More comprehensively test the SVE ptrace interface")
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Dev Jain <dev.jain@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20250609-kselftest-arm64-ssve-fixups-v2-1-998fcfa6f240@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 8284815ca161 ("wifi: mt76: mt7925: add RNR scan support for 6GHz")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/aDVT2tPhG_8T0Qla@stanley.mountain
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/fp/sve-ptrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/fp/sve-ptrace.c b/tools/testing/selftests/arm64/fp/sve-ptrace.c
-index 577b6e05e860..c499d5789dd5 100644
---- a/tools/testing/selftests/arm64/fp/sve-ptrace.c
-+++ b/tools/testing/selftests/arm64/fp/sve-ptrace.c
-@@ -253,7 +253,7 @@ static void ptrace_set_get_vl(pid_t child, const struct vec_type *type,
- 		return;
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 8ac6fbb736ab..300c863f0e3e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -2916,7 +2916,7 @@ int mt7925_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
+ 	for (i = 0; i < sreq->n_ssids; i++) {
+ 		if (!sreq->ssids[i].ssid_len)
+ 			continue;
+-		if (i > MT7925_RNR_SCAN_MAX_BSSIDS)
++		if (i >= MT7925_RNR_SCAN_MAX_BSSIDS)
+ 			break;
  
--	ksft_test_result(new_sve->vl = prctl_vl, "Set %s VL %u\n",
-+	ksft_test_result(new_sve->vl == prctl_vl, "Set %s VL %u\n",
- 			 type->name, vl);
+ 		ssid->ssids[n_ssids].ssid_len = cpu_to_le32(sreq->ssids[i].ssid_len);
+@@ -2933,7 +2933,7 @@ int mt7925_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
+ 		mt76_connac_mcu_build_rnr_scan_param(mdev, sreq);
  
- 	free(new_sve);
+ 		for (j = 0; j < mdev->rnr.bssid_num; j++) {
+-			if (j > MT7925_RNR_SCAN_MAX_BSSIDS)
++			if (j >= MT7925_RNR_SCAN_MAX_BSSIDS)
+ 				break;
+ 
+ 			tlv = mt76_connac_mcu_add_tlv(skb, UNI_SCAN_BSSID,
 -- 
 2.39.5
 
