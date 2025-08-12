@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61A72F5E;
-	Tue, 12 Aug 2025 18:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65691257435;
+	Tue, 12 Aug 2025 18:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022415; cv=none; b=mwx0273DGT+7cTvDxoW7HD4bvfrueoBBacojtd3vajxOPpTpMccq+1xOw8p8Psb1nhCVcutvq3rvN94kL+5xpRSW46shudZxvpind5duGVcNXrKoI5EL6zEtQNIviD51UujIa+Eh62a07MKnCSNuMFCn2aqRpps+O+oW2gQdbRQ=
+	t=1755022418; cv=none; b=fNKb1zfqOHQHZR/SpgznXxEQ0v69YyOe2xNWJhzgJSmzdcVs6vN7q0++1sythogZNILwbZzr0Z2Bv72ndPiglQL9PeW/aYzdaIuv4/Qqd8YunAmn710VbBNaUWzyDFXOXdDwNMi6apGSVRADG5BYR9MHj6hFV1wUaO5xYe4DOPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022415; c=relaxed/simple;
-	bh=bm9Xe3dT+ZO5ckV1+3TfQ3lGRruGE/rNlLyBE85HCgE=;
+	s=arc-20240116; t=1755022418; c=relaxed/simple;
+	bh=C+YRNBvv8CCpn7sxIbhFPot9oiAfDy67OlfJmW7SeyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G7zZ8qkHS9AivPNMRLIYL+/80QXnjs1KGfWLIeJuk179BfcnyckC1Rvyn1UjF10jhPZ2Jxmo/8BQ7cuKuVWMZRVG0evrt7qT+/EA9r1j5h5afyszyjXPWan5Yetp8AsYvELmz3MjwAf1hyepUy76wFb+MPVBrPCpjkvvQGlFzEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBQatSTS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QBhiRp5Q8WlYeITZgbiR4PR/UEfHigt714VUBXGIV7+07esJU4mokFzLf3dwdQtScUQUQT07ZdTCdul7cZpO/NAC50G68xu2FCtjzg+8w9o4cxr5LGt7vj2u+coRUTn4h2Qs71o5zRDZM212qHgt/8RVAFg5vqEKNXxJdXxo4BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtuYceHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBQatSTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49099C4CEF1;
-	Tue, 12 Aug 2025 18:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtuYceHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE254C4CEF1;
+	Tue, 12 Aug 2025 18:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022414;
-	bh=bm9Xe3dT+ZO5ckV1+3TfQ3lGRruGE/rNlLyBE85HCgE=;
+	s=korg; t=1755022418;
+	bh=C+YRNBvv8CCpn7sxIbhFPot9oiAfDy67OlfJmW7SeyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBQatSTSBhaW116Z507CmeK2NXExC+8RgMxEgvBhpFuo11qWJfypIBETG86cDQY3t
-	 XUAsxB11vmGjcOoYX7HTfraULaPxJDLjJ6cKIzFbTkBd736Uib9quQ4XJuikcqNnAI
-	 LyTs5xVfHcnkVSqEhz9ObYtxSx4SJkZy0A4kij/Q=
+	b=RtuYceHe5h05xtZ/Dn0YAPo7eZ83++Afv2mWd2osb52GrJvs7f9HwPklnIL98khXj
+	 8+3Yjpk3Y32oqWRX47cPdHRpnRN9KnbNouwixlmj/t3NDBDxxyZkYdmVp07hxd2nz+
+	 pxfLVDntK9Qtf4oek/ZRj1fo+K+R1onD72LZXQT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Puranjay Mohan <puranjay@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Christoph Hellwig <hch@lst.de>,
+	Xu Kuohai <xukuohai@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/369] bpf/preload: Dont select USERMODE_DRIVER
-Date: Tue, 12 Aug 2025 19:27:26 +0200
-Message-ID: <20250812173020.386638099@linuxfoundation.org>
+Subject: [PATCH 6.12 150/369] bpf, arm64: Fix fp initialization for exception boundary
+Date: Tue, 12 Aug 2025 19:27:27 +0200
+Message-ID: <20250812173020.423546105@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -46,42 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit 2b03164eee20eac7ce0fe3aa4fbda7efc1e5427a ]
+[ Upstream commit b114fcee766d5101eada1aca7bb5fd0a86c89b35 ]
 
-The usermode driver framework is not used anymore by the BPF
-preload code.
+In the ARM64 BPF JIT when prog->aux->exception_boundary is set for a BPF
+program, find_used_callee_regs() is not called because for a program
+acting as exception boundary, all callee saved registers are saved.
+find_used_callee_regs() sets `ctx->fp_used = true;` when it sees FP
+being used in any of the instructions.
 
-Fixes: cb80ddc67152 ("bpf: Convert bpf_preload.ko to use light skeleton.")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+For programs acting as exception boundary, ctx->fp_used remains false
+even if frame pointer is used by the program and therefore, FP is not
+set-up for such programs in the prologue. This can cause the kernel to
+crash due to a pagefault.
+
+Fix it by setting ctx->fp_used = true for exception boundary programs as
+fp is always saved in such programs.
+
+Fixes: 5d4fa9ec5643 ("bpf, arm64: Avoid blindly saving/restoring all callee-saved registers")
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/bpf/20250721-remove-usermode-driver-v1-1-0d0083334382@linutronix.de
+Acked-by: Xu Kuohai <xukuohai@huawei.com>
+Link: https://lore.kernel.org/bpf/20250722133410.54161-2-puranjay@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/preload/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/net/bpf_jit_comp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/preload/Kconfig b/kernel/bpf/preload/Kconfig
-index c9d45c9d6918..f9b11d01c3b5 100644
---- a/kernel/bpf/preload/Kconfig
-+++ b/kernel/bpf/preload/Kconfig
-@@ -10,7 +10,6 @@ menuconfig BPF_PRELOAD
- 	# The dependency on !COMPILE_TEST prevents it from being enabled
- 	# in allmodconfig or allyesconfig configurations
- 	depends on !COMPILE_TEST
--	select USERMODE_DRIVER
- 	help
- 	  This builds kernel module with several embedded BPF programs that are
- 	  pinned into BPF FS mount point as human readable files that are
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 515c411c2c83..5553508c3644 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -399,6 +399,7 @@ static void push_callee_regs(struct jit_ctx *ctx)
+ 		emit(A64_PUSH(A64_R(23), A64_R(24), A64_SP), ctx);
+ 		emit(A64_PUSH(A64_R(25), A64_R(26), A64_SP), ctx);
+ 		emit(A64_PUSH(A64_R(27), A64_R(28), A64_SP), ctx);
++		ctx->fp_used = true;
+ 	} else {
+ 		find_used_callee_regs(ctx);
+ 		for (i = 0; i + 1 < ctx->nr_used_callee_reg; i += 2) {
 -- 
 2.39.5
 
