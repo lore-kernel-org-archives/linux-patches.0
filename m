@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635302FDC54;
-	Tue, 12 Aug 2025 17:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBF72FDC51;
+	Tue, 12 Aug 2025 17:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020330; cv=none; b=YLk6/v/QBcfFJUny60i84V0ZUHJbGecsX016g97eoyaAXF0ZTfIfmyKBWVFAsdSKePX+P6tkrVf1UsKkp+Lgq7VBi4q5ZHWDDgR6vcjJoWeDJBgi2d3yVr3jceudPEzoYDUAh7pdtZEbxymYWzXK1+xRszTGRgD16V460Idn+gY=
+	t=1755020333; cv=none; b=dzYp2pCXyvMCr87C6kW0TbMkJKuCZI2S67grwUl6pqn4FrYSsl16sH9Ia7CBTsUraD2xMMEhashS5iDD8CyA+Pe13yvB/uyB976zU5yWOafjAswX4JqTh1bqjzV5qfYuisBE88wkXKvAGG5QuT0SW1KVaMXLldQdbUZmfnMAmyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020330; c=relaxed/simple;
-	bh=oUQWd0DBXb7ahE18Of2cixJIb3OE3sdwveYHNeASGkk=;
+	s=arc-20240116; t=1755020333; c=relaxed/simple;
+	bh=//iBkvNwi3TgTrySUrbqQhbUwVcZddPoZXeYyRTUxE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KBLhdc70P+2fhbhkvHWJrcA1pxMS/9riUNik5i4j2lX7BXjgUzSqT6ZbZSseBeVfXhHqToti0utEV3wQrCCtM/db3INbynMMu2JJ+sK1utEAP/EapoTBjDtB8NrxOPm6jwZ7ZwxFG2aF+I1VCRkPk8Ax2GyYQvPdMcFnXw/wg+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PYbUUxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tA6QnmHPc75oxz1n6ygypa/znEjCgSsXhOLFxKmNSHrUp+4BWe/03ms6SG6KRrHD2DNDcmFoIwfMg41kqspeem+RgLLvnULhOk0pPnBl460e0/18VZmG1NNuE3H8GwXyq3vsa21gZsmiC2oTwOXxdIMXaIRNU1tLCNqygDv0Tq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tb7DuFK1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PYbUUxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1D5C4CEF0;
-	Tue, 12 Aug 2025 17:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tb7DuFK1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F173CC4CEF0;
+	Tue, 12 Aug 2025 17:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020330;
-	bh=oUQWd0DBXb7ahE18Of2cixJIb3OE3sdwveYHNeASGkk=;
+	s=korg; t=1755020333;
+	bh=//iBkvNwi3TgTrySUrbqQhbUwVcZddPoZXeYyRTUxE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2PYbUUxrr+s4w621SGwZVnTy2E3Q3K4KHJnFtOwZSkiSTi1GkDll4IwMeuUZ5ddOm
-	 jjFhKOeDzECXoybxNEHh2UIG1WSGjz76FWjG+PR6gLluq2R7R1bCpdzsQ8Zt14lF3r
-	 3CkT279usrQcDAIPZ2eOcB+qihImfz2/FyBgRRjU=
+	b=tb7DuFK1qXhiHX0Qd9MuPAwY9NlgOodfANz2eD6WDTwVJMYfILphJPCxagFvke5oq
+	 wjtYrgDJx/Ij81G9emcQn4wXcX8vOll7fDxSLbnZGEgF5uzVklZsVJybFZtKfTXR90
+	 liSmLOB9Lmnj3cj1wfhmtQH6p9VJpSBuAAHEJHVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ac2116e48989e84a2893@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Aditya Dutt <duttaditya18@gmail.com>
-Subject: [PATCH 6.1 048/253] jfs: reject on-disk inodes of an unsupported type
-Date: Tue, 12 Aug 2025 19:27:16 +0200
-Message-ID: <20250812172950.778724536@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 049/253] comedi: comedi_test: Fix possible deletion of uninitialized timers
+Date: Tue, 12 Aug 2025 19:27:17 +0200
+Message-ID: <20250812172950.821049864@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -52,112 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 8c3f9a70d2d4dd6c640afe294b05c6a0a45434d9 upstream.
+commit 1b98304c09a0192598d0767f1eb8c83d7e793091 upstream.
 
-Syzbot has reported the following BUG:
+In `waveform_common_attach()`, the two timers `&devpriv->ai_timer` and
+`&devpriv->ao_timer` are initialized after the allocation of the device
+private data by `comedi_alloc_devpriv()` and the subdevices by
+`comedi_alloc_subdevices()`.  The function may return with an error
+between those function calls.  In that case, `waveform_detach()` will be
+called by the Comedi core to clean up.  The check that
+`waveform_detach()` uses to decide whether to delete the timers is
+incorrect.  It only checks that the device private data was allocated,
+but that does not guarantee that the timers were initialized.  It also
+needs to check that the subdevices were allocated.  Fix it.
 
-kernel BUG at fs/inode.c:668!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 3 UID: 0 PID: 139 Comm: jfsCommit Not tainted 6.12.0-rc4-syzkaller-00085-g4e46774408d9 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
-RIP: 0010:clear_inode+0x168/0x190
-Code: 4c 89 f7 e8 ba fe e5 ff e9 61 ff ff ff 44 89 f1 80 e1 07 80 c1 03 38 c1 7c c1 4c 89 f7 e8 90 ff e5 ff eb b7
- 0b e8 01 5d 7f ff 90 0f 0b e8 f9 5c 7f ff 90 0f 0b e8 f1 5c 7f
-RSP: 0018:ffffc900027dfae8 EFLAGS: 00010093
-RAX: ffffffff82157a87 RBX: 0000000000000001 RCX: ffff888104d4b980
-RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000000
-RBP: ffffc900027dfc90 R08: ffffffff82157977 R09: fffff520004fbf38
-R10: dffffc0000000000 R11: fffff520004fbf38 R12: dffffc0000000000
-R13: ffff88811315bc00 R14: ffff88811315bda8 R15: ffff88811315bb80
-FS:  0000000000000000(0000) GS:ffff888135f00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005565222e0578 CR3: 0000000026ef0000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- ? __die_body+0x5f/0xb0
- ? die+0x9e/0xc0
- ? do_trap+0x15a/0x3a0
- ? clear_inode+0x168/0x190
- ? do_error_trap+0x1dc/0x2c0
- ? clear_inode+0x168/0x190
- ? __pfx_do_error_trap+0x10/0x10
- ? report_bug+0x3cd/0x500
- ? handle_invalid_op+0x34/0x40
- ? clear_inode+0x168/0x190
- ? exc_invalid_op+0x38/0x50
- ? asm_exc_invalid_op+0x1a/0x20
- ? clear_inode+0x57/0x190
- ? clear_inode+0x167/0x190
- ? clear_inode+0x168/0x190
- ? clear_inode+0x167/0x190
- jfs_evict_inode+0xb5/0x440
- ? __pfx_jfs_evict_inode+0x10/0x10
- evict+0x4ea/0x9b0
- ? __pfx_evict+0x10/0x10
- ? iput+0x713/0xa50
- txUpdateMap+0x931/0xb10
- ? __pfx_txUpdateMap+0x10/0x10
- jfs_lazycommit+0x49a/0xb80
- ? _raw_spin_unlock_irqrestore+0x8f/0x140
- ? lockdep_hardirqs_on+0x99/0x150
- ? __pfx_jfs_lazycommit+0x10/0x10
- ? __pfx_default_wake_function+0x10/0x10
- ? __kthread_parkme+0x169/0x1d0
- ? __pfx_jfs_lazycommit+0x10/0x10
- kthread+0x2f2/0x390
- ? __pfx_jfs_lazycommit+0x10/0x10
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x4d/0x80
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-This happens when 'clear_inode()' makes an attempt to finalize an underlying
-JFS inode of unknown type. According to JFS layout description from
-https://jfs.sourceforge.net/project/pub/jfslayout.pdf, inode types from 5 to
-15 are reserved for future extensions and should not be encountered on a valid
-filesystem. So add an extra check for valid inode type in 'copy_from_dinode()'.
-
-Reported-by: syzbot+ac2116e48989e84a2893@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ac2116e48989e84a2893
-Fixes: 79ac5a46c5c1 ("jfs_lookup(): don't bother with . or ..")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
+Fixes: 73e0e4dfed4c ("staging: comedi: comedi_test: fix timer lock-up")
+Cc: stable@vger.kernel.org # 6.15+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250708130627.21743-1-abbotti@mev.co.uk
+[ changed timer_delete_sync() to del_timer_sync() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_imap.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/comedi/drivers/comedi_test.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -3029,14 +3029,23 @@ static void duplicateIXtree(struct super
-  *
-  * RETURN VALUES:
-  *	0	- success
-- *	-ENOMEM	- insufficient memory
-+ *	-EINVAL	- unexpected inode type
-  */
- static int copy_from_dinode(struct dinode * dip, struct inode *ip)
+--- a/drivers/comedi/drivers/comedi_test.c
++++ b/drivers/comedi/drivers/comedi_test.c
+@@ -788,7 +788,7 @@ static void waveform_detach(struct comed
  {
- 	struct jfs_inode_info *jfs_ip = JFS_IP(ip);
- 	struct jfs_sb_info *sbi = JFS_SBI(ip->i_sb);
-+	int fileset = le32_to_cpu(dip->di_fileset);
+ 	struct waveform_private *devpriv = dev->private;
  
--	jfs_ip->fileset = le32_to_cpu(dip->di_fileset);
-+	switch (fileset) {
-+	case AGGR_RESERVED_I: case AGGREGATE_I: case BMAP_I:
-+	case LOG_I: case BADBLOCK_I: case FILESYSTEM_I:
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	jfs_ip->fileset = fileset;
- 	jfs_ip->mode2 = le32_to_cpu(dip->di_mode);
- 	jfs_set_inode_flags(ip);
- 
+-	if (devpriv) {
++	if (devpriv && dev->n_subdevices) {
+ 		del_timer_sync(&devpriv->ai_timer);
+ 		del_timer_sync(&devpriv->ao_timer);
+ 	}
 
 
