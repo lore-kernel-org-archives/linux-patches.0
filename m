@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BAF1EBFE0;
-	Tue, 12 Aug 2025 18:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455AE2192F4;
+	Tue, 12 Aug 2025 18:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022881; cv=none; b=mh6FJA/BdiQb54mJYgtf7NXh0RZpZRSMciGmSf8hoLdUFfLMaoibVx4gNpuTEbTpy31L2vDgsezVNmCgZXv/wOnnbbIaTlHAA0QsyH3sm/UkHrzU1Xd1OQQFR2ijqVwK6DrvWw0ep8saWDNC7jmEQs28cebPaoOoXc4yyXTUQkQ=
+	t=1755022884; cv=none; b=Xa4yvYTT65V2jmAzoTne/n8+gCRpEqWOLsViWqHMqZJ1iwIjESaVZzXzg4w2GF8X3QF+KaQsvjoypZMiGXASbNqgIp99/dVXwuFG0QsNtRgyeblD4Ve2hNgxKgiyGRLqoXqsPBXZJXSZ3u6Ye4Vu+GQku1++GeDTYJkVmU6xNMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022881; c=relaxed/simple;
-	bh=64r630jbVa5PLttT0srOWBAHtoWF0bTf4iEpcnjeNaM=;
+	s=arc-20240116; t=1755022884; c=relaxed/simple;
+	bh=OZTfBvT1MLa3ETjZ2ztGH+Xkr8CSOVrt3oEvoJmn884=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1RH9OH0YgB0I7to+81aZbcpTE4NtmIip7JIb5oH5m4yL8zwWh5yblWvZmu3QjQmlnC4dcYqxkFXG1NpKzENE/LKoOxp/VDAragnLtsdSaZyoQrdE9OxDWaG9xPXwqCtnZcFcEeduUHaYME2XuE2mVMzNnM5kj/82LqX4vanR4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtQBSak8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NuaC2iLzv3RiwIINVFRuA39yE3L9UZJqsncNc4UgvlbkLys2WOXip6aa7eqJN5/w+3Ohuuv3OK5eT6UEwEKEaem6BIoNBrYkhmkZIylwInSiJEqJ4o2X51PEc2LyAzz7LIMeIMATf154QzsiGUvkkOXNEdwBcCdyCUZBD1QgnQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDhMNb0o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtQBSak8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5AAC4CEF0;
-	Tue, 12 Aug 2025 18:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDhMNb0o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7BBC4CEF0;
+	Tue, 12 Aug 2025 18:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022880;
-	bh=64r630jbVa5PLttT0srOWBAHtoWF0bTf4iEpcnjeNaM=;
+	s=korg; t=1755022884;
+	bh=OZTfBvT1MLa3ETjZ2ztGH+Xkr8CSOVrt3oEvoJmn884=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtQBSak8A0UW11vDV0MI/X6QOrzwTt5l/Q9Qia+zo4SJBbvIVOZfc0NLLX6mx1wIg
-	 mOFrhWv7H7rV6mMvPMotBWcjNzROuEo6+jyBX+ykl2k/7i8en8t4UclG8yCTly8XDz
-	 EyIiH9QrKOslRQ/C0pEV3CUYQUUomo2VvHJnZN1I=
+	b=CDhMNb0ofh8wjIIuN173dDHRDtvt3d+pkiC8uCd5XhiaQhmXILz0iFg0OckBb/Cyb
+	 5O8EGAa7DrMCDUypohWRn4IZwqLZPM3U4cgF/fI0DVArGDAWhLslPs54AOXnU3u2Fw
+	 pjLcnpCh1/2ZzhqAjjdSqt/0RlY+OSBOcQ+iZBtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 254/369] f2fs: fix to check upper boundary for gc_no_zoned_gc_percent
-Date: Tue, 12 Aug 2025 19:29:11 +0200
-Message-ID: <20250812173024.314097272@linuxfoundation.org>
+Subject: [PATCH 6.12 255/369] f2fs: doc: fix wrong quota mount option description
+Date: Tue, 12 Aug 2025 19:29:12 +0200
+Message-ID: <20250812173024.350430373@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -54,38 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit a919ae794ad2dc6d04b3eea2f9bc86332c1630cc ]
+[ Upstream commit 81b6ecca2f15922e8d653dc037df5871e754be6e ]
 
-This patch adds missing upper boundary check while setting
-gc_no_zoned_gc_percent via sysfs.
+We should use "{usr,grp,prj}jquota=" to disable journaled quota,
+rather than using off{usr,grp,prj}jquota.
 
-Fixes: 9a481a1c16f4 ("f2fs: create gc_no_zoned_gc_percent and gc_boost_zoned_gc_percent")
-Cc: Daeho Jeong <daehojeong@google.com>
+Fixes: 4b2414d04e99 ("f2fs: support journalled quota")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/sysfs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/filesystems/f2fs.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
-index d79d8041b8b7..eb84b9418ac1 100644
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -623,6 +623,13 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
- 		return count;
- 	}
- 
-+	if (!strcmp(a->attr.name, "gc_no_zoned_gc_percent")) {
-+		if (t > 100)
-+			return -EINVAL;
-+		*ui = (unsigned int)t;
-+		return count;
-+	}
-+
- 	if (!strcmp(a->attr.name, "gc_boost_zoned_gc_percent")) {
- 		if (t > 100)
- 			return -EINVAL;
+diff --git a/Documentation/filesystems/f2fs.rst b/Documentation/filesystems/f2fs.rst
+index 68a0885fb5e6..fdf31514fb1c 100644
+--- a/Documentation/filesystems/f2fs.rst
++++ b/Documentation/filesystems/f2fs.rst
+@@ -235,9 +235,9 @@ usrjquota=<file>	 Appoint specified file and type during mount, so that quota
+ grpjquota=<file>	 information can be properly updated during recovery flow,
+ prjjquota=<file>	 <quota file>: must be in root directory;
+ jqfmt=<quota type>	 <quota type>: [vfsold,vfsv0,vfsv1].
+-offusrjquota		 Turn off user journalled quota.
+-offgrpjquota		 Turn off group journalled quota.
+-offprjjquota		 Turn off project journalled quota.
++usrjquota=		 Turn off user journalled quota.
++grpjquota=		 Turn off group journalled quota.
++prjjquota=		 Turn off project journalled quota.
+ quota			 Enable plain user disk quota accounting.
+ noquota			 Disable all plain disk quota option.
+ alloc_mode=%s		 Adjust block allocation policy, which supports "reuse"
 -- 
 2.39.5
 
