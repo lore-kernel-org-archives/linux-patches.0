@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5412CA9;
-	Tue, 12 Aug 2025 18:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7A32CA9;
+	Tue, 12 Aug 2025 18:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024472; cv=none; b=lPkCj4wlFtUe/nBKhv1eW9pVzzpA2LPuUJEUQHozf3k2w4DxjKXF3zxm2Ta1nZXM6uSAa/EnENWHBLNo3+oKdLwE06QfKxCA3ZsBwdiZFMDLuS1n/hqsTZzv7U93tw685YHMUdi5+ALY6triW8BnN6cch7vBmmc9GsRCjrnEPb0=
+	t=1755024475; cv=none; b=NVBPhf3GXUUpHah6hpRFre86dQ6B2skBWoRAWxqNvxQjco4UGk/S+EgrbhfLzBN2P+GRRFyzpWA5OmaLbrxbKrC7ECgqf7j7TiKncKuaUUu8NPpIPruxtX5F56IbKhn45lAzHQahB8luGWs4epMKbrYN1Zh5KZy0vi0k+PGKcng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024472; c=relaxed/simple;
-	bh=YOjYB8T6KUjQaNNQGoxwF0G1hHcrb0Yd68Sv6A+yf30=;
+	s=arc-20240116; t=1755024475; c=relaxed/simple;
+	bh=PVpxcwhH1mo17vndFoZwnnC9DBEMKfvWVuUcHIm3sO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHl+2VmavTIUzp/ZDABT0R2xELcQLNuv+7a6YMCaQjHnGxBqMKwj125FmiCV3mhZq+1/R/SK04l6S/rTWpvLs6d3JKhoJx4x6k8aS9pK0DB/CEvHi7xqA1aFYEvDTPm3RBTig+KM7t2jOjtPXew0kWUaTGfqHUJ3Vmo9yDis1Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDL0LxWd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SEdl/6HDFC/kpWncRHhTBsJr5zhDzplBjTpmxyz0FXZbInUtzp3NUXdKFhn9h/mUfXwFwFLFnKYvGOcOWso89nkaqPWaDjvveg74M6F8fg9tk2RC9lPcei35+/yZ++C5OJ9Ymq1dKSb2uknZwGfYuz8ilRH3eMZet6aY3MmOMyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Siqy7Cqd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDL0LxWd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F76C4CEF0;
-	Tue, 12 Aug 2025 18:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Siqy7Cqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00BCC4CEF0;
+	Tue, 12 Aug 2025 18:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024471;
-	bh=YOjYB8T6KUjQaNNQGoxwF0G1hHcrb0Yd68Sv6A+yf30=;
+	s=korg; t=1755024475;
+	bh=PVpxcwhH1mo17vndFoZwnnC9DBEMKfvWVuUcHIm3sO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDL0LxWdUSBRfcRHLKo3iuiUmPIxtn3KzgrB5AGv/0tKhOhlx7M1wL18VYaX277Ak
-	 cev2l8PItOmyBuc9a9VyVzsuH+zKEptqckYiK9NR5RL8nn8nV+pHqjUtXqRJ15yUtk
-	 cjOZ6DXoLTNMk7GDPMjAVcG6qDUJjL85243MzgyU=
+	b=Siqy7CqdEh9vao7U9R51U3o4AW7aHbqrHvElgX5SCZl+nSlRcyh6vjbTeNV01V/Zq
+	 QQdHs8LI5AohdmZkekihXfJ5rntbHk9tsLtcDwVpt+QBXHK7dBf3tc3l1kz7g6rM39
+	 l5AzZzUL/QilX1hwUpzIEfh3CW+V10EchwLjtSgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parav Pandit <parav@nvidia.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 350/627] RDMA/counter: Check CAP_NET_RAW check in user namespace for RDMA counters
-Date: Tue, 12 Aug 2025 19:30:45 +0200
-Message-ID: <20250812173432.598473603@linuxfoundation.org>
+Subject: [PATCH 6.16 351/627] Fix dma_unmap_sg() nents value
+Date: Tue, 12 Aug 2025 19:30:46 +0200
+Message-ID: <20250812173432.634039945@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,40 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Parav Pandit <parav@nvidia.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 449728196d65fce513dbacf4d3696764be1c6524 ]
+[ Upstream commit 1db50f7b7a793670adcf062df9ff27798829d963 ]
 
-Currently, the capability check is done in the default
-init_user_ns user namespace. When a process runs in a
-non default user namespace, such check fails.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Since the RDMA device is a resource within a network namespace,
-use the network namespace associated with the RDMA device to
-determine its owning user namespace.
-
-Fixes: 1bd8e0a9d0fd ("RDMA/counter: Allow manual mode configuration support")
-Signed-off-by: Parav Pandit <parav@nvidia.com>
-Link: https://patch.msgid.link/68e2064e72e94558a576fdbbb987681a64f6fea8.1750963874.git.leon@kernel.org
+Fixes: ed10435d3583 ("RDMA/erdma: Implement hierarchical MTT")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20250630092346.81017-2-fourier.thomas@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/counters.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
-index e6ec7b7a40af..c3aa6d7fc66b 100644
---- a/drivers/infiniband/core/counters.c
-+++ b/drivers/infiniband/core/counters.c
-@@ -461,7 +461,7 @@ static struct ib_qp *rdma_counter_get_qp(struct ib_device *dev, u32 qp_num)
- 		return NULL;
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index af36a8d2df22..ec0ad4086066 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -629,7 +629,8 @@ static struct erdma_mtt *erdma_create_cont_mtt(struct erdma_dev *dev,
+ static void erdma_destroy_mtt_buf_sg(struct erdma_dev *dev,
+ 				     struct erdma_mtt *mtt)
+ {
+-	dma_unmap_sg(&dev->pdev->dev, mtt->sglist, mtt->nsg, DMA_TO_DEVICE);
++	dma_unmap_sg(&dev->pdev->dev, mtt->sglist,
++		     DIV_ROUND_UP(mtt->size, PAGE_SIZE), DMA_TO_DEVICE);
+ 	vfree(mtt->sglist);
+ }
  
- 	qp = container_of(res, struct ib_qp, res);
--	if (qp->qp_type == IB_QPT_RAW_PACKET && !capable(CAP_NET_RAW))
-+	if (qp->qp_type == IB_QPT_RAW_PACKET && !rdma_dev_has_raw_cap(dev))
- 		goto err;
- 
- 	return qp;
 -- 
 2.39.5
 
