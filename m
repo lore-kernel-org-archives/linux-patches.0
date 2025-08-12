@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F2D21ABD0;
-	Tue, 12 Aug 2025 19:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2412021ABD0;
+	Tue, 12 Aug 2025 19:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026545; cv=none; b=YfqqQ6YCZMLAYiRSZ7lA9Ex24bpgX55M2RVJPsxRUgU0bfnBFxbzLMTuY3Ft/ep/EDXaEbMTuynI1Rz/KaLTc2+ydBYlqrrifZqI+fZF26hrXMCsETzgUBUlK0YfsTgRwxBHaHBiPYQY5G9iazNUghFtLaMuoKE9nm6Wm4ANdA4=
+	t=1755026549; cv=none; b=Tef9IwXuo5UAGOPidRGtZR9Vac2HaRfGz0d1xLbQIkUddvvLF8N76E/sESM0Jl9K/LmxjsGFejHD8SlPV4zpBESAQwt9C2qpRYbcdiNPcfxN6W2xD4uxY0Okkw+Kt1yw0XN0CFPRXucaKym3U20el75RZLEuPvHC53YXo3I43hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026545; c=relaxed/simple;
-	bh=mjJS5EOzoRj02jpjmjEnsNCfvzkjz/JxDgrGfCuwcCQ=;
+	s=arc-20240116; t=1755026549; c=relaxed/simple;
+	bh=cSZjrYptHfEQ55cWFaPqDnk8dGPPieexkPMUFMo+vfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2i78+YX8JVPpPvzFDYa4IXS74dlCJdeMXmDmBpehfn57U5SBwBGsq9iDOPR5n0dBXhekFDlzEYNjbTcoujPhY4bttJCRirUgljhYA4oNrNA69iR5eNWSRR1M9B7Csz4+vn+LS6AGCo3eDakIXmsxX0hSGrDNeOecD6247AyuGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBE83RqM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwH+jWAiAEYrcTpmzXmlXz+tXHz9FcRwntYosU0C62wwjMOTSQxQSOPDg2vYQXVpFC0rjraYn0NwUhrN3BDmRIxeb6wS2cvLYoTpsNz2p1syjOb2sQPfQf9LNdqv4ExdAB8MY+tVYQBeptq0qEkrkL2pfWWYkhFhwtyIoIScFFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbzPFidV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBE83RqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4202FC4CEF0;
-	Tue, 12 Aug 2025 19:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbzPFidV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EBFC4CEF0;
+	Tue, 12 Aug 2025 19:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026545;
-	bh=mjJS5EOzoRj02jpjmjEnsNCfvzkjz/JxDgrGfCuwcCQ=;
+	s=korg; t=1755026549;
+	bh=cSZjrYptHfEQ55cWFaPqDnk8dGPPieexkPMUFMo+vfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBE83RqMlJAn3qO0/8GkF1i6at2IxXf7wY5fnepRREQPA+uV05azNaNwlAS74olaW
-	 paiWZgH2k30TeT05dX7V1qA6wSH8T8EHS5H5xFVKe8+nyWPuT1p+YuTyDGAVSH8Ref
-	 s7ikZQ436RnFDjc8HUZsVeIOnh872FCovWhoHmSE=
+	b=ZbzPFidV7w5hbajPY4LleKi3/U1MOrC65QGvLoyhi/ryCFm+WhONWbWArTCWWwUPu
+	 S4BbUXHNg26ge9TQpPkrp5kLgzFD0OmPV2NCPX1aOMuT7wAaxTah0mu1dDCDq42tYm
+	 RKju93tjfISfBznjiz2lLPDn1v4V9STQMdqEwkSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 336/480] i3c: master: svc: Fix npcm845 FIFO_EMPTY quirk
-Date: Tue, 12 Aug 2025 19:49:04 +0200
-Message-ID: <20250812174411.300299446@linuxfoundation.org>
+Subject: [PATCH 6.15 337/480] module: Restore the moduleparam prefix length check
+Date: Tue, 12 Aug 2025 19:49:05 +0200
+Message-ID: <20250812174411.339831260@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,67 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <yschu@nuvoton.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit bc4a09d8e79cadccdd505f47b01903a80bc666e7 ]
+[ Upstream commit bdc877ba6b7ff1b6d2ebeff11e63da4a50a54854 ]
 
-In a private write transfer, the driver pre-fills the FIFO to work around
-the FIFO_EMPTY quirk. However, if an IBIWON event occurs, the hardware
-emits a NACK and the driver initiates a retry. During the retry, driver
-attempts to pre-fill the FIFO again if there is remaining data, but since
-the FIFO is already full, this leads to data loss.
+The moduleparam code allows modules to provide their own definition of
+MODULE_PARAM_PREFIX, instead of using the default KBUILD_MODNAME ".".
 
-Check available space in FIFO to prevent overflow.
+Commit 730b69d22525 ("module: check kernel param length at compile time,
+not runtime") added a check to ensure the prefix doesn't exceed
+MODULE_NAME_LEN, as this is what param_sysfs_builtin() expects.
 
-Fixes: 4008a74e0f9b ("i3c: master: svc: Fix npcm845 FIFO empty issue")
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Link: https://lore.kernel.org/r/20250730003719.1825593-1-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Later, commit 58f86cc89c33 ("VERIFY_OCTAL_PERMISSIONS: stricter checking
+for sysfs perms.") removed this check, but there is no indication this was
+intentional.
+
+Since the check is still useful for param_sysfs_builtin() to function
+properly, reintroduce it in __module_param_call(), but in a modernized form
+using static_assert().
+
+While here, clean up the __module_param_call() comments. In particular,
+remove the comment "Default value instead of permissions?", which comes
+from commit 9774a1f54f17 ("[PATCH] Compile-time check re world-writeable
+module params"). This comment was related to the test variable
+__param_perm_check_##name, which was removed in the previously mentioned
+commit 58f86cc89c33.
+
+Fixes: 58f86cc89c33 ("VERIFY_OCTAL_PERMISSIONS: stricter checking for sysfs perms.")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Link: https://lore.kernel.org/r/20250630143535.267745-4-petr.pavlu@suse.com
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ include/linux/moduleparam.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index 85e16de208d3..01295eb80806 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -104,6 +104,7 @@
- #define   SVC_I3C_MDATACTRL_TXTRIG_FIFO_NOT_FULL GENMASK(5, 4)
- #define   SVC_I3C_MDATACTRL_RXTRIG_FIFO_NOT_EMPTY 0
- #define   SVC_I3C_MDATACTRL_RXCOUNT(x) FIELD_GET(GENMASK(28, 24), (x))
-+#define   SVC_I3C_MDATACTRL_TXCOUNT(x) FIELD_GET(GENMASK(20, 16), (x))
- #define   SVC_I3C_MDATACTRL_TXFULL BIT(30)
- #define   SVC_I3C_MDATACTRL_RXEMPTY BIT(31)
+diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
+index bfb85fd13e1f..110e9d09de24 100644
+--- a/include/linux/moduleparam.h
++++ b/include/linux/moduleparam.h
+@@ -282,10 +282,9 @@ struct kparam_array
+ #define __moduleparam_const const
+ #endif
  
-@@ -1308,14 +1309,19 @@ static int svc_i3c_master_xfer(struct svc_i3c_master *master,
- 		 * FIFO start filling as soon as possible after EmitStartAddr.
- 		 */
- 		if (svc_has_quirk(master, SVC_I3C_QUIRK_FIFO_EMPTY) && !rnw && xfer_len) {
--			u32 end = xfer_len > SVC_I3C_FIFO_SIZE ? 0 : SVC_I3C_MWDATAB_END;
--			u32 len = min_t(u32, xfer_len, SVC_I3C_FIFO_SIZE);
--
--			writesb(master->regs + SVC_I3C_MWDATAB1, out, len - 1);
--			/* Mark END bit if this is the last byte */
--			writel(out[len - 1] | end, master->regs + SVC_I3C_MWDATAB);
--			xfer_len -= len;
--			out += len;
-+			u32 space, end, len;
-+
-+			reg = readl(master->regs + SVC_I3C_MDATACTRL);
-+			space = SVC_I3C_FIFO_SIZE - SVC_I3C_MDATACTRL_TXCOUNT(reg);
-+			if (space) {
-+				end = xfer_len > space ? 0 : SVC_I3C_MWDATAB_END;
-+				len = min_t(u32, xfer_len, space);
-+				writesb(master->regs + SVC_I3C_MWDATAB1, out, len - 1);
-+				/* Mark END bit if this is the last byte */
-+				writel(out[len - 1] | end, master->regs + SVC_I3C_MWDATAB);
-+				xfer_len -= len;
-+				out += len;
-+			}
- 		}
- 
- 		ret = readl_poll_timeout(master->regs + SVC_I3C_MSTATUS, reg,
+-/* This is the fundamental function for registering boot/module
+-   parameters. */
++/* This is the fundamental function for registering boot/module parameters. */
+ #define __module_param_call(prefix, name, ops, arg, perm, level, flags)	\
+-	/* Default value instead of permissions? */			\
++	static_assert(sizeof(""prefix) - 1 <= MAX_PARAM_PREFIX_LEN);	\
+ 	static const char __param_str_##name[] = prefix #name;		\
+ 	static struct kernel_param __moduleparam_const __param_##name	\
+ 	__used __section("__param")					\
 -- 
 2.39.5
 
