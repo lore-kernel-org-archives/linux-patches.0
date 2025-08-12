@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCD161FFE;
-	Tue, 12 Aug 2025 18:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3181A61FFE;
+	Tue, 12 Aug 2025 18:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022631; cv=none; b=BnUJEPw+Nl0gVXMDzT/A4bFOQFqUD0kqQZ6amhV1FKaYQHoep9ia46qZvktgb7qwkk6fQWyfSU9orrtJDbUWOOpP2psyrhU9yvJouSkmpd0P+nQn4jWq2iIyiPIdxIK2SsSl/EJc3vFf6WjFszeA+U8cGyyjrq7fAJCEpFypSfc=
+	t=1755022635; cv=none; b=sbFmBcIY+cCmCDttnfwvxmYmY7c4RTwxVZNnih1VOFHF8CkTGbWb0xLpfOGx1naJW1GF9f4zPgZPwb5IwyqDrQGQGpots6PSye3ewcxQLpW/sR7/keouzhaM3ItOAImRMOpj0/BZ+8uhEhMbVH1KmaSj0OGJmNOZfCgYsHHqpno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022631; c=relaxed/simple;
-	bh=Ra2QsLhymIjXESY7aSXKpeWfIfUtKDDtb4TPEaAiyLk=;
+	s=arc-20240116; t=1755022635; c=relaxed/simple;
+	bh=2NhMcA2h85UBndp3Y++bCgW6paMTRe5ORL7XLP6EcfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJ7+S1KuT5CH0dr2k0OUc0lz0+ic8pLKnxITRjBTV8zK1U1xQz63K0/ICGJ7D4XeTWXhLwsLOvQLXz/cGfFOSxvcLRHe2LtgDnNhY6T9/YgrpEAQwsfIheH6Kks/yM5qQ9Fj18BKIrMmqmMCMbEOi6UDjFg6gAWBF3H/mW4rqgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG3EPD1t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lU5Eiy9jm3BhfcelkiueUPKNLYYyjZjSvuq9z6GLdTZk4jJjdF9PdPLUPsVy7k+3pVV/U77lVIr3NAWjb9eli9dfzZUxrmLOexPHOcEmk16Skwo8fJyugXjNfowKhbKVETD2xtgwXroMVe6iQwW4EvMfl2+JuYS7rYCFTgrm9qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QH/sPQ9R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG3EPD1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF081C4CEF0;
-	Tue, 12 Aug 2025 18:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QH/sPQ9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDDDC4CEF0;
+	Tue, 12 Aug 2025 18:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022631;
-	bh=Ra2QsLhymIjXESY7aSXKpeWfIfUtKDDtb4TPEaAiyLk=;
+	s=korg; t=1755022634;
+	bh=2NhMcA2h85UBndp3Y++bCgW6paMTRe5ORL7XLP6EcfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QG3EPD1tma4jO93z6YEalD021i5HPWdLonPX1SvDFz/wavrCW/jQjQiafOH2Dn8lG
-	 x1a3PGRw2huc3k9WL9CtS9DUm96DBIn9whDR1trFaP9wwLYPDtZSnpDXcgkHexP92s
-	 S9/fEmW4ZQU8SFoVW4mKAJWXt4fpmIMUVR7vVH7A=
+	b=QH/sPQ9R9qOAmQnwxfJ7ckXQUOEthQzEAduEDWLk40S0JC9QCiuotNuOQVo8YVIWY
+	 g9klZDE+wh9WrpinNWtH6dUPrBaqwRMhaYtlfCIczdT+BMy4asoeMNDtzPsGHtrnn+
+	 ZO5iwS7GdEdPWPX6sUo1jIyuvXdVhd7coRGyd/dI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 179/369] perf sched: Free thread->priv using priv_destructor
-Date: Tue, 12 Aug 2025 19:27:56 +0200
-Message-ID: <20250812173021.509664250@linuxfoundation.org>
+Subject: [PATCH 6.12 180/369] perf sched: Fix memory leaks in perf sched map
+Date: Tue, 12 Aug 2025 19:27:57 +0200
+Message-ID: <20250812173021.546168110@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,36 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit aa9fdd106bab8c478d37eba5703c0950ad5c0d4f ]
+[ Upstream commit dc3a80c98884d86389b3b572c50ccc7f502cd41b ]
 
-In many perf sched subcommand saves priv data structure in the thread
-but it forgot to free them.  As it's an opaque type with 'void *', it
-needs to register that knows how to free the data.  In this case, just
-regular 'free()' is fine.
+It maintains per-cpu pointers for the current thread but it doesn't
+release the refcounts.
 
-Fixes: 04cb4fc4d40a5bf1 ("perf thread: Allow tools to register a thread->priv destructor")
+Fixes: 5e895278697c014e ("perf sched: Move curr_thread initialization to perf_sched__map()")
 Reviewed-by: Ian Rogers <irogers@google.com>
 Tested-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250703014942.1369397-3-namhyung@kernel.org
+Link: https://lore.kernel.org/r/20250703014942.1369397-4-namhyung@kernel.org
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/builtin-sched.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
 diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 864fcb76e758..c55388b36ac5 100644
+index c55388b36ac5..cd15c0cba9b2 100644
 --- a/tools/perf/builtin-sched.c
 +++ b/tools/perf/builtin-sched.c
-@@ -3887,6 +3887,8 @@ int cmd_sched(int argc, const char **argv)
- 	if (!argc)
- 		usage_with_options(sched_usage, sched_options);
+@@ -1639,6 +1639,7 @@ static int map_switch_event(struct perf_sched *sched, struct evsel *evsel,
+ 	const char *color = PERF_COLOR_NORMAL;
+ 	char stimestamp[32];
+ 	const char *str;
++	int ret = -1;
  
-+	thread__set_priv_destructor(free);
+ 	BUG_ON(this_cpu.cpu >= MAX_CPUS || this_cpu.cpu < 0);
+ 
+@@ -1669,17 +1670,20 @@ static int map_switch_event(struct perf_sched *sched, struct evsel *evsel,
+ 	sched_in = map__findnew_thread(sched, machine, -1, next_pid);
+ 	sched_out = map__findnew_thread(sched, machine, -1, prev_pid);
+ 	if (sched_in == NULL || sched_out == NULL)
+-		return -1;
++		goto out;
+ 
+ 	tr = thread__get_runtime(sched_in);
+-	if (tr == NULL) {
+-		thread__put(sched_in);
+-		return -1;
+-	}
++	if (tr == NULL)
++		goto out;
 +
- 	/*
- 	 * Aliased to 'perf script' for now:
- 	 */
++	thread__put(sched->curr_thread[this_cpu.cpu]);
++	thread__put(sched->curr_out_thread[this_cpu.cpu]);
+ 
+ 	sched->curr_thread[this_cpu.cpu] = thread__get(sched_in);
+ 	sched->curr_out_thread[this_cpu.cpu] = thread__get(sched_out);
+ 
++	ret = 0;
++
+ 	str = thread__comm_str(sched_in);
+ 	new_shortname = 0;
+ 	if (!tr->shortname[0]) {
+@@ -1774,12 +1778,10 @@ static int map_switch_event(struct perf_sched *sched, struct evsel *evsel,
+ 	color_fprintf(stdout, color, "\n");
+ 
+ out:
+-	if (sched->map.task_name)
+-		thread__put(sched_out);
+-
++	thread__put(sched_out);
+ 	thread__put(sched_in);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int process_sched_switch_event(const struct perf_tool *tool,
+@@ -3546,10 +3548,10 @@ static int perf_sched__map(struct perf_sched *sched)
+ 
+ 	sched->curr_out_thread = calloc(MAX_CPUS, sizeof(*(sched->curr_out_thread)));
+ 	if (!sched->curr_out_thread)
+-		return rc;
++		goto out_free_curr_thread;
+ 
+ 	if (setup_cpus_switch_event(sched))
+-		goto out_free_curr_thread;
++		goto out_free_curr_out_thread;
+ 
+ 	if (setup_map_cpus(sched))
+ 		goto out_free_cpus_switch_event;
+@@ -3580,7 +3582,14 @@ static int perf_sched__map(struct perf_sched *sched)
+ out_free_cpus_switch_event:
+ 	free_cpus_switch_event(sched);
+ 
++out_free_curr_out_thread:
++	for (int i = 0; i < MAX_CPUS; i++)
++		thread__put(sched->curr_out_thread[i]);
++	zfree(&sched->curr_out_thread);
++
+ out_free_curr_thread:
++	for (int i = 0; i < MAX_CPUS; i++)
++		thread__put(sched->curr_thread[i]);
+ 	zfree(&sched->curr_thread);
+ 	return rc;
+ }
 -- 
 2.39.5
 
