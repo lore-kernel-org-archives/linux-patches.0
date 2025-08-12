@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C4E2FE571;
-	Tue, 12 Aug 2025 18:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFE62FD1AD;
+	Tue, 12 Aug 2025 18:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023978; cv=none; b=VVpi2jeOvY5mCqVoWW8WvTZFjB4xo4HITjLPGRPvf1jiyGVl0f3pCmzkIKSrcD/d/yQbq8fwLPOxHNis7B6lahrRBvzThYuNZgfN15wjQ7LVkoZD/8yDCh0TvAEi5V/eLn2Zu17LZxrv66n50nkNGJWVvP+GfSKzbx+iegANQNI=
+	t=1755023983; cv=none; b=Zq7sqOUhzaRSp2gwnN7i46LE+0Vjgi7VtrgsQoPvdcE11loFfFZPf9RHyMS9C69jE3uxPED5I/AVmPckBGnRgTjNoD0lJEzugwwTJZIh0X5IhIRvHgNhRTYPGTVPzChCjhGXF9h8xHGRO0o0W05TFIGjRQcTY/tyBDHDYGBJR6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023978; c=relaxed/simple;
-	bh=XmbSj21D1X4Iz0bjL9ge/pX2Ny8VkPqZvD+oH+TLrWk=;
+	s=arc-20240116; t=1755023983; c=relaxed/simple;
+	bh=rB45pbiPqx12ToZplfUAnh/K1Ul1HZU9ijbt6/JqUzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHfP3553TWTP8oSYYMoG0j9D6B2hlCfO0SuVWyGak0RJ1AWOiJyNbyTIU9hEBkMCYQsUCuJmthSubTz4YNmB8s8QQwcZ59uBGk42geBZPh5cxAxHIz9Ej7G7NO4K0Z8MD5FoxSr+747woiicEVc6F4Ud6IFiaxxh2pG6rkrbHHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLmiTCj0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p7aOvHjGFDaSZbt0gLyE/NrtEVNbjkkWlrKnvEHXrt1ti2x7US7nPDH3G8TbPPMcISafZqo+09eOGqmKevWIDUunT2lWL+oNPrTPrEc8zaNf/LzclvaS8OssAtC5p7+05F1HeE9rYgCeg0kctEegQ8tzXvTgvLW2CgqNZviNwh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKjAz9EA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLmiTCj0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC366C4CEF0;
-	Tue, 12 Aug 2025 18:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKjAz9EA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A28FC4CEF0;
+	Tue, 12 Aug 2025 18:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023978;
-	bh=XmbSj21D1X4Iz0bjL9ge/pX2Ny8VkPqZvD+oH+TLrWk=;
+	s=korg; t=1755023981;
+	bh=rB45pbiPqx12ToZplfUAnh/K1Ul1HZU9ijbt6/JqUzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lLmiTCj0pj4327gEPALDz/BTowLl2XttMwt2DXyPx+/h+31vb2HM+m7QpX9dMJl6n
-	 nJphji14SS0YvfKmBj080zV1z9FEr9C02N/8gklu0//s5OPIwkHfIaLle/2EG3gJCt
-	 H8zUWzzcRqqaKkCvPYZA1kDlsKDdJq4/0YBWTHNI=
+	b=HKjAz9EA4Gvj61ITF8LNWpECZG9iMfyyz+/w7gc0h94H2l9T6/kzChprgXqUfGKTu
+	 3d01QRCOZIr621a4cJDL+OoS1Wp2SmXAB4krqkNzkV2oR5iPWvhuK/3YxYIPmnJe07
+	 nrfwJgtyt/oQ8XsgQy3tcIFOiArRySU5zfsQ2kOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Wetzel <Alexander@wetzel-home.de>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 236/627] wifi: cfg80211: Add missing lock in cfg80211_check_and_end_cac()
-Date: Tue, 12 Aug 2025 19:28:51 +0200
-Message-ID: <20250812173428.276143567@linuxfoundation.org>
+Subject: [PATCH 6.16 237/627] wifi: mac80211: Do not schedule stopped TXQs
+Date: Tue, 12 Aug 2025 19:28:52 +0200
+Message-ID: <20250812173428.318247954@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,81 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Wetzel <Alexander@wetzel-home.de>
 
-[ Upstream commit 2c5dee15239f3f3e31aa5c8808f18996c039e2c1 ]
+[ Upstream commit 11e3e22fa533f5d7cf04e32343b05a27eda3c7a5 ]
 
-Callers of wdev_chandef() must hold the wiphy mutex.
+Ignore TXQs with the flag IEEE80211_TXQ_STOP when scheduling a queue.
 
-But the worker cfg80211_propagate_cac_done_wk() never takes the lock.
-Which triggers the warning below with the mesh_peer_connected_dfs
-test from hostapd and not (yet) released mac80211 code changes:
+The flag is only set after all fragments have been dequeued and won't
+allow dequeueing other frames as long as the flag is set.
 
-WARNING: CPU: 0 PID: 495 at net/wireless/chan.c:1552 wdev_chandef+0x60/0x165
-Modules linked in:
-CPU: 0 UID: 0 PID: 495 Comm: kworker/u4:2 Not tainted 6.14.0-rc5-wt-g03960e6f9d47 #33 13c287eeabfe1efea01c0bcc863723ab082e17cf
-Workqueue: cfg80211 cfg80211_propagate_cac_done_wk
-Stack:
- 00000000 00000001 ffffff00 6093267c
- 00000000 6002ec30 6d577c50 60037608
- 00000000 67e8d108 6063717b 00000000
-Call Trace:
- [<6002ec30>] ? _printk+0x0/0x98
- [<6003c2b3>] show_stack+0x10e/0x11a
- [<6002ec30>] ? _printk+0x0/0x98
- [<60037608>] dump_stack_lvl+0x71/0xb8
- [<6063717b>] ? wdev_chandef+0x60/0x165
- [<6003766d>] dump_stack+0x1e/0x20
- [<6005d1b7>] __warn+0x101/0x20f
- [<6005d3a8>] warn_slowpath_fmt+0xe3/0x15d
- [<600b0c5c>] ? mark_lock.part.0+0x0/0x4ec
- [<60751191>] ? __this_cpu_preempt_check+0x0/0x16
- [<600b11a2>] ? mark_held_locks+0x5a/0x6e
- [<6005d2c5>] ? warn_slowpath_fmt+0x0/0x15d
- [<60052e53>] ? unblock_signals+0x3a/0xe7
- [<60052f2d>] ? um_set_signals+0x2d/0x43
- [<60751191>] ? __this_cpu_preempt_check+0x0/0x16
- [<607508b2>] ? lock_is_held_type+0x207/0x21f
- [<6063717b>] wdev_chandef+0x60/0x165
- [<605f89b4>] regulatory_propagate_dfs_state+0x247/0x43f
- [<60052f00>] ? um_set_signals+0x0/0x43
- [<605e6bfd>] cfg80211_propagate_cac_done_wk+0x3a/0x4a
- [<6007e460>] process_scheduled_works+0x3bc/0x60e
- [<6007d0ec>] ? move_linked_works+0x4d/0x81
- [<6007d120>] ? assign_work+0x0/0xaa
- [<6007f81f>] worker_thread+0x220/0x2dc
- [<600786ef>] ? set_pf_worker+0x0/0x57
- [<60087c96>] ? to_kthread+0x0/0x43
- [<6008ab3c>] kthread+0x2d3/0x2e2
- [<6007f5ff>] ? worker_thread+0x0/0x2dc
- [<6006c05b>] ? calculate_sigpending+0x0/0x56
- [<6003b37d>] new_thread_handler+0x4a/0x64
-irq event stamp: 614611
-hardirqs last  enabled at (614621): [<00000000600bc96b>] __up_console_sem+0x82/0xaf
-hardirqs last disabled at (614630): [<00000000600bc92c>] __up_console_sem+0x43/0xaf
-softirqs last  enabled at (614268): [<00000000606c55c6>] __ieee80211_wake_queue+0x933/0x985
-softirqs last disabled at (614266): [<00000000606c52d6>] __ieee80211_wake_queue+0x643/0x985
+For drivers using ieee80211_txq_schedule_start() this prevents an
+loop trying to push the queued frames while IEEE80211_TXQ_STOP is set:
 
-Fixes: 26ec17a1dc5e ("cfg80211: Fix radar event during another phy CAC")
+After setting IEEE80211_TXQ_STOP the driver will call
+ieee80211_return_txq(). Which calls __ieee80211_schedule_txq(), detects
+that there sill are frames in the queue and immediately restarts the
+stopped TXQ. Which can't dequeue any frame and thus starts over the loop.
+
 Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
-Link: https://patch.msgid.link/20250717162547.94582-1-Alexander@wetzel-home.de
+Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
+Link: https://patch.msgid.link/20250717162547.94582-2-Alexander@wetzel-home.de
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/reg.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/tx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index c1752b31734f..92e04370fa63 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -4229,6 +4229,8 @@ static void cfg80211_check_and_end_cac(struct cfg80211_registered_device *rdev)
- 	struct wireless_dev *wdev;
- 	unsigned int link_id;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index d58b80813bdd..4a9b258300fe 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -4098,7 +4098,9 @@ void __ieee80211_schedule_txq(struct ieee80211_hw *hw,
  
-+	guard(wiphy)(&rdev->wiphy);
-+
- 	/* If we finished CAC or received radar, we should end any
- 	 * CAC running on the same channels.
- 	 * the check !cfg80211_chandef_dfs_usable contain 2 options:
+ 	spin_lock_bh(&local->active_txq_lock[txq->ac]);
+ 
+-	has_queue = force || txq_has_queue(txq);
++	has_queue = force ||
++		    (!test_bit(IEEE80211_TXQ_STOP, &txqi->flags) &&
++		     txq_has_queue(txq));
+ 	if (list_empty(&txqi->schedule_order) &&
+ 	    (has_queue || ieee80211_txq_keep_active(txqi))) {
+ 		/* If airtime accounting is active, always enqueue STAs at the
 -- 
 2.39.5
 
