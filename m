@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7E3285C89;
-	Tue, 12 Aug 2025 19:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562AA2D4818;
+	Tue, 12 Aug 2025 19:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026203; cv=none; b=o0yELPkbGIKe2yetKb+IoMlkSlFhCYcq5TK7Uena6JaSLAau6g5FcYbi0L7uHRBX2HepKb4xiZpreOO+uK80g5fRGZaRO/2HwZHZBtSjO91TriisioaMj6GFrkRbfkSf/bAZUrWIF2KaF87P7ZYvFKhq63rsQvqgL/KqKtdKyxc=
+	t=1755026206; cv=none; b=D91feXIPPupeNdgFwPRdLAYx05HHJvbHz6upMsImXskazOxb4x+vYg2Rm1JaXOazTXu0eEM8/bWe3RH00hPOmQfR0ey5NFRWKiG0yY1y9tLSJZdiMw7Jln2rG9yR6kh6EZJhU8TW/PJUW6n6L0hu0MRlcpI+B7Rr/r99oBiQczQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026203; c=relaxed/simple;
-	bh=i4TtQDmR/8KzDqUReUKKHd6JBF+giWnsLlpac84r8VU=;
+	s=arc-20240116; t=1755026206; c=relaxed/simple;
+	bh=rzKHInzRO4mgaWdXQtImeWVXrlFbzX++CY/2vra4bbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSYEFyhQAMTSiJKnrIM5wrpvCj/yasIte/xe2oqYEtSGBEgBMrS8BAGSudE6mXOBWT8GqDEnVLo95LnDFLFXzm1+yL5ScB5fI3ex/quSyEL7Z6NCwFit0LEiP80MIoGrk+MV+7+ee4KCtqzDJzYpZExjmYRFKur1RoU5wrQWXXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzCE75D4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k8OivDcG0kacpSBiA+UqGQm+Do9cVYUoUfaSJSOQh5Ntu5MeyEePop9RftM0i777Y2vP4l2TW5/4SdOE8HVUmzN0wdLVB1bW3bwTR+wRWVRZQGA+D2iPkuIQq6EGBwZirBo5LlMWrj3uU6Ln8M8sN3KsJ5ZmjmYuI7EHQBIUI50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/VOI738; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzCE75D4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691B4C4CEF1;
-	Tue, 12 Aug 2025 19:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/VOI738"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF05CC4CEF6;
+	Tue, 12 Aug 2025 19:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026202;
-	bh=i4TtQDmR/8KzDqUReUKKHd6JBF+giWnsLlpac84r8VU=;
+	s=korg; t=1755026206;
+	bh=rzKHInzRO4mgaWdXQtImeWVXrlFbzX++CY/2vra4bbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vzCE75D4wDce3MLvZnQlUJY+TAHVT6a59fKzV+aBaSMUChM0ViEwJUUcjqoombA4x
-	 b+evrFyRL6+YlaTNppbdwGrR86h4UUKlrsIF2Lz9R6cENkGnryHyHzdl0XLEty+nAy
-	 DEjjikgkMv/Vn17HZpfHCbzmaicJ3vGg326gqFJU=
+	b=O/VOI7385ZZWTCKc1jaIFhA5avgaPOvRc+oZyvQOA+rKm2SLgSuTJHruuBx2XverG
+	 pRTtcH/FMrpaEJDLqaeB2bb2UNw3q9ftJEB1VTzsDT6FRCyoGtJh6dqrLROejFpgEP
+	 Xrk086NlX5arl2q2qPtZkxsGB6mVBPJImZ7+7hrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Antoine Tenart <atenart@kernel.org>,
+	Mengbiao Xiong <xisme1998@gmail.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 268/480] crypto: inside-secure - Fix `dma_unmap_sg()` nents value
-Date: Tue, 12 Aug 2025 19:47:56 +0200
-Message-ID: <20250812174408.496422152@linuxfoundation.org>
+Subject: [PATCH 6.15 269/480] crypto: ccp - Fix crash when rebind ccp device for ccp.ko
+Date: Tue, 12 Aug 2025 19:47:57 +0200
+Message-ID: <20250812174408.538702432@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,48 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Mengbiao Xiong <xisme1998@gmail.com>
 
-[ Upstream commit cb7fa6b6fc71e0c801e271aa498e2f19e6df2931 ]
+[ Upstream commit 181698af38d3f93381229ad89c09b5bd0496661a ]
 
-The `dma_unmap_sg()` functions should be called with the same nents as the
-`dma_map_sg()`, not the value the map function returned.
+When CONFIG_CRYPTO_DEV_CCP_DEBUGFS is enabled, rebinding
+the ccp device causes the following crash:
 
-Fixes: c957f8b3e2e5 ("crypto: inside-secure - avoid unmapping DMA memory that was not mapped")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
+$ echo '0000:0a:00.2' > /sys/bus/pci/drivers/ccp/unbind
+$ echo '0000:0a:00.2' > /sys/bus/pci/drivers/ccp/bind
+
+[  204.976930] BUG: kernel NULL pointer dereference, address: 0000000000000098
+[  204.978026] #PF: supervisor write access in kernel mode
+[  204.979126] #PF: error_code(0x0002) - not-present page
+[  204.980226] PGD 0 P4D 0
+[  204.981317] Oops: Oops: 0002 [#1] SMP NOPTI
+...
+[  204.997852] Call Trace:
+[  204.999074]  <TASK>
+[  205.000297]  start_creating+0x9f/0x1c0
+[  205.001533]  debugfs_create_dir+0x1f/0x170
+[  205.002769]  ? srso_return_thunk+0x5/0x5f
+[  205.004000]  ccp5_debugfs_setup+0x87/0x170 [ccp]
+[  205.005241]  ccp5_init+0x8b2/0x960 [ccp]
+[  205.006469]  ccp_dev_init+0xd4/0x150 [ccp]
+[  205.007709]  sp_init+0x5f/0x80 [ccp]
+[  205.008942]  sp_pci_probe+0x283/0x2e0 [ccp]
+[  205.010165]  ? srso_return_thunk+0x5/0x5f
+[  205.011376]  local_pci_probe+0x4f/0xb0
+[  205.012584]  pci_device_probe+0xdb/0x230
+[  205.013810]  really_probe+0xed/0x380
+[  205.015024]  __driver_probe_device+0x7e/0x160
+[  205.016240]  device_driver_attach+0x2f/0x60
+[  205.017457]  bind_store+0x7c/0xb0
+[  205.018663]  drv_attr_store+0x28/0x40
+[  205.019868]  sysfs_kf_write+0x5f/0x70
+[  205.021065]  kernfs_fop_write_iter+0x145/0x1d0
+[  205.022267]  vfs_write+0x308/0x440
+[  205.023453]  ksys_write+0x6d/0xe0
+[  205.024616]  __x64_sys_write+0x1e/0x30
+[  205.025778]  x64_sys_call+0x16ba/0x2150
+[  205.026942]  do_syscall_64+0x56/0x1e0
+[  205.028108]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  205.029276] RIP: 0033:0x7fbc36f10104
+[  205.030420] Code: 89 02 48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 8d 05 e1 08 2e 00 8b 00 85 c0 75 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 f3 c3 66 90 41 54 55 49 89 d4 53 48 89 f5
+
+This patch sets ccp_debugfs_dir to NULL after destroying it in
+ccp5_debugfs_destroy, allowing the directory dentry to be
+recreated when rebinding the ccp device.
+
+Tested on AMD Ryzen 7 1700X.
+
+Fixes: 3cdbe346ed3f ("crypto: ccp - Add debugfs entries for CCP information")
+Signed-off-by: Mengbiao Xiong <xisme1998@gmail.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/inside-secure/safexcel_hash.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/crypto/ccp/ccp-debugfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/inside-secure/safexcel_hash.c b/drivers/crypto/inside-secure/safexcel_hash.c
-index f44c08f5f5ec..af4b978189e5 100644
---- a/drivers/crypto/inside-secure/safexcel_hash.c
-+++ b/drivers/crypto/inside-secure/safexcel_hash.c
-@@ -249,7 +249,9 @@ static int safexcel_handle_req_result(struct safexcel_crypto_priv *priv,
- 	safexcel_complete(priv, ring);
+diff --git a/drivers/crypto/ccp/ccp-debugfs.c b/drivers/crypto/ccp/ccp-debugfs.c
+index a1055554b47a..dc26bc22c91d 100644
+--- a/drivers/crypto/ccp/ccp-debugfs.c
++++ b/drivers/crypto/ccp/ccp-debugfs.c
+@@ -319,5 +319,8 @@ void ccp5_debugfs_setup(struct ccp_device *ccp)
  
- 	if (sreq->nents) {
--		dma_unmap_sg(priv->dev, areq->src, sreq->nents, DMA_TO_DEVICE);
-+		dma_unmap_sg(priv->dev, areq->src,
-+			     sg_nents_for_len(areq->src, areq->nbytes),
-+			     DMA_TO_DEVICE);
- 		sreq->nents = 0;
- 	}
- 
-@@ -497,7 +499,9 @@ static int safexcel_ahash_send_req(struct crypto_async_request *async, int ring,
- 			 DMA_FROM_DEVICE);
- unmap_sg:
- 	if (req->nents) {
--		dma_unmap_sg(priv->dev, areq->src, req->nents, DMA_TO_DEVICE);
-+		dma_unmap_sg(priv->dev, areq->src,
-+			     sg_nents_for_len(areq->src, areq->nbytes),
-+			     DMA_TO_DEVICE);
- 		req->nents = 0;
- 	}
- cdesc_rollback:
+ void ccp5_debugfs_destroy(void)
+ {
++	mutex_lock(&ccp_debugfs_lock);
+ 	debugfs_remove_recursive(ccp_debugfs_dir);
++	ccp_debugfs_dir = NULL;
++	mutex_unlock(&ccp_debugfs_lock);
+ }
 -- 
 2.39.5
 
