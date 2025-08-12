@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6864F2FE59B;
-	Tue, 12 Aug 2025 18:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648411DB92A;
+	Tue, 12 Aug 2025 18:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023874; cv=none; b=CgFTdhzX9XUkktXME1+cz9lrT/VLjBu0K/67c+lnrJ93N1s6bNqrOeSymRzYyiIluYn3fe0+7MdFx92ZsX1A04njlacNSBL4L8Z+njY7dAclpK6UGrnFxL8YYaVUsS0aunad5SXynzLFNl34LNXP+kIBYhhJZInsGV7tx22FHJs=
+	t=1755023878; cv=none; b=ZFh/B6dkxaXFKa4b5feDfpuvMPUTk3S2hXTqQhSxo7+En1nqiajRBZrjQYNdpu6Bkb6fVucTwVhef+gXwKltUkZYaM8t1zC6AAexjYQoZqbb8A2cw6TtiBlzRhPntyQUiJ8CxgVYSLXufdbWrRte+82WBLIinZi8W+ew7z98ZuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023874; c=relaxed/simple;
-	bh=BWSUqOXofZJ969UJwVA9aKAhSJ3T6nfQ1s433dIYaTg=;
+	s=arc-20240116; t=1755023878; c=relaxed/simple;
+	bh=QL/RTp4B04Ux8CKDLzBpUyTUo2d6mDEiArvk8kTbMxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFLUxGMMgWxGXqPM/c1CYHs4FNJVMlqsApJ1rcmpdcqp3Avc/zabktOdi+DJqKv3dLX/6koAjiYQ6apPJWlAcbkQ9MrSCHFqmQfEei1gVLsp8Flp8VH1HJYXXWrpfnOLQ/inxq0S1w3nwkgSLwsmFn0DDnjrgs+eZbTa77Y0oAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAcIedCp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SJQYSdv7OWk+Iv5u8CjHMj8LJoVAIdi9NRWXj3vmnNQXlY/i66uMTw3SIyXjBfaQC1JQBkxBZtCZyJ7Kh/LPc++aXgiRa8f3XeLDbUMlv0p3LIdcW3NteVyEwgxEb/rOYqcDsBYSlhUnY3etpp8jKSfDseBeRKLPoYeL9AZHMlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIZO2tSa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAcIedCp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA619C4CEF0;
-	Tue, 12 Aug 2025 18:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIZO2tSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BB0C4CEF1;
+	Tue, 12 Aug 2025 18:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023874;
-	bh=BWSUqOXofZJ969UJwVA9aKAhSJ3T6nfQ1s433dIYaTg=;
+	s=korg; t=1755023878;
+	bh=QL/RTp4B04Ux8CKDLzBpUyTUo2d6mDEiArvk8kTbMxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAcIedCpFjW9xFPRNSSTxMcSiQTY7yYiyWpRdZ9ZIXmcB7FiHHXZTqpN3Lf85cTCf
-	 5+rvI5FGzzb6dG+teMW1gxy54jf4hg6Lrj+E8lSGJMigyKzfl2MbYxN2tHWOsFoNjD
-	 GK5X7OjSJ6Al4rW8bGxhURVYWjR+grFKgsWc/ajA=
+	b=wIZO2tSaTReXchpkUUvF93ScC/IH9xjlz0jaMalE2n0KIcyvpeCOZe7jMMmawuwa1
+	 Wixl1wZlx8HawvuIXiil1WrgESB6ETTd+4iddNBKHG5Sn4H8Bi1Fe8Xf+3drGSQptf
+	 WlArZdCyUOjkSs/jX3VvtSvG/I0YCasTA5/M544I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 175/627] net: dst: annotate data-races around dst->output
-Date: Tue, 12 Aug 2025 19:27:50 +0200
-Message-ID: <20250812173425.934867221@linuxfoundation.org>
+Subject: [PATCH 6.16 176/627] net: dst: add four helpers to annotate data-races around dst->dev
+Date: Tue, 12 Aug 2025 19:27:51 +0200
+Message-ID: <20250812173425.972404557@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,83 +54,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2dce8c52a98995c4719def6f88629ab1581c0b82 ]
+[ Upstream commit 88fe14253e181878c2ddb51a298ae8c468a63010 ]
 
-dst_dev_put() can overwrite dst->output while other
-cpus might read this field (for instance from dst_output())
+dst->dev is read locklessly in many contexts,
+and written in dst_dev_put().
 
-Add READ_ONCE()/WRITE_ONCE() annotations to suppress
-potential issues.
+Fixing all the races is going to need many changes.
 
-We will likely need RCU protection in the future.
+We probably will have to add full RCU protection.
+
+Add three helpers to ease this painful process.
+
+static inline struct net_device *dst_dev(const struct dst_entry *dst)
+{
+       return READ_ONCE(dst->dev);
+}
+
+static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
+{
+       return dst_dev(skb_dst(skb));
+}
+
+static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
+{
+       return dev_net(skb_dst_dev(skb));
+}
+
+static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
+{
+       return dev_net_rcu(skb_dst_dev(skb));
+}
 
 Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250630121934.3399505-6-edumazet@google.com
+Link: https://patch.msgid.link/20250630121934.3399505-7-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dst.h      | 2 +-
- include/net/lwtunnel.h | 4 ++--
- net/core/dst.c         | 2 +-
- net/ipv4/route.c       | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ include/net/dst.h | 20 ++++++++++++++++++++
+ net/core/dst.c    |  4 ++--
+ net/core/sock.c   |  8 ++++----
+ 3 files changed, 26 insertions(+), 6 deletions(-)
 
 diff --git a/include/net/dst.h b/include/net/dst.h
-index 65d81116d6bf..2caf85e2ce86 100644
+index 2caf85e2ce86..32dafbab4cd0 100644
 --- a/include/net/dst.h
 +++ b/include/net/dst.h
-@@ -456,7 +456,7 @@ INDIRECT_CALLABLE_DECLARE(int ip_output(struct net *, struct sock *,
- /* Output packet to network from transport.  */
- static inline int dst_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- {
--	return INDIRECT_CALL_INET(skb_dst(skb)->output,
-+	return INDIRECT_CALL_INET(READ_ONCE(skb_dst(skb)->output),
- 				  ip6_output, ip_output,
- 				  net, sk, skb);
+@@ -561,6 +561,26 @@ static inline void skb_dst_update_pmtu_no_confirm(struct sk_buff *skb, u32 mtu)
+ 		dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
  }
-diff --git a/include/net/lwtunnel.h b/include/net/lwtunnel.h
-index eaac07d50595..26232f603e33 100644
---- a/include/net/lwtunnel.h
-+++ b/include/net/lwtunnel.h
-@@ -138,8 +138,8 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len,
- static inline void lwtunnel_set_redirect(struct dst_entry *dst)
- {
- 	if (lwtunnel_output_redirect(dst->lwtstate)) {
--		dst->lwtstate->orig_output = dst->output;
--		dst->output = lwtunnel_output;
-+		dst->lwtstate->orig_output = READ_ONCE(dst->output);
-+		WRITE_ONCE(dst->output, lwtunnel_output);
- 	}
- 	if (lwtunnel_input_redirect(dst->lwtstate)) {
- 		dst->lwtstate->orig_input = READ_ONCE(dst->input);
+ 
++static inline struct net_device *dst_dev(const struct dst_entry *dst)
++{
++	return READ_ONCE(dst->dev);
++}
++
++static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
++{
++	return dst_dev(skb_dst(skb));
++}
++
++static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
++{
++	return dev_net(skb_dst_dev(skb));
++}
++
++static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
++{
++	return dev_net_rcu(skb_dst_dev(skb));
++}
++
+ struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
+ void dst_blackhole_update_pmtu(struct dst_entry *dst, struct sock *sk,
+ 			       struct sk_buff *skb, u32 mtu, bool confirm_neigh);
 diff --git a/net/core/dst.c b/net/core/dst.c
-index b46f7722a1b6..e483daf17666 100644
+index e483daf17666..b3a12c7c08af 100644
 --- a/net/core/dst.c
 +++ b/net/core/dst.c
-@@ -149,7 +149,7 @@ void dst_dev_put(struct dst_entry *dst)
- 	if (dst->ops->ifdown)
+@@ -150,7 +150,7 @@ void dst_dev_put(struct dst_entry *dst)
  		dst->ops->ifdown(dst, dev);
  	WRITE_ONCE(dst->input, dst_discard);
--	dst->output = dst_discard_out;
-+	WRITE_ONCE(dst->output, dst_discard_out);
- 	dst->dev = blackhole_netdev;
+ 	WRITE_ONCE(dst->output, dst_discard_out);
+-	dst->dev = blackhole_netdev;
++	WRITE_ONCE(dst->dev, blackhole_netdev);
  	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
  			   GFP_ATOMIC);
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 2cc88f8c3bc6..bd5d48fdd62a 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1686,7 +1686,7 @@ struct rtable *rt_dst_clone(struct net_device *dev, struct rtable *rt)
- 			new_rt->rt_gw6 = rt->rt_gw6;
+ }
+@@ -263,7 +263,7 @@ unsigned int dst_blackhole_mtu(const struct dst_entry *dst)
+ {
+ 	unsigned int mtu = dst_metric_raw(dst, RTAX_MTU);
  
- 		new_rt->dst.input = READ_ONCE(rt->dst.input);
--		new_rt->dst.output = rt->dst.output;
-+		new_rt->dst.output = READ_ONCE(rt->dst.output);
- 		new_rt->dst.error = rt->dst.error;
- 		new_rt->dst.lastuse = jiffies;
- 		new_rt->dst.lwtstate = lwtstate_get(rt->dst.lwtstate);
+-	return mtu ? : dst->dev->mtu;
++	return mtu ? : dst_dev(dst)->mtu;
+ }
+ EXPORT_SYMBOL_GPL(dst_blackhole_mtu);
+ 
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 3b409bc8ef6d..9fae9239f939 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2602,8 +2602,8 @@ static u32 sk_dst_gso_max_size(struct sock *sk, struct dst_entry *dst)
+ 		   !ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr));
+ #endif
+ 	/* pairs with the WRITE_ONCE() in netif_set_gso(_ipv4)_max_size() */
+-	max_size = is_ipv6 ? READ_ONCE(dst->dev->gso_max_size) :
+-			READ_ONCE(dst->dev->gso_ipv4_max_size);
++	max_size = is_ipv6 ? READ_ONCE(dst_dev(dst)->gso_max_size) :
++			READ_ONCE(dst_dev(dst)->gso_ipv4_max_size);
+ 	if (max_size > GSO_LEGACY_MAX_SIZE && !sk_is_tcp(sk))
+ 		max_size = GSO_LEGACY_MAX_SIZE;
+ 
+@@ -2614,7 +2614,7 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
+ {
+ 	u32 max_segs = 1;
+ 
+-	sk->sk_route_caps = dst->dev->features;
++	sk->sk_route_caps = dst_dev(dst)->features;
+ 	if (sk_is_tcp(sk)) {
+ 		struct inet_connection_sock *icsk = inet_csk(sk);
+ 
+@@ -2632,7 +2632,7 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
+ 			sk->sk_route_caps |= NETIF_F_SG | NETIF_F_HW_CSUM;
+ 			sk->sk_gso_max_size = sk_dst_gso_max_size(sk, dst);
+ 			/* pairs with the WRITE_ONCE() in netif_set_gso_max_segs() */
+-			max_segs = max_t(u32, READ_ONCE(dst->dev->gso_max_segs), 1);
++			max_segs = max_t(u32, READ_ONCE(dst_dev(dst)->gso_max_segs), 1);
+ 		}
+ 	}
+ 	sk->sk_gso_max_segs = max_segs;
 -- 
 2.39.5
 
