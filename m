@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD30F1DB92A;
-	Tue, 12 Aug 2025 18:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FCA6BB5B;
+	Tue, 12 Aug 2025 18:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023912; cv=none; b=pTcS/0ayMUhlNVWrzY2ygc+ADy3COvVAsN8EfzBLlgwqSBy2DYq+eZ1oFUvoPzE/PcyLYF200LEYIAR6ltJ7fbsX50zqW2uiAB5sg1pSUp16pn9mWi9yeJtFWAEeXH1rnibWCFaMnbjR30sC+Ntj86StnFmo903ZQAy6aftY4Uw=
+	t=1755023917; cv=none; b=KlXIr1huvLP/9cEUeYFVY38lXhyohfCCmeqjTPWW1fDdka5JZDQmr/+5ELVBEp8PCrrKncujXZzWFvgRwmk1geJf245KwGsTcThPmAkv2sdZ2kpyBPO6K3sqSwBLkFqW2XTlF9hXUCiELN5iPx+7MXYA8FC5j4rO1dTg4zSPDhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023912; c=relaxed/simple;
-	bh=fVb5Zu7ek5JDpfWXJJG7jlPU8ohF0YTy/oZ6abWTGWQ=;
+	s=arc-20240116; t=1755023917; c=relaxed/simple;
+	bh=fr/bYhCEOwKzP0Rmh18RfS5qnxiZzxKFu3470BLZEFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncQ+QVl5dcUMS8i1zkYGvqIbPch6lTkIdsVDnNyGanF05hoHwJE1wiUJVADbETxXxssu/R5mzSPU5vD8pePoMbNxWhx8mdleWf3mYn2eFKYyYxKRAFZH67oRwE7b2mpfFy6AqU1FSntqo4Cy5r56g/U36qm+/Pljf4T/9klxajI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzRBDn92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TIGhG/QeqooCYRk2sslpGZGAALOgjZY+xtofki6LXmMEb/yp2jHfzcKWSNm/umHfa8WFG4pKJV96Dhni9qN29urpimT1bq80OhL1xgow1TMj9TgmA0UYMVG9aPXRwg1xn7nbOCmPAX0wIjT14SmYsyKq5XW01DB8RoZBOf9lpNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GfaG59JP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzRBDn92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E414C4CEF0;
-	Tue, 12 Aug 2025 18:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GfaG59JP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC86C4CEF0;
+	Tue, 12 Aug 2025 18:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023912;
-	bh=fVb5Zu7ek5JDpfWXJJG7jlPU8ohF0YTy/oZ6abWTGWQ=;
+	s=korg; t=1755023916;
+	bh=fr/bYhCEOwKzP0Rmh18RfS5qnxiZzxKFu3470BLZEFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzRBDn923RFt/KDiG/kOZIU2naBRNRIAN4LAk7J1wzEwESCYHMOmOVD8WGpdNjaUP
-	 yCMAj786majwk8LFp5sETb+WPq4prHv0plsqYE/GvrWVgAUGKIZcV2xhUrmivTg1sQ
-	 MFBs0fVvj7AITgRQvOm84vIFU30GERAT35BiwzUg=
+	b=GfaG59JPHmdnyWfPoZJOj+HLYuyyVxKd1zijp6+RuL/DEN08jkuFztVKTmOl8Xp8r
+	 iN7v+lMx6BL/rNxgawdcSLOuSIfbVB7pgtxk4GZ0r67qJOUEsZU1xqR9aLMWsxJ5Uh
+	 hZOELmWtUNsD9d+RykRpx2tFcI1iq3Jd+eNCtAj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+	Abinash Singh <abinashsinghlalotra@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 219/627] iommu/arm-smmu: disable PRR on SM8250
-Date: Tue, 12 Aug 2025 19:28:34 +0200
-Message-ID: <20250812173427.614176335@linuxfoundation.org>
+Subject: [PATCH 6.16 220/627] xen/gntdev: remove struct gntdev_copy_batch from stack
+Date: Tue, 12 Aug 2025 19:28:35 +0200
+Message-ID: <20250812173427.650073904@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,38 +52,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit b9bb7e814cd0c3633791327a96749a1f9b7f3ef4 ]
+[ Upstream commit 70045cf6593cbf0740956ea9b7b4269142c6ee38 ]
 
-On SM8250 / QRB5165-RB5 using PRR bits resets the device, most likely
-because of the hyp limitations. Disable PRR support on that platform.
+When compiling the kernel with LLVM, the following warning was issued:
 
-Fixes: 7f2ef1bfc758 ("iommu/arm-smmu: Add support for PRR bit setup")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Reviewed-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250705-iommu-fix-prr-v2-1-406fecc37cf8@oss.qualcomm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+  drivers/xen/gntdev.c:991: warning: stack frame size (1160) exceeds
+  limit (1024) in function 'gntdev_ioctl'
+
+The main reason is struct gntdev_copy_batch which is located on the
+stack and has a size of nearly 1kb.
+
+For performance reasons it shouldn't by just dynamically allocated
+instead, so allocate a new instance when needed and instead of freeing
+it put it into a list of free structs anchored in struct gntdev_priv.
+
+Fixes: a4cdb556cae0 ("xen/gntdev: add ioctl for grant copy")
+Reported-by: Abinash Singh <abinashsinghlalotra@gmail.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250703073259.17356-1-jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/xen/gntdev-common.h |  4 +++
+ drivers/xen/gntdev.c        | 71 ++++++++++++++++++++++++++-----------
+ 2 files changed, 54 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 62874b18f645..53d88646476e 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -355,7 +355,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
- 	priv->set_prr_addr = NULL;
+diff --git a/drivers/xen/gntdev-common.h b/drivers/xen/gntdev-common.h
+index 9c286b2a1900..ac8ce3179ba2 100644
+--- a/drivers/xen/gntdev-common.h
++++ b/drivers/xen/gntdev-common.h
+@@ -26,6 +26,10 @@ struct gntdev_priv {
+ 	/* lock protects maps and freeable_maps. */
+ 	struct mutex lock;
  
- 	if (of_device_is_compatible(np, "qcom,smmu-500") &&
--			of_device_is_compatible(np, "qcom,adreno-smmu")) {
-+	    !of_device_is_compatible(np, "qcom,sm8250-smmu-500") &&
-+	    of_device_is_compatible(np, "qcom,adreno-smmu")) {
- 		priv->set_prr_bit = qcom_adreno_smmu_set_prr_bit;
- 		priv->set_prr_addr = qcom_adreno_smmu_set_prr_addr;
++	/* Free instances of struct gntdev_copy_batch. */
++	struct gntdev_copy_batch *batch;
++	struct mutex batch_lock;
++
+ #ifdef CONFIG_XEN_GRANT_DMA_ALLOC
+ 	/* Device for which DMA memory is allocated. */
+ 	struct device *dma_dev;
+diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
+index 61faea1f0663..1f2160765618 100644
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -56,6 +56,18 @@ MODULE_AUTHOR("Derek G. Murray <Derek.Murray@cl.cam.ac.uk>, "
+ 	      "Gerd Hoffmann <kraxel@redhat.com>");
+ MODULE_DESCRIPTION("User-space granted page access driver");
+ 
++#define GNTDEV_COPY_BATCH 16
++
++struct gntdev_copy_batch {
++	struct gnttab_copy ops[GNTDEV_COPY_BATCH];
++	struct page *pages[GNTDEV_COPY_BATCH];
++	s16 __user *status[GNTDEV_COPY_BATCH];
++	unsigned int nr_ops;
++	unsigned int nr_pages;
++	bool writeable;
++	struct gntdev_copy_batch *next;
++};
++
+ static unsigned int limit = 64*1024;
+ module_param(limit, uint, 0644);
+ MODULE_PARM_DESC(limit,
+@@ -584,6 +596,8 @@ static int gntdev_open(struct inode *inode, struct file *flip)
+ 	INIT_LIST_HEAD(&priv->maps);
+ 	mutex_init(&priv->lock);
+ 
++	mutex_init(&priv->batch_lock);
++
+ #ifdef CONFIG_XEN_GNTDEV_DMABUF
+ 	priv->dmabuf_priv = gntdev_dmabuf_init(flip);
+ 	if (IS_ERR(priv->dmabuf_priv)) {
+@@ -608,6 +622,7 @@ static int gntdev_release(struct inode *inode, struct file *flip)
+ {
+ 	struct gntdev_priv *priv = flip->private_data;
+ 	struct gntdev_grant_map *map;
++	struct gntdev_copy_batch *batch;
+ 
+ 	pr_debug("priv %p\n", priv);
+ 
+@@ -620,6 +635,14 @@ static int gntdev_release(struct inode *inode, struct file *flip)
  	}
+ 	mutex_unlock(&priv->lock);
+ 
++	mutex_lock(&priv->batch_lock);
++	while (priv->batch) {
++		batch = priv->batch;
++		priv->batch = batch->next;
++		kfree(batch);
++	}
++	mutex_unlock(&priv->batch_lock);
++
+ #ifdef CONFIG_XEN_GNTDEV_DMABUF
+ 	gntdev_dmabuf_fini(priv->dmabuf_priv);
+ #endif
+@@ -785,17 +808,6 @@ static long gntdev_ioctl_notify(struct gntdev_priv *priv, void __user *u)
+ 	return rc;
+ }
+ 
+-#define GNTDEV_COPY_BATCH 16
+-
+-struct gntdev_copy_batch {
+-	struct gnttab_copy ops[GNTDEV_COPY_BATCH];
+-	struct page *pages[GNTDEV_COPY_BATCH];
+-	s16 __user *status[GNTDEV_COPY_BATCH];
+-	unsigned int nr_ops;
+-	unsigned int nr_pages;
+-	bool writeable;
+-};
+-
+ static int gntdev_get_page(struct gntdev_copy_batch *batch, void __user *virt,
+ 				unsigned long *gfn)
+ {
+@@ -953,36 +965,53 @@ static int gntdev_grant_copy_seg(struct gntdev_copy_batch *batch,
+ static long gntdev_ioctl_grant_copy(struct gntdev_priv *priv, void __user *u)
+ {
+ 	struct ioctl_gntdev_grant_copy copy;
+-	struct gntdev_copy_batch batch;
++	struct gntdev_copy_batch *batch;
+ 	unsigned int i;
+ 	int ret = 0;
+ 
+ 	if (copy_from_user(&copy, u, sizeof(copy)))
+ 		return -EFAULT;
+ 
+-	batch.nr_ops = 0;
+-	batch.nr_pages = 0;
++	mutex_lock(&priv->batch_lock);
++	if (!priv->batch) {
++		batch = kmalloc(sizeof(*batch), GFP_KERNEL);
++	} else {
++		batch = priv->batch;
++		priv->batch = batch->next;
++	}
++	mutex_unlock(&priv->batch_lock);
++	if (!batch)
++		return -ENOMEM;
++
++	batch->nr_ops = 0;
++	batch->nr_pages = 0;
+ 
+ 	for (i = 0; i < copy.count; i++) {
+ 		struct gntdev_grant_copy_segment seg;
+ 
+ 		if (copy_from_user(&seg, &copy.segments[i], sizeof(seg))) {
+ 			ret = -EFAULT;
++			gntdev_put_pages(batch);
+ 			goto out;
+ 		}
+ 
+-		ret = gntdev_grant_copy_seg(&batch, &seg, &copy.segments[i].status);
+-		if (ret < 0)
++		ret = gntdev_grant_copy_seg(batch, &seg, &copy.segments[i].status);
++		if (ret < 0) {
++			gntdev_put_pages(batch);
+ 			goto out;
++		}
+ 
+ 		cond_resched();
+ 	}
+-	if (batch.nr_ops)
+-		ret = gntdev_copy(&batch);
+-	return ret;
++	if (batch->nr_ops)
++		ret = gntdev_copy(batch);
++
++ out:
++	mutex_lock(&priv->batch_lock);
++	batch->next = priv->batch;
++	priv->batch = batch;
++	mutex_unlock(&priv->batch_lock);
+ 
+-  out:
+-	gntdev_put_pages(&batch);
+ 	return ret;
+ }
+ 
 -- 
 2.39.5
 
