@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346F83D994;
-	Tue, 12 Aug 2025 19:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AD5217F35;
+	Tue, 12 Aug 2025 19:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026460; cv=none; b=gZ794oJux0CfdEOVtnuzB51bbagcxjgatm9Z19hPdA8PmcxltjBOXQKSGZYPqq2uFo3gqWnCoDZvu3mg4whPjw5dZgdn03VUoIZDqPdOqAbAqRiRTQajSZccHccti3GUnjPR7PBkQk6haO7Z4eFE7+TKZgaFLl9tyD02vo1b2u8=
+	t=1755026463; cv=none; b=GMgA55J1turdJEETPhLfiDnHgHJkZBYepbCC6mroPDx0QxTEXNyNBCRqsN4OEIx/Kmn0YvbhbfcEzrrJ93A/vMKzN7wF15iehcS4NkaL4sJxroqFc0Ylo8Ln19EwHp8cxQ6+LTG7llbkSQOPhqyD0pe9xBMLYnKGZCcOtQHBBJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026460; c=relaxed/simple;
-	bh=qyE3zz8FHBwcs3eq4WoJsOAlPvpnuR6PSYKcP6G+wFI=;
+	s=arc-20240116; t=1755026463; c=relaxed/simple;
+	bh=vSq2EmlmkD4k26Aejo4pgK4tF5VAu9bOxKPK/7Y5QqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sa5c/j9Caa/2056d2A270TXrBOy2yTIR/DWL9NEfaGmBn+JyhfIO5iEgg2X/22zkefl2+3BGianzC0VwYiB1yXUKJ2dd32hfrYsPR08dlww4HLinE7/olJfOwV7J+sY2ZfzQTxBz/X3vEpytVxMtReyHIpwYkDNH9CoEtLCSjPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3naew5t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NH5frWBO8FNKrGo3RCDWz6WHJbw4YTYSB1wq1XMhZtglewoRz/sdQTuxBBPItKGETgPSmIJLKn1BD41VOrwNJIyozhWxLbsdkJ77Ej2yFmZFehGfFJA6x7MWwdyVhEE1cyfB8tSxJjQxin3VIXN9a5cggUhlI60MtweQnuqsQhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+tkXzR/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3naew5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CDFC4CEF0;
-	Tue, 12 Aug 2025 19:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+tkXzR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E365DC4CEF0;
+	Tue, 12 Aug 2025 19:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026459;
-	bh=qyE3zz8FHBwcs3eq4WoJsOAlPvpnuR6PSYKcP6G+wFI=;
+	s=korg; t=1755026463;
+	bh=vSq2EmlmkD4k26Aejo4pgK4tF5VAu9bOxKPK/7Y5QqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3naew5tw/jPuWEnIVlYKFryDfbchJcHDzkkDQhikuMUy8yko3eZcg1hTckudYmcM
-	 iX7KmzMxyNKzRv3mscRoRwZ8gsTuGM3HJdVlir747AYV0B6staJjbtIroptx9w5nYq
-	 HBjxodXRbXqhJLfC8Z4EEK4pkmg7eFyFuTcFooso=
+	b=1+tkXzR/KXiUVwgmS/HbMMk3/fimYRjSmDQpeixPfygAkyEtE1tB97hkW08AUfFD+
+	 cYPo3pi38QBzgj8S4uE5OOYq+K1OhdF1UJeeCl9+huxQPmOuzri8PICU+EEw/tqLuQ
+	 HMWFLLdJV5vMURVAQOKRKqueQbvb20B2i+0oPiXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 344/480] rtc: rv3028: fix incorrect maximum clock rate handling
-Date: Tue, 12 Aug 2025 19:49:12 +0200
-Message-ID: <20250812174411.623897304@linuxfoundation.org>
+Subject: [PATCH 6.15 345/480] f2fs: turn off one_time when forcibly set to foreground GC
+Date: Tue, 12 Aug 2025 19:49:13 +0200
+Message-ID: <20250812174411.663357818@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,38 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit b574acb3cf7591d2513a9f29f8c2021ad55fb881 ]
+[ Upstream commit 8142daf8a53806689186ee255cc02f89af7f8890 ]
 
-When rv3028_clkout_round_rate() is called with a requested rate higher
-than the highest supported rate, it currently returns 0, which disables
-the clock. According to the clk API, round_rate() should instead return
-the highest supported rate. Update the function to return the maximum
-supported rate in this case.
+one_time mode is only for background GC. So, we need to set it back to
+false when foreground GC is enforced.
 
-Fixes: f583c341a515f ("rtc: rv3028: add clkout support")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-6-33140bb2278e@redhat.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 9748c2ddea4a ("f2fs: do FG_GC when GC boosting is required for zoned devices")
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-rv3028.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/gc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-rv3028.c b/drivers/rtc/rtc-rv3028.c
-index 868d1b1eb0f4..278841c2e47e 100644
---- a/drivers/rtc/rtc-rv3028.c
-+++ b/drivers/rtc/rtc-rv3028.c
-@@ -740,7 +740,7 @@ static long rv3028_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
- 		if (clkout_rates[i] <= rate)
- 			return clkout_rates[i];
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 8b5a55b72264..67f04d140e0f 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1893,6 +1893,7 @@ int f2fs_gc(struct f2fs_sb_info *sbi, struct f2fs_gc_control *gc_control)
+ 	/* Let's run FG_GC, if we don't have enough space. */
+ 	if (has_not_enough_free_secs(sbi, 0, 0)) {
+ 		gc_type = FG_GC;
++		gc_control->one_time = false;
  
--	return 0;
-+	return clkout_rates[0];
- }
- 
- static int rv3028_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
+ 		/*
+ 		 * For example, if there are many prefree_segments below given
 -- 
 2.39.5
 
