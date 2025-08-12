@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B89247287;
-	Tue, 12 Aug 2025 18:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F407A2C21E3;
+	Tue, 12 Aug 2025 18:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024608; cv=none; b=XyEeX3jkKPbv96uhsvf6ZuATSNC/3SgQt7BqkwOM9ii/sVnCXzR8uu4dTPUNLPz9esJLVk10efUIJuBQw4goBmCFcOhkVYZJMyV1Nsgg0CNXVd6n8BiERKg+l0LgJUfmVwjAa+AMl2huqRq0rH1tZxpQFMPe00hd+u+M/7Ij+wo=
+	t=1755024612; cv=none; b=FSK3kE9ZXK+DsTZ3QQY2szNYQDnrFS2Q5VYv1kYGwp7WeouIiIJ8H2NWr4e1ayldrWGr9hBuHga29BeAFg+g2gwn4socmq+6zxlsgJS/bY4cP8fyR7IySrXZdM5VXh5H26HHsS6XZf/ERFqVrE72h1KGeiyJW/Oy4wlCq5QaXUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024608; c=relaxed/simple;
-	bh=sMQXHvvv4n8Z0bUxsV8/AQdzJAIedTV2xSrDTLpmgjI=;
+	s=arc-20240116; t=1755024612; c=relaxed/simple;
+	bh=pheDWyn9fQSF7iVfwkvigSV1QnNbMnF+zwzg1RBm0EQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKIdpfRuQAXqccVLV2U6xMUhzCuqQKq6p4DDJfcVK8Mecvsd7AM6TMZlceU52u1ISfA087YxJmG018K7mlkdmYDFHQ/9Km/wjQ0j1q49UpPxUFMRDaqmgn4GGYb7R3s8kxExscZvSpLOujKVB8mDFHH1dZNM+wSSxteGXghd7G4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTeww/Ye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYV0L4lN0CQ7qVrf6DQ4Wg3K9MRd3pIAEBpPKR4cIxRxy/r5IBQBTr9k9asu5e7TLpy+w97EHd/X2yu2xGaWFUdEXkCHlLnvt6ErzMIVZ2S9q4VDk+esS8dnl+6u8O3Ed4ai8Xf5vfR41aVZkBrUVFt3g1tz/aZl7q0Dwi9lkWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkEbDGpq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTeww/Ye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E98C4CEF0;
-	Tue, 12 Aug 2025 18:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkEbDGpq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6814CC4CEF0;
+	Tue, 12 Aug 2025 18:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024608;
-	bh=sMQXHvvv4n8Z0bUxsV8/AQdzJAIedTV2xSrDTLpmgjI=;
+	s=korg; t=1755024611;
+	bh=pheDWyn9fQSF7iVfwkvigSV1QnNbMnF+zwzg1RBm0EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTeww/YeB25nL1MVMW9+JdBYOq03zlmDGk8J2TPbQfstOI8TRbkCmF7sY/ZhIIF9j
-	 +qhpuVWBN/iZcf72kOli5nuPxX2nKvtwc5h1IYRlgCENpUpF7e0GwAvqR053KQuCdr
-	 J8Xk5yfhmz7vQsQ4b1O19at2rEP4pmBNRf51blBs=
+	b=PkEbDGpqgXWRX4XwBrnlHGGKVZKLyqfb/iGbNVEBsryEn5jIv6ebxG7xyRw8mrOPG
+	 DRhzvTob5aOJ3L3NzrcM2a/XTBXY1C73X7sUdHh8DC+U584ZI4ftvU1YcO4giIihXh
+	 GnVZmd03qqYTGr5eVaDd4PR+/r6/TQtX7tYDdsGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 380/627] pinmux: fix race causing mux_owner NULL with active mux_usecount
-Date: Tue, 12 Aug 2025 19:31:15 +0200
-Message-ID: <20250812173433.752838160@linuxfoundation.org>
+Subject: [PATCH 6.16 417/627] dmaengine: mv_xor: Fix missing check after DMA map and missing unmap
+Date: Tue, 12 Aug 2025 19:31:52 +0200
+Message-ID: <20250812173435.145141173@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,93 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 0b075c011032f88d1cfde3b45d6dcf08b44140eb ]
+[ Upstream commit 60095aca6b471b7b7a79c80b7395f7e4e414b479 ]
 
-commit 5a3e85c3c397 ("pinmux: Use sequential access to access
-desc->pinmux data") tried to address the issue when two client of the
-same gpio calls pinctrl_select_state() for the same functionality, was
-resulting in NULL pointer issue while accessing desc->mux_owner.
-However, issue was not completely fixed due to the way it was handled
-and it can still result in the same NULL pointer.
+The DMA map functions can fail and should be tested for errors.
 
-The issue occurs due to the following interleaving:
+In case of error, unmap the already mapped regions.
 
-     cpu0 (process A)                   cpu1 (process B)
-
-      pin_request() {                   pin_free() {
-
-                                         mutex_lock()
-                                         desc->mux_usecount--; //becomes 0
-                                         ..
-                                         mutex_unlock()
-
-  mutex_lock(desc->mux)
-  desc->mux_usecount++; // becomes 1
-  desc->mux_owner = owner;
-  mutex_unlock(desc->mux)
-
-                                         mutex_lock(desc->mux)
-                                         desc->mux_owner = NULL;
-                                         mutex_unlock(desc->mux)
-
-This sequence leads to a state where the pin appears to be in use
-(`mux_usecount == 1`) but has no owner (`mux_owner == NULL`), which can
-cause NULL pointer on next pin_request on the same pin.
-
-Ensure that updates to mux_usecount and mux_owner are performed
-atomically under the same lock. Only clear mux_owner when mux_usecount
-reaches zero and no new owner has been assigned.
-
-Fixes: 5a3e85c3c397 ("pinmux: Use sequential access to access desc->pinmux data")
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/20250708-pinmux-race-fix-v2-1-8ae9e8a0d1a1@oss.qualcomm.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 22843545b200 ("dma: mv_xor: Add support for DMA_INTERRUPT")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://lore.kernel.org/r/20250701123753.46935-2-fourier.thomas@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinmux.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/dma/mv_xor.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/pinmux.c b/drivers/pinctrl/pinmux.c
-index 0743190da59e..2c31e7f2a27a 100644
---- a/drivers/pinctrl/pinmux.c
-+++ b/drivers/pinctrl/pinmux.c
-@@ -236,18 +236,7 @@ static const char *pin_free(struct pinctrl_dev *pctldev, int pin,
- 			if (desc->mux_usecount)
- 				return NULL;
- 		}
--	}
--
--	/*
--	 * If there is no kind of request function for the pin we just assume
--	 * we got it by default and proceed.
--	 */
--	if (gpio_range && ops->gpio_disable_free)
--		ops->gpio_disable_free(pctldev, gpio_range, pin);
--	else if (ops->free)
--		ops->free(pctldev, pin);
- 
--	scoped_guard(mutex, &desc->mux_lock) {
- 		if (gpio_range) {
- 			owner = desc->gpio_owner;
- 			desc->gpio_owner = NULL;
-@@ -258,6 +247,15 @@ static const char *pin_free(struct pinctrl_dev *pctldev, int pin,
- 		}
- 	}
- 
-+	/*
-+	 * If there is no kind of request function for the pin we just assume
-+	 * we got it by default and proceed.
-+	 */
-+	if (gpio_range && ops->gpio_disable_free)
-+		ops->gpio_disable_free(pctldev, gpio_range, pin);
-+	else if (ops->free)
-+		ops->free(pctldev, pin);
+diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+index fa6e4646fdc2..1fdcb0f5c9e7 100644
+--- a/drivers/dma/mv_xor.c
++++ b/drivers/dma/mv_xor.c
+@@ -1061,8 +1061,16 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 	 */
+ 	mv_chan->dummy_src_addr = dma_map_single(dma_dev->dev,
+ 		mv_chan->dummy_src, MV_XOR_MIN_BYTE_COUNT, DMA_FROM_DEVICE);
++	if (dma_mapping_error(dma_dev->dev, mv_chan->dummy_src_addr))
++		return ERR_PTR(-ENOMEM);
 +
- 	module_put(pctldev->owner);
+ 	mv_chan->dummy_dst_addr = dma_map_single(dma_dev->dev,
+ 		mv_chan->dummy_dst, MV_XOR_MIN_BYTE_COUNT, DMA_TO_DEVICE);
++	if (dma_mapping_error(dma_dev->dev, mv_chan->dummy_dst_addr)) {
++		ret = -ENOMEM;
++		goto err_unmap_src;
++	}
++
  
- 	return owner;
+ 	/* allocate coherent memory for hardware descriptors
+ 	 * note: writecombine gives slightly better performance, but
+@@ -1071,8 +1079,10 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 	mv_chan->dma_desc_pool_virt =
+ 	  dma_alloc_wc(&pdev->dev, MV_XOR_POOL_SIZE, &mv_chan->dma_desc_pool,
+ 		       GFP_KERNEL);
+-	if (!mv_chan->dma_desc_pool_virt)
+-		return ERR_PTR(-ENOMEM);
++	if (!mv_chan->dma_desc_pool_virt) {
++		ret = -ENOMEM;
++		goto err_unmap_dst;
++	}
+ 
+ 	/* discover transaction capabilities from the platform data */
+ 	dma_dev->cap_mask = cap_mask;
+@@ -1155,6 +1165,13 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ err_free_dma:
+ 	dma_free_coherent(&pdev->dev, MV_XOR_POOL_SIZE,
+ 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
++err_unmap_dst:
++	dma_unmap_single(dma_dev->dev, mv_chan->dummy_dst_addr,
++			 MV_XOR_MIN_BYTE_COUNT, DMA_TO_DEVICE);
++err_unmap_src:
++	dma_unmap_single(dma_dev->dev, mv_chan->dummy_src_addr,
++			 MV_XOR_MIN_BYTE_COUNT, DMA_FROM_DEVICE);
++
+ 	return ERR_PTR(ret);
+ }
+ 
 -- 
 2.39.5
 
