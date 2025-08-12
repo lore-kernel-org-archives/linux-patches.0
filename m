@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311381A3029;
-	Tue, 12 Aug 2025 19:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8CF1A3029;
+	Tue, 12 Aug 2025 19:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025860; cv=none; b=Tnqu3xxRD4tEyn+uELTVrYWIxRn6kAhdOILbhR6+T8P2Nz8gERvM6qVy5YKhlfXaM7AYTZQfclkZeIttAEniJdAVSqgaJwnGXJzCy1G/5GJu0HzZ0H+/Fyut4AAg3w2vy1WK6+RF0YvkfAuTtHsTYx/XOQew8wwhLkeFM9gyoYw=
+	t=1755025863; cv=none; b=ZiANuqWI+k4JirJcEmirB5TUkpbdfW9EL7pUrvVVs8Fr2oAMJnV76kMrRMiUT99xHF5ZB4v2SzUBeHAorRbIJalFBuFz2xTk4D/OJ8Yv0lWFFHU/SktdsZWzMegF7sPqZ/Ktxe9yyWwQqqdw8ahlV9dAsPRHILI9stCs5DFYPeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025860; c=relaxed/simple;
-	bh=dDChgbniBwFOiKCnc0TrJ1ENgqi7Mm/zaa4btDbdcac=;
+	s=arc-20240116; t=1755025863; c=relaxed/simple;
+	bh=un4sE5Aoim2MJwjam80op8ry7Cd39jBUaRaZeAwFmkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dm8N4O/phMvLFzTNwbOrw0qXNwyt+oMcDB/E/EFuYWM/KJzD5SqBNh6cLo1Ti9QqByeRcGeqo/XimMgPcMa69A+9g5nrfoXV6u9KIZAddcM8zJasg9DblzLFBZyoKdaq3owcAb+3wZlcH9nc0yaW0yRgbZwcTlZjQRYyCPwvhwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTYA8XRn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SwsUAscMrLcgO0aRt8/USJBln4nUGopYlURTeNYZogU/pUlmYMzj8PYqw3UUKaAv1GsRy/HD3lZQ/stSNcmRcq7Z8elUy7Y7SL1dv7qvAPtC8eN/gm6oHZNlFmeCrJMOVVw8qQvLtMlvBr5aMeNSbuLuJciuCEqVKD1UZEo6YJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tPYQUe7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTYA8XRn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9209FC4CEF0;
-	Tue, 12 Aug 2025 19:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tPYQUe7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B80C4CEF0;
+	Tue, 12 Aug 2025 19:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025860;
-	bh=dDChgbniBwFOiKCnc0TrJ1ENgqi7Mm/zaa4btDbdcac=;
+	s=korg; t=1755025863;
+	bh=un4sE5Aoim2MJwjam80op8ry7Cd39jBUaRaZeAwFmkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTYA8XRnGB8qjiVMOpxRyRRzTCaIasTXHNz4S0oDiKupBQwYipFL9C0uEs+LO8JXH
-	 Xbj66/e9m4tVzmc1VFVRMZ2cflmIpIGo4x75sud7IxbT3ae+yIDg7J7SwAbNRLcOPr
-	 3mAdrWUC7MjU6/LiX1v18hQRdi7e9beA5A07tQcc=
+	b=0tPYQUe7qf2v8uOlQ2D3OBWmpX6+MSHXmgeQLuAsf6TJ4uUVmkSSGjXpbfaX3hB7y
+	 8TLvxfyPRMv0B8NL/ytQABjki19OxD5TAcybuiOVfetD3fRyRF/io7YuIkjxrCgnq/
+	 ikkRbHC3sW3BUbn0HoSDVodmCUiC7Jg/DMfeXAMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 166/480] wifi: ath12k: Use HTT_TCL_METADATA_VER_V1 in FTM mode
-Date: Tue, 12 Aug 2025 19:46:14 +0200
-Message-ID: <20250812174404.370298299@linuxfoundation.org>
+Subject: [PATCH 6.15 167/480] wifi: ath11k: fix sleeping-in-atomic in ath11k_mac_op_set_bitrate_mask()
+Date: Tue, 12 Aug 2025 19:46:15 +0200
+Message-ID: <20250812174404.411208041@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,76 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 66b3ebc77d23d6574a965bdbfe41de8aeb7f384e ]
+[ Upstream commit 65c12b104cb942d588a1a093acc4537fb3d3b129 ]
 
-Currently host sends HTT_TCL_METADATA_VER_V2 to the firmware
-regardless of the operating mode (Mission or FTM).
+ath11k_mac_disable_peer_fixed_rate() is passed as the iterator to
+ieee80211_iterate_stations_atomic(). Note in this case the iterator is
+required to be atomic, however ath11k_mac_disable_peer_fixed_rate() does
+not follow it as it might sleep. Consequently below warning is seen:
 
-Firmware expects additional software information (like peer ID, vdev
-ID, and link ID) in Tx packets when HTT_TCL_METADATA_VER_V2 is set.
-However, in FTM (Factory Test Mode) mode, no vdev is created on the
-host side (this is expected). As a result, the firmware fails to find
-the expected vdev during packet processing and ends up dropping
-packets.
+BUG: sleeping function called from invalid context at wmi.c:304
+Call Trace:
+ <TASK>
+ dump_stack_lvl
+ __might_resched.cold
+ ath11k_wmi_cmd_send
+ ath11k_wmi_set_peer_param
+ ath11k_mac_disable_peer_fixed_rate
+ ieee80211_iterate_stations_atomic
+ ath11k_mac_op_set_bitrate_mask.cold
 
-To fix this, send HTT_TCL_METADATA_VER_V1 in FTM mode because FTM
-mode doesn't support HTT_TCL_METADATA_VER_V2.
+Change to ieee80211_iterate_stations_mtx() to fix this issue.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.5-01651-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
 
-Fixes: 5d964966bd3f ("wifi: ath12k: Update HTT_TCL_METADATA version and bit mask definitions")
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250711035420.1509029-1-aaradhana.sahu@oss.qualcomm.com
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250603-ath11k-use-non-atomic-iterator-v1-1-d75762068d56@quicinc.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.h    | 1 +
- drivers/net/wireless/ath/ath12k/dp_tx.c | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/mac.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index e8dbba0c3bb7..4003e81df535 100644
---- a/drivers/net/wireless/ath/ath12k/dp.h
-+++ b/drivers/net/wireless/ath/ath12k/dp.h
-@@ -425,6 +425,7 @@ enum htt_h2t_msg_type {
- };
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index 4763b271309a..9514e95d5020 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -8734,9 +8734,9 @@ ath11k_mac_op_set_bitrate_mask(struct ieee80211_hw *hw,
+ 				    arvif->vdev_id, ret);
+ 			return ret;
+ 		}
+-		ieee80211_iterate_stations_atomic(ar->hw,
+-						  ath11k_mac_disable_peer_fixed_rate,
+-						  arvif);
++		ieee80211_iterate_stations_mtx(ar->hw,
++					       ath11k_mac_disable_peer_fixed_rate,
++					       arvif);
+ 	} else if (ath11k_mac_bitrate_mask_get_single_nss(ar, arvif, band, mask,
+ 							  &single_nss)) {
+ 		rate = WMI_FIXED_RATE_NONE;
+@@ -8803,9 +8803,9 @@ ath11k_mac_op_set_bitrate_mask(struct ieee80211_hw *hw,
+ 		}
  
- #define HTT_VER_REQ_INFO_MSG_ID		GENMASK(7, 0)
-+#define HTT_OPTION_TCL_METADATA_VER_V1	1
- #define HTT_OPTION_TCL_METADATA_VER_V2	2
- #define HTT_OPTION_TAG			GENMASK(7, 0)
- #define HTT_OPTION_LEN			GENMASK(15, 8)
-diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
-index faf58e91d3eb..5e741b221d87 100644
---- a/drivers/net/wireless/ath/ath12k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
-@@ -1107,6 +1107,7 @@ int ath12k_dp_tx_htt_h2t_ver_req_msg(struct ath12k_base *ab)
- 	struct sk_buff *skb;
- 	struct htt_ver_req_cmd *cmd;
- 	int len = sizeof(*cmd);
-+	u32 metadata_version;
- 	int ret;
+ 		mutex_lock(&ar->conf_mutex);
+-		ieee80211_iterate_stations_atomic(ar->hw,
+-						  ath11k_mac_disable_peer_fixed_rate,
+-						  arvif);
++		ieee80211_iterate_stations_mtx(ar->hw,
++					       ath11k_mac_disable_peer_fixed_rate,
++					       arvif);
  
- 	init_completion(&dp->htt_tgt_version_received);
-@@ -1119,12 +1120,14 @@ int ath12k_dp_tx_htt_h2t_ver_req_msg(struct ath12k_base *ab)
- 	cmd = (struct htt_ver_req_cmd *)skb->data;
- 	cmd->ver_reg_info = le32_encode_bits(HTT_H2T_MSG_TYPE_VERSION_REQ,
- 					     HTT_OPTION_TAG);
-+	metadata_version = ath12k_ftm_mode ? HTT_OPTION_TCL_METADATA_VER_V1 :
-+			   HTT_OPTION_TCL_METADATA_VER_V2;
- 
- 	cmd->tcl_metadata_version = le32_encode_bits(HTT_TAG_TCL_METADATA_VERSION,
- 						     HTT_OPTION_TAG) |
- 				    le32_encode_bits(HTT_TCL_METADATA_VER_SZ,
- 						     HTT_OPTION_LEN) |
--				    le32_encode_bits(HTT_OPTION_TCL_METADATA_VER_V2,
-+				    le32_encode_bits(metadata_version,
- 						     HTT_OPTION_VALUE);
- 
- 	ret = ath12k_htc_send(&ab->htc, dp->eid, skb);
+ 		arvif->bitrate_mask = *mask;
+ 		ieee80211_iterate_stations_atomic(ar->hw,
 -- 
 2.39.5
 
