@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394122D2391;
-	Tue, 12 Aug 2025 19:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C4E29BDB7;
+	Tue, 12 Aug 2025 19:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026659; cv=none; b=reOUSLXL7Yl++bJgex91j5QtAOpzCm234r3CNCnIzIewhwj6kYtEd6gouVs3Bo3NdvRXYAqJEyOF4KUmIoD3adnGTp497lLCYUlS2rlmRwLzjDVm9B2EnK8mVo0DdwckLylCXGDYvuNaK/w6kxsYqnimVo+bc+vqD5vxjtHNQKE=
+	t=1755026662; cv=none; b=VGCNrDPySN32rDcygOyhdHS4FatG1kPxpAMgnH7jZgbIQM3NY6mZaqHNvw8gqv0Lu297e6o0/72RD/7c2hC1Q4uI7fXj3Gt0czZfQOkB8Jc1nAn0v/K7ii++7GbV10hjo30dn2Iefb+/VMY4xtCPzFvMsFsceQuAfgwUJIcAfCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026659; c=relaxed/simple;
-	bh=S80Wbfo/cKymt5FWD/oe05cc7Eg5ZELUosz2ngV/L/I=;
+	s=arc-20240116; t=1755026662; c=relaxed/simple;
+	bh=HtMlyEkhbERkla+AvLrTXpLbVDcUraqlTQOOttK+FWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxu+cn8hOtEC1frXuouzRTHmWCTdKexInZG0gf0CgaZzOtF4QKpYXeueTOS1zHR4M4+JzEbFTe+MJ8uFo8OXfI28MLhor8Bq2ZBzQk8z7LRE3g/ZBUy0APNsmbn936ijZczvdBdlUgjjKBG+TeF1vcuSMxnNA1rllbuwWDysQIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBMjHl6X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r6DEBOlxpJSSaTYVCIZ2wcA9r3j2gO2s4dzWzwnWS2/YN6iMn+LIJZVWpAo5R9FPpidylByYy/nRpuJgtaENba3N6V/SRQcVlCJB7CH1x1Aldl2b0SOQB86YbKtLjJC13ju7UfM27myfeoBaxkaBHdS8RYXb+wED1wKdeCHb730=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anTjKzav; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBMjHl6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7DBC4CEF0;
-	Tue, 12 Aug 2025 19:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anTjKzav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A38C4CEF0;
+	Tue, 12 Aug 2025 19:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026659;
-	bh=S80Wbfo/cKymt5FWD/oe05cc7Eg5ZELUosz2ngV/L/I=;
+	s=korg; t=1755026662;
+	bh=HtMlyEkhbERkla+AvLrTXpLbVDcUraqlTQOOttK+FWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBMjHl6XuE92xoh3zaII76lygbSMJXAUOhTx2bG/9LlwUL3Dl2qTlowBranqSrWlg
-	 ad3jIYgVU574MwHOUC/zw8T9kKinQJ33Cn8hVYld2Lb+wMiZJ9dmT4Qd52DpcjGaYx
-	 AGmMY7/sKppE8Cd6zGBJgvhvuFL72VPecbuC79LE=
+	b=anTjKzavR0T2lr4emedEeTKOC8bzaTZtMxCAicPvQAO5WeDMzTf6RDE5lrcYFPJmW
+	 kCua3y1XujEGtT2/rJj91bWom2nQPPun9Qn9sie6noLVqG2yG3RpmNqWyKZIc9o5kI
+	 v3H9H2X8R3o2lzDl/y9dXYGFCUVJbvwAxFop+U1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salomon Dushimirimana <salomondush@google.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 369/480] scsi: sd: Make sd shutdown issue START STOP UNIT appropriately
-Date: Tue, 12 Aug 2025 19:49:37 +0200
-Message-ID: <20250812174412.649826651@linuxfoundation.org>
+Subject: [PATCH 6.15 370/480] kconfig: qconf: fix ConfigList::updateListAllforAll()
+Date: Tue, 12 Aug 2025 19:49:38 +0200
+Message-ID: <20250812174412.690065929@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,51 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salomon Dushimirimana <salomondush@google.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 8e48727c26c4d839ff9b4b73d1cae486bea7fe19 ]
+[ Upstream commit 721bfe583c52ba1ea74b3736a31a9dcfe6dd6d95 ]
 
-Commit aa3998dbeb3a ("ata: libata-scsi: Disable scsi device
-manage_system_start_stop") enabled libata EH to manage device power mode
-trasitions for system suspend/resume and removed the flag from
-ata_scsi_dev_config. However, since the sd_shutdown() function still
-relies on the manage_system_start_stop flag, a spin-down command is not
-issued to the disk with command "echo 1 > /sys/block/sdb/device/delete"
+ConfigList::updateListForAll() and ConfigList::updateListAllforAll()
+are identical.
 
-sd_shutdown() can be called for both system/runtime start stop
-operations, so utilize the manage_run_time_start_stop flag set in the
-ata_scsi_dev_config and issue a spin-down command during disk removal
-when the system is running. This is in addition to when the system is
-powering off and manage_shutdown flag is set. The
-manage_system_start_stop flag will still be used for drivers that still
-set the flag.
+Commit f9b918fae678 ("kconfig: qconf: move ConfigView::updateList(All)
+to ConfigList class") was a misconversion.
 
-Fixes: aa3998dbeb3a ("ata: libata-scsi: Disable scsi device manage_system_start_stop")
-Signed-off-by: Salomon Dushimirimana <salomondush@google.com>
-Link: https://lore.kernel.org/r/20250724214520.112927-1-salomondush@google.com
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f9b918fae678 ("kconfig: qconf: move ConfigView::updateList(All) to ConfigList class")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ scripts/kconfig/qconf.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 89d5c4b17bc4..2f64caa3b253 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -4173,7 +4173,9 @@ static void sd_shutdown(struct device *dev)
- 	if ((system_state != SYSTEM_RESTART &&
- 	     sdkp->device->manage_system_start_stop) ||
- 	    (system_state == SYSTEM_POWER_OFF &&
--	     sdkp->device->manage_shutdown)) {
-+	     sdkp->device->manage_shutdown) ||
-+	    (system_state == SYSTEM_RUNNING &&
-+	     sdkp->device->manage_runtime_start_stop)) {
- 		sd_printk(KERN_NOTICE, sdkp, "Stopping disk\n");
- 		sd_start_stop_device(sdkp, 0);
+diff --git a/scripts/kconfig/qconf.cc b/scripts/kconfig/qconf.cc
+index eaa465b0ccf9..49607555d343 100644
+--- a/scripts/kconfig/qconf.cc
++++ b/scripts/kconfig/qconf.cc
+@@ -478,7 +478,7 @@ void ConfigList::updateListAllForAll()
+ 	while (it.hasNext()) {
+ 		ConfigList *list = it.next();
+ 
+-		list->updateList();
++		list->updateListAll();
  	}
+ }
+ 
 -- 
 2.39.5
 
