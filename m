@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE9E279DB6;
-	Tue, 12 Aug 2025 19:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926AB21C187;
+	Tue, 12 Aug 2025 19:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025652; cv=none; b=IXPGmjI4re5H4tLL0Mki1nODDHT/4gcNe8v/03NgMR6KY62aUDxzFzHrspgTaXtilkDeheTyPtrLseWqlp/4Z6EnK8sFju6uTnDxMZ7MlRgomtD2noCyT5R9HlM4mbzO5mMa2w8KacQUdN7n8CYYOc0fvXPGvrH45Or3IjL1oOA=
+	t=1755025655; cv=none; b=RKF34vs9Vi1Gmr2nJ9Je9alUPAgrLIzzni5qua7Cx8aQzJ8TniO5JV2hiRbl8pQtzw/PM5pRz00CV3nFU94IeT8liEIVL7Mu+QW3YlQ5sMpJE9q5HhkcqHqm1woOxtHLHUBDwZr0g+SWYmtv1885ukuSmGbPVsAImDNLUoDzE4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025652; c=relaxed/simple;
-	bh=wKv0KR2lIi3X7KuzkCBXDAcfN63X91KXQvvYr+ODokA=;
+	s=arc-20240116; t=1755025655; c=relaxed/simple;
+	bh=H9l/3bGjeZZVg/kd3rpl23mcP0YV4skb6PVzdksU/t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DWMnthyYv4tRGrqN3B81WfZyhb+ZDdzfiohVuoN501epADco5IaxDOnptWXTnLR74Z7RI6bD2HmEfA7xZNcw8RJheu9ZcO7mmwFEjT20ixf2nfis8Yl5FUxpCNhSHoVfwy4sq4Z0M4mHT9J6UhA17JknDmGA0ze/9TjZ5B53McA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olP+P5pM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YM0mT4stY8VzxoWDRz039LIJHyJRN9Xptmjax53IUHTCcJVGMDzSZoYFGC2ORClv7jNsRLyPJSnlgZ3H2NOZI5TBTHtJxbZHj1saH/JoKIUKYWw441W9iDpbdFzH3kI6+QE9vSP+ygz6AfeYnEXlIh5e2PuuM0eYHZVkinulpoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ab3WhQ3T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olP+P5pM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F36BC4CEF0;
-	Tue, 12 Aug 2025 19:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ab3WhQ3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C24C4CEF0;
+	Tue, 12 Aug 2025 19:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025652;
-	bh=wKv0KR2lIi3X7KuzkCBXDAcfN63X91KXQvvYr+ODokA=;
+	s=korg; t=1755025655;
+	bh=H9l/3bGjeZZVg/kd3rpl23mcP0YV4skb6PVzdksU/t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olP+P5pMBeFa54ot1AX3xifg0LvJrQ+mZwIBs8Ho9B4+z5M0RF/UFt7D68qVA9fWE
-	 dKSKP1ztdsHfRjxp6IjwkjA5zAjWVVVIiLjdOtpfB0ezzjcEokfNwo4ZhD4bI0NEQy
-	 OX+v0fl75SN5e4c+0a0aq6uEZPNbVgwkRaq1bKbA=
+	b=Ab3WhQ3T1hIDnC88qJ7TEdQM+RrkA9txnXuTySTL5T9jFQtXc989ZA7V2VDhAd5x/
+	 s94H2gP81gNvkp4s3BKyw2dFJ6QnNXX7LlEz86RwOb0K6uAfYxBV51IEC7gtE1cySn
+	 bPYb4EU8LoLrQPBrcD7J/Vt8CJ90u2fWE6ui0orM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 104/480] bpf, sockmap: Fix psock incorrectly pointing to sk
-Date: Tue, 12 Aug 2025 19:45:12 +0200
-Message-ID: <20250812174401.762409358@linuxfoundation.org>
+Subject: [PATCH 6.15 105/480] netconsole: Only register console drivers when targets are configured
+Date: Tue, 12 Aug 2025 19:45:13 +0200
+Message-ID: <20250812174401.809630068@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,80 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 76be5fae32febb1fdb848ba09f78c4b2c76cb337 ]
+[ Upstream commit bc0cb64db1c765a81f69997d5a28f539e1731bc0 ]
 
-We observed an issue from the latest selftest: sockmap_redir where
-sk_psock(psock->sk) != psock in the backlog. The root cause is the special
-behavior in sockmap_redir - it frequently performs map_update() and
-map_delete() on the same socket. During map_update(), we create a new
-psock and during map_delete(), we eventually free the psock via rcu_work
-in sk_psock_drop(). However, pending workqueues might still exist and not
-be processed yet. If users immediately perform another map_update(), a new
-psock will be allocated for the same sk, resulting in two psocks pointing
-to the same sk.
+The netconsole driver currently registers the basic console driver
+unconditionally during initialization, even when only extended targets
+are configured. This results in unnecessary console registration and
+performance overhead, as the write_msg() callback is invoked for every
+log message only to return early when no matching targets are found.
 
-When the pending workqueue is later triggered, it uses the old psock to
-access sk for I/O operations, which is incorrect.
+Optimize the driver by conditionally registering console drivers based
+on the actual target configuration. The basic console driver is now
+registered only when non-extended targets exist, same as the extended
+console. The implementation also handles dynamic target creation through
+the configfs interface.
 
-Timing Diagram:
+This change eliminates unnecessary console driver registrations,
+redundant write_msg() callbacks for unused console types, and associated
+lock contention and target list iterations. The optimization is
+particularly beneficial for systems using only the most common extended
+console type.
 
-cpu0                        cpu1
-
-map_update(sk):
-    sk->psock = psock1
-    psock1->sk = sk
-map_delete(sk):
-   rcu_work_free(psock1)
-
-map_update(sk):
-    sk->psock = psock2
-    psock2->sk = sk
-                            workqueue:
-                                wakeup with psock1, but the sk of psock1
-                                doesn't belong to psock1
-rcu_handler:
-    clean psock1
-    free(psock1)
-
-Previously, we used reference counting to address the concurrency issue
-between backlog and sock_map_close(). This logic remains necessary as it
-prevents the sk from being freed while processing the backlog. But this
-patch prevents pending backlogs from using a psock after it has been
-stopped.
-
-Note: We cannot call cancel_delayed_work_sync() in map_delete() since this
-might be invoked in BPF context by BPF helper, and the function may sleep.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20250609025908.79331-1-jiayuan.chen@linux.dev
+Fixes: e2f15f9a79201 ("netconsole: implement extended console support")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20250609-netcons_ext-v3-1-5336fa670326@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/netconsole.c | 30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 34c51eb1a14f..83c78379932e 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -656,6 +656,13 @@ static void sk_psock_backlog(struct work_struct *work)
- 	bool ingress;
- 	int ret;
+diff --git a/drivers/net/netconsole.c b/drivers/net/netconsole.c
+index 176935a8645f..a35b1fd4337b 100644
+--- a/drivers/net/netconsole.c
++++ b/drivers/net/netconsole.c
+@@ -86,10 +86,10 @@ static DEFINE_SPINLOCK(target_list_lock);
+ static DEFINE_MUTEX(target_cleanup_list_lock);
  
-+	/* If sk is quickly removed from the map and then added back, the old
-+	 * psock should not be scheduled, because there are now two psocks
-+	 * pointing to the same sk.
-+	 */
-+	if (!sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED))
-+		return;
+ /*
+- * Console driver for extended netconsoles.  Registered on the first use to
+- * avoid unnecessarily enabling ext message formatting.
++ * Console driver for netconsoles.  Register only consoles that have
++ * an associated target of the same type.
+  */
+-static struct console netconsole_ext;
++static struct console netconsole_ext, netconsole;
+ 
+ struct netconsole_target_stats  {
+ 	u64_stats_t xmit_drop_count;
+@@ -97,6 +97,11 @@ struct netconsole_target_stats  {
+ 	struct u64_stats_sync syncp;
+ };
+ 
++enum console_type {
++	CONS_BASIC = BIT(0),
++	CONS_EXTENDED = BIT(1),
++};
 +
- 	/* Increment the psock refcnt to synchronize with close(fd) path in
- 	 * sock_map_close(), ensuring we wait for backlog thread completion
- 	 * before sk_socket freed. If refcnt increment fails, it indicates
+ /* Features enabled in sysdata. Contrary to userdata, this data is populated by
+  * the kernel. The fields are designed as bitwise flags, allowing multiple
+  * features to be set in sysdata_fields.
+@@ -491,6 +496,12 @@ static ssize_t enabled_store(struct config_item *item,
+ 		if (nt->extended && !console_is_registered(&netconsole_ext))
+ 			register_console(&netconsole_ext);
+ 
++		/* User might be enabling the basic format target for the very
++		 * first time, make sure the console is registered.
++		 */
++		if (!nt->extended && !console_is_registered(&netconsole))
++			register_console(&netconsole);
++
+ 		/*
+ 		 * Skip netpoll_parse_options() -- all the attributes are
+ 		 * already configured via configfs. Just print them out.
+@@ -1690,8 +1701,8 @@ static int __init init_netconsole(void)
+ {
+ 	int err;
+ 	struct netconsole_target *nt, *tmp;
++	u32 console_type_needed = 0;
+ 	unsigned int count = 0;
+-	bool extended = false;
+ 	unsigned long flags;
+ 	char *target_config;
+ 	char *input = config;
+@@ -1707,9 +1718,10 @@ static int __init init_netconsole(void)
+ 			}
+ 			/* Dump existing printks when we register */
+ 			if (nt->extended) {
+-				extended = true;
++				console_type_needed |= CONS_EXTENDED;
+ 				netconsole_ext.flags |= CON_PRINTBUFFER;
+ 			} else {
++				console_type_needed |= CONS_BASIC;
+ 				netconsole.flags |= CON_PRINTBUFFER;
+ 			}
+ 
+@@ -1728,9 +1740,10 @@ static int __init init_netconsole(void)
+ 	if (err)
+ 		goto undonotifier;
+ 
+-	if (extended)
++	if (console_type_needed & CONS_EXTENDED)
+ 		register_console(&netconsole_ext);
+-	register_console(&netconsole);
++	if (console_type_needed & CONS_BASIC)
++		register_console(&netconsole);
+ 	pr_info("network logging started\n");
+ 
+ 	return err;
+@@ -1760,7 +1773,8 @@ static void __exit cleanup_netconsole(void)
+ 
+ 	if (console_is_registered(&netconsole_ext))
+ 		unregister_console(&netconsole_ext);
+-	unregister_console(&netconsole);
++	if (console_is_registered(&netconsole))
++		unregister_console(&netconsole);
+ 	dynamic_netconsole_exit();
+ 	unregister_netdevice_notifier(&netconsole_netdev_notifier);
+ 
 -- 
 2.39.5
 
