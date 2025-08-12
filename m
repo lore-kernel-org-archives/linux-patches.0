@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAC423182D;
-	Tue, 12 Aug 2025 19:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB5B26FA77;
+	Tue, 12 Aug 2025 19:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025571; cv=none; b=kWXHaPkDgQWfcySHCEzBp+w8ShO138d6XYvZHBiryeWIOU/C2jdOaeRNOtMsi8f/wr2qGuhEnYh8uiOkps8bZczbBFSp6VzTJrZK9B2VaxtTLHBFFnG19odAPS0u3PK10OzsJh6MhQpKTz9GRkv+skGzaUn3soEjGJoE1g1KP0g=
+	t=1755025575; cv=none; b=Z+sJbZ+hVg7+7UdWmwowe56gX2rCx8lH/IxO2Ehc7AD5EizVVe1pZLlxjKnRO9msWBO+zgRksxx4111QC8BarRBbheSU2RqMg3M47mdL68N+SLdOmFYOdEKKd4N1kIeqdKcMLjLFiBfeeIfvGXhzalC/7q16Z/IJcnZOiX9n4/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025571; c=relaxed/simple;
-	bh=ructsx/cg7Uljzo6YSoZkN/lxj3bvuIOkI4nQc8t/h0=;
+	s=arc-20240116; t=1755025575; c=relaxed/simple;
+	bh=WpnbTSY030UtG5ugd61gmyfcOmuhsx2DQarscQWZJJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvbEYlGK7gbrTWv1wBK9w3eslIPtDWn88rPlZ12XlZKN2t4swuoPYuy2COO5pFp/8OMZCex4I+WsO0NHBBoQIU1ymD9PrKDphPIuF3k9u7WkVm7kbxY6kn9g10dB5cAkIx96oH3GHz01Lv5cC0l/XbM4P24R1Nvgk+JKQvfoSZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSRSqmz1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D9rfipzJ46UqUoGHDaTBdFmZARIOlIqdhH7TqNkHyXbI/N6PVM64QFUo5lAV531baV9j09ZiY7SC/t83zRTes6zdQ6oo5xaWY1VeyHOceF2+Axmsmz1uddFoIyhk2saFAWM5n/Wz0hF8+XDPu0gSEyyfLX1Feq7KKjLkO5jakg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2C7fo0x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSRSqmz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DCDC4CEF0;
-	Tue, 12 Aug 2025 19:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2C7fo0x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9C7C4CEF0;
+	Tue, 12 Aug 2025 19:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025571;
-	bh=ructsx/cg7Uljzo6YSoZkN/lxj3bvuIOkI4nQc8t/h0=;
+	s=korg; t=1755025575;
+	bh=WpnbTSY030UtG5ugd61gmyfcOmuhsx2DQarscQWZJJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSRSqmz1xuUQ83s8ZijzGm9QSvb/3E/PTPL3J5Gq0uBHkpYbBgn9Zr8iaBAK1jisR
-	 Rb6VMPU4H1s8iAxgjoqJVMVyrmPHDH10HdlcErHB8HqczmQ7cJoUT/jGuEsG+Elstn
-	 3f+Cbo3JoqyW3Y8i0KGExGNyfeBNwoxiPcMG/W6o=
+	b=C2C7fo0xtV2CAxjuRnualwne+ywvcZvmR6o6zNrucQ+KKJBcL8BagOUpA3M3sIzQx
+	 fKCBBT/5S1kWC/nTQTgLKk1QZ2/o9vyqyFSSBpc+Rn73Cpez5RxLl+pyBgkkMruCNN
+	 79dE+gyaaH8uXckXSIpXCrI5zxTyawMarfOiwPfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wadim Egorov <w.egorov@phytec.de>,
+	Michael Walle <mwalle@kernel.org>,
 	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 047/480] arm64: dts: ti: k3-am642-phyboard-electra: Fix PRU-ICSSG Ethernet ports
-Date: Tue, 12 Aug 2025 19:44:15 +0200
-Message-ID: <20250812174359.341252006@linuxfoundation.org>
+Subject: [PATCH 6.15 048/480] arm64: dts: ti: k3-am62p-j722s: fix pinctrl-single size
+Date: Tue, 12 Aug 2025 19:44:16 +0200
+Message-ID: <20250812174359.382672863@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wadim Egorov <w.egorov@phytec.de>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 945e48a39c957924bc84d1a6c137da039e13855b ]
+[ Upstream commit fdc8ad019ab9a2308b8cef54fbc366f482fb746f ]
 
-For the ICSSG PHYs to operate correctly, a 25 MHz reference clock must
-be supplied on CLKOUT0. Previously, our bootloader configured this
-clock, which is why the PRU Ethernet ports appeared to work, but the
-change never made it into the device tree.
+Pinmux registers ends at 0x000f42ac (including). Thus, the size argument
+of the pinctrl-single node has to be 0x2b0. Fix it.
 
-Add clock properties to make EXT_REFCLK1.CLKOUT0 output a 25MHz clock.
+This will fix the following error:
+pinctrl-single f4000.pinctrl: mux offset out of range: 0x2ac (0x2ac)
 
-Signed-off-by: Wadim Egorov <w.egorov@phytec.de>
-Fixes: 87adfd1ab03a ("arm64: dts: ti: am642-phyboard-electra: Add PRU-ICSSG nodes")
-Link: https://lore.kernel.org/r/20250521053339.1751844-1-w.egorov@phytec.de
+Fixes: 29075cc09f43 ("arm64: dts: ti: Introduce AM62P5 family of SoCs")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Link: https://lore.kernel.org/r/20250618065239.1904953-1-mwalle@kernel.org
 Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-rdk.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-rdk.dts b/arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-rdk.dts
-index f63c101b7d61..129524eb5b91 100644
---- a/arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-rdk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-rdk.dts
-@@ -322,6 +322,8 @@ AM64X_IOPAD(0x0040, PIN_OUTPUT, 7)	/* (U21) GPMC0_AD1.GPIO0_16 */
- &icssg0_mdio {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&icssg0_mdio_pins_default &clkout0_pins_default>;
-+	assigned-clocks = <&k3_clks 157 123>;
-+	assigned-clock-parents = <&k3_clks 157 125>;
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
+index f9b5c97518d6..8bacb04b3773 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
+@@ -250,7 +250,7 @@ secure_proxy_sa3: mailbox@43600000 {
  
- 	icssg0_phy1: ethernet-phy@1 {
+ 	main_pmx0: pinctrl@f4000 {
+ 		compatible = "pinctrl-single";
+-		reg = <0x00 0xf4000 0x00 0x2ac>;
++		reg = <0x00 0xf4000 0x00 0x2b0>;
+ 		#pinctrl-cells = <1>;
+ 		pinctrl-single,register-width = <32>;
+ 		pinctrl-single,function-mask = <0xffffffff>;
 -- 
 2.39.5
 
