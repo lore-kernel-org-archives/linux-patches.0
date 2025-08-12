@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00A61A01BF;
-	Tue, 12 Aug 2025 18:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C72291C1F;
+	Tue, 12 Aug 2025 18:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024434; cv=none; b=WefkiRs2tMlRElQM3nfr9YTHX3ejd7tx+GYIyb7FVz6S6IxU8pSEfk+/BQw4TNvHYxyscLiFRATJsLizZPQF5lGg5TYbBnsrN83gJ9u76cHYpH4vcj7nm2M65CDn/+Fm7zIX+glu9NfOwjv1akfIlc25v0A8ullgJGjM5h0NuYo=
+	t=1755024438; cv=none; b=BzJ6M/3lmPlc+wd4njPD+Z8XdDFXxYKmQ9Cvdt6EQwKamTSuOVnPHVqOl5tYCvIBUlaZMcnaCt5n8ALNWeWvMBX5U4bkYli5OsDbzN8lBnJzZIt/NdpXVS+K4H/NrcFk51zirp7XCKdPCpE20HXNSW2uaDEOt44nKGcI292f+Hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024434; c=relaxed/simple;
-	bh=gsOG4Mqe+Xj4XsfD89zGief1a66VpFTKhJX5dQhjpz8=;
+	s=arc-20240116; t=1755024438; c=relaxed/simple;
+	bh=tEwGpfg+0keHRb2IY7IC/fL7ekGEsbiLdcMeLCEDUuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZJKLHJ5FD8+1rewUCqmxIU4cQfnu/jGNoPtpOeBa0la47PWGdKSF13lWz6glpB0G6CRkJILpKu0B7VEtV7uQiMovfg0OY9pemP22h14Q2ym7pwXvrsnzL19d/08Wm0OSIv9xFIMbjbfi7vEmX4cDRluxtHCRMmnHXK9tf6pevs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrDyt37V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCxmP7pEXbzD3ckV4Ceg0D67N/6EXJHOJRmk62BwzZN2/o/1Z0cKuqjO3ghKyQF7zo3gncma/oSCmj94Af+5C7N59D8e6ld+wxZ02EHpDjFkyUrvdV01DtVPSLa6IH+mMV8LtU3Xen5h3y4/9HLW9A4HXM32jDU4nWXzuaaQ87A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGf8LKJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrDyt37V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E91AC4CEF0;
-	Tue, 12 Aug 2025 18:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGf8LKJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FB8C4CEF0;
+	Tue, 12 Aug 2025 18:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024434;
-	bh=gsOG4Mqe+Xj4XsfD89zGief1a66VpFTKhJX5dQhjpz8=;
+	s=korg; t=1755024437;
+	bh=tEwGpfg+0keHRb2IY7IC/fL7ekGEsbiLdcMeLCEDUuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrDyt37VD3cWqNiFD8z+qwKabLFuhcjzRbJ2pPMTLSwFnxtTvb+S4F5nETsM3tHOe
-	 cwU4qIOS5+7mJAchZCeHNwFVIGzEE4CXqHEQ9ip5Pl/eXuDM7spfSnwOjK4SyXN9RI
-	 2QLL/7L9GbC86Wq+nLQitfUyPR+MkFLP21Us445M=
+	b=cGf8LKJwrnPfArgZfHJtOZIg5iKCRiRj91lRmh5N9hcxmFtAOoJFIeHdf2oHMCrJT
+	 PGDulJBL9HrEAXp7wM/sQ2FP9EoVgPHE+NHab1o30Y8Ih2f3sxRNtm6Gb/AydwPJpn
+	 1Cudloz0PDRpNBNAjPcA+TXStHqqnZlA6tfz/lBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 372/627] RDMA/hns: Drop GFP_NOWARN
-Date: Tue, 12 Aug 2025 19:31:07 +0200
-Message-ID: <20250812173433.458689965@linuxfoundation.org>
+Subject: [PATCH 6.16 373/627] RDMA/hns: Fix -Wframe-larger-than issue
+Date: Tue, 12 Aug 2025 19:31:08 +0200
+Message-ID: <20250812173433.494080418@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,86 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 5338abb299f0cd764edf78a7e71a0b746af35030 ]
+[ Upstream commit 79d56805c5068f2bc81518043e043c3dedd1c82a ]
 
-GFP_NOWARN silences all warnings on dma_alloc_coherent() failure,
-which might otherwise help with troubleshooting.
+Fix -Wframe-larger-than issue by allocating memory for qpc struct
+with kzalloc() instead of using stack memory.
 
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
+Fixes: 606bf89e98ef ("RDMA/hns: Refactor for hns_roce_v2_modify_qp function")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506240032.CSgIyFct-lkp@intel.com/
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250703113905.3597124-6-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20250703113905.3597124-7-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
-index ca0798224e56..3d479c63b117 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
-@@ -249,15 +249,12 @@ int hns_roce_calc_hem_mhop(struct hns_roce_dev *hr_dev,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 246642859159..b30dce00f240 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -5387,11 +5387,10 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
+ {
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(ibqp->device);
+ 	struct hns_roce_qp *hr_qp = to_hr_qp(ibqp);
+-	struct hns_roce_v2_qp_context ctx[2];
+-	struct hns_roce_v2_qp_context *context = ctx;
+-	struct hns_roce_v2_qp_context *qpc_mask = ctx + 1;
++	struct hns_roce_v2_qp_context *context;
++	struct hns_roce_v2_qp_context *qpc_mask;
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+-	int ret;
++	int ret = -ENOMEM;
+ 
+ 	if (attr_mask & ~IB_QP_ATTR_STANDARD_BITS)
+ 		return -EOPNOTSUPP;
+@@ -5402,7 +5401,11 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
+ 	 * we should set all bits of the relevant fields in context mask to
+ 	 * 0 at the same time, else set them to 0x1.
+ 	 */
+-	memset(context, 0, hr_dev->caps.qpc_sz);
++	context = kvzalloc(sizeof(*context), GFP_KERNEL);
++	qpc_mask = kvzalloc(sizeof(*qpc_mask), GFP_KERNEL);
++	if (!context || !qpc_mask)
++		goto out;
++
+ 	memset(qpc_mask, 0xff, hr_dev->caps.qpc_sz);
+ 
+ 	ret = hns_roce_v2_set_abs_fields(ibqp, attr, attr_mask, cur_state,
+@@ -5444,6 +5447,8 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
+ 		clear_qp(hr_qp);
+ 
+ out:
++	kvfree(qpc_mask);
++	kvfree(context);
+ 	return ret;
  }
  
- static struct hns_roce_hem *hns_roce_alloc_hem(struct hns_roce_dev *hr_dev,
--					       unsigned long hem_alloc_size,
--					       gfp_t gfp_mask)
-+					       unsigned long hem_alloc_size)
- {
- 	struct hns_roce_hem *hem;
- 	int order;
- 	void *buf;
- 
--	WARN_ON(gfp_mask & __GFP_HIGHMEM);
--
- 	order = get_order(hem_alloc_size);
- 	if (PAGE_SIZE << order != hem_alloc_size) {
- 		dev_err(hr_dev->dev, "invalid hem_alloc_size: %lu!\n",
-@@ -265,13 +262,12 @@ static struct hns_roce_hem *hns_roce_alloc_hem(struct hns_roce_dev *hr_dev,
- 		return NULL;
- 	}
- 
--	hem = kmalloc(sizeof(*hem),
--		      gfp_mask & ~(__GFP_HIGHMEM | __GFP_NOWARN));
-+	hem = kmalloc(sizeof(*hem), GFP_KERNEL);
- 	if (!hem)
- 		return NULL;
- 
- 	buf = dma_alloc_coherent(hr_dev->dev, hem_alloc_size,
--				 &hem->dma, gfp_mask);
-+				 &hem->dma, GFP_KERNEL);
- 	if (!buf)
- 		goto fail;
- 
-@@ -378,7 +374,6 @@ static int alloc_mhop_hem(struct hns_roce_dev *hr_dev,
- {
- 	u32 bt_size = mhop->bt_chunk_size;
- 	struct device *dev = hr_dev->dev;
--	gfp_t flag;
- 	u64 bt_ba;
- 	u32 size;
- 	int ret;
-@@ -417,8 +412,7 @@ static int alloc_mhop_hem(struct hns_roce_dev *hr_dev,
- 	 * alloc bt space chunk for MTT/CQE.
- 	 */
- 	size = table->type < HEM_TYPE_MTT ? mhop->buf_chunk_size : bt_size;
--	flag = GFP_KERNEL | __GFP_NOWARN;
--	table->hem[index->buf] = hns_roce_alloc_hem(hr_dev, size, flag);
-+	table->hem[index->buf] = hns_roce_alloc_hem(hr_dev, size);
- 	if (!table->hem[index->buf]) {
- 		ret = -ENOMEM;
- 		goto err_alloc_hem;
-@@ -546,9 +540,7 @@ int hns_roce_table_get(struct hns_roce_dev *hr_dev,
- 		goto out;
- 	}
- 
--	table->hem[i] = hns_roce_alloc_hem(hr_dev,
--				       table->table_chunk_size,
--				       GFP_KERNEL | __GFP_NOWARN);
-+	table->hem[i] = hns_roce_alloc_hem(hr_dev, table->table_chunk_size);
- 	if (!table->hem[i]) {
- 		ret = -ENOMEM;
- 		goto out;
 -- 
 2.39.5
 
