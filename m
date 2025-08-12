@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2C41F37A1;
-	Tue, 12 Aug 2025 19:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E691C305E2D;
+	Tue, 12 Aug 2025 19:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026310; cv=none; b=Zk1a3bPULGuvJNQ9sfipk1lxISGRRVjaxMeY3SdJoCOD7GN+3DqvXthx82cd5pGMI0p9wABclfxduOEEZlFnBSBSfuTzaDZW2Mr9JP7dij11RzP4sBkD+m4ayDoC0ndveWyKcUBpDlDYUhAnuhCmnoej950fOmt77ZsARjFl8gg=
+	t=1755026314; cv=none; b=uXwPP2RXQ+ZTDBOLMAzcT2vI2nAVT8uqMPZG+0YdK1jHMAcOanhFEYh31hZhDJNq2tefAv8pdSgKussr3puzKNm3bEWJFTaeWcY+fkBQtIbHIbe/PYp+S37+h8JddPxgcHss5kr3+qKo0MyTTy+d8juJMUCAGeWFSEAEQPheBPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026310; c=relaxed/simple;
-	bh=L/784mn5SKStP+4bGjh691qu1bUOIF4khO7kOsbivNE=;
+	s=arc-20240116; t=1755026314; c=relaxed/simple;
+	bh=q9Zllc0ncdf50O0AyKN9eXj65RsY25hsGyomuhqFBrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhWpDi85TxtwAxWq2H5rs8d5fl8r8u0crdcqT+FBmdkRq2uNyNwdmEmKPLjAqp5RrG7GPtjB9JuC2CYGbiHrn/6c9hkbGl2xMpdZawtOHeEh/W7O0RU1XQG25a0JwbKl6OodqqmUQwfGqEZ/clYJFeR+yHtG7eboNq+KPPJQKDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxqRa9ru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZMuEEnEnQTxBOLugmzr10EoVbIcMRImL26o2DJaHY9PO6AFjwg3Ed+WVMTgfAXYop622YvFHg2UN98pn/LV2OSGZQBpMxBk/dfRU+lR2eCvZXaRMDNLL0lPAQOqXZhiRUks5mdq44MmqVrOM0s4G476Eh1kq8EoY6jdTxs4o21I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMhRE+Gr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxqRa9ru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2949C4CEF0;
-	Tue, 12 Aug 2025 19:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMhRE+Gr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5333DC4CEF0;
+	Tue, 12 Aug 2025 19:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026310;
-	bh=L/784mn5SKStP+4bGjh691qu1bUOIF4khO7kOsbivNE=;
+	s=korg; t=1755026313;
+	bh=q9Zllc0ncdf50O0AyKN9eXj65RsY25hsGyomuhqFBrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NxqRa9ru53orw6X9OXMIDuhI3J7zWm6FIa0hV5GihlPfIDi+FlyZ7PBXh57kRjTjS
-	 TI0XLNuWZ7/wJMW09max9N+oSxg7b+iw1KrS2ZizdVbi+E8Q+CyDaS0sIXwmUTrfeX
-	 IYXVSnyFWnpDg0hLOYhzFuydvxiAOJS+3ZFKdwKw=
+	b=DMhRE+GrahYUI1KvrDMt7cAzBzewd+Tc6pepw6VZPXcaLK9jUmEFPcfpCPuKIEuun
+	 L0cTy0BGFTx67KMgrJM88tOfzQEDzQQQA1zS/SlrRDwSAeCun9Dy6Ws4h+MfgRZp5B
+	 DagZparyzqz9vr3ZdvqpD4dL+nLjZRHYNDFoVijs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 256/480] perf dso: Add missed dso__put to dso__load_kcore
-Date: Tue, 12 Aug 2025 19:47:44 +0200
-Message-ID: <20250812174408.004681293@linuxfoundation.org>
+Subject: [PATCH 6.15 293/480] crypto: keembay - Fix dma_unmap_sg() nents value
+Date: Tue, 12 Aug 2025 19:48:21 +0200
+Message-ID: <20250812174409.517834386@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,36 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 63a088e999de3f431f87d9a367933da894ddb613 ]
+[ Upstream commit 01951a7dc5ac1a37e5fb7d86ea7eb2dfbf96e8b6 ]
 
-The kcore loading creates a set of list nodes that have reference
-counted references to maps of the kcore. The list node freeing in the
-success path wasn't releasing the maps, add the missing puts. It is
-unclear why this leak was being missed by leak sanitizer.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Fixes: 83720209961f ("perf map: Move map list node into symbol")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250624190326.2038704-2-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 472b04444cd3 ("crypto: keembay - Add Keem Bay OCS HCU driver")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index 11540219481b..9c9e28bbb245 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -1414,6 +1414,7 @@ static int dso__load_kcore(struct dso *dso, struct map *map,
- 				goto out_err;
- 			}
- 		}
-+		map__zput(new_node->map);
- 		free(new_node);
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c b/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
+index 95dc8979918d..8f9e21ced0fe 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
+@@ -68,6 +68,7 @@ struct ocs_hcu_ctx {
+  * @sg_data_total:  Total data in the SG list at any time.
+  * @sg_data_offset: Offset into the data of the current individual SG node.
+  * @sg_dma_nents:   Number of sg entries mapped in dma_list.
++ * @nents:          Number of entries in the scatterlist.
+  */
+ struct ocs_hcu_rctx {
+ 	struct ocs_hcu_dev	*hcu_dev;
+@@ -91,6 +92,7 @@ struct ocs_hcu_rctx {
+ 	unsigned int		sg_data_total;
+ 	unsigned int		sg_data_offset;
+ 	unsigned int		sg_dma_nents;
++	unsigned int		nents;
+ };
+ 
+ /**
+@@ -199,7 +201,7 @@ static void kmb_ocs_hcu_dma_cleanup(struct ahash_request *req,
+ 
+ 	/* Unmap req->src (if mapped). */
+ 	if (rctx->sg_dma_nents) {
+-		dma_unmap_sg(dev, req->src, rctx->sg_dma_nents, DMA_TO_DEVICE);
++		dma_unmap_sg(dev, req->src, rctx->nents, DMA_TO_DEVICE);
+ 		rctx->sg_dma_nents = 0;
  	}
  
+@@ -260,6 +262,10 @@ static int kmb_ocs_dma_prepare(struct ahash_request *req)
+ 			rc = -ENOMEM;
+ 			goto cleanup;
+ 		}
++
++		/* Save the value of nents to pass to dma_unmap_sg. */
++		rctx->nents = nents;
++
+ 		/*
+ 		 * The value returned by dma_map_sg() can be < nents; so update
+ 		 * nents accordingly.
 -- 
 2.39.5
 
