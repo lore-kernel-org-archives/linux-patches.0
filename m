@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5CD2CA9;
-	Tue, 12 Aug 2025 18:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7160F2FAC02;
+	Tue, 12 Aug 2025 18:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025132; cv=none; b=F29ZnYOmyTl3oqdSiAzSF+pSSckdD8ta8GPZGWoNPMkAxLWhYOLFNE2Xt6EnR15b+vqs3mcwvjh4d0y54KlhtDaxjKyY0Owg8q4e+TyxLOe7pESZaL8xNZ3usI5uv2lBQtLU34RRfDmLI9/oNDdy7ClmijHUjYiH7pc2CF1nldQ=
+	t=1755025135; cv=none; b=hQxnIYAOQuQgFfQIKY/4Ccmy2b2Qwe1vNdDT0895+Do54LhLSTsfi/KJkFxedIBWplM7rxpwfNnpEvhpXbBc6sPnTev8qe/5khlW0g980YykEjH8Wfj2W0+zRYNEDQDCS8l7XETL8I8WLTihqPh2LwFkSFwPXlZoGPo41Sfm1Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025132; c=relaxed/simple;
-	bh=qL4W/rtBFS7AN4y8Bg1AgbKFOBmEsP77Fe+4vOvyn+A=;
+	s=arc-20240116; t=1755025135; c=relaxed/simple;
+	bh=gduv6qhUOEGYB2/UYHqg35uF9GJuarW/GeG6hCsZE8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxsomG/CZE86CWWRO0Bup2J3GYbONKzM4UoHaJEKJExOQVa79uDv2o4m89ixZtPure3ebwVoS5pPL1l4gmMbqYPuA5fXJ0BrKiVfXLT+H34UHiIfSDIam7nD4k4sJeS48QkfSsdD9KrttapqXc91o8nyyJkiol87JL5qcAQunbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSyDdUWx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rM9w8HqWQZIW+yOynwMpY5au62efLcNhQ2lki9JymuvuLZbFDDJPBTW+R8VWgJ2kNtr1fo6ertgXBocDnnIhazF2QehlzTo3zv7CaMx+vxWKVHlgZKlvt8Qmgo354usjhRuwZYitQbVUfBycntxecNfVSdbbRN1kHktt4RIsUWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9YZNetY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSyDdUWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68078C4CEF0;
-	Tue, 12 Aug 2025 18:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9YZNetY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5655C4CEF0;
+	Tue, 12 Aug 2025 18:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025131;
-	bh=qL4W/rtBFS7AN4y8Bg1AgbKFOBmEsP77Fe+4vOvyn+A=;
+	s=korg; t=1755025135;
+	bh=gduv6qhUOEGYB2/UYHqg35uF9GJuarW/GeG6hCsZE8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSyDdUWx7V4lJdQYMibuXFs2m8MpcKS5pTo5rcX0PquCYRM/U/rAsk/rPDHLefSBs
-	 pu/hwjsFob/02/8uM01hGOSBVTUy101K4VNyOTM9uN+WDYytMmx9hJZutrelES02N2
-	 lmB25k0wQ7BVeiEZEH3/mJan2ksqPo3ynt8FZymw=
+	b=Q9YZNetYL240W+ml85LLaLWxjGfdCE5fO+/iI0lqjIbaz2slYj9b7ub42Qf1rXubg
+	 w+b9MRrBHZgetXo/EfU+7GKWylYylq1qCRV0922NYevE3XHTBQWeB5eWhZ3He+X3hd
+	 gJsZ7ppFo3zO80qTiG5Rsn6FPIBf6dBORGguVXCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Subject: [PATCH 6.16 579/627] perf/core: Handle buffer mapping fail correctly in perf_mmap()
-Date: Tue, 12 Aug 2025 19:34:34 +0200
-Message-ID: <20250812173453.896888821@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 562/627] smb: server: let recv_done() avoid touching data_transfer after cleanup/move
+Date: Tue, 12 Aug 2025 19:34:17 +0200
+Message-ID: <20250812173453.270185479@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -50,57 +56,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit f74b9f4ba63ffdf597aaaa6cad7e284cb8e04820 upstream.
+[ Upstream commit a6c015b7ac2d8c5233337e5793f50d04fac17669 ]
 
-After successful allocation of a buffer or a successful attachment to an
-existing buffer perf_mmap() tries to map the buffer read only into the page
-table. If that fails, the already set up page table entries are zapped, but
-the other perf specific side effects of that failure are not handled.  The
-calling code just cleans up the VMA and does not invoke perf_mmap_close().
+Calling enqueue_reassembly() and wake_up_interruptible(&t->wait_reassembly_queue)
+or put_receive_buffer() means the recvmsg/data_transfer pointer might
+get re-used by another thread, which means these should be
+the last operations before calling return.
 
-This leaks reference counts, corrupts user->vm accounting and also results
-in an unbalanced invocation of event::event_mapped().
-
-Cure this by moving the event::event_mapped() invocation before the
-map_range() call so that on map_range() failure perf_mmap_close() can be
-invoked without causing an unbalanced event::event_unmapped() call.
-
-perf_mmap_close() undoes the reference counts and eventually frees buffers.
-
-Fixes: b709eb872e19 ("perf/core: map pages in advance")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/smb/server/transport_rdma.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -7148,12 +7148,20 @@ aux_unlock:
- 	vm_flags_set(vma, VM_DONTCOPY | VM_DONTEXPAND | VM_DONTDUMP);
- 	vma->vm_ops = &perf_mmap_vmops;
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index cd8a92fe372b..8d366db5f605 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -581,16 +581,11 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			else
+ 				t->full_packet_received = true;
  
--	ret = map_range(rb, vma);
+-			enqueue_reassembly(t, recvmsg, (int)data_length);
+-			wake_up_interruptible(&t->wait_reassembly_queue);
 -
- 	mapped = get_mapped(event, event_mapped);
- 	if (mapped)
- 		mapped(event, vma->vm_mm);
- 
-+	/*
-+	 * Try to map it into the page table. On fail, invoke
-+	 * perf_mmap_close() to undo the above, as the callsite expects
-+	 * full cleanup in this case and therefore does not invoke
-+	 * vmops::close().
-+	 */
-+	ret = map_range(rb, vma);
-+	if (ret)
-+		perf_mmap_close(vma);
+ 			spin_lock(&t->receive_credit_lock);
+ 			receive_credits = --(t->recv_credits);
+ 			avail_recvmsg_count = t->count_avail_recvmsg;
+ 			spin_unlock(&t->receive_credit_lock);
+ 		} else {
+-			put_recvmsg(t, recvmsg);
+-
+ 			spin_lock(&t->receive_credit_lock);
+ 			receive_credits = --(t->recv_credits);
+ 			avail_recvmsg_count = ++(t->count_avail_recvmsg);
+@@ -612,6 +607,13 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		if (is_receive_credit_post_required(receive_credits, avail_recvmsg_count))
+ 			mod_delayed_work(smb_direct_wq,
+ 					 &t->post_recv_credits_work, 0);
 +
- 	return ret;
- }
- 
++		if (data_length) {
++			enqueue_reassembly(t, recvmsg, (int)data_length);
++			wake_up_interruptible(&t->wait_reassembly_queue);
++		} else
++			put_recvmsg(t, recvmsg);
++
+ 		return;
+ 	}
+ 	}
+-- 
+2.39.5
+
 
 
