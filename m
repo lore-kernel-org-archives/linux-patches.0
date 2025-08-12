@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3013D2F7461;
-	Tue, 12 Aug 2025 17:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564C62F7461;
+	Tue, 12 Aug 2025 17:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020558; cv=none; b=KXW9JHTCNtIdnb5T2bnOrVKTLNRp7JgHcLNk/PC8ghApcm37rOvp5Q99EbNKagIFyDC0g9B6PGCjlxj6fiuxoqeiHP2/821QDyxC2aVjBFiXNLa8NNEx2fXHMwwjHM/I29si7DIXkbq4AiA+4XQ7pc36O8Xwoq+XcfIOrThDric=
+	t=1755020562; cv=none; b=bPnZsg3TUI3ZLZUa1L1rdIfnqr3mRUKbNP7dUqjAN8MUXIX5RM9ekcYjMJMZyga2UIyU/qi2ekprROi6POvRU+DiRbZ9eA2Dsfg218biUByXq80suXk+w77ovAIN+yJCucF6kQThh1fELx5vbRaRMeucX4q35cdhP4I+JQIGijo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020558; c=relaxed/simple;
-	bh=k6wU/RgA2ZSlsOQYSHVs5KlSacFFm/Io+0W/BHjXn/w=;
+	s=arc-20240116; t=1755020562; c=relaxed/simple;
+	bh=I8nvq1CpXKhpsInL4fFVAXW/9Z2wpe/0aaFniROuRoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QonPG6nYlmuMC+Ee3ThtmyUouqhKRVjrAgDvIra4q9spMtZxTTsGSf3VXB2Mu/a+7DjD+tyStZxb//hRPLHbxzy3ovuhSf4sETmJu9BFwoqJqFvhu/UmVPzlteoe1cI+6mE1HzCVzvxFDbjsIAb68E3cONB2B49hxXmQprIHN/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UB0JpRME; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BfKAyLkkxb0yWbMWqq5NG5LnpBU4Zce3AuTZJfz131/oSc4W7uW4D8eYBHBJAmy/pveWZ05eFbDqOEhMK677wvP/+TxqJBjYLNVxEJmihMyQv5NyNW6a0m/uPPTb7nM/jsabvecux9R9HxhcUrYkjuSYloVK1Qe+v1FeQuDkbbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NabjEhLb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UB0JpRME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A199CC4CEF0;
-	Tue, 12 Aug 2025 17:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NabjEhLb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7170C4CEF0;
+	Tue, 12 Aug 2025 17:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020558;
-	bh=k6wU/RgA2ZSlsOQYSHVs5KlSacFFm/Io+0W/BHjXn/w=;
+	s=korg; t=1755020562;
+	bh=I8nvq1CpXKhpsInL4fFVAXW/9Z2wpe/0aaFniROuRoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UB0JpRMEF7xVWgGaSIcCp1x4FNildkBIjpWQxJzB6Zeg8tb8K7PC1Jo2Wavb+YXpn
-	 XZRrUz39jg/9/nPlbALKyUU5EXrg7zWxgnReGap+rZpbJS2ku7rOeGsL1Gg3erAtH8
-	 60lzdGNEyio37WNvTuHFRBaw82pZ8L6BKRHBW9bc=
+	b=NabjEhLb390o5RNvfCQLMi9FYr1EYT+EYXcOca9mvw/ZHw6Mdfa6WLZR1dhfwgOr4
+	 JK9+A5I0R8O72MWMbaEVnDwxQAEaUz7/ihRU+a+ge1LCCTtJ1r+njqoxkXa2WzuE/5
+	 794HHLifn1MWGWy2bN10SIalabbc1k6uirlLqrOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/253] um: rtc: Avoid shadowing err in uml_rtc_start()
-Date: Tue, 12 Aug 2025 19:28:23 +0200
-Message-ID: <20250812172953.609637022@linuxfoundation.org>
+Subject: [PATCH 6.1 116/253] net/sched: Restrict conditions for adding duplicating netems to qdisc tree
+Date: Tue, 12 Aug 2025 19:28:24 +0200
+Message-ID: <20250812172953.650447013@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,36 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: William Liu <will@willsroot.io>
 
-[ Upstream commit 4c916e3b224a02019b3cc3983a15f32bfd9a22df ]
+[ Upstream commit ec8e0e3d7adef940cdf9475e2352c0680189d14e ]
 
-Remove the declaration of 'err' inside the 'if (timetravel)' block,
-as it would otherwise be unavailable outside that block, potentially
-leading to uml_rtc_start() returning an uninitialized value.
+netem_enqueue's duplication prevention logic breaks when a netem
+resides in a qdisc tree with other netems - this can lead to a
+soft lockup and OOM loop in netem_dequeue, as seen in [1].
+Ensure that a duplicating netem cannot exist in a tree with other
+netems.
 
-Fixes: dde8b58d5127 ("um: add a pseudo RTC")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20250708090403.1067440-5-tiwei.bie@linux.dev
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Previous approaches suggested in discussions in chronological order:
+
+1) Track duplication status or ttl in the sk_buff struct. Considered
+too specific a use case to extend such a struct, though this would
+be a resilient fix and address other previous and potential future
+DOS bugs like the one described in loopy fun [2].
+
+2) Restrict netem_enqueue recursion depth like in act_mirred with a
+per cpu variable. However, netem_dequeue can call enqueue on its
+child, and the depth restriction could be bypassed if the child is a
+netem.
+
+3) Use the same approach as in 2, but add metadata in netem_skb_cb
+to handle the netem_dequeue case and track a packet's involvement
+in duplication. This is an overly complex approach, and Jamal
+notes that the skb cb can be overwritten to circumvent this
+safeguard.
+
+4) Prevent the addition of a netem to a qdisc tree if its ancestral
+path contains a netem. However, filters and actions can cause a
+packet to change paths when re-enqueued to the root from netem
+duplication, leading us to the current solution: prevent a
+duplicating netem from inhabiting the same tree as other netems.
+
+[1] https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/
+[2] https://lwn.net/Articles/719297/
+
+Fixes: 0afb51e72855 ("[PKT_SCHED]: netem: reinsert for duplication")
+Reported-by: William Liu <will@willsroot.io>
+Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
+Signed-off-by: William Liu <will@willsroot.io>
+Signed-off-by: Savino Dicanosa <savy@syst3mfailure.io>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20250708164141.875402-1-will@willsroot.io
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/rtc_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_netem.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/arch/um/drivers/rtc_user.c b/arch/um/drivers/rtc_user.c
-index 7c3cec4c68cf..006a5a164ea9 100644
---- a/arch/um/drivers/rtc_user.c
-+++ b/arch/um/drivers/rtc_user.c
-@@ -28,7 +28,7 @@ int uml_rtc_start(bool timetravel)
- 	int err;
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index cb38e58ee771..2613353defde 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -962,6 +962,41 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
+ 	return 0;
+ }
  
- 	if (timetravel) {
--		int err = os_pipe(uml_rtc_irq_fds, 1, 1);
-+		err = os_pipe(uml_rtc_irq_fds, 1, 1);
- 		if (err)
- 			goto fail;
- 	} else {
++static const struct Qdisc_class_ops netem_class_ops;
++
++static int check_netem_in_tree(struct Qdisc *sch, bool duplicates,
++			       struct netlink_ext_ack *extack)
++{
++	struct Qdisc *root, *q;
++	unsigned int i;
++
++	root = qdisc_root_sleeping(sch);
++
++	if (sch != root && root->ops->cl_ops == &netem_class_ops) {
++		if (duplicates ||
++		    ((struct netem_sched_data *)qdisc_priv(root))->duplicate)
++			goto err;
++	}
++
++	if (!qdisc_dev(root))
++		return 0;
++
++	hash_for_each(qdisc_dev(root)->qdisc_hash, i, q, hash) {
++		if (sch != q && q->ops->cl_ops == &netem_class_ops) {
++			if (duplicates ||
++			    ((struct netem_sched_data *)qdisc_priv(q))->duplicate)
++				goto err;
++		}
++	}
++
++	return 0;
++
++err:
++	NL_SET_ERR_MSG(extack,
++		       "netem: cannot mix duplicating netems with other netems in tree");
++	return -EINVAL;
++}
++
+ /* Parse netlink message to set options */
+ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 			struct netlink_ext_ack *extack)
+@@ -1020,6 +1055,11 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	q->gap = qopt->gap;
+ 	q->counter = 0;
+ 	q->loss = qopt->loss;
++
++	ret = check_netem_in_tree(sch, qopt->duplicate, extack);
++	if (ret)
++		goto unlock;
++
+ 	q->duplicate = qopt->duplicate;
+ 
+ 	/* for compatibility with earlier versions.
 -- 
 2.39.5
 
