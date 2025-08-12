@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E2C2F5E;
-	Tue, 12 Aug 2025 18:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6C92F5E;
+	Tue, 12 Aug 2025 18:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023930; cv=none; b=A865Q8lRZS2p86+koZtObcYXFrao1cUokXvHdLjmSeN31Jcq+KARL+hmVDG+dzEx97khYskHJLWXX9PResHsLC0HYdvd5rqF4Y0ZaCFlaSv1bM8kQatOC81nNSnG9QxLZ8QHHz3InjZJx64H+rwWQD7motfCqETt0FKxyjPlxoU=
+	t=1755023933; cv=none; b=VAi8Zee23xdo4p/Y3jzSHPkErHq0qvQSj8y1HEgYAbqXJzzjVMbkRcjD/7BIMYixVDH/sSd5Hu7m5YN8zB3OyZtq0B6lCq0Qq7XX+hVWBId1PBxVKGdMBVrh/DYEk4Dcfc9cZjghEo0vGqnabugecytg9M4lYBV8mBfXY37SKfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023930; c=relaxed/simple;
-	bh=bERJcUwDk8Mwue2APiS7DcJxXenJk+40Ficp9hnQqFc=;
+	s=arc-20240116; t=1755023933; c=relaxed/simple;
+	bh=YE3yw4EIoyTcdC+E0xmwRky0vW6SU0BUyC89B5DVFq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iocuHKEy7XgFOMqdavrh4R6mFFBsLKOHrkl6Qs/qWO7YCwc+J1e4urKbLjFbg+Y8L8DUxwVguwUewL0oBpI2u2lrMS+YZpkpza+dK8vXBkP/d4goEWhJ/Hn26HN1q3pMHvDpTE8loDl8Zqmi1ceCIC37VHqjqBE2pyePQnRCS2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BU5tKk+w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5P25TblPBe8WXmyQfVQZ7HQXIwBrEjaNSt7L6aovdVheAYfexA02BtrKS/mWqYbXlaCA8NL6zPggs+PiP/33EUBzBOxkHjnZjRs2POlsjW2rWBLJQtZNyhPaDddWEPSSmm5E+MUWIudG7x+Ha8IpYvq3AHTxlCBKuQ9mEzkioc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hauMIR+2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BU5tKk+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D23C4CEF0;
-	Tue, 12 Aug 2025 18:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hauMIR+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6413C4CEF0;
+	Tue, 12 Aug 2025 18:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023929;
-	bh=bERJcUwDk8Mwue2APiS7DcJxXenJk+40Ficp9hnQqFc=;
+	s=korg; t=1755023933;
+	bh=YE3yw4EIoyTcdC+E0xmwRky0vW6SU0BUyC89B5DVFq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BU5tKk+wD00xmVk1LEMCKjreZRRDUVMpU94FnE2pRyxfMBPwjZ9QiZC8Ij+TVVyw9
-	 VtBvnnN5ywSVnBHkv1PsNoDS9/amyAybt3p0wCQ44SbOyOjY6uXa6cP4Viuk2EDPaP
-	 g0G8HmW1YMU58rj33NAvEGikvhkGwL21AMAYYXv8=
+	b=hauMIR+25zccLzbTGFMBz5KFqJpx1J+ayK6+AwVmXdP6tlpVUJT0sGnAh06tnjrXb
+	 VG7JFz4i2Qg0mIEM0mnK8RILT7MC/tvsWU8zNSOvnhCWCNCT9yvd3KfhcYE3uxhYom
+	 Uvpuwy7FX6vQp1+GoMG4EfVzB7NnBOIEAS0RyDXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 223/627] wifi: rtw88: Fix macid assigned to TDLS station
-Date: Tue, 12 Aug 2025 19:28:38 +0200
-Message-ID: <20250812173427.760107043@linuxfoundation.org>
+Subject: [PATCH 6.16 224/627] mwl8k: Add missing check after DMA map
+Date: Tue, 12 Aug 2025 19:28:39 +0200
+Message-ID: <20250812173427.808516077@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,49 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 526b000991b557c40ea53e64ba24bb9e0fff0071 ]
+[ Upstream commit 50459501b9a212dbe7a673727589ee105a8a9954 ]
 
-When working in station mode, TDLS peers are assigned macid 0, even
-though 0 was already assigned to the AP. This causes the connection
-with the AP to stop working after the TDLS connection is torn down.
+The DMA map functions can fail and should be tested for errors.
+If the mapping fails, unmap and return an error.
 
-Assign the next available macid to TDLS peers, same as client stations
-in AP mode.
-
-Fixes: 902cb7b11f9a ("wifi: rtw88: assign mac_id for vif/sta and update to TX desc")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/58648c09-8553-4bcc-a977-9dc9afd63780@gmail.com
+Fixes: 788838ebe8a4 ("mwl8k: use pci_unmap_addr{,set}() to keep track of unmap addresses on rx")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20250709111339.25360-2-fourier.thomas@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/mwl8k.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
-index c4de5d114eda..8be6e70d92d1 100644
---- a/drivers/net/wireless/realtek/rtw88/main.c
-+++ b/drivers/net/wireless/realtek/rtw88/main.c
-@@ -349,7 +349,7 @@ int rtw_sta_add(struct rtw_dev *rtwdev, struct ieee80211_sta *sta,
- 	struct rtw_vif *rtwvif = (struct rtw_vif *)vif->drv_priv;
- 	int i;
+diff --git a/drivers/net/wireless/marvell/mwl8k.c b/drivers/net/wireless/marvell/mwl8k.c
+index bab9ef37a1ab..8bcb1d0dd618 100644
+--- a/drivers/net/wireless/marvell/mwl8k.c
++++ b/drivers/net/wireless/marvell/mwl8k.c
+@@ -1227,6 +1227,10 @@ static int rxq_refill(struct ieee80211_hw *hw, int index, int limit)
  
--	if (vif->type == NL80211_IFTYPE_STATION) {
-+	if (vif->type == NL80211_IFTYPE_STATION && !sta->tdls) {
- 		si->mac_id = rtwvif->mac_id;
- 	} else {
- 		si->mac_id = rtw_acquire_macid(rtwdev);
-@@ -386,7 +386,7 @@ void rtw_sta_remove(struct rtw_dev *rtwdev, struct ieee80211_sta *sta,
+ 		addr = dma_map_single(&priv->pdev->dev, skb->data,
+ 				      MWL8K_RX_MAXSZ, DMA_FROM_DEVICE);
++		if (dma_mapping_error(&priv->pdev->dev, addr)) {
++			kfree_skb(skb);
++			break;
++		}
  
- 	cancel_work_sync(&si->rc_work);
- 
--	if (vif->type != NL80211_IFTYPE_STATION)
-+	if (vif->type != NL80211_IFTYPE_STATION || sta->tdls)
- 		rtw_release_macid(rtwdev, si->mac_id);
- 	if (fw_exist)
- 		rtw_fw_media_status_report(rtwdev, si->mac_id, false);
+ 		rxq->rxd_count++;
+ 		rx = rxq->tail++;
 -- 
 2.39.5
 
