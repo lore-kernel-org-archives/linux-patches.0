@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA7A2D5C76;
-	Tue, 12 Aug 2025 17:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BF92F83CB;
+	Tue, 12 Aug 2025 17:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021322; cv=none; b=gOq28oP9IHh/VlAgIWjL8xyCSg7Rilx08F78DmNb+ID60R+rUV3jIJot1bVlAZ///IjZApvmvKuVoUVyTUBs+kt2HrdMt+NBKLfEO00LPlMWSmv2Iqt2yFcqxPdqR2sLODlrGLdWM35yIcGMEPQMeP76WlloB2WmB52HQ/feROo=
+	t=1755021325; cv=none; b=o3OY8XjBKUNRvBsFLymlzQjmJWJaH2gkmFfs4SaVKXbO0DQih/HxXa1ISLVrrL+GAqVFAF4yg8onO4gBCJz2shTjY8osasZGixeP/7sn86U3FFo5t9QhCga6IH5pCMDdaV6MAY1RXifCDaMu1eVBqwZTbwLCIg860zN/E0v5mTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021322; c=relaxed/simple;
-	bh=a4w22/OK6UiITn7sqrrZcw1tEkWh0EnBJLWpaM/e00Q=;
+	s=arc-20240116; t=1755021325; c=relaxed/simple;
+	bh=XnFMDGfGjS8olGNo9gv3/ki5FXxesjS3G1Vk0TkDPVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PUDoHy8hRw1isLtT2UWxiD/FQPw9mKwYKWgpAbTP0CYqSDUTvXPoPEa8g0JZ6DG0swqXz9wagOKfe33OQhGC9G3jdi92M6uE3bFYW941oHzh/tXMWQVKhjVU+BgdA6NjU2MxnZh8EWF2hPMd62hD0vVY01hkx42EGZlfT6/UYxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYZq4heH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=umSLgK2YuAAex8/lQv18BS14Vz6PXroBO7xzyEWapA7NrzX8qxEWSgH0iJmPLFNXxG/EtnNZtu7vKAaBNG6ylq9pySviM3IAiMaEIFcDdR/W2RbgEH+V+lyPzctUsneQ9Dwp9uozHEzhyOYuN8PzzpANKg+hC5ruXTbMeBhhxSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUx5drGm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYZq4heH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A2AC4CEF1;
-	Tue, 12 Aug 2025 17:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUx5drGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D127C4CEF1;
+	Tue, 12 Aug 2025 17:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021322;
-	bh=a4w22/OK6UiITn7sqrrZcw1tEkWh0EnBJLWpaM/e00Q=;
+	s=korg; t=1755021325;
+	bh=XnFMDGfGjS8olGNo9gv3/ki5FXxesjS3G1Vk0TkDPVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYZq4heHbanvBu8wV3nasutMuH2gvMw/XdmmSMpCrP+4hA9iGzDhQoP2IZFoGsYIz
-	 Y9D6WX8KqtU6+HfdaB4ALuBcmK3D9k7EtB5GWuGJ7fOJ9uWWNJI4Cg7W6HU/vDDKPA
-	 LepDjtaKPKgCTi0P3OH55b2hQYA/55CBdM/ICf24=
+	b=LUx5drGmVNVm+M3v8Mmg3CB3R+biL4OH+RQOWK037GxZdJLiCQAAnmcgs2Nnk9bJi
+	 up3jI4KkwoEXbrz2NA6qHCJbYsOAPHv0vLo4Rne8qhN/RZv/IqEUZxWEsvelifhrrK
+	 hd4TB4qUJmKS6183NeCQJT+jaMYMFw7sGH5XOHsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Grosjean <stephane.grosjean@hms-networks.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/262] can: peak_usb: fix USB FD devices potential malfunction
-Date: Tue, 12 Aug 2025 19:28:03 +0200
-Message-ID: <20250812172957.113914453@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 248/253] ALSA: intel_hdmi: Fix off-by-one error in __hdmi_lpe_audio_probe()
+Date: Tue, 12 Aug 2025 19:30:36 +0200
+Message-ID: <20250812172959.415879410@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,78 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephane Grosjean <stephane.grosjean@hms-networks.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 788199b73b6efe4ee2ade4d7457b50bb45493488 ]
+commit 8cbe564974248ee980562be02f2b1912769562c7 upstream.
 
-The latest firmware versions of USB CAN FD interfaces export the EP numbers
-to be used to dialog with the device via the "type" field of a response to
-a vendor request structure, particularly when its value is greater than or
-equal to 2.
+In __hdmi_lpe_audio_probe(), strscpy() is incorrectly called with the
+length of the source string (excluding the NUL terminator) rather than
+the size of the destination buffer. This results in one character less
+being copied from 'card->shortname' to 'pcm->name'.
 
-Correct the driver's test of this field.
+Use the destination buffer size instead to ensure the card name is
+copied correctly.
 
-Fixes: 4f232482467a ("can: peak_usb: include support for a new MCU")
-Signed-off-by: Stephane Grosjean <stephane.grosjean@hms-networks.com>
-Link: https://patch.msgid.link/20250724081550.11694-1-stephane.grosjean@free.fr
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-[mkl: rephrase commit message]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 75b1a8f9d62e ("ALSA: Convert strlcpy to strscpy when return value is unused")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20250805234156.60294-1-thorsten.blum@linux.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_fd.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ sound/x86/intel_hdmi_audio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-index 4d85b29a17b7..ebefc274b50a 100644
---- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-@@ -49,7 +49,7 @@ struct __packed pcan_ufd_fw_info {
- 	__le32	ser_no;		/* S/N */
- 	__le32	flags;		/* special functions */
+--- a/sound/x86/intel_hdmi_audio.c
++++ b/sound/x86/intel_hdmi_audio.c
+@@ -1766,7 +1766,7 @@ static int __hdmi_lpe_audio_probe(struct
+ 		/* setup private data which can be retrieved when required */
+ 		pcm->private_data = ctx;
+ 		pcm->info_flags = 0;
+-		strscpy(pcm->name, card->shortname, strlen(card->shortname));
++		strscpy(pcm->name, card->shortname, sizeof(pcm->name));
+ 		/* setup the ops for playback */
+ 		snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &had_pcm_ops);
  
--	/* extended data when type == PCAN_USBFD_TYPE_EXT */
-+	/* extended data when type >= PCAN_USBFD_TYPE_EXT */
- 	u8	cmd_out_ep;	/* ep for cmd */
- 	u8	cmd_in_ep;	/* ep for replies */
- 	u8	data_out_ep[2];	/* ep for CANx TX */
-@@ -982,10 +982,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
- 			dev->can.ctrlmode |= CAN_CTRLMODE_FD_NON_ISO;
- 		}
- 
--		/* if vendor rsp is of type 2, then it contains EP numbers to
--		 * use for cmds pipes. If not, then default EP should be used.
-+		/* if vendor rsp type is greater than or equal to 2, then it
-+		 * contains EP numbers to use for cmds pipes. If not, then
-+		 * default EP should be used.
- 		 */
--		if (fw_info->type != cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
-+		if (le16_to_cpu(fw_info->type) < PCAN_USBFD_TYPE_EXT) {
- 			fw_info->cmd_out_ep = PCAN_USBPRO_EP_CMDOUT;
- 			fw_info->cmd_in_ep = PCAN_USBPRO_EP_CMDIN;
- 		}
-@@ -1018,11 +1019,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
- 	dev->can_channel_id =
- 		le32_to_cpu(pdev->usb_if->fw_info.dev_id[dev->ctrl_idx]);
- 
--	/* if vendor rsp is of type 2, then it contains EP numbers to
--	 * use for data pipes. If not, then statically defined EP are used
--	 * (see peak_usb_create_dev()).
-+	/* if vendor rsp type is greater than or equal to 2, then it contains EP
-+	 * numbers to use for data pipes. If not, then statically defined EP are
-+	 * used (see peak_usb_create_dev()).
- 	 */
--	if (fw_info->type == cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
-+	if (le16_to_cpu(fw_info->type) >= PCAN_USBFD_TYPE_EXT) {
- 		dev->ep_msg_in = fw_info->data_in_ep;
- 		dev->ep_msg_out = fw_info->data_out_ep[dev->ctrl_idx];
- 	}
--- 
-2.39.5
-
 
 
