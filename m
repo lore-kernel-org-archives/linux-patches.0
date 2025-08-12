@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E230D26A0EB;
-	Tue, 12 Aug 2025 18:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607EB26A0EB;
+	Tue, 12 Aug 2025 18:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023742; cv=none; b=PD4uvGtN/rz794w7hmqq0gLF+9muPLSSzoL0PdMa6c7dSptmW4KwWFv9TiI75plcXUwS/5GaeT2l5dmwrmuW137Xc0oY3T9XZ+R0zsltE/qKXeY3d64N4Euno8R2AVygmH/qSK75EjwE3Tax1f8ZB3fR/Z7bwLNivrIgfd474m0=
+	t=1755023745; cv=none; b=GjfGfZ9tBhHbCH6z/fHmZNdflfPkrpMzMEthIvLgJ4J8ZcZa+Tyal/ldThRy7v4GLBfduE82w0PyEYz9AbNjyvQkik/i3htAzj51leCAIw1y0XFJgzeHnSI4cv6IUXr7UzrN+Y/1OZ3aTKkZS1BGcr4wTcd0xT4Nxo0NtKEz2Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023742; c=relaxed/simple;
-	bh=e4vYY+OzEHOVfT5s8XTzX6a6tMV7lenTx/N7l2phCwM=;
+	s=arc-20240116; t=1755023745; c=relaxed/simple;
+	bh=dwJcXpVPdgKzCJJehrNm+mM22XynnYAWYN/P73G1QqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XXMoz6O9PWJM4jE6SEJOhkwYpUB3wkGa4yyp2nNsD11Y8B8ICTzZe1f6uSfjR57K9HP2cy73dKS+LyLf5HjJNLBo3r/OZczLhvb2JEkDPgXIM/QvW0+QMlscqOTjRDkigUVgapDHTde2ZxHFviYsUb0BbFP2z8jagH72AYXCSC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRw0wf00; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pX5taKEpMJOdWjCRnZa1EcnY9k18GzZb2sQKbIfg0iNaU9DdUNwhntn3ZymrEvqUN0Jk6ujgJQsCQg2NpgV0FUq5ZhUEX77D1pf0jnb0bUITpzkOpTiNUpNFag2jaGooaREp9d7o5sGjbCY5S7J0LVj25AnMy5NMyx4+GuaI91Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/E9airV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRw0wf00"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E61CC4CEF0;
-	Tue, 12 Aug 2025 18:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/E9airV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C353FC4CEF0;
+	Tue, 12 Aug 2025 18:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023741;
-	bh=e4vYY+OzEHOVfT5s8XTzX6a6tMV7lenTx/N7l2phCwM=;
+	s=korg; t=1755023745;
+	bh=dwJcXpVPdgKzCJJehrNm+mM22XynnYAWYN/P73G1QqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRw0wf0099zQXZBeZNNrYrGB6b1d+6cy+htiRNqRL6rzXclDAQBbM9G+FX/tojNK1
-	 EeLG/yWI86XEXNUZifN8qV4Hf4r1IB1rbYKnH+c1dZY9oWHfpXdtMEFgbmjO2n6a2d
-	 1ZWpJjEMP5oEaC6V0hJfdcB68HrK4eSJa9hT46VU=
+	b=d/E9airVXs5Pir/3CQe2f2dM7Wr0kmfOgsvtiCKAzl4Ds1VRCfSPP5qTYXLF8eTaq
+	 5zBrNaUdRdYosKZ1gEimkvyhVp5CGQJwqtfrLJzaAyMOcn4iJp56Gn21fyV3Nm367B
+	 Kp9ST2LkTLBWRNyITJ+rJ/E6ElAF49x8cdC2YH7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
 	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 135/627] drm/panfrost: Fix panfrost device variable name in devfreq
-Date: Tue, 12 Aug 2025 19:27:10 +0200
-Message-ID: <20250812173424.442977787@linuxfoundation.org>
+Subject: [PATCH 6.16 136/627] drm/panthor: Add missing explicit padding in drm_panthor_gpu_info
+Date: Tue, 12 Aug 2025 19:27:11 +0200
+Message-ID: <20250812173424.478785217@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,49 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 6048f5587614bb4919c54966913452c1a0a43138 ]
+[ Upstream commit 95cbab48782bf62e4093837dc15ac6133902c12f ]
 
-Commit 64111a0e22a9 ("drm/panfrost: Fix incorrect updating of current
-device frequency") was a Panfrost port of a similar fix in Panthor.
+drm_panthor_gpu_info::shader_present is currently automatically offset
+by 4 byte to meet Arm's 32-bit/64-bit field alignment rules, but those
+constraints don't stand on 32-bit x86 and cause a mismatch when running
+an x86 binary in a user emulated environment like FEX. It's also
+generally agreed that uAPIs should explicitly pad their struct fields,
+which we originally intended to do, but a mistake slipped through during
+the submission process, leading drm_panthor_gpu_info::shader_present to
+be misaligned.
 
-Fix the Panfrost device pointer variable name so that it follows
-Panfrost naming conventions.
+This uAPI change doesn't break any of the existing users of panthor
+which are either arm32 or arm64 where the 64-bit alignment of
+u64 fields is already enforced a the compiler level.
 
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Fixes: 64111a0e22a9 ("drm/panfrost: Fix incorrect updating of current device frequency")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Changes in v2:
+- Rename the garbage field into pad0 and adjust the comment accordingly
+- Add Liviu's A-b
+
+Changes in v3:
+- Add R-bs
+
+Fixes: 0f25e493a246 ("drm/panthor: Add uAPI")
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://lore.kernel.org/r/20250520174634.353267-6-adrian.larumbe@collabora.com
+Link: https://lore.kernel.org/r/20250606080932.4140010-2-boris.brezillon@collabora.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/uapi/drm/panthor_drm.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-index 3385fd3ef41a..5d0dce10336b 100644
---- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-@@ -29,7 +29,7 @@ static void panfrost_devfreq_update_utilization(struct panfrost_devfreq *pfdevfr
- static int panfrost_devfreq_target(struct device *dev, unsigned long *freq,
- 				   u32 flags)
- {
--	struct panfrost_device *ptdev = dev_get_drvdata(dev);
-+	struct panfrost_device *pfdev = dev_get_drvdata(dev);
- 	struct dev_pm_opp *opp;
- 	int err;
+diff --git a/include/uapi/drm/panthor_drm.h b/include/uapi/drm/panthor_drm.h
+index ad9a70afea6c..3a76c4f2882b 100644
+--- a/include/uapi/drm/panthor_drm.h
++++ b/include/uapi/drm/panthor_drm.h
+@@ -296,6 +296,9 @@ struct drm_panthor_gpu_info {
+ 	/** @as_present: Bitmask encoding the number of address-space exposed by the MMU. */
+ 	__u32 as_present;
  
-@@ -40,7 +40,7 @@ static int panfrost_devfreq_target(struct device *dev, unsigned long *freq,
++	/** @pad0: MBZ. */
++	__u32 pad0;
++
+ 	/** @shader_present: Bitmask encoding the shader cores exposed by the GPU. */
+ 	__u64 shader_present;
  
- 	err = dev_pm_opp_set_rate(dev, *freq);
- 	if (!err)
--		ptdev->pfdevfreq.current_frequency = *freq;
-+		pfdev->pfdevfreq.current_frequency = *freq;
- 
- 	return err;
- }
 -- 
 2.39.5
 
