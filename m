@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1ADF1DF27F;
-	Tue, 12 Aug 2025 18:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0ED1DF27F;
+	Tue, 12 Aug 2025 18:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023375; cv=none; b=aOcw5uW8pX835O1jiP2w4854Xgl4xUOTNEyquEz6rOlboWneNe+8VGK1qyBuSE9AjDi7JIGaPRbPJecXj7V/v1BudIQn+veKrM+l4Z3cD3fa33DF0TsqZCAkfXvu/2W1hN/lDI7aQYEOpKqhmnFnWeZNjyn5rTmmJUYioy60xFI=
+	t=1755023379; cv=none; b=WPE4M49T3Ct2x7mvSeb0ZMVe4f2GFx58L2bQkFQfA7gixE3ihYauI67hjTaLZyhjLycffLilscSJnaIOBBnKSjGh87l51gn7dftJeVZpiyTlJofVn4IwRPybFnEx/XgicyqPPDys+lK2zhIrsepD9Fd8LRxG2/tiu0mqx7wnpv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023375; c=relaxed/simple;
-	bh=6+fpmnFOYIjY9Hf3lYkrKnn5ChUXzPIit59gUB5MPhU=;
+	s=arc-20240116; t=1755023379; c=relaxed/simple;
+	bh=P3Pkvx3paTwVsh7vRToT2n30OOYM9KEg7qIZUuRq6u8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oheROVulV2H4xptSc2emHWtR6PDy6XjaLmU9sv/f0FvustF7MPrSysW/a62Lr7fQOLN4mwEF9K2BFAYpNgKthBOgEPLgLdY/1uLqPoJGZZNh8bzZMap0vmYrgEk4Rj9F0bkC27MPXWB2A/MvJFxyM5+B1vnvmNUnIyg7FS7FRFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8rUgHNb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n4lVvcpz/iNq3mbvOsKgMYphtCranUJqJwVv5F7Gj+vDeVl6BuH4qAwK/3rFrBMLY4jVaYNn6+9c7YF48JyFlLvI2lLtrQ7opAicJ52DwE5DfE1JO6xz8+zP2RiFBGMw9clCsy+7GbDo3WG3yxX7xBaIXvpDr1iBQMaan09/ELU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hdybPXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8rUgHNb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392C8C4CEF0;
-	Tue, 12 Aug 2025 18:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hdybPXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CAEC4CEF7;
+	Tue, 12 Aug 2025 18:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023375;
-	bh=6+fpmnFOYIjY9Hf3lYkrKnn5ChUXzPIit59gUB5MPhU=;
+	s=korg; t=1755023379;
+	bh=P3Pkvx3paTwVsh7vRToT2n30OOYM9KEg7qIZUuRq6u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8rUgHNb2+LI4Z+EoX6OZ+2JSWZioyPLAb5v+bPb5NO7o58Wrmxj8Sq4dmwBNFY1b
-	 qkQLxusIgnmZb2UwdRGh/Eyu3nmNCGlQ3T35EmXrlUazl13NIqTP8Tbe+nAKGRewKZ
-	 ivGTIAng88Dk4WdQPORXck61Nni/BH9KTqGXlB+s=
+	b=0hdybPXh8jTOofqOWkN7mHZDYQFceVIkQnPfNOZ2CSOTQf+QPF2QPGGYIruQKZXO3
+	 AcvjQ5jDwLqZblHxUr1genBsouidyUDU8Jkh9Zxv3gcJsKLnSlHvOUfqbbOKYrbb2X
+	 KObYSKHAvLidVLBE/vZIg5O+l9B7CfjjH6k2rSPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Bo Liu (OpenAnolis)" <liubo03@inspur.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 028/627] erofs: fix build error with CONFIG_EROFS_FS_ZIP_ACCEL=y
-Date: Tue, 12 Aug 2025 19:25:23 +0200
-Message-ID: <20250812173420.398660113@linuxfoundation.org>
+Subject: [PATCH 6.16 029/627] block: restore two stage elevator switch while running nr_hw_queue update
+Date: Tue, 12 Aug 2025 19:25:24 +0200
+Message-ID: <20250812173420.436241788@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,56 +46,307 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bo Liu (OpenAnolis) <liubo03@inspur.com>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 5e0bf36fd156b8d9b09f8481ee6daa6cdba1b064 ]
+[ Upstream commit 5989bfe6ac6bf230c2c84e118c786be0ed4be3f4 ]
 
-fix build err:
- ld.lld: error: undefined symbol: crypto_req_done
-   referenced by decompressor_crypto.c
-       fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
-   referenced by decompressor_crypto.c
-       fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
+The kmemleak reports memory leaks related to elevator resources that
+were originally allocated in the ->init_hctx() method. The following
+leak traces are observed after running blktests block/040:
 
- ld.lld: error: undefined symbol: crypto_acomp_decompress
-   referenced by decompressor_crypto.c
-       fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
+unreferenced object 0xffff8881b82f7400 (size 512):
+  comm "check", pid 68454, jiffies 4310588881
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 5bac8b34):
+    __kvmalloc_node_noprof+0x55d/0x7a0
+    sbitmap_init_node+0x15a/0x6a0
+    kyber_init_hctx+0x316/0xb90
+    blk_mq_init_sched+0x419/0x580
+    elevator_switch+0x18b/0x630
+    elv_update_nr_hw_queues+0x219/0x2c0
+    __blk_mq_update_nr_hw_queues+0x36a/0x6f0
+    blk_mq_update_nr_hw_queues+0x3a/0x60
+    0xffffffffc09ceb80
+    0xffffffffc09d7e0b
+    configfs_write_iter+0x2b1/0x470
+    vfs_write+0x527/0xe70
+    ksys_write+0xff/0x200
+    do_syscall_64+0x98/0x3c0
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+unreferenced object 0xffff8881b82f6000 (size 512):
+  comm "check", pid 68454, jiffies 4310588881
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 5bac8b34):
+    __kvmalloc_node_noprof+0x55d/0x7a0
+    sbitmap_init_node+0x15a/0x6a0
+    kyber_init_hctx+0x316/0xb90
+    blk_mq_init_sched+0x419/0x580
+    elevator_switch+0x18b/0x630
+    elv_update_nr_hw_queues+0x219/0x2c0
+    __blk_mq_update_nr_hw_queues+0x36a/0x6f0
+    blk_mq_update_nr_hw_queues+0x3a/0x60
+    0xffffffffc09ceb80
+    0xffffffffc09d7e0b
+    configfs_write_iter+0x2b1/0x470
+    vfs_write+0x527/0xe70
+    ksys_write+0xff/0x200
+    do_syscall_64+0x98/0x3c0
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+unreferenced object 0xffff8881b82f5800 (size 512):
+  comm "check", pid 68454, jiffies 4310588881
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 5bac8b34):
+    __kvmalloc_node_noprof+0x55d/0x7a0
+    sbitmap_init_node+0x15a/0x6a0
+    kyber_init_hctx+0x316/0xb90
+    blk_mq_init_sched+0x419/0x580
+    elevator_switch+0x18b/0x630
+    elv_update_nr_hw_queues+0x219/0x2c0
+    __blk_mq_update_nr_hw_queues+0x36a/0x6f0
+    blk_mq_update_nr_hw_queues+0x3a/0x60
+    0xffffffffc09ceb80
+    0xffffffffc09d7e0b
+    configfs_write_iter+0x2b1/0x470
+    vfs_write+0x527/0xe70
 
- ld.lld: error: undefined symbol: crypto_alloc_acomp
-   referenced by decompressor_crypto.c
-       fs/erofs/decompressor_crypto.o:(z_erofs_crypto_enable_engine) in archive vmlinux.a
+    ksys_write+0xff/0x200
+    do_syscall_64+0x98/0x3c0
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202507161032.QholMPtn-lkp@intel.com/
-Fixes: b4a29efc5146 ("erofs: support DEFLATE decompression by using Intel QAT")
-Signed-off-by: Bo Liu (OpenAnolis) <liubo03@inspur.com>
-Link: https://lore.kernel.org/r/20250718033039.3609-1-liubo03@inspur.com
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+The issue arises while we run nr_hw_queue update,  Specifically, we first
+reallocate hardware contexts (hctx) via __blk_mq_realloc_hw_ctxs(), and
+then later invoke elevator_switch() (assuming q->elevator is not NULL).
+The elevator switch code would first exit old elevator (elevator_exit)
+and then switches to the new elevator. The elevator_exit loops through
+each hctx and invokes the elevator’s per-hctx exit method ->exit_hctx(),
+which releases resources allocated during ->init_hctx().
+
+This memleak manifests when we reduce the num of h/w queues - for example,
+when the initial update sets the number of queues to X, and a later update
+reduces it to Y, where Y < X. In this case, we'd loose the access to old
+hctxs while we get to elevator exit code because __blk_mq_realloc_hw_ctxs
+would have already released the old hctxs. As we don't now have any
+reference left to the old hctxs, we don't have any way to free the
+scheduler resources (which are allocate in ->init_hctx()) and kmemleak
+complains about it.
+
+This issue was caused due to the commit 596dce110b7d ("block: simplify
+elevator reattachment for updating nr_hw_queues"). That change unified
+the two-stage elevator teardown and reattachment into a single call that
+occurs after __blk_mq_realloc_hw_ctxs() has already freed the hctxs.
+
+This patch restores the previous two-stage elevator switch logic during
+nr_hw_queues updates. First, the elevator is switched to 'none', which
+ensures all scheduler resources are properly freed. Then, the hardware
+contexts (hctxs) are reallocated, and the software-to-hardware queue
+mappings are updated. Finally, the original elevator is reattached. This
+sequence prevents loss of references to old hctxs and avoids the scheduler
+resource leaks reported by kmemleak.
+
+Reported-by : Yi Zhang <yi.zhang@redhat.com>
+
+Fixes: 596dce110b7d ("block: simplify elevator reattachment for updating nr_hw_queues")
+Closes: https://lore.kernel.org/all/CAHj4cs8oJFvz=daCvjHM5dYCNQH4UXwSySPPU4v-WHce_kZXZA@mail.gmail.com/
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250724102540.1366308-1-nilay@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ block/blk-mq.c   | 84 ++++++++++++++++++++++++++++++++++++++++++------
+ block/blk.h      |  2 +-
+ block/elevator.c | 10 +++---
+ 3 files changed, 81 insertions(+), 15 deletions(-)
 
-diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-index 6beeb7063871..7b26efc271ee 100644
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -147,6 +147,8 @@ config EROFS_FS_ZIP_ZSTD
- config EROFS_FS_ZIP_ACCEL
- 	bool "EROFS hardware decompression support"
- 	depends on EROFS_FS_ZIP
-+	select CRYPTO
-+	select CRYPTO_DEFLATE
- 	help
- 	  Saying Y here includes hardware accelerator support for reading
- 	  EROFS file systems containing compressed data.  It gives better
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 4806b867e37d..dec1cd4f1f5b 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -4966,6 +4966,60 @@ int blk_mq_update_nr_requests(struct request_queue *q, unsigned int nr)
+ 	return ret;
+ }
+ 
++/*
++ * Switch back to the elevator type stored in the xarray.
++ */
++static void blk_mq_elv_switch_back(struct request_queue *q,
++		struct xarray *elv_tbl)
++{
++	struct elevator_type *e = xa_load(elv_tbl, q->id);
++
++	/* The elv_update_nr_hw_queues unfreezes the queue. */
++	elv_update_nr_hw_queues(q, e);
++
++	/* Drop the reference acquired in blk_mq_elv_switch_none. */
++	if (e)
++		elevator_put(e);
++}
++
++/*
++ * Stores elevator type in xarray and set current elevator to none. It uses
++ * q->id as an index to store the elevator type into the xarray.
++ */
++static int blk_mq_elv_switch_none(struct request_queue *q,
++		struct xarray *elv_tbl)
++{
++	int ret = 0;
++
++	lockdep_assert_held_write(&q->tag_set->update_nr_hwq_lock);
++
++	/*
++	 * Accessing q->elevator without holding q->elevator_lock is safe here
++	 * because we're called from nr_hw_queue update which is protected by
++	 * set->update_nr_hwq_lock in the writer context. So, scheduler update/
++	 * switch code (which acquires the same lock in the reader context)
++	 * can't run concurrently.
++	 */
++	if (q->elevator) {
++
++		ret = xa_insert(elv_tbl, q->id, q->elevator->type, GFP_KERNEL);
++		if (WARN_ON_ONCE(ret))
++			return ret;
++
++		/*
++		 * Before we switch elevator to 'none', take a reference to
++		 * the elevator module so that while nr_hw_queue update is
++		 * running, no one can remove elevator module. We'd put the
++		 * reference to elevator module later when we switch back
++		 * elevator.
++		 */
++		__elevator_get(q->elevator->type);
++
++		elevator_set_none(q);
++	}
++	return ret;
++}
++
+ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 							int nr_hw_queues)
+ {
+@@ -4973,6 +5027,7 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 	int prev_nr_hw_queues = set->nr_hw_queues;
+ 	unsigned int memflags;
+ 	int i;
++	struct xarray elv_tbl;
+ 
+ 	lockdep_assert_held(&set->tag_list_lock);
+ 
+@@ -4984,6 +5039,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 		return;
+ 
+ 	memflags = memalloc_noio_save();
++
++	xa_init(&elv_tbl);
++
+ 	list_for_each_entry(q, &set->tag_list, tag_set_list) {
+ 		blk_mq_debugfs_unregister_hctxs(q);
+ 		blk_mq_sysfs_unregister_hctxs(q);
+@@ -4992,11 +5050,17 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 	list_for_each_entry(q, &set->tag_list, tag_set_list)
+ 		blk_mq_freeze_queue_nomemsave(q);
+ 
+-	if (blk_mq_realloc_tag_set_tags(set, nr_hw_queues) < 0) {
+-		list_for_each_entry(q, &set->tag_list, tag_set_list)
+-			blk_mq_unfreeze_queue_nomemrestore(q);
+-		goto reregister;
+-	}
++	/*
++	 * Switch IO scheduler to 'none', cleaning up the data associated
++	 * with the previous scheduler. We will switch back once we are done
++	 * updating the new sw to hw queue mappings.
++	 */
++	list_for_each_entry(q, &set->tag_list, tag_set_list)
++		if (blk_mq_elv_switch_none(q, &elv_tbl))
++			goto switch_back;
++
++	if (blk_mq_realloc_tag_set_tags(set, nr_hw_queues) < 0)
++		goto switch_back;
+ 
+ fallback:
+ 	blk_mq_update_queue_map(set);
+@@ -5016,12 +5080,11 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 		}
+ 		blk_mq_map_swqueue(q);
+ 	}
+-
+-	/* elv_update_nr_hw_queues() unfreeze queue for us */
++switch_back:
++	/* The blk_mq_elv_switch_back unfreezes queue for us. */
+ 	list_for_each_entry(q, &set->tag_list, tag_set_list)
+-		elv_update_nr_hw_queues(q);
++		blk_mq_elv_switch_back(q, &elv_tbl);
+ 
+-reregister:
+ 	list_for_each_entry(q, &set->tag_list, tag_set_list) {
+ 		blk_mq_sysfs_register_hctxs(q);
+ 		blk_mq_debugfs_register_hctxs(q);
+@@ -5029,6 +5092,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 		blk_mq_remove_hw_queues_cpuhp(q);
+ 		blk_mq_add_hw_queues_cpuhp(q);
+ 	}
++
++	xa_destroy(&elv_tbl);
++
+ 	memalloc_noio_restore(memflags);
+ 
+ 	/* Free the excess tags when nr_hw_queues shrink. */
+diff --git a/block/blk.h b/block/blk.h
+index 37ec459fe656..fae7653a941f 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -321,7 +321,7 @@ bool blk_bio_list_merge(struct request_queue *q, struct list_head *list,
+ 
+ bool blk_insert_flush(struct request *rq);
+ 
+-void elv_update_nr_hw_queues(struct request_queue *q);
++void elv_update_nr_hw_queues(struct request_queue *q, struct elevator_type *e);
+ void elevator_set_default(struct request_queue *q);
+ void elevator_set_none(struct request_queue *q);
+ 
+diff --git a/block/elevator.c b/block/elevator.c
+index a960bdc869bc..88f8f36bed98 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -689,21 +689,21 @@ static int elevator_change(struct request_queue *q, struct elv_change_ctx *ctx)
+  * The I/O scheduler depends on the number of hardware queues, this forces a
+  * reattachment when nr_hw_queues changes.
+  */
+-void elv_update_nr_hw_queues(struct request_queue *q)
++void elv_update_nr_hw_queues(struct request_queue *q, struct elevator_type *e)
+ {
+ 	struct elv_change_ctx ctx = {};
+ 	int ret = -ENODEV;
+ 
+ 	WARN_ON_ONCE(q->mq_freeze_depth == 0);
+ 
+-	mutex_lock(&q->elevator_lock);
+-	if (q->elevator && !blk_queue_dying(q) && blk_queue_registered(q)) {
+-		ctx.name = q->elevator->type->elevator_name;
++	if (e && !blk_queue_dying(q) && blk_queue_registered(q)) {
++		ctx.name = e->elevator_name;
+ 
++		mutex_lock(&q->elevator_lock);
+ 		/* force to reattach elevator after nr_hw_queue is updated */
+ 		ret = elevator_switch(q, &ctx);
++		mutex_unlock(&q->elevator_lock);
+ 	}
+-	mutex_unlock(&q->elevator_lock);
+ 	blk_mq_unfreeze_queue_nomemrestore(q);
+ 	if (!ret)
+ 		WARN_ON_ONCE(elevator_change_done(q, &ctx));
 -- 
 2.39.5
 
