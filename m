@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6522921C187;
-	Tue, 12 Aug 2025 19:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B96283FE4;
+	Tue, 12 Aug 2025 19:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025690; cv=none; b=t05FVwe/PM0GF51yA60BT2Cufi6gvXH6X9F/bU7G0TOKrWWjdKOjvznSGM26qjbBcfBK9BWhM6pyaoBj5hP6qpojOkbvSGEQD1s0ui0FU5TfEbubU2qQjWWcMkxdUqzn4mQV1ag9MDUh/g4a5wrnejjj3tWIaq/yhzfHkytmORA=
+	t=1755025693; cv=none; b=XcKQ+OaPJImsEreEwk7hsc3zjHk4Hm60Pp76LHP3Su24gCBngmiXXA2wFF7mPtyldwbLRdS08vUwbHjgYP2qngx64riF6OYSJt6XLfhSnA9z3N51w3u73msAsp2n0USiSf8FnUrT52Zar4iDKw0FTZqxEL3Yh0x7Rf2ffcwy7Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025690; c=relaxed/simple;
-	bh=4fxro1Q/fHEpbj9v8kpk45IZwj0aLIeMoz7X2MMu8LQ=;
+	s=arc-20240116; t=1755025693; c=relaxed/simple;
+	bh=Ykc5S7ETfFl5SaCC/J/loZRWoREr7AHGQa4nq16Z3b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9Vvux9Tb8jDXV/zhjriruLcTIM7+tBRPKTsixMLc8NTIFzUivZjDbK6J6Wi7rzw55DAIn2ceMfBog69ptCJVrCZ3IwhBEj8eArD5Yo8WMFhR9Lp7L2eE/9X/BdZYCln4loxa8uxbVRXmYy8V4VrfWfWiCPrwxQevx1V0N8JDQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxNYhrY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gApXhdmZVCOcILhb1aBQ/wVzffnJOh2MG8sJG/CrLTfff8QvUQtBerPTBSzlYo5ExTZGc7o/6tEdF9IB2OWu4rUtFPIXz/s02P7KaHRL5Uyvp49hshUtl3/7T3fVxvDBt+6xC7iMuY84t2uXosIZeVfnhc4AklI21dzDhGTDr3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXqwl1PH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxNYhrY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CD8C4CEF0;
-	Tue, 12 Aug 2025 19:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXqwl1PH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD8FC4CEF0;
+	Tue, 12 Aug 2025 19:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025690;
-	bh=4fxro1Q/fHEpbj9v8kpk45IZwj0aLIeMoz7X2MMu8LQ=;
+	s=korg; t=1755025693;
+	bh=Ykc5S7ETfFl5SaCC/J/loZRWoREr7AHGQa4nq16Z3b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxNYhrY5GHAD3AEr2t0PK3CoqQdvba4NzqCAXKK7OK48kZa1/F81ASOMkeshcnlAO
-	 NTloBuNGfH5zXcz9fzt2+vgpaelAe6gVO1JcZxyQXaNUbtfT32CnSmrIcQwEyNNyMu
-	 SslY+frFjC+7Gqt4m8VJoaXocG5Ba+zFdpVxWO9U=
+	b=AXqwl1PHxAMSCDSBOno5f3QJipITIzueVvEbAY9EgTVoISJvRAS0+e9bpz4qVdMj1
+	 NHZpZ08NIavHev5VKiih9/4V1Ex3vbdU313HOvTxfBCZTWtNOFbeUfAt6eaMp6Fesm
+	 LIvnlehssLqsE7k/KufxThshw5MEZm6Xby4KuYoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	pls <pleasurefish@126.com>,
 	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 082/480] PM / devfreq: Check governor before using governor->name
-Date: Tue, 12 Aug 2025 19:44:50 +0200
-Message-ID: <20250812174400.830477985@linuxfoundation.org>
+Subject: [PATCH 6.15 083/480] PM / devfreq: Fix a index typo in trans_stat
+Date: Tue, 12 Aug 2025 19:44:51 +0200
+Message-ID: <20250812174400.875760712@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,48 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Chanwoo Choi <cw00.choi@samsung.com>
 
-[ Upstream commit bab7834c03820eb11269bc48f07c3800192460d2 ]
+[ Upstream commit 78c5845fbbf6aaeb9959c5fbaee5cc53ef5f38c2 ]
 
-Commit 96ffcdf239de ("PM / devfreq: Remove redundant governor_name from
-struct devfreq") removes governor_name and uses governor->name to replace
-it. But devfreq->governor may be NULL and directly using
-devfreq->governor->name may cause null pointer exception. Move the check of
-governor to before using governor->name.
-
-Fixes: 96ffcdf239de ("PM / devfreq: Remove redundant governor_name from struct devfreq")
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://lore.kernel.org/lkml/20250421030020.3108405-5-zhenglifeng1@huawei.com/
+Fixes: 4920ee6dcfaf ("PM / devfreq: Convert to use sysfs_emit_at() API")
+Signed-off-by: pls <pleasurefish@126.com>
+Link: https://patchwork.kernel.org/project/linux-pm/patch/20250515143100.17849-1-chanwoo@kernel.org/
 Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/devfreq/devfreq.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/devfreq/devfreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/devfreq/devfreq.c b/drivers/devfreq/devfreq.c
-index 98657d3b9435..713e6e52cca1 100644
+index 713e6e52cca1..0d9f3d3282ec 100644
 --- a/drivers/devfreq/devfreq.c
 +++ b/drivers/devfreq/devfreq.c
-@@ -1382,15 +1382,11 @@ int devfreq_remove_governor(struct devfreq_governor *governor)
- 		int ret;
- 		struct device *dev = devfreq->dev.parent;
- 
-+		if (!devfreq->governor)
-+			continue;
-+
- 		if (!strncmp(devfreq->governor->name, governor->name,
- 			     DEVFREQ_NAME_LEN)) {
--			/* we should have a devfreq governor! */
--			if (!devfreq->governor) {
--				dev_warn(dev, "%s: Governor %s NOT present\n",
--					 __func__, governor->name);
--				continue;
--				/* Fall through */
--			}
- 			ret = devfreq->governor->event_handler(devfreq,
- 						DEVFREQ_GOV_STOP, NULL);
- 			if (ret) {
+@@ -1739,7 +1739,7 @@ static ssize_t trans_stat_show(struct device *dev,
+ 	for (i = 0; i < max_state; i++) {
+ 		if (len >= PAGE_SIZE - 1)
+ 			break;
+-		if (df->freq_table[2] == df->previous_freq)
++		if (df->freq_table[i] == df->previous_freq)
+ 			len += sysfs_emit_at(buf, len, "*");
+ 		else
+ 			len += sysfs_emit_at(buf, len, " ");
 -- 
 2.39.5
 
