@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6405268C73;
-	Tue, 12 Aug 2025 17:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5868268C73;
+	Tue, 12 Aug 2025 17:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021112; cv=none; b=MbEl8fGLhWzsFAdKBOwVDd671Yh3DaDzslyqchy+pOr5G6fqbp08hG9/H9t+B8A9X/7SqlyLJQSB3Oc/uGUrleSoSYvH7XMdJlJfI/2f+zddVLoN+Roa/08lWNKe4Br8uitlG6lT7AqePMmgggZvM37ZuICBmNNTq6kjPPM5D2A=
+	t=1755021115; cv=none; b=g11YMb3cUTc6f6WGroP/cOgjlMbNaPYENVtMJOYSdOOVREmmerlv1dkr/6GYeG8dpwiJ8QR/a9dnSNL1PIR6nk4JWIJG9g7pjsv550YEFPG3/NHDeAZbW0etMaXYGgFKy7ytsmLR/IM7zxQoOQkC8IevieqxwUHMLg2evUOBZRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021112; c=relaxed/simple;
-	bh=TxE9UeQhmfJyFG0uhkZqseaCQaDbdPs6yOyK5wOcIgI=;
+	s=arc-20240116; t=1755021115; c=relaxed/simple;
+	bh=1HIeY0ZEevQ8/40Hjis282DocBF+fekN+82GQphtYKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gv5BrvYvL0Mz97thNdJxyOyQ5Yq7pdqY/+MTzoOBJcyq6cAUbvRnznMuh96oLiJxEX7Kd82HZFVlPj3Ef4eeC0uBx0Khbkvm0QFFdSYyNCMpa2vyoc99+Lv1uFJArkXdt2qkhH6b9t72TX8+oH3knsfJq22an6ZiojJ/m3k88bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpmxr//r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sjivNfGRvTIdaQ3lOe02XawaillAzuK3UlGV+cji4/VqANSxoL8hnohTJ28RB9lHxTzGZ9EuOYn7N7sZv6aBYFu6Y+7smtlm5AbEqekzN/xfNI1eGpThD2lXxvi6uzqp+/McGrN31XQ3jYCCZurEkctyv3OMENbTPxmRCZWHY9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXESs8rU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpmxr//r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530E5C4CEF0;
-	Tue, 12 Aug 2025 17:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXESs8rU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578C6C4CEF0;
+	Tue, 12 Aug 2025 17:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021111;
-	bh=TxE9UeQhmfJyFG0uhkZqseaCQaDbdPs6yOyK5wOcIgI=;
+	s=korg; t=1755021114;
+	bh=1HIeY0ZEevQ8/40Hjis282DocBF+fekN+82GQphtYKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zpmxr//r5MM9eEQk7rt6wHV2KBC5RHBSRseC+LIe7oNDrXr8f7e0tgVDQhyfHe4M5
-	 ExV9bDRsTRu+HCrMFDzRXA2ASDVuPp9kw5MW3MCX85iECqfHIO27hrDCdrZMv2ofeo
-	 VduhIJTqmCJwX37kg+v4y0ClMHN9PjcqHnNGsNfk=
+	b=dXESs8rU3KFGqSmm9VlcCf+A6hN3YuLwa+9kK3gq1mchXnHFT6J6uMEnO/XFr8TSh
+	 PjjSm8A/z8aQKHxdufiphkuwlR6dsam0iHd7cCmiTojM2zne3QPpQDDz2hqICycN5H
+	 VYXndUOC8KZWw7x1AUZGOekS0RiuN4/flSmCeWEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/262] net: dst: annotate data-races around dst->input
-Date: Tue, 12 Aug 2025 19:27:31 +0200
-Message-ID: <20250812172955.670642353@linuxfoundation.org>
+Subject: [PATCH 6.6 040/262] cpufreq: Initialize cpufreq-based frequency-invariance later
+Date: Tue, 12 Aug 2025 19:27:08 +0200
+Message-ID: <20250812172954.666881664@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -52,85 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit f1c5fd34891a1c242885f48c2e4dc52df180f311 ]
+[ Upstream commit 2a6c727387062a2ea79eb6cf5004820cb1b0afe2 ]
 
-dst_dev_put() can overwrite dst->input while other
-cpus might read this field (for instance from dst_input())
+The cpufreq-based invariance is enabled in cpufreq_register_driver(),
+but never disabled after registration fails. Move the invariance
+initialization to where all other initializations have been successfully
+done to solve this problem.
 
-Add READ_ONCE()/WRITE_ONCE() annotations to suppress
-potential issues.
-
-We will likely need full RCU protection later.
-
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250630121934.3399505-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 874f63531064 ("cpufreq: report whether cpufreq supports Frequency Invariance (FI)")
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://patch.msgid.link/20250709104145.2348017-2-zhenglifeng1@huawei.com
+[ rjw: New subject ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dst.h      | 2 +-
- include/net/lwtunnel.h | 4 ++--
- net/core/dst.c         | 2 +-
- net/ipv4/route.c       | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/cpufreq/cpufreq.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/dst.h b/include/net/dst.h
-index 16b7b99b5f30..ef7f88f01881 100644
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -474,7 +474,7 @@ INDIRECT_CALLABLE_DECLARE(int ip_local_deliver(struct sk_buff *));
- /* Input packet from network to transport.  */
- static inline int dst_input(struct sk_buff *skb)
- {
--	return INDIRECT_CALL_INET(skb_dst(skb)->input,
-+	return INDIRECT_CALL_INET(READ_ONCE(skb_dst(skb)->input),
- 				  ip6_input, ip_local_deliver, skb);
- }
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 6682f422cadd..d48a7feba54d 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2938,15 +2938,6 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 	cpufreq_driver = driver_data;
+ 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
  
-diff --git a/include/net/lwtunnel.h b/include/net/lwtunnel.h
-index 53bd2d02a4f0..a4632a64daae 100644
---- a/include/net/lwtunnel.h
-+++ b/include/net/lwtunnel.h
-@@ -142,8 +142,8 @@ static inline void lwtunnel_set_redirect(struct dst_entry *dst)
- 		dst->output = lwtunnel_output;
- 	}
- 	if (lwtunnel_input_redirect(dst->lwtstate)) {
--		dst->lwtstate->orig_input = dst->input;
--		dst->input = lwtunnel_input;
-+		dst->lwtstate->orig_input = READ_ONCE(dst->input);
-+		WRITE_ONCE(dst->input, lwtunnel_input);
- 	}
- }
- #else
-diff --git a/net/core/dst.c b/net/core/dst.c
-index aad197e761cb..def3dbbd37e3 100644
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -150,7 +150,7 @@ void dst_dev_put(struct dst_entry *dst)
- 	dst->obsolete = DST_OBSOLETE_DEAD;
- 	if (dst->ops->ifdown)
- 		dst->ops->ifdown(dst, dev);
--	dst->input = dst_discard;
-+	WRITE_ONCE(dst->input, dst_discard);
- 	dst->output = dst_discard_out;
- 	dst->dev = blackhole_netdev;
- 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 8ee1ad2d8c13..f8538507ce3f 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1699,7 +1699,7 @@ struct rtable *rt_dst_clone(struct net_device *dev, struct rtable *rt)
- 		else if (rt->rt_gw_family == AF_INET6)
- 			new_rt->rt_gw6 = rt->rt_gw6;
+-	/*
+-	 * Mark support for the scheduler's frequency invariance engine for
+-	 * drivers that implement target(), target_index() or fast_switch().
+-	 */
+-	if (!cpufreq_driver->setpolicy) {
+-		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
+-		pr_debug("supports frequency invariance");
+-	}
+-
+ 	if (driver_data->setpolicy)
+ 		driver_data->flags |= CPUFREQ_CONST_LOOPS;
  
--		new_rt->dst.input = rt->dst.input;
-+		new_rt->dst.input = READ_ONCE(rt->dst.input);
- 		new_rt->dst.output = rt->dst.output;
- 		new_rt->dst.error = rt->dst.error;
- 		new_rt->dst.lastuse = jiffies;
+@@ -2977,6 +2968,15 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 	hp_online = ret;
+ 	ret = 0;
+ 
++	/*
++	 * Mark support for the scheduler's frequency invariance engine for
++	 * drivers that implement target(), target_index() or fast_switch().
++	 */
++	if (!cpufreq_driver->setpolicy) {
++		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
++		pr_debug("supports frequency invariance");
++	}
++
+ 	pr_debug("driver %s up and running\n", driver_data->name);
+ 	goto out;
+ 
 -- 
 2.39.5
 
