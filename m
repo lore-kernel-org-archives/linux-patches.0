@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C63E2C21E3;
-	Tue, 12 Aug 2025 18:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3032C21D4;
+	Tue, 12 Aug 2025 18:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024986; cv=none; b=KXIR/LwsIE4jJrKkOBodE3yhZ+xcj4Z2AglwGsCnOeK969NHcVdKwB+YtU+hrOIWf1DpnaXLEYIsyKPhtVM0GLdn2iWLYBVqCCMmL+W9W+mzSYjtis9TYKqF1lviFceNaKmHS3mwX2YB8fegI+TnVGVntUPNtUGpmM3QYh074k4=
+	t=1755024988; cv=none; b=dk0PNDeyU/B0YNAoaGwfCd/7/mABwlzrv+jqohWKGKzlDmvHGOq/MCSrOMhzKxr8A1CXRxx+UWJ0LDfYi1YN1Sgoz+NsrPDwR0rVaXhjayKzSzkmCSxf70z94muXcSUOvea5Ssdsk7XSDEbQu9RbCZ0lLhfFfh9ImnFQB8OEGRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024986; c=relaxed/simple;
-	bh=hXjHoQxGbSiBpSLwsfhV7WiHQmiWkmT8QgiWhUgLmLc=;
+	s=arc-20240116; t=1755024988; c=relaxed/simple;
+	bh=Dqb+3UniqcM/MGBmKmjk5T+eP0VZ+6YY2z345qJw73E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kamKV5CaazqjZ2nE5nf9MaZmmX+28sKUTgthS3kSZ2KOA8zkzE0GiN6WE3VVKK5xSDbruyMosY+Fsg5nivvAp3d5P/j2zMr7b3McEz4pIKHxH2/ct27/mUDzUifbu+2VSr15wpNuPGLh7P8YrNV0l3xwWePXNB8npqSp/nYMjsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVLSQzFA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0l/chMAFMfaLhTamKisv6yDVWxIKDzbjiRaT6WV465DwmJOQtNyPts6us4I/OBoH7leNaPJpFe39lMLPqimFg6s8T1A90mnMXqU4iKAFhuNXdJzwWQBut+CZyfm4ojJGgAlqsoyOWkhEg+O+fnDOC+9ZFtfI1zN+dLnFZWyWh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhYrcp0n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVLSQzFA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FCDC4CEF0;
-	Tue, 12 Aug 2025 18:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhYrcp0n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F367C4CEF0;
+	Tue, 12 Aug 2025 18:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024984;
-	bh=hXjHoQxGbSiBpSLwsfhV7WiHQmiWkmT8QgiWhUgLmLc=;
+	s=korg; t=1755024988;
+	bh=Dqb+3UniqcM/MGBmKmjk5T+eP0VZ+6YY2z345qJw73E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVLSQzFA1S2hCzgGvaB1WqvPEIxj17G70uqkpnJiheFExQEqsr7jHFEO208nXV6vC
-	 GkGv5CUSf2JCLKfDddRK08nXGIecluMZQTCQaNQtumm7KNMstE5JnFNT4jY8N6WXVi
-	 mzvfzCeF+N/cZrBwAh5ZERSbhsIJNsCwZ29nsipM=
+	b=DhYrcp0nubDsdFQx+FR2zQfRWDMML204aoWElmJcnPI33qR6kvth0Ox1w/TvN4HYh
+	 73A4f2uAke/Ba+4HdHn6LaozzSfg3hQzOC8TRPJCeH7FzFd3c/64Uws0Eh7gdChJwx
+	 /J5UfsY8FwzYvj4LeCvuQjmxbUfGSqqmV49dW6OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Scott Mayhew <smayhew@redhat.com>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 536/627] md: make rdev_addable usable for rcu mode
-Date: Tue, 12 Aug 2025 19:33:51 +0200
-Message-ID: <20250812173452.303557152@linuxfoundation.org>
+Subject: [PATCH 6.16 537/627] sunrpc: fix client side handling of tls alerts
+Date: Tue, 12 Aug 2025 19:33:52 +0200
+Message-ID: <20250812173452.340712331@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,78 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-[ Upstream commit 13017b427118f4311471ee47df74872372ca8482 ]
+[ Upstream commit cc5d59081fa26506d02de2127ab822f40d88bc5a ]
 
-Our testcase trigger panic:
+A security exploit was discovered in NFS over TLS in tls_alert_recv
+due to its assumption that there is valid data in the msghdr's
+iterator's kvec.
 
-BUG: kernel NULL pointer dereference, address: 00000000000000e0
-...
-Oops: Oops: 0000 [#1] SMP NOPTI
-CPU: 2 UID: 0 PID: 85 Comm: kworker/2:1 Not tainted 6.16.0+ #94
-PREEMPT(none)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.16.1-2.fc37 04/01/2014
-Workqueue: md_misc md_start_sync
-RIP: 0010:rdev_addable+0x4d/0xf0
-...
-Call Trace:
- <TASK>
- md_start_sync+0x329/0x480
- process_one_work+0x226/0x6d0
- worker_thread+0x19e/0x340
- kthread+0x10f/0x250
- ret_from_fork+0x14d/0x180
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-Modules linked in: raid10
-CR2: 00000000000000e0
----[ end trace 0000000000000000 ]---
-RIP: 0010:rdev_addable+0x4d/0xf0
+Instead, this patch proposes the rework how control messages are
+setup and used by sock_recvmsg().
 
-md_spares_need_change in md_start_sync will call rdev_addable which
-protected by rcu_read_lock/rcu_read_unlock. This rcu context will help
-protect rdev won't be released, but rdev->mddev will be set to NULL
-before we call synchronize_rcu in md_kick_rdev_from_array. Fix this by
-using READ_ONCE and check does rdev->mddev still alive.
+If no control message structure is setup, kTLS layer will read and
+process TLS data record types. As soon as it encounters a TLS control
+message, it would return an error. At that point, NFS can setup a kvec
+backed control buffer and read in the control message such as a TLS
+alert. Scott found that a msg iterator can advance the kvec pointer
+as a part of the copy process thus we need to revert the iterator
+before calling into the tls_alert_recv.
 
-Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
-Fixes: 570b9147deb6 ("md: use RCU lock to protect traversal in md_spares_need_change()")
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Link: https://lore.kernel.org/linux-raid/20250731114530.776670-1-yangerkun@huawei.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Fixes: dea034b963c8 ("SUNRPC: Capture CMSG metadata on client-side receive")
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Suggested-by: Scott Mayhew <smayhew@redhat.com>
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Link: https://lore.kernel.org/r/20250731180058.4669-3-okorniev@redhat.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtsock.c | 40 ++++++++++++++++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index e78c42c381db..10670c62b09e 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9418,6 +9418,12 @@ static bool rdev_is_spare(struct md_rdev *rdev)
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 04ff66758fc3..c5f7bbf5775f 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -358,7 +358,7 @@ xs_alloc_sparse_pages(struct xdr_buf *buf, size_t want, gfp_t gfp)
  
- static bool rdev_addable(struct md_rdev *rdev)
+ static int
+ xs_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
+-		     struct cmsghdr *cmsg, int ret)
++		     unsigned int *msg_flags, struct cmsghdr *cmsg, int ret)
  {
-+	struct mddev *mddev;
-+
-+	mddev = READ_ONCE(rdev->mddev);
-+	if (!mddev)
-+		return false;
-+
- 	/* rdev is already used, don't add it again. */
- 	if (test_bit(Candidate, &rdev->flags) || rdev->raid_disk >= 0 ||
- 	    test_bit(Faulty, &rdev->flags))
-@@ -9428,7 +9434,7 @@ static bool rdev_addable(struct md_rdev *rdev)
- 		return true;
+ 	u8 content_type = tls_get_record_type(sock->sk, cmsg);
+ 	u8 level, description;
+@@ -371,7 +371,7 @@ xs_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
+ 		 * record, even though there might be more frames
+ 		 * waiting to be decrypted.
+ 		 */
+-		msg->msg_flags &= ~MSG_EOR;
++		*msg_flags &= ~MSG_EOR;
+ 		break;
+ 	case TLS_RECORD_TYPE_ALERT:
+ 		tls_alert_recv(sock->sk, msg, &level, &description);
+@@ -386,19 +386,33 @@ xs_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
+ }
  
- 	/* Allow to add if array is read-write. */
--	if (md_is_rdwr(rdev->mddev))
-+	if (md_is_rdwr(mddev))
- 		return true;
+ static int
+-xs_sock_recv_cmsg(struct socket *sock, struct msghdr *msg, int flags)
++xs_sock_recv_cmsg(struct socket *sock, unsigned int *msg_flags, int flags)
+ {
+ 	union {
+ 		struct cmsghdr	cmsg;
+ 		u8		buf[CMSG_SPACE(sizeof(u8))];
+ 	} u;
++	u8 alert[2];
++	struct kvec alert_kvec = {
++		.iov_base = alert,
++		.iov_len = sizeof(alert),
++	};
++	struct msghdr msg = {
++		.msg_flags = *msg_flags,
++		.msg_control = &u,
++		.msg_controllen = sizeof(u),
++	};
+ 	int ret;
  
- 	/*
+-	msg->msg_control = &u;
+-	msg->msg_controllen = sizeof(u);
+-	ret = sock_recvmsg(sock, msg, flags);
+-	if (msg->msg_controllen != sizeof(u))
+-		ret = xs_sock_process_cmsg(sock, msg, &u.cmsg, ret);
++	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
++		      alert_kvec.iov_len);
++	ret = sock_recvmsg(sock, &msg, flags);
++	if (ret > 0 &&
++	    tls_get_record_type(sock->sk, &u.cmsg) == TLS_RECORD_TYPE_ALERT) {
++		iov_iter_revert(&msg.msg_iter, ret);
++		ret = xs_sock_process_cmsg(sock, &msg, msg_flags, &u.cmsg,
++					   -EAGAIN);
++	}
+ 	return ret;
+ }
+ 
+@@ -408,7 +422,13 @@ xs_sock_recvmsg(struct socket *sock, struct msghdr *msg, int flags, size_t seek)
+ 	ssize_t ret;
+ 	if (seek != 0)
+ 		iov_iter_advance(&msg->msg_iter, seek);
+-	ret = xs_sock_recv_cmsg(sock, msg, flags);
++	ret = sock_recvmsg(sock, msg, flags);
++	/* Handle TLS inband control message lazily */
++	if (msg->msg_flags & MSG_CTRUNC) {
++		msg->msg_flags &= ~(MSG_CTRUNC | MSG_EOR);
++		if (ret == 0 || ret == -EIO)
++			ret = xs_sock_recv_cmsg(sock, &msg->msg_flags, flags);
++	}
+ 	return ret > 0 ? ret + seek : ret;
+ }
+ 
+@@ -434,7 +454,7 @@ xs_read_discard(struct socket *sock, struct msghdr *msg, int flags,
+ 		size_t count)
+ {
+ 	iov_iter_discard(&msg->msg_iter, ITER_DEST, count);
+-	return xs_sock_recv_cmsg(sock, msg, flags);
++	return xs_sock_recvmsg(sock, msg, flags, 0);
+ }
+ 
+ #if ARCH_IMPLEMENTS_FLUSH_DCACHE_PAGE
 -- 
 2.39.5
 
