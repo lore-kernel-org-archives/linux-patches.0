@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B112F5E;
-	Tue, 12 Aug 2025 18:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC333217736;
+	Tue, 12 Aug 2025 18:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021836; cv=none; b=Lhlfd2RnKzyioIr/LHzXr131N04ItS0mt6j/HWmTW02IWX/2vg1sTG9G3kS7SLqx276gSfsdWniw5kOjopXnZoDlCUDAQwbR2DFEsYvMQ3lbtWTsXvKH1zoXv0Vu1qHnWrlr7+1tbEfvgZH19uiB8Y5B64suefiJOhEXNPYLvcg=
+	t=1755021839; cv=none; b=LmYD/8eFLlTnI78ROj6K4IiJZH0Y6CxFRLBwNy4NvN5XRqHByeMNJOsj05brASdXBYuHcB29463/jVshDE1FFkaNgyG0F3uzUyKd1GtyynV5fMwThbpUeJrGr5PkIFj5/mkLaNE2PQzfqioLtjAs4EwgXad0myTB0kfL/zEf3hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021836; c=relaxed/simple;
-	bh=a+3VDvmoFH/A2C95Xg4+dKYGBS4jmaH2glQV7W3eym4=;
+	s=arc-20240116; t=1755021839; c=relaxed/simple;
+	bh=mraxedJmANSE7TGDeZov1zWNkyn6EQWLswH0t0tCDo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=apaloNIZ33WyMxV5S0IA5zGMKq0y2ALRBYilMcUWOZu65KIMLxsDx8umjUOS5c7CwqZjwm3akSbzJpA3BpkZuDzYpGzwJdf0WXe3n6wvGqdFsvwFxt6evbelArtdZa9vNlW+dC6TLRPtbBKkYRM15QUErO1g+qlvR4G+Rnk9BX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9u0GTrd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNzixV7KaspmoXCam9wbzubBaIhvHu2gXsKaU7B8GY4w2m4vfJHP1my4uBtWOISFjx8x8qkHZDN2tVDwooF4tUNbnITVAf476dMV/gTzKSm4Jyt9S8C0AxjUEfxq9AuBBwuWhMMdgcxJ4nVAsg3kE2373JJPtTexg6YBHgvapF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgNGdNA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9u0GTrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B349DC4CEF0;
-	Tue, 12 Aug 2025 18:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgNGdNA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9B9C4CEF0;
+	Tue, 12 Aug 2025 18:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021836;
-	bh=a+3VDvmoFH/A2C95Xg4+dKYGBS4jmaH2glQV7W3eym4=;
+	s=korg; t=1755021839;
+	bh=mraxedJmANSE7TGDeZov1zWNkyn6EQWLswH0t0tCDo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V9u0GTrdMCHQ8wDd432mGrnneReA8MvFpAqAHHHT+DT8cR5Bm6cX2KittpI2MkIaZ
-	 VEyteR9pF3gTWw1tj/IHtgrA9qsNPRYyuwCgcbad75mX/lzR9lr3AJ3f4PEVMyCc15
-	 bNqBOk5tOWgIDn7ZfUyXG22bCte0qHfIt7N/RN6Y=
+	b=hgNGdNA84Q4VWKVRnJTwDlPx3WL4aVAunPgEFomTwJNfaCVt4OJ75v2Z40kqT3XpW
+	 MGGPFMwO5cn1Qnmht1KBovWUI1FEgohjMe1eXY2w/V2oLZiqJKLtMYG3VQDYw1fzO0
+	 p5tVGIdEZTYLdfRTTIcf9tz8eGettdMIuw6xxcqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tianshuo han <hantianshuo233@gmail.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 240/262] ksmbd: limit repeated connections from clients with the same IP
-Date: Tue, 12 Aug 2025 19:30:28 +0200
-Message-ID: <20250812173003.370695651@linuxfoundation.org>
+Subject: [PATCH 6.6 241/262] smb: server: Fix extension string in ksmbd_extract_shortname()
+Date: Tue, 12 Aug 2025 19:30:29 +0200
+Message-ID: <20250812173003.413719296@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,73 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit e6bb9193974059ddbb0ce7763fa3882bd60d4dc3 upstream.
+commit 8e7d178d06e8937454b6d2f2811fa6a15656a214 upstream.
 
-Repeated connections from clients with the same IP address may exhaust
-the max connections and prevent other normal client connections.
-This patch limit repeated connections from clients with the same IP.
+In ksmbd_extract_shortname(), strscpy() is incorrectly called with the
+length of the source string (excluding the NUL terminator) rather than
+the size of the destination buffer. This results in "__" being copied
+to 'extension' rather than "___" (two underscores instead of three).
 
-Reported-by: tianshuo han <hantianshuo233@gmail.com>
+Use the destination buffer size instead to ensure that the string "___"
+(three underscores) is copied correctly.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.h    |    1 +
- fs/smb/server/transport_tcp.c |   17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
+ fs/smb/server/smb_common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -45,6 +45,7 @@ struct ksmbd_conn {
- 	struct mutex			srv_mutex;
- 	int				status;
- 	unsigned int			cli_cap;
-+	__be32				inet_addr;
- 	char				*request_buf;
- 	struct ksmbd_transport		*transport;
- 	struct nls_table		*local_nls;
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -87,6 +87,7 @@ static struct tcp_transport *alloc_trans
- 		return NULL;
- 	}
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -515,7 +515,7 @@ int ksmbd_extract_shortname(struct ksmbd
  
-+	conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
- 	conn->transport = KSMBD_TRANS(t);
- 	KSMBD_TRANS(t)->conn = conn;
- 	KSMBD_TRANS(t)->ops = &ksmbd_tcp_transport_ops;
-@@ -230,6 +231,8 @@ static int ksmbd_kthread_fn(void *p)
- {
- 	struct socket *client_sk = NULL;
- 	struct interface *iface = (struct interface *)p;
-+	struct inet_sock *csk_inet;
-+	struct ksmbd_conn *conn;
- 	int ret;
- 
- 	while (!kthread_should_stop()) {
-@@ -248,6 +251,20 @@ static int ksmbd_kthread_fn(void *p)
- 			continue;
- 		}
- 
-+		/*
-+		 * Limits repeated connections from clients with the same IP.
-+		 */
-+		csk_inet = inet_sk(client_sk->sk);
-+		down_read(&conn_list_lock);
-+		list_for_each_entry(conn, &conn_list, conns_list)
-+			if (csk_inet->inet_daddr == conn->inet_addr) {
-+				ret = -EAGAIN;
-+				break;
-+			}
-+		up_read(&conn_list_lock);
-+		if (ret == -EAGAIN)
-+			continue;
-+
- 		if (server_conf.max_connections &&
- 		    atomic_inc_return(&active_num_conn) >= server_conf.max_connections) {
- 			pr_info_ratelimited("Limit the maximum number of connections(%u)\n",
+ 	p = strrchr(longname, '.');
+ 	if (p == longname) { /*name starts with a dot*/
+-		strscpy(extension, "___", strlen("___"));
++		strscpy(extension, "___", sizeof(extension));
+ 	} else {
+ 		if (p) {
+ 			p++;
 
 
