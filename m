@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3532F90F1;
-	Tue, 12 Aug 2025 19:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D0826FA77;
+	Tue, 12 Aug 2025 19:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025207; cv=none; b=PW+XdIyg9dAHJF64SBS2RmjwtQGDax7wsGtK78mF0C1Xix5UOdFz9Z/LLcpglwMZI7/uDCfbEY5IABCDSujIU5hyPDuQhxxPIstTfH1V1dPRF/D9H/HSNu+piP5/oWukCPeSZa1ne+x1PgKO74x2+xSbCsDaEwtLzap5bhRrtIY=
+	t=1755025211; cv=none; b=TJp4jknavqvaJtHeSdUOpyJufWNWmh/d+3quzkgywMf/HhqALOBeBOMD7Ff1q+4H3yL7zKLKXGnBaOkuALyHiQT032XAz5y6LjuZmgpxPSy3uMbHEo6jyPMwpQA/JEUb5HoQyXkVKcaHkpJJCeK5ohOea/10qwGEolgWZjhfHCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025207; c=relaxed/simple;
-	bh=xUYJQ2Key9ozI4GqlK8IAEJT76gzZMAbyuwcdS6g/50=;
+	s=arc-20240116; t=1755025211; c=relaxed/simple;
+	bh=Tj2r89svtQ2dpqBeTuy4A/qaWnPlYsQeMPfwJBBUd9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ols3bQBLfHqPrxQ30XTeTWnmhN4RwfxBww4ggxpiMRnNhHTisnaVyi3i2OztDwcNuNte6eFDT28qZa/uwqZ1KJK+2bX+JZo6JbLY4fGMbcNcI/2PvR6jnSUn6kt+ia3H1CAMlubZ1SkodC8tbkyavPMNqf2/tiQ9H6B58KpGv08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Tu4Sx1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R263cRtKS2T5tWFVBOslyz63i3yu8M/Ssu0q6xaALozN6XngTZZwtnFmvZKNVJUYDA0wCy5gXZmN+Xi6NW118kmil/jVLThJf0XuVNPqxstx12WwVeH06PaFLR8rxTymKJbTNQzmRzcppkGtWNJVgYSagU5bDrPllSLachE7TMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/zn5ae5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Tu4Sx1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C121BC4CEF0;
-	Tue, 12 Aug 2025 19:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/zn5ae5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418BFC4CEF0;
+	Tue, 12 Aug 2025 19:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025207;
-	bh=xUYJQ2Key9ozI4GqlK8IAEJT76gzZMAbyuwcdS6g/50=;
+	s=korg; t=1755025210;
+	bh=Tj2r89svtQ2dpqBeTuy4A/qaWnPlYsQeMPfwJBBUd9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Tu4Sx1F4RPZIKpBQCot6lP+MXOkDQ0LBzhhr6R46KbKQR50p6x8PkEb4/GDrkz9c
-	 rYMJK+L8ayRWCKhoTgbeMw/7p7QwV5FclZ5AEFICcyoxQarPoADvCKnP9p3tZ5I4A4
-	 /a09yXadLv9q8YX9YQQmhp7g9ynyLO8J+atYXsSY=
+	b=A/zn5ae5dXTy/e+RarHFSmLRuS37NiGa2GECZ3kcUxpkeLx6S3XSwZ04lk5lZwwof
+	 vCLuOlHIMJgEWTKBeml5ctewEeKRgYvERmAZYkSvnCXjK9ZA0PfF6/gpzeVtl4cKr8
+	 11yTr/qb2GXRSDeZFk8LhFCifDSNDNB2gazOx1uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <dwagner@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 567/627] smb: client: let recv_done() avoid touching data_transfer after cleanup/move
-Date: Tue, 12 Aug 2025 19:34:22 +0200
-Message-ID: <20250812173453.452553902@linuxfoundation.org>
+Subject: [PATCH 6.16 568/627] nvmet: exit debugfs after discovery subsystem exits
+Date: Tue, 12 Aug 2025 19:34:23 +0200
+Message-ID: <20250812173453.488806688@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -56,78 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-[ Upstream commit 24eff17887cb45c25a427e662dda352973c5c171 ]
+[ Upstream commit 80f21806b8e34ae1e24c0fc6a0f0dfd9b055e130 ]
 
-Calling enqueue_reassembly() and wake_up_interruptible(&info->wait_reassembly_queue)
-or put_receive_buffer() means the response/data_transfer pointer might
-get re-used by another thread, which means these should be
-the last operations before calling return.
+Commit 528589947c180 ("nvmet: initialize discovery subsys after debugfs
+is initialized") changed nvmet_init() to initialize nvme discovery after
+"nvmet" debugfs directory is initialized. The change broke nvmet_exit()
+because discovery subsystem now depends on debugfs. Debugfs should be
+destroyed after discovery subsystem. Fix nvmet_exit() to do that.
 
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Closes: https://lore.kernel.org/all/CAHj4cs96AfFQpyDKF_MdfJsnOEo=2V7dQgqjFv+k3t7H-=yGhA@mail.gmail.com/
+Fixes: 528589947c180 ("nvmet: initialize discovery subsys after debugfs is initialized")
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Link: https://lore.kernel.org/r/20250807053507.2794335-1-mkhalfella@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ drivers/nvme/target/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index d26b8cef82d6..47f2a6cc1c0c 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -479,10 +479,6 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		data_transfer = smbd_response_payload(response);
- 		data_length = le32_to_cpu(data_transfer->data_length);
- 
--		/*
--		 * If this is a packet with data playload place the data in
--		 * reassembly queue and wake up the reading thread
--		 */
- 		if (data_length) {
- 			if (info->full_packet_received)
- 				response->first_segment = true;
-@@ -491,16 +487,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 				info->full_packet_received = false;
- 			else
- 				info->full_packet_received = true;
--
--			enqueue_reassembly(
--				info,
--				response,
--				data_length);
--		} else
--			put_receive_buffer(info, response);
--
--		if (data_length)
--			wake_up_interruptible(&info->wait_reassembly_queue);
-+		}
- 
- 		atomic_dec(&info->receive_credits);
- 		info->receive_credit_target =
-@@ -528,6 +515,16 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 			info->keep_alive_requested = KEEP_ALIVE_PENDING;
- 		}
- 
-+		/*
-+		 * If this is a packet with data playload place the data in
-+		 * reassembly queue and wake up the reading thread
-+		 */
-+		if (data_length) {
-+			enqueue_reassembly(info, response, data_length);
-+			wake_up_interruptible(&info->wait_reassembly_queue);
-+		} else
-+			put_receive_buffer(info, response);
-+
- 		return;
- 	}
- 
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index b6247e4afc9c..491df044635f 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1994,8 +1994,8 @@ static int __init nvmet_init(void)
+ static void __exit nvmet_exit(void)
+ {
+ 	nvmet_exit_configfs();
+-	nvmet_exit_debugfs();
+ 	nvmet_exit_discovery();
++	nvmet_exit_debugfs();
+ 	ida_destroy(&cntlid_ida);
+ 	destroy_workqueue(nvmet_wq);
+ 	destroy_workqueue(buffered_io_wq);
 -- 
 2.39.5
 
