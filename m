@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124C42FF16C;
-	Tue, 12 Aug 2025 18:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA97D1E500C;
+	Tue, 12 Aug 2025 18:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023476; cv=none; b=Hts9f1uks6w/133lyNNHVUcNMsWr8VUiUd5DRAnB2/9aa1XpjPng6oBsomwSY9APq367dJS3PT9dp06bLHFH5bEXGtM1WDijjvjBv4oENJTX1GSvaoel+MbHG0btKMBEpiZHNdxJub22R9GFUvNOBrU4FXyAl5XSJrjBzxw8XGQ=
+	t=1755023477; cv=none; b=ZUIL/mKvtDG61mag7929fQfeM49HxMFr8CFGWXmIPYtqgVCUUTsGrzw8HDaM5qiGFXknQtU/VB0dRPFj1L6NYSDSx0f24G/Kybo8xO4KHWguYu3WetvCH+XnrCznTrizByPXVq2mCAxRYS7rC/Uv8K8sItgE2y98zO/BqYHQmus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023476; c=relaxed/simple;
-	bh=xj7/OgE7M/zq6WpgECKoGCx8B5ULSbt45H/4BHtF/6w=;
+	s=arc-20240116; t=1755023477; c=relaxed/simple;
+	bh=h0hgFh+Lg88gRqLx4SWLh/iUhnLNt4dsfhFH5NAKENo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZOCknzUZ7VtoQ/RyEiZ0gy5QuUMdKVDb4KMSFQE3kxWEaDB+ozvtGssB55o0l9xMA2GsjEuPJbsp3ubZ2Kr4sW78iExl3ziNHL/r4aUvIyTqp1j7XEOUECBB557d47FHIgLlTgiF0WEBqEWEuvkXgXl/hABgMQY7RpqdjFQmik4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSvVkduR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4t0+hbc+5NDEpiRPz5GNv3Nk46yNFdlWA3fcFaH9Njlz2pBifJnhBAUz94iNcPaG5Xp6FyoUVRN8+/BDbqNYlNZ473mYscSP6mjxEFJOBk3N5Nq58ox2WVjPO+aMYGm746XZBfLdId1GaBVWau/km/DO2YlpQDjLA5MIuJh7Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyGeINki; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSvVkduR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3978BC4CEF7;
-	Tue, 12 Aug 2025 18:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyGeINki"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4598BC4CEF0;
+	Tue, 12 Aug 2025 18:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023473;
-	bh=xj7/OgE7M/zq6WpgECKoGCx8B5ULSbt45H/4BHtF/6w=;
+	s=korg; t=1755023477;
+	bh=h0hgFh+Lg88gRqLx4SWLh/iUhnLNt4dsfhFH5NAKENo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSvVkduRCN2G0DAyIrnJcrBChKTnCCLA1waEfhW6gaqWzQ4OWc7QVtTgHC+EhN58F
-	 Y+5BaIV6WhHGChZmtc/I13PBSCEEcAjZKXzQYw5+pw9BIx3e8ruHUjknPxxoGJxqpJ
-	 uYM5pr/SnC3lU2oEg6Xw03V5Fhn9GRIq4xNurOx4=
+	b=fyGeINkiGlhBFn3dJiHh72uif0FuFNfiROekbLGJ8k3aGVfLR9BUxFRWDRDM1q/PY
+	 n18VBIrJdZOPVtCbI+IypiTYo2hUbi1alsbCPLKVUGJbRRX6ne9D/uf4eUP+5feYEx
+	 IvkSuYvWQiI15LtHHD4Fr5o06TcI2BQGUZ1Qoob4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Willy Tarreau <w@1wt.eu>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 089/627] selftests/nolibc: correctly report errors from printf() and friends
-Date: Tue, 12 Aug 2025 19:26:24 +0200
-Message-ID: <20250812173422.688655214@linuxfoundation.org>
+Subject: [PATCH 6.16 090/627] usb: early: xhci-dbc: Fix early_ioremap leak
+Date: Tue, 12 Aug 2025 19:26:25 +0200
+Message-ID: <20250812173422.733482328@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,94 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit 4a40129087a4c32135bb1177a57bbbe6ee646f1a ]
+[ Upstream commit 2b7eec2ec3015f52fc74cf45d0408925e984ecd1 ]
 
-When an error is encountered by printf() it needs to be reported.
-errno() is already set by the callback.
+Using the kernel param earlyprintk=xdbc,keep without proper hardware
+setup leads to this:
 
-sprintf() is different, but that keeps working and is already tested.
+	[ ] xhci_dbc:early_xdbc_parse_parameter: dbgp_num: 0
+	...
+	[ ] xhci_dbc:early_xdbc_setup_hardware: failed to setup the connection to host
+	...
+	[ ] calling  kmemleak_late_init+0x0/0xa0 @ 1
+	[ ] kmemleak: Kernel memory leak detector initialized (mem pool available: 14919)
+	[ ] kmemleak: Automatic memory scanning thread started
+	[ ] initcall kmemleak_late_init+0x0/0xa0 returned 0 after 417 usecs
+	[ ] calling  check_early_ioremap_leak+0x0/0x70 @ 1
+	[ ] ------------[ cut here ]------------
+	[ ] Debug warning: early ioremap leak of 1 areas detected.
+	    please boot with early_ioremap_debug and report the dmesg.
+	[ ] WARNING: CPU: 11 PID: 1 at mm/early_ioremap.c:90 check_early_ioremap_leak+0x4e/0x70
 
-Also add a new test.
+When early_xdbc_setup_hardware() fails, make sure to call
+early_iounmap() since xdbc_init() won't handle it.
 
-Fixes: 7e4346f4a3a6 ("tools/nolibc/stdio: add a minimal [vf]printf() implementation")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Willy Tarreau <w@1wt.eu>
-Link: https://lore.kernel.org/r/20250704-nolibc-printf-error-v1-2-74b7a092433b@linutronix.de
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Fixes: aeb9dd1de98c ("usb/early: Add driver for xhci debug capability")
+Link: https://lore.kernel.org/r/20250627-xdbc-v1-1-43cc8c317b1b@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/stdio.h                 |  4 ++--
- tools/testing/selftests/nolibc/nolibc-test.c | 23 ++++++++++++++++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ drivers/usb/early/xhci-dbc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/include/nolibc/stdio.h b/tools/include/nolibc/stdio.h
-index c470d334ef3f..7630234408c5 100644
---- a/tools/include/nolibc/stdio.h
-+++ b/tools/include/nolibc/stdio.h
-@@ -358,11 +358,11 @@ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char
- 				n -= w;
- 				while (width-- > w) {
- 					if (cb(state, " ", 1) != 0)
--						break;
-+						return -1;
- 					written += 1;
- 				}
- 				if (cb(state, outstr, w) != 0)
--					break;
-+					return -1;
- 			}
+diff --git a/drivers/usb/early/xhci-dbc.c b/drivers/usb/early/xhci-dbc.c
+index 341408410ed9..41118bba9197 100644
+--- a/drivers/usb/early/xhci-dbc.c
++++ b/drivers/usb/early/xhci-dbc.c
+@@ -681,6 +681,10 @@ int __init early_xdbc_setup_hardware(void)
  
- 			written += len;
-diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
-index dbe13000fb1a..b5c04c137249 100644
---- a/tools/testing/selftests/nolibc/nolibc-test.c
-+++ b/tools/testing/selftests/nolibc/nolibc-test.c
-@@ -1646,6 +1646,28 @@ int test_strerror(void)
- 	return 0;
- }
+ 		xdbc.table_base = NULL;
+ 		xdbc.out_buf = NULL;
++
++		early_iounmap(xdbc.xhci_base, xdbc.xhci_length);
++		xdbc.xhci_base = NULL;
++		xdbc.xhci_length = 0;
+ 	}
  
-+static int test_printf_error(void)
-+{
-+	int fd, ret, saved_errno;
-+
-+	fd = open("/dev/full", O_RDWR);
-+	if (fd == -1)
-+		return 1;
-+
-+	errno = 0;
-+	ret = dprintf(fd, "foo");
-+	saved_errno = errno;
-+	close(fd);
-+
-+	if (ret != -1)
-+		return 2;
-+
-+	if (saved_errno != ENOSPC)
-+		return 3;
-+
-+	return 0;
-+}
-+
- static int run_printf(int min, int max)
- {
- 	int test;
-@@ -1675,6 +1697,7 @@ static int run_printf(int min, int max)
- 		CASE_TEST(width_trunc);  EXPECT_VFPRINTF(25, "                    ", "%25d", 1); break;
- 		CASE_TEST(scanf);        EXPECT_ZR(1, test_scanf()); break;
- 		CASE_TEST(strerror);     EXPECT_ZR(1, test_strerror()); break;
-+		CASE_TEST(printf_error); EXPECT_ZR(1, test_printf_error()); break;
- 		case __LINE__:
- 			return ret; /* must be last */
- 		/* note: do not set any defaults so as to permit holes above */
+ 	return ret;
 -- 
 2.39.5
 
