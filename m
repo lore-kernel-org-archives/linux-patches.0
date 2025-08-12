@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0CD2F7461;
-	Tue, 12 Aug 2025 17:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9A92F7461;
+	Tue, 12 Aug 2025 17:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020479; cv=none; b=mL4E9YEtqSIpobHb6go3a5LNPdessIHfu+aYgJQoa7gCxw5BSLE66ZF4K1bl5hPBzkCUIyfK3GtHtTld6kGyRmrNy6OWRF35UpSvWloxKW4aM8ECnWjIfTTBbWM602toHQ24OHCEpVMRzbgJMC/Gwg2eYTMaylzXlBDXV2Ee+fo=
+	t=1755020482; cv=none; b=lU0fIzvd5x3KLcSYVjwLyFxMT2Fj1/95uQLaCsvfbU0jzHnu/CDfnoe7ioK5t3Z4u2SVPXpFJOBo0ijaoKluV4+rSohkFlzETtgtD+emMbWJbx2KagbOv9wW/09HZyBdZGUMNxPx/bSxzpci/aFdrsWP1oAr2MgbGuUj4IEvkIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020479; c=relaxed/simple;
-	bh=dzz2gIrXURaZ7f4I04M1F+rFzXjnPF9v0crsAR45/u0=;
+	s=arc-20240116; t=1755020482; c=relaxed/simple;
+	bh=yMLjHIfix4O5TL/qOu0CmoC4oNtME40kO7hUMEKTRjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tk4pMzjM8w96u1RTu1hQh9aop2SLnO7wdff6YGIxphrgstSDMOrp+EdSC1GopgYVHntgApORiUm4sR/xBaxN0mG7RRVghWfz9ISvrYGVqPxn1Rv39Z4AfjmNw8X5aJv0IZlGyGRxqP7SMz5gELY9zHjX5Es+v72adnlg8P3jqCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B44EF+7I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ovph63eax5Q5E9lLn/E6qbJZz3Wy/OPlMwcznuccsg7E3N+aW2x2CKS+++0lAsfayFUoOuB1K7ucqB2/8F6HpbiXzANugL38G4ULLGzjXnWOAgGg3sLCTZXtZF80ecwuULkMDpfycDDfa+Di37iZIY9EKK3GRpFqC5aaXuH6tww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHGkSKrl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B44EF+7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7922EC4CEF0;
-	Tue, 12 Aug 2025 17:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHGkSKrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A472FC4CEF0;
+	Tue, 12 Aug 2025 17:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020478;
-	bh=dzz2gIrXURaZ7f4I04M1F+rFzXjnPF9v0crsAR45/u0=;
+	s=korg; t=1755020482;
+	bh=yMLjHIfix4O5TL/qOu0CmoC4oNtME40kO7hUMEKTRjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B44EF+7I+UpOLMLELOnchok6LtyNnMQ1mq+lUK9twJp0624xA5s6vnsuP41Pi0Qzx
-	 y+R3VmZZDZpQ4umc4+RYNZjJSZiMIU4ca5ueHJxOEGx/OznpzvCKsWYGrAVwJu7x/x
-	 bTLeMmWGpXcffhkKvtFScXOh//74apcMvnXpqtpk=
+	b=CHGkSKrlc9h5xj4HXPjyRglA6i6fRSEqbRuclylftb/iKeZCTkOOejl6VYuJdhXva
+	 zNi/0Km8rjuGZRwyypCZ2ForurFj3j64echivF8zv1ST96FPrAMq46QAH8Vbn16xZ6
+	 lU4yLE+2+t/FxDkky98T0//omLEe7PIZcBwQUvxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/253] cpufreq: Init policy->rwsem before it may be possibly used
-Date: Tue, 12 Aug 2025 19:27:59 +0200
-Message-ID: <20250812172952.606602758@linuxfoundation.org>
+Subject: [PATCH 6.1 059/253] usb: chipidea: add USB PHY event
+Date: Tue, 12 Aug 2025 19:27:27 +0200
+Message-ID: <20250812172951.237993266@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,47 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit d1378d1d7edb3a4c4935a44fe834ae135be03564 ]
+[ Upstream commit b7a62611fab72e585c729a7fcf666aa9c4144214 ]
 
-In cpufreq_policy_put_kobj(), policy->rwsem is used. But in
-cpufreq_policy_alloc(), if freq_qos_add_notifier() returns an error, error
-path via err_kobj_remove or err_min_qos_notifier will be reached and
-cpufreq_policy_put_kobj() will be called before policy->rwsem is
-initialized. Thus, the calling of init_rwsem() should be moved to where
-before these two error paths can be reached.
+Add USB PHY event for below situation:
+- usb role changed
+- vbus connect
+- vbus disconnect
+- gadget driver is enumerated
 
-Fixes: 67d874c3b2c6 ("cpufreq: Register notifiers with the PM QoS framework")
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/20250709104145.2348017-3-zhenglifeng1@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+USB PHY driver can get the last event after above situation occurs
+and deal with different situations.
+
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20230627110353.1879477-1-xu.yang_2@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/chipidea/ci.h  | 18 ++++++++++++++++--
+ drivers/usb/chipidea/udc.c | 10 ++++++++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 1d18a56dccab..805b4d26e9d2 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1239,6 +1239,8 @@ static struct cpufreq_policy *cpufreq_policy_alloc(unsigned int cpu)
- 		goto err_free_real_cpus;
- 	}
+diff --git a/drivers/usb/chipidea/ci.h b/drivers/usb/chipidea/ci.h
+index 2ff83911219f..de23e10470d3 100644
+--- a/drivers/usb/chipidea/ci.h
++++ b/drivers/usb/chipidea/ci.h
+@@ -278,8 +278,19 @@ static inline int ci_role_start(struct ci_hdrc *ci, enum ci_role role)
+ 		return -ENXIO;
  
-+	init_rwsem(&policy->rwsem);
+ 	ret = ci->roles[role]->start(ci);
+-	if (!ret)
+-		ci->role = role;
++	if (ret)
++		return ret;
 +
- 	freq_constraints_init(&policy->constraints);
++	ci->role = role;
++
++	if (ci->usb_phy) {
++		if (role == CI_ROLE_HOST)
++			usb_phy_set_event(ci->usb_phy, USB_EVENT_ID);
++		else
++			/* in device mode but vbus is invalid*/
++			usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
++	}
++
+ 	return ret;
+ }
  
- 	policy->nb_min.notifier_call = cpufreq_notifier_min;
-@@ -1261,7 +1263,6 @@ static struct cpufreq_policy *cpufreq_policy_alloc(unsigned int cpu)
- 	}
+@@ -293,6 +304,9 @@ static inline void ci_role_stop(struct ci_hdrc *ci)
+ 	ci->role = CI_ROLE_END;
  
- 	INIT_LIST_HEAD(&policy->policy_list);
--	init_rwsem(&policy->rwsem);
- 	spin_lock_init(&policy->transition_lock);
- 	init_waitqueue_head(&policy->transition_wait);
- 	INIT_WORK(&policy->update, handle_update);
+ 	ci->roles[role]->stop(ci);
++
++	if (ci->usb_phy)
++		usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
+ }
+ 
+ static inline enum usb_role ci_role_to_usb_role(struct ci_hdrc *ci)
+diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
+index 3795c70a3155..e7a02d9e1c07 100644
+--- a/drivers/usb/chipidea/udc.c
++++ b/drivers/usb/chipidea/udc.c
+@@ -1724,6 +1724,13 @@ static int ci_udc_vbus_session(struct usb_gadget *_gadget, int is_active)
+ 		ret = ci->platdata->notify_event(ci,
+ 				CI_HDRC_CONTROLLER_VBUS_EVENT);
+ 
++	if (ci->usb_phy) {
++		if (is_active)
++			usb_phy_set_event(ci->usb_phy, USB_EVENT_VBUS);
++		else
++			usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
++	}
++
+ 	if (ci->driver)
+ 		ci_hdrc_gadget_connect(_gadget, is_active);
+ 
+@@ -2040,6 +2047,9 @@ static irqreturn_t udc_irq(struct ci_hdrc *ci)
+ 		if (USBi_PCI & intr) {
+ 			ci->gadget.speed = hw_port_is_high_speed(ci) ?
+ 				USB_SPEED_HIGH : USB_SPEED_FULL;
++			if (ci->usb_phy)
++				usb_phy_set_event(ci->usb_phy,
++					USB_EVENT_ENUMERATED);
+ 			if (ci->suspended) {
+ 				if (ci->driver->resume) {
+ 					spin_unlock(&ci->lock);
 -- 
 2.39.5
 
