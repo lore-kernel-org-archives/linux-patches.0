@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8844E2FD1AD;
-	Tue, 12 Aug 2025 18:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07582FDC49;
+	Tue, 12 Aug 2025 18:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024293; cv=none; b=sKhk8Ta9P1EhaDWJ3MiIiiawWyaDOt47StrE7tOfjbbzvTEeSPzt46NyuO6pWNCLVcEd0r4IGQMEWjBNgwq1t1e6UegdCgYGKVpntEA0/Nzr6V/Ss5aZuM5o+PVAXPB4igEkxbhystFykt2kdvUhkwTmCOjoKg1rlgtaZWb45DU=
+	t=1755024298; cv=none; b=hO6GX0CSm6t+L9MS+FKIIXWYrUS/SKYUcbgq5lac7/4I0N9BO8Djf02q+Z8l4DFXxEsGg3/oSEO9ShfeGW0mxExV6Rz6L6T7Ih4ZdkRRVS41tCJ9cWwizLx8ww7zzKhgxaX2I3QQAFeoqj0a8OdnUCJMQx0RaxBFlNz3RLDVFMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024293; c=relaxed/simple;
-	bh=ZQHZNurwaOeVW9bY50mZfU2yCkXRh9o5hxu06OShF7Y=;
+	s=arc-20240116; t=1755024298; c=relaxed/simple;
+	bh=nBpQO9yDoX6qW6LUMKkEZ2tWR9KwGwf9BfSLMI2ZAs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbIZDd33JspoFzXKL0BDd0gJsjQlL/dM6m6cwYHhCnT2UpJqczua7c1CegxOKY8sZljPllaRtUkWiFtp4xy0zhPXaGhbmQRVXC0/jBNLhv/HLdlSOmFtH3vhh5ZxKWnOr5Dm5krIOfGSFeGFD8zdYBvsKCQDCZuRnAmEQwVrOsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxTwJlN3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fY68EGvM6ORhhbOMoNpuFQC2L0ZNl69vSTLY/2Sy9BTHkdYORfsC34HZwVEROy/HED5HJPFu4V7B6+tQNw9ha2onpuB37+9Yc1MeKNT9zrjiyDHYuU1L0WAhY+TXMNoTCWSOBdJcEhnUC0Pd5ppUh7gnggxO4ydz+LhdUJQN7A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaVde2Uv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxTwJlN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98BFC4CEF0;
-	Tue, 12 Aug 2025 18:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaVde2Uv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E808AC4CEF0;
+	Tue, 12 Aug 2025 18:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024293;
-	bh=ZQHZNurwaOeVW9bY50mZfU2yCkXRh9o5hxu06OShF7Y=;
+	s=korg; t=1755024297;
+	bh=nBpQO9yDoX6qW6LUMKkEZ2tWR9KwGwf9BfSLMI2ZAs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxTwJlN3TCV60pi8leh5ZXNXRbPTY/TlhE8akUaheKij1qMkWWMx+YgSPeapyoT9f
-	 ymHiLLr88jw1oF6Mh7LA+98h6i9x++nxvkpqFH64DO9d4Kr8LLiBq+ys5aCJc6Y17K
-	 oBz3ImvAEGdm23QGOObWAqQURsAMfIjq4QEiGJWU=
+	b=UaVde2UveLrENRhh+mXeCcNxcg74kE89NSzDfMvIS+xLw/P0SD2w13Xa2a45QR3f3
+	 IvtpylVxHLyNQY8jQg7n1/PHLk59G8/s6nRxozFpgWN7JoIyh3C+DlWJtHf4Smn/30
+	 A04/WP0zjkqtYIPTxZ80aCfjDg9Dh3SxtrJWa6GE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <ziyao@disroot.org>,
-	Ze Huang <huangze@whut.edu.cn>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiwei Sun <sunjw10@lenovo.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 330/627] pinctrl: canaan: k230: Fix order of DT parse and pinctrl register
-Date: Tue, 12 Aug 2025 19:30:25 +0200
-Message-ID: <20250812173431.848800536@linuxfoundation.org>
+Subject: [PATCH 6.16 331/627] PCI: Adjust the position of reading the Link Control 2 register
+Date: Tue, 12 Aug 2025 19:30:26 +0200
+Message-ID: <20250812173431.884697024@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,60 +47,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ze Huang <huangze@whut.edu.cn>
+From: Jiwei Sun <sunjw10@lenovo.com>
 
-[ Upstream commit d94a32ac688f953dc9a9f12b5b4139ecad841bbb ]
+[ Upstream commit b85af48de3ece4e5bbdb2248a5360a409991cf67 ]
 
-Move DT parse before pinctrl register. This ensures that device tree
-parsing is done before calling devm_pinctrl_register() to prevent using
-uninitialized pin resources.
+In a89c82249c37 ("PCI: Work around PCIe link training failures"), if the
+speed limit is set to 2.5 GT/s and the retraining is successful, an attempt
+will be made to lift the speed limit. One condition for lifting the speed
+limit is to check whether the link speed field of the Link Control 2
+register is PCI_EXP_LNKCTL2_TLS_2_5GT.
 
-Fixes: 545887eab6f6 ("pinctrl: canaan: Add support for k230 SoC")
-Reported-by: Yao Zi <ziyao@disroot.org>
-Signed-off-by: Ze Huang <huangze@whut.edu.cn>
-Link: https://lore.kernel.org/20250624-k230-return-check-v1-2-6b4fc5ba0c41@whut.edu.cn
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+However, since de9a6c8d5dbf ("PCI/bwctrl: Add pcie_set_target_speed() to
+set PCIe Link Speed"), the `lnkctl2` local variable does not undergo any
+changes during the speed limit setting and retraining process. As a result,
+the code intended to lift the speed limit is not executed.
+
+To address this issue, adjust the position of the Link Control 2 register
+read operation in the code and place it before its use.
+
+Fixes: de9a6c8d5dbf ("PCI/bwctrl: Add pcie_set_target_speed() to set PCIe Link Speed")
+Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Jiwei Sun <sunjw10@lenovo.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250123055155.22648-3-sjiwei@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-k230.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/pci/quirks.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-k230.c b/drivers/pinctrl/pinctrl-k230.c
-index 4976308e6237..d716f23d837f 100644
---- a/drivers/pinctrl/pinctrl-k230.c
-+++ b/drivers/pinctrl/pinctrl-k230.c
-@@ -590,6 +590,7 @@ static int k230_pinctrl_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct k230_pinctrl *info;
- 	struct pinctrl_desc *pctl;
-+	int ret;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index d7f4ee634263..db6e142b082d 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -105,13 +105,13 @@ int pcie_failed_link_retrain(struct pci_dev *dev)
+ 	    !pcie_cap_has_lnkctl2(dev) || !dev->link_active_reporting)
+ 		return ret;
  
- 	info = devm_kzalloc(dev, sizeof(*info), GFP_KERNEL);
- 	if (!info)
-@@ -615,13 +616,15 @@ static int k230_pinctrl_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(info->regmap_base),
- 				     "failed to init regmap\n");
+-	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
+ 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
+ 	if (!(lnksta & PCI_EXP_LNKSTA_DLLLA) && pcie_lbms_seen(dev, lnksta)) {
+-		u16 oldlnkctl2 = lnkctl2;
++		u16 oldlnkctl2;
  
-+	ret = k230_pinctrl_parse_dt(pdev, info);
-+	if (ret)
-+		return ret;
+ 		pci_info(dev, "broken device, retraining non-functional downstream link at 2.5GT/s\n");
+ 
++		pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &oldlnkctl2);
+ 		ret = pcie_set_target_speed(dev, PCIE_SPEED_2_5GT, false);
+ 		if (ret) {
+ 			pci_info(dev, "retraining failed\n");
+@@ -123,6 +123,8 @@ int pcie_failed_link_retrain(struct pci_dev *dev)
+ 		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
+ 	}
+ 
++	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
 +
- 	info->pctl_dev = devm_pinctrl_register(dev, pctl, info);
- 	if (IS_ERR(info->pctl_dev))
- 		return dev_err_probe(dev, PTR_ERR(info->pctl_dev),
- 				     "devm_pinctrl_register failed\n");
- 
--	k230_pinctrl_parse_dt(pdev, info);
--
- 	return 0;
- }
- 
+ 	if ((lnksta & PCI_EXP_LNKSTA_DLLLA) &&
+ 	    (lnkctl2 & PCI_EXP_LNKCTL2_TLS) == PCI_EXP_LNKCTL2_TLS_2_5GT &&
+ 	    pci_match_id(ids, dev)) {
 -- 
 2.39.5
 
