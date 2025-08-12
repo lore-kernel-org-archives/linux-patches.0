@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2922FE579;
-	Tue, 12 Aug 2025 17:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4266D268C73;
+	Tue, 12 Aug 2025 17:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020379; cv=none; b=ZbX/rofji4T9vIjH9APeq9sonHJFhhdBB4Cje3xXvrZfwJS1VvJ7w4ZAcDBXNYszSc0k1E+dQGTuCbVcbTSr7PTWgU9Z05slOuq07Up3BUyyqeRv9yrgxkR97nAQOzfGp5hNikokUTUeWFY2XwX9HddUoq56QrKlhAya1WiC1yM=
+	t=1755020383; cv=none; b=Q01PeLfoNJ87ZsSzxgJO1bDe9K20F5Zusug9sGYRHmzZYGkyOORSrimcduqSYqW0IxVroFPBdMjaU71f4jKWWp3WnD0a7JaMnEX+mQ2itSW9AvPoK9ahX20flr/ypiI39ed8316l3Zorcc3ahLYm4V7XXV1ups5BiwMH/hpPt4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020379; c=relaxed/simple;
-	bh=/lmcZ/Fd/83LKqPw4TbHdduzYZoAkEy5Bc0KJBbEMmM=;
+	s=arc-20240116; t=1755020383; c=relaxed/simple;
+	bh=0GccDuBkTVuIZeBAcGdRB/P2P2pouwiRx+SXsIwULLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpGBX0rfrEMIvK8DFk+nmV/dU56rR+VsRvrcz+9wYExEjEmlKox0wLIMrD6Qi5tGq60A8Qxyo2izFo8r1AY/bUV6hrQtp1WPAwgaIW+L/C7mKYO6P9BN0IrsU79Splx7XhQe8io+DqwsLbz666Buniys+PQO+9Ba/pol8mQ8rOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VE88QM9q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D0so1SNsKoMG9Y7STw6bGb1LUCyZTUMoBR4M785ji5ZGkoadeIkb70xZU3EzvIJ20biWMgzAQkhTGH7e/2xSng+FSRqv4fZTAC/xCyxjYl+00rXI39YlRVMuFSmnZuxUYB3qlVi+fRZBGYQXi6SVF1gETa9MbjZ+7lnsWocUIv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sj9AWGCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VE88QM9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1F9C4CEF0;
-	Tue, 12 Aug 2025 17:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sj9AWGCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D627C4CEF0;
+	Tue, 12 Aug 2025 17:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020379;
-	bh=/lmcZ/Fd/83LKqPw4TbHdduzYZoAkEy5Bc0KJBbEMmM=;
+	s=korg; t=1755020382;
+	bh=0GccDuBkTVuIZeBAcGdRB/P2P2pouwiRx+SXsIwULLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VE88QM9qmp+SxZJvPFy3GiFGYzopVHaDf92PDQjuao2GmjjRL9zNUNkYQNsEA0h61
-	 y/OJKL2kBYFeTAtsAYry1Iyo382GEBnHgxDCjytDaEbAM1KDqLovMdhm7uL0xmXh8m
-	 pOg0g6vydWABGHSGwsJx9+nBQcmsiGDLAPrfFEEM=
+	b=sj9AWGCVz7pAoHHQtuLQH03oWevBEV62LqJeYf7Kg6p/Lmhc3G6fRjGzcwSJZbj4g
+	 V7TQlrBschQVgzFJFd/kl7jFlBbXTDw8xGlUe9KLBcJWTHCWa8RTdk8+0DmLPRpkmK
+	 G70UECaLmQgVwhsyLXNoPRCEZcGN/Kziqf42jH44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@coolpad.com>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.1 056/253] erofs: drop z_erofs_page_mark_eio()
-Date: Tue, 12 Aug 2025 19:27:24 +0200
-Message-ID: <20250812172951.111571802@linuxfoundation.org>
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 065/253] ublk: use vmalloc for ublk_devices __queues
+Date: Tue, 12 Aug 2025 19:27:33 +0200
+Message-ID: <20250812172951.499104393@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,84 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-commit 9a05c6a8bc26138d34e87b39e6a815603bc2a66c upstream.
+[ Upstream commit c2f48453b7806d41f5a3270f206a5cd5640ed207 ]
 
-It can be folded into z_erofs_onlinepage_endio() to simplify the code.
+struct ublk_device's __queues points to an allocation with up to
+UBLK_MAX_NR_QUEUES (4096) queues, each of which have:
+- struct ublk_queue (48 bytes)
+- Tail array of up to UBLK_MAX_QUEUE_DEPTH (4096) struct ublk_io's,
+  32 bytes each
+This means the full allocation can exceed 512 MB, which may well be
+impossible to service with contiguous physical pages. Switch to
+kvcalloc() and kvfree(), since there is no need for physically
+contiguous memory.
 
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230817082813.81180-5-hsiangkao@linux.alibaba.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250620151008.3976463-2-csander@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c |   29 +++++++++--------------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
+ drivers/block/ublk_drv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -144,22 +144,17 @@ static inline void z_erofs_onlinepage_sp
- 	atomic_inc((atomic_t *)&page->private);
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index f2a99e5d304d..3a7c42f76d89 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1391,7 +1391,7 @@ static void ublk_deinit_queues(struct ublk_device *ub)
+ 
+ 	for (i = 0; i < nr_queues; i++)
+ 		ublk_deinit_queue(ub, i);
+-	kfree(ub->__queues);
++	kvfree(ub->__queues);
  }
  
--static inline void z_erofs_page_mark_eio(struct page *page)
-+static void z_erofs_onlinepage_endio(struct page *page, int err)
- {
--	int orig;
-+	int orig, v;
-+
-+	DBG_BUGON(!PagePrivate(page));
+ static int ublk_init_queues(struct ublk_device *ub)
+@@ -1402,7 +1402,7 @@ static int ublk_init_queues(struct ublk_device *ub)
+ 	int i, ret = -ENOMEM;
  
- 	do {
- 		orig = atomic_read((atomic_t *)&page->private);
--	} while (atomic_cmpxchg((atomic_t *)&page->private, orig,
--				orig | Z_EROFS_PAGE_EIO) != orig);
--}
--
--static inline void z_erofs_onlinepage_endio(struct page *page)
--{
--	unsigned int v;
-+		v = (orig - 1) | (err ? Z_EROFS_PAGE_EIO : 0);
-+	} while (atomic_cmpxchg((atomic_t *)&page->private, orig, v) != orig);
+ 	ub->queue_size = ubq_size;
+-	ub->__queues = kcalloc(nr_queues, ubq_size, GFP_KERNEL);
++	ub->__queues = kvcalloc(nr_queues, ubq_size, GFP_KERNEL);
+ 	if (!ub->__queues)
+ 		return ret;
  
--	DBG_BUGON(!PagePrivate(page));
--	v = atomic_dec_return((atomic_t *)&page->private);
- 	if (!(v & ~Z_EROFS_PAGE_EIO)) {
- 		set_page_private(page, 0);
- 		ClearPagePrivate(page);
-@@ -930,9 +925,7 @@ next_part:
- 		goto repeat;
- 
- out:
--	if (err)
--		z_erofs_page_mark_eio(page);
--	z_erofs_onlinepage_endio(page);
-+	z_erofs_onlinepage_endio(page, err);
- 	return err;
- }
- 
-@@ -1035,9 +1028,7 @@ static void z_erofs_fill_other_copies(st
- 			cur += len;
- 		}
- 		kunmap_local(dst);
--		if (err)
--			z_erofs_page_mark_eio(bvi->bvec.page);
--		z_erofs_onlinepage_endio(bvi->bvec.page);
-+		z_erofs_onlinepage_endio(bvi->bvec.page, err);
- 		list_del(p);
- 		kfree(bvi);
- 	}
-@@ -1205,9 +1196,7 @@ out:
- 		/* recycle all individual short-lived pages */
- 		if (z_erofs_put_shortlivedpage(be->pagepool, page))
- 			continue;
--		if (err)
--			z_erofs_page_mark_eio(page);
--		z_erofs_onlinepage_endio(page);
-+		z_erofs_onlinepage_endio(page, err);
- 	}
- 
- 	if (be->decompressed_pages != be->onstack_pages)
+-- 
+2.39.5
+
 
 
