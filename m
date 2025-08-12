@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635902F90DF;
-	Tue, 12 Aug 2025 18:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C000C1DB92A;
+	Tue, 12 Aug 2025 18:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023807; cv=none; b=NGDePGvhEAz5tG10sUDicKij8AxF8bl3Chuon37Vf2z6LoPqbLHbFFqOYZIK/Oy0697mvRyZeOjijhLttg/SIFBh4hD7f1vjpPvOYW0Hwwpn3ty6Dvc3dG6Cqj9F4ljCf2JQowGDvJxAXz2Im0HKj0RnwBTQ/kRwNCTbLIiigRE=
+	t=1755023810; cv=none; b=Mx+IB88u7naFjhtwWG3Vh/lVFftz0cJ5TUD2i1ibTxT5ouqIFhD4ByktaF3R15ol8Yq6T+n06b/faCeMn8hVNHkEjKkDOK2Jj5TZhLIxj8EPiEe6H+KaGOp1qekVS3nRjcBbNTCU47rM0GyPcP90IpcKMokA1I7jLJfZUS/5vl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023807; c=relaxed/simple;
-	bh=514N8JRHvZUm9L+GQP7g75Qowaf61K8A+ca6wqx73+U=;
+	s=arc-20240116; t=1755023810; c=relaxed/simple;
+	bh=sQtbooRGf/OEIhZHJoICIVJW+sIMvmNi+qo90Ojv0T4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSjC6zJC6U2/NWnMbr7dnSmMByTPmaN40ZJyBjvTkHTDPt9dMBTZbjTsShVvyR5xbsv83c0pwzZBkCDo/QXjhuBG151tYjDhHx/7PFcZLALr7E2Go1q8iNdRxB7GdECwyFyzG2LU8y+cE/4iMsc6loOUXltdB6iiVA1rFaSe90Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0T2WKiP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IG3ocLPYgi990EdER3u1JoYxEHPAIqlgEKgz0xMZZsxrMzpC3gaO1jT1K/Y1frtUWOnPNT0as4wo7xyFIS/yYNyVTIK+p+Yz/VJakNRIJXQhutd+w3uMDN065hfY8l0MLyHOfJSTDxaUmA95XCO+5N2+qw5iRheDC1r20d8c/w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkCds3Wi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0T2WKiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6B0C4CEF0;
-	Tue, 12 Aug 2025 18:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkCds3Wi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F65C4CEF0;
+	Tue, 12 Aug 2025 18:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023807;
-	bh=514N8JRHvZUm9L+GQP7g75Qowaf61K8A+ca6wqx73+U=;
+	s=korg; t=1755023810;
+	bh=sQtbooRGf/OEIhZHJoICIVJW+sIMvmNi+qo90Ojv0T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0T2WKiP9zNy4q/osz0pfVuiheY++BYGCr7s1/zuUrVbwny8yl/NvpY6BdQC5KKBk
-	 ia7tSycwWxx4Q34Rme1N37E3Xk1CWj2SxnKNR8o5/PiUjtMvBlVRUcqM8HJb8fGvIq
-	 8CZ8IXW223UFSpceWE33g3Flrzip0wezrsUC/qik=
+	b=dkCds3WixSJFI+ageKca4LlwMIltC/OfnlktXqzGJMUEHzeYWXXenhQ4GNP2BzbvF
+	 MeTEbXO4ca2TW6OwliL6tY4e3Ck0OUml2cTv8yCKYoKDtzcX5JPetOWuTcP7KSdhaN
+	 ZnEEMlOB7u7Bsnvp7bm1SdJQ05M7Vi7BEk6oHM9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emily Deng <Emily.Deng@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 187/627] drm/amdkfd: Move the process suspend and resume out of full access
-Date: Tue, 12 Aug 2025 19:28:02 +0200
-Message-ID: <20250812173426.388029853@linuxfoundation.org>
+Subject: [PATCH 6.16 188/627] drm/amdgpu: rework queue reset scheduler interaction
+Date: Tue, 12 Aug 2025 19:28:03 +0200
+Message-ID: <20250812173426.425813446@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,318 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emily Deng <Emily.Deng@amd.com>
+From: Christian König <ckoenig.leichtzumerken@gmail.com>
 
-[ Upstream commit 54f7a24e1437d66c9ff36d727a9dff1beeeab429 ]
+[ Upstream commit 821aacb2dcf0d1fbc3c0f7803b6089b01addb8bf ]
 
-For the suspend and resume process, exclusive access is not required.
-Therefore, it can be moved out of the full access section to reduce the
-duration of exclusive access.
+Stopping the scheduler for queue reset is generally a good idea because
+it prevents any worker from touching the ring buffer.
 
-v3:
-Move suspend processes before hardware fini.
-Remove twice call for bare metal.
-
-v4:
-Refine code
-
-Signed-off-by: Emily Deng <Emily.Deng@amd.com>
-Acked-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 14b2d71a9a24 ("drm/amdgpu/gfx10: fix KGQ reset sequence")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c    | 24 +++++++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h    | 25 ++++++---
- .../drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c   |  4 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c    | 11 ++--
- drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c      |  4 +-
- drivers/gpu/drm/amd/amdkfd/kfd_device.c       | 54 ++++++++++++-------
- 6 files changed, 86 insertions(+), 36 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 35 ++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-index d8ac4b1051a8..fe282b855734 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -248,18 +248,34 @@ void amdgpu_amdkfd_interrupt(struct amdgpu_device *adev,
- 		kgd2kfd_interrupt(adev->kfd.dev, ih_ring_entry);
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+index ddb9d3269357..9ea3bce01faf 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -91,8 +91,8 @@ static enum drm_gpu_sched_stat amdgpu_job_timedout(struct drm_sched_job *s_job)
+ 	struct amdgpu_job *job = to_amdgpu_job(s_job);
+ 	struct amdgpu_task_info *ti;
+ 	struct amdgpu_device *adev = ring->adev;
+-	int idx;
+-	int r;
++	bool set_error = false;
++	int idx, r;
  
--void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool run_pm)
-+void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool suspend_proc)
- {
- 	if (adev->kfd.dev)
--		kgd2kfd_suspend(adev->kfd.dev, run_pm);
-+		kgd2kfd_suspend(adev->kfd.dev, suspend_proc);
- }
+ 	if (!drm_dev_enter(adev_to_drm(adev), &idx)) {
+ 		dev_info(adev->dev, "%s - device unplugged skipping recovery on scheduler:%s",
+@@ -136,10 +136,12 @@ static enum drm_gpu_sched_stat amdgpu_job_timedout(struct drm_sched_job *s_job)
+ 	} else if (amdgpu_gpu_recovery && ring->funcs->reset) {
+ 		bool is_guilty;
  
--int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool run_pm)
-+int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool resume_proc)
- {
- 	int r = 0;
- 
- 	if (adev->kfd.dev)
--		r = kgd2kfd_resume(adev->kfd.dev, run_pm);
-+		r = kgd2kfd_resume(adev->kfd.dev, resume_proc);
+-		dev_err(adev->dev, "Starting %s ring reset\n", s_job->sched->name);
+-		/* stop the scheduler, but don't mess with the
+-		 * bad job yet because if ring reset fails
+-		 * we'll fall back to full GPU reset.
++		dev_err(adev->dev, "Starting %s ring reset\n",
++			s_job->sched->name);
 +
-+	return r;
-+}
-+
-+void amdgpu_amdkfd_suspend_process(struct amdgpu_device *adev)
-+{
-+	if (adev->kfd.dev)
-+		kgd2kfd_suspend_process(adev->kfd.dev);
-+}
-+
-+int amdgpu_amdkfd_resume_process(struct amdgpu_device *adev)
-+{
-+	int r = 0;
-+
-+	if (adev->kfd.dev)
-+		r = kgd2kfd_resume_process(adev->kfd.dev);
++		/*
++		 * Stop the scheduler to prevent anybody else from touching the
++		 * ring buffer.
+ 		 */
+ 		drm_sched_wqueue_stop(&ring->sched);
  
- 	return r;
- }
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-index b6ca41859b53..b7c3ec483407 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-@@ -154,8 +154,10 @@ struct amdkfd_process_info {
- int amdgpu_amdkfd_init(void);
- void amdgpu_amdkfd_fini(void);
+@@ -152,26 +154,29 @@ static enum drm_gpu_sched_stat amdgpu_job_timedout(struct drm_sched_job *s_job)
+ 		else
+ 			is_guilty = true;
  
--void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool run_pm);
--int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool run_pm);
-+void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool suspend_proc);
-+int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool resume_proc);
-+void amdgpu_amdkfd_suspend_process(struct amdgpu_device *adev);
-+int amdgpu_amdkfd_resume_process(struct amdgpu_device *adev);
- void amdgpu_amdkfd_interrupt(struct amdgpu_device *adev,
- 			const void *ih_ring_entry);
- void amdgpu_amdkfd_device_probe(struct amdgpu_device *adev);
-@@ -411,8 +413,10 @@ struct kfd_dev *kgd2kfd_probe(struct amdgpu_device *adev, bool vf);
- bool kgd2kfd_device_init(struct kfd_dev *kfd,
- 			 const struct kgd2kfd_shared_resources *gpu_resources);
- void kgd2kfd_device_exit(struct kfd_dev *kfd);
--void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm);
--int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm);
-+void kgd2kfd_suspend(struct kfd_dev *kfd, bool suspend_proc);
-+int kgd2kfd_resume(struct kfd_dev *kfd, bool resume_proc);
-+void kgd2kfd_suspend_process(struct kfd_dev *kfd);
-+int kgd2kfd_resume_process(struct kfd_dev *kfd);
- int kgd2kfd_pre_reset(struct kfd_dev *kfd,
- 		      struct amdgpu_reset_context *reset_context);
- int kgd2kfd_post_reset(struct kfd_dev *kfd);
-@@ -454,11 +458,20 @@ static inline void kgd2kfd_device_exit(struct kfd_dev *kfd)
- {
- }
+-		if (is_guilty)
++		if (is_guilty) {
+ 			dma_fence_set_error(&s_job->s_fence->finished, -ETIME);
++			set_error = true;
++		}
  
--static inline void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
-+static inline void kgd2kfd_suspend(struct kfd_dev *kfd, bool suspend_proc)
- {
- }
- 
--static inline int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm)
-+static inline int kgd2kfd_resume(struct kfd_dev *kfd, bool resume_proc)
-+{
-+	return 0;
-+}
-+
-+static inline void kgd2kfd_suspend_process(struct kfd_dev *kfd)
-+{
-+}
-+
-+static inline int kgd2kfd_resume_process(struct kfd_dev *kfd)
- {
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c
-index ffbaa8bc5eea..1105a09e55dc 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c
-@@ -320,7 +320,7 @@ static void set_barrier_auto_waitcnt(struct amdgpu_device *adev, bool enable_wai
- 	if (!down_read_trylock(&adev->reset_domain->sem))
- 		return;
- 
--	amdgpu_amdkfd_suspend(adev, false);
-+	amdgpu_amdkfd_suspend(adev, true);
- 
- 	if (suspend_resume_compute_scheduler(adev, true))
- 		goto out;
-@@ -333,7 +333,7 @@ static void set_barrier_auto_waitcnt(struct amdgpu_device *adev, bool enable_wai
- out:
- 	suspend_resume_compute_scheduler(adev, false);
- 
--	amdgpu_amdkfd_resume(adev, false);
-+	amdgpu_amdkfd_resume(adev, true);
- 
- 	up_read(&adev->reset_domain->sem);
- }
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index aa32df7e2fb2..54ea8e8d7812 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3518,7 +3518,7 @@ static int amdgpu_device_ip_fini_early(struct amdgpu_device *adev)
- 	amdgpu_device_set_pg_state(adev, AMD_PG_STATE_UNGATE);
- 	amdgpu_device_set_cg_state(adev, AMD_CG_STATE_UNGATE);
- 
--	amdgpu_amdkfd_suspend(adev, false);
-+	amdgpu_amdkfd_suspend(adev, true);
- 	amdgpu_userq_suspend(adev);
- 
- 	/* Workaround for ASICs need to disable SMC first */
-@@ -5055,6 +5055,8 @@ int amdgpu_device_suspend(struct drm_device *dev, bool notify_clients)
- 	adev->in_suspend = true;
- 
- 	if (amdgpu_sriov_vf(adev)) {
-+		if (!adev->in_s0ix && !adev->in_runpm)
-+			amdgpu_amdkfd_suspend_process(adev);
- 		amdgpu_virt_fini_data_exchange(adev);
- 		r = amdgpu_virt_request_full_gpu(adev, false);
- 		if (r)
-@@ -5074,7 +5076,7 @@ int amdgpu_device_suspend(struct drm_device *dev, bool notify_clients)
- 	amdgpu_device_ip_suspend_phase1(adev);
- 
- 	if (!adev->in_s0ix) {
--		amdgpu_amdkfd_suspend(adev, adev->in_runpm);
-+		amdgpu_amdkfd_suspend(adev, !amdgpu_sriov_vf(adev) && !adev->in_runpm);
- 		amdgpu_userq_suspend(adev);
- 	}
- 
-@@ -5140,7 +5142,7 @@ int amdgpu_device_resume(struct drm_device *dev, bool notify_clients)
- 	}
- 
- 	if (!adev->in_s0ix) {
--		r = amdgpu_amdkfd_resume(adev, adev->in_runpm);
-+		r = amdgpu_amdkfd_resume(adev, !amdgpu_sriov_vf(adev) && !adev->in_runpm);
- 		if (r)
+ 		r = amdgpu_ring_reset(ring, job->vmid);
+ 		if (!r) {
+-			if (amdgpu_ring_sched_ready(ring))
+-				drm_sched_stop(&ring->sched, s_job);
+ 			if (is_guilty) {
+ 				atomic_inc(&ring->adev->gpu_reset_counter);
+ 				amdgpu_fence_driver_force_completion(ring);
+ 			}
+-			if (amdgpu_ring_sched_ready(ring))
+-				drm_sched_start(&ring->sched, 0);
+-			dev_err(adev->dev, "Ring %s reset succeeded\n", ring->sched.name);
+-			drm_dev_wedged_event(adev_to_drm(adev), DRM_WEDGE_RECOVERY_NONE);
++			drm_sched_wqueue_start(&ring->sched);
++			dev_err(adev->dev, "Ring %s reset succeeded\n",
++				ring->sched.name);
++			drm_dev_wedged_event(adev_to_drm(adev),
++					     DRM_WEDGE_RECOVERY_NONE);
  			goto exit;
- 
-@@ -5159,6 +5161,9 @@ int amdgpu_device_resume(struct drm_device *dev, bool notify_clients)
- 	if (amdgpu_sriov_vf(adev)) {
- 		amdgpu_virt_init_data_exchange(adev);
- 		amdgpu_virt_release_full_gpu(adev, true);
-+
-+		if (!adev->in_s0ix && !r && !adev->in_runpm)
-+			r = amdgpu_amdkfd_resume_process(adev);
+ 		}
+-		dev_err(adev->dev, "Ring %s reset failure\n", ring->sched.name);
++		dev_err(adev->dev, "Ring %s reset failed\n", ring->sched.name);
  	}
- 
- 	if (r)
-diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-index bb82c652e4c0..5de2f047c534 100644
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-@@ -1681,9 +1681,9 @@ static int sdma_v4_4_2_reset_queue(struct amdgpu_ring *ring, unsigned int vmid)
- 	if (!(adev->sdma.supported_reset & AMDGPU_RESET_TYPE_PER_QUEUE))
- 		return -EOPNOTSUPP;
- 
--	amdgpu_amdkfd_suspend(adev, false);
-+	amdgpu_amdkfd_suspend(adev, true);
- 	r = amdgpu_sdma_reset_engine(adev, id);
--	amdgpu_amdkfd_resume(adev, false);
-+	amdgpu_amdkfd_resume(adev, true);
- 
- 	return r;
- }
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-index bf0854bd5555..097bf6753782 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -971,7 +971,7 @@ int kgd2kfd_pre_reset(struct kfd_dev *kfd,
- 		kfd_smi_event_update_gpu_reset(node, false, reset_context);
- 	}
- 
--	kgd2kfd_suspend(kfd, false);
-+	kgd2kfd_suspend(kfd, true);
- 
- 	for (i = 0; i < kfd->num_nodes; i++)
- 		kfd_signal_reset_event(kfd->nodes[i]);
-@@ -1019,7 +1019,7 @@ bool kfd_is_locked(void)
- 	return  (kfd_locked > 0);
- }
- 
--void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
-+void kgd2kfd_suspend(struct kfd_dev *kfd, bool suspend_proc)
- {
- 	struct kfd_node *node;
- 	int i;
-@@ -1027,14 +1027,8 @@ void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
- 	if (!kfd->init_complete)
- 		return;
- 
--	/* for runtime suspend, skip locking kfd */
--	if (!run_pm) {
--		mutex_lock(&kfd_processes_mutex);
--		/* For first KFD device suspend all the KFD processes */
--		if (++kfd_locked == 1)
--			kfd_suspend_all_processes();
--		mutex_unlock(&kfd_processes_mutex);
--	}
-+	if (suspend_proc)
-+		kgd2kfd_suspend_process(kfd);
- 
- 	for (i = 0; i < kfd->num_nodes; i++) {
- 		node = kfd->nodes[i];
-@@ -1042,7 +1036,7 @@ void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
- 	}
- }
- 
--int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm)
-+int kgd2kfd_resume(struct kfd_dev *kfd, bool resume_proc)
- {
- 	int ret, i;
- 
-@@ -1055,14 +1049,36 @@ int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm)
- 			return ret;
- 	}
- 
--	/* for runtime resume, skip unlocking kfd */
--	if (!run_pm) {
--		mutex_lock(&kfd_processes_mutex);
--		if (--kfd_locked == 0)
--			ret = kfd_resume_all_processes();
--		WARN_ONCE(kfd_locked < 0, "KFD suspend / resume ref. error");
--		mutex_unlock(&kfd_processes_mutex);
--	}
-+	if (resume_proc)
-+		ret = kgd2kfd_resume_process(kfd);
+-	dma_fence_set_error(&s_job->s_fence->finished, -ETIME);
 +
-+	return ret;
-+}
-+
-+void kgd2kfd_suspend_process(struct kfd_dev *kfd)
-+{
-+	if (!kfd->init_complete)
-+		return;
-+
-+	mutex_lock(&kfd_processes_mutex);
-+	/* For first KFD device suspend all the KFD processes */
-+	if (++kfd_locked == 1)
-+		kfd_suspend_all_processes();
-+	mutex_unlock(&kfd_processes_mutex);
-+}
-+
-+int kgd2kfd_resume_process(struct kfd_dev *kfd)
-+{
-+	int ret = 0;
-+
-+	if (!kfd->init_complete)
-+		return 0;
-+
-+	mutex_lock(&kfd_processes_mutex);
-+	if (--kfd_locked == 0)
-+		ret = kfd_resume_all_processes();
-+	WARN_ONCE(kfd_locked < 0, "KFD suspend / resume ref. error");
-+	mutex_unlock(&kfd_processes_mutex);
++	if (!set_error)
++		dma_fence_set_error(&s_job->s_fence->finished, -ETIME);
  
- 	return ret;
- }
+ 	if (amdgpu_device_should_recover_gpu(ring->adev)) {
+ 		struct amdgpu_reset_context reset_context;
 -- 
 2.39.5
 
