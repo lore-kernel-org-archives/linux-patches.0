@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BE52DE1E2;
-	Tue, 12 Aug 2025 17:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2811F2C15B5;
+	Tue, 12 Aug 2025 17:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021286; cv=none; b=Zrg5k0WWnNoFVYsNTqyBVlsvNLdGM3XFK0rC+EsoCew9ocqUUJcCqimfcNn02rQ/vchv8O+Z6La8PaS9AYe4C9wSLpT3elrnOIe2av9ijGJvNbZyVQC8XTlMk92NH+QZPIEceCBcVo0pZkdV0L39oHOcvv0MxjkTHrOthunPs4I=
+	t=1755021288; cv=none; b=dFw2/lE9gLoPWVesM6jYo4MZW0xzaY/ZeS8cOGymI9a0nTyeV9WOugYuf3T6FaSFEq2fuedAaGBT9WGXBRV7VI3FqHY2AxC8oGqpJsW0oaYntrZt/Kn/TBszUfT1YrKVm8sICH3gaQOkX1YDVoiRVM/tq1U7iTel/VODkxpT+x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021286; c=relaxed/simple;
-	bh=cn3ylJkNaMZT3UKSVdGvZvzFNATvzwUSrkl5jJcYo1s=;
+	s=arc-20240116; t=1755021288; c=relaxed/simple;
+	bh=snn3A8V2C1ZFshk9h4O2wJKX8CmJT37ThXi23GFIIXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teEirNpVEliW5SXFKRuPWZ5UIwND6XTmIE/WSWtmTtO+fKZnep+wRN7gvrmupoEFrezlM0y+eybaOxtHLiZLEl5EeNGPMq5H+lk0hGOgzsrVplSIt+TC/gBqHYrhwPl946dxDRFVqT2j8msJORQy1nihOVfe5BSrNswg12FDehU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpc+ozGZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o0cWklnQs9HFkgv7VHPes2BsQmVK/zldtKwZmYnfH8SWbz3CWnOcvCFpI412IP+dQRH3tn+SXLO0FfHy8Yq07YQaILccsmEuiMMZRIQLnjsRCmo04Y0NcpSVdzO27skTyPGZjVqjfOONUOtZTzPq0b3BEjWIa2gUBOtJPUH+LWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiS14lPH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpc+ozGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3005DC4CEF0;
-	Tue, 12 Aug 2025 17:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiS14lPH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A943C4CEF7;
+	Tue, 12 Aug 2025 17:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021284;
-	bh=cn3ylJkNaMZT3UKSVdGvZvzFNATvzwUSrkl5jJcYo1s=;
+	s=korg; t=1755021288;
+	bh=snn3A8V2C1ZFshk9h4O2wJKX8CmJT37ThXi23GFIIXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gpc+ozGZ2+ODyReqnNPDWqtBEnAM8Wer967+CzYXNJmZEtFeQXQVJxXFXYUJFwuLU
-	 r9rfRCvM+syKQtOjWNY0xebJ34KR19CQfpfvh54hHhRzQDlnowlKJd1wy5CctSCdNn
-	 HlqlqP6+LklQ5gu7MAzI8xle4nCQncIB3pfaCDKc=
+	b=kiS14lPHGaHrY9zZ5xj+ZT5NafHNWq6N4cL1LD2v8v34Pag8nDs+rvYPC0XQNvKxs
+	 lYoG46jCRZiJ1toE6LTrlRCw5Rs8JZTjglRsIYX4D+Dtsa/keZHPxpox1EVVnjN1Yt
+	 nrWX8sOJkcpRtCzThU/T30o+scr3+67ito0RX9zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Trond Myklebust <trondmy@kernel.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/262] wifi: ath12k: fix endianness handling while accessing wmi service bit
-Date: Tue, 12 Aug 2025 19:27:56 +0200
-Message-ID: <20250812172956.807168433@linuxfoundation.org>
+Subject: [PATCH 6.1 217/253] NFS: Fixup allocation flags for nfsiods __GFP_NORETRY
+Date: Tue, 12 Aug 2025 19:30:05 +0200
+Message-ID: <20250812172958.072212321@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +50,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 8f1a078842d4af4877fb686f3907788024d0d1b7 ]
+[ Upstream commit 99765233ab42bf7a4950377ad7894dce8a5c0e60 ]
 
-Currently there is no endian conversion in ath12k_wmi_tlv_services_parser()
-so the service bit parsing will be incorrect on a big endian platform and
-to fix this by using appropriate endian conversion.
+If the NFS client is doing writeback from a workqueue context, avoid using
+__GFP_NORETRY for allocations if the task has set PF_MEMALLOC_NOIO or
+PF_MEMALLOC_NOFS.  The combination of these flags makes memory allocation
+failures much more likely.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00217-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+We've seen those allocation failures show up when the loopback driver is
+doing writeback from a workqueue to a file on NFS, where memory allocation
+failure results in errors or corruption within the loopback device's
+filesystem.
 
-Fixes: 342527f35338 ("wifi: ath12k: Add support to parse new WMI event for 6 GHz regulatory")
-Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250717173539.2523396-2-tamizh.raja@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Suggested-by: Trond Myklebust <trondmy@kernel.org>
+Fixes: 0bae835b63c5 ("NFS: Avoid writeback threads getting stuck in mempool_alloc()")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Tested-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/f83ac1155a4bc670f2663959a7a068571e06afd9.1752111622.git.bcodding@redhat.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/nfs/internal.h | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 958ac4ed5c34..e918218ce2d6 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -6303,7 +6303,7 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
- 					  void *data)
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 84361674bffc..6ea10abfa851 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -598,9 +598,12 @@ nfs_write_match_verf(const struct nfs_writeverf *verf,
+ 
+ static inline gfp_t nfs_io_gfp_mask(void)
  {
- 	const struct wmi_service_available_event *ev;
--	u32 *wmi_ext2_service_bitmap;
-+	__le32 *wmi_ext2_service_bitmap;
- 	int i, j;
- 	u16 expected_len;
+-	if (current->flags & PF_WQ_WORKER)
+-		return GFP_KERNEL | __GFP_NORETRY | __GFP_NOWARN;
+-	return GFP_KERNEL;
++	gfp_t ret = current_gfp_context(GFP_KERNEL);
++
++	/* For workers __GFP_NORETRY only with __GFP_IO or __GFP_FS */
++	if ((current->flags & PF_WQ_WORKER) && ret == GFP_KERNEL)
++		ret |= __GFP_NORETRY | __GFP_NOWARN;
++	return ret;
+ }
  
-@@ -6335,12 +6335,12 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
- 			   ev->wmi_service_segment_bitmap[3]);
- 		break;
- 	case WMI_TAG_ARRAY_UINT32:
--		wmi_ext2_service_bitmap = (u32 *)ptr;
-+		wmi_ext2_service_bitmap = (__le32 *)ptr;
- 		for (i = 0, j = WMI_MAX_EXT_SERVICE;
- 		     i < WMI_SERVICE_SEGMENT_BM_SIZE32 && j < WMI_MAX_EXT2_SERVICE;
- 		     i++) {
- 			do {
--				if (wmi_ext2_service_bitmap[i] &
-+				if (__le32_to_cpu(wmi_ext2_service_bitmap[i]) &
- 				    BIT(j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32))
- 					set_bit(j, ab->wmi_ab.svc_map);
- 			} while (++j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32);
-@@ -6348,8 +6348,10 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
- 
- 		ath12k_dbg(ab, ATH12K_DBG_WMI,
- 			   "wmi_ext2_service_bitmap 0x%04x 0x%04x 0x%04x 0x%04x",
--			   wmi_ext2_service_bitmap[0], wmi_ext2_service_bitmap[1],
--			   wmi_ext2_service_bitmap[2], wmi_ext2_service_bitmap[3]);
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[0]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[1]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[2]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[3]));
- 		break;
- 	}
- 	return 0;
+ /*
 -- 
 2.39.5
 
