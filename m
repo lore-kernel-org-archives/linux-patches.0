@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D442F5E;
-	Tue, 12 Aug 2025 18:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD30F1DB92A;
+	Tue, 12 Aug 2025 18:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023909; cv=none; b=cRQpcGF39R8JlStL9Q1D536l6ArZJvVHRJjc/strnPte0d2/3YXn2z7TKNFInRLBCeNCIRzi+EsEE/NVP3FeP+IAUIKMcLB3TvSho4TSeeILqou/Yp6pl/zO1WjZNlN2U5aeDk667iXi6s+yQFlh8+rtfyN99FZR4pha0iFZJe4=
+	t=1755023912; cv=none; b=pTcS/0ayMUhlNVWrzY2ygc+ADy3COvVAsN8EfzBLlgwqSBy2DYq+eZ1oFUvoPzE/PcyLYF200LEYIAR6ltJ7fbsX50zqW2uiAB5sg1pSUp16pn9mWi9yeJtFWAEeXH1rnibWCFaMnbjR30sC+Ntj86StnFmo903ZQAy6aftY4Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023909; c=relaxed/simple;
-	bh=2SxhUKJ6DBVARi6ybYmk8pgckoLN+CCwTopYmnW3Zu8=;
+	s=arc-20240116; t=1755023912; c=relaxed/simple;
+	bh=fVb5Zu7ek5JDpfWXJJG7jlPU8ohF0YTy/oZ6abWTGWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4Yow0VRW6PAG0oIk1alKbWT70eePTxyOPnOxcT+FhgXZxksRZXYS0dCrH/6UTfZX2HI12KHqWKIGPEif7P8R75m0wmfNmssVdBpCeuVNjLSqCTXfvhLmkLAnnRbCiSN/U31g6+oNheqO1rZcjM40vKEx4HZgV9muXoBbArGjBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSksD51/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncQ+QVl5dcUMS8i1zkYGvqIbPch6lTkIdsVDnNyGanF05hoHwJE1wiUJVADbETxXxssu/R5mzSPU5vD8pePoMbNxWhx8mdleWf3mYn2eFKYyYxKRAFZH67oRwE7b2mpfFy6AqU1FSntqo4Cy5r56g/U36qm+/Pljf4T/9klxajI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzRBDn92; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSksD51/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D834C4CEF0;
-	Tue, 12 Aug 2025 18:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzRBDn92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E414C4CEF0;
+	Tue, 12 Aug 2025 18:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023909;
-	bh=2SxhUKJ6DBVARi6ybYmk8pgckoLN+CCwTopYmnW3Zu8=;
+	s=korg; t=1755023912;
+	bh=fVb5Zu7ek5JDpfWXJJG7jlPU8ohF0YTy/oZ6abWTGWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WSksD51/BYokFTe//C8zAuTuljSE0Mauq7IEZSTAzn4X3DuQzwTL/H4+fZOae+r4G
-	 UeXYl6WRq8xXvnjnx3I2NNbXbKXJdY3cLRIq6kDsEjFTByg8D6sLI+KbR2M8sGR05m
-	 UzSafMsaJlOWaE4gaZRO/Y6C3iHSiak3FLri8snU=
+	b=tzRBDn923RFt/KDiG/kOZIU2naBRNRIAN4LAk7J1wzEwESCYHMOmOVD8WGpdNjaUP
+	 yCMAj786majwk8LFp5sETb+WPq4prHv0plsqYE/GvrWVgAUGKIZcV2xhUrmivTg1sQ
+	 MFBs0fVvj7AITgRQvOm84vIFU30GERAT35BiwzUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Milon <ethan.milon@eviden.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 218/627] iommu/vt-d: Fix missing PASID in dev TLB flush with cache_tag_flush_all
-Date: Tue, 12 Aug 2025 19:28:33 +0200
-Message-ID: <20250812173427.575947955@linuxfoundation.org>
+Subject: [PATCH 6.16 219/627] iommu/arm-smmu: disable PRR on SM8250
+Date: Tue, 12 Aug 2025 19:28:34 +0200
+Message-ID: <20250812173427.614176335@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,74 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Milon <ethan.milon@eviden.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 3141153816bf4f0257747bd4dda176d38f1a9a49 ]
+[ Upstream commit b9bb7e814cd0c3633791327a96749a1f9b7f3ef4 ]
 
-The function cache_tag_flush_all() was originally implemented with
-incorrect device TLB invalidation logic that does not handle PASID, in
-commit c4d27ffaa8eb ("iommu/vt-d: Add cache tag invalidation helpers")
+On SM8250 / QRB5165-RB5 using PRR bits resets the device, most likely
+because of the hyp limitations. Disable PRR support on that platform.
 
-This causes regressions where full address space TLB invalidations occur
-with a PASID attached, such as during transparent hugepage unmapping in
-SVA configurations or when calling iommu_flush_iotlb_all(). In these
-cases, the device receives a TLB invalidation that lacks PASID.
-
-This incorrect logic was later extracted into
-cache_tag_flush_devtlb_all(), in commit 3297d047cd7f ("iommu/vt-d:
-Refactor IOTLB and Dev-IOTLB flush for batching")
-
-The fix replaces the call to cache_tag_flush_devtlb_all() with
-cache_tag_flush_devtlb_psi(), which properly handles PASID.
-
-Fixes: 4f609dbff51b ("iommu/vt-d: Use cache helpers in arch_invalidate_secondary_tlbs")
-Fixes: 4e589a53685c ("iommu/vt-d: Use cache_tag_flush_all() in flush_iotlb_all")
-Signed-off-by: Ethan Milon <ethan.milon@eviden.com>
-Link: https://lore.kernel.org/r/20250708214821.30967-1-ethan.milon@eviden.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20250714045028.958850-11-baolu.lu@linux.intel.com
+Fixes: 7f2ef1bfc758 ("iommu/arm-smmu: Add support for PRR bit setup")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Reviewed-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250705-iommu-fix-prr-v2-1-406fecc37cf8@oss.qualcomm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/cache.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
-index 47692cbfaabd..c8b79de84d3f 100644
---- a/drivers/iommu/intel/cache.c
-+++ b/drivers/iommu/intel/cache.c
-@@ -422,22 +422,6 @@ static void cache_tag_flush_devtlb_psi(struct dmar_domain *domain, struct cache_
- 					     domain->qi_batch);
- }
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 62874b18f645..53d88646476e 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -355,7 +355,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+ 	priv->set_prr_addr = NULL;
  
--static void cache_tag_flush_devtlb_all(struct dmar_domain *domain, struct cache_tag *tag)
--{
--	struct intel_iommu *iommu = tag->iommu;
--	struct device_domain_info *info;
--	u16 sid;
--
--	info = dev_iommu_priv_get(tag->dev);
--	sid = PCI_DEVID(info->bus, info->devfn);
--
--	qi_batch_add_dev_iotlb(iommu, sid, info->pfsid, info->ats_qdep, 0,
--			       MAX_AGAW_PFN_WIDTH, domain->qi_batch);
--	if (info->dtlb_extra_inval)
--		qi_batch_add_dev_iotlb(iommu, sid, info->pfsid, info->ats_qdep, 0,
--				       MAX_AGAW_PFN_WIDTH, domain->qi_batch);
--}
--
- /*
-  * Invalidates a range of IOVA from @start (inclusive) to @end (inclusive)
-  * when the memory mappings in the target domain have been modified.
-@@ -508,7 +492,7 @@ void cache_tag_flush_all(struct dmar_domain *domain)
- 			break;
- 		case CACHE_TAG_DEVTLB:
- 		case CACHE_TAG_NESTING_DEVTLB:
--			cache_tag_flush_devtlb_all(domain, tag);
-+			cache_tag_flush_devtlb_psi(domain, tag, 0, MAX_AGAW_PFN_WIDTH);
- 			break;
- 		}
- 
+ 	if (of_device_is_compatible(np, "qcom,smmu-500") &&
+-			of_device_is_compatible(np, "qcom,adreno-smmu")) {
++	    !of_device_is_compatible(np, "qcom,sm8250-smmu-500") &&
++	    of_device_is_compatible(np, "qcom,adreno-smmu")) {
+ 		priv->set_prr_bit = qcom_adreno_smmu_set_prr_bit;
+ 		priv->set_prr_addr = qcom_adreno_smmu_set_prr_addr;
+ 	}
 -- 
 2.39.5
 
