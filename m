@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70652E7BD4;
-	Tue, 12 Aug 2025 18:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78791247287;
+	Tue, 12 Aug 2025 18:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024652; cv=none; b=MPyTQNrbSi9LxihMoqmj/DlxGDOu/+yP4iqCaTfYXVDprbf+znHGQBRxDwWZIcct0NcsOZOS9B4fkKeeGMmjfFmvU2BJPcyu/6c1f6CA1X38kkk6B1i+EnGFqaT5MSlJ9DcMFW6/polT9MYzr1t/YQ3yRNFORu2MqrNcgxEPNrQ=
+	t=1755024656; cv=none; b=ptjkQUXjrZ7fPSGNXcrBHVNYwfQlIGyjICNSZY9jExABJrB8HsdSFShDm6gNHUkplrTYvQtLeMhhOcYeWti/h6kBCUL2HwqwnaSxg4sNteS7s7y+ORyR6erF4q95WHLcn78xUZCGFjp/pgQAWdgfl/Ju8Sj5iI/TjukAI0OwgDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024652; c=relaxed/simple;
-	bh=sQGG2/4kihwD2NPxxOuuexiy70aXnEpPdJpDp/yDFmM=;
+	s=arc-20240116; t=1755024656; c=relaxed/simple;
+	bh=y2BERBwX7O/6q9/i0Lxx1mq7fT0NIMflhZWcwbkKXTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZC1PwESQPlE3R85nXkQYC5LU8dW9AnWbMvQckmQM7sm9FHSCxTxws5P/T3wmXDgSTMTyHSZsmHKpkH64Yimq1fcvUiGWh+P3buVyD4MozLsmOzu+BOKwlBG1cB3n37TibAqcDUuBb8M8Ovb9XWafTM2IkzSVkTDTRYpmYs7/18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxtKHqXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QrrucJO5N9eJRC0fde4dUDa9WqHHkgNP7R3M2/STGvMk+2VCQzVjxbQV35ud19ouOXXl5UXx6fFRoVBedaUNN1AMSfq3SdKtYcrmfYGaAPmaLQWBjWa8N1OMOU1H2JXk/fCA2OA2bgmLmLq/6SRu2bCbujv53Bj0qqggv+R/7V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYHTn8PH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxtKHqXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8E0C4CEF0;
-	Tue, 12 Aug 2025 18:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYHTn8PH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7E5C4CEF6;
+	Tue, 12 Aug 2025 18:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024652;
-	bh=sQGG2/4kihwD2NPxxOuuexiy70aXnEpPdJpDp/yDFmM=;
+	s=korg; t=1755024656;
+	bh=y2BERBwX7O/6q9/i0Lxx1mq7fT0NIMflhZWcwbkKXTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxtKHqXNt/EOXEIn+1/fbn/T9dYTbxqw2dAYOt0oMrM+NAiX8mfvtlWqNywxMb9d1
-	 MfPN/hsFB+kanhtKS19F7FRQFxd2C2PKkoSjUf5snAsSUl3wggMC13R1g9fpiAy5Sq
-	 9aDoqZ9Bafjc8G2LX9wsX6GzozvzENf19fYMFuZc=
+	b=tYHTn8PHtyf/QWGMjuK1M02jS7IfOwldwyVKowpOpQcf4Dr31VGix4x2HVOE9H31b
+	 aT/bAF1qD3piwofGv9wMkxdzPBkw9Wgs+yJH9HKOtoW6dskc1hCBuD6VkwyboI8UNt
+	 xF9C1B2l7M5Tp2eN2llpLAZlkX4RnJjBry/dkGj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zixun LI <admin@hifiphile.com>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Lukasz Laguna <lukasz.laguna@intel.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 436/627] mtd: rawnand: atmel: set pmecc data setup time
-Date: Tue, 12 Aug 2025 19:32:11 +0200
-Message-ID: <20250812173435.862997298@linuxfoundation.org>
+Subject: [PATCH 6.16 437/627] drm/xe/vf: Disable CSC support on VF
+Date: Tue, 12 Aug 2025 19:32:12 +0200
+Message-ID: <20250812173435.901231598@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,55 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
+From: Lukasz Laguna <lukasz.laguna@intel.com>
 
-[ Upstream commit f552a7c7e0a14215cb8a6fd89e60fa3932a74786 ]
+[ Upstream commit f62408efc8669b82541295a4611494c8c8c52684 ]
 
-Setup the pmecc data setup time as 3 clock cycles for 133MHz as recommended
-by the datasheet.
+CSC is not accessible by VF drivers, so disable its support flag on VF
+to prevent further initialization attempts.
 
-Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
-Reported-by: Zixun LI <admin@hifiphile.com>
-Closes: https://lore.kernel.org/all/c015bb20-6a57-4f63-8102-34b3d83e0f5b@microchip.com
-Suggested-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Signed-off-by: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: e02cea83d32d ("drm/xe/gsc: add Battlemage support")
+Signed-off-by: Lukasz Laguna <lukasz.laguna@intel.com>
+Cc: Alexander Usyskin <alexander.usyskin@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Link: https://lore.kernel.org/r/20250729123437.5933-1-lukasz.laguna@intel.com
+(cherry picked from commit 552dbba1caaf0cb40ce961806d757615e26ec668)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/pmecc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/xe/xe_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
-index 3c7dee1be21d..0b402823b619 100644
---- a/drivers/mtd/nand/raw/atmel/pmecc.c
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.c
-@@ -143,6 +143,7 @@ struct atmel_pmecc_caps {
- 	int nstrengths;
- 	int el_offset;
- 	bool correct_erased_chunks;
-+	bool clk_ctrl;
- };
- 
- struct atmel_pmecc {
-@@ -843,6 +844,10 @@ static struct atmel_pmecc *atmel_pmecc_create(struct platform_device *pdev,
- 	if (IS_ERR(pmecc->regs.errloc))
- 		return ERR_CAST(pmecc->regs.errloc);
- 
-+	/* pmecc data setup time */
-+	if (caps->clk_ctrl)
-+		writel(PMECC_CLK_133MHZ, pmecc->regs.base + ATMEL_PMECC_CLK);
-+
- 	/* Disable all interrupts before registering the PMECC handler. */
- 	writel(0xffffffff, pmecc->regs.base + ATMEL_PMECC_IDR);
- 	atmel_pmecc_reset(pmecc);
-@@ -896,6 +901,7 @@ static struct atmel_pmecc_caps at91sam9g45_caps = {
- 	.strengths = atmel_pmecc_strengths,
- 	.nstrengths = 5,
- 	.el_offset = 0x8c,
-+	.clk_ctrl = true,
- };
- 
- static struct atmel_pmecc_caps sama5d4_caps = {
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index e9f3c1a53db2..7f839c3b9a14 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -685,6 +685,7 @@ static void sriov_update_device_info(struct xe_device *xe)
+ 	/* disable features that are not available/applicable to VFs */
+ 	if (IS_SRIOV_VF(xe)) {
+ 		xe->info.probe_display = 0;
++		xe->info.has_heci_cscfi = 0;
+ 		xe->info.has_heci_gscfi = 0;
+ 		xe->info.skip_guc_pc = 1;
+ 		xe->info.skip_pcode = 1;
 -- 
 2.39.5
 
