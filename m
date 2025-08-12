@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBD42F291B;
-	Tue, 12 Aug 2025 18:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93473F9D2;
+	Tue, 12 Aug 2025 18:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023045; cv=none; b=V8tKhlck/VrpCJQKfQxXulGUc3RY4a3/EaRzvV8p3uZYZGqcinPDkBlVo+T7DAk4tMrlPQ022HsjHNds56/8S2P817EVawwaK54hY0RM1TN4Q85FDEh0pgQA0Kbjuj3fPTYBFMGRMfwFRBOm/4soWoqN/+9wuMjoVKY1QaFD/r4=
+	t=1755023049; cv=none; b=ojsIUIQoeW5oIt7vJGv+tn+mXg7ymP+PMcwRfD27MW4AfN0/0gLndMdNOR11d1Tqj4MjQR8Z5qvDySMYYnKNMicaBwwaUdnw1Ys6lLG656hFjOcjBVsvCtfu0eN5RBK7dYrkPJ+dW+fTePb5n7LY35CNMy2wB0x25wSTddArXwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023045; c=relaxed/simple;
-	bh=pjTqF9agWQmiO8hpOXLjDnqhcknoMYuOwD7pucD8q94=;
+	s=arc-20240116; t=1755023049; c=relaxed/simple;
+	bh=Wki39VWw+jbe7nsim1fK4rOSxmx+lJHi9yurrxGHoIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWy8D6M1CJ7XCrLTjQL5HtlZX5olsMG2X+Lt/tHCMIRyRCAAzucc3DWQCxCsK06UJNp2ljiFDOOGIlX8Gqchorhihs7O2CsD5b8j1QAEM7gHciI4cU3nDNCeDdpHO8fW+zf1I/sbCpoDan+m2uq+ivW4tCdwH6p2HJb5hKiWUW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDBfgga6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p9P6/Rd39vxET5DCIubKNuFgp/WX+PeNAvBScKtRA8et+pVXMlEoLDoepxFeQdAYnA1tl/knrJ1epAI2zaX5Sfzof1gZTN7D0VsiMwCFC9knySo+6i2tylI1GJ5uNq7icKXarp3k+Wft/k+BMt3KUklqAdKUN/S6+oW7TIBp+Ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpJ+T6a3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDBfgga6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15BFC4CEF0;
-	Tue, 12 Aug 2025 18:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpJ+T6a3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577E5C4CEF0;
+	Tue, 12 Aug 2025 18:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023045;
-	bh=pjTqF9agWQmiO8hpOXLjDnqhcknoMYuOwD7pucD8q94=;
+	s=korg; t=1755023048;
+	bh=Wki39VWw+jbe7nsim1fK4rOSxmx+lJHi9yurrxGHoIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rDBfgga6ktQCHN4SxqeHnyiLpvytj1wC4EgwphPG9c9nBzLh9900gpuuCaE6ubDMd
-	 0y/iereCTRkSMZfwLpVyzI/QZGZ58ayfdQBh6+RFEV9rCNTDgocBfjdItGqJsF0ARI
-	 PhotALBDPyAk1VLHG1XRiGtWRD/Inhwj7I+0mOMI=
+	b=fpJ+T6a3bYqkmnAkH8ATt5MACUxn/U2v6PHYXSZkZ4F9z83V2B58DDg1h+uGGgt7J
+	 5kvorA2ka1PvgdTpDX3AzT77hze23CXTvGPjdsvea1wfy+gmSOQFo0YDb38ZOGT5rv
+	 u8os7FYFmxBQtgrbrm580fkhkyDPogXEv+lni3YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <olsajiri@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Yifei Liu <yifei.l.liu@oracle.com>
-Subject: [PATCH 6.12 334/369] selftests/bpf: Fix build error with llvm 19
-Date: Tue, 12 Aug 2025 19:30:31 +0200
-Message-ID: <20250812173029.272293824@linuxfoundation.org>
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.12 335/369] drm/i915/ddi: change intel_ddi_init_{dp, hdmi}_connector() return type
+Date: Tue, 12 Aug 2025 19:30:32 +0200
+Message-ID: <20250812173029.308804404@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,36 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 608e99f7869e3a6e028c7cba14a896c7797e8746 upstream.
+commit e1980a977686d46dbf45687f7750f1c50d1d6cf8 upstream.
 
-llvm 19 fails to compile arena self test:
-CLNG-BPF [test_progs] verifier_arena_large.bpf.o
-progs/verifier_arena_large.c:90:24: error: unsupported signed division, please convert to unsigned div/mod.
-   90 |                 pg_idx = (pg - base) / PAGE_SIZE;
+The caller doesn't actually need the returned struct intel_connector;
+it's stored in the ->attached_connector of intel_dp and
+intel_hdmi. Switch to returning an int with 0 for success and negative
+errors codes to be able to indicate success even when we don't have a
+connector.
 
-Though llvm <= 18 and llvm >= 20 don't have this issue,
-fix the test to avoid the build error.
-
-Reported-by: Jiri Olsa <olsajiri@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/8ef7fe838231919e85eaead640c51ad3e4550d27.1735568047.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/progs/verifier_arena_large.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_ddi.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/tools/testing/selftests/bpf/progs/verifier_arena_large.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_arena_large.c
-@@ -87,7 +87,7 @@ __noinline int alloc_pages(int page_cnt,
- 					   NUMA_NO_NODE, 0);
- 		if (!pg)
- 			return step;
--		pg_idx = (pg - base) / PAGE_SIZE;
-+		pg_idx = (unsigned long) (pg - base) / PAGE_SIZE;
- 		if (first_pass) {
- 			/* Pages must be allocated sequentially */
- 			if (pg_idx != i)
+--- a/drivers/gpu/drm/i915/display/intel_ddi.c
++++ b/drivers/gpu/drm/i915/display/intel_ddi.c
+@@ -4413,8 +4413,7 @@ static const struct drm_encoder_funcs in
+ 	.late_register = intel_ddi_encoder_late_register,
+ };
+ 
+-static struct intel_connector *
+-intel_ddi_init_dp_connector(struct intel_digital_port *dig_port)
++static int intel_ddi_init_dp_connector(struct intel_digital_port *dig_port)
+ {
+ 	struct drm_i915_private *i915 = to_i915(dig_port->base.base.dev);
+ 	struct intel_connector *connector;
+@@ -4422,7 +4421,7 @@ intel_ddi_init_dp_connector(struct intel
+ 
+ 	connector = intel_connector_alloc();
+ 	if (!connector)
+-		return NULL;
++		return -ENOMEM;
+ 
+ 	dig_port->dp.output_reg = DDI_BUF_CTL(port);
+ 	if (DISPLAY_VER(i915) >= 14)
+@@ -4437,7 +4436,7 @@ intel_ddi_init_dp_connector(struct intel
+ 
+ 	if (!intel_dp_init_connector(dig_port, connector)) {
+ 		kfree(connector);
+-		return NULL;
++		return -EINVAL;
+ 	}
+ 
+ 	if (dig_port->base.type == INTEL_OUTPUT_EDP) {
+@@ -4453,7 +4452,7 @@ intel_ddi_init_dp_connector(struct intel
+ 		}
+ 	}
+ 
+-	return connector;
++	return 0;
+ }
+ 
+ static int intel_hdmi_reset_link(struct intel_encoder *encoder,
+@@ -4623,20 +4622,19 @@ static bool bdw_digital_port_connected(s
+ 	return intel_de_read(dev_priv, GEN8_DE_PORT_ISR) & bit;
+ }
+ 
+-static struct intel_connector *
+-intel_ddi_init_hdmi_connector(struct intel_digital_port *dig_port)
++static int intel_ddi_init_hdmi_connector(struct intel_digital_port *dig_port)
+ {
+ 	struct intel_connector *connector;
+ 	enum port port = dig_port->base.port;
+ 
+ 	connector = intel_connector_alloc();
+ 	if (!connector)
+-		return NULL;
++		return -ENOMEM;
+ 
+ 	dig_port->hdmi.hdmi_reg = DDI_BUF_CTL(port);
+ 	intel_hdmi_init_connector(dig_port, connector);
+ 
+-	return connector;
++	return 0;
+ }
+ 
+ static bool intel_ddi_a_force_4_lanes(struct intel_digital_port *dig_port)
+@@ -5185,7 +5183,7 @@ void intel_ddi_init(struct intel_display
+ 	intel_infoframe_init(dig_port);
+ 
+ 	if (init_dp) {
+-		if (!intel_ddi_init_dp_connector(dig_port))
++		if (intel_ddi_init_dp_connector(dig_port))
+ 			goto err;
+ 
+ 		dig_port->hpd_pulse = intel_dp_hpd_pulse;
+@@ -5199,7 +5197,7 @@ void intel_ddi_init(struct intel_display
+ 	 * but leave it just in case we have some really bad VBTs...
+ 	 */
+ 	if (encoder->type != INTEL_OUTPUT_EDP && init_hdmi) {
+-		if (!intel_ddi_init_hdmi_connector(dig_port))
++		if (intel_ddi_init_hdmi_connector(dig_port))
+ 			goto err;
+ 	}
+ 
 
 
