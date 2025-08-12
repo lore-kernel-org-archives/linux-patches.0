@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35E82FAC06;
-	Tue, 12 Aug 2025 18:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218DE2FDC53;
+	Tue, 12 Aug 2025 18:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024997; cv=none; b=jGhlhGAJhw/u6v+UfWPHormE5DeKeyDJEim+VGWNU0Je2/5OXRkXhC+IJlbRB9VW9r5Uu2Ujdrfdsl2CrjuM8d8Pm0pI9fagQ31ELCULBIh63EqGl4hGuYO/ka3G1x2zU+Drr4Rp+kBfwJytcp1kvnIhgM+w2dHkxzVXf4VfLxs=
+	t=1755025001; cv=none; b=JmWTG6HMbBXxdzS81nsauIFSV63mgG+zRPWYo+x5koAxguVitAJZAepKlUizDEVGB8ofAQfi4F622R6xgP3QR/KeXwKxISxJIwhYaTnnRUHZeAX9PKpKqQ7wBZY+vAcS607F8l8A4qp7lrovo0QjNCExzBsuvlQ3mPUW7b47i5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024997; c=relaxed/simple;
-	bh=iCCYMdWtXCTxVQi6v7v2aSoUOd3q8EvZ4XdLEeFNfeA=;
+	s=arc-20240116; t=1755025001; c=relaxed/simple;
+	bh=v/QcgZGpqTG6wcnZCX5Vor2ldRU8QbwkkGouMUUqKuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVPTPWiuijj3Y3HGBqG0lH10H8wHCdApZZjRJWH6wR1f7EgGfgRB6lq3otap1OTiVbydnaVdr7pyEVU4SuPgT6BYaXisGQrM8wZ+DQgAYTwDFvzmVCluREvN0yWz3eZfnyqCVDkj/K3uFJIT5nSAzxf8oMGXav1Tq0vTdpNzxkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JopbUZjg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ow6DehzFdW+QqkbUmURaAokbbkJ9U5bHZw/PS+UJD76g6GKlfmYdyxM9q7SXOWbvCqfp1Eq5o+KS8WH0857027u3u1pU9wPTQ4J6epW2vScds6+pmPWuF2+JtkV3Dxh057SKewYW+y/nZAKIDgmG4OFSMake03gWoAtApBIl8HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSyYUysx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JopbUZjg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43278C4CEF0;
-	Tue, 12 Aug 2025 18:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSyYUysx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BE3C4CEF0;
+	Tue, 12 Aug 2025 18:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024997;
-	bh=iCCYMdWtXCTxVQi6v7v2aSoUOd3q8EvZ4XdLEeFNfeA=;
+	s=korg; t=1755025001;
+	bh=v/QcgZGpqTG6wcnZCX5Vor2ldRU8QbwkkGouMUUqKuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JopbUZjgSzh54iqCvCGmm9skm/n03iALDkoXuc2Tdn+5hnOP6MGZIepWwWL/RFAwr
-	 NmDkAPaI+sODIZFIWK4CqcsD24oIwGoyMZdiIjPG/N2IKZEByp8hncGhctKULjllz/
-	 Grwcy4Q1tkrBelkVhfPWAH355zu+y6uBG7QGWY3U=
+	b=jSyYUysxFOa/Lv95LGU4U9j3DZys2Y7Bqrg6pnFFIhILpcoQaKPtc6GNIaFP7i550
+	 vd7e40UtU2ZMqv5dciOembtyw/BdHX8K+eITYaWpgf+9kJkXaHmJ9wamgun6VLVYbE
+	 STYQ5m7hxtCvUog61U7m567xc61maIB7NzGdan8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Simon Horman <horms@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 540/627] eth: fbnic: unlink NAPIs from queues on error to open
-Date: Tue, 12 Aug 2025 19:33:55 +0200
-Message-ID: <20250812173452.449881637@linuxfoundation.org>
+Subject: [PATCH 6.16 541/627] ipa: fix compile-testing with qcom-mdt=m
+Date: Tue, 12 Aug 2025 19:33:56 +0200
+Message-ID: <20250812173452.487251904@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,47 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4b31bcb025cb497da2b01f87173108ff32d350d2 ]
+[ Upstream commit 2df158047d532d0e2a6b39953656c738872151a3 ]
 
-CI hit a UaF in fbnic in the AF_XDP portion of the queues.py test.
-The UaF is in the __sk_mark_napi_id_once() call in xsk_bind(),
-NAPI has been freed. Looks like the device failed to open earlier,
-and we lack clearing the NAPI pointer from the queue.
+There are multiple drivers that use the qualcomm mdt loader, but they
+have conflicting ideas of how to deal with that dependency when compile-testing
+for non-qualcomm targets:
 
-Fixes: 557d02238e05 ("eth: fbnic: centralize the queue count and NAPI<>queue setting")
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250728163129.117360-1-kuba@kernel.org
+IPA only enables the MDT loader when the kernel config includes ARCH_QCOM,
+but the newly added ath12k support always enables it, which leads to a
+link failure with the combination of IPA=y and ATH12K=m:
+
+    aarch64-linux-ld: drivers/net/ipa/ipa_main.o: in function `ipa_firmware_load':
+    ipa_main.c:(.text.unlikely+0x134): undefined reference to `qcom_mdt_load
+
+The ATH12K method seems more reliable here, so change IPA over to do the same
+thing.
+
+Fixes: 38a4066f593c ("net: ipa: support COMPILE_TEST")
+Fixes: c0dd3f4f7091 ("wifi: ath12k: enable ath12k AHB support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250731080024.2054904-1-arnd@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ipa/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-index aa812c63d5af..93717cf5bd8f 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-@@ -33,7 +33,7 @@ int __fbnic_open(struct fbnic_net *fbn)
- 		dev_warn(fbd->dev,
- 			 "Error %d sending host ownership message to the firmware\n",
- 			 err);
--		goto free_resources;
-+		goto err_reset_queues;
- 	}
- 
- 	err = fbnic_time_start(fbn);
-@@ -57,6 +57,8 @@ int __fbnic_open(struct fbnic_net *fbn)
- 	fbnic_time_stop(fbn);
- release_ownership:
- 	fbnic_fw_xmit_ownership_msg(fbn->fbd, false);
-+err_reset_queues:
-+	fbnic_reset_netif_queues(fbn);
- free_resources:
- 	fbnic_free_resources(fbn);
- free_napi_vectors:
+diff --git a/drivers/net/ipa/Kconfig b/drivers/net/ipa/Kconfig
+index 6782c2cbf542..01d219d3760c 100644
+--- a/drivers/net/ipa/Kconfig
++++ b/drivers/net/ipa/Kconfig
+@@ -5,7 +5,7 @@ config QCOM_IPA
+ 	depends on INTERCONNECT
+ 	depends on QCOM_RPROC_COMMON || (QCOM_RPROC_COMMON=n && COMPILE_TEST)
+ 	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
+-	select QCOM_MDT_LOADER if ARCH_QCOM
++	select QCOM_MDT_LOADER
+ 	select QCOM_SCM
+ 	select QCOM_QMI_HELPERS
+ 	help
 -- 
 2.39.5
 
