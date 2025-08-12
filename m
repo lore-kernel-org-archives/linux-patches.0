@@ -1,121 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D34169AE6;
-	Tue, 12 Aug 2025 04:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46611531E8;
+	Tue, 12 Aug 2025 13:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754971841; cv=none; b=bQPc6cKRJk0cMUro/QTP9v9kFHiOf2N6Z4c8MyulgmUJh7V2vhoy2YEUREyMaGXuC2zLgV21EBJ6bzxb3ppA4yYBTxeS1tKYTzarXn/9TuH5s8Pejq17WcXgrVQWuO5COc1iGzPtA1L3WlSbsfWLvv2WSk0u4nqml1CJ8oh08SE=
+	t=1755004011; cv=none; b=AZH00qLsgxFTVFQdzBDd+OUEFfRFf02hxNeHiRaV8eqvJYs6F6RrmhXFvPID5fwRHbZV41Y1uSEqAjYOJ7B1QorjweDhhXwt7jCkL21v8OQmw2ohucg1hd3ENYYbxAwXW43C80XGCZG7YwIit37wP3bxMWI/SzMbtUOBiFK93EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754971841; c=relaxed/simple;
-	bh=A1IDknI2wBVOF1lDrVTLS/8ROE/k11Q3XCJ/bLtA1Qk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=r/YeJLgigygSofgwXXdsDUscxaX7gy0WaLChLWQVEHJ8ynrxp9b4qyskuAPesB2HoBOj1/JjwHqpjKcJ9AtIEhEhRpx53RctmHekJbIgiQuYWkmGeu9A1z3I9GbHSD73Ch5uyHM+uIbH08sqFl9qF+0lR2564IA4+wDPjTgNuaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tMPKyrPX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755004011; c=relaxed/simple;
+	bh=kgcdZRlgzMs6r2fHQPsEJ3bWbY/Y1L0QseyEFWl+2rE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JPh5IJ7j9BWr8lGJxrGdsAOZd4BzJTAvPH5yET/IK1Vej+tx1dthIsYaVjkJuPd7+5J5BzKSsLJ4Z1DWLQTQtM2Ebz9FDnpW1DfsR0Bc8mNLt40ZZo5nbmv94FDGwQzltpP9JWgyMPWFVkXsAwSw9akkIXLVwRma54lipkM644U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnCiiRUn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tMPKyrPX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0E6C4CEF0;
-	Tue, 12 Aug 2025 04:10:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754971840;
-	bh=A1IDknI2wBVOF1lDrVTLS/8ROE/k11Q3XCJ/bLtA1Qk=;
-	h=From:Date:Subject:To:Cc:From;
-	b=tMPKyrPX7lo45EbxFVokOQCV7amf4PfNmPA+d8EqFKOZ7mq6bO73wUaWvP7MO3jPa
-	 x2QLuPdJvru8sVfRRndqXv9SLq8UL/BRs+KfSVqpzOXH5u8ZACsmXSw4CIs3QogrwE
-	 a4i9XTRhwvDiyZAZIOB6gaFJqBAdJS5uyKhEIQgJTKJArOIsihkmLm7Fn0eQqRbn4H
-	 oFR4MN3FIPX10lbxO07nIAAVOFC0mw6ZqvCCBhgR5NFfx4cLZ1tPL/mgz0iEH7M1pg
-	 pCt4uuXQO5jniQp2dYuexo25QpiZrRJsqnrz7ut4QO69TmnPiuyEJYUFa8luUha2cA
-	 84MuwP1LVk6TQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 11 Aug 2025 21:10:01 -0700
-Subject: [PATCH RFC] riscv: Use 64-bit variable for output in
- __get_user_asm
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnCiiRUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C80C4CEF0;
+	Tue, 12 Aug 2025 13:06:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1755004010;
+	bh=kgcdZRlgzMs6r2fHQPsEJ3bWbY/Y1L0QseyEFWl+2rE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jnCiiRUnryd0zHRPHwaoptE+p9429pB1BJ4W4ppiGk2pKejMyLYDBI8d/l7HxASiZ
+	 rff4PlFYvZWMaWByz3tLj0ROSnJsf5dcwb1QmRO9bO8vFa3Kzu1oBeaPjebM8aNrH5
+	 rAoTGLtuTI2Mf3Am/vBFwOtTZ68TQ0hKvZ0nfivI=
+Date: Tue, 12 Aug 2025 15:06:47 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Brian Norris <briannorris@chromium.org>
+Cc: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Jian-Hong Pan <jhp@endlessos.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH 6.13 445/623] PCI/ASPM: Save parent L1SS config in
+ pci_save_aspm_l1ss_state()
+Message-ID: <2025081241-reverence-margarine-76dd@gregkh>
+References: <20250205134456.221272033@linuxfoundation.org>
+ <20250205134513.241757556@linuxfoundation.org>
+ <7a41907d-14d0-a1a4-47d6-90ff572d5af9@linux.intel.com>
+ <2025020621-remindful-occultist-b433@gregkh>
+ <aIpPWZ5eS1gEeAwm@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250811-riscv-wa-llvm-asm-goto-outputs-assertion-failure-v1-1-7bb8c9cbb92b@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAJi+mmgC/x3NywrCMBCF4Vcps3agSbEUt4IP4FZcDHFSB9Km5
- KZQ+u4OLv+z+M4OmZNwhku3Q+ImWeKqYU4duDetM6O8tMH29txPxmCS7Bp+CENoC1JecI4lYqx
- lqyXroGBRBD1JqIlxJPZkx2GYnANlt8Revv/LB9xvV3gexw/QjY3WhwAAAA==
-X-Change-ID: 20250811-riscv-wa-llvm-asm-goto-outputs-assertion-failure-6aefa26338cc
-To: Palmer Dabbelt <palmer@dabbelt.com>, Alexandre Ghiti <alex@ghiti.fr>, 
- Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
- Bill Wendling <morbo@google.com>, Craig Topper <craig.topper@sifive.com>, 
- linux-riscv@lists.infradead.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2547; i=nathan@kernel.org;
- h=from:subject:message-id; bh=A1IDknI2wBVOF1lDrVTLS/8ROE/k11Q3XCJ/bLtA1Qk=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBmz9u3bu+uaZ6lnc862mOrn133Ys/dd/3fH+YnE1hdRc
- y/lJNzk6ChlYRDjYpAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQATMX7JyHDe9KGdeaNbuKXH
- l/DAxCAb4a+J21+Ul92Kl05/7JhnpMXIsLmZ0U0t6PDh/XeutvcsczGcuKHPsEa67Lyh28p7y+W
- zWAA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aIpPWZ5eS1gEeAwm@google.com>
 
-After commit f6bff7827a48 ("riscv: uaccess: use 'asm_goto_output' for
-get_user()"), which was the first commit that started using asm goto
-with outputs on RISC-V, builds of clang built with assertions enabled
-start crashing in certain files that use get_user() with:
+On Wed, Jul 30, 2025 at 09:59:05AM -0700, Brian Norris wrote:
+> Hello,
+> 
+> On Thu, Feb 06, 2025 at 03:29:35PM +0100, Greg Kroah-Hartman wrote:
+> > On Thu, Feb 06, 2025 at 11:00:18AM +0200, Ilpo Järvinen wrote:
+> > > On Wed, 5 Feb 2025, Greg Kroah-Hartman wrote:
+> > > 
+> > > > 6.13-stable review patch.  If anyone has any objections, please let me know.
+> > > > 
+> > > > ------------------
+> > > > 
+> > > > From: Jian-Hong Pan <jhp@endlessos.org>
+> > > > 
+> > > > [ Upstream commit 1db806ec06b7c6e08e8af57088da067963ddf117 ]
+> > > > 
+> > > > After 17423360a27a ("PCI/ASPM: Save L1 PM Substates Capability for
+> > > > suspend/resume"), pci_save_aspm_l1ss_state(dev) saves the L1SS state for
+> > > > "dev", and pci_restore_aspm_l1ss_state(dev) restores the state for both
+> > > > "dev" and its parent.
+> [...]
+> > > Please withhold this commit from stable until its fix ("PCI/ASPM: Fix L1SS 
+> > > saving") can be pushed at the same as having this commit alone can causes 
+> > > PCIe devices to becomes unavailable and hang the system during PM 
+> > > transitions.
+> > > 
+> > > The fix is currently in pci/for-linus as the commit c312f005dedc, but 
+> > > Bjorn might add more reported-by/tested-by tags if more people hit it 
+> > > before the commit makes into Linus' tree so don't expect that commit id to 
+> > > be stable just yet.
+> > 
+> > Ok, now dropped from all stable queues, thanks for letting us know.
+> 
+> Any chance these can be re-included? That's:
+> 
+> 1db806ec06b7 ("PCI/ASPM: Save parent L1SS config in pci_save_aspm_l1ss_state()")
+> 7507eb3e7bfa ("PCI/ASPM: Fix L1SS saving")
+> 
+> We've independently backported them into kernels we're using, but it
+> seems wise to get 6.12.y, etc., back up to date.
 
-  clang: llvm/lib/CodeGen/SelectionDAG/SelectionDAGBuilder.cpp:12743: Register FollowCopyChain(MachineRegisterInfo &, Register): Assertion `MI->getOpcode() == TargetOpcode::COPY && "start of copy chain MUST be COPY"' failed.
+Now queued up, thanks.
 
-Internally, LLVM generates an addiw instruction when the output of the
-inline asm (which may be any scalar type) needs to be sign extended for
-ABI reasons, such as a later function call, so that basic block does not
-have to do it.
-
-Use a temporary 64-bit variable as the output of the inline assembly in
-__get_user_asm() and explicitly cast it to truncate it if necessary,
-avoiding the addiw that triggers the assertion.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/2092
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-I did this unconditionally but I did not do much investigation into how
-the code generation changes, as I never have good luck with figuring out
-what is real vs. noise. If this is a worry, I can just duplicate this
-under a CONFIG_CC_IS_CLANG block. Alternatively, we could mark
-CONFIG_CC_HAS_ASM_GOTO_OUTPUT as broken with clang when targeting
-RISC-V.
----
- arch/riscv/include/asm/uaccess.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/arch/riscv/include/asm/uaccess.h b/arch/riscv/include/asm/uaccess.h
-index b88a6218b7f2..ff162db20521 100644
---- a/arch/riscv/include/asm/uaccess.h
-+++ b/arch/riscv/include/asm/uaccess.h
-@@ -98,12 +98,16 @@ static inline unsigned long __untagged_addr_remote(struct mm_struct *mm, unsigne
- 
- #ifdef CONFIG_CC_HAS_ASM_GOTO_OUTPUT
- #define __get_user_asm(insn, x, ptr, label)			\
-+do {								\
-+	u64 __tmp;						\
- 	asm_goto_output(					\
- 		"1:\n"						\
- 		"	" insn " %0, %1\n"			\
- 		_ASM_EXTABLE_UACCESS_ERR(1b, %l2, %0)		\
--		: "=&r" (x)					\
--		: "m" (*(ptr)) : : label)
-+		: "=&r" (__tmp)					\
-+		: "m" (*(ptr)) : : label);			\
-+	(x) = (__typeof__(x))__tmp;				\
-+} while (0)
- #else /* !CONFIG_CC_HAS_ASM_GOTO_OUTPUT */
- #define __get_user_asm(insn, x, ptr, label)			\
- do {								\
-
----
-base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
-change-id: 20250811-riscv-wa-llvm-asm-goto-outputs-assertion-failure-6aefa26338cc
-
-Best regards,
---  
-Nathan Chancellor <nathan@kernel.org>
-
+greg k-h
