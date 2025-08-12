@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BE52868AF;
-	Tue, 12 Aug 2025 17:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEB92868AF;
+	Tue, 12 Aug 2025 17:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021080; cv=none; b=DS8xs4HQGUODwzm4Xxdt86xUZjLmo5/NkyDeNsTL0wPHyjpuhJv+nim3PHWQGbHrGg8hLmMN/DZYMW5RSvPJ/PQE0PF8Z8okm5FzyWTcuYMjFXcdr/T1+897ah9EbCrFuhcWatWn9fqjnFPU2ED005DfDMy874NL+vcI7qmNzN4=
+	t=1755021083; cv=none; b=SEj/k/fZ93/pVMLm5HuWL1wPdajYdAvcW4m4SPGLgpilkm604LTBfzvGHcVZ1tYP5Et0n4thpMez4fap7kw5cCWVyiDNN6RvUFQgpIuoVNH3VBxr1aVNMBhUUqd4ks0LOOjGeRnzYTnb18ek7N1oLuqlVMnK3F6OilHH+lOwVqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021080; c=relaxed/simple;
-	bh=3HR+7pEFSima9heqlmjRGUHNhj/D0GLRlaZzaXin4GQ=;
+	s=arc-20240116; t=1755021083; c=relaxed/simple;
+	bh=KKowj8qTjl+83B5sqog4dOWNZe/6+SzoY+6rWTuNr9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMlc9eA3BwVtEQdu/p7cOgfs9KFlJju+YvudeI4kSOplZC+yMykRIvmfRscrGMndtZS6oeA/f1KyzadrYrNtr+NoenyQ33yBuhSGaRC6BJ3YHPCmIDg/LmLJYwnk92/Vm3DlyJaZ5yXD4loSf+sLXR0FfEolbSomPaeL8CYndo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyNWwWXP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gV7PX61hKqLTxsShKlJGA0JzSZ08FKSoZ14DeWycAPSZM8M3wkiIp4aCTIJiAWw9by97eizeVT83jFeHBM+qVVrIMx4AjNKFia9fWotDRDDL3HyArjoe+oo1BDd5qz9JaqxFNy/+bZPZ4e0TLfsOLKD577zQCzsIjTkoBhSW6QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA7VQ9De; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyNWwWXP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C501C4CEF0;
-	Tue, 12 Aug 2025 17:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA7VQ9De"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374C7C4CEF0;
+	Tue, 12 Aug 2025 17:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021080;
-	bh=3HR+7pEFSima9heqlmjRGUHNhj/D0GLRlaZzaXin4GQ=;
+	s=korg; t=1755021083;
+	bh=KKowj8qTjl+83B5sqog4dOWNZe/6+SzoY+6rWTuNr9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyNWwWXPnttUxC6a6+NfsMCb8umxpvyN8Oxua5DK4GD2nsliKKoPanKjIJo9jx2be
-	 Gh+UwJ3sgu+KkmaNtq0LJlvH5YpK08x8rNS/vSfjaBe9ugtTH8Qisou4N8LaV+gcTt
-	 VndP5dI1j6ziGJhkVnK2V+XsEfshaKFdningkjeI=
+	b=BA7VQ9De/Ie2O/0er1UXs1OjZOIFQDgxi8Cinbn3vGYmYGH+aZhTvEJqIfxix8EXK
+	 yPhvcSCiDyQIpSAdnBECF0mCPIeJdn6I5mRDwIPCPlFG1hRR1BethIrkpCvA9ODUPO
+	 FAsTd3Gc4MdnXeGANj1krwxsJtGAG/mhF0Bo7FHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timothy Pearson <tpearson@raptorengineering.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 208/253] powerpc/eeh: Export eeh_unfreeze_pe()
-Date: Tue, 12 Aug 2025 19:29:56 +0200
-Message-ID: <20250812172957.675726693@linuxfoundation.org>
+Subject: [PATCH 6.6 059/262] iwlwifi: Add missing check for alloc_ordered_workqueue
+Date: Tue, 12 Aug 2025 19:27:27 +0200
+Message-ID: <20250812172955.498211640@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timothy Pearson <tpearson@raptorengineering.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit e82b34eed04b0ddcff4548b62633467235672fd3 ]
+[ Upstream commit 90a0d9f339960448a3acc1437a46730f975efd6a ]
 
-The PowerNV hotplug driver needs to be able to clear any frozen PE(s)
-on the PHB after suprise removal of a downstream device.
+Add check for the return value of alloc_ordered_workqueue since it may
+return NULL pointer.
 
-Export the eeh_unfreeze_pe() symbol to allow implementation of this
-functionality in the php_nv module.
-
-Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/1778535414.1359858.1752615454618.JavaMail.zimbra@raptorengineeringinc.com
+Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://patch.msgid.link/20230110014848.28226-1-jiasheng@iscas.ac.cn
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/dvm/main.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/eeh.c b/arch/powerpc/kernel/eeh.c
-index 2e286bba2f64..82626363a309 100644
---- a/arch/powerpc/kernel/eeh.c
-+++ b/arch/powerpc/kernel/eeh.c
-@@ -1130,6 +1130,7 @@ int eeh_unfreeze_pe(struct eeh_pe *pe)
+diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/main.c b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
+index a873be109f43..b490a88b97ca 100644
+--- a/drivers/net/wireless/intel/iwlwifi/dvm/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
+@@ -1048,9 +1048,11 @@ static void iwl_bg_restart(struct work_struct *data)
+  *
+  *****************************************************************************/
  
- 	return ret;
+-static void iwl_setup_deferred_work(struct iwl_priv *priv)
++static int iwl_setup_deferred_work(struct iwl_priv *priv)
+ {
+ 	priv->workqueue = alloc_ordered_workqueue(DRV_NAME, 0);
++	if (!priv->workqueue)
++		return -ENOMEM;
+ 
+ 	INIT_WORK(&priv->restart, iwl_bg_restart);
+ 	INIT_WORK(&priv->beacon_update, iwl_bg_beacon_update);
+@@ -1067,6 +1069,8 @@ static void iwl_setup_deferred_work(struct iwl_priv *priv)
+ 	timer_setup(&priv->statistics_periodic, iwl_bg_statistics_periodic, 0);
+ 
+ 	timer_setup(&priv->ucode_trace, iwl_bg_ucode_trace, 0);
++
++	return 0;
  }
-+EXPORT_SYMBOL_GPL(eeh_unfreeze_pe);
  
+ void iwl_cancel_deferred_work(struct iwl_priv *priv)
+@@ -1456,7 +1460,9 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
+ 	/********************
+ 	 * 6. Setup services
+ 	 ********************/
+-	iwl_setup_deferred_work(priv);
++	if (iwl_setup_deferred_work(priv))
++		goto out_uninit_drv;
++
+ 	iwl_setup_rx_handlers(priv);
  
- static struct pci_device_id eeh_reset_ids[] = {
+ 	iwl_power_initialize(priv);
+@@ -1494,6 +1500,7 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
+ 	iwl_cancel_deferred_work(priv);
+ 	destroy_workqueue(priv->workqueue);
+ 	priv->workqueue = NULL;
++out_uninit_drv:
+ 	iwl_uninit_drv(priv);
+ out_free_eeprom_blob:
+ 	kfree(priv->eeprom_blob);
 -- 
 2.39.5
 
