@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE07305E08;
-	Tue, 12 Aug 2025 18:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BAA1C84C7;
+	Tue, 12 Aug 2025 18:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022076; cv=none; b=O8WVCKUCEnbonGwMNSNYtx+JQM03PCfBFJ+WmH84ysZtVatcOvWhO1IW4A3T7TRnnmVd0vW8lsAWMl4JLt9P7sP+wI/Bl31ty0qGP4xJqLH9EqJZQmyBpkqnU/HYDwZw+9kjLlTejY2Q5zkOOABnBchq+aSm+sG2ggYOnUFDz6c=
+	t=1755022080; cv=none; b=emCYSfoy4UCdCbswN2nLIN0Y6i2l/WL8D/lqGhm87e2VMTki/sjeNDvutQSOeyThtJntOSMkS/1/XLng078CyBxDbuhCo+Ohn7X6gXfSHdtNd6plWRQ2ef4ydacDL7wA1ka03WbaiuFacX132Lx5M1NcTyDPxRNePvCkJieqau8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022076; c=relaxed/simple;
-	bh=bTEe+1TcNG5tJetG/kgJFcNdAIKGyaSOnNP7b34Bzoo=;
+	s=arc-20240116; t=1755022080; c=relaxed/simple;
+	bh=lYcpEMqoWEoEp2Ou7Z67CsI7/DjmVQ9lskya7zCBz4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3h99q7EDg6cCXjgyTn7klAiUQeyGTI3OEydVMMBSuacW4fzFkuBkhY0dgVxcRtpygbEwqLJzav0Fb0tzFD36EKYtEYvFBtQ6boWIDks2Alca2TGhvfOpu2oh7rRR4IG2ArcG6Nft/dV9v1Uy7HKoHjGpJhYjyQ0Xz5kHmo1sPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZkEfCFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tyFDpIoe4fdQTgJU32B2BfllisrxVulLRKZq0kv+4AkWvGXxd99CgsYxo9m2g/kcaLedzl2XJygoo5pzkzm2WQhn8/QHvkZEuX5dt4rUzvpemOAlJ9cu5JUilv62r9CsWMXm5E8BnapXTGLE1YyW5yxU29DepkwoG19R0Az6hDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXcfa8UX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZkEfCFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CE2C4CEF0;
-	Tue, 12 Aug 2025 18:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXcfa8UX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54040C4CEF0;
+	Tue, 12 Aug 2025 18:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022076;
-	bh=bTEe+1TcNG5tJetG/kgJFcNdAIKGyaSOnNP7b34Bzoo=;
+	s=korg; t=1755022079;
+	bh=lYcpEMqoWEoEp2Ou7Z67CsI7/DjmVQ9lskya7zCBz4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZkEfCFzY8lzv5zf0ffE3xPbvm8HTfK2eXj1fh8QCQ+vm+BZgUC8EZePuuJh5JibE
-	 6oZJ+jZW/SZnDTqSR8dMdJYT5gv+u68hdtGsFb2+PvGlzIBmb44vgDF85CskiYcfrJ
-	 H7UEci+mza8JBB/TRpjjhaHNO0t0ifboQSFgX8Oo=
+	b=rXcfa8UXP8XS/kr1BiSi5y0AncJ/vGj52UKivl3fJZgaB9lUh27Y3lcfMkxKWmyK+
+	 jc7OEF1wJcrD873KIpsFEugBOtgM+YlaIzcSNGW3mPokbV+fsaFr+ImNqSlU9vx99j
+	 4JENz648VkO/SDAw5Y6e97MTBIKbY57v+rq8T42U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/369] usb: misc: apple-mfi-fastcharge: Make power supply names unique
-Date: Tue, 12 Aug 2025 19:25:28 +0200
-Message-ID: <20250812173015.923781763@linuxfoundation.org>
+Subject: [PATCH 6.12 049/369] soc/tegra: cbb: Clear ERR_FORCE register with ERR_STATUS
+Date: Tue, 12 Aug 2025 19:25:46 +0200
+Message-ID: <20250812173016.608609974@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -50,108 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit 43007b89fb2de746443fbbb84aedd1089afdf582 ]
+[ Upstream commit a0647bca8966db04b79af72851ebd04224a4da40 ]
 
-When multiple Apple devices are connected concurrently, the
-apple-mfi-fastcharge driver fails to probe the subsequent devices with
-the following error:
+When error is injected with the ERR_FORCE register, then this register
+is not auto cleared on clearing the ERR_STATUS register. This causes
+repeated interrupts on error injection. To fix, set the ERR_FORCE to
+zero along with clearing the ERR_STATUS register after handling error.
 
-    sysfs: cannot create duplicate filename '/class/power_supply/apple_mfi_fastcharge'
-    apple-mfi-fastcharge 5-2.4.3.3: probe of 5-2.4.3.3 failed with error -17
-
-This happens because the driver uses a fixed power supply name
-("apple_mfi_fastcharge") for all devices, causing a sysfs name
-conflict when a second device is connected.
-
-Fix this by generating unique names using the USB bus and device
-number (e.g., "apple_mfi_fastcharge_5-12"). This ensures each
-connected device gets a unique power supply entry in sysfs.
-
-The change requires storing a copy of the power_supply_desc structure
-in the per-device mfi_device struct, since the name pointer needs to
-remain valid for the lifetime of the power supply registration.
-
-Fixes: 249fa8217b84 ("USB: Add driver to control USB fast charge for iOS devices")
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Link: https://lore.kernel.org/r/20250602-apple-mfi-fastcharge-duplicate-sysfs-v1-1-5d84de34fac6@posteo.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fc2f151d2314 ("soc/tegra: cbb: Add driver for Tegra234 CBB 2.0")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/apple-mfi-fastcharge.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/soc/tegra/cbb/tegra234-cbb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/misc/apple-mfi-fastcharge.c b/drivers/usb/misc/apple-mfi-fastcharge.c
-index ac8695195c13..8e852f4b8262 100644
---- a/drivers/usb/misc/apple-mfi-fastcharge.c
-+++ b/drivers/usb/misc/apple-mfi-fastcharge.c
-@@ -44,6 +44,7 @@ MODULE_DEVICE_TABLE(usb, mfi_fc_id_table);
- struct mfi_device {
- 	struct usb_device *udev;
- 	struct power_supply *battery;
-+	struct power_supply_desc battery_desc;
- 	int charge_type;
- };
- 
-@@ -178,6 +179,7 @@ static int mfi_fc_probe(struct usb_device *udev)
+diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
+index 5cf0e8c34164..e8cc46874c72 100644
+--- a/drivers/soc/tegra/cbb/tegra234-cbb.c
++++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
+@@ -185,6 +185,8 @@ static void tegra234_cbb_error_clear(struct tegra_cbb *cbb)
  {
- 	struct power_supply_config battery_cfg = {};
- 	struct mfi_device *mfi = NULL;
-+	char *battery_name;
- 	int err;
+ 	struct tegra234_cbb *priv = to_tegra234_cbb(cbb);
  
- 	if (!mfi_fc_match(udev))
-@@ -187,23 +189,38 @@ static int mfi_fc_probe(struct usb_device *udev)
- 	if (!mfi)
- 		return -ENOMEM;
- 
-+	battery_name = kasprintf(GFP_KERNEL, "apple_mfi_fastcharge_%d-%d",
-+				 udev->bus->busnum, udev->devnum);
-+	if (!battery_name) {
-+		err = -ENOMEM;
-+		goto err_free_mfi;
-+	}
++	writel(0, priv->mon + FABRIC_MN_MASTER_ERR_FORCE_0);
 +
-+	mfi->battery_desc = apple_mfi_fc_desc;
-+	mfi->battery_desc.name = battery_name;
-+
- 	battery_cfg.drv_data = mfi;
- 
- 	mfi->charge_type = POWER_SUPPLY_CHARGE_TYPE_TRICKLE;
- 	mfi->battery = power_supply_register(&udev->dev,
--						&apple_mfi_fc_desc,
-+						&mfi->battery_desc,
- 						&battery_cfg);
- 	if (IS_ERR(mfi->battery)) {
- 		dev_err(&udev->dev, "Can't register battery\n");
- 		err = PTR_ERR(mfi->battery);
--		kfree(mfi);
--		return err;
-+		goto err_free_name;
- 	}
- 
- 	mfi->udev = usb_get_dev(udev);
- 	dev_set_drvdata(&udev->dev, mfi);
- 
- 	return 0;
-+
-+err_free_name:
-+	kfree(battery_name);
-+err_free_mfi:
-+	kfree(mfi);
-+	return err;
+ 	writel(0x3f, priv->mon + FABRIC_MN_MASTER_ERR_STATUS_0);
+ 	dsb(sy);
  }
- 
- static void mfi_fc_disconnect(struct usb_device *udev)
-@@ -213,6 +230,7 @@ static void mfi_fc_disconnect(struct usb_device *udev)
- 	mfi = dev_get_drvdata(&udev->dev);
- 	if (mfi->battery)
- 		power_supply_unregister(mfi->battery);
-+	kfree(mfi->battery_desc.name);
- 	dev_set_drvdata(&udev->dev, NULL);
- 	usb_put_dev(mfi->udev);
- 	kfree(mfi);
 -- 
 2.39.5
 
