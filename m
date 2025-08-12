@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54752EE5E8;
-	Tue, 12 Aug 2025 18:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603F961FFE;
+	Tue, 12 Aug 2025 18:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023179; cv=none; b=pRCjudKsF5FuTfhCw3fM8zwX7bn3vzayW/LHO12kqaKofEaRZ+PnHe8XaabhO0VBAuEQ5LvSu+6Oi1aQghmw7MRRocbE5bzu+73GrUxuBKfnFM88oB478f7O1PXq20RtghrCbdg6142QSGfMLumv/Bjq2WnAdOzDpp9QwAeB7ws=
+	t=1755023183; cv=none; b=gHUXt9KETJNzcgOm5PUrLjxWED7eQY8K2ED+QO847jWE2WjYkUbS+AkKw4AJENibHqr6LQVLRs3T5J2tbRbN2hcZJ3CyDdFu5GUQcim4MDwLmn80dSdHHME67h/XG/ciGeQV3N1Tkd/FNZCuAy+/Gkq1zQ+emIOzSM4oX+6tnuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023179; c=relaxed/simple;
-	bh=/xWrYALAHaejhGBv0Pq8JYDFhlOTAfP2IowSPWMMBcE=;
+	s=arc-20240116; t=1755023183; c=relaxed/simple;
+	bh=5gQ+en5/HXJp16egaus4InteHj0M212Bk2F54VdYH5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAx1IY5PyrGmafLP2KSpn4c/0iQnk5OSwMgQBQl+dM7BUvudMGPH91ZzQzx/2qNb2ZBHTUD7+0D2G1oR069Oz6wZ9OoQZ88O0PHtz3V+Dgz24orEEQQacjZt7cmcGuE/dRTC78y358jXF3wKCVYlq/zXfpjkN0cXYUqD4pyghs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZygCchs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEPVeiEoDs2+nI2bFRqkUEvvdoRk6WqJqh7spDs9EVGZE0R3l4/eZF5rrZr8vs+kMbIgyAd/XBxft2PNv1JDBF1ARCOsc3kbYB6R1VkmR2axUHtNRlTYMaj6AjNiXLB9bi+QcIT62E1CwslSuthv+sG32iyPbda1Kz76yz/ttn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjJddG9p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZygCchs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BCCC4CEF0;
-	Tue, 12 Aug 2025 18:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjJddG9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D77C4CEF0;
+	Tue, 12 Aug 2025 18:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023179;
-	bh=/xWrYALAHaejhGBv0Pq8JYDFhlOTAfP2IowSPWMMBcE=;
+	s=korg; t=1755023182;
+	bh=5gQ+en5/HXJp16egaus4InteHj0M212Bk2F54VdYH5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZygCchsaes+BRxZMfhrzphRPwncuKVNFCBwFJ5fvu2i5BkvX8oIIXU2DVZsZT75B
-	 2BjlopVoYe3o2mhKe+ZoHQzr4J3K2++XkvXPzPhKNun1pHGzreFMPKQuP2DdUbuNTx
-	 Eu7y9RQQBVkFL0/JNEiRu4tY6W+3H1BF9OzR/xPU=
+	b=KjJddG9pJpK8vwgZBvcQ7x4WEuRyL1ElRtHaJOdpTMt3baPSsLO9N14tbT7UkMwTv
+	 uKkSBrTb67tGoV0URZRU3s/SCDA0eFwrDWbCqPVOnsoplNKyun7I41vhwfDnOSMHex
+	 dnY8TGMHvpZ378Tqn4Vr4i8lG3UNjvhD1ENm9Fdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Chao Gao <chao.gao@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 359/369] x86/fpu: Delay instruction pointer fixup until after warning
-Date: Tue, 12 Aug 2025 19:30:56 +0200
-Message-ID: <20250812173030.193134057@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Subject: [PATCH 6.12 360/369] s390/mm: Remove possible false-positive warning in pte_free_defer()
+Date: Tue, 12 Aug 2025 19:30:57 +0200
+Message-ID: <20250812173030.228840513@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,57 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
 
-commit 1cec9ac2d071cfd2da562241aab0ef701355762a upstream.
+commit 5647f61ad9171e8f025558ed6dc5702c56a33ba3 upstream.
 
-Right now, if XRSTOR fails a console message like this is be printed:
+Commit 8211dad627981 ("s390: add pte_free_defer() for pgtables sharing
+page") added a warning to pte_free_defer(), on our request. It was meant
+to warn if this would ever be reached for KVM guest mappings, because
+the page table would be freed w/o a gmap_unlink(). THP mappings are not
+allowed for KVM guests on s390, so this should never happen.
 
-	Bad FPU state detected at restore_fpregs_from_fpstate+0x9a/0x170, reinitializing FPU registers.
+However, it is possible that the warning is triggered in a valid case as
+false-positive.
 
-However, the text location (...+0x9a in this case) is the instruction
-*AFTER* the XRSTOR. The highlighted instruction in the "Code:" dump
-also points one instruction late.
+s390_enable_sie() takes the mmap_lock, marks all VMAs as VM_NOHUGEPAGE and
+splits possibly existing THP guest mappings. mm->context.has_pgste is set
+to 1 before that, to prevent races with the mm_has_pgste() check in
+MADV_HUGEPAGE.
 
-The reason is that the "fixup" moves RIP up to pass the bad XRSTOR and
-keep on running after returning from the #GP handler. But it does this
-fixup before warning.
+khugepaged drops the mmap_lock for file mappings and might run in parallel,
+before a vma is marked VM_NOHUGEPAGE, but after mm->context.has_pgste was
+set to 1. If it finds file mappings to collapse, it will eventually call
+pte_free_defer(). This will trigger the warning, but it is a valid case
+because gmap is not yet set up, and the THP mappings will be split again.
 
-The resulting warning output is nonsensical because it looks like the
-non-FPU-related instruction is #GP'ing.
+Therefore, remove the warning and the comment.
 
-Do not fix up RIP until after printing the warning. Do this by using
-the more generic and standard ex_handler_default().
-
-Fixes: d5c8028b4788 ("x86/fpu: Reinitialize FPU registers if restoring FPU state fails")
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Acked-by: Alison Schofield <alison.schofield@intel.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250624210148.97126F9E%40davehans-spike.ostc.intel.com
+Fixes: 8211dad627981 ("s390: add pte_free_defer() for pgtables sharing page")
+Cc: <stable@vger.kernel.org> # 6.6+
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/extable.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/s390/mm/pgalloc.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/arch/x86/mm/extable.c
-+++ b/arch/x86/mm/extable.c
-@@ -122,13 +122,12 @@ static bool ex_handler_sgx(const struct
- static bool ex_handler_fprestore(const struct exception_table_entry *fixup,
- 				 struct pt_regs *regs)
- {
--	regs->ip = ex_fixup_addr(fixup);
--
- 	WARN_ONCE(1, "Bad FPU state detected at %pB, reinitializing FPU registers.",
- 		  (void *)instruction_pointer(regs));
+--- a/arch/s390/mm/pgalloc.c
++++ b/arch/s390/mm/pgalloc.c
+@@ -219,11 +219,6 @@ void pte_free_defer(struct mm_struct *mm
+ 	struct ptdesc *ptdesc = virt_to_ptdesc(pgtable);
  
- 	fpu_reset_from_exception_fixup();
--	return true;
-+
-+	return ex_handler_default(fixup, regs);
+ 	call_rcu(&ptdesc->pt_rcu_head, pte_free_now);
+-	/*
+-	 * THPs are not allowed for KVM guests. Warn if pgste ever reaches here.
+-	 * Turn to the generic pte_free_defer() version once gmap is removed.
+-	 */
+-	WARN_ON_ONCE(mm_has_pgste(mm));
  }
+ #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
  
- /*
 
 
