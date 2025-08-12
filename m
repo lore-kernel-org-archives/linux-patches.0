@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2AF2868AF;
-	Tue, 12 Aug 2025 17:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0502868AF;
+	Tue, 12 Aug 2025 17:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021089; cv=none; b=g1IzrDH1s8SBWLUxU9/7eqzsYFT9EwSNpk/IGOgiV0thEPh1cCK5jKSUSRPp4jgwhtTyFmUNCL1jMS1le6y5AWNuuIPhqOtncuOccEYYm8hEHo3a+cSFevGwAOnIe8og8Zy7jSCZ1Qw5eg116Bdk+6TgXtqbX7lBRYExmpFty0Y=
+	t=1755021092; cv=none; b=nlEoceR40sfwEBuSUllN9hrxEYsZisnhrfkaMJFr/gfsOXy6Wih2L5yL/t6oM0mh9wXgj9KEgdM0wAbi1YDVd8iIL6tCK6NKzPrCxdBgOlyuIVaXfIxkwHE6maBFkbJD37bC1RXhTozkcRW4TWB4fXylCOjg67b/fM6oRlrtQwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021089; c=relaxed/simple;
-	bh=69dmY99I7Nj47db5nXC2Ub8Ke2Bmm/omRu7QRnsLgS8=;
+	s=arc-20240116; t=1755021092; c=relaxed/simple;
+	bh=dBjONge+jQBHHJLRwej0k9/6B9BEpw8xu5dJweQdyog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7K0hcCO82aZwOFTftXZvMmYKmy0oQLqYdKrQRwK/+cBNR55o0HNdNvTVrRdQBa9Wgt2pOxhKjqEryxX9G6wG16EWVNCGqBRdcCa/BlnKMfj/UqEC0BmDfz//yFxAqvmByaCy6KBSDlD9OxXb9Szaj++c2jig6815H2827v3Lus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIeJJdFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ryuwK6EKRBLbtv0hR/3u0N8MFkElNjDy4qccMcELpondIFZUaolU9kqhB5mFpJg1WikvpDL3Y0ueMM4HlUnMhBm4D9OjVoH2SS60doCDJl7yzryXqVLrCBw3LX5b+LbdNHqAFX8tT1o8cFqHaxufCHi4gaNIDeynRAJWXKgG90k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZhlX9dm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIeJJdFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF23C4CEF0;
-	Tue, 12 Aug 2025 17:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZhlX9dm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16889C4CEF0;
+	Tue, 12 Aug 2025 17:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021089;
-	bh=69dmY99I7Nj47db5nXC2Ub8Ke2Bmm/omRu7QRnsLgS8=;
+	s=korg; t=1755021092;
+	bh=dBjONge+jQBHHJLRwej0k9/6B9BEpw8xu5dJweQdyog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nIeJJdFfu69OQPh7InqYtayvlAVgYkrNPmdqVQkNwk6IAPjRhccg2pex5bpwQumkx
-	 uToI1I7G2mt8sWccAEgAw6K1O44tEXRnqXVeDMXc7lFgtoC4z2XCvT2l/dz52+VmNb
-	 DrM3wVnx3jvS/PiTpcGQn/TSKIpquSn5cHvbzVxc=
+	b=2ZhlX9dmh6zj/Ezjjsc1BDjr15MztYHQtwvaV1VdNbhoG061WpjmFQgGruBEqEPFo
+	 u4iHYYZMai+lwNoOR5hURHyCehqTMh7abWtZR9jE7vJ1aybcYkowo+atO5kK1+qKYS
+	 wuX81VoVJPkj/epGp4/H06cn3Gmej9teOlK3UGIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Timothy Pearson <tpearson@raptorengineering.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/262] wifi: ath11k: clear initialized flag for deinit-ed srng lists
-Date: Tue, 12 Aug 2025 19:27:28 +0200
-Message-ID: <20250812172955.544173059@linuxfoundation.org>
+Subject: [PATCH 6.1 210/253] powerpc/eeh: Make EEH driver device hotplug safe
+Date: Tue, 12 Aug 2025 19:29:58 +0200
+Message-ID: <20250812172957.760632701@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,99 +48,254 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit a5b46aa7cf5f05c213316a018e49a8e086efd98e ]
+[ Upstream commit 1010b4c012b0d78dfb9d3132b49aa2ef024a07a7 ]
 
-In a number of cases we see kernel panics on resume due
-to ath11k kernel page fault, which happens under the
-following circumstances:
+Multiple race conditions existed between the PCIe hotplug driver and the
+EEH driver, leading to a variety of kernel oopses of the same general
+nature:
 
-1) First ath11k_hal_dump_srng_stats() call
+<pcie device unplug>
+<eeh driver trigger>
+<hotplug removal trigger>
+<pcie tree reconfiguration>
+<eeh recovery next step>
+<oops in EEH driver bus iteration loop>
 
- Last interrupt received for each group:
- ath11k_pci 0000:01:00.0: group_id 0 22511ms before
- ath11k_pci 0000:01:00.0: group_id 1 14440788ms before
- [..]
- ath11k_pci 0000:01:00.0: failed to receive control response completion, polling..
- ath11k_pci 0000:01:00.0: Service connect timeout
- ath11k_pci 0000:01:00.0: failed to connect to HTT: -110
- ath11k_pci 0000:01:00.0: failed to start core: -110
- ath11k_pci 0000:01:00.0: firmware crashed: MHI_CB_EE_RDDM
- ath11k_pci 0000:01:00.0: already resetting count 2
- ath11k_pci 0000:01:00.0: failed to wait wlan mode request (mode 4): -110
- ath11k_pci 0000:01:00.0: qmi failed to send wlan mode off: -110
- ath11k_pci 0000:01:00.0: failed to reconfigure driver on crash recovery
- [..]
+A second class of oops is also seen when the underlying bus disappears
+during device recovery.
 
-2) At this point reconfiguration fails (we have 2 resets) and
-  ath11k_core_reconfigure_on_crash() calls ath11k_hal_srng_deinit()
-  which destroys srng lists.  However, it does not reset per-list
-  ->initialized flag.
+Refactor the EEH module to be PCI rescan and remove safe.  Also clean
+up a few minor formatting / readability issues.
 
-3) Second ath11k_hal_dump_srng_stats() call sees stale ->initialized
-  flag and attempts to dump srng stats:
-
- Last interrupt received for each group:
- ath11k_pci 0000:01:00.0: group_id 0 66785ms before
- ath11k_pci 0000:01:00.0: group_id 1 14485062ms before
- ath11k_pci 0000:01:00.0: group_id 2 14485062ms before
- ath11k_pci 0000:01:00.0: group_id 3 14485062ms before
- ath11k_pci 0000:01:00.0: group_id 4 14780845ms before
- ath11k_pci 0000:01:00.0: group_id 5 14780845ms before
- ath11k_pci 0000:01:00.0: group_id 6 14485062ms before
- ath11k_pci 0000:01:00.0: group_id 7 66814ms before
- ath11k_pci 0000:01:00.0: group_id 8 68997ms before
- ath11k_pci 0000:01:00.0: group_id 9 67588ms before
- ath11k_pci 0000:01:00.0: group_id 10 69511ms before
- BUG: unable to handle page fault for address: ffffa007404eb010
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 100000067 P4D 100000067 PUD 10022d067 PMD 100b01067 PTE 0
- Oops: 0000 [#1] PREEMPT SMP NOPTI
- RIP: 0010:ath11k_hal_dump_srng_stats+0x2b4/0x3b0 [ath11k]
- Call Trace:
- <TASK>
- ? __die_body+0xae/0xb0
- ? page_fault_oops+0x381/0x3e0
- ? exc_page_fault+0x69/0xa0
- ? asm_exc_page_fault+0x22/0x30
- ? ath11k_hal_dump_srng_stats+0x2b4/0x3b0 [ath11k (HASH:6cea 4)]
- ath11k_qmi_driver_event_work+0xbd/0x1050 [ath11k (HASH:6cea 4)]
- worker_thread+0x389/0x930
- kthread+0x149/0x170
-
-Clear per-list ->initialized flag in ath11k_hal_srng_deinit().
-
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Fixes: 5118935b1bc2 ("ath11k: dump SRNG stats during FW assert")
-Link: https://patch.msgid.link/20250612084551.702803-1-senozhatsky@chromium.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/1334208367.1359861.1752615503144.JavaMail.zimbra@raptorengineeringinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/hal.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/powerpc/kernel/eeh_driver.c | 48 +++++++++++++++++++++-----------
+ arch/powerpc/kernel/eeh_pe.c     | 10 ++++---
+ 2 files changed, 38 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/hal.c b/drivers/net/wireless/ath/ath11k/hal.c
-index f32fa104ded9..df493d176062 100644
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -1319,6 +1319,10 @@ EXPORT_SYMBOL(ath11k_hal_srng_init);
- void ath11k_hal_srng_deinit(struct ath11k_base *ab)
- {
- 	struct ath11k_hal *hal = &ab->hal;
-+	int i;
-+
-+	for (i = 0; i < HAL_SRNG_RING_ID_MAX; i++)
-+		ab->hal.srng_list[i].initialized = 0;
+diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
+index f279295179bd..429abaecad41 100644
+--- a/arch/powerpc/kernel/eeh_driver.c
++++ b/arch/powerpc/kernel/eeh_driver.c
+@@ -257,13 +257,12 @@ static void eeh_pe_report_edev(struct eeh_dev *edev, eeh_report_fn fn,
+ 	struct pci_driver *driver;
+ 	enum pci_ers_result new_result;
  
- 	ath11k_hal_unregister_srng_key(ab);
- 	ath11k_hal_free_cont_rdp(ab);
+-	pci_lock_rescan_remove();
+ 	pdev = edev->pdev;
+ 	if (pdev)
+ 		get_device(&pdev->dev);
+-	pci_unlock_rescan_remove();
+ 	if (!pdev) {
+ 		eeh_edev_info(edev, "no device");
++		*result = PCI_ERS_RESULT_DISCONNECT;
+ 		return;
+ 	}
+ 	device_lock(&pdev->dev);
+@@ -304,8 +303,9 @@ static void eeh_pe_report(const char *name, struct eeh_pe *root,
+ 	struct eeh_dev *edev, *tmp;
+ 
+ 	pr_info("EEH: Beginning: '%s'\n", name);
+-	eeh_for_each_pe(root, pe) eeh_pe_for_each_dev(pe, edev, tmp)
+-		eeh_pe_report_edev(edev, fn, result);
++	eeh_for_each_pe(root, pe)
++		eeh_pe_for_each_dev(pe, edev, tmp)
++			eeh_pe_report_edev(edev, fn, result);
+ 	if (result)
+ 		pr_info("EEH: Finished:'%s' with aggregate recovery state:'%s'\n",
+ 			name, pci_ers_result_name(*result));
+@@ -383,6 +383,8 @@ static void eeh_dev_restore_state(struct eeh_dev *edev, void *userdata)
+ 	if (!edev)
+ 		return;
+ 
++	pci_lock_rescan_remove();
++
+ 	/*
+ 	 * The content in the config space isn't saved because
+ 	 * the blocked config space on some adapters. We have
+@@ -393,14 +395,19 @@ static void eeh_dev_restore_state(struct eeh_dev *edev, void *userdata)
+ 		if (list_is_last(&edev->entry, &edev->pe->edevs))
+ 			eeh_pe_restore_bars(edev->pe);
+ 
++		pci_unlock_rescan_remove();
+ 		return;
+ 	}
+ 
+ 	pdev = eeh_dev_to_pci_dev(edev);
+-	if (!pdev)
++	if (!pdev) {
++		pci_unlock_rescan_remove();
+ 		return;
++	}
+ 
+ 	pci_restore_state(pdev);
++
++	pci_unlock_rescan_remove();
+ }
+ 
+ /**
+@@ -647,9 +654,7 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
+ 	if (any_passed || driver_eeh_aware || (pe->type & EEH_PE_VF)) {
+ 		eeh_pe_dev_traverse(pe, eeh_rmv_device, rmv_data);
+ 	} else {
+-		pci_lock_rescan_remove();
+ 		pci_hp_remove_devices(bus);
+-		pci_unlock_rescan_remove();
+ 	}
+ 
+ 	/*
+@@ -665,8 +670,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
+ 	if (rc)
+ 		return rc;
+ 
+-	pci_lock_rescan_remove();
+-
+ 	/* Restore PE */
+ 	eeh_ops->configure_bridge(pe);
+ 	eeh_pe_restore_bars(pe);
+@@ -674,7 +677,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
+ 	/* Clear frozen state */
+ 	rc = eeh_clear_pe_frozen_state(pe, false);
+ 	if (rc) {
+-		pci_unlock_rescan_remove();
+ 		return rc;
+ 	}
+ 
+@@ -709,7 +711,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
+ 	pe->tstamp = tstamp;
+ 	pe->freeze_count = cnt;
+ 
+-	pci_unlock_rescan_remove();
+ 	return 0;
+ }
+ 
+@@ -843,10 +844,13 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
+ 		{LIST_HEAD_INIT(rmv_data.removed_vf_list), 0};
+ 	int devices = 0;
+ 
++	pci_lock_rescan_remove();
++
+ 	bus = eeh_pe_bus_get(pe);
+ 	if (!bus) {
+ 		pr_err("%s: Cannot find PCI bus for PHB#%x-PE#%x\n",
+ 			__func__, pe->phb->global_number, pe->addr);
++		pci_unlock_rescan_remove();
+ 		return;
+ 	}
+ 
+@@ -1085,10 +1089,15 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
+ 		eeh_pe_state_clear(pe, EEH_PE_PRI_BUS, true);
+ 		eeh_pe_dev_mode_mark(pe, EEH_DEV_REMOVED);
+ 
+-		pci_lock_rescan_remove();
+-		pci_hp_remove_devices(bus);
+-		pci_unlock_rescan_remove();
++		bus = eeh_pe_bus_get(pe);
++		if (bus)
++			pci_hp_remove_devices(bus);
++		else
++			pr_err("%s: PCI bus for PHB#%x-PE#%x disappeared\n",
++				__func__, pe->phb->global_number, pe->addr);
++
+ 		/* The passed PE should no longer be used */
++		pci_unlock_rescan_remove();
+ 		return;
+ 	}
+ 
+@@ -1105,6 +1114,8 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
+ 			eeh_clear_slot_attention(edev->pdev);
+ 
+ 	eeh_pe_state_clear(pe, EEH_PE_RECOVERING, true);
++
++	pci_unlock_rescan_remove();
+ }
+ 
+ /**
+@@ -1123,6 +1134,7 @@ void eeh_handle_special_event(void)
+ 	unsigned long flags;
+ 	int rc;
+ 
++	pci_lock_rescan_remove();
+ 
+ 	do {
+ 		rc = eeh_ops->next_error(&pe);
+@@ -1162,10 +1174,12 @@ void eeh_handle_special_event(void)
+ 
+ 			break;
+ 		case EEH_NEXT_ERR_NONE:
++			pci_unlock_rescan_remove();
+ 			return;
+ 		default:
+ 			pr_warn("%s: Invalid value %d from next_error()\n",
+ 				__func__, rc);
++			pci_unlock_rescan_remove();
+ 			return;
+ 		}
+ 
+@@ -1177,7 +1191,9 @@ void eeh_handle_special_event(void)
+ 		if (rc == EEH_NEXT_ERR_FROZEN_PE ||
+ 		    rc == EEH_NEXT_ERR_FENCED_PHB) {
+ 			eeh_pe_state_mark(pe, EEH_PE_RECOVERING);
++			pci_unlock_rescan_remove();
+ 			eeh_handle_normal_event(pe);
++			pci_lock_rescan_remove();
+ 		} else {
+ 			eeh_for_each_pe(pe, tmp_pe)
+ 				eeh_pe_for_each_dev(tmp_pe, edev, tmp_edev)
+@@ -1190,7 +1206,6 @@ void eeh_handle_special_event(void)
+ 				"error_detected(permanent failure)", pe,
+ 				eeh_report_failure, NULL);
+ 
+-			pci_lock_rescan_remove();
+ 			list_for_each_entry(hose, &hose_list, list_node) {
+ 				phb_pe = eeh_phb_pe_get(hose);
+ 				if (!phb_pe ||
+@@ -1209,7 +1224,6 @@ void eeh_handle_special_event(void)
+ 				}
+ 				pci_hp_remove_devices(bus);
+ 			}
+-			pci_unlock_rescan_remove();
+ 		}
+ 
+ 		/*
+@@ -1219,4 +1233,6 @@ void eeh_handle_special_event(void)
+ 		if (rc == EEH_NEXT_ERR_DEAD_IOC)
+ 			break;
+ 	} while (rc != EEH_NEXT_ERR_NONE);
++
++	pci_unlock_rescan_remove();
+ }
+diff --git a/arch/powerpc/kernel/eeh_pe.c b/arch/powerpc/kernel/eeh_pe.c
+index 7d1b50599dd6..08095aeba5c9 100644
+--- a/arch/powerpc/kernel/eeh_pe.c
++++ b/arch/powerpc/kernel/eeh_pe.c
+@@ -671,10 +671,12 @@ static void eeh_bridge_check_link(struct eeh_dev *edev)
+ 	eeh_ops->write_config(edev, cap + PCI_EXP_LNKCTL, 2, val);
+ 
+ 	/* Check link */
+-	if (!edev->pdev->link_active_reporting) {
+-		eeh_edev_dbg(edev, "No link reporting capability\n");
+-		msleep(1000);
+-		return;
++	if (edev->pdev) {
++		if (!edev->pdev->link_active_reporting) {
++			eeh_edev_dbg(edev, "No link reporting capability\n");
++			msleep(1000);
++			return;
++		}
+ 	}
+ 
+ 	/* Wait the link is up until timeout (5s) */
 -- 
 2.39.5
 
