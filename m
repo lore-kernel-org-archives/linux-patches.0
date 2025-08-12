@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D8E2D46AC;
-	Tue, 12 Aug 2025 17:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41263221FAC;
+	Tue, 12 Aug 2025 17:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020952; cv=none; b=LY1t2yp/Sf0wziAvOHT/brMWAWx6nkTCzL1TC8HBzG8CWYVmYQbwL+AAH7zCXQbXvzQAc+m0OmJsCL63BHGRhZMTXkC75muo5941IyYajC7C6jt8HpRGUeQr+PQUEuQH+ALj4wPOCCkSWuwHzxG8rotbrOQAeDn2A4/v0WmX0+A=
+	t=1755020955; cv=none; b=nUqiYoHwOr7mN9rrYkqp8oJkBsbhjITYkjbNEobrNa8S39WZ3slVau4s/XhpqmMzTCHb8RZybD3PfWsXUNl3k2Xt92DfCRWeCPYdlbvpOMwo0/E8L8C53KXnuHRNMX/9tGsC2v2+EIBsqZEhx2dTMi6iSHkLgRabYEOl8U8VogQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020952; c=relaxed/simple;
-	bh=2fYHmjjQoByqWcAif2I4o9Me25uFe/ImjvBEtNCUp30=;
+	s=arc-20240116; t=1755020955; c=relaxed/simple;
+	bh=tiMtfOPsFNnJMQ3eEzjk+3mjDFD3tldSmoodVnNGah8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0GRKJ7erg5LOJTKWy6CABXpoj5IFsvuHqRjAJ+kJMCaqEbHk3I80055nt9Oyf2QDKYHHS1BnbNAAKO20hTCxou8+bBj3J8Ed+b3VrXPW9w5oIvxnlBtP4ghyIREUxqMxUsEv55O+bdGT1h5pkpiSGdZFhAPKYLej+w3rXDfVZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMZIFDQI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BiO2O1QZ7VSDDyhokdUtsyQfdwxhNCROpaPNrWMbxJWOmi1596eNFJB84a5dAYHFgqCaVlMUeWGywxYFBqYVJy1DD0vtcVLMMXq15c5tOk3Wnq9k50KXNpQBIbTempWpmfXWst2NG0p+8nowEoE62z3sWl+YPurAjQn1SChTX5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfwHJ9nP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMZIFDQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BBFC4CEF0;
-	Tue, 12 Aug 2025 17:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfwHJ9nP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A435BC4CEF0;
+	Tue, 12 Aug 2025 17:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020951;
-	bh=2fYHmjjQoByqWcAif2I4o9Me25uFe/ImjvBEtNCUp30=;
+	s=korg; t=1755020955;
+	bh=tiMtfOPsFNnJMQ3eEzjk+3mjDFD3tldSmoodVnNGah8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMZIFDQIp1tWdutTFnWGzJCWHNsKPhfsOqLmzylNUfBqlM9wxEMXpHxjGSsWxrea3
-	 Y3kXItubHhx0b/hqdMCjY3d8mopTmoGbrVF4GlGVh1zD6UjdhTesEE450lHcTGSnOx
-	 ATTZMRpcFQa+wC3PWcxlWJO2XBZlUSLp61L9YxEs=
+	b=rfwHJ9nPxL7GFoFgweoYonm15fZY1sVKnBISizLWHxJxHQllrx6ZzUeyvZr1DAd4k
+	 Rjxvggps+P7jsSDQRgnRN07Xpa6ocYeQTpayrjYGKBRnWhXpUIw+4QzLGOqVBHmhl/
+	 TUGI1mFKwUVZQml+AEOP3/R6GCLuZ/UrEjkhU6+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Brahmajit Das <listout@listout.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/262] arm64: dts: imx8mm-beacon: Fix HS400 USDHC clock speed
-Date: Tue, 12 Aug 2025 19:27:04 +0200
-Message-ID: <20250812172954.499565938@linuxfoundation.org>
+Subject: [PATCH 6.6 042/262] samples: mei: Fix building on musl libc
+Date: Tue, 12 Aug 2025 19:27:10 +0200
+Message-ID: <20250812172954.749835879@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -52,39 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit f83f69097a302ed2a2775975ddcf12e6a5ac6ec3 ]
+[ Upstream commit 239df3e4b4752524e7c0fb3417c218d8063654b4 ]
 
-The reference manual for the i.MX8MM states the clock rate in
-MMC mode is 1/2 of the input clock, therefore to properly run
-at HS400 rates, the input clock must be 400MHz to operate at
-200MHz.  Currently the clock is set to 200MHz which is half the
-rate it should be, so the throughput is half of what it should be
-for HS400 operation.
+The header bits/wordsize.h is glibc specific and on building on musl
+with allyesconfig results in
 
-Fixes: 593816fa2f35 ("arm64: dts: imx: Add Beacon i.MX8m-Mini development kit")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+samples/mei/mei-amt-version.c:77:10: fatal error: bits/wordsize.h: No such file or directory
+   77 | #include <bits/wordsize.h>
+      |          ^~~~~~~~~~~~~~~~~
+
+mei-amt-version.c build file without bits/wordsize.h on musl and glibc.
+
+However on musl we get the follwing error without sys/time.h
+
+samples/mei/mei-amt-version.c: In function 'mei_recv_msg':
+samples/mei/mei-amt-version.c:159:24: error: storage size of 'tv' isn't known
+  159 |         struct timeval tv;
+      |                        ^~
+samples/mei/mei-amt-version.c:160:9: error: unknown type name 'fd_set'
+  160 |         fd_set set;
+      |         ^~~~~~
+samples/mei/mei-amt-version.c:168:9: error: implicit declaration of function 'FD_ZERO' [-Wimplicit-function-declaration]
+  168 |         FD_ZERO(&set);
+      |         ^~~~~~~
+samples/mei/mei-amt-version.c:169:9: error: implicit declaration of function 'FD_SET'; did you mean 'L_SET'? [-Wimplicit-function-declaration]
+  169 |         FD_SET(me->fd, &set);
+      |         ^~~~~~
+      |         L_SET
+samples/mei/mei-amt-version.c:170:14: error: implicit declaration of function 'select' [-Wimplicit-function-declaration]
+  170 |         rc = select(me->fd + 1, &set, NULL, NULL, &tv);
+      |              ^~~~~~
+samples/mei/mei-amt-version.c:171:23: error: implicit declaration of function 'FD_ISSET' [-Wimplicit-function-declaration]
+  171 |         if (rc > 0 && FD_ISSET(me->fd, &set)) {
+      |                       ^~~~~~~~
+samples/mei/mei-amt-version.c:159:24: warning: unused variable 'tv' [-Wunused-variable]
+  159 |         struct timeval tv;
+      |                        ^~
+
+Hence the the file has been included.
+
+Fixes: c52827cc4ddf ("staging/mei: add mei user space example")
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Link: https://lore.kernel.org/r/20250702135955.24955-1-listout@listout.xyz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ samples/mei/mei-amt-version.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-index 8ab0e45f2ad3..f93c2b604c57 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-@@ -284,6 +284,8 @@ &usdhc3 {
- 	pinctrl-0 = <&pinctrl_usdhc3>;
- 	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
- 	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
-+	assigned-clocks = <&clk IMX8MM_CLK_USDHC3>;
-+	assigned-clock-rates = <400000000>;
- 	bus-width = <8>;
- 	non-removable;
- 	status = "okay";
+diff --git a/samples/mei/mei-amt-version.c b/samples/mei/mei-amt-version.c
+index 867debd3b912..1d7254bcb44c 100644
+--- a/samples/mei/mei-amt-version.c
++++ b/samples/mei/mei-amt-version.c
+@@ -69,11 +69,11 @@
+ #include <string.h>
+ #include <fcntl.h>
+ #include <sys/ioctl.h>
++#include <sys/time.h>
+ #include <unistd.h>
+ #include <errno.h>
+ #include <stdint.h>
+ #include <stdbool.h>
+-#include <bits/wordsize.h>
+ #include <linux/mei.h>
+ 
+ /*****************************************************************************
 -- 
 2.39.5
 
