@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0452FE56D;
-	Tue, 12 Aug 2025 17:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43E32F8BE7;
+	Tue, 12 Aug 2025 17:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021481; cv=none; b=FLHZeA+N0U5dHhsnmfDLKo5NOaH41mAwwraEGtjDjVXN3/kjDtMQ0TYZFvLNEMWqBNei+mW7U6nXEuaSjU87T0/vsH+SCmcWz1aSe0mfUVEJWTOX+LFWUerBBjIo0NwQhn7smIvFa9omuwkzNceBn+jR2MVM88X6GGb1ql3xNRg=
+	t=1755021484; cv=none; b=fR9HmSD2sl+Urp5jVaUaTZ1Le3g3D6/dyG3llDRLNoVs0SJm3HgebsoZsjNiQgXIwmX6AdSU37+rw7Ip2Ho7etiSVO3+fM/fwM++6GDzXtFLosN7lDW/XwzklEc1fBGxTGJ2uf4vi2dsPjKbsRwKuQCgKib+C68Q/DGC7QFPxcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021481; c=relaxed/simple;
-	bh=ESwDdXCn0hQdUuPTbJEhwm9fHL5hsXVqJSSB8XMQloo=;
+	s=arc-20240116; t=1755021484; c=relaxed/simple;
+	bh=4xc3kcAnWfKxcrmA/Q2yKhTQe/LGSDzW/1fKZji2imA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFCQb3gzGpcp/VIsG/usdC4i5RpFvqDAUgTIkWropdNkDn6/Jpo3yBeP5mxAEcBktDAPk/cPPpZXk07bUJ4z+Tx7D/JszvHpG3DycM6tGbIc6LmQe0DiQg5ESNfuT6dhp5bjFlsPYnnzBHIiNeRbO33fdsUgnrLfkMFxipr/CYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RzB8j6h4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRBaanhKQZaOLcSUTedtvoIVavE2uyJT9uOSBz58ckllqBZZiGs4VEOl8Wvna4zp5dXlNZeB7HHWX8CJll0Ff0QQ96MjrYOg8+y06m2DaW/HYrvbvxRE/BIvyj34z9RCNAICHwsOtzZVwmxxJTIRGZgrwz0nJF+sAFlug9ofASg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4WLxJ0p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzB8j6h4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5DAC4CEF6;
-	Tue, 12 Aug 2025 17:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4WLxJ0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1376DC4CEF0;
+	Tue, 12 Aug 2025 17:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021481;
-	bh=ESwDdXCn0hQdUuPTbJEhwm9fHL5hsXVqJSSB8XMQloo=;
+	s=korg; t=1755021484;
+	bh=4xc3kcAnWfKxcrmA/Q2yKhTQe/LGSDzW/1fKZji2imA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzB8j6h4Gl1wqTK0sfY8d7zxWM8d+7ON+bNqa98PtbxDLSppcwwU0RjUuYmP3KR3z
-	 HhGvEpJY8ty+mGD8ev/I+ZRPyywCRhwn4prwXPr4KjY523oSSFMF5YrYBYTZK5H2Zb
-	 PebNV8cF3ZrYhOlFvnAaumee5ZOXN5AKTp5R+NUg=
+	b=x4WLxJ0pZCMTOypeYhEeZWWDA82tk0cvP8Pj7W4TRhquLgzOKxGvslDximRrAps8p
+	 NjuG3GVdNyBBO9M1sPHp6KjwDB0yzJn3FwqCBgw1R3iIVIkljwhma4vjkomq93iSyQ
+	 nCqrBopY2KMV+dQD0Vo673TMwxkOZG2ly5NfcpbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/262] scsi: ibmvscsi_tgt: Fix dma_unmap_sg() nents value
-Date: Tue, 12 Aug 2025 19:28:44 +0200
-Message-ID: <20250812172958.888884532@linuxfoundation.org>
+Subject: [PATCH 6.6 119/262] pinctrl: sunxi: Fix memory leak on krealloc failure
+Date: Tue, 12 Aug 2025 19:28:27 +0200
+Message-ID: <20250812172958.177603844@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,46 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 023a293b9cd0bb86a9b50cd7688a3d9d266826db ]
+[ Upstream commit e3507c56cbb208d4f160942748c527ef6a528ba1 ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+In sunxi_pctrl_dt_node_to_map(), when krealloc() fails to resize
+the pinctrl_map array, the function returns -ENOMEM directly
+without freeing the previously allocated *map buffer. This results
+in a memory leak of the original kmalloc_array allocation.
 
-Fixes: 88a678bbc34c ("ibmvscsis: Initial commit of IBM VSCSI Tgt Driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250630111803.94389-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: e11dee2e98f8 ("pinctrl: sunxi: Deal with configless pins")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Link: https://lore.kernel.org/20250620012708.16709-1-chenyuan_fl@163.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ibmvscsi_tgt/libsrp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pinctrl/sunxi/pinctrl-sunxi.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/ibmvscsi_tgt/libsrp.c b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-index 8a0e28aec928..0ecad398ed3d 100644
---- a/drivers/scsi/ibmvscsi_tgt/libsrp.c
-+++ b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-@@ -184,7 +184,8 @@ static int srp_direct_data(struct ibmvscsis_cmd *cmd, struct srp_direct_buf *md,
- 	err = rdma_io(cmd, sg, nsg, md, 1, dir, len);
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+index 73bcf806af0e..fc11c3d55fa8 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+@@ -395,6 +395,7 @@ static int sunxi_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	const char *function, *pin_prop;
+ 	const char *group;
+ 	int ret, npins, nmaps, configlen = 0, i = 0;
++	struct pinctrl_map *new_map;
  
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
+ 	*map = NULL;
+ 	*num_maps = 0;
+@@ -469,9 +470,13 @@ static int sunxi_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	 * We know have the number of maps we need, we can resize our
+ 	 * map array
+ 	 */
+-	*map = krealloc(*map, i * sizeof(struct pinctrl_map), GFP_KERNEL);
+-	if (!*map)
+-		return -ENOMEM;
++	new_map = krealloc(*map, i * sizeof(struct pinctrl_map), GFP_KERNEL);
++	if (!new_map) {
++		ret = -ENOMEM;
++		goto err_free_map;
++	}
++
++	*map = new_map;
  
- 	return err;
- }
-@@ -256,7 +257,8 @@ static int srp_indirect_data(struct ibmvscsis_cmd *cmd, struct srp_cmd *srp_cmd,
- 	err = rdma_io(cmd, sg, nsg, md, nmd, dir, len);
+ 	return 0;
  
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- free_mem:
- 	if (token && dma_map) {
 -- 
 2.39.5
 
