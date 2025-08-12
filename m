@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAE02D5C76;
-	Tue, 12 Aug 2025 17:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BE52DE1E2;
+	Tue, 12 Aug 2025 17:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021281; cv=none; b=bzPkg5dYYrEk18js/oRkySd/9jmJ8rPzH2l9q/dhrGDnZIpZAZkEYNSaaPAjyRe2ZgYQjjCDIOXMe677TcSAsNk5iWnBCFUSgSwkl0rPSeI/1k8awg5omCTRvFbBT6vEWJxnSGtvQglHv/TS33EInWIzJd8k2Fq0FvjA+dwj+W4=
+	t=1755021286; cv=none; b=Zrg5k0WWnNoFVYsNTqyBVlsvNLdGM3XFK0rC+EsoCew9ocqUUJcCqimfcNn02rQ/vchv8O+Z6La8PaS9AYe4C9wSLpT3elrnOIe2av9ijGJvNbZyVQC8XTlMk92NH+QZPIEceCBcVo0pZkdV0L39oHOcvv0MxjkTHrOthunPs4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021281; c=relaxed/simple;
-	bh=FTsYD5cuNLu4ihVvRm/MLI6R29yZlnkeNOi9bCdCvn0=;
+	s=arc-20240116; t=1755021286; c=relaxed/simple;
+	bh=cn3ylJkNaMZT3UKSVdGvZvzFNATvzwUSrkl5jJcYo1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JzUDn+qlTGxypGTtBiDzsrWYiKrFajnQwXtHioJRXF3NuXHnYIIpWfC58MGJszCuRDuqWFcQCBQXivcs9OjL8o6G0ZGZ9gSTsMIR0NhJmRFKk31i1yyjpcMVterqMrjM4HWtZoBX5hBwhJRktrip6lAd5RncdOYR020VFiLZLmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/wMgdeM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=teEirNpVEliW5SXFKRuPWZ5UIwND6XTmIE/WSWtmTtO+fKZnep+wRN7gvrmupoEFrezlM0y+eybaOxtHLiZLEl5EeNGPMq5H+lk0hGOgzsrVplSIt+TC/gBqHYrhwPl946dxDRFVqT2j8msJORQy1nihOVfe5BSrNswg12FDehU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpc+ozGZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/wMgdeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF926C4CEF0;
-	Tue, 12 Aug 2025 17:54:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpc+ozGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3005DC4CEF0;
+	Tue, 12 Aug 2025 17:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021281;
-	bh=FTsYD5cuNLu4ihVvRm/MLI6R29yZlnkeNOi9bCdCvn0=;
+	s=korg; t=1755021284;
+	bh=cn3ylJkNaMZT3UKSVdGvZvzFNATvzwUSrkl5jJcYo1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/wMgdeMlkyd5D3CMvjYWJ5YTyDiHMEhl4MjvO6IlxgomVi8FxJLRYDNi5IOYJbLh
-	 kmU6JJ7KyyvR59ETKjMJ+1tZeVhCu60EPyxbOuMT8HuMly56SAH70UaX6B8GLTiY9I
-	 OYtBHXZn8n/5m0oIqvF1PEfuuFkJVY0OmRsyuRsk=
+	b=gpc+ozGZ2+ODyReqnNPDWqtBEnAM8Wer967+CzYXNJmZEtFeQXQVJxXFXYUJFwuLU
+	 r9rfRCvM+syKQtOjWNY0xebJ34KR19CQfpfvh54hHhRzQDlnowlKJd1wy5CctSCdNn
+	 HlqlqP6+LklQ5gu7MAzI8xle4nCQncIB3pfaCDKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 239/253] ksmbd: fix null pointer dereference error in generate_encryptionkey
-Date: Tue, 12 Aug 2025 19:30:27 +0200
-Message-ID: <20250812172959.007356815@linuxfoundation.org>
+	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 088/262] wifi: ath12k: fix endianness handling while accessing wmi service bit
+Date: Tue, 12 Aug 2025 19:27:56 +0200
+Message-ID: <20250812172956.807168433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
 
-commit 9b493ab6f35178afd8d619800df9071992f715de upstream.
+[ Upstream commit 8f1a078842d4af4877fb686f3907788024d0d1b7 ]
 
-If client send two session setups with krb5 authenticate to ksmbd,
-null pointer dereference error in generate_encryptionkey could happen.
-sess->Preauth_HashValue is set to NULL if session is valid.
-So this patch skip generate encryption key if session is valid.
+Currently there is no endian conversion in ath12k_wmi_tlv_services_parser()
+so the service bit parsing will be incorrect on a big endian platform and
+to fix this by using appropriate endian conversion.
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-27654
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00217-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Fixes: 342527f35338 ("wifi: ath12k: Add support to parse new WMI event for 6 GHz regulatory")
+Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250717173539.2523396-2-tamizh.raja@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1621,11 +1621,24 @@ static int krb5_authenticate(struct ksmb
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 958ac4ed5c34..e918218ce2d6 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -6303,7 +6303,7 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
+ 					  void *data)
+ {
+ 	const struct wmi_service_available_event *ev;
+-	u32 *wmi_ext2_service_bitmap;
++	__le32 *wmi_ext2_service_bitmap;
+ 	int i, j;
+ 	u16 expected_len;
  
- 	rsp->SecurityBufferLength = cpu_to_le16(out_len);
+@@ -6335,12 +6335,12 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
+ 			   ev->wmi_service_segment_bitmap[3]);
+ 		break;
+ 	case WMI_TAG_ARRAY_UINT32:
+-		wmi_ext2_service_bitmap = (u32 *)ptr;
++		wmi_ext2_service_bitmap = (__le32 *)ptr;
+ 		for (i = 0, j = WMI_MAX_EXT_SERVICE;
+ 		     i < WMI_SERVICE_SEGMENT_BM_SIZE32 && j < WMI_MAX_EXT2_SERVICE;
+ 		     i++) {
+ 			do {
+-				if (wmi_ext2_service_bitmap[i] &
++				if (__le32_to_cpu(wmi_ext2_service_bitmap[i]) &
+ 				    BIT(j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32))
+ 					set_bit(j, ab->wmi_ab.svc_map);
+ 			} while (++j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32);
+@@ -6348,8 +6348,10 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
  
--	if ((conn->sign || server_conf.enforced_signing) ||
-+	/*
-+	 * If session state is SMB2_SESSION_VALID, We can assume
-+	 * that it is reauthentication. And the user/password
-+	 * has been verified, so return it here.
-+	 */
-+	if (sess->state == SMB2_SESSION_VALID) {
-+		if (conn->binding)
-+			goto binding_session;
-+		return 0;
-+	}
-+
-+	if ((rsp->SessionFlags != SMB2_SESSION_FLAG_IS_GUEST_LE &&
-+	    (conn->sign || server_conf.enforced_signing)) ||
- 	    (req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED))
- 		sess->sign = true;
- 
--	if (smb3_encryption_negotiated(conn)) {
-+	if (smb3_encryption_negotiated(conn) &&
-+	    !(req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
- 		retval = conn->ops->generate_encryptionkey(conn, sess);
- 		if (retval) {
- 			ksmbd_debug(SMB,
-@@ -1638,6 +1651,7 @@ static int krb5_authenticate(struct ksmb
- 		sess->sign = false;
+ 		ath12k_dbg(ab, ATH12K_DBG_WMI,
+ 			   "wmi_ext2_service_bitmap 0x%04x 0x%04x 0x%04x 0x%04x",
+-			   wmi_ext2_service_bitmap[0], wmi_ext2_service_bitmap[1],
+-			   wmi_ext2_service_bitmap[2], wmi_ext2_service_bitmap[3]);
++			   __le32_to_cpu(wmi_ext2_service_bitmap[0]),
++			   __le32_to_cpu(wmi_ext2_service_bitmap[1]),
++			   __le32_to_cpu(wmi_ext2_service_bitmap[2]),
++			   __le32_to_cpu(wmi_ext2_service_bitmap[3]));
+ 		break;
  	}
- 
-+binding_session:
- 	if (conn->dialect >= SMB30_PROT_ID) {
- 		chann = lookup_chann_list(sess, conn);
- 		if (!chann) {
+ 	return 0;
+-- 
+2.39.5
+
 
 
