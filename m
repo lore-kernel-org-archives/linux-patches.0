@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7837320E023;
-	Tue, 12 Aug 2025 19:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC0520E023;
+	Tue, 12 Aug 2025 19:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026235; cv=none; b=O9Rzfk0Umlia7KFuKhLGyAv9laXwgCa7GMFLKeHQWyD89JzLX31cK8RlMeC9RoESJ1JtJ1pWdi08DNPRt6zwaiOhNOlB1F5geNu7YII/qMmN6MBH/qqdgWXP4q7CDA2n26hhPearTuvdKyU8usb6+FzExJGloWPI9yP3sd5FtLo=
+	t=1755026239; cv=none; b=EC0g/lUIfUpSE7LmG/LaYcYSzQuJr82yjwdV2RF9ui/PHIy+0AI9pIbnSMmfdQZxrjA8cgZW48ZeOXJrbGRppHqO0o/bUPLWlrVSOKgqiBJzsMfu6gjHK8k6+UgzYPQtDAhNO/BCcGZv5onYNvYrQBNPw/Q8Mip7J3k9tEekxNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026235; c=relaxed/simple;
-	bh=y/2TLpQ2XRmeqgCBJoTYPykwyyWGXJLUvqcOrfMIXd4=;
+	s=arc-20240116; t=1755026239; c=relaxed/simple;
+	bh=oYjGgyNC1jysaRvYQTeA+xzOpXzUe2jwtpABl/ili88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TnD6LbWCH3SfkP+mVrGlY2wiIgLDqNviI2QnIOltX65SQQ9lbcymqL6adgmRJlqniOubC+9NLuHUyKrMmVXrSiv3izjrRuc4Ms7+QrmLRPDpA8rfbtjbPRLUnJ6Iu+OcDPSuPcsX7VR5Q7LJlDzz394LaVPsU7B1SLqdMbeQo7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9MjbyIF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JN9jO877TwGQGx8xQDz9O2T3l2EtZaO5+An9SmW1V9+en6mXscugPzDnJ07oKeygA093gW7wYsx07GJzgPdV7aSeajV1w6/Uqjya7JIU0vIEIfani4BV5zORtdpS6n1vZ9YAmRa14Z4WXluU0+i5xSziowxPrTR+mWXrqxlv8Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MH1RYbc6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9MjbyIF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC207C4CEF0;
-	Tue, 12 Aug 2025 19:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MH1RYbc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C728C4CEF0;
+	Tue, 12 Aug 2025 19:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026235;
-	bh=y/2TLpQ2XRmeqgCBJoTYPykwyyWGXJLUvqcOrfMIXd4=;
+	s=korg; t=1755026238;
+	bh=oYjGgyNC1jysaRvYQTeA+xzOpXzUe2jwtpABl/ili88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z9MjbyIFWsWt7bLUi3Mdsy8VUEKNUTDroNwBzVEzn4vl5MFLtl2fzISLvFv77WNt+
-	 3jKNrT2D4jfhnqXWAYM6Tds4tjFbLF69FSqqNgBGD+l2+BKiV+ZaBBOIN6Dg8GD0XP
-	 5qpxm9AOlo4+EQD2sugv6NH533Dvemteolx9Qivk=
+	b=MH1RYbc6ktRm7IbxcOc6CBKZLJqG5kwdxmPSN1bsSYGPo70vUXOoCh4TGuoO128bA
+	 amr1ua2yOZGmuSpLBVzsFihlnQyOV5mJ8fBgAvEC2AE/LHgQldhfiUwVRr3DWo++DC
+	 P/v+arQ5dY5fOU4KldFIjjx2isANWZ6mx7tGDuC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Aishwarya TCV <aishwarya.tcv@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 277/480] pinmux: fix race causing mux_owner NULL with active mux_usecount
-Date: Tue, 12 Aug 2025 19:48:05 +0200
-Message-ID: <20250812174408.862585767@linuxfoundation.org>
+Subject: [PATCH 6.15 278/480] perf tests bp_account: Fix leaked file descriptor
+Date: Tue, 12 Aug 2025 19:48:06 +0200
+Message-ID: <20250812174408.901230129@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,93 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 0b075c011032f88d1cfde3b45d6dcf08b44140eb ]
+[ Upstream commit 4a6cdecaa1497f1fbbd1d5307a225b6ca5a62a90 ]
 
-commit 5a3e85c3c397 ("pinmux: Use sequential access to access
-desc->pinmux data") tried to address the issue when two client of the
-same gpio calls pinctrl_select_state() for the same functionality, was
-resulting in NULL pointer issue while accessing desc->mux_owner.
-However, issue was not completely fixed due to the way it was handled
-and it can still result in the same NULL pointer.
+Since the commit e9846f5ead26 ("perf test: In forked mode add check that
+fds aren't leaked"), the test "Breakpoint accounting" reports the error:
 
-The issue occurs due to the following interleaving:
+  # perf test -vvv "Breakpoint accounting"
+  20: Breakpoint accounting:
+  --- start ---
+  test child forked, pid 373
+  failed opening event 0
+  failed opening event 0
+  watchpoints count 4, breakpoints count 6, has_ioctl 1, share 0
+  wp 0 created
+  wp 1 created
+  wp 2 created
+  wp 3 created
+  wp 0 modified to bp
+  wp max created
+  ---- end(0) ----
+  Leak of file descriptor 7 that opened: 'anon_inode:[perf_event]'
 
-     cpu0 (process A)                   cpu1 (process B)
+A watchpoint's file descriptor was not properly released. This patch
+fixes the leak.
 
-      pin_request() {                   pin_free() {
-
-                                         mutex_lock()
-                                         desc->mux_usecount--; //becomes 0
-                                         ..
-                                         mutex_unlock()
-
-  mutex_lock(desc->mux)
-  desc->mux_usecount++; // becomes 1
-  desc->mux_owner = owner;
-  mutex_unlock(desc->mux)
-
-                                         mutex_lock(desc->mux)
-                                         desc->mux_owner = NULL;
-                                         mutex_unlock(desc->mux)
-
-This sequence leads to a state where the pin appears to be in use
-(`mux_usecount == 1`) but has no owner (`mux_owner == NULL`), which can
-cause NULL pointer on next pin_request on the same pin.
-
-Ensure that updates to mux_usecount and mux_owner are performed
-atomically under the same lock. Only clear mux_owner when mux_usecount
-reaches zero and no new owner has been assigned.
-
-Fixes: 5a3e85c3c397 ("pinmux: Use sequential access to access desc->pinmux data")
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/20250708-pinmux-race-fix-v2-1-8ae9e8a0d1a1@oss.qualcomm.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 032db28e5fa3 ("perf tests: Add breakpoint accounting/modify test")
+Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250711-perf_fix_breakpoint_accounting-v1-1-b314393023f9@arm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinmux.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ tools/perf/tests/bp_account.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/pinmux.c b/drivers/pinctrl/pinmux.c
-index 0743190da59e..2c31e7f2a27a 100644
---- a/drivers/pinctrl/pinmux.c
-+++ b/drivers/pinctrl/pinmux.c
-@@ -236,18 +236,7 @@ static const char *pin_free(struct pinctrl_dev *pctldev, int pin,
- 			if (desc->mux_usecount)
- 				return NULL;
- 		}
--	}
--
--	/*
--	 * If there is no kind of request function for the pin we just assume
--	 * we got it by default and proceed.
--	 */
--	if (gpio_range && ops->gpio_disable_free)
--		ops->gpio_disable_free(pctldev, gpio_range, pin);
--	else if (ops->free)
--		ops->free(pctldev, pin);
- 
--	scoped_guard(mutex, &desc->mux_lock) {
- 		if (gpio_range) {
- 			owner = desc->gpio_owner;
- 			desc->gpio_owner = NULL;
-@@ -258,6 +247,15 @@ static const char *pin_free(struct pinctrl_dev *pctldev, int pin,
- 		}
+diff --git a/tools/perf/tests/bp_account.c b/tools/perf/tests/bp_account.c
+index 4cb7d486b5c1..047433c977bc 100644
+--- a/tools/perf/tests/bp_account.c
++++ b/tools/perf/tests/bp_account.c
+@@ -104,6 +104,7 @@ static int bp_accounting(int wp_cnt, int share)
+ 		fd_wp = wp_event((void *)&the_var, &attr_new);
+ 		TEST_ASSERT_VAL("failed to create max wp\n", fd_wp != -1);
+ 		pr_debug("wp max created\n");
++		close(fd_wp);
  	}
  
-+	/*
-+	 * If there is no kind of request function for the pin we just assume
-+	 * we got it by default and proceed.
-+	 */
-+	if (gpio_range && ops->gpio_disable_free)
-+		ops->gpio_disable_free(pctldev, gpio_range, pin);
-+	else if (ops->free)
-+		ops->free(pctldev, pin);
-+
- 	module_put(pctldev->owner);
- 
- 	return owner;
+ 	for (i = 0; i < wp_cnt; i++)
 -- 
 2.39.5
 
