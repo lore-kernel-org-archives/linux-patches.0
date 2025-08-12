@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FD122425B;
-	Tue, 12 Aug 2025 19:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6ED2882CE;
+	Tue, 12 Aug 2025 19:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025345; cv=none; b=dFsw/aq9ijuvf0lhOfEOTFtglq02JXqgTXWDhQwg6MJQjlEeeOMfxXwf307Z3dnd5pZlxE/W9mb4J93pTTamBLFygPtjOTF2dzDFWdej1v07Kc9feTiaeWnQ7RsUJuZzFoU5wHauI6jy61hqBvCHkrlIuhBCQ/w1er6gwJM9LnA=
+	t=1755025349; cv=none; b=MfYxsqSz5h+2w6YHRMeDeJV9x8AfEoF7x1mgKKFyPkYEiwYnU+wiug3vFSKWySY/hPDJ7KEk+9kGemcA1P8dbcFIynKuxeyhjntHynDYC2D1QkNYsodZCF1B3ZoivPjs9QZCjUxl8MSkcrVvfwLMxnFgWMYpknRvrQEFWeZZtao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025345; c=relaxed/simple;
-	bh=ukkXegXYkFnUFGtnZIsbBzb4456aONXpL5ShWWAXJ7o=;
+	s=arc-20240116; t=1755025349; c=relaxed/simple;
+	bh=wsYnFEuHI9R8AEHkegVq7i/6mI2efz+W+l3Va7sBy4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o25nbEbXkS3yidkXu7rl/RLaZBcAxIrt1SrCFpiU2Y529vWLUHyZAGqgs23dUwrfmUR8Fpgk76N+S6OBQDmKc3bDHo+fno863ecCokrwnb6Dq+IqV0VlSZOGqm51+C4siamf1W6rYt/nwvb6kZqHQJrxfPofDs9WUmDbiwivvh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9QPP2Oy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M1q07rMLVjmu2PkQPjpQ6p9QBZBSTiP5T5FZ5jUM0nDf7n2AZOe653ZMAIqsifcnQE758emv0r356CDtjte5P/zgkAgOEywawWKzE6mIgHNXdPV9zxUjlk8kn4BaJlv0zi6lThw+bUoBim6QRCFKKTZkPB8OcNQv2IC3wxRrgQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtZEUAiW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9QPP2Oy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F067C4CEF0;
-	Tue, 12 Aug 2025 19:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtZEUAiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BA3C4CEF0;
+	Tue, 12 Aug 2025 19:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025345;
-	bh=ukkXegXYkFnUFGtnZIsbBzb4456aONXpL5ShWWAXJ7o=;
+	s=korg; t=1755025348;
+	bh=wsYnFEuHI9R8AEHkegVq7i/6mI2efz+W+l3Va7sBy4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z9QPP2OyQAJLzPyNgN5i9V2vxmldnc1JYzsykq/CdVpahuehm1rO+7RH+urIWyzB+
-	 uTCI8tLS/bJYurB/qizcaOkehbGjTdETKapiMXTFvRw43atNZax4s41MNk4e119UUm
-	 qIYRuhDr5JqkPXImLGjFyOyaDTqCRFattBg+6HH8=
+	b=PtZEUAiWXxmmTfLWZJnGnZAfzxBsfoUPlSgZ1yTQt5nBzHTEx9QbsYSJkP2xCKuuB
+	 1BPnfkaHAB+YZHtn/Q36Nh00UuWXQ9IRxFtbYQMoK4/5tAco5gDMRYsKtB1Nm1SB5q
+	 HI99qVTBfZBduyXNWrzpQRu/yFmyEQlb2OW1T+lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tingmao Wang <m@maowtm.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 015/480] landlock: Fix warning from KUnit tests
-Date: Tue, 12 Aug 2025 19:43:43 +0200
-Message-ID: <20250812174357.939601403@linuxfoundation.org>
+Subject: [PATCH 6.15 016/480] ublk: use vmalloc for ublk_devices __queues
+Date: Tue, 12 Aug 2025 19:43:44 +0200
+Message-ID: <20250812174357.978619500@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -45,202 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tingmao Wang <m@maowtm.org>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit e0a69cf2c03e61bd8069becb97f66c173d0d1fa1 ]
+[ Upstream commit c2f48453b7806d41f5a3270f206a5cd5640ed207 ]
 
-get_id_range() expects a positive value as first argument but
-get_random_u8() can return 0.  Fix this by clamping it.
+struct ublk_device's __queues points to an allocation with up to
+UBLK_MAX_NR_QUEUES (4096) queues, each of which have:
+- struct ublk_queue (48 bytes)
+- Tail array of up to UBLK_MAX_QUEUE_DEPTH (4096) struct ublk_io's,
+  32 bytes each
+This means the full allocation can exceed 512 MB, which may well be
+impossible to service with contiguous physical pages. Switch to
+kvcalloc() and kvfree(), since there is no need for physically
+contiguous memory.
 
-Validated by running the test in a for loop for 1000 times.
-
-Note that MAX() is wrong as it is only supposed to be used for
-constants, but max() is good here.
-
-  [..]     ok 9 test_range2_rand1
-  [..]     ok 10 test_range2_rand2
-  [..]     ok 11 test_range2_rand15
-  [..] ------------[ cut here ]------------
-  [..] WARNING: CPU: 6 PID: 104 at security/landlock/id.c:99 test_range2_rand16 (security/landlock/id.c:99 (discriminator 1) security/landlock/id.c:234 (discriminator 1))
-  [..] Modules linked in:
-  [..] CPU: 6 UID: 0 PID: 104 Comm: kunit_try_catch Tainted: G                 N  6.16.0-rc1-dev-00001-g314a2f98b65f #1 PREEMPT(undef)
-  [..] Tainted: [N]=TEST
-  [..] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-  [..] RIP: 0010:test_range2_rand16 (security/landlock/id.c:99 (discriminator 1) security/landlock/id.c:234 (discriminator 1))
-  [..] Code: 49 c7 c0 10 70 30 82 4c 89 ff 48 c7 c6 a0 63 1e 83 49 c7 45 a0 e0 63 1e 83 e8 3f 95 17 00 e9 1f ff ff ff 0f 0b e9 df fd ff ff <0f> 0b ba 01 00 00 00 e9 68 fe ff ff 49 89 45 a8 49 8d 4d a0 45 31
-
-  [..] RSP: 0000:ffff888104eb7c78 EFLAGS: 00010246
-  [..] RAX: 0000000000000000 RBX: 000000000870822c RCX: 0000000000000000
-            ^^^^^^^^^^^^^^^^
-  [..]
-  [..] Call Trace:
-  [..]
-  [..] ---[ end trace 0000000000000000 ]---
-  [..]     ok 12 test_range2_rand16
-  [..] # landlock_id: pass:12 fail:0 skip:0 total:12
-  [..] # Totals: pass:12 fail:0 skip:0 total:12
-  [..] ok 1 landlock_id
-
-Fixes: d9d2a68ed44b ("landlock: Add unique ID generator")
-Signed-off-by: Tingmao Wang <m@maowtm.org>
-Link: https://lore.kernel.org/r/73e28efc5b8cc394608b99d5bc2596ca917d7c4a.1750003733.git.m@maowtm.org
-[mic: Minor cosmetic improvements]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250620151008.3976463-2-csander@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/id.c | 69 +++++++++++++++++++++++++-----------------
- 1 file changed, 42 insertions(+), 27 deletions(-)
+ drivers/block/ublk_drv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/security/landlock/id.c b/security/landlock/id.c
-index 56f7cc0fc744..838c3ed7bb82 100644
---- a/security/landlock/id.c
-+++ b/security/landlock/id.c
-@@ -119,6 +119,12 @@ static u64 get_id_range(size_t number_of_ids, atomic64_t *const counter,
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 0e017eae97fb..066231e66f03 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2373,7 +2373,7 @@ static void ublk_deinit_queues(struct ublk_device *ub)
  
- #ifdef CONFIG_SECURITY_LANDLOCK_KUNIT_TEST
- 
-+static u8 get_random_u8_positive(void)
-+{
-+	/* max() evaluates its arguments once. */
-+	return max(1, get_random_u8());
-+}
-+
- static void test_range1_rand0(struct kunit *const test)
- {
- 	atomic64_t counter;
-@@ -127,9 +133,10 @@ static void test_range1_rand0(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(1, &counter, 0), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 1);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 1);
+ 	for (i = 0; i < nr_queues; i++)
+ 		ublk_deinit_queue(ub, i);
+-	kfree(ub->__queues);
++	kvfree(ub->__queues);
  }
  
- static void test_range1_rand1(struct kunit *const test)
-@@ -140,9 +147,10 @@ static void test_range1_rand1(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(1, &counter, 1), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 2);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 2);
- }
+ static int ublk_init_queues(struct ublk_device *ub)
+@@ -2384,7 +2384,7 @@ static int ublk_init_queues(struct ublk_device *ub)
+ 	int i, ret = -ENOMEM;
  
- static void test_range1_rand15(struct kunit *const test)
-@@ -153,9 +161,10 @@ static void test_range1_rand15(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(1, &counter, 15), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 16);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 16);
- }
+ 	ub->queue_size = ubq_size;
+-	ub->__queues = kcalloc(nr_queues, ubq_size, GFP_KERNEL);
++	ub->__queues = kvcalloc(nr_queues, ubq_size, GFP_KERNEL);
+ 	if (!ub->__queues)
+ 		return ret;
  
- static void test_range1_rand16(struct kunit *const test)
-@@ -166,9 +175,10 @@ static void test_range1_rand16(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(1, &counter, 16), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 1);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 1);
- }
- 
- static void test_range2_rand0(struct kunit *const test)
-@@ -179,9 +189,10 @@ static void test_range2_rand0(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(2, &counter, 0), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 2);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 2);
- }
- 
- static void test_range2_rand1(struct kunit *const test)
-@@ -192,9 +203,10 @@ static void test_range2_rand1(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(2, &counter, 1), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 3);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 3);
- }
- 
- static void test_range2_rand2(struct kunit *const test)
-@@ -205,9 +217,10 @@ static void test_range2_rand2(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(2, &counter, 2), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 4);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 4);
- }
- 
- static void test_range2_rand15(struct kunit *const test)
-@@ -218,9 +231,10 @@ static void test_range2_rand15(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(2, &counter, 15), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 17);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 17);
- }
- 
- static void test_range2_rand16(struct kunit *const test)
-@@ -231,9 +245,10 @@ static void test_range2_rand16(struct kunit *const test)
- 	init = get_random_u32();
- 	atomic64_set(&counter, init);
- 	KUNIT_EXPECT_EQ(test, get_id_range(2, &counter, 16), init);
--	KUNIT_EXPECT_EQ(
--		test, get_id_range(get_random_u8(), &counter, get_random_u8()),
--		init + 2);
-+	KUNIT_EXPECT_EQ(test,
-+			get_id_range(get_random_u8_positive(), &counter,
-+				     get_random_u8()),
-+			init + 2);
- }
- 
- #endif /* CONFIG_SECURITY_LANDLOCK_KUNIT_TEST */
 -- 
 2.39.5
 
