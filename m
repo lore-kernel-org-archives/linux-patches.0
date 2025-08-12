@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3509A2FAC06;
-	Tue, 12 Aug 2025 18:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825E72FFDC1;
+	Tue, 12 Aug 2025 18:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024940; cv=none; b=IWtxCiGrcTxxdA9wj1Bu5R9mUsvbuJgdr9RZtzJwDj2GJR1PagPVqlnhu0JIitTTgPV3SE9HLIFzSk/GzB+B6hZzJbG8Xd2ZIxf3UUi5wYAdMvMWId09dLTHiKTYkwduNIiQzkSqVFPbhlQKkhqkhVCM4k94bnL/mZ63G+zyKCM=
+	t=1755024943; cv=none; b=VRdkjHeoCqdK3n6JWw/kxbOsBeeltnKj0kY5tX6cYDFitknLZWfwVqeduEeO6icN2K9cPDj7+GcSefJqhJQUIRsUTTo7VG/WULXkwQP+ykgZsqND7bU/Cz0/lviIZMEFxBevqjV0cBADOGfVF3gYPtW7virUeEMbDNxs/cjf7ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024940; c=relaxed/simple;
-	bh=+sMe7oba4Bt5KBWHicmfzbHnjYZHOkjMTnGVvuCknRc=;
+	s=arc-20240116; t=1755024943; c=relaxed/simple;
+	bh=YHazTvPZlCH15L9meXN9+mPvIomZLEmzlHV69pSxzrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doMcVXf7s21hFhuhZu9k9D9i5MBRdfG/pPHvgXl9qCtFNtnYlgtCLdJlHeXkkVDZafD8lIIFdZmqy/12WW8NNjnPtxN7ok68wkB3dIS8POv7FU4C64q3egV1FLVLb2gF+wPhH3uGJSBN9TFwZG6xxe/nGCR8G0CaZvFmc8vj8HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGxr8p3d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ArrYp0Hogis24OulMKWU/dEO34s8jQxnWK0edPIhVRaFONB6uSIlpF5OdZEiqX4YzvLmPSRNMA6+NoQ+NHo+cvZnSVKhG1x3RJRY6eKwqXXPxWFl3Kfkm7KAIat8t1RQxG0FeBsCj1DzfBqzc/8shWGUYl0tDH4Opfoj//h6GN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEEKxH86; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGxr8p3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98217C4CEF0;
-	Tue, 12 Aug 2025 18:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEEKxH86"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00699C4CEFA;
+	Tue, 12 Aug 2025 18:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024940;
-	bh=+sMe7oba4Bt5KBWHicmfzbHnjYZHOkjMTnGVvuCknRc=;
+	s=korg; t=1755024943;
+	bh=YHazTvPZlCH15L9meXN9+mPvIomZLEmzlHV69pSxzrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGxr8p3dqOx3kbH0LUBIbjMABLTeOCmms4hSLPy0ADi4ss4oYjgzpusbH1tjHRc6y
-	 BgFpkg2hXc0SYQEGlgX1Dg3hUrU+VAtDYk8yWCCHSXfX8hBAELjFI30nNHUdlSbbAY
-	 O5EWXF3aOMjkL4w3Tn9ExL0PJ7jhHxh+2ZLs+tkk=
+	b=qEEKxH86D92idQYAGr6OM4FFUpmf/OuUl8MAn72EcKZNs20IVLZHHf0iSXIXQCQHs
+	 Y4Ap67tgE+NS0S7Auep52/WImtlzLGYmD3koJURw3ivYn7wssclu/GmN3YkmhI5iAc
+	 HcpvyJHHVgUxxyxSwFUWAPSr+m2gjqXI/CfYe4es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Daniel Wagner <dwagner@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 520/627] pptp: ensure minimal skb length in pptp_xmit()
-Date: Tue, 12 Aug 2025 19:33:35 +0200
-Message-ID: <20250812173451.125512186@linuxfoundation.org>
+Subject: [PATCH 6.16 521/627] nvmet: initialize discovery subsys after debugfs is initialized
+Date: Tue, 12 Aug 2025 19:33:36 +0200
+Message-ID: <20250812173451.310325819@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,90 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-[ Upstream commit de9c4861fb42f0cd72da844c3c34f692d5895b7b ]
+[ Upstream commit 528589947c1802b9357c2a9b96d88cc4a11cd88b ]
 
-Commit aabc6596ffb3 ("net: ppp: Add bound checking for skb data
-on ppp_sync_txmung") fixed ppp_sync_txmunge()
+During nvme target initialization discovery subsystem is initialized
+before "nvmet" debugfs directory is created. This results in discovery
+subsystem debugfs directory to be created in debugfs root directory.
 
-We need a similar fix in pptp_xmit(), otherwise we might
-read uninit data as reported by syzbot.
+nvmet_init() ->
+  nvmet_init_discovery() ->
+    nvmet_subsys_alloc() ->
+      nvmet_debugfs_subsys_setup()
 
-BUG: KMSAN: uninit-value in pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
-  pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
-  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2290 [inline]
-  ppp_input+0x1d6/0xe60 drivers/net/ppp/ppp_generic.c:2314
-  pppoe_rcv_core+0x1e8/0x760 drivers/net/ppp/pppoe.c:379
-  sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
-  __release_sock+0x1d3/0x330 net/core/sock.c:3213
-  release_sock+0x6b/0x270 net/core/sock.c:3767
-  pppoe_sendmsg+0x15d/0xcb0 drivers/net/ppp/pppoe.c:904
-  sock_sendmsg_nosec net/socket.c:712 [inline]
-  __sock_sendmsg+0x330/0x3d0 net/socket.c:727
-  ____sys_sendmsg+0x893/0xd80 net/socket.c:2566
-  ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
-  __sys_sendmmsg+0x2d9/0x7c0 net/socket.c:2709
+In other words, the codepath above is exeucted before nvmet_debugfs is
+created. We get /sys/kernel/debug/nqn.2014-08.org.nvmexpress.discovery
+instead of /sys/kernel/debug/nvmet/nqn.2014-08.org.nvmexpress.discovery.
+Move nvmet_init_discovery() call after nvmet_init_debugfs() to fix it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68887d86.a00a0220.b12ec.00cd.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Link: https://patch.msgid.link/20250729080207.1863408-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 649fd41420a8 ("nvmet: add debugfs support")
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pptp.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/nvme/target/core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
-index 5feaa70b5f47..4cd6f67bd5d3 100644
---- a/drivers/net/ppp/pptp.c
-+++ b/drivers/net/ppp/pptp.c
-@@ -159,9 +159,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 	int len;
- 	unsigned char *data;
- 	__u32 seq_recv;
--
--
--	struct rtable *rt;
-+	struct rtable *rt = NULL;
- 	struct net_device *tdev;
- 	struct iphdr  *iph;
- 	int    max_headroom;
-@@ -179,16 +177,20 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 175c5b6d4dd5..b6247e4afc9c 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1962,24 +1962,24 @@ static int __init nvmet_init(void)
+ 	if (!nvmet_wq)
+ 		goto out_free_buffered_work_queue;
  
- 	if (skb_headroom(skb) < max_headroom || skb_cloned(skb) || skb_shared(skb)) {
- 		struct sk_buff *new_skb = skb_realloc_headroom(skb, max_headroom);
--		if (!new_skb) {
--			ip_rt_put(rt);
-+
-+		if (!new_skb)
- 			goto tx_error;
--		}
-+
- 		if (skb->sk)
- 			skb_set_owner_w(new_skb, skb->sk);
- 		consume_skb(skb);
- 		skb = new_skb;
- 	}
+-	error = nvmet_init_discovery();
++	error = nvmet_init_debugfs();
+ 	if (error)
+ 		goto out_free_nvmet_work_queue;
  
-+	/* Ensure we can safely access protocol field and LCP code */
-+	if (!pskb_may_pull(skb, 3))
-+		goto tx_error;
-+
- 	data = skb->data;
- 	islcp = ((data[0] << 8) + data[1]) == PPP_LCP && 1 <= data[2] && data[2] <= 7;
+-	error = nvmet_init_debugfs();
++	error = nvmet_init_discovery();
+ 	if (error)
+-		goto out_exit_discovery;
++		goto out_exit_debugfs;
  
-@@ -262,6 +264,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 	return 1;
+ 	error = nvmet_init_configfs();
+ 	if (error)
+-		goto out_exit_debugfs;
++		goto out_exit_discovery;
  
- tx_error:
-+	ip_rt_put(rt);
- 	kfree_skb(skb);
- 	return 1;
- }
+ 	return 0;
+ 
+-out_exit_debugfs:
+-	nvmet_exit_debugfs();
+ out_exit_discovery:
+ 	nvmet_exit_discovery();
++out_exit_debugfs:
++	nvmet_exit_debugfs();
+ out_free_nvmet_work_queue:
+ 	destroy_workqueue(nvmet_wq);
+ out_free_buffered_work_queue:
 -- 
 2.39.5
 
