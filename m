@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39FF1A01BF;
-	Tue, 12 Aug 2025 18:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4962826CE2B;
+	Tue, 12 Aug 2025 18:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024359; cv=none; b=bHn6iNKmE3UIieebQChg2fmL6xCsbCZqExX22Js1URBZvLOI9nNoCCQK2r+WD87CLeErkQLWagh7wJgM9TmNfSnG2rzBvoK24fUu5FplcfYsSwgn5Iq4Xs8qKcklcXTGqaOtBtn4O79IFAL12LOpxPM5Tfc6XoJv8QVfJhjlDyM=
+	t=1755024362; cv=none; b=XA6OtAJiawjSaIGPdIM5Q8UMq4XVeY1YfkomxrFUDg5KA95DFqvaWg5daFUUF4ffxUgmTzw97bQ7LY7l8TveUyj7ai8U0msrXtjQR288hUQ/U6i/8+lSKsRk/ZFDH88hbJ0NHWRWO++GocoRQJKhIWBcFyRyiYG1pyb+BCHrwS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024359; c=relaxed/simple;
-	bh=IBDFCIMUBENT9zHggZ8jfbTeAIWOgP2QAqFazH2nz7Y=;
+	s=arc-20240116; t=1755024362; c=relaxed/simple;
+	bh=4hNvpuTc5UTnWKrqYE5nSZAQQwcuYOEZNDkcWc5ejI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AoHpaX71xnlvML9UEFeNTrZ0abh97YL9/FZMI+Khy4J6kltnb8ZiHou6xnDS4KUeoMC6JzrFgr88GpQJLoOV4yJ9sc59nSeIWjpRLOGQ3rLsq6RInlJF5hvjY2w/6nVYIzc30YQoIQOyRMxnM7VvC1SNXpzHnDhEDm1sWHtPN/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5dpL3HI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cm9NAleLgin3bbeOjikxRW0+BvuJRp9NSgO+ZjdKhtNEGZY4MH5dQ8IPM253qC7ctIWCU8mubB1AM+HkwaHcmIXrP6++0TMPi0nqYhIqIQ8b6fG3lXLdzw/G0muKr6E9fFqG7OR6MvooYEPhOFNwmjT3LDgnZSsNu80sXS3hVmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSIMaABY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5dpL3HI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAFFC4CEF0;
-	Tue, 12 Aug 2025 18:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSIMaABY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F69C4CEF1;
+	Tue, 12 Aug 2025 18:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024358;
-	bh=IBDFCIMUBENT9zHggZ8jfbTeAIWOgP2QAqFazH2nz7Y=;
+	s=korg; t=1755024361;
+	bh=4hNvpuTc5UTnWKrqYE5nSZAQQwcuYOEZNDkcWc5ejI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5dpL3HIklu/3ez3d/3YQkVhZp2RveNUsFDmiWe1JZHu5/KuR2RdiGVFT42RaLKrI
-	 TNausTbfQ4LPMPMMS0w7iQ7dpiJ5niXMbftiq/p/lpCNVeUpPwdvF+5qcpereYXT8N
-	 xrf5FVUP2sOzRz6FnQ9exZqTw6zAbvXrDRtdWs5I=
+	b=vSIMaABY9ZJbFRSkABzXNhGpHBbY+FYFp7JPNlM50Ti/5TX0JJqX4Fy2liFsqgwWZ
+	 Yhi6p9yh55PCIBXitDNfje/z96+nb50KvxWJi8waeCsDx9DQ7TMEsCMX0eqZjSgck2
+	 Bxe8hV3X1fKwTjEhKqYlYRfldsDmc4AfsHfDciLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 317/627] power: supply: cpcap-charger: Fix null check for power_supply_get_by_name
-Date: Tue, 12 Aug 2025 19:30:12 +0200
-Message-ID: <20250812173431.363306304@linuxfoundation.org>
+Subject: [PATCH 6.16 318/627] power: reset: POWER_RESET_TORADEX_EC should depend on ARCH_MXC
+Date: Tue, 12 Aug 2025 19:30:13 +0200
+Message-ID: <20250812173431.401652162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit d9fa3aae08f99493e67fb79413c0e95d30fca5e9 ]
+[ Upstream commit 22e4d29f081df8a10f1c062d3d952bb876eb9bdc ]
 
-In the cpcap_usb_detect() function, the power_supply_get_by_name()
-function may return `NULL` instead of an error pointer.
-To prevent potential null pointer dereferences, Added a null check.
+The Toradex Embedded Controller is currently only present on Toradex
+SMARC iMX8MP and iMX95 SoMs.  Hence add a dependency on ARCH_MXC, to
+prevent asking the user about this driver when configuring a kernel
+without NXP i.MX SoC family support.
 
-Fixes: eab4e6d953c1 ("power: supply: cpcap-charger: get the battery inserted infomation from cpcap-battery")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://lore.kernel.org/r/20250519024741.5846-1-hanchunchao@inspur.com
+Fixes: 18672fe12367ed44 ("power: reset: add Toradex Embedded Controller")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/1ef0beb1e09bf914650f9f9885a33af06772540d.1746536287.git.geert+renesas@glider.be
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cpcap-charger.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/power/reset/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/cpcap-charger.c b/drivers/power/supply/cpcap-charger.c
-index 13300dc60baf..d0c3008db534 100644
---- a/drivers/power/supply/cpcap-charger.c
-+++ b/drivers/power/supply/cpcap-charger.c
-@@ -689,9 +689,8 @@ static void cpcap_usb_detect(struct work_struct *work)
- 		struct power_supply *battery;
+diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
+index e71f0af4e378..95f140ee7077 100644
+--- a/drivers/power/reset/Kconfig
++++ b/drivers/power/reset/Kconfig
+@@ -218,6 +218,7 @@ config POWER_RESET_ST
  
- 		battery = power_supply_get_by_name("battery");
--		if (IS_ERR_OR_NULL(battery)) {
--			dev_err(ddata->dev, "battery power_supply not available %li\n",
--					PTR_ERR(battery));
-+		if (!battery) {
-+			dev_err(ddata->dev, "battery power_supply not available\n");
- 			return;
- 		}
- 
+ config POWER_RESET_TORADEX_EC
+ 	tristate "Toradex Embedded Controller power-off and reset driver"
++	depends on ARCH_MXC || COMPILE_TEST
+ 	depends on I2C
+ 	select REGMAP_I2C
+ 	help
 -- 
 2.39.5
 
