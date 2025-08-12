@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E76280037;
-	Tue, 12 Aug 2025 18:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C171A9F89;
+	Tue, 12 Aug 2025 18:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022993; cv=none; b=egUhZ69zhGxf4IutIsO/8Zb1pyLV+00E2ydDB9jBsetxe0b8LDV18/oSK2fetNz7I/PpC+loXpEfKn2BLPDW7V1m7nB2M2nRDkbttjd+BF2Vi7f57k8qhTngYxdGL2bkZx0iV01TAzC64VAAn1WniXqc2X7b3l9fV5BB/1iYXL4=
+	t=1755022997; cv=none; b=ARUAHMdatgNJuN1+OJuR6wNeiFCHTWIBtbi1bzrsCekKY3vk64ph2ozY4aGg/CIoMQVaeGTqYqM1F6i4A1Y1uiGOY9OCAWHrbMR5XVuFxD/LxAMUApxvfmC1x0e42UytS5WR9UBRrkBdt4KX/c/m1QnGmmGKomCuWqeE+CPmzNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022993; c=relaxed/simple;
-	bh=R4XMtiUBmd+f/3rXn+b6vPn1rtOhWyhjUp1KQrxtsfc=;
+	s=arc-20240116; t=1755022997; c=relaxed/simple;
+	bh=m3V1AoO07xWdXaOBzUqUXS4rQAkVt5AU292wrQ9PwhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJItCuFKdYbNommgvgajj0jfuvN/Gl/FWqkxteP9bifDL30GnMrN4hlLlrb2PhiRsq3fYWXPE3e1M1ENdpej3oKkcxqHt1KN0JfnII3RxZqO+bFB4SSgEbbP+E5Bd6RKSXjSAT9psoJxxqlMnjIekbn2hO9h28/SfZV7Ma5+o1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bH4SWIzl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dIe/hO542t1js5e0LWZePSUnNNJI/znudpTelxzTV0G3MvnnBWt/dqWNm22JMY7gupuePta9gOui/ysvRdM3LiKnmwvwaLqN/BBNSsGCJQRwBGKS059kvmL12luuc8iMkm8UNrkn5CqFO3iVW62KhgOSnSuGcCRN/31yDXP+SR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=texgv43y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bH4SWIzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EA6C4CEF6;
-	Tue, 12 Aug 2025 18:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="texgv43y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0DBC4CEF9;
+	Tue, 12 Aug 2025 18:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022993;
-	bh=R4XMtiUBmd+f/3rXn+b6vPn1rtOhWyhjUp1KQrxtsfc=;
+	s=korg; t=1755022997;
+	bh=m3V1AoO07xWdXaOBzUqUXS4rQAkVt5AU292wrQ9PwhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bH4SWIzlHsHtcdkbCBRkb6FE47G7KI5fBewrqfHG3RuBf6FispwF83btRNo+1pMh+
-	 hwq4QKKGq8EzcllPo46rihiNl9DoMRY4WNjb2hYJbuSA09VKNQaI30yFcpzCFGJntW
-	 Q1koZQSiWneIJ1Le5jMJlKJ2LJk1gIuIB+7m4DRA=
+	b=texgv43yb2YIeCGHsuv7/80s8uqQWdYeSNDGPspUFMfzbJrjTUttPgipMqBNSQ6WD
+	 CDDcB18syikwJFtzdh1hZjDC3uoBT8sI/HzvAhgYzUuvUof8r2KpX4pSmXfa7MyEAH
+	 L8YZQ15ydLuao1mvdvaqndLCmp+0ZbC6/GwO3p2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trondmy@kernel.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Su Yue <glass.su@suse.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 285/369] NFS: Fixup allocation flags for nfsiods __GFP_NORETRY
-Date: Tue, 12 Aug 2025 19:29:42 +0200
-Message-ID: <20250812173027.443917666@linuxfoundation.org>
+Subject: [PATCH 6.12 286/369] md/md-cluster: handle REMOVE message earlier
+Date: Tue, 12 Aug 2025 19:29:43 +0200
+Message-ID: <20250812173027.485902149@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -54,53 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Heming Zhao <heming.zhao@suse.com>
 
-[ Upstream commit 99765233ab42bf7a4950377ad7894dce8a5c0e60 ]
+[ Upstream commit 948b1fe12005d39e2b49087b50e5ee55c9a8f76f ]
 
-If the NFS client is doing writeback from a workqueue context, avoid using
-__GFP_NORETRY for allocations if the task has set PF_MEMALLOC_NOIO or
-PF_MEMALLOC_NOFS.  The combination of these flags makes memory allocation
-failures much more likely.
+Commit a1fd37f97808 ("md: Don't wait for MD_RECOVERY_NEEDED for
+HOT_REMOVE_DISK ioctl") introduced a regression in the md_cluster
+module. (Failed cases 02r1_Manage_re-add & 02r10_Manage_re-add)
 
-We've seen those allocation failures show up when the loopback driver is
-doing writeback from a workqueue to a file on NFS, where memory allocation
-failure results in errors or corruption within the loopback device's
-filesystem.
+Consider a 2-node cluster:
+- node1 set faulty & remove command on a disk.
+- node2 must correctly update the array metadata.
 
-Suggested-by: Trond Myklebust <trondmy@kernel.org>
-Fixes: 0bae835b63c5 ("NFS: Avoid writeback threads getting stuck in mempool_alloc()")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Tested-by: Laurence Oberman <loberman@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/f83ac1155a4bc670f2663959a7a068571e06afd9.1752111622.git.bcodding@redhat.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Before a1fd37f97808, on node1, the delay between msg:METADATA_UPDATED
+(triggered by faulty) and msg:REMOVE was sufficient for node2 to
+reload the disk info (written by node1).
+After a1fd37f97808, node1 no longer waits between faulty and remove,
+causing it to send msg:REMOVE while node2 is still reloading disk info.
+This often results in node2 failing to remove the faulty disk.
+
+== how to trigger ==
+
+set up a 2-node cluster (node1 & node2) with disks vdc & vdd.
+
+on node1:
+mdadm -CR /dev/md0 -l1 -b clustered -n2 /dev/vdc /dev/vdd --assume-clean
+ssh node2-ip mdadm -A /dev/md0 /dev/vdc /dev/vdd
+mdadm --manage /dev/md0 --fail /dev/vdc --remove /dev/vdc
+
+check array status on both nodes with "mdadm -D /dev/md0".
+node1 output:
+    Number   Major   Minor   RaidDevice State
+       -       0        0        0      removed
+       1     254       48        1      active sync   /dev/vdd
+node2 output:
+    Number   Major   Minor   RaidDevice State
+       -       0        0        0      removed
+       1     254       48        1      active sync   /dev/vdd
+
+       0     254       32        -      faulty   /dev/vdc
+
+Fixes: a1fd37f97808 ("md: Don't wait for MD_RECOVERY_NEEDED for HOT_REMOVE_DISK ioctl")
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Su Yue <glass.su@suse.com>
+Link: https://lore.kernel.org/linux-raid/20250728042145.9989-1-heming.zhao@suse.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/internal.h | 9 ++++++---
+ drivers/md/md.c | 9 ++++++---
  1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index 1be4be3d4a2b..9840b779f0df 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -668,9 +668,12 @@ nfs_write_match_verf(const struct nfs_writeverf *verf,
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 7809b951e09a..4b3291723670 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9702,8 +9702,8 @@ void md_check_recovery(struct mddev *mddev)
+ 			 * remove disk.
+ 			 */
+ 			rdev_for_each_safe(rdev, tmp, mddev) {
+-				if (test_and_clear_bit(ClusterRemove, &rdev->flags) &&
+-						rdev->raid_disk < 0)
++				if (rdev->raid_disk < 0 &&
++				    test_and_clear_bit(ClusterRemove, &rdev->flags))
+ 					md_kick_rdev_from_array(rdev);
+ 			}
+ 		}
+@@ -10000,8 +10000,11 @@ static void check_sb_changes(struct mddev *mddev, struct md_rdev *rdev)
  
- static inline gfp_t nfs_io_gfp_mask(void)
- {
--	if (current->flags & PF_WQ_WORKER)
--		return GFP_KERNEL | __GFP_NORETRY | __GFP_NOWARN;
--	return GFP_KERNEL;
-+	gfp_t ret = current_gfp_context(GFP_KERNEL);
-+
-+	/* For workers __GFP_NORETRY only with __GFP_IO or __GFP_FS */
-+	if ((current->flags & PF_WQ_WORKER) && ret == GFP_KERNEL)
-+		ret |= __GFP_NORETRY | __GFP_NOWARN;
-+	return ret;
- }
+ 	/* Check for change of roles in the active devices */
+ 	rdev_for_each_safe(rdev2, tmp, mddev) {
+-		if (test_bit(Faulty, &rdev2->flags))
++		if (test_bit(Faulty, &rdev2->flags)) {
++			if (test_bit(ClusterRemove, &rdev2->flags))
++				set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
+ 			continue;
++		}
  
- /*
+ 		/* Check if the roles changed */
+ 		role = le16_to_cpu(sb->dev_roles[rdev2->desc_nr]);
 -- 
 2.39.5
 
