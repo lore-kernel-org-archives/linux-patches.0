@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0292257435;
-	Tue, 12 Aug 2025 18:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B75305E08;
+	Tue, 12 Aug 2025 18:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022255; cv=none; b=qRh7OU7cYGb/2Z8kXBkG+F9DXAo/puvMlpT5axcluz7yEFGwKimkrkMlzOCRWjjxsKu6S1335cLR4ZqGM8afkrx5RlhGN8MXuyPV0WS3VTP3LIb0AoT6eAclm1bcJs2rToCVN7K3ruT1Jaz0I8M2MR1Y3mrNpgqcWaxAfznnCBM=
+	t=1755022259; cv=none; b=mqMlEzuRgtyvpxjCDdvdnz9a2zKd/igcQYkwhsckk2jqYS4VaE3sJ9xDSa8PQesarPPz2cXe4HQsoSnbZAGZYYonTSJClFy0MuCdr+RVSIsAfJXDUwvvnhWuOvuqFNAYqGhqtUpUvFvY+28je6vDWcIxFN2FYVIsyngwnplvn1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022255; c=relaxed/simple;
-	bh=XzSMrb6Q0krqkhizIa2vhA08byD3P9Wc7bUh2mJ1myE=;
+	s=arc-20240116; t=1755022259; c=relaxed/simple;
+	bh=4XnLaStQsnKoyxKsrP6G1ikUAIYS9GWH548CRu+rg2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdJupLmsWJhgN2MvwmzUgXyDBOxxOgypz0pXlwThOknWmXbnoWrEBEMOXOAwYFMnnvEUbrxxSlWo2mlnHrJQ5gE2ax8+1/H0RD6Z1sJAdPBDGSaP0+h4cEHDvQquXIsqF0kzuTA/Wx1IyrHYKpPgT7fat5B9/0KzDfXeOz+wSqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omUyfi4b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c+1myiSJ6fNmH6JwqtddDCCJ13wWeb9QXVNcGCLqclutWlfwk2VuGa6MoG3M1TVu6E7VL1tFD6v2Adc51Rq3TyEqD+dvIWTIH8C7LF5YT2MiuLXcxvjT+sZFVuVkJ2So5NnPH8SQh7MsSbO40JX7wv9DoQ9byK04O3WwHOLUDTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwl8je+1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omUyfi4b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283CEC4CEF0;
-	Tue, 12 Aug 2025 18:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwl8je+1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532F5C4CEF0;
+	Tue, 12 Aug 2025 18:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022255;
-	bh=XzSMrb6Q0krqkhizIa2vhA08byD3P9Wc7bUh2mJ1myE=;
+	s=korg; t=1755022258;
+	bh=4XnLaStQsnKoyxKsrP6G1ikUAIYS9GWH548CRu+rg2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omUyfi4b3K4X9VJQSYp6gyquWY8eNXxvdldBBHDVvnhUrrj1DjldIvxnUJANBPubp
-	 gDOBy6/O8UNJLbsz40FREgfhzJPKYTPYHYefXCRzX11pnpOtvP7/4oOhLl8BewPtYZ
-	 9A2FfnLLimge5xQZRJ3R/WgCaw2Rq0tljZZ3ZMZQ=
+	b=gwl8je+1iL1Jb/ok/muhbPvlgo8agKPrCLkpNKV2ZJKwIv8msjQMi1e5EWRDZku7x
+	 j1s469ELl8V+gtXIHlJM2zbGcZR2MSlKsnwkb47IT3eau38X9kMhsns1qsN20qvUSD
+	 hUVq7QO0QIN4yqjlaGrRmiKST1o+Z8ZjtDHevU8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Korsnes <johan.korsnes@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 100/369] arch: powerpc: defconfig: Drop obsolete CONFIG_NET_CLS_TCINDEX
-Date: Tue, 12 Aug 2025 19:26:37 +0200
-Message-ID: <20250812173018.540957437@linuxfoundation.org>
+Subject: [PATCH 6.12 069/369] drm/panfrost: Fix panfrost device variable name in devfreq
+Date: Tue, 12 Aug 2025 19:26:06 +0200
+Message-ID: <20250812173017.369801357@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -46,42 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Korsnes <johan.korsnes@gmail.com>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit 75cd37c5f28b85979fd5a65174013010f6b78f27 ]
+[ Upstream commit 6048f5587614bb4919c54966913452c1a0a43138 ]
 
-This option was removed from the Kconfig in commit
-8c710f75256b ("net/sched: Retire tcindex classifier") but it was not
-removed from the defconfigs.
+Commit 64111a0e22a9 ("drm/panfrost: Fix incorrect updating of current
+device frequency") was a Panfrost port of a similar fix in Panthor.
 
-Fixes: 8c710f75256b ("net/sched: Retire tcindex classifier")
-Signed-off-by: Johan Korsnes <johan.korsnes@gmail.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250323191116.113482-1-johan.korsnes@gmail.com
+Fix the Panfrost device pointer variable name so that it follows
+Panfrost naming conventions.
+
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Fixes: 64111a0e22a9 ("drm/panfrost: Fix incorrect updating of current device frequency")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250520174634.353267-6-adrian.larumbe@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/configs/ppc6xx_defconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/panfrost/panfrost_devfreq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/configs/ppc6xx_defconfig b/arch/powerpc/configs/ppc6xx_defconfig
-index c06344db0eb3..1c67f64739a0 100644
---- a/arch/powerpc/configs/ppc6xx_defconfig
-+++ b/arch/powerpc/configs/ppc6xx_defconfig
-@@ -253,7 +253,6 @@ CONFIG_NET_SCH_DSMARK=m
- CONFIG_NET_SCH_NETEM=m
- CONFIG_NET_SCH_INGRESS=m
- CONFIG_NET_CLS_BASIC=m
--CONFIG_NET_CLS_TCINDEX=m
- CONFIG_NET_CLS_ROUTE4=m
- CONFIG_NET_CLS_FW=m
- CONFIG_NET_CLS_U32=m
+diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+index 3385fd3ef41a..5d0dce10336b 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
++++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+@@ -29,7 +29,7 @@ static void panfrost_devfreq_update_utilization(struct panfrost_devfreq *pfdevfr
+ static int panfrost_devfreq_target(struct device *dev, unsigned long *freq,
+ 				   u32 flags)
+ {
+-	struct panfrost_device *ptdev = dev_get_drvdata(dev);
++	struct panfrost_device *pfdev = dev_get_drvdata(dev);
+ 	struct dev_pm_opp *opp;
+ 	int err;
+ 
+@@ -40,7 +40,7 @@ static int panfrost_devfreq_target(struct device *dev, unsigned long *freq,
+ 
+ 	err = dev_pm_opp_set_rate(dev, *freq);
+ 	if (!err)
+-		ptdev->pfdevfreq.current_frequency = *freq;
++		pfdev->pfdevfreq.current_frequency = *freq;
+ 
+ 	return err;
+ }
 -- 
 2.39.5
 
