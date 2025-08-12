@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342862FDC55;
-	Tue, 12 Aug 2025 17:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160E42FE597;
+	Tue, 12 Aug 2025 17:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021533; cv=none; b=iJVDIBvT4gm2B9Qk17nDPz/ql5R2R0iZraH/NgUdSJMMMhQ4bzW53c3h2IBe+WMCQLXN96UZ4vpqfHWj6n7Nh1sbBQHzOEs6puKYz2Uwv4LwAiknNM4prXm+DFmeAx1JkLy+E0WMZedEhDICfDWJbeN39x8cCVFQZyC7zsFYoGY=
+	t=1755021538; cv=none; b=rwcoVRk0/5SR6npFJstLdnE5ECE8ke/5IovUHLNvEmvBXmdNf4rFLIMrMhw8Uvnd8ep9PU5A0LJ/tvIsPvrgSc1Bu6u6fT3ChHWwfVu0dS2i9wLoYC9UbukGI5KsyjPaD0NFSGZ0Pg9NkjnSP1sWh5DcWvM6vEzywQ0xYACBo4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021533; c=relaxed/simple;
-	bh=oSc9oivqbtF/rN5xJx/h8bciU6sWvbL2+Fa/BwVptRg=;
+	s=arc-20240116; t=1755021538; c=relaxed/simple;
+	bh=jrnrh/JWFsGjyn6HywF/yMEjdlE8pwPloIN7LWkAqGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvXwQLZlvo9c8i9h3HeXnGXNaxlWE46f8ScuQtJeN2/GNPcEjuaI9+erXk6N5cEN4CBhqDbMUPGo2xJp+V8IhvgfAo1v1/vmAVof9YbdH8ra3JuCGG+DnRLIbTdm6+ZCTbJlWj3IqbBrgabTBbAYTAi38Ea6bgmEi0uhF3wueD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdOEm1NX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UqJcx+Mo3blajAJs2JuFwsxi5rf1XIsQiOJcMdJSF5153PFVRNw6Zqf8q4M6+4ZeVDfMU5iqqbGz+w6fuSen2FoCtr3yS3nxGMYzu8ipM0afVvXd/JvscdEWHRxDI2ILGsmcn1c6HkK2Pht0FTyRqSygJMCEm9jBh+fmlSAb/nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oE/QMSZF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdOEm1NX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7808C4CEF1;
-	Tue, 12 Aug 2025 17:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oE/QMSZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190CDC4CEF6;
+	Tue, 12 Aug 2025 17:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021533;
-	bh=oSc9oivqbtF/rN5xJx/h8bciU6sWvbL2+Fa/BwVptRg=;
+	s=korg; t=1755021536;
+	bh=jrnrh/JWFsGjyn6HywF/yMEjdlE8pwPloIN7LWkAqGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vdOEm1NXqPIU/Hip8TLAJR77ZAK1XN+08aPg73AjVmsqM+39K+sfBVmQUED59q9bg
-	 r2ZpcJKuNsUQM3mBFWeYnEd8iW2hjR4nu34XnVOo+OcHOQ7ZWmvsdEfnbqvnG3x6rP
-	 q+Nx8qqOYVsoN4N7yJGR8/yp4iNdIPJGzKJu/GXU=
+	b=oE/QMSZFqK/eBSXQ6dJRYcf4F3xQTigJuZxSvFL8LWlrsEbRiCPODNtNpqW/eUEsw
+	 WyltMe4/VzK3+uL30/seUCBreSsp5o9Xzd+G+CcVQa5hIM5TWUrPwhObjLm0VG6OlB
+	 6lYFGaqVq8UiSzQpqhFwXI6VowDyIAGU0GIpvwIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 149/262] ASoC: fsl_xcvr: get channel status data when PHY is not exists
-Date: Tue, 12 Aug 2025 19:28:57 +0200
-Message-ID: <20250812172959.445798585@linuxfoundation.org>
+Subject: [PATCH 6.6 150/262] sh: Do not use hyphen in exported variable name
+Date: Tue, 12 Aug 2025 19:28:58 +0200
+Message-ID: <20250812172959.487958946@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,54 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit ca592e20659e0304ebd8f4dabb273da4f9385848 ]
+[ Upstream commit c32969d0362a790fbc6117e0b6a737a7e510b843 ]
 
-There is no PHY for the XCVR module on i.MX93, the channel status needs
-to be obtained from FSL_XCVR_RX_CS_DATA_* registers. And channel status
-acknowledge (CSA) bit should be set once channel status is processed.
+arch/sh/Makefile defines and exports ld-bfd to be used by
+arch/sh/boot/compressed/Makefile and arch/sh/boot/romimage/Makefile.
+However some shells, including dash, will not pass through environment
+variables whose name includes a hyphen.  Usually GNU make does not use
+a shell to recurse, but if e.g. $(srctree) contains '~' it will use a
+shell here.
 
-Fixes: e240b9329a30 ("ASoC: fsl_xcvr: Add support for i.MX93 platform")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20250710030405.3370671-2-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Other instances of this problem were previously fixed by commits
+2bfbe7881ee0 "kbuild: Do not use hyphen in exported variable name"
+and 82977af93a0d "sh: rename suffix-y to suffix_y".
+
+Rename the variable to ld_bfd.
+
+References: https://buildd.debian.org/status/fetch.php?pkg=linux&arch=sh4&ver=4.13%7Erc5-1%7Eexp1&stamp=1502943967&raw=0
+Fixes: 7b022d07a0fd ("sh: Tidy up the ldscript output format specifier.")
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_xcvr.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ arch/sh/Makefile                 | 10 +++++-----
+ arch/sh/boot/compressed/Makefile |  4 ++--
+ arch/sh/boot/romimage/Makefile   |  4 ++--
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index c46f64557a7f..1d7791c7fb4e 100644
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -1197,6 +1197,26 @@ static irqreturn_t irq0_isr(int irq, void *devid)
- 				/* clear CS control register */
- 				memset_io(reg_ctrl, 0, sizeof(val));
- 			}
-+		} else {
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_0,
-+				    (u32 *)&xcvr->rx_iec958.status[0]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_1,
-+				    (u32 *)&xcvr->rx_iec958.status[4]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_2,
-+				    (u32 *)&xcvr->rx_iec958.status[8]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_3,
-+				    (u32 *)&xcvr->rx_iec958.status[12]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_4,
-+				    (u32 *)&xcvr->rx_iec958.status[16]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_5,
-+				    (u32 *)&xcvr->rx_iec958.status[20]);
-+			for (i = 0; i < 6; i++) {
-+				val = *(u32 *)(xcvr->rx_iec958.status + i * 4);
-+				*(u32 *)(xcvr->rx_iec958.status + i * 4) =
-+					bitrev32(val);
-+			}
-+			regmap_set_bits(xcvr->regmap, FSL_XCVR_RX_DPTH_CTRL,
-+					FSL_XCVR_RX_DPTH_CTRL_CSA);
- 		}
- 	}
- 	if (isr & FSL_XCVR_IRQ_NEW_UD) {
+diff --git a/arch/sh/Makefile b/arch/sh/Makefile
+index cab2f9c011a8..7b420424b6d7 100644
+--- a/arch/sh/Makefile
++++ b/arch/sh/Makefile
+@@ -103,16 +103,16 @@ UTS_MACHINE		:= sh
+ LDFLAGS_vmlinux		+= -e _stext
+ 
+ ifdef CONFIG_CPU_LITTLE_ENDIAN
+-ld-bfd			:= elf32-sh-linux
+-LDFLAGS_vmlinux		+= --defsym jiffies=jiffies_64 --oformat $(ld-bfd)
++ld_bfd			:= elf32-sh-linux
++LDFLAGS_vmlinux		+= --defsym jiffies=jiffies_64 --oformat $(ld_bfd)
+ KBUILD_LDFLAGS		+= -EL
+ else
+-ld-bfd			:= elf32-shbig-linux
+-LDFLAGS_vmlinux		+= --defsym jiffies=jiffies_64+4 --oformat $(ld-bfd)
++ld_bfd			:= elf32-shbig-linux
++LDFLAGS_vmlinux		+= --defsym jiffies=jiffies_64+4 --oformat $(ld_bfd)
+ KBUILD_LDFLAGS		+= -EB
+ endif
+ 
+-export ld-bfd
++export ld_bfd
+ 
+ # Mach groups
+ machdir-$(CONFIG_SOLUTION_ENGINE)		+= mach-se
+diff --git a/arch/sh/boot/compressed/Makefile b/arch/sh/boot/compressed/Makefile
+index b5e29f99c02c..5d5b2da2a3f1 100644
+--- a/arch/sh/boot/compressed/Makefile
++++ b/arch/sh/boot/compressed/Makefile
+@@ -29,7 +29,7 @@ endif
+ 
+ ccflags-remove-$(CONFIG_MCOUNT) += -pg
+ 
+-LDFLAGS_vmlinux := --oformat $(ld-bfd) -Ttext $(IMAGE_OFFSET) -e startup \
++LDFLAGS_vmlinux := --oformat $(ld_bfd) -Ttext $(IMAGE_OFFSET) -e startup \
+ 		   -T $(obj)/../../kernel/vmlinux.lds
+ 
+ KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
+@@ -53,7 +53,7 @@ $(obj)/vmlinux.bin.lzo: $(obj)/vmlinux.bin FORCE
+ 
+ OBJCOPYFLAGS += -R .empty_zero_page
+ 
+-LDFLAGS_piggy.o := -r --format binary --oformat $(ld-bfd) -T
++LDFLAGS_piggy.o := -r --format binary --oformat $(ld_bfd) -T
+ 
+ $(obj)/piggy.o: $(obj)/vmlinux.scr $(obj)/vmlinux.bin.$(suffix_y) FORCE
+ 	$(call if_changed,ld)
+diff --git a/arch/sh/boot/romimage/Makefile b/arch/sh/boot/romimage/Makefile
+index c7c8be58400c..17b03df0a8de 100644
+--- a/arch/sh/boot/romimage/Makefile
++++ b/arch/sh/boot/romimage/Makefile
+@@ -13,7 +13,7 @@ mmcif-obj-$(CONFIG_CPU_SUBTYPE_SH7724)	:= $(obj)/mmcif-sh7724.o
+ load-$(CONFIG_ROMIMAGE_MMCIF)		:= $(mmcif-load-y)
+ obj-$(CONFIG_ROMIMAGE_MMCIF)		:= $(mmcif-obj-y)
+ 
+-LDFLAGS_vmlinux := --oformat $(ld-bfd) -Ttext $(load-y) -e romstart \
++LDFLAGS_vmlinux := --oformat $(ld_bfd) -Ttext $(load-y) -e romstart \
+ 		   -T $(obj)/../../kernel/vmlinux.lds
+ 
+ $(obj)/vmlinux: $(obj)/head.o $(obj-y) $(obj)/piggy.o FORCE
+@@ -24,7 +24,7 @@ OBJCOPYFLAGS += -j .empty_zero_page
+ $(obj)/zeropage.bin: vmlinux FORCE
+ 	$(call if_changed,objcopy)
+ 
+-LDFLAGS_piggy.o := -r --format binary --oformat $(ld-bfd) -T
++LDFLAGS_piggy.o := -r --format binary --oformat $(ld_bfd) -T
+ 
+ $(obj)/piggy.o: $(obj)/vmlinux.scr $(obj)/zeropage.bin arch/sh/boot/zImage FORCE
+ 	$(call if_changed,ld)
 -- 
 2.39.5
 
