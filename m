@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1201F1DB92A;
-	Tue, 12 Aug 2025 18:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2261DB92A;
+	Tue, 12 Aug 2025 18:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023830; cv=none; b=WGm4AfDJyafI2Cwtan3XYSzASJc616pVTCjmzgxyr9/uAzxiumr4RLtuxb1EM+5qChhIAXtfYpDrzQeqD8vuEuPBeUHoLUjivbh7s56ezK+Qv4zM/oPoKjroKKn8ulKVi5MNG+K6UrFhGYxrZvWEIxSjYOb20T9TTXYDEjXDp1s=
+	t=1755023833; cv=none; b=HOoiWTPQhVFc7J3nIF2+I/DaeXH25sQa1Y+RPwp++3Nyq0GGDSdNcmJDxYl0o+7D4kJoJkPcA+FueAMCsRENIhQDpidSceRDlmkhhjQF4fQw2EGHH3PuP+sdiYXbGYNCvmfFyTrKWnrLXk8GrfrbUQGYGgNYq0UBFSPyR/nfA6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023830; c=relaxed/simple;
-	bh=YiSjxrf0Nb7PpnruA4eGfOWjqQfQSMYKDnrAO6WUxtM=;
+	s=arc-20240116; t=1755023833; c=relaxed/simple;
+	bh=7rRsp/MaK7pxdV1GmqlvLt6KZusJGJgUV1JVsYgaDG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUiFMto9cNFWN6ZsdvcCJ2u1/SuL9arcUY8LecdgRVUoL9w9VRvriPX7pR6UbiO0bUdyjM+RakFcj5lR50GHSNSZTva/HXNmwNJTHqzU4+U9KrCxIyOd/y8O3Jlf94sW2yU6F3vSxi8rqkuzHbxTV9kOfSKdQ2c+FTWxSCekOKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2agyOjiP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IaAzVchNCE8ff33wxYU3WeUaP/54xdHE3EN+DsQ4MvDwxBh3sw54yamiDdlMxwoswDWkQZ3FCufHCaFQ1oxVl1feBQrnxpMcoi95smJxIKeHrLZkNOXHMv+rQcpr0Fro/pGrNaf2Bebtm3JV0bxu/np0IRMBFc24zaJQEVWHj4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvJbX1nh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2agyOjiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448A9C4CEF0;
-	Tue, 12 Aug 2025 18:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvJbX1nh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DA6C4CEF0;
+	Tue, 12 Aug 2025 18:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023829;
-	bh=YiSjxrf0Nb7PpnruA4eGfOWjqQfQSMYKDnrAO6WUxtM=;
+	s=korg; t=1755023832;
+	bh=7rRsp/MaK7pxdV1GmqlvLt6KZusJGJgUV1JVsYgaDG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2agyOjiP8ICmDeoOJiTOKeMyyFMqje3iznXSjBtjswH4fKFclEnLZbnvKjB4t/HM9
-	 pkRlfEQ4D7zcHOWiVozWpg1oku94tggqzoKM36S+km5BBdKvssdP4Mwequni5VQbdg
-	 xspLDCXGT25q7t3Qm08W9So6E9zIVa2nILMpnZmI=
+	b=IvJbX1nhI0m+kSFqwYQ8zJBYnElDPu4XxqQ8h83/ZmooiCiOD9jNPejo7unjq0LT5
+	 gHAjn/Hj+Y+jaJ/LK8qitf4zSoXx0MoZJPnINSsF5XoYZtBZ9uJzHkt8MTM4dkWSyo
+	 mgCpiGw4jxlNSOC0B6N0t8i9c9gz7/l+suu7jALo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 194/627] wifi: ath12k: Block radio bring-up in FTM mode
-Date: Tue, 12 Aug 2025 19:28:09 +0200
-Message-ID: <20250812173426.649019536@linuxfoundation.org>
+Subject: [PATCH 6.16 195/627] arm64: fix unnecessary rebuilding when CONFIG_DEBUG_EFI=y
+Date: Tue, 12 Aug 2025 19:28:10 +0200
+Message-ID: <20250812173426.684536217@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,66 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 80570587e418f361e7ce3f9200477f728b38c94b ]
+[ Upstream commit 344b6580472451390d070c65c27f59716a1deecb ]
 
-Ensure that all radios remain down when the driver operates in Factory
-Test Mode (FTM). Reject any userspace attempts to bring up an
-interface in this mode.
+When CONFIG_DEBUG_EFI is enabled, some objects are needlessly rebuilt.
 
-Currently, the driver allows userspace to bring up the interface even
-though it operates in FTM mode, which violates FTM constraints and
-leads to FTM command failures.
+[Steps to reproduce]
 
-Hence, block the radio start when the driver is in FTM mode. Also,
-remove ath12k_ftm_mode check from ath12k_drain_tx() because FTM mode
-check is already handled in the caller function
-(ath12k_mac_op_start()).
+  Enable CONFIG_DEBUG_EFI and run 'make' twice in a clean source tree.
+  On the second run, arch/arm64/kernel/head.o is rebuilt even though
+  no files have changed.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+  $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
+  $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+     [ snip ]
+  $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+    CALL    scripts/checksyscalls.sh
+    AS      arch/arm64/kernel/head.o
+    AR      arch/arm64/kernel/built-in.a
+    AR      arch/arm64/built-in.a
+    AR      built-in.a
+     [ snip ]
 
-Fixes: 3bc374cbc49e ("wifi: ath12k: add factory test mode support")
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250630031502.8902-1-aaradhana.sahu@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+The issue is caused by the use of the $(realpath ...) function.
+
+At the time arch/arm64/kernel/Makefile is parsed on the first run,
+$(objtree)/vmlinux does not exist. As a result,
+$(realpath $(objtree)/vmlinux) expands to an empty string.
+
+On the second run of Make, $(objtree)/vmlinux already exists, so
+$(realpath $(objtree)/vmlinux) expands to the absolute path of vmlinux.
+However, this change in the command line causes arch/arm64/kernel/head.o
+to be rebuilt.
+
+To address this issue, use $(abspath ...) instead, which does not require
+the file to exist. While $(abspath ...) does not resolve symlinks, this
+should be fine from a debugging perspective.
+
+The GNU Make manual [1] clearly explains the difference between the two:
+
+  $(realpath names...)
+    For each file name in names return the canonical absolute name.
+    A canonical name does not contain any . or .. components, nor any
+    repeated path separators (/) or symlinks. In case of a failure the
+    empty string is returned. Consult the realpath(3) documentation for
+    a list of possible failure causes.
+
+  $(abspath namees...)
+    For each file name in names return an absolute name that does not
+    contain any . or .. components, nor any repeated path separators (/).
+    Note that, in contrast to realpath function, abspath does not resolve
+    symlinks and does not require the file names to refer to an existing
+    file or directory. Use the wildcard function to test for existence.
+
+The same problem exists in drivers/firmware/efi/libstub/Makefile.zboot.
+On the first run of Make, $(obj)/vmlinuz.efi.elf does not exist when the
+Makefile is parsed, so -DZBOOT_EFI_PATH is set to an empty string.
+Replace $(realpath ...) with $(abspath ...) there as well.
+
+[1]: https://www.gnu.org/software/make/manual/make.html#File-Name-Functions
+
+Fixes: 757b435aaabe ("efi: arm64: Add vmlinux debug link to the Image binary")
+Fixes: a050910972bb ("efi/libstub: implement generic EFI zboot")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20250625125555.2504734-1-masahiroy@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/arm64/kernel/Makefile                  | 2 +-
+ drivers/firmware/efi/libstub/Makefile.zboot | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 0feb800a4921..43464853a01d 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -8167,14 +8167,9 @@ static int ath12k_mac_start(struct ath12k *ar)
+diff --git a/arch/arm64/kernel/Makefile b/arch/arm64/kernel/Makefile
+index a2faf0049dab..76f32e424065 100644
+--- a/arch/arm64/kernel/Makefile
++++ b/arch/arm64/kernel/Makefile
+@@ -80,7 +80,7 @@ obj-y					+= head.o
+ always-$(KBUILD_BUILTIN)		+= vmlinux.lds
  
- static void ath12k_drain_tx(struct ath12k_hw *ah)
- {
--	struct ath12k *ar = ah->radio;
-+	struct ath12k *ar;
- 	int i;
+ ifeq ($(CONFIG_DEBUG_EFI),y)
+-AFLAGS_head.o += -DVMLINUX_PATH="\"$(realpath $(objtree)/vmlinux)\""
++AFLAGS_head.o += -DVMLINUX_PATH="\"$(abspath vmlinux)\""
+ endif
  
--	if (ath12k_ftm_mode) {
--		ath12k_err(ar->ab, "fail to start mac operations in ftm mode\n");
--		return;
--	}
--
- 	lockdep_assert_wiphy(ah->hw->wiphy);
+ # for cleaning
+diff --git a/drivers/firmware/efi/libstub/Makefile.zboot b/drivers/firmware/efi/libstub/Makefile.zboot
+index 92e3c73502ba..832deee36e48 100644
+--- a/drivers/firmware/efi/libstub/Makefile.zboot
++++ b/drivers/firmware/efi/libstub/Makefile.zboot
+@@ -36,7 +36,7 @@ aflags-zboot-header-$(EFI_ZBOOT_FORWARD_CFI) := \
+ 		-DPE_DLL_CHAR_EX=IMAGE_DLLCHARACTERISTICS_EX_FORWARD_CFI_COMPAT
  
- 	for_each_ar(ah, ar, i)
-@@ -8187,6 +8182,9 @@ static int ath12k_mac_op_start(struct ieee80211_hw *hw)
- 	struct ath12k *ar;
- 	int ret, i;
- 
-+	if (ath12k_ftm_mode)
-+		return -EPERM;
-+
- 	lockdep_assert_wiphy(hw->wiphy);
- 
- 	ath12k_drain_tx(ah);
+ AFLAGS_zboot-header.o += -DMACHINE_TYPE=IMAGE_FILE_MACHINE_$(EFI_ZBOOT_MACH_TYPE) \
+-			 -DZBOOT_EFI_PATH="\"$(realpath $(obj)/vmlinuz.efi.elf)\"" \
++			 -DZBOOT_EFI_PATH="\"$(abspath $(obj)/vmlinuz.efi.elf)\"" \
+ 			 -DZBOOT_SIZE_LEN=$(zboot-size-len-y) \
+ 			 -DCOMP_TYPE="\"$(comp-type-y)\"" \
+ 			 $(aflags-zboot-header-y)
 -- 
 2.39.5
 
