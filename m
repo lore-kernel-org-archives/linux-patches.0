@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D04321ABD0;
-	Tue, 12 Aug 2025 18:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B031EF38C;
+	Tue, 12 Aug 2025 18:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023096; cv=none; b=g2Fc1Eg22KvN32ZxM7brQf9BrImu6yJt2JtLnDCWcMUvN2gQmYKfumDusiQ97bt/fmJwD2jv0Z9XizAoMVrLB80lIZmrHIUSMs0bJpZIbCSvp1Ctvk/Hq9qzwDa2uMwCkvtarUSAw2a8+BTEvOeKHYQMOswaCDPuvdA/sMFj8ws=
+	t=1755023100; cv=none; b=Z4qwH2emK15moWc+5s5E0AB4H6bY5uVrlBVL2Q7YsL1MYfhoQe2tWdUXZfnfIRQGpJNR8mArpnEa85jUVzKzd16j+AWTOFCTSgfDRMCO2SUSBxEB9n49WVK8/6oBjRDvUasvGrBm79QSYG7zN2XFXzZLi9WzG8we5aAJY8CcYik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023096; c=relaxed/simple;
-	bh=wMbcoPuAPRGzJpM6BvrKG4ytGCZOgikNdDF/rzDb9+g=;
+	s=arc-20240116; t=1755023100; c=relaxed/simple;
+	bh=F5wrTzgbny7VIDf9kbY7m6BcHqEcqvk7PzEIv7RA/VM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QxyITzeXp1utLS5cbKOxx7RD3JYE6JsjfXxkib4MbVQHLEuna71uwBLXGWAtcWqj6OT1pv0HvgHf3lx2GanABCbWLy2I17IsG87tI/h4xl4G87pnJb6ZoetIjBQqABlZpCVRQg6a11XhbiZdz7B6nKN3r4QAX5F56w5qG9Zdpu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlMwu3PJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bEXtN+IENZuW0ViSUZRJo00tMzHZCJ01Z23NuHrHpHM8c2EPxym0s/72CygMVWA45pq/Hop0/jLd2Z0QMF7MsP/v2mlBjw//odb8Nc7NEBfhPn3NLk/yewMwfZgaXlDj25BNteCY8eHN8BpjIe473XXVWfCpJMnz32ZeK/YTM+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAHcl82O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlMwu3PJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D89C4CEF0;
-	Tue, 12 Aug 2025 18:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAHcl82O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C81FC4CEF0;
+	Tue, 12 Aug 2025 18:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023096;
-	bh=wMbcoPuAPRGzJpM6BvrKG4ytGCZOgikNdDF/rzDb9+g=;
+	s=korg; t=1755023099;
+	bh=F5wrTzgbny7VIDf9kbY7m6BcHqEcqvk7PzEIv7RA/VM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KlMwu3PJtedXemmrlrqQDAFt2fQr42Wpq4dJw0bYWkYg4qTKoov8ouRycw8fUm41I
-	 fYdMawxYDTHSMB3EtNk0aZF2K7C4GXaNFHUOmi3AoHEgHfM0moMebUsQ6bSqh+xfhw
-	 ZFhTZWoQVN6aN5AefVW74HNkio2KKSXyxtZoVUhw=
+	b=qAHcl82O0jtiD6TssWUVEBa1fIc2ekha5nv8fFBVd8hls9rf539/BXD2oaYOyN2B0
+	 eiW7vHa54txgYeA2jdynkJRrglF+KbT2laSSdCT3ycFbr3AQaCLA8dnrCzZ8wd8z53
+	 Vtxm1oWIK96xiSlPm5phZx+bSSaCMFvPNgcu2B7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Nikl=C4=81vs=20Ko=C4=BCes=C5=86ikovs?= <pinkflames.linux@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jian-Hong Pan <jhp@endlessos.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Brian Norris <briannorris@chromium.org>
-Subject: [PATCH 6.12 347/369] PCI/ASPM: Save parent L1SS config in pci_save_aspm_l1ss_state()
-Date: Tue, 12 Aug 2025 19:30:44 +0200
-Message-ID: <20250812173029.746956614@linuxfoundation.org>
+Subject: [PATCH 6.12 348/369] PCI/ASPM: Fix L1SS saving
+Date: Tue, 12 Aug 2025 19:30:45 +0200
+Message-ID: <20250812173029.786603557@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,93 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian-Hong Pan <jhp@endlessos.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 1db806ec06b7c6e08e8af57088da067963ddf117 upstream.
+commit 7507eb3e7bfac7c3baef8dd377fdf5871eefd42b upstream.
 
-After 17423360a27a ("PCI/ASPM: Save L1 PM Substates Capability for
-suspend/resume"), pci_save_aspm_l1ss_state(dev) saves the L1SS state for
-"dev", and pci_restore_aspm_l1ss_state(dev) restores the state for both
-"dev" and its parent.
+Commit 1db806ec06b7 ("PCI/ASPM: Save parent L1SS config in
+pci_save_aspm_l1ss_state()") aimed to perform L1SS config save for both the
+Upstream Port and its upstream bridge when handling an Upstream Port, which
+matches what the L1SS restore side does. However, parent->state_saved can
+be set true at an earlier time when the upstream bridge saved other parts
+of its state. Then later when attempting to save the L1SS config while
+handling the Upstream Port, parent->state_saved is true in
+pci_save_aspm_l1ss_state() resulting in early return and skipping saving
+bridge's L1SS config because it is assumed to be already saved. Later on
+restore, junk is written into L1SS config which causes issues with some
+devices.
 
-The problem is that unless pci_save_state() has been used in some other
-path and has already saved the parent L1SS state, we will restore junk to
-the parent, which means the L1 Substates likely won't work correctly.
+Remove parent->state_saved check and unconditionally save L1SS config also
+for the upstream bridge from an Upstream Port which ought to be harmless
+from correctness point of view. With the Upstream Port check now present,
+saving the L1SS config more than once for the bridge is no longer a problem
+(unlike when the parent->state_saved check got introduced into the fix
+during its development).
 
-Save the L1SS config for both the device and its parent in
-pci_save_aspm_l1ss_state().  When restoring, we need both because L1SS must
-be enabled at the parent (the Downstream Port) before being enabled at the
-child (the Upstream Port).
-
-Link: https://lore.kernel.org/r/20241115072200.37509-3-jhp@endlessos.org
-Fixes: 17423360a27a ("PCI/ASPM: Save L1 PM Substates Capability for suspend/resume")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218394
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Jian-Hong Pan <jhp@endlessos.org>
-[bhelgaas: parallel save/restore structure, simplify commit log, patch at
-https://lore.kernel.org/r/20241212230340.GA3267194@bhelgaas]
+Link: https://lore.kernel.org/r/20250131152913.2507-1-ilpo.jarvinen@linux.intel.com
+Fixes: 1db806ec06b7 ("PCI/ASPM: Save parent L1SS config in pci_save_aspm_l1ss_state()")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219731
+Reported-by: Niklāvs Koļesņikovs <pinkflames.linux@gmail.com>
+Reported by: Rafael J. Wysocki <rafael@kernel.org>
+Closes: https://lore.kernel.org/r/CAJZ5v0iKmynOQ5vKSQbg1J_FmavwZE-nRONovOZ0mpMVauheWg@mail.gmail.com
+Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Closes: https://lore.kernel.org/r/d7246feb-4f3f-4d0c-bb64-89566b170671@molgen.mpg.de
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Jian-Hong Pan <jhp@endlessos.org> # Asus B1400CEAE
+Tested-by: Niklāvs Koļesņikovs <pinkflames.linux@gmail.com>
+Tested-by: Paul Menzel <pmenzel@molgen.mpg.de> # Dell XPS 13 9360
 Cc: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/aspm.c |   33 ++++++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
+ drivers/pci/pcie/aspm.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
 --- a/drivers/pci/pcie/aspm.c
 +++ b/drivers/pci/pcie/aspm.c
-@@ -81,24 +81,47 @@ void pci_configure_aspm_l1ss(struct pci_
+@@ -108,9 +108,6 @@ void pci_save_aspm_l1ss_state(struct pci
+ 	pci_read_config_dword(pdev, pdev->l1ss + PCI_L1SS_CTL2, cap++);
+ 	pci_read_config_dword(pdev, pdev->l1ss + PCI_L1SS_CTL1, cap++);
  
- void pci_save_aspm_l1ss_state(struct pci_dev *pdev)
- {
-+	struct pci_dev *parent = pdev->bus->self;
- 	struct pci_cap_saved_state *save_state;
--	u16 l1ss = pdev->l1ss;
- 	u32 *cap;
- 
+-	if (parent->state_saved)
+-		return;
+-
  	/*
-+	 * If this is a Downstream Port, we never restore the L1SS state
-+	 * directly; we only restore it when we restore the state of the
-+	 * Upstream Port below it.
-+	 */
-+	if (pcie_downstream_port(pdev) || !parent)
-+		return;
-+
-+	if (!pdev->l1ss || !parent->l1ss)
-+		return;
-+
-+	/*
- 	 * Save L1 substate configuration. The ASPM L0s/L1 configuration
- 	 * in PCI_EXP_LNKCTL_ASPMC is saved by pci_save_pcie_state().
- 	 */
--	if (!l1ss)
-+	save_state = pci_find_saved_ext_cap(pdev, PCI_EXT_CAP_ID_L1SS);
-+	if (!save_state)
- 		return;
- 
--	save_state = pci_find_saved_ext_cap(pdev, PCI_EXT_CAP_ID_L1SS);
-+	cap = &save_state->cap.data[0];
-+	pci_read_config_dword(pdev, pdev->l1ss + PCI_L1SS_CTL2, cap++);
-+	pci_read_config_dword(pdev, pdev->l1ss + PCI_L1SS_CTL1, cap++);
-+
-+	if (parent->state_saved)
-+		return;
-+
-+	/*
-+	 * Save parent's L1 substate configuration so we have it for
-+	 * pci_restore_aspm_l1ss_state(pdev) to restore.
-+	 */
-+	save_state = pci_find_saved_ext_cap(parent, PCI_EXT_CAP_ID_L1SS);
- 	if (!save_state)
- 		return;
- 
- 	cap = &save_state->cap.data[0];
--	pci_read_config_dword(pdev, l1ss + PCI_L1SS_CTL2, cap++);
--	pci_read_config_dword(pdev, l1ss + PCI_L1SS_CTL1, cap++);
-+	pci_read_config_dword(parent, parent->l1ss + PCI_L1SS_CTL2, cap++);
-+	pci_read_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1, cap++);
- }
- 
- void pci_restore_aspm_l1ss_state(struct pci_dev *pdev)
+ 	 * Save parent's L1 substate configuration so we have it for
+ 	 * pci_restore_aspm_l1ss_state(pdev) to restore.
 
 
