@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A522E7BD4;
-	Tue, 12 Aug 2025 18:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7000D1EBFE0;
+	Tue, 12 Aug 2025 18:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022952; cv=none; b=IGa9/wxZT03Rdz41teaFLGbMpllb3dTL4OIhUtb1t/c1SsazjVuzlCURuZSqj+VNeK7dER6kyJrIHdohvDmD7UyctKM/SSfI/ZZ1ylwUcT4eMUj0nIBg4aKZs+RqLr449aBuV8eJk3EXXg4O7IGPiaxec65TI7uI15VKveDctow=
+	t=1755022957; cv=none; b=E4C4gEhun44xdCXrs05QfSRVrKifCcCozpNFT+c7w3xMGLPv5Q4Rwt0y+oG8MdRwOxxQFALdbPFgu6psedNMt0LWkTNgrWEGAJ1YkpZ9ojSi7SlG/67AbgPgrCDY6ifHlWJ+hOwdAXnKVy3hw2aqhS462SphRz5bgFpBTJGiacc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022952; c=relaxed/simple;
-	bh=poXzssY3S7rEvxo8kG7TmDjOqJjZM+d7gUxIH8bUwlE=;
+	s=arc-20240116; t=1755022957; c=relaxed/simple;
+	bh=8aJFs9uj9Yh1GTsG/Io9oyTrd/NWBsFLKGkFYRpq3yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o5oYGIegvry+cQbx1jiA1fmI3VCzmR2+aaPyzk7jP8VNHFbZkLYTHj9os4pnxmlC5SNbmUBxl1lLWOC/ZzETBjEDr3SC1WXvDg0rxY1NpyAytpp9u+K6KwKPiqKU7o5Ks32kNNFzdsW7MFaGi+R5R8q5rFG+RXOOMPBa11Z50Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhF1ShH3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S9XDb/DNcyKlggs4GQDnxxwdXO8FhwIlpfE5XXhbTR45+PNRRmnguGRaARFeFKsXM9ytn9c9m2h1sf69hJVGsz3aaoIZu+7TYjmG8OYw9shO07oqVz2b1v7QOCO5wrkrJ5y7f1UOJ5k4EF7a4mJvjYgppyj/BfJ3XmTXwEIyXOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcRqDdng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhF1ShH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024E0C4CEF0;
-	Tue, 12 Aug 2025 18:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcRqDdng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772D8C4CEF7;
+	Tue, 12 Aug 2025 18:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022952;
-	bh=poXzssY3S7rEvxo8kG7TmDjOqJjZM+d7gUxIH8bUwlE=;
+	s=korg; t=1755022955;
+	bh=8aJFs9uj9Yh1GTsG/Io9oyTrd/NWBsFLKGkFYRpq3yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhF1ShH3bn7/JqtoxxQd9MxN+MqkDM2YmJgBnMgwLWW+VxZ3fgkyPquEwuDoXIpJD
-	 Xbp6ykZreWaqooG3nkpvIfxFZ0opS0SpZ84vJnltl4TRjrzyshLy5wHklj4lXYWSx7
-	 dMTczYRAIu3MPLGcw4YFFqXvDRUIUK6r/l+K/eSI=
+	b=mcRqDdngszE7PtfCS9agZ/hU9DxEinFtAMIWQdFq+1lzwBaF6oWOiG9yecoCLpzEY
+	 CwzaQB8+HGXcZV6Xdo5X7L3oR+zWUjmXA4+umsaBktTYRBuWhznHwqcoe5lVZ/UOs5
+	 TFaTrOlGMf6mhsXNc+fgL3RMyC2+Wlmnbl0p+CHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Maher Azzouzi <maherazz04@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 306/369] net/sched: mqprio: fix stack out-of-bounds write in tc entry parsing
-Date: Tue, 12 Aug 2025 19:30:03 +0200
-Message-ID: <20250812173028.242665265@linuxfoundation.org>
+Subject: [PATCH 6.12 307/369] s390/mm: Allocate page table with PAGE_SIZE granularity
+Date: Tue, 12 Aug 2025 19:30:04 +0200
+Message-ID: <20250812173028.279688600@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -47,48 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maher Azzouzi <maherazz04@gmail.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-[ Upstream commit ffd2dc4c6c49ff4f1e5d34e454a6a55608104c17 ]
+[ Upstream commit daa8af80d283ee9a7d42dd6f164a65036665b9d4 ]
 
-TCA_MQPRIO_TC_ENTRY_INDEX is validated using
-NLA_POLICY_MAX(NLA_U32, TC_QOPT_MAX_QUEUE), which allows the value
-TC_QOPT_MAX_QUEUE (16). This leads to a 4-byte out-of-bounds stack
-write in the fp[] array, which only has room for 16 elements (0–15).
+Make vmem_pte_alloc() consistent by always allocating page table of
+PAGE_SIZE granularity, regardless of whether page_table_alloc() (with
+slab) or memblock_alloc() is used. This ensures page table can be fully
+freed when the corresponding page table entries are removed.
 
-Fix this by changing the policy to allow only up to TC_QOPT_MAX_QUEUE - 1.
-
-Fixes: f62af20bed2d ("net/sched: mqprio: allow per-TC user input of FP adminStatus")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250802001857.2702497-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d08d4e7cd6bf ("s390/mm: use full 4KB page for 2KB PTE")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_mqprio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/mm/vmem.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
-index 51d4013b6121..f3e5ef9a9592 100644
---- a/net/sched/sch_mqprio.c
-+++ b/net/sched/sch_mqprio.c
-@@ -152,7 +152,7 @@ static int mqprio_parse_opt(struct net_device *dev, struct tc_mqprio_qopt *qopt,
- static const struct
- nla_policy mqprio_tc_entry_policy[TCA_MQPRIO_TC_ENTRY_MAX + 1] = {
- 	[TCA_MQPRIO_TC_ENTRY_INDEX]	= NLA_POLICY_MAX(NLA_U32,
--							 TC_QOPT_MAX_QUEUE),
-+							 TC_QOPT_MAX_QUEUE - 1),
- 	[TCA_MQPRIO_TC_ENTRY_FP]	= NLA_POLICY_RANGE(NLA_U32,
- 							   TC_FP_EXPRESS,
- 							   TC_FP_PREEMPTIBLE),
+diff --git a/arch/s390/mm/vmem.c b/arch/s390/mm/vmem.c
+index 665b8228afeb..dd971826652a 100644
+--- a/arch/s390/mm/vmem.c
++++ b/arch/s390/mm/vmem.c
+@@ -63,13 +63,12 @@ void *vmem_crst_alloc(unsigned long val)
+ 
+ pte_t __ref *vmem_pte_alloc(void)
+ {
+-	unsigned long size = PTRS_PER_PTE * sizeof(pte_t);
+ 	pte_t *pte;
+ 
+ 	if (slab_is_available())
+-		pte = (pte_t *) page_table_alloc(&init_mm);
++		pte = (pte_t *)page_table_alloc(&init_mm);
+ 	else
+-		pte = (pte_t *) memblock_alloc(size, size);
++		pte = (pte_t *)memblock_alloc(PAGE_SIZE, PAGE_SIZE);
+ 	if (!pte)
+ 		return NULL;
+ 	memset64((u64 *)pte, _PAGE_INVALID, PTRS_PER_PTE);
 -- 
 2.39.5
 
