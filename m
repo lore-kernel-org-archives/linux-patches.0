@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFCD22425B;
-	Tue, 12 Aug 2025 19:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C810C2FDC4F;
+	Tue, 12 Aug 2025 19:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025296; cv=none; b=rkWB8QUgmy8oH7pMttLl6zixJDU4S+KP8qao3uR9v4HE4JChsUtRgc/pnNhviv9/20WiQCBU6KfI13QVF/cvrc+W17rmLwLa/Uiaj+0zamhS9pA3FFQtGTn8+pDA4yevVuWmgkiJahFAQM6ek8Jliw2lpEXyY051/iijvL+uPa8=
+	t=1755025299; cv=none; b=JZrv+XT9J6rRw5AYNcPmCAOMbg8XlzzTJaq7lA1F0ch3ud/ET4jpRX9CzX9rqlEkvha7Cu4NpMwvrLcZ4q7nHhAy7qqkng0tkqWz8ojnoFq1D1erQYLtw/MlTC9FrrWxUxNcDDgDGabYvziTluO7a7AD/soEwPtFGmlfWHkc/Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025296; c=relaxed/simple;
-	bh=JQvlHGTMaSaEnkW5xW84NAYooASxOoKim2/FS1Y1mKk=;
+	s=arc-20240116; t=1755025299; c=relaxed/simple;
+	bh=8D58WCDbPZKHv1mBOILaA+TF3UBArd7ThEjzqVvo5Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WOZ+ky4EMoPovZnmZlrzhO5GHQnB+1Ubj+Giwr76GMWN4jMA7DJglpIclq3Ff2KTZJpQbYqD3l0HdhUQboXsKtz/rLk6YrMw34rxdcn/7dGGSYeTyL/eqlRKpVDJZxr/bMs+4F8d2ZDDK8C/NNrpthLCw92XwgLFaaklQI/RvCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PltcxDVx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=km+sAqCtAv8si5MomxS213nXKpKqpfi8SKvAmcSY98U8KdgYOrGcJGV/So6ZjvXPBLdwYKy45lYkONjUfDhZdCBWlMUl4EgXrQynngTVxiFzPnR/z0EShJZ+ADKT73SZ97NiGJTmagizYm3xclEs3RPPiprJ1OvlSBPMPakPnfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKnjLvUN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PltcxDVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B767AC4CEF0;
-	Tue, 12 Aug 2025 19:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKnjLvUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AF2C4CEF7;
+	Tue, 12 Aug 2025 19:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025295;
-	bh=JQvlHGTMaSaEnkW5xW84NAYooASxOoKim2/FS1Y1mKk=;
+	s=korg; t=1755025298;
+	bh=8D58WCDbPZKHv1mBOILaA+TF3UBArd7ThEjzqVvo5Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PltcxDVxdKcPspFeHd+pRW4KC+ZpC3ILtBFGei1GHsPmC3/M9RMvsR7FPKZx7R7SP
-	 V2srpIrFYmRCGrnldygImw/UHNSJEglyMOQBq2PTj60pgiRgMMHPLUYVQuopW41Snw
-	 K89kVjyVa4y137OJ/x1vxTNLwUSeMLtdHBMkEcZc=
+	b=qKnjLvUNbuGSb1TMUPCWL8UCEENdoXQc9gYrd1auKEP5+OnXnr4eWeD2UIVuq7xbF
+	 zoxdACbstms99OivizxZXJDFoIfmZ0K+XvyTrcQvJ2bPAGMX9zbIHt2AZ5xNiS1Xh6
+	 cHTjTkyBEF+BUj4ATUcjDNgz+DndBDKjSzIjCfSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.16 626/627] wifi: ath12k: install pairwise key first
-Date: Tue, 12 Aug 2025 19:35:21 +0200
-Message-ID: <20250812173455.695186756@linuxfoundation.org>
+	Suren Baghdasaryan <surenb@google.com>,
+	Jann Horn <jannh@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 627/627] mm: fix a UAF when vma->mm is freed after vma->vm_refcnt got dropped
+Date: Tue, 12 Aug 2025 19:35:22 +0200
+Message-ID: <20250812173455.732520503@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,172 +54,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Suren Baghdasaryan <surenb@google.com>
 
-commit 66e865f9dc78d00e6d1c8c6624cb0c9004e5aafb upstream.
+commit 9bbffee67ffd16360179327b57f3b1245579ef08 upstream.
 
-As station, WCN7850 firmware requires pairwise key to be installed before
-group key. Currently host does not care about this, so it is up to kernel
-or userspace to decide which one will be installed first. In case above
-requirement is not met, WCN7850 firmware's EAPOL station machine is messed
-up, and finally connection fails [1].
+By inducing delays in the right places, Jann Horn created a reproducer for
+a hard to hit UAF issue that became possible after VMAs were allowed to be
+recycled by adding SLAB_TYPESAFE_BY_RCU to their cache.
 
-Reorder key install for station interface in that case: this is done by
-caching group key first; Later when pairwise key arrives, both can be
-installed in required order.
+Race description is borrowed from Jann's discovery report:
+lock_vma_under_rcu() looks up a VMA locklessly with mas_walk() under
+rcu_read_lock().  At that point, the VMA may be concurrently freed, and it
+can be recycled by another process.  vma_start_read() then increments the
+vma->vm_refcnt (if it is in an acceptable range), and if this succeeds,
+vma_start_read() can return a recycled VMA.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00217-QCAHKSWPL_SILICONZ-1
+In this scenario where the VMA has been recycled, lock_vma_under_rcu()
+will then detect the mismatching ->vm_mm pointer and drop the VMA through
+vma_end_read(), which calls vma_refcount_put().  vma_refcount_put() drops
+the refcount and then calls rcuwait_wake_up() using a copy of vma->vm_mm.
+This is wrong: It implicitly assumes that the caller is keeping the VMA's
+mm alive, but in this scenario the caller has no relation to the VMA's mm,
+so the rcuwait_wake_up() can cause UAF.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218733
-Link: https://lore.kernel.org/all/AS8P190MB12051DDBD84CD88E71C40AD7873F2@AS8P190MB1205.EURP190.PROD.OUTLOOK.COM # [1]
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250523-ath12k-unicast-key-first-v1-2-f53c3880e6d8@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+The diagram depicting the race:
+T1         T2         T3
+==         ==         ==
+lock_vma_under_rcu
+  mas_walk
+          <VMA gets removed from mm>
+                      mmap
+                        <the same VMA is reallocated>
+  vma_start_read
+    __refcount_inc_not_zero_limited_acquire
+                      munmap
+                        __vma_enter_locked
+                          refcount_add_not_zero
+  vma_end_read
+    vma_refcount_put
+      __refcount_dec_and_test
+                          rcuwait_wait_event
+                            <finish operation>
+      rcuwait_wake_up [UAF]
+
+Note that rcuwait_wait_event() in T3 does not block because refcount was
+already dropped by T1.  At this point T3 can exit and free the mm causing
+UAF in T1.
+
+To avoid this we move vma->vm_mm verification into vma_start_read() and
+grab vma->vm_mm to stabilize it before vma_refcount_put() operation.
+
+[surenb@google.com: v3]
+  Link: https://lkml.kernel.org/r/20250729145709.2731370-1-surenb@google.com
+Link: https://lkml.kernel.org/r/20250728175355.2282375-1-surenb@google.com
+Fixes: 3104138517fc ("mm: make vma cache SLAB_TYPESAFE_BY_RCU")
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Reported-by: Jann Horn <jannh@google.com>
+Closes: https://lore.kernel.org/all/CAG48ez0-deFbVH=E3jbkWx=X3uVbd8nWeo6kbJPQ0KoUD+m2tA@mail.gmail.com/
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/core.h |    4 +
- drivers/net/wireless/ath/ath12k/mac.c  |   76 +++++++++++++++++++++++++++++----
- drivers/net/wireless/ath/ath12k/wmi.h  |    1 
- 3 files changed, 74 insertions(+), 7 deletions(-)
+ include/linux/mmap_lock.h |   30 ++++++++++++++++++++++++++++++
+ mm/mmap_lock.c            |    3 +--
+ 2 files changed, 31 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath12k/core.h
-+++ b/drivers/net/wireless/ath/ath12k/core.h
-@@ -345,6 +345,10 @@ struct ath12k_link_vif {
- 	bool is_sta_assoc_link;
+--- a/include/linux/mmap_lock.h
++++ b/include/linux/mmap_lock.h
+@@ -12,6 +12,7 @@ extern int rcuwait_wake_up(struct rcuwai
+ #include <linux/tracepoint-defs.h>
+ #include <linux/types.h>
+ #include <linux/cleanup.h>
++#include <linux/sched/mm.h>
  
- 	struct ath12k_reg_tpc_power_info reg_tpc_info;
-+
-+	bool group_key_valid;
-+	struct wmi_vdev_install_key_arg group_key;
-+	bool pairwise_key_done;
- };
- 
- struct ath12k_vif {
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -4723,14 +4723,13 @@ static int ath12k_install_key(struct ath
- 		.key_len = key->keylen,
- 		.key_data = key->key,
- 		.key_flags = flags,
-+		.ieee80211_key_cipher = key->cipher,
- 		.macaddr = macaddr,
- 	};
- 	struct ath12k_vif *ahvif = arvif->ahvif;
- 
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
- 
--	reinit_completion(&ar->install_key_done);
--
- 	if (test_bit(ATH12K_FLAG_HW_CRYPTO_DISABLED, &ar->ab->dev_flags))
- 		return 0;
- 
-@@ -4739,7 +4738,7 @@ static int ath12k_install_key(struct ath
- 		/* arg.key_cipher = WMI_CIPHER_NONE; */
- 		arg.key_len = 0;
- 		arg.key_data = NULL;
--		goto install;
-+		goto check_order;
+ #define MMAP_LOCK_INITIALIZER(name) \
+ 	.mmap_lock = __RWSEM_INITIALIZER((name).mmap_lock),
+@@ -154,6 +155,10 @@ static inline void vma_refcount_put(stru
+  * reused and attached to a different mm before we lock it.
+  * Returns the vma on success, NULL on failure to lock and EAGAIN if vma got
+  * detached.
++ *
++ * WARNING! The vma passed to this function cannot be used if the function
++ * fails to lock it because in certain cases RCU lock is dropped and then
++ * reacquired. Once RCU lock is dropped the vma can be concurently freed.
+  */
+ static inline struct vm_area_struct *vma_start_read(struct mm_struct *mm,
+ 						    struct vm_area_struct *vma)
+@@ -183,6 +188,31 @@ static inline struct vm_area_struct *vma
  	}
  
- 	switch (key->cipher) {
-@@ -4767,19 +4766,82 @@ static int ath12k_install_key(struct ath
- 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV |
- 			      IEEE80211_KEY_FLAG_RESERVE_TAILROOM;
- 
-+check_order:
-+	if (ahvif->vdev_type == WMI_VDEV_TYPE_STA &&
-+	    arg.key_flags == WMI_KEY_GROUP) {
-+		if (cmd == SET_KEY) {
-+			if (arvif->pairwise_key_done) {
-+				ath12k_dbg(ar->ab, ATH12K_DBG_MAC,
-+					   "vdev %u pairwise key done, go install group key\n",
-+					   arg.vdev_id);
-+				goto install;
-+			} else {
-+				/* WCN7850 firmware requires pairwise key to be installed
-+				 * before group key. In case group key comes first, cache
-+				 * it and return. Will revisit it once pairwise key gets
-+				 * installed.
-+				 */
-+				arvif->group_key = arg;
-+				arvif->group_key_valid = true;
-+				ath12k_dbg(ar->ab, ATH12K_DBG_MAC,
-+					   "vdev %u group key before pairwise key, cache and skip\n",
-+					   arg.vdev_id);
+ 	rwsem_acquire_read(&vma->vmlock_dep_map, 0, 1, _RET_IP_);
 +
-+				ret = 0;
-+				goto out;
-+			}
-+		} else {
-+			arvif->group_key_valid = false;
-+		}
-+	}
++	/*
++	 * If vma got attached to another mm from under us, that mm is not
++	 * stable and can be freed in the narrow window after vma->vm_refcnt
++	 * is dropped and before rcuwait_wake_up(mm) is called. Grab it before
++	 * releasing vma->vm_refcnt.
++	 */
++	if (unlikely(vma->vm_mm != mm)) {
++		/* Use a copy of vm_mm in case vma is freed after we drop vm_refcnt */
++		struct mm_struct *other_mm = vma->vm_mm;
 +
- install:
--	ret = ath12k_wmi_vdev_install_key(arvif->ar, &arg);
-+	reinit_completion(&ar->install_key_done);
- 
-+	ret = ath12k_wmi_vdev_install_key(arvif->ar, &arg);
- 	if (ret)
- 		return ret;
- 
- 	if (!wait_for_completion_timeout(&ar->install_key_done, 1 * HZ))
- 		return -ETIMEDOUT;
- 
--	if (ether_addr_equal(macaddr, arvif->bssid))
--		ahvif->key_cipher = key->cipher;
-+	if (ether_addr_equal(arg.macaddr, arvif->bssid))
-+		ahvif->key_cipher = arg.ieee80211_key_cipher;
-+
-+	if (ar->install_key_status) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
-+	if (ahvif->vdev_type == WMI_VDEV_TYPE_STA &&
-+	    arg.key_flags == WMI_KEY_PAIRWISE) {
-+		if (cmd == SET_KEY) {
-+			arvif->pairwise_key_done = true;
-+			if (arvif->group_key_valid) {
-+				/* Install cached GTK */
-+				arvif->group_key_valid = false;
-+				arg = arvif->group_key;
-+				ath12k_dbg(ar->ab, ATH12K_DBG_MAC,
-+					   "vdev %u pairwise key done, group key ready, go install\n",
-+					   arg.vdev_id);
-+				goto install;
-+			}
-+		} else {
-+			arvif->pairwise_key_done = false;
-+		}
-+	}
-+
-+out:
-+	if (ret) {
-+		/* In case of failure userspace may not do DISABLE_KEY
-+		 * but triggers re-connection directly, so manually reset
-+		 * status here.
++		/*
++		 * __mmdrop() is a heavy operation and we don't need RCU
++		 * protection here. Release RCU lock during these operations.
++		 * We reinstate the RCU read lock as the caller expects it to
++		 * be held when this function returns even on error.
 +		 */
-+		arvif->group_key_valid = false;
-+		arvif->pairwise_key_done = false;
++		rcu_read_unlock();
++		mmgrab(other_mm);
++		vma_refcount_put(vma);
++		mmdrop(other_mm);
++		rcu_read_lock();
++		return NULL;
 +	}
++
+ 	/*
+ 	 * Overflow of vm_lock_seq/mm_lock_seq might produce false locked result.
+ 	 * False unlocked result is impossible because we modify and check
+--- a/mm/mmap_lock.c
++++ b/mm/mmap_lock.c
+@@ -164,8 +164,7 @@ retry:
+ 	 */
  
--	return ar->install_key_status ? -EINVAL : 0;
-+	return ret;
- }
+ 	/* Check if the vma we locked is the right one. */
+-	if (unlikely(vma->vm_mm != mm ||
+-		     address < vma->vm_start || address >= vma->vm_end))
++	if (unlikely(address < vma->vm_start || address >= vma->vm_end))
+ 		goto inval_end_read;
  
- static int ath12k_clear_peer_keys(struct ath12k_link_vif *arvif,
---- a/drivers/net/wireless/ath/ath12k/wmi.h
-+++ b/drivers/net/wireless/ath/ath12k/wmi.h
-@@ -3760,6 +3760,7 @@ struct wmi_vdev_install_key_arg {
- 	u32 key_idx;
- 	u32 key_flags;
- 	u32 key_cipher;
-+	u32 ieee80211_key_cipher;
- 	u32 key_len;
- 	u32 key_txmic_len;
- 	u32 key_rxmic_len;
+ 	rcu_read_unlock();
 
 
