@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51202FD1C1;
-	Tue, 12 Aug 2025 18:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4542F83A1;
+	Tue, 12 Aug 2025 18:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022484; cv=none; b=mycFNSfOEiMDrM7l9JvLweesH098f6xiWhBx1QI1R/WWYWtW5HjI4+0W1YYi+q5QELeqEdkP74dEUonbmp0ABVLuew2A/bWzJLa1SCB4shwF4HFj+Yh80g+lJ0wIyKe8qQ5esyxbJxOTUGa7RYNkLZ9UkGxVq464byMgbDnJuxY=
+	t=1755022487; cv=none; b=rKIWbLmPDKf3G+tiDdu8HgT54JgtHCQnh1Enjc17KV6jKxkwxZLjvavL36Lcct0z5mGKTzcHQ7vBUGtAClO56lV2OPdzG0nHJwjRxxSrcLTlcfB6i11IvX9IX0UYxHYv4fcqgUdMekPVgn4miyYvukuPUT/F/oLJX2dEtAWO5mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022484; c=relaxed/simple;
-	bh=oZkPh6r5ZA26CGJ9xJ8mypiZeOddzf+YYun5YdEeW4o=;
+	s=arc-20240116; t=1755022487; c=relaxed/simple;
+	bh=+3O9hbRdMVzSrZzsiQA32qZgYTshSB6Mw8b3tWh4fbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvOjzw1PKR3Bb4nNQjOpG0KwTzZcz+bnHm0hZK4MwoXjUrCsg8ptgWfWzugsTBBBti6LbDpYYYUKEqFgz9DRHPULFCz7aFqhYlLsP7YVOhqt63QrWvu6uD7sVI8D54zaeAUn5ONGFZYNRl2cYuSKPeZk3dv/HNjNjSQYCU/tDys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khcLJ7Bu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=moysERZjQ0HYfJlLR+0I62Gf3dbdhEF+p/UPZg6wJ5i9qlT+ne3ka4KcmUVyNIm2xw8SZHq8JOn9znMOGX19rZbQq/gMN0p+5aOF0HPUqCxIPeoeGlzfKZuRg3dkWxg78+/TcWFXnSwTtwWnfa7JPvqwsczcpciDc3i5Ljj9BLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJjTQPNH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khcLJ7Bu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A3AC4CEF0;
-	Tue, 12 Aug 2025 18:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJjTQPNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783CBC4CEF0;
+	Tue, 12 Aug 2025 18:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022483;
-	bh=oZkPh6r5ZA26CGJ9xJ8mypiZeOddzf+YYun5YdEeW4o=;
+	s=korg; t=1755022487;
+	bh=+3O9hbRdMVzSrZzsiQA32qZgYTshSB6Mw8b3tWh4fbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khcLJ7BuzQsFkCaRT2iCqfmQIN1LMxjE4apkGEazhyWkAa3Z7v75IQ2wXYQ5/dsMW
-	 5Ly/MVpveWvARQ624uDuXp9JrKobam00j1RD0ZYvAZ8oHpG+LkTOcs2LvVuDZSl5tt
-	 zrz//ZvDbbyaRI/ZAAJJwZx7c8dq5o5ArM9uYVSQ=
+	b=DJjTQPNHimwlo8iBIa768faEBCZTMDroos7TGa1iey8msc+qjiC7Dbo0owUBrD6AO
+	 jHS5SXofTSFCCyB1u/1FJFhVV+8GONdABvmO2IAcQDy9ICs/CpNNDWntugKcYUlzAX
+	 SKI0gMBFJ/LJL/tHhuIzr6nV670KOIdJgpmdxm3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 167/369] PCI: endpoint: pci-epf-vntb: Return -ENOENT if pci_epc_get_next_free_bar() fails
-Date: Tue, 12 Aug 2025 19:27:44 +0200
-Message-ID: <20250812173021.052727821@linuxfoundation.org>
+Subject: [PATCH 6.12 168/369] pinctrl: sunxi: Fix memory leak on krealloc failure
+Date: Tue, 12 Aug 2025 19:27:45 +0200
+Message-ID: <20250812173021.088500797@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,40 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 7ea488cce73263231662e426639dd3e836537068 ]
+[ Upstream commit e3507c56cbb208d4f160942748c527ef6a528ba1 ]
 
-According the function documentation of epf_ntb_init_epc_bar(), the
-function should return an error code on error. However, it returns -1 when
-no BAR is available i.e., when pci_epc_get_next_free_bar() fails.
+In sunxi_pctrl_dt_node_to_map(), when krealloc() fails to resize
+the pinctrl_map array, the function returns -ENOMEM directly
+without freeing the previously allocated *map buffer. This results
+in a memory leak of the original kmalloc_array allocation.
 
-Return -ENOENT instead.
-
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-[mani: changed err code to -ENOENT]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250603-pci-vntb-bar-mapping-v2-1-fc685a22ad28@baylibre.com
+Fixes: e11dee2e98f8 ("pinctrl: sunxi: Deal with configless pins")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Link: https://lore.kernel.org/20250620012708.16709-1-chenyuan_fl@163.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/sunxi/pinctrl-sunxi.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 874cb097b093..3cddfdd04029 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -700,7 +700,7 @@ static int epf_ntb_init_epc_bar(struct epf_ntb *ntb)
- 		barno = pci_epc_get_next_free_bar(epc_features, barno);
- 		if (barno < 0) {
- 			dev_err(dev, "Fail to get NTB function BAR\n");
--			return barno;
-+			return -ENOENT;
- 		}
- 		ntb->epf_ntb_bar[bar] = barno;
- 	}
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+index bde67ee31417..8fbbdcc52deb 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+@@ -395,6 +395,7 @@ static int sunxi_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	const char *function, *pin_prop;
+ 	const char *group;
+ 	int ret, npins, nmaps, configlen = 0, i = 0;
++	struct pinctrl_map *new_map;
+ 
+ 	*map = NULL;
+ 	*num_maps = 0;
+@@ -469,9 +470,13 @@ static int sunxi_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	 * We know have the number of maps we need, we can resize our
+ 	 * map array
+ 	 */
+-	*map = krealloc(*map, i * sizeof(struct pinctrl_map), GFP_KERNEL);
+-	if (!*map)
+-		return -ENOMEM;
++	new_map = krealloc(*map, i * sizeof(struct pinctrl_map), GFP_KERNEL);
++	if (!new_map) {
++		ret = -ENOMEM;
++		goto err_free_map;
++	}
++
++	*map = new_map;
+ 
+ 	return 0;
+ 
 -- 
 2.39.5
 
