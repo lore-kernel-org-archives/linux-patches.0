@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE850260583;
-	Tue, 12 Aug 2025 19:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D87285043;
+	Tue, 12 Aug 2025 19:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025850; cv=none; b=AexjXNTw3rxyYLJQHJAAiBS4aG9JUJrFZDzlVXVmfazPtc8GXjyy1bwpnpOngJn8TDEXD+KNgSV/lLiSH8REJkNgzODaSP7sNcrwAQklnatSIrTud6J0uTwXpxoyPzPGTiZaYtuM4vfpKy75A8UIEayNAPnGXHpmOI5/YBSYqT4=
+	t=1755025853; cv=none; b=pkyn2KVXhIWuOMP2N7mL4pRejQWd8kzDM73NcWB/Bt4ZuOuXyi4PHcUB8TPHDwVqYdXzcaOWx4wT3ATwJXLFfcf8AC8JVWFj9pXSszAkd4wKDrMQK7NS3JweTjSCi00bxR1nBN+4JwhBbvHX3ECKeCsNJnHNWsi/dn0QxPVHMH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025850; c=relaxed/simple;
-	bh=eFfzTzA/akrf9OXLq7TIopWSxpdlNnrL36dK6QrqvGY=;
+	s=arc-20240116; t=1755025853; c=relaxed/simple;
+	bh=lTSZbnAtR/RWA/8vLZdW5nc5nGsuHeAovwGhxX0R+pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJyyGpVviyaiWLyrvsnT/L7DBn72L6uIhpnmSk5X5g1Zs5qIjcgtq0mDKMNAAFDFWKyVqlplDGQrMvFtHiSuXScvvdMazWCngWB76qccw6CS3ZEc2F9aP0O7C1DYy0WSr+dvUX8oOpPqqFI9gR7ZvunPVzZcFxydqRr0X9FApFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHKa1KPU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bStn4g5nKjm+RTF81ydQQ3qtjyljWFmXCEBPmncxZ0A+WnBQ/oMUAvhd7JHuo5n3V15Qf2AjBOobhqWKkuTOflH0WHQZJw5sOG7iKcEAqACND09ddIFnsxoYdd26WBBsE2iajzQphu1zTDztg4eCVUje7LOXSbwAAAeToTpEaVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeZ0ouod; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHKa1KPU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B528C4CEF0;
-	Tue, 12 Aug 2025 19:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeZ0ouod"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30783C4CEF0;
+	Tue, 12 Aug 2025 19:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025850;
-	bh=eFfzTzA/akrf9OXLq7TIopWSxpdlNnrL36dK6QrqvGY=;
+	s=korg; t=1755025853;
+	bh=lTSZbnAtR/RWA/8vLZdW5nc5nGsuHeAovwGhxX0R+pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHKa1KPUPq8epsX8BtiL4teidZ4XsysBypddq105EuCBp4zsFMxHXWigASf1DEwV0
-	 taxq2xciaENZGFIpkJ0ZwwvB8PKcXh7yIgC5+3K3zkh5xTB8XfP6OQNj2E/o621fYd
-	 g6bqqDpKkY8AIpeJhx35iuCUlr8dBAjzcvKqnxZc=
+	b=IeZ0ouodezBKFgCpGuL6etL+6P0HKYgvTQdC0h1uJbgRv1TxosMJn2GBIZSVr8q6W
+	 UoN03sG6MAJe9HgOOMWoioVgieuYGgXTOCdhm0fx39SGw8FJku6N5zWzyxXqzHKp00
+	 kPAn2hOB2j8D+EfnfYI0dKWzDQtdx8wSjVt6Ka8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaistra <martin.kaistra@linutronix.de>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 163/480] wifi: rtl8xxxu: Fix RX skb size for aggregation disabled
-Date: Tue, 12 Aug 2025 19:46:11 +0200
-Message-ID: <20250812174404.246274264@linuxfoundation.org>
+Subject: [PATCH 6.15 164/480] wifi: rtw88: Fix macid assigned to TDLS station
+Date: Tue, 12 Aug 2025 19:46:12 +0200
+Message-ID: <20250812174404.289781714@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,43 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaistra <martin.kaistra@linutronix.de>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit d76a1abcf57734d2bcd4a7ec051617edd4513d7f ]
+[ Upstream commit 526b000991b557c40ea53e64ba24bb9e0fff0071 ]
 
-Commit 1e5b3b3fe9e0 ("rtl8xxxu: Adjust RX skb size to include space for
-phystats") increased the skb size when aggregation is enabled but decreased
-it for the aggregation disabled case.
+When working in station mode, TDLS peers are assigned macid 0, even
+though 0 was already assigned to the AP. This causes the connection
+with the AP to stop working after the TDLS connection is torn down.
 
-As a result, if a frame near the maximum size is received,
-rtl8xxxu_rx_complete() is called with status -EOVERFLOW and then the
-driver starts to malfunction and no further communication is possible.
+Assign the next available macid to TDLS peers, same as client stations
+in AP mode.
 
-Restore the skb size in the aggregation disabled case.
-
-Fixes: 1e5b3b3fe9e0 ("rtl8xxxu: Adjust RX skb size to include space for phystats")
-Signed-off-by: Martin Kaistra <martin.kaistra@linutronix.de>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Fixes: 902cb7b11f9a ("wifi: rtw88: assign mac_id for vif/sta and update to TX desc")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250709121522.1992366-1-martin.kaistra@linutronix.de
+Link: https://patch.msgid.link/58648c09-8553-4bcc-a977-9dc9afd63780@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-index 569856ca677f..c6f69d87c38d 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -6617,7 +6617,7 @@ static int rtl8xxxu_submit_rx_urb(struct rtl8xxxu_priv *priv,
- 		skb_size = fops->rx_agg_buf_size;
- 		skb_size += (rx_desc_sz + sizeof(struct rtl8723au_phy_stats));
- 	} else {
--		skb_size = IEEE80211_MAX_FRAME_LEN;
-+		skb_size = IEEE80211_MAX_FRAME_LEN + rx_desc_sz;
- 	}
+diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
+index bc2c1a5a30b3..c589727c525e 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -349,7 +349,7 @@ int rtw_sta_add(struct rtw_dev *rtwdev, struct ieee80211_sta *sta,
+ 	struct rtw_vif *rtwvif = (struct rtw_vif *)vif->drv_priv;
+ 	int i;
  
- 	skb = __netdev_alloc_skb(NULL, skb_size, GFP_KERNEL);
+-	if (vif->type == NL80211_IFTYPE_STATION) {
++	if (vif->type == NL80211_IFTYPE_STATION && !sta->tdls) {
+ 		si->mac_id = rtwvif->mac_id;
+ 	} else {
+ 		si->mac_id = rtw_acquire_macid(rtwdev);
+@@ -386,7 +386,7 @@ void rtw_sta_remove(struct rtw_dev *rtwdev, struct ieee80211_sta *sta,
+ 
+ 	cancel_work_sync(&si->rc_work);
+ 
+-	if (vif->type != NL80211_IFTYPE_STATION)
++	if (vif->type != NL80211_IFTYPE_STATION || sta->tdls)
+ 		rtw_release_macid(rtwdev, si->mac_id);
+ 	if (fw_exist)
+ 		rtw_fw_media_status_report(rtwdev, si->mac_id, false);
 -- 
 2.39.5
 
