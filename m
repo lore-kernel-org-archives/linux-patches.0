@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFF33D994;
-	Tue, 12 Aug 2025 19:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2306D3D994;
+	Tue, 12 Aug 2025 19:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026498; cv=none; b=oaKF+E9gYOM4gP0qtWY7dKnMR2s/MlNa5S5gwnDHdEIUPwzxcdVYpsj/XqVQtsSCGcp//+HjwH1Wfh7z/pgScH77qNlXudkxeNrNGDOrOj2Bdk/i2J7xf6bhzXVeS+cxUAZXn+tj7EogrMCPy1TKY96vxQVi7zHFP5opCOeXaUs=
+	t=1755026502; cv=none; b=tsim7LOfC1NZ1USFeLI/OLx6ulzVLPexhP/WTx4+p2xpuk1EV/clxOvT4Yo9Em1OJtE9/28mQL0kHl+0D2jzfAFNiCOnHkwzr4tXlN/H5iqZReVUIFftNgxZXpWC7DgX+fPda5X3Ve10aBWKK0RPdZxJzenb7QM4FcXHkKAke9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026498; c=relaxed/simple;
-	bh=laqwzQhNzDUvkmz1/Ms+tA4BVXIqJFkGbTchTMk5bPw=;
+	s=arc-20240116; t=1755026502; c=relaxed/simple;
+	bh=RkIiUUl79PpeJPHy7tVw+ngNfxcXRzg/EwSgx1nZ7i0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZU5NjI7boIWsvzH5f8J6uXu4LIpFh0x0jkaNo7+U50XlsoJ/zt5S9cq2X0PY1tPnMaophdSjusPZ3q9b/AfA9aFUlOaeNVrHquub+ovMeaqwmYLgAwDxg2oZsu7dtTlfPatWIoZvaDdXBVzVuVUBmOkEDs0mQIKIMa9bdbgCNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hq2gqgQ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOrjRV1dNBUlRbf8CqkkpXopCNKH1oHls3MsyZLsYUKSaOi0h9xv3NSJ2Dggbbt5RJEbNYweHWFEWAAB2Ftx8QO87C65+2KFM1wX9FaGN0PFziwY+ShbAmvE13fEHWeK7WInC9a0KqTZuqz/Cnv15l9/vQgnoZL4IIt1OqAn3Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EuHEb3lM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hq2gqgQ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28144C4CEF0;
-	Tue, 12 Aug 2025 19:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuHEb3lM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87191C4CEF0;
+	Tue, 12 Aug 2025 19:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026498;
-	bh=laqwzQhNzDUvkmz1/Ms+tA4BVXIqJFkGbTchTMk5bPw=;
+	s=korg; t=1755026502;
+	bh=RkIiUUl79PpeJPHy7tVw+ngNfxcXRzg/EwSgx1nZ7i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hq2gqgQ45iQ19QEBhz7HSQEeWMhivEKZ08U9pa3v5mgDTH6imv4+biLgn9i1GyWQN
-	 KRxk5OpH3zulXam85HhspF30S6UdNu4k5C/naSYcgYPQ45xm4UNXxJh6F5M2mNkg6i
-	 nsCEpWfkL6/GPlwpYdKfBYMqd+NdrCjP0GyNaX/Q=
+	b=EuHEb3lMbmUCvQ5aKV0PjGCrJ3bhEklDAnlisLh/u2mvvF1Ld7rgLmpW/eV4Y9fXz
+	 Gc3vwfhsu80zGCfh/5zwmbKtYQmmOZbs0cXu15Zr/LWACYp0yKW5txF2SHxvqIj+LM
+	 sHRwEfgN2LwLgjlnkYrhuAaqpteiuZ/pe+jzKV50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jan Prusakowski <jprusakowski@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 355/480] f2fs: fix to avoid out-of-boundary access in devs.path
-Date: Tue, 12 Aug 2025 19:49:23 +0200
-Message-ID: <20250812174412.077666896@linuxfoundation.org>
+Subject: [PATCH 6.15 356/480] f2fs: vm_unmap_ram() may be called from an invalid context
+Date: Tue, 12 Aug 2025 19:49:24 +0200
+Message-ID: <20250812174412.119279133@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,58 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Jan Prusakowski <jprusakowski@google.com>
 
-[ Upstream commit 5661998536af52848cc4d52a377e90368196edea ]
+[ Upstream commit 08a7efc5b02a0620ae16aa9584060e980a69cb55 ]
 
-- touch /mnt/f2fs/012345678901234567890123456789012345678901234567890123
-- truncate -s $((1024*1024*1024)) \
-  /mnt/f2fs/012345678901234567890123456789012345678901234567890123
-- touch /mnt/f2fs/file
-- truncate -s $((1024*1024*1024)) /mnt/f2fs/file
-- mkfs.f2fs /mnt/f2fs/012345678901234567890123456789012345678901234567890123 \
-  -c /mnt/f2fs/file
-- mount /mnt/f2fs/012345678901234567890123456789012345678901234567890123 \
-  /mnt/f2fs/loop
+When testing F2FS with xfstests using UFS backed virtual disks the
+kernel complains sometimes that f2fs_release_decomp_mem() calls
+vm_unmap_ram() from an invalid context. Example trace from
+f2fs/007 test:
 
-[16937.192225] F2FS-fs (loop0): Mount Device [ 0]: /mnt/f2fs/012345678901234567890123456789012345678901234567890123\xff\x01,      511,        0 -    3ffff
-[16937.192268] F2FS-fs (loop0): Failed to find devices
+f2fs/007 5s ...  [12:59:38][    8.902525] run fstests f2fs/007
+[   11.468026] BUG: sleeping function called from invalid context at mm/vmalloc.c:2978
+[   11.471849] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 68, name: irq/22-ufshcd
+[   11.475357] preempt_count: 1, expected: 0
+[   11.476970] RCU nest depth: 0, expected: 0
+[   11.478531] CPU: 0 UID: 0 PID: 68 Comm: irq/22-ufshcd Tainted: G        W           6.16.0-rc5-xfstests-ufs-g40f92e79b0aa #9 PREEMPT(none)
+[   11.478535] Tainted: [W]=WARN
+[   11.478536] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   11.478537] Call Trace:
+[   11.478543]  <TASK>
+[   11.478545]  dump_stack_lvl+0x4e/0x70
+[   11.478554]  __might_resched.cold+0xaf/0xbe
+[   11.478557]  vm_unmap_ram+0x21/0xb0
+[   11.478560]  f2fs_release_decomp_mem+0x59/0x80
+[   11.478563]  f2fs_free_dic+0x18/0x1a0
+[   11.478565]  f2fs_finish_read_bio+0xd7/0x290
+[   11.478570]  blk_update_request+0xec/0x3b0
+[   11.478574]  ? sbitmap_queue_clear+0x3b/0x60
+[   11.478576]  scsi_end_request+0x27/0x1a0
+[   11.478582]  scsi_io_completion+0x40/0x300
+[   11.478583]  ufshcd_mcq_poll_cqe_lock+0xa3/0xe0
+[   11.478588]  ufshcd_sl_intr+0x194/0x1f0
+[   11.478592]  ufshcd_threaded_intr+0x68/0xb0
+[   11.478594]  ? __pfx_irq_thread_fn+0x10/0x10
+[   11.478599]  irq_thread_fn+0x20/0x60
+[   11.478602]  ? __pfx_irq_thread_fn+0x10/0x10
+[   11.478603]  irq_thread+0xb9/0x180
+[   11.478605]  ? __pfx_irq_thread_dtor+0x10/0x10
+[   11.478607]  ? __pfx_irq_thread+0x10/0x10
+[   11.478609]  kthread+0x10a/0x230
+[   11.478614]  ? __pfx_kthread+0x10/0x10
+[   11.478615]  ret_from_fork+0x7e/0xd0
+[   11.478619]  ? __pfx_kthread+0x10/0x10
+[   11.478621]  ret_from_fork_asm+0x1a/0x30
+[   11.478623]  </TASK>
 
-If device path length equals to MAX_PATH_LEN, sbi->devs.path[] may
-not end up w/ null character due to path array is fully filled, So
-accidently, fields locate after path[] may be treated as part of
-device path, result in parsing wrong device path.
+This patch modifies in_task() check inside f2fs_read_end_io() to also
+check if interrupts are disabled. This ensures that pages are unmapped
+asynchronously in an interrupt handler.
 
-struct f2fs_dev_info {
-...
-	char path[MAX_PATH_LEN];
-...
-};
-
-Let's add one byte space for sbi->devs.path[] to store null
-character of device path string.
-
-Fixes: 3c62be17d4f5 ("f2fs: support multiple devices")
-Signed-off-by: Chao Yu <chao@kernel.org>
+Fixes: bff139b49d9f ("f2fs: handle decompress only post processing in softirq")
+Signed-off-by: Jan Prusakowski <jprusakowski@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h | 2 +-
+ fs/f2fs/data.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 34e4ae2a5f5b..8a8d15c219dc 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1273,7 +1273,7 @@ struct f2fs_bio_info {
- struct f2fs_dev_info {
- 	struct file *bdev_file;
- 	struct block_device *bdev;
--	char path[MAX_PATH_LEN];
-+	char path[MAX_PATH_LEN + 1];
- 	unsigned int total_segments;
- 	block_t start_blk;
- 	block_t end_blk;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index b0b8748ae287..84d45e58a5ff 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -282,7 +282,7 @@ static void f2fs_read_end_io(struct bio *bio)
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_P_SB(bio_first_page_all(bio));
+ 	struct bio_post_read_ctx *ctx;
+-	bool intask = in_task();
++	bool intask = in_task() && !irqs_disabled();
+ 
+ 	iostat_update_and_unbind_ctx(bio);
+ 	ctx = bio->bi_private;
 -- 
 2.39.5
 
