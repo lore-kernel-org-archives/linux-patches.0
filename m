@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA91086331;
-	Tue, 12 Aug 2025 17:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211E42FDC32;
+	Tue, 12 Aug 2025 17:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020626; cv=none; b=RZeDUhG9IsUbnrexN3QKESEuqs0G4vAwzH1xwOX8f5lXEY+ajzgyiL71L1/Fh/YRke4nwKu9d2hda+TK8xjfGUDvVDIyZDdHwZZ2YsQE/6XwppdvO2vmMP5Q6nYnU0rZ0kE3yaZWO7io9Xg71dwRkPIstGbq7NlSCa9o4heiPww=
+	t=1755020630; cv=none; b=sxuB0Exh8uRZWa9YamapROiTwiN7BaurxO16D1U/VT3sUXQ3j/heBBIsVd+MAHB0W1xQdYVrxhrlOedsefF+u8m+7A3xwg/PqBbs9cpusowhk4iKFfTTBCGTy19yS9T2Apr90RO1noDRrU3mcE1fcHXBBozk6LRIQqvUeFvUrOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020626; c=relaxed/simple;
-	bh=jlGf7HlTcoWH/isAKP5gLp3CJOTUcXSFI8XEB1d6hDA=;
+	s=arc-20240116; t=1755020630; c=relaxed/simple;
+	bh=vMsiozkvRUDcrDYGFg++QOHgUpZ9c92Pz2dByYNMzhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6NfQwE2/MhwnVQCB0jnIU4LYcXWzFMdu/x6aKcAugQv1YdvL2ZIOz5u065ggek12CJPsVABERUaQ3hatVFUKbAvd9g9kHnrNa1sJmFG1VycdCDBOFVreViIzFivScwHzrn8pGZRgbzLXGaA+2BdpWfVvR9OrZzTgkzhoYoM+hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0cxRhbE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QosXWRHFeBvsOc1lKRpzwlbE09bqXwqjbNZ/ATeFEFdn/IRdAkI2Vn1yb7snnblv6h5aVhsT0GyBQc9lJUmyBBljQMr5qLQtVfaR7nPcDa8JxCIB4W9dE+eSuNqBdcYjuvR6WKRorYjmegLpoCK/fKF3zAP4+Mz3j4Icr0Gt01I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxiTGDp0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0cxRhbE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2761FC4CEF0;
-	Tue, 12 Aug 2025 17:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxiTGDp0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AAAC4CEF0;
+	Tue, 12 Aug 2025 17:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020626;
-	bh=jlGf7HlTcoWH/isAKP5gLp3CJOTUcXSFI8XEB1d6hDA=;
+	s=korg; t=1755020630;
+	bh=vMsiozkvRUDcrDYGFg++QOHgUpZ9c92Pz2dByYNMzhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0cxRhbEKTRNEktgMX0TmO455MWzB7bTbAxp0FzAfCEjhRGUXkkedITwVyW8EhJsB
-	 3VAW+7OgJ9gZ88jQVN109f4jOKn4qogcAEdIhQMJCq0uKx15lY8vejwmCK3q+wWQcP
-	 ql5Vuiq3G/ncNy9cP+17GPIPILxPnfF/ZaXaTYcI=
+	b=fxiTGDp0+EkFsVo5QzjZ3mek90eE3ZxTy3bn9GGXrqnXLNBEC/656RbPsoImSiGZ5
+	 ZdpX3xYoBUKURViyEV0MnHZUQNZa/BbQOSCfPEagVtegQBRXLj0c4iH/IpuJ5t/w3B
+	 A/wqQ+iuuvfinPDPIqMKlVLskWewEAZU5Eq731gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brahmajit Das <listout@listout.xyz>,
+	Stephane Grosjean <stephane.grosjean@hms-networks.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/253] samples: mei: Fix building on musl libc
-Date: Tue, 12 Aug 2025 19:28:00 +0200
-Message-ID: <20250812172952.647663958@linuxfoundation.org>
+Subject: [PATCH 6.1 129/253] can: peak_usb: fix USB FD devices potential malfunction
+Date: Tue, 12 Aug 2025 19:28:37 +0200
+Message-ID: <20250812172954.184889586@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -50,73 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Stephane Grosjean <stephane.grosjean@hms-networks.com>
 
-[ Upstream commit 239df3e4b4752524e7c0fb3417c218d8063654b4 ]
+[ Upstream commit 788199b73b6efe4ee2ade4d7457b50bb45493488 ]
 
-The header bits/wordsize.h is glibc specific and on building on musl
-with allyesconfig results in
+The latest firmware versions of USB CAN FD interfaces export the EP numbers
+to be used to dialog with the device via the "type" field of a response to
+a vendor request structure, particularly when its value is greater than or
+equal to 2.
 
-samples/mei/mei-amt-version.c:77:10: fatal error: bits/wordsize.h: No such file or directory
-   77 | #include <bits/wordsize.h>
-      |          ^~~~~~~~~~~~~~~~~
+Correct the driver's test of this field.
 
-mei-amt-version.c build file without bits/wordsize.h on musl and glibc.
-
-However on musl we get the follwing error without sys/time.h
-
-samples/mei/mei-amt-version.c: In function 'mei_recv_msg':
-samples/mei/mei-amt-version.c:159:24: error: storage size of 'tv' isn't known
-  159 |         struct timeval tv;
-      |                        ^~
-samples/mei/mei-amt-version.c:160:9: error: unknown type name 'fd_set'
-  160 |         fd_set set;
-      |         ^~~~~~
-samples/mei/mei-amt-version.c:168:9: error: implicit declaration of function 'FD_ZERO' [-Wimplicit-function-declaration]
-  168 |         FD_ZERO(&set);
-      |         ^~~~~~~
-samples/mei/mei-amt-version.c:169:9: error: implicit declaration of function 'FD_SET'; did you mean 'L_SET'? [-Wimplicit-function-declaration]
-  169 |         FD_SET(me->fd, &set);
-      |         ^~~~~~
-      |         L_SET
-samples/mei/mei-amt-version.c:170:14: error: implicit declaration of function 'select' [-Wimplicit-function-declaration]
-  170 |         rc = select(me->fd + 1, &set, NULL, NULL, &tv);
-      |              ^~~~~~
-samples/mei/mei-amt-version.c:171:23: error: implicit declaration of function 'FD_ISSET' [-Wimplicit-function-declaration]
-  171 |         if (rc > 0 && FD_ISSET(me->fd, &set)) {
-      |                       ^~~~~~~~
-samples/mei/mei-amt-version.c:159:24: warning: unused variable 'tv' [-Wunused-variable]
-  159 |         struct timeval tv;
-      |                        ^~
-
-Hence the the file has been included.
-
-Fixes: c52827cc4ddf ("staging/mei: add mei user space example")
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Link: https://lore.kernel.org/r/20250702135955.24955-1-listout@listout.xyz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4f232482467a ("can: peak_usb: include support for a new MCU")
+Signed-off-by: Stephane Grosjean <stephane.grosjean@hms-networks.com>
+Link: https://patch.msgid.link/20250724081550.11694-1-stephane.grosjean@free.fr
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+[mkl: rephrase commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/mei/mei-amt-version.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/peak_usb/pcan_usb_fd.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/samples/mei/mei-amt-version.c b/samples/mei/mei-amt-version.c
-index 867debd3b912..1d7254bcb44c 100644
---- a/samples/mei/mei-amt-version.c
-+++ b/samples/mei/mei-amt-version.c
-@@ -69,11 +69,11 @@
- #include <string.h>
- #include <fcntl.h>
- #include <sys/ioctl.h>
-+#include <sys/time.h>
- #include <unistd.h>
- #include <errno.h>
- #include <stdint.h>
- #include <stdbool.h>
--#include <bits/wordsize.h>
- #include <linux/mei.h>
+diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
+index 2ea1500df393..a203b7fca2f3 100644
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
+@@ -49,7 +49,7 @@ struct __packed pcan_ufd_fw_info {
+ 	__le32	ser_no;		/* S/N */
+ 	__le32	flags;		/* special functions */
  
- /*****************************************************************************
+-	/* extended data when type == PCAN_USBFD_TYPE_EXT */
++	/* extended data when type >= PCAN_USBFD_TYPE_EXT */
+ 	u8	cmd_out_ep;	/* ep for cmd */
+ 	u8	cmd_in_ep;	/* ep for replies */
+ 	u8	data_out_ep[2];	/* ep for CANx TX */
+@@ -939,10 +939,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
+ 			dev->can.ctrlmode |= CAN_CTRLMODE_FD_NON_ISO;
+ 		}
+ 
+-		/* if vendor rsp is of type 2, then it contains EP numbers to
+-		 * use for cmds pipes. If not, then default EP should be used.
++		/* if vendor rsp type is greater than or equal to 2, then it
++		 * contains EP numbers to use for cmds pipes. If not, then
++		 * default EP should be used.
+ 		 */
+-		if (fw_info->type != cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
++		if (le16_to_cpu(fw_info->type) < PCAN_USBFD_TYPE_EXT) {
+ 			fw_info->cmd_out_ep = PCAN_USBPRO_EP_CMDOUT;
+ 			fw_info->cmd_in_ep = PCAN_USBPRO_EP_CMDIN;
+ 		}
+@@ -975,11 +976,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
+ 	dev->device_number =
+ 		le32_to_cpu(pdev->usb_if->fw_info.dev_id[dev->ctrl_idx]);
+ 
+-	/* if vendor rsp is of type 2, then it contains EP numbers to
+-	 * use for data pipes. If not, then statically defined EP are used
+-	 * (see peak_usb_create_dev()).
++	/* if vendor rsp type is greater than or equal to 2, then it contains EP
++	 * numbers to use for data pipes. If not, then statically defined EP are
++	 * used (see peak_usb_create_dev()).
+ 	 */
+-	if (fw_info->type == cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
++	if (le16_to_cpu(fw_info->type) >= PCAN_USBFD_TYPE_EXT) {
+ 		dev->ep_msg_in = fw_info->data_in_ep;
+ 		dev->ep_msg_out = fw_info->data_out_ep[dev->ctrl_idx];
+ 	}
 -- 
 2.39.5
 
