@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364532E9EDE;
-	Tue, 12 Aug 2025 18:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D1E188715;
+	Tue, 12 Aug 2025 18:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024083; cv=none; b=d0mK/PyszFSN+yvl4ZrBAmt9EgcHIWbnnmLSUYxCGHJsk6mMyciGXQ4Wj/JF+OPDSi95ES05ZUlRywFqh50zUcXjt9URUf8i3eoppp1/CjQQbVCZ3n4B6PdQQh9urj2i6r1cFx8zhqex9CB+9kRItaBmFwnj3hgP2ciAcqHXlO4=
+	t=1755024086; cv=none; b=s73+9MfIeJrPrAkjiUq3qCS5R03DVsL40KT0ETol5wqUoh3yMWhN0AfUWC0iDIWwqDtNyzVMpR0Aa5ml6iPZdhREKMEK+5212z6cTpP2b1f2LlJNf6h2ZkH6oKsKDezM6ScFs+4TYsVVErYnrMhtnungn74vb6dVVzsq23qq1/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024083; c=relaxed/simple;
-	bh=QLGKUq3UaOclg+gRxcqi0UmcvguF+taFouN4D97ugzg=;
+	s=arc-20240116; t=1755024086; c=relaxed/simple;
+	bh=yH3OVp/U67u6gubwKibqBBwzlCZrHEuDqnTVi/q68Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pucDZSBBHb+4dEhv0X4HT8v2nsYPl4IbM4SCwiRv2t8HAUma6LovotVTZqiRNDic7of3TyaCDQn+jV4ge1OPzYnuueF77gGEhpfWqNixNer5shtJHcGKNVJuzdJ3Tsax6ro3iKSNQVArvU1j9LqGzrxpFexC0wPosmClFV0Qyik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FioOQRq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nZzCTQzJS0f9VYOzStzNgWLHO0y8ga8U7+WoR7wUCrvabG+KNBKdb2JzvACMin8MEvUoTJbWlloZSr3L0XEovCwioKukbCIvmBiXkj7mNPcrlHfx7DSAMhKIUPc24r/Av/QyA1Qt32T/n3eEt/ZZ+FSOC8E1Wj9ihQEzqiLgjog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGR+8Xzd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FioOQRq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB39C4CEF0;
-	Tue, 12 Aug 2025 18:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGR+8Xzd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA509C4CEF0;
+	Tue, 12 Aug 2025 18:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024083;
-	bh=QLGKUq3UaOclg+gRxcqi0UmcvguF+taFouN4D97ugzg=;
+	s=korg; t=1755024086;
+	bh=yH3OVp/U67u6gubwKibqBBwzlCZrHEuDqnTVi/q68Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FioOQRq3PGRwZ/pk7zzSiNhySXC7p1gDo58rSQBMdu9PdeovRcYR+jgGzywREVN0Z
-	 Wevx25XVPYrkLu8/7ONuJcbv3dK8CEhGDCsz6MwXkEnfHvM7ADV7yDZ5TtFGkoQeUX
-	 BsiUys1gVQ4xVRiEY5NXi/XI2DdFF/hggbXL8ViU=
+	b=LGR+8XzdY54azy2e1JwOhtI6fltKT1WbGhRVX8BFSa8hn0CFHyyo6V3HD8HoY8aJf
+	 2GNVIM4qOvIvulpwooc/hQQkkYl3Uz12//jm2dWN7JK69m9xw0ui4sam+cOL9UohFo
+	 4qBf+Z03sAEjXTmeJnEtgv/wHeWcH+SdnQdDrMz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Stephane Grosjean <stephane.grosjean@hms-networks.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 241/627] wifi: ath12k: fix endianness handling while accessing wmi service bit
-Date: Tue, 12 Aug 2025 19:28:56 +0200
-Message-ID: <20250812173428.466998248@linuxfoundation.org>
+Subject: [PATCH 6.16 268/627] can: peak_usb: fix USB FD devices potential malfunction
+Date: Tue, 12 Aug 2025 19:29:23 +0200
+Message-ID: <20250812173429.506012090@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,68 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+From: Stephane Grosjean <stephane.grosjean@hms-networks.com>
 
-[ Upstream commit 8f1a078842d4af4877fb686f3907788024d0d1b7 ]
+[ Upstream commit 788199b73b6efe4ee2ade4d7457b50bb45493488 ]
 
-Currently there is no endian conversion in ath12k_wmi_tlv_services_parser()
-so the service bit parsing will be incorrect on a big endian platform and
-to fix this by using appropriate endian conversion.
+The latest firmware versions of USB CAN FD interfaces export the EP numbers
+to be used to dialog with the device via the "type" field of a response to
+a vendor request structure, particularly when its value is greater than or
+equal to 2.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00217-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+Correct the driver's test of this field.
 
-Fixes: 342527f35338 ("wifi: ath12k: Add support to parse new WMI event for 6 GHz regulatory")
-Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250717173539.2523396-2-tamizh.raja@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 4f232482467a ("can: peak_usb: include support for a new MCU")
+Signed-off-by: Stephane Grosjean <stephane.grosjean@hms-networks.com>
+Link: https://patch.msgid.link/20250724081550.11694-1-stephane.grosjean@free.fr
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+[mkl: rephrase commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/can/usb/peak_usb/pcan_usb_fd.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index e19803bfba75..745d017c5aa8 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -7491,7 +7491,7 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
- 					  void *data)
- {
- 	const struct wmi_service_available_event *ev;
--	u32 *wmi_ext2_service_bitmap;
-+	__le32 *wmi_ext2_service_bitmap;
- 	int i, j;
- 	u16 expected_len;
+diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
+index 4d85b29a17b7..ebefc274b50a 100644
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
+@@ -49,7 +49,7 @@ struct __packed pcan_ufd_fw_info {
+ 	__le32	ser_no;		/* S/N */
+ 	__le32	flags;		/* special functions */
  
-@@ -7523,12 +7523,12 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
- 			   ev->wmi_service_segment_bitmap[3]);
- 		break;
- 	case WMI_TAG_ARRAY_UINT32:
--		wmi_ext2_service_bitmap = (u32 *)ptr;
-+		wmi_ext2_service_bitmap = (__le32 *)ptr;
- 		for (i = 0, j = WMI_MAX_EXT_SERVICE;
- 		     i < WMI_SERVICE_SEGMENT_BM_SIZE32 && j < WMI_MAX_EXT2_SERVICE;
- 		     i++) {
- 			do {
--				if (wmi_ext2_service_bitmap[i] &
-+				if (__le32_to_cpu(wmi_ext2_service_bitmap[i]) &
- 				    BIT(j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32))
- 					set_bit(j, ab->wmi_ab.svc_map);
- 			} while (++j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32);
-@@ -7536,8 +7536,10 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
+-	/* extended data when type == PCAN_USBFD_TYPE_EXT */
++	/* extended data when type >= PCAN_USBFD_TYPE_EXT */
+ 	u8	cmd_out_ep;	/* ep for cmd */
+ 	u8	cmd_in_ep;	/* ep for replies */
+ 	u8	data_out_ep[2];	/* ep for CANx TX */
+@@ -982,10 +982,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
+ 			dev->can.ctrlmode |= CAN_CTRLMODE_FD_NON_ISO;
+ 		}
  
- 		ath12k_dbg(ab, ATH12K_DBG_WMI,
- 			   "wmi_ext2_service_bitmap 0x%04x 0x%04x 0x%04x 0x%04x",
--			   wmi_ext2_service_bitmap[0], wmi_ext2_service_bitmap[1],
--			   wmi_ext2_service_bitmap[2], wmi_ext2_service_bitmap[3]);
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[0]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[1]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[2]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[3]));
- 		break;
+-		/* if vendor rsp is of type 2, then it contains EP numbers to
+-		 * use for cmds pipes. If not, then default EP should be used.
++		/* if vendor rsp type is greater than or equal to 2, then it
++		 * contains EP numbers to use for cmds pipes. If not, then
++		 * default EP should be used.
+ 		 */
+-		if (fw_info->type != cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
++		if (le16_to_cpu(fw_info->type) < PCAN_USBFD_TYPE_EXT) {
+ 			fw_info->cmd_out_ep = PCAN_USBPRO_EP_CMDOUT;
+ 			fw_info->cmd_in_ep = PCAN_USBPRO_EP_CMDIN;
+ 		}
+@@ -1018,11 +1019,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
+ 	dev->can_channel_id =
+ 		le32_to_cpu(pdev->usb_if->fw_info.dev_id[dev->ctrl_idx]);
+ 
+-	/* if vendor rsp is of type 2, then it contains EP numbers to
+-	 * use for data pipes. If not, then statically defined EP are used
+-	 * (see peak_usb_create_dev()).
++	/* if vendor rsp type is greater than or equal to 2, then it contains EP
++	 * numbers to use for data pipes. If not, then statically defined EP are
++	 * used (see peak_usb_create_dev()).
+ 	 */
+-	if (fw_info->type == cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
++	if (le16_to_cpu(fw_info->type) >= PCAN_USBFD_TYPE_EXT) {
+ 		dev->ep_msg_in = fw_info->data_in_ep;
+ 		dev->ep_msg_out = fw_info->data_out_ep[dev->ctrl_idx];
  	}
- 	return 0;
 -- 
 2.39.5
 
