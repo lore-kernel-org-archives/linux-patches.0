@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2364B2FE57A;
-	Tue, 12 Aug 2025 18:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A182FD1C5;
+	Tue, 12 Aug 2025 18:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023396; cv=none; b=AfHoA7i65/lpcUjvGZmvE7zIOSJSExF/DsS55qEHkdpCYx/txe8Yhzl9CmDHDEe4L96w0r90RNCMt4plYSZNaE7QaUCVmro1o9SAGfKogd+LTn1qND+l/z93qZ3oZsOfZu826AYcsmvAT1IqG+oQbjusCom2/y1yX4Zrxb5lpsE=
+	t=1755023399; cv=none; b=ncaDY1NFf1Nb6kR7gfpqb+jEPoszV0I59JN8ksLz1aqE+sVwI+/bBItaOC7kKoFwkZojHzhvj928XKzCZ+upMTSCJDUf9GqsKf/jDJYzXCDtvk9kYUy2UJ7IVZ/n6Xvdb5Fm0UHCdzNwoTSZQyzVQIyoWRcKOXzA3YKLK5AzZDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023396; c=relaxed/simple;
-	bh=1v8tLvJg1xGQcNkUsZaaZbeaiWB2Y7bVQ5ItcvvlC1E=;
+	s=arc-20240116; t=1755023399; c=relaxed/simple;
+	bh=yAET7+pTvC/UkuE/O/F/2clUjXnBDzDvTN582lD3OZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eu0x6g1l2OqVrvRwwRX6mrRLMLjFNrmPq5yWyd2FqvPApYl6IgeUIo6RegaCGr2PJMvq6TUdmJdrTDOcOGqOgnFSvfN4lgXTESeWy7pqwzUxCytURhgL6VLgZnRtO+aoY4CzhhfkPp0+VcUp1SUDyyKifumE3niqJmlXGHV7Yyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amFRAaHa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eCmQ1EC5gmnXJPou/wQ7OO50Q8h0zd3nHW4bSSFqRDTpB1vwGv6sWY7/djbr9wFpDWRXXakHFahUf7AjhL8pwsYTcsZLf1JIfXqDTsnOWcIXyQPxFnZuqVKiTjTx0Hb3n/aolFBJRWl+i2YIlMlBSFAQ6oHUKsm/v1UCfABkeT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ro5VyD5B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amFRAaHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA97C4CEF0;
-	Tue, 12 Aug 2025 18:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ro5VyD5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F280BC4CEF0;
+	Tue, 12 Aug 2025 18:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023396;
-	bh=1v8tLvJg1xGQcNkUsZaaZbeaiWB2Y7bVQ5ItcvvlC1E=;
+	s=korg; t=1755023399;
+	bh=yAET7+pTvC/UkuE/O/F/2clUjXnBDzDvTN582lD3OZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=amFRAaHaSSNS9DX1SWE+3hd069Jpk+AXMkBT7KG9wmsoUGpr7kwSpdoBuKbM7vpoE
-	 Ufw6Ig+eKiQHRUAt+mFfJq3MW3d/CCnrJSvh9xxnFAYlfv42p3+jXG2Z+VH6KRFbm9
-	 jqeQu+FDYfcaqMCol7lJLYwOF7jBqpKWTkyV29m4=
+	b=Ro5VyD5BR2Brp5MHNcmstFoT6wZ5GcQUhCpGki+WURrm4M4c+o2VdM0CSl3ZmRVyQ
+	 EsOUIi97y3LFBLacegICkaetFeSEGOgpGZFd0h4i6Fd9iUa4UPiLLvPJ11MhRCviP4
+	 s/aHHyi7xkhDyaTBRH6Xs4Y2mU/o+g2XCQ8wSe3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Hans de Goede <hansg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 060/627] firmware: arm_scmi: Fix up turbo frequencies selection
-Date: Tue, 12 Aug 2025 19:25:55 +0200
-Message-ID: <20250812173421.610240805@linuxfoundation.org>
+Subject: [PATCH 6.16 069/627] mei: vsc: Unset the event callback on remove and probe errors
+Date: Tue, 12 Aug 2025 19:26:04 +0200
+Message-ID: <20250812173421.942629968@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,36 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sibi Sankar <quic_sibis@quicinc.com>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit ad28fc31dd702871764e9294d4f2314ad78d24a9 ]
+[ Upstream commit 6175c6974095f8ca7e5f8d593171512f3e5bd453 ]
 
-Sustained frequency when greater than or equal to 4Ghz on 64-bit devices
-currently result in marking all frequencies as turbo. Address the turbo
-frequency selection bug by fixing the truncation.
+Make mei_vsc_remove() properly unset the callback to avoid a dead callback
+sticking around after probe errors or unbinding of the platform driver.
 
-Fixes: a897575e79d7 ("firmware: arm_scmi: Add support for marking certain frequencies as turbo")
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Message-Id: <20250514214719.203607-1-quic_sibis@quicinc.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 386a766c4169 ("mei: Add MEI hardware support for IVSC device")
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250623085052.12347-8-hansg@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/perf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/mei/platform-vsc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-index c7e5a34b254b..683fd9b85c5c 100644
---- a/drivers/firmware/arm_scmi/perf.c
-+++ b/drivers/firmware/arm_scmi/perf.c
-@@ -892,7 +892,7 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
- 			freq = dom->opp[idx].indicative_freq * dom->mult_factor;
+diff --git a/drivers/misc/mei/platform-vsc.c b/drivers/misc/mei/platform-vsc.c
+index 1ac85f0251c5..b2b5a20ae3fa 100644
+--- a/drivers/misc/mei/platform-vsc.c
++++ b/drivers/misc/mei/platform-vsc.c
+@@ -380,6 +380,8 @@ static int mei_vsc_probe(struct platform_device *pdev)
+ err_cancel:
+ 	mei_cancel_work(mei_dev);
  
- 		/* All OPPs above the sustained frequency are treated as turbo */
--		data.turbo = freq > dom->sustained_freq_khz * 1000;
-+		data.turbo = freq > dom->sustained_freq_khz * 1000UL;
++	vsc_tp_register_event_cb(tp, NULL, NULL);
++
+ 	mei_disable_interrupts(mei_dev);
  
- 		data.level = dom->opp[idx].perf;
- 		data.freq = freq;
+ 	return ret;
+@@ -388,11 +390,14 @@ static int mei_vsc_probe(struct platform_device *pdev)
+ static void mei_vsc_remove(struct platform_device *pdev)
+ {
+ 	struct mei_device *mei_dev = platform_get_drvdata(pdev);
++	struct mei_vsc_hw *hw = mei_dev_to_vsc_hw(mei_dev);
+ 
+ 	pm_runtime_disable(mei_dev->dev);
+ 
+ 	mei_stop(mei_dev);
+ 
++	vsc_tp_register_event_cb(hw->tp, NULL, NULL);
++
+ 	mei_disable_interrupts(mei_dev);
+ 
+ 	mei_deregister(mei_dev);
 -- 
 2.39.5
 
