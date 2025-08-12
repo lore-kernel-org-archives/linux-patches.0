@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A64A2FDC35;
-	Tue, 12 Aug 2025 18:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D572DE6E9;
+	Tue, 12 Aug 2025 18:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021782; cv=none; b=SVv6TUrSA7BTGa2AHeDuvMtKKzT/98AfJPJWbxbksO6Zr7cET/rECWdDCQMstJVthVUIhxaSBrVmlrwLr3JAhRZlo9HFdAo71t9AYLewo/PDePTChLVZeXcjPAxBG8qNMhBq+UUUMtCH/P9rL4iO/flrAho2w1ehKxA1FlyCyfY=
+	t=1755021785; cv=none; b=OKxXZ1I2g+rVecOi7gjOgqn8ibPNGZCKcTwif3RiVO0j0ZDHBogo57lJZOM7OkK1iORuF6djHonw8elIYEA2jtqAD1z/awZ+iTETJ4psx898HakkGH7WH/e12Hr5E+bAe2sMfKlWLddR31IbqBP76TIC5L1vOjWd31cgPzVjhXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021782; c=relaxed/simple;
-	bh=TqLhR0i1NaAhZVdGTfwmC6BYvLsyR0D0itijqKiFlvU=;
+	s=arc-20240116; t=1755021785; c=relaxed/simple;
+	bh=m1dhUjASm09tcti22IiPVagsvrJNWx2675L8yaJeeY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGb12JYNtH8ArIapCPDQEifQfzpg+OtbDl1yjW4nvTlecui9iTYsfass3vOt7xr/cbUdaChgrdb7mXpI20uOUcAP805KS49YUN1b3ebmxEKxm82JPXhdR4x0UBWii4VzTF3OsZSw4tT/GMfH8t9yYkA/61BzQx4bfgPrgv+beHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sw4qkczs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ktnR/+jASTdGWq8Rklwp9c1zF56HBH9VjdJBpimwGcUHJvEC5AbikZcKPM71uWEk8cvWQ2WCSHLSCqHVyg5GE0LSQHzjSAsTFuwZv/T4a1aWT1VKvrb/3NAJvbPadNtjzEnm4VOhzC1kq35QXgqU31eTw4N70EkNYXOxB2GGYmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJkbhdsA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sw4qkczs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3F5C4CEF6;
-	Tue, 12 Aug 2025 18:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJkbhdsA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E99DC4CEF8;
+	Tue, 12 Aug 2025 18:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021782;
-	bh=TqLhR0i1NaAhZVdGTfwmC6BYvLsyR0D0itijqKiFlvU=;
+	s=korg; t=1755021785;
+	bh=m1dhUjASm09tcti22IiPVagsvrJNWx2675L8yaJeeY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sw4qkczsBbUFdSgNFxZFhvVsVx5U3aZhQRmAsgAlcjhFAaxDdSh/ncNH9XIWOMVsp
-	 Z6oDdlKDRqNQrudjhb9uhvpP0BtbfeHlxIdXLBv2/7qxHUObsd1V5OmIZZTWFp+IaB
-	 2MNkoCuM1Rc+rvQB145oC4IjNxz6/WAJKw6mjcf8=
+	b=lJkbhdsAVxaSJFKiuaa7aiJoVvvkvUUoJhbwiJa1iOcnkzo4qNBtwLQbFuLtkuN9S
+	 MQGtPrxqvJwhmR2b7effiNptxRds7i6Ib1vC6gDttUP/jmtADjF5uFnn1qPM4SvlqV
+	 AXsQD6ZkiGF8qwQLesmy6NTmIAGYhx4fJsTtSeL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shen Lichuan <shenlichuan@vivo.com>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Meetakshi Setiya <meetakshisetiyaoss@gmail.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 222/262] smb: client: Correct typos in multiple comments across various files
-Date: Tue, 12 Aug 2025 19:30:10 +0200
-Message-ID: <20250812173002.598800696@linuxfoundation.org>
+Subject: [PATCH 6.6 223/262] smb: smbdirect: add smbdirect_socket.h
+Date: Tue, 12 Aug 2025 19:30:11 +0200
+Message-ID: <20250812173002.648251706@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,342 +59,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shen Lichuan <shenlichuan@vivo.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit e9f49feefb4b13b36441aae51649a67a8389bd40 ]
+[ Upstream commit 22234e37d7e97652cb53133009da5e14793d3c10 ]
 
-Fixed some confusing typos that were currently identified witch codespell,
-the details are as follows:
+This abstracts the common smbdirect layer.
 
--in the code comments:
-fs/smb/client/cifsacl.h:58: inheritence ==> inheritance
-fs/smb/client/cifsencrypt.c:242: origiginal ==> original
-fs/smb/client/cifsfs.c:164: referece ==> reference
-fs/smb/client/cifsfs.c:292: ned ==> need
-fs/smb/client/cifsglob.h:779: initital ==> initial
-fs/smb/client/cifspdu.h:784: altetnative ==> alternative
-fs/smb/client/cifspdu.h:2409: conrol ==> control
-fs/smb/client/cifssmb.c:1218: Expirement ==> Experiment
-fs/smb/client/cifssmb.c:3021: conver ==> convert
-fs/smb/client/cifssmb.c:3998: asterik ==> asterisk
-fs/smb/client/file.c:2505: useable ==> usable
-fs/smb/client/fs_context.h:263: timemout ==> timeout
-fs/smb/client/misc.c:257: responsbility ==> responsibility
-fs/smb/client/netmisc.c:1006: divisable ==> divisible
-fs/smb/client/readdir.c:556: endianess ==> endianness
-fs/smb/client/readdir.c:818: bu ==> by
-fs/smb/client/smb2ops.c:2180: snaphots ==> snapshots
-fs/smb/client/smb2ops.c:3586: otions ==> options
-fs/smb/client/smb2pdu.c:2979: timestaps ==> timestamps
-fs/smb/client/smb2pdu.c:4574: memmory ==> memory
-fs/smb/client/smb2transport.c:699: origiginal ==> original
-fs/smb/client/smbdirect.c:222: happenes ==> happens
-fs/smb/client/smbdirect.c:1347: registartions ==> registrations
-fs/smb/client/smbdirect.h:114: accoutning ==> accounting
+Currently with just a few things in it,
+but that will change over time until everything is
+in common.
 
-Signed-off-by: Shen Lichuan <shenlichuan@vivo.com>
+Will be used in client and server in the next commits
+
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Hyunchul Lee <hyc.lee@gmail.com>
+Cc: Meetakshi Setiya <meetakshisetiyaoss@gmail.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: 5349ae5e05fa ("smb: client: let send_done() cleanup before calling smbd_disconnect_rdma_connection()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.h       | 2 +-
- fs/smb/client/cifsencrypt.c   | 2 +-
- fs/smb/client/cifsfs.c        | 4 ++--
- fs/smb/client/cifsglob.h      | 2 +-
- fs/smb/client/cifspdu.h       | 4 ++--
- fs/smb/client/cifssmb.c       | 6 +++---
- fs/smb/client/file.c          | 2 +-
- fs/smb/client/fs_context.h    | 2 +-
- fs/smb/client/misc.c          | 2 +-
- fs/smb/client/netmisc.c       | 2 +-
- fs/smb/client/readdir.c       | 4 ++--
- fs/smb/client/smb2ops.c       | 4 ++--
- fs/smb/client/smb2pdu.c       | 4 ++--
- fs/smb/client/smb2transport.c | 2 +-
- fs/smb/client/smbdirect.c     | 4 ++--
- fs/smb/client/smbdirect.h     | 2 +-
- 16 files changed, 24 insertions(+), 24 deletions(-)
+ fs/smb/common/smbdirect/smbdirect_socket.h | 41 ++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+ create mode 100644 fs/smb/common/smbdirect/smbdirect_socket.h
 
-diff --git a/fs/smb/client/cifsacl.h b/fs/smb/client/cifsacl.h
-index cbaed8038e36..05b3650ba0ae 100644
---- a/fs/smb/client/cifsacl.h
-+++ b/fs/smb/client/cifsacl.h
-@@ -144,7 +144,7 @@ struct smb3_sd {
- #define ACL_CONTROL_SI	0x0800	/* SACL Auto-Inherited */
- #define ACL_CONTROL_DI	0x0400	/* DACL Auto-Inherited */
- #define ACL_CONTROL_SC	0x0200	/* SACL computed through inheritance */
--#define ACL_CONTROL_DC	0x0100	/* DACL computed through inheritence */
-+#define ACL_CONTROL_DC	0x0100	/* DACL computed through inheritance */
- #define ACL_CONTROL_SS	0x0080	/* Create server ACL */
- #define ACL_CONTROL_DT	0x0040	/* DACL provided by trusted source */
- #define ACL_CONTROL_SD	0x0020	/* SACL defaulted */
-diff --git a/fs/smb/client/cifsencrypt.c b/fs/smb/client/cifsencrypt.c
-index b0473c2567fe..da3d003cb43d 100644
---- a/fs/smb/client/cifsencrypt.c
-+++ b/fs/smb/client/cifsencrypt.c
-@@ -353,7 +353,7 @@ int cifs_verify_signature(struct smb_rqst *rqst,
- 		cifs_dbg(FYI, "dummy signature received for smb command 0x%x\n",
- 			 cifs_pdu->Command);
- 
--	/* save off the origiginal signature so we can modify the smb and check
-+	/* save off the original signature so we can modify the smb and check
- 		its signature against what the server sent */
- 	memcpy(server_response_sig, cifs_pdu->Signature.SecuritySignature, 8);
- 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index bbb0ef18d7b8..a1ab95f382d5 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -161,7 +161,7 @@ __u32 cifs_lock_secret;
- 
- /*
-  * Bumps refcount for cifs super block.
-- * Note that it should be only called if a referece to VFS super block is
-+ * Note that it should be only called if a reference to VFS super block is
-  * already held, e.g. in open-type syscalls context. Otherwise it can race with
-  * atomic_dec_and_test in deactivate_locked_super.
-  */
-@@ -289,7 +289,7 @@ static void cifs_kill_sb(struct super_block *sb)
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
- 
- 	/*
--	 * We ned to release all dentries for the cached directories
-+	 * We need to release all dentries for the cached directories
- 	 * before we kill the sb.
- 	 */
- 	if (cifs_sb->root) {
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index c9b37f2ebde8..4bafb1adfb22 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -785,7 +785,7 @@ struct TCP_Server_Info {
- 	} compression;
- 	__u16	signing_algorithm;
- 	__le16	cipher_type;
--	 /* save initital negprot hash */
-+	 /* save initial negprot hash */
- 	__u8	preauth_sha_hash[SMB2_PREAUTH_HASH_SIZE];
- 	bool	signing_negotiated; /* true if valid signing context rcvd from server */
- 	bool	posix_ext_supported;
-diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
-index 763178b77454..f4cfb082dfd1 100644
---- a/fs/smb/client/cifspdu.h
-+++ b/fs/smb/client/cifspdu.h
-@@ -781,7 +781,7 @@ typedef struct smb_com_logoff_andx_rsp {
- 	__u16 ByteCount;
- } __attribute__((packed)) LOGOFF_ANDX_RSP;
- 
--typedef union smb_com_tree_disconnect {	/* as an altetnative can use flag on
-+typedef union smb_com_tree_disconnect {	/* as an alternative can use flag on
- 					tree_connect PDU to effect disconnect */
- 					/* tdis is probably simplest SMB PDU */
- 	struct {
-@@ -2405,7 +2405,7 @@ struct cifs_posix_ace { /* access control entry (ACE) */
- 	__le64 cifs_uid; /* or gid */
- } __attribute__((packed));
- 
--struct cifs_posix_acl { /* access conrol list  (ACL) */
-+struct cifs_posix_acl { /* access control list  (ACL) */
- 	__le16	version;
- 	__le16	access_entry_count;  /* access ACL - count of entries */
- 	__le16	default_entry_count; /* default ACL - count of entries */
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index db35e68e8a58..81d425f571e2 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -1214,7 +1214,7 @@ CIFS_open(const unsigned int xid, struct cifs_open_parms *oparms, int *oplock,
- 	req->CreateDisposition = cpu_to_le32(disposition);
- 	req->CreateOptions = cpu_to_le32(create_options & CREATE_OPTIONS_MASK);
- 
--	/* BB Expirement with various impersonation levels and verify */
-+	/* BB Experiment with various impersonation levels and verify */
- 	req->ImpersonationLevel = cpu_to_le32(SECURITY_IMPERSONATION);
- 	req->SecurityFlags = SECURITY_CONTEXT_TRACKING|SECURITY_EFFECTIVE_ONLY;
- 
-@@ -2993,7 +2993,7 @@ static void cifs_init_ace(struct cifs_posix_ace *cifs_ace,
- 
- /**
-  * posix_acl_to_cifs - convert ACLs from POSIX ACL to cifs format
-- * @parm_data: ACLs in cifs format to conver to
-+ * @parm_data: ACLs in cifs format to convert to
-  * @acl: ACLs in POSIX ACL format to convert from
-  * @acl_type: the type of POSIX ACLs stored in @acl
-  *
-@@ -3970,7 +3970,7 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- 		name_len =
- 		    cifsConvertToUTF16((__le16 *) pSMB->FileName, searchName,
- 				       PATH_MAX, nls_codepage, remap);
--		/* We can not add the asterik earlier in case
-+		/* We can not add the asterisk earlier in case
- 		it got remapped to 0xF03A as if it were part of the
- 		directory name instead of a wildcard */
- 		name_len *= 2;
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index 99a8c6fbd41a..7a2b81fbd9cf 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2421,7 +2421,7 @@ cifs_get_writable_file(struct cifsInodeInfo *cifs_inode, int flags,
- 			}
- 		}
- 	}
--	/* couldn't find useable FH with same pid, try any available */
-+	/* couldn't find usable FH with same pid, try any available */
- 	if (!any_available) {
- 		any_available = true;
- 		goto refind_writable;
-diff --git a/fs/smb/client/fs_context.h b/fs/smb/client/fs_context.h
-index 52ee72e562f5..90ebff5d0199 100644
---- a/fs/smb/client/fs_context.h
-+++ b/fs/smb/client/fs_context.h
-@@ -263,7 +263,7 @@ struct smb3_fs_context {
- 	unsigned int min_offload;
- 	unsigned int retrans;
- 	bool sockopt_tcp_nodelay:1;
--	/* attribute cache timemout for files and directories in jiffies */
-+	/* attribute cache timeout for files and directories in jiffies */
- 	unsigned long acregmax;
- 	unsigned long acdirmax;
- 	/* timeout for deferred close of files in jiffies */
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index bbbe48447765..ad77952f6d81 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -260,7 +260,7 @@ free_rsp_buf(int resp_buftype, void *rsp)
- }
- 
- /* NB: MID can not be set if treeCon not passed in, in that
--   case it is responsbility of caller to set the mid */
-+   case it is responsibility of caller to set the mid */
- void
- header_assemble(struct smb_hdr *buffer, char smb_command /* command */ ,
- 		const struct cifs_tcon *treeCon, int word_count
-diff --git a/fs/smb/client/netmisc.c b/fs/smb/client/netmisc.c
-index 1b52e6ac431c..2a8d71221e5e 100644
---- a/fs/smb/client/netmisc.c
-+++ b/fs/smb/client/netmisc.c
-@@ -1003,7 +1003,7 @@ struct timespec64 cnvrtDosUnixTm(__le16 le_date, __le16 le_time, int offset)
- 	 year is 2**7, the last year is 1980+127, which means we need only
- 	 consider 2 special case years, ie the years 2000 and 2100, and only
- 	 adjust for the lack of leap year for the year 2100, as 2000 was a
--	 leap year (divisable by 400) */
-+	 leap year (divisible by 400) */
- 	if (year >= 120)  /* the year 2100 */
- 		days = days - 1;  /* do not count leap year for the year 2100 */
- 
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index 0be16f8acd9a..5febf8afaab0 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -567,7 +567,7 @@ static void cifs_fill_dirent_std(struct cifs_dirent *de,
- 		const FIND_FILE_STANDARD_INFO *info)
- {
- 	de->name = &info->FileName[0];
--	/* one byte length, no endianess conversion */
-+	/* one byte length, no endianness conversion */
- 	de->namelen = info->FileNameLength;
- 	de->resume_key = info->ResumeKey;
- }
-@@ -832,7 +832,7 @@ static bool emit_cached_dirents(struct cached_dirents *cde,
- 		 * However, this sequence of ->pos values may have holes
- 		 * in it, for example dot-dirs returned from the server
- 		 * are suppressed.
--		 * Handle this bu forcing ctx->pos to be the same as the
-+		 * Handle this by forcing ctx->pos to be the same as the
- 		 * ->pos of the current dirent we emit from the cache.
- 		 * This means that when we emit these entries from the cache
- 		 * we now emit them with the same ->pos value as in the
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 2385e570e331..d0734aa1961a 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -2132,7 +2132,7 @@ smb3_enum_snapshots(const unsigned int xid, struct cifs_tcon *tcon,
- 			NULL, 0 /* no input data */, max_response_size,
- 			(char **)&retbuf,
- 			&ret_data_len);
--	cifs_dbg(FYI, "enum snaphots ioctl returned %d and ret buflen is %d\n",
-+	cifs_dbg(FYI, "enum snapshots ioctl returned %d and ret buflen is %d\n",
- 			rc, ret_data_len);
- 	if (rc)
- 		return rc;
-@@ -3540,7 +3540,7 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
- 		/*
- 		 * At this point, we are trying to fallocate an internal
- 		 * regions of a sparse file. Since smb2 does not have a
--		 * fallocate command we have two otions on how to emulate this.
-+		 * fallocate command we have two options on how to emulate this.
- 		 * We can either turn the entire file to become non-sparse
- 		 * which we only do if the fallocate is for virtually
- 		 * the whole file,  or we can overwrite the region with zeroes
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 357abb0170c4..e58cad5d735a 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2989,7 +2989,7 @@ int smb311_posix_mkdir(const unsigned int xid, struct inode *inode,
- 
- 	SMB2_close(xid, tcon, rsp->PersistentFileId, rsp->VolatileFileId);
- 
--	/* Eventually save off posix specific response info and timestaps */
-+	/* Eventually save off posix specific response info and timestamps */
- 
- err_free_rsp_buf:
- 	free_rsp_buf(resp_buftype, rsp_iov.iov_base);
-@@ -4574,7 +4574,7 @@ smb2_readv_callback(struct mid_q_entry *mid)
- 	}
- #ifdef CONFIG_CIFS_SMB_DIRECT
- 	/*
--	 * If this rdata has a memmory registered, the MR can be freed
-+	 * If this rdata has a memory registered, the MR can be freed
- 	 * MR needs to be freed as soon as I/O finishes to prevent deadlock
- 	 * because they have limited number and are used for future I/Os
- 	 */
-diff --git a/fs/smb/client/smb2transport.c b/fs/smb/client/smb2transport.c
-index 4a43802375b3..99081e9d6283 100644
---- a/fs/smb/client/smb2transport.c
-+++ b/fs/smb/client/smb2transport.c
-@@ -720,7 +720,7 @@ smb2_verify_signature(struct smb_rqst *rqst, struct TCP_Server_Info *server)
- 			 shdr->Command);
- 
- 	/*
--	 * Save off the origiginal signature so we can modify the smb and check
-+	 * Save off the original signature so we can modify the smb and check
- 	 * our calculated signature against what the server sent.
- 	 */
- 	memcpy(server_response_sig, shdr->Signature, SMB2_SIGNATURE_SIZE);
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index c41a44f4fc63..e7f15515f5d4 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -218,7 +218,7 @@ static int smbd_conn_upcall(
- 
- 	case RDMA_CM_EVENT_DEVICE_REMOVAL:
- 	case RDMA_CM_EVENT_DISCONNECTED:
--		/* This happenes when we fail the negotiation */
-+		/* This happens when we fail the negotiation */
- 		if (info->transport_status == SMBD_NEGOTIATE_FAILED) {
- 			info->transport_status = SMBD_DISCONNECTED;
- 			wake_up(&info->conn_wait);
-@@ -1343,7 +1343,7 @@ void smbd_destroy(struct TCP_Server_Info *server)
- 	 * are not locked by srv_mutex. It is possible some processes are
- 	 * blocked on transport srv_mutex while holding memory registration.
- 	 * Release the transport srv_mutex to allow them to hit the failure
--	 * path when sending data, and then release memory registartions.
-+	 * path when sending data, and then release memory registrations.
- 	 */
- 	log_rdma_event(INFO, "freeing mr list\n");
- 	wake_up_interruptible_all(&info->wait_mr);
-diff --git a/fs/smb/client/smbdirect.h b/fs/smb/client/smbdirect.h
-index 83f239f376f0..c08e3665150d 100644
---- a/fs/smb/client/smbdirect.h
-+++ b/fs/smb/client/smbdirect.h
-@@ -111,7 +111,7 @@ struct smbd_connection {
- 	/* Used by transport to wait until all MRs are returned */
- 	wait_queue_head_t wait_for_mr_cleanup;
- 
--	/* Activity accoutning */
-+	/* Activity accounting */
- 	atomic_t send_pending;
- 	wait_queue_head_t wait_send_pending;
- 	wait_queue_head_t wait_post_send;
+diff --git a/fs/smb/common/smbdirect/smbdirect_socket.h b/fs/smb/common/smbdirect/smbdirect_socket.h
+new file mode 100644
+index 000000000000..69a55561f91a
+--- /dev/null
++++ b/fs/smb/common/smbdirect/smbdirect_socket.h
+@@ -0,0 +1,41 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *   Copyright (c) 2025 Stefan Metzmacher
++ */
++
++#ifndef __FS_SMB_COMMON_SMBDIRECT_SMBDIRECT_SOCKET_H__
++#define __FS_SMB_COMMON_SMBDIRECT_SMBDIRECT_SOCKET_H__
++
++enum smbdirect_socket_status {
++	SMBDIRECT_SOCKET_CREATED,
++	SMBDIRECT_SOCKET_CONNECTING,
++	SMBDIRECT_SOCKET_CONNECTED,
++	SMBDIRECT_SOCKET_NEGOTIATE_FAILED,
++	SMBDIRECT_SOCKET_DISCONNECTING,
++	SMBDIRECT_SOCKET_DISCONNECTED,
++	SMBDIRECT_SOCKET_DESTROYED
++};
++
++struct smbdirect_socket {
++	enum smbdirect_socket_status status;
++
++	/* RDMA related */
++	struct {
++		struct rdma_cm_id *cm_id;
++	} rdma;
++
++	/* IB verbs related */
++	struct {
++		struct ib_pd *pd;
++		struct ib_cq *send_cq;
++		struct ib_cq *recv_cq;
++
++		/*
++		 * shortcuts for rdma.cm_id->{qp,device};
++		 */
++		struct ib_qp *qp;
++		struct ib_device *dev;
++	} ib;
++};
++
++#endif /* __FS_SMB_COMMON_SMBDIRECT_SMBDIRECT_SOCKET_H__ */
 -- 
 2.39.5
 
