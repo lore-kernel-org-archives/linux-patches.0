@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95E061FFE;
-	Tue, 12 Aug 2025 18:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCD8191F98;
+	Tue, 12 Aug 2025 18:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023777; cv=none; b=LcV04JNkPbWznx/McyknjKtjD8a133h4f8ceGCI84n2iaqbqDYas72fsCeYqaqPf0rfw/CiCDS0TkzMR2xKynvzJOHp4xQNP1oRNbid5LPXX4RJveCRdXJPuPZ6g1D6voyFZKhhhcW8uadfjLurNTUS2QBQEFp4LODIsla4J/Go=
+	t=1755023781; cv=none; b=rD7DO7muayIW4Y0FYi4EV5dvu/ARLyTltUfx4K1Dec+X6W0BZx5G964fCCRK/8+uGWJo5pKxUPdEvEXxqMckuRIi/feJd0jApQ2p67Zad/qHWyi+d0Ifthg/nrWAEOtc+43N9p9+9+xdzhrhNAP+7ue/Of6J4rCl8sXOeT0+dWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023777; c=relaxed/simple;
-	bh=pRH90TvtdM5KvJo3m/LOex0gqNqVr/a4gP//qrE0cMM=;
+	s=arc-20240116; t=1755023781; c=relaxed/simple;
+	bh=9SI4eOEPRQim2rUh7ZaIndqwfHH1eVvyujKbyWkB3IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjFPbLpkwDRb4IO1vJwmC+Gu53WG2KZraW8eOj9l5k1n7wteqqpLRy2RXPxIk4vzrBp4FHhpILK6Genq9rsTI9RhbFQQfOJtvoCmdlLZqcbp4rAcUtYNL+eIeVo96D30CNlSqKDULa5VEwW9+PAsCYwpGIobCModbAXI8W8WQVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiVVgmnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eXzpVwrw9QbMKh1yNxAiiwYShK52mQOaQl7BAO2UZ3DAjg6WYF7v3EZL/065rGkxd1HYPlXH5wNo0mdOMyN8SddOBSyNBH5OzckWxYlm/keH9Pz28TE1guQxdMN0MbfUUXeSmfp8a3dDV6iNnss+wE9HSfmum4SsntjuZB1vk50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwoLiqWw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiVVgmnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31795C4CEF0;
-	Tue, 12 Aug 2025 18:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwoLiqWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405EDC4CEF0;
+	Tue, 12 Aug 2025 18:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023777;
-	bh=pRH90TvtdM5KvJo3m/LOex0gqNqVr/a4gP//qrE0cMM=;
+	s=korg; t=1755023781;
+	bh=9SI4eOEPRQim2rUh7ZaIndqwfHH1eVvyujKbyWkB3IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiVVgmnI933PdQai+Vp3zNlJY5ahUzzXFCJ/eyRS4wUmqII6K0mkQqyQPazayG6mi
-	 sklkRHD+J06hKy3n3lhc5nd3PCDpwXQnqeF1kwtsAgnzbQVQMljah83f6OLrBCstHF
-	 drJYYG56fOf3xVUpWGegO0IYr+4EemgUY9bowLgo=
+	b=LwoLiqWwZA5vqYZgDO4l+sgWaEtV1ILYS/Ya28fOQxs/4rLMb9EsNF6pOiEaUT4S0
+	 ZAb+EcdOfWGFAUOjk3Nrr8xqMPhpONs4+sx/MFpM9NzBk4nMXt4Cs4xCSzoQmSNqSx
+	 /jSgvj9RXcaxGr7luYCjnX+wfYHSBQ2OgOtlUsVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 179/627] wifi: mt76: mt7925: fix off by one in mt7925_mcu_hw_scan()
-Date: Tue, 12 Aug 2025 19:27:54 +0200
-Message-ID: <20250812173426.091633228@linuxfoundation.org>
+Subject: [PATCH 6.16 180/627] bpf: Ensure RCU lock is held around bpf_prog_ksym_find
+Date: Tue, 12 Aug 2025 19:27:55 +0200
+Message-ID: <20250812173426.128627677@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,44 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit b3a431fe2e399b2e0cc5f43f7e9d63d63d3710ee ]
+[ Upstream commit d090326860096df9dac6f27cff76d3f8df44d4f1 ]
 
-The ssid->ssids[] and sreq->ssids[] arrays have MT7925_RNR_SCAN_MAX_BSSIDS
-elements so this >= needs to be > to prevent an out of bounds access.
+Add a warning to ensure RCU lock is held around tree lookup, and then
+fix one of the invocations in bpf_stack_walker. The program has an
+active stack frame and won't disappear. Use the opportunity to remove
+unneeded invocation of is_bpf_text_address.
 
-Fixes: 8284815ca161 ("wifi: mt76: mt7925: add RNR scan support for 6GHz")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aDVT2tPhG_8T0Qla@stanley.mountain
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: f18b03fabaa9 ("bpf: Implement BPF exceptions")
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20250703204818.925464-5-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/core.c    |  5 ++++-
+ kernel/bpf/helpers.c | 11 +++++++++--
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 8ac6fbb736ab..300c863f0e3e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -2916,7 +2916,7 @@ int mt7925_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
- 	for (i = 0; i < sreq->n_ssids; i++) {
- 		if (!sreq->ssids[i].ssid_len)
- 			continue;
--		if (i > MT7925_RNR_SCAN_MAX_BSSIDS)
-+		if (i >= MT7925_RNR_SCAN_MAX_BSSIDS)
- 			break;
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index c20babbf998f..93e49b0c218b 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -778,7 +778,10 @@ bool is_bpf_text_address(unsigned long addr)
  
- 		ssid->ssids[n_ssids].ssid_len = cpu_to_le32(sreq->ssids[i].ssid_len);
-@@ -2933,7 +2933,7 @@ int mt7925_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
- 		mt76_connac_mcu_build_rnr_scan_param(mdev, sreq);
+ struct bpf_prog *bpf_prog_ksym_find(unsigned long addr)
+ {
+-	struct bpf_ksym *ksym = bpf_ksym_find(addr);
++	struct bpf_ksym *ksym;
++
++	WARN_ON_ONCE(!rcu_read_lock_held());
++	ksym = bpf_ksym_find(addr);
  
- 		for (j = 0; j < mdev->rnr.bssid_num; j++) {
--			if (j > MT7925_RNR_SCAN_MAX_BSSIDS)
-+			if (j >= MT7925_RNR_SCAN_MAX_BSSIDS)
- 				break;
+ 	return ksym && ksym->prog ?
+ 	       container_of(ksym, struct bpf_prog_aux, ksym)->prog :
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index ad6df48b540c..fdf8737542ac 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -2943,9 +2943,16 @@ static bool bpf_stack_walker(void *cookie, u64 ip, u64 sp, u64 bp)
+ 	struct bpf_throw_ctx *ctx = cookie;
+ 	struct bpf_prog *prog;
  
- 			tlv = mt76_connac_mcu_add_tlv(skb, UNI_SCAN_BSSID,
+-	if (!is_bpf_text_address(ip))
+-		return !ctx->cnt;
++	/*
++	 * The RCU read lock is held to safely traverse the latch tree, but we
++	 * don't need its protection when accessing the prog, since it has an
++	 * active stack frame on the current stack trace, and won't disappear.
++	 */
++	rcu_read_lock();
+ 	prog = bpf_prog_ksym_find(ip);
++	rcu_read_unlock();
++	if (!prog)
++		return !ctx->cnt;
+ 	ctx->cnt++;
+ 	if (bpf_is_subprog(prog))
+ 		return true;
 -- 
 2.39.5
 
