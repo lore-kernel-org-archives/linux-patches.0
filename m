@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25555280037;
-	Tue, 12 Aug 2025 18:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984BF1EBFE0;
+	Tue, 12 Aug 2025 18:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022937; cv=none; b=qM9d3cE1GuxM4YnG3zmo8VL2riuFbqE5dwdYRg92LaU3s/AYb6/ZIlAdcBIWm+v/8Gg40QbSjV9yfM/8Ic7boBy/J2p34EaShaNeYAIaGaQmrEfpDdnOnYsv+mmyjwP2oXvMNT3F3vngvyfqWKi8EMb+Rm5uzzlHaMNLKFtTgcI=
+	t=1755022940; cv=none; b=aZyEO3hX4YJ1rR8Lbp1bEwJNwbils4WzNJr+KUybg4m9VlLMK0ra2sDRi9cg0XM1tbk5nVxOAYmSpo85oQSx9pciwxruYZ8nnmocF7Ah0QWAh7Bq5gOEAOsSYHbTa+mlULkgRo5NkzrDVaoeHz9iOmFvCCiCH6tPT/hV12ohW0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022937; c=relaxed/simple;
-	bh=8KsLHJJnQI2yIjElGneCNNJjn4xGjBU9p0/kwIJTx0I=;
+	s=arc-20240116; t=1755022940; c=relaxed/simple;
+	bh=l5PEFLqZABTvPwPnB5Ke9bjvvmx4uREpI8CiYE3b+Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YchOMi7eVzvwQryNZP2kEg8nVnIHVVeVQN09rwZDA2IXpomp8Z9u4UL57vL8Mg2tEDFHzc/caxAtaQJ0YDpAJvVHCuOtWaJjplBjATvZbWtAcgtFRixBJzyaS8x5g+KfJjM4f/yCGNBPeshehmFq9qO9+Q+so1Edf3iE4slhnEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLwselyc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YPZxmOeRi6mMxJH7Pq4HJlfJ+KP/rPrNCRRuJ0MsiUyVXGhzzwPHcc/aaplnieirZ6WiMjbqgbZqfYcC2kUX9j+nV4HQp2skLW6RpbLbx9WFeKNfH6OwhEoQa0G+wG4Uaq6lUo4RnxCqQPk/Ljmju1h5w8NXbI6SsQ6UQGg3RT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VArWYTUY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLwselyc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A1EC4CEF0;
-	Tue, 12 Aug 2025 18:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VArWYTUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A19C4CEF0;
+	Tue, 12 Aug 2025 18:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022937;
-	bh=8KsLHJJnQI2yIjElGneCNNJjn4xGjBU9p0/kwIJTx0I=;
+	s=korg; t=1755022940;
+	bh=l5PEFLqZABTvPwPnB5Ke9bjvvmx4uREpI8CiYE3b+Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gLwselycFtJaFXq9Jfw7b6gOIyx2fuREmLKvmQHd/rZMyS1VO9Cj6QYx1Iz2vrs7Q
-	 mbZJ3+dwSKNx8fnQewY2CRLb+0Zr4XqG1gy41+9tmohA8PJFYaZyYQSvy841GPJjPd
-	 c3VDnOHNmb7RLXQ44wajg/36F8hpHvN4SKHxVua0=
+	b=VArWYTUYw3BiEkill6iBhvTKQkT/hUfYlyGBGBo0IYCxb0sMagiR9EyClnECiG4A4
+	 f+0nAT/6XVr7suPZBwqPB5U5aHdCCzNjmTr4BRGrD65TJ0wP4qwQS+2mg+6LSkYcuK
+	 cUxd6euYSftBAR89LE4N89XBt+XtQoVflV0+Igy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trondmy@hammerspace.com>,
-	Scott Mayhew <smayhew@redhat.com>,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Hogan Wang <hogan.wang@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 303/369] sunrpc: fix client side handling of tls alerts
-Date: Tue, 12 Aug 2025 19:30:00 +0200
-Message-ID: <20250812173028.131151781@linuxfoundation.org>
+Subject: [PATCH 6.12 304/369] x86/irq: Plug vector setup race
+Date: Tue, 12 Aug 2025 19:30:01 +0200
+Message-ID: <20250812173028.167851479@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,122 +51,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit cc5d59081fa26506d02de2127ab822f40d88bc5a ]
+[ Upstream commit ce0b5eedcb753697d43f61dd2e27d68eb5d3150f ]
 
-A security exploit was discovered in NFS over TLS in tls_alert_recv
-due to its assumption that there is valid data in the msghdr's
-iterator's kvec.
+Hogan reported a vector setup race, which overwrites the interrupt
+descriptor in the per CPU vector array resulting in a disfunctional device.
 
-Instead, this patch proposes the rework how control messages are
-setup and used by sock_recvmsg().
+CPU0				CPU1
+				interrupt is raised in APIC IRR
+				but not handled
+  free_irq()
+    per_cpu(vector_irq, CPU1)[vector] = VECTOR_SHUTDOWN;
 
-If no control message structure is setup, kTLS layer will read and
-process TLS data record types. As soon as it encounters a TLS control
-message, it would return an error. At that point, NFS can setup a kvec
-backed control buffer and read in the control message such as a TLS
-alert. Scott found that a msg iterator can advance the kvec pointer
-as a part of the copy process thus we need to revert the iterator
-before calling into the tls_alert_recv.
+  request_irq()			common_interrupt()
+  				  d = this_cpu_read(vector_irq[vector]);
 
-Fixes: dea034b963c8 ("SUNRPC: Capture CMSG metadata on client-side receive")
-Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
-Suggested-by: Scott Mayhew <smayhew@redhat.com>
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Link: https://lore.kernel.org/r/20250731180058.4669-3-okorniev@redhat.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+    per_cpu(vector_irq, CPU1)[vector] = desc;
+
+    				  if (d == VECTOR_SHUTDOWN)
+				    this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
+
+free_irq() cannot observe the pending vector in the CPU1 APIC as there is
+no way to query the remote CPUs APIC IRR.
+
+This requires that request_irq() uses the same vector/CPU as the one which
+was freed, but this also can be triggered by a spurious interrupt.
+
+Interestingly enough this problem managed to be hidden for more than a
+decade.
+
+Prevent this by reevaluating vector_irq under the vector lock, which is
+held by the interrupt activation code when vector_irq is updated.
+
+To avoid ifdeffery or IS_ENABLED() nonsense, move the
+[un]lock_vector_lock() declarations out under the
+CONFIG_IRQ_DOMAIN_HIERARCHY guard as it's only provided when
+CONFIG_X86_LOCAL_APIC=y.
+
+The current CONFIG_IRQ_DOMAIN_HIERARCHY guard is selected by
+CONFIG_X86_LOCAL_APIC, but can also be selected by other parts of the
+Kconfig system, which makes 32-bit UP builds with CONFIG_X86_LOCAL_APIC=n
+fail.
+
+Can we just get rid of this !APIC nonsense once and forever?
+
+Fixes: 9345005f4eed ("x86/irq: Fix do_IRQ() interrupt warning for cpu hotplug retriggered irqs")
+Reported-by: Hogan Wang <hogan.wang@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Hogan Wang <hogan.wang@huawei.com>
+Link: https://lore.kernel.org/all/draft-87ikjhrhhh.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 40 ++++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/hw_irq.h | 12 ++++---
+ arch/x86/kernel/irq.c         | 63 ++++++++++++++++++++++++++---------
+ 2 files changed, 55 insertions(+), 20 deletions(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 67d099c7c662..1397bb48cdde 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -358,7 +358,7 @@ xs_alloc_sparse_pages(struct xdr_buf *buf, size_t want, gfp_t gfp)
+diff --git a/arch/x86/include/asm/hw_irq.h b/arch/x86/include/asm/hw_irq.h
+index edebf1020e04..6bb3d9a86abe 100644
+--- a/arch/x86/include/asm/hw_irq.h
++++ b/arch/x86/include/asm/hw_irq.h
+@@ -92,8 +92,6 @@ struct irq_cfg {
  
- static int
- xs_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
--		     struct cmsghdr *cmsg, int ret)
-+		     unsigned int *msg_flags, struct cmsghdr *cmsg, int ret)
+ extern struct irq_cfg *irq_cfg(unsigned int irq);
+ extern struct irq_cfg *irqd_cfg(struct irq_data *irq_data);
+-extern void lock_vector_lock(void);
+-extern void unlock_vector_lock(void);
+ #ifdef CONFIG_SMP
+ extern void vector_schedule_cleanup(struct irq_cfg *);
+ extern void irq_complete_move(struct irq_cfg *cfg);
+@@ -101,12 +99,16 @@ extern void irq_complete_move(struct irq_cfg *cfg);
+ static inline void vector_schedule_cleanup(struct irq_cfg *c) { }
+ static inline void irq_complete_move(struct irq_cfg *c) { }
+ #endif
+-
+ extern void apic_ack_edge(struct irq_data *data);
+-#else	/*  CONFIG_IRQ_DOMAIN_HIERARCHY */
++#endif /* CONFIG_IRQ_DOMAIN_HIERARCHY */
++
++#ifdef CONFIG_X86_LOCAL_APIC
++extern void lock_vector_lock(void);
++extern void unlock_vector_lock(void);
++#else
+ static inline void lock_vector_lock(void) {}
+ static inline void unlock_vector_lock(void) {}
+-#endif	/* CONFIG_IRQ_DOMAIN_HIERARCHY */
++#endif
+ 
+ /* Statistics */
+ extern atomic_t irq_err_count;
+diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
+index 85fa2db38dc4..9400730e538e 100644
+--- a/arch/x86/kernel/irq.c
++++ b/arch/x86/kernel/irq.c
+@@ -251,26 +251,59 @@ static __always_inline void handle_irq(struct irq_desc *desc,
+ 		__handle_irq(desc, regs);
+ }
+ 
+-static __always_inline int call_irq_handler(int vector, struct pt_regs *regs)
++static struct irq_desc *reevaluate_vector(int vector)
  {
- 	u8 content_type = tls_get_record_type(sock->sk, cmsg);
- 	u8 level, description;
-@@ -371,7 +371,7 @@ xs_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
- 		 * record, even though there might be more frames
- 		 * waiting to be decrypted.
- 		 */
--		msg->msg_flags &= ~MSG_EOR;
-+		*msg_flags &= ~MSG_EOR;
- 		break;
- 	case TLS_RECORD_TYPE_ALERT:
- 		tls_alert_recv(sock->sk, msg, &level, &description);
-@@ -386,19 +386,33 @@ xs_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
+-	struct irq_desc *desc;
+-	int ret = 0;
++	struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
++
++	if (!IS_ERR_OR_NULL(desc))
++		return desc;
++
++	if (desc == VECTOR_UNUSED)
++		pr_emerg_ratelimited("No irq handler for %d.%u\n", smp_processor_id(), vector);
++	else
++		__this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
++	return NULL;
++}
++
++static __always_inline bool call_irq_handler(int vector, struct pt_regs *regs)
++{
++	struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
+ 
+-	desc = __this_cpu_read(vector_irq[vector]);
+ 	if (likely(!IS_ERR_OR_NULL(desc))) {
+ 		handle_irq(desc, regs);
+-	} else {
+-		ret = -EINVAL;
+-		if (desc == VECTOR_UNUSED) {
+-			pr_emerg_ratelimited("%s: %d.%u No irq handler for vector\n",
+-					     __func__, smp_processor_id(),
+-					     vector);
+-		} else {
+-			__this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
+-		}
++		return true;
+ 	}
+ 
+-	return ret;
++	/*
++	 * Reevaluate with vector_lock held to prevent a race against
++	 * request_irq() setting up the vector:
++	 *
++	 * CPU0				CPU1
++	 *				interrupt is raised in APIC IRR
++	 *				but not handled
++	 * free_irq()
++	 *   per_cpu(vector_irq, CPU1)[vector] = VECTOR_SHUTDOWN;
++	 *
++	 * request_irq()		common_interrupt()
++	 *				  d = this_cpu_read(vector_irq[vector]);
++	 *
++	 * per_cpu(vector_irq, CPU1)[vector] = desc;
++	 *
++	 *				  if (d == VECTOR_SHUTDOWN)
++	 *				    this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
++	 *
++	 * This requires that the same vector on the same target CPU is
++	 * handed out or that a spurious interrupt hits that CPU/vector.
++	 */
++	lock_vector_lock();
++	desc = reevaluate_vector(vector);
++	unlock_vector_lock();
++
++	if (!desc)
++		return false;
++
++	handle_irq(desc, regs);
++	return true;
  }
  
- static int
--xs_sock_recv_cmsg(struct socket *sock, struct msghdr *msg, int flags)
-+xs_sock_recv_cmsg(struct socket *sock, unsigned int *msg_flags, int flags)
- {
- 	union {
- 		struct cmsghdr	cmsg;
- 		u8		buf[CMSG_SPACE(sizeof(u8))];
- 	} u;
-+	u8 alert[2];
-+	struct kvec alert_kvec = {
-+		.iov_base = alert,
-+		.iov_len = sizeof(alert),
-+	};
-+	struct msghdr msg = {
-+		.msg_flags = *msg_flags,
-+		.msg_control = &u,
-+		.msg_controllen = sizeof(u),
-+	};
- 	int ret;
+ /*
+@@ -284,7 +317,7 @@ DEFINE_IDTENTRY_IRQ(common_interrupt)
+ 	/* entry code tells RCU that we're not quiescent.  Check it. */
+ 	RCU_LOCKDEP_WARN(!rcu_is_watching(), "IRQ failed to wake up RCU");
  
--	msg->msg_control = &u;
--	msg->msg_controllen = sizeof(u);
--	ret = sock_recvmsg(sock, msg, flags);
--	if (msg->msg_controllen != sizeof(u))
--		ret = xs_sock_process_cmsg(sock, msg, &u.cmsg, ret);
-+	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
-+		      alert_kvec.iov_len);
-+	ret = sock_recvmsg(sock, &msg, flags);
-+	if (ret > 0 &&
-+	    tls_get_record_type(sock->sk, &u.cmsg) == TLS_RECORD_TYPE_ALERT) {
-+		iov_iter_revert(&msg.msg_iter, ret);
-+		ret = xs_sock_process_cmsg(sock, &msg, msg_flags, &u.cmsg,
-+					   -EAGAIN);
-+	}
- 	return ret;
- }
+-	if (unlikely(call_irq_handler(vector, regs)))
++	if (unlikely(!call_irq_handler(vector, regs)))
+ 		apic_eoi();
  
-@@ -408,7 +422,13 @@ xs_sock_recvmsg(struct socket *sock, struct msghdr *msg, int flags, size_t seek)
- 	ssize_t ret;
- 	if (seek != 0)
- 		iov_iter_advance(&msg->msg_iter, seek);
--	ret = xs_sock_recv_cmsg(sock, msg, flags);
-+	ret = sock_recvmsg(sock, msg, flags);
-+	/* Handle TLS inband control message lazily */
-+	if (msg->msg_flags & MSG_CTRUNC) {
-+		msg->msg_flags &= ~(MSG_CTRUNC | MSG_EOR);
-+		if (ret == 0 || ret == -EIO)
-+			ret = xs_sock_recv_cmsg(sock, &msg->msg_flags, flags);
-+	}
- 	return ret > 0 ? ret + seek : ret;
- }
- 
-@@ -434,7 +454,7 @@ xs_read_discard(struct socket *sock, struct msghdr *msg, int flags,
- 		size_t count)
- {
- 	iov_iter_discard(&msg->msg_iter, ITER_DEST, count);
--	return xs_sock_recv_cmsg(sock, msg, flags);
-+	return xs_sock_recvmsg(sock, msg, flags, 0);
- }
- 
- #if ARCH_IMPLEMENTS_FLUSH_DCACHE_PAGE
+ 	set_irq_regs(old_regs);
 -- 
 2.39.5
 
