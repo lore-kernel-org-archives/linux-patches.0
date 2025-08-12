@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D1E188715;
-	Tue, 12 Aug 2025 18:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2E02FE580;
+	Tue, 12 Aug 2025 18:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024086; cv=none; b=s73+9MfIeJrPrAkjiUq3qCS5R03DVsL40KT0ETol5wqUoh3yMWhN0AfUWC0iDIWwqDtNyzVMpR0Aa5ml6iPZdhREKMEK+5212z6cTpP2b1f2LlJNf6h2ZkH6oKsKDezM6ScFs+4TYsVVErYnrMhtnungn74vb6dVVzsq23qq1/A=
+	t=1755024089; cv=none; b=Q4JGiimGG+9SuIswGIU0Ko6LzbNUu4zagNSDwsVxSZsejSG6gj1kgvO64qE+xOK/7mAnP/vOcdS8mo01WLma05eG6exReFP7r4aSh2P6YBuzbcr2gIRFXy4rWfbc8vzCc1cGL6ioUXFL+4ggBh7aKgP2C7GIpfMndIqTIBgQfAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024086; c=relaxed/simple;
-	bh=yH3OVp/U67u6gubwKibqBBwzlCZrHEuDqnTVi/q68Bc=;
+	s=arc-20240116; t=1755024089; c=relaxed/simple;
+	bh=pAK3/ofzF+lVB2mmwp5Lz9pfahFFjo6Gq4m/wnqZoVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZzCTQzJS0f9VYOzStzNgWLHO0y8ga8U7+WoR7wUCrvabG+KNBKdb2JzvACMin8MEvUoTJbWlloZSr3L0XEovCwioKukbCIvmBiXkj7mNPcrlHfx7DSAMhKIUPc24r/Av/QyA1Qt32T/n3eEt/ZZ+FSOC8E1Wj9ihQEzqiLgjog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGR+8Xzd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fGLxuNhLQKdhOawpEDTS8XYXip6b6Yix6f1R/nY1XaTPKV1ete37HlfQKsehw4w8xchEEdqZpHYo2XgEUJ9m3kI/TkhHIij5X6Bi4LtWNwROO++GB4DzkEJXOwRtqK5yk3DYG+FYFUZHRMdHXBRT1SkLLCvFBU1PwRxEu43sKFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uiQ1+3YR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGR+8Xzd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA509C4CEF0;
-	Tue, 12 Aug 2025 18:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uiQ1+3YR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B853C4CEF0;
+	Tue, 12 Aug 2025 18:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024086;
-	bh=yH3OVp/U67u6gubwKibqBBwzlCZrHEuDqnTVi/q68Bc=;
+	s=korg; t=1755024089;
+	bh=pAK3/ofzF+lVB2mmwp5Lz9pfahFFjo6Gq4m/wnqZoVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGR+8XzdY54azy2e1JwOhtI6fltKT1WbGhRVX8BFSa8hn0CFHyyo6V3HD8HoY8aJf
-	 2GNVIM4qOvIvulpwooc/hQQkkYl3Uz12//jm2dWN7JK69m9xw0ui4sam+cOL9UohFo
-	 4qBf+Z03sAEjXTmeJnEtgv/wHeWcH+SdnQdDrMz4=
+	b=uiQ1+3YRyBUSm+vFS3R9E0KeXAfzbLMkMyjiMLO2Kg5r0HB4WuP4nzPuWmeUj0+Bo
+	 aGHbTayrrjiE47FtvZEJ5XhH1NI0TzJqa4OaM/pSlnk2hzZmRVXDvPitypOh52gck8
+	 QRFtOyF0Gei+Mpji+pjA/vn4PyUEKjwYfQTYYqFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Grosjean <stephane.grosjean@hms-networks.com>,
 	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 268/627] can: peak_usb: fix USB FD devices potential malfunction
-Date: Tue, 12 Aug 2025 19:29:23 +0200
-Message-ID: <20250812173429.506012090@linuxfoundation.org>
+Subject: [PATCH 6.16 269/627] can: tscan1: Kconfig: add COMPILE_TEST
+Date: Tue, 12 Aug 2025 19:29:24 +0200
+Message-ID: <20250812173429.541196205@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,72 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephane Grosjean <stephane.grosjean@hms-networks.com>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit 788199b73b6efe4ee2ade4d7457b50bb45493488 ]
+[ Upstream commit 5323af351e7524497930b7793153ff68ee5c0ec1 ]
 
-The latest firmware versions of USB CAN FD interfaces export the EP numbers
-to be used to dialog with the device via the "type" field of a response to
-a vendor request structure, particularly when its value is greater than or
-equal to 2.
+tscan1 depends on ISA. It also has a hidden dependency on HAS_IOPORT
+as reported by the kernel test bot [1]. That dependency is implied by
+ISA which explains why this was not an issue so far.
 
-Correct the driver's test of this field.
+Add both COMPILE_TEST and HAS_IOPORT to the dependency list so that
+this driver can also be built on other platforms.
 
-Fixes: 4f232482467a ("can: peak_usb: include support for a new MCU")
-Signed-off-by: Stephane Grosjean <stephane.grosjean@hms-networks.com>
-Link: https://patch.msgid.link/20250724081550.11694-1-stephane.grosjean@free.fr
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-[mkl: rephrase commit message]
+[1] https://lore.kernel.org/linux-can/202507141417.qAMrchyV-lkp@intel.com/
+
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250715-can-compile-test-v2-3-f7fd566db86f@wanadoo.fr
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: b7d012e59627 ("can: tscan1: CAN_TSCAN1 can depend on PC104")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_fd.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/net/can/sja1000/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-index 4d85b29a17b7..ebefc274b50a 100644
---- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-@@ -49,7 +49,7 @@ struct __packed pcan_ufd_fw_info {
- 	__le32	ser_no;		/* S/N */
- 	__le32	flags;		/* special functions */
+diff --git a/drivers/net/can/sja1000/Kconfig b/drivers/net/can/sja1000/Kconfig
+index 2f516cc6d22c..ba16d7bc09ef 100644
+--- a/drivers/net/can/sja1000/Kconfig
++++ b/drivers/net/can/sja1000/Kconfig
+@@ -105,7 +105,7 @@ config CAN_SJA1000_PLATFORM
  
--	/* extended data when type == PCAN_USBFD_TYPE_EXT */
-+	/* extended data when type >= PCAN_USBFD_TYPE_EXT */
- 	u8	cmd_out_ep;	/* ep for cmd */
- 	u8	cmd_in_ep;	/* ep for replies */
- 	u8	data_out_ep[2];	/* ep for CANx TX */
-@@ -982,10 +982,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
- 			dev->can.ctrlmode |= CAN_CTRLMODE_FD_NON_ISO;
- 		}
- 
--		/* if vendor rsp is of type 2, then it contains EP numbers to
--		 * use for cmds pipes. If not, then default EP should be used.
-+		/* if vendor rsp type is greater than or equal to 2, then it
-+		 * contains EP numbers to use for cmds pipes. If not, then
-+		 * default EP should be used.
- 		 */
--		if (fw_info->type != cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
-+		if (le16_to_cpu(fw_info->type) < PCAN_USBFD_TYPE_EXT) {
- 			fw_info->cmd_out_ep = PCAN_USBPRO_EP_CMDOUT;
- 			fw_info->cmd_in_ep = PCAN_USBPRO_EP_CMDIN;
- 		}
-@@ -1018,11 +1019,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
- 	dev->can_channel_id =
- 		le32_to_cpu(pdev->usb_if->fw_info.dev_id[dev->ctrl_idx]);
- 
--	/* if vendor rsp is of type 2, then it contains EP numbers to
--	 * use for data pipes. If not, then statically defined EP are used
--	 * (see peak_usb_create_dev()).
-+	/* if vendor rsp type is greater than or equal to 2, then it contains EP
-+	 * numbers to use for data pipes. If not, then statically defined EP are
-+	 * used (see peak_usb_create_dev()).
- 	 */
--	if (fw_info->type == cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
-+	if (le16_to_cpu(fw_info->type) >= PCAN_USBFD_TYPE_EXT) {
- 		dev->ep_msg_in = fw_info->data_in_ep;
- 		dev->ep_msg_out = fw_info->data_out_ep[dev->ctrl_idx];
- 	}
+ config CAN_TSCAN1
+ 	tristate "TS-CAN1 PC104 boards"
+-	depends on ISA
++	depends on ISA || (COMPILE_TEST && HAS_IOPORT)
+ 	help
+ 	  This driver is for Technologic Systems' TSCAN-1 PC104 boards.
+ 	  https://www.embeddedts.com/products/TS-CAN1
 -- 
 2.39.5
 
