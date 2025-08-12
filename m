@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825E72FFDC1;
-	Tue, 12 Aug 2025 18:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB4C2FF15F;
+	Tue, 12 Aug 2025 18:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024943; cv=none; b=VRdkjHeoCqdK3n6JWw/kxbOsBeeltnKj0kY5tX6cYDFitknLZWfwVqeduEeO6icN2K9cPDj7+GcSefJqhJQUIRsUTTo7VG/WULXkwQP+ykgZsqND7bU/Cz0/lviIZMEFxBevqjV0cBADOGfVF3gYPtW7virUeEMbDNxs/cjf7ao=
+	t=1755024947; cv=none; b=kvqG3/IgVRjntjmYTlU/dyuNBhjeDYpTWKARrpyUb58mvPT+Fn09455BwytFa0lNRRfbQOxJkR+Oy7AzBBman2TArOyHJ/lHCBGb70y36m8V7Xg71+qzUAZA4O649RDJkdh0LfotVrNOWuUWSNlXE2No1ctRkeyEzjtugQ4FtZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024943; c=relaxed/simple;
-	bh=YHazTvPZlCH15L9meXN9+mPvIomZLEmzlHV69pSxzrA=;
+	s=arc-20240116; t=1755024947; c=relaxed/simple;
+	bh=pWZ/rcd54cV4iFMYJbySXQvFbZXiryaBpUkiCGl436U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ArrYp0Hogis24OulMKWU/dEO34s8jQxnWK0edPIhVRaFONB6uSIlpF5OdZEiqX4YzvLmPSRNMA6+NoQ+NHo+cvZnSVKhG1x3RJRY6eKwqXXPxWFl3Kfkm7KAIat8t1RQxG0FeBsCj1DzfBqzc/8shWGUYl0tDH4Opfoj//h6GN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEEKxH86; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BAXDuSev9w/OzdMMdxrcwiWfbb5O23yrCBDrAWaWq6DWJSLz51BQZi1hl1T5mycRNAMGNiY1OVKqENLf65xfUQDEmZiG0/rnm1rvLbSU5Hr0w2OdWL3dpBzFX5oHs3XeJgtj0oTHJX32S14QuvC51G4t/Ee8/+LKjOfNO2Rhz/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbeZbuvQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEEKxH86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00699C4CEFA;
-	Tue, 12 Aug 2025 18:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbeZbuvQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B607C4CEF0;
+	Tue, 12 Aug 2025 18:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024943;
-	bh=YHazTvPZlCH15L9meXN9+mPvIomZLEmzlHV69pSxzrA=;
+	s=korg; t=1755024946;
+	bh=pWZ/rcd54cV4iFMYJbySXQvFbZXiryaBpUkiCGl436U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qEEKxH86D92idQYAGr6OM4FFUpmf/OuUl8MAn72EcKZNs20IVLZHHf0iSXIXQCQHs
-	 Y4Ap67tgE+NS0S7Auep52/WImtlzLGYmD3koJURw3ivYn7wssclu/GmN3YkmhI5iAc
-	 HcpvyJHHVgUxxyxSwFUWAPSr+m2gjqXI/CfYe4es=
+	b=KbeZbuvQsTl0KMXELyNH8zobDCugRVR+6yL2uEIyE6O7F92IY8uxy+D1Ork/7y7u3
+	 j9EdW0Qn8tKlkVreYK86CGhKtSFGC0lMmjbEWSLk37zjJx7RhisGipTu8DIGWePvtr
+	 NfyzHDObiTEOv2ckV0+rAoQMeStD6jcf849BGZuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Daniel Wagner <dwagner@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 521/627] nvmet: initialize discovery subsys after debugfs is initialized
-Date: Tue, 12 Aug 2025 19:33:36 +0200
-Message-ID: <20250812173451.310325819@linuxfoundation.org>
+Subject: [PATCH 6.16 522/627] s390/ap: Unmask SLCF bit in card and queue ap functions sysfs
+Date: Tue, 12 Aug 2025 19:33:37 +0200
+Message-ID: <20250812173451.515423312@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,70 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 528589947c1802b9357c2a9b96d88cc4a11cd88b ]
+[ Upstream commit 123b7c7c2ba725daf3bfa5ce421d65b92cb5c075 ]
 
-During nvme target initialization discovery subsystem is initialized
-before "nvmet" debugfs directory is created. This results in discovery
-subsystem debugfs directory to be created in debugfs root directory.
+The SLCF bit ("stateless command filtering") introduced with
+CEX8 cards was because of the function mask's default value
+suppressed when user space read the ap function for an AP
+card or queue. Unmask this bit so that user space applications
+like lszcrypt can evaluate and list this feature.
 
-nvmet_init() ->
-  nvmet_init_discovery() ->
-    nvmet_subsys_alloc() ->
-      nvmet_debugfs_subsys_setup()
-
-In other words, the codepath above is exeucted before nvmet_debugfs is
-created. We get /sys/kernel/debug/nqn.2014-08.org.nvmexpress.discovery
-instead of /sys/kernel/debug/nvmet/nqn.2014-08.org.nvmexpress.discovery.
-Move nvmet_init_discovery() call after nvmet_init_debugfs() to fix it.
-
-Fixes: 649fd41420a8 ("nvmet: add debugfs support")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: d4c53ae8e494 ("s390/ap: store TAPQ hwinfo in struct ap_card")
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/s390/include/asm/ap.h   | 2 +-
+ drivers/s390/crypto/ap_bus.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 175c5b6d4dd5..b6247e4afc9c 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1962,24 +1962,24 @@ static int __init nvmet_init(void)
- 	if (!nvmet_wq)
- 		goto out_free_buffered_work_queue;
+diff --git a/arch/s390/include/asm/ap.h b/arch/s390/include/asm/ap.h
+index 395b02d6a133..352108727d7e 100644
+--- a/arch/s390/include/asm/ap.h
++++ b/arch/s390/include/asm/ap.h
+@@ -103,7 +103,7 @@ struct ap_tapq_hwinfo {
+ 			unsigned int accel :  1; /* A */
+ 			unsigned int ep11  :  1; /* X */
+ 			unsigned int apxa  :  1; /* APXA */
+-			unsigned int	   :  1;
++			unsigned int slcf  :  1; /* Cmd filtering avail. */
+ 			unsigned int class :  8;
+ 			unsigned int bs	   :  2; /* SE bind/assoc */
+ 			unsigned int	   : 14;
+diff --git a/drivers/s390/crypto/ap_bus.h b/drivers/s390/crypto/ap_bus.h
+index 88b625ba1978..4b7ffa840563 100644
+--- a/drivers/s390/crypto/ap_bus.h
++++ b/drivers/s390/crypto/ap_bus.h
+@@ -180,7 +180,7 @@ struct ap_card {
+ 	atomic64_t total_request_count;	/* # requests ever for this AP device.*/
+ };
  
--	error = nvmet_init_discovery();
-+	error = nvmet_init_debugfs();
- 	if (error)
- 		goto out_free_nvmet_work_queue;
+-#define TAPQ_CARD_HWINFO_MASK 0xFEFF0000FFFF0F0FUL
++#define TAPQ_CARD_HWINFO_MASK 0xFFFF0000FFFF0F0FUL
+ #define ASSOC_IDX_INVALID 0x10000
  
--	error = nvmet_init_debugfs();
-+	error = nvmet_init_discovery();
- 	if (error)
--		goto out_exit_discovery;
-+		goto out_exit_debugfs;
- 
- 	error = nvmet_init_configfs();
- 	if (error)
--		goto out_exit_debugfs;
-+		goto out_exit_discovery;
- 
- 	return 0;
- 
--out_exit_debugfs:
--	nvmet_exit_debugfs();
- out_exit_discovery:
- 	nvmet_exit_discovery();
-+out_exit_debugfs:
-+	nvmet_exit_debugfs();
- out_free_nvmet_work_queue:
- 	destroy_workqueue(nvmet_wq);
- out_free_buffered_work_queue:
+ #define to_ap_card(x) container_of((x), struct ap_card, ap_dev.device)
 -- 
 2.39.5
 
