@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1CD191F98;
-	Tue, 12 Aug 2025 18:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124C42FF16C;
+	Tue, 12 Aug 2025 18:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023469; cv=none; b=f130En1l+EM6OgkKjLpzigCv/KcSzCauAb4c8EXL0VFp5ewMyJtPDoE0jL+cO+zOcRm3GheWxu2nIJKghZL2/p91XFq7mGT4QJmj6FFeR9KFt3nTo6qqJTZkRRdBJ+gSdgT354SuCSgXJ2q9OLghOOIEulWtpifDgi77ACpQB1k=
+	t=1755023476; cv=none; b=Hts9f1uks6w/133lyNNHVUcNMsWr8VUiUd5DRAnB2/9aa1XpjPng6oBsomwSY9APq367dJS3PT9dp06bLHFH5bEXGtM1WDijjvjBv4oENJTX1GSvaoel+MbHG0btKMBEpiZHNdxJub22R9GFUvNOBrU4FXyAl5XSJrjBzxw8XGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023469; c=relaxed/simple;
-	bh=rLRzejude+AIxMw35oswo7gfb/GQn8OaVeWMtsgOeUE=;
+	s=arc-20240116; t=1755023476; c=relaxed/simple;
+	bh=xj7/OgE7M/zq6WpgECKoGCx8B5ULSbt45H/4BHtF/6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ia9mHU0sBsqsXTvQKtHv8e7a2/5i6LR8dFZTzFL0Bcaa6LLslahdfW8+gO6rym0iPjZwLzNuPZWT4cnd08aQUzhKDlrNsFv0vQxIpGxXGiz9ynMizy+YfnH7zd//1niudeedUnPjKMrWYLsE8QUTmXMS7da4ERmdoKchQCrsRTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9kHhzNJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZOCknzUZ7VtoQ/RyEiZ0gy5QuUMdKVDb4KMSFQE3kxWEaDB+ozvtGssB55o0l9xMA2GsjEuPJbsp3ubZ2Kr4sW78iExl3ziNHL/r4aUvIyTqp1j7XEOUECBB557d47FHIgLlTgiF0WEBqEWEuvkXgXl/hABgMQY7RpqdjFQmik4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSvVkduR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9kHhzNJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225C0C4CEF0;
-	Tue, 12 Aug 2025 18:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSvVkduR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3978BC4CEF7;
+	Tue, 12 Aug 2025 18:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023469;
-	bh=rLRzejude+AIxMw35oswo7gfb/GQn8OaVeWMtsgOeUE=;
+	s=korg; t=1755023473;
+	bh=xj7/OgE7M/zq6WpgECKoGCx8B5ULSbt45H/4BHtF/6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9kHhzNJESnZM+qCqW1Q5/6m4ebRUozjYWx0CANrqfP77nLuDAXo3Jbq9ME9833cx
-	 upoUnfX6SZWwBOj+bcL+zIbX9BKyb2bv9w5JKxOUGGQLrEbVMd1NbZ1kk6kl6JSidx
-	 SkFojUPz6ReE8CkqsNDSQ3l9bLJCVJmSEiYORQDM=
+	b=PSvVkduRCN2G0DAyIrnJcrBChKTnCCLA1waEfhW6gaqWzQ4OWc7QVtTgHC+EhN58F
+	 Y+5BaIV6WhHGChZmtc/I13PBSCEEcAjZKXzQYw5+pw9BIx3e8ruHUjknPxxoGJxqpJ
+	 uYM5pr/SnC3lU2oEg6Xw03V5Fhn9GRIq4xNurOx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nikolay Borisov <nik.borisov@suse.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 062/627] x86/bugs: Simplify the retbleed=stuff checks
-Date: Tue, 12 Aug 2025 19:25:57 +0200
-Message-ID: <20250812173421.683959867@linuxfoundation.org>
+Subject: [PATCH 6.16 089/627] selftests/nolibc: correctly report errors from printf() and friends
+Date: Tue, 12 Aug 2025 19:26:24 +0200
+Message-ID: <20250812173422.688655214@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,66 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 530e80648bff083e1d19ad7248c0540812a9a35f ]
+[ Upstream commit 4a40129087a4c32135bb1177a57bbbe6ee646f1a ]
 
-Simplify the nested checks, remove redundant print and comment.
+When an error is encountered by printf() it needs to be reported.
+errno() is already set by the callback.
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250611-eibrs-fix-v4-2-5ff86cac6c61@linux.intel.com
-Stable-dep-of: ab9f2388e0b9 ("x86/bugs: Allow ITS stuffing in eIBRS+retpoline mode also")
+sprintf() is different, but that keeps working and is already tested.
+
+Also add a new test.
+
+Fixes: 7e4346f4a3a6 ("tools/nolibc/stdio: add a minimal [vf]printf() implementation")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250704-nolibc-printf-error-v1-2-74b7a092433b@linutronix.de
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ tools/include/nolibc/stdio.h                 |  4 ++--
+ tools/testing/selftests/nolibc/nolibc-test.c | 23 ++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 0bf2566d21b6..937971fde749 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1267,24 +1267,16 @@ static void __init retbleed_update_mitigation(void)
- 	if (!boot_cpu_has_bug(X86_BUG_RETBLEED) || cpu_mitigations_off())
- 		return;
+diff --git a/tools/include/nolibc/stdio.h b/tools/include/nolibc/stdio.h
+index c470d334ef3f..7630234408c5 100644
+--- a/tools/include/nolibc/stdio.h
++++ b/tools/include/nolibc/stdio.h
+@@ -358,11 +358,11 @@ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char
+ 				n -= w;
+ 				while (width-- > w) {
+ 					if (cb(state, " ", 1) != 0)
+-						break;
++						return -1;
+ 					written += 1;
+ 				}
+ 				if (cb(state, outstr, w) != 0)
+-					break;
++					return -1;
+ 			}
  
--	/*
--	 * retbleed=stuff is only allowed on Intel.  If stuffing can't be used
--	 * then a different mitigation will be selected below.
--	 *
--	 * its=stuff will also attempt to enable stuffing.
--	 */
--	if (retbleed_mitigation == RETBLEED_MITIGATION_STUFF ||
--	    its_mitigation == ITS_MITIGATION_RETPOLINE_STUFF) {
--		if (spectre_v2_enabled != SPECTRE_V2_RETPOLINE) {
--			pr_err("WARNING: retbleed=stuff depends on spectre_v2=retpoline\n");
--			retbleed_mitigation = RETBLEED_MITIGATION_NONE;
--		} else {
--			if (retbleed_mitigation != RETBLEED_MITIGATION_STUFF)
--				pr_info("Retbleed mitigation updated to stuffing\n");
-+	 /* ITS can also enable stuffing */
-+	if (its_mitigation == ITS_MITIGATION_RETPOLINE_STUFF)
-+		retbleed_mitigation = RETBLEED_MITIGATION_STUFF;
+ 			written += len;
+diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
+index dbe13000fb1a..b5c04c137249 100644
+--- a/tools/testing/selftests/nolibc/nolibc-test.c
++++ b/tools/testing/selftests/nolibc/nolibc-test.c
+@@ -1646,6 +1646,28 @@ int test_strerror(void)
+ 	return 0;
+ }
  
--			retbleed_mitigation = RETBLEED_MITIGATION_STUFF;
--		}
-+	if (retbleed_mitigation == RETBLEED_MITIGATION_STUFF &&
-+	    spectre_v2_enabled != SPECTRE_V2_RETPOLINE) {
-+		pr_err("WARNING: retbleed=stuff depends on spectre_v2=retpoline\n");
-+		retbleed_mitigation = RETBLEED_MITIGATION_NONE;
- 	}
++static int test_printf_error(void)
++{
++	int fd, ret, saved_errno;
 +
- 	/*
- 	 * Let IBRS trump all on Intel without affecting the effects of the
- 	 * retbleed= cmdline option except for call depth based stuffing
++	fd = open("/dev/full", O_RDWR);
++	if (fd == -1)
++		return 1;
++
++	errno = 0;
++	ret = dprintf(fd, "foo");
++	saved_errno = errno;
++	close(fd);
++
++	if (ret != -1)
++		return 2;
++
++	if (saved_errno != ENOSPC)
++		return 3;
++
++	return 0;
++}
++
+ static int run_printf(int min, int max)
+ {
+ 	int test;
+@@ -1675,6 +1697,7 @@ static int run_printf(int min, int max)
+ 		CASE_TEST(width_trunc);  EXPECT_VFPRINTF(25, "                    ", "%25d", 1); break;
+ 		CASE_TEST(scanf);        EXPECT_ZR(1, test_scanf()); break;
+ 		CASE_TEST(strerror);     EXPECT_ZR(1, test_strerror()); break;
++		CASE_TEST(printf_error); EXPECT_ZR(1, test_printf_error()); break;
+ 		case __LINE__:
+ 			return ret; /* must be last */
+ 		/* note: do not set any defaults so as to permit holes above */
 -- 
 2.39.5
 
