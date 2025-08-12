@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97732C21E3;
-	Tue, 12 Aug 2025 18:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60DE2FAC06;
+	Tue, 12 Aug 2025 18:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024992; cv=none; b=sDZ2fe/jW5rgG5NXwd4HhjfDxPXasNTM64XGFnr8VTz8tmaIi8JmT+pWrPQC25P7z9b3Sv/4HwobnjsichTAaNrly+c8zyBh6Fl7WBdg3P7dafN4WvMw5IbNs/nVwRm9eIKrj3M9RagKuxZUg++Lef7/xTVCvpN8IvGEY30JJXA=
+	t=1755024994; cv=none; b=ZHbM+CXXtM5BkhQlzWXX8Gn48mv0ZGWuVWOx7yQaDeEDNzmvS7bNyXUmzUdQ5fnkmXhwZ9BE6p8YaKoDgT3AVhFNsrujZloBJ0XoDK8FBTiP0Gz/GK5PrvEk2yRMUemKW1d6j8SGey2CkpLCmvqb6iPjQL2YrApF4vth00ZoLns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024992; c=relaxed/simple;
-	bh=lXYtUVkNGE0QBrfwXMwSqoI/8dkA2shPIsxOIcTghM8=;
+	s=arc-20240116; t=1755024994; c=relaxed/simple;
+	bh=o3AGd8pH1YIyUx2KDQPAyb7EwoHXcfgcxCQHdDJOHj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jvTlcuk0sB6CxU9LzBmPRtdrxieI3TL9MazfmZSbapfQb++cJe4d5Uz1BFq5+lO3c/dUccXsab+2KbmToiN1w88KeLlwKZQ8TN1zcoUZI1D83jed+p1ehJleyFiWxa6K27DMrqkEjpf5Y0vSSoXUzF8e8ByQ/0iQJyLlzVI2cNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh9cwpwY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A5o0Pz1/fOWR8cGWWJfgj1s1wZMNjmyEMIKe4QL5G/Ndah++6FXpLfQVc7UUVoxOBgMFvJSgj2nAtliDc1zkj8H+egtyIG/ivGMAUczkVGufyTp7erTf4SCTxr6lJCnpc7kkotUAvWQJ5uIXRyOIFUF4u/Il8p7mhWf/dsDnHM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFjaXqgQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh9cwpwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E230EC4CEF0;
-	Tue, 12 Aug 2025 18:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFjaXqgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CE6C4CEF0;
+	Tue, 12 Aug 2025 18:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024991;
-	bh=lXYtUVkNGE0QBrfwXMwSqoI/8dkA2shPIsxOIcTghM8=;
+	s=korg; t=1755024994;
+	bh=o3AGd8pH1YIyUx2KDQPAyb7EwoHXcfgcxCQHdDJOHj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fh9cwpwYMI5V9MNzNi3Bi0/OMf1zoHobdSndNFqjJX8KCvgC6GoSBw0RAHwMKq+Zc
-	 BbdB2jzqd6PMekd7rjj9OtFr/mHgRAdwbj8QsiiStr4eZ6SAJFVvVCLeBkU0C4WBZs
-	 S0wMiXECqYhRq5ROgLIJXBnZZklgAobVOQ4YM5rU=
+	b=jFjaXqgQAAQcfW0jyPAjEVyH+VhmcuhgBAKIJXqhfX+ZGKnTZAzwzcBfNePmRt5A+
+	 v3FsXKB+sH2R2OrrQAyQu1P2/waGb6GoPC1688m7Cbx97etxsmb2JuK0qcVsyJ6Wda
+	 p9Ji4U2Neu7FNYmTCrIOGd3OPLKiORrmUEd/MV7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Hogan Wang <hogan.wang@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 538/627] drm/xe/pf: Disable PF restart worker on device removal
-Date: Tue, 12 Aug 2025 19:33:53 +0200
-Message-ID: <20250812173452.375588689@linuxfoundation.org>
+Subject: [PATCH 6.16 539/627] x86/irq: Plug vector setup race
+Date: Tue, 12 Aug 2025 19:33:54 +0200
+Message-ID: <20250812173452.412208582@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -47,93 +45,188 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit c286ce6b01f633806b4db3e4ec8e0162928299cd ]
+[ Upstream commit ce0b5eedcb753697d43f61dd2e27d68eb5d3150f ]
 
-We can't let restart worker run once device is removed, since other
-data that it might want to access could be already released.
-Explicitly disable worker as part of device cleanup action.
+Hogan reported a vector setup race, which overwrites the interrupt
+descriptor in the per CPU vector array resulting in a disfunctional device.
 
-Fixes: a4d1c5d0b99b ("drm/xe/pf: Move VFs reprovisioning to worker")
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://lore.kernel.org/r/20250801142822.180530-2-michal.wajdeczko@intel.com
-(cherry picked from commit a424353937c24554bb242a6582ed8f018b4a411c)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+CPU0				CPU1
+				interrupt is raised in APIC IRR
+				but not handled
+  free_irq()
+    per_cpu(vector_irq, CPU1)[vector] = VECTOR_SHUTDOWN;
+
+  request_irq()			common_interrupt()
+  				  d = this_cpu_read(vector_irq[vector]);
+
+    per_cpu(vector_irq, CPU1)[vector] = desc;
+
+    				  if (d == VECTOR_SHUTDOWN)
+				    this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
+
+free_irq() cannot observe the pending vector in the CPU1 APIC as there is
+no way to query the remote CPUs APIC IRR.
+
+This requires that request_irq() uses the same vector/CPU as the one which
+was freed, but this also can be triggered by a spurious interrupt.
+
+Interestingly enough this problem managed to be hidden for more than a
+decade.
+
+Prevent this by reevaluating vector_irq under the vector lock, which is
+held by the interrupt activation code when vector_irq is updated.
+
+To avoid ifdeffery or IS_ENABLED() nonsense, move the
+[un]lock_vector_lock() declarations out under the
+CONFIG_IRQ_DOMAIN_HIERARCHY guard as it's only provided when
+CONFIG_X86_LOCAL_APIC=y.
+
+The current CONFIG_IRQ_DOMAIN_HIERARCHY guard is selected by
+CONFIG_X86_LOCAL_APIC, but can also be selected by other parts of the
+Kconfig system, which makes 32-bit UP builds with CONFIG_X86_LOCAL_APIC=n
+fail.
+
+Can we just get rid of this !APIC nonsense once and forever?
+
+Fixes: 9345005f4eed ("x86/irq: Fix do_IRQ() interrupt warning for cpu hotplug retriggered irqs")
+Reported-by: Hogan Wang <hogan.wang@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Hogan Wang <hogan.wang@huawei.com>
+Link: https://lore.kernel.org/all/draft-87ikjhrhhh.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_sriov_pf.c | 32 ++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/hw_irq.h | 12 ++++---
+ arch/x86/kernel/irq.c         | 63 ++++++++++++++++++++++++++---------
+ 2 files changed, 55 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
-index 35489fa81825..2ea81d81c0ae 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
-@@ -47,9 +47,16 @@ static int pf_alloc_metadata(struct xe_gt *gt)
+diff --git a/arch/x86/include/asm/hw_irq.h b/arch/x86/include/asm/hw_irq.h
+index 162ebd73a698..cbe19e669080 100644
+--- a/arch/x86/include/asm/hw_irq.h
++++ b/arch/x86/include/asm/hw_irq.h
+@@ -92,8 +92,6 @@ struct irq_cfg {
  
- static void pf_init_workers(struct xe_gt *gt)
+ extern struct irq_cfg *irq_cfg(unsigned int irq);
+ extern struct irq_cfg *irqd_cfg(struct irq_data *irq_data);
+-extern void lock_vector_lock(void);
+-extern void unlock_vector_lock(void);
+ #ifdef CONFIG_SMP
+ extern void vector_schedule_cleanup(struct irq_cfg *);
+ extern void irq_complete_move(struct irq_cfg *cfg);
+@@ -101,12 +99,16 @@ extern void irq_complete_move(struct irq_cfg *cfg);
+ static inline void vector_schedule_cleanup(struct irq_cfg *c) { }
+ static inline void irq_complete_move(struct irq_cfg *c) { }
+ #endif
+-
+ extern void apic_ack_edge(struct irq_data *data);
+-#else	/*  CONFIG_IRQ_DOMAIN_HIERARCHY */
++#endif /* CONFIG_IRQ_DOMAIN_HIERARCHY */
++
++#ifdef CONFIG_X86_LOCAL_APIC
++extern void lock_vector_lock(void);
++extern void unlock_vector_lock(void);
++#else
+ static inline void lock_vector_lock(void) {}
+ static inline void unlock_vector_lock(void) {}
+-#endif	/* CONFIG_IRQ_DOMAIN_HIERARCHY */
++#endif
+ 
+ /* Statistics */
+ extern atomic_t irq_err_count;
+diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
+index 9ed29ff10e59..10721a125226 100644
+--- a/arch/x86/kernel/irq.c
++++ b/arch/x86/kernel/irq.c
+@@ -256,26 +256,59 @@ static __always_inline void handle_irq(struct irq_desc *desc,
+ 		__handle_irq(desc, regs);
+ }
+ 
+-static __always_inline int call_irq_handler(int vector, struct pt_regs *regs)
++static struct irq_desc *reevaluate_vector(int vector)
  {
-+	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
- 	INIT_WORK(&gt->sriov.pf.workers.restart, pf_worker_restart_func);
- }
- 
-+static void pf_fini_workers(struct xe_gt *gt)
-+{
-+	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
-+	disable_work_sync(&gt->sriov.pf.workers.restart);
+-	struct irq_desc *desc;
+-	int ret = 0;
++	struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
++
++	if (!IS_ERR_OR_NULL(desc))
++		return desc;
++
++	if (desc == VECTOR_UNUSED)
++		pr_emerg_ratelimited("No irq handler for %d.%u\n", smp_processor_id(), vector);
++	else
++		__this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
++	return NULL;
 +}
 +
- /**
-  * xe_gt_sriov_pf_init_early - Prepare SR-IOV PF data structures on PF.
-  * @gt: the &xe_gt to initialize
-@@ -79,6 +86,21 @@ int xe_gt_sriov_pf_init_early(struct xe_gt *gt)
- 	return 0;
++static __always_inline bool call_irq_handler(int vector, struct pt_regs *regs)
++{
++	struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
+ 
+-	desc = __this_cpu_read(vector_irq[vector]);
+ 	if (likely(!IS_ERR_OR_NULL(desc))) {
+ 		handle_irq(desc, regs);
+-	} else {
+-		ret = -EINVAL;
+-		if (desc == VECTOR_UNUSED) {
+-			pr_emerg_ratelimited("%s: %d.%u No irq handler for vector\n",
+-					     __func__, smp_processor_id(),
+-					     vector);
+-		} else {
+-			__this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
+-		}
++		return true;
+ 	}
+ 
+-	return ret;
++	/*
++	 * Reevaluate with vector_lock held to prevent a race against
++	 * request_irq() setting up the vector:
++	 *
++	 * CPU0				CPU1
++	 *				interrupt is raised in APIC IRR
++	 *				but not handled
++	 * free_irq()
++	 *   per_cpu(vector_irq, CPU1)[vector] = VECTOR_SHUTDOWN;
++	 *
++	 * request_irq()		common_interrupt()
++	 *				  d = this_cpu_read(vector_irq[vector]);
++	 *
++	 * per_cpu(vector_irq, CPU1)[vector] = desc;
++	 *
++	 *				  if (d == VECTOR_SHUTDOWN)
++	 *				    this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
++	 *
++	 * This requires that the same vector on the same target CPU is
++	 * handed out or that a spurious interrupt hits that CPU/vector.
++	 */
++	lock_vector_lock();
++	desc = reevaluate_vector(vector);
++	unlock_vector_lock();
++
++	if (!desc)
++		return false;
++
++	handle_irq(desc, regs);
++	return true;
  }
  
-+static void pf_fini_action(void *arg)
-+{
-+	struct xe_gt *gt = arg;
-+
-+	pf_fini_workers(gt);
-+}
-+
-+static int pf_init_late(struct xe_gt *gt)
-+{
-+	struct xe_device *xe = gt_to_xe(gt);
-+
-+	xe_gt_assert(gt, IS_SRIOV_PF(xe));
-+	return devm_add_action_or_reset(xe->drm.dev, pf_fini_action, gt);
-+}
-+
- /**
-  * xe_gt_sriov_pf_init - Prepare SR-IOV PF data structures on PF.
-  * @gt: the &xe_gt to initialize
-@@ -95,7 +117,15 @@ int xe_gt_sriov_pf_init(struct xe_gt *gt)
- 	if (err)
- 		return err;
+ /*
+@@ -289,7 +322,7 @@ DEFINE_IDTENTRY_IRQ(common_interrupt)
+ 	/* entry code tells RCU that we're not quiescent.  Check it. */
+ 	RCU_LOCKDEP_WARN(!rcu_is_watching(), "IRQ failed to wake up RCU");
  
--	return xe_gt_sriov_pf_migration_init(gt);
-+	err = xe_gt_sriov_pf_migration_init(gt);
-+	if (err)
-+		return err;
-+
-+	err = pf_init_late(gt);
-+	if (err)
-+		return err;
-+
-+	return 0;
- }
+-	if (unlikely(call_irq_handler(vector, regs)))
++	if (unlikely(!call_irq_handler(vector, regs)))
+ 		apic_eoi();
  
- static bool pf_needs_enable_ggtt_guest_update(struct xe_device *xe)
+ 	set_irq_regs(old_regs);
 -- 
 2.39.5
 
