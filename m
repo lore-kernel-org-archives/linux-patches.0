@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4572E285E;
-	Tue, 12 Aug 2025 18:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189671B87E9;
+	Tue, 12 Aug 2025 18:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022425; cv=none; b=nlX6TupsR0H3EF49WdYWJCmhoMFtWjsvw1S1o6ASfemryDOAz0WF07o7+2hClTXwwX8XDbOstrlsAvPbwpxZwjHWf+SdC8P6uZXypQ+5cTirMlphwJnwhanKiCiI6THNuvMcjCdxl/sFOMzUhXnRJeNLyw0jNU6ALBcGphhidfE=
+	t=1755022429; cv=none; b=uvWZZDRVbEbmVT3zxVVMbdzeLiS2t3bzQ51E95AzPO+sugits4Xnny5vWIkN6b2U8b4pgmJbj5AW7jmGzIPm/f+1NpkDlD3/3Ldq7qgIDnzW5emQlqZ4knqxyf5cwUVqoRIJ97y2oixxJUzMtNEW1n9nFLtBHMf6GDo2U3uiJOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022425; c=relaxed/simple;
-	bh=kT6iuwzzeIoNjsuktMt75ZdAAZlEvBv2pJo/rJT3IvY=;
+	s=arc-20240116; t=1755022429; c=relaxed/simple;
+	bh=0LZyK7JU5o1mOO432WqDZixl0xtnhzCz5sqpOSij9oA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9mbBDh1wLAjPpbl5NFsV0mcftWbOaUESfsckG8/uSx0eZtfK5kBu0Vjpi5Isccgy7XAVrKJep6w5IeRE/6LDVtheBWP3jknNb1R9q731NJcMONoUXQw0DT289PuuLaG++Nl9j3SoreXqxgc8zR/FRwKZ1J1FCrVUIYhLDUgVPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wI575v/x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2s6O8dkMufMNIZOTuqWt/bmqIZqZOTrCmLdmtdFVIpYs+Bgdpdy3RueK9pAhUYU6Lcb76dJw9vlkIsBEETPGFc19kQQaEYPH/8JKboOZTSDB/w4RzmZrJFxb9o8kD7SCf3q9jWgS8LNbiDlwEwHHyk1KTjhyyxye4xpq4zo0RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2vgnlgm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wI575v/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD68C4CEF1;
-	Tue, 12 Aug 2025 18:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2vgnlgm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D68AC4CEF1;
+	Tue, 12 Aug 2025 18:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022425;
-	bh=kT6iuwzzeIoNjsuktMt75ZdAAZlEvBv2pJo/rJT3IvY=;
+	s=korg; t=1755022428;
+	bh=0LZyK7JU5o1mOO432WqDZixl0xtnhzCz5sqpOSij9oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wI575v/xwSCBPI3ua8/l64veb8hXyjV29MYYEO8L9oI40QT5q3ZxRFbSFy8X/9ykk
-	 qU41q1wmhoHB3FbpMqgXXPFU7sb7oFDeniovcHPgd9T4u6DB/0JyT0FLM84Bj1+aXE
-	 Fw5vq+MR6wccIyR5yYkn7hf19+H8NHT+EGI5AVRc=
+	b=d2vgnlgmlk3k0Ob8Zqf6WJJZylh3u1CUebHeLwZAzqZQLR6aTAmiGRL9QT3c3v41P
+	 9ums93dyruBgOLs4FAc/1C3B4Uf3H/9xiuakZKGolXSLr0M8PhoMUEPirGaRJU2lME
+	 mp9HzPm+T7klttJI2zO+4/UBkTIAPh404aM5mNrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <kees@kernel.org>,
+	Hans Zhang <18255117159@163.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 152/369] fortify: Fix incorrect reporting of read buffer size
-Date: Tue, 12 Aug 2025 19:27:29 +0200
-Message-ID: <20250812173020.497353708@linuxfoundation.org>
+Subject: [PATCH 6.12 153/369] PCI: rockchip-host: Fix "Unexpected Completion" log message
+Date: Tue, 12 Aug 2025 19:27:30 +0200
+Message-ID: <20250812173020.534937839@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,36 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 94fd44648dae2a5b6149a41faa0b07928c3e1963 ]
+[ Upstream commit fcc5f586c4edbcc10de23fb9b8c0972a84e945cd ]
 
-When FORTIFY_SOURCE reports about a run-time buffer overread, the wrong
-buffer size was being shown in the error message. (The bounds checking
-was correct.)
+Fix the debug message for the PCIE_CORE_INT_UCR interrupt to clearly
+indicate "Unexpected Completion" instead of a duplicate "malformed TLP"
+message.
 
-Fixes: 3d965b33e40d ("fortify: Improve buffer overflow reporting")
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20250729231817.work.023-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
+Signed-off-by: Hans Zhang <18255117159@163.com>
+[mani: added fixes tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://patch.msgid.link/20250607160201.807043-2-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fortify-string.h | 2 +-
+ drivers/pci/controller/pcie-rockchip-host.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
-index 0d99bf11d260..71f9dcf56128 100644
---- a/include/linux/fortify-string.h
-+++ b/include/linux/fortify-string.h
-@@ -596,7 +596,7 @@ __FORTIFY_INLINE bool fortify_memcpy_chk(__kernel_size_t size,
- 	if (p_size != SIZE_MAX && p_size < size)
- 		fortify_panic(func, FORTIFY_WRITE, p_size, size, true);
- 	else if (q_size != SIZE_MAX && q_size < size)
--		fortify_panic(func, FORTIFY_READ, p_size, size, true);
-+		fortify_panic(func, FORTIFY_READ, q_size, size, true);
+diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
+index 481dcc476c55..18e65571c145 100644
+--- a/drivers/pci/controller/pcie-rockchip-host.c
++++ b/drivers/pci/controller/pcie-rockchip-host.c
+@@ -439,7 +439,7 @@ static irqreturn_t rockchip_pcie_subsys_irq_handler(int irq, void *arg)
+ 			dev_dbg(dev, "malformed TLP received from the link\n");
  
- 	/*
- 	 * Warn when writing beyond destination field size.
+ 		if (sub_reg & PCIE_CORE_INT_UCR)
+-			dev_dbg(dev, "malformed TLP received from the link\n");
++			dev_dbg(dev, "Unexpected Completion received from the link\n");
+ 
+ 		if (sub_reg & PCIE_CORE_INT_FCE)
+ 			dev_dbg(dev, "an error was observed in the flow control advertisements from the other side\n");
 -- 
 2.39.5
 
