@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92292F5E;
-	Tue, 12 Aug 2025 18:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E5A2F5E;
+	Tue, 12 Aug 2025 18:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022349; cv=none; b=FnXiRjjS+1eM40L4p06ap81dq1UeIcY+74aEBnsjKrOTg2kbfDuwtZSURDc7iq4NcMb4wKyl52yiRQIUwltzHrFjGxs2Qm5yP+mIr7Pu0HjQ+vdaUrqroOPQN/2FIvwOA1da8z7lnxi45NgGfVXdHnbKPkkhOA/lkpVBcUNJ5b4=
+	t=1755022353; cv=none; b=qyVZ2jleiIQQrpSpYRZGSIutXKnQfgdgIYbtyTWab7w5LUi1cqiyGX69PjqlbPzrRqHbDyPwHXsIyCdcUu4gRBS8wS+yjuNzx+/BStiSKvyzDuUtAQpQTPF5wuogezlq8DViyw5K3HbNCuCbOJUqZvMJIQ/nAdieDnKPUsS6QlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022349; c=relaxed/simple;
-	bh=ki0J6yfuenyxgk1hIsJsnUhHrVByf4uULgIWpKzsEQw=;
+	s=arc-20240116; t=1755022353; c=relaxed/simple;
+	bh=3ic3//5g2T+c33Ub3RG1J4wOfemVQ6SefDS+4iq2HAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWYW8wHvHMDcShmev1dWU1lBIXfEoNnT2riNmNRVQ2RaK6ba0ZwZjmodeFIa0C7TX6Jq3orgmLCoxr9nt6vbzbMRj1Owe6L4cLCiomb12Xygo1lnuvE5dGOY8iWrpun1DzSMPlifJl6TSm+BbUKN3isznysL9zRtvbih4wmlWEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJ757uAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Evek1E5rX576CdTtFHM3trsr1loXNvIQiPxPy374LIfd52AY58tTEzySz2+J1vuchHu7zB1Ox8hT4mAY418ejuv90ikLVU/iam3z4GFtTCT0QbD5Vf36r4MNl0+m06iAuHvaOvguEIwpu8FJ+SRA4SIXxZYTyN5omKHNVi8/LyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2cgDnvu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJ757uAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B77C4CEF0;
-	Tue, 12 Aug 2025 18:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2cgDnvu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860E3C4CEF0;
+	Tue, 12 Aug 2025 18:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022349;
-	bh=ki0J6yfuenyxgk1hIsJsnUhHrVByf4uULgIWpKzsEQw=;
+	s=korg; t=1755022353;
+	bh=3ic3//5g2T+c33Ub3RG1J4wOfemVQ6SefDS+4iq2HAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJ757uAqRkHRm5g3DH6i7QPKY3pKCjq4MXQTMu6rZ4lYZeaA59nKdbgt2eyzi/nIm
-	 WxhAtzXRM5xIe+wKpZ2S20fKtNfS0Py1gARgjeaB8zOy9x4rYx92lMNeWeQ69yCCke
-	 i0n683esMay8VZFdcCbFgljDomH1gi1ICGVG4REA=
+	b=q2cgDnvuXKjZjhLD4+rqHqdcHi5XPORK2sJIrBgysVdNV1IruNvFG7O22AfDRlU1r
+	 MetWWnGKebCFEJApiagObF8+s2i+Z4ZFJGZDsR2N+sOxu8P2Fx5b4aAGrYa7AvFyvP
+	 be+oVjmGLOyKAdzfLpYJDQ1c3XtYrDe/pC8OWuxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Alexander Potapenko <glider@google.com>,
-	Marco Elver <elver@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/369] kcsan: test: Initialize dummy variable
-Date: Tue, 12 Aug 2025 19:27:06 +0200
-Message-ID: <20250812173019.624139256@linuxfoundation.org>
+Subject: [PATCH 6.12 130/369] memcg_slabinfo: Fix use of PG_slab
+Date: Tue, 12 Aug 2025 19:27:07 +0200
+Message-ID: <20250812173019.663118965@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,45 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 9872916ad1a1a5e7d089e05166c85dbd65e5b0e8 ]
+[ Upstream commit 7f770e94d7936e8e35d4b4d5fa4618301b03ea33 ]
 
-Newer compiler versions rightfully point out:
+Check PGTY_slab instead of PG_slab.
 
- kernel/kcsan/kcsan_test.c:591:41: error: variable 'dummy' is
- uninitialized when passed as a const pointer argument here
- [-Werror,-Wuninitialized-const-pointer]
-   591 |         KCSAN_EXPECT_READ_BARRIER(atomic_read(&dummy), false);
-       |                                                ^~~~~
- 1 error generated.
-
-Although this particular test does not care about the value stored in
-the dummy atomic variable, let's silence the warning.
-
-Link: https://lkml.kernel.org/r/CA+G9fYu8JY=k-r0hnBRSkQQrFJ1Bz+ShdXNwC1TNeMt0eXaxeA@mail.gmail.com
-Fixes: 8bc32b348178 ("kcsan: test: Add test cases for memory barrier instrumentation")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Signed-off-by: Marco Elver <elver@google.com>
+Fixes: 4ffca5a96678 (mm: support only one page_type per page)
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Tested-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Link: https://patch.msgid.link/20250611155916.2579160-11-willy@infradead.org
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcsan/kcsan_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/cgroup/memcg_slabinfo.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/kcsan/kcsan_test.c b/kernel/kcsan/kcsan_test.c
-index 117d9d4d3c3b..5121d9a6dd3b 100644
---- a/kernel/kcsan/kcsan_test.c
-+++ b/kernel/kcsan/kcsan_test.c
-@@ -533,7 +533,7 @@ static void test_barrier_nothreads(struct kunit *test)
- 	struct kcsan_scoped_access *reorder_access = NULL;
- #endif
- 	arch_spinlock_t arch_spinlock = __ARCH_SPIN_LOCK_UNLOCKED;
--	atomic_t dummy;
-+	atomic_t dummy = ATOMIC_INIT(0);
+diff --git a/tools/cgroup/memcg_slabinfo.py b/tools/cgroup/memcg_slabinfo.py
+index 270c28a0d098..6bf4bde77903 100644
+--- a/tools/cgroup/memcg_slabinfo.py
++++ b/tools/cgroup/memcg_slabinfo.py
+@@ -146,11 +146,11 @@ def detect_kernel_config():
  
- 	KCSAN_TEST_REQUIRES(test, reorder_access != NULL);
- 	KCSAN_TEST_REQUIRES(test, IS_ENABLED(CONFIG_SMP));
+ 
+ def for_each_slab(prog):
+-    PGSlab = ~prog.constant('PG_slab')
++    slabtype = prog.constant('PGTY_slab')
+ 
+     for page in for_each_page(prog):
+         try:
+-            if page.page_type.value_() == PGSlab:
++            if (page.page_type.value_() >> 24) == slabtype:
+                 yield cast('struct slab *', page)
+         except FaultError:
+             pass
 -- 
 2.39.5
 
