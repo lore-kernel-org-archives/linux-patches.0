@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7702FE57D;
-	Tue, 12 Aug 2025 17:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E6B2FA0DB;
+	Tue, 12 Aug 2025 17:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021433; cv=none; b=roWJvYuvl6QqfRfGQPNVLkkvQwk7FnOR57MQXMPJXreCGRwb09eDKuxQuPj3g6Q/aleMHCA9sUdSCHpRzhRZuylYRSCQxKFeHqvIOmCIRz34nTRPejDkGvlLt2/7pCU6ZHwBZmeg3PbvxNAl4Z0m8k47oMrUqRlYtuSAfeqd57A=
+	t=1755021436; cv=none; b=q82fj1BHUmxxFxkTsOvjPOMnOemOspxSnRfnCB0Skeal+CaPsrmboOD4Yho+qAgYXxwTEivgj3MBbT1Db+jllMLjfICGjxiFT0QPr8g8BOFA10HxViD3IJr9fLQg4fzXqfcdwFOmFRfOgKuZmfyeztIcZQjsEqq2RgbknMrCPIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021433; c=relaxed/simple;
-	bh=jkBvDnVBgmY5H7+dZR+XjMdXKr2kQoxBFDTs9+V6Xbg=;
+	s=arc-20240116; t=1755021436; c=relaxed/simple;
+	bh=4Tw1MK3EOVxFZhPhNX4VyVpcSZ5ApcJNjB9RL2UQUQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duT637jxBMRKpjLSikc16BLdUDZa9K4koJBEKvm5rRoL0cNit2CaUmvCiIL3/PBa0NcAK5Zf+109yv3kSiufXFUYXZmxeCHoxYxxa6MeMUdLKpA8M7MSwQ7Q2xIJZDli3eApslO1jsBwmTdVIOXFNaX2kOa17aIWHi9wYaTBZ+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1JdnP/h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JkHns1MQB5wc5FDDb5TygYhIa6Wnpm942IE0DRB0u8QYS0on8Ev8KQDlhSCZA6/fnq8wDMdiJUIYC4p3HFJSYQAlEkDNjEvgg8o9mNse3STcyOckyl198ey9minQmEwyF7iteXK4N5LVAF4v1tsW46eJV2kbzzx/Ql4Tt/oN4WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+8t7X1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1JdnP/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD0DC4CEF0;
-	Tue, 12 Aug 2025 17:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+8t7X1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D133C4CEF0;
+	Tue, 12 Aug 2025 17:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021433;
-	bh=jkBvDnVBgmY5H7+dZR+XjMdXKr2kQoxBFDTs9+V6Xbg=;
+	s=korg; t=1755021436;
+	bh=4Tw1MK3EOVxFZhPhNX4VyVpcSZ5ApcJNjB9RL2UQUQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1JdnP/h+EFe/CB5P9Fhmg8Gc2n5b/bySu7BNGNvMRxH7s17GPPbHfOncDIwYqKVp
-	 xaw0lj20SirehumTm3qLwZsw6Z0c0c+ypAwGKyh6h02UVzuqr55eYbHF0Wxe3/FMfC
-	 +BYOE1vQbMo8jUnzREyIofocv2VtplNUwgMgLrt8=
+	b=g+8t7X1VHEpV+fn68vlaAa47gshL14j8Ugg55p3EJUUzZCkZUgblGqdf6QFS/CvJ3
+	 8wDu/U+KwsUiRTsd1siVKCjGmoJXN6oI+iPgiQabQPhXca6KzHh75d9Sn8OiuFJ1q0
+	 rEnul+07Kaakrv3PqKnB5XQPXkes/+rPqr0SMFdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 244/253] USB: serial: option: add Foxconn T99W709
-Date: Tue, 12 Aug 2025 19:30:32 +0200
-Message-ID: <20250812172959.242567843@linuxfoundation.org>
+	Chris Down <chris@chrisdown.name>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 092/262] Bluetooth: hci_event: Mask data status from LE ext adv reports
+Date: Tue, 12 Aug 2025 19:28:00 +0200
+Message-ID: <20250812172956.984467094@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,55 +47,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Chris Down <chris@chrisdown.name>
 
-commit ad1244e1ce18f8c1a5ebad8074bfcf10eacb0311 upstream.
+[ Upstream commit 0cadf8534f2a727bc3a01e8c583b085d25963ee0 ]
 
-T99W709 is designed based on MTK T300(5G redcap) chip. There are
-7 serial ports to be enumerated: AP_LOG, GNSS, AP_META, AT,
-MD_META, NPT, DBG. RSVD(5) for ADB port.
+The Event_Type field in an LE Extended Advertising Report uses bits 5
+and 6 for data status (e.g. truncation or fragmentation), not the PDU
+type itself.
 
-test evidence as below:
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e15f Rev=00.01
-S:  Manufacturer=MediaTek Inc.
-S:  Product=USB DATA CARD
-S:  SerialNumber=355511220000399
-C:  #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-I:  If#=0x6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+The ext_evt_type_to_legacy() function fails to mask these status bits
+before evaluation. This causes valid advertisements with status bits set
+(e.g. a truncated non-connectable advertisement, which ends up showing
+as PDU type 0x40) to be misclassified as unknown and subsequently
+dropped. This is okay for most checks which use bitwise AND on the
+relevant event type bits, but it doesn't work for non-connectable types,
+which are checked with '== LE_EXT_ADV_NON_CONN_IND' (that is, zero).
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In terms of behaviour, first the device sends a truncated report:
+
+> HCI Event: LE Meta Event (0x3e) plen 26
+      LE Extended Advertising Report (0x0d)
+        Entry 0
+          Event type: 0x0040
+            Data status: Incomplete, data truncated, no more to come
+          Address type: Random (0x01)
+          Address: 1D:12:46:FA:F8:6E (Non-Resolvable)
+          SID: 0x03
+          RSSI: -98 dBm (0x9e)
+          Data length: 0x00
+
+Then, a few seconds later, it sends the subsequent complete report:
+
+> HCI Event: LE Meta Event (0x3e) plen 122
+      LE Extended Advertising Report (0x0d)
+        Entry 0
+          Event type: 0x0000
+            Data status: Complete
+          Address type: Random (0x01)
+          Address: 1D:12:46:FA:F8:6E (Non-Resolvable)
+          SID: 0x03
+          RSSI: -97 dBm (0x9f)
+          Data length: 0x60
+          Service Data: Google (0xfef3)
+            Data[92]: ...
+
+These devices often send multiple truncated reports per second.
+
+This patch introduces a PDU type mask to ensure only the relevant bits
+are evaluated, allowing for the correct translation of all valid
+extended advertising packets.
+
+Fixes: b2cc9761f144 ("Bluetooth: Handle extended ADV PDU types")
+Signed-off-by: Chris Down <chris@chrisdown.name>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/net/bluetooth/hci.h | 1 +
+ net/bluetooth/hci_event.c   | 8 ++++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
- 	  .driver_info = RSVD(5) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
-+	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index e4a97b2d0998..4c084a03d6bb 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -2577,6 +2577,7 @@ struct hci_ev_le_conn_complete {
+ #define LE_EXT_ADV_DIRECT_IND		0x0004
+ #define LE_EXT_ADV_SCAN_RSP		0x0008
+ #define LE_EXT_ADV_LEGACY_PDU		0x0010
++#define LE_EXT_ADV_DATA_STATUS_MASK	0x0060
+ #define LE_EXT_ADV_EVT_TYPE_MASK	0x007f
+ 
+ #define ADDR_LE_DEV_PUBLIC		0x00
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 8516ba62c545..3b22ce3aa95b 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6216,6 +6216,11 @@ static void hci_le_adv_report_evt(struct hci_dev *hdev, void *data,
+ 
+ static u8 ext_evt_type_to_legacy(struct hci_dev *hdev, u16 evt_type)
+ {
++	u16 pdu_type = evt_type & ~LE_EXT_ADV_DATA_STATUS_MASK;
++
++	if (!pdu_type)
++		return LE_ADV_NONCONN_IND;
++
+ 	if (evt_type & LE_EXT_ADV_LEGACY_PDU) {
+ 		switch (evt_type) {
+ 		case LE_LEGACY_ADV_IND:
+@@ -6247,8 +6252,7 @@ static u8 ext_evt_type_to_legacy(struct hci_dev *hdev, u16 evt_type)
+ 	if (evt_type & LE_EXT_ADV_SCAN_IND)
+ 		return LE_ADV_SCAN_IND;
+ 
+-	if (evt_type == LE_EXT_ADV_NON_CONN_IND ||
+-	    evt_type & LE_EXT_ADV_DIRECT_IND)
++	if (evt_type & LE_EXT_ADV_DIRECT_IND)
+ 		return LE_ADV_NONCONN_IND;
+ 
+ invalid:
+-- 
+2.39.5
+
 
 
