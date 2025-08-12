@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4A96BB5B;
-	Tue, 12 Aug 2025 18:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB976BB5B;
+	Tue, 12 Aug 2025 18:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024006; cv=none; b=QBoPdPgKt/7ZRSk0SdlDWrc230UbghL/3u7/nNrB6RfA0dOfmTUqOJNXpInX+GztrBwZymIf8xQ9vlurDiUgb1dwAbfVKLr00JuKYGdjz9LDWc52WFS41VRAeI3W6DoxDl8IaISdDbu7Vluls7nRbeAkFn/p+UmnAE9QvkdGpjI=
+	t=1755024009; cv=none; b=R+fRF9e0gi3wrHukPh/4cqV3XxF4GdYjP5t6TE5WsS/xSzQggNl88XJ+2C8ehUw5AWW4ckP1M4yZ2YlQCA9B4E0/bDIZcFzvcwrPTTbrs98hjC3nKrgN9keA22bZLAZAI9C/xZxntWuFDfR8UNgCyVGExp6vKeTAx/BvIxuEvoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024006; c=relaxed/simple;
-	bh=BJieD4zoncUbKWDtEb9r3GgDmeqhTdW7CuGsykP9Mew=;
+	s=arc-20240116; t=1755024009; c=relaxed/simple;
+	bh=XV8CwznsuAm8xsKaGekypuv5wlYTUJW9F7EMYB5yRzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+S7+eZZGQxCHBIGu9VanTHwUlfQDXtmFU9etWO2YVT2nNYfGR3GIY95zlujosgVe1m53aBkwbnUtyFnzQW3V8YrXLB51p9s5XjG9xCE2R4koCNbXs8/KMsJfzFPlVNF/FVIbNUyOhe9aeuRYM/iC5S+BXddYpVFNVxkt/X4Sqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej5vvmWH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gdanw5YOsknYo15HBkk488dPpaW5bcRDrBpfj6WdN88jqUozttLMORoLMz03Z98gO7duIXI+1I6+8RGUF2lhzaLWKNbuzyKn/Jc7zoZGrUGsgQbD9WGlGh7oHswsPkWqNAMudApy9bQcNXFTHyGFQtKHOYuArIr1MtWtVKMzii4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vi6J2M4g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej5vvmWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958E2C4CEF0;
-	Tue, 12 Aug 2025 18:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vi6J2M4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18478C4CEF0;
+	Tue, 12 Aug 2025 18:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024006;
-	bh=BJieD4zoncUbKWDtEb9r3GgDmeqhTdW7CuGsykP9Mew=;
+	s=korg; t=1755024009;
+	bh=XV8CwznsuAm8xsKaGekypuv5wlYTUJW9F7EMYB5yRzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ej5vvmWHQasnCJJ+oyxvc7qK+KTBSUMONG+SVqW4prfu65jHjGzax44XUihxqLi5k
-	 U0Kcm/kHYrsxaiTz/zDmrIh5/e72un8UdRr0s5CDo+WhFv51oWV/fUSJBrToIGHvNv
-	 ltrcyyvPmezj1q1p2ZpJetvu19ammyWZz22kIE7s=
+	b=vi6J2M4gx6fByFqMSyviLQF2l91tZlSrGoSoa59kD8xJUfrqEwwYgzyo/MtPALF2E
+	 YFpCNwWDtXlEX86L/KpsWBAwnzNoPZdyO04PcdXZ1UnEDATGkmvl4GqE2zOmFu6l4+
+	 8qmYbz33cdmqK3pB7SxfaoQZ2b/LdWwPmZmuefZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 202/627] netfilter: nf_tables: adjust lockdep assertions handling
-Date: Tue, 12 Aug 2025 19:28:17 +0200
-Message-ID: <20250812173426.963431390@linuxfoundation.org>
+Subject: [PATCH 6.16 239/627] wifi: mac80211: Check 802.11 encaps offloading in ieee80211_tx_h_select_key()
+Date: Tue, 12 Aug 2025 19:28:54 +0200
+Message-ID: <20250812173428.393755501@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,49 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 8df1b40de76979bb8e975201d07b71103d5de820 ]
+[ Upstream commit 4037c468d1b3c508d69e6df0ef47fdee3d440e39 ]
 
-It's needed to check the return value of lockdep_commit_lock_is_held(),
-otherwise there's no point in this assertion as it doesn't print any
-debug information on itself.
+With 802.11 encapsulation offloading, ieee80211_tx_h_select_key() is
+called on 802.3 frames. In that case do not try to use skb data as
+valid 802.11 headers.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
-
-Fixes: b04df3da1b5c ("netfilter: nf_tables: do not defer rule destruction via call_rcu")
-Reported-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
+Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://patch.msgid.link/1af4b5b903a5fca5ebe67333d5854f93b2be5abe.1752765971.git.repk@triplefau.lt
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/tx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 9ebda0248d20..064f18792d98 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4029,7 +4029,7 @@ void nf_tables_rule_destroy(const struct nft_ctx *ctx, struct nft_rule *rule)
- /* can only be used if rule is no longer visible to dumps */
- static void nf_tables_rule_release(const struct nft_ctx *ctx, struct nft_rule *rule)
- {
--	lockdep_commit_lock_is_held(ctx->net);
-+	WARN_ON_ONCE(!lockdep_commit_lock_is_held(ctx->net));
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 04f4d574401f..73304a5cf6fc 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -612,6 +612,12 @@ ieee80211_tx_h_select_key(struct ieee80211_tx_data *tx)
+ 	else
+ 		tx->key = NULL;
  
- 	nft_rule_expr_deactivate(ctx, rule, NFT_TRANS_RELEASE);
- 	nf_tables_rule_destroy(ctx, rule);
-@@ -5844,7 +5844,7 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase)
- {
--	lockdep_commit_lock_is_held(ctx->net);
-+	WARN_ON_ONCE(!lockdep_commit_lock_is_held(ctx->net));
++	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) {
++		if (tx->key && tx->key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE)
++			info->control.hw_key = &tx->key->conf;
++		return TX_CONTINUE;
++	}
++
+ 	if (tx->key) {
+ 		bool skip_hw = false;
  
- 	switch (phase) {
- 	case NFT_TRANS_PREPARE_ERROR:
 -- 
 2.39.5
 
