@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4862FE570;
-	Tue, 12 Aug 2025 18:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973982FABFC;
+	Tue, 12 Aug 2025 18:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025014; cv=none; b=mMvMkc16cPOhfbSWGeG0zjFU3oSa6qrbbUpe4nAsATxJlIE3gm5Z00nWtBZLT7RyiyD/q4WOxU/r617yClvNfKHlRu8S8xnk7e41Xgq1WccqbbD838+WVpDWF7OLhQXe3aLOBqFRmGzFmnXlPX78gKVHglJdSRmg19oILgtU8xg=
+	t=1755025017; cv=none; b=kUhkERVGaE6UEVVWyWs4Ray5fcWmFvOulhdh9DgB+5c/ezxsITllokGBWnLlHuMc5f2BMkDPC0jyqY+xLYKCWMMPtTTT+dtWapyd5mzWEEgvbsXH9LJJCkqpBrU0lVRkE6wuJUJJfSvvAqlveEK1cH04403maqRKbGA4+AKoviQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025014; c=relaxed/simple;
-	bh=MW/vofPSSYIX+PQqt3lrC6SbClqn5jYGqTy+W5mknjM=;
+	s=arc-20240116; t=1755025017; c=relaxed/simple;
+	bh=kaJJDdhQ873sp3RLo+GuW9modz9dA+jRnM+wldsj/+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0+SYoWOl3pDTdQ5tY8pv5aBpy3TbmV4iW521ru7ESfxQulLi6kbl+n857a2BqWsLYbZ6/6etjvy9vOkyKpSYpDNSnppn2KQofuYDUYB0+fgGltLefG1K6CGg0uDZ2yL48rPy9BQYWW4pyY2lYSajSy8vjCKhbBOho+k4mN4AcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+EkWaCe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q15NRjPL9AjQ2+A5KoCLacMIUIKHUClVRj4nvsyPsKeQl96iQyAQqFSRvJkUFsJIMqN0PAGgF30CfkY9eZOC3NPbGa0sBoIGu1PcaJDdAJmtFO6vmCW1izCd4/Dum89+wAel8ghrzNzqXV/Gc7rub8KeUgicHCgsoHMUMwMOOHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cslrzLf4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+EkWaCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F93C4CEF0;
-	Tue, 12 Aug 2025 18:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cslrzLf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0990EC4CEF0;
+	Tue, 12 Aug 2025 18:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025014;
-	bh=MW/vofPSSYIX+PQqt3lrC6SbClqn5jYGqTy+W5mknjM=;
+	s=korg; t=1755025017;
+	bh=kaJJDdhQ873sp3RLo+GuW9modz9dA+jRnM+wldsj/+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+EkWaCej9l4b4P45XCyTblNub+DMUdZs5Rcve9KaoKyWtgWlRhBxaMyI6AaaPC4h
-	 OTC+4DgCWiGZrEQaPlfQ/xWfW2znv7WZCY1KGR5uBCuNgtcpbqQg1TlyS47br+RkTr
-	 hlpfzwjYmcsMsQ2gZLTRKEctU6uuLWfhS5Z7tLMw=
+	b=cslrzLf4xb256Nuo0vva5KhHciEQMCv79EB6BZ4aRBFAC3r4RtbhkTskmNmlHN/uA
+	 e9XZaVJMwtMUMnH37lYWaMe2wPaz9BpAVH1jo12ZA54z50NIxBHt/0pKt1oem8YR8/
+	 UpnEUa9dnpJ6sdSDMn+yTWdrxwi6dBijLLL1FCAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Mark Brown <broonie@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 544/627] benet: fix BUG when creating VFs
-Date: Tue, 12 Aug 2025 19:33:59 +0200
-Message-ID: <20250812173452.603303702@linuxfoundation.org>
+Subject: [PATCH 6.16 545/627] Revert "net: mdio_bus: Use devm for getting reset GPIO"
+Date: Tue, 12 Aug 2025 19:34:00 +0200
+Message-ID: <20250812173452.639813226@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,58 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 5a40f8af2ba1b9bdf46e2db10e8c9710538fbc63 ]
+[ Upstream commit 175811b8f05f0da3e19b7d3124666649ddde3802 ]
 
-benet crashes as soon as SRIOV VFs are created:
+This reverts commit 3b98c9352511db627b606477fc7944b2fa53a165.
 
- kernel BUG at mm/vmalloc.c:3457!
- Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
- CPU: 4 UID: 0 PID: 7408 Comm: test.sh Kdump: loaded Not tainted 6.16.0+ #1 PREEMPT(voluntary)
- [...]
- RIP: 0010:vunmap+0x5f/0x70
- [...]
- Call Trace:
-  <TASK>
-  __iommu_dma_free+0xe8/0x1c0
-  be_cmd_set_mac_list+0x3fe/0x640 [be2net]
-  be_cmd_set_mac+0xaf/0x110 [be2net]
-  be_vf_eth_addr_config+0x19f/0x330 [be2net]
-  be_vf_setup+0x4f7/0x990 [be2net]
-  be_pci_sriov_configure+0x3a1/0x470 [be2net]
-  sriov_numvfs_store+0x20b/0x380
-  kernfs_fop_write_iter+0x354/0x530
-  vfs_write+0x9b9/0xf60
-  ksys_write+0xf3/0x1d0
-  do_syscall_64+0x8c/0x3d0
+Russell says:
 
-be_cmd_set_mac_list() calls dma_free_coherent() under a spin_lock_bh.
-Fix it by freeing only after the lock has been released.
+  Using devm_*() [here] is completely wrong, because this is called
+  from mdiobus_register_device(). This is not the probe function
+  for the device, and thus there is no code to trigger the release of
+  the resource on unregistration.
 
-Fixes: 1a82d19ca2d6 ("be2net: fix sleeping while atomic bugs in be_ndo_bridge_getlink")
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250801101338.72502-1-mschmidt@redhat.com
+  Moreover, when the mdiodev is eventually probed, if the driver fails
+  or the driver is unbound, the GPIO will be released, but a reference
+  will be left behind.
+
+  Using devm* with a struct device that is *not* currently being probed
+  is fundamentally wrong - an abuse of devm.
+
+Reported-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/95449490-fa58-41d4-9493-c9213c1f2e7d@sirena.org.uk
+Suggested-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 3b98c9352511 ("net: mdio_bus: Use devm for getting reset GPIO")
+Link: https://patch.msgid.link/20250801212742.2607149-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/emulex/benet/be_cmds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/mdio_bus.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_cmds.c b/drivers/net/ethernet/emulex/benet/be_cmds.c
-index d730af4a50c7..bb5d2fa15736 100644
---- a/drivers/net/ethernet/emulex/benet/be_cmds.c
-+++ b/drivers/net/ethernet/emulex/benet/be_cmds.c
-@@ -3856,8 +3856,8 @@ int be_cmd_set_mac_list(struct be_adapter *adapter, u8 *mac_array,
- 	status = be_mcc_notify_wait(adapter);
- 
- err:
--	dma_free_coherent(&adapter->pdev->dev, cmd.size, cmd.va, cmd.dma);
- 	spin_unlock_bh(&adapter->mcc_lock);
-+	dma_free_coherent(&adapter->pdev->dev, cmd.size, cmd.va, cmd.dma);
- 	return status;
- }
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index 24bdab5bdd24..fda2e27c1810 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -36,8 +36,8 @@
+ static int mdiobus_register_gpiod(struct mdio_device *mdiodev)
+ {
+ 	/* Deassert the optional reset signal */
+-	mdiodev->reset_gpio = devm_gpiod_get_optional(&mdiodev->dev,
+-						      "reset", GPIOD_OUT_LOW);
++	mdiodev->reset_gpio = gpiod_get_optional(&mdiodev->dev,
++						 "reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(mdiodev->reset_gpio))
+ 		return PTR_ERR(mdiodev->reset_gpio);
  
 -- 
 2.39.5
