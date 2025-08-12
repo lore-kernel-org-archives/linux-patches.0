@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8FF1EF38C;
-	Tue, 12 Aug 2025 18:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085A41EF38C;
+	Tue, 12 Aug 2025 18:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023436; cv=none; b=R9X0ZrtldicIeXK+Q0u2winfTy/BPq98s0vfsYenHAXf2iiekMvLZJNQWulJkLrlLSFipaoJsrb3pbfMEjZGvP54A4T+pe3cUvXI/Ll/nkjGNuvVCTu+IqYEP2TdRcyX/Ct49M1jYNn4TKjqMW/mGSSuRT5KTULTYPABJB91iZM=
+	t=1755023440; cv=none; b=YZNa5Wyr0ldQR4dfAtPDs1LpbRT2Bfp2HioJl7PzEch+meDwcBdjsThy4Pqt3yEZzJxUhe00Q1KThTESQgd0rNEhiRaLOkcDb3uWuluWlrVaav7BUDauf42cNRl+2AGAWiW5Sis1D9+wrN0qlUE/U3x56PoJ3aSkW5/CxFvIEk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023436; c=relaxed/simple;
-	bh=WiYnjwRhQFSQgyeXE2R7GTndw9v1KUuTkh7Z2EsrZF8=;
+	s=arc-20240116; t=1755023440; c=relaxed/simple;
+	bh=W4hSqVJ2gyN08/mdJgaPGn7fTysXke3C+Nk7G2yt2GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t66WtDnV9D7IqJrpGkguoSnRzyQSfk69tjrQpvRCnziKEUp6+e7RmTuUXUYEBERco31kguD5vZuYyuQwpW9F54fIxqcVlM+6xX2PC1JhP6OFD9dIgcjYQfKs/BD/yD8xQBzXeJ65A1uZ6XirUHGtD5oQDvVTAa+C/RdFOVwi0GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvZeodtJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aIyYur8Np0967EFYLpgML9PpgYyzGxZj6IpmvGQu0g/G9H/oTDK81ELuTNto/ggcIeMfl2deOsvoDJuJe5kAi2zJI9AbyLePRtwYqayPHRLKbKmOm1NsvHF+Dg9qe4qoaLqZs6uC1bHgt0uqmCXw+1P0oYaFAMiwqs2anxmEi40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOBa68/+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvZeodtJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F585C4CEF0;
-	Tue, 12 Aug 2025 18:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOBa68/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B90BC4CEF0;
+	Tue, 12 Aug 2025 18:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023436;
-	bh=WiYnjwRhQFSQgyeXE2R7GTndw9v1KUuTkh7Z2EsrZF8=;
+	s=korg; t=1755023439;
+	bh=W4hSqVJ2gyN08/mdJgaPGn7fTysXke3C+Nk7G2yt2GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvZeodtJ+sTpaAei1P1nf65bE3+yw7NEVrHIPiTA7lAyaj72+I5THeL+NtZsF5OJX
-	 Hsc6T6+veiJ6WxTcAIQr2GPowNhraon7R6GXbxQEA9BR8ypecSNDupH6dsdc+hMGBO
-	 H+EsO7MhqYc6PlWBsCVM0rivBiN7JwS1vkwlqEDo=
+	b=aOBa68/+FrB/sD1gInSW3s1K4onY4yyTg1a0hsikDNqsamlxb5mM2uXwFQ3zGKdUP
+	 J7AjqMWS29e/UOPSd5j+bDJV8zeE2YffJwAv2pVIVsnrTmTkgW0ePWMcIajz00NCLw
+	 WUiDKp9Xrbj6UhchXH27q9c+m+LKC45CXY8TrLi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 079/627] staging: gpib: fix unset padding field copy back to userspace
-Date: Tue, 12 Aug 2025 19:26:14 +0200
-Message-ID: <20250812173422.313578678@linuxfoundation.org>
+Subject: [PATCH 6.16 080/627] staging: fbtft: fix potential memory leak in fbtft_framebuffer_alloc()
+Date: Tue, 12 Aug 2025 19:26:15 +0200
+Message-ID: <20250812173422.351875558@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit a739d3b13bff0dfa1aec679d08c7062131a2a425 ]
+[ Upstream commit eb2cb7dab60f9be0b435ac4a674255429a36d72c ]
 
-The introduction of a padding field in the gpib_board_info_ioctl is
-showing up as initialized data on the stack frame being copyied back
-to userspace in function board_info_ioctl. The simplest fix is to
-initialize the entire struct to zero to ensure all unassigned padding
-fields are zero'd before being copied back to userspace.
+In the error paths after fb_info structure is successfully allocated,
+the memory allocated in fb_deferred_io_init() for info->pagerefs is not
+freed. Fix that by adding the cleanup function on the error path.
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Fixes: 9dde4559e939 ("staging: gpib: Add GPIB common core driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20250623220958.280424-1-colin.i.king@gmail.com
+Fixes: c296d5f9957c ("staging: fbtft: core support")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250626172412.18355-1-abdun.nihaal@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/common/gpib_os.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/fbtft/fbtft-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/gpib/common/gpib_os.c b/drivers/staging/gpib/common/gpib_os.c
-index a193d64db033..93ef5f6ce249 100644
---- a/drivers/staging/gpib/common/gpib_os.c
-+++ b/drivers/staging/gpib/common/gpib_os.c
-@@ -1774,7 +1774,7 @@ static int query_board_rsv_ioctl(struct gpib_board *board, unsigned long arg)
+diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
+index da9c64152a60..39bced400065 100644
+--- a/drivers/staging/fbtft/fbtft-core.c
++++ b/drivers/staging/fbtft/fbtft-core.c
+@@ -692,6 +692,7 @@ struct fb_info *fbtft_framebuffer_alloc(struct fbtft_display *display,
+ 	return info;
  
- static int board_info_ioctl(const struct gpib_board *board, unsigned long arg)
- {
--	struct gpib_board_info_ioctl info;
-+	struct gpib_board_info_ioctl info = { };
- 	int retval;
+ release_framebuf:
++	fb_deferred_io_cleanup(info);
+ 	framebuffer_release(info);
  
- 	info.pad = board->pad;
+ alloc_fail:
 -- 
 2.39.5
 
