@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF2F217F35;
-	Tue, 12 Aug 2025 19:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0207620E023;
+	Tue, 12 Aug 2025 19:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026229; cv=none; b=NB1W0PTcpcvKGCOo/7QViscp4vYCscDbSv+reQ/0X1UhGAXXpYcqPLbpdZVjLjantN+VjJAQxm2ZAXGInoD6Ie1V+/ZK/a8Pvj4lGYt40HN6jQfWpOyUzxvPgE8h4M+MZo5seMgvQ/XntrOBX1YZLkQgRY1PpZnwq6+T9zGDxkQ=
+	t=1755026232; cv=none; b=UJ+YB48OlEZ3BbfRbgQMZmsqSswPu/xVewHJJ3csTMlo7S35qKET9uJSY1xLA9DWSIu/AkRkyz44QBvsvAZhqZSrKq/c1iu5mcwTVpUPRluTmLTr+7VZm3Trfsw0NBObfbooejuJgSiN6uMGc8r56bac46BLNZ/FgLAClL9bhfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026229; c=relaxed/simple;
-	bh=11tFE41Gab5VKXH2VZvUWliZXYoiu5VYoBTF+VBqNJw=;
+	s=arc-20240116; t=1755026232; c=relaxed/simple;
+	bh=lkc8TkyRWGIynRLrPZvPwBWXVVyCjlHsC1QQWak5tMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4pEpwh3ROsu1G5I37i7kbh0UfgeQokAHbsoruquaMuN8ojvMQWZd/r27m8eAF54dgUI57EfhHVRInO0YdjVDc1ylwcMBNUewMs2FrFt7TLGYf4zpPmwA78avaWa5NSNOen682n2WzT1HXkAMIngkRKdmUrh+jsXCQ6L5AtIC34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sajvzOXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gGGAMiprzw5G947MnlJGc6IRur0pyVcZZImJa2toSBfCmnLbUQr1eKbBftJlLKg+r/Z2ZnB94bvSQmWLDGhfxLWMqz944R+DM377X34a+wFu2jjruNNTveWPNoO97CLitMBAZmXO60JSWjm3Oy5Cdq0w8fK6KzZppPTWYX0Z2IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4TUmKjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sajvzOXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52957C4CEF0;
-	Tue, 12 Aug 2025 19:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4TUmKjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71153C4CEF0;
+	Tue, 12 Aug 2025 19:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026228;
-	bh=11tFE41Gab5VKXH2VZvUWliZXYoiu5VYoBTF+VBqNJw=;
+	s=korg; t=1755026231;
+	bh=lkc8TkyRWGIynRLrPZvPwBWXVVyCjlHsC1QQWak5tMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sajvzOXvKuoepBs7kVJFde1WDcfRm61NORGi/zWQrh+pUFZjkNlVTfxXcAAvD8bg0
-	 RA0YGa7+R+iSGjoV06Vvc830ADBq9ztLARtUImpPweqKbf3LH8yMQW+gtXEbaRVPM7
-	 FBN9wNO3kHV96eHO+gn2WsWtstILPQqH+SNmpozs=
+	b=f4TUmKjWHBrmZDhuaUw5t1Cn5ipefiNWK+Ds6eELFKIRxSxJQD9q5y4a4bJnz1xDj
+	 13diCeDZOHI3BaM//T03zHGv0zx/DfWtveVTt9obCdCEkL7G0nE6h6g558cY6W/kz1
+	 QTQJ7QZJF/y3XcsD/B3Fw3gxRdV64GGPEjWJZrB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	wangzijie <wangzijie1@honor.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
+	"Kirill A. Shuemov" <kirill.shutemov@linux.intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 258/480] perf sched: Make sure it frees the usage string
-Date: Tue, 12 Aug 2025 19:47:46 +0200
-Message-ID: <20250812174408.084426494@linuxfoundation.org>
+Subject: [PATCH 6.15 276/480] proc: use the same treatment to check proc_lseek as ones for proc_read_iter et.al
+Date: Tue, 12 Aug 2025 19:48:04 +0200
+Message-ID: <20250812174408.823582640@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,101 +56,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: wangzijie <wangzijie1@honor.com>
 
-[ Upstream commit 10d9b89203765fb776512742c13af8dd92821842 ]
+[ Upstream commit ff7ec8dc1b646296f8d94c39339e8d3833d16c05 ]
 
-The parse_options_subcommand() allocates the usage string based on the
-given subcommands.  So it should reach the end of the function to free
-the string to prevent memory leaks.
+Check pde->proc_ops->proc_lseek directly may cause UAF in rmmod scenario.
+It's a gap in proc_reg_open() after commit 654b33ada4ab("proc: fix UAF in
+proc_get_inode()").  Followed by AI Viro's suggestion, fix it in same
+manner.
 
-Fixes: 1a5efc9e13f357ab ("libsubcmd: Don't free the usage string")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250703014942.1369397-2-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lkml.kernel.org/r/20250607021353.1127963-1-wangzijie1@honor.com
+Fixes: 3f61631d47f1 ("take care to handle NULL ->proc_lseek()")
+Signed-off-by: wangzijie <wangzijie1@honor.com>
+Reviewed-by: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
+Cc: Kirill A. Shuemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ fs/proc/generic.c       | 2 ++
+ fs/proc/inode.c         | 2 +-
+ fs/proc/internal.h      | 5 +++++
+ include/linux/proc_fs.h | 1 +
+ 4 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 26ece6e9bfd1..b7bbfad0ed60 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -3902,9 +3902,9 @@ int cmd_sched(int argc, const char **argv)
- 	 * Aliased to 'perf script' for now:
- 	 */
- 	if (!strcmp(argv[0], "script")) {
--		return cmd_script(argc, argv);
-+		ret = cmd_script(argc, argv);
- 	} else if (strlen(argv[0]) > 2 && strstarts("record", argv[0])) {
--		return __cmd_record(argc, argv);
-+		ret = __cmd_record(argc, argv);
- 	} else if (strlen(argv[0]) > 2 && strstarts("latency", argv[0])) {
- 		sched.tp_handler = &lat_ops;
- 		if (argc > 1) {
-@@ -3913,7 +3913,7 @@ int cmd_sched(int argc, const char **argv)
- 				usage_with_options(latency_usage, latency_options);
- 		}
- 		setup_sorting(&sched, latency_options, latency_usage);
--		return perf_sched__lat(&sched);
-+		ret = perf_sched__lat(&sched);
- 	} else if (!strcmp(argv[0], "map")) {
- 		if (argc) {
- 			argc = parse_options(argc, argv, map_options, map_usage, 0);
-@@ -3924,13 +3924,14 @@ int cmd_sched(int argc, const char **argv)
- 				sched.map.task_names = strlist__new(sched.map.task_name, NULL);
- 				if (sched.map.task_names == NULL) {
- 					fprintf(stderr, "Failed to parse task names\n");
--					return -1;
-+					ret = -1;
-+					goto out;
- 				}
- 			}
- 		}
- 		sched.tp_handler = &map_ops;
- 		setup_sorting(&sched, latency_options, latency_usage);
--		return perf_sched__map(&sched);
-+		ret = perf_sched__map(&sched);
- 	} else if (strlen(argv[0]) > 2 && strstarts("replay", argv[0])) {
- 		sched.tp_handler = &replay_ops;
- 		if (argc) {
-@@ -3938,7 +3939,7 @@ int cmd_sched(int argc, const char **argv)
- 			if (argc)
- 				usage_with_options(replay_usage, replay_options);
- 		}
--		return perf_sched__replay(&sched);
-+		ret = perf_sched__replay(&sched);
- 	} else if (!strcmp(argv[0], "timehist")) {
- 		if (argc) {
- 			argc = parse_options(argc, argv, timehist_options,
-@@ -3954,19 +3955,19 @@ int cmd_sched(int argc, const char **argv)
- 				parse_options_usage(NULL, timehist_options, "w", true);
- 			if (sched.show_next)
- 				parse_options_usage(NULL, timehist_options, "n", true);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto out;
- 		}
- 		ret = symbol__validate_sym_arguments();
--		if (ret)
--			return ret;
--
--		return perf_sched__timehist(&sched);
-+		if (!ret)
-+			ret = perf_sched__timehist(&sched);
- 	} else {
- 		usage_with_options(sched_usage, sched_options);
- 	}
- 
-+out:
- 	/* free usage string allocated by parse_options_subcommand */
- 	free((void *)sched_usage[0]);
- 
--	return 0;
-+	return ret;
+diff --git a/fs/proc/generic.c b/fs/proc/generic.c
+index a3e22803cddf..e0e50914ab25 100644
+--- a/fs/proc/generic.c
++++ b/fs/proc/generic.c
+@@ -569,6 +569,8 @@ static void pde_set_flags(struct proc_dir_entry *pde)
+ 	if (pde->proc_ops->proc_compat_ioctl)
+ 		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
+ #endif
++	if (pde->proc_ops->proc_lseek)
++		pde->flags |= PROC_ENTRY_proc_lseek;
  }
+ 
+ struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
+diff --git a/fs/proc/inode.c b/fs/proc/inode.c
+index 3604b616311c..129490151be1 100644
+--- a/fs/proc/inode.c
++++ b/fs/proc/inode.c
+@@ -473,7 +473,7 @@ static int proc_reg_open(struct inode *inode, struct file *file)
+ 	typeof_member(struct proc_ops, proc_open) open;
+ 	struct pde_opener *pdeo;
+ 
+-	if (!pde->proc_ops->proc_lseek)
++	if (!pde_has_proc_lseek(pde))
+ 		file->f_mode &= ~FMODE_LSEEK;
+ 
+ 	if (pde_is_permanent(pde)) {
+diff --git a/fs/proc/internal.h b/fs/proc/internal.h
+index 96122e91c645..3d48ffe72583 100644
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -99,6 +99,11 @@ static inline bool pde_has_proc_compat_ioctl(const struct proc_dir_entry *pde)
+ #endif
+ }
+ 
++static inline bool pde_has_proc_lseek(const struct proc_dir_entry *pde)
++{
++	return pde->flags & PROC_ENTRY_proc_lseek;
++}
++
+ extern struct kmem_cache *proc_dir_entry_cache;
+ void pde_free(struct proc_dir_entry *pde);
+ 
+diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
+index ea62201c74c4..703d0c76cc9a 100644
+--- a/include/linux/proc_fs.h
++++ b/include/linux/proc_fs.h
+@@ -27,6 +27,7 @@ enum {
+ 
+ 	PROC_ENTRY_proc_read_iter	= 1U << 1,
+ 	PROC_ENTRY_proc_compat_ioctl	= 1U << 2,
++	PROC_ENTRY_proc_lseek		= 1U << 3,
+ };
+ 
+ struct proc_ops {
 -- 
 2.39.5
 
