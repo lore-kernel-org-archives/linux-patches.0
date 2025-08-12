@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6352868AF;
-	Tue, 12 Aug 2025 17:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7272868AF;
+	Tue, 12 Aug 2025 17:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021044; cv=none; b=lPPC7gGFhCRWzmecVcH+rDMUMvaLeBp7/wVSU/ST3/p7hB6KaKP3Ubp+dbvSyk/LsHhUQqrG5L2C+62lRcdOZNaLZsdWCzkZlfCIlHt30Ii9ddy6bm660gh37kO3Ov6ik0oKEM0nXgTlIIakxPOUmniQyud/d5OmVwwrf4eG23s=
+	t=1755021048; cv=none; b=qo92wg5A5URm0Eya/48T+XWSxYlX0m/2OZSdbNSTGXEx+8Pflj6xe7mAr6h1oIFbRHnN3BIEWEYrhM6UsX8yNyUz9iRC/nAOSWiPWTtbv5E6E1YHRngbtVf4Znigr9+j9GanyB91DVdLQCd6CAlTH/cQZZhFjbBeJRDxhZkWj6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021044; c=relaxed/simple;
-	bh=tEnQJ+Y0sm6gPbJEyJRChsTqjJUsv0PEaMj02kQcbA4=;
+	s=arc-20240116; t=1755021048; c=relaxed/simple;
+	bh=k5BXBCvDPhL7Oq8WwbftVIci606FyNNWuErtWOFRvLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNxGqYpEjtducnY0WCryu5GoZ5vQak06amKhBnawiedgBcOXp+GZl2+GYIliy48Lq7JbQ5uhwJpTHnJPgyvY8WbLGKIFJRGZwW9lEOCtt6guHtyigj1oJ+INWMdy/zkp3C67Y8bpBHg90Myo5KaEqkovqltYnvK0gnz3B+GW1W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLRdEwKY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwlCLw2QW3Yk5ll1dz0FPGbdWGeUoYpvpaga+MIMFeEf67jJhY+beEcFu3fYPZmSrSKMKzjyn67BBcdI7QpOXeTGcDuRH+CKanD82QbwBZROJ1sdW9QgWAincumOu4Itvu8E75gHoBROebN5Lw7bZ3YDErrzd0qcXVGYKFBZk2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgRDqUd+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLRdEwKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0186C4CEF1;
-	Tue, 12 Aug 2025 17:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgRDqUd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39712C4CEF0;
+	Tue, 12 Aug 2025 17:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021044;
-	bh=tEnQJ+Y0sm6gPbJEyJRChsTqjJUsv0PEaMj02kQcbA4=;
+	s=korg; t=1755021047;
+	bh=k5BXBCvDPhL7Oq8WwbftVIci606FyNNWuErtWOFRvLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aLRdEwKYM4+fBRkz8kcBBKK3GqeZ6+vgCLJHHHh9AtluKF1q7OUMwLEUMBRMFC00a
-	 5iL64MNi3sUi7MTZ7Ql3NSvK6qfuttdSj6W6lh339PrKAp5ATQG8hmbWD08Le/Bb4F
-	 ILbVjNuizs7Plg/efgQbd5p8gLfnKhFtryil7ZeE=
+	b=EgRDqUd+qEHEmFyA3VIQbcRKOY7hzaE1vwIT16aMnD5cstdNR73PG4GdGRB+b4pzq
+	 TloTLkgnLslOWmISW+XIfqLjaUPjI7AXuWokxatXQvABsFHW0epG4mQ50fdfS+ZBZD
+	 Xcwika+6R5+oYUUx0nNQjNNlSVCnfEiXT6CrG0OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghui Lee <sh043.lee@samsung.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Quentin Monnet <qmo@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 203/253] scsi: ufs: core: Use link recovery when h8 exit fails during runtime resume
-Date: Tue, 12 Aug 2025 19:29:51 +0200
-Message-ID: <20250812172957.452869869@linuxfoundation.org>
+Subject: [PATCH 6.6 054/262] bpftool: Fix memory leak in dump_xx_nlmsg on realloc failure
+Date: Tue, 12 Aug 2025 19:27:22 +0200
+Message-ID: <20250812172955.279925298@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +48,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Seunghui Lee <sh043.lee@samsung.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 35dabf4503b94a697bababe94678a8bc989c3223 ]
+[ Upstream commit 99fe8af069a9fa5b09140518b1364e35713a642e ]
 
-If the h8 exit fails during runtime resume process, the runtime thread
-enters runtime suspend immediately and the error handler operates at the
-same time.  It becomes stuck and cannot be recovered through the error
-handler.  To fix this, use link recovery instead of the error handler.
+In function dump_xx_nlmsg(), when realloc() fails to allocate memory,
+the original pointer to the buffer is overwritten with NULL. This causes
+a memory leak because the previously allocated buffer becomes unreachable
+without being freed.
 
-Fixes: 4db7a2360597 ("scsi: ufs: Fix concurrency of error handler and other error recovery paths")
-Signed-off-by: Seunghui Lee <sh043.lee@samsung.com>
-Link: https://lore.kernel.org/r/20250717081213.6811-1-sh043.lee@samsung.com
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Acked-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 7900efc19214 ("tools/bpf: bpftool: improve output format for bpftool net")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/r/20250620012133.14819-1-chenyuan_fl@163.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/net.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index dc17ae1dfe26..f9adb1106747 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4125,7 +4125,7 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 	hba->uic_async_done = NULL;
- 	if (reenable_intr)
- 		ufshcd_enable_intr(hba, UIC_COMMAND_COMPL);
--	if (ret) {
-+	if (ret && !hba->pm_op_in_progress) {
- 		ufshcd_set_link_broken(hba);
- 		ufshcd_schedule_eh_work(hba);
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index 28e9417a5c2e..c2ca82fc21e2 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -360,17 +360,18 @@ static int dump_link_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ {
+ 	struct bpf_netdev_t *netinfo = cookie;
+ 	struct ifinfomsg *ifinfo = msg;
++	struct ip_devname_ifindex *tmp;
+ 
+ 	if (netinfo->filter_idx > 0 && netinfo->filter_idx != ifinfo->ifi_index)
+ 		return 0;
+ 
+ 	if (netinfo->used_len == netinfo->array_len) {
+-		netinfo->devices = realloc(netinfo->devices,
+-			(netinfo->array_len + 16) *
+-			sizeof(struct ip_devname_ifindex));
+-		if (!netinfo->devices)
++		tmp = realloc(netinfo->devices,
++			(netinfo->array_len + 16) * sizeof(struct ip_devname_ifindex));
++		if (!tmp)
+ 			return -ENOMEM;
+ 
++		netinfo->devices = tmp;
+ 		netinfo->array_len += 16;
  	}
-@@ -4133,6 +4133,14 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 	spin_unlock_irqrestore(hba->host->host_lock, flags);
- 	mutex_unlock(&hba->uic_cmd_mutex);
+ 	netinfo->devices[netinfo->used_len].ifindex = ifinfo->ifi_index;
+@@ -389,6 +390,7 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ {
+ 	struct bpf_tcinfo_t *tcinfo = cookie;
+ 	struct tcmsg *info = msg;
++	struct tc_kind_handle *tmp;
  
-+	/*
-+	 * If the h8 exit fails during the runtime resume process, it becomes
-+	 * stuck and cannot be recovered through the error handler.  To fix
-+	 * this, use link recovery instead of the error handler.
-+	 */
-+	if (ret && hba->pm_op_in_progress)
-+		ret = ufshcd_link_recovery(hba);
-+
- 	return ret;
- }
+ 	if (tcinfo->is_qdisc) {
+ 		/* skip clsact qdisc */
+@@ -400,11 +402,12 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ 	}
  
+ 	if (tcinfo->used_len == tcinfo->array_len) {
+-		tcinfo->handle_array = realloc(tcinfo->handle_array,
++		tmp = realloc(tcinfo->handle_array,
+ 			(tcinfo->array_len + 16) * sizeof(struct tc_kind_handle));
+-		if (!tcinfo->handle_array)
++		if (!tmp)
+ 			return -ENOMEM;
+ 
++		tcinfo->handle_array = tmp;
+ 		tcinfo->array_len += 16;
+ 	}
+ 	tcinfo->handle_array[tcinfo->used_len].handle = info->tcm_handle;
 -- 
 2.39.5
 
