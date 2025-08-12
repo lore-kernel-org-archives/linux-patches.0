@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB092DBF5E;
-	Tue, 12 Aug 2025 18:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3DA1D416C;
+	Tue, 12 Aug 2025 18:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022858; cv=none; b=EBrlHIBP1F+X3WKvdihJ0O01Q9p3iqLpoCo0VI9cSWeTObH46URm4WDAiM8FCauOYfuF5fpLX74ZUF6ZCAv2FW7AaTtMUjSN2YlUPmY6HW4TSpOrUDKdIaEmXxb2R3VCc6TQ8kEbtA1DBpu/8YWEC7r4sakrgngDonqMd4nAKeU=
+	t=1755022861; cv=none; b=JR+fVmaIWc/9PJR3UBCwouIsOohL8U+WBbhGvbhv2X+J1/LRQGZtlFwPeGBC26sYtmCRdl0z5ff2rfBX5kJQzQvF5/A9XN/AA09fT/q5fz0JKWZPohlZBAyJTHWeXTy5+C/IfEUL3m65B9kEDQOf0KzSUFTlEZ6QpudRkxpDyic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022858; c=relaxed/simple;
-	bh=7lbq0Iid/kNfePSk/IdVQmpVkiOEM6hGfbbMKLITvsE=;
+	s=arc-20240116; t=1755022861; c=relaxed/simple;
+	bh=PVaFaalyHH4Y3v6O0fhALNEaDIy7Eovu8tNkqC4qLNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqrdhTMjznSdfcUr7mGhg9s697GdidT5U2lBtvbMUQ4yEJQFboU4o5vdyqSbSbiixvWUPJrX/E6tHLPtOopwhtQSJSpuoZMvGD22U6OzFiqNpDWGlStvPJOpUHfiSRIPGrUI4uGtKq9n6Ju7axr7f3kRl4TLv7dbmQbkzHF4tgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCIidV97; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RKf8pwu/pyiJYktlRT6xZ0rtN1iYDfHGAZ0NrQB69Fc/0ov0s9AcoqTB/2nkZA9t83FepmhT4Ri6hSj5lUz+Lbt6DiRXFPU0GprE6R29whqWKepCY5TLtXlp9YhuH3k3UjL2N7PEdlYNhfUIs7zz71Zxz2hblaEVYwk/iL0Hrvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEvP4dAM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCIidV97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D288C4CEF1;
-	Tue, 12 Aug 2025 18:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEvP4dAM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52F7C4CEF1;
+	Tue, 12 Aug 2025 18:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022857;
-	bh=7lbq0Iid/kNfePSk/IdVQmpVkiOEM6hGfbbMKLITvsE=;
+	s=korg; t=1755022861;
+	bh=PVaFaalyHH4Y3v6O0fhALNEaDIy7Eovu8tNkqC4qLNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCIidV97O5/cNno1Fc8f2wCYv2BDXlCmfHa3VeYepEmXOSE8NogG/w5Nez5EWI5LD
-	 AqZ4hNyC+LTWVpBO4n13o9Zs4+bx4l/HL9NSZ0rSMnyzg6Yo0RngbiXvVUTq3s2X+A
-	 6oarlOoQLxi0BiigWR+QE/aBlIf8J54TLwphyKoo=
+	b=WEvP4dAMRwi8oBa4iPbEGXtkzmq4zWa/W3CTFCNyLIlVX7xwjNoGsvKzq57Ihgsd3
+	 giM/al1sKBQxvBS6sMMZT/D3iHt/OsOjxj3U9kC7Jw1Sb+LIEGdu7umf33lHmQwiRy
+	 IsEynTV/udbElojyCZ5FXB2ffvF10uYBznBK0Ur4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 278/369] powerpc/eeh: Make EEH driver device hotplug safe
-Date: Tue, 12 Aug 2025 19:29:35 +0200
-Message-ID: <20250812173026.236960203@linuxfoundation.org>
+Subject: [PATCH 6.12 279/369] PCI: pnv_php: Fix surprise plug detection and recovery
+Date: Tue, 12 Aug 2025 19:29:36 +0200
+Message-ID: <20250812173026.443805787@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -54,248 +54,211 @@ Content-Transfer-Encoding: 8bit
 
 From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit 1010b4c012b0d78dfb9d3132b49aa2ef024a07a7 ]
+[ Upstream commit a2a2a6fc2469524caa713036297c542746d148dc ]
 
-Multiple race conditions existed between the PCIe hotplug driver and the
-EEH driver, leading to a variety of kernel oopses of the same general
-nature:
+The existing PowerNV hotplug code did not handle surprise plug events
+correctly, leading to a complete failure of the hotplug system after device
+removal and a required reboot to detect new devices.
 
-<pcie device unplug>
-<eeh driver trigger>
-<hotplug removal trigger>
-<pcie tree reconfiguration>
-<eeh recovery next step>
-<oops in EEH driver bus iteration loop>
+This comes down to two issues:
 
-A second class of oops is also seen when the underlying bus disappears
-during device recovery.
+ 1) When a device is surprise removed, often the bridge upstream
+    port will cause a PE freeze on the PHB.  If this freeze is not
+    cleared, the MSI interrupts from the bridge hotplug notification
+    logic will not be received by the kernel, stalling all plug events
+    on all slots associated with the PE.
 
-Refactor the EEH module to be PCI rescan and remove safe.  Also clean
-up a few minor formatting / readability issues.
+ 2) When a device is removed from a slot, regardless of surprise or
+    programmatic removal, the associated PHB/PE ls left frozen.
+    If this freeze is not cleared via a fundamental reset, skiboot
+    is unable to clear the freeze and cannot retrain / rescan the
+    slot.  This also requires a reboot to clear the freeze and redetect
+    the device in the slot.
+
+Issue the appropriate unfreeze and rescan commands on hotplug events,
+and don't oops on hotplug if pci_bus_to_OF_node() returns NULL.
 
 Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+[bhelgaas: tidy comments]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/1334208367.1359861.1752615503144.JavaMail.zimbra@raptorengineeringinc.com
+Link: https://patch.msgid.link/171044224.1359864.1752615546988.JavaMail.zimbra@raptorengineeringinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh_driver.c | 48 +++++++++++++++++++++-----------
- arch/powerpc/kernel/eeh_pe.c     | 10 ++++---
- 2 files changed, 38 insertions(+), 20 deletions(-)
+ arch/powerpc/kernel/pci-hotplug.c |   3 +
+ drivers/pci/hotplug/pnv_php.c     | 110 +++++++++++++++++++++++++++++-
+ 2 files changed, 110 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
-index 7efe04c68f0f..dd50de91c438 100644
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -257,13 +257,12 @@ static void eeh_pe_report_edev(struct eeh_dev *edev, eeh_report_fn fn,
- 	struct pci_driver *driver;
- 	enum pci_ers_result new_result;
+diff --git a/arch/powerpc/kernel/pci-hotplug.c b/arch/powerpc/kernel/pci-hotplug.c
+index 9ea74973d78d..6f444d0822d8 100644
+--- a/arch/powerpc/kernel/pci-hotplug.c
++++ b/arch/powerpc/kernel/pci-hotplug.c
+@@ -141,6 +141,9 @@ void pci_hp_add_devices(struct pci_bus *bus)
+ 	struct pci_controller *phb;
+ 	struct device_node *dn = pci_bus_to_OF_node(bus);
  
--	pci_lock_rescan_remove();
- 	pdev = edev->pdev;
- 	if (pdev)
- 		get_device(&pdev->dev);
--	pci_unlock_rescan_remove();
- 	if (!pdev) {
- 		eeh_edev_info(edev, "no device");
-+		*result = PCI_ERS_RESULT_DISCONNECT;
- 		return;
- 	}
- 	device_lock(&pdev->dev);
-@@ -304,8 +303,9 @@ static void eeh_pe_report(const char *name, struct eeh_pe *root,
- 	struct eeh_dev *edev, *tmp;
- 
- 	pr_info("EEH: Beginning: '%s'\n", name);
--	eeh_for_each_pe(root, pe) eeh_pe_for_each_dev(pe, edev, tmp)
--		eeh_pe_report_edev(edev, fn, result);
-+	eeh_for_each_pe(root, pe)
-+		eeh_pe_for_each_dev(pe, edev, tmp)
-+			eeh_pe_report_edev(edev, fn, result);
- 	if (result)
- 		pr_info("EEH: Finished:'%s' with aggregate recovery state:'%s'\n",
- 			name, pci_ers_result_name(*result));
-@@ -383,6 +383,8 @@ static void eeh_dev_restore_state(struct eeh_dev *edev, void *userdata)
- 	if (!edev)
- 		return;
- 
-+	pci_lock_rescan_remove();
++	if (!dn)
++		return;
 +
- 	/*
- 	 * The content in the config space isn't saved because
- 	 * the blocked config space on some adapters. We have
-@@ -393,14 +395,19 @@ static void eeh_dev_restore_state(struct eeh_dev *edev, void *userdata)
- 		if (list_is_last(&edev->entry, &edev->pe->edevs))
- 			eeh_pe_restore_bars(edev->pe);
+ 	phb = pci_bus_to_host(bus);
  
-+		pci_unlock_rescan_remove();
- 		return;
- 	}
+ 	mode = PCI_PROBE_NORMAL;
+diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
+index 5476c9e7760d..4f85e7fe29ec 100644
+--- a/drivers/pci/hotplug/pnv_php.c
++++ b/drivers/pci/hotplug/pnv_php.c
+@@ -4,12 +4,14 @@
+  *
+  * Copyright Gavin Shan, IBM Corporation 2016.
+  * Copyright (C) 2025 Raptor Engineering, LLC
++ * Copyright (C) 2025 Raptor Computing Systems, LLC
+  */
  
- 	pdev = eeh_dev_to_pci_dev(edev);
--	if (!pdev)
-+	if (!pdev) {
-+		pci_unlock_rescan_remove();
- 		return;
-+	}
+ #include <linux/bitfield.h>
+ #include <linux/libfdt.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
++#include <linux/delay.h>
+ #include <linux/pci_hotplug.h>
+ #include <linux/of_fdt.h>
  
- 	pci_restore_state(pdev);
-+
-+	pci_unlock_rescan_remove();
- }
- 
- /**
-@@ -647,9 +654,7 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
- 	if (any_passed || driver_eeh_aware || (pe->type & EEH_PE_VF)) {
- 		eeh_pe_dev_traverse(pe, eeh_rmv_device, rmv_data);
- 	} else {
--		pci_lock_rescan_remove();
- 		pci_hp_remove_devices(bus);
--		pci_unlock_rescan_remove();
- 	}
- 
- 	/*
-@@ -665,8 +670,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
- 	if (rc)
- 		return rc;
- 
--	pci_lock_rescan_remove();
--
- 	/* Restore PE */
- 	eeh_ops->configure_bridge(pe);
- 	eeh_pe_restore_bars(pe);
-@@ -674,7 +677,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
- 	/* Clear frozen state */
- 	rc = eeh_clear_pe_frozen_state(pe, false);
- 	if (rc) {
--		pci_unlock_rescan_remove();
- 		return rc;
- 	}
- 
-@@ -709,7 +711,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
- 	pe->tstamp = tstamp;
- 	pe->freeze_count = cnt;
- 
--	pci_unlock_rescan_remove();
+@@ -469,6 +471,61 @@ static int pnv_php_set_attention_state(struct hotplug_slot *slot, u8 state)
  	return 0;
  }
  
-@@ -843,10 +844,13 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
- 		{LIST_HEAD_INIT(rmv_data.removed_vf_list), 0};
- 	int devices = 0;
- 
-+	pci_lock_rescan_remove();
++static int pnv_php_activate_slot(struct pnv_php_slot *php_slot,
++				 struct hotplug_slot *slot)
++{
++	int ret, i;
 +
- 	bus = eeh_pe_bus_get(pe);
- 	if (!bus) {
- 		pr_err("%s: Cannot find PCI bus for PHB#%x-PE#%x\n",
- 			__func__, pe->phb->global_number, pe->addr);
-+		pci_unlock_rescan_remove();
- 		return;
- 	}
- 
-@@ -1094,10 +1098,15 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
- 		eeh_pe_state_clear(pe, EEH_PE_PRI_BUS, true);
- 		eeh_pe_dev_mode_mark(pe, EEH_DEV_REMOVED);
- 
--		pci_lock_rescan_remove();
--		pci_hp_remove_devices(bus);
--		pci_unlock_rescan_remove();
-+		bus = eeh_pe_bus_get(pe);
-+		if (bus)
-+			pci_hp_remove_devices(bus);
-+		else
-+			pr_err("%s: PCI bus for PHB#%x-PE#%x disappeared\n",
-+				__func__, pe->phb->global_number, pe->addr);
++	/*
++	 * Issue initial slot activation command to firmware
++	 *
++	 * Firmware will power slot on, attempt to train the link, and
++	 * discover any downstream devices. If this process fails, firmware
++	 * will return an error code and an invalid device tree. Failure
++	 * can be caused for multiple reasons, including a faulty
++	 * downstream device, poor connection to the downstream device, or
++	 * a previously latched PHB fence.  On failure, issue fundamental
++	 * reset up to three times before aborting.
++	 */
++	ret = pnv_php_set_slot_power_state(slot, OPAL_PCI_SLOT_POWER_ON);
++	if (ret) {
++		SLOT_WARN(
++			php_slot,
++			"PCI slot activation failed with error code %d, possible frozen PHB",
++			ret);
++		SLOT_WARN(
++			php_slot,
++			"Attempting complete PHB reset before retrying slot activation\n");
++		for (i = 0; i < 3; i++) {
++			/*
++			 * Slot activation failed, PHB may be fenced from a
++			 * prior device failure.
++			 *
++			 * Use the OPAL fundamental reset call to both try a
++			 * device reset and clear any potentially active PHB
++			 * fence / freeze.
++			 */
++			SLOT_WARN(php_slot, "Try %d...\n", i + 1);
++			pci_set_pcie_reset_state(php_slot->pdev,
++						 pcie_warm_reset);
++			msleep(250);
++			pci_set_pcie_reset_state(php_slot->pdev,
++						 pcie_deassert_reset);
 +
- 		/* The passed PE should no longer be used */
-+		pci_unlock_rescan_remove();
- 		return;
- 	}
- 
-@@ -1114,6 +1123,8 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
- 			eeh_clear_slot_attention(edev->pdev);
- 
- 	eeh_pe_state_clear(pe, EEH_PE_RECOVERING, true);
-+
-+	pci_unlock_rescan_remove();
- }
- 
- /**
-@@ -1132,6 +1143,7 @@ void eeh_handle_special_event(void)
- 	unsigned long flags;
- 	int rc;
- 
-+	pci_lock_rescan_remove();
- 
- 	do {
- 		rc = eeh_ops->next_error(&pe);
-@@ -1171,10 +1183,12 @@ void eeh_handle_special_event(void)
- 
- 			break;
- 		case EEH_NEXT_ERR_NONE:
-+			pci_unlock_rescan_remove();
- 			return;
- 		default:
- 			pr_warn("%s: Invalid value %d from next_error()\n",
- 				__func__, rc);
-+			pci_unlock_rescan_remove();
- 			return;
- 		}
- 
-@@ -1186,7 +1200,9 @@ void eeh_handle_special_event(void)
- 		if (rc == EEH_NEXT_ERR_FROZEN_PE ||
- 		    rc == EEH_NEXT_ERR_FENCED_PHB) {
- 			eeh_pe_state_mark(pe, EEH_PE_RECOVERING);
-+			pci_unlock_rescan_remove();
- 			eeh_handle_normal_event(pe);
-+			pci_lock_rescan_remove();
- 		} else {
- 			eeh_for_each_pe(pe, tmp_pe)
- 				eeh_pe_for_each_dev(tmp_pe, edev, tmp_edev)
-@@ -1199,7 +1215,6 @@ void eeh_handle_special_event(void)
- 				eeh_report_failure, NULL);
- 			eeh_set_channel_state(pe, pci_channel_io_perm_failure);
- 
--			pci_lock_rescan_remove();
- 			list_for_each_entry(hose, &hose_list, list_node) {
- 				phb_pe = eeh_phb_pe_get(hose);
- 				if (!phb_pe ||
-@@ -1218,7 +1233,6 @@ void eeh_handle_special_event(void)
- 				}
- 				pci_hp_remove_devices(bus);
- 			}
--			pci_unlock_rescan_remove();
- 		}
- 
- 		/*
-@@ -1228,4 +1242,6 @@ void eeh_handle_special_event(void)
- 		if (rc == EEH_NEXT_ERR_DEAD_IOC)
- 			break;
- 	} while (rc != EEH_NEXT_ERR_NONE);
-+
-+	pci_unlock_rescan_remove();
- }
-diff --git a/arch/powerpc/kernel/eeh_pe.c b/arch/powerpc/kernel/eeh_pe.c
-index d283d281d28e..e740101fadf3 100644
---- a/arch/powerpc/kernel/eeh_pe.c
-+++ b/arch/powerpc/kernel/eeh_pe.c
-@@ -671,10 +671,12 @@ static void eeh_bridge_check_link(struct eeh_dev *edev)
- 	eeh_ops->write_config(edev, cap + PCI_EXP_LNKCTL, 2, val);
- 
- 	/* Check link */
--	if (!edev->pdev->link_active_reporting) {
--		eeh_edev_dbg(edev, "No link reporting capability\n");
--		msleep(1000);
--		return;
-+	if (edev->pdev) {
-+		if (!edev->pdev->link_active_reporting) {
-+			eeh_edev_dbg(edev, "No link reporting capability\n");
-+			msleep(1000);
-+			return;
++			ret = pnv_php_set_slot_power_state(
++				slot, OPAL_PCI_SLOT_POWER_ON);
++			if (!ret)
++				break;
 +		}
- 	}
++
++		if (i >= 3)
++			SLOT_WARN(php_slot,
++				  "Failed to bring slot online, aborting!\n");
++	}
++
++	return ret;
++}
++
+ static int pnv_php_enable(struct pnv_php_slot *php_slot, bool rescan)
+ {
+ 	struct hotplug_slot *slot = &php_slot->slot;
+@@ -531,7 +588,7 @@ static int pnv_php_enable(struct pnv_php_slot *php_slot, bool rescan)
+ 		goto scan;
  
- 	/* Wait the link is up until timeout (5s) */
+ 	/* Power is off, turn it on and then scan the slot */
+-	ret = pnv_php_set_slot_power_state(slot, OPAL_PCI_SLOT_POWER_ON);
++	ret = pnv_php_activate_slot(php_slot, slot);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -838,16 +895,63 @@ static int pnv_php_enable_msix(struct pnv_php_slot *php_slot)
+ 	return entry.vector;
+ }
+ 
++static void
++pnv_php_detect_clear_suprise_removal_freeze(struct pnv_php_slot *php_slot)
++{
++	struct pci_dev *pdev = php_slot->pdev;
++	struct eeh_dev *edev;
++	struct eeh_pe *pe;
++	int i, rc;
++
++	/*
++	 * When a device is surprise removed from a downstream bridge slot,
++	 * the upstream bridge port can still end up frozen due to related EEH
++	 * events, which will in turn block the MSI interrupts for slot hotplug
++	 * detection.
++	 *
++	 * Detect and thaw any frozen upstream PE after slot deactivation.
++	 */
++	edev = pci_dev_to_eeh_dev(pdev);
++	pe = edev ? edev->pe : NULL;
++	rc = eeh_pe_get_state(pe);
++	if ((rc == -ENODEV) || (rc == -ENOENT)) {
++		SLOT_WARN(
++			php_slot,
++			"Upstream bridge PE state unknown, hotplug detect may fail\n");
++	} else {
++		if (pe->state & EEH_PE_ISOLATED) {
++			SLOT_WARN(
++				php_slot,
++				"Upstream bridge PE %02x frozen, thawing...\n",
++				pe->addr);
++			for (i = 0; i < 3; i++)
++				if (!eeh_unfreeze_pe(pe))
++					break;
++			if (i >= 3)
++				SLOT_WARN(
++					php_slot,
++					"Unable to thaw PE %02x, hotplug detect will fail!\n",
++					pe->addr);
++			else
++				SLOT_WARN(php_slot,
++					  "PE %02x thawed successfully\n",
++					  pe->addr);
++		}
++	}
++}
++
+ static void pnv_php_event_handler(struct work_struct *work)
+ {
+ 	struct pnv_php_event *event =
+ 		container_of(work, struct pnv_php_event, work);
+ 	struct pnv_php_slot *php_slot = event->php_slot;
+ 
+-	if (event->added)
++	if (event->added) {
+ 		pnv_php_enable_slot(&php_slot->slot);
+-	else
++	} else {
+ 		pnv_php_disable_slot(&php_slot->slot);
++		pnv_php_detect_clear_suprise_removal_freeze(php_slot);
++	}
+ 
+ 	kfree(event);
+ }
 -- 
 2.39.5
 
