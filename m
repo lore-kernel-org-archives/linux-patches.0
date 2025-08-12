@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1645A2F8BE7;
-	Tue, 12 Aug 2025 17:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7215A2F83CB;
+	Tue, 12 Aug 2025 17:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021336; cv=none; b=XLnespp0+fn3zfE/3PtQQ/Cce0L8m5+qFdyK+FKle3HB6/+LWSZi9oTwmfn5W7vST8DvzaaMLRLauZ6n2TqwzN33RLj9S+10PQkh5YXYNofnPYUZ2sTVkOKAA5u1V2JeDHU70zrjDmedGDmCjhZjL5e1JO4+cpXR1GFv/LKJqwI=
+	t=1755021339; cv=none; b=FS6inkJVfzK1qRvKifREuhsG4D5Fxn0LyJwz6m0VHj6pbuYo4bDd17dkdsrnVgBCy3LCi0vy9fkRSeNMCzCdh3W+0QaidnDrwQwh0I9IDyzZR4NjOXWo5suZKkb7Tg7KR0hm4Ihzg7YUaGUOO3MhG5hMinTJqInVQ22MCxH7rSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021336; c=relaxed/simple;
-	bh=JSj/qbkFQ3fCQhSihoMTfshuFoBKKMy9ryU3bPQ3QMQ=;
+	s=arc-20240116; t=1755021339; c=relaxed/simple;
+	bh=OjRFGQ6WABinM/uiTfPTWvBA1IOZYBoXVukGYDrPjyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HmHOqWZH7o8KiyZ0EJ1l/vcPePHo/azny6pFUC5cB2gTTdLzFaD/5C84OQ6SY2yhkL/Hir1IS8oRymLQt9W+oTqJRCQegRkwwcYU5V72rYd0iyyqtYE/poS9Dl4ALZwo5k0LX3TVRb3gIG+y2orIbDrrdcw3jI83t/Wa7xYtp14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfaUTTBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6PzI2Oeb7vosWQU2spF/FeKiBPvu7sYUtWoZBVLOTGVOuUgayq8KpvyR4eUA6amKbGdrU/Z7tJRgGGn+Xh0WwKL2Bn8iz+k5ozbmRiyiw+lTmGlOmxs2yfZskeW579sKgydpnEG0neZ0MkqZJyRp4Wj/QXwpOdrIoVrPFLTf70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkPvSwi9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfaUTTBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A29CC4CEF1;
-	Tue, 12 Aug 2025 17:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkPvSwi9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57DDC4CEF1;
+	Tue, 12 Aug 2025 17:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021336;
-	bh=JSj/qbkFQ3fCQhSihoMTfshuFoBKKMy9ryU3bPQ3QMQ=;
+	s=korg; t=1755021339;
+	bh=OjRFGQ6WABinM/uiTfPTWvBA1IOZYBoXVukGYDrPjyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfaUTTBUu1UlW6e40MUyaQ46mTfVP1sfSFyk3qYv0BjK8qh8+gz0J1oUCjjSLr/e7
-	 8rsqVaboFDsegmSRJ09ECwxf9xS+YTaQ4ugLTUMwwHazVaFCW1qdyaKP7lMnmEb6wp
-	 Cd0l9fFRfOAKW32Bs9v7bzPXK5nM0vNlVEg8pmsw=
+	b=SkPvSwi9QkpWWna5rLbtWCV9Y2A9OFt3fnROpUEN7B3CnlGS3FkHmFB6Gclv09xE1
+	 lPIr2VdY5AcqPSfAvnSD4LsIguFodrB17m8SF8QJ2KZDQH6ALTEgbdUnKhv/XoKAqT
+	 ShZ8FL6kFoTDqCdWiYzkAREWjQhH6FYnYjalgI+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/262] can: kvaser_usb: Assign netdev.dev_port based on device channel index
-Date: Tue, 12 Aug 2025 19:28:05 +0200
-Message-ID: <20250812172957.219229066@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Chao Gao <chao.gao@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 250/253] x86/fpu: Delay instruction pointer fixup until after warning
+Date: Tue, 12 Aug 2025 19:30:38 +0200
+Message-ID: <20250812172959.505614566@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-[ Upstream commit c151b06a087a61c7a1790b75ee2f1d6edb6a8a45 ]
+commit 1cec9ac2d071cfd2da562241aab0ef701355762a upstream.
 
-Assign netdev.dev_port based on the device channel index, to indicate the
-port number of the network device.
-While this driver already uses netdev.dev_id for that purpose, dev_port is
-more appropriate. However, retain dev_id to avoid potential regressions.
+Right now, if XRSTOR fails a console message like this is be printed:
 
-Fixes: 3e66d0138c05 ("can: populate netdev::dev_id for udev discrimination")
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://patch.msgid.link/20250725123452.41-4-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	Bad FPU state detected at restore_fpregs_from_fpstate+0x9a/0x170, reinitializing FPU registers.
+
+However, the text location (...+0x9a in this case) is the instruction
+*AFTER* the XRSTOR. The highlighted instruction in the "Code:" dump
+also points one instruction late.
+
+The reason is that the "fixup" moves RIP up to pass the bad XRSTOR and
+keep on running after returning from the #GP handler. But it does this
+fixup before warning.
+
+The resulting warning output is nonsensical because it looks like the
+non-FPU-related instruction is #GP'ing.
+
+Do not fix up RIP until after printing the warning. Do this by using
+the more generic and standard ex_handler_default().
+
+Fixes: d5c8028b4788 ("x86/fpu: Reinitialize FPU registers if restoring FPU state fails")
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Acked-by: Alison Schofield <alison.schofield@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250624210148.97126F9E%40davehans-spike.ostc.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/mm/extable.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-index 15f28b6fe758..022b5b79247c 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-@@ -856,6 +856,7 @@ static int kvaser_usb_init_one(struct kvaser_usb *dev, int channel)
- 	}
- 	SET_NETDEV_DEV(netdev, &dev->intf->dev);
- 	netdev->dev_id = channel;
-+	netdev->dev_port = channel;
+--- a/arch/x86/mm/extable.c
++++ b/arch/x86/mm/extable.c
+@@ -121,13 +121,12 @@ static bool ex_handler_sgx(const struct
+ static bool ex_handler_fprestore(const struct exception_table_entry *fixup,
+ 				 struct pt_regs *regs)
+ {
+-	regs->ip = ex_fixup_addr(fixup);
+-
+ 	WARN_ONCE(1, "Bad FPU state detected at %pB, reinitializing FPU registers.",
+ 		  (void *)instruction_pointer(regs));
  
- 	dev->nets[channel] = priv;
+ 	fpu_reset_from_exception_fixup();
+-	return true;
++
++	return ex_handler_default(fixup, regs);
+ }
  
--- 
-2.39.5
-
+ static bool ex_handler_uaccess(const struct exception_table_entry *fixup,
 
 
