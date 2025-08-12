@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55F52F745D;
-	Tue, 12 Aug 2025 18:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1342D8363;
+	Tue, 12 Aug 2025 18:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022579; cv=none; b=dyDU/9LGhdjlS2ZeZYp6ds/JQZcgdu2merNN8b4E0jo8dAc5lJv5naS+oOFlLn+6yHmtBzKEr1NaJkuMyySHybIA/Qg0VpgGQH1BPnJEWqQ7S4ehBwoOIinU8/LxbSXmwZ78/7NbarAwdkMuU5g0CmIYaTJf7TSmDJtS5fk1QW8=
+	t=1755022582; cv=none; b=lB67jW8mEDgMKyfAVzQCtPpAzxtGLdxpTQrv0vctFQ9LKwjDHKgEypSsMfRlJx6mZpEbCT806wkuSmHjLVMixsti+POoZu5A3LsyPDBLRzpzjZGSsnCeAIdICggOCDWc4RO59Yg2uO9fWUl4ewkCKyJzWQCX9MjHhzQ8KkCSNXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022579; c=relaxed/simple;
-	bh=PshlVZS+a9eQhTCjt/FMDWp0RhwRmvMD6GkpXs7GrkA=;
+	s=arc-20240116; t=1755022582; c=relaxed/simple;
+	bh=Ec+HXgrIBaB39I3tew0zByYx9FUa5P/6N5qq3aeyOao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBQQZUMU3HarA9bqaIn2Lc0oEUrbFDfvrImgNis1ubPjAnREsVcpjF1fpXPY4yspKmq/YdjWzPWa7g37qImdkqEW+EwsdUNBhcn7nDAE27n7yGA/2M7xlcO4ESzyUzW8faces6KA9hJCH8e754Sr8DvO5R+98E4PgDjHjXT8/qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5svCkqT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PV5ov9EpZIotISP0esAHP9zGk0Hj4BrkeR0VPfzpCEwZ0FQjZ4PRAMLo1jLHG7pGmAUHUsFf3FreJtl6tYerLVcAQBDfmZG73TsbL9xDCcQLdXVBQ175p4Pl4mnL/a5X27HZWacEngWfE5TtB9yiu7l4zO2x1vR7buGUSBhdZfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tb8mej2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5svCkqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8870C4CEF1;
-	Tue, 12 Aug 2025 18:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tb8mej2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08151C4CEF6;
+	Tue, 12 Aug 2025 18:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022579;
-	bh=PshlVZS+a9eQhTCjt/FMDWp0RhwRmvMD6GkpXs7GrkA=;
+	s=korg; t=1755022582;
+	bh=Ec+HXgrIBaB39I3tew0zByYx9FUa5P/6N5qq3aeyOao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5svCkqT++YXbqGzMZN9BJHqF6zAchLJCovD9dbXrz68zOzabctCKn/KaQgPv7r3R
-	 v+Es4X5PhaxpTipcUTCXn0ooAFsyfEKl1PSUXThWUR02h2/wgZ2qjrkLhaXo/HWHO3
-	 cQrU7wDbHTQ+RcYR3uwbjUbrJy3y+Q90NLzNPyRA=
+	b=tb8mej2Y11P+B33bAu1LBDSbE2rmvzhJZaKNIoYaSF5ebf/GgwaYsv+H9BeMc6CvQ
+	 XrYdoHhpSFsZYn6KC8ZHCA16uNw8fEv6Ms8qJQWDu6WW8496/j2JnT8/GEghQKhJ0k
+	 E1+FhXm60h3MXFD2QfNsSHu3tL3G1BZ6k9YaeNtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aishwarya TCV <aishwarya.tcv@arm.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Shiraz Saleem <shirazsaleem@microsoft.com>,
+	Konstantin Taranov <kotaranov@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 196/369] perf tests bp_account: Fix leaked file descriptor
-Date: Tue, 12 Aug 2025 19:28:13 +0200
-Message-ID: <20250812173022.136555545@linuxfoundation.org>
+Subject: [PATCH 6.12 197/369] RDMA/mana_ib: Fix DSCP value in modify QP
+Date: Tue, 12 Aug 2025 19:28:14 +0200
+Message-ID: <20250812173022.176537996@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,55 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Shiraz Saleem <shirazsaleem@microsoft.com>
 
-[ Upstream commit 4a6cdecaa1497f1fbbd1d5307a225b6ca5a62a90 ]
+[ Upstream commit 62de0e67328e9503459a24b9343c3358937cdeef ]
 
-Since the commit e9846f5ead26 ("perf test: In forked mode add check that
-fds aren't leaked"), the test "Breakpoint accounting" reports the error:
+Convert the traffic_class in GRH to a DSCP value as required by the HW.
 
-  # perf test -vvv "Breakpoint accounting"
-  20: Breakpoint accounting:
-  --- start ---
-  test child forked, pid 373
-  failed opening event 0
-  failed opening event 0
-  watchpoints count 4, breakpoints count 6, has_ioctl 1, share 0
-  wp 0 created
-  wp 1 created
-  wp 2 created
-  wp 3 created
-  wp 0 modified to bp
-  wp max created
-  ---- end(0) ----
-  Leak of file descriptor 7 that opened: 'anon_inode:[perf_event]'
-
-A watchpoint's file descriptor was not properly released. This patch
-fixes the leak.
-
-Fixes: 032db28e5fa3 ("perf tests: Add breakpoint accounting/modify test")
-Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250711-perf_fix_breakpoint_accounting-v1-1-b314393023f9@arm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: e095405b45bb ("RDMA/mana_ib: Modify QP state")
+Signed-off-by: Shiraz Saleem <shirazsaleem@microsoft.com>
+Signed-off-by: Konstantin Taranov <kotaranov@microsoft.com>
+Link: https://patch.msgid.link/1752143085-4169-1-git-send-email-kotaranov@linux.microsoft.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/bp_account.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mana/qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/bp_account.c b/tools/perf/tests/bp_account.c
-index 4cb7d486b5c1..047433c977bc 100644
---- a/tools/perf/tests/bp_account.c
-+++ b/tools/perf/tests/bp_account.c
-@@ -104,6 +104,7 @@ static int bp_accounting(int wp_cnt, int share)
- 		fd_wp = wp_event((void *)&the_var, &attr_new);
- 		TEST_ASSERT_VAL("failed to create max wp\n", fd_wp != -1);
- 		pr_debug("wp max created\n");
-+		close(fd_wp);
+diff --git a/drivers/infiniband/hw/mana/qp.c b/drivers/infiniband/hw/mana/qp.c
+index 73d67c853b6f..48fef989318b 100644
+--- a/drivers/infiniband/hw/mana/qp.c
++++ b/drivers/infiniband/hw/mana/qp.c
+@@ -561,7 +561,7 @@ static int mana_ib_gd_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 		req.ah_attr.dest_port = ROCE_V2_UDP_DPORT;
+ 		req.ah_attr.src_port = rdma_get_udp_sport(attr->ah_attr.grh.flow_label,
+ 							  ibqp->qp_num, attr->dest_qp_num);
+-		req.ah_attr.traffic_class = attr->ah_attr.grh.traffic_class;
++		req.ah_attr.traffic_class = attr->ah_attr.grh.traffic_class >> 2;
+ 		req.ah_attr.hop_limit = attr->ah_attr.grh.hop_limit;
  	}
  
- 	for (i = 0; i < wp_cnt; i++)
 -- 
 2.39.5
 
