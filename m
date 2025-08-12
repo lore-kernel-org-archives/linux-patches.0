@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF751F429C;
-	Tue, 12 Aug 2025 19:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3CB1B87E9;
+	Tue, 12 Aug 2025 19:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026161; cv=none; b=ndCYFezQHvpD9R6KwoVu/tbLjrCx2XB1FfG44IBT0zYee2zTl3hQNSnwkoQqUw0ELMQNc1xcxYCHAjTqybme/WROBMLX797ydjJn4s+ZSJKzXYdTnC9tx/8gOhb92dKVe2U9hP87z/zrSh6lKVWuFUkA/tCr5GB3TPU1yEVsmj8=
+	t=1755026164; cv=none; b=Y+V4j9BOcvQ5V40gEN3zHI0joIJjfcdA3PQQJCbZ9kkYBznZrfgSD6FZEjnMnq6h3CMgHEPuyJLUEKJBDeyV1nZ6ZUjzkrHJYSV60rgE7TYdEJ4Mmfcg6T7Ene1+SvsgyMkMdBFKkw9Sd+DVUgp+QqfkdFOdu1NabrvmW6lzsHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026161; c=relaxed/simple;
-	bh=t+TO3nl27GeAbIDIIkvibLGjo4zo6w71MlLT4JRG2D0=;
+	s=arc-20240116; t=1755026164; c=relaxed/simple;
+	bh=GzU2LoaLBY/2/GEDBk9MRLloon/ayM4nTaezYcL+CZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NsE+y/XuzxfRoBkDSALQJhq24rGcnlHfs5ARoBtzKEhloYpQ7JL4L2sHv+U+tepTj547Nalyl5Ws1dn4mXX8C6D66N8fSStAQqKqCHWtcfxfjKxGXBJ+hZUugUcYxCGnKrmw5thwt6cpMZGI6zS/NbNP/RXRMYPHEyHnCui5DVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3mX8GT1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTfrbQCQ6ZP7rFLxjfXyqTolxtBf/MoBki955u3NPKZzyhzMc6i+TBiAsFVcPck//wiHRfKcuiFIKr6suN965E9H+fWByug+A4phLjUQMQUzD6KBhWbWS5BrgJOqHaGhqEpwW3kin7YKIZffFG77Kg4NaXXeVSob4shRDDSuxOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkdP+Lds; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3mX8GT1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0318AC4CEF0;
-	Tue, 12 Aug 2025 19:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkdP+Lds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDCAC4CEF0;
+	Tue, 12 Aug 2025 19:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026160;
-	bh=t+TO3nl27GeAbIDIIkvibLGjo4zo6w71MlLT4JRG2D0=;
+	s=korg; t=1755026164;
+	bh=GzU2LoaLBY/2/GEDBk9MRLloon/ayM4nTaezYcL+CZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3mX8GT1dXylBMTY3LPK8aM0JDZqxTsL4NGUXdX+Loj24KG9bSmO+R22qu5XslrPP
-	 GZMRqdhNjMZUK4VzQ7g8GqMabsV1icrTSrNdvZfZTK6nKldloTjpSO3KI65DNAipc0
-	 gv0PFb5fnMyt7+rh9jlcyuScH0AA78aYnDD4TDKQ=
+	b=wkdP+Lds/hjfv+DMGVhcIoxec+zFqmMk0PankDlCJjKTcKZch24q9JdE4Fu/exvkV
+	 HKRtoWsyl+tbKavOQSxcdzlLAsxv4ba2JmkqJ3LQo5bwEpthL+vR6B45PB9FX9UjT7
+	 51zW+2dUcIBYqwokgxH22bQM25H2mz92KakgWSdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 253/480] clk: clk-axi-clkgen: fix fpfd_max frequency for zynq
-Date: Tue, 12 Aug 2025 19:47:41 +0200
-Message-ID: <20250812174407.885692895@linuxfoundation.org>
+Subject: [PATCH 6.15 254/480] Fix dma_unmap_sg() nents value
+Date: Tue, 12 Aug 2025 19:47:42 +0200
+Message-ID: <20250812174407.926147832@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -46,45 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit ce8a9096699500e2c5bca09dde27b16edda5f636 ]
+[ Upstream commit 1db50f7b7a793670adcf062df9ff27798829d963 ]
 
-The fpfd_max frequency should be set to 450 MHz instead of 300 MHz.
-Well, it actually depends on the platform speed grade but we are being
-conservative for ultrascale so let's be consistent. In a following
-change we will set these limits at runtime.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20250519-dev-axi-clkgen-limits-v6-1-bc4b3b61d1d4@analog.com
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: ed10435d3583 ("RDMA/erdma: Implement hierarchical MTT")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20250630092346.81017-2-fourier.thomas@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-axi-clkgen.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/clk-axi-clkgen.c b/drivers/clk/clk-axi-clkgen.c
-index 934e53a96ddd..00bf799964c6 100644
---- a/drivers/clk/clk-axi-clkgen.c
-+++ b/drivers/clk/clk-axi-clkgen.c
-@@ -118,7 +118,7 @@ static const struct axi_clkgen_limits axi_clkgen_zynqmp_default_limits = {
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index af36a8d2df22..ec0ad4086066 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -629,7 +629,8 @@ static struct erdma_mtt *erdma_create_cont_mtt(struct erdma_dev *dev,
+ static void erdma_destroy_mtt_buf_sg(struct erdma_dev *dev,
+ 				     struct erdma_mtt *mtt)
+ {
+-	dma_unmap_sg(&dev->pdev->dev, mtt->sglist, mtt->nsg, DMA_TO_DEVICE);
++	dma_unmap_sg(&dev->pdev->dev, mtt->sglist,
++		     DIV_ROUND_UP(mtt->size, PAGE_SIZE), DMA_TO_DEVICE);
+ 	vfree(mtt->sglist);
+ }
  
- static const struct axi_clkgen_limits axi_clkgen_zynq_default_limits = {
- 	.fpfd_min = 10000,
--	.fpfd_max = 300000,
-+	.fpfd_max = 450000,
- 	.fvco_min = 600000,
- 	.fvco_max = 1200000,
- };
 -- 
 2.39.5
 
