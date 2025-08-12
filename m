@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821B72FD1A4;
-	Tue, 12 Aug 2025 18:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AEF13AA2F;
+	Tue, 12 Aug 2025 18:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024245; cv=none; b=Ch/JcIeWZJpesAJFE9qB5K6IHi/4byFSrT/K7myfYGSBau7xMAi5o5OEJhwXyw0WUR57xsBAMYnmpPvETNHK41yKfRkgYEKBDkM9rDgn/mzgkWo3T1szGxZ3wXNYzp3OoK5AYSZB6VAzqmwLN5WyrzHBbM7XspXKB5DqwKaGnNo=
+	t=1755024249; cv=none; b=JDrfHBmdI8ln/BO1AOkeeZpQ4iiIgEPc3hRMRjz9LSltvjX0XJ4425JEZTo87Ovcp6fefay3dqlN6NsEBSV7vNzZhKaYre4gwopGn/9PRmwa8GG5m6Re6CxmrrVYKWEtgXvq1uMAnTx/IYHnxxohxvaWk9MANee4P3w2YrQW98U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024245; c=relaxed/simple;
-	bh=qMZaYGrNeVlBp7vuAx3fyC19oBhg8gw62eFUzNYwZcI=;
+	s=arc-20240116; t=1755024249; c=relaxed/simple;
+	bh=MDgXqq3TfH3t5m9y5xEOcpjpe/OEHwce4CZL+8PaqP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E5C3XBeGzIed51eZ5O1IEOzW8FBSKCdgJGOH8ju0Q9vAvS0f0FpSIggQPy4oZNY5/KG66qY40Gb9Es4AaiKVR2BJ6m0/22O8Q/99lNneWFf3aTE+Ck5Xu78lCfwBn7PoPk9NUvo5KVpcu+MYCr+UAZsHe2rYIZkmyLFNfOHeQA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3xh/mGZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rwNwuUVCtoXq4gfOsVathoAPLp8+HFwXLJcmPaRmy2v0m/ZXad3un7XE+XNBO28I7FtZagUMaLyLBCXI1Rcbt78eIHPyr4pr1t/UZF96sciIppWdFQGqv37xeLklqT1XcGa2vV7etkv8UIQIBEhXnb4tBpFxkvOBdZHo9FY60PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usW+XVvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3xh/mGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3694C4CEF0;
-	Tue, 12 Aug 2025 18:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usW+XVvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B98C4CEF0;
+	Tue, 12 Aug 2025 18:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024245;
-	bh=qMZaYGrNeVlBp7vuAx3fyC19oBhg8gw62eFUzNYwZcI=;
+	s=korg; t=1755024248;
+	bh=MDgXqq3TfH3t5m9y5xEOcpjpe/OEHwce4CZL+8PaqP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3xh/mGZGTxOKou0El2QvIWIVWuTiC1AW5Hz9i2ZOKyrctCERpyz9DIMIgLrOfFlN
-	 SCQnjyPoqBTOLbiKmh11e9wKciwrGTtPoecE3hUBv2tGd8j++JljlP7Z0Tljt/syem
-	 G73O3M0+aJz6BrHB6PoXd1dghCL56yJqcpBNC5ns=
+	b=usW+XVvvEd7sRq7h+KK06FhjsT0u8ujR4AW66+hEZOenkWwZ8AjwTH9wYlbYlYmj/
+	 KrBt4u9n/rou3jJPZxOCtGlsZ6rSHkFcmFzfVuIflyCuTUUNXSriDlvE42mGhP1dHs
+	 KB6Mz/HdYqVv8gFTWK9KL2NGfKbny33Hw86Rks7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 273/627] netfilter: xt_nfacct: dont assume acct name is null-terminated
-Date: Tue, 12 Aug 2025 19:29:28 +0200
-Message-ID: <20250812173429.700489819@linuxfoundation.org>
+Subject: [PATCH 6.16 310/627] crypto: qat - fix state restore for banks with exceptions
+Date: Tue, 12 Aug 2025 19:30:05 +0200
+Message-ID: <20250812173431.098616912@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,48 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>
 
-[ Upstream commit bf58e667af7d96c8eb9411f926a0a0955f41ce21 ]
+[ Upstream commit 254923ca8715f623704378266815b6d14eb26194 ]
 
-BUG: KASAN: slab-out-of-bounds in .. lib/vsprintf.c:721
-Read of size 1 at addr ffff88801eac95c8 by task syz-executor183/5851
-[..]
- string+0x231/0x2b0 lib/vsprintf.c:721
- vsnprintf+0x739/0xf00 lib/vsprintf.c:2874
- [..]
- nfacct_mt_checkentry+0xd2/0xe0 net/netfilter/xt_nfacct.c:41
- xt_check_match+0x3d1/0xab0 net/netfilter/x_tables.c:523
+Change the logic in the restore function to properly handle bank
+exceptions.
 
-nfnl_acct_find_get() handles non-null input, but the error
-printk relied on its presence.
+The check for exceptions in the saved state should be performed before
+conducting any other ringstat register checks.
+If a bank was saved with an exception, the ringstat will have the
+appropriate rp_halt/rp_exception bits set, causing the driver to exit
+the restore process with an error. Instead, the restore routine should
+first check the ringexpstat register, and if any exception was raised,
+it should stop further checks and return without any error. In other
+words, if a ring pair is in an exception state at the source, it should
+be restored the same way at the destination but without raising an error.
 
-Reported-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4ff165b9251e4d295690
-Tested-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
-Fixes: ceb98d03eac5 ("netfilter: xtables: add nfacct match to support extended accounting")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Even though this approach might lead to losing the exception state
+during migration, the driver will log the exception from the saved state
+during the restore process.
+
+Signed-off-by: Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>
+Fixes: bbfdde7d195f ("crypto: qat - add bank save and restore flows")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_nfacct.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../intel/qat/qat_common/adf_gen4_hw_data.c   | 29 ++++++++++++++-----
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/xt_nfacct.c b/net/netfilter/xt_nfacct.c
-index 7c6bf1c16813..0ca1cdfc4095 100644
---- a/net/netfilter/xt_nfacct.c
-+++ b/net/netfilter/xt_nfacct.c
-@@ -38,8 +38,8 @@ nfacct_mt_checkentry(const struct xt_mtchk_param *par)
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.c b/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.c
+index 0406cb09c5bb..14d0fdd66a4b 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.c
+@@ -581,6 +581,28 @@ static int bank_state_restore(struct adf_hw_csr_ops *ops, void __iomem *base,
+ 	ops->write_csr_int_srcsel_w_val(base, bank, state->iaintflagsrcsel0);
+ 	ops->write_csr_exp_int_en(base, bank, state->ringexpintenable);
+ 	ops->write_csr_int_col_ctl(base, bank, state->iaintcolctl);
++
++	/*
++	 * Verify whether any exceptions were raised during the bank save process.
++	 * If exceptions occurred, the status and exception registers cannot
++	 * be directly restored. Consequently, further restoration is not
++	 * feasible, and the current state of the ring should be maintained.
++	 */
++	val = state->ringexpstat;
++	if (val) {
++		pr_info("QAT: Bank %u state not fully restored due to exception in saved state (%#x)\n",
++			bank, val);
++		return 0;
++	}
++
++	/* Ensure that the restoration process completed without exceptions */
++	tmp_val = ops->read_csr_exp_stat(base, bank);
++	if (tmp_val) {
++		pr_err("QAT: Bank %u restored with exception: %#x\n",
++		       bank, tmp_val);
++		return -EFAULT;
++	}
++
+ 	ops->write_csr_ring_srv_arb_en(base, bank, state->ringsrvarben);
  
- 	nfacct = nfnl_acct_find_get(par->net, info->name);
- 	if (nfacct == NULL) {
--		pr_info_ratelimited("accounting object `%s' does not exists\n",
--				    info->name);
-+		pr_info_ratelimited("accounting object `%.*s' does not exist\n",
-+				    NFACCT_NAME_MAX, info->name);
- 		return -ENOENT;
- 	}
- 	info->nfacct = nfacct;
+ 	/* Check that all ring statuses match the saved state. */
+@@ -614,13 +636,6 @@ static int bank_state_restore(struct adf_hw_csr_ops *ops, void __iomem *base,
+ 	if (ret)
+ 		return ret;
+ 
+-	tmp_val = ops->read_csr_exp_stat(base, bank);
+-	val = state->ringexpstat;
+-	if (tmp_val && !val) {
+-		pr_err("QAT: Bank was restored with exception: 0x%x\n", val);
+-		return -EINVAL;
+-	}
+-
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
