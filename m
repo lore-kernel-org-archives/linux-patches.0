@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C902DE6E9;
-	Tue, 12 Aug 2025 18:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4FF257435;
+	Tue, 12 Aug 2025 18:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022195; cv=none; b=TdujyF4jcIThnw8zxx2IjMVIWk5jR7z+yyKE4Iz/bU/TasDNXtmIkChg30ON0Cj7B15HEG5jaWcyQ8WRREblSuaV1rr35Bbeiua5CeYdJ4hIGEYdQ6pNlT1jeAuDd0pftSfUyBTt1KIVumzm4Y435pCFYt+8hqoEfqQC0UO9P3k=
+	t=1755022199; cv=none; b=nQEvzY2ajCuzR5KdgCehWUgHGtl08OIJ/vjx9j4yIpp+5QTIve0G50QH64wMEmDVOx2bvpxPkzCvV+e7u5dDHaepyz7jKpyz1c/2gH1GV5U28ZwvgHNLn8VL3GKE4ELUaasaAP4LC63znVpShlHxrtzEAyusolo1YSEoR8bfwak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022195; c=relaxed/simple;
-	bh=iaW1hrI/BJG3Xgms7ZYtwpvfIDfYsdQ9l7UymSWmDv8=;
+	s=arc-20240116; t=1755022199; c=relaxed/simple;
+	bh=TqlP5+mHH6P1eLtp+c+Y5VpEvupWn80kVff7JTvBQp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuKgl+cIF1yVI+WL773FwJPDpjrm6m+iMMK3YByCjjz4PtG/aa/LUJUfO8ocNavT4Lv6WZLklrdGK5HwND/GdTdTB5uGmUr+J2KKgnOyQ69MXCiyXTCLvlEBlx+Pj38Ygls4xJudrO9jfC1rk3woaNvecCGzxMREn7d3rhSfMrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iA7os2i3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oPGrCjsLrOLOGk+zdEn1TUMx4FrleUhtSw8OJx4Y7GOjTGRrPzEYmTwZ1a75Lgi1kMOKGZ4UUlpIxGTmKaUZjKsYKnCULUSCYjxyhQYeaC0dtmHtUYMg7cvF6yTGryIzJAmrKygv0N00KDVmKE+EKRPrti84Jqzn4m0SG+As0as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clFqAvkH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iA7os2i3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B97BC4CEF0;
-	Tue, 12 Aug 2025 18:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clFqAvkH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06AC6C4CEF0;
+	Tue, 12 Aug 2025 18:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022195;
-	bh=iaW1hrI/BJG3Xgms7ZYtwpvfIDfYsdQ9l7UymSWmDv8=;
+	s=korg; t=1755022198;
+	bh=TqlP5+mHH6P1eLtp+c+Y5VpEvupWn80kVff7JTvBQp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iA7os2i3XSRTGvrzO0kA0Tg/PWNxFZtYo3t8jP/O6SJ+/yCtW3dvfajblAU7I+cZA
-	 ALCwcfWpO3LEjdtBr8kNVGnGS+o/E+1AbGzmLl+iYxLHF8VKDja5C7d+sNgnkEg8E5
-	 D5Ti3dg7H7njfJjnHLMELO+FSaYNLx0rYDtprZwE=
+	b=clFqAvkHsEmjjVwVoNe8HdfVZ+8q+BrByY5jB8CzzXOP/Jdm1hEefm9oXA3k4ioSX
+	 c13o5GIiRPywB0TwCfKjRL3RpHjGBLPUuqsqECmM6pxB8x04+ActjALx2DzxiTA2K+
+	 7Ak9uGs9PwqnQHRYKjDrjqFPvcrKUfOumv19c6VY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/369] iwlwifi: Add missing check for alloc_ordered_workqueue
-Date: Tue, 12 Aug 2025 19:26:21 +0200
-Message-ID: <20250812173017.944512305@linuxfoundation.org>
+Subject: [PATCH 6.12 067/369] selftests/tracing: Fix false failure of subsystem event test
+Date: Tue, 12 Aug 2025 19:26:04 +0200
+Message-ID: <20250812173017.285748941@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,67 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 90a0d9f339960448a3acc1437a46730f975efd6a ]
+[ Upstream commit 213879061a9c60200ba971330dbefec6df3b4a30 ]
 
-Add check for the return value of alloc_ordered_workqueue since it may
-return NULL pointer.
+The subsystem event test enables all "sched" events and makes sure there's
+at least 3 different events in the output. It used to cat the entire trace
+file to | wc -l, but on slow machines, that could last a very long time.
+To solve that, it was changed to just read the first 100 lines of the
+trace file. This can cause false failures as some events repeat so often,
+that the 100 lines that are examined could possibly be of only one event.
 
-Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://patch.msgid.link/20230110014848.28226-1-jiasheng@iscas.ac.cn
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Instead, create an awk script that looks for 3 different events and will
+exit out after it finds them. This will find the 3 events the test looks
+for (eventually if it works), and still exit out after the test is
+satisfied and not cause slower machines to run forever.
+
+Link: https://lore.kernel.org/r/20250721134212.53c3e140@batman.local.home
+Reported-by: Tengda Wu <wutengda@huaweicloud.com>
+Closes: https://lore.kernel.org/all/20250710130134.591066-1-wutengda@huaweicloud.com/
+Fixes: 1a4ea83a6e67 ("selftests/ftrace: Limit length in subsystem-enable tests")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/main.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ .../ftrace/test.d/event/subsystem-enable.tc   | 28 +++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/main.c b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-index e0b14be25b02..b8713ebd7190 100644
---- a/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-@@ -1048,9 +1048,11 @@ static void iwl_bg_restart(struct work_struct *data)
-  *
-  *****************************************************************************/
- 
--static void iwl_setup_deferred_work(struct iwl_priv *priv)
-+static int iwl_setup_deferred_work(struct iwl_priv *priv)
- {
- 	priv->workqueue = alloc_ordered_workqueue(DRV_NAME, 0);
-+	if (!priv->workqueue)
-+		return -ENOMEM;
- 
- 	INIT_WORK(&priv->restart, iwl_bg_restart);
- 	INIT_WORK(&priv->beacon_update, iwl_bg_beacon_update);
-@@ -1067,6 +1069,8 @@ static void iwl_setup_deferred_work(struct iwl_priv *priv)
- 	timer_setup(&priv->statistics_periodic, iwl_bg_statistics_periodic, 0);
- 
- 	timer_setup(&priv->ucode_trace, iwl_bg_ucode_trace, 0);
-+
-+	return 0;
+diff --git a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
+index b7c8f29c09a9..65916bb55dfb 100644
+--- a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
++++ b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
+@@ -14,11 +14,35 @@ fail() { #msg
+     exit_fail
  }
  
- void iwl_cancel_deferred_work(struct iwl_priv *priv)
-@@ -1454,7 +1458,9 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
- 	/********************
- 	 * 6. Setup services
- 	 ********************/
--	iwl_setup_deferred_work(priv);
-+	if (iwl_setup_deferred_work(priv))
-+		goto out_uninit_drv;
++# As reading trace can last forever, simply look for 3 different
++# events then exit out of reading the file. If there's not 3 different
++# events, then the test has failed.
++check_unique() {
++    cat trace | grep -v '^#' | awk '
++	BEGIN { cnt = 0; }
++	{
++	    for (i = 0; i < cnt; i++) {
++		if (event[i] == $5) {
++		    break;
++		}
++	    }
++	    if (i == cnt) {
++		event[cnt++] = $5;
++		if (cnt > 2) {
++		    exit;
++		}
++	    }
++	}
++	END {
++	    printf "%d", cnt;
++	}'
++}
 +
- 	iwl_setup_rx_handlers(priv);
+ echo 'sched:*' > set_event
  
- 	iwl_power_initialize(priv);
-@@ -1492,6 +1498,7 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
- 	iwl_cancel_deferred_work(priv);
- 	destroy_workqueue(priv->workqueue);
- 	priv->workqueue = NULL;
-+out_uninit_drv:
- 	iwl_uninit_drv(priv);
- out_free_eeprom_blob:
- 	kfree(priv->eeprom_blob);
+ yield
+ 
+-count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
++count=`check_unique`
+ if [ $count -lt 3 ]; then
+     fail "at least fork, exec and exit events should be recorded"
+ fi
+@@ -29,7 +53,7 @@ echo 1 > events/sched/enable
+ 
+ yield
+ 
+-count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
++count=`check_unique`
+ if [ $count -lt 3 ]; then
+     fail "at least fork, exec and exit events should be recorded"
+ fi
 -- 
 2.39.5
 
