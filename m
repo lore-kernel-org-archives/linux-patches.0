@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B991B87F2;
-	Tue, 12 Aug 2025 18:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7555C3F9D2;
+	Tue, 12 Aug 2025 18:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022804; cv=none; b=StOAy4W3tASxJHBhYVx9ACKMqtCNWc+YUWpuFcoJBhFVVmqcWDqtY6gPJDjqKPJiQaf1pRBQzz8m/y4uHsV0AxDW1mYGUGSBy1fBXprx9qBOD2GLUWEUHjhEHdY6gQZNEdJivO9tqf3ucq+nOEHDPu0LZ1czhpH/tKf9j10gCoA=
+	t=1755022807; cv=none; b=u9wfnOK4U5c788FG9cA/W9C+OZ7iuEhDeHhpcPBpsnn8/qT2wBiTsY2C0M+3QW2ynfurYqt2vn4LHefk/WT/OexBAUhjDD/V7zC9z9Q/hnUbTZFQQ0NQolfxbH3xQoGXJFaaEk8IfaPPFKJxI5wWi7eYFADTDVIssDhdLixohP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022804; c=relaxed/simple;
-	bh=jh02Imc4Jw0Rsh9o/UJqyUmSpI/3+DAHY+xeUpRLSVg=;
+	s=arc-20240116; t=1755022807; c=relaxed/simple;
+	bh=GKDfQgWPhT3DOH4H/SK3r1h86r3m2mzSMeg18pzcfkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqEZOX67GaEMVyOD096Y4dlv5o0uOGDNPYRHo8NeyeieERzW+OWMTSJJnCL+8fFlRnofI/rOFVHRU+DAgUnI48poRsgnVaRHnVfChztOHtX+cZo/mLpnPTZcnUutAwHAQYUWJzBA30V0Sm4Hlf5porpaWmCZ1rxbeFbtaRFtFr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qt0kSRMn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iEbBQSZ9XT0BxqdPmgqghRO1XNI6+lNIjA4dHpTHg7rhvJj8p1okUz0+je3ebtVIJVpyItUWxeSLO4jyvQ8cEZfvaOJZrQT48T/h6T322bnsxebKlER/yJ3mNvdMFgP5V7/sKNOaa6hRtMb3xJygIIPTAwplc/ZknZYSZQTSIgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLs8gjQM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qt0kSRMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4AFC4CEF6;
-	Tue, 12 Aug 2025 18:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLs8gjQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6F4C4CEF6;
+	Tue, 12 Aug 2025 18:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022803;
-	bh=jh02Imc4Jw0Rsh9o/UJqyUmSpI/3+DAHY+xeUpRLSVg=;
+	s=korg; t=1755022807;
+	bh=GKDfQgWPhT3DOH4H/SK3r1h86r3m2mzSMeg18pzcfkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qt0kSRMnDiuZ117L6ghFQBiUEU513rM2b+v8raYfaK8g/EmpQz61BTNiP3XwOVWEJ
-	 veInwx3HCSxW/RWazwOfc7B0jrwhl/FcGEHzOuyIzYQQfoOOZVoAwp2IW1Z1iY7VWO
-	 JvSgllCLv3yr35GczjJxEgmMKgopp1dUnjUTQIS4=
+	b=PLs8gjQMKsRJiybuGlhoP5Uj17tzszkNdwxqZcbfCKxca3DU7G2m77u3T+lO0rKxM
+	 G9CKjHZYrrW0HvFu+mRYIAMbNXLgu5cc3cS1qkkzL4LCHZ8Jr6pUyLOTaBtMLIDtBk
+	 d1Re2I97BgpJmiCCMzSriuPCKvNeWRY4E9m/eJk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Jacob Pan <jacob.pan@linux.microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 264/369] i2c: muxes: mule: Fix an error handling path in mule_i2c_mux_probe()
-Date: Tue, 12 Aug 2025 19:29:21 +0200
-Message-ID: <20250812173024.694060135@linuxfoundation.org>
+Subject: [PATCH 6.12 265/369] vfio: Fix unbalanced vfio_df_close call in no-iommu mode
+Date: Tue, 12 Aug 2025 19:29:22 +0200
+Message-ID: <20250812173024.731959853@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,45 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jacob Pan <jacob.pan@linux.microsoft.com>
 
-[ Upstream commit 33ac5155891cab165c93b51b0e22e153eacc2ee7 ]
+[ Upstream commit b25e271b377999191b12f0afbe1861edcf57e3fe ]
 
-If an error occurs in the loop that creates the device adapters, then a
-reference to 'dev' still needs to be released.
+For devices with no-iommu enabled in IOMMUFD VFIO compat mode, the group open
+path skips vfio_df_open(), leaving open_count at 0. This causes a warning in
+vfio_assert_device_open(device) when vfio_df_close() is called during group
+close.
 
-Use for_each_child_of_node_scoped() to both fix the issue and save one line
-of code.
+The correct behavior is to skip only the IOMMUFD bind in the device open path
+for no-iommu devices. Commit 6086efe73498 omitted vfio_df_open(), which was
+too broad. This patch restores the previous behavior, ensuring
+the vfio_df_open is called in the group open path.
 
-Fixes: d0f8e97866bf ("i2c: muxes: add support for tsd,mule-i2c multiplexer")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fixes: 6086efe73498 ("vfio-iommufd: Move noiommu compat validation out of vfio_iommufd_bind()")
+Suggested-by: Alex Williamson <alex.williamson@redhat.com>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Jacob Pan <jacob.pan@linux.microsoft.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20250618234618.1910456-1-jacob.pan@linux.microsoft.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-mux-mule.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/vfio/group.c   | 7 +++----
+ drivers/vfio/iommufd.c | 4 ++++
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i2c/muxes/i2c-mux-mule.c b/drivers/i2c/muxes/i2c-mux-mule.c
-index 284ff4afeeac..d3b32b794172 100644
---- a/drivers/i2c/muxes/i2c-mux-mule.c
-+++ b/drivers/i2c/muxes/i2c-mux-mule.c
-@@ -47,7 +47,6 @@ static int mule_i2c_mux_probe(struct platform_device *pdev)
- 	struct mule_i2c_reg_mux *priv;
- 	struct i2c_client *client;
- 	struct i2c_mux_core *muxc;
--	struct device_node *dev;
- 	unsigned int readback;
- 	int ndev, ret;
- 	bool old_fw;
-@@ -95,7 +94,7 @@ static int mule_i2c_mux_probe(struct platform_device *pdev)
- 				     "Failed to register mux remove\n");
+diff --git a/drivers/vfio/group.c b/drivers/vfio/group.c
+index 95b336de8a17..5f2b2c950bbc 100644
+--- a/drivers/vfio/group.c
++++ b/drivers/vfio/group.c
+@@ -194,11 +194,10 @@ static int vfio_df_group_open(struct vfio_device_file *df)
+ 		 * implies they expected translation to exist
+ 		 */
+ 		if (!capable(CAP_SYS_RAWIO) ||
+-		    vfio_iommufd_device_has_compat_ioas(device, df->iommufd))
++		    vfio_iommufd_device_has_compat_ioas(device, df->iommufd)) {
+ 			ret = -EPERM;
+-		else
+-			ret = 0;
+-		goto out_put_kvm;
++			goto out_put_kvm;
++		}
+ 	}
  
- 	/* Create device adapters */
--	for_each_child_of_node(mux_dev->of_node, dev) {
-+	for_each_child_of_node_scoped(mux_dev->of_node, dev) {
- 		u32 reg;
+ 	ret = vfio_df_open(df);
+diff --git a/drivers/vfio/iommufd.c b/drivers/vfio/iommufd.c
+index 82eba6966fa5..02852899c2ae 100644
+--- a/drivers/vfio/iommufd.c
++++ b/drivers/vfio/iommufd.c
+@@ -25,6 +25,10 @@ int vfio_df_iommufd_bind(struct vfio_device_file *df)
  
- 		ret = of_property_read_u32(dev, "reg", &reg);
+ 	lockdep_assert_held(&vdev->dev_set->lock);
+ 
++	/* Returns 0 to permit device opening under noiommu mode */
++	if (vfio_device_is_noiommu(vdev))
++		return 0;
++
+ 	return vdev->ops->bind_iommufd(vdev, ictx, &df->devid);
+ }
+ 
 -- 
 2.39.5
 
