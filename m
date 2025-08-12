@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B952F221FAC;
-	Tue, 12 Aug 2025 17:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B422221FAC;
+	Tue, 12 Aug 2025 17:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021206; cv=none; b=iWFq0BDt4DNycAb0r8H8ORYsNYjn4vOvqjd9YfTAhooEeKAwZ2+mc5SExhOPsA2yj/BrVTWPP13cMs+mPz2BYYQVq308aWd0/0fJa6VMW6kG92AyigVfixv2tfTFN8nPJJ2QKS2xdTxRywDy9d3JXFgk3y3nFd/LcdTtD31+30Y=
+	t=1755021210; cv=none; b=gQJeo0X2qvauVtmWLJ1fD89BpnkkXzF4vGbMvdWPmVcS16YTEv3e68LEC5EgI/VTEi4b4dty7dO3vnUJSjhe/YjRrM2SJl19Kt0Fry5E8/899JJDRGoVcLYZf0FBYncZ9dNgeFhu6wCEs8TRWG2tbFasypXu49Q1BvsZLQgfqZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021206; c=relaxed/simple;
-	bh=ZOVvG48/JSStAoxl03ONiBCmvsUrXNcm84umHW+6zFo=;
+	s=arc-20240116; t=1755021210; c=relaxed/simple;
+	bh=o1qyW3BnBO4bevlilRmACezvOT3ousSxF4bhIRhmM84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0UmgOQ6VDN+VU60zf+9AVsZbazc9l8rn7RneI+M0xtPnZQPa3X8LkWOh7Yg7zruL9VvQTdCi8+g+8+ZrXIRoc6or/Ct0a5v5PCHLN3c1I3EKKo1kukBB75ezfqqQQvleZAHuJ6xcXxjuHdVAZRyxe58xbCssQe0uOftwJ6zohE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ijq7FM1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BbxVYWjyg+UuD3pehrMzaEnnFKK8PMXdj2uUhYEFrg7X+DfabEpBgEqCk0j/O9FBL2Y3jSXUgZu2j1OLz3L7Nbe7rVuHyu+yehD/2J+OqJ9poc5sgVZvH/vVjD8BwXXVwUB+RTjcG4+z4TejrRSiqYb5H6XILeg7UEedNKZNASs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIuqBbhQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ijq7FM1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A8DC4CEF0;
-	Tue, 12 Aug 2025 17:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIuqBbhQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E095C4CEF6;
+	Tue, 12 Aug 2025 17:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021206;
-	bh=ZOVvG48/JSStAoxl03ONiBCmvsUrXNcm84umHW+6zFo=;
+	s=korg; t=1755021210;
+	bh=o1qyW3BnBO4bevlilRmACezvOT3ousSxF4bhIRhmM84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ijq7FM1Md3O2jPfLW3DeRwkurBuSztoBpRO6Jrfg21QXdMcr5aDGaj+S7mV4yibXn
-	 zRl8vsI0uvB6kKc0GWlJ0pr9Jdx2LPClLsIJHgmAZiXrjMUlr5AId6MYcV6dyUbQCk
-	 Jvd0gVLq3lftt2xnJKVHWj3AqzITbhVBIsmU048Q=
+	b=MIuqBbhQ5+zNQhwGzd6gk7AjmU2F75UhbENJg2nU8l+EbjT9YnHjrJpC31/RDNbyJ
+	 sGwb6qRLZxUxd/kyV0IkBWFMN16B/ZrX9Wgagcl8ujP8pVqDVLJvBoGnAX4DVizjpM
+	 5wZSm4zj7reHPcKK9x2FiIm6XDYc4mdYax2gGT/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 229/253] smb: server: let recv_done() consistently call put_recvmsg/smb_direct_disconnect_rdma_connection
-Date: Tue, 12 Aug 2025 19:30:17 +0200
-Message-ID: <20250812172958.573087899@linuxfoundation.org>
+Subject: [PATCH 6.6 078/262] tcp: call tcp_measure_rcv_mss() for ooo packets
+Date: Tue, 12 Aug 2025 19:27:46 +0200
+Message-ID: <20250812172956.359881959@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,106 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cfe76fdbb9729c650f3505d9cfb2f70ddda2dbdc ]
+[ Upstream commit 38d7e444336567bae1c7b21fc18b7ceaaa5643a0 ]
 
-We should call put_recvmsg() before smb_direct_disconnect_rdma_connection()
-in order to call it before waking up the callers.
+tcp_measure_rcv_mss() is used to update icsk->icsk_ack.rcv_mss
+(tcpi_rcv_mss in tcp_info) and tp->scaling_ratio.
 
-In all error cases we should call smb_direct_disconnect_rdma_connection()
-in order to avoid stale connections.
+Calling it from tcp_data_queue_ofo() makes sure these
+fields are updated, and permits a better tuning
+of sk->sk_rcvbuf, in the case a new flow receives many ooo
+packets.
 
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250711114006.480026-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_rdma.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/ipv4/tcp_input.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 71a12953089c..f9c0c5267e6e 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -515,13 +515,13 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	t = recvmsg->transport;
- 
- 	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_RECV) {
-+		put_recvmsg(t, recvmsg);
- 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
- 			pr_err("Recv error. status='%s (%d)' opcode=%d\n",
- 			       ib_wc_status_msg(wc->status), wc->status,
- 			       wc->opcode);
- 			smb_direct_disconnect_rdma_connection(t);
- 		}
--		put_recvmsg(t, recvmsg);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 8520c43726e2..c6d00817ad3f 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4941,6 +4941,7 @@ static void tcp_data_queue_ofo(struct sock *sk, struct sk_buff *skb)
  		return;
  	}
  
-@@ -536,6 +536,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	case SMB_DIRECT_MSG_NEGOTIATE_REQ:
- 		if (wc->byte_len < sizeof(struct smb_direct_negotiate_req)) {
- 			put_recvmsg(t, recvmsg);
-+			smb_direct_disconnect_rdma_connection(t);
- 			return;
- 		}
- 		t->negotiation_requested = true;
-@@ -543,7 +544,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		t->status = SMB_DIRECT_CS_CONNECTED;
- 		enqueue_reassembly(t, recvmsg, 0);
- 		wake_up_interruptible(&t->wait_status);
--		break;
-+		return;
- 	case SMB_DIRECT_MSG_DATA_TRANSFER: {
- 		struct smb_direct_data_transfer *data_transfer =
- 			(struct smb_direct_data_transfer *)recvmsg->packet;
-@@ -553,6 +554,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		if (wc->byte_len <
- 		    offsetof(struct smb_direct_data_transfer, padding)) {
- 			put_recvmsg(t, recvmsg);
-+			smb_direct_disconnect_rdma_connection(t);
- 			return;
- 		}
- 
-@@ -561,6 +563,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 			if (wc->byte_len < sizeof(struct smb_direct_data_transfer) +
- 			    (u64)data_length) {
- 				put_recvmsg(t, recvmsg);
-+				smb_direct_disconnect_rdma_connection(t);
- 				return;
- 			}
- 
-@@ -603,11 +606,16 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		if (is_receive_credit_post_required(receive_credits, avail_recvmsg_count))
- 			mod_delayed_work(smb_direct_wq,
- 					 &t->post_recv_credits_work, 0);
--		break;
-+		return;
- 	}
--	default:
--		break;
- 	}
-+
-+	/*
-+	 * This is an internal error!
-+	 */
-+	WARN_ON_ONCE(recvmsg->type != SMB_DIRECT_MSG_DATA_TRANSFER);
-+	put_recvmsg(t, recvmsg);
-+	smb_direct_disconnect_rdma_connection(t);
- }
- 
- static int smb_direct_post_recv(struct smb_direct_transport *t,
++	tcp_measure_rcv_mss(sk, skb);
+ 	/* Disable header prediction. */
+ 	tp->pred_flags = 0;
+ 	inet_csk_schedule_ack(sk);
 -- 
 2.39.5
 
