@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2162F7461;
-	Tue, 12 Aug 2025 17:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2312F7477;
+	Tue, 12 Aug 2025 17:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020509; cv=none; b=F8nkJsstQfJAg1GFjbwqZBezjIWmcxHZsZbPXYEFI/of5MXsbE2Gr52CnmX7aAsGBMozNbZNlkeLZUDf1gx3NiOekobd1TKYzFIBm57KKAb1fYgUrKWCKViLTFzD/heNKljuzGhYYVt+Qf0yaTCGwLkANUipFp+J61CXkpIkXbY=
+	t=1755020512; cv=none; b=LLIULuI4CJmuTR1AyAbg6Yu+iBF9wRlpPMjNTGkReUJQGTjWIaqJ7PIqcasc0qwyrcMP0HzEUpvOzRFa3c0DzgIsUmTP6aJY1I972RO9BD68zgnCeSeEeU4Nj8EPo3tJ/X579Xk060jH5l82gpos06pemr07N4nvujONe3pRGis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020509; c=relaxed/simple;
-	bh=2lvVSbBl9zeETbX/soFjQS1QwYujwjN7/7zojo4SPZw=;
+	s=arc-20240116; t=1755020512; c=relaxed/simple;
+	bh=8MeweJwOu49CZAHpyqjqhGRPikEFk5mBdN0p7B6Eyx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBqlqQcKRLkxPoJqu63u9m/n07UR6EQUOa3wLInY+ADIas+Tu6UXChVrtmlSReWvifh7rNcy/gca1QQdHD+3aPE9/AlmP6IaFJJVsaBqWwEgUl0xHFBliRIl8SkIl9t51NQwVhtJq6fzoDL43pHE3QMVO+TFChH8JYff98cSoT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3Bvy9jy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWiIB0rfGjKadVGOYwoZ5LXitNysAJCJ9DLhvJdT/MY8cQu4B+jm3lp/dvERNIXZO/S6EX2piA+OyeZHMrDV00NDrQodqv2Vh+4rF1g+wJ9RudFOXNHZGJwY8ORxb/ATxtBcrZcR6nMy249FGjcPi37ruXOeDs1TzxTXPJgOUQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWYoJacN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3Bvy9jy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497F3C4CEF1;
-	Tue, 12 Aug 2025 17:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWYoJacN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F39C4CEF0;
+	Tue, 12 Aug 2025 17:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020508;
-	bh=2lvVSbBl9zeETbX/soFjQS1QwYujwjN7/7zojo4SPZw=;
+	s=korg; t=1755020512;
+	bh=8MeweJwOu49CZAHpyqjqhGRPikEFk5mBdN0p7B6Eyx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3Bvy9jyrK1cdmwOnvAzBbfWD+MxWcpQxYQQWOfX6vRdrfFIeQiaw5f7m+xV25RZ7
-	 hXGSGaZ3T5B5NeVaBfyV4TKixdnQ7h/hX6AVdPgr03EiPT/dkMat1Q2U+Rtekc9ik1
-	 8Zx4SZBwuNHSR7eOspV+ObmxYgjErgp8X55BCaWw=
+	b=JWYoJacNEWd9GwVVWnl/jYC09mYi8lYeLHnr5ItnDx7kalN64jaNz1l/Mb3a0slYN
+	 x3tTw1gpTaeUYawPVdEmnnSvA27B3Qo4yhbzRll7jmzjr8hq8EHTnpyHBVH0MEf7eE
+	 BWARbi0YsQIWqGySnU7vzF/WjdiiTOkHQsUmmZnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/253] caif: reduce stack size, again
-Date: Tue, 12 Aug 2025 19:28:10 +0200
-Message-ID: <20250812172953.067176297@linuxfoundation.org>
+Subject: [PATCH 6.1 103/253] wifi: rtl818x: Kill URBs before clearing tx status queue
+Date: Tue, 12 Aug 2025 19:28:11 +0200
+Message-ID: <20250812172953.111275652@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,357 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit b630c781bcf6ff87657146661816d0d30a902139 ]
+[ Upstream commit 16d8fd74dbfca0ea58645cd2fca13be10cae3cdd ]
 
-I tried to fix the stack usage in this function a couple of years ago,
-but there is still a problem with the latest gcc versions in some
-configurations:
+In rtl8187_stop() move the call of usb_kill_anchored_urbs() before clearing
+b_tx_status.queue. This change prevents callbacks from using already freed
+skb due to anchor was not killed before freeing such skb.
 
-net/caif/cfctrl.c:553:1: error: the frame size of 1296 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
+ BUG: kernel NULL pointer dereference, address: 0000000000000080
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP NOPTI
+ CPU: 7 UID: 0 PID: 0 Comm: swapper/7 Not tainted 6.15.0 #8 PREEMPT(voluntary)
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 0.0.0 02/06/2015
+ RIP: 0010:ieee80211_tx_status_irqsafe+0x21/0xc0 [mac80211]
+ Call Trace:
+  <IRQ>
+  rtl8187_tx_cb+0x116/0x150 [rtl8187]
+  __usb_hcd_giveback_urb+0x9d/0x120
+  usb_giveback_urb_bh+0xbb/0x140
+  process_one_work+0x19b/0x3c0
+  bh_worker+0x1a7/0x210
+  tasklet_action+0x10/0x30
+  handle_softirqs+0xf0/0x340
+  __irq_exit_rcu+0xcd/0xf0
+  common_interrupt+0x85/0xa0
+  </IRQ>
 
-Reduce this once again, with a separate cfctrl_link_setup() function that
-holds the bulk of all the local variables. It also turns out that the
-param[] array that takes up a large portion of the stack is write-only
-and can be left out here.
+Tested on RTL8187BvE device.
 
-Fixes: ce6289661b14 ("caif: reduce stack size with KASAN")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20250620112244.3425554-1-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: c1db52b9d27e ("rtl8187: Use usb anchor facilities to manage urbs")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250617135634.21760-1-d.dulov@aladdin.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/caif/cfctrl.c | 294 +++++++++++++++++++++++-----------------------
- 1 file changed, 144 insertions(+), 150 deletions(-)
+ drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/caif/cfctrl.c b/net/caif/cfctrl.c
-index 8480684f2762..10eeace2278b 100644
---- a/net/caif/cfctrl.c
-+++ b/net/caif/cfctrl.c
-@@ -351,17 +351,154 @@ int cfctrl_cancel_req(struct cflayer *layr, struct cflayer *adap_layer)
- 	return found;
- }
+diff --git a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
+index c0f6e9c6d03e..fa3fb93f4485 100644
+--- a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
++++ b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
+@@ -1041,10 +1041,11 @@ static void rtl8187_stop(struct ieee80211_hw *dev)
+ 	rtl818x_iowrite8(priv, &priv->map->CONFIG4, reg | RTL818X_CONFIG4_VCOOFF);
+ 	rtl818x_iowrite8(priv, &priv->map->EEPROM_CMD, RTL818X_EEPROM_CMD_NORMAL);
  
-+static int cfctrl_link_setup(struct cfctrl *cfctrl, struct cfpkt *pkt, u8 cmdrsp)
-+{
-+	u8 len;
-+	u8 linkid = 0;
-+	enum cfctrl_srv serv;
-+	enum cfctrl_srv servtype;
-+	u8 endpoint;
-+	u8 physlinkid;
-+	u8 prio;
-+	u8 tmp;
-+	u8 *cp;
-+	int i;
-+	struct cfctrl_link_param linkparam;
-+	struct cfctrl_request_info rsp, *req;
++	usb_kill_anchored_urbs(&priv->anchored);
 +
-+	memset(&linkparam, 0, sizeof(linkparam));
-+
-+	tmp = cfpkt_extr_head_u8(pkt);
-+
-+	serv = tmp & CFCTRL_SRV_MASK;
-+	linkparam.linktype = serv;
-+
-+	servtype = tmp >> 4;
-+	linkparam.chtype = servtype;
-+
-+	tmp = cfpkt_extr_head_u8(pkt);
-+	physlinkid = tmp & 0x07;
-+	prio = tmp >> 3;
-+
-+	linkparam.priority = prio;
-+	linkparam.phyid = physlinkid;
-+	endpoint = cfpkt_extr_head_u8(pkt);
-+	linkparam.endpoint = endpoint & 0x03;
-+
-+	switch (serv) {
-+	case CFCTRL_SRV_VEI:
-+	case CFCTRL_SRV_DBG:
-+		if (CFCTRL_ERR_BIT & cmdrsp)
-+			break;
-+		/* Link ID */
-+		linkid = cfpkt_extr_head_u8(pkt);
-+		break;
-+	case CFCTRL_SRV_VIDEO:
-+		tmp = cfpkt_extr_head_u8(pkt);
-+		linkparam.u.video.connid = tmp;
-+		if (CFCTRL_ERR_BIT & cmdrsp)
-+			break;
-+		/* Link ID */
-+		linkid = cfpkt_extr_head_u8(pkt);
-+		break;
-+
-+	case CFCTRL_SRV_DATAGRAM:
-+		linkparam.u.datagram.connid = cfpkt_extr_head_u32(pkt);
-+		if (CFCTRL_ERR_BIT & cmdrsp)
-+			break;
-+		/* Link ID */
-+		linkid = cfpkt_extr_head_u8(pkt);
-+		break;
-+	case CFCTRL_SRV_RFM:
-+		/* Construct a frame, convert
-+		 * DatagramConnectionID
-+		 * to network format long and copy it out...
-+		 */
-+		linkparam.u.rfm.connid = cfpkt_extr_head_u32(pkt);
-+		cp = (u8 *) linkparam.u.rfm.volume;
-+		for (tmp = cfpkt_extr_head_u8(pkt);
-+		     cfpkt_more(pkt) && tmp != '\0';
-+		     tmp = cfpkt_extr_head_u8(pkt))
-+			*cp++ = tmp;
-+		*cp = '\0';
-+
-+		if (CFCTRL_ERR_BIT & cmdrsp)
-+			break;
-+		/* Link ID */
-+		linkid = cfpkt_extr_head_u8(pkt);
-+
-+		break;
-+	case CFCTRL_SRV_UTIL:
-+		/* Construct a frame, convert
-+		 * DatagramConnectionID
-+		 * to network format long and copy it out...
-+		 */
-+		/* Fifosize KB */
-+		linkparam.u.utility.fifosize_kb = cfpkt_extr_head_u16(pkt);
-+		/* Fifosize bufs */
-+		linkparam.u.utility.fifosize_bufs = cfpkt_extr_head_u16(pkt);
-+		/* name */
-+		cp = (u8 *) linkparam.u.utility.name;
-+		caif_assert(sizeof(linkparam.u.utility.name)
-+			     >= UTILITY_NAME_LENGTH);
-+		for (i = 0; i < UTILITY_NAME_LENGTH && cfpkt_more(pkt); i++) {
-+			tmp = cfpkt_extr_head_u8(pkt);
-+			*cp++ = tmp;
-+		}
-+		/* Length */
-+		len = cfpkt_extr_head_u8(pkt);
-+		linkparam.u.utility.paramlen = len;
-+		/* Param Data */
-+		cp = linkparam.u.utility.params;
-+		while (cfpkt_more(pkt) && len--) {
-+			tmp = cfpkt_extr_head_u8(pkt);
-+			*cp++ = tmp;
-+		}
-+		if (CFCTRL_ERR_BIT & cmdrsp)
-+			break;
-+		/* Link ID */
-+		linkid = cfpkt_extr_head_u8(pkt);
-+		/* Length */
-+		len = cfpkt_extr_head_u8(pkt);
-+		/* Param Data */
-+		cfpkt_extr_head(pkt, NULL, len);
-+		break;
-+	default:
-+		pr_warn("Request setup, invalid type (%d)\n", serv);
-+		return -1;
-+	}
-+
-+	rsp.cmd = CFCTRL_CMD_LINK_SETUP;
-+	rsp.param = linkparam;
-+	spin_lock_bh(&cfctrl->info_list_lock);
-+	req = cfctrl_remove_req(cfctrl, &rsp);
-+
-+	if (CFCTRL_ERR_BIT == (CFCTRL_ERR_BIT & cmdrsp) ||
-+		cfpkt_erroneous(pkt)) {
-+		pr_err("Invalid O/E bit or parse error "
-+				"on CAIF control channel\n");
-+		cfctrl->res.reject_rsp(cfctrl->serv.layer.up, 0,
-+				       req ? req->client_layer : NULL);
-+	} else {
-+		cfctrl->res.linksetup_rsp(cfctrl->serv.layer.up, linkid,
-+					  serv, physlinkid,
-+					  req ?  req->client_layer : NULL);
-+	}
-+
-+	kfree(req);
-+
-+	spin_unlock_bh(&cfctrl->info_list_lock);
-+
-+	return 0;
-+}
-+
- static int cfctrl_recv(struct cflayer *layer, struct cfpkt *pkt)
- {
- 	u8 cmdrsp;
- 	u8 cmd;
--	int ret = -1;
--	u8 len;
--	u8 param[255];
-+	int ret = 0;
- 	u8 linkid = 0;
- 	struct cfctrl *cfctrl = container_obj(layer);
--	struct cfctrl_request_info rsp, *req;
--
+ 	while ((skb = skb_dequeue(&priv->b_tx_status.queue)))
+ 		dev_kfree_skb_any(skb);
  
- 	cmdrsp = cfpkt_extr_head_u8(pkt);
- 	cmd = cmdrsp & CFCTRL_CMD_MASK;
-@@ -374,150 +511,7 @@ static int cfctrl_recv(struct cflayer *layer, struct cfpkt *pkt)
+-	usb_kill_anchored_urbs(&priv->anchored);
+ 	mutex_unlock(&priv->conf_mutex);
  
- 	switch (cmd) {
- 	case CFCTRL_CMD_LINK_SETUP:
--		{
--			enum cfctrl_srv serv;
--			enum cfctrl_srv servtype;
--			u8 endpoint;
--			u8 physlinkid;
--			u8 prio;
--			u8 tmp;
--			u8 *cp;
--			int i;
--			struct cfctrl_link_param linkparam;
--			memset(&linkparam, 0, sizeof(linkparam));
--
--			tmp = cfpkt_extr_head_u8(pkt);
--
--			serv = tmp & CFCTRL_SRV_MASK;
--			linkparam.linktype = serv;
--
--			servtype = tmp >> 4;
--			linkparam.chtype = servtype;
--
--			tmp = cfpkt_extr_head_u8(pkt);
--			physlinkid = tmp & 0x07;
--			prio = tmp >> 3;
--
--			linkparam.priority = prio;
--			linkparam.phyid = physlinkid;
--			endpoint = cfpkt_extr_head_u8(pkt);
--			linkparam.endpoint = endpoint & 0x03;
--
--			switch (serv) {
--			case CFCTRL_SRV_VEI:
--			case CFCTRL_SRV_DBG:
--				if (CFCTRL_ERR_BIT & cmdrsp)
--					break;
--				/* Link ID */
--				linkid = cfpkt_extr_head_u8(pkt);
--				break;
--			case CFCTRL_SRV_VIDEO:
--				tmp = cfpkt_extr_head_u8(pkt);
--				linkparam.u.video.connid = tmp;
--				if (CFCTRL_ERR_BIT & cmdrsp)
--					break;
--				/* Link ID */
--				linkid = cfpkt_extr_head_u8(pkt);
--				break;
--
--			case CFCTRL_SRV_DATAGRAM:
--				linkparam.u.datagram.connid =
--				    cfpkt_extr_head_u32(pkt);
--				if (CFCTRL_ERR_BIT & cmdrsp)
--					break;
--				/* Link ID */
--				linkid = cfpkt_extr_head_u8(pkt);
--				break;
--			case CFCTRL_SRV_RFM:
--				/* Construct a frame, convert
--				 * DatagramConnectionID
--				 * to network format long and copy it out...
--				 */
--				linkparam.u.rfm.connid =
--				    cfpkt_extr_head_u32(pkt);
--				cp = (u8 *) linkparam.u.rfm.volume;
--				for (tmp = cfpkt_extr_head_u8(pkt);
--				     cfpkt_more(pkt) && tmp != '\0';
--				     tmp = cfpkt_extr_head_u8(pkt))
--					*cp++ = tmp;
--				*cp = '\0';
--
--				if (CFCTRL_ERR_BIT & cmdrsp)
--					break;
--				/* Link ID */
--				linkid = cfpkt_extr_head_u8(pkt);
--
--				break;
--			case CFCTRL_SRV_UTIL:
--				/* Construct a frame, convert
--				 * DatagramConnectionID
--				 * to network format long and copy it out...
--				 */
--				/* Fifosize KB */
--				linkparam.u.utility.fifosize_kb =
--				    cfpkt_extr_head_u16(pkt);
--				/* Fifosize bufs */
--				linkparam.u.utility.fifosize_bufs =
--				    cfpkt_extr_head_u16(pkt);
--				/* name */
--				cp = (u8 *) linkparam.u.utility.name;
--				caif_assert(sizeof(linkparam.u.utility.name)
--					     >= UTILITY_NAME_LENGTH);
--				for (i = 0;
--				     i < UTILITY_NAME_LENGTH
--				     && cfpkt_more(pkt); i++) {
--					tmp = cfpkt_extr_head_u8(pkt);
--					*cp++ = tmp;
--				}
--				/* Length */
--				len = cfpkt_extr_head_u8(pkt);
--				linkparam.u.utility.paramlen = len;
--				/* Param Data */
--				cp = linkparam.u.utility.params;
--				while (cfpkt_more(pkt) && len--) {
--					tmp = cfpkt_extr_head_u8(pkt);
--					*cp++ = tmp;
--				}
--				if (CFCTRL_ERR_BIT & cmdrsp)
--					break;
--				/* Link ID */
--				linkid = cfpkt_extr_head_u8(pkt);
--				/* Length */
--				len = cfpkt_extr_head_u8(pkt);
--				/* Param Data */
--				cfpkt_extr_head(pkt, &param, len);
--				break;
--			default:
--				pr_warn("Request setup, invalid type (%d)\n",
--					serv);
--				goto error;
--			}
--
--			rsp.cmd = cmd;
--			rsp.param = linkparam;
--			spin_lock_bh(&cfctrl->info_list_lock);
--			req = cfctrl_remove_req(cfctrl, &rsp);
--
--			if (CFCTRL_ERR_BIT == (CFCTRL_ERR_BIT & cmdrsp) ||
--				cfpkt_erroneous(pkt)) {
--				pr_err("Invalid O/E bit or parse error "
--						"on CAIF control channel\n");
--				cfctrl->res.reject_rsp(cfctrl->serv.layer.up,
--						       0,
--						       req ? req->client_layer
--						       : NULL);
--			} else {
--				cfctrl->res.linksetup_rsp(cfctrl->serv.
--							  layer.up, linkid,
--							  serv, physlinkid,
--							  req ? req->
--							  client_layer : NULL);
--			}
--
--			kfree(req);
--
--			spin_unlock_bh(&cfctrl->info_list_lock);
--		}
-+		ret = cfctrl_link_setup(cfctrl, pkt, cmdrsp);
- 		break;
- 	case CFCTRL_CMD_LINK_DESTROY:
- 		linkid = cfpkt_extr_head_u8(pkt);
-@@ -544,9 +538,9 @@ static int cfctrl_recv(struct cflayer *layer, struct cfpkt *pkt)
- 		break;
- 	default:
- 		pr_err("Unrecognized Control Frame\n");
-+		ret = -1;
- 		goto error;
- 	}
--	ret = 0;
- error:
- 	cfpkt_destroy(pkt);
- 	return ret;
+ 	if (!priv->is_rtl8187b)
 -- 
 2.39.5
 
