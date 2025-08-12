@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4477E2F5E;
-	Tue, 12 Aug 2025 18:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFF92F5E;
+	Tue, 12 Aug 2025 18:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022615; cv=none; b=i7/7Xkh0vZT1rzE96s5HBhA9XrnEzIVgTanB3LEaFg3rt7FUnarvg3o1dg6LRZAOJl2gLSzelYvASZiW/u56pF+Dp/8F+HqiLw1eiuavta30gSK82A46b4+ax3ykK3XctV3qgwcJ3gv4YaZDYZ1CGUXt9UyAIB4K9k5Fs+KmKTU=
+	t=1755022618; cv=none; b=gNtzP2zpWhdmTPvkVtsefOC0jl0YJrzgWl3XDQDz1vRy2ZVmb0xfqQyfABZeY4npFp8Sq2LBimCu51sCa6q3VWLkF3lmYzFXidD7/bKcMQo40Y3NmKlntr/fbLCF+SsklQfqPCgqso5JzTTqS0mF1cQBJ+3sxmmwkvgrj1Y5qGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022615; c=relaxed/simple;
-	bh=fWVFWZwb3lQwvV2oqX8rZ3ddouDjf5vsRbjlfXOWk88=;
+	s=arc-20240116; t=1755022618; c=relaxed/simple;
+	bh=em5nQT3bpMOI65tTXLlv/Fh74/5RXEL0c4gn4AggvcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLZd9e0Dj3C1/Ca5UTURob8qJVZeehfA5B3uVeXVfufbOK+a23omSBROBp1prGgpZ7qkxeHFWzMnKsLslhZ0iR4xJDPdPzIJNjVFSYD2eDzcSZpAgP2uKjSTwMPscSlD5PvRazfUEO1r+yrTAjJkacLskyhJ/DQMXajqKqs69xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnY7QBma; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MnGuyNvKeZGFzIh+ZHTZxW5uNwRpLXsAGn7Cot07eViJ/x4w9mqtXz8Uf/yUsRWZrUeLa3LpPlFFAqlX/5gXJ/62erYSP2sAxuZvhEkdKdLJZtEVGQR3t+42BsEdtRG03KLjipXjrDJKOkIriAa9v1vkup8Mky9udDNGe5VH5Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTvo9MEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnY7QBma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5B9C4CEF0;
-	Tue, 12 Aug 2025 18:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTvo9MEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDA5C4CEF0;
+	Tue, 12 Aug 2025 18:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022615;
-	bh=fWVFWZwb3lQwvV2oqX8rZ3ddouDjf5vsRbjlfXOWk88=;
+	s=korg; t=1755022618;
+	bh=em5nQT3bpMOI65tTXLlv/Fh74/5RXEL0c4gn4AggvcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YnY7QBmaWGol+1QvwuEbj3ac3JEc2+1EZrY4agNre9634E49MnZMWZzzPcC6l07gt
-	 WEppc4JBUupny9z/ttVRCz0F5Dw6jgBjVE1+bib7aoS41Kcre0E2Td2uaw6gmDPzVv
-	 nILgUyAAbWyTis5//9rVJFl420Wm0HGtPXk7Q4ns=
+	b=MTvo9MEbeSy0UAnmt87xS6LDNBo2IQgqsRbpXZ9dB5MnkLKv9Nl2HcUbDRcmyMgLI
+	 CnztmBRXizoS+UhfyGQrFiHkX3gwwrPyFLhBWpRw/nMdK6Y5GyEdJ/NfA7lbHbIuPf
+	 mBfzNAfsxzOD0PXZsVtwtVGf13562K5TlVJCjzNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrice Vilchez <Patrice.Vilchez@microchip.com>,
-	Varshini Rajendran <varshini.rajendran@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 206/369] clk: at91: sam9x7: update pll clk ranges
-Date: Tue, 12 Aug 2025 19:28:23 +0200
-Message-ID: <20250812173022.516042051@linuxfoundation.org>
+Subject: [PATCH 6.12 207/369] hwrng: mtk - handle devm_pm_runtime_enable errors
+Date: Tue, 12 Aug 2025 19:28:24 +0200
+Message-ID: <20250812173022.550637558@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,84 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Varshini Rajendran <varshini.rajendran@microchip.com>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-[ Upstream commit c7f7ddbd27d55fa552a7269b7bae539adc2a3d46 ]
+[ Upstream commit 522a242a18adc5c63a24836715dbeec4dc3faee1 ]
 
-Update the min, max ranges of the PLL clocks according to the latest
-datasheet to be coherent in the driver. This patch solves the issues in
-configuring the clocks related to peripherals with the desired frequency
-within the range.
+Although unlikely, devm_pm_runtime_enable() call might fail, so handle
+the return value.
 
-Fixes: 33013b43e271 ("clk: at91: sam9x7: add sam9x7 pmc driver")
-Suggested-by: Patrice Vilchez <Patrice.Vilchez@microchip.com>
-Signed-off-by: Varshini Rajendran <varshini.rajendran@microchip.com>
-Link: https://lore.kernel.org/r/20250714093512.29944-1-varshini.rajendran@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: 78cb66caa6ab ("hwrng: mtk - Use devm_pm_runtime_enable")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/sam9x7.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/char/hw_random/mtk-rng.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/at91/sam9x7.c b/drivers/clk/at91/sam9x7.c
-index cbb8b220f16b..ffab32b047a0 100644
---- a/drivers/clk/at91/sam9x7.c
-+++ b/drivers/clk/at91/sam9x7.c
-@@ -61,44 +61,44 @@ static const struct clk_master_layout sam9x7_master_layout = {
+diff --git a/drivers/char/hw_random/mtk-rng.c b/drivers/char/hw_random/mtk-rng.c
+index 1e3048f2bb38..6c4e40d0365f 100644
+--- a/drivers/char/hw_random/mtk-rng.c
++++ b/drivers/char/hw_random/mtk-rng.c
+@@ -142,7 +142,9 @@ static int mtk_rng_probe(struct platform_device *pdev)
+ 	dev_set_drvdata(&pdev->dev, priv);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+-	devm_pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
  
- /* Fractional PLL core output range. */
- static const struct clk_range plla_core_outputs[] = {
--	{ .min = 375000000, .max = 1600000000 },
-+	{ .min = 800000000, .max = 1600000000 },
- };
+ 	dev_info(&pdev->dev, "registered RNG driver\n");
  
- static const struct clk_range upll_core_outputs[] = {
--	{ .min = 600000000, .max = 1200000000 },
-+	{ .min = 600000000, .max = 960000000 },
- };
- 
- static const struct clk_range lvdspll_core_outputs[] = {
--	{ .min = 400000000, .max = 800000000 },
-+	{ .min = 600000000, .max = 1200000000 },
- };
- 
- static const struct clk_range audiopll_core_outputs[] = {
--	{ .min = 400000000, .max = 800000000 },
-+	{ .min = 600000000, .max = 1200000000 },
- };
- 
- static const struct clk_range plladiv2_core_outputs[] = {
--	{ .min = 375000000, .max = 1600000000 },
-+	{ .min = 800000000, .max = 1600000000 },
- };
- 
- /* Fractional PLL output range. */
- static const struct clk_range plla_outputs[] = {
--	{ .min = 732421, .max = 800000000 },
-+	{ .min = 400000000, .max = 800000000 },
- };
- 
- static const struct clk_range upll_outputs[] = {
--	{ .min = 300000000, .max = 600000000 },
-+	{ .min = 300000000, .max = 480000000 },
- };
- 
- static const struct clk_range lvdspll_outputs[] = {
--	{ .min = 10000000, .max = 800000000 },
-+	{ .min = 175000000, .max = 550000000 },
- };
- 
- static const struct clk_range audiopll_outputs[] = {
--	{ .min = 10000000, .max = 800000000 },
-+	{ .min = 0, .max = 300000000 },
- };
- 
- static const struct clk_range plladiv2_outputs[] = {
--	{ .min = 366210, .max = 400000000 },
-+	{ .min = 200000000, .max = 400000000 },
- };
- 
- /* PLL characteristics. */
 -- 
 2.39.5
 
