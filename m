@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B46F2FE579;
-	Tue, 12 Aug 2025 18:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FCA2E7BD4;
+	Tue, 12 Aug 2025 18:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023248; cv=none; b=hRttsirkQMevEMyLDMeX4yHuNV/UcVWIi0OvMmqq5pmeVy/l8DQf54fwZsbqbghdfBZb857MPlnItN6wn9ty1GMkEBaOi9tL/qAMqZ8P2/XfU0p/8Lt2n55a5cH6l9te87tnbS42ZbDrYKFbrQBftwQDEUoPf8Gfc02Chykc6Qo=
+	t=1755023251; cv=none; b=TuCD3E3vf2o0iteMOPWgbg8zUvG49r4xSKN9EmSRWn8MoCBo9ZYsd0ZTJ1HfsIbBHwOC+fji9KHg0V2iZwGkh2mcCvWKiQilrvCDv6whN5czNzoKF9iYdxpdKcIDCDK72vbfNlpDytP0Mtm7DBdf3vhh9+sPXTfEqkPtcFoA3IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023248; c=relaxed/simple;
-	bh=T8qByBb1ZyHc4CfMwR7aetdZG9aiSjU2zW2ehIR8QUI=;
+	s=arc-20240116; t=1755023251; c=relaxed/simple;
+	bh=yjD3ud9trxCsm/dBfmg22jHOIRlt0yf0dJ0BOifYSPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RHAWXtSVyXURiqmijMJuOOcEPPzZhfa7q98g64IYeWClejWXVzv/cRqfvYdD2o3MIlK/zxKxg0MAYamVCy/J4pl/4GLvbbTB8YTNhi7pN1Ti5V4VgYW39U/XAjepSxD7/zLLnVy5HHmEbx7yTgl9S5qS05W7NgIUYVwiW+JCGLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaPpzSAC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=glKCDqTMZ1pjneNv+pICkpfbDXLUXrUyny8UJZAybx9Tf2/y8jZHwSgIr4N/IlqCFqg06qErCzXDiYo/Ua/CjGcRAeJfd41rrwKMAJIzXh6LLLohb7YX8OjIzXRtX86D0cwkRChIj2vXRZ0n7I0Cc9K50mHkSJv9tLlHN4iJREU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3ujw1if; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaPpzSAC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0CEC4CEF1;
-	Tue, 12 Aug 2025 18:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3ujw1if"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373E6C4CEF1;
+	Tue, 12 Aug 2025 18:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023248;
-	bh=T8qByBb1ZyHc4CfMwR7aetdZG9aiSjU2zW2ehIR8QUI=;
+	s=korg; t=1755023251;
+	bh=yjD3ud9trxCsm/dBfmg22jHOIRlt0yf0dJ0BOifYSPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaPpzSACv+4qdqpSoRyb+7MqBs01hcnTMHGcrajisp6f0v7GL+P7nZoyUllhHLcC1
-	 8pLWNgDQ6XHLzmDicQJayfZBQ9V+GGZBy5tlmIeUnGN5NL7QqRNAmCb+8lQ0edq5P0
-	 jm/651v1fI/8r2Pt9qT6y0JIooXTvWs8sZ9Eon/A=
+	b=i3ujw1if0p+BaGjlrrs+YESjLKqn20INoLqED30mUuqXLmybx9iud1SpgP6F6fcCB
+	 VMPf71t+3X7yoV8vFn0pinPDkTeMhIptVudiXfy+KKpowDP6bzLJ9pTnF5hYrmJ1Ni
+	 7eJsX0dq0Yr4IRrK0P5FdLjclccJbBy44bNWmLVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Song Liu <song@kernel.org>,
 	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 004/627] selftests/landlock: Fix readlink check
-Date: Tue, 12 Aug 2025 19:24:59 +0200
-Message-ID: <20250812173419.487053566@linuxfoundation.org>
+Subject: [PATCH 6.16 005/627] selftests/landlock: Fix build of audit_test
+Date: Tue, 12 Aug 2025 19:25:00 +0200
+Message-ID: <20250812173419.523658139@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,45 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit 94a7ce26428d3a7ceb46c503ed726160578b9fcc ]
+[ Upstream commit dc58130bc38f09b162aa3b216f8b8f1e0a56127b ]
 
-The audit_init_filter_exe() helper incorrectly checks the readlink(2)
-error because an unsigned integer is used to store the result.  Use a
-signed integer for this check.
+We are hitting build error on CentOS 9:
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/aDbFwyZ_fM-IO7sC@stanley.mountain
-Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
-Reviewed-by: Günther Noack <gnoack@google.com>
-Link: https://lore.kernel.org/r/20250528144426.1709063-1-mic@digikod.net
+audit_test.c:232:40: error: ‘O_CLOEXEC’ undeclared (...)
+
+Fix this by including fcntl.h.
+
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20250605214416.1885878-1-song@kernel.org
+Fixes: 6b4566400a29 ("selftests/landlock: Add PID tests for audit records")
 Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/audit.h | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/testing/selftests/landlock/audit_test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/landlock/audit.h b/tools/testing/selftests/landlock/audit.h
-index 18a6014920b5..b16986aa6442 100644
---- a/tools/testing/selftests/landlock/audit.h
-+++ b/tools/testing/selftests/landlock/audit.h
-@@ -403,11 +403,12 @@ static int audit_init_filter_exe(struct audit_filter *filter, const char *path)
- 	/* It is assume that there is not already filtering rules. */
- 	filter->record_type = AUDIT_EXE;
- 	if (!path) {
--		filter->exe_len = readlink("/proc/self/exe", filter->exe,
--					   sizeof(filter->exe) - 1);
--		if (filter->exe_len < 0)
-+		int ret = readlink("/proc/self/exe", filter->exe,
-+				   sizeof(filter->exe) - 1);
-+		if (ret < 0)
- 			return -errno;
+diff --git a/tools/testing/selftests/landlock/audit_test.c b/tools/testing/selftests/landlock/audit_test.c
+index cfc571afd0eb..46d02d49835a 100644
+--- a/tools/testing/selftests/landlock/audit_test.c
++++ b/tools/testing/selftests/landlock/audit_test.c
+@@ -7,6 +7,7 @@
  
-+		filter->exe_len = ret;
- 		return 0;
- 	}
- 
+ #define _GNU_SOURCE
+ #include <errno.h>
++#include <fcntl.h>
+ #include <limits.h>
+ #include <linux/landlock.h>
+ #include <pthread.h>
 -- 
 2.39.5
 
