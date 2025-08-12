@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DB32FF169;
-	Tue, 12 Aug 2025 18:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D982FFDC7;
+	Tue, 12 Aug 2025 18:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024053; cv=none; b=SUYPHDJy+qpdPHvaQfhuiF5LW209uiYdDj7ezDk/BMJcUAR03bUx/c4qec6e3CKu91aeV1PGylJJel3R1FvoTsGQboM9Espmj6LZl5dcaWQeHpDjuV+mF8U7XBLTZpHK2eVQdFiDtOMa8cIJQZ1VgwB9YnxFVunvO+i5+8SH0eI=
+	t=1755024057; cv=none; b=mPV0/uGwOgOtiVduMHDNR6P+/Tk3NVAzVqxtI/HcY0h1gv5SVZxK2ofvgN4vKl0gIc/Bj6Ztp3OISo/blmTUaj5saRpjS2Vpp0lyoqdNXNPsQSteh2aDuQ1+kjC4mX8mFwHCRN6wg13USCCd0pCP6MMtPMv9r4BecJj7D3383nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024053; c=relaxed/simple;
-	bh=RdONG8xWdLqrLfLJzfu6R1TW/0XpUIQpMBUuG5UhxjU=;
+	s=arc-20240116; t=1755024057; c=relaxed/simple;
+	bh=tlC6WOttenCNbxWCZUsqJoA77i/6rpxL/VBPgaQ7634=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eG88TfqsLcri+MqZvHwGFgF1oLna2aCSwVTMgnvWSrokpZK90EelAAhX1/lHT4Pn+ecGZ/bEJd+9FmzLJgCd+idJJyfAjEFE5y17AsrXGpJJqM2yKTqA6qpABNVAEuOzsmfTdNi3DfJNCT3d6y6cMlm5vVAzT2DEEXGG3NjuPRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyqxLhCj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JXdhknLYbZdKH/0XjooEt3UAwFjceuLjYVubXRYkLUXPW0VosK34ZgycwOqVdtAhsZAX2gP11hvm7+WuuLT+XlBJse7GESb/CpE68se5vJ5cbdKYqbhajFX5y+Zf4ID/1c66WSDV2zhkHFIPvLPeZjEJdHYgXrHECtaVra7SC8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19rMKAFx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyqxLhCj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21872C4CEF0;
-	Tue, 12 Aug 2025 18:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19rMKAFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBF8C4CEF0;
+	Tue, 12 Aug 2025 18:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024053;
-	bh=RdONG8xWdLqrLfLJzfu6R1TW/0XpUIQpMBUuG5UhxjU=;
+	s=korg; t=1755024056;
+	bh=tlC6WOttenCNbxWCZUsqJoA77i/6rpxL/VBPgaQ7634=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iyqxLhCjl5mVYjdkIFpQUJ8E2GOSh1alHqXwj1fT4kJUgQRdCe1QKReXhG4+RcBy9
-	 330jzOxz03eigZb9CYEBrSVpz/vnd4UOwp7jth32LAfXJNIQ29C1eembr5a8FQaWRN
-	 +vP8RmkDjVlujfnyaRgklWyD8EGTogZgRZzOHqEM=
+	b=19rMKAFx4oJWkcXAyHN1xaU44Y3t1dhxJMTMBi656m9PxMcFp6HBrH5lIfC/RDbAB
+	 pIUr0MLcrIOctRxc56zxFE0hjoDI8oZY57Rn5v+poWZgs8c5jKvv+LyNejf/Jfhw6z
+	 g1o0yZEU6pP6MewWVgtK1diaHcIr8Isel5Lyqgpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sai Teja Aluvala <aluvala.sai.teja@intel.com>,
-	Kiran K <kiran.k@intel.com>,
+	Chris Down <chris@chrisdown.name>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 259/627] Bluetooth: btintel_pcie: Make driver wait for alive interrupt
-Date: Tue, 12 Aug 2025 19:29:14 +0200
-Message-ID: <20250812173429.169011943@linuxfoundation.org>
+Subject: [PATCH 6.16 260/627] Bluetooth: hci_event: Mask data status from LE ext adv reports
+Date: Tue, 12 Aug 2025 19:29:15 +0200
+Message-ID: <20250812173429.205181330@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,92 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Chris Down <chris@chrisdown.name>
 
-[ Upstream commit 69b3d3acf3dba21e2abad863c80c7114eb110b3d ]
+[ Upstream commit 0cadf8534f2a727bc3a01e8c583b085d25963ee0 ]
 
-The firmware raises an alive interrupt upon receiving the HCI_RESET or
-BTINTEL_HCI_OP_RESET (Intel reset - 0xfc01) command. This change fixes
-the driver to properly wait for the alive interrupt to avoid driver
-sending commands to firmware before it is ready to process.
+The Event_Type field in an LE Extended Advertising Report uses bits 5
+and 6 for data status (e.g. truncation or fragmentation), not the PDU
+type itself.
 
-For details on the handshake between the driver and firmware, refer to
-commit 05c200c8f029 ("Bluetooth: btintel_pcie: Add handshake between
-driver and firmware").
+The ext_evt_type_to_legacy() function fails to mask these status bits
+before evaluation. This causes valid advertisements with status bits set
+(e.g. a truncated non-connectable advertisement, which ends up showing
+as PDU type 0x40) to be misclassified as unknown and subsequently
+dropped. This is okay for most checks which use bitwise AND on the
+relevant event type bits, but it doesn't work for non-connectable types,
+which are checked with '== LE_EXT_ADV_NON_CONN_IND' (that is, zero).
 
-As the driver needs to handle two interrupts for HCI_OP_RESET and
-BTINTEL_HCI_OP_RESET, the firmware ensures that the TX completion
-interrupt is always followed by the alive interrupt.
+In terms of behaviour, first the device sends a truncated report:
 
-Fixes: 05c200c8f029 ("Bluetooth: btintel_pcie: Add handshake between driver and firmware")
-Signed-off-by: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
-Signed-off-by: Kiran K <kiran.k@intel.com>
+> HCI Event: LE Meta Event (0x3e) plen 26
+      LE Extended Advertising Report (0x0d)
+        Entry 0
+          Event type: 0x0040
+            Data status: Incomplete, data truncated, no more to come
+          Address type: Random (0x01)
+          Address: 1D:12:46:FA:F8:6E (Non-Resolvable)
+          SID: 0x03
+          RSSI: -98 dBm (0x9e)
+          Data length: 0x00
+
+Then, a few seconds later, it sends the subsequent complete report:
+
+> HCI Event: LE Meta Event (0x3e) plen 122
+      LE Extended Advertising Report (0x0d)
+        Entry 0
+          Event type: 0x0000
+            Data status: Complete
+          Address type: Random (0x01)
+          Address: 1D:12:46:FA:F8:6E (Non-Resolvable)
+          SID: 0x03
+          RSSI: -97 dBm (0x9f)
+          Data length: 0x60
+          Service Data: Google (0xfef3)
+            Data[92]: ...
+
+These devices often send multiple truncated reports per second.
+
+This patch introduces a PDU type mask to ensure only the relevant bits
+are evaluated, allowing for the correct translation of all valid
+extended advertising packets.
+
+Fixes: b2cc9761f144 ("Bluetooth: Handle extended ADV PDU types")
+Signed-off-by: Chris Down <chris@chrisdown.name>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ include/net/bluetooth/hci.h | 1 +
+ net/bluetooth/hci_event.c   | 8 ++++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 1638be0921a3..7f789937a764 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -928,11 +928,13 @@ static void btintel_pcie_msix_gp0_handler(struct btintel_pcie_data *data)
- 	case BTINTEL_PCIE_INTEL_HCI_RESET1:
- 		if (btintel_pcie_in_op(data)) {
- 			submit_rx = true;
-+			signal_waitq = true;
- 			break;
- 		}
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index c79901f2dc2a..5796ca9fe5da 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -2634,6 +2634,7 @@ struct hci_ev_le_conn_complete {
+ #define LE_EXT_ADV_DIRECT_IND		0x0004
+ #define LE_EXT_ADV_SCAN_RSP		0x0008
+ #define LE_EXT_ADV_LEGACY_PDU		0x0010
++#define LE_EXT_ADV_DATA_STATUS_MASK	0x0060
+ #define LE_EXT_ADV_EVT_TYPE_MASK	0x007f
  
- 		if (btintel_pcie_in_iml(data)) {
- 			submit_rx = true;
-+			signal_waitq = true;
- 			data->alive_intr_ctxt = BTINTEL_PCIE_FW_DL;
- 			break;
- 		}
-@@ -1963,8 +1965,11 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
- 			if (opcode == BTINTEL_HCI_OP_RESET)
- 				btintel_pcie_inject_cmd_complete(hdev, opcode);
- 		}
--		/* Firmware raises alive interrupt on HCI_OP_RESET */
--		if (opcode == HCI_OP_RESET)
+ #define ADDR_LE_DEV_PUBLIC		0x00
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index cf4b30ac9e0e..c1dd8d78701f 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6239,6 +6239,11 @@ static void hci_le_adv_report_evt(struct hci_dev *hdev, void *data,
+ 
+ static u8 ext_evt_type_to_legacy(struct hci_dev *hdev, u16 evt_type)
+ {
++	u16 pdu_type = evt_type & ~LE_EXT_ADV_DATA_STATUS_MASK;
 +
-+		/* Firmware raises alive interrupt on HCI_OP_RESET or
-+		 * BTINTEL_HCI_OP_RESET
-+		 */
-+		if (opcode == HCI_OP_RESET || opcode == BTINTEL_HCI_OP_RESET)
- 			data->gp0_received = false;
++	if (!pdu_type)
++		return LE_ADV_NONCONN_IND;
++
+ 	if (evt_type & LE_EXT_ADV_LEGACY_PDU) {
+ 		switch (evt_type) {
+ 		case LE_LEGACY_ADV_IND:
+@@ -6270,8 +6275,7 @@ static u8 ext_evt_type_to_legacy(struct hci_dev *hdev, u16 evt_type)
+ 	if (evt_type & LE_EXT_ADV_SCAN_IND)
+ 		return LE_ADV_SCAN_IND;
  
- 		hdev->stat.cmd_tx++;
-@@ -2003,17 +2008,16 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
- 		bt_dev_dbg(data->hdev, "sent cmd: 0x%4.4x alive context changed: %s  ->  %s",
- 			   opcode, btintel_pcie_alivectxt_state2str(old_ctxt),
- 			   btintel_pcie_alivectxt_state2str(data->alive_intr_ctxt));
--		if (opcode == HCI_OP_RESET) {
--			ret = wait_event_timeout(data->gp0_wait_q,
--						 data->gp0_received,
--						 msecs_to_jiffies(BTINTEL_DEFAULT_INTR_TIMEOUT_MS));
--			if (!ret) {
--				hdev->stat.err_tx++;
--				bt_dev_err(hdev, "No alive interrupt received for %s",
--					   btintel_pcie_alivectxt_state2str(data->alive_intr_ctxt));
--				ret = -ETIME;
--				goto exit_error;
--			}
-+		ret = wait_event_timeout(data->gp0_wait_q,
-+					 data->gp0_received,
-+					 msecs_to_jiffies(BTINTEL_DEFAULT_INTR_TIMEOUT_MS));
-+		if (!ret) {
-+			hdev->stat.err_tx++;
-+			bt_dev_err(hdev, "Timeout on alive interrupt (%u ms). Alive context: %s",
-+				   BTINTEL_DEFAULT_INTR_TIMEOUT_MS,
-+				   btintel_pcie_alivectxt_state2str(data->alive_intr_ctxt));
-+			ret = -ETIME;
-+			goto exit_error;
- 		}
- 	}
- 	hdev->stat.byte_tx += skb->len;
+-	if (evt_type == LE_EXT_ADV_NON_CONN_IND ||
+-	    evt_type & LE_EXT_ADV_DIRECT_IND)
++	if (evt_type & LE_EXT_ADV_DIRECT_IND)
+ 		return LE_ADV_NONCONN_IND;
+ 
+ invalid:
 -- 
 2.39.5
 
