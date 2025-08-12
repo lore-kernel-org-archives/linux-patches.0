@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F8020409A;
-	Tue, 12 Aug 2025 18:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D83305E08;
+	Tue, 12 Aug 2025 18:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022215; cv=none; b=bc9/AIu8PzSKBR8tIdpk7httAKBDqCFaoihFC84otug2SwDV5n7gvyqpygv8PowOR+weysF1kdJDG36sVHkGsgKfVvRuoaS7qLbKgAIkswmCjt4jqJwcWfq0FxOiWP0XjnDLPBcxXg7PIiJk80ZC7HlfzMd4ntWuvW5AlkLqpDE=
+	t=1755022218; cv=none; b=Om4D7YAebMmjT/bWb5fHUR52My7RI3oDAQ8W7U8GjUxDTQTEEXUyZH8PaHNH71JsTKBrQ5sob2NerrOjEoTkeyWmtYi2X5wpJzPzkZaLhX419oWT2xnwIKXvunQ4QXGYQ2Io3nU6Mltqx1GymS97eg9kneYBN9P1ivnGz/weWdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022215; c=relaxed/simple;
-	bh=k/Igswuh7S4d9liHi5t3if94lO59tZP9EHev4S4CC08=;
+	s=arc-20240116; t=1755022218; c=relaxed/simple;
+	bh=xxnweZD77CcKJOEuta/z8Fa9y7v48PNsWLt1ayMU5lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMKSt1f55wYntar6LHL4dc/xUZT4uBEpk/LYOMwFXJCKfLlz42B3bR4nJ2C8MvWyLDDVSgHxxhnu20pQOTsLU6HCyXul18SZzoZOZbJRuTdiAXTP13CmtH7PsJ4MvSSO7KNJC6iNwgs4C+buyxgiXXH0XkWn09Kt2Y4IcErxzgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uiUwFITw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYJGtzcfuiwM7XWSSfgDSUI7Y5mS2iBlGmj71xvoA5lMZZsstxhtoQfGtOY6zzrmHNTj7SuXVRKlbJ6GoOmN8stAK3+Hmf+w3x3U76/DavKr5RRGrTVel+6UlG/RsiW0tr7HFC41wzGTt2lhVfe+Hxk4FL0WS1lhCv43NqJjpI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REuvD9VM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uiUwFITw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7810C4CEF0;
-	Tue, 12 Aug 2025 18:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REuvD9VM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CDAC4CEF0;
+	Tue, 12 Aug 2025 18:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022215;
-	bh=k/Igswuh7S4d9liHi5t3if94lO59tZP9EHev4S4CC08=;
+	s=korg; t=1755022218;
+	bh=xxnweZD77CcKJOEuta/z8Fa9y7v48PNsWLt1ayMU5lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiUwFITwvWqVNxmuie+ceQoHShXQ9o9+caJKmDpBcnvRHyan6ofhXfwssMl+moml2
-	 2ayJ+CdFUZZ3htIpBlxf3ErNhQPDxrqIIpbyMbp2gJpKJPfMvVk0y0BnOv6ZWp6upy
-	 rYM6ez0RbSZEVRIrAvUdfy4iZBXfBNr6eOdZJKB0=
+	b=REuvD9VMy3LeJZSO3Ir70uqinzlodZHuAeAFxBbXDo6jDGJsT9vKMSO9d6+xbqB6y
+	 s79vQO09OAhdF12koCIcJDcHqA23RYKkFYEvNsmLYHMT4hRxaZW5Z/1ggBDAbVaM+M
+	 7Fu02xA57cQJR9odROF5vSrVGF8mIcaK7pFdCX1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/369] net: dst: annotate data-races around dst->output
-Date: Tue, 12 Aug 2025 19:26:26 +0200
-Message-ID: <20250812173018.124469806@linuxfoundation.org>
+Subject: [PATCH 6.12 090/369] kselftest/arm64: Fix check for setting new VLs in sve-ptrace
+Date: Tue, 12 Aug 2025 19:26:27 +0200
+Message-ID: <20250812173018.162098996@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,85 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 2dce8c52a98995c4719def6f88629ab1581c0b82 ]
+[ Upstream commit 867446f090589626497638f70b10be5e61a0b925 ]
 
-dst_dev_put() can overwrite dst->output while other
-cpus might read this field (for instance from dst_output())
+The check that the new vector length we set was the expected one was typoed
+to an assignment statement which for some reason the compilers didn't spot,
+most likely due to the macros involved.
 
-Add READ_ONCE()/WRITE_ONCE() annotations to suppress
-potential issues.
-
-We will likely need RCU protection in the future.
-
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250630121934.3399505-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a1d7111257cd ("selftests: arm64: More comprehensively test the SVE ptrace interface")
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Dev Jain <dev.jain@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250609-kselftest-arm64-ssve-fixups-v2-1-998fcfa6f240@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dst.h      | 2 +-
- include/net/lwtunnel.h | 4 ++--
- net/core/dst.c         | 2 +-
- net/ipv4/route.c       | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ tools/testing/selftests/arm64/fp/sve-ptrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/dst.h b/include/net/dst.h
-index c844ba143b9c..e18826cd0559 100644
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -456,7 +456,7 @@ INDIRECT_CALLABLE_DECLARE(int ip_output(struct net *, struct sock *,
- /* Output packet to network from transport.  */
- static inline int dst_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- {
--	return INDIRECT_CALL_INET(skb_dst(skb)->output,
-+	return INDIRECT_CALL_INET(READ_ONCE(skb_dst(skb)->output),
- 				  ip6_output, ip_output,
- 				  net, sk, skb);
- }
-diff --git a/include/net/lwtunnel.h b/include/net/lwtunnel.h
-index a4632a64daae..09791f5d9b6e 100644
---- a/include/net/lwtunnel.h
-+++ b/include/net/lwtunnel.h
-@@ -138,8 +138,8 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len,
- static inline void lwtunnel_set_redirect(struct dst_entry *dst)
- {
- 	if (lwtunnel_output_redirect(dst->lwtstate)) {
--		dst->lwtstate->orig_output = dst->output;
--		dst->output = lwtunnel_output;
-+		dst->lwtstate->orig_output = READ_ONCE(dst->output);
-+		WRITE_ONCE(dst->output, lwtunnel_output);
+diff --git a/tools/testing/selftests/arm64/fp/sve-ptrace.c b/tools/testing/selftests/arm64/fp/sve-ptrace.c
+index 6d61992fe8a0..c6228176dd1a 100644
+--- a/tools/testing/selftests/arm64/fp/sve-ptrace.c
++++ b/tools/testing/selftests/arm64/fp/sve-ptrace.c
+@@ -251,7 +251,7 @@ static void ptrace_set_get_vl(pid_t child, const struct vec_type *type,
+ 		return;
  	}
- 	if (lwtunnel_input_redirect(dst->lwtstate)) {
- 		dst->lwtstate->orig_input = READ_ONCE(dst->input);
-diff --git a/net/core/dst.c b/net/core/dst.c
-index 0eef85f8f1f3..cc990706b645 100644
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -149,7 +149,7 @@ void dst_dev_put(struct dst_entry *dst)
- 	if (dst->ops->ifdown)
- 		dst->ops->ifdown(dst, dev);
- 	WRITE_ONCE(dst->input, dst_discard);
--	dst->output = dst_discard_out;
-+	WRITE_ONCE(dst->output, dst_discard_out);
- 	dst->dev = blackhole_netdev;
- 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
- 			   GFP_ATOMIC);
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 118f01aef868..73d555593f5c 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1685,7 +1685,7 @@ struct rtable *rt_dst_clone(struct net_device *dev, struct rtable *rt)
- 			new_rt->rt_gw6 = rt->rt_gw6;
  
- 		new_rt->dst.input = READ_ONCE(rt->dst.input);
--		new_rt->dst.output = rt->dst.output;
-+		new_rt->dst.output = READ_ONCE(rt->dst.output);
- 		new_rt->dst.error = rt->dst.error;
- 		new_rt->dst.lastuse = jiffies;
- 		new_rt->dst.lwtstate = lwtstate_get(rt->dst.lwtstate);
+-	ksft_test_result(new_sve->vl = prctl_vl, "Set %s VL %u\n",
++	ksft_test_result(new_sve->vl == prctl_vl, "Set %s VL %u\n",
+ 			 type->name, vl);
+ 
+ 	free(new_sve);
 -- 
 2.39.5
 
