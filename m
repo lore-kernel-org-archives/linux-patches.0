@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F29E26B2C8;
-	Tue, 12 Aug 2025 17:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A5F26B2C8;
+	Tue, 12 Aug 2025 17:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021184; cv=none; b=TTLcxc1BAd/Qck41nS3DSqfkcRg7sjYGhfzzWuJAmvme9AMWhTY8rqSz8LpW1cmmXDlFkiU9dPzPjehU3xFteeR1k1qWj37ZBTbv4/+SBl8Ae5K6UXZzkcENh2p3Q18cS0AGYn260XTdiqVx2Z46uYmZGux6e8CCaC8Bb2I7MFo=
+	t=1755021187; cv=none; b=qV1SuzhAeuzUDaweCZGkEeOYsIOtU83xW9Y+t6Txh640utxk09j0mPZ3ueH/15jpWpqYQYK/vYgnCqq1/fSLRdmYuA0lFfnQwqpOrQliNM62xz0msVZetqs99gyJEwhg5q2AwiDZOZK0Jg6F4kcvzoOu0PvWiJ3/vpPiQJOjz+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021184; c=relaxed/simple;
-	bh=MIUzq7r/4xrhMBFIr9Lj8hozY3or4bkogmlE+mZtqsI=;
+	s=arc-20240116; t=1755021187; c=relaxed/simple;
+	bh=QSQaeNFYnvGW8muqOS8df1VgXjPKOgW3kEfimg/EbOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/V/w9o5RZHjS4BuyaSxV9ZKGjbYIYWFRmV/S7M5oQQHowQO+OCFsQQQflJFLMhSCbQj1rIXVi4XcFBTlGB4KRRToWkTkI4ANaK+dk4asWQr/0cteHjNye7HDCKMbxNk7q0MweQq/xtK2tPxx85BnCW7KSVGvNkw0GexCNGTf4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWAafi/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUytePcHnDSp8DkhIeoFMCE7GQG8ijGAena27KH+0DA+UV+c0HFLOAIgvTB/vz2E3vYeaLtsNDMkMw1+iFJNwhZgk6RiKA/rBNx2WCr4I5iu/ee+gSt9ktmkF5WvBoD8Za9V/YrCPUvOJOpEuVJpr7QLDfHPmBqtGPis4rt6DtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UluOo2I9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWAafi/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82454C4CEF0;
-	Tue, 12 Aug 2025 17:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UluOo2I9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D0BC4CEF0;
+	Tue, 12 Aug 2025 17:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021184;
-	bh=MIUzq7r/4xrhMBFIr9Lj8hozY3or4bkogmlE+mZtqsI=;
+	s=korg; t=1755021187;
+	bh=QSQaeNFYnvGW8muqOS8df1VgXjPKOgW3kEfimg/EbOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWAafi/gMxMHQAZ1dFzSlvARSbibqZjYMe3ymPsh/c9SJXNea0WDckJonMs1J06/q
-	 LNgFqBNJfnBqOqKFHksB8St9RoBEmW7TJN0IImpTGDL6MSUJ/NU2UMaY7Z9GbeJloq
-	 dm6/FiT0DkCMWs2WzKwn9S9npwiylXI6gSRUOkoo=
+	b=UluOo2I9NzEQ26mZFHG41k6Zx4OGPHerXmgzNklOUytfzw+DO1GLpfOoAyj/sLhq3
+	 bYjjgsPhh3yIY4sINC7OPvaoWPYhMupFjRqp4ZY16jF+Cl4rruyJag+ZCCLhvj4MEs
+	 O81B7aipq7fjOOrBMTa0xMLfldboatriTUkMihiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 226/253] ALSA: hda/ca0132: Fix missing error handling in ca0132_alt_select_out()
-Date: Tue, 12 Aug 2025 19:30:14 +0200
-Message-ID: <20250812172958.447330409@linuxfoundation.org>
+Subject: [PATCH 6.6 075/262] net/sched: Restrict conditions for adding duplicating netems to qdisc tree
+Date: Tue, 12 Aug 2025 19:27:43 +0200
+Message-ID: <20250812172956.224706748@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +49,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: William Liu <will@willsroot.io>
 
-[ Upstream commit 9f320dfb0ffc555aa2eac8331dee0c2c16f67633 ]
+[ Upstream commit ec8e0e3d7adef940cdf9475e2352c0680189d14e ]
 
-There are a couple of cases where the error is ignored or the error
-code isn't propagated in ca0132_alt_select_out().  Fix those.
+netem_enqueue's duplication prevention logic breaks when a netem
+resides in a qdisc tree with other netems - this can lead to a
+soft lockup and OOM loop in netem_dequeue, as seen in [1].
+Ensure that a duplicating netem cannot exist in a tree with other
+netems.
 
-Fixes: def3f0a5c700 ("ALSA: hda/ca0132 - Add quirk output selection structures.")
-Link: https://patch.msgid.link/20250806094423.8843-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Previous approaches suggested in discussions in chronological order:
+
+1) Track duplication status or ttl in the sk_buff struct. Considered
+too specific a use case to extend such a struct, though this would
+be a resilient fix and address other previous and potential future
+DOS bugs like the one described in loopy fun [2].
+
+2) Restrict netem_enqueue recursion depth like in act_mirred with a
+per cpu variable. However, netem_dequeue can call enqueue on its
+child, and the depth restriction could be bypassed if the child is a
+netem.
+
+3) Use the same approach as in 2, but add metadata in netem_skb_cb
+to handle the netem_dequeue case and track a packet's involvement
+in duplication. This is an overly complex approach, and Jamal
+notes that the skb cb can be overwritten to circumvent this
+safeguard.
+
+4) Prevent the addition of a netem to a qdisc tree if its ancestral
+path contains a netem. However, filters and actions can cause a
+packet to change paths when re-enqueued to the root from netem
+duplication, leading us to the current solution: prevent a
+duplicating netem from inhabiting the same tree as other netems.
+
+[1] https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/
+[2] https://lwn.net/Articles/719297/
+
+Fixes: 0afb51e72855 ("[PKT_SCHED]: netem: reinsert for duplication")
+Reported-by: William Liu <will@willsroot.io>
+Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
+Signed-off-by: William Liu <will@willsroot.io>
+Signed-off-by: Savino Dicanosa <savy@syst3mfailure.io>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20250708164141.875402-1-will@willsroot.io
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sched/sch_netem.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index 748a3c40966e..d825fcce05ee 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -4791,7 +4791,8 @@ static int ca0132_alt_select_out(struct hda_codec *codec)
- 	if (err < 0)
- 		goto exit;
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 447d3e836a24..0ad231e94e14 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -972,6 +972,41 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
+ 	return 0;
+ }
  
--	if (ca0132_alt_select_out_quirk_set(codec) < 0)
-+	err = ca0132_alt_select_out_quirk_set(codec);
-+	if (err < 0)
- 		goto exit;
++static const struct Qdisc_class_ops netem_class_ops;
++
++static int check_netem_in_tree(struct Qdisc *sch, bool duplicates,
++			       struct netlink_ext_ack *extack)
++{
++	struct Qdisc *root, *q;
++	unsigned int i;
++
++	root = qdisc_root_sleeping(sch);
++
++	if (sch != root && root->ops->cl_ops == &netem_class_ops) {
++		if (duplicates ||
++		    ((struct netem_sched_data *)qdisc_priv(root))->duplicate)
++			goto err;
++	}
++
++	if (!qdisc_dev(root))
++		return 0;
++
++	hash_for_each(qdisc_dev(root)->qdisc_hash, i, q, hash) {
++		if (sch != q && q->ops->cl_ops == &netem_class_ops) {
++			if (duplicates ||
++			    ((struct netem_sched_data *)qdisc_priv(q))->duplicate)
++				goto err;
++		}
++	}
++
++	return 0;
++
++err:
++	NL_SET_ERR_MSG(extack,
++		       "netem: cannot mix duplicating netems with other netems in tree");
++	return -EINVAL;
++}
++
+ /* Parse netlink message to set options */
+ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 			struct netlink_ext_ack *extack)
+@@ -1030,6 +1065,11 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	q->gap = qopt->gap;
+ 	q->counter = 0;
+ 	q->loss = qopt->loss;
++
++	ret = check_netem_in_tree(sch, qopt->duplicate, extack);
++	if (ret)
++		goto unlock;
++
+ 	q->duplicate = qopt->duplicate;
  
- 	switch (spec->cur_out_type) {
-@@ -4881,6 +4882,8 @@ static int ca0132_alt_select_out(struct hda_codec *codec)
- 				spec->bass_redirection_val);
- 	else
- 		err = ca0132_alt_surround_set_bass_redirection(codec, 0);
-+	if (err < 0)
-+		goto exit;
- 
- 	/* Unmute DSP now that we're done with output selection. */
- 	err = dspio_set_uint_param(codec, 0x96,
+ 	/* for compatibility with earlier versions.
 -- 
 2.39.5
 
