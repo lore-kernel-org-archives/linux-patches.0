@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EB3279915;
-	Tue, 12 Aug 2025 17:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0912868AF;
+	Tue, 12 Aug 2025 17:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021014; cv=none; b=hQ19NlpJK/k6UYTF+3DOnZt2eYIhRvlStiZzBkI3j6TJtNnXtjBjW/h4+tSeIOgkq9r7569CSIIrA4hZ1KBcg8KvaVkNqJeAlBHe6vv0erIXkjmZhZjK/klE/oZdoOxioav95mkGcva37dkzmQC8PX+D22HBb3kwpYyctzow080=
+	t=1755021020; cv=none; b=gn3uCR9404n0j4zpko98JquVPMuLjQHZ31nL0MkhlbSeHQrz/H+6czbRl+ynrI09/XYk1+fLOpMgMmfB8Loy7xJfEEL5LmE2ACDW9UbH5ZF/Tstpg0I9Ot9j5MtbjBORCyQyd1UjJefyEkkq/hOfdip8U4Wz7bIXCCXMBD16Zvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021014; c=relaxed/simple;
-	bh=jwFqXhEMzGf6Gp++d8peB0Wq334D9/7JRP+ryRDNC/I=;
+	s=arc-20240116; t=1755021020; c=relaxed/simple;
+	bh=oPwKqfHTRWSVJiIAVkYPGVn4rpQvWlOE2Jmnqv9geYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZBRXYv5KC9xoUa4e7qS/KvB9bf1fR/PqDRWkhM0IPqXnE8JkExTObKPoTTRYm6aKO+JpzvdwjTwl6c2SOn+KxpHEQmCKCyVKyRnY7LaU6sHL/5bFugSOBj/k5S/z/yvxbVyzN/0jt0sGzDHqvJ6prXGo3Dx407ZYYgll9jsuhX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uq6i+F5G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lZxRXq2dsoiCdbNk7GuZCo2svTyalo5xuiUb34iNUhkMRhw5Wpk0MKvFOXDEAGCYJf2W2xQk9u733zJtDxZV5JkA0fZocvFNRQSPqocCHwuwpHdizLnRhSk3F2ws71GtbKwEoF4qX+/j2wqn+MS+V6iYIYyYXN3rssDjgs/GjWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SudwwCJZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uq6i+F5G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868FEC4CEF1;
-	Tue, 12 Aug 2025 17:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SudwwCJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C42C4CEF0;
+	Tue, 12 Aug 2025 17:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021014;
-	bh=jwFqXhEMzGf6Gp++d8peB0Wq334D9/7JRP+ryRDNC/I=;
+	s=korg; t=1755021017;
+	bh=oPwKqfHTRWSVJiIAVkYPGVn4rpQvWlOE2Jmnqv9geYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uq6i+F5GtF9wB4waB5/qCB41FPjJ1VWiYUGUFI7wVep+9Cfw/myy2hb1Pas4yb2LV
-	 EY4Itq6fhOAdjVwP9M/immmTW5wkB1Gn27HuPMKi9iACAzyytxhkDCu24UjEdSPKg0
-	 r/3pIl5Iv56EipW2gujQuF3po7zlnE+VzGykq71o=
+	b=SudwwCJZQzpqCX+n8W5QmcbEjvcX1kGl+1TUZPNuGAgUB8dtT78Lk3Q4l61r0dr4Y
+	 8IvwyJsyY63q3HuarmHEM0jHiQqs67U1MgX+QcZJ5VDpHx0ryB8LYhAZ/JNzcmuLwe
+	 jF/uy+iBs5ID/OMRqrIFYzoxWsWqzS26zrbFlSg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aaron Lewis <aaronlewis@google.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/262] bpf, ktls: Fix data corruption when using bpf_msg_pop_data() in ktls
-Date: Tue, 12 Aug 2025 19:27:18 +0200
-Message-ID: <20250812172955.107663644@linuxfoundation.org>
+Subject: [PATCH 6.1 200/253] vfio/pci: Separate SR-IOV VF dev_set
+Date: Tue, 12 Aug 2025 19:29:48 +0200
+Message-ID: <20250812172957.318626301@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,61 +50,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 178f6a5c8cb3b6be1602de0964cd440243f493c9 ]
+[ Upstream commit e908f58b6beb337cbe4481d52c3f5c78167b1aab ]
 
-When sending plaintext data, we initially calculated the corresponding
-ciphertext length. However, if we later reduced the plaintext data length
-via socket policy, we failed to recalculate the ciphertext length.
+In the below noted Fixes commit we introduced a reflck mutex to allow
+better scaling between devices for open and close.  The reflck was
+based on the hot reset granularity, device level for root bus devices
+which cannot support hot reset or bus/slot reset otherwise.  Overlooked
+in this were SR-IOV VFs, where there's also no bus reset option, but
+the default for a non-root-bus, non-slot-based device is bus level
+reflck granularity.
 
-This results in transmitting buffers containing uninitialized data during
-ciphertext transmission.
+The reflck mutex has since become the dev_set mutex (via commit
+2cd8b14aaa66 ("vfio/pci: Move to the device set infrastructure")) and
+is our defacto serialization for various operations and ioctls.  It
+still seems to be the case though that sets of vfio-pci devices really
+only need serialization relative to hot resets affecting the entire
+set, which is not relevant to SR-IOV VFs.  As described in the Closes
+link below, this serialization contributes to startup latency when
+multiple VFs sharing the same "bus" are opened concurrently.
 
-This causes uninitialized bytes to be appended after a complete
-"Application Data" packet, leading to errors on the receiving end when
-parsing TLS record.
+Mark the device itself as the basis of the dev_set for SR-IOV VFs.
 
-Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
-Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/bpf/20250609020910.397930-2-jiayuan.chen@linux.dev
+Reported-by: Aaron Lewis <aaronlewis@google.com>
+Closes: https://lore.kernel.org/all/20250626180424.632628-1-aaronlewis@google.com
+Tested-by: Aaron Lewis <aaronlewis@google.com>
+Fixes: e309df5b0c9e ("vfio/pci: Parallelize device open and release")
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20250626225623.1180952-1-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/vfio/pci/vfio_pci_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 4a9a3aed5d6d..4905a81c4ac1 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -872,6 +872,19 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 		delta = msg->sg.size;
- 		psock->eval = sk_psock_msg_verdict(sk, psock, msg);
- 		delta -= msg->sg.size;
-+
-+		if ((s32)delta > 0) {
-+			/* It indicates that we executed bpf_msg_pop_data(),
-+			 * causing the plaintext data size to decrease.
-+			 * Therefore the encrypted data size also needs to
-+			 * correspondingly decrease. We only need to subtract
-+			 * delta to calculate the new ciphertext length since
-+			 * ktls does not support block encryption.
-+			 */
-+			struct sk_msg *enc = &ctx->open_rec->msg_encrypted;
-+
-+			sk_msg_trim(sk, enc, enc->sg.size - delta);
-+		}
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index aa362b434413..13c223228c31 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -2144,7 +2144,7 @@ int vfio_pci_core_register_device(struct vfio_pci_core_device *vdev)
+ 		return -EBUSY;
  	}
- 	if (msg->cork_bytes && msg->cork_bytes > msg->sg.size &&
- 	    !enospc && !full_record) {
+ 
+-	if (pci_is_root_bus(pdev->bus)) {
++	if (pci_is_root_bus(pdev->bus) || pdev->is_virtfn) {
+ 		ret = vfio_assign_device_set(&vdev->vdev, vdev);
+ 	} else if (!pci_probe_reset_slot(pdev->slot)) {
+ 		ret = vfio_assign_device_set(&vdev->vdev, pdev->slot);
 -- 
 2.39.5
 
