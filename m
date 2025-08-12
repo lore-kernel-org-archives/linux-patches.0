@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64E12FA0DB;
-	Tue, 12 Aug 2025 18:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDA52D46B3;
+	Tue, 12 Aug 2025 18:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022045; cv=none; b=lwDN3/KSV2dU7MLTKsaxJaDzDVBqRonicgY4LzMix8VpvKfV0VboaSfMRW8oTmfUX0fKnepya5fGfmLXtuxo9ae7CnoXhpf1Y9c0oESPrW/+nyGTnnPfew6DPyo4bYk7LUIGdnvBT/tCoKm5qEZQLx194X3Fw3hMy/080QDo+T4=
+	t=1755022049; cv=none; b=oR0wRtBnUtOJeUL0tEYYUfnSoOqUihF7gjZEbq22mDZWvKJFEoCaoqXBsdi5sdeuTNgE2JQQIHgtKgQyqfdXxeMOtHqQk5BzsrwAf5gDaFq++ehj5tIKM864WedtFzw0EH7qdztbxrSN/d+mfQI+GyCQtENsw2BUcPeJCS+MQws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022045; c=relaxed/simple;
-	bh=FE12ykrhB2ClcI0y9q5hqcgJLvS29rzUND5C8JkaUrY=;
+	s=arc-20240116; t=1755022049; c=relaxed/simple;
+	bh=nhortiVsF+mt+a9dwwxpwDQDT37o++eNlHI1tBW5kos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lhHxvlSADTmMezDz4IbFmLRUmqRIMMM+8lYsK/Ih8U2JCzlki7XkAlbV93lU/cbppkRCxgFaVlCvQvWKxL08YivU2ZNW33Z9RBrghwCZ4BzXrpRAHJ2MHYfhFiiyoY9cGIYKH007BUg3bqlgjo4XXCWvtZsPa/z+8zoLsR1N57M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwFf7dp/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QWxTBsN2cpaacc38PHC1/UoTKMJ7UZ/Wt7WmiGWque1GeTAbI/BZH3DixWnxivImp21+Gpzw4WsqzUgn5Axuk3yEeRXkVkp0wWyE38qOS4QfL7OmE0F18ssYNrwhADebRA2au8UO53dtfk2Mirj76Dt7zPKdicFVou1DuAS4wxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBliM9eS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwFf7dp/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C140C4CEF0;
-	Tue, 12 Aug 2025 18:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBliM9eS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F139C4CEF1;
+	Tue, 12 Aug 2025 18:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022045;
-	bh=FE12ykrhB2ClcI0y9q5hqcgJLvS29rzUND5C8JkaUrY=;
+	s=korg; t=1755022049;
+	bh=nhortiVsF+mt+a9dwwxpwDQDT37o++eNlHI1tBW5kos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IwFf7dp/juYVP70e6R80DVYq930ZhN7k3x3aEA+MqNbvhI/T6PCvfG7yzL28rJNSs
-	 et8yh/oJaFH9/x8B9ZIYWYS6dxhRtdES8Q56fzROBE95tNss0zX0eHDhayIDQE5KGv
-	 rR6QDeeSo7pQQ4rj3QxifZxln7uR9EdbaagOMjqA=
+	b=DBliM9eSUrTqTV8BdnMew1XgtWg9lM//DYSqg7KntJMYVaRpxyrsnAegnBwkEpD7T
+	 7cgxqjIqtJyVCp5nAFxOo+woDaAIIJDbImF2cPrD79DmQ1io29WkAJkYYgAgEwy8BN
+	 ZvqKNoGnP4b61mG7+IcTCx54nfmSH03N8PgRTlTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
-	kernel test robot <lkp@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/369] spi: stm32: Check for cfg availability in stm32_spi_probe
-Date: Tue, 12 Aug 2025 19:25:37 +0200
-Message-ID: <20250812173016.267724811@linuxfoundation.org>
+Subject: [PATCH 6.12 041/369] staging: fbtft: fix potential memory leak in fbtft_framebuffer_alloc()
+Date: Tue, 12 Aug 2025 19:25:38 +0200
+Message-ID: <20250812173016.304024792@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -46,61 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Le Goffic <clement.legoffic@foss.st.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit 21f1c800f6620e43f31dfd76709dbac8ebaa5a16 ]
+[ Upstream commit eb2cb7dab60f9be0b435ac4a674255429a36d72c ]
 
-The stm32_spi_probe function now includes a check to ensure that the
-pointer returned by of_device_get_match_data is not NULL before
-accessing its members. This resolves a warning where a potential NULL
-pointer dereference could occur when accessing cfg->has_device_mode.
+In the error paths after fb_info structure is successfully allocated,
+the memory allocated in fb_deferred_io_init() for info->pagerefs is not
+freed. Fix that by adding the cleanup function on the error path.
 
-Before accessing the 'has_device_mode' member, we verify that 'cfg' is
-not NULL. If 'cfg' is NULL, an error message is logged.
-
-This change ensures that the driver does not attempt to access
-configuration data if it is not available, thus preventing a potential
-system crash due to a NULL pointer dereference.
-
-Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310191831.MLwx1c6x-lkp@intel.com/
-Fixes: fee681646fc8 ("spi: stm32: disable device mode with st,stm32f4-spi compatible")
-Link: https://patch.msgid.link/20250616-spi-upstream-v1-2-7e8593f3f75d@foss.st.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c296d5f9957c ("staging: fbtft: core support")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250626172412.18355-1-abdun.nihaal@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/staging/fbtft/fbtft-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
-index fc72a89fb3a7..3b1b810f33bf 100644
---- a/drivers/spi/spi-stm32.c
-+++ b/drivers/spi/spi-stm32.c
-@@ -2069,9 +2069,15 @@ static int stm32_spi_probe(struct platform_device *pdev)
- 	struct resource *res;
- 	struct reset_control *rst;
- 	struct device_node *np = pdev->dev.of_node;
-+	const struct stm32_spi_cfg *cfg;
- 	bool device_mode;
- 	int ret;
--	const struct stm32_spi_cfg *cfg = of_device_get_match_data(&pdev->dev);
-+
-+	cfg = of_device_get_match_data(&pdev->dev);
-+	if (!cfg) {
-+		dev_err(&pdev->dev, "Failed to get match data for platform\n");
-+		return -ENODEV;
-+	}
+diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
+index 4cfa494243b9..8fab5126765d 100644
+--- a/drivers/staging/fbtft/fbtft-core.c
++++ b/drivers/staging/fbtft/fbtft-core.c
+@@ -694,6 +694,7 @@ struct fb_info *fbtft_framebuffer_alloc(struct fbtft_display *display,
+ 	return info;
  
- 	device_mode = of_property_read_bool(np, "spi-slave");
- 	if (!cfg->has_device_mode && device_mode) {
+ release_framebuf:
++	fb_deferred_io_cleanup(info);
+ 	framebuffer_release(info);
+ 
+ alloc_fail:
 -- 
 2.39.5
 
