@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D888C2F4A07;
-	Tue, 12 Aug 2025 19:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346D7279DB6;
+	Tue, 12 Aug 2025 19:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025824; cv=none; b=MnLzc5TFXNQYJbiqnaW9vcFee1vIaKMd0hUV8l9HWBgjZitzCza87Yf4Emp68EKUGpVOV0CJwK8PWZW4KJyHpklikR6oENITxDDlJoDFT7xVyXvz3FPfEuX6WI2ANjQrg7ivdJAEVmXpaaQoM4555PlNLV+V0HkFiCGLmnwgv2A=
+	t=1755025827; cv=none; b=rOPowgvdp3bNcIT7BCfj5uDMGjlg6+QDnUJGN+4m7E9gL9Xr7R1WDbDgyFssV234yGiMsy/qZHw924YSgno++Ruc76b65OreMkx9lYSLxx3V8XgveV6eAuH/vsxFx7GGsiYtMud0qkBb3S+cn8zhuvSswrw/XhVMqxHMdNG4e2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025824; c=relaxed/simple;
-	bh=mNLSwHmE2+9mUiWkD8Jd0UJ+kkgVCEEI/uKQKTedLFs=;
+	s=arc-20240116; t=1755025827; c=relaxed/simple;
+	bh=L+gquhZjVb7mLpVWiW6pMhzcv4njPE/P7LUbNgvdn5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1Cfx6MjHZCY6KlxYJTMP1j58FuhPi207wyPW34es6vUTZI9mmwZ6DRhDfHAaltb/7GiQnk2UBK8RwXkB4Ls02x2haB5Tr0kJTIfeLwxuyS9VhfZ/UimjH0NLTsOQp8GP/PAm/SG6vBYqmE8sJxMOI9gT07aBBvkc8/4vXTsTOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhHSJUFd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dRjC99fgWmML5tpPOF5cJnFfCMsc7t+VG8qVlhtrtD6ov15hnwUapRHjZLuXokV6CNOxw9AvvanyBj4kigFhwxTFxLIVaelCGHf/SQeZY3L0LJ7u4r9H43y2KegBhdnOnYi7+TkemZh9Pu7GFe6O/OGMVuK/N0scrmmQ2W5hsCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iCNr76J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhHSJUFd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23894C4CEF0;
-	Tue, 12 Aug 2025 19:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iCNr76J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FFEC4CEF0;
+	Tue, 12 Aug 2025 19:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025823;
-	bh=mNLSwHmE2+9mUiWkD8Jd0UJ+kkgVCEEI/uKQKTedLFs=;
+	s=korg; t=1755025827;
+	bh=L+gquhZjVb7mLpVWiW6pMhzcv4njPE/P7LUbNgvdn5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UhHSJUFd87O1DCTih7WGnBT+wwy+aM5S5vHuVlipUMbWh8BXO4aNE70Ki7Lw7rsGF
-	 jST2uAtUiOeQE5NZnueNL8g8YGrCRJuwETAGtWbGMQDJ9Hkug6oWGvSvmthAh4Mutt
-	 tj1G86gniJuxF86rU20mA9aArf2BWPnUqnznD4LY=
+	b=0iCNr76J2uV2F0WWAsCFD9MonAyjOnI8RTe0rnF1MX9YodWpJDefAMXsZelgLJ1R6
+	 N2dq3FYK12sXze+4+1jSAYeh53SNMMuWssrvSY6GzDASNI/3QG8gjoouSX3GpHb5vS
+	 MAFvIRwq/I1IFXAqQy7q59WewFNFI78teYB0FECk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 121/480] wifi: rtl818x: Kill URBs before clearing tx status queue
-Date: Tue, 12 Aug 2025 19:45:29 +0200
-Message-ID: <20250812174402.510851526@linuxfoundation.org>
+Subject: [PATCH 6.15 112/480] slub: Fix a documentation build error for krealloc()
+Date: Tue, 12 Aug 2025 19:45:20 +0200
+Message-ID: <20250812174402.108585009@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,66 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Jonathan Corbet <corbet@lwn.net>
 
-[ Upstream commit 16d8fd74dbfca0ea58645cd2fca13be10cae3cdd ]
+[ Upstream commit e8a45f198e3ae2434108f815bc28f37f6fe6742b ]
 
-In rtl8187_stop() move the call of usb_kill_anchored_urbs() before clearing
-b_tx_status.queue. This change prevents callbacks from using already freed
-skb due to anchor was not killed before freeing such skb.
+The kerneldoc comment for krealloc() contains an unmarked literal block,
+leading to these warnings in the docs build:
 
- BUG: kernel NULL pointer dereference, address: 0000000000000080
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP NOPTI
- CPU: 7 UID: 0 PID: 0 Comm: swapper/7 Not tainted 6.15.0 #8 PREEMPT(voluntary)
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 0.0.0 02/06/2015
- RIP: 0010:ieee80211_tx_status_irqsafe+0x21/0xc0 [mac80211]
- Call Trace:
-  <IRQ>
-  rtl8187_tx_cb+0x116/0x150 [rtl8187]
-  __usb_hcd_giveback_urb+0x9d/0x120
-  usb_giveback_urb_bh+0xbb/0x140
-  process_one_work+0x19b/0x3c0
-  bh_worker+0x1a7/0x210
-  tasklet_action+0x10/0x30
-  handle_softirqs+0xf0/0x340
-  __irq_exit_rcu+0xcd/0xf0
-  common_interrupt+0x85/0xa0
-  </IRQ>
+  ./mm/slub.c:4936: WARNING: Block quote ends without a blank line; unexpected unindent. [docutils]
+  ./mm/slub.c:4936: ERROR: Undefined substitution referenced: "--------". [docutils]
 
-Tested on RTL8187BvE device.
+Mark up and indent the block properly to bring a bit of peace to our build
+logs.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c1db52b9d27e ("rtl8187: Use usb anchor facilities to manage urbs")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250617135634.21760-1-d.dulov@aladdin.ru
+Fixes: 489a744e5fb1 (mm: krealloc: clarify valid usage of __GFP_ZERO)
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://patch.msgid.link/20250611155916.2579160-6-willy@infradead.org
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/slub.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-index 220ac5bdf279..8a57d6c72335 100644
---- a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-+++ b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-@@ -1041,10 +1041,11 @@ static void rtl8187_stop(struct ieee80211_hw *dev, bool suspend)
- 	rtl818x_iowrite8(priv, &priv->map->CONFIG4, reg | RTL818X_CONFIG4_VCOOFF);
- 	rtl818x_iowrite8(priv, &priv->map->EEPROM_CMD, RTL818X_EEPROM_CMD_NORMAL);
- 
-+	usb_kill_anchored_urbs(&priv->anchored);
-+
- 	while ((skb = skb_dequeue(&priv->b_tx_status.queue)))
- 		dev_kfree_skb_any(skb);
- 
--	usb_kill_anchored_urbs(&priv->anchored);
- 	mutex_unlock(&priv->conf_mutex);
- 
- 	if (!priv->is_rtl8187b)
+diff --git a/mm/slub.c b/mm/slub.c
+index be8b09e09d30..5c73b956615f 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -4929,12 +4929,12 @@ __do_krealloc(const void *p, size_t new_size, gfp_t flags)
+  * When slub_debug_orig_size() is off, krealloc() only knows about the bucket
+  * size of an allocation (but not the exact size it was allocated with) and
+  * hence implements the following semantics for shrinking and growing buffers
+- * with __GFP_ZERO.
++ * with __GFP_ZERO::
+  *
+- *         new             bucket
+- * 0       size             size
+- * |--------|----------------|
+- * |  keep  |      zero      |
++ *           new             bucket
++ *   0       size             size
++ *   |--------|----------------|
++ *   |  keep  |      zero      |
+  *
+  * Otherwise, the original allocation size 'orig_size' could be used to
+  * precisely clear the requested size, and the new size will also be stored
 -- 
 2.39.5
 
