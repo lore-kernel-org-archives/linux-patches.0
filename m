@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D58D1A01BF;
-	Tue, 12 Aug 2025 18:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B51F1A01BF;
+	Tue, 12 Aug 2025 18:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024407; cv=none; b=GIvG2RFq8In7UERJM7wGFJYty2C3yYk0HniBHqmiKmVkLF9mq7v5VurThtTKpH0VdgwBANOGZd6CaeT3693lMuvSfLaW6NY7cJ2bdA9aGhAwHVB4Ho9Hj2DymotCKHUFGW9YKpG6D6M+xDhSDdoF21fr4HKJ/tp6MpjMQcI9YyI=
+	t=1755024410; cv=none; b=jyZWyZ99kWwliZwt4bLx9rcxAOF9TFt+gAQlSkyXjWsc2lJnBtjhYBb/ViI7VsTMvgQOar9zkMH2Pm7B1K3w7BbygbXLNxaseRlAE0/PFe//7puOKFYDKQnsuhcr6a6iy+S7moEEykuv26Um9i48RNMkJJzijVcfeJfsoLHFe4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024407; c=relaxed/simple;
-	bh=V1JaOVhGLJKGQnjZQw84fbAI1C9OvlKbm/J0qk1cIDQ=;
+	s=arc-20240116; t=1755024410; c=relaxed/simple;
+	bh=c7UWh0QLtcjjKkc07lJ8+HTWIVerFzym641UFgDGNyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjPxK95nIaPj/+h9ziwOdB+PqDQnq7G63MU9wrYlxpadV5CTXlUWx0hviW/FKnjwX3gKhYgeM5rZzObyj9Wao5iKgX3CffZSxtxqv/SaKjq/u4R0YGc042CElRju/t6cWTb4PaouNHNno/k+ws4bO8iaIl/izq9oJm2AwzYXKHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZh3lb0u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XW0WESDnVLleY1jZpwJvrNA/9cKN2QOjZ5WML53ES6dMcXdA3wxBHOYzZlNnMVsXzFgxggoHB7aP3xP4jq20APShmNgd6bpF1fQ8ipU5tFSGFfxPr4c8fKS1wELfQ1Dg+dTPAaPZRU4MK6OTmzxcL8rFqr4Bc4nfhPP6emwCmh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEp3SbZe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZh3lb0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C1FC4CEF1;
-	Tue, 12 Aug 2025 18:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEp3SbZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01094C4CEF0;
+	Tue, 12 Aug 2025 18:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024407;
-	bh=V1JaOVhGLJKGQnjZQw84fbAI1C9OvlKbm/J0qk1cIDQ=;
+	s=korg; t=1755024410;
+	bh=c7UWh0QLtcjjKkc07lJ8+HTWIVerFzym641UFgDGNyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NZh3lb0uh6SHahrjyX0mcfM/gsLVr2Fi4tB+QNuCwy6T5k/PsBw6nbIPhFDwi3bd6
-	 rutl3SfdDrD6N3DZL+Z3LUZ7d2STxFFnaRhGn3D+GvPzmBuQFafSMBbyEcA7DaquRS
-	 effAWhUKD7XypSsHYb9SDYVMq3dQOmg5g5Boi+9s=
+	b=YEp3SbZeS7GXmR358+hBK3N+qTSQKBjFXuIlgDxuJFpvoBy3HA9mMXyNvLcuU/sQn
+	 5aR/V+kAGH2GUVr2B5ZxiDQC1YZsKNYMtehZZECk+qxNskPAECH5PVQFljxaMiRv5W
+	 gdFXbrFmsHidQISnX7eSV3A2UvXm/67mCGDQNBLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Elder <elder@riscstar.com>,
-	Guodong Xu <guodong@riscstar.com>,
-	Haylen Chu <heylenay@4d2.org>,
-	Yixun Lan <dlan@gentoo.org>,
+	wenglianfa <wenglianfa@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 364/627] clk: spacemit: mark K1 pll1_d8 as critical
-Date: Tue, 12 Aug 2025 19:30:59 +0200
-Message-ID: <20250812173433.134374162@linuxfoundation.org>
+Subject: [PATCH 6.16 365/627] RDMA/hns: Fix double destruction of rsv_qp
+Date: Tue, 12 Aug 2025 19:31:00 +0200
+Message-ID: <20250812173433.172107457@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,83 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Elder <elder@riscstar.com>
+From: wenglianfa <wenglianfa@huawei.com>
 
-[ Upstream commit 7554729de27daf6d54bcf8689d863bbe267828bf ]
+[ Upstream commit c6957b95ecc5b63c5a4bb4ecc28af326cf8f6dc8 ]
 
-The pll1_d8 clock is enabled by the boot loader, and is ultimately a
-parent for numerous clocks, including those used by APB and AXI buses.
-Guodong Xu discovered that this clock got disabled while responding to
-getting -EPROBE_DEFER when requesting a reset controller.
+rsv_qp may be double destroyed in error flow, first in free_mr_init(),
+and then in hns_roce_exit(). Fix it by moving the free_mr_init() call
+into hns_roce_v2_init().
 
-The needed clock (CLK_DMA, along with its parents) had already been
-enabled.  To respond to the probe deferral return, the CLK_DMA clock
-was disabled, and this led to parent clocks also reducing their enable
-count.  When the enable count for pll1_d8 was decremented it became 0,
-which caused it to be disabled.  This led to a system hang.
+list_del corruption, ffff589732eb9b50->next is LIST_POISON1 (dead000000000100)
+WARNING: CPU: 8 PID: 1047115 at lib/list_debug.c:53 __list_del_entry_valid+0x148/0x240
+...
+Call trace:
+ __list_del_entry_valid+0x148/0x240
+ hns_roce_qp_remove+0x4c/0x3f0 [hns_roce_hw_v2]
+ hns_roce_v2_destroy_qp_common+0x1dc/0x5f4 [hns_roce_hw_v2]
+ hns_roce_v2_destroy_qp+0x22c/0x46c [hns_roce_hw_v2]
+ free_mr_exit+0x6c/0x120 [hns_roce_hw_v2]
+ hns_roce_v2_exit+0x170/0x200 [hns_roce_hw_v2]
+ hns_roce_exit+0x118/0x350 [hns_roce_hw_v2]
+ __hns_roce_hw_v2_init_instance+0x1c8/0x304 [hns_roce_hw_v2]
+ hns_roce_hw_v2_reset_notify_init+0x170/0x21c [hns_roce_hw_v2]
+ hns_roce_hw_v2_reset_notify+0x6c/0x190 [hns_roce_hw_v2]
+ hclge_notify_roce_client+0x6c/0x160 [hclge]
+ hclge_reset_rebuild+0x150/0x5c0 [hclge]
+ hclge_reset+0x10c/0x140 [hclge]
+ hclge_reset_subtask+0x80/0x104 [hclge]
+ hclge_reset_service_task+0x168/0x3ac [hclge]
+ hclge_service_task+0x50/0x100 [hclge]
+ process_one_work+0x250/0x9a0
+ worker_thread+0x324/0x990
+ kthread+0x190/0x210
+ ret_from_fork+0x10/0x18
 
-Marking that clock critical resolves this by preventing it from being
-disabled.
-
-Define a new macro CCU_FACTOR_GATE_DEFINE() to allow clock flags to
-be supplied for a CCU_FACTOR_GATE clock.
-
-Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Tested-by: Guodong Xu <guodong@riscstar.com>
-Reviewed-by: Haylen Chu <heylenay@4d2.org>
-Link: https://lore.kernel.org/r/20250612224856.1105924-1-elder@riscstar.com
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
+Fixes: fd8489294dd2 ("RDMA/hns: Fix Use-After-Free of rsv_qp on HIP08")
+Signed-off-by: wenglianfa <wenglianfa@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20250703113905.3597124-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/spacemit/ccu-k1.c  |  3 ++-
- drivers/clk/spacemit/ccu_mix.h | 11 ++++++++---
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 25 +++++++++++-----------
+ drivers/infiniband/hw/hns/hns_roce_main.c  |  6 +++---
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-index cdde37a05235..df65009a07bb 100644
---- a/drivers/clk/spacemit/ccu-k1.c
-+++ b/drivers/clk/spacemit/ccu-k1.c
-@@ -170,7 +170,8 @@ CCU_FACTOR_GATE_DEFINE(pll1_d4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(3), 4,
- CCU_FACTOR_GATE_DEFINE(pll1_d5, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(4), 5, 1);
- CCU_FACTOR_GATE_DEFINE(pll1_d6, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(5), 6, 1);
- CCU_FACTOR_GATE_DEFINE(pll1_d7, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(6), 7, 1);
--CCU_FACTOR_GATE_DEFINE(pll1_d8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(7), 8, 1);
-+CCU_FACTOR_GATE_FLAGS_DEFINE(pll1_d8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(7), 8, 1,
-+		CLK_IS_CRITICAL);
- CCU_FACTOR_GATE_DEFINE(pll1_d11_223p4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(15), 11, 1);
- CCU_FACTOR_GATE_DEFINE(pll1_d13_189, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(16), 13, 1);
- CCU_FACTOR_GATE_DEFINE(pll1_d23_106p8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(20), 23, 1);
-diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
-index 51d19f5d6aac..54d40cd39b27 100644
---- a/drivers/clk/spacemit/ccu_mix.h
-+++ b/drivers/clk/spacemit/ccu_mix.h
-@@ -101,17 +101,22 @@ static struct ccu_mix _name = {							\
- 	}									\
- }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index fa8747656f25..29068be052d9 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -2986,14 +2986,22 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
+ {
+ 	int ret;
  
--#define CCU_FACTOR_GATE_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
--			       _mul)						\
-+#define CCU_FACTOR_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
-+			       _mul, _flags)					\
- static struct ccu_mix _name = {							\
- 	.gate	= CCU_GATE_INIT(_mask_gate),					\
- 	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
- 	.common = {								\
- 		.reg_ctrl	= _reg_ctrl,					\
--		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_factor_gate_ops, 0)	\
-+		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_factor_gate_ops, _flags)	\
- 	}									\
- }
- 
-+#define CCU_FACTOR_GATE_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
-+			       _mul)						\
-+	CCU_FACTOR_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
-+			       _mul, 0)
++	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08) {
++		ret = free_mr_init(hr_dev);
++		if (ret) {
++			dev_err(hr_dev->dev, "failed to init free mr!\n");
++			return ret;
++		}
++	}
 +
- #define CCU_MUX_GATE_DEFINE(_name, _parents, _reg_ctrl, _shift, _width,		\
- 			    _mask_gate, _flags)					\
- static struct ccu_mix _name = {							\
+ 	/* The hns ROCEE requires the extdb info to be cleared before using */
+ 	ret = hns_roce_clear_extdb_list_info(hr_dev);
+ 	if (ret)
+-		return ret;
++		goto err_clear_extdb_failed;
+ 
+ 	ret = get_hem_table(hr_dev);
+ 	if (ret)
+-		return ret;
++		goto err_clear_extdb_failed;
+ 
+ 	if (hr_dev->is_vf)
+ 		return 0;
+@@ -3008,6 +3016,9 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
+ 
+ err_llm_init_failed:
+ 	put_hem_table(hr_dev);
++err_clear_extdb_failed:
++	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
++		free_mr_exit(hr_dev);
+ 
+ 	return ret;
+ }
+@@ -7044,21 +7055,11 @@ static int __hns_roce_hw_v2_init_instance(struct hnae3_handle *handle)
+ 		goto error_failed_roce_init;
+ 	}
+ 
+-	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08) {
+-		ret = free_mr_init(hr_dev);
+-		if (ret) {
+-			dev_err(hr_dev->dev, "failed to init free mr!\n");
+-			goto error_failed_free_mr_init;
+-		}
+-	}
+ 
+ 	handle->priv = hr_dev;
+ 
+ 	return 0;
+ 
+-error_failed_free_mr_init:
+-	hns_roce_exit(hr_dev);
+-
+ error_failed_roce_init:
+ 	kfree(hr_dev->priv);
+ 
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index e7a497cc125c..623610b3e2ec 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -965,6 +965,9 @@ static int hns_roce_setup_hca(struct hns_roce_dev *hr_dev)
+ 
+ 	spin_lock_init(&hr_dev->sm_lock);
+ 
++	INIT_LIST_HEAD(&hr_dev->qp_list);
++	spin_lock_init(&hr_dev->qp_list_lock);
++
+ 	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_CQ_RECORD_DB ||
+ 	    hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_QP_RECORD_DB) {
+ 		INIT_LIST_HEAD(&hr_dev->pgdir_list);
+@@ -1132,9 +1135,6 @@ int hns_roce_init(struct hns_roce_dev *hr_dev)
+ 		}
+ 	}
+ 
+-	INIT_LIST_HEAD(&hr_dev->qp_list);
+-	spin_lock_init(&hr_dev->qp_list_lock);
+-
+ 	ret = hns_roce_register_device(hr_dev);
+ 	if (ret)
+ 		goto error_failed_register_device;
 -- 
 2.39.5
 
