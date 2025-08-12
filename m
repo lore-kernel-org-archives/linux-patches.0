@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6672D46B3;
-	Tue, 12 Aug 2025 18:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227D92D46B3;
+	Tue, 12 Aug 2025 18:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022476; cv=none; b=R3KomCVfkGaGgTEEymdImh8ExP6Brjw+K3GJOkWNPJiFDA7+y72dj0ruGBsB57Td5aePVI+1ebQCVHfTrs+JwGuhqxJbrR/hXGKnbtj76vylQLvZ6ZJWDrnGGV1F0+adWNNplIyMyqm2UoMqqoHElxVRexo+WuhoVLmWwvCj0VU=
+	t=1755022480; cv=none; b=hwg8PjX4AYgH58rv4EA1tZDuHP4ImmzrmrDHFBMytX3O+FmhrzMbkpvvFyjtRuo8jCRRKYaSxUZu1egAnhFvD0FQXn8HqRCCiYVDnUa6sLxNQnRMRScCcIdgYq1M8Hw7+hvuRZ+UCQ+8lLZV/EwuUYFex+yXrochMzQvxNdtUso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022476; c=relaxed/simple;
-	bh=EpPuwK2f8GTaOKCBzE7TB5H7vvMsnTaY0+M7YAJvWYw=;
+	s=arc-20240116; t=1755022480; c=relaxed/simple;
+	bh=JW31C43uVvJY2F/TgEroGph3crLXn/4QJYrY1bVLpVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=psE5vqt9CqwC5dS6DNhHyDQ15g15tgry+zrfUvG8YJWXifqY+TIv0nZ1Teu8mZ8X+mMJg+trvCZnp59G9u6kNBgJ4aot605ROjjgDMV13L0w6zXsVLwbXJ3RTCnPNjmGFjwpRuohgOT57bYEpEs4Bry6UqfPWOR8NEkuqvRTBxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkkT9az2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dq6YVEKUkmzseytd4ZTLnoS3MCKsxYVtD4d4Tbl1kanlvqgkK9bqAO5lqRhccW58jRziS6Ivlfhyl3FIuyFfvAYvRWTzyZyMipHgu6dhXJ7K16kdScBtWUAoq2N0a6vA/b0dGk72SGyPIP1tUe85IBvu42CZ7u4IR/uQMLe5XDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHznC6nY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkkT9az2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B11BC4CEF0;
-	Tue, 12 Aug 2025 18:14:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHznC6nY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80894C4CEF0;
+	Tue, 12 Aug 2025 18:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022476;
-	bh=EpPuwK2f8GTaOKCBzE7TB5H7vvMsnTaY0+M7YAJvWYw=;
+	s=korg; t=1755022480;
+	bh=JW31C43uVvJY2F/TgEroGph3crLXn/4QJYrY1bVLpVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkkT9az2g2Z3WvUXLR3v5ru0WilFNxGWXVXsmEyN0c2PXomZgROKTjV5t9brh7i5H
-	 q6uFR5pZFLL40Od5inoCB7XI/fJ8cUNFhlHrax0NoHAjVG2yYtGpUOhM4NKxJzTpwZ
-	 tseh9z6hBGPqU3zmQYa4M3HQUrQD5edPPSKZfCzM=
+	b=oHznC6nYjXk7rsUiWIQa9pcRnYxup/xNLmsa4JOGGvnSPSdjikbCabOt7ysbfmnr+
+	 wWGAjwokEmV/4B6kvfAQeMxzMayq4nsLWeSKvHQp5+sU9H42GbTu/qCNJRVKuekXbn
+	 bEWsWXZ2f0ulTwWf7iYRLU4jB7FjnXe+f1NE/eFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 166/369] crypto: arm/aes-neonbs - work around gcc-15 warning
-Date: Tue, 12 Aug 2025 19:27:43 +0200
-Message-ID: <20250812173021.017223953@linuxfoundation.org>
+Subject: [PATCH 6.12 140/369] net/mlx5e: Clear Read-Only port buffer size in PBMC before update
+Date: Tue, 12 Aug 2025 19:27:17 +0200
+Message-ID: <20250812173020.040270490@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,54 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit d5fa96dc5590915f060fee3209143313e4f5b03b ]
+[ Upstream commit fd4b97246a23c1149479b88490946bcfbd28de63 ]
 
-I get a very rare -Wstringop-overread warning with gcc-15 for one function
-in aesbs_ctr_encrypt():
+When updating the PBMC register, we read its current value,
+modify desired fields, then write it back.
 
-arch/arm/crypto/aes-neonbs-glue.c: In function 'ctr_encrypt':
-arch/arm/crypto/aes-neonbs-glue.c:212:1446: error: '__builtin_memcpy' offset [17, 2147483647] is out of the bounds [0, 16] of object 'buf' with type 'u8[16]' {aka 'unsigned char[16]'} [-Werror=array-bounds=]
-  212 |                         src = dst = memcpy(buf + sizeof(buf) - bytes,
-arch/arm/crypto/aes-neonbs-glue.c: In function 'ctr_encrypt':
-arch/arm/crypto/aes-neonbs-glue.c:218:17: error: 'aesbs_ctr_encrypt' reading 1 byte from a region of size 0 [-Werror=stringop-overread]
-  218 |                 aesbs_ctr_encrypt(dst, src, ctx->rk, ctx->rounds, bytes, walk.iv);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 2 of type 'const u8[0]' {aka 'const unsigned char[]'}
-arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 3 of type 'const u8[0]' {aka 'const unsigned char[]'}
-arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 6 of type 'u8[0]' {aka 'unsigned char[]'}
-arch/arm/crypto/aes-neonbs-glue.c:36:17: note: in a call to function 'aesbs_ctr_encrypt'
-   36 | asmlinkage void aesbs_ctr_encrypt(u8 out[], u8 const in[], u8 const rk[],
+The port_buffer_size field within PBMC is Read-Only (RO).
+If this RO field contains a non-zero value when read,
+attempting to write it back will cause the entire PBMC
+register update to fail.
 
-This could happen in theory if walk.nbytes is larger than INT_MAX and gets
-converted to a negative local variable.
+This commit ensures port_buffer_size is explicitly cleared
+to zero after reading the PBMC register but before writing
+back the modified value.
+This allows updates to other fields in the PBMC register to succeed.
 
-Keep the type unsigned like the orignal nbytes to be sure there is no
-integer overflow.
-
-Fixes: c8bf850e991a ("crypto: arm/aes-neonbs-ctr - deal with non-multiples of AES block size")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 0696d60853d5 ("net/mlx5e: Receive buffer configuration")
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1753256672-337784-2-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/crypto/aes-neonbs-glue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/crypto/aes-neonbs-glue.c b/arch/arm/crypto/aes-neonbs-glue.c
-index f6be80b5938b..2fad3a0c0563 100644
---- a/arch/arm/crypto/aes-neonbs-glue.c
-+++ b/arch/arm/crypto/aes-neonbs-glue.c
-@@ -232,7 +232,7 @@ static int ctr_encrypt(struct skcipher_request *req)
- 	while (walk.nbytes > 0) {
- 		const u8 *src = walk.src.virt.addr;
- 		u8 *dst = walk.dst.virt.addr;
--		int bytes = walk.nbytes;
-+		unsigned int bytes = walk.nbytes;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
+index 8e25f4ef5ccc..5ae787656a7c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
+@@ -331,6 +331,9 @@ static int port_set_buffer(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto out;
  
- 		if (unlikely(bytes < AES_BLOCK_SIZE))
- 			src = dst = memcpy(buf + sizeof(buf) - bytes,
++	/* RO bits should be set to 0 on write */
++	MLX5_SET(pbmc_reg, in, port_buffer_size, 0);
++
+ 	err = mlx5e_port_set_pbmc(mdev, in);
+ out:
+ 	kfree(in);
 -- 
 2.39.5
 
