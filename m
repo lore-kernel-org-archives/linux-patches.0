@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70C527781E;
-	Tue, 12 Aug 2025 19:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE3026FA77;
+	Tue, 12 Aug 2025 19:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025624; cv=none; b=QFe7iKZJO+4JU8ZBfLTlLnkM9Z4Y2KwUo5Q9jNzlPyS+TlgkBUS/gRkAj1m8TGL0YQxcvAJeinQGPZHBCZjkHEM7FgYypzhjEaD6YtxuO+pG1/80Um05rOVz1qmsta65jnyikzBnabOm0ZHfgtvlkF4BlEO8WFjHU4OxRzjZDDQ=
+	t=1755025628; cv=none; b=RakOq2YpjVrUhlgkjYV30buDoY/OTUDxcN75tH4IbmEXyUg86JllgMRKk9Wfq44kFQ2XFFZmx14KJnGv5OGUDFUVSkx8mSJcSvZGLaxdVp3qFM1sB8ru2q7ssE8JQBdJOHCQ9Vjxjb5kKL/wqFjaJXpHac/ZpDjDACXoMYFn40I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025624; c=relaxed/simple;
-	bh=zY6hR6BUumkBNoZ01J+Qp0NP+olAXxnoTwULMy7ptlA=;
+	s=arc-20240116; t=1755025628; c=relaxed/simple;
+	bh=H6q/MhtucjK9G8/dtwj9HTK2gIyum3o2IU5FzXotpfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gCJl9+4c5HCXRWLqe9L4ML1GH5OZqb3yG8jqDC8KmZBLjNsAUDexO4yLNPxsfw4lDD9vA+9x0YebFaIv0QEfevo5LUJD7D0+w+H2AdtvKtDNtCoVeCYiSxYsV1jE8EolqG6JtoOXZgVdvvaMQYYrj0A392om78duQ361OV4uWN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiHe/oE5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=psPTEWMCPjpj1jqZsTFRxQnBDtXX/ptFFLecGFy6c0aD1cfrBevXCTIZ+p0dgkkXMtiIcTXDtY9bfF+cFUWo6mCT+wXQYMSmjxMP4KEb/0FXcpO4fxk9z0IYxB6JXJJT40y/fmxsZq4AG8pCGYj8QSXPBsoPXVB2YtUhxQ332Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vA7SEKOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiHe/oE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44132C4CEF1;
-	Tue, 12 Aug 2025 19:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vA7SEKOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B933DC4CEF0;
+	Tue, 12 Aug 2025 19:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025624;
-	bh=zY6hR6BUumkBNoZ01J+Qp0NP+olAXxnoTwULMy7ptlA=;
+	s=korg; t=1755025628;
+	bh=H6q/MhtucjK9G8/dtwj9HTK2gIyum3o2IU5FzXotpfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiHe/oE5L2VWvXd6gURsNCnw+CyqAPMOAgtVM/85X3VolbfB+Xdmo5h4VsbIxoGTV
-	 3GcHH1VkYILT+HCFrfWdts/aLhJ5g6TeXwrkfd+06gIEeN193fGNH1LiO9xMyRZ4QV
-	 RE29DX6tR07v3kprVsIbVls7Msc8xNxkuDKeOM+Q=
+	b=vA7SEKOXvA3Vq59tpE4+zE3MAClWBAZDv0yltmALlWdAAukgEut0QCFttGQ9iZWyI
+	 IWqJIq6dt9FSE4sselDTcBiKYaRuiE63wwglj7tutd3jn+YkK8acyig52ds/7i+nf5
+	 P8mZa3jrOHx1k2zMuTnb4FL57c7w+8ToKKscqNSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 096/480] drm/xe: Correct BMG VSEC header sizing
-Date: Tue, 12 Aug 2025 19:45:04 +0200
-Message-ID: <20250812174401.416037889@linuxfoundation.org>
+Subject: [PATCH 6.15 097/480] staging: nvec: Fix incorrect null termination of battery manufacturer
+Date: Tue, 12 Aug 2025 19:45:05 +0200
+Message-ID: <20250812174401.458304179@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -47,75 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael J. Ruhl <michael.j.ruhl@intel.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 5b27388171a18cf6842c700520086ec50194e858 ]
+[ Upstream commit a8934352ba01081c51d2df428e9d540aae0e88b5 ]
 
-The intel_vsec_header information for the crashlog feature is
-incorrect.
+The battery manufacturer string was incorrectly null terminated using
+bat_model instead of bat_manu. This could result in an unintended
+write to the wrong field and potentially incorrect behavior.
 
-Update the VSEC header with correct sizing and count.
+fixe the issue by correctly null terminating the bat_manu string.
 
-Since the crashlog entries are "merged" (num_entries = 2), the
-separate capabilities entries must be merged as well.
-
-Fixes: 0c45e76fcc62 ("drm/xe/vsec: Support BMG devices")
-Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Reviewed-by: David E. Box <david.e.box@linux.intel.com>
-Link: https://lore.kernel.org/r/20250713172943.7335-4-michael.j.ruhl@intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 32890b983086 ("Staging: initial version of the nvec driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250719080755.3954373-1-alok.a.tiwari@oracle.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vsec.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ drivers/staging/nvec/nvec_power.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_vsec.c b/drivers/gpu/drm/xe/xe_vsec.c
-index 1bf7e709e110..56930ad42962 100644
---- a/drivers/gpu/drm/xe/xe_vsec.c
-+++ b/drivers/gpu/drm/xe/xe_vsec.c
-@@ -33,30 +33,19 @@ static struct intel_vsec_header bmg_telemetry = {
- 	.offset = BMG_DISCOVERY_OFFSET,
- };
- 
--static struct intel_vsec_header bmg_punit_crashlog = {
-+static struct intel_vsec_header bmg_crashlog = {
- 	.rev = 1,
- 	.length = 0x10,
- 	.id = VSEC_ID_CRASHLOG,
--	.num_entries = 1,
--	.entry_size = 4,
-+	.num_entries = 2,
-+	.entry_size = 6,
- 	.tbir = 0,
- 	.offset = BMG_DISCOVERY_OFFSET + 0x60,
- };
- 
--static struct intel_vsec_header bmg_oobmsm_crashlog = {
--	.rev = 1,
--	.length = 0x10,
--	.id = VSEC_ID_CRASHLOG,
--	.num_entries = 1,
--	.entry_size = 4,
--	.tbir = 0,
--	.offset = BMG_DISCOVERY_OFFSET + 0x78,
--};
--
- static struct intel_vsec_header *bmg_capabilities[] = {
- 	&bmg_telemetry,
--	&bmg_punit_crashlog,
--	&bmg_oobmsm_crashlog,
-+	&bmg_crashlog,
- 	NULL
- };
- 
+diff --git a/drivers/staging/nvec/nvec_power.c b/drivers/staging/nvec/nvec_power.c
+index e0e67a3eb722..2faab9fdedef 100644
+--- a/drivers/staging/nvec/nvec_power.c
++++ b/drivers/staging/nvec/nvec_power.c
+@@ -194,7 +194,7 @@ static int nvec_power_bat_notifier(struct notifier_block *nb,
+ 		break;
+ 	case MANUFACTURER:
+ 		memcpy(power->bat_manu, &res->plc, res->length - 2);
+-		power->bat_model[res->length - 2] = '\0';
++		power->bat_manu[res->length - 2] = '\0';
+ 		break;
+ 	case MODEL:
+ 		memcpy(power->bat_model, &res->plc, res->length - 2);
 -- 
 2.39.5
 
