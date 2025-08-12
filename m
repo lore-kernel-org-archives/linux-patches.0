@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1332FDC49;
-	Tue, 12 Aug 2025 19:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708BC2FDC49;
+	Tue, 12 Aug 2025 19:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025276; cv=none; b=uvyLizgCr0tEx87ub+LRYjleAzEOLGYXsL//utowAdbTPFhxzV1he+LrcT6xmkELRAABZr2vzhkixLRLsbJBpzxoUbgKHhKCLkA4mhvtYzbPBt3RSNHI7n/AjcNX/0rGbpi3zD22M7W4Q/xN9Ci/q9AWyD7RYVHjqNDrZPLJKHs=
+	t=1755025279; cv=none; b=Be7nVgFf7Q8jXVWZrVe5j4szgMrxEDoRCObHzNgWvkFvL4a0diVdszJsWbrT8ktSCFBypedjzp1kBgMrI4Uw1FppG2W0pM32Oif/3+FXosxvN3YYwHtISkbJhpNbJPiBwzW4pqZuCaZOuTKUjMLvA+//pN/+qnzmFTzfeBDcwQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025276; c=relaxed/simple;
-	bh=5tfEzmTyTHTLt8Zti9HFId5A1ZN4yo+A9kreRrRHoTI=;
+	s=arc-20240116; t=1755025279; c=relaxed/simple;
+	bh=b73FeTSqm8ft1DXt0aE35HkCgc/0FmonDO4zS3NDUNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1vzV8a8JwoiE/ggXChtz2qQPBifC2QTG4yyJi8L9lQ34ZbAEHWlG4hWHQ/Dxlfn3BqbgIN3hYy+QxA0DBMN9zgIFDQfDWgX9N4D+aW7sz/e/oPj25JMsGrHvpnlioGPnb2aw5IBrmOYw3kZ8kdphmaKwE+JfychnnyN2vY2a7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5+ftDEB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W4ZgKeHuA+YIdFA2IPyLeN10mkQ+V3RRfTuDf2cWUlbmN/pe+rzxNPEPSRDt5xALRlXGqevfhBDqpJW7MkiOjhswuWjpuwoar7ZKR6gm+3C94QDkEfosRk650uJsuPIzJiWvbBqVQTXGPULxYZHB6pjCop82Bu+GRu5jNAjL3jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWKzZEeR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5+ftDEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5A2C4CEF0;
-	Tue, 12 Aug 2025 19:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWKzZEeR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6529C4CEF0;
+	Tue, 12 Aug 2025 19:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025276;
-	bh=5tfEzmTyTHTLt8Zti9HFId5A1ZN4yo+A9kreRrRHoTI=;
+	s=korg; t=1755025279;
+	bh=b73FeTSqm8ft1DXt0aE35HkCgc/0FmonDO4zS3NDUNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U5+ftDEBX6r8clOe629lSsOtR2iWpseIXjGe0TRE/y8MsMuNTbXhvNufj3uyDPGiQ
-	 8p5pSDTH9saKm4G0FE5GCJvZ1wDQYYEr80Le+29jkwxDS5FsCST73ziw/C1zpFrxOE
-	 l0mROOXh1ttMcuedZve2RDjdh+PZKLds0RdEUaDk=
+	b=QWKzZEeRl9+7GBbC3jyii6jtc/SqF4A0KbeJMBKecTBQ1M/CrK+NeNRBj2lhajpd7
+	 YN+HgFEwSSo1TyK1CuMq+r4iPTdMKgn1P5CLvQffTFEdfiHyqTLytbOjIxZylHeUrz
+	 00DTYlYPL2lY6cc4dNhnjNN6X/9dODQRTqe43INo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>
-Subject: [PATCH 6.16 621/627] USB: gadget: f_hid: Fix memory leak in hidg_bind error path
-Date: Tue, 12 Aug 2025 19:35:16 +0200
-Message-ID: <20250812173455.503888407@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.16 622/627] HID: core: Harden s32ton() against conversion to 0 bits
+Date: Tue, 12 Aug 2025 19:35:17 +0200
+Message-ID: <20250812173455.539516788@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -49,56 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuhao Jiang <danisjiang@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 62783c30d78aecf9810dae46fd4d11420ad38b74 upstream.
+commit a6b87bfc2ab5bccb7ad953693c85d9062aef3fdd upstream.
 
-In hidg_bind(), if alloc_workqueue() fails after usb_assign_descriptors()
-has successfully allocated the USB descriptors, the current error handling
-does not call usb_free_all_descriptors() to free the allocated descriptors,
-resulting in a memory leak.
+Testing by the syzbot fuzzer showed that the HID core gets a
+shift-out-of-bounds exception when it tries to convert a 32-bit
+quantity to a 0-bit quantity.  Ideally this should never occur, but
+there are buggy devices and some might have a report field with size
+set to zero; we shouldn't reject the report or the device just because
+of that.
 
-Restructure the error handling by adding proper cleanup labels:
-- fail_free_all: cleans up workqueue and descriptors
-- fail_free_descs: cleans up descriptors only
-- fail: original cleanup for earlier failures
+Instead, harden the s32ton() routine so that it returns a reasonable
+result instead of crashing when it is called with the number of bits
+set to 0 -- the same as what snto32() does.
 
-This ensures that allocated resources are properly freed in reverse order
-of their allocation, preventing the memory leak when alloc_workqueue() fails.
-
-Fixes: a139c98f760ef ("USB: gadget: f_hid: Add GET_REPORT via userspace IOCTL")
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-by: syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/68753a08.050a0220.33d347.0008.GAE@google.com/
+Tested-by: syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com
+Fixes: dde5845a529f ("[PATCH] Generic HID layer - code split")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuhao Jiang <danisjiang@gmail.com>
-Link: https://lore.kernel.org/r/20250623094844.244977-1-danisjiang@gmail.com
+Link: https://patch.msgid.link/613a66cd-4309-4bce-a4f7-2905f9bce0c9@rowland.harvard.edu
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hid/hid-core.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1278,18 +1278,19 @@ static int hidg_bind(struct usb_configur
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -66,8 +66,12 @@ static s32 snto32(__u32 value, unsigned
  
- 	if (!hidg->workqueue) {
- 		status = -ENOMEM;
--		goto fail;
-+		goto fail_free_descs;
- 	}
+ static u32 s32ton(__s32 value, unsigned int n)
+ {
+-	s32 a = value >> (n - 1);
++	s32 a;
  
- 	/* create char device */
- 	cdev_init(&hidg->cdev, &f_hidg_fops);
- 	status = cdev_device_add(&hidg->cdev, &hidg->dev);
- 	if (status)
--		goto fail_free_descs;
-+		goto fail_free_all;
- 
- 	return 0;
--fail_free_descs:
-+fail_free_all:
- 	destroy_workqueue(hidg->workqueue);
-+fail_free_descs:
- 	usb_free_all_descriptors(f);
- fail:
- 	ERROR(f->config->cdev, "hidg_bind FAILED\n");
++	if (!value || !n)
++		return 0;
++
++	a = value >> (n - 1);
+ 	if (a && a != -1)
+ 		return value < 0 ? 1 << (n - 1) : (1 << (n - 1)) - 1;
+ 	return value & ((1 << n) - 1);
 
 
