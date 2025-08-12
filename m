@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7E22F83A1;
-	Tue, 12 Aug 2025 18:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49272FF164;
+	Tue, 12 Aug 2025 18:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023157; cv=none; b=tBgNRdM9pg8KZElpI6xkxEWd0MdxCwQFGmJrhEVs6XoZmeL40NGJmHgSFezjYfF0KpMhVZ7u7eSNxNKoUdBwUk5kEhvxsyH8mJIvOmIXZ4RdgIydo9+oQJB6TlFK+r4XtUCbP6liNblQcar8SPh7zsjd6zHrg1gTiGfszCvUZlY=
+	t=1755023160; cv=none; b=YwARQSZPq8zalbcFszo1rjcQv6RB9YE+PN9/J2n1UNcRtLdjbWs32ZR04fdKazqULFXZu7cTXyKWVucbSr8frTeQTyiYD80uMREBpSodt0IRmw9nOAYVmjxY15/efNIywTQVfLXXMp9X3TXhLqdDATBgSO3L41/MlsS/NDptO1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023157; c=relaxed/simple;
-	bh=UrTJlw2v80iwIEW6HL5MarikxIpRVDNYZbCRkm5mzdw=;
+	s=arc-20240116; t=1755023160; c=relaxed/simple;
+	bh=3s1OiosYkLfWjGv5OCcQfeyO4S+JrchwTD5D53QLoXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbvD3WhSYMabEFv/3Q8XERcxmNCTeBKIPX8FUVa+ymxJOctzmEWMaC/wkVLfm7dZqQ9H/e+jLKtZjWNbbEu5P2meCAkZ/utBXWictLOeEYhgge/TcVVG7hzT8Zjz99i/UjtBqqFI39YOFZJS6OYQ+4/4ws92u/iFl1w8oUfBrfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwHK06GO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SUSh/IB/ko5qU+Seth2e/tgfnMipdsa4YemrGOTi/wGCJc1vPAuVL2gvrE2b0pGKVk52P4MzBfUTXc72hhRqxmV28cZ+n1koWXGaEqsRxE5zHywzr7rWteUX+2xHPaujA3MCQlQTtf1iZojgwuX408+1unVDvd8jzCWghnvtuto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylrjshsi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwHK06GO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6407C4CEF0;
-	Tue, 12 Aug 2025 18:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylrjshsi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F17EC4CEF0;
+	Tue, 12 Aug 2025 18:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023157;
-	bh=UrTJlw2v80iwIEW6HL5MarikxIpRVDNYZbCRkm5mzdw=;
+	s=korg; t=1755023160;
+	bh=3s1OiosYkLfWjGv5OCcQfeyO4S+JrchwTD5D53QLoXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwHK06GOUt5/2ZoDGk+2ABKOb4SK5EVMGzLqTo1+GNBIeSU+Yibiw2d4zLpcUvdhR
-	 Bc/x05A4ByuT/+k3Ox7wCIv6Eel4ENp1hVG8mutzZoC9qU1Ns/jaYVIviZ4AT00jZw
-	 3TCFXjCUWTU+1cMEUGLC3+XRvKLLK4RKEPc8YREM=
+	b=ylrjshsiTTdhHA2cB+BBa8iNYmTVK16Rg9QL1WTfStNXYCbcnEsSYDSVc1kAe8LfY
+	 Dq1V+ojjQelaZ1rlA9B0T2Yska/irjfhr+7VLUPlerRuRXxXZ59kUIztDtVnqCtENX
+	 TIqqYVfFVgve2qmoFRk2LfLW6guAOswRGA0izx48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Orlando Chamberlain <orlandoch.dev@gmail.com>,
-	Aditya Garg <gargaditya08@live.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.12 367/369] HID: apple: validate feature-report field count to prevent NULL pointer dereference
-Date: Tue, 12 Aug 2025 19:31:04 +0200
-Message-ID: <20250812173030.489883647@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>
+Subject: [PATCH 6.12 368/369] USB: gadget: f_hid: Fix memory leak in hidg_bind error path
+Date: Tue, 12 Aug 2025 19:31:05 +0200
+Message-ID: <20250812173030.526502526@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,102 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Yuhao Jiang <danisjiang@gmail.com>
 
-commit 1bb3363da862e0464ec050eea2fb5472a36ad86b upstream.
+commit 62783c30d78aecf9810dae46fd4d11420ad38b74 upstream.
 
-A malicious HID device with quirk APPLE_MAGIC_BACKLIGHT can trigger a NULL
-pointer dereference whilst the power feature-report is toggled and sent to
-the device in apple_magic_backlight_report_set(). The power feature-report
-is expected to have two data fields, but if the descriptor declares one
-field then accessing field[1] and dereferencing it in
-apple_magic_backlight_report_set() becomes invalid
-since field[1] will be NULL.
+In hidg_bind(), if alloc_workqueue() fails after usb_assign_descriptors()
+has successfully allocated the USB descriptors, the current error handling
+does not call usb_free_all_descriptors() to free the allocated descriptors,
+resulting in a memory leak.
 
-An example of a minimal descriptor which can cause the crash is something
-like the following where the report with ID 3 (power report) only
-references a single 1-byte field. When hid core parses the descriptor it
-will encounter the final feature tag, allocate a hid_report (all members
-of field[] will be zeroed out), create field structure and populate it,
-increasing the maxfield to 1. The subsequent field[1] access and
-dereference causes the crash.
+Restructure the error handling by adding proper cleanup labels:
+- fail_free_all: cleans up workqueue and descriptors
+- fail_free_descs: cleans up descriptors only
+- fail: original cleanup for earlier failures
 
-  Usage Page (Vendor Defined 0xFF00)
-  Usage (0x0F)
-  Collection (Application)
-    Report ID (1)
-    Usage (0x01)
-    Logical Minimum (0)
-    Logical Maximum (255)
-    Report Size (8)
-    Report Count (1)
-    Feature (Data,Var,Abs)
+This ensures that allocated resources are properly freed in reverse order
+of their allocation, preventing the memory leak when alloc_workqueue() fails.
 
-    Usage (0x02)
-    Logical Maximum (32767)
-    Report Size (16)
-    Report Count (1)
-    Feature (Data,Var,Abs)
-
-    Report ID (3)
-    Usage (0x03)
-    Logical Minimum (0)
-    Logical Maximum (1)
-    Report Size (8)
-    Report Count (1)
-    Feature (Data,Var,Abs)
-  End Collection
-
-Here we see the KASAN splat when the kernel dereferences the
-NULL pointer and crashes:
-
-  [   15.164723] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP KASAN NOPTI
-  [   15.165691] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-  [   15.165691] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Not tainted 6.15.0 #31 PREEMPT(voluntary)
-  [   15.165691] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-  [   15.165691] RIP: 0010:apple_magic_backlight_report_set+0xbf/0x210
-  [   15.165691] Call Trace:
-  [   15.165691]  <TASK>
-  [   15.165691]  apple_probe+0x571/0xa20
-  [   15.165691]  hid_device_probe+0x2e2/0x6f0
-  [   15.165691]  really_probe+0x1ca/0x5c0
-  [   15.165691]  __driver_probe_device+0x24f/0x310
-  [   15.165691]  driver_probe_device+0x4a/0xd0
-  [   15.165691]  __device_attach_driver+0x169/0x220
-  [   15.165691]  bus_for_each_drv+0x118/0x1b0
-  [   15.165691]  __device_attach+0x1d5/0x380
-  [   15.165691]  device_initial_probe+0x12/0x20
-  [   15.165691]  bus_probe_device+0x13d/0x180
-  [   15.165691]  device_add+0xd87/0x1510
-  [...]
-
-To fix this issue we should validate the number of fields that the
-backlight and power reports have and if they do not have the required
-number of fields then bail.
-
-Fixes: 394ba612f941 ("HID: apple: Add support for magic keyboard backlight on T2 Macs")
+Fixes: a139c98f760ef ("USB: gadget: f_hid: Add GET_REPORT via userspace IOCTL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Reviewed-by: Orlando Chamberlain <orlandoch.dev@gmail.com>
-Tested-by: Aditya Garg <gargaditya08@live.com>
-Link: https://patch.msgid.link/20250713233008.15131-1-qasdev00@gmail.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Yuhao Jiang <danisjiang@gmail.com>
+Link: https://lore.kernel.org/r/20250623094844.244977-1-danisjiang@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-apple.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_hid.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -890,7 +890,8 @@ static int apple_magic_backlight_init(st
- 	backlight->brightness = report_enum->report_id_hash[APPLE_MAGIC_REPORT_ID_BRIGHTNESS];
- 	backlight->power = report_enum->report_id_hash[APPLE_MAGIC_REPORT_ID_POWER];
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -1275,18 +1275,19 @@ static int hidg_bind(struct usb_configur
  
--	if (!backlight->brightness || !backlight->power)
-+	if (!backlight->brightness || backlight->brightness->maxfield < 2 ||
-+	    !backlight->power || backlight->power->maxfield < 2)
- 		return -ENODEV;
+ 	if (!hidg->workqueue) {
+ 		status = -ENOMEM;
+-		goto fail;
++		goto fail_free_descs;
+ 	}
  
- 	backlight->cdev.name = ":white:" LED_FUNCTION_KBD_BACKLIGHT;
+ 	/* create char device */
+ 	cdev_init(&hidg->cdev, &f_hidg_fops);
+ 	status = cdev_device_add(&hidg->cdev, &hidg->dev);
+ 	if (status)
+-		goto fail_free_descs;
++		goto fail_free_all;
+ 
+ 	return 0;
+-fail_free_descs:
++fail_free_all:
+ 	destroy_workqueue(hidg->workqueue);
++fail_free_descs:
+ 	usb_free_all_descriptors(f);
+ fail:
+ 	ERROR(f->config->cdev, "hidg_bind FAILED\n");
 
 
