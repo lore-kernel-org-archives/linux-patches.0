@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CE7260583;
-	Tue, 12 Aug 2025 19:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78051C1AAA;
+	Tue, 12 Aug 2025 19:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025486; cv=none; b=Rpe+Yn8AxihbRbecy6pNabRbu4I9eaf7lERvEkyV3tbSK22C7+UcZR767WcK30pLlr2FuGc1TxZpeY4CLwoduIYWh0dQvhOSBj+10DGlJXtiCqVgIw+cngqcvyqjIBzOFQqOZvU4Yb3rDLTZTvTh+i8+h4A8iTVgX5fy/Bfd21I=
+	t=1755025489; cv=none; b=t/wJa7/6N1tut9DzhaGxEm7IDXI88uIbOauuVvPbBCPcobSBT9KWYmN3ao+1mrK/MxjJ+Xnra3t1Bth0Z/gr9rCvh50Pb2ySbVsEVdEpKHsy+VH3MT464dPa27iKkspJIv+dfqYhxbDoteek4CKl5QGxb1Rg8x2dJUje8QFLrt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025486; c=relaxed/simple;
-	bh=2blicBxsBnEgLCC4fRuB8Go3oHgYTrl/c9GtrPvGutk=;
+	s=arc-20240116; t=1755025489; c=relaxed/simple;
+	bh=GJjsI6pZo1VZ/l4eOm9OeioAlEcdYxhXbfokCDcY3eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYSoGp3k/PfdB08UCmfDbpZ7JRJ+uyUzKORIofHx2HAH8KouWVmKGDVFJ5eJ74roMV0+QJlfDSiLMeFGqTr7zd3zh9f1MabTBxL/koUSP76T1mFJPXXDR3j4XOxt188CHx/sTyrHtYA9y3SqeHYDawuDo6wd/ZlHDMnYZ56wMbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7Kp+jy2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u6iYGqWuE87tU6MRlHzwPnIcD3Sakyqw7HtJwsDJj/GjQpYSWs9QYA7p8EIU0LzsF13jaUYH6OhRXYvb+TBBCzp7xdXd/Dgi0I+FgqEltvDDtVIzY36tjUVC14IGSR/PgzhtftcVrODNOBP+wJWhESjj2HiwjFUTFeM5wvs1RQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxMc+KSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7Kp+jy2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0735BC4CEF0;
-	Tue, 12 Aug 2025 19:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxMc+KSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B316C4CEF0;
+	Tue, 12 Aug 2025 19:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025486;
-	bh=2blicBxsBnEgLCC4fRuB8Go3oHgYTrl/c9GtrPvGutk=;
+	s=korg; t=1755025489;
+	bh=GJjsI6pZo1VZ/l4eOm9OeioAlEcdYxhXbfokCDcY3eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7Kp+jy20evqNP34ezzpCZsYzXjWjC169T314KzxST7WGg1S3qK4vtqxGGfeW9tYC
-	 0GUCO0Nk8LDwNozIWkOHr7SahHKwpHxrkl2EB5XR7Ogt063cmUFqrQiBgIm29J/A69
-	 /eQFjNY/uJw5teMOofL165NvcEGzKhntGEsfCf0k=
+	b=XxMc+KSAcZWcIYkA04YIMcyjxyiuM15bOlPPsjEvKiiHeGWMzI+91DDyA7MINVa7v
+	 MtMw7nhXihkQc2fjNOUFawWyq2ZboKERQ8Fq+upfUz4DZIEPjgtWH9a0sRO/Edavd5
+	 wyRPqp78Psi7rDQrGJvPSZMnwAeE1QMqKhNT2Yp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hansg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 056/480] mei: vsc: Event notifier fixes
-Date: Tue, 12 Aug 2025 19:44:24 +0200
-Message-ID: <20250812174359.729840255@linuxfoundation.org>
+Subject: [PATCH 6.15 057/480] mei: vsc: Unset the event callback on remove and probe errors
+Date: Tue, 12 Aug 2025 19:44:25 +0200
+Message-ID: <20250812174359.770857248@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,78 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 18f14b2e7f73c7ec272d833d570b632286467c7d ]
+[ Upstream commit 6175c6974095f8ca7e5f8d593171512f3e5bd453 ]
 
-vsc_tp_register_event_cb() can race with vsc_tp_thread_isr(), add a mutex
-to protect against this.
+Make mei_vsc_remove() properly unset the callback to avoid a dead callback
+sticking around after probe errors or unbinding of the platform driver.
 
-Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
+Fixes: 386a766c4169 ("mei: Add MEI hardware support for IVSC device")
 Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://lore.kernel.org/r/20250623085052.12347-7-hansg@kernel.org
+Link: https://lore.kernel.org/r/20250623085052.12347-8-hansg@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/vsc-tp.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/misc/mei/platform-vsc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/misc/mei/vsc-tp.c b/drivers/misc/mei/vsc-tp.c
-index 66b41b86ea7d..97df3077175d 100644
---- a/drivers/misc/mei/vsc-tp.c
-+++ b/drivers/misc/mei/vsc-tp.c
-@@ -79,9 +79,8 @@ struct vsc_tp {
+diff --git a/drivers/misc/mei/platform-vsc.c b/drivers/misc/mei/platform-vsc.c
+index 1ac85f0251c5..b2b5a20ae3fa 100644
+--- a/drivers/misc/mei/platform-vsc.c
++++ b/drivers/misc/mei/platform-vsc.c
+@@ -380,6 +380,8 @@ static int mei_vsc_probe(struct platform_device *pdev)
+ err_cancel:
+ 	mei_cancel_work(mei_dev);
  
- 	vsc_tp_event_cb_t event_notify;
- 	void *event_notify_context;
--
--	/* used to protect command download */
--	struct mutex mutex;
-+	struct mutex event_notify_mutex;	/* protects event_notify + context */
-+	struct mutex mutex;			/* protects command download */
- };
- 
- /* GPIO resources */
-@@ -113,6 +112,8 @@ static irqreturn_t vsc_tp_thread_isr(int irq, void *data)
- {
- 	struct vsc_tp *tp = data;
- 
-+	guard(mutex)(&tp->event_notify_mutex);
++	vsc_tp_register_event_cb(tp, NULL, NULL);
 +
- 	if (tp->event_notify)
- 		tp->event_notify(tp->event_notify_context);
- 
-@@ -399,6 +400,8 @@ EXPORT_SYMBOL_NS_GPL(vsc_tp_need_read, "VSC_TP");
- int vsc_tp_register_event_cb(struct vsc_tp *tp, vsc_tp_event_cb_t event_cb,
- 			    void *context)
- {
-+	guard(mutex)(&tp->event_notify_mutex);
-+
- 	tp->event_notify = event_cb;
- 	tp->event_notify_context = context;
- 
-@@ -530,6 +533,7 @@ static int vsc_tp_probe(struct spi_device *spi)
- 		return ret;
- 
- 	mutex_init(&tp->mutex);
-+	mutex_init(&tp->event_notify_mutex);
- 
- 	/* only one child acpi device */
- 	ret = acpi_dev_for_each_child(ACPI_COMPANION(dev),
-@@ -554,6 +558,7 @@ static int vsc_tp_probe(struct spi_device *spi)
- err_destroy_lock:
- 	free_irq(spi->irq, tp);
- 
-+	mutex_destroy(&tp->event_notify_mutex);
- 	mutex_destroy(&tp->mutex);
+ 	mei_disable_interrupts(mei_dev);
  
  	return ret;
-@@ -567,6 +572,7 @@ static void vsc_tp_remove(struct spi_device *spi)
+@@ -388,11 +390,14 @@ static int mei_vsc_probe(struct platform_device *pdev)
+ static void mei_vsc_remove(struct platform_device *pdev)
+ {
+ 	struct mei_device *mei_dev = platform_get_drvdata(pdev);
++	struct mei_vsc_hw *hw = mei_dev_to_vsc_hw(mei_dev);
  
- 	free_irq(spi->irq, tp);
+ 	pm_runtime_disable(mei_dev->dev);
  
-+	mutex_destroy(&tp->event_notify_mutex);
- 	mutex_destroy(&tp->mutex);
- }
+ 	mei_stop(mei_dev);
  
++	vsc_tp_register_event_cb(hw->tp, NULL, NULL);
++
+ 	mei_disable_interrupts(mei_dev);
+ 
+ 	mei_deregister(mei_dev);
 -- 
 2.39.5
 
