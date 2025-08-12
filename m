@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5923F9D2;
-	Tue, 12 Aug 2025 18:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51E81B87F2;
+	Tue, 12 Aug 2025 18:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022814; cv=none; b=ITLaGsZfV4yTS8xCgCTsagFaT9TwFMlLwoYnaMSQckLRvmdntIuDX4Gye1GMnHkKJOm/plsu1HRFoox9bhDhP3HZ8aVQlgy3icAB93Szl4D3aojGJZyqVJnE+qVJpy8cxzD1blAq0hafLsD3fszqPj42JDHQjYulsOywm2Brl+U=
+	t=1755022817; cv=none; b=EW3KZPSYyuCp9bdaNx2wxGxke4EpzJ9EfXDpSbvM4RL+F2dOwJdozklbr/sstZzlL9L1Ajn9fSZIkHzLhLP7UggX9mTu/2RQPLyE5B9wnGWXrsG0SkeRpqR9nUHSwDAxhvGFDvnzgQOST5PMkB7G8GtRBG9yJ0U95TNpwZC1Ycw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022814; c=relaxed/simple;
-	bh=FSlUOI+6tlcKr7f7o2Gj00KCcUd6jNCw6fS5JqnI83g=;
+	s=arc-20240116; t=1755022817; c=relaxed/simple;
+	bh=HCIrmASAnM4vNpr3k6T1Isich30iXqyS5EILZ9RhwQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VmgQTqnE8acQqyZ4S13NOmG0vtsso5xkHb2EDe+yOPaBQX8Pd0CVuBoGdl/abnPBNjg+eD1lK78IGDIk/1++GCYrroYiTvYUlkj2llQy9s7nVJ006XAtUllH58leqTBYoA+g4mt78L18iCsvx0B4zbbSzlzkP4pXfUEN2i6G/hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCeMUdLq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=quObs5XN2WxGTWt9/axfyaCY1WmBHo/MKLQ8MdoAIwlpYMKwc/VcHPkCvq83mq8rb63wgE63kAjY4aCaursKbZfnRgI+5t9r7T6v2K5nc2pqbsIN1qOQLbzyqC9Y/K48/9B3VylGdpSQ36RUc5Jun9X4xBRuCYmGgQA4oNYSKwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWRf7TtS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCeMUdLq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57309C4CEF6;
-	Tue, 12 Aug 2025 18:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWRf7TtS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC36C4CEF6;
+	Tue, 12 Aug 2025 18:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022813;
-	bh=FSlUOI+6tlcKr7f7o2Gj00KCcUd6jNCw6fS5JqnI83g=;
+	s=korg; t=1755022817;
+	bh=HCIrmASAnM4vNpr3k6T1Isich30iXqyS5EILZ9RhwQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCeMUdLq72UJ9S8sFo/49M+f8SI7GIb6D3g7NOX0HvNx0YP6xv8DtZ/F+AicQcPbB
-	 /2ChCTqLCSDxjCNRoIxRizJ3DTcp9awAhV3SckGej483Pp+vTCOZ0jPZvD1QXYh3TI
-	 sG1S6znAKMipl0SMbB1uAImxsp3rdM1jVS51JD74=
+	b=hWRf7TtSuU5pId2E4RVJWutS2TEuHEkudSq72pz2sr1aCqYh2XiAzqa7ecl3KcYh2
+	 lCFMbNgjU9w+nJRp6LxyNHF9xlrQY/k7Tg45UyBShC6hoqd58BDIdWUOYTZb+9WxCA
+	 5C876TUPaeZenz3H29KEZthJrv+U0iEZP2m7iZwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Jacob Pan <jacob.pan@linux.microsoft.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 266/369] vfio: Prevent open_count decrement to negative
-Date: Tue, 12 Aug 2025 19:29:23 +0200
-Message-ID: <20250812173024.769128027@linuxfoundation.org>
+Subject: [PATCH 6.12 267/369] vfio/pds: Fix missing detach_ioas op
+Date: Tue, 12 Aug 2025 19:29:24 +0200
+Message-ID: <20250812173024.806662348@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Pan <jacob.pan@linux.microsoft.com>
+From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit 982ddd59ed97dc7e63efd97ed50273ffb817bd41 ]
+[ Upstream commit fe24d5bc635e103a517ec201c3cb571eeab8be2f ]
 
-When vfio_df_close() is called with open_count=0, it triggers a warning in
-vfio_assert_device_open() but still decrements open_count to -1. This allows
-a subsequent open to incorrectly pass the open_count == 0 check, leading to
-unintended behavior, such as setting df->access_granted = true.
+When CONFIG_IOMMUFD is enabled and a device is bound to the pds_vfio_pci
+driver, the following WARN_ON() trace is seen and probe fails:
 
-For example, running an IOMMUFD compat no-IOMMU device with VFIO tests
-(https://github.com/awilliam/tests/blob/master/vfio-noiommu-pci-device-open.c)
-results in a warning and a failed VFIO_GROUP_GET_DEVICE_FD ioctl on the first
-run, but the second run succeeds incorrectly.
+WARNING: CPU: 0 PID: 5040 at drivers/vfio/vfio_main.c:317 __vfio_register_dev+0x130/0x140 [vfio]
+<...>
+pds_vfio_pci 0000:08:00.1: probe with driver pds_vfio_pci failed with error -22
 
-Add checks to avoid decrementing open_count below zero.
+This is because the driver's vfio_device_ops.detach_ioas isn't set.
 
-Fixes: 05f37e1c03b6 ("vfio: Pass struct vfio_device_file * to vfio_device_open/close()")
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Jacob Pan <jacob.pan@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250618234618.1910456-2-jacob.pan@linux.microsoft.com
+Fix this by using the generic vfio_iommufd_physical_detach_ioas
+function.
+
+Fixes: 38fe3975b4c2 ("vfio/pds: Initial support for pds VFIO driver")
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20250702163744.69767-1-brett.creeley@amd.com
 Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/vfio_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/vfio/pci/pds/vfio_dev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
-index a5a62d9d963f..ae78822f2d71 100644
---- a/drivers/vfio/vfio_main.c
-+++ b/drivers/vfio/vfio_main.c
-@@ -583,7 +583,8 @@ void vfio_df_close(struct vfio_device_file *df)
+diff --git a/drivers/vfio/pci/pds/vfio_dev.c b/drivers/vfio/pci/pds/vfio_dev.c
+index 76a80ae7087b..f6e0253a8a14 100644
+--- a/drivers/vfio/pci/pds/vfio_dev.c
++++ b/drivers/vfio/pci/pds/vfio_dev.c
+@@ -204,6 +204,7 @@ static const struct vfio_device_ops pds_vfio_ops = {
+ 	.bind_iommufd = vfio_iommufd_physical_bind,
+ 	.unbind_iommufd = vfio_iommufd_physical_unbind,
+ 	.attach_ioas = vfio_iommufd_physical_attach_ioas,
++	.detach_ioas = vfio_iommufd_physical_detach_ioas,
+ };
  
- 	lockdep_assert_held(&device->dev_set->lock);
- 
--	vfio_assert_device_open(device);
-+	if (!vfio_assert_device_open(device))
-+		return;
- 	if (device->open_count == 1)
- 		vfio_df_device_last_close(df);
- 	device->open_count--;
+ const struct vfio_device_ops *pds_vfio_ops_info(void)
 -- 
 2.39.5
 
