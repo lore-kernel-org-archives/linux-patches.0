@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703352E3B06;
-	Tue, 12 Aug 2025 18:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380841C8621;
+	Tue, 12 Aug 2025 18:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021769; cv=none; b=NBH0fYS0xMEILggrmMrZnC1maHvOx+vY9hCOr8hyV454iAsJupn0afSBRh1J2EFOTN/I4it94TGMHuphZQX+3XViVfkHeyTbrH2kC9FFOdFXSHHgUWcpy5usbp/ZNj+Q8+zOpzf6dcHJ2V0xU6THhKLp/qCnfJwszi+R4jSum6s=
+	t=1755021772; cv=none; b=Ja1qwaOmnb1jvkRj8ZnJ/REaELJeqXTKSw4BvOjOxHzxjjsrCQQSIfPLtRcbW3+eiRMImDRJRECHYK1zZWW91BUXaOte1xOu6XYdQK127uJJKpobGi+pZkrxRu43i/HxYyAS3d0zXDDY+KGBF6s0W9hrkO47gs0tLiDDYx5IiY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021769; c=relaxed/simple;
-	bh=VS4tWZk0tS6aBa3lA9h2+Vu9v03nj25OpDwHyqsjHXk=;
+	s=arc-20240116; t=1755021772; c=relaxed/simple;
+	bh=OWA3aIS7LFl+m+zbAjl7xTcgHFOodQ26Ux3paJUS0d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JseDUL9BBh7zhSU22Gj4ffwra7QSaWrVR/8iqh1r9I3Dr3anxE3DjKppmjRXMwvNaIdNSbq3XfqpqZ6NySnUaQh1d1mnxz+1p7z1zau1uyiZ73dke/7D3OIXZJdxP+qkwNiaIkMY783dlfdu3S8j0u4vBBs+xydpKYrP86Xec6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQt7tkf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bn3VEhEkxxvrK4WgPYAkLK5E8quY3Dm4+FxXWP2PoqByop+X8JLqJ6xKH7pr8VqRsbXC/yqMvxiQ9hXXfeT9zwiarOnU1ZPs5tICIkiBqbNhsOoHfXhErO+ml8kR8ut/7cF3euxaFw2keijNrCQnUUj4BI8SX+hcab0TryUkCSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB2MJG+y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQt7tkf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871EFC4CEF0;
-	Tue, 12 Aug 2025 18:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB2MJG+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A663CC4CEF6;
+	Tue, 12 Aug 2025 18:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021769;
-	bh=VS4tWZk0tS6aBa3lA9h2+Vu9v03nj25OpDwHyqsjHXk=;
+	s=korg; t=1755021772;
+	bh=OWA3aIS7LFl+m+zbAjl7xTcgHFOodQ26Ux3paJUS0d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQt7tkf9eK5L6E4K7JiMlp5OptgmqhCeZGb1VW31XzRxPdji1B5rvi9D8lJSAcCzU
-	 oXYrN/B6CAi7ULqOweBU0sKKgF0NqadfD5fHRjWQs3gyN/DvtJB1Pfs9IjhCgh5Bn8
-	 9lJl6JM8zlZEssZ9f6Im9ubuH/y56pEbqK6POePI=
+	b=YB2MJG+yH29ucEE9ODlPyhlgEu79uD+b4rMaCf+JXF1m1ILtXXamoHrc3FuTAAdbY
+	 /kdH1vbLEdofgK4CfSVtM5Fl9nlIu8ZtvxY2JjVlVgyqqzzticuRU07G4E0X9fcYsT
+	 rQnRJlIkq6l5GAyQGp+YHBNKo1uTKtra8OLJS2pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Anastasio <sanastasio@raptorengineering.com>,
-	Timothy Pearson <tpearson@raptorengineering.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 192/262] PCI: pnv_php: Work around switches with broken presence detection
-Date: Tue, 12 Aug 2025 19:29:40 +0200
-Message-ID: <20250812173001.305695634@linuxfoundation.org>
+Subject: [PATCH 6.6 219/262] smb: server: let recv_done() consistently call put_recvmsg/smb_direct_disconnect_rdma_connection
+Date: Tue, 12 Aug 2025 19:30:07 +0200
+Message-ID: <20250812173002.474885300@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -53,75 +56,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timothy Pearson <tpearson@raptorengineering.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 80f9fc2362797538ebd4fd70a1dfa838cc2c2cdb ]
+[ Upstream commit cfe76fdbb9729c650f3505d9cfb2f70ddda2dbdc ]
 
-The Microsemi Switchtec PM8533 PFX 48xG3 [11f8:8533] PCIe switch system
-was observed to incorrectly assert the Presence Detect Set bit in its
-capabilities when tested on a Raptor Computing Systems Blackbird system,
-resulting in the hot insert path never attempting a rescan of the bus
-and any downstream devices not being re-detected.
+We should call put_recvmsg() before smb_direct_disconnect_rdma_connection()
+in order to call it before waking up the callers.
 
-Work around this by additionally checking whether the PCIe data link is
-active or not when performing presence detection on downstream switches'
-ports, similar to the pciehp_hpc.c driver.
+In all error cases we should call smb_direct_disconnect_rdma_connection()
+in order to avoid stale connections.
 
-Signed-off-by: Shawn Anastasio <sanastasio@raptorengineering.com>
-Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/505981576.1359853.1752615415117.JavaMail.zimbra@raptorengineeringinc.com
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pnv_php.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/smb/server/transport_rdma.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
-index 6989b8a0dc6b..d37faa53bcd8 100644
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -390,6 +390,20 @@ static int pnv_php_get_power_state(struct hotplug_slot *slot, u8 *state)
- 	return 0;
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index d28d85a46597..b22fe18212cf 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -520,13 +520,13 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	t = recvmsg->transport;
+ 
+ 	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_RECV) {
++		put_recvmsg(t, recvmsg);
+ 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
+ 			pr_err("Recv error. status='%s (%d)' opcode=%d\n",
+ 			       ib_wc_status_msg(wc->status), wc->status,
+ 			       wc->opcode);
+ 			smb_direct_disconnect_rdma_connection(t);
+ 		}
+-		put_recvmsg(t, recvmsg);
+ 		return;
+ 	}
+ 
+@@ -541,6 +541,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	case SMB_DIRECT_MSG_NEGOTIATE_REQ:
+ 		if (wc->byte_len < sizeof(struct smb_direct_negotiate_req)) {
+ 			put_recvmsg(t, recvmsg);
++			smb_direct_disconnect_rdma_connection(t);
+ 			return;
+ 		}
+ 		t->negotiation_requested = true;
+@@ -548,7 +549,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		t->status = SMB_DIRECT_CS_CONNECTED;
+ 		enqueue_reassembly(t, recvmsg, 0);
+ 		wake_up_interruptible(&t->wait_status);
+-		break;
++		return;
+ 	case SMB_DIRECT_MSG_DATA_TRANSFER: {
+ 		struct smb_direct_data_transfer *data_transfer =
+ 			(struct smb_direct_data_transfer *)recvmsg->packet;
+@@ -558,6 +559,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		if (wc->byte_len <
+ 		    offsetof(struct smb_direct_data_transfer, padding)) {
+ 			put_recvmsg(t, recvmsg);
++			smb_direct_disconnect_rdma_connection(t);
+ 			return;
+ 		}
+ 
+@@ -566,6 +568,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			if (wc->byte_len < sizeof(struct smb_direct_data_transfer) +
+ 			    (u64)data_length) {
+ 				put_recvmsg(t, recvmsg);
++				smb_direct_disconnect_rdma_connection(t);
+ 				return;
+ 			}
+ 
+@@ -608,11 +611,16 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		if (is_receive_credit_post_required(receive_credits, avail_recvmsg_count))
+ 			mod_delayed_work(smb_direct_wq,
+ 					 &t->post_recv_credits_work, 0);
+-		break;
++		return;
+ 	}
+-	default:
+-		break;
+ 	}
++
++	/*
++	 * This is an internal error!
++	 */
++	WARN_ON_ONCE(recvmsg->type != SMB_DIRECT_MSG_DATA_TRANSFER);
++	put_recvmsg(t, recvmsg);
++	smb_direct_disconnect_rdma_connection(t);
  }
  
-+static int pcie_check_link_active(struct pci_dev *pdev)
-+{
-+	u16 lnk_status;
-+	int ret;
-+
-+	ret = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnk_status);
-+	if (ret == PCIBIOS_DEVICE_NOT_FOUND || PCI_POSSIBLE_ERROR(lnk_status))
-+		return -ENODEV;
-+
-+	ret = !!(lnk_status & PCI_EXP_LNKSTA_DLLLA);
-+
-+	return ret;
-+}
-+
- static int pnv_php_get_adapter_state(struct hotplug_slot *slot, u8 *state)
- {
- 	struct pnv_php_slot *php_slot = to_pnv_php_slot(slot);
-@@ -402,6 +416,19 @@ static int pnv_php_get_adapter_state(struct hotplug_slot *slot, u8 *state)
- 	 */
- 	ret = pnv_pci_get_presence_state(php_slot->id, &presence);
- 	if (ret >= 0) {
-+		if (pci_pcie_type(php_slot->pdev) == PCI_EXP_TYPE_DOWNSTREAM &&
-+			presence == OPAL_PCI_SLOT_EMPTY) {
-+			/*
-+			 * Similar to pciehp_hpc, check whether the Link Active
-+			 * bit is set to account for broken downstream bridges
-+			 * that don't properly assert Presence Detect State, as
-+			 * was observed on the Microsemi Switchtec PM8533 PFX
-+			 * [11f8:8533].
-+			 */
-+			if (pcie_check_link_active(php_slot->pdev) > 0)
-+				presence = OPAL_PCI_SLOT_PRESENT;
-+		}
-+
- 		*state = presence;
- 		ret = 0;
- 	} else {
+ static int smb_direct_post_recv(struct smb_direct_transport *t,
 -- 
 2.39.5
 
