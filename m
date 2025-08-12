@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642EE280037;
-	Tue, 12 Aug 2025 18:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7912BEC2F;
+	Tue, 12 Aug 2025 18:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022009; cv=none; b=hT6rAwubjRBBodR8mpPq7hj/1V3bIMNWWhPsfd6BItoUb/c+bhfxHA1pDZ1le7ZnLqvSBfv/YanOq+Qle9jVyg0sqVkIpEYQYWFOiMDjm3EbC9PHfrzBXfUUBxA++IBh3IEf46trBAsnz6loBeUlJg3+sCcRNEST6LMzAk/FhZM=
+	t=1755022012; cv=none; b=GFzsI65vmjTcjVmFqhgTLjBLkRZkQ5Fb8fWcYVx7SOnAxpwhW2PgbAhZeAawiUMjzcvV4RVvA9EMD9zemNaLq3riY0Mhk0jiKYsaMqn26Jx3i23vrCfwt0bPW0K8yPi3tXTXp6TKq8vmfcmYaQn6ijVgts85yozzp6znfaXQEPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022009; c=relaxed/simple;
-	bh=+q9zQldOVpW25BI6E85O7YHfUAvr9jzOZgfL4UrXBjc=;
+	s=arc-20240116; t=1755022012; c=relaxed/simple;
+	bh=hsVWuIzjyF+wpB8RtLSIqD1ixvgxz45OUnfapmp9XQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f6t4zKJdCBO7aJMH3D3VtxfnPxDEuERrFWKTzxgHbPKPQIS10TLdkuWxTOvbJ4k5zMXPLg/9nK3hUaKRoKS+OEbbjdVHoz88589y1rGcWHu4e/e7PS+gp1UisJ/ZLu2MX2d1W6zuj2r4SSLQAFhzI5kZvZjWbPm0+gS+kLuFzXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZM5lhN0e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e9Fi7JMt+oQ3+xjnMY29WfHkS68+vTqg5PEPmWGh2+6u+xn4aAZMkPU/HWHyLWaISeaCcpCYK0oX9yyzNO2Gi7yX9f9FHdUjVSdo+9Xk3n2606d/z5zdWi2OmTslEYMVATQpXuMOL9uRNp4Utht9MjuAlIjZZyyqYQWxLBLJ+hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0epKeytN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZM5lhN0e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E958C4CEF6;
-	Tue, 12 Aug 2025 18:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0epKeytN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8EBC4CEF7;
+	Tue, 12 Aug 2025 18:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022009;
-	bh=+q9zQldOVpW25BI6E85O7YHfUAvr9jzOZgfL4UrXBjc=;
+	s=korg; t=1755022012;
+	bh=hsVWuIzjyF+wpB8RtLSIqD1ixvgxz45OUnfapmp9XQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZM5lhN0ey7+i0Le3eoNVAtTc/0+A7ejFO3pv2PreIAnltpte0BC0RMONWDioRnm3T
-	 bPF1rSoQsv5eP8y3x4nPz1K9RyrZinmnK+gXGks7MtK4QfHnbv7NBwuO+ovdIQtFtg
-	 DEsa+bxTEddQS5Uvp2wg4bEitKSlcZHQu42MokD4=
+	b=0epKeytNwzpx8tjiPRKOCAPgcvNdXcNwQ0BNof+vHFyhH3XsRU69qxvHBo2dUE1ta
+	 7Otd3dEktMRavDOf8SM6KHqmT2kVWn/5anIRhCNZTBKTLa0T3Rquexx43IQl6FPWW5
+	 g3s93SBqFVgnt2W3mtYLSI5mFgKUEIeNfrPU/qHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Adam Queler <queler+k@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/369] arm64: dts: qcom: msm8976: Make blsp_dma controlled-remotely
-Date: Tue, 12 Aug 2025 19:25:25 +0200
-Message-ID: <20250812173015.796158178@linuxfoundation.org>
+Subject: [PATCH 6.12 003/369] ASoC: amd: yc: Add DMI entries to support HP 15-fb1xxx
+Date: Tue, 12 Aug 2025 19:25:00 +0200
+Message-ID: <20250812173014.873778286@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -46,63 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Apitzsch <git@apitzsch.eu>
+From: Adam Queler <queler@gmail.com>
 
-[ Upstream commit 76270a18dbdf0bb50615f1b29d2cae8d683da01e ]
+[ Upstream commit 949ddec3728f3a793a13c1c9003028b9b159aefc ]
 
-The blsp_dma controller is shared between the different subsystems,
-which is why it is already initialized by the firmware. We should not
-reinitialize it from Linux to avoid potential other users of the DMA
-engine to misbehave.
+This model requires an additional detection quirk to
+enable the internal microphone.
 
-In mainline this can be described using the "qcom,controlled-remotely"
-property. In the downstream/vendor kernel from Qualcomm there is an
-opposite "qcom,managed-locally" property. This property is *not* set
-for the qcom,sps-dma@7884000 and qcom,sps-dma@7ac4000 [1] so adding
-"qcom,controlled-remotely" upstream matches the behavior of the
-downstream/vendor kernel.
-
-Adding this fixes booting Longcheer L9360.
-
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26/arch/arm/boot/dts/qcom/msm8976.dtsi#L1149-1163
-
-Fixes: 0484d3ce0902 ("arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
-Link: https://lore.kernel.org/r/20250615-bqx5plus-v2-1-72b45c84237d@apitzsch.eu
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Adam Queler <queler+k@gmail.com>
+Link: https://patch.msgid.link/20250715031434.222062-1-queler+k@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8976.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-index 06af6e5ec578..884b5bb54ba8 100644
---- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-@@ -1330,6 +1330,7 @@ blsp1_dma: dma-controller@7884000 {
- 			clock-names = "bam_clk";
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
-+			qcom,controlled-remotely;
- 		};
- 
- 		blsp1_uart1: serial@78af000 {
-@@ -1450,6 +1451,7 @@ blsp2_dma: dma-controller@7ac4000 {
- 			clock-names = "bam_clk";
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
-+			qcom,controlled-remotely;
- 		};
- 
- 		blsp2_uart2: serial@7af0000 {
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 42d123cb8b4c..4bde41663f42 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -528,6 +528,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb1xxx"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
