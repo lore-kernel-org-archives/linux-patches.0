@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AB63F9D2;
-	Tue, 12 Aug 2025 18:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9B02F5E;
+	Tue, 12 Aug 2025 18:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022357; cv=none; b=d6LeX+an5aUm0I1AnZEfLZHvJ72pRIEq3GDD4hhfSzGR4iNr9wYz3pEEEwdryxz6iBUUXa8h7NEf9xDS1HL2l9PtPVYw+/RfNaqFryVKsSPexTtpoNQp4ahVY5LPoospD4PnQ03Q/KX2PO84PwJO4KprB4FXZJIvh3eI6d0Iva0=
+	t=1755022360; cv=none; b=nGwyCF9jRkaUe3iHATF7riyRviUmIDIOp//zUgywBROLJAnFQhwX3t+XM8HyviyjMzShFUjYt1h2DhxBY8Sgn2S0zb/z0hL5iAdBvPmb6dIFUEKCeA9j29u2wna2C/CVvZvTeXxGLrPfvnU92vhJPD+BO0WTxtGxRthxCxLGXCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022357; c=relaxed/simple;
-	bh=8Ib3wOASbtgv7DeW+1YXgPvcjyF1jpIc+pImcMkWqEY=;
+	s=arc-20240116; t=1755022360; c=relaxed/simple;
+	bh=XYzbOHXoNquyyTtVJAZ/nkc5qr8fjLEG3/7NQcveKYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDvz3yrm3k+jhzEyUYybwHleUBRGLmXdZ+3yeLZdbImMBFBrpPcP/xtf5dLmwDMzUuZtMkP2/8TZjF+3vTpmNWdmjpS7XFFFbapdbOBDzKKvPVii/09KAe0fTEH1DwI37n9+taPsPoBRlY9JYJ1/yDB5DMNDgKR+Lgr0wpdL3sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrd1a5Wp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fd+PJ3cQs82VMLOV+68/uoWDc52ibxdgkgxzM6sCO+dIWD1T2jdSy1nF+wohR1Y5wFPuSZ3dekaSwZGtxwwKvp01I+PpWCoooONOpwhBfVOJney0KZtVW2zhcCUCZ0zl/KWDmXU+/LGphJEGjXn1SbPm1fZ2wouFnidwebNcJFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kU+0iiZy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrd1a5Wp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528D0C4CEF0;
-	Tue, 12 Aug 2025 18:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kU+0iiZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E3DC4CEF0;
+	Tue, 12 Aug 2025 18:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022356;
-	bh=8Ib3wOASbtgv7DeW+1YXgPvcjyF1jpIc+pImcMkWqEY=;
+	s=korg; t=1755022360;
+	bh=XYzbOHXoNquyyTtVJAZ/nkc5qr8fjLEG3/7NQcveKYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrd1a5WpkkKtnZEYu40em6fWP81B71vw12ZLfFKOQOLhZ9stBFCB2AmkuVIslDrGK
-	 NvmeV+zRG/N5OY3GD2fv4naUxq+fBFKyQsntsAu4wY6JPuKssKNYiI6NOqXrBaAYax
-	 i1oV7wB5KHU/+jUC5zsvQeiYNU35M8tC3vZ9TMo0=
+	b=kU+0iiZyAdqPK+1iT6elRtIOV7bziN9XdFxfvObsR8bTi58R9EvHE4t0IuW9ZZX6c
+	 wpUOkwqWpgXgmptZC4E5/fs5vd2xhFzqWEfbpw9qECejEYCiOirNEnVv2l4HX0976D
+	 6Z+klicwCGJXJ2OvdA9PMyIkkFhQxadEp+DUuy5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/369] net_sched: act_ctinfo: use atomic64_t for three counters
-Date: Tue, 12 Aug 2025 19:26:41 +0200
-Message-ID: <20250812173018.686928607@linuxfoundation.org>
+Subject: [PATCH 6.12 131/369] Bluetooth: hci_sync: fix double free in hci_discovery_filter_clear()
+Date: Tue, 12 Aug 2025 19:27:08 +0200
+Message-ID: <20250812173019.698933451@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,104 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit d300335b4e18672913dd792ff9f49e6cccf41d26 ]
+[ Upstream commit 2935e556850e9c94d7a00adf14d3cd7fe406ac03 ]
 
-Commit 21c167aa0ba9 ("net/sched: act_ctinfo: use percpu stats")
-missed that stats_dscp_set, stats_dscp_error and stats_cpmark_set
-might be written (and read) locklessly.
+Function 'hci_discovery_filter_clear()' frees 'uuids' array and then
+sets it to NULL. There is a tiny chance of the following race:
 
-Use atomic64_t for these three fields, I doubt act_ctinfo is used
-heavily on big SMP hosts anyway.
+'hci_cmd_sync_work()'
 
-Fixes: 24ec483cec98 ("net: sched: Introduce act_ctinfo action")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://patch.msgid.link/20250709090204.797558-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ 'update_passive_scan_sync()'
+
+   'hci_update_passive_scan_sync()'
+
+     'hci_discovery_filter_clear()'
+       kfree(uuids);
+
+       <-------------------------preempted-------------------------------->
+                                           'start_service_discovery()'
+
+                                             'hci_discovery_filter_clear()'
+                                               kfree(uuids); // DOUBLE FREE
+
+       <-------------------------preempted-------------------------------->
+
+      uuids = NULL;
+
+To fix it let's add locking around 'kfree()' call and NULL pointer
+assignment. Otherwise the following backtrace fires:
+
+[ ] ------------[ cut here ]------------
+[ ] kernel BUG at mm/slub.c:547!
+[ ] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+[ ] CPU: 3 UID: 0 PID: 246 Comm: bluetoothd Tainted: G O 6.12.19-kernel #1
+[ ] Tainted: [O]=OOT_MODULE
+[ ] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ ] pc : __slab_free+0xf8/0x348
+[ ] lr : __slab_free+0x48/0x348
+...
+[ ] Call trace:
+[ ]  __slab_free+0xf8/0x348
+[ ]  kfree+0x164/0x27c
+[ ]  start_service_discovery+0x1d0/0x2c0
+[ ]  hci_sock_sendmsg+0x518/0x924
+[ ]  __sock_sendmsg+0x54/0x60
+[ ]  sock_write_iter+0x98/0xf8
+[ ]  do_iter_readv_writev+0xe4/0x1c8
+[ ]  vfs_writev+0x128/0x2b0
+[ ]  do_writev+0xfc/0x118
+[ ]  __arm64_sys_writev+0x20/0x2c
+[ ]  invoke_syscall+0x68/0xf0
+[ ]  el0_svc_common.constprop.0+0x40/0xe0
+[ ]  do_el0_svc+0x1c/0x28
+[ ]  el0_svc+0x30/0xd0
+[ ]  el0t_64_sync_handler+0x100/0x12c
+[ ]  el0t_64_sync+0x194/0x198
+[ ] Code: 8b0002e6 eb17031f 54fffbe1 d503201f (d4210000)
+[ ] ---[ end trace 0000000000000000 ]---
+
+Fixes: ad383c2c65a5 ("Bluetooth: hci_sync: Enable advertising when LL privacy is enabled")
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tc_act/tc_ctinfo.h |  6 +++---
- net/sched/act_ctinfo.c         | 19 +++++++++++--------
- 2 files changed, 14 insertions(+), 11 deletions(-)
+ include/net/bluetooth/hci_core.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/net/tc_act/tc_ctinfo.h b/include/net/tc_act/tc_ctinfo.h
-index f071c1d70a25..a04bcac7adf4 100644
---- a/include/net/tc_act/tc_ctinfo.h
-+++ b/include/net/tc_act/tc_ctinfo.h
-@@ -18,9 +18,9 @@ struct tcf_ctinfo_params {
- struct tcf_ctinfo {
- 	struct tc_action common;
- 	struct tcf_ctinfo_params __rcu *params;
--	u64 stats_dscp_set;
--	u64 stats_dscp_error;
--	u64 stats_cpmark_set;
-+	atomic64_t stats_dscp_set;
-+	atomic64_t stats_dscp_error;
-+	atomic64_t stats_cpmark_set;
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 3d1d7296aed9..df4af45f8603 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -29,6 +29,7 @@
+ #include <linux/idr.h>
+ #include <linux/leds.h>
+ #include <linux/rculist.h>
++#include <linux/spinlock.h>
+ #include <linux/srcu.h>
+ 
+ #include <net/bluetooth/hci.h>
+@@ -93,6 +94,7 @@ struct discovery_state {
+ 	u16			uuid_count;
+ 	u8			(*uuids)[16];
+ 	unsigned long		name_resolve_timeout;
++	spinlock_t		lock;
  };
  
- enum {
-diff --git a/net/sched/act_ctinfo.c b/net/sched/act_ctinfo.c
-index 5dd41a012110..ae571bfe84c7 100644
---- a/net/sched/act_ctinfo.c
-+++ b/net/sched/act_ctinfo.c
-@@ -44,9 +44,9 @@ static void tcf_ctinfo_dscp_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				ipv4_change_dsfield(ip_hdr(skb),
- 						    INET_ECN_MASK,
- 						    newdscp);
--				ca->stats_dscp_set++;
-+				atomic64_inc(&ca->stats_dscp_set);
- 			} else {
--				ca->stats_dscp_error++;
-+				atomic64_inc(&ca->stats_dscp_error);
- 			}
- 		}
- 		break;
-@@ -57,9 +57,9 @@ static void tcf_ctinfo_dscp_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				ipv6_change_dsfield(ipv6_hdr(skb),
- 						    INET_ECN_MASK,
- 						    newdscp);
--				ca->stats_dscp_set++;
-+				atomic64_inc(&ca->stats_dscp_set);
- 			} else {
--				ca->stats_dscp_error++;
-+				atomic64_inc(&ca->stats_dscp_error);
- 			}
- 		}
- 		break;
-@@ -72,7 +72,7 @@ static void tcf_ctinfo_cpmark_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				  struct tcf_ctinfo_params *cp,
- 				  struct sk_buff *skb)
+ #define SUSPEND_NOTIFIER_TIMEOUT	msecs_to_jiffies(2000) /* 2 seconds */
+@@ -873,6 +875,7 @@ static inline void iso_recv(struct hci_conn *hcon, struct sk_buff *skb,
+ 
+ static inline void discovery_init(struct hci_dev *hdev)
  {
--	ca->stats_cpmark_set++;
-+	atomic64_inc(&ca->stats_cpmark_set);
- 	skb->mark = READ_ONCE(ct->mark) & cp->cpmarkmask;
++	spin_lock_init(&hdev->discovery.lock);
+ 	hdev->discovery.state = DISCOVERY_STOPPED;
+ 	INIT_LIST_HEAD(&hdev->discovery.all);
+ 	INIT_LIST_HEAD(&hdev->discovery.unknown);
+@@ -887,8 +890,11 @@ static inline void hci_discovery_filter_clear(struct hci_dev *hdev)
+ 	hdev->discovery.report_invalid_rssi = true;
+ 	hdev->discovery.rssi = HCI_RSSI_INVALID;
+ 	hdev->discovery.uuid_count = 0;
++
++	spin_lock(&hdev->discovery.lock);
+ 	kfree(hdev->discovery.uuids);
+ 	hdev->discovery.uuids = NULL;
++	spin_unlock(&hdev->discovery.lock);
  }
  
-@@ -323,15 +323,18 @@ static int tcf_ctinfo_dump(struct sk_buff *skb, struct tc_action *a,
- 	}
- 
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_DSCP_SET,
--			      ci->stats_dscp_set, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_dscp_set),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
- 
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_DSCP_ERROR,
--			      ci->stats_dscp_error, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_dscp_error),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
- 
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_CPMARK_SET,
--			      ci->stats_cpmark_set, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_cpmark_set),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
- 
- 	spin_unlock_bh(&ci->tcf_lock);
+ bool hci_discovery_active(struct hci_dev *hdev);
 -- 
 2.39.5
 
