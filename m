@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AB46BB5B;
-	Tue, 12 Aug 2025 18:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CB01474CC;
+	Tue, 12 Aug 2025 18:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024730; cv=none; b=nbGM/nk90k7TjAtU2FhHQxS2ScyNK22VzhzxNmwiAybwaS+UQwRy0fSyl4ZHDCt84AnOKKZ+QePpV4f97gd/919s6/tf0aha24ycveT6QoWRpyQaX5HqaxlIdzu89SgxuTSFRFNaTWdvmCJ4P5e0V4L25j0Oz3VC4hCGxXS4VoA=
+	t=1755024734; cv=none; b=T2yhoMv5wf1RL8R/M+jwx5NL2XIdWbQoo6w8qA9AHdaISfOlShcoQG8fWcq7ZBlV8NgeG9SrwIrSiihNWnr2kzuQUCkNhBT+6gHA+o/JsP+eomG/jVgOdE2E3VB6Hf4FAWOC/GrQfK9k0Z8txiZJDJesBBYlI/hoCbTYXln/kPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024730; c=relaxed/simple;
-	bh=ru5eiNjFUL5hovvYOj5oJRvbDH1LVhb9YsmMg8mNbMI=;
+	s=arc-20240116; t=1755024734; c=relaxed/simple;
+	bh=0IokeVgNMoUn1DNxw+1rt3mKXIQ9Qjn7x30rlOCj9Bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i5wC6QILgJ4OvfvdraeOwCtDhhe7oSmMVJIBoFN5tkF0WcMP4o6HUvL26W13+LSzDq+yvngj9JX81gHdKPUpFQG6F/EwijZZiYkQNS98HB4Zq2gNipgqxFaWQBR6lO73hk6eExrQqLtD1fUFGtIQJPNFB5XbJNQH7ujnoPRtosE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mj0sfxX4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DOCMz2ChTVQnWMBLolEF0EycXDsR+4PnhpkAGPbdEP59c/EVLAzf3oEKpiklbn3YdcF41orSiTSBMlNTkWm5M86A8htcXA2EHtMcOjlddmB03Wvc5ToQ7kOtqT6QadTXZsbAjLbL5DMSmgamk5WJiN2DIuQi6G/SoO9bBkBs7og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tySQVlRA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mj0sfxX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349CDC4CEF0;
-	Tue, 12 Aug 2025 18:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tySQVlRA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A78C4CEF0;
+	Tue, 12 Aug 2025 18:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024730;
-	bh=ru5eiNjFUL5hovvYOj5oJRvbDH1LVhb9YsmMg8mNbMI=;
+	s=korg; t=1755024734;
+	bh=0IokeVgNMoUn1DNxw+1rt3mKXIQ9Qjn7x30rlOCj9Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mj0sfxX4IjGXSkbvMryFPSkHO2+aFt5AGuHtcsgvpzMk3k8Jg1a2QBk5X/9a56V95
-	 DCnbjPCvT8Mp4ebBlgfNPTGbyc67/KuLrfd3xUdbv/pcoXXfg/swv8o1AZm1ui1+ae
-	 mL/soN4V9FvMbmYiZWsJ+lK11Oik4drCh2jRkUMg=
+	b=tySQVlRA3OcnhXJQ3id5CWYFK3QfHLzuPDffx+Q7Jv9T7Iy/bZ6vUpVK+HF7huvat
+	 EraLkw3do5vCNlKhuix1S+MmcAQfrGum1+xv6O0mbsS9ru7YyxBD9d/doWfcSGdByW
+	 +CDdH604wyVpF/mLAnnhBgfgRwjUDeWoV/6VCbQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Lee <ryan.lee@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Stanley Chu <yschu@nuvoton.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 453/627] apparmor: ensure WB_HISTORY_SIZE value is a power of 2
-Date: Tue, 12 Aug 2025 19:32:28 +0200
-Message-ID: <20250812173437.618640349@linuxfoundation.org>
+Subject: [PATCH 6.16 462/627] i3c: master: svc: Fix npcm845 FIFO_EMPTY quirk
+Date: Tue, 12 Aug 2025 19:32:37 +0200
+Message-ID: <20250812173439.401028636@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,53 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Lee <ryan.lee@canonical.com>
+From: Stanley Chu <yschu@nuvoton.com>
 
-[ Upstream commit 6c055e62560b958354625604293652753d82bcae ]
+[ Upstream commit bc4a09d8e79cadccdd505f47b01903a80bc666e7 ]
 
-WB_HISTORY_SIZE was defined to be a value not a power of 2, despite a
-comment in the declaration of struct match_workbuf stating it is and a
-modular arithmetic usage in the inc_wb_pos macro assuming that it is. Bump
-WB_HISTORY_SIZE's value up to 32 and add a BUILD_BUG_ON_NOT_POWER_OF_2
-line to ensure that any future changes to the value of WB_HISTORY_SIZE
-respect this requirement.
+In a private write transfer, the driver pre-fills the FIFO to work around
+the FIFO_EMPTY quirk. However, if an IBIWON event occurs, the hardware
+emits a NACK and the driver initiates a retry. During the retry, driver
+attempts to pre-fill the FIFO again if there is remaining data, but since
+the FIFO is already full, this leads to data loss.
 
-Fixes: 136db994852a ("apparmor: increase left match history buffer size")
+Check available space in FIFO to prevent overflow.
 
-Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: 4008a74e0f9b ("i3c: master: svc: Fix npcm845 FIFO empty issue")
+Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+Link: https://lore.kernel.org/r/20250730003719.1825593-1-yschu@nuvoton.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/match.h | 3 ++-
- security/apparmor/match.c         | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/i3c/master/svc-i3c-master.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/security/apparmor/include/match.h b/security/apparmor/include/match.h
-index 536ce3abd598..b45fc39fa837 100644
---- a/security/apparmor/include/match.h
-+++ b/security/apparmor/include/match.h
-@@ -137,7 +137,8 @@ aa_state_t aa_dfa_matchn_until(struct aa_dfa *dfa, aa_state_t start,
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index 7e1a7cb94b43..ece563353895 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -104,6 +104,7 @@
+ #define   SVC_I3C_MDATACTRL_TXTRIG_FIFO_NOT_FULL GENMASK(5, 4)
+ #define   SVC_I3C_MDATACTRL_RXTRIG_FIFO_NOT_EMPTY 0
+ #define   SVC_I3C_MDATACTRL_RXCOUNT(x) FIELD_GET(GENMASK(28, 24), (x))
++#define   SVC_I3C_MDATACTRL_TXCOUNT(x) FIELD_GET(GENMASK(20, 16), (x))
+ #define   SVC_I3C_MDATACTRL_TXFULL BIT(30)
+ #define   SVC_I3C_MDATACTRL_RXEMPTY BIT(31)
  
- void aa_dfa_free_kref(struct kref *kref);
+@@ -1304,14 +1305,19 @@ static int svc_i3c_master_xfer(struct svc_i3c_master *master,
+ 		 * FIFO start filling as soon as possible after EmitStartAddr.
+ 		 */
+ 		if (svc_has_quirk(master, SVC_I3C_QUIRK_FIFO_EMPTY) && !rnw && xfer_len) {
+-			u32 end = xfer_len > SVC_I3C_FIFO_SIZE ? 0 : SVC_I3C_MWDATAB_END;
+-			u32 len = min_t(u32, xfer_len, SVC_I3C_FIFO_SIZE);
+-
+-			writesb(master->regs + SVC_I3C_MWDATAB1, out, len - 1);
+-			/* Mark END bit if this is the last byte */
+-			writel(out[len - 1] | end, master->regs + SVC_I3C_MWDATAB);
+-			xfer_len -= len;
+-			out += len;
++			u32 space, end, len;
++
++			reg = readl(master->regs + SVC_I3C_MDATACTRL);
++			space = SVC_I3C_FIFO_SIZE - SVC_I3C_MDATACTRL_TXCOUNT(reg);
++			if (space) {
++				end = xfer_len > space ? 0 : SVC_I3C_MWDATAB_END;
++				len = min_t(u32, xfer_len, space);
++				writesb(master->regs + SVC_I3C_MWDATAB1, out, len - 1);
++				/* Mark END bit if this is the last byte */
++				writel(out[len - 1] | end, master->regs + SVC_I3C_MWDATAB);
++				xfer_len -= len;
++				out += len;
++			}
+ 		}
  
--#define WB_HISTORY_SIZE 24
-+/* This needs to be a power of 2 */
-+#define WB_HISTORY_SIZE 32
- struct match_workbuf {
- 	unsigned int count;
- 	unsigned int pos;
-diff --git a/security/apparmor/match.c b/security/apparmor/match.c
-index f2d9c57f8794..1ceabde550f2 100644
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -681,6 +681,7 @@ aa_state_t aa_dfa_matchn_until(struct aa_dfa *dfa, aa_state_t start,
- 
- #define inc_wb_pos(wb)						\
- do {								\
-+	BUILD_BUG_ON_NOT_POWER_OF_2(WB_HISTORY_SIZE);			\
- 	wb->pos = (wb->pos + 1) & (WB_HISTORY_SIZE - 1);		\
- 	wb->len = (wb->len + 1) & (WB_HISTORY_SIZE - 1);		\
- } while (0)
+ 		ret = readl_poll_timeout(master->regs + SVC_I3C_MSTATUS, reg,
 -- 
 2.39.5
 
