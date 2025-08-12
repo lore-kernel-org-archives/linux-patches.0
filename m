@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3412D1A3029;
-	Tue, 12 Aug 2025 19:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF7C1A3029;
+	Tue, 12 Aug 2025 19:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025718; cv=none; b=RJBLBwsFxlwUL3SbLaMxHycIUmWLliuJeFKrvNmoUc0ACWg/GYel2Ce5MWMOXiLSDkFN19XxaHrrVetAmvWqZtj3AzNcn2YBHpZKxDnhnnRrocv91Xil3oOKUlru+QcvB78z7zJrjPOxMOoZCbiYkFnW/W6YRu7vXmqWuKS2GmQ=
+	t=1755025721; cv=none; b=OSuGmzrjqYE0Xt1Y82kKMzi/fkwXGnyvUY99cp4SsJ+pEBqTINdAMAhDIARFo38bo23aVXV4OSSbNGL8Ty22KOp4vRjzrQogzojf5xggK5oSmqgdihj4bcWhR7kHO4dcmk8Y0pQh0sIr6ZVy6jDykkHfjYvjArOGYXLypEAz9yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025718; c=relaxed/simple;
-	bh=c6ldLmrVZ39GgE0bdjH6f6iNhXQfinWwWbhmzO/AOkw=;
+	s=arc-20240116; t=1755025721; c=relaxed/simple;
+	bh=Vz0CUNvXdpuotyKNUe6CjLED01GBBM+smdhp7+VbeB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GtSakziEamkvzPklP5Y6xIqlHjh9dpIJXZmamQDAoEM0Xl1BeJj2QA4ZaIn+WiQO3VYhORG1q7KqmsnqmDzAM9FILLv03x6nvQFNCqwHoutlUfcen+EHlyodK5EuyjG6BldIFF6baraoYvBAXkPsLwqaxw9eQuFjZVEmxeVT4Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocgGSsB5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dDBsjhJMqHxMwlrN1ALwmi4bVw9eYWRNW+9/J5WszQcSj2460IkPaJz0CQRLLT9sc1CVrkdSYf0LPgs47JwVGKiBFihQ/xlA33cKOYmtruJZ35eVF0vMB3sKdYZI+dMDwdJi8JtRaybRIKuPqk9EV9bXMH+RLY56ZRT0GVVXC+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOLbk37X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocgGSsB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4008FC4CEF0;
-	Tue, 12 Aug 2025 19:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOLbk37X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B583BC4CEF0;
+	Tue, 12 Aug 2025 19:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025717;
-	bh=c6ldLmrVZ39GgE0bdjH6f6iNhXQfinWwWbhmzO/AOkw=;
+	s=korg; t=1755025721;
+	bh=Vz0CUNvXdpuotyKNUe6CjLED01GBBM+smdhp7+VbeB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocgGSsB54XdIZ/18jkwQ6GLK8Vr4RPf0QMIZdj6+PFWBXPtmhNchDkdbUpYS90UfY
-	 JGCVm7mdFkl+uHyxcMd5NpIw98UtNo+Ws08ljwZ9OLNxeMP5t1Sz9AOSaqC5UUq9Mk
-	 O0y8s6fRRAtWTCj5BuPO5505uCirypUiFk8t166g=
+	b=LOLbk37XPPif8o12Iqqymsi0g/FYIsupa+Xy7Bvt3Aty1sF7HCOOBKzKlLH0rL7ER
+	 BiHFLgkcIHKu9SUH25QlnvU7p/dMAGLKz2bCPYZAvxg1phBLCacmRSog19cfNisl6h
+	 JNO0ZZXea2zNPvzesO1gYVYOnI5ysIsl2e0HVGoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@resnulli.us>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot+705c61d60b091ef42c04@syzkaller.appspotmail.com,
-	syzbot+71fd22ae4b81631e22fd@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 124/480] team: replace team lock with rtnl lock
-Date: Tue, 12 Aug 2025 19:45:32 +0200
-Message-ID: <20250812174402.640222918@linuxfoundation.org>
+Subject: [PATCH 6.15 125/480] wifi: ath11k: clear initialized flag for deinit-ed srng lists
+Date: Tue, 12 Aug 2025 19:45:33 +0200
+Message-ID: <20250812174402.681306928@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -55,423 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit bfb4fb77f9a8ce33ce357224569eae5564eec573 ]
+[ Upstream commit a5b46aa7cf5f05c213316a018e49a8e086efd98e ]
 
-syszbot reports various ordering issues for lower instance locks and
-team lock. Switch to using rtnl lock for protecting team device,
-similar to bonding. Based on the patch by Tetsuo Handa.
+In a number of cases we see kernel panics on resume due
+to ath11k kernel page fault, which happens under the
+following circumstances:
 
-Cc: Jiri Pirko <jiri@resnulli.us>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: syzbot+705c61d60b091ef42c04@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=705c61d60b091ef42c04
-Reported-by: syzbot+71fd22ae4b81631e22fd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=71fd22ae4b81631e22fd
-Fixes: 6b1d3c5f675c ("team: grab team lock during team_change_rx_flags")
-Link: https://lkml.kernel.org/r/ZoZ2RH9BcahEB9Sb@nanopsycho.orion
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250623153147.3413631-1-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+1) First ath11k_hal_dump_srng_stats() call
+
+ Last interrupt received for each group:
+ ath11k_pci 0000:01:00.0: group_id 0 22511ms before
+ ath11k_pci 0000:01:00.0: group_id 1 14440788ms before
+ [..]
+ ath11k_pci 0000:01:00.0: failed to receive control response completion, polling..
+ ath11k_pci 0000:01:00.0: Service connect timeout
+ ath11k_pci 0000:01:00.0: failed to connect to HTT: -110
+ ath11k_pci 0000:01:00.0: failed to start core: -110
+ ath11k_pci 0000:01:00.0: firmware crashed: MHI_CB_EE_RDDM
+ ath11k_pci 0000:01:00.0: already resetting count 2
+ ath11k_pci 0000:01:00.0: failed to wait wlan mode request (mode 4): -110
+ ath11k_pci 0000:01:00.0: qmi failed to send wlan mode off: -110
+ ath11k_pci 0000:01:00.0: failed to reconfigure driver on crash recovery
+ [..]
+
+2) At this point reconfiguration fails (we have 2 resets) and
+  ath11k_core_reconfigure_on_crash() calls ath11k_hal_srng_deinit()
+  which destroys srng lists.  However, it does not reset per-list
+  ->initialized flag.
+
+3) Second ath11k_hal_dump_srng_stats() call sees stale ->initialized
+  flag and attempts to dump srng stats:
+
+ Last interrupt received for each group:
+ ath11k_pci 0000:01:00.0: group_id 0 66785ms before
+ ath11k_pci 0000:01:00.0: group_id 1 14485062ms before
+ ath11k_pci 0000:01:00.0: group_id 2 14485062ms before
+ ath11k_pci 0000:01:00.0: group_id 3 14485062ms before
+ ath11k_pci 0000:01:00.0: group_id 4 14780845ms before
+ ath11k_pci 0000:01:00.0: group_id 5 14780845ms before
+ ath11k_pci 0000:01:00.0: group_id 6 14485062ms before
+ ath11k_pci 0000:01:00.0: group_id 7 66814ms before
+ ath11k_pci 0000:01:00.0: group_id 8 68997ms before
+ ath11k_pci 0000:01:00.0: group_id 9 67588ms before
+ ath11k_pci 0000:01:00.0: group_id 10 69511ms before
+ BUG: unable to handle page fault for address: ffffa007404eb010
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 100000067 P4D 100000067 PUD 10022d067 PMD 100b01067 PTE 0
+ Oops: 0000 [#1] PREEMPT SMP NOPTI
+ RIP: 0010:ath11k_hal_dump_srng_stats+0x2b4/0x3b0 [ath11k]
+ Call Trace:
+ <TASK>
+ ? __die_body+0xae/0xb0
+ ? page_fault_oops+0x381/0x3e0
+ ? exc_page_fault+0x69/0xa0
+ ? asm_exc_page_fault+0x22/0x30
+ ? ath11k_hal_dump_srng_stats+0x2b4/0x3b0 [ath11k (HASH:6cea 4)]
+ ath11k_qmi_driver_event_work+0xbd/0x1050 [ath11k (HASH:6cea 4)]
+ worker_thread+0x389/0x930
+ kthread+0x149/0x170
+
+Clear per-list ->initialized flag in ath11k_hal_srng_deinit().
+
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Fixes: 5118935b1bc2 ("ath11k: dump SRNG stats during FW assert")
+Link: https://patch.msgid.link/20250612084551.702803-1-senozhatsky@chromium.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c              | 96 +++++++++++------------
- drivers/net/team/team_mode_activebackup.c |  3 +-
- drivers/net/team/team_mode_loadbalance.c  | 13 ++-
- include/linux/if_team.h                   |  3 -
- 4 files changed, 50 insertions(+), 65 deletions(-)
+ drivers/net/wireless/ath/ath11k/hal.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index b75ceb90359f..94fc7eec4fca 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -933,7 +933,7 @@ static bool team_port_find(const struct team *team,
-  * Enable/disable port by adding to enabled port hashlist and setting
-  * port->index (Might be racy so reader could see incorrect ifindex when
-  * processing a flying packet, but that is not a problem). Write guarded
-- * by team->lock.
-+ * by RTNL.
-  */
- static void team_port_enable(struct team *team,
- 			     struct team_port *port)
-@@ -1660,8 +1660,6 @@ static int team_init(struct net_device *dev)
- 		goto err_options_register;
- 	netif_carrier_off(dev);
- 
--	lockdep_register_key(&team->team_lock_key);
--	__mutex_init(&team->lock, "team->team_lock_key", &team->team_lock_key);
- 	netdev_lockdep_set_classes(dev);
- 
- 	return 0;
-@@ -1682,7 +1680,8 @@ static void team_uninit(struct net_device *dev)
- 	struct team_port *port;
- 	struct team_port *tmp;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry_safe(port, tmp, &team->port_list, list)
- 		team_port_del(team, port->dev);
- 
-@@ -1691,9 +1690,7 @@ static void team_uninit(struct net_device *dev)
- 	team_mcast_rejoin_fini(team);
- 	team_notify_peers_fini(team);
- 	team_queue_override_fini(team);
--	mutex_unlock(&team->lock);
- 	netdev_change_features(dev);
--	lockdep_unregister_key(&team->team_lock_key);
- }
- 
- static void team_destructor(struct net_device *dev)
-@@ -1778,7 +1775,8 @@ static void team_change_rx_flags(struct net_device *dev, int change)
- 	struct team_port *port;
- 	int inc;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry(port, &team->port_list, list) {
- 		if (change & IFF_PROMISC) {
- 			inc = dev->flags & IFF_PROMISC ? 1 : -1;
-@@ -1789,7 +1787,6 @@ static void team_change_rx_flags(struct net_device *dev, int change)
- 			dev_set_allmulti(port->dev, inc);
- 		}
- 	}
--	mutex_unlock(&team->lock);
- }
- 
- static void team_set_rx_mode(struct net_device *dev)
-@@ -1811,14 +1808,14 @@ static int team_set_mac_address(struct net_device *dev, void *p)
- 	struct team *team = netdev_priv(dev);
- 	struct team_port *port;
- 
-+	ASSERT_RTNL();
-+
- 	if (dev->type == ARPHRD_ETHER && !is_valid_ether_addr(addr->sa_data))
- 		return -EADDRNOTAVAIL;
- 	dev_addr_set(dev, addr->sa_data);
--	mutex_lock(&team->lock);
- 	list_for_each_entry(port, &team->port_list, list)
- 		if (team->ops.port_change_dev_addr)
- 			team->ops.port_change_dev_addr(team, port);
--	mutex_unlock(&team->lock);
- 	return 0;
- }
- 
-@@ -1828,11 +1825,8 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
- 	struct team_port *port;
- 	int err;
- 
--	/*
--	 * Alhough this is reader, it's guarded by team lock. It's not possible
--	 * to traverse list in reverse under rcu_read_lock
--	 */
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	team->port_mtu_change_allowed = true;
- 	list_for_each_entry(port, &team->port_list, list) {
- 		err = dev_set_mtu(port->dev, new_mtu);
-@@ -1843,7 +1837,6 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
- 		}
- 	}
- 	team->port_mtu_change_allowed = false;
--	mutex_unlock(&team->lock);
- 
- 	WRITE_ONCE(dev->mtu, new_mtu);
- 
-@@ -1853,7 +1846,6 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
- 	list_for_each_entry_continue_reverse(port, &team->port_list, list)
- 		dev_set_mtu(port->dev, dev->mtu);
- 	team->port_mtu_change_allowed = false;
--	mutex_unlock(&team->lock);
- 
- 	return err;
- }
-@@ -1903,24 +1895,19 @@ static int team_vlan_rx_add_vid(struct net_device *dev, __be16 proto, u16 vid)
- 	struct team_port *port;
- 	int err;
- 
--	/*
--	 * Alhough this is reader, it's guarded by team lock. It's not possible
--	 * to traverse list in reverse under rcu_read_lock
--	 */
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry(port, &team->port_list, list) {
- 		err = vlan_vid_add(port->dev, proto, vid);
- 		if (err)
- 			goto unwind;
- 	}
--	mutex_unlock(&team->lock);
- 
- 	return 0;
- 
- unwind:
- 	list_for_each_entry_continue_reverse(port, &team->port_list, list)
- 		vlan_vid_del(port->dev, proto, vid);
--	mutex_unlock(&team->lock);
- 
- 	return err;
- }
-@@ -1930,10 +1917,10 @@ static int team_vlan_rx_kill_vid(struct net_device *dev, __be16 proto, u16 vid)
- 	struct team *team = netdev_priv(dev);
- 	struct team_port *port;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry(port, &team->port_list, list)
- 		vlan_vid_del(port->dev, proto, vid);
--	mutex_unlock(&team->lock);
- 
- 	return 0;
- }
-@@ -1955,9 +1942,9 @@ static void team_netpoll_cleanup(struct net_device *dev)
+diff --git a/drivers/net/wireless/ath/ath11k/hal.c b/drivers/net/wireless/ath/ath11k/hal.c
+index 8cb1505a5a0c..cab11a35f911 100644
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -1346,6 +1346,10 @@ EXPORT_SYMBOL(ath11k_hal_srng_init);
+ void ath11k_hal_srng_deinit(struct ath11k_base *ab)
  {
- 	struct team *team = netdev_priv(dev);
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
+ 	struct ath11k_hal *hal = &ab->hal;
++	int i;
 +
- 	__team_netpoll_cleanup(team);
--	mutex_unlock(&team->lock);
- }
++	for (i = 0; i < HAL_SRNG_RING_ID_MAX; i++)
++		ab->hal.srng_list[i].initialized = 0;
  
- static int team_netpoll_setup(struct net_device *dev)
-@@ -1966,7 +1953,8 @@ static int team_netpoll_setup(struct net_device *dev)
- 	struct team_port *port;
- 	int err = 0;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry(port, &team->port_list, list) {
- 		err = __team_port_enable_netpoll(port);
- 		if (err) {
-@@ -1974,7 +1962,6 @@ static int team_netpoll_setup(struct net_device *dev)
- 			break;
- 		}
- 	}
--	mutex_unlock(&team->lock);
- 	return err;
- }
- #endif
-@@ -1985,9 +1972,9 @@ static int team_add_slave(struct net_device *dev, struct net_device *port_dev,
- 	struct team *team = netdev_priv(dev);
- 	int err;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	err = team_port_add(team, port_dev, extack);
--	mutex_unlock(&team->lock);
- 
- 	if (!err)
- 		netdev_change_features(dev);
-@@ -2000,18 +1987,13 @@ static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
- 	struct team *team = netdev_priv(dev);
- 	int err;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	err = team_port_del(team, port_dev);
--	mutex_unlock(&team->lock);
- 
- 	if (err)
- 		return err;
- 
--	if (netif_is_team_master(port_dev)) {
--		lockdep_unregister_key(&team->team_lock_key);
--		lockdep_register_key(&team->team_lock_key);
--		lockdep_set_class(&team->lock, &team->team_lock_key);
--	}
- 	netdev_change_features(dev);
- 
- 	return err;
-@@ -2304,9 +2286,10 @@ int team_nl_noop_doit(struct sk_buff *skb, struct genl_info *info)
- static struct team *team_nl_team_get(struct genl_info *info)
- {
- 	struct net *net = genl_info_net(info);
--	int ifindex;
- 	struct net_device *dev;
--	struct team *team;
-+	int ifindex;
-+
-+	ASSERT_RTNL();
- 
- 	if (!info->attrs[TEAM_ATTR_TEAM_IFINDEX])
- 		return NULL;
-@@ -2318,14 +2301,11 @@ static struct team *team_nl_team_get(struct genl_info *info)
- 		return NULL;
- 	}
- 
--	team = netdev_priv(dev);
--	mutex_lock(&team->lock);
--	return team;
-+	return netdev_priv(dev);
- }
- 
- static void team_nl_team_put(struct team *team)
- {
--	mutex_unlock(&team->lock);
- 	dev_put(team->dev);
- }
- 
-@@ -2515,9 +2495,13 @@ int team_nl_options_get_doit(struct sk_buff *skb, struct genl_info *info)
- 	int err;
- 	LIST_HEAD(sel_opt_inst_list);
- 
-+	rtnl_lock();
-+
- 	team = team_nl_team_get(info);
--	if (!team)
--		return -EINVAL;
-+	if (!team) {
-+		err = -EINVAL;
-+		goto rtnl_unlock;
-+	}
- 
- 	list_for_each_entry(opt_inst, &team->option_inst_list, list)
- 		list_add_tail(&opt_inst->tmp_list, &sel_opt_inst_list);
-@@ -2527,6 +2511,9 @@ int team_nl_options_get_doit(struct sk_buff *skb, struct genl_info *info)
- 
- 	team_nl_team_put(team);
- 
-+rtnl_unlock:
-+	rtnl_unlock();
-+
- 	return err;
- }
- 
-@@ -2805,15 +2792,22 @@ int team_nl_port_list_get_doit(struct sk_buff *skb,
- 	struct team *team;
- 	int err;
- 
-+	rtnl_lock();
-+
- 	team = team_nl_team_get(info);
--	if (!team)
--		return -EINVAL;
-+	if (!team) {
-+		err = -EINVAL;
-+		goto rtnl_unlock;
-+	}
- 
- 	err = team_nl_send_port_list_get(team, info->snd_portid, info->snd_seq,
- 					 NLM_F_ACK, team_nl_send_unicast, NULL);
- 
- 	team_nl_team_put(team);
- 
-+rtnl_unlock:
-+	rtnl_unlock();
-+
- 	return err;
- }
- 
-@@ -2961,11 +2955,9 @@ static void __team_port_change_port_removed(struct team_port *port)
- 
- static void team_port_change_check(struct team_port *port, bool linkup)
- {
--	struct team *team = port->team;
-+	ASSERT_RTNL();
- 
--	mutex_lock(&team->lock);
- 	__team_port_change_check(port, linkup);
--	mutex_unlock(&team->lock);
- }
- 
- 
-diff --git a/drivers/net/team/team_mode_activebackup.c b/drivers/net/team/team_mode_activebackup.c
-index e0f599e2a51d..1c3336c7a1b2 100644
---- a/drivers/net/team/team_mode_activebackup.c
-+++ b/drivers/net/team/team_mode_activebackup.c
-@@ -67,8 +67,7 @@ static void ab_active_port_get(struct team *team, struct team_gsetter_ctx *ctx)
- {
- 	struct team_port *active_port;
- 
--	active_port = rcu_dereference_protected(ab_priv(team)->active_port,
--						lockdep_is_held(&team->lock));
-+	active_port = rtnl_dereference(ab_priv(team)->active_port);
- 	if (active_port)
- 		ctx->data.u32_val = active_port->dev->ifindex;
- 	else
-diff --git a/drivers/net/team/team_mode_loadbalance.c b/drivers/net/team/team_mode_loadbalance.c
-index 00f8989c29c0..b14538bde2f8 100644
---- a/drivers/net/team/team_mode_loadbalance.c
-+++ b/drivers/net/team/team_mode_loadbalance.c
-@@ -301,8 +301,7 @@ static int lb_bpf_func_set(struct team *team, struct team_gsetter_ctx *ctx)
- 	if (lb_priv->ex->orig_fprog) {
- 		/* Clear old filter data */
- 		__fprog_destroy(lb_priv->ex->orig_fprog);
--		orig_fp = rcu_dereference_protected(lb_priv->fp,
--						lockdep_is_held(&team->lock));
-+		orig_fp = rtnl_dereference(lb_priv->fp);
- 	}
- 
- 	rcu_assign_pointer(lb_priv->fp, fp);
-@@ -324,8 +323,7 @@ static void lb_bpf_func_free(struct team *team)
- 		return;
- 
- 	__fprog_destroy(lb_priv->ex->orig_fprog);
--	fp = rcu_dereference_protected(lb_priv->fp,
--				       lockdep_is_held(&team->lock));
-+	fp = rtnl_dereference(lb_priv->fp);
- 	bpf_prog_destroy(fp);
- }
- 
-@@ -335,8 +333,7 @@ static void lb_tx_method_get(struct team *team, struct team_gsetter_ctx *ctx)
- 	lb_select_tx_port_func_t *func;
- 	char *name;
- 
--	func = rcu_dereference_protected(lb_priv->select_tx_port_func,
--					 lockdep_is_held(&team->lock));
-+	func = rtnl_dereference(lb_priv->select_tx_port_func);
- 	name = lb_select_tx_port_get_name(func);
- 	BUG_ON(!name);
- 	ctx->data.str_val = name;
-@@ -478,7 +475,7 @@ static void lb_stats_refresh(struct work_struct *work)
- 	team = lb_priv_ex->team;
- 	lb_priv = get_lb_priv(team);
- 
--	if (!mutex_trylock(&team->lock)) {
-+	if (!rtnl_trylock()) {
- 		schedule_delayed_work(&lb_priv_ex->stats.refresh_dw, 0);
- 		return;
- 	}
-@@ -515,7 +512,7 @@ static void lb_stats_refresh(struct work_struct *work)
- 	schedule_delayed_work(&lb_priv_ex->stats.refresh_dw,
- 			      (lb_priv_ex->stats.refresh_interval * HZ) / 10);
- 
--	mutex_unlock(&team->lock);
-+	rtnl_unlock();
- }
- 
- static void lb_stats_refresh_interval_get(struct team *team,
-diff --git a/include/linux/if_team.h b/include/linux/if_team.h
-index cdc684e04a2f..ce97d891cf72 100644
---- a/include/linux/if_team.h
-+++ b/include/linux/if_team.h
-@@ -191,8 +191,6 @@ struct team {
- 
- 	const struct header_ops *header_ops_cache;
- 
--	struct mutex lock; /* used for overall locking, e.g. port lists write */
--
- 	/*
- 	 * List of enabled ports and their count
- 	 */
-@@ -223,7 +221,6 @@ struct team {
- 		atomic_t count_pending;
- 		struct delayed_work dw;
- 	} mcast_rejoin;
--	struct lock_class_key team_lock_key;
- 	long mode_priv[TEAM_MODE_PRIV_LONGS];
- };
- 
+ 	ath11k_hal_unregister_srng_key(ab);
+ 	ath11k_hal_free_cont_rdp(ab);
 -- 
 2.39.5
 
