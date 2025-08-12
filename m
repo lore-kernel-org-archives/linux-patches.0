@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A3E2E7BD4;
-	Tue, 12 Aug 2025 18:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BB11EBFE0;
+	Tue, 12 Aug 2025 18:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023027; cv=none; b=Yk5KC8zmWmwLdcC74fZehEALLEbi7HgWYeqJz/W7/P8BqjvhkRDu55sL6BzEZ/Av/blCnyZM+3r4DrsUe87lb6+V5iwlZPc3WqmOs6Q3vqZZtwYgEs3dLkYOTNdVK4SDZoWJhGENlLnlfQ0/x8PruS9+wxLIVrGHg2Yl2wF4NYo=
+	t=1755023031; cv=none; b=aGE6gwi9QKekE1GL9GLtQdba/r00J9Vwm5+NJzDunq4ZxYjjMNIxC84MbOmlLnIcOPvGfd0X58eHSUYTBm0p0ZlPluVq1aZF93gsuJpqh6SGmsXnUfFCqNi3708awWIFQXaTdqTXtVuFFh0C/GLGwPNCAmb+5mkkomQpJcujND0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023027; c=relaxed/simple;
-	bh=WW8n3AN53Q8PjOEncfCWbR4mMpJOWD41alg48nHginQ=;
+	s=arc-20240116; t=1755023031; c=relaxed/simple;
+	bh=5er8bQlFs2g5P3oNk1TbLTWjkWPkNo02hsO+/IGbn8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MekqzFOBnOpz4DWE4F/JbDEKeoX6tVOF0QIDglEdpsumlm8+DWioKjiybziBUiqHdAmM3PDshs4xUk8RNRqKVpe7ZjFhmegNnQPndooSdNnQOjgPrdsN4ESuyMFnSpZS29hF0B2UDdGrltCKEZhz0xXR0MUPVYAUos0UD5UhiTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuhBPHYs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BpMQmqfIcEvGqzWiF6d24hMp/EhzWC4UaxgeKfRQfc0WYYkJ06KlQjB32rqn6GwnL6MH3R82D0jrAqOPNPYIB/MkHFP1TwBIjB6QrcUARZ9sA5OzwioUY7V0H2metBMscxEayJ6z7/HUKPzBmGYT5HT+JBHidUywZgyQ7YMmZok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XotSHSiP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuhBPHYs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42997C4CEF7;
-	Tue, 12 Aug 2025 18:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XotSHSiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75EFC4CEF7;
+	Tue, 12 Aug 2025 18:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023027;
-	bh=WW8n3AN53Q8PjOEncfCWbR4mMpJOWD41alg48nHginQ=;
+	s=korg; t=1755023031;
+	bh=5er8bQlFs2g5P3oNk1TbLTWjkWPkNo02hsO+/IGbn8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuhBPHYsRUrEy3ONeqvPX0Qm1owPelBlO51Srr+1fjybBEIlZz97LVe90SfX5gMCe
-	 ghE4l1VBP4k+nljO6pPzFHHyW9y26/95ipCjQXadDlKXdacECqnu75TSkaszWGR3ma
-	 MOoBh350Ue3zHHVX/Tnsk9ZzcWHHqu5IkjcB7vDU=
+	b=XotSHSiPLs04Pz420Gddk7/V5jg5vwgYPGBSHQX7iez9VbAM23IN87kbdcCS9YoL9
+	 HLvsmt1deS25OL7cqTBfyAsRwsVkYVaNOBN8Z1mT/+zV92WVf3XQ53Plb1VsNhTLyq
+	 Maek+zJI1I0/uPPLD3WNw+VLtOF4sHWshX55Yr5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 329/369] vsock: Do not allow binding to VMADDR_PORT_ANY
-Date: Tue, 12 Aug 2025 19:30:26 +0200
-Message-ID: <20250812173029.089176088@linuxfoundation.org>
+	Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH 6.12 330/369] accel/ivpu: Fix reset_engine debugfs file logic
+Date: Tue, 12 Aug 2025 19:30:27 +0200
+Message-ID: <20250812173029.124708926@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,42 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Budimir Markovic <markovicbudimir@gmail.com>
+From: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
 
-commit aba0c94f61ec05315fa7815d21aefa4c87f6a9f4 upstream.
+commit 541a137254c71822e7a3ebdf8309c5a37b7de465 upstream.
 
-It is possible for a vsock to autobind to VMADDR_PORT_ANY. This can
-cause a use-after-free when a connection is made to the bound socket.
-The socket returned by accept() also has port VMADDR_PORT_ANY but is not
-on the list of unbound sockets. Binding it will result in an extra
-refcount decrement similar to the one fixed in fcdd2242c023 (vsock: Keep
-the binding until socket destruction).
+The current reset_engine implementation unconditionally resets
+all engines. Improve implementation to reset only the engine
+requested by the user space to allow more granular testing.
+Also use DEFINE_DEBUGFS_ATTRIBUTE() to simplify implementation.
 
-Modify the check in __vsock_bind_connectible() to also prevent binding
-to VMADDR_PORT_ANY.
+Same changes applied to resume_engine debugfs file for consistency.
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Budimir Markovic <markovicbudimir@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20250807041811.678-1-markovicbudimir@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
+Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240930195322.461209-22-jacek.lawrynowicz@linux.intel.com
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/af_vsock.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/accel/ivpu/ivpu_debugfs.c |   42 +++++++-------------------------------
+ 1 file changed, 8 insertions(+), 34 deletions(-)
 
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -689,7 +689,8 @@ static int __vsock_bind_connectible(stru
- 		unsigned int i;
+--- a/drivers/accel/ivpu/ivpu_debugfs.c
++++ b/drivers/accel/ivpu/ivpu_debugfs.c
+@@ -346,49 +346,23 @@ static const struct file_operations ivpu
+ 	.write = ivpu_force_recovery_fn,
+ };
  
- 		for (i = 0; i < MAX_PORT_RETRIES; i++) {
--			if (port <= LAST_RESERVED_PORT)
-+			if (port == VMADDR_PORT_ANY ||
-+			    port <= LAST_RESERVED_PORT)
- 				port = LAST_RESERVED_PORT + 1;
+-static ssize_t
+-ivpu_reset_engine_fn(struct file *file, const char __user *user_buf, size_t size, loff_t *pos)
++static int ivpu_reset_engine_fn(void *data, u64 val)
+ {
+-	struct ivpu_device *vdev = file->private_data;
++	struct ivpu_device *vdev = (struct ivpu_device *)data;
  
- 			new_addr.svm_port = port++;
+-	if (!size)
+-		return -EINVAL;
+-
+-	if (ivpu_jsm_reset_engine(vdev, DRM_IVPU_ENGINE_COMPUTE))
+-		return -ENODEV;
+-	if (ivpu_jsm_reset_engine(vdev, DRM_IVPU_ENGINE_COPY))
+-		return -ENODEV;
+-
+-	return size;
++	return ivpu_jsm_reset_engine(vdev, (u32)val);
+ }
+ 
+-static const struct file_operations ivpu_reset_engine_fops = {
+-	.owner = THIS_MODULE,
+-	.open = simple_open,
+-	.write = ivpu_reset_engine_fn,
+-};
++DEFINE_DEBUGFS_ATTRIBUTE(ivpu_reset_engine_fops, NULL, ivpu_reset_engine_fn, "0x%02llx\n");
+ 
+-static ssize_t
+-ivpu_resume_engine_fn(struct file *file, const char __user *user_buf, size_t size, loff_t *pos)
++static int ivpu_resume_engine_fn(void *data, u64 val)
+ {
+-	struct ivpu_device *vdev = file->private_data;
++	struct ivpu_device *vdev = (struct ivpu_device *)data;
+ 
+-	if (!size)
+-		return -EINVAL;
+-
+-	if (ivpu_jsm_hws_resume_engine(vdev, DRM_IVPU_ENGINE_COMPUTE))
+-		return -ENODEV;
+-	if (ivpu_jsm_hws_resume_engine(vdev, DRM_IVPU_ENGINE_COPY))
+-		return -ENODEV;
+-
+-	return size;
++	return ivpu_jsm_hws_resume_engine(vdev, (u32)val);
+ }
+ 
+-static const struct file_operations ivpu_resume_engine_fops = {
+-	.owner = THIS_MODULE,
+-	.open = simple_open,
+-	.write = ivpu_resume_engine_fn,
+-};
++DEFINE_DEBUGFS_ATTRIBUTE(ivpu_resume_engine_fops, NULL, ivpu_resume_engine_fn, "0x%02llx\n");
+ 
+ static int dct_active_get(void *data, u64 *active_percent)
+ {
 
 
