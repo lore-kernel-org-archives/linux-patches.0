@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4B42DE1E2;
-	Tue, 12 Aug 2025 17:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1C52F8BE7;
+	Tue, 12 Aug 2025 17:54:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021264; cv=none; b=tiyaPGGybRm3K7NqhgJlCS/fR0fuzCf9kK3NxXKYUT8GEJ5IGeh9kfId0ZS6KnQElJCt/Jse0q3w+21t+eifdtwahlhWbyWaoz3slr2rordDmtGxIyJOB8sr+08HlSsYBLMaLUeYB5duMco4wRCojurYh5zghqQ0BlJAcaHqXtA=
+	t=1755021267; cv=none; b=mu5CuOcw+i3s6Z5QiDoMNyDFrp4r4q47muGpA1fjm0oN/plv2g7ZgXiLyO4RXq6W0UmfxSLUJxxGaDxsB/n1ZnEN+/cIAUVpKK/nYJvLL9T2W7eYUo+MWG602bKBUtOPCM5KEoKJFQ1oJbnjzBkoe5YlaVLQtgTjBlJyzHkYhTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021264; c=relaxed/simple;
-	bh=vDhluTV0fGV2vVNKQAisHf1kJSJvYegP+6xWiAUOR1s=;
+	s=arc-20240116; t=1755021267; c=relaxed/simple;
+	bh=niDAzv1biZxFWkoc8dMuONFObFqIEKElBjjVrQmelmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mVKOFh3BGNXwgAKRzbeqhOrzQOqoPwHmVBrsQlNCtWHYw0R7QAZ90Ldlhqg6SUOD+2oDMUMPnaMGxvw7Cw8huyz9kbixQZvRSTUByL7NCBBvrs64qolhlQCV4zzHPQpk/ja6MG/GXpekyJYL9XIdA7Hb+CVDxh4jxqAdrC+A1YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2agAuGB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwrllfdJ3LImq79JHekuyLmU2oag1uacdScwX3NgLO8IPi28C3OPn3/3RGNDbwt7Yx550tH7wuFXfjjVzT6HdIBEaQXQpj1Z2WAxbuzJ5HQNRGdS4JMzdA//WlsqaP3YzE+vc+92KZSRlsIrNA1T3ZduhjkH0cRnGsXahEWPbTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSP5cbv4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2agAuGB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053C9C4CEF0;
-	Tue, 12 Aug 2025 17:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSP5cbv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E035C4CEF0;
+	Tue, 12 Aug 2025 17:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021264;
-	bh=vDhluTV0fGV2vVNKQAisHf1kJSJvYegP+6xWiAUOR1s=;
+	s=korg; t=1755021267;
+	bh=niDAzv1biZxFWkoc8dMuONFObFqIEKElBjjVrQmelmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q2agAuGBxhRlnnShH93Ll/u2rgZk1mPDBurZlrY6+1fWpAFRR++YsKeVI3C5E04w4
-	 MtIdtIZA3fhsFOtH1Y+JeUrYcAjJYlKm0I9Tx4qBnC2qPBmmmHNCBY+8RkCNAObUNj
-	 ARx15eJ5FeVqWmE5+NgjCKI1EmfIQHFBUmF1Rvas=
+	b=SSP5cbv4pwm0E3GU5EsCHjzAFbD5IkSRq3Ek/WYXK9vKfkOrkZHXyUfryBjMIjq3B
+	 SKYsAWBT/fgyFDN9YvraMVb/p1TSDC48Y8Hm6yPcmGHdgB+lI72OnaGO4MmU/UIKHJ
+	 HQWXvyj5q2URez3w7yw80p9tQOvQZbxDpzxeK11k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quang Le <quanglex97@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 237/253] net/packet: fix a race in packet_set_ring() and packet_notifier()
-Date: Tue, 12 Aug 2025 19:30:25 +0200
-Message-ID: <20250812172958.919964898@linuxfoundation.org>
+	Bert Karwatzki <spasswolf@web.de>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 086/262] wifi: mac80211: Check 802.11 encaps offloading in ieee80211_tx_h_select_key()
+Date: Tue, 12 Aug 2025 19:27:54 +0200
+Message-ID: <20250812172956.707989877@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,68 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quang Le <quanglex97@gmail.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-commit 01d3c8417b9c1b884a8a981a3b886da556512f36 upstream.
+[ Upstream commit 4037c468d1b3c508d69e6df0ef47fdee3d440e39 ]
 
-When packet_set_ring() releases po->bind_lock, another thread can
-run packet_notifier() and process an NETDEV_UP event.
+With 802.11 encapsulation offloading, ieee80211_tx_h_select_key() is
+called on 802.3 frames. In that case do not try to use skb data as
+valid 802.11 headers.
 
-This race and the fix are both similar to that of commit 15fe076edea7
-("net/packet: fix a race in packet_bind() and packet_notifier()").
-
-There too the packet_notifier NETDEV_UP event managed to run while a
-po->bind_lock critical section had to be temporarily released. And
-the fix was similarly to temporarily set po->num to zero to keep
-the socket unhooked until the lock is retaken.
-
-The po->bind_lock in packet_set_ring and packet_notifier precede the
-introduction of git history.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Quang Le <quanglex97@gmail.com>
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250801175423.2970334-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
+Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://patch.msgid.link/1af4b5b903a5fca5ebe67333d5854f93b2be5abe.1752765971.git.repk@triplefau.lt
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/mac80211/tx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4541,10 +4541,10 @@ static int packet_set_ring(struct sock *
- 	spin_lock(&po->bind_lock);
- 	was_running = po->running;
- 	num = po->num;
--	if (was_running) {
--		WRITE_ONCE(po->num, 0);
-+	WRITE_ONCE(po->num, 0);
-+	if (was_running)
- 		__unregister_prot_hook(sk, false);
--	}
-+
- 	spin_unlock(&po->bind_lock);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index f54792c4b910..e4797eb9c2ba 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -629,6 +629,12 @@ ieee80211_tx_h_select_key(struct ieee80211_tx_data *tx)
+ 	else
+ 		tx->key = NULL;
  
- 	synchronize_net();
-@@ -4576,10 +4576,10 @@ static int packet_set_ring(struct sock *
- 	mutex_unlock(&po->pg_vec_lock);
- 
- 	spin_lock(&po->bind_lock);
--	if (was_running) {
--		WRITE_ONCE(po->num, num);
-+	WRITE_ONCE(po->num, num);
-+	if (was_running)
- 		register_prot_hook(sk);
--	}
++	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) {
++		if (tx->key && tx->key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE)
++			info->control.hw_key = &tx->key->conf;
++		return TX_CONTINUE;
++	}
 +
- 	spin_unlock(&po->bind_lock);
- 	if (pg_vec && (po->tp_version > TPACKET_V2)) {
- 		/* Because we don't support block-based V3 on tx-ring */
+ 	if (tx->key) {
+ 		bool skip_hw = false;
+ 
+-- 
+2.39.5
+
 
 
