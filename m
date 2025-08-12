@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93473F9D2;
-	Tue, 12 Aug 2025 18:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F0A3F9D2;
+	Tue, 12 Aug 2025 18:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023049; cv=none; b=ojsIUIQoeW5oIt7vJGv+tn+mXg7ymP+PMcwRfD27MW4AfN0/0gLndMdNOR11d1Tqj4MjQR8Z5qvDySMYYnKNMicaBwwaUdnw1Ys6lLG656hFjOcjBVsvCtfu0eN5RBK7dYrkPJ+dW+fTePb5n7LY35CNMy2wB0x25wSTddArXwA=
+	t=1755023052; cv=none; b=AqxptYR3pQ/lgb/US5jHx5zk/3wjPU5vVHMQUFbOZoyu2dWHhiOZ7lo4sA825AdaWt9yCeuoQ8a8AnQ959BwG2ExTxoh3MMix+k7DxgxYAm0TBX4CIackpPeL+6LKNh6pxDicrDvGPYnXBcmZyx6+BGFiiwESh3JxNxHeDGVqxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023049; c=relaxed/simple;
-	bh=Wki39VWw+jbe7nsim1fK4rOSxmx+lJHi9yurrxGHoIo=;
+	s=arc-20240116; t=1755023052; c=relaxed/simple;
+	bh=0ZD/DGY1kDanOaAFB5w310dRrl4hfD/NGZRa2Qn9uis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9P6/Rd39vxET5DCIubKNuFgp/WX+PeNAvBScKtRA8et+pVXMlEoLDoepxFeQdAYnA1tl/knrJ1epAI2zaX5Sfzof1gZTN7D0VsiMwCFC9knySo+6i2tylI1GJ5uNq7icKXarp3k+Wft/k+BMt3KUklqAdKUN/S6+oW7TIBp+Ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpJ+T6a3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mp5nQLFStmXJ6lz5qgPKnh6ABrDB7UiXcvXnW9wdDYtNnY4iEFC2Ki0LSmeYh5CUAPzsTbdUdSwh3lawAKhXjtsIToydpFx4vJuXfV5kUF9HgWxwrVG7Ygbng7/2hXAevraxTECZ1wdrAhTNAQPat747y9Vxgy5h4+qq/wQUW2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpX88eFu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpJ+T6a3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577E5C4CEF0;
-	Tue, 12 Aug 2025 18:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpX88eFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B658AC4CEF0;
+	Tue, 12 Aug 2025 18:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023048;
-	bh=Wki39VWw+jbe7nsim1fK4rOSxmx+lJHi9yurrxGHoIo=;
+	s=korg; t=1755023052;
+	bh=0ZD/DGY1kDanOaAFB5w310dRrl4hfD/NGZRa2Qn9uis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fpJ+T6a3bYqkmnAkH8ATt5MACUxn/U2v6PHYXSZkZ4F9z83V2B58DDg1h+uGGgt7J
-	 5kvorA2ka1PvgdTpDX3AzT77hze23CXTvGPjdsvea1wfy+gmSOQFo0YDb38ZOGT5rv
-	 u8os7FYFmxBQtgrbrm580fkhkyDPogXEv+lni3YY=
+	b=IpX88eFuhsClEmHaXPefD5MzhgJ8cW4vGYTa+cwY3+vxR7+P0bo0/Y4PCmXvdGEEu
+	 lEqmixeYmxMCCjL7ShLNa2rxc+x0mElYJJrqlHW2f5JO0zO6svx3vGlPyHF8QYknZp
+	 NT0K3GYGymzb2lS69XKQFI4XeKW6dZK+ofKOaKJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
 	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Ville Syrjala <ville.syrjala@linux.intel.com>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.12 335/369] drm/i915/ddi: change intel_ddi_init_{dp, hdmi}_connector() return type
-Date: Tue, 12 Aug 2025 19:30:32 +0200
-Message-ID: <20250812173029.308804404@linuxfoundation.org>
+Subject: [PATCH 6.12 336/369] drm/i915/hdmi: propagate errors from intel_hdmi_init_connector()
+Date: Tue, 12 Aug 2025 19:30:33 +0200
+Message-ID: <20250812173029.343742807@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,103 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-commit e1980a977686d46dbf45687f7750f1c50d1d6cf8 upstream.
+commit 7fb56536fa37e23bc291d31c10e575d500f4fda7 upstream.
 
-The caller doesn't actually need the returned struct intel_connector;
-it's stored in the ->attached_connector of intel_dp and
-intel_hdmi. Switch to returning an int with 0 for success and negative
-errors codes to be able to indicate success even when we don't have a
-connector.
+Propagate errors from intel_hdmi_init_connector() to be able to handle
+them at callers. This is similar to intel_dp_init_connector().
 
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/8ef7fe838231919e85eaead640c51ad3e4550d27.1735568047.git.jani.nikula@intel.com
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
+Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Closes: https://lore.kernel.org/r/20241031105145.2140590-1-senozhatsky@chromium.org
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/cdaf9e32cc4880c46e120933438c37b4d87be12e.1735568047.git.jani.nikula@intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_ddi.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/i915/display/intel_hdmi.c |   10 ++++++----
+ drivers/gpu/drm/i915/display/intel_hdmi.h |    2 +-
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_ddi.c
-+++ b/drivers/gpu/drm/i915/display/intel_ddi.c
-@@ -4413,8 +4413,7 @@ static const struct drm_encoder_funcs in
- 	.late_register = intel_ddi_encoder_late_register,
- };
+--- a/drivers/gpu/drm/i915/display/intel_hdmi.c
++++ b/drivers/gpu/drm/i915/display/intel_hdmi.c
+@@ -3015,7 +3015,7 @@ void intel_infoframe_init(struct intel_d
+ 	}
+ }
  
--static struct intel_connector *
--intel_ddi_init_dp_connector(struct intel_digital_port *dig_port)
-+static int intel_ddi_init_dp_connector(struct intel_digital_port *dig_port)
+-void intel_hdmi_init_connector(struct intel_digital_port *dig_port,
++bool intel_hdmi_init_connector(struct intel_digital_port *dig_port,
+ 			       struct intel_connector *intel_connector)
  {
- 	struct drm_i915_private *i915 = to_i915(dig_port->base.base.dev);
- 	struct intel_connector *connector;
-@@ -4422,7 +4421,7 @@ intel_ddi_init_dp_connector(struct intel
+ 	struct intel_display *display = to_intel_display(dig_port);
+@@ -3033,17 +3033,17 @@ void intel_hdmi_init_connector(struct in
+ 		    intel_encoder->base.base.id, intel_encoder->base.name);
  
- 	connector = intel_connector_alloc();
- 	if (!connector)
--		return NULL;
-+		return -ENOMEM;
+ 	if (DISPLAY_VER(display) < 12 && drm_WARN_ON(dev, port == PORT_A))
+-		return;
++		return false;
  
- 	dig_port->dp.output_reg = DDI_BUF_CTL(port);
- 	if (DISPLAY_VER(i915) >= 14)
-@@ -4437,7 +4436,7 @@ intel_ddi_init_dp_connector(struct intel
+ 	if (drm_WARN(dev, dig_port->max_lanes < 4,
+ 		     "Not enough lanes (%d) for HDMI on [ENCODER:%d:%s]\n",
+ 		     dig_port->max_lanes, intel_encoder->base.base.id,
+ 		     intel_encoder->base.name))
+-		return;
++		return false;
  
- 	if (!intel_dp_init_connector(dig_port, connector)) {
- 		kfree(connector);
--		return NULL;
-+		return -EINVAL;
- 	}
+ 	ddc_pin = intel_hdmi_ddc_pin(intel_encoder);
+ 	if (!ddc_pin)
+-		return;
++		return false;
  
- 	if (dig_port->base.type == INTEL_OUTPUT_EDP) {
-@@ -4453,7 +4452,7 @@ intel_ddi_init_dp_connector(struct intel
- 		}
- 	}
- 
--	return connector;
-+	return 0;
+ 	drm_connector_init_with_ddc(dev, connector,
+ 				    &intel_hdmi_connector_funcs,
+@@ -3088,6 +3088,8 @@ void intel_hdmi_init_connector(struct in
+ 					   &conn_info);
+ 	if (!intel_hdmi->cec_notifier)
+ 		drm_dbg_kms(display->drm, "CEC notifier get failed\n");
++
++	return true;
  }
  
- static int intel_hdmi_reset_link(struct intel_encoder *encoder,
-@@ -4623,20 +4622,19 @@ static bool bdw_digital_port_connected(s
- 	return intel_de_read(dev_priv, GEN8_DE_PORT_ISR) & bit;
- }
+ /*
+--- a/drivers/gpu/drm/i915/display/intel_hdmi.h
++++ b/drivers/gpu/drm/i915/display/intel_hdmi.h
+@@ -22,7 +22,7 @@ struct intel_encoder;
+ struct intel_hdmi;
+ union hdmi_infoframe;
  
--static struct intel_connector *
--intel_ddi_init_hdmi_connector(struct intel_digital_port *dig_port)
-+static int intel_ddi_init_hdmi_connector(struct intel_digital_port *dig_port)
- {
- 	struct intel_connector *connector;
- 	enum port port = dig_port->base.port;
- 
- 	connector = intel_connector_alloc();
- 	if (!connector)
--		return NULL;
-+		return -ENOMEM;
- 
- 	dig_port->hdmi.hdmi_reg = DDI_BUF_CTL(port);
- 	intel_hdmi_init_connector(dig_port, connector);
- 
--	return connector;
-+	return 0;
- }
- 
- static bool intel_ddi_a_force_4_lanes(struct intel_digital_port *dig_port)
-@@ -5185,7 +5183,7 @@ void intel_ddi_init(struct intel_display
- 	intel_infoframe_init(dig_port);
- 
- 	if (init_dp) {
--		if (!intel_ddi_init_dp_connector(dig_port))
-+		if (intel_ddi_init_dp_connector(dig_port))
- 			goto err;
- 
- 		dig_port->hpd_pulse = intel_dp_hpd_pulse;
-@@ -5199,7 +5197,7 @@ void intel_ddi_init(struct intel_display
- 	 * but leave it just in case we have some really bad VBTs...
- 	 */
- 	if (encoder->type != INTEL_OUTPUT_EDP && init_hdmi) {
--		if (!intel_ddi_init_hdmi_connector(dig_port))
-+		if (intel_ddi_init_hdmi_connector(dig_port))
- 			goto err;
- 	}
- 
+-void intel_hdmi_init_connector(struct intel_digital_port *dig_port,
++bool intel_hdmi_init_connector(struct intel_digital_port *dig_port,
+ 			       struct intel_connector *intel_connector);
+ bool intel_hdmi_compute_has_hdmi_sink(struct intel_encoder *encoder,
+ 				      const struct intel_crtc_state *crtc_state,
 
 
