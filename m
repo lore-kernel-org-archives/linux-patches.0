@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65167279915;
-	Tue, 12 Aug 2025 17:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B42221FAC;
+	Tue, 12 Aug 2025 17:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020873; cv=none; b=k8ss00qdanv9dxSe9JD5fX8EJACOVP7xsnesrgA9V9AHCYnaS0GEdswzk59WTYgdf/TCXABsWF3Ymey1uRI7PTNK7JT6igR0aOKjITq69ZTA143WBQbU6dE2AsPc+jzRcqHT/wRTwsIktbIpTkEnEDjPDD2ItpnYsFJ/813zSi8=
+	t=1755020876; cv=none; b=k4KjjJT48aFGetufpCSzjaPfA/OgRQXbO1UIMI5ghZ22kXwJD85fBqPZJU7kRbfQVoQkzpbwbiuavUCWA8ji22SFWTPHT7op4QPHYYQqtzXxOI/rJKEi1KD/nMEacAdsDgPCnq0e2fUBLNRLdOn9DDML+0MnwE/JaVto0e8R0WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020873; c=relaxed/simple;
-	bh=pKETphnQ7G5R+O4mnvigND2sSw788dYl10lV5BG3v7c=;
+	s=arc-20240116; t=1755020876; c=relaxed/simple;
+	bh=1WoYnugmbp6iWRHxZthgA83odREM1UMh2X1EAlOIJYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKeI9Om0qoyY+XHGyUBTqaf83cMRfpezx7r0Rb9jQgD/RgLdOwvKZ1HFPsDiMA0bqTq14ArE8ly10afOslQS52iD5aV9IbfQ+sfnIZ22m/jXeTtlyWCpk7uQNG1jwzPqXEApCgg7SkHMedjpTTe0apk3NncztuxPC/W+RwAiY84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WV8NQ6tu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hcw4dCsLWr3jYZX5YkPYGNEP1aWrvw9/helVW4J8HsAiOiOn45CHImO4HMIDZiUpzpVF/NaktjyAiGKfcHxsrTLPi1wpytoha1ZyKnh0O28Kfn/gIGEV+xGW6h7T32uNWy9tseSP8GYQsPGECmThLheLz81jTLi1+tojT+T6bZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/kNBYjg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WV8NQ6tu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC6EC4CEF0;
-	Tue, 12 Aug 2025 17:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/kNBYjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EEC7C4CEF0;
+	Tue, 12 Aug 2025 17:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020873;
-	bh=pKETphnQ7G5R+O4mnvigND2sSw788dYl10lV5BG3v7c=;
+	s=korg; t=1755020876;
+	bh=1WoYnugmbp6iWRHxZthgA83odREM1UMh2X1EAlOIJYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WV8NQ6tuJQM2wRp6rs1G+Jnl/K5My9SXDeKGyX+vxtR1TTp8ty7twAvsw9Uv5pbVh
-	 uSCpKomnyLR5tdOG4hkxvsS5MLRnzAtq+c42LePAqT3MtHI4Apr/8F+8+Ur75oenh6
-	 KP0+xxrOShFkLtPqRqpwlCs+gMHxh/DdErzkrwGI=
+	b=u/kNBYjge+mcOChMX9y+GoUZe/eJB5POWkLIIp/eyEmfiVv10pCvUvZgMt6iTwGsD
+	 3xrXxB6HyGyrKptcR/7DAKmcK0iqv6oIDL7YUZ8ql8MReYDoRkmiTXVDWGqTEH51Lx
+	 un0ZBjIzpFGAMHqnZk4pk+t5XugFIm1FL29699us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mike Christie <michael.christie@oracle.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/262] staging: fbtft: fix potential memory leak in fbtft_framebuffer_alloc()
-Date: Tue, 12 Aug 2025 19:26:55 +0200
-Message-ID: <20250812172954.128196559@linuxfoundation.org>
+Subject: [PATCH 6.1 181/253] vhost-scsi: Fix log flooding with target does not exist errors
+Date: Tue, 12 Aug 2025 19:29:29 +0200
+Message-ID: <20250812172956.467668062@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +49,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit eb2cb7dab60f9be0b435ac4a674255429a36d72c ]
+[ Upstream commit 69cd720a8a5e9ef0f05ce5dd8c9ea6e018245c82 ]
 
-In the error paths after fb_info structure is successfully allocated,
-the memory allocated in fb_deferred_io_init() for info->pagerefs is not
-freed. Fix that by adding the cleanup function on the error path.
+As part of the normal initiator side scanning the guest's scsi layer
+will loop over all possible targets and send an inquiry. Since the
+max number of targets for virtio-scsi is 256, this can result in 255
+error messages about targets not existing if you only have a single
+target. When there's more than 1 vhost-scsi device each with a single
+target, then you get N * 255 log messages.
 
-Fixes: c296d5f9957c ("staging: fbtft: core support")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20250626172412.18355-1-abdun.nihaal@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It looks like the log message was added by accident in:
+
+commit 3f8ca2e115e5 ("vhost/scsi: Extract common handling code from
+control queue handler")
+
+when we added common helpers. Then in:
+
+commit 09d7583294aa ("vhost/scsi: Use common handling code in request
+queue handler")
+
+we converted the scsi command processing path to use the new
+helpers so we started to see the extra log messages during scanning.
+
+The patches were just making some code common but added the vq_err
+call and I'm guessing the patch author forgot to enable the vq_err
+call (vq_err is implemented by pr_debug which defaults to off). So
+this patch removes the call since it's expected to hit this path
+during device discovery.
+
+Fixes: 09d7583294aa ("vhost/scsi: Use common handling code in request queue handler")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20250611210113.10912-1-michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fbtft-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vhost/scsi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
-index eac1d570f437..dce721f440c5 100644
---- a/drivers/staging/fbtft/fbtft-core.c
-+++ b/drivers/staging/fbtft/fbtft-core.c
-@@ -744,6 +744,7 @@ struct fb_info *fbtft_framebuffer_alloc(struct fbtft_display *display,
- 	return info;
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 87f2f56fd20a..de6f108a50a9 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -913,10 +913,8 @@ vhost_scsi_get_req(struct vhost_virtqueue *vq, struct vhost_scsi_ctx *vc,
+ 			/* validated at handler entry */
+ 			vs_tpg = vhost_vq_get_backend(vq);
+ 			tpg = READ_ONCE(vs_tpg[*vc->target]);
+-			if (unlikely(!tpg)) {
+-				vq_err(vq, "Target 0x%x does not exist\n", *vc->target);
++			if (unlikely(!tpg))
+ 				goto out;
+-			}
+ 		}
  
- release_framebuf:
-+	fb_deferred_io_cleanup(info);
- 	framebuffer_release(info);
- 
- alloc_fail:
+ 		if (tpgp)
 -- 
 2.39.5
 
