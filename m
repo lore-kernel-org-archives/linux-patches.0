@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7160F2FAC02;
-	Tue, 12 Aug 2025 18:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FED52FD1C2;
+	Tue, 12 Aug 2025 18:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025135; cv=none; b=hQxnIYAOQuQgFfQIKY/4Ccmy2b2Qwe1vNdDT0895+Do54LhLSTsfi/KJkFxedIBWplM7rxpwfNnpEvhpXbBc6sPnTev8qe/5khlW0g980YykEjH8Wfj2W0+zRYNEDQDCS8l7XETL8I8WLTihqPh2LwFkSFwPXlZoGPo41Sfm1Z0=
+	t=1755025139; cv=none; b=fc//7S+j1GnO98GMhMD1Wfj1BOl4Mqwhw+7DYzKHeeUB7DHCqUC0Ve+EoVlFjWStO3ENWyxzzC97rg8F3lCrq9SpcXCb+KZqBs9ksRf1Qa8POrnH9T3wNP3XwwF106GE9Al/u0OwSoAfN4GjcL1orqqA8xlXlCk1PH06D8Us5X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025135; c=relaxed/simple;
-	bh=gduv6qhUOEGYB2/UYHqg35uF9GJuarW/GeG6hCsZE8M=;
+	s=arc-20240116; t=1755025139; c=relaxed/simple;
+	bh=M6+k9nAQarM4GEjqJ5kBSALfTjW6ScftEm0R8UY/XrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rM9w8HqWQZIW+yOynwMpY5au62efLcNhQ2lki9JymuvuLZbFDDJPBTW+R8VWgJ2kNtr1fo6ertgXBocDnnIhazF2QehlzTo3zv7CaMx+vxWKVHlgZKlvt8Qmgo354usjhRuwZYitQbVUfBycntxecNfVSdbbRN1kHktt4RIsUWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9YZNetY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K2YBaQy7uwZ6ucczkEMATxRY47PB1wNlNhxzyHptIOpPWMETtCk1StQcsoyTCxT1nXDlCIVEj53e63yqLmIKu2IwNr9/4HeZ5EFO+9BO2qxr3wt6Kyhb0ww3LDE/0211RTTICcZgTo7BwxghV17PBnUjfZwK/FlR1DOFbWYtNIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snxLo11a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9YZNetY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5655C4CEF0;
-	Tue, 12 Aug 2025 18:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snxLo11a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B76C4CEF0;
+	Tue, 12 Aug 2025 18:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025135;
-	bh=gduv6qhUOEGYB2/UYHqg35uF9GJuarW/GeG6hCsZE8M=;
+	s=korg; t=1755025138;
+	bh=M6+k9nAQarM4GEjqJ5kBSALfTjW6ScftEm0R8UY/XrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q9YZNetYL240W+ml85LLaLWxjGfdCE5fO+/iI0lqjIbaz2slYj9b7ub42Qf1rXubg
-	 w+b9MRrBHZgetXo/EfU+7GKWylYylq1qCRV0922NYevE3XHTBQWeB5eWhZ3He+X3hd
-	 gJsZ7ppFo3zO80qTiG5Rsn6FPIBf6dBORGguVXCQ=
+	b=snxLo11asKlGqU8bLH1+F2tSSbHFFEXPii6vso8SnWmksaYcx9iTubCw3PoXL3a5E
+	 9rXsKV1vgD//mvivlqlH4j9EEhcCr15rKz2MBuwvRUeQaad7SMvAzmAyVnu2+ELLEw
+	 xx6crl1zdqdMbFMCbTrZcyy804ABPBMenTu8gUr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 562/627] smb: server: let recv_done() avoid touching data_transfer after cleanup/move
-Date: Tue, 12 Aug 2025 19:34:17 +0200
-Message-ID: <20250812173453.270185479@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.16 580/627] perf/core: Prevent VMA split of buffer mappings
+Date: Tue, 12 Aug 2025 19:34:35 +0200
+Message-ID: <20250812173453.935131462@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -56,66 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit a6c015b7ac2d8c5233337e5793f50d04fac17669 ]
+commit b024d7b56c77191cde544f838debb7f8451cd0d6 upstream.
 
-Calling enqueue_reassembly() and wake_up_interruptible(&t->wait_reassembly_queue)
-or put_receive_buffer() means the recvmsg/data_transfer pointer might
-get re-used by another thread, which means these should be
-the last operations before calling return.
+The perf mmap code is careful about mmap()'ing the user page with the
+ringbuffer and additionally the auxiliary buffer, when the event supports
+it. Once the first mapping is established, subsequent mapping have to use
+the same offset and the same size in both cases. The reference counting for
+the ringbuffer and the auxiliary buffer depends on this being correct.
 
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Though perf does not prevent that a related mapping is split via mmap(2),
+munmap(2) or mremap(2). A split of a VMA results in perf_mmap_open() calls,
+which take reference counts, but then the subsequent perf_mmap_close()
+calls are not longer fulfilling the offset and size checks. This leads to
+reference count leaks.
+
+As perf already has the requirement for subsequent mappings to match the
+initial mapping, the obvious consequence is that VMA splits, caused by
+resizing of a mapping or partial unmapping, have to be prevented.
+
+Implement the vm_operations_struct::may_split() callback and return
+unconditionally -EINVAL.
+
+That ensures that the mapping offsets and sizes cannot be changed after the
+fact. Remapping to a different fixed address with the same size is still
+possible as it takes the references for the new mapping and drops those of
+the old mapping.
+
+Fixes: 45bfb2e50471 ("perf/core: Add AUX area to ring buffer for raw data streams")
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-27504
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_rdma.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ kernel/events/core.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index cd8a92fe372b..8d366db5f605 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -581,16 +581,11 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 			else
- 				t->full_packet_received = true;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6842,10 +6842,20 @@ static vm_fault_t perf_mmap_pfn_mkwrite(
+ 	return vmf->pgoff == 0 ? 0 : VM_FAULT_SIGBUS;
+ }
  
--			enqueue_reassembly(t, recvmsg, (int)data_length);
--			wake_up_interruptible(&t->wait_reassembly_queue);
--
- 			spin_lock(&t->receive_credit_lock);
- 			receive_credits = --(t->recv_credits);
- 			avail_recvmsg_count = t->count_avail_recvmsg;
- 			spin_unlock(&t->receive_credit_lock);
- 		} else {
--			put_recvmsg(t, recvmsg);
--
- 			spin_lock(&t->receive_credit_lock);
- 			receive_credits = --(t->recv_credits);
- 			avail_recvmsg_count = ++(t->count_avail_recvmsg);
-@@ -612,6 +607,13 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		if (is_receive_credit_post_required(receive_credits, avail_recvmsg_count))
- 			mod_delayed_work(smb_direct_wq,
- 					 &t->post_recv_credits_work, 0);
++static int perf_mmap_may_split(struct vm_area_struct *vma, unsigned long addr)
++{
++	/*
++	 * Forbid splitting perf mappings to prevent refcount leaks due to
++	 * the resulting non-matching offsets and sizes. See open()/close().
++	 */
++	return -EINVAL;
++}
 +
-+		if (data_length) {
-+			enqueue_reassembly(t, recvmsg, (int)data_length);
-+			wake_up_interruptible(&t->wait_reassembly_queue);
-+		} else
-+			put_recvmsg(t, recvmsg);
-+
- 		return;
- 	}
- 	}
--- 
-2.39.5
-
+ static const struct vm_operations_struct perf_mmap_vmops = {
+ 	.open		= perf_mmap_open,
+ 	.close		= perf_mmap_close, /* non mergeable */
+ 	.pfn_mkwrite	= perf_mmap_pfn_mkwrite,
++	.may_split	= perf_mmap_may_split,
+ };
+ 
+ static int map_range(struct perf_buffer *rb, struct vm_area_struct *vma)
 
 
