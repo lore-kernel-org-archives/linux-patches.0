@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36F72FDC30;
-	Tue, 12 Aug 2025 19:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1812D63FC;
+	Tue, 12 Aug 2025 19:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026101; cv=none; b=BgCShWjCznjRobRm2f0scnksfEn1uTnSx88WaRGV2rIx/yY9Xllo0kB6zwCCnbMrI/gjdKi0qX+NB6/Dxj+DhIIIDTY3xqSkorG7F4O5xI1ClznIOpvd0MvD+5ACjnR09ASL+53dMmIhSuKoRl6skEckAT36/hnZfwkvgwp0UFQ=
+	t=1755026104; cv=none; b=tcsc9q2zf2XpOPOujR6AhJ/98tiHALt+5SjXtXnqjOZxIEEqO2vuHjeyBl+IxGMVJBPKIQRfXFLigmh7Fmddgt+pOwTf7nUc4ZmdudtTPfc2zJN0nM5DRQdX96kaikGyHTazHqlf4HJtLQBrRn+/qXyYOMyl/vg5CxpW1wdXgXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026101; c=relaxed/simple;
-	bh=SW6DhHdJfC93t4L82tqpOxP9+s+AWjzXWeusaI2hnO8=;
+	s=arc-20240116; t=1755026104; c=relaxed/simple;
+	bh=kvObHmAF5OeO9EeVcGkI9NezHr/3Sx2IVloJbepzAe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXPKjRVsXykoce7IMp9B+bmzxFYbAECRIy7+VBJJLNPZwMTpnnhC6YWfb5erjfH/GZVRHj0FAeY10aU+A80or1vwmS22LbydmMWSzzKNzRBFcYTXofTW8Veoio6ImDuucYJnGDjRwqHvrnnvU1pywtCXT6mpEvgg56T8CKwSPos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=woAqDkSE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wa9/iAvjQsEt8TlfO2XT0PfCm4uk0JWRczTnEJc+07FnvRzFTCUMEhLpBN5NWuwI6G/SIlsXElUkWUXZz7QeVzYa52ou4kwnd+RryNsgerMnaHhqhvKJKR8Q6cIQQ9SeBJgDIMEy80ASJA0zFUECNnbCzAm9m+24VQwZhWl6poI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etL2x26s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woAqDkSE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BE6C4CEF0;
-	Tue, 12 Aug 2025 19:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etL2x26s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1435C4CEF1;
+	Tue, 12 Aug 2025 19:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026100;
-	bh=SW6DhHdJfC93t4L82tqpOxP9+s+AWjzXWeusaI2hnO8=;
+	s=korg; t=1755026104;
+	bh=kvObHmAF5OeO9EeVcGkI9NezHr/3Sx2IVloJbepzAe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=woAqDkSEUg5iX0+Zp7rq4NDTVUklyJjcFWBnb7mRd3FRinsAXyH72nWmEGv2VjsfD
-	 tzvKkmDWjvDqQGD2CRD0YO4xjkcKSui8wDA4lmPtxqj2ENvrtIiExtWO7fREbZa2XC
-	 rVt5JBgPx6glS6huXRE32Bi5vJQK+P21QDzbzw3s=
+	b=etL2x26sxO8ssdvzKuCshTiXr85i2kGpD/Q9aS7J+ZnCXxTdwQygsX3v6GRfIuaUq
+	 xA2gFPAm6tIo2vScNyW0LqPxE2lm54QPg6wJ/RqJIZXhIv9IhcGlJeAHvNYBA/jT/S
+	 t1ihxuZLFA1EIRuxVTSSaYjicmzsoOWtx/lWSTQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Charles Han <hanchunchao@inspur.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 237/480] power: supply: cpcap-charger: Fix null check for power_supply_get_by_name
-Date: Tue, 12 Aug 2025 19:47:25 +0200
-Message-ID: <20250812174407.226021833@linuxfoundation.org>
+Subject: [PATCH 6.15 238/480] power: supply: max14577: Handle NULL pdata when CONFIG_OF is not set
+Date: Tue, 12 Aug 2025 19:47:26 +0200
+Message-ID: <20250812174407.271634537@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -53,37 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit d9fa3aae08f99493e67fb79413c0e95d30fca5e9 ]
+[ Upstream commit 2937f5d2e24eefef8cb126244caec7fe3307f724 ]
 
-In the cpcap_usb_detect() function, the power_supply_get_by_name()
-function may return `NULL` instead of an error pointer.
-To prevent potential null pointer dereferences, Added a null check.
+When the kernel is not configured  CONFIG_OF, the max14577_charger_dt_init
+function returns NULL. Fix the max14577_charger_probe functionby returning
+-ENODATA instead of potentially passing a NULL pointer to PTR_ERR.
 
-Fixes: eab4e6d953c1 ("power: supply: cpcap-charger: get the battery inserted infomation from cpcap-battery")
+This fixes the below smatch warning:
+max14577_charger_probe() warn: passing zero to 'PTR_ERR'
+
+Fixes: e30110e9c96f ("charger: max14577: Configure battery-dependent settings from DTS and sysfs")
 Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://lore.kernel.org/r/20250519024741.5846-1-hanchunchao@inspur.com
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250519061601.8755-1-hanchunchao@inspur.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cpcap-charger.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/power/supply/max14577_charger.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/cpcap-charger.c b/drivers/power/supply/cpcap-charger.c
-index 13300dc60baf..d0c3008db534 100644
---- a/drivers/power/supply/cpcap-charger.c
-+++ b/drivers/power/supply/cpcap-charger.c
-@@ -689,9 +689,8 @@ static void cpcap_usb_detect(struct work_struct *work)
- 		struct power_supply *battery;
+diff --git a/drivers/power/supply/max14577_charger.c b/drivers/power/supply/max14577_charger.c
+index 1cef2f860b5f..63077d38ea30 100644
+--- a/drivers/power/supply/max14577_charger.c
++++ b/drivers/power/supply/max14577_charger.c
+@@ -501,7 +501,7 @@ static struct max14577_charger_platform_data *max14577_charger_dt_init(
+ static struct max14577_charger_platform_data *max14577_charger_dt_init(
+ 		struct platform_device *pdev)
+ {
+-	return NULL;
++	return ERR_PTR(-ENODATA);
+ }
+ #endif /* CONFIG_OF */
  
- 		battery = power_supply_get_by_name("battery");
--		if (IS_ERR_OR_NULL(battery)) {
--			dev_err(ddata->dev, "battery power_supply not available %li\n",
--					PTR_ERR(battery));
-+		if (!battery) {
-+			dev_err(ddata->dev, "battery power_supply not available\n");
- 			return;
- 		}
+@@ -572,7 +572,7 @@ static int max14577_charger_probe(struct platform_device *pdev)
+ 	chg->max14577 = max14577;
  
+ 	chg->pdata = max14577_charger_dt_init(pdev);
+-	if (IS_ERR_OR_NULL(chg->pdata))
++	if (IS_ERR(chg->pdata))
+ 		return PTR_ERR(chg->pdata);
+ 
+ 	ret = max14577_charger_reg_init(chg);
 -- 
 2.39.5
 
