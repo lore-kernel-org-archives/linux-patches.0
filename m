@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B9A2FD1CE;
-	Tue, 12 Aug 2025 17:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9E02FD1D6;
+	Tue, 12 Aug 2025 17:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020593; cv=none; b=KQs19ub4oPP7xvmUgJ89Rad6tSbhrj6rw4Drlc/zuJLZ+R55heTK1AkcFRQTvLUkpaxOnBr42Ze5nJ3/oq2XoJ2tVHG8iHGz8djxu5bj8umXQN2c/LoJXylPdN4I8RsYeRaJBOsPEfG3oNP7vebX12nFjgVNQrjHLk7w0V7Bqik=
+	t=1755020596; cv=none; b=ZZRYIBCrIRMoeP1uLw/Prlsyl5vgkEOjeG40SvhS/FUgMGQ/2atMrRdoHz8imZI0KTTEd5fyQBl+t8CH+NiuGeP29pBFSzTZGXFAA2eELD0q7h/iWC+/lNFwEnoed8AQ5ffSy+2gITkjeeQz46tYQDWnJKYPwHGGsPYDSOwkKlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020593; c=relaxed/simple;
-	bh=Vh5tG46W531W0Iz+dnGmQm2Fb3pLWMPtUndnPH+62Q4=;
+	s=arc-20240116; t=1755020596; c=relaxed/simple;
+	bh=KBWgQ69FEUqzuIExYg6sDfy0BNe0rqlblWl68TPXYug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoVfpsyhKzDyxj7gsdxoRh+aSmh2oMzwFotVWXuhRkRuDY8SZNAWhwvAhAxFc4YLuIt9wup5aK0ETWW0KrPgwzpgGtsNhRkqkrOn+pt+sahQNtHZmRNE/26v3J8rut5lZkCMM9W3UDUywF0Vl7SolkVawqYsNTYQIMjzDC/JQHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnlxLNQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3FbCTrXaaqbp7Tpz6EE4OxHF6M8O40SJu+iZ83QkYvRqX4WHzGxogJ6bZn2dTIm7kq86iG117eKNgKzZMmfd31wxOos6FOWhOtHIGq6vm+8fGvat/ERNwqsKqUflX1jW/ducCY/GR42/2jp4L5Od0VjrXlbMWO/b/BcBsZGlB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNZJtxeQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnlxLNQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DDBC4CEF1;
-	Tue, 12 Aug 2025 17:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNZJtxeQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523B1C4CEF9;
+	Tue, 12 Aug 2025 17:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020593;
-	bh=Vh5tG46W531W0Iz+dnGmQm2Fb3pLWMPtUndnPH+62Q4=;
+	s=korg; t=1755020596;
+	bh=KBWgQ69FEUqzuIExYg6sDfy0BNe0rqlblWl68TPXYug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bnlxLNQbq0/HhGul7xc7OqgFDezWHdjQvky6bW1DYdCtrG5iErwJPCFydLd/kLS6G
-	 vyh4IJiCxwOUnHmytpf9PgGWjI7Z1SN/4uQx9oGiHgotkzf61L7p2LivQsAnwNx27I
-	 nNo8P6Z99XsYRBR0vYF1y/x69QkPJr3WmZOKd6BQ=
+	b=dNZJtxeQKIEldYVGOf2z/HLleH+FLsYSs01wkM8d12FG/bnbKWUTPJFXKOxmlHfUI
+	 U3u+ipuO1E4qhyZ/0mOJmSKkUc5X+2mTPEZtsW7mHo3etG0pbk0fv3Yy1GmWJITcrX
+	 ow68HNl6U7LIh8XVSTGD+c4iH2qIpJBA3Tj0pcQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <Alexander@wetzel-home.de>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Remi Pommarel <repk@triplefau.lt>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/253] wifi: mac80211: Dont call fq_flow_idx() for management frames
-Date: Tue, 12 Aug 2025 19:28:32 +0200
-Message-ID: <20250812172953.976519179@linuxfoundation.org>
+Subject: [PATCH 6.1 125/253] wifi: mac80211: Check 802.11 encaps offloading in ieee80211_tx_h_select_key()
+Date: Tue, 12 Aug 2025 19:28:33 +0200
+Message-ID: <20250812172954.018766780@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,43 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Wetzel <Alexander@wetzel-home.de>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit cb3bb3d88dfcd177a1050c0a009a3ee147b2e5b9 ]
+[ Upstream commit 4037c468d1b3c508d69e6df0ef47fdee3d440e39 ]
 
-skb_get_hash() can only be used when the skb is linked to a netdev
-device.
+With 802.11 encapsulation offloading, ieee80211_tx_h_select_key() is
+called on 802.3 frames. In that case do not try to use skb data as
+valid 802.11 headers.
 
-Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
-Fixes: 73bc9e0af594 ("mac80211: don't apply flow control on management frames")
-Link: https://patch.msgid.link/20250717162547.94582-3-Alexander@wetzel-home.de
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
+Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://patch.msgid.link/1af4b5b903a5fca5ebe67333d5854f93b2be5abe.1752765971.git.repk@triplefau.lt
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index a04c7f9b2b0e..fe47674b83b6 100644
+index fe47674b83b6..e35a755b353b 100644
 --- a/net/mac80211/tx.c
 +++ b/net/mac80211/tx.c
-@@ -1467,7 +1467,7 @@ static void ieee80211_txq_enqueue(struct ieee80211_local *local,
- {
- 	struct fq *fq = &local->fq;
- 	struct fq_tin *tin = &txqi->tin;
--	u32 flow_idx = fq_flow_idx(fq, skb);
-+	u32 flow_idx;
+@@ -644,6 +644,12 @@ ieee80211_tx_h_select_key(struct ieee80211_tx_data *tx)
+ 	else
+ 		tx->key = NULL;
  
- 	ieee80211_set_skb_enqueue_time(skb);
++	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) {
++		if (tx->key && tx->key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE)
++			info->control.hw_key = &tx->key->conf;
++		return TX_CONTINUE;
++	}
++
+ 	if (tx->key) {
+ 		bool skip_hw = false;
  
-@@ -1483,6 +1483,7 @@ static void ieee80211_txq_enqueue(struct ieee80211_local *local,
- 			IEEE80211_TX_INTCFL_NEED_TXPROCESSING;
- 		__skb_queue_tail(&txqi->frags, skb);
- 	} else {
-+		flow_idx = fq_flow_idx(fq, skb);
- 		fq_tin_enqueue(fq, tin, flow_idx, skb,
- 			       fq_skb_free_func);
- 	}
 -- 
 2.39.5
 
