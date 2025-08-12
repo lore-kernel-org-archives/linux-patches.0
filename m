@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E202FE583;
-	Tue, 12 Aug 2025 18:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB32B305E08;
+	Tue, 12 Aug 2025 18:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021927; cv=none; b=MR2WKRX5Qs7Z5MEj5WrE10rZMfjHMcdy05k826n7HlMMWw5KnfxgH49EpZ8E6lYZZ09PsP+Fr58ZHzTvvEZ/nCkKspvlQ9AOMhEP7YYN6yqDWaSvmjeKtJqULDcrpDnETPvD4FXLMtpdiRck4DjimUmQH9+pDKzGJj2rJECUQp4=
+	t=1755021930; cv=none; b=KvfPW+xfj6YHVuCo3om+1QRf9lZsaz2kMB9QBO+8yK/CJhDnJnGFht2tHhWYHNNXT97yrKhGdfFAZITdpBehFasJ9FBFHQP/xc46np9fB9H67KyKbbH4f5c317WpiujzIFWrDmOZMuxxw3cWWn/3aCJy2XtpiQHJBUN895eM//I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021927; c=relaxed/simple;
-	bh=dQ3FXcvi35p77fNOQLuKbQOLNN1UfEkWHyaobFU9E6U=;
+	s=arc-20240116; t=1755021930; c=relaxed/simple;
+	bh=EDjpD6f+qr+s6BRajmFkqmmPHk4kluT12K+3B57eEh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZn4Sgzxrl6A0PrUNqeYx6a+IWggk2RNG6xPtFpSf5i9W0BYuRwVV50EF9/STfQJnRU3sybisC2CO7+4tAvtTJY11kwg9uQnWctdpV8zAGyulVMI/S74RTahu8DrzHa+GAotaHsvCtTOOYUzZeiW2AvVjuJnhfjW1L9IyOi9GVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bT+xJwj5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DVTHkWD5dOboJrM7c5lQ3G8qBJTB+Zd9nl51mN5ds6k/zIJufsucq+bMzKYimgWBeguP6rfXESpDthFgBnhc2zU6qWZpNr2webbehImhsXVJS5oaJVzsSQIIaA4s4MTso5b8q8qCGLfgVxOUGGTDDp2Cn6dscLvAlQey8yx5mQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3xdwRjZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bT+xJwj5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A3EC4CEF0;
-	Tue, 12 Aug 2025 18:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3xdwRjZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCC2C4CEF0;
+	Tue, 12 Aug 2025 18:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021927;
-	bh=dQ3FXcvi35p77fNOQLuKbQOLNN1UfEkWHyaobFU9E6U=;
+	s=korg; t=1755021930;
+	bh=EDjpD6f+qr+s6BRajmFkqmmPHk4kluT12K+3B57eEh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bT+xJwj5q9lK0YxSMzKvj3p5CFUcgz1hGUanP2THl5aIVqFiVFA44daVAziWrpy69
-	 L1JKW/ZNk0OzaKxjaV0xSwiNq5DMRjKWZxMvpDjRli7lwL4p9HzN/tb9SkNtnV71Nh
-	 W7K3TH9LyrOwjHHDhSKmWqLbB4rD4jTO7nRuH5v0=
+	b=O3xdwRjZviaKJSfnOFEn8n97aYLrnZFT56yYdlX0tKaqZfD6Fdb7j15WQAnhqblDc
+	 RMcOY7LAMPqZSEKz3W6YwQY4NjQRgDU0b0CvgeXi/t16FgdeHrZF3x+Jz4MwklKq/8
+	 vkGNgjFDkR34EU2ioGx8rbOfT6QAbWvz8MLkJkv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.6 233/262] perf/core: Prevent VMA split of buffer mappings
-Date: Tue, 12 Aug 2025 19:30:21 +0200
-Message-ID: <20250812173003.079837145@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.6 234/262] selftests/perf_events: Add a mmap() correctness test
+Date: Tue, 12 Aug 2025 19:30:22 +0200
+Message-ID: <20250812173003.123321896@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -53,69 +50,292 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit b024d7b56c77191cde544f838debb7f8451cd0d6 upstream.
+commit 084d2ac4030c5919e85bba1f4af26e33491469cb upstream.
 
-The perf mmap code is careful about mmap()'ing the user page with the
-ringbuffer and additionally the auxiliary buffer, when the event supports
-it. Once the first mapping is established, subsequent mapping have to use
-the same offset and the same size in both cases. The reference counting for
-the ringbuffer and the auxiliary buffer depends on this being correct.
+Exercise various mmap(), munmap() and mremap() invocations, which might
+cause a perf buffer mapping to be split or truncated.
 
-Though perf does not prevent that a related mapping is split via mmap(2),
-munmap(2) or mremap(2). A split of a VMA results in perf_mmap_open() calls,
-which take reference counts, but then the subsequent perf_mmap_close()
-calls are not longer fulfilling the offset and size checks. This leads to
-reference count leaks.
+To avoid hard coding the perf event and having dependencies on
+architectures and configuration options, scan through event types in sysfs
+and try to open them. On success, try to mmap() and if that succeeds try to
+mmap() the AUX buffer.
 
-As perf already has the requirement for subsequent mappings to match the
-initial mapping, the obvious consequence is that VMA splits, caused by
-resizing of a mapping or partial unmapping, have to be prevented.
+In case that no AUX buffer supporting event is found, only test the base
+buffer mapping. If no mappable event is found or permissions are not
+sufficient, skip the tests.
 
-Implement the vm_operations_struct::may_split() callback and return
-unconditionally -EINVAL.
+Reserve a PROT_NONE region for both rb and aux tests to allow testing the
+case where mremap unmaps beyond the end of a mapped VMA to prevent it from
+unmapping unrelated mappings.
 
-That ensures that the mapping offsets and sizes cannot be changed after the
-fact. Remapping to a different fixed address with the same size is still
-possible as it takes the references for the new mapping and drops those of
-the old mapping.
-
-Fixes: 45bfb2e50471 ("perf/core: Add AUX area to ring buffer for raw data streams")
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-27504
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Co-developed-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Acked-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/testing/selftests/perf_events/.gitignore |    1 
+ tools/testing/selftests/perf_events/Makefile   |    2 
+ tools/testing/selftests/perf_events/mmap.c     |  236 +++++++++++++++++++++++++
+ 3 files changed, 238 insertions(+), 1 deletion(-)
+ create mode 100644 tools/testing/selftests/perf_events/mmap.c
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6499,11 +6499,21 @@ out_put:
- 	ring_buffer_put(rb); /* could be last */
- }
+--- a/tools/testing/selftests/perf_events/.gitignore
++++ b/tools/testing/selftests/perf_events/.gitignore
+@@ -1,3 +1,4 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ sigtrap_threads
+ remove_on_exec
++mmap
+--- a/tools/testing/selftests/perf_events/Makefile
++++ b/tools/testing/selftests/perf_events/Makefile
+@@ -2,5 +2,5 @@
+ CFLAGS += -Wl,-no-as-needed -Wall $(KHDR_INCLUDES)
+ LDFLAGS += -lpthread
  
-+static int perf_mmap_may_split(struct vm_area_struct *vma, unsigned long addr)
+-TEST_GEN_PROGS := sigtrap_threads remove_on_exec
++TEST_GEN_PROGS := sigtrap_threads remove_on_exec mmap
+ include ../lib.mk
+--- /dev/null
++++ b/tools/testing/selftests/perf_events/mmap.c
+@@ -0,0 +1,236 @@
++// SPDX-License-Identifier: GPL-2.0-only
++#define _GNU_SOURCE
++
++#include <dirent.h>
++#include <sched.h>
++#include <stdbool.h>
++#include <stdio.h>
++#include <unistd.h>
++
++#include <sys/ioctl.h>
++#include <sys/mman.h>
++#include <sys/syscall.h>
++#include <sys/types.h>
++
++#include <linux/perf_event.h>
++
++#include "../kselftest_harness.h"
++
++#define RB_SIZE		0x3000
++#define AUX_SIZE	0x10000
++#define AUX_OFFS	0x4000
++
++#define HOLE_SIZE	0x1000
++
++/* Reserve space for rb, aux with space for shrink-beyond-vma testing. */
++#define REGION_SIZE	(2 * RB_SIZE + 2 * AUX_SIZE)
++#define REGION_AUX_OFFS (2 * RB_SIZE)
++
++#define MAP_BASE	1
++#define MAP_AUX		2
++
++#define EVENT_SRC_DIR	"/sys/bus/event_source/devices"
++
++FIXTURE(perf_mmap)
 +{
-+	/*
-+	 * Forbid splitting perf mappings to prevent refcount leaks due to
-+	 * the resulting non-matching offsets and sizes. See open()/close().
-+	 */
-+	return -EINVAL;
++	int		fd;
++	void		*ptr;
++	void		*region;
++};
++
++FIXTURE_VARIANT(perf_mmap)
++{
++	bool		aux;
++	unsigned long	ptr_size;
++};
++
++FIXTURE_VARIANT_ADD(perf_mmap, rb)
++{
++	.aux = false,
++	.ptr_size = RB_SIZE,
++};
++
++FIXTURE_VARIANT_ADD(perf_mmap, aux)
++{
++	.aux = true,
++	.ptr_size = AUX_SIZE,
++};
++
++static bool read_event_type(struct dirent *dent, __u32 *type)
++{
++	char typefn[512];
++	FILE *fp;
++	int res;
++
++	snprintf(typefn, sizeof(typefn), "%s/%s/type", EVENT_SRC_DIR, dent->d_name);
++	fp = fopen(typefn, "r");
++	if (!fp)
++		return false;
++
++	res = fscanf(fp, "%u", type);
++	fclose(fp);
++	return res > 0;
 +}
 +
- static const struct vm_operations_struct perf_mmap_vmops = {
- 	.open		= perf_mmap_open,
- 	.close		= perf_mmap_close, /* non mergeable */
- 	.fault		= perf_mmap_fault,
- 	.page_mkwrite	= perf_mmap_fault,
-+	.may_split	= perf_mmap_may_split,
- };
- 
- static int perf_mmap(struct file *file, struct vm_area_struct *vma)
++FIXTURE_SETUP(perf_mmap)
++{
++	struct perf_event_attr attr = {
++		.size		= sizeof(attr),
++		.disabled	= 1,
++		.exclude_kernel	= 1,
++		.exclude_hv	= 1,
++	};
++	struct perf_event_attr attr_ok = {};
++	unsigned int eacces = 0, map = 0;
++	struct perf_event_mmap_page *rb;
++	struct dirent *dent;
++	void *aux, *region;
++	DIR *dir;
++
++	self->ptr = NULL;
++
++	dir = opendir(EVENT_SRC_DIR);
++	if (!dir)
++		SKIP(return, "perf not available.");
++
++	region = mmap(NULL, REGION_SIZE, PROT_NONE, MAP_ANON | MAP_PRIVATE, -1, 0);
++	ASSERT_NE(region, MAP_FAILED);
++	self->region = region;
++
++	// Try to find a suitable event on this system
++	while ((dent = readdir(dir))) {
++		int fd;
++
++		if (!read_event_type(dent, &attr.type))
++			continue;
++
++		fd = syscall(SYS_perf_event_open, &attr, 0, -1, -1, 0);
++		if (fd < 0) {
++			if (errno == EACCES)
++				eacces++;
++			continue;
++		}
++
++		// Check whether the event supports mmap()
++		rb = mmap(region, RB_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, fd, 0);
++		if (rb == MAP_FAILED) {
++			close(fd);
++			continue;
++		}
++
++		if (!map) {
++			// Save the event in case that no AUX capable event is found
++			attr_ok = attr;
++			map = MAP_BASE;
++		}
++
++		if (!variant->aux)
++			continue;
++
++		rb->aux_offset = AUX_OFFS;
++		rb->aux_size = AUX_SIZE;
++
++		// Check whether it supports a AUX buffer
++		aux = mmap(region + REGION_AUX_OFFS, AUX_SIZE, PROT_READ | PROT_WRITE,
++			   MAP_SHARED | MAP_FIXED, fd, AUX_OFFS);
++		if (aux == MAP_FAILED) {
++			munmap(rb, RB_SIZE);
++			close(fd);
++			continue;
++		}
++
++		attr_ok = attr;
++		map = MAP_AUX;
++		munmap(aux, AUX_SIZE);
++		munmap(rb, RB_SIZE);
++		close(fd);
++		break;
++	}
++	closedir(dir);
++
++	if (!map) {
++		if (!eacces)
++			SKIP(return, "No mappable perf event found.");
++		else
++			SKIP(return, "No permissions for perf_event_open()");
++	}
++
++	self->fd = syscall(SYS_perf_event_open, &attr_ok, 0, -1, -1, 0);
++	ASSERT_NE(self->fd, -1);
++
++	rb = mmap(region, RB_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, self->fd, 0);
++	ASSERT_NE(rb, MAP_FAILED);
++
++	if (!variant->aux) {
++		self->ptr = rb;
++		return;
++	}
++
++	if (map != MAP_AUX)
++		SKIP(return, "No AUX event found.");
++
++	rb->aux_offset = AUX_OFFS;
++	rb->aux_size = AUX_SIZE;
++	aux = mmap(region + REGION_AUX_OFFS, AUX_SIZE, PROT_READ | PROT_WRITE,
++		   MAP_SHARED | MAP_FIXED, self->fd, AUX_OFFS);
++	ASSERT_NE(aux, MAP_FAILED);
++	self->ptr = aux;
++}
++
++FIXTURE_TEARDOWN(perf_mmap)
++{
++	ASSERT_EQ(munmap(self->region, REGION_SIZE), 0);
++	if (self->fd != -1)
++		ASSERT_EQ(close(self->fd), 0);
++}
++
++TEST_F(perf_mmap, remap)
++{
++	void *tmp, *ptr = self->ptr;
++	unsigned long size = variant->ptr_size;
++
++	// Test the invalid remaps
++	ASSERT_EQ(mremap(ptr, size, HOLE_SIZE, MREMAP_MAYMOVE), MAP_FAILED);
++	ASSERT_EQ(mremap(ptr + HOLE_SIZE, size, HOLE_SIZE, MREMAP_MAYMOVE), MAP_FAILED);
++	ASSERT_EQ(mremap(ptr + size - HOLE_SIZE, HOLE_SIZE, size, MREMAP_MAYMOVE), MAP_FAILED);
++	// Shrink the end of the mapping such that we only unmap past end of the VMA,
++	// which should succeed and poke a hole into the PROT_NONE region
++	ASSERT_NE(mremap(ptr + size - HOLE_SIZE, size, HOLE_SIZE, MREMAP_MAYMOVE), MAP_FAILED);
++
++	// Remap the whole buffer to a new address
++	tmp = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
++	ASSERT_NE(tmp, MAP_FAILED);
++
++	// Try splitting offset 1 hole size into VMA, this should fail
++	ASSERT_EQ(mremap(ptr + HOLE_SIZE, size - HOLE_SIZE, size - HOLE_SIZE,
++			 MREMAP_MAYMOVE | MREMAP_FIXED, tmp), MAP_FAILED);
++	// Remapping the whole thing should succeed fine
++	ptr = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, tmp);
++	ASSERT_EQ(ptr, tmp);
++	ASSERT_EQ(munmap(tmp, size), 0);
++}
++
++TEST_F(perf_mmap, unmap)
++{
++	unsigned long size = variant->ptr_size;
++
++	// Try to poke holes into the mappings
++	ASSERT_NE(munmap(self->ptr, HOLE_SIZE), 0);
++	ASSERT_NE(munmap(self->ptr + HOLE_SIZE, HOLE_SIZE), 0);
++	ASSERT_NE(munmap(self->ptr + size - HOLE_SIZE, HOLE_SIZE), 0);
++}
++
++TEST_F(perf_mmap, map)
++{
++	unsigned long size = variant->ptr_size;
++
++	// Try to poke holes into the mappings by mapping anonymous memory over it
++	ASSERT_EQ(mmap(self->ptr, HOLE_SIZE, PROT_READ | PROT_WRITE,
++		       MAP_PRIVATE | MAP_ANON | MAP_FIXED, -1, 0), MAP_FAILED);
++	ASSERT_EQ(mmap(self->ptr + HOLE_SIZE, HOLE_SIZE, PROT_READ | PROT_WRITE,
++		       MAP_PRIVATE | MAP_ANON | MAP_FIXED, -1, 0), MAP_FAILED);
++	ASSERT_EQ(mmap(self->ptr + size - HOLE_SIZE, HOLE_SIZE, PROT_READ | PROT_WRITE,
++		       MAP_PRIVATE | MAP_ANON | MAP_FIXED, -1, 0), MAP_FAILED);
++}
++
++TEST_HARNESS_MAIN
 
 
