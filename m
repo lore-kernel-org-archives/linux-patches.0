@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7742F7461;
-	Tue, 12 Aug 2025 17:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BE22F7461;
+	Tue, 12 Aug 2025 17:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020526; cv=none; b=n2f2+vhBRGTlGl9eJFYQy8ha1cffLeey1H3NXvKp6zV0zt4j1j/rfy+kXjsPlMqMB8pvSZZBaC0JaY2/jsdOEfBA5oK18iSv+PLD+Ns1F/Iq6UFp7MZZicm1Z51QgsHE/TwRDRV8vwyhJh3F1KidFbVfg2fkM8qG/0NiGr5b14I=
+	t=1755020530; cv=none; b=H60pSZHdln3Cr31DbK6jPOj6c6SHWma6qUqDcjBoND3Ff1XCIShga7Qt30GIZwroGesPXAxpp47vGlcfj1iRvtzGtwMRhveszbXXuZdCYfMAAxL+GgLWoyDcofSKpMukZBvzw9OyPd0xgoImRg51SW75jLF3+9ZNzkEhU8R4Ui8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020526; c=relaxed/simple;
-	bh=L+d3EGMD+lStBTMrATB2cCMg6DRH9Z/bHwfMei3RUhs=;
+	s=arc-20240116; t=1755020530; c=relaxed/simple;
+	bh=Ke/d58eQ8JcsnMHp/ZnrRPcfWILsH9r6PPx4QJlW6Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbabVk5LqOqpqQSXaK4EXsfYLf26x5nCQ/wZLQ8KT/tHVc18vQWVThOJ9t/Evi1myEZBgMTW//s9E/9XJYX+8K1iVSw10OGWwSjzIWDUuHSVlpZXyC5fOxRCCQzHGE9BlM1+9cxwZiKIW3kqGFmLMAXhZaFHoobE0XEXx1Pbsak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8fbIV/n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bzJUJAwej/BewME8uVJ2BMWG6+t6qAuYrTLxUfcifWqIqBtlF/s12XnzVjuR+Ib7vBMkFek9j/PfHGxnSTU9ooJT7dNDa/xMlzNNABYtLx710lti/4wBPmLsFlYmIZmvJsd91x3J01P3jIqRSq3LrATbCY7Mm2BR+r056geHLPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpI0WcMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8fbIV/n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE558C4CEF0;
-	Tue, 12 Aug 2025 17:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpI0WcMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1729DC4CEF0;
+	Tue, 12 Aug 2025 17:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020526;
-	bh=L+d3EGMD+lStBTMrATB2cCMg6DRH9Z/bHwfMei3RUhs=;
+	s=korg; t=1755020529;
+	bh=Ke/d58eQ8JcsnMHp/ZnrRPcfWILsH9r6PPx4QJlW6Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8fbIV/nuhAvN63UU04S1tYCLp/NyTUrXhHFhrxlpN8SAFNL42MmWEeXtQipyNmNj
-	 /RC37EHQU2jAwGmYMg95igBzBJhQKRPFjB/qM+A/wyFj5C1ukCc09xy8WpJ7hG6kTU
-	 FE8Ci+VHtAYugC+oZopHWk7iVcG5ixIuWQzTk8V8=
+	b=mpI0WcMnk34+ILom8w0OFMLWigkh7eD55DUsuENlFTxXPIjZ7prO0gih7ifd0XgZv
+	 euUxcgFp+2sAaG29RvlUNATUA61u540a4TOhBR8rwNLKpLpT24G4Mmvv5/P1UX96SA
+	 DYda3ZSIhu2V9pcRJPzcbDST4eYb7QSkvmIZc09I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"xin.guo" <guoxin0309@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stav Aviram <saviram@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/253] tcp: fix tcp_ofo_queue() to avoid including too much DUP SACK range
-Date: Tue, 12 Aug 2025 19:28:15 +0200
-Message-ID: <20250812172953.278583959@linuxfoundation.org>
+Subject: [PATCH 6.1 108/253] net/mlx5: Check device memory pointer before usage
+Date: Tue, 12 Aug 2025 19:28:16 +0200
+Message-ID: <20250812172953.321759391@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -52,54 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xin.guo <guoxin0309@gmail.com>
+From: Stav Aviram <saviram@nvidia.com>
 
-[ Upstream commit a041f70e573e185d5d5fdbba53f0db2fbe7257ad ]
+[ Upstream commit 70f238c902b8c0461ae6fbb8d1a0bbddc4350eea ]
 
-If the new coming segment covers more than one skbs in the ofo queue,
-and which seq is equal to rcv_nxt, then the sequence range
-that is duplicated will be sent as DUP SACK, the detail as below,
-in step6, the {501,2001} range is clearly including too much
-DUP SACK range, in violation of RFC 2883 rules.
+Add a NULL check before accessing device memory to prevent a crash if
+dev->dm allocation in mlx5_init_once() fails.
 
-1. client > server: Flags [.], seq 501:1001, ack 1325288529, win 20000, length 500
-2. server > client: Flags [.], ack 1, [nop,nop,sack 1 {501:1001}], length 0
-3. client > server: Flags [.], seq 1501:2001, ack 1325288529, win 20000, length 500
-4. server > client: Flags [.], ack 1, [nop,nop,sack 2 {1501:2001} {501:1001}], length 0
-5. client > server: Flags [.], seq 1:2001, ack 1325288529, win 20000, length 2000
-6. server > client: Flags [.], ack 2001, [nop,nop,sack 1 {501:2001}], length 0
-
-After this fix, the final ACK is as below:
-
-6. server > client: Flags [.], ack 2001, options [nop,nop,sack 1 {501:1001}], length 0
-
-[edumazet] added a new packetdrill test in the following patch.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: xin.guo <guoxin0309@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250626123420.1933835-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c9b9dcb430b3 ("net/mlx5: Move device memory management to mlx5_core")
+Signed-off-by: Stav Aviram <saviram@nvidia.com>
+Link: https://patch.msgid.link/c88711327f4d74d5cebc730dc629607e989ca187.1751370035.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/dm.c                  | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c | 4 ++--
+ drivers/net/ethernet/mellanox/mlx5/core/main.c   | 3 ---
+ 3 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 222b829f33f4..5ee1e1c2082c 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4834,8 +4834,9 @@ static void tcp_ofo_queue(struct sock *sk)
+diff --git a/drivers/infiniband/hw/mlx5/dm.c b/drivers/infiniband/hw/mlx5/dm.c
+index 3669c90b2dad..672e5cfd2fca 100644
+--- a/drivers/infiniband/hw/mlx5/dm.c
++++ b/drivers/infiniband/hw/mlx5/dm.c
+@@ -282,7 +282,7 @@ static struct ib_dm *handle_alloc_dm_memic(struct ib_ucontext *ctx,
+ 	int err;
+ 	u64 address;
  
- 		if (before(TCP_SKB_CB(skb)->seq, dsack_high)) {
- 			__u32 dsack = dsack_high;
-+
- 			if (before(TCP_SKB_CB(skb)->end_seq, dsack_high))
--				dsack_high = TCP_SKB_CB(skb)->end_seq;
-+				dsack = TCP_SKB_CB(skb)->end_seq;
- 			tcp_dsack_extend(sk, TCP_SKB_CB(skb)->seq, dsack);
- 		}
- 		p = rb_next(p);
+-	if (!MLX5_CAP_DEV_MEM(dm_db->dev, memic))
++	if (!dm_db || !MLX5_CAP_DEV_MEM(dm_db->dev, memic))
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 
+ 	dm = kzalloc(sizeof(*dm), GFP_KERNEL);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c
+index 9482e51ac82a..bdbbfaf504d9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c
+@@ -28,7 +28,7 @@ struct mlx5_dm *mlx5_dm_create(struct mlx5_core_dev *dev)
+ 
+ 	dm = kzalloc(sizeof(*dm), GFP_KERNEL);
+ 	if (!dm)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
+ 
+ 	spin_lock_init(&dm->lock);
+ 
+@@ -80,7 +80,7 @@ struct mlx5_dm *mlx5_dm_create(struct mlx5_core_dev *dev)
+ err_steering:
+ 	kfree(dm);
+ 
+-	return ERR_PTR(-ENOMEM);
++	return NULL;
+ }
+ 
+ void mlx5_dm_cleanup(struct mlx5_core_dev *dev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 8c9633f740b4..a53f222e3fee 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1022,9 +1022,6 @@ static int mlx5_init_once(struct mlx5_core_dev *dev)
+ 	}
+ 
+ 	dev->dm = mlx5_dm_create(dev);
+-	if (IS_ERR(dev->dm))
+-		mlx5_core_warn(dev, "Failed to init device memory %ld\n", PTR_ERR(dev->dm));
+-
+ 	dev->tracer = mlx5_fw_tracer_create(dev);
+ 	dev->hv_vhca = mlx5_hv_vhca_create(dev);
+ 	dev->rsc_dump = mlx5_rsc_dump_create(dev);
 -- 
 2.39.5
 
