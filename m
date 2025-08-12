@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD6727604E;
-	Tue, 12 Aug 2025 19:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DBF1C1AAA;
+	Tue, 12 Aug 2025 19:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025521; cv=none; b=FlTEnfwqSvLvsLwSw/F2tlOhxWHGk1li6K/XhAyyUQeBnN9Mz1Ea47Km/BuCi5QSCGj//Q5Wv0mFPyuoP2HSyQlk8F/Hj46QVsmHuBVMKw0cdRZGFPEQ0V0inijfnwtsQX9Gd7xsUyjYNuirHXtTXXM/bvnJaxR+x/N2sW1Jcas=
+	t=1755025524; cv=none; b=RKI6Lz8s/yu/IBWsPAM0EIhUN9YX1eOZrHD+ltyjG5wzKkQuqEB2m5FB8rEWXT9LdiHsOZPfPsrmSaWyRDwWnNgzOphGStaA0VXUx7MwdHIunwboTrPTRXM0rJP8vAEu1rUO6OZfYSemAChYfZI1kX9VIjPmV+hmIwJ7B71WMhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025521; c=relaxed/simple;
-	bh=nY6c8bJvT7VNNC9tL6gfm+bqtSwfgXC25APpGkXvyiE=;
+	s=arc-20240116; t=1755025524; c=relaxed/simple;
+	bh=fYc5imWgAr+cFxHuVAMBfm3HDwgn8Ie6zHJi/RnbmWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h99+G97PIeC907L3LUmwKlBzUQlsjZEz8EYczphJsHpUAqztkg81M6U+MiVNAPpZLxQyuTzWjPX/xeH5+OdvvY48gOuna4lgDphHpf5Dw8ymHekcq/eG6Xamhkv8GBGFPAPwJ4hw1/n9bZ0lb11TZbkyOcajTtoV41G/8374fUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cU9csj0v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bY+DO3Uj2iardnzA9EKI+hkY1JR75Q/n54JQ7MqSGIRUaTxGx1v7TscOts8fDxrHHidb5uKiznIXPy5p3OkjlzjwTMcmrBYlEcQ89cIQYcLpDirqTEjxDACeEIrCTOZMBlb3ndkXoAi0sC8q2pWtaf+viOWmQdVjBmxmwFLhKcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2EBNMMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cU9csj0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53478C4CEF0;
-	Tue, 12 Aug 2025 19:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2EBNMMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BBAC4CEF0;
+	Tue, 12 Aug 2025 19:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025520;
-	bh=nY6c8bJvT7VNNC9tL6gfm+bqtSwfgXC25APpGkXvyiE=;
+	s=korg; t=1755025524;
+	bh=fYc5imWgAr+cFxHuVAMBfm3HDwgn8Ie6zHJi/RnbmWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cU9csj0v4n3RVtrk37Q2ssihVRAm0D6DAP55uVb2ba2Ap1Jr2XK2mbF4nS/ycqtS+
-	 1WeB2HMzYtR+8wUZrl8ZNm2VXqCs69vYF0wUrJx5mn3j5xxELyoZCFeZtfVXRbRzBE
-	 GX+UEAX9X3+C4QC4O4ONSOQUdd11dpg3FfwgEVQs=
+	b=R2EBNMMfybL9v02lym5mWvIf1s7bPs/UO8NH8ayhDlWAJB7wCi32oIin27UCBHSzb
+	 lihANkS3ipCuakaom3Uk4VmegWIfxCQuBtOCXnb6PgqDWGkJve+DCD16LVJC7bA0ms
+	 Z4pXX3no8VeAyAsKrR9Axef9oWxt4b6XTN61cYVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis OSTERLAND-HEIM <denis.osterland@diehl.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 065/480] pps: fix poll support
-Date: Tue, 12 Aug 2025 19:44:33 +0200
-Message-ID: <20250812174400.101063200@linuxfoundation.org>
+Subject: [PATCH 6.15 066/480] arm64: dts: imx8mp-venice-gw74xx: update name of M2SKT_WDIS2# gpio
+Date: Tue, 12 Aug 2025 19:44:34 +0200
+Message-ID: <20250812174400.139779920@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,100 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit 12c409aa1ec2592280a2ddcc66ff8f3c7f7bb171 ]
+[ Upstream commit 26a6a9cde64a890997708007d9de25809970eac9 ]
 
-Because pps_cdev_poll() returns unconditionally EPOLLIN,
-a user space program that calls select/poll get always an immediate data
-ready-to-read response. As a result the intended use to wait until next
-data becomes ready does not work.
+The GW74xx D revision has added a M2SKT_WDIS2# GPIO which routes to the
+W_DISABLE2# pin of the M.2 socket. Update the gpio name for consistency.
 
-User space snippet:
-
-    struct pollfd pollfd = {
-      .fd = open("/dev/pps0", O_RDONLY),
-      .events = POLLIN|POLLERR,
-      .revents = 0 };
-    while(1) {
-      poll(&pollfd, 1, 2000/*ms*/); // returns immediate, but should wait
-      if(revents & EPOLLIN) { // always true
-        struct pps_fdata fdata;
-        memset(&fdata, 0, sizeof(memdata));
-        ioctl(PPS_FETCH, &fdata); // currently fetches data at max speed
-      }
-    }
-
-Lets remember the last fetch event counter and compare this value
-in pps_cdev_poll() with most recent event counter
-and return 0 if they are equal.
-
-Signed-off-by: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
-Co-developed-by: Rodolfo Giometti <giometti@enneenne.com>
-Signed-off-by: Rodolfo Giometti <giometti@enneenne.com>
-Fixes: eae9d2ba0cfc ("LinuxPPS: core support")
-Link: https://lore.kernel.org/all/f6bed779-6d59-4f0f-8a59-b6312bd83b4e@enneenne.com/
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/c3c50ad1eb19ef553eca8a57c17f4c006413ab70.camel@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6a5d95b06d93 ("arm64: dts: imx8mp-venice-gw74xx: add M2SKT_GPIO10 gpio configuration")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/pps.c          | 11 +++++++++--
- include/linux/pps_kernel.h |  1 +
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-venice-gw74xx.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
-index 6a02245ea35f..9463232af8d2 100644
---- a/drivers/pps/pps.c
-+++ b/drivers/pps/pps.c
-@@ -41,6 +41,9 @@ static __poll_t pps_cdev_poll(struct file *file, poll_table *wait)
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw74xx.dts b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw74xx.dts
+index 568d24265ddf..12de7cf1e853 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw74xx.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw74xx.dts
+@@ -301,7 +301,7 @@ &gpio2 {
+ &gpio3 {
+ 	gpio-line-names =
+ 		"", "", "", "", "", "", "m2_rst", "",
+-		"", "", "", "", "", "", "m2_gpio10", "",
++		"", "", "", "", "", "", "m2_wdis2#", "",
+ 		"", "", "", "", "", "", "", "",
+ 		"", "", "", "", "", "", "", "";
+ };
+@@ -310,7 +310,7 @@ &gpio4 {
+ 	gpio-line-names =
+ 		"", "", "m2_off#", "", "", "", "", "",
+ 		"", "", "", "", "", "", "", "",
+-		"", "", "m2_wdis#", "", "", "", "", "",
++		"", "", "m2_wdis1#", "", "", "", "", "",
+ 		"", "", "", "", "", "", "", "rs485_en";
+ };
  
- 	poll_wait(file, &pps->queue, wait);
- 
-+	if (pps->last_fetched_ev == pps->last_ev)
-+		return 0;
-+
- 	return EPOLLIN | EPOLLRDNORM;
- }
- 
-@@ -186,9 +189,11 @@ static long pps_cdev_ioctl(struct file *file,
- 		if (err)
- 			return err;
- 
--		/* Return the fetched timestamp */
-+		/* Return the fetched timestamp and save last fetched event  */
- 		spin_lock_irq(&pps->lock);
- 
-+		pps->last_fetched_ev = pps->last_ev;
-+
- 		fdata.info.assert_sequence = pps->assert_sequence;
- 		fdata.info.clear_sequence = pps->clear_sequence;
- 		fdata.info.assert_tu = pps->assert_tu;
-@@ -272,9 +277,11 @@ static long pps_cdev_compat_ioctl(struct file *file,
- 		if (err)
- 			return err;
- 
--		/* Return the fetched timestamp */
-+		/* Return the fetched timestamp and save last fetched event  */
- 		spin_lock_irq(&pps->lock);
- 
-+		pps->last_fetched_ev = pps->last_ev;
-+
- 		compat.info.assert_sequence = pps->assert_sequence;
- 		compat.info.clear_sequence = pps->clear_sequence;
- 		compat.info.current_mode = pps->current_mode;
-diff --git a/include/linux/pps_kernel.h b/include/linux/pps_kernel.h
-index c7abce28ed29..aab0aebb529e 100644
---- a/include/linux/pps_kernel.h
-+++ b/include/linux/pps_kernel.h
-@@ -52,6 +52,7 @@ struct pps_device {
- 	int current_mode;			/* PPS mode at event time */
- 
- 	unsigned int last_ev;			/* last PPS event id */
-+	unsigned int last_fetched_ev;		/* last fetched PPS event id */
- 	wait_queue_head_t queue;		/* PPS event queue */
- 
- 	unsigned int id;			/* PPS source unique ID */
+@@ -811,14 +811,14 @@ pinctrl_hog: hoggrp {
+ 			MX8MP_IOMUXC_GPIO1_IO09__GPIO1_IO09	0x40000040 /* DIO0 */
+ 			MX8MP_IOMUXC_GPIO1_IO11__GPIO1_IO11	0x40000040 /* DIO1 */
+ 			MX8MP_IOMUXC_SAI1_RXD0__GPIO4_IO02	0x40000040 /* M2SKT_OFF# */
+-			MX8MP_IOMUXC_SAI1_TXD6__GPIO4_IO18	0x40000150 /* M2SKT_WDIS# */
++			MX8MP_IOMUXC_SAI1_TXD6__GPIO4_IO18	0x40000150 /* M2SKT_WDIS1# */
+ 			MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06	0x40000040 /* M2SKT_PIN20 */
+ 			MX8MP_IOMUXC_SD1_STROBE__GPIO2_IO11	0x40000040 /* M2SKT_PIN22 */
+ 			MX8MP_IOMUXC_SD2_CLK__GPIO2_IO13	0x40000150 /* PCIE1_WDIS# */
+ 			MX8MP_IOMUXC_SD2_CMD__GPIO2_IO14	0x40000150 /* PCIE3_WDIS# */
+ 			MX8MP_IOMUXC_SD2_DATA3__GPIO2_IO18	0x40000150 /* PCIE2_WDIS# */
+ 			MX8MP_IOMUXC_NAND_DATA00__GPIO3_IO06	0x40000040 /* M2SKT_RST# */
+-			MX8MP_IOMUXC_NAND_DQS__GPIO3_IO14	0x40000040 /* M2SKT_GPIO10 */
++			MX8MP_IOMUXC_NAND_DQS__GPIO3_IO14	0x40000150 /* M2KST_WDIS2# */
+ 			MX8MP_IOMUXC_SAI3_TXD__GPIO5_IO01	0x40000104 /* UART_TERM */
+ 			MX8MP_IOMUXC_SAI3_TXFS__GPIO4_IO31	0x40000104 /* UART_RS485 */
+ 			MX8MP_IOMUXC_SAI3_TXC__GPIO5_IO00	0x40000104 /* UART_HALF */
 -- 
 2.39.5
 
