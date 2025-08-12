@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98EA2FAC06;
-	Tue, 12 Aug 2025 18:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA442FAC06;
+	Tue, 12 Aug 2025 18:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024840; cv=none; b=ptI14wOi1U/A4dvv7fzNXOkIj8SHmwzM+xA/hzt0PKXMQZl3ziGLIvyf009dJYMc+jTIRNuTmnpTS6+6yc65SQBAFy8mSGbVNlX8POJMYEWnEuFirPEwOkBlWdCOgPv+MlaMhmiEAm+wayZ6kD/2lZJIrIbZ+AyedRhYs8hzD8I=
+	t=1755024843; cv=none; b=A5/1uZyOYRpKTxDeCQApciyTTvONW8g+CQgh2jCXCyLAKHwednGCxY+NxNwdOK8QeX8ny0rpw9v0AoTRnzKNJudbeihjZkTGBjvpabZhYRJ7NgtoFjExTvDbGH0F+9wJkEoSmnh+Uxj0UaE0BbrdOgvNzoycRpdN1xEF08yP04Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024840; c=relaxed/simple;
-	bh=TOR5CIw+QA/U82cBQxCQTv/eltIInPUu2376kklcXEQ=;
+	s=arc-20240116; t=1755024843; c=relaxed/simple;
+	bh=6GxUVc54Z25alAVPLa6t9W12IdCl37j69YaivzeCkws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y4phXw7nPKs/aR26NthNt/2y9XiYugidC7dmBmspd77dIbtJ2KARHeuJL4eE/Qmt28NHzru/IRHqlKJjDo7aQpbo2MvcYmhvyFGAJon/oEa/cVlK3N6JYYQamBHjuPxwZgWhAMT8jwExcYGyi5Sag/Pd7JCGZQ+FnhjOLwUAlzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzRYdkXB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g464sIapEtBogkezFqxhF2jwb647K1MVBsPdf5h50gXM5A/0RkI8LK2xGEI7ZZwAmRYiu843ONIS/0wCf2KHbnWkWwyPSj3K27t7mefOx92ZjlNwLSZkSCBLDyiK0b0PZhOvdm2mF87JBqMkyv8lPmxe2AAn8/d1pRxOHdWXaFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnZMCUbG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzRYdkXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE31C4CEF1;
-	Tue, 12 Aug 2025 18:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnZMCUbG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E205C4CEF1;
+	Tue, 12 Aug 2025 18:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024839;
-	bh=TOR5CIw+QA/U82cBQxCQTv/eltIInPUu2376kklcXEQ=;
+	s=korg; t=1755024843;
+	bh=6GxUVc54Z25alAVPLa6t9W12IdCl37j69YaivzeCkws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IzRYdkXB7TYWteNggsiQljAQdtp/wIxU1gVBrzrXCMmqLuCzgnoZaQiXrXTda20iB
-	 Y9L3TxZX39kQ9g3IP4VF1Lo2tXY2Kv+Jry6H0T3fN4YEJyNrW/ERY7TD6ZP+ZO3GeO
-	 clBV70XluuGF87VFUIsgLPkrc2DSJ2KniZfNpclA=
+	b=VnZMCUbGm+r6g+6oVrk3pNp98988fb6sulzcEUYbhNF49nCgpiMjC7TkdwcxeBh9G
+	 Ec6wJbKT/M/+qEc53fNKfz9Hpu9z6ZKoN/4FprnajINKxcdV8cEwEM1Bf8WeRC5C/2
+	 R8FYDA7bLjqDXA2KVmoxGmV0e6jBvzWSgJUGFqcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Chanho Min <chanho.min@lge.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Helge Deller <deller@gmx.de>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 459/627] squashfs: fix incorrect argument to sizeof in kmalloc_array call
-Date: Tue, 12 Aug 2025 19:32:34 +0200
-Message-ID: <20250812173438.801755537@linuxfoundation.org>
+Subject: [PATCH 6.16 460/627] apparmor: Fix unaligned memory accesses in KUnit test
+Date: Tue, 12 Aug 2025 19:32:35 +0200
+Message-ID: <20250812173439.017865946@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,41 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 97103dcec292b8688de142f7a48bd0d46038d3f6 ]
+[ Upstream commit c68804199dd9d63868497a27b5da3c3cd15356db ]
 
-The sizeof(void *) is the incorrect argument in the kmalloc_array call, it
-best to fix this by using sizeof(*cache_folios) instead.
+The testcase triggers some unnecessary unaligned memory accesses on the
+parisc architecture:
+  Kernel: unaligned access to 0x12f28e27 in policy_unpack_test_init+0x180/0x374 (iir 0x0cdc1280)
+  Kernel: unaligned access to 0x12f28e67 in policy_unpack_test_init+0x270/0x374 (iir 0x64dc00ce)
 
-Fortunately the sizes of void* and folio* happen to be the same, so this
-has not shown up as a run time issue.
+Use the existing helper functions put_unaligned_le32() and
+put_unaligned_le16() to avoid such warnings on architectures which
+prefer aligned memory accesses.
 
-[akpm@linux-foundation.org: fix build]
-Link: https://lkml.kernel.org/r/20250708142604.1891156-1-colin.i.king@gmail.com
-Fixes: 2e227ff5e272 ("squashfs: add optional full compressed block caching")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Cc: Phillip Lougher <phillip@squashfs.org.uk>
-Cc: Chanho Min <chanho.min@lge.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 98c0cc48e27e ("apparmor: fix policy_unpack_test on big endian systems")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/block.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/apparmor/policy_unpack_test.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/squashfs/block.c b/fs/squashfs/block.c
-index 296c5a0fcc40..e7a4649fc85c 100644
---- a/fs/squashfs/block.c
-+++ b/fs/squashfs/block.c
-@@ -89,7 +89,7 @@ static int squashfs_bio_read_cached(struct bio *fullbio,
- 	int err = 0;
- #ifdef CONFIG_SQUASHFS_COMP_CACHE_FULL
- 	struct folio **cache_folios = kmalloc_array(page_count,
--			sizeof(void *), GFP_KERNEL | __GFP_ZERO);
-+			sizeof(*cache_folios), GFP_KERNEL | __GFP_ZERO);
- #endif
+diff --git a/security/apparmor/policy_unpack_test.c b/security/apparmor/policy_unpack_test.c
+index 5b2ba88ae9e2..cf18744dafe2 100644
+--- a/security/apparmor/policy_unpack_test.c
++++ b/security/apparmor/policy_unpack_test.c
+@@ -9,6 +9,8 @@
+ #include "include/policy.h"
+ #include "include/policy_unpack.h"
  
- 	bio_for_each_folio_all(fi, fullbio) {
++#include <linux/unaligned.h>
++
+ #define TEST_STRING_NAME "TEST_STRING"
+ #define TEST_STRING_DATA "testing"
+ #define TEST_STRING_BUF_OFFSET \
+@@ -80,7 +82,7 @@ static struct aa_ext *build_aa_ext_struct(struct policy_unpack_fixture *puf,
+ 	*(buf + 1) = strlen(TEST_U32_NAME) + 1;
+ 	strscpy(buf + 3, TEST_U32_NAME, e->end - (void *)(buf + 3));
+ 	*(buf + 3 + strlen(TEST_U32_NAME) + 1) = AA_U32;
+-	*((__le32 *)(buf + 3 + strlen(TEST_U32_NAME) + 2)) = cpu_to_le32(TEST_U32_DATA);
++	put_unaligned_le32(TEST_U32_DATA, buf + 3 + strlen(TEST_U32_NAME) + 2);
+ 
+ 	buf = e->start + TEST_NAMED_U64_BUF_OFFSET;
+ 	*buf = AA_NAME;
+@@ -103,7 +105,7 @@ static struct aa_ext *build_aa_ext_struct(struct policy_unpack_fixture *puf,
+ 	*(buf + 1) = strlen(TEST_ARRAY_NAME) + 1;
+ 	strscpy(buf + 3, TEST_ARRAY_NAME, e->end - (void *)(buf + 3));
+ 	*(buf + 3 + strlen(TEST_ARRAY_NAME) + 1) = AA_ARRAY;
+-	*((__le16 *)(buf + 3 + strlen(TEST_ARRAY_NAME) + 2)) = cpu_to_le16(TEST_ARRAY_SIZE);
++	put_unaligned_le16(TEST_ARRAY_SIZE, buf + 3 + strlen(TEST_ARRAY_NAME) + 2);
+ 
+ 	return e;
+ }
 -- 
 2.39.5
 
