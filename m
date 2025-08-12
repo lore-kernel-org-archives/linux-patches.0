@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB2A2FE571;
-	Tue, 12 Aug 2025 18:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EBE2882CE;
+	Tue, 12 Aug 2025 18:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021674; cv=none; b=TfXFIg2GKmB0J/6UhMz+GlPFdpx7fMJQfUS2b2mp2ywG9brnQJGtFYOeUHj3TbbR19nd5cqxOND8fRPv3CyvKznLVVSTytuiSLdhN8Vy4R6SMOwHz7abgfPAlyVwDURcXDUBXP6D2SXuO7JEdrenBXfQJBgJdwcCv3liC0WxBWY=
+	t=1755021677; cv=none; b=ssJrNteNEwNUZWIipfHF162JwzWnI3NWAfakv4YYwFvxQu75+WiKlstptgI9Fz/jBk0h2anVZOv9Ht7D68k2/zybRwH2vgVPG4Uq1gZ4lBMwto4W55d6ftyFMRE10O67gfyARIwhlJezLB0IkbGIAQ7/5BWaOgOECy98QGQtpKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021674; c=relaxed/simple;
-	bh=bjCge3zA8MoqHQGQbWrkN50pCoDOdpkwdCI2M/Mm7lU=;
+	s=arc-20240116; t=1755021677; c=relaxed/simple;
+	bh=HAIjS9mACo0ISIlDIZDU3qcL8uLo5zSwF3ikrmZLl6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bs9T+LI8wp5CprdUfPKA0AZ3bBayvPJ6JJlz8Gvl/vQp+hs4GTQX2qEM/xfksDCJW4FMBjQhXExWXQNYdbR1fTqX8XITf5iOM/HqLVDsSaWrLfgyz/umqaV5QSiOTN1zzhoE2r3JVUJt9jYHkmIUTI0zHV2l70EoUYsOW4PavBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGRkbWc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YRDC+6YRshI91IM4umc6IA831v6i2e2vVwitcdYAvuhchTMcoUQ5TtrgRJNbb/XvuDeUNYSZZDjufAcf2ohmNVEpUTIq3SGPvL4HUFhUaM0MTLQbLagPzDw7AV8V+XvhvSogdQANXgFdKpSR3wbqjQ1uace8yPdJR28N/wPB1vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIW31vWY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGRkbWc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B247AC4CEF0;
-	Tue, 12 Aug 2025 18:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIW31vWY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3473BC4CEF1;
+	Tue, 12 Aug 2025 18:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021674;
-	bh=bjCge3zA8MoqHQGQbWrkN50pCoDOdpkwdCI2M/Mm7lU=;
+	s=korg; t=1755021677;
+	bh=HAIjS9mACo0ISIlDIZDU3qcL8uLo5zSwF3ikrmZLl6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGRkbWc5BG+LL770rDrXALwhQaWoH87PMsFJDIbAL5PpI0UfXG782ZGRgILbsMeuB
-	 XDUPYbQ/LXXXCcdWj0iQf4zlvgdPZqcldRpVR/NJnFxWk2Uu3Bsa79WPas7PQ++hFA
-	 7s/Ja//CmEcxz8tP4WyJebtVfJwpK4DEk1TnsLkI=
+	b=AIW31vWYukehS6LVNoZpdJqhENXhKQbMiZKLR7i4BbXID9ou7XilbaBFAlJJlBPax
+	 fBoq2CQivqOZSwxLyvGbK0+sPhICuZLITpIU0Wm/7WTWUhUASgr0DSM6e4dDbU9Rrk
+	 UksIlRBn6fbznwwpzYgeunefTlMAQGDXNP3s51Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zixun LI <admin@hifiphile.com>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/262] mtd: rawnand: atmel: set pmecc data setup time
-Date: Tue, 12 Aug 2025 19:29:06 +0200
-Message-ID: <20250812172959.831805592@linuxfoundation.org>
+Subject: [PATCH 6.6 159/262] vhost-scsi: Fix log flooding with target does not exist errors
+Date: Tue, 12 Aug 2025 19:29:07 +0200
+Message-ID: <20250812172959.874078442@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -53,55 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit f552a7c7e0a14215cb8a6fd89e60fa3932a74786 ]
+[ Upstream commit 69cd720a8a5e9ef0f05ce5dd8c9ea6e018245c82 ]
 
-Setup the pmecc data setup time as 3 clock cycles for 133MHz as recommended
-by the datasheet.
+As part of the normal initiator side scanning the guest's scsi layer
+will loop over all possible targets and send an inquiry. Since the
+max number of targets for virtio-scsi is 256, this can result in 255
+error messages about targets not existing if you only have a single
+target. When there's more than 1 vhost-scsi device each with a single
+target, then you get N * 255 log messages.
 
-Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
-Reported-by: Zixun LI <admin@hifiphile.com>
-Closes: https://lore.kernel.org/all/c015bb20-6a57-4f63-8102-34b3d83e0f5b@microchip.com
-Suggested-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Signed-off-by: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+It looks like the log message was added by accident in:
+
+commit 3f8ca2e115e5 ("vhost/scsi: Extract common handling code from
+control queue handler")
+
+when we added common helpers. Then in:
+
+commit 09d7583294aa ("vhost/scsi: Use common handling code in request
+queue handler")
+
+we converted the scsi command processing path to use the new
+helpers so we started to see the extra log messages during scanning.
+
+The patches were just making some code common but added the vq_err
+call and I'm guessing the patch author forgot to enable the vq_err
+call (vq_err is implemented by pr_debug which defaults to off). So
+this patch removes the call since it's expected to hit this path
+during device discovery.
+
+Fixes: 09d7583294aa ("vhost/scsi: Use common handling code in request queue handler")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20250611210113.10912-1-michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/pmecc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/vhost/scsi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
-index 3c7dee1be21d..0b402823b619 100644
---- a/drivers/mtd/nand/raw/atmel/pmecc.c
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.c
-@@ -143,6 +143,7 @@ struct atmel_pmecc_caps {
- 	int nstrengths;
- 	int el_offset;
- 	bool correct_erased_chunks;
-+	bool clk_ctrl;
- };
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 662351511157..90a3c0fc5ab0 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1032,10 +1032,8 @@ vhost_scsi_get_req(struct vhost_virtqueue *vq, struct vhost_scsi_ctx *vc,
+ 			/* validated at handler entry */
+ 			vs_tpg = vhost_vq_get_backend(vq);
+ 			tpg = READ_ONCE(vs_tpg[*vc->target]);
+-			if (unlikely(!tpg)) {
+-				vq_err(vq, "Target 0x%x does not exist\n", *vc->target);
++			if (unlikely(!tpg))
+ 				goto out;
+-			}
+ 		}
  
- struct atmel_pmecc {
-@@ -843,6 +844,10 @@ static struct atmel_pmecc *atmel_pmecc_create(struct platform_device *pdev,
- 	if (IS_ERR(pmecc->regs.errloc))
- 		return ERR_CAST(pmecc->regs.errloc);
- 
-+	/* pmecc data setup time */
-+	if (caps->clk_ctrl)
-+		writel(PMECC_CLK_133MHZ, pmecc->regs.base + ATMEL_PMECC_CLK);
-+
- 	/* Disable all interrupts before registering the PMECC handler. */
- 	writel(0xffffffff, pmecc->regs.base + ATMEL_PMECC_IDR);
- 	atmel_pmecc_reset(pmecc);
-@@ -896,6 +901,7 @@ static struct atmel_pmecc_caps at91sam9g45_caps = {
- 	.strengths = atmel_pmecc_strengths,
- 	.nstrengths = 5,
- 	.el_offset = 0x8c,
-+	.clk_ctrl = true,
- };
- 
- static struct atmel_pmecc_caps sama5d4_caps = {
+ 		if (tpgp)
 -- 
 2.39.5
 
