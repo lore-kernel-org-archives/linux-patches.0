@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0200C2F8BE7;
-	Tue, 12 Aug 2025 17:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A51268C73;
+	Tue, 12 Aug 2025 17:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021403; cv=none; b=IDJX9vAb80Kyy/7Rl9LHZ8vLAKIlx2VJ3U4F0hqCbfAwJ4RPkuT+xB5uAHWng2eqnpJ5tv8k6SwYreK6JfJQWdoIU8lMZ1jGSr50xYcPO9UZ5ATVJRf0NX1NkwLVo3MmeeiNghnlhYZC53L1QZlo1bzcSVvppnSkc12wji7ZpAY=
+	t=1755021406; cv=none; b=RzqFNVOIZ/g4SIYnOBOEUeFPSXVaRxxeKt1uTIYRxDKZm4FRGZtaP9lOaVM+VF0x+Th9O6Mt0vmt/mJozFy24Hg7C20VZ8vu71KvLsRkw7BtqL3f++xd89I9LW63xjZnwXTfS4whi/cgZ0qATPCvwueXa4EmfvGCNl0vQ9eXPao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021403; c=relaxed/simple;
-	bh=Sm6Y4WsetivurHkKZZ1muCCAWIZL3UbYG7eenb811Wk=;
+	s=arc-20240116; t=1755021406; c=relaxed/simple;
+	bh=d3E8ZLOT2ej5yykEszbxUJsSLH5paAX192ar0IBfwAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJnx3GMBHlg/XQnko91QfLE19JDSXfE+4A6KYRJ7o4A03MvdZiLce1PEiKRG2SZgU4zQKf57/cblRfVK5Btnxl8werJ6/lfb1/iMCvc0Yza7EkMwwfkUZ21uHrEnbvEcePbDRfPILFOnDN65MymlCHJCfB3P203yqQkQtG3t/xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFTmR+7d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sKl3bcH/wcoa9BwtWHKxs2gpTMgY4nNbBVvztoMqYvvntC1AAdGaNmL1L8Jh2XuwBBV9kl11R4/MvYtPxL3KDLMdnA8LHPSNexnF52QvgyXjQ0gSqbnOOB9HbeYtC50oggO4Kdw4kZ2DTGyEHQEt2DKt05rGV3oqpdCSyicLtBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxeyV86R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFTmR+7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B1CC4CEF0;
-	Tue, 12 Aug 2025 17:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxeyV86R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B091DC4CEF0;
+	Tue, 12 Aug 2025 17:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021402;
-	bh=Sm6Y4WsetivurHkKZZ1muCCAWIZL3UbYG7eenb811Wk=;
+	s=korg; t=1755021406;
+	bh=d3E8ZLOT2ej5yykEszbxUJsSLH5paAX192ar0IBfwAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFTmR+7dGizIojhoK4tTmPb9pLiPFm9omYl9vKmcIq9O3mcq+CNOU1QAdVLhc7OaM
-	 CqXhlE3YaP9iebdwVT+s/qJBv4lAKJJoCq8n37c3g3EUuzNwEte1PveA3/tLfVaPRe
-	 1Upe96EWUuEW4OkkYKgY4x5p+yTmq8zj1QfN7H9k=
+	b=zxeyV86RqXV0+GGimRirgWNzRCsitCW//H7BJsc/YZPuS0PNNpuWqI6LVBlW9Bl22
+	 zS6WGisRI/fBvZEbHCcTL1BMqeOTWn8HoUkZegR/p9xh3C3V6zoW7TbIu2v2KJeZcR
+	 7CQzR+oHslXAFDf/sKlPB2jot+2jnRkhhRn2RyCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	David Lechner <david@lechnology.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 111/262] mtd: fix possible integer overflow in erase_xfer()
-Date: Tue, 12 Aug 2025 19:28:19 +0200
-Message-ID: <20250812172957.821408974@linuxfoundation.org>
+Subject: [PATCH 6.6 112/262] clk: davinci: Add NULL check in davinci_lpsc_clk_register()
+Date: Tue, 12 Aug 2025 19:28:20 +0200
+Message-ID: <20250812172957.863972712@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,39 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 9358bdb9f9f54d94ceafc650deffefd737d19fdd ]
+[ Upstream commit 13de464f445d42738fe18c9a28bab056ba3a290a ]
 
-The expression '1 << EraseUnitSize' is evaluated in int, which causes
-a negative result when shifting by 31 - the upper bound of the valid
-range [10, 31], enforced by scan_header(). This leads to incorrect
-extension when storing the result in 'erase->len' (uint64_t), producing
-a large unexpected value.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+davinci_lpsc_clk_register() does not check for this case, which results
+in a NULL pointer dereference.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+Add NULL check after devm_kasprintf() to prevent this issue and ensuring
+no resources are left allocated.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: c6ed4d734bc7 ("clk: davinci: New driver for davinci PSC clocks")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://lore.kernel.org/r/20250401131341.26800-1-bsdhenrymartin@gmail.com
+Reviewed-by: David Lechner <david@lechnology.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ftl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/davinci/psc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/mtd/ftl.c b/drivers/mtd/ftl.c
-index 8c22064ead38..f2bd1984609c 100644
---- a/drivers/mtd/ftl.c
-+++ b/drivers/mtd/ftl.c
-@@ -344,7 +344,7 @@ static int erase_xfer(partition_t *part,
-             return -ENOMEM;
+diff --git a/drivers/clk/davinci/psc.c b/drivers/clk/davinci/psc.c
+index cd85d9f158b0..6f7b8f082ad3 100644
+--- a/drivers/clk/davinci/psc.c
++++ b/drivers/clk/davinci/psc.c
+@@ -278,6 +278,11 @@ davinci_lpsc_clk_register(struct device *dev, const char *name,
  
-     erase->addr = xfer->Offset;
--    erase->len = 1 << part->header.EraseUnitSize;
-+    erase->len = 1ULL << part->header.EraseUnitSize;
- 
-     ret = mtd_erase(part->mbd.mtd, erase);
-     if (!ret) {
+ 	lpsc->pm_domain.name = devm_kasprintf(dev, GFP_KERNEL, "%s: %s",
+ 					      best_dev_name(dev), name);
++	if (!lpsc->pm_domain.name) {
++		clk_hw_unregister(&lpsc->hw);
++		kfree(lpsc);
++		return ERR_PTR(-ENOMEM);
++	}
+ 	lpsc->pm_domain.attach_dev = davinci_psc_genpd_attach_dev;
+ 	lpsc->pm_domain.detach_dev = davinci_psc_genpd_detach_dev;
+ 	lpsc->pm_domain.flags = GENPD_FLAG_PM_CLK;
 -- 
 2.39.5
 
