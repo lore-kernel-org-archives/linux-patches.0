@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39582FDC2F;
-	Tue, 12 Aug 2025 17:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143E42F8BE7;
+	Tue, 12 Aug 2025 17:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021412; cv=none; b=gS5ip6nZ9ddFx8bqb79MPcTo9U7Wj8SfJXQAcVPL7qDjrxxxdS4zEy3x/lxE3I645AaBUM6YBQeVahPIjcHuFTyinBiiWTvqoNmSzUynjrXl/x1JOBL/wGDecCVPmXyT2ZHkX3+u9wD8CDC2dpN8QXGiFWXoQJ2Vo5EpQGCsH6s=
+	t=1755021416; cv=none; b=Jg+rMhRxibZX+Pe8AaN2nytuDuuegaWxMJuB/b/HRIUINrx2JmaIx3mzq3+5RWzIKux/4WFp0XKV8EGDFZDXzdr52XGb5YPNxjlcgoabUV9pft20o7TFYru7BYy+gd4TAHoC6/tUSzXMt8246GYq+L2Ztjr3LFcOx8zbar1uWfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021412; c=relaxed/simple;
-	bh=MjW/+o8szuDFyyIASkctf9XRpiDAL2eklHuVVJpTP5A=;
+	s=arc-20240116; t=1755021416; c=relaxed/simple;
+	bh=+1DQFgswVuHo5NbejPa62AzXZmOyKCOdXNUyR7C72lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICSIPhnkAWsPLUKcj9t5XtkGeaLV4zw8TqdOHSIJL5N+coyr1Pn76Gay5Mo+XKLPoOKysnQ62lztgQMBJCI+Ht6Nh+9y9XqjCOpRUdf9lq3fc9/WMibJXL/aT1jS4/seb+w4Kw6CQH8XP4tog7m5JZObfPtlwk4KEsdVhqrUNT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPoe2FM7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HUMkALBbppllOdiTVYlNk9eaQrtWvyNpi7RjbKRvc7VRwgGZ0w6M4VwCtqyn1jZlpmgLEWD3yEKjAG8AsuVAz7HfnkNd/IDK8nisKdjX1dWNRBVB+vkFPMrDH6DWcdlor+idZiN1oDUSM/5nHhYiyTmhqFAGSe9IA/DQuKNfR9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2NV6aM/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPoe2FM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495EEC4CEF6;
-	Tue, 12 Aug 2025 17:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2NV6aM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7399DC4CEF0;
+	Tue, 12 Aug 2025 17:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021412;
-	bh=MjW/+o8szuDFyyIASkctf9XRpiDAL2eklHuVVJpTP5A=;
+	s=korg; t=1755021415;
+	bh=+1DQFgswVuHo5NbejPa62AzXZmOyKCOdXNUyR7C72lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZPoe2FM7YOG+zd0VEwp+Jse/Tq1dfAxg+6s5yqXCnxUcToxZTaNlixhgZjQsu+C54
-	 nvLdaFY2ZMNqEMWgyAKK2ADwR+u3fAkx//3Fz0KB4atfU17wqZL2zg32rbYV6oJ0TY
-	 307hnkbSA411TkJPiG1cilPp9J41lcStQT4Y+Ijg=
+	b=x2NV6aM/skB88L73exKlxOQxkHKfw4Sb17zkjmewYl0VzOf9b1FKTeXRkF0hZIU2N
+	 fHNXpmkiTJjYqtOmJS6pu5haFBQg4Kz6qUrIT8CdnmyE0WILfM9zsbmvux15hP4cJH
+	 w1EtTnmD3VGZ1T9Eh0lEbJRR1BpK1YxPiJKXRPr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohit Visavalia <rohit.visavalia@amd.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 114/262] clk: xilinx: vcu: unregister pll_post only if registered correctly
-Date: Tue, 12 Aug 2025 19:28:22 +0200
-Message-ID: <20250812172957.955127756@linuxfoundation.org>
+Subject: [PATCH 6.6 090/262] wifi: mac80211: Write cnt before copying in ieee80211_copy_rnr_beacon()
+Date: Tue, 12 Aug 2025 19:27:58 +0200
+Message-ID: <20250812172956.895068724@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,48 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohit Visavalia <rohit.visavalia@amd.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 3b0abc443ac22f7d4f61ddbbbbc5dbb06c87139d ]
+[ Upstream commit a37192c432adaec9e8ef29e4ddb319ea2f443aa6 ]
 
-If registration of pll_post is failed, it will be set to NULL or ERR,
-unregistering same will fail with following call trace:
+While I caught the need for setting cnt early in nl80211_parse_rnr_elems()
+in the original annotation of struct cfg80211_rnr_elems with __counted_by,
+I missed a similar pattern in ieee80211_copy_rnr_beacon(). Fix this by
+moving the cnt assignment to before the loop.
 
-Unable to handle kernel NULL pointer dereference at virtual address 008
-pc : clk_hw_unregister+0xc/0x20
-lr : clk_hw_unregister_fixed_factor+0x18/0x30
-sp : ffff800011923850
-...
-Call trace:
- clk_hw_unregister+0xc/0x20
- clk_hw_unregister_fixed_factor+0x18/0x30
- xvcu_unregister_clock_provider+0xcc/0xf4 [xlnx_vcu]
- xvcu_probe+0x2bc/0x53c [xlnx_vcu]
-
-Fixes: 4472e1849db7 ("soc: xilinx: vcu: make pll post divider explicit")
-Signed-off-by: Rohit Visavalia <rohit.visavalia@amd.com>
-Link: https://lore.kernel.org/r/20250210113614.4149050-2-rohit.visavalia@amd.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 7b6d7087031b ("wifi: cfg80211: Annotate struct cfg80211_rnr_elems with __counted_by")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/20250721182521.work.540-kees@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/xilinx/xlnx_vcu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/cfg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/xilinx/xlnx_vcu.c b/drivers/clk/xilinx/xlnx_vcu.c
-index 60a3ed7c7263..299332818ba3 100644
---- a/drivers/clk/xilinx/xlnx_vcu.c
-+++ b/drivers/clk/xilinx/xlnx_vcu.c
-@@ -587,8 +587,8 @@ static void xvcu_unregister_clock_provider(struct xvcu_device *xvcu)
- 		xvcu_clk_hw_unregister_leaf(hws[CLK_XVCU_ENC_MCU]);
- 	if (!IS_ERR_OR_NULL(hws[CLK_XVCU_ENC_CORE]))
- 		xvcu_clk_hw_unregister_leaf(hws[CLK_XVCU_ENC_CORE]);
--
--	clk_hw_unregister_fixed_factor(xvcu->pll_post);
-+	if (!IS_ERR_OR_NULL(xvcu->pll_post))
-+		clk_hw_unregister_fixed_factor(xvcu->pll_post);
- }
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index a3c5d4d995db..3ff7f38394a6 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1099,13 +1099,13 @@ ieee80211_copy_rnr_beacon(u8 *pos, struct cfg80211_rnr_elems *dst,
+ {
+ 	int i, offset = 0;
  
- /**
++	dst->cnt = src->cnt;
+ 	for (i = 0; i < src->cnt; i++) {
+ 		memcpy(pos + offset, src->elem[i].data, src->elem[i].len);
+ 		dst->elem[i].len = src->elem[i].len;
+ 		dst->elem[i].data = pos + offset;
+ 		offset += dst->elem[i].len;
+ 	}
+-	dst->cnt = src->cnt;
+ 
+ 	return offset;
+ }
 -- 
 2.39.5
 
