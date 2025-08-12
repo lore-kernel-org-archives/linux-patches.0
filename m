@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9B9247287;
-	Tue, 12 Aug 2025 18:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B89247287;
+	Tue, 12 Aug 2025 18:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024605; cv=none; b=hraRgRgUMuIN24IJ9bivd8n0ZD7ELBsFxSVMwSHNt0zG9UfL4x/hJFzxOTfmWK7ab/C3FtbiXdbWugPn+w8D4iqccBbrGrGvMnPk0FuS08aBy8o65IXLpan6wfkEsW1bwY/ATSp88u9yhviQV6+iGfIRmnSAFuPPShqvA4bKRkw=
+	t=1755024608; cv=none; b=XyEeX3jkKPbv96uhsvf6ZuATSNC/3SgQt7BqkwOM9ii/sVnCXzR8uu4dTPUNLPz9esJLVk10efUIJuBQw4goBmCFcOhkVYZJMyV1Nsgg0CNXVd6n8BiERKg+l0LgJUfmVwjAa+AMl2huqRq0rH1tZxpQFMPe00hd+u+M/7Ij+wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024605; c=relaxed/simple;
-	bh=/oN+XmUB8lmTc2F0d610G/h54YuylM8g0/g3G6nxRnM=;
+	s=arc-20240116; t=1755024608; c=relaxed/simple;
+	bh=sMQXHvvv4n8Z0bUxsV8/AQdzJAIedTV2xSrDTLpmgjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NpxgX8vI2LxDDSYEEpanIQupF5EOPOZVegULKFYahm+dj9bmTfCp938aFFipL/ueI+xDCl43WzFTMPRWXdt4/QnaAIRgvIrgrUcN+Igx48GaOExZEC5lRjKzigcMFKlNXYjI96WavuV1zE1JLC12XUZ6w98UXYujHQ3mcTJZknA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HO/LOeNh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iKIdpfRuQAXqccVLV2U6xMUhzCuqQKq6p4DDJfcVK8Mecvsd7AM6TMZlceU52u1ISfA087YxJmG018K7mlkdmYDFHQ/9Km/wjQ0j1q49UpPxUFMRDaqmgn4GGYb7R3s8kxExscZvSpLOujKVB8mDFHH1dZNM+wSSxteGXghd7G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTeww/Ye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HO/LOeNh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72634C4CEF0;
-	Tue, 12 Aug 2025 18:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTeww/Ye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E98C4CEF0;
+	Tue, 12 Aug 2025 18:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024604;
-	bh=/oN+XmUB8lmTc2F0d610G/h54YuylM8g0/g3G6nxRnM=;
+	s=korg; t=1755024608;
+	bh=sMQXHvvv4n8Z0bUxsV8/AQdzJAIedTV2xSrDTLpmgjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HO/LOeNhoYYQ5nw8Bqnpbhx8RHamLy004xRfvr+vmvPxYaAzIA8atfa+xLGie6sfz
-	 EXInWCMOmMTeYJ2R8+1tYeUcbM5Na5ZoQTAiwo8FURekk/oLUDtv0jrVY01KBXCL6+
-	 AOniwH5WCJr4LIZ2dS/jn+PsU+vYokRS6aRldjiU=
+	b=jTeww/YeB25nL1MVMW9+JdBYOq03zlmDGk8J2TPbQfstOI8TRbkCmF7sY/ZhIIF9j
+	 +qhpuVWBN/iZcf72kOli5nuPxX2nKvtwc5h1IYRlgCENpUpF7e0GwAvqR053KQuCdr
+	 J8Xk5yfhmz7vQsQ4b1O19at2rEP4pmBNRf51blBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 389/627] clk: sunxi-ng: v3s: Fix de clock definition
-Date: Tue, 12 Aug 2025 19:31:24 +0200
-Message-ID: <20250812173434.100259839@linuxfoundation.org>
+Subject: [PATCH 6.16 380/627] pinmux: fix race causing mux_owner NULL with active mux_usecount
+Date: Tue, 12 Aug 2025 19:31:15 +0200
+Message-ID: <20250812173433.752838160@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,42 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Kocialkowski <paulk@sys-base.io>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit e8ab346f9907a1a3aa2f0e5decf849925c06ae2e ]
+[ Upstream commit 0b075c011032f88d1cfde3b45d6dcf08b44140eb ]
 
-The de clock is marked with CLK_SET_RATE_PARENT, which is really not
-necessary (as confirmed from experimentation) and significantly
-restricts flexibility for other clocks using the same parent.
+commit 5a3e85c3c397 ("pinmux: Use sequential access to access
+desc->pinmux data") tried to address the issue when two client of the
+same gpio calls pinctrl_select_state() for the same functionality, was
+resulting in NULL pointer issue while accessing desc->mux_owner.
+However, issue was not completely fixed due to the way it was handled
+and it can still result in the same NULL pointer.
 
-In addition the source selection (parent) field is marked as using
-2 bits, when it the documentation reports that it uses 3.
+The issue occurs due to the following interleaving:
 
-Fix both issues in the de clock definition.
+     cpu0 (process A)                   cpu1 (process B)
 
-Fixes: d0f11d14b0bc ("clk: sunxi-ng: add support for V3s CCU")
-Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
-Link: https://patch.msgid.link/20250704154008.3463257-1-paulk@sys-base.io
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+      pin_request() {                   pin_free() {
+
+                                         mutex_lock()
+                                         desc->mux_usecount--; //becomes 0
+                                         ..
+                                         mutex_unlock()
+
+  mutex_lock(desc->mux)
+  desc->mux_usecount++; // becomes 1
+  desc->mux_owner = owner;
+  mutex_unlock(desc->mux)
+
+                                         mutex_lock(desc->mux)
+                                         desc->mux_owner = NULL;
+                                         mutex_unlock(desc->mux)
+
+This sequence leads to a state where the pin appears to be in use
+(`mux_usecount == 1`) but has no owner (`mux_owner == NULL`), which can
+cause NULL pointer on next pin_request on the same pin.
+
+Ensure that updates to mux_usecount and mux_owner are performed
+atomically under the same lock. Only clear mux_owner when mux_usecount
+reaches zero and no new owner has been assigned.
+
+Fixes: 5a3e85c3c397 ("pinmux: Use sequential access to access desc->pinmux data")
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://lore.kernel.org/20250708-pinmux-race-fix-v2-1-8ae9e8a0d1a1@oss.qualcomm.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun8i-v3s.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pinctrl/pinmux.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c b/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
-index 52e4369664c5..df345a620d8d 100644
---- a/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
-@@ -347,8 +347,7 @@ static SUNXI_CCU_GATE(dram_ohci_clk,	"dram-ohci",	"dram",
+diff --git a/drivers/pinctrl/pinmux.c b/drivers/pinctrl/pinmux.c
+index 0743190da59e..2c31e7f2a27a 100644
+--- a/drivers/pinctrl/pinmux.c
++++ b/drivers/pinctrl/pinmux.c
+@@ -236,18 +236,7 @@ static const char *pin_free(struct pinctrl_dev *pctldev, int pin,
+ 			if (desc->mux_usecount)
+ 				return NULL;
+ 		}
+-	}
+-
+-	/*
+-	 * If there is no kind of request function for the pin we just assume
+-	 * we got it by default and proceed.
+-	 */
+-	if (gpio_range && ops->gpio_disable_free)
+-		ops->gpio_disable_free(pctldev, gpio_range, pin);
+-	else if (ops->free)
+-		ops->free(pctldev, pin);
  
- static const char * const de_parents[] = { "pll-video", "pll-periph0" };
- static SUNXI_CCU_M_WITH_MUX_GATE(de_clk, "de", de_parents,
--				 0x104, 0, 4, 24, 2, BIT(31),
--				 CLK_SET_RATE_PARENT);
-+				 0x104, 0, 4, 24, 3, BIT(31), 0);
+-	scoped_guard(mutex, &desc->mux_lock) {
+ 		if (gpio_range) {
+ 			owner = desc->gpio_owner;
+ 			desc->gpio_owner = NULL;
+@@ -258,6 +247,15 @@ static const char *pin_free(struct pinctrl_dev *pctldev, int pin,
+ 		}
+ 	}
  
- static const char * const tcon_parents[] = { "pll-video", "pll-periph0" };
- static SUNXI_CCU_M_WITH_MUX_GATE(tcon_clk, "tcon", tcon_parents,
++	/*
++	 * If there is no kind of request function for the pin we just assume
++	 * we got it by default and proceed.
++	 */
++	if (gpio_range && ops->gpio_disable_free)
++		ops->gpio_disable_free(pctldev, gpio_range, pin);
++	else if (ops->free)
++		ops->free(pctldev, pin);
++
+ 	module_put(pctldev->owner);
+ 
+ 	return owner;
 -- 
 2.39.5
 
