@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B3A2CA9;
-	Tue, 12 Aug 2025 18:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6B52CA9;
+	Tue, 12 Aug 2025 18:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024492; cv=none; b=g5YGoc6h/w9cWN7QF0oQmFr5b+0sqQHCx0Yx4CEmNVOzfaFrmdMTL2a8qG0vK+8JOpctA0WpFiwxCP2Oslvd/Z6sWF4jUe8UaChaV3jU/d9Dy/bgy8uSiYLiRlDeHqBuPchThdQU0SspaOuXvl1qxm1xUF3qCU9/Ao1ELmEHipQ=
+	t=1755024495; cv=none; b=Vl1d/Xb8awe1IB8ZVnIh2MvdBfoTOFHof44PPcIVJm3l9bh7F1eArJONAxaoa7ZD25APsou4aqAC4lE2mllYyx/Gd9p3Xz9rL6kZu/ibFfYa/Ajs0O7P57LDGLuP4x6TNQd3mTL71VQwSKHFipk4fgZyqvQCfyYuv+i38T/3CB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024492; c=relaxed/simple;
-	bh=et2pbS4YtUoAtoRaFZHGnJcKTikaXqDG1olRPhlt0HU=;
+	s=arc-20240116; t=1755024495; c=relaxed/simple;
+	bh=Kf2z03Z3wezYVNv4Ki32CZ5jPlO3YZoDe17to4dCZZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkKc1bPjxsPPrlY2yhSlFSOkRmNoaWK+KiKo6GulS7+Z85wWvi3mZjTcBBx0PnPkHACTPar7gDCpHWhGG5onswYho/9FbbEYQxc63R6rLpbbhqFonHECU3aUYftAZXtbxtB9IUBA9L685ADOOyDc6VIEgAjmL92S2Vckw3Epycg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc+9b7kD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AqML/1x148RTIBnHVRB5lgAqr91Z0Q4Qlygjw065UhA8vs3Q06MkmgfPfw7nrZZMNVkn90BNH55Pa8Gx+vWlw76kXEpW5xGC+H19H47FOoxQgl5S9/FPm2PoaJHFPi8heZHY38X+KJSaBsm0Ofb9qSJBE0keooIkoiX3vlOqMYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiicpHvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc+9b7kD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAEAC4CEF0;
-	Tue, 12 Aug 2025 18:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiicpHvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3183EC4CEF0;
+	Tue, 12 Aug 2025 18:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024492;
-	bh=et2pbS4YtUoAtoRaFZHGnJcKTikaXqDG1olRPhlt0HU=;
+	s=korg; t=1755024495;
+	bh=Kf2z03Z3wezYVNv4Ki32CZ5jPlO3YZoDe17to4dCZZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bc+9b7kDOx+LLHSeTashH5AHkQKVmBZ1qa2UFbKVGuSewt+XyI3ahJ5DouwZB/d59
-	 Qe9bYjjGNGrRe/bpIWd8158KeaNwC/YgBLtC/ku/aTY4QAp+5HTkdOSG2aKSXb9P4t
-	 qIjTGRqGezCjK829+Nbf0aRjV91Eo/CULwTwirIs=
+	b=ZiicpHvrJhZoxMlocao/y9D9GpVy3wzmIdFawIiEN9J4NOHesU3H4Is4BeeDtPGiO
+	 nSwr2drfYotfw38C/F+AyvSY9klgjVxWPmxPV8EGBvIGj38kS+R80d8e42kt4wbGOS
+	 mSo5PpkqCejLeGZFqn4k+X4vxDs/BvqH10lPwd7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 390/627] scsi: ibmvscsi_tgt: Fix dma_unmap_sg() nents value
-Date: Tue, 12 Aug 2025 19:31:25 +0200
-Message-ID: <20250812173434.136022999@linuxfoundation.org>
+Subject: [PATCH 6.16 391/627] scsi: core: Fix kernel doc for scsi_track_queue_full()
+Date: Tue, 12 Aug 2025 19:31:26 +0200
+Message-ID: <20250812173434.173486815@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,46 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-[ Upstream commit 023a293b9cd0bb86a9b50cd7688a3d9d266826db ]
+[ Upstream commit 6070bd558aee1eb5114e1676165bf0ccaa08240a ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+Sphinx reports indentation warning on scsi_track_queue_full() return
+values:
 
-Fixes: 88a678bbc34c ("ibmvscsis: Initial commit of IBM VSCSI Tgt Driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250630111803.94389-2-fourier.thomas@gmail.com
+Documentation/driver-api/scsi:101: ./drivers/scsi/scsi.c:247: ERROR: Unexpected indentation. [docutils]
+
+Fix the warning by making the return values listing a bullet list.
+
+Fixes: eb44820c28bc ("[SCSI] Add Documentation and integrate into docbook build")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Link: https://lore.kernel.org/r/20250702035822.18072-2-bagasdotme@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ibmvscsi_tgt/libsrp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/ibmvscsi_tgt/libsrp.c b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-index 8a0e28aec928..0ecad398ed3d 100644
---- a/drivers/scsi/ibmvscsi_tgt/libsrp.c
-+++ b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-@@ -184,7 +184,8 @@ static int srp_direct_data(struct ibmvscsis_cmd *cmd, struct srp_direct_buf *md,
- 	err = rdma_io(cmd, sg, nsg, md, 1, dir, len);
- 
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- 	return err;
- }
-@@ -256,7 +257,8 @@ static int srp_indirect_data(struct ibmvscsis_cmd *cmd, struct srp_cmd *srp_cmd,
- 	err = rdma_io(cmd, sg, nsg, md, nmd, dir, len);
- 
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- free_mem:
- 	if (token && dma_map) {
+diff --git a/drivers/scsi/scsi.c b/drivers/scsi/scsi.c
+index 518a252eb6aa..c2527dd289d9 100644
+--- a/drivers/scsi/scsi.c
++++ b/drivers/scsi/scsi.c
+@@ -242,9 +242,11 @@ EXPORT_SYMBOL(scsi_change_queue_depth);
+  * 		specific SCSI device to determine if and when there is a
+  * 		need to adjust the queue depth on the device.
+  *
+- * Returns:	0 - No change needed, >0 - Adjust queue depth to this new depth,
+- * 		-1 - Drop back to untagged operation using host->cmd_per_lun
+- * 			as the untagged command depth
++ * Returns:
++ * * 0 - No change needed
++ * * >0 - Adjust queue depth to this new depth,
++ * * -1 - Drop back to untagged operation using host->cmd_per_lun as the
++ *   untagged command depth
+  *
+  * Lock Status:	None held on entry
+  *
 -- 
 2.39.5
 
