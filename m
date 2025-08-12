@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27C52FE57E;
-	Tue, 12 Aug 2025 18:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737662FE593;
+	Tue, 12 Aug 2025 18:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024163; cv=none; b=kuxBRqzbcqVjmO9zg0SeCrf8tTFXTFeGMDF+eJcejBj1nav/v+j0T7v8DPdOL/+SWk+Dfq7En0GAelUQ31VZEevtsnHBzbILMDne6iDp+hiDQfTOhAyznFKLEDExf2Uubz7lU8TDw9u4FQE8EKcpTXs/1FIZiyGjk1vvbRv/ZK8=
+	t=1755024166; cv=none; b=G1BLM9Ap2FDfughBrw4xC2HKbNthGM7aVqk1WZ41zPW/x3ffBWn1fgzuIbYf+UL3cf2emJeziumqjeoSehF+tHaQgbd2wRFa3atIOyt2GnJ7+/C5BVUseXZtszYOw/FEfCmdEuhkZgoHpDgEmvr7SQMR1LB9wdbDH8dvqx4K50k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024163; c=relaxed/simple;
-	bh=lfQcjPaNQfDNEx2cdYpPZem0Yp6vRxtpZ8QJJxm8YxY=;
+	s=arc-20240116; t=1755024166; c=relaxed/simple;
+	bh=UTuqIYkLt3YSUCUKMuLk2XwHURssXZDtj0IQ9q8c1xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bx8Y6HC6IuAbsB20vDSZPo9iVx0LnxbtFOJPXLc42nMktAzck3AEBLSqVoOFwLT+LMJBKEH+tyPnJ82FtuahbLiwPcRuzI7e4Ujw0f2NY+sYv2DeBNnPNgDFJEa/x8379zfHYEN10c1CJL+9T0W+rK/+Jhv0UkVJUf8xigqO25U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTDC34o+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Np1MB1Y7C7R3OpAqBUUmkMwk8mmZAzh+OJiOAb47hQCb16o5fA/xqB7KWnN/Z+CymSpwKEfz3MJOxhA1KWpElDttPUPJoCDFzRjRT+fTkbbODa8CFdytRfgzwt6ihXUmdas2WOOTudsf0+VAbHMv7+y54WvkW2MU1lDcck5QQMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJqcOMdk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTDC34o+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3735AC4CEF0;
-	Tue, 12 Aug 2025 18:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJqcOMdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5258C4CEF0;
+	Tue, 12 Aug 2025 18:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024162;
-	bh=lfQcjPaNQfDNEx2cdYpPZem0Yp6vRxtpZ8QJJxm8YxY=;
+	s=korg; t=1755024166;
+	bh=UTuqIYkLt3YSUCUKMuLk2XwHURssXZDtj0IQ9q8c1xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yTDC34o+srLW4ubmrSgEDRE4kTCFO+K0CF8WPMufnctU3llaQdXLxZxbI/9kF8t6f
-	 Xn3IotES/B787jrPSViPf4cBvOYoi0DYvZTlXFOFRCSvoOsap/Pe5fw16ccCU1ROs8
-	 Kv1mmkZNOMoeRnHtEHQDdLWb2us9RTiuM/G1BO9A=
+	b=BJqcOMdkGhcYqdWqIr+n2HRK07QoWIoYU8iYBvncZAHOgMBXRjfUrLxIQu1FrIZXg
+	 dSKzCfJ8E4t7zblltyrM1OcnTmBQyDSdK4r1HrUxQ5NFRishJVLvsfZ5R2GXyvky9A
+	 Rsgvb7cH+aNYw7JV5E8ZECz/XfMtCknBaMiz4S8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Chen <yiche@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Juri Lelli <jlelli@redhat.com>,
+	Clark Williams <williams@redhat.com>,
+	John Kacur <jkacur@redhat.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 275/627] selftests: netfilter: ipvs.sh: Explicity disable rp_filter on interface tunl0
-Date: Tue, 12 Aug 2025 19:29:30 +0200
-Message-ID: <20250812173429.772268828@linuxfoundation.org>
+Subject: [PATCH 6.16 293/627] rv: Remove trailing whitespace from tracepoint string
+Date: Tue, 12 Aug 2025 19:29:48 +0200
+Message-ID: <20250812173430.455484242@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,61 +59,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Chen <yiche@redhat.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 8b4a1a46e84a17f5d6fde5c506cc6bb141a24772 ]
+[ Upstream commit 7b70ac4cad2b20eaf415276bbaa0d9df9abb428c ]
 
-Although setup_ns() set net.ipv4.conf.default.rp_filter=0,
-loading certain module such as ipip will automatically create a tunl0 interface
-in all netns including new created ones. In the script, this is before than
-default.rp_filter=0 applied, as a result tunl0.rp_filter remains set to 1
-which causes the test report FAIL when ipip module is preloaded.
+RV event tracepoints print a line with the format:
+    "event_xyz: S0 x event -> S1 "
+    "event_xyz: S1 x event -> S0 (final)"
 
-Before fix:
-Testing DR mode...
-Testing NAT mode...
-Testing Tunnel mode...
-ipvs.sh: FAIL
+While printing an event leading to a non-final state, the line
+has a trailing white space (visible above before the closing ").
 
-After fix:
-Testing DR mode...
-Testing NAT mode...
-Testing Tunnel mode...
-ipvs.sh: PASS
+Adapt the format string not to print the trailing whitespace if we are
+not printing "(final)".
 
-Fixes: 7c8b89ec506e ("selftests: netfilter: remove rp_filter configuration")
-Signed-off-by: Yi Chen <yiche@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tomas Glozar <tglozar@redhat.com>
+Cc: Juri Lelli <jlelli@redhat.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: John Kacur <jkacur@redhat.com>
+Link: https://lore.kernel.org/20250728135022.255578-3-gmonaco@redhat.com
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 7f904ff6e58d ("rv: Use strings in da monitors tracepoints")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/netfilter/ipvs.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/rv/rv_trace.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/netfilter/ipvs.sh b/tools/testing/selftests/net/netfilter/ipvs.sh
-index 6af2ea3ad6b8..9c9d5b38ab71 100755
---- a/tools/testing/selftests/net/netfilter/ipvs.sh
-+++ b/tools/testing/selftests/net/netfilter/ipvs.sh
-@@ -151,7 +151,7 @@ test_nat() {
- test_tun() {
- 	ip netns exec "${ns0}" ip route add "${vip_v4}" via "${gip_v4}" dev br0
+diff --git a/kernel/trace/rv/rv_trace.h b/kernel/trace/rv/rv_trace.h
+index 422b75f58891..18fa0e358a30 100644
+--- a/kernel/trace/rv/rv_trace.h
++++ b/kernel/trace/rv/rv_trace.h
+@@ -29,11 +29,11 @@ DECLARE_EVENT_CLASS(event_da_monitor,
+ 		__entry->final_state		= final_state;
+ 	),
  
--	ip netns exec "${ns1}" modprobe -q ipip
-+	modprobe -q ipip
- 	ip netns exec "${ns1}" ip link set tunl0 up
- 	ip netns exec "${ns1}" sysctl -qw net.ipv4.ip_forward=0
- 	ip netns exec "${ns1}" sysctl -qw net.ipv4.conf.all.send_redirects=0
-@@ -160,10 +160,10 @@ test_tun() {
- 	ip netns exec "${ns1}" ipvsadm -a -i -t "${vip_v4}:${port}" -r ${rip_v4}:${port}
- 	ip netns exec "${ns1}" ip addr add ${vip_v4}/32 dev lo:1
+-	TP_printk("%s x %s -> %s %s",
++	TP_printk("%s x %s -> %s%s",
+ 		__entry->state,
+ 		__entry->event,
+ 		__entry->next_state,
+-		__entry->final_state ? "(final)" : "")
++		__entry->final_state ? " (final)" : "")
+ );
  
--	ip netns exec "${ns2}" modprobe -q ipip
- 	ip netns exec "${ns2}" ip link set tunl0 up
- 	ip netns exec "${ns2}" sysctl -qw net.ipv4.conf.all.arp_ignore=1
- 	ip netns exec "${ns2}" sysctl -qw net.ipv4.conf.all.arp_announce=2
-+	ip netns exec "${ns2}" sysctl -qw net.ipv4.conf.tunl0.rp_filter=0
- 	ip netns exec "${ns2}" ip addr add "${vip_v4}/32" dev lo:1
+ DECLARE_EVENT_CLASS(error_da_monitor,
+@@ -90,12 +90,12 @@ DECLARE_EVENT_CLASS(event_da_monitor_id,
+ 		__entry->final_state		= final_state;
+ 	),
  
- 	test_service
+-	TP_printk("%d: %s x %s -> %s %s",
++	TP_printk("%d: %s x %s -> %s%s",
+ 		__entry->id,
+ 		__entry->state,
+ 		__entry->event,
+ 		__entry->next_state,
+-		__entry->final_state ? "(final)" : "")
++		__entry->final_state ? " (final)" : "")
+ );
+ 
+ DECLARE_EVENT_CLASS(error_da_monitor_id,
 -- 
 2.39.5
 
