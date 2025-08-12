@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E336320E023;
-	Tue, 12 Aug 2025 19:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CDB1F429C;
+	Tue, 12 Aug 2025 19:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026177; cv=none; b=h5KoLMRL6peyOvDHV5IqP+n+I+qSiSy20rQKwGw9nCnEBHvmSQzIoQ1QawlpQqPyHmoQEa3bf1Dr+oX+EzAcO5SacKuBdIA8gwEj+7XYSs6/ukHePr+WSMRsnRj6mB4khO6YCknLSPGkpwSb8SeCcJn+3gg518Xx7VO9yXmjZ2I=
+	t=1755026180; cv=none; b=bTq8w52BNIR6JsKUWE8kRPOzSDJg0E+bczHdYyNcy9O1bbq+P2l1Yjue0IIGLL/yRyR6LNZKb12+9z5AlQ3lsM5/Kbt6o8rhyce2cguafWlGNtcNEAlD3Nk+O50zU7oM5A7IZuD2vR02rj/B2zTZB8cQNcVAIQ2e3yOklIe0U3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026177; c=relaxed/simple;
-	bh=RYTIExPxixxO8P8L+mc+lMmIM67NqEuhf7q8sh4LMA0=;
+	s=arc-20240116; t=1755026180; c=relaxed/simple;
+	bh=B5j7sQBVnE/SU28FCegdga6QVg7mCv8l761GhP8cRJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0I9s/6ia3143AAAnoVFAQ8cZdL/NdJ/Lrm4Y1vhzkiXWIO4JrfcTnbXweyv/AgRxjvToBYWENRvG/9DDMt+ZdbmLO7GKxvq3Tx/6KGIpQNDTSC8rF2M2q42BRFLXFtMEYv042MyjRcdOlOqevgTj2rl9/J38HEwbt/THGYeez8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqT6l3dt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EekeiZ5VX74chLhGZIPFlSxMTCDqmga25TS0sX8ibln9pzYCuRZRqIXoS+iIB0GkQqk/NK9cg/5O0zLpsd3ZgLJFON8dGftYHXjLB/6ndSSIZipz7pqEBw8f2OMLpCYZoBhkcbc9EAasCS1N/CcTqPQDTQm3FykpjI3YZWs/5o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idNPUytD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqT6l3dt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADEEC4CEF0;
-	Tue, 12 Aug 2025 19:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idNPUytD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9116DC4CEF0;
+	Tue, 12 Aug 2025 19:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026176;
-	bh=RYTIExPxixxO8P8L+mc+lMmIM67NqEuhf7q8sh4LMA0=;
+	s=korg; t=1755026180;
+	bh=B5j7sQBVnE/SU28FCegdga6QVg7mCv8l761GhP8cRJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqT6l3dtYgMju4LyvqPIl6GSkSJ1ZEOepHoOXFjgukuMOSEQ1me4UA9mzPscn5ffh
-	 MZJrPB75SqwWW4FJDkpxCK23x61Eg6hFP0uNwhFzvxHC0gD5r5auFvFZomW24zQbj6
-	 IlMDeo2ZYqaYz0hq9GrMoS7+MMyXSZ26xFGiQfI4=
+	b=idNPUytDT3jNx8UnXzfr9QPhdt5jHcUHjXNkXMDSpl/cPcgV3Ls5719IGp5VpqisV
+	 ltgV47UV97n8AXOvR1mJDKE9BxSDVpmfOIe3NLTTYpJ1lU/wGOiTv/6lIz2vVBUaJC
+	 pu2xEoGXeEaWmwvNHjA2416VIMDp8mlggtG77gkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
-	Corentin LABBE <clabbe.montjoie@gmail.com>,
+	Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 226/480] crypto: sun8i-ce - fix nents passed to dma_unmap_sg()
-Date: Tue, 12 Aug 2025 19:47:14 +0200
-Message-ID: <20250812174406.770934102@linuxfoundation.org>
+Subject: [PATCH 6.15 227/480] crypto: qat - use unmanaged allocation for dc_data
+Date: Tue, 12 Aug 2025 19:47:15 +0200
+Message-ID: <20250812174406.811292879@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,42 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
 
-[ Upstream commit b6cd3cfb5afe49952f8f6be947aeeca9ba0faebb ]
+[ Upstream commit 4cc871ad0173e8bc22f80e3609e34d546d30ef1a ]
 
-In sun8i_ce_cipher_unprepare(), dma_unmap_sg() is incorrectly called with
-the number of entries returned by dma_map_sg(), rather than using the
-original number of entries passed when mapping the scatterlist.
+The dc_data structure holds data required for handling compression
+operations, such as overflow buffers. In this context, the use of
+managed memory allocation APIs (devm_kzalloc() and devm_kfree())
+is not necessary, as these data structures are freed and
+re-allocated when a device is restarted in adf_dev_down() and
+adf_dev_up().
 
-To fix this, stash the original number of entries passed to dma_map_sg()
-in the request context.
+Additionally, managed APIs automatically handle memory cleanup when the
+device is detached, which can lead to conflicts with manual cleanup
+processes. Specifically, if a device driver invokes the adf_dev_down()
+function as part of the cleanup registered with
+devm_add_action_or_reset(), it may attempt to free memory that is also
+managed by the device's resource management system, potentially leading
+to a double-free.
 
-Fixes: 0605fa0f7826 ("crypto: sun8i-ce - split into prepare/run/unprepare")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
-Tested-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+This might result in a warning similar to the following when unloading
+the device specific driver, for example qat_6xxx.ko:
+
+    qat_free_dc_data+0x4f/0x60 [intel_qat]
+    qat_compression_event_handler+0x3d/0x1d0 [intel_qat]
+    adf_dev_shutdown+0x6d/0x1a0 [intel_qat]
+    adf_dev_down+0x32/0x50 [intel_qat]
+    devres_release_all+0xb8/0x110
+    device_unbind_cleanup+0xe/0x70
+    device_release_driver_internal+0x1c1/0x200
+    driver_detach+0x48/0x90
+    bus_remove_driver+0x74/0xf0
+    pci_unregister_driver+0x2e/0xb0
+
+Use unmanaged memory allocation APIs (kzalloc_node() and kfree()) for
+the dc_data structure. This ensures that memory is explicitly allocated
+and freed under the control of the driver code, preventing manual
+deallocation from interfering with automatic cleanup.
+
+Fixes: 1198ae56c9a5 ("crypto: qat - expose deflate through acomp api for QAT GEN2")
+Signed-off-by: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c | 4 ++--
+ drivers/crypto/intel/qat/qat_common/qat_compression.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
-index 05f67661553c..63e66a85477e 100644
---- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
-+++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
-@@ -265,8 +265,8 @@ static int sun8i_ce_cipher_prepare(struct crypto_engine *engine, void *async_req
- 	}
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_compression.c b/drivers/crypto/intel/qat/qat_common/qat_compression.c
+index 7842a9f22178..2c3aa89b316a 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_compression.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_compression.c
+@@ -197,7 +197,7 @@ static int qat_compression_alloc_dc_data(struct adf_accel_dev *accel_dev)
+ 	struct adf_dc_data *dc_data = NULL;
+ 	u8 *obuff = NULL;
  
- 	chan->timeout = areq->cryptlen;
--	rctx->nr_sgs = nr_sgs;
--	rctx->nr_sgd = nr_sgd;
-+	rctx->nr_sgs = ns;
-+	rctx->nr_sgd = nd;
- 	return 0;
+-	dc_data = devm_kzalloc(dev, sizeof(*dc_data), GFP_KERNEL);
++	dc_data = kzalloc_node(sizeof(*dc_data), GFP_KERNEL, dev_to_node(dev));
+ 	if (!dc_data)
+ 		goto err;
  
- theend_sgs:
+@@ -235,7 +235,7 @@ static void qat_free_dc_data(struct adf_accel_dev *accel_dev)
+ 	dma_unmap_single(dev, dc_data->ovf_buff_p, dc_data->ovf_buff_sz,
+ 			 DMA_FROM_DEVICE);
+ 	kfree_sensitive(dc_data->ovf_buff);
+-	devm_kfree(dev, dc_data);
++	kfree(dc_data);
+ 	accel_dev->dc_data = NULL;
+ }
+ 
 -- 
 2.39.5
 
