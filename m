@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B112949E0;
-	Tue, 12 Aug 2025 19:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B26221C187;
+	Tue, 12 Aug 2025 19:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025931; cv=none; b=lDb/HG/93hPwo+VemOHFgve0Gp6wzBiNhf3fjThieZoOKZQ+iwLfOsEF/fVUaiKT5Pwv8bJYgAlb60iIZTcSDS9Llp4XEoDbk8/si0H4VlDnR/5t3Q0NCOsoGIXQcicyH8FXawkl/zTvQUt4T4xUOwjwNPol5YKowzDy5KtPzSw=
+	t=1755025935; cv=none; b=urHWfxK5SgP+x8sQ8OLUOCztQsEGxgoriTjpLDR3hpPnH6OjNhxKW3H4XmpW12K13PDTMlkeVLh4CZH/XvOgDpGFTbTxCCjE7j3+m84/Nf4uuDddVPMgXdc/93qtXv5CmW7eG6CyvHbBBdmS02xEJSJDuteOwx8105LkXnwujC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025931; c=relaxed/simple;
-	bh=xJBZkUo9CJe2C+ZAA7H9llmhOUEO4nJKfZrNI+fB3Jw=;
+	s=arc-20240116; t=1755025935; c=relaxed/simple;
+	bh=/Y62mkXQr+jSsGxjF5fIfSXn2UQt9DpQsuGi9Ru1vWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSkaHZNrAbqSo5PUUNHkUc6DIKnNPM+Pfnsg5ENNuiDkRR10aKGJvoqE3cbF3ZHTK0cbtIJ3DuD3lJvLfazUHbHI5UiJu4GZR6FPDbjCbuIU6XZUyeV/sqFZV27dp3FI53/85h5XxAZ3PxlJeaLgfmAovm+dKQDgA7WMydV/fcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xp12Q28L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RP+5NW5SE3uZDINlG2b4cHW63IVEsLj5e/rGmzVIxqYRhhmXdXdbqXTp9S9tWODfxSxM4Z2UeQIFi0fMI4jo9XUPdIjGVy+yPOODSQm7D/1LxfCPQGahu64hpmbSq7JQR0Px+Nqd4oPbR7kNn8ktwIrCyXSHEnPcazIgqo6hJBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/JzABZq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xp12Q28L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44870C4CEF0;
-	Tue, 12 Aug 2025 19:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/JzABZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEE1C4CEF0;
+	Tue, 12 Aug 2025 19:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025931;
-	bh=xJBZkUo9CJe2C+ZAA7H9llmhOUEO4nJKfZrNI+fB3Jw=;
+	s=korg; t=1755025935;
+	bh=/Y62mkXQr+jSsGxjF5fIfSXn2UQt9DpQsuGi9Ru1vWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xp12Q28L/5tY9xpxIIkcwK5LGJBUMv7HQxZ2bm8XTpKXfn+KIFCmf4LpIva/5YPfH
-	 JlAoA9VCjL9nXxGtiqeCdruhCMTtJB/6h8HW6F11sWZRm28NT7dMCYPisFMj9gS6bc
-	 8M1GfvQXuXRyR5vPrJ5DVnakWOY/f6boVHO1c5iA=
+	b=0/JzABZqTzykZ1dV9rwzsJkbp1IJ9HdeLasy9AlcIFZ8ufj1Y6Tp59RDX8pzM0FTb
+	 X+bvRqx68aF7vtr3wZm4pcbZ29uAaMkkF0gIk++p//LHpqUoxXsKuZwJqm7lb5NLNA
+	 9r2V4VeZzi6J1yNALq4MGbqXufGtqpOKhD9Oyxzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Edward Srouji <edwards@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 154/480] net_sched: act_ctinfo: use atomic64_t for three counters
-Date: Tue, 12 Aug 2025 19:46:02 +0200
-Message-ID: <20250812174403.868681022@linuxfoundation.org>
+Subject: [PATCH 6.15 155/480] RDMA/mlx5: Fix UMR modifying of mkey page size
+Date: Tue, 12 Aug 2025 19:46:03 +0200
+Message-ID: <20250812174403.913953148@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,104 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Edward Srouji <edwards@nvidia.com>
 
-[ Upstream commit d300335b4e18672913dd792ff9f49e6cccf41d26 ]
+[ Upstream commit c4f96972c3c206ac8f6770b5ecd5320b561d0058 ]
 
-Commit 21c167aa0ba9 ("net/sched: act_ctinfo: use percpu stats")
-missed that stats_dscp_set, stats_dscp_error and stats_cpmark_set
-might be written (and read) locklessly.
+When changing the page size on an mkey, the driver needs to set the
+appropriate bits in the mkey mask to indicate which fields are being
+modified.
+The 6th bit of a page size in mlx5 driver is considered an extension,
+and this bit has a dedicated capability and mask bits.
 
-Use atomic64_t for these three fields, I doubt act_ctinfo is used
-heavily on big SMP hosts anyway.
+Previously, the driver was not setting this mask in the mkey mask when
+performing page size changes, regardless of its hardware support,
+potentially leading to an incorrect page size updates.
 
-Fixes: 24ec483cec98 ("net: sched: Introduce act_ctinfo action")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://patch.msgid.link/20250709090204.797558-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This fixes the issue by setting the relevant bit in the mkey mask when
+performing page size changes on an mkey and the 6th bit of this field is
+supported by the hardware.
+
+Fixes: cef7dde8836a ("net/mlx5: Expand mkey page size to support 6 bits")
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://patch.msgid.link/9f43a9c73bf2db6085a99dc836f7137e76579f09.1751979184.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tc_act/tc_ctinfo.h |  6 +++---
- net/sched/act_ctinfo.c         | 19 +++++++++++--------
- 2 files changed, 14 insertions(+), 11 deletions(-)
+ drivers/infiniband/hw/mlx5/umr.c | 6 ++++--
+ include/linux/mlx5/device.h      | 1 +
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/tc_act/tc_ctinfo.h b/include/net/tc_act/tc_ctinfo.h
-index f071c1d70a25..a04bcac7adf4 100644
---- a/include/net/tc_act/tc_ctinfo.h
-+++ b/include/net/tc_act/tc_ctinfo.h
-@@ -18,9 +18,9 @@ struct tcf_ctinfo_params {
- struct tcf_ctinfo {
- 	struct tc_action common;
- 	struct tcf_ctinfo_params __rcu *params;
--	u64 stats_dscp_set;
--	u64 stats_dscp_error;
--	u64 stats_cpmark_set;
-+	atomic64_t stats_dscp_set;
-+	atomic64_t stats_dscp_error;
-+	atomic64_t stats_cpmark_set;
- };
- 
- enum {
-diff --git a/net/sched/act_ctinfo.c b/net/sched/act_ctinfo.c
-index 5b1241ddc758..93ab3bcd6d31 100644
---- a/net/sched/act_ctinfo.c
-+++ b/net/sched/act_ctinfo.c
-@@ -44,9 +44,9 @@ static void tcf_ctinfo_dscp_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				ipv4_change_dsfield(ip_hdr(skb),
- 						    INET_ECN_MASK,
- 						    newdscp);
--				ca->stats_dscp_set++;
-+				atomic64_inc(&ca->stats_dscp_set);
- 			} else {
--				ca->stats_dscp_error++;
-+				atomic64_inc(&ca->stats_dscp_error);
- 			}
- 		}
- 		break;
-@@ -57,9 +57,9 @@ static void tcf_ctinfo_dscp_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				ipv6_change_dsfield(ipv6_hdr(skb),
- 						    INET_ECN_MASK,
- 						    newdscp);
--				ca->stats_dscp_set++;
-+				atomic64_inc(&ca->stats_dscp_set);
- 			} else {
--				ca->stats_dscp_error++;
-+				atomic64_inc(&ca->stats_dscp_error);
- 			}
- 		}
- 		break;
-@@ -72,7 +72,7 @@ static void tcf_ctinfo_cpmark_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				  struct tcf_ctinfo_params *cp,
- 				  struct sk_buff *skb)
- {
--	ca->stats_cpmark_set++;
-+	atomic64_inc(&ca->stats_cpmark_set);
- 	skb->mark = READ_ONCE(ct->mark) & cp->cpmarkmask;
+diff --git a/drivers/infiniband/hw/mlx5/umr.c b/drivers/infiniband/hw/mlx5/umr.c
+index 793f3c5c4d01..80c665d15218 100644
+--- a/drivers/infiniband/hw/mlx5/umr.c
++++ b/drivers/infiniband/hw/mlx5/umr.c
+@@ -32,13 +32,15 @@ static __be64 get_umr_disable_mr_mask(void)
+ 	return cpu_to_be64(result);
  }
  
-@@ -323,15 +323,18 @@ static int tcf_ctinfo_dump(struct sk_buff *skb, struct tc_action *a,
+-static __be64 get_umr_update_translation_mask(void)
++static __be64 get_umr_update_translation_mask(struct mlx5_ib_dev *dev)
+ {
+ 	u64 result;
+ 
+ 	result = MLX5_MKEY_MASK_LEN |
+ 		 MLX5_MKEY_MASK_PAGE_SIZE |
+ 		 MLX5_MKEY_MASK_START_ADDR;
++	if (MLX5_CAP_GEN_2(dev->mdev, umr_log_entity_size_5))
++		result |= MLX5_MKEY_MASK_PAGE_SIZE_5;
+ 
+ 	return cpu_to_be64(result);
+ }
+@@ -654,7 +656,7 @@ static void mlx5r_umr_final_update_xlt(struct mlx5_ib_dev *dev,
+ 		flags & MLX5_IB_UPD_XLT_ENABLE || flags & MLX5_IB_UPD_XLT_ADDR;
+ 
+ 	if (update_translation) {
+-		wqe->ctrl_seg.mkey_mask |= get_umr_update_translation_mask();
++		wqe->ctrl_seg.mkey_mask |= get_umr_update_translation_mask(dev);
+ 		if (!mr->ibmr.length)
+ 			MLX5_SET(mkc, &wqe->mkey_seg, length64, 1);
  	}
+diff --git a/include/linux/mlx5/device.h b/include/linux/mlx5/device.h
+index 6822cfa5f4ad..9d2467f982ad 100644
+--- a/include/linux/mlx5/device.h
++++ b/include/linux/mlx5/device.h
+@@ -280,6 +280,7 @@ enum {
+ 	MLX5_MKEY_MASK_SMALL_FENCE	= 1ull << 23,
+ 	MLX5_MKEY_MASK_RELAXED_ORDERING_WRITE	= 1ull << 25,
+ 	MLX5_MKEY_MASK_FREE			= 1ull << 29,
++	MLX5_MKEY_MASK_PAGE_SIZE_5		= 1ull << 42,
+ 	MLX5_MKEY_MASK_RELAXED_ORDERING_READ	= 1ull << 47,
+ };
  
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_DSCP_SET,
--			      ci->stats_dscp_set, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_dscp_set),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
- 
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_DSCP_ERROR,
--			      ci->stats_dscp_error, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_dscp_error),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
- 
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_CPMARK_SET,
--			      ci->stats_cpmark_set, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_cpmark_set),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
- 
- 	spin_unlock_bh(&ci->tcf_lock);
 -- 
 2.39.5
 
