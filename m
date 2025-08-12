@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1309D221FAC;
-	Tue, 12 Aug 2025 17:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD9126B2C8;
+	Tue, 12 Aug 2025 17:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020833; cv=none; b=GsZ+whlRjWZ77pNvYVpMRWwaV2/4zBK4l1OcRbO8BVXP2y8a8ZMtEYAatVv+Jb2oNE5Rq/iSceQ9rZj9cx2F1WzLuMn3PXzk7G8nQd1riPJHdx4AKmSJ/cq511a34anedy5rd+4QpEFLZmbvVPLuKZOr0L1SPHwmb1C5P/2Kc6o=
+	t=1755020836; cv=none; b=m8IllBaIQcY+CF3tkj7eZgstSyGC39kT3zAWSEUlj9D/94oW7/Oc6SZr18yJhg2aA+Cd6YKnHqG/T4XudWBI3pVAXPVN/MmNaJIvKgisOv0x/ab5OuhxjH/GSaAhDXg344i2diBxHIDuhUuZVFYCUrWgMtmAEnLGc18J0a2JW10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020833; c=relaxed/simple;
-	bh=AUD6xaVURWRSRmHOfPazptxBoCdoin+rar1Rcb29sdA=;
+	s=arc-20240116; t=1755020836; c=relaxed/simple;
+	bh=njtHPMTphjS0wkGI5Eud7j3yBfci+G5ZIlYZSFNrhC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKq3ILWEqEaVjSPtbmvqGJUV/LYUy6+t5Z0+C81PE13Baesvty6gAPNMquphetD9xm1Gp47eIsvAYXSD1p7mD1JFgiV3rsBrB0pd1CxhRvCf8Be2m5ovx14mIfdzWTvKqO+Og5FQps6XDGwHdAeHldtykOVXqC2gxJsnwuG4GEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgH4nje1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=seZ9Qz35iFKL2Mj83MiRJ6FFdkKXyGHFnnmtE+lj9Ldr3IpPrdMmABFU/3LcIDOh2R1MLv+OQLaAgrt/5y1W0KhY0tTLq+jIbdFehPTM5XJQWd27jXhWDg3SW/Wc7Zv+tzJIZ/DjTV5NPa8VPxi5sZLvmGMHE4NyX63MSb9RDIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2TgHyDv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgH4nje1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A192C4CEF0;
-	Tue, 12 Aug 2025 17:47:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2TgHyDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D00AC4CEF0;
+	Tue, 12 Aug 2025 17:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020833;
-	bh=AUD6xaVURWRSRmHOfPazptxBoCdoin+rar1Rcb29sdA=;
+	s=korg; t=1755020836;
+	bh=njtHPMTphjS0wkGI5Eud7j3yBfci+G5ZIlYZSFNrhC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgH4nje1er4CI77BTFXt9bjRXlOjZnLtj7eMDo5vNH9MDplDhNNj9Mjj9vIZqbLPV
-	 OF/NPaFPIe78PWJOH2Ca91y4p25eDbVeb66XIFNeEknB9o459ixrZFK7qL5xoolgU8
-	 C96gpJVowQItZfpcSmNLNvF25FdoeNevWYEzzy9s=
+	b=X2TgHyDvuQJ6/0CdMEedBn19ZHJzUC5w2ntXmDmLAPRVjbmNwET9QIEREJ/2KjPxm
+	 9s2kF7YxGbtJYz7mXKlog4lxdtR3/JPaoBXph9ciiuXkFyij4JHXyUHZO6P7aFNrUz
+	 2KkmB5zlKQFR0EBwmMznhoQcu+HrV9GIZ7flWH2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 175/253] crypto: qat - fix seq_file position update in adf_ring_next()
-Date: Tue, 12 Aug 2025 19:29:23 +0200
-Message-ID: <20250812172956.194663225@linuxfoundation.org>
+Subject: [PATCH 6.6 022/262] arm64: dts: qcom: msm8976: Make blsp_dma controlled-remotely
+Date: Tue, 12 Aug 2025 19:26:50 +0200
+Message-ID: <20250812172953.916919196@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: André Apitzsch <git@apitzsch.eu>
 
-[ Upstream commit 6908c5f4f066a0412c3d9a6f543a09fa7d87824b ]
+[ Upstream commit 76270a18dbdf0bb50615f1b29d2cae8d683da01e ]
 
-The `adf_ring_next()` function in the QAT debug transport interface
-fails to correctly update the position index when reaching the end of
-the ring elements. This triggers the following kernel warning when
-reading ring files, such as
-/sys/kernel/debug/qat_c6xx_<D:B:D:F>/transport/bank_00/ring_00:
+The blsp_dma controller is shared between the different subsystems,
+which is why it is already initialized by the firmware. We should not
+reinitialize it from Linux to avoid potential other users of the DMA
+engine to misbehave.
 
-   [27725.022965] seq_file: buggy .next function adf_ring_next [intel_qat] did not update position index
+In mainline this can be described using the "qcom,controlled-remotely"
+property. In the downstream/vendor kernel from Qualcomm there is an
+opposite "qcom,managed-locally" property. This property is *not* set
+for the qcom,sps-dma@7884000 and qcom,sps-dma@7ac4000 [1] so adding
+"qcom,controlled-remotely" upstream matches the behavior of the
+downstream/vendor kernel.
 
-Ensure that the `*pos` index is incremented before returning NULL when
-after the last element in the ring is found, satisfying the seq_file API
-requirements and preventing the warning.
+Adding this fixes booting Longcheer L9360.
 
-Fixes: a672a9dc872e ("crypto: qat - Intel(R) QAT transport code")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26/arch/arm/boot/dts/qcom/msm8976.dtsi#L1149-1163
+
+Fixes: 0484d3ce0902 ("arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+Link: https://lore.kernel.org/r/20250615-bqx5plus-v2-1-72b45c84237d@apitzsch.eu
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/adf_transport_debug.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8976.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/qat/qat_common/adf_transport_debug.c b/drivers/crypto/qat/qat_common/adf_transport_debug.c
-index e2dd568b87b5..621b5d3dfcef 100644
---- a/drivers/crypto/qat/qat_common/adf_transport_debug.c
-+++ b/drivers/crypto/qat/qat_common/adf_transport_debug.c
-@@ -31,8 +31,10 @@ static void *adf_ring_next(struct seq_file *sfile, void *v, loff_t *pos)
- 	struct adf_etr_ring_data *ring = sfile->private;
+diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+index 4c5be22b47fe..e01f6e8a17f2 100644
+--- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+@@ -862,6 +862,7 @@ blsp1_dma: dma-controller@7884000 {
+ 			clock-names = "bam_clk";
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,controlled-remotely;
+ 		};
  
- 	if (*pos >= (ADF_SIZE_TO_RING_SIZE_IN_BYTES(ring->ring_size) /
--		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size)))
-+		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size))) {
-+		(*pos)++;
- 		return NULL;
-+	}
+ 		blsp1_uart1: serial@78af000 {
+@@ -982,6 +983,7 @@ blsp2_dma: dma-controller@7ac4000 {
+ 			clock-names = "bam_clk";
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,controlled-remotely;
+ 		};
  
- 	return ring->base_addr +
- 		(ADF_MSG_SIZE_TO_BYTES(ring->msg_size) * (*pos)++);
+ 		blsp2_uart2: serial@7af0000 {
 -- 
 2.39.5
 
