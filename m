@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381242868AF;
-	Tue, 12 Aug 2025 18:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21E51FF7C5;
+	Tue, 12 Aug 2025 18:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022903; cv=none; b=YbSITRZOWeZUnfcRVsAV9mrXpjuT0i/rTMi827Ll6H1598e6k64qcNWPEfYUV/9DDU+IiWinVZerS8WnGY4pxk9dDfGqlX0CkcBMbnYXy/R8nItMKM832UV2lCrsP+9R/tlI9Ep7iNPWV7bhNRjHklnoMYg5YtWdqMgTMVqqwL0=
+	t=1755022906; cv=none; b=Fvu3pvcQyJBDZ554fnpFK6cCGWaIoNj+4z2Ttx5E3PHxSxA8aq7jXSF0fP25opsgzbchoXbZbimIJ4dWzC4YQFkg9cuECU9ObR5jh3rQKlmKhMNYQqh/frx6ikW8vdLUbjnOIC9jVKa2G1y5m9MfEl6tUEQJOYCAHJTPv2k7XW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022903; c=relaxed/simple;
-	bh=kmxZvXQgl52dpifNVqraPM6xFCsU6cY4AYsJGDp7UQE=;
+	s=arc-20240116; t=1755022906; c=relaxed/simple;
+	bh=Qu8mqSjG+nFD9x2SLn5e+E4Z5FgHGkoC4ZDFKDvTzJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZyUSC8Qhp5XGMOh1ZBtYDNpTeiuEjyIP6EJ35qkjrAR5l5LHWi+fG6K1xKcCYt6bDPWX+MIRSmWAXUxG0JQSKq9c+nAtZvW1OVxMsxB5s6NDvTHgnoX11gszK3sUYtfsm3653zcNSYuhJGWv6x7VopYokrGTY8WF6teTJ8rtwVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iU3WPizo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gbWIyLLIKIIFrEnPt2Hkq2KJT3DueYvBWb12HBWeAtU2v1sD8nZgOKqySkz0ooLQJITMe9z6bds0GgRghmjfw61Q3D69H5ZhcMvNyCfSzHT7kku0a3NyCYRsZJeZguT29oavNhU17AbgGORLl7nXHiZ9wPD/BiPMyX97loMqhqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3kHF/7P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iU3WPizo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB2FC4CEF0;
-	Tue, 12 Aug 2025 18:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3kHF/7P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D31C4CEF0;
+	Tue, 12 Aug 2025 18:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022903;
-	bh=kmxZvXQgl52dpifNVqraPM6xFCsU6cY4AYsJGDp7UQE=;
+	s=korg; t=1755022906;
+	bh=Qu8mqSjG+nFD9x2SLn5e+E4Z5FgHGkoC4ZDFKDvTzJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iU3WPizojIhbrMKCMZuteGYBoG74IZbCO0C6dcrmaBvrSIlEGarTxcIqymxIDLFML
-	 J+c42L3SlwfbLX7+Q6RlGwTiXYX6jcGvBZi+K/SAgXwhDAtYUdv8JE4MZls7y+Mnwb
-	 /DTE0gwbOL7c3uByRX2wnZPOYs9KheyDZ4YA8+FI=
+	b=h3kHF/7P/it4TMeudJuOQ8Uo8yu1x0kk6ddwRxESkMnNdOceK7kLKSo/dZI/4rkft
+	 9ACl4/IQhhLN4FC2x9emUG4bYtdssMDPt/HqUD8XzP1PNycBJAh+hRNtK1MTumUHrt
+	 Fl7pZ+Lp+2pb8Ol6fccxslwQMCy2lbNM1LtlVTMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Jens Axboe <axboe@kernel.dk>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 294/369] block: Fix default IO priority if there is no IO context
-Date: Tue, 12 Aug 2025 19:29:51 +0200
-Message-ID: <20250812173027.790020308@linuxfoundation.org>
+Subject: [PATCH 6.12 295/369] block: ensure discard_granularity is zero when discard is not supported
+Date: Tue, 12 Aug 2025 19:29:52 +0200
+Message-ID: <20250812173027.826109661@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -54,52 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit e2ba58ccc9099514380c3300cbc0750b5055fc1c ]
+[ Upstream commit fad6551fcf537375702b9af012508156a16a1ff7 ]
 
-Upstream commit 53889bcaf536 ("block: make __get_task_ioprio() easier to
-read") changes the IO priority returned to the caller if no IO context
-is defined for the task. Prior to this commit, the returned IO priority
-was determined by task_nice_ioclass() and task_nice_ioprio(). Now it is
-always IOPRIO_DEFAULT, which translates to IOPRIO_CLASS_NONE with priority
-0. However, task_nice_ioclass() returns IOPRIO_CLASS_IDLE, IOPRIO_CLASS_RT,
-or IOPRIO_CLASS_BE depending on the task scheduling policy, and
-task_nice_ioprio() returns a value determined by task_nice(). This causes
-regressions in test code checking the IO priority and class of IO
-operations on tasks with no IO context.
+Documentation/ABI/stable/sysfs-block states:
 
-Fix the problem by returning the IO priority calculated from
-task_nice_ioclass() and task_nice_ioprio() if no IO context is defined
-to match earlier behavior.
+  What: /sys/block/<disk>/queue/discard_granularity
+  [...]
+  A discard_granularity of 0 means that the device does not support
+  discard functionality.
 
-Fixes: 53889bcaf536 ("block: make __get_task_ioprio() easier to read")
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250731044953.1852690-1-linux@roeck-us.net
+but this got broken when sorting out the block limits updates.  Fix this
+by setting the discard_granularity limit to zero when the combined
+max_discard_sectors is zero.
+
+Fixes: 3c407dc723bb ("block: default the discard granularity to sector size")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20250731152228.873923-1-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ioprio.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/blk-settings.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/ioprio.h b/include/linux/ioprio.h
-index b25377b6ea98..5210e8371238 100644
---- a/include/linux/ioprio.h
-+++ b/include/linux/ioprio.h
-@@ -60,7 +60,8 @@ static inline int __get_task_ioprio(struct task_struct *p)
- 	int prio;
+diff --git a/block/blk-settings.c b/block/blk-settings.c
+index 7858c92b4483..22ce7fa4fe20 100644
+--- a/block/blk-settings.c
++++ b/block/blk-settings.c
+@@ -320,12 +320,19 @@ static int blk_validate_limits(struct queue_limits *lim)
+ 	lim->max_discard_sectors =
+ 		min(lim->max_hw_discard_sectors, lim->max_user_discard_sectors);
  
- 	if (!ioc)
--		return IOPRIO_DEFAULT;
-+		return IOPRIO_PRIO_VALUE(task_nice_ioclass(p),
-+					 task_nice_ioprio(p));
++	/*
++	 * When discard is not supported, discard_granularity should be reported
++	 * as 0 to userspace.
++	 */
++	if (lim->max_discard_sectors)
++		lim->discard_granularity =
++			max(lim->discard_granularity, lim->physical_block_size);
++	else
++		lim->discard_granularity = 0;
++
+ 	if (!lim->max_discard_segments)
+ 		lim->max_discard_segments = 1;
  
- 	if (p != current)
- 		lockdep_assert_held(&p->alloc_lock);
+-	if (lim->discard_granularity < lim->physical_block_size)
+-		lim->discard_granularity = lim->physical_block_size;
+-
+ 	/*
+ 	 * By default there is no limit on the segment boundary alignment,
+ 	 * but if there is one it can't be smaller than the page size as
 -- 
 2.39.5
 
