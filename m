@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AA42FDC4B;
-	Tue, 12 Aug 2025 17:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222362FDC59;
+	Tue, 12 Aug 2025 17:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020697; cv=none; b=cMQ1/yrSn7sYZNNCd4ba54L69L/GFwyuQGq5iG7yLt+tsy3SJh7IzDSEVfcY9nWpBO8i3dV2Zyfva4/GVIRu6vxu3dd/cqyKqyT/G/qw4E6eDTY7rJue9UNpH/+bMrXKxKE9A7ZcP5E8rtE0X9IejKUf4SnwBfVCwUwpYPHV4PE=
+	t=1755020702; cv=none; b=KOOxa+nbxXf+66wIsRTxbNkGF0EKOzHZ7TgCZh9WN1SXH+iD7Bcmrpo8UD9zMgWK56DX+RYn/sU1XYjc7QgltDy3VWBfLYTFeUfZNqjZPsL3kW4q6y4HmEdMmUETLT8TfUnn762WhO77xbgy+DcuH6Xuo0qNH8fTgSxGj4fQJng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020697; c=relaxed/simple;
-	bh=GJmSBOmPVeeVAPW+UA2O58aV311+mwC2fOwBJdzNmOc=;
+	s=arc-20240116; t=1755020702; c=relaxed/simple;
+	bh=MTIgNjFPPiEduwdI83X2sek5/yDIk/GVS8NfVd5vMdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkomL+pAorCD0OTi/96uFpN9/LsGbrrnN9ZUz6cCekUKXqIQsZsbCZRcAUCjUo4xYULznRPnIfEphk6Sm0vgwsqSWQF+4ucRkupC/oWPx1xfGiQ4KAlXFgBtKci1jGbj2uzWW++qlekIVNe120mnvsZeXtEEJ90mh2l/O3QkhI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUZgZ/Ew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G0esIo801Ugs70G7epNuwyb/FNcgvwOqw9tfXb6aatdfkxJQyB8kkV0APglZ8+5HIcA3gFI5oBmbQz3fiwIDNQ2SdTCFT2l2sb/mI97UT8rIRDsed1JEQLGxnA2rOIl+0seHg1wCZs6owrA6nnx+8JTvPDR3HJA/T74uD5Hbprg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0m7ebT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUZgZ/Ew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0751BC4CEF0;
-	Tue, 12 Aug 2025 17:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0m7ebT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE25C4CEF0;
+	Tue, 12 Aug 2025 17:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020697;
-	bh=GJmSBOmPVeeVAPW+UA2O58aV311+mwC2fOwBJdzNmOc=;
+	s=korg; t=1755020702;
+	bh=MTIgNjFPPiEduwdI83X2sek5/yDIk/GVS8NfVd5vMdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DUZgZ/EwbnQtyWtOHCHViNYpckuzUO1AEyYyyANRSQyHA8F2TPQmtspPZo257ewXD
-	 OuD7pzQYkQ2YjcSBKUSJuZmRaA5f774MeLrbogsTCIFR0Y6xY8RzKWI1WkGB/MxVr5
-	 9pKX8L8p3WHWNrl/BaAqtjDSOBXIbjwBRT4M7UUo=
+	b=t0m7ebT1gaJSiFLIdpVROxHswvJa9chKh4L+jgsfeRHI09tsPRTWuFrzfwDszqRH/
+	 hlCglYiYHKHFcclTW3mY8cW1RiCJyu8o05eFbxUAfOUPrtCEu2wniZ/lF+l/LzC0Wt
+	 LxFzBuPEcvd1zOfD1ospgOX4bKWbC9GBbmrbc/uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mengbiao Xiong <xisme1998@gmail.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Lane Odenbach <laodenbach@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/253] crypto: ccp - Fix crash when rebind ccp device for ccp.ko
-Date: Tue, 12 Aug 2025 19:29:03 +0200
-Message-ID: <20250812172955.315682184@linuxfoundation.org>
+Subject: [PATCH 6.6 001/262] ASoC: amd: yc: Add DMI quirk for HP Laptop 17 cp-2033dx
+Date: Tue, 12 Aug 2025 19:26:29 +0200
+Message-ID: <20250812172953.026977270@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,83 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mengbiao Xiong <xisme1998@gmail.com>
+From: Lane Odenbach <laodenbach@gmail.com>
 
-[ Upstream commit 181698af38d3f93381229ad89c09b5bd0496661a ]
+[ Upstream commit 7bab1bd9fdf15b9fa7e6a4b0151deab93df3c80d ]
 
-When CONFIG_CRYPTO_DEV_CCP_DEBUGFS is enabled, rebinding
-the ccp device causes the following crash:
+This fixes the internal microphone in the stated device
 
-$ echo '0000:0a:00.2' > /sys/bus/pci/drivers/ccp/unbind
-$ echo '0000:0a:00.2' > /sys/bus/pci/drivers/ccp/bind
-
-[  204.976930] BUG: kernel NULL pointer dereference, address: 0000000000000098
-[  204.978026] #PF: supervisor write access in kernel mode
-[  204.979126] #PF: error_code(0x0002) - not-present page
-[  204.980226] PGD 0 P4D 0
-[  204.981317] Oops: Oops: 0002 [#1] SMP NOPTI
-...
-[  204.997852] Call Trace:
-[  204.999074]  <TASK>
-[  205.000297]  start_creating+0x9f/0x1c0
-[  205.001533]  debugfs_create_dir+0x1f/0x170
-[  205.002769]  ? srso_return_thunk+0x5/0x5f
-[  205.004000]  ccp5_debugfs_setup+0x87/0x170 [ccp]
-[  205.005241]  ccp5_init+0x8b2/0x960 [ccp]
-[  205.006469]  ccp_dev_init+0xd4/0x150 [ccp]
-[  205.007709]  sp_init+0x5f/0x80 [ccp]
-[  205.008942]  sp_pci_probe+0x283/0x2e0 [ccp]
-[  205.010165]  ? srso_return_thunk+0x5/0x5f
-[  205.011376]  local_pci_probe+0x4f/0xb0
-[  205.012584]  pci_device_probe+0xdb/0x230
-[  205.013810]  really_probe+0xed/0x380
-[  205.015024]  __driver_probe_device+0x7e/0x160
-[  205.016240]  device_driver_attach+0x2f/0x60
-[  205.017457]  bind_store+0x7c/0xb0
-[  205.018663]  drv_attr_store+0x28/0x40
-[  205.019868]  sysfs_kf_write+0x5f/0x70
-[  205.021065]  kernfs_fop_write_iter+0x145/0x1d0
-[  205.022267]  vfs_write+0x308/0x440
-[  205.023453]  ksys_write+0x6d/0xe0
-[  205.024616]  __x64_sys_write+0x1e/0x30
-[  205.025778]  x64_sys_call+0x16ba/0x2150
-[  205.026942]  do_syscall_64+0x56/0x1e0
-[  205.028108]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  205.029276] RIP: 0033:0x7fbc36f10104
-[  205.030420] Code: 89 02 48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 8d 05 e1 08 2e 00 8b 00 85 c0 75 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 f3 c3 66 90 41 54 55 49 89 d4 53 48 89 f5
-
-This patch sets ccp_debugfs_dir to NULL after destroying it in
-ccp5_debugfs_destroy, allowing the directory dentry to be
-recreated when rebinding the ccp device.
-
-Tested on AMD Ryzen 7 1700X.
-
-Fixes: 3cdbe346ed3f ("crypto: ccp - Add debugfs entries for CCP information")
-Signed-off-by: Mengbiao Xiong <xisme1998@gmail.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Lane Odenbach <laodenbach@gmail.com>
+Link: https://patch.msgid.link/20250715182038.10048-1-laodenbach@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/ccp-debugfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/crypto/ccp/ccp-debugfs.c b/drivers/crypto/ccp/ccp-debugfs.c
-index a1055554b47a..dc26bc22c91d 100644
---- a/drivers/crypto/ccp/ccp-debugfs.c
-+++ b/drivers/crypto/ccp/ccp-debugfs.c
-@@ -319,5 +319,8 @@ void ccp5_debugfs_setup(struct ccp_device *ccp)
- 
- void ccp5_debugfs_destroy(void)
- {
-+	mutex_lock(&ccp_debugfs_lock);
- 	debugfs_remove_recursive(ccp_debugfs_dir);
-+	ccp_debugfs_dir = NULL;
-+	mutex_unlock(&ccp_debugfs_lock);
- }
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 66ef8f4fd02c..74f8e12aa710 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -577,6 +577,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "8A7F"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_BOARD_NAME, "8A81"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
