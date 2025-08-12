@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E8C2DFA3E;
-	Tue, 12 Aug 2025 18:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725643F9D2;
+	Tue, 12 Aug 2025 18:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022769; cv=none; b=J8rOVJwgzzRrZxWh2oM7bAS3pFHO2vhhSHGchwWf0n9gOZFcGOSqsMi4EbBzchv6+uYgCmg72x2QV7Vawr5RnVF77SR5gb56tcFqJAKTIuNjqjYr5wyPkxWiQNUJzu+TVAm81pbtmV/5/crMviMIBXHJAmr/SckAaOKnGvzHa2U=
+	t=1755022773; cv=none; b=WjdZxFvrQLXyrK67SNFfTY8iM9u3Ah/Dqpcdp8wbnM8P3SlD6/s39sUmeOmulpR5OxGck1jcSQ+aypou9gj3vspVMCwbW+y3eiFLTLjKMpLy8xI/k6cqWjjAfm+GhTfvKQonkB9kmAUb3kopLyJUXiL52z7GeCX2eHg5IwFu4IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022769; c=relaxed/simple;
-	bh=O9bpRJmspuVmBw+jqc5xM9DC6MEWkqgH4GmAKREawXI=;
+	s=arc-20240116; t=1755022773; c=relaxed/simple;
+	bh=a7pogepNtFPCe3hgqAtiqEbSNvUem9m6ju6u/uAB4wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=luwEg7TMEg3gciOd5aVOPOYvw4irlTCS9kOYMMArW7vc96Yku2EIyhpe9q3OxOZukpCLM7a00rQf7tZ8DU2Jtu+CIf/P2uSREBG9NEPlTY01gMHF1TNeAymEou4d4XdqsUhW5axd9z6zMpG7pbNCRVVOEZRqazUndF0HdxF/hbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moz90FCG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TY74x/1/16kZ9gA20DVl2DC8Ao+4vrNXYG8uc1Ak0Ps6tDf/wVia+lAFkEwFSwz/d27rGdkfpxE4cg1xlrs+sVIM3p/0rw4uOM0gnIwQFM+WmJuY7yKXMQMgqquswByYnkpkVfj448DfG2uQQrdy/AadK/P3Arcx+BBjHkfYGlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGQ2wZeg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moz90FCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEE2C4CEF6;
-	Tue, 12 Aug 2025 18:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGQ2wZeg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79398C4CEF6;
+	Tue, 12 Aug 2025 18:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022769;
-	bh=O9bpRJmspuVmBw+jqc5xM9DC6MEWkqgH4GmAKREawXI=;
+	s=korg; t=1755022773;
+	bh=a7pogepNtFPCe3hgqAtiqEbSNvUem9m6ju6u/uAB4wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moz90FCGtD4EKNCKj3lww0l0GyC82L25BvzcxLNI4bvUOBgCnFqiOEEVGZ5Jn4zMn
-	 o+v7ij/+gwk1ZPvZz29wFtBeoEabCtp1WG04AuvhlBq7tDVHZE/riySxiGy0wbIJ2L
-	 nqLt9jR8Wo2DQUFyQP0LXk2mHcWvG2UB8MFKcU6A=
+	b=uGQ2wZeg1rO1qkbf7RVT/zdlyMzyfiTJgMyz1jl9U0fbNzP7Bt9oZf8z+U3vANIm2
+	 pr7uqcDmhJNhX2e6JBSfhXmGcr/B2WeTL/0c39FCgjJVuifzaIRlJqyyX2wCaFPVQS
+	 DBImJhjMmsPqGLet2ExYuM4FjswBFYNkuKPg3UCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bairavi Alagappan <bairavix.alagappan@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Brian Masney <bmasney@redhat.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 210/369] crypto: qat - disable ZUC-256 capability for QAT GEN5
-Date: Tue, 12 Aug 2025 19:28:27 +0200
-Message-ID: <20250812173022.659094138@linuxfoundation.org>
+Subject: [PATCH 6.12 247/369] rtc: pcf8563: fix incorrect maximum clock rate handling
+Date: Tue, 12 Aug 2025 19:29:04 +0200
+Message-ID: <20250812173024.059714932@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,60 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bairavi Alagappan <bairavix.alagappan@intel.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit d956692c7dd523b331d4556ee03def8dd02609dc ]
+[ Upstream commit 906726a5efeefe0ef0103ccff5312a09080c04ae ]
 
-The ZUC-256 EEA (encryption) and EIA (integrity) algorithms are not
-supported on QAT GEN5 devices, as their current implementation does not
-align with the NIST specification. Earlier versions of the ZUC-256
-specification used a different initialization scheme, which has since
-been revised to comply with the 5G specification.
+When pcf8563_clkout_round_rate() is called with a requested rate higher
+than the highest supported rate, it currently returns 0, which disables
+the clock. According to the clk API, round_rate() should instead return
+the highest supported rate. Update the function to return the maximum
+supported rate in this case.
 
-Due to this misalignment with the updated specification, remove support
-for ZUC-256 EEA and EIA for QAT GEN5 by masking out the ZUC-256
-capability.
-
-Fixes: fcf60f4bcf549 ("crypto: qat - add support for 420xx devices")
-Signed-off-by: Bairavi Alagappan <bairavix.alagappan@intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: a39a6405d5f94 ("rtc: pcf8563: add CLKOUT to common clock framework")
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-5-33140bb2278e@redhat.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/rtc/rtc-pcf8563.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c b/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
-index a17adc4beda2..ef5f03be4190 100644
---- a/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
-+++ b/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
-@@ -199,7 +199,6 @@ static u32 get_accel_cap(struct adf_accel_dev *accel_dev)
- 			  ICP_ACCEL_CAPABILITIES_SM4 |
- 			  ICP_ACCEL_CAPABILITIES_AES_V2 |
- 			  ICP_ACCEL_CAPABILITIES_ZUC |
--			  ICP_ACCEL_CAPABILITIES_ZUC_256 |
- 			  ICP_ACCEL_CAPABILITIES_WIRELESS_CRYPTO_EXT |
- 			  ICP_ACCEL_CAPABILITIES_EXT_ALGCHAIN;
+diff --git a/drivers/rtc/rtc-pcf8563.c b/drivers/rtc/rtc-pcf8563.c
+index 647d52f1f5c5..23b21b908915 100644
+--- a/drivers/rtc/rtc-pcf8563.c
++++ b/drivers/rtc/rtc-pcf8563.c
+@@ -386,7 +386,7 @@ static long pcf8563_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
+ 		if (clkout_rates[i] <= rate)
+ 			return clkout_rates[i];
  
-@@ -231,17 +230,11 @@ static u32 get_accel_cap(struct adf_accel_dev *accel_dev)
+-	return 0;
++	return clkout_rates[0];
+ }
  
- 	if (fusectl1 & ICP_ACCEL_GEN4_MASK_WCP_WAT_SLICE) {
- 		capabilities_sym &= ~ICP_ACCEL_CAPABILITIES_ZUC;
--		capabilities_sym &= ~ICP_ACCEL_CAPABILITIES_ZUC_256;
- 		capabilities_sym &= ~ICP_ACCEL_CAPABILITIES_WIRELESS_CRYPTO_EXT;
- 	}
- 
--	if (fusectl1 & ICP_ACCEL_GEN4_MASK_EIA3_SLICE) {
-+	if (fusectl1 & ICP_ACCEL_GEN4_MASK_EIA3_SLICE)
- 		capabilities_sym &= ~ICP_ACCEL_CAPABILITIES_ZUC;
--		capabilities_sym &= ~ICP_ACCEL_CAPABILITIES_ZUC_256;
--	}
--
--	if (fusectl1 & ICP_ACCEL_GEN4_MASK_ZUC_256_SLICE)
--		capabilities_sym &= ~ICP_ACCEL_CAPABILITIES_ZUC_256;
- 
- 	capabilities_asym = ICP_ACCEL_CAPABILITIES_CRYPTO_ASYMMETRIC |
- 			  ICP_ACCEL_CAPABILITIES_SM2 |
+ static int pcf8563_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.39.5
 
