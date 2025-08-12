@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F02729BD9D;
-	Tue, 12 Aug 2025 19:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707C42FE582;
+	Tue, 12 Aug 2025 19:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026824; cv=none; b=Ee0ZgC6t2maJQ61QIUb/6nsHPl6onwrrgeTeJ0jWqQ9Wlxj1x8Pw9WHLGX/mU3afaLA06LnhdRLrZWgm+vTt8UaUVSfc6NZwwA01Uq/xmgmPk0E0j9JlEPGqSNadDe5gWqRQMU6RMPeB27NndHJnRsFR54rX0V/OmsVoMGnC3B0=
+	t=1755026827; cv=none; b=fzoFHDe+sDcpr0+6Mtx4WocdbVx3/n/6x+PMUWOj11vN0AKmso6/kg5w3+aTLk6gQVHJ7vLc2yjv4UTNzESLHHLrBgPqC0X4J8c8rJ3WeKczUD2Fk1uGGv1ZYGTIeVhmeLaf3x2GRY+tnDwojI+c+WaRNVUH7yslj5PcKWWFcjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026824; c=relaxed/simple;
-	bh=camfEh7Ejw4VGB9BzKY+KLsaw974qm9FFLXg/r3c8XU=;
+	s=arc-20240116; t=1755026827; c=relaxed/simple;
+	bh=5O6Q9l+99JHboXQibLDhUsBzvJhGhD7XDBNSDtj6lgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gCeQ845a7KYOSrkAAEyDHLh99zDmAe2FI9bB1BmwkhTeM5+TEFlBvlfwxy0XftrsXdojnr4pMMjDz+l62tcC7dZ0a5Uyz595Bk5yr88kKkDYncy97htUIspdoAx6Nt4f4tg8+uK9exsZNvcCJxmLLGjjFkj5APSfN0WBieRYA+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2hg1xMr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RraMT8qpv/7Hfk9c0NH/37p5DSGkw2G4LPp4TglNghxfH/Gws652Yvj4aa998oo/eqEEsA5E7pKXM1VPfUUDKzN34/eznC/VGKSSje+gCLpbNe62Pw9dpsdPzOFnq9Lm94+RVhfoviSm0JApkNnV9+V2nWsxADapAJjCFLmF9Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zeoe1fMG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2hg1xMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9351EC4CEF4;
-	Tue, 12 Aug 2025 19:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zeoe1fMG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FEBC4CEF4;
+	Tue, 12 Aug 2025 19:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026824;
-	bh=camfEh7Ejw4VGB9BzKY+KLsaw974qm9FFLXg/r3c8XU=;
+	s=korg; t=1755026827;
+	bh=5O6Q9l+99JHboXQibLDhUsBzvJhGhD7XDBNSDtj6lgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R2hg1xMrm21xHrnkqVpKBs4dfGXr0f3Od/jRdtfGN60j8039rDZTdHl69nIsi260k
-	 Sxq5bYyA+zj7eymb1Xu4lAlEf2f3eybbCPZgIdy2L/LmXykIPvMKCVd3N5WVukESvZ
-	 VV17qDgEy9Lf9wfQwir4jGshHGc9Desn6tJeQGnU=
+	b=Zeoe1fMG9Hu0y8q6C5ab7BwSbGoAdPaLkEpKfb1Lw/zBEI5dmJDN6gcI2Jy0ZyVAb
+	 4YvXh7UMrxgw0Q7n5Cx2OtuMfzh7m9hKAHCDYA4YKnA75p+s7EPld2IthVOtgb5Bi6
+	 01ESJJ4nosSzND7BkcBQO2OBbpc+6WHwZV6GSLH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.15 452/480] USB: serial: option: add Foxconn T99W709
-Date: Tue, 12 Aug 2025 19:51:00 +0200
-Message-ID: <20250812174416.042233956@linuxfoundation.org>
+	Zenm Chen <zenmchen@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.15 453/480] Bluetooth: btusb: Add USB ID 3625:010b for TP-LINK Archer TX10UB Nano
+Date: Tue, 12 Aug 2025 19:51:01 +0200
+Message-ID: <20250812174416.081671241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -50,51 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-commit ad1244e1ce18f8c1a5ebad8074bfcf10eacb0311 upstream.
+commit d9da920233ec85af8b9c87154f2721a7dc4623f5 upstream.
 
-T99W709 is designed based on MTK T300(5G redcap) chip. There are
-7 serial ports to be enumerated: AP_LOG, GNSS, AP_META, AT,
-MD_META, NPT, DBG. RSVD(5) for ADB port.
+Add USB ID 3625:010b for TP-LINK Archer TX10UB Nano which is based on
+a Realtek RTL8851BU chip.
 
-test evidence as below:
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e15f Rev=00.01
-S:  Manufacturer=MediaTek Inc.
-S:  Product=USB DATA CARD
-S:  SerialNumber=355511220000399
-C:  #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-I:  If#=0x6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below:
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
+T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 9 Spd=480 MxCh= 0
+D: Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs= 1
+P: Vendor=3625 ProdID=010b Rev= 0.00
+S: Manufacturer=Realtek
+S: Product=802.11ax WLAN Adapter
+S: SerialNumber=00e04c000001
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
+A: FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=1ms
+E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 0 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 0 Ivl=1ms
+I: If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 9 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 9 Ivl=1ms
+I: If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 17 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 17 Ivl=1ms
+I: If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 25 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 25 Ivl=1ms
+I: If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 33 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 33 Ivl=1ms
+I: If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 49 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 49 Ivl=1ms
+I: If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 63 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=rtl8851bu
+E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btusb.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
- 	  .driver_info = RSVD(5) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
-+	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -516,6 +516,10 @@ static const struct usb_device_id quirks
+ 	{ USB_DEVICE(0x0bda, 0xb850), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3600), .driver_info = BTUSB_REALTEK },
+ 
++	/* Realtek 8851BU Bluetooth devices */
++	{ USB_DEVICE(0x3625, 0x010b), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
++
+ 	/* Realtek 8852AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0x2852), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
 
 
