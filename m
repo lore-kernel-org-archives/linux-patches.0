@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6ED2882CE;
-	Tue, 12 Aug 2025 19:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625BF2222D2;
+	Tue, 12 Aug 2025 19:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025349; cv=none; b=MfYxsqSz5h+2w6YHRMeDeJV9x8AfEoF7x1mgKKFyPkYEiwYnU+wiug3vFSKWySY/hPDJ7KEk+9kGemcA1P8dbcFIynKuxeyhjntHynDYC2D1QkNYsodZCF1B3ZoivPjs9QZCjUxl8MSkcrVvfwLMxnFgWMYpknRvrQEFWeZZtao=
+	t=1755025352; cv=none; b=W+qMGk6fGeKZTdX3rIy9DuE/XS+lBlA+XFiBduPfnFC26Zkw7UBRrye6gXwd3GhpQDQhFyZLbFt/9cnIIJLeXrUdMCVz2hYkW+K3JdxhIo5fgjmRaLzS4lx8wEWC8CF3VcqpUIwwfIiTe5DqyvifFx/KiFVKxGQbJYKMPCqJRh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025349; c=relaxed/simple;
-	bh=wsYnFEuHI9R8AEHkegVq7i/6mI2efz+W+l3Va7sBy4c=;
+	s=arc-20240116; t=1755025352; c=relaxed/simple;
+	bh=R3POt4e0jSmrZsCKJwJCZANFuL+NBwgoOyTYltj++DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1q07rMLVjmu2PkQPjpQ6p9QBZBSTiP5T5FZ5jUM0nDf7n2AZOe653ZMAIqsifcnQE758emv0r356CDtjte5P/zgkAgOEywawWKzE6mIgHNXdPV9zxUjlk8kn4BaJlv0zi6lThw+bUoBim6QRCFKKTZkPB8OcNQv2IC3wxRrgQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtZEUAiW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HXxbyOIyQNETX5iWaalQbn4m+jutGul6unPgOVsT/vO99Mxq2S+57Ol8jwk3B/XbE3O5z4Pw0RYlCao2zI1WK2UPIDQcDjMC0UIy1h0/EeS+uo+aVWm0ho5DXd4/uc5OFJgzWfrQ+vDbb+l7cNI7tD0eaHcjFOR7/sP+lY1i+6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOwmZMr1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtZEUAiW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BA3C4CEF0;
-	Tue, 12 Aug 2025 19:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOwmZMr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BF4C4CEF0;
+	Tue, 12 Aug 2025 19:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025348;
-	bh=wsYnFEuHI9R8AEHkegVq7i/6mI2efz+W+l3Va7sBy4c=;
+	s=korg; t=1755025352;
+	bh=R3POt4e0jSmrZsCKJwJCZANFuL+NBwgoOyTYltj++DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtZEUAiWXxmmTfLWZJnGnZAfzxBsfoUPlSgZ1yTQt5nBzHTEx9QbsYSJkP2xCKuuB
-	 1BPnfkaHAB+YZHtn/Q36Nh00UuWXQ9IRxFtbYQMoK4/5tAco5gDMRYsKtB1Nm1SB5q
-	 HI99qVTBfZBduyXNWrzpQRu/yFmyEQlb2OW1T+lg=
+	b=pOwmZMr1GNJema6/cS0nraomLWT4QXZnl7dayoUV7ofmc07GWFVkOeLUolnwW5t7a
+	 FQ04lqbQun90hJgQ4nmaI3zTZXHoiNRzqbC0LLcaxrJCAB59CUk3qBdO/YBoPCH0ZO
+	 eoC+cp+hJ2EXzCClzwy2YLLIlZ4bT2J8GNZW97UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yangtao Li <frank.li@vivo.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 016/480] ublk: use vmalloc for ublk_devices __queues
-Date: Tue, 12 Aug 2025 19:43:44 +0200
-Message-ID: <20250812174357.978619500@linuxfoundation.org>
+Subject: [PATCH 6.15 017/480] hfsplus: make splice write available again
+Date: Tue, 12 Aug 2025 19:43:45 +0200
+Message-ID: <20250812174358.017152032@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,52 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit c2f48453b7806d41f5a3270f206a5cd5640ed207 ]
+[ Upstream commit 2eafb669da0bf71fac0838bff13594970674e2b4 ]
 
-struct ublk_device's __queues points to an allocation with up to
-UBLK_MAX_NR_QUEUES (4096) queues, each of which have:
-- struct ublk_queue (48 bytes)
-- Tail array of up to UBLK_MAX_QUEUE_DEPTH (4096) struct ublk_io's,
-  32 bytes each
-This means the full allocation can exceed 512 MB, which may well be
-impossible to service with contiguous physical pages. Switch to
-kvcalloc() and kvfree(), since there is no need for physically
-contiguous memory.
+Since 5.10, splice() or sendfile() return EINVAL. This was
+caused by commit 36e2c7421f02 ("fs: don't allow splice read/write
+without explicit ops").
 
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250620151008.3976463-2-csander@purestorage.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This patch initializes the splice_write field in file_operations, like
+most file systems do, to restore the functionality.
+
+Fixes: 36e2c7421f02 ("fs: don't allow splice read/write without explicit ops")
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250529140033.2296791-1-frank.li@vivo.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/hfsplus/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 0e017eae97fb..066231e66f03 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2373,7 +2373,7 @@ static void ublk_deinit_queues(struct ublk_device *ub)
- 
- 	for (i = 0; i < nr_queues; i++)
- 		ublk_deinit_queue(ub, i);
--	kfree(ub->__queues);
-+	kvfree(ub->__queues);
- }
- 
- static int ublk_init_queues(struct ublk_device *ub)
-@@ -2384,7 +2384,7 @@ static int ublk_init_queues(struct ublk_device *ub)
- 	int i, ret = -ENOMEM;
- 
- 	ub->queue_size = ubq_size;
--	ub->__queues = kcalloc(nr_queues, ubq_size, GFP_KERNEL);
-+	ub->__queues = kvcalloc(nr_queues, ubq_size, GFP_KERNEL);
- 	if (!ub->__queues)
- 		return ret;
- 
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index f331e9574217..c85b5802ec0f 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -368,6 +368,7 @@ static const struct file_operations hfsplus_file_operations = {
+ 	.write_iter	= generic_file_write_iter,
+ 	.mmap		= generic_file_mmap,
+ 	.splice_read	= filemap_splice_read,
++	.splice_write	= iter_file_splice_write,
+ 	.fsync		= hfsplus_file_fsync,
+ 	.open		= hfsplus_file_open,
+ 	.release	= hfsplus_file_release,
 -- 
 2.39.5
 
