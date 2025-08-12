@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E612EAB97;
-	Tue, 12 Aug 2025 18:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6142E3B06;
+	Tue, 12 Aug 2025 18:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022003; cv=none; b=NzNBkF5bDJ1akx8G0Y/C62YjPD14fj/ghmhSbRqQYN04rASEl5u02L7KlFek/jGjyNZZy7Eyti3cFy0JfCOAD9QINtjhTmKETaNNp44a5YGaQNhXkk95s/ub9x8o5XFmYNzfDDPujQsTaWWXpVsScRwrdX1bpNXTjDY2+LI6cjE=
+	t=1755022006; cv=none; b=T7ZScXJ1BzWwygVsArppbVg0Rob9DvAzLzcgywvQpYn4xMBrauHWWnNZtz2CEBD75plXgkF5gtJJArADCV5vci7vu85a++NE5BOz2CvRoxwS55Ero5Lfe81KiiADSA1DqM2DK8kjRN56p+0Bd9tda7WyvpIsEgZ2G8F6NTwZMJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022003; c=relaxed/simple;
-	bh=/iY+BTZwOJaKhSpIpbSWSjjbiCG5I9J0caOfvVyy5Qs=;
+	s=arc-20240116; t=1755022006; c=relaxed/simple;
+	bh=+no6iFL0K3VcFgSsKTqRvIGk+72RnHiOQpaOioG4FA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ew1czDRYWRVOVK6tkOQm390m8bd8f0Ig8vkEE+yd+au9XTz9LZ3yhHwpAM45NiNVOQTxlOvqop+mePZf1Fqi2FOR7X4cT3tkToAgTfyjyJLsRdxzF7sF07uxtKYxDzIKOcrQsAK+uzzBTEFL1a4WWiOFwLMqyoRKPod7kB2JykU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAFN3lSy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oO3tO3d6jIjAGdjyBNB04dpQj3gZ4IYCyv2bBivQLm8Fvnecp38S0vXeg9hTVrclcYJnnApJ2whAy0Els22wrEy0WSaFcPeQ4bDm1bkPJt+21u7y1mmMvyt9rSPCOWrBgiVqAgEGh7w+nXgfjo9P66xfy31zAXtM2Sv9emwPueM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbJpB+8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAFN3lSy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BABC4CEF0;
-	Tue, 12 Aug 2025 18:06:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbJpB+8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF8CC4CEF6;
+	Tue, 12 Aug 2025 18:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022002;
-	bh=/iY+BTZwOJaKhSpIpbSWSjjbiCG5I9J0caOfvVyy5Qs=;
+	s=korg; t=1755022005;
+	bh=+no6iFL0K3VcFgSsKTqRvIGk+72RnHiOQpaOioG4FA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TAFN3lSy2BZHrlkDQa3CicGdsgzpmnXvn9/YYkV+2YYRngcUfTVDo58lLEWCRQq5y
-	 x4TXbCoLlGaeiB1onNb4X6yzCzkah4XKi1vobVqW+olL2zsgUz+Qhyb+FN674MnEZr
-	 uvu4jJsyoippfuF4XsChJ30vLYv8jYR80fEOjJlQ=
+	b=NbJpB+8v1MoDj0VOH7Y3znJflhoSLA58uvgODHj0ITtfAtVKVuQgRtu6STDe3oHLx
+	 fm9bnV3JvRwGHXQBWQ/ueR43ckN4qmeVvJCsTrVBlhM77hBMBppBX8sWeh8xcG/xZB
+	 s44Tox2UNLN3Y0rClMgIzSPELMtYw8QmKZrEqTTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <willdeacon@google.com>,
-	Will McVicker <willmcvicker@google.com>,
-	Youngmin Nam <youngmin.nam@samsung.com>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lijuan Gao <lijuan.gao@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/369] arm64: dts: exynos: gs101: Add local-timer-stop to cpuidle nodes
-Date: Tue, 12 Aug 2025 19:25:23 +0200
-Message-ID: <20250812173015.723478796@linuxfoundation.org>
+Subject: [PATCH 6.12 027/369] arm64: dts: qcom: sa8775p: Correct the interrupt for remoteproc
+Date: Tue, 12 Aug 2025 19:25:24 +0200
+Message-ID: <20250812173015.759014244@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -54,59 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <willdeacon@google.com>
+From: Lijuan Gao <lijuan.gao@oss.qualcomm.com>
 
-[ Upstream commit b649082312dd1a4c3989bbdb7c25eb711e9b1d94 ]
+[ Upstream commit 7bd7209e9cb11c8864e601d915008da088476f0c ]
 
-In preparation for switching to the architected timer as the primary
-clockevents device, mark the cpuidle nodes with the 'local-timer-stop'
-property to indicate that an alternative clockevents device must be
-used for waking up from the "c2" idle state.
+Fix the incorrect IRQ numbers for ready and handover on sa8775p.
+The correct values are as follows:
 
-Signed-off-by: Will Deacon <willdeacon@google.com>
-[Original commit from https://android.googlesource.com/kernel/gs/+/a896fd98638047989513d05556faebd28a62b27c]
-Signed-off-by: Will McVicker <willmcvicker@google.com>
-Reviewed-by: Youngmin Nam <youngmin.nam@samsung.com>
-Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
-Fixes: ea89fdf24fd9 ("arm64: dts: exynos: google: Add initial Google gs101 SoC support")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
-Tested-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20250611-gs101-cpuidle-v2-1-4fa811ec404d@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fatal interrupt - 0
+Ready interrupt - 1
+Handover interrupt - 2
+Stop acknowledge interrupt - 3
+
+Fixes: df54dcb34ff2e ("arm64: dts: qcom: sa8775p: add ADSP, CDSP and GPDSP nodes")
+Signed-off-by: Lijuan Gao <lijuan.gao@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250612-correct_interrupt_for_remoteproc-v1-2-490ee6d92a1b@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/exynos/google/gs101.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-index b8f8255f840b..7caa2f3ef134 100644
---- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-+++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-@@ -155,6 +155,7 @@ ANANKE_CPU_SLEEP: cpu-ananke-sleep {
- 				idle-state-name = "c2";
- 				compatible = "arm,idle-state";
- 				arm,psci-suspend-param = <0x0010000>;
-+				local-timer-stop;
- 				entry-latency-us = <70>;
- 				exit-latency-us = <160>;
- 				min-residency-us = <2000>;
-@@ -164,6 +165,7 @@ ENYO_CPU_SLEEP: cpu-enyo-sleep {
- 				idle-state-name = "c2";
- 				compatible = "arm,idle-state";
- 				arm,psci-suspend-param = <0x0010000>;
-+				local-timer-stop;
- 				entry-latency-us = <150>;
- 				exit-latency-us = <190>;
- 				min-residency-us = <2500>;
-@@ -173,6 +175,7 @@ HERA_CPU_SLEEP: cpu-hera-sleep {
- 				idle-state-name = "c2";
- 				compatible = "arm,idle-state";
- 				arm,psci-suspend-param = <0x0010000>;
-+				local-timer-stop;
- 				entry-latency-us = <235>;
- 				exit-latency-us = <220>;
- 				min-residency-us = <3500>;
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index b28fa598cebb..60f3b545304b 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -3797,8 +3797,8 @@ remoteproc_gpdsp0: remoteproc@20c00000 {
+ 
+ 			interrupts-extended = <&intc GIC_SPI 768 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_gpdsp0_in 0 0>,
+-					      <&smp2p_gpdsp0_in 2 0>,
+ 					      <&smp2p_gpdsp0_in 1 0>,
++					      <&smp2p_gpdsp0_in 2 0>,
+ 					      <&smp2p_gpdsp0_in 3 0>;
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+@@ -3840,8 +3840,8 @@ remoteproc_gpdsp1: remoteproc@21c00000 {
+ 
+ 			interrupts-extended = <&intc GIC_SPI 624 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_gpdsp1_in 0 0>,
+-					      <&smp2p_gpdsp1_in 2 0>,
+ 					      <&smp2p_gpdsp1_in 1 0>,
++					      <&smp2p_gpdsp1_in 2 0>,
+ 					      <&smp2p_gpdsp1_in 3 0>;
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+@@ -3965,8 +3965,8 @@ remoteproc_cdsp0: remoteproc@26300000 {
+ 
+ 			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp0_in 0 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_cdsp0_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp0_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_cdsp0_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp0_in 3 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+@@ -4097,8 +4097,8 @@ remoteproc_cdsp1: remoteproc@2a300000 {
+ 
+ 			interrupts-extended = <&intc GIC_SPI 798 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp1_in 0 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_cdsp1_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp1_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_cdsp1_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp1_in 3 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+@@ -4253,8 +4253,8 @@ remoteproc_adsp: remoteproc@30000000 {
+ 
+ 			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "wdog", "fatal", "ready", "handover",
+ 					  "stop-ack";
 -- 
 2.39.5
 
