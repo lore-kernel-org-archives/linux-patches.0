@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD122CA9;
-	Tue, 12 Aug 2025 18:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EE1247287;
+	Tue, 12 Aug 2025 18:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024618; cv=none; b=q5yr50CAVMSah/LRRXj6SpP8ToivKkZrqN87DrMccX2XLypvb7XPrLJCK+89Gcdn+wk6+3qw9+cHR11k1XiDDGZQZChL3zxuCsiJMQCc7V8Vw1/tYEM8QW8+LwKSQIJzt54DCVG9N0sNNw8HaEHHxR0Vh2GCLORM9JGnRWPs3yk=
+	t=1755024622; cv=none; b=EImw2NARYdoe2k9tS1q3mqqVfNB348wxF3Yv4+CugvIcGAfKr0KMytDBdKfOMk6ACU01PUUsbB1D3hrOpxmQwIAlicuAwoS+vJj8wKd0mD8z/ajKoSAeIvQ4cwhcQbAR0NvilEgva8dr4o23WVs6wdGIbHSmWp8it1W3LH7z+NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024618; c=relaxed/simple;
-	bh=6O100+HzJB8wnRKnl/gnPjWfXqYwJi91kIIuG35ibMY=;
+	s=arc-20240116; t=1755024622; c=relaxed/simple;
+	bh=pas6xjIOrXyFQnCPJplBoBMkfu3Fdbs/g0XxSt2rJa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=caXuIBZx8C8N3+PX8jQI5fckUliBItLYeC/qhMIBkxz/ugErCPkXhl7tK9coe54YDLLIWKZFr4PxZAVUr9gL9l0eXRnxZXj0tXgHiB83MiB6GHlaLZFn7Ay+emXzEaaLp6ZgaGOiLFVR1UlXnLPONYk5fyK+NCywU9q6J1mFXS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvxZ8R4O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BJNM7NJ32WTacyqpSwIrisnzaZwSaUveNHAFZ+vG+1Le3Lq/NepcrGCbh/PIcdsyEoe542lJHN0uUvUcMsJQIs4tJx8E0cypnjYQ6r6RDu5T+J7kNJUW+IkGlRVgQrZweFOFPaHohujW1IqHSBD/uCV1Y1NhSaxsOmgfh6WHqI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgZg8ZYi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvxZ8R4O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BE8C4CEF0;
-	Tue, 12 Aug 2025 18:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgZg8ZYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C6AC4CEF0;
+	Tue, 12 Aug 2025 18:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024618;
-	bh=6O100+HzJB8wnRKnl/gnPjWfXqYwJi91kIIuG35ibMY=;
+	s=korg; t=1755024622;
+	bh=pas6xjIOrXyFQnCPJplBoBMkfu3Fdbs/g0XxSt2rJa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvxZ8R4OnK5jPKAROTDQTehZFG1lT3DhbRiz7TMgtIeERT55SNTigE99QxSqg+OBC
-	 boVfKmNUO4jP20/AShf/sGM+Yv9IMLu+xMAcVzvZtPwaU4AK2/uKDlTj9Mno4D2Ult
-	 pwEz1+X2KGXr3DnrOR4o/GtlqklfsJkd/vYMgNNw=
+	b=dgZg8ZYi2paY2QdnhovtlLYCd6ZQi8ERvP7TMLO3dfQPDN86hthWyOTdWTZYKsAVT
+	 TMr2Ruhdwn8fqBbzj08OKm8jk2Ujo2puCU47+5WdPGAl3muB9SKmi9PZlfVD/nD31s
+	 5IIykMdnUDMn2+zXA0NJ3PG0sEALmPPYFr2oK72k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 427/627] clk: clocking-wizard: Fix the round rate handling for versal
-Date: Tue, 12 Aug 2025 19:32:02 +0200
-Message-ID: <20250812173435.508164102@linuxfoundation.org>
+Subject: [PATCH 6.16 428/627] crypto: qat - fix DMA direction for compression on GEN2 devices
+Date: Tue, 12 Aug 2025 19:32:03 +0200
+Message-ID: <20250812173435.544415528@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,36 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 7f5e9ca0a424af44a708bb4727624d56f83ecffa ]
+[ Upstream commit d41d75fe1b751ee6b347bf1cb1cfe9accc4fcb12 ]
 
-Fix the `clk_round_rate` implementation for Versal platforms by calling
-the Versal-specific divider calculation helper. The existing code used
-the generic divider routine, which results in incorrect round rate.
+QAT devices perform an additional integrity check during compression by
+decompressing the output. Starting from QAT GEN4, this verification is
+done in-line by the hardware. However, on GEN2 devices, the hardware
+reads back the compressed output from the destination buffer and performs
+a decompression operation using it as the source.
 
-Fixes: 7681f64e6404 ("clk: clocking-wizard: calculate dividers fractional parts")
-Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Link: https://lore.kernel.org/r/20250625054114.28273-1-shubhrajyoti.datta@amd.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+In the current QAT driver, destination buffers are always marked as
+write-only. This is incorrect for QAT GEN2 compression, where the buffer
+is also read during verification. Since commit 6f5dc7658094
+("iommu/vt-d: Restore WO permissions on second-level paging entries"),
+merged in v6.16-rc1, write-only permissions are strictly enforced, leading
+to DMAR errors when using QAT GEN2 devices for compression, if VT-d is
+enabled.
+
+Mark the destination buffers as DMA_BIDIRECTIONAL. This ensures
+compatibility with GEN2 devices, even though it is not required for
+QAT GEN4 and later.
+
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Fixes: cf5bb835b7c8 ("crypto: qat - fix DMA transfer direction")
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/xilinx/clk-xlnx-clock-wizard.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/intel/qat/qat_common/qat_bl.c          | 6 +++---
+ drivers/crypto/intel/qat/qat_common/qat_compression.c | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-index bbf7714480e7..0295a13a811c 100644
---- a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-+++ b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-@@ -669,7 +669,7 @@ static long clk_wzrd_ver_round_rate_all(struct clk_hw *hw, unsigned long rate,
- 	u32 m, d, o, div, f;
- 	int err;
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_bl.c b/drivers/crypto/intel/qat/qat_common/qat_bl.c
+index 5e4dad4693ca..9b2338f58d97 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_bl.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_bl.c
+@@ -38,7 +38,7 @@ void qat_bl_free_bufl(struct adf_accel_dev *accel_dev,
+ 		for (i = 0; i < blout->num_mapped_bufs; i++) {
+ 			dma_unmap_single(dev, blout->buffers[i].addr,
+ 					 blout->buffers[i].len,
+-					 DMA_FROM_DEVICE);
++					 DMA_BIDIRECTIONAL);
+ 		}
+ 		dma_unmap_single(dev, blpout, sz_out, DMA_TO_DEVICE);
  
--	err = clk_wzrd_get_divisors(hw, rate, *prate);
-+	err = clk_wzrd_get_divisors_ver(hw, rate, *prate);
- 	if (err)
- 		return err;
+@@ -162,7 +162,7 @@ static int __qat_bl_sgl_to_bufl(struct adf_accel_dev *accel_dev,
+ 			}
+ 			buffers[y].addr = dma_map_single(dev, sg_virt(sg) + left,
+ 							 sg->length - left,
+-							 DMA_FROM_DEVICE);
++							 DMA_BIDIRECTIONAL);
+ 			if (unlikely(dma_mapping_error(dev, buffers[y].addr)))
+ 				goto err_out;
+ 			buffers[y].len = sg->length;
+@@ -204,7 +204,7 @@ static int __qat_bl_sgl_to_bufl(struct adf_accel_dev *accel_dev,
+ 		if (!dma_mapping_error(dev, buflout->buffers[i].addr))
+ 			dma_unmap_single(dev, buflout->buffers[i].addr,
+ 					 buflout->buffers[i].len,
+-					 DMA_FROM_DEVICE);
++					 DMA_BIDIRECTIONAL);
+ 	}
  
+ 	if (!buf->sgl_dst_valid)
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_compression.c b/drivers/crypto/intel/qat/qat_common/qat_compression.c
+index 0a77ca65c8d4..53a4db5507ec 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_compression.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_compression.c
+@@ -204,7 +204,7 @@ static int qat_compression_alloc_dc_data(struct adf_accel_dev *accel_dev)
+ 	if (!obuff)
+ 		goto err;
+ 
+-	obuff_p = dma_map_single(dev, obuff, ovf_buff_sz, DMA_FROM_DEVICE);
++	obuff_p = dma_map_single(dev, obuff, ovf_buff_sz, DMA_BIDIRECTIONAL);
+ 	if (unlikely(dma_mapping_error(dev, obuff_p)))
+ 		goto err;
+ 
+@@ -232,7 +232,7 @@ static void qat_free_dc_data(struct adf_accel_dev *accel_dev)
+ 		return;
+ 
+ 	dma_unmap_single(dev, dc_data->ovf_buff_p, dc_data->ovf_buff_sz,
+-			 DMA_FROM_DEVICE);
++			 DMA_BIDIRECTIONAL);
+ 	kfree_sensitive(dc_data->ovf_buff);
+ 	kfree(dc_data);
+ 	accel_dev->dc_data = NULL;
 -- 
 2.39.5
 
