@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC5F2DBF5E;
-	Tue, 12 Aug 2025 18:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338B63F9D2;
+	Tue, 12 Aug 2025 18:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022688; cv=none; b=W4mbVavTaECnSxyvsbhUMCEgzGhv4Qb53iYTKvpiveQ+4t6y6cdEns863Owv0QpqkeICfLrLYyVVx4xhaGw9RSH2HBvMMQiOKda60xesjSVSm/awC+5RvtLknqcMh91HtUQpQuc/f+hXuaMwkgwYoU/1Q6X2VQ9iFv0YBjNf+0I=
+	t=1755022692; cv=none; b=pq2DfbKzTIXlxuQo6o/XjmlDPC58g7ceNTq5LkyWGbHgBFQF/2cEb0risYJFj2P2tBdFLA5uo1pe82DFw/KFhFJfZIz6KGO5HuAMuV8VH94+l+XbwfZLoGRkGw5fTA59P74as8QT0YTvnWa6M3OYovKvP0k0HCTIzV2bFASz4eA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022688; c=relaxed/simple;
-	bh=KkD0PxD+TjM0lWl4DhxK6672ArDHeG0OwjRvYtevp4U=;
+	s=arc-20240116; t=1755022692; c=relaxed/simple;
+	bh=goNJhPvU/I8qF85q+G70MeZUK937GjcEa5QIEUwIYB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVv7f+CbUdS0ejtVBccGmGgo5DeeVSJdRYVVriV3xBN3HS/ojB1u39XExi4UL9JcPnpTl9XYOCkGSsBBKeJHbbjChM1SCXrr/gyfOP9BHTaD1bLStbQ9DNcVbAGoY3LEPLDAxs3t/IQQkWlLn86fRW0CvuTwAJWYpDn/YUkj1xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPjjcy8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwejB4fifPhBRmBu2MnAOYy1g53Tm5EN1fJkW2AoOvexJ4U/s3OvITjBBU0ZnxAx5eCtl06/PCusM12WdMYAnXWhl/GXfQ0JBef+jL39GH0xRDugb/nWpAbOxHCNboxv3zYDvkbdPjkjGA0y7DuSLneWQMSX7EZ0lQEZ0xQB3EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tov1jPFu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPjjcy8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD88C4CEF0;
-	Tue, 12 Aug 2025 18:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tov1jPFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940E2C4CEF0;
+	Tue, 12 Aug 2025 18:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022688;
-	bh=KkD0PxD+TjM0lWl4DhxK6672ArDHeG0OwjRvYtevp4U=;
+	s=korg; t=1755022692;
+	bh=goNJhPvU/I8qF85q+G70MeZUK937GjcEa5QIEUwIYB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPjjcy8dAYIm1qW68w6pXOmVgpmC6E2ALC+jnoIVetxZvtgkfdcUUbkfhJEUih+ke
-	 yZG4RYZAbVeZMZ9gVyD/uusbTfvJ4wA/Nnni3fY9jMd97tKPJTva+f1TNazdbPj5Bm
-	 DHQbsKYQEJjqdVQe501c0wDu8kGIJjqUdOpLGyAM=
+	b=Tov1jPFuZUIY5/N+4uWkJQogJXC4SGnrYweoDci7VbV33SVVx3XWhCuDwP8gydwlV
+	 eT1l1R8OFIQg4Si3GL01ujeiTe8m0aZhnhkqyyOWpgSgIxjct3h0qHI8SR710xGVkH
+	 hs9M99DirEo/OKl7oi+mk7fQhMWQ1d4gJUa6/Hc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 212/369] PCI: endpoint: pci-epf-vntb: Fix the incorrect usage of __iomem attribute
-Date: Tue, 12 Aug 2025 19:28:29 +0200
-Message-ID: <20250812173022.733244268@linuxfoundation.org>
+Subject: [PATCH 6.12 230/369] perf record: Cache build-ID of hit DSOs only
+Date: Tue, 12 Aug 2025 19:28:47 +0200
+Message-ID: <20250812173023.426227452@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,49 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <mani@kernel.org>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 61ae7f8694fb4b57a8c02a1a8d2b601806afc999 ]
+[ Upstream commit 6235ce77749f45cac27f630337e2fdf04e8a6c73 ]
 
-__iomem attribute is supposed to be used only with variables holding the
-MMIO pointer. But here, 'mw_addr' variable is just holding a 'void *'
-returned by pci_epf_alloc_space(). So annotating it with __iomem is clearly
-wrong. Hence, drop the attribute.
+It post-processes samples to find which DSO has samples.  Based on that
+info, it can save used DSOs in the build-ID cache directory.  But for
+some reason, it saves all DSOs without checking the hit mark.  Skipping
+unused DSOs can give some speedup especially with --buildid-mmap being
+default.
 
-This also fixes the below sparse warning:
+On my idle machine, `time perf record -a sleep 1` goes down from 3 sec
+to 1.5 sec with this change.
 
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17: warning: incorrect type in assignment (different address spaces)
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17:    expected void [noderef] __iomem *mw_addr
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17:    got void *
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21: warning: incorrect type in assignment (different address spaces)
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21:    expected unsigned int [usertype] *epf_db
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21:    got void [noderef] __iomem *mw_addr
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38: warning: incorrect type in argument 2 (different address spaces)
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38:    expected void *addr
-  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38:    got void [noderef] __iomem *mw_addr
-
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250709125022.22524-1-mani@kernel.org
+Fixes: e29386c8f7d71fa5 ("perf record: Add --buildid-mmap option to enable PERF_RECORD_MMAP2's build id")
+Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lore.kernel.org/r/20250731070330.57116-1-namhyung@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
+ tools/perf/util/build-id.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 3cddfdd04029..62d09a528e68 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -530,7 +530,7 @@ static int epf_ntb_db_bar_init(struct epf_ntb *ntb)
- 	struct device *dev = &ntb->epf->dev;
- 	int ret;
- 	struct pci_epf_bar *epf_bar;
--	void __iomem *mw_addr;
-+	void *mw_addr;
- 	enum pci_barno barno;
- 	size_t size = sizeof(u32) * ntb->db_count;
+diff --git a/tools/perf/util/build-id.c b/tools/perf/util/build-id.c
+index e763e8d99a43..ee00313d5d7e 100644
+--- a/tools/perf/util/build-id.c
++++ b/tools/perf/util/build-id.c
+@@ -864,7 +864,7 @@ static int dso__cache_build_id(struct dso *dso, struct machine *machine,
+ 	char *allocated_name = NULL;
+ 	int ret = 0;
  
+-	if (!dso__has_build_id(dso))
++	if (!dso__has_build_id(dso) || !dso__hit(dso))
+ 		return 0;
+ 
+ 	if (dso__is_kcore(dso)) {
 -- 
 2.39.5
 
