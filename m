@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5722F4A0A;
-	Tue, 12 Aug 2025 18:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25042F4A0A;
+	Tue, 12 Aug 2025 18:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023590; cv=none; b=LlAp2HpexJp0BDZxGDw5fCkvNrmWk4akZ+7PGsTDyYfbJOQBaqu1e6hED+z3WhYyxcD/BmeAE/my35i15SBvx8DlTs3WZXjNTZ7Ds3wA3E1CKXTUTCl+ZsUMbWk3kU9muPHuIxZsiiJCHmKetkJniWZpCrPKhfjm3FmDDMafQFA=
+	t=1755023593; cv=none; b=kfi4ieVEJn10XEIuPih8VBtFRx9tJfXgPbwYTw9mPBOmeYgfiHcJjZsT4LijfNDaGiozXlYXWpsSED4/Vx6sdsX9U3jrHYPsLMZLUGx8ReQGgxsnvubnaOFJErgUavuUZZF+H8e1gNO37aqa+OaGtfnRWr6+CqyeOggHLsfeZ8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023590; c=relaxed/simple;
-	bh=68Qys1e2DPB/2G+KPdFdIDaH+atrXh5cr5A0FEAQRDc=;
+	s=arc-20240116; t=1755023593; c=relaxed/simple;
+	bh=xHRRSuFE76k+dUciJ49s3WmV1nD0r/xHIulQiIKoF+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B/5ULL1rlxM2o1hnCK9/V4sDgqBIaLPOSx2z1frKUFW8+JiAfX0V6NxSm54Ftyxg5nxWWG+bLuYRz7RcewYMgZssu7rrhdKJDRMs8oh0UNhNS+7ESO021B0pTDD4xuzLtFa3z8KzKaXLPjoNgv6aXd6j7EKhC/ntvzQ1k3UnCZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBnAyC8G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YC0F/fXiVSuQ+n4dK3Y6XGw7AO9U2JuIxIW7SMWbELH9aRW53CJ4lxAu70iQOa2g4anxaONT5QmEzZa1QagqRGMtK17rsYvqrWrIGR5Rnxr+OPE5Q4RCmQYD0midENXtk7VERjqXBq4eOtgPDmEC3yGqv6KtjY3tIcbMqKgkOsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtGlpZ5s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBnAyC8G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F84C4CEF0;
-	Tue, 12 Aug 2025 18:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtGlpZ5s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F74CC4CEF0;
+	Tue, 12 Aug 2025 18:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023590;
-	bh=68Qys1e2DPB/2G+KPdFdIDaH+atrXh5cr5A0FEAQRDc=;
+	s=korg; t=1755023593;
+	bh=xHRRSuFE76k+dUciJ49s3WmV1nD0r/xHIulQiIKoF+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBnAyC8Gu61kj9JLiqHfO+0yfiXs7q0dDymZK7+cAJdPSyeGIo9+ahPmbxsQI5kIR
-	 wCNTckmVKkAAJAeAMmY/12+j0o25wX2d5BHrfpzmyXwA4e/EwaGgKEiEB7ONykpY2m
-	 0OB3ASJ8WEGMN3eTbdfgLEi8ZpIKi+phpIS6XoXs=
+	b=WtGlpZ5svVlG7xFgeVNfgiUUAlFj0XJYCMmObt2O9HE4ZFZBQwjGIcS2eKbS5iwlS
+	 vFc76uZ4L+oV5pBzUjzBcZqAgJXY78jTiE5uMP4clvE5NH37oj0CQrJD3AZK/iyeFC
+	 ejPKv5pV3kryjp7gc2J55q8ZaKy14UFfpcrqiWV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 124/627] drm/xe: Correct BMG VSEC header sizing
-Date: Tue, 12 Aug 2025 19:26:59 +0200
-Message-ID: <20250812173424.036665694@linuxfoundation.org>
+Subject: [PATCH 6.16 098/627] arm64: dts: rockchip: fix PHY handling for ROCK 4D
+Date: Tue, 12 Aug 2025 19:26:33 +0200
+Message-ID: <20250812173423.044154924@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -47,73 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael J. Ruhl <michael.j.ruhl@intel.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 5b27388171a18cf6842c700520086ec50194e858 ]
+[ Upstream commit cd803da7c033e376a66793a43ee98e136bc6cc25 ]
 
-The intel_vsec_header information for the crashlog feature is
-incorrect.
+Old revisions of the ROCK 4D board have a dedicated crystal to
+supply the RTL8211F PHY's 25MHz clock input. At least some newer
+revisions instead use REFCLKO25M_GMAC0_OUT. The DT already has
+this half-prepared, but there are some issues:
 
-Update the VSEC header with correct sizing and count.
+1. The DT relies on auto-selecting the right PHY driver, which
+   requires that it works good enough to read the ID registers.
+   This does not work without the clock, which is handled by
+   the PHY driver. By updating the compatible to contain the
+   RTL8211F IDs, so that the operating system can choose the
+   right PHY driver without relying on a pre-powered PHY.
 
-Since the crashlog entries are "merged" (num_entries = 2), the
-separate capabilities entries must be merged as well.
+2. Despite the name REFCLKO25M_GMAC0_OUT could also provide a
+   different frequency, so ensure it is explicitly set to 25
+   MHz as expected by the PHY.
 
-Fixes: 0c45e76fcc62 ("drm/xe/vsec: Support BMG devices")
-Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Reviewed-by: David E. Box <david.e.box@linux.intel.com>
-Link: https://lore.kernel.org/r/20250713172943.7335-4-michael.j.ruhl@intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+3. While at it switch from deprecated "enable-gpio" to standard
+   "enable-gpios".
+
+Fixes: a0fb7eca9c09 ("arm64: dts: rockchip: Add Radxa ROCK 4D device tree")
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lore.kernel.org/r/20250704-rk3576-rock4d-phy-handling-fixes-v1-1-1d64130c4139@kernel.org
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vsec.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3576-rock-4d.dts | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_vsec.c b/drivers/gpu/drm/xe/xe_vsec.c
-index 1bf7e709e110..56930ad42962 100644
---- a/drivers/gpu/drm/xe/xe_vsec.c
-+++ b/drivers/gpu/drm/xe/xe_vsec.c
-@@ -33,30 +33,19 @@ static struct intel_vsec_header bmg_telemetry = {
- 	.offset = BMG_DISCOVERY_OFFSET,
- };
+diff --git a/arch/arm64/boot/dts/rockchip/rk3576-rock-4d.dts b/arch/arm64/boot/dts/rockchip/rk3576-rock-4d.dts
+index 6756403111e7..0a93853cdf43 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3576-rock-4d.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3576-rock-4d.dts
+@@ -641,14 +641,16 @@ hym8563: rtc@51 {
  
--static struct intel_vsec_header bmg_punit_crashlog = {
-+static struct intel_vsec_header bmg_crashlog = {
- 	.rev = 1,
- 	.length = 0x10,
- 	.id = VSEC_ID_CRASHLOG,
--	.num_entries = 1,
--	.entry_size = 4,
-+	.num_entries = 2,
-+	.entry_size = 6,
- 	.tbir = 0,
- 	.offset = BMG_DISCOVERY_OFFSET + 0x60,
- };
- 
--static struct intel_vsec_header bmg_oobmsm_crashlog = {
--	.rev = 1,
--	.length = 0x10,
--	.id = VSEC_ID_CRASHLOG,
--	.num_entries = 1,
--	.entry_size = 4,
--	.tbir = 0,
--	.offset = BMG_DISCOVERY_OFFSET + 0x78,
--};
--
- static struct intel_vsec_header *bmg_capabilities[] = {
- 	&bmg_telemetry,
--	&bmg_punit_crashlog,
--	&bmg_oobmsm_crashlog,
-+	&bmg_crashlog,
- 	NULL
+ &mdio0 {
+ 	rgmii_phy0: ethernet-phy@1 {
+-		compatible = "ethernet-phy-ieee802.3-c22";
++		compatible = "ethernet-phy-id001c.c916";
+ 		reg = <0x1>;
+ 		clocks = <&cru REFCLKO25M_GMAC0_OUT>;
++		assigned-clocks = <&cru REFCLKO25M_GMAC0_OUT>;
++		assigned-clock-rates = <25000000>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&rtl8211f_rst>;
+ 		reset-assert-us = <20000>;
+ 		reset-deassert-us = <100000>;
+-		reset-gpio = <&gpio2 RK_PB5 GPIO_ACTIVE_LOW>;
++		reset-gpios = <&gpio2 RK_PB5 GPIO_ACTIVE_LOW>;
+ 	};
  };
  
 -- 
