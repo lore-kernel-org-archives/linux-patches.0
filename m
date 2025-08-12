@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2119A1EBFE0;
-	Tue, 12 Aug 2025 18:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB75257435;
+	Tue, 12 Aug 2025 18:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022391; cv=none; b=H6KnZI9oxowee76Qj654wwvfypotlRlLruxJHKDaI1nXuStOysuPSyniykK0mbrAPMz46SL8rT3dqKo1jeN7yRm8I52VfsaWIQ6Ju9PdddLRB/CW2DsmMN2TQEnSk+KpESwhtxIjkwkdW1UUYUcnL+5xwgi5VSy010pu5TCoErY=
+	t=1755022394; cv=none; b=MldGZxkesX4tlaxbtmQrK4GAU6v71KxNrFTYxpmjIK27TA8LkL6ogwv5ekGzaYpq+D6xZYilLf+95NRP/nNUwA7jU7VjN4JzXQkyXJEKpvRm8i6FY8J+W6CArzUViKMtaoShFkKqWr1ftLClU+WbMCG/gLW4XIjsntY84Nv/cGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022391; c=relaxed/simple;
-	bh=QeOFuwmkHd8i/dnrhxqrSU3yhjk9YTbtD2uiOanibMQ=;
+	s=arc-20240116; t=1755022394; c=relaxed/simple;
+	bh=oldVOwLQMxt4sTQHzDNMcivcAI/s3JsXOlobsF30xcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LCPA8fpAeyhbkF6IAAwZ6kBtVk+3CrHKkMGHMHuuqArfC/q62QYeyVpXXbaPaxS2Zi1A73U0vxRhqCw26zXlhoKVkw2N+ywzecQq/rscYqUghs5pZ17AdED6LqkN/nuA9YmV/7CAco5rl69XUwCDc/iWaENreaKVjhoAqqi/dcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fv2XtBqL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rITk8mtIU/z4bUddU70IFB9hbShlcLaOX6HV1mGsml/hONXaKEctT657v2zI3dDs01c25x3qrzYSiFmoW7TVIZE89k0soIGWJeC7gglmRxCAWlZdyUEa18Ke15w3nztoU2aZmSZgBfXJBJC8ZlFL4XT2epjLyZX+iUmSp18wwHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myIS9cFq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fv2XtBqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842FFC4CEF1;
-	Tue, 12 Aug 2025 18:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myIS9cFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF95EC4CEF6;
+	Tue, 12 Aug 2025 18:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022391;
-	bh=QeOFuwmkHd8i/dnrhxqrSU3yhjk9YTbtD2uiOanibMQ=;
+	s=korg; t=1755022394;
+	bh=oldVOwLQMxt4sTQHzDNMcivcAI/s3JsXOlobsF30xcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fv2XtBqLykZNIrNl+3hNAMZHrIbu7F3DJ0pSTF4UzK9+XTCyRPavBrCnC5q8o1FME
-	 lxWxF3j+R19otlROmes8rxg65vTfTAixlxSwt/Ogn3Ia0uwRL98/AfxlWa0l8xMMp0
-	 72DeM/Ig9vO55ydzUk9kcqM5MNw9UDEP4HLTMa8o=
+	b=myIS9cFqDHpOAVVD+BiMYm3f/YWs21XQlTS2sveLUqzNK90PfrbwurOlBjOY+V8/i
+	 RfKZ4nKu1u/gNZXu0SwsQKvY2DuJkZ/WUyJsIm/+fY4kBOWF5CGM1K6T1FpaX4tGKX
+	 0SefjhXc+sROTvOBlAv9/ltKDfngytD5HvAnJ6Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin Kaistra <martin.kaistra@linutronix.de>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/369] tcp: call tcp_measure_rcv_mss() for ooo packets
-Date: Tue, 12 Aug 2025 19:26:45 +0200
-Message-ID: <20250812173018.841851841@linuxfoundation.org>
+Subject: [PATCH 6.12 109/369] wifi: rtl8xxxu: Fix RX skb size for aggregation disabled
+Date: Tue, 12 Aug 2025 19:26:46 +0200
+Message-ID: <20250812173018.877058302@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,40 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Martin Kaistra <martin.kaistra@linutronix.de>
 
-[ Upstream commit 38d7e444336567bae1c7b21fc18b7ceaaa5643a0 ]
+[ Upstream commit d76a1abcf57734d2bcd4a7ec051617edd4513d7f ]
 
-tcp_measure_rcv_mss() is used to update icsk->icsk_ack.rcv_mss
-(tcpi_rcv_mss in tcp_info) and tp->scaling_ratio.
+Commit 1e5b3b3fe9e0 ("rtl8xxxu: Adjust RX skb size to include space for
+phystats") increased the skb size when aggregation is enabled but decreased
+it for the aggregation disabled case.
 
-Calling it from tcp_data_queue_ofo() makes sure these
-fields are updated, and permits a better tuning
-of sk->sk_rcvbuf, in the case a new flow receives many ooo
-packets.
+As a result, if a frame near the maximum size is received,
+rtl8xxxu_rx_complete() is called with status -EOVERFLOW and then the
+driver starts to malfunction and no further communication is possible.
 
-Fixes: dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250711114006.480026-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Restore the skb size in the aggregation disabled case.
+
+Fixes: 1e5b3b3fe9e0 ("rtl8xxxu: Adjust RX skb size to include space for phystats")
+Signed-off-by: Martin Kaistra <martin.kaistra@linutronix.de>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250709121522.1992366-1-martin.kaistra@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtl8xxxu/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index d45a6dcc3753..30f4375f8431 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -5040,6 +5040,7 @@ static void tcp_data_queue_ofo(struct sock *sk, struct sk_buff *skb)
- 		return;
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+index 569856ca677f..c6f69d87c38d 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+@@ -6617,7 +6617,7 @@ static int rtl8xxxu_submit_rx_urb(struct rtl8xxxu_priv *priv,
+ 		skb_size = fops->rx_agg_buf_size;
+ 		skb_size += (rx_desc_sz + sizeof(struct rtl8723au_phy_stats));
+ 	} else {
+-		skb_size = IEEE80211_MAX_FRAME_LEN;
++		skb_size = IEEE80211_MAX_FRAME_LEN + rx_desc_sz;
  	}
  
-+	tcp_measure_rcv_mss(sk, skb);
- 	/* Disable header prediction. */
- 	tp->pred_flags = 0;
- 	inet_csk_schedule_ack(sk);
+ 	skb = __netdev_alloc_skb(NULL, skb_size, GFP_KERNEL);
 -- 
 2.39.5
 
