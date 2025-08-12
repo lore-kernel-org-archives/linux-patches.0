@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10C7279915;
-	Tue, 12 Aug 2025 17:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA092F8BE6;
+	Tue, 12 Aug 2025 17:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020925; cv=none; b=pIUcecq6c/eHx1YPyMdHM6eNiC4KxzxIYXYS0jZXz1zK7PSzeNVcnB6HHmRX1aBX0DwUV+ls6LoAUhqvpVYIzfYHVD2iknAPtQ9nqXbTWLGGUh7CAxwzRTkN2rGVcgbLu6IIcgb0M6itTp0FBLBlAq9jl6O/4qPevxH+1vSsKIY=
+	t=1755020928; cv=none; b=a5Tt/NVxwb3/CwoHjufcAj5XEceNb/nn4ihLz3aHY/kmvjI4oclTANVOgobI8O0GM0A3M6C+WyQG+dBUlHOaoa+nctSIC5eZwc2JRLsZWV59Ru9kX39kyLKXfe2G5iqp76Br2bVDb9qUe3qRpH1/3+VLj9QAP2ckKI5fOkR0VWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020925; c=relaxed/simple;
-	bh=kObonQ8jr/vVVHLx7qvHCVxOsKzafBfbvVK9QrPnUdQ=;
+	s=arc-20240116; t=1755020928; c=relaxed/simple;
+	bh=e4OldpH+/PQkkk8DoDQGDrOj6SDBCIJ/5wi9AeMPDEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dErOzqjaiJbVYbtoiWeyQb0uK2P/DwzfeOZ7Sk6tG7NiYGnHqDhv1/e44yzqIwcLxoNrYfKCmYJsUCvZ470O/UoTChiWn9hW4iRRDjjblrNgHkgSXV73uvwHUOIwps4Pcl8F5wKs0M+UX5fTgjfVb0a+lvMBQu54k+PEoRPzPnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWcJ8ajS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VDjfbUAC+dzwv4g1r/4lHrYhBZ4JcLlpk/N/yIS+qdh50fCXoQoAKJBbEXPTaZgTw31k5lDNPeovNmk1apoErj1iYONrfegGL9KZPcHlu2VIql7FW7cfOl9Tt9OxZl2ubexSFta1xFBPhSEGA8IEceGUeSmb2wDt0gRwUjgE55c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6SBweRr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWcJ8ajS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550E0C4CEF0;
-	Tue, 12 Aug 2025 17:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6SBweRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804EBC4CEF0;
+	Tue, 12 Aug 2025 17:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020924;
-	bh=kObonQ8jr/vVVHLx7qvHCVxOsKzafBfbvVK9QrPnUdQ=;
+	s=korg; t=1755020928;
+	bh=e4OldpH+/PQkkk8DoDQGDrOj6SDBCIJ/5wi9AeMPDEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mWcJ8ajSuz5jKfKhPMHQi1vDUcJL+F+JlQZpGzDEHWP/H8ZTdI+kgmxDEw0+llNxc
-	 HrvxtYt7wVMz0N/325mQBubkRiWX0zurxhSyCGsbsenMfajL7G0hYx4gif6TSx+vZ3
-	 AMKc2C+E+SvpiI0kYOsC0eFUj9Y6E0qgxMLrWxJs=
+	b=K6SBweRrb8sksNR3wr43m8h0/s6WzUoU60KzpZtUYvX2qvzqsM7ii5gVd3b2W0kM5
+	 4+EHpQcBKtyiTaKV+JPl2J1Vb4rkc51FURouqkmD+lHoX3cSi56ceVTNiCghy3OLvW
+	 78yqyuheG3HtBXcakZbD+zSsfDPZmMdn9TAmPw7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 187/253] rtc: hym8563: fix incorrect maximum clock rate handling
-Date: Tue, 12 Aug 2025 19:29:35 +0200
-Message-ID: <20250812172956.745610667@linuxfoundation.org>
+Subject: [PATCH 6.6 034/262] soc/tegra: cbb: Clear ERR_FORCE register with ERR_STATUS
+Date: Tue, 12 Aug 2025 19:27:02 +0200
+Message-ID: <20250812172954.416078789@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit d0a518eb0a692a2ab8357e844970660c5ea37720 ]
+[ Upstream commit a0647bca8966db04b79af72851ebd04224a4da40 ]
 
-When hym8563_clkout_round_rate() is called with a requested rate higher
-than the highest supported rate, it currently returns 0, which disables
-the clock. According to the clk API, round_rate() should instead return
-the highest supported rate. Update the function to return the maximum
-supported rate in this case.
+When error is injected with the ERR_FORCE register, then this register
+is not auto cleared on clearing the ERR_STATUS register. This causes
+repeated interrupts on error injection. To fix, set the ERR_FORCE to
+zero along with clearing the ERR_STATUS register after handling error.
 
-Fixes: dcaf038493525 ("rtc: add hym8563 rtc-driver")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-2-33140bb2278e@redhat.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: fc2f151d2314 ("soc/tegra: cbb: Add driver for Tegra234 CBB 2.0")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-hym8563.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/tegra/cbb/tegra234-cbb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/rtc-hym8563.c b/drivers/rtc/rtc-hym8563.c
-index cc710d682121..2f52aabd129a 100644
---- a/drivers/rtc/rtc-hym8563.c
-+++ b/drivers/rtc/rtc-hym8563.c
-@@ -294,7 +294,7 @@ static long hym8563_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
- 		if (clkout_rates[i] <= rate)
- 			return clkout_rates[i];
+diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
+index 5cf0e8c34164..e8cc46874c72 100644
+--- a/drivers/soc/tegra/cbb/tegra234-cbb.c
++++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
+@@ -185,6 +185,8 @@ static void tegra234_cbb_error_clear(struct tegra_cbb *cbb)
+ {
+ 	struct tegra234_cbb *priv = to_tegra234_cbb(cbb);
  
--	return 0;
-+	return clkout_rates[0];
++	writel(0, priv->mon + FABRIC_MN_MASTER_ERR_FORCE_0);
++
+ 	writel(0x3f, priv->mon + FABRIC_MN_MASTER_ERR_STATUS_0);
+ 	dsb(sy);
  }
- 
- static int hym8563_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.39.5
 
