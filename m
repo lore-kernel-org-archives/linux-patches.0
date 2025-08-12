@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBC22FFDD8;
-	Tue, 12 Aug 2025 18:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E602FF14E;
+	Tue, 12 Aug 2025 18:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024030; cv=none; b=kEAXrqXS1HFnhAaqjqq87Rw3yefrBXsUpWbF4CWHCaXAmuLBIKhjNm0ngcYwe8h7W72TFRcknxF0jQ08fn86f96XMExstt24MTWc51GDJy3mXhCj4zkr15/nerjtypRYreoO5q3A7zsIkFMrseoy25RBE3wBU8alHr7zqT/qJhA=
+	t=1755024033; cv=none; b=pqaJPx5M/K6+MyEp023O16DYYXKwQFqug6xyvR4gtHjdaFUmp102ycB2mgX+QMy5jvskNm0Mx0Lxs8RhX1bgrclQfV1r9T3aeG21m8KV+eL6OyKLVfvZ7b6V12fJWktf0F3eY14U2nu/VfNbzV9Wwl15seAlYH+5j2JwZp1SZjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024030; c=relaxed/simple;
-	bh=VBqyFfxNbcTNLoX4pSqYzNcnm53zT+UsWdWUl3MG/sA=;
+	s=arc-20240116; t=1755024033; c=relaxed/simple;
+	bh=/2dZPHv47RN0ZeAaPsm5QSq4dF6sTaRykZZ42aIOfRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ff0QY3zl7HGP6K++8+f5PyUGmQb7VRDu+zidLwlxK4nA1dR+7vbgu+mot8JinCQoZSNj48JTT3dVN2N3LhECuX7SA4DzhRpmWFoGBqyLU4IyzfC8qR6oR5Pfno1/wsftqMyg+CJa1QReFt1OBlaAUHnrV1MZQAyA4MUCc4mRNZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjoRWApb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ycxwm0CWTonyVLz60pqYAVTKmlwUxSwK4zO+TQHiP7IdChDiCz56RcS/zhxl4Luv2zVvZNMihw2sRgxdTqI105yyESjaJOrspzCYfl9s9JfgF+iMZ/a/Cql/1niRpVjIQgmjiWP/bPZugvCJF6yHPNm34l7Rf8TLeIDR18L+TEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZ9/JX6/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjoRWApb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73486C4CEF0;
-	Tue, 12 Aug 2025 18:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZ9/JX6/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B74C4CEF1;
+	Tue, 12 Aug 2025 18:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024029;
-	bh=VBqyFfxNbcTNLoX4pSqYzNcnm53zT+UsWdWUl3MG/sA=;
+	s=korg; t=1755024033;
+	bh=/2dZPHv47RN0ZeAaPsm5QSq4dF6sTaRykZZ42aIOfRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjoRWApb+yThv02oAkNqrDf32IANQbdJU+PWLoJ5U6cPDiL0jpMz3uWmpwB8DwtFZ
-	 fek4+p1ksCQ2AzgG40QM610yWEj9hsmHDmtW7lZ15b7kh6Cs7QJ/MsOVxtOxWkwrlJ
-	 bhSgZunOLVTwkaqI7uGoF1EfXgTng7ilSuPKofnI=
+	b=vZ9/JX6/5VtO9Vh5xeG3EMxlD3W3IfQwA2GzedE1GoL6LgAmwUj3O9DiTqS4FZDnJ
+	 7wUlwWLH+akrXVgne2sjSkFkLEAlqMdaqcVwPaiUPOaiNtPO0OlSEJFIrR6Bhw4Gql
+	 cme1fwR7vkxiyllViegZSmk0qIFgyOFcOcdYH6VM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Milon <ethan.milon@eviden.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 253/627] iommu/vt-d: Fix UAF on sva unbind with pending IOPFs
-Date: Tue, 12 Aug 2025 19:29:08 +0200
-Message-ID: <20250812173428.935976317@linuxfoundation.org>
+	Ting-Ying Li <tingying.li@cypress.com>,
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH 6.16 254/627] wifi: brcmfmac: fix EXTSAE WPA3 connection failure due to AUTH TX failure
+Date: Tue, 12 Aug 2025 19:29:09 +0200
+Message-ID: <20250812173428.981831643@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,67 +53,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Ting-Ying Li <tingying.li@cypress.com>
 
-[ Upstream commit f0b9d31c6edd50a6207489cd1bd4ddac814b9cd2 ]
+[ Upstream commit f2d7c3c380bf0c38c395d50de3a7c1a6275983cb ]
 
-Commit 17fce9d2336d ("iommu/vt-d: Put iopf enablement in domain attach
-path") disables IOPF on device by removing the device from its IOMMU's
-IOPF queue when the last IOPF-capable domain is detached from the device.
-Unfortunately, it did this in a wrong place where there are still pending
-IOPFs. As a result, a use-after-free error is potentially triggered and
-eventually a kernel panic with a kernel trace similar to the following:
+For WPA3-SAE Connection in EXTSAE mode, the userspace daemon is allowed to
+generate the SAE Auth frames. The driver uses the "mgmt_frame" FW IOVAR to
+transmit this MGMT frame.
 
- refcount_t: underflow; use-after-free.
- WARNING: CPU: 3 PID: 313 at lib/refcount.c:28 refcount_warn_saturate+0xd8/0xe0
- Workqueue: iopf_queue/dmar0-iopfq iommu_sva_handle_iopf
- Call Trace:
-   <TASK>
-   iopf_free_group+0xe/0x20
-   process_one_work+0x197/0x3d0
-   worker_thread+0x23a/0x350
-   ? rescuer_thread+0x4a0/0x4a0
-   kthread+0xf8/0x230
-   ? finish_task_switch.isra.0+0x81/0x260
-   ? kthreads_online_cpu+0x110/0x110
-   ? kthreads_online_cpu+0x110/0x110
-   ret_from_fork+0x13b/0x170
-   ? kthreads_online_cpu+0x110/0x110
-   ret_from_fork_asm+0x11/0x20
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+Before sending the IOVAR, the Driver is incorrectly treating the channel
+number read from the FW as a frequency value and again attempts to convert
+this into a channel number using ieee80211_frequency_to_channel().
 
-The intel_pasid_tear_down_entry() function is responsible for blocking
-hardware from generating new page faults and flushing all in-flight
-ones. Therefore, moving iopf_for_domain_remove() after this function
-should resolve this.
+This added an invalid channel number as part of the IOVAR request to the FW
+And some FW which strictly expects a valid channel would return BAD_CHAN
+error, while failing to transmit the driver requested SAE Auth MGMT frame.
 
-Fixes: 17fce9d2336d ("iommu/vt-d: Put iopf enablement in domain attach path")
-Reported-by: Ethan Milon <ethan.milon@eviden.com>
-Closes: https://lore.kernel.org/r/e8b37f3e-8539-40d4-8993-43a1f3ffe5aa@eviden.com
-Suggested-by: Ethan Milon <ethan.milon@eviden.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20250723072045.1853328-1-baolu.lu@linux.intel.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fix this in the CYW vendor specific MGMT TX cfg80211 ops handler, by not
+treating the channel number read from the FW as frequency value and skip
+the attempt to convert it again into a channel number.
+
+Also fix this in the generic MGMT TX cfg80211 ops handler.
+
+Fixes: c2ff8cad6423 ("brcm80211: make mgmt_tx in brcmfmac accept a NULL channel")
+Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
+Signed-off-by: Ting-Ying Li <tingying.li@cypress.com>
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>>
+Link: https://patch.msgid.link/20250723105918.5229-1-gokulkumar.sivakumar@infineon.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 30 ++++++++++++-------
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 26 +++++++++-------
+ 2 files changed, 35 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 72b477911fdb..c0be0b64e4c7 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3999,8 +3999,8 @@ static int blocking_domain_set_dev_pasid(struct iommu_domain *domain,
- {
- 	struct device_domain_info *info = dev_iommu_priv_get(dev);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 086b9157292a..70e8ddd3851f 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5527,8 +5527,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	struct brcmf_fil_action_frame_le *action_frame;
+ 	struct brcmf_fil_af_params_le *af_params;
+ 	bool ack;
+-	s32 chan_nr;
+-	u32 freq;
++	__le32 hw_ch;
  
--	iopf_for_domain_remove(old, dev);
- 	intel_pasid_tear_down_entry(info->iommu, dev, pasid, false);
-+	iopf_for_domain_remove(old, dev);
- 	domain_remove_dev_pasid(old, dev, pasid);
+ 	brcmf_dbg(TRACE, "Enter\n");
  
- 	return 0;
+@@ -5589,25 +5588,34 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 		/* Add the channel. Use the one specified as parameter if any or
+ 		 * the current one (got from the firmware) otherwise
+ 		 */
+-		if (chan)
+-			freq = chan->center_freq;
+-		else
+-			brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
+-					      &freq);
+-		chan_nr = ieee80211_frequency_to_channel(freq);
+-		af_params->channel = cpu_to_le32(chan_nr);
++		if (chan) {
++			hw_ch = cpu_to_le32(chan->hw_value);
++		} else {
++			err = brcmf_fil_cmd_data_get(vif->ifp,
++						     BRCMF_C_GET_CHANNEL,
++						     &hw_ch, sizeof(hw_ch));
++			if (err) {
++				bphy_err(drvr,
++					 "unable to get current hw channel\n");
++				goto free;
++			}
++		}
++		af_params->channel = hw_ch;
++
+ 		af_params->dwell_time = cpu_to_le32(params->wait);
+ 		memcpy(action_frame->data, &buf[DOT11_MGMT_HDR_LEN],
+ 		       le16_to_cpu(action_frame->len));
+ 
+-		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
+-			  *cookie, le16_to_cpu(action_frame->len), freq);
++		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, channel=%d\n",
++			  *cookie, le16_to_cpu(action_frame->len),
++			  le32_to_cpu(af_params->channel));
+ 
+ 		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
+ 						  af_params);
+ 
+ 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
+ 					GFP_KERNEL);
++free:
+ 		kfree(af_params);
+ 	} else {
+ 		brcmf_dbg(TRACE, "Unhandled, fc=%04x!!\n", mgmt->frame_control);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index c9537fb597ce..4f0ea4347840 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -112,8 +112,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	struct brcmf_cfg80211_vif *vif;
+ 	s32 err = 0;
+ 	bool ack = false;
+-	s32 chan_nr;
+-	u32 freq;
++	__le16 hw_ch;
+ 	struct brcmf_mf_params_le *mf_params;
+ 	u32 mf_params_len;
+ 	s32 ready;
+@@ -143,13 +142,18 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	mf_params->len = cpu_to_le16(len - DOT11_MGMT_HDR_LEN);
+ 	mf_params->frame_control = mgmt->frame_control;
+ 
+-	if (chan)
+-		freq = chan->center_freq;
+-	else
+-		brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
+-				      &freq);
+-	chan_nr = ieee80211_frequency_to_channel(freq);
+-	mf_params->channel = cpu_to_le16(chan_nr);
++	if (chan) {
++		hw_ch = cpu_to_le16(chan->hw_value);
++	} else {
++		err = brcmf_fil_cmd_data_get(vif->ifp, BRCMF_C_GET_CHANNEL,
++					     &hw_ch, sizeof(hw_ch));
++		if (err) {
++			bphy_err(drvr, "unable to get current hw channel\n");
++			goto free;
++		}
++	}
++	mf_params->channel = hw_ch;
++
+ 	memcpy(&mf_params->da[0], &mgmt->da[0], ETH_ALEN);
+ 	memcpy(&mf_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
+ 	mf_params->packet_id = cpu_to_le32(*cookie);
+@@ -159,7 +163,8 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	brcmf_dbg(TRACE, "Auth frame, cookie=%d, fc=%04x, len=%d, channel=%d\n",
+ 		  le32_to_cpu(mf_params->packet_id),
+ 		  le16_to_cpu(mf_params->frame_control),
+-		  le16_to_cpu(mf_params->len), chan_nr);
++		  le16_to_cpu(mf_params->len),
++		  le16_to_cpu(mf_params->channel));
+ 
+ 	vif->mgmt_tx_id = le32_to_cpu(mf_params->packet_id);
+ 	set_bit(BRCMF_MGMT_TX_SEND_FRAME, &vif->mgmt_tx_status);
+@@ -185,6 +190,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ tx_status:
+ 	cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
+ 				GFP_KERNEL);
++free:
+ 	kfree(mf_params);
+ 	return err;
+ }
 -- 
 2.39.5
 
