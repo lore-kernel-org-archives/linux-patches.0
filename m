@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFD61A9F89;
-	Tue, 12 Aug 2025 18:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6E4282E1;
+	Tue, 12 Aug 2025 18:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021688; cv=none; b=OoECa0bJzYisuTwfBZjnIGS8QKWnOeY4r57C3rDURM6Z5cI3Dukdt22akv5ktINjlWHkq0Efzm2/bRjxwu3NwOg79DHSTMZJszOppHkvLaUDSkyu4+nKKC8Cz+qOqdw6HO5qUxWE1JoJsF1Jz6eeruQChEHG63hziY58QDjLYgM=
+	t=1755021691; cv=none; b=kVsZoL34aplGzB0UfaLuekNwXF8lKbtqiz60SfcbQBA3Up29fwgGT1atrEhIzZEyp6wCKMqlCOxgvpMczIqnZSYhyzPShVB96Af4XsVaUAo/J8C61QnASfF3t88zDXk5MR578J2XZ0YfMHSJmXiozNw/OJBurahapdKbLJ6KZuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021688; c=relaxed/simple;
-	bh=UoiMupQ2hCXIIRdsIRo1cuIQRLhBMuq4ejDzNdtNZrA=;
+	s=arc-20240116; t=1755021691; c=relaxed/simple;
+	bh=I9usJA+My72Ws5ApLUmgSA+Zhhc197hCqSAMogiJ8a8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5uvG1fG5pCp+SJ8XV6B1NMERPK4iBIL3AWdiv1JSDymu1KtMbPL8XP+TEI3MR63fXnQ90VeXUXv1kZNJzgMaqEgszy1fbde+C7KIWCrmSgKQ0aFGI1pdcxusPaAumrNq1HdCF1iut3+hXXnw6ajBK1SQwvOVbV1qYmA9H7b9Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xg0g8rrv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rIoLeKyKMKwG5WZNSioQs9CNfoixTqVnAzxI1R+j9wHilZOBfGECEqXgr1LqLm7YacVCaeXDsg2/UEBVyQauMg4g1R4H5swm1G/eAXj/hndgTI1iVi9Ak8ATMvPzElmeWwCqo/LAM947+hUkskEhgXxJDbYAsqswFrkAwt2tCgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8KiUP7c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xg0g8rrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E15CC4CEF0;
-	Tue, 12 Aug 2025 18:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8KiUP7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B216DC4CEF0;
+	Tue, 12 Aug 2025 18:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021687;
-	bh=UoiMupQ2hCXIIRdsIRo1cuIQRLhBMuq4ejDzNdtNZrA=;
+	s=korg; t=1755021691;
+	bh=I9usJA+My72Ws5ApLUmgSA+Zhhc197hCqSAMogiJ8a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xg0g8rrvuk+QIXLG9o2tCEPb/9XSDdir8O4OYp1rlXtWbtAwLAmC8CU9bPFjPLj9E
-	 ZVeDi9P7AaG/EEcr+wiITSMSVfmQb1cJP5o25xSAq08KEio2MOHT102oa3d3YeXPD5
-	 UZPEJfj/Wjy9r4KK7SFewLwjI05zLcqEOfKuVRok=
+	b=V8KiUP7cNAMy27XJj2Eyfg1KxIjCEryivVe3ahAyh/6YWFQydTTDJaBDvGjSJAAId
+	 nMJIuiyvOgOYrlOkjbdcliuvKdEw8ri0Ix0tjc8algLn/+El/soV5BoJIn+EuWGSUE
+	 zMvOqYD+M/QCbqt2rggcy0CEK08+Yocf5kUbBfkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Lee <ryan.lee@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/262] apparmor: ensure WB_HISTORY_SIZE value is a power of 2
-Date: Tue, 12 Aug 2025 19:29:10 +0200
-Message-ID: <20250812172959.996095924@linuxfoundation.org>
+Subject: [PATCH 6.6 153/262] crypto: qat - fix seq_file position update in adf_ring_next()
+Date: Tue, 12 Aug 2025 19:29:01 +0200
+Message-ID: <20250812172959.615014506@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,53 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Lee <ryan.lee@canonical.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 6c055e62560b958354625604293652753d82bcae ]
+[ Upstream commit 6908c5f4f066a0412c3d9a6f543a09fa7d87824b ]
 
-WB_HISTORY_SIZE was defined to be a value not a power of 2, despite a
-comment in the declaration of struct match_workbuf stating it is and a
-modular arithmetic usage in the inc_wb_pos macro assuming that it is. Bump
-WB_HISTORY_SIZE's value up to 32 and add a BUILD_BUG_ON_NOT_POWER_OF_2
-line to ensure that any future changes to the value of WB_HISTORY_SIZE
-respect this requirement.
+The `adf_ring_next()` function in the QAT debug transport interface
+fails to correctly update the position index when reaching the end of
+the ring elements. This triggers the following kernel warning when
+reading ring files, such as
+/sys/kernel/debug/qat_c6xx_<D:B:D:F>/transport/bank_00/ring_00:
 
-Fixes: 136db994852a ("apparmor: increase left match history buffer size")
+   [27725.022965] seq_file: buggy .next function adf_ring_next [intel_qat] did not update position index
 
-Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Ensure that the `*pos` index is incremented before returning NULL when
+after the last element in the ring is found, satisfying the seq_file API
+requirements and preventing the warning.
+
+Fixes: a672a9dc872e ("crypto: qat - Intel(R) QAT transport code")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/match.h | 3 ++-
- security/apparmor/match.c         | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/intel/qat/qat_common/adf_transport_debug.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/include/match.h b/security/apparmor/include/match.h
-index 58fbf67139b9..5b6f16242e60 100644
---- a/security/apparmor/include/match.h
-+++ b/security/apparmor/include/match.h
-@@ -141,7 +141,8 @@ aa_state_t aa_dfa_matchn_until(struct aa_dfa *dfa, aa_state_t start,
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c b/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
+index e2dd568b87b5..621b5d3dfcef 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
+@@ -31,8 +31,10 @@ static void *adf_ring_next(struct seq_file *sfile, void *v, loff_t *pos)
+ 	struct adf_etr_ring_data *ring = sfile->private;
  
- void aa_dfa_free_kref(struct kref *kref);
+ 	if (*pos >= (ADF_SIZE_TO_RING_SIZE_IN_BYTES(ring->ring_size) /
+-		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size)))
++		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size))) {
++		(*pos)++;
+ 		return NULL;
++	}
  
--#define WB_HISTORY_SIZE 24
-+/* This needs to be a power of 2 */
-+#define WB_HISTORY_SIZE 32
- struct match_workbuf {
- 	unsigned int count;
- 	unsigned int pos;
-diff --git a/security/apparmor/match.c b/security/apparmor/match.c
-index b97ef5e1db73..76709b7c6519 100644
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -670,6 +670,7 @@ aa_state_t aa_dfa_matchn_until(struct aa_dfa *dfa, aa_state_t start,
- 
- #define inc_wb_pos(wb)						\
- do {								\
-+	BUILD_BUG_ON_NOT_POWER_OF_2(WB_HISTORY_SIZE);			\
- 	wb->pos = (wb->pos + 1) & (WB_HISTORY_SIZE - 1);		\
- 	wb->len = (wb->len + 1) & (WB_HISTORY_SIZE - 1);		\
- } while (0)
+ 	return ring->base_addr +
+ 		(ADF_MSG_SIZE_TO_BYTES(ring->msg_size) * (*pos)++);
 -- 
 2.39.5
 
