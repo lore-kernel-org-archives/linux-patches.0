@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FD71D416C;
-	Tue, 12 Aug 2025 18:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A24A2EAB97;
+	Tue, 12 Aug 2025 18:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022796; cv=none; b=VprNUaIGOR8qIu4PhPOgxYSDqeid5nmsNJKImWhDX1v4zdMvDTJ6ceaLl3C/O5jAiV29CCJJycdnZkeT1f5qFuXKtHlM4I4xNDezuAB1RXNRh8EFb140M8CAMSSsLLGX6fW4SFYeD8JpWDsLWgB8us3UlTNRHxFa2RsolZSRfH4=
+	t=1755022800; cv=none; b=lu/Q/qty3EWkWMAxTqC3+VWK8+QBQXX8xOYXvZGgb6eMOPl0+lCyD/5qRBzfe+IlI6sXw3zczXLUF67XvZzcGZYo73uTxUs04Dr6PZILiv84LMv+S1ZdP4/ZUZasJIQE0riB1bEPDugUjvOpyjt1Tsps/Vbu4vtbrVO7Jt+yGpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022796; c=relaxed/simple;
-	bh=QtW1ibWF8Pgn84QmYbMSygbIIL0Kf7iRMYdpTHC7bRM=;
+	s=arc-20240116; t=1755022800; c=relaxed/simple;
+	bh=fV+CeBIwKplhQIGryD3Px3jeeiaEKLq7tVaEun6DvY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbOUJj+gZRH4+Ubl042wttV3QUkjmw2HZ/X68tnqk0Yv7T6vvnKHznOP29YVx46BGSLVaf8nP6TfwK59HBvGDjWIQgcP96ksUH/Djy3tWnvH3syBwt5SH+ckBmIfWHFINnFjBZXqP2f1qijzSr0QSRt0+yJqabTK/SAg/iu7lRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zE1OZzhA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eldi5MoQennDgdLVey7XwFfTR7KDhEGkRWJbOGQdZqEyTwA+g/sljCdfFrOBFYZ05c2Uhf5VxsitmN+ULjNEG4VQKmvEueSqbAqJqMRWpbBxU4Ytinz2Q+wBczSmovvtUMRsVJVuXcJN1Lij65nXSu5isxG0Hs6FtVluuxegwag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlNQj4m6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zE1OZzhA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258F9C4CEF6;
-	Tue, 12 Aug 2025 18:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlNQj4m6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF18C4CEF6;
+	Tue, 12 Aug 2025 18:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022796;
-	bh=QtW1ibWF8Pgn84QmYbMSygbIIL0Kf7iRMYdpTHC7bRM=;
+	s=korg; t=1755022800;
+	bh=fV+CeBIwKplhQIGryD3Px3jeeiaEKLq7tVaEun6DvY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zE1OZzhAA7Lakh0QUsveFrfn6CL3Aqn+QHQ0izloA/WzJLSxA2j9NssRt893Y5EtH
-	 KiI0+KM/SLSMCLgKIKekIQ651pinI/2tG345iVEJd2m6V9hzQzTgwkdBvmPMH6JEYv
-	 q4WPnZOmcpVt1XtgHE6PX4RhXqUohfHk1atefWJY=
+	b=XlNQj4m6NPSJi8R1Eetn1t15ALpQnoOdKnlVOzN68xWU3vTCfDuejA0miS2UtRrLF
+	 fVrB5GBhrbC+jG1BUlB81TtKCt0qfkQJZ7NrSKernv8mix2Yo6pppwcwpb3x1tW28F
+	 74FLzeKDD3/SmDko2xxxfjfp8Fj7S475lFKophC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Zhengxu Zhang <zhengxu.zhang@unisoc.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 262/369] f2fs: fix to trigger foreground gc during f2fs_map_blocks() in lfs mode
-Date: Tue, 12 Aug 2025 19:29:19 +0200
-Message-ID: <20250812173024.619688317@linuxfoundation.org>
+Subject: [PATCH 6.12 263/369] exfat: fdatasync flag should be same like generic_write_sync()
+Date: Tue, 12 Aug 2025 19:29:20 +0200
+Message-ID: <20250812173024.657704254@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,64 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Zhengxu Zhang <zhengxu.zhang@unisoc.com>
 
-[ Upstream commit 1005a3ca28e90c7a64fa43023f866b960a60f791 ]
+[ Upstream commit 2f2d42a17b5a6711378d39df74f1f69a831c5d4e ]
 
-w/ "mode=lfs" mount option, generic/299 will cause system panic as below:
+Test: androbench by default setting, use 64GB sdcard.
+ the random write speed:
+	without this patch 3.5MB/s
+	with this patch 7MB/s
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/segment.c:2835!
-Call Trace:
- <TASK>
- f2fs_allocate_data_block+0x6f4/0xc50
- f2fs_map_blocks+0x970/0x1550
- f2fs_iomap_begin+0xb2/0x1e0
- iomap_iter+0x1d6/0x430
- __iomap_dio_rw+0x208/0x9a0
- f2fs_file_write_iter+0x6b3/0xfa0
- aio_write+0x15d/0x2e0
- io_submit_one+0x55e/0xab0
- __x64_sys_io_submit+0xa5/0x230
- do_syscall_64+0x84/0x2f0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0010:new_curseg+0x70f/0x720
+After patch "11a347fb6cef", the random write speed decreased significantly.
+the .write_iter() interface had been modified, and check the differences
+with generic_file_write_iter(), when calling generic_write_sync() and
+exfat_file_write_iter() to call vfs_fsync_range(), the fdatasync flag is
+wrong, and make not use the fdatasync mode, and make random write speed
+decreased. So use generic_write_sync() instead of vfs_fsync_range().
 
-The root cause of we run out-of-space is: in f2fs_map_blocks(), f2fs may
-trigger foreground gc only if it allocates any physical block, it will be
-a little bit later when there is multiple threads writing data w/
-aio/dio/bufio method in parallel, since we always use OPU in lfs mode, so
-f2fs_map_blocks() does block allocations aggressively.
-
-In order to fix this issue, let's give a chance to trigger foreground
-gc in prior to block allocation in f2fs_map_blocks().
-
-Fixes: 36abef4e796d ("f2fs: introduce mode=lfs mount option")
-Cc: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
+Signed-off-by: Zhengxu Zhang <zhengxu.zhang@unisoc.com>
+Acked-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/exfat/file.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 4fc0ea5f69b8..efc30626760a 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1573,8 +1573,11 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map, int flag)
- 	end = pgofs + maxblocks;
+diff --git a/fs/exfat/file.c b/fs/exfat/file.c
+index 841a5b18e3df..7ac5126aa4f1 100644
+--- a/fs/exfat/file.c
++++ b/fs/exfat/file.c
+@@ -623,9 +623,8 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	if (pos > valid_size)
+ 		pos = valid_size;
  
- next_dnode:
--	if (map->m_may_create)
-+	if (map->m_may_create) {
-+		if (f2fs_lfs_mode(sbi))
-+			f2fs_balance_fs(sbi, true);
- 		f2fs_map_lock(sbi, flag);
-+	}
- 
- 	/* When reading holes, we need its node page */
- 	set_new_dnode(&dn, inode, NULL, NULL, 0);
+-	if (iocb_is_dsync(iocb) && iocb->ki_pos > pos) {
+-		ssize_t err = vfs_fsync_range(file, pos, iocb->ki_pos - 1,
+-				iocb->ki_flags & IOCB_SYNC);
++	if (iocb->ki_pos > pos) {
++		ssize_t err = generic_write_sync(iocb, iocb->ki_pos - pos);
+ 		if (err < 0)
+ 			return err;
+ 	}
 -- 
 2.39.5
 
