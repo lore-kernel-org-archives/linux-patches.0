@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6769E2FD1CE;
-	Tue, 12 Aug 2025 17:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630652FA0FD;
+	Tue, 12 Aug 2025 17:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020233; cv=none; b=h/jbvqmR4LaJOWdbJ9HKQZIc+d3ubzaJl/vW0FV03+VSggaxbrSujeFtlRxZ/tkqqEE1Ly2J/afQ9fYyZFhziJBx2E3mToHKXpGdb9fzXWUtsi+oIIrUzvu45m6rTxNMpMvCstcH4XhRlJGDDiDjLcp3gfu5T9sCCPxpuY6WJWs=
+	t=1755020237; cv=none; b=VZgLjGnvgdM+x3FCerwK5wqyzFllKsKBMpfEuQL3Yiq2idCt7kumq0b5jmYktYJgnNZ3fIYCu1cC4QGBNXtNdEFbMlwY28Vw6QXMHuMxW/1SZ3F4VrIhfh3sW2+xF2e7lA3vis6Re5272ImG1H2UF1gfBgsOFWgD1B3Zpv+l950=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020233; c=relaxed/simple;
-	bh=xGrQSHPsBdykj8Ms2p+RrGpnDLz4kyyFJ0CDmtVYPjY=;
+	s=arc-20240116; t=1755020237; c=relaxed/simple;
+	bh=NGAcDRaf5w7d/uyJaLo+5mfoiM14gjwvDjYMXm1B2EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rd7ba2Cc78d1XVJ/B5+264zxK8udbfXq2HG8DrJQsKJsXR3cruBl90MMq0tdUCqJJ+tKd7/NZPMGAfnNkqgYK+5ZFDS3FLAljGdPTQSdDS2Wn+fj5UhkugNIYA31N7Jx8XGH4dtFajBerCUFyo9cZeDK/w/f57qCXyVBqiqlrig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Nn6AS90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ANvLc53/rDY4LIeoS/szP8bE+Y5l9ILEXm9ATk2L9m6IN1vwpLude1oHZ/24KFf8cwOlZNESnfHT7LrRZGFlfhCNOTyGtQ0LEqDekh37lLr/JK1TzOdUSnhHdYjFKtrOgYBQx3Q23P+/tC+p7BbDY0Qxkdgb7I2fD1XryQk+dd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5exGu9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Nn6AS90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA91C4CEF0;
-	Tue, 12 Aug 2025 17:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5exGu9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE95C4CEF0;
+	Tue, 12 Aug 2025 17:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020233;
-	bh=xGrQSHPsBdykj8Ms2p+RrGpnDLz4kyyFJ0CDmtVYPjY=;
+	s=korg; t=1755020236;
+	bh=NGAcDRaf5w7d/uyJaLo+5mfoiM14gjwvDjYMXm1B2EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Nn6AS90IC+0IxExfByUynDDtkSy7MbPX2nKWotryteU3ufnt+RQ0tXkr1Fr8a2em
-	 gzMowfR1nIIELOBgLg6Tc+IfOrIxZbSlHmu+FZNCwFwe4O0Vb/SlG3IMmpZtWM0h9H
-	 ZSNHCKKteE7yVz/bCvmPN9W/jKZ6sgeDEfswiXDg=
+	b=w5exGu9h1QqqggvZdM2w69YfIuc2ZrsiOozZOKjk3kaSH/nfc8nmZNKCMuxDsInR0
+	 4zOyN6DcP3MkguPSgPK+udBO279DU2BHPIsymXugLc40J1H7xLsCTdt4/zHUsqnaIj
+	 qgfq2iBRIkFy3ulRr3nImZ0SgrX6w3IwvHovZHDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Alessandro Carminati <acarmina@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/253] can: dev: can_restart(): reverse logic to remove need for goto
-Date: Tue, 12 Aug 2025 19:26:47 +0200
-Message-ID: <20250812172949.528414468@linuxfoundation.org>
+Subject: [PATCH 6.1 002/253] regulator: core: fix NULL dereference on unbind due to stale coupling data
+Date: Tue, 12 Aug 2025 19:26:30 +0200
+Message-ID: <20250812172948.786063157@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,45 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Alessandro Carminati <acarmina@redhat.com>
 
-[ Upstream commit 8f3ec204d340af183fb2bb21b8e797ac2ed012b2 ]
+[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
 
-Reverse the logic in the if statement and eliminate the need for a
-goto to simplify code readability.
+Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
+lead to NULL pointer dereference when regulators are accessed post-unbind.
 
-Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-3-91b5c1fd922c@pengutronix.de
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: c1f3f9797c1f ("can: netlink: can_changelink(): fix NULL pointer deref of struct can_priv::do_set_mode")
+This can happen during runtime PM or other regulator operations that rely
+on coupling metadata.
+
+For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
+a panic in regulator_lock_recursive() due to stale coupling state.
+
+Ensure n_coupled is set to 0 to prevent access to invalid pointers.
+
+Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
+Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/dev.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
-index 43125ce96f1aa..42c486d1fd10b 100644
---- a/drivers/net/can/dev/dev.c
-+++ b/drivers/net/can/dev/dev.c
-@@ -142,14 +142,11 @@ static void can_restart(struct net_device *dev)
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 29c9171e923a2..7e6ff7e72784b 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5423,6 +5423,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
+ 				 ERR_PTR(err));
+ 	}
  
- 	/* send restart message upstream */
- 	skb = alloc_can_err_skb(dev, &cf);
--	if (!skb)
--		goto restart;
--
--	cf->can_id |= CAN_ERR_RESTARTED;
--
--	netif_rx(skb);
-+	if (skb) {
-+		cf->can_id |= CAN_ERR_RESTARTED;
-+		netif_rx(skb);
-+	}
- 
--restart:
- 	netdev_dbg(dev, "restarted\n");
- 	priv->can_stats.restarts++;
- 
++	rdev->coupling_desc.n_coupled = 0;
+ 	kfree(rdev->coupling_desc.coupled_rdevs);
+ 	rdev->coupling_desc.coupled_rdevs = NULL;
+ }
 -- 
 2.39.5
 
