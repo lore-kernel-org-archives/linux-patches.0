@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7F422425B;
-	Tue, 12 Aug 2025 19:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C773FE7;
+	Tue, 12 Aug 2025 19:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025395; cv=none; b=EfotCQV4oggdLk/14nIXU9PrItxNVAbcw2w2QFlWoTQ2Az2t5ZThziNbpLeDbLtL30TQ7F9/kTQPy1n3eRwNzGAMmiLMsYNUYVb2HEhb5nHOlTA1NMtHvuleclriaKogViOh1ceT1Ecf3c11oM4dBcoJXnnYnNVbr6FFobZEqIg=
+	t=1755025398; cv=none; b=Qht5nIzj3Gxy0691VZwkREoaaHCe8SW0F37PbElw+c3LwOCcDdEcJW7UzRm2G7FhnR+wxy8O7C4lPlSO9eH9h4CEDFYrDkOiI320kxtBzvQylqfgM7BDit+XzB6X8tYtd4jqWY8Bnd/M/uSXtclOm+ZvKphkVdQwyQu4wo8gfeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025395; c=relaxed/simple;
-	bh=MxMXoDI5BztNXVx6/F5kWzcdUXVFvQxOMBwR6hw9RDU=;
+	s=arc-20240116; t=1755025398; c=relaxed/simple;
+	bh=l84A9QnX4DmO+gVbSHlFhWr1h66HLMtufO33WNjRe0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIw2eXhCJNf2SL7Kq8mhmcw9CeRhTwSs1AobyxWVK8dN3v7qdcyMpATCo4/yow5pQophrjE7Cdew/W506ejr2MJoX7n9QHbQlkzR60XtantCsg1vKveJPyDMCL5R0v4fsiqRFPegIQNDcDEYnjE+JNpbzJtYv/jVVsJiVBH9jgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zum2cRmX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D+QaWML97HA+LcmovHyHPhPgOVhEG7SLoxnfqPa79kluB2oMy3MDe9zcP76T+Imkk26PZrR7gj8U7cHLdnWDmDIGSIY1RelmdGqTQLoaYs5aslFpatntnx6CBr2ynz+n/XPwzUqyvit45Rfae9L1C+Qlr6Tcc82OC1BSoJkR5jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2K8gENZa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zum2cRmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F41BC4CEF0;
-	Tue, 12 Aug 2025 19:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2K8gENZa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D21C4CEF0;
+	Tue, 12 Aug 2025 19:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025394;
-	bh=MxMXoDI5BztNXVx6/F5kWzcdUXVFvQxOMBwR6hw9RDU=;
+	s=korg; t=1755025398;
+	bh=l84A9QnX4DmO+gVbSHlFhWr1h66HLMtufO33WNjRe0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zum2cRmXc/z1rskP4uynX0nU8mem5JBu+gFb3RcaOD+grzpHGRtLcBT7YzUsYhZCF
-	 sxO5qsgpWfn1BqBQhCn+GU0/xQtUxCzn+HPTXaF4LM/RwJny9VctfJfWdXJyEauCde
-	 JYmfa2UVJatLlPhpHENGHACbjHPz5kMHdfJj+8S0=
+	b=2K8gENZaj5RoKBSHE4AiUdrR4lR2jRFeeZdYMJAjJNRO0u0nnEmyasCK96BnbV6rh
+	 AwBEaWMg9icaphWTICsIlpHDiK/xaPtVcVkpMImO2xzRp2sI8Y0D5br18PwnKVOKKA
+	 S7MmeXltMebE6KY1BpFQBwS7FtPgQ9WIQidH0wUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Sun YangKai <sunk67188@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	=?UTF-8?q?Giedrius=20Trainavi=C4=8Dius?= <giedrius@blokas.io>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 028/480] btrfs: remove partial support for lowest level from btrfs_search_forward()
-Date: Tue, 12 Aug 2025 19:43:56 +0200
-Message-ID: <20250812174358.498097700@linuxfoundation.org>
+Subject: [PATCH 6.15 029/480] ASoC: soc-dai: tidyup return value of snd_soc_xlate_tdm_slot_mask()
+Date: Tue, 12 Aug 2025 19:43:57 +0200
+Message-ID: <20250812174358.540231192@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -47,110 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sun YangKai <sunk67188@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 27260dd1904bb409cf84709928ba9bc5506fbe8e ]
+[ Upstream commit f4c77d5af0a9cd0ee22617baa8b49d0e151fbda7 ]
 
-Commit 323ac95bce44 ("Btrfs: don't read leaf blocks containing only
-checksums during truncate") changed the condition from `level == 0` to
-`level == path->lowest_level`, while its original purpose was just to do
-some leaf node handling (calling btrfs_item_key_to_cpu()) and skip some
-code that doesn't fit leaf nodes.
+commit 7f1186a8d738661 ("ASoC: soc-dai: check return value at
+snd_soc_dai_set_tdm_slot()") checks return value of
+xlate_tdm_slot_mask() (A1)(A2).
 
-After changing the condition, the code path:
+	/*
+	 * ...
+(Y)	 * TDM mode can be disabled by passing 0 for @slots. In this case @tx_mask,
+	 * @rx_mask and @slot_width will be ignored.
+	 * ...
+	 */
+	int snd_soc_dai_set_tdm_slot(...)
+	{
+		...
+		if (...)
+(A1)			ret = dai->driver->ops->xlate_tdm_slot_mask(...);
+		else
+(A2)			ret = snd_soc_xlate_tdm_slot_mask(...);
+		if (ret)
+			goto err;
+		...
+	}
 
-1. Also handles the non-leaf nodes when path->lowest_level is nonzero,
-   which is wrong. However btrfs_search_forward() is never called with a
-   nonzero path->lowest_level, which makes this bug not found before.
+snd_soc_xlate_tdm_slot_mask() (A2) will return -EINVAL if slots was 0 (X),
+but snd_soc_dai_set_tdm_slot() allow to use it (Y).
 
-2. Makes the later if block with the same condition, which was originally
-   used to handle non-leaf node (calling btrfs_node_key_to_cpu()) when
-   lowest_level is not zero, dead code.
+(A)	static int snd_soc_xlate_tdm_slot_mask(...)
+	{
+		...
+		if (!slots)
+(X)			return -EINVAL;
+		...
+	}
 
-Since btrfs_search_forward() is never called for a path with a
-lowest_level different from zero, just completely remove the partial
-support for a non-zero lowest_level, simplifying a bit the code, and
-assert that lowest_level is zero at the start of the function.
+Call xlate_tdm_slot_mask() only if slots was non zero.
 
-Suggested-by: Qu Wenruo <wqu@suse.com>
-Fixes: 323ac95bce44 ("Btrfs: don't read leaf blocks containing only checksums during truncate")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Sun YangKai <sunk67188@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Giedrius Trainavičius <giedrius@blokas.io>
+Closes: https://lore.kernel.org/r/CAMONXLtSL7iKyvH6w=CzPTxQdBECf++hn8RKL6Y4=M_ou2YHow@mail.gmail.com
+Fixes: 7f1186a8d738661 ("ASoC: soc-dai: check return value at snd_soc_dai_set_tdm_slot()")
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/8734cdfx59.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ sound/soc/soc-dai.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index a2e7979372cc..648531fe0900 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -4585,16 +4585,13 @@ int btrfs_del_items(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index a210089747d0..32f46a38682b 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -259,13 +259,15 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
+ 		&rx_mask,
+ 	};
  
- /*
-  * A helper function to walk down the tree starting at min_key, and looking
-- * for nodes or leaves that are have a minimum transaction id.
-+ * for leaves that have a minimum transaction id.
-  * This is used by the btree defrag code, and tree logging
-  *
-  * This does not cow, but it does stuff the starting key it finds back
-  * into min_key, so you can call btrfs_search_slot with cow=1 on the
-  * key and get a writable path.
-  *
-- * This honors path->lowest_level to prevent descent past a given level
-- * of the tree.
-- *
-  * min_trans indicates the oldest transaction that you are interested
-  * in walking through.  Any nodes or leaves older than min_trans are
-  * skipped over (without reading them).
-@@ -4615,6 +4612,7 @@ int btrfs_search_forward(struct btrfs_root *root, struct btrfs_key *min_key,
- 	int keep_locks = path->keep_locks;
+-	if (dai->driver->ops &&
+-	    dai->driver->ops->xlate_tdm_slot_mask)
+-		ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
+-	else
+-		ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
+-	if (ret)
+-		goto err;
++	if (slots) {
++		if (dai->driver->ops &&
++		    dai->driver->ops->xlate_tdm_slot_mask)
++			ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++		else
++			ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++		if (ret)
++			goto err;
++	}
  
- 	ASSERT(!path->nowait);
-+	ASSERT(path->lowest_level == 0);
- 	path->keep_locks = 1;
- again:
- 	cur = btrfs_read_lock_root_node(root);
-@@ -4636,8 +4634,8 @@ int btrfs_search_forward(struct btrfs_root *root, struct btrfs_key *min_key,
- 			goto out;
- 		}
- 
--		/* at the lowest level, we're done, setup the path and exit */
--		if (level == path->lowest_level) {
-+		/* At level 0 we're done, setup the path and exit. */
-+		if (level == 0) {
- 			if (slot >= nritems)
- 				goto find_next_key;
- 			ret = 0;
-@@ -4678,12 +4676,6 @@ int btrfs_search_forward(struct btrfs_root *root, struct btrfs_key *min_key,
- 				goto out;
- 			}
- 		}
--		if (level == path->lowest_level) {
--			ret = 0;
--			/* Save our key for returning back. */
--			btrfs_node_key_to_cpu(cur, min_key, slot);
--			goto out;
--		}
- 		cur = btrfs_read_node_slot(cur, slot);
- 		if (IS_ERR(cur)) {
- 			ret = PTR_ERR(cur);
-@@ -4699,7 +4691,7 @@ int btrfs_search_forward(struct btrfs_root *root, struct btrfs_key *min_key,
- out:
- 	path->keep_locks = keep_locks;
- 	if (ret == 0)
--		btrfs_unlock_up_safe(path, path->lowest_level + 1);
-+		btrfs_unlock_up_safe(path, 1);
- 	return ret;
- }
- 
+ 	for_each_pcm_streams(stream)
+ 		snd_soc_dai_tdm_mask_set(dai, stream, *tdm_mask[stream]);
 -- 
 2.39.5
 
