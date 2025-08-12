@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57467279915;
-	Tue, 12 Aug 2025 17:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10C7279915;
+	Tue, 12 Aug 2025 17:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020921; cv=none; b=ew3yNu7CNdVEa8YvuatHIvFdcNiBoNM4Y8alVb/ZkLbaEUBTuS4EF5hGhsvWidYu1pD5PNDSnz1N0E1azsrvEQr0R91SCR64HKPuDxoSDEevmBlrK1xy0bTZXPavdRP0YK29V2Rupv8VU2vopab19UoUUEszwWKxREZbb2sZECU=
+	t=1755020925; cv=none; b=pIUcecq6c/eHx1YPyMdHM6eNiC4KxzxIYXYS0jZXz1zK7PSzeNVcnB6HHmRX1aBX0DwUV+ls6LoAUhqvpVYIzfYHVD2iknAPtQ9nqXbTWLGGUh7CAxwzRTkN2rGVcgbLu6IIcgb0M6itTp0FBLBlAq9jl6O/4qPevxH+1vSsKIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020921; c=relaxed/simple;
-	bh=w1lgKh2wzEg2l4Fv0gywQrdEW6yPba+SbwZxetAkWi4=;
+	s=arc-20240116; t=1755020925; c=relaxed/simple;
+	bh=kObonQ8jr/vVVHLx7qvHCVxOsKzafBfbvVK9QrPnUdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMUwgvniZWWQAsndH76tX7RxZw1Z3r7woKQrP7etoz1E7LwnXLvuwm2C9On/WZ2m5D/54nvtq+XFnofP33t8j1lBhTRSs+MQavXuEHsM2n/Jyi3X7AVcBdcN2cIbm5bktlO+68zaZbG+JAeFVBw2vlRWJpGM0fT70x7Sm/r6JBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=In/ZSwlM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dErOzqjaiJbVYbtoiWeyQb0uK2P/DwzfeOZ7Sk6tG7NiYGnHqDhv1/e44yzqIwcLxoNrYfKCmYJsUCvZ470O/UoTChiWn9hW4iRRDjjblrNgHkgSXV73uvwHUOIwps4Pcl8F5wKs0M+UX5fTgjfVb0a+lvMBQu54k+PEoRPzPnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWcJ8ajS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="In/ZSwlM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF16C4CEF0;
-	Tue, 12 Aug 2025 17:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWcJ8ajS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550E0C4CEF0;
+	Tue, 12 Aug 2025 17:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020921;
-	bh=w1lgKh2wzEg2l4Fv0gywQrdEW6yPba+SbwZxetAkWi4=;
+	s=korg; t=1755020924;
+	bh=kObonQ8jr/vVVHLx7qvHCVxOsKzafBfbvVK9QrPnUdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=In/ZSwlMq6GqqFHrGGNxJCEh4klfY08I/YC5pH608n9zMjEPyNNIN0h+5bchNe8KH
-	 almASteevj8vPwL88mdN/ihhrqaOS9VuY7zTaXJUXlREu/B3Y1oOA0LvPVm/qBZdWW
-	 lZ8ixROJ8HRFT9cSprP8MR9wq3qW8oOhpGY7ZGSQ=
+	b=mWcJ8ajSuz5jKfKhPMHQi1vDUcJL+F+JlQZpGzDEHWP/H8ZTdI+kgmxDEw0+llNxc
+	 HrvxtYt7wVMz0N/325mQBubkRiWX0zurxhSyCGsbsenMfajL7G0hYx4gif6TSx+vZ3
+	 AMKc2C+E+SvpiI0kYOsC0eFUj9Y6E0qgxMLrWxJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 164/253] scsi: isci: Fix dma_unmap_sg() nents value
-Date: Tue, 12 Aug 2025 19:29:12 +0200
-Message-ID: <20250812172955.696674781@linuxfoundation.org>
+Subject: [PATCH 6.1 187/253] rtc: hym8563: fix incorrect maximum clock rate handling
+Date: Tue, 12 Aug 2025 19:29:35 +0200
+Message-ID: <20250812172956.745610667@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,35 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 063bec4444d54e5f35d11949c5c90eaa1ff84c11 ]
+[ Upstream commit d0a518eb0a692a2ab8357e844970660c5ea37720 ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+When hym8563_clkout_round_rate() is called with a requested rate higher
+than the highest supported rate, it currently returns 0, which disables
+the clock. According to the clk API, round_rate() should instead return
+the highest supported rate. Update the function to return the maximum
+supported rate in this case.
 
-Fixes: ddcc7e347a89 ("isci: fix dma_unmap_sg usage")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250627142451.241713-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: dcaf038493525 ("rtc: add hym8563 rtc-driver")
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-2-33140bb2278e@redhat.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/isci/request.c | 2 +-
+ drivers/rtc/rtc-hym8563.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/isci/request.c b/drivers/scsi/isci/request.c
-index 0f0732d56800..46d30a725d7e 100644
---- a/drivers/scsi/isci/request.c
-+++ b/drivers/scsi/isci/request.c
-@@ -2907,7 +2907,7 @@ static void isci_request_io_request_complete(struct isci_host *ihost,
- 					 task->total_xfer_len, task->data_dir);
- 		else  /* unmap the sgl dma addresses */
- 			dma_unmap_sg(&ihost->pdev->dev, task->scatter,
--				     request->num_sg_entries, task->data_dir);
-+				     task->num_scatter, task->data_dir);
- 		break;
- 	case SAS_PROTOCOL_SMP: {
- 		struct scatterlist *sg = &task->smp_task.smp_req;
+diff --git a/drivers/rtc/rtc-hym8563.c b/drivers/rtc/rtc-hym8563.c
+index cc710d682121..2f52aabd129a 100644
+--- a/drivers/rtc/rtc-hym8563.c
++++ b/drivers/rtc/rtc-hym8563.c
+@@ -294,7 +294,7 @@ static long hym8563_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
+ 		if (clkout_rates[i] <= rate)
+ 			return clkout_rates[i];
+ 
+-	return 0;
++	return clkout_rates[0];
+ }
+ 
+ static int hym8563_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.39.5
 
