@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594E426FA77;
-	Tue, 12 Aug 2025 19:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95A023182D;
+	Tue, 12 Aug 2025 19:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025551; cv=none; b=Yz9/wg4bB3M4icOAgiO86ZkfPNEeIxbSMWlAMd84enlPs0JtrdzTDYY8e7qX3UIoREQCxbpUxUKRSVp+0yN2NjCAUinWEziYRAh0ldeZ6DGDC2VCzIhD+2gQr1xgfojZVOePMpddczITmfsFykxwQbQq2Am8qN5ePvrka31dNZE=
+	t=1755025554; cv=none; b=TP2TIVvU9/auFYGhNzwJ2GtHpOHCgAXb0KgZtAqPdqgwhpPZVcWik+AFjsQAmOjSRI5TKiv+x2UhGCpYg44DVD3ymYiMlLjY1l76p/AOXE2jdl3jATUyjz6KjLBsRPoarQhze5rIz0PzEmZ860oFimX7hWye4Sp0n7+Rnis88LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025551; c=relaxed/simple;
-	bh=vfzipKHmMdq7ul3FB9DrvQMiaVuJJEcxkqL/ekiboak=;
+	s=arc-20240116; t=1755025554; c=relaxed/simple;
+	bh=EyMSHGsQJkStmjcgKhJ+wdwkBVXQTq+QuJLtDd1etY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEzVWrYvzGDDFQnMl8EwUivCcYmXpAvs+G33/gvGouG3hX4UUJKBwzzDNaxMUwwvuk+SY7M9pF7AlJB0D1daEysqdZPhHJnr2Ov1J9M+u/Fe32cook+P9/D0AZS5rod5HhG5GrzaPnB5vm1InzEhnp9B8qkQBqrqOK2VoO2EJxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnT7LCJ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CLM1kwQLmzoFdQroIoi/GuiYFXac0ncoGmPaE8S2VgIabW+tbk/JqlpESMr1NzTuTSl2TQ4C2mE+H/TUSiB83J2z28pYyjOkhcw3pm+WzVa18dsCmmcan57um0VTa/QDfRxGv4vp9txnYV1wG4I6E5NxWjXsqKcl8XCYUgMbqzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGNiPyJl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnT7LCJ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C04C4CEF0;
-	Tue, 12 Aug 2025 19:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGNiPyJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A63C4CEF0;
+	Tue, 12 Aug 2025 19:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025551;
-	bh=vfzipKHmMdq7ul3FB9DrvQMiaVuJJEcxkqL/ekiboak=;
+	s=korg; t=1755025554;
+	bh=EyMSHGsQJkStmjcgKhJ+wdwkBVXQTq+QuJLtDd1etY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnT7LCJ/FZbyCCsAWNtJP7skwzoOUAfBr9dnmXWGPbHankby5YxrICrk+U2eAEyuQ
-	 WgxI0XXLQXn7sk8iwvvIUfWWpdehPu/I97jP+4ieoXtlFu5diLIK1LEOpgqCh1XJYI
-	 wG911IiZ1tyOKuzzaJn6lJ/Qx2anyIZWdLM447/U=
+	b=dGNiPyJlOFi3PF8EDV+vengGCIpSzdlM+9QZiT+PDN4bYMCz5F3T+eY7xcIPJ7b68
+	 96wlgr+pwgXSGkEjDSPQFxzUOA2PEeeY7Oj2uHeefyUDhDVTBqST4uc6X2V0JVpYzt
+	 E0jIqJBECCph++8y4UqyDkaBKjbM2DGiXYhzY/Fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 073/480] staging: gpib: Fix error handling paths in cb_gpib_probe()
-Date: Tue, 12 Aug 2025 19:44:41 +0200
-Message-ID: <20250812174400.442815477@linuxfoundation.org>
+Subject: [PATCH 6.15 074/480] soc/tegra: cbb: Clear ERR_FORCE register with ERR_STATUS
+Date: Tue, 12 Aug 2025 19:44:42 +0200
+Message-ID: <20250812174400.489775089@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -50,57 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit 1b0ee85ee7967a4d7a68080c3f6a66af69e4e0b4 ]
+[ Upstream commit a0647bca8966db04b79af72851ebd04224a4da40 ]
 
-If cb_gpib_config() fails, 'info' needs to be freed, as already done in the
-remove function.
+When error is injected with the ERR_FORCE register, then this register
+is not auto cleared on clearing the ERR_STATUS register. This causes
+repeated interrupts on error injection. To fix, set the ERR_FORCE to
+zero along with clearing the ERR_STATUS register after handling error.
 
-While at it, remove a pointless comment related to gpib_attach().
-
-Fixes: e9dc69956d4d ("staging: gpib: Add Computer Boards GPIB driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/bf89d6f2f8b8c680720d02061fc4ebdd805deca8.1751709098.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fc2f151d2314 ("soc/tegra: cbb: Add driver for Tegra234 CBB 2.0")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/cb7210/cb7210.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/soc/tegra/cbb/tegra234-cbb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/gpib/cb7210/cb7210.c b/drivers/staging/gpib/cb7210/cb7210.c
-index 6b22a33a8c4f..e6465331ffd0 100644
---- a/drivers/staging/gpib/cb7210/cb7210.c
-+++ b/drivers/staging/gpib/cb7210/cb7210.c
-@@ -1183,8 +1183,7 @@ struct local_info {
- static int cb_gpib_probe(struct pcmcia_device *link)
+diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
+index c74629af9bb5..1da31ead2b5e 100644
+--- a/drivers/soc/tegra/cbb/tegra234-cbb.c
++++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
+@@ -185,6 +185,8 @@ static void tegra234_cbb_error_clear(struct tegra_cbb *cbb)
  {
- 	struct local_info *info;
--
--//	int ret, i;
-+	int ret;
+ 	struct tegra234_cbb *priv = to_tegra234_cbb(cbb);
  
- 	/* Allocate space for private device-specific data */
- 	info = kzalloc(sizeof(*info), GFP_KERNEL);
-@@ -1210,8 +1209,16 @@ static int cb_gpib_probe(struct pcmcia_device *link)
- 
- 	/* Register with Card Services */
- 	curr_dev = link;
--	return cb_gpib_config(link);
--} /* gpib_attach */
-+	ret = cb_gpib_config(link);
-+	if (ret)
-+		goto free_info;
++	writel(0, priv->mon + FABRIC_MN_MASTER_ERR_FORCE_0);
 +
-+	return 0;
-+
-+free_info:
-+	kfree(info);
-+	return ret;
-+}
- 
- /*
-  *   This deletes a driver "instance".  The device is de-registered
+ 	writel(0x3f, priv->mon + FABRIC_MN_MASTER_ERR_STATUS_0);
+ 	dsb(sy);
+ }
 -- 
 2.39.5
 
