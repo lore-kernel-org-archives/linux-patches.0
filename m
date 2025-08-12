@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05AA1E500C;
-	Tue, 12 Aug 2025 18:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CA16BB5B;
+	Tue, 12 Aug 2025 18:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023456; cv=none; b=uI9dQ0u9XvOBWgM81OWyX6dfJN5RhflpmB+yfuAukdHaFdbom2EdhvHMV/TwOCST3/Nnaj3p/ieAQkvPWVzYhxO9kJ2brbdpnt3RXW650Xnzhb7QK0WdAwLr+H1feqphnugtHheTmgIrPi4bg07Za6wGQdwESx3Pgvr8LAnLdwA=
+	t=1755023460; cv=none; b=ApywE76qCRtxYQFEXg8fHS/nl2WxzH+h/VQcotc9sUWyoMEp9QmP/B77eG0motZTRO9f0upvQmNeW3mnV6WYvVWKpk8XqKRmaFgRD2uu3gzbXTuBx5E5h0PXiq95uQKx9Kip+ynrB513l2QnmoHwDdIgp4rgSpn4VUxYPp/37vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023456; c=relaxed/simple;
-	bh=4J3smR3aviQpFZkIODGICT/HQo+Sw1/lkrygLPkHts8=;
+	s=arc-20240116; t=1755023460; c=relaxed/simple;
+	bh=lCmdNt04PXcf5Zi1fOncq8QKH75+ltqsW715SzHD3oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qaFV5+EaxbZSTtpRZnSEKPL8sV+aTdGhebPmpPgovcVGcBmSSaKs+uLGzlCsNH7GGnhF6n3Da6x7Ki5V3vvqGXwNnzbHj/Kl7g3fF01HX4ZbDJmW267EwvOULQOewpiL8L7wlRnxjcFsHmgE+8L9QyqKoshHvpN9LTFD/nVZk5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBJmGkdC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwRLkXuEfsM5UbjWrlST0lYzlz3PhA/b0uHG7quSLACnE2q0OBoMiVSG4sNYdMEyXzAVYUBjJWrKH/DeFlEXkbeizj37X9z+N4jB8PCZj/fzq6zKUW4nKtRYrQD2ReAzNO+j45+xmXQjFEzgYeiMrNGqXrLgo7jsK7KYbp7U6sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQJjwLA7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBJmGkdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF50C4CEF0;
-	Tue, 12 Aug 2025 18:30:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQJjwLA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF7BC4CEF0;
+	Tue, 12 Aug 2025 18:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023456;
-	bh=4J3smR3aviQpFZkIODGICT/HQo+Sw1/lkrygLPkHts8=;
+	s=korg; t=1755023459;
+	bh=lCmdNt04PXcf5Zi1fOncq8QKH75+ltqsW715SzHD3oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBJmGkdCEsKlmOk/U0VYjKN7jnpwZ27/GHVPDl9/HSvTIFeAz0KcPp9lrwqvhgUay
-	 eAjquMzGfzD4kqY4UEPw1HwAKZXnZE6Ph/pcEgKaQOfrTAgPBkwQD8oRC/aXCQWktC
-	 WEakKdxmURQt4FXh2aGbxRmQCEf/iphibjtOIncc=
+	b=aQJjwLA7T3MEG+27A+a5cuIMOT4zsef8WpuMS7686I/18fBsv4T1FMmA4lXDwxxbl
+	 jx0VLgAd/t0umMLkuuKMNVImwCYChk/sJjVRrbF9ZzhQsN6TCeuUIKaKJ1bUgvLWVU
+	 CbLjvdE88LAyXOLia5RhuCE4teQj4cEx2YZgYtKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Lizhi Xu <lizhi.xu@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 085/627] selftests: vDSO: chacha: Correctly skip test if necessary
-Date: Tue, 12 Aug 2025 19:26:20 +0200
-Message-ID: <20250812173422.539820442@linuxfoundation.org>
+Subject: [PATCH 6.16 086/627] Revert "vmci: Prevent the dispatching of uninitialized payloads"
+Date: Tue, 12 Aug 2025 19:26:21 +0200
+Message-ID: <20250812173422.577032700@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,54 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 2c0a4428f5d6005ff0db12057cc35273593fc040 ]
+[ Upstream commit 8f5d9bed6122b8d96508436e5ad2498bb797eb6b ]
 
-According to kselftest.h ksft_exit_skip() is not meant to be called when
-a plan has already been printed.
+This reverts commit bfb4cf9fb97e4063f0aa62e9e398025fb6625031.
 
-Use the recommended function ksft_test_result_skip().
+While the code "looks" correct, the compiler has no way to know that
+doing "fun" pointer math like this really isn't a write off the end of
+the structure as there is no hint anywhere that the structure has data
+at the end of it.
 
-This fixes a bug, where the TAP output would be invalid when skipping:
+This causes the following build warning:
 
-	TAP version 13
-	1..1
-	ok 2 # SKIP Not implemented on architecture
+In function 'fortify_memset_chk',
+    inlined from 'ctx_fire_notification.isra' at drivers/misc/vmw_vmci/vmci_context.c:254:3:
+include/linux/fortify-string.h:480:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  480 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The SKIP line should start with "ok 1" as the plan only contains one test.
+So revert it for now and it can come back in the future in a "sane" way
+that either correctly makes the structure know that there is trailing
+data, OR just the payload structure is properly referenced and zeroed
+out.
 
-Fixes: 3b5992eaf730 ("selftests: vDSO: unconditionally build chacha test")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/all/20250611-selftests-vdso-fixes-v3-1-e62e37a6bcf5@linutronix.de
+Fixes: bfb4cf9fb97e ("vmci: Prevent the dispatching of uninitialized payloads")
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Lizhi Xu <lizhi.xu@windriver.com>
+Link: https://lore.kernel.org/r/20250703171021.0aee1482@canb.auug.org.au
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/vdso_test_chacha.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/misc/vmw_vmci/vmci_context.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/vdso_test_chacha.c b/tools/testing/selftests/vDSO/vdso_test_chacha.c
-index 8757f738b0b1..0aad682b12c8 100644
---- a/tools/testing/selftests/vDSO/vdso_test_chacha.c
-+++ b/tools/testing/selftests/vDSO/vdso_test_chacha.c
-@@ -76,7 +76,8 @@ static void reference_chacha20_blocks(uint8_t *dst_bytes, const uint32_t *key, u
+diff --git a/drivers/misc/vmw_vmci/vmci_context.c b/drivers/misc/vmw_vmci/vmci_context.c
+index d566103caa27..f22b44827e92 100644
+--- a/drivers/misc/vmw_vmci/vmci_context.c
++++ b/drivers/misc/vmw_vmci/vmci_context.c
+@@ -251,8 +251,6 @@ static int ctx_fire_notification(u32 context_id, u32 priv_flags)
+ 		ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
+ 						  VMCI_CONTEXT_RESOURCE_ID);
+ 		ev.msg.hdr.payload_size = sizeof(ev) - sizeof(ev.msg.hdr);
+-		memset((char*)&ev.msg.hdr + sizeof(ev.msg.hdr), 0,
+-			ev.msg.hdr.payload_size);
+ 		ev.msg.event_data.event = VMCI_EVENT_CTX_REMOVED;
+ 		ev.payload.context_id = context_id;
  
- void __weak __arch_chacha20_blocks_nostack(uint8_t *dst_bytes, const uint32_t *key, uint32_t *counter, size_t nblocks)
- {
--	ksft_exit_skip("Not implemented on architecture\n");
-+	ksft_test_result_skip("Not implemented on architecture\n");
-+	ksft_finished();
- }
- 
- int main(int argc, char *argv[])
 -- 
 2.39.5
 
