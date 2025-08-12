@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2713327FB12;
-	Tue, 12 Aug 2025 18:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA341A9F89;
+	Tue, 12 Aug 2025 18:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023608; cv=none; b=UsZzlE9pJF7K5OonD/ooalSTbBHg/aHkmU8F1RunM78Ua3jE85LSeleNFM4pi3/0CcYImQpwYxae8ycKpLv6TAjcFgMJlHM0xox8jCa09EC258DW3tJ5wfYUDk98Wl1fP4zvJbxTAEGc5BJ8mcwho5Nh6j+t2Wq0Az00KW30Ims=
+	t=1755023611; cv=none; b=ZwTGLVLSMC3uS92DTL5H+RnvLqGoE1p+0pOWYuEttMSXmk4rfUrWJysUogEWaBAdKM8tkH3p6YAI1dMmGnO5WdOH8JtcroGOog2XwTgoNpPqCYN8cUAnIRr/F1XWXtFVcSI1b1b0aLmyLMwi8X0bg44Xlk98MLWbd1nZxQIZb/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023608; c=relaxed/simple;
-	bh=cg/H8d86um3dpzmhhRKcJ88zspYhxIc5a/E3yt2Vpb8=;
+	s=arc-20240116; t=1755023611; c=relaxed/simple;
+	bh=U84ytQ8rdQ7W1MTPYHtVVQdrkoKfA9/7u74zGakvOOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZ6qTYkPZDu7fODt5NUyFrIdWBtSc8cjtQKo23TmxziXmO2So2Qx4AzfoYeLfO1VyZM0/oP6/dKkTYV9UmI5hPjpdrIyN9BwYOuvxarUCirw36fFjhlnN3pPlOXz1P9SHjMSA1masw3cmsI+9FKEar8CMj7kLtpanQAzGJT7hFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvjIR4uY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eCL6uMeCr/dGy8s+2IoGlXzBMwXUw8pOTEalmK9YbsHsA0vqo2YWEc+MxrY+0oBdbs3FEAc101XK30b9aNVj0fJEHygkN4xNbwM7ObdGzzhT3fyoZuqN4RNF5PA00f+8wK+lC4ohJHiTBDZRSiUOx8iC/jl6U2ACH3E52oquw00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TH5QnHMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvjIR4uY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DCEC4CEF0;
-	Tue, 12 Aug 2025 18:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TH5QnHMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A092DC4CEF0;
+	Tue, 12 Aug 2025 18:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023607;
-	bh=cg/H8d86um3dpzmhhRKcJ88zspYhxIc5a/E3yt2Vpb8=;
+	s=korg; t=1755023611;
+	bh=U84ytQ8rdQ7W1MTPYHtVVQdrkoKfA9/7u74zGakvOOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvjIR4uYTenSJ3qHG+ZInT26yxPuH3nHBStnwTYPcchKCruf75NBen4x3YUH/NsSr
-	 O6u/vfm0Z65cgZTL2kmfl6cE1VNoaL10xYq8J+kYXy8H7GAjEXSqIa3q21Vul0Uh55
-	 B8oJvD0lCUUA20h5OIOa5AlM5zWSysGl5vR6CeKE=
+	b=TH5QnHMkxr89DHqgj/Vz1ahEY4WgX5gS5st93+Ibq5qFpBnVhJcvXHTjAq8BEo8hp
+	 jCOJVG3IyI97Sk7LeQQcpTeewFCNljwvPxScC20AW6+NgUZAis06DybD/rvv3aD3G8
+	 B17DeurrNuxle09hSxXJrTUGJUYfV3AcipIH56Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 128/627] selftests/tracing: Fix false failure of subsystem event test
-Date: Tue, 12 Aug 2025 19:27:03 +0200
-Message-ID: <20250812173424.191241528@linuxfoundation.org>
+Subject: [PATCH 6.16 129/627] MIPS: alchemy: gpio: use new GPIO line value setter callbacks for the remaining chips
+Date: Tue, 12 Aug 2025 19:27:04 +0200
+Message-ID: <20250812173424.227634022@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,83 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 213879061a9c60200ba971330dbefec6df3b4a30 ]
+[ Upstream commit 6b94bf976f9f9e6d4a6bf3218968a506c049702e ]
 
-The subsystem event test enables all "sched" events and makes sure there's
-at least 3 different events in the output. It used to cat the entire trace
-file to | wc -l, but on slow machines, that could last a very long time.
-To solve that, it was changed to just read the first 100 lines of the
-trace file. This can cause false failures as some events repeat so often,
-that the 100 lines that are examined could possibly be of only one event.
+Previous commit missed two other places that need converting, it only
+came out in tests on autobuilders now. Convert the rest of the driver.
 
-Instead, create an awk script that looks for 3 different events and will
-exit out after it finds them. This will find the 3 events the test looks
-for (eventually if it works), and still exit out after the test is
-satisfied and not cause slower machines to run forever.
-
-Link: https://lore.kernel.org/r/20250721134212.53c3e140@batman.local.home
-Reported-by: Tengda Wu <wutengda@huaweicloud.com>
-Closes: https://lore.kernel.org/all/20250710130134.591066-1-wutengda@huaweicloud.com/
-Fixes: 1a4ea83a6e67 ("selftests/ftrace: Limit length in subsystem-enable tests")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 68bdc4dc1130 ("MIPS: alchemy: gpio: use new line value setter callbacks")
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://lore.kernel.org/r/20250727082442.13182-1-brgl@bgdev.pl
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ftrace/test.d/event/subsystem-enable.tc   | 28 +++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ arch/mips/alchemy/common/gpiolib.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-index b7c8f29c09a9..65916bb55dfb 100644
---- a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-+++ b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-@@ -14,11 +14,35 @@ fail() { #msg
-     exit_fail
+diff --git a/arch/mips/alchemy/common/gpiolib.c b/arch/mips/alchemy/common/gpiolib.c
+index 411f70ceb762..194034eba75f 100644
+--- a/arch/mips/alchemy/common/gpiolib.c
++++ b/arch/mips/alchemy/common/gpiolib.c
+@@ -40,9 +40,11 @@ static int gpio2_get(struct gpio_chip *chip, unsigned offset)
+ 	return !!alchemy_gpio2_get_value(offset + ALCHEMY_GPIO2_BASE);
  }
  
-+# As reading trace can last forever, simply look for 3 different
-+# events then exit out of reading the file. If there's not 3 different
-+# events, then the test has failed.
-+check_unique() {
-+    cat trace | grep -v '^#' | awk '
-+	BEGIN { cnt = 0; }
-+	{
-+	    for (i = 0; i < cnt; i++) {
-+		if (event[i] == $5) {
-+		    break;
-+		}
-+	    }
-+	    if (i == cnt) {
-+		event[cnt++] = $5;
-+		if (cnt > 2) {
-+		    exit;
-+		}
-+	    }
-+	}
-+	END {
-+	    printf "%d", cnt;
-+	}'
-+}
+-static void gpio2_set(struct gpio_chip *chip, unsigned offset, int value)
++static int gpio2_set(struct gpio_chip *chip, unsigned offset, int value)
+ {
+ 	alchemy_gpio2_set_value(offset + ALCHEMY_GPIO2_BASE, value);
 +
- echo 'sched:*' > set_event
++	return 0;
+ }
  
- yield
+ static int gpio2_direction_input(struct gpio_chip *chip, unsigned offset)
+@@ -68,10 +70,12 @@ static int gpio1_get(struct gpio_chip *chip, unsigned offset)
+ 	return !!alchemy_gpio1_get_value(offset + ALCHEMY_GPIO1_BASE);
+ }
  
--count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
-+count=`check_unique`
- if [ $count -lt 3 ]; then
-     fail "at least fork, exec and exit events should be recorded"
- fi
-@@ -29,7 +53,7 @@ echo 1 > events/sched/enable
+-static void gpio1_set(struct gpio_chip *chip,
++static int gpio1_set(struct gpio_chip *chip,
+ 				unsigned offset, int value)
+ {
+ 	alchemy_gpio1_set_value(offset + ALCHEMY_GPIO1_BASE, value);
++
++	return 0;
+ }
  
- yield
- 
--count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
-+count=`check_unique`
- if [ $count -lt 3 ]; then
-     fail "at least fork, exec and exit events should be recorded"
- fi
+ static int gpio1_direction_input(struct gpio_chip *chip, unsigned offset)
+@@ -97,7 +101,7 @@ struct gpio_chip alchemy_gpio_chip[] = {
+ 		.direction_input	= gpio1_direction_input,
+ 		.direction_output	= gpio1_direction_output,
+ 		.get			= gpio1_get,
+-		.set			= gpio1_set,
++		.set_rv			= gpio1_set,
+ 		.to_irq			= gpio1_to_irq,
+ 		.base			= ALCHEMY_GPIO1_BASE,
+ 		.ngpio			= ALCHEMY_GPIO1_NUM,
+@@ -107,7 +111,7 @@ struct gpio_chip alchemy_gpio_chip[] = {
+ 		.direction_input	= gpio2_direction_input,
+ 		.direction_output	= gpio2_direction_output,
+ 		.get			= gpio2_get,
+-		.set			= gpio2_set,
++		.set_rv			= gpio2_set,
+ 		.to_irq			= gpio2_to_irq,
+ 		.base			= ALCHEMY_GPIO2_BASE,
+ 		.ngpio			= ALCHEMY_GPIO2_NUM,
 -- 
 2.39.5
 
