@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033AE2F5481;
-	Tue, 12 Aug 2025 18:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B822FD1C2;
+	Tue, 12 Aug 2025 18:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023857; cv=none; b=Y+uMZkxrzdLA7Ma2Pcn90TCWDH9H+/bFhrJTj2+yOQ6XXJnJumE+5UnqtVpd3fqfUVvmUge86ZopqSXEwyn95xQxQCxOErhJdZ+FEwUf0vzPtEfm7S2MYyWcyWr80i0ht4Q/98mU5dRv+UzQF4a7/Lhoid8aqE/KSV01Pw0ZgyA=
+	t=1755023860; cv=none; b=CyK3FtwYQqKPnjxLiDxbpZshMqkgSUzBvNS8M794H5bx8lRHMmHfB+ni0ORLxnJDAUldcXajY1lQj6hwzm4yOBU2tmoZiJFqH3OdUIwmxSxGF/3IfagQ68O95fOE/zh5ST2FxLz7GoKZa1IR70GDLQLd/qO5NNaA8IIjnURurAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023857; c=relaxed/simple;
-	bh=ugD+9sHDj+gRJR9p7c6tYK/JllUk8RzkqtpKrjLDUB4=;
+	s=arc-20240116; t=1755023860; c=relaxed/simple;
+	bh=I4nEyjtF/E5dmV0C2u64jcitbpaeoJSbZLURlTUhoLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nEhUyR6lCDSTxGceK/gaJiAtsn67zZzhmiRxlc/d4AqHXkqtP2R8azbBOrt57GkDTETFxF7yJyGZe8HSLw2GTYOTq2JTdFLXv06Bmb8KSYXnolGxp/wJbKG+M/N2pxhYKRk0EkQczc1n6/uuBwEJamDftg10VuoWWBoP11WhVjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbbYNNJN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TJ6EK5FYXxArJ2Gi8dkdNM38kLHPkQlkYVwazx8slLKxYvJwWU8fbb/mBHDXcDOqQ8N19FRAeuEHyTWy4zlOhFLZPJDCZsdyx7Xribia8yDM7lfPcyR/YgRzvrOvZkAz7S7XfyY1X66fp9G3Z1Rz3lHNix/DozgUxIBhoEiUWj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRvpJ84Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbbYNNJN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B42C4CEF0;
-	Tue, 12 Aug 2025 18:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRvpJ84Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055DCC4CEF0;
+	Tue, 12 Aug 2025 18:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023856;
-	bh=ugD+9sHDj+gRJR9p7c6tYK/JllUk8RzkqtpKrjLDUB4=;
+	s=korg; t=1755023860;
+	bh=I4nEyjtF/E5dmV0C2u64jcitbpaeoJSbZLURlTUhoLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbbYNNJN6ZkY6NTo89WdyP46EouGiysVMNieRuKj8qgiAy3r/PJiXIqd0gv+hCHgn
-	 KrDkZoJbnD9pIzTU8FEVUHQQP+ymr0I4bHbolUveeA+mAkoLy7caDXNAgcspHG87ok
-	 ZfpwoqannzjpFLYfCrM2F2dkoUG0Xep2Q6tV1J3A=
+	b=bRvpJ84QYhBYCNv0mR6n5OQUQ7QQBw5TCuFIOTdVepXvZ3bdV5ymV2iyQMrbkm/hj
+	 SajhQmTUvn+wywzEuQtBcu6aon1T5xJ3FkTF4rk+8kc7czyC49YzPvSlQWz80LMfHF
+	 V7VoD8jn+zL59lk5/wOd85FwaefXSo5qERDZ3S8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Thiraviyam Mariyappan <thiraviyam.mariyappan@oss.qualcomm.com>,
+	Ramasamy Kaliappan <ramasamy.kaliappan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 201/627] netfilter: nf_tables: Drop dead code from fill_*_info routines
-Date: Tue, 12 Aug 2025 19:28:16 +0200
-Message-ID: <20250812173426.928212305@linuxfoundation.org>
+Subject: [PATCH 6.16 171/627] wifi: ath12k: Clear auth flag only for actual association in security mode
+Date: Tue, 12 Aug 2025 19:27:46 +0200
+Message-ID: <20250812173425.784725350@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,90 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Thiraviyam Mariyappan <thiraviyam.mariyappan@oss.qualcomm.com>
 
-[ Upstream commit 8080357a8c6cf4905bbd8969412c19d34be3395e ]
+[ Upstream commit c27bb624b3d789a337df3bbcc020a575680555cc ]
 
-This practically reverts commit 28339b21a365 ("netfilter: nf_tables: do
-not send complete notification of deletions"): The feature was never
-effective, due to prior modification of 'event' variable the conditional
-early return never happened.
+When setting a new bitrate, WMI peer association command is sent from
+the host without the peer authentication bit set in peer_flags for
+security mode, which causes ping failure.
 
-User space also relies upon the current behaviour, so better reintroduce
-the shortened deletion notifications once it is fixed.
+The firmware handles peer_flags when the client is associating, as the
+peer authentication bit in peer_flags is set after the key exchange.
+When the WMI peer association command is sent from the host to update
+the new bitrate for an associated STA, the firmware expects the WMI
+peer authentication bit to be set in peer_flags.
 
-Fixes: 28339b21a365 ("netfilter: nf_tables: do not send complete notification of deletions")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix this issue by ensuring that the WMI peer auth bit is set in
+peer_flags in WMI peer association command when updating the new
+bitrate.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Thiraviyam Mariyappan <thiraviyam.mariyappan@oss.qualcomm.com>
+Signed-off-by: Ramasamy Kaliappan <ramasamy.kaliappan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250608145651.1735236-1-ramasamy.kaliappan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 25 -------------------------
- 1 file changed, 25 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 4 ++++
+ drivers/net/wireless/ath/ath12k/wmi.c | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a7240736f98e..9ebda0248d20 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1165,11 +1165,6 @@ static int nf_tables_fill_table_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_TABLE_PAD))
- 		goto nla_put_failure;
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 3616269538e6..0feb800a4921 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -3235,6 +3235,7 @@ static void ath12k_bss_assoc(struct ath12k *ar,
  
--	if (event == NFT_MSG_DELTABLE) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nla_put_be32(skb, NFTA_TABLE_FLAGS,
- 			 htonl(table->flags & NFT_TABLE_F_MASK)))
- 		goto nla_put_failure;
-@@ -2028,11 +2023,6 @@ static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_CHAIN_PAD))
- 		goto nla_put_failure;
+ 	rcu_read_unlock();
  
--	if (event == NFT_MSG_DELCHAIN && !hook_list) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nft_is_base_chain(chain)) {
- 		const struct nft_base_chain *basechain = nft_base_chain(chain);
- 		struct nft_stats __percpu *stats;
-@@ -4859,11 +4849,6 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
- 			 NFTA_SET_PAD))
- 		goto nla_put_failure;
++	peer_arg->is_assoc = true;
+ 	ret = ath12k_wmi_send_peer_assoc_cmd(ar, peer_arg);
+ 	if (ret) {
+ 		ath12k_warn(ar->ab, "failed to run peer assoc for %pM vdev %i: %d\n",
+@@ -5165,6 +5166,8 @@ static int ath12k_mac_station_assoc(struct ath12k *ar,
+ 			    "invalid peer NSS %d\n", peer_arg->peer_nss);
+ 		return -EINVAL;
+ 	}
++
++	peer_arg->is_assoc = true;
+ 	ret = ath12k_wmi_send_peer_assoc_cmd(ar, peer_arg);
+ 	if (ret) {
+ 		ath12k_warn(ar->ab, "failed to run peer assoc for STA %pM vdev %i: %d\n",
+@@ -5411,6 +5414,7 @@ static void ath12k_sta_rc_update_wk(struct wiphy *wiphy, struct wiphy_work *wk)
+ 			ath12k_peer_assoc_prepare(ar, arvif, arsta,
+ 						  peer_arg, true);
  
--	if (event == NFT_MSG_DELSET) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (set->flags != 0)
- 		if (nla_put_be32(skb, NFTA_SET_FLAGS, htonl(set->flags)))
- 			goto nla_put_failure;
-@@ -8350,11 +8335,6 @@ static int nf_tables_fill_obj_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_OBJ_PAD))
- 		goto nla_put_failure;
- 
--	if (event == NFT_MSG_DELOBJ) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nla_put_be32(skb, NFTA_OBJ_TYPE, htonl(obj->ops->type->type)) ||
- 	    nla_put_be32(skb, NFTA_OBJ_USE, htonl(obj->use)) ||
- 	    nft_object_dump(skb, NFTA_OBJ_DATA, obj, reset))
-@@ -9394,11 +9374,6 @@ static int nf_tables_fill_flowtable_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_FLOWTABLE_PAD))
- 		goto nla_put_failure;
- 
--	if (event == NFT_MSG_DELFLOWTABLE && !hook_list) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nla_put_be32(skb, NFTA_FLOWTABLE_USE, htonl(flowtable->use)) ||
- 	    nla_put_be32(skb, NFTA_FLOWTABLE_FLAGS, htonl(flowtable->data.flags)))
- 		goto nla_put_failure;
++			peer_arg->is_assoc = false;
+ 			err = ath12k_wmi_send_peer_assoc_cmd(ar, peer_arg);
+ 			if (err)
+ 				ath12k_warn(ar->ab, "failed to run peer assoc for STA %pM vdev %i: %d\n",
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 465f877fc0fb..e19803bfba75 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -2152,7 +2152,7 @@ static void ath12k_wmi_copy_peer_flags(struct wmi_peer_assoc_complete_cmd *cmd,
+ 		cmd->peer_flags |= cpu_to_le32(WMI_PEER_AUTH);
+ 	if (arg->need_ptk_4_way) {
+ 		cmd->peer_flags |= cpu_to_le32(WMI_PEER_NEED_PTK_4_WAY);
+-		if (!hw_crypto_disabled)
++		if (!hw_crypto_disabled && arg->is_assoc)
+ 			cmd->peer_flags &= cpu_to_le32(~WMI_PEER_AUTH);
+ 	}
+ 	if (arg->need_gtk_2_way)
 -- 
 2.39.5
 
