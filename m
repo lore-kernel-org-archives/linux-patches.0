@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3A82FDC59;
-	Tue, 12 Aug 2025 18:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5BE2CA9;
+	Tue, 12 Aug 2025 18:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025044; cv=none; b=nssV2HfyovA8TUwHzRS/FrPlqvgBBsQwqZtjJr8uffgW3e1Rx5hEQjWe3Ghh73m/GBw3+OgOBavNEE1qKdpXQoBnlKZHjOczRgtPFWAgR/DXUpZNGK98W8earx4VQ5JAXwSODU9He4NhxsD9afmUVfauvaDoD4FIZRP2TfORNSQ=
+	t=1755025048; cv=none; b=il7WJx1T1/nN0y/Ijot1mdpUm28tY10h94V3fAei2d44ss98b4uBT5RQbYKjpA/GDO9qh0CC3kY3fSHkIubsA1BYkzYNCZVy/Oa95VFRz9dL2cTKIXS3iFEQc6abDOxBqCowF5nEPcHGZOKSnnRqJHlE0WS+ZzZZiOAo+ZBSYW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025044; c=relaxed/simple;
-	bh=raFL+I/OvsODt8uXyWqFhvaf2ct7OArgm1xWu7fYh5s=;
+	s=arc-20240116; t=1755025048; c=relaxed/simple;
+	bh=kFBYCLJ4nsrAr6czstJj7N0POiGsUbkavERGNGU5E2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b70N8Dy4WlCVGrzKYPeh/U51zMZH+RDK3wJLhtxb5TwdO9UubDBXy2AMGaEXYGFCQlEThuV4zPYwPAoNk1cOIXFV+leSHX55tK/7vuroTC+cQczlcgBJxb7gV9GXYK43s47ggtODF2RhtP/pai2oUxnTapbrqwrp8XVD7QdVkt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyhmW8dF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KuzQTtXnhGJnWTAGsM40cIqkVCKyy1VponVXqaWMkcYUVIvtBcwaAcLc/PWn+xA7/llC6YBOUePwFRhlUParbQHR0AKdBX70OmlYRQ+xG7jKpO7dmli9xoYvHOSU7nGCtGKFdC2n1KzyDKEuK+DDBmsKkUqY7qAaPAFR+TOL0jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOmG+SPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyhmW8dF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F361C4CEF0;
-	Tue, 12 Aug 2025 18:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOmG+SPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5493C4CEF0;
+	Tue, 12 Aug 2025 18:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025044;
-	bh=raFL+I/OvsODt8uXyWqFhvaf2ct7OArgm1xWu7fYh5s=;
+	s=korg; t=1755025047;
+	bh=kFBYCLJ4nsrAr6czstJj7N0POiGsUbkavERGNGU5E2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hyhmW8dFawW+pwoAxe7+OB/6pdah7IiC555qBP4+BQg2+Y+ounuM+xRMucVfP2pXt
-	 5u1qPt7LTJwXcWCYtUc1fxxXnzOwC4KFtBwwQg1CCYrYptlXKAjnAHGu9y2tQ4QpZU
-	 vtivNS0wAUgvk1j/zU9sJ+2nkgAygY841YdIVL68=
+	b=oOmG+SPGBo8MYwrWqTcnXP/yejsHw/7cZeNHY6Qlqse00fkFWXQI/XA/vyhgwWPX2
+	 JyAJ18Y8KGC4toAM50Qow1miYTFX1Jvf7LZp9oSfrmJ1MAWPYS4jr/OT30PbpHNgr8
+	 4L5dUQqrlHsz6xVr5FpN8txP5UpRq5ngFGTS0xJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Baojun Xu <baojun.xu@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 553/627] NFS/localio: nfs_uuid_put() fix the wake up after unlinking the file
-Date: Tue, 12 Aug 2025 19:34:08 +0200
-Message-ID: <20250812173452.937404405@linuxfoundation.org>
+Subject: [PATCH 6.16 527/627] ASoC: tas2781: Fix the wrong step for TLV on tas2781
+Date: Tue, 12 Aug 2025 19:33:42 +0200
+Message-ID: <20250812173451.953554163@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,38 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Baojun Xu <baojun.xu@ti.com>
 
-[ Upstream commit 4ec752ce6debd5a0e7e0febf6bcf780ccda6ab5e ]
+[ Upstream commit 9843cf7b6fd6f938c16fde51e86dd0e3ddbefb12 ]
 
-Use store_release_wake_up() instead of wake_up_var_locked(), because the
-waiter cannot retake the nfs_uuid->lock.
+The step for TLV on tas2781, should be 50 (-0.5dB).
 
-Acked-by: Mike Snitzer <snitzer@kernel.org>
-Tested-by: Mike Snitzer <snitzer@kernel.org>
-Suggested-by: NeilBrown <neil@brown.name>
-Link: https://lore.kernel.org/all/175262948827.2234665.1891349021754495573@noble.neil.brown.name/
-Fixes: 21fb44034695 ("nfs_localio: protect race between nfs_uuid_put() and nfs_close_local_fh()")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 678f38eba1f2 ("ASoC: tas2781: Add Header file for tas2781 driver")
+Signed-off-by: Baojun Xu <baojun.xu@ti.com>
+Link: https://patch.msgid.link/20250801021618.64627-1-baojun.xu@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs_common/nfslocalio.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/sound/tas2781-tlv.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs_common/nfslocalio.c b/fs/nfs_common/nfslocalio.c
-index f1f1592ac134..dd715cdb6c04 100644
---- a/fs/nfs_common/nfslocalio.c
-+++ b/fs/nfs_common/nfslocalio.c
-@@ -198,8 +198,7 @@ static bool nfs_uuid_put(nfs_uuid_t *nfs_uuid)
- 		/* Now we can allow racing nfs_close_local_fh() to
- 		 * skip the locking.
- 		 */
--		RCU_INIT_POINTER(nfl->nfs_uuid, NULL);
--		wake_up_var_locked(&nfl->nfs_uuid, &nfs_uuid->lock);
-+		store_release_wake_up(&nfl->nfs_uuid, RCU_INITIALIZER(NULL));
- 	}
+diff --git a/include/sound/tas2781-tlv.h b/include/sound/tas2781-tlv.h
+index d87263e43fdb..ef9b9f19d212 100644
+--- a/include/sound/tas2781-tlv.h
++++ b/include/sound/tas2781-tlv.h
+@@ -15,7 +15,7 @@
+ #ifndef __TAS2781_TLV_H__
+ #define __TAS2781_TLV_H__
  
- 	/* Remove client from nn->local_clients */
+-static const __maybe_unused DECLARE_TLV_DB_SCALE(dvc_tlv, -10000, 100, 0);
++static const __maybe_unused DECLARE_TLV_DB_SCALE(dvc_tlv, -10000, 50, 0);
+ static const __maybe_unused DECLARE_TLV_DB_SCALE(amp_vol_tlv, 1100, 50, 0);
+ 
+ #endif
 -- 
 2.39.5
 
