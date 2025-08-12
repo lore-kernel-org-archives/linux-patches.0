@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57132FABFF;
-	Tue, 12 Aug 2025 17:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEBC268C73;
+	Tue, 12 Aug 2025 17:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021060; cv=none; b=rplbNkoiIywXGWTeSZzmCZ0g8K800omTGbpadNmqjADNSusecwy6GiVu8wTljB5FC/1LYTfc8mtbyvBxCdM4MdGIUJ2tztScKSYyCozHIzmDe9ryr8oSSaniwxr+ZLwc5RdCVx660EHckGQ4R3f44llQQiyfCKbPqxdmmEVd25Q=
+	t=1755021064; cv=none; b=fe1daBJ1MD50sM70wOq4psIE4l1qEGFz5VkD2P00KcVmOeLJ/6EsEu3CzxbI8NAhewfGJs/be94YmSnEE+36pvOPvwD76gopDwbkhlvrth4qdlBGH4B1BajBS1kx7WYRWxJzkasPt6zBHRF76PurER/NqqHz9vz198Sn3jF8SeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021060; c=relaxed/simple;
-	bh=e60irfMrPdg82b1z742SK8mgmzx2C6znAOabzuqlMqg=;
+	s=arc-20240116; t=1755021064; c=relaxed/simple;
+	bh=5j6Iv4aJV7J/6Iy0nAz0vTUwQ45sK7SeDDa7BrwUqSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxLOjvdYfAImlTYapz4AdidpmnS+gjXuzxa8sdyF/eXn7ftv/G8awikXBFSdDBNBo7Vrm7oZAuMRg0aUqHOxOjmW4brAjZxrI+M/pgycsWU1tICBtZVr+al0rJuICrnKL1l+pUJ/r0urQk/Uoak8JimSarvOVnWagQWXAdl92AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLsO+s/2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GyuM/2F+qklam59s+NW4dpFyGKTtwZqP9LZNdggzgMq92pFpAU7IXUiX5zAT+jTJ+Q6ksZVnHuTtQJrjRA4F2n85IoJrOEUUMhI5Cr18vihFqcO2y91cIoMKIUWGNgcwTFqwRvZF3VtkEBp6guTDjRXPInpZomxP0CVi5hVi8cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vq2G7BM6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLsO+s/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1E0C4CEF0;
-	Tue, 12 Aug 2025 17:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vq2G7BM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C560C4CEF0;
+	Tue, 12 Aug 2025 17:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021060;
-	bh=e60irfMrPdg82b1z742SK8mgmzx2C6znAOabzuqlMqg=;
+	s=korg; t=1755021064;
+	bh=5j6Iv4aJV7J/6Iy0nAz0vTUwQ45sK7SeDDa7BrwUqSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLsO+s/2K1IdiBsA+q/0ETbW/4QkbqRzGw/sI5UHVppedrVQYQ6W43Mfw5Dl6UR4y
-	 yxUBnq0UouXHhXJhLCvvFjZERVmbyWSZw8sAGD76eLH6Fuhj18jfmt0R/ytL0Tt8vo
-	 3f9KIabzjpg5HHohlu4Lp/5OI2qxzbxO47mJn+NA=
+	b=Vq2G7BM6POMySXjGEraMptyvABqTqG5UcLEnU8Ah35VuMm4QsF/Ert2msZTrAWr8S
+	 +zr1qlg90ugDHYpOJhWQ33qcxaNca2TAI+jrYLSgzCtOvY1bYd2hKTK/BOSwF2pI3z
+	 3Ij5iJP/pxoG6i3/LdD9A7AtQY1T7EzwKl41anqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Shawn Anastasio <sanastasio@raptorengineering.com>,
+	Timothy Pearson <tpearson@raptorengineering.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/262] wifi: rtw89: avoid NULL dereference when RX problematic packet on unsupported 6 GHz band
-Date: Tue, 12 Aug 2025 19:27:24 +0200
-Message-ID: <20250812172955.366165904@linuxfoundation.org>
+Subject: [PATCH 6.1 206/253] PCI: pnv_php: Clean up allocated IRQs on unplug
+Date: Tue, 12 Aug 2025 19:29:54 +0200
+Message-ID: <20250812172957.591298762@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +49,231 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit 7e04f01bb94fe61c73cc59f0495c3b6c16a83231 ]
+[ Upstream commit 4668619092554e1b95c9a5ac2941ca47ba6d548a ]
 
-With a quite rare chance, RX report might be problematic to make SW think
-a packet is received on 6 GHz band even if the chip does not support 6 GHz
-band actually. Since SW won't initialize stuffs for unsupported bands, NULL
-dereference will happen then in the sequence, rtw89_vif_rx_stats_iter() ->
-rtw89_core_cancel_6ghz_probe_tx(). So, add a check to avoid it.
+When the root of a nested PCIe bridge configuration is unplugged, the
+pnv_php driver leaked the allocated IRQ resources for the child bridges'
+hotplug event notifications, resulting in a panic.
 
-The following is a crash log for this case.
+Fix this by walking all child buses and deallocating all its IRQ resources
+before calling pci_hp_remove_devices().
 
- BUG: kernel NULL pointer dereference, address: 0000000000000032
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: 0000 [#1] PREEMPT SMP NOPTI
- CPU: 1 PID: 1907 Comm: irq/131-rtw89_p Tainted: G     U             6.6.56-05896-g89f5fb0eb30b #1 (HASH:1400 4)
- Hardware name: Google Telith/Telith, BIOS Google_Telith.15217.747.0 11/12/2024
- RIP: 0010:rtw89_vif_rx_stats_iter+0xd2/0x310 [rtw89_core]
- Code: 4c 89 7d c8 48 89 55 c0 49 8d 44 24 02 48 89 45 b8 45 31 ff eb 11
- 41 c6 45 3a 01 41 b7 01 4d 8b 6d 00 4d 39 f5 74 42 8b 43 10 <41> 33 45
- 32 0f b7 4b 14 66 41 33 4d 36 0f b7 c9 09 c1 74 d8 4d 85
- RSP: 0018:ffff9f3080138ca0 EFLAGS: 00010246
- RAX: 00000000b8bf5770 RBX: ffff91b5e8c639c0 RCX: 0000000000000011
- RDX: ffff91b582de1be8 RSI: 0000000000000000 RDI: ffff91b5e8c639e6
- RBP: ffff9f3080138d00 R08: 0000000000000000 R09: 0000000000000000
- R10: ffff91b59de70000 R11: ffffffffc069be50 R12: ffff91b5e8c639e4
- R13: 0000000000000000 R14: ffff91b5828020b8 R15: 0000000000000000
- FS:  0000000000000000(0000) GS:ffff91b8efa40000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000032 CR3: 00000002bf838000 CR4: 0000000000750ee0
- PKRU: 55555554
- Call Trace:
-  <IRQ>
-  ? __die_body+0x68/0xb0
-  ? page_fault_oops+0x379/0x3e0
-  ? exc_page_fault+0x4f/0xa0
-  ? asm_exc_page_fault+0x22/0x30
-  ? __pfx_rtw89_vif_rx_stats_iter+0x10/0x10 [rtw89_core (HASH:1400 5)]
-  ? rtw89_vif_rx_stats_iter+0xd2/0x310 [rtw89_core (HASH:1400 5)]
-  __iterate_interfaces+0x59/0x110 [mac80211 (HASH:1400 6)]
-  ? __pfx_rtw89_vif_rx_stats_iter+0x10/0x10 [rtw89_core (HASH:1400 5)]
-  ? __pfx_rtw89_vif_rx_stats_iter+0x10/0x10 [rtw89_core (HASH:1400 5)]
-  ieee80211_iterate_active_interfaces_atomic+0x36/0x50 [mac80211 (HASH:1400 6)]
-  rtw89_core_rx_to_mac80211+0xfd/0x1b0 [rtw89_core (HASH:1400 5)]
-  rtw89_core_rx+0x43a/0x980 [rtw89_core (HASH:1400 5)]
+Also modify the lifetime of the workqueue at struct pnv_php_slot::wq so
+that it is only destroyed in pnv_php_free_slot(), instead of
+pnv_php_disable_irq(). This is required since pnv_php_disable_irq() will
+now be called by workers triggered by hot unplug interrupts, so the
+workqueue needs to stay allocated.
 
-Fixes: c6aa9a9c4725 ("wifi: rtw89: add RNR support for 6 GHz scan")
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250618124649.11436-5-pkshih@realtek.com
+The abridged kernel panic that occurs without this patch is as follows:
+
+  WARNING: CPU: 0 PID: 687 at kernel/irq/msi.c:292 msi_device_data_release+0x6c/0x9c
+  CPU: 0 UID: 0 PID: 687 Comm: bash Not tainted 6.14.0-rc5+ #2
+  Call Trace:
+   msi_device_data_release+0x34/0x9c (unreliable)
+   release_nodes+0x64/0x13c
+   devres_release_all+0xc0/0x140
+   device_del+0x2d4/0x46c
+   pci_destroy_dev+0x5c/0x194
+   pci_hp_remove_devices+0x90/0x128
+   pci_hp_remove_devices+0x44/0x128
+   pnv_php_disable_slot+0x54/0xd4
+   power_write_file+0xf8/0x18c
+   pci_slot_attr_store+0x40/0x5c
+   sysfs_kf_write+0x64/0x78
+   kernfs_fop_write_iter+0x1b0/0x290
+   vfs_write+0x3bc/0x50c
+   ksys_write+0x84/0x140
+   system_call_exception+0x124/0x230
+   system_call_vectored_common+0x15c/0x2ec
+
+Signed-off-by: Shawn Anastasio <sanastasio@raptorengineering.com>
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+[bhelgaas: tidy comments]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/2013845045.1359852.1752615367790.JavaMail.zimbra@raptorengineeringinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pci/hotplug/pnv_php.c | 96 ++++++++++++++++++++++++++++-------
+ 1 file changed, 77 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index d1d8fd812cbf..21e9ec8768b5 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -1597,6 +1597,11 @@ static void rtw89_core_cancel_6ghz_probe_tx(struct rtw89_dev *rtwdev,
- 	if (rx_status->band != NL80211_BAND_6GHZ)
- 		return;
+diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
+index 092c9ac0d26d..6989b8a0dc6b 100644
+--- a/drivers/pci/hotplug/pnv_php.c
++++ b/drivers/pci/hotplug/pnv_php.c
+@@ -3,6 +3,7 @@
+  * PCI Hotplug Driver for PowerPC PowerNV platform.
+  *
+  * Copyright Gavin Shan, IBM Corporation 2016.
++ * Copyright (C) 2025 Raptor Engineering, LLC
+  */
  
-+	if (unlikely(!(rtwdev->chip->support_bands & BIT(NL80211_BAND_6GHZ)))) {
-+		rtw89_debug(rtwdev, RTW89_DBG_UNEXP, "invalid rx on unsupported 6 GHz\n");
-+		return;
+ #include <linux/libfdt.h>
+@@ -35,8 +36,10 @@ static void pnv_php_register(struct device_node *dn);
+ static void pnv_php_unregister_one(struct device_node *dn);
+ static void pnv_php_unregister(struct device_node *dn);
+ 
++static void pnv_php_enable_irq(struct pnv_php_slot *php_slot);
++
+ static void pnv_php_disable_irq(struct pnv_php_slot *php_slot,
+-				bool disable_device)
++				bool disable_device, bool disable_msi)
+ {
+ 	struct pci_dev *pdev = php_slot->pdev;
+ 	u16 ctrl;
+@@ -52,19 +55,15 @@ static void pnv_php_disable_irq(struct pnv_php_slot *php_slot,
+ 		php_slot->irq = 0;
+ 	}
+ 
+-	if (php_slot->wq) {
+-		destroy_workqueue(php_slot->wq);
+-		php_slot->wq = NULL;
+-	}
+-
+-	if (disable_device) {
++	if (disable_device || disable_msi) {
+ 		if (pdev->msix_enabled)
+ 			pci_disable_msix(pdev);
+ 		else if (pdev->msi_enabled)
+ 			pci_disable_msi(pdev);
++	}
+ 
++	if (disable_device)
+ 		pci_disable_device(pdev);
+-	}
+ }
+ 
+ static void pnv_php_free_slot(struct kref *kref)
+@@ -73,7 +72,8 @@ static void pnv_php_free_slot(struct kref *kref)
+ 					struct pnv_php_slot, kref);
+ 
+ 	WARN_ON(!list_empty(&php_slot->children));
+-	pnv_php_disable_irq(php_slot, false);
++	pnv_php_disable_irq(php_slot, false, false);
++	destroy_workqueue(php_slot->wq);
+ 	kfree(php_slot->name);
+ 	kfree(php_slot);
+ }
+@@ -560,8 +560,58 @@ static int pnv_php_reset_slot(struct hotplug_slot *slot, bool probe)
+ static int pnv_php_enable_slot(struct hotplug_slot *slot)
+ {
+ 	struct pnv_php_slot *php_slot = to_pnv_php_slot(slot);
++	u32 prop32;
++	int ret;
++
++	ret = pnv_php_enable(php_slot, true);
++	if (ret)
++		return ret;
++
++	/* (Re-)enable interrupt if the slot supports surprise hotplug */
++	ret = of_property_read_u32(php_slot->dn, "ibm,slot-surprise-pluggable",
++				   &prop32);
++	if (!ret && prop32)
++		pnv_php_enable_irq(php_slot);
+ 
+-	return pnv_php_enable(php_slot, true);
++	return 0;
++}
++
++/*
++ * Disable any hotplug interrupts for all slots on the provided bus, as well as
++ * all downstream slots in preparation for a hot unplug.
++ */
++static int pnv_php_disable_all_irqs(struct pci_bus *bus)
++{
++	struct pci_bus *child_bus;
++	struct pci_slot *slot;
++
++	/* First go down child buses */
++	list_for_each_entry(child_bus, &bus->children, node)
++		pnv_php_disable_all_irqs(child_bus);
++
++	/* Disable IRQs for all pnv_php slots on this bus */
++	list_for_each_entry(slot, &bus->slots, list) {
++		struct pnv_php_slot *php_slot = to_pnv_php_slot(slot->hotplug);
++
++		pnv_php_disable_irq(php_slot, false, true);
 +	}
 +
- 	ssid_ie = cfg80211_find_ie(WLAN_EID_SSID, ies, skb->len);
++	return 0;
++}
++
++/*
++ * Disable any hotplug interrupts for all downstream slots on the provided
++ * bus in preparation for a hot unplug.
++ */
++static int pnv_php_disable_all_downstream_irqs(struct pci_bus *bus)
++{
++	struct pci_bus *child_bus;
++
++	/* Go down child buses, recursively deactivating their IRQs */
++	list_for_each_entry(child_bus, &bus->children, node)
++		pnv_php_disable_all_irqs(child_bus);
++
++	return 0;
+ }
  
- 	list_for_each_entry(info, &pkt_list[NL80211_BAND_6GHZ], list) {
+ static int pnv_php_disable_slot(struct hotplug_slot *slot)
+@@ -578,6 +628,13 @@ static int pnv_php_disable_slot(struct hotplug_slot *slot)
+ 	    php_slot->state != PNV_PHP_STATE_REGISTERED)
+ 		return 0;
+ 
++	/*
++	 * Free all IRQ resources from all child slots before remove.
++	 * Note that we do not disable the root slot IRQ here as that
++	 * would also deactivate the slot hot (re)plug interrupt!
++	 */
++	pnv_php_disable_all_downstream_irqs(php_slot->bus);
++
+ 	/* Remove all devices behind the slot */
+ 	pci_lock_rescan_remove();
+ 	pci_hp_remove_devices(php_slot->bus);
+@@ -646,6 +703,15 @@ static struct pnv_php_slot *pnv_php_alloc_slot(struct device_node *dn)
+ 		return NULL;
+ 	}
+ 
++	/* Allocate workqueue for this slot's interrupt handling */
++	php_slot->wq = alloc_workqueue("pciehp-%s", 0, 0, php_slot->name);
++	if (!php_slot->wq) {
++		SLOT_WARN(php_slot, "Cannot alloc workqueue\n");
++		kfree(php_slot->name);
++		kfree(php_slot);
++		return NULL;
++	}
++
+ 	if (dn->child && PCI_DN(dn->child))
+ 		php_slot->slot_no = PCI_SLOT(PCI_DN(dn->child)->devfn);
+ 	else
+@@ -842,14 +908,6 @@ static void pnv_php_init_irq(struct pnv_php_slot *php_slot, int irq)
+ 	u16 sts, ctrl;
+ 	int ret;
+ 
+-	/* Allocate workqueue */
+-	php_slot->wq = alloc_workqueue("pciehp-%s", 0, 0, php_slot->name);
+-	if (!php_slot->wq) {
+-		SLOT_WARN(php_slot, "Cannot alloc workqueue\n");
+-		pnv_php_disable_irq(php_slot, true);
+-		return;
+-	}
+-
+ 	/* Check PDC (Presence Detection Change) is broken or not */
+ 	ret = of_property_read_u32(php_slot->dn, "ibm,slot-broken-pdc",
+ 				   &broken_pdc);
+@@ -868,7 +926,7 @@ static void pnv_php_init_irq(struct pnv_php_slot *php_slot, int irq)
+ 	ret = request_irq(irq, pnv_php_interrupt, IRQF_SHARED,
+ 			  php_slot->name, php_slot);
+ 	if (ret) {
+-		pnv_php_disable_irq(php_slot, true);
++		pnv_php_disable_irq(php_slot, true, true);
+ 		SLOT_WARN(php_slot, "Error %d enabling IRQ %d\n", ret, irq);
+ 		return;
+ 	}
 -- 
 2.39.5
 
