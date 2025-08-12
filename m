@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDC026FA77;
-	Tue, 12 Aug 2025 19:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A3E21C187;
+	Tue, 12 Aug 2025 19:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025891; cv=none; b=GUf/NzwmaBF98QU6IctAeb3xoMI153XKlAmTiCuKrTNsuw3hKBgqk+G3zPrcnrzXH2N/vwAFKzIHLxMVTknT53XoqsHDgjg/LG6ZHOAIxvrJBNV1Bhil+9aHklnCn4hfR6k9gypb7kGNvy/9K1LxCn9oMkV60rnDfIyaO0dAAUU=
+	t=1755025893; cv=none; b=VyJsvovK3MAZdxscIMo5xlCWOGxwQBaPE/vSSVilH1II1JOVlgbZUznxPx1yeaeDAidOLak0su4seo8Bb1VpwLoH5+To9Q8WiDTZuVUX/ZW9vs8CyzQgGA6SCeXCIDK3kaq7wgSwLsd/fqDrQMSvY5oFElZNcCXthPMclvY/OWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025891; c=relaxed/simple;
-	bh=OtAcdKSpAUYbIAlvgxSK7RKBP0JGIs/5wXLzT7c56Ls=;
+	s=arc-20240116; t=1755025893; c=relaxed/simple;
+	bh=f6Wsq8LsDVCg62ORFeYJ/RPWQoInRzX7f28La8RX6K0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdnfCCKGm2GKLBS2YGFIny9ppJlU9abas9+rwp8PIL/UDKAgjlALOvPsNp2tmrJ1Q2o6ZKh0WJxVYNdhtQ15EvtqDnnQ4a8IhasJtipzXF+jKDwNHH1GaWNzTGXTqTt8zU3J+LBAU2Fk2BR7zeR7JmfYpaXn+6XS1IkL47ntzn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHiLGrYv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g3Vmm2EmTsgpIv3KqzKXJCbeNXRradX1w4OnI3dIFextko29F2PAmOBXYl/jRA5vs3MWSmQdqNq1LArNpXpyzxe0fxDBDeamT7AKothOxyP+zR/CE4hsD7IbIoqHkw9GelcBzsjoY3e2g4wePUeNUp6yovP1jCzjWIhdwkFhaUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BakRqQ1B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHiLGrYv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16952C4CEF0;
-	Tue, 12 Aug 2025 19:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BakRqQ1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FA9C4CEF0;
+	Tue, 12 Aug 2025 19:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025889;
-	bh=OtAcdKSpAUYbIAlvgxSK7RKBP0JGIs/5wXLzT7c56Ls=;
+	s=korg; t=1755025892;
+	bh=f6Wsq8LsDVCg62ORFeYJ/RPWQoInRzX7f28La8RX6K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHiLGrYv3mIapCZQbyYOdHqEaKyJfI4iNJyROGw6c9gWfNUIFwt0unVelpyhXsa95
-	 XgiW5XQFda7WtLBiLEQZyGoCyEc9Vw7NMvJ/5UWDA+wBjcVk3mEsV44b9jiSTiDe5s
-	 h3EEWWxMdQAEpKcFpfk8YbPZS1sJOTlPILJM2CJQ=
+	b=BakRqQ1BdSMpCS+oaSx+Wes0FnKNOePBhhA0VVZ21e+PVt3hVH2wORjxm1DfPa/n0
+	 6rsX/NY3AFV3Jb8SA7h0fxVU92Qk6fiX4VwyYPAtL/5FVMbTtSsKMSY6cmYQLPNd3Q
+	 nJGnkH/4Spi3ntqpvZ/bF6YbpXVxi8dwMq/f5Pbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f73f203f8c9b19037380@syzkaller.appspotmail.com,
-	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
+	Murad Masimov <m.masimov@mt-integration.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 174/480] wifi: mac80211: reject TDLS operations when station is not associated
-Date: Tue, 12 Aug 2025 19:46:22 +0200
-Message-ID: <20250812174404.687881926@linuxfoundation.org>
+Subject: [PATCH 6.15 175/480] wifi: plfxlc: Fix error handling in usb driver probe
+Date: Tue, 12 Aug 2025 19:46:23 +0200
+Message-ID: <20250812174404.736601084@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,44 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 16ecdab5446f15a61ec88eb0d23d25d009821db0 ]
+[ Upstream commit 3fe79a25c3cd54d25d30bc235c0c57f8a123d9d5 ]
 
-syzbot triggered a WARN in ieee80211_tdls_oper() by sending
-NL80211_TDLS_ENABLE_LINK immediately after NL80211_CMD_CONNECT,
-before association completed and without prior TDLS setup.
+If probe fails before ieee80211_register_hw() is successfully done,
+ieee80211_unregister_hw() will be called anyway. This may lead to various
+bugs as the implementation of ieee80211_unregister_hw() assumes that
+ieee80211_register_hw() has been called.
 
-This left internal state like sdata->u.mgd.tdls_peer uninitialized,
-leading to a WARN_ON() in code paths that assumed it was valid.
+Divide error handling section into relevant subsections, so that
+ieee80211_unregister_hw() is called only when it is appropriate. Correct
+the order of the calls: ieee80211_unregister_hw() should go before
+plfxlc_mac_release(). Also move ieee80211_free_hw() to plfxlc_mac_release()
+as it supposed to be the opposite to plfxlc_mac_alloc_hw() that calls
+ieee80211_alloc_hw().
 
-Reject the operation early if not in station mode or not associated.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Reported-by: syzbot+f73f203f8c9b19037380@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f73f203f8c9b19037380
-Fixes: 81dd2b882241 ("mac80211: move TDLS data to mgd private part")
-Tested-by: syzbot+f73f203f8c9b19037380@syzkaller.appspotmail.com
-Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
-Link: https://patch.msgid.link/20250715230904.661092-2-moonhee.lee.ca@gmail.com
+Fixes: 68d57a07bfe5 ("wireless: add plfxlc driver for pureLiFi X, XL, XC devices")
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Link: https://patch.msgid.link/20250321185226.71-3-m.masimov@mt-integration.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tdls.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/purelifi/plfxlc/mac.c | 11 ++++----
+ drivers/net/wireless/purelifi/plfxlc/mac.h |  2 +-
+ drivers/net/wireless/purelifi/plfxlc/usb.c | 29 +++++++++++-----------
+ 3 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
-index 2f92e7c7f203..49c92c5d3909 100644
---- a/net/mac80211/tdls.c
-+++ b/net/mac80211/tdls.c
-@@ -1422,7 +1422,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
- 	if (!(wiphy->flags & WIPHY_FLAG_SUPPORTS_TDLS))
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/wireless/purelifi/plfxlc/mac.c b/drivers/net/wireless/purelifi/plfxlc/mac.c
+index 82d1bf7edba2..a7f5d287e369 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/mac.c
++++ b/drivers/net/wireless/purelifi/plfxlc/mac.c
+@@ -99,11 +99,6 @@ int plfxlc_mac_init_hw(struct ieee80211_hw *hw)
+ 	return r;
+ }
  
--	if (sdata->vif.type != NL80211_IFTYPE_STATION)
-+	if (sdata->vif.type != NL80211_IFTYPE_STATION || !sdata->vif.cfg.assoc)
- 		return -EINVAL;
+-void plfxlc_mac_release(struct plfxlc_mac *mac)
+-{
+-	plfxlc_chip_release(&mac->chip);
+-}
+-
+ int plfxlc_op_start(struct ieee80211_hw *hw)
+ {
+ 	plfxlc_hw_mac(hw)->chip.usb.initialized = 1;
+@@ -755,3 +750,9 @@ struct ieee80211_hw *plfxlc_mac_alloc_hw(struct usb_interface *intf)
+ 	SET_IEEE80211_DEV(hw, &intf->dev);
+ 	return hw;
+ }
++
++void plfxlc_mac_release_hw(struct ieee80211_hw *hw)
++{
++	plfxlc_chip_release(&plfxlc_hw_mac(hw)->chip);
++	ieee80211_free_hw(hw);
++}
+diff --git a/drivers/net/wireless/purelifi/plfxlc/mac.h b/drivers/net/wireless/purelifi/plfxlc/mac.h
+index 9384acddcf26..56da502999c1 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/mac.h
++++ b/drivers/net/wireless/purelifi/plfxlc/mac.h
+@@ -168,7 +168,7 @@ static inline u8 *plfxlc_mac_get_perm_addr(struct plfxlc_mac *mac)
+ }
  
- 	switch (oper) {
+ struct ieee80211_hw *plfxlc_mac_alloc_hw(struct usb_interface *intf);
+-void plfxlc_mac_release(struct plfxlc_mac *mac);
++void plfxlc_mac_release_hw(struct ieee80211_hw *hw);
+ 
+ int plfxlc_mac_preinit_hw(struct ieee80211_hw *hw, const u8 *hw_address);
+ int plfxlc_mac_init_hw(struct ieee80211_hw *hw);
+diff --git a/drivers/net/wireless/purelifi/plfxlc/usb.c b/drivers/net/wireless/purelifi/plfxlc/usb.c
+index c2a1234b59db..0817506021c3 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/usb.c
++++ b/drivers/net/wireless/purelifi/plfxlc/usb.c
+@@ -604,7 +604,7 @@ static int probe(struct usb_interface *intf,
+ 	r = plfxlc_upload_mac_and_serial(intf, hw_address, serial_number);
+ 	if (r) {
+ 		dev_err(&intf->dev, "MAC and Serial upload failed (%d)\n", r);
+-		goto error;
++		goto error_free_hw;
+ 	}
+ 
+ 	chip->unit_type = STA;
+@@ -613,13 +613,13 @@ static int probe(struct usb_interface *intf,
+ 	r = plfxlc_mac_preinit_hw(hw, hw_address);
+ 	if (r) {
+ 		dev_err(&intf->dev, "Init mac failed (%d)\n", r);
+-		goto error;
++		goto error_free_hw;
+ 	}
+ 
+ 	r = ieee80211_register_hw(hw);
+ 	if (r) {
+ 		dev_err(&intf->dev, "Register device failed (%d)\n", r);
+-		goto error;
++		goto error_free_hw;
+ 	}
+ 
+ 	if ((le16_to_cpu(interface_to_usbdev(intf)->descriptor.idVendor) ==
+@@ -632,7 +632,7 @@ static int probe(struct usb_interface *intf,
+ 	}
+ 	if (r != 0) {
+ 		dev_err(&intf->dev, "FPGA download failed (%d)\n", r);
+-		goto error;
++		goto error_unreg_hw;
+ 	}
+ 
+ 	tx->mac_fifo_full = 0;
+@@ -642,21 +642,21 @@ static int probe(struct usb_interface *intf,
+ 	r = plfxlc_usb_init_hw(usb);
+ 	if (r < 0) {
+ 		dev_err(&intf->dev, "usb_init_hw failed (%d)\n", r);
+-		goto error;
++		goto error_unreg_hw;
+ 	}
+ 
+ 	msleep(PLF_MSLEEP_TIME);
+ 	r = plfxlc_chip_switch_radio(chip, PLFXLC_RADIO_ON);
+ 	if (r < 0) {
+ 		dev_dbg(&intf->dev, "chip_switch_radio_on failed (%d)\n", r);
+-		goto error;
++		goto error_unreg_hw;
+ 	}
+ 
+ 	msleep(PLF_MSLEEP_TIME);
+ 	r = plfxlc_chip_set_rate(chip, 8);
+ 	if (r < 0) {
+ 		dev_dbg(&intf->dev, "chip_set_rate failed (%d)\n", r);
+-		goto error;
++		goto error_unreg_hw;
+ 	}
+ 
+ 	msleep(PLF_MSLEEP_TIME);
+@@ -664,7 +664,7 @@ static int probe(struct usb_interface *intf,
+ 			    hw_address, ETH_ALEN, USB_REQ_MAC_WR);
+ 	if (r < 0) {
+ 		dev_dbg(&intf->dev, "MAC_WR failure (%d)\n", r);
+-		goto error;
++		goto error_unreg_hw;
+ 	}
+ 
+ 	plfxlc_chip_enable_rxtx(chip);
+@@ -691,12 +691,12 @@ static int probe(struct usb_interface *intf,
+ 	plfxlc_mac_init_hw(hw);
+ 	usb->initialized = true;
+ 	return 0;
++
++error_unreg_hw:
++	ieee80211_unregister_hw(hw);
++error_free_hw:
++	plfxlc_mac_release_hw(hw);
+ error:
+-	if (hw) {
+-		plfxlc_mac_release(plfxlc_hw_mac(hw));
+-		ieee80211_unregister_hw(hw);
+-		ieee80211_free_hw(hw);
+-	}
+ 	dev_err(&intf->dev, "pureLifi:Device error");
+ 	return r;
+ }
+@@ -730,8 +730,7 @@ static void disconnect(struct usb_interface *intf)
+ 	 */
+ 	usb_reset_device(interface_to_usbdev(intf));
+ 
+-	plfxlc_mac_release(mac);
+-	ieee80211_free_hw(hw);
++	plfxlc_mac_release_hw(hw);
+ }
+ 
+ static void plfxlc_usb_resume(struct plfxlc_usb *usb)
 -- 
 2.39.5
 
