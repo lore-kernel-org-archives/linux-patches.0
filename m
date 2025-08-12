@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE882FE598;
-	Tue, 12 Aug 2025 18:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5D91FF7C5;
+	Tue, 12 Aug 2025 18:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025099; cv=none; b=HPH9sPCKfTD/2W5BiZUMoIrlWwhrKBNX3EqkfZ1W4j+U/fFX2mqpIZMfDMMewvBMvA1vq7EPnwAwZn97/Q4PIcwcMQnzJBXUc3sqcMII4zRr8XnbLfeTgyNDiwWs/jWHCsa5LMgpm0O5U6dKYoQdetFfQMNXtjkWCEEYpRVZpKY=
+	t=1755025103; cv=none; b=EOLr80G8QKKO5xS/FhFkODSEBZ9T9u20Y48vbACK1kEWHMiA/plcQGqVf9eY0ZYZduptDP2xwY9FHbrQTfzGJc2/mVimCGx5RUalwRenJwo/74Nkd7d/nEnn4s936DRkO/BorlOibfFvxrPWGhvnM8dLKPPOYUCxUyOJzRCdnSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025099; c=relaxed/simple;
-	bh=C7EmWK4JZbY66OWGnGx9HNRcJDXezGcE6e4CDlHpvQ0=;
+	s=arc-20240116; t=1755025103; c=relaxed/simple;
+	bh=+WXs7DLA+QnvD1MyyAMGpsgdwcnOMpMTvzii0ODFcCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+HjtZWNxgKVR1c7cTb0nM7UGe4kAgyyCoIKOyCbm2RtDqS4Mwo2hVS5yU8i9I0RerO/fh4ILVU1fw7CMeiPlKdkYCf7hP0uNI/yK0gMEXenWOaAmFT7uQjasLqB+3NDRm1lvcsezgZpCP45datq+f+/LJWsR0gQOzja9tZv0oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAepaCXI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzW+Uqilhcb7Hgn+Iw9yHku2/0XHaGUbJtiMKQDV8ZMnIKMZ8eGoeAspSR2fbU0XKLhzp8snw6BSe/VHV4gnuey94NMIGS3OlPqqK69OiMu6TQ0ynbKM4mYCsPlJqDXGl5kch4JMAzPApJ53NZAU4Au2oiPcO0y++29G/LZjMWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzF84snI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAepaCXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA879C4CEF0;
-	Tue, 12 Aug 2025 18:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzF84snI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E678AC4CEF0;
+	Tue, 12 Aug 2025 18:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025099;
-	bh=C7EmWK4JZbY66OWGnGx9HNRcJDXezGcE6e4CDlHpvQ0=;
+	s=korg; t=1755025103;
+	bh=+WXs7DLA+QnvD1MyyAMGpsgdwcnOMpMTvzii0ODFcCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAepaCXI1vnLhf6tpwdJpmClukYCUXh6VFregyXFMigFqiaDksnhWfPzsz73SwCEm
-	 l0Jkl48fdkh93/eGl9h8jZSy5Nh+7/EfZfseX0h4h8MZ3OM2PkaET2Un75MiYHug5q
-	 G92IXumPh3xKKiLZ347XPz8EG5NILsvqubRZexIk=
+	b=fzF84snIZ0FmwFnvHypzjJD159NDkWfEaZOCopqAVLzatDLV68yR6mMNLhjBqRUZd
+	 c8FMGd7VT4usal1CdAUHt+HW1+T75BAJXwfChhvGdUtAKnZ2B2fFirNgU1s0OzPALA
+	 3mmSLLYuQNmOQKf1VT4hKkIF4EdYBqHPWtRRg4h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 570/627] smb: client: return an error if rdma_connect does not return within 5 seconds
-Date: Tue, 12 Aug 2025 19:34:25 +0200
-Message-ID: <20250812173453.565501067@linuxfoundation.org>
+Subject: [PATCH 6.16 571/627] tools/power turbostat: Fix bogus SysWatt for forked program
+Date: Tue, 12 Aug 2025 19:34:26 +0200
+Message-ID: <20250812173453.603343380@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -56,42 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 03537826f77f1c829d0593d211b38b9c876c1722 ]
+[ Upstream commit 44207567fa64e995d4f2ec2d45af4c947cb1a465 ]
 
-This matches the timeout for tcp connections.
+Similar to delta_cpu(), delta_platform() is called in turbostat main
+loop. This ensures accurate SysWatt readings in periodic monitoring mode
+$ sudo turbostat -S -q --show power -i 1
+CoreTmp	PkgTmp	PkgWatt	CorWatt	GFXWatt	RAMWatt	PKG_%	RAM_%	SysWatt
+60	61	6.21	1.13	0.16	0.00	0.00	0.00	13.07
+58	61	6.00	1.07	0.18	0.00	0.00	0.00	12.75
+58	61	5.74	1.05	0.17	0.00	0.00	0.00	12.22
+58	60	6.27	1.11	0.24	0.00	0.00	0.00	13.55
 
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+However, delta_platform() is missing for forked program and causes bogus
+SysWatt reporting,
+$ sudo turbostat -S -q --show power sleep 1
+1.004736 sec
+CoreTmp	PkgTmp	PkgWatt	CorWatt	GFXWatt	RAMWatt	PKG_%	RAM_%	SysWatt
+57	58	6.05	1.02	0.16	0.00	0.00	0.00	0.03
+
+Add missing delta_platform() for forked program.
+
+Fixes: e5f687b89bc2 ("tools/power turbostat: Add RAPL psys as a built-in counter")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index 47f2a6cc1c0c..60b160219f0a 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -1636,8 +1636,10 @@ static struct smbd_connection *_smbd_get_connection(
- 		goto rdma_connect_failed;
- 	}
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 33a54a9e0781..d56d457d6d93 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -9816,6 +9816,7 @@ int fork_it(char **argv)
+ 	timersub(&tv_odd, &tv_even, &tv_delta);
+ 	if (for_all_cpus_2(delta_cpu, ODD_COUNTERS, EVEN_COUNTERS))
+ 		fprintf(outf, "%s: Counter reset detected\n", progname);
++	delta_platform(&platform_counters_odd, &platform_counters_even);
  
--	wait_event_interruptible(
--		info->conn_wait, sc->status != SMBDIRECT_SOCKET_CONNECTING);
-+	wait_event_interruptible_timeout(
-+		info->conn_wait,
-+		sc->status != SMBDIRECT_SOCKET_CONNECTING,
-+		msecs_to_jiffies(RDMA_RESOLVE_TIMEOUT));
- 
- 	if (sc->status != SMBDIRECT_SOCKET_CONNECTED) {
- 		log_rdma_event(ERR, "rdma_connect failed port=%d\n", port);
+ 	compute_average(EVEN_COUNTERS);
+ 	format_all_counters(EVEN_COUNTERS);
 -- 
 2.39.5
 
