@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04232F7449;
-	Tue, 12 Aug 2025 17:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EF02FA0DB;
+	Tue, 12 Aug 2025 17:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021379; cv=none; b=kTSRI8SBQ/1Q1KcIbZcVWNFT3yhrEaOUFyU9p0jDqWpwXulJSR/NIz//StE8jP3UOwhR2tx8zYDuAVgUsJ6UCSpFkvPjCINE4bC8iwNsGIb5jaLsqVB2ulWrUPmQx1t3J/nr0qOPDWdbCJ3avvmiMx/XA844tg/32rsm5fZcvR8=
+	t=1755021382; cv=none; b=SrqR/JAy5V62+EXPJZk+vdYcA5J1RJca1dKLm/ooZKUw3/wZ5JssL8HKdImAmaW8q7He0TOYLlF0T2AzpSWyATwzXVBbIua6egNU51aL8f4WuSDZbr+bKLEqQOG8X5XXOlH/osPWkEoQXM0y2Y2UEpxCp8oTeKe9LDCqm8O5v2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021379; c=relaxed/simple;
-	bh=HEYn81TXKMwdc8ujPBrjJmuqMPEhF/k+0c5Gh5dC2LY=;
+	s=arc-20240116; t=1755021382; c=relaxed/simple;
+	bh=hAoaE51QVvkP1dwlt+TZqi0sYCNixNX+G4xol3MbWAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d6Z8yw7tyjowReUxuzpIgxkLs2qwI3unMFX/JDrK219AWKds9+VjTX37J7CscmGBMpb2CeJGgMPZSW7KllAWrum2Yh+NMi0foqImhtIlA18ww8h1f0Tqa/WaYptHejfrOZW4IUVvtp2U+f1mi0uFRgjHVdnc6/oFtK3nl9Ogkz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJqtJYCv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oELIGwJt50K4O4NwnBP/98DclSZtSeJGwnEtFt8DsdMHOllojPq1fOCj4p207VTpVNIM6gulcnzS185Q9hOG33b0r28MZlc4X0PJJ1fH9wfvk0SJVdB0Zw/y0S0xL01cRBxJ4FcLqGR2Z23DWcSouA9Y0g8Mk5PPgzsZEoreZc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mx31Cy84; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJqtJYCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06C9C4CEF0;
-	Tue, 12 Aug 2025 17:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mx31Cy84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D04C4CEF0;
+	Tue, 12 Aug 2025 17:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021379;
-	bh=HEYn81TXKMwdc8ujPBrjJmuqMPEhF/k+0c5Gh5dC2LY=;
+	s=korg; t=1755021382;
+	bh=hAoaE51QVvkP1dwlt+TZqi0sYCNixNX+G4xol3MbWAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJqtJYCvBfIVjMdYQ8Yide4Tbkw2IWOyzAhkynCXrMP4hVoXiOddFzx+GJEzoJnzU
-	 vrBJqiDjGbcjLeZP4QSDMYKQhS42Q0GdKccKSfxc1AicMRgvK0jcAolZwaTewRWGqO
-	 WmofslzztDT9w1nJChBRZgElBbhUenroj2Fz3oHI=
+	b=mx31Cy84bd9cW16YDbbw5rioFhNXbkay40xgvJAgWtBvJmOcnzm95/M3AmW6onECe
+	 JSy45a/+QBiGoxNVcuu/N8EiEbPHFeE5sMvtiI9o3uaX4KGpu9R4TfLrR+jjzqNDGz
+	 +ecOUOQNlIeNeazZyRYuE15CT3r3Nkvjoi8A2KHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tianshuo han <hantianshuo233@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 242/253] ksmbd: limit repeated connections from clients with the same IP
-Date: Tue, 12 Aug 2025 19:30:30 +0200
-Message-ID: <20250812172959.151334099@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 105/262] ipv6: annotate data-races around rt->fib6_nsiblings
+Date: Tue, 12 Aug 2025 19:28:13 +0200
+Message-ID: <20250812172957.562134140@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +47,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit e6bb9193974059ddbb0ce7763fa3882bd60d4dc3 upstream.
+[ Upstream commit 31d7d67ba1274f42494256d52e86da80ed09f3cb ]
 
-Repeated connections from clients with the same IP address may exhaust
-the max connections and prevent other normal client connections.
-This patch limit repeated connections from clients with the same IP.
+rt->fib6_nsiblings can be read locklessly, add corresponding
+READ_ONCE() and WRITE_ONCE() annotations.
 
-Reported-by: tianshuo han <hantianshuo233@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 66f5d6ce53e6 ("ipv6: replace rwlock with rcu and spinlock in fib6_table")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250725140725.3626540-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.h    |    1 +
- fs/smb/server/transport_tcp.c |   17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
+ net/ipv6/ip6_fib.c | 20 +++++++++++++-------
+ net/ipv6/route.c   |  5 +++--
+ 2 files changed, 16 insertions(+), 9 deletions(-)
 
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -45,6 +45,7 @@ struct ksmbd_conn {
- 	struct mutex			srv_mutex;
- 	int				status;
- 	unsigned int			cli_cap;
-+	__be32				inet_addr;
- 	char				*request_buf;
- 	struct ksmbd_transport		*transport;
- 	struct nls_table		*local_nls;
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -87,6 +87,7 @@ static struct tcp_transport *alloc_trans
- 		return NULL;
- 	}
- 
-+	conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
- 	conn->transport = KSMBD_TRANS(t);
- 	KSMBD_TRANS(t)->conn = conn;
- 	KSMBD_TRANS(t)->ops = &ksmbd_tcp_transport_ops;
-@@ -226,6 +227,8 @@ static int ksmbd_kthread_fn(void *p)
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 65702bddb21f..c44136cbbaa1 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -437,15 +437,17 @@ struct fib6_dump_arg {
+ static int fib6_rt_dump(struct fib6_info *rt, struct fib6_dump_arg *arg)
  {
- 	struct socket *client_sk = NULL;
- 	struct interface *iface = (struct interface *)p;
-+	struct inet_sock *csk_inet;
-+	struct ksmbd_conn *conn;
- 	int ret;
+ 	enum fib_event_type fib_event = FIB_EVENT_ENTRY_REPLACE;
++	unsigned int nsiblings;
+ 	int err;
  
- 	while (!kthread_should_stop()) {
-@@ -244,6 +247,20 @@ static int ksmbd_kthread_fn(void *p)
- 			continue;
+ 	if (!rt || rt == arg->net->ipv6.fib6_null_entry)
+ 		return 0;
+ 
+-	if (rt->fib6_nsiblings)
++	nsiblings = READ_ONCE(rt->fib6_nsiblings);
++	if (nsiblings)
+ 		err = call_fib6_multipath_entry_notifier(arg->nb, fib_event,
+ 							 rt,
+-							 rt->fib6_nsiblings,
++							 nsiblings,
+ 							 arg->extack);
+ 	else
+ 		err = call_fib6_entry_notifier(arg->nb, fib_event, rt,
+@@ -1118,7 +1120,7 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
+ 
+ 			if (rt6_duplicate_nexthop(iter, rt)) {
+ 				if (rt->fib6_nsiblings)
+-					rt->fib6_nsiblings = 0;
++					WRITE_ONCE(rt->fib6_nsiblings, 0);
+ 				if (!(iter->fib6_flags & RTF_EXPIRES))
+ 					return -EEXIST;
+ 				if (!(rt->fib6_flags & RTF_EXPIRES))
+@@ -1144,7 +1146,8 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
+ 			 */
+ 			if (rt_can_ecmp &&
+ 			    rt6_qualify_for_ecmp(iter))
+-				rt->fib6_nsiblings++;
++				WRITE_ONCE(rt->fib6_nsiblings,
++					   rt->fib6_nsiblings + 1);
  		}
  
-+		/*
-+		 * Limits repeated connections from clients with the same IP.
-+		 */
-+		csk_inet = inet_sk(client_sk->sk);
-+		down_read(&conn_list_lock);
-+		list_for_each_entry(conn, &conn_list, conns_list)
-+			if (csk_inet->inet_daddr == conn->inet_addr) {
-+				ret = -EAGAIN;
-+				break;
-+			}
-+		up_read(&conn_list_lock);
-+		if (ret == -EAGAIN)
-+			continue;
-+
- 		if (server_conf.max_connections &&
- 		    atomic_inc_return(&active_num_conn) >= server_conf.max_connections) {
- 			pr_info_ratelimited("Limit the maximum number of connections(%u)\n",
+ 		if (iter->fib6_metric > rt->fib6_metric)
+@@ -1194,7 +1197,8 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
+ 		fib6_nsiblings = 0;
+ 		list_for_each_entry_safe(sibling, temp_sibling,
+ 					 &rt->fib6_siblings, fib6_siblings) {
+-			sibling->fib6_nsiblings++;
++			WRITE_ONCE(sibling->fib6_nsiblings,
++				   sibling->fib6_nsiblings + 1);
+ 			BUG_ON(sibling->fib6_nsiblings != rt->fib6_nsiblings);
+ 			fib6_nsiblings++;
+ 		}
+@@ -1239,7 +1243,8 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
+ 				list_for_each_entry_safe(sibling, next_sibling,
+ 							 &rt->fib6_siblings,
+ 							 fib6_siblings)
+-					sibling->fib6_nsiblings--;
++					WRITE_ONCE(sibling->fib6_nsiblings,
++						   sibling->fib6_nsiblings - 1);
+ 				WRITE_ONCE(rt->fib6_nsiblings, 0);
+ 				list_del_rcu(&rt->fib6_siblings);
+ 				rt6_multipath_rebalance(next_sibling);
+@@ -1952,7 +1957,8 @@ static void fib6_del_route(struct fib6_table *table, struct fib6_node *fn,
+ 			notify_del = true;
+ 		list_for_each_entry_safe(sibling, next_sibling,
+ 					 &rt->fib6_siblings, fib6_siblings)
+-			sibling->fib6_nsiblings--;
++			WRITE_ONCE(sibling->fib6_nsiblings,
++				   sibling->fib6_nsiblings - 1);
+ 		WRITE_ONCE(rt->fib6_nsiblings, 0);
+ 		list_del_rcu(&rt->fib6_siblings);
+ 		rt6_multipath_rebalance(next_sibling);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index f180b7bc9f57..eb9e505f71f9 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -5230,7 +5230,8 @@ static void ip6_route_mpath_notify(struct fib6_info *rt,
+ 	 */
+ 	rcu_read_lock();
+ 
+-	if ((nlflags & NLM_F_APPEND) && rt_last && rt_last->fib6_nsiblings) {
++	if ((nlflags & NLM_F_APPEND) && rt_last &&
++	    READ_ONCE(rt_last->fib6_nsiblings)) {
+ 		rt = list_first_or_null_rcu(&rt_last->fib6_siblings,
+ 					    struct fib6_info,
+ 					    fib6_siblings);
+@@ -5763,7 +5764,7 @@ static int rt6_fill_node(struct net *net, struct sk_buff *skb,
+ 		if (dst->lwtstate &&
+ 		    lwtunnel_fill_encap(skb, dst->lwtstate, RTA_ENCAP, RTA_ENCAP_TYPE) < 0)
+ 			goto nla_put_failure;
+-	} else if (rt->fib6_nsiblings) {
++	} else if (READ_ONCE(rt->fib6_nsiblings)) {
+ 		struct fib6_info *sibling;
+ 		struct nlattr *mp;
+ 
+-- 
+2.39.5
+
 
 
