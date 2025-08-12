@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149641A3029;
-	Tue, 12 Aug 2025 19:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E88F27604E;
+	Tue, 12 Aug 2025 19:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025412; cv=none; b=s40008hoybsLzegltl0dOgJ6HYimz1DIBblJDcW+maSgvtTZ3O+NNgAqnzK6oMsD+28ULfAbrTIbrmZUYjkupb44f3124SRAyB4BF1C6nrgOb/VeumfxWj6i253H683gOYTgdiPjXWXbmljYMRUby4JjQgY0S1hAjvorOuQmNks=
+	t=1755025415; cv=none; b=sCR0sEInJgWGkO8WPEzPD8WBxEn7etRUjrbr21ikYq3yeGXb32uOYWYgYP0fVgFUOsobOnNURSJK61fu/5k9fatobLnDx77wBrATskZ/Oo4RFpG/cMDh6rqO08e0gX6w/3I50JQ/Ef5DfAgK3KDHxZIH7rw1nBwS54gU07tg1o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025412; c=relaxed/simple;
-	bh=Z4DC/ehNY3A79vbmUm7viPfoBbzBGZTVWTevpoLZDrM=;
+	s=arc-20240116; t=1755025415; c=relaxed/simple;
+	bh=K1ZKoF4zPud5y9hyxdSSTo3bHcGoxF2BVEt/+qGNLDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hS231NpNL9FuEx4HmVx0mv+JZwAJ5d1IJni/CX9OVphnD0Ea5ygk1KuJaBZnlqGEKbDlssgHtIC5exe9yE4FU0qX+bLfdehuhk6DqnDS6zJBMN8Lq6GoeQdE0Tzs6E+A0NPjmYPrqYvoSEC/QAsVc1JRRUCMDUxwsgV6bXzNdPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0AiZVbF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l0PGfnWt//vIyarhg63b2HO7y8maSBp3IgnzXzSXAMEo8M6hPL819IZ9efKxiU0mwp65dzd9X3AiIQ32xzu7G1xIGSce1Jx7PSH3VhkZjU1n5ZLXTcXuz0p5xl0xYZtpLL4+k+khWPagwpz1npv1xBqxJTCJWJI44n+ZSAqP1u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HN8sgNgH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0AiZVbF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779EEC4CEF0;
-	Tue, 12 Aug 2025 19:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HN8sgNgH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FD2C4CEF0;
+	Tue, 12 Aug 2025 19:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025412;
-	bh=Z4DC/ehNY3A79vbmUm7viPfoBbzBGZTVWTevpoLZDrM=;
+	s=korg; t=1755025415;
+	bh=K1ZKoF4zPud5y9hyxdSSTo3bHcGoxF2BVEt/+qGNLDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0AiZVbF2qOuwaAMiHC3n53yeR8R2KZ2D4fXcP54rsV2oNmaymd05fLy2qOnbNfe8
-	 WdJkUAVAYgoo5HDZdOscUG6F1iPjohDO8tGaSqHgwZobSL7+uYhBamG7+9EkQcwE4K
-	 uGws8v7dB2MGFcY4GekYomBBevA45/fWE1+2Ehho=
+	b=HN8sgNgH9bHG4SAghSnVABfIh7s7+4DOMk5SxHy88yTOVQaD5WfPg4T2uOJ3a5UAW
+	 KYfT9ILNWNpR8zUcec9ubOOq6vif7b7njNCpq4iOngfm2YZ6CrofdTazSWivYWYDsP
+	 +Qj9dK0C4Oirb5NWaJHLKeuuqtcDn+wCKYFe4FcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackie Dong <xy-jackie@139.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 006/480] ALSA: hda/realtek: Support mute LED for Yoga with ALC287
-Date: Tue, 12 Aug 2025 19:43:34 +0200
-Message-ID: <20250812174357.570319983@linuxfoundation.org>
+Subject: [PATCH 6.15 033/480] arm64: dts: freescale: imx93-tqma9352: Limit BUCK2 to 600mV
+Date: Tue, 12 Aug 2025 19:44:01 +0200
+Message-ID: <20250812174358.753402431@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,39 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackie Dong <xy-jackie@139.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 4722727373533b53489b66d3436b50ac156f23bf ]
+[ Upstream commit 696a4c325fad8af95da6a9d797766d1613831622 ]
 
-Support mute LED on keyboard for Lenovo Yoga series products with
-Realtek ALC287 chipset.
+TQMa9352 is only using LPDDR4X, so the BUCK2 regulator should be fixed
+at 600MV.
 
-Tested on Lenovo Slim Pro 7 14APH8.
-
-[ slight comment cleanup by tiwai ]
-
-Signed-off-by: Jackie Dong <xy-jackie@139.com>
-Link: https://patch.msgid.link/20250714094655.4657-1-xy-jackie@139.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: d2858e6bd36c ("arm64: dts: freescale: imx93-tqma9352: Add PMIC node")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Acked-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 3c93d2135717..bf36e84d260b 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7497,6 +7497,9 @@ static void alc287_fixup_yoga9_14iap7_bass_spk_pin(struct hda_codec *codec,
- 	};
- 	struct alc_spec *spec = codec->spec;
+diff --git a/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi b/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
+index 2cabdae24227..09385b058664 100644
+--- a/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: (GPL-2.0-or-later OR MIT)
+ /*
+- * Copyright (c) 2022 TQ-Systems GmbH <linux@ew.tq-group.com>,
++ * Copyright (c) 2022-2025 TQ-Systems GmbH <linux@ew.tq-group.com>,
+  * D-82229 Seefeld, Germany.
+  * Author: Markus Niebel
+  */
+@@ -110,11 +110,11 @@ buck1: BUCK1 {
+ 				regulator-ramp-delay = <3125>;
+ 			};
  
-+	/* Support Audio mute LED and Mic mute LED on keyboard */
-+	hda_fixup_ideapad_acpi(codec, fix, action);
-+
- 	switch (action) {
- 	case HDA_FIXUP_ACT_PRE_PROBE:
- 		snd_hda_apply_pincfgs(codec, pincfgs);
+-			/* V_DDRQ - 1.1 LPDDR4 or 0.6 LPDDR4X */
++			/* V_DDRQ - 0.6 V for LPDDR4X */
+ 			buck2: BUCK2 {
+ 				regulator-name = "BUCK2";
+ 				regulator-min-microvolt = <600000>;
+-				regulator-max-microvolt = <1100000>;
++				regulator-max-microvolt = <600000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 				regulator-ramp-delay = <3125>;
 -- 
 2.39.5
 
