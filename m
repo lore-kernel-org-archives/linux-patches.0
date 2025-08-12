@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07682F291B;
-	Tue, 12 Aug 2025 18:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB0C2FD1A4;
+	Tue, 12 Aug 2025 18:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024272; cv=none; b=knLgYI5QyZvqfu3sbVX4Wmfo5BVK5d2GhXyLDIJ3yBvi0X/79ub+00grqVq/ptV7sQdezZ1Tqx20A+KNP3yMxt0I0Qwnhqd9DpxT+0QLbUAAqo0zYMUXh91wY9VEwn3q1m7XLsmnHumRIB7L7ijCrvKHXT0qpXRSUJyFygo6Hg0=
+	t=1755024276; cv=none; b=aFNLm5p2JQLGxzxw4HcADUkJKqhO26NIaE4DNJS9cTIRqVKgNZ06O3y9pa0oG8CLmJljIPtswargptB7lxqn6KBHojuI3jugu1LDfDlX7sGv92m2mBlaLJEDY0Q7hqVrNHksk5WeCzYkYkf4bkML1SdTREs9Dk8y90PbyZf31Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024272; c=relaxed/simple;
-	bh=J+248NYXJceAyF5YHImgxbr2Q+WvC7wccB+Io6ZPKsA=;
+	s=arc-20240116; t=1755024276; c=relaxed/simple;
+	bh=8VkicDYJKB9IxIU9Wa573aeisnqQRQL3DOkEZfauy6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDX6cBKz7KwoMURkxQ0J6zW7+b9VRv8zodZh6ExmiQ7IVaNw0xHoOzfnn2vs2mFYdU1hq+fpDe9jmUWvvfB4RB5NOAgJqxSgClWmrmgRtX8tSFg44nmxNgusKV9Afsk0sBWnLUNfLqAYCCT21bv5M54577ZanS8Eeuo0I1B6cJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8pHuiFq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fuz6ItOrrTLjOAySqBzilQqSzsviCoz3PIRtoZfCaxHvLaTT6Xu/En05KnxsWktmxmYwrj53mW8RjJfkzq6vV4JoL/lvA0mJK5YtnAS2UowKt4auleM9PsS6+496MkAgMoUzJc+g5BupuxvmpufSO3Br+TVGvEmhi+NkZFeOeRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha9ZiGQ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8pHuiFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B60C4CEF0;
-	Tue, 12 Aug 2025 18:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha9ZiGQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B39C4CEF0;
+	Tue, 12 Aug 2025 18:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024272;
-	bh=J+248NYXJceAyF5YHImgxbr2Q+WvC7wccB+Io6ZPKsA=;
+	s=korg; t=1755024276;
+	bh=8VkicDYJKB9IxIU9Wa573aeisnqQRQL3DOkEZfauy6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n8pHuiFqaXoUmP6LDcGwGtouUPh8MGcwLgIpYoTHxjR8YoittqLOAVazuot5txtZC
-	 dlzD8hX1hB7El3xiiExNSqFn2zoL9eASfAS1xqN2WoWfj/W82JPwz02ug3W3DN1cmr
-	 hbm89sucvE9hHqHA2rLMKosaU04uE/ohdCZXPNGE=
+	b=ha9ZiGQ5IycSSVlCyWXcFkAaRsmJxocS6BtIn1Srd+z2MA98ahRE64o7xozWh8HMn
+	 2rORRuXvJZCEEA6FammgjDuqyNOiFj5qzyRB1uihkZT8Q54TtqAcLBTsa4D3+wKPr2
+	 mut3994Z8J9RPlbNLg7/UDoQSFAKlhTUlnFsvJ3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 325/627] crypto: qat - restore ASYM service support for GEN6 devices
-Date: Tue, 12 Aug 2025 19:30:20 +0200
-Message-ID: <20250812173431.658753749@linuxfoundation.org>
+Subject: [PATCH 6.16 326/627] PCI: endpoint: pci-epf-vntb: Return -ENOENT if pci_epc_get_next_free_bar() fails
+Date: Tue, 12 Aug 2025 19:30:21 +0200
+Message-ID: <20250812173431.695599599@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,47 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 4e55a929ff4d973206879a997a47a188353b3cd6 ]
+[ Upstream commit 7ea488cce73263231662e426639dd3e836537068 ]
 
-Support for asymmetric crypto services was not included in the qat_6xxx
-by explicitly setting the asymmetric capabilities to 0 to allow for
-additional testing.
+According the function documentation of epf_ntb_init_epc_bar(), the
+function should return an error code on error. However, it returns -1 when
+no BAR is available i.e., when pci_epc_get_next_free_bar() fails.
 
-Enable asymmetric crypto services on QAT GEN6 devices by setting the
-appropriate capability flags.
+Return -ENOENT instead.
 
-Fixes: 17fd7514ae68 ("crypto: qat - add qat_6xxx driver")
-Signed-off-by: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+[mani: changed err code to -ENOENT]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250603-pci-vntb-bar-mapping-v2-1-fc685a22ad28@baylibre.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c b/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c
-index 359a6447ccb8..185a7ab92b7b 100644
---- a/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c
-+++ b/drivers/crypto/intel/qat/qat_6xxx/adf_6xxx_hw_data.c
-@@ -627,7 +627,15 @@ static u32 get_accel_cap(struct adf_accel_dev *accel_dev)
- 		capabilities_sym &= ~ICP_ACCEL_CAPABILITIES_CIPHER;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index e4da3fdb0007..30c6c563335a 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -680,7 +680,7 @@ static int epf_ntb_init_epc_bar(struct epf_ntb *ntb)
+ 		barno = pci_epc_get_next_free_bar(epc_features, barno);
+ 		if (barno < 0) {
+ 			dev_err(dev, "Fail to get NTB function BAR\n");
+-			return barno;
++			return -ENOENT;
+ 		}
+ 		ntb->epf_ntb_bar[bar] = barno;
  	}
- 
--	capabilities_asym = 0;
-+	capabilities_asym = ICP_ACCEL_CAPABILITIES_CRYPTO_ASYMMETRIC |
-+			    ICP_ACCEL_CAPABILITIES_SM2 |
-+			    ICP_ACCEL_CAPABILITIES_ECEDMONT;
-+
-+	if (fusectl1 & ICP_ACCEL_GEN6_MASK_PKE_SLICE) {
-+		capabilities_asym &= ~ICP_ACCEL_CAPABILITIES_CRYPTO_ASYMMETRIC;
-+		capabilities_asym &= ~ICP_ACCEL_CAPABILITIES_SM2;
-+		capabilities_asym &= ~ICP_ACCEL_CAPABILITIES_ECEDMONT;
-+	}
- 
- 	capabilities_dc = ICP_ACCEL_CAPABILITIES_COMPRESSION |
- 			  ICP_ACCEL_CAPABILITIES_LZ4_COMPRESSION |
 -- 
 2.39.5
 
