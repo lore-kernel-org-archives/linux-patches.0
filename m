@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541C2221FAC;
-	Tue, 12 Aug 2025 17:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4E3279915;
+	Tue, 12 Aug 2025 17:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020890; cv=none; b=YsoXetZCgpENX8V5UNwpxqfRVMiy6oGCu082qOzwbD+g/IXU3LGeecEN4lmSXPpImOv/HyBsP2GhvJe6e2gEX4TjFJ7BkVi1jyJM+tcmL4XW8JOl6z1dxeZSLpl303GNw/jftu3I1kuY+3qNdlF1oVIcf9FBwG+SzCFtS7BpHYQ=
+	t=1755020893; cv=none; b=Esvn45QIX3nHAy6CoeP9bPbKRlUTIwQLCMI7radrFc9rrmxuBHSWKmkqcfPEa7P78JAE4028Loqf/BiQgyre1j7sMrB3LNi2eNr1y+FjcMR2m9bbT90f3dbCB4/oaMvkaxgz9k3d6FrN4wcxKtEH6pMipSkPd+hXu4DaPDGJaUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020890; c=relaxed/simple;
-	bh=706zFCHp6GqadvBEmRjVvqz4EcOIrgr2BYMBrHhV8BE=;
+	s=arc-20240116; t=1755020893; c=relaxed/simple;
+	bh=86Dc9U1LbpP4oHafup10qy9NzGaV0kWCvLGkThqkiBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEQN8EH1m7B3HnnV9kt9MwkAQcUqMSaQ6ZewO2BLRPMaQhtrZhNJ2w1bl5GwJ4sSbCTy32EDnMr3MiB7wi3e6eUEamq8fIu6vYoxeg17F0wV+2AHJhIWVaN7XsRWDiYzA7hSpCIYVKvYJMRF0KeRF3JGXioZNNfW0RKMLd5jfWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhVx2Tk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YdLSGUSmmiOLrnf/ypWSHubqtF4D8wslXr7B//W66Patc4bf9YG6H42ZN8Kpemsmq6lAwF6YsuSL7ff9IdIVyxyIzddLS40590STWPO/J6Q+azsCTsPl03tLtDjpg75llsGaw+KX3L/qbSy9qEpIQHpmI2tVDvmedfzpuCbmySo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1pvkLbe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhVx2Tk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A04C4CEF0;
-	Tue, 12 Aug 2025 17:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1pvkLbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3855CC4CEF0;
+	Tue, 12 Aug 2025 17:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020890;
-	bh=706zFCHp6GqadvBEmRjVvqz4EcOIrgr2BYMBrHhV8BE=;
+	s=korg; t=1755020893;
+	bh=86Dc9U1LbpP4oHafup10qy9NzGaV0kWCvLGkThqkiBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NhVx2Tk2hYGXUrhp6VPJ+anv8ZUxdCXHAdnGzp8hP+HGWP550LKjtumIVnYdszxQd
-	 pd2nAGmH8vRL6tAID5Gvblt/ol9OV8kZmMe3HpZtCpzdjMt1hQAAtR6/Xb7cfHYwzO
-	 ZMAq/m8titrSVsZYJratEOOcMt5JASmiQRwYaYCk=
+	b=V1pvkLbe2sU7jx4eUk37cqAuJrpfftFoVzwU12d0+EhHdLg5qep9jKxOh7ZFolhoR
+	 83nA+JPnR0MQuTKEB04U3amAu9Fv4YsiXgOY/cMK5lUxKcodXobE7W/dNrgTKm0V+y
+	 OejpzGaLXU51o31NiErVL3T6bBXnutbRh02FEfUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis OSTERLAND-HEIM <denis.osterland@diehl.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+	Ryan Lee <ryan.lee@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/262] pps: fix poll support
-Date: Tue, 12 Aug 2025 19:26:57 +0200
-Message-ID: <20250812172954.209742424@linuxfoundation.org>
+Subject: [PATCH 6.1 183/253] apparmor: ensure WB_HISTORY_SIZE value is a power of 2
+Date: Tue, 12 Aug 2025 19:29:31 +0200
+Message-ID: <20250812172956.560449832@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,104 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
+From: Ryan Lee <ryan.lee@canonical.com>
 
-[ Upstream commit 12c409aa1ec2592280a2ddcc66ff8f3c7f7bb171 ]
+[ Upstream commit 6c055e62560b958354625604293652753d82bcae ]
 
-Because pps_cdev_poll() returns unconditionally EPOLLIN,
-a user space program that calls select/poll get always an immediate data
-ready-to-read response. As a result the intended use to wait until next
-data becomes ready does not work.
+WB_HISTORY_SIZE was defined to be a value not a power of 2, despite a
+comment in the declaration of struct match_workbuf stating it is and a
+modular arithmetic usage in the inc_wb_pos macro assuming that it is. Bump
+WB_HISTORY_SIZE's value up to 32 and add a BUILD_BUG_ON_NOT_POWER_OF_2
+line to ensure that any future changes to the value of WB_HISTORY_SIZE
+respect this requirement.
 
-User space snippet:
+Fixes: 136db994852a ("apparmor: increase left match history buffer size")
 
-    struct pollfd pollfd = {
-      .fd = open("/dev/pps0", O_RDONLY),
-      .events = POLLIN|POLLERR,
-      .revents = 0 };
-    while(1) {
-      poll(&pollfd, 1, 2000/*ms*/); // returns immediate, but should wait
-      if(revents & EPOLLIN) { // always true
-        struct pps_fdata fdata;
-        memset(&fdata, 0, sizeof(memdata));
-        ioctl(PPS_FETCH, &fdata); // currently fetches data at max speed
-      }
-    }
-
-Lets remember the last fetch event counter and compare this value
-in pps_cdev_poll() with most recent event counter
-and return 0 if they are equal.
-
-Signed-off-by: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
-Co-developed-by: Rodolfo Giometti <giometti@enneenne.com>
-Signed-off-by: Rodolfo Giometti <giometti@enneenne.com>
-Fixes: eae9d2ba0cfc ("LinuxPPS: core support")
-Link: https://lore.kernel.org/all/f6bed779-6d59-4f0f-8a59-b6312bd83b4e@enneenne.com/
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/c3c50ad1eb19ef553eca8a57c17f4c006413ab70.camel@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/pps.c          | 11 +++++++++--
- include/linux/pps_kernel.h |  1 +
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ security/apparmor/include/match.h | 3 ++-
+ security/apparmor/match.c         | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
-index 63f96357eb9f..e1689957736d 100644
---- a/drivers/pps/pps.c
-+++ b/drivers/pps/pps.c
-@@ -41,6 +41,9 @@ static __poll_t pps_cdev_poll(struct file *file, poll_table *wait)
+diff --git a/security/apparmor/include/match.h b/security/apparmor/include/match.h
+index 884489590588..29306ec87fd1 100644
+--- a/security/apparmor/include/match.h
++++ b/security/apparmor/include/match.h
+@@ -141,7 +141,8 @@ unsigned int aa_dfa_matchn_until(struct aa_dfa *dfa, unsigned int start,
  
- 	poll_wait(file, &pps->queue, wait);
+ void aa_dfa_free_kref(struct kref *kref);
  
-+	if (pps->last_fetched_ev == pps->last_ev)
-+		return 0;
-+
- 	return EPOLLIN | EPOLLRDNORM;
- }
+-#define WB_HISTORY_SIZE 24
++/* This needs to be a power of 2 */
++#define WB_HISTORY_SIZE 32
+ struct match_workbuf {
+ 	unsigned int count;
+ 	unsigned int pos;
+diff --git a/security/apparmor/match.c b/security/apparmor/match.c
+index 3e9e1eaf990e..0e683ee323e3 100644
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -672,6 +672,7 @@ unsigned int aa_dfa_matchn_until(struct aa_dfa *dfa, unsigned int start,
  
-@@ -186,9 +189,11 @@ static long pps_cdev_ioctl(struct file *file,
- 		if (err)
- 			return err;
- 
--		/* Return the fetched timestamp */
-+		/* Return the fetched timestamp and save last fetched event  */
- 		spin_lock_irq(&pps->lock);
- 
-+		pps->last_fetched_ev = pps->last_ev;
-+
- 		fdata.info.assert_sequence = pps->assert_sequence;
- 		fdata.info.clear_sequence = pps->clear_sequence;
- 		fdata.info.assert_tu = pps->assert_tu;
-@@ -272,9 +277,11 @@ static long pps_cdev_compat_ioctl(struct file *file,
- 		if (err)
- 			return err;
- 
--		/* Return the fetched timestamp */
-+		/* Return the fetched timestamp and save last fetched event  */
- 		spin_lock_irq(&pps->lock);
- 
-+		pps->last_fetched_ev = pps->last_ev;
-+
- 		compat.info.assert_sequence = pps->assert_sequence;
- 		compat.info.clear_sequence = pps->clear_sequence;
- 		compat.info.current_mode = pps->current_mode;
-diff --git a/include/linux/pps_kernel.h b/include/linux/pps_kernel.h
-index c7abce28ed29..aab0aebb529e 100644
---- a/include/linux/pps_kernel.h
-+++ b/include/linux/pps_kernel.h
-@@ -52,6 +52,7 @@ struct pps_device {
- 	int current_mode;			/* PPS mode at event time */
- 
- 	unsigned int last_ev;			/* last PPS event id */
-+	unsigned int last_fetched_ev;		/* last fetched PPS event id */
- 	wait_queue_head_t queue;		/* PPS event queue */
- 
- 	unsigned int id;			/* PPS source unique ID */
+ #define inc_wb_pos(wb)						\
+ do {								\
++	BUILD_BUG_ON_NOT_POWER_OF_2(WB_HISTORY_SIZE);			\
+ 	wb->pos = (wb->pos + 1) & (WB_HISTORY_SIZE - 1);		\
+ 	wb->len = (wb->len + 1) & (WB_HISTORY_SIZE - 1);		\
+ } while (0)
 -- 
 2.39.5
 
