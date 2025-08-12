@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346D7279DB6;
-	Tue, 12 Aug 2025 19:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93751279DB6;
+	Tue, 12 Aug 2025 19:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025827; cv=none; b=rOPowgvdp3bNcIT7BCfj5uDMGjlg6+QDnUJGN+4m7E9gL9Xr7R1WDbDgyFssV234yGiMsy/qZHw924YSgno++Ruc76b65OreMkx9lYSLxx3V8XgveV6eAuH/vsxFx7GGsiYtMud0qkBb3S+cn8zhuvSswrw/XhVMqxHMdNG4e2g=
+	t=1755025830; cv=none; b=E4dS8PY0fNgKGtm+7PbAg6j0zATE4enOIMxTt+SWE7KgzpJW4vuj/LEUO7t9TlhHSaorDQYGR2wLmDYFxMV2bMUp7tGg5iT6c8OxzYX1DjnJAywDPPTfEkGpVA4L59MEeZv5muf915VCfRXEYinx6bX5z9NbblUSUS0bJMYVVsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025827; c=relaxed/simple;
-	bh=L+gquhZjVb7mLpVWiW6pMhzcv4njPE/P7LUbNgvdn5w=;
+	s=arc-20240116; t=1755025830; c=relaxed/simple;
+	bh=vM9bq7nJX8AAPL9Oio727bLG9QEyhnc9mx5wBFDyZAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRjC99fgWmML5tpPOF5cJnFfCMsc7t+VG8qVlhtrtD6ov15hnwUapRHjZLuXokV6CNOxw9AvvanyBj4kigFhwxTFxLIVaelCGHf/SQeZY3L0LJ7u4r9H43y2KegBhdnOnYi7+TkemZh9Pu7GFe6O/OGMVuK/N0scrmmQ2W5hsCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iCNr76J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYcFBI2qng5eT4VNRn6pjKmDmRNZjKe3nMmVORwXtVhGloqxMQy2pEt5ZLZIyhxCPy8mwZIEGDPl9KlkrEter8N4Wby1pJZtztadt4+gRzBlGzKyr+zYWygK/tuQp9iAMZm81wRpgKssIyRb5AoMeJvnpGUw0VneGEUzrw+XJgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUnsRXBL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iCNr76J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FFEC4CEF0;
-	Tue, 12 Aug 2025 19:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUnsRXBL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C9EC4CEF0;
+	Tue, 12 Aug 2025 19:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025827;
-	bh=L+gquhZjVb7mLpVWiW6pMhzcv4njPE/P7LUbNgvdn5w=;
+	s=korg; t=1755025830;
+	bh=vM9bq7nJX8AAPL9Oio727bLG9QEyhnc9mx5wBFDyZAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0iCNr76J2uV2F0WWAsCFD9MonAyjOnI8RTe0rnF1MX9YodWpJDefAMXsZelgLJ1R6
-	 N2dq3FYK12sXze+4+1jSAYeh53SNMMuWssrvSY6GzDASNI/3QG8gjoouSX3GpHb5vS
-	 MAFvIRwq/I1IFXAqQy7q59WewFNFI78teYB0FECk=
+	b=BUnsRXBLD86OMgiL3rJHgLf7MPUDB1BHUo7cNYL8vBLcLQz16JiE1ETNqaczuj+ho
+	 CiYcTHpaxgt2MSeM0+lx9kTWda9074zRtw/8vQZp1rP8tcxTUc21wzVr4loEJMp50U
+	 axEkFgzd0yMt9nzpJtWMq2+oyMyaonTt8gypCzU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Corbet <corbet@lwn.net>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 112/480] slub: Fix a documentation build error for krealloc()
-Date: Tue, 12 Aug 2025 19:45:20 +0200
-Message-ID: <20250812174402.108585009@linuxfoundation.org>
+Subject: [PATCH 6.15 149/480] netfilter: nf_tables: adjust lockdep assertions handling
+Date: Tue, 12 Aug 2025 19:45:57 +0200
+Message-ID: <20250812174403.655448573@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,51 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Corbet <corbet@lwn.net>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit e8a45f198e3ae2434108f815bc28f37f6fe6742b ]
+[ Upstream commit 8df1b40de76979bb8e975201d07b71103d5de820 ]
 
-The kerneldoc comment for krealloc() contains an unmarked literal block,
-leading to these warnings in the docs build:
+It's needed to check the return value of lockdep_commit_lock_is_held(),
+otherwise there's no point in this assertion as it doesn't print any
+debug information on itself.
 
-  ./mm/slub.c:4936: WARNING: Block quote ends without a blank line; unexpected unindent. [docutils]
-  ./mm/slub.c:4936: ERROR: Undefined substitution referenced: "--------". [docutils]
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
 
-Mark up and indent the block properly to bring a bit of peace to our build
-logs.
-
-Fixes: 489a744e5fb1 (mm: krealloc: clarify valid usage of __GFP_ZERO)
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://patch.msgid.link/20250611155916.2579160-6-willy@infradead.org
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: b04df3da1b5c ("netfilter: nf_tables: do not defer rule destruction via call_rcu")
+Reported-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/netfilter/nf_tables_api.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index be8b09e09d30..5c73b956615f 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -4929,12 +4929,12 @@ __do_krealloc(const void *p, size_t new_size, gfp_t flags)
-  * When slub_debug_orig_size() is off, krealloc() only knows about the bucket
-  * size of an allocation (but not the exact size it was allocated with) and
-  * hence implements the following semantics for shrinking and growing buffers
-- * with __GFP_ZERO.
-+ * with __GFP_ZERO::
-  *
-- *         new             bucket
-- * 0       size             size
-- * |--------|----------------|
-- * |  keep  |      zero      |
-+ *           new             bucket
-+ *   0       size             size
-+ *   |--------|----------------|
-+ *   |  keep  |      zero      |
-  *
-  * Otherwise, the original allocation size 'orig_size' could be used to
-  * precisely clear the requested size, and the new size will also be stored
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 3eb000ae2f27..843f2c3ce73c 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3981,7 +3981,7 @@ void nf_tables_rule_destroy(const struct nft_ctx *ctx, struct nft_rule *rule)
+ /* can only be used if rule is no longer visible to dumps */
+ static void nf_tables_rule_release(const struct nft_ctx *ctx, struct nft_rule *rule)
+ {
+-	lockdep_commit_lock_is_held(ctx->net);
++	WARN_ON_ONCE(!lockdep_commit_lock_is_held(ctx->net));
+ 
+ 	nft_rule_expr_deactivate(ctx, rule, NFT_TRANS_RELEASE);
+ 	nf_tables_rule_destroy(ctx, rule);
+@@ -5770,7 +5770,7 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 			      struct nft_set_binding *binding,
+ 			      enum nft_trans_phase phase)
+ {
+-	lockdep_commit_lock_is_held(ctx->net);
++	WARN_ON_ONCE(!lockdep_commit_lock_is_held(ctx->net));
+ 
+ 	switch (phase) {
+ 	case NFT_TRANS_PREPARE_ERROR:
 -- 
 2.39.5
 
