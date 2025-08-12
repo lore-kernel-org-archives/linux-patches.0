@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67B11B87E9;
-	Tue, 12 Aug 2025 19:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E336320E023;
+	Tue, 12 Aug 2025 19:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026174; cv=none; b=X8g5JZqWcQzpikieNNo5HTq6b+UMaFjflREkwwsD4enxi8FFgTVpIXdLIeTyG0Hj7/NJrDUBekDYme2/dZl51NKIfrs1Ce57lcVVI8UllvqI0ieH+VPSWtdzhqMFyjDfJL9+ihRF5rPwwM2rzAax1deo0UEwC+eu9Lit39IU0aE=
+	t=1755026177; cv=none; b=h5KoLMRL6peyOvDHV5IqP+n+I+qSiSy20rQKwGw9nCnEBHvmSQzIoQ1QawlpQqPyHmoQEa3bf1Dr+oX+EzAcO5SacKuBdIA8gwEj+7XYSs6/ukHePr+WSMRsnRj6mB4khO6YCknLSPGkpwSb8SeCcJn+3gg518Xx7VO9yXmjZ2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026174; c=relaxed/simple;
-	bh=CJrAb4V2lpC7D4+Jj+Q2Ij1/FNrGf+dcmwDZkCxLWjI=;
+	s=arc-20240116; t=1755026177; c=relaxed/simple;
+	bh=RYTIExPxixxO8P8L+mc+lMmIM67NqEuhf7q8sh4LMA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDNBmbXfpSECh6YTrsaA9MfwFXgP3ym7s4slO/vNOcUK14U/KqamesdJfd8PqKouSXIcZcOCUVKT7cxtxK4o3PIWsnL3p0JqPZs+ff591RaH4+/p0XElJYqN8O4e+wJKZTivohATY58YpDxVHkinPkwmQPiwsUSiwX9d23I+Tk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZNQ2qFk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L0I9s/6ia3143AAAnoVFAQ8cZdL/NdJ/Lrm4Y1vhzkiXWIO4JrfcTnbXweyv/AgRxjvToBYWENRvG/9DDMt+ZdbmLO7GKxvq3Tx/6KGIpQNDTSC8rF2M2q42BRFLXFtMEYv042MyjRcdOlOqevgTj2rl9/J38HEwbt/THGYeez8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqT6l3dt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZNQ2qFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5708CC4CEF0;
-	Tue, 12 Aug 2025 19:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqT6l3dt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADEEC4CEF0;
+	Tue, 12 Aug 2025 19:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026173;
-	bh=CJrAb4V2lpC7D4+Jj+Q2Ij1/FNrGf+dcmwDZkCxLWjI=;
+	s=korg; t=1755026176;
+	bh=RYTIExPxixxO8P8L+mc+lMmIM67NqEuhf7q8sh4LMA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZNQ2qFkDB1ngv73zr4qNufaKmFS03vMI05Vwxu7tFhr8Xzr2OUzP1z65SIliWHTm
-	 5LSgvzs6td4B3UwlvhFYzQbEiaHFqsguJq+9CoSgtCcZGL0Y549b2r43fFF8n5lCoL
-	 UFdO+nrgteAKXhFYyt4DaJcRu8qWaMphyum5OAFk=
+	b=nqT6l3dtYgMju4LyvqPIl6GSkSJ1ZEOepHoOXFjgukuMOSEQ1me4UA9mzPscn5ffh
+	 MZJrPB75SqwWW4FJDkpxCK23x61Eg6hFP0uNwhFzvxHC0gD5r5auFvFZomW24zQbj6
+	 IlMDeo2ZYqaYz0hq9GrMoS7+MMyXSZ26xFGiQfI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Corentin LABBE <clabbe.montjoie@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 225/480] clk: renesas: rzv2h: Fix missing CLK_SET_RATE_PARENT flag for ddiv clocks
-Date: Tue, 12 Aug 2025 19:47:13 +0200
-Message-ID: <20250812174406.725682176@linuxfoundation.org>
+Subject: [PATCH 6.15 226/480] crypto: sun8i-ce - fix nents passed to dma_unmap_sg()
+Date: Tue, 12 Aug 2025 19:47:14 +0200
+Message-ID: <20250812174406.770934102@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,41 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-[ Upstream commit 715676d8418062f54d746451294ccce9786c1734 ]
+[ Upstream commit b6cd3cfb5afe49952f8f6be947aeeca9ba0faebb ]
 
-Commit bc4d25fdfadf ("clk: renesas: rzv2h: Add support for dynamic
-switching divider clocks") missed setting the `CLK_SET_RATE_PARENT`
-flag when registering ddiv clocks.
+In sun8i_ce_cipher_unprepare(), dma_unmap_sg() is incorrectly called with
+the number of entries returned by dma_map_sg(), rather than using the
+original number of entries passed when mapping the scatterlist.
 
-Without this flag, rate changes to the divider clock do not propagate
-to its parent, potentially resulting in incorrect clock configurations.
+To fix this, stash the original number of entries passed to dma_map_sg()
+in the request context.
 
-Fix this by setting `CLK_SET_RATE_PARENT` in the clock init data.
-
-Fixes: bc4d25fdfadfa ("clk: renesas: rzv2h: Add support for dynamic switching divider clocks")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250609140341.235919-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 0605fa0f7826 ("crypto: sun8i-ce - split into prepare/run/unprepare")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+Tested-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzv2h-cpg.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzv2h-cpg.c b/drivers/clk/renesas/rzv2h-cpg.c
-index 2b9771ab2b3f..43d2e73f9601 100644
---- a/drivers/clk/renesas/rzv2h-cpg.c
-+++ b/drivers/clk/renesas/rzv2h-cpg.c
-@@ -323,6 +323,7 @@ rzv2h_cpg_ddiv_clk_register(const struct cpg_core_clk *core,
- 	init.ops = &rzv2h_ddiv_clk_divider_ops;
- 	init.parent_names = &parent_name;
- 	init.num_parents = 1;
-+	init.flags = CLK_SET_RATE_PARENT;
+diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+index 05f67661553c..63e66a85477e 100644
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+@@ -265,8 +265,8 @@ static int sun8i_ce_cipher_prepare(struct crypto_engine *engine, void *async_req
+ 	}
  
- 	ddiv->priv = priv;
- 	ddiv->mon = cfg_ddiv.monbit;
+ 	chan->timeout = areq->cryptlen;
+-	rctx->nr_sgs = nr_sgs;
+-	rctx->nr_sgd = nr_sgd;
++	rctx->nr_sgs = ns;
++	rctx->nr_sgd = nd;
+ 	return 0;
+ 
+ theend_sgs:
 -- 
 2.39.5
 
