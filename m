@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218DE2FDC53;
-	Tue, 12 Aug 2025 18:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85482FF14E;
+	Tue, 12 Aug 2025 18:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025001; cv=none; b=JmWTG6HMbBXxdzS81nsauIFSV63mgG+zRPWYo+x5koAxguVitAJZAepKlUizDEVGB8ofAQfi4F622R6xgP3QR/KeXwKxISxJIwhYaTnnRUHZeAX9PKpKqQ7wBZY+vAcS607F8l8A4qp7lrovo0QjNCExzBsuvlQ3mPUW7b47i5M=
+	t=1755025004; cv=none; b=Jwfv7ymQ+P59x9fybj456maNTnXZADLLgYuNXiqYaYBCULMyTJKbsXcPg26AmvjnEx+tuhv5L6FSz/dYmT9UePAgmHC0Z3Xu9z0e+TKuRy5Wy8w0bdOsaxHWv53Va+f4REPlTaStRe+yCsrva/75vaFl3i7sS6+n+cfNeK6S/VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025001; c=relaxed/simple;
-	bh=v/QcgZGpqTG6wcnZCX5Vor2ldRU8QbwkkGouMUUqKuM=;
+	s=arc-20240116; t=1755025004; c=relaxed/simple;
+	bh=HDdhz/gat4YrkffH1yuokcfZyWxKTg53Vc4xrm7PeBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ow6DehzFdW+QqkbUmURaAokbbkJ9U5bHZw/PS+UJD76g6GKlfmYdyxM9q7SXOWbvCqfp1Eq5o+KS8WH0857027u3u1pU9wPTQ4J6epW2vScds6+pmPWuF2+JtkV3Dxh057SKewYW+y/nZAKIDgmG4OFSMake03gWoAtApBIl8HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSyYUysx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E3kS1vyPesrlWcXpR3VPa8XRcpZTzUzScnDwIx7tbLtVfNhzAANwq/q12vdVnYvA5sEBfKULkotQaplLoyMwKQdQAA9wUhxd38U121LBIjSe8muIfXQlgq8jc5ca9kTxLe2FFUT/SOAZIdHBHUr3MrZF2qL2LtQe+WfTBfZVbyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t57tWxh8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSyYUysx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BE3C4CEF0;
-	Tue, 12 Aug 2025 18:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t57tWxh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD4EC4CEF0;
+	Tue, 12 Aug 2025 18:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025001;
-	bh=v/QcgZGpqTG6wcnZCX5Vor2ldRU8QbwkkGouMUUqKuM=;
+	s=korg; t=1755025004;
+	bh=HDdhz/gat4YrkffH1yuokcfZyWxKTg53Vc4xrm7PeBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSyYUysxFOa/Lv95LGU4U9j3DZys2Y7Bqrg6pnFFIhILpcoQaKPtc6GNIaFP7i550
-	 vd7e40UtU2ZMqv5dciOembtyw/BdHX8K+eITYaWpgf+9kJkXaHmJ9wamgun6VLVYbE
-	 STYQ5m7hxtCvUog61U7m567xc61maIB7NzGdan8Y=
+	b=t57tWxh8+ZjnwhBuAxp+dClF+D3iRkSGqiyGdurBI0Rfouk4d36Ruk/yFiSyPkjQa
+	 U3a8jAwcCRnwc0vKi5IdDN9Qgf3Odv8gNlNMOXZlKEyZV2Ev9MoU1aEsrCTTjfbefp
+	 U4IgAJ15pKLQ1KLJsCelzLrwylEypwGlNz0WJapk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Mina Almasry <almasrymina@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 541/627] ipa: fix compile-testing with qcom-mdt=m
-Date: Tue, 12 Aug 2025 19:33:56 +0200
-Message-ID: <20250812173452.487251904@linuxfoundation.org>
+Subject: [PATCH 6.16 542/627] net: devmem: fix DMA direction on unmapping
+Date: Tue, 12 Aug 2025 19:33:57 +0200
+Message-ID: <20250812173452.522383540@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,47 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 2df158047d532d0e2a6b39953656c738872151a3 ]
+[ Upstream commit fa516c0d8bf90da9d5b168757162205aafe5d0e1 ]
 
-There are multiple drivers that use the qualcomm mdt loader, but they
-have conflicting ideas of how to deal with that dependency when compile-testing
-for non-qualcomm targets:
+Looks like we always unmap the DMA_BUF with DMA_FROM_DEVICE direction.
+While at it unexport __net_devmem_dmabuf_binding_free(), it's internal.
 
-IPA only enables the MDT loader when the kernel config includes ARCH_QCOM,
-but the newly added ath12k support always enables it, which leads to a
-link failure with the combination of IPA=y and ATH12K=m:
+Found by code inspection.
 
-    aarch64-linux-ld: drivers/net/ipa/ipa_main.o: in function `ipa_firmware_load':
-    ipa_main.c:(.text.unlikely+0x134): undefined reference to `qcom_mdt_load
-
-The ATH12K method seems more reliable here, so change IPA over to do the same
-thing.
-
-Fixes: 38a4066f593c ("net: ipa: support COMPILE_TEST")
-Fixes: c0dd3f4f7091 ("wifi: ath12k: enable ath12k AHB support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20250731080024.2054904-1-arnd@kernel.org
+Fixes: bd61848900bf ("net: devmem: Implement TX path")
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250801011335.2267515-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/devmem.c | 6 +++---
+ net/core/devmem.h | 7 +++----
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ipa/Kconfig b/drivers/net/ipa/Kconfig
-index 6782c2cbf542..01d219d3760c 100644
---- a/drivers/net/ipa/Kconfig
-+++ b/drivers/net/ipa/Kconfig
-@@ -5,7 +5,7 @@ config QCOM_IPA
- 	depends on INTERCONNECT
- 	depends on QCOM_RPROC_COMMON || (QCOM_RPROC_COMMON=n && COMPILE_TEST)
- 	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
--	select QCOM_MDT_LOADER if ARCH_QCOM
-+	select QCOM_MDT_LOADER
- 	select QCOM_SCM
- 	select QCOM_QMI_HELPERS
- 	help
+diff --git a/net/core/devmem.c b/net/core/devmem.c
+index b3a62ca0df65..24c591ab38ae 100644
+--- a/net/core/devmem.c
++++ b/net/core/devmem.c
+@@ -70,14 +70,13 @@ void __net_devmem_dmabuf_binding_free(struct work_struct *wq)
+ 		gen_pool_destroy(binding->chunk_pool);
+ 
+ 	dma_buf_unmap_attachment_unlocked(binding->attachment, binding->sgt,
+-					  DMA_FROM_DEVICE);
++					  binding->direction);
+ 	dma_buf_detach(binding->dmabuf, binding->attachment);
+ 	dma_buf_put(binding->dmabuf);
+ 	xa_destroy(&binding->bound_rxqs);
+ 	kvfree(binding->tx_vec);
+ 	kfree(binding);
+ }
+-EXPORT_SYMBOL(__net_devmem_dmabuf_binding_free);
+ 
+ struct net_iov *
+ net_devmem_alloc_dmabuf(struct net_devmem_dmabuf_binding *binding)
+@@ -208,6 +207,7 @@ net_devmem_bind_dmabuf(struct net_device *dev,
+ 	mutex_init(&binding->lock);
+ 
+ 	binding->dmabuf = dmabuf;
++	binding->direction = direction;
+ 
+ 	binding->attachment = dma_buf_attach(binding->dmabuf, dev->dev.parent);
+ 	if (IS_ERR(binding->attachment)) {
+@@ -312,7 +312,7 @@ net_devmem_bind_dmabuf(struct net_device *dev,
+ 	kvfree(binding->tx_vec);
+ err_unmap:
+ 	dma_buf_unmap_attachment_unlocked(binding->attachment, binding->sgt,
+-					  DMA_FROM_DEVICE);
++					  direction);
+ err_detach:
+ 	dma_buf_detach(dmabuf, binding->attachment);
+ err_free_binding:
+diff --git a/net/core/devmem.h b/net/core/devmem.h
+index 0a3b28ba5c13..41cd6e1c9141 100644
+--- a/net/core/devmem.h
++++ b/net/core/devmem.h
+@@ -56,6 +56,9 @@ struct net_devmem_dmabuf_binding {
+ 	 */
+ 	u32 id;
+ 
++	/* DMA direction, FROM_DEVICE for Rx binding, TO_DEVICE for Tx. */
++	enum dma_data_direction direction;
++
+ 	/* Array of net_iov pointers for this binding, sorted by virtual
+ 	 * address. This array is convenient to map the virtual addresses to
+ 	 * net_iovs in the TX path.
+@@ -165,10 +168,6 @@ static inline void net_devmem_put_net_iov(struct net_iov *niov)
+ {
+ }
+ 
+-static inline void __net_devmem_dmabuf_binding_free(struct work_struct *wq)
+-{
+-}
+-
+ static inline struct net_devmem_dmabuf_binding *
+ net_devmem_bind_dmabuf(struct net_device *dev,
+ 		       enum dma_data_direction direction,
 -- 
 2.39.5
 
