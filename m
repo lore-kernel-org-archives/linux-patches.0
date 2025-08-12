@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C72291C1F;
-	Tue, 12 Aug 2025 18:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF46D291C1F;
+	Tue, 12 Aug 2025 18:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024438; cv=none; b=BzJ6M/3lmPlc+wd4njPD+Z8XdDFXxYKmQ9Cvdt6EQwKamTSuOVnPHVqOl5tYCvIBUlaZMcnaCt5n8ALNWeWvMBX5U4bkYli5OsDbzN8lBnJzZIt/NdpXVS+K4H/NrcFk51zirp7XCKdPCpE20HXNSW2uaDEOt44nKGcI292f+Hw=
+	t=1755024441; cv=none; b=FPj7ZJ1CwYVLJNIai+5vfbWNZY6jzDkWy5NkqBvsANjoyR+nxZxbVkqfsmiHB2ZJvtaPbw+zln/NKq4xCybt10NAL7m9tHBV2/8Rfaa6szv4SGuPPqz5+4UBw5GKCGLukm07b40tgi02bDTKsnxF6odfjutpvQ+Pg5GXBS3EWxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024438; c=relaxed/simple;
-	bh=tEwGpfg+0keHRb2IY7IC/fL7ekGEsbiLdcMeLCEDUuM=;
+	s=arc-20240116; t=1755024441; c=relaxed/simple;
+	bh=SivwWfug9CQZ32SAzFw5rATmgN1o16Vnu6tzU6inqBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCxmP7pEXbzD3ckV4Ceg0D67N/6EXJHOJRmk62BwzZN2/o/1Z0cKuqjO3ghKyQF7zo3gncma/oSCmj94Af+5C7N59D8e6ld+wxZ02EHpDjFkyUrvdV01DtVPSLa6IH+mMV8LtU3Xen5h3y4/9HLW9A4HXM32jDU4nWXzuaaQ87A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGf8LKJw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ot66B0/TyKJjD1IT+0bxJyXVHsDcD5nWURe+RZggZUAkvVIMzjUgM7s3s9GKwMvcfcJJ/tvyzvzfm51mfUOKiM5nG2sOFPij2F4eB9VeQhMOBhATh6Bw6gj2FfUUr/Bybf6v3tYFML0nJI8qBY4FL8N8z9tXeSR7HCiED0/EqOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhtDCKxz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGf8LKJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FB8C4CEF0;
-	Tue, 12 Aug 2025 18:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhtDCKxz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87CEC4CEF0;
+	Tue, 12 Aug 2025 18:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024437;
-	bh=tEwGpfg+0keHRb2IY7IC/fL7ekGEsbiLdcMeLCEDUuM=;
+	s=korg; t=1755024441;
+	bh=SivwWfug9CQZ32SAzFw5rATmgN1o16Vnu6tzU6inqBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGf8LKJwrnPfArgZfHJtOZIg5iKCRiRj91lRmh5N9hcxmFtAOoJFIeHdf2oHMCrJT
-	 PGDulJBL9HrEAXp7wM/sQ2FP9EoVgPHE+NHab1o30Y8Ih2f3sxRNtm6Gb/AydwPJpn
-	 1Cudloz0PDRpNBNAjPcA+TXStHqqnZlA6tfz/lBo=
+	b=YhtDCKxzUbkcsHVlGoLCbe8h4/SLWKa/GuWztmbs8yMy1NFj9JXGrgC2baJILdyKd
+	 7lSuQpxHJydeo8Ca5w8hcbGJVjGSKxtA5aUd0s//FMC0hwpAWeuBWi9j8otZ6Yz6kp
+	 3wUWUzt+y84fQeGouutebDQB5YuVVziQ+OL3ahd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 373/627] RDMA/hns: Fix -Wframe-larger-than issue
-Date: Tue, 12 Aug 2025 19:31:08 +0200
-Message-ID: <20250812173433.494080418@linuxfoundation.org>
+Subject: [PATCH 6.16 347/627] leds: tps6131x: Add V4L2_FLASH_LED_CLASS dependency
+Date: Tue, 12 Aug 2025 19:30:42 +0200
+Message-ID: <20250812173432.489461716@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,65 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 79d56805c5068f2bc81518043e043c3dedd1c82a ]
+[ Upstream commit c3c38e80016548685e439b23999b4f0bd0ad7e05 ]
 
-Fix -Wframe-larger-than issue by allocating memory for qpc struct
-with kzalloc() instead of using stack memory.
+This driver can optionally use the v4l2_flash infrastructure, but fails to
+link built=in if that is in a loadable module:
 
-Fixes: 606bf89e98ef ("RDMA/hns: Refactor for hns_roce_v2_modify_qp function")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506240032.CSgIyFct-lkp@intel.com/
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250703113905.3597124-7-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+ld.lld-21: error: undefined symbol: v4l2_flash_release
+>>> referenced by leds-tps6131x.c:792 (drivers/leds/flash/leds-tps6131x.c:792)
+
+Add the usual Kconfig dependency for it, still allowing it to be built when
+CONFIG_V4L2_FLASH_LED_CLASS is disabled.
+
+Fixes: b338a2ae9b31 ("leds: tps6131x: Add support for Texas Instruments TPS6131X flash LED driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20250620114440.4080938-1-arnd@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/leds/flash/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 246642859159..b30dce00f240 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5387,11 +5387,10 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
- {
- 	struct hns_roce_dev *hr_dev = to_hr_dev(ibqp->device);
- 	struct hns_roce_qp *hr_qp = to_hr_qp(ibqp);
--	struct hns_roce_v2_qp_context ctx[2];
--	struct hns_roce_v2_qp_context *context = ctx;
--	struct hns_roce_v2_qp_context *qpc_mask = ctx + 1;
-+	struct hns_roce_v2_qp_context *context;
-+	struct hns_roce_v2_qp_context *qpc_mask;
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
--	int ret;
-+	int ret = -ENOMEM;
- 
- 	if (attr_mask & ~IB_QP_ATTR_STANDARD_BITS)
- 		return -EOPNOTSUPP;
-@@ -5402,7 +5401,11 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
- 	 * we should set all bits of the relevant fields in context mask to
- 	 * 0 at the same time, else set them to 0x1.
- 	 */
--	memset(context, 0, hr_dev->caps.qpc_sz);
-+	context = kvzalloc(sizeof(*context), GFP_KERNEL);
-+	qpc_mask = kvzalloc(sizeof(*qpc_mask), GFP_KERNEL);
-+	if (!context || !qpc_mask)
-+		goto out;
-+
- 	memset(qpc_mask, 0xff, hr_dev->caps.qpc_sz);
- 
- 	ret = hns_roce_v2_set_abs_fields(ibqp, attr, attr_mask, cur_state,
-@@ -5444,6 +5447,8 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
- 		clear_qp(hr_qp);
- 
- out:
-+	kvfree(qpc_mask);
-+	kvfree(context);
- 	return ret;
- }
- 
+diff --git a/drivers/leds/flash/Kconfig b/drivers/leds/flash/Kconfig
+index 55ca663ca506..5e08102a6784 100644
+--- a/drivers/leds/flash/Kconfig
++++ b/drivers/leds/flash/Kconfig
+@@ -136,6 +136,7 @@ config LEDS_TPS6131X
+ 	tristate "LED support for TI TPS6131x flash LED driver"
+ 	depends on I2C && OF
+ 	depends on GPIOLIB
++	depends on V4L2_FLASH_LED_CLASS || !V4L2_FLASH_LED_CLASS
+ 	select REGMAP_I2C
+ 	help
+ 	  This option enables support for Texas Instruments TPS61310/TPS61311
 -- 
 2.39.5
 
