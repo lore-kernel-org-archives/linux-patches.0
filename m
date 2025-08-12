@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876722CA9;
-	Tue, 12 Aug 2025 18:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5412CA9;
+	Tue, 12 Aug 2025 18:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024468; cv=none; b=ChRBi2895L/LkcFbB2opqCRacDtDriTH38oFa3H8rhVAKM8W3PAiuvC9h9WqxxGoJ34zQjGhW4F7mPOFaE8kQC/ZWT486W3Crt/jmp+BMZDS9zg8Vz0OE9AoJEiZvEY61ANsa3VByJTU6pjDHDSkLuFDr9tVESoIt1Y22S39DtU=
+	t=1755024472; cv=none; b=lPkCj4wlFtUe/nBKhv1eW9pVzzpA2LPuUJEUQHozf3k2w4DxjKXF3zxm2Ta1nZXM6uSAa/EnENWHBLNo3+oKdLwE06QfKxCA3ZsBwdiZFMDLuS1n/hqsTZzv7U93tw685YHMUdi5+ALY6triW8BnN6cch7vBmmc9GsRCjrnEPb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024468; c=relaxed/simple;
-	bh=i4TU4hci6a2E3QWpgLgL2Tx7ffMMdxB+SkLXFSjvTRI=;
+	s=arc-20240116; t=1755024472; c=relaxed/simple;
+	bh=YOjYB8T6KUjQaNNQGoxwF0G1hHcrb0Yd68Sv6A+yf30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFDSzCS3p8PICE5/2PbaJvwDbUh8ZfAOpcxcZY1QnbWnVlHowQxps1/75Y906c0ELfFMC0XFth3yu44T3h3kXrZvs2Ql8tCQFocp18v2SsiaGtwLq6Q2E7SLcNAG1QHRNa6BsCiC1/TD2OZaVb5zP1BVf8y7bRIu8Aabhhn71bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrlv0tz2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHl+2VmavTIUzp/ZDABT0R2xELcQLNuv+7a6YMCaQjHnGxBqMKwj125FmiCV3mhZq+1/R/SK04l6S/rTWpvLs6d3JKhoJx4x6k8aS9pK0DB/CEvHi7xqA1aFYEvDTPm3RBTig+KM7t2jOjtPXew0kWUaTGfqHUJ3Vmo9yDis1Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDL0LxWd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrlv0tz2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3A1C4CEF0;
-	Tue, 12 Aug 2025 18:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDL0LxWd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F76C4CEF0;
+	Tue, 12 Aug 2025 18:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024468;
-	bh=i4TU4hci6a2E3QWpgLgL2Tx7ffMMdxB+SkLXFSjvTRI=;
+	s=korg; t=1755024471;
+	bh=YOjYB8T6KUjQaNNQGoxwF0G1hHcrb0Yd68Sv6A+yf30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrlv0tz2R1l+RgxxCuCfzf9BouYFmRX2MmdvHGAEWIo/FfSma+PPk6ldKrf1N36tZ
-	 h4tDkOVQXsVLF5+vWJFrBZ6aumoAVTAQIJ+0dhHgbyFftpsxAbJp/J5dAz4bNRYBbx
-	 9cDRx5pJ6lRh7qyHPlLrve/9yQhR1BbPZkPLhLhA=
+	b=QDL0LxWdUSBRfcRHLKo3iuiUmPIxtn3KzgrB5AGv/0tKhOhlx7M1wL18VYaX277Ak
+	 cev2l8PItOmyBuc9a9VyVzsuH+zKEptqckYiK9NR5RL8nn8nV+pHqjUtXqRJ15yUtk
+	 cjOZ6DXoLTNMk7GDPMjAVcG6qDUJjL85243MzgyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Parav Pandit <parav@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 349/627] RDMA/nldev: Check CAP_NET_RAW in user namespace for QP modify
-Date: Tue, 12 Aug 2025 19:30:44 +0200
-Message-ID: <20250812173432.562314636@linuxfoundation.org>
+Subject: [PATCH 6.16 350/627] RDMA/counter: Check CAP_NET_RAW check in user namespace for RDMA counters
+Date: Tue, 12 Aug 2025 19:30:45 +0200
+Message-ID: <20250812173432.598473603@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,55 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit 28ea058a2979f063d4b756c5d82d885fc16f5ca2 ]
+[ Upstream commit 449728196d65fce513dbacf4d3696764be1c6524 ]
 
 Currently, the capability check is done in the default
 init_user_ns user namespace. When a process runs in a
-non default user namespace, such check fails. Due to this
-when a process is running using Podman, it fails to modify
-the QP.
+non default user namespace, such check fails.
 
 Since the RDMA device is a resource within a network namespace,
 use the network namespace associated with the RDMA device to
 determine its owning user namespace.
 
-Fixes: 0cadb4db79e1 ("RDMA/uverbs: Restrict usage of privileged QKEYs")
+Fixes: 1bd8e0a9d0fd ("RDMA/counter: Allow manual mode configuration support")
 Signed-off-by: Parav Pandit <parav@nvidia.com>
-Link: https://patch.msgid.link/099eb263622ccdd27014db7e02fec824a3307829.1750963874.git.leon@kernel.org
+Link: https://patch.msgid.link/68e2064e72e94558a576fdbbb987681a64f6fea8.1750963874.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c      | 2 +-
- drivers/infiniband/core/uverbs_cmd.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/counters.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index a872643e8039..be6b2ef0ede4 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -255,7 +255,7 @@ EXPORT_SYMBOL(rdma_nl_put_driver_u64_hex);
+diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
+index e6ec7b7a40af..c3aa6d7fc66b 100644
+--- a/drivers/infiniband/core/counters.c
++++ b/drivers/infiniband/core/counters.c
+@@ -461,7 +461,7 @@ static struct ib_qp *rdma_counter_get_qp(struct ib_device *dev, u32 qp_num)
+ 		return NULL;
  
- bool rdma_nl_get_privileged_qkey(void)
- {
--	return privileged_qkey || capable(CAP_NET_RAW);
-+	return privileged_qkey;
- }
- EXPORT_SYMBOL(rdma_nl_get_privileged_qkey);
+ 	qp = container_of(res, struct ib_qp, res);
+-	if (qp->qp_type == IB_QPT_RAW_PACKET && !capable(CAP_NET_RAW))
++	if (qp->qp_type == IB_QPT_RAW_PACKET && !rdma_dev_has_raw_cap(dev))
+ 		goto err;
  
-diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
-index 4d96e4a678f3..0807e9a00008 100644
---- a/drivers/infiniband/core/uverbs_cmd.c
-+++ b/drivers/infiniband/core/uverbs_cmd.c
-@@ -1877,7 +1877,8 @@ static int modify_qp(struct uverbs_attr_bundle *attrs,
- 		attr->path_mig_state = cmd->base.path_mig_state;
- 	if (cmd->base.attr_mask & IB_QP_QKEY) {
- 		if (cmd->base.qkey & IB_QP_SET_QKEY &&
--		    !rdma_nl_get_privileged_qkey()) {
-+		    !(rdma_nl_get_privileged_qkey() ||
-+		      rdma_uattrs_has_raw_cap(attrs))) {
- 			ret = -EPERM;
- 			goto release_qp;
- 		}
+ 	return qp;
 -- 
 2.39.5
 
