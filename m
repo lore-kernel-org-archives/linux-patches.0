@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08082FD1B2;
-	Tue, 12 Aug 2025 18:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC8C2FF148;
+	Tue, 12 Aug 2025 18:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024774; cv=none; b=W/FhrXLCY9cmZqVZX3+xCcaF5/pYeriqsKItJ3WvB37YjqQ3rY1LRqPzZKQMy0wRugeTDyD3CVxnuzFv3+XE78On1Pbo+vgBcd6Have1jTQ1PMTj2Kkrex2ch7k63LzICU3ZQhGYd8kpiobJ9UXRQrrpg6v1s7E03FoLxkQSyTQ=
+	t=1755024778; cv=none; b=qQ6i4nvB7QULCg7m7LHpfmQXWQZ+M1HIX7DhZ5vzw9JBsfZ2nzPySylqxGMKrjQa3x0o2xMndIe4YX6PPnRNnoDortqKobFFUSFiv2mqaYsEp/X1u7eRIkJJ0KlpxIqeEs8crMJJAZALWiqr+ehoYD3U2I+c7mER9tEhaWSG4KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024774; c=relaxed/simple;
-	bh=76iI/kWwQX5JDgWBJzNwiyPQfVcqQVWQhNoTaR+J/90=;
+	s=arc-20240116; t=1755024778; c=relaxed/simple;
+	bh=roeJZM6CY0GzO2WUaCPtir8nwc1WskiTKbUldDiS1Ec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LANkXWmYL545w4CRIRqHd8aV3FbKBetW4S2nXh9bKOOzUumvl9iFGFxzyDIZFY+rOxwpKhOj71jFvgg+PlwdkAPeY1/pbpLsZfbIg6IEJlRoUrYdcXpzsjuryLqcxgzv6YAVYbs3/Ag7JC+IpPhvi+3K9hehQSUt4+xxNT7r6q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjKNYOJi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lkmry7oHNnriw9LJrPJ9mPnUE9ZY0i0Pkwbse2PF5cC6/WOwDqotLFMz0XBfysT1w5gOL2Y/Q9sNyPDgv7lgyZuhPqtPVlt4kLlMuhJa8D7pwKVCrVYNnFZ446BJxCVPAaPM5Q9foUn3MBsWVXOEf+SvwCiTbFr3X6MtiQQMnO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asAXCwQJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjKNYOJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA62C4CEF0;
-	Tue, 12 Aug 2025 18:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asAXCwQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1006C4CEF0;
+	Tue, 12 Aug 2025 18:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024774;
-	bh=76iI/kWwQX5JDgWBJzNwiyPQfVcqQVWQhNoTaR+J/90=;
+	s=korg; t=1755024778;
+	bh=roeJZM6CY0GzO2WUaCPtir8nwc1WskiTKbUldDiS1Ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjKNYOJigb2wkmrnocUKJbipiVbL30O7NZq84ed1GT1mYr7YcNTNYPCJTHKzBjYHB
-	 x8U1vRrhrGsvm9jYv+53qFaHGrbdWOlCCTONr85kY8fWszyp3k4WpXioBXxIwjGJAJ
-	 SCHfwI4Np3HLzeeK4eTPQBHD/BLONxPnuG1ai5Ms=
+	b=asAXCwQJHXnk82KSShnElqo4JQWiQYkTrwzKAYWrQSxQ6qCSgq+vbRb8MwdvziYQ9
+	 4TxRO8iIHYvAYkx/5lkl1B6XYss7n0XejyIceCxPSvIHpoAHnzcGylMzbI3gz02kTD
+	 n8DxQ8tqiLVsnwXcPAgh4wGeMyNl6J/6ViKc/6rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Baocong Liu <baocong.liu@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 473/627] f2fs: fix to avoid invalid wait context issue
-Date: Tue, 12 Aug 2025 19:32:48 +0200
-Message-ID: <20250812173441.570938808@linuxfoundation.org>
+Subject: [PATCH 6.16 474/627] f2fs: compress: change the first parameter of page_array_{alloc,free} to sbi
+Date: Tue, 12 Aug 2025 19:32:49 +0200
+Message-ID: <20250812173441.761648060@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,160 +53,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 90d5c9ba3ed91950f1546bf123a7a57cd958b452 ]
+[ Upstream commit 8e2a9b656474d67c55010f2c003ea2cf889a19ff ]
 
-=============================
-[ BUG: Invalid wait context ]
-6.13.0-rc1 #84 Tainted: G           O
------------------------------
-cat/56160 is trying to lock:
-ffff888105c86648 (&cprc->stat_lock){+.+.}-{3:3}, at: update_general_status+0x32a/0x8c0 [f2fs]
-other info that might help us debug this:
-context-{5:5}
-2 locks held by cat/56160:
- #0: ffff88810a002a98 (&p->lock){+.+.}-{4:4}, at: seq_read_iter+0x56/0x4c0
- #1: ffffffffa0462638 (f2fs_stat_lock){....}-{2:2}, at: stat_show+0x29/0x1020 [f2fs]
-stack backtrace:
-CPU: 0 UID: 0 PID: 56160 Comm: cat Tainted: G           O       6.13.0-rc1 #84
-Tainted: [O]=OOT_MODULE
-Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
-Call Trace:
- <TASK>
- dump_stack_lvl+0x88/0xd0
- dump_stack+0x14/0x20
- __lock_acquire+0x8d4/0xbb0
- lock_acquire+0xd6/0x300
- _raw_spin_lock+0x38/0x50
- update_general_status+0x32a/0x8c0 [f2fs]
- stat_show+0x50/0x1020 [f2fs]
- seq_read_iter+0x116/0x4c0
- seq_read+0xfa/0x130
- full_proxy_read+0x66/0x90
- vfs_read+0xc4/0x350
- ksys_read+0x74/0xf0
- __x64_sys_read+0x1d/0x20
- x64_sys_call+0x17d9/0x1b80
- do_syscall_64+0x68/0x130
- entry_SYSCALL_64_after_hwframe+0x67/0x6f
-RIP: 0033:0x7f2ca53147e2
+No logic changes, just cleanup and prepare for fixing the UAF issue
+in f2fs_free_dic.
 
-- seq_read
- - stat_show
-  - raw_spin_lock_irqsave(&f2fs_stat_lock, flags)
-  : f2fs_stat_lock is raw_spinlock_t type variable
-  - update_general_status
-   - spin_lock(&sbi->cprc_info.stat_lock);
-   : stat_lock is spinlock_t type variable
-
-The root cause is the lock order is incorrect [1], we should not acquire
-spinlock_t lock after raw_spinlock_t lock, as if CONFIG_PREEMPT_LOCK is
-on, spinlock_t is implemented based on rtmutex, which can sleep after
-holding the lock.
-
-To fix this issue, let's use change f2fs_stat_lock lock type from
-raw_spinlock_t to spinlock_t, it's safe due to:
-- we don't need to use raw version of spinlock as the path is not
-performance sensitive.
-- we don't need to use irqsave version of spinlock as it won't be
-used in irq context.
-
-Quoted from [1]:
-
-"Extend lockdep to validate lock wait-type context.
-
-The current wait-types are:
-
-	LD_WAIT_FREE,		/* wait free, rcu etc.. */
-	LD_WAIT_SPIN,		/* spin loops, raw_spinlock_t etc.. */
-	LD_WAIT_CONFIG,		/* CONFIG_PREEMPT_LOCK, spinlock_t etc.. */
-	LD_WAIT_SLEEP,		/* sleeping locks, mutex_t etc.. */
-
-Where lockdep validates that the current lock (the one being acquired)
-fits in the current wait-context (as generated by the held stack).
-
-This ensures that there is no attempt to acquire mutexes while holding
-spinlocks, to acquire spinlocks while holding raw_spinlocks and so on. In
-other words, its a more fancy might_sleep()."
-
-[1] https://lore.kernel.org/all/20200321113242.427089655@linutronix.de
-
-Fixes: 98237fcda4a2 ("f2fs: use spin_lock to avoid hang")
-Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Baocong Liu <baocong.liu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 39868685c2a9 ("f2fs: compress: fix UAF of f2fs_inode_info in f2fs_free_dic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/debug.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ fs/f2fs/compress.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/fs/f2fs/debug.c b/fs/f2fs/debug.c
-index 16c2dfb4f595..3417e7e550b2 100644
---- a/fs/f2fs/debug.c
-+++ b/fs/f2fs/debug.c
-@@ -21,7 +21,7 @@
- #include "gc.h"
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index b3c1df93a163..832a484963b7 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -23,20 +23,18 @@
+ static struct kmem_cache *cic_entry_slab;
+ static struct kmem_cache *dic_entry_slab;
  
- static LIST_HEAD(f2fs_stat_list);
--static DEFINE_RAW_SPINLOCK(f2fs_stat_lock);
-+static DEFINE_SPINLOCK(f2fs_stat_lock);
- #ifdef CONFIG_DEBUG_FS
- static struct dentry *f2fs_debugfs_root;
- #endif
-@@ -439,9 +439,8 @@ static int stat_show(struct seq_file *s, void *v)
+-static void *page_array_alloc(struct inode *inode, int nr)
++static void *page_array_alloc(struct f2fs_sb_info *sbi, int nr)
  {
- 	struct f2fs_stat_info *si;
- 	int i = 0, j = 0;
--	unsigned long flags;
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	unsigned int size = sizeof(struct page *) * nr;
  
--	raw_spin_lock_irqsave(&f2fs_stat_lock, flags);
-+	spin_lock(&f2fs_stat_lock);
- 	list_for_each_entry(si, &f2fs_stat_list, stat_list) {
- 		struct f2fs_sb_info *sbi = si->sbi;
+ 	if (likely(size <= sbi->page_array_slab_size))
+ 		return f2fs_kmem_cache_alloc(sbi->page_array_slab,
+-					GFP_F2FS_ZERO, false, F2FS_I_SB(inode));
++					GFP_F2FS_ZERO, false, sbi);
+ 	return f2fs_kzalloc(sbi, size, GFP_NOFS);
+ }
  
-@@ -753,7 +752,7 @@ static int stat_show(struct seq_file *s, void *v)
- 		seq_printf(s, "  - paged : %llu KB\n",
- 				si->page_mem >> 10);
+-static void page_array_free(struct inode *inode, void *pages, int nr)
++static void page_array_free(struct f2fs_sb_info *sbi, void *pages, int nr)
+ {
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	unsigned int size = sizeof(struct page *) * nr;
+ 
+ 	if (!pages)
+@@ -149,13 +147,13 @@ int f2fs_init_compress_ctx(struct compress_ctx *cc)
+ 	if (cc->rpages)
+ 		return 0;
+ 
+-	cc->rpages = page_array_alloc(cc->inode, cc->cluster_size);
++	cc->rpages = page_array_alloc(F2FS_I_SB(cc->inode), cc->cluster_size);
+ 	return cc->rpages ? 0 : -ENOMEM;
+ }
+ 
+ void f2fs_destroy_compress_ctx(struct compress_ctx *cc, bool reuse)
+ {
+-	page_array_free(cc->inode, cc->rpages, cc->cluster_size);
++	page_array_free(F2FS_I_SB(cc->inode), cc->rpages, cc->cluster_size);
+ 	cc->rpages = NULL;
+ 	cc->nr_rpages = 0;
+ 	cc->nr_cpages = 0;
+@@ -622,6 +620,7 @@ static void *f2fs_vmap(struct page **pages, unsigned int count)
+ 
+ static int f2fs_compress_pages(struct compress_ctx *cc)
+ {
++	struct f2fs_sb_info *sbi = F2FS_I_SB(cc->inode);
+ 	struct f2fs_inode_info *fi = F2FS_I(cc->inode);
+ 	const struct f2fs_compress_ops *cops =
+ 				f2fs_cops[fi->i_compress_algorithm];
+@@ -642,7 +641,7 @@ static int f2fs_compress_pages(struct compress_ctx *cc)
+ 	cc->nr_cpages = DIV_ROUND_UP(max_len, PAGE_SIZE);
+ 	cc->valid_nr_cpages = cc->nr_cpages;
+ 
+-	cc->cpages = page_array_alloc(cc->inode, cc->nr_cpages);
++	cc->cpages = page_array_alloc(sbi, cc->nr_cpages);
+ 	if (!cc->cpages) {
+ 		ret = -ENOMEM;
+ 		goto destroy_compress_ctx;
+@@ -716,7 +715,7 @@ static int f2fs_compress_pages(struct compress_ctx *cc)
+ 		if (cc->cpages[i])
+ 			f2fs_compress_free_page(cc->cpages[i]);
  	}
--	raw_spin_unlock_irqrestore(&f2fs_stat_lock, flags);
-+	spin_unlock(&f2fs_stat_lock);
+-	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
++	page_array_free(sbi, cc->cpages, cc->nr_cpages);
+ 	cc->cpages = NULL;
+ destroy_compress_ctx:
+ 	if (cops->destroy_compress_ctx)
+@@ -1340,7 +1339,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
+ 	cic->magic = F2FS_COMPRESSED_PAGE_MAGIC;
+ 	cic->inode = inode;
+ 	atomic_set(&cic->pending_pages, cc->valid_nr_cpages);
+-	cic->rpages = page_array_alloc(cc->inode, cc->cluster_size);
++	cic->rpages = page_array_alloc(sbi, cc->cluster_size);
+ 	if (!cic->rpages)
+ 		goto out_put_cic;
+ 
+@@ -1442,13 +1441,13 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
+ 	spin_unlock(&fi->i_size_lock);
+ 
+ 	f2fs_put_rpages(cc);
+-	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
++	page_array_free(sbi, cc->cpages, cc->nr_cpages);
+ 	cc->cpages = NULL;
+ 	f2fs_destroy_compress_ctx(cc, false);
  	return 0;
+ 
+ out_destroy_crypt:
+-	page_array_free(cc->inode, cic->rpages, cc->cluster_size);
++	page_array_free(sbi, cic->rpages, cc->cluster_size);
+ 
+ 	for (--i; i >= 0; i--) {
+ 		if (!cc->cpages[i])
+@@ -1469,7 +1468,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
+ 		f2fs_compress_free_page(cc->cpages[i]);
+ 		cc->cpages[i] = NULL;
+ 	}
+-	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
++	page_array_free(sbi, cc->cpages, cc->nr_cpages);
+ 	cc->cpages = NULL;
+ 	return -EAGAIN;
+ }
+@@ -1499,7 +1498,7 @@ void f2fs_compress_write_end_io(struct bio *bio, struct page *page)
+ 		end_page_writeback(cic->rpages[i]);
+ 	}
+ 
+-	page_array_free(cic->inode, cic->rpages, cic->nr_rpages);
++	page_array_free(sbi, cic->rpages, cic->nr_rpages);
+ 	kmem_cache_free(cic_entry_slab, cic);
  }
  
-@@ -765,7 +764,6 @@ int f2fs_build_stats(struct f2fs_sb_info *sbi)
- 	struct f2fs_super_block *raw_super = F2FS_RAW_SUPER(sbi);
- 	struct f2fs_stat_info *si;
- 	struct f2fs_dev_stats *dev_stats;
--	unsigned long flags;
- 	int i;
+@@ -1640,7 +1639,7 @@ static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
+ 	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
+ 		return 0;
  
- 	si = f2fs_kzalloc(sbi, sizeof(struct f2fs_stat_info), GFP_KERNEL);
-@@ -817,9 +815,9 @@ int f2fs_build_stats(struct f2fs_sb_info *sbi)
+-	dic->tpages = page_array_alloc(dic->inode, dic->cluster_size);
++	dic->tpages = page_array_alloc(F2FS_I_SB(dic->inode), dic->cluster_size);
+ 	if (!dic->tpages)
+ 		return -ENOMEM;
  
- 	atomic_set(&sbi->max_aw_cnt, 0);
+@@ -1700,7 +1699,7 @@ struct decompress_io_ctx *f2fs_alloc_dic(struct compress_ctx *cc)
+ 	if (!dic)
+ 		return ERR_PTR(-ENOMEM);
  
--	raw_spin_lock_irqsave(&f2fs_stat_lock, flags);
-+	spin_lock(&f2fs_stat_lock);
- 	list_add_tail(&si->stat_list, &f2fs_stat_list);
--	raw_spin_unlock_irqrestore(&f2fs_stat_lock, flags);
-+	spin_unlock(&f2fs_stat_lock);
+-	dic->rpages = page_array_alloc(cc->inode, cc->cluster_size);
++	dic->rpages = page_array_alloc(sbi, cc->cluster_size);
+ 	if (!dic->rpages) {
+ 		kmem_cache_free(dic_entry_slab, dic);
+ 		return ERR_PTR(-ENOMEM);
+@@ -1721,7 +1720,7 @@ struct decompress_io_ctx *f2fs_alloc_dic(struct compress_ctx *cc)
+ 		dic->rpages[i] = cc->rpages[i];
+ 	dic->nr_rpages = cc->cluster_size;
  
- 	return 0;
- }
-@@ -827,11 +825,10 @@ int f2fs_build_stats(struct f2fs_sb_info *sbi)
- void f2fs_destroy_stats(struct f2fs_sb_info *sbi)
+-	dic->cpages = page_array_alloc(dic->inode, dic->nr_cpages);
++	dic->cpages = page_array_alloc(sbi, dic->nr_cpages);
+ 	if (!dic->cpages) {
+ 		ret = -ENOMEM;
+ 		goto out_free;
+@@ -1751,6 +1750,7 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
+ 		bool bypass_destroy_callback)
  {
- 	struct f2fs_stat_info *si = F2FS_STAT(sbi);
--	unsigned long flags;
+ 	int i;
++	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
  
--	raw_spin_lock_irqsave(&f2fs_stat_lock, flags);
-+	spin_lock(&f2fs_stat_lock);
- 	list_del(&si->stat_list);
--	raw_spin_unlock_irqrestore(&f2fs_stat_lock, flags);
-+	spin_unlock(&f2fs_stat_lock);
+ 	f2fs_release_decomp_mem(dic, bypass_destroy_callback, true);
  
- 	kfree(si->dev_stats);
- 	kfree(si);
+@@ -1762,7 +1762,7 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
+ 				continue;
+ 			f2fs_compress_free_page(dic->tpages[i]);
+ 		}
+-		page_array_free(dic->inode, dic->tpages, dic->cluster_size);
++		page_array_free(sbi, dic->tpages, dic->cluster_size);
+ 	}
+ 
+ 	if (dic->cpages) {
+@@ -1771,10 +1771,10 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
+ 				continue;
+ 			f2fs_compress_free_page(dic->cpages[i]);
+ 		}
+-		page_array_free(dic->inode, dic->cpages, dic->nr_cpages);
++		page_array_free(sbi, dic->cpages, dic->nr_cpages);
+ 	}
+ 
+-	page_array_free(dic->inode, dic->rpages, dic->nr_rpages);
++	page_array_free(sbi, dic->rpages, dic->nr_rpages);
+ 	kmem_cache_free(dic_entry_slab, dic);
+ }
+ 
 -- 
 2.39.5
 
