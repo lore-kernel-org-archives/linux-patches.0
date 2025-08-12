@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916311C1AAA;
-	Tue, 12 Aug 2025 19:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04B0283FE4;
+	Tue, 12 Aug 2025 19:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025459; cv=none; b=arU1TkN0ZdIoa2USOpqB3Nv2TJQ1a29YS2iqA5xrCThb09d6CJyjFxerQfcSJlwsF1aDNq/GCAfZOHbAVKuBZwvZS3FIn7rfP1Jm2TnFQ7bar8E6xYfkl7IwqT3mJW6xSHArjgB2c0Huh3ievcKtZR+lprhdMEecqOmkBV2D2pQ=
+	t=1755025463; cv=none; b=Wbm5pRWsp2O6HoNUQ0jDmAFhu4kOhd7j8FH3ketPArw7SNTOaUHYAccRmBaPrm3m8RtW6+XVpFn0xYE55ZjFSVdQPDj0BXbM/cIRQRxokvN/WfIHMlsznmBHYbmICWV52FCYy7k6RUclB1078kywC8CP58ooE4rHUnPhp5uKZxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025459; c=relaxed/simple;
-	bh=OE9jsVAQ5aU1dogaQ5ywRRpioy7wkHmJu4fsTvWPEdQ=;
+	s=arc-20240116; t=1755025463; c=relaxed/simple;
+	bh=UxdfNm/I+vmbir9ICHHVR7mlVYVxCCqOjHpsZFEEs04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mjuIYy3mcoq79P+PhsmjseKpxQl6T5ws+SDqiiG6FwkXSpkxvHWBx6L24oA1s40FTRjvep53H/BTn+9OIYSoSG3l5l9Gn3ZgWv9T0m1K33xt8Zjw8m8F6o5tmgq31x8a04yKJt0FX8GOuzEpvRzAjQnFmkS/063Breq8cszS32c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+wHOaV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QMp9xp2oI2OMBztIfRm5Qry8/JqdpuVi6MNciZvoaa+sOC9hmv70tFu+3k6/bEtk1i+t/wKqU3En1xCr3AYWQQjT7dN/+EMmgyh6lECWEJmLxQUbt9REpUT9W214+OW/IzXXmpwd5dwgyxQC1s9pJIgVBx3h8g4U8FSLZKZTUpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+xLwf26; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+wHOaV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2721C4CEF0;
-	Tue, 12 Aug 2025 19:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+xLwf26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD99C4CEF0;
+	Tue, 12 Aug 2025 19:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025459;
-	bh=OE9jsVAQ5aU1dogaQ5ywRRpioy7wkHmJu4fsTvWPEdQ=;
+	s=korg; t=1755025462;
+	bh=UxdfNm/I+vmbir9ICHHVR7mlVYVxCCqOjHpsZFEEs04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q+wHOaV3XE2TzI7bPl7/KPrd9gmclnD2STOmjuS46d1/T9CVVxcyAmnsgKTUF+Snr
-	 Yq5cx/Gn4bhKclo+HotAxcvZo+I+7cekwu/ZuAHzohColQMo+pFeI+uQalb6qdUGvX
-	 0W0luRlQEkPV2elwn+2DTSl0j65nvvo/g/Bfsl58=
+	b=u+xLwf26qjs6pwp8lIO9sni7zznoBUbP3V3D2PB3TdH7Y7ziNkoF+/ikpxYe/A7fy
+	 61G1Z/FJgyYrRl9B/MKhptT0XRc8AJxd1cB0Heb4D0/FTa8chvW0EBNC5pxR6rxzfg
+	 5AwNtukANfb8n9QLUte62gD/BZODY0u1oBASbAvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>
-Subject: [PATCH 6.15 003/480] ethernet: intel: fix building with large NR_CPUS
-Date: Tue, 12 Aug 2025 19:43:31 +0200
-Message-ID: <20250812174357.443167594@linuxfoundation.org>
+	Lijuan Gao <lijuan.gao@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 041/480] arm64: dts: qcom: sa8775p: Correct the interrupt for remoteproc
+Date: Tue, 12 Aug 2025 19:44:09 +0200
+Message-ID: <20250812174359.098663289@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -49,102 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Lijuan Gao <lijuan.gao@oss.qualcomm.com>
 
-[ Upstream commit 24171a5a4a952c26568ff0d2a0bc8c4708a95e1d ]
+[ Upstream commit 7bd7209e9cb11c8864e601d915008da088476f0c ]
 
-With large values of CONFIG_NR_CPUS, three Intel ethernet drivers fail to
-compile like:
+Fix the incorrect IRQ numbers for ready and handover on sa8775p.
+The correct values are as follows:
 
-In function ‘i40e_free_q_vector’,
-    inlined from ‘i40e_vsi_alloc_q_vectors’ at drivers/net/ethernet/intel/i40e/i40e_main.c:12112:3:
-  571 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-include/linux/rcupdate.h:1084:17: note: in expansion of macro ‘BUILD_BUG_ON’
- 1084 |                 BUILD_BUG_ON(offsetof(typeof(*(ptr)), rhf) >= 4096);    \
-drivers/net/ethernet/intel/i40e/i40e_main.c:5113:9: note: in expansion of macro ‘kfree_rcu’
- 5113 |         kfree_rcu(q_vector, rcu);
-      |         ^~~~~~~~~
+Fatal interrupt - 0
+Ready interrupt - 1
+Handover interrupt - 2
+Stop acknowledge interrupt - 3
 
-The problem is that the 'rcu' member in 'q_vector' is too far from the start
-of the structure. Move this member before the CPU mask instead, in all three
-drivers.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: David S. Miller <davem@davemloft.net>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: df54dcb34ff2e ("arm64: dts: qcom: sa8775p: add ADSP, CDSP and GPDSP nodes")
+Signed-off-by: Lijuan Gao <lijuan.gao@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250612-correct_interrupt_for_remoteproc-v1-2-490ee6d92a1b@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/fm10k/fm10k.h | 3 ++-
- drivers/net/ethernet/intel/i40e/i40e.h   | 2 +-
- drivers/net/ethernet/intel/ixgbe/ixgbe.h | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k.h b/drivers/net/ethernet/intel/fm10k/fm10k.h
-index 6119a4108838..65a2816142d9 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k.h
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k.h
-@@ -189,13 +189,14 @@ struct fm10k_q_vector {
- 	struct fm10k_ring_container rx, tx;
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index 2010b7988b6c..958e4be164d8 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -4663,8 +4663,8 @@ remoteproc_gpdsp0: remoteproc@20c00000 {
  
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
-+
- 	cpumask_t affinity_mask;
- 	char name[IFNAMSIZ + 9];
+ 			interrupts-extended = <&intc GIC_SPI 768 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_gpdsp0_in 0 0>,
+-					      <&smp2p_gpdsp0_in 2 0>,
+ 					      <&smp2p_gpdsp0_in 1 0>,
++					      <&smp2p_gpdsp0_in 2 0>,
+ 					      <&smp2p_gpdsp0_in 3 0>;
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+@@ -4706,8 +4706,8 @@ remoteproc_gpdsp1: remoteproc@21c00000 {
  
- #ifdef CONFIG_DEBUG_FS
- 	struct dentry *dbg_q_vector;
- #endif /* CONFIG_DEBUG_FS */
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 			interrupts-extended = <&intc GIC_SPI 624 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_gpdsp1_in 0 0>,
+-					      <&smp2p_gpdsp1_in 2 0>,
+ 					      <&smp2p_gpdsp1_in 1 0>,
++					      <&smp2p_gpdsp1_in 2 0>,
+ 					      <&smp2p_gpdsp1_in 3 0>;
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+@@ -4847,8 +4847,8 @@ remoteproc_cdsp0: remoteproc@26300000 {
  
- 	/* for dynamic allocation of rings associated with this q_vector */
- 	struct fm10k_ring ring[] ____cacheline_internodealigned_in_smp;
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
-index c67963bfe14e..7c600d6e66ba 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -945,6 +945,7 @@ struct i40e_q_vector {
- 	u16 reg_idx;		/* register index of the interrupt */
+ 			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp0_in 0 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_cdsp0_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp0_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_cdsp0_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp0_in 3 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+@@ -4979,8 +4979,8 @@ remoteproc_cdsp1: remoteproc@2a300000 {
  
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 			interrupts-extended = <&intc GIC_SPI 798 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp1_in 0 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_cdsp1_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp1_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_cdsp1_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp1_in 3 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+@@ -5135,8 +5135,8 @@ remoteproc_adsp: remoteproc@30000000 {
  
- 	struct i40e_ring_container rx;
- 	struct i40e_ring_container tx;
-@@ -955,7 +956,6 @@ struct i40e_q_vector {
- 	cpumask_t affinity_mask;
- 	struct irq_affinity_notify affinity_notify;
- 
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 	char name[I40E_INT_NAME_STR_LEN];
- 	bool arm_wb_state;
- 	bool in_busy_poll;
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe.h b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-index e6a380d4929b..fb43fba5daa1 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-@@ -505,9 +505,10 @@ struct ixgbe_q_vector {
- 	struct ixgbe_ring_container rx, tx;
- 
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
-+
- 	cpumask_t affinity_mask;
- 	int numa_node;
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 	char name[IFNAMSIZ + 9];
- 
- 	/* for dynamic allocation of rings associated with this q_vector */
+ 			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "wdog", "fatal", "ready", "handover",
+ 					  "stop-ack";
 -- 
 2.39.5
 
