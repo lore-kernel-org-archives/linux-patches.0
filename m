@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342A3302CCC;
-	Tue, 12 Aug 2025 19:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E4F2F8BC3;
+	Tue, 12 Aug 2025 19:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026642; cv=none; b=cyRkmwMx5HWJ+JcTFLt2bdFMjfxaF1TM5MJ4g9QpQDQBV7ceWAmNUaZ6QjuhJODl4ak+/9+6zNya/0zViuf9WKQVQWlAY0S/pbqRD4+rxmbSnekyyRIoFP0a+Si+TUfcxyYfEiWd8oPVZrYkvRkoY5hekogW0p9kNje8oi8Z/rQ=
+	t=1755026645; cv=none; b=ClBiGoldEkTkZcsVBG5N5ZrE/u6V7RCRO6S5kVbCx6DuTai8waWC/bz8z5MGiD/luMvhtNFSEx2NxyFFeOzjTY85HzNza9vKaG8jZe0EGtUpg3I8DfFoeOuorgP9g1tWdotcGRQG1ZpkoZ5Mkpa4PUU4vfcMA8ZsxW2MEXKEjts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026642; c=relaxed/simple;
-	bh=4Nfr3NIkfADejPZNfnrUzTvck9MAv+QmjpjKs0HaPgU=;
+	s=arc-20240116; t=1755026645; c=relaxed/simple;
+	bh=N+wIUpTMrAwiqmdd/Rs6nqxpClB5rR/3rQvCs8EY7bU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3jzCs+Ffk8u9p8dyQH4N1VebCU56QWv2hWdbDYTRfaUj3rbf9AMo4vCLtBijUtZT4AIFwEb9yuSEMrubloptb4VWetoaRZTfU7ndt1/NK9SfZyO7CFHGzF4gZnUF4IaK8zGAB12PP55MHCByFcp9sY9kX9FkCXgoAhIwWwlF6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/+jzKYH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dt7/C6hWKMisi8vjCVtXq5Aj1Bk6gnRpujBA8aN4WZqOF2A+pH641KgTg6rCgvrPkB1P4JA39yscj+2+lNjUKI3+NPewuw79z7Q7yhm+BEK5Ny7OIIGtThbubVkS0A2im6KqsPWQePH2QmB9vPP4KSlZMeWwdjdJuAe4pvm8CHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZbqzHxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/+jzKYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B620C4CEF7;
-	Tue, 12 Aug 2025 19:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZbqzHxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF20BC4CEF0;
+	Tue, 12 Aug 2025 19:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026642;
-	bh=4Nfr3NIkfADejPZNfnrUzTvck9MAv+QmjpjKs0HaPgU=;
+	s=korg; t=1755026645;
+	bh=N+wIUpTMrAwiqmdd/Rs6nqxpClB5rR/3rQvCs8EY7bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/+jzKYHKfIdo5e0dvT7a+SgYUo0A1CVp0QdHBTI6fUXwWMdRzKWeHpNzQAWbqppr
-	 8h/OudmGyE8bWZ/CKL4Gw9dBE9EO8SUUTsK+6E/toqtGF/HXqWnfVLzPR7s0fwTxRQ
-	 ziAGyqt36O5agmNGGaq2zd0pts392cj5Ffq62C4I=
+	b=iZbqzHxS03WdcFG6/e5A8B6RqNP6YRf/Tp38jhRV9Xuv8m+41vRzRD0LzZqAjHYrJ
+	 JDbGJp48WnNCEU+CpFjqaSFUAGgm5BJf7hhigwKgHia4+bZ/z5uKAPAM2sKek3WVq5
+	 iUkNhc28ZwQQ0MwDo3DcSu/fF2rlYbsYBgFu6bXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baojun Xu <baojun.xu@ti.com>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 396/480] ASoC: tas2781: Fix the wrong step for TLV on tas2781
-Date: Tue, 12 Aug 2025 19:50:04 +0200
-Message-ID: <20250812174413.761437952@linuxfoundation.org>
+Subject: [PATCH 6.15 397/480] spi: cs42l43: Property entry should be a null-terminated array
+Date: Tue, 12 Aug 2025 19:50:05 +0200
+Message-ID: <20250812174413.800957885@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,34 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baojun Xu <baojun.xu@ti.com>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit 9843cf7b6fd6f938c16fde51e86dd0e3ddbefb12 ]
+[ Upstream commit ffcfd071eec7973e58c4ffff7da4cb0e9ca7b667 ]
 
-The step for TLV on tas2781, should be 50 (-0.5dB).
+The software node does not specify a count of property entries, so the
+array must be null-terminated.
 
-Fixes: 678f38eba1f2 ("ASoC: tas2781: Add Header file for tas2781 driver")
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20250801021618.64627-1-baojun.xu@ti.com
+When unterminated, this can lead to a fault in the downstream cs35l56
+amplifier driver, because the node parse walks off the end of the
+array into unknown memory.
+
+Fixes: 0ca645ab5b15 ("spi: cs42l43: Add speaker id support to the bridge configuration")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220371
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250731160109.1547131-1-simont@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/tas2781-tlv.h | 2 +-
+ drivers/spi/spi-cs42l43.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/sound/tas2781-tlv.h b/include/sound/tas2781-tlv.h
-index d87263e43fdb..ef9b9f19d212 100644
---- a/include/sound/tas2781-tlv.h
-+++ b/include/sound/tas2781-tlv.h
-@@ -15,7 +15,7 @@
- #ifndef __TAS2781_TLV_H__
- #define __TAS2781_TLV_H__
+diff --git a/drivers/spi/spi-cs42l43.c b/drivers/spi/spi-cs42l43.c
+index ceefc253c549..004801c2c925 100644
+--- a/drivers/spi/spi-cs42l43.c
++++ b/drivers/spi/spi-cs42l43.c
+@@ -293,7 +293,7 @@ static struct spi_board_info *cs42l43_create_bridge_amp(struct cs42l43_spi *priv
+ 	struct spi_board_info *info;
  
--static const __maybe_unused DECLARE_TLV_DB_SCALE(dvc_tlv, -10000, 100, 0);
-+static const __maybe_unused DECLARE_TLV_DB_SCALE(dvc_tlv, -10000, 50, 0);
- static const __maybe_unused DECLARE_TLV_DB_SCALE(amp_vol_tlv, 1100, 50, 0);
+ 	if (spkid >= 0) {
+-		props = devm_kmalloc(priv->dev, sizeof(*props), GFP_KERNEL);
++		props = devm_kcalloc(priv->dev, 2, sizeof(*props), GFP_KERNEL);
+ 		if (!props)
+ 			return NULL;
  
- #endif
 -- 
 2.39.5
 
