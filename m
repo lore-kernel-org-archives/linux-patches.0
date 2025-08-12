@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912A51DB92A;
-	Tue, 12 Aug 2025 18:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5A01DB92A;
+	Tue, 12 Aug 2025 18:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023800; cv=none; b=dNrRdrF1fJ9KTNp25mnFZEt3SFeF1ch4WNuFCzRrn+Thp44qfFveO5+hKdjLAXvfTqh1Z7lb7pPHT7wwuMcNHqoAwG3GWfXJ2cyXDNqUvszjZyujB0qih5ALUjfF6HgdDVKqrpw/QizV6Ob87tl0KpTvPNBjs/7bUw3fwL/sqsI=
+	t=1755023803; cv=none; b=oc3KYFAgTqI/eU+U+6cuGQRu2Hv275nl09QEWeJ2JuLfLyilzyC5Q7IDxIq+ZA4tNxCK/8OALRifb7DuIm5XLxfblFcWxFH90dtWTddDMMtzUzHKn1uq0Cx5t4YGtfARbjXoi9KbigDt/30mAD59PwaSPtcU81u0cpPafWvR0UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023800; c=relaxed/simple;
-	bh=H2P1itVfZFMwkcJLbednhCJVsFXnbE7aOk6XXBoN69I=;
+	s=arc-20240116; t=1755023803; c=relaxed/simple;
+	bh=F3LbTngjBDo/znU0NAyPVgNoqndhHsDPZ4xeREmGkuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZBV3fYWwvIKp/mlmMCsnyqYi3AM8oGwx4lEnMaUEARIdlBUUr8bWz/6Ag5TlNU8sUUm7VEXknOppZk/Ggm/5A4uBVFCmThAAKjNuaDpaP8ZgBKBE+OWUmPUqXDPcSbza9CQ43ciboxkaLTeIG2rrEEt90kB3xoeYqCxL+6X9zg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkZsCodr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjFusfKkNKYD+s28tHlDvyEthr9LNsRfFcrZJjYwZvMX52gQVESjCK5kMsBvrzIYTKkjdy1oueIur94tosh8dJ2RQI4d2xItjv+qqSf0a+3NJwWmet77yl8I0eW1mm0B4sOzW0L1tCoc8C0UqBQCMOxLjwp4XsQn0xO2RAA3qOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLXkX+ko; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkZsCodr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105CBC4CEF0;
-	Tue, 12 Aug 2025 18:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLXkX+ko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C50BC4CEF0;
+	Tue, 12 Aug 2025 18:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023800;
-	bh=H2P1itVfZFMwkcJLbednhCJVsFXnbE7aOk6XXBoN69I=;
+	s=korg; t=1755023803;
+	bh=F3LbTngjBDo/znU0NAyPVgNoqndhHsDPZ4xeREmGkuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkZsCodrPgCggZnLaShkiA1LAWwR7IAcpPe61PpbY8iGNBwIWgOeGck40RP9Lm1cp
-	 csE0ew+dN7lQX3x6c82O3xGtxMSTUnjkK6L81eh165PrQvJCIo9pD+te5xhOFBhRs8
-	 AqiUDwZUs6VcJiroRzh84Qw69HdpAwI3C+UTWpkk=
+	b=cLXkX+kouUTxyUisfHRXUTcv0m8MEMsX0RpOME+kK1ph5cjGAeSGtw0+WUZpeTlBV
+	 itXzAmYqRWevSfjf5Uz55IpARSCHAmrjgBFUdSy1ES+KEUow3Sgk3bGymVkIUSkXDp
+	 KYG/rS+ITMcsBNeM/cybv/KZfvVn0HqQX6Uozc6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot+705c61d60b091ef42c04@syzkaller.appspotmail.com,
+	syzbot+71fd22ae4b81631e22fd@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 186/627] wifi: mt76: mt7996: Fix valid_links bitmask in mt7996_mac_sta_{add,remove}
-Date: Tue, 12 Aug 2025 19:28:01 +0200
-Message-ID: <20250812173426.352664380@linuxfoundation.org>
+Subject: [PATCH 6.16 169/627] team: replace team lock with rtnl lock
+Date: Tue, 12 Aug 2025 19:27:44 +0200
+Message-ID: <20250812173425.709715049@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,42 +55,422 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit a59650a2270190905fdab79431140371feb35251 ]
+[ Upstream commit bfb4fb77f9a8ce33ce357224569eae5564eec573 ]
 
-sta->valid_links bitmask can be set even for non-MLO client.
+syszbot reports various ordering issues for lower instance locks and
+team lock. Switch to using rtnl lock for protecting team device,
+similar to bonding. Based on the patch by Tetsuo Handa.
 
-Fixes: dd82a9e02c054 ("wifi: mt76: mt7996: Rely on mt7996_sta_link in sta_add/sta_remove callbacks")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250704-mt7996-mlo-fixes-v1-7-356456c73f43@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reported-by: syzbot+705c61d60b091ef42c04@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=705c61d60b091ef42c04
+Reported-by: syzbot+71fd22ae4b81631e22fd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=71fd22ae4b81631e22fd
+Fixes: 6b1d3c5f675c ("team: grab team lock during team_change_rx_flags")
+Link: https://lkml.kernel.org/r/ZoZ2RH9BcahEB9Sb@nanopsycho.orion
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250623153147.3413631-1-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/team/team_core.c              | 96 +++++++++++------------
+ drivers/net/team/team_mode_activebackup.c |  3 +-
+ drivers/net/team/team_mode_loadbalance.c  | 13 ++-
+ include/linux/if_team.h                   |  3 -
+ 4 files changed, 50 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 44b4e48e499d..f41b2c98bc45 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1061,7 +1061,7 @@ mt7996_mac_sta_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
- 	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
--	unsigned long links = sta->mlo ? sta->valid_links : BIT(0);
-+	unsigned long links = sta->valid_links ? sta->valid_links : BIT(0);
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 8bc56186b2a3..17f07eb0ee52 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -933,7 +933,7 @@ static bool team_port_find(const struct team *team,
+  * Enable/disable port by adding to enabled port hashlist and setting
+  * port->index (Might be racy so reader could see incorrect ifindex when
+  * processing a flying packet, but that is not a problem). Write guarded
+- * by team->lock.
++ * by RTNL.
+  */
+ static void team_port_enable(struct team *team,
+ 			     struct team_port *port)
+@@ -1660,8 +1660,6 @@ static int team_init(struct net_device *dev)
+ 		goto err_options_register;
+ 	netif_carrier_off(dev);
+ 
+-	lockdep_register_key(&team->team_lock_key);
+-	__mutex_init(&team->lock, "team->team_lock_key", &team->team_lock_key);
+ 	netdev_lockdep_set_classes(dev);
+ 
+ 	return 0;
+@@ -1682,7 +1680,8 @@ static void team_uninit(struct net_device *dev)
+ 	struct team_port *port;
+ 	struct team_port *tmp;
+ 
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	list_for_each_entry_safe(port, tmp, &team->port_list, list)
+ 		team_port_del(team, port->dev);
+ 
+@@ -1691,9 +1690,7 @@ static void team_uninit(struct net_device *dev)
+ 	team_mcast_rejoin_fini(team);
+ 	team_notify_peers_fini(team);
+ 	team_queue_override_fini(team);
+-	mutex_unlock(&team->lock);
+ 	netdev_change_features(dev);
+-	lockdep_unregister_key(&team->team_lock_key);
+ }
+ 
+ static void team_destructor(struct net_device *dev)
+@@ -1778,7 +1775,8 @@ static void team_change_rx_flags(struct net_device *dev, int change)
+ 	struct team_port *port;
+ 	int inc;
+ 
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	list_for_each_entry(port, &team->port_list, list) {
+ 		if (change & IFF_PROMISC) {
+ 			inc = dev->flags & IFF_PROMISC ? 1 : -1;
+@@ -1789,7 +1787,6 @@ static void team_change_rx_flags(struct net_device *dev, int change)
+ 			dev_set_allmulti(port->dev, inc);
+ 		}
+ 	}
+-	mutex_unlock(&team->lock);
+ }
+ 
+ static void team_set_rx_mode(struct net_device *dev)
+@@ -1811,14 +1808,14 @@ static int team_set_mac_address(struct net_device *dev, void *p)
+ 	struct team *team = netdev_priv(dev);
+ 	struct team_port *port;
+ 
++	ASSERT_RTNL();
++
+ 	if (dev->type == ARPHRD_ETHER && !is_valid_ether_addr(addr->sa_data))
+ 		return -EADDRNOTAVAIL;
+ 	dev_addr_set(dev, addr->sa_data);
+-	mutex_lock(&team->lock);
+ 	list_for_each_entry(port, &team->port_list, list)
+ 		if (team->ops.port_change_dev_addr)
+ 			team->ops.port_change_dev_addr(team, port);
+-	mutex_unlock(&team->lock);
+ 	return 0;
+ }
+ 
+@@ -1828,11 +1825,8 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
+ 	struct team_port *port;
  	int err;
  
- 	mutex_lock(&mdev->mutex);
-@@ -1155,7 +1155,7 @@ mt7996_mac_sta_remove(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- {
- 	struct mt76_dev *mdev = mphy->dev;
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
--	unsigned long links = sta->mlo ? sta->valid_links : BIT(0);
-+	unsigned long links = sta->valid_links ? sta->valid_links : BIT(0);
+-	/*
+-	 * Alhough this is reader, it's guarded by team lock. It's not possible
+-	 * to traverse list in reverse under rcu_read_lock
+-	 */
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	team->port_mtu_change_allowed = true;
+ 	list_for_each_entry(port, &team->port_list, list) {
+ 		err = dev_set_mtu(port->dev, new_mtu);
+@@ -1843,7 +1837,6 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
+ 		}
+ 	}
+ 	team->port_mtu_change_allowed = false;
+-	mutex_unlock(&team->lock);
  
- 	mutex_lock(&mdev->mutex);
+ 	WRITE_ONCE(dev->mtu, new_mtu);
+ 
+@@ -1853,7 +1846,6 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
+ 	list_for_each_entry_continue_reverse(port, &team->port_list, list)
+ 		dev_set_mtu(port->dev, dev->mtu);
+ 	team->port_mtu_change_allowed = false;
+-	mutex_unlock(&team->lock);
+ 
+ 	return err;
+ }
+@@ -1903,24 +1895,19 @@ static int team_vlan_rx_add_vid(struct net_device *dev, __be16 proto, u16 vid)
+ 	struct team_port *port;
+ 	int err;
+ 
+-	/*
+-	 * Alhough this is reader, it's guarded by team lock. It's not possible
+-	 * to traverse list in reverse under rcu_read_lock
+-	 */
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	list_for_each_entry(port, &team->port_list, list) {
+ 		err = vlan_vid_add(port->dev, proto, vid);
+ 		if (err)
+ 			goto unwind;
+ 	}
+-	mutex_unlock(&team->lock);
+ 
+ 	return 0;
+ 
+ unwind:
+ 	list_for_each_entry_continue_reverse(port, &team->port_list, list)
+ 		vlan_vid_del(port->dev, proto, vid);
+-	mutex_unlock(&team->lock);
+ 
+ 	return err;
+ }
+@@ -1930,10 +1917,10 @@ static int team_vlan_rx_kill_vid(struct net_device *dev, __be16 proto, u16 vid)
+ 	struct team *team = netdev_priv(dev);
+ 	struct team_port *port;
+ 
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	list_for_each_entry(port, &team->port_list, list)
+ 		vlan_vid_del(port->dev, proto, vid);
+-	mutex_unlock(&team->lock);
+ 
+ 	return 0;
+ }
+@@ -1955,9 +1942,9 @@ static void team_netpoll_cleanup(struct net_device *dev)
+ {
+ 	struct team *team = netdev_priv(dev);
+ 
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	__team_netpoll_cleanup(team);
+-	mutex_unlock(&team->lock);
+ }
+ 
+ static int team_netpoll_setup(struct net_device *dev)
+@@ -1966,7 +1953,8 @@ static int team_netpoll_setup(struct net_device *dev)
+ 	struct team_port *port;
+ 	int err = 0;
+ 
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	list_for_each_entry(port, &team->port_list, list) {
+ 		err = __team_port_enable_netpoll(port);
+ 		if (err) {
+@@ -1974,7 +1962,6 @@ static int team_netpoll_setup(struct net_device *dev)
+ 			break;
+ 		}
+ 	}
+-	mutex_unlock(&team->lock);
+ 	return err;
+ }
+ #endif
+@@ -1985,9 +1972,9 @@ static int team_add_slave(struct net_device *dev, struct net_device *port_dev,
+ 	struct team *team = netdev_priv(dev);
+ 	int err;
+ 
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	err = team_port_add(team, port_dev, extack);
+-	mutex_unlock(&team->lock);
+ 
+ 	if (!err)
+ 		netdev_change_features(dev);
+@@ -2000,18 +1987,13 @@ static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
+ 	struct team *team = netdev_priv(dev);
+ 	int err;
+ 
+-	mutex_lock(&team->lock);
++	ASSERT_RTNL();
++
+ 	err = team_port_del(team, port_dev);
+-	mutex_unlock(&team->lock);
+ 
+ 	if (err)
+ 		return err;
+ 
+-	if (netif_is_team_master(port_dev)) {
+-		lockdep_unregister_key(&team->team_lock_key);
+-		lockdep_register_key(&team->team_lock_key);
+-		lockdep_set_class(&team->lock, &team->team_lock_key);
+-	}
+ 	netdev_change_features(dev);
+ 
+ 	return err;
+@@ -2304,9 +2286,10 @@ int team_nl_noop_doit(struct sk_buff *skb, struct genl_info *info)
+ static struct team *team_nl_team_get(struct genl_info *info)
+ {
+ 	struct net *net = genl_info_net(info);
+-	int ifindex;
+ 	struct net_device *dev;
+-	struct team *team;
++	int ifindex;
++
++	ASSERT_RTNL();
+ 
+ 	if (!info->attrs[TEAM_ATTR_TEAM_IFINDEX])
+ 		return NULL;
+@@ -2318,14 +2301,11 @@ static struct team *team_nl_team_get(struct genl_info *info)
+ 		return NULL;
+ 	}
+ 
+-	team = netdev_priv(dev);
+-	mutex_lock(&team->lock);
+-	return team;
++	return netdev_priv(dev);
+ }
+ 
+ static void team_nl_team_put(struct team *team)
+ {
+-	mutex_unlock(&team->lock);
+ 	dev_put(team->dev);
+ }
+ 
+@@ -2515,9 +2495,13 @@ int team_nl_options_get_doit(struct sk_buff *skb, struct genl_info *info)
+ 	int err;
+ 	LIST_HEAD(sel_opt_inst_list);
+ 
++	rtnl_lock();
++
+ 	team = team_nl_team_get(info);
+-	if (!team)
+-		return -EINVAL;
++	if (!team) {
++		err = -EINVAL;
++		goto rtnl_unlock;
++	}
+ 
+ 	list_for_each_entry(opt_inst, &team->option_inst_list, list)
+ 		list_add_tail(&opt_inst->tmp_list, &sel_opt_inst_list);
+@@ -2527,6 +2511,9 @@ int team_nl_options_get_doit(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	team_nl_team_put(team);
+ 
++rtnl_unlock:
++	rtnl_unlock();
++
+ 	return err;
+ }
+ 
+@@ -2805,15 +2792,22 @@ int team_nl_port_list_get_doit(struct sk_buff *skb,
+ 	struct team *team;
+ 	int err;
+ 
++	rtnl_lock();
++
+ 	team = team_nl_team_get(info);
+-	if (!team)
+-		return -EINVAL;
++	if (!team) {
++		err = -EINVAL;
++		goto rtnl_unlock;
++	}
+ 
+ 	err = team_nl_send_port_list_get(team, info->snd_portid, info->snd_seq,
+ 					 NLM_F_ACK, team_nl_send_unicast, NULL);
+ 
+ 	team_nl_team_put(team);
+ 
++rtnl_unlock:
++	rtnl_unlock();
++
+ 	return err;
+ }
+ 
+@@ -2961,11 +2955,9 @@ static void __team_port_change_port_removed(struct team_port *port)
+ 
+ static void team_port_change_check(struct team_port *port, bool linkup)
+ {
+-	struct team *team = port->team;
++	ASSERT_RTNL();
+ 
+-	mutex_lock(&team->lock);
+ 	__team_port_change_check(port, linkup);
+-	mutex_unlock(&team->lock);
+ }
+ 
+ 
+diff --git a/drivers/net/team/team_mode_activebackup.c b/drivers/net/team/team_mode_activebackup.c
+index e0f599e2a51d..1c3336c7a1b2 100644
+--- a/drivers/net/team/team_mode_activebackup.c
++++ b/drivers/net/team/team_mode_activebackup.c
+@@ -67,8 +67,7 @@ static void ab_active_port_get(struct team *team, struct team_gsetter_ctx *ctx)
+ {
+ 	struct team_port *active_port;
+ 
+-	active_port = rcu_dereference_protected(ab_priv(team)->active_port,
+-						lockdep_is_held(&team->lock));
++	active_port = rtnl_dereference(ab_priv(team)->active_port);
+ 	if (active_port)
+ 		ctx->data.u32_val = active_port->dev->ifindex;
+ 	else
+diff --git a/drivers/net/team/team_mode_loadbalance.c b/drivers/net/team/team_mode_loadbalance.c
+index 00f8989c29c0..b14538bde2f8 100644
+--- a/drivers/net/team/team_mode_loadbalance.c
++++ b/drivers/net/team/team_mode_loadbalance.c
+@@ -301,8 +301,7 @@ static int lb_bpf_func_set(struct team *team, struct team_gsetter_ctx *ctx)
+ 	if (lb_priv->ex->orig_fprog) {
+ 		/* Clear old filter data */
+ 		__fprog_destroy(lb_priv->ex->orig_fprog);
+-		orig_fp = rcu_dereference_protected(lb_priv->fp,
+-						lockdep_is_held(&team->lock));
++		orig_fp = rtnl_dereference(lb_priv->fp);
+ 	}
+ 
+ 	rcu_assign_pointer(lb_priv->fp, fp);
+@@ -324,8 +323,7 @@ static void lb_bpf_func_free(struct team *team)
+ 		return;
+ 
+ 	__fprog_destroy(lb_priv->ex->orig_fprog);
+-	fp = rcu_dereference_protected(lb_priv->fp,
+-				       lockdep_is_held(&team->lock));
++	fp = rtnl_dereference(lb_priv->fp);
+ 	bpf_prog_destroy(fp);
+ }
+ 
+@@ -335,8 +333,7 @@ static void lb_tx_method_get(struct team *team, struct team_gsetter_ctx *ctx)
+ 	lb_select_tx_port_func_t *func;
+ 	char *name;
+ 
+-	func = rcu_dereference_protected(lb_priv->select_tx_port_func,
+-					 lockdep_is_held(&team->lock));
++	func = rtnl_dereference(lb_priv->select_tx_port_func);
+ 	name = lb_select_tx_port_get_name(func);
+ 	BUG_ON(!name);
+ 	ctx->data.str_val = name;
+@@ -478,7 +475,7 @@ static void lb_stats_refresh(struct work_struct *work)
+ 	team = lb_priv_ex->team;
+ 	lb_priv = get_lb_priv(team);
+ 
+-	if (!mutex_trylock(&team->lock)) {
++	if (!rtnl_trylock()) {
+ 		schedule_delayed_work(&lb_priv_ex->stats.refresh_dw, 0);
+ 		return;
+ 	}
+@@ -515,7 +512,7 @@ static void lb_stats_refresh(struct work_struct *work)
+ 	schedule_delayed_work(&lb_priv_ex->stats.refresh_dw,
+ 			      (lb_priv_ex->stats.refresh_interval * HZ) / 10);
+ 
+-	mutex_unlock(&team->lock);
++	rtnl_unlock();
+ }
+ 
+ static void lb_stats_refresh_interval_get(struct team *team,
+diff --git a/include/linux/if_team.h b/include/linux/if_team.h
+index cdc684e04a2f..ce97d891cf72 100644
+--- a/include/linux/if_team.h
++++ b/include/linux/if_team.h
+@@ -191,8 +191,6 @@ struct team {
+ 
+ 	const struct header_ops *header_ops_cache;
+ 
+-	struct mutex lock; /* used for overall locking, e.g. port lists write */
+-
+ 	/*
+ 	 * List of enabled ports and their count
+ 	 */
+@@ -223,7 +221,6 @@ struct team {
+ 		atomic_t count_pending;
+ 		struct delayed_work dw;
+ 	} mcast_rejoin;
+-	struct lock_class_key team_lock_key;
+ 	long mode_priv[TEAM_MODE_PRIV_LONGS];
+ };
  
 -- 
 2.39.5
