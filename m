@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560031E500C;
-	Tue, 12 Aug 2025 18:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6555D2F5481;
+	Tue, 12 Aug 2025 18:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023794; cv=none; b=TUJJQh8EQwOueCMpirZINvP2vIQGNpcdvQr2yi6sU4zBUiYuZFUtjEgaO9jwZKb+0WOr1Zs/+U0/PwooXEXv+cLS9LDYqjrE9oeRCat2Jg8qWwDcZyUmRPr8EafPcM010ZPoKElr+RFawOxd3wEfvFODNmyw+HOu/e2LHvf9aGM=
+	t=1755023797; cv=none; b=IRGRMpRs3T8OTSSBtB7jFAeKFSLAFgYtUnXrdxJiWb539St6LLPYW0ect0/oqD+iCc1TUTCBhZG8vUJuoLpns3oOotdHAa35VAlv78zhyZgZZpz5DXpdmHsR/vuGAXkYNk3jhWe5IemvQOo5HSU4sfMm4Nlx4Dta/NErG8PyUzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023794; c=relaxed/simple;
-	bh=NxY9qPfk8zrfXmbEjdXSzSInXoPTAJAcRFSW/wE6y8k=;
+	s=arc-20240116; t=1755023797; c=relaxed/simple;
+	bh=D2DujF2dcbfx834i7vjK9d3nl41j9GjFVOWkG1cti8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8HqCmWzPxQaOfoW0f4vfzAzEQEToksqtwnsXsAqsvqJTrmxwINH0xBcZhauL4HrqtoFJ39yD/8kxBGXyATUycNJlI+VSwTVCElCCo/adBW0KK9nV+non++hK59+7ug7ofrTD7u8wDWvOZlDFLIhnr4oOYLzx39LSJufa59aKjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ks+6Dai2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I2ki/U6HSrvOsy9Hm+sN3JQ9k2EScnQkQsv7fx99mrBeaCKCImgCo3pInouteZc5bTFP4WM+V05aCv0eKisNs22T7XyUmjh8xrNMAW53uNq7GFQ6g9ICDcqDhlIwipKZb2Cjf6spqiQGieZGOhWd2liMQNZveqhmAs0uRsvKxzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnYcsfDe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ks+6Dai2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73DDC4CEF0;
-	Tue, 12 Aug 2025 18:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnYcsfDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85EBC4CEF0;
+	Tue, 12 Aug 2025 18:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023794;
-	bh=NxY9qPfk8zrfXmbEjdXSzSInXoPTAJAcRFSW/wE6y8k=;
+	s=korg; t=1755023797;
+	bh=D2DujF2dcbfx834i7vjK9d3nl41j9GjFVOWkG1cti8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ks+6Dai2OAc4FL7H3JwuwFpVEIQdqyc1Dw2jvoLmPSiVve0tR/l+CnEJoNg53nPnA
-	 b/ks7NA+QunB9ge21/Xwq7lyuw6hxd03yyb3+GgnTOblX0ypTGxa9BK2uKgNUxroRp
-	 Zyl2GRcZh21L3WCosnfV51aBJalTBiMNp5pu9Tcs=
+	b=RnYcsfDe8Hepzu0J8+tDKo+Mq6RDoBQKBglubcEtvwo2eU5lfJg0ObtEN7Y+ryr75
+	 oqBV9RGpSnXFwlKEzGvUPRJ6z2RF8tMyrBvAp/sp3FKoeuX/+0fZXDjeLzkZx+IP18
+	 gmyM6C2NQbPiWcRc2ozI7pGikKuDt6oQiT6inw/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 184/627] wifi: mt76: mt7996: Fix secondary link lookup in mt7996_mcu_sta_mld_setup_tlv()
-Date: Tue, 12 Aug 2025 19:27:59 +0200
-Message-ID: <20250812173426.282571796@linuxfoundation.org>
+Subject: [PATCH 6.16 185/627] wifi: mt76: mt7996: Fix possible OOB access in mt7996_tx()
+Date: Tue, 12 Aug 2025 19:28:00 +0200
+Message-ID: <20250812173426.318154838@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,34 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit e8d7eef07199887161cd6f3c062406628781f8b6 ]
+[ Upstream commit 64cbf0d7ce9afe20666da90ec6ecaec6ba5ac64b ]
 
-Use proper link_id value for secondary link lookup in
-mt7996_mcu_sta_mld_setup_tlv routine.
+Fis possible Out-Of-Boundary access in mt7996_tx routine if link_id is
+set to IEEE80211_LINK_UNSPECIFIED
 
-Fixes: 00cef41d9d8f5 ("wifi: mt76: mt7996: Add mt7996_mcu_sta_mld_setup_tlv() and mt7996_mcu_sta_eht_mld_tlv()")
+Fixes: 3ce8acb86b661 ("wifi: mt76: mt7996: Update mt7996_tx to MLO support")
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250704-mt7996-mlo-fixes-v1-2-356456c73f43@kernel.org
+Link: https://patch.msgid.link/20250704-mt7996-mlo-fixes-v1-6-356456c73f43@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/main.c    | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 994526c65bfc..dd4b7b8c34ea 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -2326,8 +2326,7 @@ mt7996_mcu_sta_mld_setup_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 07dd75ce94a5..44b4e48e499d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -1216,10 +1216,17 @@ static void mt7996_tx(struct ieee80211_hw *hw,
  
- 	if (nlinks > 1) {
- 		link_id = __ffs(links & ~BIT(msta->deflink_id));
--		msta_link = mt76_dereference(msta->link[msta->deflink_id],
--					     &dev->mt76);
-+		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
- 		if (!msta_link)
- 			return;
+ 	if (vif) {
+ 		struct mt7996_vif *mvif = (void *)vif->drv_priv;
+-		struct mt76_vif_link *mlink;
++		struct mt76_vif_link *mlink = &mvif->deflink.mt76;
+ 
+-		mlink = rcu_dereference(mvif->mt76.link[link_id]);
+-		if (mlink && mlink->wcid)
++		if (link_id < IEEE80211_LINK_UNSPECIFIED)
++			mlink = rcu_dereference(mvif->mt76.link[link_id]);
++
++		if (!mlink) {
++			ieee80211_free_txskb(hw, skb);
++			goto unlock;
++		}
++
++		if (mlink->wcid)
+ 			wcid = mlink->wcid;
+ 
+ 		if (mvif->mt76.roc_phy &&
+@@ -1228,7 +1235,7 @@ static void mt7996_tx(struct ieee80211_hw *hw,
+ 			if (mphy->roc_link)
+ 				wcid = mphy->roc_link->wcid;
+ 		} else {
+-			mphy = mt76_vif_link_phy(&mvif->deflink.mt76);
++			mphy = mt76_vif_link_phy(mlink);
+ 		}
  	}
+ 
+@@ -1237,7 +1244,7 @@ static void mt7996_tx(struct ieee80211_hw *hw,
+ 		goto unlock;
+ 	}
+ 
+-	if (control->sta) {
++	if (control->sta && link_id < IEEE80211_LINK_UNSPECIFIED) {
+ 		struct mt7996_sta *msta = (void *)control->sta->drv_priv;
+ 		struct mt7996_sta_link *msta_link;
+ 
 -- 
 2.39.5
 
