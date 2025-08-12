@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FD826FA77;
-	Tue, 12 Aug 2025 19:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B9026FA77;
+	Tue, 12 Aug 2025 19:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025578; cv=none; b=gMApq7R4886WkMI6B5Ev6MAjoWLVOnV/pNxhQ+0nrP/djZ3MAPJnS3E05umEuAF500X2NBH9oY23fdCNLnf8elGDEaBXns/d2H2mFn4ndMcO9BsQz8/wrEzYA+C/W44k2Y1saLAKkzKmzvc4E/iboUfKyA5mtc/2hCBj8hWOkdY=
+	t=1755025581; cv=none; b=NRD+5ZJEefaUvPjDhMAjNCYWjIOI4Md23SCVe9pGN8B0E80b7sy2jvd9sBTFAdx5YPsJVDBq41XrANqns8SpmLMW5fzWuiHEj1i4kHVh5jd2UPYGpKIbjMSQCjRqVypqFsYJHyvUxon6iEUY3Hyqa4JKT4fxgtYWdwXHA3XyymM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025578; c=relaxed/simple;
-	bh=+/8B0vS+hyGVzL941cdnjVUGDclMPNY/azhU+XwP6YA=;
+	s=arc-20240116; t=1755025581; c=relaxed/simple;
+	bh=8AOco4iVg4ynueMB0/jJg8Tx1AtNlva+GqVZOTMQNFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2RKnCGdWwMsHyWTeCMGPs1Y7Uef3CsKHefv4kYIlG8mrQzTPUxu8qP3vtgkyi1n/sRTk6STFZNe5dmglaXvCA4nG1FSE6WFj6Dzdbe00/9WzR4+VwoqTcK3EQo2VmKM5TxxwY3794b9Yp9nITB8IfMWFW83i+qvoAgHpLXp/3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrgf2xkC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=syngs/k2hi+fiSYq5OVDTdnnsVNjpwYjmCPQPhRCgVPfsa/uHxOWeoqeA4OIgbwwiq16WMHPjZmTrXbnt7du3IYmQ4nmQ1q+YdzUfZK+Jo4/oCmO0fXRx3LvZDL0Y1r0k42L4Dx0fv1tSRzNHWO+wvVVlFZfLzzu2kPPyXyanlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFAH5cNT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrgf2xkC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00BAC4CEF0;
-	Tue, 12 Aug 2025 19:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFAH5cNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C58C4CEF0;
+	Tue, 12 Aug 2025 19:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025578;
-	bh=+/8B0vS+hyGVzL941cdnjVUGDclMPNY/azhU+XwP6YA=;
+	s=korg; t=1755025581;
+	bh=8AOco4iVg4ynueMB0/jJg8Tx1AtNlva+GqVZOTMQNFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrgf2xkCxjeHl6xKQYt6WS2FCUtc2RG1OUmerjRaafIL4Y7Jcoby2xGhd92hVOQ2J
-	 BvVHk632l9tgbUueb2l6p0Q/O6oB8EqK2gOCFPXaat4ulHmQqZTL9dvin1YtNi1R8u
-	 9n84q8obcqtVZ4v6esTDNDPr+Re61LaW0kQCPUog=
+	b=bFAH5cNT7lb1lV9tiv6V9k/RRIApIS+5kJ4l0RGE9OWHfZKac8sa4DtLtV6D4qdaR
+	 yCJuRQSyMeKtadShvUcHfMqxj41AGCbCwut7ubVPZ+vFUHeI1Loqx219g6MnD6bwKz
+	 ZBSpl82lFRH8f1dEoTJBFG1VzsJrwjh5YsU8ZLOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Wanner <Ryan.Wanner@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Will Deacon <willdeacon@google.com>,
+	Will McVicker <willmcvicker@google.com>,
+	Youngmin Nam <youngmin.nam@samsung.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 049/480] ARM: dts: microchip: sama7d65: Add clock name property
-Date: Tue, 12 Aug 2025 19:44:17 +0200
-Message-ID: <20250812174359.423488227@linuxfoundation.org>
+Subject: [PATCH 6.15 040/480] arm64: dts: exynos: gs101: Add local-timer-stop to cpuidle nodes
+Date: Tue, 12 Aug 2025 19:44:08 +0200
+Message-ID: <20250812174359.059256355@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,43 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Wanner <Ryan.Wanner@microchip.com>
+From: Will Deacon <willdeacon@google.com>
 
-[ Upstream commit 0029468132ba2e00a3010865038783d9b2e6cc07 ]
+[ Upstream commit b649082312dd1a4c3989bbdb7c25eb711e9b1d94 ]
 
-Add clock-output-names to the xtal nodes, so the driver can correctly
-register the main and slow xtal.
+In preparation for switching to the architected timer as the primary
+clockevents device, mark the cpuidle nodes with the 'local-timer-stop'
+property to indicate that an alternative clockevents device must be
+used for waking up from the "c2" idle state.
 
-This fixes the issue of the SoC clock driver not being able to find
-the main xtal and slow xtal correctly causing a bad clock tree.
-
-Fixes: 261dcfad1b59 ("ARM: dts: microchip: add sama7d65 SoC DT")
-Signed-off-by: Ryan Wanner <Ryan.Wanner@microchip.com>
-Link: https://lore.kernel.org/r/3878ae6d0016d46f0c91bd379146d575d5d336aa.1750175453.git.Ryan.Wanner@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Will Deacon <willdeacon@google.com>
+[Original commit from https://android.googlesource.com/kernel/gs/+/a896fd98638047989513d05556faebd28a62b27c]
+Signed-off-by: Will McVicker <willmcvicker@google.com>
+Reviewed-by: Youngmin Nam <youngmin.nam@samsung.com>
+Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
+Fixes: ea89fdf24fd9 ("arm64: dts: exynos: google: Add initial Google gs101 SoC support")
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Tested-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20250611-gs101-cpuidle-v2-1-4fa811ec404d@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/sama7d65.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/exynos/google/gs101.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/microchip/sama7d65.dtsi b/arch/arm/boot/dts/microchip/sama7d65.dtsi
-index b6710ccd4c36..7b1dd28a2cfa 100644
---- a/arch/arm/boot/dts/microchip/sama7d65.dtsi
-+++ b/arch/arm/boot/dts/microchip/sama7d65.dtsi
-@@ -38,11 +38,13 @@ cpu0: cpu@0 {
- 	clocks {
- 		main_xtal: clock-mainxtal {
- 			compatible = "fixed-clock";
-+			clock-output-names = "main_xtal";
- 			#clock-cells = <0>;
- 		};
- 
- 		slow_xtal: clock-slowxtal {
- 			compatible = "fixed-clock";
-+			clock-output-names = "slow_xtal";
- 			#clock-cells = <0>;
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
+index 3de3a758f113..fd0badf24e6f 100644
+--- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
++++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
+@@ -155,6 +155,7 @@ ananke_cpu_sleep: cpu-ananke-sleep {
+ 				idle-state-name = "c2";
+ 				compatible = "arm,idle-state";
+ 				arm,psci-suspend-param = <0x0010000>;
++				local-timer-stop;
+ 				entry-latency-us = <70>;
+ 				exit-latency-us = <160>;
+ 				min-residency-us = <2000>;
+@@ -164,6 +165,7 @@ enyo_cpu_sleep: cpu-enyo-sleep {
+ 				idle-state-name = "c2";
+ 				compatible = "arm,idle-state";
+ 				arm,psci-suspend-param = <0x0010000>;
++				local-timer-stop;
+ 				entry-latency-us = <150>;
+ 				exit-latency-us = <190>;
+ 				min-residency-us = <2500>;
+@@ -173,6 +175,7 @@ hera_cpu_sleep: cpu-hera-sleep {
+ 				idle-state-name = "c2";
+ 				compatible = "arm,idle-state";
+ 				arm,psci-suspend-param = <0x0010000>;
++				local-timer-stop;
+ 				entry-latency-us = <235>;
+ 				exit-latency-us = <220>;
+ 				min-residency-us = <3500>;
 -- 
 2.39.5
 
