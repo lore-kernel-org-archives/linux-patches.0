@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE5D2F5E;
-	Tue, 12 Aug 2025 18:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2119A1EBFE0;
+	Tue, 12 Aug 2025 18:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022387; cv=none; b=c6u6/CxgwwkHNslLPFaFedeTq2kZ1/XT5WbcXAVUH8UeCCRQT+d69/b82LXPzIBA5O5mKadpqxFerWyhme+/ysJHlG8cbLSJBC9b+r+ADcY6XkPcCZ+qvna/aWve76H9Q3NI4Fwa5kAaHt2UB6PZh2jvtAhI8msdg9EAMnrWo1Q=
+	t=1755022391; cv=none; b=H6KnZI9oxowee76Qj654wwvfypotlRlLruxJHKDaI1nXuStOysuPSyniykK0mbrAPMz46SL8rT3dqKo1jeN7yRm8I52VfsaWIQ6Ju9PdddLRB/CW2DsmMN2TQEnSk+KpESwhtxIjkwkdW1UUYUcnL+5xwgi5VSy010pu5TCoErY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022387; c=relaxed/simple;
-	bh=wl9nkgqahRsOlIFsf9H2y3QezAq9anAkCIgXoPN6zj0=;
+	s=arc-20240116; t=1755022391; c=relaxed/simple;
+	bh=QeOFuwmkHd8i/dnrhxqrSU3yhjk9YTbtD2uiOanibMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tm/T1rB6EHweHyCOCESvyWYwW1W2KbTIG9VoAyX0dWXrFA5syTOft1vgKVVqP2KD7Ur+uGtUo5EWTTVx3WtZMQH3h4af5Cg/Ls+Jxu32VHuEwimcfOU65VZHJULaMRDHzJb1hYZjUwrODZSk/PdMxFSVInX+lVdPgZnmE53K08g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYauTzla; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LCPA8fpAeyhbkF6IAAwZ6kBtVk+3CrHKkMGHMHuuqArfC/q62QYeyVpXXbaPaxS2Zi1A73U0vxRhqCw26zXlhoKVkw2N+ywzecQq/rscYqUghs5pZ17AdED6LqkN/nuA9YmV/7CAco5rl69XUwCDc/iWaENreaKVjhoAqqi/dcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fv2XtBqL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYauTzla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379B9C4CEF1;
-	Tue, 12 Aug 2025 18:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fv2XtBqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842FFC4CEF1;
+	Tue, 12 Aug 2025 18:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022387;
-	bh=wl9nkgqahRsOlIFsf9H2y3QezAq9anAkCIgXoPN6zj0=;
+	s=korg; t=1755022391;
+	bh=QeOFuwmkHd8i/dnrhxqrSU3yhjk9YTbtD2uiOanibMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jYauTzlaWvT6gP0FDIUeceNgVyZWU5dhodZFzrScOZU0Eq24OcxhTlOWBQtGtYMGc
-	 Lkh/hv32pwRmgDvGpH4+Oco42hC5e7kPYAtCFdXQezljL1yCntJpWRnbZOcgK5DiUR
-	 AoIwkPdaIqub1g1xmqx0vGjL95C5eMj8l+IUt+tM=
+	b=fv2XtBqLykZNIrNl+3hNAMZHrIbu7F3DJ0pSTF4UzK9+XTCyRPavBrCnC5q8o1FME
+	 lxWxF3j+R19otlROmes8rxg65vTfTAixlxSwt/Ogn3Ia0uwRL98/AfxlWa0l8xMMp0
+	 72DeM/Ig9vO55ydzUk9kcqM5MNw9UDEP4HLTMa8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abinash Singh <abinashsinghlalotra@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/369] xen/gntdev: remove struct gntdev_copy_batch from stack
-Date: Tue, 12 Aug 2025 19:26:44 +0200
-Message-ID: <20250812173018.803200009@linuxfoundation.org>
+Subject: [PATCH 6.12 108/369] tcp: call tcp_measure_rcv_mss() for ooo packets
+Date: Tue, 12 Aug 2025 19:26:45 +0200
+Message-ID: <20250812173018.841851841@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,185 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 70045cf6593cbf0740956ea9b7b4269142c6ee38 ]
+[ Upstream commit 38d7e444336567bae1c7b21fc18b7ceaaa5643a0 ]
 
-When compiling the kernel with LLVM, the following warning was issued:
+tcp_measure_rcv_mss() is used to update icsk->icsk_ack.rcv_mss
+(tcpi_rcv_mss in tcp_info) and tp->scaling_ratio.
 
-  drivers/xen/gntdev.c:991: warning: stack frame size (1160) exceeds
-  limit (1024) in function 'gntdev_ioctl'
+Calling it from tcp_data_queue_ofo() makes sure these
+fields are updated, and permits a better tuning
+of sk->sk_rcvbuf, in the case a new flow receives many ooo
+packets.
 
-The main reason is struct gntdev_copy_batch which is located on the
-stack and has a size of nearly 1kb.
-
-For performance reasons it shouldn't by just dynamically allocated
-instead, so allocate a new instance when needed and instead of freeing
-it put it into a list of free structs anchored in struct gntdev_priv.
-
-Fixes: a4cdb556cae0 ("xen/gntdev: add ioctl for grant copy")
-Reported-by: Abinash Singh <abinashsinghlalotra@gmail.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250703073259.17356-1-jgross@suse.com>
+Fixes: dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250711114006.480026-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntdev-common.h |  4 +++
- drivers/xen/gntdev.c        | 71 ++++++++++++++++++++++++++-----------
- 2 files changed, 54 insertions(+), 21 deletions(-)
+ net/ipv4/tcp_input.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/xen/gntdev-common.h b/drivers/xen/gntdev-common.h
-index 9c286b2a1900..ac8ce3179ba2 100644
---- a/drivers/xen/gntdev-common.h
-+++ b/drivers/xen/gntdev-common.h
-@@ -26,6 +26,10 @@ struct gntdev_priv {
- 	/* lock protects maps and freeable_maps. */
- 	struct mutex lock;
- 
-+	/* Free instances of struct gntdev_copy_batch. */
-+	struct gntdev_copy_batch *batch;
-+	struct mutex batch_lock;
-+
- #ifdef CONFIG_XEN_GRANT_DMA_ALLOC
- 	/* Device for which DMA memory is allocated. */
- 	struct device *dma_dev;
-diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
-index 61faea1f0663..1f2160765618 100644
---- a/drivers/xen/gntdev.c
-+++ b/drivers/xen/gntdev.c
-@@ -56,6 +56,18 @@ MODULE_AUTHOR("Derek G. Murray <Derek.Murray@cl.cam.ac.uk>, "
- 	      "Gerd Hoffmann <kraxel@redhat.com>");
- MODULE_DESCRIPTION("User-space granted page access driver");
- 
-+#define GNTDEV_COPY_BATCH 16
-+
-+struct gntdev_copy_batch {
-+	struct gnttab_copy ops[GNTDEV_COPY_BATCH];
-+	struct page *pages[GNTDEV_COPY_BATCH];
-+	s16 __user *status[GNTDEV_COPY_BATCH];
-+	unsigned int nr_ops;
-+	unsigned int nr_pages;
-+	bool writeable;
-+	struct gntdev_copy_batch *next;
-+};
-+
- static unsigned int limit = 64*1024;
- module_param(limit, uint, 0644);
- MODULE_PARM_DESC(limit,
-@@ -584,6 +596,8 @@ static int gntdev_open(struct inode *inode, struct file *flip)
- 	INIT_LIST_HEAD(&priv->maps);
- 	mutex_init(&priv->lock);
- 
-+	mutex_init(&priv->batch_lock);
-+
- #ifdef CONFIG_XEN_GNTDEV_DMABUF
- 	priv->dmabuf_priv = gntdev_dmabuf_init(flip);
- 	if (IS_ERR(priv->dmabuf_priv)) {
-@@ -608,6 +622,7 @@ static int gntdev_release(struct inode *inode, struct file *flip)
- {
- 	struct gntdev_priv *priv = flip->private_data;
- 	struct gntdev_grant_map *map;
-+	struct gntdev_copy_batch *batch;
- 
- 	pr_debug("priv %p\n", priv);
- 
-@@ -620,6 +635,14 @@ static int gntdev_release(struct inode *inode, struct file *flip)
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index d45a6dcc3753..30f4375f8431 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -5040,6 +5040,7 @@ static void tcp_data_queue_ofo(struct sock *sk, struct sk_buff *skb)
+ 		return;
  	}
- 	mutex_unlock(&priv->lock);
  
-+	mutex_lock(&priv->batch_lock);
-+	while (priv->batch) {
-+		batch = priv->batch;
-+		priv->batch = batch->next;
-+		kfree(batch);
-+	}
-+	mutex_unlock(&priv->batch_lock);
-+
- #ifdef CONFIG_XEN_GNTDEV_DMABUF
- 	gntdev_dmabuf_fini(priv->dmabuf_priv);
- #endif
-@@ -785,17 +808,6 @@ static long gntdev_ioctl_notify(struct gntdev_priv *priv, void __user *u)
- 	return rc;
- }
- 
--#define GNTDEV_COPY_BATCH 16
--
--struct gntdev_copy_batch {
--	struct gnttab_copy ops[GNTDEV_COPY_BATCH];
--	struct page *pages[GNTDEV_COPY_BATCH];
--	s16 __user *status[GNTDEV_COPY_BATCH];
--	unsigned int nr_ops;
--	unsigned int nr_pages;
--	bool writeable;
--};
--
- static int gntdev_get_page(struct gntdev_copy_batch *batch, void __user *virt,
- 				unsigned long *gfn)
- {
-@@ -953,36 +965,53 @@ static int gntdev_grant_copy_seg(struct gntdev_copy_batch *batch,
- static long gntdev_ioctl_grant_copy(struct gntdev_priv *priv, void __user *u)
- {
- 	struct ioctl_gntdev_grant_copy copy;
--	struct gntdev_copy_batch batch;
-+	struct gntdev_copy_batch *batch;
- 	unsigned int i;
- 	int ret = 0;
- 
- 	if (copy_from_user(&copy, u, sizeof(copy)))
- 		return -EFAULT;
- 
--	batch.nr_ops = 0;
--	batch.nr_pages = 0;
-+	mutex_lock(&priv->batch_lock);
-+	if (!priv->batch) {
-+		batch = kmalloc(sizeof(*batch), GFP_KERNEL);
-+	} else {
-+		batch = priv->batch;
-+		priv->batch = batch->next;
-+	}
-+	mutex_unlock(&priv->batch_lock);
-+	if (!batch)
-+		return -ENOMEM;
-+
-+	batch->nr_ops = 0;
-+	batch->nr_pages = 0;
- 
- 	for (i = 0; i < copy.count; i++) {
- 		struct gntdev_grant_copy_segment seg;
- 
- 		if (copy_from_user(&seg, &copy.segments[i], sizeof(seg))) {
- 			ret = -EFAULT;
-+			gntdev_put_pages(batch);
- 			goto out;
- 		}
- 
--		ret = gntdev_grant_copy_seg(&batch, &seg, &copy.segments[i].status);
--		if (ret < 0)
-+		ret = gntdev_grant_copy_seg(batch, &seg, &copy.segments[i].status);
-+		if (ret < 0) {
-+			gntdev_put_pages(batch);
- 			goto out;
-+		}
- 
- 		cond_resched();
- 	}
--	if (batch.nr_ops)
--		ret = gntdev_copy(&batch);
--	return ret;
-+	if (batch->nr_ops)
-+		ret = gntdev_copy(batch);
-+
-+ out:
-+	mutex_lock(&priv->batch_lock);
-+	batch->next = priv->batch;
-+	priv->batch = batch;
-+	mutex_unlock(&priv->batch_lock);
- 
--  out:
--	gntdev_put_pages(&batch);
- 	return ret;
- }
- 
++	tcp_measure_rcv_mss(sk, skb);
+ 	/* Disable header prediction. */
+ 	tp->pred_flags = 0;
+ 	inet_csk_schedule_ack(sk);
 -- 
 2.39.5
 
