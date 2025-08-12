@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26052FF148;
-	Tue, 12 Aug 2025 18:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C63E2C21E3;
+	Tue, 12 Aug 2025 18:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024981; cv=none; b=eEX+Zf9tS6wvopkWZMqIr2HH73mlEQSnyikai5UaK+E6mVh/I7z4MkG9qo61xJv40e36H5YbKeKaSsxqXP3K1yafMIdJdojpAwShhTXrbhafYf1UgQPG6/xemKf4mu0Z+yYmL3F0a6++bF44OjriF9cClu8jscPqO94I0p/4cfc=
+	t=1755024986; cv=none; b=KXIR/LwsIE4jJrKkOBodE3yhZ+xcj4Z2AglwGsCnOeK969NHcVdKwB+YtU+hrOIWf1DpnaXLEYIsyKPhtVM0GLdn2iWLYBVqCCMmL+W9W+mzSYjtis9TYKqF1lviFceNaKmHS3mwX2YB8fegI+TnVGVntUPNtUGpmM3QYh074k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024981; c=relaxed/simple;
-	bh=m8kaBMR7fDofVDZ1Bms4Ihek0KI6Ikf46TA2BrB2yrk=;
+	s=arc-20240116; t=1755024986; c=relaxed/simple;
+	bh=hXjHoQxGbSiBpSLwsfhV7WiHQmiWkmT8QgiWhUgLmLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMbS0m3CaA0VMTs3PWK5bp+6jWhHS2Yj+KI4QlSJHJyOam9iCh5YoWPgqXnjYC31+GUC2BUeRJDBABEZIuVqE9LjTHFKX2IEDE9fWgneSg+aadGJjR+vtearqkBVBt4JItQJ2bLAvoWuaYMYlZ0dpvTbKQpsA6Xxwh5QIj34FcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAz7oZbS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kamKV5CaazqjZ2nE5nf9MaZmmX+28sKUTgthS3kSZ2KOA8zkzE0GiN6WE3VVKK5xSDbruyMosY+Fsg5nivvAp3d5P/j2zMr7b3McEz4pIKHxH2/ct27/mUDzUifbu+2VSr15wpNuPGLh7P8YrNV0l3xwWePXNB8npqSp/nYMjsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVLSQzFA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAz7oZbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4942CC4CEF0;
-	Tue, 12 Aug 2025 18:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVLSQzFA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FCDC4CEF0;
+	Tue, 12 Aug 2025 18:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024981;
-	bh=m8kaBMR7fDofVDZ1Bms4Ihek0KI6Ikf46TA2BrB2yrk=;
+	s=korg; t=1755024984;
+	bh=hXjHoQxGbSiBpSLwsfhV7WiHQmiWkmT8QgiWhUgLmLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAz7oZbS0jhPFQVECl2rlTZfcPzzi/MHXQGJunN7cy3Tb0w4nZRAGVRQwc4V6zi0h
-	 uHk/8mW5LwduovItJtR9DmYmVrGSytRrhlgkVtQNQekHBycbWy5xBpcoeuqQDE59oP
-	 ecwflDdc3a3S19kDnEq5l5DI8kB6jkq3MvgfUUkw=
+	b=QVLSQzFA1S2hCzgGvaB1WqvPEIxj17G70uqkpnJiheFExQEqsr7jHFEO208nXV6vC
+	 GkGv5CUSf2JCLKfDddRK08nXGIecluMZQTCQaNQtumm7KNMstE5JnFNT4jY8N6WXVi
+	 mzvfzCeF+N/cZrBwAh5ZERSbhsIJNsCwZ29nsipM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+398e1ee4ca2cac05fddb@syzkaller.appspotmail.com,
-	Takamitsu Iwai <takamitz@amazon.co.jp>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 535/627] net/sched: taprio: enforce minimum value for picos_per_byte
-Date: Tue, 12 Aug 2025 19:33:50 +0200
-Message-ID: <20250812173452.264782867@linuxfoundation.org>
+Subject: [PATCH 6.16 536/627] md: make rdev_addable usable for rcu mode
+Date: Tue, 12 Aug 2025 19:33:51 +0200
+Message-ID: <20250812173452.303557152@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,101 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takamitsu Iwai <takamitz@amazon.co.jp>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit ae8508b25def57982493c48694ef135973bfabe0 ]
+[ Upstream commit 13017b427118f4311471ee47df74872372ca8482 ]
 
-Syzbot reported a WARNING in taprio_get_start_time().
+Our testcase trigger panic:
 
-When link speed is 470,589 or greater, q->picos_per_byte becomes too
-small, causing length_to_duration(q, ETH_ZLEN) to return zero.
+BUG: kernel NULL pointer dereference, address: 00000000000000e0
+...
+Oops: Oops: 0000 [#1] SMP NOPTI
+CPU: 2 UID: 0 PID: 85 Comm: kworker/2:1 Not tainted 6.16.0+ #94
+PREEMPT(none)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+Workqueue: md_misc md_start_sync
+RIP: 0010:rdev_addable+0x4d/0xf0
+...
+Call Trace:
+ <TASK>
+ md_start_sync+0x329/0x480
+ process_one_work+0x226/0x6d0
+ worker_thread+0x19e/0x340
+ kthread+0x10f/0x250
+ ret_from_fork+0x14d/0x180
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+Modules linked in: raid10
+CR2: 00000000000000e0
+---[ end trace 0000000000000000 ]---
+RIP: 0010:rdev_addable+0x4d/0xf0
 
-This zero value leads to validation failures in fill_sched_entry() and
-parse_taprio_schedule(), allowing arbitrary values to be assigned to
-entry->interval and cycle_time. As a result, sched->cycle can become zero.
+md_spares_need_change in md_start_sync will call rdev_addable which
+protected by rcu_read_lock/rcu_read_unlock. This rcu context will help
+protect rdev won't be released, but rdev->mddev will be set to NULL
+before we call synchronize_rcu in md_kick_rdev_from_array. Fix this by
+using READ_ONCE and check does rdev->mddev still alive.
 
-Since SPEED_800000 is the largest defined speed in
-include/uapi/linux/ethtool.h, this issue can occur in realistic scenarios.
-
-To ensure length_to_duration() returns a non-zero value for minimum-sized
-Ethernet frames (ETH_ZLEN = 60), picos_per_byte must be at least 17
-(60 * 17 > PSEC_PER_NSEC which is 1000).
-
-This patch enforces a minimum value of 17 for picos_per_byte when the
-calculated value would be lower, and adds a warning message to inform
-users that scheduling accuracy may be affected at very high link speeds.
-
-Fixes: fb66df20a720 ("net/sched: taprio: extend minimum interval restriction to entire cycle too")
-Reported-by: syzbot+398e1ee4ca2cac05fddb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=398e1ee4ca2cac05fddb
-Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
-Link: https://patch.msgid.link/20250728173149.45585-1-takamitz@amazon.co.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
+Fixes: 570b9147deb6 ("md: use RCU lock to protect traversal in md_spares_need_change()")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Link: https://lore.kernel.org/linux-raid/20250731114530.776670-1-yangerkun@huawei.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/md/md.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 2b14c81a87e5..85d84f39e220 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -43,6 +43,11 @@ static struct static_key_false taprio_have_working_mqprio;
- #define TAPRIO_SUPPORTED_FLAGS \
- 	(TCA_TAPRIO_ATTR_FLAG_TXTIME_ASSIST | TCA_TAPRIO_ATTR_FLAG_FULL_OFFLOAD)
- #define TAPRIO_FLAGS_INVALID U32_MAX
-+/* Minimum value for picos_per_byte to ensure non-zero duration
-+ * for minimum-sized Ethernet frames (ETH_ZLEN = 60).
-+ * 60 * 17 > PSEC_PER_NSEC (1000)
-+ */
-+#define TAPRIO_PICOS_PER_BYTE_MIN 17
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index e78c42c381db..10670c62b09e 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9418,6 +9418,12 @@ static bool rdev_is_spare(struct md_rdev *rdev)
  
- struct sched_entry {
- 	/* Durations between this GCL entry and the GCL entry where the
-@@ -1284,7 +1289,8 @@ static void taprio_start_sched(struct Qdisc *sch,
- }
- 
- static void taprio_set_picos_per_byte(struct net_device *dev,
--				      struct taprio_sched *q)
-+				      struct taprio_sched *q,
-+				      struct netlink_ext_ack *extack)
+ static bool rdev_addable(struct md_rdev *rdev)
  {
- 	struct ethtool_link_ksettings ecmd;
- 	int speed = SPEED_10;
-@@ -1300,6 +1306,15 @@ static void taprio_set_picos_per_byte(struct net_device *dev,
++	struct mddev *mddev;
++
++	mddev = READ_ONCE(rdev->mddev);
++	if (!mddev)
++		return false;
++
+ 	/* rdev is already used, don't add it again. */
+ 	if (test_bit(Candidate, &rdev->flags) || rdev->raid_disk >= 0 ||
+ 	    test_bit(Faulty, &rdev->flags))
+@@ -9428,7 +9434,7 @@ static bool rdev_addable(struct md_rdev *rdev)
+ 		return true;
  
- skip:
- 	picos_per_byte = (USEC_PER_SEC * 8) / speed;
-+	if (picos_per_byte < TAPRIO_PICOS_PER_BYTE_MIN) {
-+		if (!extack)
-+			pr_warn("Link speed %d is too high. Schedule may be inaccurate.\n",
-+				speed);
-+		NL_SET_ERR_MSG_FMT_MOD(extack,
-+				       "Link speed %d is too high. Schedule may be inaccurate.",
-+				       speed);
-+		picos_per_byte = TAPRIO_PICOS_PER_BYTE_MIN;
-+	}
+ 	/* Allow to add if array is read-write. */
+-	if (md_is_rdwr(rdev->mddev))
++	if (md_is_rdwr(mddev))
+ 		return true;
  
- 	atomic64_set(&q->picos_per_byte, picos_per_byte);
- 	netdev_dbg(dev, "taprio: set %s's picos_per_byte to: %lld, linkspeed: %d\n",
-@@ -1324,7 +1339,7 @@ static int taprio_dev_notifier(struct notifier_block *nb, unsigned long event,
- 		if (dev != qdisc_dev(q->root))
- 			continue;
- 
--		taprio_set_picos_per_byte(dev, q);
-+		taprio_set_picos_per_byte(dev, q, NULL);
- 
- 		stab = rtnl_dereference(q->root->stab);
- 
-@@ -1848,7 +1863,7 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
- 	q->flags = taprio_flags;
- 
- 	/* Needed for length_to_duration() during netlink attribute parsing */
--	taprio_set_picos_per_byte(dev, q);
-+	taprio_set_picos_per_byte(dev, q, extack);
- 
- 	err = taprio_parse_mqprio_opt(dev, mqprio, extack, q->flags);
- 	if (err < 0)
+ 	/*
 -- 
 2.39.5
 
