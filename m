@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDFA2FE59D;
-	Tue, 12 Aug 2025 18:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959972FDC35;
+	Tue, 12 Aug 2025 18:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022066; cv=none; b=F8zuZLk+bx9u2+vjx7FmYd4QFcRoRKWBlIe4bQKuCJ9qpu5LPacdz9iZSihvFKCt9LpPCVPjVvOP5rV7wwG5DE8jttmIBZTYxjJmczE6SGad+a9fxbpIYQVvX7/OavVgYRoYFyO3vCiiJGp1ZADNaWKrsDeR+slfgrdkPnV3WbA=
+	t=1755022069; cv=none; b=DLhAF35qpwPNHPb2DPv1yE4NRhB3Ck1I6XfFB1iTZfeC+PRO0mzFKGY5ggIdz0t7S1Gg2b6VfWLCAj/cAZ3nxjHqXrTi+1+BCudk6/AsUK0H/z2NyBLybOPdH+IOLgVcKe/5bWQm1AMdMR4dFUlgp4IM7xxJ+nTSL6AOPDZ8p8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022066; c=relaxed/simple;
-	bh=gxxnXWf12Dq1Fr7xqZGsdQXjSLPQOvXyleLzdexluXc=;
+	s=arc-20240116; t=1755022069; c=relaxed/simple;
+	bh=HUpVwWAfcgiVLVUcSDEw4hBPgO+a/W1Jq9+m5P1EMzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ibd9Y1GifahftoktD7bxwc0M+VB6Dtx3VIhDDkYgJZqp+mqkAvlUVw32bFEabJn7sLTaAuPo/4ei8X1qpHJyk1OmAstph8TqGAa03r/cCf+zI0MgGtE/xNFKmxLrmQUixfgmkUw2xURvpTHBWwzZxb2Il7cv+HezWkTfajjco+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+n26OG5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nkyFuMe95SWKISX1rLimPc2LPoowzEVlZrL93ZoFfk3KWJ94W9RWhsCFCIOObvStKXbz8jiwP1C4PGidr7MvIU5Lmaa1Ua9gfXDOESFPyJHeVp6W2A2nM0UtuRRxtdqLMJSIxBNdpC1SXYrzBPGN9oB6ML14WMN7Vu/COFPI4Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VecUASkC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+n26OG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06DFC4CEF0;
-	Tue, 12 Aug 2025 18:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VecUASkC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2586C4CEF0;
+	Tue, 12 Aug 2025 18:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022066;
-	bh=gxxnXWf12Dq1Fr7xqZGsdQXjSLPQOvXyleLzdexluXc=;
+	s=korg; t=1755022069;
+	bh=HUpVwWAfcgiVLVUcSDEw4hBPgO+a/W1Jq9+m5P1EMzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+n26OG5gkMhgSzz8VpYqPV33gUsh5rz4ZQCuBVt7mdQi4LzHraD/YIkOiaHj0uO7
-	 SA2dmdlSC88pX59UPkeVrXHG7+kQcu+ylAarNfYPVMSne/JyuKWTNReNxRgoA1j1qc
-	 ID1HNoeA8PKi7zgHKUahV09bWSnJVOgdti6lSn6s=
+	b=VecUASkCpmwmMpP4CnwbeRIjsFgvGwtosslQtXzd80H1oGEioe65QgOkv1/npndCE
+	 BwKtPgJEJ51CVzbWJQSVlki3PDKLrbkE/ByIQ3GVDO1wzJQLN6W+Ntb4fr33AyyjQb
+	 xGJlAbCtUmYxVWIVyylKCvpuS3hk9YEyWLHSDZO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sivan Zohar-Kotzer <sivany32@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/369] powercap: dtpm_cpu: Fix NULL pointer dereference in get_pd_power_uw()
-Date: Tue, 12 Aug 2025 19:25:43 +0200
-Message-ID: <20250812173016.493727291@linuxfoundation.org>
+Subject: [PATCH 6.12 047/369] usb: early: xhci-dbc: Fix early_ioremap leak
+Date: Tue, 12 Aug 2025 19:25:44 +0200
+Message-ID: <20250812173016.532769869@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,42 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sivan Zohar-Kotzer <sivany32@gmail.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit 46dc57406887dd02565cb264224194a6776d882b ]
+[ Upstream commit 2b7eec2ec3015f52fc74cf45d0408925e984ecd1 ]
 
-The get_pd_power_uw() function can crash with a NULL pointer dereference
-when em_cpu_get() returns NULL. This occurs when a CPU becomes impossible
-during runtime, causing get_cpu_device() to return NULL, which propagates
-through em_cpu_get() and leads to a crash when em_span_cpus() dereferences
-the NULL pointer.
+Using the kernel param earlyprintk=xdbc,keep without proper hardware
+setup leads to this:
 
-Add a NULL check after em_cpu_get() and return 0 if unavailable,
-matching the existing fallback behavior in __dtpm_cpu_setup().
+	[ ] xhci_dbc:early_xdbc_parse_parameter: dbgp_num: 0
+	...
+	[ ] xhci_dbc:early_xdbc_setup_hardware: failed to setup the connection to host
+	...
+	[ ] calling  kmemleak_late_init+0x0/0xa0 @ 1
+	[ ] kmemleak: Kernel memory leak detector initialized (mem pool available: 14919)
+	[ ] kmemleak: Automatic memory scanning thread started
+	[ ] initcall kmemleak_late_init+0x0/0xa0 returned 0 after 417 usecs
+	[ ] calling  check_early_ioremap_leak+0x0/0x70 @ 1
+	[ ] ------------[ cut here ]------------
+	[ ] Debug warning: early ioremap leak of 1 areas detected.
+	    please boot with early_ioremap_debug and report the dmesg.
+	[ ] WARNING: CPU: 11 PID: 1 at mm/early_ioremap.c:90 check_early_ioremap_leak+0x4e/0x70
 
-Fixes: eb82bace8931 ("powercap/drivers/dtpm: Scale the power with the load")
-Signed-off-by: Sivan Zohar-Kotzer <sivany32@gmail.com>
-Link: https://patch.msgid.link/20250701221355.96916-1-sivany32@gmail.com
-[ rjw: Drop an excess empty code line ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+When early_xdbc_setup_hardware() fails, make sure to call
+early_iounmap() since xdbc_init() won't handle it.
+
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Fixes: aeb9dd1de98c ("usb/early: Add driver for xhci debug capability")
+Link: https://lore.kernel.org/r/20250627-xdbc-v1-1-43cc8c317b1b@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/dtpm_cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/early/xhci-dbc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/powercap/dtpm_cpu.c b/drivers/powercap/dtpm_cpu.c
-index 6b6f51b21550..99390ec1481f 100644
---- a/drivers/powercap/dtpm_cpu.c
-+++ b/drivers/powercap/dtpm_cpu.c
-@@ -96,6 +96,8 @@ static u64 get_pd_power_uw(struct dtpm *dtpm)
- 	int i;
+diff --git a/drivers/usb/early/xhci-dbc.c b/drivers/usb/early/xhci-dbc.c
+index 341408410ed9..41118bba9197 100644
+--- a/drivers/usb/early/xhci-dbc.c
++++ b/drivers/usb/early/xhci-dbc.c
+@@ -681,6 +681,10 @@ int __init early_xdbc_setup_hardware(void)
  
- 	pd = em_cpu_get(dtpm_cpu->cpu);
-+	if (!pd)
-+		return 0;
+ 		xdbc.table_base = NULL;
+ 		xdbc.out_buf = NULL;
++
++		early_iounmap(xdbc.xhci_base, xdbc.xhci_length);
++		xdbc.xhci_base = NULL;
++		xdbc.xhci_length = 0;
+ 	}
  
- 	pd_mask = em_span_cpus(pd);
- 
+ 	return ret;
 -- 
 2.39.5
 
