@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA60E1F429C;
-	Tue, 12 Aug 2025 19:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CD8217F35;
+	Tue, 12 Aug 2025 19:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026186; cv=none; b=XmM5rarokoeQpSevVOU82p5spkPpF2pdlhCpsQG+sMKVSeKKG1812C0qmtsFqJtouDpMViuJu+XeiTM+LPfKRdHRtP12QOGRa74QgzaDrKjHqT1s6FFptHlrtr7W2z6Jsw3586lO0y6oQ4k+D2zgdeZevZh8zats0YR1KWszF6Q=
+	t=1755026190; cv=none; b=CFnUouLUm5CNNXLLr+ce14CYhLDrRCvkqGsitcrPg4Z3n9Ua0gZ3p8XGoYPAGW16bVxrUNCqIMkTi9BM+D2+zIPUDwD94gAqEOxAvELKpEIG4ND5voN0oX904G43v1WNeKb38+ULrhDWhe1doJI7aoUpG99X2+ckmJ6EeZoNRsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026186; c=relaxed/simple;
-	bh=PWay3c3eFSrHXmfGCPu6nQfRM36aq1fEa5pI6Anus7M=;
+	s=arc-20240116; t=1755026190; c=relaxed/simple;
+	bh=JuFRNWkJ/D5lQhpQCYC7B0cNkHLkzY9mSrGbjkEv7OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nU6PHS0cI0yPKahqM0P/quD2NYwDVCsr4tZnfFPmtSFcQbfcB69rRhJU6PTzGwQ3NFUHQ71Kf9XEgcDxI/pOekmikqdfMAPxA/hUfe3vAQf0+NMDsQQa+Us+66s874+pgidhMSZJxqngMTYUdrjiv6rQXkgtTX+8636JrLWsShs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyDwXRud; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTQmRUXCSJZCy+aIRqZKjp/IkArxPOR3FmKgnT+CqY8TnwZmYYzhdaDgMEFD9xvjuuMs54ofK9hLRJg8u0jui8fmGk7/wp2+uv4TwcDyYc5C4P56bu0bp5c27Mk9hsamQMZ5C5CtsB1m4vKCprCSNVn9+m/WjAlN6Ms7zMLmGQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgUTbjpu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyDwXRud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F52CC4CEF0;
-	Tue, 12 Aug 2025 19:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgUTbjpu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E36C4CEF0;
+	Tue, 12 Aug 2025 19:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026186;
-	bh=PWay3c3eFSrHXmfGCPu6nQfRM36aq1fEa5pI6Anus7M=;
+	s=korg; t=1755026189;
+	bh=JuFRNWkJ/D5lQhpQCYC7B0cNkHLkzY9mSrGbjkEv7OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyDwXRudfm5Ez+bqHbSSg5mhgCztnha1ohFr7dlvuKpH3lqF+5Ko4jZLjDEXUnf2x
-	 pdyDZrnDStxQeFCxNsGpTcwWsW2kUBn8iUyOflR+bkW0Ivf5XFmo6741BlvkAOVZwu
-	 iww5dyf8atpR6erO/YseLZuw7ZgAt/anilUpBUuI=
+	b=XgUTbjpuK9M3EzyzAkupuGmV4AQx3KsZZ+puOZHRgDB9Vy/7+F31lRGqeiQpSBlWf
+	 L2BxE16F7fh3c58nRKqHqHmeY7R+cLxP30LUlWTW8d74DibiGn2SreRZts0xsKuShJ
+	 GID6Y+RoS46aJoKyxMGdlm44MbWmStPSsrKkWcjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Juri Lelli <jlelli@redhat.com>,
+	Clark Williams <williams@redhat.com>,
+	John Kacur <jkacur@redhat.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 229/480] padata: Fix pd UAF once and for all
-Date: Tue, 12 Aug 2025 19:47:17 +0200
-Message-ID: <20250812174406.891370887@linuxfoundation.org>
+Subject: [PATCH 6.15 220/480] rv: Adjust monitor dependencies
+Date: Tue, 12 Aug 2025 19:47:08 +0200
+Message-ID: <20250812174406.522543234@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -50,267 +59,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 71203f68c7749609d7fc8ae6ad054bdedeb24f91 ]
+[ Upstream commit 79de661707a4a2dc695fd3e00529a14b4f5ec50d ]
 
-There is a race condition/UAF in padata_reorder that goes back
-to the initial commit.  A reference count is taken at the start
-of the process in padata_do_parallel, and released at the end in
-padata_serial_worker.
+RV monitors relying on the preemptirqs tracepoints are set as dependent
+on PREEMPT_TRACER and IRQSOFF_TRACER. In fact, those configurations do
+enable the tracepoints but are not the minimal configurations enabling
+them, which are TRACE_PREEMPT_TOGGLE and TRACE_IRQFLAGS (not selectable
+manually).
 
-This reference count is (and only is) required for padata_replace
-to function correctly.  If padata_replace is never called then
-there is no issue.
+Set TRACE_PREEMPT_TOGGLE and TRACE_IRQFLAGS as dependencies for
+monitors.
 
-In the function padata_reorder which serves as the core of padata,
-as soon as padata is added to queue->serial.list, and the associated
-spin lock released, that padata may be processed and the reference
-count on pd would go away.
-
-Fix this by getting the next padata before the squeue->serial lock
-is released.
-
-In order to make this possible, simplify padata_reorder by only
-calling it once the next padata arrives.
-
-Fixes: 16295bec6398 ("padata: Generic parallelization/serialization interface")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tomas Glozar <tglozar@redhat.com>
+Cc: Juri Lelli <jlelli@redhat.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: John Kacur <jkacur@redhat.com>
+Link: https://lore.kernel.org/20250728135022.255578-5-gmonaco@redhat.com
+Fixes: fbe6c09b7eb4 ("rv: Add scpd, snep and sncid per-cpu monitors")
+Acked-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/padata.h |   3 -
- kernel/padata.c        | 132 ++++++++++++-----------------------------
- 2 files changed, 37 insertions(+), 98 deletions(-)
+ kernel/trace/rv/monitors/scpd/Kconfig  | 2 +-
+ kernel/trace/rv/monitors/sncid/Kconfig | 2 +-
+ kernel/trace/rv/monitors/snep/Kconfig  | 2 +-
+ kernel/trace/rv/monitors/wip/Kconfig   | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/padata.h b/include/linux/padata.h
-index 0146daf34430..b486c7359de2 100644
---- a/include/linux/padata.h
-+++ b/include/linux/padata.h
-@@ -91,7 +91,6 @@ struct padata_cpumask {
-  * @cpu: Next CPU to be processed.
-  * @cpumask: The cpumasks in use for parallel and serial workers.
-  * @reorder_work: work struct for reordering.
-- * @lock: Reorder lock.
-  */
- struct parallel_data {
- 	struct padata_shell		*ps;
-@@ -102,8 +101,6 @@ struct parallel_data {
- 	unsigned int			processed;
- 	int				cpu;
- 	struct padata_cpumask		cpumask;
--	struct work_struct		reorder_work;
--	spinlock_t                      ____cacheline_aligned lock;
- };
- 
- /**
-diff --git a/kernel/padata.c b/kernel/padata.c
-index 7eee94166357..25cd3406477a 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -261,20 +261,17 @@ EXPORT_SYMBOL(padata_do_parallel);
-  *   be parallel processed by another cpu and is not yet present in
-  *   the cpu's reorder queue.
-  */
--static struct padata_priv *padata_find_next(struct parallel_data *pd,
--					    bool remove_object)
-+static struct padata_priv *padata_find_next(struct parallel_data *pd, int cpu,
-+					    unsigned int processed)
- {
- 	struct padata_priv *padata;
- 	struct padata_list *reorder;
--	int cpu = pd->cpu;
- 
- 	reorder = per_cpu_ptr(pd->reorder_list, cpu);
- 
- 	spin_lock(&reorder->lock);
--	if (list_empty(&reorder->list)) {
--		spin_unlock(&reorder->lock);
--		return NULL;
--	}
-+	if (list_empty(&reorder->list))
-+		goto notfound;
- 
- 	padata = list_entry(reorder->list.next, struct padata_priv, list);
- 
-@@ -282,97 +279,52 @@ static struct padata_priv *padata_find_next(struct parallel_data *pd,
- 	 * Checks the rare case where two or more parallel jobs have hashed to
- 	 * the same CPU and one of the later ones finishes first.
- 	 */
--	if (padata->seq_nr != pd->processed) {
--		spin_unlock(&reorder->lock);
--		return NULL;
--	}
--
--	if (remove_object) {
--		list_del_init(&padata->list);
--		++pd->processed;
--		pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu);
--	}
-+	if (padata->seq_nr != processed)
-+		goto notfound;
- 
-+	list_del_init(&padata->list);
- 	spin_unlock(&reorder->lock);
- 	return padata;
-+
-+notfound:
-+	pd->processed = processed;
-+	pd->cpu = cpu;
-+	spin_unlock(&reorder->lock);
-+	return NULL;
- }
- 
--static void padata_reorder(struct parallel_data *pd)
-+static void padata_reorder(struct padata_priv *padata)
- {
-+	struct parallel_data *pd = padata->pd;
- 	struct padata_instance *pinst = pd->ps->pinst;
--	int cb_cpu;
--	struct padata_priv *padata;
--	struct padata_serial_queue *squeue;
--	struct padata_list *reorder;
-+	unsigned int processed;
-+	int cpu;
- 
--	/*
--	 * We need to ensure that only one cpu can work on dequeueing of
--	 * the reorder queue the time. Calculating in which percpu reorder
--	 * queue the next object will arrive takes some time. A spinlock
--	 * would be highly contended. Also it is not clear in which order
--	 * the objects arrive to the reorder queues. So a cpu could wait to
--	 * get the lock just to notice that there is nothing to do at the
--	 * moment. Therefore we use a trylock and let the holder of the lock
--	 * care for all the objects enqueued during the holdtime of the lock.
--	 */
--	if (!spin_trylock_bh(&pd->lock))
--		return;
-+	processed = pd->processed;
-+	cpu = pd->cpu;
- 
--	while (1) {
--		padata = padata_find_next(pd, true);
-+	do {
-+		struct padata_serial_queue *squeue;
-+		int cb_cpu;
- 
--		/*
--		 * If the next object that needs serialization is parallel
--		 * processed by another cpu and is still on it's way to the
--		 * cpu's reorder queue, nothing to do for now.
--		 */
--		if (!padata)
--			break;
-+		cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu);
-+		processed++;
- 
- 		cb_cpu = padata->cb_cpu;
- 		squeue = per_cpu_ptr(pd->squeue, cb_cpu);
- 
- 		spin_lock(&squeue->serial.lock);
- 		list_add_tail(&padata->list, &squeue->serial.list);
--		spin_unlock(&squeue->serial.lock);
--
- 		queue_work_on(cb_cpu, pinst->serial_wq, &squeue->work);
--	}
- 
--	spin_unlock_bh(&pd->lock);
--
--	/*
--	 * The next object that needs serialization might have arrived to
--	 * the reorder queues in the meantime.
--	 *
--	 * Ensure reorder queue is read after pd->lock is dropped so we see
--	 * new objects from another task in padata_do_serial.  Pairs with
--	 * smp_mb in padata_do_serial.
--	 */
--	smp_mb();
--
--	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
--	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
- 		/*
--		 * Other context(eg. the padata_serial_worker) can finish the request.
--		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
-+		 * If the next object that needs serialization is parallel
-+		 * processed by another cpu and is still on it's way to the
-+		 * cpu's reorder queue, end the loop.
- 		 */
--		padata_get_pd(pd);
--		if (!queue_work(pinst->serial_wq, &pd->reorder_work))
--			padata_put_pd(pd);
--	}
--}
--
--static void invoke_padata_reorder(struct work_struct *work)
--{
--	struct parallel_data *pd;
--
--	local_bh_disable();
--	pd = container_of(work, struct parallel_data, reorder_work);
--	padata_reorder(pd);
--	local_bh_enable();
--	/* Pairs with putting the reorder_work in the serial_wq */
--	padata_put_pd(pd);
-+		padata = padata_find_next(pd, cpu, processed);
-+		spin_unlock(&squeue->serial.lock);
-+	} while (padata);
- }
- 
- static void padata_serial_worker(struct work_struct *serial_work)
-@@ -423,6 +375,7 @@ void padata_do_serial(struct padata_priv *padata)
- 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
- 	struct padata_priv *cur;
- 	struct list_head *pos;
-+	bool gotit = true;
- 
- 	spin_lock(&reorder->lock);
- 	/* Sort in ascending order of sequence number. */
-@@ -432,17 +385,14 @@ void padata_do_serial(struct padata_priv *padata)
- 		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
- 			break;
- 	}
--	list_add(&padata->list, pos);
-+	if (padata->seq_nr != pd->processed) {
-+		gotit = false;
-+		list_add(&padata->list, pos);
-+	}
- 	spin_unlock(&reorder->lock);
- 
--	/*
--	 * Ensure the addition to the reorder list is ordered correctly
--	 * with the trylock of pd->lock in padata_reorder.  Pairs with smp_mb
--	 * in padata_reorder.
--	 */
--	smp_mb();
--
--	padata_reorder(pd);
-+	if (gotit)
-+		padata_reorder(padata);
- }
- EXPORT_SYMBOL(padata_do_serial);
- 
-@@ -632,9 +582,7 @@ static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
- 	padata_init_squeues(pd);
- 	pd->seq_nr = -1;
- 	refcount_set(&pd->refcnt, 1);
--	spin_lock_init(&pd->lock);
- 	pd->cpu = cpumask_first(pd->cpumask.pcpu);
--	INIT_WORK(&pd->reorder_work, invoke_padata_reorder);
- 
- 	return pd;
- 
-@@ -1144,12 +1092,6 @@ void padata_free_shell(struct padata_shell *ps)
- 	if (!ps)
- 		return;
- 
--	/*
--	 * Wait for all _do_serial calls to finish to avoid touching
--	 * freed pd's and ps's.
--	 */
--	synchronize_rcu();
--
- 	mutex_lock(&ps->pinst->lock);
- 	list_del(&ps->list);
- 	pd = rcu_dereference_protected(ps->pd, 1);
+diff --git a/kernel/trace/rv/monitors/scpd/Kconfig b/kernel/trace/rv/monitors/scpd/Kconfig
+index b9114fbf680f..682d0416188b 100644
+--- a/kernel/trace/rv/monitors/scpd/Kconfig
++++ b/kernel/trace/rv/monitors/scpd/Kconfig
+@@ -2,7 +2,7 @@
+ #
+ config RV_MON_SCPD
+ 	depends on RV
+-	depends on PREEMPT_TRACER
++	depends on TRACE_PREEMPT_TOGGLE
+ 	depends on RV_MON_SCHED
+ 	default y
+ 	select DA_MON_EVENTS_IMPLICIT
+diff --git a/kernel/trace/rv/monitors/sncid/Kconfig b/kernel/trace/rv/monitors/sncid/Kconfig
+index 76bcfef4fd10..3a5639feaaaf 100644
+--- a/kernel/trace/rv/monitors/sncid/Kconfig
++++ b/kernel/trace/rv/monitors/sncid/Kconfig
+@@ -2,7 +2,7 @@
+ #
+ config RV_MON_SNCID
+ 	depends on RV
+-	depends on IRQSOFF_TRACER
++	depends on TRACE_IRQFLAGS
+ 	depends on RV_MON_SCHED
+ 	default y
+ 	select DA_MON_EVENTS_IMPLICIT
+diff --git a/kernel/trace/rv/monitors/snep/Kconfig b/kernel/trace/rv/monitors/snep/Kconfig
+index 77527f971232..7dd54f434ff7 100644
+--- a/kernel/trace/rv/monitors/snep/Kconfig
++++ b/kernel/trace/rv/monitors/snep/Kconfig
+@@ -2,7 +2,7 @@
+ #
+ config RV_MON_SNEP
+ 	depends on RV
+-	depends on PREEMPT_TRACER
++	depends on TRACE_PREEMPT_TOGGLE
+ 	depends on RV_MON_SCHED
+ 	default y
+ 	select DA_MON_EVENTS_IMPLICIT
+diff --git a/kernel/trace/rv/monitors/wip/Kconfig b/kernel/trace/rv/monitors/wip/Kconfig
+index e464b9294865..87a26195792b 100644
+--- a/kernel/trace/rv/monitors/wip/Kconfig
++++ b/kernel/trace/rv/monitors/wip/Kconfig
+@@ -2,7 +2,7 @@
+ #
+ config RV_MON_WIP
+ 	depends on RV
+-	depends on PREEMPT_TRACER
++	depends on TRACE_PREEMPT_TOGGLE
+ 	select DA_MON_EVENTS_IMPLICIT
+ 	bool "wip monitor"
+ 	help
 -- 
 2.39.5
 
