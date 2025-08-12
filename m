@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656BD29BD9D;
-	Tue, 12 Aug 2025 19:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5DF217F35;
+	Tue, 12 Aug 2025 19:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026790; cv=none; b=SlomBOdQYynqmdVNWO/f3pCV7aKQUdl/zgPjThH+XJA7f4XunliNH90R0Pfz9B33SGwSeeksFHC2B4IDKNFHm/a7R0oKwL5aE5hHAzRE07sm8aCPEEgFLqJRoS2ct5Cws/DjBGVLXQhF2Sdh6aROZudKBYGoMn7wvHR6ph8ETn8=
+	t=1755026794; cv=none; b=DjL+2CsSVJcwt27WvE8ejVOqvANFcD7rW2MmM7yr+0GPuZfVGdmyp5cUL17oUd0q57k5HwpKsCLi+91SU2X+JqcKE/TQjoo1WPQwSaWcXD2DRuNl17NO3py2Ot+4xAD3ItABvUFE0TFsQAnE20Lx68uuG4kB7Iz4zk7rGivmbUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026790; c=relaxed/simple;
-	bh=Wzn0hxnVVQxg9BAA69bhzo5FaQpiHlIA8D3/NFtmOig=;
+	s=arc-20240116; t=1755026794; c=relaxed/simple;
+	bh=1LLKemOqK+SAeVLrlwsYYbGoFF+JS/ZjNBgLnoXE/Wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ltHXsHfXwccCEtK9bSdm9Q09UQG2/ZBs7PP18KMnAltjn2+8kW22aP+BOU/wia1ZCGOPKu7cddKY8c0McpGZ2Bg5WfBYByncysLlLUEg50MXfhyKIKkNv9CQlwo+UwznvWqpjsiR6ZYwUXscWU+VmnSChvBeD2FX4wGyZ33d570=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGk/LvIq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xvdu+oIaaaWeRM2nZciqEEsXUPgkRAF9+tGKHrWojFegPPy0XIOBm+BCoKMzYtAjmX8Cl6QrowW2TZfDvaZg87zgekPch8mfiMIGPBd2cfShLkYbflOewfCRP6czxZZWj3ZCinjsYJI1VA+l3p7M2rpNK5ZTHXUev7PFxuNRXd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2WPfPGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGk/LvIq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7430C4CEF1;
-	Tue, 12 Aug 2025 19:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2WPfPGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEE2C4CEF0;
+	Tue, 12 Aug 2025 19:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026790;
-	bh=Wzn0hxnVVQxg9BAA69bhzo5FaQpiHlIA8D3/NFtmOig=;
+	s=korg; t=1755026793;
+	bh=1LLKemOqK+SAeVLrlwsYYbGoFF+JS/ZjNBgLnoXE/Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGk/LvIqwSdZDhH1H+3SdxTzaQQmiL70N1+jKTH3dUqFCRJVlSC4q285m0K8WF4pa
-	 BktcT4/CJSWE5B8bNqRDkSpaOAGZFNeJEkSmsZ9YbqASOiw7V2lhH3isSCoFhedlYS
-	 iPnk/MC9GqhFep4KL/bUqZbLjwrQoriSfUqOlrhw=
+	b=m2WPfPGe9tOZdV3zwouqPlTrUwPvTmAlLVQpEYRxl2ZmaAHFogCwRuZQjnllq6Gf/
+	 GTwDUOzHAT+NIxk6wLtQ+GpB6Qe5PjiHCh/iv2UuL9/ZuYgSaD8wLHxG7X2HIXDYtU
+	 CDvkYPg/NUGYheJvrYIxKsQYGs9gpAuizI3v8Nms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Maher Azzouzi <maherazz04@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 409/480] net/sched: mqprio: fix stack out-of-bounds write in tc entry parsing
-Date: Tue, 12 Aug 2025 19:50:17 +0200
-Message-ID: <20250812174414.298283688@linuxfoundation.org>
+Subject: [PATCH 6.15 400/480] net: mdio: mdio-bcm-unimac: Correct rate fallback logic
+Date: Tue, 12 Aug 2025 19:50:08 +0200
+Message-ID: <20250812174413.932311830@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -47,48 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maher Azzouzi <maherazz04@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit ffd2dc4c6c49ff4f1e5d34e454a6a55608104c17 ]
+[ Upstream commit a81649a4efd382497bf3d34a623360263adc6993 ]
 
-TCA_MQPRIO_TC_ENTRY_INDEX is validated using
-NLA_POLICY_MAX(NLA_U32, TC_QOPT_MAX_QUEUE), which allows the value
-TC_QOPT_MAX_QUEUE (16). This leads to a 4-byte out-of-bounds stack
-write in the fp[] array, which only has room for 16 elements (0–15).
+When the parent clock is a gated clock which has multiple parents, the
+clock provider (clk-scmi typically) might return a rate of 0 since there
+is not one of those particular parent clocks that should be chosen for
+returning a rate. Prior to ee975351cf0c ("net: mdio: mdio-bcm-unimac:
+Manage clock around I/O accesses"), we would not always be passing a
+clock reference depending upon how mdio-bcm-unimac was instantiated. In
+that case, we would take the fallback path where the rate is hard coded
+to 250MHz.
 
-Fix this by changing the policy to allow only up to TC_QOPT_MAX_QUEUE - 1.
+Make sure that we still fallback to using a fixed rate for the divider
+calculation, otherwise we simply ignore the desired MDIO bus clock
+frequency which can prevent us from interfacing with Ethernet PHYs
+properly.
 
-Fixes: f62af20bed2d ("net/sched: mqprio: allow per-TC user input of FP adminStatus")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250802001857.2702497-1-kuba@kernel.org
+Fixes: ee975351cf0c ("net: mdio: mdio-bcm-unimac: Manage clock around I/O accesses")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250730202533.3463529-1-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_mqprio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/mdio/mdio-bcm-unimac.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
-index 51d4013b6121..f3e5ef9a9592 100644
---- a/net/sched/sch_mqprio.c
-+++ b/net/sched/sch_mqprio.c
-@@ -152,7 +152,7 @@ static int mqprio_parse_opt(struct net_device *dev, struct tc_mqprio_qopt *qopt,
- static const struct
- nla_policy mqprio_tc_entry_policy[TCA_MQPRIO_TC_ENTRY_MAX + 1] = {
- 	[TCA_MQPRIO_TC_ENTRY_INDEX]	= NLA_POLICY_MAX(NLA_U32,
--							 TC_QOPT_MAX_QUEUE),
-+							 TC_QOPT_MAX_QUEUE - 1),
- 	[TCA_MQPRIO_TC_ENTRY_FP]	= NLA_POLICY_RANGE(NLA_U32,
- 							   TC_FP_EXPRESS,
- 							   TC_FP_PREEMPTIBLE),
+diff --git a/drivers/net/mdio/mdio-bcm-unimac.c b/drivers/net/mdio/mdio-bcm-unimac.c
+index 074d96328f41..60565e7c88bd 100644
+--- a/drivers/net/mdio/mdio-bcm-unimac.c
++++ b/drivers/net/mdio/mdio-bcm-unimac.c
+@@ -209,10 +209,9 @@ static int unimac_mdio_clk_set(struct unimac_mdio_priv *priv)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (!priv->clk)
++	rate = clk_get_rate(priv->clk);
++	if (!rate)
+ 		rate = 250000000;
+-	else
+-		rate = clk_get_rate(priv->clk);
+ 
+ 	div = (rate / (2 * priv->clk_freq)) - 1;
+ 	if (div & ~MDIO_CLK_DIV_MASK) {
 -- 
 2.39.5
 
