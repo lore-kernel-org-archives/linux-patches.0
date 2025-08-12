@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E766221FAC;
-	Tue, 12 Aug 2025 17:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A331A257435;
+	Tue, 12 Aug 2025 17:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020986; cv=none; b=CXS6KasPqLHyXFq/tldcowgt2tZOPPH0/84RJ7PNod7l+MhF4HtQMrFeTGd61RNZN32hDqvk9m2cSEaUDuUSwHsGYXQwNFXkGw578SZweqvZje/X8cfjAXQKJscDbXd91/KWVZZwxmox2j6ARUhl2zecRda/ixawD4U/SmfJ5I0=
+	t=1755020989; cv=none; b=JUTdcV1rVonGYNNcGv9KmhS91xrPRmK01h75bS7+dhJqBqI+HdDPmIlmGbiDrsUm/2OUu/ESlhYfC63jWZTlBJiLSWqUDGqrKGlGEbFy5FYVXmq+SyTX9SMc7cFVu6dQyeJZf/gQwhkYsQXw2Wz8g7nuQhg7u/p6Imzez38h8eY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020986; c=relaxed/simple;
-	bh=AhFM8KU83xkN3OfZZ3A73/eXpqppQlxgXqyXm0fUQhA=;
+	s=arc-20240116; t=1755020989; c=relaxed/simple;
+	bh=NxFw3PGj8jUWQ/B9piGC1lkVF621dWc4opxJ2+LlH/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLouoWMu+CsuGvTPLzFyO1T2uYUMKm4gf3njBRH4iTBnA0d5gE32llts/zP1UP/5npWRxCQ5J/kSdy8rEC82TdJnK91oWlrcSOCsWtMOJhUkcgys+ioqr5RMioqTP6hS/eyTPf2tilGNYHNqvWEbIxycfnbLql+PtEIiIw3dPls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=devNH7x/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q2lEARRlOYh8I7WQ2d3Mup//Fp+rRXov+E6tCmFGpPPTx53tD2uAjVqtxsoDg6Dl/+JQiqdJfn/Fi2ALzFyZ4LibokK6T679blBS6hsQ1HI5CjgK1fQR8Ik59yCxZkOy8Wnm3nVCYfGz6yfRWtuIYdrRxP7CvLsbuvfIRP3GTRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXfz+PC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="devNH7x/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB485C4CEF0;
-	Tue, 12 Aug 2025 17:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXfz+PC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD1CC4CEF0;
+	Tue, 12 Aug 2025 17:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020986;
-	bh=AhFM8KU83xkN3OfZZ3A73/eXpqppQlxgXqyXm0fUQhA=;
+	s=korg; t=1755020989;
+	bh=NxFw3PGj8jUWQ/B9piGC1lkVF621dWc4opxJ2+LlH/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=devNH7x/bGTIEpK1JKRY/IPPEQszaZehGFbt7kGjFdijN3/rf1ZWB29V4wyAA1TmK
-	 PYGHy29sQYfGxMvkmlPRaLrCxUd/piH2uVRE2ziKi99xdxL8pcUTyt4mglNl+xQO3f
-	 L5kcarsWFMz5a4SVPTC5UERtP9vQ1tXlRbNPwph8=
+	b=nXfz+PC8/uOkOPdkDqWzItJ4gQnixdZdPg1/mvmQyConSafjQ6CbOsjx5aHsedmZK
+	 DQChkThMccd8ebjvpeE08D3TnxygHpFhe8SNZkaet5AUhhi8LRm7Zu53BL25vd/wJt
+	 SP0k58GWt/HZNMt4LMlpvmr1Zv/10MqPhHYf1cMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 196/253] f2fs: fix to avoid out-of-boundary access in devs.path
-Date: Tue, 12 Aug 2025 19:29:44 +0200
-Message-ID: <20250812172957.146476746@linuxfoundation.org>
+Subject: [PATCH 6.6 037/262] arm64: dts: imx8mn-beacon: Fix HS400 USDHC clock speed
+Date: Tue, 12 Aug 2025 19:27:05 +0200
+Message-ID: <20250812172954.539914035@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,62 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 5661998536af52848cc4d52a377e90368196edea ]
+[ Upstream commit e16ad6c79906bba5e2ac499492b6a5b29ab19d6c ]
 
-- touch /mnt/f2fs/012345678901234567890123456789012345678901234567890123
-- truncate -s $((1024*1024*1024)) \
-  /mnt/f2fs/012345678901234567890123456789012345678901234567890123
-- touch /mnt/f2fs/file
-- truncate -s $((1024*1024*1024)) /mnt/f2fs/file
-- mkfs.f2fs /mnt/f2fs/012345678901234567890123456789012345678901234567890123 \
-  -c /mnt/f2fs/file
-- mount /mnt/f2fs/012345678901234567890123456789012345678901234567890123 \
-  /mnt/f2fs/loop
+The reference manual for the i.MX8MN states the clock rate in
+MMC mode is 1/2 of the input clock, therefore to properly run
+at HS400 rates, the input clock must be 400MHz to operate at
+200MHz.  Currently the clock is set to 200MHz which is half the
+rate it should be, so the throughput is half of what it should be
+for HS400 operation.
 
-[16937.192225] F2FS-fs (loop0): Mount Device [ 0]: /mnt/f2fs/012345678901234567890123456789012345678901234567890123\xff\x01,      511,        0 -    3ffff
-[16937.192268] F2FS-fs (loop0): Failed to find devices
-
-If device path length equals to MAX_PATH_LEN, sbi->devs.path[] may
-not end up w/ null character due to path array is fully filled, So
-accidently, fields locate after path[] may be treated as part of
-device path, result in parsing wrong device path.
-
-struct f2fs_dev_info {
-...
-	char path[MAX_PATH_LEN];
-...
-};
-
-Let's add one byte space for sbi->devs.path[] to store null
-character of device path string.
-
-Fixes: 3c62be17d4f5 ("f2fs: support multiple devices")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 36ca3c8ccb53 ("arm64: dts: imx: Add Beacon i.MX8M Nano development kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index ef9149bd398a..1ad9669666e8 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1226,7 +1226,7 @@ struct f2fs_bio_info {
- #define RDEV(i)				(raw_super->devs[i])
- struct f2fs_dev_info {
- 	struct block_device *bdev;
--	char path[MAX_PATH_LEN];
-+	char path[MAX_PATH_LEN + 1];
- 	unsigned int total_segments;
- 	block_t start_blk;
- 	block_t end_blk;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+index 1760062e6ffc..f5f87b389123 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+@@ -295,6 +295,8 @@ &usdhc3 {
+ 	pinctrl-0 = <&pinctrl_usdhc3>;
+ 	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
+ 	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
++	assigned-clocks = <&clk IMX8MN_CLK_USDHC3>;
++	assigned-clock-rates = <400000000>;
+ 	bus-width = <8>;
+ 	non-removable;
+ 	status = "okay";
 -- 
 2.39.5
 
