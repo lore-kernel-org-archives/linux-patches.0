@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A6C27FB12;
-	Tue, 12 Aug 2025 18:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4858C2F5481;
+	Tue, 12 Aug 2025 18:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023546; cv=none; b=HyQ21GwtHhgAKwHw9T1sb7drD+WRiDVPKSoT89wWCZbp/0BrqEthx2+KtkdwR9jZvewbJYRW561UirpDo9fgzoDFxol6vNgzWP1qLzCUYfaRKXoRWnHfw2G2Gq+Zoz1KZit74gcCR+zW34VQX93i/SmITpZWvFDiWz7m4v7xsfU=
+	t=1755023549; cv=none; b=O1dCrhsUwpVFqy/osKNoXF5FluH4dPeCDp9hcVGt1C6wN76v3zv0AxQiDcOqAwpt4gezTpRRfN2CA6RcnONxn44pBJTakMvLRcQGmJYEDv+ymkG2Ixa8qdcKmLQRVUaYaCj5kdW9v68SDYK5nVT0YBMIK0RwDXDo29MUU5X060g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023546; c=relaxed/simple;
-	bh=lr5f4MEJP5DN/i3Gvrx7+GKpeoCRWbUitm6Sf/RKXjg=;
+	s=arc-20240116; t=1755023549; c=relaxed/simple;
+	bh=7K68s1sqLlLMc32J+ZlMwHepU3s8Iw+jVVT9uKnU6Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2YqM93v8fC5LDq5IL1nYf7lpjjaLX7rSO2k1oN6CTE6DGFynF+B+hxhI30UXGLQXjNDFYei5kOUBzLCqeKfJSjAtHwW4cPqZoXlx0uQ47JguV8TsO27CmznTEXWFb+JHY6+PS8Vq3XcAXW5GnCazERFiVw9+KQbo3eT970LUTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7eCTJOi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vwy/5+C9O8/66AcXbRSlH4bJDbmjmD0SPW9ycog8s+0j2Q7CHI12fPfpLhyThzxJAoaOucxfFSzPL2KYmaOGe63WhHDOGHjmEuDOqVaeUkCORJvVAMqEtPbXwzyoNIIvqbxmJGDuo5ivzayhYXXFHtjPczeWrE9B4pXPBGAEIEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JhJnZ3a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7eCTJOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6851AC4CEF7;
-	Tue, 12 Aug 2025 18:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JhJnZ3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB655C4CEF0;
+	Tue, 12 Aug 2025 18:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023545;
-	bh=lr5f4MEJP5DN/i3Gvrx7+GKpeoCRWbUitm6Sf/RKXjg=;
+	s=korg; t=1755023549;
+	bh=7K68s1sqLlLMc32J+ZlMwHepU3s8Iw+jVVT9uKnU6Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7eCTJOiIh5+3N5dRxFATvzzd4SEQZWb5WCd3K1P5FPSCIRvfAQvdptEp38k13MDD
-	 su/ir/M+CHIkiLBOAalaUxiT07SAb+NBNnkPDvc5qUmihld1FiqS5s+71j9g9ldV2d
-	 wj2l6A44NpcEeYZDYcKIdL/rdedFMchsMuMkcrN8=
+	b=2JhJnZ3a7+jfOVDNGhqDW7b+j13tEHWqsfQqD1e0113WNj85YUWLJe7KgjLQkwyE/
+	 Fv3fa74K3Q2kYep7uI1t1ri72fMmudIS/YsZ15R6coLKM6i71vCLFmrmRfdOyjFrdo
+	 77yidVxc+d8BvHM/P7eXyd05lSHacltWpsWWSBUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 112/627] kexec_core: Fix error code path in the KEXEC_JUMP flow
-Date: Tue, 12 Aug 2025 19:26:47 +0200
-Message-ID: <20250812173423.573843423@linuxfoundation.org>
+Subject: [PATCH 6.16 113/627] ASoC: SDCA: Update memory allocations to zero initialise
+Date: Tue, 12 Aug 2025 19:26:48 +0200
+Message-ID: <20250812173423.609175228@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,51 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 996afb6efd1a345736f9a888e4d6c7d4f3752aa5 ]
+[ Upstream commit 15247b5a63f506125360fa45d7aa1fbe8b903b95 ]
 
-If dpm_suspend_start() fails, dpm_resume_end() must be called to
-recover devices whose suspend callbacks have been called, but this
-does not happen in the KEXEC_JUMP flow's error path due to a confused
-goto target label.
+All the memory allocations in the SDCA ASoC helpers rely on fields being
+zero initialised, the code should use kzalloc not kmalloc.
 
-Address this by using the correct target label in the goto statement in
-question and drop the Resume_console label that is not used any more.
-
-Fixes: 2965faa5e03d ("kexec: split kexec_load syscall from kexec core code")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/2396879.ElGaqSPkdT@rjwysocki.net
-[ rjw: Drop unused label and amend the changelog ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Shuming Fan <shumingf@realtek.com>
+Fixes: 2c8b3a8e6aa8 ("ASoC: SDCA: Create DAPM widgets and routes from DisCo")
+Fixes: c3ca24e3fcb6 ("ASoC: SDCA: Create ALSA controls from DisCo")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250715151723.2964336-4-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/sdca/sdca_asoc.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
-index 3a9a9f240dbc..554369595298 100644
---- a/kernel/kexec_core.c
-+++ b/kernel/kexec_core.c
-@@ -1080,7 +1080,7 @@ int kernel_kexec(void)
- 		console_suspend_all();
- 		error = dpm_suspend_start(PMSG_FREEZE);
- 		if (error)
--			goto Resume_console;
-+			goto Resume_devices;
- 		/*
- 		 * dpm_suspend_end() must be called after dpm_suspend_start()
- 		 * to complete the transition, like in the hibernation flows
-@@ -1135,7 +1135,6 @@ int kernel_kexec(void)
- 		dpm_resume_start(PMSG_RESTORE);
-  Resume_devices:
- 		dpm_resume_end(PMSG_RESTORE);
-- Resume_console:
- 		pm_restore_gfp_mask();
- 		console_resume_all();
- 		thaw_processes();
+diff --git a/sound/soc/sdca/sdca_asoc.c b/sound/soc/sdca/sdca_asoc.c
+index e96e696cb107..febc57b2a0b5 100644
+--- a/sound/soc/sdca/sdca_asoc.c
++++ b/sound/soc/sdca/sdca_asoc.c
+@@ -229,11 +229,11 @@ static int entity_early_parse_ge(struct device *dev,
+ 	if (!control_name)
+ 		return -ENOMEM;
+ 
+-	kctl = devm_kmalloc(dev, sizeof(*kctl), GFP_KERNEL);
++	kctl = devm_kzalloc(dev, sizeof(*kctl), GFP_KERNEL);
+ 	if (!kctl)
+ 		return -ENOMEM;
+ 
+-	soc_enum = devm_kmalloc(dev, sizeof(*soc_enum), GFP_KERNEL);
++	soc_enum = devm_kzalloc(dev, sizeof(*soc_enum), GFP_KERNEL);
+ 	if (!soc_enum)
+ 		return -ENOMEM;
+ 
+@@ -560,11 +560,11 @@ static int entity_parse_su_class(struct device *dev,
+ 	const char **texts;
+ 	int i;
+ 
+-	kctl = devm_kmalloc(dev, sizeof(*kctl), GFP_KERNEL);
++	kctl = devm_kzalloc(dev, sizeof(*kctl), GFP_KERNEL);
+ 	if (!kctl)
+ 		return -ENOMEM;
+ 
+-	soc_enum = devm_kmalloc(dev, sizeof(*soc_enum), GFP_KERNEL);
++	soc_enum = devm_kzalloc(dev, sizeof(*soc_enum), GFP_KERNEL);
+ 	if (!soc_enum)
+ 		return -ENOMEM;
+ 
+@@ -671,7 +671,7 @@ static int entity_parse_mu(struct device *dev,
+ 		if (!control_name)
+ 			return -ENOMEM;
+ 
+-		mc = devm_kmalloc(dev, sizeof(*mc), GFP_KERNEL);
++		mc = devm_kzalloc(dev, sizeof(*mc), GFP_KERNEL);
+ 		if (!mc)
+ 			return -ENOMEM;
+ 
+@@ -925,7 +925,7 @@ static int populate_control(struct device *dev,
+ 	if (!control_name)
+ 		return -ENOMEM;
+ 
+-	mc = devm_kmalloc(dev, sizeof(*mc), GFP_KERNEL);
++	mc = devm_kzalloc(dev, sizeof(*mc), GFP_KERNEL);
+ 	if (!mc)
+ 		return -ENOMEM;
+ 
 -- 
 2.39.5
 
