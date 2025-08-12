@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2323D2DBF5E;
-	Tue, 12 Aug 2025 18:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC1D282E1;
+	Tue, 12 Aug 2025 18:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022848; cv=none; b=KeWz2sNQWRW2F6gNe9yscRVgPv74JGIo4YX2TZdJqz1FZrM1Xtc4Sg8YqrgWHy3C7q5KLdvhKqbsRKNkp7kWV/bbS+usI+ZYtw23YpTji+IgyoBMBNEfttX1bQR8uJXSDg9apFTHunrI/FRf33qRPLr1806PwX3gJS1F8DaSXVs=
+	t=1755022851; cv=none; b=uDaLdugndVVtJvO4Mpce/N4lfZCTwnaeNx1siqP13noYlH5r3EnHgwQtBH2O10/Wn8Z46eQJSuFqV+4aO9SSzBXcFad4pxt734chbt1jff9thQfblw2P8cd7dRSxNitaE3GkgVl4linVCwHfP3akRJIB7SmSPL014Y2Ff1vPYU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022848; c=relaxed/simple;
-	bh=OToJF4gaRfRbxYvgA4rj1ecG7bzZ0MA64jct9Z1Ncz0=;
+	s=arc-20240116; t=1755022851; c=relaxed/simple;
+	bh=GtvldUA36v/SOJSMa3dkhpd6LfMG9C+sT2f0cIe/u7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCtGT6KJiQDoVSa6IlrQVNAyy+9Vy/yL29QDOs4D6veFxoGtWRylgUxRVDxQmgi2gMlkqRtDXMHZboFiQPpDSKsUY3qoej+ISq0Cu3tua+M0X0H93lrjnZ6aKzFhuigEb+sWTIo6kyS19ah54/fwSr/p95oDbGBCBDQs7I0hSZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3yxEqKz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjRwLB3jNJNtsLImbKuv0KCA2y7JDJA5lfNpwGi01aWQeA1uvDxMZW8m2gMbVjU9R60NbhpC6WgxUn27GfEe7cFPpb7SikNKiJnIdXqO/jFEDXK+h+SNtRXWkazgdL2YBw6jkh/AjjybfU91bm7Ll3PEqu2u+GHglnTBPobslFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdil0Qn5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3yxEqKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A05C4CEF6;
-	Tue, 12 Aug 2025 18:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdil0Qn5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A59C4CEF1;
+	Tue, 12 Aug 2025 18:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022848;
-	bh=OToJF4gaRfRbxYvgA4rj1ecG7bzZ0MA64jct9Z1Ncz0=;
+	s=korg; t=1755022851;
+	bh=GtvldUA36v/SOJSMa3dkhpd6LfMG9C+sT2f0cIe/u7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T3yxEqKzanXr/KD9IRhmTaEdHCpFsevkqHmi3I4tpTWDyK9llkyYR+NUFFE9GGcmf
-	 UBpIbBgGtVseOUbioXz+3pF8Ei0+NS+asSVPh4duo7b0PCZEBUdtDgKDFSQW3mFc9z
-	 Or/fsmPHRWhfXmk1zieloV5JsiTxmpQWK/SHSwwM=
+	b=Tdil0Qn5aHSzdKjN3FL173Cq5E2lk4beKfaE3b8a5ul7970xxcBQBhyiZkAHyoDZG
+	 l32GqRMKRznQ7INQjWs84DquHLPPUAwRs0wXgZKikWZBLa6V3qhOLXwmjAFu+IyhTb
+	 OGD3sWg9bP7px7p8TCV4m8Nc96140C0xj4yc8O8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Shawn Anastasio <sanastasio@raptorengineering.com>,
+	Timothy Pearson <tpearson@raptorengineering.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 249/369] f2fs: turn off one_time when forcibly set to foreground GC
-Date: Tue, 12 Aug 2025 19:29:06 +0200
-Message-ID: <20250812173024.129852096@linuxfoundation.org>
+Subject: [PATCH 6.12 276/369] PCI: pnv_php: Work around switches with broken presence detection
+Date: Tue, 12 Aug 2025 19:29:33 +0200
+Message-ID: <20250812173025.810515354@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,34 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit 8142daf8a53806689186ee255cc02f89af7f8890 ]
+[ Upstream commit 80f9fc2362797538ebd4fd70a1dfa838cc2c2cdb ]
 
-one_time mode is only for background GC. So, we need to set it back to
-false when foreground GC is enforced.
+The Microsemi Switchtec PM8533 PFX 48xG3 [11f8:8533] PCIe switch system
+was observed to incorrectly assert the Presence Detect Set bit in its
+capabilities when tested on a Raptor Computing Systems Blackbird system,
+resulting in the hot insert path never attempting a rescan of the bus
+and any downstream devices not being re-detected.
 
-Fixes: 9748c2ddea4a ("f2fs: do FG_GC when GC boosting is required for zoned devices")
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Work around this by additionally checking whether the PCIe data link is
+active or not when performing presence detection on downstream switches'
+ports, similar to the pciehp_hpc.c driver.
+
+Signed-off-by: Shawn Anastasio <sanastasio@raptorengineering.com>
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/505981576.1359853.1752615415117.JavaMail.zimbra@raptorengineeringinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/hotplug/pnv_php.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index cd56c0e66657..c0e43d6056a0 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1899,6 +1899,7 @@ int f2fs_gc(struct f2fs_sb_info *sbi, struct f2fs_gc_control *gc_control)
- 	/* Let's run FG_GC, if we don't have enough space. */
- 	if (has_not_enough_free_secs(sbi, 0, 0)) {
- 		gc_type = FG_GC;
-+		gc_control->one_time = false;
+diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
+index 1304329ca6f7..5476c9e7760d 100644
+--- a/drivers/pci/hotplug/pnv_php.c
++++ b/drivers/pci/hotplug/pnv_php.c
+@@ -391,6 +391,20 @@ static int pnv_php_get_power_state(struct hotplug_slot *slot, u8 *state)
+ 	return 0;
+ }
  
- 		/*
- 		 * For example, if there are many prefree_segments below given
++static int pcie_check_link_active(struct pci_dev *pdev)
++{
++	u16 lnk_status;
++	int ret;
++
++	ret = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnk_status);
++	if (ret == PCIBIOS_DEVICE_NOT_FOUND || PCI_POSSIBLE_ERROR(lnk_status))
++		return -ENODEV;
++
++	ret = !!(lnk_status & PCI_EXP_LNKSTA_DLLLA);
++
++	return ret;
++}
++
+ static int pnv_php_get_adapter_state(struct hotplug_slot *slot, u8 *state)
+ {
+ 	struct pnv_php_slot *php_slot = to_pnv_php_slot(slot);
+@@ -403,6 +417,19 @@ static int pnv_php_get_adapter_state(struct hotplug_slot *slot, u8 *state)
+ 	 */
+ 	ret = pnv_pci_get_presence_state(php_slot->id, &presence);
+ 	if (ret >= 0) {
++		if (pci_pcie_type(php_slot->pdev) == PCI_EXP_TYPE_DOWNSTREAM &&
++			presence == OPAL_PCI_SLOT_EMPTY) {
++			/*
++			 * Similar to pciehp_hpc, check whether the Link Active
++			 * bit is set to account for broken downstream bridges
++			 * that don't properly assert Presence Detect State, as
++			 * was observed on the Microsemi Switchtec PM8533 PFX
++			 * [11f8:8533].
++			 */
++			if (pcie_check_link_active(php_slot->pdev) > 0)
++				presence = OPAL_PCI_SLOT_PRESENT;
++		}
++
+ 		*state = presence;
+ 		ret = 0;
+ 	} else {
 -- 
 2.39.5
 
