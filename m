@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04482CA9;
-	Tue, 12 Aug 2025 18:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934842CA9;
+	Tue, 12 Aug 2025 18:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024584; cv=none; b=KH1BXBAZGWPB5faFKHCL9RePKvPpVMKcx6DYjCUyGitDpp1lUE1WaX00TE6NzW81cX1IDge59hQ+q1SO/BOfcVqeP2aNVPR6CDwRvaFWeDCzd2klI21qF2yS+ikVe+8N99/jIcJUZU8HVfeA3MS2+CB9glCfff6TC3bbxLOlihI=
+	t=1755024587; cv=none; b=pcARs+j5npzg4/sta1e6tR69XEQTj5/FGgIrgPhHmtN/lhqb2IPbAybWKUdqDYnrMCS1qJ41cWFFxTpCqMEJAcKfi+LLOMy6oq4BTtyTo2fzRNMNQB791Vn46qAMtHnDg5Bdmm7BWWw+OaYMH/T7LU8MnRrFASD7ErKdaUI/Zs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024584; c=relaxed/simple;
-	bh=Vtwr/Wy/CDFSoj2PBMtTabubBOV/eFfKWu8XE19ju00=;
+	s=arc-20240116; t=1755024587; c=relaxed/simple;
+	bh=NgRZchFGVRlPoa0/xDXlzp/bOm3iZ3ue2aLKDBPXLPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTMkd0hg2DtU/d0wuoZq0S3egGNA8p6REgZ5x9YNtYJslKnmDiIUQ4+qnM8djjl52FrgRL2PwGuGjTxdlulSGxUUTkuNRswI+C2zSOh0cEdB4QJVzFX02ITRhC25sVhiwDQRNQNuzr4ZhRmTBBVUHCcCU+UC3HqfOfAQplHEAYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5bOtgdA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UTW5sfJwWgA9zdI+cNmULs+dd+imMBbzpxfL2vbaQNungF1D0xjNncU3QVQsudQtJ+2q3UpyqiMAteZTbEk6sZxzPYXBmbH7aiuDxnRBNRHTATp1Lh5pqy4MEKNsPOjcRDOzqQM7ru7PioY6u/WCFPaFyKP+Hv8HGPY/mCcdWOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0RjFpBl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5bOtgdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59ACAC4CEF0;
-	Tue, 12 Aug 2025 18:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0RjFpBl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83A7C4CEF0;
+	Tue, 12 Aug 2025 18:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024583;
-	bh=Vtwr/Wy/CDFSoj2PBMtTabubBOV/eFfKWu8XE19ju00=;
+	s=korg; t=1755024587;
+	bh=NgRZchFGVRlPoa0/xDXlzp/bOm3iZ3ue2aLKDBPXLPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5bOtgdAiEsJQGJ5h36F6WVMG5jzPql24+pMN1nHIqRtzaMYrk/E87tJ1Euca89D+
-	 Itsf/H7QFDiZprrZcmbZTrbkOH9RThJYc8StXygYajAd5hNgUlDjXsWYR4eAjnO2Mz
-	 2PWHJHgWEEDj1pQiaDlCsEmxBpmawOKSLqjjYHUw=
+	b=G0RjFpBljBU1VkKk3dr/f+YYH2wu8ME9KVvn9aIkRFrYQ0GpUHQCRXDaBrj8Ggqhc
+	 Xd9BB1GMhEjbIYSi2fgKIx7OvBKO6xvTP+CYumCIDcTGDb6ShgDHxhVXPS9q0PLuNd
+	 Qh8gTsCm3H1iO7yGXl1bT9KSC+L3p8SRXUVJCA+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 415/627] tools subcmd: Tighten the filename size in check_if_command_finished
-Date: Tue, 12 Aug 2025 19:31:50 +0200
-Message-ID: <20250812173435.071662729@linuxfoundation.org>
+Subject: [PATCH 6.16 384/627] perf python: Correct pyrf_evsel__read for tool PMUs
+Date: Tue, 12 Aug 2025 19:31:19 +0200
+Message-ID: <20250812173433.901493814@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,64 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 478272d1cdd9959a6d638e9d81f70642f04290c9 ]
+[ Upstream commit 6183afcba9c1c810656ddb36170106aaf3cf778c ]
 
-FILENAME_MAX is often PATH_MAX (4kb), far more than needed for the
-/proc path. Make the buffer size sufficient for the maximum integer
-plus "/proc/" and "/status" with a '\0' terminator.
+Tool PMUs assume that stat's process_counter_values is being used to
+read the counters. Specifically they hold onto old values in
+evsel->prev_raw_counts and give the cumulative count based off of this
+value. Update pyrf_evsel__read to allocate counts and prev_raw_counts,
+use evsel__read_counter rather than perf_evsel__read so tool PMUs are
+read from not just perf_event_open events, make the returned
+pyrf_counts_values contain the delta value rather than the cumulative
+value.
 
-Fixes: 5ce42b5de461 ("tools subcmd: Add non-waitpid check_if_command_finished()")
+Fixes: 739621f65702 ("perf python: Add evsel read method")
 Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250717150855.1032526-1-irogers@google.com
+Link: https://lore.kernel.org/r/20250710235126.1086011-12-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/subcmd/run-command.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ tools/perf/util/python.c | 47 +++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 44 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/subcmd/run-command.c b/tools/lib/subcmd/run-command.c
-index 0a764c25c384..b7510f83209a 100644
---- a/tools/lib/subcmd/run-command.c
-+++ b/tools/lib/subcmd/run-command.c
-@@ -5,6 +5,7 @@
- #include <ctype.h>
- #include <fcntl.h>
- #include <string.h>
-+#include <linux/compiler.h>
- #include <linux/string.h>
- #include <errno.h>
- #include <sys/wait.h>
-@@ -216,10 +217,20 @@ static int wait_or_whine(struct child_process *cmd, bool block)
- 	return result;
+diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+index eb560e3f9e35..b9fe7f2c14af 100644
+--- a/tools/perf/util/python.c
++++ b/tools/perf/util/python.c
+@@ -10,6 +10,7 @@
+ #endif
+ #include <perf/mmap.h>
+ #include "callchain.h"
++#include "counts.h"
+ #include "evlist.h"
+ #include "evsel.h"
+ #include "event.h"
+@@ -888,12 +889,38 @@ static PyObject *pyrf_evsel__threads(struct pyrf_evsel *pevsel)
+ 	return (PyObject *)pthread_map;
  }
  
 +/*
-+ * Conservative estimate of number of characaters needed to hold an a decoded
-+ * integer, assume each 3 bits needs a character byte and plus a possible sign
-+ * character.
++ * Ensure evsel's counts and prev_raw_counts are allocated, the latter
++ * used by tool PMUs to compute the cumulative count as expected by
++ * stat's process_counter_values.
 + */
-+#ifndef is_signed_type
-+#define is_signed_type(type) (((type)(-1)) < (type)1)
-+#endif
-+#define MAX_STRLEN_TYPE(type) (sizeof(type) * 8 / 3 + (is_signed_type(type) ? 1 : 0))
++static int evsel__ensure_counts(struct evsel *evsel)
++{
++	int nthreads, ncpus;
 +
- int check_if_command_finished(struct child_process *cmd)
++	if (evsel->counts != NULL)
++		return 0;
++
++	nthreads = perf_thread_map__nr(evsel->core.threads);
++	ncpus = perf_cpu_map__nr(evsel->core.cpus);
++
++	evsel->counts = perf_counts__new(ncpus, nthreads);
++	if (evsel->counts == NULL)
++		return -ENOMEM;
++
++	evsel->prev_raw_counts = perf_counts__new(ncpus, nthreads);
++	if (evsel->prev_raw_counts == NULL)
++		return -ENOMEM;
++
++	return 0;
++}
++
+ static PyObject *pyrf_evsel__read(struct pyrf_evsel *pevsel,
+ 				  PyObject *args, PyObject *kwargs)
  {
- #ifdef __linux__
--	char filename[FILENAME_MAX + 12];
-+	char filename[6 + MAX_STRLEN_TYPE(typeof(cmd->pid)) + 7 + 1];
- 	char status_line[256];
- 	FILE *status_file;
+ 	struct evsel *evsel = &pevsel->evsel;
+ 	int cpu = 0, cpu_idx, thread = 0, thread_idx;
+-	struct perf_counts_values counts;
++	struct perf_counts_values *old_count, *new_count;
+ 	struct pyrf_counts_values *count_values = PyObject_New(struct pyrf_counts_values,
+ 							       &pyrf_counts_values__type);
  
-@@ -227,7 +238,7 @@ int check_if_command_finished(struct child_process *cmd)
- 	 * Check by reading /proc/<pid>/status as calling waitpid causes
- 	 * stdout/stderr to be closed and data lost.
- 	 */
--	sprintf(filename, "/proc/%d/status", cmd->pid);
-+	sprintf(filename, "/proc/%u/status", cmd->pid);
- 	status_file = fopen(filename, "r");
- 	if (status_file == NULL) {
- 		/* Open failed assume finish_command was called. */
+@@ -914,8 +941,22 @@ static PyObject *pyrf_evsel__read(struct pyrf_evsel *pevsel,
+ 			     thread);
+ 		return NULL;
+ 	}
+-	perf_evsel__read(&(evsel->core), cpu_idx, thread_idx, &counts);
+-	count_values->values = counts;
++
++	if (evsel__ensure_counts(evsel))
++		return PyErr_NoMemory();
++
++	/* Set up pointers to the old and newly read counter values. */
++	old_count = perf_counts(evsel->prev_raw_counts, cpu_idx, thread_idx);
++	new_count = perf_counts(evsel->counts, cpu_idx, thread_idx);
++	/* Update the value in evsel->counts. */
++	evsel__read_counter(evsel, cpu_idx, thread_idx);
++	/* Copy the value and turn it into the delta from old_count. */
++	count_values->values = *new_count;
++	count_values->values.val -= old_count->val;
++	count_values->values.ena -= old_count->ena;
++	count_values->values.run -= old_count->run;
++	/* Save the new count over the old_count for the next read. */
++	*old_count = *new_count;
+ 	return (PyObject *)count_values;
+ }
+ 
 -- 
 2.39.5
 
