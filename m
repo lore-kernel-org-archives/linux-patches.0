@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56292E7BD4;
-	Tue, 12 Aug 2025 18:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70652E7BD4;
+	Tue, 12 Aug 2025 18:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024649; cv=none; b=iyLkEHN+w65P3yXXWJxuOSE3ei/H/YRNMUZPIPDHCqIpKAgepsHFryFzahxV2fdHsEu6+NzFKB8XnWqCbhZgrzXhx71OQ45KMpc6tCSbmzaFjBqFpTn0UfTs6cvh2lWXAw0ifvP40o6aK97MztQMjnFkNvNYZPfXXDi8ltTCs+I=
+	t=1755024652; cv=none; b=MPyTQNrbSi9LxihMoqmj/DlxGDOu/+yP4iqCaTfYXVDprbf+znHGQBRxDwWZIcct0NcsOZOS9B4fkKeeGMmjfFmvU2BJPcyu/6c1f6CA1X38kkk6B1i+EnGFqaT5MSlJ9DcMFW6/polT9MYzr1t/YQ3yRNFORu2MqrNcgxEPNrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024649; c=relaxed/simple;
-	bh=mYtSfaHPoBRLYaAnbi7pYhHT8nGtnw171RATv5vk5Os=;
+	s=arc-20240116; t=1755024652; c=relaxed/simple;
+	bh=sQGG2/4kihwD2NPxxOuuexiy70aXnEpPdJpDp/yDFmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iD0/GlBKv2Q2vB6Ziwd+NUm3HoH+Q/qX0z2ejYf5EwrKQTXKI4DHvVONo4e82HVK5UCZoT74BmYjgXXwBWvI0+/ehwZH7cOLUwmtStzvS1+jdLCDB4ZuuCHF3lSthRDSZl54+rihu0+dDGPC29h7lh+hAGrzN07ONlzNcENgEfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvE5bwAt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZC1PwESQPlE3R85nXkQYC5LU8dW9AnWbMvQckmQM7sm9FHSCxTxws5P/T3wmXDgSTMTyHSZsmHKpkH64Yimq1fcvUiGWh+P3buVyD4MozLsmOzu+BOKwlBG1cB3n37TibAqcDUuBb8M8Ovb9XWafTM2IkzSVkTDTRYpmYs7/18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxtKHqXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvE5bwAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD511C4CEF0;
-	Tue, 12 Aug 2025 18:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxtKHqXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8E0C4CEF0;
+	Tue, 12 Aug 2025 18:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024649;
-	bh=mYtSfaHPoBRLYaAnbi7pYhHT8nGtnw171RATv5vk5Os=;
+	s=korg; t=1755024652;
+	bh=sQGG2/4kihwD2NPxxOuuexiy70aXnEpPdJpDp/yDFmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvE5bwAtnIJqaZzqG6U4aCSNFWhDDh6MfPVHqm41dAT2YCV19jn28wHWW7nGGmvEN
-	 h90FxV3BMSbi4tnYKfJhquAXELrstEu+mXSqpFxtZB3BC9t95Uc6ARaPpsJYn+9mpI
-	 MtEgQhhy4PD9Nzl4a1fnZC27ENIdgwm4IyLNrxF0=
+	b=yxtKHqXNt/EOXEIn+1/fbn/T9dYTbxqw2dAYOt0oMrM+NAiX8mfvtlWqNywxMb9d1
+	 MfPN/hsFB+kanhtKS19F7FRQFxd2C2PKkoSjUf5snAsSUl3wggMC13R1g9fpiAy5Sq
+	 9aDoqZ9Bafjc8G2LX9wsX6GzozvzENf19fYMFuZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Zixun LI <admin@hifiphile.com>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 418/627] dmaengine: nbpfaxi: Add missing check after DMA map
-Date: Tue, 12 Aug 2025 19:31:53 +0200
-Message-ID: <20250812173435.183361853@linuxfoundation.org>
+Subject: [PATCH 6.16 436/627] mtd: rawnand: atmel: set pmecc data setup time
+Date: Tue, 12 Aug 2025 19:32:11 +0200
+Message-ID: <20250812173435.862997298@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,53 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
 
-[ Upstream commit c6ee78fc8f3e653bec427cfd06fec7877ee782bd ]
+[ Upstream commit f552a7c7e0a14215cb8a6fd89e60fa3932a74786 ]
 
-The DMA map functions can fail and should be tested for errors.
-If the mapping fails, unmap and return an error.
+Setup the pmecc data setup time as 3 clock cycles for 133MHz as recommended
+by the datasheet.
 
-Fixes: b45b262cefd5 ("dmaengine: add a driver for AMBA AXI NBPF DMAC IP cores")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250707075752.28674-2-fourier.thomas@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
+Reported-by: Zixun LI <admin@hifiphile.com>
+Closes: https://lore.kernel.org/all/c015bb20-6a57-4f63-8102-34b3d83e0f5b@microchip.com
+Suggested-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Signed-off-by: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/nbpfaxi.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/mtd/nand/raw/atmel/pmecc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/dma/nbpfaxi.c b/drivers/dma/nbpfaxi.c
-index 7a2488a0d6a3..765462303de0 100644
---- a/drivers/dma/nbpfaxi.c
-+++ b/drivers/dma/nbpfaxi.c
-@@ -711,6 +711,9 @@ static int nbpf_desc_page_alloc(struct nbpf_channel *chan)
- 		list_add_tail(&ldesc->node, &lhead);
- 		ldesc->hwdesc_dma_addr = dma_map_single(dchan->device->dev,
- 					hwdesc, sizeof(*hwdesc), DMA_TO_DEVICE);
-+		if (dma_mapping_error(dchan->device->dev,
-+				      ldesc->hwdesc_dma_addr))
-+			goto unmap_error;
+diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
+index 3c7dee1be21d..0b402823b619 100644
+--- a/drivers/mtd/nand/raw/atmel/pmecc.c
++++ b/drivers/mtd/nand/raw/atmel/pmecc.c
+@@ -143,6 +143,7 @@ struct atmel_pmecc_caps {
+ 	int nstrengths;
+ 	int el_offset;
+ 	bool correct_erased_chunks;
++	bool clk_ctrl;
+ };
  
- 		dev_dbg(dev, "%s(): mapped 0x%p to %pad\n", __func__,
- 			hwdesc, &ldesc->hwdesc_dma_addr);
-@@ -737,6 +740,16 @@ static int nbpf_desc_page_alloc(struct nbpf_channel *chan)
- 	spin_unlock_irq(&chan->lock);
+ struct atmel_pmecc {
+@@ -843,6 +844,10 @@ static struct atmel_pmecc *atmel_pmecc_create(struct platform_device *pdev,
+ 	if (IS_ERR(pmecc->regs.errloc))
+ 		return ERR_CAST(pmecc->regs.errloc);
  
- 	return ARRAY_SIZE(dpage->desc);
++	/* pmecc data setup time */
++	if (caps->clk_ctrl)
++		writel(PMECC_CLK_133MHZ, pmecc->regs.base + ATMEL_PMECC_CLK);
 +
-+unmap_error:
-+	while (i--) {
-+		ldesc--; hwdesc--;
-+
-+		dma_unmap_single(dchan->device->dev, ldesc->hwdesc_dma_addr,
-+				 sizeof(hwdesc), DMA_TO_DEVICE);
-+	}
-+
-+	return -ENOMEM;
- }
+ 	/* Disable all interrupts before registering the PMECC handler. */
+ 	writel(0xffffffff, pmecc->regs.base + ATMEL_PMECC_IDR);
+ 	atmel_pmecc_reset(pmecc);
+@@ -896,6 +901,7 @@ static struct atmel_pmecc_caps at91sam9g45_caps = {
+ 	.strengths = atmel_pmecc_strengths,
+ 	.nstrengths = 5,
+ 	.el_offset = 0x8c,
++	.clk_ctrl = true,
+ };
  
- static void nbpf_desc_put(struct nbpf_desc *desc)
+ static struct atmel_pmecc_caps sama5d4_caps = {
 -- 
 2.39.5
 
