@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD4F3594E;
-	Tue, 12 Aug 2025 19:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF2F217F35;
+	Tue, 12 Aug 2025 19:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026226; cv=none; b=mVPNPAYnW+1ynUJiWf69cA6DBMA/8e4rL9AJgmhaTMO9xiDaska89S30+DzlXq0eC/ymwbMVyfgq4M2nwCx7CZ3o/GPzvE1cN3Ws9eDDH6o/0veqcM7dTUo6W3p04gFRyk5HgrfsBKEVjChW6R62TYglJcaAkjMiRcX0lFfMa5I=
+	t=1755026229; cv=none; b=NB1W0PTcpcvKGCOo/7QViscp4vYCscDbSv+reQ/0X1UhGAXXpYcqPLbpdZVjLjantN+VjJAQxm2ZAXGInoD6Ie1V+/ZK/a8Pvj4lGYt40HN6jQfWpOyUzxvPgE8h4M+MZo5seMgvQ/XntrOBX1YZLkQgRY1PpZnwq6+T9zGDxkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026226; c=relaxed/simple;
-	bh=+3tqT0RDBMgdUG++VA8ioGkcfdlrd5HEwrShJTwrx74=;
+	s=arc-20240116; t=1755026229; c=relaxed/simple;
+	bh=11tFE41Gab5VKXH2VZvUWliZXYoiu5VYoBTF+VBqNJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bT3tRYapCI85He7Ns02QYM9UXCn54KbEJwI7o9Ku6dnnFeFS3V8cXbNVQ2uxKie2XeQ4kwwd4zsBt2rntNSisZOzlPX1JxBGy6C2thcprxvKtFkiFHSnI+kS18/jZL3cEeVniMffW5Tf2dP1y+EPYFU4AMVhSd27bpurWJKDH2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K853RHQP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m4pEpwh3ROsu1G5I37i7kbh0UfgeQokAHbsoruquaMuN8ojvMQWZd/r27m8eAF54dgUI57EfhHVRInO0YdjVDc1ylwcMBNUewMs2FrFt7TLGYf4zpPmwA78avaWa5NSNOen682n2WzT1HXkAMIngkRKdmUrh+jsXCQ6L5AtIC34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sajvzOXv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K853RHQP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DB1C4CEF0;
-	Tue, 12 Aug 2025 19:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sajvzOXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52957C4CEF0;
+	Tue, 12 Aug 2025 19:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026225;
-	bh=+3tqT0RDBMgdUG++VA8ioGkcfdlrd5HEwrShJTwrx74=;
+	s=korg; t=1755026228;
+	bh=11tFE41Gab5VKXH2VZvUWliZXYoiu5VYoBTF+VBqNJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K853RHQPJqW6cWpVWh9MyjoFA5Y7o1G9OClPutdICFX82q3Q+FX4nsMifz7MO2d8p
-	 rON9MZyA2HE4oocTwp0FC5pHFOWtLbtrZpmacfgXEZqRxSDaEf/R1+KlKySQHd2qF6
-	 ZsHdlokIQKebT5/CTU1Dc2OmPHPf6DaxpvjnyO2M=
+	b=sajvzOXvKuoepBs7kVJFde1WDcfRm61NORGi/zWQrh+pUFZjkNlVTfxXcAAvD8bg0
+	 RA0YGa7+R+iSGjoV06Vvc830ADBq9ztLARtUImpPweqKbf3LH8yMQW+gtXEbaRVPM7
+	 FBN9wNO3kHV96eHO+gn2WsWtstILPQqH+SNmpozs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Song Chen <chensong_2000@189.cn>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 275/480] kernel: trace: preemptirq_delay_test: use offstack cpu mask
-Date: Tue, 12 Aug 2025 19:48:03 +0200
-Message-ID: <20250812174408.782788257@linuxfoundation.org>
+Subject: [PATCH 6.15 258/480] perf sched: Make sure it frees the usage string
+Date: Tue, 12 Aug 2025 19:47:46 +0200
+Message-ID: <20250812174408.084426494@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -48,69 +45,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit adc353c0bfb243ebfd29b6222fa3bf149169a6de ]
+[ Upstream commit 10d9b89203765fb776512742c13af8dd92821842 ]
 
-A CPU mask on the stack is broken for large values of CONFIG_NR_CPUS:
+The parse_options_subcommand() allocates the usage string based on the
+given subcommands.  So it should reach the end of the function to free
+the string to prevent memory leaks.
 
-kernel/trace/preemptirq_delay_test.c: In function ‘preemptirq_delay_run’:
-kernel/trace/preemptirq_delay_test.c:143:1: error: the frame size of 8512 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]
-
-Fall back to dynamic allocation here.
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Song Chen <chensong_2000@189.cn>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250620111215.3365305-1-arnd@kernel.org
-Fixes: 4b9091e1c194 ("kernel: trace: preemptirq_delay_test: add cpu affinity")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 1a5efc9e13f357ab ("libsubcmd: Don't free the usage string")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250703014942.1369397-2-namhyung@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/preemptirq_delay_test.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ tools/perf/builtin-sched.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/trace/preemptirq_delay_test.c b/kernel/trace/preemptirq_delay_test.c
-index 314ffc143039..acb0c971a408 100644
---- a/kernel/trace/preemptirq_delay_test.c
-+++ b/kernel/trace/preemptirq_delay_test.c
-@@ -117,12 +117,15 @@ static int preemptirq_delay_run(void *data)
- {
- 	int i;
- 	int s = MIN(burst_size, NR_TEST_FUNCS);
--	struct cpumask cpu_mask;
-+	cpumask_var_t cpu_mask;
-+
-+	if (!alloc_cpumask_var(&cpu_mask, GFP_KERNEL))
-+		return -ENOMEM;
- 
- 	if (cpu_affinity > -1) {
--		cpumask_clear(&cpu_mask);
--		cpumask_set_cpu(cpu_affinity, &cpu_mask);
--		if (set_cpus_allowed_ptr(current, &cpu_mask))
-+		cpumask_clear(cpu_mask);
-+		cpumask_set_cpu(cpu_affinity, cpu_mask);
-+		if (set_cpus_allowed_ptr(current, cpu_mask))
- 			pr_err("cpu_affinity:%d, failed\n", cpu_affinity);
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 26ece6e9bfd1..b7bbfad0ed60 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -3902,9 +3902,9 @@ int cmd_sched(int argc, const char **argv)
+ 	 * Aliased to 'perf script' for now:
+ 	 */
+ 	if (!strcmp(argv[0], "script")) {
+-		return cmd_script(argc, argv);
++		ret = cmd_script(argc, argv);
+ 	} else if (strlen(argv[0]) > 2 && strstarts("record", argv[0])) {
+-		return __cmd_record(argc, argv);
++		ret = __cmd_record(argc, argv);
+ 	} else if (strlen(argv[0]) > 2 && strstarts("latency", argv[0])) {
+ 		sched.tp_handler = &lat_ops;
+ 		if (argc > 1) {
+@@ -3913,7 +3913,7 @@ int cmd_sched(int argc, const char **argv)
+ 				usage_with_options(latency_usage, latency_options);
+ 		}
+ 		setup_sorting(&sched, latency_options, latency_usage);
+-		return perf_sched__lat(&sched);
++		ret = perf_sched__lat(&sched);
+ 	} else if (!strcmp(argv[0], "map")) {
+ 		if (argc) {
+ 			argc = parse_options(argc, argv, map_options, map_usage, 0);
+@@ -3924,13 +3924,14 @@ int cmd_sched(int argc, const char **argv)
+ 				sched.map.task_names = strlist__new(sched.map.task_name, NULL);
+ 				if (sched.map.task_names == NULL) {
+ 					fprintf(stderr, "Failed to parse task names\n");
+-					return -1;
++					ret = -1;
++					goto out;
+ 				}
+ 			}
+ 		}
+ 		sched.tp_handler = &map_ops;
+ 		setup_sorting(&sched, latency_options, latency_usage);
+-		return perf_sched__map(&sched);
++		ret = perf_sched__map(&sched);
+ 	} else if (strlen(argv[0]) > 2 && strstarts("replay", argv[0])) {
+ 		sched.tp_handler = &replay_ops;
+ 		if (argc) {
+@@ -3938,7 +3939,7 @@ int cmd_sched(int argc, const char **argv)
+ 			if (argc)
+ 				usage_with_options(replay_usage, replay_options);
+ 		}
+-		return perf_sched__replay(&sched);
++		ret = perf_sched__replay(&sched);
+ 	} else if (!strcmp(argv[0], "timehist")) {
+ 		if (argc) {
+ 			argc = parse_options(argc, argv, timehist_options,
+@@ -3954,19 +3955,19 @@ int cmd_sched(int argc, const char **argv)
+ 				parse_options_usage(NULL, timehist_options, "w", true);
+ 			if (sched.show_next)
+ 				parse_options_usage(NULL, timehist_options, "n", true);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto out;
+ 		}
+ 		ret = symbol__validate_sym_arguments();
+-		if (ret)
+-			return ret;
+-
+-		return perf_sched__timehist(&sched);
++		if (!ret)
++			ret = perf_sched__timehist(&sched);
+ 	} else {
+ 		usage_with_options(sched_usage, sched_options);
  	}
  
-@@ -139,6 +142,8 @@ static int preemptirq_delay_run(void *data)
++out:
+ 	/* free usage string allocated by parse_options_subcommand */
+ 	free((void *)sched_usage[0]);
  
- 	__set_current_state(TASK_RUNNING);
- 
-+	free_cpumask_var(cpu_mask);
-+
- 	return 0;
+-	return 0;
++	return ret;
  }
- 
 -- 
 2.39.5
 
