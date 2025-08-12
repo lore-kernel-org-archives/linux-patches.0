@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B527A17993;
-	Tue, 12 Aug 2025 18:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390EC2F90C8;
+	Tue, 12 Aug 2025 18:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021819; cv=none; b=TrpfnnGKKUUxlXoqPf+dVmjQKf0BVwDm5MvjLB5+9O0/0SZpKzfa1Djtnl3fbtPZhnuT2CZUA4zSl3RphNVpVHn7Bpaaozp19rQWKwvjZjNyhzMpYdBBi/Qhr/ysJGWN46HZJDO4a7X6AonWIa8I/a+5abp/OAMd8vwrILKJyRo=
+	t=1755021823; cv=none; b=Y59TO3uKK7uGpVZf/aTUPs56aiclhTyMOM8FuDFSDjkzvBQ0jWeEfwbSVRk+DNCw3uTSxzmBvZDqOo3rxuxBLrVsuihfEgOW7zhxyQo19au4voq0aIz4vBkpodOhDdNPLohqy5n//0f2MrpK4Ny9CaCFbmPPKKV5QrBOuT8Kn+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021819; c=relaxed/simple;
-	bh=V1F3mDbZneFN/pjrP+Su1Txb/WXrqERt2gKKeCBeqIY=;
+	s=arc-20240116; t=1755021823; c=relaxed/simple;
+	bh=uyDlPsu6Xz81az/L8CIWbQ3yjJ8TWVtBbzQpD7O9r8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUxsxW8jhaMkG3F6JUqQzlWvwkWRMV992Spl/kA6Oggjd8QM7sdSu+GXvCddzmUS1M5lV9udELe9Lfm/RwnlVWTb+GpgdwpL+xerCUHuC1YcPNaExnUMsoElTlmsOpAPMjUA+0wqwk2+f9L1jY1+1Wr1ZxFjXay8r98GKdU5Gp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkuphTCD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FPef2WBfSD/cJX6y6iVoAxSoLa6POE3RKsqoYzvl60FimcKYfC+TB0yLRQNfLuWOymzAOjdZKA7He/c23CI+Bak3fSvZd8gjP4XmXYxad77/sEBNem8rxPRphEbAHBG6yCNdRYb0LB6HoZ0cUg+53yBX3Q+KKvqgnMbai9UMLu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYoJpxg4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkuphTCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E89C4CEF0;
-	Tue, 12 Aug 2025 18:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYoJpxg4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C33C4CEF6;
+	Tue, 12 Aug 2025 18:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021819;
-	bh=V1F3mDbZneFN/pjrP+Su1Txb/WXrqERt2gKKeCBeqIY=;
+	s=korg; t=1755021823;
+	bh=uyDlPsu6Xz81az/L8CIWbQ3yjJ8TWVtBbzQpD7O9r8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DkuphTCD0gNW3dC/OYgV7R3laVEdZk0aM3iPF/RYeJhFEFTE930SKkuuMD39pXVeL
-	 ke++FBqcAIUWIMoCIU4SfDmlGgBeojh1lahVaWhbBEC0Aa7nbjZAdRgfq6/mRbviEX
-	 /Dz4/ATi9W+PcSKHjCLfnBgNtl9fV8AA9vkskE/U=
+	b=aYoJpxg4+ywh7zYU+ZkcagrRROZxMYIo1FclcDOlM0+pRChO+pNO7tBPfNz9EzzZ9
+	 kezaE77/O7660GXi7wyZHB5P/NuawkiCTgFuI+Uv4sE6xHMTbXAMKOHXzcfnZK2o50
+	 uNwhvnLEgJuaecSO8VVhgkQcpiy/SCbj2iDE17AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quang Le <quanglex97@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 235/262] net/packet: fix a race in packet_set_ring() and packet_notifier()
-Date: Tue, 12 Aug 2025 19:30:23 +0200
-Message-ID: <20250812173003.166147511@linuxfoundation.org>
+Subject: [PATCH 6.6 236/262] vsock: Do not allow binding to VMADDR_PORT_ANY
+Date: Tue, 12 Aug 2025 19:30:24 +0200
+Message-ID: <20250812173003.208617070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,64 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quang Le <quanglex97@gmail.com>
+From: Budimir Markovic <markovicbudimir@gmail.com>
 
-commit 01d3c8417b9c1b884a8a981a3b886da556512f36 upstream.
+commit aba0c94f61ec05315fa7815d21aefa4c87f6a9f4 upstream.
 
-When packet_set_ring() releases po->bind_lock, another thread can
-run packet_notifier() and process an NETDEV_UP event.
+It is possible for a vsock to autobind to VMADDR_PORT_ANY. This can
+cause a use-after-free when a connection is made to the bound socket.
+The socket returned by accept() also has port VMADDR_PORT_ANY but is not
+on the list of unbound sockets. Binding it will result in an extra
+refcount decrement similar to the one fixed in fcdd2242c023 (vsock: Keep
+the binding until socket destruction).
 
-This race and the fix are both similar to that of commit 15fe076edea7
-("net/packet: fix a race in packet_bind() and packet_notifier()").
+Modify the check in __vsock_bind_connectible() to also prevent binding
+to VMADDR_PORT_ANY.
 
-There too the packet_notifier NETDEV_UP event managed to run while a
-po->bind_lock critical section had to be temporarily released. And
-the fix was similarly to temporarily set po->num to zero to keep
-the socket unhooked until the lock is retaken.
-
-The po->bind_lock in packet_set_ring and packet_notifier precede the
-introduction of git history.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Quang Le <quanglex97@gmail.com>
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250801175423.2970334-1-willemdebruijn.kernel@gmail.com
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Budimir Markovic <markovicbudimir@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250807041811.678-1-markovicbudimir@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/vmw_vsock/af_vsock.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4566,10 +4566,10 @@ static int packet_set_ring(struct sock *
- 	spin_lock(&po->bind_lock);
- 	was_running = packet_sock_flag(po, PACKET_SOCK_RUNNING);
- 	num = po->num;
--	if (was_running) {
--		WRITE_ONCE(po->num, 0);
-+	WRITE_ONCE(po->num, 0);
-+	if (was_running)
- 		__unregister_prot_hook(sk, false);
--	}
-+
- 	spin_unlock(&po->bind_lock);
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -688,7 +688,8 @@ static int __vsock_bind_connectible(stru
+ 		unsigned int i;
  
- 	synchronize_net();
-@@ -4601,10 +4601,10 @@ static int packet_set_ring(struct sock *
- 	mutex_unlock(&po->pg_vec_lock);
+ 		for (i = 0; i < MAX_PORT_RETRIES; i++) {
+-			if (port <= LAST_RESERVED_PORT)
++			if (port == VMADDR_PORT_ANY ||
++			    port <= LAST_RESERVED_PORT)
+ 				port = LAST_RESERVED_PORT + 1;
  
- 	spin_lock(&po->bind_lock);
--	if (was_running) {
--		WRITE_ONCE(po->num, num);
-+	WRITE_ONCE(po->num, num);
-+	if (was_running)
- 		register_prot_hook(sk);
--	}
-+
- 	spin_unlock(&po->bind_lock);
- 	if (pg_vec && (po->tp_version > TPACKET_V2)) {
- 		/* Because we don't support block-based V3 on tx-ring */
+ 			new_addr.svm_port = port++;
 
 
