@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D02861FFE;
-	Tue, 12 Aug 2025 18:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CF9280037;
+	Tue, 12 Aug 2025 18:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022966; cv=none; b=cFeuiccCRdz0us2h1PyVxgUzcOEdE4ivGe5DnMBpNtcazP4Z+6H6s3786Jooee+IKftlTxFnsYgFEcCkAIxOJJoBXwVtXPLNcsYcEf596UpoDMD81YcpSGFkSOWjSh6D+wu7ddPUIrBMkU2tgvU6C0iGpnzHNarQ2KkpD5ap4k0=
+	t=1755022969; cv=none; b=alPbo9ZuKt1Df3cDzRmSLDZ9GZgRgxagJ68oVhuGWm1WhheroHBCdG5QMq6eNMwAg9+izAdohxhPGJNJcI6FDlEZ17P3RDCwm3pFdvdhck7V83pqQ92/3MPCafUadpc3LB1CiZoiM35jmocxeKewwkbY7cwro3K0gZXu5praUkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022966; c=relaxed/simple;
-	bh=sWxBc2KhL19DrSKhoenZRd4WWCaZgnU0LTLi6Sq15sE=;
+	s=arc-20240116; t=1755022969; c=relaxed/simple;
+	bh=0eQlujl/pxO10JDcKRedcmqGHfP5y4tfiawdLXJNOCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zc5LdniZzvpFyGWlDowKF02qlNqcrVh7TAHKvw4J9glAOpUfTcL/TiXzjXsE+p8HUfW/BP+KuQeJQD7CrgAROvTq5qAMY1YPuQYYUyN/0qAHa+GyClUTNSewsm5DtU2es9H8fRXjGqlDWk8noCXL27pfJSe1Xm+qjcsmPJulXB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pH5QE4AT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jAQRvKv7SwFeDLB7trKifj4J0ZQgIXm7YBqUHi6I12CnYObZUTAktel3lk2NF87T+M/ryK3IgimCb9phjhtPS5SW+kh+ms3GikFuPXXBKEddpSqykK3ntkToUID80VE53UwjXR5TwOCOhQ/MnPB4V+6cUnO3D3IzSMyhhcSrm0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx7phGR2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pH5QE4AT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1D5C4CEF6;
-	Tue, 12 Aug 2025 18:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx7phGR2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7C0C4CEF6;
+	Tue, 12 Aug 2025 18:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022966;
-	bh=sWxBc2KhL19DrSKhoenZRd4WWCaZgnU0LTLi6Sq15sE=;
+	s=korg; t=1755022969;
+	bh=0eQlujl/pxO10JDcKRedcmqGHfP5y4tfiawdLXJNOCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pH5QE4ATbM6TUK7rN/mzRGy7uFNpHv6zv3KMF9HVTN69b+4GwV8zm6JNiyu/QdIFC
-	 JD+GbPwEK+UFKCJwXaAxMhnECu00NdQNECYikNDN8gc6tWdN3LkTdiTd7aKi0htmgJ
-	 5207K8mUkw7WrxZHglUZfw9B13xjfJAOCTAlVJYA=
+	b=yx7phGR2fXgqHS91cGBz2QHkUv7llG+PL7MRdMqXtWHUUsslVuDh+5ePbDB6fj0FS
+	 vxc34lUunohJ6avZVBpP8iNTERqBj2Rh87GOgWrwhfojQmZM0SkwKn6f6QlPemovh9
+	 TrC0s1xR/5CpCvNqaaikpB6odW71pHWUTCVN0+rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 310/369] ALSA: hda/ca0132: Fix missing error handling in ca0132_alt_select_out()
-Date: Tue, 12 Aug 2025 19:30:07 +0200
-Message-ID: <20250812173028.389614727@linuxfoundation.org>
+Subject: [PATCH 6.12 284/369] NFSv4.2: another fix for listxattr
+Date: Tue, 12 Aug 2025 19:29:41 +0200
+Message-ID: <20250812173027.390274641@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -50,44 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-[ Upstream commit 9f320dfb0ffc555aa2eac8331dee0c2c16f67633 ]
+[ Upstream commit 9acb237deff7667b0f6b10fe6b1b70c4429ea049 ]
 
-There are a couple of cases where the error is ignored or the error
-code isn't propagated in ca0132_alt_select_out().  Fix those.
+Currently, when the server supports NFS4.1 security labels then
+security.selinux label in included twice. Instead, only add it
+when the server doesn't possess security label support.
 
-Fixes: def3f0a5c700 ("ALSA: hda/ca0132 - Add quirk output selection structures.")
-Link: https://patch.msgid.link/20250806094423.8843-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 243fea134633 ("NFSv4.2: fix listxattr to return selinux security label")
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Link: https://lore.kernel.org/r/20250722205641.79394-1-okorniev@redhat.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index d40197fb5fbd..77432e06f3e3 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -4802,7 +4802,8 @@ static int ca0132_alt_select_out(struct hda_codec *codec)
- 	if (err < 0)
- 		goto exit;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 77b239b10d41..e27cd2c7cfd1 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -10819,7 +10819,7 @@ const struct nfs4_minor_version_ops *nfs_v4_minor_ops[] = {
  
--	if (ca0132_alt_select_out_quirk_set(codec) < 0)
-+	err = ca0132_alt_select_out_quirk_set(codec);
-+	if (err < 0)
- 		goto exit;
+ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ {
+-	ssize_t error, error2, error3, error4;
++	ssize_t error, error2, error3, error4 = 0;
+ 	size_t left = size;
  
- 	switch (spec->cur_out_type) {
-@@ -4892,6 +4893,8 @@ static int ca0132_alt_select_out(struct hda_codec *codec)
- 				spec->bass_redirection_val);
- 	else
- 		err = ca0132_alt_surround_set_bass_redirection(codec, 0);
-+	if (err < 0)
-+		goto exit;
+ 	error = generic_listxattr(dentry, list, left);
+@@ -10847,9 +10847,11 @@ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ 		left -= error3;
+ 	}
  
- 	/* Unmute DSP now that we're done with output selection. */
- 	err = dspio_set_uint_param(codec, 0x96,
+-	error4 = security_inode_listsecurity(d_inode(dentry), list, left);
+-	if (error4 < 0)
+-		return error4;
++	if (!nfs_server_capable(d_inode(dentry), NFS_CAP_SECURITY_LABEL)) {
++		error4 = security_inode_listsecurity(d_inode(dentry), list, left);
++		if (error4 < 0)
++			return error4;
++	}
+ 
+ 	error += error2 + error3 + error4;
+ 	if (size && error > size)
 -- 
 2.39.5
 
