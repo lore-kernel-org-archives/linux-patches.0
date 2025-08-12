@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDB227781E;
-	Tue, 12 Aug 2025 19:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF77B27781E;
+	Tue, 12 Aug 2025 19:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025942; cv=none; b=vEy4S9L6oUqDOT0dwa2UtSNoUPETf8cbogfYtnEN4xMMyJnU9hXxkzz5xdqXtwX2zzoWXXyYoOZVlvPOBE6oOg1tttI8OC4ea7sM0Y94Yt8pfvoN922F4CNo3092iOvzObTK+yH0hLl4xtLckvxuXt6F8qGu4D9LYFpXb77ljsw=
+	t=1755025946; cv=none; b=rd8hQWZwfECtfjhLDn4IhOU5CYky+ENNhSXwZhZE640XMJgnOxv1peBYqZhLUko90S+1CYylqYwDbBv1jv2uJMFnwckTawic3fCmDVYTR1onIAlSnscxKGT3fVbgGTsLznUoTVTqvJxEgUP/0g4Q+44zWRQ88BjJtkgeCosiOos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025942; c=relaxed/simple;
-	bh=ojJTAalpvEqDIPNKya+2wPnJGeK0vOMYhgcMpANK+pg=;
+	s=arc-20240116; t=1755025946; c=relaxed/simple;
+	bh=4QyvhCMXxU2bRBp7IsknWEDuwlGkUbu2DalJ1ZNr+NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PcXkYPpOb0Zx7wq1YIidXMzefrTQR2YbE0xjuV9OLxlAuMols0LFilXVA+MXrrtS+dO9LsyLHAGEvsHw18gvF1S9U4ynw2M1Imew4sodbaB3MupL9RZQNsKybbzmhWoDTcUkSFcWbcvtWF/KCxS+snJsJ1MwGyy8gRDg9rWp5Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5MtMhrj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prlCCdHZBwzxdifKZSZN8c2CbtSnNq3ecMtDv71kdvwpZRcunwoDgveHSbhDqy3xxQMLfSbdXfYWTXa3+XIVuzlxLMh89/SIWJd7CswIqBAYWepP0JJxver/yIC0UXCEGGt1kEGR6rEnXw//mYaD/8RKbqFd794leiTWfmvJQUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHPaPB45; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5MtMhrj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FED2C4CEF0;
-	Tue, 12 Aug 2025 19:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHPaPB45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CF1C4CEF0;
+	Tue, 12 Aug 2025 19:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025942;
-	bh=ojJTAalpvEqDIPNKya+2wPnJGeK0vOMYhgcMpANK+pg=;
+	s=korg; t=1755025945;
+	bh=4QyvhCMXxU2bRBp7IsknWEDuwlGkUbu2DalJ1ZNr+NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5MtMhrjRmEFyMNDjr0LLE5GHiVQyqfwq1OBqN8JAhXOwhi4WslwtTGWsa8/Rck5A
-	 W8gJzpBIF3Lcmtak6aKz9feCY2iYqCooc5heqGwPL9odkUerK/gAXKjr2mMVkk1ar6
-	 gkJCNqQ4gC3QzgqY3eAKVp33/ULxnEiPOIfy/Xx8=
+	b=JHPaPB45nLF7EybXzheB/a2zlSC1cxrgYiX8YxPYdZu0qDLidVO8uxKaaBJU7xeSx
+	 hrEIFVFtDdyX+gU3w1OdCt2hALFXTO52rt+IJRa6cnw8NgOGCtp7D14LEUV0Yhb7pG
+	 nvwUv+vPo/G74cHa6vKsNQZ3sfcWQGr8dginB/Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcel Ziswiler <marcel.ziswiler@codethink.co.uk>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Waiman Long <longman@redhat.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 157/480] sched/deadline: Initialize dl_servers after SMP
-Date: Tue, 12 Aug 2025 19:46:05 +0200
-Message-ID: <20250812174403.995964601@linuxfoundation.org>
+Subject: [PATCH 6.15 148/480] netfilter: nf_tables: Drop dead code from fill_*_info routines
+Date: Tue, 12 Aug 2025 19:45:56 +0200
+Message-ID: <20250812174403.614903328@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -53,138 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juri Lelli <juri.lelli@redhat.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 9f239df55546ee1d28f0976130136ffd1cad0fd7 ]
+[ Upstream commit 8080357a8c6cf4905bbd8969412c19d34be3395e ]
 
-dl-servers are currently initialized too early at boot when CPUs are not
-fully up (only boot CPU is). This results in miscalculation of per
-runqueue DEADLINE variables like extra_bw (which needs a stable CPU
-count).
+This practically reverts commit 28339b21a365 ("netfilter: nf_tables: do
+not send complete notification of deletions"): The feature was never
+effective, due to prior modification of 'event' variable the conditional
+early return never happened.
 
-Move initialization of dl-servers later on after SMP has been
-initialized and CPUs are all online, so that CPU count is stable and
-DEADLINE variables can be computed correctly.
+User space also relies upon the current behaviour, so better reintroduce
+the shortened deletion notifications once it is fixed.
 
-Fixes: d741f297bceaf ("sched/fair: Fair server interface")
-Reported-by: Marcel Ziswiler <marcel.ziswiler@codethink.co.uk>
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Waiman Long <longman@redhat.com>
-Tested-by: Marcel Ziswiler <marcel.ziswiler@codethink.co.uk> # nuc & rock5b
-Link: https://lore.kernel.org/r/20250627115118.438797-2-juri.lelli@redhat.com
+Fixes: 28339b21a365 ("netfilter: nf_tables: do not send complete notification of deletions")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c     |  2 ++
- kernel/sched/deadline.c | 48 +++++++++++++++++++++++++----------------
- kernel/sched/sched.h    |  1 +
- 3 files changed, 33 insertions(+), 18 deletions(-)
+ net/netfilter/nf_tables_api.c | 25 -------------------------
+ 1 file changed, 25 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 7d5f51e2f761..333743f143aa 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8501,6 +8501,8 @@ void __init sched_init_smp(void)
- 	init_sched_rt_class();
- 	init_sched_dl_class();
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index a133e1c175ce..3eb000ae2f27 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1130,11 +1130,6 @@ static int nf_tables_fill_table_info(struct sk_buff *skb, struct net *net,
+ 			 NFTA_TABLE_PAD))
+ 		goto nla_put_failure;
  
-+	sched_init_dl_servers();
-+
- 	sched_smp_initialized = true;
- }
- 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 094134c9b135..ef5b5c045769 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -824,6 +824,8 @@ static inline void setup_new_dl_entity(struct sched_dl_entity *dl_se)
- 	struct dl_rq *dl_rq = dl_rq_of_se(dl_se);
- 	struct rq *rq = rq_of_dl_rq(dl_rq);
- 
-+	update_rq_clock(rq);
-+
- 	WARN_ON(is_dl_boosted(dl_se));
- 	WARN_ON(dl_time_before(rq_clock(rq), dl_se->deadline));
- 
-@@ -1652,23 +1654,7 @@ void dl_server_start(struct sched_dl_entity *dl_se)
- {
- 	struct rq *rq = dl_se->rq;
- 
--	/*
--	 * XXX: the apply do not work fine at the init phase for the
--	 * fair server because things are not yet set. We need to improve
--	 * this before getting generic.
--	 */
--	if (!dl_server(dl_se)) {
--		u64 runtime =  50 * NSEC_PER_MSEC;
--		u64 period = 1000 * NSEC_PER_MSEC;
--
--		dl_server_apply_params(dl_se, runtime, period, 1);
--
--		dl_se->dl_server = 1;
--		dl_se->dl_defer = 1;
--		setup_new_dl_entity(dl_se);
+-	if (event == NFT_MSG_DELTABLE) {
+-		nlmsg_end(skb, nlh);
+-		return 0;
 -	}
 -
--	if (!dl_se->dl_runtime || dl_se->dl_server_active)
-+	if (!dl_server(dl_se) || dl_se->dl_server_active)
- 		return;
+ 	if (nla_put_be32(skb, NFTA_TABLE_FLAGS,
+ 			 htonl(table->flags & NFT_TABLE_F_MASK)))
+ 		goto nla_put_failure;
+@@ -1993,11 +1988,6 @@ static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
+ 			 NFTA_CHAIN_PAD))
+ 		goto nla_put_failure;
  
- 	dl_se->dl_server_active = 1;
-@@ -1679,7 +1665,7 @@ void dl_server_start(struct sched_dl_entity *dl_se)
+-	if (event == NFT_MSG_DELCHAIN && !hook_list) {
+-		nlmsg_end(skb, nlh);
+-		return 0;
+-	}
+-
+ 	if (nft_is_base_chain(chain)) {
+ 		const struct nft_base_chain *basechain = nft_base_chain(chain);
+ 		struct nft_stats __percpu *stats;
+@@ -4788,11 +4778,6 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
+ 			 NFTA_SET_PAD))
+ 		goto nla_put_failure;
  
- void dl_server_stop(struct sched_dl_entity *dl_se)
- {
--	if (!dl_se->dl_runtime)
-+	if (!dl_server(dl_se) || !dl_server_active(dl_se))
- 		return;
+-	if (event == NFT_MSG_DELSET) {
+-		nlmsg_end(skb, nlh);
+-		return 0;
+-	}
+-
+ 	if (set->flags != 0)
+ 		if (nla_put_be32(skb, NFTA_SET_FLAGS, htonl(set->flags)))
+ 			goto nla_put_failure;
+@@ -8276,11 +8261,6 @@ static int nf_tables_fill_obj_info(struct sk_buff *skb, struct net *net,
+ 			 NFTA_OBJ_PAD))
+ 		goto nla_put_failure;
  
- 	dequeue_dl_entity(dl_se, DEQUEUE_SLEEP);
-@@ -1712,6 +1698,32 @@ void dl_server_init(struct sched_dl_entity *dl_se, struct rq *rq,
- 	dl_se->server_pick_task = pick_task;
- }
+-	if (event == NFT_MSG_DELOBJ) {
+-		nlmsg_end(skb, nlh);
+-		return 0;
+-	}
+-
+ 	if (nla_put_be32(skb, NFTA_OBJ_TYPE, htonl(obj->ops->type->type)) ||
+ 	    nla_put_be32(skb, NFTA_OBJ_USE, htonl(obj->use)) ||
+ 	    nft_object_dump(skb, NFTA_OBJ_DATA, obj, reset))
+@@ -9298,11 +9278,6 @@ static int nf_tables_fill_flowtable_info(struct sk_buff *skb, struct net *net,
+ 			 NFTA_FLOWTABLE_PAD))
+ 		goto nla_put_failure;
  
-+void sched_init_dl_servers(void)
-+{
-+	int cpu;
-+	struct rq *rq;
-+	struct sched_dl_entity *dl_se;
-+
-+	for_each_online_cpu(cpu) {
-+		u64 runtime =  50 * NSEC_PER_MSEC;
-+		u64 period = 1000 * NSEC_PER_MSEC;
-+
-+		rq = cpu_rq(cpu);
-+
-+		guard(rq_lock_irq)(rq);
-+
-+		dl_se = &rq->fair_server;
-+
-+		WARN_ON(dl_server(dl_se));
-+
-+		dl_server_apply_params(dl_se, runtime, period, 1);
-+
-+		dl_se->dl_server = 1;
-+		dl_se->dl_defer = 1;
-+		setup_new_dl_entity(dl_se);
-+	}
-+}
-+
- void __dl_server_attach_root(struct sched_dl_entity *dl_se, struct rq *rq)
- {
- 	u64 new_bw = dl_se->dl_bw;
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index d6f82833f652..063f29a228ad 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -384,6 +384,7 @@ extern void dl_server_stop(struct sched_dl_entity *dl_se);
- extern void dl_server_init(struct sched_dl_entity *dl_se, struct rq *rq,
- 		    dl_server_has_tasks_f has_tasks,
- 		    dl_server_pick_f pick_task);
-+extern void sched_init_dl_servers(void);
- 
- extern void dl_server_update_idle_time(struct rq *rq,
- 		    struct task_struct *p);
+-	if (event == NFT_MSG_DELFLOWTABLE && !hook_list) {
+-		nlmsg_end(skb, nlh);
+-		return 0;
+-	}
+-
+ 	if (nla_put_be32(skb, NFTA_FLOWTABLE_USE, htonl(flowtable->use)) ||
+ 	    nla_put_be32(skb, NFTA_FLOWTABLE_FLAGS, htonl(flowtable->data.flags)))
+ 		goto nla_put_failure;
 -- 
 2.39.5
 
