@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C67F2E4248;
-	Tue, 12 Aug 2025 17:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF722E4248;
+	Tue, 12 Aug 2025 17:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020712; cv=none; b=HtwNcyfQU73wzno9QKNTQB2V0yp/GJhzlZbe45lORNHskqOBZOYCAHVDNXl+jD66PBez8h/jK6bGQ2VS+X2PCpKLqZEIifDrgJlFwUAwks+ODsv8Boh9i/Qsw3Dq+2DE2Qpe81i/jS1HLZjFUnvx37iWDzwIaPgvhP1rFg3Bbu8=
+	t=1755020715; cv=none; b=s11TcombJRLap9UcQxWKqesEfgyJN5HGn+ikrSvGOzqNRWU6FGP0ganupb4aU/fkp2hEwTBWX7JCZYyvgms1m8E8QcW8GITMg7x3n4aQc//BNqwAe0mQ3voazU81Umz4vunOR9umaDTKYhKDfgcsZb1xbFAqKBrgF18W1+E7mnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020712; c=relaxed/simple;
-	bh=OPxArkzImq03DWq6hvlHGZ1AIH118peFI9xYQrnZwD0=;
+	s=arc-20240116; t=1755020715; c=relaxed/simple;
+	bh=JFDZ6y0Fa49CpNPOX7Do3Dh8fKzT2T0OeiI0D0zli2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c7e8OwxhrrKGPf0H5UuYqUFk4/J8TeiF5ekcSQaexUQrpNF0uIQAFfcMPZjUHf0Jl0Tpn4mC66qX4CV89zcaK+yK5RuiyQHNYQAfmhBLpItvTIqZ21518YdfVbaaDDDzURhAlLhc/d0hPrfSxfiOKD6ioIJGMpv/gUsQpiqOIO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhfZKIM1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k2MLSbjT3EeK0Nbkqjk1IdFmy1ZYRaElZ2oyl0xfRDsuUNMrRjAJwMz8yGvmySp1I0msELlsG4210CYHbfJdopJamCXTb+AvAIv/kGo+cseawXTUaHkqqAVUY4qDVYn60loo11EQB7kgdsAbcyO1HtoU6GtcoDpRoNMncdzrfrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rd+l5Mi8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhfZKIM1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2BAC4CEF6;
-	Tue, 12 Aug 2025 17:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rd+l5Mi8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1EAC4CEF0;
+	Tue, 12 Aug 2025 17:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020712;
-	bh=OPxArkzImq03DWq6hvlHGZ1AIH118peFI9xYQrnZwD0=;
+	s=korg; t=1755020715;
+	bh=JFDZ6y0Fa49CpNPOX7Do3Dh8fKzT2T0OeiI0D0zli2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YhfZKIM1GS0LBShgnJyyRE+XG8/v5+1iauu+omTeu88N/AptpC9mNGS0NjxHJQHNA
-	 irCEbyYI/+bBlEMdhnqJ3srN+5EIk5k8Ur5qqDtXX2OIjfnTM7F23IQ8lxsNYXjfbc
-	 BLRjHWMNo2UyUcYqfSYr59Bcr8HVOqWw/OziJryY=
+	b=rd+l5Mi8n7DqZa+dNN9di8kn8iCvx+UoUQMKFPYkWwWjnzfZLN3sXLF2/39sCxWYf
+	 R1YLa7J+0h5dFUPXp+406TNOoaRDepNe5EF9I3ftn0pTvpWoMA6RKbtoMOo7dHWYKL
+	 gwgkTx0tyfHb2WBk6SPhQ0oSJMjeQjWzo8FB/Txw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Song Chen <chensong_2000@189.cn>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Arnd Bergmann <arnd@arndb.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>
-Subject: [PATCH 6.6 002/262] ethernet: intel: fix building with large NR_CPUS
-Date: Tue, 12 Aug 2025 19:26:30 +0200
-Message-ID: <20250812172953.072947928@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 157/253] kernel: trace: preemptirq_delay_test: use offstack cpu mask
+Date: Tue, 12 Aug 2025 19:29:05 +0200
+Message-ID: <20250812172955.400641480@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,99 +51,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 24171a5a4a952c26568ff0d2a0bc8c4708a95e1d ]
+[ Upstream commit adc353c0bfb243ebfd29b6222fa3bf149169a6de ]
 
-With large values of CONFIG_NR_CPUS, three Intel ethernet drivers fail to
-compile like:
+A CPU mask on the stack is broken for large values of CONFIG_NR_CPUS:
 
-In function ‘i40e_free_q_vector’,
-    inlined from ‘i40e_vsi_alloc_q_vectors’ at drivers/net/ethernet/intel/i40e/i40e_main.c:12112:3:
-  571 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-include/linux/rcupdate.h:1084:17: note: in expansion of macro ‘BUILD_BUG_ON’
- 1084 |                 BUILD_BUG_ON(offsetof(typeof(*(ptr)), rhf) >= 4096);    \
-drivers/net/ethernet/intel/i40e/i40e_main.c:5113:9: note: in expansion of macro ‘kfree_rcu’
- 5113 |         kfree_rcu(q_vector, rcu);
-      |         ^~~~~~~~~
+kernel/trace/preemptirq_delay_test.c: In function ‘preemptirq_delay_run’:
+kernel/trace/preemptirq_delay_test.c:143:1: error: the frame size of 8512 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]
 
-The problem is that the 'rcu' member in 'q_vector' is too far from the start
-of the structure. Move this member before the CPU mask instead, in all three
-drivers.
+Fall back to dynamic allocation here.
 
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Song Chen <chensong_2000@189.cn>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250620111215.3365305-1-arnd@kernel.org
+Fixes: 4b9091e1c194 ("kernel: trace: preemptirq_delay_test: add cpu affinity")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: David S. Miller <davem@davemloft.net>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/fm10k/fm10k.h | 3 ++-
- drivers/net/ethernet/intel/i40e/i40e.h   | 2 +-
- drivers/net/ethernet/intel/ixgbe/ixgbe.h | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ kernel/trace/preemptirq_delay_test.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k.h b/drivers/net/ethernet/intel/fm10k/fm10k.h
-index 6119a4108838..65a2816142d9 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k.h
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k.h
-@@ -189,13 +189,14 @@ struct fm10k_q_vector {
- 	struct fm10k_ring_container rx, tx;
- 
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
+diff --git a/kernel/trace/preemptirq_delay_test.c b/kernel/trace/preemptirq_delay_test.c
+index cb0871fbdb07..8af92dbe98f0 100644
+--- a/kernel/trace/preemptirq_delay_test.c
++++ b/kernel/trace/preemptirq_delay_test.c
+@@ -119,12 +119,15 @@ static int preemptirq_delay_run(void *data)
+ {
+ 	int i;
+ 	int s = MIN(burst_size, NR_TEST_FUNCS);
+-	struct cpumask cpu_mask;
++	cpumask_var_t cpu_mask;
 +
- 	cpumask_t affinity_mask;
- 	char name[IFNAMSIZ + 9];
++	if (!alloc_cpumask_var(&cpu_mask, GFP_KERNEL))
++		return -ENOMEM;
  
- #ifdef CONFIG_DEBUG_FS
- 	struct dentry *dbg_q_vector;
- #endif /* CONFIG_DEBUG_FS */
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 	if (cpu_affinity > -1) {
+-		cpumask_clear(&cpu_mask);
+-		cpumask_set_cpu(cpu_affinity, &cpu_mask);
+-		if (set_cpus_allowed_ptr(current, &cpu_mask))
++		cpumask_clear(cpu_mask);
++		cpumask_set_cpu(cpu_affinity, cpu_mask);
++		if (set_cpus_allowed_ptr(current, cpu_mask))
+ 			pr_err("cpu_affinity:%d, failed\n", cpu_affinity);
+ 	}
  
- 	/* for dynamic allocation of rings associated with this q_vector */
- 	struct fm10k_ring ring[] ____cacheline_internodealigned_in_smp;
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
-index 68f403dd2f52..9fb7c5fe05d1 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -953,6 +953,7 @@ struct i40e_q_vector {
- 	u16 reg_idx;		/* register index of the interrupt */
+@@ -141,6 +144,8 @@ static int preemptirq_delay_run(void *data)
  
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 	__set_current_state(TASK_RUNNING);
  
- 	struct i40e_ring_container rx;
- 	struct i40e_ring_container tx;
-@@ -963,7 +964,6 @@ struct i40e_q_vector {
- 	cpumask_t affinity_mask;
- 	struct irq_affinity_notify affinity_notify;
- 
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 	char name[I40E_INT_NAME_STR_LEN];
- 	bool arm_wb_state;
- 	bool in_busy_poll;
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe.h b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-index b6f0376e42f4..d15182657cea 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-@@ -503,9 +503,10 @@ struct ixgbe_q_vector {
- 	struct ixgbe_ring_container rx, tx;
- 
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
++	free_cpumask_var(cpu_mask);
 +
- 	cpumask_t affinity_mask;
- 	int numa_node;
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 	char name[IFNAMSIZ + 9];
+ 	return 0;
+ }
  
- 	/* for dynamic allocation of rings associated with this q_vector */
 -- 
 2.39.5
 
