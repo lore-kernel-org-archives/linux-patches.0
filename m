@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657F32FE571;
-	Tue, 12 Aug 2025 18:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C563B2F745E;
+	Tue, 12 Aug 2025 18:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021917; cv=none; b=QDZVEOuR2QROF8W2Dv6Gsj0XSjqLgjmsFcugcgnbScPABfQXyrZTp4IhchMrfGuSdJuM2pQhZR7vhVABhRZU3dpNPzTKt1pDWjvvZUQzrPitCL+fnPEaEQUq9npgwWr1lv/s93kJt4UZHYJUfp77ziOl9MbSJweg0RXS5H2rAVM=
+	t=1755021920; cv=none; b=deeHPluRKv092vVeNhfFDUWmIdiHF1k2vVsQfFyAcgzhBw+7X/rGqzXGv3JpEgtLUgtWxTby7cIvFBCO8qQxQoc9TaCfXDNrlHOwwn3EHE9h5UptgOQklRW7kUXctvyH8aEbm383f3TKpo7gv2yK8222HvVgHKg/Qe24DssfFjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021917; c=relaxed/simple;
-	bh=0y2FR6YA5Dpj0ja4hO4ugpVRdw5RxY0xuBFp4hEF+cY=;
+	s=arc-20240116; t=1755021920; c=relaxed/simple;
+	bh=R8/RXqzNzc/FSAPYd19zIw59XP2o5ZDptC9q8nE1B64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8liV+Dh7VyerKnp9f2x1Avdq7X6ghFfemLr2hffMc2W1ViNz+BJ8jptmk75/s9DcM0bba99TmXJR+O7nHFjTboLmJt4QVTIBsQelR7GA6CcCl14FFH5ZWwC1yWZB8G4R1AaLqmVOe3advGNfTMjEc+J2bXbNyzfkRNoBubiA8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGHbYxoH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSCllZQ8aV20g3LRIMvoSERLLDy1ePYg1lfJwDRoN6f12MhfMiDXzggjpM1Tau+5XX5a3sl9oxFwVsSt5A0nLtNpizDSh6q4tB/e8Y7/H4hmULyVUaAuuPkqP1jwoF1rXiPAYhKkPYcj/HReInKTAlacNHMIjGth61bl8qkLf8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDWzX7Dq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGHbYxoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C981DC4CEF0;
-	Tue, 12 Aug 2025 18:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDWzX7Dq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334F5C4CEF0;
+	Tue, 12 Aug 2025 18:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021917;
-	bh=0y2FR6YA5Dpj0ja4hO4ugpVRdw5RxY0xuBFp4hEF+cY=;
+	s=korg; t=1755021920;
+	bh=R8/RXqzNzc/FSAPYd19zIw59XP2o5ZDptC9q8nE1B64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGHbYxoHCzWXiVJxnP68kL8mGGBqBUDzcRRz86jfERCccoLYoPPCPqF1S2wSZmCN9
-	 opPDj9Hv+WNNR+XTFO8cfDoRxP4TqmoMHVcPsq0tkHSmIJf86B5hJ/Pe5DktbS9iHX
-	 HX1hP3g5061kv876sJAZkOVtyCV8gPAE+Sj045RA=
+	b=HDWzX7DqVELh0t+ZaQxbuvKhmLbxDH0UKoNhZBQoxF0MXXSeJkfoYBsRkMa8ZgkDe
+	 er8ysBW4klPZ3ngSyzS2HhnhBzmAh58YdQh3tSYc58ACjcddb3z/wIp0rrOlnY1U6s
+	 6VORrXNCQ+lPbOGK8A6+L/8DNz/f3AP41kuFQO+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mayhew <smayhew@redhat.com>,
-	Trond Myklebust <trondmy@hammerspace.com>,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 230/262] sunrpc: fix handling of server side tls alerts
-Date: Tue, 12 Aug 2025 19:30:18 +0200
-Message-ID: <20250812173002.954442181@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Subject: [PATCH 6.6 231/262] perf/core: Dont leak AUX buffer refcount on allocation failure
+Date: Tue, 12 Aug 2025 19:30:19 +0200
+Message-ID: <20250812173002.996107717@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -52,114 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit bee47cb026e762841f3faece47b51f985e215edb upstream.
+commit 5468c0fbccbb9d156522c50832244a8b722374fb upstream.
 
-Scott Mayhew discovered a security exploit in NFS over TLS in
-tls_alert_recv() due to its assumption it can read data from
-the msg iterator's kvec..
+Failure of the AUX buffer allocation leaks the reference count.
 
-kTLS implementation splits TLS non-data record payload between
-the control message buffer (which includes the type such as TLS
-aler or TLS cipher change) and the rest of the payload (say TLS
-alert's level/description) which goes into the msg payload buffer.
+Set the reference count to 1 only when the allocation succeeds.
 
-This patch proposes to rework how control messages are setup and
-used by sock_recvmsg().
-
-If no control message structure is setup, kTLS layer will read and
-process TLS data record types. As soon as it encounters a TLS control
-message, it would return an error. At that point, NFS can setup a
-kvec backed msg buffer and read in the control message such as a
-TLS alert. Msg iterator can advance the kvec pointer as a part of
-the copy process thus we need to revert the iterator before calling
-into the tls_alert_recv.
-
-Reported-by: Scott Mayhew <smayhew@redhat.com>
-Fixes: 5e052dda121e ("SUNRPC: Recognize control messages in server-side TCP socket code")
-Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 45bfb2e50471 ("perf/core: Add AUX area to ring buffer for raw data streams")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |   43 +++++++++++++++++++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 8 deletions(-)
+ kernel/events/core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -257,20 +257,47 @@ svc_tcp_sock_process_cmsg(struct socket
- }
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6595,9 +6595,7 @@ static int perf_mmap(struct file *file,
+ 			goto unlock;
+ 		}
  
- static int
--svc_tcp_sock_recv_cmsg(struct svc_sock *svsk, struct msghdr *msg)
-+svc_tcp_sock_recv_cmsg(struct socket *sock, unsigned int *msg_flags)
- {
- 	union {
- 		struct cmsghdr	cmsg;
- 		u8		buf[CMSG_SPACE(sizeof(u8))];
- 	} u;
--	struct socket *sock = svsk->sk_sock;
-+	u8 alert[2];
-+	struct kvec alert_kvec = {
-+		.iov_base = alert,
-+		.iov_len = sizeof(alert),
-+	};
-+	struct msghdr msg = {
-+		.msg_flags = *msg_flags,
-+		.msg_control = &u,
-+		.msg_controllen = sizeof(u),
-+	};
-+	int ret;
-+
-+	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
-+		      alert_kvec.iov_len);
-+	ret = sock_recvmsg(sock, &msg, MSG_DONTWAIT);
-+	if (ret > 0 &&
-+	    tls_get_record_type(sock->sk, &u.cmsg) == TLS_RECORD_TYPE_ALERT) {
-+		iov_iter_revert(&msg.msg_iter, ret);
-+		ret = svc_tcp_sock_process_cmsg(sock, &msg, &u.cmsg, -EAGAIN);
-+	}
-+	return ret;
-+}
-+
-+static int
-+svc_tcp_sock_recvmsg(struct svc_sock *svsk, struct msghdr *msg)
-+{
- 	int ret;
-+	struct socket *sock = svsk->sk_sock;
- 
--	msg->msg_control = &u;
--	msg->msg_controllen = sizeof(u);
- 	ret = sock_recvmsg(sock, msg, MSG_DONTWAIT);
--	if (unlikely(msg->msg_controllen != sizeof(u)))
--		ret = svc_tcp_sock_process_cmsg(sock, msg, &u.cmsg, ret);
-+	if (msg->msg_flags & MSG_CTRUNC) {
-+		msg->msg_flags &= ~(MSG_CTRUNC | MSG_EOR);
-+		if (ret == 0 || ret == -EIO)
-+			ret = svc_tcp_sock_recv_cmsg(sock, &msg->msg_flags);
-+	}
- 	return ret;
- }
- 
-@@ -321,7 +348,7 @@ static ssize_t svc_tcp_read_msg(struct s
- 		iov_iter_advance(&msg.msg_iter, seek);
- 		buflen -= seek;
+-		atomic_set(&rb->aux_mmap_count, 1);
+ 		user_extra = nr_pages;
+-
+ 		goto accounting;
  	}
--	len = svc_tcp_sock_recv_cmsg(svsk, &msg);
-+	len = svc_tcp_sock_recvmsg(svsk, &msg);
- 	if (len > 0)
- 		svc_flush_bvec(bvec, len, seek);
  
-@@ -1019,7 +1046,7 @@ static ssize_t svc_tcp_read_marker(struc
- 		iov.iov_base = ((char *)&svsk->sk_marker) + svsk->sk_tcplen;
- 		iov.iov_len  = want;
- 		iov_iter_kvec(&msg.msg_iter, ITER_DEST, &iov, 1, want);
--		len = svc_tcp_sock_recv_cmsg(svsk, &msg);
-+		len = svc_tcp_sock_recvmsg(svsk, &msg);
- 		if (len < 0)
- 			return len;
- 		svsk->sk_tcplen += len;
+@@ -6699,8 +6697,10 @@ accounting:
+ 	} else {
+ 		ret = rb_alloc_aux(rb, event, vma->vm_pgoff, nr_pages,
+ 				   event->attr.aux_watermark, flags);
+-		if (!ret)
++		if (!ret) {
++			atomic_set(&rb->aux_mmap_count, 1);
+ 			rb->aux_mmap_locked = extra;
++		}
+ 	}
+ 
+ unlock:
+@@ -6710,6 +6710,7 @@ unlock:
+ 
+ 		atomic_inc(&event->mmap_count);
+ 	} else if (rb) {
++		/* AUX allocation failed */
+ 		atomic_dec(&rb->mmap_count);
+ 	}
+ aux_unlock:
 
 
