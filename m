@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD2726FA77;
-	Tue, 12 Aug 2025 19:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559CB27781E;
+	Tue, 12 Aug 2025 19:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025590; cv=none; b=Ge6gI9NgzgY9afxeAIoYeQBtPFZvFk1NFrTay1x+EOD8ZwDI9/MSe+oc5dPMfS297aCPpA3YAc25LxO90VWUZlfWFJr1sCfPsgbJ9a3FynE10+l6CQ1YvN6zgvztk82VPqZLjendCesRaifS9Ziam3AfZJ09JXBT53dY6Ls839s=
+	t=1755025594; cv=none; b=UBgGSfJU9zl4ijYC5+3BNqdR8eGtZzF4bir2wWn98YLog7BtWcWKepYIxvDkAG5Bs+J8B9gemnRElGgOuOfuS819Pqx/cuqnor60IggjAA0R4lrFLEdjtbX3ACvKrqdZgg6Wlqn2D0p9juPbANbVZkbOpGY7oJiynQks6onZkrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025590; c=relaxed/simple;
-	bh=T2wwt5ZupvEy1YkZnxEhXyI6uEU72MNLOBJnKTjq270=;
+	s=arc-20240116; t=1755025594; c=relaxed/simple;
+	bh=mA0MwtwcZe5bQvlpMr8sJrYqvsKlC3YATC3lnaynOvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbW+Mzosl1JRXiOiCgLQRVcJiuIgt5sOyiRbiyAxjbRmryO8732ONK/no5ZTCsAbdo3I5l7uYZCy+Ch1G0PsLj6XRjMsiqT+qQaro9LRp1OGRFmQGPUIBejJU1HjFZrG7wQNCoN1jOCt2gRpIlvnQwH45VLNb3Fsc1GdRmXXWx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smSex6ri; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uffzoEu7e1HUiHn4/9M0xf+jdu59JRFJztC622Tu5gqPqocrxS7g+BNSo61NnbKCTYpCQnrMuP60GgYrNFrc3t2/T7/Cz50NO3ZVNuAD3bw5+vT9MyJxRQmHlGDqoxEEATZPQ/ZJ8aOKbYXQIOK6VwsVFDdIWIaTxEKeDLm9VL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFSRKNVb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smSex6ri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429C6C4CEF0;
-	Tue, 12 Aug 2025 19:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFSRKNVb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5F2C4CEF0;
+	Tue, 12 Aug 2025 19:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025590;
-	bh=T2wwt5ZupvEy1YkZnxEhXyI6uEU72MNLOBJnKTjq270=;
+	s=korg; t=1755025593;
+	bh=mA0MwtwcZe5bQvlpMr8sJrYqvsKlC3YATC3lnaynOvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smSex6riakaRJPzi2tOkgmcrUqpFqesn6qTKMxU9Fb50H1kHRHCRtB8R40bRjwll3
-	 TdrQ/kcedCnM/c55i2gNWBAyAtqz4u5cWGf84Zwbsq8k/qpL8LJ9nnnrz+ce3bmWkS
-	 MKFhvlIZiGC0hBBp2GHBSaJBGpHv8fukz2Rwunb8=
+	b=OFSRKNVb6hT8dSvCS9a2dyV4/HxjuTItpMtgwM1m+bXiCyjSDz+mi1iVM7eXv+6YP
+	 qOsqapjumqlguoeZlktbjxuvS8LvRLSzrWIP6gWLc1eqVAbbxuBlMIVhprh6ExpDc8
+	 YGfTnfG772mBUfdkKmImV//nl2PameA1Rb7M2pkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Elder <elder@kernel.org>,
+	greybus-dev@lists.linaro.org,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 087/480] ASoC: SDCA: Allow read-only controls to be deferrable
-Date: Tue, 12 Aug 2025 19:44:55 +0200
-Message-ID: <20250812174401.037873752@linuxfoundation.org>
+Subject: [PATCH 6.15 088/480] staging: greybus: gbphy: fix up const issue with the match callback
+Date: Tue, 12 Aug 2025 19:44:56 +0200
+Message-ID: <20250812174401.079187621@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,39 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 4eb6ad5d2080681b531db2c1764246f9a868062f ]
+[ Upstream commit ce32eff1cf3ae8ac2596171dd0af1657634c83eb ]
 
-The current SDCA Control parsing only checks the deferrable flag for
-Read/Write and Dual Ranked controls. However, reads can defer as well as
-writes so Read Only controls should also check for the deferrable flag.
-Add the handling for this into find_sdca_entity_control().
+gbphy_dev_match_id() should be taking a const pointer, as the pointer
+passed to it from the container_of() call was const to start with (it
+was accidentally cast away with the call.)  Fix this all up by correctly
+marking the pointer types.
 
-Fixes: 42b144cb6a2d ("ASoC: SDCA: Add SDCA Control parsing")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20250707124155.2596744-2-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Alex Elder <elder@kernel.org>
+Cc: greybus-dev@lists.linaro.org
+Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/2025070115-reoccupy-showy-e2ad@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdca/sdca_functions.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/staging/greybus/gbphy.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
-index 493f390f087a..15aa57a07c73 100644
---- a/sound/soc/sdca/sdca_functions.c
-+++ b/sound/soc/sdca/sdca_functions.c
-@@ -880,7 +880,8 @@ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *enti
- 			control->value = tmp;
- 			control->has_fixed = true;
- 		}
--
-+		fallthrough;
-+	case SDCA_ACCESS_MODE_RO:
- 		control->deferrable = fwnode_property_read_bool(control_node,
- 								"mipi-sdca-control-deferrable");
- 		break;
+diff --git a/drivers/staging/greybus/gbphy.c b/drivers/staging/greybus/gbphy.c
+index 6adcad286633..60cf09a302a7 100644
+--- a/drivers/staging/greybus/gbphy.c
++++ b/drivers/staging/greybus/gbphy.c
+@@ -102,8 +102,8 @@ static int gbphy_dev_uevent(const struct device *dev, struct kobj_uevent_env *en
+ }
+ 
+ static const struct gbphy_device_id *
+-gbphy_dev_match_id(struct gbphy_device *gbphy_dev,
+-		   struct gbphy_driver *gbphy_drv)
++gbphy_dev_match_id(const struct gbphy_device *gbphy_dev,
++		   const struct gbphy_driver *gbphy_drv)
+ {
+ 	const struct gbphy_device_id *id = gbphy_drv->id_table;
+ 
+@@ -119,7 +119,7 @@ gbphy_dev_match_id(struct gbphy_device *gbphy_dev,
+ 
+ static int gbphy_dev_match(struct device *dev, const struct device_driver *drv)
+ {
+-	struct gbphy_driver *gbphy_drv = to_gbphy_driver(drv);
++	const struct gbphy_driver *gbphy_drv = to_gbphy_driver(drv);
+ 	struct gbphy_device *gbphy_dev = to_gbphy_dev(dev);
+ 	const struct gbphy_device_id *id;
+ 
 -- 
 2.39.5
 
