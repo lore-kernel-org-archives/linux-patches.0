@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A9D29BD9D;
-	Tue, 12 Aug 2025 19:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB4E29BD9D;
+	Tue, 12 Aug 2025 19:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026770; cv=none; b=QfUq216Kr1pDztGvAIU8dnYPrYYWjFSPqh03xb7NJDdHNd1jhiig8NhQ2y5dahHgk0f0WOKEJVYTjn15CEgW2+ik0Oe2zCgLW4oT8PBFioinP13Fu5tYf8nehu6S+vGfTGEXN8LZsGlvl+AG3XxzH/uxzch+9N0He3UWV4u8KiY=
+	t=1755026774; cv=none; b=rpILosbKx9ly0Qe8jzLD3Mm4QJ2RxfbX4K+5RJcx/wHFxyVakwnpezsadt46k0iDGcR3QMJ35v0/ZPraA66aDWWeZbHC5qANnTn4i+O1zS3zqvoUyKnQZpMHii64hZ1qeLWmHTu8SEtvh1PFHVEpLNoq1X6LKpmnPDf5tb1+/vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026770; c=relaxed/simple;
-	bh=XnTeAQGNQROfSeGxS8cmgqQ32g/FVXzNDe9M9lgnvx4=;
+	s=arc-20240116; t=1755026774; c=relaxed/simple;
+	bh=onoFtrb2n9icqsjVHl7cw9kuMjBJdBH1Tc7d/UGMB0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2xJ4t0xrfjp6pvp7L0dsVA4s643oAUqyE/cpL0fglfbBZQvVUCPKh9oG2FmX9tjpU4RryjfxacfmLjsrD98HbdukOottgNOnkrsX/8wd6cdmhFiMIa3Coc6sURSeDfCftczIK6SEmbRK7uSbTRsaFXbkmz3sNxoG1XqlYZsaQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4b7gFK5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Du8KUYEOHnFmvVAtTOzrkikN2XglwqhlLVpWdR4FhCuVe0kmtuD9QvV4hWhMFrQrY1Y4eyVkpDkOVUBnYRTEnl3lphYNL/tg+BOS1EzyYGOu5oEBNagkFJZ9SJj3VL6ycNnu21ILa9Za9bfMu4QMbC5WNOLHj2hBWjRVT7Orzzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQQ3x5/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4b7gFK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CA7C4CEF1;
-	Tue, 12 Aug 2025 19:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQQ3x5/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C0CC4CEF0;
+	Tue, 12 Aug 2025 19:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026770;
-	bh=XnTeAQGNQROfSeGxS8cmgqQ32g/FVXzNDe9M9lgnvx4=;
+	s=korg; t=1755026773;
+	bh=onoFtrb2n9icqsjVHl7cw9kuMjBJdBH1Tc7d/UGMB0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4b7gFK5inTuK3u894q/xUlS+Ieo/3T7iOnhbbSj/Ore+X/GcdUC6wKev7KxYymQK
-	 XbBqyefsgkff+p8rlYV+an4nykyZyM0RbAVJH6dxddk+nMol3on6imCyzHKW9sNXNq
-	 j8ARcQm0ztQfUiM820zpU4xXNbER1rYfAH2Tuk84=
+	b=ZQQ3x5/EeDGZ8DDp9Vjh3lMiVGANZxzRSVtC84Qf7xa17HkDR9mwqelmwWmXR5iEE
+	 TJ+zTH9g8I6TVpw9n+PdTIPpDfLWy9WSNJ3tCPbS1Zq+/UatiGhbd6jBDEIWj6hJWA
+	 OzyldyMOlwgHBmLVP9IiISscLJnhq6is+yHgVxWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.15 434/480] nfsd: avoid ref leak in nfsd_open_local_fh()
-Date: Tue, 12 Aug 2025 19:50:42 +0200
-Message-ID: <20250812174415.302517865@linuxfoundation.org>
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 404/480] drm/xe/pf: Disable PF restart worker on device removal
+Date: Tue, 12 Aug 2025 19:50:12 +0200
+Message-ID: <20250812174414.096074338@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -46,61 +47,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-commit e5a73150776f18547ee685c9f6bfafe549714899 upstream.
+[ Upstream commit c286ce6b01f633806b4db3e4ec8e0162928299cd ]
 
-If two calls to nfsd_open_local_fh() race and both successfully call
-nfsd_file_acquire_local(), they will both get an extra reference to the
-net to accompany the file reference stored in *pnf.
+We can't let restart worker run once device is removed, since other
+data that it might want to access could be already released.
+Explicitly disable worker as part of device cleanup action.
 
-One of them will fail to store (using xchg()) the file reference in
-*pnf and will drop that reference but WON'T drop the accompanying
-reference to the net.  This leak means that when the nfs server is shut
-down it will hang in nfsd_shutdown_net() waiting for
-&nn->nfsd_net_free_done.
-
-This patch adds the missing nfsd_net_put().
-
-Reported-by: Mike Snitzer <snitzer@kernel.org>
-Fixes: e6f7e1487ab5 ("nfs_localio: simplify interface to nfsd for getting nfsd_file")
-Cc: stable@vger.kernel.org
-Signed-off-by: NeilBrown <neil@brown.name>
-Tested-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a4d1c5d0b99b ("drm/xe/pf: Move VFs reprovisioning to worker")
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://lore.kernel.org/r/20250801142822.180530-2-michal.wajdeczko@intel.com
+(cherry picked from commit a424353937c24554bb242a6582ed8f018b4a411c)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/localio.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_gt_sriov_pf.c | 32 ++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/localio.c b/fs/nfsd/localio.c
-index 4f6468eb2adf..cb237f1b902a 100644
---- a/fs/nfsd/localio.c
-+++ b/fs/nfsd/localio.c
-@@ -103,10 +103,11 @@ nfsd_open_local_fh(struct net *net, struct auth_domain *dom,
- 			if (nfsd_file_get(new) == NULL)
- 				goto again;
- 			/*
--			 * Drop the ref we were going to install and the
--			 * one we were going to return.
-+			 * Drop the ref we were going to install (both file and
-+			 * net) and the one we were going to return (only file).
- 			 */
- 			nfsd_file_put(localio);
-+			nfsd_net_put(net);
- 			nfsd_file_put(localio);
- 			localio = new;
- 		}
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+index 35489fa81825..2ea81d81c0ae 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+@@ -47,9 +47,16 @@ static int pf_alloc_metadata(struct xe_gt *gt)
+ 
+ static void pf_init_workers(struct xe_gt *gt)
+ {
++	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
+ 	INIT_WORK(&gt->sriov.pf.workers.restart, pf_worker_restart_func);
+ }
+ 
++static void pf_fini_workers(struct xe_gt *gt)
++{
++	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
++	disable_work_sync(&gt->sriov.pf.workers.restart);
++}
++
+ /**
+  * xe_gt_sriov_pf_init_early - Prepare SR-IOV PF data structures on PF.
+  * @gt: the &xe_gt to initialize
+@@ -79,6 +86,21 @@ int xe_gt_sriov_pf_init_early(struct xe_gt *gt)
+ 	return 0;
+ }
+ 
++static void pf_fini_action(void *arg)
++{
++	struct xe_gt *gt = arg;
++
++	pf_fini_workers(gt);
++}
++
++static int pf_init_late(struct xe_gt *gt)
++{
++	struct xe_device *xe = gt_to_xe(gt);
++
++	xe_gt_assert(gt, IS_SRIOV_PF(xe));
++	return devm_add_action_or_reset(xe->drm.dev, pf_fini_action, gt);
++}
++
+ /**
+  * xe_gt_sriov_pf_init - Prepare SR-IOV PF data structures on PF.
+  * @gt: the &xe_gt to initialize
+@@ -95,7 +117,15 @@ int xe_gt_sriov_pf_init(struct xe_gt *gt)
+ 	if (err)
+ 		return err;
+ 
+-	return xe_gt_sriov_pf_migration_init(gt);
++	err = xe_gt_sriov_pf_migration_init(gt);
++	if (err)
++		return err;
++
++	err = pf_init_late(gt);
++	if (err)
++		return err;
++
++	return 0;
+ }
+ 
+ static bool pf_needs_enable_ggtt_guest_update(struct xe_device *xe)
 -- 
-2.50.1
+2.39.5
 
 
 
