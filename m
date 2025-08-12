@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559CB27781E;
-	Tue, 12 Aug 2025 19:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6162882CE;
+	Tue, 12 Aug 2025 19:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025594; cv=none; b=UBgGSfJU9zl4ijYC5+3BNqdR8eGtZzF4bir2wWn98YLog7BtWcWKepYIxvDkAG5Bs+J8B9gemnRElGgOuOfuS819Pqx/cuqnor60IggjAA0R4lrFLEdjtbX3ACvKrqdZgg6Wlqn2D0p9juPbANbVZkbOpGY7oJiynQks6onZkrM=
+	t=1755025597; cv=none; b=QxLFZtyKZYqBEqw8y9JE8TQINbA8ZCC5m02giNh1xQF/I7/DjQ9xsmLWlvWTc0DbWgwA9dwBdE+H+kLO6KtSU1D7tN2CxTVLdeBGq0SsXBZn9E/J1Tx26wlbn5uN4BAuqQMRCjREkod50UXk5E09s6rK8jjMI/elk2iuoLfBQIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025594; c=relaxed/simple;
-	bh=mA0MwtwcZe5bQvlpMr8sJrYqvsKlC3YATC3lnaynOvo=;
+	s=arc-20240116; t=1755025597; c=relaxed/simple;
+	bh=lw0at8EXRYb0R8dDdTkVrRxB1pRZi79c1GZchpIyb7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uffzoEu7e1HUiHn4/9M0xf+jdu59JRFJztC622Tu5gqPqocrxS7g+BNSo61NnbKCTYpCQnrMuP60GgYrNFrc3t2/T7/Cz50NO3ZVNuAD3bw5+vT9MyJxRQmHlGDqoxEEATZPQ/ZJ8aOKbYXQIOK6VwsVFDdIWIaTxEKeDLm9VL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFSRKNVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nqEoK3UzeVk3jDfoP4dAhTpP4dUysvxLrqVNIPXHZpvzQclZpGcMJJpj/h2i/5BlXwaU/x/Fv/+5IQ9pXEhcAHUTFDSQKMGALxbtkXB2+PCTsXEPLeEFPD0QXQIws09Ev/rV+auHVz203EnyQ809WBBZTKakLpPxzn5r5BR1z4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dohEaZ6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFSRKNVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5F2C4CEF0;
-	Tue, 12 Aug 2025 19:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dohEaZ6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2ED3C4CEF0;
+	Tue, 12 Aug 2025 19:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025593;
-	bh=mA0MwtwcZe5bQvlpMr8sJrYqvsKlC3YATC3lnaynOvo=;
+	s=korg; t=1755025597;
+	bh=lw0at8EXRYb0R8dDdTkVrRxB1pRZi79c1GZchpIyb7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFSRKNVb6hT8dSvCS9a2dyV4/HxjuTItpMtgwM1m+bXiCyjSDz+mi1iVM7eXv+6YP
-	 qOsqapjumqlguoeZlktbjxuvS8LvRLSzrWIP6gWLc1eqVAbbxuBlMIVhprh6ExpDc8
-	 YGfTnfG772mBUfdkKmImV//nl2PameA1Rb7M2pkc=
+	b=dohEaZ6dsYgvFaS/HIpl3CqWJNKfMO/xE75mDFLmTdFLNdbBW5KY+M4eUkMxsw4j/
+	 Fu8dQyA4I9QhF8gOjgUNpWKy9J2bUk4HGHp2ZwZC8Igtqds7/fXHJmkp5RN/jZBcO+
+	 uI2zJCGutiqK/ZDoZRLokwxA0Mg5zKrnBrODroQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Elder <elder@kernel.org>,
-	greybus-dev@lists.linaro.org,
-	Johan Hovold <johan@kernel.org>,
+	Brahmajit Das <listout@listout.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 088/480] staging: greybus: gbphy: fix up const issue with the match callback
-Date: Tue, 12 Aug 2025 19:44:56 +0200
-Message-ID: <20250812174401.079187621@linuxfoundation.org>
+Subject: [PATCH 6.15 089/480] samples: mei: Fix building on musl libc
+Date: Tue, 12 Aug 2025 19:44:57 +0200
+Message-ID: <20250812174401.120368281@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,50 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit ce32eff1cf3ae8ac2596171dd0af1657634c83eb ]
+[ Upstream commit 239df3e4b4752524e7c0fb3417c218d8063654b4 ]
 
-gbphy_dev_match_id() should be taking a const pointer, as the pointer
-passed to it from the container_of() call was const to start with (it
-was accidentally cast away with the call.)  Fix this all up by correctly
-marking the pointer types.
+The header bits/wordsize.h is glibc specific and on building on musl
+with allyesconfig results in
 
-Cc: Alex Elder <elder@kernel.org>
-Cc: greybus-dev@lists.linaro.org
-Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/2025070115-reoccupy-showy-e2ad@gregkh
+samples/mei/mei-amt-version.c:77:10: fatal error: bits/wordsize.h: No such file or directory
+   77 | #include <bits/wordsize.h>
+      |          ^~~~~~~~~~~~~~~~~
+
+mei-amt-version.c build file without bits/wordsize.h on musl and glibc.
+
+However on musl we get the follwing error without sys/time.h
+
+samples/mei/mei-amt-version.c: In function 'mei_recv_msg':
+samples/mei/mei-amt-version.c:159:24: error: storage size of 'tv' isn't known
+  159 |         struct timeval tv;
+      |                        ^~
+samples/mei/mei-amt-version.c:160:9: error: unknown type name 'fd_set'
+  160 |         fd_set set;
+      |         ^~~~~~
+samples/mei/mei-amt-version.c:168:9: error: implicit declaration of function 'FD_ZERO' [-Wimplicit-function-declaration]
+  168 |         FD_ZERO(&set);
+      |         ^~~~~~~
+samples/mei/mei-amt-version.c:169:9: error: implicit declaration of function 'FD_SET'; did you mean 'L_SET'? [-Wimplicit-function-declaration]
+  169 |         FD_SET(me->fd, &set);
+      |         ^~~~~~
+      |         L_SET
+samples/mei/mei-amt-version.c:170:14: error: implicit declaration of function 'select' [-Wimplicit-function-declaration]
+  170 |         rc = select(me->fd + 1, &set, NULL, NULL, &tv);
+      |              ^~~~~~
+samples/mei/mei-amt-version.c:171:23: error: implicit declaration of function 'FD_ISSET' [-Wimplicit-function-declaration]
+  171 |         if (rc > 0 && FD_ISSET(me->fd, &set)) {
+      |                       ^~~~~~~~
+samples/mei/mei-amt-version.c:159:24: warning: unused variable 'tv' [-Wunused-variable]
+  159 |         struct timeval tv;
+      |                        ^~
+
+Hence the the file has been included.
+
+Fixes: c52827cc4ddf ("staging/mei: add mei user space example")
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Link: https://lore.kernel.org/r/20250702135955.24955-1-listout@listout.xyz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/gbphy.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ samples/mei/mei-amt-version.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/greybus/gbphy.c b/drivers/staging/greybus/gbphy.c
-index 6adcad286633..60cf09a302a7 100644
---- a/drivers/staging/greybus/gbphy.c
-+++ b/drivers/staging/greybus/gbphy.c
-@@ -102,8 +102,8 @@ static int gbphy_dev_uevent(const struct device *dev, struct kobj_uevent_env *en
- }
+diff --git a/samples/mei/mei-amt-version.c b/samples/mei/mei-amt-version.c
+index 867debd3b912..1d7254bcb44c 100644
+--- a/samples/mei/mei-amt-version.c
++++ b/samples/mei/mei-amt-version.c
+@@ -69,11 +69,11 @@
+ #include <string.h>
+ #include <fcntl.h>
+ #include <sys/ioctl.h>
++#include <sys/time.h>
+ #include <unistd.h>
+ #include <errno.h>
+ #include <stdint.h>
+ #include <stdbool.h>
+-#include <bits/wordsize.h>
+ #include <linux/mei.h>
  
- static const struct gbphy_device_id *
--gbphy_dev_match_id(struct gbphy_device *gbphy_dev,
--		   struct gbphy_driver *gbphy_drv)
-+gbphy_dev_match_id(const struct gbphy_device *gbphy_dev,
-+		   const struct gbphy_driver *gbphy_drv)
- {
- 	const struct gbphy_device_id *id = gbphy_drv->id_table;
- 
-@@ -119,7 +119,7 @@ gbphy_dev_match_id(struct gbphy_device *gbphy_dev,
- 
- static int gbphy_dev_match(struct device *dev, const struct device_driver *drv)
- {
--	struct gbphy_driver *gbphy_drv = to_gbphy_driver(drv);
-+	const struct gbphy_driver *gbphy_drv = to_gbphy_driver(drv);
- 	struct gbphy_device *gbphy_dev = to_gbphy_dev(dev);
- 	const struct gbphy_device_id *id;
- 
+ /*****************************************************************************
 -- 
 2.39.5
 
