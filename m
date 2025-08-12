@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05E32F7477;
-	Tue, 12 Aug 2025 17:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D742FD1CE;
+	Tue, 12 Aug 2025 17:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020455; cv=none; b=M2Kt/BnZNA+I0BaT0VjtSwIrVszOYG1zcpTUHDLKnZG8RQwr3PSDlT8T1vXUK/hbsUzmm5hU6LzFFldmPzM+OjPBAnjGjnrqTrf/DXCdIHXiOb4hjVXLMjt8WGMRIzyLpagdrCVfwz4M9NXn4i7ysQrw7H5zdmisAL74pXJqpuI=
+	t=1755020461; cv=none; b=MWqQ5u/GHO+G18JhLPTwdIco/1Tc+ciwSpVcVI/S4vqKRvMsZT4lbU17z2qQONjNKmzdklGY8Q3GEvqjPPVy71JcQ6Twc8HH5Okw07JCPGDLLbzEM7BGs9YXLB0CjapUbBZiqSA70hI4a/MrfM82bq/MjT7dzBKFKARoEgr+SIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020455; c=relaxed/simple;
-	bh=FGJb53o4/9lpH0MfpvOOa+s8T24HaMOA65uNhMmlue0=;
+	s=arc-20240116; t=1755020461; c=relaxed/simple;
+	bh=nk61acLotDpyQePRH0tPQD29qaAaciOt9DTslYAwog4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUyXg95qnJ3nzZ8xm/3otIQ6E6yznIdFLs7tTiUkV1OqMMvwZM56yanXGVghxD+mVx70eH5G3YUR0IvCemZ+xOOqznWR9J498OTfZpY8+HxemwQtEWDNTsVaskJrUaZCd+Nqb+15CyLxFP9obY/trSRpvNNjqUG4tDzX6BCpRfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0bQZCsF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fh1bXKWepW8ljD6/iGhddd2B0Bd9v34yUKfEIseLp9Yy0xSCMb9QicVfV+1npsdlRNuQ5Jk3WJhsvgX6thqQ/TrvvM5/y7eL4QpiatHOfc6XaeBIJx+aOEptIMkDBKNrfDwKt3g5o+UOSwBakHr+iCthMO+9rznB2ApEFEwXgzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxxlym40; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0bQZCsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38310C4CEF1;
-	Tue, 12 Aug 2025 17:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxxlym40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCCEC4CEF0;
+	Tue, 12 Aug 2025 17:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020455;
-	bh=FGJb53o4/9lpH0MfpvOOa+s8T24HaMOA65uNhMmlue0=;
+	s=korg; t=1755020460;
+	bh=nk61acLotDpyQePRH0tPQD29qaAaciOt9DTslYAwog4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0bQZCsFamsHa2K7xFW1dBvMVmI4MpFsxbCJUK6kwDMCTZmhFB252hS1Mz7697LgE
-	 ub9gHmoQocQq0aom/9Wv77cKG14G5TM3WheWYm7LQt3MRJrULc8HQvOH4TWaDjlXaB
-	 X6m4/VOnWV509a54seX8KUxb26moT8JteBMPbyGQ=
+	b=cxxlym40jC0+8e7HvnhlTQIgPBJqSzs4pkPFCVxXHKXeobL+/4yflb8lEWJittr/s
+	 Ba0cVlKUSBZa2aKpne03CSDiMfQ3w4WkzOaTlOdaieIja6+LnijxcVwM9HR8Ib83vd
+	 G0wNoTziYhUPZrz6pDTffnjwEVOhYvUNOuROB7F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Annette Kobou <annette.kobou@kontron.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Adam Ford <aford173@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/253] ARM: dts: imx6ul-kontron-bl-common: Fix RTS polarity for RS485 interface
-Date: Tue, 12 Aug 2025 19:27:53 +0200
-Message-ID: <20250812172952.356064999@linuxfoundation.org>
+Subject: [PATCH 6.1 086/253] arm64: dts: imx8mm-beacon: Fix HS400 USDHC clock speed
+Date: Tue, 12 Aug 2025 19:27:54 +0200
+Message-ID: <20250812172952.398324450@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -52,35 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Annette Kobou <annette.kobou@kontron.de>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 47ef5256124fb939d8157b13ca048c902435cf23 ]
+[ Upstream commit f83f69097a302ed2a2775975ddcf12e6a5ac6ec3 ]
 
-The polarity of the DE signal of the transceiver is active-high for
-sending. Therefore rs485-rts-active-low is wrong and needs to be
-removed to make RS485 transmissions work.
+The reference manual for the i.MX8MM states the clock rate in
+MMC mode is 1/2 of the input clock, therefore to properly run
+at HS400 rates, the input clock must be 400MHz to operate at
+200MHz.  Currently the clock is set to 200MHz which is half the
+rate it should be, so the throughput is half of what it should be
+for HS400 operation.
 
-Signed-off-by: Annette Kobou <annette.kobou@kontron.de>
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Fixes: 1ea4b76cdfde ("ARM: dts: imx6ul-kontron-n6310: Add Kontron i.MX6UL N6310 SoM and boards")
+Fixes: 593816fa2f35 ("arm64: dts: imx: Add Beacon i.MX8m-Mini development kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6ul-kontron-bl-common.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/imx6ul-kontron-bl-common.dtsi b/arch/arm/boot/dts/imx6ul-kontron-bl-common.dtsi
-index 43868311f48a..bb324725411c 100644
---- a/arch/arm/boot/dts/imx6ul-kontron-bl-common.dtsi
-+++ b/arch/arm/boot/dts/imx6ul-kontron-bl-common.dtsi
-@@ -169,7 +169,6 @@ &uart2 {
- 	pinctrl-0 = <&pinctrl_uart2>;
- 	linux,rs485-enabled-at-boot-time;
- 	rs485-rx-during-tx;
--	rs485-rts-active-low;
- 	uart-has-rtscts;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
+index 140e251094fa..94bec023868c 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
+@@ -284,6 +284,8 @@ &usdhc3 {
+ 	pinctrl-0 = <&pinctrl_usdhc3>;
+ 	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
+ 	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
++	assigned-clocks = <&clk IMX8MM_CLK_USDHC3>;
++	assigned-clock-rates = <400000000>;
+ 	bus-width = <8>;
+ 	non-removable;
  	status = "okay";
- };
 -- 
 2.39.5
 
