@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7852FE59E;
-	Tue, 12 Aug 2025 18:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C31B2ECE85;
+	Tue, 12 Aug 2025 18:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024678; cv=none; b=o5aJp8NGdJw0tU4jqDwO9QCg5oHiakj4//E/R9F2Rqf/Pdqz3tTmx9GY3MnwqZUkMNJluT0r1HLmDEfk+e0Wpa04Ly4Wz1QfGOYo5e8WU+ekCQQrJPE8uR5iTjfrZ/3dHUkjKmRz2kZazlZf1ycm/PFkEOXazRgvbn+lcW8jaG4=
+	t=1755024682; cv=none; b=i+DVZw9mxiAukoY9rU/vGayHlIkZwVerBe2JChDuZjMJDy9IMEc9rPCf11Ztusbp59wr54QfpO8LdMQHaabNpVMYH+YXUKpE4o8tFbBN3W6hvMug4MJHCWpbMvdbFZBZHR85EBjAgPqa+m1rrfV42L0wMyqmAVp8T8PHqr9Ytf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024678; c=relaxed/simple;
-	bh=4oDa52tCwk8An3LPTv+sclBinwTe1U0bJyM5hve/KIk=;
+	s=arc-20240116; t=1755024682; c=relaxed/simple;
+	bh=Ip7B6t7XyRW4DnNq/YMl+tFjefbbMb8xDRZ8CdQ4Kl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUDMUcGpnqp34e1j+VMALr3l5Xj06T65YQ3Fp0K8aakG9aZZC+L5eSenaLlwDrkCEa6iIL2lvsgAcBpBNdjqokHXV00vnsj0NjeKeP9z3/LC9v7BX9oX80mMDwV8kgGJ2XHExAQVnZ5q7ljc7Epb2RIRHdkdsNzQ3u5/k0JvkBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loHaevvC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=boT7MZUlMgkQgqA51GE0DgPV2y8HdfisjcVRzJGMu4VXSDwP5CKhPK9vGXK1r/wxcG8onFJaysaNQy/oTuxuR6pL/EQWrciWrHIVbIe9z9T00jwpseh8vWMHd4+Os7l8x5eujItB98Uclw6aYqGUwuZts9fkgQzPyd9b90cMsQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnUgnv3d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loHaevvC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62F9C4CEF0;
-	Tue, 12 Aug 2025 18:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnUgnv3d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B551CC4CEF7;
+	Tue, 12 Aug 2025 18:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024678;
-	bh=4oDa52tCwk8An3LPTv+sclBinwTe1U0bJyM5hve/KIk=;
+	s=korg; t=1755024681;
+	bh=Ip7B6t7XyRW4DnNq/YMl+tFjefbbMb8xDRZ8CdQ4Kl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loHaevvCG+bQzL4N6NNPL/+w1VNtawwbFcMfuoPTm02OUlrVSUuBNw1us1x40Gn6o
-	 /pepP49ZYOc7sRZlahlG7KPn9RsNWxbyHChxmr07MMex9G3Ldj0UjcnKlobCB7VJX1
-	 e4BW5X5+A5MsSC/qSfOHKqK8Zsp6KSrkDTXaOI3E=
+	b=gnUgnv3dOLe89UqYUY7y0e2biZzkYP8/Ng9ojnwF9QzrtrDHzoFSilSiet0tMFois
+	 vnZaxsyLHjA+IrkoIlwtuAINLDA3twPT8/u5WinTDV+GzB8KswcQf+zK2e7J6Z5fQR
+	 RpxkilO5GYHnJa8O/9v72SV3mmkW36kprMwBPydg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lonial Con <kongln9170@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Si-Wei Liu <si-wei.liu@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 444/627] bpf: Fix oob access in cgroup local storage
-Date: Tue, 12 Aug 2025 19:32:19 +0200
-Message-ID: <20250812173436.168991685@linuxfoundation.org>
+Subject: [PATCH 6.16 445/627] vdpa/mlx5: Fix needs_teardown flag calculation
+Date: Tue, 12 Aug 2025 19:32:20 +0200
+Message-ID: <20250812173436.205121002@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,101 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit abad3d0bad72a52137e0c350c59542d75ae4f513 ]
+[ Upstream commit 6f0f3d7fc4e05797b801ded4910a64d16db230e9 ]
 
-Lonial reported that an out-of-bounds access in cgroup local storage
-can be crafted via tail calls. Given two programs each utilizing a
-cgroup local storage with a different value size, and one program
-doing a tail call into the other. The verifier will validate each of
-the indivial programs just fine. However, in the runtime context
-the bpf_cg_run_ctx holds an bpf_prog_array_item which contains the
-BPF program as well as any cgroup local storage flavor the program
-uses. Helpers such as bpf_get_local_storage() pick this up from the
-runtime context:
+needs_teardown is a device flag that indicates when virtual queues need
+to be recreated. This happens for certain configuration changes: queue
+size and some specific features.
 
-  ctx = container_of(current->bpf_ctx, struct bpf_cg_run_ctx, run_ctx);
-  storage = ctx->prog_item->cgroup_storage[stype];
+Currently, the needs_teardown state can be incorrectly reset by
+subsequent .set_vq_num() calls. For example, for 1 rx VQ with size 512
+and 1 tx VQ with size 256:
 
-  if (stype == BPF_CGROUP_STORAGE_SHARED)
-    ptr = &READ_ONCE(storage->buf)->data[0];
-  else
-    ptr = this_cpu_ptr(storage->percpu_buf);
+.set_vq_num(0, 512) -> sets needs_teardown to true (rx queue has a
+                       non-default size)
+.set_vq_num(1, 256) -> sets needs_teardown to false (tx queue has a
+                       default size)
 
-For the second program which was called from the originally attached
-one, this means bpf_get_local_storage() will pick up the former
-program's map, not its own. With mismatching sizes, this can result
-in an unintended out-of-bounds access.
+This change takes into account the previous value of the needs_teardown
+flag when re-calculating it during VQ size configuration.
 
-To fix this issue, we need to extend bpf_map_owner with an array of
-storage_cookie[] to match on i) the exact maps from the original
-program if the second program was using bpf_get_local_storage(), or
-ii) allow the tail call combination if the second program was not
-using any of the cgroup local storage maps.
-
-Fixes: 7d9c3427894f ("bpf: Make cgroup storages shared between programs on the same cgroup")
-Reported-by: Lonial Con <kongln9170@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20250730234733.530041-4-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 0fe963d6fc16 ("vdpa/mlx5: Re-create HW VQs under certain conditions")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Tested-by: Si-Wei Liu<si-wei.liu@oracle.com>
+Message-Id: <20250604184802.2625300-1-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h |  1 +
- kernel/bpf/core.c   | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ drivers/vdpa/mlx5/net/mlx5_vnet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index d5f720d6cb81..bcae876a2a60 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -283,6 +283,7 @@ struct bpf_map_owner {
- 	enum bpf_prog_type type;
- 	bool jited;
- 	bool xdp_has_frags;
-+	u64 storage_cookie[MAX_BPF_CGROUP_STORAGE_TYPE];
- 	const struct btf_type *attach_func_proto;
- };
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index cccc49a08a1a..efb5fa694f1e 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -2491,7 +2491,7 @@ static void mlx5_vdpa_set_vq_num(struct vdpa_device *vdev, u16 idx, u32 num)
+         }
  
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 9abc37739ca5..d966e971893a 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2366,7 +2366,9 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
- {
- 	enum bpf_prog_type prog_type = resolve_prog_type(fp);
- 	struct bpf_prog_aux *aux = fp->aux;
-+	enum bpf_cgroup_storage_type i;
- 	bool ret = false;
-+	u64 cookie;
+ 	mvq = &ndev->vqs[idx];
+-	ndev->needs_teardown = num != mvq->num_ent;
++	ndev->needs_teardown |= num != mvq->num_ent;
+ 	mvq->num_ent = num;
+ }
  
- 	if (fp->kprobe_override)
- 		return ret;
-@@ -2381,11 +2383,24 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
- 		map->owner->jited = fp->jited;
- 		map->owner->xdp_has_frags = aux->xdp_has_frags;
- 		map->owner->attach_func_proto = aux->attach_func_proto;
-+		for_each_cgroup_storage_type(i) {
-+			map->owner->storage_cookie[i] =
-+				aux->cgroup_storage[i] ?
-+				aux->cgroup_storage[i]->cookie : 0;
-+		}
- 		ret = true;
- 	} else {
- 		ret = map->owner->type  == prog_type &&
- 		      map->owner->jited == fp->jited &&
- 		      map->owner->xdp_has_frags == aux->xdp_has_frags;
-+		for_each_cgroup_storage_type(i) {
-+			if (!ret)
-+				break;
-+			cookie = aux->cgroup_storage[i] ?
-+				 aux->cgroup_storage[i]->cookie : 0;
-+			ret = map->owner->storage_cookie[i] == cookie ||
-+			      !cookie;
-+		}
- 		if (ret &&
- 		    map->owner->attach_func_proto != aux->attach_func_proto) {
- 			switch (prog_type) {
 -- 
 2.39.5
 
