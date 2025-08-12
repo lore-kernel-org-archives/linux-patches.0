@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1E83F9D2;
-	Tue, 12 Aug 2025 18:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5923F9D2;
+	Tue, 12 Aug 2025 18:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022810; cv=none; b=ZT2CD89dNMQbi7OeIvlT0RN+2TX5vruNf5VnbwI2nwE8S6aaIaznlj/GJD8Hq+00UgVV7D3x5DTwm9M9Haha69SXaLe8/Flediaa8+KKWTeF0M+qrHvf0O5C5oLw3h8wJf+yETu7+Wpd4Qhd85LXoBRXXnJP7PKqb2yqIdLDl38=
+	t=1755022814; cv=none; b=ITLaGsZfV4yTS8xCgCTsagFaT9TwFMlLwoYnaMSQckLRvmdntIuDX4Gye1GMnHkKJOm/plsu1HRFoox9bhDhP3HZ8aVQlgy3icAB93Szl4D3aojGJZyqVJnE+qVJpy8cxzD1blAq0hafLsD3fszqPj42JDHQjYulsOywm2Brl+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022810; c=relaxed/simple;
-	bh=OCSzRreOSN06uIRdevCo230TXE85lu9QiBIjauNP/vg=;
+	s=arc-20240116; t=1755022814; c=relaxed/simple;
+	bh=FSlUOI+6tlcKr7f7o2Gj00KCcUd6jNCw6fS5JqnI83g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGwLlfiZBu2gQMoH30Y2GpkPzZqoSHD3hKlS4UoEh2KBzJTF3RM5RNvvdv7Z6hXJHVGFfEhvS64JlJ54wL9ZzQVadcCPJxVwC3rT+cZMZ1N34O9s1rA/c8SMNX7ecG9DXUxRt/LlPYSYUJNzJa/j3LR2HKjJ/azQGlyLBaBwzVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0V0c4O5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VmgQTqnE8acQqyZ4S13NOmG0vtsso5xkHb2EDe+yOPaBQX8Pd0CVuBoGdl/abnPBNjg+eD1lK78IGDIk/1++GCYrroYiTvYUlkj2llQy9s7nVJ006XAtUllH58leqTBYoA+g4mt78L18iCsvx0B4zbbSzlzkP4pXfUEN2i6G/hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCeMUdLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0V0c4O5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEED9C4CEF6;
-	Tue, 12 Aug 2025 18:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCeMUdLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57309C4CEF6;
+	Tue, 12 Aug 2025 18:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022810;
-	bh=OCSzRreOSN06uIRdevCo230TXE85lu9QiBIjauNP/vg=;
+	s=korg; t=1755022813;
+	bh=FSlUOI+6tlcKr7f7o2Gj00KCcUd6jNCw6fS5JqnI83g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0V0c4O5uFwAuGlse2+vkkF4Wp6450QKc05f4NW3i56sTaUp9RmR1DRES8oAr7ikk3
-	 ztHMHHkAFQagQH7yDhxfbycFn9MEMUBX0UyX0E/HW7uMfbMRd64MO9zzueyGZu4W7f
-	 rOrBTa6YCgdntXR628P+bOxd0+1IWtu8zXGkwreU=
+	b=uCeMUdLq72UJ9S8sFo/49M+f8SI7GIb6D3g7NOX0HvNx0YP6xv8DtZ/F+AicQcPbB
+	 /2ChCTqLCSDxjCNRoIxRizJ3DTcp9awAhV3SckGej483Pp+vTCOZ0jPZvD1QXYh3TI
+	 sG1S6znAKMipl0SMbB1uAImxsp3rdM1jVS51JD74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Jacob Pan <jacob.pan@linux.microsoft.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 248/369] rtc: rv3028: fix incorrect maximum clock rate handling
-Date: Tue, 12 Aug 2025 19:29:05 +0200
-Message-ID: <20250812173024.095195690@linuxfoundation.org>
+Subject: [PATCH 6.12 266/369] vfio: Prevent open_count decrement to negative
+Date: Tue, 12 Aug 2025 19:29:23 +0200
+Message-ID: <20250812173024.769128027@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,38 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Jacob Pan <jacob.pan@linux.microsoft.com>
 
-[ Upstream commit b574acb3cf7591d2513a9f29f8c2021ad55fb881 ]
+[ Upstream commit 982ddd59ed97dc7e63efd97ed50273ffb817bd41 ]
 
-When rv3028_clkout_round_rate() is called with a requested rate higher
-than the highest supported rate, it currently returns 0, which disables
-the clock. According to the clk API, round_rate() should instead return
-the highest supported rate. Update the function to return the maximum
-supported rate in this case.
+When vfio_df_close() is called with open_count=0, it triggers a warning in
+vfio_assert_device_open() but still decrements open_count to -1. This allows
+a subsequent open to incorrectly pass the open_count == 0 check, leading to
+unintended behavior, such as setting df->access_granted = true.
 
-Fixes: f583c341a515f ("rtc: rv3028: add clkout support")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-6-33140bb2278e@redhat.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+For example, running an IOMMUFD compat no-IOMMU device with VFIO tests
+(https://github.com/awilliam/tests/blob/master/vfio-noiommu-pci-device-open.c)
+results in a warning and a failed VFIO_GROUP_GET_DEVICE_FD ioctl on the first
+run, but the second run succeeds incorrectly.
+
+Add checks to avoid decrementing open_count below zero.
+
+Fixes: 05f37e1c03b6 ("vfio: Pass struct vfio_device_file * to vfio_device_open/close()")
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Jacob Pan <jacob.pan@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250618234618.1910456-2-jacob.pan@linux.microsoft.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-rv3028.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vfio/vfio_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-rv3028.c b/drivers/rtc/rtc-rv3028.c
-index 2f001c59c61d..86b7f821e937 100644
---- a/drivers/rtc/rtc-rv3028.c
-+++ b/drivers/rtc/rtc-rv3028.c
-@@ -738,7 +738,7 @@ static long rv3028_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
- 		if (clkout_rates[i] <= rate)
- 			return clkout_rates[i];
+diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
+index a5a62d9d963f..ae78822f2d71 100644
+--- a/drivers/vfio/vfio_main.c
++++ b/drivers/vfio/vfio_main.c
+@@ -583,7 +583,8 @@ void vfio_df_close(struct vfio_device_file *df)
  
--	return 0;
-+	return clkout_rates[0];
- }
+ 	lockdep_assert_held(&device->dev_set->lock);
  
- static int rv3028_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
+-	vfio_assert_device_open(device);
++	if (!vfio_assert_device_open(device))
++		return;
+ 	if (device->open_count == 1)
+ 		vfio_df_device_last_close(df);
+ 	device->open_count--;
 -- 
 2.39.5
 
