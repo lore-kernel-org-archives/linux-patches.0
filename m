@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F1C86331;
-	Tue, 12 Aug 2025 17:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B9A2FD1CE;
+	Tue, 12 Aug 2025 17:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020590; cv=none; b=GACqEYqs76wCl3dH5JB0ajacqoWb55WVrTZavsEH1WQWfkgh8qjUGoetiIZ6cLwCzwNSCuN6+KPpfnSdZLmBSW/vF+JIfo2rCn7NqaEbYILU7pDMpWty4gmbt1cBTYym17ezk3vor2F5nDmD0Ppctapuc98qn6uwCicyWNn0ySs=
+	t=1755020593; cv=none; b=KQs19ub4oPP7xvmUgJ89Rad6tSbhrj6rw4Drlc/zuJLZ+R55heTK1AkcFRQTvLUkpaxOnBr42Ze5nJ3/oq2XoJ2tVHG8iHGz8djxu5bj8umXQN2c/LoJXylPdN4I8RsYeRaJBOsPEfG3oNP7vebX12nFjgVNQrjHLk7w0V7Bqik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020590; c=relaxed/simple;
-	bh=mozfj/P4NyzyGn5Ln4T9sMCAxfAyYS7cap94vpmV5tA=;
+	s=arc-20240116; t=1755020593; c=relaxed/simple;
+	bh=Vh5tG46W531W0Iz+dnGmQm2Fb3pLWMPtUndnPH+62Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+LxO4BThalL+2LtyVYpijHrMdw+OxnRgSksm3EBeDhUlgFtWN9ha/P1WG1XUz73oUw7Ui9vNf7p7GpmdB+s74tq2iXeYUko9EEBQfyAhFmempAH56fAtVqXB990A4d/QyXmzKlJ/LN/ltVS5OrlTrtM/tC+Jgt4FBPGGI55EZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHZv6WEf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YoVfpsyhKzDyxj7gsdxoRh+aSmh2oMzwFotVWXuhRkRuDY8SZNAWhwvAhAxFc4YLuIt9wup5aK0ETWW0KrPgwzpgGtsNhRkqkrOn+pt+sahQNtHZmRNE/26v3J8rut5lZkCMM9W3UDUywF0Vl7SolkVawqYsNTYQIMjzDC/JQHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnlxLNQb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHZv6WEf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7942AC4CEF0;
-	Tue, 12 Aug 2025 17:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnlxLNQb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DDBC4CEF1;
+	Tue, 12 Aug 2025 17:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020590;
-	bh=mozfj/P4NyzyGn5Ln4T9sMCAxfAyYS7cap94vpmV5tA=;
+	s=korg; t=1755020593;
+	bh=Vh5tG46W531W0Iz+dnGmQm2Fb3pLWMPtUndnPH+62Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CHZv6WEfVk8JIV/3nX7xlV/w3QmWLiaPN2Ttr0hSFgR5EtNBY5NM0Xoqb5twOa/P1
-	 g+gs4l2Q9loQE0is8cGBRJRApHYpLsmdStGWRCX/fuBsR9yEZf3GthCxFiRNEHrQX+
-	 Qyr+lcLi62KVkXYxA8BtU2X0vBjvajQ2bg/2jFbo=
+	b=bnlxLNQbq0/HhGul7xc7OqgFDezWHdjQvky6bW1DYdCtrG5iErwJPCFydLd/kLS6G
+	 vyh4IJiCxwOUnHmytpf9PgGWjI7Z1SN/4uQx9oGiHgotkzf61L7p2LivQsAnwNx27I
+	 nNo8P6Z99XsYRBR0vYF1y/x69QkPJr3WmZOKd6BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Wetzel <Alexander@wetzel-home.de>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/253] wifi: mac80211: Do not schedule stopped TXQs
-Date: Tue, 12 Aug 2025 19:28:31 +0200
-Message-ID: <20250812172953.935700556@linuxfoundation.org>
+Subject: [PATCH 6.1 124/253] wifi: mac80211: Dont call fq_flow_idx() for management frames
+Date: Tue, 12 Aug 2025 19:28:32 +0200
+Message-ID: <20250812172953.976519179@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -53,45 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Wetzel <Alexander@wetzel-home.de>
 
-[ Upstream commit 11e3e22fa533f5d7cf04e32343b05a27eda3c7a5 ]
+[ Upstream commit cb3bb3d88dfcd177a1050c0a009a3ee147b2e5b9 ]
 
-Ignore TXQs with the flag IEEE80211_TXQ_STOP when scheduling a queue.
-
-The flag is only set after all fragments have been dequeued and won't
-allow dequeueing other frames as long as the flag is set.
-
-For drivers using ieee80211_txq_schedule_start() this prevents an
-loop trying to push the queued frames while IEEE80211_TXQ_STOP is set:
-
-After setting IEEE80211_TXQ_STOP the driver will call
-ieee80211_return_txq(). Which calls __ieee80211_schedule_txq(), detects
-that there sill are frames in the queue and immediately restarts the
-stopped TXQ. Which can't dequeue any frame and thus starts over the loop.
+skb_get_hash() can only be used when the skb is linked to a netdev
+device.
 
 Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
-Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
-Link: https://patch.msgid.link/20250717162547.94582-2-Alexander@wetzel-home.de
+Fixes: 73bc9e0af594 ("mac80211: don't apply flow control on management frames")
+Link: https://patch.msgid.link/20250717162547.94582-3-Alexander@wetzel-home.de
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 62b2817df2ba..a04c7f9b2b0e 100644
+index a04c7f9b2b0e..fe47674b83b6 100644
 --- a/net/mac80211/tx.c
 +++ b/net/mac80211/tx.c
-@@ -4024,7 +4024,9 @@ void __ieee80211_schedule_txq(struct ieee80211_hw *hw,
+@@ -1467,7 +1467,7 @@ static void ieee80211_txq_enqueue(struct ieee80211_local *local,
+ {
+ 	struct fq *fq = &local->fq;
+ 	struct fq_tin *tin = &txqi->tin;
+-	u32 flow_idx = fq_flow_idx(fq, skb);
++	u32 flow_idx;
  
- 	spin_lock_bh(&local->active_txq_lock[txq->ac]);
+ 	ieee80211_set_skb_enqueue_time(skb);
  
--	has_queue = force || txq_has_queue(txq);
-+	has_queue = force ||
-+		    (!test_bit(IEEE80211_TXQ_STOP, &txqi->flags) &&
-+		     txq_has_queue(txq));
- 	if (list_empty(&txqi->schedule_order) &&
- 	    (has_queue || ieee80211_txq_keep_active(txqi))) {
- 		/* If airtime accounting is active, always enqueue STAs at the
+@@ -1483,6 +1483,7 @@ static void ieee80211_txq_enqueue(struct ieee80211_local *local,
+ 			IEEE80211_TX_INTCFL_NEED_TXPROCESSING;
+ 		__skb_queue_tail(&txqi->frags, skb);
+ 	} else {
++		flow_idx = fq_flow_idx(fq, skb);
+ 		fq_tin_enqueue(fq, tin, flow_idx, skb,
+ 			       fq_skb_free_func);
+ 	}
 -- 
 2.39.5
 
