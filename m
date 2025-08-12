@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0207620E023;
-	Tue, 12 Aug 2025 19:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7837320E023;
+	Tue, 12 Aug 2025 19:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026232; cv=none; b=UJ+YB48OlEZ3BbfRbgQMZmsqSswPu/xVewHJJ3csTMlo7S35qKET9uJSY1xLA9DWSIu/AkRkyz44QBvsvAZhqZSrKq/c1iu5mcwTVpUPRluTmLTr+7VZm3Trfsw0NBObfbooejuJgSiN6uMGc8r56bac46BLNZ/FgLAClL9bhfg=
+	t=1755026235; cv=none; b=O9Rzfk0Umlia7KFuKhLGyAv9laXwgCa7GMFLKeHQWyD89JzLX31cK8RlMeC9RoESJ1JtJ1pWdi08DNPRt6zwaiOhNOlB1F5geNu7YII/qMmN6MBH/qqdgWXP4q7CDA2n26hhPearTuvdKyU8usb6+FzExJGloWPI9yP3sd5FtLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026232; c=relaxed/simple;
-	bh=lkc8TkyRWGIynRLrPZvPwBWXVVyCjlHsC1QQWak5tMw=;
+	s=arc-20240116; t=1755026235; c=relaxed/simple;
+	bh=y/2TLpQ2XRmeqgCBJoTYPykwyyWGXJLUvqcOrfMIXd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGGAMiprzw5G947MnlJGc6IRur0pyVcZZImJa2toSBfCmnLbUQr1eKbBftJlLKg+r/Z2ZnB94bvSQmWLDGhfxLWMqz944R+DM377X34a+wFu2jjruNNTveWPNoO97CLitMBAZmXO60JSWjm3Oy5Cdq0w8fK6KzZppPTWYX0Z2IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4TUmKjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TnD6LbWCH3SfkP+mVrGlY2wiIgLDqNviI2QnIOltX65SQQ9lbcymqL6adgmRJlqniOubC+9NLuHUyKrMmVXrSiv3izjrRuc4Ms7+QrmLRPDpA8rfbtjbPRLUnJ6Iu+OcDPSuPcsX7VR5Q7LJlDzz394LaVPsU7B1SLqdMbeQo7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9MjbyIF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4TUmKjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71153C4CEF0;
-	Tue, 12 Aug 2025 19:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9MjbyIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC207C4CEF0;
+	Tue, 12 Aug 2025 19:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026231;
-	bh=lkc8TkyRWGIynRLrPZvPwBWXVVyCjlHsC1QQWak5tMw=;
+	s=korg; t=1755026235;
+	bh=y/2TLpQ2XRmeqgCBJoTYPykwyyWGXJLUvqcOrfMIXd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4TUmKjWHBrmZDhuaUw5t1Cn5ipefiNWK+Ds6eELFKIRxSxJQD9q5y4a4bJnz1xDj
-	 13diCeDZOHI3BaM//T03zHGv0zx/DfWtveVTt9obCdCEkL7G0nE6h6g558cY6W/kz1
-	 QTQJ7QZJF/y3XcsD/B3Fw3gxRdV64GGPEjWJZrB4=
+	b=Z9MjbyIFWsWt7bLUi3Mdsy8VUEKNUTDroNwBzVEzn4vl5MFLtl2fzISLvFv77WNt+
+	 3jKNrT2D4jfhnqXWAYM6Tds4tjFbLF69FSqqNgBGD+l2+BKiV+ZaBBOIN6Dg8GD0XP
+	 5qpxm9AOlo4+EQD2sugv6NH533Dvemteolx9Qivk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	"Kirill A. Shuemov" <kirill.shutemov@linux.intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 276/480] proc: use the same treatment to check proc_lseek as ones for proc_read_iter et.al
-Date: Tue, 12 Aug 2025 19:48:04 +0200
-Message-ID: <20250812174408.823582640@linuxfoundation.org>
+Subject: [PATCH 6.15 277/480] pinmux: fix race causing mux_owner NULL with active mux_usecount
+Date: Tue, 12 Aug 2025 19:48:05 +0200
+Message-ID: <20250812174408.862585767@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -56,86 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit ff7ec8dc1b646296f8d94c39339e8d3833d16c05 ]
+[ Upstream commit 0b075c011032f88d1cfde3b45d6dcf08b44140eb ]
 
-Check pde->proc_ops->proc_lseek directly may cause UAF in rmmod scenario.
-It's a gap in proc_reg_open() after commit 654b33ada4ab("proc: fix UAF in
-proc_get_inode()").  Followed by AI Viro's suggestion, fix it in same
-manner.
+commit 5a3e85c3c397 ("pinmux: Use sequential access to access
+desc->pinmux data") tried to address the issue when two client of the
+same gpio calls pinctrl_select_state() for the same functionality, was
+resulting in NULL pointer issue while accessing desc->mux_owner.
+However, issue was not completely fixed due to the way it was handled
+and it can still result in the same NULL pointer.
 
-Link: https://lkml.kernel.org/r/20250607021353.1127963-1-wangzijie1@honor.com
-Fixes: 3f61631d47f1 ("take care to handle NULL ->proc_lseek()")
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reviewed-by: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Cc: Kirill A. Shuemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The issue occurs due to the following interleaving:
+
+     cpu0 (process A)                   cpu1 (process B)
+
+      pin_request() {                   pin_free() {
+
+                                         mutex_lock()
+                                         desc->mux_usecount--; //becomes 0
+                                         ..
+                                         mutex_unlock()
+
+  mutex_lock(desc->mux)
+  desc->mux_usecount++; // becomes 1
+  desc->mux_owner = owner;
+  mutex_unlock(desc->mux)
+
+                                         mutex_lock(desc->mux)
+                                         desc->mux_owner = NULL;
+                                         mutex_unlock(desc->mux)
+
+This sequence leads to a state where the pin appears to be in use
+(`mux_usecount == 1`) but has no owner (`mux_owner == NULL`), which can
+cause NULL pointer on next pin_request on the same pin.
+
+Ensure that updates to mux_usecount and mux_owner are performed
+atomically under the same lock. Only clear mux_owner when mux_usecount
+reaches zero and no new owner has been assigned.
+
+Fixes: 5a3e85c3c397 ("pinmux: Use sequential access to access desc->pinmux data")
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://lore.kernel.org/20250708-pinmux-race-fix-v2-1-8ae9e8a0d1a1@oss.qualcomm.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/generic.c       | 2 ++
- fs/proc/inode.c         | 2 +-
- fs/proc/internal.h      | 5 +++++
- include/linux/proc_fs.h | 1 +
- 4 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinmux.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/fs/proc/generic.c b/fs/proc/generic.c
-index a3e22803cddf..e0e50914ab25 100644
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -569,6 +569,8 @@ static void pde_set_flags(struct proc_dir_entry *pde)
- 	if (pde->proc_ops->proc_compat_ioctl)
- 		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
- #endif
-+	if (pde->proc_ops->proc_lseek)
-+		pde->flags |= PROC_ENTRY_proc_lseek;
- }
+diff --git a/drivers/pinctrl/pinmux.c b/drivers/pinctrl/pinmux.c
+index 0743190da59e..2c31e7f2a27a 100644
+--- a/drivers/pinctrl/pinmux.c
++++ b/drivers/pinctrl/pinmux.c
+@@ -236,18 +236,7 @@ static const char *pin_free(struct pinctrl_dev *pctldev, int pin,
+ 			if (desc->mux_usecount)
+ 				return NULL;
+ 		}
+-	}
+-
+-	/*
+-	 * If there is no kind of request function for the pin we just assume
+-	 * we got it by default and proceed.
+-	 */
+-	if (gpio_range && ops->gpio_disable_free)
+-		ops->gpio_disable_free(pctldev, gpio_range, pin);
+-	else if (ops->free)
+-		ops->free(pctldev, pin);
  
- struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
-diff --git a/fs/proc/inode.c b/fs/proc/inode.c
-index 3604b616311c..129490151be1 100644
---- a/fs/proc/inode.c
-+++ b/fs/proc/inode.c
-@@ -473,7 +473,7 @@ static int proc_reg_open(struct inode *inode, struct file *file)
- 	typeof_member(struct proc_ops, proc_open) open;
- 	struct pde_opener *pdeo;
+-	scoped_guard(mutex, &desc->mux_lock) {
+ 		if (gpio_range) {
+ 			owner = desc->gpio_owner;
+ 			desc->gpio_owner = NULL;
+@@ -258,6 +247,15 @@ static const char *pin_free(struct pinctrl_dev *pctldev, int pin,
+ 		}
+ 	}
  
--	if (!pde->proc_ops->proc_lseek)
-+	if (!pde_has_proc_lseek(pde))
- 		file->f_mode &= ~FMODE_LSEEK;
- 
- 	if (pde_is_permanent(pde)) {
-diff --git a/fs/proc/internal.h b/fs/proc/internal.h
-index 96122e91c645..3d48ffe72583 100644
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -99,6 +99,11 @@ static inline bool pde_has_proc_compat_ioctl(const struct proc_dir_entry *pde)
- #endif
- }
- 
-+static inline bool pde_has_proc_lseek(const struct proc_dir_entry *pde)
-+{
-+	return pde->flags & PROC_ENTRY_proc_lseek;
-+}
++	/*
++	 * If there is no kind of request function for the pin we just assume
++	 * we got it by default and proceed.
++	 */
++	if (gpio_range && ops->gpio_disable_free)
++		ops->gpio_disable_free(pctldev, gpio_range, pin);
++	else if (ops->free)
++		ops->free(pctldev, pin);
 +
- extern struct kmem_cache *proc_dir_entry_cache;
- void pde_free(struct proc_dir_entry *pde);
+ 	module_put(pctldev->owner);
  
-diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
-index ea62201c74c4..703d0c76cc9a 100644
---- a/include/linux/proc_fs.h
-+++ b/include/linux/proc_fs.h
-@@ -27,6 +27,7 @@ enum {
- 
- 	PROC_ENTRY_proc_read_iter	= 1U << 1,
- 	PROC_ENTRY_proc_compat_ioctl	= 1U << 2,
-+	PROC_ENTRY_proc_lseek		= 1U << 3,
- };
- 
- struct proc_ops {
+ 	return owner;
 -- 
 2.39.5
 
