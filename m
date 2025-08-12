@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBE02FDC5D;
-	Tue, 12 Aug 2025 17:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD962FDC25;
+	Tue, 12 Aug 2025 17:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020354; cv=none; b=HgpypNuTSlBlV/anR0tX2e3LOiVLB1/D2DurQCfN2VHUfCe8Yq0T5om1+Gh05cCR8pk1rSXnxW5NgTjvfKGGZbLTwMo6VqDmrBNDeAdzD8Pfd8nPqdSdIZn4qpnkVJNOOfOS7G5KSc/2cWGOGPv5wUCqkmuIWbyT35KMKFCa2CQ=
+	t=1755020357; cv=none; b=JtaBFqKJf+BsQQhz69rMQ4lcBQi7RjOcn/7NDHiOudAQ9Zj4vnXKAT+tYhkfmoVN0TtG90/YywND92KohuMVxtT79R6ELjKXOkds36UoUk5acvQzV2foGUb/GmHmgQc8Al2heSHHrmWbEEGw74tzyQ9tEKlVT9ZFQibz9qSGUSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020354; c=relaxed/simple;
-	bh=TNUXxCloo26rcRt/pEk4jjGJxKRoJmXDgivNvPvUPgI=;
+	s=arc-20240116; t=1755020357; c=relaxed/simple;
+	bh=wLrPYmLKn7+SG/0IJM1mfYToyuJ1/y6+HJXp3LI/AEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRuJPX3STWeNDWugwNqCMrd7xqBGd84EhAedHrHSxtdIx2dZc5d+S2EXWGo87pExxAL6ql80YnHTVyhZMWd+pJSyjCkCGSnYK60rYZ7M6wy/asF0nm3LcDjLnLyqkATuA26LJGhVazAU2L0bJYHnStv1453WDc2GEOZ5Bb2SMh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bR/OVvJL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSJuMHBL7YkV3UUD4tG47GQXb5tqohAzOv8C7XHJQfh9Tej9lIQu0kaFUOEMIyhstYJKtOAg3x0+7ggHH3FRWs0R+zHULqGHI4DC2oqfZWJ3tE7d6a665cVZUTpd5IPemz/e76QnIkR0nLXMIEKZNSWlw/xtZLiCtCd49E/H//c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eu5dV7iQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bR/OVvJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3185C4CEF0;
-	Tue, 12 Aug 2025 17:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eu5dV7iQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26526C4CEF0;
+	Tue, 12 Aug 2025 17:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020354;
-	bh=TNUXxCloo26rcRt/pEk4jjGJxKRoJmXDgivNvPvUPgI=;
+	s=korg; t=1755020357;
+	bh=wLrPYmLKn7+SG/0IJM1mfYToyuJ1/y6+HJXp3LI/AEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bR/OVvJLGCzWeHAAPxfGqSHLNMzTN7W+Dy++EUpjwO5kjAUdDnjKhpQetsMIBx9J2
-	 eRyJBtxY3FhD18xsngrmOZvFdS9/vRAcx5DLP5LNTIs0sE9uQ+cR2b6bHgGqdTCjOB
-	 +mO8833+cXbKOF+fZYs5VWVM9tPgTREpwq7o5XdI=
+	b=eu5dV7iQ+enkt9xz02vogxYoWFM+nWOBf1dbVjxINfK1rIp6gu6uSH9eY4BORzbZe
+	 1MzRrbTFQubDn+1Uc4aFoYN5XFsNhGby0RiP+oq2COv3nWfPEPCLOGrheMANsd+iF/
+	 YjqchoQFi0BRQRnAK8aFnMiIfLRYNlRvN7zFHFdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@coolpad.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.1 054/253] erofs: get rid of debug_one_dentry()
-Date: Tue, 12 Aug 2025 19:27:22 +0200
-Message-ID: <20250812172951.026842414@linuxfoundation.org>
+	Yonglong Liu <liuyonglong@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 024/253] net: hns3: disable interrupt when ptp init failed
+Date: Tue, 12 Aug 2025 19:26:52 +0200
+Message-ID: <20250812172949.758102632@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -52,59 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-commit e324eaa9790614577c93e819651e0a83963dac79 upstream.
+[ Upstream commit cde304655f25d94a996c45b0f9956e7dcc2bc4c0 ]
 
-Since erofsdump is available, no need to keep this debugging
-functionality at all.
+When ptp init failed, we'd better disable the interrupt and clear the
+flag, to avoid early report interrupt at next probe.
 
-Also drop a useless comment since it's the VFS behavior.
-
-Link: https://lore.kernel.org/r/20230114125746.399253-1-xiang@kernel.org
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0bf5eb788512 ("net: hns3: add support for PTP")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250722125423.1270673-3-shaojijie@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/dir.c |   17 -----------------
- 1 file changed, 17 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/erofs/dir.c
-+++ b/fs/erofs/dir.c
-@@ -6,21 +6,6 @@
-  */
- #include "internal.h"
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+index b7cf9fbf97183..6d7aeac600128 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+@@ -509,14 +509,14 @@ int hclge_ptp_init(struct hclge_dev *hdev)
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to init freq, ret = %d\n", ret);
+-		goto out;
++		goto out_clear_int;
+ 	}
  
--static void debug_one_dentry(unsigned char d_type, const char *de_name,
--			     unsigned int de_namelen)
--{
--#ifdef CONFIG_EROFS_FS_DEBUG
--	/* since the on-disk name could not have the trailing '\0' */
--	unsigned char dbg_namebuf[EROFS_NAME_LEN + 1];
--
--	memcpy(dbg_namebuf, de_name, de_namelen);
--	dbg_namebuf[de_namelen] = '\0';
--
--	erofs_dbg("found dirent %s de_len %u d_type %d", dbg_namebuf,
--		  de_namelen, d_type);
--#endif
--}
--
- static int erofs_fill_dentries(struct inode *dir, struct dir_context *ctx,
- 			       void *dentry_blk, struct erofs_dirent *de,
- 			       unsigned int nameoff, unsigned int maxsize)
-@@ -52,10 +37,8 @@ static int erofs_fill_dentries(struct in
- 			return -EFSCORRUPTED;
- 		}
+ 	ret = hclge_ptp_set_ts_mode(hdev, &hdev->ptp->ts_cfg);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to init ts mode, ret = %d\n", ret);
+-		goto out;
++		goto out_clear_int;
+ 	}
  
--		debug_one_dentry(d_type, de_name, de_namelen);
- 		if (!dir_emit(ctx, de_name, de_namelen,
- 			      le64_to_cpu(de->nid), d_type))
--			/* stopped by some reason */
- 			return 1;
- 		++de;
- 		ctx->pos += sizeof(struct erofs_dirent);
+ 	ktime_get_real_ts64(&ts);
+@@ -524,7 +524,7 @@ int hclge_ptp_init(struct hclge_dev *hdev)
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to init ts time, ret = %d\n", ret);
+-		goto out;
++		goto out_clear_int;
+ 	}
+ 
+ 	set_bit(HCLGE_STATE_PTP_EN, &hdev->state);
+@@ -532,6 +532,9 @@ int hclge_ptp_init(struct hclge_dev *hdev)
+ 
+ 	return 0;
+ 
++out_clear_int:
++	clear_bit(HCLGE_PTP_FLAG_EN, &hdev->ptp->flags);
++	hclge_ptp_int_en(hdev, false);
+ out:
+ 	hclge_ptp_destroy_clock(hdev);
+ 
+-- 
+2.39.5
+
 
 
