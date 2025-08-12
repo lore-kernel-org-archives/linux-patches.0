@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D8B217F35;
-	Tue, 12 Aug 2025 19:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A976C29BD9D;
+	Tue, 12 Aug 2025 19:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026764; cv=none; b=BXuBAk/F5itkl1FSVY1FGKfGBxTiB7uFkGyjDtaoxu1I9mbcHCMjIFkLpA/2sr5CEeCjmNd2yReOJXjWNPU/AyG00XS0oTYionF3Ys8Q+KN2MgroANN4P+xf8WoUjPVm8gGuOywyxEDNDqvaUUU0iMCOHFo+mK0au7yHhL9aigs=
+	t=1755026767; cv=none; b=TQrNYOJlA7eMjSpoNNW7lRSGkE7g91MiTAExdYi9oi+wEsnY3qpAjFrdryO5/0ZVfV9pHXjdY7xiDSK3dlrjCNs4UBhyUuL8whO5xYJdEEW0Ty7MOuUVQt9FIizDrjByzgauUgw8IuJZTTGHn1rd2dxWA/oYkOnQ1ZucdT5dD8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026764; c=relaxed/simple;
-	bh=c3lVdYii2fjaXnc5XsB0KBiAlJ3g8fmA2sprTAdPWA8=;
+	s=arc-20240116; t=1755026767; c=relaxed/simple;
+	bh=Dg78E1yfdPWMu+W/UXyEflg1DLqyC5Zlo/iZ4aIK80E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hER6HVtD61V1+bAgrnZsW8MQb9rimi9vVftf3eWccso36vySnauOgsba+B0+XsX+T1dbfzplqSNlDdpYqqithCzLtVTgs/vHXStmKYw2ww00XRk/L787KL0PTclLqh20OZznoxjZxc9A57f/RM4NX0CyA0pcD1mnDHkZ4JBl7K8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbd4+NEg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUj1hFLtLPGDcW/9ahqNkhbzDOcX1afjeGdZQl0P8vfDSMr5wh8XxmzlQqlsoWQLrkVGxz9tpVkHN4D+U5Tjn4fi2G+aUSlDM9KHmb3O+GBPYJw1Qsu9070b91I8xExHOCKdc2DEoiTnGYI3vx0PDrUhzEGZ3ifn3tod/WES/Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZqLBofM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbd4+NEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DB8C4CEF0;
-	Tue, 12 Aug 2025 19:26:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZqLBofM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E08C4CEF0;
+	Tue, 12 Aug 2025 19:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026764;
-	bh=c3lVdYii2fjaXnc5XsB0KBiAlJ3g8fmA2sprTAdPWA8=;
+	s=korg; t=1755026767;
+	bh=Dg78E1yfdPWMu+W/UXyEflg1DLqyC5Zlo/iZ4aIK80E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fbd4+NEg9eexYomupA3aUQloEWu97r97tiSqfQ90ovwFR/O8BFFzXlMDwmVBmuOYS
-	 FQFVf6p65sHngbFu51+hQETcY4mspaAxH/LgXnVXm2ceykkMSJ4RNlNaXXm4Jw8y4B
-	 FbjV1gy2829aATj4rRkwpCHzLMiKvC+ENlgYTc98=
+	b=DZqLBofM0iehik/h4EhpwHcPZ7NEVePBfZRfXMT1lEneOwTzlklP7jPnAB+jjbWWI
+	 thKOzKmYtA43gjfLnLXWqwzYUbE8wzx+rH+3doy/M6pgN+ijrLCnJ4t8Lpliwtrzp/
+	 hmp4dibOA8W4cl4YtM6x/qglI4KdaNZibgEaNbBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Len Brown <len.brown@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 432/480] tools/power turbostat: Fix bogus SysWatt for forked program
-Date: Tue, 12 Aug 2025 19:50:40 +0200
-Message-ID: <20250812174415.217628196@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.15 433/480] nfsd: dont set the ctime on delegated atime updates
+Date: Tue, 12 Aug 2025 19:50:41 +0200
+Message-ID: <20250812174415.261303835@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,50 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 44207567fa64e995d4f2ec2d45af4c947cb1a465 ]
+commit f9a348e0de19226fc3c7e81de7677d3fa2c4b2d8 upstream.
 
-Similar to delta_cpu(), delta_platform() is called in turbostat main
-loop. This ensures accurate SysWatt readings in periodic monitoring mode
-$ sudo turbostat -S -q --show power -i 1
-CoreTmp	PkgTmp	PkgWatt	CorWatt	GFXWatt	RAMWatt	PKG_%	RAM_%	SysWatt
-60	61	6.21	1.13	0.16	0.00	0.00	0.00	13.07
-58	61	6.00	1.07	0.18	0.00	0.00	0.00	12.75
-58	61	5.74	1.05	0.17	0.00	0.00	0.00	12.22
-58	60	6.27	1.11	0.24	0.00	0.00	0.00	13.55
+Clients will typically precede a DELEGRETURN for a delegation with
+delegated timestamp with a SETATTR to set the timestamps on the server
+to match what the client has.
 
-However, delta_platform() is missing for forked program and causes bogus
-SysWatt reporting,
-$ sudo turbostat -S -q --show power sleep 1
-1.004736 sec
-CoreTmp	PkgTmp	PkgWatt	CorWatt	GFXWatt	RAMWatt	PKG_%	RAM_%	SysWatt
-57	58	6.05	1.02	0.16	0.00	0.00	0.00	0.03
+knfsd implements this by using the nfsd_setattr() infrastructure, which
+will set ATTR_CTIME on any update that goes to notify_change(). This is
+problematic as it means that the client will get a spurious ctime
+update when updating the atime.
 
-Add missing delta_platform() for forked program.
+POSIX unfortunately doesn't phrase it succinctly, but updating the atime
+due to reads should not update the ctime. In this case, the client is
+sending a SETATTR to update the atime on the server to match its latest
+value. The ctime should not be advanced in this case as that would
+incorrectly indicate a change to the inode.
 
-Fixes: e5f687b89bc2 ("tools/power turbostat: Add RAPL psys as a built-in counter")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by not implicitly setting ATTR_CTIME when ATTR_DELEG is set in
+__nfsd_setattr(). The decoder for FATTR4_WORD2_TIME_DELEG_MODIFY already
+sets ATTR_CTIME, so this is sufficient to make it skip setting the ctime
+on atime-only updates.
+
+Fixes: 7e13f4f8d27d ("nfsd: handle delegated timestamps in SETATTR")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/vfs.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 7a407694d221..444b6bfb4683 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -9593,6 +9593,7 @@ int fork_it(char **argv)
- 	timersub(&tv_odd, &tv_even, &tv_delta);
- 	if (for_all_cpus_2(delta_cpu, ODD_COUNTERS, EVEN_COUNTERS))
- 		fprintf(outf, "%s: Counter reset detected\n", progname);
-+	delta_platform(&platform_counters_odd, &platform_counters_even);
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -466,7 +466,15 @@ static int __nfsd_setattr(struct dentry
+ 	if (!iap->ia_valid)
+ 		return 0;
  
- 	compute_average(EVEN_COUNTERS);
- 	format_all_counters(EVEN_COUNTERS);
--- 
-2.39.5
-
+-	iap->ia_valid |= ATTR_CTIME;
++	/*
++	 * If ATTR_DELEG is set, then this is an update from a client that
++	 * holds a delegation. If this is an update for only the atime, the
++	 * ctime should not be changed. If the update contains the mtime
++	 * too, then ATTR_CTIME should already be set.
++	 */
++	if (!(iap->ia_valid & ATTR_DELEG))
++		iap->ia_valid |= ATTR_CTIME;
++
+ 	return notify_change(&nop_mnt_idmap, dentry, iap, NULL);
+ }
+ 
 
 
