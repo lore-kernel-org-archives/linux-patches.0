@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D743594E;
-	Tue, 12 Aug 2025 19:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855FA1B87E9;
+	Tue, 12 Aug 2025 19:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026128; cv=none; b=qnYvJwL2QXCdmwj/6EmGHYCCwFqu91hUbgFyopRwQJMU9nk5H9zqf0gTOcVnd8UZ4LrO9xaGACQe+gNmvSqrCYSe6OejqKypBAUJHZ7XMNll1MvJ9/PO3PHgVkOyStoksBjO4IXqGS6djAtC0vMh04WBAJuXlrg/F1pxprpbxHI=
+	t=1755026131; cv=none; b=WgNMVFqvX7jFZx//eKWgTDMobT7QxGrAzKJFBRk4wZ/5x+Gk4J/irAlofqNYKHrnF6SsFv5fwLQt6oHUgolfRhd35/mmS+w1wmYcBY0IUKIstu4KIr9VNKcGloieqjt+RZlxVfcDZH7pnoHA/vuu5igcMxB1qsEwGYKoSzYxufA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026128; c=relaxed/simple;
-	bh=oAUHpd0RtEH/oca4lBB22iYNgzhCv/d7DhfM3xVY0DE=;
+	s=arc-20240116; t=1755026131; c=relaxed/simple;
+	bh=f5x2QNEMqDejLWR3szDdSIrDbnH9ksnRRZyBSEqk0+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqAO7vp/iYMaTRbOXqTV4/jb0vhf8qbe4itlt3N2gpaNg1gqIAnLOO2B2RsfFeXMUXF8JYBws9x2Icc9EWGt9Rn0q43MlOBLyL+IFm5CQrGQEgiP4qSGnceHcP6DFZzwXmLp2J/gXdNYVNFdA9t2BlqciYrQdp2SgQ7p2HX/ruY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OV9Fu1d9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l56SB0a7HFlZWn6eDW3f69kP7cm+wf/mxmSlFo2h2n3Bz9QLf+25uTSoD8b8StY4DgIzEYuErYbvMqYbMp6/xFt8R+72IqyE9zfu674wPdnoObbd4Adk2SCU8zpDOZiDXu+ef4rnQrlsbvrwfa19RkXT2GI7PVIURFKtU51dtmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sG0z85R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OV9Fu1d9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75563C4CEF0;
-	Tue, 12 Aug 2025 19:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sG0z85R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA772C4CEF0;
+	Tue, 12 Aug 2025 19:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026127;
-	bh=oAUHpd0RtEH/oca4lBB22iYNgzhCv/d7DhfM3xVY0DE=;
+	s=korg; t=1755026131;
+	bh=f5x2QNEMqDejLWR3szDdSIrDbnH9ksnRRZyBSEqk0+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OV9Fu1d9c3OAPOxLxdqniZXCvn5dKSHkBEl7MVgiO8qFgHFkU8XNUqkGrM8imqN/2
-	 fd8vqFATyNkkDItEjBiv3IGWVsJM7wm530FLi1cVhCZNd3s5wjmyBPTGXCrHkO37DX
-	 RwCZECr849AxcTcLz2YyWFb4iaC10mZErgzOU7mI=
+	b=1sG0z85RuWaZyljYWx/18Ys8bYA++FwxYl6MXrFcvYlxmarWZCXQJ4CKf+gH2HxwH
+	 F4B4F1JfoCsxkizJ/If58pODoLo20z3MUqlbh7UGDUjhqvm1fi+SBmAJW4vsiJtmfP
+	 ftR0iFf1bBATIsVOvR6nua1HRJWPkAWPthRDOuDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
+	Yao Zi <ziyao@disroot.org>,
+	Ze Huang <huangze@whut.edu.cn>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 244/480] pinctrl: berlin: fix memory leak in berlin_pinctrl_build_state()
-Date: Tue, 12 Aug 2025 19:47:32 +0200
-Message-ID: <20250812174407.524158891@linuxfoundation.org>
+Subject: [PATCH 6.15 245/480] pinctrl: canaan: k230: add NULL check in DT parse
+Date: Tue, 12 Aug 2025 19:47:33 +0200
+Message-ID: <20250812174407.564358389@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,53 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Ze Huang <huangze@whut.edu.cn>
 
-[ Upstream commit 8f6f303551100291bf2c1e1ccc66b758fffb1168 ]
+[ Upstream commit 65bd0be486390fc12a84eafaad78758c5e5a55e6 ]
 
-In the original implementation, krealloc() failure handling incorrectly
-assigned the original memory pointer to NULL after kfree(), causing a
-memory leak when reallocation failed.
+Add a NULL check for the return value of of_get_property() when
+retrieving the "pinmux" property in the group parser. This avoids
+a potential NULL pointer dereference if the property is missing
+from the device tree node.
 
-Fixes: de845036f997 ("pinctrl: berlin: fix error return code of berlin_pinctrl_build_state()")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Link: https://lore.kernel.org/20250620015343.21494-1-chenyuan_fl@163.com
+Also fix a typo ("sintenel") in the device ID match table comment,
+correcting it to "sentinel".
+
+Fixes: 545887eab6f6 ("pinctrl: canaan: Add support for k230 SoC")
+Reported-by: Yao Zi <ziyao@disroot.org>
+Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+Link: https://lore.kernel.org/20250624-k230-return-check-v1-1-6b4fc5ba0c41@whut.edu.cn
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/berlin/berlin.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-k230.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/berlin/berlin.c b/drivers/pinctrl/berlin/berlin.c
-index c372a2a24be4..9dc2da8056b7 100644
---- a/drivers/pinctrl/berlin/berlin.c
-+++ b/drivers/pinctrl/berlin/berlin.c
-@@ -204,6 +204,7 @@ static int berlin_pinctrl_build_state(struct platform_device *pdev)
- 	const struct berlin_desc_group *desc_group;
- 	const struct berlin_desc_function *desc_function;
- 	int i, max_functions = 0;
-+	struct pinfunction *new_functions;
+diff --git a/drivers/pinctrl/pinctrl-k230.c b/drivers/pinctrl/pinctrl-k230.c
+index a9b4627b46b0..4976308e6237 100644
+--- a/drivers/pinctrl/pinctrl-k230.c
++++ b/drivers/pinctrl/pinctrl-k230.c
+@@ -477,6 +477,10 @@ static int k230_pinctrl_parse_groups(struct device_node *np,
+ 	grp->name = np->name;
  
- 	pctrl->nfunctions = 0;
- 
-@@ -229,12 +230,15 @@ static int berlin_pinctrl_build_state(struct platform_device *pdev)
- 		}
- 	}
- 
--	pctrl->functions = krealloc(pctrl->functions,
-+	new_functions = krealloc(pctrl->functions,
- 				    pctrl->nfunctions * sizeof(*pctrl->functions),
- 				    GFP_KERNEL);
--	if (!pctrl->functions)
-+	if (!new_functions) {
-+		kfree(pctrl->functions);
- 		return -ENOMEM;
+ 	list = of_get_property(np, "pinmux", &size);
++	if (!list) {
++		dev_err(dev, "failed to get pinmux property\n");
++		return -EINVAL;
 +	}
+ 	size /= sizeof(*list);
  
-+	pctrl->functions = new_functions;
- 	/* map functions to theirs groups */
- 	for (i = 0; i < pctrl->desc->ngroups; i++) {
- 		desc_group = pctrl->desc->groups + i;
+ 	grp->num_pins = size;
+@@ -623,7 +627,7 @@ static int k230_pinctrl_probe(struct platform_device *pdev)
+ 
+ static const struct of_device_id k230_dt_ids[] = {
+ 	{ .compatible = "canaan,k230-pinctrl", },
+-	{ /* sintenel */ }
++	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, k230_dt_ids);
+ 
 -- 
 2.39.5
 
