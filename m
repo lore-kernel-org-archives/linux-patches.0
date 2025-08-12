@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4171D416C;
-	Tue, 12 Aug 2025 18:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2578B280037;
+	Tue, 12 Aug 2025 18:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022959; cv=none; b=q76E70Z7Dh/WMSjPj8J76ol+w37dJmMTTcAMLy26wLPVW7ITW3O3Dha2iKAr3yA+r1m4eIln9iFLaYEhUlHRN1Ubeks7HNczhNMCCQFJUtB1pPBBY2uA7a+hD/Zs0bGWJWk2donmRkJeNtDslcfGvFfWTggIs55VF7le43m+ZTo=
+	t=1755022963; cv=none; b=hNjYPbkl1oCPnumnWj+asIGljUV9FQzoaCPB68PDuz/myH7fFAdQFm8j1L3fVWp1ONbNJTczvBdVdR0iB+rfQ1DJi8c0HgAHDgl+h2iGsunz5U8PzVOW5n1n6k6Xe5rNJRFs2mmSN7ARRhjfBQcYywPDkjE9roRXjCGYXaN1GHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022959; c=relaxed/simple;
-	bh=KciKeN5PwC5hviWR8FjawFERum41BGnf4HZgEG6derQ=;
+	s=arc-20240116; t=1755022963; c=relaxed/simple;
+	bh=inrgngWLQnnS52ThQAJkxw1GPVOUNyEQN2JBS180k34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pCTjUACIJfwYJtC5KmFalnEVCFC6wgINq7Mv5xkYb/B9tTXcQNDUeLDycRlwrFsLsa8OzYY6v1qqO1BN6GNwJI23rKxcbUUrwNMzidJev3cdH8bNZZCjP51LeB1cc3Pd/zzn05J6e5hV2MGZHcdkyPBRP+BFZuneRO5ojnYVzeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2FQa4In; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hD5QzRxkGqfZfMmkb8k7z4nHgmUUQATJBKHZmdNtGP9o3sQW53aMzPFNAn9hpFFyhxrq1Z5wNSjq3E8tHXhBKDZacGhm2QHPn5tEYLLp6VMwZm4MutqTNGYkeHD1nAlUA68FdiXwlr1exqgV0oHAdOMA9j95mGAi9AMTFIw4G4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbD7VfMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2FQa4In"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A6AC4CEF7;
-	Tue, 12 Aug 2025 18:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbD7VfMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8831CC4CEF8;
+	Tue, 12 Aug 2025 18:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022959;
-	bh=KciKeN5PwC5hviWR8FjawFERum41BGnf4HZgEG6derQ=;
+	s=korg; t=1755022963;
+	bh=inrgngWLQnnS52ThQAJkxw1GPVOUNyEQN2JBS180k34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2FQa4InDu7KmSICBIs1XHxDXvuE7JgsI1rl/uZZxIiC4QrS+zVPLoObjoRKbPCET
-	 ZbSQCmTrDNVt6O20uDpPgrKCQZ09lvLjtBkdPBvR8pSjytqX6JgwKrRlzvLMHXrEvq
-	 BiTXNPTF71wg9DXt6vqqtLHHwdnoyL9kRPArFPEg=
+	b=gbD7VfMwQf+M0ywpIs4dAt0l4jK25+qQPiqDlZmmeU80S8fT6qfq2tVjU1I4vlZJQ
+	 B3wHuTlgHdRlouFYeYI/XGJtxf5Tu8GGuG87OjxshSHDU9AJ0UGOrQH6iHj97gSUAI
+	 Ib2zwXdASGmb/U5V1SriteOK5pzPhGy1Kd5ky4mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 308/369] eth: fbnic: remove the debugging trick of super high page bias
-Date: Tue, 12 Aug 2025 19:30:05 +0200
-Message-ID: <20250812173028.316843145@linuxfoundation.org>
+Subject: [PATCH 6.12 309/369] irqchip: Build IMX_MU_MSI only on ARM
+Date: Tue, 12 Aug 2025 19:30:06 +0200
+Message-ID: <20250812173028.353643632@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -50,64 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit e407fceeaf1b2959892b4fc9b584843d3f2bfc05 ]
+[ Upstream commit 3b6a18f0da8720d612d8a682ea5c55870da068e0 ]
 
-Alex added page bias of LONG_MAX, which is admittedly quite
-a clever way of catching overflows of the pp ref count.
-The page pool code was "optimized" to leave the ref at 1
-for freed pages so it can't catch basic bugs by itself any more.
-(Something we should probably address under DEBUG_NET...)
+Compile-testing IMX_MU_MSI on x86 without PCI_MSI support results in a
+build failure:
 
-Unfortunately for fbnic since commit f7dc3248dcfb ("skbuff: Optimization
-of SKB coalescing for page pool") core _may_ actually take two extra
-pp refcounts, if one of them is returned before driver gives up the bias
-the ret < 0 check in page_pool_unref_netmem() will trigger.
+drivers/gpio/gpio-sprd.c:8:
+include/linux/gpio/driver.h:41:33: error: field 'msiinfo' has incomplete type
+drivers/iommu/iommufd/viommu.c:4:
+include/linux/msi.h:528:33: error: field 'alloc_info' has incomplete type
 
-While at it add a FBNIC_ to the name of the driver constant.
+Tighten the dependency further to only allow compile testing on Arm.
+This could be refined further to allow certain x86 configs.
 
-Fixes: 0cb4c0a13723 ("eth: fbnic: Implement Rx queue alloc/start/stop/free")
-Link: https://patch.msgid.link/20250801170754.2439577-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This was submitted before to address a different build failure, which was
+fixed differently, but the problem has now returned in a different form.
+
+Fixes: 70afdab904d2d1e6 ("irqchip: Add IMX MU MSI controller driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250805160952.4006075-1-arnd@kernel.org
+Link: https://lore.kernel.org/all/20221215164109.761427-1-arnd@kernel.org/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 4 ++--
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.h | 6 ++----
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ drivers/irqchip/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-index 6a6d7e22f1a7..fc52db8e36f2 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-@@ -389,8 +389,8 @@ static void fbnic_page_pool_init(struct fbnic_ring *ring, unsigned int idx,
- {
- 	struct fbnic_rx_buf *rx_buf = &ring->rx_buf[idx];
- 
--	page_pool_fragment_page(page, PAGECNT_BIAS_MAX);
--	rx_buf->pagecnt_bias = PAGECNT_BIAS_MAX;
-+	page_pool_fragment_page(page, FBNIC_PAGECNT_BIAS_MAX);
-+	rx_buf->pagecnt_bias = FBNIC_PAGECNT_BIAS_MAX;
- 	rx_buf->page = page;
- }
- 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-index 2f91f68d11d5..05cde71db9df 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-@@ -59,10 +59,8 @@ struct fbnic_queue_stats {
- 	struct u64_stats_sync syncp;
- };
- 
--/* Pagecnt bias is long max to reserve the last bit to catch overflow
-- * cases where if we overcharge the bias it will flip over to be negative.
-- */
--#define PAGECNT_BIAS_MAX	LONG_MAX
-+#define FBNIC_PAGECNT_BIAS_MAX	PAGE_SIZE
-+
- struct fbnic_rx_buf {
- 	struct page *page;
- 	long pagecnt_bias;
+diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+index a799a89195c5..5d5b3cf381b9 100644
+--- a/drivers/irqchip/Kconfig
++++ b/drivers/irqchip/Kconfig
+@@ -506,6 +506,7 @@ config IMX_MU_MSI
+ 	tristate "i.MX MU used as MSI controller"
+ 	depends on OF && HAS_IOMEM
+ 	depends on ARCH_MXC || COMPILE_TEST
++	depends on ARM || ARM64
+ 	default m if ARCH_MXC
+ 	select IRQ_DOMAIN
+ 	select IRQ_DOMAIN_HIERARCHY
 -- 
 2.39.5
 
