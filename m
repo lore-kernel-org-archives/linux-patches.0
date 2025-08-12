@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0202FDC35;
-	Tue, 12 Aug 2025 18:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BC62FF164;
+	Tue, 12 Aug 2025 18:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022463; cv=none; b=cwrvplSkkvPgEF07AnI490zVqA5yWtbZPbibVfEWqHFOjeDE/jxSUFDf92ijWm3SVbmgWBj3FP+1ZjqhQ+xneLP7J6zYwXo9HHZN4PBcTGD6fU45SpO2oqZgKRNYBuc7fdhrOTE0q5sOQhdl2ccaJhHEgQqLupf0d3/4m3gVHY0=
+	t=1755022466; cv=none; b=noZCnUpAOJYQ9+RXSj/rlJmpPXb35iUL/URICNr6p3/50APSXuj263HDsN0ofJmLXICzO2wEiaBthwLOlbwkSfKUO8q7UGHIMaRKOYC0WZoqZ97REv5M5sDidtR4MkGlH8ktktdEgMeqv+kfqY+4LsIuaikSIrYTqivtEuMPliQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022463; c=relaxed/simple;
-	bh=hu86ZwqOG2IwpXOo8j3pIkXFZC2Z6HpDh6CrF1ccMG8=;
+	s=arc-20240116; t=1755022466; c=relaxed/simple;
+	bh=x0KxSoj8q0+q0+7kib33uAnC5UH9RvkiASIrzdthR4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hglFhCeKnNoM9dCRsTH+Y+NfN0JzmRh5v+M2v01dFFxFeTlGTIpSbYJTdFXaQk8dLF5d8pAY8u0BJ/ZkZs5J3ec7bDYNeQuItwdnqBz6Xm21JffUfzvUl2R0uVE39QSXQ2HBEI/lVLFPojDjLH60m3mGvvCQ6WwboUp30n8GtEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLVQpXhq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u1lcnlhE4c8izkBqsmo8usaN+fZ0xDMvGo5+dlcBM3nJoWhGgDPMUJWDKqEqhSJ0YFGO4j0s7fwPVFZcx/z4lFqgh999RffdymqOfi+yimj7C/zsyrJk3F9aGlmSHO0cdO5whCPuTtFPmGGowqDNsY+hfbIYFxAWQy4d1nNuZ2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMWScvXk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLVQpXhq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2A1C4CEF0;
-	Tue, 12 Aug 2025 18:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMWScvXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E5CC4CEF6;
+	Tue, 12 Aug 2025 18:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022463;
-	bh=hu86ZwqOG2IwpXOo8j3pIkXFZC2Z6HpDh6CrF1ccMG8=;
+	s=korg; t=1755022466;
+	bh=x0KxSoj8q0+q0+7kib33uAnC5UH9RvkiASIrzdthR4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLVQpXhqd0w2HHcGU9SVXmS0CL8A7oQFOveo119KM/D1oOeHAsh16VWY8kiSWfAmB
-	 0Iz2p30d+N5gFZpf7Ak2jmhjY4UkYanmh7ew6pgnCL80OXLPBeBHnCAfe0Z8tgW/kA
-	 5m5R5r8d69zMxNwSpwdake6nqANYYm/lpShNP6C0=
+	b=kMWScvXkdXmgNZMLmaB6xTSD+ORzVxDJNqeL1/qctPbdz0mSXKG3UaA+EhMu9jO4m
+	 QKVF9b1+AxIaYz75RRTkt+75Dt8LURtmb9ZjTZVkHI3VQN43ID/LjuEj9ArlO71siL
+	 NSjoofkH6iRSdLBX18H5H6nqUNcVKLJvSSasg5zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Cowgill <james.cowgill@blaize.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Rohit Visavalia <rohit.visavalia@amd.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 162/369] media: v4l2-ctrls: Fix H264 SEPARATE_COLOUR_PLANE check
-Date: Tue, 12 Aug 2025 19:27:39 +0200
-Message-ID: <20250812173020.862098680@linuxfoundation.org>
+Subject: [PATCH 6.12 163/369] clk: xilinx: vcu: unregister pll_post only if registered correctly
+Date: Tue, 12 Aug 2025 19:27:40 +0200
+Message-ID: <20250812173020.897916755@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Cowgill <james.cowgill@blaize.com>
+From: Rohit Visavalia <rohit.visavalia@amd.com>
 
-[ Upstream commit 803b9eabc649c778986449eb0596e5ffeb7a8aed ]
+[ Upstream commit 3b0abc443ac22f7d4f61ddbbbbc5dbb06c87139d ]
 
-The `separate_colour_plane_flag` element is only present in the SPS if
-`chroma_format_idc == 3`, so the corresponding flag should be disabled
-whenever that is not the case and not just on profiles where
-`chroma_format_idc` is not present.
+If registration of pll_post is failed, it will be set to NULL or ERR,
+unregistering same will fail with following call trace:
 
-Fixes: b32e48503df0 ("media: controls: Validate H264 stateless controls")
-Signed-off-by: James Cowgill <james.cowgill@blaize.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Unable to handle kernel NULL pointer dereference at virtual address 008
+pc : clk_hw_unregister+0xc/0x20
+lr : clk_hw_unregister_fixed_factor+0x18/0x30
+sp : ffff800011923850
+...
+Call trace:
+ clk_hw_unregister+0xc/0x20
+ clk_hw_unregister_fixed_factor+0x18/0x30
+ xvcu_unregister_clock_provider+0xcc/0xf4 [xlnx_vcu]
+ xvcu_probe+0x2bc/0x53c [xlnx_vcu]
+
+Fixes: 4472e1849db7 ("soc: xilinx: vcu: make pll post divider explicit")
+Signed-off-by: Rohit Visavalia <rohit.visavalia@amd.com>
+Link: https://lore.kernel.org/r/20250210113614.4149050-2-rohit.visavalia@amd.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/xilinx/xlnx_vcu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-index eeab6a5eb7ba..675642af8601 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -897,12 +897,12 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
- 
- 			p_h264_sps->flags &=
- 				~V4L2_H264_SPS_FLAG_QPPRIME_Y_ZERO_TRANSFORM_BYPASS;
+diff --git a/drivers/clk/xilinx/xlnx_vcu.c b/drivers/clk/xilinx/xlnx_vcu.c
+index 81501b48412e..88b3fd8250c2 100644
+--- a/drivers/clk/xilinx/xlnx_vcu.c
++++ b/drivers/clk/xilinx/xlnx_vcu.c
+@@ -587,8 +587,8 @@ static void xvcu_unregister_clock_provider(struct xvcu_device *xvcu)
+ 		xvcu_clk_hw_unregister_leaf(hws[CLK_XVCU_ENC_MCU]);
+ 	if (!IS_ERR_OR_NULL(hws[CLK_XVCU_ENC_CORE]))
+ 		xvcu_clk_hw_unregister_leaf(hws[CLK_XVCU_ENC_CORE]);
 -
--			if (p_h264_sps->chroma_format_idc < 3)
--				p_h264_sps->flags &=
--					~V4L2_H264_SPS_FLAG_SEPARATE_COLOUR_PLANE;
- 		}
+-	clk_hw_unregister_fixed_factor(xvcu->pll_post);
++	if (!IS_ERR_OR_NULL(xvcu->pll_post))
++		clk_hw_unregister_fixed_factor(xvcu->pll_post);
+ }
  
-+		if (p_h264_sps->chroma_format_idc < 3)
-+			p_h264_sps->flags &=
-+				~V4L2_H264_SPS_FLAG_SEPARATE_COLOUR_PLANE;
-+
- 		if (p_h264_sps->flags & V4L2_H264_SPS_FLAG_FRAME_MBS_ONLY)
- 			p_h264_sps->flags &=
- 				~V4L2_H264_SPS_FLAG_MB_ADAPTIVE_FRAME_FIELD;
+ /**
 -- 
 2.39.5
 
