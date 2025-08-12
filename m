@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC71B2D46AC;
-	Tue, 12 Aug 2025 17:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCA7279915;
+	Tue, 12 Aug 2025 17:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020866; cv=none; b=T60MA9aXHVXfnL8tN+E3XeEPwjGoArHqL5QOY/AHSh+hshqjZIR0CTWyRJrQPcrgZEuFZHgsK4xpWWF4OT3AeZCF+bOU/8GERaPtuHm+yCnnrm4apb9kC/NBSUvMRN70zQ0/dWHPfSaejOfXwUmSwcmwhqHztzVAO5RMSfLls+A=
+	t=1755020870; cv=none; b=mDtS61MerbK1maORJYcBFB6aEwP75hkRuNHJ6L5rAyiMZr7SZ7wBrq0A6o+uy6+Fp3+RrklIDy3hcz7draZbqeGJ27X1JtZxH/UewSl0GU0Uvwgjo28FWr8IlytByeAEk+8E3Dm6NcHNvPVZwgDp1UbgLPak9unrl4vWt4nhXK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020866; c=relaxed/simple;
-	bh=RcK8t9DYFq1S3B2DI6khCMltEPmdMFkL1QKZOhEP0Tc=;
+	s=arc-20240116; t=1755020870; c=relaxed/simple;
+	bh=Q8Z9vGzVdEy2WpLEUDDW0g1am+foy8VXZAMJdxreWEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dFwzkphJqDbhNHhQOh5aHITLln1B9zAuSwPsWXe3CxN08NKShX3BgyL0ZnNVqGzn3oL6BlJSM5zTNsV0BDPNT6f7qs9nrz2eB95jcZtNCC4S9mfWiUymzK5HlkJUXnVymZalW2xZVjVWGSK4QMNeX19MnFcuv2anbzIcqJyewA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykJ7pjg8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYkXGZH5WlwFsOMiTZylx7YeMpWT7TK8BGGV/y8dT/foVNtwKAhXsmrVUGL6gKHdjCaQRs3wjRhTgaydRh0baKHwzcgmWIsNEZgfiRjK8Dp139HqyiFB1+zXhImwr1X+9/oIO/lyBkbDOQB6tRmhPes+0gB3GgUUcDJXqKjRhjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1MBd+xp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykJ7pjg8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5DAC4CEF0;
-	Tue, 12 Aug 2025 17:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1MBd+xp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72441C4CEF0;
+	Tue, 12 Aug 2025 17:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020866;
-	bh=RcK8t9DYFq1S3B2DI6khCMltEPmdMFkL1QKZOhEP0Tc=;
+	s=korg; t=1755020869;
+	bh=Q8Z9vGzVdEy2WpLEUDDW0g1am+foy8VXZAMJdxreWEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykJ7pjg85je6TJPHnWI76huMEw9btFGrOq/x2Q5t5/GhVh9Pyf+4abyx7GljjFuSU
-	 99VjCtxtrBXS5ZYJACAL1rRRSzPtV+maCtTH+q+IxuD9VfPCZLEdhcUc9rXoUL+aTI
-	 WAppXBJPdmv97aXGqTqHdTnl7SjOL/hBCrsGl2As=
+	b=u1MBd+xpYGXTqiCQ9LMr/JEyKqRw2x7Z1JgK0X2uZV5INiLwx/92HwxFzRnW5kTAt
+	 +Lei5qZzGvuv1a0rPIunYPa2DtXDXOjqeU++KDqKp0vWOc0HcUHiTIoo8Rm6R2T97i
+	 2B8dC9yJVq2QDV6peKi4LrP6rFnp6R5zafYC3tag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
-	kernel test robot <lkp@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zixun LI <admin@hifiphile.com>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/262] spi: stm32: Check for cfg availability in stm32_spi_probe
-Date: Tue, 12 Aug 2025 19:26:54 +0200
-Message-ID: <20250812172954.086409374@linuxfoundation.org>
+Subject: [PATCH 6.1 180/253] mtd: rawnand: atmel: set pmecc data setup time
+Date: Tue, 12 Aug 2025 19:29:28 +0200
+Message-ID: <20250812172956.423278059@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Le Goffic <clement.legoffic@foss.st.com>
+From: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
 
-[ Upstream commit 21f1c800f6620e43f31dfd76709dbac8ebaa5a16 ]
+[ Upstream commit f552a7c7e0a14215cb8a6fd89e60fa3932a74786 ]
 
-The stm32_spi_probe function now includes a check to ensure that the
-pointer returned by of_device_get_match_data is not NULL before
-accessing its members. This resolves a warning where a potential NULL
-pointer dereference could occur when accessing cfg->has_device_mode.
+Setup the pmecc data setup time as 3 clock cycles for 133MHz as recommended
+by the datasheet.
 
-Before accessing the 'has_device_mode' member, we verify that 'cfg' is
-not NULL. If 'cfg' is NULL, an error message is logged.
-
-This change ensures that the driver does not attempt to access
-configuration data if it is not available, thus preventing a potential
-system crash due to a NULL pointer dereference.
-
-Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310191831.MLwx1c6x-lkp@intel.com/
-Fixes: fee681646fc8 ("spi: stm32: disable device mode with st,stm32f4-spi compatible")
-Link: https://patch.msgid.link/20250616-spi-upstream-v1-2-7e8593f3f75d@foss.st.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
+Reported-by: Zixun LI <admin@hifiphile.com>
+Closes: https://lore.kernel.org/all/c015bb20-6a57-4f63-8102-34b3d83e0f5b@microchip.com
+Suggested-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Signed-off-by: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/atmel/pmecc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
-index 40680b5fffc9..211d9c76665b 100644
---- a/drivers/spi/spi-stm32.c
-+++ b/drivers/spi/spi-stm32.c
-@@ -1808,9 +1808,15 @@ static int stm32_spi_probe(struct platform_device *pdev)
- 	struct resource *res;
- 	struct reset_control *rst;
- 	struct device_node *np = pdev->dev.of_node;
-+	const struct stm32_spi_cfg *cfg;
- 	bool device_mode;
- 	int ret;
--	const struct stm32_spi_cfg *cfg = of_device_get_match_data(&pdev->dev);
-+
-+	cfg = of_device_get_match_data(&pdev->dev);
-+	if (!cfg) {
-+		dev_err(&pdev->dev, "Failed to get match data for platform\n");
-+		return -ENODEV;
-+	}
+diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
+index 3c7dee1be21d..0b402823b619 100644
+--- a/drivers/mtd/nand/raw/atmel/pmecc.c
++++ b/drivers/mtd/nand/raw/atmel/pmecc.c
+@@ -143,6 +143,7 @@ struct atmel_pmecc_caps {
+ 	int nstrengths;
+ 	int el_offset;
+ 	bool correct_erased_chunks;
++	bool clk_ctrl;
+ };
  
- 	device_mode = of_property_read_bool(np, "spi-slave");
- 	if (!cfg->has_device_mode && device_mode) {
+ struct atmel_pmecc {
+@@ -843,6 +844,10 @@ static struct atmel_pmecc *atmel_pmecc_create(struct platform_device *pdev,
+ 	if (IS_ERR(pmecc->regs.errloc))
+ 		return ERR_CAST(pmecc->regs.errloc);
+ 
++	/* pmecc data setup time */
++	if (caps->clk_ctrl)
++		writel(PMECC_CLK_133MHZ, pmecc->regs.base + ATMEL_PMECC_CLK);
++
+ 	/* Disable all interrupts before registering the PMECC handler. */
+ 	writel(0xffffffff, pmecc->regs.base + ATMEL_PMECC_IDR);
+ 	atmel_pmecc_reset(pmecc);
+@@ -896,6 +901,7 @@ static struct atmel_pmecc_caps at91sam9g45_caps = {
+ 	.strengths = atmel_pmecc_strengths,
+ 	.nstrengths = 5,
+ 	.el_offset = 0x8c,
++	.clk_ctrl = true,
+ };
+ 
+ static struct atmel_pmecc_caps sama5d4_caps = {
 -- 
 2.39.5
 
