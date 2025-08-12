@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24E82FDC52;
-	Tue, 12 Aug 2025 18:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00865282E1;
+	Tue, 12 Aug 2025 18:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021748; cv=none; b=fVJGpscSUl2xaNmOOu+0ctKju+7sbcDzvNebaj0xAO6gzpheLe7SKm8UOM7SqX1NuM7aISnPGrRaPX80RMcsxulXpJP8THiWROhPYQwdaJTtMIi8FFXtU0svIKOmAKwjl5+YqOP7PtEBiC5VJ9f8JtTVdvKxjqCdrv4mXIpItFw=
+	t=1755021752; cv=none; b=k0qCxEyGDO7PSSmCMHRouhBvl43GpQNZH3HLOyguXoQ7olee+1LMUJVu8JWO1/ZPUlr8GAvAqiHlPS0SBjvu4PyUvbpKnr77ld6npb22HaODSsbdKPeqhYVMj0NFmyCc7GVwvKLQwEIcHq2Rs5wmbGresuuqpLR063xwbtkHN58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021748; c=relaxed/simple;
-	bh=M2JRQNS+USDgaGb039mm7DL/jIEDh7Kg6VPeRKXsTkE=;
+	s=arc-20240116; t=1755021752; c=relaxed/simple;
+	bh=fus9dX9dGf1C8lDD86NA3W6qndtDcsrD9ny9mY0YkHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRj5m1AqNdER/hN0mYbA5Kl6bfcFPQA8n13Eff2XMdFnZGloowTHNSai6bTB0m9te+qoIWmwHl3pn04rCWaM6JNFgLezr7d1Xzd0IrMO+EBCYZ7tYFj2a4qBSZV+PxZCED0J9+wlWzCR1eBpk9HJ+bdpnpYKjhen/iZ4o/6cuXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5C10BsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s8r6PY9JrfKhxhAARTuwEf+Z9Mg8TwUYb9nu1kP8wS9xiDsQglHEW8JApQ2ivrrC4WnvXasTr8HoFnNi3fLUBlkGBjTbf3EiHrIYlR2u0F456x9DnOZL8G1Qxo8u6YJDUBIQBHX6OBKOVXJClgc9dRYKZuCgWKL1eFhO5fpwYJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuPn97BU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5C10BsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB26C4CEF0;
-	Tue, 12 Aug 2025 18:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuPn97BU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506DAC4CEF0;
+	Tue, 12 Aug 2025 18:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021748;
-	bh=M2JRQNS+USDgaGb039mm7DL/jIEDh7Kg6VPeRKXsTkE=;
+	s=korg; t=1755021751;
+	bh=fus9dX9dGf1C8lDD86NA3W6qndtDcsrD9ny9mY0YkHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5C10BsXSQJ/HB8QpNM2qcrIOVd/rX0DOOa3PTYZezP0D+VEOQQ9Y/scxmA+aEAd/
-	 y8OG6R8JKo50gK+oqF/iNNpLtznKj0lOsEr6aNkDzg7VwfcCiG1znNpZvln6r52U46
-	 WtLTnMafYQOqs3QhcvF3++WQbk7RbT3EmEZL1lug=
+	b=OuPn97BUa3h8OHsbtKCeEMQPOHreYE8SxcyWP72dGKvTpEUjgJ0syICDMrOwnkqf9
+	 1l/IVsn+fwKjdZHn7/vqgFxkJDFS41zPDJtin3CsNqFAMlNZItfTCYFF9yZaM96AmL
+	 qbbAnMdWF6BOQNjd6n1Z0+v1Gk9r0YtzeY5l+CQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Maher Azzouzi <maherazz04@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 213/262] benet: fix BUG when creating VFs
-Date: Tue, 12 Aug 2025 19:30:01 +0200
-Message-ID: <20250812173002.217817466@linuxfoundation.org>
+Subject: [PATCH 6.6 214/262] net/sched: mqprio: fix stack out-of-bounds write in tc entry parsing
+Date: Tue, 12 Aug 2025 19:30:02 +0200
+Message-ID: <20250812173002.259375033@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -46,65 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Maher Azzouzi <maherazz04@gmail.com>
 
-[ Upstream commit 5a40f8af2ba1b9bdf46e2db10e8c9710538fbc63 ]
+[ Upstream commit ffd2dc4c6c49ff4f1e5d34e454a6a55608104c17 ]
 
-benet crashes as soon as SRIOV VFs are created:
+TCA_MQPRIO_TC_ENTRY_INDEX is validated using
+NLA_POLICY_MAX(NLA_U32, TC_QOPT_MAX_QUEUE), which allows the value
+TC_QOPT_MAX_QUEUE (16). This leads to a 4-byte out-of-bounds stack
+write in the fp[] array, which only has room for 16 elements (0–15).
 
- kernel BUG at mm/vmalloc.c:3457!
- Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
- CPU: 4 UID: 0 PID: 7408 Comm: test.sh Kdump: loaded Not tainted 6.16.0+ #1 PREEMPT(voluntary)
- [...]
- RIP: 0010:vunmap+0x5f/0x70
- [...]
- Call Trace:
-  <TASK>
-  __iommu_dma_free+0xe8/0x1c0
-  be_cmd_set_mac_list+0x3fe/0x640 [be2net]
-  be_cmd_set_mac+0xaf/0x110 [be2net]
-  be_vf_eth_addr_config+0x19f/0x330 [be2net]
-  be_vf_setup+0x4f7/0x990 [be2net]
-  be_pci_sriov_configure+0x3a1/0x470 [be2net]
-  sriov_numvfs_store+0x20b/0x380
-  kernfs_fop_write_iter+0x354/0x530
-  vfs_write+0x9b9/0xf60
-  ksys_write+0xf3/0x1d0
-  do_syscall_64+0x8c/0x3d0
+Fix this by changing the policy to allow only up to TC_QOPT_MAX_QUEUE - 1.
 
-be_cmd_set_mac_list() calls dma_free_coherent() under a spin_lock_bh.
-Fix it by freeing only after the lock has been released.
-
-Fixes: 1a82d19ca2d6 ("be2net: fix sleeping while atomic bugs in be_ndo_bridge_getlink")
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250801101338.72502-1-mschmidt@redhat.com
+Fixes: f62af20bed2d ("net/sched: mqprio: allow per-TC user input of FP adminStatus")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250802001857.2702497-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/emulex/benet/be_cmds.c | 2 +-
+ net/sched/sch_mqprio.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_cmds.c b/drivers/net/ethernet/emulex/benet/be_cmds.c
-index a89aa4ac0a06..779f1324bb5f 100644
---- a/drivers/net/ethernet/emulex/benet/be_cmds.c
-+++ b/drivers/net/ethernet/emulex/benet/be_cmds.c
-@@ -3852,8 +3852,8 @@ int be_cmd_set_mac_list(struct be_adapter *adapter, u8 *mac_array,
- 	status = be_mcc_notify_wait(adapter);
- 
- err:
--	dma_free_coherent(&adapter->pdev->dev, cmd.size, cmd.va, cmd.dma);
- 	spin_unlock_bh(&adapter->mcc_lock);
-+	dma_free_coherent(&adapter->pdev->dev, cmd.size, cmd.va, cmd.dma);
- 	return status;
- }
- 
+diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
+index 793009f445c0..a0e3f3bae536 100644
+--- a/net/sched/sch_mqprio.c
++++ b/net/sched/sch_mqprio.c
+@@ -152,7 +152,7 @@ static int mqprio_parse_opt(struct net_device *dev, struct tc_mqprio_qopt *qopt,
+ static const struct
+ nla_policy mqprio_tc_entry_policy[TCA_MQPRIO_TC_ENTRY_MAX + 1] = {
+ 	[TCA_MQPRIO_TC_ENTRY_INDEX]	= NLA_POLICY_MAX(NLA_U32,
+-							 TC_QOPT_MAX_QUEUE),
++							 TC_QOPT_MAX_QUEUE - 1),
+ 	[TCA_MQPRIO_TC_ENTRY_FP]	= NLA_POLICY_RANGE(NLA_U32,
+ 							   TC_FP_EXPRESS,
+ 							   TC_FP_PREEMPTIBLE),
 -- 
 2.39.5
 
