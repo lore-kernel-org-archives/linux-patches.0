@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94BD2F7461;
-	Tue, 12 Aug 2025 17:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18F786331;
+	Tue, 12 Aug 2025 17:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020606; cv=none; b=JOKjXljFqAAhIx3I9j9wZ7bOiwAtxT+uJ0lr0yLnO3+eoJeeyrqKl0ikBQM53P/R+0fx8AUqX8SIgDip+9FUmnhS694MI2QqWnw1UU4IYTwr/uvBI146Zp3XeFH69Ne6LoBm/dg4/l0AhumACgBFKMxj0lclNtfDbXx0VwJevRg=
+	t=1755020609; cv=none; b=rDK/GW5bS9Ou+VV/0zrzojJo0cO6KzZ4dOL4NUl0A2g5Uwd+WHBopPddWAJVs7lqrF1da+O3USTDfVrlxA5z7VQaHXw2kKsGrEhah/Ta4aHsXY44yDql+CR5sMe9VLAbvXq4Tk1UAyBy5iawabvxsWd+GR2Oc35zLo99rq6mmGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020606; c=relaxed/simple;
-	bh=R56aCXlkcUjxJvIwE/tjwzgqZhiM+iUtfYX1CroICPo=;
+	s=arc-20240116; t=1755020609; c=relaxed/simple;
+	bh=1zMscYCaod19EM4wqE1S3oan6fFitUnH//UTi2khAiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gA/U0VNIRv7AyC6Q+eWGP/b0vCbz2uHPF8dtwgzFIx/E3f5NPCJGs7FRQALqY6s8SvZPbMJRihYSaHEtsHVChQ98yyI5EM+0ZyP97Y6HfyEgt6hDV6XrR/LoFQLshU/i1f1zs3fRUG0RYPFNqJwrJbzGwsBXE216/qF+IybfNDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2K4JgZhU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ue3WEIs1pBJ8MXLkLVZnPfrbmY7C6Wy9iy0lwtUqRMhuK4NpI6Ah1cVDCyDP8TDdrxcHotfk20oZ2L1jo4cl9/1oWjgxFfCDVGKMvjneQyCamyXDyMJ6LG6W/X4FIWuGyViWpj1pnoATZ93zqQykDYv22yrhQF/99erx4JlbfHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vk+Hsair; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2K4JgZhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BB7C4CEF0;
-	Tue, 12 Aug 2025 17:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vk+Hsair"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B833C4CEF0;
+	Tue, 12 Aug 2025 17:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020606;
-	bh=R56aCXlkcUjxJvIwE/tjwzgqZhiM+iUtfYX1CroICPo=;
+	s=korg; t=1755020609;
+	bh=1zMscYCaod19EM4wqE1S3oan6fFitUnH//UTi2khAiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2K4JgZhUh401cJslgGlfdCCkiD2poQb3nFjeM5FyXS807QBVRlpyHExsXN1IhXbbU
-	 wXfTxDnH/gC+ZBQ4qNIGX/NeQouJFhfJUPzCZaa6vuslB8tYl3BAHJFosDWjKoh54v
-	 QenpSkI9yYpy+PLf6tYbP2OQmnd8A11n6i0X1+fg=
+	b=vk+HsairQdCvQ6r6LCwlKIoFbJuGe4G2GJJLMg+nUgzTxrjNIelPHji/FGb5r2G9o
+	 4FjdP24FqBgx9S/vEX/5h0ch6hjg+ovcdCpUJ0kolJLh6LjJEz6HlySZ8/NJTmMwFL
+	 gvq5KwE/KgWoRw1auCug4kE4Ao0LNMZAfcLh5jx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/253] selftests/tracing: Fix false failure of subsystem event test
-Date: Tue, 12 Aug 2025 19:28:04 +0200
-Message-ID: <20250812172952.817926549@linuxfoundation.org>
+Subject: [PATCH 6.1 097/253] drm/rockchip: cleanup fb when drm_gem_fb_afbc_init failed
+Date: Tue, 12 Aug 2025 19:28:05 +0200
+Message-ID: <20250812172952.858667512@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -52,83 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 213879061a9c60200ba971330dbefec6df3b4a30 ]
+[ Upstream commit 099593a28138b48feea5be8ce700e5bc4565e31d ]
 
-The subsystem event test enables all "sched" events and makes sure there's
-at least 3 different events in the output. It used to cat the entire trace
-file to | wc -l, but on slow machines, that could last a very long time.
-To solve that, it was changed to just read the first 100 lines of the
-trace file. This can cause false failures as some events repeat so often,
-that the 100 lines that are examined could possibly be of only one event.
+In the function drm_gem_fb_init_with_funcs, the framebuffer (fb)
+and its corresponding object ID have already been registered.
 
-Instead, create an awk script that looks for 3 different events and will
-exit out after it finds them. This will find the 3 events the test looks
-for (eventually if it works), and still exit out after the test is
-satisfied and not cause slower machines to run forever.
+So we need to cleanup the drm framebuffer if the subsequent
+execution of drm_gem_fb_afbc_init fails.
 
-Link: https://lore.kernel.org/r/20250721134212.53c3e140@batman.local.home
-Reported-by: Tengda Wu <wutengda@huaweicloud.com>
-Closes: https://lore.kernel.org/all/20250710130134.591066-1-wutengda@huaweicloud.com/
-Fixes: 1a4ea83a6e67 ("selftests/ftrace: Limit length in subsystem-enable tests")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Directly call drm_framebuffer_put to ensure that all fb related
+resources are cleanup.
+
+Fixes: 7707f7227f09 ("drm/rockchip: Add support for afbc")
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250509031607.2542187-1-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ftrace/test.d/event/subsystem-enable.tc   | 28 +++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_fb.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-index b7c8f29c09a9..65916bb55dfb 100644
---- a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-+++ b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-@@ -14,11 +14,35 @@ fail() { #msg
-     exit_fail
- }
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_fb.c b/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
+index 092bf863110b..9545ee64a90a 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
+@@ -82,16 +82,9 @@ rockchip_fb_create(struct drm_device *dev, struct drm_file *file,
+ 	}
  
-+# As reading trace can last forever, simply look for 3 different
-+# events then exit out of reading the file. If there's not 3 different
-+# events, then the test has failed.
-+check_unique() {
-+    cat trace | grep -v '^#' | awk '
-+	BEGIN { cnt = 0; }
-+	{
-+	    for (i = 0; i < cnt; i++) {
-+		if (event[i] == $5) {
-+		    break;
-+		}
-+	    }
-+	    if (i == cnt) {
-+		event[cnt++] = $5;
-+		if (cnt > 2) {
-+		    exit;
-+		}
-+	    }
-+	}
-+	END {
-+	    printf "%d", cnt;
-+	}'
-+}
-+
- echo 'sched:*' > set_event
- 
- yield
- 
--count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
-+count=`check_unique`
- if [ $count -lt 3 ]; then
-     fail "at least fork, exec and exit events should be recorded"
- fi
-@@ -29,7 +53,7 @@ echo 1 > events/sched/enable
- 
- yield
- 
--count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
-+count=`check_unique`
- if [ $count -lt 3 ]; then
-     fail "at least fork, exec and exit events should be recorded"
- fi
+ 	if (drm_is_afbc(mode_cmd->modifier[0])) {
+-		int ret, i;
+-
+ 		ret = drm_gem_fb_afbc_init(dev, mode_cmd, afbc_fb);
+ 		if (ret) {
+-			struct drm_gem_object **obj = afbc_fb->base.obj;
+-
+-			for (i = 0; i < info->num_planes; ++i)
+-				drm_gem_object_put(obj[i]);
+-
+-			kfree(afbc_fb);
++			drm_framebuffer_put(&afbc_fb->base);
+ 			return ERR_PTR(ret);
+ 		}
+ 	}
 -- 
 2.39.5
 
