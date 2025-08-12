@@ -1,99 +1,83 @@
-Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
+Received: from mailout02.platinum-mail.de (mx02.platinum-mail.de [89.58.18.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEB82D0611
-	for <patches@lists.linux.dev>; Tue, 12 Aug 2025 20:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD3C245008
+	for <patches@lists.linux.dev>; Tue, 12 Aug 2025 21:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.18.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755030187; cv=none; b=Lc7PwsJCfAtnVd8BBzcKnudSzLZg/ny799Bk1tENdo/U+t+bFtxDLmROu/9FP4wT83UolCoWI3aBKo12hheHgd6UCGHBPmGWpDbWsDK8h04Vc+OHB77W+4qDKNn/LrtPd1PssmXyrZcqvQN0sC3hY5Xr8b/WvjJDuCbwRhHo94k=
+	t=1755032963; cv=none; b=bpd33kWi8tNhaSqW+QfAFMlOThUhmsxquGNznQ51iTv8mRSbfFeaqEQ4AiRthSzKNGUBHp5WA+x/XWuJxMY00zTieNAEkNbyUzAlldLw7omViOkkfT0mgvY3DLJVryIZFucqi+ZpFlnzzgpEHX1m0l4hJvNQCvSVORMbwlSYDdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755030187; c=relaxed/simple;
-	bh=dRa7uPXdBkE0022iiO5LOsjaaaGyOM5No8nalaKQ9T4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EmBeV8qapUx2fiNgB0yUn1PwH+DI6efF2eaRSAJLKeUMugTKh7DRmK+MVgyQmCj7h4DiWk+pm/7246R9KxiWWYOVndwIPSRU4fKJ6Y6oNLIGhgMspV1uurdF4CxyBkvJ2ZfPImwjaaNYTMKP9LPczPYygfyGuZKfc8x6WbF/7o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=TDWXNJHp; arc=none smtp.client-ip=193.68.50.107
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
+	s=arc-20240116; t=1755032963; c=relaxed/simple;
+	bh=nlz94/12tGKOGIP7I3mDjoSbnHBOPTZwWTMcmg5RrJo=;
+	h=Mime-Version:Date:Message-Id:Cc:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=kW4xRMbEZV84je+o3rJbnqNdqClPIUr3LU1Tguw72n6y1y/m418ob/sW/3QIN4jxDTjCoI/DC1KeRT+MRhTMg5re2LVZFnX0k8wa9UwPpAOBz0X2oHwA+38ErXvC0iyBollSXEW7CvJuFThXNTCipYS3LWDGkeIvqaRywLO3Cok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=achill.org; spf=pass smtp.mailfrom=achill.org; dkim=pass (2048-bit key) header.d=achill.org header.i=@achill.org header.b=Z7bOETaj; arc=none smtp.client-ip=89.58.18.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=achill.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=achill.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="TDWXNJHp"
-Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
-	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 9FB3CA037B;
-	Tue, 12 Aug 2025 22:23:00 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:from:from:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=mail; bh=Nh1m1iWO/nB4Jszb2T+R
-	g13RHjnrAzOyavUGPIC+VjI=; b=TDWXNJHpLnf/KFadUhMNW1P/DSNX/shAW63B
-	wfMro9tGjuPUgk/ACMCq+8OMkFrLPizhC1YmPR9ZliwOOc6NigGOLYkX7KWi424v
-	I/47mTGN5MCqoe4JRXrmH1NlJuxLr39Sz7lTYyIVBxqLDAdP3ulBPNaOppHoqSbn
-	TkxLMKKdj/lMAum2Wlzl/WZYpWUaQmDoZr7iFzfW/LcGQ6hKfkBbxeeOSK0J/fYS
-	GMDJRciI4B0BMhOTXzQtHCFTHv+esAJzfqUe3HftHZnLot9e7goD8UjI2veuHTS5
-	6kuNr2mkW2wQj4vEspGKx1v3X92mM+kpo90S7C8EUd+8wAkxytGwV/73Xw4vhnXN
-	GLihibi61LU9Ihm060+hJbfEjuwx3b6jOD7IyoQNp+T5t9IH6dBgdmse26Kct8vR
-	snakMknXX38PFCHR6yzgaMAMTgKkhPD3M8VaMxHj6gP47w+wSxJS2iynvFrqKfN8
-	Ooh7/4t+vufHHtYGTPsWXdj0F2AXf2g2ziXSfEndQhAJ2CVucjiZnXmI1T8hszSQ
-	iOOerntKRCZOD5DPmKH1qBwtLgc7G/r0OSu9frskZtwH/4t/0YXc8AG4jS49T9vI
-	fZR0fKHTBMEmqa7pWb/dX215a3fTJb2i2srenkRwrHko7PbJrVoiKME+tHxrYRA3
-	3WY+DYM=
-Message-ID: <73f6a64b-89b5-412a-94d7-07cdfa07cfb5@prolan.hu>
-Date: Tue, 12 Aug 2025 22:22:59 +0200
+	dkim=pass (2048-bit key) header.d=achill.org header.i=@achill.org header.b="Z7bOETaj"
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mailout02.platinum-mail.de (Mail Service) with ESMTPS id E8D8A9A2961
+	for <patches@lists.linux.dev>; Tue, 12 Aug 2025 21:09:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; d=achill.org; s=mail; c=relaxed/simple;
+	t=1755032955; h=date:message-id:subject:from:to;
+	bh=nlz94/12tGKOGIP7I3mDjoSbnHBOPTZwWTMcmg5RrJo=;
+	b=Z7bOETajqvAhvQ58ek6rJyB+11LjoeHvS2+OxoVIs4yJVvLqng4fI9xTChPxfLsp5oc4/Ux5YWt
+	rrhGqTNhQmOhrr3KSVY842Xam0RmfBev4fe+TcrNoaFVzArguXnYLITg3fzw8HnINsKcsNmW1B7Fz
+	+9rNqJjDOHu8y6Or1iqdm1SZPPROaZ4OuytugAaW5N9zwTTewQwF3vbr5Z90L9x6VabUDCZPSTodr
+	dlqhuiD6unpSDM0mj945tR93UVlrRcOQDnZVDiOO7+HFmhhT7On8rf8XJ5DX98N3vmOMeGRDrqoBk
+	8JGRK8Qg4rpg3EXA+6C+XQBCAjZC+VcXvUtw==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.16 519/627] net: mdio_bus: Use devm for getting reset
- GPIO
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, Csaba Buday <buday.csaba@prolan.hu>, "Andrew
- Lunn" <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, Sasha Levin
-	<sashal@kernel.org>
-References: <20250812173419.303046420@linuxfoundation.org>
- <20250812173450.953470487@linuxfoundation.org>
-Content-Language: en-US
-From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
-In-Reply-To: <20250812173450.953470487@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
- ATLAS.intranet.prolan.hu (10.254.0.229)
-X-EsetResult: clean, is OK
-X-EsetId: 37303A296767155E61746B
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 12 Aug 2025 23:09:14 +0200
+Message-Id: <DC0R9CV2PQCG.26IYGBPDZBPR2@achill.org>
+Cc: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+ <torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+ <linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+ <lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+ <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+ <srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>,
+ <hargar@microsoft.com>, <broonie@kernel.org>
+Subject: Re: [PATCH 6.15 000/480] 6.15.10-rc1 review
+From: "Achill Gilgenast" <achill@achill.org>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ <stable@vger.kernel.org>
+X-Greeting: Hi mom! Look, I'm in somebodys mail client!
+X-Mailer: aerc 0.20.1
+References: <20250812174357.281828096@linuxfoundation.org>
+In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue Aug 12, 2025 at 7:43 PM CEST, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.15.10 release.
+> There are 480 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 14 Aug 2025 17:42:20 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.10=
+-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
+ linux-6.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-On 2025. 08. 12. 19:33, Greg Kroah-Hartman wrote:
-> 6.16-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Bence Csókás <csokas.bence@prolan.hu>
-> 
-> [ Upstream commit 3b98c9352511db627b606477fc7944b2fa53a165 ]
-> 
-> Commit bafbdd527d56 ("phylib: Add device reset GPIO support") removed
-> devm_gpiod_get_optional() in favor of the non-devres managed
-> fwnode_get_named_gpiod(). When it was kind-of reverted by commit
-> 40ba6a12a548 ("net: mdio: switch to using gpiod_get_optional()"), the devm
-> functionality was not reinstated. Nor was the GPIO unclaimed on device
-> remove. This leads to the GPIO being claimed indefinitely, even when the
-> device and/or the driver gets removed.
-> 
-> Fixes: bafbdd527d56 ("phylib: Add device reset GPIO support")
-> Fixes: 40ba6a12a548 ("net: mdio: switch to using gpiod_get_optional()")
-> Cc: Csaba Buday <buday.csaba@prolan.hu>
-> Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-> Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-> Link: https://patch.msgid.link/20250728153455.47190-2-csokas.bence@prolan.hu
-> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+Thanks, build-tested on all Alpine architectures and boot-tested on
+x86_64.
 
-This was reverted and replaced by:
-https://git.kernel.org/netdev/net/c/8ea25274ebaf
-
-Please pick that instead.
-
-Bence
-
+Tested-By: Achill Gilgenast <achill@achill.org>=
