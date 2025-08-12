@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DBA2DE1E2;
-	Tue, 12 Aug 2025 17:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67666268C73;
+	Tue, 12 Aug 2025 17:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021423; cv=none; b=PWAvAPMgjaNjYv+L9i+Abua+mx3hKBgUw5Hz2QEebEQwTWX+2dMXY8kCdrnLMNwNvJbcVpCGXesBfDWZJXTf7lCKGSdcWC39jyHNvmM08KP+m54UUdjdvWD0a4pj7KUNZwI1OIyvxLmrK+E/b2DruZDGfBEb3+UgsEYS0aCvEqs=
+	t=1755021426; cv=none; b=eJDaSXSdGDRaF32YzvMiGEM6y/MFoB/cvvSPZM9nrY3RSoj9cSuYUHA8OUgKTkx03TxXHtvxCe9Mmcxb2nPkzeTtnSQw5jek2rZZvr7vI2B5or1Q9BS2HLYeoSLzBQ1pHmnbuE4UMYuythRXWPvp2dErr0BYBSzyQmoNPk9NKwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021423; c=relaxed/simple;
-	bh=tAab+al2OFsDkiidbZRhPsYvnwhappmTbo/RFVZ1k3c=;
+	s=arc-20240116; t=1755021426; c=relaxed/simple;
+	bh=IzWe0FlXtO3MnTCHXeekdykiAPgYNm5zIDwOm6JAktU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9ottgeahb1LZP/kYuRXFNkI1FZG94edIuhMNGRN2k3w07NVQbDJqtWP20HFB4uPe8Ug3yGis28Beal6vApmW4VOtKAUyb2cKB/zg0+ni4c8bsHMOS0rqnN0QRgGfPoTgZS94JP7fPVWnv7eibg+tS09j8njDWju6bPKED4wwxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zp5IQN5z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m+NsfXBsLrqnAzEAaiHRIvn4HWPwl9/SUyipjmuUlDO4toNP8ASajFpzyBH5ARtU3FTYKknSyNeCRtP9DfOLvbfZ7IJKcYMl8ygHH5kajssc+vX0lrnQulAGKR+CSweQgy3kZIAJ4usEzI2miUaqMu4CY2UP3+CiMsg5i9yjzOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcX55j4E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zp5IQN5z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518A1C4CEF0;
-	Tue, 12 Aug 2025 17:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcX55j4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8565C4CEF0;
+	Tue, 12 Aug 2025 17:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021422;
-	bh=tAab+al2OFsDkiidbZRhPsYvnwhappmTbo/RFVZ1k3c=;
+	s=korg; t=1755021426;
+	bh=IzWe0FlXtO3MnTCHXeekdykiAPgYNm5zIDwOm6JAktU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zp5IQN5zcsEEELzdvxvrgRvbzFrbBzJ5wc1hiTCAh6pzF+taYhvzjl03Kn11OeAqO
-	 vsJyvQtat7rtcrosjCf6gr7jivn4adk/y3yG9irVNkWzeUTFg2067GgmzN5Ms2QLhw
-	 yHn4FD+Nnv1xfeXWJciuEBY4tNuhSZCILWQN3i2A=
+	b=YcX55j4EQb3SQGExuLRvUMAjXoga4PBCZnA0FkovgtBnHI6yQq0cHieRC0yxXSXD3
+	 YWh6ybeLM9m1UbTxw83/F2XQxPaiApyFhjaqbfjxth7CK8tTs9sgiow/Ym5BaMMXVa
+	 xQn4M7kmg4pPR2CFtRjgJ3j5HR53Ys+48gDssmXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/262] power: supply: max14577: Handle NULL pdata when CONFIG_OF is not set
-Date: Tue, 12 Aug 2025 19:28:24 +0200
-Message-ID: <20250812172958.043255726@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 243/253] smb: server: Fix extension string in ksmbd_extract_shortname()
+Date: Tue, 12 Aug 2025 19:30:31 +0200
+Message-ID: <20250812172959.200375072@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 2937f5d2e24eefef8cb126244caec7fe3307f724 ]
+commit 8e7d178d06e8937454b6d2f2811fa6a15656a214 upstream.
 
-When the kernel is not configured  CONFIG_OF, the max14577_charger_dt_init
-function returns NULL. Fix the max14577_charger_probe functionby returning
--ENODATA instead of potentially passing a NULL pointer to PTR_ERR.
+In ksmbd_extract_shortname(), strscpy() is incorrectly called with the
+length of the source string (excluding the NUL terminator) rather than
+the size of the destination buffer. This results in "__" being copied
+to 'extension' rather than "___" (two underscores instead of three).
 
-This fixes the below smatch warning:
-max14577_charger_probe() warn: passing zero to 'PTR_ERR'
+Use the destination buffer size instead to ensure that the string "___"
+(three underscores) is copied correctly.
 
-Fixes: e30110e9c96f ("charger: max14577: Configure battery-dependent settings from DTS and sysfs")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250519061601.8755-1-hanchunchao@inspur.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/max14577_charger.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/smb_common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/max14577_charger.c b/drivers/power/supply/max14577_charger.c
-index 96f9de775043..daa5a6d41bb4 100644
---- a/drivers/power/supply/max14577_charger.c
-+++ b/drivers/power/supply/max14577_charger.c
-@@ -501,7 +501,7 @@ static struct max14577_charger_platform_data *max14577_charger_dt_init(
- static struct max14577_charger_platform_data *max14577_charger_dt_init(
- 		struct platform_device *pdev)
- {
--	return NULL;
-+	return ERR_PTR(-ENODATA);
- }
- #endif /* CONFIG_OF */
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -508,7 +508,7 @@ int ksmbd_extract_shortname(struct ksmbd
  
-@@ -572,7 +572,7 @@ static int max14577_charger_probe(struct platform_device *pdev)
- 	chg->max14577 = max14577;
- 
- 	chg->pdata = max14577_charger_dt_init(pdev);
--	if (IS_ERR_OR_NULL(chg->pdata))
-+	if (IS_ERR(chg->pdata))
- 		return PTR_ERR(chg->pdata);
- 
- 	ret = max14577_charger_reg_init(chg);
--- 
-2.39.5
-
+ 	p = strrchr(longname, '.');
+ 	if (p == longname) { /*name starts with a dot*/
+-		strscpy(extension, "___", strlen("___"));
++		strscpy(extension, "___", sizeof(extension));
+ 	} else {
+ 		if (p) {
+ 			p++;
 
 
