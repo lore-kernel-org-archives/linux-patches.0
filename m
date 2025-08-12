@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A17F21A43B;
-	Tue, 12 Aug 2025 19:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D903594E;
+	Tue, 12 Aug 2025 19:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026219; cv=none; b=FClqafRbjYDTeT3AUmZOrU1X6Wj+dmNEzEe+SIIvJFPxvhSdd6bWD090PDpQUckLCdwHRNzSuCfarlNTZ1TLRFB/aTEbY4V7dAzl/CJvZMhElD5MdLiugu6wheYF5FokWECZFcafbslD6f4seb7yIqlVHUQT8qenVXFPgQq5vek=
+	t=1755026222; cv=none; b=ZfpSKJ8tCRj7VXgPgdmcl3t+GgbABkrGwapjVWjsV+MkIOd69LRPxpn45E1unQPX9bNfdR4RWyHEO4CKaiJOw8eUQIUwU5oGkan6OG6Le1Iusl4yspQG11GT4CcTIpPGT58ICAIqBn4DOZlUvZgvEX0nA1FUc3VIC3FAVdvI0+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026219; c=relaxed/simple;
-	bh=/fbNuXVRXP6313Ls3EOhSHDlr0iPRhYGgysp6YBJ6Hs=;
+	s=arc-20240116; t=1755026222; c=relaxed/simple;
+	bh=D0QpgPky37kJA3Dz5rjAXw9iWajP+usl00LdUjrhk5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VFZ0bibG3I/Wk4tBC8EKqQNZU7ZiBf0RI7HCA8YEIZHQhK/ZWYx7DhI46UzlNfv7k0lbfvdKHxVyzuubglMkEoh2FDVMkJD0+iAR7Tt/ogNLi3JPtNN3ARdoa5bjD2zF04dVAIcLYADckt6ffbPwitaJsFw/oK1izfbtmWZIKBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dU4S8StP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKcbGqTlgAXcLM1E+ecsY84zWaU9gHqCgfODlT9FmBE74cEbTMCl5mtq/vfL1R1jxFd5vwxhg5RelgTFB3PCXhAx1Q5IAeJkZY01MNhnhGgsxkcKyS2mERVAE9leNeMmk51PDWpfUqeR54GJ/pIkMHJBPKtgG3E7QgDTilJxrTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xABSi+XN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dU4S8StP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D221C4CEF0;
-	Tue, 12 Aug 2025 19:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xABSi+XN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB47EC4CEF0;
+	Tue, 12 Aug 2025 19:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026219;
-	bh=/fbNuXVRXP6313Ls3EOhSHDlr0iPRhYGgysp6YBJ6Hs=;
+	s=korg; t=1755026222;
+	bh=D0QpgPky37kJA3Dz5rjAXw9iWajP+usl00LdUjrhk5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dU4S8StPUl9GaupVp5p9XIe5lPx7S9t0gQyaBtj6TQYfAkgmHx8/QPfDjRCKzRNr2
-	 fRW8ODIf/HP2l6rIrmlEjOc2WZ+REOV60LbzG6r1EkOxgTyambww/yzIF4f6Re5qsQ
-	 BEZcJh/lZLcNoZo6MQudp4sFjHQBJkexhDz0+mOk=
+	b=xABSi+XNCq8Ws3OG+x1tbLJrQtLNI+SbZoS+48Dp9UtkYugu/mVrLLtoH8Y6XjnQ6
+	 xttrmTm1u3i3pKnPhZGU6OA9Zjz7Q+xr2VNuqxYyjcYpeRB40AXn2yK78OtL/zKpnw
+	 iVcTGMrsYCsrRq/mA9EbVzW3ahUyXYukBCeN/0DI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 273/480] RDMA/hns: Fix -Wframe-larger-than issue
-Date: Tue, 12 Aug 2025 19:48:01 +0200
-Message-ID: <20250812174408.702760838@linuxfoundation.org>
+Subject: [PATCH 6.15 274/480] tracing: Use queue_rcu_work() to free filters
+Date: Tue, 12 Aug 2025 19:48:02 +0200
+Message-ID: <20250812174408.742587968@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,65 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 79d56805c5068f2bc81518043e043c3dedd1c82a ]
+[ Upstream commit 3aceaa539cfe3a2e62bd92e6697d9fae1c20c0be ]
 
-Fix -Wframe-larger-than issue by allocating memory for qpc struct
-with kzalloc() instead of using stack memory.
+Freeing of filters requires to wait for both an RCU grace period as well as
+a RCU task trace wait period after they have been detached from their
+lists. The trace task period can be quite large so the freeing of the
+filters was moved to use the call_rcu*() routines. The problem with that is
+that the callback functions of call_rcu*() is done from a soft irq and can
+cause latencies if the callback takes a bit of time.
 
-Fixes: 606bf89e98ef ("RDMA/hns: Refactor for hns_roce_v2_modify_qp function")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506240032.CSgIyFct-lkp@intel.com/
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250703113905.3597124-7-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The filters are freed per event in a system and the syscalls system
+contains an event per system call, which can be over 700 events. Freeing 700
+filters in a bottom half is undesirable.
+
+Instead, move the freeing to use queue_rcu_work() which is done in task
+context.
+
+Link: https://lore.kernel.org/all/9a2f0cd0-1561-4206-8966-f93ccd25927f@paulmck-laptop/
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250609131732.04fd303b@gandalf.local.home
+Fixes: a9d0aab5eb33 ("tracing: Fix regression of filter waiting a long time on RCU synchronization")
+Suggested-by: "Paul E. McKenney" <paulmck@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ kernel/trace/trace_events_filter.c | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 1c55ed69b560..07d93cf4557e 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5371,11 +5371,10 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
+diff --git a/kernel/trace/trace_events_filter.c b/kernel/trace/trace_events_filter.c
+index cca676f651b1..8fc5323a2ed3 100644
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -1342,13 +1342,14 @@ struct filter_list {
+ 
+ struct filter_head {
+ 	struct list_head	list;
+-	struct rcu_head		rcu;
++	union {
++		struct rcu_head		rcu;
++		struct rcu_work		rwork;
++	};
+ };
+ 
+-
+-static void free_filter_list(struct rcu_head *rhp)
++static void free_filter_list(struct filter_head *filter_list)
  {
- 	struct hns_roce_dev *hr_dev = to_hr_dev(ibqp->device);
- 	struct hns_roce_qp *hr_qp = to_hr_qp(ibqp);
--	struct hns_roce_v2_qp_context ctx[2];
--	struct hns_roce_v2_qp_context *context = ctx;
--	struct hns_roce_v2_qp_context *qpc_mask = ctx + 1;
-+	struct hns_roce_v2_qp_context *context;
-+	struct hns_roce_v2_qp_context *qpc_mask;
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
--	int ret;
-+	int ret = -ENOMEM;
+-	struct filter_head *filter_list = container_of(rhp, struct filter_head, rcu);
+ 	struct filter_list *filter_item, *tmp;
  
- 	if (attr_mask & ~IB_QP_ATTR_STANDARD_BITS)
- 		return -EOPNOTSUPP;
-@@ -5386,7 +5385,11 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
- 	 * we should set all bits of the relevant fields in context mask to
- 	 * 0 at the same time, else set them to 0x1.
- 	 */
--	memset(context, 0, hr_dev->caps.qpc_sz);
-+	context = kvzalloc(sizeof(*context), GFP_KERNEL);
-+	qpc_mask = kvzalloc(sizeof(*qpc_mask), GFP_KERNEL);
-+	if (!context || !qpc_mask)
-+		goto out;
-+
- 	memset(qpc_mask, 0xff, hr_dev->caps.qpc_sz);
- 
- 	ret = hns_roce_v2_set_abs_fields(ibqp, attr, attr_mask, cur_state,
-@@ -5428,6 +5431,8 @@ static int hns_roce_v2_modify_qp(struct ib_qp *ibqp,
- 		clear_qp(hr_qp);
- 
- out:
-+	kvfree(qpc_mask);
-+	kvfree(context);
- 	return ret;
+ 	list_for_each_entry_safe(filter_item, tmp, &filter_list->list, list) {
+@@ -1359,9 +1360,20 @@ static void free_filter_list(struct rcu_head *rhp)
+ 	kfree(filter_list);
  }
  
++static void free_filter_list_work(struct work_struct *work)
++{
++	struct filter_head *filter_list;
++
++	filter_list = container_of(to_rcu_work(work), struct filter_head, rwork);
++	free_filter_list(filter_list);
++}
++
+ static void free_filter_list_tasks(struct rcu_head *rhp)
+ {
+-	call_rcu(rhp, free_filter_list);
++	struct filter_head *filter_list = container_of(rhp, struct filter_head, rcu);
++
++	INIT_RCU_WORK(&filter_list->rwork, free_filter_list_work);
++	queue_rcu_work(system_wq, &filter_list->rwork);
+ }
+ 
+ /*
+@@ -1458,7 +1470,7 @@ static void filter_free_subsystem_filters(struct trace_subsystem_dir *dir,
+ 	tracepoint_synchronize_unregister();
+ 
+ 	if (head)
+-		free_filter_list(&head->rcu);
++		free_filter_list(head);
+ 
+ 	list_for_each_entry(file, &tr->events, list) {
+ 		if (file->system != dir || !file->filter)
+@@ -2303,7 +2315,7 @@ static int process_system_preds(struct trace_subsystem_dir *dir,
+ 	return 0;
+  fail:
+ 	/* No call succeeded */
+-	free_filter_list(&filter_list->rcu);
++	free_filter_list(filter_list);
+ 	parse_error(pe, FILT_ERR_BAD_SUBSYS_FILTER, 0);
+ 	return -EINVAL;
+  fail_mem:
+@@ -2313,7 +2325,7 @@ static int process_system_preds(struct trace_subsystem_dir *dir,
+ 	if (!fail)
+ 		delay_free_filter(filter_list);
+ 	else
+-		free_filter_list(&filter_list->rcu);
++		free_filter_list(filter_list);
+ 
+ 	return -ENOMEM;
+ }
 -- 
 2.39.5
 
