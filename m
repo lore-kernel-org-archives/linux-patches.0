@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5A01DB92A;
-	Tue, 12 Aug 2025 18:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635902F90DF;
+	Tue, 12 Aug 2025 18:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023803; cv=none; b=oc3KYFAgTqI/eU+U+6cuGQRu2Hv275nl09QEWeJ2JuLfLyilzyC5Q7IDxIq+ZA4tNxCK/8OALRifb7DuIm5XLxfblFcWxFH90dtWTddDMMtzUzHKn1uq0Cx5t4YGtfARbjXoi9KbigDt/30mAD59PwaSPtcU81u0cpPafWvR0UU=
+	t=1755023807; cv=none; b=NGDePGvhEAz5tG10sUDicKij8AxF8bl3Chuon37Vf2z6LoPqbLHbFFqOYZIK/Oy0697mvRyZeOjijhLttg/SIFBh4hD7f1vjpPvOYW0Hwwpn3ty6Dvc3dG6Cqj9F4ljCf2JQowGDvJxAXz2Im0HKj0RnwBTQ/kRwNCTbLIiigRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023803; c=relaxed/simple;
-	bh=F3LbTngjBDo/znU0NAyPVgNoqndhHsDPZ4xeREmGkuk=;
+	s=arc-20240116; t=1755023807; c=relaxed/simple;
+	bh=514N8JRHvZUm9L+GQP7g75Qowaf61K8A+ca6wqx73+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjFusfKkNKYD+s28tHlDvyEthr9LNsRfFcrZJjYwZvMX52gQVESjCK5kMsBvrzIYTKkjdy1oueIur94tosh8dJ2RQI4d2xItjv+qqSf0a+3NJwWmet77yl8I0eW1mm0B4sOzW0L1tCoc8C0UqBQCMOxLjwp4XsQn0xO2RAA3qOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLXkX+ko; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YSjC6zJC6U2/NWnMbr7dnSmMByTPmaN40ZJyBjvTkHTDPt9dMBTZbjTsShVvyR5xbsv83c0pwzZBkCDo/QXjhuBG151tYjDhHx/7PFcZLALr7E2Go1q8iNdRxB7GdECwyFyzG2LU8y+cE/4iMsc6loOUXltdB6iiVA1rFaSe90Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0T2WKiP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLXkX+ko"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C50BC4CEF0;
-	Tue, 12 Aug 2025 18:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0T2WKiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6B0C4CEF0;
+	Tue, 12 Aug 2025 18:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023803;
-	bh=F3LbTngjBDo/znU0NAyPVgNoqndhHsDPZ4xeREmGkuk=;
+	s=korg; t=1755023807;
+	bh=514N8JRHvZUm9L+GQP7g75Qowaf61K8A+ca6wqx73+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cLXkX+kouUTxyUisfHRXUTcv0m8MEMsX0RpOME+kK1ph5cjGAeSGtw0+WUZpeTlBV
-	 itXzAmYqRWevSfjf5Uz55IpARSCHAmrjgBFUdSy1ES+KEUow3Sgk3bGymVkIUSkXDp
-	 KYG/rS+ITMcsBNeM/cybv/KZfvVn0HqQX6Uozc6Q=
+	b=A0T2WKiP9zNy4q/osz0pfVuiheY++BYGCr7s1/zuUrVbwny8yl/NvpY6BdQC5KKBk
+	 ia7tSycwWxx4Q34Rme1N37E3Xk1CWj2SxnKNR8o5/PiUjtMvBlVRUcqM8HJb8fGvIq
+	 8CZ8IXW223UFSpceWE33g3Flrzip0wezrsUC/qik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@resnulli.us>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot+705c61d60b091ef42c04@syzkaller.appspotmail.com,
-	syzbot+71fd22ae4b81631e22fd@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Emily Deng <Emily.Deng@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 169/627] team: replace team lock with rtnl lock
-Date: Tue, 12 Aug 2025 19:27:44 +0200
-Message-ID: <20250812173425.709715049@linuxfoundation.org>
+Subject: [PATCH 6.16 187/627] drm/amdkfd: Move the process suspend and resume out of full access
+Date: Tue, 12 Aug 2025 19:28:02 +0200
+Message-ID: <20250812173426.388029853@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -55,423 +52,312 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Emily Deng <Emily.Deng@amd.com>
 
-[ Upstream commit bfb4fb77f9a8ce33ce357224569eae5564eec573 ]
+[ Upstream commit 54f7a24e1437d66c9ff36d727a9dff1beeeab429 ]
 
-syszbot reports various ordering issues for lower instance locks and
-team lock. Switch to using rtnl lock for protecting team device,
-similar to bonding. Based on the patch by Tetsuo Handa.
+For the suspend and resume process, exclusive access is not required.
+Therefore, it can be moved out of the full access section to reduce the
+duration of exclusive access.
 
-Cc: Jiri Pirko <jiri@resnulli.us>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: syzbot+705c61d60b091ef42c04@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=705c61d60b091ef42c04
-Reported-by: syzbot+71fd22ae4b81631e22fd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=71fd22ae4b81631e22fd
-Fixes: 6b1d3c5f675c ("team: grab team lock during team_change_rx_flags")
-Link: https://lkml.kernel.org/r/ZoZ2RH9BcahEB9Sb@nanopsycho.orion
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250623153147.3413631-1-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+v3:
+Move suspend processes before hardware fini.
+Remove twice call for bare metal.
+
+v4:
+Refine code
+
+Signed-off-by: Emily Deng <Emily.Deng@amd.com>
+Acked-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 14b2d71a9a24 ("drm/amdgpu/gfx10: fix KGQ reset sequence")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c              | 96 +++++++++++------------
- drivers/net/team/team_mode_activebackup.c |  3 +-
- drivers/net/team/team_mode_loadbalance.c  | 13 ++-
- include/linux/if_team.h                   |  3 -
- 4 files changed, 50 insertions(+), 65 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c    | 24 +++++++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h    | 25 ++++++---
+ .../drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c   |  4 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c    | 11 ++--
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c      |  4 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c       | 54 ++++++++++++-------
+ 6 files changed, 86 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index 8bc56186b2a3..17f07eb0ee52 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -933,7 +933,7 @@ static bool team_port_find(const struct team *team,
-  * Enable/disable port by adding to enabled port hashlist and setting
-  * port->index (Might be racy so reader could see incorrect ifindex when
-  * processing a flying packet, but that is not a problem). Write guarded
-- * by team->lock.
-+ * by RTNL.
-  */
- static void team_port_enable(struct team *team,
- 			     struct team_port *port)
-@@ -1660,8 +1660,6 @@ static int team_init(struct net_device *dev)
- 		goto err_options_register;
- 	netif_carrier_off(dev);
- 
--	lockdep_register_key(&team->team_lock_key);
--	__mutex_init(&team->lock, "team->team_lock_key", &team->team_lock_key);
- 	netdev_lockdep_set_classes(dev);
- 
- 	return 0;
-@@ -1682,7 +1680,8 @@ static void team_uninit(struct net_device *dev)
- 	struct team_port *port;
- 	struct team_port *tmp;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry_safe(port, tmp, &team->port_list, list)
- 		team_port_del(team, port->dev);
- 
-@@ -1691,9 +1690,7 @@ static void team_uninit(struct net_device *dev)
- 	team_mcast_rejoin_fini(team);
- 	team_notify_peers_fini(team);
- 	team_queue_override_fini(team);
--	mutex_unlock(&team->lock);
- 	netdev_change_features(dev);
--	lockdep_unregister_key(&team->team_lock_key);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+index d8ac4b1051a8..fe282b855734 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -248,18 +248,34 @@ void amdgpu_amdkfd_interrupt(struct amdgpu_device *adev,
+ 		kgd2kfd_interrupt(adev->kfd.dev, ih_ring_entry);
  }
  
- static void team_destructor(struct net_device *dev)
-@@ -1778,7 +1775,8 @@ static void team_change_rx_flags(struct net_device *dev, int change)
- 	struct team_port *port;
- 	int inc;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry(port, &team->port_list, list) {
- 		if (change & IFF_PROMISC) {
- 			inc = dev->flags & IFF_PROMISC ? 1 : -1;
-@@ -1789,7 +1787,6 @@ static void team_change_rx_flags(struct net_device *dev, int change)
- 			dev_set_allmulti(port->dev, inc);
- 		}
- 	}
--	mutex_unlock(&team->lock);
- }
- 
- static void team_set_rx_mode(struct net_device *dev)
-@@ -1811,14 +1808,14 @@ static int team_set_mac_address(struct net_device *dev, void *p)
- 	struct team *team = netdev_priv(dev);
- 	struct team_port *port;
- 
-+	ASSERT_RTNL();
-+
- 	if (dev->type == ARPHRD_ETHER && !is_valid_ether_addr(addr->sa_data))
- 		return -EADDRNOTAVAIL;
- 	dev_addr_set(dev, addr->sa_data);
--	mutex_lock(&team->lock);
- 	list_for_each_entry(port, &team->port_list, list)
- 		if (team->ops.port_change_dev_addr)
- 			team->ops.port_change_dev_addr(team, port);
--	mutex_unlock(&team->lock);
- 	return 0;
- }
- 
-@@ -1828,11 +1825,8 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
- 	struct team_port *port;
- 	int err;
- 
--	/*
--	 * Alhough this is reader, it's guarded by team lock. It's not possible
--	 * to traverse list in reverse under rcu_read_lock
--	 */
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	team->port_mtu_change_allowed = true;
- 	list_for_each_entry(port, &team->port_list, list) {
- 		err = dev_set_mtu(port->dev, new_mtu);
-@@ -1843,7 +1837,6 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
- 		}
- 	}
- 	team->port_mtu_change_allowed = false;
--	mutex_unlock(&team->lock);
- 
- 	WRITE_ONCE(dev->mtu, new_mtu);
- 
-@@ -1853,7 +1846,6 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
- 	list_for_each_entry_continue_reverse(port, &team->port_list, list)
- 		dev_set_mtu(port->dev, dev->mtu);
- 	team->port_mtu_change_allowed = false;
--	mutex_unlock(&team->lock);
- 
- 	return err;
- }
-@@ -1903,24 +1895,19 @@ static int team_vlan_rx_add_vid(struct net_device *dev, __be16 proto, u16 vid)
- 	struct team_port *port;
- 	int err;
- 
--	/*
--	 * Alhough this is reader, it's guarded by team lock. It's not possible
--	 * to traverse list in reverse under rcu_read_lock
--	 */
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry(port, &team->port_list, list) {
- 		err = vlan_vid_add(port->dev, proto, vid);
- 		if (err)
- 			goto unwind;
- 	}
--	mutex_unlock(&team->lock);
- 
- 	return 0;
- 
- unwind:
- 	list_for_each_entry_continue_reverse(port, &team->port_list, list)
- 		vlan_vid_del(port->dev, proto, vid);
--	mutex_unlock(&team->lock);
- 
- 	return err;
- }
-@@ -1930,10 +1917,10 @@ static int team_vlan_rx_kill_vid(struct net_device *dev, __be16 proto, u16 vid)
- 	struct team *team = netdev_priv(dev);
- 	struct team_port *port;
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	list_for_each_entry(port, &team->port_list, list)
- 		vlan_vid_del(port->dev, proto, vid);
--	mutex_unlock(&team->lock);
- 
- 	return 0;
- }
-@@ -1955,9 +1942,9 @@ static void team_netpoll_cleanup(struct net_device *dev)
+-void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool run_pm)
++void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool suspend_proc)
  {
- 	struct team *team = netdev_priv(dev);
- 
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	__team_netpoll_cleanup(team);
--	mutex_unlock(&team->lock);
+ 	if (adev->kfd.dev)
+-		kgd2kfd_suspend(adev->kfd.dev, run_pm);
++		kgd2kfd_suspend(adev->kfd.dev, suspend_proc);
  }
  
- static int team_netpoll_setup(struct net_device *dev)
-@@ -1966,7 +1953,8 @@ static int team_netpoll_setup(struct net_device *dev)
- 	struct team_port *port;
- 	int err = 0;
+-int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool run_pm)
++int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool resume_proc)
+ {
+ 	int r = 0;
  
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
+ 	if (adev->kfd.dev)
+-		r = kgd2kfd_resume(adev->kfd.dev, run_pm);
++		r = kgd2kfd_resume(adev->kfd.dev, resume_proc);
 +
- 	list_for_each_entry(port, &team->port_list, list) {
- 		err = __team_port_enable_netpoll(port);
- 		if (err) {
-@@ -1974,7 +1962,6 @@ static int team_netpoll_setup(struct net_device *dev)
- 			break;
- 		}
++	return r;
++}
++
++void amdgpu_amdkfd_suspend_process(struct amdgpu_device *adev)
++{
++	if (adev->kfd.dev)
++		kgd2kfd_suspend_process(adev->kfd.dev);
++}
++
++int amdgpu_amdkfd_resume_process(struct amdgpu_device *adev)
++{
++	int r = 0;
++
++	if (adev->kfd.dev)
++		r = kgd2kfd_resume_process(adev->kfd.dev);
+ 
+ 	return r;
+ }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+index b6ca41859b53..b7c3ec483407 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+@@ -154,8 +154,10 @@ struct amdkfd_process_info {
+ int amdgpu_amdkfd_init(void);
+ void amdgpu_amdkfd_fini(void);
+ 
+-void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool run_pm);
+-int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool run_pm);
++void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool suspend_proc);
++int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool resume_proc);
++void amdgpu_amdkfd_suspend_process(struct amdgpu_device *adev);
++int amdgpu_amdkfd_resume_process(struct amdgpu_device *adev);
+ void amdgpu_amdkfd_interrupt(struct amdgpu_device *adev,
+ 			const void *ih_ring_entry);
+ void amdgpu_amdkfd_device_probe(struct amdgpu_device *adev);
+@@ -411,8 +413,10 @@ struct kfd_dev *kgd2kfd_probe(struct amdgpu_device *adev, bool vf);
+ bool kgd2kfd_device_init(struct kfd_dev *kfd,
+ 			 const struct kgd2kfd_shared_resources *gpu_resources);
+ void kgd2kfd_device_exit(struct kfd_dev *kfd);
+-void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm);
+-int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm);
++void kgd2kfd_suspend(struct kfd_dev *kfd, bool suspend_proc);
++int kgd2kfd_resume(struct kfd_dev *kfd, bool resume_proc);
++void kgd2kfd_suspend_process(struct kfd_dev *kfd);
++int kgd2kfd_resume_process(struct kfd_dev *kfd);
+ int kgd2kfd_pre_reset(struct kfd_dev *kfd,
+ 		      struct amdgpu_reset_context *reset_context);
+ int kgd2kfd_post_reset(struct kfd_dev *kfd);
+@@ -454,11 +458,20 @@ static inline void kgd2kfd_device_exit(struct kfd_dev *kfd)
+ {
+ }
+ 
+-static inline void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
++static inline void kgd2kfd_suspend(struct kfd_dev *kfd, bool suspend_proc)
+ {
+ }
+ 
+-static inline int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm)
++static inline int kgd2kfd_resume(struct kfd_dev *kfd, bool resume_proc)
++{
++	return 0;
++}
++
++static inline void kgd2kfd_suspend_process(struct kfd_dev *kfd)
++{
++}
++
++static inline int kgd2kfd_resume_process(struct kfd_dev *kfd)
+ {
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c
+index ffbaa8bc5eea..1105a09e55dc 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_arcturus.c
+@@ -320,7 +320,7 @@ static void set_barrier_auto_waitcnt(struct amdgpu_device *adev, bool enable_wai
+ 	if (!down_read_trylock(&adev->reset_domain->sem))
+ 		return;
+ 
+-	amdgpu_amdkfd_suspend(adev, false);
++	amdgpu_amdkfd_suspend(adev, true);
+ 
+ 	if (suspend_resume_compute_scheduler(adev, true))
+ 		goto out;
+@@ -333,7 +333,7 @@ static void set_barrier_auto_waitcnt(struct amdgpu_device *adev, bool enable_wai
+ out:
+ 	suspend_resume_compute_scheduler(adev, false);
+ 
+-	amdgpu_amdkfd_resume(adev, false);
++	amdgpu_amdkfd_resume(adev, true);
+ 
+ 	up_read(&adev->reset_domain->sem);
+ }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index aa32df7e2fb2..54ea8e8d7812 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3518,7 +3518,7 @@ static int amdgpu_device_ip_fini_early(struct amdgpu_device *adev)
+ 	amdgpu_device_set_pg_state(adev, AMD_PG_STATE_UNGATE);
+ 	amdgpu_device_set_cg_state(adev, AMD_CG_STATE_UNGATE);
+ 
+-	amdgpu_amdkfd_suspend(adev, false);
++	amdgpu_amdkfd_suspend(adev, true);
+ 	amdgpu_userq_suspend(adev);
+ 
+ 	/* Workaround for ASICs need to disable SMC first */
+@@ -5055,6 +5055,8 @@ int amdgpu_device_suspend(struct drm_device *dev, bool notify_clients)
+ 	adev->in_suspend = true;
+ 
+ 	if (amdgpu_sriov_vf(adev)) {
++		if (!adev->in_s0ix && !adev->in_runpm)
++			amdgpu_amdkfd_suspend_process(adev);
+ 		amdgpu_virt_fini_data_exchange(adev);
+ 		r = amdgpu_virt_request_full_gpu(adev, false);
+ 		if (r)
+@@ -5074,7 +5076,7 @@ int amdgpu_device_suspend(struct drm_device *dev, bool notify_clients)
+ 	amdgpu_device_ip_suspend_phase1(adev);
+ 
+ 	if (!adev->in_s0ix) {
+-		amdgpu_amdkfd_suspend(adev, adev->in_runpm);
++		amdgpu_amdkfd_suspend(adev, !amdgpu_sriov_vf(adev) && !adev->in_runpm);
+ 		amdgpu_userq_suspend(adev);
  	}
--	mutex_unlock(&team->lock);
- 	return err;
+ 
+@@ -5140,7 +5142,7 @@ int amdgpu_device_resume(struct drm_device *dev, bool notify_clients)
+ 	}
+ 
+ 	if (!adev->in_s0ix) {
+-		r = amdgpu_amdkfd_resume(adev, adev->in_runpm);
++		r = amdgpu_amdkfd_resume(adev, !amdgpu_sriov_vf(adev) && !adev->in_runpm);
+ 		if (r)
+ 			goto exit;
+ 
+@@ -5159,6 +5161,9 @@ int amdgpu_device_resume(struct drm_device *dev, bool notify_clients)
+ 	if (amdgpu_sriov_vf(adev)) {
+ 		amdgpu_virt_init_data_exchange(adev);
+ 		amdgpu_virt_release_full_gpu(adev, true);
++
++		if (!adev->in_s0ix && !r && !adev->in_runpm)
++			r = amdgpu_amdkfd_resume_process(adev);
+ 	}
+ 
+ 	if (r)
+diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
+index bb82c652e4c0..5de2f047c534 100644
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
+@@ -1681,9 +1681,9 @@ static int sdma_v4_4_2_reset_queue(struct amdgpu_ring *ring, unsigned int vmid)
+ 	if (!(adev->sdma.supported_reset & AMDGPU_RESET_TYPE_PER_QUEUE))
+ 		return -EOPNOTSUPP;
+ 
+-	amdgpu_amdkfd_suspend(adev, false);
++	amdgpu_amdkfd_suspend(adev, true);
+ 	r = amdgpu_sdma_reset_engine(adev, id);
+-	amdgpu_amdkfd_resume(adev, false);
++	amdgpu_amdkfd_resume(adev, true);
+ 
+ 	return r;
  }
- #endif
-@@ -1985,9 +1972,9 @@ static int team_add_slave(struct net_device *dev, struct net_device *port_dev,
- 	struct team *team = netdev_priv(dev);
- 	int err;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index bf0854bd5555..097bf6753782 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -971,7 +971,7 @@ int kgd2kfd_pre_reset(struct kfd_dev *kfd,
+ 		kfd_smi_event_update_gpu_reset(node, false, reset_context);
+ 	}
  
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	err = team_port_add(team, port_dev, extack);
--	mutex_unlock(&team->lock);
+-	kgd2kfd_suspend(kfd, false);
++	kgd2kfd_suspend(kfd, true);
  
- 	if (!err)
- 		netdev_change_features(dev);
-@@ -2000,18 +1987,13 @@ static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
- 	struct team *team = netdev_priv(dev);
- 	int err;
+ 	for (i = 0; i < kfd->num_nodes; i++)
+ 		kfd_signal_reset_event(kfd->nodes[i]);
+@@ -1019,7 +1019,7 @@ bool kfd_is_locked(void)
+ 	return  (kfd_locked > 0);
+ }
  
--	mutex_lock(&team->lock);
-+	ASSERT_RTNL();
-+
- 	err = team_port_del(team, port_dev);
--	mutex_unlock(&team->lock);
+-void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
++void kgd2kfd_suspend(struct kfd_dev *kfd, bool suspend_proc)
+ {
+ 	struct kfd_node *node;
+ 	int i;
+@@ -1027,14 +1027,8 @@ void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
+ 	if (!kfd->init_complete)
+ 		return;
  
- 	if (err)
- 		return err;
- 
--	if (netif_is_team_master(port_dev)) {
--		lockdep_unregister_key(&team->team_lock_key);
--		lockdep_register_key(&team->team_lock_key);
--		lockdep_set_class(&team->lock, &team->team_lock_key);
+-	/* for runtime suspend, skip locking kfd */
+-	if (!run_pm) {
+-		mutex_lock(&kfd_processes_mutex);
+-		/* For first KFD device suspend all the KFD processes */
+-		if (++kfd_locked == 1)
+-			kfd_suspend_all_processes();
+-		mutex_unlock(&kfd_processes_mutex);
 -	}
- 	netdev_change_features(dev);
++	if (suspend_proc)
++		kgd2kfd_suspend_process(kfd);
  
- 	return err;
-@@ -2304,9 +2286,10 @@ int team_nl_noop_doit(struct sk_buff *skb, struct genl_info *info)
- static struct team *team_nl_team_get(struct genl_info *info)
+ 	for (i = 0; i < kfd->num_nodes; i++) {
+ 		node = kfd->nodes[i];
+@@ -1042,7 +1036,7 @@ void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
+ 	}
+ }
+ 
+-int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm)
++int kgd2kfd_resume(struct kfd_dev *kfd, bool resume_proc)
  {
- 	struct net *net = genl_info_net(info);
--	int ifindex;
- 	struct net_device *dev;
--	struct team *team;
-+	int ifindex;
-+
-+	ASSERT_RTNL();
+ 	int ret, i;
  
- 	if (!info->attrs[TEAM_ATTR_TEAM_IFINDEX])
- 		return NULL;
-@@ -2318,14 +2301,11 @@ static struct team *team_nl_team_get(struct genl_info *info)
- 		return NULL;
+@@ -1055,14 +1049,36 @@ int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm)
+ 			return ret;
  	}
  
--	team = netdev_priv(dev);
--	mutex_lock(&team->lock);
--	return team;
-+	return netdev_priv(dev);
- }
- 
- static void team_nl_team_put(struct team *team)
- {
--	mutex_unlock(&team->lock);
- 	dev_put(team->dev);
- }
- 
-@@ -2515,9 +2495,13 @@ int team_nl_options_get_doit(struct sk_buff *skb, struct genl_info *info)
- 	int err;
- 	LIST_HEAD(sel_opt_inst_list);
- 
-+	rtnl_lock();
+-	/* for runtime resume, skip unlocking kfd */
+-	if (!run_pm) {
+-		mutex_lock(&kfd_processes_mutex);
+-		if (--kfd_locked == 0)
+-			ret = kfd_resume_all_processes();
+-		WARN_ONCE(kfd_locked < 0, "KFD suspend / resume ref. error");
+-		mutex_unlock(&kfd_processes_mutex);
+-	}
++	if (resume_proc)
++		ret = kgd2kfd_resume_process(kfd);
 +
- 	team = team_nl_team_get(info);
--	if (!team)
--		return -EINVAL;
-+	if (!team) {
-+		err = -EINVAL;
-+		goto rtnl_unlock;
-+	}
- 
- 	list_for_each_entry(opt_inst, &team->option_inst_list, list)
- 		list_add_tail(&opt_inst->tmp_list, &sel_opt_inst_list);
-@@ -2527,6 +2511,9 @@ int team_nl_options_get_doit(struct sk_buff *skb, struct genl_info *info)
- 
- 	team_nl_team_put(team);
- 
-+rtnl_unlock:
-+	rtnl_unlock();
++	return ret;
++}
 +
- 	return err;
- }
- 
-@@ -2805,15 +2792,22 @@ int team_nl_port_list_get_doit(struct sk_buff *skb,
- 	struct team *team;
- 	int err;
- 
-+	rtnl_lock();
++void kgd2kfd_suspend_process(struct kfd_dev *kfd)
++{
++	if (!kfd->init_complete)
++		return;
 +
- 	team = team_nl_team_get(info);
--	if (!team)
--		return -EINVAL;
-+	if (!team) {
-+		err = -EINVAL;
-+		goto rtnl_unlock;
-+	}
- 
- 	err = team_nl_send_port_list_get(team, info->snd_portid, info->snd_seq,
- 					 NLM_F_ACK, team_nl_send_unicast, NULL);
- 
- 	team_nl_team_put(team);
- 
-+rtnl_unlock:
-+	rtnl_unlock();
++	mutex_lock(&kfd_processes_mutex);
++	/* For first KFD device suspend all the KFD processes */
++	if (++kfd_locked == 1)
++		kfd_suspend_all_processes();
++	mutex_unlock(&kfd_processes_mutex);
++}
 +
- 	return err;
++int kgd2kfd_resume_process(struct kfd_dev *kfd)
++{
++	int ret = 0;
++
++	if (!kfd->init_complete)
++		return 0;
++
++	mutex_lock(&kfd_processes_mutex);
++	if (--kfd_locked == 0)
++		ret = kfd_resume_all_processes();
++	WARN_ONCE(kfd_locked < 0, "KFD suspend / resume ref. error");
++	mutex_unlock(&kfd_processes_mutex);
+ 
+ 	return ret;
  }
- 
-@@ -2961,11 +2955,9 @@ static void __team_port_change_port_removed(struct team_port *port)
- 
- static void team_port_change_check(struct team_port *port, bool linkup)
- {
--	struct team *team = port->team;
-+	ASSERT_RTNL();
- 
--	mutex_lock(&team->lock);
- 	__team_port_change_check(port, linkup);
--	mutex_unlock(&team->lock);
- }
- 
- 
-diff --git a/drivers/net/team/team_mode_activebackup.c b/drivers/net/team/team_mode_activebackup.c
-index e0f599e2a51d..1c3336c7a1b2 100644
---- a/drivers/net/team/team_mode_activebackup.c
-+++ b/drivers/net/team/team_mode_activebackup.c
-@@ -67,8 +67,7 @@ static void ab_active_port_get(struct team *team, struct team_gsetter_ctx *ctx)
- {
- 	struct team_port *active_port;
- 
--	active_port = rcu_dereference_protected(ab_priv(team)->active_port,
--						lockdep_is_held(&team->lock));
-+	active_port = rtnl_dereference(ab_priv(team)->active_port);
- 	if (active_port)
- 		ctx->data.u32_val = active_port->dev->ifindex;
- 	else
-diff --git a/drivers/net/team/team_mode_loadbalance.c b/drivers/net/team/team_mode_loadbalance.c
-index 00f8989c29c0..b14538bde2f8 100644
---- a/drivers/net/team/team_mode_loadbalance.c
-+++ b/drivers/net/team/team_mode_loadbalance.c
-@@ -301,8 +301,7 @@ static int lb_bpf_func_set(struct team *team, struct team_gsetter_ctx *ctx)
- 	if (lb_priv->ex->orig_fprog) {
- 		/* Clear old filter data */
- 		__fprog_destroy(lb_priv->ex->orig_fprog);
--		orig_fp = rcu_dereference_protected(lb_priv->fp,
--						lockdep_is_held(&team->lock));
-+		orig_fp = rtnl_dereference(lb_priv->fp);
- 	}
- 
- 	rcu_assign_pointer(lb_priv->fp, fp);
-@@ -324,8 +323,7 @@ static void lb_bpf_func_free(struct team *team)
- 		return;
- 
- 	__fprog_destroy(lb_priv->ex->orig_fprog);
--	fp = rcu_dereference_protected(lb_priv->fp,
--				       lockdep_is_held(&team->lock));
-+	fp = rtnl_dereference(lb_priv->fp);
- 	bpf_prog_destroy(fp);
- }
- 
-@@ -335,8 +333,7 @@ static void lb_tx_method_get(struct team *team, struct team_gsetter_ctx *ctx)
- 	lb_select_tx_port_func_t *func;
- 	char *name;
- 
--	func = rcu_dereference_protected(lb_priv->select_tx_port_func,
--					 lockdep_is_held(&team->lock));
-+	func = rtnl_dereference(lb_priv->select_tx_port_func);
- 	name = lb_select_tx_port_get_name(func);
- 	BUG_ON(!name);
- 	ctx->data.str_val = name;
-@@ -478,7 +475,7 @@ static void lb_stats_refresh(struct work_struct *work)
- 	team = lb_priv_ex->team;
- 	lb_priv = get_lb_priv(team);
- 
--	if (!mutex_trylock(&team->lock)) {
-+	if (!rtnl_trylock()) {
- 		schedule_delayed_work(&lb_priv_ex->stats.refresh_dw, 0);
- 		return;
- 	}
-@@ -515,7 +512,7 @@ static void lb_stats_refresh(struct work_struct *work)
- 	schedule_delayed_work(&lb_priv_ex->stats.refresh_dw,
- 			      (lb_priv_ex->stats.refresh_interval * HZ) / 10);
- 
--	mutex_unlock(&team->lock);
-+	rtnl_unlock();
- }
- 
- static void lb_stats_refresh_interval_get(struct team *team,
-diff --git a/include/linux/if_team.h b/include/linux/if_team.h
-index cdc684e04a2f..ce97d891cf72 100644
---- a/include/linux/if_team.h
-+++ b/include/linux/if_team.h
-@@ -191,8 +191,6 @@ struct team {
- 
- 	const struct header_ops *header_ops_cache;
- 
--	struct mutex lock; /* used for overall locking, e.g. port lists write */
--
- 	/*
- 	 * List of enabled ports and their count
- 	 */
-@@ -223,7 +221,6 @@ struct team {
- 		atomic_t count_pending;
- 		struct delayed_work dw;
- 	} mcast_rejoin;
--	struct lock_class_key team_lock_key;
- 	long mode_priv[TEAM_MODE_PRIV_LONGS];
- };
- 
 -- 
 2.39.5
 
