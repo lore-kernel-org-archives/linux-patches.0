@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0729B3F9D2;
-	Tue, 12 Aug 2025 18:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968D72DE1E2;
+	Tue, 12 Aug 2025 18:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022446; cv=none; b=C9dppOBphAciA9XhQEcz6oJ8vkWlHBCZ89Zc0bSlzNpWSzgpADOGYcHx300NStaC9+L/6NePttQCesob31Ds3PEuC6imndf+0mBGUo7+lACNFDUYhUqtc0i56cbxYTdeZKQeqp0aG2UFOhmcZ+pcaRJhVsNo08RREOQghValAyY=
+	t=1755022449; cv=none; b=OeBilPJuBG4p8VSVlNjOhBonqDuIXjETaUy1Na8v2eEJ6NuDkbW8eB9R/qvLD820/IUKk0liLjAz5P3RK2/T2CLZGUY7bZYBOY06kW6t/CADvuCbXnitNJ8WKp+24p88qkPxdZ22shV47nUD2ZmDV3i3uCPp66ogdZx0yXG6IuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022446; c=relaxed/simple;
-	bh=3iq1fGepwtavGwpuaZuSAzVURbHeX0ZLUEUl4UPMkUA=;
+	s=arc-20240116; t=1755022449; c=relaxed/simple;
+	bh=rBohJIqUeOOCJkFQYtXHSi0/RGS7t02/M6GHlOxw2Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7ZQ9lCZvJCWJDp9D/slJvhsT63XOn2ZolX/DcVNrWXcJ4+fR2U9dhMGbMKR/Ictqij1H1I0ai+PIJtQ6vYdwDirlNmsZGe5ghI8VmqcELTHEdMkRo3OAL2S6MazKZwniB45g22JSxBX96etRlVy70S+VNcBD4zQp8h2d8CubYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpSfXmYj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ECBe3VlXOxEg23oISeZ07rAbFEv4tNbTzvIXXNGeUFOlJ1VvncbQww92DsL+H5GIqd8JoF3immg4R7rHrv27iNut9olTEBXAgIKFRkZNV/UgCB7tEuUe5dnp2JIKlStHj1/z3mLNenjYvXVOFG39QLHdu3nukSsFbRRjp09jSg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEElUVpz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpSfXmYj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69439C4CEF0;
-	Tue, 12 Aug 2025 18:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEElUVpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E070BC4CEF0;
+	Tue, 12 Aug 2025 18:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022445;
-	bh=3iq1fGepwtavGwpuaZuSAzVURbHeX0ZLUEUl4UPMkUA=;
+	s=korg; t=1755022449;
+	bh=rBohJIqUeOOCJkFQYtXHSi0/RGS7t02/M6GHlOxw2Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpSfXmYjh3Jd2IyIJgQTSDouiaU0WbGFzNpFg6gEYNdkatYoNKCBu2CEV5qP0dbtm
-	 E42j8oes2wXSi/lFR32QIeZlThLwjkDpwDeJA23WwEgzw7qguMAuJqP+UYVXfwH7Dk
-	 e0DxjffQNaHnEsrc8jgL0u7zUlLnnMHICpnwwN9Y=
+	b=DEElUVpzllggI3++g5S4P5xIxcO4vHLimtV0WvqtVUpaL8oTVm2DHHk4tyydWrskc
+	 toiSYIjnt48vAWyWT0gS10vaaD2MU+qw4SPHy+Zo6zfAVj+JK0vdYmookCWaikrrlW
+	 Z8VNjsC516ZwfNEPQds6zOGTe3+gM7HGD9SdVWAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Michal Witwicki <michal.witwicki@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 157/369] crypto: marvell/cesa - Fix engine load inaccuracy
-Date: Tue, 12 Aug 2025 19:27:34 +0200
-Message-ID: <20250812173020.676915993@linuxfoundation.org>
+Subject: [PATCH 6.12 158/369] crypto: qat - allow enabling VFs in the absence of IOMMU
+Date: Tue, 12 Aug 2025 19:27:35 +0200
+Message-ID: <20250812173020.712132324@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -50,73 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 442134ab30e75b7229c4bfc1ac5641d245cffe27 ]
+[ Upstream commit 53669ff591d4deb2d80eed4c07593ad0c0b45899 ]
 
-If an error occurs during queueing the engine load will never be
-decremented.  Fix this by moving the engine load adjustment into
-the cleanup function.
+The commit ca88a2bdd4dd ("crypto: qat - allow disabling SR-IOV VFs")
+introduced an unnecessary change that prevented enabling SR-IOV when
+IOMMU is disabled. In certain scenarios, it is desirable to enable
+SR-IOV even in the absence of IOMMU. Thus, restoring the previous
+functionality to allow VFs to be enumerated in the absence of IOMMU.
 
-Fixes: bf8f91e71192 ("crypto: marvell - Add load balancing between engines")
+Fixes: ca88a2bdd4dd ("crypto: qat - allow disabling SR-IOV VFs")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Michal Witwicki <michal.witwicki@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/cesa/cipher.c | 4 +++-
- drivers/crypto/marvell/cesa/hash.c   | 5 +++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_sriov.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/crypto/marvell/cesa/cipher.c b/drivers/crypto/marvell/cesa/cipher.c
-index 3876e3ce822f..eabed9d977df 100644
---- a/drivers/crypto/marvell/cesa/cipher.c
-+++ b/drivers/crypto/marvell/cesa/cipher.c
-@@ -75,9 +75,12 @@ mv_cesa_skcipher_dma_cleanup(struct skcipher_request *req)
- static inline void mv_cesa_skcipher_cleanup(struct skcipher_request *req)
- {
- 	struct mv_cesa_skcipher_req *creq = skcipher_request_ctx(req);
-+	struct mv_cesa_engine *engine = creq->base.engine;
- 
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
- 		mv_cesa_skcipher_dma_cleanup(req);
-+
-+	atomic_sub(req->cryptlen, &engine->load);
- }
- 
- static void mv_cesa_skcipher_std_step(struct skcipher_request *req)
-@@ -212,7 +215,6 @@ mv_cesa_skcipher_complete(struct crypto_async_request *req)
- 	struct mv_cesa_engine *engine = creq->base.engine;
- 	unsigned int ivsize;
- 
--	atomic_sub(skreq->cryptlen, &engine->load);
- 	ivsize = crypto_skcipher_ivsize(crypto_skcipher_reqtfm(skreq));
- 
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ) {
-diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
-index 6815eddc9068..e339ce7ad533 100644
---- a/drivers/crypto/marvell/cesa/hash.c
-+++ b/drivers/crypto/marvell/cesa/hash.c
-@@ -110,9 +110,12 @@ static inline void mv_cesa_ahash_dma_cleanup(struct ahash_request *req)
- static inline void mv_cesa_ahash_cleanup(struct ahash_request *req)
- {
- 	struct mv_cesa_ahash_req *creq = ahash_request_ctx(req);
-+	struct mv_cesa_engine *engine = creq->base.engine;
- 
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
- 		mv_cesa_ahash_dma_cleanup(req);
-+
-+	atomic_sub(req->nbytes, &engine->load);
- }
- 
- static void mv_cesa_ahash_last_cleanup(struct ahash_request *req)
-@@ -395,8 +398,6 @@ static void mv_cesa_ahash_complete(struct crypto_async_request *req)
- 			}
- 		}
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_sriov.c b/drivers/crypto/intel/qat/qat_common/adf_sriov.c
+index c75d0b6cb0ad..31d1ef0cb1f5 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_sriov.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_sriov.c
+@@ -155,7 +155,6 @@ static int adf_do_enable_sriov(struct adf_accel_dev *accel_dev)
+ 	if (!device_iommu_mapped(&GET_DEV(accel_dev))) {
+ 		dev_warn(&GET_DEV(accel_dev),
+ 			 "IOMMU should be enabled for SR-IOV to work correctly\n");
+-		return -EINVAL;
  	}
--
--	atomic_sub(ahashreq->nbytes, &engine->load);
- }
  
- static void mv_cesa_ahash_prepare(struct crypto_async_request *req,
+ 	if (adf_dev_started(accel_dev)) {
 -- 
 2.39.5
 
