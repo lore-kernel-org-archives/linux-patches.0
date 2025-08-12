@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6EE2FE573;
-	Tue, 12 Aug 2025 17:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7C42FE56E;
+	Tue, 12 Aug 2025 17:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021566; cv=none; b=bfg59sfTxksCeUd2nhvrYbAsDwZtQiktohm1+gc+q0gw43N5p3rjbXX0xxnlCmFLaKt1nLrgXyGuI+3EJA/hmlDqqeIEOrCK+QDxuFoYqY9H+ZWob1Vry0BxmzJP8zmJesBdi9cMSh2IiVbdTdWAns/OYnu8MSwUA68+ds796b4=
+	t=1755021569; cv=none; b=hrDl4QD1AITOOL0ycpFQN3nt+iPxnIT0pukJcJ0l4VtAaibbQsDJi3upNIDmN7zWVVqm8mrVSyuOuAXhEIipEQz+udroxLtYkr0JHjPdGYoCfBx7KxVk03TPEc4BJdDu5sAjlJC4EBI/dOqxQfexg2wGLuvXGQrbhMrEF9ZBjlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021566; c=relaxed/simple;
-	bh=9WypVhOSK8srL+IeahHIkUSCokExQJJHRlE5/kcpHwo=;
+	s=arc-20240116; t=1755021569; c=relaxed/simple;
+	bh=5sxSClECgfCIJBf3gYAcGkPMmbArLrFolvnLdz2ErD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjy2VIAtUKKfZG+PhsWnuKoz8uNonF/YXBJGlDKfyMhXC0lYk3Tq6q3VnGkjAiSzcnzQZ2o8ZBovqNgA4D7tAtbRcxOTCGxr2n3xCAkUJEuST9XRXMXf9Y5wVXWJa3lrc4EdIfS1Hm2nWLQ3tx7zRGTLnI29ikPiXm7SXBrYgd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkdFFM+5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4GajdrtoRELFY1e7jKFF56tg0/EfUCpJGhzFoh3SRmlJxDButXSjQXDJlYiBA8X+Tdo3YCO/4YYqdMQ82MZ/pNxFyVupkxhHTqw5/cDCBKkNt/hhq+NVcx41EAIi+96S9miUyK/P99TjnkP8q1BEP8jZBWQfPJolZGAGu7QcG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxqpcwTQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkdFFM+5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4705DC4CEF1;
-	Tue, 12 Aug 2025 17:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxqpcwTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A272EC4CEF0;
+	Tue, 12 Aug 2025 17:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021565;
-	bh=9WypVhOSK8srL+IeahHIkUSCokExQJJHRlE5/kcpHwo=;
+	s=korg; t=1755021569;
+	bh=5sxSClECgfCIJBf3gYAcGkPMmbArLrFolvnLdz2ErD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OkdFFM+5ZJluBBgWZBDRZGAYXa8miSCLWBwDc/0zfUeyxm3036So4Dh8UJBsrVt/M
-	 vZCKhtr5AB7ZtXnP71AHHdUUH6n12QGxUeEHQ6rUlK4J5qYQCKVurwuDQ9FIptQUJy
-	 eVi6Orn9Ig21/PKvoG8C+PrVAE7U81DLlMTpYtBs=
+	b=lxqpcwTQym1BDHxND9OhftxX6MFbM116/Ala1EWY+Y8BbnYpcPTTpXI6XhWW7nBvR
+	 lAqKRsgSPuZcEwMWxtKrQGeFALGByXAegE777MVDf25lcnSCGCaj3x214dGB/ZB3nx
+	 jLKT7XqAcszyqyQGor0AlCFc2g9zcmWkinnOuf90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/262] perf sched: Fix memory leaks for evsel->priv in timehist
-Date: Tue, 12 Aug 2025 19:28:34 +0200
-Message-ID: <20250812172958.472827691@linuxfoundation.org>
+Subject: [PATCH 6.6 117/262] crypto: arm/aes-neonbs - work around gcc-15 warning
+Date: Tue, 12 Aug 2025 19:28:25 +0200
+Message-ID: <20250812172958.092464918@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,99 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 117e5c33b1c44037af016d77ce6c0b086d55535f ]
+[ Upstream commit d5fa96dc5590915f060fee3209143313e4f5b03b ]
 
-It uses evsel->priv to save per-cpu timing information.  It should be
-freed when the evsel is released.
+I get a very rare -Wstringop-overread warning with gcc-15 for one function
+in aesbs_ctr_encrypt():
 
-Add the priv destructor for evsel same as thread to handle that.
+arch/arm/crypto/aes-neonbs-glue.c: In function 'ctr_encrypt':
+arch/arm/crypto/aes-neonbs-glue.c:212:1446: error: '__builtin_memcpy' offset [17, 2147483647] is out of the bounds [0, 16] of object 'buf' with type 'u8[16]' {aka 'unsigned char[16]'} [-Werror=array-bounds=]
+  212 |                         src = dst = memcpy(buf + sizeof(buf) - bytes,
+arch/arm/crypto/aes-neonbs-glue.c: In function 'ctr_encrypt':
+arch/arm/crypto/aes-neonbs-glue.c:218:17: error: 'aesbs_ctr_encrypt' reading 1 byte from a region of size 0 [-Werror=stringop-overread]
+  218 |                 aesbs_ctr_encrypt(dst, src, ctx->rk, ctx->rounds, bytes, walk.iv);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 2 of type 'const u8[0]' {aka 'const unsigned char[]'}
+arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 3 of type 'const u8[0]' {aka 'const unsigned char[]'}
+arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 6 of type 'u8[0]' {aka 'unsigned char[]'}
+arch/arm/crypto/aes-neonbs-glue.c:36:17: note: in a call to function 'aesbs_ctr_encrypt'
+   36 | asmlinkage void aesbs_ctr_encrypt(u8 out[], u8 const in[], u8 const rk[],
 
-Fixes: 49394a2a24c78ce0 ("perf sched timehist: Introduce timehist command")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250703014942.1369397-6-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+This could happen in theory if walk.nbytes is larger than INT_MAX and gets
+converted to a negative local variable.
+
+Keep the type unsigned like the orignal nbytes to be sure there is no
+integer overflow.
+
+Fixes: c8bf850e991a ("crypto: arm/aes-neonbs-ctr - deal with non-multiples of AES block size")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 12 ++++++++++++
- tools/perf/util/evsel.c    | 11 +++++++++++
- tools/perf/util/evsel.h    |  2 ++
- 3 files changed, 25 insertions(+)
+ arch/arm/crypto/aes-neonbs-glue.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 5f4fb1ce1ea9..a1fab1a52b6a 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -1949,6 +1949,16 @@ static u64 evsel__get_time(struct evsel *evsel, u32 cpu)
- 	return r->last_time[cpu];
- }
+diff --git a/arch/arm/crypto/aes-neonbs-glue.c b/arch/arm/crypto/aes-neonbs-glue.c
+index 0ca94b90bc4e..ba98daeb119c 100644
+--- a/arch/arm/crypto/aes-neonbs-glue.c
++++ b/arch/arm/crypto/aes-neonbs-glue.c
+@@ -245,7 +245,7 @@ static int ctr_encrypt(struct skcipher_request *req)
+ 	while (walk.nbytes > 0) {
+ 		const u8 *src = walk.src.virt.addr;
+ 		u8 *dst = walk.dst.virt.addr;
+-		int bytes = walk.nbytes;
++		unsigned int bytes = walk.nbytes;
  
-+static void timehist__evsel_priv_destructor(void *priv)
-+{
-+	struct evsel_runtime *r = priv;
-+
-+	if (r) {
-+		free(r->last_time);
-+		free(r);
-+	}
-+}
-+
- static int comm_width = 30;
- 
- static char *timehist_get_commstr(struct thread *thread)
-@@ -3080,6 +3090,8 @@ static int perf_sched__timehist(struct perf_sched *sched)
- 
- 	setup_pager();
- 
-+	evsel__set_priv_destructor(timehist__evsel_priv_destructor);
-+
- 	/* prefer sched_waking if it is captured */
- 	if (evlist__find_tracepoint_by_name(session->evlist, "sched:sched_waking"))
- 		handlers[1].handler = timehist_sched_wakeup_ignore;
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 6d2b056232f6..2a6295f1ac1b 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -1460,6 +1460,15 @@ static void evsel__free_config_terms(struct evsel *evsel)
- 	free_config_terms(&evsel->config_terms);
- }
- 
-+static void (*evsel__priv_destructor)(void *priv);
-+
-+void evsel__set_priv_destructor(void (*destructor)(void *priv))
-+{
-+	assert(evsel__priv_destructor == NULL);
-+
-+	evsel__priv_destructor = destructor;
-+}
-+
- void evsel__exit(struct evsel *evsel)
- {
- 	assert(list_empty(&evsel->core.node));
-@@ -1485,6 +1494,8 @@ void evsel__exit(struct evsel *evsel)
- 	hashmap__free(evsel->per_pkg_mask);
- 	evsel->per_pkg_mask = NULL;
- 	zfree(&evsel->metric_events);
-+	if (evsel__priv_destructor)
-+		evsel__priv_destructor(evsel->priv);
- 	perf_evsel__object.fini(evsel);
- }
- 
-diff --git a/tools/perf/util/evsel.h b/tools/perf/util/evsel.h
-index 848534ec74fa..ac396d6f95cb 100644
---- a/tools/perf/util/evsel.h
-+++ b/tools/perf/util/evsel.h
-@@ -252,6 +252,8 @@ void evsel__init(struct evsel *evsel, struct perf_event_attr *attr, int idx);
- void evsel__exit(struct evsel *evsel);
- void evsel__delete(struct evsel *evsel);
- 
-+void evsel__set_priv_destructor(void (*destructor)(void *priv));
-+
- struct callchain_param;
- 
- void evsel__config(struct evsel *evsel, struct record_opts *opts,
+ 		if (unlikely(bytes < AES_BLOCK_SIZE))
+ 			src = dst = memcpy(buf + sizeof(buf) - bytes,
 -- 
 2.39.5
 
