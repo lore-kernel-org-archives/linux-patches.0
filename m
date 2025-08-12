@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2578B280037;
-	Tue, 12 Aug 2025 18:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D02861FFE;
+	Tue, 12 Aug 2025 18:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022963; cv=none; b=hNjYPbkl1oCPnumnWj+asIGljUV9FQzoaCPB68PDuz/myH7fFAdQFm8j1L3fVWp1ONbNJTczvBdVdR0iB+rfQ1DJi8c0HgAHDgl+h2iGsunz5U8PzVOW5n1n6k6Xe5rNJRFs2mmSN7ARRhjfBQcYywPDkjE9roRXjCGYXaN1GHY=
+	t=1755022966; cv=none; b=cFeuiccCRdz0us2h1PyVxgUzcOEdE4ivGe5DnMBpNtcazP4Z+6H6s3786Jooee+IKftlTxFnsYgFEcCkAIxOJJoBXwVtXPLNcsYcEf596UpoDMD81YcpSGFkSOWjSh6D+wu7ddPUIrBMkU2tgvU6C0iGpnzHNarQ2KkpD5ap4k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022963; c=relaxed/simple;
-	bh=inrgngWLQnnS52ThQAJkxw1GPVOUNyEQN2JBS180k34=;
+	s=arc-20240116; t=1755022966; c=relaxed/simple;
+	bh=sWxBc2KhL19DrSKhoenZRd4WWCaZgnU0LTLi6Sq15sE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hD5QzRxkGqfZfMmkb8k7z4nHgmUUQATJBKHZmdNtGP9o3sQW53aMzPFNAn9hpFFyhxrq1Z5wNSjq3E8tHXhBKDZacGhm2QHPn5tEYLLp6VMwZm4MutqTNGYkeHD1nAlUA68FdiXwlr1exqgV0oHAdOMA9j95mGAi9AMTFIw4G4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbD7VfMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zc5LdniZzvpFyGWlDowKF02qlNqcrVh7TAHKvw4J9glAOpUfTcL/TiXzjXsE+p8HUfW/BP+KuQeJQD7CrgAROvTq5qAMY1YPuQYYUyN/0qAHa+GyClUTNSewsm5DtU2es9H8fRXjGqlDWk8noCXL27pfJSe1Xm+qjcsmPJulXB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pH5QE4AT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbD7VfMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8831CC4CEF8;
-	Tue, 12 Aug 2025 18:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pH5QE4AT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1D5C4CEF6;
+	Tue, 12 Aug 2025 18:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022963;
-	bh=inrgngWLQnnS52ThQAJkxw1GPVOUNyEQN2JBS180k34=;
+	s=korg; t=1755022966;
+	bh=sWxBc2KhL19DrSKhoenZRd4WWCaZgnU0LTLi6Sq15sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbD7VfMwQf+M0ywpIs4dAt0l4jK25+qQPiqDlZmmeU80S8fT6qfq2tVjU1I4vlZJQ
-	 B3wHuTlgHdRlouFYeYI/XGJtxf5Tu8GGuG87OjxshSHDU9AJ0UGOrQH6iHj97gSUAI
-	 Ib2zwXdASGmb/U5V1SriteOK5pzPhGy1Kd5ky4mg=
+	b=pH5QE4ATbM6TUK7rN/mzRGy7uFNpHv6zv3KMF9HVTN69b+4GwV8zm6JNiyu/QdIFC
+	 JD+GbPwEK+UFKCJwXaAxMhnECu00NdQNECYikNDN8gc6tWdN3LkTdiTd7aKi0htmgJ
+	 5207K8mUkw7WrxZHglUZfw9B13xjfJAOCTAlVJYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 309/369] irqchip: Build IMX_MU_MSI only on ARM
-Date: Tue, 12 Aug 2025 19:30:06 +0200
-Message-ID: <20250812173028.353643632@linuxfoundation.org>
+Subject: [PATCH 6.12 310/369] ALSA: hda/ca0132: Fix missing error handling in ca0132_alt_select_out()
+Date: Tue, 12 Aug 2025 19:30:07 +0200
+Message-ID: <20250812173028.389614727@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,46 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 3b6a18f0da8720d612d8a682ea5c55870da068e0 ]
+[ Upstream commit 9f320dfb0ffc555aa2eac8331dee0c2c16f67633 ]
 
-Compile-testing IMX_MU_MSI on x86 without PCI_MSI support results in a
-build failure:
+There are a couple of cases where the error is ignored or the error
+code isn't propagated in ca0132_alt_select_out().  Fix those.
 
-drivers/gpio/gpio-sprd.c:8:
-include/linux/gpio/driver.h:41:33: error: field 'msiinfo' has incomplete type
-drivers/iommu/iommufd/viommu.c:4:
-include/linux/msi.h:528:33: error: field 'alloc_info' has incomplete type
-
-Tighten the dependency further to only allow compile testing on Arm.
-This could be refined further to allow certain x86 configs.
-
-This was submitted before to address a different build failure, which was
-fixed differently, but the problem has now returned in a different form.
-
-Fixes: 70afdab904d2d1e6 ("irqchip: Add IMX MU MSI controller driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250805160952.4006075-1-arnd@kernel.org
-Link: https://lore.kernel.org/all/20221215164109.761427-1-arnd@kernel.org/
+Fixes: def3f0a5c700 ("ALSA: hda/ca0132 - Add quirk output selection structures.")
+Link: https://patch.msgid.link/20250806094423.8843-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_ca0132.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index a799a89195c5..5d5b3cf381b9 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -506,6 +506,7 @@ config IMX_MU_MSI
- 	tristate "i.MX MU used as MSI controller"
- 	depends on OF && HAS_IOMEM
- 	depends on ARCH_MXC || COMPILE_TEST
-+	depends on ARM || ARM64
- 	default m if ARCH_MXC
- 	select IRQ_DOMAIN
- 	select IRQ_DOMAIN_HIERARCHY
+diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
+index d40197fb5fbd..77432e06f3e3 100644
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -4802,7 +4802,8 @@ static int ca0132_alt_select_out(struct hda_codec *codec)
+ 	if (err < 0)
+ 		goto exit;
+ 
+-	if (ca0132_alt_select_out_quirk_set(codec) < 0)
++	err = ca0132_alt_select_out_quirk_set(codec);
++	if (err < 0)
+ 		goto exit;
+ 
+ 	switch (spec->cur_out_type) {
+@@ -4892,6 +4893,8 @@ static int ca0132_alt_select_out(struct hda_codec *codec)
+ 				spec->bass_redirection_val);
+ 	else
+ 		err = ca0132_alt_surround_set_bass_redirection(codec, 0);
++	if (err < 0)
++		goto exit;
+ 
+ 	/* Unmute DSP now that we're done with output selection. */
+ 	err = dspio_set_uint_param(codec, 0x96,
 -- 
 2.39.5
 
