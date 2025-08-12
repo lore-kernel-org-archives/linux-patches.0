@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9536C284685;
-	Tue, 12 Aug 2025 18:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EFF305E13;
+	Tue, 12 Aug 2025 18:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024850; cv=none; b=PjG39EAkvfHGMomb/qqzGnKYpQCEJNcKoTZ0SpF2ugmDNQegvI5lx5EBUUdM+Bj75uOQ6iKFHTDqH4fmcxB+CGW1KNNv7xnSR7GmBM/uWkUgh0aGN0QyOvKwiankkz158WEZ5xQAY5Bq7e3kTL2Ja1gd6WndVWy92N4qTQRinDg=
+	t=1755024857; cv=none; b=E65bEZF3uJB+5RyT2601vKY6ztsxte47fQ3xUElejSKWC1BRd41wHmzIHPybgGaWuHO7ko6kzETX4nt1SAWA5m+fYhI/y2/X+nmZdyGu7EVVAZ3InuEmnxC7PTjkb1DD2EDO9fh1L14iG96ESPEK9qU2SYtYwR2IhKBqJeSgE9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024850; c=relaxed/simple;
-	bh=hee5B8MHsciLHMcnNK3ufgTMQlPxB1zw0ORa9OI4JMw=;
+	s=arc-20240116; t=1755024857; c=relaxed/simple;
+	bh=YcbAyCD8iiKZDSC3cdOyRxFdiWcHgxJpXRystfPFgjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GcNhnSx2rYOWev3LxVxxW5Rf4Gkl1gGqjdgb6VJ+RQYiDDrx5ATGv+1PyUa9x2KA30iLby3wmE0FuueirjZkYCaQIeW5aszpE7bFJ3JTu0P+QsJWHAm+yqtXgOxvZYRmF56i2yOAchnGF0Kis2amZSGjChZWaDjh1TOPwBFVZpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCxY+lH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yri7QBhY6O92PPWO2MLDxxC5O5JKe/Xq0pC0mpdn9XM4730gumGEPmOARdjv3suoJ/cmEtxNAsh85kAJ67Ox+RDO9rFsUl2d7jr907tw/Kr2UvP95jEG6suqCt77e7l5XQUD5UHfArEfo02Y1XJAo6ROGn/9/qnbpVAJMvgCj5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQrYMKsq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCxY+lH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056AAC4CEF0;
-	Tue, 12 Aug 2025 18:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQrYMKsq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46F4C4CEF1;
+	Tue, 12 Aug 2025 18:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024850;
-	bh=hee5B8MHsciLHMcnNK3ufgTMQlPxB1zw0ORa9OI4JMw=;
+	s=korg; t=1755024857;
+	bh=YcbAyCD8iiKZDSC3cdOyRxFdiWcHgxJpXRystfPFgjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KCxY+lH1r1avSHdRY9S+R216vuD8/OZpMIYAOFYZAhE8ZCGgl5dHEcQphBMOIrq83
-	 nk7gTThNtjP0hc+YqbXeAQCPj6PSVFoHT9wZD5lZJIBRNEebsp7VM2HnvwLMg/Bmzn
-	 prLbGYLisa6DPxIHKL9EomHbwb+0peDQSEMBgtrg=
+	b=SQrYMKsqiYYsEqyXpgnyXnVGWKnVNTOHlsaczu0FRPFjZedB/teAs4uXJ5rGerXzv
+	 mib93S2i6SdC1orsGYmi9PYBTGr5Fz+6tTqLI+kiyuqiEWr4qYA0mMEemtevpt0R0e
+	 LZTQCDznsgoaWO0vpcpq3DNKdCsd58cs1maIrSis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 452/627] bpf: Check netfilter ctx accesses are aligned
-Date: Tue, 12 Aug 2025 19:32:27 +0200
-Message-ID: <20250812173437.426835416@linuxfoundation.org>
+Subject: [PATCH 6.16 498/627] kconfig: qconf: fix ConfigList::updateListAllforAll()
+Date: Tue, 12 Aug 2025 19:33:13 +0200
+Message-ID: <20250812173446.734166052@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,40 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 9e6448f7b1efb27f8d508b067ecd33ed664a4246 ]
+[ Upstream commit 721bfe583c52ba1ea74b3736a31a9dcfe6dd6d95 ]
 
-Similarly to the previous patch fixing the flow_dissector ctx accesses,
-nf_is_valid_access also doesn't check that ctx accesses are aligned.
-Contrary to flow_dissector programs, netfilter programs don't have
-context conversion. The unaligned ctx accesses are therefore allowed by
-the verifier.
+ConfigList::updateListForAll() and ConfigList::updateListAllforAll()
+are identical.
 
-Fixes: fd9c663b9ad6 ("bpf: minimal support for programs hooked into netfilter framework")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/853ae9ed5edaa5196e8472ff0f1bb1cc24059214.1754039605.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Commit f9b918fae678 ("kconfig: qconf: move ConfigView::updateList(All)
+to ConfigList class") was a misconversion.
+
+Fixes: f9b918fae678 ("kconfig: qconf: move ConfigView::updateList(All) to ConfigList class")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_bpf_link.c | 3 +++
- 1 file changed, 3 insertions(+)
+ scripts/kconfig/qconf.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_bpf_link.c b/net/netfilter/nf_bpf_link.c
-index 25bbac8986c2..c12250e50a8b 100644
---- a/net/netfilter/nf_bpf_link.c
-+++ b/net/netfilter/nf_bpf_link.c
-@@ -295,6 +295,9 @@ static bool nf_is_valid_access(int off, int size, enum bpf_access_type type,
- 	if (off < 0 || off >= sizeof(struct bpf_nf_ctx))
- 		return false;
+diff --git a/scripts/kconfig/qconf.cc b/scripts/kconfig/qconf.cc
+index eaa465b0ccf9..49607555d343 100644
+--- a/scripts/kconfig/qconf.cc
++++ b/scripts/kconfig/qconf.cc
+@@ -478,7 +478,7 @@ void ConfigList::updateListAllForAll()
+ 	while (it.hasNext()) {
+ 		ConfigList *list = it.next();
  
-+	if (off % size != 0)
-+		return false;
-+
- 	if (type == BPF_WRITE)
- 		return false;
+-		list->updateList();
++		list->updateListAll();
+ 	}
+ }
  
 -- 
 2.39.5
