@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE92413AA2F;
-	Tue, 12 Aug 2025 18:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0912F4A0A;
+	Tue, 12 Aug 2025 18:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024207; cv=none; b=E6IFxONWH2ieXSI8Y8SIZimA3UGiJZyYXxxQNtWv68bYUIixkWjJblgJCWL/ModNYRYyf5NuAXEHnDz1K6KUM+UyifYhrvD6iZ4vpkhNZ5SmBYzvlheiYQSeLNVqGkB/4aAJeH61lm1PoezxR8YJtPRxf7ZJRfp6p9HugovpHx0=
+	t=1755024210; cv=none; b=Q+pZM/aTmhpg8cXoA0YsjFR+sJAKB1piEGup1zJNiDRKjVlMj2gRAyqd/MVoFi/t9X9f6Q5Hk5EmL3SzgeHpUqEWfuOO6wQDFWXcETYF1H+7ni/zqrfq5xv27/jBKDC5edBM63Mym0a5VG7NqxMldAKAegjRGFBtVU6g4/eafM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024207; c=relaxed/simple;
-	bh=A77roLRuJPvb6NJ23ib6jFOSRlTAj9XE8mzYw3KzFOk=;
+	s=arc-20240116; t=1755024210; c=relaxed/simple;
+	bh=awJDRcdCgaTe8R30AvBtaxYs5t0z9rZbXtbpC5BGPCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUOAg6lW/SwWwnJPTW8+S2RLF0IKZO+3eN+JGMY8omURUDsFEa/zRAbuYSn6lZqgu9u3j3CsqMwJr+BWA+9/U1o0qmsi2coVgN08uNmz4zFzEhzRAqIWWQ1MvwKkQiK5YQfLLUjn8P3DyN0mzKoLnv2ohFJv6gK5E6PtjNaR0RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtmOG4ME; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W0JsodAzO1joovlE1IQRHGBxMmisbu213IQbOwdTScdqsHqylYXmbIRrJ8LNIviNv5VG85qsQq+hZr1SAI77ysgzdtB/8VmDBI3ey5zgbp1XOujjPGdmmjS30mMOHwI70Lj93QhHtEyQDN1VoSqc1iBAjHXb57CDoANu57daT+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zd1SEmza; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtmOG4ME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC699C4CEF0;
-	Tue, 12 Aug 2025 18:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zd1SEmza"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A030C4CEF0;
+	Tue, 12 Aug 2025 18:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024207;
-	bh=A77roLRuJPvb6NJ23ib6jFOSRlTAj9XE8mzYw3KzFOk=;
+	s=korg; t=1755024210;
+	bh=awJDRcdCgaTe8R30AvBtaxYs5t0z9rZbXtbpC5BGPCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NtmOG4MEVAIFN5X/2ZRfly72X/Q/AxK1pbovp39pKjZs+wGBy1PHjYMQdkIq8grW7
-	 hcmEccPcYNn1DL4KdsQJHy6aw5JwNeGRNbGj+c0DcABnOHeb44PfccPo1kFRiVfoe3
-	 xUSLND0iH8rQRL2rDoU4qDzjV7wmwRwAfV2czKq0=
+	b=zd1SEmzalIyUUW01jiFGsvri7swCeUUB8rfXQrAtLqQRcBCf+hRdvVxKRv3w662hG
+	 GmdrRI5aQrRpVkrEwmpDCKVcUl+t0oC1zycRyWn2tP1wkIet4DkECELTdAoKy7xuD8
+	 sZm0YiSFGR8AI7IqGUdGOkZsfdgNm44BEWIj31HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 304/627] crypto: marvell/cesa - Fix engine load inaccuracy
-Date: Tue, 12 Aug 2025 19:29:59 +0200
-Message-ID: <20250812173430.877640314@linuxfoundation.org>
+Subject: [PATCH 6.16 305/627] crypto: s390/hmac - Fix counter in export state
+Date: Tue, 12 Aug 2025 19:30:00 +0200
+Message-ID: <20250812173430.915737575@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,71 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 442134ab30e75b7229c4bfc1ac5641d245cffe27 ]
+[ Upstream commit 1b39bc4a703a63a22c08232015540adfb31f22ba ]
 
-If an error occurs during queueing the engine load will never be
-decremented.  Fix this by moving the engine load adjustment into
-the cleanup function.
+The hmac export state needs to be one block-size bigger to account
+for the ipad.
 
-Fixes: bf8f91e71192 ("crypto: marvell - Add load balancing between engines")
+Reported-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Fixes: 08811169ac01 ("crypto: s390/hmac - Use API partial block handling")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/cesa/cipher.c | 4 +++-
- drivers/crypto/marvell/cesa/hash.c   | 5 +++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ arch/s390/crypto/hmac_s390.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/marvell/cesa/cipher.c b/drivers/crypto/marvell/cesa/cipher.c
-index 48c5c8ea8c43..3fe0fd9226cf 100644
---- a/drivers/crypto/marvell/cesa/cipher.c
-+++ b/drivers/crypto/marvell/cesa/cipher.c
-@@ -75,9 +75,12 @@ mv_cesa_skcipher_dma_cleanup(struct skcipher_request *req)
- static inline void mv_cesa_skcipher_cleanup(struct skcipher_request *req)
- {
- 	struct mv_cesa_skcipher_req *creq = skcipher_request_ctx(req);
-+	struct mv_cesa_engine *engine = creq->base.engine;
- 
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
- 		mv_cesa_skcipher_dma_cleanup(req);
-+
-+	atomic_sub(req->cryptlen, &engine->load);
+diff --git a/arch/s390/crypto/hmac_s390.c b/arch/s390/crypto/hmac_s390.c
+index 93a1098d9f8d..58444da9b004 100644
+--- a/arch/s390/crypto/hmac_s390.c
++++ b/arch/s390/crypto/hmac_s390.c
+@@ -290,6 +290,7 @@ static int s390_hmac_export(struct shash_desc *desc, void *out)
+ 	struct s390_kmac_sha2_ctx *ctx = shash_desc_ctx(desc);
+ 	unsigned int bs = crypto_shash_blocksize(desc->tfm);
+ 	unsigned int ds = bs / 2;
++	u64 lo = ctx->buflen[0];
+ 	union {
+ 		u8 *u8;
+ 		u64 *u64;
+@@ -301,9 +302,10 @@ static int s390_hmac_export(struct shash_desc *desc, void *out)
+ 	else
+ 		memcpy(p.u8, ctx->param, ds);
+ 	p.u8 += ds;
+-	put_unaligned(ctx->buflen[0], p.u64++);
++	lo += bs;
++	put_unaligned(lo, p.u64++);
+ 	if (ds == SHA512_DIGEST_SIZE)
+-		put_unaligned(ctx->buflen[1], p.u64);
++		put_unaligned(ctx->buflen[1] + (lo < bs), p.u64);
+ 	return err;
  }
  
- static void mv_cesa_skcipher_std_step(struct skcipher_request *req)
-@@ -212,7 +215,6 @@ mv_cesa_skcipher_complete(struct crypto_async_request *req)
- 	struct mv_cesa_engine *engine = creq->base.engine;
- 	unsigned int ivsize;
+@@ -316,14 +318,16 @@ static int s390_hmac_import(struct shash_desc *desc, const void *in)
+ 		const u8 *u8;
+ 		const u64 *u64;
+ 	} p = { .u8 = in };
++	u64 lo;
+ 	int err;
  
--	atomic_sub(skreq->cryptlen, &engine->load);
- 	ivsize = crypto_skcipher_ivsize(crypto_skcipher_reqtfm(skreq));
- 
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ) {
-diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
-index 6815eddc9068..e339ce7ad533 100644
---- a/drivers/crypto/marvell/cesa/hash.c
-+++ b/drivers/crypto/marvell/cesa/hash.c
-@@ -110,9 +110,12 @@ static inline void mv_cesa_ahash_dma_cleanup(struct ahash_request *req)
- static inline void mv_cesa_ahash_cleanup(struct ahash_request *req)
- {
- 	struct mv_cesa_ahash_req *creq = ahash_request_ctx(req);
-+	struct mv_cesa_engine *engine = creq->base.engine;
- 
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
- 		mv_cesa_ahash_dma_cleanup(req);
-+
-+	atomic_sub(req->nbytes, &engine->load);
- }
- 
- static void mv_cesa_ahash_last_cleanup(struct ahash_request *req)
-@@ -395,8 +398,6 @@ static void mv_cesa_ahash_complete(struct crypto_async_request *req)
- 			}
- 		}
- 	}
--
--	atomic_sub(ahashreq->nbytes, &engine->load);
- }
- 
- static void mv_cesa_ahash_prepare(struct crypto_async_request *req,
+ 	err = s390_hmac_sha2_init(desc);
+ 	memcpy(ctx->param, p.u8, ds);
+ 	p.u8 += ds;
+-	ctx->buflen[0] = get_unaligned(p.u64++);
++	lo = get_unaligned(p.u64++);
++	ctx->buflen[0] = lo - bs;
+ 	if (ds == SHA512_DIGEST_SIZE)
+-		ctx->buflen[1] = get_unaligned(p.u64);
++		ctx->buflen[1] = get_unaligned(p.u64) - (lo < bs);
+ 	if (ctx->buflen[0] | ctx->buflen[1])
+ 		ctx->gr0.ikp = 1;
+ 	return err;
 -- 
 2.39.5
 
