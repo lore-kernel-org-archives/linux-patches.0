@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604481DB92A;
-	Tue, 12 Aug 2025 18:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55301DB92A;
+	Tue, 12 Aug 2025 18:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023843; cv=none; b=bqF58JM4pGtJKzucuZwWmhXajxBxfhufc02he533d2+LZ6uHGpr1tJmQUcd1S9fsK5/Fac+qjX2Z1n7NJZr7fmrcpg2/5Czau7TBOGVxTZzmbp2WlAw5B1WsjYgF9fsHMOmUDT6j5QxMaYjigOCId4AbGrrVh8CpJCpd0IMOV98=
+	t=1755023846; cv=none; b=bL8RdiIzA2JrNCArKS/8EIFShiedV4n2FSDhmYDi8aUe8ZWlwVJPE/aRuYxUYIryKEJqGcc9Z7Wa93ZKPMEBTGZACFWT1vxgevoyjCAVKJ6L/NpwlgYdfMhA6Q7VVsh0aHPIq06AtvvUgMQme2snYCO+fqbGR8yo2Mg0JgN3wTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023843; c=relaxed/simple;
-	bh=d64VdqvU/XqvAxUGhLTRo6re6ctBsaoktsHcfGoNU0w=;
+	s=arc-20240116; t=1755023846; c=relaxed/simple;
+	bh=q8PDctpHdxVfZNy6BXNusWgmQzfY16oVF6YxdN61dII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACzcATBzg6xaGOQSneWvCmprUKeH9DBQOYJWCstZTBaCLTdN9nhWrq0uyjH8mzX5SMuXs7aFTXznxO5xfl9OLKnIXUMQISUIOMAA2hizbsbd0Sy7dhaA4UCXTDPpKVPomqud+onfWQXRAkghBM/QGTUIE6pE+2YD6xnCHoJbzfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygNqRZ/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ay2thPr3N4IWBw2VWTGqSqyVlbX4vTbijwTuCnTuokFyUQ0JCjxDpKe6S/Uvbx0HdZ/EDQKShH3GAUPURDQO6OntGGz5ch2yVCAcFa0B2a/VZG8oWQpJHxkz7VCsUCEOC6fCITn6jSSzecC2oDDsceJKohDyeH0KL7kPS6wF2W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQusl0LA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygNqRZ/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3ACCC4CEF1;
-	Tue, 12 Aug 2025 18:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQusl0LA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AC7C4CEF0;
+	Tue, 12 Aug 2025 18:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023843;
-	bh=d64VdqvU/XqvAxUGhLTRo6re6ctBsaoktsHcfGoNU0w=;
+	s=korg; t=1755023846;
+	bh=q8PDctpHdxVfZNy6BXNusWgmQzfY16oVF6YxdN61dII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygNqRZ/A0R9vaDnS7IpmzR3nIgegkqmuDLXHm0i8ui9XBrAN20G9H1A7FGj2Hp/aH
-	 aXdlFeghBxvRg2l3MrSggIvpF/Mamwk/d2pVXFnjRyj7HECOAiGCBgT24qHArPyJrw
-	 pgaxq6RvMLLQA7w7mLcHqUjCvH9TH3EUY8+SC0oE=
+	b=zQusl0LAYa8RXmT3G0Wkx055S2czD3P4YYd9korS4tdLG6BdjcVLiESjHeAnMyk5b
+	 01e6SHzF8DUZRSS52pVFsH9hzcBLjtZ3xvHoWXUpismuwBp+z6e0n/YKCXS1MNsq4k
+	 rZCc2tBwDvU8BjK+TXQury4qHXfHP8unWiKKp0Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 197/627] drm/rockchip: vop2: Fix the update of LAYER/PORT select registers when there are multi display output on rk3588/rk3568
-Date: Tue, 12 Aug 2025 19:28:12 +0200
-Message-ID: <20250812173426.769473495@linuxfoundation.org>
+Subject: [PATCH 6.16 198/627] sched/psi: Optimize psi_group_change() cpu_clock() usage
+Date: Tue, 12 Aug 2025 19:28:13 +0200
+Message-ID: <20250812173426.814633537@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,294 +52,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 3e89a8c6835476aa782da80585dee9ddae651eea ]
+[ Upstream commit 570c8efd5eb79c3725ba439ce105ed1bedc5acd9 ]
 
-The all video ports of rk3568/rk3588 share the same OVL_LAYER_SEL
-and OVL_PORT_SEL registers, and the configuration of these two registers
-can be set to take effect when the vsync signal arrives at a certain Video
-Port.
+Dietmar reported that commit 3840cbe24cf0 ("sched: psi: fix bogus
+pressure spikes from aggregation race") caused a regression for him on
+a high context switch rate benchmark (schbench) due to the now
+repeating cpu_clock() calls.
 
-If two threads for two display output choose to update these two registers
-simultaneously to meet their own plane adjustment requirements(change plane
-zpos or switch plane from one crtc to another), then no matter which Video
-Port'svsync signal we choose to follow for these two registers, the display
-output of the other Video Port will be abnormal.
-This is because the configuration of this Video Port does not take
-effect at the right time (its configuration should take effect when its
-VSYNC signal arrives).
+In particular the problem is that get_recent_times() will extrapolate
+the current state to 'now'. But if an update uses a timestamp from
+before the start of the update, it is possible to get two reads
+with inconsistent results. It is effectively back-dating an update.
 
-In order to solve this problem, when performing plane migration or
-change the zpos of planes, there are two things to be observed and
-followed:
+(note that this all hard-relies on the clock being synchronized across
+CPUs -- if this is not the case, all bets are off).
 
-1. When a plane is migrated from one VP to another, the configuration of
-   the layer can only take effect after the Port mux configuration is
-   enabled.
+Combine this problem with the fact that there are per-group-per-cpu
+seqcounts, the commit in question pushed the clock read into the group
+iteration, causing tree-depth cpu_clock() calls. On architectures
+where cpu_clock() has appreciable overhead, this hurts.
 
-2. When change the zpos of planes, we must ensure that the change for
-   the previous VP takes effect before we proceed to change the next VP.
-   Otherwise, the new configuration might overwrite the previous one for
-   the previous VP, or it could lead to the configuration of the previous
-   VP being take effect along with the VSYNC of the new VP.
+Instead move to a per-cpu seqcount, which allows us to have a single
+clock read for all group updates, increasing internal consistency and
+lowering update overhead. This comes at the cost of a longer update
+side (proportional to the tree depth) which can cause the read side to
+retry more often.
 
-This issue only occurs in scenarios where multi-display output is enabled.
-
-Fixes: c5996e4ab109 ("drm/rockchip: vop2: Make overlay layer select register configuration take effect by vsync")
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250421102156.424480-1-andyshrk@163.com
+Fixes: 3840cbe24cf0 ("sched: psi: fix bogus pressure spikes from aggregation race")
+Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>,
+Link: https://lkml.kernel.org/20250522084844.GC31726@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 25 ++----
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.h | 33 ++++++++
- drivers/gpu/drm/rockchip/rockchip_vop2_reg.c | 89 ++++++++++++++++++--
- 3 files changed, 122 insertions(+), 25 deletions(-)
+ include/linux/psi_types.h |   6 +-
+ kernel/sched/psi.c        | 121 +++++++++++++++++++++-----------------
+ 2 files changed, 68 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 6b37ce3ee60b..186f6452a7d3 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -146,25 +146,6 @@ static void vop2_unlock(struct vop2 *vop2)
- 	mutex_unlock(&vop2->vop2_lock);
- }
+diff --git a/include/linux/psi_types.h b/include/linux/psi_types.h
+index f1fd3a8044e0..dd10c22299ab 100644
+--- a/include/linux/psi_types.h
++++ b/include/linux/psi_types.h
+@@ -84,11 +84,9 @@ enum psi_aggregators {
+ struct psi_group_cpu {
+ 	/* 1st cacheline updated by the scheduler */
  
--/*
-- * Note:
-- * The write mask function is documented but missing on rk3566/8, writes
-- * to these bits have no effect. For newer soc(rk3588 and following) the
-- * write mask is needed for register writes.
-- *
-- * GLB_CFG_DONE_EN has no write mask bit.
-- *
-- */
--static void vop2_cfg_done(struct vop2_video_port *vp)
--{
--	struct vop2 *vop2 = vp->vop2;
--	u32 val = RK3568_REG_CFG_DONE__GLB_CFG_DONE_EN;
+-	/* Aggregator needs to know of concurrent changes */
+-	seqcount_t seq ____cacheline_aligned_in_smp;
 -
--	val |= BIT(vp->id) | (BIT(vp->id) << 16);
--
--	regmap_set_bits(vop2->map, RK3568_REG_CFG_DONE, val);
--}
--
- static void vop2_win_disable(struct vop2_win *win)
- {
- 	vop2_win_write(win, VOP2_WIN_ENABLE, 0);
-@@ -854,6 +835,11 @@ static void vop2_enable(struct vop2 *vop2)
- 	if (vop2->version == VOP_VERSION_RK3588)
- 		rk3588_vop2_power_domain_enable_all(vop2);
+ 	/* States of the tasks belonging to this group */
+-	unsigned int tasks[NR_PSI_TASK_COUNTS];
++	unsigned int tasks[NR_PSI_TASK_COUNTS]
++			____cacheline_aligned_in_smp;
  
-+	if (vop2->version <= VOP_VERSION_RK3588) {
-+		vop2->old_layer_sel = vop2_readl(vop2, RK3568_OVL_LAYER_SEL);
-+		vop2->old_port_sel = vop2_readl(vop2, RK3568_OVL_PORT_SEL);
-+	}
-+
- 	vop2_writel(vop2, RK3568_REG_CFG_DONE, RK3568_REG_CFG_DONE__GLB_CFG_DONE_EN);
- 
- 	/*
-@@ -2728,6 +2714,7 @@ static int vop2_bind(struct device *dev, struct device *master, void *data)
- 		return dev_err_probe(drm->dev, vop2->irq, "cannot find irq for vop2\n");
- 
- 	mutex_init(&vop2->vop2_lock);
-+	mutex_init(&vop2->ovl_lock);
- 
- 	ret = devm_request_irq(dev, vop2->irq, vop2_isr, IRQF_SHARED, dev_name(dev), vop2);
- 	if (ret)
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-index fc3ecb9fcd95..fa5c56f16047 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-@@ -334,6 +334,19 @@ struct vop2 {
- 	/* optional internal rgb encoder */
- 	struct rockchip_rgb *rgb;
- 
-+	/*
-+	 * Used to record layer selection configuration on rk356x/rk3588
-+	 * as register RK3568_OVL_LAYER_SEL and RK3568_OVL_PORT_SEL are
-+	 * shared for all the Video Ports.
-+	 */
-+	u32 old_layer_sel;
-+	u32 old_port_sel;
-+	/*
-+	 * Ensure that the updates to these two registers(RKK3568_OVL_LAYER_SEL/RK3568_OVL_PORT_SEL)
-+	 * take effect in sequence.
-+	 */
-+	struct mutex ovl_lock;
-+
- 	/* must be put at the end of the struct */
- 	struct vop2_win win[];
+ 	/* Aggregate pressure state derived from the tasks */
+ 	u32 state_mask;
+diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+index ad04a5c3162a..5f7c023c4cca 100644
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -172,6 +172,28 @@ struct psi_group psi_system = {
+ 	.pcpu = &system_group_pcpu,
  };
-@@ -727,6 +740,7 @@ enum dst_factor_mode {
- #define RK3588_OVL_PORT_SEL__CLUSTER2			GENMASK(21, 20)
- #define RK3568_OVL_PORT_SEL__CLUSTER1			GENMASK(19, 18)
- #define RK3568_OVL_PORT_SEL__CLUSTER0			GENMASK(17, 16)
-+#define RK3588_OVL_PORT_SET__PORT3_MUX			GENMASK(15, 12)
- #define RK3568_OVL_PORT_SET__PORT2_MUX			GENMASK(11, 8)
- #define RK3568_OVL_PORT_SET__PORT1_MUX			GENMASK(7, 4)
- #define RK3568_OVL_PORT_SET__PORT0_MUX			GENMASK(3, 0)
-@@ -831,4 +845,23 @@ static inline struct vop2_win *to_vop2_win(struct drm_plane *p)
- 	return container_of(p, struct vop2_win, base);
+ 
++static DEFINE_PER_CPU(seqcount_t, psi_seq);
++
++static inline void psi_write_begin(int cpu)
++{
++	write_seqcount_begin(per_cpu_ptr(&psi_seq, cpu));
++}
++
++static inline void psi_write_end(int cpu)
++{
++	write_seqcount_end(per_cpu_ptr(&psi_seq, cpu));
++}
++
++static inline u32 psi_read_begin(int cpu)
++{
++	return read_seqcount_begin(per_cpu_ptr(&psi_seq, cpu));
++}
++
++static inline bool psi_read_retry(int cpu, u32 seq)
++{
++	return read_seqcount_retry(per_cpu_ptr(&psi_seq, cpu), seq);
++}
++
+ static void psi_avgs_work(struct work_struct *work);
+ 
+ static void poll_timer_fn(struct timer_list *t);
+@@ -182,7 +204,7 @@ static void group_init(struct psi_group *group)
+ 
+ 	group->enabled = true;
+ 	for_each_possible_cpu(cpu)
+-		seqcount_init(&per_cpu_ptr(group->pcpu, cpu)->seq);
++		seqcount_init(per_cpu_ptr(&psi_seq, cpu));
+ 	group->avg_last_update = sched_clock();
+ 	group->avg_next_update = group->avg_last_update + psi_period;
+ 	mutex_init(&group->avgs_lock);
+@@ -262,14 +284,14 @@ static void get_recent_times(struct psi_group *group, int cpu,
+ 
+ 	/* Snapshot a coherent view of the CPU state */
+ 	do {
+-		seq = read_seqcount_begin(&groupc->seq);
++		seq = psi_read_begin(cpu);
+ 		now = cpu_clock(cpu);
+ 		memcpy(times, groupc->times, sizeof(groupc->times));
+ 		state_mask = groupc->state_mask;
+ 		state_start = groupc->state_start;
+ 		if (cpu == current_cpu)
+ 			memcpy(tasks, groupc->tasks, sizeof(groupc->tasks));
+-	} while (read_seqcount_retry(&groupc->seq, seq));
++	} while (psi_read_retry(cpu, seq));
+ 
+ 	/* Calculate state time deltas against the previous snapshot */
+ 	for (s = 0; s < NR_PSI_STATES; s++) {
+@@ -768,30 +790,20 @@ static void record_times(struct psi_group_cpu *groupc, u64 now)
+ 		groupc->times[PSI_NONIDLE] += delta;
  }
  
-+/*
-+ * Note:
-+ * The write mask function is documented but missing on rk3566/8, writes
-+ * to these bits have no effect. For newer soc(rk3588 and following) the
-+ * write mask is needed for register writes.
-+ *
-+ * GLB_CFG_DONE_EN has no write mask bit.
-+ *
-+ */
-+static inline void vop2_cfg_done(struct vop2_video_port *vp)
-+{
-+	struct vop2 *vop2 = vp->vop2;
-+	u32 val = RK3568_REG_CFG_DONE__GLB_CFG_DONE_EN;
++#define for_each_group(iter, group) \
++	for (typeof(group) iter = group; iter; iter = iter->parent)
 +
-+	val |= BIT(vp->id) | (BIT(vp->id) << 16);
-+
-+	regmap_set_bits(vop2->map, RK3568_REG_CFG_DONE, val);
-+}
-+
- #endif /* _ROCKCHIP_DRM_VOP2_H */
-diff --git a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-index 32c4ed685739..45c5e3987813 100644
---- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-@@ -2052,12 +2052,55 @@ static void vop2_setup_alpha(struct vop2_video_port *vp)
- 	}
- }
- 
-+static u32 rk3568_vop2_read_port_mux(struct vop2 *vop2)
-+{
-+	return vop2_readl(vop2, RK3568_OVL_PORT_SEL);
-+}
-+
-+static void rk3568_vop2_wait_for_port_mux_done(struct vop2 *vop2)
-+{
-+	u32 port_mux_sel;
-+	int ret;
-+
-+	/*
-+	 * Spin until the previous port_mux figuration is done.
-+	 */
-+	ret = readx_poll_timeout_atomic(rk3568_vop2_read_port_mux, vop2, port_mux_sel,
-+					port_mux_sel == vop2->old_port_sel, 0, 50 * 1000);
-+	if (ret)
-+		DRM_DEV_ERROR(vop2->dev, "wait port_mux done timeout: 0x%x--0x%x\n",
-+			      port_mux_sel, vop2->old_port_sel);
-+}
-+
-+static u32 rk3568_vop2_read_layer_cfg(struct vop2 *vop2)
-+{
-+	return vop2_readl(vop2, RK3568_OVL_LAYER_SEL);
-+}
-+
-+static void rk3568_vop2_wait_for_layer_cfg_done(struct vop2 *vop2, u32 cfg)
-+{
-+	u32 atv_layer_cfg;
-+	int ret;
-+
-+	/*
-+	 * Spin until the previous layer configuration is done.
-+	 */
-+	ret = readx_poll_timeout_atomic(rk3568_vop2_read_layer_cfg, vop2, atv_layer_cfg,
-+					atv_layer_cfg == cfg, 0, 50 * 1000);
-+	if (ret)
-+		DRM_DEV_ERROR(vop2->dev, "wait layer cfg done timeout: 0x%x--0x%x\n",
-+			      atv_layer_cfg, cfg);
-+}
-+
- static void rk3568_vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ static void psi_group_change(struct psi_group *group, int cpu,
+ 			     unsigned int clear, unsigned int set,
+-			     bool wake_clock)
++			     u64 now, bool wake_clock)
  {
- 	struct vop2 *vop2 = vp->vop2;
- 	struct drm_plane *plane;
- 	u32 layer_sel = 0;
- 	u32 port_sel;
-+	u32 old_layer_sel = 0;
-+	u32 atv_layer_sel = 0;
-+	u32 old_port_sel = 0;
- 	u8 layer_id;
- 	u8 old_layer_id;
- 	u8 layer_sel_id;
-@@ -2069,19 +2112,18 @@ static void rk3568_vop2_setup_layer_mixer(struct vop2_video_port *vp)
- 	struct vop2_video_port *vp2 = &vop2->vps[2];
- 	struct rockchip_crtc_state *vcstate = to_rockchip_crtc_state(vp->crtc.state);
+ 	struct psi_group_cpu *groupc;
+ 	unsigned int t, m;
+ 	u32 state_mask;
+-	u64 now;
  
-+	mutex_lock(&vop2->ovl_lock);
- 	ovl_ctrl = vop2_readl(vop2, RK3568_OVL_CTRL);
- 	ovl_ctrl &= ~RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD;
- 	ovl_ctrl &= ~RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL;
--	ovl_ctrl |= FIELD_PREP(RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL, vp->id);
+ 	lockdep_assert_rq_held(cpu_rq(cpu));
+ 	groupc = per_cpu_ptr(group->pcpu, cpu);
  
- 	if (vcstate->yuv_overlay)
- 		ovl_ctrl |= RK3568_OVL_CTRL__YUV_MODE(vp->id);
- 	else
- 		ovl_ctrl &= ~RK3568_OVL_CTRL__YUV_MODE(vp->id);
- 
--	vop2_writel(vop2, RK3568_OVL_CTRL, ovl_ctrl);
+-	/*
+-	 * First we update the task counts according to the state
+-	 * change requested through the @clear and @set bits.
+-	 *
+-	 * Then if the cgroup PSI stats accounting enabled, we
+-	 * assess the aggregate resource states this CPU's tasks
+-	 * have been in since the last change, and account any
+-	 * SOME and FULL time these may have resulted in.
+-	 */
+-	write_seqcount_begin(&groupc->seq);
+-	now = cpu_clock(cpu);
 -
--	port_sel = vop2_readl(vop2, RK3568_OVL_PORT_SEL);
-+	old_port_sel = vop2->old_port_sel;
-+	port_sel = old_port_sel;
- 	port_sel &= RK3568_OVL_PORT_SEL__SEL_PORT;
+ 	/*
+ 	 * Start with TSK_ONCPU, which doesn't have a corresponding
+ 	 * task count - it's just a boolean flag directly encoded in
+@@ -843,7 +855,6 @@ static void psi_group_change(struct psi_group *group, int cpu,
  
- 	if (vp0->nlayers)
-@@ -2102,7 +2144,13 @@ static void rk3568_vop2_setup_layer_mixer(struct vop2_video_port *vp)
- 	else
- 		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT2_MUX, 8);
+ 		groupc->state_mask = state_mask;
  
--	layer_sel = vop2_readl(vop2, RK3568_OVL_LAYER_SEL);
-+	/* Fixed value for rk3588 */
-+	if (vop2->version == VOP_VERSION_RK3588)
-+		port_sel |= FIELD_PREP(RK3588_OVL_PORT_SET__PORT3_MUX, 7);
-+
-+	atv_layer_sel = vop2_readl(vop2, RK3568_OVL_LAYER_SEL);
-+	old_layer_sel = vop2->old_layer_sel;
-+	layer_sel = old_layer_sel;
- 
- 	ofs = 0;
- 	for (i = 0; i < vp->id; i++)
-@@ -2186,8 +2234,37 @@ static void rk3568_vop2_setup_layer_mixer(struct vop2_video_port *vp)
- 			     old_win->data->layer_sel_id[vp->id]);
+-		write_seqcount_end(&groupc->seq);
+ 		return;
  	}
  
-+	vop2->old_layer_sel = layer_sel;
-+	vop2->old_port_sel = port_sel;
-+	/*
-+	 * As the RK3568_OVL_LAYER_SEL and RK3568_OVL_PORT_SEL are shared by all Video Ports,
-+	 * and the configuration take effect by one Video Port's vsync.
-+	 * When performing layer migration or change the zpos of layers, there are two things
-+	 * to be observed and followed:
-+	 * 1. When a layer is migrated from one VP to another, the configuration of the layer
-+	 *    can only take effect after the Port mux configuration is enabled.
-+	 *
-+	 * 2. When we change the zpos of layers, we must ensure that the change for the previous
-+	 *    VP takes effect before we proceed to change the next VP. Otherwise, the new
-+	 *    configuration might overwrite the previous one for the previous VP, or it could
-+	 *    lead to the configuration of the previous VP being take effect along with the VSYNC
-+	 *    of the new VP.
-+	 */
-+	if (layer_sel != old_layer_sel || port_sel != old_port_sel)
-+		ovl_ctrl |= FIELD_PREP(RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL, vp->id);
-+	vop2_writel(vop2, RK3568_OVL_CTRL, ovl_ctrl);
-+
-+	if (port_sel != old_port_sel) {
-+		vop2_writel(vop2, RK3568_OVL_PORT_SEL, port_sel);
-+		vop2_cfg_done(vp);
-+		rk3568_vop2_wait_for_port_mux_done(vop2);
-+	}
-+
-+	if (layer_sel != old_layer_sel && atv_layer_sel != old_layer_sel)
-+		rk3568_vop2_wait_for_layer_cfg_done(vop2, vop2->old_layer_sel);
-+
- 	vop2_writel(vop2, RK3568_OVL_LAYER_SEL, layer_sel);
--	vop2_writel(vop2, RK3568_OVL_PORT_SEL, port_sel);
-+	mutex_unlock(&vop2->ovl_lock);
+@@ -864,8 +875,6 @@ static void psi_group_change(struct psi_group *group, int cpu,
+ 
+ 	groupc->state_mask = state_mask;
+ 
+-	write_seqcount_end(&groupc->seq);
+-
+ 	if (state_mask & group->rtpoll_states)
+ 		psi_schedule_rtpoll_work(group, 1, false);
+ 
+@@ -900,24 +909,29 @@ static void psi_flags_change(struct task_struct *task, int clear, int set)
+ void psi_task_change(struct task_struct *task, int clear, int set)
+ {
+ 	int cpu = task_cpu(task);
+-	struct psi_group *group;
++	u64 now;
+ 
+ 	if (!task->pid)
+ 		return;
+ 
+ 	psi_flags_change(task, clear, set);
+ 
+-	group = task_psi_group(task);
+-	do {
+-		psi_group_change(group, cpu, clear, set, true);
+-	} while ((group = group->parent));
++	psi_write_begin(cpu);
++	now = cpu_clock(cpu);
++	for_each_group(group, task_psi_group(task))
++		psi_group_change(group, cpu, clear, set, now, true);
++	psi_write_end(cpu);
  }
  
- static void rk3568_vop2_setup_dly_for_windows(struct vop2_video_port *vp)
+ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 		     bool sleep)
+ {
+-	struct psi_group *group, *common = NULL;
++	struct psi_group *common = NULL;
+ 	int cpu = task_cpu(prev);
++	u64 now;
++
++	psi_write_begin(cpu);
++	now = cpu_clock(cpu);
+ 
+ 	if (next->pid) {
+ 		psi_flags_change(next, 0, TSK_ONCPU);
+@@ -926,16 +940,15 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 		 * ancestors with @prev, those will already have @prev's
+ 		 * TSK_ONCPU bit set, and we can stop the iteration there.
+ 		 */
+-		group = task_psi_group(next);
+-		do {
+-			if (per_cpu_ptr(group->pcpu, cpu)->state_mask &
+-			    PSI_ONCPU) {
++		for_each_group(group, task_psi_group(next)) {
++			struct psi_group_cpu *groupc = per_cpu_ptr(group->pcpu, cpu);
++
++			if (groupc->state_mask & PSI_ONCPU) {
+ 				common = group;
+ 				break;
+ 			}
+-
+-			psi_group_change(group, cpu, 0, TSK_ONCPU, true);
+-		} while ((group = group->parent));
++			psi_group_change(group, cpu, 0, TSK_ONCPU, now, true);
++		}
+ 	}
+ 
+ 	if (prev->pid) {
+@@ -968,12 +981,11 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 
+ 		psi_flags_change(prev, clear, set);
+ 
+-		group = task_psi_group(prev);
+-		do {
++		for_each_group(group, task_psi_group(prev)) {
+ 			if (group == common)
+ 				break;
+-			psi_group_change(group, cpu, clear, set, wake_clock);
+-		} while ((group = group->parent));
++			psi_group_change(group, cpu, clear, set, now, wake_clock);
++		}
+ 
+ 		/*
+ 		 * TSK_ONCPU is handled up to the common ancestor. If there are
+@@ -983,20 +995,21 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 		 */
+ 		if ((prev->psi_flags ^ next->psi_flags) & ~TSK_ONCPU) {
+ 			clear &= ~TSK_ONCPU;
+-			for (; group; group = group->parent)
+-				psi_group_change(group, cpu, clear, set, wake_clock);
++			for_each_group(group, common)
++				psi_group_change(group, cpu, clear, set, now, wake_clock);
+ 		}
+ 	}
++	psi_write_end(cpu);
+ }
+ 
+ #ifdef CONFIG_IRQ_TIME_ACCOUNTING
+ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_struct *prev)
+ {
+ 	int cpu = task_cpu(curr);
+-	struct psi_group *group;
+ 	struct psi_group_cpu *groupc;
+ 	s64 delta;
+ 	u64 irq;
++	u64 now;
+ 
+ 	if (static_branch_likely(&psi_disabled) || !irqtime_enabled())
+ 		return;
+@@ -1005,8 +1018,7 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+ 		return;
+ 
+ 	lockdep_assert_rq_held(rq);
+-	group = task_psi_group(curr);
+-	if (prev && task_psi_group(prev) == group)
++	if (prev && task_psi_group(prev) == task_psi_group(curr))
+ 		return;
+ 
+ 	irq = irq_time_read(cpu);
+@@ -1015,25 +1027,22 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+ 		return;
+ 	rq->psi_irq_time = irq;
+ 
+-	do {
+-		u64 now;
++	psi_write_begin(cpu);
++	now = cpu_clock(cpu);
+ 
++	for_each_group(group, task_psi_group(curr)) {
+ 		if (!group->enabled)
+ 			continue;
+ 
+ 		groupc = per_cpu_ptr(group->pcpu, cpu);
+ 
+-		write_seqcount_begin(&groupc->seq);
+-		now = cpu_clock(cpu);
+-
+ 		record_times(groupc, now);
+ 		groupc->times[PSI_IRQ_FULL] += delta;
+ 
+-		write_seqcount_end(&groupc->seq);
+-
+ 		if (group->rtpoll_states & (1 << PSI_IRQ_FULL))
+ 			psi_schedule_rtpoll_work(group, 1, false);
+-	} while ((group = group->parent));
++	}
++	psi_write_end(cpu);
+ }
+ #endif
+ 
+@@ -1221,12 +1230,14 @@ void psi_cgroup_restart(struct psi_group *group)
+ 		return;
+ 
+ 	for_each_possible_cpu(cpu) {
+-		struct rq *rq = cpu_rq(cpu);
+-		struct rq_flags rf;
++		u64 now;
+ 
+-		rq_lock_irq(rq, &rf);
+-		psi_group_change(group, cpu, 0, 0, true);
+-		rq_unlock_irq(rq, &rf);
++		guard(rq_lock_irq)(cpu_rq(cpu));
++
++		psi_write_begin(cpu);
++		now = cpu_clock(cpu);
++		psi_group_change(group, cpu, 0, 0, now, true);
++		psi_write_end(cpu);
+ 	}
+ }
+ #endif /* CONFIG_CGROUPS */
 -- 
 2.39.5
 
