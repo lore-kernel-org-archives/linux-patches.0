@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4700A2FD1DC;
-	Tue, 12 Aug 2025 18:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA655282E1;
+	Tue, 12 Aug 2025 18:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022178; cv=none; b=uhjaNPioJIwtbukWt6+HAbrhCuJaJiLEgjK+AH7KPLgdlEnP3CLP7aSuoRAuDq/vEOF5+BQF2GVzYUWMSjIVB7HD2z6JKgjb3P/MPwUe76jP3atHih08siNS798mu80c50PnVWs+esgokrX3cEE7EKHNfw889pvA1nK0HRTDfJk=
+	t=1755022181; cv=none; b=QpDBYxu4ekbICLS8H+0uGSEXfKB/UX1dgsYS9lk65LCiyUkbilE3VDtt4I28uusJXMnuIJNtnBzK5u2/RXhdr+kNCYY0Qx1iOPSidK0XJ4wvyMqQgMb7iyYTyr80hvHDjJTMA9H6bEdbIx+2S5wsM/Lwau+guPXWmVMtI8srW4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022178; c=relaxed/simple;
-	bh=jxlr0+36lBJ/0pP2efXL74lDzUjfsKv0rueeDwbXAck=;
+	s=arc-20240116; t=1755022181; c=relaxed/simple;
+	bh=CHfMxMys8faouDyA1SAox6Qilx3CTy9z78gt1hEUNJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aLaAEYieY7W94Pla4wyvIokeNL/6Ouoa9BSVT1y8iLyAEsbGlrAxgUGo+VKdJW/U76+AyHpcnWxIRGpp7qlpDvB0DONEcAxSC6LFh1sQASPp3kTErmz3YbpKTYqCqYnp7kpSq4D41b+oGS3YkcOwosuTCsXDC1MURzeUJ4io36U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ee3R4b8n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dN+o8QbOT/QZLUrpl5Gw3xcAHqRuh45xbFk/pa4wiKg9ZOcvqplfr7GEvdY9nHns7dfoGWmT0HDyt4a4OTT9g+e8JgmEtDX+mgYUf8RkFfZbp9TYv1L6NsZr1dADOfQGfKP+SMe3FmXzxdChmykIDePpv1vbOPJqQBNjeQuVzM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAJZN4o1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ee3R4b8n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEB4C4CEF0;
-	Tue, 12 Aug 2025 18:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAJZN4o1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFD9C4CEF0;
+	Tue, 12 Aug 2025 18:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022178;
-	bh=jxlr0+36lBJ/0pP2efXL74lDzUjfsKv0rueeDwbXAck=;
+	s=korg; t=1755022181;
+	bh=CHfMxMys8faouDyA1SAox6Qilx3CTy9z78gt1hEUNJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ee3R4b8nP+RcweJw9N0TZYgRBO9ptmJ2HVipljGCCAdAVRUDPqTOHZNZmi3lSoOSw
-	 DWOg33lvf0BEqTTK1BDMnwTtGyAZSooGUykGGkjyXPlR3qCvEiRGLIWg9GCUmEUzoB
-	 JDw/bJ2suJQP/v8EqyON61ocBt04RRxAuYitsMXM=
+	b=gAJZN4o1itnBOTJ8qE51hLmAhoLghhiyAYgyWE1fYawgyWR+rr5Zwr4nJn8u3vBjF
+	 vIx05/BTzoVdswbR4utZ8b/uBHD+zDr/ovD4P1kgq1G6Lp6HO/xu+cUsVRCNzo+hfT
+	 tarwDCxXzuGZiU1Gdk1yDFgtfbuXakOOsQYYb5ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kowshik Jois <kowsjois@linux.ibm.com>,
-	Haren Myneni <haren@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Tyrel Datwyler <tyreld@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/369] powerpc/pseries/dlpar: Search DRC index from ibm,drc-indexes for IO add
-Date: Tue, 12 Aug 2025 19:26:16 +0200
-Message-ID: <20250812173017.758989911@linuxfoundation.org>
+Subject: [PATCH 6.12 080/369] caif: reduce stack size, again
+Date: Tue, 12 Aug 2025 19:26:17 +0200
+Message-ID: <20250812173017.794706198@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -48,114 +45,363 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haren Myneni <haren@linux.ibm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 41a1452759a8b1121df9cf7310acf31d766ba70b ]
+[ Upstream commit b630c781bcf6ff87657146661816d0d30a902139 ]
 
-IO hotplug add event is handled in the user space with drmgr tool.
-After the device is enabled, the user space uses /sys/kernel/dlpar
-interface with “dt add index <drc_index>” to update the device tree.
-The kernel interface (dlpar_hp_dt_add()) finds the parent node for
-the specified ‘drc_index’ from ibm,drc-info property. The recent FW
-provides this property from 2017 onwards. But KVM guest code in
-some releases is still using the older SLOF firmware which has
-ibm,drc-indexes property instead of ibm,drc-info.
+I tried to fix the stack usage in this function a couple of years ago,
+but there is still a problem with the latest gcc versions in some
+configurations:
 
-If the ibm,drc-info is not available, this patch adds changes to
-search ‘drc_index’ from the indexes array in ibm,drc-indexes
-property to support old FW.
+net/caif/cfctrl.c:553:1: error: the frame size of 1296 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
 
-Fixes: 02b98ff44a57 ("powerpc/pseries/dlpar: Add device tree nodes for DLPAR IO add")
-Reported-by: Kowshik Jois <kowsjois@linux.ibm.com>
-Signed-off-by: Haren Myneni <haren@linux.ibm.com>
-Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Tyrel Datwyler <tyreld@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250531235002.239213-1-haren@linux.ibm.com
+Reduce this once again, with a separate cfctrl_link_setup() function that
+holds the bulk of all the local variables. It also turns out that the
+param[] array that takes up a large portion of the stack is write-only
+and can be left out here.
+
+Fixes: ce6289661b14 ("caif: reduce stack size with KASAN")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250620112244.3425554-1-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/dlpar.c | 52 +++++++++++++++++++++++++-
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ net/caif/cfctrl.c | 294 +++++++++++++++++++++++-----------------------
+ 1 file changed, 144 insertions(+), 150 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/dlpar.c b/arch/powerpc/platforms/pseries/dlpar.c
-index 213aa26dc8b3..979487da6522 100644
---- a/arch/powerpc/platforms/pseries/dlpar.c
-+++ b/arch/powerpc/platforms/pseries/dlpar.c
-@@ -404,6 +404,45 @@ get_device_node_with_drc_info(u32 index)
- 	return NULL;
+diff --git a/net/caif/cfctrl.c b/net/caif/cfctrl.c
+index 20139fa1be1f..06b604cf9d58 100644
+--- a/net/caif/cfctrl.c
++++ b/net/caif/cfctrl.c
+@@ -351,17 +351,154 @@ int cfctrl_cancel_req(struct cflayer *layr, struct cflayer *adap_layer)
+ 	return found;
  }
  
-+static struct device_node *
-+get_device_node_with_drc_indexes(u32 drc_index)
++static int cfctrl_link_setup(struct cfctrl *cfctrl, struct cfpkt *pkt, u8 cmdrsp)
 +{
-+	struct device_node *np = NULL;
-+	u32 nr_indexes, index;
-+	int i, rc;
++	u8 len;
++	u8 linkid = 0;
++	enum cfctrl_srv serv;
++	enum cfctrl_srv servtype;
++	u8 endpoint;
++	u8 physlinkid;
++	u8 prio;
++	u8 tmp;
++	u8 *cp;
++	int i;
++	struct cfctrl_link_param linkparam;
++	struct cfctrl_request_info rsp, *req;
 +
-+	for_each_node_with_property(np, "ibm,drc-indexes") {
-+		/*
-+		 * First element in the array is the total number of
-+		 * DRC indexes returned.
++	memset(&linkparam, 0, sizeof(linkparam));
++
++	tmp = cfpkt_extr_head_u8(pkt);
++
++	serv = tmp & CFCTRL_SRV_MASK;
++	linkparam.linktype = serv;
++
++	servtype = tmp >> 4;
++	linkparam.chtype = servtype;
++
++	tmp = cfpkt_extr_head_u8(pkt);
++	physlinkid = tmp & 0x07;
++	prio = tmp >> 3;
++
++	linkparam.priority = prio;
++	linkparam.phyid = physlinkid;
++	endpoint = cfpkt_extr_head_u8(pkt);
++	linkparam.endpoint = endpoint & 0x03;
++
++	switch (serv) {
++	case CFCTRL_SRV_VEI:
++	case CFCTRL_SRV_DBG:
++		if (CFCTRL_ERR_BIT & cmdrsp)
++			break;
++		/* Link ID */
++		linkid = cfpkt_extr_head_u8(pkt);
++		break;
++	case CFCTRL_SRV_VIDEO:
++		tmp = cfpkt_extr_head_u8(pkt);
++		linkparam.u.video.connid = tmp;
++		if (CFCTRL_ERR_BIT & cmdrsp)
++			break;
++		/* Link ID */
++		linkid = cfpkt_extr_head_u8(pkt);
++		break;
++
++	case CFCTRL_SRV_DATAGRAM:
++		linkparam.u.datagram.connid = cfpkt_extr_head_u32(pkt);
++		if (CFCTRL_ERR_BIT & cmdrsp)
++			break;
++		/* Link ID */
++		linkid = cfpkt_extr_head_u8(pkt);
++		break;
++	case CFCTRL_SRV_RFM:
++		/* Construct a frame, convert
++		 * DatagramConnectionID
++		 * to network format long and copy it out...
 +		 */
-+		rc = of_property_read_u32_index(np, "ibm,drc-indexes",
-+				0, &nr_indexes);
-+		if (rc)
-+			goto out_put_np;
++		linkparam.u.rfm.connid = cfpkt_extr_head_u32(pkt);
++		cp = (u8 *) linkparam.u.rfm.volume;
++		for (tmp = cfpkt_extr_head_u8(pkt);
++		     cfpkt_more(pkt) && tmp != '\0';
++		     tmp = cfpkt_extr_head_u8(pkt))
++			*cp++ = tmp;
++		*cp = '\0';
 +
-+		/*
-+		 * Retrieve DRC index from the list and return the
-+		 * device node if matched with the specified index.
++		if (CFCTRL_ERR_BIT & cmdrsp)
++			break;
++		/* Link ID */
++		linkid = cfpkt_extr_head_u8(pkt);
++
++		break;
++	case CFCTRL_SRV_UTIL:
++		/* Construct a frame, convert
++		 * DatagramConnectionID
++		 * to network format long and copy it out...
 +		 */
-+		for (i = 0; i < nr_indexes; i++) {
-+			rc = of_property_read_u32_index(np, "ibm,drc-indexes",
-+							i+1, &index);
-+			if (rc)
-+				goto out_put_np;
-+
-+			if (drc_index == index)
-+				return np;
++		/* Fifosize KB */
++		linkparam.u.utility.fifosize_kb = cfpkt_extr_head_u16(pkt);
++		/* Fifosize bufs */
++		linkparam.u.utility.fifosize_bufs = cfpkt_extr_head_u16(pkt);
++		/* name */
++		cp = (u8 *) linkparam.u.utility.name;
++		caif_assert(sizeof(linkparam.u.utility.name)
++			     >= UTILITY_NAME_LENGTH);
++		for (i = 0; i < UTILITY_NAME_LENGTH && cfpkt_more(pkt); i++) {
++			tmp = cfpkt_extr_head_u8(pkt);
++			*cp++ = tmp;
 +		}
++		/* Length */
++		len = cfpkt_extr_head_u8(pkt);
++		linkparam.u.utility.paramlen = len;
++		/* Param Data */
++		cp = linkparam.u.utility.params;
++		while (cfpkt_more(pkt) && len--) {
++			tmp = cfpkt_extr_head_u8(pkt);
++			*cp++ = tmp;
++		}
++		if (CFCTRL_ERR_BIT & cmdrsp)
++			break;
++		/* Link ID */
++		linkid = cfpkt_extr_head_u8(pkt);
++		/* Length */
++		len = cfpkt_extr_head_u8(pkt);
++		/* Param Data */
++		cfpkt_extr_head(pkt, NULL, len);
++		break;
++	default:
++		pr_warn("Request setup, invalid type (%d)\n", serv);
++		return -1;
 +	}
 +
-+	return NULL;
++	rsp.cmd = CFCTRL_CMD_LINK_SETUP;
++	rsp.param = linkparam;
++	spin_lock_bh(&cfctrl->info_list_lock);
++	req = cfctrl_remove_req(cfctrl, &rsp);
 +
-+out_put_np:
-+	of_node_put(np);
-+	return NULL;
++	if (CFCTRL_ERR_BIT == (CFCTRL_ERR_BIT & cmdrsp) ||
++		cfpkt_erroneous(pkt)) {
++		pr_err("Invalid O/E bit or parse error "
++				"on CAIF control channel\n");
++		cfctrl->res.reject_rsp(cfctrl->serv.layer.up, 0,
++				       req ? req->client_layer : NULL);
++	} else {
++		cfctrl->res.linksetup_rsp(cfctrl->serv.layer.up, linkid,
++					  serv, physlinkid,
++					  req ?  req->client_layer : NULL);
++	}
++
++	kfree(req);
++
++	spin_unlock_bh(&cfctrl->info_list_lock);
++
++	return 0;
 +}
 +
- static int dlpar_hp_dt_add(u32 index)
+ static int cfctrl_recv(struct cflayer *layer, struct cfpkt *pkt)
  {
- 	struct device_node *np, *nodes;
-@@ -423,10 +462,19 @@ static int dlpar_hp_dt_add(u32 index)
- 		goto out;
+ 	u8 cmdrsp;
+ 	u8 cmd;
+-	int ret = -1;
+-	u8 len;
+-	u8 param[255];
++	int ret = 0;
+ 	u8 linkid = 0;
+ 	struct cfctrl *cfctrl = container_obj(layer);
+-	struct cfctrl_request_info rsp, *req;
+-
+ 
+ 	cmdrsp = cfpkt_extr_head_u8(pkt);
+ 	cmd = cmdrsp & CFCTRL_CMD_MASK;
+@@ -374,150 +511,7 @@ static int cfctrl_recv(struct cflayer *layer, struct cfpkt *pkt)
+ 
+ 	switch (cmd) {
+ 	case CFCTRL_CMD_LINK_SETUP:
+-		{
+-			enum cfctrl_srv serv;
+-			enum cfctrl_srv servtype;
+-			u8 endpoint;
+-			u8 physlinkid;
+-			u8 prio;
+-			u8 tmp;
+-			u8 *cp;
+-			int i;
+-			struct cfctrl_link_param linkparam;
+-			memset(&linkparam, 0, sizeof(linkparam));
+-
+-			tmp = cfpkt_extr_head_u8(pkt);
+-
+-			serv = tmp & CFCTRL_SRV_MASK;
+-			linkparam.linktype = serv;
+-
+-			servtype = tmp >> 4;
+-			linkparam.chtype = servtype;
+-
+-			tmp = cfpkt_extr_head_u8(pkt);
+-			physlinkid = tmp & 0x07;
+-			prio = tmp >> 3;
+-
+-			linkparam.priority = prio;
+-			linkparam.phyid = physlinkid;
+-			endpoint = cfpkt_extr_head_u8(pkt);
+-			linkparam.endpoint = endpoint & 0x03;
+-
+-			switch (serv) {
+-			case CFCTRL_SRV_VEI:
+-			case CFCTRL_SRV_DBG:
+-				if (CFCTRL_ERR_BIT & cmdrsp)
+-					break;
+-				/* Link ID */
+-				linkid = cfpkt_extr_head_u8(pkt);
+-				break;
+-			case CFCTRL_SRV_VIDEO:
+-				tmp = cfpkt_extr_head_u8(pkt);
+-				linkparam.u.video.connid = tmp;
+-				if (CFCTRL_ERR_BIT & cmdrsp)
+-					break;
+-				/* Link ID */
+-				linkid = cfpkt_extr_head_u8(pkt);
+-				break;
+-
+-			case CFCTRL_SRV_DATAGRAM:
+-				linkparam.u.datagram.connid =
+-				    cfpkt_extr_head_u32(pkt);
+-				if (CFCTRL_ERR_BIT & cmdrsp)
+-					break;
+-				/* Link ID */
+-				linkid = cfpkt_extr_head_u8(pkt);
+-				break;
+-			case CFCTRL_SRV_RFM:
+-				/* Construct a frame, convert
+-				 * DatagramConnectionID
+-				 * to network format long and copy it out...
+-				 */
+-				linkparam.u.rfm.connid =
+-				    cfpkt_extr_head_u32(pkt);
+-				cp = (u8 *) linkparam.u.rfm.volume;
+-				for (tmp = cfpkt_extr_head_u8(pkt);
+-				     cfpkt_more(pkt) && tmp != '\0';
+-				     tmp = cfpkt_extr_head_u8(pkt))
+-					*cp++ = tmp;
+-				*cp = '\0';
+-
+-				if (CFCTRL_ERR_BIT & cmdrsp)
+-					break;
+-				/* Link ID */
+-				linkid = cfpkt_extr_head_u8(pkt);
+-
+-				break;
+-			case CFCTRL_SRV_UTIL:
+-				/* Construct a frame, convert
+-				 * DatagramConnectionID
+-				 * to network format long and copy it out...
+-				 */
+-				/* Fifosize KB */
+-				linkparam.u.utility.fifosize_kb =
+-				    cfpkt_extr_head_u16(pkt);
+-				/* Fifosize bufs */
+-				linkparam.u.utility.fifosize_bufs =
+-				    cfpkt_extr_head_u16(pkt);
+-				/* name */
+-				cp = (u8 *) linkparam.u.utility.name;
+-				caif_assert(sizeof(linkparam.u.utility.name)
+-					     >= UTILITY_NAME_LENGTH);
+-				for (i = 0;
+-				     i < UTILITY_NAME_LENGTH
+-				     && cfpkt_more(pkt); i++) {
+-					tmp = cfpkt_extr_head_u8(pkt);
+-					*cp++ = tmp;
+-				}
+-				/* Length */
+-				len = cfpkt_extr_head_u8(pkt);
+-				linkparam.u.utility.paramlen = len;
+-				/* Param Data */
+-				cp = linkparam.u.utility.params;
+-				while (cfpkt_more(pkt) && len--) {
+-					tmp = cfpkt_extr_head_u8(pkt);
+-					*cp++ = tmp;
+-				}
+-				if (CFCTRL_ERR_BIT & cmdrsp)
+-					break;
+-				/* Link ID */
+-				linkid = cfpkt_extr_head_u8(pkt);
+-				/* Length */
+-				len = cfpkt_extr_head_u8(pkt);
+-				/* Param Data */
+-				cfpkt_extr_head(pkt, &param, len);
+-				break;
+-			default:
+-				pr_warn("Request setup, invalid type (%d)\n",
+-					serv);
+-				goto error;
+-			}
+-
+-			rsp.cmd = cmd;
+-			rsp.param = linkparam;
+-			spin_lock_bh(&cfctrl->info_list_lock);
+-			req = cfctrl_remove_req(cfctrl, &rsp);
+-
+-			if (CFCTRL_ERR_BIT == (CFCTRL_ERR_BIT & cmdrsp) ||
+-				cfpkt_erroneous(pkt)) {
+-				pr_err("Invalid O/E bit or parse error "
+-						"on CAIF control channel\n");
+-				cfctrl->res.reject_rsp(cfctrl->serv.layer.up,
+-						       0,
+-						       req ? req->client_layer
+-						       : NULL);
+-			} else {
+-				cfctrl->res.linksetup_rsp(cfctrl->serv.
+-							  layer.up, linkid,
+-							  serv, physlinkid,
+-							  req ? req->
+-							  client_layer : NULL);
+-			}
+-
+-			kfree(req);
+-
+-			spin_unlock_bh(&cfctrl->info_list_lock);
+-		}
++		ret = cfctrl_link_setup(cfctrl, pkt, cmdrsp);
+ 		break;
+ 	case CFCTRL_CMD_LINK_DESTROY:
+ 		linkid = cfpkt_extr_head_u8(pkt);
+@@ -544,9 +538,9 @@ static int cfctrl_recv(struct cflayer *layer, struct cfpkt *pkt)
+ 		break;
+ 	default:
+ 		pr_err("Unrecognized Control Frame\n");
++		ret = -1;
+ 		goto error;
  	}
- 
-+	/*
-+	 * Recent FW provides ibm,drc-info property. So search
-+	 * for the user specified DRC index from ibm,drc-info
-+	 * property. If this property is not available, search
-+	 * in the indexes array from ibm,drc-indexes property.
-+	 */
- 	np = get_device_node_with_drc_info(index);
- 
--	if (!np)
--		return -EIO;
-+	if (!np) {
-+		np = get_device_node_with_drc_indexes(index);
-+		if (!np)
-+			return -EIO;
-+	}
- 
- 	/* Next, configure the connector. */
- 	nodes = dlpar_configure_connector(cpu_to_be32(index), np);
+-	ret = 0;
+ error:
+ 	cfpkt_destroy(pkt);
+ 	return ret;
 -- 
 2.39.5
 
