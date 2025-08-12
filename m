@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4531EF38C;
-	Tue, 12 Aug 2025 18:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD61A2E7BD4;
+	Tue, 12 Aug 2025 18:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023235; cv=none; b=akL4aYHFcF4dQbLtvkvU0VVrcRhztvla2P0ZQICkUcw2MM+q+ePoRVqi/x3SRbpAQEM/iQHLNuC2w2pp0lsJ/zvEr2aUq/2i7oB6cshE+x5dqILu7RqsI+fioGYWKBMC0sqGdP9oetI708yp5dU4KEYYEGDmysvaLmYeayIVHzw=
+	t=1755023238; cv=none; b=qTMSbJJ6eErEUR58PJc3MyJC9hQ2rPzCnsLUob49ztOeY+BtkXC1xs6LiaHcLlBeJsl/+yHP8UVcX8rG2f7MmWgLQgP7KqVx05xNbtNBXhKv94IWcGuRGs9Ue+ii89VJzNy5yIu9EwIYYd3EO48gcbPUf6ljjM27XdFlDhGS5T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023235; c=relaxed/simple;
-	bh=Be/bPe5Z5gORVTNAQvgACKZc278ZzujneRgdFCkzyhs=;
+	s=arc-20240116; t=1755023238; c=relaxed/simple;
+	bh=Igfh0OgfnowupVO2YdroBq49RbQgfcbfypJJB6BoRYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qz2/Ujl7YAnyWa9k3DEEXdID0Q8EKVqyiOiJO4jWdrEQXr8o2g6aU0tqVKOcfv4Z2Wrb5lJlZ3eP0zzPZXGR/ncXTeZ1Emp6abx505vd/gLDoVhL1G2cmCW6luiMlWmDKqe9Ud+zKtQERGdmGH2rMMO84QQ5s/FWK9tmBge5XZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LURhCB0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HXr6F+IO8cmYLY+gbMP/YN1WHkHIrZv/n0jFvLAGttBCDyBnfgwtW5iwAB+ry24Nw4TnxOQff0yGDRubbtsDSywkWb/M+pmszvui79db2xCY5QYaX3SWFzq9MDzUjtG89nZ/XL4a1ehHYLnyEUAi91pRVM34pIFRh/lg9H6rnAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+e/aWND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LURhCB0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DE1C4CEF0;
-	Tue, 12 Aug 2025 18:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+e/aWND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C501C4CEF1;
+	Tue, 12 Aug 2025 18:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023235;
-	bh=Be/bPe5Z5gORVTNAQvgACKZc278ZzujneRgdFCkzyhs=;
+	s=korg; t=1755023238;
+	bh=Igfh0OgfnowupVO2YdroBq49RbQgfcbfypJJB6BoRYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LURhCB0ApHL2huBKvgAuRQVNUNAItXD7u2uawXSH2YBSm9/J1N5jW3lEXEK+eImRD
-	 FgkxBZ2vr6l7yz9StvjCofzEVjFCg2WIKEXz6v3s02iXAuq26ACCskGkdp7DyUCi6t
-	 MdnIJ6bqSLTF0Irgd4zyIpF8qTYfPut7olNFQIew=
+	b=R+e/aWNDLKn6uqhkQRPeb86C1u2hJOE52PjPCo+P8WXL7JMS+3c4Nl28lVmU1djWo
+	 sAow/1zsb/vI03bnOFfqCQz3Q1nCxyUSwIo4khSDCNKuIRxYbP+ebnW/QR/SQqM/2B
+	 /Sc3H1FA6r+c9kFzCqjSseDTaMSZv3e5TE4tSX2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Yu Kuai <yukuai@kernel.org>,
+	Chunjie Zhu <chunjie.zhu@cloud.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 020/627] md/raid10: fix set but not used variable in sync_request_write()
-Date: Tue, 12 Aug 2025 19:25:15 +0200
-Message-ID: <20250812173420.088762011@linuxfoundation.org>
+Subject: [PATCH 6.16 021/627] gfs2: No more self recovery
+Date: Tue, 12 Aug 2025 19:25:16 +0200
+Message-ID: <20250812173420.124264534@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -45,56 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit bc1c2f0ae355f7e30b5baecdfb89d2b148aa0515 ]
+[ Upstream commit deb016c1669002e48c431d6fd32ea1c20ef41756 ]
 
-Building with W=1 reports the following:
+When a node withdraws and it turns out that it is the only node that has
+the filesystem mounted, gfs2 currently tries to replay the local journal
+to bring the filesystem back into a consistent state.  Not only is that
+a very bad idea, it has also never worked because gfs2_recover_func()
+will refuse to do anything during a withdraw.
 
-drivers/md/raid10.c: In function ‘sync_request_write’:
-drivers/md/raid10.c:2441:21: error: variable ‘d’ set but not used [-Werror=unused-but-set-variable]
- 2441 |                 int d;
-      |                     ^
-cc1: all warnings being treated as errors
+However, before even getting to this point, gfs2_recover_func()
+dereferences sdp->sd_jdesc->jd_inode.  This was a use-after-free before
+commit 04133b607a78 ("gfs2: Prevent double iput for journal on error")
+and is a NULL pointer dereference since then.
 
-Remove the usage of that variable.
+Simply get rid of self recovery to fix that.
 
-Fixes: 752d0464b78a ("md: clean up accounting for issued sync IO")
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/linux-raid/20250709104814.2307276-1-john.g.garry@oracle.com
-Signed-off-by: Yu Kuai <yukuai@kernel.org>
+Fixes: 601ef0d52e96 ("gfs2: Force withdraw to replay journals and wait for it to finish")
+Reported-by: Chunjie Zhu <chunjie.zhu@cloud.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/gfs2/util.c | 31 +++++++++++--------------------
+ 1 file changed, 11 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index c9bd2005bfd0..d2b237652d7e 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -2446,15 +2446,12 @@ static void sync_request_write(struct mddev *mddev, struct r10bio *r10_bio)
- 	 * that are active
+diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
+index d5a1e63fa257..24864a66074b 100644
+--- a/fs/gfs2/util.c
++++ b/fs/gfs2/util.c
+@@ -232,32 +232,23 @@ static void signal_our_withdraw(struct gfs2_sbd *sdp)
  	 */
- 	for (i = 0; i < conf->copies; i++) {
--		int d;
--
- 		tbio = r10_bio->devs[i].repl_bio;
- 		if (!tbio || !tbio->bi_end_io)
- 			continue;
- 		if (r10_bio->devs[i].bio->bi_end_io != end_sync_write
- 		    && r10_bio->devs[i].bio != fbio)
- 			bio_copy_data(tbio, fbio);
--		d = r10_bio->devs[i].devnum;
- 		atomic_inc(&r10_bio->remaining);
- 		submit_bio_noacct(tbio);
+ 	ret = gfs2_glock_nq(&sdp->sd_live_gh);
+ 
++	gfs2_glock_put(live_gl); /* drop extra reference we acquired */
++	clear_bit(SDF_WITHDRAW_RECOVERY, &sdp->sd_flags);
++
+ 	/*
+ 	 * If we actually got the "live" lock in EX mode, there are no other
+-	 * nodes available to replay our journal. So we try to replay it
+-	 * ourselves. We hold the "live" glock to prevent other mounters
+-	 * during recovery, then just dequeue it and reacquire it in our
+-	 * normal SH mode. Just in case the problem that caused us to
+-	 * withdraw prevents us from recovering our journal (e.g. io errors
+-	 * and such) we still check if the journal is clean before proceeding
+-	 * but we may wait forever until another mounter does the recovery.
++	 * nodes available to replay our journal.
+ 	 */
+ 	if (ret == 0) {
+-		fs_warn(sdp, "No other mounters found. Trying to recover our "
+-			"own journal jid %d.\n", sdp->sd_lockstruct.ls_jid);
+-		if (gfs2_recover_journal(sdp->sd_jdesc, 1))
+-			fs_warn(sdp, "Unable to recover our journal jid %d.\n",
+-				sdp->sd_lockstruct.ls_jid);
+-		gfs2_glock_dq_wait(&sdp->sd_live_gh);
+-		gfs2_holder_reinit(LM_ST_SHARED,
+-				   LM_FLAG_NOEXP | GL_EXACT | GL_NOPID,
+-				   &sdp->sd_live_gh);
+-		gfs2_glock_nq(&sdp->sd_live_gh);
++		fs_warn(sdp, "No other mounters found.\n");
++		/*
++		 * We are about to release the lockspace.  By keeping live_gl
++		 * locked here, we ensure that the next mounter coming along
++		 * will be a "first" mounter which will perform recovery.
++		 */
++		goto skip_recovery;
  	}
+ 
+-	gfs2_glock_put(live_gl); /* drop extra reference we acquired */
+-	clear_bit(SDF_WITHDRAW_RECOVERY, &sdp->sd_flags);
+-
+ 	/*
+ 	 * At this point our journal is evicted, so we need to get a new inode
+ 	 * for it. Once done, we need to call gfs2_find_jhead which
 -- 
 2.39.5
 
