@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDE2191F98;
-	Tue, 12 Aug 2025 18:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73B42ECE93;
+	Tue, 12 Aug 2025 18:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023560; cv=none; b=eA5m7d0rmOyjHszyxN5SjQ41nxNXZzmMdTUWCvFxo7LrG6QmVa+Mr92CSAQh0adCpEFVnpdjVrrnQaZwG41tZ5Yr2xrdeL3x0rcCUnTeP96Y+hp+xoCo6X/RViibucUGm+m0KzwDL8E3aRmR51Xcyh6Z67pcOlDXZDiDqu/ue/E=
+	t=1755023563; cv=none; b=KYkjjtLA0vJHIGVMMRYaW7N1JQp7yLLKqvmLX28EFM8BAhArcdJe5trEMTTTtyiqBNnO2ArTazthfofakeJb5zQdPH4L0znxsclejD7NMEVZKZUOLbm00zPkj3rbJmmsd/ARV/Gh95TW65iA4f/qaIkpLn/XK99UNQd4XE4OGM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023560; c=relaxed/simple;
-	bh=S9VKdWS5dVrfIKKcryMfpzhdlNYnsqGImzVgJREaLCU=;
+	s=arc-20240116; t=1755023563; c=relaxed/simple;
+	bh=b/3HdGOXCm8LsMGICslh74doxhZMtmAiLVyNXj5l4LU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W84nj3rFBcGrRftjCMBZSonN9nDZ3pj6q5CvKQ0JCh7WVArpwTgxcbNyZzTrtUqLK1ZLmyFGPgnVi/OdDmZL6ImRrcbaJmHdBg++ID9hipnPGo8iFhjzjzybnVX4Ep/VvQcL804nL4J2PLCjXJYH4ooxxCUsT3tntsfij+k91/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6cFDbRL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u2lLav/03tywAi0yQHDswtkADMMTcnSoTClPtrB+acZAu2huUbLltXpKHTB+cTLHmq3QSyM8tqSBj7IZdMNpu2ObRVSrV/N6x0AK2xAwD/6r0n/8iPcaEaqcJ14Ozeekjb7fNym+VjFbTyPxXeUGg/4ywgvnB6M9+5e16K1x8p8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DeOtqXAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6cFDbRL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A5CC4CEF0;
-	Tue, 12 Aug 2025 18:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DeOtqXAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58E6C4CEF1;
+	Tue, 12 Aug 2025 18:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023559;
-	bh=S9VKdWS5dVrfIKKcryMfpzhdlNYnsqGImzVgJREaLCU=;
+	s=korg; t=1755023563;
+	bh=b/3HdGOXCm8LsMGICslh74doxhZMtmAiLVyNXj5l4LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6cFDbRL2q2eyQVXmpVOfphRU8GcwPCgR6z21QJVcv0mRtMgbC0WzSQ3srVmHkn4A
-	 5q9RaxRNbo2rck6yoKPI/XL0reH0w0uLXT+XIJqXk4Som6z5KU2nlOg2aIUDxCseFn
-	 8B8lC5z535X4xc4DtNdTzwjcAIhZJZSVWMN8s7H8=
+	b=DeOtqXAiIlTjzMuORSqVMZMp0V219YVsSVhd+ZKCwps3mAYnD07X6Q+yGj6Ac4d/2
+	 xuNm85zraoO9PEF6nqEzjBrMXmPhkhZVNFh8cRAnFuaa4FZzAMEHXonNBQ1F6/8ts6
+	 QujSoIr+FBHsjRf0S2FCGUkiinSXH7AvsjG8mSgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Elder <elder@kernel.org>,
-	greybus-dev@lists.linaro.org,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Johan Hovold <johan@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 115/627] staging: greybus: gbphy: fix up const issue with the match callback
-Date: Tue, 12 Aug 2025 19:26:50 +0200
-Message-ID: <20250812173423.685629795@linuxfoundation.org>
+Subject: [PATCH 6.16 116/627] driver core: auxiliary bus: fix OF node leak
+Date: Tue, 12 Aug 2025 19:26:51 +0200
+Message-ID: <20250812173423.731562621@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,50 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit ce32eff1cf3ae8ac2596171dd0af1657634c83eb ]
+[ Upstream commit 6beb4ec0f9fdff4c4c6eb8ed8654fe8396c2b6e0 ]
 
-gbphy_dev_match_id() should be taking a const pointer, as the pointer
-passed to it from the container_of() call was const to start with (it
-was accidentally cast away with the call.)  Fix this all up by correctly
-marking the pointer types.
+Make sure to drop the OF node reference taken when creating an auxiliary
+device using auxiliary_device_create() when the device is later
+released.
 
-Cc: Alex Elder <elder@kernel.org>
-Cc: greybus-dev@lists.linaro.org
-Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/2025070115-reoccupy-showy-e2ad@gregkh
+Fixes: eaa0d30216c1 ("driver core: auxiliary bus: add device creation helpers")
+Cc: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20250708084654.15145-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/gbphy.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/base/auxiliary.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/greybus/gbphy.c b/drivers/staging/greybus/gbphy.c
-index 6adcad286633..60cf09a302a7 100644
---- a/drivers/staging/greybus/gbphy.c
-+++ b/drivers/staging/greybus/gbphy.c
-@@ -102,8 +102,8 @@ static int gbphy_dev_uevent(const struct device *dev, struct kobj_uevent_env *en
+diff --git a/drivers/base/auxiliary.c b/drivers/base/auxiliary.c
+index dba7c8e13a53..6bdefebf3609 100644
+--- a/drivers/base/auxiliary.c
++++ b/drivers/base/auxiliary.c
+@@ -399,6 +399,7 @@ static void auxiliary_device_release(struct device *dev)
+ {
+ 	struct auxiliary_device *auxdev = to_auxiliary_dev(dev);
+ 
++	of_node_put(dev->of_node);
+ 	kfree(auxdev);
  }
  
- static const struct gbphy_device_id *
--gbphy_dev_match_id(struct gbphy_device *gbphy_dev,
--		   struct gbphy_driver *gbphy_drv)
-+gbphy_dev_match_id(const struct gbphy_device *gbphy_dev,
-+		   const struct gbphy_driver *gbphy_drv)
- {
- 	const struct gbphy_device_id *id = gbphy_drv->id_table;
+@@ -435,6 +436,7 @@ struct auxiliary_device *auxiliary_device_create(struct device *dev,
  
-@@ -119,7 +119,7 @@ gbphy_dev_match_id(struct gbphy_device *gbphy_dev,
- 
- static int gbphy_dev_match(struct device *dev, const struct device_driver *drv)
- {
--	struct gbphy_driver *gbphy_drv = to_gbphy_driver(drv);
-+	const struct gbphy_driver *gbphy_drv = to_gbphy_driver(drv);
- 	struct gbphy_device *gbphy_dev = to_gbphy_dev(dev);
- 	const struct gbphy_device_id *id;
- 
+ 	ret = auxiliary_device_init(auxdev);
+ 	if (ret) {
++		of_node_put(auxdev->dev.of_node);
+ 		kfree(auxdev);
+ 		return NULL;
+ 	}
 -- 
 2.39.5
 
