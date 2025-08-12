@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C85C1C8621;
-	Tue, 12 Aug 2025 18:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB7A1B87E9;
+	Tue, 12 Aug 2025 18:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022367; cv=none; b=PwDbKxC4Dimvg+H2S0nM8KsFMjbkTfFiWTiOYJVVRz3CBvPZidewULzHMaBGGNNOqwIBEIkI1S8BX9P52FjcgzdVYPrAsFIB51BIlFSn4MlF2sd9ak2SqsrhrHkWAA+tmCgH6rLTyddgtRU26LIAYRNtwwRfHT7+ieb6YJtTEGc=
+	t=1755022370; cv=none; b=qptqm3x9j1236G4GhZz39E/CVfmL+GBH51QlssHn9iJ7hFvAVhIb/UCSaPzmedZgVSp8KFummt6kqagtlCtxIrKmk0JqudDlR5uGAaFqKq6yy/9u8JyH+brWBcPVEtki7c1m+cHrVGhK9nq5h12GoapDUxKlhP6IS2suyA2Vn/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022367; c=relaxed/simple;
-	bh=pMGCVBI2mvjmHMCm8GCO6tVhQe6kuYN49vwbLGgnjmg=;
+	s=arc-20240116; t=1755022370; c=relaxed/simple;
+	bh=P/XRLPfL9xyvM+LPpBMKjT67Q5sENcMik64gyYIwZZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F640gvs6P98CPfXFRf5tbx6+R6pE7hw76WMnq9n9JkcmevaSh+YjYVuNRoKL4A3MRZ3n1mhhgfU29TBD+NMUMS6no8Qzta4l7mo6cnxi+8XcC40aO4HWAQYXSZSQfFfNEPYl91BSB2Pu6e/CYpzky5lRan2I6h9ahNTlcgvTXME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvsoW2Nx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pbpOEdoUsID5zRVIqa+F68mEUTdK3mQSxQzCA41vZxcSA/mjcUmwEEsW06GXE6q+sLRND1BWsGg9YMHcAq7aZeooHCU5HLn7Q4Zg/tLb8UZGaElOJtOc7QKq5MpzOyVWv788W1tqgsYJHuY691pEyL4LxsWMeib7b2RrPaUA9wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3Xcs1Aj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvsoW2Nx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6847C4CEF0;
-	Tue, 12 Aug 2025 18:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3Xcs1Aj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E480EC4CEF0;
+	Tue, 12 Aug 2025 18:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022367;
-	bh=pMGCVBI2mvjmHMCm8GCO6tVhQe6kuYN49vwbLGgnjmg=;
+	s=korg; t=1755022370;
+	bh=P/XRLPfL9xyvM+LPpBMKjT67Q5sENcMik64gyYIwZZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JvsoW2Nx6KkBwOoG3f+R+ndmBEgHuOMChGcrtokV6AXv+PokXH6IiJRXZe4Bbj6hW
-	 b0QJ6pVpTWhx8ENTrbt8SN4dSAdI+S8dw7gl7/OEUX3163NueaF/MhhqqDseRs+67Q
-	 /d1cOAhb7XsQUwLn2qZqJc+xDBD2OE3KE1zVneb8=
+	b=s3Xcs1AjojIPoQD1hNgAXtXcuMAhfSJhkueCLACf6VAjxG5BCD+/hC8v2aTFEwFJo
+	 ZVX0RftP66svbX1jKM5e76Ba5gTYsjVa87b1OtuuO0JJ3TUPaxram64+BwuYYmdN/k
+	 N3D1zvMIbw+SCiMPM9n27WTZrIiJAqHfRmv6KCfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+40f772d37250b6d10efc@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Florian Westphal <fw@strlen.de>,
+	Nam Cao <namcao@linutronix.de>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Juri Lelli <jlelli@redhat.com>,
+	Clark Williams <williams@redhat.com>,
+	John Kacur <jkacur@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/369] bpf: Disable migration in nf_hook_run_bpf().
-Date: Tue, 12 Aug 2025 19:27:10 +0200
-Message-ID: <20250812173019.773557997@linuxfoundation.org>
+Subject: [PATCH 6.12 134/369] tools/rv: Do not skip idle in trace
+Date: Tue, 12 Aug 2025 19:27:11 +0200
+Message-ID: <20250812173019.810716731@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,96 +56,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 17ce3e5949bc37557305ad46316f41c7875d6366 ]
+[ Upstream commit f60227f3448911b682c45041c3fbd94f6d3b15a2 ]
 
-syzbot reported that the netfilter bpf prog can be called without
-migration disabled in xmit path.
+Currently, the userspace RV tool skips trace events triggered by the RV
+tool itself, this can be changed by passing the parameter -s, which sets
+the variable config_my_pid to 0 (instead of the tool's PID).
+This has the side effect of skipping events generated by idle (PID 0).
 
-Then the assertion in __bpf_prog_run() fails, triggering the splat
-below. [0]
+Set config_my_pid to -1 (an invalid pid) to avoid skipping idle.
 
-Let's use bpf_prog_run_pin_on_cpu() in nf_hook_run_bpf().
-
-[0]:
-BUG: assuming non migratable context at ./include/linux/filter.h:703
-in_atomic(): 0, irqs_disabled(): 0, migration_disabled() 0 pid: 5829, name: sshd-session
-3 locks held by sshd-session/5829:
- #0: ffff88807b4e4218 (sk_lock-AF_INET){+.+.}-{0:0}, at: lock_sock include/net/sock.h:1667 [inline]
- #0: ffff88807b4e4218 (sk_lock-AF_INET){+.+.}-{0:0}, at: tcp_sendmsg+0x20/0x50 net/ipv4/tcp.c:1395
- #1: ffffffff8e5c4e00 (rcu_read_lock){....}-{1:3}, at: rcu_lock_acquire include/linux/rcupdate.h:331 [inline]
- #1: ffffffff8e5c4e00 (rcu_read_lock){....}-{1:3}, at: rcu_read_lock include/linux/rcupdate.h:841 [inline]
- #1: ffffffff8e5c4e00 (rcu_read_lock){....}-{1:3}, at: __ip_queue_xmit+0x69/0x26c0 net/ipv4/ip_output.c:470
- #2: ffffffff8e5c4e00 (rcu_read_lock){....}-{1:3}, at: rcu_lock_acquire include/linux/rcupdate.h:331 [inline]
- #2: ffffffff8e5c4e00 (rcu_read_lock){....}-{1:3}, at: rcu_read_lock include/linux/rcupdate.h:841 [inline]
- #2: ffffffff8e5c4e00 (rcu_read_lock){....}-{1:3}, at: nf_hook+0xb2/0x680 include/linux/netfilter.h:241
-CPU: 0 UID: 0 PID: 5829 Comm: sshd-session Not tainted 6.16.0-rc6-syzkaller-00002-g155a3c003e55 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
- __cant_migrate kernel/sched/core.c:8860 [inline]
- __cant_migrate+0x1c7/0x250 kernel/sched/core.c:8834
- __bpf_prog_run include/linux/filter.h:703 [inline]
- bpf_prog_run include/linux/filter.h:725 [inline]
- nf_hook_run_bpf+0x83/0x1e0 net/netfilter/nf_bpf_link.c:20
- nf_hook_entry_hookfn include/linux/netfilter.h:157 [inline]
- nf_hook_slow+0xbb/0x200 net/netfilter/core.c:623
- nf_hook+0x370/0x680 include/linux/netfilter.h:272
- NF_HOOK_COND include/linux/netfilter.h:305 [inline]
- ip_output+0x1bc/0x2a0 net/ipv4/ip_output.c:433
- dst_output include/net/dst.h:459 [inline]
- ip_local_out net/ipv4/ip_output.c:129 [inline]
- __ip_queue_xmit+0x1d7d/0x26c0 net/ipv4/ip_output.c:527
- __tcp_transmit_skb+0x2686/0x3e90 net/ipv4/tcp_output.c:1479
- tcp_transmit_skb net/ipv4/tcp_output.c:1497 [inline]
- tcp_write_xmit+0x1274/0x84e0 net/ipv4/tcp_output.c:2838
- __tcp_push_pending_frames+0xaf/0x390 net/ipv4/tcp_output.c:3021
- tcp_push+0x225/0x700 net/ipv4/tcp.c:759
- tcp_sendmsg_locked+0x1870/0x42b0 net/ipv4/tcp.c:1359
- tcp_sendmsg+0x2e/0x50 net/ipv4/tcp.c:1396
- inet_sendmsg+0xb9/0x140 net/ipv4/af_inet.c:851
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg net/socket.c:727 [inline]
- sock_write_iter+0x4aa/0x5b0 net/socket.c:1131
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x6c7/0x1150 fs/read_write.c:686
- ksys_write+0x1f8/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fe7d365d407
-Code: 48 89 fa 4c 89 df e8 38 aa 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-RSP:
-
-Fixes: fd9c663b9ad67 ("bpf: minimal support for programs hooked into netfilter framework")
-Reported-by: syzbot+40f772d37250b6d10efc@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6879466d.a00a0220.3af5df.0022.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Tested-by: syzbot+40f772d37250b6d10efc@syzkaller.appspotmail.com
-Acked-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20250722224041.112292-1-kuniyu@google.com
+Cc: Nam Cao <namcao@linutronix.de>
+Cc: Tomas Glozar <tglozar@redhat.com>
+Cc: Juri Lelli <jlelli@redhat.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: John Kacur <jkacur@redhat.com>
+Link: https://lore.kernel.org/20250723161240.194860-2-gmonaco@redhat.com
+Fixes: 6d60f89691fc ("tools/rv: Add in-kernel monitor interface")
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_bpf_link.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/verification/rv/src/in_kernel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_bpf_link.c b/net/netfilter/nf_bpf_link.c
-index 3d64a4511fcf..be3f72fcc678 100644
---- a/net/netfilter/nf_bpf_link.c
-+++ b/net/netfilter/nf_bpf_link.c
-@@ -17,7 +17,7 @@ static unsigned int nf_hook_run_bpf(void *bpf_prog, struct sk_buff *skb,
- 		.skb = skb,
- 	};
+diff --git a/tools/verification/rv/src/in_kernel.c b/tools/verification/rv/src/in_kernel.c
+index f04479ecc96c..ced72950cb1e 100644
+--- a/tools/verification/rv/src/in_kernel.c
++++ b/tools/verification/rv/src/in_kernel.c
+@@ -353,7 +353,7 @@ ikm_event_handler(struct trace_seq *s, struct tep_record *record,
  
--	return bpf_prog_run(prog, &ctx);
-+	return bpf_prog_run_pin_on_cpu(prog, &ctx);
- }
+ 	if (config_has_id && (config_my_pid == id))
+ 		return 0;
+-	else if (config_my_pid && (config_my_pid == pid))
++	else if (config_my_pid == pid)
+ 		return 0;
  
- struct bpf_nf_link {
+ 	tep_print_event(trace_event->tep, s, record, "%16s-%-8d ", TEP_PRINT_COMM, TEP_PRINT_PID);
+@@ -595,7 +595,7 @@ static int parse_arguments(char *monitor_name, int argc, char **argv)
+ 			config_reactor = optarg;
+ 			break;
+ 		case 's':
+-			config_my_pid = 0;
++			config_my_pid = -1;
+ 			break;
+ 		case 't':
+ 			config_trace = 1;
 -- 
 2.39.5
 
