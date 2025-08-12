@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B762E3B06;
-	Tue, 12 Aug 2025 18:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92A32E3B06;
+	Tue, 12 Aug 2025 18:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022668; cv=none; b=jcGLmSbao9RKGKsZlmTV8/L0+1i68DeUSl+njLOHaZQJPs3njLBuFdjTo68Pl1mYRm4ppQXAf5XV9pTmfUyNl+zy7xS/yci97cY5vOHpAJqjPb0ePvj9h4sGRItqylycT8ojpMmAxipT/JLCbOpLOTfqidonfzIvirqc0ffSiRU=
+	t=1755022671; cv=none; b=dsyiOXjzUhPxdMouzalpVu2SLnUcdE1Iag/lwo+VaQWE2Dchx7yNUWc/xhsFLqYqWtOkQyG2uZk++gohCJDI8OAdREHVYe0v5b3pZ+M3BsKrrP3KXJV6VTYDKceLYfwpJuBf3czogXunFnJd23Qg2K4ZoSSOF1P10+eSBAqAQDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022668; c=relaxed/simple;
-	bh=o6RIn0a4l6LcvnDg1ReMHMM3xuAEgQN1jrn8dMUiVFI=;
+	s=arc-20240116; t=1755022671; c=relaxed/simple;
+	bh=yljkFY5qh9NcIryY9Hrh+cWo58atkLae5TZAZ2RdMwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N5nJU8SA5yL3XnqkHg7OVzvlm/ZVBf5TYbxdJU6IoIombCGnxDiXxNrbV0wD+82Up4HsWelPKuBWA/WYdh8mOEKTXIoR+KCkzIuNQbGchfwzCsKbFSzqd8xTuM1wTI/ZhG+AZsnndOPmsmgayJpr/bakOZVUnszYxERJ5EIKvxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8R/73P2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYWj3BhuKECZhToF/LmyuPyfdY+QW3wVRTOclkn21CajLWNBawOe4Owt8fwH9/W76+TpUlp2jkd6vMGVZ8XB0q9rXocYhK6HOYmnRKF/3dsS8zoRjgoDy1VnfLXPTWSFNeBE6u2n5xUW/1K1KcIE+2X/oh1veKD8hO+mR/QDr9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRWOEmig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8R/73P2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE135C4CEF7;
-	Tue, 12 Aug 2025 18:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRWOEmig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B11C4CEF0;
+	Tue, 12 Aug 2025 18:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022668;
-	bh=o6RIn0a4l6LcvnDg1ReMHMM3xuAEgQN1jrn8dMUiVFI=;
+	s=korg; t=1755022671;
+	bh=yljkFY5qh9NcIryY9Hrh+cWo58atkLae5TZAZ2RdMwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8R/73P2zdyHRWZ48oz8R57r9t7IWfBSuv2aN6Mv9+crkt3vBYF0VRto7zgDhp/il
-	 Xt3IBLPDzc5HDJWv0EhcnERdHkVQldUMWDRJVlhxrfcOEJsdLbA5GIE1cHVhSAiRFg
-	 zjxsU+o4LMp6V4ZBS+NE1xjpfE8+6ZCG19qDEbEE=
+	b=wRWOEmignJPSpAySywuwqqpKJcfWDFfgCD468IswSMM+Ot9Y3IrK0ylgyW39nJben
+	 5jlatDiLB64VQoHZW8jeSTZZgaIbtm9lqPpF8vc1sxF/eAL6HWfu1Kq6rM/AH5YauM
+	 UiqC5uo+XVrrY/fht0uAz4lCI7aDMTJHe3tnL70k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yu <zheng.yu@northwestern.edu>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 224/369] jfs: fix metapage reference count leak in dbAllocCtl
-Date: Tue, 12 Aug 2025 19:28:41 +0200
-Message-ID: <20250812173023.183925080@linuxfoundation.org>
+Subject: [PATCH 6.12 225/369] mtd: rawnand: atmel: Fix dma_mapping_error() address
+Date: Tue, 12 Aug 2025 19:28:42 +0200
+Message-ID: <20250812173023.221104674@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,43 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yu <zheng.yu@northwestern.edu>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 856db37592021e9155384094e331e2d4589f28b1 ]
+[ Upstream commit e1e6b933c56b1e9fda93caa0b8bae39f3f421e5c ]
 
-In dbAllocCtl(), read_metapage() increases the reference count of the
-metapage. However, when dp->tree.budmin < 0, the function returns -EIO
-without calling release_metapage() to decrease the reference count,
-leading to a memory leak.
+It seems like what was intended is to test if the dma_map of the
+previous line failed but the wrong dma address was passed.
 
-Add release_metapage(mp) before the error return to properly manage
-the metapage reference count and prevent the leak.
-
-Fixes: a5f5e4698f8abbb25fe4959814093fb5bfa1aa9d ("jfs: fix shift-out-of-bounds in dbSplit")
-
-Signed-off-by: Zheng Yu <zheng.yu@northwestern.edu>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Rule: add
+Link: https://lore.kernel.org/stable/20250702064515.18145-2-fourier.thomas%40gmail.com
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/atmel/nand-controller.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 35e063c9f3a4..5a877261c3fe 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -1809,8 +1809,10 @@ dbAllocCtl(struct bmap * bmp, s64 nblocks, int l2nb, s64 blkno, s64 * results)
- 			return -EIO;
- 		dp = (struct dmap *) mp->data;
+diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
+index f9ccfd02e804..6f8eb7fa4c59 100644
+--- a/drivers/mtd/nand/raw/atmel/nand-controller.c
++++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
+@@ -373,7 +373,7 @@ static int atmel_nand_dma_transfer(struct atmel_nand_controller *nc,
+ 	dma_cookie_t cookie;
  
--		if (dp->tree.budmin < 0)
-+		if (dp->tree.budmin < 0) {
-+			release_metapage(mp);
- 			return -EIO;
-+		}
- 
- 		/* try to allocate the blocks.
- 		 */
+ 	buf_dma = dma_map_single(nc->dev, buf, len, dir);
+-	if (dma_mapping_error(nc->dev, dev_dma)) {
++	if (dma_mapping_error(nc->dev, buf_dma)) {
+ 		dev_err(nc->dev,
+ 			"Failed to prepare a buffer for DMA access\n");
+ 		goto err;
 -- 
 2.39.5
 
