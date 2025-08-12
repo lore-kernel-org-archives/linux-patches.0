@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1812D63FC;
-	Tue, 12 Aug 2025 19:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF3F2AE90;
+	Tue, 12 Aug 2025 19:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026104; cv=none; b=tcsc9q2zf2XpOPOujR6AhJ/98tiHALt+5SjXtXnqjOZxIEEqO2vuHjeyBl+IxGMVJBPKIQRfXFLigmh7Fmddgt+pOwTf7nUc4ZmdudtTPfc2zJN0nM5DRQdX96kaikGyHTazHqlf4HJtLQBrRn+/qXyYOMyl/vg5CxpW1wdXgXA=
+	t=1755026108; cv=none; b=XRclB8STHVaaOXECJPBw8lvkUXhB2dAX9fY4lZ4ymVvK1/VE9KzVQighbWhZQcAfqrPZq+cWkUA+Nz8jIxChK5GFvOIeVLv44bEkJL8m+IqqFvry4bCZtBZMnv3WRrYg8e2WT1hWFFP3BZLes3LM2KKzX0j+x0CDJm2trz8yEjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026104; c=relaxed/simple;
-	bh=kvObHmAF5OeO9EeVcGkI9NezHr/3Sx2IVloJbepzAe0=;
+	s=arc-20240116; t=1755026108; c=relaxed/simple;
+	bh=bLCXgTksg++npbVkObDU7dM+3fgUaI0HGonIbo8ZtkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wa9/iAvjQsEt8TlfO2XT0PfCm4uk0JWRczTnEJc+07FnvRzFTCUMEhLpBN5NWuwI6G/SIlsXElUkWUXZz7QeVzYa52ou4kwnd+RryNsgerMnaHhqhvKJKR8Q6cIQQ9SeBJgDIMEy80ASJA0zFUECNnbCzAm9m+24VQwZhWl6poI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etL2x26s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DO8WsMDwZd6MbC7gNmFA1Qa456QY0TYWSzQ7D6VSIY+ZyOX1CdTM9AjqC2/pZyAqnjiYzDW201wKlfV0Cjp9FVBl0hW09IGKBMghO93kCKA84J7/LDU93ztzqii6y+yjwF1juIsw1Sewfv032rm4T61I18WcRJXIsBQZvOzCmxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXdmWMtm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etL2x26s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1435C4CEF1;
-	Tue, 12 Aug 2025 19:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXdmWMtm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D21CC4CEF0;
+	Tue, 12 Aug 2025 19:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026104;
-	bh=kvObHmAF5OeO9EeVcGkI9NezHr/3Sx2IVloJbepzAe0=;
+	s=korg; t=1755026108;
+	bh=bLCXgTksg++npbVkObDU7dM+3fgUaI0HGonIbo8ZtkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=etL2x26sxO8ssdvzKuCshTiXr85i2kGpD/Q9aS7J+ZnCXxTdwQygsX3v6GRfIuaUq
-	 xA2gFPAm6tIo2vScNyW0LqPxE2lm54QPg6wJ/RqJIZXhIv9IhcGlJeAHvNYBA/jT/S
-	 t1ihxuZLFA1EIRuxVTSSaYjicmzsoOWtx/lWSTQw=
+	b=LXdmWMtmHZw73MYispLtZ4lVjPSP6czo2VWMPMV3SLaFlNjwGoZJOe3oJbsUutRno
+	 ni/2JWMWU8h1/4+d2NvvSwG3hg4Ley4e4WeDf5eoDhzBXBgUn8pFY91g1ocNuV0Bxq
+	 sHL+aCpz0R7ye/RJynke2uQ1HzatFYo6aAIIjjwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 238/480] power: supply: max14577: Handle NULL pdata when CONFIG_OF is not set
-Date: Tue, 12 Aug 2025 19:47:26 +0200
-Message-ID: <20250812174407.271634537@linuxfoundation.org>
+Subject: [PATCH 6.15 239/480] power: supply: qcom_pmi8998_charger: fix wakeirq
+Date: Tue, 12 Aug 2025 19:47:27 +0200
+Message-ID: <20250812174407.313017435@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,49 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Casey Connolly <casey.connolly@linaro.org>
 
-[ Upstream commit 2937f5d2e24eefef8cb126244caec7fe3307f724 ]
+[ Upstream commit 6c5393771c50fac30f08dfb6d2f65f4f2cfeb8c7 ]
 
-When the kernel is not configured  CONFIG_OF, the max14577_charger_dt_init
-function returns NULL. Fix the max14577_charger_probe functionby returning
--ENODATA instead of potentially passing a NULL pointer to PTR_ERR.
+Unloading and reloading the driver (e.g. when built as a module)
+currently leads to errors trying to enable wake IRQ since it's already
+enabled.
 
-This fixes the below smatch warning:
-max14577_charger_probe() warn: passing zero to 'PTR_ERR'
+Use devm to manage this for us so it correctly gets disabled when
+removing the driver.
 
-Fixes: e30110e9c96f ("charger: max14577: Configure battery-dependent settings from DTS and sysfs")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250519061601.8755-1-hanchunchao@inspur.com
+Additionally, call device_init_wakeup() so that charger attach/remove
+will trigger a wakeup by default.
+
+Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250619-smb2-smb5-support-v1-3-ac5dec51b6e1@linaro.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max14577_charger.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/qcom_pmi8998_charger.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/max14577_charger.c b/drivers/power/supply/max14577_charger.c
-index 1cef2f860b5f..63077d38ea30 100644
---- a/drivers/power/supply/max14577_charger.c
-+++ b/drivers/power/supply/max14577_charger.c
-@@ -501,7 +501,7 @@ static struct max14577_charger_platform_data *max14577_charger_dt_init(
- static struct max14577_charger_platform_data *max14577_charger_dt_init(
- 		struct platform_device *pdev)
- {
--	return NULL;
-+	return ERR_PTR(-ENODATA);
- }
- #endif /* CONFIG_OF */
+diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
+index 74a8d8ed8d9f..8b641b822f52 100644
+--- a/drivers/power/supply/qcom_pmi8998_charger.c
++++ b/drivers/power/supply/qcom_pmi8998_charger.c
+@@ -1016,7 +1016,9 @@ static int smb2_probe(struct platform_device *pdev)
+ 	if (rc < 0)
+ 		return rc;
  
-@@ -572,7 +572,7 @@ static int max14577_charger_probe(struct platform_device *pdev)
- 	chg->max14577 = max14577;
+-	rc = dev_pm_set_wake_irq(chip->dev, chip->cable_irq);
++	devm_device_init_wakeup(chip->dev);
++
++	rc = devm_pm_set_wake_irq(chip->dev, chip->cable_irq);
+ 	if (rc < 0)
+ 		return dev_err_probe(chip->dev, rc, "Couldn't set wake irq\n");
  
- 	chg->pdata = max14577_charger_dt_init(pdev);
--	if (IS_ERR_OR_NULL(chg->pdata))
-+	if (IS_ERR(chg->pdata))
- 		return PTR_ERR(chg->pdata);
- 
- 	ret = max14577_charger_reg_init(chg);
 -- 
 2.39.5
 
