@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88601C1AAA;
-	Tue, 12 Aug 2025 19:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7171C1AAA;
+	Tue, 12 Aug 2025 19:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025476; cv=none; b=RSh5bWLmY2q6rqq9+hbaE4IElqiDIFYL26lLa+U6JaWCpCqdMvNtW0nwv1QY+thweCWoJ51BftBWIoyKn4jONIAHGQJniMYJAL4RYN/N/j1rwUahT363YNs03MTaavb9GnJ/EtrbTuZ5dD6Wj6oLfDodVMbd/qEWA/rGxmdDNVA=
+	t=1755025480; cv=none; b=CRuLsyGDBOj7dvuLHnVyQhrev+OElpXEoFWX+jOjfyeFazAFXtdp7kZIh3tG/9rUJDkfM1c+Qs7lfR3tKEMz8VfqDJZh8Jl05d7bfCLJcTPy/qNQtkVBwn+FKSf4Cgcdq7g2S8tiqPFW9smgP1/IYrl1ZW/pL8uG9r7gx7iBoLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025476; c=relaxed/simple;
-	bh=yWgQ1P9ODKWErcF4Joz7F2gdhy5UHT+wJptZhLOKWco=;
+	s=arc-20240116; t=1755025480; c=relaxed/simple;
+	bh=gY8fraeYqO5OZpwlcy7iJ0B++xeKCQA35RNCAWbbIrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XgWxIV5MuO+0riecscq3/z+9xIvILFUI8cfWT0mS6xyy0MHD9UeeF1fqfUXcZRO7Ai8gpVaenDId74RIlHHbxs5IQQjjSbBYZ3JczvEDq25zcZx7Dop0W4sf6SgHgjjKktWG9wPyXY3cq7wh8k0L8tqFLNak3lyoOmRdXUEEUlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlnGNBq1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CHgNHGVlrZ+/P1WXuYiZ/9tPilAdsVUAdTIIipaRctwMKOzBulFrIm//omoByDcgJLnxBmSkjd5O4yWVjYqmCb5j6sbRkqyhT+pHmu37UxOEX1mUpHRpw0c9T2ZtJ1TYckTX7lrq9+cn3LZTT+NLwJj8UmAu7TH0IPf/TTV6vuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcSiyqMP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlnGNBq1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E05C4CEF0;
-	Tue, 12 Aug 2025 19:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcSiyqMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D820C4CEF0;
+	Tue, 12 Aug 2025 19:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025476;
-	bh=yWgQ1P9ODKWErcF4Joz7F2gdhy5UHT+wJptZhLOKWco=;
+	s=korg; t=1755025479;
+	bh=gY8fraeYqO5OZpwlcy7iJ0B++xeKCQA35RNCAWbbIrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlnGNBq1Okdm/Bq9s99Dx3078qW6YGnYfPvdya3SjPMiNnF6yD8/aG1BtIdg/2Mws
-	 n4wzyT05xWLNjAbhf3TY91j9gjGJomzg6+OLNUSSIazD/8wLdon069n7WN0PVJpHr3
-	 /sQOncE8fhClN4fT+8KlrJAJ2RDdczIs3cl8Tjf4=
+	b=tcSiyqMPsPUtVeBAslIxejcW31EVIdAIzPSI87TVq1ruCphr60b1Ck4qsRJmOBomO
+	 bckvAnHUYs5TY5LH1IihhlGV3NvJHvAMTXMjHPrl7nYwuYTz46Nr85aW0gkdUGnpvr
+	 JH8mi4FuDNj7MzLJBK6dE1sIBbKYk3c2E9aukPK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Alexander Usyskin <alexander.usyskin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 053/480] usb: typec: ucsi: yoga-c630: fix error and remove paths
-Date: Tue, 12 Aug 2025 19:44:21 +0200
-Message-ID: <20250812174359.596660425@linuxfoundation.org>
+Subject: [PATCH 6.15 054/480] mei: vsc: Dont re-init VSC from mei_vsc_hw_reset() on stop
+Date: Tue, 12 Aug 2025 19:44:22 +0200
+Message-ID: <20250812174359.643426080@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,63 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 168c3896f32e78e7b87f6aa9e85af36e47a9f96c ]
+[ Upstream commit 880af854d6343b796f05b9a8b52b68a88535625b ]
 
-Fix memory leak and call ucsi_destroy() from the driver's remove
-function and probe's error path in order to remove debugfs files and
-free the memory. Also call yoga_c630_ec_unregister_notify() in the
-probe's error path.
+mei_vsc_hw_reset() gets called from mei_start() and mei_stop() in
+the latter case we do not need to re-init the VSC by calling vsc_tp_init().
 
-Fixes: 2ea6d07efe53 ("usb: typec: ucsi: add Lenovo Yoga C630 glue driver")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250621-c630-ucsi-v1-1-a86de5e11361@oss.qualcomm.com
+mei_stop() only happens on shutdown and driver unbind. On shutdown we
+don't need to load + boot the firmware and if the driver later is
+bound to the device again then mei_start() will do another reset.
+
+The intr_enable flag is true when called from mei_start() and false on
+mei_stop(). Skip vsc_tp_init() when intr_enable is false.
+
+This avoids unnecessarily uploading the firmware, which takes 11 seconds.
+This change reduces the poweroff/reboot time by 11 seconds.
+
+Fixes: 386a766c4169 ("mei: Add MEI hardware support for IVSC device")
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Reviewed-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://lore.kernel.org/r/20250623085052.12347-3-hansg@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_yoga_c630.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/misc/mei/platform-vsc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_yoga_c630.c b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-index d33e3f2dd1d8..47e8dd5b255b 100644
---- a/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-+++ b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-@@ -133,17 +133,30 @@ static int yoga_c630_ucsi_probe(struct auxiliary_device *adev,
+diff --git a/drivers/misc/mei/platform-vsc.c b/drivers/misc/mei/platform-vsc.c
+index 435760b1e86f..1ac85f0251c5 100644
+--- a/drivers/misc/mei/platform-vsc.c
++++ b/drivers/misc/mei/platform-vsc.c
+@@ -256,6 +256,9 @@ static int mei_vsc_hw_reset(struct mei_device *mei_dev, bool intr_enable)
  
- 	ret = yoga_c630_ec_register_notify(ec, &uec->nb);
- 	if (ret)
--		return ret;
-+		goto err_destroy;
-+
-+	ret = ucsi_register(uec->ucsi);
-+	if (ret)
-+		goto err_unregister;
-+
-+	return 0;
+ 	vsc_tp_reset(hw->tp);
  
--	return ucsi_register(uec->ucsi);
-+err_unregister:
-+	yoga_c630_ec_unregister_notify(uec->ec, &uec->nb);
++	if (!intr_enable)
++		return 0;
 +
-+err_destroy:
-+	ucsi_destroy(uec->ucsi);
-+
-+	return ret;
+ 	return vsc_tp_init(hw->tp, mei_dev->dev);
  }
  
- static void yoga_c630_ucsi_remove(struct auxiliary_device *adev)
- {
- 	struct yoga_c630_ucsi *uec = auxiliary_get_drvdata(adev);
- 
--	yoga_c630_ec_unregister_notify(uec->ec, &uec->nb);
- 	ucsi_unregister(uec->ucsi);
-+	yoga_c630_ec_unregister_notify(uec->ec, &uec->nb);
-+	ucsi_destroy(uec->ucsi);
- }
- 
- static const struct auxiliary_device_id yoga_c630_ucsi_id_table[] = {
 -- 
 2.39.5
 
