@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B592DE6E9;
-	Tue, 12 Aug 2025 18:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1BF2F5E;
+	Tue, 12 Aug 2025 18:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021843; cv=none; b=vFoPj35nSjnOKPY1K60TCUrjM5ABYuhNb9VTu0dajzNTxRNZ0Ved+BEVahy37EfhvNAIZrIbHy+kkYDWIh51pOeJIQumVVaOzbMlLgQ9h8xrkC4jY956qnMe9YfPRvfv/6psigeIfuFKhe7ZoTCzW7XYappRKCvglIyyzy55Ipg=
+	t=1755021846; cv=none; b=q2mw+4Q32jt1ScSUdudNT1bICoc6aoejeou4ckPWlX35miL1XHSS+ZFkXg7Zlc7uhIMZqP50YBS+UnGiF+hh8B8efpyOesjPTnf8WCOxYa3SVDFDhvCBk8HUrl0rmkPu1AyyuPYbxG44vwu2TkUCfkQL8Hv8y54gaxgPQ6HvxYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021843; c=relaxed/simple;
-	bh=cti562yJVxveqlAVPWqF/CUbNzv4vI9E1twdKHxSeNU=;
+	s=arc-20240116; t=1755021846; c=relaxed/simple;
+	bh=/oArxbwcMb9PGRJNzsTbRXGsNzbYMQRmU/5niuZ+PRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CTxUd3UeEnYJuIqu8tnzc6o8P39QuzccHouj86SBgFei/kHhylwawLsbd8ztxiA0utxEYIpWH/Ct60iNy7m4tNHqAI3wxLfC3LWIZwM5RUoVRPZs0K/Nef5c/0wBbc5vJaFXsgF+kC6C9NmvH39w76Po/Vpx2oj1F+R5Jfqfllo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKy4dzlD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NoEbFBWLhygtxSk5fkGcLmSYiNOfK/hO8tgUjzcVd+Oed0mSUhwmVdmS3GnEHtBFHgG2WCk/OMY3UNAyM9HecZHLNGtSFCFA53RojlUd2V+7ImvpgbOKF4T/qVsQyta5b5/6wZvAxbeFmP37hUmV3klaanXCGxqySmt+wZcFvhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0ZByo/i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKy4dzlD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77300C4CEF7;
-	Tue, 12 Aug 2025 18:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0ZByo/i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFCAC4CEF0;
+	Tue, 12 Aug 2025 18:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021843;
-	bh=cti562yJVxveqlAVPWqF/CUbNzv4vI9E1twdKHxSeNU=;
+	s=korg; t=1755021846;
+	bh=/oArxbwcMb9PGRJNzsTbRXGsNzbYMQRmU/5niuZ+PRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bKy4dzlDnPmPkc8CCaQQXlXodcZdtFFzPVrHLQJBBph6WlVAS6diRM69iUUZ7/DL5
-	 YsfbdB5sBukAbIwc0KdNfypHH0wixL/5la2PT3CzdZE8W5ELhUaI+yNFD+OMf2BB8x
-	 nfSbFvcYPa3T9l2EZ9fTcfO4zfn+fql5kGrCNDmA=
+	b=c0ZByo/iwe2j4t6XC4Fb7UMZ0FzGjHFbD1NdLvQHP4rfRLfV3d+TT3ZIezNqaQi1X
+	 z+TeiL6eC/CGyR2NnDrH+KE+ahrURrRJiiWGS4hGlQBrmnDW+KIuM4bJ/iLOiBFwcH
+	 iuyALADpMIZu2hyK8zP5BieLxmL8l3E2oRmIqjGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 242/262] USB: serial: option: add Foxconn T99W709
-Date: Tue, 12 Aug 2025 19:30:30 +0200
-Message-ID: <20250812173003.456138205@linuxfoundation.org>
+	Andi Shyti <andi.shyti@kernel.org>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 243/262] i2c: stm32f7: Use devm_clk_get_enabled()
+Date: Tue, 12 Aug 2025 19:30:31 +0200
+Message-ID: <20250812173003.496745860@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -50,51 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Andi Shyti <andi.shyti@kernel.org>
 
-commit ad1244e1ce18f8c1a5ebad8074bfcf10eacb0311 upstream.
+[ Upstream commit 7ba2b17a87466e1410ae0ccc94d8eb381de177c2 ]
 
-T99W709 is designed based on MTK T300(5G redcap) chip. There are
-7 serial ports to be enumerated: AP_LOG, GNSS, AP_META, AT,
-MD_META, NPT, DBG. RSVD(5) for ADB port.
+Replace the pair of functions, devm_clk_get() and
+clk_prepare_enable(), with a single function
+devm_clk_get_enabled().
 
-test evidence as below:
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e15f Rev=00.01
-S:  Manufacturer=MediaTek Inc.
-S:  Product=USB DATA CARD
-S:  SerialNumber=355511220000399
-C:  #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-I:  If#=0x6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 6aae87fe7f18 ("i2c: stm32f7: unmap DMA mapped buffer")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i2c/busses/i2c-stm32f7.c |   37 ++++++++++++-------------------------
+ 1 file changed, 12 insertions(+), 25 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
- 	  .driver_info = RSVD(5) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
-+	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -2177,23 +2177,16 @@ static int stm32f7_i2c_probe(struct plat
+ 	i2c_dev->wakeup_src = of_property_read_bool(pdev->dev.of_node,
+ 						    "wakeup-source");
+ 
+-	i2c_dev->clk = devm_clk_get(&pdev->dev, NULL);
++	i2c_dev->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(i2c_dev->clk))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(i2c_dev->clk),
+-				     "Failed to get controller clock\n");
+-
+-	ret = clk_prepare_enable(i2c_dev->clk);
+-	if (ret) {
+-		dev_err(&pdev->dev, "Failed to prepare_enable clock\n");
+-		return ret;
+-	}
++				     "Failed to enable controller clock\n");
+ 
+ 	rst = devm_reset_control_get(&pdev->dev, NULL);
+-	if (IS_ERR(rst)) {
+-		ret = dev_err_probe(&pdev->dev, PTR_ERR(rst),
+-				    "Error: Missing reset ctrl\n");
+-		goto clk_free;
+-	}
++	if (IS_ERR(rst))
++		return dev_err_probe(&pdev->dev, PTR_ERR(rst),
++				     "Error: Missing reset ctrl\n");
++
+ 	reset_control_assert(rst);
+ 	udelay(2);
+ 	reset_control_deassert(rst);
+@@ -2208,7 +2201,7 @@ static int stm32f7_i2c_probe(struct plat
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to request irq event %i\n",
+ 			irq_event);
+-		goto clk_free;
++		return ret;
+ 	}
+ 
+ 	ret = devm_request_irq(&pdev->dev, irq_error, stm32f7_i2c_isr_error, 0,
+@@ -2216,29 +2209,28 @@ static int stm32f7_i2c_probe(struct plat
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to request irq error %i\n",
+ 			irq_error);
+-		goto clk_free;
++		return ret;
+ 	}
+ 
+ 	setup = of_device_get_match_data(&pdev->dev);
+ 	if (!setup) {
+ 		dev_err(&pdev->dev, "Can't get device data\n");
+-		ret = -ENODEV;
+-		goto clk_free;
++		return -ENODEV;
+ 	}
+ 	i2c_dev->setup = *setup;
+ 
+ 	ret = stm32f7_i2c_setup_timing(i2c_dev, &i2c_dev->setup);
+ 	if (ret)
+-		goto clk_free;
++		return ret;
+ 
+ 	/* Setup Fast mode plus if necessary */
+ 	if (i2c_dev->bus_rate > I2C_MAX_FAST_MODE_FREQ) {
+ 		ret = stm32f7_i2c_setup_fm_plus_bits(pdev, i2c_dev);
+ 		if (ret)
+-			goto clk_free;
++			return ret;
+ 		ret = stm32f7_i2c_write_fm_plus_bits(i2c_dev, true);
+ 		if (ret)
+-			goto clk_free;
++			return ret;
+ 	}
+ 
+ 	adap = &i2c_dev->adap;
+@@ -2349,9 +2341,6 @@ clr_wakeup_capable:
+ fmp_clear:
+ 	stm32f7_i2c_write_fm_plus_bits(i2c_dev, false);
+ 
+-clk_free:
+-	clk_disable_unprepare(i2c_dev->clk);
+-
+ 	return ret;
+ }
+ 
+@@ -2385,8 +2374,6 @@ static void stm32f7_i2c_remove(struct pl
+ 	}
+ 
+ 	stm32f7_i2c_write_fm_plus_bits(i2c_dev, false);
+-
+-	clk_disable_unprepare(i2c_dev->clk);
+ }
+ 
+ static int __maybe_unused stm32f7_i2c_runtime_suspend(struct device *dev)
 
 
