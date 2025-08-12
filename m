@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96199285C89;
-	Tue, 12 Aug 2025 19:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C96F2F4A07;
+	Tue, 12 Aug 2025 19:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026878; cv=none; b=d4mydQpqyVoPKzLOhwwgKlR1pqw7vrL1Ghvv8ncOSRBTGhFJEQpEFnsKDKezOjhBb72McW0U4axZ0kxCNxkA3I+NK06DI0CchFDDwQuCv5HxBkUgISvUA4yFvM8O2zCUGc4XTnGHwEeYzi9vzaS+c0i8dgarmaOilW+4cSiCzIE=
+	t=1755026882; cv=none; b=r6Z3EAeF+e8k+riQXBi0PFkF8OjvM3t2oFPIlsquhN9bkKfcVi0ZZUZGP0vJGKmWNXOIiNCWcS+EeD/Nv9hPXZr7KmU0hwuTdXd2MdDIHFFYF9ezf4jgDjDUmcQI8Qlxco3Iu7NGPNKyTdYxKNCLOnk6QEyjiW1oFiPrbY0NB3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026878; c=relaxed/simple;
-	bh=VaRudYBkHypttkmnx4TfMpmJEX02yF1XdGAGICHnbhg=;
+	s=arc-20240116; t=1755026882; c=relaxed/simple;
+	bh=PdFDxMuzagnjzSwxr+EYho4fYpoRJBDtgfay9n/jrZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WxdDnGDjg0dwdr8j4w+Xbly5zuUtlgpGUY/b7MfLo7Lbz+JTHAPpqqhfYu8l3PQ/sFcC48J+FoJnGuZcmliBXkokOB58+4096QsBqMB9dteuWsE+wTpSCKoCGr/3xtUgaAENtyv2ujEqhYha52P8o35fAWduWh/V6llwHhVs0CM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewS3yC4N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nnyoe7GBrUuRGrMDCjB6aqc/0HhKkwPGR9Ahac3A3PIVe9WgupunVeGaCO47ZuTfsnFjOv0Fxi7mrMoJHLA5KT8STE48K7FrT6S13uU4Y2Hg5+1kj8sdQICyEJSRmWsFvNTrW9eRQTpRKRr1K3RRLD/qBYw2mxN0k+Ty18jUYSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCJzJThs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewS3yC4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D1AC4CEF1;
-	Tue, 12 Aug 2025 19:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCJzJThs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716B0C4CEF4;
+	Tue, 12 Aug 2025 19:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026878;
-	bh=VaRudYBkHypttkmnx4TfMpmJEX02yF1XdGAGICHnbhg=;
+	s=korg; t=1755026881;
+	bh=PdFDxMuzagnjzSwxr+EYho4fYpoRJBDtgfay9n/jrZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewS3yC4N8/hf9hgOvcUERC659TwavWO4Lrs5Dyd8xTyUHPC1NsDkrFHyciaxI9+kG
-	 QWnvYh9Ail72Seiq7VBtc2J/InM80xbT8TWCXmJxaoZosfW6n2KmH5rGL3l2mjyBSO
-	 Y7KiwidINAZ0ft9DTj28f2OP0PSV8OxfkICqMgSg=
+	b=HCJzJThsYvlXE0qG1D/CZNEbT/hoSGytq0QJG5yn4rJNOWn0qa47JmdXXtuqPBaO/
+	 3RCEY5KQ8ZBwb5G3V9QPOOSC/KmCWFe8eVA8C6naR64rvGxSkdjuc5Qh3OaXCumO3/
+	 mBYPVY22izAUKd6vIIb3zEVqXRfLCfTQWjh7yV0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.15 466/480] MIPS: mm: tlb-r4k: Uniquify TLB entries on init
-Date: Tue, 12 Aug 2025 19:51:14 +0200
-Message-ID: <20250812174416.610351215@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Bill Wendling <morbo@google.com>,
+	Jerome Glisse <jglisse@redhat.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 467/480] mm/hmm: move pmd_to_hmm_pfn_flags() to the respective #ifdeffery
+Date: Tue, 12 Aug 2025 19:51:15 +0200
+Message-ID: <20250812174416.648290952@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,98 +56,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 35ad7e181541aa5757f9f316768d3e64403ec843 upstream.
+commit 188cb385bbf04d486df3e52f28c47b3961f5f0c0 upstream.
 
-Hardware or bootloader will initialize TLB entries to any value, which
-may collide with kernel's UNIQUE_ENTRYHI value. On MIPS microAptiv/M5150
-family of cores this will trigger machine check exception and cause boot
-failure. On M5150 simulation this could happen 7 times out of 1000 boots.
+When pmd_to_hmm_pfn_flags() is unused, it prevents kernel builds with
+clang, `make W=1` and CONFIG_TRANSPARENT_HUGEPAGE=n:
 
-Replace local_flush_tlb_all() with r4k_tlb_uniquify() which probes each
-TLB ENTRIHI unique value for collisions before it's written, and in case
-of collision try a different ASID.
+  mm/hmm.c:186:29: warning: unused function 'pmd_to_hmm_pfn_flags' [-Wunused-function]
 
-Cc: stable@kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fix this by moving the function to the respective existing ifdeffery
+for its the only user.
+
+See also:
+
+  6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
+
+Link: https://lkml.kernel.org/r/20250710082403.664093-1-andriy.shevchenko@linux.intel.com
+Fixes: 992de9a8b751 ("mm/hmm: allow to mirror vma of a file on a DAX backed filesystem")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Jerome Glisse <jglisse@redhat.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/tlb-r4k.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 55 insertions(+), 1 deletion(-)
+ mm/hmm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -508,6 +508,60 @@ static int __init set_ntlb(char *str)
- 
- __setup("ntlb=", set_ntlb);
- 
-+/* Initialise all TLB entries with unique values */
-+static void r4k_tlb_uniquify(void)
-+{
-+	int entry = num_wired_entries();
-+
-+	htw_stop();
-+	write_c0_entrylo0(0);
-+	write_c0_entrylo1(0);
-+
-+	while (entry < current_cpu_data.tlbsize) {
-+		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
-+		unsigned long asid = 0;
-+		int idx;
-+
-+		/* Skip wired MMID to make ginvt_mmid work */
-+		if (cpu_has_mmid)
-+			asid = MMID_KERNEL_WIRED + 1;
-+
-+		/* Check for match before using UNIQUE_ENTRYHI */
-+		do {
-+			if (cpu_has_mmid) {
-+				write_c0_memorymapid(asid);
-+				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
-+			} else {
-+				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
-+			}
-+			mtc0_tlbw_hazard();
-+			tlb_probe();
-+			tlb_probe_hazard();
-+			idx = read_c0_index();
-+			/* No match or match is on current entry */
-+			if (idx < 0 || idx == entry)
-+				break;
-+			/*
-+			 * If we hit a match, we need to try again with
-+			 * a different ASID.
-+			 */
-+			asid++;
-+		} while (asid < asid_mask);
-+
-+		if (idx >= 0 && idx != entry)
-+			panic("Unable to uniquify TLB entry %d", idx);
-+
-+		write_c0_index(entry);
-+		mtc0_tlbw_hazard();
-+		tlb_write_indexed();
-+		entry++;
-+	}
-+
-+	tlbw_use_hazard();
-+	htw_start();
-+	flush_micro_tlb();
-+}
-+
- /*
-  * Configure TLB (for init or after a CPU has been powered off).
-  */
-@@ -547,7 +601,7 @@ static void r4k_tlb_configure(void)
- 	temp_tlb_entry = current_cpu_data.tlbsize - 1;
- 
- 	/* From this point on the ARC firmware is dead.	 */
--	local_flush_tlb_all();
-+	r4k_tlb_uniquify();
- 
- 	/* Did I tell you that ARC SUCKS?  */
+--- a/mm/hmm.c
++++ b/mm/hmm.c
+@@ -173,6 +173,7 @@ static inline unsigned long hmm_pfn_flag
+ 	return order << HMM_PFN_ORDER_SHIFT;
  }
+ 
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ static inline unsigned long pmd_to_hmm_pfn_flags(struct hmm_range *range,
+ 						 pmd_t pmd)
+ {
+@@ -183,7 +184,6 @@ static inline unsigned long pmd_to_hmm_p
+ 	       hmm_pfn_flags_order(PMD_SHIFT - PAGE_SHIFT);
+ }
+ 
+-#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ static int hmm_vma_handle_pmd(struct mm_walk *walk, unsigned long addr,
+ 			      unsigned long end, unsigned long hmm_pfns[],
+ 			      pmd_t pmd)
 
 
