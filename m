@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B1D2E972E;
-	Tue, 12 Aug 2025 17:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D8E2D46AC;
+	Tue, 12 Aug 2025 17:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020948; cv=none; b=lWN0icCowe9KLcIC07OlQZVNtEtbMvgdm4tt96bmt/lUFRuUP0Tr73ryb+llxbYcyE47LRC+TiXwW2wVw2nUaJrahDqH4aexgQdGXgoJymMPFdqlpvdyEm/jkdE+BcqJ0vFuyK4IB+byiUAB+fM5UBYbpEryvLSBNGVsRQbMQMs=
+	t=1755020952; cv=none; b=LY1t2yp/Sf0wziAvOHT/brMWAWx6nkTCzL1TC8HBzG8CWYVmYQbwL+AAH7zCXQbXvzQAc+m0OmJsCL63BHGRhZMTXkC75muo5941IyYajC7C6jt8HpRGUeQr+PQUEuQH+ALj4wPOCCkSWuwHzxG8rotbrOQAeDn2A4/v0WmX0+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020948; c=relaxed/simple;
-	bh=H/6dhTZH91DJT7/IRxrqOhklw+dqsKcg9L26nGLgLu8=;
+	s=arc-20240116; t=1755020952; c=relaxed/simple;
+	bh=2fYHmjjQoByqWcAif2I4o9Me25uFe/ImjvBEtNCUp30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciTyqsPvYI4mToHCcIPO1+btsS3dRfzycZJ9GdKceXAvHRyXHs0MLkxdzVs5eHqsfzkQjcwHj+dZkDOfhBMfQmsh4ym6ogNACKoQ6bypVuhIvVRbpx2rr+U5Hb1PODBdQb95MX+IVMD6epP+iBkpL9L4Agzd8b7cwfR9xSAK2VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3zzjoFq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S0GRKJ7erg5LOJTKWy6CABXpoj5IFsvuHqRjAJ+kJMCaqEbHk3I80055nt9Oyf2QDKYHHS1BnbNAAKO20hTCxou8+bBj3J8Ed+b3VrXPW9w5oIvxnlBtP4ghyIREUxqMxUsEv55O+bdGT1h5pkpiSGdZFhAPKYLej+w3rXDfVZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMZIFDQI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3zzjoFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA471C4CEF1;
-	Tue, 12 Aug 2025 17:49:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMZIFDQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BBFC4CEF0;
+	Tue, 12 Aug 2025 17:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020948;
-	bh=H/6dhTZH91DJT7/IRxrqOhklw+dqsKcg9L26nGLgLu8=;
+	s=korg; t=1755020951;
+	bh=2fYHmjjQoByqWcAif2I4o9Me25uFe/ImjvBEtNCUp30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3zzjoFqUhzCKe1Ep834tJmakBWEYzQUJrMAonJf9vLjUvMLu+s+TzcQ1pkSWYPh6
-	 9FnyosNF6DcPps0Ro57ujlPTm++mVKpx9g7CAxSnwzmz+1QdOu1iAO0eFkGL7xh5UQ
-	 Joo8TnrlDDBeexv3GtHeLrxZPN+rZDxRlDWycC1I=
+	b=MMZIFDQIp1tWdutTFnWGzJCWHNsKPhfsOqLmzylNUfBqlM9wxEMXpHxjGSsWxrea3
+	 Y3kXItubHhx0b/hqdMCjY3d8mopTmoGbrVF4GlGVh1zD6UjdhTesEE450lHcTGSnOx
+	 ATTZMRpcFQa+wC3PWcxlWJO2XBZlUSLp61L9YxEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1aa90f0eb1fc3e77d969@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Adam Ford <aford173@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 008/262] fs/ntfs3: cancle set bad inode after removing name fails
-Date: Tue, 12 Aug 2025 19:26:36 +0200
-Message-ID: <20250812172953.326711829@linuxfoundation.org>
+Subject: [PATCH 6.6 036/262] arm64: dts: imx8mm-beacon: Fix HS400 USDHC clock speed
+Date: Tue, 12 Aug 2025 19:27:04 +0200
+Message-ID: <20250812172954.499565938@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -52,102 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit d99208b91933fd2a58ed9ed321af07dacd06ddc3 ]
+[ Upstream commit f83f69097a302ed2a2775975ddcf12e6a5ac6ec3 ]
 
-The reproducer uses a file0 on a ntfs3 file system with a corrupted i_link.
-When renaming, the file0's inode is marked as a bad inode because the file
-name cannot be deleted.
+The reference manual for the i.MX8MM states the clock rate in
+MMC mode is 1/2 of the input clock, therefore to properly run
+at HS400 rates, the input clock must be 400MHz to operate at
+200MHz.  Currently the clock is set to 200MHz which is half the
+rate it should be, so the throughput is half of what it should be
+for HS400 operation.
 
-The underlying bug is that make_bad_inode() is called on a live inode.
-In some cases it's "icache lookup finds a normal inode, d_splice_alias()
-is called to attach it to dentry, while another thread decides to call
-make_bad_inode() on it - that would evict it from icache, but we'd already
-found it there earlier".
-In some it's outright "we have an inode attached to dentry - that's how we
-got it in the first place; let's call make_bad_inode() on it just for shits
-and giggles".
-
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Reported-by: syzbot+1aa90f0eb1fc3e77d969@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1aa90f0eb1fc3e77d969
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 593816fa2f35 ("arm64: dts: imx: Add Beacon i.MX8m-Mini development kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c |  7 +++----
- fs/ntfs3/namei.c   | 10 +++-------
- fs/ntfs3/ntfs_fs.h |  3 +--
- 3 files changed, 7 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 3c876c468c2c..5c45fec832b0 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -3058,8 +3058,7 @@ int ni_add_name(struct ntfs_inode *dir_ni, struct ntfs_inode *ni,
-  * ni_rename - Remove one name and insert new name.
-  */
- int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
--	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de,
--	      bool *is_bad)
-+	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de)
- {
- 	int err;
- 	struct NTFS_DE *de2 = NULL;
-@@ -3082,8 +3081,8 @@ int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
- 	err = ni_add_name(new_dir_ni, ni, new_de);
- 	if (!err) {
- 		err = ni_remove_name(dir_ni, ni, de, &de2, &undo);
--		if (err && ni_remove_name(new_dir_ni, ni, new_de, &de2, &undo))
--			*is_bad = true;
-+		WARN_ON(err && ni_remove_name(new_dir_ni, ni, new_de, &de2,
-+			&undo));
- 	}
- 
- 	/*
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 61c4da8e6c3d..f5901c23ab93 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -261,7 +261,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
- 	struct ntfs_inode *ni = ntfs_i(inode);
- 	struct inode *new_inode = d_inode(new_dentry);
- 	struct NTFS_DE *de, *new_de;
--	bool is_same, is_bad;
-+	bool is_same;
- 	/*
- 	 * de		- memory of PATH_MAX bytes:
- 	 * [0-1024)	- original name (dentry->d_name)
-@@ -330,12 +330,8 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
- 	if (dir_ni != new_dir_ni)
- 		ni_lock_dir2(new_dir_ni);
- 
--	is_bad = false;
--	err = ni_rename(dir_ni, new_dir_ni, ni, de, new_de, &is_bad);
--	if (is_bad) {
--		/* Restore after failed rename failed too. */
--		_ntfs_bad_inode(inode);
--	} else if (!err) {
-+	err = ni_rename(dir_ni, new_dir_ni, ni, de, new_de);
-+	if (!err) {
- 		simple_rename_timestamp(dir, dentry, new_dir, new_dentry);
- 		mark_inode_dirty(inode);
- 		mark_inode_dirty(dir);
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index c98e6868bfba..72810d8f62ee 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -577,8 +577,7 @@ int ni_add_name(struct ntfs_inode *dir_ni, struct ntfs_inode *ni,
- 		struct NTFS_DE *de);
- 
- int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
--	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de,
--	      bool *is_bad);
-+	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de);
- 
- bool ni_is_dirty(struct inode *inode);
- 
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
+index 8ab0e45f2ad3..f93c2b604c57 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
+@@ -284,6 +284,8 @@ &usdhc3 {
+ 	pinctrl-0 = <&pinctrl_usdhc3>;
+ 	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
+ 	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
++	assigned-clocks = <&clk IMX8MM_CLK_USDHC3>;
++	assigned-clock-rates = <400000000>;
+ 	bus-width = <8>;
+ 	non-removable;
+ 	status = "okay";
 -- 
 2.39.5
 
