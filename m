@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AC22EAB97;
-	Tue, 12 Aug 2025 18:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E612EAB97;
+	Tue, 12 Aug 2025 18:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021999; cv=none; b=cOvoV8SxAZJqUFFMK9kgCKB7THTvdWRu3rvJuun9W7JEDdGDUULkB/0kJrxgU/WbwcnUl22rOAJEiVQu/sNADgj8IukKkjocJV242C/k/uVOYARIdqniocWwYUP4WWs0AzBXLMMFjIU27qsAEBSASNBEX/lOTXmwvt8orBxmCAg=
+	t=1755022003; cv=none; b=NzNBkF5bDJ1akx8G0Y/C62YjPD14fj/ghmhSbRqQYN04rASEl5u02L7KlFek/jGjyNZZy7Eyti3cFy0JfCOAD9QINtjhTmKETaNNp44a5YGaQNhXkk95s/ub9x8o5XFmYNzfDDPujQsTaWWXpVsScRwrdX1bpNXTjDY2+LI6cjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021999; c=relaxed/simple;
-	bh=rRH3NviaOZXznGqrDwscPqiWR45jdL+3mqlXtkKszWI=;
+	s=arc-20240116; t=1755022003; c=relaxed/simple;
+	bh=/iY+BTZwOJaKhSpIpbSWSjjbiCG5I9J0caOfvVyy5Qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aC3bPMSKiLlW8Z516MiE7wxLiZ0lOD3fkVgSZUBTUqy1iLyvxMNM1Av3nwcsabpNQCvSsV3GTP6as8Qx1wd/GoNreXTxWybnhaX+bgU6kD+rAydiwzyYkBqBMWvkjCGUPX6W9Lnr7AMWZDJ9jt/+tGRCPe1UKAkkl3j4dRsnfCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuEoSkHF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ew1czDRYWRVOVK6tkOQm390m8bd8f0Ig8vkEE+yd+au9XTz9LZ3yhHwpAM45NiNVOQTxlOvqop+mePZf1Fqi2FOR7X4cT3tkToAgTfyjyJLsRdxzF7sF07uxtKYxDzIKOcrQsAK+uzzBTEFL1a4WWiOFwLMqyoRKPod7kB2JykU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAFN3lSy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuEoSkHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC7FC4CEF8;
-	Tue, 12 Aug 2025 18:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAFN3lSy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BABC4CEF0;
+	Tue, 12 Aug 2025 18:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021999;
-	bh=rRH3NviaOZXznGqrDwscPqiWR45jdL+3mqlXtkKszWI=;
+	s=korg; t=1755022002;
+	bh=/iY+BTZwOJaKhSpIpbSWSjjbiCG5I9J0caOfvVyy5Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuEoSkHFD6iROu8bH32Ce9NOHj4w67Qe8x+TAqCoNQD925ZvN1ChFrJ0HTm4dgnX3
-	 HO7DvZZDC2c0lgngygcJYhqzAPOI5TobC2qSG+sJS+6mE6RQ5TIT/ASf5+yso4xEdz
-	 fOOgNDC2HvdDxxctlbOnAtSJY8fJaOevhmJOSh6A=
+	b=TAFN3lSy2BZHrlkDQa3CicGdsgzpmnXvn9/YYkV+2YYRngcUfTVDo58lLEWCRQq5y
+	 x4TXbCoLlGaeiB1onNb4X6yzCzkah4XKi1vobVqW+olL2zsgUz+Qhyb+FN674MnEZr
+	 uvu4jJsyoippfuF4XsChJ30vLYv8jYR80fEOjJlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Will Deacon <willdeacon@google.com>,
+	Will McVicker <willmcvicker@google.com>,
+	Youngmin Nam <youngmin.nam@samsung.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/369] arm64: dts: qcom: sc7180: Expand IMEM region
-Date: Tue, 12 Aug 2025 19:25:22 +0200
-Message-ID: <20250812173015.687379212@linuxfoundation.org>
+Subject: [PATCH 6.12 026/369] arm64: dts: exynos: gs101: Add local-timer-stop to cpuidle nodes
+Date: Tue, 12 Aug 2025 19:25:23 +0200
+Message-ID: <20250812173015.723478796@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,51 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Will Deacon <willdeacon@google.com>
 
-[ Upstream commit 965e28cad4739b11f1bc58c0a9935e025938bb1f ]
+[ Upstream commit b649082312dd1a4c3989bbdb7c25eb711e9b1d94 ]
 
-We need more than what is currently described, expand the region to its
-actual boundaries.
+In preparation for switching to the architected timer as the primary
+clockevents device, mark the cpuidle nodes with the 'local-timer-stop'
+property to indicate that an alternative clockevents device must be
+used for waking up from the "c2" idle state.
 
-Fixes: ede638c42c82 ("arm64: dts: qcom: sc7180: Add IMEM and pil info regions")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250523-topic-ipa_mem_dts-v1-3-f7aa94fac1ab@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Will Deacon <willdeacon@google.com>
+[Original commit from https://android.googlesource.com/kernel/gs/+/a896fd98638047989513d05556faebd28a62b27c]
+Signed-off-by: Will McVicker <willmcvicker@google.com>
+Reviewed-by: Youngmin Nam <youngmin.nam@samsung.com>
+Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
+Fixes: ea89fdf24fd9 ("arm64: dts: exynos: google: Add initial Google gs101 SoC support")
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Tested-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20250611-gs101-cpuidle-v2-1-4fa811ec404d@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/exynos/google/gs101.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 249b257fc6a7..6ae5ca00c718 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3524,18 +3524,18 @@ spmi_bus: spmi@c440000 {
- 			#interrupt-cells = <4>;
- 		};
- 
--		sram@146aa000 {
-+		sram@14680000 {
- 			compatible = "qcom,sc7180-imem", "syscon", "simple-mfd";
--			reg = <0 0x146aa000 0 0x2000>;
-+			reg = <0 0x14680000 0 0x2e000>;
- 
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 
--			ranges = <0 0 0x146aa000 0x2000>;
-+			ranges = <0 0 0x14680000 0x2e000>;
- 
--			pil-reloc@94c {
-+			pil-reloc@2a94c {
- 				compatible = "qcom,pil-reloc-info";
--				reg = <0x94c 0xc8>;
-+				reg = <0x2a94c 0xc8>;
- 			};
- 		};
- 
+diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
+index b8f8255f840b..7caa2f3ef134 100644
+--- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
++++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
+@@ -155,6 +155,7 @@ ANANKE_CPU_SLEEP: cpu-ananke-sleep {
+ 				idle-state-name = "c2";
+ 				compatible = "arm,idle-state";
+ 				arm,psci-suspend-param = <0x0010000>;
++				local-timer-stop;
+ 				entry-latency-us = <70>;
+ 				exit-latency-us = <160>;
+ 				min-residency-us = <2000>;
+@@ -164,6 +165,7 @@ ENYO_CPU_SLEEP: cpu-enyo-sleep {
+ 				idle-state-name = "c2";
+ 				compatible = "arm,idle-state";
+ 				arm,psci-suspend-param = <0x0010000>;
++				local-timer-stop;
+ 				entry-latency-us = <150>;
+ 				exit-latency-us = <190>;
+ 				min-residency-us = <2500>;
+@@ -173,6 +175,7 @@ HERA_CPU_SLEEP: cpu-hera-sleep {
+ 				idle-state-name = "c2";
+ 				compatible = "arm,idle-state";
+ 				arm,psci-suspend-param = <0x0010000>;
++				local-timer-stop;
+ 				entry-latency-us = <235>;
+ 				exit-latency-us = <220>;
+ 				min-residency-us = <3500>;
 -- 
 2.39.5
 
