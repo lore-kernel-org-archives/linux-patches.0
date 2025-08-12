@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE6121ABD0;
-	Tue, 12 Aug 2025 19:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EB61B87E9;
+	Tue, 12 Aug 2025 19:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026518; cv=none; b=ks72kxfrpT13O+xvjFLSyFuzDiTl98H48JVcPB26vTWTdHKm/kgRDkPHnfmpfr4JTUtWRHNaSod2TCb/iqKmKOIvOF1jagSk+nsfg9Ttfz77DmWNv2eahIUOoMN2TlWF5WXo5p2zpvQLb8eaSf+nTEJqiKF2UO9k7IoMooYHlUk=
+	t=1755026521; cv=none; b=RvcWJKsrW8xP9J08tYFJdKjBlKmsB3dpoTguyq4LNuyT2LuhbPFUTfI1dPlU6iwJJztqsLBZOcrLqgUc3KKoKj9dTgXQuZn3r8pdVJ9QjS97zOar8Evn1Lexh966NJ7+yjmFwcs7AHAtjCT6s79IQ/+72IbcIaS8arc8bI16bD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026518; c=relaxed/simple;
-	bh=wDCNcSj+SD4AWX6d0tPjX6CMVnpi3JFwU4SS/hHDAIY=;
+	s=arc-20240116; t=1755026521; c=relaxed/simple;
+	bh=P+jhgBdyNbHmVmRsteMtVsH8Yz4T8LxIuUeOcuMbi3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8M7KNSfQbiedP+shoUt5eNChA9k8MWNP6mYzeFBd0hqpWmCfBuHOyJgaNYq4Fd8X0PJZUpkq+vrGK52zQ8vNs4KRu17bn0O6liOstusm66voxLmnLttFLRi33Vn/9tmhcwcdfXenp86v1JXzVjn/DofN/iQm059LUUyXh9hYtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CF23DwOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lgfw6enuF2Vm77k+KU4ke2YclhkWkIgqu9+fjbBRuN7pv3tUUaTgXPIRprPSB7kZuyVD220uze8/rf294lmkARD0m5BqJWsMQwoTHGgJKmammNLoYXKUv13G69wjY6XENVVssPA+u6KnovS53CPOW4bwptzjBftu6lBNl9dzj0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtPym8Vj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CF23DwOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B56C4CEF0;
-	Tue, 12 Aug 2025 19:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtPym8Vj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353F6C4CEF0;
+	Tue, 12 Aug 2025 19:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026518;
-	bh=wDCNcSj+SD4AWX6d0tPjX6CMVnpi3JFwU4SS/hHDAIY=;
+	s=korg; t=1755026521;
+	bh=P+jhgBdyNbHmVmRsteMtVsH8Yz4T8LxIuUeOcuMbi3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CF23DwOIv0JccuQqGWQaB6hSA5FuxGvQLF8f1+VWTv6l0Cet9RIp6j5tOe4i4wL3y
-	 /xiJAhUGhGe8/wi6jQHpmP053MOs+WcfhxkpnfSmQwVcSasTnOlQSrpuRnsJ98FFFE
-	 ypnRLziloTkXqr596ILHsGTiw7dtOOG2PaerZHfo=
+	b=xtPym8VjKydfILYR5yHsdkzodcvo+DYOrZiW1RsxD2FoOuFwKgqTloPuO5jTIwn3u
+	 6qg0z5n1ue2L2ygIN/sMHsk97b19duAuTIfYwbGA6mW7foBaSd2ScQS6zwTs8Bb8H0
+	 Eje+bWJnn2blK3kwrli7eQJRPGEbsZNtxlZsRXL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengxu Zhang <zhengxu.zhang@unisoc.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 360/480] exfat: fdatasync flag should be same like generic_write_sync()
-Date: Tue, 12 Aug 2025 19:49:28 +0200
-Message-ID: <20250812174412.279143282@linuxfoundation.org>
+Subject: [PATCH 6.15 361/480] i2c: muxes: mule: Fix an error handling path in mule_i2c_mux_probe()
+Date: Tue, 12 Aug 2025 19:49:29 +0200
+Message-ID: <20250812174412.319615167@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,47 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengxu Zhang <zhengxu.zhang@unisoc.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 2f2d42a17b5a6711378d39df74f1f69a831c5d4e ]
+[ Upstream commit 33ac5155891cab165c93b51b0e22e153eacc2ee7 ]
 
-Test: androbench by default setting, use 64GB sdcard.
- the random write speed:
-	without this patch 3.5MB/s
-	with this patch 7MB/s
+If an error occurs in the loop that creates the device adapters, then a
+reference to 'dev' still needs to be released.
 
-After patch "11a347fb6cef", the random write speed decreased significantly.
-the .write_iter() interface had been modified, and check the differences
-with generic_file_write_iter(), when calling generic_write_sync() and
-exfat_file_write_iter() to call vfs_fsync_range(), the fdatasync flag is
-wrong, and make not use the fdatasync mode, and make random write speed
-decreased. So use generic_write_sync() instead of vfs_fsync_range().
+Use for_each_child_of_node_scoped() to both fix the issue and save one line
+of code.
 
-Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
-Signed-off-by: Zhengxu Zhang <zhengxu.zhang@unisoc.com>
-Acked-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: d0f8e97866bf ("i2c: muxes: add support for tsd,mule-i2c multiplexer")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/i2c/muxes/i2c-mux-mule.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index 841a5b18e3df..7ac5126aa4f1 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -623,9 +623,8 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 	if (pos > valid_size)
- 		pos = valid_size;
+diff --git a/drivers/i2c/muxes/i2c-mux-mule.c b/drivers/i2c/muxes/i2c-mux-mule.c
+index 284ff4afeeac..d3b32b794172 100644
+--- a/drivers/i2c/muxes/i2c-mux-mule.c
++++ b/drivers/i2c/muxes/i2c-mux-mule.c
+@@ -47,7 +47,6 @@ static int mule_i2c_mux_probe(struct platform_device *pdev)
+ 	struct mule_i2c_reg_mux *priv;
+ 	struct i2c_client *client;
+ 	struct i2c_mux_core *muxc;
+-	struct device_node *dev;
+ 	unsigned int readback;
+ 	int ndev, ret;
+ 	bool old_fw;
+@@ -95,7 +94,7 @@ static int mule_i2c_mux_probe(struct platform_device *pdev)
+ 				     "Failed to register mux remove\n");
  
--	if (iocb_is_dsync(iocb) && iocb->ki_pos > pos) {
--		ssize_t err = vfs_fsync_range(file, pos, iocb->ki_pos - 1,
--				iocb->ki_flags & IOCB_SYNC);
-+	if (iocb->ki_pos > pos) {
-+		ssize_t err = generic_write_sync(iocb, iocb->ki_pos - pos);
- 		if (err < 0)
- 			return err;
- 	}
+ 	/* Create device adapters */
+-	for_each_child_of_node(mux_dev->of_node, dev) {
++	for_each_child_of_node_scoped(mux_dev->of_node, dev) {
+ 		u32 reg;
+ 
+ 		ret = of_property_read_u32(dev, "reg", &reg);
 -- 
 2.39.5
 
