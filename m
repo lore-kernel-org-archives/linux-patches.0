@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3CF2D3A94;
-	Tue, 12 Aug 2025 19:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A98B2D3A94;
+	Tue, 12 Aug 2025 19:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026666; cv=none; b=LsfeAQtdyscwE8wMODeoFQdCr+zv5OnIVifVrqLmYeZQpxBj3Tgw9lEWACUc6QA7gasWhK5so/Rh+o7PG/qij69pKxwvuwkKAU8Z+YSy/89LChTv9szRasRxPtHfDSHfeonu0e3Yw8IDRD5mKKbiVGm2u+fLpf3rhYTDipoTYig=
+	t=1755026669; cv=none; b=D1pSLpW1lH97bj2rQu5w+4o65I9NqzuWIZq4anKTVwZtsWAtGo5ao9sR+G437tU4w9mGAVmnyhtLp6v5ca2b7YSPaBNducRX3fYIK56bREHYnguu+0qEkBPQ7pxccHbYgU+horq9u4qqB7+TG6vZl8ALmdUiSD0xhXMxACJibVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026666; c=relaxed/simple;
-	bh=o1FrZ7UkDhZmP6S1L7u468UAVQkLoaFnXpxr8s7Rcaw=;
+	s=arc-20240116; t=1755026669; c=relaxed/simple;
+	bh=6tPsfQUQUhr1y5AFpTKibYbdpuTJ963pddKZN62udUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O86uAGSoUR4JsiXHCISxEe0ap01QSinq/Rxrnq06F5J5Huo2mDmWHcz2IwL1I6Mp2LXHdaqKCesDxr0ASJzzpFLiVzrtas3AJiIe0K+GQ4SMdd9DKtatZBbdLonmQ65oe4OfBt+0y6N90JmLlRD0hVZ4IiVUZbs4TFYt20is+RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vbv0KpQu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YinHmwLMPauFFqGQdTD+LgPuxmyJUfKySY7eECObg6tNFj9QuCRMBUDLYFfVSVQ02NxkwOE/1ok0KGDZaTyG+jN0fgArGxzwNxOESNQYpObCgeA4vvatRpMCzEkGLxK0R+V3v45Pk+bu2RBWvwyKNdql1vkPZ6UNypH4jKI1NhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhLIJGlV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vbv0KpQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60417C4CEF0;
-	Tue, 12 Aug 2025 19:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhLIJGlV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF53C4CEF1;
+	Tue, 12 Aug 2025 19:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026665;
-	bh=o1FrZ7UkDhZmP6S1L7u468UAVQkLoaFnXpxr8s7Rcaw=;
+	s=korg; t=1755026669;
+	bh=6tPsfQUQUhr1y5AFpTKibYbdpuTJ963pddKZN62udUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vbv0KpQuRTCTCno3ldW3ddN48+ubrXyXa9CsOjq3pF6GrcX70F0KUfMfm6n9sD6/s
-	 wm1/HWxNq5H/4DH//L7EsvASZIrkRxFp6xsBLtpn6CnT4a6B8Yfpp7dzN9nSOH+Ydz
-	 +TCwu9fs3mjpWACfMan3cqfD/eaQKIsubeTxVhHM=
+	b=DhLIJGlVYe6LxIssJXhLVyG0bL/Ebm6+QHn4txKoy1NFgkPfEix80q6meVKsm4XPV
+	 WlGSHaWZ4n7nHhb1AZHckevmvIbE8n2xPrOXejjytohMgH8zJvcw8h4VocJKos4dYX
+	 3VWquvqYqXdeDP1XW0snxlwhmgapzlNc2vqAh/Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Chris Mason <clm@meta.com>,
+	Beata Michalska <beata.michalska@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 371/480] vfio/pci: Do vf_token checks for VFIO_DEVICE_BIND_IOMMUFD
-Date: Tue, 12 Aug 2025 19:49:39 +0200
-Message-ID: <20250812174412.729505823@linuxfoundation.org>
+Subject: [PATCH 6.15 372/480] sched/psi: Fix psi_seq initialization
+Date: Tue, 12 Aug 2025 19:49:40 +0200
+Message-ID: <20250812174412.777765295@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -54,378 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 86624ba3b522b6512def25534341da93356c8da4 ]
+[ Upstream commit 99b773d720aeea1ef2170dce5fcfa80649e26b78 ]
 
-This was missed during the initial implementation. The VFIO PCI encodes
-the vf_token inside the device name when opening the device from the group
-FD, something like:
+With the seqcount moved out of the group into a global psi_seq,
+re-initializing the seqcount on group creation is causing seqcount
+corruption.
 
-  "0000:04:10.0 vf_token=bd8d9d2b-5a5f-4f5a-a211-f591514ba1f3"
-
-This is used to control access to a VF unless there is co-ordination with
-the owner of the PF.
-
-Since we no longer have a device name in the cdev path, pass the token
-directly through VFIO_DEVICE_BIND_IOMMUFD using an optional field
-indicated by VFIO_DEVICE_BIND_FLAG_TOKEN.
-
-Fixes: 5fcc26969a16 ("vfio: Add VFIO_DEVICE_BIND_IOMMUFD")
-Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/0-v3-bdd8716e85fe+3978a-vfio_token_jgg@nvidia.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: 570c8efd5eb7 ("sched/psi: Optimize psi_group_change() cpu_clock() usage")
+Reported-by: Chris Mason <clm@meta.com>
+Suggested-by: Beata Michalska <beata.michalska@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/device_cdev.c                    | 38 +++++++++++++++++--
- .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    |  1 +
- drivers/vfio/pci/mlx5/main.c                  |  1 +
- drivers/vfio/pci/nvgrace-gpu/main.c           |  2 +
- drivers/vfio/pci/pds/vfio_dev.c               |  1 +
- drivers/vfio/pci/qat/main.c                   |  1 +
- drivers/vfio/pci/vfio_pci.c                   |  1 +
- drivers/vfio/pci/vfio_pci_core.c              | 22 +++++++----
- drivers/vfio/pci/virtio/main.c                |  3 ++
- include/linux/vfio.h                          |  4 ++
- include/linux/vfio_pci_core.h                 |  2 +
- include/uapi/linux/vfio.h                     | 12 +++++-
- 12 files changed, 76 insertions(+), 12 deletions(-)
+ kernel/sched/psi.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/vfio/device_cdev.c b/drivers/vfio/device_cdev.c
-index 281a8dc3ed49..480cac3a0c27 100644
---- a/drivers/vfio/device_cdev.c
-+++ b/drivers/vfio/device_cdev.c
-@@ -60,22 +60,50 @@ static void vfio_df_get_kvm_safe(struct vfio_device_file *df)
- 	spin_unlock(&df->kvm_ref_lock);
- }
- 
-+static int vfio_df_check_token(struct vfio_device *device,
-+			       const struct vfio_device_bind_iommufd *bind)
-+{
-+	uuid_t uuid;
-+
-+	if (!device->ops->match_token_uuid) {
-+		if (bind->flags & VFIO_DEVICE_BIND_FLAG_TOKEN)
-+			return -EINVAL;
-+		return 0;
-+	}
-+
-+	if (!(bind->flags & VFIO_DEVICE_BIND_FLAG_TOKEN))
-+		return device->ops->match_token_uuid(device, NULL);
-+
-+	if (copy_from_user(&uuid, u64_to_user_ptr(bind->token_uuid_ptr),
-+			   sizeof(uuid)))
-+		return -EFAULT;
-+	return device->ops->match_token_uuid(device, &uuid);
-+}
-+
- long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
- 				struct vfio_device_bind_iommufd __user *arg)
- {
-+	const u32 VALID_FLAGS = VFIO_DEVICE_BIND_FLAG_TOKEN;
- 	struct vfio_device *device = df->device;
- 	struct vfio_device_bind_iommufd bind;
- 	unsigned long minsz;
-+	u32 user_size;
- 	int ret;
- 
- 	static_assert(__same_type(arg->out_devid, df->devid));
- 
- 	minsz = offsetofend(struct vfio_device_bind_iommufd, out_devid);
- 
--	if (copy_from_user(&bind, arg, minsz))
--		return -EFAULT;
-+	ret = get_user(user_size, &arg->argsz);
-+	if (ret)
-+		return ret;
-+	if (user_size < minsz)
-+		return -EINVAL;
-+	ret = copy_struct_from_user(&bind, minsz, arg, user_size);
-+	if (ret)
-+		return ret;
- 
--	if (bind.argsz < minsz || bind.flags || bind.iommufd < 0)
-+	if (bind.iommufd < 0 || bind.flags & ~VALID_FLAGS)
- 		return -EINVAL;
- 
- 	/* BIND_IOMMUFD only allowed for cdev fds */
-@@ -93,6 +121,10 @@ long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
- 		goto out_unlock;
- 	}
- 
-+	ret = vfio_df_check_token(device, &bind);
-+	if (ret)
-+		goto out_unlock;
-+
- 	df->iommufd = iommufd_ctx_from_fd(bind.iommufd);
- 	if (IS_ERR(df->iommufd)) {
- 		ret = PTR_ERR(df->iommufd);
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index d12a350440d3..36b60e293204 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -1580,6 +1580,7 @@ static const struct vfio_device_ops hisi_acc_vfio_pci_ops = {
- 	.mmap = vfio_pci_core_mmap,
- 	.request = vfio_pci_core_request,
- 	.match = vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd = vfio_iommufd_physical_bind,
- 	.unbind_iommufd = vfio_iommufd_physical_unbind,
- 	.attach_ioas = vfio_iommufd_physical_attach_ioas,
-diff --git a/drivers/vfio/pci/mlx5/main.c b/drivers/vfio/pci/mlx5/main.c
-index 709543e7eb04..d83249aea275 100644
---- a/drivers/vfio/pci/mlx5/main.c
-+++ b/drivers/vfio/pci/mlx5/main.c
-@@ -1387,6 +1387,7 @@ static const struct vfio_device_ops mlx5vf_pci_ops = {
- 	.mmap = vfio_pci_core_mmap,
- 	.request = vfio_pci_core_request,
- 	.match = vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd = vfio_iommufd_physical_bind,
- 	.unbind_iommufd = vfio_iommufd_physical_unbind,
- 	.attach_ioas = vfio_iommufd_physical_attach_ioas,
-diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgrace-gpu/main.c
-index e5ac39c4cc6b..d95761dcdd58 100644
---- a/drivers/vfio/pci/nvgrace-gpu/main.c
-+++ b/drivers/vfio/pci/nvgrace-gpu/main.c
-@@ -696,6 +696,7 @@ static const struct vfio_device_ops nvgrace_gpu_pci_ops = {
- 	.mmap		= nvgrace_gpu_mmap,
- 	.request	= vfio_pci_core_request,
- 	.match		= vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd	= vfio_iommufd_physical_bind,
- 	.unbind_iommufd	= vfio_iommufd_physical_unbind,
- 	.attach_ioas	= vfio_iommufd_physical_attach_ioas,
-@@ -715,6 +716,7 @@ static const struct vfio_device_ops nvgrace_gpu_pci_core_ops = {
- 	.mmap		= vfio_pci_core_mmap,
- 	.request	= vfio_pci_core_request,
- 	.match		= vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd	= vfio_iommufd_physical_bind,
- 	.unbind_iommufd	= vfio_iommufd_physical_unbind,
- 	.attach_ioas	= vfio_iommufd_physical_attach_ioas,
-diff --git a/drivers/vfio/pci/pds/vfio_dev.c b/drivers/vfio/pci/pds/vfio_dev.c
-index f6e0253a8a14..f3ccb0008f67 100644
---- a/drivers/vfio/pci/pds/vfio_dev.c
-+++ b/drivers/vfio/pci/pds/vfio_dev.c
-@@ -201,6 +201,7 @@ static const struct vfio_device_ops pds_vfio_ops = {
- 	.mmap = vfio_pci_core_mmap,
- 	.request = vfio_pci_core_request,
- 	.match = vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd = vfio_iommufd_physical_bind,
- 	.unbind_iommufd = vfio_iommufd_physical_unbind,
- 	.attach_ioas = vfio_iommufd_physical_attach_ioas,
-diff --git a/drivers/vfio/pci/qat/main.c b/drivers/vfio/pci/qat/main.c
-index 845ed15b6771..5cce6b0b8d2f 100644
---- a/drivers/vfio/pci/qat/main.c
-+++ b/drivers/vfio/pci/qat/main.c
-@@ -614,6 +614,7 @@ static const struct vfio_device_ops qat_vf_pci_ops = {
- 	.mmap = vfio_pci_core_mmap,
- 	.request = vfio_pci_core_request,
- 	.match = vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd = vfio_iommufd_physical_bind,
- 	.unbind_iommufd = vfio_iommufd_physical_unbind,
- 	.attach_ioas = vfio_iommufd_physical_attach_ioas,
-diff --git a/drivers/vfio/pci/vfio_pci.c b/drivers/vfio/pci/vfio_pci.c
-index 5ba39f7623bb..ac10f14417f2 100644
---- a/drivers/vfio/pci/vfio_pci.c
-+++ b/drivers/vfio/pci/vfio_pci.c
-@@ -138,6 +138,7 @@ static const struct vfio_device_ops vfio_pci_ops = {
- 	.mmap		= vfio_pci_core_mmap,
- 	.request	= vfio_pci_core_request,
- 	.match		= vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd	= vfio_iommufd_physical_bind,
- 	.unbind_iommufd	= vfio_iommufd_physical_unbind,
- 	.attach_ioas	= vfio_iommufd_physical_attach_ioas,
-diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index 261a6dc5a5fc..fad410cf91bc 100644
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -1821,9 +1821,13 @@ void vfio_pci_core_request(struct vfio_device *core_vdev, unsigned int count)
- }
- EXPORT_SYMBOL_GPL(vfio_pci_core_request);
- 
--static int vfio_pci_validate_vf_token(struct vfio_pci_core_device *vdev,
--				      bool vf_token, uuid_t *uuid)
-+int vfio_pci_core_match_token_uuid(struct vfio_device *core_vdev,
-+				   const uuid_t *uuid)
-+
- {
-+	struct vfio_pci_core_device *vdev =
-+		container_of(core_vdev, struct vfio_pci_core_device, vdev);
-+
- 	/*
- 	 * There's always some degree of trust or collaboration between SR-IOV
- 	 * PF and VFs, even if just that the PF hosts the SR-IOV capability and
-@@ -1854,7 +1858,7 @@ static int vfio_pci_validate_vf_token(struct vfio_pci_core_device *vdev,
- 		bool match;
- 
- 		if (!pf_vdev) {
--			if (!vf_token)
-+			if (!uuid)
- 				return 0; /* PF is not vfio-pci, no VF token */
- 
- 			pci_info_ratelimited(vdev->pdev,
-@@ -1862,7 +1866,7 @@ static int vfio_pci_validate_vf_token(struct vfio_pci_core_device *vdev,
- 			return -EINVAL;
- 		}
- 
--		if (!vf_token) {
-+		if (!uuid) {
- 			pci_info_ratelimited(vdev->pdev,
- 				"VF token required to access device\n");
- 			return -EACCES;
-@@ -1880,7 +1884,7 @@ static int vfio_pci_validate_vf_token(struct vfio_pci_core_device *vdev,
- 	} else if (vdev->vf_token) {
- 		mutex_lock(&vdev->vf_token->lock);
- 		if (vdev->vf_token->users) {
--			if (!vf_token) {
-+			if (!uuid) {
- 				mutex_unlock(&vdev->vf_token->lock);
- 				pci_info_ratelimited(vdev->pdev,
- 					"VF token required to access device\n");
-@@ -1893,12 +1897,12 @@ static int vfio_pci_validate_vf_token(struct vfio_pci_core_device *vdev,
- 					"Incorrect VF token provided for device\n");
- 				return -EACCES;
- 			}
--		} else if (vf_token) {
-+		} else if (uuid) {
- 			uuid_copy(&vdev->vf_token->uuid, uuid);
- 		}
- 
- 		mutex_unlock(&vdev->vf_token->lock);
--	} else if (vf_token) {
-+	} else if (uuid) {
- 		pci_info_ratelimited(vdev->pdev,
- 			"VF token incorrectly provided, not a PF or VF\n");
- 		return -EINVAL;
-@@ -1906,6 +1910,7 @@ static int vfio_pci_validate_vf_token(struct vfio_pci_core_device *vdev,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(vfio_pci_core_match_token_uuid);
- 
- #define VF_TOKEN_ARG "vf_token="
- 
-@@ -1952,7 +1957,8 @@ int vfio_pci_core_match(struct vfio_device *core_vdev, char *buf)
- 		}
- 	}
- 
--	ret = vfio_pci_validate_vf_token(vdev, vf_token, &uuid);
-+	ret = core_vdev->ops->match_token_uuid(core_vdev,
-+					       vf_token ? &uuid : NULL);
- 	if (ret)
- 		return ret;
- 
-diff --git a/drivers/vfio/pci/virtio/main.c b/drivers/vfio/pci/virtio/main.c
-index 515fe1b9f94d..8084f3e36a9f 100644
---- a/drivers/vfio/pci/virtio/main.c
-+++ b/drivers/vfio/pci/virtio/main.c
-@@ -94,6 +94,7 @@ static const struct vfio_device_ops virtiovf_vfio_pci_lm_ops = {
- 	.mmap = vfio_pci_core_mmap,
- 	.request = vfio_pci_core_request,
- 	.match = vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd = vfio_iommufd_physical_bind,
- 	.unbind_iommufd = vfio_iommufd_physical_unbind,
- 	.attach_ioas = vfio_iommufd_physical_attach_ioas,
-@@ -114,6 +115,7 @@ static const struct vfio_device_ops virtiovf_vfio_pci_tran_lm_ops = {
- 	.mmap = vfio_pci_core_mmap,
- 	.request = vfio_pci_core_request,
- 	.match = vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd = vfio_iommufd_physical_bind,
- 	.unbind_iommufd = vfio_iommufd_physical_unbind,
- 	.attach_ioas = vfio_iommufd_physical_attach_ioas,
-@@ -134,6 +136,7 @@ static const struct vfio_device_ops virtiovf_vfio_pci_ops = {
- 	.mmap = vfio_pci_core_mmap,
- 	.request = vfio_pci_core_request,
- 	.match = vfio_pci_core_match,
-+	.match_token_uuid = vfio_pci_core_match_token_uuid,
- 	.bind_iommufd = vfio_iommufd_physical_bind,
- 	.unbind_iommufd = vfio_iommufd_physical_unbind,
- 	.attach_ioas = vfio_iommufd_physical_attach_ioas,
-diff --git a/include/linux/vfio.h b/include/linux/vfio.h
-index 707b00772ce1..eb563f538dee 100644
---- a/include/linux/vfio.h
-+++ b/include/linux/vfio.h
-@@ -105,6 +105,9 @@ struct vfio_device {
-  * @match: Optional device name match callback (return: 0 for no-match, >0 for
-  *         match, -errno for abort (ex. match with insufficient or incorrect
-  *         additional args)
-+ * @match_token_uuid: Optional device token match/validation. Return 0
-+ *         if the uuid is valid for the device, -errno otherwise. uuid is NULL
-+ *         if none was provided.
-  * @dma_unmap: Called when userspace unmaps IOVA from the container
-  *             this device is attached to.
-  * @device_feature: Optional, fill in the VFIO_DEVICE_FEATURE ioctl
-@@ -132,6 +135,7 @@ struct vfio_device_ops {
- 	int	(*mmap)(struct vfio_device *vdev, struct vm_area_struct *vma);
- 	void	(*request)(struct vfio_device *vdev, unsigned int count);
- 	int	(*match)(struct vfio_device *vdev, char *buf);
-+	int	(*match_token_uuid)(struct vfio_device *vdev, const uuid_t *uuid);
- 	void	(*dma_unmap)(struct vfio_device *vdev, u64 iova, u64 length);
- 	int	(*device_feature)(struct vfio_device *device, u32 flags,
- 				  void __user *arg, size_t argsz);
-diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
-index fbb472dd99b3..f541044e42a2 100644
---- a/include/linux/vfio_pci_core.h
-+++ b/include/linux/vfio_pci_core.h
-@@ -122,6 +122,8 @@ ssize_t vfio_pci_core_write(struct vfio_device *core_vdev, const char __user *bu
- int vfio_pci_core_mmap(struct vfio_device *core_vdev, struct vm_area_struct *vma);
- void vfio_pci_core_request(struct vfio_device *core_vdev, unsigned int count);
- int vfio_pci_core_match(struct vfio_device *core_vdev, char *buf);
-+int vfio_pci_core_match_token_uuid(struct vfio_device *core_vdev,
-+				   const uuid_t *uuid);
- int vfio_pci_core_enable(struct vfio_pci_core_device *vdev);
- void vfio_pci_core_disable(struct vfio_pci_core_device *vdev);
- void vfio_pci_core_finish_enable(struct vfio_pci_core_device *vdev);
-diff --git a/include/uapi/linux/vfio.h b/include/uapi/linux/vfio.h
-index 5764f315137f..75100bf009ba 100644
---- a/include/uapi/linux/vfio.h
-+++ b/include/uapi/linux/vfio.h
-@@ -905,10 +905,12 @@ struct vfio_device_feature {
-  * VFIO_DEVICE_BIND_IOMMUFD - _IOR(VFIO_TYPE, VFIO_BASE + 18,
-  *				   struct vfio_device_bind_iommufd)
-  * @argsz:	 User filled size of this data.
-- * @flags:	 Must be 0.
-+ * @flags:	 Must be 0 or a bit flags of VFIO_DEVICE_BIND_*
-  * @iommufd:	 iommufd to bind.
-  * @out_devid:	 The device id generated by this bind. devid is a handle for
-  *		 this device/iommufd bond and can be used in IOMMUFD commands.
-+ * @token_uuid_ptr: Valid if VFIO_DEVICE_BIND_FLAG_TOKEN. Points to a 16 byte
-+ *                  UUID in the same format as VFIO_DEVICE_FEATURE_PCI_VF_TOKEN.
-  *
-  * Bind a vfio_device to the specified iommufd.
-  *
-@@ -917,13 +919,21 @@ struct vfio_device_feature {
-  *
-  * Unbind is automatically conducted when device fd is closed.
-  *
-+ * A token is sometimes required to open the device, unless this is known to be
-+ * needed VFIO_DEVICE_BIND_FLAG_TOKEN should not be set and token_uuid_ptr is
-+ * ignored. The only case today is a PF/VF relationship where the VF bind must
-+ * be provided the same token as VFIO_DEVICE_FEATURE_PCI_VF_TOKEN provided to
-+ * the PF.
-+ *
-  * Return: 0 on success, -errno on failure.
-  */
- struct vfio_device_bind_iommufd {
- 	__u32		argsz;
- 	__u32		flags;
-+#define VFIO_DEVICE_BIND_FLAG_TOKEN (1 << 0)
- 	__s32		iommufd;
- 	__u32		out_devid;
-+	__aligned_u64	token_uuid_ptr;
+diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+index c62f4316a2b9..e0ad56b26171 100644
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -172,7 +172,7 @@ struct psi_group psi_system = {
+ 	.pcpu = &system_group_pcpu,
  };
  
- #define VFIO_DEVICE_BIND_IOMMUFD	_IO(VFIO_TYPE, VFIO_BASE + 18)
+-static DEFINE_PER_CPU(seqcount_t, psi_seq);
++static DEFINE_PER_CPU(seqcount_t, psi_seq) = SEQCNT_ZERO(psi_seq);
+ 
+ static inline void psi_write_begin(int cpu)
+ {
+@@ -200,11 +200,7 @@ static void poll_timer_fn(struct timer_list *t);
+ 
+ static void group_init(struct psi_group *group)
+ {
+-	int cpu;
+-
+ 	group->enabled = true;
+-	for_each_possible_cpu(cpu)
+-		seqcount_init(per_cpu_ptr(&psi_seq, cpu));
+ 	group->avg_last_update = sched_clock();
+ 	group->avg_next_update = group->avg_last_update + psi_period;
+ 	mutex_init(&group->avgs_lock);
 -- 
 2.39.5
 
