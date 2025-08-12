@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508BC28505A;
-	Tue, 12 Aug 2025 19:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CCB2E11BF;
+	Tue, 12 Aug 2025 19:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026505; cv=none; b=i9fKXChKGVX/wUUK1NS9ODKOR9y9UUf0jgFgEsFKtRBzkBKn3TuekbiiXm/1r9gqN/EBnpsG024N+CGGtftIMjuBTsZg1FRzOfG3EYV+/NfIihRznr10JYhohxQW6uDtG1pYBiJlC+S22/2oHOjDg6Aw0iCEtD6O4qFoc0t5m74=
+	t=1755026508; cv=none; b=kbuzJ72OMdLTuFogfCsCqBx0Jqwm9zSWOiKMYC93eTLCxJgLxCofnNynXsh3gKe50trVsp8sAaGFtceS2dgVS9jI9KI0JJbB55qZV2kdu6LpSczw+dpOJixcRWqiU/aml9IXlYRmRQyKTDYI95IzFoqNwGUaVeiP/giLj62Hezk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026505; c=relaxed/simple;
-	bh=cdgK03atgl29ZPWQHXXJ3EGoCkEV9DsOTNuJvZOtPE8=;
+	s=arc-20240116; t=1755026508; c=relaxed/simple;
+	bh=rwz6XV/ugUpFBWoXMAApgztZVhvTmAx+kxvoXdLTfnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxDe+twHIXG9kZspIpBB5+wkc4/8v9riCtlHo9EpBG/XMexTPDkIdiqIwJRk//fKvnP9WYGoshKDVaI+wuoJBxzA08P2CMffO3SqpXFYq0Ub00fmeWzvtlTD9LGk34vG5X77wI4s9aCBtCvZyDLgmT9/S8tSNATRET9q6n0G3OM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehBit2cu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OV7D1ZXVXbcx8bIallVqrp4Zwgq7Rr5eSi2HEQeomAFT+dy61BRuIHYQXDpMUjr8VmXOok591r5YLsXuDjl8O5k7Wd2dxqWVOobJcfI9/abinYweQ0KfwRRaHGGkTG51TytanjF4wgHgov0gK8YmfMf8zHHPI+8uliNeT+DAVKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZBxR4DI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehBit2cu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACF0C4CEF0;
-	Tue, 12 Aug 2025 19:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZBxR4DI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6776C4CEF0;
+	Tue, 12 Aug 2025 19:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026505;
-	bh=cdgK03atgl29ZPWQHXXJ3EGoCkEV9DsOTNuJvZOtPE8=;
+	s=korg; t=1755026508;
+	bh=rwz6XV/ugUpFBWoXMAApgztZVhvTmAx+kxvoXdLTfnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehBit2cuBPRF/I/f4yH7FbxSi/xRhbB3EcAaOR31g1wSL3e+x4uYZbx+QSl3QQbuu
-	 6Dw4nuqkzpAMyEP2CpjOh6UnOAdouQAzP2VMZzfB8INQ5crVBk5csw4L3z0mQ91/F4
-	 yGDgvAx0Twmx/QH1TzLXUecpYX9v2YsCZinGGMBY=
+	b=xZBxR4DIOFpwntlNBg487Oq+YU+pDE6B5/YqPg/ISVrLBFU14r71EV7CxigmJcWQe
+	 wlgFvx59i5iXHKywrAGi2UfdoEgkFEJKlOzwB+jfkE7ym0Q0iOh38pvNoifRSmCHKd
+	 uR4Y1xO232E0dqrsL25TUWma+SvZJcq9RTebbGBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 357/480] f2fs: fix to update upper_p in __get_secs_required() correctly
-Date: Tue, 12 Aug 2025 19:49:25 +0200
-Message-ID: <20250812174412.159122103@linuxfoundation.org>
+Subject: [PATCH 6.15 331/480] bpf: Check netfilter ctx accesses are aligned
+Date: Tue, 12 Aug 2025 19:48:59 +0200
+Message-ID: <20250812174411.095534857@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,35 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 6840faddb65683b4e7bd8196f177b038a1e19faf ]
+[ Upstream commit 9e6448f7b1efb27f8d508b067ecd33ed664a4246 ]
 
-Commit 1acd73edbbfe ("f2fs: fix to account dirty data in __get_secs_required()")
-missed to calculate upper_p w/ data_secs, fix it.
+Similarly to the previous patch fixing the flow_dissector ctx accesses,
+nf_is_valid_access also doesn't check that ctx accesses are aligned.
+Contrary to flow_dissector programs, netfilter programs don't have
+context conversion. The unaligned ctx accesses are therefore allowed by
+the verifier.
 
-Fixes: 1acd73edbbfe ("f2fs: fix to account dirty data in __get_secs_required()")
-Cc: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: fd9c663b9ad6 ("bpf: minimal support for programs hooked into netfilter framework")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/853ae9ed5edaa5196e8472ff0f1bb1cc24059214.1754039605.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_bpf_link.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 503f6df690bf..4c3a0d54be7e 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -633,7 +633,7 @@ static inline void __get_secs_required(struct f2fs_sb_info *sbi,
- 	if (lower_p)
- 		*lower_p = node_secs + dent_secs + data_secs;
- 	if (upper_p)
--		*upper_p = node_secs + dent_secs +
-+		*upper_p = node_secs + dent_secs + data_secs +
- 			(node_blocks ? 1 : 0) + (dent_blocks ? 1 : 0) +
- 			(data_blocks ? 1 : 0);
- 	if (curseg_p)
+diff --git a/net/netfilter/nf_bpf_link.c b/net/netfilter/nf_bpf_link.c
+index 25bbac8986c2..c12250e50a8b 100644
+--- a/net/netfilter/nf_bpf_link.c
++++ b/net/netfilter/nf_bpf_link.c
+@@ -295,6 +295,9 @@ static bool nf_is_valid_access(int off, int size, enum bpf_access_type type,
+ 	if (off < 0 || off >= sizeof(struct bpf_nf_ctx))
+ 		return false;
+ 
++	if (off % size != 0)
++		return false;
++
+ 	if (type == BPF_WRITE)
+ 		return false;
+ 
 -- 
 2.39.5
 
