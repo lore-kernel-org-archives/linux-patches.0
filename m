@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDF12FDC3C;
-	Tue, 12 Aug 2025 18:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A602F745E;
+	Tue, 12 Aug 2025 18:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021910; cv=none; b=ZjZGdEwrrFMwDxnKyLwt635UagTQlJx5eBoWFFzyEydRC9Uvtj8Q+H/PHTvw+wuKy5rCfW7gkwtUX2ADmDBV98yJ0mW4X3WLPt77hadHf6qr3xZ3AJ3fsCLAaVao7gi3YENUFWKPjndzO94PRnx5dabN80my1j31WRbzBruQUeU=
+	t=1755021915; cv=none; b=Xsi1Dy4F9SQlAxkw8+O2FndERvO2bUvCQGhW1zLINGIRaBIr76BzXuhVQfbNZtB7nlI2WHUay1SnqNn/jtVnExWrkfe0TYcN6pOHzwtSO1Oq2JAtpP/YfftsH9wRFsnenRpZ+Kfyk8FIipksBvFU96yYllfn71gfUHM/4KSjJV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021910; c=relaxed/simple;
-	bh=xzPHxxALJtHkYgykxqTJAdGKSIFGrIbdXkCNrlQHJ68=;
+	s=arc-20240116; t=1755021915; c=relaxed/simple;
+	bh=w2lwJB/tdlB559C067ziz0uS2t2Z4uAP3SJxane2rXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rv6XIM/aDl0bOEaCr+HZlqIiJMUJP+BSR6mfjfmSwRin2WZesLGHSmapViwtdO/M4UAx8FPM64BrBEfHM8ZVojOsVuOsSewiS6y9oVQy1v12XhiZOiA5vF/yz0m+1YR5cOJqvnTboPslzqa02dqKUedBSRhskK5D/WwY4NQfhSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIvx2OdA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMM/WGPCCzvPiuiDw8xjndBKjd3m0jnRAjl+ayBxveI7Dy+ngTNnIE9vzJ2h03tYSoBTtKDphYTR4P+QHGXvmXleclJrJLr3CE1JwV1Og5WfXYUMRQfKJWXu+FmLKzqytWt9/ZNqQ9Lbd32jY9rn10miTxZuhDESIyb6F32SP8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAYotmQB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIvx2OdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EEFC4CEF0;
-	Tue, 12 Aug 2025 18:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAYotmQB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872A8C4CEF0;
+	Tue, 12 Aug 2025 18:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021910;
-	bh=xzPHxxALJtHkYgykxqTJAdGKSIFGrIbdXkCNrlQHJ68=;
+	s=korg; t=1755021914;
+	bh=w2lwJB/tdlB559C067ziz0uS2t2Z4uAP3SJxane2rXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIvx2OdAiROqyzWL3c/hJOD95lGRmWK0uNwvuQ8KzyJuikMaoOvldwaOC8T15dppy
-	 Fft8ZEo7WzAIHBLTz11aKJN64ruHuiRNoKQ1WbnTa7KShoz/Kl1i8JqffFMhIPfeqs
-	 uXpbn8cNueYVqqcbYo8V2fSR+/Cm/4rbx5wfYZQs=
+	b=XAYotmQBaMwGOqjQZMl1j7Mbh4tBLZf3ekG1tZtJt+J4phe3/iGegEyyW1pD8Sw2j
+	 Crt+F/lKjilul8Lu0I4czo9kTQTRQ5jjK17OvYrobHpxC+0dmz8KZ6goojLSih31ok
+	 giubb4mfTKW49r4bsbaOrnGHj8JMVwLIH/y+1yZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.6 260/262] MIPS: mm: tlb-r4k: Uniquify TLB entries on init
-Date: Tue, 12 Aug 2025 19:30:48 +0200
-Message-ID: <20250812173004.202663647@linuxfoundation.org>
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 229/262] smb: client: return an error if rdma_connect does not return within 5 seconds
+Date: Tue, 12 Aug 2025 19:30:17 +0200
+Message-ID: <20250812173002.914031126@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,98 +56,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit 35ad7e181541aa5757f9f316768d3e64403ec843 upstream.
+[ Upstream commit 03537826f77f1c829d0593d211b38b9c876c1722 ]
 
-Hardware or bootloader will initialize TLB entries to any value, which
-may collide with kernel's UNIQUE_ENTRYHI value. On MIPS microAptiv/M5150
-family of cores this will trigger machine check exception and cause boot
-failure. On M5150 simulation this could happen 7 times out of 1000 boots.
+This matches the timeout for tcp connections.
 
-Replace local_flush_tlb_all() with r4k_tlb_uniquify() which probes each
-TLB ENTRIHI unique value for collisions before it's written, and in case
-of collision try a different ASID.
-
-Cc: stable@kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/tlb-r4k.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 55 insertions(+), 1 deletion(-)
+ fs/smb/client/smbdirect.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -506,6 +506,60 @@ static int __init set_ntlb(char *str)
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index c7f4eb8c9a10..71aef565db5f 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1647,8 +1647,10 @@ static struct smbd_connection *_smbd_get_connection(
+ 		goto rdma_connect_failed;
+ 	}
  
- __setup("ntlb=", set_ntlb);
+-	wait_event_interruptible(
+-		info->conn_wait, sc->status != SMBDIRECT_SOCKET_CONNECTING);
++	wait_event_interruptible_timeout(
++		info->conn_wait,
++		sc->status != SMBDIRECT_SOCKET_CONNECTING,
++		msecs_to_jiffies(RDMA_RESOLVE_TIMEOUT));
  
-+/* Initialise all TLB entries with unique values */
-+static void r4k_tlb_uniquify(void)
-+{
-+	int entry = num_wired_entries();
-+
-+	htw_stop();
-+	write_c0_entrylo0(0);
-+	write_c0_entrylo1(0);
-+
-+	while (entry < current_cpu_data.tlbsize) {
-+		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
-+		unsigned long asid = 0;
-+		int idx;
-+
-+		/* Skip wired MMID to make ginvt_mmid work */
-+		if (cpu_has_mmid)
-+			asid = MMID_KERNEL_WIRED + 1;
-+
-+		/* Check for match before using UNIQUE_ENTRYHI */
-+		do {
-+			if (cpu_has_mmid) {
-+				write_c0_memorymapid(asid);
-+				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
-+			} else {
-+				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
-+			}
-+			mtc0_tlbw_hazard();
-+			tlb_probe();
-+			tlb_probe_hazard();
-+			idx = read_c0_index();
-+			/* No match or match is on current entry */
-+			if (idx < 0 || idx == entry)
-+				break;
-+			/*
-+			 * If we hit a match, we need to try again with
-+			 * a different ASID.
-+			 */
-+			asid++;
-+		} while (asid < asid_mask);
-+
-+		if (idx >= 0 && idx != entry)
-+			panic("Unable to uniquify TLB entry %d", idx);
-+
-+		write_c0_index(entry);
-+		mtc0_tlbw_hazard();
-+		tlb_write_indexed();
-+		entry++;
-+	}
-+
-+	tlbw_use_hazard();
-+	htw_start();
-+	flush_micro_tlb();
-+}
-+
- /*
-  * Configure TLB (for init or after a CPU has been powered off).
-  */
-@@ -545,7 +599,7 @@ static void r4k_tlb_configure(void)
- 	temp_tlb_entry = current_cpu_data.tlbsize - 1;
- 
- 	/* From this point on the ARC firmware is dead.	 */
--	local_flush_tlb_all();
-+	r4k_tlb_uniquify();
- 
- 	/* Did I tell you that ARC SUCKS?  */
- }
+ 	if (sc->status != SMBDIRECT_SOCKET_CONNECTED) {
+ 		log_rdma_event(ERR, "rdma_connect failed port=%d\n", port);
+-- 
+2.39.5
+
 
 
