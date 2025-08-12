@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA8A2F7461;
-	Tue, 12 Aug 2025 17:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183302F7461;
+	Tue, 12 Aug 2025 17:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020488; cv=none; b=ITuQaZfiWpGIb4feMLaUFmDwuwa4XwgQakIvGB2svCHRceiwE0Xl30V8LmYVfb8fAWzDyQzqmwEif1r5DPQ7iMnYSel1xNTMG/ckTusXb+ajM0Jk7+v09JZcUL+dUCvK+ZUBR/BWmPoyPHfAYzIo0JCtRH1e9sfPq1MvpI/x1Fo=
+	t=1755020492; cv=none; b=pQmfE/bnQdQfWNPBCrjXFOw3pI6bh2CpTZZus8JWbPhNnfMvRMpT5p1+uguTOkgYJLu3M6/cJY/WCxtOvW9DoNkQnOtnO69GsHB7mBanQpLs06ZH9Ph/z5deVHf8IJhXB0gqp6QyfFpeYb+dB19U5/lK2NskQsiAFQaz8k+TmQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020488; c=relaxed/simple;
-	bh=zRa9sIQ6764zCA/BVTFkV2t8Gtbj0R69sI5hnZUGp8U=;
+	s=arc-20240116; t=1755020492; c=relaxed/simple;
+	bh=4k+i45f0sBPrZ4NRfRtnNsyeCgOqKKP//j+DhyrMExg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X1kn0kFbr8MvyRce2Ezh1q6zfgop6pEBiNcJUQhvoD4rgvcxTf9fIMmratq6diDXo3iUA8hZdppqOzKi+B8ED4Una/JU6u56Bi8yaCu+o+ZpjQeBozdAXK5nswLlHvMUd7QMh9h1GIYwBC+pTxxvAJgW+7BA4ZBpmt5SgtIe4CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwV1fIiz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k2BKHaUFPVA2pkMRWp3y6ka0P42rYvb2AgNFmkCyxldnmGw5z+/Uwzo5DGgguE4AtgYjfPPM9WvbOs17YvAOiCc2NB6h2ta93X0GNFjqeYIcbF8y+RLuzT1ZfyLzfBN7Yv0u9vWjZKp6hxUwdIKhMiRQN7ptslLaKFE7xlxaFdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Vx3kY3J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwV1fIiz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4F9C4CEF0;
-	Tue, 12 Aug 2025 17:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Vx3kY3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5E2C4CEF7;
+	Tue, 12 Aug 2025 17:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020488;
-	bh=zRa9sIQ6764zCA/BVTFkV2t8Gtbj0R69sI5hnZUGp8U=;
+	s=korg; t=1755020492;
+	bh=4k+i45f0sBPrZ4NRfRtnNsyeCgOqKKP//j+DhyrMExg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwV1fIizo+d1tAMmHbtfXjnrr4Z2uMiknfQrtjcj9zFVI4dbaMCVpWJyTj/Z50YNp
-	 S/oxF3ZIMXK3l+ocsHWJWENorQkY8mm404EvjIGutB9wxp2sQKYScgFtkNVz7rvb5N
-	 oeUBmX0qzMzIVqiF8hmp9SFiMWRPfjZ9o3TOLi2Y=
+	b=1Vx3kY3J8a93TCnrYv88vaUReA5/5vHjZ4tdUuNVmPaA2b7137iEbSW3iTNmyCBBb
+	 o3g+u7OKErpvm1NcNPssWPvv6qqganUJrvvq6IjNVL7bRgM2ALE3VQd6B/sa/KT51K
+	 sp7zJq4NAZ8VCPuE+WZulHRNzbuCbtjwDC+AfxFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>
-Subject: [PATCH 6.1 061/253] ethernet: intel: fix building with large NR_CPUS
-Date: Tue, 12 Aug 2025 19:27:29 +0200
-Message-ID: <20250812172951.321470565@linuxfoundation.org>
+	Adam Queler <queler+k@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 062/253] ASoC: amd: yc: Add DMI entries to support HP 15-fb1xxx
+Date: Tue, 12 Aug 2025 19:27:30 +0200
+Message-ID: <20250812172951.364371620@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -49,102 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Adam Queler <queler@gmail.com>
 
-[ Upstream commit 24171a5a4a952c26568ff0d2a0bc8c4708a95e1d ]
+[ Upstream commit 949ddec3728f3a793a13c1c9003028b9b159aefc ]
 
-With large values of CONFIG_NR_CPUS, three Intel ethernet drivers fail to
-compile like:
+This model requires an additional detection quirk to
+enable the internal microphone.
 
-In function ‘i40e_free_q_vector’,
-    inlined from ‘i40e_vsi_alloc_q_vectors’ at drivers/net/ethernet/intel/i40e/i40e_main.c:12112:3:
-  571 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-include/linux/rcupdate.h:1084:17: note: in expansion of macro ‘BUILD_BUG_ON’
- 1084 |                 BUILD_BUG_ON(offsetof(typeof(*(ptr)), rhf) >= 4096);    \
-drivers/net/ethernet/intel/i40e/i40e_main.c:5113:9: note: in expansion of macro ‘kfree_rcu’
- 5113 |         kfree_rcu(q_vector, rcu);
-      |         ^~~~~~~~~
-
-The problem is that the 'rcu' member in 'q_vector' is too far from the start
-of the structure. Move this member before the CPU mask instead, in all three
-drivers.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: David S. Miller <davem@davemloft.net>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Adam Queler <queler+k@gmail.com>
+Link: https://patch.msgid.link/20250715031434.222062-1-queler+k@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/fm10k/fm10k.h | 3 ++-
- drivers/net/ethernet/intel/i40e/i40e.h   | 2 +-
- drivers/net/ethernet/intel/ixgbe/ixgbe.h | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k.h b/drivers/net/ethernet/intel/fm10k/fm10k.h
-index 6119a4108838..65a2816142d9 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k.h
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k.h
-@@ -189,13 +189,14 @@ struct fm10k_q_vector {
- 	struct fm10k_ring_container rx, tx;
- 
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
-+
- 	cpumask_t affinity_mask;
- 	char name[IFNAMSIZ + 9];
- 
- #ifdef CONFIG_DEBUG_FS
- 	struct dentry *dbg_q_vector;
- #endif /* CONFIG_DEBUG_FS */
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 
- 	/* for dynamic allocation of rings associated with this q_vector */
- 	struct fm10k_ring ring[] ____cacheline_internodealigned_in_smp;
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
-index 22ac8c48ca34..61590e92f3ab 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -980,6 +980,7 @@ struct i40e_q_vector {
- 	u16 reg_idx;		/* register index of the interrupt */
- 
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 
- 	struct i40e_ring_container rx;
- 	struct i40e_ring_container tx;
-@@ -990,7 +991,6 @@ struct i40e_q_vector {
- 	cpumask_t affinity_mask;
- 	struct irq_affinity_notify affinity_notify;
- 
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 	char name[I40E_INT_NAME_STR_LEN];
- 	bool arm_wb_state;
- 	bool in_busy_poll;
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe.h b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-index 2bf387e52e20..f49b99b175ef 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-@@ -498,9 +498,10 @@ struct ixgbe_q_vector {
- 	struct ixgbe_ring_container rx, tx;
- 
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
-+
- 	cpumask_t affinity_mask;
- 	int numa_node;
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 	char name[IFNAMSIZ + 9];
- 
- 	/* for dynamic allocation of rings associated with this q_vector */
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 1f4c43bf817e..fce918a089e3 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -458,6 +458,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb1xxx"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
