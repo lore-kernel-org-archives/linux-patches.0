@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DF62F7461;
-	Tue, 12 Aug 2025 17:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D020A2F7461;
+	Tue, 12 Aug 2025 17:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020435; cv=none; b=Fed0Ef5/hMnwg8i6jfHq4fdknOTODARW7vJtaISJGExQHLRZ42IXB+jXUl4bgBvrx5LNkXws8gmqr+tz3mtFQYtM3b2U7/w5Fn5iE3tM/ASs1VYfDJ2yKCIdnGDsrdzuiZs5BSTf5n2rAUO5cCAk/IpU+J/ajpyf4sExhCDyCxQ=
+	t=1755020438; cv=none; b=TA3VYVIc+cxUdLlKlY9RoVZZEGj/10b/9xDrwzmF5KKh4pzd1+Eg555C9Y1LOMrQCi4WEulN8vBi7u0Os2keDPcBNOBNIhnlmJ/Mq+NwrwmJV8iS5FqXIxPvDatrJlTKUBsd5UZyqj2l8PSiQlO9Rlpg6jpKxe7/EaRo/rghduA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020435; c=relaxed/simple;
-	bh=AxElkGc9oG4LRjCm78P5wZRSScIUGw9tbGePWVA97t4=;
+	s=arc-20240116; t=1755020438; c=relaxed/simple;
+	bh=xiZ8kL56t/TNTES9rvGNeCDp0MMLfsn8MJOztGrXY6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mVY5d7g405RIQ+NM0Pb9FZZDFxpW17tnJ7DVlCI1L6PF+pumGwrIL5Haru32H8EKwiUnpzVPFNT+qPEG+/HJ2HZmExmyFXGS38WCmUw1MXBL9ml4OPJogAeSxxfD3k1RVMK/0AtVdMUp58h0QPqxEiriylWqMxrhNjFa5Qei6Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbEsSH8Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZqgafrwoTmLb1g+B64P3QOXYr+0okq2WhfAg8cyqYC+RU5PItVnjvhKhEW6HznRNdX7XSd6Eng00RQV09Y9gCWjbUa+q95vo+HMTOhe281uomzQnwu2dKj7vkIEJNwoynKELEa/vlzAbCg5+eHg6xD2gPfng7iy/FgHShv8AvcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVdW+X+y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbEsSH8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5759C4CEF0;
-	Tue, 12 Aug 2025 17:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVdW+X+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDCDC4CEF1;
+	Tue, 12 Aug 2025 17:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020435;
-	bh=AxElkGc9oG4LRjCm78P5wZRSScIUGw9tbGePWVA97t4=;
+	s=korg; t=1755020438;
+	bh=xiZ8kL56t/TNTES9rvGNeCDp0MMLfsn8MJOztGrXY6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YbEsSH8YNIWy6JCyXmluXQuLicBQImfb3iFBwo0OxY7dxhOawfnF0XeMp+oWEtVEv
-	 s78orI2m+a3jUOh8rl5OQRlmIeeCKn4oGYVyOt7GzvtDLKD/ngQiRpgvln/Pr+aomf
-	 s2jLeZIU+4bYd5p6SZXDtYNre98WFCXpClqaMDGc=
+	b=dVdW+X+yj4H2wa2s0O9gLH50Cu68BSo0Qjanutezsq05oSWEmEO4UhwMEGpFCsAWH
+	 g517g2A/TbZ6YkIUrguG152ClswajSZkuerq7NE5oE1GMxN9KrZt1M+xaSVaYFRftv
+	 1gPYcBiyEvPu5DUa1jD9EuBX/8PPTpEqcHOzWkJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Lizhi Xu <lizhi.xu@windriver.com>,
+	Sivan Zohar-Kotzer <sivany32@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/253] Revert "vmci: Prevent the dispatching of uninitialized payloads"
-Date: Tue, 12 Aug 2025 19:27:48 +0200
-Message-ID: <20250812172952.134568815@linuxfoundation.org>
+Subject: [PATCH 6.1 081/253] powercap: dtpm_cpu: Fix NULL pointer dereference in get_pd_power_uw()
+Date: Tue, 12 Aug 2025 19:27:49 +0200
+Message-ID: <20250812172952.183040912@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,52 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Sivan Zohar-Kotzer <sivany32@gmail.com>
 
-[ Upstream commit 8f5d9bed6122b8d96508436e5ad2498bb797eb6b ]
+[ Upstream commit 46dc57406887dd02565cb264224194a6776d882b ]
 
-This reverts commit bfb4cf9fb97e4063f0aa62e9e398025fb6625031.
+The get_pd_power_uw() function can crash with a NULL pointer dereference
+when em_cpu_get() returns NULL. This occurs when a CPU becomes impossible
+during runtime, causing get_cpu_device() to return NULL, which propagates
+through em_cpu_get() and leads to a crash when em_span_cpus() dereferences
+the NULL pointer.
 
-While the code "looks" correct, the compiler has no way to know that
-doing "fun" pointer math like this really isn't a write off the end of
-the structure as there is no hint anywhere that the structure has data
-at the end of it.
+Add a NULL check after em_cpu_get() and return 0 if unavailable,
+matching the existing fallback behavior in __dtpm_cpu_setup().
 
-This causes the following build warning:
-
-In function 'fortify_memset_chk',
-    inlined from 'ctx_fire_notification.isra' at drivers/misc/vmw_vmci/vmci_context.c:254:3:
-include/linux/fortify-string.h:480:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  480 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-So revert it for now and it can come back in the future in a "sane" way
-that either correctly makes the structure know that there is trailing
-data, OR just the payload structure is properly referenced and zeroed
-out.
-
-Fixes: bfb4cf9fb97e ("vmci: Prevent the dispatching of uninitialized payloads")
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Lizhi Xu <lizhi.xu@windriver.com>
-Link: https://lore.kernel.org/r/20250703171021.0aee1482@canb.auug.org.au
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: eb82bace8931 ("powercap/drivers/dtpm: Scale the power with the load")
+Signed-off-by: Sivan Zohar-Kotzer <sivany32@gmail.com>
+Link: https://patch.msgid.link/20250701221355.96916-1-sivany32@gmail.com
+[ rjw: Drop an excess empty code line ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_context.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/powercap/dtpm_cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/misc/vmw_vmci/vmci_context.c b/drivers/misc/vmw_vmci/vmci_context.c
-index ab5060df80aa..172696abce31 100644
---- a/drivers/misc/vmw_vmci/vmci_context.c
-+++ b/drivers/misc/vmw_vmci/vmci_context.c
-@@ -251,8 +251,6 @@ static int ctx_fire_notification(u32 context_id, u32 priv_flags)
- 		ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 						  VMCI_CONTEXT_RESOURCE_ID);
- 		ev.msg.hdr.payload_size = sizeof(ev) - sizeof(ev.msg.hdr);
--		memset((char*)&ev.msg.hdr + sizeof(ev.msg.hdr), 0,
--			ev.msg.hdr.payload_size);
- 		ev.msg.event_data.event = VMCI_EVENT_CTX_REMOVED;
- 		ev.payload.context_id = context_id;
+diff --git a/drivers/powercap/dtpm_cpu.c b/drivers/powercap/dtpm_cpu.c
+index ae7ee611978b..99a82060ead9 100644
+--- a/drivers/powercap/dtpm_cpu.c
++++ b/drivers/powercap/dtpm_cpu.c
+@@ -93,6 +93,8 @@ static u64 get_pd_power_uw(struct dtpm *dtpm)
+ 	int i;
+ 
+ 	pd = em_cpu_get(dtpm_cpu->cpu);
++	if (!pd)
++		return 0;
+ 
+ 	pd_mask = em_span_cpus(pd);
  
 -- 
 2.39.5
