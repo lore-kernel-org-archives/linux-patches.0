@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DB061FFE;
-	Tue, 12 Aug 2025 18:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F662FFDD4;
+	Tue, 12 Aug 2025 18:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023127; cv=none; b=GOXLFzBTWh/q4z32at59TKTTw2h2/dtBYdGhr2Mvjy0tSdkHTUvMp1EN+CG2Yu3Ci3XTjl44lG4cA3B1a9WVyWxxJq+PKg1LGvjRIaG5Y6coc5NSpUPdEadAScD2GL9d5lZ33YDhh4RfA56+RUv8AHeQJ3xFeIr13v6Ijlwysnw=
+	t=1755023132; cv=none; b=UZb3MlJkxzG7HvIRNmTBx70vDr8/AaJW5T9f9IsK7N8d/XI5e4M32nVNqsmVAiyGMRbB6qR4LYvGiHhfo7mmSnK4I2qm0Hp7asSbnLsSOVK+CS/susckegbNbZ/LM19p6Zt0egMgtx0ykVSdjvtyRlyVv3b2yENJ4t5lcw4Zbq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023127; c=relaxed/simple;
-	bh=qrGC9OvP6cVTx8Fk9mWItJtEh6BsvWcubu6Qey0r0L8=;
+	s=arc-20240116; t=1755023132; c=relaxed/simple;
+	bh=pVbeLiwEFVt5F8bbXy6ZrN3Q9M2DjuRA2R5Nr56s4sI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xmyovd6Y3RBtWR9lxwRBcUkRP58TvxZHOzLtE+APRa72aGzuyLDbbwuq1kiBbZOH99cBbSiGeF82m4k7kW3HunEZOudcFRmnITrUxy3amfFbmyTToXp9f3uMEzPRNpDdHV+EJOkcc8CH7195uYQucVQMpDs9Q7x/HGKIUanRHAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeo8SnhS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uPUGW2uvF10cKAlZU2JjfomvJ4qNkD3WVZ1WgQnMAu81hHRDvqGN21qvNz4VmO4dovR93lfzAkMYaqLa2SXwFxmzr8q4fk4GaI6IM3MBEV5Bq9TD7QMs+30Diyv4wj+UJKN5JjI/6z9RWMA5FZPQ8pyphsfZPJB/okDXsZwO+WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1QGHwrL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeo8SnhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C291EC4CEF0;
-	Tue, 12 Aug 2025 18:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1QGHwrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DB7C4CEFC;
+	Tue, 12 Aug 2025 18:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023127;
-	bh=qrGC9OvP6cVTx8Fk9mWItJtEh6BsvWcubu6Qey0r0L8=;
+	s=korg; t=1755023130;
+	bh=pVbeLiwEFVt5F8bbXy6ZrN3Q9M2DjuRA2R5Nr56s4sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yeo8SnhSoFBHMeAy8atA/SeIhjGt/OqLj+D3MDRZu85fBwd9K6Hn+VJd2ay/C1kxG
-	 Di6NKLwyU1LqnSUkthVJxG5SytKwAqBqFwIN9FZ/mIleCLjPBxFldRvxYsf20WW5/c
-	 +U4JX8ATpmeMtbfd147vCia18lVgjrvH56znYqBc=
+	b=A1QGHwrLT9FavYbpznHiArFaIV3apz9yv/ysMeP8lkGwKFw5EJaVlQAvqBpfQcNxD
+	 6Th9/wCFVH8G+kYyaAR4AT2O2/kuPBwOXdks1B71Jwp9bxbIXjm5MzVvQLP/PSr1CY
+	 qy03pqzUPHHgOKLc/mVOdzi9Y7MWTQq2ySTaW30o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Subject: [PATCH 6.12 324/369] perf/core: Dont leak AUX buffer refcount on allocation failure
-Date: Tue, 12 Aug 2025 19:30:21 +0200
-Message-ID: <20250812173028.904840412@linuxfoundation.org>
+Subject: [PATCH 6.12 325/369] perf/core: Exit early on perf_mmap() fail
+Date: Tue, 12 Aug 2025 19:30:22 +0200
+Message-ID: <20250812173028.942292084@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,52 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 5468c0fbccbb9d156522c50832244a8b722374fb upstream.
+commit 07091aade394f690e7b655578140ef84d0e8d7b0 upstream.
 
-Failure of the AUX buffer allocation leaks the reference count.
+When perf_mmap() fails to allocate a buffer, it still invokes the
+event_mapped() callback of the related event. On X86 this might increase
+the perf_rdpmc_allowed reference counter. But nothing undoes this as
+perf_mmap_close() is never called in this case, which causes another
+reference count leak.
 
-Set the reference count to 1 only when the allocation succeeds.
+Return early on failure to prevent that.
 
-Fixes: 45bfb2e50471 ("perf/core: Add AUX area to ring buffer for raw data streams")
+Fixes: 1e0fb9ec679c ("perf/core: Add pmu callbacks to track event mapping and unmapping")
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: stable@vger.kernel.org
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/events/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -6713,9 +6713,7 @@ static int perf_mmap(struct file *file,
- 			goto unlock;
- 		}
+@@ -6836,6 +6836,9 @@ aux_unlock:
+ 		mutex_unlock(aux_mutex);
+ 	mutex_unlock(&event->mmap_mutex);
  
--		atomic_set(&rb->aux_mmap_count, 1);
- 		user_extra = nr_pages;
--
- 		goto accounting;
- 	}
- 
-@@ -6817,8 +6815,10 @@ accounting:
- 	} else {
- 		ret = rb_alloc_aux(rb, event, vma->vm_pgoff, nr_pages,
- 				   event->attr.aux_watermark, flags);
--		if (!ret)
-+		if (!ret) {
-+			atomic_set(&rb->aux_mmap_count, 1);
- 			rb->aux_mmap_locked = extra;
-+		}
- 	}
- 
- unlock:
-@@ -6828,6 +6828,7 @@ unlock:
- 
- 		atomic_inc(&event->mmap_count);
- 	} else if (rb) {
-+		/* AUX allocation failed */
- 		atomic_dec(&rb->mmap_count);
- 	}
- aux_unlock:
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Since pinned accounting is per vm we cannot allow fork() to copy our
+ 	 * vma.
 
 
