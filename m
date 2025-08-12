@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B73A1C1AAA;
-	Tue, 12 Aug 2025 19:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70C527781E;
+	Tue, 12 Aug 2025 19:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025621; cv=none; b=trgWuH6CE5b20S8uz2cyodjeJK2awz4G7M84KPOOsNfIbjdXDI4VYNbEa0cLXvkztiK8FuWvF342lFWbI7fq1oBsyI9+5+Y7scighOILvywKBISLRB8Fo58JoiJ0bz3OHNLim1XbcYYEtlTLnfqALvTYgIQ1c6Tonspp+SBzW0M=
+	t=1755025624; cv=none; b=QFe7iKZJO+4JU8ZBfLTlLnkM9Z4Y2KwUo5Q9jNzlPyS+TlgkBUS/gRkAj1m8TGL0YQxcvAJeinQGPZHBCZjkHEM7FgYypzhjEaD6YtxuO+pG1/80Um05rOVz1qmsta65jnyikzBnabOm0ZHfgtvlkF4BlEO8WFjHU4OxRzjZDDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025621; c=relaxed/simple;
-	bh=Cq7Ig1pZUZPdU61J2/K+ULtjmu0AIl3GtEq7hK6P/bg=;
+	s=arc-20240116; t=1755025624; c=relaxed/simple;
+	bh=zY6hR6BUumkBNoZ01J+Qp0NP+olAXxnoTwULMy7ptlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0hR/R9MJBCtHpvL0l9nIV8SGmjQmdd3B0uP4xXJoc4YcLnDOVGCq8prkK+0P89oKxdM9YYmy1JMajIPD0nwEvQ89CMM0/aNB3l9jRnaGRZfyOzQ5dgS4GDFopWJ+/PTmPJ7IZa1nyi0TISFaH8ux6acNVMtUjZpXE0lY4JQ2R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBsO4iYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gCJl9+4c5HCXRWLqe9L4ML1GH5OZqb3yG8jqDC8KmZBLjNsAUDexO4yLNPxsfw4lDD9vA+9x0YebFaIv0QEfevo5LUJD7D0+w+H2AdtvKtDNtCoVeCYiSxYsV1jE8EolqG6JtoOXZgVdvvaMQYYrj0A392om78duQ361OV4uWN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiHe/oE5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBsO4iYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCAAC4CEF0;
-	Tue, 12 Aug 2025 19:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiHe/oE5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44132C4CEF1;
+	Tue, 12 Aug 2025 19:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025621;
-	bh=Cq7Ig1pZUZPdU61J2/K+ULtjmu0AIl3GtEq7hK6P/bg=;
+	s=korg; t=1755025624;
+	bh=zY6hR6BUumkBNoZ01J+Qp0NP+olAXxnoTwULMy7ptlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBsO4iYkrS6JM9kOI3TvVKC/9Zaeu8M8ll6BNlx75yXQlamj8ptjZ0m6NvUKMTjQ6
-	 hFwU79+yFLd6aZVsVgjZm/mTF6asq+kFvWQU1SqsOKUsb7LUeX3vWh+uPSVoWwFznj
-	 ZHterm5IRWPd2tg15zpLbxyVc1EGuHdGmZToNVNs=
+	b=tiHe/oE5L2VWvXd6gURsNCnw+CyqAPMOAgtVM/85X3VolbfB+Xdmo5h4VsbIxoGTV
+	 3GcHH1VkYILT+HCFrfWdts/aLhJ5g6TeXwrkfd+06gIEeN193fGNH1LiO9xMyRZ4QV
+	 RE29DX6tR07v3kprVsIbVls7Msc8xNxkuDKeOM+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Annette Kobou <annette.kobou@kontron.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 078/480] ARM: dts: imx6ul-kontron-bl-common: Fix RTS polarity for RS485 interface
-Date: Tue, 12 Aug 2025 19:44:46 +0200
-Message-ID: <20250812174400.670524916@linuxfoundation.org>
+Subject: [PATCH 6.15 096/480] drm/xe: Correct BMG VSEC header sizing
+Date: Tue, 12 Aug 2025 19:45:04 +0200
+Message-ID: <20250812174401.416037889@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -46,41 +47,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Annette Kobou <annette.kobou@kontron.de>
+From: Michael J. Ruhl <michael.j.ruhl@intel.com>
 
-[ Upstream commit 47ef5256124fb939d8157b13ca048c902435cf23 ]
+[ Upstream commit 5b27388171a18cf6842c700520086ec50194e858 ]
 
-The polarity of the DE signal of the transceiver is active-high for
-sending. Therefore rs485-rts-active-low is wrong and needs to be
-removed to make RS485 transmissions work.
+The intel_vsec_header information for the crashlog feature is
+incorrect.
 
-Signed-off-by: Annette Kobou <annette.kobou@kontron.de>
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Fixes: 1ea4b76cdfde ("ARM: dts: imx6ul-kontron-n6310: Add Kontron i.MX6UL N6310 SoM and boards")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Update the VSEC header with correct sizing and count.
+
+Since the crashlog entries are "merged" (num_entries = 2), the
+separate capabilities entries must be merged as well.
+
+Fixes: 0c45e76fcc62 ("drm/xe/vsec: Support BMG devices")
+Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Reviewed-by: David E. Box <david.e.box@linux.intel.com>
+Link: https://lore.kernel.org/r/20250713172943.7335-4-michael.j.ruhl@intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx6ul-kontron-bl-common.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/xe/xe_vsec.c | 19 ++++---------------
+ 1 file changed, 4 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx6ul-kontron-bl-common.dtsi b/arch/arm/boot/dts/nxp/imx/imx6ul-kontron-bl-common.dtsi
-index 29d2f86d5e34..f4c45e964daf 100644
---- a/arch/arm/boot/dts/nxp/imx/imx6ul-kontron-bl-common.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6ul-kontron-bl-common.dtsi
-@@ -168,7 +168,6 @@ &uart2 {
- 	pinctrl-0 = <&pinctrl_uart2>;
- 	linux,rs485-enabled-at-boot-time;
- 	rs485-rx-during-tx;
--	rs485-rts-active-low;
- 	uart-has-rtscts;
- 	status = "okay";
+diff --git a/drivers/gpu/drm/xe/xe_vsec.c b/drivers/gpu/drm/xe/xe_vsec.c
+index 1bf7e709e110..56930ad42962 100644
+--- a/drivers/gpu/drm/xe/xe_vsec.c
++++ b/drivers/gpu/drm/xe/xe_vsec.c
+@@ -33,30 +33,19 @@ static struct intel_vsec_header bmg_telemetry = {
+ 	.offset = BMG_DISCOVERY_OFFSET,
  };
+ 
+-static struct intel_vsec_header bmg_punit_crashlog = {
++static struct intel_vsec_header bmg_crashlog = {
+ 	.rev = 1,
+ 	.length = 0x10,
+ 	.id = VSEC_ID_CRASHLOG,
+-	.num_entries = 1,
+-	.entry_size = 4,
++	.num_entries = 2,
++	.entry_size = 6,
+ 	.tbir = 0,
+ 	.offset = BMG_DISCOVERY_OFFSET + 0x60,
+ };
+ 
+-static struct intel_vsec_header bmg_oobmsm_crashlog = {
+-	.rev = 1,
+-	.length = 0x10,
+-	.id = VSEC_ID_CRASHLOG,
+-	.num_entries = 1,
+-	.entry_size = 4,
+-	.tbir = 0,
+-	.offset = BMG_DISCOVERY_OFFSET + 0x78,
+-};
+-
+ static struct intel_vsec_header *bmg_capabilities[] = {
+ 	&bmg_telemetry,
+-	&bmg_punit_crashlog,
+-	&bmg_oobmsm_crashlog,
++	&bmg_crashlog,
+ 	NULL
+ };
+ 
 -- 
 2.39.5
 
