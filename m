@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8856F2FD1B2;
-	Tue, 12 Aug 2025 17:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26AC2FE560;
+	Tue, 12 Aug 2025 17:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020657; cv=none; b=DbfbPIpytGEaLuYVyncW3lBcSi7vUKsyznwTb4gyWXqUI3fcnnjjsZT4eR6SfVROJITE+3drJO3tgxJmVAjcgs6ULSWtDB778XHX818UKMwU3hhFXyIp04wqQcHPHOG9qkJ3zyvf9FE89Y6Gm91SjmUxnpwzQPgbE1M3WbHSER4=
+	t=1755020660; cv=none; b=Q1Bwy6SC5DELBS81o32BNRFu5B1+TcwMtLkTA/bYwMV4+4TKQhABd3Ka21RkFg5Fx2gQiW7NO20xQqQOA3nHMoDnk96EHYqXpGOaDmeAZXfDxgkdDNIyvjyUOgIcjD4AOx3hFfxMf4fESaK0qlRoikxdab/H4QDVqNATFyAzwQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020657; c=relaxed/simple;
-	bh=NVpmMzjgOGk8KEmsDm08bNqzFrjjHRF3ELCQAsmaOtk=;
+	s=arc-20240116; t=1755020660; c=relaxed/simple;
+	bh=xDQYv72VHvARUg3xYrakhXjl2LIF6EwUCUk6LEYN0AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XOw73ouQ22q2WgxEsdcQGMpzdXwFjJju/Pw4GT+TIXaUntaFZxuE5Em5tjwn13YLMm1jMOsLqJkQjlviT/wXsksz9Dv0vLdGnLy5jm1imNAHKhqsPgYsICUfICRG1uS2V1h+UORskPx7uti+e7yKHl0go85Eg3kG67UOYVjk6/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghPsL3RD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KjTr1D6TwFouVJ3pOvgYjmMB2bl0pXv9gFPr2lmgIadPz4nyczbE9mzZvRKWpuYEWiCV1DBFf1JIKp9TephVMUMuDNKt3e6QDrP6C0oTnkEVMrgzCOCtbbKjjZ8VREcrYncuaRUpFK3rvUgmyEFzzbA7qPtHXXLW8Pbh6TF6pyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2yydyes; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghPsL3RD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EEDC4CEF0;
-	Tue, 12 Aug 2025 17:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2yydyes"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27719C4CEF0;
+	Tue, 12 Aug 2025 17:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020657;
-	bh=NVpmMzjgOGk8KEmsDm08bNqzFrjjHRF3ELCQAsmaOtk=;
+	s=korg; t=1755020660;
+	bh=xDQYv72VHvARUg3xYrakhXjl2LIF6EwUCUk6LEYN0AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ghPsL3RDQ93EkNgxiauOf8UYW0tbSxhyvu3ldt0Ge7aFn0reHDE+vHhJdMazSJBTF
-	 Z3zXu/BPYMrCtb7SzjQVozPUb/HLzgQ9As/LI9PuWRKf0P4xT8siQc8VQeUsaaf00z
-	 EJIy9y5VYlA4c075EbaLuxwTcbwesV0XY/clMzH8=
+	b=r2yydyesel4BchiIpy/HDU/7RGVfUrH2eEEkWm3BadOClK1RiljxC63Mu58ixskAt
+	 FlAP9uusULSqq+5llzZi/ftltY68Zc1NOLyhxTWXH/De7XxPO4efDtskrZhNexwD6k
+	 chLS4ZAJLxA5RZRjaU/CXpDCh+aOhRoTrOJyDdpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohit Visavalia <rohit.visavalia@amd.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Charles Han <hanchunchao@inspur.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/253] clk: xilinx: vcu: unregister pll_post only if registered correctly
-Date: Tue, 12 Aug 2025 19:28:53 +0200
-Message-ID: <20250812172954.873456067@linuxfoundation.org>
+Subject: [PATCH 6.1 146/253] power: supply: cpcap-charger: Fix null check for power_supply_get_by_name
+Date: Tue, 12 Aug 2025 19:28:54 +0200
+Message-ID: <20250812172954.916632938@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,48 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohit Visavalia <rohit.visavalia@amd.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 3b0abc443ac22f7d4f61ddbbbbc5dbb06c87139d ]
+[ Upstream commit d9fa3aae08f99493e67fb79413c0e95d30fca5e9 ]
 
-If registration of pll_post is failed, it will be set to NULL or ERR,
-unregistering same will fail with following call trace:
+In the cpcap_usb_detect() function, the power_supply_get_by_name()
+function may return `NULL` instead of an error pointer.
+To prevent potential null pointer dereferences, Added a null check.
 
-Unable to handle kernel NULL pointer dereference at virtual address 008
-pc : clk_hw_unregister+0xc/0x20
-lr : clk_hw_unregister_fixed_factor+0x18/0x30
-sp : ffff800011923850
-...
-Call trace:
- clk_hw_unregister+0xc/0x20
- clk_hw_unregister_fixed_factor+0x18/0x30
- xvcu_unregister_clock_provider+0xcc/0xf4 [xlnx_vcu]
- xvcu_probe+0x2bc/0x53c [xlnx_vcu]
-
-Fixes: 4472e1849db7 ("soc: xilinx: vcu: make pll post divider explicit")
-Signed-off-by: Rohit Visavalia <rohit.visavalia@amd.com>
-Link: https://lore.kernel.org/r/20250210113614.4149050-2-rohit.visavalia@amd.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: eab4e6d953c1 ("power: supply: cpcap-charger: get the battery inserted infomation from cpcap-battery")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Link: https://lore.kernel.org/r/20250519024741.5846-1-hanchunchao@inspur.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/xilinx/xlnx_vcu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/cpcap-charger.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/xilinx/xlnx_vcu.c b/drivers/clk/xilinx/xlnx_vcu.c
-index d66b1315114e..292d50ba0112 100644
---- a/drivers/clk/xilinx/xlnx_vcu.c
-+++ b/drivers/clk/xilinx/xlnx_vcu.c
-@@ -587,8 +587,8 @@ static void xvcu_unregister_clock_provider(struct xvcu_device *xvcu)
- 		xvcu_clk_hw_unregister_leaf(hws[CLK_XVCU_ENC_MCU]);
- 	if (!IS_ERR_OR_NULL(hws[CLK_XVCU_ENC_CORE]))
- 		xvcu_clk_hw_unregister_leaf(hws[CLK_XVCU_ENC_CORE]);
--
--	clk_hw_unregister_fixed_factor(xvcu->pll_post);
-+	if (!IS_ERR_OR_NULL(xvcu->pll_post))
-+		clk_hw_unregister_fixed_factor(xvcu->pll_post);
- }
+diff --git a/drivers/power/supply/cpcap-charger.c b/drivers/power/supply/cpcap-charger.c
+index be9764541d52..05a3f4b208a4 100644
+--- a/drivers/power/supply/cpcap-charger.c
++++ b/drivers/power/supply/cpcap-charger.c
+@@ -689,9 +689,8 @@ static void cpcap_usb_detect(struct work_struct *work)
+ 		struct power_supply *battery;
  
- /**
+ 		battery = power_supply_get_by_name("battery");
+-		if (IS_ERR_OR_NULL(battery)) {
+-			dev_err(ddata->dev, "battery power_supply not available %li\n",
+-					PTR_ERR(battery));
++		if (!battery) {
++			dev_err(ddata->dev, "battery power_supply not available\n");
+ 			return;
+ 		}
+ 
 -- 
 2.39.5
 
