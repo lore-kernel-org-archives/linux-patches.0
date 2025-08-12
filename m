@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BC221ABD0;
-	Tue, 12 Aug 2025 19:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EDA21ABD0;
+	Tue, 12 Aug 2025 19:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026347; cv=none; b=XMUkPq/Oz4qz0N3QSQ3jH1czW3HUmB0afqPi6vwSaq8dSgGNHOX8n/d/vP1qdftPeCNALPgC5AbkldB62fs4zcKl6uVDknoiXDkrDsfjwdE8hgX1zf7rHEQ2FrVa1WzhSwWyfZTLuPnnA+2ZHTpzGFYeoJJy15dRa+rrLQXrgS4=
+	t=1755026351; cv=none; b=TNrKpHetGAXOtDfPQec3xwsxob/mSEkEJmKOOyS6PyhNa3H1+efYEAz1EcWzP9b8qhm83f7nt7CiRvFgltooP/mwfqx81hi7FWfrTV1pGWtRqSZeuQCskDUaqpXP3ZguhGeJCsBdFBVnTG8Gl3vPDvGR+rk30iwVvxPVyIrFIMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026347; c=relaxed/simple;
-	bh=ehVL5FcpeCvmTMuNchgkNWQpDrq/yRW6VkQ2Uoht4Gs=;
+	s=arc-20240116; t=1755026351; c=relaxed/simple;
+	bh=AxYfYi+L1+emPXuDsc2W7HSawHT6imKEfI5H4L2ZAdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWdlcbj6RXeIjISca0IMPVdMguoU7BMGGiK8TxRmgpN3gdIWficABr8IWQWcoO1zxBAhGPifDSxTZxhekCATjUyuV1PfREi4AyLEMW1ATQFfQUXV3ylrnz3PQ7ghr87lQQBuHYCzE63VfgSdQux0NjpoetogdOo7/UTWsFqBg98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaJbhh5t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VUVJ+NuK3d3m11SCPac47LcQDXYipmaG+JpZxczkYZ3NH7wLl/Q4VAXK9GQGfF6I1u4NbksDRuzQJsWVgfo4J3ZZ/4DFK2YOwxaNFGIkHhesr3cA6uLO2vJ/yKEk5yKWEYd1argxx++asJlWxiBXGq2FXE5TrvFacnbm1SioM/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rnc/QreS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaJbhh5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE54C4CEF0;
-	Tue, 12 Aug 2025 19:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rnc/QreS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B81DC4CEF0;
+	Tue, 12 Aug 2025 19:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026347;
-	bh=ehVL5FcpeCvmTMuNchgkNWQpDrq/yRW6VkQ2Uoht4Gs=;
+	s=korg; t=1755026351;
+	bh=AxYfYi+L1+emPXuDsc2W7HSawHT6imKEfI5H4L2ZAdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaJbhh5tDyg0/MjopQl2Ji023A4CUlD5IPwe5DL5x4BJ2kRnDfbszMVp7TN9TJqfm
-	 2Gna5aCJwqMVzPjG7PlzGXjPsY/zQMLr389HoyKwOv9+qFiE6k9steCcYqHm6/h0se
-	 gzkrBpM4RhBhaMvERrIW/2nTZ2qBfEzsEaix3hK8=
+	b=Rnc/QreS/C5GEg3yMDUehlBSoDjeSpEQvPYwsdxKYnhHyCzgaBI8KC5WOwVAtIZE0
+	 h4cQS53UwLwIR4jrze9d8XQGwWphjaTN4rzJbelXiVSxaYi7NUtqjGk37OROWV3mA3
+	 M32dUBqur2B9otv3mXYQ0DBK1/sS76upSQPBZqfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 311/480] clk: clocking-wizard: Fix the round rate handling for versal
-Date: Tue, 12 Aug 2025 19:48:39 +0200
-Message-ID: <20250812174410.260363574@linuxfoundation.org>
+Subject: [PATCH 6.15 294/480] crypto: img-hash - Fix dma_unmap_sg() nents value
+Date: Tue, 12 Aug 2025 19:48:22 +0200
+Message-ID: <20250812174409.557573928@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,36 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 7f5e9ca0a424af44a708bb4727624d56f83ecffa ]
+[ Upstream commit 34b283636181ce02c52633551f594fec9876bec7 ]
 
-Fix the `clk_round_rate` implementation for Versal platforms by calling
-the Versal-specific divider calculation helper. The existing code used
-the generic divider routine, which results in incorrect round rate.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Fixes: 7681f64e6404 ("clk: clocking-wizard: calculate dividers fractional parts")
-Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Link: https://lore.kernel.org/r/20250625054114.28273-1-shubhrajyoti.datta@amd.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/xilinx/clk-xlnx-clock-wizard.c | 2 +-
+ drivers/crypto/img-hash.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-index bbf7714480e7..0295a13a811c 100644
---- a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-+++ b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-@@ -669,7 +669,7 @@ static long clk_wzrd_ver_round_rate_all(struct clk_hw *hw, unsigned long rate,
- 	u32 m, d, o, div, f;
- 	int err;
+diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
+index 1dc2378aa88b..503bc1c9e3f3 100644
+--- a/drivers/crypto/img-hash.c
++++ b/drivers/crypto/img-hash.c
+@@ -436,7 +436,7 @@ static int img_hash_write_via_dma_stop(struct img_hash_dev *hdev)
+ 	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
  
--	err = clk_wzrd_get_divisors(hw, rate, *prate);
-+	err = clk_wzrd_get_divisors_ver(hw, rate, *prate);
- 	if (err)
- 		return err;
+ 	if (ctx->flags & DRIVER_FLAGS_SG)
+-		dma_unmap_sg(hdev->dev, ctx->sg, ctx->dma_ct, DMA_TO_DEVICE);
++		dma_unmap_sg(hdev->dev, ctx->sg, 1, DMA_TO_DEVICE);
  
+ 	return 0;
+ }
 -- 
 2.39.5
 
