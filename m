@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52FA2FE566;
-	Tue, 12 Aug 2025 17:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8C1221FAC;
+	Tue, 12 Aug 2025 17:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020762; cv=none; b=XihCv2D59gs/Cx5Z3O9oA5RCVsCwnh/Pz14M9RBLoLAL/LbToop0sHBx/S8k7Fws+18M5CVJGKZ9SnHTkhf5UxWodMRVP/szWH2dtZAbQ9nSVxecD0Pl4mHbwfyziQCB24RnTCNSwsRNVjW/mlyNuBrVOQ8t95+NgikkrLnuZyE=
+	t=1755020766; cv=none; b=LbvZeY7KD2noSOZ4k+S3D06be60iJEo/lRcsKYFI2P5EvEQ4OJ1U40bRk8gK/mmcBWKoIcUrJnOl+2SEa1SlYug3cSLU/4l0+G0YgqbXzebKuj5ZyhIdZPgaaiFoNCsLTyp30HmZbQFq5+wZs2Mlj2mrU9qBPiQeMzqRRW0wVmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020762; c=relaxed/simple;
-	bh=HZ2IF553qSUflvw9YeMKMc/zTknU4EnPr3xgtRkYdA0=;
+	s=arc-20240116; t=1755020766; c=relaxed/simple;
+	bh=PJapiJ2ZGadMXmQOkF1O94k8huJoXw8sryTXQ+gTND4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgV6EcSsTKPf04qVRdWFaXbR3MXS2uAAk1A87kmsmSpBoxQ22d5TkUGAZuDwibNgMB/rCiFscTbZ2h8DkWsrDuw1equUB8mjdOgTAk9M8kEleitIFqpWwo+QXkoebJjJOOn7VYJQS8898+i/uS23DRalAwU0Qa5ipfudSQtG5q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YevOG2OR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jI9gohLdd2fp88ytq1/nOOtS/Eq1wOp7ZTMO8NgoGCSwEc4MJ9Pd20TyWpB3R8Snd01wRzItOCcw1EUEvtIkfk3x9H/0d7RqvwmDjFdS/MdN25twXIFsGLWXYBDpWvppaBqfcLfdCV1ynC1doGoxs/0Ufp2re3hKjXzaxJ10ihE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUs8MuW5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YevOG2OR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD580C4CEF0;
-	Tue, 12 Aug 2025 17:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUs8MuW5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052E2C4CEF7;
+	Tue, 12 Aug 2025 17:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020762;
-	bh=HZ2IF553qSUflvw9YeMKMc/zTknU4EnPr3xgtRkYdA0=;
+	s=korg; t=1755020765;
+	bh=PJapiJ2ZGadMXmQOkF1O94k8huJoXw8sryTXQ+gTND4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YevOG2ORCvEvIEXwqr8cjIbkW8oqoE1ZvtPE1SWuw78WBfoVQm4ZyZEsSgfgJyNCf
-	 B07AgAgeJUEnVlDmuesWrAs9i4izStCpXHjSrlo0wGhKKWoFq0iz04lMNadrvSEiPd
-	 j2g+Y5MqHKXPb4iOedEuUNWOePkaPT4cHOuN/xrE=
+	b=iUs8MuW5gBJNq493Ll6djr957UC7B6m8i1ogCWP2zotwzWPrhEJZtbdRcPOEr6wD7
+	 hgvWo3nbIJKgul943hTO2kDZ1NxWfnv83NFZR+dRMy1Xm1qcJindQk3YvmgNBE1xSQ
+	 uYxym+YzuzwgvpkqBvzEn8x0MYLaYLvKcTaVXQco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 135/253] ipv6: prevent infinite loop in rt6_nlmsg_size()
-Date: Tue, 12 Aug 2025 19:28:43 +0200
-Message-ID: <20250812172954.440104304@linuxfoundation.org>
+Subject: [PATCH 6.1 136/253] ipv6: fix possible infinite loop in fib6_info_uses_dev()
+Date: Tue, 12 Aug 2025 19:28:44 +0200
+Message-ID: <20250812172954.480822808@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -53,109 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 54e6fe9dd3b0e7c481c2228782c9494d653546da ]
+[ Upstream commit f8d8ce1b515a0a6af72b30502670a406cfb75073 ]
 
-While testing prior patch, I was able to trigger
-an infinite loop in rt6_nlmsg_size() in the following place:
+fib6_info_uses_dev() seems to rely on RCU without an explicit
+protection.
 
-list_for_each_entry_rcu(sibling, &f6i->fib6_siblings,
-			fib6_siblings) {
-	rt6_nh_nlmsg_size(sibling->fib6_nh, &nexthop_len);
-}
-
-This is because fib6_del_route() and fib6_add_rt2node()
-uses list_del_rcu(), which can confuse rcu readers,
-because they might no longer see the head of the list.
-
-Restart the loop if f6i->fib6_nsiblings is zero.
+Like the prior fix in rt6_nlmsg_size(),
+we need to make sure fib6_del_route() or fib6_add_rt2node()
+have not removed the anchor from the list, or we risk an infinite loop.
 
 Fixes: d9ccb18f83ea ("ipv6: Fix soft lockups in fib6_select_path under high next hop churn")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250725140725.3626540-3-edumazet@google.com
+Link: https://patch.msgid.link/20250725140725.3626540-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c |  4 ++--
- net/ipv6/route.c   | 34 ++++++++++++++++++----------------
- 2 files changed, 20 insertions(+), 18 deletions(-)
+ net/ipv6/route.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index b6a7cbd6bee0..bc70380eb437 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1241,7 +1241,7 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
- 							 &rt->fib6_siblings,
- 							 fib6_siblings)
- 					sibling->fib6_nsiblings--;
--				rt->fib6_nsiblings = 0;
-+				WRITE_ONCE(rt->fib6_nsiblings, 0);
- 				list_del_rcu(&rt->fib6_siblings);
- 				rt6_multipath_rebalance(next_sibling);
- 				return err;
-@@ -1954,7 +1954,7 @@ static void fib6_del_route(struct fib6_table *table, struct fib6_node *fn,
- 		list_for_each_entry_safe(sibling, next_sibling,
- 					 &rt->fib6_siblings, fib6_siblings)
- 			sibling->fib6_nsiblings--;
--		rt->fib6_nsiblings = 0;
-+		WRITE_ONCE(rt->fib6_nsiblings, 0);
- 		list_del_rcu(&rt->fib6_siblings);
- 		rt6_multipath_rebalance(next_sibling);
- 	}
 diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 4e6b833dc40b..201a0ef51a6d 100644
+index 201a0ef51a6d..061a7a524e5e 100644
 --- a/net/ipv6/route.c
 +++ b/net/ipv6/route.c
-@@ -5580,32 +5580,34 @@ static int rt6_nh_nlmsg_size(struct fib6_nh *nh, void *arg)
+@@ -5868,16 +5868,21 @@ static bool fib6_info_uses_dev(const struct fib6_info *f6i,
+ 	if (f6i->fib6_nh->fib_nh_dev == dev)
+ 		return true;
  
- static size_t rt6_nlmsg_size(struct fib6_info *f6i)
- {
-+	struct fib6_info *sibling;
-+	struct fib6_nh *nh;
- 	int nexthop_len;
- 
- 	if (f6i->nh) {
- 		nexthop_len = nla_total_size(4); /* RTA_NH_ID */
- 		nexthop_for_each_fib6_nh(f6i->nh, rt6_nh_nlmsg_size,
- 					 &nexthop_len);
--	} else {
--		struct fib6_nh *nh = f6i->fib6_nh;
--		struct fib6_info *sibling;
--
--		nexthop_len = 0;
--		if (f6i->fib6_nsiblings) {
--			rt6_nh_nlmsg_size(nh, &nexthop_len);
--
--			rcu_read_lock();
-+		goto common;
-+	}
- 
--			list_for_each_entry_rcu(sibling, &f6i->fib6_siblings,
--						fib6_siblings) {
--				rt6_nh_nlmsg_size(sibling->fib6_nh, &nexthop_len);
--			}
-+	rcu_read_lock();
-+retry:
-+	nh = f6i->fib6_nh;
-+	nexthop_len = 0;
+-	if (f6i->fib6_nsiblings) {
+-		struct fib6_info *sibling, *next_sibling;
 +	if (READ_ONCE(f6i->fib6_nsiblings)) {
-+		rt6_nh_nlmsg_size(nh, &nexthop_len);
++		const struct fib6_info *sibling;
  
--			rcu_read_unlock();
+-		list_for_each_entry_safe(sibling, next_sibling,
+-					 &f6i->fib6_siblings, fib6_siblings) {
+-			if (sibling->fib6_nh->fib_nh_dev == dev)
++		rcu_read_lock();
 +		list_for_each_entry_rcu(sibling, &f6i->fib6_siblings,
 +					fib6_siblings) {
-+			rt6_nh_nlmsg_size(sibling->fib6_nh, &nexthop_len);
++			if (sibling->fib6_nh->fib_nh_dev == dev) {
++				rcu_read_unlock();
+ 				return true;
++			}
 +			if (!READ_ONCE(f6i->fib6_nsiblings))
-+				goto retry;
++				break;
  		}
--		nexthop_len += lwtunnel_get_encap_size(nh->fib_nh_lws);
++		rcu_read_unlock();
  	}
 -
-+	rcu_read_unlock();
-+	nexthop_len += lwtunnel_get_encap_size(nh->fib_nh_lws);
-+common:
- 	return NLMSG_ALIGN(sizeof(struct rtmsg))
- 	       + nla_total_size(16) /* RTA_SRC */
- 	       + nla_total_size(16) /* RTA_DST */
+ 	return false;
+ }
+ 
 -- 
 2.39.5
 
