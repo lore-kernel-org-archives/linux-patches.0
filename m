@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0ED1DF27F;
-	Tue, 12 Aug 2025 18:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A46188715;
+	Tue, 12 Aug 2025 18:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023379; cv=none; b=WPE4M49T3Ct2x7mvSeb0ZMVe4f2GFx58L2bQkFQfA7gixE3ihYauI67hjTaLZyhjLycffLilscSJnaIOBBnKSjGh87l51gn7dftJeVZpiyTlJofVn4IwRPybFnEx/XgicyqPPDys+lK2zhIrsepD9Fd8LRxG2/tiu0mqx7wnpv8=
+	t=1755023382; cv=none; b=hb/jF4NXud/HCJ/TF37wCvf9gAyGJCCsOOMFofnCl911Ol1L+2Kn3SQli/H1Zsmn+TZG/Prr0Kf1vxmuegiJmFqDs5Gk0tih0pDP+nTL4WUKGPX2ko32dkgtsjpwe/cuDP5tg5RgrRNOBj5bt1o4WoCCSHyhDmHOjIjufltD6cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023379; c=relaxed/simple;
-	bh=P3Pkvx3paTwVsh7vRToT2n30OOYM9KEg7qIZUuRq6u8=;
+	s=arc-20240116; t=1755023382; c=relaxed/simple;
+	bh=1liWup676ECM/WZDdh3a+Vdrw7a4RY3ElJ8/gGGNabE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n4lVvcpz/iNq3mbvOsKgMYphtCranUJqJwVv5F7Gj+vDeVl6BuH4qAwK/3rFrBMLY4jVaYNn6+9c7YF48JyFlLvI2lLtrQ7opAicJ52DwE5DfE1JO6xz8+zP2RiFBGMw9clCsy+7GbDo3WG3yxX7xBaIXvpDr1iBQMaan09/ELU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hdybPXh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=du4nx1dPZOx4glKc6J8niYuUMHTl5cKlrjydzX/223rtcDsN+fC1OyHuXzahZYtRXAJK5vv700DPMc229cchSegdVZHJ5O7MJSEw00GlM4MK4urW7IGj2sMO9kYthIAr7chNvQ73uMW/+8GU5F6/0GS1W3p+5RHdHPN5LlWYL1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAYGYs1/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hdybPXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CAEC4CEF7;
-	Tue, 12 Aug 2025 18:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAYGYs1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D7C4CEF0;
+	Tue, 12 Aug 2025 18:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023379;
-	bh=P3Pkvx3paTwVsh7vRToT2n30OOYM9KEg7qIZUuRq6u8=;
+	s=korg; t=1755023382;
+	bh=1liWup676ECM/WZDdh3a+Vdrw7a4RY3ElJ8/gGGNabE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hdybPXh8jTOofqOWkN7mHZDYQFceVIkQnPfNOZ2CSOTQf+QPF2QPGGYIruQKZXO3
-	 AcvjQ5jDwLqZblHxUr1genBsouidyUDU8Jkh9Zxv3gcJsKLnSlHvOUfqbbOKYrbb2X
-	 KObYSKHAvLidVLBE/vZIg5O+l9B7CfjjH6k2rSPI=
+	b=ZAYGYs1/0WIWgxWYJqKPrDnMHgiPly9d8TrcZSEgOu/DqH6SNDPzlrMvLPpvv7UyY
+	 Q3B/b/EpyURayKAEr87YbRF3SZRDG6/NXq5U+SUslczLmHkxJRpFGPEqvFJz8me1EP
+	 BF6BxYwYYQUQwP9rnPhTAifQUmhxcZp8a/tk1ecY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Youling Tang <tangyouling@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 029/627] block: restore two stage elevator switch while running nr_hw_queue update
-Date: Tue, 12 Aug 2025 19:25:24 +0200
-Message-ID: <20250812173420.436241788@linuxfoundation.org>
+Subject: [PATCH 6.16 030/627] sched/task_stack: Add missing const qualifier to end_of_stack()
+Date: Tue, 12 Aug 2025 19:25:25 +0200
+Message-ID: <20250812173420.473831323@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,307 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 5989bfe6ac6bf230c2c84e118c786be0ed4be3f4 ]
+[ Upstream commit 32e42ab9fc88a884435c27527a433f61c4d2b61b ]
 
-The kmemleak reports memory leaks related to elevator resources that
-were originally allocated in the ->init_hctx() method. The following
-leak traces are observed after running blktests block/040:
+Add missing const qualifier to the non-CONFIG_THREAD_INFO_IN_TASK
+version of end_of_stack() to match the CONFIG_THREAD_INFO_IN_TASK
+version. Fixes a warning with CONFIG_KSTACK_ERASE=y on archs that don't
+select THREAD_INFO_IN_TASK (such as LoongArch):
 
-unreferenced object 0xffff8881b82f7400 (size 512):
-  comm "check", pid 68454, jiffies 4310588881
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 5bac8b34):
-    __kvmalloc_node_noprof+0x55d/0x7a0
-    sbitmap_init_node+0x15a/0x6a0
-    kyber_init_hctx+0x316/0xb90
-    blk_mq_init_sched+0x419/0x580
-    elevator_switch+0x18b/0x630
-    elv_update_nr_hw_queues+0x219/0x2c0
-    __blk_mq_update_nr_hw_queues+0x36a/0x6f0
-    blk_mq_update_nr_hw_queues+0x3a/0x60
-    0xffffffffc09ceb80
-    0xffffffffc09d7e0b
-    configfs_write_iter+0x2b1/0x470
-    vfs_write+0x527/0xe70
-    ksys_write+0xff/0x200
-    do_syscall_64+0x98/0x3c0
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-unreferenced object 0xffff8881b82f6000 (size 512):
-  comm "check", pid 68454, jiffies 4310588881
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 5bac8b34):
-    __kvmalloc_node_noprof+0x55d/0x7a0
-    sbitmap_init_node+0x15a/0x6a0
-    kyber_init_hctx+0x316/0xb90
-    blk_mq_init_sched+0x419/0x580
-    elevator_switch+0x18b/0x630
-    elv_update_nr_hw_queues+0x219/0x2c0
-    __blk_mq_update_nr_hw_queues+0x36a/0x6f0
-    blk_mq_update_nr_hw_queues+0x3a/0x60
-    0xffffffffc09ceb80
-    0xffffffffc09d7e0b
-    configfs_write_iter+0x2b1/0x470
-    vfs_write+0x527/0xe70
-    ksys_write+0xff/0x200
-    do_syscall_64+0x98/0x3c0
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-unreferenced object 0xffff8881b82f5800 (size 512):
-  comm "check", pid 68454, jiffies 4310588881
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 5bac8b34):
-    __kvmalloc_node_noprof+0x55d/0x7a0
-    sbitmap_init_node+0x15a/0x6a0
-    kyber_init_hctx+0x316/0xb90
-    blk_mq_init_sched+0x419/0x580
-    elevator_switch+0x18b/0x630
-    elv_update_nr_hw_queues+0x219/0x2c0
-    __blk_mq_update_nr_hw_queues+0x36a/0x6f0
-    blk_mq_update_nr_hw_queues+0x3a/0x60
-    0xffffffffc09ceb80
-    0xffffffffc09d7e0b
-    configfs_write_iter+0x2b1/0x470
-    vfs_write+0x527/0xe70
+  error: passing 'const struct task_struct *' to parameter of type 'struct task_struct *' discards qualifiers
 
-    ksys_write+0xff/0x200
-    do_syscall_64+0x98/0x3c0
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+The stackleak_task_low_bound() function correctly uses a const task
+parameter, but the legacy end_of_stack() prototype didn't like that.
 
-The issue arises while we run nr_hw_queue update,  Specifically, we first
-reallocate hardware contexts (hctx) via __blk_mq_realloc_hw_ctxs(), and
-then later invoke elevator_switch() (assuming q->elevator is not NULL).
-The elevator switch code would first exit old elevator (elevator_exit)
-and then switches to the new elevator. The elevator_exit loops through
-each hctx and invokes the elevator’s per-hctx exit method ->exit_hctx(),
-which releases resources allocated during ->init_hctx().
+Build tested on loongarch (with CONFIG_KSTACK_ERASE=y) and m68k
+(with CONFIG_DEBUG_STACK_USAGE=y).
 
-This memleak manifests when we reduce the num of h/w queues - for example,
-when the initial update sets the number of queues to X, and a later update
-reduces it to Y, where Y < X. In this case, we'd loose the access to old
-hctxs while we get to elevator exit code because __blk_mq_realloc_hw_ctxs
-would have already released the old hctxs. As we don't now have any
-reference left to the old hctxs, we don't have any way to free the
-scheduler resources (which are allocate in ->init_hctx()) and kmemleak
-complains about it.
-
-This issue was caused due to the commit 596dce110b7d ("block: simplify
-elevator reattachment for updating nr_hw_queues"). That change unified
-the two-stage elevator teardown and reattachment into a single call that
-occurs after __blk_mq_realloc_hw_ctxs() has already freed the hctxs.
-
-This patch restores the previous two-stage elevator switch logic during
-nr_hw_queues updates. First, the elevator is switched to 'none', which
-ensures all scheduler resources are properly freed. Then, the hardware
-contexts (hctxs) are reallocated, and the software-to-hardware queue
-mappings are updated. Finally, the original elevator is reattached. This
-sequence prevents loss of references to old hctxs and avoids the scheduler
-resource leaks reported by kmemleak.
-
-Reported-by : Yi Zhang <yi.zhang@redhat.com>
-
-Fixes: 596dce110b7d ("block: simplify elevator reattachment for updating nr_hw_queues")
-Closes: https://lore.kernel.org/all/CAHj4cs8oJFvz=daCvjHM5dYCNQH4UXwSySPPU4v-WHce_kZXZA@mail.gmail.com/
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20250724102540.1366308-1-nilay@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: a45728fd4120 ("LoongArch: Enable HAVE_ARCH_STACKLEAK")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/all/20250726004313.GA3650901@ax162
+Cc: Youling Tang <tangyouling@kylinos.cn>
+Cc: Huacai Chen <chenhuacai@loongson.cn>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c   | 84 ++++++++++++++++++++++++++++++++++++++++++------
- block/blk.h      |  2 +-
- block/elevator.c | 10 +++---
- 3 files changed, 81 insertions(+), 15 deletions(-)
+ include/linux/sched/task_stack.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 4806b867e37d..dec1cd4f1f5b 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4966,6 +4966,60 @@ int blk_mq_update_nr_requests(struct request_queue *q, unsigned int nr)
- 	return ret;
- }
- 
-+/*
-+ * Switch back to the elevator type stored in the xarray.
-+ */
-+static void blk_mq_elv_switch_back(struct request_queue *q,
-+		struct xarray *elv_tbl)
-+{
-+	struct elevator_type *e = xa_load(elv_tbl, q->id);
-+
-+	/* The elv_update_nr_hw_queues unfreezes the queue. */
-+	elv_update_nr_hw_queues(q, e);
-+
-+	/* Drop the reference acquired in blk_mq_elv_switch_none. */
-+	if (e)
-+		elevator_put(e);
-+}
-+
-+/*
-+ * Stores elevator type in xarray and set current elevator to none. It uses
-+ * q->id as an index to store the elevator type into the xarray.
-+ */
-+static int blk_mq_elv_switch_none(struct request_queue *q,
-+		struct xarray *elv_tbl)
-+{
-+	int ret = 0;
-+
-+	lockdep_assert_held_write(&q->tag_set->update_nr_hwq_lock);
-+
-+	/*
-+	 * Accessing q->elevator without holding q->elevator_lock is safe here
-+	 * because we're called from nr_hw_queue update which is protected by
-+	 * set->update_nr_hwq_lock in the writer context. So, scheduler update/
-+	 * switch code (which acquires the same lock in the reader context)
-+	 * can't run concurrently.
-+	 */
-+	if (q->elevator) {
-+
-+		ret = xa_insert(elv_tbl, q->id, q->elevator->type, GFP_KERNEL);
-+		if (WARN_ON_ONCE(ret))
-+			return ret;
-+
-+		/*
-+		 * Before we switch elevator to 'none', take a reference to
-+		 * the elevator module so that while nr_hw_queue update is
-+		 * running, no one can remove elevator module. We'd put the
-+		 * reference to elevator module later when we switch back
-+		 * elevator.
-+		 */
-+		__elevator_get(q->elevator->type);
-+
-+		elevator_set_none(q);
-+	}
-+	return ret;
-+}
-+
- static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 							int nr_hw_queues)
- {
-@@ -4973,6 +5027,7 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	int prev_nr_hw_queues = set->nr_hw_queues;
- 	unsigned int memflags;
- 	int i;
-+	struct xarray elv_tbl;
- 
- 	lockdep_assert_held(&set->tag_list_lock);
- 
-@@ -4984,6 +5039,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 		return;
- 
- 	memflags = memalloc_noio_save();
-+
-+	xa_init(&elv_tbl);
-+
- 	list_for_each_entry(q, &set->tag_list, tag_set_list) {
- 		blk_mq_debugfs_unregister_hctxs(q);
- 		blk_mq_sysfs_unregister_hctxs(q);
-@@ -4992,11 +5050,17 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	list_for_each_entry(q, &set->tag_list, tag_set_list)
- 		blk_mq_freeze_queue_nomemsave(q);
- 
--	if (blk_mq_realloc_tag_set_tags(set, nr_hw_queues) < 0) {
--		list_for_each_entry(q, &set->tag_list, tag_set_list)
--			blk_mq_unfreeze_queue_nomemrestore(q);
--		goto reregister;
--	}
-+	/*
-+	 * Switch IO scheduler to 'none', cleaning up the data associated
-+	 * with the previous scheduler. We will switch back once we are done
-+	 * updating the new sw to hw queue mappings.
-+	 */
-+	list_for_each_entry(q, &set->tag_list, tag_set_list)
-+		if (blk_mq_elv_switch_none(q, &elv_tbl))
-+			goto switch_back;
-+
-+	if (blk_mq_realloc_tag_set_tags(set, nr_hw_queues) < 0)
-+		goto switch_back;
- 
- fallback:
- 	blk_mq_update_queue_map(set);
-@@ -5016,12 +5080,11 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 		}
- 		blk_mq_map_swqueue(q);
- 	}
--
--	/* elv_update_nr_hw_queues() unfreeze queue for us */
-+switch_back:
-+	/* The blk_mq_elv_switch_back unfreezes queue for us. */
- 	list_for_each_entry(q, &set->tag_list, tag_set_list)
--		elv_update_nr_hw_queues(q);
-+		blk_mq_elv_switch_back(q, &elv_tbl);
- 
--reregister:
- 	list_for_each_entry(q, &set->tag_list, tag_set_list) {
- 		blk_mq_sysfs_register_hctxs(q);
- 		blk_mq_debugfs_register_hctxs(q);
-@@ -5029,6 +5092,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 		blk_mq_remove_hw_queues_cpuhp(q);
- 		blk_mq_add_hw_queues_cpuhp(q);
- 	}
-+
-+	xa_destroy(&elv_tbl);
-+
- 	memalloc_noio_restore(memflags);
- 
- 	/* Free the excess tags when nr_hw_queues shrink. */
-diff --git a/block/blk.h b/block/blk.h
-index 37ec459fe656..fae7653a941f 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -321,7 +321,7 @@ bool blk_bio_list_merge(struct request_queue *q, struct list_head *list,
- 
- bool blk_insert_flush(struct request *rq);
- 
--void elv_update_nr_hw_queues(struct request_queue *q);
-+void elv_update_nr_hw_queues(struct request_queue *q, struct elevator_type *e);
- void elevator_set_default(struct request_queue *q);
- void elevator_set_none(struct request_queue *q);
- 
-diff --git a/block/elevator.c b/block/elevator.c
-index a960bdc869bc..88f8f36bed98 100644
---- a/block/elevator.c
-+++ b/block/elevator.c
-@@ -689,21 +689,21 @@ static int elevator_change(struct request_queue *q, struct elv_change_ctx *ctx)
-  * The I/O scheduler depends on the number of hardware queues, this forces a
-  * reattachment when nr_hw_queues changes.
+diff --git a/include/linux/sched/task_stack.h b/include/linux/sched/task_stack.h
+index 85c5a6392e02..1fab7e9043a3 100644
+--- a/include/linux/sched/task_stack.h
++++ b/include/linux/sched/task_stack.h
+@@ -53,7 +53,7 @@ static inline void setup_thread_stack(struct task_struct *p, struct task_struct
+  * When the stack grows up, this is the highest address.
+  * Beyond that position, we corrupt data on the next page.
   */
--void elv_update_nr_hw_queues(struct request_queue *q)
-+void elv_update_nr_hw_queues(struct request_queue *q, struct elevator_type *e)
+-static inline unsigned long *end_of_stack(struct task_struct *p)
++static inline unsigned long *end_of_stack(const struct task_struct *p)
  {
- 	struct elv_change_ctx ctx = {};
- 	int ret = -ENODEV;
- 
- 	WARN_ON_ONCE(q->mq_freeze_depth == 0);
- 
--	mutex_lock(&q->elevator_lock);
--	if (q->elevator && !blk_queue_dying(q) && blk_queue_registered(q)) {
--		ctx.name = q->elevator->type->elevator_name;
-+	if (e && !blk_queue_dying(q) && blk_queue_registered(q)) {
-+		ctx.name = e->elevator_name;
- 
-+		mutex_lock(&q->elevator_lock);
- 		/* force to reattach elevator after nr_hw_queue is updated */
- 		ret = elevator_switch(q, &ctx);
-+		mutex_unlock(&q->elevator_lock);
- 	}
--	mutex_unlock(&q->elevator_lock);
- 	blk_mq_unfreeze_queue_nomemrestore(q);
- 	if (!ret)
- 		WARN_ON_ONCE(elevator_change_done(q, &ctx));
+ #ifdef CONFIG_STACK_GROWSUP
+ 	return (unsigned long *)((unsigned long)task_thread_info(p) + THREAD_SIZE) - 1;
 -- 
 2.39.5
 
