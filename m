@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC9D285043;
-	Tue, 12 Aug 2025 19:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7F126FA77;
+	Tue, 12 Aug 2025 19:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025785; cv=none; b=manI4mk9JBHI7fBhBaYLRjHxrhlP1DyFLUGuUceWEbzS9T6VGPLPWNs68R/JAmAQ+6lOTp2WdNEV9xsw1aX4ii4SDl8Y9sD9Nh30InCnKNi2e3ND7qP5gF9t/K94RlqiyHTxfTjFLFBL1VLtLW+WOGpMAPHUoyYBmdaUWhGBbnE=
+	t=1755025789; cv=none; b=QUbVNwQgcr5sN5knDiYX76s0vW5EOXWgrGxsZ4wkGFiwrskPBbQIhlVZZhgRDRliZ0Uww6bsXuzpDxfq/yLujRTwPQRkXjVq21L4X88Hqgo8tj2IS3L8nvSRoARDizzUFyY0U16H+rTSQ6wsmiIeAHn+d4nKQzaS8p6aPW3k1lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025785; c=relaxed/simple;
-	bh=QDIsLM6mn/ZBcQ/sgAQGDyZuZX7PHupJyBN5uTQ2cFc=;
+	s=arc-20240116; t=1755025789; c=relaxed/simple;
+	bh=xOCA7CJgc+0RsqcC8p5bpL4HOu6E49l5wYw+PlcVZ9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NiaANMGs2eyaniOiSaTkcBw50fbd9m0cKrafnKQgjGEY85JfDuEFJ56oAS2TjPI4V9ZUfvpouPl8of4VAtuJO2IAs0PPiHolOPmc3/yVORVp4o48X4M4Lnybhrcr8eub9qU7SJYddqbj2W2pJWZQiFt6zpUuIOtoucxDo9s/wj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJXhgY1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JjPf1wbhXocfRylRVNO/pi3yAllnFZkwhCtkkkDwmfwq56jVWOfVIfE234iimT1RC9w4MHFVOlCcTuyf03G/O8DGSrwFhoecP//Dof62ehxXoTqKBAMvDWtx+/b+TJocvFAGjQVVja+xTfbhJmhBiAjXxLm/+xsUN+6q/whxIs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XB0vzuR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJXhgY1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515D0C4CEF0;
-	Tue, 12 Aug 2025 19:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XB0vzuR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823CBC4CEF0;
+	Tue, 12 Aug 2025 19:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025785;
-	bh=QDIsLM6mn/ZBcQ/sgAQGDyZuZX7PHupJyBN5uTQ2cFc=;
+	s=korg; t=1755025789;
+	bh=xOCA7CJgc+0RsqcC8p5bpL4HOu6E49l5wYw+PlcVZ9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJXhgY1Trr+2Grzu/0rjZvy/ozDiq8SfuAzaV3dxSqzRrS7tv0xRnvakuWE9V1QbB
-	 0g+Aw8rwdIM+dYAc2yDJWmCZ+h9C4DpYpwYoT+0Uy6szOJnw8ZsA99pBs14MP2K3sL
-	 e93Vi0FRPUh11lzOAsnDuoCH6R97Ary5h1HAwtRU=
+	b=2XB0vzuROrEq+/m/mXlV/TsEyVGOZZ6+22ied/hwPn4K+2ES/sbpbWFQ60VPqolIU
+	 gcE92waoslsvuokYgqbW/w+S21qm9sowvcMO73aYZNK+2qwHqM3YT1l2YqgrnbPaxm
+	 YxfSfClkrWAakSQL/tmwP3mMSzm4Q71OXAXxoAfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 142/480] wifi: ath12k: Block radio bring-up in FTM mode
-Date: Tue, 12 Aug 2025 19:45:50 +0200
-Message-ID: <20250812174403.378732789@linuxfoundation.org>
+Subject: [PATCH 6.15 143/480] drm/rockchip: vop2: fail cleanly if missing a primary plane for a video-port
+Date: Tue, 12 Aug 2025 19:45:51 +0200
+Message-ID: <20250812174403.417021162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,66 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 80570587e418f361e7ce3f9200477f728b38c94b ]
+[ Upstream commit f9f68bf1d0efeadb6c427c9dbb30f307a7def19b ]
 
-Ensure that all radios remain down when the driver operates in Factory
-Test Mode (FTM). Reject any userspace attempts to bring up an
-interface in this mode.
+Each window of a vop2 is usable by a specific set of video ports, so while
+binding the vop2, we look through the list of available windows trying to
+find one designated as primary-plane and usable by that specific port.
 
-Currently, the driver allows userspace to bring up the interface even
-though it operates in FTM mode, which violates FTM constraints and
-leads to FTM command failures.
+The code later wants to use drm_crtc_init_with_planes with that found
+primary plane, but nothing has checked so far if a primary plane was
+actually found.
 
-Hence, block the radio start when the driver is in FTM mode. Also,
-remove ath12k_ftm_mode check from ath12k_drain_tx() because FTM mode
-check is already handled in the caller function
-(ath12k_mac_op_start()).
+For whatever reason, the rk3576 vp2 does not have a usable primary window
+(if vp0 is also in use) which brought the issue to light and ended in a
+null-pointer dereference further down.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+As we expect a primary-plane to exist for a video-port, add a check at
+the end of the window-iteration and fail probing if none was found.
 
-Fixes: 3bc374cbc49e ("wifi: ath12k: add factory test mode support")
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250630031502.8902-1-aaradhana.sahu@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250610212748.1062375-1-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index ccc27863f333..029376c57496 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -7689,14 +7689,9 @@ static int ath12k_mac_start(struct ath12k *ar)
- 
- static void ath12k_drain_tx(struct ath12k_hw *ah)
- {
--	struct ath12k *ar = ah->radio;
-+	struct ath12k *ar;
- 	int i;
- 
--	if (ath12k_ftm_mode) {
--		ath12k_err(ar->ab, "fail to start mac operations in ftm mode\n");
--		return;
--	}
--
- 	lockdep_assert_wiphy(ah->hw->wiphy);
- 
- 	for_each_ar(ah, ar, i)
-@@ -7709,6 +7704,9 @@ static int ath12k_mac_op_start(struct ieee80211_hw *hw)
- 	struct ath12k *ar;
- 	int ret, i;
- 
-+	if (ath12k_ftm_mode)
-+		return -EPERM;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index d0f5fea15e21..6b37ce3ee60b 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2422,6 +2422,10 @@ static int vop2_create_crtcs(struct vop2 *vop2)
+ 				break;
+ 			}
+ 		}
 +
- 	lockdep_assert_wiphy(hw->wiphy);
++		if (!vp->primary_plane)
++			return dev_err_probe(drm->dev, -ENOENT,
++					     "no primary plane for vp %d\n", i);
+ 	}
  
- 	ath12k_drain_tx(ah);
+ 	/* Register all unused window as overlay plane */
 -- 
 2.39.5
 
