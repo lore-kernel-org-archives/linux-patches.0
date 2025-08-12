@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E691C305E2D;
-	Tue, 12 Aug 2025 19:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646A7305E2D;
+	Tue, 12 Aug 2025 19:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026314; cv=none; b=uXwPP2RXQ+ZTDBOLMAzcT2vI2nAVT8uqMPZG+0YdK1jHMAcOanhFEYh31hZhDJNq2tefAv8pdSgKussr3puzKNm3bEWJFTaeWcY+fkBQtIbHIbe/PYp+S37+h8JddPxgcHss5kr3+qKo0MyTTy+d8juJMUCAGeWFSEAEQPheBPw=
+	t=1755026317; cv=none; b=JXJlutDfdJBE11HhabFCXOl+rkWpNx9EJE/A4jHDgJRAiYAg0b43yClNYbCKcxvpkuiwbKMhGbCf7dnUPWjBTNNtSEXwMmHGeVTRePxAt/07OY0xGbV3TLE+I11eKOlDv6iaCOa0oxf+vc4ed+N4J4od0bqb4pOP+4bniGUJ8Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026314; c=relaxed/simple;
-	bh=q9Zllc0ncdf50O0AyKN9eXj65RsY25hsGyomuhqFBrk=;
+	s=arc-20240116; t=1755026317; c=relaxed/simple;
+	bh=s90TNxF5VrnZMPwRXJWm07yhrSZeKGPpSiekrvbrU9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZMuEEnEnQTxBOLugmzr10EoVbIcMRImL26o2DJaHY9PO6AFjwg3Ed+WVMTgfAXYop622YvFHg2UN98pn/LV2OSGZQBpMxBk/dfRU+lR2eCvZXaRMDNLL0lPAQOqXZhiRUks5mdq44MmqVrOM0s4G476Eh1kq8EoY6jdTxs4o21I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMhRE+Gr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISsAciqrYxrwbUhwz+0EK5b50RMi0JOAzRabp9p8MngpSYohf4lmOPrBUGigBvulFLAt4gtR+1XlggbKMJvg/Nmp8B4Ncyu1gwvonsVRLRH0d1lAtKqSHBoiSZ9ZA8OpZSbbJOfkg1Bv5wFWP/sDYtZRH6kVFaFzJ1P40kY44Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzjV6sHX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMhRE+Gr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5333DC4CEF0;
-	Tue, 12 Aug 2025 19:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzjV6sHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C810AC4CEF0;
+	Tue, 12 Aug 2025 19:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026313;
-	bh=q9Zllc0ncdf50O0AyKN9eXj65RsY25hsGyomuhqFBrk=;
+	s=korg; t=1755026317;
+	bh=s90TNxF5VrnZMPwRXJWm07yhrSZeKGPpSiekrvbrU9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DMhRE+GrahYUI1KvrDMt7cAzBzewd+Tc6pepw6VZPXcaLK9jUmEFPcfpCPuKIEuun
-	 L0cTy0BGFTx67KMgrJM88tOfzQEDzQQQA1zS/SlrRDwSAeCun9Dy6Ws4h+MfgRZp5B
-	 DagZparyzqz9vr3ZdvqpD4dL+nLjZRHYNDFoVijs=
+	b=YzjV6sHXpLyuw+8eAV41D3UNeoPimsxcofBwSYw8VY6fcTCcYHj9bFt0dRmZPMvQD
+	 JyNMrXpynpFp/RSM2jPHNhEyYYEC6/gUdvEBbkWkMFZW72Ud5GixewGZRI+l1hIrUg
+	 u71y0iDaw68ZvXOayqD5asIOx9fkeVxPEmo/ziqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 293/480] crypto: keembay - Fix dma_unmap_sg() nents value
-Date: Tue, 12 Aug 2025 19:48:21 +0200
-Message-ID: <20250812174409.517834386@linuxfoundation.org>
+Subject: [PATCH 6.15 302/480] tools subcmd: Tighten the filename size in check_if_command_finished
+Date: Tue, 12 Aug 2025 19:48:30 +0200
+Message-ID: <20250812174409.886083065@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,61 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 01951a7dc5ac1a37e5fb7d86ea7eb2dfbf96e8b6 ]
+[ Upstream commit 478272d1cdd9959a6d638e9d81f70642f04290c9 ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+FILENAME_MAX is often PATH_MAX (4kb), far more than needed for the
+/proc path. Make the buffer size sufficient for the maximum integer
+plus "/proc/" and "/status" with a '\0' terminator.
 
-Fixes: 472b04444cd3 ("crypto: keembay - Add Keem Bay OCS HCU driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 5ce42b5de461 ("tools subcmd: Add non-waitpid check_if_command_finished()")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250717150855.1032526-1-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/lib/subcmd/run-command.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c b/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
-index 95dc8979918d..8f9e21ced0fe 100644
---- a/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
-+++ b/drivers/crypto/intel/keembay/keembay-ocs-hcu-core.c
-@@ -68,6 +68,7 @@ struct ocs_hcu_ctx {
-  * @sg_data_total:  Total data in the SG list at any time.
-  * @sg_data_offset: Offset into the data of the current individual SG node.
-  * @sg_dma_nents:   Number of sg entries mapped in dma_list.
-+ * @nents:          Number of entries in the scatterlist.
-  */
- struct ocs_hcu_rctx {
- 	struct ocs_hcu_dev	*hcu_dev;
-@@ -91,6 +92,7 @@ struct ocs_hcu_rctx {
- 	unsigned int		sg_data_total;
- 	unsigned int		sg_data_offset;
- 	unsigned int		sg_dma_nents;
-+	unsigned int		nents;
- };
+diff --git a/tools/lib/subcmd/run-command.c b/tools/lib/subcmd/run-command.c
+index 0a764c25c384..b7510f83209a 100644
+--- a/tools/lib/subcmd/run-command.c
++++ b/tools/lib/subcmd/run-command.c
+@@ -5,6 +5,7 @@
+ #include <ctype.h>
+ #include <fcntl.h>
+ #include <string.h>
++#include <linux/compiler.h>
+ #include <linux/string.h>
+ #include <errno.h>
+ #include <sys/wait.h>
+@@ -216,10 +217,20 @@ static int wait_or_whine(struct child_process *cmd, bool block)
+ 	return result;
+ }
  
- /**
-@@ -199,7 +201,7 @@ static void kmb_ocs_hcu_dma_cleanup(struct ahash_request *req,
- 
- 	/* Unmap req->src (if mapped). */
- 	if (rctx->sg_dma_nents) {
--		dma_unmap_sg(dev, req->src, rctx->sg_dma_nents, DMA_TO_DEVICE);
-+		dma_unmap_sg(dev, req->src, rctx->nents, DMA_TO_DEVICE);
- 		rctx->sg_dma_nents = 0;
- 	}
- 
-@@ -260,6 +262,10 @@ static int kmb_ocs_dma_prepare(struct ahash_request *req)
- 			rc = -ENOMEM;
- 			goto cleanup;
- 		}
++/*
++ * Conservative estimate of number of characaters needed to hold an a decoded
++ * integer, assume each 3 bits needs a character byte and plus a possible sign
++ * character.
++ */
++#ifndef is_signed_type
++#define is_signed_type(type) (((type)(-1)) < (type)1)
++#endif
++#define MAX_STRLEN_TYPE(type) (sizeof(type) * 8 / 3 + (is_signed_type(type) ? 1 : 0))
 +
-+		/* Save the value of nents to pass to dma_unmap_sg. */
-+		rctx->nents = nents;
-+
- 		/*
- 		 * The value returned by dma_map_sg() can be < nents; so update
- 		 * nents accordingly.
+ int check_if_command_finished(struct child_process *cmd)
+ {
+ #ifdef __linux__
+-	char filename[FILENAME_MAX + 12];
++	char filename[6 + MAX_STRLEN_TYPE(typeof(cmd->pid)) + 7 + 1];
+ 	char status_line[256];
+ 	FILE *status_file;
+ 
+@@ -227,7 +238,7 @@ int check_if_command_finished(struct child_process *cmd)
+ 	 * Check by reading /proc/<pid>/status as calling waitpid causes
+ 	 * stdout/stderr to be closed and data lost.
+ 	 */
+-	sprintf(filename, "/proc/%d/status", cmd->pid);
++	sprintf(filename, "/proc/%u/status", cmd->pid);
+ 	status_file = fopen(filename, "r");
+ 	if (status_file == NULL) {
+ 		/* Open failed assume finish_command was called. */
 -- 
 2.39.5
 
