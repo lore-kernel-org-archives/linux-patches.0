@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBD12FE571;
-	Tue, 12 Aug 2025 18:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C402C2F6573;
+	Tue, 12 Aug 2025 18:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025085; cv=none; b=gtReSdZa9MrXtM7euuL3c5Bc3Ou31mp0yv+diF4faq6ZKhsblHAwEHP6yJh9PLLfIXtlVyq7apMc1oGoe2s67cQEAId63Bg0/+ykhk5Eu2K6/ihPVo5PDdESCy5DGe7P3VU7CKa3WSnwIM3lb4qmEhZOLNzPgh33tF24MhaqJj4=
+	t=1755025088; cv=none; b=SJkftMuOHJirfEDCU+0ejuVUemiMvVbNni4qiQV6IdY3oEq9WFkRpqumEVaNw70zjG2WfwnQzbZh+S0SMigPze93HvfOF3+z9QBUkmqWz++57MqMVEOQ56oRlv60dxOEdia/fd2PASvDRKrfNi9iN1IDlEHcYNVYEia51W4qvs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025085; c=relaxed/simple;
-	bh=GZmGsloP1bA4fGL04JOcZ3OuYq2gECb6wTQpcgv3loE=;
+	s=arc-20240116; t=1755025088; c=relaxed/simple;
+	bh=YqDJUGfDhc3deXURXEiBUgsmq+KSqOqVs0abFUHoyzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdKGG7Md5wYM8n8/WGWaIViGTOpUtlYcta+RUmDMtf6+IUCiX+W3Rm77AvjnE35QYFmd9E0HDvPY0mw6Role0509RmwaGmw6DrBowxUJN0F+aWsvkaxxXq5XKjnbQw+eIyeMPbVBic+zcrkyDWubQZHgl6um3W2DM8fA6MryYSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2+MPhZV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q/HyedVGY6qXq4ibomhIiHZ+zgQRoBEXcTVnhzOpnCB9QRrTU2sUvnL0wRadLwNyNB0ABFoSS6p0vnFksJGy39oLcG6rxd5/KJgJUFykWHrWd+kMfoTjdqdC4Vm3hMYRSHIu1MQufjSXviQIIrlytboRIFjzGh+anY69tfMsIKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNRsmKoN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2+MPhZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A49C4CEF0;
-	Tue, 12 Aug 2025 18:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNRsmKoN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32302C4CEF0;
+	Tue, 12 Aug 2025 18:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025085;
-	bh=GZmGsloP1bA4fGL04JOcZ3OuYq2gECb6wTQpcgv3loE=;
+	s=korg; t=1755025088;
+	bh=YqDJUGfDhc3deXURXEiBUgsmq+KSqOqVs0abFUHoyzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z2+MPhZVKKqfEk8A+844S6UdPnpBAl8pG3yYPxHlbaZJcltyUZx9D+uGMvvNIladq
-	 cz61kfQe8xczMvjToGCByuQgAX3IkCz00pZWq6VynidQBnq/vOS/n5HMnbXg3oAsgz
-	 wmZJriBPTFygOf6YjsAhtC2A0MJZsWt+cgEVvMvE=
+	b=ZNRsmKoNxDiumUjc/2FAaX2I/7vfwjxIeQRGxy9cJWBP6HJMAZqK5fubIISUeJeWu
+	 vLCLWHcpiF26+A7++Om/YLZJ8WNatj1S0pdM4iBDROQx1Yb/WM7Bb6QAn+u5nBXSCZ
+	 9ZW5kwGY3kbHQ+coyRPvJnDHa+g8K2W0I73p+bVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+af43e647fd835acc02df@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 532/627] ipv6: reject malicious packets in ipv6_gso_segment()
-Date: Tue, 12 Aug 2025 19:33:47 +0200
-Message-ID: <20250812173452.153178331@linuxfoundation.org>
+Subject: [PATCH 6.16 533/627] net: mdio: mdio-bcm-unimac: Correct rate fallback logic
+Date: Tue, 12 Aug 2025 19:33:48 +0200
+Message-ID: <20250812173452.192395013@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,101 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit d45cf1e7d7180256e17c9ce88e32e8061a7887fe ]
+[ Upstream commit a81649a4efd382497bf3d34a623360263adc6993 ]
 
-syzbot was able to craft a packet with very long IPv6 extension headers
-leading to an overflow of skb->transport_header.
+When the parent clock is a gated clock which has multiple parents, the
+clock provider (clk-scmi typically) might return a rate of 0 since there
+is not one of those particular parent clocks that should be chosen for
+returning a rate. Prior to ee975351cf0c ("net: mdio: mdio-bcm-unimac:
+Manage clock around I/O accesses"), we would not always be passing a
+clock reference depending upon how mdio-bcm-unimac was instantiated. In
+that case, we would take the fallback path where the rate is hard coded
+to 250MHz.
 
-This 16bit field has a limited range.
+Make sure that we still fallback to using a fixed rate for the divider
+calculation, otherwise we simply ignore the desired MDIO bus clock
+frequency which can prevent us from interfacing with Ethernet PHYs
+properly.
 
-Add skb_reset_transport_header_careful() helper and use it
-from ipv6_gso_segment()
-
-WARNING: CPU: 0 PID: 5871 at ./include/linux/skbuff.h:3032 skb_reset_transport_header include/linux/skbuff.h:3032 [inline]
-WARNING: CPU: 0 PID: 5871 at ./include/linux/skbuff.h:3032 ipv6_gso_segment+0x15e2/0x21e0 net/ipv6/ip6_offload.c:151
-Modules linked in:
-CPU: 0 UID: 0 PID: 5871 Comm: syz-executor211 Not tainted 6.16.0-rc6-syzkaller-g7abc678e3084 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
- RIP: 0010:skb_reset_transport_header include/linux/skbuff.h:3032 [inline]
- RIP: 0010:ipv6_gso_segment+0x15e2/0x21e0 net/ipv6/ip6_offload.c:151
-Call Trace:
- <TASK>
-  skb_mac_gso_segment+0x31c/0x640 net/core/gso.c:53
-  nsh_gso_segment+0x54a/0xe10 net/nsh/nsh.c:110
-  skb_mac_gso_segment+0x31c/0x640 net/core/gso.c:53
-  __skb_gso_segment+0x342/0x510 net/core/gso.c:124
-  skb_gso_segment include/net/gso.h:83 [inline]
-  validate_xmit_skb+0x857/0x11b0 net/core/dev.c:3950
-  validate_xmit_skb_list+0x84/0x120 net/core/dev.c:4000
-  sch_direct_xmit+0xd3/0x4b0 net/sched/sch_generic.c:329
-  __dev_xmit_skb net/core/dev.c:4102 [inline]
-  __dev_queue_xmit+0x17b6/0x3a70 net/core/dev.c:4679
-
-Fixes: d1da932ed4ec ("ipv6: Separate ipv6 offload support")
-Reported-by: syzbot+af43e647fd835acc02df@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/688a1a05.050a0220.5d226.0008.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250730131738.3385939-1-edumazet@google.com
+Fixes: ee975351cf0c ("net: mdio: mdio-bcm-unimac: Manage clock around I/O accesses")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250730202533.3463529-1-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 23 +++++++++++++++++++++++
- net/ipv6/ip6_offload.c |  4 +++-
- 2 files changed, 26 insertions(+), 1 deletion(-)
+ drivers/net/mdio/mdio-bcm-unimac.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 5520524c93bf..37f5c6099b1f 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -3033,6 +3033,29 @@ static inline void skb_reset_transport_header(struct sk_buff *skb)
- 	skb->transport_header = offset;
- }
+diff --git a/drivers/net/mdio/mdio-bcm-unimac.c b/drivers/net/mdio/mdio-bcm-unimac.c
+index b6e30bdf5325..7baab230008a 100644
+--- a/drivers/net/mdio/mdio-bcm-unimac.c
++++ b/drivers/net/mdio/mdio-bcm-unimac.c
+@@ -209,10 +209,9 @@ static int unimac_mdio_clk_set(struct unimac_mdio_priv *priv)
+ 	if (ret)
+ 		return ret;
  
-+/**
-+ * skb_reset_transport_header_careful - conditionally reset transport header
-+ * @skb: buffer to alter
-+ *
-+ * Hardened version of skb_reset_transport_header().
-+ *
-+ * Returns: true if the operation was a success.
-+ */
-+static inline bool __must_check
-+skb_reset_transport_header_careful(struct sk_buff *skb)
-+{
-+	long offset = skb->data - skb->head;
-+
-+	if (unlikely(offset != (typeof(skb->transport_header))offset))
-+		return false;
-+
-+	if (unlikely(offset == (typeof(skb->transport_header))~0U))
-+		return false;
-+
-+	skb->transport_header = offset;
-+	return true;
-+}
-+
- static inline void skb_set_transport_header(struct sk_buff *skb,
- 					    const int offset)
- {
-diff --git a/net/ipv6/ip6_offload.c b/net/ipv6/ip6_offload.c
-index 9822163428b0..fce91183797a 100644
---- a/net/ipv6/ip6_offload.c
-+++ b/net/ipv6/ip6_offload.c
-@@ -148,7 +148,9 @@ static struct sk_buff *ipv6_gso_segment(struct sk_buff *skb,
+-	if (!priv->clk)
++	rate = clk_get_rate(priv->clk);
++	if (!rate)
+ 		rate = 250000000;
+-	else
+-		rate = clk_get_rate(priv->clk);
  
- 	ops = rcu_dereference(inet6_offloads[proto]);
- 	if (likely(ops && ops->callbacks.gso_segment)) {
--		skb_reset_transport_header(skb);
-+		if (!skb_reset_transport_header_careful(skb))
-+			goto out;
-+
- 		segs = ops->callbacks.gso_segment(skb, features);
- 		if (!segs)
- 			skb->network_header = skb_mac_header(skb) + nhoff - skb->head;
+ 	div = (rate / (2 * priv->clk_freq)) - 1;
+ 	if (div & ~MDIO_CLK_DIV_MASK) {
 -- 
 2.39.5
 
