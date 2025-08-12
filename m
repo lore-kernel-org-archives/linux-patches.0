@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9156BB5B;
-	Tue, 12 Aug 2025 18:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F81E1474CC;
+	Tue, 12 Aug 2025 18:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024707; cv=none; b=eTsVxQ8JGbmN1ZdS4dEn/dDLrXtdIe0e+SpLo2ua1ClutdWS+odSbX+0lMH2EhqyNyR9AEV3mPAKmn64NDU8EFZBFWBBuzWcurDsr00AzAmHfywCbMTpSHXMV0SGej7xfXNCJNbVCSUv7UVznIjlZGEAfpDJj8uhKliPfjWmON8=
+	t=1755024711; cv=none; b=KDq9Dvalueukon6TTRprOX/lzyhtXJHQBoqm7hqA0D3x4e0VDD1L7JWk56Pwn+iWwjWrCBXHm2r+nktHCSoz4Dqa6GLtIA718rIY3ntCl2fbrOvIuSFtPI4qSxOxN4bydZrfc2W9ZVqI9NeLwyoiTTRzDeA3sGvhN/5nbcORNe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024707; c=relaxed/simple;
-	bh=SxfIdz6kn+fobqItbtBxpNUmNrPbv9/hvqU/KbP9N6U=;
+	s=arc-20240116; t=1755024711; c=relaxed/simple;
+	bh=tMNhike4eQJLdtmXzRAKXkwTnOwfX5pk3lv7mOy8dX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQyr8yteyIS6bh5G3KnBvBjKlUORxcVUZ37xDJfXN29FvKDH6JMuyb6cnSVfhGpMTC99mDkmtsCfp4V2X3DB3+SlyG0OQYOhanh+rnEdN66pnMX46M0T0lL2brsF2/PuCm63UqLb9mzToWOtmyrmQ/imbtqkq9yTo9bfNFhu83k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSjyg7c4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G0CFdGemAfpx9HPqhbYuE4DApc8sFE/ZTpmOk8w5vmHjPQ1rFwaCCc9p7Txh5VLMirskcGnqvMYQkHJ42LamCN3ynoLjDxYDbJshR8UdzDQgwJJbQtCht2jWtmwOttMGM06b4X7eetxkxp008OjW8zZneFJzI5snpVJVDn+joNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1wB+8AL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSjyg7c4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249D8C4CEF0;
-	Tue, 12 Aug 2025 18:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1wB+8AL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F510C4CEF0;
+	Tue, 12 Aug 2025 18:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024707;
-	bh=SxfIdz6kn+fobqItbtBxpNUmNrPbv9/hvqU/KbP9N6U=;
+	s=korg; t=1755024711;
+	bh=tMNhike4eQJLdtmXzRAKXkwTnOwfX5pk3lv7mOy8dX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSjyg7c43Cn284NGFjzkbr2joZTDtSFqBNjge6f+SdhlY2aRy2SOuzcms3hVOixub
-	 qPy1+rYwZnP4ICTwTiXXX38ostlA9GMWcZUCsy3GcJWhlj/eWb4uNXUCeJQWAD4hkg
-	 OwOGi3eFyIqHC/N0FzUNxtXYH7Wc/wLGJql9hvpw=
+	b=S1wB+8ALP6/HseTPvPfO7CA4e4iuEk0qz5EoJLOPzfd81RdlgE6c1UlpniYW4+eiM
+	 WODcrv28JSDrE+6w5C540U1rmgTnsj2EwBZtQX95z7OZV5MHrD+ghRxwwo54psNONY
+	 OobFYFCnKuhexepWFwwvOt5OhKW26mV+YaSK6Dwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 420/627] ASoC: SDCA: Fix some holes in the regmap readable/writeable helpers
-Date: Tue, 12 Aug 2025 19:31:55 +0200
-Message-ID: <20250812173435.255456419@linuxfoundation.org>
+Subject: [PATCH 6.16 421/627] ASoC: fsl_xcvr: get channel status data when PHY is not exists
+Date: Tue, 12 Aug 2025 19:31:56 +0200
+Message-ID: <20250812173435.292296541@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,68 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 061fade7a67f6cdfe918a675270d84107abbef61 ]
+[ Upstream commit ca592e20659e0304ebd8f4dabb273da4f9385848 ]
 
-The current regmap readable/writeable helper functions always
-allow the Next flag and allows any Control Number. Mask the Next
-flag based on SDCA_ACCESS_MODE_DUAL which is the only Mode that
-supports it. Also check that the Control Number is valid for
-the given control.
+There is no PHY for the XCVR module on i.MX93, the channel status needs
+to be obtained from FSL_XCVR_RX_CS_DATA_* registers. And channel status
+acknowledge (CSA) bit should be set once channel status is processed.
 
-Fixes: e3f7caf74b79 ("ASoC: SDCA: Add generic regmap SDCA helpers")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250718135432.1048566-2-ckeepax@opensource.cirrus.com
+Fixes: e240b9329a30 ("ASoC: fsl_xcvr: Add support for i.MX93 platform")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20250710030405.3370671-2-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdca/sdca_regmap.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_xcvr.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/sound/soc/sdca/sdca_regmap.c b/sound/soc/sdca/sdca_regmap.c
-index 66e7eee7d7f4..c41c67c2204a 100644
---- a/sound/soc/sdca/sdca_regmap.c
-+++ b/sound/soc/sdca/sdca_regmap.c
-@@ -72,12 +72,18 @@ bool sdca_regmap_readable(struct sdca_function_data *function, unsigned int reg)
- 	if (!control)
- 		return false;
- 
-+	if (!(BIT(SDW_SDCA_CTL_CNUM(reg)) & control->cn_list))
-+		return false;
-+
- 	switch (control->mode) {
- 	case SDCA_ACCESS_MODE_RW:
- 	case SDCA_ACCESS_MODE_RO:
--	case SDCA_ACCESS_MODE_DUAL:
- 	case SDCA_ACCESS_MODE_RW1S:
- 	case SDCA_ACCESS_MODE_RW1C:
-+		if (SDW_SDCA_NEXT_CTL(0) & reg)
-+			return false;
-+		fallthrough;
-+	case SDCA_ACCESS_MODE_DUAL:
- 		/* No access to registers marked solely for device use */
- 		return control->layers & ~SDCA_ACCESS_LAYER_DEVICE;
- 	default:
-@@ -104,11 +110,17 @@ bool sdca_regmap_writeable(struct sdca_function_data *function, unsigned int reg
- 	if (!control)
- 		return false;
- 
-+	if (!(BIT(SDW_SDCA_CTL_CNUM(reg)) & control->cn_list))
-+		return false;
-+
- 	switch (control->mode) {
- 	case SDCA_ACCESS_MODE_RW:
--	case SDCA_ACCESS_MODE_DUAL:
- 	case SDCA_ACCESS_MODE_RW1S:
- 	case SDCA_ACCESS_MODE_RW1C:
-+		if (SDW_SDCA_NEXT_CTL(0) & reg)
-+			return false;
-+		fallthrough;
-+	case SDCA_ACCESS_MODE_DUAL:
- 		/* No access to registers marked solely for device use */
- 		return control->layers & ~SDCA_ACCESS_LAYER_DEVICE;
- 	default:
+diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
+index e3111dd80be4..405433144515 100644
+--- a/sound/soc/fsl/fsl_xcvr.c
++++ b/sound/soc/fsl/fsl_xcvr.c
+@@ -1423,6 +1423,26 @@ static irqreturn_t irq0_isr(int irq, void *devid)
+ 				/* clear CS control register */
+ 				memset_io(reg_ctrl, 0, sizeof(val));
+ 			}
++		} else {
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_0,
++				    (u32 *)&xcvr->rx_iec958.status[0]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_1,
++				    (u32 *)&xcvr->rx_iec958.status[4]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_2,
++				    (u32 *)&xcvr->rx_iec958.status[8]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_3,
++				    (u32 *)&xcvr->rx_iec958.status[12]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_4,
++				    (u32 *)&xcvr->rx_iec958.status[16]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_5,
++				    (u32 *)&xcvr->rx_iec958.status[20]);
++			for (i = 0; i < 6; i++) {
++				val = *(u32 *)(xcvr->rx_iec958.status + i * 4);
++				*(u32 *)(xcvr->rx_iec958.status + i * 4) =
++					bitrev32(val);
++			}
++			regmap_set_bits(xcvr->regmap, FSL_XCVR_RX_DPTH_CTRL,
++					FSL_XCVR_RX_DPTH_CTRL_CSA);
+ 		}
+ 	}
+ 	if (isr & FSL_XCVR_IRQ_NEW_UD) {
 -- 
 2.39.5
 
