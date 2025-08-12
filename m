@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B952F7461;
-	Tue, 12 Aug 2025 17:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855132F7461;
+	Tue, 12 Aug 2025 17:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020469; cv=none; b=Rwt+9RzBJSezf4VqiLDTkEfySD4OVwuLbnGZhJXaV5aULZzTNA0CH9V9hiihZ2QwoCT+AbCh4kdGCwR09KwP28FCJGPu9/wkrpBQxT9WIGd9tASg1E5OlY2HHZl9x4vobGq49g8+2NahuPcmI8761PWZAjZReBMeNece/AQuAGc=
+	t=1755020472; cv=none; b=WQ/fOpoRJzCcnOsLNRP0LsylzSh7hd5OheVOC6WtNwjdddfANDy7LswkLhBWMt9JcCOMQf3bMsRzpgXLqpxrMKfRAnyvVzmSp7f/x3PRBlZz/++9rSbCUltdD0F5L3Q6aaXqrStibADrPGkWHwM18/PwS4b9MgDILFKPJENKpfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020469; c=relaxed/simple;
-	bh=CdXDwK+pGXmEBLuVE32bcG0TEchCBrINYZpM9UlUDTk=;
+	s=arc-20240116; t=1755020472; c=relaxed/simple;
+	bh=oKViSp3vIwY5zkMPiY2wUhFrqZwVENhqLjArF4dCt0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KAMckvna35q5QjnwKSZyqrOdEahM6SIG4409h8LeYo8QiL1VZa4UeM0CcvgTtHPuqIyo/LQuoyK2eO6dZ+viw7un/ft3toQiTLCBiDA1gu7nzVLN/b/8XE+Ex2cwCpnuEkK0OrKbTdwWX5SwsFu9rSgNKjbbmwpvrl++VX8/VNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCWyXMtA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JwxJJ1xMMTUvHyJNbA3dV8ROc/vmxcSYMYp3wA4z7OW5muJ5wJrEl4DptN59/dDa+2Fa29Fr4JxVmtQvqy2fzChjccVXXxHhRosXBd8yPG2Oxu4mxiD57rwsKNdtIoxUs7y+zVCH1NMZzcF7QuLA3Oaq0052F7/EDaL21s3DT4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8lZ55zz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCWyXMtA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE278C4CEF0;
-	Tue, 12 Aug 2025 17:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8lZ55zz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABA3C4CEF0;
+	Tue, 12 Aug 2025 17:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020469;
-	bh=CdXDwK+pGXmEBLuVE32bcG0TEchCBrINYZpM9UlUDTk=;
+	s=korg; t=1755020472;
+	bh=oKViSp3vIwY5zkMPiY2wUhFrqZwVENhqLjArF4dCt0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCWyXMtAbsDDkw+VZW4pT/fbHP6wyoO3PNs7+YOf983cyBWsPZwmVpqCkOEEtvlWM
-	 dW0cv2LpL+WabmWBORyaare9AeDpSD6A22qviXCrW1So9JAZvOqtKMQlTun3CzHlkq
-	 gyP6ceRmicmXNUq0oXwYMslOoIo9xa3Y/ivc/48Q=
+	b=T8lZ55zzMiF3/Q9Rctu/ca4oEanC3dAzK9B3bnRnmOtq51UII1IyIm03UFF5mTqlB
+	 aMKCRxlzgYGgG9WCAYDqHxDwcSWcFI/yjuZoJ50lOXMjUUQMC/z6wylA3w8VAgabcO
+	 RPbSColHV3bveqLMFBwwCptFOB8fGObhkKIWbRks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shashank Balaji <shashank.mahadasyam@sony.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/253] PM / devfreq: Check governor before using governor->name
-Date: Tue, 12 Aug 2025 19:27:56 +0200
-Message-ID: <20250812172952.480188813@linuxfoundation.org>
+Subject: [PATCH 6.1 089/253] cpufreq: intel_pstate: Always use HWP_DESIRED_PERF in passive mode
+Date: Tue, 12 Aug 2025 19:27:57 +0200
+Message-ID: <20250812172952.521645660@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit bab7834c03820eb11269bc48f07c3800192460d2 ]
+[ Upstream commit 1cefe495cacba5fb0417da3a75a1a76e3546d176 ]
 
-Commit 96ffcdf239de ("PM / devfreq: Remove redundant governor_name from
-struct devfreq") removes governor_name and uses governor->name to replace
-it. But devfreq->governor may be NULL and directly using
-devfreq->governor->name may cause null pointer exception. Move the check of
-governor to before using governor->name.
+In the passive mode, intel_cpufreq_update_pstate() sets HWP_MIN_PERF in
+accordance with the target frequency to ensure delivering adequate
+performance, but it sets HWP_DESIRED_PERF to 0, so the processor has no
+indication that the desired performance level is actually equal to the
+floor one.  This may cause it to choose a performance point way above
+the desired level.
 
-Fixes: 96ffcdf239de ("PM / devfreq: Remove redundant governor_name from struct devfreq")
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://lore.kernel.org/lkml/20250421030020.3108405-5-zhenglifeng1@huawei.com/
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Moreover, this is inconsistent with intel_cpufreq_adjust_perf() which
+actually sets HWP_DESIRED_PERF in accordance with the target performance
+value.
+
+Address this by adjusting intel_cpufreq_update_pstate() to pass
+target_pstate as both the minimum and the desired performance levels
+to intel_cpufreq_hwp_update().
+
+Fixes: a365ab6b9dfb ("cpufreq: intel_pstate: Implement the ->adjust_perf() callback")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Shashank Balaji <shashank.mahadasyam@sony.com>
+Link: https://patch.msgid.link/6173276.lOV4Wx5bFT@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/devfreq/devfreq.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/devfreq/devfreq.c b/drivers/devfreq/devfreq.c
-index 344e276165e4..9ab97164443e 100644
---- a/drivers/devfreq/devfreq.c
-+++ b/drivers/devfreq/devfreq.c
-@@ -1381,15 +1381,11 @@ int devfreq_remove_governor(struct devfreq_governor *governor)
- 		int ret;
- 		struct device *dev = devfreq->dev.parent;
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index d471d74df3bb..ee676ae1bc48 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2867,8 +2867,8 @@ static int intel_cpufreq_update_pstate(struct cpufreq_policy *policy,
+ 		int max_pstate = policy->strict_target ?
+ 					target_pstate : cpu->max_perf_ratio;
  
-+		if (!devfreq->governor)
-+			continue;
-+
- 		if (!strncmp(devfreq->governor->name, governor->name,
- 			     DEVFREQ_NAME_LEN)) {
--			/* we should have a devfreq governor! */
--			if (!devfreq->governor) {
--				dev_warn(dev, "%s: Governor %s NOT present\n",
--					 __func__, governor->name);
--				continue;
--				/* Fall through */
--			}
- 			ret = devfreq->governor->event_handler(devfreq,
- 						DEVFREQ_GOV_STOP, NULL);
- 			if (ret) {
+-		intel_cpufreq_hwp_update(cpu, target_pstate, max_pstate, 0,
+-					 fast_switch);
++		intel_cpufreq_hwp_update(cpu, target_pstate, max_pstate,
++					 target_pstate, fast_switch);
+ 	} else if (target_pstate != old_pstate) {
+ 		intel_cpufreq_perf_ctl_update(cpu, target_pstate, fast_switch);
+ 	}
 -- 
 2.39.5
 
