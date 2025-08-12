@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4E3279915;
-	Tue, 12 Aug 2025 17:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198D4221FAC;
+	Tue, 12 Aug 2025 17:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020893; cv=none; b=Esvn45QIX3nHAy6CoeP9bPbKRlUTIwQLCMI7radrFc9rrmxuBHSWKmkqcfPEa7P78JAE4028Loqf/BiQgyre1j7sMrB3LNi2eNr1y+FjcMR2m9bbT90f3dbCB4/oaMvkaxgz9k3d6FrN4wcxKtEH6pMipSkPd+hXu4DaPDGJaUA=
+	t=1755020897; cv=none; b=fpe3ghl/TpRk/itkpDnUsQq2pIjzFV1y4KLzR3LoBVABcaLmEyB9+ugl7EvA3KeXElAndeY+FCI4PcvSB3H7iSMrQChy05pVxYV8lg31Gt1DFzFdPwUuLmR3Mk/PVWKc8ykVaX2/Q3/Gh7kab6GX37kDPBcdfXYf/d0g4ClowaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020893; c=relaxed/simple;
-	bh=86Dc9U1LbpP4oHafup10qy9NzGaV0kWCvLGkThqkiBQ=;
+	s=arc-20240116; t=1755020897; c=relaxed/simple;
+	bh=1nQHgsA1I79OY84Ma2AHcmF4LB3qhKmB9CdBuWp5A+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdLSGUSmmiOLrnf/ypWSHubqtF4D8wslXr7B//W66Patc4bf9YG6H42ZN8Kpemsmq6lAwF6YsuSL7ff9IdIVyxyIzddLS40590STWPO/J6Q+azsCTsPl03tLtDjpg75llsGaw+KX3L/qbSy9qEpIQHpmI2tVDvmedfzpuCbmySo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1pvkLbe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A6ZpRiaw9XqdzjALcr0UbFwD8hqnM5nhD109RkZbwFkTkTw1oxgyeg7NZAMhzjvjfh2mLjweDYmpBZaTrNqB72VDeuN7Ir1XTNmLv2i6QdJaaLzqGHchNMe+SgeKTXsuEHbZAQ+O2v9qD9fEV1J1cKkqTjbINhQ0hRwb0qWu0/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dj1SshLr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1pvkLbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3855CC4CEF0;
-	Tue, 12 Aug 2025 17:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dj1SshLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B35FC4CEF0;
+	Tue, 12 Aug 2025 17:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020893;
-	bh=86Dc9U1LbpP4oHafup10qy9NzGaV0kWCvLGkThqkiBQ=;
+	s=korg; t=1755020897;
+	bh=1nQHgsA1I79OY84Ma2AHcmF4LB3qhKmB9CdBuWp5A+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1pvkLbe2sU7jx4eUk37cqAuJrpfftFoVzwU12d0+EhHdLg5qep9jKxOh7ZFolhoR
-	 83nA+JPnR0MQuTKEB04U3amAu9Fv4YsiXgOY/cMK5lUxKcodXobE7W/dNrgTKm0V+y
-	 OejpzGaLXU51o31NiErVL3T6bBXnutbRh02FEfUM=
+	b=Dj1SshLrxRvuOdPaJU50tO4rBUVuY5OZKC1isMiiiw5YOG0yvX7K5i4krC+j8K6kF
+	 ehop8q4INeOfh+zuDTrYDy6h5F6wGB3YBxU7bisEKCqkb1SPzMjR9t9GukmoCAi4zg
+	 bVpbHrENE+QRacVLqgjacLLxpiFF/+njErOZdcD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Lee <ryan.lee@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Lizhi Xu <lizhi.xu@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/253] apparmor: ensure WB_HISTORY_SIZE value is a power of 2
-Date: Tue, 12 Aug 2025 19:29:31 +0200
-Message-ID: <20250812172956.560449832@linuxfoundation.org>
+Subject: [PATCH 6.6 030/262] Revert "vmci: Prevent the dispatching of uninitialized payloads"
+Date: Tue, 12 Aug 2025 19:26:58 +0200
+Message-ID: <20250812172954.251028433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryan Lee <ryan.lee@canonical.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 6c055e62560b958354625604293652753d82bcae ]
+[ Upstream commit 8f5d9bed6122b8d96508436e5ad2498bb797eb6b ]
 
-WB_HISTORY_SIZE was defined to be a value not a power of 2, despite a
-comment in the declaration of struct match_workbuf stating it is and a
-modular arithmetic usage in the inc_wb_pos macro assuming that it is. Bump
-WB_HISTORY_SIZE's value up to 32 and add a BUILD_BUG_ON_NOT_POWER_OF_2
-line to ensure that any future changes to the value of WB_HISTORY_SIZE
-respect this requirement.
+This reverts commit bfb4cf9fb97e4063f0aa62e9e398025fb6625031.
 
-Fixes: 136db994852a ("apparmor: increase left match history buffer size")
+While the code "looks" correct, the compiler has no way to know that
+doing "fun" pointer math like this really isn't a write off the end of
+the structure as there is no hint anywhere that the structure has data
+at the end of it.
 
-Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+This causes the following build warning:
+
+In function 'fortify_memset_chk',
+    inlined from 'ctx_fire_notification.isra' at drivers/misc/vmw_vmci/vmci_context.c:254:3:
+include/linux/fortify-string.h:480:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  480 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So revert it for now and it can come back in the future in a "sane" way
+that either correctly makes the structure know that there is trailing
+data, OR just the payload structure is properly referenced and zeroed
+out.
+
+Fixes: bfb4cf9fb97e ("vmci: Prevent the dispatching of uninitialized payloads")
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Lizhi Xu <lizhi.xu@windriver.com>
+Link: https://lore.kernel.org/r/20250703171021.0aee1482@canb.auug.org.au
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/match.h | 3 ++-
- security/apparmor/match.c         | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/misc/vmw_vmci/vmci_context.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/security/apparmor/include/match.h b/security/apparmor/include/match.h
-index 884489590588..29306ec87fd1 100644
---- a/security/apparmor/include/match.h
-+++ b/security/apparmor/include/match.h
-@@ -141,7 +141,8 @@ unsigned int aa_dfa_matchn_until(struct aa_dfa *dfa, unsigned int start,
+diff --git a/drivers/misc/vmw_vmci/vmci_context.c b/drivers/misc/vmw_vmci/vmci_context.c
+index d566103caa27..f22b44827e92 100644
+--- a/drivers/misc/vmw_vmci/vmci_context.c
++++ b/drivers/misc/vmw_vmci/vmci_context.c
+@@ -251,8 +251,6 @@ static int ctx_fire_notification(u32 context_id, u32 priv_flags)
+ 		ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
+ 						  VMCI_CONTEXT_RESOURCE_ID);
+ 		ev.msg.hdr.payload_size = sizeof(ev) - sizeof(ev.msg.hdr);
+-		memset((char*)&ev.msg.hdr + sizeof(ev.msg.hdr), 0,
+-			ev.msg.hdr.payload_size);
+ 		ev.msg.event_data.event = VMCI_EVENT_CTX_REMOVED;
+ 		ev.payload.context_id = context_id;
  
- void aa_dfa_free_kref(struct kref *kref);
- 
--#define WB_HISTORY_SIZE 24
-+/* This needs to be a power of 2 */
-+#define WB_HISTORY_SIZE 32
- struct match_workbuf {
- 	unsigned int count;
- 	unsigned int pos;
-diff --git a/security/apparmor/match.c b/security/apparmor/match.c
-index 3e9e1eaf990e..0e683ee323e3 100644
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -672,6 +672,7 @@ unsigned int aa_dfa_matchn_until(struct aa_dfa *dfa, unsigned int start,
- 
- #define inc_wb_pos(wb)						\
- do {								\
-+	BUILD_BUG_ON_NOT_POWER_OF_2(WB_HISTORY_SIZE);			\
- 	wb->pos = (wb->pos + 1) & (WB_HISTORY_SIZE - 1);		\
- 	wb->len = (wb->len + 1) & (WB_HISTORY_SIZE - 1);		\
- } while (0)
 -- 
 2.39.5
 
