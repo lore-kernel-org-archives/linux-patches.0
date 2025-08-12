@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD476BB5B;
-	Tue, 12 Aug 2025 18:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4432FD1C2;
+	Tue, 12 Aug 2025 18:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024886; cv=none; b=hGf1mVpoYViKlB3xlgKkYmzyI2WR+GrSSJp8T16QXLYdZsAJ4oSIUJXWYNJ/CDBAFtta1oUfs6SgCnI2ZJmyOTht5YUappOG/5Xd0pcJs8RNgvf79X6hc3MQxNt5ua7/g413Y01kurfn9woIN1xPekK9w3zBiJ3TJXHrf4fcXtY=
+	t=1755024889; cv=none; b=GZBB83K/YgOuR9Ur0HDti/1yneoPQjU3DL+lJARCLe/3TJvyZ29txYibTVBaN2OkyoWatDxctzucOcbWMTUHMuhneTZy0oljrGyZmvYOuHST6hwCemK/Y6pBPHuTYhK9htbdF0a5rh27XZxNs4GxdQMepGzmxilvhFV06CTxZvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024886; c=relaxed/simple;
-	bh=nIaG+7rb08qAf4GEClpFUefB+Rtbb5SkHFdWcV8v2nE=;
+	s=arc-20240116; t=1755024889; c=relaxed/simple;
+	bh=IJ2AzBbH9mxs4dhwn0j4zVU//5P6WzhNwRV54OsLoP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CoAi1S3biscgNhmwNXEMyot6xAtRYe8bQ8Ne5x60v0zN184MlCXi4nwSVgNFHUvXDHZCz+X3CdOPQFVuEL83se/DDuOuGfo+YMGkDPrTNAARH2uKo9Vhf3UPZYoSbQ8GA2jugVU45XvFMJPUVBhLmMPnqTlPINOhCmeD5DLvlrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3y9CC8r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uu5rekVtc+2ISiPZSY+LcwwEcR3nUVvg8Tntw+wYYkDyn9Ap8j5X8LL5yGrVl5Fef5qcCaL72K6cNzR1zZr1EVTBSGswdVu6qTOrrY8Bpm0Dl24Wsfu3xTbYnWjIqSf2NPi07dINGMvyIu05g1RkkUk1xHCi38tHHM+XJcrjmtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKwdU6dm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3y9CC8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEF2C4CEF0;
-	Tue, 12 Aug 2025 18:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKwdU6dm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3667C4CEF0;
+	Tue, 12 Aug 2025 18:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024885;
-	bh=nIaG+7rb08qAf4GEClpFUefB+Rtbb5SkHFdWcV8v2nE=;
+	s=korg; t=1755024889;
+	bh=IJ2AzBbH9mxs4dhwn0j4zVU//5P6WzhNwRV54OsLoP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3y9CC8rb3+GuGLVfzjxRqsClH6+42K6nTGvQgGpg+iazohd31eoEb44lL91/pYr0
-	 oMJM6NPwEh6DHslBaRN12DjWDgj/dJQPxeHQFKMyc4/kMw5fD6B7ILd/aQB5FZGR2f
-	 qRJdUIZJlelxLI/VBEfjc52FSfWtcEky4m/qyemo=
+	b=WKwdU6dmRhGTW69aUYPfedcztOanRVLYKvArScQFg/LLJHyzUexq4wCzE5y9NlCcg
+	 Ou/BMSZeNbZbMxSFcFnuzgIQl1d7TDGs3yKkfklvHodaqqAPNaXE4bEdi0SPTsMI6t
+	 gHrCqWmCrPlswK/PRV9DW2qwvYgEVBN/fuXIMls8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timothy Pearson <tpearson@raptorengineering.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 506/627] PCI: pnv_php: Fix surprise plug detection and recovery
-Date: Tue, 12 Aug 2025 19:33:21 +0200
-Message-ID: <20250812173448.303530038@linuxfoundation.org>
+Subject: [PATCH 6.16 507/627] tools/power turbostat: regression fix: --show C1E%
+Date: Tue, 12 Aug 2025 19:33:22 +0200
+Message-ID: <20250812173448.457609738@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,213 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timothy Pearson <tpearson@raptorengineering.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit a2a2a6fc2469524caa713036297c542746d148dc ]
+[ Upstream commit 5d939fbdd480cdf276eccc01eda3ed41e37d3f8a ]
 
-The existing PowerNV hotplug code did not handle surprise plug events
-correctly, leading to a complete failure of the hotplug system after device
-removal and a required reboot to detect new devices.
+The new default idle counter groupings broke "--show C1E%" (or any other C-state %)
 
-This comes down to two issues:
+Also delete a stray debug printf from the same offending commit.
 
- 1) When a device is surprise removed, often the bridge upstream
-    port will cause a PE freeze on the PHB.  If this freeze is not
-    cleared, the MSI interrupts from the bridge hotplug notification
-    logic will not be received by the kernel, stalling all plug events
-    on all slots associated with the PE.
-
- 2) When a device is removed from a slot, regardless of surprise or
-    programmatic removal, the associated PHB/PE ls left frozen.
-    If this freeze is not cleared via a fundamental reset, skiboot
-    is unable to clear the freeze and cannot retrain / rescan the
-    slot.  This also requires a reboot to clear the freeze and redetect
-    the device in the slot.
-
-Issue the appropriate unfreeze and rescan commands on hotplug events,
-and don't oops on hotplug if pci_bus_to_OF_node() returns NULL.
-
-Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
-[bhelgaas: tidy comments]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/171044224.1359864.1752615546988.JavaMail.zimbra@raptorengineeringinc.com
+Reported-by: Zhang Rui <rui.zhang@intel.com>
+Fixes: ec4acd3166d8 ("tools/power turbostat: disable "cpuidle" invocation counters, by default")
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/pci-hotplug.c |   3 +
- drivers/pci/hotplug/pnv_php.c     | 110 +++++++++++++++++++++++++++++-
- 2 files changed, 110 insertions(+), 3 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/powerpc/kernel/pci-hotplug.c b/arch/powerpc/kernel/pci-hotplug.c
-index 9ea74973d78d..6f444d0822d8 100644
---- a/arch/powerpc/kernel/pci-hotplug.c
-+++ b/arch/powerpc/kernel/pci-hotplug.c
-@@ -141,6 +141,9 @@ void pci_hp_add_devices(struct pci_bus *bus)
- 	struct pci_controller *phb;
- 	struct device_node *dn = pci_bus_to_OF_node(bus);
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 5230e072e414..33a54a9e0781 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -2429,7 +2429,6 @@ unsigned long long bic_lookup(char *name_list, enum show_hide_mode mode)
  
-+	if (!dn)
-+		return;
-+
- 	phb = pci_bus_to_host(bus);
+ 		}
+ 		if (i == MAX_BIC) {
+-			fprintf(stderr, "deferred %s\n", name_list);
+ 			if (mode == SHOW_LIST) {
+ 				deferred_add_names[deferred_add_index++] = name_list;
+ 				if (deferred_add_index >= MAX_DEFERRED) {
+@@ -10537,9 +10536,6 @@ void probe_cpuidle_residency(void)
+ 	int min_state = 1024, max_state = 0;
+ 	char *sp;
  
- 	mode = PCI_PROBE_NORMAL;
-diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
-index 5476c9e7760d..4f85e7fe29ec 100644
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -4,12 +4,14 @@
-  *
-  * Copyright Gavin Shan, IBM Corporation 2016.
-  * Copyright (C) 2025 Raptor Engineering, LLC
-+ * Copyright (C) 2025 Raptor Computing Systems, LLC
-  */
+-	if (!DO_BIC(BIC_pct_idle))
+-		return;
+-
+ 	for (state = 10; state >= 0; --state) {
  
- #include <linux/bitfield.h>
- #include <linux/libfdt.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-+#include <linux/delay.h>
- #include <linux/pci_hotplug.h>
- #include <linux/of_fdt.h>
- 
-@@ -469,6 +471,61 @@ static int pnv_php_set_attention_state(struct hotplug_slot *slot, u8 state)
- 	return 0;
- }
- 
-+static int pnv_php_activate_slot(struct pnv_php_slot *php_slot,
-+				 struct hotplug_slot *slot)
-+{
-+	int ret, i;
-+
-+	/*
-+	 * Issue initial slot activation command to firmware
-+	 *
-+	 * Firmware will power slot on, attempt to train the link, and
-+	 * discover any downstream devices. If this process fails, firmware
-+	 * will return an error code and an invalid device tree. Failure
-+	 * can be caused for multiple reasons, including a faulty
-+	 * downstream device, poor connection to the downstream device, or
-+	 * a previously latched PHB fence.  On failure, issue fundamental
-+	 * reset up to three times before aborting.
-+	 */
-+	ret = pnv_php_set_slot_power_state(slot, OPAL_PCI_SLOT_POWER_ON);
-+	if (ret) {
-+		SLOT_WARN(
-+			php_slot,
-+			"PCI slot activation failed with error code %d, possible frozen PHB",
-+			ret);
-+		SLOT_WARN(
-+			php_slot,
-+			"Attempting complete PHB reset before retrying slot activation\n");
-+		for (i = 0; i < 3; i++) {
-+			/*
-+			 * Slot activation failed, PHB may be fenced from a
-+			 * prior device failure.
-+			 *
-+			 * Use the OPAL fundamental reset call to both try a
-+			 * device reset and clear any potentially active PHB
-+			 * fence / freeze.
-+			 */
-+			SLOT_WARN(php_slot, "Try %d...\n", i + 1);
-+			pci_set_pcie_reset_state(php_slot->pdev,
-+						 pcie_warm_reset);
-+			msleep(250);
-+			pci_set_pcie_reset_state(php_slot->pdev,
-+						 pcie_deassert_reset);
-+
-+			ret = pnv_php_set_slot_power_state(
-+				slot, OPAL_PCI_SLOT_POWER_ON);
-+			if (!ret)
-+				break;
-+		}
-+
-+		if (i >= 3)
-+			SLOT_WARN(php_slot,
-+				  "Failed to bring slot online, aborting!\n");
-+	}
-+
-+	return ret;
-+}
-+
- static int pnv_php_enable(struct pnv_php_slot *php_slot, bool rescan)
- {
- 	struct hotplug_slot *slot = &php_slot->slot;
-@@ -531,7 +588,7 @@ static int pnv_php_enable(struct pnv_php_slot *php_slot, bool rescan)
- 		goto scan;
- 
- 	/* Power is off, turn it on and then scan the slot */
--	ret = pnv_php_set_slot_power_state(slot, OPAL_PCI_SLOT_POWER_ON);
-+	ret = pnv_php_activate_slot(php_slot, slot);
- 	if (ret)
- 		return ret;
- 
-@@ -838,16 +895,63 @@ static int pnv_php_enable_msix(struct pnv_php_slot *php_slot)
- 	return entry.vector;
- }
- 
-+static void
-+pnv_php_detect_clear_suprise_removal_freeze(struct pnv_php_slot *php_slot)
-+{
-+	struct pci_dev *pdev = php_slot->pdev;
-+	struct eeh_dev *edev;
-+	struct eeh_pe *pe;
-+	int i, rc;
-+
-+	/*
-+	 * When a device is surprise removed from a downstream bridge slot,
-+	 * the upstream bridge port can still end up frozen due to related EEH
-+	 * events, which will in turn block the MSI interrupts for slot hotplug
-+	 * detection.
-+	 *
-+	 * Detect and thaw any frozen upstream PE after slot deactivation.
-+	 */
-+	edev = pci_dev_to_eeh_dev(pdev);
-+	pe = edev ? edev->pe : NULL;
-+	rc = eeh_pe_get_state(pe);
-+	if ((rc == -ENODEV) || (rc == -ENOENT)) {
-+		SLOT_WARN(
-+			php_slot,
-+			"Upstream bridge PE state unknown, hotplug detect may fail\n");
-+	} else {
-+		if (pe->state & EEH_PE_ISOLATED) {
-+			SLOT_WARN(
-+				php_slot,
-+				"Upstream bridge PE %02x frozen, thawing...\n",
-+				pe->addr);
-+			for (i = 0; i < 3; i++)
-+				if (!eeh_unfreeze_pe(pe))
-+					break;
-+			if (i >= 3)
-+				SLOT_WARN(
-+					php_slot,
-+					"Unable to thaw PE %02x, hotplug detect will fail!\n",
-+					pe->addr);
-+			else
-+				SLOT_WARN(php_slot,
-+					  "PE %02x thawed successfully\n",
-+					  pe->addr);
-+		}
-+	}
-+}
-+
- static void pnv_php_event_handler(struct work_struct *work)
- {
- 	struct pnv_php_event *event =
- 		container_of(work, struct pnv_php_event, work);
- 	struct pnv_php_slot *php_slot = event->php_slot;
- 
--	if (event->added)
-+	if (event->added) {
- 		pnv_php_enable_slot(&php_slot->slot);
--	else
-+	} else {
- 		pnv_php_disable_slot(&php_slot->slot);
-+		pnv_php_detect_clear_suprise_removal_freeze(php_slot);
-+	}
- 
- 	kfree(event);
- }
+ 		sprintf(path, "/sys/devices/system/cpu/cpu%d/cpuidle/state%d/name", base_cpu, state);
 -- 
 2.39.5
 
