@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A5F26B2C8;
-	Tue, 12 Aug 2025 17:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B6F2E4248;
+	Tue, 12 Aug 2025 17:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021187; cv=none; b=qV1SuzhAeuzUDaweCZGkEeOYsIOtU83xW9Y+t6Txh640utxk09j0mPZ3ueH/15jpWpqYQYK/vYgnCqq1/fSLRdmYuA0lFfnQwqpOrQliNM62xz0msVZetqs99gyJEwhg5q2AwiDZOZK0Jg6F4kcvzoOu0PvWiJ3/vpPiQJOjz+o=
+	t=1755021190; cv=none; b=RjYFvjTbZeo2XX1dlcUploGJngfpS3KHbZkY0H2dsSp9UlztGcIt5zm0Kw19RyySBePeFZBoDYD3SznuIsmfNp0hBptdiGoAyGQSd4JLhDPLkV8qNEiOPSmhh29eeptgIKC5o5KG8CVyOpcJpYh0os8mJh8YuK1Pn4sHIfILBrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021187; c=relaxed/simple;
-	bh=QSQaeNFYnvGW8muqOS8df1VgXjPKOgW3kEfimg/EbOE=;
+	s=arc-20240116; t=1755021190; c=relaxed/simple;
+	bh=q5bkG3wX0UWsX7my4jMgjleXM5wdItAHPDgWzDjPcB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUytePcHnDSp8DkhIeoFMCE7GQG8ijGAena27KH+0DA+UV+c0HFLOAIgvTB/vz2E3vYeaLtsNDMkMw1+iFJNwhZgk6RiKA/rBNx2WCr4I5iu/ee+gSt9ktmkF5WvBoD8Za9V/YrCPUvOJOpEuVJpr7QLDfHPmBqtGPis4rt6DtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UluOo2I9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBqLcuvo5AxoEznsGzXHbB3n4tZMQravLZ1DsCRB0HygGFPcOxah638LIxa56bycgpUgsW23DgFz7RpYR5AqQlidiqp8sQTkp8aeq9AwrHd+ka97PqRwjR7kAoENvARpxFFP7h6/4D328CCXYasuNZ+Uk1x0+cZWeMz7T4UE3ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5Uj61DD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UluOo2I9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D0BC4CEF0;
-	Tue, 12 Aug 2025 17:53:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5Uj61DD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCA0C4CEF0;
+	Tue, 12 Aug 2025 17:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021187;
-	bh=QSQaeNFYnvGW8muqOS8df1VgXjPKOgW3kEfimg/EbOE=;
+	s=korg; t=1755021189;
+	bh=q5bkG3wX0UWsX7my4jMgjleXM5wdItAHPDgWzDjPcB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UluOo2I9NzEQ26mZFHG41k6Zx4OGPHerXmgzNklOUytfzw+DO1GLpfOoAyj/sLhq3
-	 bYjjgsPhh3yIY4sINC7OPvaoWPYhMupFjRqp4ZY16jF+Cl4rruyJag+ZCCLhvj4MEs
-	 O81B7aipq7fjOOrBMTa0xMLfldboatriTUkMihiI=
+	b=U5Uj61DDpoRFYwhAkJpRZil93Ksux50r0hP3f2+8JtKJ/RJsHkXmpWWuXIqTSFTV8
+	 38EfhkADOs4Iuf46D990xbJzqe1q8Fqe/TAEQ+SjtmJJ59MktQaZYPaWlPmOsf6M5j
+	 nurtL4o04vOEPLq8okjwZZHeECvZpw0B99l/KQOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/262] net/sched: Restrict conditions for adding duplicating netems to qdisc tree
-Date: Tue, 12 Aug 2025 19:27:43 +0200
-Message-ID: <20250812172956.224706748@linuxfoundation.org>
+Subject: [PATCH 6.1 227/253] smb: server: remove separate empty_recvmsg_queue
+Date: Tue, 12 Aug 2025 19:30:15 +0200
+Message-ID: <20250812172958.488737027@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,118 +52,171 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit ec8e0e3d7adef940cdf9475e2352c0680189d14e ]
+[ Upstream commit 01027a62b508c48c762096f347de925eedcbd008 ]
 
-netem_enqueue's duplication prevention logic breaks when a netem
-resides in a qdisc tree with other netems - this can lead to a
-soft lockup and OOM loop in netem_dequeue, as seen in [1].
-Ensure that a duplicating netem cannot exist in a tree with other
-netems.
+There's no need to maintain two lists, we can just
+have a single list of receive buffers, which are free to use.
 
-Previous approaches suggested in discussions in chronological order:
-
-1) Track duplication status or ttl in the sk_buff struct. Considered
-too specific a use case to extend such a struct, though this would
-be a resilient fix and address other previous and potential future
-DOS bugs like the one described in loopy fun [2].
-
-2) Restrict netem_enqueue recursion depth like in act_mirred with a
-per cpu variable. However, netem_dequeue can call enqueue on its
-child, and the depth restriction could be bypassed if the child is a
-netem.
-
-3) Use the same approach as in 2, but add metadata in netem_skb_cb
-to handle the netem_dequeue case and track a packet's involvement
-in duplication. This is an overly complex approach, and Jamal
-notes that the skb cb can be overwritten to circumvent this
-safeguard.
-
-4) Prevent the addition of a netem to a qdisc tree if its ancestral
-path contains a netem. However, filters and actions can cause a
-packet to change paths when re-enqueued to the root from netem
-duplication, leading us to the current solution: prevent a
-duplicating netem from inhabiting the same tree as other netems.
-
-[1] https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/
-[2] https://lwn.net/Articles/719297/
-
-Fixes: 0afb51e72855 ("[PKT_SCHED]: netem: reinsert for duplication")
-Reported-by: William Liu <will@willsroot.io>
-Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
-Signed-off-by: William Liu <will@willsroot.io>
-Signed-off-by: Savino Dicanosa <savy@syst3mfailure.io>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20250708164141.875402-1-will@willsroot.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ fs/smb/server/transport_rdma.c | 60 +++++-----------------------------
+ 1 file changed, 8 insertions(+), 52 deletions(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 447d3e836a24..0ad231e94e14 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -972,6 +972,41 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
- 	return 0;
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index 7b6639949c25..0a6fedac59f0 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -128,9 +128,6 @@ struct smb_direct_transport {
+ 	spinlock_t		recvmsg_queue_lock;
+ 	struct list_head	recvmsg_queue;
+ 
+-	spinlock_t		empty_recvmsg_queue_lock;
+-	struct list_head	empty_recvmsg_queue;
+-
+ 	int			send_credit_target;
+ 	atomic_t		send_credits;
+ 	spinlock_t		lock_new_recv_credits;
+@@ -274,32 +271,6 @@ static void put_recvmsg(struct smb_direct_transport *t,
+ 	spin_unlock(&t->recvmsg_queue_lock);
  }
  
-+static const struct Qdisc_class_ops netem_class_ops;
-+
-+static int check_netem_in_tree(struct Qdisc *sch, bool duplicates,
-+			       struct netlink_ext_ack *extack)
-+{
-+	struct Qdisc *root, *q;
-+	unsigned int i;
-+
-+	root = qdisc_root_sleeping(sch);
-+
-+	if (sch != root && root->ops->cl_ops == &netem_class_ops) {
-+		if (duplicates ||
-+		    ((struct netem_sched_data *)qdisc_priv(root))->duplicate)
-+			goto err;
-+	}
-+
-+	if (!qdisc_dev(root))
-+		return 0;
-+
-+	hash_for_each(qdisc_dev(root)->qdisc_hash, i, q, hash) {
-+		if (sch != q && q->ops->cl_ops == &netem_class_ops) {
-+			if (duplicates ||
-+			    ((struct netem_sched_data *)qdisc_priv(q))->duplicate)
-+				goto err;
-+		}
-+	}
-+
-+	return 0;
-+
-+err:
-+	NL_SET_ERR_MSG(extack,
-+		       "netem: cannot mix duplicating netems with other netems in tree");
-+	return -EINVAL;
-+}
-+
- /* Parse netlink message to set options */
- static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 			struct netlink_ext_ack *extack)
-@@ -1030,6 +1065,11 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	q->gap = qopt->gap;
- 	q->counter = 0;
- 	q->loss = qopt->loss;
-+
-+	ret = check_netem_in_tree(sch, qopt->duplicate, extack);
-+	if (ret)
-+		goto unlock;
-+
- 	q->duplicate = qopt->duplicate;
+-static struct
+-smb_direct_recvmsg *get_empty_recvmsg(struct smb_direct_transport *t)
+-{
+-	struct smb_direct_recvmsg *recvmsg = NULL;
+-
+-	spin_lock(&t->empty_recvmsg_queue_lock);
+-	if (!list_empty(&t->empty_recvmsg_queue)) {
+-		recvmsg = list_first_entry(&t->empty_recvmsg_queue,
+-					   struct smb_direct_recvmsg, list);
+-		list_del(&recvmsg->list);
+-	}
+-	spin_unlock(&t->empty_recvmsg_queue_lock);
+-	return recvmsg;
+-}
+-
+-static void put_empty_recvmsg(struct smb_direct_transport *t,
+-			      struct smb_direct_recvmsg *recvmsg)
+-{
+-	ib_dma_unmap_single(t->cm_id->device, recvmsg->sge.addr,
+-			    recvmsg->sge.length, DMA_FROM_DEVICE);
+-
+-	spin_lock(&t->empty_recvmsg_queue_lock);
+-	list_add_tail(&recvmsg->list, &t->empty_recvmsg_queue);
+-	spin_unlock(&t->empty_recvmsg_queue_lock);
+-}
+-
+ static void enqueue_reassembly(struct smb_direct_transport *t,
+ 			       struct smb_direct_recvmsg *recvmsg,
+ 			       int data_length)
+@@ -384,9 +355,6 @@ static struct smb_direct_transport *alloc_transport(struct rdma_cm_id *cm_id)
+ 	spin_lock_init(&t->recvmsg_queue_lock);
+ 	INIT_LIST_HEAD(&t->recvmsg_queue);
  
- 	/* for compatibility with earlier versions.
+-	spin_lock_init(&t->empty_recvmsg_queue_lock);
+-	INIT_LIST_HEAD(&t->empty_recvmsg_queue);
+-
+ 	init_waitqueue_head(&t->wait_send_pending);
+ 	atomic_set(&t->send_pending, 0);
+ 
+@@ -548,7 +516,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			       wc->opcode);
+ 			smb_direct_disconnect_rdma_connection(t);
+ 		}
+-		put_empty_recvmsg(t, recvmsg);
++		put_recvmsg(t, recvmsg);
+ 		return;
+ 	}
+ 
+@@ -562,7 +530,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	switch (recvmsg->type) {
+ 	case SMB_DIRECT_MSG_NEGOTIATE_REQ:
+ 		if (wc->byte_len < sizeof(struct smb_direct_negotiate_req)) {
+-			put_empty_recvmsg(t, recvmsg);
++			put_recvmsg(t, recvmsg);
+ 			return;
+ 		}
+ 		t->negotiation_requested = true;
+@@ -579,7 +547,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 
+ 		if (wc->byte_len <
+ 		    offsetof(struct smb_direct_data_transfer, padding)) {
+-			put_empty_recvmsg(t, recvmsg);
++			put_recvmsg(t, recvmsg);
+ 			return;
+ 		}
+ 
+@@ -587,7 +555,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		if (data_length) {
+ 			if (wc->byte_len < sizeof(struct smb_direct_data_transfer) +
+ 			    (u64)data_length) {
+-				put_empty_recvmsg(t, recvmsg);
++				put_recvmsg(t, recvmsg);
+ 				return;
+ 			}
+ 
+@@ -607,7 +575,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			avail_recvmsg_count = t->count_avail_recvmsg;
+ 			spin_unlock(&t->receive_credit_lock);
+ 		} else {
+-			put_empty_recvmsg(t, recvmsg);
++			put_recvmsg(t, recvmsg);
+ 
+ 			spin_lock(&t->receive_credit_lock);
+ 			receive_credits = --(t->recv_credits);
+@@ -805,7 +773,6 @@ static void smb_direct_post_recv_credits(struct work_struct *work)
+ 	struct smb_direct_recvmsg *recvmsg;
+ 	int receive_credits, credits = 0;
+ 	int ret;
+-	int use_free = 1;
+ 
+ 	spin_lock(&t->receive_credit_lock);
+ 	receive_credits = t->recv_credits;
+@@ -813,18 +780,9 @@ static void smb_direct_post_recv_credits(struct work_struct *work)
+ 
+ 	if (receive_credits < t->recv_credit_target) {
+ 		while (true) {
+-			if (use_free)
+-				recvmsg = get_free_recvmsg(t);
+-			else
+-				recvmsg = get_empty_recvmsg(t);
+-			if (!recvmsg) {
+-				if (use_free) {
+-					use_free = 0;
+-					continue;
+-				} else {
+-					break;
+-				}
+-			}
++			recvmsg = get_free_recvmsg(t);
++			if (!recvmsg)
++				break;
+ 
+ 			recvmsg->type = SMB_DIRECT_MSG_DATA_TRANSFER;
+ 			recvmsg->first_segment = false;
+@@ -1800,8 +1758,6 @@ static void smb_direct_destroy_pools(struct smb_direct_transport *t)
+ 
+ 	while ((recvmsg = get_free_recvmsg(t)))
+ 		mempool_free(recvmsg, t->recvmsg_mempool);
+-	while ((recvmsg = get_empty_recvmsg(t)))
+-		mempool_free(recvmsg, t->recvmsg_mempool);
+ 
+ 	mempool_destroy(t->recvmsg_mempool);
+ 	t->recvmsg_mempool = NULL;
 -- 
 2.39.5
 
