@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737662FE593;
-	Tue, 12 Aug 2025 18:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521F92FDC55;
+	Tue, 12 Aug 2025 18:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024166; cv=none; b=G1BLM9Ap2FDfughBrw4xC2HKbNthGM7aVqk1WZ41zPW/x3ffBWn1fgzuIbYf+UL3cf2emJeziumqjeoSehF+tHaQgbd2wRFa3atIOyt2GnJ7+/C5BVUseXZtszYOw/FEfCmdEuhkZgoHpDgEmvr7SQMR1LB9wdbDH8dvqx4K50k=
+	t=1755024170; cv=none; b=Ut8ZmHeRviHIjdair1QYyHcRpDubUmIuVt6ppbOFNbmINvoOzjtaogtZcEWDj3OiWYKF2AHX8yT2Uwd0w38d+NhC8Rx8XRDaKVNsxMvVIyBtIjCtVBCV72uPAXiV80ujE5Iy/FmsScrpkN6jfpR3sh1P/SiYIqrS6TJZLf2PtyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024166; c=relaxed/simple;
-	bh=UTuqIYkLt3YSUCUKMuLk2XwHURssXZDtj0IQ9q8c1xc=;
+	s=arc-20240116; t=1755024170; c=relaxed/simple;
+	bh=WG/tC0tUdn4YzEkJwBhMcHxtUcaui8/RT6UiQ7IYZ6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Np1MB1Y7C7R3OpAqBUUmkMwk8mmZAzh+OJiOAb47hQCb16o5fA/xqB7KWnN/Z+CymSpwKEfz3MJOxhA1KWpElDttPUPJoCDFzRjRT+fTkbbODa8CFdytRfgzwt6ihXUmdas2WOOTudsf0+VAbHMv7+y54WvkW2MU1lDcck5QQMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJqcOMdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIgijIuDOZpQvIOJV36ob5sGxIPRMqJTjyZqljO2afPVW6SCZoWc5FJjVewCit1jgwntzOoKKtCZ6K+v/QyDwi4sSQo4GwZZK5VRIrKoPO2Sat1BQvCN744Q7OjBBSZ69ai4quOoNlvOZFpAQahL6EI2+g82Acbu54zcL4ZjENo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adchXmsY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJqcOMdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5258C4CEF0;
-	Tue, 12 Aug 2025 18:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adchXmsY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EC1C4CEF0;
+	Tue, 12 Aug 2025 18:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024166;
-	bh=UTuqIYkLt3YSUCUKMuLk2XwHURssXZDtj0IQ9q8c1xc=;
+	s=korg; t=1755024169;
+	bh=WG/tC0tUdn4YzEkJwBhMcHxtUcaui8/RT6UiQ7IYZ6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJqcOMdkGhcYqdWqIr+n2HRK07QoWIoYU8iYBvncZAHOgMBXRjfUrLxIQu1FrIZXg
-	 dSKzCfJ8E4t7zblltyrM1OcnTmBQyDSdK4r1HrUxQ5NFRishJVLvsfZ5R2GXyvky9A
-	 Rsgvb7cH+aNYw7JV5E8ZECz/XfMtCknBaMiz4S8s=
+	b=adchXmsYdMFYINUV6t0BUr/KLKicPhw6MrEdLb+F+qKcvG6AqNixzgwSff++5wVgn
+	 yqOkcG7q9FjiZSSZHeFq9sjqYAkj8osX/0twhHRu2kRDPDNKMF/6/pOiGhk+iCK1tZ
+	 7HoDWmPRkSzGJGlopX7iFFWgg/J+3jMnGLzDiP78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gabriele Monaco <gmonaco@redhat.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 293/627] rv: Remove trailing whitespace from tracepoint string
-Date: Tue, 12 Aug 2025 19:29:48 +0200
-Message-ID: <20250812173430.455484242@linuxfoundation.org>
+Subject: [PATCH 6.16 294/627] rv: Use strings in da monitors tracepoints
+Date: Tue, 12 Aug 2025 19:29:49 +0200
+Message-ID: <20250812173430.493889971@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -61,17 +61,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 7b70ac4cad2b20eaf415276bbaa0d9df9abb428c ]
+[ Upstream commit 7f904ff6e58d398c4336f3c19c42b338324451f7 ]
 
-RV event tracepoints print a line with the format:
-    "event_xyz: S0 x event -> S1 "
-    "event_xyz: S1 x event -> S0 (final)"
+Using DA monitors tracepoints with KASAN enabled triggers the following
+warning:
 
-While printing an event leading to a non-final state, the line
-has a trailing white space (visible above before the closing ").
+ BUG: KASAN: global-out-of-bounds in do_trace_event_raw_event_event_da_monitor+0xd6/0x1a0
+ Read of size 32 at addr ffffffffaada8980 by task ...
+ Call Trace:
+  <TASK>
+ [...]
+  do_trace_event_raw_event_event_da_monitor+0xd6/0x1a0
+  ? __pfx_do_trace_event_raw_event_event_da_monitor+0x10/0x10
+  ? trace_event_sncid+0x83/0x200
+  trace_event_sncid+0x163/0x200
+ [...]
+ The buggy address belongs to the variable:
+  automaton_snep+0x4e0/0x5e0
 
-Adapt the format string not to print the trailing whitespace if we are
-not printing "(final)".
+This is caused by the tracepoints reading 32 bytes __array instead of
+__string from the automata definition. Such strings are literals and
+reading 32 bytes ends up in out of bound memory accesses (e.g. the next
+automaton's data in this case).
+The error is harmless as, while printing the string, we stop at the null
+terminator, but it should still be fixed.
+
+Use the __string facilities while defining the tracepoints to avoid
+reading out of bound memory.
 
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Ingo Molnar <mingo@redhat.com>
@@ -80,49 +96,150 @@ Cc: Tomas Glozar <tglozar@redhat.com>
 Cc: Juri Lelli <jlelli@redhat.com>
 Cc: Clark Williams <williams@redhat.com>
 Cc: John Kacur <jkacur@redhat.com>
-Link: https://lore.kernel.org/20250728135022.255578-3-gmonaco@redhat.com
+Link: https://lore.kernel.org/20250728135022.255578-4-gmonaco@redhat.com
+Fixes: 792575348ff7 ("rv/include: Add deterministic automata monitor definition via C macros")
 Reviewed-by: Nam Cao <namcao@linutronix.de>
 Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 7f904ff6e58d ("rv: Use strings in da monitors tracepoints")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/rv/rv_trace.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/rv/rv_trace.h | 76 +++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 38 deletions(-)
 
 diff --git a/kernel/trace/rv/rv_trace.h b/kernel/trace/rv/rv_trace.h
-index 422b75f58891..18fa0e358a30 100644
+index 18fa0e358a30..01fa84824bcb 100644
 --- a/kernel/trace/rv/rv_trace.h
 +++ b/kernel/trace/rv/rv_trace.h
-@@ -29,11 +29,11 @@ DECLARE_EVENT_CLASS(event_da_monitor,
- 		__entry->final_state		= final_state;
+@@ -16,23 +16,23 @@ DECLARE_EVENT_CLASS(event_da_monitor,
+ 	TP_ARGS(state, event, next_state, final_state),
+ 
+ 	TP_STRUCT__entry(
+-		__array(	char,	state,		MAX_DA_NAME_LEN	)
+-		__array(	char,	event,		MAX_DA_NAME_LEN	)
+-		__array(	char,	next_state,	MAX_DA_NAME_LEN	)
+-		__field(	bool,	final_state			)
++		__string(	state,		state		)
++		__string(	event,		event		)
++		__string(	next_state,	next_state	)
++		__field(	bool,		final_state	)
  	),
  
--	TP_printk("%s x %s -> %s %s",
-+	TP_printk("%s x %s -> %s%s",
- 		__entry->state,
- 		__entry->event,
- 		__entry->next_state,
--		__entry->final_state ? "(final)" : "")
-+		__entry->final_state ? " (final)" : "")
+ 	TP_fast_assign(
+-		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->next_state,	next_state,	MAX_DA_NAME_LEN);
+-		__entry->final_state		= final_state;
++		__assign_str(state);
++		__assign_str(event);
++		__assign_str(next_state);
++		__entry->final_state = final_state;
+ 	),
+ 
+ 	TP_printk("%s x %s -> %s%s",
+-		__entry->state,
+-		__entry->event,
+-		__entry->next_state,
++		__get_str(state),
++		__get_str(event),
++		__get_str(next_state),
+ 		__entry->final_state ? " (final)" : "")
  );
  
- DECLARE_EVENT_CLASS(error_da_monitor,
-@@ -90,12 +90,12 @@ DECLARE_EVENT_CLASS(event_da_monitor_id,
- 		__entry->final_state		= final_state;
+@@ -43,18 +43,18 @@ DECLARE_EVENT_CLASS(error_da_monitor,
+ 	TP_ARGS(state, event),
+ 
+ 	TP_STRUCT__entry(
+-		__array(	char,	state,		MAX_DA_NAME_LEN	)
+-		__array(	char,	event,		MAX_DA_NAME_LEN	)
++		__string(	state,	state	)
++		__string(	event,	event	)
  	),
  
--	TP_printk("%d: %s x %s -> %s %s",
-+	TP_printk("%d: %s x %s -> %s%s",
+ 	TP_fast_assign(
+-		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
++		__assign_str(state);
++		__assign_str(event);
+ 	),
+ 
+ 	TP_printk("event %s not expected in the state %s",
+-		__entry->event,
+-		__entry->state)
++		__get_str(event),
++		__get_str(state))
+ );
+ 
+ #include <monitors/wip/wip_trace.h>
+@@ -75,26 +75,26 @@ DECLARE_EVENT_CLASS(event_da_monitor_id,
+ 	TP_ARGS(id, state, event, next_state, final_state),
+ 
+ 	TP_STRUCT__entry(
+-		__field(	int,	id				)
+-		__array(	char,	state,		MAX_DA_NAME_LEN	)
+-		__array(	char,	event,		MAX_DA_NAME_LEN	)
+-		__array(	char,	next_state,	MAX_DA_NAME_LEN	)
+-		__field(	bool,	final_state			)
++		__field(	int,		id		)
++		__string(	state,		state		)
++		__string(	event,		event		)
++		__string(	next_state,	next_state	)
++		__field(	bool,		final_state	)
+ 	),
+ 
+ 	TP_fast_assign(
+-		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->next_state,	next_state,	MAX_DA_NAME_LEN);
+-		__entry->id			= id;
+-		__entry->final_state		= final_state;
++		__assign_str(state);
++		__assign_str(event);
++		__assign_str(next_state);
++		__entry->id		= id;
++		__entry->final_state	= final_state;
+ 	),
+ 
+ 	TP_printk("%d: %s x %s -> %s%s",
  		__entry->id,
- 		__entry->state,
- 		__entry->event,
- 		__entry->next_state,
--		__entry->final_state ? "(final)" : "")
-+		__entry->final_state ? " (final)" : "")
+-		__entry->state,
+-		__entry->event,
+-		__entry->next_state,
++		__get_str(state),
++		__get_str(event),
++		__get_str(next_state),
+ 		__entry->final_state ? " (final)" : "")
  );
  
- DECLARE_EVENT_CLASS(error_da_monitor_id,
+@@ -105,21 +105,21 @@ DECLARE_EVENT_CLASS(error_da_monitor_id,
+ 	TP_ARGS(id, state, event),
+ 
+ 	TP_STRUCT__entry(
+-		__field(	int,	id				)
+-		__array(	char,	state,		MAX_DA_NAME_LEN	)
+-		__array(	char,	event,		MAX_DA_NAME_LEN	)
++		__field(	int,	id	)
++		__string(	state,	state	)
++		__string(	event,	event	)
+ 	),
+ 
+ 	TP_fast_assign(
+-		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
+-		__entry->id			= id;
++		__assign_str(state);
++		__assign_str(event);
++		__entry->id	= id;
+ 	),
+ 
+ 	TP_printk("%d: event %s not expected in the state %s",
+ 		__entry->id,
+-		__entry->event,
+-		__entry->state)
++		__get_str(event),
++		__get_str(state))
+ );
+ 
+ #include <monitors/wwnr/wwnr_trace.h>
 -- 
 2.39.5
 
