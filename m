@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43966279DB6;
-	Tue, 12 Aug 2025 19:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594E426FA77;
+	Tue, 12 Aug 2025 19:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025548; cv=none; b=VS4/KmZnq1Se6qkkC7meuBxFdZlQiID8X5VUbYaFHx3g/FNu8pTbJDjnhH6Uk97cZLd5Otukg0D5lJP4uYQZhu76zsTO5Z6GmX0QCpmKe5PvbTY0v17fE5mXqUvTfZ2tYZ+o3IaxBjT2Iuq9b9TNXQdmv3Y0Qd9NGjI//4W4e2k=
+	t=1755025551; cv=none; b=Yz9/wg4bB3M4icOAgiO86ZkfPNEeIxbSMWlAMd84enlPs0JtrdzTDYY8e7qX3UIoREQCxbpUxUKRSVp+0yN2NjCAUinWEziYRAh0ldeZ6DGDC2VCzIhD+2gQr1xgfojZVOePMpddczITmfsFykxwQbQq2Am8qN5ePvrka31dNZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025548; c=relaxed/simple;
-	bh=fUyW9LjPQKpKcmVL8cF5N9xo9gOfR7916YJHmusMj/I=;
+	s=arc-20240116; t=1755025551; c=relaxed/simple;
+	bh=vfzipKHmMdq7ul3FB9DrvQMiaVuJJEcxkqL/ekiboak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2RYFfs5OZG8FzoEMKfxhj5NkMMJ/UALeTLQIk7NAWWAngfRUVCpldEhv+VqRc5LYGE6b3TBzK/8cBNlKe+2ctC0Ip46AuisIlP4EWLB2tUjP+13c36dbsCN0jtVRtsJusJ+6zvsGr07YmIYUS/cLRDHgJH1vrdUo7sAR4sJtMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGmk1efn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEzVWrYvzGDDFQnMl8EwUivCcYmXpAvs+G33/gvGouG3hX4UUJKBwzzDNaxMUwwvuk+SY7M9pF7AlJB0D1daEysqdZPhHJnr2Ov1J9M+u/Fe32cook+P9/D0AZS5rod5HhG5GrzaPnB5vm1InzEhnp9B8qkQBqrqOK2VoO2EJxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnT7LCJ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGmk1efn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B96CC4CEF0;
-	Tue, 12 Aug 2025 19:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnT7LCJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C04C4CEF0;
+	Tue, 12 Aug 2025 19:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025547;
-	bh=fUyW9LjPQKpKcmVL8cF5N9xo9gOfR7916YJHmusMj/I=;
+	s=korg; t=1755025551;
+	bh=vfzipKHmMdq7ul3FB9DrvQMiaVuJJEcxkqL/ekiboak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGmk1efnv71T5AHqAQRItAWyYZBAk3Fge1EDG/KiP2OqzCP5KKkgAyBuCEIIEy1Ha
-	 s6z92j0ihXpccF/JocpV8+wXgOgtusRwNFuHc8W7EiapgJgEkGMpEjTeSZleKX5nx5
-	 wKvpYol41FgKUPVEGvxNnyCJrQ464EM1jGRvnofM=
+	b=fnT7LCJ/FZbyCCsAWNtJP7skwzoOUAfBr9dnmXWGPbHankby5YxrICrk+U2eAEyuQ
+	 WgxI0XXLQXn7sk8iwvvIUfWWpdehPu/I97jP+4ieoXtlFu5diLIK1LEOpgqCh1XJYI
+	 wG911IiZ1tyOKuzzaJn6lJ/Qx2anyIZWdLM447/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 072/480] staging: gpib: Fix error code in board_type_ioctl()
-Date: Tue, 12 Aug 2025 19:44:40 +0200
-Message-ID: <20250812174400.397882718@linuxfoundation.org>
+Subject: [PATCH 6.15 073/480] staging: gpib: Fix error handling paths in cb_gpib_probe()
+Date: Tue, 12 Aug 2025 19:44:41 +0200
+Message-ID: <20250812174400.442815477@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -50,36 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit aa07b790d79226f9bd0731d2c065db2823867cc5 ]
+[ Upstream commit 1b0ee85ee7967a4d7a68080c3f6a66af69e4e0b4 ]
 
-When copy_from_user() fails it return number of bytes it wasn't able to
-copy. So the correct return value when copy_from_user() fails is
--EFAULT.
+If cb_gpib_config() fails, 'info' needs to be freed, as already done in the
+remove function.
 
-Fixes: 9dde4559e939 ("staging: gpib: Add GPIB common core driver")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20250703064633.1955893-1-harshit.m.mogalapalli@oracle.com
+While at it, remove a pointless comment related to gpib_attach().
+
+Fixes: e9dc69956d4d ("staging: gpib: Add Computer Boards GPIB driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/bf89d6f2f8b8c680720d02061fc4ebdd805deca8.1751709098.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/common/gpib_os.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/gpib/cb7210/cb7210.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/gpib/common/gpib_os.c b/drivers/staging/gpib/common/gpib_os.c
-index 8456b97290b8..01a9099a6c16 100644
---- a/drivers/staging/gpib/common/gpib_os.c
-+++ b/drivers/staging/gpib/common/gpib_os.c
-@@ -819,7 +819,7 @@ static int board_type_ioctl(gpib_file_private_t *file_priv, struct gpib_board *b
+diff --git a/drivers/staging/gpib/cb7210/cb7210.c b/drivers/staging/gpib/cb7210/cb7210.c
+index 6b22a33a8c4f..e6465331ffd0 100644
+--- a/drivers/staging/gpib/cb7210/cb7210.c
++++ b/drivers/staging/gpib/cb7210/cb7210.c
+@@ -1183,8 +1183,7 @@ struct local_info {
+ static int cb_gpib_probe(struct pcmcia_device *link)
+ {
+ 	struct local_info *info;
+-
+-//	int ret, i;
++	int ret;
  
- 	retval = copy_from_user(&cmd, (void __user *)arg, sizeof(board_type_ioctl_t));
- 	if (retval)
--		return retval;
-+		return -EFAULT;
+ 	/* Allocate space for private device-specific data */
+ 	info = kzalloc(sizeof(*info), GFP_KERNEL);
+@@ -1210,8 +1209,16 @@ static int cb_gpib_probe(struct pcmcia_device *link)
  
- 	for (list_ptr = registered_drivers.next; list_ptr != &registered_drivers;
- 	     list_ptr = list_ptr->next) {
+ 	/* Register with Card Services */
+ 	curr_dev = link;
+-	return cb_gpib_config(link);
+-} /* gpib_attach */
++	ret = cb_gpib_config(link);
++	if (ret)
++		goto free_info;
++
++	return 0;
++
++free_info:
++	kfree(info);
++	return ret;
++}
+ 
+ /*
+  *   This deletes a driver "instance".  The device is de-registered
 -- 
 2.39.5
 
