@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8393921ABD0;
-	Tue, 12 Aug 2025 18:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0887721ABD0;
+	Tue, 12 Aug 2025 18:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023218; cv=none; b=Eub9++E0qZtEjQg6aovL1bL2Z+gqHO3rz48DZL9fL4q/FSKuUIwCBPh4kv9BI5pSR/NccoDrzzJ3cHf+7fU5i8wpJv5HPzHHiIqwSsO7qokUXDvSwx5cKCAED9j2BXhyCtNpTrUGTXNGxpV7g3E+T6hfy6CJHGPtSSyzVTsfoEM=
+	t=1755023222; cv=none; b=puaAuTbp/uSnYq40Mo+m6aeIw46LMYGyoZvpiiuR7ZnmZ2YDCLyVgyyaY6ZcBg4ORQSYArHJA7rkm9BRDMqVyIqPEYvHOys0QtvxBEIBlF/trvXJNZIWflDXObA6IwCB1en9PeGpuL0q+AwQCzDozwUAYKVALCvjPLeYZxCC1bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023218; c=relaxed/simple;
-	bh=VTsYBVMCwjBIKb1MUOUHH+1XRuigzZv6CWfhSwTkv7w=;
+	s=arc-20240116; t=1755023222; c=relaxed/simple;
+	bh=tj1XpLZ/1ZlN1h7DUBKboco6JqCTm+mVLF+NLDDxnFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJQn/sGlLc0wQru2tYjhY+MYIP4ZbxeUFJQHjJKyu99KQ4zwwbsmUCM6SFlf8ZZ+7pSGMUtchh9Jwx+YLvj/1OYyBAGVNfcqEuUbPHTYgFJop6XxW22aurAuuFLySmvJHpPDfBWZvTOVcbJXLEdbMNqVGDK2iKwO6UhCvZM8G9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylIjm5Dm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JbPwVY/yBTDJHQ6RDNv/EAzGgf9Nvo/T2a1p7eGGoQdiDMN8utUpw/m73X13tObcsv/uLtjHiiAuR8yBewmZYlQbYHnxIMHiTQbgpdLIQhJQ/gAPnPhF6JuGNoV/utp191gobPeVW0Fcf9IiV4trO1eHplpa+20V9N43XV8iil8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae0krAZz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylIjm5Dm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CF9C4CEF0;
-	Tue, 12 Aug 2025 18:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae0krAZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DF3C4CEF0;
+	Tue, 12 Aug 2025 18:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023218;
-	bh=VTsYBVMCwjBIKb1MUOUHH+1XRuigzZv6CWfhSwTkv7w=;
+	s=korg; t=1755023221;
+	bh=tj1XpLZ/1ZlN1h7DUBKboco6JqCTm+mVLF+NLDDxnFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylIjm5DmWckP/ap1V9H8LmsEAq808d1r+i9KhWhVTQHUrNLWpyqlF0IFz6NBV5rFU
-	 QDUiHkSXFx/GvX+214CVl9r+4GuVAUZvHTFTjzVm/YUTEdqlSusu/fNjVOUG9jquVq
-	 z/AvLXbw+5Jw9kfMGxqVJxYd/6Gkk+ApqVQAkCok=
+	b=Ae0krAZzyphOjRyt81nqlF244qi7k6P8nnvFvSXPR5N4eQqkJOwsF5zzOeOOc1rRX
+	 5SSjmZvt3DP2FWvw/wJ2q0yJSLEfyNXCRsnxOttG87tqRKwWgTKfUC0xWUJBaBhIh2
+	 QR4HttTqlhjkiotZ0m++j8oKfTybupwBsE9ar5P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Jannik=20Gl=C3=BCckert?= <jannik.glueckert@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 016/627] md: allow removing faulty rdev during resync
-Date: Tue, 12 Aug 2025 19:25:11 +0200
-Message-ID: <20250812173419.937897066@linuxfoundation.org>
+Subject: [PATCH 6.16 017/627] kunit/fortify: Add back "volatile" for sizeof() constants
+Date: Tue, 12 Aug 2025 19:25:12 +0200
+Message-ID: <20250812173419.974702088@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,96 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit c0ffeb648000acdc932da7a9d33fd65e9263c54c ]
+[ Upstream commit 10299c07c94aa0997fa43523b53301e713a6415d ]
 
-During RAID resync, faulty rdev cannot be removed and will result in
-"Device or resource busy" error when attempting hot removal.
+It seems the Clang can see through OPTIMIZER_HIDE_VAR when the constant
+is coming from sizeof. Adding "volatile" back to these variables solves
+this false positive without reintroducing the issues that originally led
+to switching to OPTIMIZER_HIDE_VAR in the first place[1].
 
-Reproduction steps:
-  mdadm -Cv /dev/md0 -l1 -n3 -e1.2 /dev/sd{b..d}
-  mdadm /dev/md0 -f /dev/sdb
-  mdadm /dev/md0 -r /dev/sdb
-  -> mdadm: hot remove failed for /dev/sdb: Device or resource busy
-
-After commit 4b10a3bc67c1 ("md: ensure resync is prioritized over
-recovery"), when a device becomes faulty during resync, the
-md_choose_sync_action() function returns early without calling
-remove_and_add_spares(), preventing faulty device removal.
-
-This patch extracts a helper function remove_spares() to support
-removing faulty devices during RAID resync operations.
-
-Fixes: 4b10a3bc67c1 ("md: ensure resync is prioritized over recovery")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
-Link: https://lore.kernel.org/linux-raid/20250707075412.150301-1-zhengqixing@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2075 [1]
+Cc: Jannik Glückert <jannik.glueckert@gmail.com>
+Suggested-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 6ee149f61bcc ("kunit/fortify: Replace "volatile" with OPTIMIZER_HIDE_VAR()")
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250628234034.work.800-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ lib/tests/fortify_kunit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 0f03b21e66e4..7f5e5a16243a 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9456,17 +9456,11 @@ static bool md_spares_need_change(struct mddev *mddev)
- 	return false;
- }
- 
--static int remove_and_add_spares(struct mddev *mddev,
--				 struct md_rdev *this)
-+static int remove_spares(struct mddev *mddev, struct md_rdev *this)
+diff --git a/lib/tests/fortify_kunit.c b/lib/tests/fortify_kunit.c
+index 29ffc62a71e3..fc9c76f026d6 100644
+--- a/lib/tests/fortify_kunit.c
++++ b/lib/tests/fortify_kunit.c
+@@ -1003,8 +1003,8 @@ static void fortify_test_memcmp(struct kunit *test)
  {
- 	struct md_rdev *rdev;
--	int spares = 0;
- 	int removed = 0;
+ 	char one[] = "My mind is going ...";
+ 	char two[] = "My mind is going ... I can feel it.";
+-	size_t one_len = sizeof(one) - 1;
+-	size_t two_len = sizeof(two) - 1;
++	volatile size_t one_len = sizeof(one) - 1;
++	volatile size_t two_len = sizeof(two) - 1;
  
--	if (this && test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
--		/* Mustn't remove devices when resync thread is running */
--		return 0;
--
- 	rdev_for_each(rdev, mddev) {
- 		if ((this == NULL || rdev == this) && rdev_removeable(rdev) &&
- 		    !mddev->pers->hot_remove_disk(mddev, rdev)) {
-@@ -9480,6 +9474,21 @@ static int remove_and_add_spares(struct mddev *mddev,
- 	if (removed && mddev->kobj.sd)
- 		sysfs_notify_dirent_safe(mddev->sysfs_degraded);
- 
-+	return removed;
-+}
-+
-+static int remove_and_add_spares(struct mddev *mddev,
-+				 struct md_rdev *this)
-+{
-+	struct md_rdev *rdev;
-+	int spares = 0;
-+	int removed = 0;
-+
-+	if (this && test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
-+		/* Mustn't remove devices when resync thread is running */
-+		return 0;
-+
-+	removed = remove_spares(mddev, this);
- 	if (this && removed)
- 		goto no_add;
- 
-@@ -9522,6 +9531,7 @@ static bool md_choose_sync_action(struct mddev *mddev, int *spares)
- 
- 	/* Check if resync is in progress. */
- 	if (mddev->recovery_cp < MaxSector) {
-+		remove_spares(mddev, NULL);
- 		set_bit(MD_RECOVERY_SYNC, &mddev->recovery);
- 		clear_bit(MD_RECOVERY_RECOVER, &mddev->recovery);
- 		return true;
+ 	OPTIMIZER_HIDE_VAR(one_len);
+ 	OPTIMIZER_HIDE_VAR(two_len);
 -- 
 2.39.5
 
