@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AAF26FA77;
-	Tue, 12 Aug 2025 19:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F6421C187;
+	Tue, 12 Aug 2025 19:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025779; cv=none; b=SoK5ZYnaaRlIKZyFVshN0a9xV2oN8tQ0m5DvzgKHEDTJUvgvFTltGQZfGQrVcg1F0mwhkxXe237noVDVeU1KXUajr034l5eaDRjwF2FDBXcRyXnGOPYaoc2G6BGxtgpYbzN7UNGOJaB7E43htxEnm/uaMy6oZ3yygq0sDBHGDcc=
+	t=1755025782; cv=none; b=U18k49H4Z3tLcNW9hZOBYhkc7L6894BFM5oOhkta9M0yUUDRiMlSVGF3XS35/mqdEn6r9aRAMjpxHuS/Cyzm4Y9Q9wxkTbF8xnuQZaYU4P7/vVE+v6ZTdjAHU0sppE7lXWKtOdWAFdd64q8LzEJrrmvXnN6nnyi2XJw3JEIcVNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025779; c=relaxed/simple;
-	bh=LElX4a7j8CyydMwyvFp2T/63NIXHduojvla/ddlCDlg=;
+	s=arc-20240116; t=1755025782; c=relaxed/simple;
+	bh=owNvjwD5aikUOL1t9sCPeScAVARtSxx3Jc+MJZbHN7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FWlJ0P0nCiYtrTePNb9hTISS0wUCUF5P/o4NjM5J1Z47SldcWSNhUjjHmWsiwLA8CDPpIe1cf8WhyC29MCNz8v4Uh8qKdSBIeQFUIjhKE9QQ+n9NEb5R3jnfkcwH55CqgNu45N1HJURqej+TLvozIzF9ZhZfbzsSckRAvIptXD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MV3dh3Os; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OIflxm8e2pn68gk2qT0Xf9zA6sB02F7VgXlOGzHo9ctibkjQdivQtRIyQRetAWhLwbLHeWL+MvWqzQlmihSSb5Ruzrz00gSX19ikEgFDhqOXEnita9CmmJWEsciwTo6AFjxF1I90awS8Ch3WRCuGk9a5UL76GkDZ8v9UA5NMiSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUicQQAa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MV3dh3Os"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CE5C4CEF1;
-	Tue, 12 Aug 2025 19:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUicQQAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E739BC4CEF6;
+	Tue, 12 Aug 2025 19:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025779;
-	bh=LElX4a7j8CyydMwyvFp2T/63NIXHduojvla/ddlCDlg=;
+	s=korg; t=1755025782;
+	bh=owNvjwD5aikUOL1t9sCPeScAVARtSxx3Jc+MJZbHN7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MV3dh3OsTTKiZnVFmkEA85sf5FXthkPa9LtkxTUgjiHmtywpbYkXON/Bc+c0vreP1
-	 UtqMZH60uzHoP4GKBT9DUWtq399aaJ+JF5hlT+46D2LeUwa+xXgP24U6ELTMt8HzTN
-	 BM4b7ynwf38i3M+YsJDLJBOYRGOTdfAHDE8CrAx0=
+	b=cUicQQAawW8s06lH+i5nixRVoM8zCmPe+PQWwscX/Rbln70Mj+rPsAS4bZs/qdG10
+	 w0JSho3chlqaJdPgZqbiVuMA/EDgql6prJzPNdzm1JSTaq2+Tnhs9T5RQkHk8Y+V02
+	 jnU8m8ffnN4Fusg1LjfHyJPZAOih/dWt4avoS04A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kowshik Jois <kowsjois@linux.ibm.com>,
+	Haren Myneni <haren@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 141/480] drm/amd/pm/powerplay/hwmgr/smu_helper: fix order of mask and value
-Date: Tue, 12 Aug 2025 19:45:49 +0200
-Message-ID: <20250812174403.338750728@linuxfoundation.org>
+Subject: [PATCH 6.15 115/480] powerpc/pseries/dlpar: Search DRC index from ibm,drc-indexes for IO add
+Date: Tue, 12 Aug 2025 19:45:23 +0200
+Message-ID: <20250812174402.245997364@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -45,48 +48,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Haren Myneni <haren@linux.ibm.com>
 
-[ Upstream commit a54e4639c4ef37a0241bac7d2a77f2e6ffb57099 ]
+[ Upstream commit 41a1452759a8b1121df9cf7310acf31d766ba70b ]
 
-There is a small typo in phm_wait_on_indirect_register().
+IO hotplug add event is handled in the user space with drmgr tool.
+After the device is enabled, the user space uses /sys/kernel/dlpar
+interface with “dt add index <drc_index>” to update the device tree.
+The kernel interface (dlpar_hp_dt_add()) finds the parent node for
+the specified ‘drc_index’ from ibm,drc-info property. The recent FW
+provides this property from 2017 onwards. But KVM guest code in
+some releases is still using the older SLOF firmware which has
+ibm,drc-indexes property instead of ibm,drc-info.
 
-Swap mask and value arguments provided to phm_wait_on_register() so that
-they satisfy the function signature and actual usage scheme.
+If the ibm,drc-info is not available, this patch adds changes to
+search ‘drc_index’ from the indexes array in ibm,drc-indexes
+property to support old FW.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
-
-In practice this doesn't fix any issues because the only place this
-function is used uses the same value for the value and mask.
-
-Fixes: 3bace3591493 ("drm/amd/powerplay: add hardware manager sub-component")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 02b98ff44a57 ("powerpc/pseries/dlpar: Add device tree nodes for DLPAR IO add")
+Reported-by: Kowshik Jois <kowsjois@linux.ibm.com>
+Signed-off-by: Haren Myneni <haren@linux.ibm.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250531235002.239213-1-haren@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/dlpar.c | 52 +++++++++++++++++++++++++-
+ 1 file changed, 50 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu_helper.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu_helper.c
-index 79a566f3564a..c305ea4ec17d 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu_helper.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu_helper.c
-@@ -149,7 +149,7 @@ int phm_wait_on_indirect_register(struct pp_hwmgr *hwmgr,
- 	}
- 
- 	cgs_write_register(hwmgr->device, indirect_port, index);
--	return phm_wait_on_register(hwmgr, indirect_port + 1, mask, value);
-+	return phm_wait_on_register(hwmgr, indirect_port + 1, value, mask);
+diff --git a/arch/powerpc/platforms/pseries/dlpar.c b/arch/powerpc/platforms/pseries/dlpar.c
+index 213aa26dc8b3..979487da6522 100644
+--- a/arch/powerpc/platforms/pseries/dlpar.c
++++ b/arch/powerpc/platforms/pseries/dlpar.c
+@@ -404,6 +404,45 @@ get_device_node_with_drc_info(u32 index)
+ 	return NULL;
  }
  
- int phm_wait_for_register_unequal(struct pp_hwmgr *hwmgr,
++static struct device_node *
++get_device_node_with_drc_indexes(u32 drc_index)
++{
++	struct device_node *np = NULL;
++	u32 nr_indexes, index;
++	int i, rc;
++
++	for_each_node_with_property(np, "ibm,drc-indexes") {
++		/*
++		 * First element in the array is the total number of
++		 * DRC indexes returned.
++		 */
++		rc = of_property_read_u32_index(np, "ibm,drc-indexes",
++				0, &nr_indexes);
++		if (rc)
++			goto out_put_np;
++
++		/*
++		 * Retrieve DRC index from the list and return the
++		 * device node if matched with the specified index.
++		 */
++		for (i = 0; i < nr_indexes; i++) {
++			rc = of_property_read_u32_index(np, "ibm,drc-indexes",
++							i+1, &index);
++			if (rc)
++				goto out_put_np;
++
++			if (drc_index == index)
++				return np;
++		}
++	}
++
++	return NULL;
++
++out_put_np:
++	of_node_put(np);
++	return NULL;
++}
++
+ static int dlpar_hp_dt_add(u32 index)
+ {
+ 	struct device_node *np, *nodes;
+@@ -423,10 +462,19 @@ static int dlpar_hp_dt_add(u32 index)
+ 		goto out;
+ 	}
+ 
++	/*
++	 * Recent FW provides ibm,drc-info property. So search
++	 * for the user specified DRC index from ibm,drc-info
++	 * property. If this property is not available, search
++	 * in the indexes array from ibm,drc-indexes property.
++	 */
+ 	np = get_device_node_with_drc_info(index);
+ 
+-	if (!np)
+-		return -EIO;
++	if (!np) {
++		np = get_device_node_with_drc_indexes(index);
++		if (!np)
++			return -EIO;
++	}
+ 
+ 	/* Next, configure the connector. */
+ 	nodes = dlpar_configure_connector(cpu_to_be32(index), np);
 -- 
 2.39.5
 
