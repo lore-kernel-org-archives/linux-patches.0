@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FB621A43B;
-	Tue, 12 Aug 2025 19:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B8121ABD0;
+	Tue, 12 Aug 2025 19:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026283; cv=none; b=Q7HUJE+I2IngoxIz5QKltzbo3HYgA4zg+ID8qW5YFuEeFKeVIuR1ybNJSJQ5xM5Y92aoWiS0//iPOTTKXmAERDEJM4BbQCuJefWMWoFF7GUMIFiRQeKF65RgPCVwq+/9tIHl2urflTbJFaCGMmJQ+mI2M9LjCB4tMHBC1h8IO78=
+	t=1755026286; cv=none; b=BCZIm4uN8j0UL6A0wIlQdiG1mF0TsNwdLSWPicIQwExUA5P9Ksuo1FOKK7DTs3ioe97YQD/Y3kM51xWM+qs0/knTvmCw0zvalx0Qm6A5HXU6qNy+loF5fBsglft7+QrWnAoNJpJ0Pq8Vy0UT6Kfo5FK0cH4pC0XH93JZKrHtuDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026283; c=relaxed/simple;
-	bh=pzCgmtXr/JxkDwgVpG52x5yLd7kkAmG/tvFmf7cy/hk=;
+	s=arc-20240116; t=1755026286; c=relaxed/simple;
+	bh=lGKkIO4fbUkv4HUSQNlfzoRl9rPoMSYHXVlsVrNxuNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngfzVzYWOFlw2oH3gFuQo6TQAc8glyV/7R9kUA0mGtBZlQrKn2Wn6m9+L6gPlYzz/ViqOSL29x4nMnRtrBB4OwQyHQqoROFGxnsM/15+D9gp7ds36QRG4qXX8InYLPgYkQX1s6tymJ+Fbo00p8U6U4zUPMaLvqunu+I3p5nykfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8sMkCS1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fidM17gN16B9Nl9idOMi7VAoKBNCkXLaHvGLyE8XYYH7KPFoDg5rfQHAT4ceIAGccZ3P2oBvHr/vVn03h/uY3Fo4ouulLbYlqEzZIe6QVgNNO2lIKcIBf0h6hOrDqR3kTb76Lc+U2AfboOyy8IGfZGTyHHsjkEafIIPWE6x1gkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5gzRwt/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8sMkCS1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE35C4CEF0;
-	Tue, 12 Aug 2025 19:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5gzRwt/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DEAC4CEF0;
+	Tue, 12 Aug 2025 19:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026282;
-	bh=pzCgmtXr/JxkDwgVpG52x5yLd7kkAmG/tvFmf7cy/hk=;
+	s=korg; t=1755026286;
+	bh=lGKkIO4fbUkv4HUSQNlfzoRl9rPoMSYHXVlsVrNxuNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8sMkCS1/r4B9Gl8XXy22nVJ1YrVgdU4v82XKhthetwYS7RwrYV5lUpFNnkiVjK13
-	 uvxyvD/IWQgzDBwiPc8oe8+lgTyNP7qDbtyPblY5O7BzbfmQGDstqcxivLF0sL1plJ
-	 ukIsyhV2okfkfwd334CivyUBtrzjT5nOdtQ6EvSo=
+	b=g5gzRwt/hG5fb8Ip2mH2IjMwhIbSHv6W/J9lKM+nH4zVqFGWZ0tW02tbxIH7QBiPT
+	 WDa4c7nhfDRU1JODaPni9qXQnrQZTrzYodyFlWWiU7F7xhsYLkWO73Z6e+vfgkkgvW
+	 6sAJ9CQwJcWxFPcmZdGE9TD1GG9vV9puLZumiwNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin12138@163.com>,
-	Zhi Long <longzhi@sangfor.com.cn>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Patrice Vilchez <Patrice.Vilchez@microchip.com>,
+	Varshini Rajendran <varshini.rajendran@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 290/480] ext4: Make sure BH_New bit is cleared in ->write_end handler
-Date: Tue, 12 Aug 2025 19:48:18 +0200
-Message-ID: <20250812174409.393040577@linuxfoundation.org>
+Subject: [PATCH 6.15 291/480] clk: at91: sam9x7: update pll clk ranges
+Date: Tue, 12 Aug 2025 19:48:19 +0200
+Message-ID: <20250812174409.434121877@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -53,74 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Varshini Rajendran <varshini.rajendran@microchip.com>
 
-[ Upstream commit 91b8ca8b26729b729dda8a4eddb9aceaea706f37 ]
+[ Upstream commit c7f7ddbd27d55fa552a7269b7bae539adc2a3d46 ]
 
-Currently we clear BH_New bit in case of error and also in the standard
-ext4_write_end() handler (in block_commit_write()). However
-ext4_journalled_write_end() misses this clearing and thus we are leaving
-stale BH_New bits behind. Generally ext4_block_write_begin() clears
-these bits before any harm can be done but in case blocksize < pagesize
-and we hit some error when processing a page with these stale bits,
-we'll try to zero buffers with these stale BH_New bits and jbd2 will
-complain (as buffers were not prepared for writing in this transaction).
-Fix the problem by clearing BH_New bits in ext4_journalled_write_end()
-and WARN if ext4_block_write_begin() sees stale BH_New bits.
+Update the min, max ranges of the PLL clocks according to the latest
+datasheet to be coherent in the driver. This patch solves the issues in
+configuring the clocks related to peripherals with the desired frequency
+within the range.
 
-Reported-by: Baolin Liu <liubaolin12138@163.com>
-Reported-by: Zhi Long <longzhi@sangfor.com.cn>
-Fixes: 3910b513fcdf ("ext4: persist the new uptodate buffers in ext4_journalled_zero_new_buffers")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250709084831.23876-2-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 33013b43e271 ("clk: at91: sam9x7: add sam9x7 pmc driver")
+Suggested-by: Patrice Vilchez <Patrice.Vilchez@microchip.com>
+Signed-off-by: Varshini Rajendran <varshini.rajendran@microchip.com>
+Link: https://lore.kernel.org/r/20250714093512.29944-1-varshini.rajendran@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inline.c | 2 ++
- fs/ext4/inode.c  | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/at91/sam9x7.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
-index e5e6bf0d338b..f27d9da53fb7 100644
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -611,6 +611,7 @@ static int ext4_convert_inline_data_to_extent(struct address_space *mapping,
- 	} else
- 		ret = ext4_block_write_begin(handle, folio, from, to,
- 					     ext4_get_block);
-+	clear_buffer_new(folio_buffers(folio));
+diff --git a/drivers/clk/at91/sam9x7.c b/drivers/clk/at91/sam9x7.c
+index cbb8b220f16b..ffab32b047a0 100644
+--- a/drivers/clk/at91/sam9x7.c
++++ b/drivers/clk/at91/sam9x7.c
+@@ -61,44 +61,44 @@ static const struct clk_master_layout sam9x7_master_layout = {
  
- 	if (!ret && ext4_should_journal_data(inode)) {
- 		ret = ext4_walk_page_buffers(handle, inode,
-@@ -890,6 +891,7 @@ static int ext4_da_convert_inline_data_to_extent(struct address_space *mapping,
- 		return ret;
- 	}
+ /* Fractional PLL core output range. */
+ static const struct clk_range plla_core_outputs[] = {
+-	{ .min = 375000000, .max = 1600000000 },
++	{ .min = 800000000, .max = 1600000000 },
+ };
  
-+	clear_buffer_new(folio_buffers(folio));
- 	folio_mark_dirty(folio);
- 	folio_mark_uptodate(folio);
- 	ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 7fcdc01a0220..46bfb39f6108 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1065,7 +1065,7 @@ int ext4_block_write_begin(handle_t *handle, struct folio *folio,
- 			}
- 			continue;
- 		}
--		if (buffer_new(bh))
-+		if (WARN_ON_ONCE(buffer_new(bh)))
- 			clear_buffer_new(bh);
- 		if (!buffer_mapped(bh)) {
- 			WARN_ON(bh->b_size != blocksize);
-@@ -1282,6 +1282,7 @@ static int write_end_fn(handle_t *handle, struct inode *inode,
- 	ret = ext4_dirty_journalled_data(handle, bh);
- 	clear_buffer_meta(bh);
- 	clear_buffer_prio(bh);
-+	clear_buffer_new(bh);
- 	return ret;
- }
+ static const struct clk_range upll_core_outputs[] = {
+-	{ .min = 600000000, .max = 1200000000 },
++	{ .min = 600000000, .max = 960000000 },
+ };
  
+ static const struct clk_range lvdspll_core_outputs[] = {
+-	{ .min = 400000000, .max = 800000000 },
++	{ .min = 600000000, .max = 1200000000 },
+ };
+ 
+ static const struct clk_range audiopll_core_outputs[] = {
+-	{ .min = 400000000, .max = 800000000 },
++	{ .min = 600000000, .max = 1200000000 },
+ };
+ 
+ static const struct clk_range plladiv2_core_outputs[] = {
+-	{ .min = 375000000, .max = 1600000000 },
++	{ .min = 800000000, .max = 1600000000 },
+ };
+ 
+ /* Fractional PLL output range. */
+ static const struct clk_range plla_outputs[] = {
+-	{ .min = 732421, .max = 800000000 },
++	{ .min = 400000000, .max = 800000000 },
+ };
+ 
+ static const struct clk_range upll_outputs[] = {
+-	{ .min = 300000000, .max = 600000000 },
++	{ .min = 300000000, .max = 480000000 },
+ };
+ 
+ static const struct clk_range lvdspll_outputs[] = {
+-	{ .min = 10000000, .max = 800000000 },
++	{ .min = 175000000, .max = 550000000 },
+ };
+ 
+ static const struct clk_range audiopll_outputs[] = {
+-	{ .min = 10000000, .max = 800000000 },
++	{ .min = 0, .max = 300000000 },
+ };
+ 
+ static const struct clk_range plladiv2_outputs[] = {
+-	{ .min = 366210, .max = 400000000 },
++	{ .min = 200000000, .max = 400000000 },
+ };
+ 
+ /* PLL characteristics. */
 -- 
 2.39.5
 
