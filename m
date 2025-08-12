@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5DF217F35;
-	Tue, 12 Aug 2025 19:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0C3217F35;
+	Tue, 12 Aug 2025 19:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026794; cv=none; b=DjL+2CsSVJcwt27WvE8ejVOqvANFcD7rW2MmM7yr+0GPuZfVGdmyp5cUL17oUd0q57k5HwpKsCLi+91SU2X+JqcKE/TQjoo1WPQwSaWcXD2DRuNl17NO3py2Ot+4xAD3ItABvUFE0TFsQAnE20Lx68uuG4kB7Iz4zk7rGivmbUI=
+	t=1755026796; cv=none; b=X3x8eT9B1ushu2gQUemCbvfuGsRD6GPFN0Gb3V5x42bjJegYHNJU1Jd+ubpgicS6TkW5841rPIfI5J5F6PqSAdiW5R3RS9V5ZU5KyofgEcZqV/bOGKM2zxaSum21or9nqSkECnwfDXn/SesEib98iU+KeaQhSulKlxNNfd2olv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026794; c=relaxed/simple;
-	bh=1LLKemOqK+SAeVLrlwsYYbGoFF+JS/ZjNBgLnoXE/Wk=;
+	s=arc-20240116; t=1755026796; c=relaxed/simple;
+	bh=blWaW6At7TUyCq6DMsNpoGezAJ5kAEkpMDqY59BLBkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xvdu+oIaaaWeRM2nZciqEEsXUPgkRAF9+tGKHrWojFegPPy0XIOBm+BCoKMzYtAjmX8Cl6QrowW2TZfDvaZg87zgekPch8mfiMIGPBd2cfShLkYbflOewfCRP6czxZZWj3ZCinjsYJI1VA+l3p7M2rpNK5ZTHXUev7PFxuNRXd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2WPfPGe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hpPD3BY+P+4I4WGRMCX56mOfiVH+UXOWK0G4pWDKjVcHQQsDR9DWN+GMMc4GCMbRqmYZ1MZ/1GyKDQjYcSlgeQUeZgEXFa+/4PKBEmKHRdoY4zcfbd7GyQe5bkyOeZP06AZccmLWasxbBJohuxNBokhy4j8L6uFgFnGoIOYgux0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPeMWeg8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2WPfPGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEE2C4CEF0;
-	Tue, 12 Aug 2025 19:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPeMWeg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E845C4CEF0;
+	Tue, 12 Aug 2025 19:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026793;
-	bh=1LLKemOqK+SAeVLrlwsYYbGoFF+JS/ZjNBgLnoXE/Wk=;
+	s=korg; t=1755026796;
+	bh=blWaW6At7TUyCq6DMsNpoGezAJ5kAEkpMDqY59BLBkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2WPfPGe9tOZdV3zwouqPlTrUwPvTmAlLVQpEYRxl2ZmaAHFogCwRuZQjnllq6Gf/
-	 GTwDUOzHAT+NIxk6wLtQ+GpB6Qe5PjiHCh/iv2UuL9/ZuYgSaD8wLHxG7X2HIXDYtU
-	 CDvkYPg/NUGYheJvrYIxKsQYGs9gpAuizI3v8Nms=
+	b=xPeMWeg8Gc1oz8iefJ9fcZHoXadJ6oZn0D/1qSlodc+3YCUH0Wtkhd2r/tTyZwCBI
+	 TGh1j9jbS/JH2pV2svWshsMha4S2QQw+NIoBnVuCAPm2ZwhE1ddPwx7o7Nvm0mz4WO
+	 zgsl7E3gLGhTsQtu6rV8dfuUGtUukwRWNxiSn+qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 400/480] net: mdio: mdio-bcm-unimac: Correct rate fallback logic
-Date: Tue, 12 Aug 2025 19:50:08 +0200
-Message-ID: <20250812174413.932311830@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Subject: [PATCH 6.15 436/480] perf/core: Preserve AUX buffer allocation failure result
+Date: Tue, 12 Aug 2025 19:50:44 +0200
+Message-ID: <20250812174415.384114861@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -53,54 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit a81649a4efd382497bf3d34a623360263adc6993 ]
+commit 54473e0ef849f44e5ee43e6d6746c27030c3825b upstream.
 
-When the parent clock is a gated clock which has multiple parents, the
-clock provider (clk-scmi typically) might return a rate of 0 since there
-is not one of those particular parent clocks that should be chosen for
-returning a rate. Prior to ee975351cf0c ("net: mdio: mdio-bcm-unimac:
-Manage clock around I/O accesses"), we would not always be passing a
-clock reference depending upon how mdio-bcm-unimac was instantiated. In
-that case, we would take the fallback path where the rate is hard coded
-to 250MHz.
+A recent overhaul sets the return value to 0 unconditionally after the
+allocations, which causes reference count leaks and corrupts the user->vm
+accounting.
 
-Make sure that we still fallback to using a fixed rate for the divider
-calculation, otherwise we simply ignore the desired MDIO bus clock
-frequency which can prevent us from interfacing with Ethernet PHYs
-properly.
+Preserve the AUX buffer allocation failure return value, so that the
+subsequent code works correctly.
 
-Fixes: ee975351cf0c ("net: mdio: mdio-bcm-unimac: Manage clock around I/O accesses")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250730202533.3463529-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0983593f32c4 ("perf/core: Lift event->mmap_mutex in perf_mmap()")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/mdio/mdio-bcm-unimac.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/events/core.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/mdio/mdio-bcm-unimac.c b/drivers/net/mdio/mdio-bcm-unimac.c
-index 074d96328f41..60565e7c88bd 100644
---- a/drivers/net/mdio/mdio-bcm-unimac.c
-+++ b/drivers/net/mdio/mdio-bcm-unimac.c
-@@ -209,10 +209,9 @@ static int unimac_mdio_clk_set(struct unimac_mdio_priv *priv)
- 	if (ret)
- 		return ret;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -7052,6 +7052,7 @@ static int perf_mmap(struct file *file,
+ 		perf_event_update_time(event);
+ 		perf_event_init_userpage(event);
+ 		perf_event_update_userpage(event);
++		ret = 0;
+ 	} else {
+ 		ret = rb_alloc_aux(rb, event, vma->vm_pgoff, nr_pages,
+ 				   event->attr.aux_watermark, flags);
+@@ -7059,8 +7060,6 @@ static int perf_mmap(struct file *file,
+ 			rb->aux_mmap_locked = extra;
+ 	}
  
--	if (!priv->clk)
-+	rate = clk_get_rate(priv->clk);
-+	if (!rate)
- 		rate = 250000000;
--	else
--		rate = clk_get_rate(priv->clk);
- 
- 	div = (rate / (2 * priv->clk_freq)) - 1;
- 	if (div & ~MDIO_CLK_DIV_MASK) {
--- 
-2.39.5
-
+-	ret = 0;
+-
+ unlock:
+ 	if (!ret) {
+ 		atomic_long_add(user_extra, &user->locked_vm);
 
 
