@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA2320409A;
-	Tue, 12 Aug 2025 18:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE5D2F5E;
+	Tue, 12 Aug 2025 18:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022384; cv=none; b=WRiSgXwr7ty5vFCCI9O4Y8mjbNu+j5ddu/rhSUizcOPXQWrDE3ppSbWoLWLSrqQER3DNof354qt5Xo8BY5UTebAN7yD2xDOYq3xr8lcZf8Dc/YjNP75U0wgAxsvPUQQd/3r49S9Or7VQ/TgNDW3bow9rJ7tWxRKMmUyPZflWiN0=
+	t=1755022387; cv=none; b=c6u6/CxgwwkHNslLPFaFedeTq2kZ1/XT5WbcXAVUH8UeCCRQT+d69/b82LXPzIBA5O5mKadpqxFerWyhme+/ysJHlG8cbLSJBC9b+r+ADcY6XkPcCZ+qvna/aWve76H9Q3NI4Fwa5kAaHt2UB6PZh2jvtAhI8msdg9EAMnrWo1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022384; c=relaxed/simple;
-	bh=LpLgUCbse8F1nPsGg6CqxlCHfwWWEOikKvETC/tJVOg=;
+	s=arc-20240116; t=1755022387; c=relaxed/simple;
+	bh=wl9nkgqahRsOlIFsf9H2y3QezAq9anAkCIgXoPN6zj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uCelRFJyHqZkUScrZhtpV6HmGldK29KiBn+SzJNl8fZRGPubIhnDwhlFKEVZN5RZvSwOoTotFRk2SSmcKDt4Uk8u8GFrm5WUojSF1MCqXoiwuHfRAseW8M81rc1gvH1QslZ2l8V/U8WFXK0fx7yZ2m0Li2HeK/H5k+VjpB4s88Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUYzMut3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tm/T1rB6EHweHyCOCESvyWYwW1W2KbTIG9VoAyX0dWXrFA5syTOft1vgKVVqP2KD7Ur+uGtUo5EWTTVx3WtZMQH3h4af5Cg/Ls+Jxu32VHuEwimcfOU65VZHJULaMRDHzJb1hYZjUwrODZSk/PdMxFSVInX+lVdPgZnmE53K08g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYauTzla; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUYzMut3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8A0C4CEF0;
-	Tue, 12 Aug 2025 18:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYauTzla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379B9C4CEF1;
+	Tue, 12 Aug 2025 18:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022384;
-	bh=LpLgUCbse8F1nPsGg6CqxlCHfwWWEOikKvETC/tJVOg=;
+	s=korg; t=1755022387;
+	bh=wl9nkgqahRsOlIFsf9H2y3QezAq9anAkCIgXoPN6zj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUYzMut3FeD+zhyU9dJh7Uk1geTorSeFB3GkGXo1TtSRYTuQPVRUGoORBXEwiipqT
-	 0xxlp2UsKU4d5U6uL9rBLXQ+JJ4au9zMJCRgLPBeW5QuVP6M+yn0vZ1N4m7edx0s88
-	 dMIezg6P5lkDoO4IEB++u3ubqu88V/duGuDQIkSk=
+	b=jYauTzlaWvT6gP0FDIUeceNgVyZWU5dhodZFzrScOZU0Eq24OcxhTlOWBQtGtYMGc
+	 Lkh/hv32pwRmgDvGpH4+Oco42hC5e7kPYAtCFdXQezljL1yCntJpWRnbZOcgK5DiUR
+	 AoIwkPdaIqub1g1xmqx0vGjL95C5eMj8l+IUt+tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Abinash Singh <abinashsinghlalotra@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
 	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/369] xen: fix UAF in dmabuf_exp_from_pages()
-Date: Tue, 12 Aug 2025 19:26:43 +0200
-Message-ID: <20250812173018.767367734@linuxfoundation.org>
+Subject: [PATCH 6.12 107/369] xen/gntdev: remove struct gntdev_copy_batch from stack
+Date: Tue, 12 Aug 2025 19:26:44 +0200
+Message-ID: <20250812173018.803200009@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,94 +52,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 532c8b51b3a8676cbf533a291f8156774f30ea87 ]
+[ Upstream commit 70045cf6593cbf0740956ea9b7b4269142c6ee38 ]
 
-[dma_buf_fd() fixes; no preferences regarding the tree it goes through -
-up to xen folks]
+When compiling the kernel with LLVM, the following warning was issued:
 
-As soon as we'd inserted a file reference into descriptor table, another
-thread could close it.  That's fine for the case when all we are doing is
-returning that descriptor to userland (it's a race, but it's a userland
-race and there's nothing the kernel can do about it).  However, if we
-follow fd_install() with any kind of access to objects that would be
-destroyed on close (be it the struct file itself or anything destroyed
-by its ->release()), we have a UAF.
+  drivers/xen/gntdev.c:991: warning: stack frame size (1160) exceeds
+  limit (1024) in function 'gntdev_ioctl'
 
-dma_buf_fd() is a combination of reserving a descriptor and fd_install().
-gntdev dmabuf_exp_from_pages() calls it and then proceeds to access the
-objects destroyed on close - starting with gntdev_dmabuf itself.
+The main reason is struct gntdev_copy_batch which is located on the
+stack and has a size of nearly 1kb.
 
-Fix that by doing reserving descriptor before anything else and do
-fd_install() only when everything had been set up.
+For performance reasons it shouldn't by just dynamically allocated
+instead, so allocate a new instance when needed and instead of freeing
+it put it into a list of free structs anchored in struct gntdev_priv.
 
-Fixes: a240d6e42e28 ("xen/gntdev: Implement dma-buf export functionality")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Acked-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250712050916.GY1880847@ZenIV>
+Fixes: a4cdb556cae0 ("xen/gntdev: add ioctl for grant copy")
+Reported-by: Abinash Singh <abinashsinghlalotra@gmail.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250703073259.17356-1-jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntdev-dmabuf.c | 28 ++++++++++------------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+ drivers/xen/gntdev-common.h |  4 +++
+ drivers/xen/gntdev.c        | 71 ++++++++++++++++++++++++++-----------
+ 2 files changed, 54 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
-index 42adc2c1e06b..5ab973627d18 100644
---- a/drivers/xen/gntdev-dmabuf.c
-+++ b/drivers/xen/gntdev-dmabuf.c
-@@ -357,8 +357,11 @@ struct gntdev_dmabuf_export_args {
- static int dmabuf_exp_from_pages(struct gntdev_dmabuf_export_args *args)
- {
- 	DEFINE_DMA_BUF_EXPORT_INFO(exp_info);
--	struct gntdev_dmabuf *gntdev_dmabuf;
--	int ret;
-+	struct gntdev_dmabuf *gntdev_dmabuf __free(kfree) = NULL;
-+	CLASS(get_unused_fd, ret)(O_CLOEXEC);
+diff --git a/drivers/xen/gntdev-common.h b/drivers/xen/gntdev-common.h
+index 9c286b2a1900..ac8ce3179ba2 100644
+--- a/drivers/xen/gntdev-common.h
++++ b/drivers/xen/gntdev-common.h
+@@ -26,6 +26,10 @@ struct gntdev_priv {
+ 	/* lock protects maps and freeable_maps. */
+ 	struct mutex lock;
+ 
++	/* Free instances of struct gntdev_copy_batch. */
++	struct gntdev_copy_batch *batch;
++	struct mutex batch_lock;
 +
-+	if (ret < 0)
-+		return ret;
+ #ifdef CONFIG_XEN_GRANT_DMA_ALLOC
+ 	/* Device for which DMA memory is allocated. */
+ 	struct device *dma_dev;
+diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
+index 61faea1f0663..1f2160765618 100644
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -56,6 +56,18 @@ MODULE_AUTHOR("Derek G. Murray <Derek.Murray@cl.cam.ac.uk>, "
+ 	      "Gerd Hoffmann <kraxel@redhat.com>");
+ MODULE_DESCRIPTION("User-space granted page access driver");
  
- 	gntdev_dmabuf = kzalloc(sizeof(*gntdev_dmabuf), GFP_KERNEL);
- 	if (!gntdev_dmabuf)
-@@ -383,32 +386,21 @@ static int dmabuf_exp_from_pages(struct gntdev_dmabuf_export_args *args)
- 	exp_info.priv = gntdev_dmabuf;
++#define GNTDEV_COPY_BATCH 16
++
++struct gntdev_copy_batch {
++	struct gnttab_copy ops[GNTDEV_COPY_BATCH];
++	struct page *pages[GNTDEV_COPY_BATCH];
++	s16 __user *status[GNTDEV_COPY_BATCH];
++	unsigned int nr_ops;
++	unsigned int nr_pages;
++	bool writeable;
++	struct gntdev_copy_batch *next;
++};
++
+ static unsigned int limit = 64*1024;
+ module_param(limit, uint, 0644);
+ MODULE_PARM_DESC(limit,
+@@ -584,6 +596,8 @@ static int gntdev_open(struct inode *inode, struct file *flip)
+ 	INIT_LIST_HEAD(&priv->maps);
+ 	mutex_init(&priv->lock);
  
- 	gntdev_dmabuf->dmabuf = dma_buf_export(&exp_info);
--	if (IS_ERR(gntdev_dmabuf->dmabuf)) {
--		ret = PTR_ERR(gntdev_dmabuf->dmabuf);
--		gntdev_dmabuf->dmabuf = NULL;
--		goto fail;
--	}
--
--	ret = dma_buf_fd(gntdev_dmabuf->dmabuf, O_CLOEXEC);
--	if (ret < 0)
--		goto fail;
-+	if (IS_ERR(gntdev_dmabuf->dmabuf))
-+		return PTR_ERR(gntdev_dmabuf->dmabuf);
++	mutex_init(&priv->batch_lock);
++
+ #ifdef CONFIG_XEN_GNTDEV_DMABUF
+ 	priv->dmabuf_priv = gntdev_dmabuf_init(flip);
+ 	if (IS_ERR(priv->dmabuf_priv)) {
+@@ -608,6 +622,7 @@ static int gntdev_release(struct inode *inode, struct file *flip)
+ {
+ 	struct gntdev_priv *priv = flip->private_data;
+ 	struct gntdev_grant_map *map;
++	struct gntdev_copy_batch *batch;
  
- 	gntdev_dmabuf->fd = ret;
- 	args->fd = ret;
+ 	pr_debug("priv %p\n", priv);
  
- 	pr_debug("Exporting DMA buffer with fd %d\n", ret);
+@@ -620,6 +635,14 @@ static int gntdev_release(struct inode *inode, struct file *flip)
+ 	}
+ 	mutex_unlock(&priv->lock);
  
-+	get_file(gntdev_dmabuf->priv->filp);
- 	mutex_lock(&args->dmabuf_priv->lock);
- 	list_add(&gntdev_dmabuf->next, &args->dmabuf_priv->exp_list);
- 	mutex_unlock(&args->dmabuf_priv->lock);
--	get_file(gntdev_dmabuf->priv->filp);
--	return 0;
- 
--fail:
--	if (gntdev_dmabuf->dmabuf)
--		dma_buf_put(gntdev_dmabuf->dmabuf);
--	kfree(gntdev_dmabuf);
--	return ret;
-+	fd_install(take_fd(ret), no_free_ptr(gntdev_dmabuf)->dmabuf->file);
-+	return 0;
++	mutex_lock(&priv->batch_lock);
++	while (priv->batch) {
++		batch = priv->batch;
++		priv->batch = batch->next;
++		kfree(batch);
++	}
++	mutex_unlock(&priv->batch_lock);
++
+ #ifdef CONFIG_XEN_GNTDEV_DMABUF
+ 	gntdev_dmabuf_fini(priv->dmabuf_priv);
+ #endif
+@@ -785,17 +808,6 @@ static long gntdev_ioctl_notify(struct gntdev_priv *priv, void __user *u)
+ 	return rc;
  }
  
- static struct gntdev_grant_map *
+-#define GNTDEV_COPY_BATCH 16
+-
+-struct gntdev_copy_batch {
+-	struct gnttab_copy ops[GNTDEV_COPY_BATCH];
+-	struct page *pages[GNTDEV_COPY_BATCH];
+-	s16 __user *status[GNTDEV_COPY_BATCH];
+-	unsigned int nr_ops;
+-	unsigned int nr_pages;
+-	bool writeable;
+-};
+-
+ static int gntdev_get_page(struct gntdev_copy_batch *batch, void __user *virt,
+ 				unsigned long *gfn)
+ {
+@@ -953,36 +965,53 @@ static int gntdev_grant_copy_seg(struct gntdev_copy_batch *batch,
+ static long gntdev_ioctl_grant_copy(struct gntdev_priv *priv, void __user *u)
+ {
+ 	struct ioctl_gntdev_grant_copy copy;
+-	struct gntdev_copy_batch batch;
++	struct gntdev_copy_batch *batch;
+ 	unsigned int i;
+ 	int ret = 0;
+ 
+ 	if (copy_from_user(&copy, u, sizeof(copy)))
+ 		return -EFAULT;
+ 
+-	batch.nr_ops = 0;
+-	batch.nr_pages = 0;
++	mutex_lock(&priv->batch_lock);
++	if (!priv->batch) {
++		batch = kmalloc(sizeof(*batch), GFP_KERNEL);
++	} else {
++		batch = priv->batch;
++		priv->batch = batch->next;
++	}
++	mutex_unlock(&priv->batch_lock);
++	if (!batch)
++		return -ENOMEM;
++
++	batch->nr_ops = 0;
++	batch->nr_pages = 0;
+ 
+ 	for (i = 0; i < copy.count; i++) {
+ 		struct gntdev_grant_copy_segment seg;
+ 
+ 		if (copy_from_user(&seg, &copy.segments[i], sizeof(seg))) {
+ 			ret = -EFAULT;
++			gntdev_put_pages(batch);
+ 			goto out;
+ 		}
+ 
+-		ret = gntdev_grant_copy_seg(&batch, &seg, &copy.segments[i].status);
+-		if (ret < 0)
++		ret = gntdev_grant_copy_seg(batch, &seg, &copy.segments[i].status);
++		if (ret < 0) {
++			gntdev_put_pages(batch);
+ 			goto out;
++		}
+ 
+ 		cond_resched();
+ 	}
+-	if (batch.nr_ops)
+-		ret = gntdev_copy(&batch);
+-	return ret;
++	if (batch->nr_ops)
++		ret = gntdev_copy(batch);
++
++ out:
++	mutex_lock(&priv->batch_lock);
++	batch->next = priv->batch;
++	priv->batch = batch;
++	mutex_unlock(&priv->batch_lock);
+ 
+-  out:
+-	gntdev_put_pages(&batch);
+ 	return ret;
+ }
+ 
 -- 
 2.39.5
 
