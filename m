@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F482FDC5F;
-	Tue, 12 Aug 2025 17:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1D32FE57F;
+	Tue, 12 Aug 2025 17:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020268; cv=none; b=LpCXfxt+Sx0ZajCmyIHqYCw/fWmynAGqmA+0PIVnEtbjXi3Sj5nfsu1+WV6RMxIEyvAs9GoelSB+ScY8L0v/LryB8bPjJmqQIRpNH20bP+mFq/Q0D4O39xhT/Jd59ALPrsOgPJ/zmW9ng4CcqBzQkK0o96ARWmb/UUAeZWKmlLU=
+	t=1755020271; cv=none; b=K3M9iV2HenJOE83kIfYUXcWyS/eC7H2KOdM5ch8ukkIXXJEm4mTmXt7JbEkF5hlsmnP73d30kHefMug7YdhT71nQdoF+OG3ioM2YEtdQBt/kuYN/FqOrCTjNy7FmhkX5ne4PK2uMUm2c9Wt5XkUjZQTquxxRbuGAvhEW0AkZEFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020268; c=relaxed/simple;
-	bh=IVCmp0NhqDqBlkOdVuZOKeXQH0JUyOllBBKMTwia5Bc=;
+	s=arc-20240116; t=1755020271; c=relaxed/simple;
+	bh=fhpysE4mw2RKahjtN/x5tiMNibloNVKVVwMJmHnZkKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhUmlwxBPkUwMXouV5dAc80D+ukvCMnBTypEO51SvFHilASNyJFAYGFMsO7Q3kJASRG9/5fiH9ZKSjo2/oAZMjwANYe993VJk7DsxgkDLNhsA63zVXFUEmyZeFpkW5CDttarBSVqO700ilgvzetpkCVfJRM3CQgt1yAjYSsGbW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnYQi7xG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tK/SkCR8wrXN0Cp9Uzm7yJtbaBXsD5w8/n86VCYaG+euvaCJEPcNo7nZuwocWG9bnbZ/p/9yZ1wWPOgkhn/T35hbo+WnvRSfeYfBuBoKRyGXUngUwBzTtXYWDMqxn9WmcVMPVKGq3BASGk1oQwjwhgxBdl6wbVBmSaEUkmlErOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acrn5Fr5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnYQi7xG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A11C4CEF0;
-	Tue, 12 Aug 2025 17:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acrn5Fr5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93240C4CEF0;
+	Tue, 12 Aug 2025 17:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020267;
-	bh=IVCmp0NhqDqBlkOdVuZOKeXQH0JUyOllBBKMTwia5Bc=;
+	s=korg; t=1755020271;
+	bh=fhpysE4mw2RKahjtN/x5tiMNibloNVKVVwMJmHnZkKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YnYQi7xGmIJA7mNFyPqbNIUC9KYSElatuI2Z7l/N3P+VgeNGGMnaF3jvJlZFGtz4B
-	 NVGNCNpG+9oOSCIbah8eljsm40fzoAw5T3lP5pJJdYQV7lDv3UY3Q0aL6m+Q7giIln
-	 eRjV5OvVBVDWX13W+BWch2jDbZmPtPNFphrA6VnI=
+	b=acrn5Fr58/sE3xUCPOioNQtCdHyxkcawnXkjkcYtM0/pCn8rp3Jg8LWCXj9kP5HyX
+	 24hVizuPOn1ovWyW5mc8S4IBf79WgxXmev2nSZ0Rtcw9maqq4fGYK5aKIE14KMqXPU
+	 +nNmJU4FC9N9VQe+A/Tn0QKxmCf/rBYKXiZ2BUl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 030/253] bus: fsl-mc: Fix potential double device reference in fsl_mc_get_endpoint()
-Date: Tue, 12 Aug 2025 19:26:58 +0200
-Message-ID: <20250812172950.015877248@linuxfoundation.org>
+	Dawid Rezler <dawidrezler.patches@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 031/253] ALSA: hda/realtek - Add mute LED support for HP Pavilion 15-eg0xxx
+Date: Tue, 12 Aug 2025 19:26:59 +0200
+Message-ID: <20250812172950.057748202@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -52,71 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Dawid Rezler <dawidrezler.patches@gmail.com>
 
-commit bddbe13d36a02d5097b99cf02354d5752ad1ac60 upstream.
+commit 9744ede7099e8a69c04aa23fbea44c15bc390c04 upstream.
 
-The fsl_mc_get_endpoint() function may call fsl_mc_device_lookup()
-twice, which would increment the device's reference count twice if
-both lookups find a device. This could lead to a reference count leak.
+The mute LED on the HP Pavilion Laptop 15-eg0xxx,
+which uses the ALC287 codec, didn't work.
+This patch fixes the issue by enabling the ALC287_FIXUP_HP_GPIO_LED quirk.
 
-Found by code review.
+Tested on a physical device, the LED now works as intended.
 
-Cc: stable@vger.kernel.org
-Fixes: 1ac210d128ef ("bus: fsl-mc: add the fsl_mc_get_endpoint function")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 8567494cebe5 ("bus: fsl-mc: rescan devices if endpoint not found")
-Link: https://patch.msgid.link/20250717022309.3339976-1-make24@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dawid Rezler <dawidrezler.patches@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250720154907.80815-2-dawidrezler.patches@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -947,6 +947,7 @@ struct fsl_mc_device *fsl_mc_get_endpoin
- 	struct fsl_mc_obj_desc endpoint_desc = {{ 0 }};
- 	struct dprc_endpoint endpoint1 = {{ 0 }};
- 	struct dprc_endpoint endpoint2 = {{ 0 }};
-+	struct fsl_mc_bus *mc_bus;
- 	int state, err;
- 
- 	mc_bus_dev = to_fsl_mc_device(mc_dev->dev.parent);
-@@ -970,6 +971,8 @@ struct fsl_mc_device *fsl_mc_get_endpoin
- 	strcpy(endpoint_desc.type, endpoint2.type);
- 	endpoint_desc.id = endpoint2.id;
- 	endpoint = fsl_mc_device_lookup(&endpoint_desc, mc_bus_dev);
-+	if (endpoint)
-+		return endpoint;
- 
- 	/*
- 	 * We know that the device has an endpoint because we verified by
-@@ -977,17 +980,13 @@ struct fsl_mc_device *fsl_mc_get_endpoin
- 	 * yet discovered by the fsl-mc bus, thus the lookup returned NULL.
- 	 * Force a rescan of the devices in this container and retry the lookup.
- 	 */
--	if (!endpoint) {
--		struct fsl_mc_bus *mc_bus = to_fsl_mc_bus(mc_bus_dev);
--
--		if (mutex_trylock(&mc_bus->scan_mutex)) {
--			err = dprc_scan_objects(mc_bus_dev, true);
--			mutex_unlock(&mc_bus->scan_mutex);
--		}
--
--		if (err < 0)
--			return ERR_PTR(err);
-+	mc_bus = to_fsl_mc_bus(mc_bus_dev);
-+	if (mutex_trylock(&mc_bus->scan_mutex)) {
-+		err = dprc_scan_objects(mc_bus_dev, true);
-+		mutex_unlock(&mc_bus->scan_mutex);
- 	}
-+	if (err < 0)
-+		return ERR_PTR(err);
- 
- 	endpoint = fsl_mc_device_lookup(&endpoint_desc, mc_bus_dev);
- 	/*
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9947,6 +9947,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 
 
