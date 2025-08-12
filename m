@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7912BEC2F;
-	Tue, 12 Aug 2025 18:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930C02BEC2F;
+	Tue, 12 Aug 2025 18:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022012; cv=none; b=GFzsI65vmjTcjVmFqhgTLjBLkRZkQ5Fb8fWcYVx7SOnAxpwhW2PgbAhZeAawiUMjzcvV4RVvA9EMD9zemNaLq3riY0Mhk0jiKYsaMqn26Jx3i23vrCfwt0bPW0K8yPi3tXTXp6TKq8vmfcmYaQn6ijVgts85yozzp6znfaXQEPg=
+	t=1755022015; cv=none; b=MqIs4DOGCt45NgVyAcNgMEgSYXSoGf3pl0/wPJykOBlQ++FwzpXHqB/995xwCF58IFuBs77h4MZ5wTD6RATQnm7B5Nf4lt94oA2YeDFzlig/F9X9quilyfVEOSKb0+4PvhsMLT0rQ4re3HugEli83znDpcLcp6+QquL/f1MPLLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022012; c=relaxed/simple;
-	bh=hsVWuIzjyF+wpB8RtLSIqD1ixvgxz45OUnfapmp9XQs=;
+	s=arc-20240116; t=1755022015; c=relaxed/simple;
+	bh=nn3qD/P9vKGpHJCGVOltzJ5+LPrPM883DXo6pYiGOS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9Fi7JMt+oQ3+xjnMY29WfHkS68+vTqg5PEPmWGh2+6u+xn4aAZMkPU/HWHyLWaISeaCcpCYK0oX9yyzNO2Gi7yX9f9FHdUjVSdo+9Xk3n2606d/z5zdWi2OmTslEYMVATQpXuMOL9uRNp4Utht9MjuAlIjZZyyqYQWxLBLJ+hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0epKeytN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djBLVdZv+7MrBlVanr2A3FMr+GXqA561j1apVz84RQgajHXs4qf9O6j1aySF2Df6CYCbhxqKEyCsH+S5Xr3ppSqEdYbnLJGEEXGhzyZ9ZawUNZwIVMYCSWUtHagn09a/x/zV3QDJuh/IAoBKeTnxwBImP2bDVOoydMhQwx/v4GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hx0aJ310; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0epKeytN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8EBC4CEF7;
-	Tue, 12 Aug 2025 18:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hx0aJ310"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D54C4CEF0;
+	Tue, 12 Aug 2025 18:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022012;
-	bh=hsVWuIzjyF+wpB8RtLSIqD1ixvgxz45OUnfapmp9XQs=;
+	s=korg; t=1755022015;
+	bh=nn3qD/P9vKGpHJCGVOltzJ5+LPrPM883DXo6pYiGOS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0epKeytNwzpx8tjiPRKOCAPgcvNdXcNwQ0BNof+vHFyhH3XsRU69qxvHBo2dUE1ta
-	 7Otd3dEktMRavDOf8SM6KHqmT2kVWn/5anIRhCNZTBKTLa0T3Rquexx43IQl6FPWW5
-	 g3s93SBqFVgnt2W3mtYLSI5mFgKUEIeNfrPU/qHc=
+	b=hx0aJ3105tP0CDVMTGvXh2quHvXWmf9RDQ6fyo9NdES1k1oClk8Xo/h16saXRrj+V
+	 3A53If2ytFuv+yiIgN8lY6zYX4idhwJ8Llv5Jy19KOAn+dGv0DYHABtGjGlmlT1/I4
+	 nqOmzhFjE/HHPIEOxCoCkgcxKRUAcFm0lcIFKlcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Queler <queler+k@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Brian Howard <blhoward2@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/369] ASoC: amd: yc: Add DMI entries to support HP 15-fb1xxx
-Date: Tue, 12 Aug 2025 19:25:00 +0200
-Message-ID: <20250812173014.873778286@linuxfoundation.org>
+Subject: [PATCH 6.12 004/369] ALSA: hda/cs35l56: Workaround bad dev-index on Lenovo Yoga Book 9i GenX
+Date: Tue, 12 Aug 2025 19:25:01 +0200
+Message-ID: <20250812173014.909707681@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,39 +52,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Queler <queler@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 949ddec3728f3a793a13c1c9003028b9b159aefc ]
+[ Upstream commit 40b1c2f9b299295ed0482e1fee6f46521e6e79e5 ]
 
-This model requires an additional detection quirk to
-enable the internal microphone.
+The Lenovo Yoga Book 9i GenX has the wrong values in the cirrus,dev-index
+_DSD property. Add a fixup for this model to ignore the property and
+hardcode the index from the I2C bus address.
 
-Signed-off-by: Adam Queler <queler+k@gmail.com>
-Link: https://patch.msgid.link/20250715031434.222062-1-queler+k@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The error in the cirrus,dev-index property would prevent the second amp
+instance from probing. The component binding would never see all the
+required instances and so there would not be a binding between
+patch_realtek.c and the cs35l56 driver.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reported-by: Brian Howard <blhoward2@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220228
+Link: https://patch.msgid.link/20250714110154.204740-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/pci/hda/cs35l56_hda.c | 110 +++++++++++++++++++++++++++---------
+ 1 file changed, 82 insertions(+), 28 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 42d123cb8b4c..4bde41663f42 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -528,6 +528,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
- 		}
- 	},
+diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
+index 7baf3b506eef..7823f71012a8 100644
+--- a/sound/pci/hda/cs35l56_hda.c
++++ b/sound/pci/hda/cs35l56_hda.c
+@@ -876,6 +876,52 @@ static int cs35l56_hda_system_resume(struct device *dev)
+ 	return 0;
+ }
+ 
++static int cs35l56_hda_fixup_yoga9(struct cs35l56_hda *cs35l56, int *bus_addr)
++{
++	/* The cirrus,dev-index property has the wrong values */
++	switch (*bus_addr) {
++	case 0x30:
++		cs35l56->index = 1;
++		return 0;
++	case 0x31:
++		cs35l56->index = 0;
++		return 0;
++	default:
++		/* There is a pseudo-address for broadcast to both amps - ignore it */
++		dev_dbg(cs35l56->base.dev, "Ignoring I2C address %#x\n", *bus_addr);
++		return 0;
++	}
++}
++
++static const struct {
++	const char *sub;
++	int (*fixup_fn)(struct cs35l56_hda *cs35l56, int *bus_addr);
++} cs35l56_hda_fixups[] = {
 +	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb1xxx"),
-+		}
++		.sub = "17AA390B", /* Lenovo Yoga Book 9i GenX */
++		.fixup_fn = cs35l56_hda_fixup_yoga9,
 +	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
++};
++
++static int cs35l56_hda_apply_platform_fixups(struct cs35l56_hda *cs35l56, const char *sub,
++					     int *bus_addr)
++{
++	int i;
++
++	if (IS_ERR(sub))
++		return 0;
++
++	for (i = 0; i < ARRAY_SIZE(cs35l56_hda_fixups); i++) {
++		if (strcasecmp(cs35l56_hda_fixups[i].sub, sub) == 0) {
++			dev_dbg(cs35l56->base.dev, "Applying fixup for %s\n",
++				cs35l56_hda_fixups[i].sub);
++			return (cs35l56_hda_fixups[i].fixup_fn)(cs35l56, bus_addr);
++		}
++	}
++
++	return 0;
++}
++
+ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
+ {
+ 	u32 values[HDA_MAX_COMPONENTS];
+@@ -900,39 +946,47 @@ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
+ 		ACPI_COMPANION_SET(cs35l56->base.dev, adev);
+ 	}
+ 
+-	property = "cirrus,dev-index";
+-	ret = device_property_count_u32(cs35l56->base.dev, property);
+-	if (ret <= 0)
+-		goto err;
+-
+-	if (ret > ARRAY_SIZE(values)) {
+-		ret = -EINVAL;
+-		goto err;
+-	}
+-	nval = ret;
++	/* Initialize things that could be overwritten by a fixup */
++	cs35l56->index = -1;
+ 
+-	ret = device_property_read_u32_array(cs35l56->base.dev, property, values, nval);
++	sub = acpi_get_subsystem_id(ACPI_HANDLE(cs35l56->base.dev));
++	ret = cs35l56_hda_apply_platform_fixups(cs35l56, sub, &id);
+ 	if (ret)
+-		goto err;
++		return ret;
+ 
+-	cs35l56->index = -1;
+-	for (i = 0; i < nval; i++) {
+-		if (values[i] == id) {
+-			cs35l56->index = i;
+-			break;
+-		}
+-	}
+-	/*
+-	 * It's not an error for the ID to be missing: for I2C there can be
+-	 * an alias address that is not a real device. So reject silently.
+-	 */
+ 	if (cs35l56->index == -1) {
+-		dev_dbg(cs35l56->base.dev, "No index found in %s\n", property);
+-		ret = -ENODEV;
+-		goto err;
+-	}
++		property = "cirrus,dev-index";
++		ret = device_property_count_u32(cs35l56->base.dev, property);
++		if (ret <= 0)
++			goto err;
+ 
+-	sub = acpi_get_subsystem_id(ACPI_HANDLE(cs35l56->base.dev));
++		if (ret > ARRAY_SIZE(values)) {
++			ret = -EINVAL;
++			goto err;
++		}
++		nval = ret;
++
++		ret = device_property_read_u32_array(cs35l56->base.dev, property, values, nval);
++		if (ret)
++			goto err;
++
++		for (i = 0; i < nval; i++) {
++			if (values[i] == id) {
++				cs35l56->index = i;
++				break;
++			}
++		}
++
++		/*
++		 * It's not an error for the ID to be missing: for I2C there can be
++		 * an alias address that is not a real device. So reject silently.
++		 */
++		if (cs35l56->index == -1) {
++			dev_dbg(cs35l56->base.dev, "No index found in %s\n", property);
++			ret = -ENODEV;
++			goto err;
++		}
++	}
+ 
+ 	if (IS_ERR(sub)) {
+ 		dev_info(cs35l56->base.dev,
 -- 
 2.39.5
 
