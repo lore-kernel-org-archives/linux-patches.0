@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CD8217F35;
-	Tue, 12 Aug 2025 19:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FD03594E;
+	Tue, 12 Aug 2025 19:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026190; cv=none; b=CFnUouLUm5CNNXLLr+ce14CYhLDrRCvkqGsitcrPg4Z3n9Ua0gZ3p8XGoYPAGW16bVxrUNCqIMkTi9BM+D2+zIPUDwD94gAqEOxAvELKpEIG4ND5voN0oX904G43v1WNeKb38+ULrhDWhe1doJI7aoUpG99X2+ckmJ6EeZoNRsc=
+	t=1755026193; cv=none; b=h2Ghd+VN2/9v6BGYUJlheEkHRkoZ+qMxMQhN/kj2wabRWASYWF9RwHpJDy/77VdldIiN32s3O9u26J8xUU0fBeDmSpZqLsB1wrzH97hF7XiEmtIQg3tmi7OjLxQijBQPR4fOsKERLte3VRUEhrQrAxyDDJikAuuOlRqlVHtADBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026190; c=relaxed/simple;
-	bh=JuFRNWkJ/D5lQhpQCYC7B0cNkHLkzY9mSrGbjkEv7OI=;
+	s=arc-20240116; t=1755026193; c=relaxed/simple;
+	bh=CY80PJjGBmJz8cQnwXolZgNQdIrdTNwwVldxUCB6TYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTQmRUXCSJZCy+aIRqZKjp/IkArxPOR3FmKgnT+CqY8TnwZmYYzhdaDgMEFD9xvjuuMs54ofK9hLRJg8u0jui8fmGk7/wp2+uv4TwcDyYc5C4P56bu0bp5c27Mk9hsamQMZ5C5CtsB1m4vKCprCSNVn9+m/WjAlN6Ms7zMLmGQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgUTbjpu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BxnvXdb1ULljT/ZP8xyYvLdAQaR5d9du4z5cvJosdMofsVm/Ig+9+m8JGfUD/xsQ8pYJ2a8bN32Z5AcAa5AA2wOKs9ZwawW6LZ9pm+Yr16FZKKtzQkr6ZvaFUDDvaH6vnvfBCUskew0ba9H0KMsJ5uun+gtfV49A2Sda/zeIa+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1god/wlO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgUTbjpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E36C4CEF0;
-	Tue, 12 Aug 2025 19:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1god/wlO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9A2C4CEF0;
+	Tue, 12 Aug 2025 19:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026189;
-	bh=JuFRNWkJ/D5lQhpQCYC7B0cNkHLkzY9mSrGbjkEv7OI=;
+	s=korg; t=1755026193;
+	bh=CY80PJjGBmJz8cQnwXolZgNQdIrdTNwwVldxUCB6TYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgUTbjpuK9M3EzyzAkupuGmV4AQx3KsZZ+puOZHRgDB9Vy/7+F31lRGqeiQpSBlWf
-	 L2BxE16F7fh3c58nRKqHqHmeY7R+cLxP30LUlWTW8d74DibiGn2SreRZts0xsKuShJ
-	 GID6Y+RoS46aJoKyxMGdlm44MbWmStPSsrKkWcjQ=
+	b=1god/wlOGAKuq8K/4t8XU7NSzHt/JIHL1hutgyQjMjaSjQM7huS92oNuE1fGUM4gr
+	 e0V65PzjsXC1XIGsqSKoMvyDLsNFGwgrpfDBD7zGshxCf74R9o7wp8sAmI/1bp/RAj
+	 re/jsL7xgBcInfTG+ObJcmNO3eyvUsWcylfq8xVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Tomas Glozar <tglozar@redhat.com>,
-	Juri Lelli <jlelli@redhat.com>,
-	Clark Williams <williams@redhat.com>,
-	John Kacur <jkacur@redhat.com>,
-	Nam Cao <namcao@linutronix.de>,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 220/480] rv: Adjust monitor dependencies
-Date: Tue, 12 Aug 2025 19:47:08 +0200
-Message-ID: <20250812174406.522543234@linuxfoundation.org>
+Subject: [PATCH 6.15 257/480] mtd: spi-nor: spansion: Fixup params->set_4byte_addr_mode for SEMPER
+Date: Tue, 12 Aug 2025 19:47:45 +0200
+Message-ID: <20250812174408.044543993@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -59,91 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
 
-[ Upstream commit 79de661707a4a2dc695fd3e00529a14b4f5ec50d ]
+[ Upstream commit a45ab839f52f3f00ac3dae18a50e902efd216de2 ]
 
-RV monitors relying on the preemptirqs tracepoints are set as dependent
-on PREEMPT_TRACER and IRQSOFF_TRACER. In fact, those configurations do
-enable the tracepoints but are not the minimal configurations enabling
-them, which are TRACE_PREEMPT_TOGGLE and TRACE_IRQFLAGS (not selectable
-manually).
+Infineon SEMPER flash family does not support E9h opcode as Exit 4-byte
+mode (EX4B). Therefore, params->set_4byte_addr_mode is not determined by
+BFPT parse. Fixup it up by introducing vendor specific EX4B opcode (B8h)
+and function.
 
-Set TRACE_PREEMPT_TOGGLE and TRACE_IRQFLAGS as dependencies for
-monitors.
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tomas Glozar <tglozar@redhat.com>
-Cc: Juri Lelli <jlelli@redhat.com>
-Cc: Clark Williams <williams@redhat.com>
-Cc: John Kacur <jkacur@redhat.com>
-Link: https://lore.kernel.org/20250728135022.255578-5-gmonaco@redhat.com
-Fixes: fbe6c09b7eb4 ("rv: Add scpd, snep and sncid per-cpu monitors")
-Acked-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: c87c9b11c53ce ("mtd: spi-nor: spansion: Determine current address mode")
+Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Acked-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20250612074427.22263-1-Takahiro.Kuwano@infineon.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/rv/monitors/scpd/Kconfig  | 2 +-
- kernel/trace/rv/monitors/sncid/Kconfig | 2 +-
- kernel/trace/rv/monitors/snep/Kconfig  | 2 +-
- kernel/trace/rv/monitors/wip/Kconfig   | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/mtd/spi-nor/spansion.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/kernel/trace/rv/monitors/scpd/Kconfig b/kernel/trace/rv/monitors/scpd/Kconfig
-index b9114fbf680f..682d0416188b 100644
---- a/kernel/trace/rv/monitors/scpd/Kconfig
-+++ b/kernel/trace/rv/monitors/scpd/Kconfig
-@@ -2,7 +2,7 @@
- #
- config RV_MON_SCPD
- 	depends on RV
--	depends on PREEMPT_TRACER
-+	depends on TRACE_PREEMPT_TOGGLE
- 	depends on RV_MON_SCHED
- 	default y
- 	select DA_MON_EVENTS_IMPLICIT
-diff --git a/kernel/trace/rv/monitors/sncid/Kconfig b/kernel/trace/rv/monitors/sncid/Kconfig
-index 76bcfef4fd10..3a5639feaaaf 100644
---- a/kernel/trace/rv/monitors/sncid/Kconfig
-+++ b/kernel/trace/rv/monitors/sncid/Kconfig
-@@ -2,7 +2,7 @@
- #
- config RV_MON_SNCID
- 	depends on RV
--	depends on IRQSOFF_TRACER
-+	depends on TRACE_IRQFLAGS
- 	depends on RV_MON_SCHED
- 	default y
- 	select DA_MON_EVENTS_IMPLICIT
-diff --git a/kernel/trace/rv/monitors/snep/Kconfig b/kernel/trace/rv/monitors/snep/Kconfig
-index 77527f971232..7dd54f434ff7 100644
---- a/kernel/trace/rv/monitors/snep/Kconfig
-+++ b/kernel/trace/rv/monitors/snep/Kconfig
-@@ -2,7 +2,7 @@
- #
- config RV_MON_SNEP
- 	depends on RV
--	depends on PREEMPT_TRACER
-+	depends on TRACE_PREEMPT_TOGGLE
- 	depends on RV_MON_SCHED
- 	default y
- 	select DA_MON_EVENTS_IMPLICIT
-diff --git a/kernel/trace/rv/monitors/wip/Kconfig b/kernel/trace/rv/monitors/wip/Kconfig
-index e464b9294865..87a26195792b 100644
---- a/kernel/trace/rv/monitors/wip/Kconfig
-+++ b/kernel/trace/rv/monitors/wip/Kconfig
-@@ -2,7 +2,7 @@
- #
- config RV_MON_WIP
- 	depends on RV
--	depends on PREEMPT_TRACER
-+	depends on TRACE_PREEMPT_TOGGLE
- 	select DA_MON_EVENTS_IMPLICIT
- 	bool "wip monitor"
- 	help
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index bf08dbf5e742..b9f156c0f8bc 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -17,6 +17,7 @@
+ 
+ #define SPINOR_OP_CLSR		0x30	/* Clear status register 1 */
+ #define SPINOR_OP_CLPEF		0x82	/* Clear program/erase failure flags */
++#define SPINOR_OP_CYPRESS_EX4B	0xB8	/* Exit 4-byte address mode */
+ #define SPINOR_OP_CYPRESS_DIE_ERASE		0x61	/* Chip (die) erase */
+ #define SPINOR_OP_RD_ANY_REG			0x65	/* Read any register */
+ #define SPINOR_OP_WR_ANY_REG			0x71	/* Write any register */
+@@ -58,6 +59,13 @@
+ 		   SPI_MEM_OP_DUMMY(ndummy, 0),				\
+ 		   SPI_MEM_OP_DATA_IN(1, buf, 0))
+ 
++#define CYPRESS_NOR_EN4B_EX4B_OP(enable)				\
++	SPI_MEM_OP(SPI_MEM_OP_CMD(enable ? SPINOR_OP_EN4B :		\
++					   SPINOR_OP_CYPRESS_EX4B, 0),	\
++		   SPI_MEM_OP_NO_ADDR,					\
++		   SPI_MEM_OP_NO_DUMMY,					\
++		   SPI_MEM_OP_NO_DATA)
++
+ #define SPANSION_OP(opcode)						\
+ 	SPI_MEM_OP(SPI_MEM_OP_CMD(opcode, 0),				\
+ 		   SPI_MEM_OP_NO_ADDR,					\
+@@ -356,6 +364,20 @@ static int cypress_nor_quad_enable_volatile(struct spi_nor *nor)
+ 	return 0;
+ }
+ 
++static int cypress_nor_set_4byte_addr_mode(struct spi_nor *nor, bool enable)
++{
++	int ret;
++	struct spi_mem_op op = CYPRESS_NOR_EN4B_EX4B_OP(enable);
++
++	spi_nor_spimem_setup_op(nor, &op, nor->reg_proto);
++
++	ret = spi_mem_exec_op(nor->spimem, &op);
++	if (ret)
++		dev_dbg(nor->dev, "error %d setting 4-byte mode\n", ret);
++
++	return ret;
++}
++
+ /**
+  * cypress_nor_determine_addr_mode_by_sr1() - Determine current address mode
+  *                                            (3 or 4-byte) by querying status
+@@ -526,6 +548,9 @@ s25fs256t_post_bfpt_fixup(struct spi_nor *nor,
+ 	struct spi_mem_op op;
+ 	int ret;
+ 
++	/* Assign 4-byte address mode method that is not determined in BFPT */
++	nor->params->set_4byte_addr_mode = cypress_nor_set_4byte_addr_mode;
++
+ 	ret = cypress_nor_set_addr_mode_nbytes(nor);
+ 	if (ret)
+ 		return ret;
+@@ -591,6 +616,9 @@ s25hx_t_post_bfpt_fixup(struct spi_nor *nor,
+ {
+ 	int ret;
+ 
++	/* Assign 4-byte address mode method that is not determined in BFPT */
++	nor->params->set_4byte_addr_mode = cypress_nor_set_4byte_addr_mode;
++
+ 	ret = cypress_nor_set_addr_mode_nbytes(nor);
+ 	if (ret)
+ 		return ret;
+@@ -718,6 +746,9 @@ static int s28hx_t_post_bfpt_fixup(struct spi_nor *nor,
+ 				   const struct sfdp_parameter_header *bfpt_header,
+ 				   const struct sfdp_bfpt *bfpt)
+ {
++	/* Assign 4-byte address mode method that is not determined in BFPT */
++	nor->params->set_4byte_addr_mode = cypress_nor_set_4byte_addr_mode;
++
+ 	return cypress_nor_set_addr_mode_nbytes(nor);
+ }
+ 
 -- 
 2.39.5
 
