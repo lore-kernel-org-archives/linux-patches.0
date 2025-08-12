@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C432FF16B;
-	Tue, 12 Aug 2025 18:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABEA2F5E;
+	Tue, 12 Aug 2025 18:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021863; cv=none; b=Q8bvM9/9jqxk58lCDcU12MV3G/bPZhaGEmUXWkukhG30ZKWfo8Z141rP70PG1craaOHdpg9T/YLLAylk2iGB3apmJRgeF2BnEQ1c0tsWkT0WgWb3SPubyc5aunSGD3GAG+hY/j/hqbPOmZMF16oK2wq9qqHoKT9iMyzy3xzdZaM=
+	t=1755021866; cv=none; b=lXNoXP8vtISqowhE275MsZ8jcUQkMrQjlYf6wV74sTik9wFtjmhTZigTAs3XGptcJqZZP3YuC6Ae+RfpirIIiixbOZvf4IB5hu4aeZRgHwrWxZP2gnG3Qgmowv12A78FIz4L6sQyrTPivOOsCEyb2rdnUh+luZHKsDzA4r6A+fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021863; c=relaxed/simple;
-	bh=vM0WbaT3uZFz6Lk5z8ulWG0KBLAIhK53qi13eCzLxaY=;
+	s=arc-20240116; t=1755021866; c=relaxed/simple;
+	bh=tiL0Hoe2XcpC0Ph1/nF3+9bYaqClixfj07DYERSBeYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kgPX9RwpNzUXfkeiNIcRfZAzzpdV17dBk53qBnuPOZkN+0W4/GiR0qJLlsPBHJIxBU9EOlS6KKYvDPH2kWzmos0Tzrir248PGGn8XzHzvoGyOmU9sxSOCZB+wl1oH+mTqKRJvgfO5ym2NNk5QPMnMtzPmodan1t9LW34TjCyreA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAyFn+lp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8Lr0DRqdR6QE8GybyvsVdzNtCSeKjWJdd8ejKFfQ94+OSPRzLfto1na9h8ildYOsP4YsNOuvF8UJ5LcMuG/4kjhPoXL1Moq6NjXG/w3e20Xnb3PNIVuWGPP8uZYIrwl/ziSxqPwZ5e54sUd/Wu6yNUrKjew9Q0X1kkD8zTAgDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlpFuJSO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAyFn+lp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACDBC4CEF6;
-	Tue, 12 Aug 2025 18:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlpFuJSO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE86C4CEF0;
+	Tue, 12 Aug 2025 18:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021863;
-	bh=vM0WbaT3uZFz6Lk5z8ulWG0KBLAIhK53qi13eCzLxaY=;
+	s=korg; t=1755021866;
+	bh=tiL0Hoe2XcpC0Ph1/nF3+9bYaqClixfj07DYERSBeYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAyFn+lp0NIp765cabSVVVuc2mDKe9J4f8T3FFYLVXlGbOmKp682/qPHw+A5rc9u1
-	 C9SiIpvDXgBJZnPJ80LzDHlqT6l1HUDBUgvf5twtwk0yNy/mfdBAYzQbROqeh2qotq
-	 a8iYgk7JRnylyxobTv31P90wIwZjWPluRAH2rXLE=
+	b=ZlpFuJSOLijN6C+jjKdH6kpV6sYAx+npn9xNh5BGXCraBCU88KGDRjpN1g0YzQoXQ
+	 oO0wIpaoH4g3I+5et3oM7aYgd+0vvujC8Rd5AHKT85dUT4CTa+DqTabvG2QHiwriaA
+	 O3w8S9uLwHXtxFvmTtwdPBpt/wuQsS62jSR+8uN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 247/262] i2c: stm32f7: unmap DMA mapped buffer
-Date: Tue, 12 Aug 2025 19:30:35 +0200
-Message-ID: <20250812173003.669015455@linuxfoundation.org>
+	Elliot Berman <quic_eberman@quicinc.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Chen Ridong <chenridong@huawei.com>
+Subject: [PATCH 6.6 248/262] sched/core: Remove ifdeffery for saved_state
+Date: Tue, 12 Aug 2025 19:30:36 +0200
+Message-ID: <20250812173003.711890431@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -46,110 +46,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Le Goffic <clement.legoffic@foss.st.com>
+From: Elliot Berman <quic_eberman@quicinc.com>
 
-[ Upstream commit 6aae87fe7f180cd93a74466cdb6cf2aa9bb28798 ]
+commit fbaa6a181a4b1886cbf4214abdf9a2df68471510 upstream.
 
-Before each I2C transfer using DMA, the I2C buffer is DMA'pped to make
-sure the memory buffer is DMA'able. This is handle in the function
-`stm32_i2c_prep_dma_xfer()`.
-If the transfer fails for any reason the I2C buffer must be unmap.
-Use the dma_callback to factorize the code and fix this issue.
+In preparation for freezer to also use saved_state, remove the
+CONFIG_PREEMPT_RT compilation guard around saved_state.
 
-Note that the `stm32f7_i2c_dma_callback()` is now called in case of DMA
-transfer success and error and that the `complete()` on the dma_complete
-completion structure is done inconditionnally in case of transfer
-success or error as well as the `dmaengine_terminate_async()`.
-This is allowed as a `complete()` in case transfer error has no effect
-as well as a `dmaengine_terminate_async()` on a transfer success.
+On the arm64 platform I tested which did not have CONFIG_PREEMPT_RT,
+there was no statistically significant deviation by applying this patch.
 
-Also fix the unneeded cast and remove not more needed variables.
+Test methodology:
 
-Fixes: 7ecc8cfde553 ("i2c: i2c-stm32f7: Add DMA support")
-Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
-Cc: <stable@vger.kernel.org> # v4.18+
-Acked-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250704-i2c-upstream-v4-2-84a095a2c728@foss.st.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+perf bench sched message -g 40 -l 40
+
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32f7.c |   20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ include/linux/sched.h |    2 --
+ kernel/sched/core.c   |   10 ++--------
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -726,10 +726,11 @@ static void stm32f7_i2c_disable_dma_req(
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -753,10 +753,8 @@ struct task_struct {
+ #endif
+ 	unsigned int			__state;
  
- static void stm32f7_i2c_dma_callback(void *arg)
+-#ifdef CONFIG_PREEMPT_RT
+ 	/* saved state for "spinlock sleepers" */
+ 	unsigned int			saved_state;
+-#endif
+ 
+ 	/*
+ 	 * This begins the randomizable portion of task_struct. Only
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -2238,17 +2238,15 @@ int __task_state_match(struct task_struc
+ 	if (READ_ONCE(p->__state) & state)
+ 		return 1;
+ 
+-#ifdef CONFIG_PREEMPT_RT
+ 	if (READ_ONCE(p->saved_state) & state)
+ 		return -1;
+-#endif
++
+ 	return 0;
+ }
+ 
+ static __always_inline
+ int task_state_match(struct task_struct *p, unsigned int state)
  {
--	struct stm32f7_i2c_dev *i2c_dev = (struct stm32f7_i2c_dev *)arg;
-+	struct stm32f7_i2c_dev *i2c_dev = arg;
- 	struct stm32_i2c_dma *dma = i2c_dev->dma;
+-#ifdef CONFIG_PREEMPT_RT
+ 	int match;
  
- 	stm32f7_i2c_disable_dma_req(i2c_dev);
-+	dmaengine_terminate_async(dma->chan_using);
- 	dma_unmap_single(i2c_dev->dev, dma->dma_buf, dma->dma_len,
- 			 dma->dma_data_dir);
- 	complete(&dma->dma_complete);
-@@ -1525,7 +1526,6 @@ static irqreturn_t stm32f7_i2c_isr_event
- {
- 	struct stm32f7_i2c_dev *i2c_dev = data;
- 	struct stm32f7_i2c_msg *f7_msg = &i2c_dev->f7_msg;
--	struct stm32_i2c_dma *dma = i2c_dev->dma;
- 	void __iomem *base = i2c_dev->base;
- 	u32 status, mask;
- 	int ret;
-@@ -1540,10 +1540,8 @@ static irqreturn_t stm32f7_i2c_isr_event
- 		dev_dbg(i2c_dev->dev, "<%s>: Receive NACK (addr %x)\n",
- 			__func__, f7_msg->addr);
- 		writel_relaxed(STM32F7_I2C_ICR_NACKCF, base + STM32F7_I2C_ICR);
--		if (i2c_dev->use_dma) {
--			stm32f7_i2c_disable_dma_req(i2c_dev);
--			dmaengine_terminate_async(dma->chan_using);
--		}
-+		if (i2c_dev->use_dma)
-+			stm32f7_i2c_dma_callback(i2c_dev);
- 		f7_msg->result = -ENXIO;
- 	}
+ 	/*
+@@ -2260,9 +2258,6 @@ int task_state_match(struct task_struct
+ 	raw_spin_unlock_irq(&p->pi_lock);
  
-@@ -1561,8 +1559,7 @@ static irqreturn_t stm32f7_i2c_isr_event
- 			ret = wait_for_completion_timeout(&i2c_dev->dma->dma_complete, HZ);
- 			if (!ret) {
- 				dev_dbg(i2c_dev->dev, "<%s>: Timed out\n", __func__);
--				stm32f7_i2c_disable_dma_req(i2c_dev);
--				dmaengine_terminate_async(dma->chan_using);
-+				stm32f7_i2c_dma_callback(i2c_dev);
- 				f7_msg->result = -ETIMEDOUT;
- 			}
- 		}
-@@ -1604,7 +1601,6 @@ static irqreturn_t stm32f7_i2c_isr_error
- 	u16 addr = f7_msg->addr;
- 	void __iomem *base = i2c_dev->base;
- 	struct device *dev = i2c_dev->dev;
--	struct stm32_i2c_dma *dma = i2c_dev->dma;
- 	u32 status;
+ 	return match;
+-#else
+-	return __task_state_match(p, state);
+-#endif
+ }
  
- 	status = readl_relaxed(i2c_dev->base + STM32F7_I2C_ISR);
-@@ -1648,10 +1644,8 @@ static irqreturn_t stm32f7_i2c_isr_error
- 	}
+ /*
+@@ -4059,7 +4054,6 @@ bool ttwu_state_match(struct task_struct
  
- 	/* Disable dma */
--	if (i2c_dev->use_dma) {
--		stm32f7_i2c_disable_dma_req(i2c_dev);
--		dmaengine_terminate_async(dma->chan_using);
--	}
-+	if (i2c_dev->use_dma)
-+		stm32f7_i2c_dma_callback(i2c_dev);
+ 	*success = !!(match = __task_state_match(p, state));
  
- 	i2c_dev->master_mode = false;
- 	complete(&i2c_dev->complete);
+-#ifdef CONFIG_PREEMPT_RT
+ 	/*
+ 	 * Saved state preserves the task state across blocking on
+ 	 * an RT lock.  If the state matches, set p::saved_state to
+@@ -4075,7 +4069,7 @@ bool ttwu_state_match(struct task_struct
+ 	 */
+ 	if (match < 0)
+ 		p->saved_state = TASK_RUNNING;
+-#endif
++
+ 	return match > 0;
+ }
+ 
 
 
