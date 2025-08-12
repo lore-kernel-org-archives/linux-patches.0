@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FCB2C15B5;
-	Tue, 12 Aug 2025 17:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD5D2F7477;
+	Tue, 12 Aug 2025 17:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020722; cv=none; b=gW7EwzbCMHclA6KZRQtQPuKimtX4otJX68zrld1YFRvm+NNNGAV5mHYfzPlER9SOHQWeO4SfP1QQZRPWssqBI7E8TqdorM64VEraps1YxeW5zfe/cO6EdzfQW9BrPlyHjjPIeGKPn+nrNuyapOkzvA/FqQ99Dex9TmaYnd0WRRk=
+	t=1755020726; cv=none; b=vCSIo4vpHOrT8wfNzxJziNA87zYGCUHfStCI9rS7MzeInEg1O8oTWv7Y15/1zim3FirMi/xvVAi5i/jSWrdV7ikV5r4sHYWeQLhEXlYkj3UseuKQWykNCRR+jLRssLprlo/75RLzkS32BwhsFXLlBaEASOrPg8f0UJ+C5BbYZ+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020722; c=relaxed/simple;
-	bh=8Wc6suO/uQ/CVTjpYCt/tgzUyhJqAWynmU1YgcGOJO8=;
+	s=arc-20240116; t=1755020726; c=relaxed/simple;
+	bh=Nry74kgnB2/3B9SF6dyuKjnLtZajoVFgXDLg1yCVX00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUDOy1zM6QVm8YvFbcqql7hXknx23NSEvcs9yEmBybgvjhEFGWtIj25PCsNe7JiM30EuAOLwKvKe37qxDZ6EDKR8Yrf/8mHepDGCoPu7cXdYYV3/Co+1rQxyGWkgxtCRPxCpVNo4J2hYWo7+svdcFrlWKqTSwC5e9ubmi6GnY6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=minNelY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MRezDnkAZThqxKAMGqkmseNFgNsOwKOa19oZRuLgUHbQ6hqR+7y2yC1ED+eqmVT6eyNM5naQ/NM6d36nGt+2xk+gqpPaVXnk314h7aeZ9Kc+JcQ9krwq5ACvesUgC8vIf1gH+9SKdDr+YJIGfgNXQSoSq+N2j9vUGA8Gaw+ASWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvDLO70T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="minNelY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35834C4CEF1;
-	Tue, 12 Aug 2025 17:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvDLO70T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF0AC4CEF0;
+	Tue, 12 Aug 2025 17:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020722;
-	bh=8Wc6suO/uQ/CVTjpYCt/tgzUyhJqAWynmU1YgcGOJO8=;
+	s=korg; t=1755020726;
+	bh=Nry74kgnB2/3B9SF6dyuKjnLtZajoVFgXDLg1yCVX00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=minNelY5UkloDM22dX8zjsAp5BPijqMyzfHggMyjp5Opue6lDfUYYFxGL16Fu7JGw
-	 1nIpVS/fGulBt+mD5wIv5iKqexg2SSQR0R+RQj2tLLyyuK+fW59DdRdDgpQoHVd9xE
-	 v2zeHWRo5QbzABFhXvAsvP9fXXvyREmulTrAl9tI=
+	b=pvDLO70T7+Ie1Plfyb97wV11l3pOcEWiflSReARSvsx+FUuj0a+ZbLIaFZDkkpBhs
+	 gImYexZAMXBO46/Eie6X7C38mjXJ1wc7OdSrzKW5y35U9pZuc7oVGGEh58mTVabxw2
+	 mEKLtUYfHEZOc67WHPRiKH+uOZKLOXYcAY/axodA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	"Kirill A. Shuemov" <kirill.shutemov@linux.intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 158/253] proc: use the same treatment to check proc_lseek as ones for proc_read_iter et.al
-Date: Tue, 12 Aug 2025 19:29:06 +0200
-Message-ID: <20250812172955.442719222@linuxfoundation.org>
+Subject: [PATCH 6.6 004/262] ASoC: Intel: fix SND_SOC_SOF dependencies
+Date: Tue, 12 Aug 2025 19:26:32 +0200
+Message-ID: <20250812172953.156628177@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,90 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit ff7ec8dc1b646296f8d94c39339e8d3833d16c05 ]
+[ Upstream commit e837b59f8b411b5baf5e3de7a5aea10b1c545a63 ]
 
-Check pde->proc_ops->proc_lseek directly may cause UAF in rmmod scenario.
-It's a gap in proc_reg_open() after commit 654b33ada4ab("proc: fix UAF in
-proc_get_inode()").  Followed by AI Viro's suggestion, fix it in same
-manner.
+It is currently possible to configure a kernel with all Intel SoC
+configs as loadable modules, but the board config as built-in. This
+causes a link failure in the reference to the snd_soc_sof.ko module:
 
-Link: https://lkml.kernel.org/r/20250607021353.1127963-1-wangzijie1@honor.com
-Fixes: 3f61631d47f1 ("take care to handle NULL ->proc_lseek()")
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reviewed-by: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Cc: Kirill A. Shuemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_hw_params':
+sof_rt5682.c:(.text+0x1f9): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sof_rt5682.c:(.text+0x234): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_codec_init':
+sof_rt5682.c:(.text+0x3e0): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_cs42l42.o: in function `sof_cs42l42_hw_params':
+sof_cs42l42.c:(.text+0x2a): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_nau8825.o: in function `sof_nau8825_hw_params':
+sof_nau8825.c:(.text+0x7f): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_da7219.o: in function `da7219_codec_init':
+sof_da7219.c:(.text+0xbf): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_maxim_common.o: in function `max_98373_hw_params':
+sof_maxim_common.c:(.text+0x6f9): undefined reference to `sof_dai_get_tdm_slots'
+x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1015_hw_params':
+sof_realtek_common.c:(.text+0x54c): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1308_hw_params':
+sof_realtek_common.c:(.text+0x702): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_cirrus_common.o: in function `cs35l41_hw_params':
+sof_cirrus_common.c:(.text+0x2f): undefined reference to `sof_dai_get_bclk'
+
+Add an optional dependency on SND_SOC_SOF_INTEL_COMMON, to ensure that whenever
+the SOF support is in a loadable module, none of the board code can be built-in.
+
+This may be be a little heavy-handed, but I also don't see a reason why one would
+want the boards to be built-in but not the SoC, so it shouldn't actually cause
+any usability problems.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250709145626.64125-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/generic.c       | 2 ++
- fs/proc/inode.c         | 2 +-
- fs/proc/internal.h      | 5 +++++
- include/linux/proc_fs.h | 1 +
- 4 files changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/proc/generic.c b/fs/proc/generic.c
-index b721bb88b4a6..c3a809e1d719 100644
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -568,6 +568,8 @@ static void pde_set_flags(struct proc_dir_entry *pde)
- 	if (pde->proc_ops->proc_compat_ioctl)
- 		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
- #endif
-+	if (pde->proc_ops->proc_lseek)
-+		pde->flags |= PROC_ENTRY_proc_lseek;
- }
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index 0ae6eecc8851..033be4d3e02d 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -11,7 +11,7 @@ menuconfig SND_SOC_INTEL_MACH
+ 	 kernel: saying N will just cause the configurator to skip all
+ 	 the questions about Intel ASoC machine drivers.
  
- struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
-diff --git a/fs/proc/inode.c b/fs/proc/inode.c
-index bc4011901c90..623aa0d97a6d 100644
---- a/fs/proc/inode.c
-+++ b/fs/proc/inode.c
-@@ -494,7 +494,7 @@ static int proc_reg_open(struct inode *inode, struct file *file)
- 	typeof_member(struct proc_ops, proc_release) release;
- 	struct pde_opener *pdeo;
+-if SND_SOC_INTEL_MACH
++if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON || !SND_SOC_SOF_INTEL_COMMON)
  
--	if (!pde->proc_ops->proc_lseek)
-+	if (!pde_has_proc_lseek(pde))
- 		file->f_mode &= ~FMODE_LSEEK;
- 
- 	if (pde_is_permanent(pde)) {
-diff --git a/fs/proc/internal.h b/fs/proc/internal.h
-index d115d22c01d4..019137261a03 100644
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -98,6 +98,11 @@ static inline bool pde_has_proc_compat_ioctl(const struct proc_dir_entry *pde)
- #endif
- }
- 
-+static inline bool pde_has_proc_lseek(const struct proc_dir_entry *pde)
-+{
-+	return pde->flags & PROC_ENTRY_proc_lseek;
-+}
-+
- extern struct kmem_cache *proc_dir_entry_cache;
- void pde_free(struct proc_dir_entry *pde);
- 
-diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
-index 39532c19aa28..ca9cd8a2569e 100644
---- a/include/linux/proc_fs.h
-+++ b/include/linux/proc_fs.h
-@@ -27,6 +27,7 @@ enum {
- 
- 	PROC_ENTRY_proc_read_iter	= 1U << 1,
- 	PROC_ENTRY_proc_compat_ioctl	= 1U << 2,
-+	PROC_ENTRY_proc_lseek		= 1U << 3,
- };
- 
- struct proc_ops {
+ config SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES
+ 	bool "Use more user friendly long card names"
 -- 
 2.39.5
 
