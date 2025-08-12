@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732A12CA9;
-	Tue, 12 Aug 2025 18:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D002C21F6;
+	Tue, 12 Aug 2025 18:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024523; cv=none; b=DzOJIEUziLCHcQWueuCeAWAftiP/QFjdBEOJxYrPFaTQj7BpGwJzXTA7FLh3VgvIDKxGttZD+ksIqbcy/bKZ7tS1A9wcANWPp4yOjkseohf6iOviSOLkbkhiXF6fm13jvTPMHgy4Ft23hTrVBo6Tm/P1jHsoSE0qVvu71FscTpA=
+	t=1755024527; cv=none; b=MzS/mPhKKCRVZlTk52yqLq6VuJsk7dCnzK7ozIxGE281DEsUPkhKLDlvtqrL2ETxcUEcUB0oZHf5GHkNDIGyZXSL9nfFPu1HkiyMDzB55tjnha+MB0oRLwPgFbH+L7l5KCJ+vZiMSfR8GBfZQH6lPC0j2hTq/ncJJHcDRDbl2eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024523; c=relaxed/simple;
-	bh=eDIE6YPuBB3SPQijJRodESmgYmctprWlXnHG9TugYko=;
+	s=arc-20240116; t=1755024527; c=relaxed/simple;
+	bh=D/v1IojSKKjeugYF8GOTYYKPGhqGdcCbNHUjvB4CPnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVUzrAH0giKNSZLDAcvGnC3saf3pZyXCfWhorfifx/9uI/XmLdpNieF6AlRd4gZW/LErfO6alHXsXrx8X+EYG+3IyrLySbTJ8WGV49tMLCgeraGimIfyBUIqVfBgF7jnYTEXyCfmZZZIHGB3g2a4pLg7EtZHwKLX/tV7MKaKVzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhTUA1KN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bc7cpYjbW1X7iNkdvOIbH+bKyiYdih1UPuuVIbAhLuL6zDp8ZQK8RluV+7mGyFFkpac7U94ptj/BG3Ol3uC+OafW83gUFEYSb0TDbjyNk7LR6+zydVvNKRDwmI1jEwOuGmv23halhcWSbztpQM0aVBOGLfZD0TaGFO8ILY/DgII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UioSlpld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhTUA1KN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFBDC4CEF0;
-	Tue, 12 Aug 2025 18:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UioSlpld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7EFC4CEF0;
+	Tue, 12 Aug 2025 18:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024523;
-	bh=eDIE6YPuBB3SPQijJRodESmgYmctprWlXnHG9TugYko=;
+	s=korg; t=1755024526;
+	bh=D/v1IojSKKjeugYF8GOTYYKPGhqGdcCbNHUjvB4CPnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JhTUA1KNfnL9WdQRqza7jhXtCJrHb3L4lXmHSkr/OKVLtXhrmxSoaMHizS8ZnpRvU
-	 WEu7nCxddzZZrW+9/ta4O0EoOvSK4a8FaKvfklXua581HBfoNxh1ZfZkaBjKyBiknh
-	 EE9/E/A4Ott/enj4yjBePk8voUBpbuboxYIgUi34=
+	b=UioSlpldYp3CfdWLgOKdJ0Hp0VC2C+PTgNuBDgMLeySaQpkUJs14FYGnIxgq3kloG
+	 b6ONUMa2I7I2+4IjFzDktz6kpWz6KM3JbDutjrGzD1yuaA5aQY15KuenzsRbMxyYzK
+	 olfar1NspGeqjSLZ5YW9mIn48gpwBCHaP+QNMh98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin12138@163.com>,
-	Zhi Long <longzhi@sangfor.com.cn>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 399/627] ext4: Make sure BH_New bit is cleared in ->write_end handler
-Date: Tue, 12 Aug 2025 19:31:34 +0200
-Message-ID: <20250812173434.475068138@linuxfoundation.org>
+Subject: [PATCH 6.16 382/627] perf hwmon_pmu: Avoid shortening hwmon PMU name
+Date: Tue, 12 Aug 2025 19:31:17 +0200
+Message-ID: <20250812173433.826782160@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,73 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 91b8ca8b26729b729dda8a4eddb9aceaea706f37 ]
+[ Upstream commit 28f5aa8184c9c9b8eab35fa3884c416fe75e88e4 ]
 
-Currently we clear BH_New bit in case of error and also in the standard
-ext4_write_end() handler (in block_commit_write()). However
-ext4_journalled_write_end() misses this clearing and thus we are leaving
-stale BH_New bits behind. Generally ext4_block_write_begin() clears
-these bits before any harm can be done but in case blocksize < pagesize
-and we hit some error when processing a page with these stale bits,
-we'll try to zero buffers with these stale BH_New bits and jbd2 will
-complain (as buffers were not prepared for writing in this transaction).
-Fix the problem by clearing BH_New bits in ext4_journalled_write_end()
-and WARN if ext4_block_write_begin() sees stale BH_New bits.
+Long names like ucsi_source_psy_USBC000:001 when prefixed with hwmon_
+exceed the buffer size and the last digit is lost. This causes
+confusion with similar names like ucsi_source_psy_USBC000:002. Extend
+the buffer size to avoid this.
 
-Reported-by: Baolin Liu <liubaolin12138@163.com>
-Reported-by: Zhi Long <longzhi@sangfor.com.cn>
-Fixes: 3910b513fcdf ("ext4: persist the new uptodate buffers in ext4_journalled_zero_new_buffers")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250709084831.23876-2-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 53cc0b351ec9 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250710235126.1086011-2-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inline.c | 2 ++
- fs/ext4/inode.c  | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/util/hwmon_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
-index a1bbcdf40824..1545846e0e3e 100644
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -612,6 +612,7 @@ static int ext4_convert_inline_data_to_extent(struct address_space *mapping,
- 	} else
- 		ret = ext4_block_write_begin(handle, folio, from, to,
- 					     ext4_get_block);
-+	clear_buffer_new(folio_buffers(folio));
+diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
+index c25e7296f1c1..75683c543994 100644
+--- a/tools/perf/util/hwmon_pmu.c
++++ b/tools/perf/util/hwmon_pmu.c
+@@ -344,7 +344,7 @@ static int hwmon_pmu__read_events(struct hwmon_pmu *pmu)
  
- 	if (!ret && ext4_should_journal_data(inode)) {
- 		ret = ext4_walk_page_buffers(handle, inode,
-@@ -891,6 +892,7 @@ static int ext4_da_convert_inline_data_to_extent(struct address_space *mapping,
- 		return ret;
- 	}
- 
-+	clear_buffer_new(folio_buffers(folio));
- 	folio_mark_dirty(folio);
- 	folio_mark_uptodate(folio);
- 	ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 8997a5f096b4..2509389badf3 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1171,7 +1171,7 @@ int ext4_block_write_begin(handle_t *handle, struct folio *folio,
- 			}
- 			continue;
- 		}
--		if (buffer_new(bh))
-+		if (WARN_ON_ONCE(buffer_new(bh)))
- 			clear_buffer_new(bh);
- 		if (!buffer_mapped(bh)) {
- 			WARN_ON(bh->b_size != blocksize);
-@@ -1395,6 +1395,7 @@ static int write_end_fn(handle_t *handle, struct inode *inode,
- 	ret = ext4_dirty_journalled_data(handle, bh);
- 	clear_buffer_meta(bh);
- 	clear_buffer_prio(bh);
-+	clear_buffer_new(bh);
- 	return ret;
- }
+ struct perf_pmu *hwmon_pmu__new(struct list_head *pmus, int hwmon_dir, const char *sysfs_name, const char *name)
+ {
+-	char buf[32];
++	char buf[64];
+ 	struct hwmon_pmu *hwm;
+ 	__u32 type = PERF_PMU_TYPE_HWMON_START + strtoul(sysfs_name + 5, NULL, 10);
  
 -- 
 2.39.5
