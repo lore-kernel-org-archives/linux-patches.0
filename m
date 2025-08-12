@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1724B1C1AAA;
-	Tue, 12 Aug 2025 19:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7A222425B;
+	Tue, 12 Aug 2025 19:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025374; cv=none; b=UN24U8eKSrD4uLlYBCIQbGHm4QKrzO5IAx8CRhbRSqJa4s2w2ZQXT8r9b7wFJDpyEcw+JdiHsFpkap1pbxwOgabHUEM6tKdrK2ZDxDicGhh8QNu/EDEjmSZVbeM+Xl97Kzzyps/NY/cwJy/wsn3eDUQf6ZS5mJhICWdFnCGm4bU=
+	t=1755025377; cv=none; b=p3mJu/0brFVrLsyM/KiMGsdav9Ob70NOyNBBTHkw0ZZxBMVRBXfLZ4zhxej5SjxHXuMeqJiLTXaN5teAl7Q7/+mFzV27I9MuU297KPiYEr76DX48ga4U8AfIkRDZuY4IqHKMMVV/ux39MsEIF8dwFF4KFxWf9QEJSaNQ/znmNi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025374; c=relaxed/simple;
-	bh=XfM/kPSafs0k6BQxB0DcKOVxzXSHwtQ6cz5K8qvH/Iw=;
+	s=arc-20240116; t=1755025377; c=relaxed/simple;
+	bh=HkdRaZ0l2dwR+KcvzSqaJMBbvkrSsBycj/CQZNdCQ2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWOVRK53KybtKAZ7Q6Ak8Cz5TbLuuFEZAKNoYVKwORvyRwskJXMng7t8x5l0qM59vkmFsNakZau6csRPGZUGEKkQaCd24s4RWrADDmL2V3rY1uwemabCEYizKzcnVWYzUOSBNYTTuFtJpmbUhcnY9IdI7226I5oam/4VK8u52kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEfidSj6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ASKzjV1nQXI2yInJurSFGx8qGcMBShkpf8VCYv+HkVzfy1z7Atol8cFF5sTDBw0xB/kOoUuxrGdwaymId0oTNv3J7/tsH2g01fShjQAS6Q57oLkp3epNZOSEPSb/lWOfFd02vetdoY7eAPmVmtV+Sf/MJeo56RRRGUvlblxoetU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSjvefbJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEfidSj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79960C4CEF0;
-	Tue, 12 Aug 2025 19:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSjvefbJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF431C4CEF1;
+	Tue, 12 Aug 2025 19:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025374;
-	bh=XfM/kPSafs0k6BQxB0DcKOVxzXSHwtQ6cz5K8qvH/Iw=;
+	s=korg; t=1755025377;
+	bh=HkdRaZ0l2dwR+KcvzSqaJMBbvkrSsBycj/CQZNdCQ2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dEfidSj6cfhWCAXjLZt2RjkpWfWvvSg5f0x8Uc/Xnx5Tz58mhAtMRo5MgD0ll0r2Q
-	 vX+67cQ1GLDs5uWXKnZQaneOK0kSVd6JxfXVANqagxARI9dsbCYEvGYkQmWPLdi/Qr
-	 rP7qDcemD7ACHXj9aVwUf7duAZ6vpOaKYsduQxsw=
+	b=mSjvefbJP8DyOO49KvRQkGE4g3GbaWiyaJrt9ZBP2bRl1wcjaqJVZXL4dEMcuhrP5
+	 OXv/MnNJy4rbYMU8OdKId+X/OB7Qs7pB0rDtQrhCE16xxdnLIY89bHJME17VONodCH
+	 YAdzQtcPymWhlVd8TeuMGVe2XVWTWBnQdVI75VCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Brian Howard <blhoward2@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 005/480] ALSA: hda/cs35l56: Workaround bad dev-index on Lenovo Yoga Book 9i GenX
-Date: Tue, 12 Aug 2025 19:43:33 +0200
-Message-ID: <20250812174357.530454813@linuxfoundation.org>
+Subject: [PATCH 6.15 023/480] md: allow removing faulty rdev during resync
+Date: Tue, 12 Aug 2025 19:43:51 +0200
+Message-ID: <20250812174358.261088737@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,162 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 40b1c2f9b299295ed0482e1fee6f46521e6e79e5 ]
+[ Upstream commit c0ffeb648000acdc932da7a9d33fd65e9263c54c ]
 
-The Lenovo Yoga Book 9i GenX has the wrong values in the cirrus,dev-index
-_DSD property. Add a fixup for this model to ignore the property and
-hardcode the index from the I2C bus address.
+During RAID resync, faulty rdev cannot be removed and will result in
+"Device or resource busy" error when attempting hot removal.
 
-The error in the cirrus,dev-index property would prevent the second amp
-instance from probing. The component binding would never see all the
-required instances and so there would not be a binding between
-patch_realtek.c and the cs35l56 driver.
+Reproduction steps:
+  mdadm -Cv /dev/md0 -l1 -n3 -e1.2 /dev/sd{b..d}
+  mdadm /dev/md0 -f /dev/sdb
+  mdadm /dev/md0 -r /dev/sdb
+  -> mdadm: hot remove failed for /dev/sdb: Device or resource busy
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Reported-by: Brian Howard <blhoward2@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220228
-Link: https://patch.msgid.link/20250714110154.204740-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+After commit 4b10a3bc67c1 ("md: ensure resync is prioritized over
+recovery"), when a device becomes faulty during resync, the
+md_choose_sync_action() function returns early without calling
+remove_and_add_spares(), preventing faulty device removal.
+
+This patch extracts a helper function remove_spares() to support
+removing faulty devices during RAID resync operations.
+
+Fixes: 4b10a3bc67c1 ("md: ensure resync is prioritized over recovery")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
+Link: https://lore.kernel.org/linux-raid/20250707075412.150301-1-zhengqixing@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda.c | 110 +++++++++++++++++++++++++++---------
- 1 file changed, 82 insertions(+), 28 deletions(-)
+ drivers/md/md.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 235d22049aa9..c9c8ec8d2474 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -874,6 +874,52 @@ static int cs35l56_hda_system_resume(struct device *dev)
- 	return 0;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 9daa78c5fe33..0de87d451a47 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9380,17 +9380,11 @@ static bool md_spares_need_change(struct mddev *mddev)
+ 	return false;
  }
  
-+static int cs35l56_hda_fixup_yoga9(struct cs35l56_hda *cs35l56, int *bus_addr)
-+{
-+	/* The cirrus,dev-index property has the wrong values */
-+	switch (*bus_addr) {
-+	case 0x30:
-+		cs35l56->index = 1;
-+		return 0;
-+	case 0x31:
-+		cs35l56->index = 0;
-+		return 0;
-+	default:
-+		/* There is a pseudo-address for broadcast to both amps - ignore it */
-+		dev_dbg(cs35l56->base.dev, "Ignoring I2C address %#x\n", *bus_addr);
-+		return 0;
-+	}
-+}
-+
-+static const struct {
-+	const char *sub;
-+	int (*fixup_fn)(struct cs35l56_hda *cs35l56, int *bus_addr);
-+} cs35l56_hda_fixups[] = {
-+	{
-+		.sub = "17AA390B", /* Lenovo Yoga Book 9i GenX */
-+		.fixup_fn = cs35l56_hda_fixup_yoga9,
-+	},
-+};
-+
-+static int cs35l56_hda_apply_platform_fixups(struct cs35l56_hda *cs35l56, const char *sub,
-+					     int *bus_addr)
-+{
-+	int i;
-+
-+	if (IS_ERR(sub))
-+		return 0;
-+
-+	for (i = 0; i < ARRAY_SIZE(cs35l56_hda_fixups); i++) {
-+		if (strcasecmp(cs35l56_hda_fixups[i].sub, sub) == 0) {
-+			dev_dbg(cs35l56->base.dev, "Applying fixup for %s\n",
-+				cs35l56_hda_fixups[i].sub);
-+			return (cs35l56_hda_fixups[i].fixup_fn)(cs35l56, bus_addr);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
+-static int remove_and_add_spares(struct mddev *mddev,
+-				 struct md_rdev *this)
++static int remove_spares(struct mddev *mddev, struct md_rdev *this)
  {
- 	u32 values[HDA_MAX_COMPONENTS];
-@@ -898,39 +944,47 @@ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
- 		ACPI_COMPANION_SET(cs35l56->base.dev, adev);
- 	}
+ 	struct md_rdev *rdev;
+-	int spares = 0;
+ 	int removed = 0;
  
--	property = "cirrus,dev-index";
--	ret = device_property_count_u32(cs35l56->base.dev, property);
--	if (ret <= 0)
--		goto err;
+-	if (this && test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
+-		/* Mustn't remove devices when resync thread is running */
+-		return 0;
 -
--	if (ret > ARRAY_SIZE(values)) {
--		ret = -EINVAL;
--		goto err;
--	}
--	nval = ret;
-+	/* Initialize things that could be overwritten by a fixup */
-+	cs35l56->index = -1;
+ 	rdev_for_each(rdev, mddev) {
+ 		if ((this == NULL || rdev == this) && rdev_removeable(rdev) &&
+ 		    !mddev->pers->hot_remove_disk(mddev, rdev)) {
+@@ -9404,6 +9398,21 @@ static int remove_and_add_spares(struct mddev *mddev,
+ 	if (removed && mddev->kobj.sd)
+ 		sysfs_notify_dirent_safe(mddev->sysfs_degraded);
  
--	ret = device_property_read_u32_array(cs35l56->base.dev, property, values, nval);
-+	sub = acpi_get_subsystem_id(ACPI_HANDLE(cs35l56->base.dev));
-+	ret = cs35l56_hda_apply_platform_fixups(cs35l56, sub, &id);
- 	if (ret)
--		goto err;
-+		return ret;
- 
--	cs35l56->index = -1;
--	for (i = 0; i < nval; i++) {
--		if (values[i] == id) {
--			cs35l56->index = i;
--			break;
--		}
--	}
--	/*
--	 * It's not an error for the ID to be missing: for I2C there can be
--	 * an alias address that is not a real device. So reject silently.
--	 */
- 	if (cs35l56->index == -1) {
--		dev_dbg(cs35l56->base.dev, "No index found in %s\n", property);
--		ret = -ENODEV;
--		goto err;
--	}
-+		property = "cirrus,dev-index";
-+		ret = device_property_count_u32(cs35l56->base.dev, property);
-+		if (ret <= 0)
-+			goto err;
- 
--	sub = acpi_get_subsystem_id(ACPI_HANDLE(cs35l56->base.dev));
-+		if (ret > ARRAY_SIZE(values)) {
-+			ret = -EINVAL;
-+			goto err;
-+		}
-+		nval = ret;
++	return removed;
++}
 +
-+		ret = device_property_read_u32_array(cs35l56->base.dev, property, values, nval);
-+		if (ret)
-+			goto err;
++static int remove_and_add_spares(struct mddev *mddev,
++				 struct md_rdev *this)
++{
++	struct md_rdev *rdev;
++	int spares = 0;
++	int removed = 0;
 +
-+		for (i = 0; i < nval; i++) {
-+			if (values[i] == id) {
-+				cs35l56->index = i;
-+				break;
-+			}
-+		}
++	if (this && test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
++		/* Mustn't remove devices when resync thread is running */
++		return 0;
 +
-+		/*
-+		 * It's not an error for the ID to be missing: for I2C there can be
-+		 * an alias address that is not a real device. So reject silently.
-+		 */
-+		if (cs35l56->index == -1) {
-+			dev_dbg(cs35l56->base.dev, "No index found in %s\n", property);
-+			ret = -ENODEV;
-+			goto err;
-+		}
-+	}
++	removed = remove_spares(mddev, this);
+ 	if (this && removed)
+ 		goto no_add;
  
- 	if (IS_ERR(sub)) {
- 		dev_info(cs35l56->base.dev,
+@@ -9446,6 +9455,7 @@ static bool md_choose_sync_action(struct mddev *mddev, int *spares)
+ 
+ 	/* Check if resync is in progress. */
+ 	if (mddev->recovery_cp < MaxSector) {
++		remove_spares(mddev, NULL);
+ 		set_bit(MD_RECOVERY_SYNC, &mddev->recovery);
+ 		clear_bit(MD_RECOVERY_RECOVER, &mddev->recovery);
+ 		return true;
 -- 
 2.39.5
 
