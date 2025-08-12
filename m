@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFC22F291B;
-	Tue, 12 Aug 2025 18:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8844E2FD1AD;
+	Tue, 12 Aug 2025 18:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024290; cv=none; b=H6VQWXp6gULVcYnCUxIkGv9qVIVNyFfWNnLuRvtxYLi2ASo+wuacDoTUImNCt7WepuJ+gG5Id2+nFBeZLGF4EI4hVIYfD2jAV6Oh3tBwwyG505tPkQBr+/289GN/my94mN20MUcurPCncizBiLVj8ZuKhKDKTx9Xhzetp6QC1NY=
+	t=1755024293; cv=none; b=sKhk8Ta9P1EhaDWJ3MiIiiawWyaDOt47StrE7tOfjbbzvTEeSPzt46NyuO6pWNCLVcEd0r4IGQMEWjBNgwq1t1e6UegdCgYGKVpntEA0/Nzr6V/Ss5aZuM5o+PVAXPB4igEkxbhystFykt2kdvUhkwTmCOjoKg1rlgtaZWb45DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024290; c=relaxed/simple;
-	bh=BsuAkzF+8xlr55FDes4gcyJ75CapleLTz5NRWsrEJxo=;
+	s=arc-20240116; t=1755024293; c=relaxed/simple;
+	bh=ZQHZNurwaOeVW9bY50mZfU2yCkXRh9o5hxu06OShF7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLQEjFW3m1pugkauO5HMoQAKAfZkMSIARy66DzZuww8eJXq6Y5gZHu3if4WjcDuW8aefnfhM7X4wjeSpBl9ik5aQC/EXef53sKm8yL2bqBwymjEvnHb+SYsgUhS8evbjXVoCccLjlSF3fTLwS6e7x3kDDKj88dB0ToSbzeU5uPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJgk1l24; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dbIZDd33JspoFzXKL0BDd0gJsjQlL/dM6m6cwYHhCnT2UpJqczua7c1CegxOKY8sZljPllaRtUkWiFtp4xy0zhPXaGhbmQRVXC0/jBNLhv/HLdlSOmFtH3vhh5ZxKWnOr5Dm5krIOfGSFeGFD8zdYBvsKCQDCZuRnAmEQwVrOsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxTwJlN3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJgk1l24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8953CC4CEF0;
-	Tue, 12 Aug 2025 18:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxTwJlN3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98BFC4CEF0;
+	Tue, 12 Aug 2025 18:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024290;
-	bh=BsuAkzF+8xlr55FDes4gcyJ75CapleLTz5NRWsrEJxo=;
+	s=korg; t=1755024293;
+	bh=ZQHZNurwaOeVW9bY50mZfU2yCkXRh9o5hxu06OShF7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJgk1l24DulvSbZqATk5a6OX6LMP8hmIwY0M/g0DNXx8Ex1tghCX59W8PLaR/f+/z
-	 WnZ0oN62BegF1b2qKke1v1EBwZdz+4qxZ8esGaDFjGVVz4zaCQHbIV/ReEnn+jiQIT
-	 sgQKOHoYZZnW4qe52vyoyFN7dIp5ESvREhnOAYPw=
+	b=DxTwJlN3TCV60pi8leh5ZXNXRbPTY/TlhE8akUaheKij1qMkWWMx+YgSPeapyoT9f
+	 ymHiLLr88jw1oF6Mh7LA+98h6i9x++nxvkpqFH64DO9d4Kr8LLiBq+ys5aCJc6Y17K
+	 oBz3ImvAEGdm23QGOObWAqQURsAMfIjq4QEiGJWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ze Huang <huangze@whut.edu.cn>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 329/627] pinctrl: canaan: k230: add NULL check in DT parse
-Date: Tue, 12 Aug 2025 19:30:24 +0200
-Message-ID: <20250812173431.812159463@linuxfoundation.org>
+Subject: [PATCH 6.16 330/627] pinctrl: canaan: k230: Fix order of DT parse and pinctrl register
+Date: Tue, 12 Aug 2025 19:30:25 +0200
+Message-ID: <20250812173431.848800536@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,49 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Ze Huang <huangze@whut.edu.cn>
 
-[ Upstream commit 65bd0be486390fc12a84eafaad78758c5e5a55e6 ]
+[ Upstream commit d94a32ac688f953dc9a9f12b5b4139ecad841bbb ]
 
-Add a NULL check for the return value of of_get_property() when
-retrieving the "pinmux" property in the group parser. This avoids
-a potential NULL pointer dereference if the property is missing
-from the device tree node.
-
-Also fix a typo ("sintenel") in the device ID match table comment,
-correcting it to "sentinel".
+Move DT parse before pinctrl register. This ensures that device tree
+parsing is done before calling devm_pinctrl_register() to prevent using
+uninitialized pin resources.
 
 Fixes: 545887eab6f6 ("pinctrl: canaan: Add support for k230 SoC")
 Reported-by: Yao Zi <ziyao@disroot.org>
 Signed-off-by: Ze Huang <huangze@whut.edu.cn>
-Link: https://lore.kernel.org/20250624-k230-return-check-v1-1-6b4fc5ba0c41@whut.edu.cn
+Link: https://lore.kernel.org/20250624-k230-return-check-v1-2-6b4fc5ba0c41@whut.edu.cn
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-k230.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-k230.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/pinctrl/pinctrl-k230.c b/drivers/pinctrl/pinctrl-k230.c
-index a9b4627b46b0..4976308e6237 100644
+index 4976308e6237..d716f23d837f 100644
 --- a/drivers/pinctrl/pinctrl-k230.c
 +++ b/drivers/pinctrl/pinctrl-k230.c
-@@ -477,6 +477,10 @@ static int k230_pinctrl_parse_groups(struct device_node *np,
- 	grp->name = np->name;
+@@ -590,6 +590,7 @@ static int k230_pinctrl_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct k230_pinctrl *info;
+ 	struct pinctrl_desc *pctl;
++	int ret;
  
- 	list = of_get_property(np, "pinmux", &size);
-+	if (!list) {
-+		dev_err(dev, "failed to get pinmux property\n");
-+		return -EINVAL;
-+	}
- 	size /= sizeof(*list);
+ 	info = devm_kzalloc(dev, sizeof(*info), GFP_KERNEL);
+ 	if (!info)
+@@ -615,13 +616,15 @@ static int k230_pinctrl_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, PTR_ERR(info->regmap_base),
+ 				     "failed to init regmap\n");
  
- 	grp->num_pins = size;
-@@ -623,7 +627,7 @@ static int k230_pinctrl_probe(struct platform_device *pdev)
++	ret = k230_pinctrl_parse_dt(pdev, info);
++	if (ret)
++		return ret;
++
+ 	info->pctl_dev = devm_pinctrl_register(dev, pctl, info);
+ 	if (IS_ERR(info->pctl_dev))
+ 		return dev_err_probe(dev, PTR_ERR(info->pctl_dev),
+ 				     "devm_pinctrl_register failed\n");
  
- static const struct of_device_id k230_dt_ids[] = {
- 	{ .compatible = "canaan,k230-pinctrl", },
--	{ /* sintenel */ }
-+	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, k230_dt_ids);
+-	k230_pinctrl_parse_dt(pdev, info);
+-
+ 	return 0;
+ }
  
 -- 
 2.39.5
