@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7541221FAC;
-	Tue, 12 Aug 2025 17:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541C2221FAC;
+	Tue, 12 Aug 2025 17:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020887; cv=none; b=fY9vvsSc6BB+OGASFnF8K+jMRIOwkpEkRAJdpqRceqMisBwPRTlvKCppVWDXF/5g1LEEzpJDIqMni/ATc8v7Sgyq3lbDzkkGKEBbVhDp5nR48vLxV8Ub8p5lqHpeKQpFf8xJQcwOhlRFywaRMceu42fGKqhMiYnf0waCFlKPUDo=
+	t=1755020890; cv=none; b=YsoXetZCgpENX8V5UNwpxqfRVMiy6oGCu082qOzwbD+g/IXU3LGeecEN4lmSXPpImOv/HyBsP2GhvJe6e2gEX4TjFJ7BkVi1jyJM+tcmL4XW8JOl6z1dxeZSLpl303GNw/jftu3I1kuY+3qNdlF1oVIcf9FBwG+SzCFtS7BpHYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020887; c=relaxed/simple;
-	bh=OT7QXgIYVZJwKIw5NI7TOe/NRA5ne18HD/miGD27FaU=;
+	s=arc-20240116; t=1755020890; c=relaxed/simple;
+	bh=706zFCHp6GqadvBEmRjVvqz4EcOIrgr2BYMBrHhV8BE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DIlEbe6AByV//iQasD9uzOWSbwlBMyt/YeR/2go54Mw8ptPEC6rJmHQPwAYYua31UqmKrn7Ygz6FeNr1HyY2Au1szIyRiLrfxzProxoPsk9odVX04a5ElhRIciqy510SIbgBTfUNiUMG+RobJ/KI/uvWGhIj3OHYFIFOVkq4r08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXHrGVXD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JEQN8EH1m7B3HnnV9kt9MwkAQcUqMSaQ6ZewO2BLRPMaQhtrZhNJ2w1bl5GwJ4sSbCTy32EDnMr3MiB7wi3e6eUEamq8fIu6vYoxeg17F0wV+2AHJhIWVaN7XsRWDiYzA7hSpCIYVKvYJMRF0KeRF3JGXioZNNfW0RKMLd5jfWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhVx2Tk2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXHrGVXD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59093C4CEF0;
-	Tue, 12 Aug 2025 17:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhVx2Tk2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A04C4CEF0;
+	Tue, 12 Aug 2025 17:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020886;
-	bh=OT7QXgIYVZJwKIw5NI7TOe/NRA5ne18HD/miGD27FaU=;
+	s=korg; t=1755020890;
+	bh=706zFCHp6GqadvBEmRjVvqz4EcOIrgr2BYMBrHhV8BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXHrGVXDvDowOC8B9eqW9T3cYWoEG7vyJJiR7WXZY6O3aTkWLB15ENQUCuTfK3ysX
-	 9AqU4MTEBs7oN1dSO8uvg8RfQVbNj8WJprCo9I0trfpUDHg2eFmO4iYpec/ZAXoHSw
-	 HetOU2AvnOdWlchheHWGEYVsbYdaT8LYE7JtYNX8=
+	b=NhVx2Tk2hYGXUrhp6VPJ+anv8ZUxdCXHAdnGzp8hP+HGWP550LKjtumIVnYdszxQd
+	 pd2nAGmH8vRL6tAID5Gvblt/ol9OV8kZmMe3HpZtCpzdjMt1hQAAtR6/Xb7cfHYwzO
+	 ZMAq/m8titrSVsZYJratEOOcMt5JASmiQRwYaYCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Denis OSTERLAND-HEIM <denis.osterland@diehl.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 182/253] bpf: Check flow_dissector ctx accesses are aligned
-Date: Tue, 12 Aug 2025 19:29:30 +0200
-Message-ID: <20250812172956.517375278@linuxfoundation.org>
+Subject: [PATCH 6.6 029/262] pps: fix poll support
+Date: Tue, 12 Aug 2025 19:26:57 +0200
+Message-ID: <20250812172954.209742424@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +47,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
 
-[ Upstream commit ead3d7b2b6afa5ee7958620c4329982a7d9c2b78 ]
+[ Upstream commit 12c409aa1ec2592280a2ddcc66ff8f3c7f7bb171 ]
 
-flow_dissector_is_valid_access doesn't check that the context access is
-aligned. As a consequence, an unaligned access within one of the exposed
-field is considered valid and later rejected by
-flow_dissector_convert_ctx_access when we try to convert it.
+Because pps_cdev_poll() returns unconditionally EPOLLIN,
+a user space program that calls select/poll get always an immediate data
+ready-to-read response. As a result the intended use to wait until next
+data becomes ready does not work.
 
-The later rejection is problematic because it's reported as a verifier
-bug with a kernel warning and doesn't point to the right instruction in
-verifier logs.
+User space snippet:
 
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Reported-by: syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ccac90e482b2a81d74aa
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/cc1b036be484c99be45eddf48bd78cc6f72839b1.1754039605.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+    struct pollfd pollfd = {
+      .fd = open("/dev/pps0", O_RDONLY),
+      .events = POLLIN|POLLERR,
+      .revents = 0 };
+    while(1) {
+      poll(&pollfd, 1, 2000/*ms*/); // returns immediate, but should wait
+      if(revents & EPOLLIN) { // always true
+        struct pps_fdata fdata;
+        memset(&fdata, 0, sizeof(memdata));
+        ioctl(PPS_FETCH, &fdata); // currently fetches data at max speed
+      }
+    }
+
+Lets remember the last fetch event counter and compare this value
+in pps_cdev_poll() with most recent event counter
+and return 0 if they are equal.
+
+Signed-off-by: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
+Co-developed-by: Rodolfo Giometti <giometti@enneenne.com>
+Signed-off-by: Rodolfo Giometti <giometti@enneenne.com>
+Fixes: eae9d2ba0cfc ("LinuxPPS: core support")
+Link: https://lore.kernel.org/all/f6bed779-6d59-4f0f-8a59-b6312bd83b4e@enneenne.com/
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://lore.kernel.org/r/c3c50ad1eb19ef553eca8a57c17f4c006413ab70.camel@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pps/pps.c          | 11 +++++++++--
+ include/linux/pps_kernel.h |  1 +
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 4c806ce62739..cd0c28e94979 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -9270,6 +9270,9 @@ static bool flow_dissector_is_valid_access(int off, int size,
- 	if (off < 0 || off >= sizeof(struct __sk_buff))
- 		return false;
+diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
+index 63f96357eb9f..e1689957736d 100644
+--- a/drivers/pps/pps.c
++++ b/drivers/pps/pps.c
+@@ -41,6 +41,9 @@ static __poll_t pps_cdev_poll(struct file *file, poll_table *wait)
  
-+	if (off % size != 0)
-+		return false;
+ 	poll_wait(file, &pps->queue, wait);
+ 
++	if (pps->last_fetched_ev == pps->last_ev)
++		return 0;
 +
- 	if (type == BPF_WRITE)
- 		return false;
+ 	return EPOLLIN | EPOLLRDNORM;
+ }
  
+@@ -186,9 +189,11 @@ static long pps_cdev_ioctl(struct file *file,
+ 		if (err)
+ 			return err;
+ 
+-		/* Return the fetched timestamp */
++		/* Return the fetched timestamp and save last fetched event  */
+ 		spin_lock_irq(&pps->lock);
+ 
++		pps->last_fetched_ev = pps->last_ev;
++
+ 		fdata.info.assert_sequence = pps->assert_sequence;
+ 		fdata.info.clear_sequence = pps->clear_sequence;
+ 		fdata.info.assert_tu = pps->assert_tu;
+@@ -272,9 +277,11 @@ static long pps_cdev_compat_ioctl(struct file *file,
+ 		if (err)
+ 			return err;
+ 
+-		/* Return the fetched timestamp */
++		/* Return the fetched timestamp and save last fetched event  */
+ 		spin_lock_irq(&pps->lock);
+ 
++		pps->last_fetched_ev = pps->last_ev;
++
+ 		compat.info.assert_sequence = pps->assert_sequence;
+ 		compat.info.clear_sequence = pps->clear_sequence;
+ 		compat.info.current_mode = pps->current_mode;
+diff --git a/include/linux/pps_kernel.h b/include/linux/pps_kernel.h
+index c7abce28ed29..aab0aebb529e 100644
+--- a/include/linux/pps_kernel.h
++++ b/include/linux/pps_kernel.h
+@@ -52,6 +52,7 @@ struct pps_device {
+ 	int current_mode;			/* PPS mode at event time */
+ 
+ 	unsigned int last_ev;			/* last PPS event id */
++	unsigned int last_fetched_ev;		/* last fetched PPS event id */
+ 	wait_queue_head_t queue;		/* PPS event queue */
+ 
+ 	unsigned int id;			/* PPS source unique ID */
 -- 
 2.39.5
 
