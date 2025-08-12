@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A94717993;
-	Tue, 12 Aug 2025 18:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3862F5E;
+	Tue, 12 Aug 2025 18:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022025; cv=none; b=ohmFwJ0JvxZ3Ol4g5oyspoyhxu55iRZLqlnneRBl8N4IdY4zuBHSLiTHxzccXMsjqd+zfSBhnSdXA0cLql6Lul1FZPtlv0Bb3wWTKVsKGtT8c4b0lVpT8AGl9wpw32W5R/oJk01Iu9+MY03ksxR1xYtRoRJAWEZUEIFwsk8XnmQ=
+	t=1755022028; cv=none; b=I5FIwuoFWz0s7Z/W9nDvyj5O25Gt73YLuzk5/gpOhqlS4VLMZPRu82+b+WhoiTt1YfKJ294xAPiGzhYlhN8MsryeWte91hKQc4bLYbu5yfWi4+gPzSM8uG+Zi3i/HL+ybbVcuUPRpRR+vFRjcRPQYrUxW8facUvr4+tJJ7GrWco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022025; c=relaxed/simple;
-	bh=WSTEyjIqd9I0dOA5NftKwMLAJibAfc1lstLX5mBllW8=;
+	s=arc-20240116; t=1755022028; c=relaxed/simple;
+	bh=34NmTKVINyiclWEVwpIFJqCBPfjEPywG/KdarvsW330=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DONm0B0V/80ri705YBPpksWileD6iN8SIAxi1aL1lO9qfElhya5T9zUr/bnhyBUArIhAM+dadrFbfbjxg73+PJ1DGTvO5R4r7M5PJlgEMe56E1x5ObQH8NM5azsddtlcgzKFshZorV786xE2eufX4zUPqktxyxHw0oY/jm+S/eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODsp6KtM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTWnpT4z50u/mJzMTM2Yysl9fwonmk2DWTfpkFARJ4xvVduKFA+9ymDCrcboGV5JT6ra4h0wCAyJVQj0Cj9f/1bCUqhoP9999gsKAaB1nwQmx0SKhyaUN55RDB6QybZXRcoTBFvX1+BDTtnR2MwVrP5WZK2lO1KbCM8ncJx17ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkRMudPN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODsp6KtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE36C4CEF0;
-	Tue, 12 Aug 2025 18:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkRMudPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B93AC4CEF0;
+	Tue, 12 Aug 2025 18:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022025;
-	bh=WSTEyjIqd9I0dOA5NftKwMLAJibAfc1lstLX5mBllW8=;
+	s=korg; t=1755022028;
+	bh=34NmTKVINyiclWEVwpIFJqCBPfjEPywG/KdarvsW330=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODsp6KtMW27TRXz/ZlC1Wm7e5bVDaX2RaYLorMKCXqLmhEVWcmWpBGsL+lgcMvoBP
-	 Agtynp91tMJzxv4YdGSOx4mmzE/MuM9Gx5DZgHE/5AHWbYAiVpVvTdAJkcXjNtrNhs
-	 5D4ODhIzQo75QglXpbW9s1USyzPExh9cTclaA/hM=
+	b=EkRMudPNHjnfgxX1mj8TT4Qgn101ccPCPC5b8hbbPP8FgB8jbERrOUSOOxbQGEhcb
+	 fCBBQfQvLyDA3OizAPQWpdXODHMZgMKw5cJYfeSbAgaCb22o1TPK02UQrSEuWLq1B2
+	 sIjDwK4oneoqLXTGPdB33oaXYAXUNS2oXbMzpuz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/369] audit,module: restore audit logging in load failure case
-Date: Tue, 12 Aug 2025 19:25:04 +0200
-Message-ID: <20250812173015.020742336@linuxfoundation.org>
+Subject: [PATCH 6.12 008/369] [ceph] parse_longname(): strrchr() expects NUL-terminated string
+Date: Tue, 12 Aug 2025 19:25:05 +0200
+Message-ID: <20250812173015.058691573@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,115 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Guy Briggs <rgb@redhat.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit ae1ae11fb277f1335d6bcd4935ba0ea985af3c32 ]
+[ Upstream commit 101841c38346f4ca41dc1802c867da990ffb32eb ]
 
-The move of the module sanity check to earlier skipped the audit logging
-call in the case of failure and to a place where the previously used
-context is unavailable.
+... and parse_longname() is not guaranteed that.  That's the reason
+why it uses kmemdup_nul() to build the argument for kstrtou64();
+the problem is, kstrtou64() is not the only thing that need it.
 
-Add an audit logging call for the module loading failure case and get
-the module name when possible.
+Just get a NUL-terminated copy of the entire thing and be done
+with that...
 
-Link: https://issues.redhat.com/browse/RHEL-52839
-Fixes: 02da2cbab452 ("module: move check_modinfo() early to early_mod_check()")
-Signed-off-by: Richard Guy Briggs <rgb@redhat.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: dd66df0053ef "ceph: add support for encrypted snapshot names"
+Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/audit.h | 9 ++++-----
- kernel/audit.h        | 2 +-
- kernel/auditsc.c      | 2 +-
- kernel/module/main.c  | 6 ++++--
- 4 files changed, 10 insertions(+), 9 deletions(-)
+ fs/ceph/crypto.c | 31 ++++++++++++-------------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
-diff --git a/include/linux/audit.h b/include/linux/audit.h
-index 0050ef288ab3..a394614ccd0b 100644
---- a/include/linux/audit.h
-+++ b/include/linux/audit.h
-@@ -417,7 +417,7 @@ extern int __audit_log_bprm_fcaps(struct linux_binprm *bprm,
- extern void __audit_log_capset(const struct cred *new, const struct cred *old);
- extern void __audit_mmap_fd(int fd, int flags);
- extern void __audit_openat2_how(struct open_how *how);
--extern void __audit_log_kern_module(char *name);
-+extern void __audit_log_kern_module(const char *name);
- extern void __audit_fanotify(u32 response, struct fanotify_response_info_audit_rule *friar);
- extern void __audit_tk_injoffset(struct timespec64 offset);
- extern void __audit_ntp_log(const struct audit_ntp_data *ad);
-@@ -519,7 +519,7 @@ static inline void audit_openat2_how(struct open_how *how)
- 		__audit_openat2_how(how);
+diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
+index 3b3c4d8d401e..9c7062245880 100644
+--- a/fs/ceph/crypto.c
++++ b/fs/ceph/crypto.c
+@@ -215,35 +215,31 @@ static struct inode *parse_longname(const struct inode *parent,
+ 	struct ceph_client *cl = ceph_inode_to_client(parent);
+ 	struct inode *dir = NULL;
+ 	struct ceph_vino vino = { .snap = CEPH_NOSNAP };
+-	char *inode_number;
+-	char *name_end;
+-	int orig_len = *name_len;
++	char *name_end, *inode_number;
+ 	int ret = -EIO;
+-
++	/* NUL-terminate */
++	char *str __free(kfree) = kmemdup_nul(name, *name_len, GFP_KERNEL);
++	if (!str)
++		return ERR_PTR(-ENOMEM);
+ 	/* Skip initial '_' */
+-	name++;
+-	name_end = strrchr(name, '_');
++	str++;
++	name_end = strrchr(str, '_');
+ 	if (!name_end) {
+-		doutc(cl, "failed to parse long snapshot name: %s\n", name);
++		doutc(cl, "failed to parse long snapshot name: %s\n", str);
+ 		return ERR_PTR(-EIO);
+ 	}
+-	*name_len = (name_end - name);
++	*name_len = (name_end - str);
+ 	if (*name_len <= 0) {
+ 		pr_err_client(cl, "failed to parse long snapshot name\n");
+ 		return ERR_PTR(-EIO);
+ 	}
+ 
+ 	/* Get the inode number */
+-	inode_number = kmemdup_nul(name_end + 1,
+-				   orig_len - *name_len - 2,
+-				   GFP_KERNEL);
+-	if (!inode_number)
+-		return ERR_PTR(-ENOMEM);
++	inode_number = name_end + 1;
+ 	ret = kstrtou64(inode_number, 10, &vino.ino);
+ 	if (ret) {
+-		doutc(cl, "failed to parse inode number: %s\n", name);
+-		dir = ERR_PTR(ret);
+-		goto out;
++		doutc(cl, "failed to parse inode number: %s\n", str);
++		return ERR_PTR(ret);
+ 	}
+ 
+ 	/* And finally the inode */
+@@ -254,9 +250,6 @@ static struct inode *parse_longname(const struct inode *parent,
+ 		if (IS_ERR(dir))
+ 			doutc(cl, "can't find inode %s (%s)\n", inode_number, name);
+ 	}
+-
+-out:
+-	kfree(inode_number);
+ 	return dir;
  }
  
--static inline void audit_log_kern_module(char *name)
-+static inline void audit_log_kern_module(const char *name)
- {
- 	if (!audit_dummy_context())
- 		__audit_log_kern_module(name);
-@@ -677,9 +677,8 @@ static inline void audit_mmap_fd(int fd, int flags)
- static inline void audit_openat2_how(struct open_how *how)
- { }
- 
--static inline void audit_log_kern_module(char *name)
--{
--}
-+static inline void audit_log_kern_module(const char *name)
-+{ }
- 
- static inline void audit_fanotify(u32 response, struct fanotify_response_info_audit_rule *friar)
- { }
-diff --git a/kernel/audit.h b/kernel/audit.h
-index a60d2840559e..5156ecd35457 100644
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -199,7 +199,7 @@ struct audit_context {
- 			int			argc;
- 		} execve;
- 		struct {
--			char			*name;
-+			const char		*name;
- 		} module;
- 		struct {
- 			struct audit_ntp_data	ntp_data;
-diff --git a/kernel/auditsc.c b/kernel/auditsc.c
-index cd57053b4a69..dae80e4dfcce 100644
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -2870,7 +2870,7 @@ void __audit_openat2_how(struct open_how *how)
- 	context->type = AUDIT_OPENAT2;
- }
- 
--void __audit_log_kern_module(char *name)
-+void __audit_log_kern_module(const char *name)
- {
- 	struct audit_context *context = audit_context();
- 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 93a07387af3b..6908062f4560 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -2898,7 +2898,7 @@ static int load_module(struct load_info *info, const char __user *uargs,
- 
- 	module_allocated = true;
- 
--	audit_log_kern_module(mod->name);
-+	audit_log_kern_module(info->name);
- 
- 	/* Reserve our place in the list. */
- 	err = add_unformed_module(mod);
-@@ -3058,8 +3058,10 @@ static int load_module(struct load_info *info, const char __user *uargs,
- 	 * failures once the proper module was allocated and
- 	 * before that.
- 	 */
--	if (!module_allocated)
-+	if (!module_allocated) {
-+		audit_log_kern_module(info->name ? info->name : "?");
- 		mod_stat_bump_becoming(info, flags);
-+	}
- 	free_copy(info, flags);
- 	return err;
- }
 -- 
 2.39.5
 
