@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A98B2D3A94;
-	Tue, 12 Aug 2025 19:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334F72C21F7;
+	Tue, 12 Aug 2025 19:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026669; cv=none; b=D1pSLpW1lH97bj2rQu5w+4o65I9NqzuWIZq4anKTVwZtsWAtGo5ao9sR+G437tU4w9mGAVmnyhtLp6v5ca2b7YSPaBNducRX3fYIK56bREHYnguu+0qEkBPQ7pxccHbYgU+horq9u4qqB7+TG6vZl8ALmdUiSD0xhXMxACJibVU=
+	t=1755026673; cv=none; b=MEvvdANbScoHrlxIUPjTKi5VxbVKLNeqA4w5IDhoNlx+fe/ngUjQKmZ0m5KPJTzbSR+vr8GPpwcAAjRNzn7ugSY5NvY/ZWS+n0h5LsNdOpBMAJUEWjOIpSZuzKv2oIXiGLSWUpuBwt2PPe6tV9GHq6VD0jYBMGATuLJXdPCU2/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026669; c=relaxed/simple;
-	bh=6tPsfQUQUhr1y5AFpTKibYbdpuTJ963pddKZN62udUY=;
+	s=arc-20240116; t=1755026673; c=relaxed/simple;
+	bh=RyxL7jXsCir5hpc9Z2Hq6jpemDzzTqbNH9Ff9Vhdd3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YinHmwLMPauFFqGQdTD+LgPuxmyJUfKySY7eECObg6tNFj9QuCRMBUDLYFfVSVQ02NxkwOE/1ok0KGDZaTyG+jN0fgArGxzwNxOESNQYpObCgeA4vvatRpMCzEkGLxK0R+V3v45Pk+bu2RBWvwyKNdql1vkPZ6UNypH4jKI1NhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhLIJGlV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DB0RaxiFXm/m+Vy8dZgWPy2V+2smHTtVMTcTcXhDB6jWjpju4kVOW30aHKay+Kp9C7atqY4R21umpyfoRc1ZoHn+NJp8AbM5TmokIAJUs5i/QTeqasb5tHvkm+f1YkEodkjp26PPjTgWhRXew+0hsK1PIeR0vcZ+bTcyBMt1ZmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bK2Ba5gy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhLIJGlV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF53C4CEF1;
-	Tue, 12 Aug 2025 19:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bK2Ba5gy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F67CC4CEF0;
+	Tue, 12 Aug 2025 19:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026669;
-	bh=6tPsfQUQUhr1y5AFpTKibYbdpuTJ963pddKZN62udUY=;
+	s=korg; t=1755026672;
+	bh=RyxL7jXsCir5hpc9Z2Hq6jpemDzzTqbNH9Ff9Vhdd3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhLIJGlVYe6LxIssJXhLVyG0bL/Ebm6+QHn4txKoy1NFgkPfEix80q6meVKsm4XPV
-	 WlGSHaWZ4n7nHhb1AZHckevmvIbE8n2xPrOXejjytohMgH8zJvcw8h4VocJKos4dYX
-	 3VWquvqYqXdeDP1XW0snxlwhmgapzlNc2vqAh/Lw=
+	b=bK2Ba5gyPwd5umVF47QgDR3y460/qbHpTgv3cFSnfELZBeil/Luwe+hRLsJUI7f9l
+	 TQ+Yk7kak1oiNC2zonTqVBA28bnHQvrgUpRIF8tRpbsu6FT8qluCeteWn7rAGAm0UX
+	 OhX2GTQCXYuiNUWRBt+hNrplCBH9e0rZIejVfsX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Beata Michalska <beata.michalska@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 372/480] sched/psi: Fix psi_seq initialization
-Date: Tue, 12 Aug 2025 19:49:40 +0200
-Message-ID: <20250812174412.777765295@linuxfoundation.org>
+Subject: [PATCH 6.15 373/480] padata: Remove comment for reorder_work
+Date: Tue, 12 Aug 2025 19:49:41 +0200
+Message-ID: <20250812174412.818069982@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -53,49 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 99b773d720aeea1ef2170dce5fcfa80649e26b78 ]
+[ Upstream commit 82a0302e7167d0b7c6cde56613db3748f8dd806d ]
 
-With the seqcount moved out of the group into a global psi_seq,
-re-initializing the seqcount on group creation is causing seqcount
-corruption.
+Remove comment for reorder_work which no longer exists.
 
-Fixes: 570c8efd5eb7 ("sched/psi: Optimize psi_group_change() cpu_clock() usage")
-Reported-by: Chris Mason <clm@meta.com>
-Suggested-by: Beata Michalska <beata.michalska@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Fixes: 71203f68c774 ("padata: Fix pd UAF once and for all")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/psi.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ include/linux/padata.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
-index c62f4316a2b9..e0ad56b26171 100644
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -172,7 +172,7 @@ struct psi_group psi_system = {
- 	.pcpu = &system_group_pcpu,
- };
- 
--static DEFINE_PER_CPU(seqcount_t, psi_seq);
-+static DEFINE_PER_CPU(seqcount_t, psi_seq) = SEQCNT_ZERO(psi_seq);
- 
- static inline void psi_write_begin(int cpu)
- {
-@@ -200,11 +200,7 @@ static void poll_timer_fn(struct timer_list *t);
- 
- static void group_init(struct psi_group *group)
- {
--	int cpu;
--
- 	group->enabled = true;
--	for_each_possible_cpu(cpu)
--		seqcount_init(per_cpu_ptr(&psi_seq, cpu));
- 	group->avg_last_update = sched_clock();
- 	group->avg_next_update = group->avg_last_update + psi_period;
- 	mutex_init(&group->avgs_lock);
+diff --git a/include/linux/padata.h b/include/linux/padata.h
+index b486c7359de2..765f2778e264 100644
+--- a/include/linux/padata.h
++++ b/include/linux/padata.h
+@@ -90,7 +90,6 @@ struct padata_cpumask {
+  * @processed: Number of already processed objects.
+  * @cpu: Next CPU to be processed.
+  * @cpumask: The cpumasks in use for parallel and serial workers.
+- * @reorder_work: work struct for reordering.
+  */
+ struct parallel_data {
+ 	struct padata_shell		*ps;
 -- 
 2.39.5
 
