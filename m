@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D002C21F6;
-	Tue, 12 Aug 2025 18:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A332CA9;
+	Tue, 12 Aug 2025 18:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024527; cv=none; b=MzS/mPhKKCRVZlTk52yqLq6VuJsk7dCnzK7ozIxGE281DEsUPkhKLDlvtqrL2ETxcUEcUB0oZHf5GHkNDIGyZXSL9nfFPu1HkiyMDzB55tjnha+MB0oRLwPgFbH+L7l5KCJ+vZiMSfR8GBfZQH6lPC0j2hTq/ncJJHcDRDbl2eU=
+	t=1755024530; cv=none; b=WQXekhPU41qWSfbnEHezSostsh490a4kT68CirL7syjaZc/5rOI6XVyls8fSCJtm+0IInNjBmb6FpbryNpVq14c3UCTJlrjMyTSyMy3F+bJfJogdU/90BEMLjr3wFV9i1TbAaxWvo8bIeuaoO5PLle1vGQaMLctDMNssWNGZEoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024527; c=relaxed/simple;
-	bh=D/v1IojSKKjeugYF8GOTYYKPGhqGdcCbNHUjvB4CPnQ=;
+	s=arc-20240116; t=1755024530; c=relaxed/simple;
+	bh=GQ/lmZ14exF0dKzvrnHyZrP+bESuAsqWYiw7DdwIqz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bc7cpYjbW1X7iNkdvOIbH+bKyiYdih1UPuuVIbAhLuL6zDp8ZQK8RluV+7mGyFFkpac7U94ptj/BG3Ol3uC+OafW83gUFEYSb0TDbjyNk7LR6+zydVvNKRDwmI1jEwOuGmv23halhcWSbztpQM0aVBOGLfZD0TaGFO8ILY/DgII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UioSlpld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QdEL6MbqvH1HbgK3Ef1ng7krObuc3fx2uOhPEuZkFW539Wu42dbh9WiHOxHiJoM3KWtUaC7qIX2gMPGIW5KobmiI8+wyIZr+y3icgPiCYHC5z0hbNj9YQeYhamB3IvDSL2SRj4Xi+9dnWzc0BWzX4TuEys6szK6sn+SNL3hz3Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSo6Hd+1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UioSlpld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7EFC4CEF0;
-	Tue, 12 Aug 2025 18:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSo6Hd+1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92358C4CEF0;
+	Tue, 12 Aug 2025 18:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024526;
-	bh=D/v1IojSKKjeugYF8GOTYYKPGhqGdcCbNHUjvB4CPnQ=;
+	s=korg; t=1755024530;
+	bh=GQ/lmZ14exF0dKzvrnHyZrP+bESuAsqWYiw7DdwIqz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UioSlpldYp3CfdWLgOKdJ0Hp0VC2C+PTgNuBDgMLeySaQpkUJs14FYGnIxgq3kloG
-	 b6ONUMa2I7I2+4IjFzDktz6kpWz6KM3JbDutjrGzD1yuaA5aQY15KuenzsRbMxyYzK
-	 olfar1NspGeqjSLZ5YW9mIn48gpwBCHaP+QNMh98=
+	b=TSo6Hd+1OxY4pt+cQy8hYBs5SXWLDwWukezDSTXw5ywwdHXCGyZEdxCBpuTWw0n62
+	 L0C5UeGrKE30R/DLLzSwOvxwRL7V1P+GvQMEomsaFaE/t/39Nb2zk/6rgLupdghctz
+	 p2vK1xPzkKwFoAl7pzc2oKjI+gfiF6GS2bOr68EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Patrice Vilchez <Patrice.Vilchez@microchip.com>,
+	Varshini Rajendran <varshini.rajendran@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 382/627] perf hwmon_pmu: Avoid shortening hwmon PMU name
-Date: Tue, 12 Aug 2025 19:31:17 +0200
-Message-ID: <20250812173433.826782160@linuxfoundation.org>
+Subject: [PATCH 6.16 400/627] clk: at91: sam9x7: update pll clk ranges
+Date: Tue, 12 Aug 2025 19:31:35 +0200
+Message-ID: <20250812173434.512124638@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,37 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Varshini Rajendran <varshini.rajendran@microchip.com>
 
-[ Upstream commit 28f5aa8184c9c9b8eab35fa3884c416fe75e88e4 ]
+[ Upstream commit c7f7ddbd27d55fa552a7269b7bae539adc2a3d46 ]
 
-Long names like ucsi_source_psy_USBC000:001 when prefixed with hwmon_
-exceed the buffer size and the last digit is lost. This causes
-confusion with similar names like ucsi_source_psy_USBC000:002. Extend
-the buffer size to avoid this.
+Update the min, max ranges of the PLL clocks according to the latest
+datasheet to be coherent in the driver. This patch solves the issues in
+configuring the clocks related to peripherals with the desired frequency
+within the range.
 
-Fixes: 53cc0b351ec9 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250710235126.1086011-2-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 33013b43e271 ("clk: at91: sam9x7: add sam9x7 pmc driver")
+Suggested-by: Patrice Vilchez <Patrice.Vilchez@microchip.com>
+Signed-off-by: Varshini Rajendran <varshini.rajendran@microchip.com>
+Link: https://lore.kernel.org/r/20250714093512.29944-1-varshini.rajendran@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hwmon_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/at91/sam9x7.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
-index c25e7296f1c1..75683c543994 100644
---- a/tools/perf/util/hwmon_pmu.c
-+++ b/tools/perf/util/hwmon_pmu.c
-@@ -344,7 +344,7 @@ static int hwmon_pmu__read_events(struct hwmon_pmu *pmu)
+diff --git a/drivers/clk/at91/sam9x7.c b/drivers/clk/at91/sam9x7.c
+index cbb8b220f16b..ffab32b047a0 100644
+--- a/drivers/clk/at91/sam9x7.c
++++ b/drivers/clk/at91/sam9x7.c
+@@ -61,44 +61,44 @@ static const struct clk_master_layout sam9x7_master_layout = {
  
- struct perf_pmu *hwmon_pmu__new(struct list_head *pmus, int hwmon_dir, const char *sysfs_name, const char *name)
- {
--	char buf[32];
-+	char buf[64];
- 	struct hwmon_pmu *hwm;
- 	__u32 type = PERF_PMU_TYPE_HWMON_START + strtoul(sysfs_name + 5, NULL, 10);
+ /* Fractional PLL core output range. */
+ static const struct clk_range plla_core_outputs[] = {
+-	{ .min = 375000000, .max = 1600000000 },
++	{ .min = 800000000, .max = 1600000000 },
+ };
  
+ static const struct clk_range upll_core_outputs[] = {
+-	{ .min = 600000000, .max = 1200000000 },
++	{ .min = 600000000, .max = 960000000 },
+ };
+ 
+ static const struct clk_range lvdspll_core_outputs[] = {
+-	{ .min = 400000000, .max = 800000000 },
++	{ .min = 600000000, .max = 1200000000 },
+ };
+ 
+ static const struct clk_range audiopll_core_outputs[] = {
+-	{ .min = 400000000, .max = 800000000 },
++	{ .min = 600000000, .max = 1200000000 },
+ };
+ 
+ static const struct clk_range plladiv2_core_outputs[] = {
+-	{ .min = 375000000, .max = 1600000000 },
++	{ .min = 800000000, .max = 1600000000 },
+ };
+ 
+ /* Fractional PLL output range. */
+ static const struct clk_range plla_outputs[] = {
+-	{ .min = 732421, .max = 800000000 },
++	{ .min = 400000000, .max = 800000000 },
+ };
+ 
+ static const struct clk_range upll_outputs[] = {
+-	{ .min = 300000000, .max = 600000000 },
++	{ .min = 300000000, .max = 480000000 },
+ };
+ 
+ static const struct clk_range lvdspll_outputs[] = {
+-	{ .min = 10000000, .max = 800000000 },
++	{ .min = 175000000, .max = 550000000 },
+ };
+ 
+ static const struct clk_range audiopll_outputs[] = {
+-	{ .min = 10000000, .max = 800000000 },
++	{ .min = 0, .max = 300000000 },
+ };
+ 
+ static const struct clk_range plladiv2_outputs[] = {
+-	{ .min = 366210, .max = 400000000 },
++	{ .min = 200000000, .max = 400000000 },
+ };
+ 
+ /* PLL characteristics. */
 -- 
 2.39.5
 
