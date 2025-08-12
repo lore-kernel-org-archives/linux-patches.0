@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434D02D46AC;
-	Tue, 12 Aug 2025 17:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD8C2FABF8;
+	Tue, 12 Aug 2025 17:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021034; cv=none; b=SIFEqWyvBUmajEYWH9skgDg6WHpKULXS5cFcGcG95a/YfSabAhsL/tI1Z3ZNrf7sTkCBYC2N8L3Uua3rt358Q3m1k2IrDFUQnM84rmJlycKidkDvPBXkCIltrNjR+trzTrxAI+qqiNkKbEIQ1ZYoDrYdynkurptXZ7WSmA5XweQ=
+	t=1755021037; cv=none; b=mGxf+SWg95g4frTnKpYQdr8uiRXjvWBlzv3A1zpcGIDI0QuVVG0FrGMHUTNyCdKEVkLCJPRzCXxCfs+uridsbktZzM3bmvkh5lsJfm1C9ZX8Sd10bl5XTXmrr0pGQG8QjdqQMnvu1mmgUQdTYydA38VG8Wkuq9zgKMj5kQlwZ7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021034; c=relaxed/simple;
-	bh=oLw5RuTK6AYNIRfmoASi3/ora9A06EK2Yx/AnDuRNFk=;
+	s=arc-20240116; t=1755021037; c=relaxed/simple;
+	bh=1FKvvsw+z3M3SYg6ySaMNbyqv/qxJ60f8mH07CU54+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMMISW0SwNbiDTWBUhC1XQ+VXweVN35H3qne88oRDgYHzyFo8BdVl0tcqeRbBCZkyxqGdWm0TBiPJ96Cky6plTNLQ5t4slTEaTo3LcVWkNOu7bJbfVoa0tmE9yo/Y+uwSJ9gSOlqvpJE3qmvkM0a6R0Awwa61Xmgj0SuBUAvT2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLC3zyyk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LgkmaXPS95Rj44RS3GIOzuyF4lEPrlvyeBxYHSV24ZMnZ7pQOpZHqcHBOSSxO+4P5KkvF25Ey13qOkRlf8UD8sIF7pB/qOu0N//mdLp2UwhqjQhEkl7VmflgbtJpnY+HmC/fNwD2LybxoR+UDot3NrcoV14jhj0wkxnrD3B/b2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNzOA0RT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLC3zyyk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC26C4CEF0;
-	Tue, 12 Aug 2025 17:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNzOA0RT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78C1C4CEF0;
+	Tue, 12 Aug 2025 17:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021033;
-	bh=oLw5RuTK6AYNIRfmoASi3/ora9A06EK2Yx/AnDuRNFk=;
+	s=korg; t=1755021037;
+	bh=1FKvvsw+z3M3SYg6ySaMNbyqv/qxJ60f8mH07CU54+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLC3zyykZBVHgn8gor1z3HlBNUzZTMK8tQo4uS4tgmloz6HHooG8pOxila7a9M5jc
-	 5E+fuGCoUhBA79GoqF47MAE8p9usbdRI9cib4ELRZuUcRhMgQfRObCoLJ1ED3nrjq9
-	 6s2qmgrA+Ef0wIClNiBoNA20CabtOQYIec0d1T1o=
+	b=oNzOA0RTsp4Huiwi4NaFHRsy4WQo69SzeMMGRaJfP7rc+0hfDnsDa+9+ez/LM1PmV
+	 /xhzFcXR9NjipKSJXvn+JK6krCEpJzZe34oi3L4ASwnu7od/wraBjvpOKOo7vhArQg
+	 Qbo5hORV8RGEEyyaJxonxOsxzMOeo7NxsPT9gAg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/262] net: ipv6: ip6mr: Fix in/out netdev to pass to the FORWARD chain
-Date: Tue, 12 Aug 2025 19:27:20 +0200
-Message-ID: <20250812172955.194196856@linuxfoundation.org>
+Subject: [PATCH 6.1 202/253] scsi: Revert "scsi: iscsi: Fix HW conn removal use after free"
+Date: Tue, 12 Aug 2025 19:29:50 +0200
+Message-ID: <20250812172957.411196654@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,60 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit 3365afd3abda5f6a54f4a822dad5c9314e94c3fc ]
+[ Upstream commit 7bdc68921481c19cd8c85ddf805a834211c19e61 ]
 
-The netfilter hook is invoked with skb->dev for input netdevice, and
-vif_dev for output netdevice. However at the point of invocation, skb->dev
-is already set to vif_dev, and MR-forwarded packets are reported with
-in=out:
+This reverts commit c577ab7ba5f3bf9062db8a58b6e89d4fe370447e.
 
- # ip6tables -A FORWARD -j LOG --log-prefix '[forw]'
- # cd tools/testing/selftests/net/forwarding
- # ./router_multicast.sh
- # dmesg | fgrep '[forw]'
- [ 1670.248245] [forw]IN=v5 OUT=v5 [...]
+The invocation of iscsi_put_conn() in iscsi_iter_destory_conn_fn() is
+used to free the initial reference counter of iscsi_cls_conn.  For
+non-qla4xxx cases, the ->destroy_conn() callback (e.g.,
+iscsi_conn_teardown) will call iscsi_remove_conn() and iscsi_put_conn()
+to remove the connection from the children list of session and free the
+connection at last.  However for qla4xxx, it is not the case. The
+->destroy_conn() callback of qla4xxx will keep the connection in the
+session conn_list and doesn't use iscsi_put_conn() to free the initial
+reference counter. Therefore, it seems necessary to keep the
+iscsi_put_conn() in the iscsi_iter_destroy_conn_fn(), otherwise, there
+will be memory leak problem.
 
-For reference, IPv4 MR code shows in and out as appropriate.
-Fix by caching skb->dev and using the updated value for output netdev.
-
-Fixes: 7bc570c8b4f7 ("[IPV6] MROUTE: Support multicast forwarding.")
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/3141ae8386fbe13fef4b793faa75e6bae58d798a.1750113335.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/all/88334658-072b-4b90-a949-9c74ef93cfd1@huawei.com/
+Fixes: c577ab7ba5f3 ("scsi: iscsi: Fix HW conn removal use after free")
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Link: https://lore.kernel.org/r/20250715073926.3529456-1-lilingfeng3@huawei.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6mr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/scsi_transport_iscsi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 7f19868d7d6c..18451dfeae68 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -2035,6 +2035,7 @@ static int ip6mr_forward2(struct net *net, struct mr_table *mrt,
- 			  struct sk_buff *skb, int vifi)
- {
- 	struct vif_device *vif = &mrt->vif_table[vifi];
-+	struct net_device *indev = skb->dev;
- 	struct net_device *vif_dev;
- 	struct ipv6hdr *ipv6h;
- 	struct dst_entry *dst;
-@@ -2097,7 +2098,7 @@ static int ip6mr_forward2(struct net *net, struct mr_table *mrt,
- 	IP6CB(skb)->flags |= IP6SKB_FORWARDED;
+diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
+index c44103752b69..ef20fea95957 100644
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -2168,6 +2168,8 @@ static int iscsi_iter_destroy_conn_fn(struct device *dev, void *data)
+ 		return 0;
  
- 	return NF_HOOK(NFPROTO_IPV6, NF_INET_FORWARD,
--		       net, NULL, skb, skb->dev, vif_dev,
-+		       net, NULL, skb, indev, skb->dev,
- 		       ip6mr_forward2_finish);
+ 	iscsi_remove_conn(iscsi_dev_to_conn(dev));
++	iscsi_put_conn(iscsi_dev_to_conn(dev));
++
+ 	return 0;
+ }
  
- out_free:
 -- 
 2.39.5
 
