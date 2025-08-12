@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7255260583;
-	Tue, 12 Aug 2025 19:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47701260583;
+	Tue, 12 Aug 2025 19:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026093; cv=none; b=Pe19KYwcF+o85aaykq+6pBGER5zTLztapaA49aQCOMEhJGWvBMk/Cxbf2srwNb3IjCA74wNM5CT8K28AJXdQx1kGNmyJX2v2nbeN4y2JZlspa6+Ibptfo+Ci1Twn1H6zBOsokbBv8T28VwOawOoXb7qC87YG66gyfEzAeOklkdI=
+	t=1755026097; cv=none; b=TCqS0ihDpxWYeOazroOLdwYOjZ3Q5N4ZJtJ7uZ8YLWaCTaRxqvlz7l6NzmXsAfsoBgWZav4k+QHYc2XGdYLvaTpEzgZdFbJbAX4uYVLjM3mLqTEEl35JGIz444Z6mpPVVrTufG9f5p9c8nl7DGlS8XhAb5wcAF/2NMLYFcF4ORA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026093; c=relaxed/simple;
-	bh=bzcWIZl0krGGAHMiteEtJZ1HT/ScKKHgVlQGmKW8cDI=;
+	s=arc-20240116; t=1755026097; c=relaxed/simple;
+	bh=P8Fsu9weMBPjU8Xw/0wJd/Rlu0qBE+lNbXw/0emnhD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmkGFmjUevIY30i5gH5MxcBmdGjeJAy5PYQSxvZew/4keHt8k9JXTI1zXJBEMBbXd6jqykFiqE9Fgb62bcvxbAv31e+Hu1/HqVHsbMJs71RqTAb0m/pq+fxj9OtRVdCb+3ZEfelZl37t+0dxWDuvEa6I0Ila2Hg4XsVXDKO59Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nccz5IMN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMqyT3DjQMVYTZGSFf5ScdFkC8rJI+06OpOa5z1CBa1kQUd1d4JMNaDmiKbsMezucEgngmfNNXpUYVD315GhzecmJKaeHUR8xuGF58ZEjGTZXV/Bhx7/YPG6W5zoxwvHPbS6p4HddGjBVg6nx0d60YJKsyREGjp1kK0XnEH3SFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5k5WW7W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nccz5IMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AAEC4CEF0;
-	Tue, 12 Aug 2025 19:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5k5WW7W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10A0C4CEF0;
+	Tue, 12 Aug 2025 19:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026093;
-	bh=bzcWIZl0krGGAHMiteEtJZ1HT/ScKKHgVlQGmKW8cDI=;
+	s=korg; t=1755026097;
+	bh=P8Fsu9weMBPjU8Xw/0wJd/Rlu0qBE+lNbXw/0emnhD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nccz5IMN+Pp5t6arJXmmfCCHVUpIk2q9uG+i/5H8Y4mjOcPyN3V+unJaUzaQK8FhA
-	 dDTHrCqWj7nzah0zbQ227lTTs5ZSGinTCrBeTOU3opCWTGs01GW4RxJcYS9QlyHKor
-	 3Jybg1CqKpdbH/7XCc/GvO5TBTT9gjXkrHAHn5Ro=
+	b=H5k5WW7WE57q5kVayVC8GslsBFaEdNLbe03mFpKNgCFPnx2DhIg4CzWiDv2qEi4fA
+	 HxB3RD+7xQrwy9Y5MNxEUp8MZLx3FTQFhqaGspJPh4apM6TqyySE3i0G8I9l9bCaJb
+	 BXZkuBA7eR32zeLZZze5ji/jkhZWzs+4RdJ01lZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Rohit Visavalia <rohit.visavalia@amd.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 235/480] perf parse-events: Set default GH modifier properly
-Date: Tue, 12 Aug 2025 19:47:23 +0200
-Message-ID: <20250812174407.141263593@linuxfoundation.org>
+Subject: [PATCH 6.15 236/480] clk: xilinx: vcu: unregister pll_post only if registered correctly
+Date: Tue, 12 Aug 2025 19:47:24 +0200
+Message-ID: <20250812174407.182103186@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,80 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Rohit Visavalia <rohit.visavalia@amd.com>
 
-[ Upstream commit dcbe6e51a0bb80a40f9a8c87750c291c2364573d ]
+[ Upstream commit 3b0abc443ac22f7d4f61ddbbbbc5dbb06c87139d ]
 
-Commit 7b100989b4f6bce7 ("perf evlist: Remove __evlist__add_default")
-changed to use "cycles:P" as a default event.  But the problem is it
-cannot set other default modifiers correctly.
+If registration of pll_post is failed, it will be set to NULL or ERR,
+unregistering same will fail with following call trace:
 
-perf kvm needs to set attr.exclude_host by default but it didn't work
-because of the logic in the parse_events__modifier_list().  Also the
-exclude_GH_default was applied only if ":u" modifier was specified -
-which is strange.  Move it out after handling the ":GH" and check
-perf_host and perf_guest properly.
+Unable to handle kernel NULL pointer dereference at virtual address 008
+pc : clk_hw_unregister+0xc/0x20
+lr : clk_hw_unregister_fixed_factor+0x18/0x30
+sp : ffff800011923850
+...
+Call trace:
+ clk_hw_unregister+0xc/0x20
+ clk_hw_unregister_fixed_factor+0x18/0x30
+ xvcu_unregister_clock_provider+0xcc/0xf4 [xlnx_vcu]
+ xvcu_probe+0x2bc/0x53c [xlnx_vcu]
 
-Before:
-  $ ./perf kvm record -vv true |& grep exclude
-  (nothing)
-
-But specifying an event (without a modifier) works:
-
-  $ ./perf kvm record -vv -e cycles true |& grep exclude
-    exclude_host                     1
-
-After:
-It now works for the both cases:
-
-  $ ./perf kvm record -vv true |& grep exclude
-    exclude_host                     1
-
-  $ ./perf kvm record -vv -e cycles true |& grep exclude
-    exclude_host                     1
-
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250606225431.2109754-1-namhyung@kernel.org
-Fixes: 35c8d21371e9b342 ("perf tools: Don't set attr.exclude_guest by default")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 4472e1849db7 ("soc: xilinx: vcu: make pll post divider explicit")
+Signed-off-by: Rohit Visavalia <rohit.visavalia@amd.com>
+Link: https://lore.kernel.org/r/20250210113614.4149050-2-rohit.visavalia@amd.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/parse-events.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/clk/xilinx/xlnx_vcu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
-index 5152fd5a6ead..7ed3c3cadd6a 100644
---- a/tools/perf/util/parse-events.c
-+++ b/tools/perf/util/parse-events.c
-@@ -1733,13 +1733,11 @@ static int parse_events__modifier_list(struct parse_events_state *parse_state,
- 		int eH = group ? evsel->core.attr.exclude_host : 0;
- 		int eG = group ? evsel->core.attr.exclude_guest : 0;
- 		int exclude = eu | ek | eh;
--		int exclude_GH = group ? evsel->exclude_GH : 0;
-+		int exclude_GH = eG | eH;
+diff --git a/drivers/clk/xilinx/xlnx_vcu.c b/drivers/clk/xilinx/xlnx_vcu.c
+index 81501b48412e..88b3fd8250c2 100644
+--- a/drivers/clk/xilinx/xlnx_vcu.c
++++ b/drivers/clk/xilinx/xlnx_vcu.c
+@@ -587,8 +587,8 @@ static void xvcu_unregister_clock_provider(struct xvcu_device *xvcu)
+ 		xvcu_clk_hw_unregister_leaf(hws[CLK_XVCU_ENC_MCU]);
+ 	if (!IS_ERR_OR_NULL(hws[CLK_XVCU_ENC_CORE]))
+ 		xvcu_clk_hw_unregister_leaf(hws[CLK_XVCU_ENC_CORE]);
+-
+-	clk_hw_unregister_fixed_factor(xvcu->pll_post);
++	if (!IS_ERR_OR_NULL(xvcu->pll_post))
++		clk_hw_unregister_fixed_factor(xvcu->pll_post);
+ }
  
- 		if (mod.user) {
- 			if (!exclude)
- 				exclude = eu = ek = eh = 1;
--			if (!exclude_GH && !perf_guest && exclude_GH_default)
--				eG = 1;
- 			eu = 0;
- 		}
- 		if (mod.kernel) {
-@@ -1762,6 +1760,13 @@ static int parse_events__modifier_list(struct parse_events_state *parse_state,
- 				exclude_GH = eG = eH = 1;
- 			eH = 0;
- 		}
-+		if (!exclude_GH && exclude_GH_default) {
-+			if (perf_host)
-+				eG = 1;
-+			else if (perf_guest)
-+				eH = 1;
-+		}
-+
- 		evsel->core.attr.exclude_user   = eu;
- 		evsel->core.attr.exclude_kernel = ek;
- 		evsel->core.attr.exclude_hv     = eh;
+ /**
 -- 
 2.39.5
 
