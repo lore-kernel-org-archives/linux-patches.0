@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABB92F8BE7;
-	Tue, 12 Aug 2025 17:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34E92DE1E2;
+	Tue, 12 Aug 2025 17:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021346; cv=none; b=d6D4f5PtAtHS+0afEuSQ5vH6bg2e3ZsaelEQOLNSx/HpaWd0pEQg3p6/CiufKfeq81ghNwXYSlN2U63Xv7UJCr+TNDMmbsiUevHzcpzOlMbU2T3aOt6Ys4/cR3BiOLxw0YBT9NzOi5SBOOytu8ACv6/4DirHEBD8c7I/Qr1XXCk=
+	t=1755021350; cv=none; b=i70nys82GwOmr9O/YTusjNZDvLd3H+k8TMnh9pL+udPEzfHukmadzY4UrvQ2uKXnjbQWhbq2U2x37ETW2NNSthYNpYy4Qop2kwEaqzwjcBTSN0BhHZ2F0FO+N3TWlMEYLUp2txgPyuDb7yptk4F9QMgEiRpU3xc3W0I3dhXI2ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021346; c=relaxed/simple;
-	bh=0hN5wptpIt8qlrdj1XOtJ2WieepiqZgcEYheOvxpXcQ=;
+	s=arc-20240116; t=1755021350; c=relaxed/simple;
+	bh=mCDxofHQDsGIc9+oHNjxJqRBce2tNgjCfrqIKQLWhQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0jC7OUcgrJWfdUHTv97P6CynNl4PGnHCQ71+iDPqdvWLH5xe7C4WPLzjzY9xuM2zefDqKjpbzWkKjvooe5TfWScv/M1fQoLdL4URUufLOVCI8uQO4ZfGzK+TXa8VLWwvkKkExVdDVyfZKayh8RVMdqrDAEaAs8lgLLpXC9UPpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePFkNpFx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbNugv3vIRFBYCwbeFgicVS+DxTIu4gI+tmOrCdILuyNJ9tS3LWx2pKoBQ8dvsMCeG5KKGzYZRpfdEAyNQE+dHtveKNebdWFjdMzzPixonyuiKh31insvG3lqYVjl+PjIICBga/7O7ZMC3XK+Oz9mVWP6S33BYqhAUXBhNqQ0/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3t+p0Es; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePFkNpFx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0B2C4CEF1;
-	Tue, 12 Aug 2025 17:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3t+p0Es"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EEADC4CEF1;
+	Tue, 12 Aug 2025 17:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021346;
-	bh=0hN5wptpIt8qlrdj1XOtJ2WieepiqZgcEYheOvxpXcQ=;
+	s=korg; t=1755021349;
+	bh=mCDxofHQDsGIc9+oHNjxJqRBce2tNgjCfrqIKQLWhQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ePFkNpFxk2uXODE/mGfkshUVj4gDschpqeX6gZ/+9+O4djWqSkHnGtEystVIHJUpc
-	 1Du2oiF+ViXkIfdCr+PFzYGDPlPRM+emG5LOjY2tjJBdTN2jGlq96Ap7rKJvwO4r3+
-	 B4/lTxkWY1JY8J1Ff13HnDHUeSSLrm1s1Keuahhc=
+	b=k3t+p0EsGsYf1w/qCh+VZzm9ivmfAtjCQNPi/jnNIGJFWWyzR4PoaQNouyLay44ox
+	 Wbcp7lzJx4FcxyMpQh8PyYACdNT5qZ2npaGXD5/RLbrfYgqaZ7XUTK7ABu2HAgPqRb
+	 S8PRzVUzAk1k9UR+GPKHsRo3QviQzGwOi00YM8DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/262] netfilter: xt_nfacct: dont assume acct name is null-terminated
-Date: Tue, 12 Aug 2025 19:28:06 +0200
-Message-ID: <20250812172957.260614204@linuxfoundation.org>
+	stable@kernel.org,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 251/253] MIPS: mm: tlb-r4k: Uniquify TLB entries on init
+Date: Tue, 12 Aug 2025 19:30:39 +0200
+Message-ID: <20250812172959.545428907@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +47,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit bf58e667af7d96c8eb9411f926a0a0955f41ce21 ]
+commit 35ad7e181541aa5757f9f316768d3e64403ec843 upstream.
 
-BUG: KASAN: slab-out-of-bounds in .. lib/vsprintf.c:721
-Read of size 1 at addr ffff88801eac95c8 by task syz-executor183/5851
-[..]
- string+0x231/0x2b0 lib/vsprintf.c:721
- vsnprintf+0x739/0xf00 lib/vsprintf.c:2874
- [..]
- nfacct_mt_checkentry+0xd2/0xe0 net/netfilter/xt_nfacct.c:41
- xt_check_match+0x3d1/0xab0 net/netfilter/x_tables.c:523
+Hardware or bootloader will initialize TLB entries to any value, which
+may collide with kernel's UNIQUE_ENTRYHI value. On MIPS microAptiv/M5150
+family of cores this will trigger machine check exception and cause boot
+failure. On M5150 simulation this could happen 7 times out of 1000 boots.
 
-nfnl_acct_find_get() handles non-null input, but the error
-printk relied on its presence.
+Replace local_flush_tlb_all() with r4k_tlb_uniquify() which probes each
+TLB ENTRIHI unique value for collisions before it's written, and in case
+of collision try a different ASID.
 
-Reported-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4ff165b9251e4d295690
-Tested-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
-Fixes: ceb98d03eac5 ("netfilter: xtables: add nfacct match to support extended accounting")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_nfacct.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/mm/tlb-r4k.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_nfacct.c b/net/netfilter/xt_nfacct.c
-index 7c6bf1c16813..0ca1cdfc4095 100644
---- a/net/netfilter/xt_nfacct.c
-+++ b/net/netfilter/xt_nfacct.c
-@@ -38,8 +38,8 @@ nfacct_mt_checkentry(const struct xt_mtchk_param *par)
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -498,6 +498,60 @@ static int __init set_ntlb(char *str)
  
- 	nfacct = nfnl_acct_find_get(par->net, info->name);
- 	if (nfacct == NULL) {
--		pr_info_ratelimited("accounting object `%s' does not exists\n",
--				    info->name);
-+		pr_info_ratelimited("accounting object `%.*s' does not exist\n",
-+				    NFACCT_NAME_MAX, info->name);
- 		return -ENOENT;
- 	}
- 	info->nfacct = nfacct;
--- 
-2.39.5
-
+ __setup("ntlb=", set_ntlb);
+ 
++/* Initialise all TLB entries with unique values */
++static void r4k_tlb_uniquify(void)
++{
++	int entry = num_wired_entries();
++
++	htw_stop();
++	write_c0_entrylo0(0);
++	write_c0_entrylo1(0);
++
++	while (entry < current_cpu_data.tlbsize) {
++		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
++		unsigned long asid = 0;
++		int idx;
++
++		/* Skip wired MMID to make ginvt_mmid work */
++		if (cpu_has_mmid)
++			asid = MMID_KERNEL_WIRED + 1;
++
++		/* Check for match before using UNIQUE_ENTRYHI */
++		do {
++			if (cpu_has_mmid) {
++				write_c0_memorymapid(asid);
++				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
++			} else {
++				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
++			}
++			mtc0_tlbw_hazard();
++			tlb_probe();
++			tlb_probe_hazard();
++			idx = read_c0_index();
++			/* No match or match is on current entry */
++			if (idx < 0 || idx == entry)
++				break;
++			/*
++			 * If we hit a match, we need to try again with
++			 * a different ASID.
++			 */
++			asid++;
++		} while (asid < asid_mask);
++
++		if (idx >= 0 && idx != entry)
++			panic("Unable to uniquify TLB entry %d", idx);
++
++		write_c0_index(entry);
++		mtc0_tlbw_hazard();
++		tlb_write_indexed();
++		entry++;
++	}
++
++	tlbw_use_hazard();
++	htw_start();
++	flush_micro_tlb();
++}
++
+ /*
+  * Configure TLB (for init or after a CPU has been powered off).
+  */
+@@ -537,7 +591,7 @@ static void r4k_tlb_configure(void)
+ 	temp_tlb_entry = current_cpu_data.tlbsize - 1;
+ 
+ 	/* From this point on the ARC firmware is dead.	 */
+-	local_flush_tlb_all();
++	r4k_tlb_uniquify();
+ 
+ 	/* Did I tell you that ARC SUCKS?  */
+ }
 
 
