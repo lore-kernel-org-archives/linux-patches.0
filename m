@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1D32FE57F;
-	Tue, 12 Aug 2025 17:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83052FDC2C;
+	Tue, 12 Aug 2025 17:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020271; cv=none; b=K3M9iV2HenJOE83kIfYUXcWyS/eC7H2KOdM5ch8ukkIXXJEm4mTmXt7JbEkF5hlsmnP73d30kHefMug7YdhT71nQdoF+OG3ioM2YEtdQBt/kuYN/FqOrCTjNy7FmhkX5ne4PK2uMUm2c9Wt5XkUjZQTquxxRbuGAvhEW0AkZEFE=
+	t=1755020275; cv=none; b=BRqw+h58Gzj1fZu1Ea1rFQRhYPmf/TS836T0QO7+xsOzcEpBXL1hGpdykStwJ5uImzh0jb7c6M/ICrXp1MMnhyzWNMpzZjEUbfM1k2idUUETCLtPAfCSCGQwt0n1MLEbBXV/VM4mkGe5F3fHOIS+XHMk95gJSIL8C+ISSZ2ewks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020271; c=relaxed/simple;
-	bh=fhpysE4mw2RKahjtN/x5tiMNibloNVKVVwMJmHnZkKk=;
+	s=arc-20240116; t=1755020275; c=relaxed/simple;
+	bh=BMfFMVP65wDWRor72k1I9b2EuPB3y7/hojKdLDSufUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tK/SkCR8wrXN0Cp9Uzm7yJtbaBXsD5w8/n86VCYaG+euvaCJEPcNo7nZuwocWG9bnbZ/p/9yZ1wWPOgkhn/T35hbo+WnvRSfeYfBuBoKRyGXUngUwBzTtXYWDMqxn9WmcVMPVKGq3BASGk1oQwjwhgxBdl6wbVBmSaEUkmlErOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acrn5Fr5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNERxYc6vAbAlNzCko61quGW3Jcx1YMj26DeU0h4n3R2r557+eQEdBYDPJTu161097SRQCX3zhg8roo0jGkiZwOg8K5SBWxHjun+LVua7X4OWg1W4qJnpV8RJscH3z0w5yKbg1J7mSp+KLjWzQbPO8M9mEKI/25R05/jCwKQjPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQBp22A9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acrn5Fr5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93240C4CEF0;
-	Tue, 12 Aug 2025 17:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQBp22A9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30D5C4CEF0;
+	Tue, 12 Aug 2025 17:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020271;
-	bh=fhpysE4mw2RKahjtN/x5tiMNibloNVKVVwMJmHnZkKk=;
+	s=korg; t=1755020274;
+	bh=BMfFMVP65wDWRor72k1I9b2EuPB3y7/hojKdLDSufUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=acrn5Fr58/sE3xUCPOioNQtCdHyxkcawnXkjkcYtM0/pCn8rp3Jg8LWCXj9kP5HyX
-	 24hVizuPOn1ovWyW5mc8S4IBf79WgxXmev2nSZ0Rtcw9maqq4fGYK5aKIE14KMqXPU
-	 +nNmJU4FC9N9VQe+A/Tn0QKxmCf/rBYKXiZ2BUl8=
+	b=qQBp22A97GzoeQty5C/uFgiueXTWVC1o1Vj4pto8zAi4KafVDDaXDmwLHdIUqz/yf
+	 6Rj96pW0KV8QI5Y+c5YSucIjHVNLYZiQAZU1t7RQbybK2qt4N/Dt/tplv607Jpn9yh
+	 rf6XqKadqlHJgKEnUMJqN4pZ2EJeSNwfRDWOgz0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawid Rezler <dawidrezler.patches@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 031/253] ALSA: hda/realtek - Add mute LED support for HP Pavilion 15-eg0xxx
-Date: Tue, 12 Aug 2025 19:26:59 +0200
-Message-ID: <20250812172950.057748202@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 032/253] dpaa2-eth: Fix device reference count leak in MAC endpoint handling
+Date: Tue, 12 Aug 2025 19:27:00 +0200
+Message-ID: <20250812172950.099874984@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -50,34 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawid Rezler <dawidrezler.patches@gmail.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 9744ede7099e8a69c04aa23fbea44c15bc390c04 upstream.
+commit ee9f3a81ab08dfe0538dbd1746f81fd4d5147fdc upstream.
 
-The mute LED on the HP Pavilion Laptop 15-eg0xxx,
-which uses the ALC287 codec, didn't work.
-This patch fixes the issue by enabling the ALC287_FIXUP_HP_GPIO_LED quirk.
+The fsl_mc_get_endpoint() function uses device_find_child() for
+localization, which implicitly calls get_device() to increment the
+device's reference count before returning the pointer. However, the
+caller dpaa2_eth_connect_mac() fails to properly release this
+reference in multiple scenarios. We should call put_device() to
+decrement reference count properly.
 
-Tested on a physical device, the LED now works as intended.
+As comment of device_find_child() says, 'NOTE: you will need to drop
+the reference with put_device() after use'.
 
-Signed-off-by: Dawid Rezler <dawidrezler.patches@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250720154907.80815-2-dawidrezler.patches@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: 719479230893 ("dpaa2-eth: add MAC/PHY support through phylink")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250717022309.3339976-2-make24@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9947,6 +9947,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -4446,12 +4446,19 @@ static int dpaa2_eth_connect_mac(struct
+ 	if (PTR_ERR(dpmac_dev) == -EPROBE_DEFER)
+ 		return PTR_ERR(dpmac_dev);
+ 
+-	if (IS_ERR(dpmac_dev) || dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type)
++	if (IS_ERR(dpmac_dev))
+ 		return 0;
+ 
++	if (dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type) {
++		err = 0;
++		goto out_put_device;
++	}
++
+ 	mac = kzalloc(sizeof(struct dpaa2_mac), GFP_KERNEL);
+-	if (!mac)
+-		return -ENOMEM;
++	if (!mac) {
++		err = -ENOMEM;
++		goto out_put_device;
++	}
+ 
+ 	mac->mc_dev = dpmac_dev;
+ 	mac->mc_io = priv->mc_io;
+@@ -4478,6 +4485,8 @@ err_close_mac:
+ 	priv->mac = NULL;
+ err_free_mac:
+ 	kfree(mac);
++out_put_device:
++	put_device(&dpmac_dev->dev);
+ 	return err;
+ }
+ 
 
 
