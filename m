@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC93C2F5E;
-	Tue, 12 Aug 2025 18:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3252F1C8621;
+	Tue, 12 Aug 2025 18:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022373; cv=none; b=R5md+nDj8Iv+BjVKvUJlYF+fbSG0a7cH036lI2uuAhpGKGGn67cQ25Gc/ppokPM8bwGHYO6x1pEvNOniBkFspuOo8jVIqcygp3bCtgheb4Fb5KB0hLKInMubZ48hoxbIo7/EM0/4WGB0I3TaLV6qHWvQhwWjob2jYB90u2zZwW0=
+	t=1755022377; cv=none; b=NXlrUVEaQLSUV6YIuHtZRspU1BpyQf/TJYJ2QfUexIyfysyu1+xclvzJB9WDey8RG+b1yPI7+TdplHFNcy2RfeUngtsFUMC4l89nJ8vg2uKAoDNvt0VVEFW3UCfWHR5HTmqbIIUHwPSLGSQgTZWrB8OvLGyVuSMpegZwbVa1Sog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022373; c=relaxed/simple;
-	bh=2sYpUym9xdXu5yr4NAZeaU1Db7Rn+d5ecZOP7ivHzUs=;
+	s=arc-20240116; t=1755022377; c=relaxed/simple;
+	bh=3J80/BW7Nb46ty2s98eItm9llRyVJA2RQHEHufEBmOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+UMQb4AFOEhBeX/QiS4jKYAf997YcCdFE/cYvX6CtkT9Cgyt6cxTGTJ9oVGNCRy9Fr1l7WPh20lqYlj/jATdsOHx6/gnwn0ECOqpXhA5PIL57ib53raVJwPNgoosxGgQmyDHGm7pNo6MJSI0sC2V1/MvuQ7dRi8ydfUUBACb00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4933rIF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DePPPRO5+i1W8o58EpzLUvXdpgFjz1UV4HacAIIEY9E9tJvrupGIgCRSGeDo3j51sUZuv36HQECSJMpcTrAmiumRWZUWmu7plEhk32qm23LYNztME6UX2Pbq9H2Lt5r74xyjC1KVEySZPomJKlAtmlyJlnSyGAHlq48mPxrV1Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xj0Cw5/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4933rIF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393A6C4CEF0;
-	Tue, 12 Aug 2025 18:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xj0Cw5/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96297C4CEF0;
+	Tue, 12 Aug 2025 18:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022373;
-	bh=2sYpUym9xdXu5yr4NAZeaU1Db7Rn+d5ecZOP7ivHzUs=;
+	s=korg; t=1755022377;
+	bh=3J80/BW7Nb46ty2s98eItm9llRyVJA2RQHEHufEBmOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4933rIFnDDDwOc/8c5Ic0XP5/JufdMQo9Um2LWSc8yjr1iFj0yGGUP88i/qNnUbs
-	 vPS1Y4BaDCQ93Cj22ybd5eV8jmA1SZZK9Jy4HisGQqZJaeC26mQHQQGp1I9Nk65hhS
-	 wQdZ35Bm5lXij20liwxGSYEn9aHb3wuAjnwMT/CY=
+	b=xj0Cw5/S04RLqTLlezydYENZdJZ/ymO/DjYXhkB9kSVmOka/CTPvjp6g98ZO/+f3L
+	 pAd7g280edd6541AgWHgmwSrtZIPmFczGe0b3EspwFzFSZitngcEXkfVt6IqMtYVbL
+	 H7U/cObGDKV6BZn3Q3qKxJQrULtBnR0UPGT+5hwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nimrod Oren <noren@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stephane Grosjean <stephane.grosjean@hms-networks.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/369] selftests: drv-net: Fix remote command checking in require_cmd()
-Date: Tue, 12 Aug 2025 19:27:12 +0200
-Message-ID: <20250812173019.846463227@linuxfoundation.org>
+Subject: [PATCH 6.12 136/369] can: peak_usb: fix USB FD devices potential malfunction
+Date: Tue, 12 Aug 2025 19:27:13 +0200
+Message-ID: <20250812173019.884940040@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,39 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Stephane Grosjean <stephane.grosjean@hms-networks.com>
 
-[ Upstream commit b4d52c698210ae1a3ceb487b189701bc70551a48 ]
+[ Upstream commit 788199b73b6efe4ee2ade4d7457b50bb45493488 ]
 
-The require_cmd() method was checking for command availability locally
-even when remote=True was specified, due to a missing host parameter.
+The latest firmware versions of USB CAN FD interfaces export the EP numbers
+to be used to dialog with the device via the "type" field of a response to
+a vendor request structure, particularly when its value is greater than or
+equal to 2.
 
-Fix by passing host=self.remote when checking remote command
-availability, ensuring commands are verified on the correct host.
+Correct the driver's test of this field.
 
-Fixes: f1e68a1a4a40 ("selftests: drv-net: add require_XYZ() helpers for validating env")
-Reviewed-by: Nimrod Oren <noren@nvidia.com>
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20250723135454.649342-2-gal@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4f232482467a ("can: peak_usb: include support for a new MCU")
+Signed-off-by: Stephane Grosjean <stephane.grosjean@hms-networks.com>
+Link: https://patch.msgid.link/20250724081550.11694-1-stephane.grosjean@free.fr
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+[mkl: rephrase commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/lib/py/env.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/peak_usb/pcan_usb_fd.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/lib/py/env.py b/tools/testing/selftests/drivers/net/lib/py/env.py
-index 1ea9bb695e94..3f35faca6559 100644
---- a/tools/testing/selftests/drivers/net/lib/py/env.py
-+++ b/tools/testing/selftests/drivers/net/lib/py/env.py
-@@ -224,7 +224,7 @@ class NetDrvEpEnv:
-             if not self._require_cmd(comm, "local"):
-                 raise KsftSkipEx("Test requires command: " + comm)
-         if remote:
--            if not self._require_cmd(comm, "remote"):
-+            if not self._require_cmd(comm, "remote", host=self.remote):
-                 raise KsftSkipEx("Test requires (remote) command: " + comm)
+diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
+index 4d85b29a17b7..ebefc274b50a 100644
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
+@@ -49,7 +49,7 @@ struct __packed pcan_ufd_fw_info {
+ 	__le32	ser_no;		/* S/N */
+ 	__le32	flags;		/* special functions */
  
-     def wait_hw_stats_settle(self):
+-	/* extended data when type == PCAN_USBFD_TYPE_EXT */
++	/* extended data when type >= PCAN_USBFD_TYPE_EXT */
+ 	u8	cmd_out_ep;	/* ep for cmd */
+ 	u8	cmd_in_ep;	/* ep for replies */
+ 	u8	data_out_ep[2];	/* ep for CANx TX */
+@@ -982,10 +982,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
+ 			dev->can.ctrlmode |= CAN_CTRLMODE_FD_NON_ISO;
+ 		}
+ 
+-		/* if vendor rsp is of type 2, then it contains EP numbers to
+-		 * use for cmds pipes. If not, then default EP should be used.
++		/* if vendor rsp type is greater than or equal to 2, then it
++		 * contains EP numbers to use for cmds pipes. If not, then
++		 * default EP should be used.
+ 		 */
+-		if (fw_info->type != cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
++		if (le16_to_cpu(fw_info->type) < PCAN_USBFD_TYPE_EXT) {
+ 			fw_info->cmd_out_ep = PCAN_USBPRO_EP_CMDOUT;
+ 			fw_info->cmd_in_ep = PCAN_USBPRO_EP_CMDIN;
+ 		}
+@@ -1018,11 +1019,11 @@ static int pcan_usb_fd_init(struct peak_usb_device *dev)
+ 	dev->can_channel_id =
+ 		le32_to_cpu(pdev->usb_if->fw_info.dev_id[dev->ctrl_idx]);
+ 
+-	/* if vendor rsp is of type 2, then it contains EP numbers to
+-	 * use for data pipes. If not, then statically defined EP are used
+-	 * (see peak_usb_create_dev()).
++	/* if vendor rsp type is greater than or equal to 2, then it contains EP
++	 * numbers to use for data pipes. If not, then statically defined EP are
++	 * used (see peak_usb_create_dev()).
+ 	 */
+-	if (fw_info->type == cpu_to_le16(PCAN_USBFD_TYPE_EXT)) {
++	if (le16_to_cpu(fw_info->type) >= PCAN_USBFD_TYPE_EXT) {
+ 		dev->ep_msg_in = fw_info->data_in_ep;
+ 		dev->ep_msg_out = fw_info->data_out_ep[dev->ctrl_idx];
+ 	}
 -- 
 2.39.5
 
