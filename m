@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1562527781E;
-	Tue, 12 Aug 2025 19:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3E827781E;
+	Tue, 12 Aug 2025 19:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025758; cv=none; b=YkwvJwyqh+9Gmgb2BaDak1BH2E1uNxTRb6Phgxf9fJ7dYXptqDTkLl9qMaygatrGRH3a1Y8KCdjhj7/PMzKRdBOoBEKOb3nIPPPuxf21zXqqP9V6kNJi07rPW4VMGKFtvZSV0VyCPHyyebqURsnIg+vWlLmEDjo+88Eh/e72NY4=
+	t=1755025759; cv=none; b=h1jvF7yY6y9IcSIpp/GwGtLuSp7ogzh+LucRZ4GlddlyM05SW4cRK5vtwCYnfhD75Q9zZMQti0ydKO8ZtLXn5OB22tdp15e9E4q62rWFnFtJxiZrC+xdljvQAEZmPHbHIYnd7v4HKNioc03/ppF+55jMQQRpajDZG18YRXY9JdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025758; c=relaxed/simple;
-	bh=3I1GjrN00Gjwm+SL8vQTzCwF/um5XQ1YSFocNWdjNFA=;
+	s=arc-20240116; t=1755025759; c=relaxed/simple;
+	bh=S6s3VzDmdFWI7fjLDFrsS7nzlbj6bbm7xPKZs2ker64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fglsAEWXx/WmZ5s0d7jvNtGKa8J/CwYBZa7qrNNqHDIF2bngWj1Qk5Oe4QZWcLCWIE3M/lijsAPtHb3gMqQgXRjkLl2tJGwgYYCV2sCc4p7/zOfGN57HiZcW1k590nm/NJM4/FWNmDiw/PD0LllUYkMhlQGPNimYH2BGXsruoWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3eoAIXr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rQnrX5FSk+VzH2ERr+9x+msDiQ1S/E9xBUic4f1DugFjxL74t60uga+gh7eTMvnYBnfiYL5ZeeEKPOYGHq1V59wP1RIyJqTcj9NOcNVxT3ICjG2QgVxYjn9M7sv5ccOrydu5TzPzCDzkCrqQ0eXsk1cAU+1Bf/c9UQdQmYvw6LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4AZN5aU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3eoAIXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E51C4CEF0;
-	Tue, 12 Aug 2025 19:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4AZN5aU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E0BC4CEF0;
+	Tue, 12 Aug 2025 19:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025755;
-	bh=3I1GjrN00Gjwm+SL8vQTzCwF/um5XQ1YSFocNWdjNFA=;
+	s=korg; t=1755025759;
+	bh=S6s3VzDmdFWI7fjLDFrsS7nzlbj6bbm7xPKZs2ker64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3eoAIXrS4dGT7cWsVqGnvJjrGHyRIT7Q2esyj2S7cAOWvacotco4pULX3mc/P+aI
-	 MhOpiLbJco3MdVkIrXJ4Lfqsyhr/l2MiFGDGonf+RamnlchcFFvZAIJ/fpXu97Woku
-	 5hDEcOzmiXByg0EoInxSc0T4RRhgOG9VaoUv7Fmo=
+	b=n4AZN5aUQr9/Yq+0/USlntfZcRfPOkTDlo7HcKGKXX1sz3kh8zJjfbM9O8G2F3rB5
+	 P/Q1LOhJArF5vGhFQ2fFIkMd+0l3L1Yy1h0rm/xxVzL9taEYajdmwOzzrB7ayh4C/l
+	 kg9yMMaLVgfrDA3VqddMmhohng6uJKGelz9EoWJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 134/480] bpf: Ensure RCU lock is held around bpf_prog_ksym_find
-Date: Tue, 12 Aug 2025 19:45:42 +0200
-Message-ID: <20250812174403.055602307@linuxfoundation.org>
+Subject: [PATCH 6.15 135/480] drm/msm/dpu: Fill in min_prefill_lines for SC8180X
+Date: Tue, 12 Aug 2025 19:45:43 +0200
+Message-ID: <20250812174403.096069242@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,65 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit d090326860096df9dac6f27cff76d3f8df44d4f1 ]
+[ Upstream commit 5136acc40afc0261802e5cb01b04f871bf6d876b ]
 
-Add a warning to ensure RCU lock is held around tree lookup, and then
-fix one of the invocations in bpf_stack_walker. The program has an
-active stack frame and won't disappear. Use the opportunity to remove
-unneeded invocation of is_bpf_text_address.
+Based on the downstream release, predictably same value as for SM8150.
 
-Fixes: f18b03fabaa9 ("bpf: Implement BPF exceptions")
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20250703204818.925464-5-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: f3af2d6ee9ab ("drm/msm/dpu: Add SC8180x to hw catalog")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/657794/
+Link: https://lore.kernel.org/r/20250610-topic-dpu_8180_mpl-v1-1-f480cd22f11c@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c    |  5 ++++-
- kernel/bpf/helpers.c | 11 +++++++++--
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index c20babbf998f..93e49b0c218b 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -778,7 +778,10 @@ bool is_bpf_text_address(unsigned long addr)
- 
- struct bpf_prog *bpf_prog_ksym_find(unsigned long addr)
- {
--	struct bpf_ksym *ksym = bpf_ksym_find(addr);
-+	struct bpf_ksym *ksym;
-+
-+	WARN_ON_ONCE(!rcu_read_lock_held());
-+	ksym = bpf_ksym_find(addr);
- 
- 	return ksym && ksym->prog ?
- 	       container_of(ksym, struct bpf_prog_aux, ksym)->prog :
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 52d02bc0abb2..3312442bc389 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -2864,9 +2864,16 @@ static bool bpf_stack_walker(void *cookie, u64 ip, u64 sp, u64 bp)
- 	struct bpf_throw_ctx *ctx = cookie;
- 	struct bpf_prog *prog;
- 
--	if (!is_bpf_text_address(ip))
--		return !ctx->cnt;
-+	/*
-+	 * The RCU read lock is held to safely traverse the latch tree, but we
-+	 * don't need its protection when accessing the prog, since it has an
-+	 * active stack frame on the current stack trace, and won't disappear.
-+	 */
-+	rcu_read_lock();
- 	prog = bpf_prog_ksym_find(ip);
-+	rcu_read_unlock();
-+	if (!prog)
-+		return !ctx->cnt;
- 	ctx->cnt++;
- 	if (bpf_is_subprog(prog))
- 		return true;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+index e736eb73a7e6..49aed344d346 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+@@ -383,6 +383,7 @@ static const struct dpu_perf_cfg sc8180x_perf_data = {
+ 	.min_core_ib = 2400000,
+ 	.min_llcc_ib = 800000,
+ 	.min_dram_ib = 800000,
++	.min_prefill_lines = 24,
+ 	.danger_lut_tbl = {0xf, 0xffff, 0x0},
+ 	.safe_lut_tbl = {0xfff0, 0xf000, 0xffff},
+ 	.qos_lut_tbl = {
 -- 
 2.39.5
 
