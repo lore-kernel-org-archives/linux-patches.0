@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEC2305E08;
-	Tue, 12 Aug 2025 18:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1641C84C7;
+	Tue, 12 Aug 2025 18:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022242; cv=none; b=JDAk1MKAmjG/YK+g7Om5VMHrjn4QKfdEfPmeYRt5okcEtO4fUjjX9hPAV6v0nHXAUwuLn7iJD9plTHidNDc1zVE6Uv6AY2zc90ShdUZwCdqRJ9pjRt3GLbRjAuaFtNsbUvKQgAAvSWYfgvNx37bF5PDcg+2EYl72rAyJKFWtYNE=
+	t=1755022245; cv=none; b=h2Etknvo2wYIw1KD2ge72U18P3PGLt1UK0aYcWVAxqDLypDLyE2WIz+MfWL/EGHIPO8LeiSV+6wrXTFh4dOry7QK3OJXK9YCDcv/I54kRZWQylzBLN3AHLJ4LtTqwoUwLZOUO49J4ATpZvArc5+Z8NJGRWBc8Y7T0aWNBd2tGuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022242; c=relaxed/simple;
-	bh=3GVqxVfmbvL4l3c+t+cC/97sNZbl5owDNymlPBzkO6Y=;
+	s=arc-20240116; t=1755022245; c=relaxed/simple;
+	bh=4DQcAn3I4blhEoRLV0ge5Tiv02FX+Yk2V0DfJ6Iokp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhKhbA2bAK8yyLCOsc9eHbjTdhSYgHuV9Ie5UqvJKu2ANA/OHHjJ5S7Y+/eHJShlQ6KBpE5ZWQPq4tVj+FsjVOlv50s6d7hQB55+X6u6ViUuzXPORBJ/88qcf0tvvrt1dFWLsM8armPSaoVrc/h+A7V/DYXEPXfKende/JcR6uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKbIbAQO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D6wZKx2wd7OICaDPpq/CaFxt05urSE53BhdwvRRUqG5pC5kdm7j6M6EFAlz+rklJ6iO8ro3gfeaZA+draKz1u1FpwWgQXDeo2xlj5O2v2GyI5kgXi0lQg5tDIyS7oaql5VJOS48Y0AULubXddCakV5b2TAP8oG05U37RJSgVJ9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aswlj6St; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKbIbAQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A2EC4CEF0;
-	Tue, 12 Aug 2025 18:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aswlj6St"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393EBC4CEF0;
+	Tue, 12 Aug 2025 18:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022242;
-	bh=3GVqxVfmbvL4l3c+t+cC/97sNZbl5owDNymlPBzkO6Y=;
+	s=korg; t=1755022245;
+	bh=4DQcAn3I4blhEoRLV0ge5Tiv02FX+Yk2V0DfJ6Iokp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKbIbAQOR8Erm5zFpoARiQA2odPSi9cJrVLdLKS5EnTHFPVkNUbHusaGLY39jJRE6
-	 h0+5zSzcCFP4PAwnfR/TwswWUAfW8EvMdpFKx2qXBTWa6bxfhV7cJpLSIc2RYBpfHi
-	 ulr3y31LIB6DdMaLTFC2Dr3O5lEzSvxLUwSHw2Ww=
+	b=aswlj6StgTdKCAjiMJO0/dXRwuXLAhudCLVGC1byNdu70V7Se3zoKwU1BdEvkTiYC
+	 0NaGlJ+fhvh/oUN0n6EyfGVgm74/AMk03dbUe2HWVxIOX1qiObdmQfRue51wU4nu5c
+	 Ghn+iRZGPh1F/YNu5OWGEBrTNvFuEOrv42WHsajw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Shixiong Ou <oushixiong@kylinos.cn>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/369] sched/psi: Optimize psi_group_change() cpu_clock() usage
-Date: Tue, 12 Aug 2025 19:26:33 +0200
-Message-ID: <20250812173018.391927854@linuxfoundation.org>
+Subject: [PATCH 6.12 097/369] fbcon: Fix outdated registered_fb reference in comment
+Date: Tue, 12 Aug 2025 19:26:34 +0200
+Message-ID: <20250812173018.429563534@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,336 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Shixiong Ou <oushixiong@kylinos.cn>
 
-[ Upstream commit 570c8efd5eb79c3725ba439ce105ed1bedc5acd9 ]
+[ Upstream commit 0f168e7be696a17487e83d1d47e5a408a181080f ]
 
-Dietmar reported that commit 3840cbe24cf0 ("sched: psi: fix bogus
-pressure spikes from aggregation race") caused a regression for him on
-a high context switch rate benchmark (schbench) due to the now
-repeating cpu_clock() calls.
+The variable was renamed to fbcon_registered_fb, but this comment was
+not updated along with the change. Correct it to avoid confusion.
 
-In particular the problem is that get_recent_times() will extrapolate
-the current state to 'now'. But if an update uses a timestamp from
-before the start of the update, it is possible to get two reads
-with inconsistent results. It is effectively back-dating an update.
-
-(note that this all hard-relies on the clock being synchronized across
-CPUs -- if this is not the case, all bets are off).
-
-Combine this problem with the fact that there are per-group-per-cpu
-seqcounts, the commit in question pushed the clock read into the group
-iteration, causing tree-depth cpu_clock() calls. On architectures
-where cpu_clock() has appreciable overhead, this hurts.
-
-Instead move to a per-cpu seqcount, which allows us to have a single
-clock read for all group updates, increasing internal consistency and
-lowering update overhead. This comes at the cost of a longer update
-side (proportional to the tree depth) which can cause the read side to
-retry more often.
-
-Fixes: 3840cbe24cf0 ("sched: psi: fix bogus pressure spikes from aggregation race")
-Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>,
-Link: https://lkml.kernel.org/20250522084844.GC31726@noisy.programming.kicks-ass.net
+Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
+Fixes: efc3acbc105a ("fbcon: Maintain a private array of fb_info")
+[sima: Add Fixes: line.]
+Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250709103438.572309-1-oushixiong1025@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/psi_types.h |   6 +-
- kernel/sched/psi.c        | 121 +++++++++++++++++++++-----------------
- 2 files changed, 68 insertions(+), 59 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/psi_types.h b/include/linux/psi_types.h
-index f1fd3a8044e0..dd10c22299ab 100644
---- a/include/linux/psi_types.h
-+++ b/include/linux/psi_types.h
-@@ -84,11 +84,9 @@ enum psi_aggregators {
- struct psi_group_cpu {
- 	/* 1st cacheline updated by the scheduler */
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index c98786996c64..678d2802760c 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -953,13 +953,13 @@ static const char *fbcon_startup(void)
+ 	int rows, cols;
  
--	/* Aggregator needs to know of concurrent changes */
--	seqcount_t seq ____cacheline_aligned_in_smp;
--
- 	/* States of the tasks belonging to this group */
--	unsigned int tasks[NR_PSI_TASK_COUNTS];
-+	unsigned int tasks[NR_PSI_TASK_COUNTS]
-+			____cacheline_aligned_in_smp;
- 
- 	/* Aggregate pressure state derived from the tasks */
- 	u32 state_mask;
-diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
-index 84dad1511d1e..81cfefc4d892 100644
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -172,6 +172,28 @@ struct psi_group psi_system = {
- 	.pcpu = &system_group_pcpu,
- };
- 
-+static DEFINE_PER_CPU(seqcount_t, psi_seq);
-+
-+static inline void psi_write_begin(int cpu)
-+{
-+	write_seqcount_begin(per_cpu_ptr(&psi_seq, cpu));
-+}
-+
-+static inline void psi_write_end(int cpu)
-+{
-+	write_seqcount_end(per_cpu_ptr(&psi_seq, cpu));
-+}
-+
-+static inline u32 psi_read_begin(int cpu)
-+{
-+	return read_seqcount_begin(per_cpu_ptr(&psi_seq, cpu));
-+}
-+
-+static inline bool psi_read_retry(int cpu, u32 seq)
-+{
-+	return read_seqcount_retry(per_cpu_ptr(&psi_seq, cpu), seq);
-+}
-+
- static void psi_avgs_work(struct work_struct *work);
- 
- static void poll_timer_fn(struct timer_list *t);
-@@ -182,7 +204,7 @@ static void group_init(struct psi_group *group)
- 
- 	group->enabled = true;
- 	for_each_possible_cpu(cpu)
--		seqcount_init(&per_cpu_ptr(group->pcpu, cpu)->seq);
-+		seqcount_init(per_cpu_ptr(&psi_seq, cpu));
- 	group->avg_last_update = sched_clock();
- 	group->avg_next_update = group->avg_last_update + psi_period;
- 	mutex_init(&group->avgs_lock);
-@@ -262,14 +284,14 @@ static void get_recent_times(struct psi_group *group, int cpu,
- 
- 	/* Snapshot a coherent view of the CPU state */
- 	do {
--		seq = read_seqcount_begin(&groupc->seq);
-+		seq = psi_read_begin(cpu);
- 		now = cpu_clock(cpu);
- 		memcpy(times, groupc->times, sizeof(groupc->times));
- 		state_mask = groupc->state_mask;
- 		state_start = groupc->state_start;
- 		if (cpu == current_cpu)
- 			memcpy(tasks, groupc->tasks, sizeof(groupc->tasks));
--	} while (read_seqcount_retry(&groupc->seq, seq));
-+	} while (psi_read_retry(cpu, seq));
- 
- 	/* Calculate state time deltas against the previous snapshot */
- 	for (s = 0; s < NR_PSI_STATES; s++) {
-@@ -768,30 +790,20 @@ static void record_times(struct psi_group_cpu *groupc, u64 now)
- 		groupc->times[PSI_NONIDLE] += delta;
- }
- 
-+#define for_each_group(iter, group) \
-+	for (typeof(group) iter = group; iter; iter = iter->parent)
-+
- static void psi_group_change(struct psi_group *group, int cpu,
- 			     unsigned int clear, unsigned int set,
--			     bool wake_clock)
-+			     u64 now, bool wake_clock)
- {
- 	struct psi_group_cpu *groupc;
- 	unsigned int t, m;
- 	u32 state_mask;
--	u64 now;
- 
- 	lockdep_assert_rq_held(cpu_rq(cpu));
- 	groupc = per_cpu_ptr(group->pcpu, cpu);
- 
--	/*
--	 * First we update the task counts according to the state
--	 * change requested through the @clear and @set bits.
--	 *
--	 * Then if the cgroup PSI stats accounting enabled, we
--	 * assess the aggregate resource states this CPU's tasks
--	 * have been in since the last change, and account any
--	 * SOME and FULL time these may have resulted in.
--	 */
--	write_seqcount_begin(&groupc->seq);
--	now = cpu_clock(cpu);
--
  	/*
- 	 * Start with TSK_ONCPU, which doesn't have a corresponding
- 	 * task count - it's just a boolean flag directly encoded in
-@@ -843,7 +855,6 @@ static void psi_group_change(struct psi_group *group, int cpu,
- 
- 		groupc->state_mask = state_mask;
- 
--		write_seqcount_end(&groupc->seq);
- 		return;
- 	}
- 
-@@ -864,8 +875,6 @@ static void psi_group_change(struct psi_group *group, int cpu,
- 
- 	groupc->state_mask = state_mask;
- 
--	write_seqcount_end(&groupc->seq);
--
- 	if (state_mask & group->rtpoll_states)
- 		psi_schedule_rtpoll_work(group, 1, false);
- 
-@@ -900,24 +909,29 @@ static void psi_flags_change(struct task_struct *task, int clear, int set)
- void psi_task_change(struct task_struct *task, int clear, int set)
- {
- 	int cpu = task_cpu(task);
--	struct psi_group *group;
-+	u64 now;
- 
- 	if (!task->pid)
- 		return;
- 
- 	psi_flags_change(task, clear, set);
- 
--	group = task_psi_group(task);
--	do {
--		psi_group_change(group, cpu, clear, set, true);
--	} while ((group = group->parent));
-+	psi_write_begin(cpu);
-+	now = cpu_clock(cpu);
-+	for_each_group(group, task_psi_group(task))
-+		psi_group_change(group, cpu, clear, set, now, true);
-+	psi_write_end(cpu);
- }
- 
- void psi_task_switch(struct task_struct *prev, struct task_struct *next,
- 		     bool sleep)
- {
--	struct psi_group *group, *common = NULL;
-+	struct psi_group *common = NULL;
- 	int cpu = task_cpu(prev);
-+	u64 now;
-+
-+	psi_write_begin(cpu);
-+	now = cpu_clock(cpu);
- 
- 	if (next->pid) {
- 		psi_flags_change(next, 0, TSK_ONCPU);
-@@ -926,16 +940,15 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
- 		 * ancestors with @prev, those will already have @prev's
- 		 * TSK_ONCPU bit set, and we can stop the iteration there.
- 		 */
--		group = task_psi_group(next);
--		do {
--			if (per_cpu_ptr(group->pcpu, cpu)->state_mask &
--			    PSI_ONCPU) {
-+		for_each_group(group, task_psi_group(next)) {
-+			struct psi_group_cpu *groupc = per_cpu_ptr(group->pcpu, cpu);
-+
-+			if (groupc->state_mask & PSI_ONCPU) {
- 				common = group;
- 				break;
- 			}
--
--			psi_group_change(group, cpu, 0, TSK_ONCPU, true);
--		} while ((group = group->parent));
-+			psi_group_change(group, cpu, 0, TSK_ONCPU, now, true);
-+		}
- 	}
- 
- 	if (prev->pid) {
-@@ -968,12 +981,11 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
- 
- 		psi_flags_change(prev, clear, set);
- 
--		group = task_psi_group(prev);
--		do {
-+		for_each_group(group, task_psi_group(prev)) {
- 			if (group == common)
- 				break;
--			psi_group_change(group, cpu, clear, set, wake_clock);
--		} while ((group = group->parent));
-+			psi_group_change(group, cpu, clear, set, now, wake_clock);
-+		}
- 
- 		/*
- 		 * TSK_ONCPU is handled up to the common ancestor. If there are
-@@ -983,20 +995,21 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
- 		 */
- 		if ((prev->psi_flags ^ next->psi_flags) & ~TSK_ONCPU) {
- 			clear &= ~TSK_ONCPU;
--			for (; group; group = group->parent)
--				psi_group_change(group, cpu, clear, set, wake_clock);
-+			for_each_group(group, common)
-+				psi_group_change(group, cpu, clear, set, now, wake_clock);
- 		}
- 	}
-+	psi_write_end(cpu);
- }
- 
- #ifdef CONFIG_IRQ_TIME_ACCOUNTING
- void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_struct *prev)
- {
- 	int cpu = task_cpu(curr);
--	struct psi_group *group;
- 	struct psi_group_cpu *groupc;
- 	s64 delta;
- 	u64 irq;
-+	u64 now;
- 
- 	if (static_branch_likely(&psi_disabled))
- 		return;
-@@ -1005,8 +1018,7 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
- 		return;
- 
- 	lockdep_assert_rq_held(rq);
--	group = task_psi_group(curr);
--	if (prev && task_psi_group(prev) == group)
-+	if (prev && task_psi_group(prev) == task_psi_group(curr))
- 		return;
- 
- 	irq = irq_time_read(cpu);
-@@ -1015,25 +1027,22 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
- 		return;
- 	rq->psi_irq_time = irq;
- 
--	do {
--		u64 now;
-+	psi_write_begin(cpu);
-+	now = cpu_clock(cpu);
- 
-+	for_each_group(group, task_psi_group(curr)) {
- 		if (!group->enabled)
- 			continue;
- 
- 		groupc = per_cpu_ptr(group->pcpu, cpu);
- 
--		write_seqcount_begin(&groupc->seq);
--		now = cpu_clock(cpu);
--
- 		record_times(groupc, now);
- 		groupc->times[PSI_IRQ_FULL] += delta;
- 
--		write_seqcount_end(&groupc->seq);
--
- 		if (group->rtpoll_states & (1 << PSI_IRQ_FULL))
- 			psi_schedule_rtpoll_work(group, 1, false);
--	} while ((group = group->parent));
-+	}
-+	psi_write_end(cpu);
- }
- #endif
- 
-@@ -1221,12 +1230,14 @@ void psi_cgroup_restart(struct psi_group *group)
- 		return;
- 
- 	for_each_possible_cpu(cpu) {
--		struct rq *rq = cpu_rq(cpu);
--		struct rq_flags rf;
-+		u64 now;
- 
--		rq_lock_irq(rq, &rf);
--		psi_group_change(group, cpu, 0, 0, true);
--		rq_unlock_irq(rq, &rf);
-+		guard(rq_lock_irq)(cpu_rq(cpu));
-+
-+		psi_write_begin(cpu);
-+		now = cpu_clock(cpu);
-+		psi_group_change(group, cpu, 0, 0, now, true);
-+		psi_write_end(cpu);
- 	}
- }
- #endif /* CONFIG_CGROUPS */
+-	 *  If num_registered_fb is zero, this is a call for the dummy part.
++	 *  If fbcon_num_registered_fb is zero, this is a call for the dummy part.
+ 	 *  The frame buffer devices weren't initialized yet.
+ 	 */
+ 	if (!fbcon_num_registered_fb || info_idx == -1)
+ 		return display_desc;
+ 	/*
+-	 * Instead of blindly using registered_fb[0], we use info_idx, set by
++	 * Instead of blindly using fbcon_registered_fb[0], we use info_idx, set by
+ 	 * fbcon_fb_registered();
+ 	 */
+ 	info = fbcon_registered_fb[info_idx];
 -- 
 2.39.5
 
