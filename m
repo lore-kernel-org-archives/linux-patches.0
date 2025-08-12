@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A46188715;
-	Tue, 12 Aug 2025 18:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D476BB5B;
+	Tue, 12 Aug 2025 18:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023382; cv=none; b=hb/jF4NXud/HCJ/TF37wCvf9gAyGJCCsOOMFofnCl911Ol1L+2Kn3SQli/H1Zsmn+TZG/Prr0Kf1vxmuegiJmFqDs5Gk0tih0pDP+nTL4WUKGPX2ko32dkgtsjpwe/cuDP5tg5RgrRNOBj5bt1o4WoCCSHyhDmHOjIjufltD6cg=
+	t=1755023386; cv=none; b=GDiymHrtUMLy1iyehh6itZbXnL+69AIBwkZ0oBxN2FlLeXSkUkyKX0/FEFf5IMiIwUtH47phitr+J2Rp/bXY8h19WKSxNGWoxIleHDhaQUMPoc+lU4brYrGyb9OvctSqwf0uGwkLRNIJm25ZBHFTQB9Vt4NYqra9vrhMX+EB32w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023382; c=relaxed/simple;
-	bh=1liWup676ECM/WZDdh3a+Vdrw7a4RY3ElJ8/gGGNabE=;
+	s=arc-20240116; t=1755023386; c=relaxed/simple;
+	bh=EznXsfCJZh+y9395wBjrBDI10+r8QC8COSPGobHgLPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=du4nx1dPZOx4glKc6J8niYuUMHTl5cKlrjydzX/223rtcDsN+fC1OyHuXzahZYtRXAJK5vv700DPMc229cchSegdVZHJ5O7MJSEw00GlM4MK4urW7IGj2sMO9kYthIAr7chNvQ73uMW/+8GU5F6/0GS1W3p+5RHdHPN5LlWYL1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAYGYs1/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hh12KBfASA3n0NsYH8gMuvA1X6ZQ9r6jPxO1t7DUltp8tSn1hMZy+fGzNORzBt8jkRqOcP02LExZrO2hO8qSap6CivHJIlfxLzKhe6BzJ6c/HlmyekooU+VRXdIO3oAKKeezwXZE4clfMIsdjY/7M1ns9WYy19oy3naUFyVKmhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGpykUz4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAYGYs1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D7C4CEF0;
-	Tue, 12 Aug 2025 18:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGpykUz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71536C4CEF0;
+	Tue, 12 Aug 2025 18:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023382;
-	bh=1liWup676ECM/WZDdh3a+Vdrw7a4RY3ElJ8/gGGNabE=;
+	s=korg; t=1755023385;
+	bh=EznXsfCJZh+y9395wBjrBDI10+r8QC8COSPGobHgLPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAYGYs1/0WIWgxWYJqKPrDnMHgiPly9d8TrcZSEgOu/DqH6SNDPzlrMvLPpvv7UyY
-	 Q3B/b/EpyURayKAEr87YbRF3SZRDG6/NXq5U+SUslczLmHkxJRpFGPEqvFJz8me1EP
-	 BF6BxYwYYQUQwP9rnPhTAifQUmhxcZp8a/tk1ecY=
+	b=EGpykUz4H7O+EFZMS/5F/88AGDG1z2OIUr2EfaBVUk43DWxz63ydFe/0nHZM6/b6w
+	 RDzHzZe49O+cTQNUjs+y8yOjhe1bagTR4tvmXgytfIpku1NwmzKCheUh99qUzc3vQf
+	 jcT3maqMs+mWLcKOkZ7s2ohP7cQxid+siaWLzMCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Youling Tang <tangyouling@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Kees Cook <kees@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 030/627] sched/task_stack: Add missing const qualifier to end_of_stack()
-Date: Tue, 12 Aug 2025 19:25:25 +0200
-Message-ID: <20250812173420.473831323@linuxfoundation.org>
+Subject: [PATCH 6.16 031/627] ASOC: rockchip: fix capture stream handling in rockchip_sai_xfer_stop
+Date: Tue, 12 Aug 2025 19:25:26 +0200
+Message-ID: <20250812173420.511793054@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,48 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 32e42ab9fc88a884435c27527a433f61c4d2b61b ]
+[ Upstream commit 5dc302d00807b8916992dd25a7a22b78d07dcd03 ]
 
-Add missing const qualifier to the non-CONFIG_THREAD_INFO_IN_TASK
-version of end_of_stack() to match the CONFIG_THREAD_INFO_IN_TASK
-version. Fixes a warning with CONFIG_KSTACK_ERASE=y on archs that don't
-select THREAD_INFO_IN_TASK (such as LoongArch):
+Correcting the capture stream handling which was incorrectly setting
+playback=true for capture streams.
 
-  error: passing 'const struct task_struct *' to parameter of type 'struct task_struct *' discards qualifiers
+The original code mistakenly set playback=true for capture streams,
+causing incorrect behavior.
 
-The stackleak_task_low_bound() function correctly uses a const task
-parameter, but the legacy end_of_stack() prototype didn't like that.
-
-Build tested on loongarch (with CONFIG_KSTACK_ERASE=y) and m68k
-(with CONFIG_DEBUG_STACK_USAGE=y).
-
-Fixes: a45728fd4120 ("LoongArch: Enable HAVE_ARCH_STACKLEAK")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/all/20250726004313.GA3650901@ax162
-Cc: Youling Tang <tangyouling@kylinos.cn>
-Cc: Huacai Chen <chenhuacai@loongson.cn>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: cc78d1eaabad ("ASoC: rockchip: add Serial Audio Interface (SAI) driver")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Tested-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Acked-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Link: https://patch.msgid.link/c374aae92c177aaf42c0f1371eccdbc7e9615786.1749201126.git.xiaopei01@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/task_stack.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/rockchip/rockchip_sai.c | 16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/sched/task_stack.h b/include/linux/sched/task_stack.h
-index 85c5a6392e02..1fab7e9043a3 100644
---- a/include/linux/sched/task_stack.h
-+++ b/include/linux/sched/task_stack.h
-@@ -53,7 +53,7 @@ static inline void setup_thread_stack(struct task_struct *p, struct task_struct
-  * When the stack grows up, this is the highest address.
-  * Beyond that position, we corrupt data on the next page.
-  */
--static inline unsigned long *end_of_stack(struct task_struct *p)
-+static inline unsigned long *end_of_stack(const struct task_struct *p)
+diff --git a/sound/soc/rockchip/rockchip_sai.c b/sound/soc/rockchip/rockchip_sai.c
+index 602f1ddfad00..916af63f1c2c 100644
+--- a/sound/soc/rockchip/rockchip_sai.c
++++ b/sound/soc/rockchip/rockchip_sai.c
+@@ -378,19 +378,9 @@ static void rockchip_sai_xfer_start(struct rk_sai_dev *sai, int stream)
+ static void rockchip_sai_xfer_stop(struct rk_sai_dev *sai, int stream)
  {
- #ifdef CONFIG_STACK_GROWSUP
- 	return (unsigned long *)((unsigned long)task_thread_info(p) + THREAD_SIZE) - 1;
+ 	unsigned int msk = 0, val = 0, clr = 0;
+-	bool playback;
+-	bool capture;
+-
+-	if (stream < 0) {
+-		playback = true;
+-		capture = true;
+-	} else if (stream == SNDRV_PCM_STREAM_PLAYBACK) {
+-		playback = true;
+-		capture = false;
+-	} else {
+-		playback = true;
+-		capture = false;
+-	}
++	bool capture = stream == SNDRV_PCM_STREAM_CAPTURE || stream < 0;
++	bool playback = stream == SNDRV_PCM_STREAM_PLAYBACK || stream < 0;
++	/* could be <= 0 but we don't want to depend on enum values */
+ 
+ 	if (playback) {
+ 		msk |= SAI_XFER_TXS_MASK;
 -- 
 2.39.5
 
