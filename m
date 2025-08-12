@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A52F221FAC;
-	Tue, 12 Aug 2025 17:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13E2221FAC;
+	Tue, 12 Aug 2025 17:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020931; cv=none; b=npTC0t4TZoF+bufHFAg198ffoIcfmeNXZ3Dn8SbEvfpWBv5IQFrN8xTHBWqFWi7caGAOf2tUWT0qGG1iBjH2FW5LgU8eLn6HEge5mJEXCCYZ3qD5IFfD+2wKfSoWnUsLohp/YVorC90W6oxmtP0k5SHCBE89e7WpRZbYhnNiFOY=
+	t=1755020935; cv=none; b=A7s/Oz84uNj25/eE6m20kK07fSyPSRfIDrPRNqiDnAiZqwzIuHRco9Uv03AoVlzWabpf51NMzUof1xWsJdVxSMTCIe9nvb5HO/yvAzKuftCjNX1xZDH5i05fTWRF5wxh6C6cmvjQJqON6dy+9Efm0eZF2dCHBezE6/Abiq5k87c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020931; c=relaxed/simple;
-	bh=I3JCQeZePTWV11hy8GMK2Cn3q8Pf+3VgtmGP4KNSgco=;
+	s=arc-20240116; t=1755020935; c=relaxed/simple;
+	bh=K10sw1N5zoVri5KnROM7peCi1JqX9w7fb0fsmw3QbhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R5Ox3zzj/7DC5qIbgzNJPsoYNcvhREGsNMSpqo2z9EDgHfu5El8CIzQhzeFY6haoBGKtSbojPcGpLPzYZrOjKevxP4LCr/PpziDZhfCXzrYmZOAqQPxyDCo2wd39ReQ9yf8MH+C66JwLnL6a4HpZ/6NjCf0ns6mNKUMLsZcWiKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znlcQ5ds; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K8qO7wrLwC/jPZwi6k6OgeU3WzSLuwjJxVa0vAh2kRaMknleWYr5gSMuCr5VG0fD6E9k0edTehhoX+2sDP7cuq9Ez2dRKRmQsqzWOMjFyiVYVspkkd5i+fH1EOjNk+HwQdkkUsdBCmtTJnWNoJIT1WDdQcquKRxKVHfoPDoWDH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPf1N+uS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znlcQ5ds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0F1C4CEF0;
-	Tue, 12 Aug 2025 17:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPf1N+uS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFCFC4CEF0;
+	Tue, 12 Aug 2025 17:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020931;
-	bh=I3JCQeZePTWV11hy8GMK2Cn3q8Pf+3VgtmGP4KNSgco=;
+	s=korg; t=1755020934;
+	bh=K10sw1N5zoVri5KnROM7peCi1JqX9w7fb0fsmw3QbhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znlcQ5ds3R8K5I9J6Y6GyWNyr1X2FbwWbP/mCGSJIwbeAbG3Ktt2SroSpPT8zOE+2
-	 UlrevLWFDrzcER7RBvnNtMcFQiisWUTmPmPaK1tf66eDw16axCejpFNOWYbQMvZsI3
-	 xzq0uS0JJjB3HryRmI3hRC/4jpVQ7UYkrQ83ntns=
+	b=vPf1N+uSsN+yToP8ALPog3UAT/sl6FBS1Mgj3MGsWXw3Vfu8hLJxeBSZbUpf12lM+
+	 9uitQ9zH7YgNdmPhGr9aSddXKQaIv6wszm/LEOM3Gwiq4Ld1+5BCPT8Y/dQRvfpCEw
+	 TLDlwNAKtRq+4640PqVmR2YZieUKx6IiChiXaiDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	syzbot+8c0bc9f818702ff75b76@syzkaller.appspotmail.com,
+	Yangtao Li <frank.li@vivo.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/253] rtc: nct3018y: fix incorrect maximum clock rate handling
-Date: Tue, 12 Aug 2025 19:29:36 +0200
-Message-ID: <20250812172956.786806305@linuxfoundation.org>
+Subject: [PATCH 6.6 012/262] hfsplus: remove mutex_lock check in hfsplus_free_extents
+Date: Tue, 12 Aug 2025 19:26:40 +0200
+Message-ID: <20250812172953.507489301@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 437c59e4b222cd697b4cf95995d933e7d583c5f1 ]
+[ Upstream commit fcb96956c921f1aae7e7b477f2435c56f77a31b4 ]
 
-When nct3018y_clkout_round_rate() is called with a requested rate higher
-than the highest supported rate, it currently returns 0, which disables
-the clock. According to the clk API, round_rate() should instead return
-the highest supported rate. Update the function to return the maximum
-supported rate in this case.
+Syzbot reported an issue in hfsplus filesystem:
 
-Fixes: 5adbaed16cc63 ("rtc: Add NCT3018Y real time clock driver")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-3-33140bb2278e@redhat.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 4400 at fs/hfsplus/extents.c:346
+	hfsplus_free_extents+0x700/0xad0
+Call Trace:
+<TASK>
+hfsplus_file_truncate+0x768/0xbb0 fs/hfsplus/extents.c:606
+hfsplus_write_begin+0xc2/0xd0 fs/hfsplus/inode.c:56
+cont_expand_zero fs/buffer.c:2383 [inline]
+cont_write_begin+0x2cf/0x860 fs/buffer.c:2446
+hfsplus_write_begin+0x86/0xd0 fs/hfsplus/inode.c:52
+generic_cont_expand_simple+0x151/0x250 fs/buffer.c:2347
+hfsplus_setattr+0x168/0x280 fs/hfsplus/inode.c:263
+notify_change+0xe38/0x10f0 fs/attr.c:420
+do_truncate+0x1fb/0x2e0 fs/open.c:65
+do_sys_ftruncate+0x2eb/0x380 fs/open.c:193
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+To avoid deadlock, Commit 31651c607151 ("hfsplus: avoid deadlock
+on file truncation") unlock extree before hfsplus_free_extents(),
+and add check wheather extree is locked in hfsplus_free_extents().
+
+However, when operations such as hfsplus_file_release,
+hfsplus_setattr, hfsplus_unlink, and hfsplus_get_block are executed
+concurrently in different files, it is very likely to trigger the
+WARN_ON, which will lead syzbot and xfstest to consider it as an
+abnormality.
+
+The comment above this warning also describes one of the easy
+triggering situations, which can easily trigger and cause
+xfstest&syzbot to report errors.
+
+[task A]			[task B]
+->hfsplus_file_release
+  ->hfsplus_file_truncate
+    ->hfs_find_init
+      ->mutex_lock
+    ->mutex_unlock
+				->hfsplus_write_begin
+				  ->hfsplus_get_block
+				    ->hfsplus_file_extend
+				      ->hfsplus_ext_read_extent
+				        ->hfs_find_init
+					  ->mutex_lock
+    ->hfsplus_free_extents
+      WARN_ON(mutex_is_locked) !!!
+
+Several threads could try to lock the shared extents tree.
+And warning can be triggered in one thread when another thread
+has locked the tree. This is the wrong behavior of the code and
+we need to remove the warning.
+
+Fixes: 31651c607151f ("hfsplus: avoid deadlock on file truncation")
+Reported-by: syzbot+8c0bc9f818702ff75b76@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/00000000000057fa4605ef101c4c@google.com/
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250529061807.2213498-1-frank.li@vivo.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-nct3018y.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfsplus/extents.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/rtc/rtc-nct3018y.c b/drivers/rtc/rtc-nct3018y.c
-index 108eced8f003..43b01f3e640a 100644
---- a/drivers/rtc/rtc-nct3018y.c
-+++ b/drivers/rtc/rtc-nct3018y.c
-@@ -342,7 +342,7 @@ static long nct3018y_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
- 		if (clkout_rates[i] <= rate)
- 			return clkout_rates[i];
+diff --git a/fs/hfsplus/extents.c b/fs/hfsplus/extents.c
+index 9c51867dddc5..f6ac98b0d44f 100644
+--- a/fs/hfsplus/extents.c
++++ b/fs/hfsplus/extents.c
+@@ -342,9 +342,6 @@ static int hfsplus_free_extents(struct super_block *sb,
+ 	int i;
+ 	int err = 0;
  
--	return 0;
-+	return clkout_rates[0];
- }
- 
- static int nct3018y_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
+-	/* Mapping the allocation file may lock the extent tree */
+-	WARN_ON(mutex_is_locked(&HFSPLUS_SB(sb)->ext_tree->tree_lock));
+-
+ 	hfsplus_dump_extent(extent);
+ 	for (i = 0; i < 8; extent++, i++) {
+ 		count = be32_to_cpu(extent->block_count);
 -- 
 2.39.5
 
