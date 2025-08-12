@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81062DE1E2;
-	Tue, 12 Aug 2025 18:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3CB1C84C7;
+	Tue, 12 Aug 2025 18:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021880; cv=none; b=fo4ati9var2MWHEOoaavDKBj3TZuBOgKWdqDlvQgtYtvJ4yPJBsBIowz+Yqa9DZkG9wIXF24+95mfdfLSNrsE5s80j7XbzxlioU5Fia6PjFbqdtkSJwV+MdAPA9MFD1z4xVxBfND5fYJOHMpUs8H18nyABForJso02xKRl3XKW8=
+	t=1755021883; cv=none; b=LZTWQbQ59hjgj5u/WXmas2Oy1eh17tv2/xCxc1eqr1CXJiM0yow5TWIPDTSYYvMR1gJ1cVoUXfuHXyhVw1gMMsb+F7Z6piJ5x2kIgP3cmCIihSzRVCLhqNsDcPv8YKsaJJNIM1JTdVy71NiXsOGQuWzdqInUQZT/wQGZGDUvutQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021880; c=relaxed/simple;
-	bh=ebCIkZSVkBW1bW4yNPy0zan7wbjVW8DTuNsb2LPR354=;
+	s=arc-20240116; t=1755021883; c=relaxed/simple;
+	bh=FvHvCJrvL7qH4FeqANv1/00UJbyALogmeakNG7iwLMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t25PXu8zjepCZf9usZ6Zt5MoHoa5AvPEMzppRAGcp/1t6k38P1u8tFeJoDW371ZMQt5CdAsT8ZnIYEaV9flUSMStNezGV55UQZv5IXxPMCnU+33CnWj8b2cCTu/HpsvObV/gi4fbzU+qD+7kgU7qGYSIAjUmyJwBwH3wyNkU4y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yybvAKfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LIObl0W0mpl9db9CdcoEh6ceQ+2AcOEdDCw9lBdZgUc7Fc2TKZkAF0wQxjJQU0EYT7Jgy2JSyZFCsI96zw0YUvbsv6+QbyKYDtf4uHYlPZY9406kd/aaU7l4iyTNOaj1MaudXMjzYXQ3oMFdLAe5Dp/nYgf0r++wGiMsLRZW4LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xAWv0Ed; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yybvAKfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED51BC4CEF7;
-	Tue, 12 Aug 2025 18:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xAWv0Ed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F4FC4CEF0;
+	Tue, 12 Aug 2025 18:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021880;
-	bh=ebCIkZSVkBW1bW4yNPy0zan7wbjVW8DTuNsb2LPR354=;
+	s=korg; t=1755021883;
+	bh=FvHvCJrvL7qH4FeqANv1/00UJbyALogmeakNG7iwLMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yybvAKfEuJYi8jIBdgAAijiL/+4RcjKIAupfNgCNL9HWgkZuKirwBlF3ydvQLh2SX
-	 l38rerQ9GStuvBcNWY0ON76XvLlwPOeDLxYpkSv86GXxEzvxq7EXZLadY09G80bSWE
-	 zz0Bw71eGggVS7ZJWqSs+KXI34+7Gp1GchzH9GkI=
+	b=1xAWv0EdqhVK+Dnb1EISu6kSZ7wxCpdAMhj6ErMirvuNnPYrCCIOrxf7NgxCVA01N
+	 5VdUDwYUvSxn8msMgjjCEuhW8bOo8qkN7MJjPybQpJgkmEBiagqN+dApk1EFS+nETD
+	 01VD3eZtYbYDMEP97cMTNIttou+pjy5ly3yWFTW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhong Jiawei <zhongjiawei1@huawei.com>,
-	Chen Ridong <chenridong@huawei.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 252/262] sched,freezer: Remove unnecessary warning in __thaw_task
-Date: Tue, 12 Aug 2025 19:30:40 +0200
-Message-ID: <20250812173003.880715224@linuxfoundation.org>
+	Zenm Chen <zenmchen@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 253/262] Bluetooth: btusb: Add USB ID 3625:010b for TP-LINK Archer TX10UB Nano
+Date: Tue, 12 Aug 2025 19:30:41 +0200
+Message-ID: <20250812173003.920472676@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -51,74 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-commit 9beb8c5e77dc10e3889ff5f967eeffba78617a88 upstream.
+commit d9da920233ec85af8b9c87154f2721a7dc4623f5 upstream.
 
-Commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if not
-frozen") modified the cgroup_freezing() logic to verify that the FROZEN
-flag is not set, affecting the return value of the freezing() function,
-in order to address a warning in __thaw_task.
+Add USB ID 3625:010b for TP-LINK Archer TX10UB Nano which is based on
+a Realtek RTL8851BU chip.
 
-A race condition exists that may allow tasks to escape being frozen. The
-following scenario demonstrates this issue:
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below:
 
-CPU 0 (get_signal path)		CPU 1 (freezer.state reader)
-try_to_freeze			read freezer.state
-__refrigerator			freezer_read
-				update_if_frozen
-WRITE_ONCE(current->__state, TASK_FROZEN);
-				...
-				/* Task is now marked frozen */
-				/* frozen(task) == true */
-				/* Assuming other tasks are frozen */
-				freezer->state |= CGROUP_FROZEN;
-/* freezing(current) returns false */
-/* because cgroup is frozen (not freezing) */
-break out
-__set_current_state(TASK_RUNNING);
-/* Bug: Task resumes running when it should remain frozen */
+T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 9 Spd=480 MxCh= 0
+D: Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs= 1
+P: Vendor=3625 ProdID=010b Rev= 0.00
+S: Manufacturer=Realtek
+S: Product=802.11ax WLAN Adapter
+S: SerialNumber=00e04c000001
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
+A: FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=1ms
+E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 0 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 0 Ivl=1ms
+I: If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 9 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 9 Ivl=1ms
+I: If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 17 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 17 Ivl=1ms
+I: If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 25 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 25 Ivl=1ms
+I: If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 33 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 33 Ivl=1ms
+I: If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 49 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 49 Ivl=1ms
+I: If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 63 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=rtl8851bu
+E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-The existing !frozen(p) check in __thaw_task makes the
-WARN_ON_ONCE(freezing(p)) warning redundant. Removing this warning enables
-reverting commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if
-not frozen") to resolve the issue.
-
-This patch removes the warning from __thaw_task. A subsequent patch will
-revert commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if
-not frozen") to complete the fix.
-
-Reported-by: Zhong Jiawei<zhongjiawei1@huawei.com>
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/freezer.c |   15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ drivers/bluetooth/btusb.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/freezer.c
-+++ b/kernel/freezer.c
-@@ -196,18 +196,9 @@ static int __restore_freezer_state(struc
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -508,6 +508,10 @@ static const struct usb_device_id quirks
+ 	{ USB_DEVICE(0x13d3, 0x3549), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
  
- void __thaw_task(struct task_struct *p)
- {
--	unsigned long flags;
--
--	spin_lock_irqsave(&freezer_lock, flags);
--	if (WARN_ON_ONCE(freezing(p)))
--		goto unlock;
--
--	if (!frozen(p) || task_call_func(p, __restore_freezer_state, NULL))
--		goto unlock;
--
--	wake_up_state(p, TASK_FROZEN);
--unlock:
--	spin_unlock_irqrestore(&freezer_lock, flags);
-+	guard(spinlock_irqsave)(&freezer_lock);
-+	if (frozen(p) && !task_call_func(p, __restore_freezer_state, NULL))
-+		wake_up_state(p, TASK_FROZEN);
- }
- 
- /**
++	/* Realtek 8851BU Bluetooth devices */
++	{ USB_DEVICE(0x3625, 0x010b), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
++
+ 	/* Realtek 8852AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0x2852), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
 
 
