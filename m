@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1996223DFF;
-	Tue, 12 Aug 2025 19:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AB620E023;
+	Tue, 12 Aug 2025 19:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026259; cv=none; b=qo+uKUkeDcGQN0TjT5fwhS8XFZZuyFCdroTsYb/EhOjGkzgea0Jz3vE2UOJ90klbpebcfRcyDAtbFlOyrMywICBe2ilrFrfB8+DDKFGxO9bcRkxvTQ7jUViJWPBTXW3wuLiE3grEpknk+e/fx4x1UB/J0pIsDrxRyF1yDMxSIQU=
+	t=1755026262; cv=none; b=Q/b1mwWrKXSYBJe3cTtOZzccBXemKgoQcVUtqk3UVXyzK+SjyMeJ2y4BdC9sYMg+h16Bxv3fdxyqNayeDGfzbcCFX7OZQnoAjn+m/27LssWStpfFmQx3d8lqzoj8890R+ViF874z1Gtz8VDuIqcW8qsPLjtaKoHrgWqnUqa98f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026259; c=relaxed/simple;
-	bh=UEGSBdk266j/ehmziMfQD5L0jCEWr1G2Be9wsMDX2S8=;
+	s=arc-20240116; t=1755026262; c=relaxed/simple;
+	bh=kcr4WfbjVxDmSnaa7rFQ9NuFdefWVu/EMRUQpxjLW3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suiUghhMku3tFvYSCSF6q1WrmhvGOfbTnr+wWm7esyNCLRSzzeYTpf5ApLHH16qmeF+l1WiSP6URrqETfKKI/FylfaPx6UfiPLKHssit3VQAY0pxFBHKMoTXxXbJoAHAUJ8EzcTaMKF4JKEJpY1VUbkyjGi7aofhZLD34t+oCaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNgH0upq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EhyLnuMkagsVx6C9IJDd6yxFOnYuJzya+AifZt7DyHOk6Ss3E1cyDdvF4NCMheMXoa7mDNnM3JX2fs8vCYuyCak0Xe3SpHi3DaOkZ6XralS/bGjnajSumqk7Sw/5hJ/du5i7xFYesED6TljZHVXwRBj2pc4kZCawNobwuINeQoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L57jo2Yc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNgH0upq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3F3C4CEF0;
-	Tue, 12 Aug 2025 19:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L57jo2Yc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA37C4CEF0;
+	Tue, 12 Aug 2025 19:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026255;
-	bh=UEGSBdk266j/ehmziMfQD5L0jCEWr1G2Be9wsMDX2S8=;
+	s=korg; t=1755026262;
+	bh=kcr4WfbjVxDmSnaa7rFQ9NuFdefWVu/EMRUQpxjLW3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNgH0upqDbKK3WA3A58Mp3wmRrqY3Nfv6pGZ8uu1I6BCDXKw0ZrGL9mV1VXzf/1N3
-	 KCuqfX6h9f/qsmqr/gz/apeHYHGxM01KaEsnlZYjCfsLR8PkCIT6JVqo5PtLqsGYs9
-	 ZAR4gxNw2Xj+4Ljiux+9YGxnW7yg6osPp9CfNNPE=
+	b=L57jo2YcNZsqFuOW138VE1r2hNlTgeOPUv3N2x8PfgCsjJ2t++Llx2u+r+uqJ32DR
+	 JaLDTPtI/Rsb/4jZwNII3Nfa7dOXMWXjjf/6jOTbF+Zc99oMahA/IcpWHf8gbkDpTm
+	 KS72WrCENXYpXj/JxKbR6/7RRYITm9twCMUB4hE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Fourier <fourier.thomas@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 283/480] scsi: ibmvscsi_tgt: Fix dma_unmap_sg() nents value
-Date: Tue, 12 Aug 2025 19:48:11 +0200
-Message-ID: <20250812174409.101199427@linuxfoundation.org>
+Subject: [PATCH 6.15 285/480] scsi: mvsas: Fix dma_unmap_sg() nents value
+Date: Tue, 12 Aug 2025 19:48:13 +0200
+Message-ID: <20250812174409.186893519@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -53,44 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 023a293b9cd0bb86a9b50cd7688a3d9d266826db ]
+[ Upstream commit 0141618727bc929fe868153d21797f10ce5bef3f ]
 
 The dma_unmap_sg() functions should be called with the same nents as the
 dma_map_sg(), not the value the map function returned.
 
-Fixes: 88a678bbc34c ("ibmvscsis: Initial commit of IBM VSCSI Tgt Driver")
+Fixes: b5762948263d ("[SCSI] mvsas: Add Marvell 6440 SAS/SATA driver")
 Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250630111803.94389-2-fourier.thomas@gmail.com
+Link: https://lore.kernel.org/r/20250627134822.234813-2-fourier.thomas@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ibmvscsi_tgt/libsrp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/mvsas/mv_sas.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/ibmvscsi_tgt/libsrp.c b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-index 8a0e28aec928..0ecad398ed3d 100644
---- a/drivers/scsi/ibmvscsi_tgt/libsrp.c
-+++ b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-@@ -184,7 +184,8 @@ static int srp_direct_data(struct ibmvscsis_cmd *cmd, struct srp_direct_buf *md,
- 	err = rdma_io(cmd, sg, nsg, md, 1, dir, len);
+diff --git a/drivers/scsi/mvsas/mv_sas.c b/drivers/scsi/mvsas/mv_sas.c
+index 52ac10226cb0..3f12096528b1 100644
+--- a/drivers/scsi/mvsas/mv_sas.c
++++ b/drivers/scsi/mvsas/mv_sas.c
+@@ -818,7 +818,7 @@ static int mvs_task_prep(struct sas_task *task, struct mvs_info *mvi, int is_tmf
+ 	dev_printk(KERN_ERR, mvi->dev, "mvsas prep failed[%d]!\n", rc);
+ 	if (!sas_protocol_ata(task->task_proto))
+ 		if (n_elem)
+-			dma_unmap_sg(mvi->dev, task->scatter, n_elem,
++			dma_unmap_sg(mvi->dev, task->scatter, task->num_scatter,
+ 				     task->data_dir);
+ prep_out:
+ 	return rc;
+@@ -864,7 +864,7 @@ static void mvs_slot_task_free(struct mvs_info *mvi, struct sas_task *task,
+ 	if (!sas_protocol_ata(task->task_proto))
+ 		if (slot->n_elem)
+ 			dma_unmap_sg(mvi->dev, task->scatter,
+-				     slot->n_elem, task->data_dir);
++				     task->num_scatter, task->data_dir);
  
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- 	return err;
- }
-@@ -256,7 +257,8 @@ static int srp_indirect_data(struct ibmvscsis_cmd *cmd, struct srp_cmd *srp_cmd,
- 	err = rdma_io(cmd, sg, nsg, md, nmd, dir, len);
- 
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- free_mem:
- 	if (token && dma_map) {
+ 	switch (task->task_proto) {
+ 	case SAS_PROTOCOL_SMP:
 -- 
 2.39.5
 
