@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D66721ABD0;
-	Tue, 12 Aug 2025 19:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB86C21A43B;
+	Tue, 12 Aug 2025 19:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026354; cv=none; b=jd2VzogPb59Wc/rjg3HEKv8bFj4RpfCKAVTaWh3xtfwoydfTtxsoW2yNoPJILON+Md9lzXnanvwvU+kKA5X4Evoqe0+mcZfGCv3pEo3ckduSUe5uMvG1Op8HTDP2G2JOHFFmelfw5XlCt7oJYhhAVMr6MW7Np+UiqGk69DdRdTk=
+	t=1755026357; cv=none; b=KjvAHPHNr9kZVey1JYwV8UrqhThuF8UyUB7jzVjzyxJwm3XEVwubA2UAnHdtlKCkp2svBx/zfvgJHzvyuhBejAi0Oz8L1PO35VSNlc3z86f3QxpXRNtCZaFdkmOq5Qi1fN8aOAHPptl93PVPfALaaShhSDfEKMU4LKKrLI5CWUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026354; c=relaxed/simple;
-	bh=ttZ5Vhdun35VTpVsaRJm6UaqMEv4QKhfno9sBv20TP4=;
+	s=arc-20240116; t=1755026357; c=relaxed/simple;
+	bh=sDKVnBAWw+VEjJlwU6qbIAbSYDnFekPiS8cxhoWJ6YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+8TkaxxtrygERQ47TCCAIYiUhEOu9KnAtzZRJAAmesBvufdPFNdZSG3QV428Rm1/0HcgPCVX6cxqeWj0IjjGX3w7GieVXn1EcqidX+X0knRZel/wpu4Nv0eFLFNtQX13OCvcWs84SlKk/sfvx7SX0gkT62f59k25Q2VgGQIML0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbdnZWAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWeVnE6Z4REafqGXBPsYGo0KS/No/qESvlaDaYONmk9fbcaLPkoDEtzFc+KpJ5XqiG5hPJ4Kb9+XknVBx2AyFg3h/0nSJTGH531mjI+sK9+tmtH9nUCbeZU9AdbyY4gJE+6jQoDfQbWH1R7E9mKWcSmN56nfGchYkNicYKqPoBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrTo1vCL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbdnZWAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9956C4CEF0;
-	Tue, 12 Aug 2025 19:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrTo1vCL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2913DC4CEF0;
+	Tue, 12 Aug 2025 19:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026354;
-	bh=ttZ5Vhdun35VTpVsaRJm6UaqMEv4QKhfno9sBv20TP4=;
+	s=korg; t=1755026357;
+	bh=sDKVnBAWw+VEjJlwU6qbIAbSYDnFekPiS8cxhoWJ6YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbdnZWASdYt8jJdaT4/WdFP2wwHS9Cf5X2MJB/im4s7s7y9E20/VTbAB6EdNbc8cJ
-	 MkptmaBlWKRKokAFElin1AUqI36g0UKvx52zf4LTP0KjH1nUAe89GVN0p3PhRc7zoI
-	 i/wXl3YDcqGQ6Sh+KPAIUy5/6vYSl4lEpiebbryI=
+	b=FrTo1vCLFoMik4HabMRim9gnz9Vd/XvBYWbeCrtH84BNrDzOeIduF9SrSNSqBCIUw
+	 4uP2DBa7WDzGc2bUUeicPo82D72B3coZJhtcrWrwDIU6QSzwXYnV+PaIccsgunrKqv
+	 SKrdF6GgIbmqsWD+w8t+aiUdHaHzDS+tlygi+2gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ahsan Atta <ahsan.atta@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 312/480] crypto: qat - fix DMA direction for compression on GEN2 devices
-Date: Tue, 12 Aug 2025 19:48:40 +0200
-Message-ID: <20250812174410.301883001@linuxfoundation.org>
+Subject: [PATCH 6.15 313/480] crypto: qat - fix seq_file position update in adf_ring_next()
+Date: Tue, 12 Aug 2025 19:48:41 +0200
+Message-ID: <20250812174410.343501257@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -54,89 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit d41d75fe1b751ee6b347bf1cb1cfe9accc4fcb12 ]
+[ Upstream commit 6908c5f4f066a0412c3d9a6f543a09fa7d87824b ]
 
-QAT devices perform an additional integrity check during compression by
-decompressing the output. Starting from QAT GEN4, this verification is
-done in-line by the hardware. However, on GEN2 devices, the hardware
-reads back the compressed output from the destination buffer and performs
-a decompression operation using it as the source.
+The `adf_ring_next()` function in the QAT debug transport interface
+fails to correctly update the position index when reaching the end of
+the ring elements. This triggers the following kernel warning when
+reading ring files, such as
+/sys/kernel/debug/qat_c6xx_<D:B:D:F>/transport/bank_00/ring_00:
 
-In the current QAT driver, destination buffers are always marked as
-write-only. This is incorrect for QAT GEN2 compression, where the buffer
-is also read during verification. Since commit 6f5dc7658094
-("iommu/vt-d: Restore WO permissions on second-level paging entries"),
-merged in v6.16-rc1, write-only permissions are strictly enforced, leading
-to DMAR errors when using QAT GEN2 devices for compression, if VT-d is
-enabled.
+   [27725.022965] seq_file: buggy .next function adf_ring_next [intel_qat] did not update position index
 
-Mark the destination buffers as DMA_BIDIRECTIONAL. This ensures
-compatibility with GEN2 devices, even though it is not required for
-QAT GEN4 and later.
+Ensure that the `*pos` index is incremented before returning NULL when
+after the last element in the ring is found, satisfying the seq_file API
+requirements and preventing the warning.
 
+Fixes: a672a9dc872e ("crypto: qat - Intel(R) QAT transport code")
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Fixes: cf5bb835b7c8 ("crypto: qat - fix DMA transfer direction")
 Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_bl.c          | 6 +++---
- drivers/crypto/intel/qat/qat_common/qat_compression.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_transport_debug.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_bl.c b/drivers/crypto/intel/qat/qat_common/qat_bl.c
-index 5e4dad4693ca..9b2338f58d97 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_bl.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_bl.c
-@@ -38,7 +38,7 @@ void qat_bl_free_bufl(struct adf_accel_dev *accel_dev,
- 		for (i = 0; i < blout->num_mapped_bufs; i++) {
- 			dma_unmap_single(dev, blout->buffers[i].addr,
- 					 blout->buffers[i].len,
--					 DMA_FROM_DEVICE);
-+					 DMA_BIDIRECTIONAL);
- 		}
- 		dma_unmap_single(dev, blpout, sz_out, DMA_TO_DEVICE);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c b/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
+index e2dd568b87b5..621b5d3dfcef 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
+@@ -31,8 +31,10 @@ static void *adf_ring_next(struct seq_file *sfile, void *v, loff_t *pos)
+ 	struct adf_etr_ring_data *ring = sfile->private;
  
-@@ -162,7 +162,7 @@ static int __qat_bl_sgl_to_bufl(struct adf_accel_dev *accel_dev,
- 			}
- 			buffers[y].addr = dma_map_single(dev, sg_virt(sg) + left,
- 							 sg->length - left,
--							 DMA_FROM_DEVICE);
-+							 DMA_BIDIRECTIONAL);
- 			if (unlikely(dma_mapping_error(dev, buffers[y].addr)))
- 				goto err_out;
- 			buffers[y].len = sg->length;
-@@ -204,7 +204,7 @@ static int __qat_bl_sgl_to_bufl(struct adf_accel_dev *accel_dev,
- 		if (!dma_mapping_error(dev, buflout->buffers[i].addr))
- 			dma_unmap_single(dev, buflout->buffers[i].addr,
- 					 buflout->buffers[i].len,
--					 DMA_FROM_DEVICE);
-+					 DMA_BIDIRECTIONAL);
- 	}
+ 	if (*pos >= (ADF_SIZE_TO_RING_SIZE_IN_BYTES(ring->ring_size) /
+-		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size)))
++		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size))) {
++		(*pos)++;
+ 		return NULL;
++	}
  
- 	if (!buf->sgl_dst_valid)
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_compression.c b/drivers/crypto/intel/qat/qat_common/qat_compression.c
-index 2c3aa89b316a..cf94ba3011d5 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_compression.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_compression.c
-@@ -205,7 +205,7 @@ static int qat_compression_alloc_dc_data(struct adf_accel_dev *accel_dev)
- 	if (!obuff)
- 		goto err;
- 
--	obuff_p = dma_map_single(dev, obuff, ovf_buff_sz, DMA_FROM_DEVICE);
-+	obuff_p = dma_map_single(dev, obuff, ovf_buff_sz, DMA_BIDIRECTIONAL);
- 	if (unlikely(dma_mapping_error(dev, obuff_p)))
- 		goto err;
- 
-@@ -233,7 +233,7 @@ static void qat_free_dc_data(struct adf_accel_dev *accel_dev)
- 		return;
- 
- 	dma_unmap_single(dev, dc_data->ovf_buff_p, dc_data->ovf_buff_sz,
--			 DMA_FROM_DEVICE);
-+			 DMA_BIDIRECTIONAL);
- 	kfree_sensitive(dc_data->ovf_buff);
- 	kfree(dc_data);
- 	accel_dev->dc_data = NULL;
+ 	return ring->base_addr +
+ 		(ADF_MSG_SIZE_TO_BYTES(ring->msg_size) * (*pos)++);
 -- 
 2.39.5
 
