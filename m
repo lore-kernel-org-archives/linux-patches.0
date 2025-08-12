@@ -1,158 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB9E1E47AD;
-	Tue, 12 Aug 2025 19:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7EE2F90F1
+	for <patches@lists.linux.dev>; Tue, 12 Aug 2025 19:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026947; cv=none; b=kXAgj8aoIXMcPY4CXmml/q3H3kOTYSQIz+ogrJN9sIVzTa8AwhfEmKOS5/DBsoqWDLjxOOUa72qj1i855shWQvm98C+OZyqMhWxi3vl6wQMGd+v1qeEVQZECBGT0RDtzBTXycUZxqkPBdlil1nBC3F8M0D5uGG7XOWg/YhXiSgE=
+	t=1755028413; cv=none; b=afEO4o1RRWu1/QRh+F2V9mjs9vKWhA1I2O7iFw0etHwFGm/hJTd+gL78XVL8cnUKMfNoZSSMfiZ2kxruxlbaMBVckV5Dj2g3pMYt5wWhWI2OnJ45T6UJ+E2g/rNWoIyT/urQJPRopSQ/VTYW3FsJfR75n5qI28lXtSmawpaga88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026947; c=relaxed/simple;
-	bh=cJCC+pPSC/Bo/uZl57mS9lhnlfejCIok7Gp/O4683eE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJ8GjMs3eCaPdSRwzlsARp50/+pdQzoU1/vSXeCUfLvmn23AG/WGHEqmTi8/fG6Kpo9P6O4KqJyM7RdOhRiQprZP9NhVo4CnafDG2me43rwkwihto7+6jhoPECXvCAY0VDPiTVlwop/TSjRO04ZfruQqeMfx5Ln5XwbyU95q5zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6dJdp3M; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755028413; c=relaxed/simple;
+	bh=vhKEJdDCorgUHjle84atTRE7pJ5rUNqpQxJLE0r93UY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mam06iIQYOFq5vfqHGRS4uObX1ZtL6plVbOEbk3uD4C8baBeM8V+LHWkGD/rAuDK0NJ3nrMuZEJy7888uqK8+Hyy1gz7FqRUp6kIsr5Fg9m0A6wvaHDdIFifE4KR7GrFW0Ug9HZ79yWGPsmA7K4BeX1geIEJJVVpBLRPGbSgKQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gpFCqFoZ; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6dJdp3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9818CC4CEF0;
-	Tue, 12 Aug 2025 19:29:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026947;
-	bh=cJCC+pPSC/Bo/uZl57mS9lhnlfejCIok7Gp/O4683eE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p6dJdp3MNOQnDxoQy0ETQp4xEywTFSjGstBfcpOrF3QzZjePKSekMvDY8KNEcC/Oc
-	 NFw9mvMdCVolkeWeHi6qSgYYU0njy+cGOjopNRiasYymXdHVIJga0A/B6NDPz1Alz/
-	 W4K621CmvoCkRpmN0szH+kLPMWHiQPVy41UemxLs=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Akash Kumar <quic_akakum@quicinc.com>
-Subject: [PATCH 6.15 472/480] usb: gadget: uvc: Initialize frame-based format color matching descriptor
-Date: Tue, 12 Aug 2025 19:51:20 +0200
-Message-ID: <20250812174416.847102300@linuxfoundation.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
-References: <20250812174357.281828096@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gpFCqFoZ"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-242abc28161so9089985ad.1
+        for <patches@lists.linux.dev>; Tue, 12 Aug 2025 12:53:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755028411; x=1755633211; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xUy+WBIe8s5eG7yD9G+tniGamA+stC4Ks75UPKA0L7U=;
+        b=gpFCqFoZ2heUaM2EmAhz0ebQyMga9wU60rKZXLxpPjPBk4HToOAmd5lUbsawh/n7jB
+         jLrIi986NLQt+qL68TfUjklB7YwEpN3o+/iRe+h9pJewfvRAS0mhEZ+2Tt0Ain/WPXTm
+         u558slAgTjCY+BdNgB+nchfYDiGwfbn/3b8fvSfQvW30gNgl2exQDY4tBRTuefDvVleE
+         MeEHJl3KriElxYIEZWwotS2Am0CVoEi+DwdeMs7QIaEagaMqjNPYUS7fr2Bxa1XnswOS
+         EpetRYOnUa/JXjxFEzGP4KBujX8gx6lTgW/3+u/4HxWMh6iFhUkzDyxFJJUI6HUQce3q
+         NSJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755028411; x=1755633211;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xUy+WBIe8s5eG7yD9G+tniGamA+stC4Ks75UPKA0L7U=;
+        b=GlAqrWi26mqU0iv6osbwoVPcA87NfkbCXlDJZ/j2Up0dn4oa9kRjN31soF530wWqlq
+         bstPzzazxx6ETWd31Z1SV59d59UmgeHf10hFThiKaym2NDRfQ2l1nCFF1OgUswX4B3t2
+         8D0RdqqlTCaWdY1VK5eDytVy2awHN4s9HhvBZk5SrJRSKOTV78ZRKJcidgXu8c7EEgVH
+         z48DY6n0eFO0SPFrdhoeNgwoGRnPsDfi6oWiDCoSKXvkPTvTHrKvd5Vx/vDzCTHLOzzJ
+         /cB/pXjxriRwqZgME7yJK5nuDKjKH6LVHO6mDoVFuzGc3UV7lS9mlgzK5PSHhDy56AF5
+         b59g==
+X-Forwarded-Encrypted: i=1; AJvYcCUrLc7HXIK1Zq8JAai27tovxu7wyB57RAI7safOr2a5mIrHKvebruavh3HmtgeoL4ixSHL0/ADb@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz6sGFL5+2rSNLfjbPfARYEQ8upAfHPdRqhuL/gojhIIEMDBCSx
+	HPOnYAjTzsW4e/cdxVp5vkjE0G6NrWk7yTx1lGWGIcj2l8PGqY5frhttv2o0XJF24Mh+a8lkUGX
+	0GTWYIhMp1y2h7bbJosGSnI+sLg5Ks6Q=
+X-Gm-Gg: ASbGnct1z1q8NAx5AXge6/6+Nc73Hslh7f+oZaqEtRjAJtxPj8yYeOUCb7sU3taJrf9
+	WGYKvlEztClOiOMP3oz4X4LYJNvR/XKu6ji/I9kqRGqmPFBJAX6Y6nS2MW8mmVBpoEYE5fBefc0
+	9t00g7tM7nCgvQ7bzzxcsD8j5mlnjmnevBDlFXMzEKlSZv7E5yKOKGXVnNS02HAmbYuBQgoYNOH
+	v5ggMar
+X-Google-Smtp-Source: AGHT+IGJF9vlSl6LtugLF3G5FrHTTGXElXZh3V5XBDYr50G2/qrw0kFxML7ITvym8eH96YpjpZcxBgyhI2RTXm8ZkWs=
+X-Received: by 2002:a17:902:c405:b0:242:d237:e20b with SMTP id
+ d9443c01a7336-2430d0f9cf4mr3360985ad.4.1755028410985; Tue, 12 Aug 2025
+ 12:53:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250726133435.2460085-1-ojeda@kernel.org>
+In-Reply-To: <20250726133435.2460085-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 12 Aug 2025 21:53:19 +0200
+X-Gm-Features: Ac12FXw9PM7CHJhFQfCIPFdA9X2yBdN7wgOVawlhnEq1u63q42B2t16j4ZB72TI
+Message-ID: <CANiq72kbsj5nJCZOo_jh8YzsiX8RgOKVAF=x8vDYbFjoCh6mjg@mail.gmail.com>
+Subject: Re: [PATCH] rust: kbuild: clean output before running `rustdoc`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
+	Daniel Almeida <daniel.almeida@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+On Sat, Jul 26, 2025 at 3:34=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> `rustdoc` can get confused when generating documentation into a folder
+> that contains generated files from other `rustdoc` versions.
+>
+> For instance, running something like:
+>
+>     rustup default 1.78.0
+>     make LLVM=3D1 rustdoc
+>     rustup default 1.88.0
+>     make LLVM=3D1 rustdoc
+>
+> may generate errors like:
+>
+>     error: couldn't generate documentation: invalid template: last line e=
+xpected to start with a comment
+>       |
+>       =3D note: failed to create or modify "./Documentation/output/rust/r=
+ustdoc/src-files.js"
+>
+> Thus just always clean the output folder before generating the
+> documentation -- we are anyway regenerating it every time the `rustdoc`
+> target gets called, at least for the time being.
+>
+> Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned i=
+n older LTSs).
+> Reported-by: Daniel Almeida <daniel.almeida@collabora.com>
+> Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/288089/topic=
+/x/near/527201113
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-------------------
+Applied to `rust-fixes` -- thanks everyone!
 
-From: Akash Kumar <quic_akakum@quicinc.com>
-
-commit 323a80a1a5ace319a722909c006d5bdb2a35d273 upstream.
-
-Fix NULL pointer crash in uvcg_framebased_make due to uninitialized color
-matching descriptor for frame-based format which was added in
-commit f5e7bdd34aca ("usb: gadget: uvc: Allow creating new color matching
-descriptors") that added handling for uncompressed and mjpeg format.
-
-Crash is seen when userspace configuration (via configfs) does not
-explicitly define the color matching descriptor. If color_matching is not
-found, config_group_find_item() returns NULL. The code then jumps to
-out_put_cm, where it calls config_item_put(color_matching);. If
-color_matching is NULL, this will dereference a null pointer, leading to a
-crash.
-
-[    2.746440] Unable to handle kernel NULL pointer dereference at virtual address 000000000000008c
-[    2.756273] Mem abort info:
-[    2.760080]   ESR = 0x0000000096000005
-[    2.764872]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    2.771068]   SET = 0, FnV = 0
-[    2.771069]   EA = 0, S1PTW = 0
-[    2.771070]   FSC = 0x05: level 1 translation fault
-[    2.771071] Data abort info:
-[    2.771072]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-[    2.771073]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    2.771074]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    2.771075] user pgtable: 4k pages, 39-bit VAs, pgdp=00000000a3e59000
-[    2.771077] [000000000000008c] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
-[    2.771081] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
-[    2.771084] Dumping ftrace buffer:
-[    2.771085]    (ftrace buffer empty)
-[    2.771138] CPU: 7 PID: 486 Comm: ln Tainted: G        W   E      6.6.58-android15
-[    2.771139] Hardware name: Qualcomm Technologies, Inc. SunP QRD HDK (DT)
-[    2.771140] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[    2.771141] pc : __uvcg_fill_strm+0x198/0x2cc
-[    2.771145] lr : __uvcg_iter_strm_cls+0xc8/0x17c
-[    2.771146] sp : ffffffc08140bbb0
-[    2.771146] x29: ffffffc08140bbb0 x28: ffffff803bc81380 x27: ffffff8023bbd250
-[    2.771147] x26: ffffff8023bbd250 x25: ffffff803c361348 x24: ffffff803d8e6768
-[    2.771148] x23: 0000000000000004 x22: 0000000000000003 x21: ffffffc08140bc48
-[    2.771149] x20: 0000000000000000 x19: ffffffc08140bc48 x18: ffffffe9f8cf4a00
-[    2.771150] x17: 000000001bf64ec3 x16: 000000001bf64ec3 x15: ffffff8023bbd250
-[    2.771151] x14: 000000000000000f x13: 004c4b40000f4240 x12: 000a2c2a00051615
-[    2.771152] x11: 000000000000004f x10: ffffffe9f76b40ec x9 : ffffffe9f7e389d0
-[    2.771153] x8 : ffffff803d0d31ce x7 : 000f4240000a2c2a x6 : 0005161500028b0a
-[    2.771154] x5 : ffffff803d0d31ce x4 : 0000000000000003 x3 : 0000000000000000
-[    2.771155] x2 : ffffffc08140bc50 x1 : ffffffc08140bc48 x0 : 0000000000000000
-[    2.771156] Call trace:
-[    2.771157]  __uvcg_fill_strm+0x198/0x2cc
-[    2.771157]  __uvcg_iter_strm_cls+0xc8/0x17c
-[    2.771158]  uvcg_streaming_class_allow_link+0x240/0x290
-[    2.771159]  configfs_symlink+0x1f8/0x630
-[    2.771161]  vfs_symlink+0x114/0x1a0
-[    2.771163]  do_symlinkat+0x94/0x28c
-[    2.771164]  __arm64_sys_symlinkat+0x54/0x70
-[    2.771164]  invoke_syscall+0x58/0x114
-[    2.771166]  el0_svc_common+0x80/0xe0
-[    2.771168]  do_el0_svc+0x1c/0x28
-[    2.771169]  el0_svc+0x3c/0x70
-[    2.771172]  el0t_64_sync_handler+0x68/0xbc
-[    2.771173]  el0t_64_sync+0x1a8/0x1ac
-
-Initialize color matching descriptor for frame-based format to prevent
-NULL pointer crash by mirroring the handling done for uncompressed and
-mjpeg formats.
-
-Fixes: 7b5a58952fc3 ("usb: gadget: uvc: configfs: Add frame-based frame format support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Akash Kumar <quic_akakum@quicinc.com>
-Link: https://lore.kernel.org/r/20250718085138.1118788-1-quic_akakum@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/gadget/function/uvc_configfs.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
-
---- a/drivers/usb/gadget/function/uvc_configfs.c
-+++ b/drivers/usb/gadget/function/uvc_configfs.c
-@@ -2916,8 +2916,15 @@ static struct config_group *uvcg_frameba
- 		'H',  '2',  '6',  '4', 0x00, 0x00, 0x10, 0x00,
- 		0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71
- 	};
-+	struct uvcg_color_matching *color_match;
-+	struct config_item *streaming;
- 	struct uvcg_framebased *h;
- 
-+	streaming = group->cg_item.ci_parent;
-+	color_match = uvcg_format_get_default_color_match(streaming);
-+	if (!color_match)
-+		return ERR_PTR(-EINVAL);
-+
- 	h = kzalloc(sizeof(*h), GFP_KERNEL);
- 	if (!h)
- 		return ERR_PTR(-ENOMEM);
-@@ -2936,6 +2943,9 @@ static struct config_group *uvcg_frameba
- 
- 	INIT_LIST_HEAD(&h->fmt.frames);
- 	h->fmt.type = UVCG_FRAMEBASED;
-+
-+	h->fmt.color_matching = color_match;
-+	color_match->refcnt++;
- 	config_group_init_type_name(&h->fmt.group, name,
- 				    &uvcg_framebased_type);
- 
-
-
+Cheers,
+Miguel
