@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3792FAC06;
-	Tue, 12 Aug 2025 18:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1246C2FF14D;
+	Tue, 12 Aug 2025 18:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025008; cv=none; b=k83/m8IBwg3H1g3IkuFWqk+lJJBp++LCk0jZZ9k/+j9VirSXJcR9xwN/S0HMrpjtyv1fu0F3PBsg93uOMps7q37GZDRZ9VclcDhG7EV1TAQPFU5fvv33Hbqu6HwWTOSL53yqx4bdkeHIExSw32EBINyIFHtIqGyNY4RubclKaEk=
+	t=1755025011; cv=none; b=LTrOF4s2O02ya41zJrb0v/NFFrYDMhILU5s4OtBP+qsSk6aCoLL3qXYyz0rDHatXUL4KZhF7z/uf57c/qu+MGpcym38dEXuGw22gGUpOo+b4tVtNQualN0LggxqA1xaMpy6J7DYeAydX16LHPRwnLRQFtxJ2lBkJT4Bu3XQ3W80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025008; c=relaxed/simple;
-	bh=2dK3qES79IwF6Lz7N2kJMTwsuCaD4GEJBj9/VWYi4Uc=;
+	s=arc-20240116; t=1755025011; c=relaxed/simple;
+	bh=BEySytcCpf++PackOwRVJhWefsYbqXBi21vJgLJMcY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VorE3Mj6Z1j2S+oiHgCCRlRjUAj0csGrQWNfgqluoLiIvm8ieJM1DlasMChBY1a656AODD/t5Y2zrV3lB+6gfbRFhjBi1cAa+g6TvC2PeOHwO9VHFvs4kna1h5IYwGlVdpVJq+swdImtlbXfFW5IisjuoQMFqXJcwjZgtaB3pZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xfaf5cCM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L0wpDte7UN9Oyc0yfR+AWxLSjVexPWtnUTkWFXXMVNpwRxISucse9yjuxjJvM1iVqTnWfSy9Sfdh4FieItIvqYYwDycyxm/I1+lHu8E7XgrRTiKhTIxderoFcIgmAVj1fEkzoh1ygGi9+7wt8XnJLtzUrJ9v1VC7N2miMA0tswI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbjTU0bw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xfaf5cCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBC6C4CEF6;
-	Tue, 12 Aug 2025 18:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbjTU0bw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CE6C4CEF1;
+	Tue, 12 Aug 2025 18:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025007;
-	bh=2dK3qES79IwF6Lz7N2kJMTwsuCaD4GEJBj9/VWYi4Uc=;
+	s=korg; t=1755025010;
+	bh=BEySytcCpf++PackOwRVJhWefsYbqXBi21vJgLJMcY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xfaf5cCMsbaWmF8NEuqWbGVeebe64PDOKJD3aewV+k55ycgE1oMfOhl9qu4JvBU/r
-	 npJ5y81DmYvZF31tCEcs1J4Ml8zhF0jmMOHw3gHkeFJ7xXnN/vXMjYoIumR90nVppt
-	 oRnc5r95c3KJASZHKPWGmlPRltkQp/+c1DMgDhzw=
+	b=VbjTU0bwyomajn+IWXN2Qn3Ea3IAqBqTvMFjLXfOkSSmbftRW7oT1m1A2n99xeBge
+	 ALBJ+OP8YL983rssr7HX+Mcs/zaYCMaPt9+/71O/F5sA77YXwBGNlT93/P/TIwc52N
+	 NrbUqoS5wfw3+DcEC0S86fSHGYKhlpNkp8cxEy8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 543/627] net: airoha: npu: Add missing MODULE_FIRMWARE macros
-Date: Tue, 12 Aug 2025 19:33:58 +0200
-Message-ID: <20250812173452.561266745@linuxfoundation.org>
+Subject: [PATCH 6.16 526/627] block: ensure discard_granularity is zero when discard is not supported
+Date: Tue, 12 Aug 2025 19:33:41 +0200
+Message-ID: <20250812173451.915212834@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,35 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 4e7e471e2e3f9085fe1dbe821c4dd904a917c66a ]
+[ Upstream commit fad6551fcf537375702b9af012508156a16a1ff7 ]
 
-Introduce missing MODULE_FIRMWARE definitions for firmware autoload.
+Documentation/ABI/stable/sysfs-block states:
 
-Fixes: 23290c7bc190d ("net: airoha: Introduce Airoha NPU support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250801-airoha-npu-missing-module-firmware-v2-1-e860c824d515@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  What: /sys/block/<disk>/queue/discard_granularity
+  [...]
+  A discard_granularity of 0 means that the device does not support
+  discard functionality.
+
+but this got broken when sorting out the block limits updates.  Fix this
+by setting the discard_granularity limit to zero when the combined
+max_discard_sectors is zero.
+
+Fixes: 3c407dc723bb ("block: default the discard granularity to sector size")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20250731152228.873923-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_npu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ block/blk-settings.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_npu.c b/drivers/net/ethernet/airoha/airoha_npu.c
-index 1e58a4aeb9a0..12fc3c68b9d0 100644
---- a/drivers/net/ethernet/airoha/airoha_npu.c
-+++ b/drivers/net/ethernet/airoha/airoha_npu.c
-@@ -586,6 +586,8 @@ static struct platform_driver airoha_npu_driver = {
- };
- module_platform_driver(airoha_npu_driver);
+diff --git a/block/blk-settings.c b/block/blk-settings.c
+index 3425ae1b1f01..1a82980d52e9 100644
+--- a/block/blk-settings.c
++++ b/block/blk-settings.c
+@@ -342,12 +342,19 @@ int blk_validate_limits(struct queue_limits *lim)
+ 	lim->max_discard_sectors =
+ 		min(lim->max_hw_discard_sectors, lim->max_user_discard_sectors);
  
-+MODULE_FIRMWARE(NPU_EN7581_FIRMWARE_DATA);
-+MODULE_FIRMWARE(NPU_EN7581_FIRMWARE_RV32);
- MODULE_LICENSE("GPL");
- MODULE_AUTHOR("Lorenzo Bianconi <lorenzo@kernel.org>");
- MODULE_DESCRIPTION("Airoha Network Processor Unit driver");
++	/*
++	 * When discard is not supported, discard_granularity should be reported
++	 * as 0 to userspace.
++	 */
++	if (lim->max_discard_sectors)
++		lim->discard_granularity =
++			max(lim->discard_granularity, lim->physical_block_size);
++	else
++		lim->discard_granularity = 0;
++
+ 	if (!lim->max_discard_segments)
+ 		lim->max_discard_segments = 1;
+ 
+-	if (lim->discard_granularity < lim->physical_block_size)
+-		lim->discard_granularity = lim->physical_block_size;
+-
+ 	/*
+ 	 * By default there is no limit on the segment boundary alignment,
+ 	 * but if there is one it can't be smaller than the page size as
 -- 
 2.39.5
 
