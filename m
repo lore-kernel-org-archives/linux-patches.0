@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB5B26FA77;
-	Tue, 12 Aug 2025 19:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FD826FA77;
+	Tue, 12 Aug 2025 19:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025575; cv=none; b=Z+sJbZ+hVg7+7UdWmwowe56gX2rCx8lH/IxO2Ehc7AD5EizVVe1pZLlxjKnRO9msWBO+zgRksxx4111QC8BarRBbheSU2RqMg3M47mdL68N+SLdOmFYOdEKKd4N1kIeqdKcMLjLFiBfeeIfvGXhzalC/7q16Z/IJcnZOiX9n4/c=
+	t=1755025578; cv=none; b=gMApq7R4886WkMI6B5Ev6MAjoWLVOnV/pNxhQ+0nrP/djZ3MAPJnS3E05umEuAF500X2NBH9oY23fdCNLnf8elGDEaBXns/d2H2mFn4ndMcO9BsQz8/wrEzYA+C/W44k2Y1saLAKkzKmzvc4E/iboUfKyA5mtc/2hCBj8hWOkdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025575; c=relaxed/simple;
-	bh=WpnbTSY030UtG5ugd61gmyfcOmuhsx2DQarscQWZJJc=;
+	s=arc-20240116; t=1755025578; c=relaxed/simple;
+	bh=+/8B0vS+hyGVzL941cdnjVUGDclMPNY/azhU+XwP6YA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9rfipzJ46UqUoGHDaTBdFmZARIOlIqdhH7TqNkHyXbI/N6PVM64QFUo5lAV531baV9j09ZiY7SC/t83zRTes6zdQ6oo5xaWY1VeyHOceF2+Axmsmz1uddFoIyhk2saFAWM5n/Wz0hF8+XDPu0gSEyyfLX1Feq7KKjLkO5jakg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2C7fo0x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s2RKnCGdWwMsHyWTeCMGPs1Y7Uef3CsKHefv4kYIlG8mrQzTPUxu8qP3vtgkyi1n/sRTk6STFZNe5dmglaXvCA4nG1FSE6WFj6Dzdbe00/9WzR4+VwoqTcK3EQo2VmKM5TxxwY3794b9Yp9nITB8IfMWFW83i+qvoAgHpLXp/3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrgf2xkC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2C7fo0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9C7C4CEF0;
-	Tue, 12 Aug 2025 19:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrgf2xkC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00BAC4CEF0;
+	Tue, 12 Aug 2025 19:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025575;
-	bh=WpnbTSY030UtG5ugd61gmyfcOmuhsx2DQarscQWZJJc=;
+	s=korg; t=1755025578;
+	bh=+/8B0vS+hyGVzL941cdnjVUGDclMPNY/azhU+XwP6YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2C7fo0xtV2CAxjuRnualwne+ywvcZvmR6o6zNrucQ+KKJBcL8BagOUpA3M3sIzQx
-	 fKCBBT/5S1kWC/nTQTgLKk1QZ2/o9vyqyFSSBpc+Rn73Cpez5RxLl+pyBgkkMruCNN
-	 79dE+gyaaH8uXckXSIpXCrI5zxTyawMarfOiwPfI=
+	b=jrgf2xkCxjeHl6xKQYt6WS2FCUtc2RG1OUmerjRaafIL4Y7Jcoby2xGhd92hVOQ2J
+	 BvVHk632l9tgbUueb2l6p0Q/O6oB8EqK2gOCFPXaat4ulHmQqZTL9dvin1YtNi1R8u
+	 9n84q8obcqtVZ4v6esTDNDPr+Re61LaW0kQCPUog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Ryan Wanner <Ryan.Wanner@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 048/480] arm64: dts: ti: k3-am62p-j722s: fix pinctrl-single size
-Date: Tue, 12 Aug 2025 19:44:16 +0200
-Message-ID: <20250812174359.382672863@linuxfoundation.org>
+Subject: [PATCH 6.15 049/480] ARM: dts: microchip: sama7d65: Add clock name property
+Date: Tue, 12 Aug 2025 19:44:17 +0200
+Message-ID: <20250812174359.423488227@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,38 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Ryan Wanner <Ryan.Wanner@microchip.com>
 
-[ Upstream commit fdc8ad019ab9a2308b8cef54fbc366f482fb746f ]
+[ Upstream commit 0029468132ba2e00a3010865038783d9b2e6cc07 ]
 
-Pinmux registers ends at 0x000f42ac (including). Thus, the size argument
-of the pinctrl-single node has to be 0x2b0. Fix it.
+Add clock-output-names to the xtal nodes, so the driver can correctly
+register the main and slow xtal.
 
-This will fix the following error:
-pinctrl-single f4000.pinctrl: mux offset out of range: 0x2ac (0x2ac)
+This fixes the issue of the SoC clock driver not being able to find
+the main xtal and slow xtal correctly causing a bad clock tree.
 
-Fixes: 29075cc09f43 ("arm64: dts: ti: Introduce AM62P5 family of SoCs")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Link: https://lore.kernel.org/r/20250618065239.1904953-1-mwalle@kernel.org
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: 261dcfad1b59 ("ARM: dts: microchip: add sama7d65 SoC DT")
+Signed-off-by: Ryan Wanner <Ryan.Wanner@microchip.com>
+Link: https://lore.kernel.org/r/3878ae6d0016d46f0c91bd379146d575d5d336aa.1750175453.git.Ryan.Wanner@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/microchip/sama7d65.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
-index f9b5c97518d6..8bacb04b3773 100644
---- a/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62p-j722s-common-main.dtsi
-@@ -250,7 +250,7 @@ secure_proxy_sa3: mailbox@43600000 {
+diff --git a/arch/arm/boot/dts/microchip/sama7d65.dtsi b/arch/arm/boot/dts/microchip/sama7d65.dtsi
+index b6710ccd4c36..7b1dd28a2cfa 100644
+--- a/arch/arm/boot/dts/microchip/sama7d65.dtsi
++++ b/arch/arm/boot/dts/microchip/sama7d65.dtsi
+@@ -38,11 +38,13 @@ cpu0: cpu@0 {
+ 	clocks {
+ 		main_xtal: clock-mainxtal {
+ 			compatible = "fixed-clock";
++			clock-output-names = "main_xtal";
+ 			#clock-cells = <0>;
+ 		};
  
- 	main_pmx0: pinctrl@f4000 {
- 		compatible = "pinctrl-single";
--		reg = <0x00 0xf4000 0x00 0x2ac>;
-+		reg = <0x00 0xf4000 0x00 0x2b0>;
- 		#pinctrl-cells = <1>;
- 		pinctrl-single,register-width = <32>;
- 		pinctrl-single,function-mask = <0xffffffff>;
+ 		slow_xtal: clock-slowxtal {
+ 			compatible = "fixed-clock";
++			clock-output-names = "slow_xtal";
+ 			#clock-cells = <0>;
+ 		};
+ 	};
 -- 
 2.39.5
 
