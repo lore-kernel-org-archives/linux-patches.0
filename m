@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364EA1A9F89;
-	Tue, 12 Aug 2025 18:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792C42F7449;
+	Tue, 12 Aug 2025 18:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023004; cv=none; b=JQGZPv2uroAmat5UL3cBh1gC28a9v0rLOqIeVll7dllt7eSyWAUK6vS+AsNfFmjTzsq2b+71uoFpmlsBvhLrbdTArOf+mivLTxq3p6WyJ+UW8/yrwFt7j3cUL5drGuv4rFIlsFIKG0k+gKzVigumQFeHovEOZpDH17kMVBf6wWo=
+	t=1755023007; cv=none; b=pL9FC6Xa3cHb95hMR4+E5Odq+S+V5OOfcWFfK+SjrbWLAA7jJFBztE1bGvR1LxbxhrCjA09Ecrvhr7350FgE+ClYGl1axrVN/u+htbJYLbAVVU+f4auGDUpAXBE7BjjeAYn+wlBhur+OhDh5YiP+f/JWnZ9hoV6ff9WWIYFoN8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023004; c=relaxed/simple;
-	bh=gxIxj2NQbo//cb2UTCQJlcv3/ZGTpsOkNi2qxkDgejw=;
+	s=arc-20240116; t=1755023007; c=relaxed/simple;
+	bh=6zOwvI+j7iL3bZngdBVxoTCqIB6hG1SYddwD72S0SSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkTiJu5sssixbskx9soo7EtqH9gKllnLIpKEuKDvwcfL3UxADicD/dhn4FV08JrdAWdpMUFu7B6sUWkdk5b7P1fVcB+Wj7Pe9uXmGCo26mGzzLofaq6KwuKAO0mKUdIN3VWsKNYC4bhYGfcbu7ZMxU2Yp4DNc7iF2043HEWk2gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMxiwScR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rrnYjDw4Y8I+L277bRtI8lIJtbl6KQcdVO1dW/74yUaa9gytTVEAwi0gBx8Dk+DNK9agl1VF/7W4QfUYR4Qw4AiYASUbIW5x/8xoGBCw9Fkw9vH8gs56cD7sanno/TtmvmhAQP8fxljdSYKBK8uvJlh2wS3iq4BHcId94TeKGSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzZ/6ThZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMxiwScR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AD3C4CEF6;
-	Tue, 12 Aug 2025 18:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzZ/6ThZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFEAC4CEF6;
+	Tue, 12 Aug 2025 18:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023004;
-	bh=gxIxj2NQbo//cb2UTCQJlcv3/ZGTpsOkNi2qxkDgejw=;
+	s=korg; t=1755023007;
+	bh=6zOwvI+j7iL3bZngdBVxoTCqIB6hG1SYddwD72S0SSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMxiwScRCB8q2RdvRrTJbIweU0h9qe8nXPJtvgnwxC/rYyQ2hCef8JK59m83tvTxG
-	 PZrLhIz2YN0TM3IuH7j9c00oPV8sccoA74JCAwyhz3M84FamIFF+VHtreEz/sio7TN
-	 0k9N1AJ0XYMN2jh5Nz+FY7//h15HNkZX0wP2GwXA=
+	b=tzZ/6ThZtqz2sgKI2pEahjCRGzoqEoCcax3bdOHlnzNiVISthZjHEfHbFLISE5MSO
+	 sy5778LokCRGtWqCWA5Mf/KlXFFWee5NcUmXlkoMXsrRE0wU7uNBO6vXKYAIj4GYsd
+	 WkXqmgSVahLWpay5ZGDFq6KiMjEE+NnKALoZCKTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Alex Elder <elder@riscstar.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 288/369] phy: mscc: Fix parsing of unicast frames
-Date: Tue, 12 Aug 2025 19:29:45 +0200
-Message-ID: <20250812173027.565189447@linuxfoundation.org>
+Subject: [PATCH 6.12 289/369] net: ipa: add IPA v5.1 and v5.5 to ipa_version_string()
+Date: Tue, 12 Aug 2025 19:29:46 +0200
+Message-ID: <20250812173027.604117726@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,51 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 6fb5ff63b35b7e849cc8510957f25753f87f63d2 ]
+[ Upstream commit f2aa00e4f65efcf25ff6bc8198e21f031e7b9b1b ]
 
-According to the 1588 standard, it is possible to use both unicast and
-multicast frames to send the PTP information. It was noticed that if the
-frames were unicast they were not processed by the analyzer meaning that
-they were not timestamped. Therefore fix this to match also these
-unicast frames.
+Handle the case for v5.1 and v5.5 instead of returning "0.0".
 
-Fixes: ab2bf9339357 ("net: phy: mscc: 1588 block initialization")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250726140307.3039694-1-horatiu.vultur@microchip.com
+Also reword the comment below since I don't see any evidence of such a
+check happening, and - since 5.5 has been missing - can happen.
+
+Fixes: 3aac8ec1c028 ("net: ipa: add some new IPA versions")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20250728-ipa-5-1-5-5-version_string-v1-1-d7a5623d7ece@fairphone.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mscc/mscc_ptp.c | 1 +
- drivers/net/phy/mscc/mscc_ptp.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/ipa/ipa_sysfs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
-index ce49f3ac6939..bce6cc5b04ee 100644
---- a/drivers/net/phy/mscc/mscc_ptp.c
-+++ b/drivers/net/phy/mscc/mscc_ptp.c
-@@ -897,6 +897,7 @@ static int vsc85xx_eth1_conf(struct phy_device *phydev, enum ts_blk blk,
- 				     get_unaligned_be32(ptp_multicast));
- 	} else {
- 		val |= ANA_ETH1_FLOW_ADDR_MATCH2_ANY_MULTICAST;
-+		val |= ANA_ETH1_FLOW_ADDR_MATCH2_ANY_UNICAST;
- 		vsc85xx_ts_write_csr(phydev, blk,
- 				     MSCC_ANA_ETH1_FLOW_ADDR_MATCH2(0), val);
- 		vsc85xx_ts_write_csr(phydev, blk,
-diff --git a/drivers/net/phy/mscc/mscc_ptp.h b/drivers/net/phy/mscc/mscc_ptp.h
-index da3465360e90..ae9ad925bfa8 100644
---- a/drivers/net/phy/mscc/mscc_ptp.h
-+++ b/drivers/net/phy/mscc/mscc_ptp.h
-@@ -98,6 +98,7 @@
- #define MSCC_ANA_ETH1_FLOW_ADDR_MATCH2(x) (MSCC_ANA_ETH1_FLOW_ENA(x) + 3)
- #define ANA_ETH1_FLOW_ADDR_MATCH2_MASK_MASK	GENMASK(22, 20)
- #define ANA_ETH1_FLOW_ADDR_MATCH2_ANY_MULTICAST	0x400000
-+#define ANA_ETH1_FLOW_ADDR_MATCH2_ANY_UNICAST	0x200000
- #define ANA_ETH1_FLOW_ADDR_MATCH2_FULL_ADDR	0x100000
- #define ANA_ETH1_FLOW_ADDR_MATCH2_SRC_DEST_MASK	GENMASK(17, 16)
- #define ANA_ETH1_FLOW_ADDR_MATCH2_SRC_DEST	0x020000
+diff --git a/drivers/net/ipa/ipa_sysfs.c b/drivers/net/ipa/ipa_sysfs.c
+index a59bd215494c..a53e9e6f6cdf 100644
+--- a/drivers/net/ipa/ipa_sysfs.c
++++ b/drivers/net/ipa/ipa_sysfs.c
+@@ -37,8 +37,12 @@ static const char *ipa_version_string(struct ipa *ipa)
+ 		return "4.11";
+ 	case IPA_VERSION_5_0:
+ 		return "5.0";
++	case IPA_VERSION_5_1:
++		return "5.1";
++	case IPA_VERSION_5_5:
++		return "5.5";
+ 	default:
+-		return "0.0";	/* Won't happen (checked at probe time) */
++		return "0.0";	/* Should not happen */
+ 	}
+ }
+ 
 -- 
 2.39.5
 
