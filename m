@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7C42FE56E;
-	Tue, 12 Aug 2025 17:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBBA2FE564;
+	Tue, 12 Aug 2025 17:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021569; cv=none; b=hrDl4QD1AITOOL0ycpFQN3nt+iPxnIT0pukJcJ0l4VtAaibbQsDJi3upNIDmN7zWVVqm8mrVSyuOuAXhEIipEQz+udroxLtYkr0JHjPdGYoCfBx7KxVk03TPEc4BJdDu5sAjlJC4EBI/dOqxQfexg2wGLuvXGQrbhMrEF9ZBjlw=
+	t=1755021572; cv=none; b=f+CTcibDqIYyUbRYV0dWMMoax2ZSVsODfjwiAArHUO0LTmqmvHMVnjEErJy56AVkv/Ahh1f30C6whqK24w42rfxiwfTqNgnZLWn6uN81B2irHsTlc6ed12uLSIjrNAQF+uTofuU9ZsFMUEd73EtFjCif9DfEhPJUx7iad3hxQ58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021569; c=relaxed/simple;
-	bh=5sxSClECgfCIJBf3gYAcGkPMmbArLrFolvnLdz2ErD0=;
+	s=arc-20240116; t=1755021572; c=relaxed/simple;
+	bh=uKtymRXumZS32ukWrzLH5zzyPsbIMkiQrdnupBfi+2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4GajdrtoRELFY1e7jKFF56tg0/EfUCpJGhzFoh3SRmlJxDButXSjQXDJlYiBA8X+Tdo3YCO/4YYqdMQ82MZ/pNxFyVupkxhHTqw5/cDCBKkNt/hhq+NVcx41EAIi+96S9miUyK/P99TjnkP8q1BEP8jZBWQfPJolZGAGu7QcG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxqpcwTQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qahaSu5rnYh0pZmJnFzHHkMEIfAymbpvIBxH1wJcaqsXSIoznTP1YCi9rhxXwUjvM3nczzODzcgZPkieupKI07ftVd1grXujuvsIXvpwdrW9Wtg4BcT7z1pb2dKnKRDktCmWWULqBLTMZrs7bON/ir+0z2EDpH6OD/rLSBPIiwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGiHWL1h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxqpcwTQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A272EC4CEF0;
-	Tue, 12 Aug 2025 17:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGiHWL1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3EFC4CEF1;
+	Tue, 12 Aug 2025 17:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021569;
-	bh=5sxSClECgfCIJBf3gYAcGkPMmbArLrFolvnLdz2ErD0=;
+	s=korg; t=1755021572;
+	bh=uKtymRXumZS32ukWrzLH5zzyPsbIMkiQrdnupBfi+2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxqpcwTQym1BDHxND9OhftxX6MFbM116/Ala1EWY+Y8BbnYpcPTTpXI6XhWW7nBvR
-	 lAqKRsgSPuZcEwMWxtKrQGeFALGByXAegE777MVDf25lcnSCGCaj3x214dGB/ZB3nx
-	 jLKT7XqAcszyqyQGor0AlCFc2g9zcmWkinnOuf90=
+	b=CGiHWL1h0Ingk74pbliniiICFjiovYCebgy7UxtGSq/awi+EeDZTE7Gx9beGfWUXN
+	 aK9xrGezeSeUdTQ+Lyax1IGwSt2mC9rTSU2MhLINWrUWgOaoo7TDK9RFoqsZLgt/Hu
+	 Ps8I9RioLlFzd9rsF6rOE1sHCKH2FYVmtEjSz7cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/262] crypto: arm/aes-neonbs - work around gcc-15 warning
-Date: Tue, 12 Aug 2025 19:28:25 +0200
-Message-ID: <20250812172958.092464918@linuxfoundation.org>
+Subject: [PATCH 6.6 154/262] fbdev: imxfb: Check fb_add_videomode to prevent null-ptr-deref
+Date: Tue, 12 Aug 2025 19:29:02 +0200
+Message-ID: <20250812172959.659768444@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -52,54 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit d5fa96dc5590915f060fee3209143313e4f5b03b ]
+[ Upstream commit da11e6a30e0bb8e911288bdc443b3dc8f6a7cac7 ]
 
-I get a very rare -Wstringop-overread warning with gcc-15 for one function
-in aesbs_ctr_encrypt():
+fb_add_videomode() can fail with -ENOMEM when its internal kmalloc() cannot
+allocate a struct fb_modelist.  If that happens, the modelist stays empty but
+the driver continues to register.  Add a check for its return value to prevent
+poteintial null-ptr-deref, which is similar to the commit 17186f1f90d3 ("fbdev:
+Fix do_register_framebuffer to prevent null-ptr-deref in fb_videomode_to_var").
 
-arch/arm/crypto/aes-neonbs-glue.c: In function 'ctr_encrypt':
-arch/arm/crypto/aes-neonbs-glue.c:212:1446: error: '__builtin_memcpy' offset [17, 2147483647] is out of the bounds [0, 16] of object 'buf' with type 'u8[16]' {aka 'unsigned char[16]'} [-Werror=array-bounds=]
-  212 |                         src = dst = memcpy(buf + sizeof(buf) - bytes,
-arch/arm/crypto/aes-neonbs-glue.c: In function 'ctr_encrypt':
-arch/arm/crypto/aes-neonbs-glue.c:218:17: error: 'aesbs_ctr_encrypt' reading 1 byte from a region of size 0 [-Werror=stringop-overread]
-  218 |                 aesbs_ctr_encrypt(dst, src, ctx->rk, ctx->rounds, bytes, walk.iv);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 2 of type 'const u8[0]' {aka 'const unsigned char[]'}
-arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 3 of type 'const u8[0]' {aka 'const unsigned char[]'}
-arch/arm/crypto/aes-neonbs-glue.c:218:17: note: referencing argument 6 of type 'u8[0]' {aka 'unsigned char[]'}
-arch/arm/crypto/aes-neonbs-glue.c:36:17: note: in a call to function 'aesbs_ctr_encrypt'
-   36 | asmlinkage void aesbs_ctr_encrypt(u8 out[], u8 const in[], u8 const rk[],
-
-This could happen in theory if walk.nbytes is larger than INT_MAX and gets
-converted to a negative local variable.
-
-Keep the type unsigned like the orignal nbytes to be sure there is no
-integer overflow.
-
-Fixes: c8bf850e991a ("crypto: arm/aes-neonbs-ctr - deal with non-multiples of AES block size")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 1b6c79361ba5 ("video: imxfb: Add DT support")
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/crypto/aes-neonbs-glue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/imxfb.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/crypto/aes-neonbs-glue.c b/arch/arm/crypto/aes-neonbs-glue.c
-index 0ca94b90bc4e..ba98daeb119c 100644
---- a/arch/arm/crypto/aes-neonbs-glue.c
-+++ b/arch/arm/crypto/aes-neonbs-glue.c
-@@ -245,7 +245,7 @@ static int ctr_encrypt(struct skcipher_request *req)
- 	while (walk.nbytes > 0) {
- 		const u8 *src = walk.src.virt.addr;
- 		u8 *dst = walk.dst.virt.addr;
--		int bytes = walk.nbytes;
-+		unsigned int bytes = walk.nbytes;
+diff --git a/drivers/video/fbdev/imxfb.c b/drivers/video/fbdev/imxfb.c
+index 7042a43b81d8..5f9e98423d65 100644
+--- a/drivers/video/fbdev/imxfb.c
++++ b/drivers/video/fbdev/imxfb.c
+@@ -1004,8 +1004,13 @@ static int imxfb_probe(struct platform_device *pdev)
+ 	info->fix.smem_start = fbi->map_dma;
  
- 		if (unlikely(bytes < AES_BLOCK_SIZE))
- 			src = dst = memcpy(buf + sizeof(buf) - bytes,
+ 	INIT_LIST_HEAD(&info->modelist);
+-	for (i = 0; i < fbi->num_modes; i++)
+-		fb_add_videomode(&fbi->mode[i].mode, &info->modelist);
++	for (i = 0; i < fbi->num_modes; i++) {
++		ret = fb_add_videomode(&fbi->mode[i].mode, &info->modelist);
++		if (ret) {
++			dev_err(&pdev->dev, "Failed to add videomode\n");
++			goto failed_cmap;
++		}
++	}
+ 
+ 	/*
+ 	 * This makes sure that our colour bitfield
 -- 
 2.39.5
 
