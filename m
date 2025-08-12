@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8AD2D8363;
-	Tue, 12 Aug 2025 18:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB02C2FE57A;
+	Tue, 12 Aug 2025 18:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022645; cv=none; b=iD+vVubwXmtcU9jd+XeB1YIc1NDuV5XQ3Yi2jHXtTDWlTItRt4JSuF5aXE+Oz6uFVUtMjQvj80Rtz9EKvIbpnn3WpucFAVsjzfpAfJ+BYfFrs8b/4g6Ez65Jg74JdNRDDXpKC3s0HqHFR9axTRLm+im9g31QsdOWRLrtd9IJW9I=
+	t=1755022648; cv=none; b=hJLaXMWo0Y0QdFN3fDASAJRIQYTWTY/lwtFEWPwcGt/7DSrY3lyPMmVCwi3Xj+PgfdMfJ6BvEJRUU+dAwJOwnIiTz3hb/R8goJGaeHL4q/H68Kr7l5Zg4OyrnAFFePb2Ngu+OS3w7zLVQbHFv92hQo1rIpdMyqEZCmmOyzto2A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022645; c=relaxed/simple;
-	bh=F+q/to525DcxvCa2VhzH+jxKcYBF7CVh9qosBjakfAU=;
+	s=arc-20240116; t=1755022648; c=relaxed/simple;
+	bh=a2Yugctz6Y4mcqn3Wg0ro3xG4R6AO6JyDqlvkyikF7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGqqSHZ63rr2T9aaY80gY9m4DLzDvuaNmPnAaB2wzMsKzv0P2U052Rx6mdYYEJvryOlUuathAV36S4IrJIe2hjj5I1tqwx6fIu7KJ2fVQy0QHLNRyWo3FKoDrJPrigVrDKKQ3wJC69tGpoFHEDNFnLSaYswPsDvJ/If9DYOjPgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emR7BGbi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CyYSM5jbOjKRo1rO8FDtpxiwRNwAYSzHmDlHgCO2VLmWiFON+2X1cavsJlMEUblP80AGWDExGKUckjoEjdZUSfA9/+aNPfNfUAaKDOUuRxJZQUIpGb8Ftsg2YpprOs3zlYt/wpUuidjy0+NYqaLixwZBIVMtTOcyeAFvb6gO+0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyTfdVxf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emR7BGbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21C9C4CEF6;
-	Tue, 12 Aug 2025 18:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyTfdVxf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A231C4CEF6;
+	Tue, 12 Aug 2025 18:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022644;
-	bh=F+q/to525DcxvCa2VhzH+jxKcYBF7CVh9qosBjakfAU=;
+	s=korg; t=1755022647;
+	bh=a2Yugctz6Y4mcqn3Wg0ro3xG4R6AO6JyDqlvkyikF7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=emR7BGbirlphqYuOhhdgM+0Qierqb1QGGtqFtH9Ykc90P8Ol6ulHVWaf6r7mnEDTM
-	 JejKLoavkc2XJEdpbr9GIr6aBiFscpcXM+ZJXqzcgMpOf8nB/YV5kVS/m6AofxBJHb
-	 y7We/w8XvgERd4OwV4Yg/ZH1f1UlfINB9rXlY0x8=
+	b=DyTfdVxfbDyb4X0ikFgK84LC1NqkQUl4JtCrvAQWNo42dM2oUqnDoWrFe7fxGStva
+	 DK+w7+FVT9Mnnr5zgwzSxcywETLPT84xUVP0vo2lyhZOkFzC/GroL3m/lGCvTskml+
+	 RiXDxL/wFCIxTNNavzQ+UuXX6VHJvkojAnwO9K5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/369] perf sched: Fix memory leaks in perf sched latency
-Date: Tue, 12 Aug 2025 19:28:00 +0200
-Message-ID: <20250812173021.653725786@linuxfoundation.org>
+Subject: [PATCH 6.12 174/369] Fix dma_unmap_sg() nents value
+Date: Tue, 12 Aug 2025 19:27:51 +0200
+Message-ID: <20250812173021.314257709@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,88 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit e68b1c0098b959cb88afce5c93dd6a9324e6da78 ]
+[ Upstream commit 1db50f7b7a793670adcf062df9ff27798829d963 ]
 
-The work_atoms should be freed after use.  Add free_work_atoms() to
-make sure to release all.  It should use list_splice_init() when merging
-atoms to prevent accessing invalid pointers.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Fixes: b1ffe8f3e0c96f552 ("perf sched: Finish latency => atom rename and misc cleanups")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250703014942.1369397-8-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: ed10435d3583 ("RDMA/erdma: Implement hierarchical MTT")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20250630092346.81017-2-fourier.thomas@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 6e9c22c1c29d..64bf3ac237f2 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -1116,6 +1116,21 @@ add_sched_in_event(struct work_atoms *atoms, u64 timestamp)
- 	atoms->nb_atoms++;
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index 51d619edb6c5..e56ba86d460e 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -597,7 +597,8 @@ static struct erdma_mtt *erdma_create_cont_mtt(struct erdma_dev *dev,
+ static void erdma_destroy_mtt_buf_sg(struct erdma_dev *dev,
+ 				     struct erdma_mtt *mtt)
+ {
+-	dma_unmap_sg(&dev->pdev->dev, mtt->sglist, mtt->nsg, DMA_TO_DEVICE);
++	dma_unmap_sg(&dev->pdev->dev, mtt->sglist,
++		     DIV_ROUND_UP(mtt->size, PAGE_SIZE), DMA_TO_DEVICE);
+ 	vfree(mtt->sglist);
  }
  
-+static void free_work_atoms(struct work_atoms *atoms)
-+{
-+	struct work_atom *atom, *tmp;
-+
-+	if (atoms == NULL)
-+		return;
-+
-+	list_for_each_entry_safe(atom, tmp, &atoms->work_list, list) {
-+		list_del(&atom->list);
-+		free(atom);
-+	}
-+	thread__zput(atoms->thread);
-+	free(atoms);
-+}
-+
- static int latency_switch_event(struct perf_sched *sched,
- 				struct evsel *evsel,
- 				struct perf_sample *sample,
-@@ -3390,13 +3405,13 @@ static void __merge_work_atoms(struct rb_root_cached *root, struct work_atoms *d
- 			this->total_runtime += data->total_runtime;
- 			this->nb_atoms += data->nb_atoms;
- 			this->total_lat += data->total_lat;
--			list_splice(&data->work_list, &this->work_list);
-+			list_splice_init(&data->work_list, &this->work_list);
- 			if (this->max_lat < data->max_lat) {
- 				this->max_lat = data->max_lat;
- 				this->max_lat_start = data->max_lat_start;
- 				this->max_lat_end = data->max_lat_end;
- 			}
--			zfree(&data);
-+			free_work_atoms(data);
- 			return;
- 		}
- 	}
-@@ -3475,7 +3490,6 @@ static int perf_sched__lat(struct perf_sched *sched)
- 		work_list = rb_entry(next, struct work_atoms, node);
- 		output_lat_thread(sched, work_list);
- 		next = rb_next(next);
--		thread__zput(work_list->thread);
- 	}
- 
- 	printf(" -----------------------------------------------------------------------------------------------------------------\n");
-@@ -3489,6 +3503,13 @@ static int perf_sched__lat(struct perf_sched *sched)
- 
- 	rc = 0;
- 
-+	while ((next = rb_first_cached(&sched->sorted_atom_root))) {
-+		struct work_atoms *data;
-+
-+		data = rb_entry(next, struct work_atoms, node);
-+		rb_erase_cached(next, &sched->sorted_atom_root);
-+		free_work_atoms(data);
-+	}
- out_free_cpus_switch_event:
- 	free_cpus_switch_event(sched);
- 	return rc;
 -- 
 2.39.5
 
