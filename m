@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716D61C1AAA;
-	Tue, 12 Aug 2025 19:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0289D1C1AAA;
+	Tue, 12 Aug 2025 19:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025496; cv=none; b=JNTMbF0fg3rLR2AAXfDzvk2ObYdCKbUE9+O6S0YpxCgmALoeffP2lBXfzjMg+8FfLydjFnm3v2f09pwy/WPYz7txpVTfjFJVYL11MaJij+dki+Mh+ShSab8iba/8S+CW1QBs8L7g78JUz6tBiPsuyyvantd115zh8m2Vmpkct0s=
+	t=1755025500; cv=none; b=ODW4VkFqsYdUK8n+KIKvnqVO6JZGbAukZ4SWa5mkGhDmqy5yJW/ki2gBCgLntfwQBrWMajULWvS2O1BLytbW8DrV/XqPOUoMBFyl7titOARw4/hws1i9IhEUh17s3Xy/PGGd2iIpqLUpLk/enFoRJJVKOO9EXlyd26AlfocP1u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025496; c=relaxed/simple;
-	bh=GAGp2rrF1YFvL4N0YvTYj4IbMG44YYEhqBiWfroiQiY=;
+	s=arc-20240116; t=1755025500; c=relaxed/simple;
+	bh=DwyPN5oNkL9C5bUG1hYAFQfghhzWM1Wvw7akX0M1RgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Umf5FPGFQ2rWPZTMEr8IQd9ruIOiWDGiP/0rUl0tcOFhh8KpJEj3iWIRswHzC840wsKmxwYR/yOdIGa6wKsSnHtTQRrKnh4DRTMRg+tXumxz+c/jNcLc17X7xVjatFXcuVkPnZLzQkfYrMkxSSAj9+BPiDpVg9BUFrzYnGmlRUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exXLi6o0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u1GTRQiC0OXW3M1yBVIKvuyiU1OPAt+t707ktXd1jQsggjoznxREvIClN0tId5i6DwLlWdpO5OR4dVzgZUYqUjjcedICKcqDgzCU4eFM+uKNR8oUZxtRUqqMtvU7IrI2r50JfmHcKvJab2by9YqBlXMuCZDxa0reNnhy0ElCFdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2sOGDtkz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exXLi6o0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A94C4CEF0;
-	Tue, 12 Aug 2025 19:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2sOGDtkz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2361CC4CEF0;
+	Tue, 12 Aug 2025 19:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025496;
-	bh=GAGp2rrF1YFvL4N0YvTYj4IbMG44YYEhqBiWfroiQiY=;
+	s=korg; t=1755025499;
+	bh=DwyPN5oNkL9C5bUG1hYAFQfghhzWM1Wvw7akX0M1RgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=exXLi6o07CM6VExyrLKFoasvCLnoc49DsyWr8pANYRwLzDNvrv9JTakK/gYGLtnjI
-	 QWImLJK38G+gwAHJwU7Q4v+Lr4gYYgT5cOxu1FEPzOVrGNo18WKY4aTik3ra2XKfvz
-	 BM76xD38yt1Lor2WPZEOKDvH7adnL/6HyvWfY1ak=
+	b=2sOGDtkzi+eS73E67NYl3n/mp8GCz3ImVHt4CbMQcoOKz9OHtlUF1ytokqRVRZQ7U
+	 Q0pHzgxdJMt7rDsb+twy5aER/XbPn0TrVT6Q4uFAiWcJ7sBKCfmTk4EcjJU7Ksn4FC
+	 Kts2LIaZoJT4SF+Rac1ATSMIdgSJIHAuoqB9mG90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 059/480] drivers: misc: sram: fix up some const issues with recent attribute changes
-Date: Tue, 12 Aug 2025 19:44:27 +0200
-Message-ID: <20250812174359.850533629@linuxfoundation.org>
+Subject: [PATCH 6.15 042/480] arm64: dts: qcom: msm8976: Make blsp_dma controlled-remotely
+Date: Tue, 12 Aug 2025 19:44:10 +0200
+Message-ID: <20250812174359.139636731@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,60 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: André Apitzsch <git@apitzsch.eu>
 
-[ Upstream commit bf7b4a0e25569ce39c6749afe363aefe5723d326 ]
+[ Upstream commit 76270a18dbdf0bb50615f1b29d2cae8d683da01e ]
 
-The binary attribute const changes recently for the sram driver were
-made in a way that hid the fact that we would be casting a const pointer
-to a non-const one.  So explicitly make the cast so that it is obvious
-and preserve the const pointer in the sram_reserve_cmp() function.
+The blsp_dma controller is shared between the different subsystems,
+which is why it is already initialized by the firmware. We should not
+reinitialize it from Linux to avoid potential other users of the DMA
+engine to misbehave.
 
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Thomas Weißschuh <linux@weissschuh.net>
-Fixes: c3b8c358c4f3 ("misc: sram: constify 'struct bin_attribute'")
-Link: https://lore.kernel.org/r/2025052125-squid-sandstorm-a418@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In mainline this can be described using the "qcom,controlled-remotely"
+property. In the downstream/vendor kernel from Qualcomm there is an
+opposite "qcom,managed-locally" property. This property is *not* set
+for the qcom,sps-dma@7884000 and qcom,sps-dma@7ac4000 [1] so adding
+"qcom,controlled-remotely" upstream matches the behavior of the
+downstream/vendor kernel.
+
+Adding this fixes booting Longcheer L9360.
+
+[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26/arch/arm/boot/dts/qcom/msm8976.dtsi#L1149-1163
+
+Fixes: 0484d3ce0902 ("arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+Link: https://lore.kernel.org/r/20250615-bqx5plus-v2-1-72b45c84237d@apitzsch.eu
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/sram.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8976.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/misc/sram.c b/drivers/misc/sram.c
-index e5069882457e..c69644be4176 100644
---- a/drivers/misc/sram.c
-+++ b/drivers/misc/sram.c
-@@ -28,7 +28,8 @@ static ssize_t sram_read(struct file *filp, struct kobject *kobj,
- {
- 	struct sram_partition *part;
+diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+index d036f31dfdca..963996f7c927 100644
+--- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+@@ -1330,6 +1330,7 @@ blsp1_dma: dma-controller@7884000 {
+ 			clock-names = "bam_clk";
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,controlled-remotely;
+ 		};
  
--	part = container_of(attr, struct sram_partition, battr);
-+	/* Cast away the const as the attribute is part of a larger structure */
-+	part = (struct sram_partition *)container_of(attr, struct sram_partition, battr);
+ 		blsp1_uart1: serial@78af000 {
+@@ -1450,6 +1451,7 @@ blsp2_dma: dma-controller@7ac4000 {
+ 			clock-names = "bam_clk";
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,controlled-remotely;
+ 		};
  
- 	mutex_lock(&part->lock);
- 	memcpy_fromio(buf, part->base + pos, count);
-@@ -43,7 +44,8 @@ static ssize_t sram_write(struct file *filp, struct kobject *kobj,
- {
- 	struct sram_partition *part;
- 
--	part = container_of(attr, struct sram_partition, battr);
-+	/* Cast away the const as the attribute is part of a larger structure */
-+	part = (struct sram_partition *)container_of(attr, struct sram_partition, battr);
- 
- 	mutex_lock(&part->lock);
- 	memcpy_toio(part->base + pos, buf, count);
-@@ -164,8 +166,8 @@ static void sram_free_partitions(struct sram_dev *sram)
- static int sram_reserve_cmp(void *priv, const struct list_head *a,
- 					const struct list_head *b)
- {
--	struct sram_reserve *ra = list_entry(a, struct sram_reserve, list);
--	struct sram_reserve *rb = list_entry(b, struct sram_reserve, list);
-+	const struct sram_reserve *ra = list_entry(a, struct sram_reserve, list);
-+	const struct sram_reserve *rb = list_entry(b, struct sram_reserve, list);
- 
- 	return ra->start - rb->start;
- }
+ 		blsp2_uart2: serial@7af0000 {
 -- 
 2.39.5
 
