@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F2F2FABF8;
-	Tue, 12 Aug 2025 18:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7F12FDC55;
+	Tue, 12 Aug 2025 18:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023332; cv=none; b=aurdJL8v9j5Lokx7V0Rfa3lspxea/Qsx3DzKKbcWosFvah41Rup9UZRCkC84KaI/4boZbWGy8GeNKDN1rmd23iVlkwWQQS6AItShmbCJuHIIFp+4n+VC9MCYx114X1Z0Ojr/ctxuvJmFKaR4dvmflnjRLzcCrTYYnNtIXTowXDI=
+	t=1755023335; cv=none; b=ZONvxFRaeDhjtsLze9HnHbeyhBKnk9MuszIYs0dIuv64Wu2Nf+gwhjlK2ZgoTN/neOxSgSysFG6O3aIxuHmzhVXf6lX25/Oa/hIF0qaTINaMxSaacDpPJG95Ev39MuGamTgJhPcH9siKBUp5frNY+fAzi2SdX08kd2SkJq8uVzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023332; c=relaxed/simple;
-	bh=PCoCXkKZUe1i45X37PD7Hbpn/sziJEQoOQcwi6NeD4U=;
+	s=arc-20240116; t=1755023335; c=relaxed/simple;
+	bh=Pfe6nnZM+GK84TJmmJm3aVVERaJjOgSdztNMZtJCDYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O1kpcZfstD4KCQRKk7/dkjhB5Z6dVYNiLBuuHDbgCdSh0roWOEMCWCIwx9/aSVSS2XLI4hCdkVs+9pf9SNZND/gJEt9dCFqYna5HJU+PCoMksrKFytSZV61VtNsgy55nJrDzCzIit4hoET+IgFkk5xTfaB57ZU5HG34bH+rkzys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8V5BhFh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z06AElTTqmdend+UXUlstU2U9lbyGzcNZ+MoNh3Wvt7CxbRFfyn+TUGgpji1kdB6ZrepvCfMW9SgYMfyJXC3dqSddhz1xNoNZsV2Dn5okhH180WFu08W535PoLCQcXy9JDLie3aZq7GhN9ciFWRFPDW+PgPSkkxDAAbC8w+gXsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9yYxDfV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8V5BhFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C577C4CEF0;
-	Tue, 12 Aug 2025 18:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9yYxDfV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7589EC4CEF0;
+	Tue, 12 Aug 2025 18:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023331;
-	bh=PCoCXkKZUe1i45X37PD7Hbpn/sziJEQoOQcwi6NeD4U=;
+	s=korg; t=1755023334;
+	bh=Pfe6nnZM+GK84TJmmJm3aVVERaJjOgSdztNMZtJCDYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8V5BhFhJIa8IUuGwqITHaadHho3ayjMkGo1ZsBLLBGKAmMqZe3BrGbPQDxlPXYSf
-	 lMM5vONpc5W1RWU5N0t9+sfLJbgVqRbgT9cZll0LFjSSrqncHlt/I5FfDd675qm4qW
-	 eJjb//y4thSYbBW+8qaUdOspZ6YQqLx1wcu7uYfw=
+	b=W9yYxDfVHNKUA6l4vIsk/BdpyizOyf6/AYQGbZk0a0t7X5xbQtgFX3A+AOB/46NYL
+	 aB1NNZVMAOa+uClCAjSNj5+FSz0l2ImQKHaF5efgu0EDpOpSpqKmjiCZ+wpEimu7QJ
+	 1yrMLloYJDnk0NGuirE2O3NSs2++tiZLPa1v0aOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 048/627] arm64: dts: qcom: msm8976: Make blsp_dma controlled-remotely
-Date: Tue, 12 Aug 2025 19:25:43 +0200
-Message-ID: <20250812173421.162167322@linuxfoundation.org>
+Subject: [PATCH 6.16 049/627] pm: cpupower: Fix printing of CORE, CPU fields in cpupower-monitor
+Date: Tue, 12 Aug 2025 19:25:44 +0200
+Message-ID: <20250812173421.198919704@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,63 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Apitzsch <git@apitzsch.eu>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 76270a18dbdf0bb50615f1b29d2cae8d683da01e ]
+[ Upstream commit 14a3318b4ac8ae0ca2e1132a89de167e1030fbdb ]
 
-The blsp_dma controller is shared between the different subsystems,
-which is why it is already initialized by the firmware. We should not
-reinitialize it from Linux to avoid potential other users of the DMA
-engine to misbehave.
+After the commit 0014f65e3df0 ("pm: cpupower: remove hard-coded
+topology depth values"), "cpupower monitor" output ceased to print the
+CORE and the CPU fields on a multi-socket platform.
 
-In mainline this can be described using the "qcom,controlled-remotely"
-property. In the downstream/vendor kernel from Qualcomm there is an
-opposite "qcom,managed-locally" property. This property is *not* set
-for the qcom,sps-dma@7884000 and qcom,sps-dma@7ac4000 [1] so adding
-"qcom,controlled-remotely" upstream matches the behavior of the
-downstream/vendor kernel.
+The reason for this is that the patch changed the behaviour to break
+out of the switch-case after printing the PKG details, while prior to
+the patch, the CORE and the CPU details would also get printed since
+the "if" condition check would pass for any level whose topology depth
+was lesser than that of a package.
 
-Adding this fixes booting Longcheer L9360.
+Fix this ensuring all the details below a desired topology depth are
+printed in the cpupower monitor output.
 
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26/arch/arm/boot/dts/qcom/msm8976.dtsi#L1149-1163
-
-Fixes: 0484d3ce0902 ("arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
-Link: https://lore.kernel.org/r/20250615-bqx5plus-v2-1-72b45c84237d@apitzsch.eu
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20250612122355.19629-3-gautham.shenoy@amd.com
+Fixes: 0014f65e3df0 ("pm: cpupower: remove hard-coded topology depth values")
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8976.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/power/cpupower/utils/idle_monitor/cpupower-monitor.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-index e2ac2fd6882f..2a3024638470 100644
---- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-@@ -1331,6 +1331,7 @@ blsp1_dma: dma-controller@7884000 {
- 			clock-names = "bam_clk";
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
-+			qcom,controlled-remotely;
- 		};
- 
- 		blsp1_uart1: serial@78af000 {
-@@ -1451,6 +1452,7 @@ blsp2_dma: dma-controller@7ac4000 {
- 			clock-names = "bam_clk";
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
-+			qcom,controlled-remotely;
- 		};
- 
- 		blsp2_uart2: serial@7af0000 {
+diff --git a/tools/power/cpupower/utils/idle_monitor/cpupower-monitor.c b/tools/power/cpupower/utils/idle_monitor/cpupower-monitor.c
+index ad493157f826..e8b3841d5c0f 100644
+--- a/tools/power/cpupower/utils/idle_monitor/cpupower-monitor.c
++++ b/tools/power/cpupower/utils/idle_monitor/cpupower-monitor.c
+@@ -121,10 +121,8 @@ void print_header(int topology_depth)
+ 	switch (topology_depth) {
+ 	case TOPOLOGY_DEPTH_PKG:
+ 		printf(" PKG|");
+-		break;
+ 	case TOPOLOGY_DEPTH_CORE:
+ 		printf("CORE|");
+-		break;
+ 	case	TOPOLOGY_DEPTH_CPU:
+ 		printf(" CPU|");
+ 		break;
+@@ -167,10 +165,8 @@ void print_results(int topology_depth, int cpu)
+ 	switch (topology_depth) {
+ 	case TOPOLOGY_DEPTH_PKG:
+ 		printf("%4d|", cpu_top.core_info[cpu].pkg);
+-		break;
+ 	case TOPOLOGY_DEPTH_CORE:
+ 		printf("%4d|", cpu_top.core_info[cpu].core);
+-		break;
+ 	case TOPOLOGY_DEPTH_CPU:
+ 		printf("%4d|", cpu_top.core_info[cpu].cpu);
+ 		break;
 -- 
 2.39.5
 
