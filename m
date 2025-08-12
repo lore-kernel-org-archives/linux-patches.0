@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F0A3F9D2;
-	Tue, 12 Aug 2025 18:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A113F9D2;
+	Tue, 12 Aug 2025 18:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023052; cv=none; b=AqxptYR3pQ/lgb/US5jHx5zk/3wjPU5vVHMQUFbOZoyu2dWHhiOZ7lo4sA825AdaWt9yCeuoQ8a8AnQ959BwG2ExTxoh3MMix+k7DxgxYAm0TBX4CIackpPeL+6LKNh6pxDicrDvGPYnXBcmZyx6+BGFiiwESh3JxNxHeDGVqxA=
+	t=1755023055; cv=none; b=Afaorm68SHRQ96QFS/ArqU/ua5P0haOoTFPEKg49qjwZMCyHgS8Yl9LPLZ+rfWisk24CpWeixY8AwmvAUo/lgsMMazXduHdVMNGLEUAQtkmeT4p8brwD5eh4HsVmvNn3oVW7fHt2ZueEuX45C3U0mR8y+khaBT5/G1ULFrDRgFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023052; c=relaxed/simple;
-	bh=0ZD/DGY1kDanOaAFB5w310dRrl4hfD/NGZRa2Qn9uis=;
+	s=arc-20240116; t=1755023055; c=relaxed/simple;
+	bh=bmLUoJo3qUmcFz7gcTTZhPs7xfjk+ZFwHGTc1/+bozQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mp5nQLFStmXJ6lz5qgPKnh6ABrDB7UiXcvXnW9wdDYtNnY4iEFC2Ki0LSmeYh5CUAPzsTbdUdSwh3lawAKhXjtsIToydpFx4vJuXfV5kUF9HgWxwrVG7Ygbng7/2hXAevraxTECZ1wdrAhTNAQPat747y9Vxgy5h4+qq/wQUW2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpX88eFu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dBf7QlKCE0i3bG/poDVdchmStJ/brtoYMup+kORvfw54GbaOqMbXROauS5T3UMQm7Zm4Ff0fi8xiY6fyPDkReHgo9q3yAtM8gkT4+n2adSi2a7jhUIIgvfwvyJ1mnGb7K6kSb1jG0Wfe1hYA6yb7okYcQzr3TfRk1r1F6HPpUc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3WyPeAA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpX88eFu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B658AC4CEF0;
-	Tue, 12 Aug 2025 18:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3WyPeAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374AFC4CEF0;
+	Tue, 12 Aug 2025 18:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023052;
-	bh=0ZD/DGY1kDanOaAFB5w310dRrl4hfD/NGZRa2Qn9uis=;
+	s=korg; t=1755023055;
+	bh=bmLUoJo3qUmcFz7gcTTZhPs7xfjk+ZFwHGTc1/+bozQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IpX88eFuhsClEmHaXPefD5MzhgJ8cW4vGYTa+cwY3+vxR7+P0bo0/Y4PCmXvdGEEu
-	 lEqmixeYmxMCCjL7ShLNa2rxc+x0mElYJJrqlHW2f5JO0zO6svx3vGlPyHF8QYknZp
-	 NT0K3GYGymzb2lS69XKQFI4XeKW6dZK+ofKOaKJM=
+	b=H3WyPeAARqQs4q3lr8PAKXCurTN47e342KrrbH7CDZjTHeFQSA3d+gyWVvRlLr2eJ
+	 5M27xMGCcTsYa/DEvkOynebApbMOQ4YDWIkJRuWaKPhbKsHGoWemE2c4pX28y7DmSp
+	 y6NqzAbxgVrCDFIWGmVOYs5H5Uoe9fh7eGRWTY2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Ville Syrjala <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.12 336/369] drm/i915/hdmi: propagate errors from intel_hdmi_init_connector()
-Date: Tue, 12 Aug 2025 19:30:33 +0200
-Message-ID: <20250812173029.343742807@linuxfoundation.org>
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 319/369] smb: client: let recv_done() avoid touching data_transfer after cleanup/move
+Date: Tue, 12 Aug 2025 19:30:16 +0200
+Message-ID: <20250812173028.721934716@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,77 +56,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit 7fb56536fa37e23bc291d31c10e575d500f4fda7 upstream.
+[ Upstream commit 24eff17887cb45c25a427e662dda352973c5c171 ]
 
-Propagate errors from intel_hdmi_init_connector() to be able to handle
-them at callers. This is similar to intel_dp_init_connector().
+Calling enqueue_reassembly() and wake_up_interruptible(&info->wait_reassembly_queue)
+or put_receive_buffer() means the response/data_transfer pointer might
+get re-used by another thread, which means these should be
+the last operations before calling return.
 
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
-Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Closes: https://lore.kernel.org/r/20241031105145.2140590-1-senozhatsky@chromium.org
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/cdaf9e32cc4880c46e120933438c37b4d87be12e.1735568047.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdmi.c |   10 ++++++----
- drivers/gpu/drm/i915/display/intel_hdmi.h |    2 +-
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ fs/smb/client/smbdirect.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_hdmi.c
-+++ b/drivers/gpu/drm/i915/display/intel_hdmi.c
-@@ -3015,7 +3015,7 @@ void intel_infoframe_init(struct intel_d
- 	}
- }
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index d26b8cef82d6..47f2a6cc1c0c 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -479,10 +479,6 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		data_transfer = smbd_response_payload(response);
+ 		data_length = le32_to_cpu(data_transfer->data_length);
  
--void intel_hdmi_init_connector(struct intel_digital_port *dig_port,
-+bool intel_hdmi_init_connector(struct intel_digital_port *dig_port,
- 			       struct intel_connector *intel_connector)
- {
- 	struct intel_display *display = to_intel_display(dig_port);
-@@ -3033,17 +3033,17 @@ void intel_hdmi_init_connector(struct in
- 		    intel_encoder->base.base.id, intel_encoder->base.name);
+-		/*
+-		 * If this is a packet with data playload place the data in
+-		 * reassembly queue and wake up the reading thread
+-		 */
+ 		if (data_length) {
+ 			if (info->full_packet_received)
+ 				response->first_segment = true;
+@@ -491,16 +487,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 				info->full_packet_received = false;
+ 			else
+ 				info->full_packet_received = true;
+-
+-			enqueue_reassembly(
+-				info,
+-				response,
+-				data_length);
+-		} else
+-			put_receive_buffer(info, response);
+-
+-		if (data_length)
+-			wake_up_interruptible(&info->wait_reassembly_queue);
++		}
  
- 	if (DISPLAY_VER(display) < 12 && drm_WARN_ON(dev, port == PORT_A))
--		return;
-+		return false;
+ 		atomic_dec(&info->receive_credits);
+ 		info->receive_credit_target =
+@@ -528,6 +515,16 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			info->keep_alive_requested = KEEP_ALIVE_PENDING;
+ 		}
  
- 	if (drm_WARN(dev, dig_port->max_lanes < 4,
- 		     "Not enough lanes (%d) for HDMI on [ENCODER:%d:%s]\n",
- 		     dig_port->max_lanes, intel_encoder->base.base.id,
- 		     intel_encoder->base.name))
--		return;
-+		return false;
- 
- 	ddc_pin = intel_hdmi_ddc_pin(intel_encoder);
- 	if (!ddc_pin)
--		return;
-+		return false;
- 
- 	drm_connector_init_with_ddc(dev, connector,
- 				    &intel_hdmi_connector_funcs,
-@@ -3088,6 +3088,8 @@ void intel_hdmi_init_connector(struct in
- 					   &conn_info);
- 	if (!intel_hdmi->cec_notifier)
- 		drm_dbg_kms(display->drm, "CEC notifier get failed\n");
++		/*
++		 * If this is a packet with data playload place the data in
++		 * reassembly queue and wake up the reading thread
++		 */
++		if (data_length) {
++			enqueue_reassembly(info, response, data_length);
++			wake_up_interruptible(&info->wait_reassembly_queue);
++		} else
++			put_receive_buffer(info, response);
 +
-+	return true;
- }
+ 		return;
+ 	}
  
- /*
---- a/drivers/gpu/drm/i915/display/intel_hdmi.h
-+++ b/drivers/gpu/drm/i915/display/intel_hdmi.h
-@@ -22,7 +22,7 @@ struct intel_encoder;
- struct intel_hdmi;
- union hdmi_infoframe;
- 
--void intel_hdmi_init_connector(struct intel_digital_port *dig_port,
-+bool intel_hdmi_init_connector(struct intel_digital_port *dig_port,
- 			       struct intel_connector *intel_connector);
- bool intel_hdmi_compute_has_hdmi_sink(struct intel_encoder *encoder,
- 				      const struct intel_crtc_state *crtc_state,
+-- 
+2.39.5
+
 
 
