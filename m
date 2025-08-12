@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B3A29B229;
-	Tue, 12 Aug 2025 18:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C596BB5B;
+	Tue, 12 Aug 2025 18:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024875; cv=none; b=ENuzuUaV4JkEmb+GqoFRBwLE78GFE4P88t6l8gHMUtMBpbeCvyJR2Y4Ciur0BDeI1hR7hSZIgxcyCVnODnM51ut7w2ZZhLDOsxAyekTbwMatOKgkuhm0Yab1eaPVUfvaYLaMAxmDtyQfqVBVfkUKI0oewHTLVOjIyccw7SCHGck=
+	t=1755024878; cv=none; b=mLwZ3AQGIE8/UtuKQnVb7Z5iA7kcEJH+ev8HCcGvaFspaIlhC/36/Ci5ma1qv8Ss0Y/y5X2EuRBil7Cd6Kgm4heyynvfW0PuUnSYuxeyoEmQ5FYjUk+UYbytvPUS0ul2iYPVqhj161XqTHiY10QbbTTjHZdO0m0dcs5gPeDYFeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024875; c=relaxed/simple;
-	bh=mJ/L2jb4DMb9NYSLNnjg35eQEFmqakWtqLUO32whMZA=;
+	s=arc-20240116; t=1755024878; c=relaxed/simple;
+	bh=O9G8mlGxNnGCL8MQbvfA3HwFedaBMY8ozJT76IaegR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qy/HrKPvFNe45AocNFAFX+NxRl8FCsxIY9byjsGPZDzLddgIGQ2/QzbSTv2LL+qHuVNS9C/7pJekRleFgAigYGxUBUbPJGigg2JjT/Ct/LY3MJcGnxSauhocZIIWqeT1M2WG1JcduqZ5RRCDWPTa30LUGnL6YvDxDnWqgBz/e1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DeJRfRQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oArMqXBUt6kHDkkIQkGjBpZltlGUmSz3zoxxlEu3PtgAhLveGSox4/UTvi+08fyBdz98UqIiYFOSIxxDPFUbKL1f6N7heplME4V1zFB87Ig6zCQU3+u63pbhGYQSiZ7PXQRyt9MPerxpmHH7Owyb4LRWDH/hwSSOqownuSlkEn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgjcWLA6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DeJRfRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB829C4CEF0;
-	Tue, 12 Aug 2025 18:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgjcWLA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A31C4CEF0;
+	Tue, 12 Aug 2025 18:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024875;
-	bh=mJ/L2jb4DMb9NYSLNnjg35eQEFmqakWtqLUO32whMZA=;
+	s=korg; t=1755024878;
+	bh=O9G8mlGxNnGCL8MQbvfA3HwFedaBMY8ozJT76IaegR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0DeJRfRQG53g7NZa7UkIJi1nS+WEKiPsoiSAlLN1r0IaPEeYVMozT60CT3rdH70XH
-	 sOACPeNB0771q0ZsvDEkZ0wT13jeFDrbx88CVgUaDwMHMvo6peMoun3grFI5g06Pf6
-	 qNnURa03+lDrR8AYqsq1vCFT4yCPw8AmiFOGtT8M=
+	b=ZgjcWLA63zLt2E7HBg/q1DuX95DaLywQl74rb2lhM3Gju2vftVTM1OAeYx/VRsvSd
+	 NYlfG9zq1MZd1SPvSNkHX33zPSo8FjJn24J5BcebIEIEHXhS9OD1I9YgjVWDJYj+7r
+	 wHrcHBvt0mf/72H9JC6d9JJEgP+d0KfIxNjJUFrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Anastasio <sanastasio@raptorengineering.com>,
 	Timothy Pearson <tpearson@raptorengineering.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 503/627] PCI: pnv_php: Work around switches with broken presence detection
-Date: Tue, 12 Aug 2025 19:33:18 +0200
-Message-ID: <20250812173447.680621114@linuxfoundation.org>
+Subject: [PATCH 6.16 504/627] powerpc/eeh: Export eeh_unfreeze_pe()
+Date: Tue, 12 Aug 2025 19:33:19 +0200
+Message-ID: <20250812173447.872195130@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -55,73 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit 80f9fc2362797538ebd4fd70a1dfa838cc2c2cdb ]
+[ Upstream commit e82b34eed04b0ddcff4548b62633467235672fd3 ]
 
-The Microsemi Switchtec PM8533 PFX 48xG3 [11f8:8533] PCIe switch system
-was observed to incorrectly assert the Presence Detect Set bit in its
-capabilities when tested on a Raptor Computing Systems Blackbird system,
-resulting in the hot insert path never attempting a rescan of the bus
-and any downstream devices not being re-detected.
+The PowerNV hotplug driver needs to be able to clear any frozen PE(s)
+on the PHB after suprise removal of a downstream device.
 
-Work around this by additionally checking whether the PCIe data link is
-active or not when performing presence detection on downstream switches'
-ports, similar to the pciehp_hpc.c driver.
+Export the eeh_unfreeze_pe() symbol to allow implementation of this
+functionality in the php_nv module.
 
-Signed-off-by: Shawn Anastasio <sanastasio@raptorengineering.com>
 Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/505981576.1359853.1752615415117.JavaMail.zimbra@raptorengineeringinc.com
+Link: https://patch.msgid.link/1778535414.1359858.1752615454618.JavaMail.zimbra@raptorengineeringinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pnv_php.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ arch/powerpc/kernel/eeh.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
-index 1304329ca6f7..5476c9e7760d 100644
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -391,6 +391,20 @@ static int pnv_php_get_power_state(struct hotplug_slot *slot, u8 *state)
- 	return 0;
- }
+diff --git a/arch/powerpc/kernel/eeh.c b/arch/powerpc/kernel/eeh.c
+index ca7f7bb2b478..2b5f3323e107 100644
+--- a/arch/powerpc/kernel/eeh.c
++++ b/arch/powerpc/kernel/eeh.c
+@@ -1139,6 +1139,7 @@ int eeh_unfreeze_pe(struct eeh_pe *pe)
  
-+static int pcie_check_link_active(struct pci_dev *pdev)
-+{
-+	u16 lnk_status;
-+	int ret;
-+
-+	ret = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnk_status);
-+	if (ret == PCIBIOS_DEVICE_NOT_FOUND || PCI_POSSIBLE_ERROR(lnk_status))
-+		return -ENODEV;
-+
-+	ret = !!(lnk_status & PCI_EXP_LNKSTA_DLLLA);
-+
-+	return ret;
-+}
-+
- static int pnv_php_get_adapter_state(struct hotplug_slot *slot, u8 *state)
- {
- 	struct pnv_php_slot *php_slot = to_pnv_php_slot(slot);
-@@ -403,6 +417,19 @@ static int pnv_php_get_adapter_state(struct hotplug_slot *slot, u8 *state)
- 	 */
- 	ret = pnv_pci_get_presence_state(php_slot->id, &presence);
- 	if (ret >= 0) {
-+		if (pci_pcie_type(php_slot->pdev) == PCI_EXP_TYPE_DOWNSTREAM &&
-+			presence == OPAL_PCI_SLOT_EMPTY) {
-+			/*
-+			 * Similar to pciehp_hpc, check whether the Link Active
-+			 * bit is set to account for broken downstream bridges
-+			 * that don't properly assert Presence Detect State, as
-+			 * was observed on the Microsemi Switchtec PM8533 PFX
-+			 * [11f8:8533].
-+			 */
-+			if (pcie_check_link_active(php_slot->pdev) > 0)
-+				presence = OPAL_PCI_SLOT_PRESENT;
-+		}
-+
- 		*state = presence;
- 		ret = 0;
- 	} else {
+ 	return ret;
+ }
++EXPORT_SYMBOL_GPL(eeh_unfreeze_pe);
+ 
+ 
+ static struct pci_device_id eeh_reset_ids[] = {
 -- 
 2.39.5
 
