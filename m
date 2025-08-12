@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E762868AF;
-	Tue, 12 Aug 2025 17:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CA82868AF;
+	Tue, 12 Aug 2025 17:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021105; cv=none; b=uSSepG5pnFV/9ZQ2jYlp0piW7JOI/y478gZq7bgaMXZ+YehL/EmkGEHq36Oz2NYLWSGoi9iAyDTUAeBJEy+/P82mW6n3tbzDNn6s0nQHiO7E7AmkTEwyvnRU7KGlBtts+LTcrhbt5UTN/Xu5dWdNVwblLp5YlKTNOE0S5UhHvtw=
+	t=1755021108; cv=none; b=amCQ0H9griiArHMfqph5fk0D6KKiDnFESNM+KJ0img/dZQgUj1Z+rMVgfSyWAv5fusFURu3i9zhJtlrgKzGCNwOmhIDgwfT9oh/n0LXDk+mN2U9wGAgUoWCwxsP+jMM+VuTHuJCHO1gFVw4EZlo3n1wv2yHCjHZ/dVhUwSniL8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021105; c=relaxed/simple;
-	bh=75idTpOlEDqhyYG2F7ggGHbE9OEw9kPqlPfEkBTduPI=;
+	s=arc-20240116; t=1755021108; c=relaxed/simple;
+	bh=NoSvVet8nOhxFuN39w6mCBgBkLQQTyNMjl40STqeEek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2j3q/9hYuWPbntyAUZ9RrHxAWVckNlMgKsR3nkiCxQ65fTpj2pZQMuNN6+GM6prQLYY81l6tIr2Se+SExYcnauE1pE+8+uSOGU51vUsSLcK2951eqnxCL2sK0UYXT2cLpS7bw44sssehgpFYl6HPhnBeo68bLUSTj+OdiJpiOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbENgoOJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=msCHeQDFgBcqlHQYNRoZYjYG7uJfJoQx4K8Jq5ASwIVC/PS0Ay3/M+X1iHtZXHMs11wbLRXoo1MnoUZknyKHAAcbRfeem7XHRPGCA3/QOeTyxOwgq90rYyx+P6/q0DOCGXlO873XVt95AvYPeJsiizl6senRCygATPBdzeIMIRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h13Y9N+Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbENgoOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA66C4CEF0;
-	Tue, 12 Aug 2025 17:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h13Y9N+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F128C4CEF0;
+	Tue, 12 Aug 2025 17:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021105;
-	bh=75idTpOlEDqhyYG2F7ggGHbE9OEw9kPqlPfEkBTduPI=;
+	s=korg; t=1755021108;
+	bh=NoSvVet8nOhxFuN39w6mCBgBkLQQTyNMjl40STqeEek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sbENgoOJzMPuwnOBIidvt6Q3ba5usfQn3EK4n7RGwJtn9XySGNDE6XEMcibFfBA6P
-	 E7VF/WZwbdfMTY/8Ez3onc8HACuCinhvMzNrkI8YAIeOx46A/cyyt8eb8GTB8KIREY
-	 4D67a3fZvyCvyCrzg1NieKS8FbWKAxLpqnnxsbEg=
+	b=h13Y9N+QmhdMrlWCCxidM6gdh84j1q2OLFVJxD0eILjrW8lbpiBZA/OxGxi+jntcx
+	 xhjlMcrw7vH/+tlFftxOoTXcOrJzg51jeynvfP6IBY+oHMTBtQQx+tvlcoLgu/9va3
+	 Dos9vExpqfuTutGMRBynGFOkui6INkMJ5KMX+Vvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stav Aviram <saviram@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/262] net/mlx5: Check device memory pointer before usage
-Date: Tue, 12 Aug 2025 19:27:30 +0200
-Message-ID: <20250812172955.628686050@linuxfoundation.org>
+Subject: [PATCH 6.1 212/253] pNFS/flexfiles: dont attempt pnfs on fatal DS errors
+Date: Tue, 12 Aug 2025 19:30:00 +0200
+Message-ID: <20250812172957.853620459@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +47,178 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stav Aviram <saviram@nvidia.com>
+From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
 
-[ Upstream commit 70f238c902b8c0461ae6fbb8d1a0bbddc4350eea ]
+[ Upstream commit f06bedfa62d57f7b67d44aacd6badad2e13a803f ]
 
-Add a NULL check before accessing device memory to prevent a crash if
-dev->dm allocation in mlx5_init_once() fails.
+When an applications get killed (SIGTERM/SIGINT) while pNFS client performs a connection
+to DS, client ends in an infinite loop of connect-disconnect. This
+source of the issue, it that flexfilelayoutdev#nfs4_ff_layout_prepare_ds gets an error
+on nfs4_pnfs_ds_connect with status ERESTARTSYS, which is set by rpc_signal_task, but
+the error is treated as transient, thus retried.
 
-Fixes: c9b9dcb430b3 ("net/mlx5: Move device memory management to mlx5_core")
-Signed-off-by: Stav Aviram <saviram@nvidia.com>
-Link: https://patch.msgid.link/c88711327f4d74d5cebc730dc629607e989ca187.1751370035.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The issue is reproducible with Ctrl+C the following script(there should be ~1000 files in
+a directory, client should must not have any connections to DSes):
+
+```
+echo 3 > /proc/sys/vm/drop_caches
+
+for i in *
+do
+   head -1 $i
+done
+```
+
+The change aims to propagate the nfs4_ff_layout_prepare_ds error state
+to the caller that can decide whatever this is a retryable error or not.
+
+Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Link: https://lore.kernel.org/r/20250627071751.189663-1-tigran.mkrtchyan@desy.de
+Fixes: 260f32adb88d ("pNFS/flexfiles: Check the result of nfs4_pnfs_ds_connect")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/dm.c                  | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c | 4 ++--
- drivers/net/ethernet/mellanox/mlx5/core/main.c   | 3 ---
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c    | 26 ++++++++++++++---------
+ fs/nfs/flexfilelayout/flexfilelayoutdev.c |  6 +++---
+ 2 files changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/dm.c b/drivers/infiniband/hw/mlx5/dm.c
-index 3669c90b2dad..672e5cfd2fca 100644
---- a/drivers/infiniband/hw/mlx5/dm.c
-+++ b/drivers/infiniband/hw/mlx5/dm.c
-@@ -282,7 +282,7 @@ static struct ib_dm *handle_alloc_dm_memic(struct ib_ucontext *ctx,
- 	int err;
- 	u64 address;
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index aa55b5df065b..5dd16f4ae74d 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -745,14 +745,14 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
+ {
+ 	struct nfs4_ff_layout_segment *fls = FF_LAYOUT_LSEG(lseg);
+ 	struct nfs4_ff_layout_mirror *mirror;
+-	struct nfs4_pnfs_ds *ds;
++	struct nfs4_pnfs_ds *ds = ERR_PTR(-EAGAIN);
+ 	u32 idx;
  
--	if (!MLX5_CAP_DEV_MEM(dm_db->dev, memic))
-+	if (!dm_db || !MLX5_CAP_DEV_MEM(dm_db->dev, memic))
- 		return ERR_PTR(-EOPNOTSUPP);
+ 	/* mirrors are initially sorted by efficiency */
+ 	for (idx = start_idx; idx < fls->mirror_array_cnt; idx++) {
+ 		mirror = FF_LAYOUT_COMP(lseg, idx);
+ 		ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
+-		if (!ds)
++		if (IS_ERR(ds))
+ 			continue;
  
- 	dm = kzalloc(sizeof(*dm), GFP_KERNEL);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c
-index 9482e51ac82a..bdbbfaf504d9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/dm.c
-@@ -28,7 +28,7 @@ struct mlx5_dm *mlx5_dm_create(struct mlx5_core_dev *dev)
+ 		if (check_device &&
+@@ -760,10 +760,10 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
+ 			continue;
  
- 	dm = kzalloc(sizeof(*dm), GFP_KERNEL);
- 	if (!dm)
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
- 
- 	spin_lock_init(&dm->lock);
- 
-@@ -80,7 +80,7 @@ struct mlx5_dm *mlx5_dm_create(struct mlx5_core_dev *dev)
- err_steering:
- 	kfree(dm);
- 
--	return ERR_PTR(-ENOMEM);
-+	return NULL;
- }
- 
- void mlx5_dm_cleanup(struct mlx5_core_dev *dev)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 32fa789a6960..62a85f09b52f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1055,9 +1055,6 @@ static int mlx5_init_once(struct mlx5_core_dev *dev)
+ 		*best_idx = idx;
+-		return ds;
++		break;
  	}
  
- 	dev->dm = mlx5_dm_create(dev);
--	if (IS_ERR(dev->dm))
--		mlx5_core_warn(dev, "Failed to init device memory %ld\n", PTR_ERR(dev->dm));
--
- 	dev->tracer = mlx5_fw_tracer_create(dev);
- 	dev->hv_vhca = mlx5_hv_vhca_create(dev);
- 	dev->rsc_dump = mlx5_rsc_dump_create(dev);
+-	return NULL;
++	return ds;
+ }
+ 
+ static struct nfs4_pnfs_ds *
+@@ -933,7 +933,7 @@ ff_layout_pg_init_write(struct nfs_pageio_descriptor *pgio,
+ 	for (i = 0; i < pgio->pg_mirror_count; i++) {
+ 		mirror = FF_LAYOUT_COMP(pgio->pg_lseg, i);
+ 		ds = nfs4_ff_layout_prepare_ds(pgio->pg_lseg, mirror, true);
+-		if (!ds) {
++		if (IS_ERR(ds)) {
+ 			if (!ff_layout_no_fallback_to_mds(pgio->pg_lseg))
+ 				goto out_mds;
+ 			pnfs_generic_pg_cleanup(pgio);
+@@ -1839,6 +1839,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ 	u32 idx = hdr->pgio_mirror_idx;
+ 	int vers;
+ 	struct nfs_fh *fh;
++	bool ds_fatal_error = false;
+ 
+ 	dprintk("--> %s ino %lu pgbase %u req %zu@%llu\n",
+ 		__func__, hdr->inode->i_ino,
+@@ -1846,8 +1847,10 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ 
+ 	mirror = FF_LAYOUT_COMP(lseg, idx);
+ 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
+-	if (!ds)
++	if (IS_ERR(ds)) {
++		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
+ 		goto out_failed;
++	}
+ 
+ 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
+ 						   hdr->inode);
+@@ -1888,7 +1891,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ 	return PNFS_ATTEMPTED;
+ 
+ out_failed:
+-	if (ff_layout_avoid_mds_available_ds(lseg))
++	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
+ 	trace_pnfs_mds_fallback_read_pagelist(hdr->inode,
+ 			hdr->args.offset, hdr->args.count,
+@@ -1909,11 +1912,14 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ 	int vers;
+ 	struct nfs_fh *fh;
+ 	u32 idx = hdr->pgio_mirror_idx;
++	bool ds_fatal_error = false;
+ 
+ 	mirror = FF_LAYOUT_COMP(lseg, idx);
+ 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, true);
+-	if (!ds)
++	if (IS_ERR(ds)) {
++		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
+ 		goto out_failed;
++	}
+ 
+ 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
+ 						   hdr->inode);
+@@ -1956,7 +1962,7 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ 	return PNFS_ATTEMPTED;
+ 
+ out_failed:
+-	if (ff_layout_avoid_mds_available_ds(lseg))
++	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
+ 	trace_pnfs_mds_fallback_write_pagelist(hdr->inode,
+ 			hdr->args.offset, hdr->args.count,
+@@ -1998,7 +2004,7 @@ static int ff_layout_initiate_commit(struct nfs_commit_data *data, int how)
+ 	idx = calc_ds_index_from_commit(lseg, data->ds_commit_index);
+ 	mirror = FF_LAYOUT_COMP(lseg, idx);
+ 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, true);
+-	if (!ds)
++	if (IS_ERR(ds))
+ 		goto out_err;
+ 
+ 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
+diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+index d21c5ecfbf1c..95d5dca67145 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
++++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+@@ -370,11 +370,11 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
+ 			  struct nfs4_ff_layout_mirror *mirror,
+ 			  bool fail_return)
+ {
+-	struct nfs4_pnfs_ds *ds = NULL;
++	struct nfs4_pnfs_ds *ds;
+ 	struct inode *ino = lseg->pls_layout->plh_inode;
+ 	struct nfs_server *s = NFS_SERVER(ino);
+ 	unsigned int max_payload;
+-	int status;
++	int status = -EAGAIN;
+ 
+ 	if (!ff_layout_init_mirror_ds(lseg->pls_layout, mirror))
+ 		goto noconnect;
+@@ -412,7 +412,7 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
+ 	ff_layout_send_layouterror(lseg);
+ 	if (fail_return || !ff_layout_has_available_ds(lseg))
+ 		pnfs_error_mark_layout_for_return(ino, lseg);
+-	ds = NULL;
++	ds = ERR_PTR(status);
+ out:
+ 	return ds;
+ }
 -- 
 2.39.5
 
