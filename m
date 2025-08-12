@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25539305E13;
-	Tue, 12 Aug 2025 18:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9536C284685;
+	Tue, 12 Aug 2025 18:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024847; cv=none; b=NTEGCDZ6noWeTG1ddk8GSJY0IjQtWbotYF7yDQnX2UDTBWQzKcgnlqzRZcSZOXScL0Esv02IWm5ze3RobdVo843LIMf6tuH3PjtSm0tpwoGO/9ddEyzfH5UU8l3ktJksU7U2IGa9Ql8N5ORi8zVwmUk9piAYn/vAJ+iIGZVgtnk=
+	t=1755024850; cv=none; b=PjG39EAkvfHGMomb/qqzGnKYpQCEJNcKoTZ0SpF2ugmDNQegvI5lx5EBUUdM+Bj75uOQ6iKFHTDqH4fmcxB+CGW1KNNv7xnSR7GmBM/uWkUgh0aGN0QyOvKwiankkz158WEZ5xQAY5Bq7e3kTL2Ja1gd6WndVWy92N4qTQRinDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024847; c=relaxed/simple;
-	bh=uJ/FoUlQHP5O0gmaRT5wpumkH7YkGtvuiIMQxEqzbyA=;
+	s=arc-20240116; t=1755024850; c=relaxed/simple;
+	bh=hee5B8MHsciLHMcnNK3ufgTMQlPxB1zw0ORa9OI4JMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kb2DmBxM4K26pgx6nSwjqH4rGTdeqxKXRWi7kUdBDCo0QwRGBAZXTJPXPfDkhPR8pjTVtp1w/ESdFvxaw5+ucWrT4qVDR/C8sasBiFiuYSPuT4zj741oS2R7qfdOO6HRvalEcLJkdjQ6uIBLG/sVJzLA/s4YHHrpSrZmmMZt0CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ou9UrRD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GcNhnSx2rYOWev3LxVxxW5Rf4Gkl1gGqjdgb6VJ+RQYiDDrx5ATGv+1PyUa9x2KA30iLby3wmE0FuueirjZkYCaQIeW5aszpE7bFJ3JTu0P+QsJWHAm+yqtXgOxvZYRmF56i2yOAchnGF0Kis2amZSGjChZWaDjh1TOPwBFVZpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCxY+lH1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ou9UrRD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C8FC4CEF0;
-	Tue, 12 Aug 2025 18:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCxY+lH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056AAC4CEF0;
+	Tue, 12 Aug 2025 18:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024847;
-	bh=uJ/FoUlQHP5O0gmaRT5wpumkH7YkGtvuiIMQxEqzbyA=;
+	s=korg; t=1755024850;
+	bh=hee5B8MHsciLHMcnNK3ufgTMQlPxB1zw0ORa9OI4JMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Ou9UrRDhkb6J2pTFKejNKYueC9d8zdSFRdJmZeOcAZt8wlrwsGrAn3Yu8dUJAdQU
-	 fttCXXnhfUku8tql5doLOAN6RaHMVKJcd/GmucQOpxmoFHxSesUw1qSVatbmrKYZya
-	 CIWVFC0sJo17doYSMv1ZHPiK+wvrS98SkU78ImQw=
+	b=KCxY+lH1r1avSHdRY9S+R216vuD8/OZpMIYAOFYZAhE8ZCGgl5dHEcQphBMOIrq83
+	 nk7gTThNtjP0hc+YqbXeAQCPj6PSVFoHT9wZD5lZJIBRNEebsp7VM2HnvwLMg/Bmzn
+	 prLbGYLisa6DPxIHKL9EomHbwb+0peDQSEMBgtrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 461/627] i3c: fix module_i3c_i2c_driver() with I3C=n
-Date: Tue, 12 Aug 2025 19:32:36 +0200
-Message-ID: <20250812173439.204636952@linuxfoundation.org>
+Subject: [PATCH 6.16 452/627] bpf: Check netfilter ctx accesses are aligned
+Date: Tue, 12 Aug 2025 19:32:27 +0200
+Message-ID: <20250812173437.426835416@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,62 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 5523a466e905b6287b94654ddb364536f2f948cf ]
+[ Upstream commit 9e6448f7b1efb27f8d508b067ecd33ed664a4246 ]
 
-When CONFIG_I3C is disabled and the i3c_i2c_driver_register() happens
-to not be inlined, any driver calling it still references the i3c_driver
-instance, which then causes a link failure:
+Similarly to the previous patch fixing the flow_dissector ctx accesses,
+nf_is_valid_access also doesn't check that ctx accesses are aligned.
+Contrary to flow_dissector programs, netfilter programs don't have
+context conversion. The unaligned ctx accesses are therefore allowed by
+the verifier.
 
-x86_64-linux-ld: drivers/hwmon/lm75.o: in function `lm75_i3c_reg_read':
-lm75.c:(.text+0xc61): undefined reference to `i3cdev_to_dev'
-x86_64-linux-ld: lm75.c:(.text+0xd25): undefined reference to `i3c_device_do_priv_xfers'
-x86_64-linux-ld: lm75.c:(.text+0xdd8): undefined reference to `i3c_device_do_priv_xfers'
-
-This issue was part of the original i3c code, but only now caused problems
-when i3c support got added to lm75.
-
-Change the 'inline' annotations in the header to '__always_inline' to
-ensure that the dead-code-elimination pass in the compiler can optimize
-it out as intended.
-
-Fixes: 6071d10413ff ("hwmon: (lm75) add I3C support for P3T1755")
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250725090609.2456262-1-arnd@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: fd9c663b9ad6 ("bpf: minimal support for programs hooked into netfilter framework")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/853ae9ed5edaa5196e8472ff0f1bb1cc24059214.1754039605.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/i3c/device.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_bpf_link.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/i3c/device.h b/include/linux/i3c/device.h
-index b674f64d0822..7f136de4b73e 100644
---- a/include/linux/i3c/device.h
-+++ b/include/linux/i3c/device.h
-@@ -245,7 +245,7 @@ void i3c_driver_unregister(struct i3c_driver *drv);
-  *
-  * Return: 0 if both registrations succeeds, a negative error code otherwise.
-  */
--static inline int i3c_i2c_driver_register(struct i3c_driver *i3cdrv,
-+static __always_inline int i3c_i2c_driver_register(struct i3c_driver *i3cdrv,
- 					  struct i2c_driver *i2cdrv)
- {
- 	int ret;
-@@ -270,7 +270,7 @@ static inline int i3c_i2c_driver_register(struct i3c_driver *i3cdrv,
-  * Note that when CONFIG_I3C is not enabled, this function only unregisters the
-  * @i2cdrv.
-  */
--static inline void i3c_i2c_driver_unregister(struct i3c_driver *i3cdrv,
-+static __always_inline void i3c_i2c_driver_unregister(struct i3c_driver *i3cdrv,
- 					     struct i2c_driver *i2cdrv)
- {
- 	if (IS_ENABLED(CONFIG_I3C))
+diff --git a/net/netfilter/nf_bpf_link.c b/net/netfilter/nf_bpf_link.c
+index 25bbac8986c2..c12250e50a8b 100644
+--- a/net/netfilter/nf_bpf_link.c
++++ b/net/netfilter/nf_bpf_link.c
+@@ -295,6 +295,9 @@ static bool nf_is_valid_access(int off, int size, enum bpf_access_type type,
+ 	if (off < 0 || off >= sizeof(struct bpf_nf_ctx))
+ 		return false;
+ 
++	if (off % size != 0)
++		return false;
++
+ 	if (type == BPF_WRITE)
+ 		return false;
+ 
 -- 
 2.39.5
 
