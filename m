@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8CC268C73;
-	Tue, 12 Aug 2025 17:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103F72FABE3;
+	Tue, 12 Aug 2025 17:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020388; cv=none; b=l6Z+eq/OGcKwyloQ0+a1TvOQGrTu3kSgKCuuu1+Z1qBQc7D1bnPGybAD/G8+5JxsQYkXxRyIwqtLMAgOcpgrfiNlHIufmJO1idQgeIZMF/UQVKlughbIyEt319fbLW6uY6hFMuGGSDgWVLeQ2CMFyereikszx3BKNyvs+QtDNRM=
+	t=1755020392; cv=none; b=OMw5pPfpbyjILDB1KBYKkuqZfLHWiBVTn2PgTEsuEbLm5JYbHvaR7XI4kw+CfPey6Zc8D25RM16qZn2E0GTzypSVXVpoooIh+G9jdpXleH7dJg2q8tM+PLhIo50geEmcjy2fdkFWCFvqSVUEMkb7skEra9mMoqjtKHslKTLUwbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020388; c=relaxed/simple;
-	bh=7fkkL68pgk+hI7aTlFnFA9I47DrVDYUuevuMLxHEEjw=;
+	s=arc-20240116; t=1755020392; c=relaxed/simple;
+	bh=UdoFW+h9V3mYba8VT1cA7vuQVGJMlrpZlO8pvgJ/1FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9u3FUiPkwjSa0yvHv5h96We6Qub0BpiSIB++WWyzrLIdfw3kc0HHi9iGLD/RNTzQUZvPPt3Y9AdnMD6gCUUBTEgNvNn5YeZHP8eF39ZASzcR6gnNJoPObMEvmAS6kVQaaY6SkB/KTc+s21YjHbKLVDAy7UFILt29I1nJLbpZ9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHnpsIuR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pD8FPwD0Lmf0KsbioH6B7gQeeXMKMOw3KWKEjPgOHvzpbEqeXhh7TL5A0/QA2+JQo/sVXmUVNw4rKVLj8sYxBkTl1bF3/IYvBnYFOcg32kMN776+hAX6MAvz25lirY6J3xiG5cc49RiYBl5KXNFo9vkOKNoGLi1ldp9eHj+85Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fXeX4aw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHnpsIuR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378EAC4CEF0;
-	Tue, 12 Aug 2025 17:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fXeX4aw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B15C4CEF0;
+	Tue, 12 Aug 2025 17:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020388;
-	bh=7fkkL68pgk+hI7aTlFnFA9I47DrVDYUuevuMLxHEEjw=;
+	s=korg; t=1755020391;
+	bh=UdoFW+h9V3mYba8VT1cA7vuQVGJMlrpZlO8pvgJ/1FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHnpsIuR7U0i96yNuE23OvKnITNU9tcLpejcpej0OCOWJhqX6pPeFvDH45fGFMnxU
-	 IjMu7MCAVzJllxtLtiNSWliaeF4+1O71s63HtZVT+RGwhdHlrxmPqlGQBm8908dEDj
-	 aY9r0UwQiXxwdfraj877PTRYgVYq6wFV7fHCwUsE=
+	b=0fXeX4awAIfyxWoNuO0I/JjZVYnwynTZzldDu5Yk40OB2IMwbRWPAR2kjH4LvypxF
+	 micBOEvf/ZgNTb22XdFuuNYv7HCxNBoxoe/7zaxW4NtwHiDOJFWDbIxDbW6dbboSBI
+	 323GIVF/EGMWiCFXA9/C4fdK9cFiJkxDV+kxghis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a91fcdbd2698f99db8f4@syzkaller.appspotmail.com,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	=?UTF-8?q?Giedrius=20Trainavi=C4=8Dius?= <giedrius@blokas.io>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/253] Revert "fs/ntfs3: Replace inode_trylock with inode_lock"
-Date: Tue, 12 Aug 2025 19:27:35 +0200
-Message-ID: <20250812172951.579638059@linuxfoundation.org>
+Subject: [PATCH 6.1 068/253] ASoC: soc-dai: tidyup return value of snd_soc_xlate_tdm_slot_mask()
+Date: Tue, 12 Aug 2025 19:27:36 +0200
+Message-ID: <20250812172951.621950757@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -46,49 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit a49f0abd8959048af18c6c690b065eb0d65b2d21 ]
+[ Upstream commit f4c77d5af0a9cd0ee22617baa8b49d0e151fbda7 ]
 
-This reverts commit 69505fe98f198ee813898cbcaf6770949636430b.
+commit 7f1186a8d738661 ("ASoC: soc-dai: check return value at
+snd_soc_dai_set_tdm_slot()") checks return value of
+xlate_tdm_slot_mask() (A1)(A2).
 
-Initially, conditional lock acquisition was removed to fix an xfstest bug
-that was observed during internal testing. The deadlock reported by syzbot
-is resolved by reintroducing conditional acquisition. The xfstest bug no
-longer occurs on kernel version 6.16-rc1 during internal testing. I
-assume that changes in other modules may have contributed to this.
+	/*
+	 * ...
+(Y)	 * TDM mode can be disabled by passing 0 for @slots. In this case @tx_mask,
+	 * @rx_mask and @slot_width will be ignored.
+	 * ...
+	 */
+	int snd_soc_dai_set_tdm_slot(...)
+	{
+		...
+		if (...)
+(A1)			ret = dai->driver->ops->xlate_tdm_slot_mask(...);
+		else
+(A2)			ret = snd_soc_xlate_tdm_slot_mask(...);
+		if (ret)
+			goto err;
+		...
+	}
 
-Fixes: 69505fe98f19 ("fs/ntfs3: Replace inode_trylock with inode_lock")
-Reported-by: syzbot+a91fcdbd2698f99db8f4@syzkaller.appspotmail.com
-Suggested-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+snd_soc_xlate_tdm_slot_mask() (A2) will return -EINVAL if slots was 0 (X),
+but snd_soc_dai_set_tdm_slot() allow to use it (Y).
+
+(A)	static int snd_soc_xlate_tdm_slot_mask(...)
+	{
+		...
+		if (!slots)
+(X)			return -EINVAL;
+		...
+	}
+
+Call xlate_tdm_slot_mask() only if slots was non zero.
+
+Reported-by: Giedrius Trainavičius <giedrius@blokas.io>
+Closes: https://lore.kernel.org/r/CAMONXLtSL7iKyvH6w=CzPTxQdBECf++hn8RKL6Y4=M_ou2YHow@mail.gmail.com
+Fixes: 7f1186a8d738661 ("ASoC: soc-dai: check return value at snd_soc_dai_set_tdm_slot()")
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/8734cdfx59.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/soc-dai.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 46eec986ec9c..6d9c1dfe9b1b 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -317,7 +317,10 @@ static int ntfs_file_mmap(struct file *file, struct vm_area_struct *vma)
- 		}
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index ba38b6e6b264..ba8a99124869 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -268,13 +268,15 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
+ {
+ 	int ret = -ENOTSUPP;
  
- 		if (ni->i_valid < to) {
--			inode_lock(inode);
-+			if (!inode_trylock(inode)) {
-+				err = -EAGAIN;
-+				goto out;
-+			}
- 			err = ntfs_extend_initialized_size(file, ni,
- 							   ni->i_valid, to);
- 			inode_unlock(inode);
+-	if (dai->driver->ops &&
+-	    dai->driver->ops->xlate_tdm_slot_mask)
+-		ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
+-	else
+-		ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
+-	if (ret)
+-		goto err;
++	if (slots) {
++		if (dai->driver->ops &&
++		    dai->driver->ops->xlate_tdm_slot_mask)
++			ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++		else
++			ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++		if (ret)
++			goto err;
++	}
+ 
+ 	dai->tx_mask = tx_mask;
+ 	dai->rx_mask = rx_mask;
 -- 
 2.39.5
 
