@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C0C2868AF;
-	Tue, 12 Aug 2025 17:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BE52868AF;
+	Tue, 12 Aug 2025 17:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021077; cv=none; b=q9v5IKrrt4o+gCWXGqOu8037bYClrcQ4dLn1HYnJCTe9VqxyfWQDYDg5dpF2jtMFXqlUSVy3thmI25ckgL+XvkRNDltcrdznAI0VzKyqMXS8f5D+aPw2Zg12BvGJ0XX/vKk7qoWjFReP2VGdrkSEPjWZ6IGquUhwXlwJ0CxsGJE=
+	t=1755021080; cv=none; b=DS8xs4HQGUODwzm4Xxdt86xUZjLmo5/NkyDeNsTL0wPHyjpuhJv+nim3PHWQGbHrGg8hLmMN/DZYMW5RSvPJ/PQE0PF8Z8okm5FzyWTcuYMjFXcdr/T1+897ah9EbCrFuhcWatWn9fqjnFPU2ED005DfDMy874NL+vcI7qmNzN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021077; c=relaxed/simple;
-	bh=fHASWCmMh0tyxsTf8XbZhsrmWp6dnCfCX41cxvSvSeQ=;
+	s=arc-20240116; t=1755021080; c=relaxed/simple;
+	bh=3HR+7pEFSima9heqlmjRGUHNhj/D0GLRlaZzaXin4GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftglIUaR5hswbF6+TVwkMxayoBFboP+svCfAGhJ0b3j3pf06NVPbXGAPx2H8nj+toHQZVoIS4d/gpvPTIso8Tj4tvzBklYoifeS+/rXxJJa5NjANU1LNmuV3+4Bsx58tVpkna9zRBopgzWZUydXNv19sTNOOd5jNVYCWV5XocqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdFENiIt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BMlc9eA3BwVtEQdu/p7cOgfs9KFlJju+YvudeI4kSOplZC+yMykRIvmfRscrGMndtZS6oeA/f1KyzadrYrNtr+NoenyQ33yBuhSGaRC6BJ3YHPCmIDg/LmLJYwnk92/Vm3DlyJaZ5yXD4loSf+sLXR0FfEolbSomPaeL8CYndo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyNWwWXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdFENiIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF18C4CEF0;
-	Tue, 12 Aug 2025 17:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyNWwWXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C501C4CEF0;
+	Tue, 12 Aug 2025 17:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021077;
-	bh=fHASWCmMh0tyxsTf8XbZhsrmWp6dnCfCX41cxvSvSeQ=;
+	s=korg; t=1755021080;
+	bh=3HR+7pEFSima9heqlmjRGUHNhj/D0GLRlaZzaXin4GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdFENiIt1RE825ceWOiKABnVOJ9QeELDpjbs8gRMo//WI1gVoqPykzWmLXSkbLIiG
-	 5y8oiybngNLLszLZY6ofFXwIfwHjGXGsynPeqamY/s+IrK3p4TR36PxRmyBf/IkTvC
-	 IMwXFURFloPc+3iNLyrxxQkaqch4MX2BTbGwiNX8=
+	b=DyNWwWXPnttUxC6a6+NfsMCb8umxpvyN8Oxua5DK4GD2nsliKKoPanKjIJo9jx2be
+	 Gh+UwJ3sgu+KkmaNtq0LJlvH5YpK08x8rNS/vSfjaBe9ugtTH8Qisou4N8LaV+gcTt
+	 VndP5dI1j6ziGJhkVnK2V+XsEfshaKFdningkjeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Timothy Pearson <tpearson@raptorengineering.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/262] wifi: iwlwifi: Fix memory leak in iwl_mvm_init()
-Date: Tue, 12 Aug 2025 19:27:26 +0200
-Message-ID: <20250812172955.456377686@linuxfoundation.org>
+Subject: [PATCH 6.1 208/253] powerpc/eeh: Export eeh_unfreeze_pe()
+Date: Tue, 12 Aug 2025 19:29:56 +0200
+Message-ID: <20250812172957.675726693@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit ed2e916c890944633d6826dce267579334f63ea5 ]
+[ Upstream commit e82b34eed04b0ddcff4548b62633467235672fd3 ]
 
-When iwl_opmode_register() fails, it does not unregster rate control,
-which will cause a memory leak issue, this patch fixes it.
+The PowerNV hotplug driver needs to be able to clear any frozen PE(s)
+on the PHB after suprise removal of a downstream device.
 
-Fixes: 9f66a397c877 ("iwlwifi: mvm: rs: add ops for the new rate scaling in the FW")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://patch.msgid.link/20221109035213.570-1-xiujianfeng@huawei.com
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Export the eeh_unfreeze_pe() symbol to allow implementation of this
+functionality in the php_nv module.
+
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/1778535414.1359858.1752615454618.JavaMail.zimbra@raptorengineeringinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/eeh.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-index b2cf5aeff7e3..d2dbbc9fe384 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -65,8 +65,10 @@ static int __init iwl_mvm_init(void)
- 	}
- 
- 	ret = iwl_opmode_register("iwlmvm", &iwl_mvm_ops);
--	if (ret)
-+	if (ret) {
- 		pr_err("Unable to register MVM op_mode: %d\n", ret);
-+		iwl_mvm_rate_control_unregister();
-+	}
+diff --git a/arch/powerpc/kernel/eeh.c b/arch/powerpc/kernel/eeh.c
+index 2e286bba2f64..82626363a309 100644
+--- a/arch/powerpc/kernel/eeh.c
++++ b/arch/powerpc/kernel/eeh.c
+@@ -1130,6 +1130,7 @@ int eeh_unfreeze_pe(struct eeh_pe *pe)
  
  	return ret;
  }
++EXPORT_SYMBOL_GPL(eeh_unfreeze_pe);
+ 
+ 
+ static struct pci_device_id eeh_reset_ids[] = {
 -- 
 2.39.5
 
