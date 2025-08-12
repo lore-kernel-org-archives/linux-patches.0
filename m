@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FF818FC91;
-	Tue, 12 Aug 2025 18:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B89F282E1;
+	Tue, 12 Aug 2025 18:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021731; cv=none; b=fgqgpi9dqzaqYMq7OVuNM4dTSa7VaCNQMmYxEGl5xoN+TR/LktEJmtw6H8OPTTCVS/OEZOaNJNfHrXJCLJfJzIKQ2E4RouirNenoBXffcZa90DKR+SXdMwgRz0MGZgnGaIcvFLnEIbgloWcMn35OmmDcWLwbM7Ar5D0NAa+0T38=
+	t=1755021735; cv=none; b=ToLKWvlG+M0TIeMHdbAir6c9LPHykQA7FmS9nsxKtDeZci3H8l+QD+aZM1BD1AX9J0mMb595MJWiZRZV9UywiFJjTpeA9OOXpvFAzN1Tr0VkvuUggrtPYoER8KSwlriL1Tlot0CI1Sw3brtYEP+GK+bEuIZ0iyd56C3ZKKeN1hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021731; c=relaxed/simple;
-	bh=Hdyy/qqU9F9KciYUT7Auc6yIBtOpbUTUsyg3r/qQcdY=;
+	s=arc-20240116; t=1755021735; c=relaxed/simple;
+	bh=BlwJ10up53TInoOrbHwfp4xDpUIEZ0iSF1qmi+rm6bU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o8Kfg1vZ4h7duqyOTDCihsiwpBhgcOX95gAB3PmVkMoO3l4JVwJFSyHnuMAaTmgo74vv3ol9MkBAxIB4FGekjKkfTe8+FbS9otoFfFYhXMbu1CP65ypI7SmZFMAuiGwMzlc9nuT6GMgc6s2FvfPYt61l+AFa3ozuER+Dl+xYhgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGZTXB5a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERTXSlaOg+0txjIAZxX/0Hxu14q6VAijhMp/09O6q7C6VMEvNcqlYoT4spH5vu2GM8aaEmJPhoPBcDVSn9GQDNAPEuCPGQkbhI4DoZ5ere+2/BxX54KVzsKy5qEuOCPiSk++avppvj+kOcd40zewPac1DH2zjdFxGZ9UJFF5nSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gt3YIWea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGZTXB5a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DB4C4CEF0;
-	Tue, 12 Aug 2025 18:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gt3YIWea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702C8C4CEF0;
+	Tue, 12 Aug 2025 18:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021731;
-	bh=Hdyy/qqU9F9KciYUT7Auc6yIBtOpbUTUsyg3r/qQcdY=;
+	s=korg; t=1755021734;
+	bh=BlwJ10up53TInoOrbHwfp4xDpUIEZ0iSF1qmi+rm6bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wGZTXB5a87xDubKxoOZlQkxEeANs+0U+u2TOy06sguxkhx5NeB7uFJqJA93yQ6CwX
-	 A5cCObWoZyR/2wEcrgbex/8GzDyaM9M9OwBfnZ5oMCZ0s8NR4esq9uQ7bLMIFO3kQM
-	 VJLHcxBKV43XJz78M5QXiBhAF+dddfwlnDI9a8AY=
+	b=Gt3YIWeaprb2AqdbPgsafsf4qncHe0dFl7zL6aMDs6bsNxD/SQdGRO9Xieg4pF2kx
+	 B70m1M32/ANqtskN58MMLUMMkUC4zM6a0894YEwymwbQjgTykx0QJ7UyLRAibxE1xu
+	 h0IA50SKQyh3drk9nVHf3z8mQZL37AeAujOjmU74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Anastasio <sanastasio@raptorengineering.com>,
-	Timothy Pearson <tpearson@raptorengineering.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	syzbot+af43e647fd835acc02df@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 191/262] PCI: pnv_php: Clean up allocated IRQs on unplug
-Date: Tue, 12 Aug 2025 19:29:39 +0200
-Message-ID: <20250812173001.264711743@linuxfoundation.org>
+Subject: [PATCH 6.6 209/262] ipv6: reject malicious packets in ipv6_gso_segment()
+Date: Tue, 12 Aug 2025 19:29:57 +0200
+Message-ID: <20250812173002.045075495@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -53,227 +54,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timothy Pearson <tpearson@raptorengineering.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4668619092554e1b95c9a5ac2941ca47ba6d548a ]
+[ Upstream commit d45cf1e7d7180256e17c9ce88e32e8061a7887fe ]
 
-When the root of a nested PCIe bridge configuration is unplugged, the
-pnv_php driver leaked the allocated IRQ resources for the child bridges'
-hotplug event notifications, resulting in a panic.
+syzbot was able to craft a packet with very long IPv6 extension headers
+leading to an overflow of skb->transport_header.
 
-Fix this by walking all child buses and deallocating all its IRQ resources
-before calling pci_hp_remove_devices().
+This 16bit field has a limited range.
 
-Also modify the lifetime of the workqueue at struct pnv_php_slot::wq so
-that it is only destroyed in pnv_php_free_slot(), instead of
-pnv_php_disable_irq(). This is required since pnv_php_disable_irq() will
-now be called by workers triggered by hot unplug interrupts, so the
-workqueue needs to stay allocated.
+Add skb_reset_transport_header_careful() helper and use it
+from ipv6_gso_segment()
 
-The abridged kernel panic that occurs without this patch is as follows:
+WARNING: CPU: 0 PID: 5871 at ./include/linux/skbuff.h:3032 skb_reset_transport_header include/linux/skbuff.h:3032 [inline]
+WARNING: CPU: 0 PID: 5871 at ./include/linux/skbuff.h:3032 ipv6_gso_segment+0x15e2/0x21e0 net/ipv6/ip6_offload.c:151
+Modules linked in:
+CPU: 0 UID: 0 PID: 5871 Comm: syz-executor211 Not tainted 6.16.0-rc6-syzkaller-g7abc678e3084 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+ RIP: 0010:skb_reset_transport_header include/linux/skbuff.h:3032 [inline]
+ RIP: 0010:ipv6_gso_segment+0x15e2/0x21e0 net/ipv6/ip6_offload.c:151
+Call Trace:
+ <TASK>
+  skb_mac_gso_segment+0x31c/0x640 net/core/gso.c:53
+  nsh_gso_segment+0x54a/0xe10 net/nsh/nsh.c:110
+  skb_mac_gso_segment+0x31c/0x640 net/core/gso.c:53
+  __skb_gso_segment+0x342/0x510 net/core/gso.c:124
+  skb_gso_segment include/net/gso.h:83 [inline]
+  validate_xmit_skb+0x857/0x11b0 net/core/dev.c:3950
+  validate_xmit_skb_list+0x84/0x120 net/core/dev.c:4000
+  sch_direct_xmit+0xd3/0x4b0 net/sched/sch_generic.c:329
+  __dev_xmit_skb net/core/dev.c:4102 [inline]
+  __dev_queue_xmit+0x17b6/0x3a70 net/core/dev.c:4679
 
-  WARNING: CPU: 0 PID: 687 at kernel/irq/msi.c:292 msi_device_data_release+0x6c/0x9c
-  CPU: 0 UID: 0 PID: 687 Comm: bash Not tainted 6.14.0-rc5+ #2
-  Call Trace:
-   msi_device_data_release+0x34/0x9c (unreliable)
-   release_nodes+0x64/0x13c
-   devres_release_all+0xc0/0x140
-   device_del+0x2d4/0x46c
-   pci_destroy_dev+0x5c/0x194
-   pci_hp_remove_devices+0x90/0x128
-   pci_hp_remove_devices+0x44/0x128
-   pnv_php_disable_slot+0x54/0xd4
-   power_write_file+0xf8/0x18c
-   pci_slot_attr_store+0x40/0x5c
-   sysfs_kf_write+0x64/0x78
-   kernfs_fop_write_iter+0x1b0/0x290
-   vfs_write+0x3bc/0x50c
-   ksys_write+0x84/0x140
-   system_call_exception+0x124/0x230
-   system_call_vectored_common+0x15c/0x2ec
-
-Signed-off-by: Shawn Anastasio <sanastasio@raptorengineering.com>
-Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
-[bhelgaas: tidy comments]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/2013845045.1359852.1752615367790.JavaMail.zimbra@raptorengineeringinc.com
+Fixes: d1da932ed4ec ("ipv6: Separate ipv6 offload support")
+Reported-by: syzbot+af43e647fd835acc02df@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/688a1a05.050a0220.5d226.0008.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250730131738.3385939-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pnv_php.c | 96 ++++++++++++++++++++++++++++-------
- 1 file changed, 77 insertions(+), 19 deletions(-)
+ include/linux/skbuff.h | 23 +++++++++++++++++++++++
+ net/ipv6/ip6_offload.c |  4 +++-
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
-index 092c9ac0d26d..6989b8a0dc6b 100644
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -3,6 +3,7 @@
-  * PCI Hotplug Driver for PowerPC PowerNV platform.
-  *
-  * Copyright Gavin Shan, IBM Corporation 2016.
-+ * Copyright (C) 2025 Raptor Engineering, LLC
-  */
- 
- #include <linux/libfdt.h>
-@@ -35,8 +36,10 @@ static void pnv_php_register(struct device_node *dn);
- static void pnv_php_unregister_one(struct device_node *dn);
- static void pnv_php_unregister(struct device_node *dn);
- 
-+static void pnv_php_enable_irq(struct pnv_php_slot *php_slot);
-+
- static void pnv_php_disable_irq(struct pnv_php_slot *php_slot,
--				bool disable_device)
-+				bool disable_device, bool disable_msi)
- {
- 	struct pci_dev *pdev = php_slot->pdev;
- 	u16 ctrl;
-@@ -52,19 +55,15 @@ static void pnv_php_disable_irq(struct pnv_php_slot *php_slot,
- 		php_slot->irq = 0;
- 	}
- 
--	if (php_slot->wq) {
--		destroy_workqueue(php_slot->wq);
--		php_slot->wq = NULL;
--	}
--
--	if (disable_device) {
-+	if (disable_device || disable_msi) {
- 		if (pdev->msix_enabled)
- 			pci_disable_msix(pdev);
- 		else if (pdev->msi_enabled)
- 			pci_disable_msi(pdev);
-+	}
- 
-+	if (disable_device)
- 		pci_disable_device(pdev);
--	}
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index f7d392d849be..7b7222b4f611 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -2877,6 +2877,29 @@ static inline void skb_reset_transport_header(struct sk_buff *skb)
+ 	skb->transport_header = skb->data - skb->head;
  }
  
- static void pnv_php_free_slot(struct kref *kref)
-@@ -73,7 +72,8 @@ static void pnv_php_free_slot(struct kref *kref)
- 					struct pnv_php_slot, kref);
- 
- 	WARN_ON(!list_empty(&php_slot->children));
--	pnv_php_disable_irq(php_slot, false);
-+	pnv_php_disable_irq(php_slot, false, false);
-+	destroy_workqueue(php_slot->wq);
- 	kfree(php_slot->name);
- 	kfree(php_slot);
- }
-@@ -560,8 +560,58 @@ static int pnv_php_reset_slot(struct hotplug_slot *slot, bool probe)
- static int pnv_php_enable_slot(struct hotplug_slot *slot)
- {
- 	struct pnv_php_slot *php_slot = to_pnv_php_slot(slot);
-+	u32 prop32;
-+	int ret;
++/**
++ * skb_reset_transport_header_careful - conditionally reset transport header
++ * @skb: buffer to alter
++ *
++ * Hardened version of skb_reset_transport_header().
++ *
++ * Returns: true if the operation was a success.
++ */
++static inline bool __must_check
++skb_reset_transport_header_careful(struct sk_buff *skb)
++{
++	long offset = skb->data - skb->head;
 +
-+	ret = pnv_php_enable(php_slot, true);
-+	if (ret)
-+		return ret;
++	if (unlikely(offset != (typeof(skb->transport_header))offset))
++		return false;
 +
-+	/* (Re-)enable interrupt if the slot supports surprise hotplug */
-+	ret = of_property_read_u32(php_slot->dn, "ibm,slot-surprise-pluggable",
-+				   &prop32);
-+	if (!ret && prop32)
-+		pnv_php_enable_irq(php_slot);
- 
--	return pnv_php_enable(php_slot, true);
-+	return 0;
++	if (unlikely(offset == (typeof(skb->transport_header))~0U))
++		return false;
++
++	skb->transport_header = offset;
++	return true;
 +}
 +
-+/*
-+ * Disable any hotplug interrupts for all slots on the provided bus, as well as
-+ * all downstream slots in preparation for a hot unplug.
-+ */
-+static int pnv_php_disable_all_irqs(struct pci_bus *bus)
-+{
-+	struct pci_bus *child_bus;
-+	struct pci_slot *slot;
-+
-+	/* First go down child buses */
-+	list_for_each_entry(child_bus, &bus->children, node)
-+		pnv_php_disable_all_irqs(child_bus);
-+
-+	/* Disable IRQs for all pnv_php slots on this bus */
-+	list_for_each_entry(slot, &bus->slots, list) {
-+		struct pnv_php_slot *php_slot = to_pnv_php_slot(slot->hotplug);
-+
-+		pnv_php_disable_irq(php_slot, false, true);
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * Disable any hotplug interrupts for all downstream slots on the provided
-+ * bus in preparation for a hot unplug.
-+ */
-+static int pnv_php_disable_all_downstream_irqs(struct pci_bus *bus)
-+{
-+	struct pci_bus *child_bus;
-+
-+	/* Go down child buses, recursively deactivating their IRQs */
-+	list_for_each_entry(child_bus, &bus->children, node)
-+		pnv_php_disable_all_irqs(child_bus);
-+
-+	return 0;
- }
+ static inline void skb_set_transport_header(struct sk_buff *skb,
+ 					    const int offset)
+ {
+diff --git a/net/ipv6/ip6_offload.c b/net/ipv6/ip6_offload.c
+index 7f014a8969fb..84b17eeaa57c 100644
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -150,7 +150,9 @@ static struct sk_buff *ipv6_gso_segment(struct sk_buff *skb,
  
- static int pnv_php_disable_slot(struct hotplug_slot *slot)
-@@ -578,6 +628,13 @@ static int pnv_php_disable_slot(struct hotplug_slot *slot)
- 	    php_slot->state != PNV_PHP_STATE_REGISTERED)
- 		return 0;
- 
-+	/*
-+	 * Free all IRQ resources from all child slots before remove.
-+	 * Note that we do not disable the root slot IRQ here as that
-+	 * would also deactivate the slot hot (re)plug interrupt!
-+	 */
-+	pnv_php_disable_all_downstream_irqs(php_slot->bus);
+ 	ops = rcu_dereference(inet6_offloads[proto]);
+ 	if (likely(ops && ops->callbacks.gso_segment)) {
+-		skb_reset_transport_header(skb);
++		if (!skb_reset_transport_header_careful(skb))
++			goto out;
 +
- 	/* Remove all devices behind the slot */
- 	pci_lock_rescan_remove();
- 	pci_hp_remove_devices(php_slot->bus);
-@@ -646,6 +703,15 @@ static struct pnv_php_slot *pnv_php_alloc_slot(struct device_node *dn)
- 		return NULL;
- 	}
- 
-+	/* Allocate workqueue for this slot's interrupt handling */
-+	php_slot->wq = alloc_workqueue("pciehp-%s", 0, 0, php_slot->name);
-+	if (!php_slot->wq) {
-+		SLOT_WARN(php_slot, "Cannot alloc workqueue\n");
-+		kfree(php_slot->name);
-+		kfree(php_slot);
-+		return NULL;
-+	}
-+
- 	if (dn->child && PCI_DN(dn->child))
- 		php_slot->slot_no = PCI_SLOT(PCI_DN(dn->child)->devfn);
- 	else
-@@ -842,14 +908,6 @@ static void pnv_php_init_irq(struct pnv_php_slot *php_slot, int irq)
- 	u16 sts, ctrl;
- 	int ret;
- 
--	/* Allocate workqueue */
--	php_slot->wq = alloc_workqueue("pciehp-%s", 0, 0, php_slot->name);
--	if (!php_slot->wq) {
--		SLOT_WARN(php_slot, "Cannot alloc workqueue\n");
--		pnv_php_disable_irq(php_slot, true);
--		return;
--	}
--
- 	/* Check PDC (Presence Detection Change) is broken or not */
- 	ret = of_property_read_u32(php_slot->dn, "ibm,slot-broken-pdc",
- 				   &broken_pdc);
-@@ -868,7 +926,7 @@ static void pnv_php_init_irq(struct pnv_php_slot *php_slot, int irq)
- 	ret = request_irq(irq, pnv_php_interrupt, IRQF_SHARED,
- 			  php_slot->name, php_slot);
- 	if (ret) {
--		pnv_php_disable_irq(php_slot, true);
-+		pnv_php_disable_irq(php_slot, true, true);
- 		SLOT_WARN(php_slot, "Error %d enabling IRQ %d\n", ret, irq);
- 		return;
- 	}
+ 		segs = ops->callbacks.gso_segment(skb, features);
+ 		if (!segs)
+ 			skb->network_header = skb_mac_header(skb) + nhoff - skb->head;
 -- 
 2.39.5
 
