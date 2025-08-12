@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C5F2DFA3E;
-	Tue, 12 Aug 2025 18:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CD22DFA3E;
+	Tue, 12 Aug 2025 18:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022923; cv=none; b=BI8ZleyRQch4zLoUhRcSTONgZhOv3bqZ6gEX4UQkL2k4CmPYim+JvqaE9QTOTUjzP06MDtQ5OpHPyb9xrj6OPeG1iGLhESCBv+m4bfyI2JgnluSa+zX/cCryMJgRhfnEOyPfElbADeCoBzYm9VVgVUmRYIoaU6EXAGfLxkIwvbs=
+	t=1755022926; cv=none; b=nsuPSJnBwFnSfVE26EgN+CSkZcpQos5mqKAsiZViGJR7zwTeGh5NGKFjuqosn4INsRA4uLDsW2CAZVWOxwXl+M1aq+MhtClCtoR9/FsCDnALGd589B+nGcaBVHoVYOTJ45VERL2QdcimJNuvqdmvHYL0CvwLWChHSQssxxcTBPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022923; c=relaxed/simple;
-	bh=VIDNyFxpEQWxcq6ctNCzsPeYKM+wkq/IhIk3rKZKuEw=;
+	s=arc-20240116; t=1755022926; c=relaxed/simple;
+	bh=ctovTAIE7IkEIsRC3YmaFPmyigl81iPacyuyjjcs+Jc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/WpS2k5FSduHuI7autRu63PoKdpsrnVsS0nzcEqXTcxWewvv36lb5OFfBFhpJmgHsAob6OcX2rV56A0pWb5ty+YO3ba6V6M5buFoSndtooz/tAsVXejvn7ke+Xz8XcX7MSPhla9dubBVjsOPSIl4Oz5qB/XjO/VXMViRYehNSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnMIzXhZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RADuH0LRQtkX4tg1H5b7Z1puroPlKE+uvihLiTkn9r3FnhBwfiN9mQ5W040eACa3xzs69Si1x+vEndcSOqE4RHpyJEE7RAVRWPQ4S/nouKgUVYXfXlAJ/nA+G0SskfFz9P9wdUBmCeRIZC191tAL1SYBU5I82u69d57QnEuDUaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aqdqc3IY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnMIzXhZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06947C4CEF0;
-	Tue, 12 Aug 2025 18:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aqdqc3IY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4898FC4CEF0;
+	Tue, 12 Aug 2025 18:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022923;
-	bh=VIDNyFxpEQWxcq6ctNCzsPeYKM+wkq/IhIk3rKZKuEw=;
+	s=korg; t=1755022926;
+	bh=ctovTAIE7IkEIsRC3YmaFPmyigl81iPacyuyjjcs+Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NnMIzXhZ0P9gaEPNLVxOTjvtewzP3hBrGO8ddg0YlA481yViMI6/+Llu850KJFvPA
-	 18u7ppUCic5WEuYmC12s2dVm59irbN6n4qpG8PRtfHZtBoshsj/wZblgBeN/y/OwEH
-	 jOWOsqkkY9nkZ8cuw5de9f685cfqVzx+rT1VpbVQ=
+	b=Aqdqc3IYJvxDaKYgwpeUEihdJEj0LJ1wYnKFa0peQxcyoH52ee6xMlllhJMorvHEV
+	 VjPWGGe85mYU0tMAYwLjyof+tsi76MLM5/3MJtn65cq1f0FOIz7ND22MB9iSTSgB8c
+	 tZuUabrKoitgEWBjdPwv7KHnlmFpBfMiREKKZMZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	zhangjian <zhangjian496@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 300/369] net: mdio: mdio-bcm-unimac: Correct rate fallback logic
-Date: Tue, 12 Aug 2025 19:29:57 +0200
-Message-ID: <20250812173028.016381186@linuxfoundation.org>
+Subject: [PATCH 6.12 283/369] NFS: Fix filehandle bounds checking in nfs_fh_to_dentry()
+Date: Tue, 12 Aug 2025 19:29:40 +0200
+Message-ID: <20250812173027.294414955@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,52 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit a81649a4efd382497bf3d34a623360263adc6993 ]
+[ Upstream commit ef93a685e01a281b5e2a25ce4e3428cf9371a205 ]
 
-When the parent clock is a gated clock which has multiple parents, the
-clock provider (clk-scmi typically) might return a rate of 0 since there
-is not one of those particular parent clocks that should be chosen for
-returning a rate. Prior to ee975351cf0c ("net: mdio: mdio-bcm-unimac:
-Manage clock around I/O accesses"), we would not always be passing a
-clock reference depending upon how mdio-bcm-unimac was instantiated. In
-that case, we would take the fallback path where the rate is hard coded
-to 250MHz.
+The function needs to check the minimal filehandle length before it can
+access the embedded filehandle.
 
-Make sure that we still fallback to using a fixed rate for the divider
-calculation, otherwise we simply ignore the desired MDIO bus clock
-frequency which can prevent us from interfacing with Ethernet PHYs
-properly.
-
-Fixes: ee975351cf0c ("net: mdio: mdio-bcm-unimac: Manage clock around I/O accesses")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250730202533.3463529-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: zhangjian <zhangjian496@huawei.com>
+Fixes: 20fa19027286 ("nfs: add export operations")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-bcm-unimac.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/nfs/export.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/mdio/mdio-bcm-unimac.c b/drivers/net/mdio/mdio-bcm-unimac.c
-index b7bc70586ee0..369540b43ada 100644
---- a/drivers/net/mdio/mdio-bcm-unimac.c
-+++ b/drivers/net/mdio/mdio-bcm-unimac.c
-@@ -209,10 +209,9 @@ static int unimac_mdio_clk_set(struct unimac_mdio_priv *priv)
- 	if (ret)
- 		return ret;
+diff --git a/fs/nfs/export.c b/fs/nfs/export.c
+index be686b8e0c54..aeb17adcb2b6 100644
+--- a/fs/nfs/export.c
++++ b/fs/nfs/export.c
+@@ -66,14 +66,21 @@ nfs_fh_to_dentry(struct super_block *sb, struct fid *fid,
+ {
+ 	struct nfs_fattr *fattr = NULL;
+ 	struct nfs_fh *server_fh = nfs_exp_embedfh(fid->raw);
+-	size_t fh_size = offsetof(struct nfs_fh, data) + server_fh->size;
++	size_t fh_size = offsetof(struct nfs_fh, data);
+ 	const struct nfs_rpc_ops *rpc_ops;
+ 	struct dentry *dentry;
+ 	struct inode *inode;
+-	int len = EMBED_FH_OFF + XDR_QUADLEN(fh_size);
++	int len = EMBED_FH_OFF;
+ 	u32 *p = fid->raw;
+ 	int ret;
  
--	if (!priv->clk)
-+	rate = clk_get_rate(priv->clk);
-+	if (!rate)
- 		rate = 250000000;
--	else
--		rate = clk_get_rate(priv->clk);
- 
- 	div = (rate / (2 * priv->clk_freq)) - 1;
- 	if (div & ~MDIO_CLK_DIV_MASK) {
++	/* Initial check of bounds */
++	if (fh_len < len + XDR_QUADLEN(fh_size) ||
++	    fh_len > XDR_QUADLEN(NFS_MAXFHSIZE))
++		return NULL;
++	/* Calculate embedded filehandle size */
++	fh_size += server_fh->size;
++	len += XDR_QUADLEN(fh_size);
+ 	/* NULL translates to ESTALE */
+ 	if (fh_len < len || fh_type != len)
+ 		return NULL;
 -- 
 2.39.5
 
