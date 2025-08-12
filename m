@@ -1,95 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5C826FA77;
-	Tue, 12 Aug 2025 19:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3338C21C187;
+	Tue, 12 Aug 2025 19:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025778; cv=none; b=d+5D8zdgJ0M83Ly+enl2wU/Ac9ZbduJa4IG7Y4J1hUyReKodoNrmZp4KhJmRATs+3mxAGhq0xWi+TH592+TWJfcVAS0Edst/fALtuHPQNlJqRPzCVqdKFYvcttRQOYqdoP9neIsQOkN7VpH/ihODhmaSlZJKVG2mCx7nzRE3bgM=
+	t=1755025779; cv=none; b=QYD28N/iNyQuObORMDiesnj6xRyzCTS4IUc//Vd1DfqRh3qTzJNI/mbAVJEcO7WgHLDsKOFLHWI+0e50hV/SAsZfhJ29siRmVDCGQvh4NBWUULiaZoeB3CcqJFmCjUjFBXB5Xy8mwLQFuCPtjTPWPCw0RHQGT7xKwymPvewQaok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025778; c=relaxed/simple;
-	bh=UNjsXnq9ueaEWqgcLXKrsg3ktl6pNqSqaYEJEJHV/Vo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kl4U2Yd6VUg4idRPUH/Q5X62mRO+YRsbyf+/8aKmQLKEqUxQhIZHKhFDWTIZbfWobC6q+oDv1pKhSsyZpsIQmE9ZP7gp4UKne8tp3lZNpaqdk8gRqHpCb+J7LbAOqnChfGFTIVtJPXNtfpDtxvxXwxm8aYjQGgHr35U3sC70YsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQqqdPdx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755025779; c=relaxed/simple;
+	bh=LvZNxTA/XdUFkun/KxvVg6Qvu5B2F0JIqObjZjqM9RU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:From:Subject:Cc:
+	 References:In-Reply-To; b=KTGY8lqZ17go7WeziAhn43ZU1P5f1e9eWoSquFS8i3lPBXOvKAR6qky878Sk6m1AlmnyDzNQp7/rUcyI614nUiGC5f3ubNOj5HoQh4jpJsIFYJS4gFVaCqxk7tbQorW93782gG3B3Xkyf7LjA9QJqq238tGHnpbIM9F1cYCYCXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dbvTCkRG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQqqdPdx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED06C4CEF1;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dbvTCkRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30440C4CEF0;
 	Tue, 12 Aug 2025 19:09:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025775;
-	bh=UNjsXnq9ueaEWqgcLXKrsg3ktl6pNqSqaYEJEJHV/Vo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQqqdPdx4i+rEzpFOoiCwxDagtJm3idzfocfrudM4PcXeJh37LFBvH1dp4AbO0dbt
-	 zg506MiXr6YZbnGtICsbnaltFw/cJx043DsdGP9PjdtRqV3HawJkqpsIvx3fIaRHMQ
-	 AkFa6jFFB/mnPyW10S3MS7u0lFHVvl6gEzapzZTY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 140/480] wifi: mt76: mt7996: Fix valid_links bitmask in mt7996_mac_sta_{add,remove}
-Date: Tue, 12 Aug 2025 19:45:48 +0200
-Message-ID: <20250812174403.297865336@linuxfoundation.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
-References: <20250812174357.281828096@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755025777;
+	bh=LvZNxTA/XdUFkun/KxvVg6Qvu5B2F0JIqObjZjqM9RU=;
+	h=Date:To:From:Subject:Cc:References:In-Reply-To:From;
+	b=dbvTCkRGH7zxEuwPOPFE7SMDjqBZzXLbVBc6MJzEcigcIvqGLi3A+U9RBIMhT7enU
+	 lJIyUeuj61MfT7VbIYBIxrPQf5IlRj49bLm57C8hxXyY87FHqvoZuA9ZY3DIv8eX+B
+	 hsxC7Tj6Eee/x6s90+3HZJsrH1klY71CAAJydGTnX7bxC+EIRYuDcs1kqjIR/By/iZ
+	 rFC9XTi5VJ0PRHF5V5TWKG1vqdG4Rm35eEN2Yg7A4PMQWi/7Ntg+9WOKvM+ZoFru7u
+	 1jjgA1IbJ2hnb8V8lHNk6zJAOBfr3ZfDjJzoh54m+cAZOvBLn+F96DdHMaOR3S2OQL
+	 hpq80ry96hdNA==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 Aug 2025 21:09:33 +0200
+Message-Id: <DC0OPPWZ9175.108IURNC3VEM1@kernel.org>
+To: "Miguel Ojeda" <ojeda@kernel.org>
+From: "Danilo Krummrich" <dakr@kernel.org>
+Subject: Re: [PATCH] MAINTAINERS: add "DEVICE I/O & IRQ [RUST]" entry
+Cc: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Boqun Feng"
+ <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
+ <lossin@kernel.org>, "Andreas Hindborg" <a.hindborg@kernel.org>, "Alice
+ Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
+ <rust-for-linux@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <patches@lists.linux.dev>, "Daniel Almeida" <daniel.almeida@collabora.com>
+References: <20250725202840.2251768-1-ojeda@kernel.org>
+In-Reply-To: <20250725202840.2251768-1-ojeda@kernel.org>
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+On Fri Jul 25, 2025 at 10:28 PM CEST, Miguel Ojeda wrote:
+> This entry will handle device I/O patches and abstractions (such as
+> memory-mapped IO and system resources series [1]), as well as IRQ ones
+> (such as the `request_irq` series [2]).
+>
+> Patches will flow through driver-core, at least for the time being.
+>
+> Danilo, Alice and Daniel will maintain it.
+>
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Cc: Alice Ryhl <aliceryhl@google.com>
+> Cc: Daniel Almeida <daniel.almeida@collabora.com>
+> Link: https://lore.kernel.org/rust-for-linux/20250717-topics-tyr-platform=
+_iomem-v15-0-beca780b77e3@collabora.com/ [1]
+> Link: https://lore.kernel.org/rust-for-linux/20250715-topics-tyr-request_=
+irq2-v7-0-d469c0f37c07@collabora.com/ [2]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-------------------
-
-From: Lorenzo Bianconi <lorenzo@kernel.org>
-
-[ Upstream commit a59650a2270190905fdab79431140371feb35251 ]
-
-sta->valid_links bitmask can be set even for non-MLO client.
-
-Fixes: dd82a9e02c054 ("wifi: mt76: mt7996: Rely on mt7996_sta_link in sta_add/sta_remove callbacks")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250704-mt7996-mlo-fixes-v1-7-356456c73f43@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 631ad0f9ff93..45ef0f309135 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1061,7 +1061,7 @@ mt7996_mac_sta_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
- 	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
--	unsigned long links = sta->mlo ? sta->valid_links : BIT(0);
-+	unsigned long links = sta->valid_links ? sta->valid_links : BIT(0);
- 	int err;
- 
- 	mutex_lock(&mdev->mutex);
-@@ -1155,7 +1155,7 @@ mt7996_mac_sta_remove(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- {
- 	struct mt76_dev *mdev = mphy->dev;
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
--	unsigned long links = sta->mlo ? sta->valid_links : BIT(0);
-+	unsigned long links = sta->valid_links ? sta->valid_links : BIT(0);
- 
- 	mutex_lock(&mdev->mutex);
- 
--- 
-2.39.5
-
-
-
+Applied to driver-core-testing, thanks!
