@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C402C2F6573;
-	Tue, 12 Aug 2025 18:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4575A2FE595;
+	Tue, 12 Aug 2025 18:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025088; cv=none; b=SJkftMuOHJirfEDCU+0ejuVUemiMvVbNni4qiQV6IdY3oEq9WFkRpqumEVaNw70zjG2WfwnQzbZh+S0SMigPze93HvfOF3+z9QBUkmqWz++57MqMVEOQ56oRlv60dxOEdia/fd2PASvDRKrfNi9iN1IDlEHcYNVYEia51W4qvs4=
+	t=1755025092; cv=none; b=T36XeLTywZjdFPApcpeEN1E6xMsKaKt6EpEhjG+ohXUmvuqbcg5qSInD/EZbHZuV5aHKF+QVd+zj6C+cIbAUwagUTiTZL2t1hwYxmxPzxH1oAO97td4GqzZ9KAqy27pbBoY8WpxjZ0dXXqGpio1Y989wvE1ogNZUhMjVxQNCi+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025088; c=relaxed/simple;
-	bh=YqDJUGfDhc3deXURXEiBUgsmq+KSqOqVs0abFUHoyzE=;
+	s=arc-20240116; t=1755025092; c=relaxed/simple;
+	bh=cKsQeSkm+Hlu5OqGDI3IuZHjSkvingSfceLq1nLS9IQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/HyedVGY6qXq4ibomhIiHZ+zgQRoBEXcTVnhzOpnCB9QRrTU2sUvnL0wRadLwNyNB0ABFoSS6p0vnFksJGy39oLcG6rxd5/KJgJUFykWHrWd+kMfoTjdqdC4Vm3hMYRSHIu1MQufjSXviQIIrlytboRIFjzGh+anY69tfMsIKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNRsmKoN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O/cbf7xqHme66ytUCPGd1Q4goRHAnt/T84TZ42BHGjBDjRasJYQ7KDxBnRDG2k3KBpOWL507BRjtXEUN1SfT9tqagMG8VXXQhBy+cVBt6J9JP/20MxA8NHJ0o3a45etNib8TuytiQN0DAVxGQsVNpBZysXdXgXADCmbbEtLTTzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhcVxyoc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNRsmKoN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32302C4CEF0;
-	Tue, 12 Aug 2025 18:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhcVxyoc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9208C4CEF0;
+	Tue, 12 Aug 2025 18:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025088;
-	bh=YqDJUGfDhc3deXURXEiBUgsmq+KSqOqVs0abFUHoyzE=;
+	s=korg; t=1755025092;
+	bh=cKsQeSkm+Hlu5OqGDI3IuZHjSkvingSfceLq1nLS9IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZNRsmKoNxDiumUjc/2FAaX2I/7vfwjxIeQRGxy9cJWBP6HJMAZqK5fubIISUeJeWu
-	 vLCLWHcpiF26+A7++Om/YLZJ8WNatj1S0pdM4iBDROQx1Yb/WM7Bb6QAn+u5nBXSCZ
-	 9ZW5kwGY3kbHQ+coyRPvJnDHa+g8K2W0I73p+bVE=
+	b=lhcVxyocsn35CE2FeeXRMGaOZhDp/RONh9nHJUAJWs6hXiGq3jsvIoc9KLQcCVmb/
+	 oel5RzgSrwqhX7gY8lgKmQSQcbl2B4kCyYORywCEqMKM4o0m8zg7ceHCnmxl03UW2d
+	 tAzBat4bhjLteFEbHcZtbEG0q8V7LZwb4Vq/lPQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Simon Horman <horms@kernel.org>,
+	Duo Yi <duo@meta.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 533/627] net: mdio: mdio-bcm-unimac: Correct rate fallback logic
-Date: Tue, 12 Aug 2025 19:33:48 +0200
-Message-ID: <20250812173452.192395013@linuxfoundation.org>
+Subject: [PATCH 6.16 524/627] netlink: specs: ethtool: fix module EEPROM input/output arguments
+Date: Tue, 12 Aug 2025 19:33:39 +0200
+Message-ID: <20250812173451.778191331@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,52 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit a81649a4efd382497bf3d34a623360263adc6993 ]
+[ Upstream commit 01051012887329ea78eaca19b1d2eac4c9f601b5 ]
 
-When the parent clock is a gated clock which has multiple parents, the
-clock provider (clk-scmi typically) might return a rate of 0 since there
-is not one of those particular parent clocks that should be chosen for
-returning a rate. Prior to ee975351cf0c ("net: mdio: mdio-bcm-unimac:
-Manage clock around I/O accesses"), we would not always be passing a
-clock reference depending upon how mdio-bcm-unimac was instantiated. In
-that case, we would take the fallback path where the rate is hard coded
-to 250MHz.
+Module (SFP) eeprom GET has a lot of input params, they are all
+mistakenly listed as output in the spec. Looks like kernel doesn't
+output them at all. Correct what are the inputs and what the outputs.
 
-Make sure that we still fallback to using a fixed rate for the divider
-calculation, otherwise we simply ignore the desired MDIO bus clock
-frequency which can prevent us from interfacing with Ethernet PHYs
-properly.
-
-Fixes: ee975351cf0c ("net: mdio: mdio-bcm-unimac: Manage clock around I/O accesses")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250730202533.3463529-1-florian.fainelli@broadcom.com
+Reported-by: Duo Yi <duo@meta.com>
+Fixes: a353318ebf24 ("tools: ynl: populate most of the ethtool spec")
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250730172137.1322351-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-bcm-unimac.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ Documentation/netlink/specs/ethtool.yaml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/mdio/mdio-bcm-unimac.c b/drivers/net/mdio/mdio-bcm-unimac.c
-index b6e30bdf5325..7baab230008a 100644
---- a/drivers/net/mdio/mdio-bcm-unimac.c
-+++ b/drivers/net/mdio/mdio-bcm-unimac.c
-@@ -209,10 +209,9 @@ static int unimac_mdio_clk_set(struct unimac_mdio_priv *priv)
- 	if (ret)
- 		return ret;
+diff --git a/Documentation/netlink/specs/ethtool.yaml b/Documentation/netlink/specs/ethtool.yaml
+index 348c6ad548f5..d1ee5307160f 100644
+--- a/Documentation/netlink/specs/ethtool.yaml
++++ b/Documentation/netlink/specs/ethtool.yaml
+@@ -2107,9 +2107,6 @@ operations:
  
--	if (!priv->clk)
-+	rate = clk_get_rate(priv->clk);
-+	if (!rate)
- 		rate = 250000000;
--	else
--		rate = clk_get_rate(priv->clk);
- 
- 	div = (rate / (2 * priv->clk_freq)) - 1;
- 	if (div & ~MDIO_CLK_DIV_MASK) {
+       do: &module-eeprom-get-op
+         request:
+-          attributes:
+-            - header
+-        reply:
+           attributes:
+             - header
+             - offset
+@@ -2117,6 +2114,9 @@ operations:
+             - page
+             - bank
+             - i2c-address
++        reply:
++          attributes:
++            - header
+             - data
+       dump: *module-eeprom-get-op
+     -
 -- 
 2.39.5
 
