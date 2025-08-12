@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24C01D416C;
-	Tue, 12 Aug 2025 18:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB2E2FA0F9;
+	Tue, 12 Aug 2025 18:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022585; cv=none; b=Vyt4tMcOZOoyGZXHGfkdcksC0Qyv1cceCKyz+vUIB2tkI2PbTO2lkCrkDctQ7xvyC2dVynaauN8IK0opAmL2m0spZe88oBnRVE7Z4dF8DCHdzb0QBX06XXwQlBe2UYhpSqw2CJzdWf8IiTIJ/a43xFD5vmzyZ5FyAZy8aI0YRv0=
+	t=1755022590; cv=none; b=taSG2CgDHSJix8AlQuqBRbOQReEvJJi0sAR+J9zzsL1tkI32N6dgqAQRWmSkg3GKbqn1jJepVkx0oSh9+OizpaYseu+T0ZlMySdqzICpAMjWnIT+8K6K/68gMQneVBdSxmK65X7x1H/kXdRHTUzXgZsv9VTWl2BqnwGE4MXzniY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022585; c=relaxed/simple;
-	bh=WvaXSOv9KWVShmQHlSRSePCjIhS0plahTT6EhKuvJ4Q=;
+	s=arc-20240116; t=1755022590; c=relaxed/simple;
+	bh=YBZr5mkRSyXU25snQXAQDz8MeWJaxVUfLcjtgksYqvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRiHsQnDhDpOu3oJxTKEziwm648q2VQ4hdkzAZ48tDeGspbpYZM5NPSUVDH3tij0CNxcSPutIUc522Ia/zqfJnv92wMkimSHs18WrLNI9IOa+AAZHSP6pdI3P/la3rsN+VVvsLtq5RqQxVMVY2hy0h7j4AgWF7PHXax1yPsLbvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJd8ACBs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fo04qbHCgbbU8ioBNY+ZJ63mPQ9/RtgJMY7nDQDh0YaoP0LKsF91fbOZ53Tb+xKiIdvll7ZELHD44bp/28mRsq4zwxycZ9lhrGTrHBJEyQU0jmSeGx1bXiVHYsTZIIJP0OyHWNdoqINBgqI+pD7+1yzlbBc5i34se4TlruzyWZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJNYzm5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJd8ACBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F71DC4CEF1;
-	Tue, 12 Aug 2025 18:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJNYzm5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A28C4CEF1;
+	Tue, 12 Aug 2025 18:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022585;
-	bh=WvaXSOv9KWVShmQHlSRSePCjIhS0plahTT6EhKuvJ4Q=;
+	s=korg; t=1755022588;
+	bh=YBZr5mkRSyXU25snQXAQDz8MeWJaxVUfLcjtgksYqvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJd8ACBsAEQHgR9eHzOur+jgpH8kvNQP5pDYqmq5DTfIPYn8nRuRjcE7CTAyaxkYP
-	 sphQC1VIfpTnEpz5pm3pdQmVOt+2z0Rl0RmyPhA2EjcfjAiUAVWy8eLXdyvHdflGC/
-	 Tvkp6OBxF5mngs3inNYyYuQsofFajvLKiTmOpStA=
+	b=iJNYzm5lOZ6Sltdi3jfyJlscBJsgHpGkqJwflx1JU11rxsUDHEA1NN4mvIFsl7NPZ
+	 0g798hTngYPHSKlPE6l7vWMu3DSWFXe1BsDtIi1YuheDyv3cvz/nBqvSA7uLBrUfuV
+	 E1jEAwTBlr1II5yWMgeph5R1F61F3Il/9o43L8SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <ziyao@disroot.org>,
-	Drew Fustini <fustini@kernel.org>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 198/369] clk: thead: th1520-ap: Correctly refer the parent of osc_12m
-Date: Tue, 12 Aug 2025 19:28:15 +0200
-Message-ID: <20250812173022.214339535@linuxfoundation.org>
+Subject: [PATCH 6.12 199/369] clk: sunxi-ng: v3s: Fix de clock definition
+Date: Tue, 12 Aug 2025 19:28:16 +0200
+Message-ID: <20250812173022.250000642@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,46 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Paul Kocialkowski <paulk@sys-base.io>
 
-[ Upstream commit d274c77ffa202b70ad01d579f33b73b4de123375 ]
+[ Upstream commit e8ab346f9907a1a3aa2f0e5decf849925c06ae2e ]
 
-The "osc_12m" fixed factor clock refers the external oscillator by
-setting clk_parent_data.fw_name to osc_24m, which is obviously wrong
-since no clock-names property is allowed for compatible
-thead,th1520-clk-ap.
+The de clock is marked with CLK_SET_RATE_PARENT, which is really not
+necessary (as confirmed from experimentation) and significantly
+restricts flexibility for other clocks using the same parent.
 
-Refer the oscillator as parent by index instead.
+In addition the source selection (parent) field is marked as using
+2 bits, when it the documentation reports that it uses 3.
 
-Fixes: ae81b69fd2b1 ("clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks")
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Reviewed-by: Drew Fustini <fustini@kernel.org>
-Signed-off-by: Drew Fustini <fustini@kernel.org>
+Fix both issues in the de clock definition.
+
+Fixes: d0f11d14b0bc ("clk: sunxi-ng: add support for V3s CCU")
+Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
+Link: https://patch.msgid.link/20250704154008.3463257-1-paulk@sys-base.io
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/thead/clk-th1520-ap.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/clk/sunxi-ng/ccu-sun8i-v3s.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
-index 4c9555fc6184..6ab89245af12 100644
---- a/drivers/clk/thead/clk-th1520-ap.c
-+++ b/drivers/clk/thead/clk-th1520-ap.c
-@@ -582,7 +582,14 @@ static const struct clk_parent_data peri2sys_apb_pclk_pd[] = {
- 	{ .hw = &peri2sys_apb_pclk.common.hw }
- };
+diff --git a/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c b/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
+index d24c0d8dfee4..3416e0020799 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
++++ b/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
+@@ -347,8 +347,7 @@ static SUNXI_CCU_GATE(dram_ohci_clk,	"dram-ohci",	"dram",
  
--static CLK_FIXED_FACTOR_FW_NAME(osc12m_clk, "osc_12m", "osc_24m", 2, 1, 0);
-+static struct clk_fixed_factor osc12m_clk = {
-+	.div		= 2,
-+	.mult		= 1,
-+	.hw.init	= CLK_HW_INIT_PARENTS_DATA("osc_12m",
-+						   osc_24m_clk,
-+						   &clk_fixed_factor_ops,
-+						   0),
-+};
+ static const char * const de_parents[] = { "pll-video", "pll-periph0" };
+ static SUNXI_CCU_M_WITH_MUX_GATE(de_clk, "de", de_parents,
+-				 0x104, 0, 4, 24, 2, BIT(31),
+-				 CLK_SET_RATE_PARENT);
++				 0x104, 0, 4, 24, 3, BIT(31), 0);
  
- static const char * const out_parents[] = { "osc_24m", "osc_12m" };
- 
+ static const char * const tcon_parents[] = { "pll-video" };
+ static SUNXI_CCU_M_WITH_MUX_GATE(tcon_clk, "tcon", tcon_parents,
 -- 
 2.39.5
 
