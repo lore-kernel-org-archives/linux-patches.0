@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF3A2F7477;
-	Tue, 12 Aug 2025 17:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED52257435;
+	Tue, 12 Aug 2025 17:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020993; cv=none; b=X0iXEg8oW7vgfcT9lBghUI2SRl34U2MymWOhyzEATEc9aMvtCZDf1O3sLp030jlPCnbvlBLKRWyscYWgpnaiy5JyRURwspuclbcAKrtoOuD/7eieBeaeD6naOYabtzIB006vN2EWy5FM1zRWz9sCXcwrzcumXGFC2rdJWRDWGu0=
+	t=1755020996; cv=none; b=OkMiMWXDJRGdqIchyIh4vHCT7Qls5N2zmu0J5N/Flh9UAKOJbncsy0nhA9MPWiHiRgQUk4wbhe/nfnPEfU62k0RPSELN49IxN00s4etPc7HWaRb0ccZ+cxy+6cQQOHWzwlHh/N/1JbuXF/diBZErM46le96fY/yuhzj/ANaKiRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020993; c=relaxed/simple;
-	bh=LFMbrwAhs86RvXcsvQFdtWJ/OaalH4zfUJGwsGPY2Dw=;
+	s=arc-20240116; t=1755020996; c=relaxed/simple;
+	bh=a35eeDcXRcWBTz18BZo+TGf1+noo0Qd1oV5eP8JkDzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MeIJ8Q+/e39wtmWQazX2zQkhTgXa5yKvK7ml03XKRiHsWnykGkBozEY4H3Ls/VVQnZFOzRNxZ1Nf63sVESCTQqglpXToXEMdwxeVqmXM21lMpyyHbbGeSWlx3FJ4U/SVvi3wEhDC82dckA1JbLiUIC6Fq9SULqTJv3CDKwajtnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7+23moj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xyne/GxSEtgO+0yxyRHF/UevMWnNetnEDjjacbDOX4mm/0J2gn92qMBlq+MMzemIclQpWhJpyGMkfcPSDTvbw00UzoGFx2P1KhcR66P3AYWSge1PNmdNiX1gn2CpoLjBSqMcGb9RhrKmSvFPDq4EOshhC02En1GMSqdZsCYlTCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBJtrxyL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7+23moj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E900C4CEF0;
-	Tue, 12 Aug 2025 17:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBJtrxyL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B263FC4CEF0;
+	Tue, 12 Aug 2025 17:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020992;
-	bh=LFMbrwAhs86RvXcsvQFdtWJ/OaalH4zfUJGwsGPY2Dw=;
+	s=korg; t=1755020996;
+	bh=a35eeDcXRcWBTz18BZo+TGf1+noo0Qd1oV5eP8JkDzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7+23mojvd77q/1CwXshB7qI6gntid1g7jiNvdOL4h2w0Gc6Q5cgVwKEQygx+kV58
-	 2C193m7LDrQX/MY1lr1Cx+JzLfnurfVmHtxxTXo2TmvrP12Ix/HwDocgX7Dp33LdhE
-	 yrz7TufnUEJyY1b7k7KtwrMaD7EM68tezwRIkmBc=
+	b=cBJtrxyLvrUgYpcqTIYhNBj0KfjbOPOeKONjLAJyLvzYDVhydzal6ZQnF9UM2PWY4
+	 R5WP1zX1+egBvVC6fSn13S9fJtMgeUyvK/lxF5+UROZxjXIxSUlACMQQfwcvrNDINi
+	 /mpfDnN6eGEgEUcIbcosagtsP4OHIGS27aQ0SyGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Jan Prusakowski <jprusakowski@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/262] selftests/tracing: Fix false failure of subsystem event test
-Date: Tue, 12 Aug 2025 19:27:15 +0200
-Message-ID: <20250812172954.974895643@linuxfoundation.org>
+Subject: [PATCH 6.1 197/253] f2fs: vm_unmap_ram() may be called from an invalid context
+Date: Tue, 12 Aug 2025 19:29:45 +0200
+Message-ID: <20250812172957.188248731@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,87 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jan Prusakowski <jprusakowski@google.com>
 
-[ Upstream commit 213879061a9c60200ba971330dbefec6df3b4a30 ]
+[ Upstream commit 08a7efc5b02a0620ae16aa9584060e980a69cb55 ]
 
-The subsystem event test enables all "sched" events and makes sure there's
-at least 3 different events in the output. It used to cat the entire trace
-file to | wc -l, but on slow machines, that could last a very long time.
-To solve that, it was changed to just read the first 100 lines of the
-trace file. This can cause false failures as some events repeat so often,
-that the 100 lines that are examined could possibly be of only one event.
+When testing F2FS with xfstests using UFS backed virtual disks the
+kernel complains sometimes that f2fs_release_decomp_mem() calls
+vm_unmap_ram() from an invalid context. Example trace from
+f2fs/007 test:
 
-Instead, create an awk script that looks for 3 different events and will
-exit out after it finds them. This will find the 3 events the test looks
-for (eventually if it works), and still exit out after the test is
-satisfied and not cause slower machines to run forever.
+f2fs/007 5s ...  [12:59:38][    8.902525] run fstests f2fs/007
+[   11.468026] BUG: sleeping function called from invalid context at mm/vmalloc.c:2978
+[   11.471849] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 68, name: irq/22-ufshcd
+[   11.475357] preempt_count: 1, expected: 0
+[   11.476970] RCU nest depth: 0, expected: 0
+[   11.478531] CPU: 0 UID: 0 PID: 68 Comm: irq/22-ufshcd Tainted: G        W           6.16.0-rc5-xfstests-ufs-g40f92e79b0aa #9 PREEMPT(none)
+[   11.478535] Tainted: [W]=WARN
+[   11.478536] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   11.478537] Call Trace:
+[   11.478543]  <TASK>
+[   11.478545]  dump_stack_lvl+0x4e/0x70
+[   11.478554]  __might_resched.cold+0xaf/0xbe
+[   11.478557]  vm_unmap_ram+0x21/0xb0
+[   11.478560]  f2fs_release_decomp_mem+0x59/0x80
+[   11.478563]  f2fs_free_dic+0x18/0x1a0
+[   11.478565]  f2fs_finish_read_bio+0xd7/0x290
+[   11.478570]  blk_update_request+0xec/0x3b0
+[   11.478574]  ? sbitmap_queue_clear+0x3b/0x60
+[   11.478576]  scsi_end_request+0x27/0x1a0
+[   11.478582]  scsi_io_completion+0x40/0x300
+[   11.478583]  ufshcd_mcq_poll_cqe_lock+0xa3/0xe0
+[   11.478588]  ufshcd_sl_intr+0x194/0x1f0
+[   11.478592]  ufshcd_threaded_intr+0x68/0xb0
+[   11.478594]  ? __pfx_irq_thread_fn+0x10/0x10
+[   11.478599]  irq_thread_fn+0x20/0x60
+[   11.478602]  ? __pfx_irq_thread_fn+0x10/0x10
+[   11.478603]  irq_thread+0xb9/0x180
+[   11.478605]  ? __pfx_irq_thread_dtor+0x10/0x10
+[   11.478607]  ? __pfx_irq_thread+0x10/0x10
+[   11.478609]  kthread+0x10a/0x230
+[   11.478614]  ? __pfx_kthread+0x10/0x10
+[   11.478615]  ret_from_fork+0x7e/0xd0
+[   11.478619]  ? __pfx_kthread+0x10/0x10
+[   11.478621]  ret_from_fork_asm+0x1a/0x30
+[   11.478623]  </TASK>
 
-Link: https://lore.kernel.org/r/20250721134212.53c3e140@batman.local.home
-Reported-by: Tengda Wu <wutengda@huaweicloud.com>
-Closes: https://lore.kernel.org/all/20250710130134.591066-1-wutengda@huaweicloud.com/
-Fixes: 1a4ea83a6e67 ("selftests/ftrace: Limit length in subsystem-enable tests")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+This patch modifies in_task() check inside f2fs_read_end_io() to also
+check if interrupts are disabled. This ensures that pages are unmapped
+asynchronously in an interrupt handler.
+
+Fixes: bff139b49d9f ("f2fs: handle decompress only post processing in softirq")
+Signed-off-by: Jan Prusakowski <jprusakowski@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ftrace/test.d/event/subsystem-enable.tc   | 28 +++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-index b7c8f29c09a9..65916bb55dfb 100644
---- a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-+++ b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
-@@ -14,11 +14,35 @@ fail() { #msg
-     exit_fail
- }
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 7b65766d365f..dc8f283f210c 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -273,7 +273,7 @@ static void f2fs_read_end_io(struct bio *bio)
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_P_SB(bio_first_page_all(bio));
+ 	struct bio_post_read_ctx *ctx;
+-	bool intask = in_task();
++	bool intask = in_task() && !irqs_disabled();
  
-+# As reading trace can last forever, simply look for 3 different
-+# events then exit out of reading the file. If there's not 3 different
-+# events, then the test has failed.
-+check_unique() {
-+    cat trace | grep -v '^#' | awk '
-+	BEGIN { cnt = 0; }
-+	{
-+	    for (i = 0; i < cnt; i++) {
-+		if (event[i] == $5) {
-+		    break;
-+		}
-+	    }
-+	    if (i == cnt) {
-+		event[cnt++] = $5;
-+		if (cnt > 2) {
-+		    exit;
-+		}
-+	    }
-+	}
-+	END {
-+	    printf "%d", cnt;
-+	}'
-+}
-+
- echo 'sched:*' > set_event
- 
- yield
- 
--count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
-+count=`check_unique`
- if [ $count -lt 3 ]; then
-     fail "at least fork, exec and exit events should be recorded"
- fi
-@@ -29,7 +53,7 @@ echo 1 > events/sched/enable
- 
- yield
- 
--count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
-+count=`check_unique`
- if [ $count -lt 3 ]; then
-     fail "at least fork, exec and exit events should be recorded"
- fi
+ 	iostat_update_and_unbind_ctx(bio, 0);
+ 	ctx = bio->bi_private;
 -- 
 2.39.5
 
