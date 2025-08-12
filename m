@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93002E972E;
-	Tue, 12 Aug 2025 17:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57467279915;
+	Tue, 12 Aug 2025 17:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020917; cv=none; b=I1GrgEPYDLmffR5BpNKxmn8s/6irxXd4hTERLRBF/FyfiZRopxJTgwtFGeSlS2SRFKraIyhBYupfALP3lQNd95GrERiCdaBksohWB6KUy34+lJVBk1MfcOO851sRTXWer6UKGlxKdPjlqrR1XjME2Tas8mTWKhFdj1NfSrMkVoE=
+	t=1755020921; cv=none; b=ew3yNu7CNdVEa8YvuatHIvFdcNiBoNM4Y8alVb/ZkLbaEUBTuS4EF5hGhsvWidYu1pD5PNDSnz1N0E1azsrvEQr0R91SCR64HKPuDxoSDEevmBlrK1xy0bTZXPavdRP0YK29V2Rupv8VU2vopab19UoUUEszwWKxREZbb2sZECU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020917; c=relaxed/simple;
-	bh=0SkzHn1prwQxcOUUw93R5zlKNlY9lGUxesoBYUASDYU=;
+	s=arc-20240116; t=1755020921; c=relaxed/simple;
+	bh=w1lgKh2wzEg2l4Fv0gywQrdEW6yPba+SbwZxetAkWi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lgo1p2HLedfBxfnXQydQKRcN0eNztZUbuC4uJDvalvmo/vIoK6yhExzMmq1TJt01Z+uwENLzKQK4jO4sjhgwWjNKM47eIk05OMMPU5y9tlpndyYxl1Fa+GgHuEGazrADdnTHJA3gfMhTwnuz0MgzENQCJ1lGwkp/BkHkjzrMTqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBS/OzDX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TMUwgvniZWWQAsndH76tX7RxZw1Z3r7woKQrP7etoz1E7LwnXLvuwm2C9On/WZ2m5D/54nvtq+XFnofP33t8j1lBhTRSs+MQavXuEHsM2n/Jyi3X7AVcBdcN2cIbm5bktlO+68zaZbG+JAeFVBw2vlRWJpGM0fT70x7Sm/r6JBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=In/ZSwlM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBS/OzDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4759BC4CEF0;
-	Tue, 12 Aug 2025 17:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="In/ZSwlM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF16C4CEF0;
+	Tue, 12 Aug 2025 17:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020917;
-	bh=0SkzHn1prwQxcOUUw93R5zlKNlY9lGUxesoBYUASDYU=;
+	s=korg; t=1755020921;
+	bh=w1lgKh2wzEg2l4Fv0gywQrdEW6yPba+SbwZxetAkWi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wBS/OzDXNac0pGdPXeXtJJ4izsWVxhvpRgEBWN34aa8c5Nz7L5iVoJnjDhL1lexdp
-	 DRRdk6gyJGqHFTu0ev5hdjMm7SyMGzMyUCwDL72svCiXDXhjfAqhDV8453SHW8NsUm
-	 4uGkcFq/9ph3OjXuRpUxOYy6gKuWlYSVGmSka5v0=
+	b=In/ZSwlMq6GqqFHrGGNxJCEh4klfY08I/YC5pH608n9zMjEPyNNIN0h+5bchNe8KH
+	 almASteevj8vPwL88mdN/ihhrqaOS9VuY7zTaXJUXlREu/B3Y1oOA0LvPVm/qBZdWW
+	 lZ8ixROJ8HRFT9cSprP8MR9wq3qW8oOhpGY7ZGSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Albin=20T=C3=B6rnqvist?= <albin.tornqvist@codiax.se>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/262] arm: dts: ti: omap: Fixup pinheader typo
-Date: Tue, 12 Aug 2025 19:27:01 +0200
-Message-ID: <20250812172954.375439484@linuxfoundation.org>
+Subject: [PATCH 6.1 164/253] scsi: isci: Fix dma_unmap_sg() nents value
+Date: Tue, 12 Aug 2025 19:29:12 +0200
+Message-ID: <20250812172955.696674781@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,46 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Albin Törnqvist <albin.tornqvist@codiax.se>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit a3a4be32b69c99fc20a66e0de83b91f8c882bf4c ]
+[ Upstream commit 063bec4444d54e5f35d11949c5c90eaa1ff84c11 ]
 
-This commit fixes a typo introduced in commit
-ee368a10d0df ("ARM: dts: am335x-boneblack.dts: unique gpio-line-names").
-gpio0_7 is located on the P9 header on the BBB.
-This was verified with a BeagleBone Black by toggling the pin and
-checking with a multimeter that it corresponds to pin 42 on the P9
-header.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Signed-off-by: Albin Törnqvist <albin.tornqvist@codiax.se>
-Link: https://lore.kernel.org/r/20250624114839.1465115-2-albin.tornqvist@codiax.se
-Fixes: ee368a10d0df ("ARM: dts: am335x-boneblack.dts: unique gpio-line-names")
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Fixes: ddcc7e347a89 ("isci: fix dma_unmap_sg usage")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://lore.kernel.org/r/20250627142451.241713-2-fourier.thomas@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/am335x-boneblack.dts | 2 +-
+ drivers/scsi/isci/request.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/ti/omap/am335x-boneblack.dts b/arch/arm/boot/dts/ti/omap/am335x-boneblack.dts
-index 16b567e3cb47..b4fdcf9c02b5 100644
---- a/arch/arm/boot/dts/ti/omap/am335x-boneblack.dts
-+++ b/arch/arm/boot/dts/ti/omap/am335x-boneblack.dts
-@@ -35,7 +35,7 @@ &gpio0 {
- 		"P9_18 [spi0_d1]",
- 		"P9_17 [spi0_cs0]",
- 		"[mmc0_cd]",
--		"P8_42A [ecappwm0]",
-+		"P9_42A [ecappwm0]",
- 		"P8_35 [lcd d12]",
- 		"P8_33 [lcd d13]",
- 		"P8_31 [lcd d14]",
+diff --git a/drivers/scsi/isci/request.c b/drivers/scsi/isci/request.c
+index 0f0732d56800..46d30a725d7e 100644
+--- a/drivers/scsi/isci/request.c
++++ b/drivers/scsi/isci/request.c
+@@ -2907,7 +2907,7 @@ static void isci_request_io_request_complete(struct isci_host *ihost,
+ 					 task->total_xfer_len, task->data_dir);
+ 		else  /* unmap the sgl dma addresses */
+ 			dma_unmap_sg(&ihost->pdev->dev, task->scatter,
+-				     request->num_sg_entries, task->data_dir);
++				     task->num_scatter, task->data_dir);
+ 		break;
+ 	case SAS_PROTOCOL_SMP: {
+ 		struct scatterlist *sg = &task->smp_task.smp_req;
 -- 
 2.39.5
 
