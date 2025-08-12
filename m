@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF8F2FDC51;
-	Tue, 12 Aug 2025 17:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC662FDC3E;
+	Tue, 12 Aug 2025 17:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020337; cv=none; b=L+Vf4mSrdNNsL8iCSa0PXeVRslaqh/Cxt1l9ym2Kuze6JwiwNUB51yIDLPegLT2HmmfDQDxQBc4Y3uWNhKeNLzFZYAr9C7LiSANkoo8SV08Mq7PQ8U5kTXjWVvOaAu+qBsBRyCIfnSBfxOMsFWeCX3hWTIXKpFsjjH7mxTY9Wjs=
+	t=1755020340; cv=none; b=tNH6xCrN0IcR4ZmOuku7FM3awkKoogRTJIpq9CB3VWKi5EZAm8OtD9nZeqswGzM3KK56p1g/iNXltokzRbP9uN+lOsByQsB6KquT17uSWR7RKkhJQj7PLwr+w4evwioSCGwGMbYF9uoVjEzqonqmUS3HZucrovftI1TkomFkNEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020337; c=relaxed/simple;
-	bh=x4d/JvC/+0b3j6Ti1bla6K0GAz8OpJ/howDdd83rWQY=;
+	s=arc-20240116; t=1755020340; c=relaxed/simple;
+	bh=irZHBGD5/sxZoHEBM2tgQU+lUWXM841txNwP6T8A9Yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+HuYXSwT6zfwrBKlTbbIw62I/tpN7nNvT/H0JpOx8eRYA6sGobggP6x4TGy2Jw23Ev2nlXtMuSxoF2jGAXlg3AyM59w+oJMe11FYQwPO8tdl7oeSCNoj7TTJiWiCuf3je+zYWZCSwXRtQHjIusRX9V3C69pai2hlIJ0NNDT2O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kh250Hpp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V8hsUed/i6Uj/KmJBi0AvpkeBPwxo3wg9IhfN5fJqqp0zbKqlHKwY7+zwzFLsvtHvusjR9ps+n0nNEpHyq2NQg2/lYS8EiO3DVSTd0+kC7p7VWKSUUoWfqDaP3K2uzG9lPeL6WFEiGAjwRMVpleQ7VZaQSwg1d/iy5TAXIAdy18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07f98mI3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kh250Hpp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6F5C4CEF0;
-	Tue, 12 Aug 2025 17:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07f98mI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6D5C4CEF0;
+	Tue, 12 Aug 2025 17:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020337;
-	bh=x4d/JvC/+0b3j6Ti1bla6K0GAz8OpJ/howDdd83rWQY=;
+	s=korg; t=1755020340;
+	bh=irZHBGD5/sxZoHEBM2tgQU+lUWXM841txNwP6T8A9Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kh250HppU9dk0Q0CeP02E/xyT6zQdCejL/gjSUUgGIiQvERj4dH2jyhLgelByAJua
-	 67toYpvW1435WkduZBM/deusTnQECA4EDH57Iuvy3L3b5AoOU4aeysei/igZRcEEci
-	 5TE0bTZTbXBGeaVba2aezTCCs0C2sSZRyCcNqnqA=
+	b=07f98mI37ohM1I2w2LiJyAPXSOzRz5JKrpLw624Hnj0I/vIyQl8JPRLuEVopfMak2
+	 8VOVRDePe624vPd3Lf7loVAiWfHLuTEGQY02rU8A4Phk+QxYBLxZ4rUdZADHeKArH+
+	 PO+uWP299Gi1BlbY5aAL98//j/p5p4iu/kgGCnm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mohan Kumar D <mkumard@nvidia.com>,
+	Sheetal <sheetal@nvidia.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/253] net: hns3: fix concurrent setting vlan filter issue
-Date: Tue, 12 Aug 2025 19:26:51 +0200
-Message-ID: <20250812172949.708876322@linuxfoundation.org>
+Subject: [PATCH 6.1 050/253] ALSA: hda/tegra: Add Tegra264 support
+Date: Tue, 12 Aug 2025 19:27:18 +0200
+Message-ID: <20250812172950.863278305@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -53,105 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Mohan Kumar D <mkumard@nvidia.com>
 
-[ Upstream commit 4555f8f8b6aa46940f55feb6a07704c2935b6d6e ]
+commit 1c4193917eb3279788968639f24d72ffeebdec6b upstream.
 
-The vport->req_vlan_fltr_en may be changed concurrently by function
-hclge_sync_vlan_fltr_state() called in periodic work task and
-function hclge_enable_vport_vlan_filter() called by user configuration.
-It may cause the user configuration inoperative. Fixes it by protect
-the vport->req_vlan_fltr by vport_lock.
+Update HDA driver to support Tegra264 differences from legacy HDA,
+which includes: clocks/resets, always power on, and hardware-managed
+FPCI/IPFS initialization. The driver retrieves this chip-specific
+information from soc_data.
 
-Fixes: 2ba306627f59 ("net: hns3: add support for modify VLAN filter state")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250722125423.1270673-2-shaojijie@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mohan Kumar D <mkumard@nvidia.com>
+Signed-off-by: Sheetal <sheetal@nvidia.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250512064258.1028331-4-sheetal@nvidia.com
+Stable-dep-of: e0a911ac8685 ("ALSA: hda: Add missing NVIDIA HDA codec IDs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 36 +++++++++++--------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+ sound/pci/hda/hda_tegra.c  |   51 +++++++++++++++++++++++++++++++++++++++------
+ sound/pci/hda/patch_hdmi.c |    1 
+ 2 files changed, 46 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index ed1b49a360165..c509c1e12109f 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -9599,33 +9599,36 @@ static bool hclge_need_enable_vport_vlan_filter(struct hclge_vport *vport)
- 	return false;
- }
+--- a/sound/pci/hda/hda_tegra.c
++++ b/sound/pci/hda/hda_tegra.c
+@@ -71,6 +71,10 @@
+ struct hda_tegra_soc {
+ 	bool has_hda2codec_2x_reset;
+ 	bool has_hda2hdmi;
++	bool has_hda2codec_2x;
++	bool input_stream;
++	bool always_on;
++	bool requires_init;
+ };
  
--int hclge_enable_vport_vlan_filter(struct hclge_vport *vport, bool request_en)
-+static int __hclge_enable_vport_vlan_filter(struct hclge_vport *vport,
-+					    bool request_en)
- {
--	struct hclge_dev *hdev = vport->back;
- 	bool need_en;
- 	int ret;
- 
--	mutex_lock(&hdev->vport_lock);
--
--	vport->req_vlan_fltr_en = request_en;
--
- 	need_en = hclge_need_enable_vport_vlan_filter(vport);
--	if (need_en == vport->cur_vlan_fltr_en) {
--		mutex_unlock(&hdev->vport_lock);
-+	if (need_en == vport->cur_vlan_fltr_en)
- 		return 0;
--	}
- 
- 	ret = hclge_set_vport_vlan_filter(vport, need_en);
--	if (ret) {
--		mutex_unlock(&hdev->vport_lock);
-+	if (ret)
- 		return ret;
--	}
- 
- 	vport->cur_vlan_fltr_en = need_en;
- 
-+	return 0;
-+}
+ struct hda_tegra {
+@@ -186,7 +190,9 @@ static int __maybe_unused hda_tegra_runt
+ 	if (rc != 0)
+ 		return rc;
+ 	if (chip->running) {
+-		hda_tegra_init(hda);
++		if (hda->soc->requires_init)
++			hda_tegra_init(hda);
 +
-+int hclge_enable_vport_vlan_filter(struct hclge_vport *vport, bool request_en)
-+{
-+	struct hclge_dev *hdev = vport->back;
-+	int ret;
+ 		azx_init_chip(chip, 1);
+ 		/* disable controller wake up event*/
+ 		azx_writew(chip, WAKEEN, azx_readw(chip, WAKEEN) &
+@@ -251,7 +257,8 @@ static int hda_tegra_init_chip(struct az
+ 	bus->remap_addr = hda->regs + HDA_BAR0;
+ 	bus->addr = res->start + HDA_BAR0;
+ 
+-	hda_tegra_init(hda);
++	if (hda->soc->requires_init)
++		hda_tegra_init(hda);
+ 
+ 	return 0;
+ }
+@@ -324,7 +331,7 @@ static int hda_tegra_first_init(struct a
+ 	 * starts with offset 0 which is wrong as HW register for output stream
+ 	 * offset starts with 4.
+ 	 */
+-	if (of_device_is_compatible(np, "nvidia,tegra234-hda"))
++	if (!hda->soc->input_stream)
+ 		chip->capture_streams = 4;
+ 
+ 	chip->playback_streams = (gcap >> 12) & 0x0f;
+@@ -420,7 +427,6 @@ static int hda_tegra_create(struct snd_c
+ 	chip->driver_caps = driver_caps;
+ 	chip->driver_type = driver_caps & 0xff;
+ 	chip->dev_index = 0;
+-	chip->jackpoll_interval = msecs_to_jiffies(5000);
+ 	INIT_LIST_HEAD(&chip->pcm_list);
+ 
+ 	chip->codec_probe_mask = -1;
+@@ -437,7 +443,16 @@ static int hda_tegra_create(struct snd_c
+ 	chip->bus.core.sync_write = 0;
+ 	chip->bus.core.needs_damn_long_delay = 1;
+ 	chip->bus.core.aligned_mmio = 1;
+-	chip->bus.jackpoll_in_suspend = 1;
 +
-+	mutex_lock(&hdev->vport_lock);
-+	vport->req_vlan_fltr_en = request_en;
-+	ret = __hclge_enable_vport_vlan_filter(vport, request_en);
- 	mutex_unlock(&hdev->vport_lock);
++	/*
++	 * HDA power domain and clocks are always on for Tegra264 and
++	 * the jack detection logic would work always, so no need of
++	 * jack polling mechanism running.
++	 */
++	if (!hda->soc->always_on) {
++		chip->jackpoll_interval = msecs_to_jiffies(5000);
++		chip->bus.jackpoll_in_suspend = 1;
++	}
  
--	return 0;
-+	return ret;
- }
+ 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+ 	if (err < 0) {
+@@ -451,22 +466,44 @@ static int hda_tegra_create(struct snd_c
+ static const struct hda_tegra_soc tegra30_data = {
+ 	.has_hda2codec_2x_reset = true,
+ 	.has_hda2hdmi = true,
++	.has_hda2codec_2x = true,
++	.input_stream = true,
++	.always_on = false,
++	.requires_init = true,
+ };
  
- static int hclge_enable_vlan_filter(struct hnae3_handle *handle, bool enable)
-@@ -10646,16 +10649,19 @@ static void hclge_sync_vlan_fltr_state(struct hclge_dev *hdev)
- 					&vport->state))
- 			continue;
+ static const struct hda_tegra_soc tegra194_data = {
+ 	.has_hda2codec_2x_reset = false,
+ 	.has_hda2hdmi = true,
++	.has_hda2codec_2x = true,
++	.input_stream = true,
++	.always_on = false,
++	.requires_init = true,
+ };
  
--		ret = hclge_enable_vport_vlan_filter(vport,
--						     vport->req_vlan_fltr_en);
-+		mutex_lock(&hdev->vport_lock);
-+		ret = __hclge_enable_vport_vlan_filter(vport,
-+						       vport->req_vlan_fltr_en);
- 		if (ret) {
- 			dev_err(&hdev->pdev->dev,
- 				"failed to sync vlan filter state for vport%u, ret = %d\n",
- 				vport->vport_id, ret);
- 			set_bit(HCLGE_VPORT_STATE_VLAN_FLTR_CHANGE,
- 				&vport->state);
-+			mutex_unlock(&hdev->vport_lock);
- 			return;
- 		}
-+		mutex_unlock(&hdev->vport_lock);
- 	}
- }
+ static const struct hda_tegra_soc tegra234_data = {
+ 	.has_hda2codec_2x_reset = true,
+ 	.has_hda2hdmi = false,
++	.has_hda2codec_2x = true,
++	.input_stream = false,
++	.always_on = false,
++	.requires_init = true,
++};
++
++static const struct hda_tegra_soc tegra264_data = {
++	.has_hda2codec_2x_reset = true,
++	.has_hda2hdmi = false,
++	.has_hda2codec_2x = false,
++	.input_stream = false,
++	.always_on = true,
++	.requires_init = false,
+ };
  
--- 
-2.39.5
-
+ static const struct of_device_id hda_tegra_match[] = {
+ 	{ .compatible = "nvidia,tegra30-hda", .data = &tegra30_data },
+ 	{ .compatible = "nvidia,tegra194-hda", .data = &tegra194_data },
+ 	{ .compatible = "nvidia,tegra234-hda", .data = &tegra234_data },
++	{ .compatible = "nvidia,tegra264-hda", .data = &tegra264_data },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, hda_tegra_match);
+@@ -521,7 +558,9 @@ static int hda_tegra_probe(struct platfo
+ 	hda->clocks[hda->nclocks++].id = "hda";
+ 	if (hda->soc->has_hda2hdmi)
+ 		hda->clocks[hda->nclocks++].id = "hda2hdmi";
+-	hda->clocks[hda->nclocks++].id = "hda2codec_2x";
++
++	if (hda->soc->has_hda2codec_2x)
++		hda->clocks[hda->nclocks++].id = "hda2codec_2x";
+ 
+ 	err = devm_clk_bulk_get(&pdev->dev, hda->nclocks, hda->clocks);
+ 	if (err < 0)
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -4556,6 +4556,7 @@ HDA_CODEC_ENTRY(0x10de002e, "Tegra186 HD
+ HDA_CODEC_ENTRY(0x10de002f, "Tegra194 HDMI/DP2", patch_tegra_hdmi),
+ HDA_CODEC_ENTRY(0x10de0030, "Tegra194 HDMI/DP3", patch_tegra_hdmi),
+ HDA_CODEC_ENTRY(0x10de0031, "Tegra234 HDMI/DP", patch_tegra234_hdmi),
++HDA_CODEC_ENTRY(0x10de0034, "Tegra264 HDMI/DP",	patch_tegra234_hdmi),
+ HDA_CODEC_ENTRY(0x10de0040, "GPU 40 HDMI/DP",	patch_nvhdmi),
+ HDA_CODEC_ENTRY(0x10de0041, "GPU 41 HDMI/DP",	patch_nvhdmi),
+ HDA_CODEC_ENTRY(0x10de0042, "GPU 42 HDMI/DP",	patch_nvhdmi),
 
 
