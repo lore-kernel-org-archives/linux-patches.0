@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0464529BD9D;
-	Tue, 12 Aug 2025 19:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEF42C21F7;
+	Tue, 12 Aug 2025 19:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026889; cv=none; b=iFIMuLLFchhrFNG4BGC89eSDOYn65N41oB9SGc57Mb9oJbIbTOYMPABTVSNetR1LYFGfDuqOucs3KtvtId0+bZEz/v9r3kd9Fa6W5iQtHEYxL44BKTZIjuJgm8hBJGaY5cIUp8zX7yJ/f2+eR15H1xA/QMFb/2pI2kKmq2muYSs=
+	t=1755026892; cv=none; b=jYgzGQOXX/s8rSgkR2jmy+396wj6nNE7MyCeKc1JDF6VhjOMecbL6+bfqhyKS9UEraAemhUORgANMUJ4xjJm9fg7iVbca/kJUDFhF+izfQVttsVEE5F5EHroHVfQYH6n4g2TkedCcmO5zWOk0FciAdfhErPdQo9NIRQ6mdiLGKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026889; c=relaxed/simple;
-	bh=E7/suJAd+fgHDN/0YvbA4y+N0BsV1I0Olsr11UGPAP8=;
+	s=arc-20240116; t=1755026892; c=relaxed/simple;
+	bh=sZ1MvrfYTiXMWEk+jqegw5/6bO1O66mb21o9fFr/I7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwCjqxkx1FYzT2W2mDViXELg5cxwRYbSDQo7PiWQr3cbiUDURmhTzdUw1n79541obMitKwzSqQs3rrt9FJDTrZ/VFdXHBYBH3O5GeIwg5e7SfsgAEp2oudEmUtqTVLXjrGYebuQud/4iKPz4ePhKPoqBa17Njkj8u3+cMvUNt2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIy5QC6O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gnfiD5Qu1SeejU1792d+/yfzneVmYqI/7rnHumB2UjD1XZdC5f039+1DyCoZEblDiCeR0X/mwKOgHNchM4omcub2O5exGyOqMlroklA3w2HytBlSYgLXNPB7i+216nPkvFfR68bTy4YUK8IgRnq+f8aO7OEL+ffHp7y/YGXb7iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2ut/tLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIy5QC6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67412C4CEF0;
-	Tue, 12 Aug 2025 19:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2ut/tLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3860C4CEF0;
+	Tue, 12 Aug 2025 19:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026888;
-	bh=E7/suJAd+fgHDN/0YvbA4y+N0BsV1I0Olsr11UGPAP8=;
+	s=korg; t=1755026892;
+	bh=sZ1MvrfYTiXMWEk+jqegw5/6bO1O66mb21o9fFr/I7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uIy5QC6OrIuEREy6iiAvbxqy1Kx8MxO1j8fTbKIJXdswjfnEf+tAV2d/7RD3BboE1
-	 FWJUcoQKLDNJ0URqPE7NVWFccr5GslWWNEuzpuRwi7ebil6i8yoUu0v6sJHqyU6kYs
-	 wFqkZGY2l+cKpqDzYQDYNm0/iXClzeNyvDisbCjE=
+	b=H2ut/tLHcnGDxRXCMQr2rlzwv1bLr4t7zB+CD6+kKZwjEHOxJl+lY4tPMmT9Ymkla
+	 Gh5hikM2s6VmKOPPAzLA2gV4NMh/XMKZa+rD3HyQnRELaNbAVbx7DRMfOmb0IYDRUR
+	 RJWAgYjSnUc+m92eXSJaN76x7nQcyok6XB/vcU68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Kairui Song <kasong@tencent.com>,
 	Baoquan He <bhe@redhat.com>,
 	Johannes Weiner <hannes@cmpxchg.org>,
-	Kairui Song <kasong@tencent.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 469/480] mm: swap: fix potential buffer overflow in setup_clusters()
-Date: Tue, 12 Aug 2025 19:51:17 +0200
-Message-ID: <20250812174416.728888447@linuxfoundation.org>
+Subject: [PATCH 6.15 470/480] mm: swap: move nr_swap_pages counter decrement from folio_alloc_swap() to swap_range_alloc()
+Date: Tue, 12 Aug 2025 19:51:18 +0200
+Message-ID: <20250812174416.767692496@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -55,46 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit 152c1339dc13ad46f1b136e8693de15980750835 upstream.
+commit 4f78252da887ee7e9d1875dd6e07d9baa936c04f upstream.
 
-In setup_swap_map(), we only ensure badpages are in range (0, last_page].
-As maxpages might be < last_page, setup_clusters() will encounter a buffer
-overflow when a badpage is >= maxpages.
+Patch series "Some randome fixes and cleanups to swapfile".
 
-Only call inc_cluster_info_page() for badpage which is < maxpages to fix
-the issue.
+Patch 0-3 are some random fixes.  Patch 4 is a cleanup.  More details can
+be found in respective patches.
 
-Link: https://lkml.kernel.org/r/20250522122554.12209-4-shikemeng@huaweicloud.com
-Fixes: b843786b0bd0 ("mm: swapfile: fix SSD detection with swapfile on btrfs")
+
+This patch (of 4):
+
+When folio_alloc_swap() encounters a failure in either
+mem_cgroup_try_charge_swap() or add_to_swap_cache(), nr_swap_pages counter
+is not decremented for allocated entry.  However, the following
+put_swap_folio() will increase nr_swap_pages counter unpairly and lead to
+an imbalance.
+
+Move nr_swap_pages decrement from folio_alloc_swap() to swap_range_alloc()
+to pair the nr_swap_pages counting.
+
+Link: https://lkml.kernel.org/r/20250522122554.12209-1-shikemeng@huaweicloud.com
+Link: https://lkml.kernel.org/r/20250522122554.12209-2-shikemeng@huaweicloud.com
+Fixes: 0ff67f990bd4 ("mm, swap: remove swap slot cache")
 Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
 Reviewed-by: Baoquan He <bhe@redhat.com>
 Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kairui Song <kasong@tencent.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/swapfile.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ mm/swapfile.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/mm/swapfile.c
 +++ b/mm/swapfile.c
-@@ -3205,9 +3205,13 @@ static struct swap_cluster_info *setup_c
- 	 * and the EOF part of the last cluster.
- 	 */
- 	inc_cluster_info_page(si, cluster_info, 0);
--	for (i = 0; i < swap_header->info.nr_badpages; i++)
--		inc_cluster_info_page(si, cluster_info,
--				      swap_header->info.badpages[i]);
-+	for (i = 0; i < swap_header->info.nr_badpages; i++) {
-+		unsigned int page_nr = swap_header->info.badpages[i];
-+
-+		if (page_nr >= maxpages)
-+			continue;
-+		inc_cluster_info_page(si, cluster_info, page_nr);
-+	}
- 	for (i = maxpages; i < round_up(maxpages, SWAPFILE_CLUSTER); i++)
- 		inc_cluster_info_page(si, cluster_info, i);
+@@ -1115,6 +1115,7 @@ static void swap_range_alloc(struct swap
+ 		if (vm_swap_full())
+ 			schedule_work(&si->reclaim_work);
+ 	}
++	atomic_long_sub(nr_entries, &nr_swap_pages);
+ }
  
+ static void swap_range_free(struct swap_info_struct *si, unsigned long offset,
+@@ -1313,7 +1314,6 @@ int folio_alloc_swap(struct folio *folio
+ 	if (add_to_swap_cache(folio, entry, gfp | __GFP_NOMEMALLOC, NULL))
+ 		goto out_free;
+ 
+-	atomic_long_sub(size, &nr_swap_pages);
+ 	return 0;
+ 
+ out_free:
 
 
