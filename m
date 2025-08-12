@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5913D2C21F6;
-	Tue, 12 Aug 2025 18:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464B42C21F6;
+	Tue, 12 Aug 2025 18:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024516; cv=none; b=DARi+7sNlVd1HdW1BFHh7ugu9v6ZACQ53Sf1LXVvWsNinO58XYenDih07RzBrTpjREGaHcg1HMM+WjIFuiOw2NcVbyMW9e54AzEOYMUD3apCNBC9qArRByr7KU3ESKeeuMUAaPV9ifNWpWn8vYaM4/9GYNe8ajH1bGcp72LJ0eQ=
+	t=1755024520; cv=none; b=Bd8GzA67ZI8H1S24e34OtaOmJUsoh11CDbIDKhHS1UxSdrrN2B8NU5SnlNCCTo3NkAWy4ml7uK6XdNvCNyiC8VxsgdPyxUFWUGlxk01xhg5uMtIsRLEkfNV0isMXbfYC14fnlgTYGYs7+dvARWYZpE0V1QIHFIGkztShQKjLY1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024516; c=relaxed/simple;
-	bh=ddjfuyAnKV4wRaRY0QDaVUgTFvMGnWgatuAsfWVq3Rg=;
+	s=arc-20240116; t=1755024520; c=relaxed/simple;
+	bh=DsvTHY1FdOj2ncR/yWiPlxHHqLKkwrTWBzVdOJOO6U0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oyNWqpnuS7H8k8CEF4MGl3maRlNXntQcCDVfAD0pJK7AzaIfdc3F3gVpYThfpTVgGfFJ3QkQGQCvSDM4fbBGEnchJJK3umKCCdgWKF4Ss+W55GMku7WrM8vh5s6gom5zyDEUyJVz0nU660jSjLh8KcT64pE0ohs3HRuCHEfgS1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnIMKdg9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EzzJqmV6mxu7+Uuyu5abw4CdiJFwS2yqeSO4E0T8qjuuthp3Tum5vXDKR0NozFKYQ+25YbKB9s7JecUz5JFCV8jpakqg849RtyVqSY1srFCkiFzj2kBHHZDM/PgO77f5uPKuA9vALZdwnfJC9MnsTD6DuamgVutEjhXH+D29jkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvr08RUu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnIMKdg9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6320C4CEF0;
-	Tue, 12 Aug 2025 18:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvr08RUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59640C4CEF0;
+	Tue, 12 Aug 2025 18:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024516;
-	bh=ddjfuyAnKV4wRaRY0QDaVUgTFvMGnWgatuAsfWVq3Rg=;
+	s=korg; t=1755024519;
+	bh=DsvTHY1FdOj2ncR/yWiPlxHHqLKkwrTWBzVdOJOO6U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnIMKdg9zVLfRVS6YcsWTrXHDLJnyrzRdbiN5C9cqC9Pi+6zN8RL/VhMGiTUU965G
-	 zhER62cwMnIv34tSOvkEAKlb6+fToCM6tl3c9e5Em/DRQLP+PWLENB0TzRYFFFRF0g
-	 BLGs2LtxbFlaf6WJAwBB6BIVc07UInEO6OourGBo=
+	b=yvr08RUu6PvZ0wbKNHYR9eCDxNHqDV4o/ph1Nln2UHQbsN05WHDhzfVmb+71Ae25i
+	 ndeZvUntV8WurB3Pv8Xq4Pd+x+d+0LpNffVeFUiybVP1ZMfqBk9KoJaEWOkjdy7Wr2
+	 /vBRJD17qrwt3pQ6gEjHj2latN5jGe5sgq/r7nQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Shashank Balaji <shashank.mahadasyam@sony.com>,
-	Tejun Heo <tj@kernel.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 397/627] selftests/cgroup: fix cpu.max tests
-Date: Tue, 12 Aug 2025 19:31:32 +0200
-Message-ID: <20250812173434.399078995@linuxfoundation.org>
+Subject: [PATCH 6.16 398/627] ext4: fix inode use after free in ext4_end_io_rsv_work()
+Date: Tue, 12 Aug 2025 19:31:33 +0200
+Message-ID: <20250812173434.437193636@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -46,218 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shashank Balaji <shashank.mahadasyam@sony.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 954bacce36d976fe472090b55987df66da00c49b ]
+[ Upstream commit c678bdc998754589cea2e6afab9401d7d8312ac4 ]
 
-Current cpu.max tests (both the normal one and the nested one) are broken.
+In ext4_io_end_defer_completion(), check if io_end->list_vec is empty to
+avoid adding an io_end that requires no conversion to the
+i_rsv_conversion_list, which in turn prevents starting an unnecessary
+worker. An ext4_emergency_state() check is also added to avoid attempting
+to abort the journal in an emergency state.
 
-They setup cpu.max with 1000 us quota and the default period (100,000 us).
-A cpu hog is run for a duration of 1s as per wall clock time. This corresponds
-to 10 periods, hence an expected usage of 10,000 us. We want the measured
-usage (as per cpu.stat) to be close to 10,000 us.
+Additionally, ext4_put_io_end_defer() is refactored to call
+ext4_io_end_defer_completion() directly instead of being open-coded.
+This also prevents starting an unnecessary worker when EXT4_IO_END_FAILED
+is set but data_err=abort is not enabled.
 
-Previously, this approximate equality test was done by
-`!values_close(usage_usec, expected_usage_usec, 95)`: if the absolute
-difference between usage_usec and expected_usage_usec is greater than 95% of
-their sum, then we pass. And expected_usage_usec was set to 1,000,000 us.
-Mathematically, this translates to the following being true for pass:
+This ensures that the check in ext4_put_io_end_defer() is consistent with
+the check in ext4_end_bio(). Otherwise, we might add an io_end to the
+i_rsv_conversion_list and then call ext4_finish_bio(), after which the
+inode could be freed before ext4_end_io_rsv_work() is called, triggering
+a use-after-free issue.
 
-	|usage - expected_usage| > (usage + expected_usage)*0.95
-
-	If usage > expected_usage:
-		usage - expected_usage > (usage + expected_usage)*0.95
-		0.05*usage > 1.95*expected_usage
-		usage > 39*expected_usage = 39s
-
-	If usage < expected_usage:
-		expected_usage - usage > (usage + expected_usage)*0.95
-		0.05*expected_usage > 1.95*usage
-		usage < 0.0256*expected_usage = 25,600 us
-
-Combined,
-
-	Pass if usage < 25,600 us or > 39 s,
-
-which makes no sense given that all we need is for usage_usec to be close to
-10,000 us.
-
-Fix this by explicitly calcuating the expected usage duration based on the
-configured quota, default period, and the duration, and compare usage_usec
-and expected_usage_usec using values_close() with a 10% error margin.
-
-Also, use snprintf to get the quota string to write to cpu.max instead of
-hardcoding the quota, ensuring a single source of truth.
-
-Remove the check comparing user_usec and expected_usage_usec, since on running
-this test modified with printfs, it's seen that user_usec and usage_usec can
-regularly exceed the theoretical expected_usage_usec:
-
-	$ sudo ./test_cpu
-	user: 10485, usage: 10485, expected: 10000
-	ok 1 test_cpucg_max
-	user: 11127, usage: 11127, expected: 10000
-	ok 2 test_cpucg_max_nested
-	$ sudo ./test_cpu
-	user: 10286, usage: 10286, expected: 10000
-	ok 1 test_cpucg_max
-	user: 10404, usage: 11271, expected: 10000
-	ok 2 test_cpucg_max_nested
-
-Hence, a values_close() check of usage_usec and expected_usage_usec is
-sufficient.
-
-Fixes: a79906570f9646ae17 ("cgroup: Add test_cpucg_max_nested() testcase")
-Fixes: 889ab8113ef1386c57 ("cgroup: Add test_cpucg_max() testcase")
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Shashank Balaji <shashank.mahadasyam@sony.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: ce51afb8cc5e ("ext4: abort journal on data writeback failure if in data_err=abort mode")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250708111504.3208660-1-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/test_cpu.c | 63 ++++++++++++++++-------
- 1 file changed, 43 insertions(+), 20 deletions(-)
+ fs/ext4/page-io.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/cgroup/test_cpu.c b/tools/testing/selftests/cgroup/test_cpu.c
-index a2b50af8e9ee..2a60e6c41940 100644
---- a/tools/testing/selftests/cgroup/test_cpu.c
-+++ b/tools/testing/selftests/cgroup/test_cpu.c
-@@ -2,6 +2,7 @@
+diff --git a/fs/ext4/page-io.c b/fs/ext4/page-io.c
+index 179e54f3a3b6..3d8b0f6d2dea 100644
+--- a/fs/ext4/page-io.c
++++ b/fs/ext4/page-io.c
+@@ -236,10 +236,12 @@ static void dump_completed_IO(struct inode *inode, struct list_head *head)
  
- #define _GNU_SOURCE
- #include <linux/limits.h>
-+#include <sys/param.h>
- #include <sys/sysinfo.h>
- #include <sys/wait.h>
- #include <errno.h>
-@@ -645,10 +646,16 @@ test_cpucg_nested_weight_underprovisioned(const char *root)
- static int test_cpucg_max(const char *root)
+ static bool ext4_io_end_defer_completion(ext4_io_end_t *io_end)
  {
- 	int ret = KSFT_FAIL;
--	long usage_usec, user_usec;
--	long usage_seconds = 1;
--	long expected_usage_usec = usage_seconds * USEC_PER_SEC;
-+	long quota_usec = 1000;
-+	long default_period_usec = 100000; /* cpu.max's default period */
-+	long duration_seconds = 1;
-+
-+	long duration_usec = duration_seconds * USEC_PER_SEC;
-+	long usage_usec, n_periods, remainder_usec, expected_usage_usec;
- 	char *cpucg;
-+	char quota_buf[32];
-+
-+	snprintf(quota_buf, sizeof(quota_buf), "%ld", quota_usec);
+-	if (io_end->flag & EXT4_IO_END_UNWRITTEN)
++	if (io_end->flag & EXT4_IO_END_UNWRITTEN &&
++	    !list_empty(&io_end->list_vec))
+ 		return true;
+ 	if (test_opt(io_end->inode->i_sb, DATA_ERR_ABORT) &&
+-	    io_end->flag & EXT4_IO_END_FAILED)
++	    io_end->flag & EXT4_IO_END_FAILED &&
++	    !ext4_emergency_state(io_end->inode->i_sb))
+ 		return true;
+ 	return false;
+ }
+@@ -256,6 +258,7 @@ static void ext4_add_complete_io(ext4_io_end_t *io_end)
+ 	WARN_ON(!(io_end->flag & EXT4_IO_END_DEFER_COMPLETION));
+ 	WARN_ON(io_end->flag & EXT4_IO_END_UNWRITTEN &&
+ 		!io_end->handle && sbi->s_journal);
++	WARN_ON(!io_end->bio);
  
- 	cpucg = cg_name(root, "cpucg_test");
- 	if (!cpucg)
-@@ -657,13 +664,13 @@ static int test_cpucg_max(const char *root)
- 	if (cg_create(cpucg))
- 		goto cleanup;
- 
--	if (cg_write(cpucg, "cpu.max", "1000"))
-+	if (cg_write(cpucg, "cpu.max", quota_buf))
- 		goto cleanup;
- 
- 	struct cpu_hog_func_param param = {
- 		.nprocs = 1,
- 		.ts = {
--			.tv_sec = usage_seconds,
-+			.tv_sec = duration_seconds,
- 			.tv_nsec = 0,
- 		},
- 		.clock_type = CPU_HOG_CLOCK_WALL,
-@@ -672,14 +679,19 @@ static int test_cpucg_max(const char *root)
- 		goto cleanup;
- 
- 	usage_usec = cg_read_key_long(cpucg, "cpu.stat", "usage_usec");
--	user_usec = cg_read_key_long(cpucg, "cpu.stat", "user_usec");
--	if (user_usec <= 0)
-+	if (usage_usec <= 0)
- 		goto cleanup;
- 
--	if (user_usec >= expected_usage_usec)
--		goto cleanup;
-+	/*
-+	 * The following calculation applies only since
-+	 * the cpu hog is set to run as per wall-clock time
-+	 */
-+	n_periods = duration_usec / default_period_usec;
-+	remainder_usec = duration_usec - n_periods * default_period_usec;
-+	expected_usage_usec
-+		= n_periods * quota_usec + MIN(remainder_usec, quota_usec);
- 
--	if (values_close(usage_usec, expected_usage_usec, 95))
-+	if (!values_close(usage_usec, expected_usage_usec, 10))
- 		goto cleanup;
- 
- 	ret = KSFT_PASS;
-@@ -698,10 +710,16 @@ static int test_cpucg_max(const char *root)
- static int test_cpucg_max_nested(const char *root)
+ 	spin_lock_irqsave(&ei->i_completed_io_lock, flags);
+ 	wq = sbi->rsv_conversion_wq;
+@@ -318,12 +321,9 @@ ext4_io_end_t *ext4_init_io_end(struct inode *inode, gfp_t flags)
+ void ext4_put_io_end_defer(ext4_io_end_t *io_end)
  {
- 	int ret = KSFT_FAIL;
--	long usage_usec, user_usec;
--	long usage_seconds = 1;
--	long expected_usage_usec = usage_seconds * USEC_PER_SEC;
-+	long quota_usec = 1000;
-+	long default_period_usec = 100000; /* cpu.max's default period */
-+	long duration_seconds = 1;
+ 	if (refcount_dec_and_test(&io_end->count)) {
+-		if (io_end->flag & EXT4_IO_END_FAILED ||
+-		    (io_end->flag & EXT4_IO_END_UNWRITTEN &&
+-		     !list_empty(&io_end->list_vec))) {
+-			ext4_add_complete_io(io_end);
+-			return;
+-		}
++		if (ext4_io_end_defer_completion(io_end))
++			return ext4_add_complete_io(io_end);
 +
-+	long duration_usec = duration_seconds * USEC_PER_SEC;
-+	long usage_usec, n_periods, remainder_usec, expected_usage_usec;
- 	char *parent, *child;
-+	char quota_buf[32];
-+
-+	snprintf(quota_buf, sizeof(quota_buf), "%ld", quota_usec);
- 
- 	parent = cg_name(root, "cpucg_parent");
- 	child = cg_name(parent, "cpucg_child");
-@@ -717,13 +735,13 @@ static int test_cpucg_max_nested(const char *root)
- 	if (cg_create(child))
- 		goto cleanup;
- 
--	if (cg_write(parent, "cpu.max", "1000"))
-+	if (cg_write(parent, "cpu.max", quota_buf))
- 		goto cleanup;
- 
- 	struct cpu_hog_func_param param = {
- 		.nprocs = 1,
- 		.ts = {
--			.tv_sec = usage_seconds,
-+			.tv_sec = duration_seconds,
- 			.tv_nsec = 0,
- 		},
- 		.clock_type = CPU_HOG_CLOCK_WALL,
-@@ -732,14 +750,19 @@ static int test_cpucg_max_nested(const char *root)
- 		goto cleanup;
- 
- 	usage_usec = cg_read_key_long(child, "cpu.stat", "usage_usec");
--	user_usec = cg_read_key_long(child, "cpu.stat", "user_usec");
--	if (user_usec <= 0)
-+	if (usage_usec <= 0)
- 		goto cleanup;
- 
--	if (user_usec >= expected_usage_usec)
--		goto cleanup;
-+	/*
-+	 * The following calculation applies only since
-+	 * the cpu hog is set to run as per wall-clock time
-+	 */
-+	n_periods = duration_usec / default_period_usec;
-+	remainder_usec = duration_usec - n_periods * default_period_usec;
-+	expected_usage_usec
-+		= n_periods * quota_usec + MIN(remainder_usec, quota_usec);
- 
--	if (values_close(usage_usec, expected_usage_usec, 95))
-+	if (!values_close(usage_usec, expected_usage_usec, 10))
- 		goto cleanup;
- 
- 	ret = KSFT_PASS;
+ 		ext4_release_io_end(io_end);
+ 	}
+ }
 -- 
 2.39.5
 
