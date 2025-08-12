@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4278E2FF174;
-	Tue, 12 Aug 2025 18:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7002E2FF155;
+	Tue, 12 Aug 2025 18:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024972; cv=none; b=K/anrK3Pr0M8Acu6jDV20sDV9bqX9KyGyqC4PEkpTapTbMKo+9QQoT/vSpI7cywI93r66AsVCeaN/YyfwBg0ZYpbhUO/hBMURo/ubIv6nVua7+OKj8sEFHFNNkqOnGDnsicIi7YYA30UmlN5UM/F4YvcOHDvFELYo0YWryOxHZw=
+	t=1755024975; cv=none; b=qDnpJpQH8t00rONe4QIfXp2xDfv7Up5A7Cf2Et63CXwVpWhlPqUG6oxfu7rUEY9wfNDGaqW2LVDj8iFDq7tD9VpulnDNsK05HkrAUqO4cVhag8U/EtWkrxh3hcF4A19SNaixczKFYgmB+eDtrfJM1V9olKC+Xd+G+IiBZVxKUqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024972; c=relaxed/simple;
-	bh=coD8pF+nB0t+jA986TnykXMS3YbqTX/RxdHFb+TqN30=;
+	s=arc-20240116; t=1755024975; c=relaxed/simple;
+	bh=AOuIgPWgdVhwTYv/Lp2NYmOrOpxj7dRhmekGd4rytao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HvGNBX9P7ovdSy5Pzh7wQmZVU5JpqeGYzSQBYZUGMjDNI89AGQAY8bBaRr2ZrnmnbYdIP4KguQ7yxFndf9JomOYlJVr/EVLMzQiGq8iAEnrlhGIaBeA0hJRoznbW4/Ug8LFlYYgeN423QkM3PgPKPw/0Btb5Ni1vtmFki+vmZ98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbZKIMvv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WWaFn7o1EyYCRcRv+InHBrwwB8IoypIpIKsf9AWOGN/h3OM3R85QGt+PEG2REip24HWs6qSlQk+NIie/CAVNB3kyXPo/Bi0FBdXrstvnWZo3g4Ae51l4UGC3uaFdrHxmd+WQvvolW4ukR9fGsQw/9dNK1VF5IKcc4FE02os3h5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZVsqneV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbZKIMvv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BC3C4CEF0;
-	Tue, 12 Aug 2025 18:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZVsqneV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9202C4CEF0;
+	Tue, 12 Aug 2025 18:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024972;
-	bh=coD8pF+nB0t+jA986TnykXMS3YbqTX/RxdHFb+TqN30=;
+	s=korg; t=1755024975;
+	bh=AOuIgPWgdVhwTYv/Lp2NYmOrOpxj7dRhmekGd4rytao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XbZKIMvv53IG1AQLN3Xk7NtN7ZM/aavaQmtelAbDxVAxv59BlONNaWylEpwIkR466
-	 DhxehpFOpQg6AitWWgFABuUGg2uvYZPcHsiqQ61RzaugUT1tYYreFz8LTzzsJSLOo6
-	 X5Ad1FKCmo+dW+b+7MXcG4T4Nw48GoxqQEBdRdHA=
+	b=qZVsqneVDHvk6Mmq7bMrJ9wuUCZ2wFZTNoV7p2wmwV6z6WEgbVu8WliwWWb0LiVHs
+	 GQwwsYOVw7TEdJ8Ohk8sGKyUkoYTWlC8KB6XpFgASWCNzvlu/9o97Fob+NVkcZsTcZ
+	 S33V3tnA3VtezMhlKM0a12ieHTUa92/bDS6erE4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengxu Zhang <zhengxu.zhang@unisoc.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 488/627] exfat: fdatasync flag should be same like generic_write_sync()
-Date: Tue, 12 Aug 2025 19:33:03 +0200
-Message-ID: <20250812173444.687003987@linuxfoundation.org>
+Subject: [PATCH 6.16 525/627] block: Fix default IO priority if there is no IO context
+Date: Tue, 12 Aug 2025 19:33:40 +0200
+Message-ID: <20250812173451.866397153@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,47 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengxu Zhang <zhengxu.zhang@unisoc.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 2f2d42a17b5a6711378d39df74f1f69a831c5d4e ]
+[ Upstream commit e2ba58ccc9099514380c3300cbc0750b5055fc1c ]
 
-Test: androbench by default setting, use 64GB sdcard.
- the random write speed:
-	without this patch 3.5MB/s
-	with this patch 7MB/s
+Upstream commit 53889bcaf536 ("block: make __get_task_ioprio() easier to
+read") changes the IO priority returned to the caller if no IO context
+is defined for the task. Prior to this commit, the returned IO priority
+was determined by task_nice_ioclass() and task_nice_ioprio(). Now it is
+always IOPRIO_DEFAULT, which translates to IOPRIO_CLASS_NONE with priority
+0. However, task_nice_ioclass() returns IOPRIO_CLASS_IDLE, IOPRIO_CLASS_RT,
+or IOPRIO_CLASS_BE depending on the task scheduling policy, and
+task_nice_ioprio() returns a value determined by task_nice(). This causes
+regressions in test code checking the IO priority and class of IO
+operations on tasks with no IO context.
 
-After patch "11a347fb6cef", the random write speed decreased significantly.
-the .write_iter() interface had been modified, and check the differences
-with generic_file_write_iter(), when calling generic_write_sync() and
-exfat_file_write_iter() to call vfs_fsync_range(), the fdatasync flag is
-wrong, and make not use the fdatasync mode, and make random write speed
-decreased. So use generic_write_sync() instead of vfs_fsync_range().
+Fix the problem by returning the IO priority calculated from
+task_nice_ioclass() and task_nice_ioprio() if no IO context is defined
+to match earlier behavior.
 
-Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
-Signed-off-by: Zhengxu Zhang <zhengxu.zhang@unisoc.com>
-Acked-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 53889bcaf536 ("block: make __get_task_ioprio() easier to read")
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250731044953.1852690-1-linux@roeck-us.net
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/linux/ioprio.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index 841a5b18e3df..7ac5126aa4f1 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -623,9 +623,8 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 	if (pos > valid_size)
- 		pos = valid_size;
+diff --git a/include/linux/ioprio.h b/include/linux/ioprio.h
+index b25377b6ea98..5210e8371238 100644
+--- a/include/linux/ioprio.h
++++ b/include/linux/ioprio.h
+@@ -60,7 +60,8 @@ static inline int __get_task_ioprio(struct task_struct *p)
+ 	int prio;
  
--	if (iocb_is_dsync(iocb) && iocb->ki_pos > pos) {
--		ssize_t err = vfs_fsync_range(file, pos, iocb->ki_pos - 1,
--				iocb->ki_flags & IOCB_SYNC);
-+	if (iocb->ki_pos > pos) {
-+		ssize_t err = generic_write_sync(iocb, iocb->ki_pos - pos);
- 		if (err < 0)
- 			return err;
- 	}
+ 	if (!ioc)
+-		return IOPRIO_DEFAULT;
++		return IOPRIO_PRIO_VALUE(task_nice_ioclass(p),
++					 task_nice_ioprio(p));
+ 
+ 	if (p != current)
+ 		lockdep_assert_held(&p->alloc_lock);
 -- 
 2.39.5
 
