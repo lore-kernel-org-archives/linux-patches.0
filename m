@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D3F279DB6;
-	Tue, 12 Aug 2025 19:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6483F2DA779;
+	Tue, 12 Aug 2025 19:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025704; cv=none; b=oyfYsEa17sjQmyKEEB2lOb2oX6nMt7YSon8K8SqxhEW0PtklP/5oWfRiKV7FL/4FMVUm7efZjuX5JoviCcEz+ebrXYcNS53alv1WDe4eQUGU7stv4Pc7E8tB3Con9g2y0Lw5OukuiWyNCkJJVeqgNQO+3lsaOnmxQApaflnuZEc=
+	t=1755025707; cv=none; b=Oy3/+UqubhCN05vgYQK0vj0ZowTEzMKXoFt/HTSj8IUxB6L6cGd8hTNrcbDmcbM0gijzz3bSuLTsfuEvtt60c3dK0OWgh4qVXErOIvGmA9K1lxvxz6cK7joIcywd0mNMC+T//KT77PysjOcAvkkI79kCFwN5BZs5WWdYYlJvQAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025704; c=relaxed/simple;
-	bh=VI9+5G+B7PPOfF18CIJQj2dGHkvhafL8LHf1372p8Mc=;
+	s=arc-20240116; t=1755025707; c=relaxed/simple;
+	bh=v/VLXAHmDgsWRAmqCNlOz+1CIHBT9lvWWAccaCQhuio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRXWzM5hXOACz69LaEy1/iY4YJuorFbcr013eeorcX6ftbc/qjSqPuHAAoXgtAnn1LQl6GQY8g7qKZOxSypMaj0sWFt214eHYg2IWBtN9qtzhIXJ3m+xe39EMj/NvJjyu1DGUp5z5ZhFe0P8ebstmIccsdfuTIMaURs6ubhhRw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJq3FKbE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mj48ep6d8QfGB3quwdyHtngPQaGLevLS2chMIQTcHEHSe3clIoPqplES94ZvM2P9q8ds6I2MMraMXyCzgW7KNgfeEAwnfR7E8sCbUSmmUfOhDJssyL/FjvIDySm6n8cK1ob91GaFiEgO8qqAam69B84HE9Ml719uXFPz8UfuCvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsqYkVjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJq3FKbE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D33C4CEF0;
-	Tue, 12 Aug 2025 19:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsqYkVjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C758FC4CEF0;
+	Tue, 12 Aug 2025 19:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025703;
-	bh=VI9+5G+B7PPOfF18CIJQj2dGHkvhafL8LHf1372p8Mc=;
+	s=korg; t=1755025707;
+	bh=v/VLXAHmDgsWRAmqCNlOz+1CIHBT9lvWWAccaCQhuio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJq3FKbEXX8pZLRuuIFAShXbJE1/uqNgiC7rnp6+5493Y6jGim0fz5K2/n/Jj7zsP
-	 5WEtN/zPV+DtxnwZ+Rxl1p9xNISnX2+Vw5ibVgZH3Urhj4GiesA6kR6QXsRSGFWvPi
-	 aFkJr2l5WcvvzQk2ETaGt/x4HszQCmXyTnQJ16oQ=
+	b=zsqYkVjPR1N50+QBTCRwA+qCcZH9pLspAo+Pd6i+nhJUsQC1TEljKaF4dXmU8tdHa
+	 lEK5Pf1YtAdcT58ISMq31LYaxZFav2CXD6FEVutNZJuAnx+ShiDwhx6/xJGgxAS2WT
+	 EYvQnfi5pGyvGOZFSh0JmW7vzn8FBuK6tUx2y588=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Delaunay <patrick.delaunay@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Mangesh Gadre <Mangesh.Gadre@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 076/480] arm64: dts: st: fix timer used for ticks
-Date: Tue, 12 Aug 2025 19:44:44 +0200
-Message-ID: <20250812174400.579408059@linuxfoundation.org>
+Subject: [PATCH 6.15 113/480] drm/amdgpu: Remove nbiov7.9 replay count reporting
+Date: Tue, 12 Aug 2025 19:45:21 +0200
+Message-ID: <20250812174402.155805399@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,35 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrick Delaunay <patrick.delaunay@foss.st.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 9ec406ac4b7de3e8040a503429d1a5d389bfdaf6 ]
+[ Upstream commit 0f566f0e9c614aa3d95082246f5b8c9e8a09c8b3 ]
 
-Remove always-on on generic ARM timer as the clock source provided by
-STGEN is deactivated in low power mode, STOP1 by example.
+Direct pcie replay count reporting is not available on nbio v7.9.
+Reporting is done through firmware.
 
-Fixes: 5d30d03aaf78 ("arm64: dts: st: introduce stm32mp25 SoCs family")
-Signed-off-by: Patrick Delaunay <patrick.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/20250515151238.1.I85271ddb811a7cf73532fec90de7281cb24ce260@changeid
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Acked-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Fixes: 50709d18f4a6 ("drm/amdgpu: Add pci replay count to nbio v7.9")
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/st/stm32mp251.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-index 87110f91e489..afe88e04875a 100644
---- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
-+++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-@@ -150,7 +150,7 @@ timer {
- 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>;
--		always-on;
-+		arm,no-tick-in-suspend;
- 	};
+diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
+index f23cb79110d6..3a78d035e128 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
+@@ -31,9 +31,6 @@
  
- 	soc@0 {
+ #define NPS_MODE_MASK 0x000000FFL
+ 
+-/* Core 0 Port 0 counter */
+-#define smnPCIEP_NAK_COUNTER 0x1A340218
+-
+ static void nbio_v7_9_remap_hdp_registers(struct amdgpu_device *adev)
+ {
+ 	WREG32_SOC15(NBIO, 0, regBIF_BX0_REMAP_HDP_MEM_FLUSH_CNTL,
+@@ -463,22 +460,6 @@ static void nbio_v7_9_init_registers(struct amdgpu_device *adev)
+ 	}
+ }
+ 
+-static u64 nbio_v7_9_get_pcie_replay_count(struct amdgpu_device *adev)
+-{
+-	u32 val, nak_r, nak_g;
+-
+-	if (adev->flags & AMD_IS_APU)
+-		return 0;
+-
+-	/* Get the number of NAKs received and generated */
+-	val = RREG32_PCIE(smnPCIEP_NAK_COUNTER);
+-	nak_r = val & 0xFFFF;
+-	nak_g = val >> 16;
+-
+-	/* Add the total number of NAKs, i.e the number of replays */
+-	return (nak_r + nak_g);
+-}
+-
+ #define MMIO_REG_HOLE_OFFSET 0x1A000
+ 
+ static void nbio_v7_9_set_reg_remap(struct amdgpu_device *adev)
+@@ -520,7 +501,6 @@ const struct amdgpu_nbio_funcs nbio_v7_9_funcs = {
+ 	.get_memory_partition_mode = nbio_v7_9_get_memory_partition_mode,
+ 	.is_nps_switch_requested = nbio_v7_9_is_nps_switch_requested,
+ 	.init_registers = nbio_v7_9_init_registers,
+-	.get_pcie_replay_count = nbio_v7_9_get_pcie_replay_count,
+ 	.set_reg_remap = nbio_v7_9_set_reg_remap,
+ };
+ 
 -- 
 2.39.5
 
