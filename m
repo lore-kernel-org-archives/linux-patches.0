@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7132A26FA77;
-	Tue, 12 Aug 2025 19:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5B023182D;
+	Tue, 12 Aug 2025 19:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025466; cv=none; b=d/VdEFD5HFvUYymla1MPz/JpOvOpaijXveeCcjiUzWDICOsnx90EYIkBwwL1k58zU1UBnna/XYtz4Plu7XMonduk6hp82ITtEzEbQsTfU5i9z5ls7jC/VswU/vYqpEyB4L+almMTAm5828Z8vsAf+8dbL+UK3FdeCpatinsu9xk=
+	t=1755025469; cv=none; b=WWZYc5HN4t21Vz0ZBCvQb5HBq65BypjBUMESkw9NzVnsFJBstgT92YTlYSvs6Rx/0WHVkfAwpQCkEMSf7wTV/zIJIMiWPoOlPOtk4bxA5ePZh+n97hjgdqEV3PLMFVumc+X2kKXZPyfVNgOWhiTYM1w8GuBvNTOAUlAJoRJ67Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025466; c=relaxed/simple;
-	bh=x8HqbRPLKTww+8stjIMBQNsPSd2nQasEMwQpKCnjGdc=;
+	s=arc-20240116; t=1755025469; c=relaxed/simple;
+	bh=D6gqBQk6ART6OHbx9S6SNhBrsLV/+2TNgk6RHYu3tZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Safa28/KaUS74z/fu5MR4qjhjkNQPTbZLgjDQ7aWrtjjmMOIPDB08UcK18W+Xrji4af3i7WcNmUlT+Wdwt/F61XKUfAaZI07AIuPQgQDyu9+UWjXqeTs9ydkLrEWkDNQ9p/SXD70OrbAqGRNCN7m4VvhO8WOLwsnUlCtQlBjnbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NC7JyGSd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dF83cv7ONCnjXr+2p3JkGSM3rtgWc++E3C5XlvVIPuu08KeoeIgNEl2W08dATxo+BBhUft3CB59lUhypqacXCOEMP67+GIlX3YeXhVdD5BkICt3dwUJMT/IsRrWMh7ZNoSJHi8XT5C9CipRqhAUkoQxg/8iTRLy+aCWcBa/Nq8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNoDMl0s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NC7JyGSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A4BC4CEF0;
-	Tue, 12 Aug 2025 19:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNoDMl0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4E2C4CEF0;
+	Tue, 12 Aug 2025 19:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025466;
-	bh=x8HqbRPLKTww+8stjIMBQNsPSd2nQasEMwQpKCnjGdc=;
+	s=korg; t=1755025469;
+	bh=D6gqBQk6ART6OHbx9S6SNhBrsLV/+2TNgk6RHYu3tZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NC7JyGSd/s6YvFtOaoSAx/qeb7zgaA9J6elHfOP9hh4Fo4vsczfy4969GCpKwIawa
-	 tZLgRBxEp25w7Tj0Wflw/YhKaRMdtODZIw7XTEdu59/C/FTNLM5tdm/akW2HO3T3Xy
-	 trzbsGLTqgfVMnhXI8TiI45eUdHDaMYxg3QhKo1I=
+	b=vNoDMl0suJ5YFadQ42l8JMkSCGacpDHaiLKIigPeJIU/MJnkHXv/mJULwryP5d6DC
+	 06etmKPUiR87AcqmYB1xATEP54ExGve9er4Dg18q/0Z8e6Q8Gh6DN+RpaSBNqVuJVk
+	 xD7wNWCToGjZaCN4YH8bDHhFwao6gBAVhL9bMDYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Wanner <Ryan.Wanner@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 050/480] ARM: dts: microchip: sam9x7: Add clock name property
-Date: Tue, 12 Aug 2025 19:44:18 +0200
-Message-ID: <20250812174359.463755963@linuxfoundation.org>
+Subject: [PATCH 6.15 051/480] cpufreq: armada-8k: make both cpu masks static
+Date: Tue, 12 Aug 2025 19:44:19 +0200
+Message-ID: <20250812174359.510977754@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,43 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Wanner <Ryan.Wanner@microchip.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 2e24723492b28ffdccb0e3e68725673e299e3823 ]
+[ Upstream commit b1b41bc072baf7301b1ae95fe417de09a5ad47e2 ]
 
-Add clock-output-names to the xtal nodes, so the driver can correctly
-register the main and slow xtal.
+An earlier patch marked one of the two CPU masks as 'static' to reduce stack
+usage, but if CONFIG_NR_CPUS is large enough, the function still produces
+a warning for compile testing:
 
-This fixes the issue of the SoC clock driver not being able to find
-the main xtal and slow xtal correctly causing a bad clock tree.
+drivers/cpufreq/armada-8k-cpufreq.c: In function 'armada_8k_cpufreq_init':
+drivers/cpufreq/armada-8k-cpufreq.c:203:1: error: the frame size of 1416 bytes is larger than 1408 bytes [-Werror=frame-larger-than=]
 
-Fixes: 41af45af8bc3 ("ARM: dts: at91: sam9x7: add device tree for SoC")
-Signed-off-by: Ryan Wanner <Ryan.Wanner@microchip.com>
-Link: https://lore.kernel.org/r/036518968ac657b93e315bb550b822b59ae6f17c.1750175453.git.Ryan.Wanner@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Normally this should be done using alloc_cpumask_var(), but since the
+driver already has a static mask and the probe function is not called
+concurrently, use the same trick for both.
+
+Fixes: 1ffec650d07f ("cpufreq: armada-8k: Avoid excessive stack usage")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/sam9x7.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/armada-8k-cpufreq.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/microchip/sam9x7.dtsi b/arch/arm/boot/dts/microchip/sam9x7.dtsi
-index b217a908f525..114449e90720 100644
---- a/arch/arm/boot/dts/microchip/sam9x7.dtsi
-+++ b/arch/arm/boot/dts/microchip/sam9x7.dtsi
-@@ -45,11 +45,13 @@ cpu@0 {
- 	clocks {
- 		slow_xtal: clock-slowxtal {
- 			compatible = "fixed-clock";
-+			clock-output-names = "slow_xtal";
- 			#clock-cells = <0>;
- 		};
+diff --git a/drivers/cpufreq/armada-8k-cpufreq.c b/drivers/cpufreq/armada-8k-cpufreq.c
+index 5a3545bd0d8d..006f4c554dd7 100644
+--- a/drivers/cpufreq/armada-8k-cpufreq.c
++++ b/drivers/cpufreq/armada-8k-cpufreq.c
+@@ -132,7 +132,7 @@ static int __init armada_8k_cpufreq_init(void)
+ 	int ret = 0, opps_index = 0, cpu, nb_cpus;
+ 	struct freq_table *freq_tables;
+ 	struct device_node *node;
+-	static struct cpumask cpus;
++	static struct cpumask cpus, shared_cpus;
  
- 		main_xtal: clock-mainxtal {
- 			compatible = "fixed-clock";
-+			clock-output-names = "main_xtal";
- 			#clock-cells = <0>;
- 		};
- 	};
+ 	node = of_find_matching_node_and_match(NULL, armada_8k_cpufreq_of_match,
+ 					       NULL);
+@@ -154,7 +154,6 @@ static int __init armada_8k_cpufreq_init(void)
+ 	 * divisions of it).
+ 	 */
+ 	for_each_cpu(cpu, &cpus) {
+-		struct cpumask shared_cpus;
+ 		struct device *cpu_dev;
+ 		struct clk *clk;
+ 
 -- 
 2.39.5
 
