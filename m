@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D78279DB6;
-	Tue, 12 Aug 2025 19:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D3F279DB6;
+	Tue, 12 Aug 2025 19:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025700; cv=none; b=Fwgl16iWjYFfMbHFHpUObnJwq6meeJmt4oaTkRHofFLH3qtm4adsn7zIflHvtNsNK2Fw2HbJ/h8kxPUbuzTj9cNtGm0sE/QZm+OAa8SW3RvcT9BixL5r3m6AbhbA3oU4mt7nS6dSDiF/lHtKptsZ1Ia0QTBwhJoOmwGpHZigXBU=
+	t=1755025704; cv=none; b=oyfYsEa17sjQmyKEEB2lOb2oX6nMt7YSon8K8SqxhEW0PtklP/5oWfRiKV7FL/4FMVUm7efZjuX5JoviCcEz+ebrXYcNS53alv1WDe4eQUGU7stv4Pc7E8tB3Con9g2y0Lw5OukuiWyNCkJJVeqgNQO+3lsaOnmxQApaflnuZEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025700; c=relaxed/simple;
-	bh=zprLKZoGswFLgnnbT9UPOmotydSpSK3vNWI9jekZJRU=;
+	s=arc-20240116; t=1755025704; c=relaxed/simple;
+	bh=VI9+5G+B7PPOfF18CIJQj2dGHkvhafL8LHf1372p8Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gpfdpPyRu0/H2krCXotbMQRMBuHTYVuQSC4PNkog999wgSzHHSs0st219i7GR2q4hpKteNQ/6C0jYe8pp/F3LnoUGWsbk0IQk+umFtaHE25agpwpSUn6aFYoDC5uoG2jXZCITr0DiAgF64QEovXFWCYhy4gNKintk5w5OJKUOUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3iRsHsF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BRXWzM5hXOACz69LaEy1/iY4YJuorFbcr013eeorcX6ftbc/qjSqPuHAAoXgtAnn1LQl6GQY8g7qKZOxSypMaj0sWFt214eHYg2IWBtN9qtzhIXJ3m+xe39EMj/NvJjyu1DGUp5z5ZhFe0P8ebstmIccsdfuTIMaURs6ubhhRw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJq3FKbE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3iRsHsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8758C4CEF0;
-	Tue, 12 Aug 2025 19:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJq3FKbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D33C4CEF0;
+	Tue, 12 Aug 2025 19:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025700;
-	bh=zprLKZoGswFLgnnbT9UPOmotydSpSK3vNWI9jekZJRU=;
+	s=korg; t=1755025703;
+	bh=VI9+5G+B7PPOfF18CIJQj2dGHkvhafL8LHf1372p8Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p3iRsHsFNWg/G/zRwcRdDmsCwXFevciA78M5HdXutEMoGiukzwUXOmIfOoYCub055
-	 UMXNhp/0AoOBdTWmKI13UxgbpbpW3HB20CA9bvReFwCJZh2RQIk9CicWuPtMY0T9Gw
-	 ZBkHsMQLD5EPh8QhvKDYbNa9p7XQmnbEcyK8pYRo=
+	b=bJq3FKbEXX8pZLRuuIFAShXbJE1/uqNgiC7rnp6+5493Y6jGim0fz5K2/n/Jj7zsP
+	 5WEtN/zPV+DtxnwZ+Rxl1p9xNISnX2+Vw5ibVgZH3Urhj4GiesA6kR6QXsRSGFWvPi
+	 aFkJr2l5WcvvzQk2ETaGt/x4HszQCmXyTnQJ16oQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Patrick Delaunay <patrick.delaunay@foss.st.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 085/480] cpufreq: Initialize cpufreq-based frequency-invariance later
-Date: Tue, 12 Aug 2025 19:44:53 +0200
-Message-ID: <20250812174400.955063007@linuxfoundation.org>
+Subject: [PATCH 6.15 076/480] arm64: dts: st: fix timer used for ticks
+Date: Tue, 12 Aug 2025 19:44:44 +0200
+Message-ID: <20250812174400.579408059@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,61 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Patrick Delaunay <patrick.delaunay@foss.st.com>
 
-[ Upstream commit 2a6c727387062a2ea79eb6cf5004820cb1b0afe2 ]
+[ Upstream commit 9ec406ac4b7de3e8040a503429d1a5d389bfdaf6 ]
 
-The cpufreq-based invariance is enabled in cpufreq_register_driver(),
-but never disabled after registration fails. Move the invariance
-initialization to where all other initializations have been successfully
-done to solve this problem.
+Remove always-on on generic ARM timer as the clock source provided by
+STGEN is deactivated in low power mode, STOP1 by example.
 
-Fixes: 874f63531064 ("cpufreq: report whether cpufreq supports Frequency Invariance (FI)")
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/20250709104145.2348017-2-zhenglifeng1@huawei.com
-[ rjw: New subject ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 5d30d03aaf78 ("arm64: dts: st: introduce stm32mp25 SoCs family")
+Signed-off-by: Patrick Delaunay <patrick.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20250515151238.1.I85271ddb811a7cf73532fec90de7281cb24ce260@changeid
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/st/stm32mp251.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index f45ded62b0e0..ea2a8d86d640 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -3009,15 +3009,6 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
- 	cpufreq_driver = driver_data;
- 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
+diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+index 87110f91e489..afe88e04875a 100644
+--- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
++++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+@@ -150,7 +150,7 @@ timer {
+ 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>;
+-		always-on;
++		arm,no-tick-in-suspend;
+ 	};
  
--	/*
--	 * Mark support for the scheduler's frequency invariance engine for
--	 * drivers that implement target(), target_index() or fast_switch().
--	 */
--	if (!cpufreq_driver->setpolicy) {
--		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
--		pr_debug("supports frequency invariance");
--	}
--
- 	if (driver_data->setpolicy)
- 		driver_data->flags |= CPUFREQ_CONST_LOOPS;
- 
-@@ -3048,6 +3039,15 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
- 	hp_online = ret;
- 	ret = 0;
- 
-+	/*
-+	 * Mark support for the scheduler's frequency invariance engine for
-+	 * drivers that implement target(), target_index() or fast_switch().
-+	 */
-+	if (!cpufreq_driver->setpolicy) {
-+		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
-+		pr_debug("supports frequency invariance");
-+	}
-+
- 	pr_debug("driver %s up and running\n", driver_data->name);
- 	goto out;
- 
+ 	soc@0 {
 -- 
 2.39.5
 
