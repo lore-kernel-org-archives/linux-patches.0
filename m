@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD5F2F83CB;
-	Tue, 12 Aug 2025 17:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4B42DE1E2;
+	Tue, 12 Aug 2025 17:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021261; cv=none; b=WDKmfrq7+VrjWjKruMv+yb4MavJu68Rc8+EwKbzubPd8pXkyCJoQBnrXgcOpSWSOWtm50mSG2cJ+Vr9Ufyta+IAYuFxjo3fFdOx8GFDnmq/UxZa4mWyQnV4LzvzJy3fQGwUEp7+mn/1IGDTX4lLjvOMVHmVesjIbo2B4RpdRqhI=
+	t=1755021264; cv=none; b=tiyaPGGybRm3K7NqhgJlCS/fR0fuzCf9kK3NxXKYUT8GEJ5IGeh9kfId0ZS6KnQElJCt/Jse0q3w+21t+eifdtwahlhWbyWaoz3slr2rordDmtGxIyJOB8sr+08HlSsYBLMaLUeYB5duMco4wRCojurYh5zghqQ0BlJAcaHqXtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021261; c=relaxed/simple;
-	bh=aecPb3V7i963nZQmJ3S0YFVhiccndXmJLfHpbfr7168=;
+	s=arc-20240116; t=1755021264; c=relaxed/simple;
+	bh=vDhluTV0fGV2vVNKQAisHf1kJSJvYegP+6xWiAUOR1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUMINNbDgbk3PWJIEOklwa/wBcVIl4jaxZC/1N2zJB1MFac5HCgTaa+p9PfTOhsTim7d3pEE4VvcNfTvdPV+amTHhHWSvGxjTeHkJHh4YIEFBZNLFuZu6YO3+vZKwJk2bHZANMiBVK+CbUmfseJbtWSOWvPIl/DNOWHlk3/6cR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8zn2oSR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mVKOFh3BGNXwgAKRzbeqhOrzQOqoPwHmVBrsQlNCtWHYw0R7QAZ90Ldlhqg6SUOD+2oDMUMPnaMGxvw7Cw8huyz9kbixQZvRSTUByL7NCBBvrs64qolhlQCV4zzHPQpk/ja6MG/GXpekyJYL9XIdA7Hb+CVDxh4jxqAdrC+A1YM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2agAuGB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8zn2oSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F2DC4CEF0;
-	Tue, 12 Aug 2025 17:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2agAuGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053C9C4CEF0;
+	Tue, 12 Aug 2025 17:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021261;
-	bh=aecPb3V7i963nZQmJ3S0YFVhiccndXmJLfHpbfr7168=;
+	s=korg; t=1755021264;
+	bh=vDhluTV0fGV2vVNKQAisHf1kJSJvYegP+6xWiAUOR1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z8zn2oSRfvF1gFSCba/u9hJYKhnx7ySDIa7y8fgRl50i9zheqlRo1UZwEJ6o0QoLh
-	 FvuWXlt9n3uzNVTzcIS8BFNLpL7Vm5zy1sn3I5VwUfCCW99DTIwzu3P7LMtz+NbOiF
-	 It6vwBvxWZ8gHnZ/d+dfqA4l9aesflK9Z2odZKpg=
+	b=q2agAuGBxhRlnnShH93Ll/u2rgZk1mPDBurZlrY6+1fWpAFRR++YsKeVI3C5E04w4
+	 MtIdtIZA3fhsFOtH1Y+JeUrYcAjJYlKm0I9Tx4qBnC2qPBmmmHNCBY+8RkCNAObUNj
+	 ARx15eJ5FeVqWmE5+NgjCKI1EmfIQHFBUmF1Rvas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <Alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/262] wifi: mac80211: Dont call fq_flow_idx() for management frames
-Date: Tue, 12 Aug 2025 19:27:53 +0200
-Message-ID: <20250812172956.663546894@linuxfoundation.org>
+	Quang Le <quanglex97@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 237/253] net/packet: fix a race in packet_set_ring() and packet_notifier()
+Date: Tue, 12 Aug 2025 19:30:25 +0200
+Message-ID: <20250812172958.919964898@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Wetzel <Alexander@wetzel-home.de>
+From: Quang Le <quanglex97@gmail.com>
 
-[ Upstream commit cb3bb3d88dfcd177a1050c0a009a3ee147b2e5b9 ]
+commit 01d3c8417b9c1b884a8a981a3b886da556512f36 upstream.
 
-skb_get_hash() can only be used when the skb is linked to a netdev
-device.
+When packet_set_ring() releases po->bind_lock, another thread can
+run packet_notifier() and process an NETDEV_UP event.
 
-Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
-Fixes: 73bc9e0af594 ("mac80211: don't apply flow control on management frames")
-Link: https://patch.msgid.link/20250717162547.94582-3-Alexander@wetzel-home.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This race and the fix are both similar to that of commit 15fe076edea7
+("net/packet: fix a race in packet_bind() and packet_notifier()").
+
+There too the packet_notifier NETDEV_UP event managed to run while a
+po->bind_lock critical section had to be temporarily released. And
+the fix was similarly to temporarily set po->num to zero to keep
+the socket unhooked until the lock is retaken.
+
+The po->bind_lock in packet_set_ring and packet_notifier precede the
+introduction of git history.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quang Le <quanglex97@gmail.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250801175423.2970334-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/packet/af_packet.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index bdf7c7ca5654..f54792c4b910 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -1451,7 +1451,7 @@ static void ieee80211_txq_enqueue(struct ieee80211_local *local,
- {
- 	struct fq *fq = &local->fq;
- 	struct fq_tin *tin = &txqi->tin;
--	u32 flow_idx = fq_flow_idx(fq, skb);
-+	u32 flow_idx;
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -4541,10 +4541,10 @@ static int packet_set_ring(struct sock *
+ 	spin_lock(&po->bind_lock);
+ 	was_running = po->running;
+ 	num = po->num;
+-	if (was_running) {
+-		WRITE_ONCE(po->num, 0);
++	WRITE_ONCE(po->num, 0);
++	if (was_running)
+ 		__unregister_prot_hook(sk, false);
+-	}
++
+ 	spin_unlock(&po->bind_lock);
  
- 	ieee80211_set_skb_enqueue_time(skb);
+ 	synchronize_net();
+@@ -4576,10 +4576,10 @@ static int packet_set_ring(struct sock *
+ 	mutex_unlock(&po->pg_vec_lock);
  
-@@ -1467,6 +1467,7 @@ static void ieee80211_txq_enqueue(struct ieee80211_local *local,
- 			IEEE80211_TX_INTCFL_NEED_TXPROCESSING;
- 		__skb_queue_tail(&txqi->frags, skb);
- 	} else {
-+		flow_idx = fq_flow_idx(fq, skb);
- 		fq_tin_enqueue(fq, tin, flow_idx, skb,
- 			       fq_skb_free_func);
- 	}
--- 
-2.39.5
-
+ 	spin_lock(&po->bind_lock);
+-	if (was_running) {
+-		WRITE_ONCE(po->num, num);
++	WRITE_ONCE(po->num, num);
++	if (was_running)
+ 		register_prot_hook(sk);
+-	}
++
+ 	spin_unlock(&po->bind_lock);
+ 	if (pg_vec && (po->tp_version > TPACKET_V2)) {
+ 		/* Because we don't support block-based V3 on tx-ring */
 
 
