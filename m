@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60DE2FAC06;
-	Tue, 12 Aug 2025 18:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35E82FAC06;
+	Tue, 12 Aug 2025 18:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024994; cv=none; b=ZHbM+CXXtM5BkhQlzWXX8Gn48mv0ZGWuVWOx7yQaDeEDNzmvS7bNyXUmzUdQ5fnkmXhwZ9BE6p8YaKoDgT3AVhFNsrujZloBJ0XoDK8FBTiP0Gz/GK5PrvEk2yRMUemKW1d6j8SGey2CkpLCmvqb6iPjQL2YrApF4vth00ZoLns=
+	t=1755024997; cv=none; b=jGhlhGAJhw/u6v+UfWPHormE5DeKeyDJEim+VGWNU0Je2/5OXRkXhC+IJlbRB9VW9r5Uu2Ujdrfdsl2CrjuM8d8Pm0pI9fagQ31ELCULBIh63EqGl4hGuYO/ka3G1x2zU+Drr4Rp+kBfwJytcp1kvnIhgM+w2dHkxzVXf4VfLxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024994; c=relaxed/simple;
-	bh=o3AGd8pH1YIyUx2KDQPAyb7EwoHXcfgcxCQHdDJOHj4=;
+	s=arc-20240116; t=1755024997; c=relaxed/simple;
+	bh=iCCYMdWtXCTxVQi6v7v2aSoUOd3q8EvZ4XdLEeFNfeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5o0Pz1/fOWR8cGWWJfgj1s1wZMNjmyEMIKe4QL5G/Ndah++6FXpLfQVc7UUVoxOBgMFvJSgj2nAtliDc1zkj8H+egtyIG/ivGMAUczkVGufyTp7erTf4SCTxr6lJCnpc7kkotUAvWQJ5uIXRyOIFUF4u/Il8p7mhWf/dsDnHM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFjaXqgQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tVPTPWiuijj3Y3HGBqG0lH10H8wHCdApZZjRJWH6wR1f7EgGfgRB6lq3otap1OTiVbydnaVdr7pyEVU4SuPgT6BYaXisGQrM8wZ+DQgAYTwDFvzmVCluREvN0yWz3eZfnyqCVDkj/K3uFJIT5nSAzxf8oMGXav1Tq0vTdpNzxkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JopbUZjg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFjaXqgQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CE6C4CEF0;
-	Tue, 12 Aug 2025 18:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JopbUZjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43278C4CEF0;
+	Tue, 12 Aug 2025 18:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024994;
-	bh=o3AGd8pH1YIyUx2KDQPAyb7EwoHXcfgcxCQHdDJOHj4=;
+	s=korg; t=1755024997;
+	bh=iCCYMdWtXCTxVQi6v7v2aSoUOd3q8EvZ4XdLEeFNfeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFjaXqgQAAQcfW0jyPAjEVyH+VhmcuhgBAKIJXqhfX+ZGKnTZAzwzcBfNePmRt5A+
-	 v3FsXKB+sH2R2OrrQAyQu1P2/waGb6GoPC1688m7Cbx97etxsmb2JuK0qcVsyJ6Wda
-	 p9Ji4U2Neu7FNYmTCrIOGd3OPLKiORrmUEd/MV7A=
+	b=JopbUZjgSzh54iqCvCGmm9skm/n03iALDkoXuc2Tdn+5hnOP6MGZIepWwWL/RFAwr
+	 NmDkAPaI+sODIZFIWK4CqcsD24oIwGoyMZdiIjPG/N2IKZEByp8hncGhctKULjllz/
+	 Grwcy4Q1tkrBelkVhfPWAH355zu+y6uBG7QGWY3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hogan Wang <hogan.wang@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 539/627] x86/irq: Plug vector setup race
-Date: Tue, 12 Aug 2025 19:33:54 +0200
-Message-ID: <20250812173452.412208582@linuxfoundation.org>
+Subject: [PATCH 6.16 540/627] eth: fbnic: unlink NAPIs from queues on error to open
+Date: Tue, 12 Aug 2025 19:33:55 +0200
+Message-ID: <20250812173452.449881637@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,182 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit ce0b5eedcb753697d43f61dd2e27d68eb5d3150f ]
+[ Upstream commit 4b31bcb025cb497da2b01f87173108ff32d350d2 ]
 
-Hogan reported a vector setup race, which overwrites the interrupt
-descriptor in the per CPU vector array resulting in a disfunctional device.
+CI hit a UaF in fbnic in the AF_XDP portion of the queues.py test.
+The UaF is in the __sk_mark_napi_id_once() call in xsk_bind(),
+NAPI has been freed. Looks like the device failed to open earlier,
+and we lack clearing the NAPI pointer from the queue.
 
-CPU0				CPU1
-				interrupt is raised in APIC IRR
-				but not handled
-  free_irq()
-    per_cpu(vector_irq, CPU1)[vector] = VECTOR_SHUTDOWN;
-
-  request_irq()			common_interrupt()
-  				  d = this_cpu_read(vector_irq[vector]);
-
-    per_cpu(vector_irq, CPU1)[vector] = desc;
-
-    				  if (d == VECTOR_SHUTDOWN)
-				    this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
-
-free_irq() cannot observe the pending vector in the CPU1 APIC as there is
-no way to query the remote CPUs APIC IRR.
-
-This requires that request_irq() uses the same vector/CPU as the one which
-was freed, but this also can be triggered by a spurious interrupt.
-
-Interestingly enough this problem managed to be hidden for more than a
-decade.
-
-Prevent this by reevaluating vector_irq under the vector lock, which is
-held by the interrupt activation code when vector_irq is updated.
-
-To avoid ifdeffery or IS_ENABLED() nonsense, move the
-[un]lock_vector_lock() declarations out under the
-CONFIG_IRQ_DOMAIN_HIERARCHY guard as it's only provided when
-CONFIG_X86_LOCAL_APIC=y.
-
-The current CONFIG_IRQ_DOMAIN_HIERARCHY guard is selected by
-CONFIG_X86_LOCAL_APIC, but can also be selected by other parts of the
-Kconfig system, which makes 32-bit UP builds with CONFIG_X86_LOCAL_APIC=n
-fail.
-
-Can we just get rid of this !APIC nonsense once and forever?
-
-Fixes: 9345005f4eed ("x86/irq: Fix do_IRQ() interrupt warning for cpu hotplug retriggered irqs")
-Reported-by: Hogan Wang <hogan.wang@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Hogan Wang <hogan.wang@huawei.com>
-Link: https://lore.kernel.org/all/draft-87ikjhrhhh.ffs@tglx
+Fixes: 557d02238e05 ("eth: fbnic: centralize the queue count and NAPI<>queue setting")
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250728163129.117360-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/hw_irq.h | 12 ++++---
- arch/x86/kernel/irq.c         | 63 ++++++++++++++++++++++++++---------
- 2 files changed, 55 insertions(+), 20 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/hw_irq.h b/arch/x86/include/asm/hw_irq.h
-index 162ebd73a698..cbe19e669080 100644
---- a/arch/x86/include/asm/hw_irq.h
-+++ b/arch/x86/include/asm/hw_irq.h
-@@ -92,8 +92,6 @@ struct irq_cfg {
- 
- extern struct irq_cfg *irq_cfg(unsigned int irq);
- extern struct irq_cfg *irqd_cfg(struct irq_data *irq_data);
--extern void lock_vector_lock(void);
--extern void unlock_vector_lock(void);
- #ifdef CONFIG_SMP
- extern void vector_schedule_cleanup(struct irq_cfg *);
- extern void irq_complete_move(struct irq_cfg *cfg);
-@@ -101,12 +99,16 @@ extern void irq_complete_move(struct irq_cfg *cfg);
- static inline void vector_schedule_cleanup(struct irq_cfg *c) { }
- static inline void irq_complete_move(struct irq_cfg *c) { }
- #endif
--
- extern void apic_ack_edge(struct irq_data *data);
--#else	/*  CONFIG_IRQ_DOMAIN_HIERARCHY */
-+#endif /* CONFIG_IRQ_DOMAIN_HIERARCHY */
-+
-+#ifdef CONFIG_X86_LOCAL_APIC
-+extern void lock_vector_lock(void);
-+extern void unlock_vector_lock(void);
-+#else
- static inline void lock_vector_lock(void) {}
- static inline void unlock_vector_lock(void) {}
--#endif	/* CONFIG_IRQ_DOMAIN_HIERARCHY */
-+#endif
- 
- /* Statistics */
- extern atomic_t irq_err_count;
-diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
-index 9ed29ff10e59..10721a125226 100644
---- a/arch/x86/kernel/irq.c
-+++ b/arch/x86/kernel/irq.c
-@@ -256,26 +256,59 @@ static __always_inline void handle_irq(struct irq_desc *desc,
- 		__handle_irq(desc, regs);
- }
- 
--static __always_inline int call_irq_handler(int vector, struct pt_regs *regs)
-+static struct irq_desc *reevaluate_vector(int vector)
- {
--	struct irq_desc *desc;
--	int ret = 0;
-+	struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
-+
-+	if (!IS_ERR_OR_NULL(desc))
-+		return desc;
-+
-+	if (desc == VECTOR_UNUSED)
-+		pr_emerg_ratelimited("No irq handler for %d.%u\n", smp_processor_id(), vector);
-+	else
-+		__this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
-+	return NULL;
-+}
-+
-+static __always_inline bool call_irq_handler(int vector, struct pt_regs *regs)
-+{
-+	struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
- 
--	desc = __this_cpu_read(vector_irq[vector]);
- 	if (likely(!IS_ERR_OR_NULL(desc))) {
- 		handle_irq(desc, regs);
--	} else {
--		ret = -EINVAL;
--		if (desc == VECTOR_UNUSED) {
--			pr_emerg_ratelimited("%s: %d.%u No irq handler for vector\n",
--					     __func__, smp_processor_id(),
--					     vector);
--		} else {
--			__this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
--		}
-+		return true;
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
+index aa812c63d5af..93717cf5bd8f 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
+@@ -33,7 +33,7 @@ int __fbnic_open(struct fbnic_net *fbn)
+ 		dev_warn(fbd->dev,
+ 			 "Error %d sending host ownership message to the firmware\n",
+ 			 err);
+-		goto free_resources;
++		goto err_reset_queues;
  	}
  
--	return ret;
-+	/*
-+	 * Reevaluate with vector_lock held to prevent a race against
-+	 * request_irq() setting up the vector:
-+	 *
-+	 * CPU0				CPU1
-+	 *				interrupt is raised in APIC IRR
-+	 *				but not handled
-+	 * free_irq()
-+	 *   per_cpu(vector_irq, CPU1)[vector] = VECTOR_SHUTDOWN;
-+	 *
-+	 * request_irq()		common_interrupt()
-+	 *				  d = this_cpu_read(vector_irq[vector]);
-+	 *
-+	 * per_cpu(vector_irq, CPU1)[vector] = desc;
-+	 *
-+	 *				  if (d == VECTOR_SHUTDOWN)
-+	 *				    this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
-+	 *
-+	 * This requires that the same vector on the same target CPU is
-+	 * handed out or that a spurious interrupt hits that CPU/vector.
-+	 */
-+	lock_vector_lock();
-+	desc = reevaluate_vector(vector);
-+	unlock_vector_lock();
-+
-+	if (!desc)
-+		return false;
-+
-+	handle_irq(desc, regs);
-+	return true;
- }
- 
- /*
-@@ -289,7 +322,7 @@ DEFINE_IDTENTRY_IRQ(common_interrupt)
- 	/* entry code tells RCU that we're not quiescent.  Check it. */
- 	RCU_LOCKDEP_WARN(!rcu_is_watching(), "IRQ failed to wake up RCU");
- 
--	if (unlikely(call_irq_handler(vector, regs)))
-+	if (unlikely(!call_irq_handler(vector, regs)))
- 		apic_eoi();
- 
- 	set_irq_regs(old_regs);
+ 	err = fbnic_time_start(fbn);
+@@ -57,6 +57,8 @@ int __fbnic_open(struct fbnic_net *fbn)
+ 	fbnic_time_stop(fbn);
+ release_ownership:
+ 	fbnic_fw_xmit_ownership_msg(fbn->fbd, false);
++err_reset_queues:
++	fbnic_reset_netif_queues(fbn);
+ free_resources:
+ 	fbnic_free_resources(fbn);
+ free_napi_vectors:
 -- 
 2.39.5
 
