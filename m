@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9C62868AF;
-	Tue, 12 Aug 2025 17:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C0C2868AF;
+	Tue, 12 Aug 2025 17:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021074; cv=none; b=Ox397H/lGxMcyk98ViHhaB/z8R8mUtq3W0T/q6MPmueYoifcqMGRsn4TAHeA+4P+S7S4hUG8SVo+uqcwYhSyYXwHpqc3dDDCZbLMLWe8LIT8xdamk51k6/XaDVnTI0YWzvuQGhTOxA/VqpwZ101oRPxuZiiDf3lYjCyBc1DjPSA=
+	t=1755021077; cv=none; b=q9v5IKrrt4o+gCWXGqOu8037bYClrcQ4dLn1HYnJCTe9VqxyfWQDYDg5dpF2jtMFXqlUSVy3thmI25ckgL+XvkRNDltcrdznAI0VzKyqMXS8f5D+aPw2Zg12BvGJ0XX/vKk7qoWjFReP2VGdrkSEPjWZ6IGquUhwXlwJ0CxsGJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021074; c=relaxed/simple;
-	bh=0SBZzTgDdY36JZqBhq7WfLqqhLp6wGLJos5sBo8kfv8=;
+	s=arc-20240116; t=1755021077; c=relaxed/simple;
+	bh=fHASWCmMh0tyxsTf8XbZhsrmWp6dnCfCX41cxvSvSeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7qfjDPg6xEiK20hzsL0R/LLEEPRXliJ5IM3RuZFSAf3PyzEChTQwelrpj+Zh2DZ1pJA0SxQSdLTkkldpkRXSRoLLraobel46NNoNhSDxync0co4tdR/XmaxtSS4GFm2uhtxJ6hzNiJb139Ir1SyH0prIENsLIGTrmsJxIR4Dv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy4/PVqK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ftglIUaR5hswbF6+TVwkMxayoBFboP+svCfAGhJ0b3j3pf06NVPbXGAPx2H8nj+toHQZVoIS4d/gpvPTIso8Tj4tvzBklYoifeS+/rXxJJa5NjANU1LNmuV3+4Bsx58tVpkna9zRBopgzWZUydXNv19sTNOOd5jNVYCWV5XocqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdFENiIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy4/PVqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052A6C4CEF0;
-	Tue, 12 Aug 2025 17:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdFENiIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF18C4CEF0;
+	Tue, 12 Aug 2025 17:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021074;
-	bh=0SBZzTgDdY36JZqBhq7WfLqqhLp6wGLJos5sBo8kfv8=;
+	s=korg; t=1755021077;
+	bh=fHASWCmMh0tyxsTf8XbZhsrmWp6dnCfCX41cxvSvSeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hy4/PVqKmhnhne7X++q6m3SwZ9zjnlZ5YLfmvPMwDA/ZgS+8/3ZiAZS+inoF+RlDC
-	 Pa1c0JhzXu+wgyiKQZxUlqaxpUDTCrLa0JxvbjmwGD4zDFXKwPDPO8YU5doKK5V0de
-	 2W50kuc0UNvRPM4IMNB6Z3WCL6PAFwYUiMAajYgQ=
+	b=ZdFENiIt1RE825ceWOiKABnVOJ9QeELDpjbs8gRMo//WI1gVoqPykzWmLXSkbLIiG
+	 5y8oiybngNLLszLZY6ofFXwIfwHjGXGsynPeqamY/s+IrK3p4TR36PxRmyBf/IkTvC
+	 IMwXFURFloPc+3iNLyrxxQkaqch4MX2BTbGwiNX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Anastasio <sanastasio@raptorengineering.com>,
-	Timothy Pearson <tpearson@raptorengineering.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 207/253] PCI: pnv_php: Work around switches with broken presence detection
-Date: Tue, 12 Aug 2025 19:29:55 +0200
-Message-ID: <20250812172957.632331602@linuxfoundation.org>
+Subject: [PATCH 6.6 058/262] wifi: iwlwifi: Fix memory leak in iwl_mvm_init()
+Date: Tue, 12 Aug 2025 19:27:26 +0200
+Message-ID: <20250812172955.456377686@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,79 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timothy Pearson <tpearson@raptorengineering.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 80f9fc2362797538ebd4fd70a1dfa838cc2c2cdb ]
+[ Upstream commit ed2e916c890944633d6826dce267579334f63ea5 ]
 
-The Microsemi Switchtec PM8533 PFX 48xG3 [11f8:8533] PCIe switch system
-was observed to incorrectly assert the Presence Detect Set bit in its
-capabilities when tested on a Raptor Computing Systems Blackbird system,
-resulting in the hot insert path never attempting a rescan of the bus
-and any downstream devices not being re-detected.
+When iwl_opmode_register() fails, it does not unregster rate control,
+which will cause a memory leak issue, this patch fixes it.
 
-Work around this by additionally checking whether the PCIe data link is
-active or not when performing presence detection on downstream switches'
-ports, similar to the pciehp_hpc.c driver.
-
-Signed-off-by: Shawn Anastasio <sanastasio@raptorengineering.com>
-Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/505981576.1359853.1752615415117.JavaMail.zimbra@raptorengineeringinc.com
+Fixes: 9f66a397c877 ("iwlwifi: mvm: rs: add ops for the new rate scaling in the FW")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Link: https://patch.msgid.link/20221109035213.570-1-xiujianfeng@huawei.com
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pnv_php.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
-index 6989b8a0dc6b..d37faa53bcd8 100644
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -390,6 +390,20 @@ static int pnv_php_get_power_state(struct hotplug_slot *slot, u8 *state)
- 	return 0;
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+index b2cf5aeff7e3..d2dbbc9fe384 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+@@ -65,8 +65,10 @@ static int __init iwl_mvm_init(void)
+ 	}
  
-+static int pcie_check_link_active(struct pci_dev *pdev)
-+{
-+	u16 lnk_status;
-+	int ret;
-+
-+	ret = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnk_status);
-+	if (ret == PCIBIOS_DEVICE_NOT_FOUND || PCI_POSSIBLE_ERROR(lnk_status))
-+		return -ENODEV;
-+
-+	ret = !!(lnk_status & PCI_EXP_LNKSTA_DLLLA);
-+
-+	return ret;
-+}
-+
- static int pnv_php_get_adapter_state(struct hotplug_slot *slot, u8 *state)
- {
- 	struct pnv_php_slot *php_slot = to_pnv_php_slot(slot);
-@@ -402,6 +416,19 @@ static int pnv_php_get_adapter_state(struct hotplug_slot *slot, u8 *state)
- 	 */
- 	ret = pnv_pci_get_presence_state(php_slot->id, &presence);
- 	if (ret >= 0) {
-+		if (pci_pcie_type(php_slot->pdev) == PCI_EXP_TYPE_DOWNSTREAM &&
-+			presence == OPAL_PCI_SLOT_EMPTY) {
-+			/*
-+			 * Similar to pciehp_hpc, check whether the Link Active
-+			 * bit is set to account for broken downstream bridges
-+			 * that don't properly assert Presence Detect State, as
-+			 * was observed on the Microsemi Switchtec PM8533 PFX
-+			 * [11f8:8533].
-+			 */
-+			if (pcie_check_link_active(php_slot->pdev) > 0)
-+				presence = OPAL_PCI_SLOT_PRESENT;
-+		}
-+
- 		*state = presence;
- 		ret = 0;
- 	} else {
+ 	ret = iwl_opmode_register("iwlmvm", &iwl_mvm_ops);
+-	if (ret)
++	if (ret) {
+ 		pr_err("Unable to register MVM op_mode: %d\n", ret);
++		iwl_mvm_rate_control_unregister();
++	}
+ 
+ 	return ret;
+ }
 -- 
 2.39.5
 
