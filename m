@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4962826CE2B;
-	Tue, 12 Aug 2025 18:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B7B26CE2B;
+	Tue, 12 Aug 2025 18:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024362; cv=none; b=XA6OtAJiawjSaIGPdIM5Q8UMq4XVeY1YfkomxrFUDg5KA95DFqvaWg5daFUUF4ffxUgmTzw97bQ7LY7l8TveUyj7ai8U0msrXtjQR288hUQ/U6i/8+lSKsRk/ZFDH88hbJ0NHWRWO++GocoRQJKhIWBcFyRyiYG1pyb+BCHrwS0=
+	t=1755024365; cv=none; b=Ir1SE6+sbLq5cB6anbLJLfBMOM3Capn2Ze7B/D1Ag9Nlgo6iP19IpVxqEt1oJrq8+8g3d/efI0CG+HI0xLhURoktXKj3epHMwlvE+E1NPspk5pfpzj+aQsF09HSG0bV5Ig+1vAd7US7nNqcm9/lZctMc5nP2iIfxHjBumqCzLf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024362; c=relaxed/simple;
-	bh=4hNvpuTc5UTnWKrqYE5nSZAQQwcuYOEZNDkcWc5ejI4=;
+	s=arc-20240116; t=1755024365; c=relaxed/simple;
+	bh=Vw16C6yEiAwTv0+b2Hyvm4jx1HII21a7SA4XxEroVlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cm9NAleLgin3bbeOjikxRW0+BvuJRp9NSgO+ZjdKhtNEGZY4MH5dQ8IPM253qC7ctIWCU8mubB1AM+HkwaHcmIXrP6++0TMPi0nqYhIqIQ8b6fG3lXLdzw/G0muKr6E9fFqG7OR6MvooYEPhOFNwmjT3LDgnZSsNu80sXS3hVmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSIMaABY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9iFDbjEOS/qpfUIhvwcN/Gv9bBWh0i2ox8GUFeRxGMbv0R1vRtckUStc42//nfB2HPvgmNiutxFQ+3IfMxeFAm67FAFt/gJ1uUXKNeeDF1iHlLGsv97tGHreSD5GF5jYZyR+Ob5YXjW3aPMNUybBZ14j2tf9jfj3sh4AE+b4O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiHghfLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSIMaABY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F69C4CEF1;
-	Tue, 12 Aug 2025 18:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiHghfLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B473BC4CEF0;
+	Tue, 12 Aug 2025 18:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024361;
-	bh=4hNvpuTc5UTnWKrqYE5nSZAQQwcuYOEZNDkcWc5ejI4=;
+	s=korg; t=1755024365;
+	bh=Vw16C6yEiAwTv0+b2Hyvm4jx1HII21a7SA4XxEroVlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSIMaABY9ZJbFRSkABzXNhGpHBbY+FYFp7JPNlM50Ti/5TX0JJqX4Fy2liFsqgwWZ
-	 Yhi6p9yh55PCIBXitDNfje/z96+nb50KvxWJi8waeCsDx9DQ7TMEsCMX0eqZjSgck2
-	 Bxe8hV3X1fKwTjEhKqYlYRfldsDmc4AfsHfDciLU=
+	b=LiHghfLqXK9Rvjhoim/WR82CLUrAeVzO0Inhx855wqmkC4zb6duXdKDSR6Sf5gryQ
+	 hCRx2rV9HuUFvXhDAE7B4TBN6zN2x6rPpHoppsFcqH8Z8x0g7IRu3YL23SPzNbl6tS
+	 YcVoVFjo2B1uqgjiSFo12/8hv+Xm9uKtcs9sb9yA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Michal Witwicki <michal.witwicki@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 318/627] power: reset: POWER_RESET_TORADEX_EC should depend on ARCH_MXC
-Date: Tue, 12 Aug 2025 19:30:13 +0200
-Message-ID: <20250812173431.401652162@linuxfoundation.org>
+Subject: [PATCH 6.16 309/627] crypto: qat - allow enabling VFs in the absence of IOMMU
+Date: Tue, 12 Aug 2025 19:30:04 +0200
+Message-ID: <20250812173431.063162780@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,36 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 22e4d29f081df8a10f1c062d3d952bb876eb9bdc ]
+[ Upstream commit 53669ff591d4deb2d80eed4c07593ad0c0b45899 ]
 
-The Toradex Embedded Controller is currently only present on Toradex
-SMARC iMX8MP and iMX95 SoMs.  Hence add a dependency on ARCH_MXC, to
-prevent asking the user about this driver when configuring a kernel
-without NXP i.MX SoC family support.
+The commit ca88a2bdd4dd ("crypto: qat - allow disabling SR-IOV VFs")
+introduced an unnecessary change that prevented enabling SR-IOV when
+IOMMU is disabled. In certain scenarios, it is desirable to enable
+SR-IOV even in the absence of IOMMU. Thus, restoring the previous
+functionality to allow VFs to be enumerated in the absence of IOMMU.
 
-Fixes: 18672fe12367ed44 ("power: reset: add Toradex Embedded Controller")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/1ef0beb1e09bf914650f9f9885a33af06772540d.1746536287.git.geert+renesas@glider.be
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: ca88a2bdd4dd ("crypto: qat - allow disabling SR-IOV VFs")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Michal Witwicki <michal.witwicki@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/reset/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/intel/qat/qat_common/adf_sriov.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-index e71f0af4e378..95f140ee7077 100644
---- a/drivers/power/reset/Kconfig
-+++ b/drivers/power/reset/Kconfig
-@@ -218,6 +218,7 @@ config POWER_RESET_ST
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_sriov.c b/drivers/crypto/intel/qat/qat_common/adf_sriov.c
+index c75d0b6cb0ad..31d1ef0cb1f5 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_sriov.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_sriov.c
+@@ -155,7 +155,6 @@ static int adf_do_enable_sriov(struct adf_accel_dev *accel_dev)
+ 	if (!device_iommu_mapped(&GET_DEV(accel_dev))) {
+ 		dev_warn(&GET_DEV(accel_dev),
+ 			 "IOMMU should be enabled for SR-IOV to work correctly\n");
+-		return -EINVAL;
+ 	}
  
- config POWER_RESET_TORADEX_EC
- 	tristate "Toradex Embedded Controller power-off and reset driver"
-+	depends on ARCH_MXC || COMPILE_TEST
- 	depends on I2C
- 	select REGMAP_I2C
- 	help
+ 	if (adf_dev_started(accel_dev)) {
 -- 
 2.39.5
 
