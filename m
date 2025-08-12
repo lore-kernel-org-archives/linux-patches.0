@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A386BB5B;
-	Tue, 12 Aug 2025 18:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C761EF38C;
+	Tue, 12 Aug 2025 18:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023228; cv=none; b=JMgmZS/ix0pWjgLvoq9euGkviL9CICty24Uach9wl2SeTbpksQBUd9CvdGz7uuHUfIqJhCPHh133Y+yZqyHKuS7dojyD5uH9P0tGDV8qbN0O8dU+ZY5TQJaYwjxm5y9klNKY1tDc6g7+oFnO+COEaHD5MrNPH2Pp8bzHxPN01YY=
+	t=1755023232; cv=none; b=SjbBvpJuc3Ppvq0KK21aSF+Ldf9/KI0XwCDK8eDCdrmKEyEm3K7/wsDZxeZO6SLubHFGiBhVe6TLN+PHMrznYXoT7Zxwl+aqVedQIhLnn+pDZOa/EeqSiqqSO7i02CPFpdXdioq8t1MVQ+mNQQ8coYXXejLkJWdNKHC9QjoeUks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023228; c=relaxed/simple;
-	bh=9k0i24K2HM8mkulCgeBurjpVmZkBQLsmW7XpFcOP0Kg=;
+	s=arc-20240116; t=1755023232; c=relaxed/simple;
+	bh=REaYwkF8ITYE8gjSrbM7Viuui2bP3ENFK5XowNEz//Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcPlKK2oEz9oSdrekFpU6+oBvRn7wRAV6Zw/YzEhHhAmPodVPVueemIl4KQCZ/tIYMODqY2gB0N89Z69O2BxO+uP+uq6b0C2bncIHLSlFDSWZLoP1y4JX6owIB8tPMipzXjM5ICWlcVi+ArmmHqmmj56rc1O/3w2jYAitxaICw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQGAEC4O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i6HUahzFdzm35DwFAN64rDCIr3ofFrcmQbVrLSIQP160/urOZILukTKCJ0DJde5hGF4jc1rKFSMMKMA+8ayHJRcwAvM6gzjpR3/nUiM8FGMg4zm7jW5WjIr4Kamze8PmY/sEXxFXJ//iogtznUmfkDBEvjVOkkMzxYw0Jp8ubV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lj+I/kf5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQGAEC4O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFECBC4CEF0;
-	Tue, 12 Aug 2025 18:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lj+I/kf5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E99C4CEF0;
+	Tue, 12 Aug 2025 18:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023228;
-	bh=9k0i24K2HM8mkulCgeBurjpVmZkBQLsmW7XpFcOP0Kg=;
+	s=korg; t=1755023231;
+	bh=REaYwkF8ITYE8gjSrbM7Viuui2bP3ENFK5XowNEz//Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oQGAEC4OYRYWVwAS0Xo2APbBp6VwqCo/89KzdqhrmXnCApdbUkPy2l8VCJnxFFBmj
-	 F76Va78GTZwKheb4ozTRACLFC37RWvkNTj4AaxAlr9S2OAOP6SxKp9iG6OQlgy8Zs+
-	 S/VLsiDPPdIxnJ3WIRAzaavZqcoMLoudGbt3XpxE=
+	b=lj+I/kf5FZ/4IWTvd8KyENjOBA5bb7UWN6FRB6XzFW0uxYAbD7bgKOf/5wQQO9qE9
+	 pZyZYGWJVLAH62ZTpujoNSiWJS/pEzM3eY0IRyygiXyLfBbhI0flLUvYOOuedZzheZ
+	 U9O9pCUiwJzX2vS6CN7ewCYOdkE48StKJD4B20aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 019/627] ublk: validate ublk server pid
-Date: Tue, 12 Aug 2025 19:25:14 +0200
-Message-ID: <20250812173420.051129007@linuxfoundation.org>
+Subject: [PATCH 6.16 002/627] [ceph] parse_longname(): strrchr() expects NUL-terminated string
+Date: Tue, 12 Aug 2025 19:24:57 +0200
+Message-ID: <20250812173419.404765606@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,73 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit c2c8089f325ed703fd5123b39e2dece1dd605904 ]
+[ Upstream commit 101841c38346f4ca41dc1802c867da990ffb32eb ]
 
-ublk server pid(the `tgid` of the process opening the ublk device) is stored
-in `ublk_device->ublksrv_tgid`. This `tgid` is then checked against the
-`ublksrv_pid` in `ublk_ctrl_start_dev` and `ublk_ctrl_end_recovery`.
+... and parse_longname() is not guaranteed that.  That's the reason
+why it uses kmemdup_nul() to build the argument for kstrtou64();
+the problem is, kstrtou64() is not the only thing that need it.
 
-This ensures that correct ublk server pid is stored in device info.
+Just get a NUL-terminated copy of the entire thing and be done
+with that...
 
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250713143415.2857561-2-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: dd66df0053ef "ceph: add support for encrypted snapshot names"
+Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ceph/crypto.c | 31 ++++++++++++-------------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 2492c11defcc..3e60558bf525 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -218,6 +218,7 @@ struct ublk_device {
- 	unsigned int		nr_privileged_daemon;
- 	struct mutex cancel_mutex;
- 	bool canceling;
-+	pid_t 	ublksrv_tgid;
- };
+diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
+index 3b3c4d8d401e..9c7062245880 100644
+--- a/fs/ceph/crypto.c
++++ b/fs/ceph/crypto.c
+@@ -215,35 +215,31 @@ static struct inode *parse_longname(const struct inode *parent,
+ 	struct ceph_client *cl = ceph_inode_to_client(parent);
+ 	struct inode *dir = NULL;
+ 	struct ceph_vino vino = { .snap = CEPH_NOSNAP };
+-	char *inode_number;
+-	char *name_end;
+-	int orig_len = *name_len;
++	char *name_end, *inode_number;
+ 	int ret = -EIO;
+-
++	/* NUL-terminate */
++	char *str __free(kfree) = kmemdup_nul(name, *name_len, GFP_KERNEL);
++	if (!str)
++		return ERR_PTR(-ENOMEM);
+ 	/* Skip initial '_' */
+-	name++;
+-	name_end = strrchr(name, '_');
++	str++;
++	name_end = strrchr(str, '_');
+ 	if (!name_end) {
+-		doutc(cl, "failed to parse long snapshot name: %s\n", name);
++		doutc(cl, "failed to parse long snapshot name: %s\n", str);
+ 		return ERR_PTR(-EIO);
+ 	}
+-	*name_len = (name_end - name);
++	*name_len = (name_end - str);
+ 	if (*name_len <= 0) {
+ 		pr_err_client(cl, "failed to parse long snapshot name\n");
+ 		return ERR_PTR(-EIO);
+ 	}
  
- /* header of ublk_params */
-@@ -1517,6 +1518,7 @@ static int ublk_ch_open(struct inode *inode, struct file *filp)
- 	if (test_and_set_bit(UB_STATE_OPEN, &ub->state))
- 		return -EBUSY;
- 	filp->private_data = ub;
-+	ub->ublksrv_tgid = current->tgid;
- 	return 0;
+ 	/* Get the inode number */
+-	inode_number = kmemdup_nul(name_end + 1,
+-				   orig_len - *name_len - 2,
+-				   GFP_KERNEL);
+-	if (!inode_number)
+-		return ERR_PTR(-ENOMEM);
++	inode_number = name_end + 1;
+ 	ret = kstrtou64(inode_number, 10, &vino.ino);
+ 	if (ret) {
+-		doutc(cl, "failed to parse inode number: %s\n", name);
+-		dir = ERR_PTR(ret);
+-		goto out;
++		doutc(cl, "failed to parse inode number: %s\n", str);
++		return ERR_PTR(ret);
+ 	}
+ 
+ 	/* And finally the inode */
+@@ -254,9 +250,6 @@ static struct inode *parse_longname(const struct inode *parent,
+ 		if (IS_ERR(dir))
+ 			doutc(cl, "can't find inode %s (%s)\n", inode_number, name);
+ 	}
+-
+-out:
+-	kfree(inode_number);
+ 	return dir;
  }
  
-@@ -1531,6 +1533,7 @@ static void ublk_reset_ch_dev(struct ublk_device *ub)
- 	ub->mm = NULL;
- 	ub->nr_queues_ready = 0;
- 	ub->nr_privileged_daemon = 0;
-+	ub->ublksrv_tgid = -1;
- }
- 
- static struct gendisk *ublk_get_disk(struct ublk_device *ub)
-@@ -2732,6 +2735,9 @@ static int ublk_ctrl_start_dev(struct ublk_device *ub,
- 	if (wait_for_completion_interruptible(&ub->completion) != 0)
- 		return -EINTR;
- 
-+	if (ub->ublksrv_tgid != ublksrv_pid)
-+		return -EINVAL;
-+
- 	mutex_lock(&ub->mutex);
- 	if (ub->dev_info.state == UBLK_S_DEV_LIVE ||
- 	    test_bit(UB_STATE_USED, &ub->state)) {
-@@ -3232,6 +3238,9 @@ static int ublk_ctrl_end_recovery(struct ublk_device *ub,
- 	pr_devel("%s: All FETCH_REQs received, dev id %d\n", __func__,
- 		 header->dev_id);
- 
-+	if (ub->ublksrv_tgid != ublksrv_pid)
-+		return -EINVAL;
-+
- 	mutex_lock(&ub->mutex);
- 	if (ublk_nosrv_should_stop_dev(ub))
- 		goto out_unlock;
 -- 
 2.39.5
 
