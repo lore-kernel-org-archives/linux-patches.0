@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56877260583;
-	Tue, 12 Aug 2025 19:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716D61C1AAA;
+	Tue, 12 Aug 2025 19:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025494; cv=none; b=jqloUuGOt2bZyEgn4tSq7ZgBDcvJrsyhFxDziZajUmAwaVX623xPF7GygMQ0xGwdeBPRywtyuq8lsyhisj0v+pIbAbqUmLDxY2ez4YmQofdkQCqZjWN0vy3Mn/sU/cYALKyj5SsLs8ZMKkJqJK3O54kT4EqvWKSaXyVUq31pwxw=
+	t=1755025496; cv=none; b=JNTMbF0fg3rLR2AAXfDzvk2ObYdCKbUE9+O6S0YpxCgmALoeffP2lBXfzjMg+8FfLydjFnm3v2f09pwy/WPYz7txpVTfjFJVYL11MaJij+dki+Mh+ShSab8iba/8S+CW1QBs8L7g78JUz6tBiPsuyyvantd115zh8m2Vmpkct0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025494; c=relaxed/simple;
-	bh=2XsH2JCYKN/VO2PTIlJUWamZwDeFJrNGVW78pBk3s3c=;
+	s=arc-20240116; t=1755025496; c=relaxed/simple;
+	bh=GAGp2rrF1YFvL4N0YvTYj4IbMG44YYEhqBiWfroiQiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PmRXDMGoywj9ZdHAQAuthY5jRCjWjvgwDr7hZRUzFp5Ty99HHKkudUXt0hj2F4AkpOLX8P+qQ3D5vGDfDSZMhsWFQpxYDUVeFJlnjrzgLJxA9cfUf8zFYIso9lrCAyPVrpCSlYw0GSvIm8cyb5dsBRTNs6yca52gs66i9bBrCoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACoPGXnj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Umf5FPGFQ2rWPZTMEr8IQd9ruIOiWDGiP/0rUl0tcOFhh8KpJEj3iWIRswHzC840wsKmxwYR/yOdIGa6wKsSnHtTQRrKnh4DRTMRg+tXumxz+c/jNcLc17X7xVjatFXcuVkPnZLzQkfYrMkxSSAj9+BPiDpVg9BUFrzYnGmlRUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exXLi6o0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACoPGXnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D52C4CEF0;
-	Tue, 12 Aug 2025 19:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exXLi6o0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A94C4CEF0;
+	Tue, 12 Aug 2025 19:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025492;
-	bh=2XsH2JCYKN/VO2PTIlJUWamZwDeFJrNGVW78pBk3s3c=;
+	s=korg; t=1755025496;
+	bh=GAGp2rrF1YFvL4N0YvTYj4IbMG44YYEhqBiWfroiQiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACoPGXnj9BHIb9wGWNWi7QVQr62GvIsyQ1g6pPnjbZ2OxjwFQQXG7T11MwrS08DAd
-	 YMpBcilaVR5KoHn5paGZxBUzCBsVt5nBmw4rBTcKNyrkBUm3BK717U+JTJzyc19eKf
-	 1ukzRD/OmNln6n8h3Fxy/BIjXV6mt0/4xbS7QDt8=
+	b=exXLi6o07CM6VExyrLKFoasvCLnoc49DsyWr8pANYRwLzDNvrv9JTakK/gYGLtnjI
+	 QWImLJK38G+gwAHJwU7Q4v+Lr4gYYgT5cOxu1FEPzOVrGNo18WKY4aTik3ra2XKfvz
+	 BM76xD38yt1Lor2WPZEOKDvH7adnL/6HyvWfY1ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
-	kernel test robot <lkp@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 058/480] spi: stm32: Check for cfg availability in stm32_spi_probe
-Date: Tue, 12 Aug 2025 19:44:26 +0200
-Message-ID: <20250812174359.811573801@linuxfoundation.org>
+Subject: [PATCH 6.15 059/480] drivers: misc: sram: fix up some const issues with recent attribute changes
+Date: Tue, 12 Aug 2025 19:44:27 +0200
+Message-ID: <20250812174359.850533629@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -53,54 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Clément Le Goffic <clement.legoffic@foss.st.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 21f1c800f6620e43f31dfd76709dbac8ebaa5a16 ]
+[ Upstream commit bf7b4a0e25569ce39c6749afe363aefe5723d326 ]
 
-The stm32_spi_probe function now includes a check to ensure that the
-pointer returned by of_device_get_match_data is not NULL before
-accessing its members. This resolves a warning where a potential NULL
-pointer dereference could occur when accessing cfg->has_device_mode.
+The binary attribute const changes recently for the sram driver were
+made in a way that hid the fact that we would be casting a const pointer
+to a non-const one.  So explicitly make the cast so that it is obvious
+and preserve the const pointer in the sram_reserve_cmp() function.
 
-Before accessing the 'has_device_mode' member, we verify that 'cfg' is
-not NULL. If 'cfg' is NULL, an error message is logged.
-
-This change ensures that the driver does not attempt to access
-configuration data if it is not available, thus preventing a potential
-system crash due to a NULL pointer dereference.
-
-Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310191831.MLwx1c6x-lkp@intel.com/
-Fixes: fee681646fc8 ("spi: stm32: disable device mode with st,stm32f4-spi compatible")
-Link: https://patch.msgid.link/20250616-spi-upstream-v1-2-7e8593f3f75d@foss.st.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Thomas Weißschuh <linux@weissschuh.net>
+Fixes: c3b8c358c4f3 ("misc: sram: constify 'struct bin_attribute'")
+Link: https://lore.kernel.org/r/2025052125-squid-sandstorm-a418@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/misc/sram.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
-index da3517d7102d..dc22b98bdbcc 100644
---- a/drivers/spi/spi-stm32.c
-+++ b/drivers/spi/spi-stm32.c
-@@ -2069,9 +2069,15 @@ static int stm32_spi_probe(struct platform_device *pdev)
- 	struct resource *res;
- 	struct reset_control *rst;
- 	struct device_node *np = pdev->dev.of_node;
-+	const struct stm32_spi_cfg *cfg;
- 	bool device_mode;
- 	int ret;
--	const struct stm32_spi_cfg *cfg = of_device_get_match_data(&pdev->dev);
-+
-+	cfg = of_device_get_match_data(&pdev->dev);
-+	if (!cfg) {
-+		dev_err(&pdev->dev, "Failed to get match data for platform\n");
-+		return -ENODEV;
-+	}
+diff --git a/drivers/misc/sram.c b/drivers/misc/sram.c
+index e5069882457e..c69644be4176 100644
+--- a/drivers/misc/sram.c
++++ b/drivers/misc/sram.c
+@@ -28,7 +28,8 @@ static ssize_t sram_read(struct file *filp, struct kobject *kobj,
+ {
+ 	struct sram_partition *part;
  
- 	device_mode = of_property_read_bool(np, "spi-slave");
- 	if (!cfg->has_device_mode && device_mode) {
+-	part = container_of(attr, struct sram_partition, battr);
++	/* Cast away the const as the attribute is part of a larger structure */
++	part = (struct sram_partition *)container_of(attr, struct sram_partition, battr);
+ 
+ 	mutex_lock(&part->lock);
+ 	memcpy_fromio(buf, part->base + pos, count);
+@@ -43,7 +44,8 @@ static ssize_t sram_write(struct file *filp, struct kobject *kobj,
+ {
+ 	struct sram_partition *part;
+ 
+-	part = container_of(attr, struct sram_partition, battr);
++	/* Cast away the const as the attribute is part of a larger structure */
++	part = (struct sram_partition *)container_of(attr, struct sram_partition, battr);
+ 
+ 	mutex_lock(&part->lock);
+ 	memcpy_toio(part->base + pos, buf, count);
+@@ -164,8 +166,8 @@ static void sram_free_partitions(struct sram_dev *sram)
+ static int sram_reserve_cmp(void *priv, const struct list_head *a,
+ 					const struct list_head *b)
+ {
+-	struct sram_reserve *ra = list_entry(a, struct sram_reserve, list);
+-	struct sram_reserve *rb = list_entry(b, struct sram_reserve, list);
++	const struct sram_reserve *ra = list_entry(a, struct sram_reserve, list);
++	const struct sram_reserve *rb = list_entry(b, struct sram_reserve, list);
+ 
+ 	return ra->start - rb->start;
+ }
 -- 
 2.39.5
 
