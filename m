@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984BF1EBFE0;
-	Tue, 12 Aug 2025 18:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1580B1EBFE0;
+	Tue, 12 Aug 2025 18:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022940; cv=none; b=aZyEO3hX4YJ1rR8Lbp1bEwJNwbils4WzNJr+KUybg4m9VlLMK0ra2sDRi9cg0XM1tbk5nVxOAYmSpo85oQSx9pciwxruYZ8nnmocF7Ah0QWAh7Bq5gOEAOsSYHbTa+mlULkgRo5NkzrDVaoeHz9iOmFvCCiCH6tPT/hV12ohW0U=
+	t=1755022944; cv=none; b=C9NxhDGx4UBizjI0KPO0C9ZTOoCfTXZ2BITjFrabdZZXSsy10LYCqLW4GymDyfVHglw1jzjdRvaftlY0zvTWtFtY8R/KwQdRlPDJMmgd7mL33AH1k4lS2cNQ5CtYiysu0xU0tZyi0WWPG+bEMyrIWFu8AIZCgGBp+tY8/Ol3EXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022940; c=relaxed/simple;
-	bh=l5PEFLqZABTvPwPnB5Ke9bjvvmx4uREpI8CiYE3b+Lw=;
+	s=arc-20240116; t=1755022944; c=relaxed/simple;
+	bh=nfk0NfB+OH9npzwbBbirJwOoC6AdT7LdxQyDzf8mErg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPZxmOeRi6mMxJH7Pq4HJlfJ+KP/rPrNCRRuJ0MsiUyVXGhzzwPHcc/aaplnieirZ6WiMjbqgbZqfYcC2kUX9j+nV4HQp2skLW6RpbLbx9WFeKNfH6OwhEoQa0G+wG4Uaq6lUo4RnxCqQPk/Ljmju1h5w8NXbI6SsQ6UQGg3RT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VArWYTUY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzqleTvi9jzG1JUVEpab9gv2ETUQchDZXtEgGXpVRopI9rYWU58UzBlt9/s2jy02bNwj0DzpSWKIHD7RGTr39uV3oTxpMMsZCP3DVon4lMEZec5tLgrE19cXYbqv31yKA79RYdxwezVqJLfjYnaf8FVkfQqAh7fv8qACUpXWR3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+hbP+w2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VArWYTUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A19C4CEF0;
-	Tue, 12 Aug 2025 18:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+hbP+w2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D5EC4CEF0;
+	Tue, 12 Aug 2025 18:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022940;
-	bh=l5PEFLqZABTvPwPnB5Ke9bjvvmx4uREpI8CiYE3b+Lw=;
+	s=korg; t=1755022944;
+	bh=nfk0NfB+OH9npzwbBbirJwOoC6AdT7LdxQyDzf8mErg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VArWYTUYw3BiEkill6iBhvTKQkT/hUfYlyGBGBo0IYCxb0sMagiR9EyClnECiG4A4
-	 f+0nAT/6XVr7suPZBwqPB5U5aHdCCzNjmTr4BRGrD65TJ0wP4qwQS+2mg+6LSkYcuK
-	 cUxd6euYSftBAR89LE4N89XBt+XtQoVflV0+Igy0=
+	b=e+hbP+w2mi7Izuy9Tu+QHhq0Owxf6t1dCyw7Cm3+8+xEm9UJ/4wZtPDmpJMSKELdh
+	 7dkgkd+iTzG+6BJtg2PTX/vQeT5/91CptZsT8M3TUI4vqI3KP3500GtmMmgzjMnKqn
+	 kRgF8Q8lFoTqQN1pG829niXkzwdHkYkNazq10k20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hogan Wang <hogan.wang@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 304/369] x86/irq: Plug vector setup race
-Date: Tue, 12 Aug 2025 19:30:01 +0200
-Message-ID: <20250812173028.167851479@linuxfoundation.org>
+Subject: [PATCH 6.12 305/369] benet: fix BUG when creating VFs
+Date: Tue, 12 Aug 2025 19:30:02 +0200
+Message-ID: <20250812173028.204828146@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,182 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit ce0b5eedcb753697d43f61dd2e27d68eb5d3150f ]
+[ Upstream commit 5a40f8af2ba1b9bdf46e2db10e8c9710538fbc63 ]
 
-Hogan reported a vector setup race, which overwrites the interrupt
-descriptor in the per CPU vector array resulting in a disfunctional device.
+benet crashes as soon as SRIOV VFs are created:
 
-CPU0				CPU1
-				interrupt is raised in APIC IRR
-				but not handled
-  free_irq()
-    per_cpu(vector_irq, CPU1)[vector] = VECTOR_SHUTDOWN;
+ kernel BUG at mm/vmalloc.c:3457!
+ Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+ CPU: 4 UID: 0 PID: 7408 Comm: test.sh Kdump: loaded Not tainted 6.16.0+ #1 PREEMPT(voluntary)
+ [...]
+ RIP: 0010:vunmap+0x5f/0x70
+ [...]
+ Call Trace:
+  <TASK>
+  __iommu_dma_free+0xe8/0x1c0
+  be_cmd_set_mac_list+0x3fe/0x640 [be2net]
+  be_cmd_set_mac+0xaf/0x110 [be2net]
+  be_vf_eth_addr_config+0x19f/0x330 [be2net]
+  be_vf_setup+0x4f7/0x990 [be2net]
+  be_pci_sriov_configure+0x3a1/0x470 [be2net]
+  sriov_numvfs_store+0x20b/0x380
+  kernfs_fop_write_iter+0x354/0x530
+  vfs_write+0x9b9/0xf60
+  ksys_write+0xf3/0x1d0
+  do_syscall_64+0x8c/0x3d0
 
-  request_irq()			common_interrupt()
-  				  d = this_cpu_read(vector_irq[vector]);
+be_cmd_set_mac_list() calls dma_free_coherent() under a spin_lock_bh.
+Fix it by freeing only after the lock has been released.
 
-    per_cpu(vector_irq, CPU1)[vector] = desc;
-
-    				  if (d == VECTOR_SHUTDOWN)
-				    this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
-
-free_irq() cannot observe the pending vector in the CPU1 APIC as there is
-no way to query the remote CPUs APIC IRR.
-
-This requires that request_irq() uses the same vector/CPU as the one which
-was freed, but this also can be triggered by a spurious interrupt.
-
-Interestingly enough this problem managed to be hidden for more than a
-decade.
-
-Prevent this by reevaluating vector_irq under the vector lock, which is
-held by the interrupt activation code when vector_irq is updated.
-
-To avoid ifdeffery or IS_ENABLED() nonsense, move the
-[un]lock_vector_lock() declarations out under the
-CONFIG_IRQ_DOMAIN_HIERARCHY guard as it's only provided when
-CONFIG_X86_LOCAL_APIC=y.
-
-The current CONFIG_IRQ_DOMAIN_HIERARCHY guard is selected by
-CONFIG_X86_LOCAL_APIC, but can also be selected by other parts of the
-Kconfig system, which makes 32-bit UP builds with CONFIG_X86_LOCAL_APIC=n
-fail.
-
-Can we just get rid of this !APIC nonsense once and forever?
-
-Fixes: 9345005f4eed ("x86/irq: Fix do_IRQ() interrupt warning for cpu hotplug retriggered irqs")
-Reported-by: Hogan Wang <hogan.wang@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Hogan Wang <hogan.wang@huawei.com>
-Link: https://lore.kernel.org/all/draft-87ikjhrhhh.ffs@tglx
+Fixes: 1a82d19ca2d6 ("be2net: fix sleeping while atomic bugs in be_ndo_bridge_getlink")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250801101338.72502-1-mschmidt@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/hw_irq.h | 12 ++++---
- arch/x86/kernel/irq.c         | 63 ++++++++++++++++++++++++++---------
- 2 files changed, 55 insertions(+), 20 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_cmds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/hw_irq.h b/arch/x86/include/asm/hw_irq.h
-index edebf1020e04..6bb3d9a86abe 100644
---- a/arch/x86/include/asm/hw_irq.h
-+++ b/arch/x86/include/asm/hw_irq.h
-@@ -92,8 +92,6 @@ struct irq_cfg {
+diff --git a/drivers/net/ethernet/emulex/benet/be_cmds.c b/drivers/net/ethernet/emulex/benet/be_cmds.c
+index a89aa4ac0a06..779f1324bb5f 100644
+--- a/drivers/net/ethernet/emulex/benet/be_cmds.c
++++ b/drivers/net/ethernet/emulex/benet/be_cmds.c
+@@ -3852,8 +3852,8 @@ int be_cmd_set_mac_list(struct be_adapter *adapter, u8 *mac_array,
+ 	status = be_mcc_notify_wait(adapter);
  
- extern struct irq_cfg *irq_cfg(unsigned int irq);
- extern struct irq_cfg *irqd_cfg(struct irq_data *irq_data);
--extern void lock_vector_lock(void);
--extern void unlock_vector_lock(void);
- #ifdef CONFIG_SMP
- extern void vector_schedule_cleanup(struct irq_cfg *);
- extern void irq_complete_move(struct irq_cfg *cfg);
-@@ -101,12 +99,16 @@ extern void irq_complete_move(struct irq_cfg *cfg);
- static inline void vector_schedule_cleanup(struct irq_cfg *c) { }
- static inline void irq_complete_move(struct irq_cfg *c) { }
- #endif
--
- extern void apic_ack_edge(struct irq_data *data);
--#else	/*  CONFIG_IRQ_DOMAIN_HIERARCHY */
-+#endif /* CONFIG_IRQ_DOMAIN_HIERARCHY */
-+
-+#ifdef CONFIG_X86_LOCAL_APIC
-+extern void lock_vector_lock(void);
-+extern void unlock_vector_lock(void);
-+#else
- static inline void lock_vector_lock(void) {}
- static inline void unlock_vector_lock(void) {}
--#endif	/* CONFIG_IRQ_DOMAIN_HIERARCHY */
-+#endif
- 
- /* Statistics */
- extern atomic_t irq_err_count;
-diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
-index 85fa2db38dc4..9400730e538e 100644
---- a/arch/x86/kernel/irq.c
-+++ b/arch/x86/kernel/irq.c
-@@ -251,26 +251,59 @@ static __always_inline void handle_irq(struct irq_desc *desc,
- 		__handle_irq(desc, regs);
+ err:
+-	dma_free_coherent(&adapter->pdev->dev, cmd.size, cmd.va, cmd.dma);
+ 	spin_unlock_bh(&adapter->mcc_lock);
++	dma_free_coherent(&adapter->pdev->dev, cmd.size, cmd.va, cmd.dma);
+ 	return status;
  }
  
--static __always_inline int call_irq_handler(int vector, struct pt_regs *regs)
-+static struct irq_desc *reevaluate_vector(int vector)
- {
--	struct irq_desc *desc;
--	int ret = 0;
-+	struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
-+
-+	if (!IS_ERR_OR_NULL(desc))
-+		return desc;
-+
-+	if (desc == VECTOR_UNUSED)
-+		pr_emerg_ratelimited("No irq handler for %d.%u\n", smp_processor_id(), vector);
-+	else
-+		__this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
-+	return NULL;
-+}
-+
-+static __always_inline bool call_irq_handler(int vector, struct pt_regs *regs)
-+{
-+	struct irq_desc *desc = __this_cpu_read(vector_irq[vector]);
- 
--	desc = __this_cpu_read(vector_irq[vector]);
- 	if (likely(!IS_ERR_OR_NULL(desc))) {
- 		handle_irq(desc, regs);
--	} else {
--		ret = -EINVAL;
--		if (desc == VECTOR_UNUSED) {
--			pr_emerg_ratelimited("%s: %d.%u No irq handler for vector\n",
--					     __func__, smp_processor_id(),
--					     vector);
--		} else {
--			__this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
--		}
-+		return true;
- 	}
- 
--	return ret;
-+	/*
-+	 * Reevaluate with vector_lock held to prevent a race against
-+	 * request_irq() setting up the vector:
-+	 *
-+	 * CPU0				CPU1
-+	 *				interrupt is raised in APIC IRR
-+	 *				but not handled
-+	 * free_irq()
-+	 *   per_cpu(vector_irq, CPU1)[vector] = VECTOR_SHUTDOWN;
-+	 *
-+	 * request_irq()		common_interrupt()
-+	 *				  d = this_cpu_read(vector_irq[vector]);
-+	 *
-+	 * per_cpu(vector_irq, CPU1)[vector] = desc;
-+	 *
-+	 *				  if (d == VECTOR_SHUTDOWN)
-+	 *				    this_cpu_write(vector_irq[vector], VECTOR_UNUSED);
-+	 *
-+	 * This requires that the same vector on the same target CPU is
-+	 * handed out or that a spurious interrupt hits that CPU/vector.
-+	 */
-+	lock_vector_lock();
-+	desc = reevaluate_vector(vector);
-+	unlock_vector_lock();
-+
-+	if (!desc)
-+		return false;
-+
-+	handle_irq(desc, regs);
-+	return true;
- }
- 
- /*
-@@ -284,7 +317,7 @@ DEFINE_IDTENTRY_IRQ(common_interrupt)
- 	/* entry code tells RCU that we're not quiescent.  Check it. */
- 	RCU_LOCKDEP_WARN(!rcu_is_watching(), "IRQ failed to wake up RCU");
- 
--	if (unlikely(call_irq_handler(vector, regs)))
-+	if (unlikely(!call_irq_handler(vector, regs)))
- 		apic_eoi();
- 
- 	set_irq_regs(old_regs);
 -- 
 2.39.5
 
