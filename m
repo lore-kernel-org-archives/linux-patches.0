@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3492DE6E9;
-	Tue, 12 Aug 2025 18:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4700A2FD1DC;
+	Tue, 12 Aug 2025 18:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022174; cv=none; b=pWcGH+sdMBaqptf220msWsIkdA7MsvFskzLTLp5K4Rd8bGPQhddMait5wF7ESPdVQLxcZUFqeED2Z4sM8aLbBUYKsHAdF5gFxOpacBxhXdk2nc2JWv6hqW08dmDYzonzvI6ENC/ycNdIo3GiYHC1uMJ34wzrUXh2jG0ZoRo/48E=
+	t=1755022178; cv=none; b=uhjaNPioJIwtbukWt6+HAbrhCuJaJiLEgjK+AH7KPLgdlEnP3CLP7aSuoRAuDq/vEOF5+BQF2GVzYUWMSjIVB7HD2z6JKgjb3P/MPwUe76jP3atHih08siNS798mu80c50PnVWs+esgokrX3cEE7EKHNfw889pvA1nK0HRTDfJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022174; c=relaxed/simple;
-	bh=8gBMjsEXMl1D+NfIlVpsO3xZCb34sqJZhpoTzjkA+c4=;
+	s=arc-20240116; t=1755022178; c=relaxed/simple;
+	bh=jxlr0+36lBJ/0pP2efXL74lDzUjfsKv0rueeDwbXAck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8nkABJ6oBN8sCpB4MosXg4CYAGBO3Q5cNrUv31bsGRCk56Bspw3fk+ewyYNAT2yASVV+iY8rU1pNm0cQl50w02frNMxzqV+MoNJqiav50d+BKIDhl6I6lT+Awy2YIEPMDZYMi6NYE7k0sHrfR97MNqzEezlpf9Fg1diZA9oiQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v84cblEY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aLaAEYieY7W94Pla4wyvIokeNL/6Ouoa9BSVT1y8iLyAEsbGlrAxgUGo+VKdJW/U76+AyHpcnWxIRGpp7qlpDvB0DONEcAxSC6LFh1sQASPp3kTErmz3YbpKTYqCqYnp7kpSq4D41b+oGS3YkcOwosuTCsXDC1MURzeUJ4io36U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ee3R4b8n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v84cblEY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420F5C4CEF0;
-	Tue, 12 Aug 2025 18:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ee3R4b8n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEB4C4CEF0;
+	Tue, 12 Aug 2025 18:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022174;
-	bh=8gBMjsEXMl1D+NfIlVpsO3xZCb34sqJZhpoTzjkA+c4=;
+	s=korg; t=1755022178;
+	bh=jxlr0+36lBJ/0pP2efXL74lDzUjfsKv0rueeDwbXAck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v84cblEYo+J2ECTiHoX5od0ZAYBkNRqtBpzgXtAugIEpkRQUSLZqJfscziWUiU9lU
-	 4Wsfw6hPv+EVksPWIQwTdSe9w1z3TcXO0/y1TjKrKKMc0Jwcrh60EvUa+UHYj2fNWV
-	 VGYDpe5gLwN/n12orbvMronnU2+GgIaYbHZjEsCw=
+	b=Ee3R4b8nP+RcweJw9N0TZYgRBO9ptmJ2HVipljGCCAdAVRUDPqTOHZNZmi3lSoOSw
+	 DWOg33lvf0BEqTTK1BDMnwTtGyAZSooGUykGGkjyXPlR3qCvEiRGLIWg9GCUmEUzoB
+	 JDw/bJ2suJQP/v8EqyON61ocBt04RRxAuYitsMXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Quentin Monnet <qmo@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kowshik Jois <kowsjois@linux.ibm.com>,
+	Haren Myneni <haren@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/369] bpftool: Fix memory leak in dump_xx_nlmsg on realloc failure
-Date: Tue, 12 Aug 2025 19:26:15 +0200
-Message-ID: <20250812173017.721531149@linuxfoundation.org>
+Subject: [PATCH 6.12 079/369] powerpc/pseries/dlpar: Search DRC index from ibm,drc-indexes for IO add
+Date: Tue, 12 Aug 2025 19:26:16 +0200
+Message-ID: <20250812173017.758989911@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -46,81 +48,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Haren Myneni <haren@linux.ibm.com>
 
-[ Upstream commit 99fe8af069a9fa5b09140518b1364e35713a642e ]
+[ Upstream commit 41a1452759a8b1121df9cf7310acf31d766ba70b ]
 
-In function dump_xx_nlmsg(), when realloc() fails to allocate memory,
-the original pointer to the buffer is overwritten with NULL. This causes
-a memory leak because the previously allocated buffer becomes unreachable
-without being freed.
+IO hotplug add event is handled in the user space with drmgr tool.
+After the device is enabled, the user space uses /sys/kernel/dlpar
+interface with “dt add index <drc_index>” to update the device tree.
+The kernel interface (dlpar_hp_dt_add()) finds the parent node for
+the specified ‘drc_index’ from ibm,drc-info property. The recent FW
+provides this property from 2017 onwards. But KVM guest code in
+some releases is still using the older SLOF firmware which has
+ibm,drc-indexes property instead of ibm,drc-info.
 
-Fixes: 7900efc19214 ("tools/bpf: bpftool: improve output format for bpftool net")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/r/20250620012133.14819-1-chenyuan_fl@163.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+If the ibm,drc-info is not available, this patch adds changes to
+search ‘drc_index’ from the indexes array in ibm,drc-indexes
+property to support old FW.
+
+Fixes: 02b98ff44a57 ("powerpc/pseries/dlpar: Add device tree nodes for DLPAR IO add")
+Reported-by: Kowshik Jois <kowsjois@linux.ibm.com>
+Signed-off-by: Haren Myneni <haren@linux.ibm.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250531235002.239213-1-haren@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/net.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ arch/powerpc/platforms/pseries/dlpar.c | 52 +++++++++++++++++++++++++-
+ 1 file changed, 50 insertions(+), 2 deletions(-)
 
-diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
-index d2242d9f8441..39f208928cdb 100644
---- a/tools/bpf/bpftool/net.c
-+++ b/tools/bpf/bpftool/net.c
-@@ -366,17 +366,18 @@ static int dump_link_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+diff --git a/arch/powerpc/platforms/pseries/dlpar.c b/arch/powerpc/platforms/pseries/dlpar.c
+index 213aa26dc8b3..979487da6522 100644
+--- a/arch/powerpc/platforms/pseries/dlpar.c
++++ b/arch/powerpc/platforms/pseries/dlpar.c
+@@ -404,6 +404,45 @@ get_device_node_with_drc_info(u32 index)
+ 	return NULL;
+ }
+ 
++static struct device_node *
++get_device_node_with_drc_indexes(u32 drc_index)
++{
++	struct device_node *np = NULL;
++	u32 nr_indexes, index;
++	int i, rc;
++
++	for_each_node_with_property(np, "ibm,drc-indexes") {
++		/*
++		 * First element in the array is the total number of
++		 * DRC indexes returned.
++		 */
++		rc = of_property_read_u32_index(np, "ibm,drc-indexes",
++				0, &nr_indexes);
++		if (rc)
++			goto out_put_np;
++
++		/*
++		 * Retrieve DRC index from the list and return the
++		 * device node if matched with the specified index.
++		 */
++		for (i = 0; i < nr_indexes; i++) {
++			rc = of_property_read_u32_index(np, "ibm,drc-indexes",
++							i+1, &index);
++			if (rc)
++				goto out_put_np;
++
++			if (drc_index == index)
++				return np;
++		}
++	}
++
++	return NULL;
++
++out_put_np:
++	of_node_put(np);
++	return NULL;
++}
++
+ static int dlpar_hp_dt_add(u32 index)
  {
- 	struct bpf_netdev_t *netinfo = cookie;
- 	struct ifinfomsg *ifinfo = msg;
-+	struct ip_devname_ifindex *tmp;
- 
- 	if (netinfo->filter_idx > 0 && netinfo->filter_idx != ifinfo->ifi_index)
- 		return 0;
- 
- 	if (netinfo->used_len == netinfo->array_len) {
--		netinfo->devices = realloc(netinfo->devices,
--			(netinfo->array_len + 16) *
--			sizeof(struct ip_devname_ifindex));
--		if (!netinfo->devices)
-+		tmp = realloc(netinfo->devices,
-+			(netinfo->array_len + 16) * sizeof(struct ip_devname_ifindex));
-+		if (!tmp)
- 			return -ENOMEM;
- 
-+		netinfo->devices = tmp;
- 		netinfo->array_len += 16;
- 	}
- 	netinfo->devices[netinfo->used_len].ifindex = ifinfo->ifi_index;
-@@ -395,6 +396,7 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
- {
- 	struct bpf_tcinfo_t *tcinfo = cookie;
- 	struct tcmsg *info = msg;
-+	struct tc_kind_handle *tmp;
- 
- 	if (tcinfo->is_qdisc) {
- 		/* skip clsact qdisc */
-@@ -406,11 +408,12 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ 	struct device_node *np, *nodes;
+@@ -423,10 +462,19 @@ static int dlpar_hp_dt_add(u32 index)
+ 		goto out;
  	}
  
- 	if (tcinfo->used_len == tcinfo->array_len) {
--		tcinfo->handle_array = realloc(tcinfo->handle_array,
-+		tmp = realloc(tcinfo->handle_array,
- 			(tcinfo->array_len + 16) * sizeof(struct tc_kind_handle));
--		if (!tcinfo->handle_array)
-+		if (!tmp)
- 			return -ENOMEM;
++	/*
++	 * Recent FW provides ibm,drc-info property. So search
++	 * for the user specified DRC index from ibm,drc-info
++	 * property. If this property is not available, search
++	 * in the indexes array from ibm,drc-indexes property.
++	 */
+ 	np = get_device_node_with_drc_info(index);
  
-+		tcinfo->handle_array = tmp;
- 		tcinfo->array_len += 16;
- 	}
- 	tcinfo->handle_array[tcinfo->used_len].handle = info->tcm_handle;
+-	if (!np)
+-		return -EIO;
++	if (!np) {
++		np = get_device_node_with_drc_indexes(index);
++		if (!np)
++			return -EIO;
++	}
+ 
+ 	/* Next, configure the connector. */
+ 	nodes = dlpar_configure_connector(cpu_to_be32(index), np);
 -- 
 2.39.5
 
