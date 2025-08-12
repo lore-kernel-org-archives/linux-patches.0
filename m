@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E112FDC36;
-	Tue, 12 Aug 2025 17:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92272FDC3E;
+	Tue, 12 Aug 2025 17:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020371; cv=none; b=Nnic2eRdVZJnxFj4vvGSvwMA4Z6gmlCjlPrueq07Hq1s8ZUNYa3qULolwmQmEpBg7hjzP3dd68pSSsjdpptft2YWVSW0DPBNvxsxsnSLCDWM6nINsr+xRaHSnm4Y2ReN9KbcVofMkHqwbikP7XWHvn53eicN00b8GnLAAgLMoOk=
+	t=1755020374; cv=none; b=u/yrSNfC6KfapCvW/odFmA6FsylWWU/OOCrfE+Ni4M3Z+j0NMHYxYJqme3UdZZbIVNCJRC8UTj3e/AKwtz33CNlry/ahDd4mE2hGRzK/+7j6RPlD4PV09zbGydb7xiD0L5oiWf+cocjV/tLAo03zNFgvnn9ib6wqhsaKFup5ghQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020371; c=relaxed/simple;
-	bh=JvA8HAgGOE03s6/zjgbVQVRJIOQmtabco0lVZzHkCl4=;
+	s=arc-20240116; t=1755020374; c=relaxed/simple;
+	bh=zb6/qHNfdtflNsHTLt/pMIy3kmKL2Sg45uEmjLeTUzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g25wYhOFonbgHpG2mmG1nyFsSiKCaCOR3yPqdJQ8Pd2kudluocE5/RfHR1JOUxrHACmlYBWmRDbD4ZTnrHoy+m1wEbEThX3vpE2ZSaMPgj1y2NvQy+luG8oQ326WhBeffGlsztEVo2paMDnpeW1IHf8CzXZolTJthEag/Jguusw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwIuXUMV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DaYs9WG3exjkHcoqUw8GXnt9K6LKJK66oN8SsvC6JSCvVTRB926bEldMbO1oWkDXC6MDjQRmlXHE7Q9J6OsGa/LIRRvJUptAZ7RDPMlhDomH2zdZTntAgXfbE0eowa7PaZXtrJCs0P0i/34ZHX7WIjFUOiyjKYF60beW6DdlJNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReQhJrgU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwIuXUMV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A0AC4CEF0;
-	Tue, 12 Aug 2025 17:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReQhJrgU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7020BC4CEF0;
+	Tue, 12 Aug 2025 17:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020370;
-	bh=JvA8HAgGOE03s6/zjgbVQVRJIOQmtabco0lVZzHkCl4=;
+	s=korg; t=1755020373;
+	bh=zb6/qHNfdtflNsHTLt/pMIy3kmKL2Sg45uEmjLeTUzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gwIuXUMVjZ8/v6mV1Sj8AOXhxudjzQyImE6M61jgHnAmuxrIdjpYQjO7/6m12Bf4D
-	 YiAy5JfQa7/+JlIK40AJcarg4oxmOnqxztFj3LKdtqG3JUKtREuJcQ5ePWVMV/xueX
-	 dCITzfNDZ/CgEGHTqbczcDfUioZIjA382MPg5Y6Q=
+	b=ReQhJrgUT89QAHZTnmGYp39SmECHwVCR+bMhVeaCn8ppySfXdAMx8EJQfr4eaXtgC
+	 8XpML4Qvy4iVXxpOrY+PsUL9/cRFWGubW3YAviDFUgboxKxlG7+dxr/DNijux3LCqM
+	 wBIJSMtN7HhxCsJmq/xcHVCnn26ktbD1wzfbdR7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Akhil R <akhilrajeev@nvidia.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 028/253] i2c: tegra: Fix reset error handling with ACPI
-Date: Tue, 12 Aug 2025 19:26:56 +0200
-Message-ID: <20250812172949.929745632@linuxfoundation.org>
+Subject: [PATCH 6.1 029/253] i2c: virtio: Avoid hang by using interruptible completion wait
+Date: Tue, 12 Aug 2025 19:26:57 +0200
+Message-ID: <20250812172949.971959523@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
 References: <20250812172948.675299901@linuxfoundation.org>
@@ -51,80 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-commit 56344e241c543f17e8102fa13466ad5c3e7dc9ff upstream.
+commit a663b3c47ab10f66130818cf94eb59c971541c3f upstream.
 
-The acpi_evaluate_object() returns an ACPI error code and not
-Linux one. For the some platforms the err will have positive code
-which may be interpreted incorrectly. Use device_reset() for
-reset control which handles it correctly.
+The current implementation uses wait_for_completion(), which can cause
+the caller to hang indefinitely if the transfer never completes.
 
-Fixes: bd2fdedbf2ba ("i2c: tegra: Add the ACPI support")
-Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Cc: <stable@vger.kernel.org> # v5.17+
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Switch to wait_for_completion_interruptible() so that the operation can
+be interrupted by signals.
+
+Fixes: 84e1d0bf1d71 ("i2c: virtio: disable timeout handling")
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: <stable@vger.kernel.org> # v5.16+
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250710131206.2316-2-akhilrajeev@nvidia.com
+Link: https://lore.kernel.org/r/b8944e9cab8eb959d888ae80add6f2a686159ba2.1751541962.git.viresh.kumar@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-tegra.c |   24 +-----------------------
- 1 file changed, 1 insertion(+), 23 deletions(-)
+ drivers/i2c/busses/i2c-virtio.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/i2c/busses/i2c-tegra.c
-+++ b/drivers/i2c/busses/i2c-tegra.c
-@@ -623,7 +623,6 @@ static int tegra_i2c_wait_for_config_loa
- static int tegra_i2c_init(struct tegra_i2c_dev *i2c_dev)
- {
- 	u32 val, clk_divisor, clk_multiplier, tsu_thd, tlow, thigh, non_hs_mode;
--	acpi_handle handle = ACPI_HANDLE(i2c_dev->dev);
- 	struct i2c_timings *t = &i2c_dev->timings;
- 	int err;
+--- a/drivers/i2c/busses/i2c-virtio.c
++++ b/drivers/i2c/busses/i2c-virtio.c
+@@ -116,15 +116,16 @@ static int virtio_i2c_complete_reqs(stru
+ 	for (i = 0; i < num; i++) {
+ 		struct virtio_i2c_req *req = &reqs[i];
  
-@@ -635,11 +634,7 @@ static int tegra_i2c_init(struct tegra_i
- 	 * emit a noisy warning on error, which won't stay unnoticed and
- 	 * won't hose machine entirely.
- 	 */
--	if (handle)
--		err = acpi_evaluate_object(handle, "_RST", NULL, NULL);
--	else
--		err = reset_control_reset(i2c_dev->rst);
+-		wait_for_completion(&req->completion);
 -
-+	err = device_reset(i2c_dev->dev);
- 	WARN_ON_ONCE(err);
+-		if (!failed && req->in_hdr.status != VIRTIO_I2C_MSG_OK)
+-			failed = true;
++		if (!failed) {
++			if (wait_for_completion_interruptible(&req->completion))
++				failed = true;
++			else if (req->in_hdr.status != VIRTIO_I2C_MSG_OK)
++				failed = true;
++			else
++				j++;
++		}
  
- 	if (IS_DVC(i2c_dev))
-@@ -1696,19 +1691,6 @@ static void tegra_i2c_parse_dt(struct te
- 		i2c_dev->is_vi = true;
- }
+ 		i2c_put_dma_safe_msg_buf(reqs[i].buf, &msgs[i], !failed);
+-
+-		if (!failed)
+-			j++;
+ 	}
  
--static int tegra_i2c_init_reset(struct tegra_i2c_dev *i2c_dev)
--{
--	if (ACPI_HANDLE(i2c_dev->dev))
--		return 0;
--
--	i2c_dev->rst = devm_reset_control_get_exclusive(i2c_dev->dev, "i2c");
--	if (IS_ERR(i2c_dev->rst))
--		return dev_err_probe(i2c_dev->dev, PTR_ERR(i2c_dev->rst),
--				      "failed to get reset control\n");
--
--	return 0;
--}
--
- static int tegra_i2c_init_clocks(struct tegra_i2c_dev *i2c_dev)
- {
- 	int err;
-@@ -1818,10 +1800,6 @@ static int tegra_i2c_probe(struct platfo
- 
- 	tegra_i2c_parse_dt(i2c_dev);
- 
--	err = tegra_i2c_init_reset(i2c_dev);
--	if (err)
--		return err;
--
- 	err = tegra_i2c_init_clocks(i2c_dev);
- 	if (err)
- 		return err;
+ 	return j;
 
 
