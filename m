@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F4E2E285E;
-	Tue, 12 Aug 2025 18:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936402F5481;
+	Tue, 12 Aug 2025 18:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023642; cv=none; b=Y0x5NdjlVkXXDagHpjusZYfKOMkwkq88/oTPNnPPMGy5j+WhsZDHZPYuJVQPsfr5Vms6glar/9mM5gsz1u3ENSDmaUDgV/j7NJaCj8ox7zWiaJ2sOnONz91JL96n7fTJSEAnN3Ks9ATSSogb3TxeIoj1vDFIMUSTGsurAHlmd80=
+	t=1755023647; cv=none; b=iWtAOOzu736cUFrK7wN9dXw5F4wh2+f3bwWj69ctWQClrj5LzkIZsYiYdf1YkD5aT1tLikI6WjVSnvLV6tMxaw7Aqnlx2Wa4iSPy1qU10csM9NIRGvt787StayHGyEl5OxsfE9Wwb/Th2U/qlYpmtN2xnDTehfiN77Npga0UaBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023642; c=relaxed/simple;
-	bh=CKvLHWFNb33M1tH7BiCOJyHB0yrLfjxxh+0JrOz9Zu0=;
+	s=arc-20240116; t=1755023647; c=relaxed/simple;
+	bh=iO2ns7XRoqhaO+A/zaEJ0R0BY59Uvh8ZnqpvvIci3R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYWgIKItKWtoQ/t2/JbJEItcO49OWS4QSSe06hp5EtI+YQfRtZUbNFqMm/WTAAKmdUKv9JgTGjk6A6iuMzktMGLpgzQuCl0RJzS26T8sevO6ojoJXyS1aO79S1kAXj146FMp3fxLPxEzhqbwcVM+lVCQ1oTQ+rBjLt9bcVy2WyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RS9O9KHX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZmEXkO6FNn5sBKy01Hxvvs6XZrF/cw+lib9dXI4bwOWIDnuIGYGOaMflFADXgO2kG3ZVgF76KT0PshMup8vg/sxUw/yoIffEcZBp5NxaAlNSdfttZms81iKJeVIfCmtKNiAuPKEfwsHea7gkYqi4ANxYOIbUGMQb8lXlNZGm+FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDTH1TJN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RS9O9KHX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4FEC4CEF0;
-	Tue, 12 Aug 2025 18:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDTH1TJN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50E7C4CEF0;
+	Tue, 12 Aug 2025 18:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023642;
-	bh=CKvLHWFNb33M1tH7BiCOJyHB0yrLfjxxh+0JrOz9Zu0=;
+	s=korg; t=1755023646;
+	bh=iO2ns7XRoqhaO+A/zaEJ0R0BY59Uvh8ZnqpvvIci3R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RS9O9KHXYUIL+tpsZHZtPD9FY/FwivHHGwnmeRvkRcFIObdPMAW3YmqC9/oqW3lcQ
-	 Jz9yVDyj220UTkjfqfMza2ZUEWUUGXyiypU2ytwcSl8Oy9KTXK3eVihdjEgP+9EF85
-	 u+43N7HSVFde3VvUI4cj+wQ2llx4R0af/0fpJlNw=
+	b=XDTH1TJNrhbr9FJ4pxNqIMqrqJJ5/i6MJzL4ICTeWUpbguDJurKRQgAsRqbrCuIk5
+	 oVWZx2kZtDeFSogXBfK+6JbPcaWXVzql2WDVtZq6obZM3o3HanD2duceDXYilpFUX+
+	 KQD2357ujlIgnIIuCLY/qBoqfYl0Gjo/XfwxskXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 132/627] drm/rockchip: cleanup fb when drm_gem_fb_afbc_init failed
-Date: Tue, 12 Aug 2025 19:27:07 +0200
-Message-ID: <20250812173424.335924655@linuxfoundation.org>
+Subject: [PATCH 6.16 141/627] bpf, sockmap: Fix psock incorrectly pointing to sk
+Date: Tue, 12 Aug 2025 19:27:16 +0200
+Message-ID: <20250812173424.662173020@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,50 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 099593a28138b48feea5be8ce700e5bc4565e31d ]
+[ Upstream commit 76be5fae32febb1fdb848ba09f78c4b2c76cb337 ]
 
-In the function drm_gem_fb_init_with_funcs, the framebuffer (fb)
-and its corresponding object ID have already been registered.
+We observed an issue from the latest selftest: sockmap_redir where
+sk_psock(psock->sk) != psock in the backlog. The root cause is the special
+behavior in sockmap_redir - it frequently performs map_update() and
+map_delete() on the same socket. During map_update(), we create a new
+psock and during map_delete(), we eventually free the psock via rcu_work
+in sk_psock_drop(). However, pending workqueues might still exist and not
+be processed yet. If users immediately perform another map_update(), a new
+psock will be allocated for the same sk, resulting in two psocks pointing
+to the same sk.
 
-So we need to cleanup the drm framebuffer if the subsequent
-execution of drm_gem_fb_afbc_init fails.
+When the pending workqueue is later triggered, it uses the old psock to
+access sk for I/O operations, which is incorrect.
 
-Directly call drm_framebuffer_put to ensure that all fb related
-resources are cleanup.
+Timing Diagram:
 
-Fixes: 7707f7227f09 ("drm/rockchip: Add support for afbc")
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250509031607.2542187-1-andyshrk@163.com
+cpu0                        cpu1
+
+map_update(sk):
+    sk->psock = psock1
+    psock1->sk = sk
+map_delete(sk):
+   rcu_work_free(psock1)
+
+map_update(sk):
+    sk->psock = psock2
+    psock2->sk = sk
+                            workqueue:
+                                wakeup with psock1, but the sk of psock1
+                                doesn't belong to psock1
+rcu_handler:
+    clean psock1
+    free(psock1)
+
+Previously, we used reference counting to address the concurrency issue
+between backlog and sock_map_close(). This logic remains necessary as it
+prevents the sk from being freed while processing the backlog. But this
+patch prevents pending backlogs from using a psock after it has been
+stopped.
+
+Note: We cannot call cancel_delayed_work_sync() in map_delete() since this
+might be invoked in BPF context by BPF helper, and the function may sleep.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20250609025908.79331-1-jiayuan.chen@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_fb.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ net/core/skmsg.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_fb.c b/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
-index dcc1f07632c3..5829ee061c61 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
-@@ -52,16 +52,9 @@ rockchip_fb_create(struct drm_device *dev, struct drm_file *file,
- 	}
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 34c51eb1a14f..83c78379932e 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -656,6 +656,13 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	bool ingress;
+ 	int ret;
  
- 	if (drm_is_afbc(mode_cmd->modifier[0])) {
--		int ret, i;
--
- 		ret = drm_gem_fb_afbc_init(dev, mode_cmd, afbc_fb);
- 		if (ret) {
--			struct drm_gem_object **obj = afbc_fb->base.obj;
--
--			for (i = 0; i < info->num_planes; ++i)
--				drm_gem_object_put(obj[i]);
--
--			kfree(afbc_fb);
-+			drm_framebuffer_put(&afbc_fb->base);
- 			return ERR_PTR(ret);
- 		}
- 	}
++	/* If sk is quickly removed from the map and then added back, the old
++	 * psock should not be scheduled, because there are now two psocks
++	 * pointing to the same sk.
++	 */
++	if (!sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED))
++		return;
++
+ 	/* Increment the psock refcnt to synchronize with close(fd) path in
+ 	 * sock_map_close(), ensuring we wait for backlog thread completion
+ 	 * before sk_socket freed. If refcnt increment fails, it indicates
 -- 
 2.39.5
 
