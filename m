@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E3A279915;
-	Tue, 12 Aug 2025 17:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA1C221FAC;
+	Tue, 12 Aug 2025 17:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020801; cv=none; b=fXL64KrNRfTIZFW5euDRiRBB3A2wlnCebY3EL7ogeU7BXy9PI1T77m+8Oan2n//5vZE7YiYfnZ+IcV1DKva/jiiMMLszndvlxEo6AG8TMn987j3bOYqg39F2okNMCvYfbWB76MeDGAyUxSVgUrfQ2DtLUoYnePQ5vwRhMToPSPU=
+	t=1755020804; cv=none; b=kFDskXkzYgwy+pwkOe25u74LZ7tefMUrWA8t/tb1In/00QEhCYURVcC/Q3pa2x/GtPbuEBMTrJDGRD7zQOCcBoQoVq7qODIqkakmzvK4r+mgwd2rZ1em2G6wavexIRtCxDfBkvGj2uafnwO+JXP/x7WDpRYuXE0575EP8rQc47Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020801; c=relaxed/simple;
-	bh=5alXXNZWtP/GhCz2pd1Ju6rABLEwenVxMYc4j+LvGyE=;
+	s=arc-20240116; t=1755020804; c=relaxed/simple;
+	bh=mmBNK7eC/IYo03cN9/ASdDv1Qc3yUurW8P/QJi3SsMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFGGH1EyIzzV61cOVFZXY1uUSeVAUBYLpp6LF6SzTwnEU0ZNF7bXTg+JzpfNAO+cYSb3+5f6VizZoYMxGAr/iZYVPFV2/KF3eYMKkzrJobtHS/OuFzenD4ttjoyIr6SW/6NCLrJtwR51slQDTcYgNKmzTFxtI8gtn+yR24p8dgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5kP2CtM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=buL+Hn7J/Ls6cyHiu7J2Iizw/Ykc9wo9ywZeKGJFWyxX2AiYaHq2Z+uimpuq/bosfTmxtT0G/W7VV8hYXP+6kHUg9fEM0rTiZ4WUpsZT/s8dfz3MORgJiqoS+uLGjZp/bE/kF2TYr84epUX9CjM6Nt23H7JoR6W/5HheBSpsHB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3FgUi5u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5kP2CtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AE8C4CEF1;
-	Tue, 12 Aug 2025 17:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3FgUi5u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3B1C4CEF0;
+	Tue, 12 Aug 2025 17:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020800;
-	bh=5alXXNZWtP/GhCz2pd1Ju6rABLEwenVxMYc4j+LvGyE=;
+	s=korg; t=1755020804;
+	bh=mmBNK7eC/IYo03cN9/ASdDv1Qc3yUurW8P/QJi3SsMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5kP2CtMK3RTsKVaV1+f58ci3lq12iMCDrcPnirmLjld8Q7U93f2UeLVRym8t0nG9
-	 lVJR8z8ccT2vCI61lwQPKOsHXH4F+d/kMLUrBNr8hU3TBXtwVmU0nFkPmUTi7Obg48
-	 Dw6Jvi8ANG+Arr3cyOrrAqoffTVFMjq/AQ2JdmxA=
+	b=T3FgUi5uHmAnRgWCsbbVfUQfZUTr5Q9q2i4fxAIWHomXZOS3u5vO0GU9sjWEGjFA+
+	 hdV9MsCgqXVlT1rjTkAW6Wmf32rYA7Gis9/xknvOJshCkIOQfCvSBoet+4ERKJG5TJ
+	 Mycn0w2PB+Lvu+bT+2t1hiM2zGdr1/OuHK/mSAJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/262] ASoC: mediatek: use reserved memory or enable buffer pre-allocation
-Date: Tue, 12 Aug 2025 19:26:45 +0200
-Message-ID: <20250812172953.712862332@linuxfoundation.org>
+Subject: [PATCH 6.1 171/253] fs/orangefs: Allow 2 more characters in do_c_string()
+Date: Tue, 12 Aug 2025 19:29:19 +0200
+Message-ID: <20250812172956.005701132@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,176 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit ec4a10ca4a68ec97f12f4d17d7abb74db34987db ]
+[ Upstream commit 2138e89cb066b40386b1d9ddd61253347d356474 ]
 
-In commit 32c9c06adb5b ("ASoC: mediatek: disable buffer pre-allocation")
-buffer pre-allocation was disabled to accommodate newer platforms that
-have a limited reserved memory region for the audio frontend.
+The do_k_string() and do_c_string() functions do essentially the same
+thing which is they add a string and a comma onto the end of an existing
+string.  At the end, the caller will overwrite the last comma with a
+newline.  Later, in orangefs_kernel_debug_init(), we add a newline to
+the string.
 
-Turns out disabling pre-allocation across the board impacts platforms
-that don't have this reserved memory region. Buffer allocation failures
-have been observed on MT8173 and MT8183 based Chromebooks under low
-memory conditions, which results in no audio playback for the user.
+The change to do_k_string() is just cosmetic.  I moved the "- 1" to
+the other side of the comparison and made it "+ 1".  This has no
+effect on runtime, I just wanted the functions to match each other
+and the rest of the file.
 
-Since some MediaTek platforms already have dedicated reserved memory
-pools for the audio frontend, the plan is to enable this for all of
-them. This requires device tree changes. As a fallback, reinstate the
-original policy of pre-allocating audio buffers at probe time of the
-reserved memory pool cannot be found or used.
+However in do_c_string(), I removed the "- 2" which allows us to print
+two extra characters.  I noticed this issue while reviewing the code
+and I doubt affects anything in real life.  My guess is that this was
+double counting the comma and the newline.  The "+ 1" accounts for
+the newline, and the caller will delete the final comma which ensures
+there is enough space for the newline.
 
-This patch covers the MT8173, MT8183, MT8186 and MT8192 platforms for
-now, the reason being that existing MediaTek platform drivers that
-supported reserved memory were all platforms that mainly supported
-ChromeOS, and is also the set of devices that I can verify.
+Removing the "- 2" lets us print 2 more characters, but mainly it makes
+the code more consistent and understandable for reviewers.
 
-Fixes: 32c9c06adb5b ("ASoC: mediatek: disable buffer pre-allocation")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://patch.msgid.link/20250612074901.4023253-7-wenst@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 44f4641073f1 ("orangefs: clean up debugfs globals")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/common/mtk-afe-platform-driver.c | 4 +++-
- sound/soc/mediatek/common/mtk-base-afe.h            | 1 +
- sound/soc/mediatek/mt8173/mt8173-afe-pcm.c          | 7 +++++++
- sound/soc/mediatek/mt8183/mt8183-afe-pcm.c          | 7 +++++++
- sound/soc/mediatek/mt8186/mt8186-afe-pcm.c          | 7 +++++++
- sound/soc/mediatek/mt8192/mt8192-afe-pcm.c          | 7 +++++++
- 6 files changed, 32 insertions(+), 1 deletion(-)
+ fs/orangefs/orangefs-debugfs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/mediatek/common/mtk-afe-platform-driver.c b/sound/soc/mediatek/common/mtk-afe-platform-driver.c
-index 52495c930ca3..56a704ec2ea9 100644
---- a/sound/soc/mediatek/common/mtk-afe-platform-driver.c
-+++ b/sound/soc/mediatek/common/mtk-afe-platform-driver.c
-@@ -120,7 +120,9 @@ int mtk_afe_pcm_new(struct snd_soc_component *component,
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(component);
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index fa41db088488..b57140ebfad0 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -728,8 +728,8 @@ static void do_k_string(void *k_mask, int index)
  
- 	size = afe->mtk_afe_hardware->buffer_bytes_max;
--	snd_pcm_set_managed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV, afe->dev, 0, size);
-+	snd_pcm_set_managed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV, afe->dev,
-+				       afe->preallocate_buffers ? size : 0,
-+				       size);
- 
- 	return 0;
- }
-diff --git a/sound/soc/mediatek/common/mtk-base-afe.h b/sound/soc/mediatek/common/mtk-base-afe.h
-index f51578b6c50a..a406f2e3e7a8 100644
---- a/sound/soc/mediatek/common/mtk-base-afe.h
-+++ b/sound/soc/mediatek/common/mtk-base-afe.h
-@@ -117,6 +117,7 @@ struct mtk_base_afe {
- 	struct mtk_base_afe_irq *irqs;
- 	int irqs_size;
- 	int memif_32bit_supported;
-+	bool preallocate_buffers;
- 
- 	struct list_head sub_dais;
- 	struct snd_soc_dai_driver *dai_drivers;
-diff --git a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
-index 06269f7e3756..240b2f041a3f 100644
---- a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
-+#include <linux/of_reserved_mem.h>
- #include <linux/dma-mapping.h>
- #include <linux/pm_runtime.h>
- #include <sound/soc.h>
-@@ -1070,6 +1071,12 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
- 
- 	afe->dev = &pdev->dev;
- 
-+	ret = of_reserved_mem_device_init(&pdev->dev);
-+	if (ret) {
-+		dev_info(&pdev->dev, "no reserved memory found, pre-allocating buffers instead\n");
-+		afe->preallocate_buffers = true;
-+	}
-+
- 	irq_id = platform_get_irq(pdev, 0);
- 	if (irq_id <= 0)
- 		return irq_id < 0 ? irq_id : -ENXIO;
-diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c b/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-index 90422ed2bbcc..cbee5a8764c3 100644
---- a/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-@@ -10,6 +10,7 @@
- #include <linux/mfd/syscon.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
-+#include <linux/of_reserved_mem.h>
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
- 
-@@ -1106,6 +1107,12 @@ static int mt8183_afe_pcm_dev_probe(struct platform_device *pdev)
- 	afe->dev = &pdev->dev;
- 	dev = afe->dev;
- 
-+	ret = of_reserved_mem_device_init(dev);
-+	if (ret) {
-+		dev_info(dev, "no reserved memory found, pre-allocating buffers instead\n");
-+		afe->preallocate_buffers = true;
-+	}
-+
- 	/* initial audio related clock */
- 	ret = mt8183_init_clock(afe);
- 	if (ret) {
-diff --git a/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c b/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
-index b86159f70a33..9ee431304a43 100644
---- a/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
-+#include <linux/of_reserved_mem.h>
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
- #include <sound/soc.h>
-@@ -2835,6 +2836,12 @@ static int mt8186_afe_pcm_dev_probe(struct platform_device *pdev)
- 	afe_priv = afe->platform_priv;
- 	afe->dev = &pdev->dev;
- 
-+	ret = of_reserved_mem_device_init(dev);
-+	if (ret) {
-+		dev_info(dev, "no reserved memory found, pre-allocating buffers instead\n");
-+		afe->preallocate_buffers = true;
-+	}
-+
- 	afe->base_addr = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(afe->base_addr))
- 		return PTR_ERR(afe->base_addr);
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c b/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
-index d0520e7e1d79..364e43da0e24 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
-@@ -12,6 +12,7 @@
- #include <linux/mfd/syscon.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
-+#include <linux/of_reserved_mem.h>
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
- #include <sound/soc.h>
-@@ -2196,6 +2197,12 @@ static int mt8192_afe_pcm_dev_probe(struct platform_device *pdev)
- 	afe->dev = &pdev->dev;
- 	dev = afe->dev;
- 
-+	ret = of_reserved_mem_device_init(dev);
-+	if (ret) {
-+		dev_info(dev, "no reserved memory found, pre-allocating buffers instead\n");
-+		afe->preallocate_buffers = true;
-+	}
-+
- 	/* init audio related clock */
- 	ret = mt8192_init_clock(afe);
- 	if (ret) {
+ 	if (*mask & s_kmod_keyword_mask_map[index].mask_val) {
+ 		if ((strlen(kernel_debug_string) +
+-		     strlen(s_kmod_keyword_mask_map[index].keyword))
+-			< ORANGEFS_MAX_DEBUG_STRING_LEN - 1) {
++		     strlen(s_kmod_keyword_mask_map[index].keyword) + 1)
++			< ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 				strcat(kernel_debug_string,
+ 				       s_kmod_keyword_mask_map[index].keyword);
+ 				strcat(kernel_debug_string, ",");
+@@ -756,7 +756,7 @@ static void do_c_string(void *c_mask, int index)
+ 	    (mask->mask2 & cdm_array[index].mask2)) {
+ 		if ((strlen(client_debug_string) +
+ 		     strlen(cdm_array[index].keyword) + 1)
+-			< ORANGEFS_MAX_DEBUG_STRING_LEN - 2) {
++			< ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 				strcat(client_debug_string,
+ 				       cdm_array[index].keyword);
+ 				strcat(client_debug_string, ",");
 -- 
 2.39.5
 
