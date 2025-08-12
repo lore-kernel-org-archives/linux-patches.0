@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D282D26FA77;
-	Tue, 12 Aug 2025 19:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B6126FA77;
+	Tue, 12 Aug 2025 19:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026052; cv=none; b=VvlwbP5gvoORphpGsP1SKcdmYXu0FyMYbcsjS9S5ypf86jxPdaPvutp/wsaZuB5HzrYiHkGhbV9Jq7jGK5SiTxk8/A7uzccKS1nctrqPvlpLNNIuou4UmPDvhBxU9YLM1ActxkebAPD+f7Q/Xau7CJKL6eJ5Fl54svtqU9A/lH4=
+	t=1755026055; cv=none; b=G0N9auLuhOAEzzDxS8N6Q7+R1kBCwVwVVjvl7q5+Zc7n59S5zdwWoGfK5bx3EPhGgdSBIbLntRI2KZUeYDar6E5ms8+q7G72YPapgdeMoApIANq6mB9Z2jY17NcCwdUmZaXl1gGg36aNLZvLbNdEDYtMrDyZO8Jngiu03M6k/e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026052; c=relaxed/simple;
-	bh=cgy4J5of8Q+zV63k8qOSD1en4hryHlZfFwlsYkzBlRU=;
+	s=arc-20240116; t=1755026055; c=relaxed/simple;
+	bh=tE1Ra9sF+Lt73PHl+Iij/n7R9sLMFOqvPvQAEU0hME8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0YToZm/ABg/CaoVMyFkOVL0KS3mhfRSwtrBYucXd5675Xmmq+F4kNUy5/8v+jI08SfSDySh0d/wjBxwDvkAELPss+Tu3T1PyOahTVzMqXIWbllIXAkZCB6uw06J83Qt73umZd3hAFWbxTALkK7QjK4eGxJoA6sPiNPrcFwuQG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcOncBcP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBCmf4xBbnPBg441MEu5Ec0PvNY+6NJlWSmaM8bIxwaG/BHn7Sl8c8n1O40JjrZ0izAwIwCli5NoI/nBT27m2rh3CiPKz5ko/qikzd2mPeUPZBdTOArvbNWPQ4+CGknQ+newjhyGK28LeqI+9S2sRrmatQbaxyCJb5oQYeEThVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edNLNzPg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcOncBcP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD6D8C4CEF0;
-	Tue, 12 Aug 2025 19:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edNLNzPg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4645CC4CEF0;
+	Tue, 12 Aug 2025 19:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026052;
-	bh=cgy4J5of8Q+zV63k8qOSD1en4hryHlZfFwlsYkzBlRU=;
+	s=korg; t=1755026055;
+	bh=tE1Ra9sF+Lt73PHl+Iij/n7R9sLMFOqvPvQAEU0hME8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KcOncBcPK+FT3JRP2rUymtJVSUM9eyN2cI8OBfiNzG3DUtzTsUtzscEFCJKgLsAKV
-	 4iiXHzMl/FaOw3ntN8a4c5yH+eeYHhWE3YTIKfrCBdGxTRFp46hG2wIl8Iv8sBJBLM
-	 Td00mW3tUatfpREXavA1GbHkRJfZ0Bp/NEBSLNAc=
+	b=edNLNzPgywrZ89z65C4vUuJ7e1oV8JtFxBPC8SwtaKB25BLyVSdWbPFLxejMlMOuj
+	 K0AQcIgrUYXBVj/+4JuyLjJGFyeMBsM7ruvhdbnc9NHo7J/X2hmK3l2mZr5MN7WWeK
+	 t+pwxI8vNNf1FERbkHo/akLLpdAIVkgADW5r3ULk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaistra <martin.kaistra@linutronix.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jeremy Linton <jeremy.linton@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 189/480] wifi: mac80211: fix WARN_ON for monitor mode on some devices
-Date: Tue, 12 Aug 2025 19:46:37 +0200
-Message-ID: <20250812174405.300112840@linuxfoundation.org>
+Subject: [PATCH 6.15 190/480] arm64/gcs: task_gcs_el0_enable() should use passed task
+Date: Tue, 12 Aug 2025 19:46:38 +0200
+Message-ID: <20250812174405.339069187@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,53 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jeremy Linton <jeremy.linton@arm.com>
 
-[ Upstream commit c57e5b9819dfd16d709bcd6cb633301ed0829a66 ]
+[ Upstream commit cbbcfb94c55c02a8c4ce52b5da0770b5591a314c ]
 
-On devices without WANT_MONITOR_VIF (and probably without
-channel context support) we get a WARN_ON for changing the
-per-link setting of a monitor interface.
+Mark Rutland noticed that the task parameter is ignored and
+'current' is being used instead. Since this is usually
+what its passed, it hasn't yet been causing problems but likely
+will as the code gets more testing.
 
-Since we already skip AP_VLAN interfaces and MONITOR with
-WANT_MONITOR_VIF and/or NO_VIRTUAL_MONITOR should update
-the settings, catch this in the link change code instead
-of the warning.
+But, once this is fixed, it creates a new bug in copy_thread_gcs()
+since the gcs_el_mode isn't yet set for the task before its being
+checked. Move gcs_alloc_thread_stack() after the new task's
+gcs_el0_mode initialization to avoid this.
 
-Reported-by: Martin Kaistra <martin.kaistra@linutronix.de>
-Link: https://lore.kernel.org/r/a9de62a0-28f1-4981-84df-253489da74ed@linutronix.de/
-Fixes: c4382d5ca1af ("wifi: mac80211: update the right link for tx power")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: fc84bc5378a8 ("arm64/gcs: Context switch GCS state for EL0")
+Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250719043740.4548-2-jeremy.linton@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/main.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/gcs.h | 2 +-
+ arch/arm64/kernel/process.c  | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index 6b6de43d9420..1bad353d8a77 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -407,9 +407,20 @@ void ieee80211_link_info_change_notify(struct ieee80211_sub_if_data *sdata,
+diff --git a/arch/arm64/include/asm/gcs.h b/arch/arm64/include/asm/gcs.h
+index f50660603ecf..5bc432234d3a 100644
+--- a/arch/arm64/include/asm/gcs.h
++++ b/arch/arm64/include/asm/gcs.h
+@@ -58,7 +58,7 @@ static inline u64 gcsss2(void)
  
- 	WARN_ON_ONCE(changed & BSS_CHANGED_VIF_CFG_FLAGS);
+ static inline bool task_gcs_el0_enabled(struct task_struct *task)
+ {
+-	return current->thread.gcs_el0_mode & PR_SHADOW_STACK_ENABLE;
++	return task->thread.gcs_el0_mode & PR_SHADOW_STACK_ENABLE;
+ }
  
--	if (!changed || sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
-+	if (!changed)
- 		return;
+ void gcs_set_el0_mode(struct task_struct *task);
+diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
+index 4bc70205312e..ce21682fe129 100644
+--- a/arch/arm64/kernel/process.c
++++ b/arch/arm64/kernel/process.c
+@@ -305,13 +305,13 @@ static int copy_thread_gcs(struct task_struct *p,
+ 	p->thread.gcs_base = 0;
+ 	p->thread.gcs_size = 0;
  
-+	switch (sdata->vif.type) {
-+	case NL80211_IFTYPE_AP_VLAN:
-+		return;
-+	case NL80211_IFTYPE_MONITOR:
-+		if (!ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF))
-+			return;
-+		break;
-+	default:
-+		break;
-+	}
++	p->thread.gcs_el0_mode = current->thread.gcs_el0_mode;
++	p->thread.gcs_el0_locked = current->thread.gcs_el0_locked;
 +
- 	if (!check_sdata_in_driver(sdata))
- 		return;
+ 	gcs = gcs_alloc_thread_stack(p, args);
+ 	if (IS_ERR_VALUE(gcs))
+ 		return PTR_ERR((void *)gcs);
+ 
+-	p->thread.gcs_el0_mode = current->thread.gcs_el0_mode;
+-	p->thread.gcs_el0_locked = current->thread.gcs_el0_locked;
+-
+ 	return 0;
+ }
  
 -- 
 2.39.5
