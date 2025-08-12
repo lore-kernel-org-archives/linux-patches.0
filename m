@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EB72D5C76;
-	Tue, 12 Aug 2025 17:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA5F2F83CB;
+	Tue, 12 Aug 2025 17:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021294; cv=none; b=TkBzousokqdngSY2wQkbPm3KyXgQytAcXyEnrAxK+eTRZBNWF4mYgPssKosNZ36O+pRnEmVINRz2EE09eJaLvja9eqn0xgSi8ab4Xf92Rtk89uEENkTaQBnpbmZniIXU+Q2vR/YcU+6IlYljzQFV9qP+2JQREX2/pv2ZcGmXNXc=
+	t=1755021298; cv=none; b=ZI/g2HUFRxbBLeDGiTj39+67x/F2B3tjA9qY/lYZHt8p11tqdGJ5VRZ/+x50Tg8RoJepBL0nWf7cpPOyJ5AIaCi18OFJAQhCjjDqOuSTD0sXZ3kRHnqb7CJgcPsCIjtYvDsJbk6KNiFE27aBdsLATewK9098OXOspdWKQb3PvUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021294; c=relaxed/simple;
-	bh=Mk0T2+1NknJOs+m74u6SxXoHjGrBFY+PTOceAVxtgRY=;
+	s=arc-20240116; t=1755021298; c=relaxed/simple;
+	bh=a5a5sX4/Cwq41aaJh+jkZ04hZlkIklzz4LtAQai74iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AieQ3dLYU1YtUCMPsEATtAzjw2qVwRRwPx2i4Kg8FIpD65UFRi102nzfwIA0hgP6p7AiYB1oKYm3MVElv4XOiVVjGFS9d4wmYlzbj0Zvo2VUX4+tbG3GCmpr3Aa2S9iJQOxNwme5RPq6GOdtniygAY7egHx7INu1UQtRSCcIm2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2exskgM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLP5yPBzjhN1zCJumW78eYJhzq4XL++PGlTJNSOVbBh1sXr6GR6jAJjiiUKaodfL5uLG76XLIox7NRQj9xtSK/+dfvQQtnV5jNtLhmIkfvYue5EP4BMuqLSL63amLEsP8P/3Lojcf04OwxmDfza1koDttU5FDAYZqEQUVrEYJFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VImDN9jy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2exskgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3932DC4CEF0;
-	Tue, 12 Aug 2025 17:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VImDN9jy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF630C4CEF0;
+	Tue, 12 Aug 2025 17:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021294;
-	bh=Mk0T2+1NknJOs+m74u6SxXoHjGrBFY+PTOceAVxtgRY=;
+	s=korg; t=1755021298;
+	bh=a5a5sX4/Cwq41aaJh+jkZ04hZlkIklzz4LtAQai74iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2exskgM89BNv6z7JDUHcB0GfQRVc0O5PlQwtBhoC9Qwdpk670i7i4bjoG6I2P8A7
-	 U34M6tsknk88KaVhzLytGxoDQG7Lqs+lMzPjhGB1f2WiNEy9N8YdVu8jErJ/4gxTdB
-	 DJUpiWsmMCuUovr5rkrv61K3IZFOlSAuh8BWgd+U=
+	b=VImDN9jy5/LfGHJaCpqvvaAWsPeYpvsXTWewIwAqAza9/AvBoMM3c1A/B+WVtcb2w
+	 KtkUzUD9ua15z5QAWK/Id4cqffJnUTHCzMaYp0D7mvBT4kNbQwqifAGTbBmzJjKQI2
+	 HKfHnPhD4a1lp5JkJjet4E0QbU0uikTjrj4XgU/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 218/253] netpoll: prevent hanging NAPI when netcons gets enabled
-Date: Tue, 12 Aug 2025 19:30:06 +0200
-Message-ID: <20250812172958.115384882@linuxfoundation.org>
+Subject: [PATCH 6.6 067/262] m68k: Dont unregister boot console needlessly
+Date: Tue, 12 Aug 2025 19:27:35 +0200
+Message-ID: <20250812172955.853471237@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,97 +48,152 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 2da4def0f487f24bbb0cece3bb2bcdcb918a0b72 ]
+[ Upstream commit 83f672a7f69ec38b1bbb27221e342937f68c11c7 ]
 
-Paolo spotted hangs in NIPA running driver tests against virtio.
-The tests hang in virtnet_close() -> virtnet_napi_tx_disable().
+When MACH_IS_MVME147, the boot console calls mvme147_scc_write() to
+generate console output. That will continue to work even after
+debug_cons_nputs() becomes unavailable so there's no need to
+unregister the boot console.
 
-The problem is only reproducible if running multiple of our tests
-in sequence (I used TEST_PROGS="xdp.py ping.py netcons_basic.sh \
-netpoll_basic.py stats.py"). Initial suspicion was that this is
-a simple case of double-disable of NAPI, but instrumenting the
-code reveals:
+Take the opportunity to remove a repeated MACH_IS_* test. Use the
+actual .write method (instead of a wrapper) and test that pointer
+instead. This means adding an unused parameter to debug_cons_nputs() for
+consistency with the struct console API.
 
- Deadlocked on NAPI ffff888007cd82c0 (virtnet_poll_tx):
-   state: 0x37, disabled: false, owner: 0, listed: false, weight: 64
+early_printk.c is only built when CONFIG_EARLY_PRINTK=y. As of late,
+head.S is only built when CONFIG_MMU_MOTOROLA=y. So let the former symbol
+depend on the latter, to obviate some ifdef conditionals.
 
-The NAPI was not in fact disabled, owner is 0 (rather than -1),
-so the NAPI "thinks" it's scheduled for CPU 0 but it's not listed
-(!list_empty(&n->poll_list) => false). It seems odd that normal NAPI
-processing would wedge itself like this.
-
-Better suspicion is that netpoll gets enabled while NAPI is polling,
-and also grabs the NAPI instance. This confuses napi_complete_done():
-
-  [netpoll]                                   [normal NAPI]
-                                        napi_poll()
-                                          have = netpoll_poll_lock()
-                                            rcu_access_pointer(dev->npinfo)
-                                              return NULL # no netpoll
-                                          __napi_poll()
-					    ->poll(->weight)
-  poll_napi()
-    cmpxchg(->poll_owner, -1, cpu)
-      poll_one_napi()
-        set_bit(NAPI_STATE_NPSVC, ->state)
-                                              napi_complete_done()
-                                                if (NAPIF_STATE_NPSVC)
-                                                  return false
-                                           # exit without clearing SCHED
-
-This feels very unlikely, but perhaps virtio has some interactions
-with the hypervisor in the NAPI ->poll that makes the race window
-larger?
-
-Best I could to to prove the theory was to add and trigger this
-warning in napi_poll (just before netpoll_poll_unlock()):
-
-      WARN_ONCE(!have && rcu_access_pointer(n->dev->npinfo) &&
-                napi_is_scheduled(n) && list_empty(&n->poll_list),
-                "NAPI race with netpoll %px", n);
-
-If this warning hits the next virtio_close() will hang.
-
-This patch survived 30 test iterations without a hang (without it
-the longest clean run was around 10). Credit for triggering this
-goes to Breno's recent netconsole tests.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/c5a93ed1-9abe-4880-a3bb-8d1678018b1d@redhat.com
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://patch.msgid.link/20250726010846.1105875-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Daniel Palmer <daniel@0x0f.com>
+Fixes: 077b33b9e283 ("m68k: mvme147: Reinstate early console")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/d1d4328e5aa9a87bd8352529ce62b767731c0530.1743467205.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/m68k/Kconfig.debug         |  2 +-
+ arch/m68k/kernel/early_printk.c | 42 +++++++++++----------------------
+ arch/m68k/kernel/head.S         |  8 +++----
+ 3 files changed, 19 insertions(+), 33 deletions(-)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 657abbb7d0d7..89f5358d7a1b 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -800,6 +800,13 @@ int netpoll_setup(struct netpoll *np)
- 		goto put;
- 	netdev_tracker_alloc(ndev, &np->dev_tracker, GFP_KERNEL);
- 	rtnl_unlock();
-+
-+	/* Make sure all NAPI polls which started before dev->npinfo
-+	 * was visible have exited before we start calling NAPI poll.
-+	 * NAPI skips locking if dev->npinfo is NULL.
-+	 */
-+	synchronize_rcu();
-+
- 	return 0;
+diff --git a/arch/m68k/Kconfig.debug b/arch/m68k/Kconfig.debug
+index 30638a6e8edc..d036f903864c 100644
+--- a/arch/m68k/Kconfig.debug
++++ b/arch/m68k/Kconfig.debug
+@@ -10,7 +10,7 @@ config BOOTPARAM_STRING
  
- put:
+ config EARLY_PRINTK
+ 	bool "Early printk"
+-	depends on !(SUN3 || M68000 || COLDFIRE)
++	depends on MMU_MOTOROLA
+ 	help
+ 	  Write kernel log output directly to a serial port.
+ 	  Where implemented, output goes to the framebuffer as well.
+diff --git a/arch/m68k/kernel/early_printk.c b/arch/m68k/kernel/early_printk.c
+index f11ef9f1f56f..521cbb8a150c 100644
+--- a/arch/m68k/kernel/early_printk.c
++++ b/arch/m68k/kernel/early_printk.c
+@@ -16,25 +16,10 @@
+ #include "../mvme147/mvme147.h"
+ #include "../mvme16x/mvme16x.h"
+ 
+-asmlinkage void __init debug_cons_nputs(const char *s, unsigned n);
+-
+-static void __ref debug_cons_write(struct console *c,
+-				   const char *s, unsigned n)
+-{
+-#if !(defined(CONFIG_SUN3) || defined(CONFIG_M68000) || \
+-      defined(CONFIG_COLDFIRE))
+-	if (MACH_IS_MVME147)
+-		mvme147_scc_write(c, s, n);
+-	else if (MACH_IS_MVME16x)
+-		mvme16x_cons_write(c, s, n);
+-	else
+-		debug_cons_nputs(s, n);
+-#endif
+-}
++asmlinkage void __init debug_cons_nputs(struct console *c, const char *s, unsigned int n);
+ 
+ static struct console early_console_instance = {
+ 	.name  = "debug",
+-	.write = debug_cons_write,
+ 	.flags = CON_PRINTBUFFER | CON_BOOT,
+ 	.index = -1
+ };
+@@ -44,6 +29,12 @@ static int __init setup_early_printk(char *buf)
+ 	if (early_console || buf)
+ 		return 0;
+ 
++	if (MACH_IS_MVME147)
++		early_console_instance.write = mvme147_scc_write;
++	else if (MACH_IS_MVME16x)
++		early_console_instance.write = mvme16x_cons_write;
++	else
++		early_console_instance.write = debug_cons_nputs;
+ 	early_console = &early_console_instance;
+ 	register_console(early_console);
+ 
+@@ -51,20 +42,15 @@ static int __init setup_early_printk(char *buf)
+ }
+ early_param("earlyprintk", setup_early_printk);
+ 
+-/*
+- * debug_cons_nputs() defined in arch/m68k/kernel/head.S cannot be called
+- * after init sections are discarded (for platforms that use it).
+- */
+-#if !(defined(CONFIG_SUN3) || defined(CONFIG_M68000) || \
+-      defined(CONFIG_COLDFIRE))
+-
+ static int __init unregister_early_console(void)
+ {
+-	if (!early_console || MACH_IS_MVME16x)
+-		return 0;
++	/*
++	 * debug_cons_nputs() defined in arch/m68k/kernel/head.S cannot be
++	 * called after init sections are discarded (for platforms that use it).
++	 */
++	if (early_console && early_console->write == debug_cons_nputs)
++		return unregister_console(early_console);
+ 
+-	return unregister_console(early_console);
++	return 0;
+ }
+ late_initcall(unregister_early_console);
+-
+-#endif
+diff --git a/arch/m68k/kernel/head.S b/arch/m68k/kernel/head.S
+index 9e812d8606be..397114962a14 100644
+--- a/arch/m68k/kernel/head.S
++++ b/arch/m68k/kernel/head.S
+@@ -3267,8 +3267,8 @@ func_return	putn
+  *	turns around and calls the internal routines.  This routine
+  *	is used by the boot console.
+  *
+- *	The calling parameters are:
+- *		void debug_cons_nputs(const char *str, unsigned length)
++ *	The function signature is -
++ *		void debug_cons_nputs(struct console *c, const char *s, unsigned int n)
+  *
+  *	This routine does NOT understand variable arguments only
+  *	simple strings!
+@@ -3277,8 +3277,8 @@ ENTRY(debug_cons_nputs)
+ 	moveml	%d0/%d1/%a0,%sp@-
+ 	movew	%sr,%sp@-
+ 	ori	#0x0700,%sr
+-	movel	%sp@(18),%a0		/* fetch parameter */
+-	movel	%sp@(22),%d1		/* fetch parameter */
++	movel	%sp@(22),%a0		/* char *s */
++	movel	%sp@(26),%d1		/* unsigned int n */
+ 	jra	2f
+ 1:
+ #ifdef CONSOLE_DEBUG
 -- 
 2.39.5
 
