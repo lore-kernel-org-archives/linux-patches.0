@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B671F27781E;
-	Tue, 12 Aug 2025 19:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA3126FA77;
+	Tue, 12 Aug 2025 19:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025918; cv=none; b=Mxo2VnBURWwclpAey7Q+CrVcDPXkd0wqMNc4lrX5YpP5oQZB802USbEIhuDZKYhtIM/GCroQHn1KrM9tk3meM9MSvmX7ljpPY6FrxznJj+vDwy8L5rojp3OatJJUdH7/h6DkrHTgwM+u1NH6XXGnATZOlBPU0InMOfxITRFaRJ0=
+	t=1755025921; cv=none; b=DXLksQttpHPZOZFRNVYHcCiYrl/Oj9iqdvHNvyLRkIJvetsywpXX9AXcwhTkm2NpUnDzQFnyq4jZhgpexHOM2PwRiY1B8W+xzKdNFvN67PP1dVUzL/l0Y+mkcHMo/f+QNFoXzIkUl1qBR1SUGNminW5h+yaWOR9yAw9DtlTmlOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025918; c=relaxed/simple;
-	bh=cvvV5dsaGhO7el1eq5ei0wEH941LNdDNxCw+2djvS64=;
+	s=arc-20240116; t=1755025921; c=relaxed/simple;
+	bh=wBTIlnp/tcXXvsMYiVNuy3sZ+Dys2cyyODk/2M7wUUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1IKNby8nbn4GjmwDbvx2CSXtvkQCLQRdchsZd/YxoMrJMK2vxEtlu1qLpbxQXAVlBjPuAq06bqyO9EOVpidXWxxuRzYqEGtmBH1jn1sqJ2/D/x9bb0D2JgcE6FuIM2G/KbbXDqcWzDn3vC+DgUWrfO+chI/0Xj7Yx0bzWIKXus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hi7yEKwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMOLqpJ573LYiHAfve4KCFduVvYNV5og4KuZXwF+ubE1T3mLutr5o/81ZEsiRmPjxMzv62VHTCf4tq1rQHf7ojN6XdMAllAZarDumtmYyFU7U6DqaF/RozBRksLytzeHJZ3JDtS1yzbYK40S6QgxqPzi1iJqj7dnKaeAQUIK8Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcSm3pDy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hi7yEKwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9931C4CEF0;
-	Tue, 12 Aug 2025 19:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcSm3pDy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A54C4CEF0;
+	Tue, 12 Aug 2025 19:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025918;
-	bh=cvvV5dsaGhO7el1eq5ei0wEH941LNdDNxCw+2djvS64=;
+	s=korg; t=1755025921;
+	bh=wBTIlnp/tcXXvsMYiVNuy3sZ+Dys2cyyODk/2M7wUUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hi7yEKwJTipZqD8G7M0SWST8EgfNQHxl6e31/lULBi8sfEteOOXDbyzbRIvEj4g+o
-	 3KgjZyei8dvptj7MJOrLjXJKEM8PQgwCpxetX72JS7zGl4wsy/ca/Evll2LRxiP5G9
-	 KVEXkiyEp3MvlLOEgT87Dl0vU5c2I+6S92kx+Ww8=
+	b=CcSm3pDy/eTJDrX8AY1V/aX3xrwitrbmLjtPr19WPKDCY8J1JLvXcNiWZrOjqy4CP
+	 okLTbzoDfoVqOrWNy5YELVkhtiOXyd7j2BFLvzCUk2rVlVqSXiJb3FUeJwiuBDtktR
+	 3dR1tyZ1863sfj+akmRobkUD5O7hWc615PT82P3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 182/480] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
-Date: Tue, 12 Aug 2025 19:46:30 +0200
-Message-ID: <20250812174405.023019178@linuxfoundation.org>
+Subject: [PATCH 6.15 183/480] PM: cpufreq: powernv/tracing: Move powernv_throttle trace event
+Date: Tue, 12 Aug 2025 19:46:31 +0200
+Message-ID: <20250812174405.061919626@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,62 +58,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 579bf8037b70b644a674c126a32bbb2212cf5c21 ]
+[ Upstream commit 647fe16b46999258ce1aec41f4bdeabb4f0cc8e7 ]
 
-After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
-IEs"), the probe request MGMT IE addition operation brcmf_vif_set_mgmt_ie()
-got moved from the brcmf_p2p_scan_prep() to the brcmf_cfg80211_scan().
+As the trace event powernv_throttle is only used by the powernv code, move
+it to a separate include file and have that code directly enable it.
 
-Because of this, as part of the scan request handler for the P2P Discovery,
-vif struct used for adding the Probe Request P2P IE in firmware got changed
-from the P2PAPI_BSSCFG_DEVICE vif to P2PAPI_BSSCFG_PRIMARY vif incorrectly.
-So the firmware stopped adding P2P IE to the outgoing P2P Discovery probe
-requests frames and the other P2P peers were unable to discover this device
-causing a regression on the P2P feature.
+Trace events can take up around 5K of memory when they are defined
+regardless if they are used or not. It wastes memory to have them defined
+in configurations where the tracepoint is not used.
 
-To fix this, while setting the P2P IE in firmware, properly use the vif of
-the P2P discovery wdev on which the driver received the P2P scan request.
-This is done by not changing the vif pointer, until brcmf_vif_set_mgmt_ie()
-is completed.
-
-Fixes: bd99a3013bdc ("brcmfmac: move configuration of probe request IEs")
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20250626050706.7271-1-gokulkumar.sivakumar@infineon.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/20250612145407.906308844@goodmis.org
+Fixes: 0306e481d479a ("cpufreq: powernv/tracing: Add powernv_throttle tracepoint")
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/cpufreq/Makefile          |  1 +
+ drivers/cpufreq/powernv-cpufreq.c |  4 ++-
+ drivers/cpufreq/powernv-trace.h   | 44 +++++++++++++++++++++++++++++++
+ include/trace/events/power.h      | 22 ----------------
+ kernel/trace/power-traces.c       |  1 -
+ 5 files changed, 48 insertions(+), 24 deletions(-)
+ create mode 100644 drivers/cpufreq/powernv-trace.h
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 4b70845e1a26..075b99478e65 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -1545,10 +1545,6 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
- 		return -EAGAIN;
- 	}
+diff --git a/drivers/cpufreq/Makefile b/drivers/cpufreq/Makefile
+index 22ab45209f9b..246f58b496da 100644
+--- a/drivers/cpufreq/Makefile
++++ b/drivers/cpufreq/Makefile
+@@ -20,6 +20,7 @@ obj-$(CONFIG_CPUFREQ_VIRT)		+= virtual-cpufreq.o
  
--	/* If scan req comes for p2p0, send it over primary I/F */
--	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
--		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
--
- 	brcmf_dbg(SCAN, "START ESCAN\n");
+ # Traces
+ CFLAGS_amd-pstate-trace.o               := -I$(src)
++CFLAGS_powernv-cpufreq.o                := -I$(src)
+ amd_pstate-y				:= amd-pstate.o amd-pstate-trace.o
  
- 	cfg->scan_request = request;
-@@ -1564,6 +1560,10 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
- 	if (err)
- 		goto scan_out;
+ ##################################################################################
+diff --git a/drivers/cpufreq/powernv-cpufreq.c b/drivers/cpufreq/powernv-cpufreq.c
+index afe5abf89d33..b7c3251e7e87 100644
+--- a/drivers/cpufreq/powernv-cpufreq.c
++++ b/drivers/cpufreq/powernv-cpufreq.c
+@@ -21,7 +21,6 @@
+ #include <linux/string_choices.h>
+ #include <linux/cpu.h>
+ #include <linux/hashtable.h>
+-#include <trace/events/power.h>
  
-+	/* If scan req comes for p2p0, send it over primary I/F */
-+	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
-+		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
+ #include <asm/cputhreads.h>
+ #include <asm/firmware.h>
+@@ -30,6 +29,9 @@
+ #include <asm/opal.h>
+ #include <linux/timer.h>
+ 
++#define CREATE_TRACE_POINTS
++#include "powernv-trace.h"
 +
- 	err = brcmf_do_escan(vif->ifp, request);
- 	if (err)
- 		goto scan_out;
+ #define POWERNV_MAX_PSTATES_ORDER  8
+ #define POWERNV_MAX_PSTATES	(1UL << (POWERNV_MAX_PSTATES_ORDER))
+ #define PMSR_PSAFE_ENABLE	(1UL << 30)
+diff --git a/drivers/cpufreq/powernv-trace.h b/drivers/cpufreq/powernv-trace.h
+new file mode 100644
+index 000000000000..8cadb7c9427b
+--- /dev/null
++++ b/drivers/cpufreq/powernv-trace.h
+@@ -0,0 +1,44 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#if !defined(_POWERNV_TRACE_H) || defined(TRACE_HEADER_MULTI_READ)
++#define _POWERNV_TRACE_H
++
++#include <linux/cpufreq.h>
++#include <linux/tracepoint.h>
++#include <linux/trace_events.h>
++
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM power
++
++TRACE_EVENT(powernv_throttle,
++
++	TP_PROTO(int chip_id, const char *reason, int pmax),
++
++	TP_ARGS(chip_id, reason, pmax),
++
++	TP_STRUCT__entry(
++		__field(int, chip_id)
++		__string(reason, reason)
++		__field(int, pmax)
++	),
++
++	TP_fast_assign(
++		__entry->chip_id = chip_id;
++		__assign_str(reason);
++		__entry->pmax = pmax;
++	),
++
++	TP_printk("Chip %d Pmax %d %s", __entry->chip_id,
++		  __entry->pmax, __get_str(reason))
++);
++
++#endif /* _POWERNV_TRACE_H */
++
++/* This part must be outside protection */
++#undef TRACE_INCLUDE_PATH
++#define TRACE_INCLUDE_PATH .
++
++#undef TRACE_INCLUDE_FILE
++#define TRACE_INCLUDE_FILE powernv-trace
++
++#include <trace/define_trace.h>
+diff --git a/include/trace/events/power.h b/include/trace/events/power.h
+index 9253e83b9bb4..ff0974e9be9a 100644
+--- a/include/trace/events/power.h
++++ b/include/trace/events/power.h
+@@ -99,28 +99,6 @@ DEFINE_EVENT(psci_domain_idle, psci_domain_idle_exit,
+ 	TP_ARGS(cpu_id, state, s2idle)
+ );
+ 
+-TRACE_EVENT(powernv_throttle,
+-
+-	TP_PROTO(int chip_id, const char *reason, int pmax),
+-
+-	TP_ARGS(chip_id, reason, pmax),
+-
+-	TP_STRUCT__entry(
+-		__field(int, chip_id)
+-		__string(reason, reason)
+-		__field(int, pmax)
+-	),
+-
+-	TP_fast_assign(
+-		__entry->chip_id = chip_id;
+-		__assign_str(reason);
+-		__entry->pmax = pmax;
+-	),
+-
+-	TP_printk("Chip %d Pmax %d %s", __entry->chip_id,
+-		  __entry->pmax, __get_str(reason))
+-);
+-
+ TRACE_EVENT(pstate_sample,
+ 
+ 	TP_PROTO(u32 core_busy,
+diff --git a/kernel/trace/power-traces.c b/kernel/trace/power-traces.c
+index 21bb161c2316..f2fe33573e54 100644
+--- a/kernel/trace/power-traces.c
++++ b/kernel/trace/power-traces.c
+@@ -17,5 +17,4 @@
+ EXPORT_TRACEPOINT_SYMBOL_GPL(suspend_resume);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(cpu_idle);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(cpu_frequency);
+-EXPORT_TRACEPOINT_SYMBOL_GPL(powernv_throttle);
+ 
 -- 
 2.39.5
 
