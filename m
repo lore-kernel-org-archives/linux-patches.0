@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1AE3FE7;
-	Tue, 12 Aug 2025 19:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1820025B1EA;
+	Tue, 12 Aug 2025 19:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025288; cv=none; b=nUUm7uuFo4aZz/rTX4qj72TtTqCV9PpMcekYiz3+IfQdnTPmsvgVGj7/KMs/Pw9zM5WO+MHOQvz6jgAtzKwdXkja6AJ2sXTszDd9dQCZC5aOdYzaDOHay/SWrxgxAEF9ad4WFddLQUQL/czUWcajtivvUDsTN7M4dkcMT986mDw=
+	t=1755025292; cv=none; b=Qk+sIvrzY0KCuDaKlNr98w46kR3N1YqCxhVLtBFFndczuIyZhV2hkfdvqPtv8bU9OCdpDLBlTZM4vz3CIzoIx/APoVHOjKselrDtZid5UZIXeQWmTxh+9qGrW1+BSo0WyDR779PDgTrLbLi/ukJl0pIU5pijglHvrTzkA/pMtXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025288; c=relaxed/simple;
-	bh=CQBO213ZlJs9VdhlWrmFLFemPqAp+iu2YKCYR7fSZL8=;
+	s=arc-20240116; t=1755025292; c=relaxed/simple;
+	bh=pdT7G/ZcZB3jP3wgfclgaaANB6FEh4kBatIuXAIJoTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dY4997FSx4LIg6ldw8AP4Ib3cH4+AR9maZq6R8LZXMo717OI+4DhOC+W8a9l6LunnMHXnPXq+GJoC1H+XS7QTxQFsn65GjPKUo9XaEdAKY4+23wY3W/CNkMjFd3vvziJkUke2MfUdr8awX0CC0XJ+S7itaZ30MPNZVBJpeGoaaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtUIJIOa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e2/PgfGoD1ccnZqRLNfXnNO5EQhwMgvb3k/2I+Ghlzkfwy0SdBjuEOp1JopXNe0xjA0a1sJM0NL7SPbfjIlu5QsOqitVIjRQdpRNlbfKfZYCpz2tRt6KCSKLzbAoZmXDVEXdiVmATSya6t83WnsFQcZOf7xMXii81AyqXNZ292E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKUvAPAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtUIJIOa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62328C4CEF0;
-	Tue, 12 Aug 2025 19:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKUvAPAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A676C4CEF0;
+	Tue, 12 Aug 2025 19:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025288;
-	bh=CQBO213ZlJs9VdhlWrmFLFemPqAp+iu2YKCYR7fSZL8=;
+	s=korg; t=1755025291;
+	bh=pdT7G/ZcZB3jP3wgfclgaaANB6FEh4kBatIuXAIJoTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FtUIJIOa7UpCDQ/tXW+tVZ0y9nVQycnI0IM+UUktII/PdCS9SPUyviHLwAMgN1q6e
-	 Qhj43rVj1bOUbQfzdevhxzxCJoEGJHM79XOwYLLGPZiiPcEXsnSEvJJyMliU2r4K++
-	 4Elt6Zq4/g5DC3If4phSkNwrJi0FDRUVK8SD/JFs=
+	b=CKUvAPALhZzhAULE2IHKwMWVj2PWPaeauUNdUL6t1K/GN2qQLoaMR3wXRLSrlqv0y
+	 lmJobqIFWCB19f4qHLIg1Nb9PeZr7q/gqo/hXou7CgoDSf2hx+bq6iu6Tb4wKh0sw3
+	 Czmf0x0g+YGhNorgtN3pE9SmLRE8g/YvLGEoIqlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tao Xue <xuetao09@huawei.com>
-Subject: [PATCH 6.16 625/627] usb: gadget : fix use-after-free in composite_dev_cleanup()
-Date: Tue, 12 Aug 2025 19:35:20 +0200
-Message-ID: <20250812173455.648465207@linuxfoundation.org>
+	Edip Hazuri <edip@medip.dev>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.16 599/627] ALSA: hda/realtek - Fix mute LED for HP Victus 16-r1xxx
+Date: Tue, 12 Aug 2025 19:34:54 +0200
+Message-ID: <20250812173454.656127044@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -50,51 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Xue <xuetao09@huawei.com>
+From: Edip Hazuri <edip@medip.dev>
 
-commit 151c0aa896c47a4459e07fee7d4843f44c1bb18e upstream.
+commit bd7814a4c0fd883894bdf9fe5eda24c9df826e4c upstream.
 
-1. In func configfs_composite_bind() -> composite_os_desc_req_prepare():
-if kmalloc fails, the pointer cdev->os_desc_req will be freed but not
-set to NULL. Then it will return a failure to the upper-level function.
-2. in func configfs_composite_bind() -> composite_dev_cleanup():
-it will checks whether cdev->os_desc_req is NULL. If it is not NULL, it
-will attempt to use it.This will lead to a use-after-free issue.
+The mute led on this laptop is using ALC245 but requires a quirk to work
+This patch enables the existing quirk for the device.
 
-BUG: KASAN: use-after-free in composite_dev_cleanup+0xf4/0x2c0
-Read of size 8 at addr 0000004827837a00 by task init/1
+Tested on Victus 16-r1xxx Laptop. The LED behaviour works
+as intended.
 
-CPU: 10 PID: 1 Comm: init Tainted: G           O      5.10.97-oh #1
- kasan_report+0x188/0x1cc
- __asan_load8+0xb4/0xbc
- composite_dev_cleanup+0xf4/0x2c0
- configfs_composite_bind+0x210/0x7ac
- udc_bind_to_driver+0xb4/0x1ec
- usb_gadget_probe_driver+0xec/0x21c
- gadget_dev_desc_UDC_store+0x264/0x27c
-
-Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Tao Xue <xuetao09@huawei.com>
-Link: https://lore.kernel.org/r/20250721093908.14967-1-xuetao09@huawei.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Edip Hazuri <edip@medip.dev>
+Link: https://patch.msgid.link/20250725151436.51543-2-edip@medip.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -2489,6 +2489,11 @@ int composite_os_desc_req_prepare(struct
- 	if (!cdev->os_desc_req->buf) {
- 		ret = -ENOMEM;
- 		usb_ep_free_request(ep0, cdev->os_desc_req);
-+		/*
-+		 * Set os_desc_req to NULL so that composite_dev_cleanup()
-+		 * will not try to free it again.
-+		 */
-+		cdev->os_desc_req = NULL;
- 		goto end;
- 	}
- 	cdev->os_desc_req->context = cdev;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10874,6 +10874,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8c91, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8c97, "HP ZBook", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8c99, "HP Victus 16-r1xxx (MB 8C99)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c9c, "HP Victus 16-s1xxx (MB 8C9C)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca1, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca2, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
 
 
