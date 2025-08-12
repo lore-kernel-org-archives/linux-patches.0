@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562AA2D4818;
-	Tue, 12 Aug 2025 19:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A983594E;
+	Tue, 12 Aug 2025 19:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026206; cv=none; b=D91feXIPPupeNdgFwPRdLAYx05HHJvbHz6upMsImXskazOxb4x+vYg2Rm1JaXOazTXu0eEM8/bWe3RH00hPOmQfR0ey5NFRWKiG0yY1y9tLSJZdiMw7Jln2rG9yR6kh6EZJhU8TW/PJUW6n6L0hu0MRlcpI+B7Rr/r99oBiQczQ=
+	t=1755026209; cv=none; b=ESdvqeR9JtnR3+CR81vW2psCq/kAKrTJH3BV0wmxnKA9QdFTiqCiHa1alvyy9tThKbB6AMuFOy/DpOZvhwFhixuqF8hhAQuq2VpIS1s2E3E2DmRmh//vWvhEozlTTAx7pm74NboTZi+DS1vlWl9qFr4Fuw/UaTp9osOSf7igKEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026206; c=relaxed/simple;
-	bh=rzKHInzRO4mgaWdXQtImeWVXrlFbzX++CY/2vra4bbE=;
+	s=arc-20240116; t=1755026209; c=relaxed/simple;
+	bh=VvcBYqJEucKEiWFfeyRCW2ccCuG1oEWS8KAr7ASf9CY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8OivDcG0kacpSBiA+UqGQm+Do9cVYUoUfaSJSOQh5Ntu5MeyEePop9RftM0i777Y2vP4l2TW5/4SdOE8HVUmzN0wdLVB1bW3bwTR+wRWVRZQGA+D2iPkuIQq6EGBwZirBo5LlMWrj3uU6Ln8M8sN3KsJ5ZmjmYuI7EHQBIUI50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/VOI738; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OwRyE/0NQC0gfdEA005Sw2DKE564SeBDQ8viDldlI7vZ3sx+JjPt/0NFJaL/ezKp00rluMkEDFe2sYjvPIVk4rmRxzQLUfmrtEr9oXK6t/GTONuJvydtSQ+RPaAD6+nwjB9Kog+bivqJScyiIpIYkHeQNA0dZB61FNLhiRxD07I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KoWZgsZq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/VOI738"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF05CC4CEF6;
-	Tue, 12 Aug 2025 19:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KoWZgsZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B4CC4CEF0;
+	Tue, 12 Aug 2025 19:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026206;
-	bh=rzKHInzRO4mgaWdXQtImeWVXrlFbzX++CY/2vra4bbE=;
+	s=korg; t=1755026209;
+	bh=VvcBYqJEucKEiWFfeyRCW2ccCuG1oEWS8KAr7ASf9CY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/VOI7385ZZWTCKc1jaIFhA5avgaPOvRc+oZyvQOA+rKm2SLgSuTJHruuBx2XverG
-	 pRTtcH/FMrpaEJDLqaeB2bb2UNw3q9ftJEB1VTzsDT6FRCyoGtJh6dqrLROejFpgEP
-	 Xrk086NlX5arl2q2qPtZkxsGB6mVBPJImZ7+7hrI=
+	b=KoWZgsZqGxyvkBkqACvvvzVHltwiJgbcKYgnN4y+1r+oj1N8yOKd2YmMtazZ5wpHi
+	 QuEOpxXEHOsIoTl+hurwIpSDIL0GBiXs6y9Epdaet4FfUFDatcgKK8VLCudlGobIOx
+	 cXusQtk+SWVHz8qlCndAUH8Orp1eIA4YyGHQJ7Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mengbiao Xiong <xisme1998@gmail.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 269/480] crypto: ccp - Fix crash when rebind ccp device for ccp.ko
-Date: Tue, 12 Aug 2025 19:47:57 +0200
-Message-ID: <20250812174408.538702432@linuxfoundation.org>
+Subject: [PATCH 6.15 270/480] RDMA/hns: Get message length of ack_req from FW
+Date: Tue, 12 Aug 2025 19:47:58 +0200
+Message-ID: <20250812174408.578423045@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,79 +51,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mengbiao Xiong <xisme1998@gmail.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 181698af38d3f93381229ad89c09b5bd0496661a ]
+[ Upstream commit 2c2ec0106c0f1f12d4eefd11de318ac47557a750 ]
 
-When CONFIG_CRYPTO_DEV_CCP_DEBUGFS is enabled, rebinding
-the ccp device causes the following crash:
+ACK_REQ_FREQ indicates the number of packets (after MTU fragmentation)
+HW sends before setting an ACK request. When MTU is greater than or
+equal to 1024, the current ACK_REQ_FREQ value causes HW to request an
+ACK for every MTU fragment. The processing of a large number of ACKs
+severely impacts HW performance when sending large size payloads.
 
-$ echo '0000:0a:00.2' > /sys/bus/pci/drivers/ccp/unbind
-$ echo '0000:0a:00.2' > /sys/bus/pci/drivers/ccp/bind
+Get message length of ack_req from FW so that we can adjust this
+parameter according to different situations. There are several
+constraints for ACK_REQ_FREQ:
 
-[  204.976930] BUG: kernel NULL pointer dereference, address: 0000000000000098
-[  204.978026] #PF: supervisor write access in kernel mode
-[  204.979126] #PF: error_code(0x0002) - not-present page
-[  204.980226] PGD 0 P4D 0
-[  204.981317] Oops: Oops: 0002 [#1] SMP NOPTI
-...
-[  204.997852] Call Trace:
-[  204.999074]  <TASK>
-[  205.000297]  start_creating+0x9f/0x1c0
-[  205.001533]  debugfs_create_dir+0x1f/0x170
-[  205.002769]  ? srso_return_thunk+0x5/0x5f
-[  205.004000]  ccp5_debugfs_setup+0x87/0x170 [ccp]
-[  205.005241]  ccp5_init+0x8b2/0x960 [ccp]
-[  205.006469]  ccp_dev_init+0xd4/0x150 [ccp]
-[  205.007709]  sp_init+0x5f/0x80 [ccp]
-[  205.008942]  sp_pci_probe+0x283/0x2e0 [ccp]
-[  205.010165]  ? srso_return_thunk+0x5/0x5f
-[  205.011376]  local_pci_probe+0x4f/0xb0
-[  205.012584]  pci_device_probe+0xdb/0x230
-[  205.013810]  really_probe+0xed/0x380
-[  205.015024]  __driver_probe_device+0x7e/0x160
-[  205.016240]  device_driver_attach+0x2f/0x60
-[  205.017457]  bind_store+0x7c/0xb0
-[  205.018663]  drv_attr_store+0x28/0x40
-[  205.019868]  sysfs_kf_write+0x5f/0x70
-[  205.021065]  kernfs_fop_write_iter+0x145/0x1d0
-[  205.022267]  vfs_write+0x308/0x440
-[  205.023453]  ksys_write+0x6d/0xe0
-[  205.024616]  __x64_sys_write+0x1e/0x30
-[  205.025778]  x64_sys_call+0x16ba/0x2150
-[  205.026942]  do_syscall_64+0x56/0x1e0
-[  205.028108]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  205.029276] RIP: 0033:0x7fbc36f10104
-[  205.030420] Code: 89 02 48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 8d 05 e1 08 2e 00 8b 00 85 c0 75 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 f3 c3 66 90 41 54 55 49 89 d4 53 48 89 f5
+1. mtu * (2 ^ ACK_REQ_FREQ) should not be too large, otherwise it may
+   cause some unexpected retries when sending large payload.
 
-This patch sets ccp_debugfs_dir to NULL after destroying it in
-ccp5_debugfs_destroy, allowing the directory dentry to be
-recreated when rebinding the ccp device.
+2. ACK_REQ_FREQ should be larger than or equal to LP_PKTN_INI.
 
-Tested on AMD Ryzen 7 1700X.
+3. ACK_REQ_FREQ must be equal to LP_PKTN_INI when using LDCP
+   or HC3 congestion control algorithm.
 
-Fixes: 3cdbe346ed3f ("crypto: ccp - Add debugfs entries for CCP information")
-Signed-off-by: Mengbiao Xiong <xisme1998@gmail.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 56518a603fd2 ("RDMA/hns: Modify the value of long message loopback slice")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20250703113905.3597124-4-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/ccp-debugfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/hns/hns_roce_device.h |  1 +
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 45 ++++++++++++++++-----
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.h  |  8 +++-
+ 3 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/crypto/ccp/ccp-debugfs.c b/drivers/crypto/ccp/ccp-debugfs.c
-index a1055554b47a..dc26bc22c91d 100644
---- a/drivers/crypto/ccp/ccp-debugfs.c
-+++ b/drivers/crypto/ccp/ccp-debugfs.c
-@@ -319,5 +319,8 @@ void ccp5_debugfs_setup(struct ccp_device *ccp)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index 560a1d9de408..cbe73d9ad525 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -856,6 +856,7 @@ struct hns_roce_caps {
+ 	u16		default_ceq_arm_st;
+ 	u8		cong_cap;
+ 	enum hns_roce_cong_type default_cong_type;
++	u32             max_ack_req_msg_len;
+ };
  
- void ccp5_debugfs_destroy(void)
+ enum hns_roce_device_state {
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 217c252fc722..1c55ed69b560 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -2181,31 +2181,36 @@ static void apply_func_caps(struct hns_roce_dev *hr_dev)
+ 
+ static int hns_roce_query_caps(struct hns_roce_dev *hr_dev)
  {
-+	mutex_lock(&ccp_debugfs_lock);
- 	debugfs_remove_recursive(ccp_debugfs_dir);
-+	ccp_debugfs_dir = NULL;
-+	mutex_unlock(&ccp_debugfs_lock);
- }
+-	struct hns_roce_cmq_desc desc[HNS_ROCE_QUERY_PF_CAPS_CMD_NUM];
++	struct hns_roce_cmq_desc desc[HNS_ROCE_QUERY_PF_CAPS_CMD_NUM] = {};
+ 	struct hns_roce_caps *caps = &hr_dev->caps;
+ 	struct hns_roce_query_pf_caps_a *resp_a;
+ 	struct hns_roce_query_pf_caps_b *resp_b;
+ 	struct hns_roce_query_pf_caps_c *resp_c;
+ 	struct hns_roce_query_pf_caps_d *resp_d;
+ 	struct hns_roce_query_pf_caps_e *resp_e;
++	struct hns_roce_query_pf_caps_f *resp_f;
+ 	enum hns_roce_opcode_type cmd;
+ 	int ctx_hop_num;
+ 	int pbl_hop_num;
++	int cmd_num;
+ 	int ret;
+ 	int i;
+ 
+ 	cmd = hr_dev->is_vf ? HNS_ROCE_OPC_QUERY_VF_CAPS_NUM :
+ 	      HNS_ROCE_OPC_QUERY_PF_CAPS_NUM;
++	cmd_num = hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08 ?
++		  HNS_ROCE_QUERY_PF_CAPS_CMD_NUM_HIP08 :
++		  HNS_ROCE_QUERY_PF_CAPS_CMD_NUM;
+ 
+-	for (i = 0; i < HNS_ROCE_QUERY_PF_CAPS_CMD_NUM; i++) {
++	for (i = 0; i < cmd_num - 1; i++) {
+ 		hns_roce_cmq_setup_basic_desc(&desc[i], cmd, true);
+-		if (i < (HNS_ROCE_QUERY_PF_CAPS_CMD_NUM - 1))
+-			desc[i].flag |= cpu_to_le16(HNS_ROCE_CMD_FLAG_NEXT);
+-		else
+-			desc[i].flag &= ~cpu_to_le16(HNS_ROCE_CMD_FLAG_NEXT);
++		desc[i].flag |= cpu_to_le16(HNS_ROCE_CMD_FLAG_NEXT);
+ 	}
+ 
+-	ret = hns_roce_cmq_send(hr_dev, desc, HNS_ROCE_QUERY_PF_CAPS_CMD_NUM);
++	hns_roce_cmq_setup_basic_desc(&desc[cmd_num - 1], cmd, true);
++	desc[cmd_num - 1].flag &= ~cpu_to_le16(HNS_ROCE_CMD_FLAG_NEXT);
++
++	ret = hns_roce_cmq_send(hr_dev, desc, cmd_num);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -2214,6 +2219,7 @@ static int hns_roce_query_caps(struct hns_roce_dev *hr_dev)
+ 	resp_c = (struct hns_roce_query_pf_caps_c *)desc[2].data;
+ 	resp_d = (struct hns_roce_query_pf_caps_d *)desc[3].data;
+ 	resp_e = (struct hns_roce_query_pf_caps_e *)desc[4].data;
++	resp_f = (struct hns_roce_query_pf_caps_f *)desc[5].data;
+ 
+ 	caps->local_ca_ack_delay = resp_a->local_ca_ack_delay;
+ 	caps->max_sq_sg = le16_to_cpu(resp_a->max_sq_sg);
+@@ -2278,6 +2284,8 @@ static int hns_roce_query_caps(struct hns_roce_dev *hr_dev)
+ 	caps->reserved_srqs = hr_reg_read(resp_e, PF_CAPS_E_RSV_SRQS);
+ 	caps->reserved_lkey = hr_reg_read(resp_e, PF_CAPS_E_RSV_LKEYS);
+ 
++	caps->max_ack_req_msg_len = le32_to_cpu(resp_f->max_ack_req_msg_len);
++
+ 	caps->qpc_hop_num = ctx_hop_num;
+ 	caps->sccc_hop_num = ctx_hop_num;
+ 	caps->srqc_hop_num = ctx_hop_num;
+@@ -4559,7 +4567,9 @@ static int modify_qp_init_to_rtr(struct ib_qp *ibqp,
+ 	dma_addr_t trrl_ba;
+ 	dma_addr_t irrl_ba;
+ 	enum ib_mtu ib_mtu;
++	u8 ack_req_freq;
+ 	const u8 *smac;
++	int lp_msg_len;
+ 	u8 lp_pktn_ini;
+ 	u64 *mtts;
+ 	u8 *dmac;
+@@ -4642,7 +4652,8 @@ static int modify_qp_init_to_rtr(struct ib_qp *ibqp,
+ 		return -EINVAL;
+ #define MIN_LP_MSG_LEN 1024
+ 	/* mtu * (2 ^ lp_pktn_ini) should be in the range of 1024 to mtu */
+-	lp_pktn_ini = ilog2(max(mtu, MIN_LP_MSG_LEN) / mtu);
++	lp_msg_len = max(mtu, MIN_LP_MSG_LEN);
++	lp_pktn_ini = ilog2(lp_msg_len / mtu);
+ 
+ 	if (attr_mask & IB_QP_PATH_MTU) {
+ 		hr_reg_write(context, QPC_MTU, ib_mtu);
+@@ -4652,8 +4663,22 @@ static int modify_qp_init_to_rtr(struct ib_qp *ibqp,
+ 	hr_reg_write(context, QPC_LP_PKTN_INI, lp_pktn_ini);
+ 	hr_reg_clear(qpc_mask, QPC_LP_PKTN_INI);
+ 
+-	/* ACK_REQ_FREQ should be larger than or equal to LP_PKTN_INI */
+-	hr_reg_write(context, QPC_ACK_REQ_FREQ, lp_pktn_ini);
++	/*
++	 * There are several constraints for ACK_REQ_FREQ:
++	 * 1. mtu * (2 ^ ACK_REQ_FREQ) should not be too large, otherwise
++	 *    it may cause some unexpected retries when sending large
++	 *    payload.
++	 * 2. ACK_REQ_FREQ should be larger than or equal to LP_PKTN_INI.
++	 * 3. ACK_REQ_FREQ must be equal to LP_PKTN_INI when using LDCP
++	 *    or HC3 congestion control algorithm.
++	 */
++	if (hr_qp->cong_type == CONG_TYPE_LDCP ||
++	    hr_qp->cong_type == CONG_TYPE_HC3 ||
++	    hr_dev->caps.max_ack_req_msg_len < lp_msg_len)
++		ack_req_freq = lp_pktn_ini;
++	else
++		ack_req_freq = ilog2(hr_dev->caps.max_ack_req_msg_len / mtu);
++	hr_reg_write(context, QPC_ACK_REQ_FREQ, ack_req_freq);
+ 	hr_reg_clear(qpc_mask, QPC_ACK_REQ_FREQ);
+ 
+ 	hr_reg_clear(qpc_mask, QPC_RX_REQ_PSN_ERR);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+index bc7466830eaf..1c2660305d27 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+@@ -1168,7 +1168,8 @@ struct hns_roce_cfg_gmv_tb_b {
+ #define GMV_TB_B_SMAC_H GMV_TB_B_FIELD_LOC(47, 32)
+ #define GMV_TB_B_SGID_IDX GMV_TB_B_FIELD_LOC(71, 64)
+ 
+-#define HNS_ROCE_QUERY_PF_CAPS_CMD_NUM 5
++#define HNS_ROCE_QUERY_PF_CAPS_CMD_NUM_HIP08 5
++#define HNS_ROCE_QUERY_PF_CAPS_CMD_NUM 6
+ struct hns_roce_query_pf_caps_a {
+ 	u8 number_ports;
+ 	u8 local_ca_ack_delay;
+@@ -1280,6 +1281,11 @@ struct hns_roce_query_pf_caps_e {
+ 	__le16 aeq_period;
+ };
+ 
++struct hns_roce_query_pf_caps_f {
++	__le32 max_ack_req_msg_len;
++	__le32 rsv[5];
++};
++
+ #define PF_CAPS_E_FIELD_LOC(h, l) \
+ 	FIELD_LOC(struct hns_roce_query_pf_caps_e, h, l)
+ 
 -- 
 2.39.5
 
