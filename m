@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68FB2E4248;
-	Tue, 12 Aug 2025 18:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2761DF27F;
+	Tue, 12 Aug 2025 18:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023345; cv=none; b=kWahfLD8mnKjMijzvh3NjIcUMjPdLEgBTuhQ1URYeUareHpdnRvb9NSh61OJeV9T4c8mbKSpvbeJsrYsy1ZxVehOYXHmBa5WmjPdWL3w8SoLil02NUKRqZ5qD2wHGuGdFBol1KenFjMdDtF9rkOp0imYIrrBHnNffpLzfngokLo=
+	t=1755023348; cv=none; b=SIHRDaPh7TN6Zeninfywkov1umQiYr61vfRJ9HoUs0NhJl/K7GXFzSbs1NoNP/sf9ARC3MeRMnrfhiG7e5jOXfWrVEtgIZb/IqLFAC8jP14zrSg5d1J5Dp1nKfrZExE7GUt7XV0Q5E364QZh3cqgUcZkq6UeroDsCn27oa1AajQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023345; c=relaxed/simple;
-	bh=1A96BMW6HjeXJ9PpN1kSwLciFm1sucgxxiVr59q2xy4=;
+	s=arc-20240116; t=1755023348; c=relaxed/simple;
+	bh=OQFnwdE/hqIkAKBLQ4eddPGXeyjSxV/xPCoj44JPcQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QE4FdZaHRAbM7xoErKqY2W5VX4ZcEKpOQ9gLsuE66zt22yfZhKtl8OGBXuumRHFpWT+n3QXXNZHb3/OW9nElUc819g8r2O3/2q6OMEsYnS/LLelCRMGIMNk9+RcIc3s9Z7vkehx+F5pzGXX6VJAWWExBVpRN1SgiD1qMGp2CYNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yibzcSSJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b9188a9hrsNZnGLcpdT/XegUXcgk3NBAqdFLg42yIKXnANWK1B+3QdO2k+7kKATSXoHClriTcfVsXNCJkLGpmgRWvDKZzCypY+HYbjrKo9mntrsuMG36Phqu64IlVLcY03JuCJmIGc564GTgrPx1/9qQMhASvYF2Txdq5m1PWis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0vw5c3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yibzcSSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C851DC4CEF0;
-	Tue, 12 Aug 2025 18:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0vw5c3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A8DC4CEF0;
+	Tue, 12 Aug 2025 18:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023345;
-	bh=1A96BMW6HjeXJ9PpN1kSwLciFm1sucgxxiVr59q2xy4=;
+	s=korg; t=1755023348;
+	bh=OQFnwdE/hqIkAKBLQ4eddPGXeyjSxV/xPCoj44JPcQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yibzcSSJE/eDPqDaqOxesNBiSrW8agFPppQyl8SXOTE2q69TIJYN2Ymgk04p458Ya
-	 CTClqPaaGq0muVe2OughwR1MyaShiJF+rXMTdxnap7TqMMSfJ433cskOP1KBaKPM22
-	 SW9ZY7K912TOK7LnL7RGggxboELPYwX7Ld02ZHBw=
+	b=I0vw5c3fXOnjChpBxNvNFqYz9djpnrAy9lr9kDw8Ds6SLUS85S4dM3S8mDiaYOAxs
+	 f74xmon9LSDsroW0dXx6fgDbRT00JCBGx+ktd7+PpKa7TLEOelFvP4ab6g80J92T4m
+	 F/iY8bvB2Mbuqtt3JY6M971c+YB9cGms1VZkb79I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 052/627] usb: misc: apple-mfi-fastcharge: Make power supply names unique
-Date: Tue, 12 Aug 2025 19:25:47 +0200
-Message-ID: <20250812173421.310516128@linuxfoundation.org>
+Subject: [PATCH 6.16 026/627] eventpoll: Fix semi-unbounded recursion
+Date: Tue, 12 Aug 2025 19:25:21 +0200
+Message-ID: <20250812173420.323333374@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -50,108 +51,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 43007b89fb2de746443fbbb84aedd1089afdf582 ]
+[ Upstream commit f2e467a48287c868818085aa35389a224d226732 ]
 
-When multiple Apple devices are connected concurrently, the
-apple-mfi-fastcharge driver fails to probe the subsequent devices with
-the following error:
+Ensure that epoll instances can never form a graph deeper than
+EP_MAX_NESTS+1 links.
 
-    sysfs: cannot create duplicate filename '/class/power_supply/apple_mfi_fastcharge'
-    apple-mfi-fastcharge 5-2.4.3.3: probe of 5-2.4.3.3 failed with error -17
+Currently, ep_loop_check_proc() ensures that the graph is loop-free and
+does some recursion depth checks, but those recursion depth checks don't
+limit the depth of the resulting tree for two reasons:
 
-This happens because the driver uses a fixed power supply name
-("apple_mfi_fastcharge") for all devices, causing a sysfs name
-conflict when a second device is connected.
+ - They don't look upwards in the tree.
+ - If there are multiple downwards paths of different lengths, only one of
+   the paths is actually considered for the depth check since commit
+   28d82dc1c4ed ("epoll: limit paths").
 
-Fix this by generating unique names using the USB bus and device
-number (e.g., "apple_mfi_fastcharge_5-12"). This ensures each
-connected device gets a unique power supply entry in sysfs.
+Essentially, the current recursion depth check in ep_loop_check_proc() just
+serves to prevent it from recursing too deeply while checking for loops.
 
-The change requires storing a copy of the power_supply_desc structure
-in the per-device mfi_device struct, since the name pointer needs to
-remain valid for the lifetime of the power supply registration.
+A more thorough check is done in reverse_path_check() after the new graph
+edge has already been created; this checks, among other things, that no
+paths going upwards from any non-epoll file with a length of more than 5
+edges exist. However, this check does not apply to non-epoll files.
 
-Fixes: 249fa8217b84 ("USB: Add driver to control USB fast charge for iOS devices")
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Link: https://lore.kernel.org/r/20250602-apple-mfi-fastcharge-duplicate-sysfs-v1-1-5d84de34fac6@posteo.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As a result, it is possible to recurse to a depth of at least roughly 500,
+tested on v6.15. (I am unsure if deeper recursion is possible; and this may
+have changed with commit 8c44dac8add7 ("eventpoll: Fix priority inversion
+problem").)
+
+To fix it:
+
+1. In ep_loop_check_proc(), note the subtree depth of each visited node,
+and use subtree depths for the total depth calculation even when a subtree
+has already been visited.
+2. Add ep_get_upwards_depth_proc() for similarly determining the maximum
+depth of an upwards walk.
+3. In ep_loop_check(), use these values to limit the total path length
+between epoll nodes to EP_MAX_NESTS edges.
+
+Fixes: 22bacca48a17 ("epoll: prevent creating circular epoll structures")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/20250711-epoll-recursion-fix-v1-1-fb2457c33292@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: ecb6cc0fd8cd ("eventpoll: fix sphinx documentation build warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/apple-mfi-fastcharge.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ fs/eventpoll.c | 60 ++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 46 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/usb/misc/apple-mfi-fastcharge.c b/drivers/usb/misc/apple-mfi-fastcharge.c
-index ac8695195c13..8e852f4b8262 100644
---- a/drivers/usb/misc/apple-mfi-fastcharge.c
-+++ b/drivers/usb/misc/apple-mfi-fastcharge.c
-@@ -44,6 +44,7 @@ MODULE_DEVICE_TABLE(usb, mfi_fc_id_table);
- struct mfi_device {
- 	struct usb_device *udev;
- 	struct power_supply *battery;
-+	struct power_supply_desc battery_desc;
- 	int charge_type;
- };
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 0fbf5dfedb24..7a7b044daadc 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -218,6 +218,7 @@ struct eventpoll {
+ 	/* used to optimize loop detection check */
+ 	u64 gen;
+ 	struct hlist_head refs;
++	u8 loop_check_depth;
  
-@@ -178,6 +179,7 @@ static int mfi_fc_probe(struct usb_device *udev)
- {
- 	struct power_supply_config battery_cfg = {};
- 	struct mfi_device *mfi = NULL;
-+	char *battery_name;
- 	int err;
- 
- 	if (!mfi_fc_match(udev))
-@@ -187,23 +189,38 @@ static int mfi_fc_probe(struct usb_device *udev)
- 	if (!mfi)
- 		return -ENOMEM;
- 
-+	battery_name = kasprintf(GFP_KERNEL, "apple_mfi_fastcharge_%d-%d",
-+				 udev->bus->busnum, udev->devnum);
-+	if (!battery_name) {
-+		err = -ENOMEM;
-+		goto err_free_mfi;
-+	}
-+
-+	mfi->battery_desc = apple_mfi_fc_desc;
-+	mfi->battery_desc.name = battery_name;
-+
- 	battery_cfg.drv_data = mfi;
- 
- 	mfi->charge_type = POWER_SUPPLY_CHARGE_TYPE_TRICKLE;
- 	mfi->battery = power_supply_register(&udev->dev,
--						&apple_mfi_fc_desc,
-+						&mfi->battery_desc,
- 						&battery_cfg);
- 	if (IS_ERR(mfi->battery)) {
- 		dev_err(&udev->dev, "Can't register battery\n");
- 		err = PTR_ERR(mfi->battery);
--		kfree(mfi);
--		return err;
-+		goto err_free_name;
- 	}
- 
- 	mfi->udev = usb_get_dev(udev);
- 	dev_set_drvdata(&udev->dev, mfi);
- 
- 	return 0;
-+
-+err_free_name:
-+	kfree(battery_name);
-+err_free_mfi:
-+	kfree(mfi);
-+	return err;
+ 	/*
+ 	 * usage count, used together with epitem->dying to
+@@ -2140,23 +2141,24 @@ static int ep_poll(struct eventpoll *ep, struct epoll_event __user *events,
  }
  
- static void mfi_fc_disconnect(struct usb_device *udev)
-@@ -213,6 +230,7 @@ static void mfi_fc_disconnect(struct usb_device *udev)
- 	mfi = dev_get_drvdata(&udev->dev);
- 	if (mfi->battery)
- 		power_supply_unregister(mfi->battery);
-+	kfree(mfi->battery_desc.name);
- 	dev_set_drvdata(&udev->dev, NULL);
- 	usb_put_dev(mfi->udev);
- 	kfree(mfi);
+ /**
+- * ep_loop_check_proc - verify that adding an epoll file inside another
+- *                      epoll structure does not violate the constraints, in
+- *                      terms of closed loops, or too deep chains (which can
+- *                      result in excessive stack usage).
++ * ep_loop_check_proc - verify that adding an epoll file @ep inside another
++ *                      epoll file does not create closed loops, and
++ *                      determine the depth of the subtree starting at @ep
+  *
+  * @ep: the &struct eventpoll to be currently checked.
+  * @depth: Current depth of the path being checked.
+  *
+- * Return: %zero if adding the epoll @file inside current epoll
+- *          structure @ep does not violate the constraints, or %-1 otherwise.
++ * Return: depth of the subtree, or INT_MAX if we found a loop or went too deep.
+  */
+ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
+ {
+-	int error = 0;
++	int result = 0;
+ 	struct rb_node *rbp;
+ 	struct epitem *epi;
+ 
++	if (ep->gen == loop_check_gen)
++		return ep->loop_check_depth;
++
+ 	mutex_lock_nested(&ep->mtx, depth + 1);
+ 	ep->gen = loop_check_gen;
+ 	for (rbp = rb_first_cached(&ep->rbr); rbp; rbp = rb_next(rbp)) {
+@@ -2164,13 +2166,11 @@ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
+ 		if (unlikely(is_file_epoll(epi->ffd.file))) {
+ 			struct eventpoll *ep_tovisit;
+ 			ep_tovisit = epi->ffd.file->private_data;
+-			if (ep_tovisit->gen == loop_check_gen)
+-				continue;
+ 			if (ep_tovisit == inserting_into || depth > EP_MAX_NESTS)
+-				error = -1;
++				result = INT_MAX;
+ 			else
+-				error = ep_loop_check_proc(ep_tovisit, depth + 1);
+-			if (error != 0)
++				result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1);
++			if (result > EP_MAX_NESTS)
+ 				break;
+ 		} else {
+ 			/*
+@@ -2184,9 +2184,27 @@ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
+ 			list_file(epi->ffd.file);
+ 		}
+ 	}
++	ep->loop_check_depth = result;
+ 	mutex_unlock(&ep->mtx);
+ 
+-	return error;
++	return result;
++}
++
++/**
++ * ep_get_upwards_depth_proc - determine depth of @ep when traversed upwards
++ */
++static int ep_get_upwards_depth_proc(struct eventpoll *ep, int depth)
++{
++	int result = 0;
++	struct epitem *epi;
++
++	if (ep->gen == loop_check_gen)
++		return ep->loop_check_depth;
++	hlist_for_each_entry_rcu(epi, &ep->refs, fllink)
++		result = max(result, ep_get_upwards_depth_proc(epi->ep, depth + 1) + 1);
++	ep->gen = loop_check_gen;
++	ep->loop_check_depth = result;
++	return result;
+ }
+ 
+ /**
+@@ -2202,8 +2220,22 @@ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
+  */
+ static int ep_loop_check(struct eventpoll *ep, struct eventpoll *to)
+ {
++	int depth, upwards_depth;
++
+ 	inserting_into = ep;
+-	return ep_loop_check_proc(to, 0);
++	/*
++	 * Check how deep down we can get from @to, and whether it is possible
++	 * to loop up to @ep.
++	 */
++	depth = ep_loop_check_proc(to, 0);
++	if (depth > EP_MAX_NESTS)
++		return -1;
++	/* Check how far up we can go from @ep. */
++	rcu_read_lock();
++	upwards_depth = ep_get_upwards_depth_proc(ep, 0);
++	rcu_read_unlock();
++
++	return (depth+1+upwards_depth > EP_MAX_NESTS) ? -1 : 0;
+ }
+ 
+ static void clear_tfile_check_list(void)
 -- 
 2.39.5
 
