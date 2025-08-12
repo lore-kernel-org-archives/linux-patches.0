@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34041C8621;
-	Tue, 12 Aug 2025 18:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E252F745E;
+	Tue, 12 Aug 2025 18:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021890; cv=none; b=IksbmsSjFEwPL9s4DMfALRWDyBo7006iZkihjp9beisR3NWEFEIT7dQD59M5oeQfi0Q0Pj0lrVGYtvYjt1fYyouM9kmNS/zsPTzO5IGLei98x/8zG2o6fE0zfhmGDtErohEy7jFD5IfQavicwBoYZAurJQOqhDdp0habX0rWzyg=
+	t=1755021894; cv=none; b=gUPuxqoywAzdp5tfXpb07D6ptO49yEJRxhUUDJxPriGi+H5hLXR8WnCwXeS+PpJFGwRLZQFtX3ABs8B5t0waU9YIeuCAiMA7PZxkHpmF1YXiGoY9idPG2NbBbYbLgOENM8sSIkxwCUS+wPfJ89UwEsAgWd6XqzrUx2yeKC5NMCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021890; c=relaxed/simple;
-	bh=MNtNQ4ZxOEhFd5AxI8apyR20QuhRQ6+dUgXfoXklR0A=;
+	s=arc-20240116; t=1755021894; c=relaxed/simple;
+	bh=Sk8edFw+XhSGBDyOY5YcyasqnJ88iogMJaX8ewRU0AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzkooET/6jncg8y/hlQtrBWmQp8z8Q7kE1iuF9KZohDyHXDdW5RtoKO6jgK4VnfTbgCWfqynqntxPXSeW6B+H4ZvluFCoVsw6pb/VZqVBbjWuSzxA2rX0WHfd5JT1ZleeQR4hL/CniNaXlIzyafrpWD+0yt7/No1rDbHK5gTW9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qo2B7pJf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qGtZLCFM3jQjlQvY3nzxHs+Sr0O8X32W4258yzVH/FNtrV8RjmiJ4r5QvJzenhr+4lC/wMTcd+7/K2kcZ9Sdks+c60E1w0tRAcXMDyetn2q2AdFF+DA8ffJHcmJzl9IPo6g6ZhvIp1v/ZyD2gL+3HofrJbHokUNQBylK5hjaZac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/ojOwaK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qo2B7pJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328E2C4CEF0;
-	Tue, 12 Aug 2025 18:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/ojOwaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9742C4CEF0;
+	Tue, 12 Aug 2025 18:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021890;
-	bh=MNtNQ4ZxOEhFd5AxI8apyR20QuhRQ6+dUgXfoXklR0A=;
+	s=korg; t=1755021894;
+	bh=Sk8edFw+XhSGBDyOY5YcyasqnJ88iogMJaX8ewRU0AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qo2B7pJfECzZM/la0flz6qozANkjrYajnJxCInFd+m9ciGznBuHWab7w0B88mK/oh
-	 L0mn7RyubALMNT+QhEEox6VkRJTERm3i9sEnQZU1nk/j0dojkbgFGg463QBj4NzSlF
-	 W+BGs2e5nkzC3bR4A+lSj7MUN7rJQv49nKXcAwAA=
+	b=Y/ojOwaKIJs97bI7AsIYjXO/q/sDnjz9Qz73ZnJUbjuFyIXnWBVjs0hpAKa2CyjGC
+	 RqTVn///0br10a6x/t253V47SOgbtl/kRo5GCOAEytmvfe1yNPxAYE83qY8KKdsHwu
+	 VPKK6Dxk+sAypSj0ye98advvosoOsCBx8KJxuYEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+27d7cfbc93457e472e00@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 228/262] pptp: fix pptp_xmit() error path
-Date: Tue, 12 Aug 2025 19:30:16 +0200
-Message-ID: <20250812173002.865209671@linuxfoundation.org>
+	Armando Budianto <sprite@gnuweeb.org>,
+	Simon Horman <horms@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ammar Faizi <ammarfaizi2@gnuweeb.org>
+Subject: [PATCH 6.6 255/262] net: usbnet: Fix the wrong netif_carrier_on() call
+Date: Tue, 12 Aug 2025 19:30:43 +0200
+Message-ID: <20250812173004.002411970@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -52,84 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 
-[ Upstream commit ae633388cae349886f1a3cfb27aa092854b24c1b ]
+commit 8466d393700f9ccef68134d3349f4e0a087679b9 upstream.
 
-I accidentally added a bug in pptp_xmit() that syzbot caught for us.
+The commit referenced in the Fixes tag causes usbnet to malfunction
+(identified via git bisect). Post-commit, my external RJ45 LAN cable
+fails to connect. Linus also reported the same issue after pulling that
+commit.
 
-Only call ip_rt_put() if a route has been allocated.
+The code has a logic error: netif_carrier_on() is only called when the
+link is already on. Fix this by moving the netif_carrier_on() call
+outside the if-statement entirely. This ensures it is always called
+when EVENT_LINK_CARRIER_ON is set and properly clears it regardless
+of the link state.
 
-BUG: unable to handle page fault for address: ffffffffffffffdb
-PGD df3b067 P4D df3b067 PUD df3d067 PMD 0
-Oops: Oops: 0002 [#1] SMP KASAN PTI
-CPU: 1 UID: 0 PID: 6346 Comm: syz.0.336 Not tainted 6.16.0-next-20250804-syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:arch_atomic_add_return arch/x86/include/asm/atomic.h:85 [inline]
-RIP: 0010:raw_atomic_sub_return_release include/linux/atomic/atomic-arch-fallback.h:846 [inline]
-RIP: 0010:atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:327 [inline]
-RIP: 0010:__rcuref_put include/linux/rcuref.h:109 [inline]
-RIP: 0010:rcuref_put+0x172/0x210 include/linux/rcuref.h:173
-Call Trace:
- <TASK>
- dst_release+0x24/0x1b0 net/core/dst.c:167
- ip_rt_put include/net/route.h:285 [inline]
- pptp_xmit+0x14b/0x1a90 drivers/net/ppp/pptp.c:267
- __ppp_channel_push+0xf2/0x1c0 drivers/net/ppp/ppp_generic.c:2166
- ppp_channel_push+0x123/0x660 drivers/net/ppp/ppp_generic.c:2198
- ppp_write+0x2b0/0x400 drivers/net/ppp/ppp_generic.c:544
- vfs_write+0x27b/0xb30 fs/read_write.c:684
- ksys_write+0x145/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: de9c4861fb42 ("pptp: ensure minimal skb length in pptp_xmit()")
-Reported-by: syzbot+27d7cfbc93457e472e00@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/689095a5.050a0220.1fc43d.0009.GAE@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250807142146.2877060-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Armando Budianto <sprite@gnuweeb.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/all/CAHk-=wjqL4uF0MG_c8+xHX1Vv8==sPYQrtzbdA3kzi96284nuQ@mail.gmail.com
+Closes: https://lore.kernel.org/netdev/CAHk-=wjKh8X4PT_mU1kD4GQrbjivMfPn-_hXa6han_BTDcXddw@mail.gmail.com
+Closes: https://lore.kernel.org/netdev/0752dee6-43d6-4e1f-81d2-4248142cccd2@gnuweeb.org
+Fixes: 0d9cfc9b8cb1 ("net: usbnet: Avoid potential RCU stall on LINK_CHANGE event")
+Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ppp/pptp.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/usb/usbnet.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
-index 4455d99be767..3a10303eb756 100644
---- a/drivers/net/ppp/pptp.c
-+++ b/drivers/net/ppp/pptp.c
-@@ -159,17 +159,17 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 	int len;
- 	unsigned char *data;
- 	__u32 seq_recv;
--	struct rtable *rt = NULL;
-+	struct rtable *rt;
- 	struct net_device *tdev;
- 	struct iphdr  *iph;
- 	int    max_headroom;
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1113,6 +1113,9 @@ static void __handle_link_change(struct
+ 	if (!test_bit(EVENT_DEV_OPEN, &dev->flags))
+ 		return;
  
- 	if (sk_pppox(po)->sk_state & PPPOX_DEAD)
--		goto tx_error;
-+		goto tx_drop;
- 
- 	rt = pptp_route_output(po, &fl4);
- 	if (IS_ERR(rt))
--		goto tx_error;
-+		goto tx_drop;
- 
- 	tdev = rt->dst.dev;
- 
-@@ -265,6 +265,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 
- tx_error:
- 	ip_rt_put(rt);
-+tx_drop:
- 	kfree_skb(skb);
- 	return 1;
- }
--- 
-2.39.5
-
++	if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
++		netif_carrier_on(dev->net);
++
+ 	if (!netif_carrier_ok(dev->net)) {
+ 		/* kill URBs for reading packets to save bus bandwidth */
+ 		unlink_urbs(dev, &dev->rxq);
+@@ -1122,9 +1125,6 @@ static void __handle_link_change(struct
+ 		 * tx queue is stopped by netcore after link becomes off
+ 		 */
+ 	} else {
+-		if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
+-			netif_carrier_on(dev->net);
+-
+ 		/* submitting URBs for reading packets */
+ 		tasklet_schedule(&dev->bh);
+ 	}
 
 
