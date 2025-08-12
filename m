@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227D92D46B3;
-	Tue, 12 Aug 2025 18:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51202FD1C1;
+	Tue, 12 Aug 2025 18:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022480; cv=none; b=hwg8PjX4AYgH58rv4EA1tZDuHP4ImmzrmrDHFBMytX3O+FmhrzMbkpvvFyjtRuo8jCRRKYaSxUZu1egAnhFvD0FQXn8HqRCCiYVDnUa6sLxNQnRMRScCcIdgYq1M8Hw7+hvuRZ+UCQ+8lLZV/EwuUYFex+yXrochMzQvxNdtUso=
+	t=1755022484; cv=none; b=mycFNSfOEiMDrM7l9JvLweesH098f6xiWhBx1QI1R/WWYWtW5HjI4+0W1YYi+q5QELeqEdkP74dEUonbmp0ABVLuew2A/bWzJLa1SCB4shwF4HFj+Yh80g+lJ0wIyKe8qQ5esyxbJxOTUGa7RYNkLZ9UkGxVq464byMgbDnJuxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022480; c=relaxed/simple;
-	bh=JW31C43uVvJY2F/TgEroGph3crLXn/4QJYrY1bVLpVg=;
+	s=arc-20240116; t=1755022484; c=relaxed/simple;
+	bh=oZkPh6r5ZA26CGJ9xJ8mypiZeOddzf+YYun5YdEeW4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dq6YVEKUkmzseytd4ZTLnoS3MCKsxYVtD4d4Tbl1kanlvqgkK9bqAO5lqRhccW58jRziS6Ivlfhyl3FIuyFfvAYvRWTzyZyMipHgu6dhXJ7K16kdScBtWUAoq2N0a6vA/b0dGk72SGyPIP1tUe85IBvu42CZ7u4IR/uQMLe5XDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHznC6nY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvOjzw1PKR3Bb4nNQjOpG0KwTzZcz+bnHm0hZK4MwoXjUrCsg8ptgWfWzugsTBBBti6LbDpYYYUKEqFgz9DRHPULFCz7aFqhYlLsP7YVOhqt63QrWvu6uD7sVI8D54zaeAUn5ONGFZYNRl2cYuSKPeZk3dv/HNjNjSQYCU/tDys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khcLJ7Bu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHznC6nY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80894C4CEF0;
-	Tue, 12 Aug 2025 18:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khcLJ7Bu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A3AC4CEF0;
+	Tue, 12 Aug 2025 18:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022480;
-	bh=JW31C43uVvJY2F/TgEroGph3crLXn/4QJYrY1bVLpVg=;
+	s=korg; t=1755022483;
+	bh=oZkPh6r5ZA26CGJ9xJ8mypiZeOddzf+YYun5YdEeW4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHznC6nYjXk7rsUiWIQa9pcRnYxup/xNLmsa4JOGGvnSPSdjikbCabOt7ysbfmnr+
-	 wWGAjwokEmV/4B6kvfAQeMxzMayq4nsLWeSKvHQp5+sU9H42GbTu/qCNJRVKuekXbn
-	 bEWsWXZ2f0ulTwWf7iYRLU4jB7FjnXe+f1NE/eFY=
+	b=khcLJ7BuzQsFkCaRT2iCqfmQIN1LMxjE4apkGEazhyWkAa3Z7v75IQ2wXYQ5/dsMW
+	 5Ly/MVpveWvARQ624uDuXp9JrKobam00j1RD0ZYvAZ8oHpG+LkTOcs2LvVuDZSl5tt
+	 zrz//ZvDbbyaRI/ZAAJJwZx7c8dq5o5ArM9uYVSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Lazar <alazar@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 140/369] net/mlx5e: Clear Read-Only port buffer size in PBMC before update
-Date: Tue, 12 Aug 2025 19:27:17 +0200
-Message-ID: <20250812173020.040270490@linuxfoundation.org>
+Subject: [PATCH 6.12 167/369] PCI: endpoint: pci-epf-vntb: Return -ENOENT if pci_epc_get_next_free_bar() fails
+Date: Tue, 12 Aug 2025 19:27:44 +0200
+Message-ID: <20250812173021.052727821@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,48 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Lazar <alazar@nvidia.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit fd4b97246a23c1149479b88490946bcfbd28de63 ]
+[ Upstream commit 7ea488cce73263231662e426639dd3e836537068 ]
 
-When updating the PBMC register, we read its current value,
-modify desired fields, then write it back.
+According the function documentation of epf_ntb_init_epc_bar(), the
+function should return an error code on error. However, it returns -1 when
+no BAR is available i.e., when pci_epc_get_next_free_bar() fails.
 
-The port_buffer_size field within PBMC is Read-Only (RO).
-If this RO field contains a non-zero value when read,
-attempting to write it back will cause the entire PBMC
-register update to fail.
+Return -ENOENT instead.
 
-This commit ensures port_buffer_size is explicitly cleared
-to zero after reading the PBMC register but before writing
-back the modified value.
-This allows updates to other fields in the PBMC register to succeed.
-
-Fixes: 0696d60853d5 ("net/mlx5e: Receive buffer configuration")
-Signed-off-by: Alexei Lazar <alazar@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1753256672-337784-2-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+[mani: changed err code to -ENOENT]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250603-pci-vntb-bar-mapping-v2-1-fc685a22ad28@baylibre.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-index 8e25f4ef5ccc..5ae787656a7c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-@@ -331,6 +331,9 @@ static int port_set_buffer(struct mlx5e_priv *priv,
- 	if (err)
- 		goto out;
- 
-+	/* RO bits should be set to 0 on write */
-+	MLX5_SET(pbmc_reg, in, port_buffer_size, 0);
-+
- 	err = mlx5e_port_set_pbmc(mdev, in);
- out:
- 	kfree(in);
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 874cb097b093..3cddfdd04029 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -700,7 +700,7 @@ static int epf_ntb_init_epc_bar(struct epf_ntb *ntb)
+ 		barno = pci_epc_get_next_free_bar(epc_features, barno);
+ 		if (barno < 0) {
+ 			dev_err(dev, "Fail to get NTB function BAR\n");
+-			return barno;
++			return -ENOENT;
+ 		}
+ 		ntb->epf_ntb_bar[bar] = barno;
+ 	}
 -- 
 2.39.5
 
