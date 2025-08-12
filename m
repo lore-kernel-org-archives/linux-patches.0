@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179F8221FAC;
-	Tue, 12 Aug 2025 17:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76706221FAC;
+	Tue, 12 Aug 2025 17:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021234; cv=none; b=Kc+BErdA55j2hlYmeZkGg8bzwodzwJ7Ugqb8qKxPlZ/1PAp219/0y54OGz9J+IvoeObw/Iqmfklh4iKCDp85xk/5RawCRThShTwgUUEqSIMpSFVjdybarMk0YDnfKTqFSm8Jxb30aGURo4oeH3RD67+WICt+5oTCwcaWwkoQxrA=
+	t=1755021237; cv=none; b=TL6t4IPL4ynS3wLU6PQG4lqIA0tT9UiPZizAH4fM0v2CQYvus8uC2eqwUu1r3Sr3DypCT5gvB7MuQpRQgZzuVtOEaA6mT0n10ArK/JKhKyl0kMEwqEm82TAUM23sjFoeDUOMTYunIkg+7cKQOJgb7Oi5RkGC8n/EZWfdPOmfCaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021234; c=relaxed/simple;
-	bh=jMabyCC+3J+0Rm2epn1ZzXtK1Soj5Nu+RGJlmvwyPtA=;
+	s=arc-20240116; t=1755021237; c=relaxed/simple;
+	bh=e7pOyeJ+qA8zKyrIKSt5EhbyAWanMQx27K94LKwf6z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ouCYcNainAFsrnaMHt3AKz5aEJD/qlvnt4y4WPmZEi7eUVx+aBI7zlr5zbkfOZPDDxcimAGg8mBOBoBvDKOT8yDqaSMhAhpTKFiy1xq+FeSoby0U6h5mH+WrkQ4y2/CEoNv2dWiO4lQn2xjk24GmJedgNGnCHClyG/UCGdyx93E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b99fRsdw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ef/iVZ0QpfGVWLzKmjlBmrcqLe/NNoxVmPTjxjzCFNNrPvRl0UXUOQqtWvtLlGeMjWa6PMo16spFtL+IyphDMmGFpsCMd6DOGJifcYQ+QayfHAemVzUqRnKikO/NWOhg9elRU9sE8+V9N9WH2ac6HFbO2Qd8kykGtCH7fVN41Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zK3DQU1C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b99fRsdw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF39C4CEF0;
-	Tue, 12 Aug 2025 17:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zK3DQU1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C0EC4CEF0;
+	Tue, 12 Aug 2025 17:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021234;
-	bh=jMabyCC+3J+0Rm2epn1ZzXtK1Soj5Nu+RGJlmvwyPtA=;
+	s=korg; t=1755021237;
+	bh=e7pOyeJ+qA8zKyrIKSt5EhbyAWanMQx27K94LKwf6z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b99fRsdwvN3qaxlGXpP0Vr8BrMjHikioaA8BXOfSNSsEmoWwzPtM0IH+6FHolYfZm
-	 6WatBkInzxVnEqyFi8Wg9MD+tlLafCtjJeAAA4yabkd05huiGhWTn+sZexzIvI3CYs
-	 kDEL7UbbmWTZ5Fdh/k9j5sx4V8FfkyZg0XlYWpUY=
+	b=zK3DQU1CpfJSWcA3gMN/TD9wTLA1/X56jATWc/OrthRZ5gPydVPJlPSfddCCVAxGS
+	 9bE5GkpTJPXyrsaQm4OtfDBaeVxaHpOR9rrj0EAka5JRJI9CQqxsZ4rGfaUqOtIl/j
+	 OplZ+AJjwmWlUmqUO0NnQKIiHscTjBjMMklnPlTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Subject: [PATCH 6.1 233/253] perf/core: Dont leak AUX buffer refcount on allocation failure
-Date: Tue, 12 Aug 2025 19:30:21 +0200
-Message-ID: <20250812172958.743385730@linuxfoundation.org>
+	syzbot+f73f203f8c9b19037380@syzkaller.appspotmail.com,
+	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 082/262] wifi: mac80211: reject TDLS operations when station is not associated
+Date: Tue, 12 Aug 2025 19:27:50 +0200
+Message-ID: <20250812172956.536254838@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,58 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
 
-commit 5468c0fbccbb9d156522c50832244a8b722374fb upstream.
+[ Upstream commit 16ecdab5446f15a61ec88eb0d23d25d009821db0 ]
 
-Failure of the AUX buffer allocation leaks the reference count.
+syzbot triggered a WARN in ieee80211_tdls_oper() by sending
+NL80211_TDLS_ENABLE_LINK immediately after NL80211_CMD_CONNECT,
+before association completed and without prior TDLS setup.
 
-Set the reference count to 1 only when the allocation succeeds.
+This left internal state like sdata->u.mgd.tdls_peer uninitialized,
+leading to a WARN_ON() in code paths that assumed it was valid.
 
-Fixes: 45bfb2e50471 ("perf/core: Add AUX area to ring buffer for raw data streams")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reject the operation early if not in station mode or not associated.
+
+Reported-by: syzbot+f73f203f8c9b19037380@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f73f203f8c9b19037380
+Fixes: 81dd2b882241 ("mac80211: move TDLS data to mgd private part")
+Tested-by: syzbot+f73f203f8c9b19037380@syzkaller.appspotmail.com
+Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+Link: https://patch.msgid.link/20250715230904.661092-2-moonhee.lee.ca@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/mac80211/tdls.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6381,9 +6381,7 @@ static int perf_mmap(struct file *file,
- 			goto unlock;
- 		}
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index a4af3b7675ef..f3cdbd2133f6 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1450,7 +1450,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
+ 	if (!(wiphy->flags & WIPHY_FLAG_SUPPORTS_TDLS))
+ 		return -ENOTSUPP;
  
--		atomic_set(&rb->aux_mmap_count, 1);
- 		user_extra = nr_pages;
--
- 		goto accounting;
- 	}
+-	if (sdata->vif.type != NL80211_IFTYPE_STATION)
++	if (sdata->vif.type != NL80211_IFTYPE_STATION || !sdata->vif.cfg.assoc)
+ 		return -EINVAL;
  
-@@ -6485,8 +6483,10 @@ accounting:
- 	} else {
- 		ret = rb_alloc_aux(rb, event, vma->vm_pgoff, nr_pages,
- 				   event->attr.aux_watermark, flags);
--		if (!ret)
-+		if (!ret) {
-+			atomic_set(&rb->aux_mmap_count, 1);
- 			rb->aux_mmap_locked = extra;
-+		}
- 	}
- 
- unlock:
-@@ -6496,6 +6496,7 @@ unlock:
- 
- 		atomic_inc(&event->mmap_count);
- 	} else if (rb) {
-+		/* AUX allocation failed */
- 		atomic_dec(&rb->mmap_count);
- 	}
- aux_unlock:
+ 	switch (oper) {
+-- 
+2.39.5
+
 
 
