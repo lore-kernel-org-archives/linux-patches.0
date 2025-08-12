@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460EB2FE573;
-	Tue, 12 Aug 2025 18:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B409A2FF141;
+	Tue, 12 Aug 2025 18:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021759; cv=none; b=I+WFBndbRheI4dG2+7VqA4P8rs/5asoVXqYbWMCyhp/vGoblfFxLpXk9N/YKckp04EzQdyY+fXPHjaOVQWiE7aCtPu0Hg9h3UOP1opgjDyPtx7UoRulF2w+KS46PKnZ/9/y6z9rq5UnLeJRUfQrKQg5V0JJ8NTZSM7xNhLVn70Y=
+	t=1755021762; cv=none; b=FtZ+o/U2jHRx9FdIrus7iO8j6iPLgiomEOImuK0eP55MxQ1LMZhWVEboKZgC09pjoECh9ftnaspLMxS8FH4vo/dVC79NSRuA/naRoC2mnAYF0g7QpOeMW37d55ubPehQ/CJuNACrKbUyfqrz+X7ss1Yhg5LCNxVjy/wzt3gYoUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021759; c=relaxed/simple;
-	bh=LhuxdgVcs30GQwao86gYV4+hyAJYEa/JiQ2kICu1A2Q=;
+	s=arc-20240116; t=1755021762; c=relaxed/simple;
+	bh=qGuYFPsqrAtYZy6lhLitJn2eJZwq/cAlzxuGKNidhZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8hNHCF2/UYIJhQ0npUaNrW6KyNfK+xi+b/YKsn4NaKstME5PO4gKYfqXPTjgkY72n27XiFowAbXY2y6HTnvTV0n0SWExHFJH4UhO7fCK6JSYWqjyvZT6L3NpGPcU/bi/yXulkkDiJ7xlos9HDqv0Z4c3shuB0KCw8ZbM5nw2yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEtx2SyP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTQ5+sO0SXtpORSU9984UJX3/dqZzlovYj2RBdDv0jmYBS9xM0hpNb7XSiaASZX5cSGlT2jfJgBqQL3a7xNEra1DcqSyEuP1hsPxKAmGGME/NHaYikRkGFjNGiKWIZRESVTEQlLfI76s95b+Lud69p9cCpQni1gykl2kIbAG4o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yt3jOaoC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEtx2SyP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DF8C4CEF0;
-	Tue, 12 Aug 2025 18:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yt3jOaoC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2951C4CEF0;
+	Tue, 12 Aug 2025 18:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021758;
-	bh=LhuxdgVcs30GQwao86gYV4+hyAJYEa/JiQ2kICu1A2Q=;
+	s=korg; t=1755021762;
+	bh=qGuYFPsqrAtYZy6lhLitJn2eJZwq/cAlzxuGKNidhZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aEtx2SyPNKpFIFYwJo0T3dNXbV9r1UmxjJU9lXsSnlgXxX28xz3nzGwoDke2dE/5p
-	 dAwl2s+OzLh37p28UZmZ/mn2TYomqCmNfbDcadGqLTBVnQflGxAaJU15Xq58BE9W+k
-	 IIzjAiKCEw4Qo47eZbqbywHurIXhEbvpEmHo1W7A=
+	b=Yt3jOaoC+v40RoJAYls20HX7VlsFDmpeApJeUiSIGaXvjVmYWWfffqs4UWu5jPyAB
+	 TTePOBE8JwqaSztVbi/wj5Uz/HYCs8itoqqtnAdP4m4Ews1VAPGOuDCXeGVnc1xaZ5
+	 E9asS5YFW/JskAufi9jTwt94ytE/iYzVwg7L8dt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 216/262] ALSA: hda/ca0132: Fix missing error handling in ca0132_alt_select_out()
-Date: Tue, 12 Aug 2025 19:30:04 +0200
-Message-ID: <20250812173002.344822687@linuxfoundation.org>
+Subject: [PATCH 6.6 217/262] smb: server: remove separate empty_recvmsg_queue
+Date: Tue, 12 Aug 2025 19:30:05 +0200
+Message-ID: <20250812173002.388455076@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -50,44 +56,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 9f320dfb0ffc555aa2eac8331dee0c2c16f67633 ]
+[ Upstream commit 01027a62b508c48c762096f347de925eedcbd008 ]
 
-There are a couple of cases where the error is ignored or the error
-code isn't propagated in ca0132_alt_select_out().  Fix those.
+There's no need to maintain two lists, we can just
+have a single list of receive buffers, which are free to use.
 
-Fixes: def3f0a5c700 ("ALSA: hda/ca0132 - Add quirk output selection structures.")
-Link: https://patch.msgid.link/20250806094423.8843-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/transport_rdma.c | 60 +++++-----------------------------
+ 1 file changed, 8 insertions(+), 52 deletions(-)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index 27e48fdbbf3a..94b452595f30 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -4803,7 +4803,8 @@ static int ca0132_alt_select_out(struct hda_codec *codec)
- 	if (err < 0)
- 		goto exit;
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index eaef45977615..228b7627a115 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -128,9 +128,6 @@ struct smb_direct_transport {
+ 	spinlock_t		recvmsg_queue_lock;
+ 	struct list_head	recvmsg_queue;
  
--	if (ca0132_alt_select_out_quirk_set(codec) < 0)
-+	err = ca0132_alt_select_out_quirk_set(codec);
-+	if (err < 0)
- 		goto exit;
+-	spinlock_t		empty_recvmsg_queue_lock;
+-	struct list_head	empty_recvmsg_queue;
+-
+ 	int			send_credit_target;
+ 	atomic_t		send_credits;
+ 	spinlock_t		lock_new_recv_credits;
+@@ -275,32 +272,6 @@ static void put_recvmsg(struct smb_direct_transport *t,
+ 	spin_unlock(&t->recvmsg_queue_lock);
+ }
  
- 	switch (spec->cur_out_type) {
-@@ -4893,6 +4894,8 @@ static int ca0132_alt_select_out(struct hda_codec *codec)
- 				spec->bass_redirection_val);
- 	else
- 		err = ca0132_alt_surround_set_bass_redirection(codec, 0);
-+	if (err < 0)
-+		goto exit;
+-static struct
+-smb_direct_recvmsg *get_empty_recvmsg(struct smb_direct_transport *t)
+-{
+-	struct smb_direct_recvmsg *recvmsg = NULL;
+-
+-	spin_lock(&t->empty_recvmsg_queue_lock);
+-	if (!list_empty(&t->empty_recvmsg_queue)) {
+-		recvmsg = list_first_entry(&t->empty_recvmsg_queue,
+-					   struct smb_direct_recvmsg, list);
+-		list_del(&recvmsg->list);
+-	}
+-	spin_unlock(&t->empty_recvmsg_queue_lock);
+-	return recvmsg;
+-}
+-
+-static void put_empty_recvmsg(struct smb_direct_transport *t,
+-			      struct smb_direct_recvmsg *recvmsg)
+-{
+-	ib_dma_unmap_single(t->cm_id->device, recvmsg->sge.addr,
+-			    recvmsg->sge.length, DMA_FROM_DEVICE);
+-
+-	spin_lock(&t->empty_recvmsg_queue_lock);
+-	list_add_tail(&recvmsg->list, &t->empty_recvmsg_queue);
+-	spin_unlock(&t->empty_recvmsg_queue_lock);
+-}
+-
+ static void enqueue_reassembly(struct smb_direct_transport *t,
+ 			       struct smb_direct_recvmsg *recvmsg,
+ 			       int data_length)
+@@ -385,9 +356,6 @@ static struct smb_direct_transport *alloc_transport(struct rdma_cm_id *cm_id)
+ 	spin_lock_init(&t->recvmsg_queue_lock);
+ 	INIT_LIST_HEAD(&t->recvmsg_queue);
  
- 	/* Unmute DSP now that we're done with output selection. */
- 	err = dspio_set_uint_param(codec, 0x96,
+-	spin_lock_init(&t->empty_recvmsg_queue_lock);
+-	INIT_LIST_HEAD(&t->empty_recvmsg_queue);
+-
+ 	init_waitqueue_head(&t->wait_send_pending);
+ 	atomic_set(&t->send_pending, 0);
+ 
+@@ -553,7 +521,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			       wc->opcode);
+ 			smb_direct_disconnect_rdma_connection(t);
+ 		}
+-		put_empty_recvmsg(t, recvmsg);
++		put_recvmsg(t, recvmsg);
+ 		return;
+ 	}
+ 
+@@ -567,7 +535,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	switch (recvmsg->type) {
+ 	case SMB_DIRECT_MSG_NEGOTIATE_REQ:
+ 		if (wc->byte_len < sizeof(struct smb_direct_negotiate_req)) {
+-			put_empty_recvmsg(t, recvmsg);
++			put_recvmsg(t, recvmsg);
+ 			return;
+ 		}
+ 		t->negotiation_requested = true;
+@@ -584,7 +552,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 
+ 		if (wc->byte_len <
+ 		    offsetof(struct smb_direct_data_transfer, padding)) {
+-			put_empty_recvmsg(t, recvmsg);
++			put_recvmsg(t, recvmsg);
+ 			return;
+ 		}
+ 
+@@ -592,7 +560,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		if (data_length) {
+ 			if (wc->byte_len < sizeof(struct smb_direct_data_transfer) +
+ 			    (u64)data_length) {
+-				put_empty_recvmsg(t, recvmsg);
++				put_recvmsg(t, recvmsg);
+ 				return;
+ 			}
+ 
+@@ -612,7 +580,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			avail_recvmsg_count = t->count_avail_recvmsg;
+ 			spin_unlock(&t->receive_credit_lock);
+ 		} else {
+-			put_empty_recvmsg(t, recvmsg);
++			put_recvmsg(t, recvmsg);
+ 
+ 			spin_lock(&t->receive_credit_lock);
+ 			receive_credits = --(t->recv_credits);
+@@ -810,7 +778,6 @@ static void smb_direct_post_recv_credits(struct work_struct *work)
+ 	struct smb_direct_recvmsg *recvmsg;
+ 	int receive_credits, credits = 0;
+ 	int ret;
+-	int use_free = 1;
+ 
+ 	spin_lock(&t->receive_credit_lock);
+ 	receive_credits = t->recv_credits;
+@@ -818,18 +785,9 @@ static void smb_direct_post_recv_credits(struct work_struct *work)
+ 
+ 	if (receive_credits < t->recv_credit_target) {
+ 		while (true) {
+-			if (use_free)
+-				recvmsg = get_free_recvmsg(t);
+-			else
+-				recvmsg = get_empty_recvmsg(t);
+-			if (!recvmsg) {
+-				if (use_free) {
+-					use_free = 0;
+-					continue;
+-				} else {
+-					break;
+-				}
+-			}
++			recvmsg = get_free_recvmsg(t);
++			if (!recvmsg)
++				break;
+ 
+ 			recvmsg->type = SMB_DIRECT_MSG_DATA_TRANSFER;
+ 			recvmsg->first_segment = false;
+@@ -1805,8 +1763,6 @@ static void smb_direct_destroy_pools(struct smb_direct_transport *t)
+ 
+ 	while ((recvmsg = get_free_recvmsg(t)))
+ 		mempool_free(recvmsg, t->recvmsg_mempool);
+-	while ((recvmsg = get_empty_recvmsg(t)))
+-		mempool_free(recvmsg, t->recvmsg_mempool);
+ 
+ 	mempool_destroy(t->recvmsg_mempool);
+ 	t->recvmsg_mempool = NULL;
 -- 
 2.39.5
 
