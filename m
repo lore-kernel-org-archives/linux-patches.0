@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49272FF164;
-	Tue, 12 Aug 2025 18:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CA32FE588;
+	Tue, 12 Aug 2025 18:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023160; cv=none; b=YwARQSZPq8zalbcFszo1rjcQv6RB9YE+PN9/J2n1UNcRtLdjbWs32ZR04fdKazqULFXZu7cTXyKWVucbSr8frTeQTyiYD80uMREBpSodt0IRmw9nOAYVmjxY15/efNIywTQVfLXXMp9X3TXhLqdDATBgSO3L41/MlsS/NDptO1U=
+	t=1755023163; cv=none; b=J0lHmF4HkGKrBdhqZl/YxRozOyz+0AX/IXRW0h87ifmka/aveTpne7+hS4CpEiEk1UxXZTSg4S7aZzo4aEyIzh8J2n4VcJaPMFLO7UoN7ALcAhxv25tfYo8S7TyuB3nmhjyBC2H3RwkC1QltyjF3fwavTeNFFMW5dsii3YC/hNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023160; c=relaxed/simple;
-	bh=3s1OiosYkLfWjGv5OCcQfeyO4S+JrchwTD5D53QLoXo=;
+	s=arc-20240116; t=1755023163; c=relaxed/simple;
+	bh=KqKx5OuOC8iv/kI251xfbVs5M3hOBqxTlvVtfs5L4+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUSh/IB/ko5qU+Seth2e/tgfnMipdsa4YemrGOTi/wGCJc1vPAuVL2gvrE2b0pGKVk52P4MzBfUTXc72hhRqxmV28cZ+n1koWXGaEqsRxE5zHywzr7rWteUX+2xHPaujA3MCQlQTtf1iZojgwuX408+1unVDvd8jzCWghnvtuto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylrjshsi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FEQJGOKdZQjNJKJ+y8Q+QGCX/dkv/lPnQqGBv8hphvZGh2EDTcuXTZPL/kvISGkS+guWUVQFiQvPBbm1Gv5BHuZCX8Xenx8jw/hOBrez+tCORX7ugXOH9gvfefo7noiudlzke9vYK9PzDIRF1u5U4FDWrU88a0k70Uo3LKw2M88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6ToO7G/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylrjshsi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F17EC4CEF0;
-	Tue, 12 Aug 2025 18:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6ToO7G/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A44C4CEF0;
+	Tue, 12 Aug 2025 18:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023160;
-	bh=3s1OiosYkLfWjGv5OCcQfeyO4S+JrchwTD5D53QLoXo=;
+	s=korg; t=1755023163;
+	bh=KqKx5OuOC8iv/kI251xfbVs5M3hOBqxTlvVtfs5L4+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylrjshsiTTdhHA2cB+BBa8iNYmTVK16Rg9QL1WTfStNXYCbcnEsSYDSVc1kAe8LfY
-	 Dq1V+ojjQelaZ1rlA9B0T2Yska/irjfhr+7VLUPlerRuRXxXZ59kUIztDtVnqCtENX
-	 TIqqYVfFVgve2qmoFRk2LfLW6guAOswRGA0izx48=
+	b=n6ToO7G/Us1jAzx9weuVVvd43pycLP5MPb1xMXXvfoKV0fzUYA9p96kc3kqRK370k
+	 sKyjpKpS5man1Mf5NmNtsgJbczw6jI1CVlJCknFbAq61Occ2FeW9Br1s2Sfn2j+bbm
+	 ORj9CgTl/9fgCBzXKTSz/vVqipEK5afEHIps+FSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>
-Subject: [PATCH 6.12 368/369] USB: gadget: f_hid: Fix memory leak in hidg_bind error path
-Date: Tue, 12 Aug 2025 19:31:05 +0200
-Message-ID: <20250812173030.526502526@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tao Xue <xuetao09@huawei.com>
+Subject: [PATCH 6.12 369/369] usb: gadget : fix use-after-free in composite_dev_cleanup()
+Date: Tue, 12 Aug 2025 19:31:06 +0200
+Message-ID: <20250812173030.561938606@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -49,56 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuhao Jiang <danisjiang@gmail.com>
+From: Tao Xue <xuetao09@huawei.com>
 
-commit 62783c30d78aecf9810dae46fd4d11420ad38b74 upstream.
+commit 151c0aa896c47a4459e07fee7d4843f44c1bb18e upstream.
 
-In hidg_bind(), if alloc_workqueue() fails after usb_assign_descriptors()
-has successfully allocated the USB descriptors, the current error handling
-does not call usb_free_all_descriptors() to free the allocated descriptors,
-resulting in a memory leak.
+1. In func configfs_composite_bind() -> composite_os_desc_req_prepare():
+if kmalloc fails, the pointer cdev->os_desc_req will be freed but not
+set to NULL. Then it will return a failure to the upper-level function.
+2. in func configfs_composite_bind() -> composite_dev_cleanup():
+it will checks whether cdev->os_desc_req is NULL. If it is not NULL, it
+will attempt to use it.This will lead to a use-after-free issue.
 
-Restructure the error handling by adding proper cleanup labels:
-- fail_free_all: cleans up workqueue and descriptors
-- fail_free_descs: cleans up descriptors only
-- fail: original cleanup for earlier failures
+BUG: KASAN: use-after-free in composite_dev_cleanup+0xf4/0x2c0
+Read of size 8 at addr 0000004827837a00 by task init/1
 
-This ensures that allocated resources are properly freed in reverse order
-of their allocation, preventing the memory leak when alloc_workqueue() fails.
+CPU: 10 PID: 1 Comm: init Tainted: G           O      5.10.97-oh #1
+ kasan_report+0x188/0x1cc
+ __asan_load8+0xb4/0xbc
+ composite_dev_cleanup+0xf4/0x2c0
+ configfs_composite_bind+0x210/0x7ac
+ udc_bind_to_driver+0xb4/0x1ec
+ usb_gadget_probe_driver+0xec/0x21c
+ gadget_dev_desc_UDC_store+0x264/0x27c
 
-Fixes: a139c98f760ef ("USB: gadget: f_hid: Add GET_REPORT via userspace IOCTL")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuhao Jiang <danisjiang@gmail.com>
-Link: https://lore.kernel.org/r/20250623094844.244977-1-danisjiang@gmail.com
+Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Tao Xue <xuetao09@huawei.com>
+Link: https://lore.kernel.org/r/20250721093908.14967-1-xuetao09@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/composite.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1275,18 +1275,19 @@ static int hidg_bind(struct usb_configur
- 
- 	if (!hidg->workqueue) {
- 		status = -ENOMEM;
--		goto fail;
-+		goto fail_free_descs;
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -2489,6 +2489,11 @@ int composite_os_desc_req_prepare(struct
+ 	if (!cdev->os_desc_req->buf) {
+ 		ret = -ENOMEM;
+ 		usb_ep_free_request(ep0, cdev->os_desc_req);
++		/*
++		 * Set os_desc_req to NULL so that composite_dev_cleanup()
++		 * will not try to free it again.
++		 */
++		cdev->os_desc_req = NULL;
+ 		goto end;
  	}
- 
- 	/* create char device */
- 	cdev_init(&hidg->cdev, &f_hidg_fops);
- 	status = cdev_device_add(&hidg->cdev, &hidg->dev);
- 	if (status)
--		goto fail_free_descs;
-+		goto fail_free_all;
- 
- 	return 0;
--fail_free_descs:
-+fail_free_all:
- 	destroy_workqueue(hidg->workqueue);
-+fail_free_descs:
- 	usb_free_all_descriptors(f);
- fail:
- 	ERROR(f->config->cdev, "hidg_bind FAILED\n");
+ 	cdev->os_desc_req->context = cdev;
 
 
