@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36388217F35;
-	Tue, 12 Aug 2025 19:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E27621A43B;
+	Tue, 12 Aug 2025 19:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026371; cv=none; b=HAk+ZGfmMDdlPfa7cmb88j8zCaA261WhAqTbYWwrEi/EMbQqjw9BAS/dtBiTuXnAw6i981spR4kG5ipJzqiivqE6CPv8sBq+/kF6K8h4LMfg+d9WL7euun+YixMFMn6vWfwuxWO8mh7dH3QccZGBgPp08ibGoEUCyaW+rIa8630=
+	t=1755026374; cv=none; b=MEKn3d64256tMReZZXHsuJkrUoH+dAHwbetxLCqmJ+9s3iHOEQduaIDplH6ZlQOzSGxS9EEpGVCy46oEYHdYzDPENSht1vmosmBvGQtgIFHpctIcBI0AVUJM4x8WEMB0yK8wwjEpjJaJYmA670uusrAoB3rfsw8j+BsZIbQJd9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026371; c=relaxed/simple;
-	bh=e3lj1qF35CuOMeI7YCHIGEC/SlJsNnj/BX/Olbtowuo=;
+	s=arc-20240116; t=1755026374; c=relaxed/simple;
+	bh=q9sMsVxhjJc2Abl90DRQASvxSPHlIc44qpsSC5TPNnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uU/Q27mdisHCsjvcF5RLAYpunsu7+l+IDTGw3EmaHhwW/KKR+dnzzdia3MaZJvS6p5M+9uGyejJzSYNkqZ7FnaVqtCrWQkz30JYuo4xpeXlG63dSXIA1q4fqfqwiV0fR/cwTdUROZYZy+298I8my5PUC00ffu+d416tFuYuzx7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7gKPhcy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V8uktTMUsgV3Y+/Jm2OE82lgqOH6/nhaCOmyivqbSCHVijv+nRPGXIx35ein4pSusIsOjM+jVaMgyohssnRSc/PIC4hC1O+uBrlJnQkXSotgOe/YOAfxgDryeJ/r3vKqMaTQUt8uw9LTeClgWnwDM0tEuzrDSIUVlrBdCurLZXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCEbdRXx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7gKPhcy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB93C4CEF0;
-	Tue, 12 Aug 2025 19:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCEbdRXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E946EC4CEF0;
+	Tue, 12 Aug 2025 19:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026371;
-	bh=e3lj1qF35CuOMeI7YCHIGEC/SlJsNnj/BX/Olbtowuo=;
+	s=korg; t=1755026374;
+	bh=q9sMsVxhjJc2Abl90DRQASvxSPHlIc44qpsSC5TPNnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7gKPhcy09sG7Kv5stp2P5cnelZkkFFlU7I9qUdwnKa8M1YQ9yrU2XhhkdrW9zGF8
-	 kaWi9RI1QMffXFBMnVL8rFWHU2J1r3l2802BaVpt9+myKioznCMwpVRwnKXbOLuXqH
-	 o98tE5Xu7YSrrZFqjaGcoXC9PQCe8+pVEfr7mA9M=
+	b=WCEbdRXx8VuPQxaOMVgLJj07hiSOIV4derqlg1FOde8y3HkOW1VLMXGuj8dPdMgbz
+	 uUbHdjxYtLJz9uE2Ep0kzLbVTmBAJ6yUlom8CJe6qk5/adTOWeFoOPTJZED4hw2JPI
+	 EqcNDqykBByXzkjZLR2B00C9xo+6rKzR95bcWJdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Fourier <fourier.thomas@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 317/480] mtd: rawnand: atmel: Fix dma_mapping_error() address
-Date: Tue, 12 Aug 2025 19:48:45 +0200
-Message-ID: <20250812174410.507794791@linuxfoundation.org>
+Subject: [PATCH 6.15 318/480] mtd: rawnand: rockchip: Add missing check after DMA map
+Date: Tue, 12 Aug 2025 19:48:46 +0200
+Message-ID: <20250812174410.553217415@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -53,34 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit e1e6b933c56b1e9fda93caa0b8bae39f3f421e5c ]
+[ Upstream commit 3b36f86dc47261828f96f826077131a35dd825fd ]
 
-It seems like what was intended is to test if the dma_map of the
-previous line failed but the wrong dma address was passed.
+The DMA map functions can fail and should be tested for errors.
 
-Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
+Fixes: 058e0e847d54 ("mtd: rawnand: rockchip: NFC driver for RK3308, RK2928 and others")
 Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20250702064515.18145-2-fourier.thomas%40gmail.com
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/nand-controller.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/rockchip-nand-controller.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
-index dedcca87defc..84ab4a83cbd6 100644
---- a/drivers/mtd/nand/raw/atmel/nand-controller.c
-+++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
-@@ -373,7 +373,7 @@ static int atmel_nand_dma_transfer(struct atmel_nand_controller *nc,
- 	dma_cookie_t cookie;
+diff --git a/drivers/mtd/nand/raw/rockchip-nand-controller.c b/drivers/mtd/nand/raw/rockchip-nand-controller.c
+index 63e7b9e39a5a..c5d7cd8a6cab 100644
+--- a/drivers/mtd/nand/raw/rockchip-nand-controller.c
++++ b/drivers/mtd/nand/raw/rockchip-nand-controller.c
+@@ -656,9 +656,16 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
  
- 	buf_dma = dma_map_single(nc->dev, buf, len, dir);
--	if (dma_mapping_error(nc->dev, dev_dma)) {
-+	if (dma_mapping_error(nc->dev, buf_dma)) {
- 		dev_err(nc->dev,
- 			"Failed to prepare a buffer for DMA access\n");
- 		goto err;
+ 	dma_data = dma_map_single(nfc->dev, (void *)nfc->page_buf,
+ 				  mtd->writesize, DMA_TO_DEVICE);
++	if (dma_mapping_error(nfc->dev, dma_data))
++		return -ENOMEM;
++
+ 	dma_oob = dma_map_single(nfc->dev, nfc->oob_buf,
+ 				 ecc->steps * oob_step,
+ 				 DMA_TO_DEVICE);
++	if (dma_mapping_error(nfc->dev, dma_oob)) {
++		dma_unmap_single(nfc->dev, dma_data, mtd->writesize, DMA_TO_DEVICE);
++		return -ENOMEM;
++	}
+ 
+ 	reinit_completion(&nfc->done);
+ 	writel(INT_DMA, nfc->regs + nfc->cfg->int_en_off);
+@@ -772,9 +779,17 @@ static int rk_nfc_read_page_hwecc(struct nand_chip *chip, u8 *buf, int oob_on,
+ 	dma_data = dma_map_single(nfc->dev, nfc->page_buf,
+ 				  mtd->writesize,
+ 				  DMA_FROM_DEVICE);
++	if (dma_mapping_error(nfc->dev, dma_data))
++		return -ENOMEM;
++
+ 	dma_oob = dma_map_single(nfc->dev, nfc->oob_buf,
+ 				 ecc->steps * oob_step,
+ 				 DMA_FROM_DEVICE);
++	if (dma_mapping_error(nfc->dev, dma_oob)) {
++		dma_unmap_single(nfc->dev, dma_data, mtd->writesize,
++				 DMA_FROM_DEVICE);
++		return -ENOMEM;
++	}
+ 
+ 	/*
+ 	 * The first blocks (4, 8 or 16 depending on the device)
 -- 
 2.39.5
 
