@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737112EE5E8;
-	Tue, 12 Aug 2025 18:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5722F4A0A;
+	Tue, 12 Aug 2025 18:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023587; cv=none; b=p7ZmWTaPyH4mvSEaIHuDxl9EIWryKurczpT6S7/bbJ57u6LllLGe2xgS5/q3gHa3W8w7+0SeBasLGEUkimNgttxDPG6O56VdlONUVHX+C5Z1LDRA5lgX24K78wcMm2eVVocnioXeA1j7+dc/PcI+f1VhK3Cy+rQd1EiRCPtTjdc=
+	t=1755023590; cv=none; b=LlAp2HpexJp0BDZxGDw5fCkvNrmWk4akZ+7PGsTDyYfbJOQBaqu1e6hED+z3WhYyxcD/BmeAE/my35i15SBvx8DlTs3WZXjNTZ7Ds3wA3E1CKXTUTCl+ZsUMbWk3kU9muPHuIxZsiiJCHmKetkJniWZpCrPKhfjm3FmDDMafQFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023587; c=relaxed/simple;
-	bh=x/3dgUm0te+Wwx2/rJ0nYp7EXK7mDSa514M3FY5bzDA=;
+	s=arc-20240116; t=1755023590; c=relaxed/simple;
+	bh=68Qys1e2DPB/2G+KPdFdIDaH+atrXh5cr5A0FEAQRDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hkfhODxd+L1dIPqFbk1C3ls38d7sk+fOj48t7XAmPT0/sCE6RlN/4BS3q7pFF6944f7OCW1DLLobnI+hsbPweCTskSdlK6T6XdwemQ3ALpv/TLA79oLifInv556f3a717/flDBzw0kTwCQLmyrTpeuniAKjy7JEJY+nqeGbmIpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06YRwhjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B/5ULL1rlxM2o1hnCK9/V4sDgqBIaLPOSx2z1frKUFW8+JiAfX0V6NxSm54Ftyxg5nxWWG+bLuYRz7RcewYMgZssu7rrhdKJDRMs8oh0UNhNS+7ESO021B0pTDD4xuzLtFa3z8KzKaXLPjoNgv6aXd6j7EKhC/ntvzQ1k3UnCZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBnAyC8G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06YRwhjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E3FC4CEF1;
-	Tue, 12 Aug 2025 18:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBnAyC8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F84C4CEF0;
+	Tue, 12 Aug 2025 18:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023587;
-	bh=x/3dgUm0te+Wwx2/rJ0nYp7EXK7mDSa514M3FY5bzDA=;
+	s=korg; t=1755023590;
+	bh=68Qys1e2DPB/2G+KPdFdIDaH+atrXh5cr5A0FEAQRDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=06YRwhjWS9/NYGwaB4l0bV6ef25Qb5sqwopg7HAruUJSNllE64Fq34uS2k/P+uu0q
-	 ENJIXP7W4lwaTJ8Nz+YZC46OOZavXzsdtVci6HaZcQ2g50AgneJlpLsLdHmUcwqXN+
-	 +MSJABcapshOeB0EMGJFgadaMUZ+6zkpCJoC4Xrw=
+	b=UBnAyC8Gu61kj9JLiqHfO+0yfiXs7q0dDymZK7+cAJdPSyeGIo9+ahPmbxsQI5kIR
+	 wCNTckmVKkAAJAeAMmY/12+j0o25wX2d5BHrfpzmyXwA4e/EwaGgKEiEB7ONykpY2m
+	 0OB3ASJ8WEGMN3eTbdfgLEi8ZpIKi+phpIS6XoXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
 	"David E. Box" <david.e.box@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 123/627] drm/xe: Correct the rev value for the DVSEC entries
-Date: Tue, 12 Aug 2025 19:26:58 +0200
-Message-ID: <20250812173424.000077510@linuxfoundation.org>
+Subject: [PATCH 6.16 124/627] drm/xe: Correct BMG VSEC header sizing
+Date: Tue, 12 Aug 2025 19:26:59 +0200
+Message-ID: <20250812173424.036665694@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -55,52 +56,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael J. Ruhl <michael.j.ruhl@intel.com>
 
-[ Upstream commit 0ba9e9cf76f2487654bc9bca38218780fa53030e ]
+[ Upstream commit 5b27388171a18cf6842c700520086ec50194e858 ]
 
-By definition, the Designated Vendor Specific Extended Capability
-(DVSEC) revision should be 1.
+The intel_vsec_header information for the crashlog feature is
+incorrect.
 
-Add the rev value to be correct.
+Update the VSEC header with correct sizing and count.
+
+Since the crashlog entries are "merged" (num_entries = 2), the
+separate capabilities entries must be merged as well.
 
 Fixes: 0c45e76fcc62 ("drm/xe/vsec: Support BMG devices")
+Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
 Reviewed-by: David E. Box <david.e.box@linux.intel.com>
-Link: https://lore.kernel.org/r/20250713172943.7335-3-michael.j.ruhl@intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20250713172943.7335-4-michael.j.ruhl@intel.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vsec.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_vsec.c | 19 ++++---------------
+ 1 file changed, 4 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_vsec.c b/drivers/gpu/drm/xe/xe_vsec.c
-index b378848d3b7b..1bf7e709e110 100644
+index 1bf7e709e110..56930ad42962 100644
 --- a/drivers/gpu/drm/xe/xe_vsec.c
 +++ b/drivers/gpu/drm/xe/xe_vsec.c
-@@ -24,6 +24,7 @@
- #define BMG_DEVICE_ID 0xE2F8
- 
- static struct intel_vsec_header bmg_telemetry = {
-+	.rev = 1,
- 	.length = 0x10,
- 	.id = VSEC_ID_TELEMETRY,
- 	.num_entries = 2,
-@@ -33,6 +34,7 @@ static struct intel_vsec_header bmg_telemetry = {
+@@ -33,30 +33,19 @@ static struct intel_vsec_header bmg_telemetry = {
+ 	.offset = BMG_DISCOVERY_OFFSET,
  };
  
- static struct intel_vsec_header bmg_punit_crashlog = {
-+	.rev = 1,
+-static struct intel_vsec_header bmg_punit_crashlog = {
++static struct intel_vsec_header bmg_crashlog = {
+ 	.rev = 1,
  	.length = 0x10,
  	.id = VSEC_ID_CRASHLOG,
- 	.num_entries = 1,
-@@ -42,6 +44,7 @@ static struct intel_vsec_header bmg_punit_crashlog = {
+-	.num_entries = 1,
+-	.entry_size = 4,
++	.num_entries = 2,
++	.entry_size = 6,
+ 	.tbir = 0,
+ 	.offset = BMG_DISCOVERY_OFFSET + 0x60,
  };
  
- static struct intel_vsec_header bmg_oobmsm_crashlog = {
-+	.rev = 1,
- 	.length = 0x10,
- 	.id = VSEC_ID_CRASHLOG,
- 	.num_entries = 1,
+-static struct intel_vsec_header bmg_oobmsm_crashlog = {
+-	.rev = 1,
+-	.length = 0x10,
+-	.id = VSEC_ID_CRASHLOG,
+-	.num_entries = 1,
+-	.entry_size = 4,
+-	.tbir = 0,
+-	.offset = BMG_DISCOVERY_OFFSET + 0x78,
+-};
+-
+ static struct intel_vsec_header *bmg_capabilities[] = {
+ 	&bmg_telemetry,
+-	&bmg_punit_crashlog,
+-	&bmg_oobmsm_crashlog,
++	&bmg_crashlog,
+ 	NULL
+ };
+ 
 -- 
 2.39.5
 
