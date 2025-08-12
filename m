@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A5A2F7449;
-	Tue, 12 Aug 2025 17:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA072FA0DB;
+	Tue, 12 Aug 2025 17:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021390; cv=none; b=kCxdNawkUrf0dR7PLk4cM/YZjNKkNMt9oq2vgNr4qjWn1qIpPWcveO3Jb6jnBmSiKya0ERtH7/YrjgG1BPnYaP7dz/xUU2Av5RwC7di8m/bCVzQ38Ln6IRfRs3jDenkNi/8NQjzKL/ZGOXcW4GJEf7oKdKzQ3vl6xjxvmD80rjs=
+	t=1755021393; cv=none; b=q9dTitfdmkMUD46XB2RLdxspkmltj5cWZWPTLnbrFmJJyHYPEN2bjWjgVPMRcOy6BXjZFtUm8V2Zv+r1AE94RNVMfGG5thLigPRZw+iE5y46F6KhwmsJeRrGCr6lcz+BnO6XAOrkb4mTqhKDjVRPi7P02PUEKXOzRcRnrDjbJA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021390; c=relaxed/simple;
-	bh=nhEt7OrlNAfhjCTAysMP2zYQsi2bYwIjt8+0sCT5M3s=;
+	s=arc-20240116; t=1755021393; c=relaxed/simple;
+	bh=Lkq53+noy8fEIdk/opS7hP5JZXR6RCFKFVADQ++2fWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=seBQ5Su2m5zwV2fYPtPTy6lhf+0bz7iPQMKfld+4p9zOQ9au0lnXpKbZ3kplZnD7CPZwwVKAMyI29YYgMkj903rw+kJotGdEq7UOSODH1KeVIRUspidDeYSRp2tbrpcB/R2HPGjF4ai6GWrU4cjhystSUm0iZbvXdGpjLfRpwe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ1ksHnm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ro3eMsuxp65UrpEf1Db1G4cbCewQVQTfF6T2B2shaI+GbNK+B/LZLO2F4uqB6QEHdrE8Xa+GX+Hd+wowotGOtQtNTLHqhMW3VBHQhvsSfsdIT268OFtGR62aJw3+BR+1H2aNoZoic2nCduqupZXO31I65YuDq2CVKex31+kovDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFPlXY1p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ1ksHnm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC28C4CEF0;
-	Tue, 12 Aug 2025 17:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFPlXY1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B539AC4CEF0;
+	Tue, 12 Aug 2025 17:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021389;
-	bh=nhEt7OrlNAfhjCTAysMP2zYQsi2bYwIjt8+0sCT5M3s=;
+	s=korg; t=1755021393;
+	bh=Lkq53+noy8fEIdk/opS7hP5JZXR6RCFKFVADQ++2fWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJ1ksHnmnLghVm6LQShgiKxe6Mgs3aCJ9p4OOyNaFLKmOlvfljT6nFF6b/8FzC9TO
-	 VK5u3psqfQIVrs6T6assp0ROvKzBLpPdZFI7cEZfWUlH9ez9gRyNHWciNngMxatWaB
-	 md6HLlpnH8Pp/zL4fXjrhHP8rPhJvS398EoRUdH0=
+	b=DFPlXY1pxw8YTkHf9/juLcZ9Axi/GPvEOT/Sm+07uIqttsA6w1op6UIIYyu1MOQGy
+	 8yTLLUQF5N3PqusNLXD87cQzSn9UGU6FCgRGpN+bPL2/UW/1UEboNkkKBYHmIwSLB+
+	 auC364zPdSr+VnpY50Z4Kyih7OOihdOmSP75LYDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Corentin LABBE <clabbe.montjoie@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/262] PCI: rockchip-host: Fix "Unexpected Completion" log message
-Date: Tue, 12 Aug 2025 19:28:15 +0200
-Message-ID: <20250812172957.646647421@linuxfoundation.org>
+Subject: [PATCH 6.6 108/262] crypto: sun8i-ce - fix nents passed to dma_unmap_sg()
+Date: Tue, 12 Aug 2025 19:28:16 +0200
+Message-ID: <20250812172957.688012678@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
 References: <20250812172952.959106058@linuxfoundation.org>
@@ -52,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-[ Upstream commit fcc5f586c4edbcc10de23fb9b8c0972a84e945cd ]
+[ Upstream commit b6cd3cfb5afe49952f8f6be947aeeca9ba0faebb ]
 
-Fix the debug message for the PCIE_CORE_INT_UCR interrupt to clearly
-indicate "Unexpected Completion" instead of a duplicate "malformed TLP"
-message.
+In sun8i_ce_cipher_unprepare(), dma_unmap_sg() is incorrectly called with
+the number of entries returned by dma_map_sg(), rather than using the
+original number of entries passed when mapping the scatterlist.
 
-Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
-Signed-off-by: Hans Zhang <18255117159@163.com>
-[mani: added fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://patch.msgid.link/20250607160201.807043-2-18255117159@163.com
+To fix this, stash the original number of entries passed to dma_map_sg()
+in the request context.
+
+Fixes: 0605fa0f7826 ("crypto: sun8i-ce - split into prepare/run/unprepare")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+Tested-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
-index afbbdccd195d..6ff20d585396 100644
---- a/drivers/pci/controller/pcie-rockchip-host.c
-+++ b/drivers/pci/controller/pcie-rockchip-host.c
-@@ -436,7 +436,7 @@ static irqreturn_t rockchip_pcie_subsys_irq_handler(int irq, void *arg)
- 			dev_dbg(dev, "malformed TLP received from the link\n");
+diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+index 70434601f99b..9e093d44a066 100644
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+@@ -265,8 +265,8 @@ static int sun8i_ce_cipher_prepare(struct crypto_engine *engine, void *async_req
+ 	}
  
- 		if (sub_reg & PCIE_CORE_INT_UCR)
--			dev_dbg(dev, "malformed TLP received from the link\n");
-+			dev_dbg(dev, "Unexpected Completion received from the link\n");
+ 	chan->timeout = areq->cryptlen;
+-	rctx->nr_sgs = nr_sgs;
+-	rctx->nr_sgd = nr_sgd;
++	rctx->nr_sgs = ns;
++	rctx->nr_sgd = nd;
+ 	return 0;
  
- 		if (sub_reg & PCIE_CORE_INT_FCE)
- 			dev_dbg(dev, "an error was observed in the flow control advertisements from the other side\n");
+ theend_sgs:
 -- 
 2.39.5
 
