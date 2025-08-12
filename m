@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45272F83B5;
-	Tue, 12 Aug 2025 18:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD7B3F9D2;
+	Tue, 12 Aug 2025 18:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022332; cv=none; b=STNDLWHggAaIXZ1Se/1ZLz3T9SlxEd1XzBHmP5+G0xs9gu7+Y/Mi91wYgDq2/E0UWl1FG0VdqmErOCKZ9YLIe3FEMSuB+mUPshzPMI5XbvZcjC+YqiIggyRjzLrPcaJ4IKsajo9y+X9NiWmB90iLSWk7+9O+wwG0RtQ4LFEKAss=
+	t=1755022336; cv=none; b=c+rDL71/OwLGS0+8Nm5KFc/G48Sx49Gyaw8rNKqqtUC8YBsBPyCp8JkfDxqKGjunhUWVDEaDHVlISL4VogkyMV17UKGgCVqjf/cd6guNpezSmhqEo2y25eM4jKv9EJ1P3RzBvkZ0C3ZKlYNY/DdRk5VMa0kjGVXhl/Hjes3VT8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022332; c=relaxed/simple;
-	bh=5oF7Ohd3y1ojJ0ZJSUUV6MFImMu4WWJrw8l+jQQsJ6c=;
+	s=arc-20240116; t=1755022336; c=relaxed/simple;
+	bh=93lYzAFBDxHYT7frN73aW7qIN4jRnS0t9DS/q111dWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKHOTh70ueEauYzgUsdAdeQmWsTcarVRUwYSrk8+WnOyEURHAGk6kpZS5xL4/u4y6OLHTZ15Uf7spyCftFYFCMYVMbZ4QRJz95kw8dOD0aUIHZBdjWGVXawW+Fgo+lq55ZgBnZ9fgLNBQ/Wh1FhXIl0L/+MvBZQtzqc6uAc5BpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK58Dee6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K83FKfJGD+OhN3tqIKD5FCBmJ2VbIJKGfk7XQgD6fy4kz9tsDeULUXD7cgIcEHr0ZiqWFo4cOq4jUiy5zktZOsCdprEkOUv2cGXlf3uZCI0vsewES9gFxzNv6Bns64WkX9WCCsKuvBZuf8418TJ+nZrvfI9vpPo2D0O4fOciwns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tefhoiZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK58Dee6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B3AC4CEF0;
-	Tue, 12 Aug 2025 18:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tefhoiZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88BE6C4CEF0;
+	Tue, 12 Aug 2025 18:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022332;
-	bh=5oF7Ohd3y1ojJ0ZJSUUV6MFImMu4WWJrw8l+jQQsJ6c=;
+	s=korg; t=1755022336;
+	bh=93lYzAFBDxHYT7frN73aW7qIN4jRnS0t9DS/q111dWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PK58Dee6JErBE0mrb25Ftidvrw2lrCzUiRV+bg+j5KQLsr8bG2al88L3YnhHleKRn
-	 mBsDApCQQ0AHQPOX7qNZIGv6XTdg8GOviIlrGchZgxXtYbG39aaVkzZLYSay3TWVXp
-	 tG5jQz/1sU1UkNzt+TWhRGGepFTD3iUavtjRDk6E=
+	b=tefhoiZchdyTB5J7NJ3zIJEHU1gYN1jLcRy+P1UXGi8xVLpKGvCcy5/dLalozEVvn
+	 fBRdMXct7kORpf9xNubtd3jd1rEajzJJXY93I1okbBgomygYz5dtBlbHGbEJ6ObRaI
+	 0HKbk4dH7Z8ssux7rGnzPizMsyZZz4E7U25/1sPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 124/369] wifi: ath12k: fix endianness handling while accessing wmi service bit
-Date: Tue, 12 Aug 2025 19:27:01 +0200
-Message-ID: <20250812173019.429683397@linuxfoundation.org>
+Subject: [PATCH 6.12 125/369] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
+Date: Tue, 12 Aug 2025 19:27:02 +0200
+Message-ID: <20250812173019.475648248@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,68 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 
-[ Upstream commit 8f1a078842d4af4877fb686f3907788024d0d1b7 ]
+[ Upstream commit 579bf8037b70b644a674c126a32bbb2212cf5c21 ]
 
-Currently there is no endian conversion in ath12k_wmi_tlv_services_parser()
-so the service bit parsing will be incorrect on a big endian platform and
-to fix this by using appropriate endian conversion.
+After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
+IEs"), the probe request MGMT IE addition operation brcmf_vif_set_mgmt_ie()
+got moved from the brcmf_p2p_scan_prep() to the brcmf_cfg80211_scan().
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00217-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+Because of this, as part of the scan request handler for the P2P Discovery,
+vif struct used for adding the Probe Request P2P IE in firmware got changed
+from the P2PAPI_BSSCFG_DEVICE vif to P2PAPI_BSSCFG_PRIMARY vif incorrectly.
+So the firmware stopped adding P2P IE to the outgoing P2P Discovery probe
+requests frames and the other P2P peers were unable to discover this device
+causing a regression on the P2P feature.
 
-Fixes: 342527f35338 ("wifi: ath12k: Add support to parse new WMI event for 6 GHz regulatory")
-Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250717173539.2523396-2-tamizh.raja@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+To fix this, while setting the P2P IE in firmware, properly use the vif of
+the P2P discovery wdev on which the driver received the P2P scan request.
+This is done by not changing the vif pointer, until brcmf_vif_set_mgmt_ie()
+is completed.
+
+Fixes: bd99a3013bdc ("brcmfmac: move configuration of probe request IEs")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20250626050706.7271-1-gokulkumar.sivakumar@infineon.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 5c2130f77dac..d5892e17494f 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -6589,7 +6589,7 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
- 					  void *data)
- {
- 	const struct wmi_service_available_event *ev;
--	u32 *wmi_ext2_service_bitmap;
-+	__le32 *wmi_ext2_service_bitmap;
- 	int i, j;
- 	u16 expected_len;
- 
-@@ -6621,12 +6621,12 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
- 			   ev->wmi_service_segment_bitmap[3]);
- 		break;
- 	case WMI_TAG_ARRAY_UINT32:
--		wmi_ext2_service_bitmap = (u32 *)ptr;
-+		wmi_ext2_service_bitmap = (__le32 *)ptr;
- 		for (i = 0, j = WMI_MAX_EXT_SERVICE;
- 		     i < WMI_SERVICE_SEGMENT_BM_SIZE32 && j < WMI_MAX_EXT2_SERVICE;
- 		     i++) {
- 			do {
--				if (wmi_ext2_service_bitmap[i] &
-+				if (__le32_to_cpu(wmi_ext2_service_bitmap[i]) &
- 				    BIT(j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32))
- 					set_bit(j, ab->wmi_ab.svc_map);
- 			} while (++j % WMI_AVAIL_SERVICE_BITS_IN_SIZE32);
-@@ -6634,8 +6634,10 @@ static int ath12k_wmi_tlv_services_parser(struct ath12k_base *ab,
- 
- 		ath12k_dbg(ab, ATH12K_DBG_WMI,
- 			   "wmi_ext2_service_bitmap 0x%04x 0x%04x 0x%04x 0x%04x",
--			   wmi_ext2_service_bitmap[0], wmi_ext2_service_bitmap[1],
--			   wmi_ext2_service_bitmap[2], wmi_ext2_service_bitmap[3]);
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[0]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[1]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[2]),
-+			   __le32_to_cpu(wmi_ext2_service_bitmap[3]));
- 		break;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 349aa3439502..708a4e2ad839 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1541,10 +1541,6 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
+ 		return -EAGAIN;
  	}
- 	return 0;
+ 
+-	/* If scan req comes for p2p0, send it over primary I/F */
+-	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
+-		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
+-
+ 	brcmf_dbg(SCAN, "START ESCAN\n");
+ 
+ 	cfg->scan_request = request;
+@@ -1560,6 +1556,10 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
+ 	if (err)
+ 		goto scan_out;
+ 
++	/* If scan req comes for p2p0, send it over primary I/F */
++	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
++		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
++
+ 	err = brcmf_do_escan(vif->ifp, request);
+ 	if (err)
+ 		goto scan_out;
 -- 
 2.39.5
 
