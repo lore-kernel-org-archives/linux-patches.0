@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6946A3F9D2;
-	Tue, 12 Aug 2025 18:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D106E305E08;
+	Tue, 12 Aug 2025 18:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022131; cv=none; b=VzGX6Yn2bN/pWE02TLIwGjDmNCkMJB6qDP7wfcTu73BnM5cZLtAV9ulhvfmXeO/WJd01Uw1bTs/nHTZ5CoPuMLjOfxoV2SxxuWtiQUD8jRjRLNxfBj5YCE8ADdKZe76pB63l++YRthXo1kLwC1uQuZuBdAPPfA4hRQJwzjB/PqE=
+	t=1755022134; cv=none; b=mhfwm5PVDw4mCYWzyWL0D7zo9WPEcuv9DO+SIDGzxf/WbkfKzped1NEGzL3pPHPKHPQ4MVglVhSe3vMZDgtWOECHGd4Ef5GluUv5DZIJrFhOngMG1jPL9NGtXhmtd3LuRZ+w0qUMqazZqryqVoAWaD7fg0l2KjSXsjYcKpI85cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022131; c=relaxed/simple;
-	bh=+bu2skLHOLIbCKRpaUZFw+RBN+w4NfoNxdXnh46yMgE=;
+	s=arc-20240116; t=1755022134; c=relaxed/simple;
+	bh=Qqz/zMybOm4G/pl/GOScvB9VVktN4uoVqER+v8Gyvcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZD6SIuIRy51zdBtN1dLAvqnUutvJ7KgnA69NSkksk5cGM0yBHW1ARbegjXabC+G7sS19wxaYqqFnFdf+gQnIKGzvrKtiGtHSslmhLh/cUkhzsgXDtzGzExTL5dqNzUhGzlmaOLp0w+K1VGfyFIy+Ugz5mc7wH964zripNCRRrXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWHV+6US; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XfXsw2yhWhHcEzz0GiRRLgkMynXgQ5iEcvRKsKlQEHBqSO7ykutuLjqZjE4lVk2596WzK90y72DDuABf9lLqu+MiV7zOXAA6+PnLYIwGpl56K2OVjAtVsch1MtZdkLVxrSmOr19Yvd3unCxh7vdxKHIHaLFZ6617xQkqLiil4OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVchAi1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWHV+6US"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF81EC4CEF6;
-	Tue, 12 Aug 2025 18:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVchAi1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3844BC4CEF6;
+	Tue, 12 Aug 2025 18:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022131;
-	bh=+bu2skLHOLIbCKRpaUZFw+RBN+w4NfoNxdXnh46yMgE=;
+	s=korg; t=1755022134;
+	bh=Qqz/zMybOm4G/pl/GOScvB9VVktN4uoVqER+v8Gyvcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWHV+6USv/tvPG3/cmK9o8x1967TLnI8nJgS4eq//nUpJo3uedtaCwSRxD3Jezsjr
-	 46ZxcOUl8LfvmK6iiSPjkZi3sBHW9KAUx7w+WDWm2v/72p2u8CcSQ8SZNlxwmdEjoS
-	 di1O/W9gIpHXxLX6Jobg7KUr5bQmMbKmYy3nb+Co=
+	b=qVchAi1VkKEsT7rViZol52uCRBtC6L1FgYmFy/Z0Q/lP5mblWVvwrBYoW72+bPVQt
+	 EZjKIkvlGoN7cR61qdRAKy3tsJS32Uzn0xbCw1tX+LJjmm23GloSp7APLYamEdw9NC
+	 2iBZnHoZLUeBhfFGrrHFZIz2jYRPQAXdUjdTxYsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/369] interconnect: qcom: sc8280xp: specify num_links for qnm_a1noc_cfg
-Date: Tue, 12 Aug 2025 19:26:00 +0200
-Message-ID: <20250812173017.135761236@linuxfoundation.org>
+Subject: [PATCH 6.12 064/369] interconnect: qcom: sc8180x: specify num_nodes
+Date: Tue, 12 Aug 2025 19:26:01 +0200
+Message-ID: <20250812173017.171966538@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,30 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 02ee375506dceb7d32007821a2bff31504d64b99 ]
+[ Upstream commit 7e0b59496a02d25828612721e846ea4b717a97b9 ]
 
-The qnm_a1noc_cfg declaration didn't include .num_links definition, fix
-it.
+Specify .num_nodes for several BCMs which missed this declaration.
 
-Fixes: f29dabda7917 ("interconnect: qcom: Add SC8280XP interconnect provider")
+Fixes: 04548d4e2798 ("interconnect: qcom: sc8180x: Reformat node and bcm definitions")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250704-rework-icc-v2-1-875fac996ef5@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20250704-rework-icc-v2-2-875fac996ef5@oss.qualcomm.com
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sc8280xp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/interconnect/qcom/sc8180x.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/sc8280xp.c b/drivers/interconnect/qcom/sc8280xp.c
-index 7acd152bf0dd..fab5978ed9d3 100644
---- a/drivers/interconnect/qcom/sc8280xp.c
-+++ b/drivers/interconnect/qcom/sc8280xp.c
-@@ -48,6 +48,7 @@ static struct qcom_icc_node qnm_a1noc_cfg = {
- 	.id = SC8280XP_MASTER_A1NOC_CFG,
- 	.channels = 1,
- 	.buswidth = 4,
-+	.num_links = 1,
- 	.links = { SC8280XP_SLAVE_SERVICE_A1NOC },
+diff --git a/drivers/interconnect/qcom/sc8180x.c b/drivers/interconnect/qcom/sc8180x.c
+index 03d626776ba1..576f90a7d55f 100644
+--- a/drivers/interconnect/qcom/sc8180x.c
++++ b/drivers/interconnect/qcom/sc8180x.c
+@@ -1492,34 +1492,40 @@ static struct qcom_icc_bcm bcm_sh3 = {
+ 
+ static struct qcom_icc_bcm bcm_sn0 = {
+ 	.name = "SN0",
++	.num_nodes = 1,
+ 	.nodes = { &slv_qns_gemnoc_sf }
+ };
+ 
+ static struct qcom_icc_bcm bcm_sn1 = {
+ 	.name = "SN1",
++	.num_nodes = 1,
+ 	.nodes = { &slv_qxs_imem }
+ };
+ 
+ static struct qcom_icc_bcm bcm_sn2 = {
+ 	.name = "SN2",
+ 	.keepalive = true,
++	.num_nodes = 1,
+ 	.nodes = { &slv_qns_gemnoc_gc }
+ };
+ 
+ static struct qcom_icc_bcm bcm_co2 = {
+ 	.name = "CO2",
++	.num_nodes = 1,
+ 	.nodes = { &mas_qnm_npu }
+ };
+ 
+ static struct qcom_icc_bcm bcm_sn3 = {
+ 	.name = "SN3",
+ 	.keepalive = true,
++	.num_nodes = 2,
+ 	.nodes = { &slv_srvc_aggre1_noc,
+ 		  &slv_qns_cnoc }
+ };
+ 
+ static struct qcom_icc_bcm bcm_sn4 = {
+ 	.name = "SN4",
++	.num_nodes = 1,
+ 	.nodes = { &slv_qxs_pimem }
  };
  
 -- 
