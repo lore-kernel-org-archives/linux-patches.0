@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455D52FE570;
-	Tue, 12 Aug 2025 18:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C992FD1B2;
+	Tue, 12 Aug 2025 18:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024461; cv=none; b=CRNSOorLARHhYhsPgiSKcaA1QIDOYD0HCDj9IVxM3qDR97qgAFO8+ASKhMkkFoXhkhnKRVI3FfW38MtTsXRjNzBhNEn49FA88+qzngBMZkSNADTGXLE4vsy0IMwGJM/CFrKtEXyOdxGGSJk9glPNyS0X8iQLCKWXlz2y6tyvZoY=
+	t=1755024465; cv=none; b=GMde7rd39dGIeo9Y6HfqCTsv3adoTJhP8Ku2MKi3Ei86Luu7GucWneotaOHBTQ64ERk4DFfgmJ5MpijtoWBbJ+sND4KnEOjIkfvJZSo6ZA7Aoi97HbXW9QBR5lUdKF/VY9qGrF6xPn6NW2hGAX1h5RtDrqDInZTzMg3yA5C3hCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024461; c=relaxed/simple;
-	bh=66xKFWYNwNMasBanIubSF0f3PafBmlWOHLND4Swaekc=;
+	s=arc-20240116; t=1755024465; c=relaxed/simple;
+	bh=uzDP5oGy9ZwBK2wgt1KoqsDe1DYbdbGbbyYKxFMHv9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PBSx2DzLY8nWEO+B2XDF9iiZnJTlPk910J/avytvafUKpJJAVuYON83vivO0JZQd2/iMH9Mh30qqQRkKC+MTP4MludvV+7g8bnEs7cckBQeFKXChdoVii59nHdD2/Fz4mM5yRl9wcjM6T01gC4t3BQ6HN9SgvkTXV2GMkRpuTx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mo1JyeRg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PF9wzBy0GhGL9zZMsL/BHn1hFSUgH1n562RneQkKawpdEvN1Vpxkv8aptIRSEEASiQr7SWAoHj61kKY+xwrkJRRclMZJ//bRVL3flECvIs3yQnBtSHA9AYsmJWlrO/JK1bABOeWr/HKrwy3fvuaPOKedrf6OxyV4QPM5Fvd/W5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlEhjGBs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mo1JyeRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BE3C4CEF0;
-	Tue, 12 Aug 2025 18:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlEhjGBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756E9C4CEF6;
+	Tue, 12 Aug 2025 18:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024461;
-	bh=66xKFWYNwNMasBanIubSF0f3PafBmlWOHLND4Swaekc=;
+	s=korg; t=1755024464;
+	bh=uzDP5oGy9ZwBK2wgt1KoqsDe1DYbdbGbbyYKxFMHv9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mo1JyeRg1cZvB6q1G1tOZ1TbmRLtfDhAgQDiy5Ein6shJtB8mqakkq6qlK2nVBOF8
-	 KG7/2kOtdLCH3jnMzu50mxdIQZclxnX2KjypLQQaIV3poQMSLlc9EsFBGHtoBgxtu8
-	 tH7tCFBpnLpL2/Oh95RxdXxv2avXRMlIocjT7MEw=
+	b=WlEhjGBs1JsGfSweXCc/tL0wAE7lgGc0O/BpObbKCBRnZZUtdjLadf7xEzGMnwFZb
+	 tX+qFTT8DJFtdkBkIKBYI7zCW14mBSrw6RndNMNMaqOFe2+uvVDPi0YoxoAo8RfQbA
+	 wlf7oTPlntCxkb1Z9JrvdlMvDix68fAF2kZNbCq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ming <ming.li@zohomail.com>,
-	Shiju Jose <shiju.jose@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 379/627] cxl/edac: Fix wrong dpa checking for PPR operation
-Date: Tue, 12 Aug 2025 19:31:14 +0200
-Message-ID: <20250812173433.716812321@linuxfoundation.org>
+Subject: [PATCH 6.16 348/627] RDMA/mlx5: Check CAP_NET_RAW in user namespace for devx create
+Date: Tue, 12 Aug 2025 19:30:43 +0200
+Message-ID: <20250812173432.525606824@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,49 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Ming <ming.li@zohomail.com>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit 03ff65c02559e8da32be231d7f10fe899233ceae ]
+[ Upstream commit bd82467f17e0940c6f6a5396278cda586c9cb6fd ]
 
-Per Table 8-143. "Get Partition Info Output Payload" in CXL r3.2 section
-8.2.10.9.2.1 "Get Partition Info(Opcode 4100h)", DPA 0 is a valid
-address of a CXL device. However, cxl_do_ppr() considers it as an
-invalid address, so that user will get an -EINVAL when user calls the
-sysfs interface of the edac driver to trigger a Post Package Repair(PPR)
-operation for DPA 0 on a CXL device. The correct implementation should
-be checking if the input DPA is in the DPA range of the CXL device.
+Currently, the capability check is done in the default
+init_user_ns user namespace. When a process runs in a
+non default user namespace, such check fails. Due to this
+when a process is running using Podman, it fails to create
+the devx object.
 
-Fixes: be9b359e056a ("cxl/edac: Add CXL memory device soft PPR control feature")
-Signed-off-by: Li Ming <ming.li@zohomail.com>
-Tested-by: Shiju Jose <shiju.jose@huawei.com>
-Reviewed-by: Shiju Jose <shiju.jose@huawei.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/20250711032357.127355-3-ming.li@zohomail.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Since the RDMA device is a resource within a network namespace,
+use the network namespace associated with the RDMA device to
+determine its owning user namespace.
+
+Fixes: a8b92ca1b0e5 ("IB/mlx5: Introduce DEVX")
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Link: https://patch.msgid.link/36ee87e92defd81410c6a2b33f9d6c0d6dcfd64c.1750963874.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/edac.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/devx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/edac.c b/drivers/cxl/core/edac.c
-index 623aaa4439c4..991fa3e70522 100644
---- a/drivers/cxl/core/edac.c
-+++ b/drivers/cxl/core/edac.c
-@@ -1923,8 +1923,11 @@ static int cxl_ppr_set_nibble_mask(struct device *dev, void *drv_data,
- static int cxl_do_ppr(struct device *dev, void *drv_data, u32 val)
- {
- 	struct cxl_ppr_context *cxl_ppr_ctx = drv_data;
-+	struct cxl_memdev *cxlmd = cxl_ppr_ctx->cxlmd;
-+	struct cxl_dev_state *cxlds = cxlmd->cxlds;
- 
--	if (!cxl_ppr_ctx->dpa || val != EDAC_DO_MEM_REPAIR)
-+	if (val != EDAC_DO_MEM_REPAIR ||
-+	    !cxl_resource_contains_addr(&cxlds->dpa_res, cxl_ppr_ctx->dpa))
- 		return -EINVAL;
- 
- 	return cxl_mem_perform_ppr(cxl_ppr_ctx);
+diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
+index 843dcd312242..c369fee33562 100644
+--- a/drivers/infiniband/hw/mlx5/devx.c
++++ b/drivers/infiniband/hw/mlx5/devx.c
+@@ -159,7 +159,7 @@ int mlx5_ib_devx_create(struct mlx5_ib_dev *dev, bool is_user, u64 req_ucaps)
+ 	uctx = MLX5_ADDR_OF(create_uctx_in, in, uctx);
+ 	if (is_user &&
+ 	    (MLX5_CAP_GEN(dev->mdev, uctx_cap) & MLX5_UCTX_CAP_RAW_TX) &&
+-	    capable(CAP_NET_RAW))
++	    rdma_dev_has_raw_cap(&dev->ib_dev))
+ 		cap |= MLX5_UCTX_CAP_RAW_TX;
+ 	if (is_user &&
+ 	    (MLX5_CAP_GEN(dev->mdev, uctx_cap) &
 -- 
 2.39.5
 
