@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0BE6BB5B;
-	Tue, 12 Aug 2025 18:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A27B2C21E3;
+	Tue, 12 Aug 2025 18:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024902; cv=none; b=KJ9jcJ/9+r8RMZL+w9qmFb6sIFYZsYRfuhsivy+Zpd+l9Zt8BS3hGChtpH65j8JwjxLvZS3TTnbJbeplDH+FbWomaKAidRZcigfHoHH/LfMT+I6P18Ei35N15r5SHPJhN1/0jsvIgEXhoJNKHbmFZayONGTPxi2XIk+CA4vyknE=
+	t=1755024906; cv=none; b=Xkt9j7s8iLjarRXeaEUvUtHwV5pkIEanBGYSnTXfes/j+I6p00Cglj/cTIoXcCWcabE9FG+ZI6DEH8uf1d3OJfm0Pa9GaiCKr2pfwZ8SsGNoFOoCUCAByNRui2+xQM27wMPbBSUu4RtHRhbUpUbB+KlJF1HoWUUv8QZuem1EU1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024902; c=relaxed/simple;
-	bh=KNm6BadJ5dYjQJ9wZp6KvWfWrbC/yiGlBTvW7Asb9FA=;
+	s=arc-20240116; t=1755024906; c=relaxed/simple;
+	bh=Up4ev/schYc9AWAzJWrMoOGyqaqmyPZJgDyHopaJ9Bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eLJTs7JNgexnA9I4h61IlfWXD8duLzQVJb6LGsYTUv3AvvbBXF7Wkzic9dHFFa8rLE4WZP9ZTXulMVMGT9YtvLtPvahYScdFB4/vK971x4fTcK072H+/PYLWC4rCBR7pozoXP8dGq2mk3Ptaa29rESXOZ6aBQtkN/prfoI4kvng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jcmqggsp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZP24UHPpthOZEPAVLsMLncNRS+itvfnE2oQnYAhVgjAOlnPPU+E0RgTPXzsOtV6K1XCNI5wWsQJ3acclQLfju46TJQ+xwTSYRqf2oInjRHw9lCLQuPAIxVaasdFJqYy8Pqq255Evuwevt8DYwmTnQekeJKWg7cje9Mb0Jv4ifWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DpZaDoa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jcmqggsp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA51C4CEF0;
-	Tue, 12 Aug 2025 18:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DpZaDoa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D62C4CEF0;
+	Tue, 12 Aug 2025 18:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024902;
-	bh=KNm6BadJ5dYjQJ9wZp6KvWfWrbC/yiGlBTvW7Asb9FA=;
+	s=korg; t=1755024906;
+	bh=Up4ev/schYc9AWAzJWrMoOGyqaqmyPZJgDyHopaJ9Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JcmqggspF2JKlpounT4XpCn1Pq0DVhQ8ygbJA0g0cZjvAbBQHT+6eQRT53s92CtT2
-	 hxFqNLbafGv0jAD8zWWbGvXBr/XIxXYyR2xf9MwHsoge/jrt89FQMq6HnOlb5dTFRv
-	 aCAdIOc4dA5s8DsvSVpv7jhK5lcINLxrMu++OIzE=
+	b=1DpZaDoanKbCEi8AMKLtaZZLE4jNIuHN+O3tkJdJ523GxaSxhDeks4tL+KhGY9bsT
+	 8VQfb7UP77igK3YdE/+Ftt0Av4q0PFdVpHgLgVLxAdWkpWcn2LDBanK5l6QOLBYu4W
+	 mup6y4G0b+WSH66qFnNzy42TxcOuttEL28jqVJnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhangjian <zhangjian496@huawei.com>,
+	Olga Kornievskaia <okorniev@redhat.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 510/627] NFS: Fix filehandle bounds checking in nfs_fh_to_dentry()
-Date: Tue, 12 Aug 2025 19:33:25 +0200
-Message-ID: <20250812173449.033533215@linuxfoundation.org>
+Subject: [PATCH 6.16 511/627] NFSv4.2: another fix for listxattr
+Date: Tue, 12 Aug 2025 19:33:26 +0200
+Message-ID: <20250812173449.210186206@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,49 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-[ Upstream commit ef93a685e01a281b5e2a25ce4e3428cf9371a205 ]
+[ Upstream commit 9acb237deff7667b0f6b10fe6b1b70c4429ea049 ]
 
-The function needs to check the minimal filehandle length before it can
-access the embedded filehandle.
+Currently, when the server supports NFS4.1 security labels then
+security.selinux label in included twice. Instead, only add it
+when the server doesn't possess security label support.
 
-Reported-by: zhangjian <zhangjian496@huawei.com>
-Fixes: 20fa19027286 ("nfs: add export operations")
+Fixes: 243fea134633 ("NFSv4.2: fix listxattr to return selinux security label")
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Link: https://lore.kernel.org/r/20250722205641.79394-1-okorniev@redhat.com
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/export.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4proc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/export.c b/fs/nfs/export.c
-index e9c233b6fd20..a10dd5f9d078 100644
---- a/fs/nfs/export.c
-+++ b/fs/nfs/export.c
-@@ -66,14 +66,21 @@ nfs_fh_to_dentry(struct super_block *sb, struct fid *fid,
- {
- 	struct nfs_fattr *fattr = NULL;
- 	struct nfs_fh *server_fh = nfs_exp_embedfh(fid->raw);
--	size_t fh_size = offsetof(struct nfs_fh, data) + server_fh->size;
-+	size_t fh_size = offsetof(struct nfs_fh, data);
- 	const struct nfs_rpc_ops *rpc_ops;
- 	struct dentry *dentry;
- 	struct inode *inode;
--	int len = EMBED_FH_OFF + XDR_QUADLEN(fh_size);
-+	int len = EMBED_FH_OFF;
- 	u32 *p = fid->raw;
- 	int ret;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 341740fa293d..811892cdb5a3 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -10867,7 +10867,7 @@ const struct nfs4_minor_version_ops *nfs_v4_minor_ops[] = {
  
-+	/* Initial check of bounds */
-+	if (fh_len < len + XDR_QUADLEN(fh_size) ||
-+	    fh_len > XDR_QUADLEN(NFS_MAXFHSIZE))
-+		return NULL;
-+	/* Calculate embedded filehandle size */
-+	fh_size += server_fh->size;
-+	len += XDR_QUADLEN(fh_size);
- 	/* NULL translates to ESTALE */
- 	if (fh_len < len || fh_type != len)
- 		return NULL;
+ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ {
+-	ssize_t error, error2, error3, error4;
++	ssize_t error, error2, error3, error4 = 0;
+ 	size_t left = size;
+ 
+ 	error = generic_listxattr(dentry, list, left);
+@@ -10895,9 +10895,11 @@ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ 		left -= error3;
+ 	}
+ 
+-	error4 = security_inode_listsecurity(d_inode(dentry), list, left);
+-	if (error4 < 0)
+-		return error4;
++	if (!nfs_server_capable(d_inode(dentry), NFS_CAP_SECURITY_LABEL)) {
++		error4 = security_inode_listsecurity(d_inode(dentry), list, left);
++		if (error4 < 0)
++			return error4;
++	}
+ 
+ 	error += error2 + error3 + error4;
+ 	if (size && error > size)
 -- 
 2.39.5
 
