@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2791A1EBFE0;
-	Tue, 12 Aug 2025 18:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD53C6BB5B;
+	Tue, 12 Aug 2025 18:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022831; cv=none; b=mbrA/U1Vv2VU8Fso+HdRUvZ/l8HVp2z1wlbdQE4y+2YaEkSXKGur7JqNl2lYnnYZDy92gcmhBbPjrPFGxoNyKe8nRuKtc5jjJ3HTB99669MVAxcg2T8uyGB1LYpAmXXJSjIb4K8+fD/iPBRjlIYYY6F6JvYGEYQpc1f0UbcZtZY=
+	t=1755022834; cv=none; b=hsEEEZyhmI8IbJPpfIplC5o/WYmRu+hoxTNS06EiJKDeKJzcESCKL8UhQ3A9vMxE+FxAUaw0BPh8BGZM9vpVFB+o+ClJOR/trRX+TsR77CIHXJs/P80zTWqLijHTC5UkUxMQ/G0G4RPCnC8VVZP97zrKvqep5wnKpVBIlWwYHzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022831; c=relaxed/simple;
-	bh=YcSKqqylIcHiqqdwH9hzuZ06Zxn+lXl/riEm8rzcbzk=;
+	s=arc-20240116; t=1755022834; c=relaxed/simple;
+	bh=AwKgnszTQSgjIkIxCRc9+1X6+mbbYLvLq3cmsaaMAxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grv7k+RipBspbd9GUtiZeglj6ci47/vmxjdLfVOBqT2bpiY1iR/2jmWlv+ooeof1yPylFPhpJMourfGm2hw1rfy0XV196Jt5XGh/T3up4HiDFDeSD4efCIxYltU1tXFl9yrcIGqhuByay6jsCRD0HcyWKfJyWvQELOq1nTH2Dtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+iCw8TI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q08QkbokkFRAWqwQ1PFTFA2O7SOGJ8XitrctV07J/4Cc+2X8KeVUtObxCWK1wU5c/zV1YaurU65GncENDJilXK9s9tTXVnG4ShvK2P48Xrm7vKOJ4wF5HCm5CdhW3gzUrNUdgFL4pbu5lDdAyZ/T3ii8h1VTxr2XXJpfiWod7A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmaeasaP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+iCw8TI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88931C4CEF1;
-	Tue, 12 Aug 2025 18:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmaeasaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E611BC4CEF1;
+	Tue, 12 Aug 2025 18:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022831;
-	bh=YcSKqqylIcHiqqdwH9hzuZ06Zxn+lXl/riEm8rzcbzk=;
+	s=korg; t=1755022834;
+	bh=AwKgnszTQSgjIkIxCRc9+1X6+mbbYLvLq3cmsaaMAxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+iCw8TIr0JIG5vuV2995FQeeOamAkjBCJcgWzoQwZ4Dv+ZhI5Z4rCFT1fZkUYTyg
-	 dCTLRZ0OLvkZsuB5uAHr2leezYocAvBs5pj8dFpFm3YuesZbZi9rntKH4gaMkSOoss
-	 8IRHSNP6cUeNLpWrc+/DsN05Mj1fi8j+sC0OxPM8=
+	b=nmaeasaPnDuYODLrlHOBLTsRHYKq1gJflJgFtC7orPHVQlw+94p+SoBRwqzHCqP52
+	 Q9Dn9i699kBCdbTeQZp9mFeM+57Ae5fS5OFWbIZzV0pJaOUKVJHhuXdJUD8v1MlKg7
+	 yVkAcViDEnbnxrvpzpogvfo+/dHZ6WzSY8eef+o4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghui Lee <sh043.lee@samsung.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Salomon Dushimirimana <salomondush@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 271/369] scsi: ufs: core: Use link recovery when h8 exit fails during runtime resume
-Date: Tue, 12 Aug 2025 19:29:28 +0200
-Message-ID: <20250812173024.956482767@linuxfoundation.org>
+Subject: [PATCH 6.12 272/369] scsi: sd: Make sd shutdown issue START STOP UNIT appropriately
+Date: Tue, 12 Aug 2025 19:29:29 +0200
+Message-ID: <20250812173025.021520455@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -53,54 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seunghui Lee <sh043.lee@samsung.com>
+From: Salomon Dushimirimana <salomondush@google.com>
 
-[ Upstream commit 35dabf4503b94a697bababe94678a8bc989c3223 ]
+[ Upstream commit 8e48727c26c4d839ff9b4b73d1cae486bea7fe19 ]
 
-If the h8 exit fails during runtime resume process, the runtime thread
-enters runtime suspend immediately and the error handler operates at the
-same time.  It becomes stuck and cannot be recovered through the error
-handler.  To fix this, use link recovery instead of the error handler.
+Commit aa3998dbeb3a ("ata: libata-scsi: Disable scsi device
+manage_system_start_stop") enabled libata EH to manage device power mode
+trasitions for system suspend/resume and removed the flag from
+ata_scsi_dev_config. However, since the sd_shutdown() function still
+relies on the manage_system_start_stop flag, a spin-down command is not
+issued to the disk with command "echo 1 > /sys/block/sdb/device/delete"
 
-Fixes: 4db7a2360597 ("scsi: ufs: Fix concurrency of error handler and other error recovery paths")
-Signed-off-by: Seunghui Lee <sh043.lee@samsung.com>
-Link: https://lore.kernel.org/r/20250717081213.6811-1-sh043.lee@samsung.com
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Acked-by: Bart Van Assche <bvanassche@acm.org>
+sd_shutdown() can be called for both system/runtime start stop
+operations, so utilize the manage_run_time_start_stop flag set in the
+ata_scsi_dev_config and issue a spin-down command during disk removal
+when the system is running. This is in addition to when the system is
+powering off and manage_shutdown flag is set. The
+manage_system_start_stop flag will still be used for drivers that still
+set the flag.
+
+Fixes: aa3998dbeb3a ("ata: libata-scsi: Disable scsi device manage_system_start_stop")
+Signed-off-by: Salomon Dushimirimana <salomondush@google.com>
+Link: https://lore.kernel.org/r/20250724214520.112927-1-salomondush@google.com
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/scsi/sd.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index a6299cb19237..e079cb5d9ec6 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4337,7 +4337,7 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 	hba->uic_async_done = NULL;
- 	if (reenable_intr)
- 		ufshcd_enable_intr(hba, UIC_COMMAND_COMPL);
--	if (ret) {
-+	if (ret && !hba->pm_op_in_progress) {
- 		ufshcd_set_link_broken(hba);
- 		ufshcd_schedule_eh_work(hba);
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index 86dde3e7debb..e1b06f803a94 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -4179,7 +4179,9 @@ static void sd_shutdown(struct device *dev)
+ 	if ((system_state != SYSTEM_RESTART &&
+ 	     sdkp->device->manage_system_start_stop) ||
+ 	    (system_state == SYSTEM_POWER_OFF &&
+-	     sdkp->device->manage_shutdown)) {
++	     sdkp->device->manage_shutdown) ||
++	    (system_state == SYSTEM_RUNNING &&
++	     sdkp->device->manage_runtime_start_stop)) {
+ 		sd_printk(KERN_NOTICE, sdkp, "Stopping disk\n");
+ 		sd_start_stop_device(sdkp, 0);
  	}
-@@ -4345,6 +4345,14 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 	spin_unlock_irqrestore(hba->host->host_lock, flags);
- 	mutex_unlock(&hba->uic_cmd_mutex);
- 
-+	/*
-+	 * If the h8 exit fails during the runtime resume process, it becomes
-+	 * stuck and cannot be recovered through the error handler.  To fix
-+	 * this, use link recovery instead of the error handler.
-+	 */
-+	if (ret && hba->pm_op_in_progress)
-+		ret = ufshcd_link_recovery(hba);
-+
- 	return ret;
- }
- 
 -- 
 2.39.5
 
