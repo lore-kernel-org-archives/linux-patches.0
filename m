@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7F36BB5B;
-	Tue, 12 Aug 2025 18:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9156BB5B;
+	Tue, 12 Aug 2025 18:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024704; cv=none; b=YxY0Y0WPLncCOcfn8FKwcHmrPLOTK8JYNqZoYE0U2LGiEWlmnk2kf2zK86cuPIxdFvrg8ACbhHXSBg9q3ZaiV6ve2nM7AzS6YVFShtumQvKuB9ALOZwTn4vsffax624ijHuuBB/N12Us4R0akza+YbbtRautC9i2DJaMpHgSQOY=
+	t=1755024707; cv=none; b=eTsVxQ8JGbmN1ZdS4dEn/dDLrXtdIe0e+SpLo2ua1ClutdWS+odSbX+0lMH2EhqyNyR9AEV3mPAKmn64NDU8EFZBFWBBuzWcurDsr00AzAmHfywCbMTpSHXMV0SGej7xfXNCJNbVCSUv7UVznIjlZGEAfpDJj8uhKliPfjWmON8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024704; c=relaxed/simple;
-	bh=MtoNYhGqSwoahDLIueiDNp+8z5kok2Cl+sQM52F6EfU=;
+	s=arc-20240116; t=1755024707; c=relaxed/simple;
+	bh=SxfIdz6kn+fobqItbtBxpNUmNrPbv9/hvqU/KbP9N6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIshus8Lcz3pZbBw0CahOswGikrsA/A3a+SHAXkcfDPlrlGdOppKKR8Jn/47NZWRwQs0lruiak/vVJGysVqI2I2z4c7bTj3rFdaxELUCD9mYlIgz8S0+JOY7REKsUuyqcNkVo4RpAVkGPA/qp4iMJFFwH6higGYcWwlKXvTBbis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gd9dz2Dz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQyr8yteyIS6bh5G3KnBvBjKlUORxcVUZ37xDJfXN29FvKDH6JMuyb6cnSVfhGpMTC99mDkmtsCfp4V2X3DB3+SlyG0OQYOhanh+rnEdN66pnMX46M0T0lL2brsF2/PuCm63UqLb9mzToWOtmyrmQ/imbtqkq9yTo9bfNFhu83k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSjyg7c4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gd9dz2Dz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3606C4CEF0;
-	Tue, 12 Aug 2025 18:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSjyg7c4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249D8C4CEF0;
+	Tue, 12 Aug 2025 18:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024704;
-	bh=MtoNYhGqSwoahDLIueiDNp+8z5kok2Cl+sQM52F6EfU=;
+	s=korg; t=1755024707;
+	bh=SxfIdz6kn+fobqItbtBxpNUmNrPbv9/hvqU/KbP9N6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gd9dz2DzyLQSwtYNkbKzol2yf1+joN+qEUGYgaAoO3GpvGJEpsB3D0wkc9/YX3RtG
-	 O7qfdSKWJ8Xhta/6O4YQEWGTeY/qU3ue4PseUjhuEUIHR6l5mJyE1HzwHvP0matVen
-	 Wp57YWN3Tmo2TJ/Rl+IfC5MqzHmwrRR+RpgenW9I=
+	b=lSjyg7c43Cn284NGFjzkbr2joZTDtSFqBNjge6f+SdhlY2aRy2SOuzcms3hVOixub
+	 qPy1+rYwZnP4ICTwTiXXX38ostlA9GMWcZUCsy3GcJWhlj/eWb4uNXUCeJQWAD4hkg
+	 OwOGi3eFyIqHC/N0FzUNxtXYH7Wc/wLGJql9hvpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 451/627] bpf: Check flow_dissector ctx accesses are aligned
-Date: Tue, 12 Aug 2025 19:32:26 +0200
-Message-ID: <20250812173437.215686075@linuxfoundation.org>
+Subject: [PATCH 6.16 420/627] ASoC: SDCA: Fix some holes in the regmap readable/writeable helpers
+Date: Tue, 12 Aug 2025 19:31:55 +0200
+Message-ID: <20250812173435.255456419@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -54,46 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit ead3d7b2b6afa5ee7958620c4329982a7d9c2b78 ]
+[ Upstream commit 061fade7a67f6cdfe918a675270d84107abbef61 ]
 
-flow_dissector_is_valid_access doesn't check that the context access is
-aligned. As a consequence, an unaligned access within one of the exposed
-field is considered valid and later rejected by
-flow_dissector_convert_ctx_access when we try to convert it.
+The current regmap readable/writeable helper functions always
+allow the Next flag and allows any Control Number. Mask the Next
+flag based on SDCA_ACCESS_MODE_DUAL which is the only Mode that
+supports it. Also check that the Control Number is valid for
+the given control.
 
-The later rejection is problematic because it's reported as a verifier
-bug with a kernel warning and doesn't point to the right instruction in
-verifier logs.
-
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Reported-by: syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ccac90e482b2a81d74aa
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/cc1b036be484c99be45eddf48bd78cc6f72839b1.1754039605.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: e3f7caf74b79 ("ASoC: SDCA: Add generic regmap SDCA helpers")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250718135432.1048566-2-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/sdca/sdca_regmap.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 47073a0180a4..2c3196dadd54 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -9449,6 +9449,9 @@ static bool flow_dissector_is_valid_access(int off, int size,
- 	if (off < 0 || off >= sizeof(struct __sk_buff))
+diff --git a/sound/soc/sdca/sdca_regmap.c b/sound/soc/sdca/sdca_regmap.c
+index 66e7eee7d7f4..c41c67c2204a 100644
+--- a/sound/soc/sdca/sdca_regmap.c
++++ b/sound/soc/sdca/sdca_regmap.c
+@@ -72,12 +72,18 @@ bool sdca_regmap_readable(struct sdca_function_data *function, unsigned int reg)
+ 	if (!control)
  		return false;
  
-+	if (off % size != 0)
++	if (!(BIT(SDW_SDCA_CTL_CNUM(reg)) & control->cn_list))
 +		return false;
 +
- 	if (type == BPF_WRITE)
+ 	switch (control->mode) {
+ 	case SDCA_ACCESS_MODE_RW:
+ 	case SDCA_ACCESS_MODE_RO:
+-	case SDCA_ACCESS_MODE_DUAL:
+ 	case SDCA_ACCESS_MODE_RW1S:
+ 	case SDCA_ACCESS_MODE_RW1C:
++		if (SDW_SDCA_NEXT_CTL(0) & reg)
++			return false;
++		fallthrough;
++	case SDCA_ACCESS_MODE_DUAL:
+ 		/* No access to registers marked solely for device use */
+ 		return control->layers & ~SDCA_ACCESS_LAYER_DEVICE;
+ 	default:
+@@ -104,11 +110,17 @@ bool sdca_regmap_writeable(struct sdca_function_data *function, unsigned int reg
+ 	if (!control)
  		return false;
  
++	if (!(BIT(SDW_SDCA_CTL_CNUM(reg)) & control->cn_list))
++		return false;
++
+ 	switch (control->mode) {
+ 	case SDCA_ACCESS_MODE_RW:
+-	case SDCA_ACCESS_MODE_DUAL:
+ 	case SDCA_ACCESS_MODE_RW1S:
+ 	case SDCA_ACCESS_MODE_RW1C:
++		if (SDW_SDCA_NEXT_CTL(0) & reg)
++			return false;
++		fallthrough;
++	case SDCA_ACCESS_MODE_DUAL:
+ 		/* No access to registers marked solely for device use */
+ 		return control->layers & ~SDCA_ACCESS_LAYER_DEVICE;
+ 	default:
 -- 
 2.39.5
 
