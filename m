@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37A12E4248;
-	Tue, 12 Aug 2025 17:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1752E4248;
+	Tue, 12 Aug 2025 17:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755020746; cv=none; b=BwnpYRtrKYCCVsgwX+rfz8+WWzISMcKEZVI0sT7S71q7OGa8g9O2P0cCs9N8eXT8pmwdzOtb+Ndb5Dw9Xn4m9vLP4Rt03NItmkG1xi6RKp0ncHUpHoBPFjPN8Fi4+SkZuUTdXr91F1XPma3X+k51ggYuuMzT8vTPW9W1pEG9GAw=
+	t=1755020750; cv=none; b=qw9EI5mqoGkq1+Z68d1i08+76K6Wd3j/sM3XtVqTGNJEKkgoSRpfBEBMILytKTmS1cxRYgqej0qjzDGbvBN1iqLTcaX+b+ih2CYCUisBzDFT4EsHnsIIiIq+xuuYK3hqKA8SfqX0D4i0moOO9eCdrK3ASv4e1bYbHsm1hys8bJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755020746; c=relaxed/simple;
-	bh=do2l3Oxe2SideZJtP9GZOPr5cO1owpNnaRW0wPOtRJ0=;
+	s=arc-20240116; t=1755020750; c=relaxed/simple;
+	bh=Vn7aCdDZWQ7Kg4A1sLI/2t2ARggEIddigYwsQFn1HMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3iau9tXOgbw+po8E/Djnwz1U+TvWAlBXbkNBClrqMq4ugoDqDKE0Kxt2N4pamYEKHsBXtcRFoo8btiw7BgIPW84DfhWbz3ccmSAp+QbErQmhdJDbUtWo5ZvLhKVc3F7+qo4es4B4hZ8cHeERxGJWNlKVO+Euy6kCsZlMVkmbNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvjkk9S3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R2XcfnWgvkTq96F9/Cd6Qhm6BQLWjZKiJLqYwSHiUOPVDY9FPJQE8QEiuF3ID4JE3mclrRon5PHdyvEOAqYttwBoTOx8F8o0CryEfRgGJioI8u8RxDiGOd9RNlg2QvqvO5QkIXEHikD5h7kvgaI2t112GzfX1UM8ARS6oFPqtxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdFcLkiY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvjkk9S3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD06C4CEF0;
-	Tue, 12 Aug 2025 17:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdFcLkiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2B9C4CEF0;
+	Tue, 12 Aug 2025 17:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755020746;
-	bh=do2l3Oxe2SideZJtP9GZOPr5cO1owpNnaRW0wPOtRJ0=;
+	s=korg; t=1755020749;
+	bh=Vn7aCdDZWQ7Kg4A1sLI/2t2ARggEIddigYwsQFn1HMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dvjkk9S3ygIj61ihjboG31k8Gy5LcwIna7wnLp6m5GVuxWJrmUofc1SLqfTS+a7i2
-	 VYm62uTnJZSUGvKdN+uP6CckCgk12ewVXIVmXgFB7k4L8neKiuImOz8HTIEBFTcrLy
-	 mvdgig4tIdaYp+v6IiH3HGzxNIT9zxX3rUrVGR3w=
+	b=wdFcLkiYVurGnBca/ksa4ZJazJ0Oi7MDChX6HPfmVT10qN+ntiy94UGnn0GXCHWiG
+	 maFeoxvcES8OubyY8RJbAg3HMDMOxsPqmcQ7vli0RVR7M5NJKMMluO09WJ1Z/DWWvC
+	 0v2OGoEjXV8zXO2IDpD26yDDV4+D2m0T0sNR+tOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	RubenKelevra <rubenkelevra@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/253] scsi: ibmvscsi_tgt: Fix dma_unmap_sg() nents value
-Date: Tue, 12 Aug 2025 19:29:09 +0200
-Message-ID: <20250812172955.568708270@linuxfoundation.org>
+Subject: [PATCH 6.6 007/262] fs_context: fix parameter name in infofc() macro
+Date: Tue, 12 Aug 2025 19:26:35 +0200
+Message-ID: <20250812172953.284688506@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
-References: <20250812172948.675299901@linuxfoundation.org>
+In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
+References: <20250812172952.959106058@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,52 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: RubenKelevra <rubenkelevra@gmail.com>
 
-[ Upstream commit 023a293b9cd0bb86a9b50cd7688a3d9d266826db ]
+[ Upstream commit ffaf1bf3737f706e4e9be876de4bc3c8fc578091 ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+The macro takes a parameter called "p" but references "fc" internally.
+This happens to compile as long as callers pass a variable named fc,
+but breaks otherwise. Rename the first parameter to “fc” to match the
+usage and to be consistent with warnfc() / errorfc().
 
-Fixes: 88a678bbc34c ("ibmvscsis: Initial commit of IBM VSCSI Tgt Driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250630111803.94389-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: a3ff937b33d9 ("prefix-handling analogues of errorf() and friends")
+Signed-off-by: RubenKelevra <rubenkelevra@gmail.com>
+Link: https://lore.kernel.org/20250617230927.1790401-1-rubenkelevra@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ibmvscsi_tgt/libsrp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/linux/fs_context.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/ibmvscsi_tgt/libsrp.c b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-index 8a0e28aec928..0ecad398ed3d 100644
---- a/drivers/scsi/ibmvscsi_tgt/libsrp.c
-+++ b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-@@ -184,7 +184,8 @@ static int srp_direct_data(struct ibmvscsis_cmd *cmd, struct srp_direct_buf *md,
- 	err = rdma_io(cmd, sg, nsg, md, 1, dir, len);
+diff --git a/include/linux/fs_context.h b/include/linux/fs_context.h
+index c13e99cbbf81..c9eae7117001 100644
+--- a/include/linux/fs_context.h
++++ b/include/linux/fs_context.h
+@@ -196,7 +196,7 @@ void logfc(struct fc_log *log, const char *prefix, char level, const char *fmt,
+  */
+ #define infof(fc, fmt, ...) __logfc(fc, 'i', fmt, ## __VA_ARGS__)
+ #define info_plog(p, fmt, ...) __plog(p, 'i', fmt, ## __VA_ARGS__)
+-#define infofc(p, fmt, ...) __plog((&(fc)->log), 'i', fmt, ## __VA_ARGS__)
++#define infofc(fc, fmt, ...) __plog((&(fc)->log), 'i', fmt, ## __VA_ARGS__)
  
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- 	return err;
- }
-@@ -256,7 +257,8 @@ static int srp_indirect_data(struct ibmvscsis_cmd *cmd, struct srp_cmd *srp_cmd,
- 	err = rdma_io(cmd, sg, nsg, md, nmd, dir, len);
- 
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- free_mem:
- 	if (token && dma_map) {
+ /**
+  * warnf - Store supplementary warning message
 -- 
 2.39.5
 
