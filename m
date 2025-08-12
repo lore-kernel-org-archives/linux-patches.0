@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65691257435;
-	Tue, 12 Aug 2025 18:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3AF2F5E;
+	Tue, 12 Aug 2025 18:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022418; cv=none; b=fNKb1zfqOHQHZR/SpgznXxEQ0v69YyOe2xNWJhzgJSmzdcVs6vN7q0++1sythogZNILwbZzr0Z2Bv72ndPiglQL9PeW/aYzdaIuv4/Qqd8YunAmn710VbBNaUWzyDFXOXdDwNMi6apGSVRADG5BYR9MHj6hFV1wUaO5xYe4DOPQ=
+	t=1755022422; cv=none; b=PpRBeHMyjxL84T5PTvMcA4O7cjMfDKovgyJ9QPtWrtfoCtGADndNr8F0iuk4UbtznIr9H7CLsalR/boS+FE3sQbvhuR8UIjZ3136sEBtecNja4zhW1V38vPuDVRSTte91QdJA2G1AEGeYpCM1K6x3uRAskR1gCekKVAujl5QqDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022418; c=relaxed/simple;
-	bh=C+YRNBvv8CCpn7sxIbhFPot9oiAfDy67OlfJmW7SeyM=;
+	s=arc-20240116; t=1755022422; c=relaxed/simple;
+	bh=7SarkvDLs6Rntmzu4VAxXxwYn3SrmydggRi398D6dJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QBhiRp5Q8WlYeITZgbiR4PR/UEfHigt714VUBXGIV7+07esJU4mokFzLf3dwdQtScUQUQT07ZdTCdul7cZpO/NAC50G68xu2FCtjzg+8w9o4cxr5LGt7vj2u+coRUTn4h2Qs71o5zRDZM212qHgt/8RVAFg5vqEKNXxJdXxo4BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtuYceHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fjbx5XjKE2WQEB0Bbh/32a/9AOA+C53jOpecoWxrx71AxSTP/4abEXUHB4IPOey0jEcMutbqEiWn+akXDodbE/tL1bYYZYGzkcNRG4JsFivN4V33Dt1P14TW0+cNv66d/6rZsPnNBOp+1LECfm4eTIEtc0y9/hxaIPvyRkwa3xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzsTSVPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtuYceHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE254C4CEF1;
-	Tue, 12 Aug 2025 18:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzsTSVPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBCCC4CEF1;
+	Tue, 12 Aug 2025 18:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022418;
-	bh=C+YRNBvv8CCpn7sxIbhFPot9oiAfDy67OlfJmW7SeyM=;
+	s=korg; t=1755022421;
+	bh=7SarkvDLs6Rntmzu4VAxXxwYn3SrmydggRi398D6dJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtuYceHe5h05xtZ/Dn0YAPo7eZ83++Afv2mWd2osb52GrJvs7f9HwPklnIL98khXj
-	 8+3Yjpk3Y32oqWRX47cPdHRpnRN9KnbNouwixlmj/t3NDBDxxyZkYdmVp07hxd2nz+
-	 pxfLVDntK9Qtf4oek/ZRj1fo+K+R1onD72LZXQT0=
+	b=YzsTSVPSkdNVJtVDwHt/LDoG+RNpgM2prwFdM7kJHAvNU2N1qHXigHgH7phbcdM+I
+	 qYSd1C4fwhz2Yz+ZXZV/QTWSYEtA4Vs7v9nJHQilKSH8XLyL5mPCszyqbnbzcnUXhN
+	 4h4/3T8Ntv21oLNGHbgJ08s0HUMBJnTW28cjmuOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Xu Kuohai <xukuohai@huawei.com>,
+	zepta <z3ptaa@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 150/369] bpf, arm64: Fix fp initialization for exception boundary
-Date: Tue, 12 Aug 2025 19:27:27 +0200
-Message-ID: <20250812173020.423546105@linuxfoundation.org>
+Subject: [PATCH 6.12 151/369] staging: media: atomisp: Fix stack buffer overflow in gmin_get_var_int()
+Date: Tue, 12 Aug 2025 19:27:28 +0200
+Message-ID: <20250812173020.462254426@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,46 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit b114fcee766d5101eada1aca7bb5fd0a86c89b35 ]
+[ Upstream commit ee4cf798202d285dcbe85e4467a094c44f5ed8e6 ]
 
-In the ARM64 BPF JIT when prog->aux->exception_boundary is set for a BPF
-program, find_used_callee_regs() is not called because for a program
-acting as exception boundary, all callee saved registers are saved.
-find_used_callee_regs() sets `ctx->fp_used = true;` when it sees FP
-being used in any of the instructions.
+When gmin_get_config_var() calls efi.get_variable() and the EFI variable
+is larger than the expected buffer size, two behaviors combine to create
+a stack buffer overflow:
 
-For programs acting as exception boundary, ctx->fp_used remains false
-even if frame pointer is used by the program and therefore, FP is not
-set-up for such programs in the prologue. This can cause the kernel to
-crash due to a pagefault.
+1. gmin_get_config_var() does not return the proper error code when
+   efi.get_variable() fails. It returns the stale 'ret' value from
+   earlier operations instead of indicating the EFI failure.
 
-Fix it by setting ctx->fp_used = true for exception boundary programs as
-fp is always saved in such programs.
+2. When efi.get_variable() returns EFI_BUFFER_TOO_SMALL, it updates
+   *out_len to the required buffer size but writes no data to the output
+   buffer. However, due to bug #1, gmin_get_var_int() believes the call
+   succeeded.
 
-Fixes: 5d4fa9ec5643 ("bpf, arm64: Avoid blindly saving/restoring all callee-saved registers")
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/bpf/20250722133410.54161-2-puranjay@kernel.org
+The caller gmin_get_var_int() then performs:
+- Allocates val[CFG_VAR_NAME_MAX + 1] (65 bytes) on stack
+- Calls gmin_get_config_var(dev, is_gmin, var, val, &len) with len=64
+- If EFI variable is >64 bytes, efi.get_variable() sets len=required_size
+- Due to bug #1, thinks call succeeded with len=required_size
+- Executes val[len] = 0, writing past end of 65-byte stack buffer
+
+This creates a stack buffer overflow when EFI variables are larger than
+64 bytes. Since EFI variables can be controlled by firmware or system
+configuration, this could potentially be exploited for code execution.
+
+Fix the bug by returning proper error codes from gmin_get_config_var()
+based on EFI status instead of stale 'ret' value.
+
+The gmin_get_var_int() function is called during device initialization
+for camera sensor configuration on Intel Bay Trail and Cherry Trail
+platforms using the atomisp camera stack.
+
+Reported-by: zepta <z3ptaa@gmail.com>
+Closes: https://lore.kernel.org/all/CAPBS6KoQyM7FMdPwOuXteXsOe44X4H3F8Fw+y_qWq6E+OdmxQA@mail.gmail.com
+Fixes: 38d4f74bc148 ("media: atomisp_gmin_platform: stop abusing efivar API")
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250724080756.work.741-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../staging/media/atomisp/pci/atomisp_gmin_platform.c    | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 515c411c2c83..5553508c3644 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -399,6 +399,7 @@ static void push_callee_regs(struct jit_ctx *ctx)
- 		emit(A64_PUSH(A64_R(23), A64_R(24), A64_SP), ctx);
- 		emit(A64_PUSH(A64_R(25), A64_R(26), A64_SP), ctx);
- 		emit(A64_PUSH(A64_R(27), A64_R(28), A64_SP), ctx);
-+		ctx->fp_used = true;
- 	} else {
- 		find_used_callee_regs(ctx);
- 		for (i = 0; i + 1 < ctx->nr_used_callee_reg; i += 2) {
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c b/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
+index e176483df301..b86494faa63a 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
+@@ -1358,14 +1358,15 @@ static int gmin_get_config_var(struct device *maindev,
+ 	if (efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE))
+ 		status = efi.get_variable(var16, &GMIN_CFG_VAR_EFI_GUID, NULL,
+ 					  (unsigned long *)out_len, out);
+-	if (status == EFI_SUCCESS)
++	if (status == EFI_SUCCESS) {
+ 		dev_info(maindev, "found EFI entry for '%s'\n", var8);
+-	else if (is_gmin)
++		return 0;
++	}
++	if (is_gmin)
+ 		dev_info(maindev, "Failed to find EFI gmin variable %s\n", var8);
+ 	else
+ 		dev_info(maindev, "Failed to find EFI variable %s\n", var8);
+-
+-	return ret;
++	return -ENOENT;
+ }
+ 
+ int gmin_get_var_int(struct device *dev, bool is_gmin, const char *var, int def)
 -- 
 2.39.5
 
