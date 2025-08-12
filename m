@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A141F37A1;
-	Tue, 12 Aug 2025 19:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3231F37A1;
+	Tue, 12 Aug 2025 19:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755026324; cv=none; b=Pnwg1qoAt0Q7otOQmoBxwKSvfH3BYhXzl7GtY5zMqXY9B2FtGqopuBxJ+O0cvJ3G/QhH0dr7YtH2+4ihsSx7hFmvAgxSogSqllnbZ0lbpSUps5NMF16F6IOEn86dVvt+qKdJjYLzuqSuDwnsVDA1TBySoiYxeCWsjXhIlk9Zaws=
+	t=1755026327; cv=none; b=Asj+LbhWKyRBcS0kNl+njG4Z3rYjNpQZ9gPVUviaVVEvOMd/6241AuKXo8G+ovFuoc6pEC3sjL1/058iS1PnIpIL+uWkpqFYXxh4sYAAqROgicpO4HK9S4YmEWcYh6Ns9F0GhJ1g7tidoJhO7k/8BsgdkMg/FzLowWsy8n89PYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755026324; c=relaxed/simple;
-	bh=8gv1zN5Few81N8UpZ+d1SCHkNLDDuFKKidGX/yqgfWw=;
+	s=arc-20240116; t=1755026327; c=relaxed/simple;
+	bh=lHTWw81mUyEuSblEd+CZD6Aclu7wsq+MZb5HkMKKI9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9PsTtpQEhS+z9K+11VMlc4ofzlstJ50BEYBM/UXbXCIfgzkrR9b/ktpn2wj28pTnbjYg/bPvc6Hu+V/dZijaBN3bJ+tCVKUXafY9pxsFwSzlQpMBfaq3Y8c+erU2N6e0rYgo2EhGop7xcZuv5SJ3OMP0HGZEpDdoLzkzblNJbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9UAQLYP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1d7Cu4uu8d7OEVmHhCH2kWDrfTzGSc9MQjQpqq18eDCBT4p8sshBV3py7NTqV4+IFegoJT6VBF9TYHDbqRu7g9u3VKlnz691PoNzuqDWDQ6UvsTZWOVATWCyZb1mH79liz7RzJxa1tXDkKIbToCmt4nS18lcFp0z9hbS98JOr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUienhcJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9UAQLYP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9D7C4CEF0;
-	Tue, 12 Aug 2025 19:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUienhcJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FC8C4CEF0;
+	Tue, 12 Aug 2025 19:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755026323;
-	bh=8gv1zN5Few81N8UpZ+d1SCHkNLDDuFKKidGX/yqgfWw=;
+	s=korg; t=1755026327;
+	bh=lHTWw81mUyEuSblEd+CZD6Aclu7wsq+MZb5HkMKKI9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O9UAQLYPb1lMgifrk7/zMXf397w1ZJda1BMakQf4lflEx3Y4ApAg4LTcqxE79mEIM
-	 IrWOqB2WDVP+jMJSc33RUJCe8hCPERvC5mRJN3k+urC4qESQt38Mj59dQ7E/By6LoA
-	 XSoZWgPyiMqC1AWdIgKZSYhIlJFdt8VHSEtmNOX0=
+	b=YUienhcJKc4xbFhj48leTiE6VUaqMG6xMe+VknsF3/xPOnMIDQ/xq7dp79DUS1pk2
+	 9biCT1XWCV9Ptq9HFICmwFLpzsw/XZzZ9DkBtZ0yoHB+1nnoilrK8BPVmh+C00kuEu
+	 PJEyPPFOFiCTosI5njI3vezk2nA3wzlSiRK2W+OA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Shree Ramamoorthy <s-ramamoorthy@ti.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 304/480] dmaengine: nbpfaxi: Add missing check after DMA map
-Date: Tue, 12 Aug 2025 19:48:32 +0200
-Message-ID: <20250812174409.973849050@linuxfoundation.org>
+Subject: [PATCH 6.15 305/480] mfd: tps65219: Update TPS65214 MFD cells GPIO compatible string
+Date: Tue, 12 Aug 2025 19:48:33 +0200
+Message-ID: <20250812174410.012153524@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -51,53 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Shree Ramamoorthy <s-ramamoorthy@ti.com>
 
-[ Upstream commit c6ee78fc8f3e653bec427cfd06fec7877ee782bd ]
+[ Upstream commit 6f27d26e363a41fc651be852094823ce47a43243 ]
 
-The DMA map functions can fail and should be tested for errors.
-If the mapping fails, unmap and return an error.
+This patch reflects the change made to move TPS65215 from 1 GPO and 1 GPIO
+to 2 GPOs and 1 GPIO. TPS65215 and TPS65219 both have 2 GPOs and 1 GPIO.
+TPS65214 has 1 GPO and 1 GPIO. TPS65215 will reuse the TPS65219 GPIO
+compatible string.
 
-Fixes: b45b262cefd5 ("dmaengine: add a driver for AMBA AXI NBPF DMAC IP cores")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250707075752.28674-2-fourier.thomas@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+TPS65214 TRM: https://www.ti.com/lit/pdf/slvud30
+TPS65215 TRM: https://www.ti.com/lit/pdf/slvucw5/
+
+Fixes: 7947219ab1a2 ("mfd: tps65219: Add support for TI TPS65214 PMIC")
+Signed-off-by: Shree Ramamoorthy <s-ramamoorthy@ti.com>
+Link: https://lore.kernel.org/r/20250527190455.169772-2-s-ramamoorthy@ti.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/nbpfaxi.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/mfd/tps65219.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/nbpfaxi.c b/drivers/dma/nbpfaxi.c
-index 7a2488a0d6a3..765462303de0 100644
---- a/drivers/dma/nbpfaxi.c
-+++ b/drivers/dma/nbpfaxi.c
-@@ -711,6 +711,9 @@ static int nbpf_desc_page_alloc(struct nbpf_channel *chan)
- 		list_add_tail(&ldesc->node, &lhead);
- 		ldesc->hwdesc_dma_addr = dma_map_single(dchan->device->dev,
- 					hwdesc, sizeof(*hwdesc), DMA_TO_DEVICE);
-+		if (dma_mapping_error(dchan->device->dev,
-+				      ldesc->hwdesc_dma_addr))
-+			goto unmap_error;
+diff --git a/drivers/mfd/tps65219.c b/drivers/mfd/tps65219.c
+index fd390600fbf0..297511025dd4 100644
+--- a/drivers/mfd/tps65219.c
++++ b/drivers/mfd/tps65219.c
+@@ -190,7 +190,7 @@ static const struct resource tps65219_regulator_resources[] = {
  
- 		dev_dbg(dev, "%s(): mapped 0x%p to %pad\n", __func__,
- 			hwdesc, &ldesc->hwdesc_dma_addr);
-@@ -737,6 +740,16 @@ static int nbpf_desc_page_alloc(struct nbpf_channel *chan)
- 	spin_unlock_irq(&chan->lock);
+ static const struct mfd_cell tps65214_cells[] = {
+ 	MFD_CELL_RES("tps65214-regulator", tps65214_regulator_resources),
+-	MFD_CELL_NAME("tps65215-gpio"),
++	MFD_CELL_NAME("tps65214-gpio"),
+ };
  
- 	return ARRAY_SIZE(dpage->desc);
-+
-+unmap_error:
-+	while (i--) {
-+		ldesc--; hwdesc--;
-+
-+		dma_unmap_single(dchan->device->dev, ldesc->hwdesc_dma_addr,
-+				 sizeof(hwdesc), DMA_TO_DEVICE);
-+	}
-+
-+	return -ENOMEM;
- }
- 
- static void nbpf_desc_put(struct nbpf_desc *desc)
+ static const struct mfd_cell tps65215_cells[] = {
 -- 
 2.39.5
 
