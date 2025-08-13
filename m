@@ -1,95 +1,111 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1801A2E172C
-	for <patches@lists.linux.dev>; Wed, 13 Aug 2025 13:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0392C0F69
+	for <patches@lists.linux.dev>; Wed, 13 Aug 2025 13:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755090492; cv=none; b=WAhX+191iRj25ZwtTxeY/R+SmVm41ocBrFeXHmNyVGEyGB7dyDFvJjiYUmFWm28CSR3nLdC5ZyRZii8FZqsiGmRmOkshNzW8MAhM+hWArWHz6wjwFAtyGUIFyFcjSxbub0sKRYFcVHEZbQe7SgXm+Wg1NVFG6jDoxAU0cOBQc40=
+	t=1755090758; cv=none; b=Jg0quA66TXe3m45w38wD+w1MqlPI7a4EfDg0ric7zQW+wf0zxSiOMFuaXArOQEDOvoeIwdeeipeOkj4h7/OL8XD3L92eq3H2JaoDTlqecEJi60hyGRcDYAgKozCSaa3K3/Sg1RajhF8R19Yx9R18lCE17fcP+V2C3IHMRoJ7R0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755090492; c=relaxed/simple;
-	bh=1pwQC3sEONEAAvu+FAQCD82dSlJxfgXF2c0gr1vct8Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cuh3zq6tQB0ZVDi5j+X3pz7ReC7BjaGPFFwGs91BpqPn1vnEHjKDyHb10brpIU+Ze55C13KjdaGB19c2Gd82M9ztZXj/sF0ULUacOT8alUCYKFNrZhOttSguJVZne7OM0kFy9B67bsmahVTN/jsBZqcYajRbatuzq2JMb7CdXps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cmpxchg.org; spf=pass smtp.mailfrom=cmpxchg.org; dkim=pass (2048-bit key) header.d=cmpxchg-org.20230601.gappssmtp.com header.i=@cmpxchg-org.20230601.gappssmtp.com header.b=z2bUhfcW; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cmpxchg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cmpxchg.org
+	s=arc-20240116; t=1755090758; c=relaxed/simple;
+	bh=GgUzu6LME52TpeiHWzbrdSV93Ja1LmmwWYtxTAV0V6M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UI3KJ2YiMjY/VPzd/MJiC4uAOIbNnJhvZmLLSDMt0gUPH7L/okCPbl4rSZyURfdYutsZdkt1wQGQdLktDVRLl/tzSqca4rs04UpoEzjCqc/UkrpwqL6yxWRphBp7OfMrRz8RUEOm9aWAwBSAwGe43e0LdVBCIYufCi4beuEUz7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com; spf=pass smtp.mailfrom=ciq.com; dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b=TsumGVp+; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ciq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cmpxchg-org.20230601.gappssmtp.com header.i=@cmpxchg-org.20230601.gappssmtp.com header.b="z2bUhfcW"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-4b0db8ce2ceso48201671cf.1
-        for <patches@lists.linux.dev>; Wed, 13 Aug 2025 06:08:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b="TsumGVp+"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7e835e02d96so455269485a.2
+        for <patches@lists.linux.dev>; Wed, 13 Aug 2025 06:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cmpxchg-org.20230601.gappssmtp.com; s=20230601; t=1755090489; x=1755695289; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tYLwmIoR7ODU7t4F7MqXFYTcBZqidg2qKZ7p7O1eaZQ=;
-        b=z2bUhfcWaKON0hdfmLN4B4ATCY8lMNwSNbFOTp790mieWTnCDhs5OWrlBpm51hkKqh
-         RbEAiLPl70+B6NTd2T5VfOSLp7vv2Yeie0TAnQtcKY2v+0b7mYyZ3LSkxtchDApEGios
-         VSL2xjmeO3ExxJly5i1gL4zeilRZ1RmAvrRjmVkvv6Y+ap+cTcX/+zF0sFhq1SGDgDHd
-         izO1bJeu4qVzT0Za30SQITn1h7p1oBvnsMB10+t/E+3UxtOizEYE7l9kL8ALJRA3xJFt
-         yhjzqiPYMemp7GRWqh7oZGAe7tBkiUn08vodfoGXpsnoM/QBoFXUstYIcyBx7sskAZqU
-         93TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755090489; x=1755695289;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=ciq.com; s=s1; t=1755090755; x=1755695555; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tYLwmIoR7ODU7t4F7MqXFYTcBZqidg2qKZ7p7O1eaZQ=;
-        b=ddQ5LsxXba634fcFK8W0+4eavZnrLNO6YRzFApLgzJ8Du1O2+g1xcLXss1+8NfcHnc
-         GufzB/RkJL9puJXIwP9azxMBnmaFb9Vh4YH0TpQUTSzLpG+0ZzhSiKKngLZhi3DS5obn
-         PeU+zKWACAT1z2x/JXAlDTkuP4dm9ozxLffbd7CaYvMM0sRuNhmZxD0WIhqoEkM25+yl
-         ufx1iV8bsk+ekFxazFBteZ4n551CZ8+xwAFaHaW75nj+uJtjFMJ2z5BX4YO+ZOZeuDek
-         7/lY0qj/av+GLwCr+a5mlR9PE6vsEg8EDiJx1Xm1VqybSEusBrZtkqPNMJXom4qBcUa+
-         baQg==
-X-Forwarded-Encrypted: i=1; AJvYcCUBmzmB6Uohu/QY9VNyo7yl8L+qh/15DKwRpkWUsZoAlTtCo+zURHlJq6nyuy9mKfWEekn1tzL1@lists.linux.dev
-X-Gm-Message-State: AOJu0YxOgcVrFKl3UpifqU1rwW956Rkpmx+mxqPYbrf9iCUC9SOR0/fb
-	+xwxlSKzV1IQ7uewZt1m+y703GSXFTun4q/DFHYK3Z+rtlKeHXX4CP1xrJIwHON0qwE=
-X-Gm-Gg: ASbGncsnUWOirU1SBKdqKcomubfPhyn/6xqQJQZ0lAz45SqU5C0bo8u4/VX5Cbsb2sw
-	1vVUsuVMHu62IG1rCW7QfHhca6sDm5UvTKwQ+5T5dFz5t1mgQkOgOrV2uAXol6LDZQRoMqFEk/O
-	1bsqqZHc99TamxTcGiOWnN8uy8WPrdaVBaVdjQMaB2EcvklF+mDldwmF01X/8ptKimxY5QMYst/
-	SXZjEb/RiKEHbXAAl57nOyibv0aILDkehi51cC21SjlhjwIS8/rVZ/Ena5/qCWld/swEZS4BF18
-	wC1pdbH1Rxpz/WtSN2mSazh7/vMYs1U0ujbZP5dZZte5pkzQ2N45l1NM09UU0Yf1D7cbFWmitQM
-	EYbKCz2lK8SAea2lPQmhAZA==
-X-Google-Smtp-Source: AGHT+IHOQuq7xqUP9UjBEVVTqrAdJO6d4BVHEpSN1f1carg3pLIr+GU8HjaN4gDsBZDXdZno+UCFDQ==
-X-Received: by 2002:ac8:6f15:0:b0:4b0:cb1f:e390 with SMTP id d75a77b69052e-4b0fc7b228fmr38411531cf.29.1755090488685;
-        Wed, 13 Aug 2025 06:08:08 -0700 (PDT)
-Received: from localhost ([2603:7000:c01:2716:929a:4aff:fe16:c778])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7e67f728a6asm1954259185a.64.2025.08.13.06.08.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Aug 2025 06:08:08 -0700 (PDT)
-Date: Wed, 13 Aug 2025 09:08:07 -0400
-From: Johannes Weiner <hannes@cmpxchg.org>
-To: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 096/369] sched/psi: Optimize psi_group_change()
- cpu_clock() usage
-Message-ID: <20250813130807.GB114408@cmpxchg.org>
-References: <20250812173014.736537091@linuxfoundation.org>
- <20250812173018.391927854@linuxfoundation.org>
- <83b69ebb-a052-482e-aa6d-34194ef18dc3@arm.com>
+        bh=JtU72p9c0fOalcp8RP9DRRIkwqBXfYTQn42C9LNbTEE=;
+        b=TsumGVp+lHkNfrE4yHa5un1w/jdlnkXl8rM+4LhGLlv7lvEtwzavIU2ZDowIFh0+HX
+         B18TPexpK5yWoBUQVME/+QSwnBBfh6GsOGjm71oiCNlnj/bxECoG3Ldi7qQKtkC4Q1uV
+         A6hSI1BC9e5ais1mTa4matPvYtr5S0GVnC7mOUXToBjJwGS07oM0r9PdtGUiKf9v3CNj
+         MTLTc3aDO8Y0F4nRQbbdh5FKYBeazlAHLF/lJ7DH8K2pLhgQjBMcbJi2dyov83UEQqLK
+         bNyFtLqbBtaVuWFiu8Zk2dIqXPZkWzumoA5BL3bOJyBB3KogYp2KxnNCdj7Suuickm2b
+         X1qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755090755; x=1755695555;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JtU72p9c0fOalcp8RP9DRRIkwqBXfYTQn42C9LNbTEE=;
+        b=UQDc0QPlJqF19HmIpmECi+Crt21Ov2G2IP1seDDwa4VqCmdBPERQhmJg161ws4V9z8
+         ah5KVnBRZ4F/AWio2Y+Vg4Fim0xww1vMhNfOaxhe94VRHc7paR+Jxe9EUJL+ZEkQ4g5V
+         NOXj6HCPzDjXRcAceSXKNW6nwAfgGBWG8uITesQ88aeEavV3SegtVj3A7k4eeXFbAQAv
+         hpWm9mOSVGpjvIArfGX+bLDOBG1fT5lrnGT7GMYsNnSLZ/WeAE9eec8pW6k3uCB7erTv
+         0RPJa6LdibkDF85iFK2e6rvUb/ivoRqt+oY9noJeOMwPB3e03zZSdSMKWseQrdritPpj
+         fKRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU1OMn/zsUAazplhWkwlpPZQFrIdC0I2jBjoLr43BNF1/hbT7aF9+n29YKVIM4rDx0wYcnGyUpG@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy5bPsrTNBu+ezW+LXNSMukwM8j3xbixbiIigZQIjbk8tkM3Sjj
+	m9TsaTMA5xAId3KBUZnY0QBl7G42vnn+bD1h8pRaDfutCvt87Bb2QZ82nZEOPwKrDgsE79ZsT6M
+	gLlRQdens50ZEZXaBrowvGmS4M8AjlbKRppsj40BN7Q==
+X-Gm-Gg: ASbGncsb9pPKnbrNlVhBIXTn1EcQ62yQXLtUHgkaVhglGh/px+vwipadW2fiyhS7NqE
+	T/gOyD56JMr59esGQhaR8tAuziV1Awc3phtbUj1T3JhPuv/lQrree1V02W6is1/r7iP2tyDsSc/
+	IL1ClOWaK7XSd1fnJx5DcVJvuEU1fA6k7XcJ22u4WCg/1d7yuVoC7b4HsrmRlbzqYgXDs4NgmQW
+	kgJTzOf
+X-Google-Smtp-Source: AGHT+IG5QZZnM8BOlOZuuRDsxed9T4NNSIcdVy3asdv+WEHOb8IbJxfeZVezY2LY6qu6NbPDuHh/ZISvs4Hz6d9Xaoc=
+X-Received: by 2002:a05:620a:5613:b0:7e8:39da:9735 with SMTP id
+ af79cd13be357-7e86524c86cmr343807085a.14.1755090755377; Wed, 13 Aug 2025
+ 06:12:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <83b69ebb-a052-482e-aa6d-34194ef18dc3@arm.com>
+References: <20250812173014.736537091@linuxfoundation.org>
+In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
+From: Brett Mastbergen <bmastbergen@ciq.com>
+Date: Wed, 13 Aug 2025 09:12:23 -0400
+X-Gm-Features: Ac12FXxImiV90KDqFEsliS51c-s2jeKLqGC0XUvACkuiyfMmFUbXrGmqeZOS8OI
+Message-ID: <CAOBMUvjaYR2b3grBiXntb16ny_8RqVVH6NGJnjEYUFU=TmDqVQ@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/369] 6.12.42-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 13, 2025 at 01:20:41PM +0100, Dietmar Eggemann wrote:
-> IIRC, there was a small bug with this which Peter already fixed
-> 
-> https://lkml.kernel.org/r/20250716104050.GR1613200@noisy.programming.kicks-ass.net
-> 
-> but I'm not sure whether this fix 'sched/psi: Fix psi_seq
-> initialization' is already available for pulling?
+On Tue, Aug 12, 2025 at 2:10=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.12.42 release.
+> There are 369 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 14 Aug 2025 17:27:11 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.12.42-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.12.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-It's included later in the series:
+Builds successfully.  Boots and works on qemu and Dell XPS 15 9520 w/
+Intel Core i7-12600H
 
-https://lore.kernel.org/stable/55070b66-0994-4064-9afa-de1e53d06631@sirena.org.uk/T/#m0ddd243fe107dea7488d119cb60e8a9e18e2c9a1
+Tested-by: Brett Mastbergen <bmastbergen@ciq.com>
 
-Linus just didn't keep the CC list when he picked up the fix.
+Thanks,
+Brett
