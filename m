@@ -1,361 +1,387 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B3F1339B1
-	for <patches@lists.linux.dev>; Wed, 13 Aug 2025 12:16:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 570A515539A
+	for <patches@lists.linux.dev>; Wed, 13 Aug 2025 12:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755087403; cv=none; b=KmzG6l1CyT3rbanFCeWiHVr4ic0kt04w3owTE0zdlPc/tdeJRNyQNBI9ExVUPA3Y+KAo3KbYYUsNYlzivI4ApzqU4XL5NzjoGUyOq/B5wwzrZSHeZnhew1Bus8ruZWVmFNq6zy87MEcCF4vzfR3wnazxEZgZ3zHA2RAHoCRN5FU=
+	t=1755087647; cv=none; b=NuOezR1MXnLqZGJhycYrsRMFIYn3Cq4yNrYipewsuWHUEFuDN29uaZ7apJLJZvHGD6i0cFIP63N2cm6sKbjH4DRMeR2uc8a9cu72wvH6TBdufkU1EuB0DhNT+3Knc/v3eVE3zqeV7/c69ok/tNF2QL771+IB+CyNQgO2zYKPOtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755087403; c=relaxed/simple;
-	bh=5/qgc59oD8soUgBaYKa9gXVnBOWyFLGpMZ+wpMO2kD4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nD3PIVQEYyiHUK18XfAz1DPYxrtxyqlHrac9ex6kZb2y3BDhqasIRlJbUANtC6mX756d5Q+peyeB9+XdMrWHTCF7vv2XZI/XBwQU4YlqQeWBtRXBw/ZUwVssUAToH122URQJMnqSO/2Gj0EQMXmE+X4lFVRDGtgKPBdEVCP5UYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tfzu5w5x; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tfzu5w5x"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-23aeac7d77aso55579355ad.3
-        for <patches@lists.linux.dev>; Wed, 13 Aug 2025 05:16:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755087400; x=1755692200; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IbnSBztKB/ky+HfHfoiCEKZibcC+VHhc0U9rmRsC39Q=;
-        b=tfzu5w5xApLfnYu12a04pY4OI2gr3kioqYfnOFg7c2ipKOPYRixTMFuEOaKCrXa4FT
-         QPLwIBTTzsWFdu57nd2j89vYyA3ySZk8GQVM6HlnTNBuJjdtVgxejjPDubtUCcL+pXfp
-         wSA/48UmuTewZI6Td3/5GnDTlZEfMOgZCl9TPUMHP//QCbTN/TvSc5iUSdWO6AYLHyP5
-         2XCQIrlTuU+Lcbp4aCvUH6wmAA6CoNxtqs6zeIBOFM7NPzPoDcqf0Kwb1Q2760KZsLjv
-         +tW6pFR5nbG2Ais7gvePWa+NFPEm7G8rgpQUXVn9q+XBcDJ+nv/WBtHb2DARGPAPVM8S
-         zH4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755087400; x=1755692200;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IbnSBztKB/ky+HfHfoiCEKZibcC+VHhc0U9rmRsC39Q=;
-        b=PuPsYL1ksmwkWIT5uWonzl7mzhxyiCNVI0wKexA1ZOepMZQjug4DmgDkPIzCCxLZje
-         joAtYK5N0J85beGb+rTL8NCVkrkgf8ABopP76yGX4MxN7px93vSrBuQwJQQrMkKf5OR0
-         Uw3zdnrLo/HmlizBmlHwj58s7g3xERqnLBWSXtHJscub35j9xahNmPr865zGyWPT+nBm
-         MFfSEjOxt8j0pT6r+1VYFbRBJUEPBt3B4alnuR0edF1Hwn+F0rKKv3WxrswIyBUePgWn
-         qahR5f1gQMlGuiWK3StpSJMlqMxWcOW5FyP7Ek4c/p07QRGdBQPc2LZHwp/jD1Ahb5Oa
-         UqGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+LECuHbZtRhhOsqkwK3GgNTWfk0ZUSKtDGVfx3/MOQhZ8JpEJFZ2B2H+FYQwKS84DtjukM4d3@lists.linux.dev
-X-Gm-Message-State: AOJu0YxAgE2sCewM144ImofKl3+LUZBUYrxBoI4BdoLcKAEBiu97qQ9g
-	tV3ljVUqbdsmD0m6f44mYuIiYFhqlgCyG3Cj9ZG9rAHajB1wcAa646kb5nurCkUzvgeJqsgrz4b
-	Gk3wSvRGvWi8FG6ZYX9lpOtyzc31gyrIEQDg7E+QiXg==
-X-Gm-Gg: ASbGncsuN/uAK6R6g4PUX9jzsjLjrAcmUVF/Y+tujL2LRfHwcgoNEkhuHjEvn7PGEbv
-	0UAjVV7feFhH5vekfEb4rxT3FzM6AC61JKdLu1B0v35CevYm/XEmcxPgAs4lSrcdAWLXj7GsmRv
-	WFSsxd1rCUIT7Ox6QY0bAYUsUb0pCIiyOQn5kkOSQuEzJyxmoJ6eNcTLEvLZwFDd+7A7PjyiYxT
-	kjxO/9MO1g0z0Qusb7ZU/l7V8ohX2rgM1o99jLp8m5Hrqw/GLU=
-X-Google-Smtp-Source: AGHT+IEqRlX1hXQvIAC8z4ap56R3F6zBfHl+FK5wqB5WBXqk2utT/Iy+dcR7aD5xv5GmvhMOoS30o/Rmi8/TkNbCz1I=
-X-Received: by 2002:a17:902:fc47:b0:242:a0b0:3c28 with SMTP id
- d9443c01a7336-2430d262dd1mr40863255ad.51.1755087400321; Wed, 13 Aug 2025
- 05:16:40 -0700 (PDT)
+	s=arc-20240116; t=1755087647; c=relaxed/simple;
+	bh=hOYg9mwOocb5T4tUs0hVrdbCJ85Z3FhLLaVPLozj7O4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KsD8SWQxIcV6yHTq/LgkFLF5r2PIOyGi4BRZW1uKP4sMmQJ++yvVauyLCUaLDB5tFkIXzyv01pC8mPgKZljjTZTQ9uctmj8wISd62e6tBWyz6CoemW2nDtFb0ix+XoQ9syJI17/f4ihbWwc5QlQXT1PNMGTIleTFzwRGofgxg9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A72FE12FC;
+	Wed, 13 Aug 2025 05:20:36 -0700 (PDT)
+Received: from [10.13.87.1] (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7FC1B3F5A1;
+	Wed, 13 Aug 2025 05:20:43 -0700 (PDT)
+Message-ID: <83b69ebb-a052-482e-aa6d-34194ef18dc3@arm.com>
+Date: Wed, 13 Aug 2025 13:20:41 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250812173419.303046420@linuxfoundation.org>
-In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 13 Aug 2025 17:46:26 +0530
-X-Gm-Features: Ac12FXybqNMQTflDlQz__4h-ypQooKNx0q_GNsw0wCT1xS6QPkD-sG6dIOKmaWc
-Message-ID: <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, achill@achill.org, qemu-devel@nongnu.org, 
-	=?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>, 
-	Anders Roxell <anders.roxell@linaro.org>, Ben Copeland <benjamin.copeland@linaro.org>, 
-	LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>, Petr Vorel <pvorel@suse.cz>, 
-	Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org, 
-	Zhang Yi <yi.zhang@huaweicloud.com>, Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>, 
-	linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 096/369] sched/psi: Optimize psi_group_change()
+ cpu_clock() usage
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, "Peter Zijlstra (Intel)" <peterz@infradead.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Sasha Levin <sashal@kernel.org>
+References: <20250812173014.736537091@linuxfoundation.org>
+ <20250812173018.391927854@linuxfoundation.org>
+Content-Language: en-GB
+From: Dietmar Eggemann <dietmar.eggemann@arm.com>
+In-Reply-To: <20250812173018.391927854@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, 12 Aug 2025 at 23:57, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.16.1 release.
-> There are 627 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 14 Aug 2025 17:32:40 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.16.1-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.16.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+IIRC, there was a small bug with this which Peter already fixed
 
-LKFT found three regressions on stable-rc 6.16.1-rc1.
+https://lkml.kernel.org/r/20250716104050.GR1613200@noisy.programming.kicks-ass.net
 
-Short version:
-1) Pef build regressions on x86_64 and i386
-2) LTP syscalls failures with 64k Page size on qemu-arm64
-3) Kernel warning at fs/jbd2/transaction.c start_this_handle x86, qemu-arm64
+but I'm not sure whether this fix 'sched/psi: Fix psi_seq
+initialization' is already available for pulling?
 
-Long story:
-1)
-The perf gcc-13 build failed on x86_64 and i386.
+-- Dietmar
 
-Build regression: qemu-arm64 ARM64_64K_PAGES ltp syscalls swap fsync
-fallocate failed.
+On 12.08.25 18:26, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Peter Zijlstra <peterz@infradead.org>
+> 
+> [ Upstream commit 570c8efd5eb79c3725ba439ce105ed1bedc5acd9 ]
+> 
+> Dietmar reported that commit 3840cbe24cf0 ("sched: psi: fix bogus
+> pressure spikes from aggregation race") caused a regression for him on
+> a high context switch rate benchmark (schbench) due to the now
+> repeating cpu_clock() calls.
+> 
+> In particular the problem is that get_recent_times() will extrapolate
+> the current state to 'now'. But if an update uses a timestamp from
+> before the start of the update, it is possible to get two reads
+> with inconsistent results. It is effectively back-dating an update.
+> 
+> (note that this all hard-relies on the clock being synchronized across
+> CPUs -- if this is not the case, all bets are off).
+> 
+> Combine this problem with the fact that there are per-group-per-cpu
+> seqcounts, the commit in question pushed the clock read into the group
+> iteration, causing tree-depth cpu_clock() calls. On architectures
+> where cpu_clock() has appreciable overhead, this hurts.
+> 
+> Instead move to a per-cpu seqcount, which allows us to have a single
+> clock read for all group updates, increasing internal consistency and
+> lowering update overhead. This comes at the cost of a longer update
+> side (proportional to the tree depth) which can cause the read side to
+> retry more often.
+> 
+> Fixes: 3840cbe24cf0 ("sched: psi: fix bogus pressure spikes from aggregation race")
+> Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+> Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+> Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>,
+> Link: https://lkml.kernel.org/20250522084844.GC31726@noisy.programming.kicks-ass.net
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  include/linux/psi_types.h |   6 +-
+>  kernel/sched/psi.c        | 121 +++++++++++++++++++++-----------------
+>  2 files changed, 68 insertions(+), 59 deletions(-)
+> 
+> diff --git a/include/linux/psi_types.h b/include/linux/psi_types.h
+> index f1fd3a8044e0..dd10c22299ab 100644
+> --- a/include/linux/psi_types.h
+> +++ b/include/linux/psi_types.h
+> @@ -84,11 +84,9 @@ enum psi_aggregators {
+>  struct psi_group_cpu {
+>  	/* 1st cacheline updated by the scheduler */
+>  
+> -	/* Aggregator needs to know of concurrent changes */
+> -	seqcount_t seq ____cacheline_aligned_in_smp;
+> -
+>  	/* States of the tasks belonging to this group */
+> -	unsigned int tasks[NR_PSI_TASK_COUNTS];
+> +	unsigned int tasks[NR_PSI_TASK_COUNTS]
+> +			____cacheline_aligned_in_smp;
+>  
+>  	/* Aggregate pressure state derived from the tasks */
+>  	u32 state_mask;
+> diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+> index 84dad1511d1e..81cfefc4d892 100644
+> --- a/kernel/sched/psi.c
+> +++ b/kernel/sched/psi.c
+> @@ -172,6 +172,28 @@ struct psi_group psi_system = {
+>  	.pcpu = &system_group_pcpu,
+>  };
+>  
+> +static DEFINE_PER_CPU(seqcount_t, psi_seq);
+> +
+> +static inline void psi_write_begin(int cpu)
+> +{
+> +	write_seqcount_begin(per_cpu_ptr(&psi_seq, cpu));
+> +}
+> +
+> +static inline void psi_write_end(int cpu)
+> +{
+> +	write_seqcount_end(per_cpu_ptr(&psi_seq, cpu));
+> +}
+> +
+> +static inline u32 psi_read_begin(int cpu)
+> +{
+> +	return read_seqcount_begin(per_cpu_ptr(&psi_seq, cpu));
+> +}
+> +
+> +static inline bool psi_read_retry(int cpu, u32 seq)
+> +{
+> +	return read_seqcount_retry(per_cpu_ptr(&psi_seq, cpu), seq);
+> +}
+> +
+>  static void psi_avgs_work(struct work_struct *work);
+>  
+>  static void poll_timer_fn(struct timer_list *t);
+> @@ -182,7 +204,7 @@ static void group_init(struct psi_group *group)
+>  
+>  	group->enabled = true;
+>  	for_each_possible_cpu(cpu)
+> -		seqcount_init(&per_cpu_ptr(group->pcpu, cpu)->seq);
+> +		seqcount_init(per_cpu_ptr(&psi_seq, cpu));
+>  	group->avg_last_update = sched_clock();
+>  	group->avg_next_update = group->avg_last_update + psi_period;
+>  	mutex_init(&group->avgs_lock);
+> @@ -262,14 +284,14 @@ static void get_recent_times(struct psi_group *group, int cpu,
+>  
+>  	/* Snapshot a coherent view of the CPU state */
+>  	do {
+> -		seq = read_seqcount_begin(&groupc->seq);
+> +		seq = psi_read_begin(cpu);
+>  		now = cpu_clock(cpu);
+>  		memcpy(times, groupc->times, sizeof(groupc->times));
+>  		state_mask = groupc->state_mask;
+>  		state_start = groupc->state_start;
+>  		if (cpu == current_cpu)
+>  			memcpy(tasks, groupc->tasks, sizeof(groupc->tasks));
+> -	} while (read_seqcount_retry(&groupc->seq, seq));
+> +	} while (psi_read_retry(cpu, seq));
+>  
+>  	/* Calculate state time deltas against the previous snapshot */
+>  	for (s = 0; s < NR_PSI_STATES; s++) {
+> @@ -768,30 +790,20 @@ static void record_times(struct psi_group_cpu *groupc, u64 now)
+>  		groupc->times[PSI_NONIDLE] += delta;
+>  }
+>  
+> +#define for_each_group(iter, group) \
+> +	for (typeof(group) iter = group; iter; iter = iter->parent)
+> +
+>  static void psi_group_change(struct psi_group *group, int cpu,
+>  			     unsigned int clear, unsigned int set,
+> -			     bool wake_clock)
+> +			     u64 now, bool wake_clock)
+>  {
+>  	struct psi_group_cpu *groupc;
+>  	unsigned int t, m;
+>  	u32 state_mask;
+> -	u64 now;
+>  
+>  	lockdep_assert_rq_held(cpu_rq(cpu));
+>  	groupc = per_cpu_ptr(group->pcpu, cpu);
+>  
+> -	/*
+> -	 * First we update the task counts according to the state
+> -	 * change requested through the @clear and @set bits.
+> -	 *
+> -	 * Then if the cgroup PSI stats accounting enabled, we
+> -	 * assess the aggregate resource states this CPU's tasks
+> -	 * have been in since the last change, and account any
+> -	 * SOME and FULL time these may have resulted in.
+> -	 */
+> -	write_seqcount_begin(&groupc->seq);
+> -	now = cpu_clock(cpu);
+> -
+>  	/*
+>  	 * Start with TSK_ONCPU, which doesn't have a corresponding
+>  	 * task count - it's just a boolean flag directly encoded in
+> @@ -843,7 +855,6 @@ static void psi_group_change(struct psi_group *group, int cpu,
+>  
+>  		groupc->state_mask = state_mask;
+>  
+> -		write_seqcount_end(&groupc->seq);
+>  		return;
+>  	}
+>  
+> @@ -864,8 +875,6 @@ static void psi_group_change(struct psi_group *group, int cpu,
+>  
+>  	groupc->state_mask = state_mask;
+>  
+> -	write_seqcount_end(&groupc->seq);
+> -
+>  	if (state_mask & group->rtpoll_states)
+>  		psi_schedule_rtpoll_work(group, 1, false);
+>  
+> @@ -900,24 +909,29 @@ static void psi_flags_change(struct task_struct *task, int clear, int set)
+>  void psi_task_change(struct task_struct *task, int clear, int set)
+>  {
+>  	int cpu = task_cpu(task);
+> -	struct psi_group *group;
+> +	u64 now;
+>  
+>  	if (!task->pid)
+>  		return;
+>  
+>  	psi_flags_change(task, clear, set);
+>  
+> -	group = task_psi_group(task);
+> -	do {
+> -		psi_group_change(group, cpu, clear, set, true);
+> -	} while ((group = group->parent));
+> +	psi_write_begin(cpu);
+> +	now = cpu_clock(cpu);
+> +	for_each_group(group, task_psi_group(task))
+> +		psi_group_change(group, cpu, clear, set, now, true);
+> +	psi_write_end(cpu);
+>  }
+>  
+>  void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+>  		     bool sleep)
+>  {
+> -	struct psi_group *group, *common = NULL;
+> +	struct psi_group *common = NULL;
+>  	int cpu = task_cpu(prev);
+> +	u64 now;
+> +
+> +	psi_write_begin(cpu);
+> +	now = cpu_clock(cpu);
+>  
+>  	if (next->pid) {
+>  		psi_flags_change(next, 0, TSK_ONCPU);
+> @@ -926,16 +940,15 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+>  		 * ancestors with @prev, those will already have @prev's
+>  		 * TSK_ONCPU bit set, and we can stop the iteration there.
+>  		 */
+> -		group = task_psi_group(next);
+> -		do {
+> -			if (per_cpu_ptr(group->pcpu, cpu)->state_mask &
+> -			    PSI_ONCPU) {
+> +		for_each_group(group, task_psi_group(next)) {
+> +			struct psi_group_cpu *groupc = per_cpu_ptr(group->pcpu, cpu);
+> +
+> +			if (groupc->state_mask & PSI_ONCPU) {
+>  				common = group;
+>  				break;
+>  			}
+> -
+> -			psi_group_change(group, cpu, 0, TSK_ONCPU, true);
+> -		} while ((group = group->parent));
+> +			psi_group_change(group, cpu, 0, TSK_ONCPU, now, true);
+> +		}
+>  	}
+>  
+>  	if (prev->pid) {
+> @@ -968,12 +981,11 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+>  
+>  		psi_flags_change(prev, clear, set);
+>  
+> -		group = task_psi_group(prev);
+> -		do {
+> +		for_each_group(group, task_psi_group(prev)) {
+>  			if (group == common)
+>  				break;
+> -			psi_group_change(group, cpu, clear, set, wake_clock);
+> -		} while ((group = group->parent));
+> +			psi_group_change(group, cpu, clear, set, now, wake_clock);
+> +		}
+>  
+>  		/*
+>  		 * TSK_ONCPU is handled up to the common ancestor. If there are
+> @@ -983,20 +995,21 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+>  		 */
+>  		if ((prev->psi_flags ^ next->psi_flags) & ~TSK_ONCPU) {
+>  			clear &= ~TSK_ONCPU;
+> -			for (; group; group = group->parent)
+> -				psi_group_change(group, cpu, clear, set, wake_clock);
+> +			for_each_group(group, common)
+> +				psi_group_change(group, cpu, clear, set, now, wake_clock);
+>  		}
+>  	}
+> +	psi_write_end(cpu);
+>  }
+>  
+>  #ifdef CONFIG_IRQ_TIME_ACCOUNTING
+>  void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_struct *prev)
+>  {
+>  	int cpu = task_cpu(curr);
+> -	struct psi_group *group;
+>  	struct psi_group_cpu *groupc;
+>  	s64 delta;
+>  	u64 irq;
+> +	u64 now;
+>  
+>  	if (static_branch_likely(&psi_disabled))
+>  		return;
+> @@ -1005,8 +1018,7 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+>  		return;
+>  
+>  	lockdep_assert_rq_held(rq);
+> -	group = task_psi_group(curr);
+> -	if (prev && task_psi_group(prev) == group)
+> +	if (prev && task_psi_group(prev) == task_psi_group(curr))
+>  		return;
+>  
+>  	irq = irq_time_read(cpu);
+> @@ -1015,25 +1027,22 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+>  		return;
+>  	rq->psi_irq_time = irq;
+>  
+> -	do {
+> -		u64 now;
+> +	psi_write_begin(cpu);
+> +	now = cpu_clock(cpu);
+>  
+> +	for_each_group(group, task_psi_group(curr)) {
+>  		if (!group->enabled)
+>  			continue;
+>  
+>  		groupc = per_cpu_ptr(group->pcpu, cpu);
+>  
+> -		write_seqcount_begin(&groupc->seq);
+> -		now = cpu_clock(cpu);
+> -
+>  		record_times(groupc, now);
+>  		groupc->times[PSI_IRQ_FULL] += delta;
+>  
+> -		write_seqcount_end(&groupc->seq);
+> -
+>  		if (group->rtpoll_states & (1 << PSI_IRQ_FULL))
+>  			psi_schedule_rtpoll_work(group, 1, false);
+> -	} while ((group = group->parent));
+> +	}
+> +	psi_write_end(cpu);
+>  }
+>  #endif
+>  
+> @@ -1221,12 +1230,14 @@ void psi_cgroup_restart(struct psi_group *group)
+>  		return;
+>  
+>  	for_each_possible_cpu(cpu) {
+> -		struct rq *rq = cpu_rq(cpu);
+> -		struct rq_flags rf;
+> +		u64 now;
+>  
+> -		rq_lock_irq(rq, &rf);
+> -		psi_group_change(group, cpu, 0, 0, true);
+> -		rq_unlock_irq(rq, &rf);
+> +		guard(rq_lock_irq)(cpu_rq(cpu));
+> +
+> +		psi_write_begin(cpu);
+> +		now = cpu_clock(cpu);
+> +		psi_group_change(group, cpu, 0, 0, now, true);
+> +		psi_write_end(cpu);
+>  	}
+>  }
+>  #endif /* CONFIG_CGROUPS */
 
-> Ian Rogers <irogers@google.com>
->     perf topdown: Use attribute to see an event is a topdown metic or slots
-
-Build error:
-
-arch/x86/tests/topdown.c: In function 'event_cb':
-arch/x86/tests/topdown.c:53:25: error: implicit declaration of
-function 'pr_debug' [-Werror=implicit-function-declaration]
-   53 |                         pr_debug("Broken topdown information
-for '%s'\n", evsel__name(evsel));
-      |                         ^~~~~~~~
-cc1: all warnings being treated as errors
-
-2)
-
-The following list of LTP syscalls failure noticed on qemu-arm64 with
-stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
-
-Most failures report ENOSPC (28) or mkswap errors, which may be related
-to disk space handling in the 64K page configuration on qemu-arm64.
-
-The issue is reproducible on multiple runs.
-
-* qemu-arm64, ltp-syscalls - 64K page size test failures list,
-
-  - fallocate04
-  - fallocate05
-  - fdatasync03
-  - fsync01
-  - fsync04
-  - ioctl_fiemap01
-  - swapoff01
-  - swapoff02
-  - swapon01
-  - swapon02
-  - swapon03
-  - sync01
-  - sync_file_range02
-  - syncfs01
-
-Reproducibility:
- - 64K config above listed test fails
- - 4K config above listed test pass.
-
-Regression Analysis:
-- New regression? yes
-- Reproducibility? yes
-
-Test regression: qemu-arm64 ARM64_64K_PAGES ltp syscalls swap fsync
-fallocate failed.
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-swapoff01:
-libswap.c:198: TINFO: create a swapfile size of 1 megabytes (MB)
-tst_ioctl.c:26: TINFO: FIBMAP ioctl is supported
-libswap.c:218: TFAIL: mkswap on ext2/ext3/ext4 failed
-swapoff01.c:44: TINFO: create a swapfile with 65536 block numbers
-swapoff01.c:44: TCONF: Insufficient disk space to create swap file
-
-swapoff02:
-libswap.c:198: TINFO: create a swapfile size of 1 megabytes (MB)
-tst_ioctl.c:26: TINFO: FIBMAP ioctl is supported
-libswap.c:218: TFAIL: mkswap on ext2/ext3/ext4 failed
-swapoff02.c:88: TINFO: create a swapfile size of 1 megabytes (MB)
-
-swapon01:
-libswap.c:198: TINFO: create a swapfile size of 1 megabytes (MB)
-tst_ioctl.c:26: TINFO: FIBMAP ioctl is supported
-libswap.c:218: TFAIL: mkswap on ext2/ext3/ext4 failed
-swapon01.c:39: TINFO: create a swapfile size of 128 megabytes (MB)
-tst_cmd.c:111: TBROK: 'mkswap' exited with a non-zero code 1 at tst_cmd.c:111
-
-swapon02:
-tst_ioctl.c:26: TINFO: FIBMAP ioctl is supported
-libswap.c:218: TFAIL: mkswap on ext2/ext3/ext4 failed
-swapon02.c:52: TINFO: create a swapfile size of 1 megabytes (MB)
-tst_cmd.c:111: TBROK: 'mkswap' exited with a non-zero code 1 at tst_cmd.c:111
-
-swapon03:
-tst_ioctl.c:26: TINFO: FIBMAP ioctl is supported
-libswap.c:218: TFAIL: mkswap on ext2/ext3/ext4 failed
-tst_kconfig.c:88: TINFO: Parsing kernel config '/proc/config.gz'
-tst_kconfig.c:88: TINFO: Parsing kernel config '/proc/config.gz'
-tst_kconfig.c:88: TINFO: Parsing kernel config '/proc/config.gz'
-tst_kconfig.c:88: TINFO: Parsing kernel config '/proc/config.gz'
-swapon03.c:51: TINFO: create a swapfile size of 1 megabytes (MB)
-tst_cmd.c:111: TBROK: 'mkswap' exited with a non-zero code 1 at tst_cmd.c:111
-
-sync01:
-sync01.c:49: TFAIL: Synced 11403264, expected 33554432
-
-syncfs01:
-syncfs01.c:53: TFAIL: Synced 4096, expected 33554432
-
-sync_file_range02:
-sync_file_range02.c:60: TFAIL: sync_file_range() failed: ENOSPC (28)
-
-fdatasync03:
-fdatasync03.c:43: TFAIL: fdatasync(fd) failed: ENOSPC (28)
-
-fsync01:
-tst_test.c:1888: TINFO: === Testing on ext4 ===
-tst_test.c:1217: TINFO: Formatting /dev/loop0 with ext4 opts='' extra opts=''
-mke2fs 1.47.2 (1-Jan-2025)
-tst_test.c:1229: TINFO: Mounting /dev/loop0 to
-/tmp/LTP_fsyX4HNML/mntpoint fstyp=ext4 flags=0
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-fsync01.c:28: TFAIL: fsync failed: ENOSPC (28)
-
-fsync04:
-tst_test.c:1229: TINFO: Mounting /dev/loop0 to
-/tmp/LTP_fsydyQA53/mnt_point fstyp=ext4 flags=0
-fsync04.c:43: TFAIL: fsync(fd) failed: ENOSPC (28)
-
-fallocate04:
-fallocate04.c:198: TFAIL: fallocate failed: ENOSPC (28)
-
-fallocate05:
-tst_fill_fs.c:53: TBROK: fsync(4) failed: ENOSPC (28)
-
-ioctl_fiemap01
-tst_test.c:1217: TINFO: Formatting /dev/loop0 with ext4 opts='' extra opts=''
-mke2fs 1.47.2 (1-Jan-2025)
-tst_test.c:1229: TINFO: Mounting /dev/loop0 to
-/tmp/LTP_iocjRR3ot/mntpoint fstyp=ext4 flags=0
-ioctl_fiemap01.c:74: TPASS: ioctl(fd, FS_IOC_FIEMAP, fiemap) : EBADR (53)
-ioctl_fiemap01.c:77: TPASS: ioctl(fd, FS_IOC_FIEMAP, fiemap) passed
-ioctl_fiemap01.c:79: TPASS: Expect: Empty file should have 0 extends mapped
-ioctl_fiemap01.c:86: TFAIL: ioctl(fd, FS_IOC_FIEMAP, fiemap) failed: ENOSPC (28)
-ioctl_fiemap01.c:41: TFAIL: Expect: extent fm_mapped_extents is 1
-ioctl_fiemap01.c:50: TFAIL: (extent->fe_flags & fe_mask) (0) != fe_flags (1)
-ioctl_fiemap01.c:51: TPASS: Expect: fe_physical > 1
-ioctl_fiemap01.c:52: TFAIL: extent->fe_length (4702687395951105107) !=
-fe_length (1024)
-ioctl_fiemap01.c:96: TFAIL: ioctl(fd, FS_IOC_FIEMAP, fiemap) failed: ENOSPC (28)
-ioctl_fiemap01.c:41: TFAIL: Expect: extent fm_mapped_extents is 3
-ioctl_fiemap01.c:50: TPASS: (extent->fe_flags & fe_mask) == fe_flags (0)
-ioctl_fiemap01.c:51: TPASS: Expect: fe_physical > 1
-ioctl_fiemap01.c:52: TFAIL: extent->fe_length (4702687395951105107) !=
-fe_length (1024)
-ioctl_fiemap01.c:50: TPASS: (extent->fe_flags & fe_mask) == fe_flags (0)
-ioctl_fiemap01.c:51: TPASS: Expect: fe_physical > 1
-ioctl_fiemap01.c:52: TFAIL: extent->fe_length (5136714152143953955) !=
-fe_length (1024)
-ioctl_fiemap01.c:50: TFAIL: (extent->fe_flags & fe_mask) (0) != fe_flags (1)
-ioctl_fiemap01.c:51: TPASS: Expect: fe_physical > 1
-ioctl_fiemap01.c:52: TFAIL: extent->fe_length (8387236464277024288) !=
-fe_length (1024)
-
-
-Links,
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.16.y/build/v6.16-628-gcd8771110407/testrun/29470711/suite/ltp-syscalls/tests/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.16.y/build/v6.16-628-gcd8771110407/testrun/29470720/suite/ltp-syscalls/tests/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.16.y/build/v6.16-628-gcd8771110407/testrun/29470711/suite/ltp-syscalls/test/sync01/log
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.16.y/build/v6.16-628-gcd8771110407/testrun/29470720/suite/ltp-syscalls/test/fdatasync03/log
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.16.y/build/v6.16-628-gcd8771110407/testrun/29470711/suite/ltp-syscalls/test/swapon01/details/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.16.y/build/v6.16-628-gcd8771110407/testrun/29471488/suite/ltp-syscalls/tests/
-
-
-3)
-
-Test regression: stable-rc 6.16.1-rc1 WARNING fs jbd2 transaction.c
-start_this_handle
-
-Kernel warning noticed on this stable-rc 6.16.1-rc1 this regression was
-reported last month on the Linux next,
-
-- https://lore.kernel.org/all/CA+G9fYsyYQ3ZL4xaSg1-Tt5Evto7Zd+hgNWZEa9cQLbahA1+xg@mail.gmail.com/
-
-Kernel warnings:
-
-------------[ cut here ]------------
-[   34.805150] WARNING: CPU: 1 PID: 627 at fs/jbd2/transaction.c:334
-start_this_handle (fs/jbd2/transaction.c:334 (discriminator 1))
-[   34.807683] Modules linked in: btrfs blake2b_generic xor xor_neon
-raid6_pq zstd_compress sm3_ce sha3_ce sha512_ce fuse drm backlight
-ip_tables x_tables
-[   34.809152] CPU: 1 UID: 0 PID: 627 Comm: io_control01 Not tainted
-6.16.1-rc1 #1 PREEMPT
-[   34.809652] Hardware name: linux,dummy-virt (DT)
-[   34.809961] pstate: 63402009 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-[   34.810205] pc : start_this_handle (fs/jbd2/transaction.c:334
-(discriminator 1))
-[   34.810395] lr : start_this_handle (fs/jbd2/transaction.c:334
-(discriminator 1))
-[   34.810798] sp : ffff800080e2f7e0
-[   34.810962] x29: ffff800080e2f820 x28: fff00000c4b43000 x27: ffffa9c145dca000
-[   34.811259] x26: 0000000000000658 x25: 0000000000000629 x24: 0000000000000002
-[   34.811507] x23: 0000000000000629 x22: 0000000000000c40 x21: 0000000000000008
-[   34.811750] x20: fff00000d0800348 x19: fff00000d0800348 x18: 0000000000000000
-[   34.811992] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-[   34.812234] x14: 0000000000000000 x13: 00000000ffffffff x12: 0000000000000000
-[   34.812858] x11: 0000000000000000 x10: ffffa9c1456a8c08 x9 : ffffa9c142b54b84
-[   34.813572] x8 : ffff800080e2f408 x7 : 0000000000000000 x6 : 0000000000000001
-[   34.814462] x5 : ffffa9c145629000 x4 : ffffa9c1456293d0 x3 : 0000000000000000
-[   34.815093] x2 : 0000000000000000 x1 : fff00000c4fd0000 x0 : 0000000000000050
-[   34.815812] Call trace:
-[   34.816213] start_this_handle (fs/jbd2/transaction.c:334
-(discriminator 1)) (P)
-[   34.816719] jbd2__journal_start (fs/jbd2/transaction.c:501)
-[   34.817124] __ext4_journal_start_sb (fs/ext4/ext4_jbd2.c:117)
-[   34.817687] ext4_do_writepages (fs/ext4/ext4_jbd2.h:242 fs/ext4/inode.c:2847)
-[   34.818109] ext4_writepages (fs/ext4/inode.c:2954)
-[   34.818549] do_writepages (mm/page-writeback.c:2636)
-[   34.818983] filemap_fdatawrite_wbc (mm/filemap.c:386 mm/filemap.c:376)
-[   34.819520] __filemap_fdatawrite_range (mm/filemap.c:420)
-[   34.819942] file_write_and_wait_range (mm/filemap.c:794)
-[   34.820349] ext4_sync_file (fs/ext4/fsync.c:154)
-[   34.820486] vfs_fsync_range (fs/sync.c:188)
-[   34.820624] do_fsync (fs/sync.c:201 fs/sync.c:212)
-[   34.820743] __arm64_sys_fsync (fs/sync.c:215)
-[   34.820882] invoke_syscall.constprop.0
-(arch/arm64/include/asm/syscall.h:61 arch/arm64/kernel/syscall.c:54)
-[   34.821046] do_el0_svc (include/linux/thread_info.h:135
-(discriminator 2) arch/arm64/kernel/syscall.c:140 (discriminator 2)
-arch/arm64/kernel/syscall.c:151 (discriminator 2))
-[   34.821172] el0_svc (arch/arm64/include/asm/irqflags.h:82
-(discriminator 1) arch/arm64/include/asm/irqflags.h:123 (discriminator
-1) arch/arm64/include/asm/irqflags.h:136 (discriminator 1)
-arch/arm64/kernel/entry-common.c:165 (discriminator 1)
-arch/arm64/kernel/entry-common.c:178 (discriminator 1)
-arch/arm64/kernel/entry-common.c:768 (discriminator 1))
-[   34.821307] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:787)
-[   34.821460] el0t_64_sync (arch/arm64/kernel/entry.S:600)
-[   34.821712] ---[ end trace 0000000000000000 ]---
-
-Link:
- -  https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.16.y/v6.16-628-gcd8771110407/log-parser-test/exception-warning-cpu-pid-at-fsjbd2transaction-start_this_handle/
-
---
-Linaro LKFT
-https://lkft.linaro.org
