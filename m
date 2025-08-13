@@ -1,110 +1,76 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hr2.samba.org (hr2.samba.org [144.76.82.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC271096F
-	for <patches@lists.linux.dev>; Wed, 13 Aug 2025 06:12:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9EC2BEFEB
+	for <patches@lists.linux.dev>; Wed, 13 Aug 2025 06:17:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.82.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755065546; cv=none; b=h2VLtwJQrsRLDy/mkoVsxiGV2eM0cCetJG7GUn0PVvjfH4AdRPPiKD3ezBYIBAGNL3suKxR6dLDd20sYe+bBRigpSmYyHbg8zPbsPjn5pwCnA5HDB2E4YPTOM08wLKoJBrlQe0Npl7I3ErIzDlkDxQbRdM/55XUvYpPcHJl0Jmk=
+	t=1755065879; cv=none; b=bam/n6w7rpa4LGIlblmjmj5IGgnJqVGkE+AkKh2coYrcxwE1EUejq0TclgQPd3EI6PMOtz9thbyrzCdMFkrtWN81XwOrHvl6SSL2s07ZuniCqVCmRFVdsZc8IFuDRSyjvubS/LCoQnQKWI85jKWdan7x3SzrIdAHDW2Bc/L7OPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755065546; c=relaxed/simple;
-	bh=cE1DhMiYYzMoy/x/kklbqKG7x+u0x4Y9SODa2dsNNdc=;
+	s=arc-20240116; t=1755065879; c=relaxed/simple;
+	bh=54AJhgpcSudV+hNAJGayVXcvyuvhyHVqjEdcQPHzdpM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F2/Q1tzKHhzLgkrJfRzHIaE3TTLNevfNmELhlmtGrLesZth91vs4nldU03F1ZccRzrv3Xrdi3Q4hVUr+RG0VoDXXA93AZHlxzVccryXulfW3QjDnRuObe8fSodmURd9enrLvLvMFuiMiMTXmqTVrfYz2UX+zkDNbNe/5eE2G6jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=ICkYiwr9; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=JfvSoO6yjcOLWWbMU/BEWR3VNMZCJJoqe9MTK8xTwjIB11h/Du5XqUly8lTmO4lS2uKV7v31hH7MP4iJOWft6MzAg9VJHQ6AfijTBS2RlvT7RusqDyRJtH/cYp1V3u2F1iHJofLVkRljMh5g5qGPOvW/2ffuXGHExrjnU0Oi1Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=samba.org; spf=pass smtp.mailfrom=samba.org; dkim=pass (3072-bit key) header.d=samba.org header.i=@samba.org header.b=ArM9DLB3; arc=none smtp.client-ip=144.76.82.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=samba.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samba.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="ICkYiwr9"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-458ba079338so2922375e9.1
-        for <patches@lists.linux.dev>; Tue, 12 Aug 2025 23:12:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1755065544; x=1755670344; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2Swm3ErZ56eiKdwJ9pJQ9YiWefVK45ut4nIQRyp8Jwk=;
-        b=ICkYiwr9elIBSYbM1AhuHa9wT5IALYupZh5uFnnm7c7mZIsR8HWuwyOFkBphByQkkT
-         koBSKURzcLvG1nM/WNvqJ5xsvBi0AKxEZyIiFGuz069tMhgAPFaKEwmQzwsGMf3VEqp+
-         i+B+ChMhwngi/eARPzoZLSlIbK8EBxYO8ebMVSDmBFpc6uCkipdASlZLLI5kHZKfdzUX
-         5s9wWFRFHrxFYYvX9RGQ1AqC6aIYJkNwIxUnl6cNtnwBl0VFw2VqC5mkwUDXyKnLKscI
-         IeRLjLWRz+6k4HDMr6wcCZpo6t2P0n46v1hvgBTuDs9ZVLTb5QTpnHFoXxrDiQCRf/nX
-         Xz+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755065544; x=1755670344;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2Swm3ErZ56eiKdwJ9pJQ9YiWefVK45ut4nIQRyp8Jwk=;
-        b=bxgWg/9ipHcPZIEZTPT5x9f1UA2xPvSHDhNlNUyiApv3PUK3eKI0eEwXpmgTqXXqVz
-         Ebn5mPK9vKWpNpG8FmRogTFpC4rz1WNmdak5QTzmn0VQvYNW8YOPzDSaO1XGcNDfBCgV
-         TI7EMI52mahaqqHjVRNBUPZCVew/YWZKN8mi4IuyowUzq8llXQvQ/nOrg+G0ayMIIgDW
-         Wj+M8s20/Z1w+T0EPYchil9Zj4MWWD9XtW1toAFC10qsMjZoJDYjfbDUfNBD9iCfsiqQ
-         52LFUSEVXQUZ81aCLtSUgR4srV+o6UcvbJMn/chXAMPks+mLOigW+j2ys3vsOOtK2qNa
-         c1Pw==
-X-Gm-Message-State: AOJu0Yy3iijPt+RPqG+d0A72e0OVfW0fOmDop/Y/0zIBd0EOFT9WVA2d
-	K1gJwOOmetJe4j+sLWyiJj7K2VH7CzOQFeIfQ6NAILRC/pQRyrhP4cA=
-X-Gm-Gg: ASbGncvaPGJKuuDsK+Dd/BsBHyFvtNg6dcULjQL9DQ0wuK3FBG1wOb3O1bpgfa+lTf/
-	aWbVjarFRZKJjRFTBGr6iGSZk9oPtlMOs8Vn0j1DdVD1NjkmYRfM0e6CQna1SZHhnicmImsPVth
-	SUtrHMba2aZ1lraVL076dlcPW1b2FubZkjpVUxAUx2VKJ8S1Z17KYizgGJczjXLHqtuWhCX5I3W
-	y2Ebre+JjdFfAOuVE7VVlR1XqnTZ6FtVExZFp+TpxryusKXSfIDCmlLXS9ZDtKPIA5n+5Ussctl
-	DIzsQE4MmqzugJ9PZUIjVBd9ipGHKQd6jLHCnHLd82SCJ9wq65FXsDrNHg1vwS3TW0q6tk9/3sZ
-	p9dsYDZROxPWIMTbOTI5n3Jf40DbjoYpFqOoFfCa8HUUiUgRzA+ncbwIgKwYJAGzksTJ+YAXYKO
-	g=
-X-Google-Smtp-Source: AGHT+IHq2Uwf4Cls+JlFUSY5TENcVSVnqP5UV2iObb0l7RNlDG/pq6r9iUkYIeehVaA7IEiSj/WjyQ==
-X-Received: by 2002:a05:600c:1716:b0:456:1d06:f37d with SMTP id 5b1f17b1804b1-45a170565b9mr6114005e9.16.1755065543427;
-        Tue, 12 Aug 2025 23:12:23 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2b48db.dip0.t-ipconnect.de. [91.43.72.219])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b9163ae600sm2535494f8f.5.2025.08.12.23.12.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Aug 2025 23:12:22 -0700 (PDT)
-Message-ID: <64d3898e-baa9-449d-a37f-2bd0ca034af8@googlemail.com>
-Date: Wed, 13 Aug 2025 08:12:21 +0200
+	dkim=pass (3072-bit key) header.d=samba.org header.i=@samba.org header.b="ArM9DLB3"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=samba.org;
+	s=42; h=From:Cc:To:Date:Message-ID;
+	bh=TRStFU0iG8B6s9qs4xh8W9VpCXMpgzKi6Yokp8SG6go=; b=ArM9DLB3p21I7BnUdHUg0OEQFG
+	g2WV7snw7UkP9elqIXS1/WhOIZqJmDFaVXi75cV6TPWQUaShQWKrbPNUtIaPG9ylYmXhO5jFEtdAo
+	ze2ksXfOr6RIa1N7I6kcJ5IER35MftQBd8v78+3E9mJkBnnOjsf3WCQj1Ao7p1WvfAQ9Pj09IWuEh
+	33AgAFz2LrHVvUtKSvxRUZ0VQ9GS+dRQXq/rFWFw84gQUiHL7aI7FxczmfXgaU2tAIEe0/39OMqxW
+	sMeeS1FyevfgDyTD1WPWAEkmCdc3ePHbrvJgENgBGlunYBasW2mEKgHf9FfOtAWVinW+pWSA0Ryzq
+	KXbOS0EF9xXP9j9Eo09ObW1+haZC0Ln4kVarUCwbqkIl/fsHvS0GatGYBtQQjG65zGiE4TFHQwZ/K
+	kIZdieX+1HbVtLFtaBBx+PJR7MGiyKVat3wmoTcqL/OD6ap6bi4DgoiWHkGypxOBy3pBljx3rL9N7
+	H1kJG3ExLY6k3Cw3ni6/oyEP;
+Received: from [127.0.0.2] (localhost [127.0.0.1])
+	by hr2.samba.org with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__CHACHA20_POLY1305:256)
+	(Exim)
+	id 1um4o6-002YpX-27;
+	Wed, 13 Aug 2025 06:17:54 +0000
+Message-ID: <527dc1db-762e-4aa0-82a2-f147a76f8133@samba.org>
+Date: Wed, 13 Aug 2025 08:17:53 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-Content-Language: de-DE
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.16 563/627] smb: client: let send_done() cleanup before
+ calling smbd_disconnect_rdma_connection()
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org
+Cc: patches@lists.linux.dev, Steve French <smfrench@gmail.com>,
+ Tom Talpey <tom@talpey.com>, Long Li <longli@microsoft.com>,
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+ Steve French <stfrench@microsoft.com>, Sasha Levin <sashal@kernel.org>
 References: <20250812173419.303046420@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
+ <20250812173453.306156678@linuxfoundation.org>
+Content-Language: en-US
+From: Stefan Metzmacher <metze@samba.org>
+In-Reply-To: <20250812173453.306156678@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Am 12.08.2025 um 19:24 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.16.1 release.
-> There are 627 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Greg,
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. Built with GCC 14.2 on Debian Trixie.
-No dmesg oddities or regressions found. I did not see any of the Python warning messages here which I did see in the 
-6.1.148-rc1 build.
+Am 12.08.25 um 19:34 schrieb Greg Kroah-Hartman:
+> 6.16-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Stefan Metzmacher <metze@samba.org>
+> 
+> [ Upstream commit 5349ae5e05fa37409fd48a1eb483b199c32c889b ]
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+This needs this patch
+https://lore.kernel.org/linux-cifs/20250812164506.29170-1-metze@samba.org/T/#u
+as follow up fix that is not yet upstream.
 
+The same applies to all other branches (6.15, 6.12, 6.6, ...)
 
-Beste Grüße,
-Peter Schneider
+metze
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
