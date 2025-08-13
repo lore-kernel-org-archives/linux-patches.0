@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87832BEFFF;
-	Wed, 13 Aug 2025 06:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055EB2C15B5;
+	Wed, 13 Aug 2025 06:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755066745; cv=none; b=H5v6iNHx32h7GLUbUsV4aOqlvaID91uV5OuMAgNqKEHulIAIsOZOXay/QVKjuH4ut74g5kOV7vcy9TolVuOOtrp9Bs7K1kWSJp7q+rdotO5qI/klrOOMGS4r0zuNiWjxmVmjHj42G++QnV68aArPge2ALX3NW9yTN5dUmncdrx0=
+	t=1755066974; cv=none; b=IEQYL2zeg98F93wVpohmO9aNuKazPx8dgVmtt+MT2Af4Vm6+rHQ+BxXDaCeTMYgquKsWkmNcRYymy6/zvq68OLJoKtftmPyUJXU85WQkd9jNvKNG6hOF25cA9s5HsbPDR1a1nuFeHq4YvBrv5fXBEM2uCGoD1zS3YPqxSCDVYhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755066745; c=relaxed/simple;
-	bh=r8n0fvZoWR9qNJ0mL6MC8/MRcrTK6Cv4vIWSR/q/yNs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bbGr2ZnZ75oq08oBoihWE0HYNPs69qKpHjyF1bdqCGhPnWCRSzU71Omfq0FlSUfRkHZAeeGBhs8IHLa96GWZmzs1ScB1df/606PdXKly872Pir9r37derzjEvKHsCyOxP+ZHqrOr5o6qzWob24cCbqDtquWD/q8+XGPHHy1qwKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DMiwHFKo; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755066974; c=relaxed/simple;
+	bh=XN/VFV6owpNhSeqhRPxjfBSPh30QuCdMXbPYfHCJCtI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Gm9yrly3IXVGmiGrR0qtZbsRJ47yV4NrM0lk3B5evfSuZm1G4emjLXxbmBQ4u+RKQUf0iDuxXU/mhZVa+unpU+qycBCU/mCN5n9HQbGLUKFbZRI8IIA3z9QahiXKOlt6seH1B6ZkyKqsTP5lIeNU0JwNEqricrK1tmWQAC6xjG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A9dcMyMP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DMiwHFKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0518EC4CEEB;
-	Wed, 13 Aug 2025 06:32:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A9dcMyMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F76C4CEEB;
+	Wed, 13 Aug 2025 06:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755066744;
-	bh=r8n0fvZoWR9qNJ0mL6MC8/MRcrTK6Cv4vIWSR/q/yNs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DMiwHFKodesPyvKinFMYAnB9OyxotIij40uS8Q/Ke/67iQ5lzYD5GO+pB73otH4Vh
-	 C8FwMtvUlSr1xQaBOoBVnc1Cv0ZHFtAE6bzYnFoTiM4xUFUlCJGVGvIPY2wnfqB/13
-	 QYg+8EW/9+P93+XBu6MIxiMlycg2Y3ZXAfLY9FuMM7fsY1yMy4HPiYYKBrHzCdWhRU
-	 FHU1bszJ2mXGAxoHrBZRCiVK62zZ/X/vsJBPUMxRqMiNUC+JONzS2ySlVgWrbQBjz0
-	 QEfGQslleDL+39pH/SDj0wlFtOok+niKmps75+fTa+5Ohik0Oe7ltbT4HpAsGXHNeo
-	 45q78w7Po+D8g==
-Message-ID: <d0af351b-715c-4f32-b33a-77d2459c2932@kernel.org>
-Date: Wed, 13 Aug 2025 08:32:20 +0200
+	s=k20201202; t=1755066973;
+	bh=XN/VFV6owpNhSeqhRPxjfBSPh30QuCdMXbPYfHCJCtI=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=A9dcMyMPRWPu6+6zYdeuZiSnciJ7BOdpQKzfsqEZ45eR7z6Jlges2D3lFMH0Y9HZO
+	 BUC26Jp3+6vOLibDO1nR0TxgO0yHa1zcrG14neP0mBTrVrhqzUJs+cpPZIWNZvMDX5
+	 dnd5mwnNctYitl8qU/EaYVO4HDNAXnFDKcBNF2sHgEe6vUE3amXP863iCWEe5q3OjL
+	 Zsbd00QmOv8lNOLyBe1t4Np9+fZHVIEXMAXBk6NE8KiEO0Q0eBHtOWaM4xuI+vFZT0
+	 DaVBu4LHCD2ZHQA3h8xyLhCcid2iUxzA6UB9PGnA2TsS1omAovbr5PHvO/fTd82Usq
+	 75lf/cfuVO/5g==
+Message-ID: <ca432b9e-e016-4d2d-b137-79def0aaca85@kernel.org>
+Date: Wed, 13 Aug 2025 08:36:10 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,14 +37,15 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 6.16 028/627] erofs: fix build error with
  CONFIG_EROFS_FS_ZIP_ACCEL=y
+From: Jiri Slaby <jirislaby@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, kernel test robot <lkp@intel.com>,
  "Bo Liu (OpenAnolis)" <liubo03@inspur.com>,
  Gao Xiang <hsiangkao@linux.alibaba.com>, Sasha Levin <sashal@kernel.org>
 References: <20250812173419.303046420@linuxfoundation.org>
  <20250812173420.398660113@linuxfoundation.org>
+ <d0af351b-715c-4f32-b33a-77d2459c2932@kernel.org>
 Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
  xsFNBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
  rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
@@ -87,65 +88,85 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20250812173420.398660113@linuxfoundation.org>
+In-Reply-To: <d0af351b-715c-4f32-b33a-77d2459c2932@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 12. 08. 25, 19:25, Greg Kroah-Hartman wrote:
-> 6.16-stable review patch.  If anyone has any objections, please let me know.
+On 13. 08. 25, 8:32, Jiri Slaby wrote:
+> On 12. 08. 25, 19:25, Greg Kroah-Hartman wrote:
+>> 6.16-stable review patch.  If anyone has any objections, please let me 
+>> know.
+>>
+>> ------------------
+>>
+>> From: Bo Liu (OpenAnolis) <liubo03@inspur.com>
+>>
+>> [ Upstream commit 5e0bf36fd156b8d9b09f8481ee6daa6cdba1b064 ]
+>>
+>> fix build err:
+>>   ld.lld: error: undefined symbol: crypto_req_done
+>>     referenced by decompressor_crypto.c
+>>         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in 
+>> archive vmlinux.a
+>>     referenced by decompressor_crypto.c
+>>         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in 
+>> archive vmlinux.a
+>>
+>>   ld.lld: error: undefined symbol: crypto_acomp_decompress
+>>     referenced by decompressor_crypto.c
+>>         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in 
+>> archive vmlinux.a
+>>
+>>   ld.lld: error: undefined symbol: crypto_alloc_acomp
+>>     referenced by decompressor_crypto.c
+>>         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_enable_engine) 
+>> in archive vmlinux.a
+>>
+>> Reported-by: kernel test robot <lkp@intel.com>
+>> Closes: https://lore.kernel.org/oe-kbuild-all/202507161032.QholMPtn- 
+>> lkp@intel.com/
+>> Fixes: b4a29efc5146 ("erofs: support DEFLATE decompression by using 
+>> Intel QAT")
+>> Signed-off-by: Bo Liu (OpenAnolis) <liubo03@inspur.com>
+>> Link: https://lore.kernel.org/r/20250718033039.3609-1-liubo03@inspur.com
+>> Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+>> Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>   fs/erofs/Kconfig | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
+>> index 6beeb7063871..7b26efc271ee 100644
+>> --- a/fs/erofs/Kconfig
+>> +++ b/fs/erofs/Kconfig
+>> @@ -147,6 +147,8 @@ config EROFS_FS_ZIP_ZSTD
+>>   config EROFS_FS_ZIP_ACCEL
+>>       bool "EROFS hardware decompression support"
+>>       depends on EROFS_FS_ZIP
+>> +    select CRYPTO
+>> +    select CRYPTO_DEFLATE
 > 
-> ------------------
+> This is not correct as it forces CRYPTO=y and CRYPTO_DEFLATE=y even if 
+> EROFS=m.
 > 
-> From: Bo Liu (OpenAnolis) <liubo03@inspur.com>
-> 
-> [ Upstream commit 5e0bf36fd156b8d9b09f8481ee6daa6cdba1b064 ]
-> 
-> fix build err:
->   ld.lld: error: undefined symbol: crypto_req_done
->     referenced by decompressor_crypto.c
->         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
->     referenced by decompressor_crypto.c
->         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
-> 
->   ld.lld: error: undefined symbol: crypto_acomp_decompress
->     referenced by decompressor_crypto.c
->         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
-> 
->   ld.lld: error: undefined symbol: crypto_alloc_acomp
->     referenced by decompressor_crypto.c
->         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_enable_engine) in archive vmlinux.a
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202507161032.QholMPtn-lkp@intel.com/
-> Fixes: b4a29efc5146 ("erofs: support DEFLATE decompression by using Intel QAT")
-> Signed-off-by: Bo Liu (OpenAnolis) <liubo03@inspur.com>
-> Link: https://lore.kernel.org/r/20250718033039.3609-1-liubo03@inspur.com
-> Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-> Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->   fs/erofs/Kconfig | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-> index 6beeb7063871..7b26efc271ee 100644
-> --- a/fs/erofs/Kconfig
-> +++ b/fs/erofs/Kconfig
-> @@ -147,6 +147,8 @@ config EROFS_FS_ZIP_ZSTD
->   config EROFS_FS_ZIP_ACCEL
->   	bool "EROFS hardware decompression support"
->   	depends on EROFS_FS_ZIP
-> +	select CRYPTO
-> +	select CRYPTO_DEFLATE
+> The upstream is bad, not only this stable patch.
 
-This is not correct as it forces CRYPTO=y and CRYPTO_DEFLATE=y even if 
-EROFS=m.
+-next is fixed by:
 
-The upstream is bad, not only this stable patch.
+commit 8f11edd645782b767ea1fc845adc30e057f25184
+Author: Geert Uytterhoeven <geert+renesas@glider.be>
+Date:   Wed Jul 30 14:44:49 2025 +0200
 
->   	help
->   	  Saying Y here includes hardware accelerator support for reading
->   	  EROFS file systems containing compressed data.  It gives better
+     erofs: Do not select tristate symbols from bool symbols
+
+I suggest postponing this patch until the above is merged and picked too...
+
+> 
+>>       help
+>>         Saying Y here includes hardware accelerator support for reading
+>>         EROFS file systems containing compressed data.  It gives better
+> 
 
 -- 
 js
