@@ -1,126 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAA42D12F7;
-	Wed, 13 Aug 2025 08:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0819E2E92DD
+	for <patches@lists.linux.dev>; Wed, 13 Aug 2025 08:10:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755072364; cv=none; b=dqzWEmgriH6EAxdpR/3k8g7Nw+39VoBIAKtX5ZfRkyM8ijM7Dut5E5FHTM67nNZ0k41StWHtTRhovbYKqMuAjC2DiwGLZhKQaB8JhX3PFFCCkHqDGTTWGvWIpPhx3A1Z5sYaxwG2IpzQNRcByu4vJat4yD3MoaSMuunTSvalskM=
+	t=1755072613; cv=none; b=G0UOt1cGMcIzjVRlWtpvjAGRF/o7oaZGAxWI/IxZ/U9A8NMYUbjeDzMVcqmRR1UhG3thAg9BtStNM8UAM0srZrjeSB9B1DyHrklqbJTEKREH8I1gSNm1oHJPCgjbxE0/0IxhvRQuCHFh+684RMpljPG9NXMSPwBTyg0qDDHBeiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755072364; c=relaxed/simple;
-	bh=eeluwFsguHI154LohyPllRNSeqspnUZCRnrHmBIVPHE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dzz6UC2a5l2zk1qQnMhn8x2u1ny3+33dS8bBEC6Bv+1xqOIw+gbno9AbBcg8uxSz8lhJGgJVzRN9TcwfEtFqlv7T+QLFww5C7sgEbT1iCBRI0rNfaYKXiQquaASZt6G+cByN3v7SGbVctyyqfTABN004aeJJZ2djqPAO8/A/JJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b57shFIc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755072613; c=relaxed/simple;
+	bh=AB4CRxgZ/K+asTbTo0Y5VIvvzarVo9pWZDEvrp60J6Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NDzidT7/YcpUbhQSv6nxnljwLYc7XfBNW2MvZEpv5MWiGe7h2zcEEVKW6kxXJZCC0po/FPXMYtRqj9mAHtp47aj13RJkN5x4kXpkUYhUB6bCfWk39ehYgfwmVQ8dSFaa+Wb2hYBft5QZuocDjQEoVoF84aVlzOq1GCz/WAcu+FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=I8J3efPm; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b57shFIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08ECC4CEF1;
-	Wed, 13 Aug 2025 08:06:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755072363;
-	bh=eeluwFsguHI154LohyPllRNSeqspnUZCRnrHmBIVPHE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=b57shFIc7eKS9yti8AUBcvU9VkfJiClltdj5B8/bnY8FgDe0YoHdnr8mcy394aWsV
-	 uFIlFk7D6zgGKilwqIca1wCxqIFebJ8GMVL0BHfK6h2GvsxoP5Wm3bbcrfuC4qGKHJ
-	 2ozF+PccwATLDv7nSYLr1AvVD1TzdBV5n1uBuy1o=
-Date: Wed, 13 Aug 2025 10:06:00 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jiri Slaby <jirislaby@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Bo Liu (OpenAnolis)" <liubo03@inspur.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.16 028/627] erofs: fix build error with
- CONFIG_EROFS_FS_ZIP_ACCEL=y
-Message-ID: <2025081346-mobilize-bobbed-5bff@gregkh>
-References: <20250812173419.303046420@linuxfoundation.org>
- <20250812173420.398660113@linuxfoundation.org>
- <d0af351b-715c-4f32-b33a-77d2459c2932@kernel.org>
- <ca432b9e-e016-4d2d-b137-79def0aaca85@kernel.org>
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="I8J3efPm"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id A4DF9A0168;
+	Wed, 13 Aug 2025 10:10:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=mail; bh=rl1WbGMPWQ/RY5hRRY42
+	uFaJEq5feAo9XpXUhJH2YDQ=; b=I8J3efPmqDQjvdTQfQamoLzL7oqALShoW1O/
+	e/CvfzKfKwLQ8Y8I+Q7tzFpW3wk3WQtmLpdYA0sRjJ/xiPXYP1eMqmV2Y6tyCu/V
+	jw5r85GQiL5j968a3HWIZqbXbgEM1SOILAZRiZcdV2vSeBVb8v85cyuRQa251RPR
+	6UMUGS6eUFyv4FMaMlOsO1yNvKgLfQ3s4kXFUOUljQVFNrdMDhs38iHZ0Lkqx8ok
+	b9wQmsyui4MnrjyC8/LnKG8i2P24+dNdTX+ltrO4uxJB+XW8o1QqnZANe6nJwYds
+	yHAQStF4QLcq70dsFHuRVnxD2wXDd8xjziGCIZjvystcNtBTIQe0xf2Cqy3my7Oe
+	th3xbfA0eLbOhrEk65aQWy99QcUkr1Rz49oWPPERljXFUEV72gVdN6WhHy8vj6/K
+	iD8Wv1pkZIzDmHqdRGAurIS4ePn902h+fQoKHDtIz6BGh/zv1zkeL+EjHRZZ50+C
+	zUBDF3FqSAEtFIyZjdVNoXsNefpMkV9N6Y8reWdWvKEsi/vLyMC0DgHW/TqQsJ7m
+	YdjLf39GKsuCqH6VW1y69hk7jIZn6TFADkspW8VJG8B0rDjGl3QtldVzfMx/0Ild
+	7SJ8ASY8YOKH/1UpCnjEWb8OAuyI2LgPmaXfhJbvcG26MObthA574roh6jKhhPJB
+	TyNrbu8=
+Message-ID: <44d15997-2c16-436e-b1f5-fc2de7afe29b@prolan.hu>
+Date: Wed, 13 Aug 2025 10:10:07 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ca432b9e-e016-4d2d-b137-79def0aaca85@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.16 519/627] net: mdio_bus: Use devm for getting reset
+ GPIO
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>, Csaba Buday
+	<buday.csaba@prolan.hu>, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
+	<kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+References: <20250812173419.303046420@linuxfoundation.org>
+ <20250812173450.953470487@linuxfoundation.org>
+ <73f6a64b-89b5-412a-94d7-07cdfa07cfb5@prolan.hu>
+ <2025081305-surround-manliness-8871@gregkh>
+ <2025081337-reprise-angling-7cb8@gregkh>
+Content-Language: en-US
+From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
+In-Reply-To: <2025081337-reprise-angling-7cb8@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
+ ATLAS.intranet.prolan.hu (10.254.0.229)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A296767155E617761
 
-On Wed, Aug 13, 2025 at 08:36:10AM +0200, Jiri Slaby wrote:
-> On 13. 08. 25, 8:32, Jiri Slaby wrote:
-> > On 12. 08. 25, 19:25, Greg Kroah-Hartman wrote:
-> > > 6.16-stable review patch.  If anyone has any objections, please let
-> > > me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Bo Liu (OpenAnolis) <liubo03@inspur.com>
-> > > 
-> > > [ Upstream commit 5e0bf36fd156b8d9b09f8481ee6daa6cdba1b064 ]
-> > > 
-> > > fix build err:
-> > >   ld.lld: error: undefined symbol: crypto_req_done
-> > >     referenced by decompressor_crypto.c
-> > >         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress)
-> > > in archive vmlinux.a
-> > >     referenced by decompressor_crypto.c
-> > >         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress)
-> > > in archive vmlinux.a
-> > > 
-> > >   ld.lld: error: undefined symbol: crypto_acomp_decompress
-> > >     referenced by decompressor_crypto.c
-> > >         fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress)
-> > > in archive vmlinux.a
-> > > 
-> > >   ld.lld: error: undefined symbol: crypto_alloc_acomp
-> > >     referenced by decompressor_crypto.c
-> > >        
-> > > fs/erofs/decompressor_crypto.o:(z_erofs_crypto_enable_engine) in
-> > > archive vmlinux.a
-> > > 
-> > > Reported-by: kernel test robot <lkp@intel.com>
-> > > Closes: https://lore.kernel.org/oe-kbuild-all/202507161032.QholMPtn-
-> > > lkp@intel.com/
-> > > Fixes: b4a29efc5146 ("erofs: support DEFLATE decompression by using
-> > > Intel QAT")
-> > > Signed-off-by: Bo Liu (OpenAnolis) <liubo03@inspur.com>
-> > > Link: https://lore.kernel.org/r/20250718033039.3609-1-liubo03@inspur.com
-> > > Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-> > > Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > ---
-> > >   fs/erofs/Kconfig | 2 ++
-> > >   1 file changed, 2 insertions(+)
-> > > 
-> > > diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-> > > index 6beeb7063871..7b26efc271ee 100644
-> > > --- a/fs/erofs/Kconfig
-> > > +++ b/fs/erofs/Kconfig
-> > > @@ -147,6 +147,8 @@ config EROFS_FS_ZIP_ZSTD
-> > >   config EROFS_FS_ZIP_ACCEL
-> > >       bool "EROFS hardware decompression support"
-> > >       depends on EROFS_FS_ZIP
-> > > +    select CRYPTO
-> > > +    select CRYPTO_DEFLATE
-> > 
-> > This is not correct as it forces CRYPTO=y and CRYPTO_DEFLATE=y even if
-> > EROFS=m.
-> > 
-> > The upstream is bad, not only this stable patch.
-> 
-> -next is fixed by:
-> 
-> commit 8f11edd645782b767ea1fc845adc30e057f25184
-> Author: Geert Uytterhoeven <geert+renesas@glider.be>
-> Date:   Wed Jul 30 14:44:49 2025 +0200
-> 
->     erofs: Do not select tristate symbols from bool symbols
-> 
-> I suggest postponing this patch until the above is merged and picked too...
+Hi,
 
-Thanks, I'll go drop this now.
+On 2025. 08. 13. 9:56, Greg Kroah-Hartman wrote:
+>>> This was reverted and replaced by:
+>>> https://git.kernel.org/netdev/net/c/8ea25274ebaf
+>>
+>> That's not in Linus's tree yet, so I can't take it :(
+>>
+>> So I'll just drop this commit for now, thanks.
+> 
+> Oops, nope, we took the revert also, so all is good, I'll leave this one
+> in.
 
-greg k-h
+Sure, although I'm not sure what the rationale is behind taking a commit 
+and its revert also, in the same release. Anyways, for the rest of the 
+backport versions, drop this commit and pick 8ea25274ebaf instead (it 
+should land in Linus' tree in the coming week or so). And when you do, 
+don't forget to read its notes at:
+
+https://lore.kernel.org/all/20250807135449.254254-2-csokas.bence@prolan.hu/
+
+Bence
+
