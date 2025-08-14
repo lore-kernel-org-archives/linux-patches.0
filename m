@@ -1,86 +1,86 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E6E279DCC
-	for <patches@lists.linux.dev>; Thu, 14 Aug 2025 21:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD96827D77B
+	for <patches@lists.linux.dev>; Thu, 14 Aug 2025 21:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.10
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755208464; cv=fail; b=HX+mXAHMe5R8s3bI+zIX02fOuBPHH4mw605RdVBQHzRDswBpOGDns6BbVgydMjVXSj7WABDK79qu+KIw5ilp0530iCVBjI/BhsFVeFuRehcmUz3W22X6pCLYeTT8iV8eLMAA8z0zrazKjQRKRtGi22CVxYpl+CFvRHGGohkVE+Q=
+	t=1755208504; cv=fail; b=X1PoBQL2CTgSvmW/WTKX94TgmlRNZf/jXskh/vU48n42hrbsZXBdQYIDXTeLYxaKjv7Nk4hCSpK8zjPP9SeXX9RDn6OIzEdEbwGF07aAcaNKu5cBQZ4tKs7IZkLtkBQ+mSa+/mjJDvVPojnQBu/RAF7WJKPJn8fWw3P72p5Q4s0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755208464; c=relaxed/simple;
-	bh=MY+BvN2LLssUZ2vGGepNAJjax/IJu9b3Ll6imFT/Yi0=;
+	s=arc-20240116; t=1755208504; c=relaxed/simple;
+	bh=ERVlIpC6+7T4DUyB0WiT1y6EIfvzBULbU4cklGG2Q68=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Erz2dO/cir+Nik86yu/eVVrKIcjTuXibya8Jx8g48v/Gr/Jo+YOKkiSo3ID/Xq9+4IdRkZ5PeGGGgdyfOwb3VmB+yQ5dN66V9B5f/064SKYW2+hmmDxlUsoXGbdoG6ibcGnarD1qWjwrOQok6/ZqN9CgYNjsh9kgwiLGtZXrrFk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HrI7sgIs; arc=fail smtp.client-ip=198.175.65.16
+	 Content-Type:MIME-Version; b=SRA3cVZjlin11AbaRawFBsz/VPkMMvDLDsTzSSsmiaSok4y1smpzNcOxkeoALb5cX6M28lMZIGQlAH0LY0cYoSWpwnzcXL7/5QLrRcu1/t7UI/nFCpgeTR6vNQNvQGbiwirEauY6MVWgb4rWOekznQKXs59E6bThPJB8NeUZ+Dc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T4+1lb5t; arc=fail smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HrI7sgIs"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T4+1lb5t"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1755208461; x=1786744461;
+  t=1755208503; x=1786744503;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=MY+BvN2LLssUZ2vGGepNAJjax/IJu9b3Ll6imFT/Yi0=;
-  b=HrI7sgIs9fy58qTzABNUDV8aK9AfnkJ+XcGgUTHmQ3maS5+GXk89jZmt
-   004nRSgaRUR8ujyYLRSjguHlAyxjLCGTwuNHsC2GHM4cf1p4GqxO+VqtX
-   /wTC40fAJtkpleexJ1luq16PzyQSHgkwXt6LdElH64u9D6S4ghmfSRhvu
-   /UK0vh8R4GM0XT3UwNptZVQWKNhSM57Y3yEtdGcwLtIiduXAHUwjYUcyf
-   aBsCC8L+tDUmKfNQLZKxCT672IGK8xkZIK0vTXYeSVkNLFWZk3bA+IP7D
-   qulvR4+V2DhvXMe9AxRHKwJHbwD0lMc8Wcp9n35cswSDjDKrBBPcbFTGg
-   g==;
-X-CSE-ConnectionGUID: TDPuO+L7T8KW/v9qUviCew==
-X-CSE-MsgGUID: gjFp7LmJRTK/EsZU8Z1xig==
-X-IronPort-AV: E=McAfee;i="6800,10657,11522"; a="57686123"
+  bh=ERVlIpC6+7T4DUyB0WiT1y6EIfvzBULbU4cklGG2Q68=;
+  b=T4+1lb5tux52vmdHuNNnfqJ0kBqPQutGirGtfwcbV5w1i1uG1U4iJUL+
+   x4cIE0CWD/uy+x6FL+O1uG+uyHe/jr+fDXnxtbt3djSKGOqKKoePFzNWz
+   765lY5atuS8tVw8e/pVJGy60xa52SkeU1nSw2wovMIKTajCkLSDdm+yz5
+   QTgvlduq28MshE3awjW706SAHWQHGKA1tYTCM3VputksQ23my4ycQnZqb
+   LjAv7zQmBtaCiaevclTL6StRjrtod8JtZQSFMcg9CBL1JSkjTXOT+h3KM
+   qJnP8VnXTYUpHDDGAstMCNsKCqtpyrKIWKHyPtTnt/kfz9EbMKCZEiSMp
+   Q==;
+X-CSE-ConnectionGUID: gikxWKGQTO6L3JS85uhkYg==
+X-CSE-MsgGUID: BR8VFqmcSwOfip4t1/qCSw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11522"; a="74988786"
 X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="57686123"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 14:54:21 -0700
-X-CSE-ConnectionGUID: rxaAybEcS2Si2vF9oO4SbA==
-X-CSE-MsgGUID: 0T9i/wQTT/y6wvi3rF4pnQ==
+   d="scan'208";a="74988786"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 14:55:03 -0700
+X-CSE-ConnectionGUID: r6mVPbSwTEC7Dyf0ESuUyA==
+X-CSE-MsgGUID: bpIivc42THmV6MgYrdM0Gg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="172197615"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 14:54:21 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+   d="scan'208";a="204052110"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 14:55:02 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Thu, 14 Aug 2025 14:54:20 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ 15.2.2562.17; Thu, 14 Aug 2025 14:55:02 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17 via Frontend Transport; Thu, 14 Aug 2025 14:54:20 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (40.107.223.75)
- by edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ 15.2.2562.17 via Frontend Transport; Thu, 14 Aug 2025 14:55:02 -0700
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (40.107.102.86)
+ by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Thu, 14 Aug 2025 14:54:20 -0700
+ 15.2.2562.17; Thu, 14 Aug 2025 14:55:01 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fRResxHYi6DJ0If0BlB6JoqUu56fDX9j5HL66ey2sCLlr48s2vVX7VP95TfgVvyiFYBOOZNwPFB8yvLt0kRY9GLxtiVzUYbi3uZTbRwwSpCTCwlfWOI2jfGzdQTrl3CZtOeA6ZJ3HsVg7kBh4iPQ9fGk2pV7E2y1xqu9+oy7ez8twu/cJxMoZ89JlOdsazPqSlD+6nn/25ePDgrYwLA4yQ9cW97RJHvW4O+ecDQLmQCJngZwG/Adc6ZrZy+b5gWKt5s4q1nFhdFLzhNtk9psY2qcpJ9T07Gn/HbrfwvmkLGXIAnC2js669rkd2hv3I/l8gJeCiV4SAHCRBaSG45+MA==
+ b=Go602hG/WuJ1FeQhL/PRFyxLhTz7qZURE9Cv6YDP2MKpug4WR9t6jil++iOIregFdOb0GFglyjeIeFBwrKtb/dhZBM9020HmtPADBzpuZs0dftktP6LbQxU6Dk4nOu1hrNVpcougdbnDDQD6zg8LKQMjpDKYWbdDwkd12IICQjY7+SfWCQsmXKObZTlvbRV84N0Sr5VQ7e8eOeH4K2o6PjKt7p0TtG7lOW5Fiqs7BYXjFW7eqAzbLBIvXFLbQCp7B2ySuJoXnR1iqy/ho7MYsZ3H3KDjDeWA2t2z42B5daMeoF5zevy4aupuFrjsKvAcjs6g+eovVdZU1C68QqhWuw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BFutATwFi16dW7Nlcn5N+IJyKxWnwNN7frP8wYUteO4=;
- b=BXuwRh8+1Ilten7DDZZFdOC+9jYDVYZ3Eho83NabfsgyUf9Naj1n4r6K15gFxwFysp4HaewypnkHwY1eru6oYlvf+nUFuV3ZdvyXN3wAsvw5ClDSins4mZB6VJ7BQnYDTRXjSVkYzoI9U3hclNqzX43yRncfjREkoXM1ITOASubKgXRCzo6igtW/QvyAxEfiCjEe6G6OSGCUATDNC3iM/y2jcBa+L7ypsQ2cI9pdrTti6EYgzF1Sgc+42R3mRtsgXq7O0XwEoShZNZXrYUtMXSj0GR1A4lt3bs7CdXuf1+XLEvDFWVQJsSpUZfSB6xCi9OvgpuzlXVO3nQGT7ScyEg==
+ bh=l4424B5YyUyv9pmf62/0k/Gja2rGHve/h7JWGy8xxu8=;
+ b=MTOlSv9zk/qFSWkX95w0P5SK1hyq5auJIEe/5IVv7vUpj3HMYZph7+Yf8QZjrkWwOZXobkIA+8ddrQhmugZkysPg7nB3LW20Yt9kszsD9XtO2y3NryjhC9HZF0pZ12qINdixqIZCzGQifSISPGXvo9HrOzZsFE+zxCrAeKVgt98jV6tD7lhS8Cdmt7ul/WU9utogVSFSWZ5cKwG2F6lAuriOeKgidYflF2SFnusoDWXX0Gi1I8aExLwZRo86iBew7DORb82o5dKokOTt1ANmdgIBbFFeGOX45qKHlklNiYu4BFrf3onaB004+phecd4be+REBf9u160OL5cfYsqyzw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by PH3PPF5A636EDE4.namprd11.prod.outlook.com (2603:10b6:518:1::d21) with
+ by CH3PR11MB8467.namprd11.prod.outlook.com (2603:10b6:610:1bd::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.15; Thu, 14 Aug
- 2025 21:54:17 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.18; Thu, 14 Aug
+ 2025 21:54:59 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf%4]) with mapi id 15.20.9031.014; Thu, 14 Aug 2025
- 21:54:17 +0000
-Message-ID: <da1c4e17-aba0-4769-9f64-e3caca7e0be7@intel.com>
-Date: Thu, 14 Aug 2025 14:54:15 -0700
+ 21:54:59 +0000
+Message-ID: <9644f34a-db4d-4bd4-b5d5-2e5a0eadf7e2@intel.com>
+Date: Thu, 14 Aug 2025 14:54:58 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 25/32] x86/resctrl: Handle number of RMIDs supported by
- telemetry resources
+Subject: Re: [PATCH v8 26/32] fs/resctrl: Move allocation/free of
+ closid_num_dirty_rmid
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
  Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
 	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
@@ -89,14 +89,14 @@ To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
 CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
 	<patches@lists.linux.dev>
 References: <20250811181709.6241-1-tony.luck@intel.com>
- <20250811181709.6241-26-tony.luck@intel.com>
-Content-Language: en-US
+ <20250811181709.6241-27-tony.luck@intel.com>
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20250811181709.6241-26-tony.luck@intel.com>
+Content-Language: en-US
+In-Reply-To: <20250811181709.6241-27-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR02CA0006.namprd02.prod.outlook.com
- (2603:10b6:303:16d::12) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR02CA0021.namprd02.prod.outlook.com
+ (2603:10b6:303:16d::31) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -105,374 +105,117 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH3PPF5A636EDE4:EE_
-X-MS-Office365-Filtering-Correlation-Id: 71028975-eb2c-4506-c45f-08dddb7d1ddf
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CH3PR11MB8467:EE_
+X-MS-Office365-Filtering-Correlation-Id: ee17af5a-7ada-41a0-31db-08dddb7d370f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?QjZLRkxmVlNpcEZoNGQvUkxrbTYzaE91K0ZiTGc4R09CZnl1Znh6V2drSzlX?=
- =?utf-8?B?bGp5TytoVW5heDJBdnkrNTJqd2RxbVVlb1NmYldJNlMxYWxRY1BJRkphSWhM?=
- =?utf-8?B?di9oU0g0Z0RPNWpYVytreHZUdDdKSHpkUVZ3eVdUZ3VWZ0ZaOTJTMU0wbTFz?=
- =?utf-8?B?ZEJJWithbFV3alI1MlpRbGZGclJuRy9ZVkoyaWs5dkQ0bTFwQkt3U2VSdml4?=
- =?utf-8?B?OU9NSHlKVDR5bWxFZTdjRlRKWVJTcUxNQ0VVVEgrb3dIdE01QjloS3VXQU5h?=
- =?utf-8?B?dWRWZ25VeTdZa0k1N1MyM3U3L0psKzhtWVMzWXJrckgwcmliaUFBVlh5UTBF?=
- =?utf-8?B?Y3pubVd0OTVaTDlPZ1ZpbGN3eXk1aDBoYnVsNldwUjcwTTNIZkdGZjJVb0pu?=
- =?utf-8?B?bWFxTy9IWHpTOTk1UXR1Z2hBMVh0WFRvK3BiZy9wS3ArZ25HOXcwS2EvU3Y1?=
- =?utf-8?B?WjB2L1NBL29iUnV4L0NxUEwvUktwWnkrNXdQMmJVc3V1Y2pJQ2J1dmdxZHRU?=
- =?utf-8?B?WC85MVE3WlZDcWo5MXcvbWgyVVBwSWc5bVZEQmdHNE42cUdsSEs2L014UnRo?=
- =?utf-8?B?bEtKVnB2dzJVNTJzVEhiVXlZQjFzeHdBTUhoZ1hIUlN4cU5Ydm9uSHlPWlVT?=
- =?utf-8?B?Z0Y2bVUwVXRWT3orUzVHSHNFWVlOU0hQUWpscHQwWktEdWJ5V0J5SGZvUmNL?=
- =?utf-8?B?MGdEeVpLbWFvSDN4U1FwdWtYWEtxSHBvOE5zWXltK0ZxZ0xZTTJJaEVhc3la?=
- =?utf-8?B?bE9UZmFLN0piMU1hZjFRMHp1ZUxwR3A5elBTZXA0cVF3blpLL1dRZ0p3RkJQ?=
- =?utf-8?B?Ym5EblFRdm82Mk1MSWJwTW5ObkxENEN0eGE2Mm5samxDUkJ4b0hPWHRpV20r?=
- =?utf-8?B?VmlDWTROUk11L2RvNnNLb2lleWRRbDVQcGZCbHZzaUkrc2FvNXRqY0o3WUt3?=
- =?utf-8?B?NGxNaGJkVVRnWllaNlhlMFk5clZwU3kwMy9aR0MyTkNxeEV4dTVsMStRNHBl?=
- =?utf-8?B?dm80UFM5VElpUFkycG5mbVM5dklVNFN5dk5UYW54UTNFSFJSY0habTdqWVpl?=
- =?utf-8?B?L2RCRXBneDRoL0R2NThmYll1QmpWMkx0cVFFaXI4a1crRnBWTGp3UTZ3U2dG?=
- =?utf-8?B?c2drOHhHeEd3WmprVk5hRjlsUk5Ua0EwMy9mSlFWeUxxTkppdTYvVHFmaVV2?=
- =?utf-8?B?dStONjNZaUVJc1owdy9CU2ZpL0R1OERuM1NJU2IxVjU4ZGFpczFqRXlsaFVw?=
- =?utf-8?B?SnhhNlJGY3ltVzVNSFVWWnNPMWMwWmFhM045SitGUDNRUS9PeExhcldlY3V5?=
- =?utf-8?B?OXVMR3NnQy92SEdlRExHSVg1TVBGMlp2Y1NEWlBYVUhYR3l2ZnFVc1IxUm1m?=
- =?utf-8?B?MURMOFZRbU5vclp1VEV3OTkwR1doTnRqcXRyNE9MNzJCMkNIdUt3dElyRTNk?=
- =?utf-8?B?M0IwTXpoZXhKV242eGFQc1BadllVckF1WDI1ZEx2R0dNaEJBZi80QU1PeTEz?=
- =?utf-8?B?VytsTFM4eHZuenlueVk1MksxbkQ0L3pQYWlDZytmOWFkUGlvWDZ0STc2L2No?=
- =?utf-8?B?bWdnK3RsSmRUTFd4Tlp6MkQzSjJ6c25WMk5oV1gwY2Q5ZVd0TmxWQi8rQVNK?=
- =?utf-8?B?NWtORDFYVVhCZVRZVTI4eUx1V1dNYTZkWE1xVmlRdGk4SmdaMThndTZOSWxy?=
- =?utf-8?B?VTlxdFVOcFlsdFF1TzVzSXE5RU5tcjZZY0grK2NwbVpvRWFXL25ISEhydWVz?=
- =?utf-8?B?V3BHdXdnczI2dHpsNzgxZE80R3JtL3BnYzhPVFlDc1Jvck5nZXZuRm5Udi9p?=
- =?utf-8?B?MlFwNGlYR0FZOW5jeEdhbmpJYk05UnBCRXRLN3hrYk9YNitDaE1RbENwMHJU?=
- =?utf-8?B?Smo1dnJGcDJjRkMvREFINmFJY01CNmxiNzNGVWlXOWZJM1NKZS9Nems4MjV0?=
- =?utf-8?Q?Gg+7eXhjX38=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eFBNQ21DUDVIbHc1WWVQOE9EKzFUTWlVYldrajVJNHBLWjhBY2VJNjJuU3hG?=
+ =?utf-8?B?cnY2SEt1SHlERXdBZDV3VHlkUjYwUE00cEh2QjU3bzhjaDdqOWpCU2dyb0hi?=
+ =?utf-8?B?VXRSV2gxS21GREM2MGtSdUtaMUYzdEt6NENrZGU3SDJ0Zm4zWW1nRmpTZ0t3?=
+ =?utf-8?B?bFd3WXcxeFBlb0UzOHczdSt1RElvc0tLMWtkb1hGaE56SjgvZ3NNWDRUOWhl?=
+ =?utf-8?B?U3ZFTHNxTkVuR0x4ZXhEbDFSY3RUQzBodGowMXh4Z1JwbE9Ja2c5ckxkT0JF?=
+ =?utf-8?B?YXdteHNhalZWNEx3dS9KUWtDd0ZGVm03KzVycVpPbTVldXdxWkdPZkZ2aDly?=
+ =?utf-8?B?MGR1QjYwbytVTFRSSFVrdlJxTmRjaEpKNTFCdER2OXprY2xNK29JdjU5Wk41?=
+ =?utf-8?B?L2wya0NoR2RuTHlQbGZURmROVHpxWjRKM3Nob2hDSWMyUmxVSTZYdXo4T2lN?=
+ =?utf-8?B?QlVTYW5ZR21MZlBtb0N3Q0g4c3IxV1ZsYWlwdjMxL3NjVzVDek8vQzdIaXV3?=
+ =?utf-8?B?MHdqOU1GU2xnbHdHNlRSNWU3a1lQS0tISTlkU1BiQnVQdWQ4d3FtYVFVREJ3?=
+ =?utf-8?B?UVJhS3JaRjljKzcrREpJK2ozdlRublQzWG9kRGp6aU5EOFpUajZRMGlhMVFU?=
+ =?utf-8?B?TTF6cnNPMWI3aDcvOWNSaEY4SDJMYVpianhlT0RpZEpMN2JtdEsvV2FnYndv?=
+ =?utf-8?B?eFl5TnlpWlhDUDEwdVV5MnBnZFJqY2NzWVphL3cvOUVQV1c4Rmp1bGlReDdV?=
+ =?utf-8?B?azF2TXlZc1h1UmU3NDdsSldxc0M3Vy9SVmR0cHBkaWVZZzBGRU9jVGc3Tzlw?=
+ =?utf-8?B?a1pTUzhnTEV0MzZCVU1CUWRGNjR0Q2IyZHFvanN2Q2lGNW1McFZya0pKc2dx?=
+ =?utf-8?B?aVhiTFFUcUtaQXRKZE03TWxYbUQ2akZwc1pzbktQSmhHTlo0dnlWb1ZoNlpI?=
+ =?utf-8?B?Y0lhdXVrTXk0TUhVNkdlbVE5K0xPVWJsMUk5RVNJeVNYaytKOTdXSE5MYkNn?=
+ =?utf-8?B?QmM0TTI3bnVuMlEwc2FDU3hpZTRzdFRhWFZQSVpBZVA0cG9QTlZqMlZXSUpL?=
+ =?utf-8?B?K083cmdLRForUGtUbndOeTlaYkVKc2ZXTjhuNGZ1OUNwZERxekIvWC83OEEw?=
+ =?utf-8?B?K1Jka0FhdXJxcDNhMlpZMmZiQWF5OEFKN3Yxb2hiR0l6Q25HVks5WmJtb0Qr?=
+ =?utf-8?B?bHZHV2I5UXJIWjJZdHhRYUI3dmRjSmlVU2Y1VldodU1DTmhtRGZKUEVGeERv?=
+ =?utf-8?B?NXBpSmxCeTQ4L3RPTXRJYlZMZSt0Nm9TdVJ1UDNCVnN1azVicjA1Rk1EQzZT?=
+ =?utf-8?B?TkUraXhuY21vYUFydTdYUEg2Vzh5U0x6UmhVdzF6WjVmODFCelhtTHcvNnZ1?=
+ =?utf-8?B?NzBiL0pCeEVRZGpwVThKanFsbUppTWNaaDkxek1QOWYrNEpXQTdBUWR5YTVB?=
+ =?utf-8?B?U3NHT2IrUUdDYXdEbHVRcWlCZDV1RWpWdFk0MXBHb2o4UXgweElmZW02REky?=
+ =?utf-8?B?clJwUSs3endoMllGenY5THpabHJpeTNnejdpYnpaeHhjTS9CdU1kTTlJYWx2?=
+ =?utf-8?B?VVFsVHpJZ3N3S2EvSEtJZU9HNUs4UldYUWRYSmYzTSt6VTZOaG9kRnZvTHR1?=
+ =?utf-8?B?cG1hZVZta3ozK3cvVy9PTUROK05JLzY5OVVORDhTck8vMlNwS1RzS0Q2bldq?=
+ =?utf-8?B?dGRPUVpqRzFYVldQMTdMcDBYa1FJS3pPRmtRVDVSTjVxeXA1eGorYllPV05i?=
+ =?utf-8?B?cFJXSW1FMi9FRnZRbGlKUFI1ZmplZ0lwSG9qS2F4eEFGamxCbTh0OUJuUUdB?=
+ =?utf-8?B?dUNBSTNpNGtGSkM4M0VrTlRCK0lGM1JHZU5Ta2hPVmVPdmFQNUFqRXRWSGps?=
+ =?utf-8?B?YVpxTzY3YUVNSFZ5dnVrSlQ4bDNveHFoZGo3N2ZubW9odjlGV2ozS05RUWlR?=
+ =?utf-8?Q?z42KBGlO8+k=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SVdJcmlsQnNsQ2paZVNGNVBiR2VSL1dwcGZPallaa0ZVNDVKVnJNMEdiWkkr?=
- =?utf-8?B?Nkg5VVpTUHJRSXRvYnZPMWxyUEVQUjBIU3prZEpDQU9Xdktkdi9MalJwT25L?=
- =?utf-8?B?dWVwN0sxc3pNU0E0NlVVSkJXNnhSUHlxc2lnQ1dkTXZqeXFwR1N6YVJCUHIy?=
- =?utf-8?B?TTIvdWN6aVdHVWhZekNMNmYybVNuU055ZFpLa1ZWV0t5WksrUUZvek8ycmRB?=
- =?utf-8?B?K1pMdDdRRlNvNEhHUEtpQVFNVXlFVHNqZG10cS9POEZsVFMwdE9DQ1BsbmR6?=
- =?utf-8?B?ZmtPTUxRa2pRRFhHdUFsY3N2SmEvM21IY0ZKUFdHbWVjQk9leE15QTU4ampp?=
- =?utf-8?B?WXR4ditzNDFMeDNuZUxlTm13MDVLNVdlOTBUQ1RKWmxESG9acmxtSVVhY0ZB?=
- =?utf-8?B?MmZZWVBCamd3VndQTVcvMmw4WmthNWs5OWZHMHhXSHkxeGtlcm9SWTRkUk5m?=
- =?utf-8?B?eFp4LzhGUk9yaGw5U0dzWDNQOXZVNjdpdHFTUXZsWFdGaXRHZVVWZzNIbDcz?=
- =?utf-8?B?bTNuOWpwKzVpcUlGSHZuY1JqajdZeHp0eFI3UmppdTl4dWhleVV3RWM4S25M?=
- =?utf-8?B?UTVTa0JXcmN1MHJ4YVpVV1Fmay9sd0VLQUhKQnAwZllOV1hvNFVGTnJwMm5q?=
- =?utf-8?B?RGdoRVhWc1ljSkpQd291QlRGcUoyaWZNRmgzMFVRTjNhQjBrTTk2bVV5QlY0?=
- =?utf-8?B?TS9HN29SbnNWeVhtS3pFUmF0YUd4NVN4aWErS3h5UmJSd2ZBbFpKT0lCVkJ2?=
- =?utf-8?B?N1FFYnM1UjFRUStES3hKRzUwNDVYdjllV0hOOGZ4MHVsVmQ3SVBCZzNSUys3?=
- =?utf-8?B?OGt1bUI5bEdjR3p5cGNuT3BVb3c3d29zZ21UYjhLYk45Y2tyZkthOUVOcFF5?=
- =?utf-8?B?dWFPMlFIYVU2ZkR0dnlUak8vdlRjOG92RU1ma0ljYXdrVFBxWjRKbDNXYUdD?=
- =?utf-8?B?T2FJdkhTS0dLMkVpNGhyWFMxaDFmZEQ0dkxuYTk2UkwzTUp5eG44UWtKYmh6?=
- =?utf-8?B?UFJSOHlML2tYYWpGTnhaNlRwWG5ZV1pNOUNHWGZTM2Iwc1ExRGpHZFRuVXAy?=
- =?utf-8?B?RkJoUWN2MUdtK2FHNGRheVNRV01STjBjRk9sRDZhZWtQbUFnV2VlMGRzRm9E?=
- =?utf-8?B?czFoWFREZGl0Q1h6VDJyaE9EbVVOY0hMcDFVTWQvcFJaRGdkTlBrUnhYaGR4?=
- =?utf-8?B?SnI3MEQ2QzN2dnNaS2w0bWp4bzQvdFlGZG9HVmk2UzVmdXF5SlI1S2JockR1?=
- =?utf-8?B?VTBXSGNyOGZLSSszSEZUdkJ4NllyWDIwblRaeFhlTUd3b1cxM1NhbDlNNzBa?=
- =?utf-8?B?bjBmRjhoMnAzb1ZJT0VibkgycEVTTmd2aVJrckxGaTlVRFpiR3FBcXQzUXNj?=
- =?utf-8?B?WEhERXNTMExjWXdZelRMYlJWd1VyYnRvQWhaRis1Tm9VRHVIVjdlWmJOMHNB?=
- =?utf-8?B?TzlOM3RHUi9rbVZTcUEwRXdNUGlYYUN4cXVIM0FGYVZzVHpQSFNseGlTLzFy?=
- =?utf-8?B?bWM0UTZNdm1jd2Nndnl5b0t5bEVBbjFlYm94ejFQZTU0N2JzaW9BZSt1Q2hz?=
- =?utf-8?B?MXFhWWJobGkyQThUM3JMTytSd2tyUlh5Ui9xeWxOWnR5Ym16Rnl0clhUY3FK?=
- =?utf-8?B?QkIrdy9OblBtc25GcW1RZjFFTXFMRFEveFJkOHFEMTFxcFdWT0U3dEdTTUhj?=
- =?utf-8?B?dDlKOTdtbkszMlh5L0Z5aXhheTdmYW9GLzlqMjBhdEN4VGNhZitvRTA1Kytk?=
- =?utf-8?B?Q0ZxbmpjWVFzUVVHN3VBRno1NGltYkg4ME0vZWRhOVpWb3RVc3FrcG9nQ2Z4?=
- =?utf-8?B?bEppMjVqZy8xbGFWOHdEQkluaG42bUZNNzZadC84Zi8yYm1KbFFta0VkWGxq?=
- =?utf-8?B?Q1drcCt1QmZyWXNCaGlJRkhGT3RyTlE3OXFVUThEVkVXa2lmcFIzUVFEMUtu?=
- =?utf-8?B?S0ZXc1VpdldKWE93QnNJUzgydHNNWGtKYXU5b3h6SHo4WlY4Q2crR0IzdE43?=
- =?utf-8?B?N0RSbkFLN3ZwRDBVNC9OeVE1RU9WdFQ0c3R2dXJST044S0g1aEZRazlzU3lW?=
- =?utf-8?B?NTRkRy9zYUN0am1ycHZ5ZHN1aUZoZEZVeVRudnh4dWtqcmY2b0N4ZmMrTnlF?=
- =?utf-8?B?UElHdEprWWtiLzFxclhWV2F0RGkvL3lNdGFpTGM3aEZuNW5wS0FHaXJYZTJr?=
- =?utf-8?B?TGc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 71028975-eb2c-4506-c45f-08dddb7d1ddf
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y2Jmajd2RTRROW1YbFdtWjRHKzlWV1BacWExWjhhbWx6RXBGQzBXVXllZi9Y?=
+ =?utf-8?B?VmpQb2wxQVpJMXJmbWdBT2kySEx0SHAvNThKRDcxN090dGlybjBvRmNqUnoz?=
+ =?utf-8?B?MGRlNWZ0Smh5NEgrV2ZZZndqMjdENWRhMXNkeEwxbCtobDczcEZUbTNBNlFI?=
+ =?utf-8?B?NnpqdEFKWXdCZ1ZWeWZHWXlSalo3a1RhcHdtd3RydEUrSjZQYThIYjRUM2pM?=
+ =?utf-8?B?VWlNZGd0ZVdNZTdtWS9sR29xTklBYmkwc2N3S3dvT2lWc0NheTE5MEhTMDFW?=
+ =?utf-8?B?SGVNYm9RYkpXcUlZZlVkeVpuMElDWTMzNlBPcXdRZUtzbmVYMVA4dHAzNlZS?=
+ =?utf-8?B?eDc5eFVsLy90OUkxcGR1dkY5N1ZYSTFqOEVXbElmVnlpRnVDTnBmTHFvelpk?=
+ =?utf-8?B?cVVuMC82eFVyakRuZm5nN2tqNWt6RFF0WXF4d3BZT3pWaUk2cFBQS296cjZO?=
+ =?utf-8?B?UG00S0MxaEF2a2V0Z2ZCcEoyNWU0Q3dhVi9oSXltcG5XTktwZHhRVWxobXl4?=
+ =?utf-8?B?bkxtanFZTzNTRWN1UkZNSDF5d1c2S1NlV0c4K2tFdjA0Q1FtYzRHbEpNaHJj?=
+ =?utf-8?B?b0ZMVCt4RHVPa3UzZWRwZ0NwTlhGanZQaFFPU2JCNzBQUVdSdUlSVk9Idno2?=
+ =?utf-8?B?SzlCb1o5aFVhK0xLb0lNZFJ6RzNweVU2LzY4SmdWVGgwbnB4RFJNY1BVZkc2?=
+ =?utf-8?B?QTNxN2g2dDVPNExIY1E3Z0RacUJFY0RGaEJIZ1ZoOHo5U1loNmZvVU9LbUww?=
+ =?utf-8?B?djdRMjdQRWtIR3gxdUlSRGxsM284dDVxeVNGejNuOUZkM3hTNHlVM2NXWGZ1?=
+ =?utf-8?B?NWVpUVVFVnVBQzluLzd2bzF6ZmpuRUxaL2dQNFRWdWg4Z1FnSUpzRkN6UHZx?=
+ =?utf-8?B?bUxKUmw1N0pxTFgrdHI1eXNKeGpNaGpaYW9SZ1NzcVluZmZIeVpCUllYQ3pj?=
+ =?utf-8?B?ckFKa1JmU0VXZ2tscTNRL3NFRm5TTk9BYTBjdnZNWFcwN2wzL1J1SEVjdG5N?=
+ =?utf-8?B?amZDUG1RSWhsSDdyZk9GT21WMXM1VXM2cmRyRWNlSDZCRXdoVEtpS3NLMm1t?=
+ =?utf-8?B?N3FqSG42dXRuWTVCeDlCd2hEQXhwMEh6Q0RhWDNiVWJVWkEvNWY3VEVuUURl?=
+ =?utf-8?B?K2lUa2pjZ2tERmdxVkFJaGloMU0xRENWajkrYmdobjFGZUU4a21RVmVibkkx?=
+ =?utf-8?B?UElpVmhiQi9FcGtldVZ4eW1yYXBhYVNOR3FjazFrVzhiTFk4ZkhvREo1VEpr?=
+ =?utf-8?B?dFhESGRUVnowNk15VVpCMHMrSVJnQ1M0cDkzYUtoUW4ybHRkWmN4ZkdYY0M1?=
+ =?utf-8?B?U3FlOERHQURqTkZGcWFmZ3B0T0Z3c05qSjEvUmtqVzJaTmYrNFR1cWdBL25u?=
+ =?utf-8?B?S1RqQXZtdkN3bVZHbXgxQnE5MHNYVXE4SWdlV0N5QWlOOUhSQ3lmRWVDYjdm?=
+ =?utf-8?B?b2xxdHhQQjRreHlVWmJIb1Q1NSsxTjE3b0hIYUtmK0oxZ1VIUFBaQWNJRnBs?=
+ =?utf-8?B?TkdFeDA0TFNmOTBidE83ZTFNMVpuYnc3aUswUVFicWVLVGZoL2ZLVDNEODQy?=
+ =?utf-8?B?TlA5SmhzRjhqdmhudWFnbWt0OVFKZmJMVHJPZDNDRE10MDd5aUNDd29BUnJ1?=
+ =?utf-8?B?N0t4dE51NVcrRFZscHp6ZVU0dklvTkI3SDNYQklZcTNHYnpBS1NTTG5zUFVG?=
+ =?utf-8?B?ZVZUSy80VWhQUUI5TGpBMlB1Qm9PZ3N1L0FYb0JqU01wT3lOMVFaOWMxWTdB?=
+ =?utf-8?B?aDk4djdtbmRoZUlDekdkUHRiMHVma2VxVGtZd1J1TXhncm9sNXE4YUVYU3hy?=
+ =?utf-8?B?eElUY1pQbXJOVjRHSkxvYURwMUFqSi9TS05lclREbEdtTDBYOFBXdHpHZWJa?=
+ =?utf-8?B?RERZbEREQ3dvVFp2c1c4MDVPZTFCd3k1UEd3R0VMS0JrL3FPbTg4dWlkeVRt?=
+ =?utf-8?B?bzQ4UmpndXpvc2g4V0MzLzZJODB4bUwzYnVld0tpTkE2UCtmb0tuZDcwN1RR?=
+ =?utf-8?B?UEtsRUViNnVLb3d3aXdoWmF0ZWlyRitONGZrNTg1TjFvZS9BUW1iOVJkVHhX?=
+ =?utf-8?B?OXVNRmhmamxLbUFKRmcyTXh3UEErMHpFaDNLVkFma0xDcUd1aVd6NUhWUDJI?=
+ =?utf-8?B?bTJtZzR2TWpqZC9BRjF4Wm8vYmM3NDNFM0pyTW1KREplbURjMVhaQjE4VVow?=
+ =?utf-8?B?eEE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee17af5a-7ada-41a0-31db-08dddb7d370f
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2025 21:54:17.6118
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2025 21:54:59.8729
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: FCsKiWFwH0V5bfTFrpUK1+4nnqW9n7eSW+VH++U9rlvTiDqi6bqEF2CgFA6KYHiTzwY/NM1a9UiUd+vdb6aVHOkdWnzVWKyo5pmHi30VMLo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH3PPF5A636EDE4
+X-MS-Exchange-CrossTenant-UserPrincipalName: gxZExbLHmu19/oSYfBzVVXuT0aR0xEg5w75BJAPdAjrvB9HYVArfGkE4N5UC+5FksCmR9fhdsgMmcMP5cOY8DUAhc57q8Rq5AaC3NXKT6OM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8467
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
-On 8/11/25 11:16 AM, Tony Luck wrote:
-> There are now three meanings for "number of RMIDs":
-> 
-> 1) The number for legacy features enumerated by CPUID leaf 0xF. This
-> is the maximum number of distinct values that can be loaded into the
-> IA32_PQR_ASSOC MSR. Note that systems with Sub-NUMA Cluster mode enabled
-> will force scaling down the CPUID enumerated value by the number of SNC
-> nodes per L3-cache.
-> 
-> 2) The number of registers in MMIO space for each event. This
-> is enumerated in the XML files and is the value initialized into
-> event_group::num_rmids. This will be overwritten with a lower
-> value if hardware does not support all these registers at the
-> same time (see next case).
+On 8/11/25 11:17 AM, Tony Luck wrote:
+> closid_num_dirty_rmid[] is allocated in dom_data_init() and freed by
+> dom_data_exit() giving it the same life cycle as rmid_ptrs[].
 
-I think the "This will be overwritten ..." should be dropped. It is
-not always overwritten and the later part of changelog describes these
-details. This part is just to introduce the different meanings of
-RMIDs.
+To help connect the current flow with the planned changes mentioned below
+this can be:
+	closid_num_dirty_rmid[] is allocated in dom_data_init() during resctrl
+	initialization and freed by dom_data_exit() during resctrl exit giving
+	it the same life cycle as rmid_ptrs[].
 
 > 
-> 3) The number of "hardware counters" (this isn't a strictly accurate
-> description of how things work, but serves as a useful analogy that
-> does describe the limitations) feeding to those MMIO registers. This
-> is enumerated in telemetry_region::num_rmids returned from the call to
-> intel_pmt_get_regions_by_feature()
-> 
-> Event groups with insufficient "hardware counters" to track all RMIDs
-> are difficult for users to use, since the system may reassign "hardware
-> counters" at any time. This means that users cannot reliably collect
-> two consecutive event counts to compute the rate at which events are
-> occurring.
-> 
-> Use rdt_set_feature_disabled() to mark any under-resourced event groups
-> (those with telemetry_region::num_rmids < event_group::num_rmids) as
-> unusable.  Note that the rdt_options[] structure must now be writable
-> at run-time.  The request to disable will be overridden if the user
+> Move the alloc/free out to resctrl_mon_l3_resource_init() and
 
-"The request to disable will be overridden ..." -> "User can force an
-under-resourced event group to be usable using the "rdt=" Linux boot
-parameter. In this case, reduce the number of RMIDs supported by the
-event group to be the number of RMIDs of the telemetry region."?
+"Move the alloc/free out ..." -> "Move closid_num_dirty_rmid[] alloc/free out ..."
 
-> explicitly requests to enable using the "rdt=" Linux boot argument.
-> 
-> Scan all enabled event groups and assign the RDT_RESOURCE_PERF_PKG
-> resource "num_rmids" value to the smallest of these values as this value
-> will be used later to compare against the number of RMIDs supported by
-> other resources.
-> 
-> N.B. Changed type of rdt_resource::num_rmid to u32 to match type of
-
-Changed -> Change
-
-> event_group::num_rmids so that min(r->num_rmid, e->num_rmids) won't
-> complain about mixing signed and unsigned types.  Print r->num_rmid as
-> unsigned value in rdt_num_rmids_show().
+> resctrl_mon_l3_resource_exit() in preparation for rmid_ptrs[] to be
+> allocated on resctrl mount in support of the new telemetry events.
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->  include/linux/resctrl.h                 |  2 +-
->  arch/x86/kernel/cpu/resctrl/internal.h  |  2 ++
->  arch/x86/kernel/cpu/resctrl/core.c      | 18 ++++++++++-
->  arch/x86/kernel/cpu/resctrl/intel_aet.c | 43 +++++++++++++++++++++++++
->  fs/resctrl/rdtgroup.c                   |  2 +-
->  5 files changed, 64 insertions(+), 3 deletions(-)
-> 
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index d729e988a475..c1cfba3c8422 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -288,7 +288,7 @@ struct rdt_resource {
->  	int			rid;
->  	bool			alloc_capable;
->  	bool			mon_capable;
-> -	int			num_rmid;
-> +	u32			num_rmid;
->  	enum resctrl_scope	ctrl_scope;
->  	enum resctrl_scope	mon_scope;
->  	struct resctrl_cache	cache;
-> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> index e76b5e35351b..0e292c2d78a1 100644
-> --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -179,6 +179,8 @@ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
->  
->  bool rdt_is_feature_enabled(char *name);
->  
-> +void rdt_set_feature_disabled(char *name);
-> +
->  #ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
->  bool intel_aet_get_events(void);
->  void __exit intel_aet_exit(void);
-> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index d151aabe2b93..2b011f9efc73 100644
-> --- a/arch/x86/kernel/cpu/resctrl/core.c
-> +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -776,7 +776,7 @@ struct rdt_options {
->  	bool	force_off, force_on;
->  };
->  
-> -static struct rdt_options rdt_options[]  __ro_after_init = {
-> +static struct rdt_options rdt_options[] = {
->  	RDT_OPT(RDT_FLAG_CMT,	    "cmt",	X86_FEATURE_CQM_OCCUP_LLC),
->  	RDT_OPT(RDT_FLAG_MBM_TOTAL, "mbmtotal", X86_FEATURE_CQM_MBM_TOTAL),
->  	RDT_OPT(RDT_FLAG_MBM_LOCAL, "mbmlocal", X86_FEATURE_CQM_MBM_LOCAL),
-> @@ -838,6 +838,22 @@ bool rdt_cpu_has(int flag)
->  	return ret;
->  }
->  
-> +/*
-> + * Can be called during feature enumeration if sanity check of
-> + * a feature's parameters indicates problems with the feature.
-> + */
-> +void rdt_set_feature_disabled(char *name)
-> +{
-> +	struct rdt_options *o;
-> +
-> +	for (o = rdt_options; o < &rdt_options[NUM_RDT_OPTIONS]; o++) {
-> +		if (!strcmp(name, o->name)) {
-> +			o->force_off = true;
-> +			return;
-> +		}
-> +	}
-> +}
-> +
->  /*
->   * Hardware features that do not have X86_FEATURE_* bits.
->   * There is no "hardware does not support this at all" case.
-> diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> index 7db03e24d4b2..96c454748320 100644
-> --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> @@ -15,6 +15,7 @@
->  #include <linux/cpu.h>
->  #include <linux/intel_vsec.h>
->  #include <linux/io.h>
-> +#include <linux/minmax.h>
->  #include <linux/resctrl.h>
->  #include <linux/slab.h>
->  
-> @@ -50,24 +51,30 @@ struct pmt_event {
->  
->  /**
->   * struct event_group - All information about a group of telemetry events.
-> + * @name:		Name for this group (used by boot rdt= option)
->   * @pfg:		Points to the aggregated telemetry space information
->   *			within the OOBMSM driver that contains data for all
->   *			telemetry regions.
->   * @list:		Member of active_event_groups.
->   * @pkginfo:		Per-package MMIO addresses of telemetry regions belonging to this group.
->   * @guid:		Unique number per XML description file.
-> + * @num_rmids:		Number of RMIDS supported by this group. Adjusted downwards
-
-RMIDS -> RMIDs
-
-"Adjusted downwards ..." -> "May be adjusted downwards ..."
-(it is not always adjusted, only when user insists, no?)
-
-> + *			if enumeration from intel_pmt_get_regions_by_feature() indicates
-> + *			fewer RMIDs can be tracked simultaneously.
->   * @mmio_size:		Number of bytes of MMIO registers for this group.
->   * @num_events:		Number of events in this group.
->   * @evts:		Array of event descriptors.
->   */
->  struct event_group {
->  	/* Data fields for additional structures to manage this group. */
-> +	char				*name;
->  	struct pmt_feature_group	*pfg;
->  	struct list_head		list;
->  	struct pkg_mmio_info		**pkginfo;
->  
->  	/* Remaining fields initialized from XML file. */
->  	u32				guid;
-> +	u32				num_rmids;
->  	size_t				mmio_size;
->  	unsigned int			num_events;
->  	struct pmt_event		evts[] __counted_by(num_events);
-> @@ -84,7 +91,9 @@ static LIST_HEAD(active_event_groups);
->   * File: xml/CWF/OOBMSM/RMID-ENERGY/cwf_aggregator.xml
->   */
->  static struct event_group energy_0x26696143 = {
-> +	.name		= "energy",
->  	.guid		= 0x26696143,
-> +	.num_rmids	= 576,
->  	.mmio_size	= XML_MMIO_SIZE(576, 2, 3),
->  	.num_events	= 2,
->  	.evts				= {
-> @@ -98,7 +107,9 @@ static struct event_group energy_0x26696143 = {
->   * File: xml/CWF/OOBMSM/RMID-PERF/cwf_aggregator.xml
->   */
->  static struct event_group perf_0x26557651 = {
-> +	.name		= "perf",
->  	.guid		= 0x26557651,
-> +	.num_rmids	= 576,
->  	.mmio_size	= XML_MMIO_SIZE(576, 7, 3),
->  	.num_events	= 7,
->  	.evts				= {
-> @@ -137,6 +148,22 @@ static bool skip_this_region(struct telemetry_region *tr, struct event_group *e)
->  	return false;
->  }
->  
-> +static bool check_rmid_count(struct event_group *e, struct pmt_feature_group *p)
-
-I think the function name can be made more helpful, how about:
-all_regions_have_sufficient_rmid()? 
-
-> +{
-> +	struct telemetry_region *tr;
-> +
-> +	for (int i = 0; i < p->count; i++) {
-> +		tr = &p->regions[i];
-> +		if (skip_this_region(tr, e))
-> +			continue;
-> +
-> +		if (tr->num_rmids < e->num_rmids)
-> +			return false;
-> +	}
-> +
-> +	return true;
-> +}
-> +
->  static void free_pkg_mmio_info(struct pkg_mmio_info **mmi)
->  {
->  	int num_pkgs = topology_max_packages();
-> @@ -159,12 +186,21 @@ DEFINE_FREE(pkg_mmio_info, struct pkg_mmio_info **, free_pkg_mmio_info(_T))
->   */
->  static int discover_events(struct event_group *e, struct pmt_feature_group *p)
->  {
-> +	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
->  	struct pkg_mmio_info **pkginfo __free(pkg_mmio_info) = NULL;
->  	int *pkgcounts __free(kfree) = NULL;
->  	struct telemetry_region *tr;
->  	struct pkg_mmio_info *mmi;
->  	int num_pkgs;
->  
-> +	/* Potentially disable feature if insufficient RMIDs */
-
-"Potentially disable" -> "Disable"
-
-> +	if (!check_rmid_count(e, p))
-> +		rdt_set_feature_disabled(e->name);
-> +
-> +	/* User can override above disable from kernel command line */
-> +	if (!rdt_is_feature_enabled(e->name))
-> +		return -EINVAL;
-> +
->  	num_pkgs = topology_max_packages();
->  
->  	/* Get per-package counts of telemetry regions for this event group */
-> @@ -173,6 +209,8 @@ static int discover_events(struct event_group *e, struct pmt_feature_group *p)
->  		if (skip_this_region(tr, e))
->  			continue;
->  
-
-Would a comment like below be valid? If so, I think it will be useful.
-		/* e->num_rmids only adjusted lower if user forces an unusable region to be usable */
-
-> +		e->num_rmids = min(e->num_rmids, tr->num_rmids);
-> +
->  		if (!pkgcounts) {
->  			pkgcounts = kcalloc(num_pkgs, sizeof(*pkgcounts), GFP_KERNEL);
->  			if (!pkgcounts)
-> @@ -215,6 +253,11 @@ static int discover_events(struct event_group *e, struct pmt_feature_group *p)
->  	for (int i = 0; i < e->num_events; i++)
->  		resctrl_enable_mon_event(e->evts[i].id, true, e->evts[i].bin_bits, &e->evts[i]);
->  
-> +	if (r->num_rmid)
-> +		r->num_rmid = min(r->num_rmid, e->num_rmids);
-> +	else
-> +		r->num_rmid = e->num_rmids;
-> +
-
-Another step in the discover_events() function comments? 
-
->  	return 0;
->  }
 
 Reinette
 
