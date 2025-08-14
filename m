@@ -1,101 +1,116 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D759022CBF1
-	for <patches@lists.linux.dev>; Thu, 14 Aug 2025 16:17:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF3C242D65;
+	Thu, 14 Aug 2025 20:08:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755188237; cv=none; b=MGev7OGRX/HhairEvA+LWD/M86KukiK9yA36OiXCKVeHDow/1kqf+5A99fAX5br2ol2HuZrKIZjf1tArzHtFA5vKXtq4v6/Ap2WQQk9Y2fym75Nv5O+pSjrXx8YLRYNzudqUWV5+Oy7qXFnJPjZbOvbn7q7+oFs3cQoS8oOxi2M=
+	t=1755202120; cv=none; b=LAQBtgK08kd/9JHQUvjuej/tulBbtz0TYSzEfSkrYCUaQjihFtm3YMtEPZE8hg5HzreH09z46DGWR2que7ylCrT5psn2qz5TUEMPu5+YGH6zdj1Noy2hD9+pRIs60IjVqe/Ywo8i+vf9O22q/z1Iu91o6iNR5m7j5BNCZ22o7e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755188237; c=relaxed/simple;
-	bh=VP/ziay4XX20JtXwVWku6vtOhHXC9F3yoIDWnipRVhk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qhKU3tm26LkH0hhFgtLEdBrMdEvZ1SgK/IdK7K28JRK2q6oKcfaoGpO5eVcyv49WXw7zKVwOosJVHWQXEzaKKu82fE5nIcBXk+wYlRpYYhAqMN894xmd1yz/nV4P6hnNuHZ4zEKb/iR+SbomrFnhab1U8w8RLa3hBen3svF1gVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ec8Ya6XB; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1755202120; c=relaxed/simple;
+	bh=xcfeo2/DQtmCLjuZc4lx76Xl5JQ/w8kZY0rp9JIkZh8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EKaV56zSwu5myYpsQCKQGfkGxTrh0/MBGMTGs8I89nZdauk0i76dUnUA8AvCEmSqnSB6UazIZ/ILbBOL9QVKv+3GDN0XXWgfwam+kJ3YuQIAWQqWV4KRJOCrHoQqHHoaaWPa9Ifvd3mlRIhGZx27x449qaA1xXNA6fGqVT4EORI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kLQWHfAy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ec8Ya6XB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1755188236; x=1786724236;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=VP/ziay4XX20JtXwVWku6vtOhHXC9F3yoIDWnipRVhk=;
-  b=Ec8Ya6XBO8lDSCu0t7p9uNAMqPriYcuHX2wuAhnk2/nOaRXdBlEbe/N+
-   Q0fTDbjlnCGYvogIjCn4fm47nwK/d1Qu2u1Ng6fXvRyH+tQIwpWhLGtSa
-   TQqRO0jI2zFz2d2uuzOXBFAlxRlPFfJs2PXAx/ozBqjsd8IiAkOtIUPv8
-   Va5vrFgJoYZiCIDTsPirjCTAfxXzbbP72beI63Qr5/MaVNleOa0Db3WAW
-   GzF6R63tSAkQK1EkbzWJ2bld06+GpGrKVNUPxh6IdPet3BW81uwoqM3l5
-   FhtEqBca/JN6XS/S/Nxq5NW+gLV3vvhqOUFr8Pfm7cx0jdbeyeF6LUuA7
-   g==;
-X-CSE-ConnectionGUID: fBJJ/0KfTLe6WU11f5HvSQ==
-X-CSE-MsgGUID: QhVPdRaVQei/t+5p3pY4DA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11522"; a="57435660"
-X-IronPort-AV: E=Sophos;i="6.17,287,1747724400"; 
-   d="scan'208";a="57435660"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 09:17:15 -0700
-X-CSE-ConnectionGUID: kUnWyTSASNmiq/wvy5LufQ==
-X-CSE-MsgGUID: j09L6sUWTfKzx8dpzmkifg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,287,1747724400"; 
-   d="scan'208";a="166435476"
-Received: from inaky-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.60])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 09:17:13 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Len Brown <lenb@kernel.org>,
-	Zaid Alali <zaidal@os.amperecomputing.com>,
-	linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	"Lai, Yi1" <yi1.lai@intel.com>
-Subject: [PATCH] ACPI: APEI: EINJ: Check if user asked for EINJV2 injection
-Date: Thu, 14 Aug 2025 09:17:06 -0700
-Message-ID: <20250814161706.4489-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.50.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kLQWHfAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B7FC4CEED;
+	Thu, 14 Aug 2025 20:08:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755202119;
+	bh=xcfeo2/DQtmCLjuZc4lx76Xl5JQ/w8kZY0rp9JIkZh8=;
+	h=From:Date:Subject:To:Cc:From;
+	b=kLQWHfAyHImX7AQXABORqZ+fce4DMi4GN3e/nOuAXZqUpBXuAcdoxb1yj21YyFJNk
+	 SsSbbo+jHBvRe0K2KYVLALgQvRFM25sMbVc3RoJQ/SZVMVJH7CCxH9PCGsxYwCPge3
+	 tGXwz5z5u4jZ+Q5Z8I3hktUXIXh0oPjA4WvjvQeyyxmok2BKMJBkP2gZSIOwAVaVnn
+	 Zk4p6budaB8J4G/Re3WeWMoCGHsK6p3xjMNYCNNlZmymL9EK5UWxSLVJ8fkOhJPc7e
+	 bzvhn4eIR0XbRsriNgnwmCauSOZaQ/yGuMuQg6Qy4LCBguxOjSGe5+1raWu2JnAsmh
+	 JGoSYw6WdQ25A==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 14 Aug 2025 13:05:22 -0700
+Subject: [PATCH] mm/rmap: Always inline __folio_rmap_sanity_checks()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250814-rmap-fix-build_bug-conversion-v1-1-fb7b10a0b362@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAIFBnmgC/x2MQQqEMAwAvyI5G2hrFdeviEitUQNrlRRlQfz7V
+ o8DM3NBJGGK0GQXCJ0ceQsJdJ6BX1yYCXlMDEaZUtXaoqxux4l/OBz8HfvhmNFv4SR5Svwoa7V
+ XRTVZA+mxCyX3/bfdff8BMsVfxW8AAAA=
+X-Change-ID: 20250814-rmap-fix-build_bug-conversion-90441c036f42
+To: Andrew Morton <akpm@linux-foundation.org>, 
+ David Hildenbrand <david@redhat.com>, 
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Rik van Riel <riel@surriel.com>, 
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>, 
+ Vlastimil Babka <vbabka@suse.cz>, Harry Yoo <harry.yoo@oracle.com>, 
+ linux-mm@kvack.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2110; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=xcfeo2/DQtmCLjuZc4lx76Xl5JQ/w8kZY0rp9JIkZh8=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBnznFyjnirtNJzLvLT5L9ed7A8f+fadub56858jRmacz
+ qxZM+UfdJSyMIhxMciKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJpIowMiwOmXTlu8aRpo54
+ X4eMDxbNXXsuWG2fNS/Myzx6dkamawgjw8Ef33ukomcenPzkfJ3xiasON7idLQ6t1jqe4unwpi3
+ pKiMA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On an EINJV2 capable system, users may still use the old injection
-interface but einj_get_parameter_address() takes the EINJV2 path to map
-the parameter structure. This results in the address the user supplied
-being stored to the wrong location and the BIOS injecting based on an
-uninitialized field (0x0 in the reported case).
+Commit 5e901e249ad1 ("mm/rmap: convert "enum rmap_level" to "enum
+pgtable_level"") changed VM_WARN_ON_ONCE, a run time warning, into
+BUILD_BUG, a compile time error. After this adjustment, certain builds
+with older versions of clang (such as arm64 allmodconfig) started
+failing to build with:
 
-Check the version of the request when mapping the EINJ parameter
-structure in BIOS reserved memory.
+  In file included from mm/rmap.c:63:
+  In file included from include/linux/ksm.h:14:
+  include/linux/rmap.h:440:3: error: call to __compiletime_assert_890 declared with 'error' attribute: BUILD_BUG failed
+                  BUILD_BUG();
+                  ^
+  ...
+  <scratch space>:21:1: note: expanded from here
+  __compiletime_assert_890
+  ^
 
-Fixes: 691a0f0a557b ("ACPI: APEI: EINJ: Discover EINJv2 parameters")
-Reported-by: Lai, Yi1 <yi1.lai@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+While __folio_rmap_sanity_checks() is marked 'inline', the compiler may
+not always honor it, such as when sanitizers or other instrumentation is
+enabled.  If __folio_rmap_sanity_checks() is not inlined, there is no
+way the compiler can eliminate the default cause.
+
+Mark __folio_rmap_sanity_checks() as __always_inline to allow the
+BUILD_BUG() to work consistently, which clears up the error.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/acpi/apei/einj-core.c | 2 +-
+I assume this will be squashed into
+mm-rmap-convert-enum-rmap_level-to-enum-pgtable_level.patch so no fixes
+tag.
+---
+ include/linux/rmap.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/apei/einj-core.c b/drivers/acpi/apei/einj-core.c
-index bf8dc92a373a..99f1b841fba9 100644
---- a/drivers/acpi/apei/einj-core.c
-+++ b/drivers/acpi/apei/einj-core.c
-@@ -315,7 +315,7 @@ static void __iomem *einj_get_parameter_address(void)
- 			memcpy_fromio(&v5param, p, v5param_size);
- 			acpi5 = 1;
- 			check_vendor_extension(pa_v5, &v5param);
--			if (available_error_type & ACPI65_EINJV2_SUPP) {
-+			if (is_v2 && available_error_type & ACPI65_EINJV2_SUPP) {
- 				len = v5param.einjv2_struct.length;
- 				offset = offsetof(struct einjv2_extension_struct, component_arr);
- 				max_nr_components = (len - offset) /
--- 
-2.50.1
+diff --git a/include/linux/rmap.h b/include/linux/rmap.h
+index 9d40d127bdb7..e8aff6d2deda 100644
+--- a/include/linux/rmap.h
++++ b/include/linux/rmap.h
+@@ -394,7 +394,7 @@ typedef int __bitwise rmap_t;
+ /* The anonymous (sub)page is exclusive to a single process. */
+ #define RMAP_EXCLUSIVE		((__force rmap_t)BIT(0))
+ 
+-static inline void __folio_rmap_sanity_checks(const struct folio *folio,
++static __always_inline void __folio_rmap_sanity_checks(const struct folio *folio,
+ 		const struct page *page, int nr_pages, enum pgtable_level level)
+ {
+ 	/* hugetlb folios are handled separately. */
+
+---
+base-commit: 6bee0462de1f9f4fa9400f153d3b0792c20d7111
+change-id: 20250814-rmap-fix-build_bug-conversion-90441c036f42
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
 
