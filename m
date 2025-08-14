@@ -1,124 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5ED23815C;
-	Thu, 14 Aug 2025 15:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603B82417D9;
+	Thu, 14 Aug 2025 15:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755185736; cv=none; b=EAXvtYtPQsX1iLm+u0/cxxnU0LRC2rF5QME/4MYZcqUGxRiilSxmUoS4+YObqHWqDnk+CSsoJa66X/j/haNqJbfrVWBbDFzyKVMXzfW60vw6JGBhVUL2SC8uzan8Cz1N9vUHRICqhh8ah5hdzvE5btftRP4HLDI3BWotfnAGIbA=
+	t=1755185782; cv=none; b=UOcH1oaV7P1PeU5J2H0FEmxiwrkVYnJQefCDjYJRUumSGzQPgUk9lgL1pwqlj3rRhMw2Vy6Sns7Hj6tXZy0Lt/kO/AtDl22NT37G6d6NfPl1d6A1BKJdfu0PJ015caReiownOWwKJCGQqFVjlWSwHh+ZSACr1m4Fb17hI33T1Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755185736; c=relaxed/simple;
-	bh=gDxvjWIgXlyBLWgV2QQr23LJcSGf4vc5YOroiJL6BHQ=;
+	s=arc-20240116; t=1755185782; c=relaxed/simple;
+	bh=fIObf5r+EmdA5oHG6zfbCH3/ZfYEQP33Abj3Xq5UHgM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V5NHdUvoZB8y+WseKQCF9GzQ12L08R3VHewug8rMhQ0E9KeBmB2i9t7yhulllCAa6V4q4zJaH1itjWNHM5KNW2f7bC0M0OzmLbsbDXJUWyCG4n6OJZ+iN57e9yCqZ48YMRqNilJMgYDfiwDuCmYwSF2kKAa64tjuPoJKip4CzJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJNPGlis; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=tIhHPUm8tf4NjYvo0eWaHLuHnGN0ZQylu5zgwfzzosa5YjqpXEH7YvZ+UULcMVCodGC3LQE6b95VtOMg/zReS7PyXpszyiQ6R/9YVXXQ1sfp70pZr6j8BJ7aM19QrLzn24/EFbIllyJsI1o5EFlrZhhdTKc6VJ8hwJIpfANoJqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVlp0Gps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJNPGlis"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2644BC4CEED;
-	Thu, 14 Aug 2025 15:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVlp0Gps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6E8C4CEED;
+	Thu, 14 Aug 2025 15:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755185735;
-	bh=gDxvjWIgXlyBLWgV2QQr23LJcSGf4vc5YOroiJL6BHQ=;
+	s=korg; t=1755185781;
+	bh=fIObf5r+EmdA5oHG6zfbCH3/ZfYEQP33Abj3Xq5UHgM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DJNPGlisvjw88EiXwDk2RuS15vYBkAcU5305MBsWPMCbM6/W7E4E6L+9JlKljpuRX
-	 zwzpCawOznOaYHkMchEhfqmMwpvf3R8wIoHWBbG1N63zmB6JfoOL8GnfoT0t/6j8PQ
-	 QQbPrxKsabXo4dWZwuKLd92OEcSIPH/lHm05gpHI=
-Date: Thu, 14 Aug 2025 17:35:32 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, achill@achill.org,
-	qemu-devel@nongnu.org,
-	Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Ben Copeland <benjamin.copeland@linaro.org>,
-	LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
-	Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
-	linux-perf-users@vger.kernel.org,
-	Zhang Yi <yi.zhang@huaweicloud.com>,
-	Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
-	linux-fsdevel@vger.kernel.org,
-	linux-ext4 <linux-ext4@vger.kernel.org>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-Message-ID: <2025081416-wing-bakery-3205@gregkh>
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <bf9ccc7d-036d-46eb-85a1-b46317e2d556@sirena.org.uk>
- <CA+G9fYtjAWpeFfb3DesEY8y6aOefkLOVBE=zxsROWLzP_V_iDg@mail.gmail.com>
+	b=JVlp0GpsLTHCrcTIZbwiZa+bI1uh5hfNIws9NaTfmNZi45NelE0A5kBalt5eTRWT3
+	 kKJVRYdShn0C1FBZcqYBXIR9mN66fCijPvLZtX3UQ6MP6rAyLn6ikIGxlaaZD4YVCJ
+	 FGTBce/Od8S+L+53orjzjWUtE76T06iuMAhgnCfA=
+Date: Thu, 14 Aug 2025 17:36:18 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org,
+	conor@kernel.org, f.fainelli@gmail.com, hargar@microsoft.com,
+	linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
+	linux@roeck-us.net, lkft-triage@lists.linaro.org,
+	patches@kernelci.org, patches@lists.linux.dev, pavel@denx.de,
+	rwarsow@gmx.de, shuah@kernel.org, srw@sladewatkins.net,
+	stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
+Subject: Re:
+Message-ID: <2025081451-afloat-raisin-7cee@gregkh>
+References: <b892ae8b-c784-4e8c-a5aa-006e0a9c9362@rnnvmail205.nvidia.com>
+ <20250813172545.310023-1-jonathanh@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYtjAWpeFfb3DesEY8y6aOefkLOVBE=zxsROWLzP_V_iDg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250813172545.310023-1-jonathanh@nvidia.com>
 
-On Wed, Aug 13, 2025 at 07:11:05PM +0530, Naresh Kamboju wrote:
-> On Wed, 13 Aug 2025 at 18:21, Mark Brown <broonie@kernel.org> wrote:
-> >
-> > On Wed, Aug 13, 2025 at 05:46:26PM +0530, Naresh Kamboju wrote:
-> > > On Tue, 12 Aug 2025 at 23:57, Greg Kroah-Hartman
-> >
-> > > The following list of LTP syscalls failure noticed on qemu-arm64 with
-> > > stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
-> > >
-> > > Most failures report ENOSPC (28) or mkswap errors, which may be related
-> > > to disk space handling in the 64K page configuration on qemu-arm64.
-> > >
-> > > The issue is reproducible on multiple runs.
-> > >
-> > > * qemu-arm64, ltp-syscalls - 64K page size test failures list,
-> > >
-> > >   - fallocate04
-> > >   - fallocate05
-> > >   - fdatasync03
-> > >   - fsync01
-> > >   - fsync04
-> > >   - ioctl_fiemap01
-> > >   - swapoff01
-> > >   - swapoff02
-> > >   - swapon01
-> > >   - swapon02
-> > >   - swapon03
-> > >   - sync01
-> > >   - sync_file_range02
-> > >   - syncfs01
+On Wed, Aug 13, 2025 at 06:25:32PM +0100, Jon Hunter wrote:
+> On Wed, Aug 13, 2025 at 08:48:28AM -0700, Jon Hunter wrote:
+> > On Tue, 12 Aug 2025 19:43:28 +0200, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.15.10 release.
+> > > There are 480 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Thu, 14 Aug 2025 17:42:20 +0000.
+> > > Anything received after that time might be too late.
+> > > 
+> > > The whole patch series can be found in one patch at:
+> > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.10-rc1.gz
+> > > or in the git tree and branch at:
+> > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> > > and the diffstat can be found below.
+> > > 
+> > > thanks,
+> > > 
+> > > greg k-h
+> > 
+> > Failures detected for Tegra ...
+> > 
+> > Test results for stable-v6.15:
+> >     10 builds:	10 pass, 0 fail
+> >     28 boots:	28 pass, 0 fail
+> >     120 tests:	119 pass, 1 fail
+> > 
+> > Linux version:	6.15.10-rc1-g2510f67e2e34
+> > Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+> >                 tegra186-p3509-0000+p3636-0001, tegra194-p2972-0000,
+> >                 tegra194-p3509-0000+p3668-0000, tegra20-ventana,
+> >                 tegra210-p2371-2180, tegra210-p3450-0000,
+> >                 tegra30-cardhu-a04
+> > 
+> > Test failures:	tegra194-p2972-0000: boot.py
 > 
-> These test failures are not seen on Linus tree v6.16 or v6.15.
+> I am seeing the following kernel warning for both linux-6.15.y and linux-6.16.y …
 > 
-> >
-> > I'm also seeing epoll_ctl04 failing on Raspberry Pi 4, there's a bisect
-> > still running but I suspect given the error message:
+>  WARNING KERN sched: DL replenish lagged too much
 > 
-> Right !
-> LTP syscalls epoll_ctl04 test is failing on Linux mainline as well
-> with this error on LKFT CI system on several platforms.
+> I believe that this is introduced by …
 > 
-> >
-> > epoll_ctl04.c:59: TFAIL: epoll_ctl(..., EPOLL_CTL_ADD, ...) with number of nesting is 5 expected EINVAL: ELOOP (40)
-> >
-> > that it might be:
-> >
-> > # bad: [b47ce23d38c737a2f84af2b18c5e6b6e09e4932d] eventpoll: Fix semi-unbounded recursion
-> >
-> > which already got tested, or something adjacent.
+> Peter Zijlstra <peterz@infradead.org>
+>     sched/deadline: Less agressive dl_server handling
 > 
-> A patch has been proposed to update the LTP test case to align with
-> recent changes in the Linux kernel code.
-> 
-> [LTP] [PATCH] syscalls/epoll_ctl04: add ELOOP to expected errnos
-> 
-> -https://lore.kernel.org/ltp/39ee7abdee12e22074b40d46775d69d37725b932.1754386027.git.jstancek@redhat.com/
+> This has been reported here: https://lore.kernel.org/all/CAMuHMdXn4z1pioTtBGMfQM0jsLviqS2jwysaWXpoLxWYoGa82w@mail.gmail.com/
 
-Great, thanks for letting us know that this is just a test-case issue.
+I've now dropped this.
+
+Is that causing the test failure for you?
+
+thanks,
 
 greg k-h
