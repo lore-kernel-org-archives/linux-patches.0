@@ -1,128 +1,104 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DF723FC54;
-	Fri, 15 Aug 2025 05:30:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B17242D66;
+	Fri, 15 Aug 2025 05:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755235817; cv=none; b=Xnl2EQTinvXtt1QTteRddu4sWKlzfBlDxh5CXy75m/3mfYNg4JnYHKkmIB2JddGzXNh84t3dotaxWVMVtblsmZLFjOV2p8mdv5qmHVLV42AORod8lA/6YhKOJ3kVzgUwKib/bkLzXrmK+sz9v0eLycWm7e0N0RRgmLqpZ7k41SM=
+	t=1755236026; cv=none; b=aDIFft0T6Cg3fXvbuev38nqdRipyie8CdYp3lnYKJlkhOISOl1WgIK0lpHPNGIut+8/Jp299GWGsYZ2MTc9bcXL0Z63Y6RBFcuR0KdytQdTEfIKw1+xdhjm1eUGXKm1eUyPCFL1FvxCMgbff/Jjw7nY6ltGoCFb0NMYvZX7eVUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755235817; c=relaxed/simple;
-	bh=y0xyaJyPtcDPNLHhbPevkPLJ5VRQZj0+f0qVNL2ihWc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BQ8dEV1R/t+Plulya+WP7oAabE+WGg1bg+wpF/Fm0pIYP+p8lT+LJh2qwgDI1Tkm64Ln0QJwUC8PQSnPVya2KlF6gqiJPg3srZ9/CJP4ZpEqqVD3CvkmWGTf7idSXPBIMlQXbfvRUYAqQHNn0bKfHMo6s1CXWCPPSyrdICH0DsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lb08oeWv; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1755236026; c=relaxed/simple;
+	bh=5pmEnpk4P+ndbonyan2VBiYanHohRCT0mNUzn8ef6Jw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uCn6sfAbMdp/+dXyCLQicymWGZ1eXdu4ngGWFuh3qavEdnPGwE6iMHVq/Kr2jvYLHcf67W15z35bgX+ZkIV5+fX4RNUQ34+q60KKJKmLn0RQvbvGFkOrsQzC7t2155+eLosrA+G/e4c5jXj6P8wj2h3THga7SsSU0hIo3S7DZ2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1acX8gnF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lb08oeWv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1755235816; x=1786771816;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=y0xyaJyPtcDPNLHhbPevkPLJ5VRQZj0+f0qVNL2ihWc=;
-  b=lb08oeWvcIV0hhXpzPTT1GehWEksO/reWfvK0Y1xvr9wKUzy7/z1sZFS
-   j0AvAc4NZ1giB1MTIJ/5AvrrWcsg9AjzTpgu/yrz4v5vWYE6yU15a6x8P
-   c0itAkLQTT+F4IpMHnvf7f5gTpSEb31AoRZXAsV4QEQz8fiGjiB9T7s8E
-   v5SDq0z5ZseFFItUppVA/qzCt7IMiB0fTWiJYpyhHSRnWI9NdwUkyf9SU
-   hSdRgGyTHFn00YuZGy+XwiGNS7QYXr7S+EAsucSNtrgTsJlEnoeZCYsr8
-   ogNJYA7SmkWfhDX7B20NfVHE3wGL3IKQsG7eEc2uzL+nZR80a8Dp36REa
-   A==;
-X-CSE-ConnectionGUID: eLDMs5bSSDKBCNWZpCnByA==
-X-CSE-MsgGUID: Z7mCQ+Y3RxuEI0X4E8li7g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11522"; a="82994985"
-X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="82994985"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 22:30:15 -0700
-X-CSE-ConnectionGUID: RseyzJmKT36kWr3vroMtQg==
-X-CSE-MsgGUID: a9/KIfTrTBati7fQxiXAIQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="166914870"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2025 22:30:08 -0700
-Message-ID: <aeb04f91-ffce-4092-8dbc-17d116cd7c7e@linux.intel.com>
-Date: Fri, 15 Aug 2025 13:28:02 +0800
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1acX8gnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923C0C4CEF4;
+	Fri, 15 Aug 2025 05:33:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1755236026;
+	bh=5pmEnpk4P+ndbonyan2VBiYanHohRCT0mNUzn8ef6Jw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=1acX8gnFQCkziGbYVwXTdj9BgkJt06DgtflG9KQNRnqNIt+UE43nvvq7RtqS8j+TO
+	 DIT37U+VhXVk1Tmo2KjQJ/IaQC3QxZHPJnNumrOKk9NIFQf1jf3eWt9D8ct/fb16Pq
+	 xhXRyIEUjs6wiBS4B4K5vjigRUpIaLwvw1zT2g0k=
+Date: Fri, 15 Aug 2025 07:33:41 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Namhyung Kim <namhyung@kernel.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	qemu-devel@nongnu.org,
+	Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Ben Copeland <benjamin.copeland@linaro.org>,
+	LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
+	Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
+	linux-perf-users@vger.kernel.org,
+	Zhang Yi <yi.zhang@huaweicloud.com>,
+	Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
+	linux-fsdevel@vger.kernel.org,
+	linux-ext4 <linux-ext4@vger.kernel.org>
+Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
+Message-ID: <2025081536-resonate-wafer-6699@gregkh>
+References: <20250812173419.303046420@linuxfoundation.org>
+ <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
+ <2025081300-frown-sketch-f5bd@gregkh>
+ <aJ5EupUV9t0jToY3@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] iommu: Add iommu_get_domain_for_dev_locked()
- helper
-To: Nicolin Chen <nicolinc@nvidia.com>, robin.murphy@arm.com,
- joro@8bytes.org, bhelgaas@google.com, jgg@nvidia.com
-Cc: will@kernel.org, robin.clark@oss.qualcomm.com, yong.wu@mediatek.com,
- matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
- thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
- rafael@kernel.org, lenb@kernel.org, kevin.tian@intel.com,
- yi.l.liu@intel.com, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-tegra@vger.kernel.org, linux-acpi@vger.kernel.org,
- linux-pci@vger.kernel.org, patches@lists.linux.dev, pjaroszynski@nvidia.com,
- vsethi@nvidia.com, helgaas@kernel.org, etzhao1900@gmail.com
-References: <cover.1754952762.git.nicolinc@nvidia.com>
- <a69557026b7e2353bae67104bbe6a88f0682305e.1754952762.git.nicolinc@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <a69557026b7e2353bae67104bbe6a88f0682305e.1754952762.git.nicolinc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJ5EupUV9t0jToY3@google.com>
 
-On 8/12/25 06:59, Nicolin Chen wrote:
-> There is a need to attach a PCI device that's under a reset to temporally
-> the blocked domain (i.e. detach it from its previously attached domain),
-> and then to reattach it back to its previous domain (i.e. detach it from
-> the blocked domain) after reset.
+On Thu, Aug 14, 2025 at 01:19:06PM -0700, Namhyung Kim wrote:
+> Hello,
 > 
-> During the reset stage, there can be races from other attach/detachment.
-> To solve this, a per-gdev reset flag will be introduced so that all the
-> attach functions will bypass the driver-level attach_dev callbacks, but
-> only update the group->domain pointer. The reset recovery procedure will
-> attach directly to the cached pointer so things will be back to normal.
+> Thanks for the report!
 > 
-> On the other hand, the iommu_get_domain_for_dev() API always returns the
-> group->domain pointer, and several IOMMMU drivers call this API in their
-> attach_dev callback functions to get the currently attached domain for a
-> device, which will be broken for the recovery case mentioned above:
->   1. core asks the driver to attach dev from blocked to group->domain
->   2. driver attaches dev from group->domain to group->domain
+> On Wed, Aug 13, 2025 at 02:50:49PM +0200, Greg Kroah-Hartman wrote:
+> > On Wed, Aug 13, 2025 at 05:46:26PM +0530, Naresh Kamboju wrote:
+> > > Long story:
+> > > 1)
+> > > The perf gcc-13 build failed on x86_64 and i386.
+> > > 
+> > > Build regression: qemu-arm64 ARM64_64K_PAGES ltp syscalls swap fsync
+> > > fallocate failed.
+> > > 
+> > > > Ian Rogers <irogers@google.com>
+> > > >     perf topdown: Use attribute to see an event is a topdown metic or slots
+> > > 
+> > > Build error:
+> > > 
+> > > arch/x86/tests/topdown.c: In function 'event_cb':
+> > > arch/x86/tests/topdown.c:53:25: error: implicit declaration of
+> > > function 'pr_debug' [-Werror=implicit-function-declaration]
+> > >    53 |                         pr_debug("Broken topdown information
+> > > for '%s'\n", evsel__name(evsel));
+> > >       |                         ^~~~~~~~
+> > > cc1: all warnings being treated as errors
+> > 
+> > Already fixed.
 > 
-> So, iommu_get_domain_for_dev() should check the gdev flag and return the
-> blocked domain if the flag is set. But the caller of this API could hold
-> the group->mutex already or not, making it difficult to add the lock.
-> 
-> Introduce a new iommu_get_domain_for_dev_locked() helper to be used by
-> those drivers in a context that is already under the protection of the
-> group->mutex, e.g. those attach_dev callback functions. And roll out the
-> new helper to all the existing IOMMU drivers.
+> Are you sure?  I'm not seeing the fix.  Can you share the commit id?
 
-Given that iommu_group->mutex is transparent to the iommu driver, how
-about
+I dropped the offending perf patch:
+	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=4199b872a5585e025f62886724f4f9ae80e014ae
 
-/*
-  * Called only by iommu drivers in the callback context where
-  * group->mutex has already been held by the core.
-  */
-struct iommu_domain *iommu_get_domain_for_dev_internal(struct device *dev)
-{
-	...
-	lockdep_assert_held(&group->mutex);
-	...
-}
+Did that not work for you?
 
-?
+thanks,
 
-> 
-> Add a lockdep_assert_not_held to the existing iommu_get_domain_for_dev()
-> to note that it would be only used outside the group->mutex.
-> 
-> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
-
-Thanks,
-baolu
+greg k-h
