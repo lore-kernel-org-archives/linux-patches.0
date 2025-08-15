@@ -1,62 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3A31607A4;
-	Fri, 15 Aug 2025 16:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510192E5D39;
+	Fri, 15 Aug 2025 16:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755275045; cv=none; b=Q0yQwC8ZBR05TtXsxm8UItkRMCq1D6wp+UNIcodEnENn9gDfLLaZltaBXop1WgjVhE3u1chSkXQG7WiTiOzqm6oIAjVjM6LAp9juYbhbHaL4550c6UR6xDxtGQmqo5Gta6r2CALkykRoYx0JI8XCwPYDR13I/z8EOLJCnLaVij8=
+	t=1755276826; cv=none; b=o82zxVuQjGnZ4ADpIdgizS1afqJbHytMfpivUFtikn2cwxz3dPeQN01OVIhL4t+s1DlszgL7IRfSFXkLC9N+FjNa60+mgYEeJROM7FEocIl2qI+sZnr0ex0KBO3u5TFEG7Yw33YeGIwIfeXKXLQ+Ks6gADLCS4cHhTd1IHiioN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755275045; c=relaxed/simple;
-	bh=4W3MexmDLIj0LLuVBsUoXVIfys/oLMGtURiFQUEH13U=;
+	s=arc-20240116; t=1755276826; c=relaxed/simple;
+	bh=kRaulFfm6o1dK9XZcvujWMGvLmV1wMAk/3iHRG5dBdo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lDr6JeuicKkTay8B93GF1HoJVzfVG3Jt+ftyGNYNCHyvD5tduuAoONrIjcPreD4cD4jEf1wMTmTZbhW7MEGqDsFkv5XuoU/12LhuqBGISuKNdZZ9g+bIz8EJNtmxyr/dxC9LDUFGY46h9SihH1gocl3NxrmiLyclVh3NAxOhNfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nUphFxrW; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=b15x9Y73IzYwae0QJVSgXXpCIPiMqT7kjQFmXKCT2yd72ARz9TOjQ7G0i8CKqjDB92CWw+rx5jXc5PRqWoN9PPIOUyMEzIQ/BvIn6nzfJUjV/VPoSOSiDRpYYemwXI294JXKW73WnAyC8fTwVMuWH6tyxxY3fGeIKuBXEiDeYkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUWB8O66; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nUphFxrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B60C4CEEB;
-	Fri, 15 Aug 2025 16:24:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755275045;
-	bh=4W3MexmDLIj0LLuVBsUoXVIfys/oLMGtURiFQUEH13U=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUWB8O66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D79C4CEF1;
+	Fri, 15 Aug 2025 16:53:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1755276821;
+	bh=kRaulFfm6o1dK9XZcvujWMGvLmV1wMAk/3iHRG5dBdo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nUphFxrWKV+6n7KpkD3VVRbo27xzyyN/vWebfUiwoAS3RvQSWcpYef5mbG32vq0xD
-	 Hj0/e3bePcSFamI9nK1ma1Z1tJgmnKrGZNeX7nNEd7c2k/TECv6Usta5G6k2J1kTXq
-	 LsLm0KSBqNf5NIpDJGBe/pMGF4IRBd7RfiQ0AFAHXmAiB/AdFCFFEAZWTG5KJ1UEeH
-	 gx7uzJLw+iJTkPJ6nbo75iUvpli22kP4Ea4eVzyFa0QL+rwrRi3uUMsyrZOzUynbnX
-	 vzx4mQ8pLbKA4C23C8MVuQVsKobT/zIxnc9HN1TNS3GmfWQ6VfTQjsBHkx+jBmRUuP
-	 bmqcMI4Wr142Q==
-Date: Fri, 15 Aug 2025 09:24:01 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	qemu-devel@nongnu.org,
-	Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Ben Copeland <benjamin.copeland@linaro.org>,
-	LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
-	Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
-	linux-perf-users@vger.kernel.org,
-	Zhang Yi <yi.zhang@huaweicloud.com>,
-	Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
-	linux-fsdevel@vger.kernel.org,
-	linux-ext4 <linux-ext4@vger.kernel.org>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-Message-ID: <aJ9fIUkM04HhRgSR@google.com>
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <2025081300-frown-sketch-f5bd@gregkh>
- <aJ5EupUV9t0jToY3@google.com>
- <2025081536-resonate-wafer-6699@gregkh>
+	b=aUWB8O66N8a0q0t0LIr4Lw9qsCEEkUcwKTb7XP+lmSomRQ1h0eDsSlP6DLSodSbWM
+	 Ot1DcAeaS+lo2a73lVggJq7N6Ar3enZYK95E1Io4SG3rzISAu0UkfyvJ8rr3GhBSAF
+	 7RlnaVFEBxNweFh8Nq1DfC3LF2/vsL88RhaNUrGE=
+Date: Fri, 15 Aug 2025 18:53:38 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org,
+	conor@kernel.org, f.fainelli@gmail.com, hargar@microsoft.com,
+	linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
+	linux@roeck-us.net, lkft-triage@lists.linaro.org,
+	patches@kernelci.org, patches@lists.linux.dev, pavel@denx.de,
+	rwarsow@gmx.de, shuah@kernel.org, srw@sladewatkins.net,
+	stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
+Subject: Re:
+Message-ID: <2025081517-observer-equivocal-7219@gregkh>
+References: <b892ae8b-c784-4e8c-a5aa-006e0a9c9362@rnnvmail205.nvidia.com>
+ <20250813172545.310023-1-jonathanh@nvidia.com>
+ <2025081451-afloat-raisin-7cee@gregkh>
+ <91238bb8-cc10-4816-948e-eb14cf385f89@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -65,47 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2025081536-resonate-wafer-6699@gregkh>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <91238bb8-cc10-4816-948e-eb14cf385f89@nvidia.com>
 
-On Fri, Aug 15, 2025 at 07:33:41AM +0200, Greg Kroah-Hartman wrote:
-> On Thu, Aug 14, 2025 at 01:19:06PM -0700, Namhyung Kim wrote:
-> > Hello,
-> > 
-> > Thanks for the report!
-> > 
-> > On Wed, Aug 13, 2025 at 02:50:49PM +0200, Greg Kroah-Hartman wrote:
-> > > On Wed, Aug 13, 2025 at 05:46:26PM +0530, Naresh Kamboju wrote:
-> > > > Long story:
-> > > > 1)
-> > > > The perf gcc-13 build failed on x86_64 and i386.
+On Fri, Aug 15, 2025 at 05:20:34PM +0100, Jon Hunter wrote:
+> On 14/08/2025 16:36, Greg KH wrote:
+> > On Wed, Aug 13, 2025 at 06:25:32PM +0100, Jon Hunter wrote:
+> > > On Wed, Aug 13, 2025 at 08:48:28AM -0700, Jon Hunter wrote:
+> > > > On Tue, 12 Aug 2025 19:43:28 +0200, Greg Kroah-Hartman wrote:
+> > > > > This is the start of the stable review cycle for the 6.15.10 release.
+> > > > > There are 480 patches in this series, all will be posted as a response
+> > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > let me know.
+> > > > > 
+> > > > > Responses should be made by Thu, 14 Aug 2025 17:42:20 +0000.
+> > > > > Anything received after that time might be too late.
+> > > > > 
+> > > > > The whole patch series can be found in one patch at:
+> > > > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.10-rc1.gz
+> > > > > or in the git tree and branch at:
+> > > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> > > > > and the diffstat can be found below.
+> > > > > 
+> > > > > thanks,
+> > > > > 
+> > > > > greg k-h
 > > > > 
-> > > > Build regression: qemu-arm64 ARM64_64K_PAGES ltp syscalls swap fsync
-> > > > fallocate failed.
+> > > > Failures detected for Tegra ...
 > > > > 
-> > > > > Ian Rogers <irogers@google.com>
-> > > > >     perf topdown: Use attribute to see an event is a topdown metic or slots
+> > > > Test results for stable-v6.15:
+> > > >      10 builds:	10 pass, 0 fail
+> > > >      28 boots:	28 pass, 0 fail
+> > > >      120 tests:	119 pass, 1 fail
 > > > > 
-> > > > Build error:
+> > > > Linux version:	6.15.10-rc1-g2510f67e2e34
+> > > > Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+> > > >                  tegra186-p3509-0000+p3636-0001, tegra194-p2972-0000,
+> > > >                  tegra194-p3509-0000+p3668-0000, tegra20-ventana,
+> > > >                  tegra210-p2371-2180, tegra210-p3450-0000,
+> > > >                  tegra30-cardhu-a04
 > > > > 
-> > > > arch/x86/tests/topdown.c: In function 'event_cb':
-> > > > arch/x86/tests/topdown.c:53:25: error: implicit declaration of
-> > > > function 'pr_debug' [-Werror=implicit-function-declaration]
-> > > >    53 |                         pr_debug("Broken topdown information
-> > > > for '%s'\n", evsel__name(evsel));
-> > > >       |                         ^~~~~~~~
-> > > > cc1: all warnings being treated as errors
+> > > > Test failures:	tegra194-p2972-0000: boot.py
 > > > 
-> > > Already fixed.
+> > > I am seeing the following kernel warning for both linux-6.15.y and linux-6.16.y …
+> > > 
+> > >   WARNING KERN sched: DL replenish lagged too much
+> > > 
+> > > I believe that this is introduced by …
+> > > 
+> > > Peter Zijlstra <peterz@infradead.org>
+> > >      sched/deadline: Less agressive dl_server handling
+> > > 
+> > > This has been reported here: https://lore.kernel.org/all/CAMuHMdXn4z1pioTtBGMfQM0jsLviqS2jwysaWXpoLxWYoGa82w@mail.gmail.com/
 > > 
-> > Are you sure?  I'm not seeing the fix.  Can you share the commit id?
+> > I've now dropped this.
+> > 
+> > Is that causing the test failure for you?
 > 
-> I dropped the offending perf patch:
-> 	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=4199b872a5585e025f62886724f4f9ae80e014ae
-> 
-> Did that not work for you?
+> Yes that is causing the test failure. Thanks!
 
-Oh sorry, I misunderstood you.  I thought you have a fix.
+Is the test just noticing the warning message?  Or is it a functional
+failure?  Does it also fail on Linus's tree?
 
-Thanks,
-Namhyung
+thanks,
 
+greg k-h
