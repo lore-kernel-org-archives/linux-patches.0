@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AFBE571;
-	Fri, 15 Aug 2025 01:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6227F19AD8B;
+	Fri, 15 Aug 2025 01:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755221510; cv=none; b=bJha62YjXWy0qU4Jr0wmsSYYY4x13acUgk5aME/14CeB5PwGU6s12ErI8H55CBvKWuMGcP4iPhV2wzCHGhUUdNbrw2c6/q2rwokneEiasq7ZR600ZWdMpYP2FtlKvxLPzanw0tOmmSaAF/9UnrYkcy6zabFeiVQjOXzWm/O8TXQ=
+	t=1755221512; cv=none; b=kf6pWEmPBZCX+GjYHL0/c4Pc/MdLELYXrybshiaa2nHXwwCGGfiSY0PfMcHJEucOWXZHzFKthQxAhFyIPV/bSkx8PoRmAELOgx1FxA6lggjIqo/ea6kGX5j/EQLrk3tdbxtwjOzOr9VI7/PtH9Z5ZO6xEKIviiPCRGQ0s0FpNe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755221510; c=relaxed/simple;
-	bh=e9/U7Zymov2op6Tt2ARZLhwTYZsxnmBtyH8fYBAWN4Y=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dSVtYjdv1kTrb2+NJ8L62nYDBj93hpYtZGB83OIM+XZB+BGycNBlxhnzN+8iDmR5a/0NRFhc5jWXKpeqgiRbTdSQmht1pc/HhIrhx8PPRwtHWMGXpwSoPu7MR8Kjz20ezz6I3D8+G43V/yq7AChHky8lMHelngsTcVHvbfGCteo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GpifKG5M; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755221512; c=relaxed/simple;
+	bh=X/zutVL5lxxntjtByHEizcL/TjX/yUfbMYCdIp0zOCY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=kUJzSPIIh/JDG01cA3JZEOLRWNOBKXuTdXslpZpTKloaT9kH6JXnq6hyVCWpzzinE/l9SoTCTMGW8Gyr+dK4CDYRFJAha+KUXHuYV7nDYzdiv7939ThcwXn7ZAtWy07SgNF4xbJpPiR+Q3wp0xIlipaNNFJdMzTP0O5oAJpv19U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aV3WhqNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GpifKG5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03D9C4CEED;
-	Fri, 15 Aug 2025 01:31:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aV3WhqNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B686C4CEF6;
+	Fri, 15 Aug 2025 01:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755221509;
-	bh=e9/U7Zymov2op6Tt2ARZLhwTYZsxnmBtyH8fYBAWN4Y=;
-	h=From:Subject:Date:To:Cc:From;
-	b=GpifKG5MQZT9Dc+mtXS6bS2OQD+C6e+AcGNzhnhE2GOKYW+JYSXRCgppXGndwjnr9
-	 +jSxk39nD6mnSVfKqci6gbyxhZF73fDPOUhioL5YimBijvj6VRx01hapCM7G8zP7JH
-	 d8APpazP3eIXavOn/Jq7J9GzjF4WvdpA9Lb3DQ0MT5VLQQeyaafMblsEXASYQ95vOf
-	 C01NQ//u0+LDWj0lH+CA+hcZo70abxPAqp+7FjvlUMTtJsuYbZ6Cl0TWVmoj7SOi8g
-	 YKPnOBbnd0OVxSgsWUsDt5sTfErr6xdvDTcYmj3jFTIoST8KaRXSE/06s5h29HtHZR
-	 9wKBxFyaoWK2A==
+	s=k20201202; t=1755221511;
+	bh=X/zutVL5lxxntjtByHEizcL/TjX/yUfbMYCdIp0zOCY=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=aV3WhqNxNJcmTUyRmvYM6XxdICA7KHoblr2D+lexZomSOnzEAzEQz9nJ1uxbeq175
+	 1b7kKVluGxZnsN6iYL7quT7JT0urfxd/NmDqzy8IjVDgXtYy9I81A37p8mOr/XD2Pk
+	 ve1JaZbaZQI0pUsr9DayxGXzPwoz7TTfQ65B9cj0q1cLChsKMcelxjZxsL/5Mk+29E
+	 E1FDb2HdBSAmu8AHvWRcwVk/Cny0ZZNkqiwze9nXRk3VaT8QnDOz+os17VfOmfhVMJ
+	 0eyVgG3ImrMerPfgNh2+xzq+L3pachVPRu3PtO4Ap9RKcbUwaMnMkRspH5d+S9mHW+
+	 2tFHayjdbd61w==
 From: Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 0/6] x86: Clean ups after minimum support compiler version
- bump
-Date: Thu, 14 Aug 2025 18:31:36 -0700
-Message-Id: <20250814-x86-min-ver-cleanups-v1-0-ff7f19457523@kernel.org>
+Date: Thu, 14 Aug 2025 18:31:37 -0700
+Subject: [PATCH 1/6] x86/build: Remove cc-option for GCC retpoline flags
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,49 +37,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPmNnmgC/x3MTQqAIBBA4avErBtI0f6uEi3UxhooC6UIorsnL
- b/Few8kikwJ+uKBSBcn3kOGKAtwiwkzIU/ZICupq1YovNsaNw54UUS3kgnnkdB62xitvHCyg5w
- ekTzf/3YY3/cDpm810mYAAAA=
-X-Change-ID: 20250814-x86-min-ver-cleanups-bfb7a54f1c29
+Message-Id: <20250814-x86-min-ver-cleanups-v1-1-ff7f19457523@kernel.org>
+References: <20250814-x86-min-ver-cleanups-v1-0-ff7f19457523@kernel.org>
+In-Reply-To: <20250814-x86-min-ver-cleanups-v1-0-ff7f19457523@kernel.org>
 To: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
  Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
  x86@kernel.org
 Cc: linux-kernel@vger.kernel.org, llvm@lists.linux.dev, 
  patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1004; i=nathan@kernel.org;
- h=from:subject:message-id; bh=e9/U7Zymov2op6Tt2ARZLhwTYZsxnmBtyH8fYBAWN4Y=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBnz+phePrX/LHNU5HuMcM7pPxv9G7+pHxK9pDOnVfPyp
- /L8+fd9OkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEbt5nZGj6cSAkXF56/sfD
- fXczA9jWln3gfJr20mh76KN+/lK110qMDD+M1kv85HN7U2S1+ueJGz5W3RnTDzNdWXTh6qTdV1l
- Kf/EBAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1317; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=X/zutVL5lxxntjtByHEizcL/TjX/yUfbMYCdIp0zOCY=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBnz+phlmipn/lmVtWL9uW+BlwJeuQpkNDK0XeWJ0fRSC
+ wr5wHKro5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAExkaS/D/6JHXE5dSjq2u253
+ n994zEDY2vdwvOx5nunzJ+a0WcelvWFkmL50cW/cDh7nD8Vvtn1mKTyi6fKpJaBrSm3F51VO9Vf
+ zWQA=
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi x86 folks,
+The minimum supported version of GCC to build the x86 kernel was bumped
+to GCC 8.1 in commit a3e8fe814ad1 ("x86/build: Raise the minimum GCC
+version to 8.1"). '-mindirect-branch' and '-mindirect-branch-register'
+were first supported in GCC 8.1, so there is no need to call cc-option
+to inquire if it is supported.
 
-Here is a small series of clean ups that I noticed after PeterZ made a
-comment about '-mskip-rax-setup' being supported with all compiler
-versions that x86 requires to build (GCC 8.1+ and LLVM 15+). This has
-seen a build with GCC 8, GCC 15, LLVM 15, and LLVM 21.
-
+Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=da99fd4a3ca06b43b08ba8d96dab84e83ac90aa7
+Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=d543c04b795f8af4ebe5b3d5f38156ef4e5734f1
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Nathan Chancellor (6):
-      x86/build: Remove cc-option for GCC retpoline flags
-      x86/build: Remove cc-option from stack alignment flags
-      x86/build: Clean up stack alignment flags in CC_FLAGS_FPU
-      x86/build: Remove cc-option from -mno-fp-ret-in-387
-      x86/build: Remove cc-option from -mskip-rax-setup
-      x86/Kconfig: Clean up LLVM version checks in IBT configurations
+ arch/x86/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- arch/x86/Kconfig  |  8 +-------
- arch/x86/Makefile | 25 +++++++------------------
- 2 files changed, 8 insertions(+), 25 deletions(-)
----
-base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
-change-id: 20250814-x86-min-ver-cleanups-bfb7a54f1c29
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index 1913d342969b..ed5657395d6a 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -13,8 +13,8 @@ else
+ endif
+ 
+ ifdef CONFIG_CC_IS_GCC
+-RETPOLINE_CFLAGS	:= $(call cc-option,-mindirect-branch=thunk-extern -mindirect-branch-register)
+-RETPOLINE_VDSO_CFLAGS	:= $(call cc-option,-mindirect-branch=thunk-inline -mindirect-branch-register)
++RETPOLINE_CFLAGS	:= -mindirect-branch=thunk-extern -mindirect-branch-register
++RETPOLINE_VDSO_CFLAGS	:= -mindirect-branch=thunk-inline -mindirect-branch-register
+ endif
+ ifdef CONFIG_CC_IS_CLANG
+ RETPOLINE_CFLAGS	:= -mretpoline-external-thunk
 
-Best regards,
---  
-Nathan Chancellor <nathan@kernel.org>
+-- 
+2.50.1
 
