@@ -1,54 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349D71DE4CA;
-	Sat, 16 Aug 2025 20:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EFB3176FB;
+	Sat, 16 Aug 2025 21:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755376946; cv=none; b=JkzOljZ6b3AoemD8KMMqrQBnbxlOxOMIpKT3N+d9E/0BQwcE9K9B7oxaP88jTHJP+ZE6JvwzbXBH7j5YYyE3MhJubkYvJ0rgL0Ka2nUPUlCBmCXThb8Rl826bkYAHVMoRMfg42DyteY42fpBpETnkDhf5aifzW7x/v0FAgmZA8k=
+	t=1755378143; cv=none; b=BNr4FIU2Zp9Yer/xjunC9y7z/arKas4pToxGsXYLzIVYV99rGJvA+9y0EOJTJZWzQhPP8zhwPinc2EJHYkp2fV0mrXgpxJTy73qVmKPNglTqhh/8JKNoPFE0ex94NfjdFU/VmDPlFmU2SS2mUtJRQDn254YW/s1OtgJ17h0CDWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755376946; c=relaxed/simple;
-	bh=C0cmruSQBBjqCamTnSvZt6Z6H4u/o6gYc+QMxN0dUNk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PZ7g3VEP5XmjWzcj76f6UYJHELUDp0Fy35PQ5AMULtxD2xPT1FzgxcVbNJOVufZ14Nj+eYNGay5jWgVmKeoi3gdakNm7g6mp1+yjxzvnNPjsFfrn+tLdUza0I69H8f3TzkVAf/Mgjib1LEawq99RUsFGI2C3I+nbTNg9xi6C14o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lko3moo/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755378143; c=relaxed/simple;
+	bh=LPy5e6n6vR1llHOo2EO24oNety9Sy0DZL4/9aZBMZcA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UcZ2rFO+AkX6IDTQsF7nWz+NA9FpzIsAAre7O/y+u0WP15Si90nfJemlYPvs0p5IN1qmC/1X559X6iGJfv2vM19jXUB9zrUV35fgfeE+E7+F2DCqQu/mwjKMbPycMnhoi/hbvqiJF9yD5s8rpRrSyFbTkG3K7i8GG5cD3GJrW84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b7ZG2hNv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lko3moo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BEAC4CEEF;
-	Sat, 16 Aug 2025 20:42:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b7ZG2hNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F43BC4CEEF;
+	Sat, 16 Aug 2025 21:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755376945;
-	bh=C0cmruSQBBjqCamTnSvZt6Z6H4u/o6gYc+QMxN0dUNk=;
+	s=k20201202; t=1755378142;
+	bh=LPy5e6n6vR1llHOo2EO24oNety9Sy0DZL4/9aZBMZcA=;
 	h=From:To:Cc:Subject:Date:From;
-	b=lko3moo/xtF64BMLgObhQ9pTtT8+94yyOMpKyfWY/CL9Jj7TX0kg4KyDDn7XbC8F+
-	 038Gw0mj1fT9nd7+uF0+33H8tSqMoa97lD25ath488K9gccVxYeMIlDm5mCyqOKJG8
-	 4jN6BOkymI/pTpcThhA2akT3UmgD5ikkv/6+3eSAmhiuDYsvWFzw/D0qzJxw5K81MG
-	 qbWjr7tNJJATQ030RnAan4C6z20cM0J5P3dS1tozu53jQxHEt8XQAcizLqcPRMPIof
-	 XodD3BktX4yJgtM5OvW8xXw5UWOXruFEVLUyHLtv3NMo8hAiTNcPOj+xcrCuArrMQH
-	 NmJkkb66fmniQ==
+	b=b7ZG2hNvVEGsmVZGqFok2B5Ut3JlrhAm0TEb5kcPlq+2FoXEJJwCdOWjPw+OogiC4
+	 vHZCCukv1MT5BZzVgAvQpzjkjzrx49nFqAhLInIGTnQFFDtEJulmp5F3v9RW3DwBYq
+	 I81Ytc7XJgOdOp8G3SYBA5d8WbeLC+ycWpljp3efVXzvpeZsg2g7cYT33UxaZequeo
+	 5zji+Z6frzPsKCjU/n36YsCIIiFxREQJza/yFLhnvDW7qysKMCoahLpV+LOXJZj1gG
+	 CwSpw7Ou6R42UU0F3yPH6duyny1UyTixAS91hV8UNblX97rHL3Of/wYXXgQuiIJHFy
+	 q1czCwufE8txA==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: Danilo Krummrich <dakr@kernel.org>,
+To: Andrew Morton <akpm@linux-foundation.org>,
+	Vitaly Wool <vitaly.wool@konsulko.se>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>
+	Alex Gaynor <alex.gaynor@gmail.com>
 Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	"Liam R . Howlett" <Liam.Howlett@oracle.com>,
-	Uladzislau Rezki <urezki@gmail.com>,
+	linux-mm@kvack.org,
 	rust-for-linux@vger.kernel.org,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Uladzislau Rezki <urezki@gmail.com>,
 	Boqun Feng <boqun.feng@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
 	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
 	Benno Lossin <lossin@kernel.org>,
 	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
 	Trevor Gross <tmgross@umich.edu>,
-	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH] rust: alloc: fix `rusttest` by providing `Cmalloc::aligned_layout` too
-Date: Sat, 16 Aug 2025 22:42:15 +0200
-Message-ID: <20250816204215.2719559-1-ojeda@kernel.org>
+Subject: [PATCH] rust: alloc: fix missing import needed for `rusttest`
+Date: Sat, 16 Aug 2025 23:02:14 +0200
+Message-ID: <20250816210214.2729269-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,63 +57,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit fde578c86281 ("rust: alloc: replace aligned_size() with
-Kmalloc::aligned_layout()") provides a public `aligned_layout` function
-in `Kamlloc`, but not in `Cmalloc`, and thus uses of it will trigger an
-error in `rusttest`.
+There is a missing import of `NumaNode` that is used in the `rusttest`
+target:
 
-Such a user appeared in the following commit 22ab0641b939 ("rust: drm:
-ensure kmalloc() compatible Layout"):
+    error[E0412]: cannot find type `NumaNode` in this scope
+      --> rust/kernel/alloc/allocator_test.rs:43:15
+       |
+    43 |         _nid: NumaNode,
+       |               ^^^^^^^^ not found in this scope
+       |
+    help: consider importing this struct
+       |
+    12 + use crate::alloc::NumaNode;
+       |
 
-    error[E0599]: no function or associated item named `aligned_layout` found for struct `alloc::allocator_test::Cmalloc` in the current scope
-       --> rust/kernel/drm/device.rs:100:31
-        |
-    100 |         let layout = Kmalloc::aligned_layout(Layout::new::<Self>());
-        |                               ^^^^^^^^^^^^^^ function or associated item not found in `Cmalloc`
-        |
-       ::: rust/kernel/alloc/allocator_test.rs:19:1
-        |
-    19  | pub struct Cmalloc;
-        | ------------------ function or associated item `aligned_layout` not found for this struct
+Thus fix it by adding it.
 
-Thus add an equivalent one for `Cmalloc`.
-
-Fixes: fde578c86281 ("rust: alloc: replace aligned_size() with Kmalloc::aligned_layout()")
+Fixes: 8405eafa6e94 ("rust: add support for NUMA ids in allocations")
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
-Danilo, as usual, please feel free to rebase if that is better.
+akpm: please feel free to rebase this into the patch directly if that is
+simpler/preferred.
 
-Here I just copied the function, including comments, as-is, which maybe we want
-to tweak. However, we may want to remove `allocator_test` soon anyway (this adds
-to the justification for doing that, so that is good news :).
+We are looking into removing this file, possibly this cycle, so it is
+not a big deal but meanwhile it would be nice to keep the branch clean
+nevertheless.
 
-I am sending that one in parallel -- hopefully we can land that removal too in
-this cycle, but meanwhile, we can put something like this in your branch.
-
- rust/kernel/alloc/allocator_test.rs | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ rust/kernel/alloc/allocator_test.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/rust/kernel/alloc/allocator_test.rs b/rust/kernel/alloc/allocator_test.rs
-index a3074480bd8d..90dd987d40e4 100644
+index 283c02376458..13435ef8e652 100644
 --- a/rust/kernel/alloc/allocator_test.rs
 +++ b/rust/kernel/alloc/allocator_test.rs
-@@ -22,6 +22,17 @@
- pub type Vmalloc = Kmalloc;
- pub type KVmalloc = Kmalloc;
+@@ -9,7 +9,7 @@
 
-+impl Cmalloc {
-+    /// Returns a [`Layout`] that makes [`Kmalloc`] fulfill the requested size and alignment of
-+    /// `layout`.
-+    pub fn aligned_layout(layout: Layout) -> Layout {
-+        // Note that `layout.size()` (after padding) is guaranteed to be a multiple of
-+        // `layout.align()` which together with the slab guarantees means that `Kmalloc` will return
-+        // a properly aligned object (see comments in `kmalloc()` for more information).
-+        layout.pad_to_align()
-+    }
-+}
-+
- extern "C" {
-     #[link_name = "aligned_alloc"]
-     fn libc_aligned_alloc(align: usize, size: usize) -> *mut crate::ffi::c_void;
+ #![allow(missing_docs)]
+
+-use super::{flags::*, AllocError, Allocator, Flags};
++use super::{flags::*, AllocError, Allocator, Flags, NumaNode};
+ use core::alloc::Layout;
+ use core::cmp;
+ use core::ptr;
 --
 2.50.1
