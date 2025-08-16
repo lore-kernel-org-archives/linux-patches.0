@@ -1,54 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EFB3176FB;
-	Sat, 16 Aug 2025 21:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D49D125A9;
+	Sat, 16 Aug 2025 21:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755378143; cv=none; b=BNr4FIU2Zp9Yer/xjunC9y7z/arKas4pToxGsXYLzIVYV99rGJvA+9y0EOJTJZWzQhPP8zhwPinc2EJHYkp2fV0mrXgpxJTy73qVmKPNglTqhh/8JKNoPFE0ex94NfjdFU/VmDPlFmU2SS2mUtJRQDn254YW/s1OtgJ17h0CDWc=
+	t=1755379149; cv=none; b=ceOh4pqRGsQ1QsA5K2Uo23VYiap3HOB88T7nzjrg4BdZKgHcDi0Brh2DsxPupvvnD0o4mMUX7yZI9opmgEpws70tDHwNmrjehXm1wawV7FLZC2gR7H6t03g5T+MzCZeNYDxE4V2VO66j/Y//6F//dTx7lWf4MkxFRQH8APKZwSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755378143; c=relaxed/simple;
-	bh=LPy5e6n6vR1llHOo2EO24oNety9Sy0DZL4/9aZBMZcA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UcZ2rFO+AkX6IDTQsF7nWz+NA9FpzIsAAre7O/y+u0WP15Si90nfJemlYPvs0p5IN1qmC/1X559X6iGJfv2vM19jXUB9zrUV35fgfeE+E7+F2DCqQu/mwjKMbPycMnhoi/hbvqiJF9yD5s8rpRrSyFbTkG3K7i8GG5cD3GJrW84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b7ZG2hNv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755379149; c=relaxed/simple;
+	bh=YCuPdCymP0lupweJG5wenPZ1WcdDzT/yx2dP7aAEox8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gY9OExVw85juLuZXKqSwoakdPF7nH0psfDrYaAjTYyp2uTRS7v5kxUQuahe8c0+EDCDwqBTgP2zobzKzmfLrf9z8B9RwaRaXPt+vJg1WK0ucbQufcvWsQZ9FYTgcJJZz3PkYXFVw+ylxdHpFRYg8GsAkTaUL1+myPP8wfiycB/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pF9kwDEU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b7ZG2hNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F43BC4CEEF;
-	Sat, 16 Aug 2025 21:02:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pF9kwDEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D79C4CEEF;
+	Sat, 16 Aug 2025 21:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755378142;
-	bh=LPy5e6n6vR1llHOo2EO24oNety9Sy0DZL4/9aZBMZcA=;
+	s=k20201202; t=1755379149;
+	bh=YCuPdCymP0lupweJG5wenPZ1WcdDzT/yx2dP7aAEox8=;
 	h=From:To:Cc:Subject:Date:From;
-	b=b7ZG2hNvVEGsmVZGqFok2B5Ut3JlrhAm0TEb5kcPlq+2FoXEJJwCdOWjPw+OogiC4
-	 vHZCCukv1MT5BZzVgAvQpzjkjzrx49nFqAhLInIGTnQFFDtEJulmp5F3v9RW3DwBYq
-	 I81Ytc7XJgOdOp8G3SYBA5d8WbeLC+ycWpljp3efVXzvpeZsg2g7cYT33UxaZequeo
-	 5zji+Z6frzPsKCjU/n36YsCIIiFxREQJza/yFLhnvDW7qysKMCoahLpV+LOXJZj1gG
-	 CwSpw7Ou6R42UU0F3yPH6duyny1UyTixAS91hV8UNblX97rHL3Of/wYXXgQuiIJHFy
-	 q1czCwufE8txA==
+	b=pF9kwDEUNQ4689iLGJmxG92q3q/YoQ+QM7O1Y9TnL8rLi8HW5iU7WlGnRwC4ASW6C
+	 L/dLiQKf5fTFT8WT1ALFJlgqwqCjASq18qSwbpBJJA6Z9VO9uOrPA2AQsPMoGrba8m
+	 yE23u8D89rSkiB5/3w7tgVhldBS6JLaxvWSmsiEmzMCp/hhnSQ55Ata0YXVJUL5NzI
+	 pW9/k91DDtw3MpQWe8cZjIm3dStKvx+y0Kj+W2qPYskWvaPdjATNEza853WLERN0tB
+	 N8iR6KqJMUWo1otSQUwNjm8B5kHY/cg2v0SntGGGrnyG+R4ZqxB90ZaRFtoYwgNx8n
+	 hiGWy/m6YExUA==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>,
-	Vitaly Wool <vitaly.wool@konsulko.se>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+To: Danilo Krummrich <dakr@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
 Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Liam R . Howlett" <Liam.Howlett@oracle.com>,
-	linux-mm@kvack.org,
-	rust-for-linux@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>,
+	"Liam R . Howlett" <Liam.Howlett@oracle.com>,
 	Uladzislau Rezki <urezki@gmail.com>,
+	rust-for-linux@vger.kernel.org,
 	Boqun Feng <boqun.feng@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
 	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
 	Benno Lossin <lossin@kernel.org>,
 	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
 	Trevor Gross <tmgross@umich.edu>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH] rust: alloc: fix missing import needed for `rusttest`
-Date: Sat, 16 Aug 2025 23:02:14 +0200
-Message-ID: <20250816210214.2729269-1-ojeda@kernel.org>
+Subject: [PATCH] rust: alloc: remove `allocator_test`
+Date: Sat, 16 Aug 2025 23:19:00 +0200
+Message-ID: <20250816211900.2731720-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,47 +54,173 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There is a missing import of `NumaNode` that is used in the `rusttest`
-target:
+Given we do not have tests that rely on it anymore, remove
+`allocator_test`, which simplifies the complexity of the build.
 
-    error[E0412]: cannot find type `NumaNode` in this scope
-      --> rust/kernel/alloc/allocator_test.rs:43:15
-       |
-    43 |         _nid: NumaNode,
-       |               ^^^^^^^^ not found in this scope
-       |
-    help: consider importing this struct
-       |
-    12 + use crate::alloc::NumaNode;
-       |
+In particular, it avoids potential issues with `rusttest`, such as the
+one fixed at [1], where a public function was added to `Kmalloc` and
+used elsewhere, but it was not added to `Cmalloc`; or trivial issues
+like a missing import [2] due to not many people testing that target.
 
-Thus fix it by adding it.
+The only downside is that we cannot use it in the `macros`' crate
+examples anymore, but we did not feel a need for that so far, and anyway
+we could support that by running those within the kernel too, which we
+may do regardless.
 
-Fixes: 8405eafa6e94 ("rust: add support for NUMA ids in allocations")
+Link: https://lore.kernel.org/rust-for-linux/20250816204215.2719559-1-ojeda@kernel.org/ [1]
+Link: https://lore.kernel.org/rust-for-linux/20250816210214.2729269-1-ojeda@kernel.org/ [2]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
-akpm: please feel free to rebase this into the patch directly if that is
-simpler/preferred.
+This one goes on top of:
 
-We are looking into removing this file, possibly this cycle, so it is
-not a big deal but meanwhile it would be nice to keep the branch clean
-nevertheless.
+    https://lore.kernel.org/rust-for-linux/20250726180750.2735836-1-ojeda@kernel.org/
 
- rust/kernel/alloc/allocator_test.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/alloc.rs                |   7 --
+ rust/kernel/alloc/allocator_test.rs | 113 ----------------------------
+ 2 files changed, 120 deletions(-)
+ delete mode 100644 rust/kernel/alloc/allocator_test.rs
 
+diff --git a/rust/kernel/alloc.rs b/rust/kernel/alloc.rs
+index 335ae3271fa8..6a3d45a5eb24 100644
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -2,18 +2,11 @@
+
+ //! Implementation of the kernel's memory allocation infrastructure.
+
+-#[cfg(not(testlib))]
+ pub mod allocator;
+ pub mod kbox;
+ pub mod kvec;
+ pub mod layout;
+
+-#[cfg(testlib)]
+-pub mod allocator_test;
+-
+-#[cfg(testlib)]
+-pub use self::allocator_test as allocator;
+-
+ pub use self::kbox::Box;
+ pub use self::kbox::KBox;
+ pub use self::kbox::KVBox;
 diff --git a/rust/kernel/alloc/allocator_test.rs b/rust/kernel/alloc/allocator_test.rs
-index 283c02376458..13435ef8e652 100644
+deleted file mode 100644
+index a3074480bd8d..000000000000
 --- a/rust/kernel/alloc/allocator_test.rs
-+++ b/rust/kernel/alloc/allocator_test.rs
-@@ -9,7 +9,7 @@
-
- #![allow(missing_docs)]
-
++++ /dev/null
+@@ -1,113 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-
+-//! So far the kernel's `Box` and `Vec` types can't be used by userspace test cases, since all users
+-//! of those types (e.g. `CString`) use kernel allocators for instantiation.
+-//!
+-//! In order to allow userspace test cases to make use of such types as well, implement the
+-//! `Cmalloc` allocator within the `allocator_test` module and type alias all kernel allocators to
+-//! `Cmalloc`. The `Cmalloc` allocator uses libc's `realloc()` function as allocator backend.
+-
+-#![allow(missing_docs)]
+-
 -use super::{flags::*, AllocError, Allocator, Flags};
-+use super::{flags::*, AllocError, Allocator, Flags, NumaNode};
- use core::alloc::Layout;
- use core::cmp;
- use core::ptr;
+-use core::alloc::Layout;
+-use core::cmp;
+-use core::ptr;
+-use core::ptr::NonNull;
+-
+-/// The userspace allocator based on libc.
+-pub struct Cmalloc;
+-
+-pub type Kmalloc = Cmalloc;
+-pub type Vmalloc = Kmalloc;
+-pub type KVmalloc = Kmalloc;
+-
+-extern "C" {
+-    #[link_name = "aligned_alloc"]
+-    fn libc_aligned_alloc(align: usize, size: usize) -> *mut crate::ffi::c_void;
+-
+-    #[link_name = "free"]
+-    fn libc_free(ptr: *mut crate::ffi::c_void);
+-}
+-
+-// SAFETY:
+-// - memory remains valid until it is explicitly freed,
+-// - passing a pointer to a valid memory allocation created by this `Allocator` is always OK,
+-// - `realloc` provides the guarantees as provided in the `# Guarantees` section.
+-unsafe impl Allocator for Cmalloc {
+-    unsafe fn realloc(
+-        ptr: Option<NonNull<u8>>,
+-        layout: Layout,
+-        old_layout: Layout,
+-        flags: Flags,
+-    ) -> Result<NonNull<[u8]>, AllocError> {
+-        let src = match ptr {
+-            Some(src) => {
+-                if old_layout.size() == 0 {
+-                    ptr::null_mut()
+-                } else {
+-                    src.as_ptr()
+-                }
+-            }
+-            None => ptr::null_mut(),
+-        };
+-
+-        if layout.size() == 0 {
+-            // SAFETY: `src` is either NULL or was previously allocated with this `Allocator`
+-            unsafe { libc_free(src.cast()) };
+-
+-            return Ok(NonNull::slice_from_raw_parts(
+-                crate::alloc::dangling_from_layout(layout),
+-                0,
+-            ));
+-        }
+-
+-        // ISO C (ISO/IEC 9899:2011) defines `aligned_alloc`:
+-        //
+-        // > The value of alignment shall be a valid alignment supported by the implementation
+-        // [...].
+-        //
+-        // As an example of the "supported by the implementation" requirement, POSIX.1-2001 (IEEE
+-        // 1003.1-2001) defines `posix_memalign`:
+-        //
+-        // > The value of alignment shall be a power of two multiple of sizeof (void *).
+-        //
+-        // and POSIX-based implementations of `aligned_alloc` inherit this requirement. At the time
+-        // of writing, this is known to be the case on macOS (but not in glibc).
+-        //
+-        // Satisfy the stricter requirement to avoid spurious test failures on some platforms.
+-        let min_align = core::mem::size_of::<*const crate::ffi::c_void>();
+-        let layout = layout.align_to(min_align).map_err(|_| AllocError)?;
+-        let layout = layout.pad_to_align();
+-
+-        // SAFETY: Returns either NULL or a pointer to a memory allocation that satisfies or
+-        // exceeds the given size and alignment requirements.
+-        let dst = unsafe { libc_aligned_alloc(layout.align(), layout.size()) }.cast::<u8>();
+-        let dst = NonNull::new(dst).ok_or(AllocError)?;
+-
+-        if flags.contains(__GFP_ZERO) {
+-            // SAFETY: The preceding calls to `libc_aligned_alloc` and `NonNull::new`
+-            // guarantee that `dst` points to memory of at least `layout.size()` bytes.
+-            unsafe { dst.as_ptr().write_bytes(0, layout.size()) };
+-        }
+-
+-        if !src.is_null() {
+-            // SAFETY:
+-            // - `src` has previously been allocated with this `Allocator`; `dst` has just been
+-            //   newly allocated, hence the memory regions do not overlap.
+-            // - both` src` and `dst` are properly aligned and valid for reads and writes
+-            unsafe {
+-                ptr::copy_nonoverlapping(
+-                    src,
+-                    dst.as_ptr(),
+-                    cmp::min(layout.size(), old_layout.size()),
+-                )
+-            };
+-        }
+-
+-        // SAFETY: `src` is either NULL or was previously allocated with this `Allocator`
+-        unsafe { libc_free(src.cast()) };
+-
+-        Ok(NonNull::slice_from_raw_parts(dst, layout.size()))
+-    }
+-}
 --
 2.50.1
