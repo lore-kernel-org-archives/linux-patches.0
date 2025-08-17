@@ -1,104 +1,104 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hr2.samba.org (hr2.samba.org [144.76.82.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4772A219302
-	for <patches@lists.linux.dev>; Sun, 17 Aug 2025 08:33:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14C939FCE
+	for <patches@lists.linux.dev>; Sun, 17 Aug 2025 09:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.82.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755419588; cv=none; b=CGF4ccPj1vSgEW4tYuVrVOMnVNyJzLdrz6oE3o/zxPrjL+MK5lBAvey1YHdszLlIcz7221XzWYkdKsHMXS51OC/LS1u54FVhHPcgBxShwd6rO5YF9LoW8pn7ZkjdAas7Gr7c//pr9pP8dhHJU51btaw3b+kJS7OuFg1iII9jcwY=
+	t=1755423943; cv=none; b=oJTtCrR8Doi3LUIpwKFDmYZuG3KnYWPxAoSZFSRLXykTjt2i0iX12b648YOhxOubJNlAjuanlrgFN69RJMlltOdZd4ub7QNk+FalU7Z03X4qM8fQVcqfgcSNRV+gD+BAfqJMetLGOolgTbdbcCj2LlFx8wpwrp8SVT6F7pgrYHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755419588; c=relaxed/simple;
-	bh=9F4kZCt6EM418SfE71rTAkC9O6+5xOXqnezhdzokRY8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ckIavdWXgBeecmN2trOL4gEykG31Ym8FJr/SjskoGd0qRDkEmfycpNedDnAJ2LE2JXU4j44piwGqvOdT3k+jmZVURPn9T7jQTVNLlKFlTgcgmCXbnTCsudLIuEZCFyoDNDAbwLECnxQv0LwVtG+YAD//EgRctJVniGmoeaQLoLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=siFp4lM1; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1755423943; c=relaxed/simple;
+	bh=kUKw3kLd7iexL+xRquTb47RXamJLX71sd8yk+SrZVAY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PTt5+IZAA1FoJ9TICGOh7e6VXj7SoxOokl7pEV3AuJEuadlRDE5qfd94J4565bT5pxMUMIiCGP15C+XDLLEM6MgoMggH3ZQnavq0Dqo3mySV2HYvW2iNNuDAciUCCQpRwjNpIK7AwJyL291LJIz7FXU4yHucX+lrQW4u8OPbXYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=samba.org; spf=pass smtp.mailfrom=samba.org; dkim=pass (3072-bit key) header.d=samba.org header.i=@samba.org header.b=nydQK3/p; arc=none smtp.client-ip=144.76.82.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=samba.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samba.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="siFp4lM1"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3b9e415a68fso3146047f8f.2
-        for <patches@lists.linux.dev>; Sun, 17 Aug 2025 01:33:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1755419585; x=1756024385; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hTwTOtGwt6cJGY41AEmiyutI55TEpKyzi4qJ2ueIWhw=;
-        b=siFp4lM1Mj6vUxaB9Z+ho+PUN4W/nEHsKkbOf+JWBhI1gCJV/7sEUS+SNSqqP9dHAj
-         ZY7N0kJUVy4j2RNBXGLGpHOTVnp6ikvsoWKje9cBHNzQ5ADPCPhwFwZi6BvceS7JSt2F
-         FLmJmiqW83JhIm6wtBDtnM72/pqWMx1oXeptoX+KwrIliZAtaJxBYirIcatHfS9JE3uT
-         ZkZMfiVNRQhtXjysjdThtUXg7MUkq5GugJlVfKnqOFCJv6tlwWvTSI6KimZfkwNmN03V
-         79UqUy5VbkiQ8DIAEhTXOHW6RlPSRrR2GJN+tV+WlqhcWGoTB/84BuT+Pq9vgefrLBbt
-         SsBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755419585; x=1756024385;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hTwTOtGwt6cJGY41AEmiyutI55TEpKyzi4qJ2ueIWhw=;
-        b=opbMz5cDmMIgd9CxZSeMg0uKywLeI3TcsPdtusGm+foHRepsDmBMJzhqivp+f4+J6K
-         u0p42hKqGblalF0AV0ebSHK9vqj9g4UyjSQ4BbSgfpLxSsZ84e/wXre61IcRwEYiD9pe
-         hdjRaB6FDXEDxCFiVEOZoXrVgkIRlot/uylI2wgFE37CtomXNuVcMWWtShfdMmt2lP87
-         0w0+/2NRt0IbmyDkUL6MvVvcr54DsBxuDam0LU9R+6aXhKNmGKAetePewIMPx147qozn
-         2oYH4fQpySIGc0sNEMeLRJFNiqf0i9aiAgczfm/yJnid1I8OlRZo25hUx7wr/Kty2UZQ
-         pTbA==
-X-Forwarded-Encrypted: i=1; AJvYcCUHb0PwGKMzehzZblOh8ewDjGdRPsg4RBYc1tc1edY9EFTXDmhYDX6OWZa8za0GZiyFT/VBWcF2@lists.linux.dev
-X-Gm-Message-State: AOJu0YxUuIEmzbALS8PkSD8zS9ceilffo0wrhETPrWC5KN2l8JkGVi21
-	JDEoRMLrt21AMxsDV7oCl7iPFhYvh2rhLQRVQjL8GcAzSHdauYlWXioCos5hgbcLusuFc3oi8NO
-	xOxT1DfBnUQNEYGZ1XxcvvGbBv7iSp3bu55KUCAxr
-X-Gm-Gg: ASbGncvoyYOVhKeg6IAeSa8odTyHaMS7RkT4LlzbqQLRuNhTquHyHOgHbS5oTF47dH3
-	uLrD3rrVenNNbGOlfBNDPino6jPNPCzCzRkTGqYBPNsOvegJ7m/S/uEFYJxvMmayw9Azb/os3yR
-	KK6tUDZd/DCVu/HGlxrdS8tpDyrc91K210BlAyBBDtiz42Z1kv1D+wixcPbg8EGv9ZecYcwDnSR
-	P0OouvvNjiKaN+WeqEdfBGIE3NDJrTd0Ue2
-X-Google-Smtp-Source: AGHT+IGoRb1xdrYrj6kHKejvqdDcCa7iTaEaP7TOTbmewwBY/XYltNC5+vB1zPlq8+D3PhMalwZdmY0KcTb1ScHU0tU=
-X-Received: by 2002:a05:6000:430b:b0:3b7:9589:1fd1 with SMTP id
- ffacd0b85a97d-3bb68fdc587mr6365788f8f.44.1755419585362; Sun, 17 Aug 2025
- 01:33:05 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=samba.org header.i=@samba.org header.b="nydQK3/p"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=samba.org;
+	s=42; h=From:Cc:To:Date:Message-ID;
+	bh=OI4yJdSASRHDaXzs0fqnSdNo/8g/kJLlvZ5t0H3MptY=; b=nydQK3/pT2L0WvvHlWcIyMLeX2
+	BW8oHniUT3OXbbW4b9nZmX16ioFslGIxeCZItCXnAqEE4s9Gtld1K1CwaeqKuaZZvnB4hgJ2DPpF4
+	HdwCy8rqsKWoFSIUyhz188yJj0f/BE+MiBR/k/g9r1kwnUeFnkZzebxsLkaROn4QmBJ8wENcefJlo
+	QAm8Fw0goAhWOYhAElYPVKmIxi4iFO7bpIhSTe8CAlZ+FIFzcpV9fXrts65tBk3hCYiB2ekkrjFdV
+	JTG82YacO2mFBDhyVpvqgozuSfzgjUm+IuOLJSTX3Mi4vzgkb4a1m/Y0A4mXE7l+Ac2luMalvwzRa
+	kckB8HwY2tT1Ub7IEyi2VYiN1n4wdl341xqGp5en6Sxvf/dKpwwCc5fCg1CMIATpn3jO+OuBlIfPT
+	MQ3qKKLFYom5dvQuYeMx4gTtu1xMMfDOXnZhUsWKKd/F5cQT9TjSRLXj6JZ+G7JAmsEY5BP/GQIFP
+	SVRZElSX7CHYTRV17Hf0rFvD;
+Received: from [127.0.0.2] (localhost [127.0.0.1])
+	by hr2.samba.org with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__CHACHA20_POLY1305:256)
+	(Exim)
+	id 1unZxE-003GXO-0Q;
+	Sun, 17 Aug 2025 09:45:32 +0000
+Message-ID: <c582ccee-9425-4f4e-a04a-c86e9992e917@samba.org>
+Date: Sun, 17 Aug 2025 11:45:31 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250816210214.2729269-1-ojeda@kernel.org>
-In-Reply-To: <20250816210214.2729269-1-ojeda@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Sun, 17 Aug 2025 10:32:53 +0200
-X-Gm-Features: Ac12FXzhd2iFnnKjyXBfrCIdB6O_r4X05qYMnlTOhhEd7NQgiE9g9rzOlA9OUao
-Message-ID: <CAH5fLggYHJg+PmLD=Fg2a=pO7JRmM+AqppwBqOBpp6+179YcVg@mail.gmail.com>
-Subject: Re: [PATCH] rust: alloc: fix missing import needed for `rusttest`
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Vitaly Wool <vitaly.wool@konsulko.se>, 
-	Danilo Krummrich <dakr@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, "Liam R . Howlett" <Liam.Howlett@oracle.com>, linux-mm@kvack.org, 
-	rust-for-linux@vger.kernel.org, Vlastimil Babka <vbabka@suse.cz>, 
-	Uladzislau Rezki <urezki@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.16 563/627] smb: client: let send_done() cleanup before
+ calling smbd_disconnect_rdma_connection()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Steve French <smfrench@gmail.com>, Tom Talpey <tom@talpey.com>,
+ Long Li <longli@microsoft.com>, linux-cifs@vger.kernel.org,
+ samba-technical@lists.samba.org, Steve French <stfrench@microsoft.com>,
+ Sasha Levin <sashal@kernel.org>
+References: <20250812173419.303046420@linuxfoundation.org>
+ <20250812173453.306156678@linuxfoundation.org>
+ <527dc1db-762e-4aa0-82a2-f147a76f8133@samba.org>
+ <2025081325-movable-popcorn-4eb8@gregkh>
+ <6acc8228-da51-4528-87c4-4cb2c96d3e8a@samba.org>
+ <2025081301-carpool-gully-cbfc@gregkh>
+Content-Language: en-US
+From: Stefan Metzmacher <metze@samba.org>
+In-Reply-To: <2025081301-carpool-gully-cbfc@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Aug 16, 2025 at 11:02=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
->
-> There is a missing import of `NumaNode` that is used in the `rusttest`
-> target:
->
->     error[E0412]: cannot find type `NumaNode` in this scope
->       --> rust/kernel/alloc/allocator_test.rs:43:15
->        |
->     43 |         _nid: NumaNode,
->        |               ^^^^^^^^ not found in this scope
->        |
->     help: consider importing this struct
->        |
->     12 + use crate::alloc::NumaNode;
->        |
->
-> Thus fix it by adding it.
->
-> Fixes: 8405eafa6e94 ("rust: add support for NUMA ids in allocations")
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Hi Greg,
 
-Acked-by: Alice Ryhl <aliceryhl@google.com>
+>>>> Am 12.08.25 um 19:34 schrieb Greg Kroah-Hartman:
+>>>>> 6.16-stable review patch.  If anyone has any objections, please let me know.
+>>>>>
+>>>>> ------------------
+>>>>>
+>>>>> From: Stefan Metzmacher <metze@samba.org>
+>>>>>
+>>>>> [ Upstream commit 5349ae5e05fa37409fd48a1eb483b199c32c889b ]
+>>>>
+>>>> This needs this patch
+>>>> https://lore.kernel.org/linux-cifs/20250812164506.29170-1-metze@samba.org/T/#u
+>>>> as follow up fix that is not yet upstream.
+>>>>
+>>>> The same applies to all other branches (6.15, 6.12, 6.6, ...)
+>>>
+>>> Thanks, now queued up.
+>>
+>> Even if it's not upstream yet?
+>> I thought the policy is that upstream is required first...
+>>
+>> It's only here
+>> https://git.samba.org/?p=sfrench/cifs-2.6.git;a=shortlog;h=refs/heads/for-next
+>> as
+>> https://git.samba.org/?p=sfrench/cifs-2.6.git;a=commitdiff;h=8b2b8a6a5827848250c0caf075b23256bab4ac88
+>>
+>> But that commit hash can change on rebase.
+> 
+> Ah, I thought since this was in linux-next it would not rebase.  Having
+> public trees that rebase is dangerous...
+> 
+> Anyway, I'll go drop both of these now, please let us know when you want
+> these added back.
+
+It landed as 8c48e1c7520321cc87ff651e96093e2f412785fb, so
+5349ae5e05fa37409fd48a1eb483b199c32c889b can be backported
+with 8c48e1c7520321cc87ff651e96093e2f412785fb being the fixup.
+
+Thanks!
+metze
+
