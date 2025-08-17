@@ -1,40 +1,41 @@
 Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64D027453
-	for <patches@lists.linux.dev>; Sun, 17 Aug 2025 17:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7441827453
+	for <patches@lists.linux.dev>; Sun, 17 Aug 2025 17:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755450940; cv=pass; b=OOfCezBj/WWj8GVYKPOxOXxT6eTCL80JP/L1DlpDuYQMY6pRsuo7fW+dl8qouF7ttDCAEY/4dnrHmv38e7OwJXS/nyqwD1568a1OpvxQp7LpDh0SjNmrygCfSRbT8sWRHWP2mVcuwDQd7+ZtULsbVuvKymPwdyZd51dqHpMbM6w=
+	t=1755450978; cv=pass; b=P7CFW+JzkXWR0WV96+b+59ryXUtHJjp7Ih1y8J3a8hqmn24IVzpR9MRzrQF+HL89m0aL3JyGVm19PUMWsUX/xAwxzGU49K6h3+HHVRbdMYnfdDzKwaaFsyMcXnX3HZgcsaWXWhq/t9izLRtOuQImuPdirGhsmQz+tQLXoglQi24=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755450940; c=relaxed/simple;
-	bh=iBHwvalA/Mc1nPmfxvrfVnqvey64uHAHShpX6Lk8xYE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lq7TG6tTrQ3IPJiKBGn5T+ot3vJCiC9ZGsJZd3MEzgwYGmFYMSxKARIxXUaRkIKaFVcqdrLuxpwuWIx7yfH96OpNt9NxpGUcEd1NeoM2Rm8++WA8CrHsztawctClUK26fA+2zwTkmhEP+khZtomlzw2XCHKUBKnEEWvrymVgg4w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b=eurnLHsl; arc=pass smtp.client-ip=136.143.188.95
+	s=arc-20240116; t=1755450978; c=relaxed/simple;
+	bh=GHW56IwTnR8DZ68dY4DgH2pgKw3Sr/CtY7s7JFfq0wY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=US9+Nm2DwJXEeJq9L83ChtH/kKOyJImo4E0XsegJlavSHadJfJ2dR2Dv3KfulOe+wfIS/N451W4/s2Anr3h+zlxJEihz+UxykBStRARo0vENG2z8qZ+Cv8OYIIAXDK+CUPtO//vNQN5f2iXVDB0DCkTkxKUv90qSQJoUVCcyVes=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b=W/bT/o6m; arc=pass smtp.client-ip=136.143.188.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b="eurnLHsl"
-ARC-Seal: i=1; a=rsa-sha256; t=1755450933; cv=none; 
+	dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b="W/bT/o6m"
+ARC-Seal: i=1; a=rsa-sha256; t=1755450939; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=InnrDTU8ilDdMK2/KX0mj7fwnImtEtEr+N7a4ETuOBgare1yhgD5NQeAz8es9Yp9kTSr16OzL6R8CRclsOHu96waAKxqXQ//T0IQ2PdJ8TyBwRqMCCgFHaUxomI/upJW4qt9xSBabEZ3K3HbYXqVYPNbOsm3PwDfs+xD7NfSTLc=
+	b=CLc8R/HHso/R1FK80Xw7vlHDwUnsoxdSe1ZPR8IyCu540OvkBM/1bHaFLUUW4QHfioFeKa/WHseTohs8Z4wkOut9VCZ1h15+DGIapQQCNUONbAiSMML4Q2T/7ziH8oEAXMBgQEFmPbt8YchVY4CfJY4ZhxKu8vBbkZ/BhirQpos=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1755450933; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=ViY095fg/kzvW7mbPbRB9wevfbtS7vvGCg+1E/G9ev4=; 
-	b=AreCIv0b7zw2U2ecwKwBKyFC4hY6VGiIIihot50d1pi7teVOTNRiGHVIj/2Aah9og+lWwQXDAmLUf1Eg7TkBNLFUPMggg/0djcFb8KHXhDKp174QIJKhoe5l0vkFRsBL0D0HZQXDEQhQDY/BGhIicMLP6dvzu6LYVxw9I/CYAcI=
+	t=1755450939; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=kqyVLSz7wv9smblV3N8ULdBRdoyfZit5Dl6ZKefYxHA=; 
+	b=lYer+aX7WRjI3Wxpqyt+HTmTNjS7uMdbi9GOWYaBO1PX9eyhlbxDQHqNaOhPJIywl6j7EkhOZrISfe7fieVGUhEpzvUMaDeOzeYjmo38jtBVF7Co8mWVxgeei6znCKlBgOeY+/1TiiXS0XdUSVE4ccz5mMTEIBP2c7nFYuUqO4E=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=zohomail.com;
 	spf=pass  smtp.mailfrom=safinaskar@zohomail.com;
 	dmarc=pass header.from=<safinaskar@zohomail.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755450933;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755450939;
 	s=zm2022; d=zohomail.com; i=safinaskar@zohomail.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
-	bh=ViY095fg/kzvW7mbPbRB9wevfbtS7vvGCg+1E/G9ev4=;
-	b=eurnLHsl0z0cu4ijzYB1ofdCwCe8sQRwDGgr9dig9BXqzAs74CF+VNVuyiOAFOXa
-	mk8/M7XonQ35IZgNS8iSV7vn1VMAc3Mt7ztFtSSbzRD0/qCz+X72/V+fk65SLGgdfpT
-	kaY2ObOZLZdvRpnoQhDK0fdncrYYNZyN8VT/Q39I=
-Received: by mx.zohomail.com with SMTPS id 1755450930270200.28498429674107;
-	Sun, 17 Aug 2025 10:15:30 -0700 (PDT)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
+	bh=kqyVLSz7wv9smblV3N8ULdBRdoyfZit5Dl6ZKefYxHA=;
+	b=W/bT/o6mFNjjxjshHYa1c9F065xZnzGRwUvtrygJC96lZb0ML1Hyy8vT6bBFiURE
+	+amCoTCoXu6hxeX1Ms57H4X7YSqrGlx69+NDsiAXl0zzxvdVWhnEXP3pLU18Y4gG4Uk
+	FCHeU2vyn7/sNC039wARPCK+gcgn88kueBD1LI0A=
+Received: by mx.zohomail.com with SMTPS id 175545093682565.71689882490375;
+	Sun, 17 Aug 2025 10:15:36 -0700 (PDT)
 From: Askar Safin <safinaskar@zohomail.com>
 To: Alexander Viro <viro@zeniv.linux.org.uk>,
 	Christian Brauner <brauner@kernel.org>,
@@ -45,10 +46,12 @@ Cc: linux-fsdevel@vger.kernel.org,
 	David Howells <dhowells@redhat.com>,
 	autofs mailing list <autofs@vger.kernel.org>,
 	patches@lists.linux.dev
-Subject: [PATCH 0/4] vfs: if RESOLVE_NO_XDEV passed to openat2, don't *trigger* automounts
-Date: Sun, 17 Aug 2025 17:15:09 +0000
-Message-ID: <20250817171513.259291-1-safinaskar@zohomail.com>
+Subject: [PATCH 2/4] vfs: fs/namei.c: remove LOOKUP_NO_XDEV check from handle_mounts
+Date: Sun, 17 Aug 2025 17:15:11 +0000
+Message-ID: <20250817171513.259291-3-safinaskar@zohomail.com>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250817171513.259291-1-safinaskar@zohomail.com>
+References: <20250817171513.259291-1-safinaskar@zohomail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,41 +59,34 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Feedback-ID: rr08011227cf344161cc8e36d43358c44f0000e446248a082fb86fa76641387b1e314a0f499e8c173e343bb1:zu08011227f65ae9751271c2df701fbc4b00002743f4b67102cf39e9a15adaff41a995eaed22a2990ccb6b0e:rf0801122c333a2d3d058be4b8b2a9fda50000d0443a7eb151880040e764fcb819b339a4a23844ed17b0e4565d64430f49:ZohoMail
+Feedback-ID: rr08011227f1f3cd4c79404d030ed3e4040000480f4c1ac4acebc3fbd4d521bbfa62260be44b27354ee04fcd:zu080112275ded32bee42613b2b95b55d900002a2b5f3008994074d61ab2f90c23bebd4943538544b01fab54:rf0801122c062571df28666cd38943d2d400005b6056c1064d1f67c9d54a37f3ac0cb78d57a34c2e62df339616a6173d52:ZohoMail
 X-ZohoMailClient: External
 
-openat2 had a bug: if we pass RESOLVE_NO_XDEV, then openat2
-doesn't traverse through automounts, but may still trigger them.
-See this link for full bug report with reproducer:
-https://lore.kernel.org/linux-fsdevel/20250817075252.4137628-1-safinaskar@zohomail.com/
+This is preparation to RESOLVE_NO_XDEV fix in following commits.
+No functional change intended
 
-This patchset fixes the bug.
+Signed-off-by: Askar Safin <safinaskar@zohomail.com>
+---
+ fs/namei.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-RESOLVE_NO_XDEV logic hopefully becomes more clear:
-now we immediately fail when we cross mountpoints.
-
-I think this patchset should get to -fixes and stable trees.
-
-I split everything to very small commits to make
-everything as bisectable as possible.
-
-Minimal testing was performed. I tested that my original
-reproducer doesn't reproduce anymore. And I did boot-test
-with localmodconfig in qemu
-
-I'm not very attached to this patchset. I. e. I will not be offended
-if someone else will submit different fix for this bug.
-
-Askar Safin (4):
-  vfs: fs/namei.c: move cross-device check to traverse_mounts
-  vfs: fs/namei.c: remove LOOKUP_NO_XDEV check from handle_mounts
-  vfs: fs/namei.c: move cross-device check to __traverse_mounts
-  vfs: fs/namei.c: if RESOLVE_NO_XDEV passed to openat2, don't *trigger*
-    automounts
-
- fs/namei.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
-
+diff --git a/fs/namei.c b/fs/namei.c
+index 1e13d8e119a4..00f79559e135 100644
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -1635,10 +1635,8 @@ static inline int handle_mounts(struct nameidata *nd, struct dentry *dentry,
+ 			return -ECHILD;
+ 	}
+ 	ret = traverse_mounts(path, &jumped, &nd->total_link_count, nd->flags);
+-	if (jumped) {
+-		if (!unlikely(nd->flags & LOOKUP_NO_XDEV))
+-			nd->state |= ND_JUMPED;
+-	}
++	if (jumped)
++		nd->state |= ND_JUMPED;
+ 	if (unlikely(ret)) {
+ 		dput(path->dentry);
+ 		if (path->mnt != nd->path.mnt)
 -- 
 2.47.2
 
