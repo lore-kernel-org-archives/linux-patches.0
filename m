@@ -1,111 +1,66 @@
-Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
+Received: from zeniv.linux.org.uk (zeniv.linux.org.uk [62.89.141.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88971ADC83
-	for <patches@lists.linux.dev>; Sun, 17 Aug 2025 17:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755451074; cv=pass; b=mfL6oWCOeBR/QIyZan/SfuBSTsn8iaT312zjA20f7AfAiApZEW/LvYDqHCoR+YEtAM4n4RtOYmvtTjInX0ohkdzYuiPG/cgf7ybXeIaadf1KEnTUV2ZEzkPquOfcgHvT4IuDahLPfPu7Jn7T/t4ICkI/dZSSX70gST2J01LL3Mk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755451074; c=relaxed/simple;
-	bh=5uaPBf07hCj63yaAFoCxEND7MCLmzvxkZW7/dK6tHJw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqpjHYiasyFbS9ySg/I2fd8vtlm7za0FxZ5wIpwwfl96845BoFssaMvW/iYWDOotRMsB8Fh2vv+GqjqoCeaobDQBftI6ziGfR8XjCa8yNJRRLCwQN2b3dyWUODhwUZXNszjXD7MWyeTYco7urUtuKcheV+4f10J3Hk3no8enxyk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b=GtH1bD3T; arc=pass smtp.client-ip=136.143.188.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7C41FE44D;
+	Sun, 17 Aug 2025 17:53:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.89.141.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755453208; cv=none; b=GJCsEWXiArvjTd0Y9tNK61Bk0D4ysXLdfDt5+O3No7SMuuGhiklznH38rbipe1Bc7EiUR2aBQ3uWZImz1PbYQ2GLnD1bVb85JNy+0LFdgzgfP/xYbIbxl6+UuUVTMmGE6hXq9oGfTvPFZKoJBBiNUan4KVeRz1p1OhvepgFKYWM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755453208; c=relaxed/simple;
+	bh=FV4d31vXhnlOKKl/LB3jEBZ+4DI35Ta4or8jtC6m4R0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=luqhL+LXDp3qiUGLEVBhbsQr29pFk46r1QtJGX0nIxcN0c/QCabMSQXbgpXkNWqJJ3mpaSySRRyUIyxZJhYuqTmjDl9HERQ1Rgbx5CCVSmuY67pG+q8uMXC5yvErfYk56tlHnfGJ4IJOYcr19lyvw7yDVZTugKz7PcmnxM4i+CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk; spf=none smtp.mailfrom=ftp.linux.org.uk; dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b=V8wZJlvp; arc=none smtp.client-ip=62.89.141.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ftp.linux.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b="GtH1bD3T"
-ARC-Seal: i=1; a=rsa-sha256; t=1755450950; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=T7WSRTv05We1bXyBh4f7UozwjOB0TpWQZFZpEWWQDQ/23ZOJvwPet7by7W4vtbq8lj7jz1ayorjA/jKs/oypTHQmTGRu1jOBm6K8RA0MKdxIgfKYiOaFAZS27P27KJND+u7APm8pNmQ/n1pqnBTvMkkq5b0s3E6JGimUCK3wr74=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1755450950; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=cwTeDTN8vZEoJJgRMRcOqX3jO84JMqfepC8EV4dqZg0=; 
-	b=iMNFZ3lbpWZxqo5DQT9asCRYFSqKDJ1CCkhLnJkCU9rDjfdDJkgbkj2GYusVgKrBdW2aY+YmFmc8sBhEwNllHxqL+9n2mKdBQuLsAvb6lP41Qv29EzSvbG4xNvrKTPnGNAVriOJ2Bb7bvUEo7J7japNx5I14+plI1hJDQYObhVk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=zohomail.com;
-	spf=pass  smtp.mailfrom=safinaskar@zohomail.com;
-	dmarc=pass header.from=<safinaskar@zohomail.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755450950;
-	s=zm2022; d=zohomail.com; i=safinaskar@zohomail.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
-	bh=cwTeDTN8vZEoJJgRMRcOqX3jO84JMqfepC8EV4dqZg0=;
-	b=GtH1bD3T6Qcv266F/tME1gBVOE+5G3l/x1EcEZtJ/f8NW5tOZ/OxfRXBhqkeXvV9
-	iYWgFVLYzr+StmGfDwP+p75YUez7TxBFRC69I2B95IVps4Rz4/Io0+4hIMBGV8+V/bR
-	LJSXA4tNin98ppyzOE7T58jVfsv9c/O/igqB6B8Q=
-Received: by mx.zohomail.com with SMTPS id 1755450933547554.6286903848388;
-	Sun, 17 Aug 2025 10:15:33 -0700 (PDT)
-From: Askar Safin <safinaskar@zohomail.com>
-To: Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	cyphar@cyphar.com,
-	Ian Kent <raven@themaw.net>
-Cc: linux-fsdevel@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
+	dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b="V8wZJlvp"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=linux.org.uk; s=zeniv-20220401; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=5wQD3GdET98B4Lqz6XgdVTX0c9q0vaiXjYgw1oAWM14=; b=V8wZJlvp1ic0GFInj/QJuEoygj
+	LULYokP2N7G84XDhd9l9pfkEhYBQSaeWy/MSEJ3plWdDsliEZBjQqkK+c/KTsSkzX8CSXH/rAD+Pz
+	4JyoLYpusNz0zU1Np+zphov6ww03RucAleeGSbQOtfbgxHFC2YW0FkQ7L69mAIoYHSpH9HAzim73q
+	FoNGhECzauwINnrVMKHM0D0qu4H5wtTTgNcDm4mRHlRxwQL5cpAh7RumgnerF1cRl74OPyXP/2U6s
+	H61esojmSqAUYK5/0x3xp6rPjQPwcaIxr2bIr6a0XS+QdUOXljQJiTWimpPLu1A2Ow9McVV+srFLH
+	DyouxmEw==;
+Received: from viro by zeniv.linux.org.uk with local (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1unhZH-0000000BVBb-3hM3;
+	Sun, 17 Aug 2025 17:53:19 +0000
+Date: Sun, 17 Aug 2025 18:53:19 +0100
+From: Al Viro <viro@zeniv.linux.org.uk>
+To: Askar Safin <safinaskar@zohomail.com>
+Cc: Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
+	cyphar@cyphar.com, Ian Kent <raven@themaw.net>,
+	linux-fsdevel@vger.kernel.org, David Howells <dhowells@redhat.com>,
 	autofs mailing list <autofs@vger.kernel.org>,
 	patches@lists.linux.dev
-Subject: [PATCH 1/4] vfs: fs/namei.c: move cross-device check to traverse_mounts
-Date: Sun, 17 Aug 2025 17:15:10 +0000
-Message-ID: <20250817171513.259291-2-safinaskar@zohomail.com>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250817171513.259291-1-safinaskar@zohomail.com>
+Subject: Re: [PATCH 4/4] vfs: fs/namei.c: if RESOLVE_NO_XDEV passed to
+ openat2, don't *trigger* automounts
+Message-ID: <20250817175319.GY222315@ZenIV>
 References: <20250817171513.259291-1-safinaskar@zohomail.com>
+ <20250817171513.259291-5-safinaskar@zohomail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Feedback-ID: rr08011227b7a56901fc46519a4ec525f3000021a20bbca9313a7e4d7b968641def150b417a4b2184ffca9f5:zu0801122785d00b213c0069409631cde50000575b3be1ed3d793896fe05f0e2b8596102cb328fa9de326ba0:rf0801122c0626ead06a823052bb414ed9000062a50369da89b8f9bc40ec4015d0d67cf64536509e0bdf50c06c1ae10190:ZohoMail
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250817171513.259291-5-safinaskar@zohomail.com>
+Sender: Al Viro <viro@ftp.linux.org.uk>
 
-This is preparation to RESOLVE_NO_XDEV fix in following commits.
-No functional change intended
+On Sun, Aug 17, 2025 at 05:15:13PM +0000, Askar Safin wrote:
 
-Signed-off-by: Askar Safin <safinaskar@zohomail.com>
----
- fs/namei.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+> @@ -1472,6 +1484,10 @@ static int __traverse_mounts(struct path *path, unsigned flags, bool *jumped,
+>  		/* Allow the filesystem to manage the transit without i_rwsem
+>  		 * being held. */
+>  		if (flags & DCACHE_MANAGE_TRANSIT) {
+> +			if (lookup_flags & LOOKUP_NO_XDEV) {
+> +				ret = -EXDEV;
+> +				break;
 
-diff --git a/fs/namei.c b/fs/namei.c
-index cd43ff89fbaa..1e13d8e119a4 100644
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -1518,6 +1518,7 @@ static inline int traverse_mounts(struct path *path, bool *jumped,
- 				  int *count, unsigned lookup_flags)
- {
- 	unsigned flags = smp_load_acquire(&path->dentry->d_flags);
-+	int ret;
- 
- 	/* fastpath */
- 	if (likely(!(flags & DCACHE_MANAGED_DENTRY))) {
-@@ -1526,7 +1527,11 @@ static inline int traverse_mounts(struct path *path, bool *jumped,
- 			return -ENOENT;
- 		return 0;
- 	}
--	return __traverse_mounts(path, flags, jumped, count, lookup_flags);
-+
-+	ret = __traverse_mounts(path, flags, jumped, count, lookup_flags);
-+	if (*jumped && unlikely(lookup_flags & LOOKUP_NO_XDEV))
-+		return -EXDEV;
-+	return ret;
- }
- 
- int follow_down_one(struct path *path)
-@@ -1631,9 +1636,7 @@ static inline int handle_mounts(struct nameidata *nd, struct dentry *dentry,
- 	}
- 	ret = traverse_mounts(path, &jumped, &nd->total_link_count, nd->flags);
- 	if (jumped) {
--		if (unlikely(nd->flags & LOOKUP_NO_XDEV))
--			ret = -EXDEV;
--		else
-+		if (!unlikely(nd->flags & LOOKUP_NO_XDEV))
- 			nd->state |= ND_JUMPED;
- 	}
- 	if (unlikely(ret)) {
--- 
-2.47.2
-
+I don't thing it's right in RCU mode, if nothing else...
