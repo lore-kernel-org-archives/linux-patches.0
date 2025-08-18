@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C447335BBB;
-	Mon, 18 Aug 2025 13:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A098B335BA8;
+	Mon, 18 Aug 2025 13:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524975; cv=none; b=MunrTYNIoRDCuZGmimyx88sL2S7aPgI2u16DMImzA1yOALwKfW/7+B3YdxdUOhcGss2NYan2mOWiLmQ+jXo+k7I591iSkRn2vg4t9/Atug9d3iLz79aNkAm4yhQRks4IFlYnWnCayo+DiPuM6kytV9CqcNfuowaLzxBewDIuNj0=
+	t=1755524978; cv=none; b=p4gIyclKtBbqT3D5tYl39N0soL40oMMBefEGu41OC9E1ZQLPfXyJfvM3pZlHIoMDacdP87zfqbbjY+SiZBKvrs02dtWxNAVOwlo/vKaIZudlQGKTIQv3KNobwQlugA6oqSbp5LGevhH155/RkzgOkJ7OaW+kjriz06YOlIpFDP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524975; c=relaxed/simple;
-	bh=7igTzAr0dbyJOcYt+U9iS3N4XPLpIl79/vCfsl3WZqk=;
+	s=arc-20240116; t=1755524978; c=relaxed/simple;
+	bh=k8zwIoPG25Ee6WPntgdCTi++W8+sTLMRpaB16GeNE28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlfLdK6urNbWUj9pJ0VjJIFGuvbEtVYdOo6K0K1IZ+L5U3a3yrrxkhdCljkNU9l6n9qFgL9FFU/wo2K1XONGWN9PU7kFve9Xqrdn266/9kMf73ow6a86UJcgP/7kEEsVdprmmiXX0dTUu6osPj4+IqpwAriPCNBLBovU9ee5/gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9AHWCZP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ehtU0u1T+8j8xjZYXqV4P9fc7wksyh4r9o2i1+eeu64kpfKy0L6t7jW/1cs8cty9H67LaLCDGyUWk/8o7yxVCxdJeCt2V30CtcrfZ16Jzel1Gd5cX8IfPDn6UFllP//aD7p/Q3+/urGf7hjLgVTgFy7Gs5Rsuok9N12iX4MEbck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9+6yGIP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9AHWCZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76DCC4CEEB;
-	Mon, 18 Aug 2025 13:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9+6yGIP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28295C4CEEB;
+	Mon, 18 Aug 2025 13:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524975;
-	bh=7igTzAr0dbyJOcYt+U9iS3N4XPLpIl79/vCfsl3WZqk=;
+	s=korg; t=1755524978;
+	bh=k8zwIoPG25Ee6WPntgdCTi++W8+sTLMRpaB16GeNE28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9AHWCZPxDAbm6OUUMEzLKKv2Mi72jv+2YhY+gnWYpcS8oTlQAOTMWswPsoKEKP6N
-	 5zVfHPLmOjzG+638RLMKslfj0QLIHoxSror/S1WZAn0Pq4g/wePEfPAFN8/rsmsz94
-	 O56ZJLI1dv6QgEAJeJBrLxFqNCp2RWJnky6YoER4=
+	b=Y9+6yGIPl6ZMp51E3n3Uwva2H+KWL3VOUL7/xNlvx/wyW2Pkn5gbh0pumAmj9Lic2
+	 xu06i8O6nyXIQkp7TEvK9b9w8mjN27KEesKFS7+6fFjVbPMQLLKu1TQq9gPZtx4fGx
+	 q9n8QuPVW/gFaIyvIwMkwAEKupPrip3Fj85Ztsds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Gao <wegao@suse.com>,
-	Jan Kara <jack@suse.cz>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 120/570] ext2: Handle fiemap on empty files to prevent EINVAL
-Date: Mon, 18 Aug 2025 14:41:47 +0200
-Message-ID: <20250818124510.437856235@linuxfoundation.org>
+Subject: [PATCH 6.16 121/570] fix locking in efi_secret_unlink()
+Date: Mon, 18 Aug 2025 14:41:48 +0200
+Message-ID: <20250818124510.475650304@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,49 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Gao <wegao@suse.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit a099b09a3342a0b28ea330e405501b5b4d0424b4 ]
+[ Upstream commit 2c58d42de71f9c73e40afacc9d062892d2cc8862 ]
 
-Previously, ext2_fiemap would unconditionally apply "len = min_t(u64, len,
-i_size_read(inode));", When inode->i_size was 0 (for an empty file), this
-would reduce the requested len to 0. Passing len = 0 to iomap_fiemap could
-then result in an -EINVAL error, even for valid queries on empty files.
+We used to need securityfs_remove() to undo simple_pin_fs() done when
+the file had been created and to drop the second extra reference
+taken at the same time.  Now that neither is needed (or done by
+securityfs_remove()), we can simply call simple_unlink() and be done
+with that - the broken games with locking had been there only for the
+sake of securityfs_remove().
 
-Link: https://github.com/linux-test-project/ltp/issues/1246
-Signed-off-by: Wei Gao <wegao@suse.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250613152402.3432135-1-wegao@suse.com
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/inode.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/virt/coco/efi_secret/efi_secret.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
-index 30f8201c155f..177b1f852b63 100644
---- a/fs/ext2/inode.c
-+++ b/fs/ext2/inode.c
-@@ -895,9 +895,19 @@ int ext2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
- 		u64 start, u64 len)
- {
- 	int ret;
-+	loff_t i_size;
+diff --git a/drivers/virt/coco/efi_secret/efi_secret.c b/drivers/virt/coco/efi_secret/efi_secret.c
+index 1864f9f80617..f2da4819ec3b 100644
+--- a/drivers/virt/coco/efi_secret/efi_secret.c
++++ b/drivers/virt/coco/efi_secret/efi_secret.c
+@@ -136,15 +136,7 @@ static int efi_secret_unlink(struct inode *dir, struct dentry *dentry)
+ 		if (s->fs_files[i] == dentry)
+ 			s->fs_files[i] = NULL;
  
- 	inode_lock(inode);
--	len = min_t(u64, len, i_size_read(inode));
-+	i_size = i_size_read(inode);
-+	/*
-+	 * iomap_fiemap() returns EINVAL for 0 length. Make sure we don't trim
-+	 * length to 0 but still trim the range as much as possible since
-+	 * ext2_get_blocks() iterates unmapped space block by block which is
-+	 * slow.
-+	 */
-+	if (i_size == 0)
-+		i_size = 1;
-+	len = min_t(u64, len, i_size);
- 	ret = iomap_fiemap(inode, fieinfo, start, len, &ext2_iomap_ops);
- 	inode_unlock(inode);
+-	/*
+-	 * securityfs_remove tries to lock the directory's inode, but we reach
+-	 * the unlink callback when it's already locked
+-	 */
+-	inode_unlock(dir);
+-	securityfs_remove(dentry);
+-	inode_lock(dir);
+-
+-	return 0;
++	return simple_unlink(inode, dentry);
+ }
  
+ static const struct inode_operations efi_secret_dir_inode_operations = {
 -- 
 2.39.5
 
