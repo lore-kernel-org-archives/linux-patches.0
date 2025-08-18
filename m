@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ADC335BA7;
-	Mon, 18 Aug 2025 13:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03256335BCB;
+	Mon, 18 Aug 2025 13:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525168; cv=none; b=IzvciPNN+p9yWHgNJytitmTGi32ZEyxCSOgxsoWJXXdcrUHfysDiX6zhcCtSkkjnIzyCCDNV94qC0OlvHoWWUAiBpzeH1XWkog0VhY7wvSkl6sgCwUuAN9gde1Efnz4KUWdBM7RIVSOAxKRK9odlhet66nUDxGdkrsV8bNiAtRQ=
+	t=1755525172; cv=none; b=mBwk/tlGDNou067gOCb+YaDWTsk/vxjFYGY3dE1TyZ6u+uUwAJjWHlR1mj9eJEcTEhfHhDtrMXYF830CPMeLx9y15syo/OmLZ+dAkYg1TX+Zlva8wcZojcemEjaZPYA3C8O9HCN1onI+XJ2PZC+qlyro/KSHwheDR6zDokiQbWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525168; c=relaxed/simple;
-	bh=QCb1uRkrukGQAPrF499/DXsTYS8jBYXPpzLL17+CsUA=;
+	s=arc-20240116; t=1755525172; c=relaxed/simple;
+	bh=uYhHuc4BZlc6BpnlbSG4H5YTLwMvNPW9JYCPHNclJ+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tB1HS5LqSU09LrS2SDmZ392h1pzexFcr2225yu6lYcYTaFWcnMZ9Vts+xoaW7m08ck2ZRIepg+YAKF5xEYcKUS6Rvmm8ktEoVgXauzFMGjhs1CElNoMVhxtXX/NfN743WvLbcSsmyui8IkdgFk5c5k9JkiGU9A06jvjkje/ZvV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWLYpg2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tf63O+38bVLziO7EW/oEhBfb8Ol1TATo9SVsOjQbOKjHoKBvH84aTjrhrM1ap9AFi25I4UsvaysmMXENZlvycigRxDBJ5iCfQZLJyjskirtWUZ17M1dpqKCRl9Y0X5QOOklI+OZxEc1u7J3PjMiipSYSg70Q+bmc1y+xCejzkM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsP4zc6M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWLYpg2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60406C4CEEB;
-	Mon, 18 Aug 2025 13:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsP4zc6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67925C4CEEB;
+	Mon, 18 Aug 2025 13:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525167;
-	bh=QCb1uRkrukGQAPrF499/DXsTYS8jBYXPpzLL17+CsUA=;
+	s=korg; t=1755525171;
+	bh=uYhHuc4BZlc6BpnlbSG4H5YTLwMvNPW9JYCPHNclJ+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWLYpg2CPW4/ZoNgaKT5LO4xrYC7eXq0ptk6zFiao3jF58YZ7OPUzCH7+9HJ10aLI
-	 aOHK6wO9/GcocgN2Ims5t0FG+Z9RixNafk/Jwhi7bXbt9lL0iYv2tpQILZOzA7GoCh
-	 YwN1imPIjdVf3ko6i7HG7lx/EZo+ol/ujhE+h/EA=
+	b=YsP4zc6MOdmn9IKhStOpxim9BE4NgWNR1sN1bu2cAe4HKXmTQY9qK+aX7Ih5iInDt
+	 YZWWJyCbiihneHxxRkt6pGK3coevk+4lTxYjEDeFbAxCCEW1UJwCUilWifMqUCPSq5
+	 H71srGeov+kW/5KuOzkBbpyZWmGu3DLR1pLXKu6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gwendal Grignou <gwendal@google.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Joakim Zhang <joakim.zhang@cixtech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 180/570] platform/chrome: cros_ec_sensorhub: Retries when a sensor is not ready
-Date: Mon, 18 Aug 2025 14:42:47 +0200
-Message-ID: <20250818124512.741129149@linuxfoundation.org>
+Subject: [PATCH 6.16 181/570] ALSA: hda: Handle the jack polling always via a work
+Date: Mon, 18 Aug 2025 14:42:48 +0200
+Message-ID: <20250818124512.779174717@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,85 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gwendal Grignou <gwendal@chromium.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 981d7f91aeda17424b29f033249f4fa7cd2a7556 ]
+[ Upstream commit 5f7e54b23e4d253eff3b10b12d6fa92d28d7dddc ]
 
-When the EC/ISH starts, it can take a while for all the sensors to be up
-and running or declared broken.
+We used to call directly hda_jackpoll_work() from a couple of places
+for updating the jack and notify to user-space, but this makes rather
+the code flow fragile.  Namely, because of those direct calls,
+hda_jackpoll_work() uses snd_hda_power_up_pm() and *_down_pm() calls
+instead of the standard snd_hda_power_up() and *_down() calls.  The
+latter pair assures the runtime PM resume sync, so it can avoid the
+race against the PM callbacks gracefully, while the former pair may
+continue if called concurrently, hence it may race (by design).
 
-If the sensor stack return -EBUSY when checking for sensor information,
-retry up to 50 times.
-It has been observed 100ms wait time is enough to have valid sensors
-ready. It can take more time in case a sensor is really broken and is
-not coming up.
+In this patch, we change the call pattern of hda_jackpoll_work(); now
+all callers are replaced with the standard snd_hda_jack_report_sync()
+and the additional schedule_delayed_work().
 
-Signed-off-by: Gwendal Grignou <gwendal@google.com>
-Link: https://lore.kernel.org/r/20250623210518.306740-1-gwendal@google.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Since hda_jackpoll_work() is called only from the associated work,
+it's always outside the PM code path, and we can safely use
+snd_hda_power_up() and *_down() there instead.  This allows us to
+remove the racy check of power-state in hda_jackpoll_work(), as well
+as the tricky cancel_delayed_work() and rescheduling at
+hda_codec_runtime_suspend().
+
+Reported-by: Joakim Zhang <joakim.zhang@cixtech.com>
+Closes: https://lore.kernel.org/20250619020844.2974160-1-joakim.zhang@cixtech.com
+Tested-by: Joakim Zhang <joakim.zhang@cixtech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250623131437.10670-4-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub.c | 23 +++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ sound/pci/hda/hda_codec.c | 41 +++++++++++++--------------------------
+ 1 file changed, 14 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_sensorhub.c b/drivers/platform/chrome/cros_ec_sensorhub.c
-index 50cdae67fa32..9bad8f72680e 100644
---- a/drivers/platform/chrome/cros_ec_sensorhub.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub.c
-@@ -8,6 +8,7 @@
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index c018beeecd3d..d205f13653bb 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -639,24 +639,16 @@ static void hda_jackpoll_work(struct work_struct *work)
+ 	struct hda_codec *codec =
+ 		container_of(work, struct hda_codec, jackpoll_work.work);
  
- #include <linux/init.h>
- #include <linux/device.h>
-+#include <linux/delay.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/platform_data/cros_ec_commands.h>
-@@ -18,6 +19,7 @@
- #include <linux/types.h>
+-	/* for non-polling trigger: we need nothing if already powered on */
+-	if (!codec->jackpoll_interval && snd_hdac_is_power_on(&codec->core))
++	if (!codec->jackpoll_interval)
+ 		return;
  
- #define DRV_NAME		"cros-ec-sensorhub"
-+#define CROS_EC_CMD_INFO_RETRIES 50
+ 	/* the power-up/down sequence triggers the runtime resume */
+-	snd_hda_power_up_pm(codec);
++	snd_hda_power_up(codec);
+ 	/* update jacks manually if polling is required, too */
+-	if (codec->jackpoll_interval) {
+-		snd_hda_jack_set_dirty_all(codec);
+-		snd_hda_jack_poll_all(codec);
+-	}
+-	snd_hda_power_down_pm(codec);
+-
+-	if (!codec->jackpoll_interval)
+-		return;
+-
+-	schedule_delayed_work(&codec->jackpoll_work,
+-			      codec->jackpoll_interval);
++	snd_hda_jack_set_dirty_all(codec);
++	snd_hda_jack_poll_all(codec);
++	schedule_delayed_work(&codec->jackpoll_work, codec->jackpoll_interval);
++	snd_hda_power_down(codec);
+ }
  
- static void cros_ec_sensorhub_free_sensor(void *arg)
- {
-@@ -53,7 +55,7 @@ static int cros_ec_sensorhub_register(struct device *dev,
- 	int sensor_type[MOTIONSENSE_TYPE_MAX] = { 0 };
- 	struct cros_ec_command *msg = sensorhub->msg;
- 	struct cros_ec_dev *ec = sensorhub->ec;
--	int ret, i;
-+	int ret, i, retries;
- 	char *name;
+ /* release all pincfg lists */
+@@ -2895,12 +2887,12 @@ static void hda_call_codec_resume(struct hda_codec *codec)
+ 		snd_hda_regmap_sync(codec);
+ 	}
  
+-	if (codec->jackpoll_interval)
+-		hda_jackpoll_work(&codec->jackpoll_work.work);
+-	else
+-		snd_hda_jack_report_sync(codec);
++	snd_hda_jack_report_sync(codec);
+ 	codec->core.dev.power.power_state = PMSG_ON;
+ 	snd_hdac_leave_pm(&codec->core);
++	if (codec->jackpoll_interval)
++		schedule_delayed_work(&codec->jackpoll_work,
++				      codec->jackpoll_interval);
+ }
  
-@@ -65,12 +67,25 @@ static int cros_ec_sensorhub_register(struct device *dev,
- 		sensorhub->params->cmd = MOTIONSENSE_CMD_INFO;
- 		sensorhub->params->info.sensor_num = i;
+ static int hda_codec_runtime_suspend(struct device *dev)
+@@ -2912,8 +2904,6 @@ static int hda_codec_runtime_suspend(struct device *dev)
+ 	if (!codec->card)
+ 		return 0;
  
--		ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
-+		retries = CROS_EC_CMD_INFO_RETRIES;
-+		do {
-+			ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
-+			if (ret == -EBUSY) {
-+				/* The EC is still busy initializing sensors. */
-+				usleep_range(5000, 6000);
-+				retries--;
-+			}
-+		} while (ret == -EBUSY && retries);
+-	cancel_delayed_work_sync(&codec->jackpoll_work);
+-
+ 	state = hda_call_codec_suspend(codec);
+ 	if (codec->link_down_at_suspend ||
+ 	    (codec_has_clkstop(codec) && codec_has_epss(codec) &&
+@@ -2921,10 +2911,6 @@ static int hda_codec_runtime_suspend(struct device *dev)
+ 		snd_hdac_codec_link_down(&codec->core);
+ 	snd_hda_codec_display_power(codec, false);
+ 
+-	if (codec->bus->jackpoll_in_suspend &&
+-		(dev->power.power_state.event != PM_EVENT_SUSPEND))
+-		schedule_delayed_work(&codec->jackpoll_work,
+-					codec->jackpoll_interval);
+ 	return 0;
+ }
+ 
+@@ -3086,10 +3072,11 @@ int snd_hda_codec_build_controls(struct hda_codec *codec)
+ 	if (err < 0)
+ 		return err;
+ 
++	snd_hda_jack_report_sync(codec); /* call at the last init point */
+ 	if (codec->jackpoll_interval)
+-		hda_jackpoll_work(&codec->jackpoll_work.work);
+-	else
+-		snd_hda_jack_report_sync(codec); /* call at the last init point */
++		schedule_delayed_work(&codec->jackpoll_work,
++				      codec->jackpoll_interval);
 +
- 		if (ret < 0) {
--			dev_warn(dev, "no info for EC sensor %d : %d/%d\n",
--				 i, ret, msg->result);
-+			dev_err(dev, "no info for EC sensor %d : %d/%d\n",
-+				i, ret, msg->result);
- 			continue;
- 		}
-+		if (retries < CROS_EC_CMD_INFO_RETRIES) {
-+			dev_warn(dev, "%d retries needed to bring up sensor %d\n",
-+				 CROS_EC_CMD_INFO_RETRIES - retries, i);
-+		}
- 
- 		switch (sensorhub->resp->info.type) {
- 		case MOTIONSENSE_TYPE_ACCEL:
+ 	sync_power_up_states(codec);
+ 	return 0;
+ }
 -- 
 2.39.5
 
