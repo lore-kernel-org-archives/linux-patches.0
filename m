@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE27B12DDA1;
-	Mon, 18 Aug 2025 13:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490DE1F462D;
+	Mon, 18 Aug 2025 13:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522139; cv=none; b=jU5BLWriBk3DGXeCPePY8hxY9e1QGzOC44DJJiV7nMlGrtahMeDfpzxSFJ9sdXPtZbo2d02X0SOSoqnOFyLV9EfCQVd38OjMp414zOYAjo/fQ0eyY0S/5PA9gp+SywKCVRR3iquPeV/Y0NUteH5xQFneAn1e8G50dfNnWNQLs7s=
+	t=1755522143; cv=none; b=Vju6MOvl1sRZJFcQxgG/3sgMjPdxqAhE0mYmqZmAGkbLTFvZ7WagEAqJLarM6AjRWi4qFlDXyWkwNTwqwqDrkhm4VT3TbKUZFfS19CzVjdpM4UVZ+kKDyqVo5JpzcBH9RuxKfTkuw2cSyjBxUSfif3EsTLw5ElhFH/R6bCQPjWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522139; c=relaxed/simple;
-	bh=4NksRWzydX+qFfzTO6U2KHrilafzBXu0XzztneMctDM=;
+	s=arc-20240116; t=1755522143; c=relaxed/simple;
+	bh=fWyefhSZHgPqDg3ygr+o1tqx7WGaIDpy67mzagh0rME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sUKvAxWCcAT8kiYbNbHH3ePoyyGMkLq1fxUquhlzpxDHIG3sllyZFggB+8XGlY1C6Yr83VijZvmgqDVYQbq6ibqD7HULx7nH0EV7FjdJz5E/uzTCxFkpzlf6aKy9q+TWZzwwFS5jX7KOaJGybu+C+AZY+Poaq4cbYJswhB/eWeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ujn/gu4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAZxws47M6SH0WMUY7SaZiXthV4+5IWSJrIi/o/jBwxW6iH4mJ5nLOg8P4TeWubtu9L1j66+iuB6TZVul0E1hogeqI3nwmTF4x77COE7OibtY1sZIV5PoiN5Q/mECQVZdMPeXJ7u8QXw3eombNVJUHTvsbTZQQ6uctgZgX1OgvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkAZDkVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ujn/gu4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E078C113D0;
-	Mon, 18 Aug 2025 13:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkAZDkVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7170C4CEEB;
+	Mon, 18 Aug 2025 13:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522139;
-	bh=4NksRWzydX+qFfzTO6U2KHrilafzBXu0XzztneMctDM=;
+	s=korg; t=1755522143;
+	bh=fWyefhSZHgPqDg3ygr+o1tqx7WGaIDpy67mzagh0rME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ujn/gu4wUxYEHOTwKNY5h2+ePVaX53fEjj+rzaMlgrABZyl+6VaNnG9rLCP5l0Iu
-	 kKjje6pgpsm9iJ/HLgrUnvtt0Xak2RC25tQ5zBTFAJDfM0AvwfKI5tfA6r6Hf10S8X
-	 4zEVwsi0tfCtBVqRWGn5Xq419AwjYSMfzheONHoo=
+	b=gkAZDkVX5E4hRYNvp4L8PSwnHNUXm5ZCxZqrXliCKA4nV1ota8+GVqfmdYTtgACIX
+	 b+6oQg8UeVHZBRzgITCtNCAWvBOXRhSA+Fk2TCvhmy1tE4HZkOZPsyI0ijWB6yS2xG
+	 eK9ANqeV6oqN44H6GQmO45Kio0UTW6B6MpA8/Ol8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Chandrakanthan <quic_haric@quicinc.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Nathan Lynch <nathan.lynch@amd.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 228/444] wifi: ath12k: Fix station association with MBSSID Non-TX BSS
-Date: Mon, 18 Aug 2025 14:44:14 +0200
-Message-ID: <20250818124457.392306009@linuxfoundation.org>
+Subject: [PATCH 6.12 229/444] lib: packing: Include necessary headers
+Date: Mon, 18 Aug 2025 14:44:15 +0200
+Message-ID: <20250818124457.429062123@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,49 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Chandrakanthan <quic_haric@quicinc.com>
+From: Nathan Lynch <nathan.lynch@amd.com>
 
-[ Upstream commit 70eeacc1a92a444f4b5777ab19e1c378a5edc8dd ]
+[ Upstream commit 8bd0af3154b2206ce19f8b1410339f7a2a56d0c3 ]
 
-ath12k station is unable to associate with non-transmitting BSSes
-in a Multiple BSS set because the user-space does not receive
-information about the non-transmitting BSSes from mac80211's
-scan results.
+packing.h uses ARRAY_SIZE(), BUILD_BUG_ON_MSG(), min(), max(), and
+sizeof_field() without including the headers where they are defined,
+potentially causing build failures.
 
-The ath12k driver does not advertise its MBSSID capability to mac80211,
-resulting in wiphy->support_mbssid not being set. Consequently, the
-information about non-transmitting BSS is not parsed from received
-Beacon/Probe response frames and is therefore not included in the
-scan results.
+Fix this in packing.h and sort the result.
 
-Fix this by advertising the MBSSID capability of ath12k driver to
-mac80211.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00284-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
-
-Signed-off-by: Hari Chandrakanthan <quic_haric@quicinc.com>
-Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250530035615.3178480-2-rameshkumar.sundaram@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20250624-packing-includes-v1-1-c23c81fab508@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/packing.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 4ca684278c36..4b3fbec397ac 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -9218,6 +9218,7 @@ static int ath12k_mac_hw_register(struct ath12k_hw *ah)
+diff --git a/include/linux/packing.h b/include/linux/packing.h
+index 8d6571feb95d..60117401c7ee 100644
+--- a/include/linux/packing.h
++++ b/include/linux/packing.h
+@@ -5,8 +5,12 @@
+ #ifndef _LINUX_PACKING_H
+ #define _LINUX_PACKING_H
  
- 	wiphy->mbssid_max_interfaces = mbssid_max_interfaces;
- 	wiphy->ema_max_profile_periodicity = TARGET_EMA_MAX_PROFILE_PERIOD;
-+	ieee80211_hw_set(hw, SUPPORTS_MULTI_BSSID);
+-#include <linux/types.h>
++#include <linux/array_size.h>
+ #include <linux/bitops.h>
++#include <linux/build_bug.h>
++#include <linux/minmax.h>
++#include <linux/stddef.h>
++#include <linux/types.h>
  
- 	if (is_6ghz) {
- 		wiphy_ext_feature_set(wiphy,
+ #define QUIRK_MSB_ON_THE_RIGHT	BIT(0)
+ #define QUIRK_LITTLE_ENDIAN	BIT(1)
 -- 
 2.39.5
 
