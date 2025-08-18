@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F7C2C235C;
-	Mon, 18 Aug 2025 13:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599682C235C;
+	Mon, 18 Aug 2025 13:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524644; cv=none; b=cYSJZoNmm3JC24ypRm0XlAOSb068MA2a5LW7IXNitnPlZdHbcZEdfqZNS1UFHk2uoOzQ8WsdrvdPE1WfRiVZYQGvUiyRRnk7du4dNuSIkp4T0eymBzjI/L5+CdGuWiwoV1f8ZrR/JVhNsjID5kEKf2cAiNSJdtEhU4EVEbsKNdc=
+	t=1755524647; cv=none; b=BJYJFZ0do0R9/bGFLUSd9ziIKTSnLW0CK19d10Sbbe/31v2EX1+o388V889Z2KVn73wkNJaPjLahBQRJLe3v2Ph5lWV7wG2TDg6m9XxJtM7Uduh1yGQ36Zv/ORqtfwl4iJ6W5hzSDEyhZZhCN/2j3+IbObEswnHjMAuaG7Aoew8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524644; c=relaxed/simple;
-	bh=JDbW1xYnynbXiHlabYc0lJqHwJTe+41JyXUyK6lAMVs=;
+	s=arc-20240116; t=1755524647; c=relaxed/simple;
+	bh=r2J2CE8fVudcpHHr+W7BBYtXL6rI02kO8DG1Gg4F7go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtR2dI5D+ZZLvjqeC3nhaqdemqgxdkNm8bbSxpajjsy5SR51SIVzNSBHy5923rhoG97nTNAqpiBBXRTGCXfiqtyBYxPQqlSHUBsbbri/PsLdWuOwR+JlUxAzgkhfECcSCVAkyqcpGiN7t4OQOOMTtZLmRucWmSMXdk5286EVs50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEgENcTb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J986L1yRgb0Q0j/cHweGXOddDlLuM/ffNbzXNh9VqEN0Pv/mg5LbFYjX/x0j5YuZYnRNn8+ktD/ueY0r9KgBCidtDPGs/k0laepPyatgoaQXsMsDPmgOPyzR4PerINlbbCqyM0hMw465Av+nvHD2AuISVut1sk/4Y9rbgNy3YZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xy7oCgaM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEgENcTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D190C113D0;
-	Mon, 18 Aug 2025 13:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy7oCgaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FEBC4CEEB;
+	Mon, 18 Aug 2025 13:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524643;
-	bh=JDbW1xYnynbXiHlabYc0lJqHwJTe+41JyXUyK6lAMVs=;
+	s=korg; t=1755524647;
+	bh=r2J2CE8fVudcpHHr+W7BBYtXL6rI02kO8DG1Gg4F7go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEgENcTbGtE3J/xms8uTml9jguQFIT6BkkEeF6jk+hepL/vUekD4MI7/vH3D4Y/0j
-	 WG/K/3ywIDRLBCQre1TBYci5lH6zMaIZbH5uwVmNt/zZQZ/YrpxVBOb+OiM6R775wl
-	 tbUUP9/aIagfCauGdN2aNjQ7TrBcw1jEhNO4gOL4=
+	b=Xy7oCgaMcxm8KkVhSkPDKkc21UBuY3zau8nOEy23PvmUfey19QE09KqE4wu0ygeB8
+	 CEARo9btuD0Zk0txt3rSP6p0WJXRgoh38eRHJtFzH+rYPIpaYV+aI5p/MhpWHFmq4K
+	 cHSSjvKNzefFRWhXWhs4kNC0S01WD7VGNNvmBNvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.16 019/570] leds: flash: leds-qcom-flash: Fix registry access after re-bind
-Date: Mon, 18 Aug 2025 14:40:06 +0200
-Message-ID: <20250818124506.539606224@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.16 002/570] io_uring: export io_[un]account_mem
+Date: Mon, 18 Aug 2025 14:39:49 +0200
+Message-ID: <20250818124505.882099503@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,78 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit fab15f57360b1e6620a1d0d6b0fbee896e6c1f07 upstream.
+commit 11fbada7184f9e19bcdfa2f6b15828a78b8897a6 upstream.
 
-Driver in probe() updates each of 'reg_field' with 'reg_base':
+Export pinned memory accounting helpers, they'll be used by zcrx
+shortly.
 
-	for (i = 0; i < REG_MAX_COUNT; i++)
-		regs[i].reg += reg_base;
-
-'reg_field' array (under variable 'regs' above) is statically allocated,
-thus each re-bind would add another 'reg_base' leading to bogus
-register addresses.  Constify the local 'reg_field' array and duplicate
-it in probe to solve this.
-
-Fixes: 96a2e242a5dc ("leds: flash: Add driver to support flash LED module in QCOM PMICs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250529063335.8785-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: cf96310c5f9a0 ("io_uring/zcrx: add io_zcrx_area")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/9a61e54bd89289b39570ae02fe620e12487439e4.1752699568.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/flash/leds-qcom-flash.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ io_uring/rsrc.c |    4 ++--
+ io_uring/rsrc.h |    2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/leds/flash/leds-qcom-flash.c
-+++ b/drivers/leds/flash/leds-qcom-flash.c
-@@ -117,7 +117,7 @@ enum {
- 	REG_MAX_COUNT,
- };
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -55,7 +55,7 @@ int __io_account_mem(struct user_struct
+ 	return 0;
+ }
  
--static struct reg_field mvflash_3ch_regs[REG_MAX_COUNT] = {
-+static const struct reg_field mvflash_3ch_regs[REG_MAX_COUNT] = {
- 	REG_FIELD(0x08, 0, 7),			/* status1	*/
- 	REG_FIELD(0x09, 0, 7),                  /* status2	*/
- 	REG_FIELD(0x0a, 0, 7),                  /* status3	*/
-@@ -132,7 +132,7 @@ static struct reg_field mvflash_3ch_regs
- 	REG_FIELD(0x58, 0, 2),			/* therm_thrsh3 */
- };
+-static void io_unaccount_mem(struct io_ring_ctx *ctx, unsigned long nr_pages)
++void io_unaccount_mem(struct io_ring_ctx *ctx, unsigned long nr_pages)
+ {
+ 	if (ctx->user)
+ 		__io_unaccount_mem(ctx->user, nr_pages);
+@@ -64,7 +64,7 @@ static void io_unaccount_mem(struct io_r
+ 		atomic64_sub(nr_pages, &ctx->mm_account->pinned_vm);
+ }
  
--static struct reg_field mvflash_4ch_regs[REG_MAX_COUNT] = {
-+static const struct reg_field mvflash_4ch_regs[REG_MAX_COUNT] = {
- 	REG_FIELD(0x06, 0, 7),			/* status1	*/
- 	REG_FIELD(0x07, 0, 6),			/* status2	*/
- 	REG_FIELD(0x09, 0, 7),			/* status3	*/
-@@ -854,11 +854,17 @@ static int qcom_flash_led_probe(struct p
- 	if (val == FLASH_SUBTYPE_3CH_PM8150_VAL || val == FLASH_SUBTYPE_3CH_PMI8998_VAL) {
- 		flash_data->hw_type = QCOM_MVFLASH_3CH;
- 		flash_data->max_channels = 3;
--		regs = mvflash_3ch_regs;
-+		regs = devm_kmemdup(dev, mvflash_3ch_regs, sizeof(mvflash_3ch_regs),
-+				    GFP_KERNEL);
-+		if (!regs)
-+			return -ENOMEM;
- 	} else if (val == FLASH_SUBTYPE_4CH_VAL) {
- 		flash_data->hw_type = QCOM_MVFLASH_4CH;
- 		flash_data->max_channels = 4;
--		regs = mvflash_4ch_regs;
-+		regs = devm_kmemdup(dev, mvflash_4ch_regs, sizeof(mvflash_4ch_regs),
-+				    GFP_KERNEL);
-+		if (!regs)
-+			return -ENOMEM;
+-static int io_account_mem(struct io_ring_ctx *ctx, unsigned long nr_pages)
++int io_account_mem(struct io_ring_ctx *ctx, unsigned long nr_pages)
+ {
+ 	int ret;
  
- 		rc = regmap_read(regmap, reg_base + FLASH_REVISION_REG, &val);
- 		if (rc < 0) {
-@@ -880,6 +886,7 @@ static int qcom_flash_led_probe(struct p
- 		dev_err(dev, "Failed to allocate regmap field, rc=%d\n", rc);
- 		return rc;
- 	}
-+	devm_kfree(dev, regs); /* devm_regmap_field_bulk_alloc() makes copies */
+--- a/io_uring/rsrc.h
++++ b/io_uring/rsrc.h
+@@ -120,6 +120,8 @@ int io_files_update(struct io_kiocb *req
+ int io_files_update_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
  
- 	platform_set_drvdata(pdev, flash_data);
- 	mutex_init(&flash_data->lock);
+ int __io_account_mem(struct user_struct *user, unsigned long nr_pages);
++int io_account_mem(struct io_ring_ctx *ctx, unsigned long nr_pages);
++void io_unaccount_mem(struct io_ring_ctx *ctx, unsigned long nr_pages);
+ 
+ static inline void __io_unaccount_mem(struct user_struct *user,
+ 				      unsigned long nr_pages)
 
 
