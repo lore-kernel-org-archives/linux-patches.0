@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C55258ED7;
-	Mon, 18 Aug 2025 12:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEB726F2AF;
+	Mon, 18 Aug 2025 12:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521408; cv=none; b=m6v9Qrao/Qer9/SXbXiCu448Qb3lYOY1axsi7opkbAqHJWMSY6UbqAnLPKvKW7bXFjqQ0tLGUSSL/71bIA25Qtj4vSiDpLmG5j+RN/jRYmhRRI/MkwmURlTi/27HRSvlLqhYYxJM/LB0xbJmMCUOK5Icz9riArh+/Duvi/qc2Ww=
+	t=1755521411; cv=none; b=AQr9uAIm8S8eEvaK3fc02CF3vr2TXCsfDSQ/WlYskMNfeqMvZfc0zjBkDZpUnKVsATPbU3iVy8eL1qBXWs+wB4PUGc23vWGoZuKdOkEbzXkBLeSGuoic9/DOI6yI+eRlkCGoxbAlvN3wn1ZNIvlXUJ1/+tyDcc2GndrAeks4ueY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521408; c=relaxed/simple;
-	bh=z1aAFzifr60X2TLvwnaafoEhUBz3WfNSaM11uPNlJwA=;
+	s=arc-20240116; t=1755521411; c=relaxed/simple;
+	bh=hK7mYambFNHRh6d+36E7DoftwHMIdph5qt3+5vTbrD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3KAgNnBIyMT0d2K2uRzRWIo+HJKYnz/MXkTIWyJEuWxuh68Q3OA3JwtsGeYQoQc6jHOImBba2wX2VUqenBxio3fkUu0O+Z1zxVU/f9nhlWBlr7OuhjKau/56xIRVWV2/LvgI7I5BxT44bcOWW+FNlCbPGx+QMmskjU2+Rxynms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuqovrCg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=st/RiF92ht7F92iLpv1AnXDvRZ7AP2lokDZzkZKcb9dRuamJq/QEodZo2Rm4UFC4z3HLk1HQmoPnmTUZdZnWh6ZttcpGi3cnEOQRRepwD10zQO4vQMIMsrsT2C7zLFdIRwV0Re6PUZDwMEVwS3Km6/iOgCHQJOSXHxtvK2g4DYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wo+Xcl5P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuqovrCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE585C4CEEB;
-	Mon, 18 Aug 2025 12:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wo+Xcl5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096C4C4CEF1;
+	Mon, 18 Aug 2025 12:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521408;
-	bh=z1aAFzifr60X2TLvwnaafoEhUBz3WfNSaM11uPNlJwA=;
+	s=korg; t=1755521411;
+	bh=hK7mYambFNHRh6d+36E7DoftwHMIdph5qt3+5vTbrD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CuqovrCgIVSIULXmrA83M32E09s5T3+OrPfthVNNQH6GLLvaEb7SKV01OeMi1683p
-	 yVyiA+leQPyHemB3fnuO+2Rczo7tWDdxXiWrt9xfCIBlne+X0MmGHwCpgAB/iRr3oE
-	 y0d5Aw0td1BYIPZO1J9bh4YCEIMgVGwhz+fgA9+o=
+	b=wo+Xcl5PAaOroGa64qPNbtXudMhSXPc+OTadEcEdVmKlkF92SXjSh8N/O8jkCyyHh
+	 +st0sfY6jsMvZgYlhFE/WL7HTaGrXWoPeeXB0Z3C13Iu7vMUYzuiRm8tD16hLeeX9Q
+	 qAK8hFrvNj3MUCtq1VxOD4rBFL2K13LsSdBGQPLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 004/444] ALSA: hda/realtek: Fix headset mic on HONOR BRB-X
-Date: Mon, 18 Aug 2025 14:40:30 +0200
-Message-ID: <20250818124449.063349743@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 013/444] Revert "leds: trigger: netdev: Configure LED blink interval for HW offload"
+Date: Mon, 18 Aug 2025 14:40:39 +0200
+Message-ID: <20250818124449.399860651@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -50,31 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Daniel Golle <daniel@makrotopia.org>
 
-commit b26e2afb3834d4a61ce54c8484ff6014bef0b4b7 upstream.
+commit 26f732791f2bcab18f59c61915bbe35225f30136 upstream.
 
-Add a PCI quirk to enable microphone input on the headphone jack on
-the HONOR BRB-X M1010 laptop.
+This reverts commit c629c972b310af41e9e072febb6dae9a299edde6.
 
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250811132716.45076-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+While .led_blink_set() would previously put an LED into an unconditional
+permanently blinking state, the offending commit now uses same operation
+to (also?) set the blink timing of the netdev trigger when offloading.
+
+This breaks many if not all of the existing PHY drivers which offer
+offloading LED operations, as those drivers would just put the LED into
+blinking state after .led_blink_set() has been called.
+
+Unfortunately the change even made it into stable kernels for unknown
+reasons, so it should be reverted there as well.
+
+Fixes: c629c972b310a ("leds: trigger: netdev: Configure LED blink interval for HW offload")
+Link: https://lore.kernel.org/linux-leds/c6134e26-2e45-4121-aa15-58aaef327201@lunn.ch/T/#m9d6fe81bbcb273e59f12bbedbd633edd32118387
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
+Cc: stable@vger.kernel.org
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/6dcc77ee1c9676891d6250d8994850f521426a0f.1752334655.git.daniel@makrotopia.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/leds/trigger/ledtrig-netdev.c |   16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11331,6 +11331,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+--- a/drivers/leds/trigger/ledtrig-netdev.c
++++ b/drivers/leds/trigger/ledtrig-netdev.c
+@@ -68,7 +68,6 @@ struct led_netdev_data {
+ 	unsigned int last_activity;
+ 
+ 	unsigned long mode;
+-	unsigned long blink_delay;
+ 	int link_speed;
+ 	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported_link_modes);
+ 	u8 duplex;
+@@ -87,10 +86,6 @@ static void set_baseline_state(struct le
+ 	/* Already validated, hw control is possible with the requested mode */
+ 	if (trigger_data->hw_control) {
+ 		led_cdev->hw_control_set(led_cdev, trigger_data->mode);
+-		if (led_cdev->blink_set) {
+-			led_cdev->blink_set(led_cdev, &trigger_data->blink_delay,
+-					    &trigger_data->blink_delay);
+-		}
+ 
+ 		return;
+ 	}
+@@ -459,11 +454,10 @@ static ssize_t interval_store(struct dev
+ 			      size_t size)
+ {
+ 	struct led_netdev_data *trigger_data = led_trigger_get_drvdata(dev);
+-	struct led_classdev *led_cdev = trigger_data->led_cdev;
+ 	unsigned long value;
+ 	int ret;
+ 
+-	if (trigger_data->hw_control && !led_cdev->blink_set)
++	if (trigger_data->hw_control)
+ 		return -EINVAL;
+ 
+ 	ret = kstrtoul(buf, 0, &value);
+@@ -472,13 +466,9 @@ static ssize_t interval_store(struct dev
+ 
+ 	/* impose some basic bounds on the timer interval */
+ 	if (value >= 5 && value <= 10000) {
+-		if (trigger_data->hw_control) {
+-			trigger_data->blink_delay = value;
+-		} else {
+-			cancel_delayed_work_sync(&trigger_data->work);
++		cancel_delayed_work_sync(&trigger_data->work);
+ 
+-			atomic_set(&trigger_data->interval, msecs_to_jiffies(value));
+-		}
++		atomic_set(&trigger_data->interval, msecs_to_jiffies(value));
+ 		set_baseline_state(trigger_data);	/* resets timer */
+ 	}
+ 
 
 
