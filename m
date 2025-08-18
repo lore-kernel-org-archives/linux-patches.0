@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45B31A727D;
-	Mon, 18 Aug 2025 13:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D22D322767;
+	Mon, 18 Aug 2025 13:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524036; cv=none; b=XiKD1zTG3dphcPoGsOHZ37pNVndsv0GiCqTG2IPUb7QTiR2Jgo61y2MAX1C3D56gzWDOEh9aztj9Adlmpcs/jTznxrhpL2ad4ZGDkV68MhD/UleSCYweKhDwr1FNgjaDxPu9BvxGXLrOBRBmQ5dr7Ult6h/58wJhkyvr7KPvsDA=
+	t=1755524040; cv=none; b=k2/h8n6LaiXR4GneRl1erndLpReQ1GhGAkcmS97G5mdAIh+MT6/gfWN9RIsx58twXSL7mE9mi4hZ2FVAnY65bfTmGdoMF7YlvJp1gCjvNrj+liZbUl3lZBxPBy3l2ZK89/H0Ns0gvYAa1dRtaowH6gJEpYJCE63P+oKnpNAXaGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524036; c=relaxed/simple;
-	bh=OwIEKnuPGd2X5GZi9thkcLYuWn+4+OcgOGn7/V6ck9s=;
+	s=arc-20240116; t=1755524040; c=relaxed/simple;
+	bh=EHpLu3OInsDTBRwKd/p6jQ+tPx32WKX63UEAnD65QC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjQ6thDSKhYhlYUiHiJ+dQQ7mOpfcnc0nZ1hWGgtqCuO14gFmK98s9Be2fxBMFXsKqlZiiIMlFXepRxAq7NNwvAcNwP1Gvsn8Coy3eqwcdPTuDEHibHrXQPAFU1Q4SNrPvyDNgGvSNy2o/nhVUNb5G3jMMOLhC7TdT2b76cjjAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0h3KVrR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ROIOX/6GOlzuYYV1acXtXB+cWLkHFyzPvPtJ5nYTf3JNkpCrGEP4jJF7pyYz69hAZfIzX7cOKPYuz9X7l1n7LbuhXathZ3Em7EU03FBNZ7fafCypjfsBLcDy2F1a3KSdSc2EE+aAkUomXP+A2lGKm6ZQLuAKvyDhrTsyJfgpsPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2ec2hO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0h3KVrR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18918C4CEEB;
-	Mon, 18 Aug 2025 13:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2ec2hO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF15C4CEEB;
+	Mon, 18 Aug 2025 13:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524036;
-	bh=OwIEKnuPGd2X5GZi9thkcLYuWn+4+OcgOGn7/V6ck9s=;
+	s=korg; t=1755524040;
+	bh=EHpLu3OInsDTBRwKd/p6jQ+tPx32WKX63UEAnD65QC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y0h3KVrRKTz7Sd3EvVRXHQ+T9POkdywc2HEhhLxxkp+2xUYB8faE0WIYGarPyzLUX
-	 fSG8sVtcMsmEmmkEYQiIlMljItsfPyyGt4+VHlK2+qJs66g46YHlpsSe3nNXWeobhK
-	 zVYPymbFiGygLKmPhpeDFW5/YzOjEJxT5W7fZCAU=
+	b=I2ec2hO16Hy55MnIzFD2ZHWSjDcK/wUlb6EjtGdtKqZQY2ymPinRTgrPjkxgswWLd
+	 u9Zeg8r9nKT+dVNTngaqhucJw4bpEvskzBLs+lLNI+Z4PvimCP5MKPj0xsLwhiG2Z4
+	 kBQZ+GZI5xz6Xb4aQVhHQgOFudThPrJgZBfLOnfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyan Fu <fuzy5@lenovo.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	jackysliu <1972843537@qq.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 348/515] watchdog: iTCO_wdt: Report error if timeout configuration fails
-Date: Mon, 18 Aug 2025 14:45:34 +0200
-Message-ID: <20250818124511.827990166@linuxfoundation.org>
+Subject: [PATCH 6.15 349/515] scsi: bfa: Double-free fix
+Date: Mon, 18 Aug 2025 14:45:35 +0200
+Message-ID: <20250818124511.863651129@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,52 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyan Fu <fuzy5@lenovo.com>
+From: jackysliu <1972843537@qq.com>
 
-[ Upstream commit 40efc43eb7ffb5a4e2f998c13b8cfb555e671b92 ]
+[ Upstream commit add4c4850363d7c1b72e8fce9ccb21fdd2cf5dc9 ]
 
-The driver probes with the invalid timeout value when
-'iTCO_wdt_set_timeout()' fails, as its return value is not checked. In
-this case, when executing "wdctl", we may get:
+When the bfad_im_probe() function fails during initialization, the memory
+pointed to by bfad->im is freed without setting bfad->im to NULL.
 
-Device:        /dev/watchdog0
-Timeout:       30 seconds
-Timeleft:      613 seconds
+Subsequently, during driver uninstallation, when the state machine enters
+the bfad_sm_stopping state and calls the bfad_im_probe_undo() function,
+it attempts to free the memory pointed to by bfad->im again, thereby
+triggering a double-free vulnerability.
 
-The timeout value is the value of "heartbeat" or "WATCHDOG_TIMEOUT", and
-the timeleft value is calculated from the register value we actually read
-(0xffff) by masking with 0x3ff and converting ticks to seconds (* 6 / 10).
+Set bfad->im to NULL if probing fails.
 
-Add error handling to return the failure code if 'iTCO_wdt_set_timeout()'
-fails, ensuring the driver probe fails and prevents invalid operation.
-
-Signed-off-by: Ziyan Fu <fuzy5@lenovo.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250704073518.7838-1-13281011316@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: jackysliu <1972843537@qq.com>
+Link: https://lore.kernel.org/r/tencent_3BB950D6D2D470976F55FC879206DE0B9A09@qq.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/iTCO_wdt.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/scsi/bfa/bfad_im.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index 7672582fa407..e9bf53929b53 100644
---- a/drivers/watchdog/iTCO_wdt.c
-+++ b/drivers/watchdog/iTCO_wdt.c
-@@ -601,7 +601,11 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
- 	/* Check that the heartbeat value is within it's range;
- 	   if not reset to the default */
- 	if (iTCO_wdt_set_timeout(&p->wddev, heartbeat)) {
--		iTCO_wdt_set_timeout(&p->wddev, WATCHDOG_TIMEOUT);
-+		ret = iTCO_wdt_set_timeout(&p->wddev, WATCHDOG_TIMEOUT);
-+		if (ret != 0) {
-+			dev_err(dev, "Failed to set watchdog timeout (%d)\n", WATCHDOG_TIMEOUT);
-+			return ret;
-+		}
- 		dev_info(dev, "timeout value out of range, using %d\n",
- 			WATCHDOG_TIMEOUT);
+diff --git a/drivers/scsi/bfa/bfad_im.c b/drivers/scsi/bfa/bfad_im.c
+index a719a18f0fbc..f56e008ee52b 100644
+--- a/drivers/scsi/bfa/bfad_im.c
++++ b/drivers/scsi/bfa/bfad_im.c
+@@ -706,6 +706,7 @@ bfad_im_probe(struct bfad_s *bfad)
+ 
+ 	if (bfad_thread_workq(bfad) != BFA_STATUS_OK) {
+ 		kfree(im);
++		bfad->im = NULL;
+ 		return BFA_STATUS_FAILED;
  	}
+ 
 -- 
 2.39.5
 
