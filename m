@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD7833EAFB;
-	Mon, 18 Aug 2025 14:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D373034E1B9;
+	Mon, 18 Aug 2025 14:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525797; cv=none; b=N3IaAj0rCnfZc/r/rtv3KzbF8GrmfjTHhqYXiwDHobu4qvsmnouZtK/3JMhjhDUIVrS4CSQBHhdmBzj3b+aM1rDCbBtjKt1BmmNgDiegKjU9aW7GlulKi0/gZYWgLmG9mT/Pa7s1XU2HSdAqtV6LLxCsWrzyy67odJb3mZB6ShM=
+	t=1755525800; cv=none; b=WHJcqtFhNG28kMcL54fEv7O1VMwGhLFMI0SmcxukZo5eeMiKaDTAw9kQg/+B0o3a9Y7Dr9I3SBloftBvg8jvPAa89viN0jevkqvpZlOWOEJD3EsFbWJxmS7xKE1KrYjt/bJ12bFYixOA4+NYGVL6Iw7WHT4FmTSqR/kXr0CWcZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525797; c=relaxed/simple;
-	bh=dV0+H/kyLZNQmpUd6XS2XjGD675gDe3vk77xwRie34U=;
+	s=arc-20240116; t=1755525800; c=relaxed/simple;
+	bh=2ONLAm6AGhXzFU3twLXvnR05pFUnaayMFyz2bNpuDiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEt+X46SX/qbaNL653rYOfQ9RDc/Dtq2MqZ2QHWFjSErUXqE73dmc95Ac2XB4eR3zCLvbdTNAZEnKxtSUiqyi+U1nikRXr8d6JiaJtKFCZR9QmfGM6pE1qjlM6usjHUrnw9cOtUeAnuNDEciGmiZdt+WEkhrDxCXlt7xW2tuyPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrck1OwG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTvqVB9cGSKcKBp1v+ZdEf8PEB+kCQ3I8D6vjcY99xS/89HfU1bFKNqHYxlOGqQVz6WY7MD7aBTjMf0hv2V8LojL2isrAh5JooM9wLYSGgKv2g7s+szJJ/PQWsBul2ifEQj6PB8db2Gt34qLUns+h4CJFxYyQsoIs8uYJjwGzEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2Lqnc7b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrck1OwG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE05C2BCC6;
-	Mon, 18 Aug 2025 14:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2Lqnc7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D415DC4CEF1;
+	Mon, 18 Aug 2025 14:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525796;
-	bh=dV0+H/kyLZNQmpUd6XS2XjGD675gDe3vk77xwRie34U=;
+	s=korg; t=1755525800;
+	bh=2ONLAm6AGhXzFU3twLXvnR05pFUnaayMFyz2bNpuDiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrck1OwGlEwyL3tgybjV1KGCADIaJlvVFuaYFSaIJj//0og37a6Yk2HVjM1xSIqtp
-	 bH/coahYJ0fwvAwKGjXoCNY/HbGwNpB/tZa4KrK+F4q6elEnF8HU4i/wHLqEjpGXMI
-	 6Swk+Jz4jb9wCF+cb9b0noADdeGntDUefovcE/Xk=
+	b=p2Lqnc7biwRt60T4ypHfofk8RZzKEYJYUiKH6CnrWJUwIsyF/LmMdo6gePGFHONhX
+	 scglMr+f6Q/hLrHcWj6DwbjSMQ1FZOECpuEwVtx90vuwUne+auZAHW3fN94gea6/Rs
+	 7WmE22xVCgFboMggcnzwQ5HnJnvW10sTlZDKMG8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Valmantas Paliksa <walmis@gmail.com>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 342/570] drm: renesas: rz-du: mipi_dsi: Add min check for VCLK range
-Date: Mon, 18 Aug 2025 14:45:29 +0200
-Message-ID: <20250818124519.035279239@linuxfoundation.org>
+Subject: [PATCH 6.16 369/570] phy: rockchip-pcie: Enable all four lanes if required
+Date: Mon, 18 Aug 2025 14:45:56 +0200
+Message-ID: <20250818124520.070799132@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,40 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Valmantas Paliksa <walmis@gmail.com>
 
-[ Upstream commit e37a95d01d5acce211da8446fefbd8684c67f516 ]
+[ Upstream commit c3fe7071e196e25789ecf90dbc9e8491a98884d7 ]
 
-The VCLK range for Renesas RZ/G2L SoC is 5.803 MHz to 148.5 MHz. Add a
-minimum clock check in the mode_valid callback to ensure that the clock
-value does not fall below the valid range.
+Current code enables only Lane 0 because pwr_cnt will be incremented on
+first call to the function. Let's reorder the enablement code to enable
+all 4 lanes through GRF.
 
-Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250609225630.502888-2-prabhakar.mahadev-lad.rj@bp.renesas.com
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+
+Signed-off-by: Valmantas Paliksa <walmis@gmail.com>
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/16b610aab34e069fd31d9f57260c10df2a968f80.1751322015.git.geraldogabriel@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-pcie.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-index dc6ab012cdb6..6aca10920c8e 100644
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-@@ -585,6 +585,9 @@ rzg2l_mipi_dsi_bridge_mode_valid(struct drm_bridge *bridge,
- 	if (mode->clock > 148500)
- 		return MODE_CLOCK_HIGH;
+diff --git a/drivers/phy/rockchip/phy-rockchip-pcie.c b/drivers/phy/rockchip/phy-rockchip-pcie.c
+index 63e88abc66c6..4e2dfd01adf2 100644
+--- a/drivers/phy/rockchip/phy-rockchip-pcie.c
++++ b/drivers/phy/rockchip/phy-rockchip-pcie.c
+@@ -159,6 +159,12 @@ static int rockchip_pcie_phy_power_on(struct phy *phy)
  
-+	if (mode->clock < 5803)
-+		return MODE_CLOCK_LOW;
+ 	guard(mutex)(&rk_phy->pcie_mutex);
+ 
++	regmap_write(rk_phy->reg_base,
++		     rk_phy->phy_data->pcie_laneoff,
++		     HIWORD_UPDATE(!PHY_LANE_IDLE_OFF,
++				   PHY_LANE_IDLE_MASK,
++				   PHY_LANE_IDLE_A_SHIFT + inst->index));
 +
- 	return MODE_OK;
- }
+ 	if (rk_phy->pwr_cnt++) {
+ 		return 0;
+ 	}
+@@ -175,12 +181,6 @@ static int rockchip_pcie_phy_power_on(struct phy *phy)
+ 				   PHY_CFG_ADDR_MASK,
+ 				   PHY_CFG_ADDR_SHIFT));
  
+-	regmap_write(rk_phy->reg_base,
+-		     rk_phy->phy_data->pcie_laneoff,
+-		     HIWORD_UPDATE(!PHY_LANE_IDLE_OFF,
+-				   PHY_LANE_IDLE_MASK,
+-				   PHY_LANE_IDLE_A_SHIFT + inst->index));
+-
+ 	/*
+ 	 * No documented timeout value for phy operation below,
+ 	 * so we make it large enough here. And we use loop-break
 -- 
 2.39.5
 
