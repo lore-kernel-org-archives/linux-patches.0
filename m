@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2E435A280;
-	Mon, 18 Aug 2025 14:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6495A35A297;
+	Mon, 18 Aug 2025 14:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526453; cv=none; b=IK2dKryGQHa7XfN5wY+tSY3RjmNTXiXoGff0B6vhSziSowt+Ang3kqokl42/Vg1GoFIyLmhj1Uh/ldE4Sfg6iYX5FD/rDy+aZeW4Y2sVdhMxUZlH97dxKrVflW/a9CMhBVbVKUY5wkQCuAKUPX/6uuhkJoyR1ls0mqOn/sOegbA=
+	t=1755526457; cv=none; b=oRhaKLYTALVKx26Ua5LuLycWNZXKCuSE18ajKvTPsrHQLLRG6bzQGxC7ptHk/E8pFcsPoSp1vVlIXxjVk/qWe70Cx6366YdiH+4doZL/wMh3ONod4QsC8/a7T2xjXjsOqvBvsV+9LeZP/AMQC5c8NWok36ab+feaDApTP2lXY1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526453; c=relaxed/simple;
-	bh=zI02DY0Z4H9KTkKZsrKLbzU+t/u49dCpuzBWaHNRxcM=;
+	s=arc-20240116; t=1755526457; c=relaxed/simple;
+	bh=m4PgmKNsbL330ldZu8xfZsSf2UH+J35gU/lP2B+U+Hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h17SsxKQ8eX1Bkg7HsBB4uX6NS5U18jSXSxKyM0cjI3grUSNdZMR0OuFL/+go1kcYI0+XgPFD2Bs7sqHZSOD5HD8thhh5lhCXw2PPwbT4ZFu/f/iKI6oa2MTQURLXnJIW+J3Ynfa6DkeGqOGNTR3Cj4GQCNdDSFXpYqOXDKSpsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ioAMy1jr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cNWKFRSA5IKIOl0c5zu2zoD5RVvzosMFN+BxpBXmg+vEbQzUo4Uo6FLlVwbhwBe1pTWLL2/MyL5zjIOIPZAbjPWyA3BCcnTnlN2d7qxKhKiSDDDpVsB0bsOqTqxkMP1QK71/LD2N4c2OePdUz2MqKK9I6UHiRTrOyTFD4bSlFrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkWVccH2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ioAMy1jr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA77AC4CEEB;
-	Mon, 18 Aug 2025 14:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkWVccH2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3F5C4CEEB;
+	Mon, 18 Aug 2025 14:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526453;
-	bh=zI02DY0Z4H9KTkKZsrKLbzU+t/u49dCpuzBWaHNRxcM=;
+	s=korg; t=1755526456;
+	bh=m4PgmKNsbL330ldZu8xfZsSf2UH+J35gU/lP2B+U+Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ioAMy1jrQMOhrRX5wZF1V9cGUURsrBcAJOS8vEQFnGPn53eGbpxqHRKnGGttAnf7j
-	 swcxCs4rbEctD3kJtObIP9Ok59kRRXSxeUb0hw9NsrcUp2Hla9fMr+o6K2PSf6YLad
-	 lVB9CUL8G/fAzrf4thHzURHaH//HdSq6711tB4qI=
+	b=HkWVccH2mJg73y0/6FPMR4PaNuh2K/kDWeigHey4QJznVHBgUebIUnFSYyCd7o4xL
+	 gLUIYuiDMYBVQCV7z1hgDHLLj0o+DmHB4c3+d/6yCU1NHW8q5Gqs562aK7p/dXKKSp
+	 FZBzZCkOXglFb2SGnkY15cftR8LJn+3fzIt2OVlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 560/570] KVM: VMX: Preserve hosts DEBUGCTLMSR_FREEZE_IN_SMM while running the guest
-Date: Mon, 18 Aug 2025 14:49:07 +0200
-Message-ID: <20250818124527.452592757@linuxfoundation.org>
+	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.16 561/570] ata: libata-sata: Add link_power_management_supported sysfs attribute
+Date: Mon, 18 Aug 2025 14:49:08 +0200
+Message-ID: <20250818124527.492567877@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,179 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 6b1dd26544d045f6a79e8c73572c0c0db3ef3c1a ]
+commit 0060beec0bfa647c4b510df188b1c4673a197839 upstream.
 
-Set/clear DEBUGCTLMSR_FREEZE_IN_SMM in GUEST_IA32_DEBUGCTL based on the
-host's pre-VM-Enter value, i.e. preserve the host's FREEZE_IN_SMM setting
-while running the guest.  When running with the "default treatment of SMIs"
-in effect (the only mode KVM supports), SMIs do not generate a VM-Exit that
-is visible to host (non-SMM) software, and instead transitions directly
-from VMX non-root to SMM.  And critically, DEBUGCTL isn't context switched
-by hardware on SMI or RSM, i.e. SMM will run with whatever value was
-resident in hardware at the time of the SMI.
+A port link power management (LPM) policy can be controlled using the
+link_power_management_policy sysfs host attribute. However, this
+attribute exists also for hosts that do not support LPM and in such
+case, attempting to change the LPM policy for the host (port) will fail
+with -EOPNOTSUPP.
 
-Failure to preserve FREEZE_IN_SMM results in the PMU unexpectedly counting
-events while the CPU is executing in SMM, which can pollute profiling and
-potentially leak information into the guest.
+Introduce the new sysfs link_power_management_supported host attribute
+to indicate to the user if a the port and the devices connected to the
+port for the host support LPM, which implies that the
+link_power_management_policy attribute can be used.
 
-Check for changes in FREEZE_IN_SMM prior to every entry into KVM's inner
-run loop, as the bit can be toggled in IRQ context via IPI callback (SMP
-function call), by way of /sys/devices/cpu/freeze_on_smi.
+Since checking that a port and its devices support LPM is common between
+the new ata_scsi_lpm_supported_show() function and the existing
+ata_scsi_lpm_store() function, the new helper ata_scsi_lpm_supported()
+is introduced.
 
-Add a field in kvm_x86_ops to communicate which DEBUGCTL bits need to be
-preserved, as FREEZE_IN_SMM is only supported and defined for Intel CPUs,
-i.e. explicitly checking FREEZE_IN_SMM in common x86 is at best weird, and
-at worst could lead to undesirable behavior in the future if AMD CPUs ever
-happened to pick up a collision with the bit.
-
-Exempt TDX vCPUs, i.e. protected guests, from the check, as the TDX Module
-owns and controls GUEST_IA32_DEBUGCTL.
-
-WARN in SVM if KVM_RUN_LOAD_DEBUGCTL is set, mostly to document that the
-lack of handling isn't a KVM bug (TDX already WARNs on any run_flag).
-
-Lastly, explicitly reload GUEST_IA32_DEBUGCTL on a VM-Fail that is missed
-by KVM but detected by hardware, i.e. in nested_vmx_restore_host_state().
-Doing so avoids the need to track host_debugctl on a per-VMCS basis, as
-GUEST_IA32_DEBUGCTL is unconditionally written by prepare_vmcs02() and
-load_vmcs12_host_state().  For the VM-Fail case, even though KVM won't
-have actually entered the guest, vcpu_enter_guest() will have run with
-vmcs02 active and thus could result in vmcs01 being run with a stale value.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Co-developed-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/20250610232010.162191-9-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 413e800cadbf ("ata: libata-sata: Disallow changing LPM state if not supported")
+Reported-by: Borah, Chaitanya Kumar <chaitanya.kumar.borah@intel.com>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202507251014.a5becc3b-lkp@intel.com
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    7 +++++++
- arch/x86/kvm/vmx/main.c         |    2 ++
- arch/x86/kvm/vmx/nested.c       |    3 +++
- arch/x86/kvm/vmx/vmx.c          |    3 +++
- arch/x86/kvm/vmx/vmx.h          |   15 ++++++++++++++-
- arch/x86/kvm/x86.c              |   14 ++++++++++++--
- 6 files changed, 41 insertions(+), 3 deletions(-)
+ drivers/ata/ata_piix.c    |    1 
+ drivers/ata/libahci.c     |    1 
+ drivers/ata/libata-sata.c |   53 +++++++++++++++++++++++++++++++++++-----------
+ include/linux/libata.h    |    1 
+ 4 files changed, 44 insertions(+), 12 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1683,6 +1683,7 @@ static inline u16 kvm_lapic_irq_dest_mod
- enum kvm_x86_run_flags {
- 	KVM_RUN_FORCE_IMMEDIATE_EXIT	= BIT(0),
- 	KVM_RUN_LOAD_GUEST_DR6		= BIT(1),
-+	KVM_RUN_LOAD_DEBUGCTL		= BIT(2),
+--- a/drivers/ata/ata_piix.c
++++ b/drivers/ata/ata_piix.c
+@@ -1089,6 +1089,7 @@ static struct ata_port_operations ich_pa
  };
  
- struct kvm_x86_ops {
-@@ -1713,6 +1714,12 @@ struct kvm_x86_ops {
- 	void (*vcpu_load)(struct kvm_vcpu *vcpu, int cpu);
- 	void (*vcpu_put)(struct kvm_vcpu *vcpu);
+ static struct attribute *piix_sidpr_shost_attrs[] = {
++	&dev_attr_link_power_management_supported.attr,
+ 	&dev_attr_link_power_management_policy.attr,
+ 	NULL
+ };
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -111,6 +111,7 @@ static DEVICE_ATTR(em_buffer, S_IWUSR |
+ static DEVICE_ATTR(em_message_supported, S_IRUGO, ahci_show_em_supported, NULL);
  
-+	/*
-+	 * Mask of DEBUGCTL bits that are owned by the host, i.e. that need to
-+	 * match the host's value even while the guest is active.
-+	 */
-+	const u64 HOST_OWNED_DEBUGCTL;
+ static struct attribute *ahci_shost_attrs[] = {
++	&dev_attr_link_power_management_supported.attr,
+ 	&dev_attr_link_power_management_policy.attr,
+ 	&dev_attr_em_message_type.attr,
+ 	&dev_attr_em_message.attr,
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -900,14 +900,52 @@ static const char *ata_lpm_policy_names[
+ 	[ATA_LPM_MIN_POWER]		= "min_power",
+ };
+ 
++/*
++ * Check if a port supports link power management.
++ * Must be called with the port locked.
++ */
++static bool ata_scsi_lpm_supported(struct ata_port *ap)
++{
++	struct ata_link *link;
++	struct ata_device *dev;
 +
- 	void (*update_exception_bitmap)(struct kvm_vcpu *vcpu);
- 	int (*get_msr)(struct kvm_vcpu *vcpu, struct msr_data *msr);
- 	int (*set_msr)(struct kvm_vcpu *vcpu, struct msr_data *msr);
---- a/arch/x86/kvm/vmx/main.c
-+++ b/arch/x86/kvm/vmx/main.c
-@@ -915,6 +915,8 @@ struct kvm_x86_ops vt_x86_ops __initdata
- 	.vcpu_load = vt_op(vcpu_load),
- 	.vcpu_put = vt_op(vcpu_put),
- 
-+	.HOST_OWNED_DEBUGCTL = DEBUGCTLMSR_FREEZE_IN_SMM,
++	if (ap->flags & ATA_FLAG_NO_LPM)
++		return false;
 +
- 	.update_exception_bitmap = vt_op(update_exception_bitmap),
- 	.get_feature_msr = vmx_get_feature_msr,
- 	.get_msr = vt_op(get_msr),
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -4861,6 +4861,9 @@ static void nested_vmx_restore_host_stat
- 			WARN_ON(kvm_set_dr(vcpu, 7, vmcs_readl(GUEST_DR7)));
- 	}
- 
-+	/* Reload DEBUGCTL to ensure vmcs01 has a fresh FREEZE_IN_SMM value. */
-+	vmx_reload_guest_debugctl(vcpu);
++	ata_for_each_link(link, ap, EDGE) {
++		ata_for_each_dev(dev, &ap->link, ENABLED) {
++			if (dev->quirks & ATA_QUIRK_NOLPM)
++				return false;
++		}
++	}
 +
- 	/*
- 	 * Note that calling vmx_set_{efer,cr0,cr4} is important as they
- 	 * handle a variety of side effects to KVM's software model.
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -7377,6 +7377,9 @@ fastpath_t vmx_vcpu_run(struct kvm_vcpu
- 	if (run_flags & KVM_RUN_LOAD_GUEST_DR6)
- 		set_debugreg(vcpu->arch.dr6, 6);
- 
-+	if (run_flags & KVM_RUN_LOAD_DEBUGCTL)
-+		vmx_reload_guest_debugctl(vcpu);
-+
- 	/*
- 	 * Refresh vmcs.HOST_CR3 if necessary.  This must be done immediately
- 	 * prior to VM-Enter, as the kernel may load a new ASID (PCID) any time
---- a/arch/x86/kvm/vmx/vmx.h
-+++ b/arch/x86/kvm/vmx/vmx.h
-@@ -419,12 +419,25 @@ bool vmx_is_valid_debugctl(struct kvm_vc
- 
- static inline void vmx_guest_debugctl_write(struct kvm_vcpu *vcpu, u64 val)
- {
-+	WARN_ON_ONCE(val & DEBUGCTLMSR_FREEZE_IN_SMM);
-+
-+	val |= vcpu->arch.host_debugctl & DEBUGCTLMSR_FREEZE_IN_SMM;
- 	vmcs_write64(GUEST_IA32_DEBUGCTL, val);
- }
- 
- static inline u64 vmx_guest_debugctl_read(void)
- {
--	return vmcs_read64(GUEST_IA32_DEBUGCTL);
-+	return vmcs_read64(GUEST_IA32_DEBUGCTL) & ~DEBUGCTLMSR_FREEZE_IN_SMM;
++	return true;
 +}
 +
-+static inline void vmx_reload_guest_debugctl(struct kvm_vcpu *vcpu)
++static ssize_t ata_scsi_lpm_supported_show(struct device *dev,
++				 struct device_attribute *attr, char *buf)
 +{
-+	u64 val = vmcs_read64(GUEST_IA32_DEBUGCTL);
++	struct Scsi_Host *shost = class_to_shost(dev);
++	struct ata_port *ap = ata_shost_to_port(shost);
++	unsigned long flags;
++	bool supported;
 +
-+	if (!((val ^ vcpu->arch.host_debugctl) & DEBUGCTLMSR_FREEZE_IN_SMM))
-+		return;
++	spin_lock_irqsave(ap->lock, flags);
++	supported = ata_scsi_lpm_supported(ap);
++	spin_unlock_irqrestore(ap->lock, flags);
 +
-+	vmx_guest_debugctl_write(vcpu, val & ~DEBUGCTLMSR_FREEZE_IN_SMM);
- }
++	return sysfs_emit(buf, "%d\n", supported);
++}
++DEVICE_ATTR(link_power_management_supported, S_IRUGO,
++	    ata_scsi_lpm_supported_show, NULL);
++EXPORT_SYMBOL_GPL(dev_attr_link_power_management_supported);
++
+ static ssize_t ata_scsi_lpm_store(struct device *device,
+ 				  struct device_attribute *attr,
+ 				  const char *buf, size_t count)
+ {
+ 	struct Scsi_Host *shost = class_to_shost(device);
+ 	struct ata_port *ap = ata_shost_to_port(shost);
+-	struct ata_link *link;
+-	struct ata_device *dev;
+ 	enum ata_lpm_policy policy;
+ 	unsigned long flags;
  
- /*
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10785,7 +10785,7 @@ static int vcpu_enter_guest(struct kvm_v
- 		dm_request_for_irq_injection(vcpu) &&
- 		kvm_cpu_accept_dm_intr(vcpu);
- 	fastpath_t exit_fastpath;
--	u64 run_flags;
-+	u64 run_flags, debug_ctl;
+@@ -924,20 +962,11 @@ static ssize_t ata_scsi_lpm_store(struct
  
- 	bool req_immediate_exit = false;
+ 	spin_lock_irqsave(ap->lock, flags);
  
-@@ -11057,7 +11057,17 @@ static int vcpu_enter_guest(struct kvm_v
- 		set_debugreg(DR7_FIXED_1, 7);
+-	if (ap->flags & ATA_FLAG_NO_LPM) {
++	if (!ata_scsi_lpm_supported(ap)) {
+ 		count = -EOPNOTSUPP;
+ 		goto out_unlock;
  	}
  
--	vcpu->arch.host_debugctl = get_debugctlmsr();
-+	/*
-+	 * Refresh the host DEBUGCTL snapshot after disabling IRQs, as DEBUGCTL
-+	 * can be modified in IRQ context, e.g. via SMP function calls.  Inform
-+	 * vendor code if any host-owned bits were changed, e.g. so that the
-+	 * value loaded into hardware while running the guest can be updated.
-+	 */
-+	debug_ctl = get_debugctlmsr();
-+	if ((debug_ctl ^ vcpu->arch.host_debugctl) & kvm_x86_ops.HOST_OWNED_DEBUGCTL &&
-+	    !vcpu->arch.guest_state_protected)
-+		run_flags |= KVM_RUN_LOAD_DEBUGCTL;
-+	vcpu->arch.host_debugctl = debug_ctl;
+-	ata_for_each_link(link, ap, EDGE) {
+-		ata_for_each_dev(dev, &ap->link, ENABLED) {
+-			if (dev->quirks & ATA_QUIRK_NOLPM) {
+-				count = -EOPNOTSUPP;
+-				goto out_unlock;
+-			}
+-		}
+-	}
+-
+ 	ap->target_lpm_policy = policy;
+ 	ata_port_schedule_eh(ap);
+ out_unlock:
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -534,6 +534,7 @@ typedef void (*ata_postreset_fn_t)(struc
  
- 	guest_timing_enter_irqoff();
- 
+ extern struct device_attribute dev_attr_unload_heads;
+ #ifdef CONFIG_SATA_HOST
++extern struct device_attribute dev_attr_link_power_management_supported;
+ extern struct device_attribute dev_attr_link_power_management_policy;
+ extern struct device_attribute dev_attr_ncq_prio_supported;
+ extern struct device_attribute dev_attr_ncq_prio_enable;
 
 
