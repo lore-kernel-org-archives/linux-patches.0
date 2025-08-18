@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66583335BD8;
-	Mon, 18 Aug 2025 13:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E513632142A;
+	Mon, 18 Aug 2025 13:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523254; cv=none; b=N3zJkhdnJhJuXTdbziVCSRg/zh3icynK/8MwzGGsmZNZ1Cz9K0oESYnfHXOmdqOa7pQRe7aIT6KX2jv3mUWGrxOqYmstJ11H0V3jcJQ1KcJ2p278VxSsSzAcsEcTPZCVxz6eS1WtPkP+OFh1WbJPcomsk5BmbIDyuO/KhnAr5y0=
+	t=1755523258; cv=none; b=GC49OZO5rLJ1OBcUGnFfhasBwkZDRFp87GtKXm1xtCE6ffG33Ovsld/UvE8aOu6pRWgFp58czFd3ohhpJkHV/8Yagk/wAkxXtYAbrVYiCa5Vym+LST2aXyZqYamzi8Fdp206xe9l6Y1Md3F+Nea4PzARzh4Sx6MPi3J7mIcGYZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523254; c=relaxed/simple;
-	bh=6LyvAp5wXCz1mRRAvx26kaCMF0c9stVjtaMIB05px/k=;
+	s=arc-20240116; t=1755523258; c=relaxed/simple;
+	bh=TBTtTnTd2KQzmAshqP25JRuaJGpx3TPNa+IufaLLRLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQUBBkiEmfYLh3kkgIagH10jBj+C9OkhSFW0xhWpYnejQYcsBsHn7tcE8ivwSs44h5Fg/26ICFoiDBsd+xlMohqxPTXEUGNOINmsAmDJ4sFliFjhbcpLQbKROJy3t82LfxEOmYK2bpyAV5p/TWNAVaU5VrhkJucRXPgbm+DVTlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+GGBl2y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Kj2bdO+14UPw28DYPJKcEj74VQO8iFapKIV49G49SS+MeuM8h3VoVRmMQAU82MaMTyyjcnIXF6kwDUqty6CT09c4iuv/WxWvFZQxoEXyDHA+igina9HrRUYNP0NRXBpHB7pIwNmwgtCmo+SLFpkFgtdH8irCSUTpdv5R98/etFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY9YXi90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+GGBl2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5316DC4CEEB;
-	Mon, 18 Aug 2025 13:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY9YXi90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6394FC4CEF1;
+	Mon, 18 Aug 2025 13:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523254;
-	bh=6LyvAp5wXCz1mRRAvx26kaCMF0c9stVjtaMIB05px/k=;
+	s=korg; t=1755523257;
+	bh=TBTtTnTd2KQzmAshqP25JRuaJGpx3TPNa+IufaLLRLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+GGBl2y6mb9wjNqoc87BJjLwloudCgTKjVh+nY7QPMkcKKK/mwQ5+WvkMPk+XKrf
-	 sZ5uUXSsbTqUiXyD6SeB05r0hhAbMHIigi48aCFCisPQAqxYIMOdhhAaGiIRTKCZz6
-	 gWXdCS0TaLDnZ8VjHRycBt3zJrHIZjzllVwYTNU8=
+	b=uY9YXi90l2JB7fQehnTsK53Nj++bvoCRl6CooE7AbWfsW2xi9a8B/ZZpG8gF5Yc/i
+	 EFIRiZ2Q3PcFcqR3BUNSQcUelMnYMiOf9RG7tLR+4jEdTiDSN24jNXaaefoHezyDGo
+	 NJ6Ot4Z85F0dRaHM/hGOaU2nB6Po+eyJNhMkMx70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Orlov <ivan.orlov0322@gmail.com>,
-	Jonathan McDowell <noodles@meta.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 084/515] tpm: Check for completion after timeout
-Date: Mon, 18 Aug 2025 14:41:10 +0200
-Message-ID: <20250818124501.611173136@linuxfoundation.org>
+Subject: [PATCH 6.15 085/515] tpm: tpm_crb_ffa: try to probe tpm_crb_ffa when its built-in
+Date: Mon, 18 Aug 2025 14:41:11 +0200
+Message-ID: <20250818124501.646601752@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -46,94 +47,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit d4640c394f23b202a89512346cf28f6622a49031 ]
+[ Upstream commit 746d9e9f62a6e8ba0eba2b83fc61cfe7fa8797ce ]
 
-The current implementation of timeout detection works in the following
-way:
+To generate the boot_aggregate log in the IMA subsystem using TPM PCR
+values, the TPM driver must be built as built-in and must be probed
+before the IMA subsystem is initialized.
 
-1. Read completion status. If completed, return the data
-2. Sleep for some time (usleep_range)
-3. Check for timeout using current jiffies value. Return an error if
-   timed out
-4. Goto 1
+However, when the TPM device operates over the FF-A protocol using the
+CRB interface, probing fails and returns -EPROBE_DEFER if the
+tpm_crb_ffa device — an FF-A device that provides the communication
+interface to the tpm_crb driver — has not yet been probed.
 
-usleep_range doesn't guarantee it's always going to wake up strictly in
-(min, max) range, so such a situation is possible:
+This issue occurs because both crb_acpi_driver_init() and
+tpm_crb_ffa_driver_init() are registered with device_initcall.  As a
+result, crb_acpi_driver_init() may be invoked before
+tpm_crb_ffa_driver_init(), which is responsible for probing the
+tpm_crb_ffa device.
 
-1. Driver reads completion status. No completion yet
-2. Process sleeps indefinitely. In the meantime, TPM responds
-3. We check for timeout without checking for the completion again.
-   Result is lost.
+When this happens, IMA fails to detect the TPM device and logs the
+following message:
 
-Such a situation also happens for the guest VMs: if vCPU goes to sleep
-and doesn't get scheduled for some time, the guest TPM driver will
-timeout instantly after waking up without checking for the completion
-(which may already be in place).
+  | ima: No TPM chip found, activating TPM-bypass!
 
-Perform the completion check once again after exiting the busy loop in
-order to give the device the last chance to send us some data.
+Consequently, it cannot generate the boot_aggregate log with the PCR
+values provided by the TPM.
 
-Since now we check for completion in two places, extract this check into
-a separate function.
+To resolve this issue, the tpm_crb_ffa_init() function explicitly
+attempts to probe the tpm_crb_ffa by register tpm_crb_ffa driver so that
+when tpm_crb_ffa device is created before tpm_crb_ffa_init(), probe the
+tpm_crb_ffa device in tpm_crb_ffa_init() to finish probe the TPM device
+completely.
 
-Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
-Reviewed-by: Jonathan McDowell <noodles@meta.com>
+This ensures that the TPM device using CRB over FF-A can be successfully
+probed, even if crb_acpi_driver_init() is called first.
+
+[ jarkko: reformatted some of the paragraphs because they were going past
+  the 75 character boundary. ]
+
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm-interface.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm_crb_ffa.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm-interface.c b/drivers/char/tpm/tpm-interface.c
-index 8d7e4da6ed53..8d18b33aa62d 100644
---- a/drivers/char/tpm/tpm-interface.c
-+++ b/drivers/char/tpm/tpm-interface.c
-@@ -82,6 +82,13 @@ static bool tpm_chip_req_canceled(struct tpm_chip *chip, u8 status)
- 	return chip->ops->req_canceled(chip, status);
- }
+diff --git a/drivers/char/tpm/tpm_crb_ffa.c b/drivers/char/tpm/tpm_crb_ffa.c
+index 3169a87a56b6..430b99c04124 100644
+--- a/drivers/char/tpm/tpm_crb_ffa.c
++++ b/drivers/char/tpm/tpm_crb_ffa.c
+@@ -109,6 +109,7 @@ struct tpm_crb_ffa {
+ };
  
-+static bool tpm_transmit_completed(u8 status, struct tpm_chip *chip)
-+{
-+	u8 status_masked = status & chip->ops->req_complete_mask;
-+
-+	return status_masked == chip->ops->req_complete_val;
-+}
-+
- static ssize_t tpm_try_transmit(struct tpm_chip *chip, void *buf, size_t bufsiz)
+ static struct tpm_crb_ffa *tpm_crb_ffa;
++static struct ffa_driver tpm_crb_ffa_driver;
+ 
+ static int tpm_crb_ffa_to_linux_errno(int errno)
  {
- 	struct tpm_header *header = buf;
-@@ -129,8 +136,7 @@ static ssize_t tpm_try_transmit(struct tpm_chip *chip, void *buf, size_t bufsiz)
- 	stop = jiffies + tpm_calc_ordinal_duration(chip, ordinal);
- 	do {
- 		u8 status = tpm_chip_status(chip);
--		if ((status & chip->ops->req_complete_mask) ==
--		    chip->ops->req_complete_val)
-+		if (tpm_transmit_completed(status, chip))
- 			goto out_recv;
- 
- 		if (tpm_chip_req_canceled(chip, status)) {
-@@ -142,6 +148,13 @@ static ssize_t tpm_try_transmit(struct tpm_chip *chip, void *buf, size_t bufsiz)
- 		rmb();
- 	} while (time_before(jiffies, stop));
- 
-+	/*
-+	 * Check for completion one more time, just in case the device reported
-+	 * it while the driver was sleeping in the busy loop above.
-+	 */
-+	if (tpm_transmit_completed(tpm_chip_status(chip), chip))
-+		goto out_recv;
+@@ -162,13 +163,23 @@ static int tpm_crb_ffa_to_linux_errno(int errno)
+  */
+ int tpm_crb_ffa_init(void)
+ {
++	int ret = 0;
 +
- 	tpm_chip_cancel(chip);
- 	dev_err(&chip->dev, "Operation Timed out\n");
- 	return -ETIME;
++	if (!IS_MODULE(CONFIG_TCG_ARM_CRB_FFA)) {
++		ret = ffa_register(&tpm_crb_ffa_driver);
++		if (ret) {
++			tpm_crb_ffa = ERR_PTR(-ENODEV);
++			return ret;
++		}
++	}
++
+ 	if (!tpm_crb_ffa)
+-		return -ENOENT;
++		ret = -ENOENT;
+ 
+ 	if (IS_ERR_VALUE(tpm_crb_ffa))
+-		return -ENODEV;
++		ret = -ENODEV;
+ 
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(tpm_crb_ffa_init);
+ 
+@@ -341,7 +352,9 @@ static struct ffa_driver tpm_crb_ffa_driver = {
+ 	.id_table = tpm_crb_ffa_device_id,
+ };
+ 
++#ifdef MODULE
+ module_ffa_driver(tpm_crb_ffa_driver);
++#endif
+ 
+ MODULE_AUTHOR("Arm");
+ MODULE_DESCRIPTION("TPM CRB FFA driver");
 -- 
 2.39.5
 
