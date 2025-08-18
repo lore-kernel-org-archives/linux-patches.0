@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A36F31A04F;
-	Mon, 18 Aug 2025 12:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED74320CB7;
+	Mon, 18 Aug 2025 12:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521675; cv=none; b=gFTsc9DzpbXG1rbyMbv1DIYx6MxfHSt5ykMLV+DRSrGHoHD1dQe6R/XANh99Fz8L6F4uLg5gqmqRgG+uO/x6LS1hPLM2KRFIhMC0bjL6RapDesGdgdsIMvyr9VSOq68nOWihtQBROWvo2SUkerSvKdNbyeo7yzwrZj6V283PgNQ=
+	t=1755521678; cv=none; b=FCqlZ0X4e6wciWpTUfbMrUZXX+kkJac7sPX+bAE0VaLxFOlqyrSPiizGwxeITKIsRN+6c5RlrrMLOYfxL3bePJBvytTtl3Phg6s6KxjBqVTgkCzLsune+AKR1nYpaRJFpVIrHzXa6kd0f36OSzbkV8zAsO4+0qzf5Rog/NeZgcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521675; c=relaxed/simple;
-	bh=K43SHj670n83h8SEMtykGxV7MWOWuluL052pp70zP70=;
+	s=arc-20240116; t=1755521678; c=relaxed/simple;
+	bh=3+cQyrgpOXNMUKikU0Qc4TKDNcaR4MzpM0QBDz1UHN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ip+NplKnW5Qze4jEdQimn2plLI4j55tnkV9JIR8ZGKaGYRnvi2X3nPR18pd+FqMu+LI6lhReh3iadvLF5Khyv1Q/ognQ9JXYrJWcxop1SVMuckhwgRE+R2QPVNS891nqW8YB4W77cBLHiEoQbdx7hmH4bURK5sYZFH/1z6JNzTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP5PoTRM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SdFXOzz9LM9HNRzvzV2RBqs+ID7CPa0R3Zl/uCdI/rOs7n6m/8wHxu+X7k4HvyclROVJPpReUQhq7vDPQg8A0tVVWdD1rO+h8cT3uxOHWvZXaFxI+xOs93j+bMSTa4bGIXJJxECqEqIeK/20hIoIThWwtGayTyJE3I6NDIzbstQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxIFGulu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP5PoTRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3070C4CEEB;
-	Mon, 18 Aug 2025 12:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxIFGulu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C214FC4CEEB;
+	Mon, 18 Aug 2025 12:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521675;
-	bh=K43SHj670n83h8SEMtykGxV7MWOWuluL052pp70zP70=;
+	s=korg; t=1755521678;
+	bh=3+cQyrgpOXNMUKikU0Qc4TKDNcaR4MzpM0QBDz1UHN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CP5PoTRMGLw3WYFO9QQmUygruWPBrq0Rqpw5yTe9Ccxf0f3guQliaXn1rloW3x4pQ
-	 sVS6lQW8021jXIOlTS/rjtZqDSrX0VjwzayRLApHascA9YKv2AR+W5A2nvyL3sDPdc
-	 SvMAe2o1V08ynmEVekYJUa/aKHz1rbn0squ/CXNc=
+	b=VxIFGuluewT/NOpt7uSLq7ZbHsWCpQEYdc5VHmhxCSoibIAg4wh7zfjk11Kfb+MQP
+	 5avSYg/vuvJFABeAiS2PUOg+eHnBBpwH9WYaGC0Eb5QilUVn9B+PUVuTmEBuSFZWAg
+	 8J4ketAlG+eLWLG4GnH1DQBRpzoOlonpuQODIwb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Wei Gao <wegao@suse.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/444] pidfs: raise SB_I_NODEV and SB_I_NOEXEC
-Date: Mon, 18 Aug 2025 14:41:56 +0200
-Message-ID: <20250818124452.320129466@linuxfoundation.org>
+Subject: [PATCH 6.12 091/444] ext2: Handle fiemap on empty files to prevent EINVAL
+Date: Mon, 18 Aug 2025 14:41:57 +0200
+Message-ID: <20250818124452.356191552@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,38 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Wei Gao <wegao@suse.com>
 
-[ Upstream commit 1a1ad73aa1a66787f05f7f10f686b74bab77be72 ]
+[ Upstream commit a099b09a3342a0b28ea330e405501b5b4d0424b4 ]
 
-Similar to commit 1ed95281c0c7 ("anon_inode: raise SB_I_NODEV and SB_I_NOEXEC"):
-it shouldn't be possible to execute pidfds via
-execveat(fd_anon_inode, "", NULL, NULL, AT_EMPTY_PATH)
-so raise SB_I_NOEXEC so that no one gets any creative ideas.
+Previously, ext2_fiemap would unconditionally apply "len = min_t(u64, len,
+i_size_read(inode));", When inode->i_size was 0 (for an empty file), this
+would reduce the requested len to 0. Passing len = 0 to iomap_fiemap could
+then result in an -EINVAL error, even for valid queries on empty files.
 
-Also raise SB_I_NODEV as we don't expect or support any devices on pidfs.
-
-Link: https://lore.kernel.org/20250618-work-pidfs-persistent-v2-1-98f3456fd552@kernel.org
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://github.com/linux-test-project/ltp/issues/1246
+Signed-off-by: Wei Gao <wegao@suse.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250613152402.3432135-1-wegao@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pidfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext2/inode.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/fs/pidfs.c b/fs/pidfs.c
-index 52b7e4f76732..5a8d8eb8df23 100644
---- a/fs/pidfs.c
-+++ b/fs/pidfs.c
-@@ -382,6 +382,8 @@ static int pidfs_init_fs_context(struct fs_context *fc)
- 	if (!ctx)
- 		return -ENOMEM;
+diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
+index 30f8201c155f..177b1f852b63 100644
+--- a/fs/ext2/inode.c
++++ b/fs/ext2/inode.c
+@@ -895,9 +895,19 @@ int ext2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
+ 		u64 start, u64 len)
+ {
+ 	int ret;
++	loff_t i_size;
  
-+	fc->s_iflags |= SB_I_NOEXEC;
-+	fc->s_iflags |= SB_I_NODEV;
- 	ctx->ops = &pidfs_sops;
- 	ctx->dops = &pidfs_dentry_operations;
- 	fc->s_fs_info = (void *)&pidfs_stashed_ops;
+ 	inode_lock(inode);
+-	len = min_t(u64, len, i_size_read(inode));
++	i_size = i_size_read(inode);
++	/*
++	 * iomap_fiemap() returns EINVAL for 0 length. Make sure we don't trim
++	 * length to 0 but still trim the range as much as possible since
++	 * ext2_get_blocks() iterates unmapped space block by block which is
++	 * slow.
++	 */
++	if (i_size == 0)
++		i_size = 1;
++	len = min_t(u64, len, i_size);
+ 	ret = iomap_fiemap(inode, fieinfo, start, len, &ext2_iomap_ops);
+ 	inode_unlock(inode);
+ 
 -- 
 2.39.5
 
