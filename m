@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4073426F2B4;
-	Mon, 18 Aug 2025 13:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D7E320CCA;
+	Mon, 18 Aug 2025 13:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523034; cv=none; b=XNB1hXY2Fw+wLOnx09VOBXUA8ED7jWKE+JzqBmm6jUCoZwPMmaQYS9PWEqtpZqT6nJ6+4LFbOQdDNwt9nA3zZthqlz3YvUvM0OjsbEtcUmjAuhMPROjn9LAzzY4Cjb9HOYuOib2Z45gjZPr2y2EkerOyqn+977LhKe5mpKJgCTc=
+	t=1755523037; cv=none; b=BWYD3W+rxvdFW4oMubFqk3jnKj1QZT4L6QQpBkZQkMviVBkIQI3HUkcTgJStjyyr2wdYAfv/pLtmII2u1FWbLKqSs+HGAE6EX3WbSBrJHjivMPsCenZmRtC64uKhcalo2AX2GccVkVVrWrKT3Jg7sZ81tguNMWnSKl6dFFKhNSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523034; c=relaxed/simple;
-	bh=FncI+V8Ioj/DkXCKFIZYmwQXTYU+W2VO4SAUwcVjzcs=;
+	s=arc-20240116; t=1755523037; c=relaxed/simple;
+	bh=2daRLs5x9/tIqIymQsiPT+fPzHieUOBzVt5LctEAwfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCnipR+H/Qi42QdvBPrSyweRn/13DeE352DukeSD1LI+RgeuGQqRu7YknFHDMozQk+v2D3gselGKRmctPgk+QkDbsI6LJnrKjNNIGbuCsiBQjThdg488T3SYkhy+IPY1AJ/02dW3Yn1Z6MNIceUboyWkHHu46IFn5ThDDpmDAOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSDNSRKb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uOhbi01pVObZJiPZEjNE/hMFrDIJ1HGlijIY5UA1Yyjuj4BMYWGm+iJtIDMj1mpdrxGQxV6Rj5/Pk36FHWdre+cG97Ot+QLO1m7G1n8XKhtT7TCxlNiHIx3DXO20N2bSpnvzh4kF95kfW8QlZQpUmKvql9HGwJdHtJ9aATLPf3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPL2EQdo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSDNSRKb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAA5C4CEEB;
-	Mon, 18 Aug 2025 13:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPL2EQdo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB432C4CEF1;
+	Mon, 18 Aug 2025 13:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523034;
-	bh=FncI+V8Ioj/DkXCKFIZYmwQXTYU+W2VO4SAUwcVjzcs=;
+	s=korg; t=1755523037;
+	bh=2daRLs5x9/tIqIymQsiPT+fPzHieUOBzVt5LctEAwfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fSDNSRKbR6um1iWPJs/m7Yvv7x9mHyEwL8BfAEV3Dc8sJfACl3IGnOghrE1d954pi
-	 lGYi6Sv90rTZ6vk2oP8d1149NcY/DX8S6oQPcH5Mn+j8svxADYux2ss44joXr6gqWB
-	 IGGAvECuqyAqhADjB78NsKG8XudYR/J5n5kXbI2Q=
+	b=XPL2EQdoyvsfIgtt1h+ODkiLmaS+n3sPX+yJhREpRxr4LU8ZQCk6UDVDlQOtkMaj+
+	 CVhvgMN+GXzdxiSO/qiOSv/1DUT+mTmn8yeNYVT5m6NFi6KIBuX4+YdBzKftRWyrp/
+	 SC+jB0mga/irYPcvDS4UGU8EeFZ4u5v8I1brDUec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Daniel Golle <daniel@makrotopia.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.15 017/515] leds: flash: leds-qcom-flash: Fix registry access after re-bind
-Date: Mon, 18 Aug 2025 14:40:03 +0200
-Message-ID: <20250818124458.975007000@linuxfoundation.org>
+Subject: [PATCH 6.15 018/515] Revert "leds: trigger: netdev: Configure LED blink interval for HW offload"
+Date: Mon, 18 Aug 2025 14:40:04 +0200
+Message-ID: <20250818124459.175879011@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,78 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Daniel Golle <daniel@makrotopia.org>
 
-commit fab15f57360b1e6620a1d0d6b0fbee896e6c1f07 upstream.
+commit 26f732791f2bcab18f59c61915bbe35225f30136 upstream.
 
-Driver in probe() updates each of 'reg_field' with 'reg_base':
+This reverts commit c629c972b310af41e9e072febb6dae9a299edde6.
 
-	for (i = 0; i < REG_MAX_COUNT; i++)
-		regs[i].reg += reg_base;
+While .led_blink_set() would previously put an LED into an unconditional
+permanently blinking state, the offending commit now uses same operation
+to (also?) set the blink timing of the netdev trigger when offloading.
 
-'reg_field' array (under variable 'regs' above) is statically allocated,
-thus each re-bind would add another 'reg_base' leading to bogus
-register addresses.  Constify the local 'reg_field' array and duplicate
-it in probe to solve this.
+This breaks many if not all of the existing PHY drivers which offer
+offloading LED operations, as those drivers would just put the LED into
+blinking state after .led_blink_set() has been called.
 
-Fixes: 96a2e242a5dc ("leds: flash: Add driver to support flash LED module in QCOM PMICs")
+Unfortunately the change even made it into stable kernels for unknown
+reasons, so it should be reverted there as well.
+
+Fixes: c629c972b310a ("leds: trigger: netdev: Configure LED blink interval for HW offload")
+Link: https://lore.kernel.org/linux-leds/c6134e26-2e45-4121-aa15-58aaef327201@lunn.ch/T/#m9d6fe81bbcb273e59f12bbedbd633edd32118387
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250529063335.8785-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/6dcc77ee1c9676891d6250d8994850f521426a0f.1752334655.git.daniel@makrotopia.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/flash/leds-qcom-flash.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/leds/trigger/ledtrig-netdev.c |   16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
---- a/drivers/leds/flash/leds-qcom-flash.c
-+++ b/drivers/leds/flash/leds-qcom-flash.c
-@@ -117,7 +117,7 @@ enum {
- 	REG_MAX_COUNT,
- };
+--- a/drivers/leds/trigger/ledtrig-netdev.c
++++ b/drivers/leds/trigger/ledtrig-netdev.c
+@@ -68,7 +68,6 @@ struct led_netdev_data {
+ 	unsigned int last_activity;
  
--static struct reg_field mvflash_3ch_regs[REG_MAX_COUNT] = {
-+static const struct reg_field mvflash_3ch_regs[REG_MAX_COUNT] = {
- 	REG_FIELD(0x08, 0, 7),			/* status1	*/
- 	REG_FIELD(0x09, 0, 7),                  /* status2	*/
- 	REG_FIELD(0x0a, 0, 7),                  /* status3	*/
-@@ -132,7 +132,7 @@ static struct reg_field mvflash_3ch_regs
- 	REG_FIELD(0x58, 0, 2),			/* therm_thrsh3 */
- };
+ 	unsigned long mode;
+-	unsigned long blink_delay;
+ 	int link_speed;
+ 	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported_link_modes);
+ 	u8 duplex;
+@@ -87,10 +86,6 @@ static void set_baseline_state(struct le
+ 	/* Already validated, hw control is possible with the requested mode */
+ 	if (trigger_data->hw_control) {
+ 		led_cdev->hw_control_set(led_cdev, trigger_data->mode);
+-		if (led_cdev->blink_set) {
+-			led_cdev->blink_set(led_cdev, &trigger_data->blink_delay,
+-					    &trigger_data->blink_delay);
+-		}
  
--static struct reg_field mvflash_4ch_regs[REG_MAX_COUNT] = {
-+static const struct reg_field mvflash_4ch_regs[REG_MAX_COUNT] = {
- 	REG_FIELD(0x06, 0, 7),			/* status1	*/
- 	REG_FIELD(0x07, 0, 6),			/* status2	*/
- 	REG_FIELD(0x09, 0, 7),			/* status3	*/
-@@ -854,11 +854,17 @@ static int qcom_flash_led_probe(struct p
- 	if (val == FLASH_SUBTYPE_3CH_PM8150_VAL || val == FLASH_SUBTYPE_3CH_PMI8998_VAL) {
- 		flash_data->hw_type = QCOM_MVFLASH_3CH;
- 		flash_data->max_channels = 3;
--		regs = mvflash_3ch_regs;
-+		regs = devm_kmemdup(dev, mvflash_3ch_regs, sizeof(mvflash_3ch_regs),
-+				    GFP_KERNEL);
-+		if (!regs)
-+			return -ENOMEM;
- 	} else if (val == FLASH_SUBTYPE_4CH_VAL) {
- 		flash_data->hw_type = QCOM_MVFLASH_4CH;
- 		flash_data->max_channels = 4;
--		regs = mvflash_4ch_regs;
-+		regs = devm_kmemdup(dev, mvflash_4ch_regs, sizeof(mvflash_4ch_regs),
-+				    GFP_KERNEL);
-+		if (!regs)
-+			return -ENOMEM;
- 
- 		rc = regmap_read(regmap, reg_base + FLASH_REVISION_REG, &val);
- 		if (rc < 0) {
-@@ -880,6 +886,7 @@ static int qcom_flash_led_probe(struct p
- 		dev_err(dev, "Failed to allocate regmap field, rc=%d\n", rc);
- 		return rc;
+ 		return;
  	}
-+	devm_kfree(dev, regs); /* devm_regmap_field_bulk_alloc() makes copies */
+@@ -459,11 +454,10 @@ static ssize_t interval_store(struct dev
+ 			      size_t size)
+ {
+ 	struct led_netdev_data *trigger_data = led_trigger_get_drvdata(dev);
+-	struct led_classdev *led_cdev = trigger_data->led_cdev;
+ 	unsigned long value;
+ 	int ret;
  
- 	platform_set_drvdata(pdev, flash_data);
- 	mutex_init(&flash_data->lock);
+-	if (trigger_data->hw_control && !led_cdev->blink_set)
++	if (trigger_data->hw_control)
+ 		return -EINVAL;
+ 
+ 	ret = kstrtoul(buf, 0, &value);
+@@ -472,13 +466,9 @@ static ssize_t interval_store(struct dev
+ 
+ 	/* impose some basic bounds on the timer interval */
+ 	if (value >= 5 && value <= 10000) {
+-		if (trigger_data->hw_control) {
+-			trigger_data->blink_delay = value;
+-		} else {
+-			cancel_delayed_work_sync(&trigger_data->work);
++		cancel_delayed_work_sync(&trigger_data->work);
+ 
+-			atomic_set(&trigger_data->interval, msecs_to_jiffies(value));
+-		}
++		atomic_set(&trigger_data->interval, msecs_to_jiffies(value));
+ 		set_baseline_state(trigger_data);	/* resets timer */
+ 	}
+ 
 
 
