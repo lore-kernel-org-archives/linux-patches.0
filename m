@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95B7322524;
-	Mon, 18 Aug 2025 13:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421A2322524;
+	Mon, 18 Aug 2025 13:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523068; cv=none; b=CNPlEJtcbhTeA1Nmv3TQJgv5Q2uxpvs+yyjRjZ6ZROZxyM8Hg6D3xT7SL5PvWdXjNrtOZR+5A5f2X93vE1FSO4CEC+6q6cTeFntLQeEq1anMuT7y3pMbQYbPI8YpT6Pog4WyLnYkOYCwq52nYjWUdhTdpeuuTvCihcVr6gicbLo=
+	t=1755523072; cv=none; b=MDkfmNIGkgeDyKbvYV8cgd2P71caEY/+58Pb/A8yLtwEh/pyP/IAO9bM7EZlGCNMBO9HRxJK4Gt5Y1DZu/FTxqOy15XXaoz0iE1r4uEHGFB61rI3pizVcqtmWiU5hYjUDTd29oKX71cLJCbJC5OA6WzsSH24lQFLMdHKJjzQd4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523068; c=relaxed/simple;
-	bh=FoQlQB5WjUhC0B04GtlLDxaX2gmcmL/yGFzWIxNg1fo=;
+	s=arc-20240116; t=1755523072; c=relaxed/simple;
+	bh=E/nIv9U7dyBInUs9ktNzuWz1/gLxS/1lU4Z8SUy5ZfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKLLFrGwG4oeYk3HPnohjZFrbdEjNNu4tzsIgTbES3xWXX/t045r3dJLUQXSefNNCUkYnUBv4d8VUrxEh+cTn8KddWI11jxOQ0QIbKpcn/xbuw9lIgIf70XbQbkUbTiQ/xvq50wD+eMrnJO2f4MuNyhyjUFyevGuCgjITvn5/tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvDY2cYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AhQtKMdVj0xbuqxxIuONE9o6XBCu2qMvr5h1rQ+ZIooXXG4poa4q2YX34Pk7uFscfgmKpkw2s5n4Cnx56Z5iPSLRvvAxdTUd7PvKXs5Ls/bZoqfMdv1uLzyYlgkoqf1cmVby7qAWiKCFbr9EVOWRgWr/PaR2uUH8e7KxsA5nnXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPxHDPz3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvDY2cYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5DFC4CEEB;
-	Mon, 18 Aug 2025 13:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPxHDPz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A8DC113D0;
+	Mon, 18 Aug 2025 13:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523068;
-	bh=FoQlQB5WjUhC0B04GtlLDxaX2gmcmL/yGFzWIxNg1fo=;
+	s=korg; t=1755523072;
+	bh=E/nIv9U7dyBInUs9ktNzuWz1/gLxS/1lU4Z8SUy5ZfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvDY2cYqL/+DKifFzsBJBC6kLwGObj+WsENFuOlx9LJpuLVHqqBMrwMEBK8ktGrYh
-	 SOzoVo1clNc66z0JEfE7I/IFbSD6W49t7sYgS0UumbEEwSv2CDPswgjUFGl7Iv4tae
-	 QoH1yoEBYP0T/izne+eJawf9F117c689JBIdR6Tc=
+	b=mPxHDPz3lf/mzEm+73h9xxq1uk2Af0Id2RC85UwOHsTZCV2YeyDAoZQjjapBMF+Yf
+	 h4TxsM7oweIgNIQ3pDT+b662x7SssBYBVYuRSKpNbdGgWEorN08AjiZwoq8VsQ97Px
+	 8USAuy2AxfelPG+0HrRyyVAsnY8I3IZMT8lRZOK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 062/515] net: hibmcge: fix the np_link_fail error reporting issue
-Date: Mon, 18 Aug 2025 14:40:48 +0200
-Message-ID: <20250818124500.797591472@linuxfoundation.org>
+Subject: [PATCH 6.15 063/515] net: ti: icssg-prueth: Fix emac link speed handling
+Date: Mon, 18 Aug 2025 14:40:49 +0200
+Message-ID: <20250818124500.834119196@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,66 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: MD Danish Anwar <danishanwar@ti.com>
 
-[ Upstream commit 62c50180ffda01468e640ac14925503796f255e2 ]
+[ Upstream commit 06feac15406f4f66f4c0c6ea60b10d44775d4133 ]
 
-Currently, after modifying device port mode, the np_link_ok state
-is immediately checked. At this point, the device may not yet ready,
-leading to the querying of an intermediate state.
+When link settings are changed emac->speed is populated by
+emac_adjust_link(). The link speed and other settings are then written into
+the DRAM. However if both ports are brought down after this and brought up
+again or if the operating mode is changed and a firmware reload is needed,
+the DRAM is cleared by icssg_config(). As a result the link settings are
+lost.
 
-This patch will poll to check if np_link is ok after
-modifying device port mode, and only report np_link_fail upon timeout.
+Fix this by calling emac_adjust_link() after icssg_config(). This re
+populates the settings in the DRAM after a new firmware load.
 
-Fixes: e0306637e85d ("net: hibmcge: Add support for mac link exception handling feature")
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 9facce84f406 ("net: ti: icssg-prueth: Fix firmware load sequence.")
+Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Message-ID: <20250805173812.2183161-1-danishanwar@ti.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hibmcge/hbg_hw.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ti/icssg/icssg_prueth.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hibmcge/hbg_hw.c b/drivers/net/ethernet/hisilicon/hibmcge/hbg_hw.c
-index 9b65eef62b3f..2844124f306d 100644
---- a/drivers/net/ethernet/hisilicon/hibmcge/hbg_hw.c
-+++ b/drivers/net/ethernet/hisilicon/hibmcge/hbg_hw.c
-@@ -12,6 +12,8 @@
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+index 2f5c4335dec3..008d77727400 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+@@ -50,6 +50,8 @@
+ /* CTRLMMR_ICSSG_RGMII_CTRL register bits */
+ #define ICSSG_CTRL_RGMII_ID_MODE                BIT(24)
  
- #define HBG_HW_EVENT_WAIT_TIMEOUT_US	(2 * 1000 * 1000)
- #define HBG_HW_EVENT_WAIT_INTERVAL_US	(10 * 1000)
-+#define HBG_MAC_LINK_WAIT_TIMEOUT_US	(500 * 1000)
-+#define HBG_MAC_LINK_WAIT_INTERVAL_US	(5 * 1000)
- /* little endian or big endian.
-  * ctrl means packet description, data means skb packet data
-  */
-@@ -213,6 +215,9 @@ void hbg_hw_fill_buffer(struct hbg_priv *priv, u32 buffer_dma_addr)
- 
- void hbg_hw_adjust_link(struct hbg_priv *priv, u32 speed, u32 duplex)
- {
-+	u32 link_status;
-+	int ret;
++static void emac_adjust_link(struct net_device *ndev);
 +
- 	hbg_hw_mac_enable(priv, HBG_STATUS_DISABLE);
+ static int emac_get_tx_ts(struct prueth_emac *emac,
+ 			  struct emac_tx_ts_response *rsp)
+ {
+@@ -266,6 +268,10 @@ static int prueth_emac_common_start(struct prueth *prueth)
+ 		ret = icssg_config(prueth, emac, slice);
+ 		if (ret)
+ 			goto disable_class;
++
++		mutex_lock(&emac->ndev->phydev->lock);
++		emac_adjust_link(emac->ndev);
++		mutex_unlock(&emac->ndev->phydev->lock);
+ 	}
  
- 	hbg_reg_write_field(priv, HBG_REG_PORT_MODE_ADDR,
-@@ -224,8 +229,14 @@ void hbg_hw_adjust_link(struct hbg_priv *priv, u32 speed, u32 duplex)
- 
- 	hbg_hw_mac_enable(priv, HBG_STATUS_ENABLE);
- 
--	if (!hbg_reg_read_field(priv, HBG_REG_AN_NEG_STATE_ADDR,
--				HBG_REG_AN_NEG_STATE_NP_LINK_OK_B))
-+	/* wait MAC link up */
-+	ret = readl_poll_timeout(priv->io_base + HBG_REG_AN_NEG_STATE_ADDR,
-+				 link_status,
-+				 FIELD_GET(HBG_REG_AN_NEG_STATE_NP_LINK_OK_B,
-+					   link_status),
-+				 HBG_MAC_LINK_WAIT_INTERVAL_US,
-+				 HBG_MAC_LINK_WAIT_TIMEOUT_US);
-+	if (ret)
- 		hbg_np_link_fail_task_schedule(priv);
- }
- 
+ 	ret = prueth_emac_start(prueth);
 -- 
 2.50.1
 
