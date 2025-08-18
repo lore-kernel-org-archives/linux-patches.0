@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B330831E115;
-	Mon, 18 Aug 2025 13:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0B631E0F8;
+	Mon, 18 Aug 2025 13:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523505; cv=none; b=r/PKvXPV7FzboK+qt/P7S4pF9o8xMHswjatOfWo0nS1tgYBB7byjGU4R+0nR+qpPODLusI4aG0pvlKICVoG6HbJgAXn1OOlZBkPzuohxfq6gN+61fT4FVjxLrhIrVL5BCJ9M1fGMJCL6YTUuStV9kDEjSo5k1+yTZCK1ZyV2jJQ=
+	t=1755523509; cv=none; b=RWke9mZxuCVOk10SV3/u50mY9Y5dKDJQ+vlX0tVLWf/EFNpt2uBpdbPIxjA7EBV3FLupVcFyeib5tuS0AG0YJ0jeq5fmBoFNBn8jA/6iPsYQ/ofx9VaIoNNXE5FExH6VQM3NKs1epTpbO18WYcOLSWcjeJV+l7VcBsubpYSKqEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523505; c=relaxed/simple;
-	bh=VUVqEprVUvxw5i1w3KLvsXgE2aDsSAbJ/e26oYqM8vg=;
+	s=arc-20240116; t=1755523509; c=relaxed/simple;
+	bh=kOSOChCC8tM5OJQERktW+HN6oZRRawpsJ+Rkj9bt1i0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fw4BRMuHP2WbUpNtzJoDwZZ5bLgwsTFgBBRMQ6eXnW7Gqng5tXCgZb1dDqs8hPz2s0Gu2tQZOiae0kJ2SnYR070xq3Lc+0dLKNyr1wH6H6sviuwiwwPMbC3PuBISKOKIEKUBcT96PkVpqS+emselKHDygYzPU7y9R1TK8QMrbQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSMUMoQl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=be84PIBx3V39Nuj5L2yvuUYMY97W4Pxo8g9r2gRT1+fq6eSWVKuPYEhpNoyN1tSA92X0NmiJlsYZdK0LWHrv5LSuKbW8BKvNsObUPabdpKd92g1HsVEAfuQX+axxCGytlGJ27R+1Qxe36if0gnUcd+MpAKq7YCw46Iq+KwpVV4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I79Dh0s3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSMUMoQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21183C4CEEB;
-	Mon, 18 Aug 2025 13:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I79Dh0s3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE832C4CEEB;
+	Mon, 18 Aug 2025 13:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523505;
-	bh=VUVqEprVUvxw5i1w3KLvsXgE2aDsSAbJ/e26oYqM8vg=;
+	s=korg; t=1755523509;
+	bh=kOSOChCC8tM5OJQERktW+HN6oZRRawpsJ+Rkj9bt1i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSMUMoQl0l5S4pNgrLm5rftw5/vZYiL9YxUWjRY282m8OPfb6LW/hVnpvootrR2OL
-	 Qs6AsYNZJtVNVDUH98x6/CAHROAind9m/Ptarms5JubsddbdIGU4UWY+jqluiXeVhU
-	 YqXxGCe0fJda3fBGndoXvndiqXo6rdR304Hle7/o=
+	b=I79Dh0s37tl9KRFvgfjcDbf/V04nT55yQhEXsTW0IU7ZLP4/VNCGPRT/QEchIgsAO
+	 pZuem7YzqsQxsTSohiayJ/9ULDwx0BUeYkDI+TJ4/9sozioPetJgMUEm7fSVHR7SLd
+	 2fm8dvars3yvVet0l5a71cxAEKXB754YNodrIJ2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliav Farber <farbere@amazon.com>,
+	GalaxySnail <me@glxys.nl>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 159/515] pps: clients: gpio: fix interrupt handling order in remove path
-Date: Mon, 18 Aug 2025 14:42:25 +0200
-Message-ID: <20250818124504.505903853@linuxfoundation.org>
+Subject: [PATCH 6.15 150/515] ALSA: hda: add MODULE_FIRMWARE for cs35l41/cs35l56
+Date: Mon, 18 Aug 2025 14:42:16 +0200
+Message-ID: <20250818124504.157767210@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,56 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eliav Farber <farbere@amazon.com>
+From: GalaxySnail <me@glxys.nl>
 
-[ Upstream commit 6bca1e955830808dc90e0506b2951b4256b81bbb ]
+[ Upstream commit 6eda9429501508196001845998bb8c73307d311a ]
 
-The interrupt handler in pps_gpio_probe() is registered after calling
-pps_register_source() using devm_request_irq(). However, in the
-corresponding remove function, pps_unregister_source() is called before
-the IRQ is freed, since devm-managed resources are released after the
-remove function completes.
+add firmware information in the .modinfo section, so that userspace
+tools can find out firmware required by cs35l41/cs35l56 kernel module
 
-This creates a potential race condition where an interrupt may occur
-after the PPS source is unregistered but before the handler is removed,
-possibly leading to a kernel panic.
-
-To prevent this, switch from devm-managed IRQ registration to manual
-management by using request_irq() and calling free_irq() explicitly in
-the remove path before unregistering the PPS source. This ensures the
-interrupt handler is safely removed before deactivating the PPS source.
-
-Signed-off-by: Eliav Farber <farbere@amazon.com>
-Link: https://lore.kernel.org/r/20250527053355.37185-1-farbere@amazon.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: GalaxySnail <me@glxys.nl>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250624101716.2365302-2-me@glxys.nl
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps-gpio.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/pci/hda/cs35l41_hda.c | 2 ++
+ sound/pci/hda/cs35l56_hda.c | 4 ++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-index 374ceefd6f2a..2866636b0554 100644
---- a/drivers/pps/clients/pps-gpio.c
-+++ b/drivers/pps/clients/pps-gpio.c
-@@ -210,8 +210,8 @@ static int pps_gpio_probe(struct platform_device *pdev)
- 	}
- 
- 	/* register IRQ interrupt handler */
--	ret = devm_request_irq(dev, data->irq, pps_gpio_irq_handler,
--			get_irqf_trigger_flags(data), data->info.name, data);
-+	ret = request_irq(data->irq, pps_gpio_irq_handler,
-+			  get_irqf_trigger_flags(data), data->info.name, data);
- 	if (ret) {
- 		pps_unregister_source(data->pps);
- 		dev_err(dev, "failed to acquire IRQ %d\n", data->irq);
-@@ -228,6 +228,7 @@ static void pps_gpio_remove(struct platform_device *pdev)
- {
- 	struct pps_gpio_device_data *data = platform_get_drvdata(pdev);
- 
-+	free_irq(data->irq, data);
- 	pps_unregister_source(data->pps);
- 	timer_delete_sync(&data->echo_timer);
- 	/* reset echo pin in any case */
+diff --git a/sound/pci/hda/cs35l41_hda.c b/sound/pci/hda/cs35l41_hda.c
+index 5dc021976c79..4397630496fd 100644
+--- a/sound/pci/hda/cs35l41_hda.c
++++ b/sound/pci/hda/cs35l41_hda.c
+@@ -2060,3 +2060,5 @@ MODULE_IMPORT_NS("SND_SOC_CS_AMP_LIB");
+ MODULE_AUTHOR("Lucas Tanure, Cirrus Logic Inc, <tanureal@opensource.cirrus.com>");
+ MODULE_LICENSE("GPL");
+ MODULE_IMPORT_NS("FW_CS_DSP");
++MODULE_FIRMWARE("cirrus/cs35l41-*.wmfw");
++MODULE_FIRMWARE("cirrus/cs35l41-*.bin");
+diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
+index c9c8ec8d2474..7e92ad955e78 100644
+--- a/sound/pci/hda/cs35l56_hda.c
++++ b/sound/pci/hda/cs35l56_hda.c
+@@ -1178,3 +1178,7 @@ MODULE_IMPORT_NS("SND_SOC_CS_AMP_LIB");
+ MODULE_AUTHOR("Richard Fitzgerald <rf@opensource.cirrus.com>");
+ MODULE_AUTHOR("Simon Trimmer <simont@opensource.cirrus.com>");
+ MODULE_LICENSE("GPL");
++MODULE_FIRMWARE("cirrus/cs35l54-*.wmfw");
++MODULE_FIRMWARE("cirrus/cs35l54-*.bin");
++MODULE_FIRMWARE("cirrus/cs35l56-*.wmfw");
++MODULE_FIRMWARE("cirrus/cs35l56-*.bin");
 -- 
 2.39.5
 
