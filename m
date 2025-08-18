@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FFD3218C0;
-	Mon, 18 Aug 2025 12:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698E43218CA;
+	Mon, 18 Aug 2025 12:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521955; cv=none; b=eucjrSIhxbD60EyE7O99qx/jzo8wANmsbSUAZBJKrONM7YYYHpahyJpfTLQ37987dSYUyNriYK3RxF6qYq8LPA09lZQ0F2NfGzPpZ3312F7Pmzah0OKlIKVOMm0ReH0SfvtOT3ajcQHR1RlQxCWKfsXcFQGkenLMpJNaGwh+SSw=
+	t=1755521957; cv=none; b=gxxWgDTFIg20zCD+yqdSYD+kba3y1FkLxhKM9dbpX/5Hpjg9TIguPSQRCKOZ79nU6GkeY7Hxx9FA0TDaSs8yKegnHzYHe4yoiOCaoJK3F5+TV7u7M85rbwXtUquHUkGCK9DB4/BsXz26iJuAR+XCm0V3e4AAAwsVLNb1u0woG8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521955; c=relaxed/simple;
-	bh=jIvBrziNHucdzVipQsLJcmm7Y1Q2wKGF9RJzoLBORwA=;
+	s=arc-20240116; t=1755521957; c=relaxed/simple;
+	bh=9pLd7l8wjASEZJIApjWK+J60zhabCydcVNdxiecU6Kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nfN+tZs9/RAgXiTbgfvcx6WTSH8U07cH8tKN6Arnivh9KkqibtW915I3L/WaR/ZejcaIgVHMOMdFBradJ7zHntyBp4nBpykD506qNzGxl6xQDY3zjUfI789jpheThKFr/NSLUzxcUJzNEQmb+mSItTHAvk0xf1x8AQRWUGMTAKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ij10vzHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avcoXRif7BIk7Tm4qrOlqGjiHcvxARxTggagonQQANLyyzcy8lBT0OGLkcNxbPIlHqr0vs2dISnmmXPmCSS/nhktwUgGxMsU1l5dqLGKGSHGLJcq0S+52GKRoyLGHpJImquHWLY8j+9RsNjEyxpxqBhsvvgRUAssmVc+FRBE81Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJ+XEV6x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ij10vzHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EE7C4CEEB;
-	Mon, 18 Aug 2025 12:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJ+XEV6x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F83AC4CEEB;
+	Mon, 18 Aug 2025 12:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521953;
-	bh=jIvBrziNHucdzVipQsLJcmm7Y1Q2wKGF9RJzoLBORwA=;
+	s=korg; t=1755521957;
+	bh=9pLd7l8wjASEZJIApjWK+J60zhabCydcVNdxiecU6Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ij10vzHAFgxyiRCbd7A8us5rRMIfBh38X7NcZ/DI7JwB4m5PIYMZPBSYKk9S/S4hS
-	 Twi0tt+uCJt1anZaAUExkxMEd+OcDVScBcVegZsD1chtLxIp4HV5dxz0Iu4rVxjs37
-	 dTP4DvBPn8M7W0iQTTXReAcE7sIVw26AUioMOt0E=
+	b=lJ+XEV6xpXfUZ42B/UkTFFKeSGgUL20juE4HFSaQ6NH46IJ0BnplXPR/PQ1oZKqjC
+	 wHqVJ3+iQtEhSMyJXXeUHtlB+KhtYE6CwhcZLslJKd+RlBaGJ+dM8rGWsFq2lH++uC
+	 yP9m2AlwUubtmKWx6BJSQneYkj5V2LVBvNE8XCvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"John Warthog9 Hawley" <warthog9@kernel.org>,
-	Dhaval Giani <dhaval.giani@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 171/444] ktest.pl: Prevent recursion of default variable options
-Date: Mon, 18 Aug 2025 14:43:17 +0200
-Message-ID: <20250818124455.296568391@linuxfoundation.org>
+Subject: [PATCH 6.12 172/444] wifi: cfg80211: reject HTC bit for management frames
+Date: Mon, 18 Aug 2025 14:43:18 +0200
+Message-ID: <20250818124455.333850594@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,60 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 61f7e318e99d3b398670518dd3f4f8510d1800fc ]
+[ Upstream commit be06a8c7313943109fa870715356503c4c709cbc ]
 
-If a default variable contains itself, do not recurse on it.
+Management frames sent by userspace should never have the
+order/HTC bit set, reject that. It could also cause some
+confusion with the length of the buffer and the header so
+the validation might end up wrong.
 
-For example:
-
-  ADD_CONFIG := ${CONFIG_DIR}/temp_config
-  DEFAULTS
-  ADD_CONFIG = ${CONFIG_DIR}/default_config ${ADD_CONFIG}
-
-The above works because the temp variable ADD_CONFIG (is a temp because it
-is created with ":=") is already defined, it will be substituted in the
-variable option. But if it gets commented out:
-
-  # ADD_CONFIG := ${CONFIG_DIR}/temp_config
-  DEFAULTS
-  ADD_CONFIG = ${CONFIG_DIR}/default_config ${ADD_CONFIG}
-
-Then the above will go into a recursive loop where ${ADD_CONFIG} will
-get replaced with the current definition of ADD_CONFIG which contains the
-${ADD_CONFIG} and that will also try to get converted. ktest.pl will error
-after 100 attempts of recursion and fail.
-
-When replacing a variable with the default variable, if the default
-variable contains itself, do not replace it.
-
-Cc: "John Warthog9 Hawley" <warthog9@kernel.org>
-Cc: Dhaval Giani <dhaval.giani@gmail.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/20250718202053.732189428@kernel.org
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20250718202307.97a0455f0f35.I1805355c7e331352df16611839bc8198c855a33f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/wireless/mlme.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index 7e524601e01a..bad227ee1b5b 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -1371,7 +1371,10 @@ sub __eval_option {
- 	# If a variable contains itself, use the default var
- 	if (($var eq $name) && defined($opt{$var})) {
- 	    $o = $opt{$var};
--	    $retval = "$retval$o";
-+	    # Only append if the default doesn't contain itself
-+	    if ($o !~ m/\$\{$var\}/) {
-+		$retval = "$retval$o";
-+	    }
- 	} elsif (defined($opt{$o})) {
- 	    $o = $opt{$o};
- 	    $retval = "$retval$o";
+diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
+index a5eb92d93074..d1a66410b9c5 100644
+--- a/net/wireless/mlme.c
++++ b/net/wireless/mlme.c
+@@ -843,7 +843,8 @@ int cfg80211_mlme_mgmt_tx(struct cfg80211_registered_device *rdev,
+ 
+ 	mgmt = (const struct ieee80211_mgmt *)params->buf;
+ 
+-	if (!ieee80211_is_mgmt(mgmt->frame_control))
++	if (!ieee80211_is_mgmt(mgmt->frame_control) ||
++	    ieee80211_has_order(mgmt->frame_control))
+ 		return -EINVAL;
+ 
+ 	stype = le16_to_cpu(mgmt->frame_control) & IEEE80211_FCTL_STYPE;
 -- 
 2.39.5
 
