@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCC5335BD6;
-	Mon, 18 Aug 2025 13:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29087335BDD;
+	Mon, 18 Aug 2025 13:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523244; cv=none; b=BR07E1lUD0JYhBc0CvbMY6lFNsmiMP5pctva5U6oPLNxo6tdBubUJ2pdUewC3FSOUeDymwMQNfGHtYbdk021WCPKXQb9dKCn9+y6TDLfSCG/MLXSsfwQXGdDIVjlaTYfUKaXmVCJssrHBJzWX36XKxkTbj+SSj0fV6Y5NW2fO+8=
+	t=1755523247; cv=none; b=szDE7+e9ki7eLBMd8j52oLTS+0/jtx5ZxYVou2+CXMcEmw/+plHcatHruKr8jXxzrypXG0fcWxpZqtNIyvi/R3i/pGmhpoUmLveS1H4KwmK8RdNjfmg76lnCQN+EzQAxcPp/hvcHDIXmdzkkfbQr9gwwBAFdYS2u9jur+MFkAG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523244; c=relaxed/simple;
-	bh=rDmwndWNjmpZkeDs0sRpHuxQzLJVQcJ0EZa9mGM5SXU=;
+	s=arc-20240116; t=1755523247; c=relaxed/simple;
+	bh=Y2GP4WYfTlakUBxbe1XO2TPJrY7kfewTZlU8i9nE3kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4QfoJkVs9YXhXMew4yNUykYGYEwEJZbHsxOELV/F17YfOk82Ab8glXlxD3/4Il2Ll8UCk2K+RSzlWkgTLTvzsCJNAgoIfdqAate9Xj1Sc7erR5KfYj4kR/1TS6poLjIu/rM7MGJOaBy06CpTDwxtk7U7uILbaDQnWJSgByAz7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwiu8uIA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r27KHsPGVk8ENvpplBkDI0GGtjq4CzIXkDKNv8CSdlYHhVCvZngP5r0di34+wzeh7p3coDXIOy5bKS4T2Pgh9RMDFiQ2XcqHaAq+6bE9GBeeuMADyf87Na1so0EQhfkcMdJSw7m+Sc9l4mAid6SUdevH6AHGrVy2Ykx58ak1CDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+xGBjRx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwiu8uIA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D179C4CEEB;
-	Mon, 18 Aug 2025 13:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+xGBjRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4D4C4CEEB;
+	Mon, 18 Aug 2025 13:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523243;
-	bh=rDmwndWNjmpZkeDs0sRpHuxQzLJVQcJ0EZa9mGM5SXU=;
+	s=korg; t=1755523247;
+	bh=Y2GP4WYfTlakUBxbe1XO2TPJrY7kfewTZlU8i9nE3kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bwiu8uIAh30jE2Bm7xSoIsL7/22fB29iFzo6Zcm81fLSNFzsj86Q1yeH0eYFWBP9+
-	 ThRughGYymB/t0sKQTxC0acG/v2ddAts2LfH1eGIbHmKEvAe5UBE163CWuikkkWWAE
-	 QiwLigFF7EDT/nXZF/VslN9HYTgnbKlVGzq/3JmY=
+	b=i+xGBjRxnijCbaNWyDbViOXPPbSr57KNrWCkvbAXD+tWrPF9JPEI+iAP4trhwc2ga
+	 dlGLNFT1BJqsko+2vxXsmua0sZdDuyeWqFTHqo4tSWWZ2Yew809GSEtGW6aHsmGh9h
+	 IjXsYf4S36YALi9N+v0C53FWz7BtRttjopeCgP0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
+	Dave Penkler <dpenkler@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 112/515] usb: xhci: print xhci->xhc_state when queue_command failed
-Date: Mon, 18 Aug 2025 14:41:38 +0200
-Message-ID: <20250818124502.666678887@linuxfoundation.org>
+Subject: [PATCH 6.15 113/515] staging: gpib: Add init response codes for new ni-usb-hs+
+Date: Mon, 18 Aug 2025 14:41:39 +0200
+Message-ID: <20250818124502.704153568@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,40 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit 7919407eca2ef562fa6c98c41cfdf6f6cdd69d92 ]
+[ Upstream commit f50d5e0c1f80d004510bf77cb0e1759103585c00 ]
 
-When encounters some errors like these:
-xhci_hcd 0000:4a:00.2: xHCI dying or halted, can't queue_command
-xhci_hcd 0000:4a:00.2: FIXME: allocate a command ring segment
-usb usb5-port6: couldn't allocate usb_device
+A new version of a bona fide genuine NI-USB-HS+ adaptor
+sends new response codes to the initialization sequence.
 
-It's hard to know whether xhc_state is dying or halted. So it's better
-to print xhc_state's value which can help locate the resaon of the bug.
+Add the checking for these response codes to suppress
+console warning messages.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20250725060117.1773770-1-suhui@nfschina.com
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250722164810.2621-1-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/staging/gpib/ni_usb/ni_usb_gpib.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index b720e04ce7d8..8be033f1877d 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -4337,7 +4337,8 @@ static int queue_command(struct xhci_hcd *xhci, struct xhci_command *cmd,
- 
- 	if ((xhci->xhc_state & XHCI_STATE_DYING) ||
- 		(xhci->xhc_state & XHCI_STATE_HALTED)) {
--		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command\n");
-+		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command. state: 0x%x\n",
-+			 xhci->xhc_state);
- 		return -ESHUTDOWN;
- 	}
- 
+diff --git a/drivers/staging/gpib/ni_usb/ni_usb_gpib.c b/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
+index 9f1b9927f025..56d3b62249b8 100644
+--- a/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
++++ b/drivers/staging/gpib/ni_usb/ni_usb_gpib.c
+@@ -2069,10 +2069,10 @@ static int ni_usb_hs_wait_for_ready(struct ni_usb_priv *ni_priv)
+ 		}
+ 		if (buffer[++j] != 0x0) { // [6]
+ 			ready = 1;
+-			// NI-USB-HS+ sends 0xf here
++			// NI-USB-HS+ sends 0xf or 0x19 here
+ 			if (buffer[j] != 0x2 && buffer[j] != 0xe && buffer[j] != 0xf &&
+-			    buffer[j] != 0x16)	{
+-				dev_err(&usb_dev->dev, "unexpected data: buffer[%i]=0x%x, expected 0x2, 0xe, 0xf or 0x16\n",
++			    buffer[j] != 0x16 && buffer[j] != 0x19) {
++				dev_err(&usb_dev->dev, "unexpected data: buffer[%i]=0x%x, expected 0x2, 0xe, 0xf, 0x16 or 0x19\n",
+ 					j, (int)buffer[j]);
+ 				unexpected = 1;
+ 			}
+@@ -2100,11 +2100,11 @@ static int ni_usb_hs_wait_for_ready(struct ni_usb_priv *ni_priv)
+ 				j, (int)buffer[j]);
+ 			unexpected = 1;
+ 		}
+-		if (buffer[++j] != 0x0) {
++		if (buffer[++j] != 0x0) { // [10] MC usb-488 sends 0x7 here, new HS+ sends 0x59
+ 			ready = 1;
+-			if (buffer[j] != 0x96 && buffer[j] != 0x7 && buffer[j] != 0x6e) {
+-// [10] MC usb-488 sends 0x7 here
+-				dev_err(&usb_dev->dev, "unexpected data: buffer[%i]=0x%x, expected 0x96, 0x07 or 0x6e\n",
++			if (buffer[j] != 0x96 && buffer[j] != 0x7 && buffer[j] != 0x6e &&
++			    buffer[j] != 0x59) {
++				dev_err(&usb_dev->dev, "unexpected data: buffer[%i]=0x%x, expected 0x96, 0x07, 0x6e or 0x59\n",
+ 					j, (int)buffer[j]);
+ 				unexpected = 1;
+ 			}
 -- 
 2.39.5
 
