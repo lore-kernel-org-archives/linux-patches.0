@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A2533A006;
-	Mon, 18 Aug 2025 14:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C62B33A003;
+	Mon, 18 Aug 2025 14:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526344; cv=none; b=q/cybdcs64rlx+if1YgiJ9jEQA1I4AU51Mf4V/i+laE8oH7jGqREbOiU2NRJotFJBjVISYsyoBu/K4O0YskoLN516kVbxajfAfD8/TVTNysG+2fsE9+W1gWOv9kyiegQQ6pJUc82ygkKBW/GFZRULBEHS0Q34fBK8sj8JuwtAek=
+	t=1755526348; cv=none; b=XS/YiQv56N3gMbb/RoBdJXTuWEBRltrXue6yf4r0cHi8MjdF3G8NTZXHq8qfa5mqDK1rct0H1FxQtCDCZiKVTiBCQAL/fiRn2r4/JAVSre6rib7p1OsLZWF96RyoQzCBViAkuBTDdQxJ3vT252lvfx2UdxoC+HYuxcZtZ4eh7us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526344; c=relaxed/simple;
-	bh=wL6tq3OwmkJs1GCPJyqku1Vi8xW431JbpKm5yZufLHY=;
+	s=arc-20240116; t=1755526348; c=relaxed/simple;
+	bh=avOG1FdYDo57siB0EhWDdC3qYwooXjcLGZcCQkiwDgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHUrmVKhI+dwhIQbcawo2gu9r2pi97TL5JFQedMkRkTz3SDaMM+3zhahUd/JXm4k0T0mnd9qqqeMjLi2qRY48lfxFLL/MLNDaxwyGA5JWUotfMLLNMqGQICFf/ikNyRqLg0FUfhMj9Tzs/ocG+Ifj93TU/zjHdAq/YunOWz0Uxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKisG82Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyjTcMHhca9HDirsIlxugB3kPpbff+DIkdw8dRmXUXl7Dkoutx45epnFuvu0HBw2u99QQITNx9ziQLiFU8hKcBNJjCLkD5Ez0iFg93cQmrEhitJF/L+a8m8wPZmqqGJCEUZ/X+V1h8cwJoKEc4bfPSvErQpUYTLfbJe38KM6vnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1R/ZoD+u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKisG82Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F739C4CEEB;
-	Mon, 18 Aug 2025 14:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1R/ZoD+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8412C116C6;
+	Mon, 18 Aug 2025 14:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526344;
-	bh=wL6tq3OwmkJs1GCPJyqku1Vi8xW431JbpKm5yZufLHY=;
+	s=korg; t=1755526348;
+	bh=avOG1FdYDo57siB0EhWDdC3qYwooXjcLGZcCQkiwDgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKisG82YGoZVPG2uxYa+BFMzBUJoCOC8PbYY2rYxQtMl1s1ueDgej5Xp9yxKNqb5c
-	 IyYNWShJ6zUrFqrBXsBtS8ksP7Ppr+JbN20PIL881SID0qj+PNbt0/Bvb/++Q4dT40
-	 +ow6AQDTlPmSAHS7C3/LbuajS437XK82zelXLz9I=
+	b=1R/ZoD+uOd2Ot+kwaCYqCN+5X6vQQUJv2/vC7a7c2yGPxP5ovrWbxnX0hqy0dkRoW
+	 h2A5HAnNUHjPCPF0VoBj3cuq2xnq0So9vOA8rRTVGhJdyYg5nMLgZM6APGI90PlhKg
+	 IVg2Qgk5EHk1IaVdP3C3Yv98YYRhQlPJQgvYnCo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 529/570] btrfs: zoned: do not select metadata BG as finish target
-Date: Mon, 18 Aug 2025 14:48:36 +0200
-Message-ID: <20250818124526.244540547@linuxfoundation.org>
+Subject: [PATCH 6.16 530/570] btrfs: fix wrong length parameter for btrfs_cleanup_ordered_extents()
+Date: Mon, 18 Aug 2025 14:48:37 +0200
+Message-ID: <20250818124526.283431219@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,37 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 3a931e9b39c7ff8066657042f5f00d3b7e6ad315 upstream.
+commit deaf895212da74635a7f0a420e1ecf8f5eca1fe5 upstream.
 
-We call btrfs_zone_finish_one_bg() to zone finish one block group and make
-room to activate another block group. Currently, we can choose a metadata
-block group as a target. But, as we reserve an active metadata block group,
-we no longer want to select a metadata block group. So, skip it in the
-loop.
+Inside nocow_one_range(), if the checksum cloning for data reloc inode
+failed, we call btrfs_cleanup_ordered_extents() to cleanup the just
+allocated ordered extents.
 
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+But unlike extent_clear_unlock_delalloc(),
+btrfs_cleanup_ordered_extents() requires a length, not an inclusive end
+bytenr.
+
+This can be problematic, as the @end is normally way larger than @len.
+
+This means btrfs_cleanup_ordered_extents() can be called on folios
+out of the correct range, and if the out-of-range folio is under
+writeback, we can incorrectly clear the ordered flag of the folio, and
+trigger the DEBUG_WARN() inside btrfs_writepage_cow_fixup().
+
+Fix the wrong parameter with correct length instead.
+
+Fixes: 94f6c5c17e52 ("btrfs: move ordered extent cleanup to where they are allocated")
+CC: stable@vger.kernel.org # 6.15+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |    2 +-
+ fs/btrfs/inode.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2651,7 +2651,7 @@ int btrfs_zone_finish_one_bg(struct btrf
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -2010,7 +2010,7 @@ static int nocow_one_range(struct btrfs_
+ 	 * cleaered by the caller.
+ 	 */
+ 	if (ret < 0)
+-		btrfs_cleanup_ordered_extents(inode, file_pos, end);
++		btrfs_cleanup_ordered_extents(inode, file_pos, len);
+ 	return ret;
+ }
  
- 		spin_lock(&block_group->lock);
- 		if (block_group->reserved || block_group->alloc_offset == 0 ||
--		    (block_group->flags & BTRFS_BLOCK_GROUP_SYSTEM) ||
-+		    !(block_group->flags & BTRFS_BLOCK_GROUP_DATA) ||
- 		    test_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &block_group->runtime_flags)) {
- 			spin_unlock(&block_group->lock);
- 			continue;
 
 
