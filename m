@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A85A335BD7;
-	Mon, 18 Aug 2025 14:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF981225413;
+	Mon, 18 Aug 2025 14:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525638; cv=none; b=uXL+6GM/WV/+TusQoMQZW6LQgH4HM6FRRjvg5K2CNgmOF6R/gC/er+b0/jiPOiG4NrNIBfV6woGBfZEiSKUqAJpeObw8cSFybQj6uvFOccHb0D31AIhl8pY4qlCZhEfUm0FgNrxcnJmOdtMkN2jxZrq3HxnIQJmbVsE3LdvzYcE=
+	t=1755525641; cv=none; b=MB48uhW6iw0uy9yrJKC5qlUq95nof4gvqkOdJAI+x2OxaJOluCrFRKxZBal/z7lmpk0L+xhiB2vYUlqmPxbdyVBbLcZO+3IU3c6tUoMmhcsgg4fXYVRJ63NJ3Mg278j56hkxsH5dN4TrDkzgGvg3OkxxoEtECovHhA3LGaVUi+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525638; c=relaxed/simple;
-	bh=1QoSXvrDA4RFgF0RHXa7+Ez6KxI0N34XsxYxRYZ+wM4=;
+	s=arc-20240116; t=1755525641; c=relaxed/simple;
+	bh=yjiQmoJuv6gG4YDUnxLyWj7sEZbvusKoDr49Zu2Tb8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzotyX6YMSWI/TquL0HyJJsS+cgJlPA5fuMYyiktcHnQwHKLMWSadIEfh7tazd4ExOiapIqi4kjzNpxgKDU/fCRp9LZRL8TARowZ3xff0fNkLusY8J6I80kgLEl3Ol2pseD34KSI3jwbPyfbv8Vls6zD8TkWYMMXklvvAuEtXo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enOXr0Dh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DXlFuxZVQrkT6vz0TTdgpfe2ORkkQPP51Xl+aQzUXeiaG35ryCIY0R3vYkhhMOSOG3Ra/+3lrOmMOWKndLHmChJOhcfm31dUHAA1mAkOXTkm12f6MOmI7xa6O1siyT8O9fbgTDs5Ko2OvMPFkrCXRy9Gg0D06E7luwWiaW9Cna0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8nffxhM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enOXr0Dh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2089C4CEEB;
-	Mon, 18 Aug 2025 14:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8nffxhM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2428C4CEEB;
+	Mon, 18 Aug 2025 14:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525638;
-	bh=1QoSXvrDA4RFgF0RHXa7+Ez6KxI0N34XsxYxRYZ+wM4=;
+	s=korg; t=1755525641;
+	bh=yjiQmoJuv6gG4YDUnxLyWj7sEZbvusKoDr49Zu2Tb8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enOXr0DhhQngBdK16pnt++Z4A0SLl39mRZ0HKiTltfrAKTVCtVG2FAqOp2JhyYzE5
-	 5P/4lfhMIPEgxujKxV8yhFk4IpPOV+B+qbB3dH0xl5jKguz+fJvSLAmK4Hyxx4NNuX
-	 T00S7GPfPpm5AfSABWCeRU3STdG5ZwdfBRpaahak=
+	b=r8nffxhMa/4fRXXGgoCbMIqIjbrX+z6D22Yad4CP0+994mQZn6CyHb/RRgAXXtsty
+	 mDE+Ikcpnn3O9WZD8jCLz6NEPEE3JLckXIvduvEHpxWwZ6KgNvzyJp3k2e5miKMvSR
+	 6eCS2znCdqRJ8sdJiN7GNyZad7868YiCjx0UNqg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
-	Vicki Pfau <vi@endrift.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 323/570] drm/amd: Allow printing VanGogh OD SCLK levels without setting dpm to manual
-Date: Mon, 18 Aug 2025 14:45:10 +0200
-Message-ID: <20250818124518.300455727@linuxfoundation.org>
+Subject: [PATCH 6.16 306/570] wifi: iwlwifi: fw: Fix possible memory leak in iwl_fw_dbg_collect
+Date: Mon, 18 Aug 2025 14:44:53 +0200
+Message-ID: <20250818124517.664577835@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,85 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit 2d1ec1e955414e8e8358178011c35afca1a1c0b1 ]
+[ Upstream commit cc8d9cbf269dab363c768bfa9312265bc807fca5 ]
 
-Several other ASICs allow printing OD SCLK levels without setting DPM
-control to manual.  When OD is disabled it will show the range the
-hardware supports. When OD is enabled it will show what values have
-been programmed. Adjust VanGogh to work the same.
+Ensure descriptor is freed on error to avoid memory leak.
 
-Cc: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
-Reported-by: Vicki Pfau <vi@endrift.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20250609031227.479079-1-superm1@kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250611222325.8158d15ec866.Ifa3e422c302397111f20a16da7509e6574bc19e3@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c  | 37 ++++++++-----------
- 1 file changed, 15 insertions(+), 22 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-index a55ea76d7399..2c9869feba61 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-@@ -666,7 +666,6 @@ static int vangogh_print_clk_levels(struct smu_context *smu,
- {
- 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
- 	SmuMetrics_t metrics;
--	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
- 	int i, idx, size = 0, ret = 0;
- 	uint32_t cur_value = 0, value = 0, count = 0;
- 	bool cur_value_match_level = false;
-@@ -682,31 +681,25 @@ static int vangogh_print_clk_levels(struct smu_context *smu,
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index ea739ebe7cb0..95a732efce45 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -3008,6 +3008,7 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
+ 	struct iwl_fw_dump_desc *desc;
+ 	unsigned int delay = 0;
+ 	bool monitor_only = false;
++	int ret;
  
- 	switch (clk_type) {
- 	case SMU_OD_SCLK:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "%s:\n", "OD_SCLK");
--			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
--			(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
--			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
--			(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "%s:\n", "OD_SCLK");
-+		size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
-+		(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
-+		size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
-+		(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
- 		break;
- 	case SMU_OD_CCLK:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "CCLK_RANGE in Core%d:\n",  smu->cpu_core_id_select);
--			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
--			(smu->cpu_actual_soft_min_freq > 0) ? smu->cpu_actual_soft_min_freq : smu->cpu_default_soft_min_freq);
--			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
--			(smu->cpu_actual_soft_max_freq > 0) ? smu->cpu_actual_soft_max_freq : smu->cpu_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "CCLK_RANGE in Core%d:\n",  smu->cpu_core_id_select);
-+		size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
-+		(smu->cpu_actual_soft_min_freq > 0) ? smu->cpu_actual_soft_min_freq : smu->cpu_default_soft_min_freq);
-+		size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
-+		(smu->cpu_actual_soft_max_freq > 0) ? smu->cpu_actual_soft_max_freq : smu->cpu_default_soft_max_freq);
- 		break;
- 	case SMU_OD_RANGE:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
--			size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
--				smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
--			size += sysfs_emit_at(buf, size, "CCLK: %7uMhz %10uMhz\n",
--				smu->cpu_default_soft_min_freq, smu->cpu_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
-+		size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
-+			smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
-+		size += sysfs_emit_at(buf, size, "CCLK: %7uMhz %10uMhz\n",
-+			smu->cpu_default_soft_min_freq, smu->cpu_default_soft_max_freq);
- 		break;
- 	case SMU_SOCCLK:
- 		/* the level 3 ~ 6 of socclk use the same frequency for vangogh */
+ 	if (trigger) {
+ 		u16 occurrences = le16_to_cpu(trigger->occurrences) - 1;
+@@ -3038,7 +3039,11 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
+ 	desc->trig_desc.type = cpu_to_le32(trig);
+ 	memcpy(desc->trig_desc.data, str, len);
+ 
+-	return iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
++	ret = iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
++	if (ret)
++		kfree(desc);
++
++	return ret;
+ }
+ IWL_EXPORT_SYMBOL(iwl_fw_dbg_collect);
+ 
 -- 
 2.39.5
 
