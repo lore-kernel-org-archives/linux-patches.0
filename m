@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FAE321F4F;
-	Mon, 18 Aug 2025 13:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD344321F4C;
+	Mon, 18 Aug 2025 13:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523895; cv=none; b=dNdzzQlqKxR6bBkMiBcg1YiqMT2kyFWPqpyPO/7o1c32zQvoGU4xlZHv+a7LgkRjj56Ny6ayw4KbR80PO/PXwmUqx1JHBFx3E9VXutRBYfbBVQtMpxitu+WCXnVMSYTG5wBCQPwWGn+VjI03Vy7T5etR7B2quVceaRvhkKRoC1M=
+	t=1755523899; cv=none; b=g2uw1vmMT9DdrIqb/nMW/pXxuj/WR0dqPU89VqcGTMKy8x8K/W2fXKJEHt4l4xm5ZD0vLLJANSPFaXzRxr4guoiKw7oYjnmiqjn7IkWSuWNs6fJ0atC082YXfCbtBP3vsq45gBwKZvuhgfxyg1Q9vFvei7jDvqbj48n/FZWPnAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523895; c=relaxed/simple;
-	bh=1ODLFlbQSPf7nkhHubMoBHjHXjUWpgCfH+ymb4IZI28=;
+	s=arc-20240116; t=1755523899; c=relaxed/simple;
+	bh=HH025KR3pGHb3vnGNsnSP24NZcODR093oVwvk4KOK5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jm4glPMwVbz3Af8hVmLAtV9H22dQ5Dh2K6kMdZlpryFINsFhUaPSGK9Rb6aM5QRI3R+tIlCu2IglzAU1sXKBBaHDWkZEFqU2aUS30Vwr/3TQYVb8W6A6GpktLHyPT/v6InGvuEhJez59KvrzqHNGfShIM5jAV5Vpf92c+3lVFEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZPHg25w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VCT+uRYPLRBdHlFJdYc4yuauxAvmWKKxWfusyn7Tto/dy1Th+Gh/3whrYW4m/miFWmpaM779t+8th5nLdjHF0mmccAAEsa75wilh2AyjJNqy1M8q5lvnJ1y8bOZZM3wEkX0/osVIZcZcVN273ShQAUgdi9mYdWKpQDMRIWaIwNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJqxm+EP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZPHg25w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6539C4CEEB;
-	Mon, 18 Aug 2025 13:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJqxm+EP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F236C4CEF1;
+	Mon, 18 Aug 2025 13:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523895;
-	bh=1ODLFlbQSPf7nkhHubMoBHjHXjUWpgCfH+ymb4IZI28=;
+	s=korg; t=1755523898;
+	bh=HH025KR3pGHb3vnGNsnSP24NZcODR093oVwvk4KOK5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZPHg25wj1be3eT57Etp4325UVsUMwc0E9Bp0ugwy/4p2UndiJpXXY/Vm7DB6GpGf
-	 5HhL6k8vPOO3ghTey87OiJPwxCn+XzhvJsvDDiOqjaTYhwPa4hn36V9PAPJ6uXmoJ5
-	 13+RXZeXhobIg68k7yy3yXtvQt3APDUM/IkURXc8=
+	b=sJqxm+EPgCr3uMhk3e+/OSGqVG147ufuLl+iqQnHv6essHrFM1F3WPAiahHgfj59f
+	 ETnH3mlWzcppFuHSAiPU+eAguWAooEbhNZCVcw/RIihpdV2iuHTNqXhua91BfAFJky
+	 sERAjVzAyudpxpg3Np+jb/zZQxE2U20iAakrl/+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 306/515] net: dsa: b53: prevent DIS_LEARNING access on BCM5325
-Date: Mon, 18 Aug 2025 14:44:52 +0200
-Message-ID: <20250818124510.219743025@linuxfoundation.org>
+Subject: [PATCH 6.15 307/515] net: dsa: b53: prevent SWITCH_CTRL access on BCM5325
+Date: Mon, 18 Aug 2025 14:44:53 +0200
+Message-ID: <20250818124510.256111237@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -55,49 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 800728abd9f83bda4de62a30ce62a8b41c242020 ]
+[ Upstream commit 22ccaaca43440e90a3b68d2183045b42247dc4be ]
 
-BCM5325 doesn't implement DIS_LEARNING register so we should avoid reading
+BCM5325 doesn't implement SWITCH_CTRL register so we should avoid reading
 or writing it.
 
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Link: https://patch.msgid.link/20250614080000.1884236-10-noltari@gmail.com
+Link: https://patch.msgid.link/20250614080000.1884236-8-noltari@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/dsa/b53/b53_common.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 8abbcc588267..990d21fad939 100644
+index 990d21fad939..bb0a5fd6a372 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -583,6 +583,9 @@ static void b53_port_set_learning(struct b53_device *dev, int port,
- {
- 	u16 reg;
+@@ -361,11 +361,12 @@ static void b53_set_forwarding(struct b53_device *dev, int enable)
  
-+	if (is5325(dev))
-+		return;
-+
- 	b53_read16(dev, B53_CTRL_PAGE, B53_DIS_LEARNING, &reg);
- 	if (learning)
- 		reg &= ~BIT(port);
-@@ -2195,7 +2198,13 @@ int b53_br_flags_pre(struct dsa_switch *ds, int port,
- 		     struct switchdev_brport_flags flags,
- 		     struct netlink_ext_ack *extack)
- {
--	if (flags.mask & ~(BR_FLOOD | BR_MCAST_FLOOD | BR_LEARNING))
-+	struct b53_device *dev = ds->priv;
-+	unsigned long mask = (BR_FLOOD | BR_MCAST_FLOOD);
-+
-+	if (!is5325(dev))
-+		mask |= BR_LEARNING;
-+
-+	if (flags.mask & ~mask)
- 		return -EINVAL;
+ 	b53_write8(dev, B53_CTRL_PAGE, B53_SWITCH_MODE, mgmt);
  
- 	return 0;
+-	/* Include IMP port in dumb forwarding mode
+-	 */
+-	b53_read8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, &mgmt);
+-	mgmt |= B53_MII_DUMB_FWDG_EN;
+-	b53_write8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, mgmt);
++	if (!is5325(dev)) {
++		/* Include IMP port in dumb forwarding mode */
++		b53_read8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, &mgmt);
++		mgmt |= B53_MII_DUMB_FWDG_EN;
++		b53_write8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, mgmt);
++	}
+ 
+ 	/* Look at B53_UC_FWD_EN and B53_MC_FWD_EN to decide whether
+ 	 * frames should be flooded or not.
 -- 
 2.39.5
 
