@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58140321F4C;
-	Mon, 18 Aug 2025 13:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFA3322543;
+	Mon, 18 Aug 2025 13:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524188; cv=none; b=mik5UWTR5cDcEDENJA9PjgtlKtlQuLRF8bngMomOZuIIyEGU8GMH4Pl233d+yId2KTDBuL8jUfO3Cofm0+SKXkWZAbIXrXDKg2f4+ZVCZBbikH3pEbQZvwiaCEdHCv4zpPikDHhWV8P++6VfRCl1uTWMyZLDcmnrjwIh86CzHn8=
+	t=1755524191; cv=none; b=LFI0ddhUwO6go7qZ4eNbLCfc3ogx0Zh67izP2I6XEYETuelQJ8Tku0ID0tSQW99UDao0EoGNKCd/d+ik5xF3gfO/67qbUIEttbnc2gXsDYYXG0Fw9uOIZFbKgYTWySP0/Z9kIpGfhjYRnC/BKZNgs287Qz2txSNbKCq8bbnBar8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524188; c=relaxed/simple;
-	bh=ESmhZ2YFRx/N/fG9NxeBJ8T7CC52L3aHvbX095jSx40=;
+	s=arc-20240116; t=1755524191; c=relaxed/simple;
+	bh=AFdpWxCDNs+BAjdP4+qk4l5f8l7gJBrTt/JiH8v6SjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fq1oS2mr5186uVMkOSkKiDMnK1S2sLqXQElF+Gv4mt+c9XZHoBwh7V8ur04sxm3wC5moEZEHbJqXROTHe+HqNLFrsOBXteNl+aCHFWYRAf0Tg4Ux/g0Ij9IutJur2OAp9ixZ32NzFMlfCn8IfNNGuC4Ii28Qhqt3GTaHWZnww0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJmgHJVT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nnY8kx11OjAYsYuvlsq2ScnL9Su3IQO+/Qn1Rb4KnpKNQK/mQwNuUgtwTv3zB4biaNHCXyQ9OBjRcc/jwA1arDYa3u9Rjx3TFjNiM9mf5sPgrmER5OVxofrQeWX9iInC02CDQ7iX7D1WBy4LO+Rf9ObDgJH+IVs6mex8rlvZsnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WY3dc2CS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJmgHJVT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87FEC4CEEB;
-	Mon, 18 Aug 2025 13:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WY3dc2CS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAABAC4CEEB;
+	Mon, 18 Aug 2025 13:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524188;
-	bh=ESmhZ2YFRx/N/fG9NxeBJ8T7CC52L3aHvbX095jSx40=;
+	s=korg; t=1755524191;
+	bh=AFdpWxCDNs+BAjdP4+qk4l5f8l7gJBrTt/JiH8v6SjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJmgHJVTCPMFXfVUVSBJ/ij+v3BClb0zLPoJ0/Ju2j52+aJD45P8z04zzBglm4z4s
-	 dYHJ2RSyWT36J18kzlFGloZHdPbEI0fud/eyTFlpjg8+oFwc2LftGUPZcgEg8BYRIr
-	 Iq7zWAcpcH44CZsjR5Ebmy5QeYfZA8AA3l2FFmak=
+	b=WY3dc2CSa64yIQPj3S5fcrIgC4xXG0vgu3VvXnmN8t+U+iXEzvvwYYmOEuvTM8g4g
+	 fMG3Aj6PIuvFbZ/6J91V0px/iPjZaDqZ59ezA1LrLqc0pan29hp8z/SyOLjd275eaq
+	 ENZGYFN90u+muyOX5nSesB4EpD1RVehsDMiCaoW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 393/515] rtc: ds1307: handle oscillator stop flag (OSF) for ds1341
-Date: Mon, 18 Aug 2025 14:46:19 +0200
-Message-ID: <20250818124513.543200809@linuxfoundation.org>
+Subject: [PATCH 6.15 363/515] dmaengine: stm32-dma: configure next sg only if there are more than 2 sgs
+Date: Mon, 18 Aug 2025 14:45:49 +0200
+Message-ID: <20250818124512.379596882@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,61 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 523923cfd5d622b8f4ba893fdaf29fa6adeb8c3e ]
+[ Upstream commit e19bdbaa31082b43dab1d936e20efcebc30aa73d ]
 
-In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-kernel time as long as rtc_read_time() succeeds. In some power loss
-situations, our supercapacitor-backed DS1342 RTC comes up with either an
-unpredictable future time or the default 01/01/00 from the datasheet.
-The oscillator stop flag (OSF) is set in these scenarios due to the
-power loss and can be used to determine the validity of the RTC data.
+DMA operates in Double Buffer Mode (DBM) when the transfer is cyclic and
+there are at least two periods.
+When DBM is enabled, the DMA toggles between two memory targets (SxM0AR and
+SxM1AR), indicated by the SxSCR.CT bit (Current Target).
+There is no need to update the next memory address if two periods are
+configured, as SxM0AR and SxM1AR are already properly set up before the
+transfer begins in the stm32_dma_start_transfer() function.
+This avoids unnecessary updates to SxM0AR/SxM1AR, thereby preventing
+potential Transfer Errors. Specifically, when the channel is enabled,
+SxM0AR and SxM1AR can only be written if SxSCR.CT=1 and SxSCR.CT=0,
+respectively. Otherwise, a Transfer Error interrupt is triggered, and the
+stream is automatically disabled.
 
-This change expands the oscillator stop flag (OSF) handling that has
-already been implemented for some chips to the ds1341 chip (DS1341 and
-DS1342 share a datasheet). This handling manages the validity of the RTC
-data in .read_time and .set_time based on the OSF.
-
-Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/1749665656-30108-3-git-send-email-meaganlloyd@linux.microsoft.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20250624-stm32_dma_dbm_fix-v1-1-337c40d6c93e@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/dma/stm32/stm32-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index c8a666de9cbe..c6d388bb4a19 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -279,6 +279,13 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 		if (tmp & DS1340_BIT_OSF)
- 			return -EINVAL;
- 		break;
-+	case ds_1341:
-+		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
-+		if (ret)
-+			return ret;
-+		if (tmp & DS1337_BIT_OSF)
-+			return -EINVAL;
-+		break;
- 	case ds_1388:
- 		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
- 		if (ret)
-@@ -377,6 +384,10 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
- 		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
- 				   DS1340_BIT_OSF, 0);
- 		break;
-+	case ds_1341:
-+		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
-+				   DS1337_BIT_OSF, 0);
-+		break;
- 	case ds_1388:
- 		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
- 				   DS1388_BIT_OSF, 0);
+diff --git a/drivers/dma/stm32/stm32-dma.c b/drivers/dma/stm32/stm32-dma.c
+index 917f8e922373..0e39f99bce8b 100644
+--- a/drivers/dma/stm32/stm32-dma.c
++++ b/drivers/dma/stm32/stm32-dma.c
+@@ -744,7 +744,7 @@ static void stm32_dma_handle_chan_done(struct stm32_dma_chan *chan, u32 scr)
+ 		/* cyclic while CIRC/DBM disable => post resume reconfiguration needed */
+ 		if (!(scr & (STM32_DMA_SCR_CIRC | STM32_DMA_SCR_DBM)))
+ 			stm32_dma_post_resume_reconfigure(chan);
+-		else if (scr & STM32_DMA_SCR_DBM)
++		else if (scr & STM32_DMA_SCR_DBM && chan->desc->num_sgs > 2)
+ 			stm32_dma_configure_next_sg(chan);
+ 	} else {
+ 		chan->busy = false;
 -- 
 2.39.5
 
