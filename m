@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0292D321F49;
-	Mon, 18 Aug 2025 13:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FA4321F5A;
+	Mon, 18 Aug 2025 13:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523466; cv=none; b=MOu23PPeOVKdqqyLDVIPXftYLOe9yg5u34IUckUxz+ZEy7W8Qb+RIylNDlP1t/NdXaBbtVimerKULRJqOQWvpdLOYYWOq+iFzkM4wRSUQlMp11vG9mVDizFYuWcZ2P0ngrzNRWfr4XfH0Wn2j6lYiABhsjRthBv4yErxbuLf2mw=
+	t=1755523469; cv=none; b=KaTxE3Z+EazOwKaS4QtoI1vcg2ORNV3jCCEbdIia3tUYkGabPz77t+bYUKRC3wVmO+CwhgbCP5lce4znhxz+LP7RpwxsXNie0r6Qa/0l3q9em35ymzpkAGu/6iCpXa3y5aC3RPRoyk4DdB9hM9MYSmG2idKTSkBhbl6JSUaFBfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523466; c=relaxed/simple;
-	bh=16HXFLwGaKgPviUEFQYrPcYrovdx/9HoBTzpOckrBwI=;
+	s=arc-20240116; t=1755523469; c=relaxed/simple;
+	bh=nVVmF9k/ixeiBlFzBYrTVSplI0osKzxMLhN9FlKOrjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l/IKRYZgaWyFfcO+FMbDjSo4mrtHrFa2XKEi+W7/qytgQrDbXEh3ntQ9lH69sJzyI9FeAsvryuvAGggXh33KJ4m4pxN7yVgan6VQU3SPZtiYQ0YpTaHh/Orz1CZerA0QyoEGJpiHXsOQnvVapQzpET6g07yyZN4fTnecdKUTlIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcmwJDA+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iK8gGTOJsf6rSJodwMLyQ2RdU24X0p0pH1q/C67ogXs8SGLq+2Pwga+t94zq3uGOil447nA7g5tx63zO6T0egMQpTD8dDh7Qt1fs0vUYmbv+Yx/JDMfiC8hFxP9RqKHrNncV0Ib6EduCpZNe4Ptmogk+g4vVw1VvaY7SDYh5jgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZRJS5VN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcmwJDA+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658D4C4CEEB;
-	Mon, 18 Aug 2025 13:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZRJS5VN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB134C4CEEB;
+	Mon, 18 Aug 2025 13:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523465;
-	bh=16HXFLwGaKgPviUEFQYrPcYrovdx/9HoBTzpOckrBwI=;
+	s=korg; t=1755523469;
+	bh=nVVmF9k/ixeiBlFzBYrTVSplI0osKzxMLhN9FlKOrjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WcmwJDA+kndzmYVfR6T1OiRG4BxGtHcfAuF+0UTg2z8gZULRD1bTR4mlzlFNapPxU
-	 RavRvGevmSF/PBKZgp+mY3zYRyatGvRmQttTq7BndBe8yS9MB9SU4Jw6VWYkYf9sQM
-	 4I7NPCfKDaBs9HHzeRp84lGVOZ/coVOxOVnm1Jh0=
+	b=CZRJS5VNRHVeUp2LqUlByyBj+i7D6yvhMkOECk9kEAI7VU6SfQKdnV6Y737ow3xRB
+	 bptE92rCIVzPjKuq4sM4MaWfAbmJ5GjisbmM4Y+woocr5tpb7Ff6UxOPOcz1a7stls
+	 /yoqWqoJPJkfLXX46091BG+I5i51L+G1aBkuTsjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	tuhaowen <tuhaowen@uniontech.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 179/515] imx8m-blk-ctrl: set ISI panic write hurry level
-Date: Mon, 18 Aug 2025 14:42:45 +0200
-Message-ID: <20250818124505.266708160@linuxfoundation.org>
+Subject: [PATCH 6.15 153/515] PM: sleep: console: Fix the black screen issue
+Date: Mon, 18 Aug 2025 14:42:19 +0200
+Message-ID: <20250818124504.274125954@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -45,57 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Hałasa <khalasa@piap.pl>
+From: tuhaowen <tuhaowen@uniontech.com>
 
-[ Upstream commit c01fba0b4869cada5403fffff416cd1675dba078 ]
+[ Upstream commit 4266e8fa56d3d982bf451d382a410b9db432015c ]
 
-Apparently, ISI needs cache settings similar to LCDIF.
-Otherwise we get artefacts in the image.
-Tested on i.MX8MP.
+When the computer enters sleep status without a monitor
+connected, the system switches the console to the virtual
+terminal tty63(SUSPEND_CONSOLE).
 
-Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
-Link: https://lore.kernel.org/r/m3ldr69lsw.fsf@t19.piap.pl
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+If a monitor is subsequently connected before waking up,
+the system skips the required VT restoration process
+during wake-up, leaving the console on tty63 instead of
+switching back to tty1.
+
+To fix this issue, a global flag vt_switch_done is introduced
+to record whether the system has successfully switched to
+the suspend console via vt_move_to_console() during suspend.
+
+If the switch was completed, vt_switch_done is set to 1.
+Later during resume, this flag is checked to ensure that
+the original console is restored properly by calling
+vt_move_to_console(orig_fgconsole, 0).
+
+This prevents scenarios where the resume logic skips console
+restoration due to incorrect detection of the console state,
+especially when a monitor is reconnected before waking up.
+
+Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
+Link: https://patch.msgid.link/20250611032345.29962-1-tuhaowen@uniontech.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/imx/imx8m-blk-ctrl.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ kernel/power/console.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pmdomain/imx/imx8m-blk-ctrl.c b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-index 912802b5215b..5c83e5599f1e 100644
---- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-@@ -665,6 +665,11 @@ static const struct imx8m_blk_ctrl_data imx8mn_disp_blk_ctl_dev_data = {
- #define  LCDIF_1_RD_HURRY	GENMASK(15, 13)
- #define  LCDIF_0_RD_HURRY	GENMASK(12, 10)
+diff --git a/kernel/power/console.c b/kernel/power/console.c
+index fcdf0e14a47d..19c48aa5355d 100644
+--- a/kernel/power/console.c
++++ b/kernel/power/console.c
+@@ -16,6 +16,7 @@
+ #define SUSPEND_CONSOLE	(MAX_NR_CONSOLES-1)
  
-+#define ISI_CACHE_CTRL		0x50
-+#define  ISI_V_WR_HURRY		GENMASK(28, 26)
-+#define  ISI_U_WR_HURRY		GENMASK(25, 23)
-+#define  ISI_Y_WR_HURRY		GENMASK(22, 20)
+ static int orig_fgconsole, orig_kmsg;
++static bool vt_switch_done;
+ 
+ static DEFINE_MUTEX(vt_switch_mutex);
+ 
+@@ -136,17 +137,21 @@ void pm_prepare_console(void)
+ 	if (orig_fgconsole < 0)
+ 		return;
+ 
++	vt_switch_done = true;
 +
- static int imx8mp_media_power_notifier(struct notifier_block *nb,
- 				unsigned long action, void *data)
- {
-@@ -694,6 +699,11 @@ static int imx8mp_media_power_notifier(struct notifier_block *nb,
- 		regmap_set_bits(bc->regmap, LCDIF_ARCACHE_CTRL,
- 				FIELD_PREP(LCDIF_1_RD_HURRY, 7) |
- 				FIELD_PREP(LCDIF_0_RD_HURRY, 7));
-+		/* Same here for ISI */
-+		regmap_set_bits(bc->regmap, ISI_CACHE_CTRL,
-+				FIELD_PREP(ISI_V_WR_HURRY, 7) |
-+				FIELD_PREP(ISI_U_WR_HURRY, 7) |
-+				FIELD_PREP(ISI_Y_WR_HURRY, 7));
- 	}
+ 	orig_kmsg = vt_kmsg_redirect(SUSPEND_CONSOLE);
+ 	return;
+ }
  
- 	return NOTIFY_OK;
+ void pm_restore_console(void)
+ {
+-	if (!pm_vt_switch())
++	if (!pm_vt_switch() && !vt_switch_done)
+ 		return;
+ 
+ 	if (orig_fgconsole >= 0) {
+ 		vt_move_to_console(orig_fgconsole, 0);
+ 		vt_kmsg_redirect(orig_kmsg);
+ 	}
++
++	vt_switch_done = false;
+ }
 -- 
 2.39.5
 
