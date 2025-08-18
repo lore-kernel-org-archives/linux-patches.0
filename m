@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95280216E23;
-	Mon, 18 Aug 2025 13:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA237270ED2;
+	Mon, 18 Aug 2025 13:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524506; cv=none; b=hwJDoViGlPzr+Nc+vSNyuZFg8H+cIpg44TS5zlJ4qS5TPS3Lro+3SHsRRPZzzuA3n76xN7zuFan94VVCn7iXzH3/aX5PDcu05QchB4F3tMP1Z3wg5x/F7baEty02UGFC4CgG9mtVNZ2ZGdT2vCIYaxFg2DObzi7nR49ywSU3zY0=
+	t=1755524509; cv=none; b=RhBOk0Pjbo3d6vKZfJbIcHnPqIhLkMefoAEUxSfv2B8JaDdgcqUhzkcT0z3wAZBOho8cuiCe83d2HdcMfsHZLrKFJUzj6hLB5NPS8/03Ga0aX5oclAoCNcmhW2YOvqfCCPZ0E9FqZvz48OpH0uwrjs52ttvl6UwHCrneQrqySLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524506; c=relaxed/simple;
-	bh=0rvZ4HTDrQWHeW6Po44J6SkxW9sLxVGT00lQ8Q9nOy8=;
+	s=arc-20240116; t=1755524509; c=relaxed/simple;
+	bh=coaKHVem68sIk50sVTp7mCpA7BlO37zu65Z6iraK3rY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PubjVIHAYll+ZApcy7V66BLOinRqEyzHS0RH5edKonPgk/9ims9nh/XWOzJqzaaaGHEUn8x51kNjdbrp9vC8FxQJ7ac4nYvE8WdspT2SgRf5sdn2I9tpVaK5lOTTZ4QthIJesKnfhYHpz5GSnIl2wW0fVzHvh146ki4q/uhWKSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kwl8Z917; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TYGjAP6VaV7BSUtdBssx9K19QJ6QvKOzKrsvZJneaUm41Djto/lDC2Cre71MYb/gTZ8hxtq+XjGL0mwTyEU+x8NnTd5vyh/MNuOSczwXvy64cZfP20zbhT9J0FSEhe2G/I6WvnYkuRU+wBQlGaTqvb4rnj6wEX95BPkQrBrOY5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqlYc2uu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kwl8Z917"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF436C4CEEB;
-	Mon, 18 Aug 2025 13:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqlYc2uu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615A9C4CEEB;
+	Mon, 18 Aug 2025 13:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524506;
-	bh=0rvZ4HTDrQWHeW6Po44J6SkxW9sLxVGT00lQ8Q9nOy8=;
+	s=korg; t=1755524509;
+	bh=coaKHVem68sIk50sVTp7mCpA7BlO37zu65Z6iraK3rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kwl8Z9174GHAqnGcPcG1fiwQ8hCoreiDRKUIHxdcC23yljY/nsdPDLNRYjtYjv27/
-	 Yh+GeCQPRTYhYb7Wj0hzqASBineT0W0LZ1vETmqLk1ALouHa+PHg30kO6aqDGML1v8
-	 CnGIwr1ykJY95c9B1RWu7f9waTKm5awjYH9LuUko=
+	b=yqlYc2uuut/jujTfIY1GaxB0SsbfaVAIzOUPnLINFExsPBYqjeEM8gdHxPbuQ7VZM
+	 MpwgFB7LDIW7ehMb+IndPXjc9VAx6ELZmRkD7NpyAB9px/mvaBvClUbqGb9RbpPoof
+	 o8/vMkBPAQ4KkSiVU9KAT5LWGQ4qNH2GrCp9GXeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Baoquan He <bhe@redhat.com>,
-	Barry Song <baohua@kernel.org>,
-	Chris Li <chrisl@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Dev Jain <dev.jain@arm.com>,
+	Waiman Long <longman@redhat.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 493/515] mm/shmem, swap: improve cached mTHP handling and fix potential hang
-Date: Mon, 18 Aug 2025 14:47:59 +0200
-Message-ID: <20250818124517.417646087@linuxfoundation.org>
+Subject: [PATCH 6.15 494/515] mm/kmemleak: avoid soft lockup in __kmemleak_do_cleanup()
+Date: Mon, 18 Aug 2025 14:48:00 +0200
+Message-ID: <20250818124517.454567116@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -59,157 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Waiman Long <longman@redhat.com>
 
-commit 5c241ed8d031693dadf33dd98ed2e7cc363e9b66 upstream.
+commit d1534ae23c2b6be350c8ab060803fbf6e9682adc upstream.
 
-The current swap-in code assumes that, when a swap entry in shmem mapping
-is order 0, its cached folios (if present) must be order 0 too, which
-turns out not always correct.
+A soft lockup warning was observed on a relative small system x86-64
+system with 16 GB of memory when running a debug kernel with kmemleak
+enabled.
 
-The problem is shmem_split_large_entry is called before verifying the
-folio will eventually be swapped in, one possible race is:
+  watchdog: BUG: soft lockup - CPU#8 stuck for 33s! [kworker/8:1:134]
 
-    CPU1                          CPU2
-shmem_swapin_folio
-/* swap in of order > 0 swap entry S1 */
-  folio = swap_cache_get_folio
-  /* folio = NULL */
-  order = xa_get_order
-  /* order > 0 */
-  folio = shmem_swap_alloc_folio
-  /* mTHP alloc failure, folio = NULL */
-  <... Interrupted ...>
-                                 shmem_swapin_folio
-                                 /* S1 is swapped in */
-                                 shmem_writeout
-                                 /* S1 is swapped out, folio cached */
-  shmem_split_large_entry(..., S1)
-  /* S1 is split, but the folio covering it has order > 0 now */
+The test system was running a workload with hot unplug happening in
+parallel.  Then kemleak decided to disable itself due to its inability to
+allocate more kmemleak objects.  The debug kernel has its
+CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE set to 40,000.
 
-Now any following swapin of S1 will hang: `xa_get_order` returns 0, and
-folio lookup will return a folio with order > 0.  The
-`xa_get_order(&mapping->i_pages, index) != folio_order(folio)` will always
-return false causing swap-in to return -EEXIST.
+The soft lockup happened in kmemleak_do_cleanup() when the existing
+kmemleak objects were being removed and deleted one-by-one in a loop via a
+workqueue.  In this particular case, there are at least 40,000 objects
+that need to be processed and given the slowness of a debug kernel and the
+fact that a raw_spinlock has to be acquired and released in
+__delete_object(), it could take a while to properly handle all these
+objects.
 
-And this looks fragile.  So fix this up by allowing seeing a larger folio
-in swap cache, and check the whole shmem mapping range covered by the
-swapin have the right swap value upon inserting the folio.  And drop the
-redundant tree walks before the insertion.
+As kmemleak has been disabled in this case, the object removal and
+deletion process can be further optimized as locking isn't really needed.
+However, it is probably not worth the effort to optimize for such an edge
+case that should rarely happen.  So the simple solution is to call
+cond_resched() at periodic interval in the iteration loop to avoid soft
+lockup.
 
-This will actually improve performance, as it avoids two redundant Xarray
-tree walks in the hot path, and the only side effect is that in the
-failure path, shmem may redundantly reallocate a few folios causing
-temporary slight memory pressure.
-
-And worth noting, it may seems the order and value check before inserting
-might help reducing the lock contention, which is not true.  The swap
-cache layer ensures raced swapin will either see a swap cache folio or
-failed to do a swapin (we have SWAP_HAS_CACHE bit even if swap cache is
-bypassed), so holding the folio lock and checking the folio flag is
-already good enough for avoiding the lock contention.  The chance that a
-folio passes the swap entry value check but the shmem mapping slot has
-changed should be very low.
-
-Link: https://lkml.kernel.org/r/20250728075306.12704-1-ryncsn@gmail.com
-Link: https://lkml.kernel.org/r/20250728075306.12704-2-ryncsn@gmail.com
-Fixes: 809bc86517cc ("mm: shmem: support large folio swap out")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Dev Jain <dev.jain@arm.com>
+Link: https://lkml.kernel.org/r/20250728190248.605750-1-longman@redhat.com
+Signed-off-by: Waiman Long <longman@redhat.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |   39 ++++++++++++++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+ mm/kmemleak.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -884,7 +884,9 @@ static int shmem_add_to_page_cache(struc
- 				   pgoff_t index, void *expected, gfp_t gfp)
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -2172,6 +2172,7 @@ static const struct file_operations kmem
+ static void __kmemleak_do_cleanup(void)
  {
- 	XA_STATE_ORDER(xas, &mapping->i_pages, index, folio_order(folio));
--	long nr = folio_nr_pages(folio);
-+	unsigned long nr = folio_nr_pages(folio);
-+	swp_entry_t iter, swap;
-+	void *entry;
+ 	struct kmemleak_object *object, *tmp;
++	unsigned int cnt = 0;
  
- 	VM_BUG_ON_FOLIO(index != round_down(index, nr), folio);
- 	VM_BUG_ON_FOLIO(!folio_test_locked(folio), folio);
-@@ -896,14 +898,25 @@ static int shmem_add_to_page_cache(struc
- 
- 	gfp &= GFP_RECLAIM_MASK;
- 	folio_throttle_swaprate(folio, gfp);
-+	swap = radix_to_swp_entry(expected);
- 
- 	do {
-+		iter = swap;
- 		xas_lock_irq(&xas);
--		if (expected != xas_find_conflict(&xas)) {
--			xas_set_err(&xas, -EEXIST);
--			goto unlock;
-+		xas_for_each_conflict(&xas, entry) {
-+			/*
-+			 * The range must either be empty, or filled with
-+			 * expected swap entries. Shmem swap entries are never
-+			 * partially freed without split of both entry and
-+			 * folio, so there shouldn't be any holes.
-+			 */
-+			if (!expected || entry != swp_to_radix_entry(iter)) {
-+				xas_set_err(&xas, -EEXIST);
-+				goto unlock;
-+			}
-+			iter.val += 1 << xas_get_order(&xas);
- 		}
--		if (expected && xas_find_conflict(&xas)) {
-+		if (expected && iter.val - nr != swap.val) {
- 			xas_set_err(&xas, -EEXIST);
- 			goto unlock;
- 		}
-@@ -2330,7 +2343,7 @@ static int shmem_swapin_folio(struct ino
- 			error = -ENOMEM;
- 			goto failed;
- 		}
--	} else if (order != folio_order(folio)) {
-+	} else if (order > folio_order(folio)) {
- 		/*
- 		 * Swap readahead may swap in order 0 folios into swapcache
- 		 * asynchronously, while the shmem mapping can still stores
-@@ -2353,15 +2366,23 @@ static int shmem_swapin_folio(struct ino
- 
- 			swap = swp_entry(swp_type(swap), swp_offset(swap) + offset);
- 		}
-+	} else if (order < folio_order(folio)) {
-+		swap.val = round_down(swap.val, 1 << folio_order(folio));
-+		index = round_down(index, 1 << folio_order(folio));
+ 	/*
+ 	 * Kmemleak has already been disabled, no need for RCU list traversal
+@@ -2180,6 +2181,10 @@ static void __kmemleak_do_cleanup(void)
+ 	list_for_each_entry_safe(object, tmp, &object_list, object_list) {
+ 		__remove_object(object);
+ 		__delete_object(object);
++
++		/* Call cond_resched() once per 64 iterations to avoid soft lockup */
++		if (!(++cnt & 0x3f))
++			cond_resched();
  	}
+ }
  
- alloced:
--	/* We have to do this with folio locked to prevent races */
-+	/*
-+	 * We have to do this with the folio locked to prevent races.
-+	 * The shmem_confirm_swap below only checks if the first swap
-+	 * entry matches the folio, that's enough to ensure the folio
-+	 * is not used outside of shmem, as shmem swap entries
-+	 * and swap cache folios are never partially freed.
-+	 */
- 	folio_lock(folio);
- 	if ((!skip_swapcache && !folio_test_swapcache(folio)) ||
--	    folio->swap.val != swap.val ||
- 	    !shmem_confirm_swap(mapping, index, swap) ||
--	    xa_get_order(&mapping->i_pages, index) != folio_order(folio)) {
-+	    folio->swap.val != swap.val) {
- 		error = -EEXIST;
- 		goto unlock;
- 	}
 
 
