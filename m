@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EBC335BA7;
-	Mon, 18 Aug 2025 13:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB59F335BA7;
+	Mon, 18 Aug 2025 13:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525045; cv=none; b=l5Ja2bspjcdvKsK/hlLEg6upOjxGOatzL85kVEW8foYwpQUNXqtJYt3fxcHj736HkBkFpWkA20E6XDYYf7809mnidONtA9S2BnHbbUz5W5RRQmGwX50aen+pOt+NoW7WjTr28cj07N7yBtv2YF2xihM9OGt6jPaYx9MWKzKRqFA=
+	t=1755525048; cv=none; b=VAzXSMHpyzIkf4mmv6jKnBYiQ+WTX4j9eGVQM2B3P51rlZdj6O13CAe3ZhcuuZAP/CI1XQF/DS+yvz3Hu+GRlKKfOxsjPN9JKEIUHGZdmKaG5sM9/FKLus/E2Q5dh2r0wXmKnn9tsZAkrTX0cxmgZniAgvIOJrZ82kQ04rAqeUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525045; c=relaxed/simple;
-	bh=OIi9tMV8SlqSnaBK7J9yKdJTgWFKOa42QhU7+cLXXTg=;
+	s=arc-20240116; t=1755525048; c=relaxed/simple;
+	bh=5EeRcbDGoeYqCCpK6qcQZgcaHs1KcR7xWiVMfBH89vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOidArUatvGR30c2oQkylhMHSSgviljlA5oDbAeTvHjuRHnhqEVRlkFymIVVONXyhAL83iAAhATGbzgIxtf318b71jKuqY0c9h0LO+s8oo7SX8iLf1WXv7Gsn7cJ34/z3M8VVBBngSkaG82KgVGBJJ71DhaneYjqCBzpJnCXLr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFqnZB3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YM/c9KruuORUkBYFeR2GCicPZFhb6EVZcZ2pEo5rRsjM+fRM17acUa4yNLJ++quVLc0HGVsNnuWnbt3FQswCune9DnEZ251CZlK6CbCEMEy5REMUr3YxhLV13Eo+iu8oVDT/jagQTMzhI0mfEqSM4cu4pz71SrElKHykjIC7XPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tk5kNfWw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFqnZB3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84008C4CEEB;
-	Mon, 18 Aug 2025 13:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk5kNfWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2964C4CEEB;
+	Mon, 18 Aug 2025 13:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525045;
-	bh=OIi9tMV8SlqSnaBK7J9yKdJTgWFKOa42QhU7+cLXXTg=;
+	s=korg; t=1755525048;
+	bh=5EeRcbDGoeYqCCpK6qcQZgcaHs1KcR7xWiVMfBH89vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFqnZB3Mri0cwizChbhrSjLWU64fQSq9o4eiYNQ84rgyOEd/FvG5DYP1VCss1Ac0F
-	 P24qYJach+nFbp8d/5cL2ssyw9BsyhLuyKE1ERkc+/FwTN9mJJd4lhCHz8Tur7gV2y
-	 iKKc0hEB8wBApfXHpFwkbHJpJLTJq0mlQ4t4ZgN8=
+	b=tk5kNfWwGCj7V7yfQPKlZ4/kRcmw8Cnp7w3nRXDRXIuKZQqgrdvh+CA24clHn5zau
+	 pKleT2VdA6+nbsoAUonxZIwm5uIy9GIpdzNUE+bboIK1pjSgyaibFQ27Ao2Sc4x2Z1
+	 m+vWkD/P0fCqOmDK9u24wrByHdIJEmHBm/HGyAtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jameson Thies <jthies@google.com>,
-	Benson Leung <bleung@chromium.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 142/570] usb: typec: ucsi: Add poll_cci operation to cros_ec_ucsi
-Date: Mon, 18 Aug 2025 14:42:09 +0200
-Message-ID: <20250818124511.294586838@linuxfoundation.org>
+Subject: [PATCH 6.16 143/570] usb: typec: tcpm/tcpci_maxim: fix irq wake usage
+Date: Mon, 18 Aug 2025 14:42:10 +0200
+Message-ID: <20250818124511.333255665@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -45,42 +45,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jameson Thies <jthies@google.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 300386d117a98961fc1d612d1f1a61997d731b8a ]
+[ Upstream commit 31611223fb34a3e9320cdfc4f4395072a13ea78e ]
 
-cros_ec_ucsi fails to allocate a UCSI instance in it's probe function
-because it does not define all operations checked by ucsi_create.
-Update cros_ec_ucsi operations to use the same function for read_cci
-and poll_cci.
+This driver calls enable_irq_wake() during probe() unconditionally, and
+never issues the required corresponding disable_irq_wake() to disable
+hardware interrupt wakeup signals.
 
-Signed-off-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://lore.kernel.org/r/20250711202033.2201305-1-jthies@google.com
+Additionally, whether or not a device should wake-up the system is
+meant to be a policy decision based on sysfs (.../power/wakeup) in the
+first place.
+
+Update the driver to use the standard approach to enable/disable IRQ
+wake during the suspend/resume callbacks. This solves both issues
+described above.
+
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://lore.kernel.org/r/20250707-max77759-irq-wake-v1-1-d367f633e4bc@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/cros_ec_ucsi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/typec/tcpm/tcpci_maxim_core.c | 46 +++++++++++++++--------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/cros_ec_ucsi.c b/drivers/usb/typec/ucsi/cros_ec_ucsi.c
-index 4ec1c6d22310..eed2a7d0ebc6 100644
---- a/drivers/usb/typec/ucsi/cros_ec_ucsi.c
-+++ b/drivers/usb/typec/ucsi/cros_ec_ucsi.c
-@@ -137,6 +137,7 @@ static int cros_ucsi_sync_control(struct ucsi *ucsi, u64 cmd, u32 *cci,
- static const struct ucsi_operations cros_ucsi_ops = {
- 	.read_version = cros_ucsi_read_version,
- 	.read_cci = cros_ucsi_read_cci,
-+	.poll_cci = cros_ucsi_read_cci,
- 	.read_message_in = cros_ucsi_read_message_in,
- 	.async_control = cros_ucsi_async_control,
- 	.sync_control = cros_ucsi_sync_control,
+diff --git a/drivers/usb/typec/tcpm/tcpci_maxim_core.c b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
+index b5a5ed40faea..ff3604be79da 100644
+--- a/drivers/usb/typec/tcpm/tcpci_maxim_core.c
++++ b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
+@@ -421,21 +421,6 @@ static irqreturn_t max_tcpci_isr(int irq, void *dev_id)
+ 	return IRQ_WAKE_THREAD;
+ }
+ 
+-static int max_tcpci_init_alert(struct max_tcpci_chip *chip, struct i2c_client *client)
+-{
+-	int ret;
+-
+-	ret = devm_request_threaded_irq(chip->dev, client->irq, max_tcpci_isr, max_tcpci_irq,
+-					(IRQF_TRIGGER_LOW | IRQF_ONESHOT), dev_name(chip->dev),
+-					chip);
+-
+-	if (ret < 0)
+-		return ret;
+-
+-	enable_irq_wake(client->irq);
+-	return 0;
+-}
+-
+ static int max_tcpci_start_toggling(struct tcpci *tcpci, struct tcpci_data *tdata,
+ 				    enum typec_cc_status cc)
+ {
+@@ -532,7 +517,9 @@ static int max_tcpci_probe(struct i2c_client *client)
+ 
+ 	chip->port = tcpci_get_tcpm_port(chip->tcpci);
+ 
+-	ret = max_tcpci_init_alert(chip, client);
++	ret = devm_request_threaded_irq(&client->dev, client->irq, max_tcpci_isr, max_tcpci_irq,
++					(IRQF_TRIGGER_LOW | IRQF_ONESHOT), dev_name(chip->dev),
++					chip);
+ 	if (ret < 0)
+ 		return dev_err_probe(&client->dev, ret,
+ 				     "IRQ initialization failed\n");
+@@ -544,6 +531,32 @@ static int max_tcpci_probe(struct i2c_client *client)
+ 	return 0;
+ }
+ 
++#ifdef CONFIG_PM_SLEEP
++static int max_tcpci_resume(struct device *dev)
++{
++	struct i2c_client *client = to_i2c_client(dev);
++	int ret = 0;
++
++	if (client->irq && device_may_wakeup(dev))
++		ret = disable_irq_wake(client->irq);
++
++	return ret;
++}
++
++static int max_tcpci_suspend(struct device *dev)
++{
++	struct i2c_client *client = to_i2c_client(dev);
++	int ret = 0;
++
++	if (client->irq && device_may_wakeup(dev))
++		ret = enable_irq_wake(client->irq);
++
++	return ret;
++}
++#endif /* CONFIG_PM_SLEEP */
++
++static SIMPLE_DEV_PM_OPS(max_tcpci_pm_ops, max_tcpci_suspend, max_tcpci_resume);
++
+ static const struct i2c_device_id max_tcpci_id[] = {
+ 	{ "maxtcpc" },
+ 	{ }
+@@ -562,6 +575,7 @@ static struct i2c_driver max_tcpci_i2c_driver = {
+ 	.driver = {
+ 		.name = "maxtcpc",
+ 		.of_match_table = of_match_ptr(max_tcpci_of_match),
++		.pm = &max_tcpci_pm_ops,
+ 	},
+ 	.probe = max_tcpci_probe,
+ 	.id_table = max_tcpci_id,
 -- 
 2.39.5
 
