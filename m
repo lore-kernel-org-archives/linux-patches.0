@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09855334733;
-	Mon, 18 Aug 2025 13:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A65322760;
+	Mon, 18 Aug 2025 13:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523140; cv=none; b=tfcTp7qzVkeypLkGXE8tFikon62png232fwvqMs4RCgyaOfddwB4Ev7Dfx9YgmXb4x/juXMSHP/Q77485l9CFyThH84o/KKj+47znkJYrRpRabuPBE4C2H83nDz9MKGUzLX/0bYYZe3SoUVoA0MvjCxBNdHWmoIEaJsyD5Q3kDw=
+	t=1755523143; cv=none; b=YX05pIOo5VYjzd+1RCYZ4ayxDKaZ1M0AdakcU8YEJqDSKYlzhehdhbvUf7oMbd4mZhw5OG0eBmnscsl8Cee18COXffkU1yUckBblGB9NmS8quyy/azqaxoFH5HBDg8ojQ/mDAdp1hHXokKEKua/FjPXHBVW9IKOpjRLp2DakKH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523140; c=relaxed/simple;
-	bh=/CJwod2//hK1/021M/r9nN/mSpYXMpHDY0MsHal4yKk=;
+	s=arc-20240116; t=1755523143; c=relaxed/simple;
+	bh=kqG2unEDCEbhmLpjzdyzbOPfgUrQF1vfzZI+HlnEOwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iV976Vx0RAfhLboq472Pm0jbjA+74cWq5a7D8SY77HfEryu4zGmu+VlWGaJvvr8ZrJJnM1K1PxHokSwbFPrhaxg51D7K6xMgl3G2pTUsezyL1Jtae0bdb41oSBdjJW4QT20L+N1Pr+TBm6rDlCf6ZldMoKwVXwRetOBJRHOl/0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYk3KZzK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OocMzd6PAR3/29i6pKYrPv7fAjuwsU6SQFI7cFSfGtG7q3W9RJ8Hn5dEGBeh8OFya0oNdarWFH/9u14ZmE4xLLuX/YwVxxhodehMiwmDMOwzXgAQuGPAKbfq75+Lc9Zb5jy3wjnALAlH4EZCjHD2XCAuoWlwka6fuKu/kItoTYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3Yzu3ov; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYk3KZzK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE0EC4CEEB;
-	Mon, 18 Aug 2025 13:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3Yzu3ov"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A964AC4CEEB;
+	Mon, 18 Aug 2025 13:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523139;
-	bh=/CJwod2//hK1/021M/r9nN/mSpYXMpHDY0MsHal4yKk=;
+	s=korg; t=1755523143;
+	bh=kqG2unEDCEbhmLpjzdyzbOPfgUrQF1vfzZI+HlnEOwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYk3KZzKW3K7+AFHSGmJgmJORRsUcOo/XM8xTlYyeReILr1D+FBLacV71KxGSlaoO
-	 Fcj4lKw3TPbjfa6Z3hUMhTnQdXjXkrBk6hnqGwfDq+r8/XnhMwwNjvRMdb0P1Xuq4G
-	 P67hIfTnJ/REdXiaa+XCK9fwLEV+XsU0WG9YMP78=
+	b=f3Yzu3ov7htQjTq+yGxoyFWNRYxZj+45baF8gOM2Bct6nXBcyOVMCMiRb9fd9XVOA
+	 AoCdArYEupdISJqL7dodPTcxHcWahdpz9KSvA3uul6ZmePIrE8ihoCT1VGll/KYbWK
+	 BpBbSI9DSt5W2PGj7LwDqSbe3oTyd+vr+XAHhpRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Huang Ying <ying.huang@linux.alibaba.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Donet Tom <donettom@linux.ibm.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 051/515] mm/memory-tier: fix abstract distance calculation overflow
-Date: Mon, 18 Aug 2025 14:40:37 +0200
-Message-ID: <20250818124500.384756167@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Tom Vincent <linux@tlvince.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.15 052/515] mfd: cros_ec: Separate charge-control probing from USB-PD
+Date: Mon, 18 Aug 2025 14:40:38 +0200
+Message-ID: <20250818124500.423251226@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -48,71 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit cce35103135c7ffc7bebc32ebfc74fe1f2c3cb5d upstream.
+commit e40fc1160d491c3bcaf8e940ae0dde0a7c5e8e14 upstream.
 
-In mt_perf_to_adistance(), the calculation of abstract distance (adist)
-involves multiplying several int values including
-MEMTIER_ADISTANCE_DRAM.
+The charge-control subsystem in the ChromeOS EC is not strictly tied to
+its USB-PD subsystem.
 
-*adist = MEMTIER_ADISTANCE_DRAM *
-		(perf->read_latency + perf->write_latency) /
-		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
-		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
-		(perf->read_bandwidth + perf->write_bandwidth);
+Since commit 7613bc0d116a ("mfd: cros_ec: Don't load charger with UCSI")
+the presence of EC_FEATURE_UCSI_PPM would inhibit the probing of the
+charge-control driver.
 
-Since these values can be large, the multiplication may exceed the
-maximum value of an int (INT_MAX) and overflow (Our platform did),
-leading to an incorrect adist.
+Furthermore recent versions of the EC firmware in Framework laptops
+hard-disable EC_FEATURE_USB_PD to avoid probing cros-usbpd-charger,
+which then also breaks cros-charge-control.
 
-User-visible impact:
-The memory tiering subsystem will misinterpret slow memory (like CXL)
-as faster than DRAM, causing inappropriate demotion of pages from
-CXL (slow memory) to DRAM (fast memory).
+Instead use the dedicated EC_FEATURE_CHARGER.
 
-For example, we will see the following demotion chains from the dmesg, where
-Node0,1 are DRAM, and Node2,3 are CXL node:
- Demotion targets for Node 0: null
- Demotion targets for Node 1: null
- Demotion targets for Node 2: preferred: 0-1, fallback: 0-1
- Demotion targets for Node 3: preferred: 0-1, fallback: 0-1
-
-Change MEMTIER_ADISTANCE_DRAM to be a long constant by writing it with
-the 'L' suffix.  This prevents the overflow because the multiplication
-will then be done in the long type which has a larger range.
-
-Link: https://lkml.kernel.org/r/20250611023439.2845785-1-lizhijian@fujitsu.com
-Link: https://lkml.kernel.org/r/20250610062751.2365436-1-lizhijian@fujitsu.com
-Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Huang Ying <ying.huang@linux.alibaba.com>
-Acked-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Donet Tom <donettom@linux.ibm.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/FrameworkComputer/EmbeddedController/commit/1d7bcf1d50137c8c01969eb65880bc83e424597e
+Fixes: 555b5fcdb844 ("mfd: cros_ec: Register charge control subdevice")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Tested-by: Tom Vincent <linux@tlvince.com>
+Link: https://lore.kernel.org/r/20250521-cros-ec-mfd-chctl-probe-v1-1-6ebfe3a6efa7@weissschuh.net
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/memory-tiers.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/cros_ec_dev.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/include/linux/memory-tiers.h
-+++ b/include/linux/memory-tiers.h
-@@ -18,7 +18,7 @@
-  * adistance value (slightly faster) than default DRAM adistance to be part of
-  * the same memory tier.
-  */
--#define MEMTIER_ADISTANCE_DRAM	((4 * MEMTIER_CHUNK_SIZE) + (MEMTIER_CHUNK_SIZE >> 1))
-+#define MEMTIER_ADISTANCE_DRAM	((4L * MEMTIER_CHUNK_SIZE) + (MEMTIER_CHUNK_SIZE >> 1))
+--- a/drivers/mfd/cros_ec_dev.c
++++ b/drivers/mfd/cros_ec_dev.c
+@@ -87,7 +87,6 @@ static const struct mfd_cell cros_ec_sen
+ };
  
- struct memory_tier;
- struct memory_dev_type {
+ static const struct mfd_cell cros_usbpd_charger_cells[] = {
+-	{ .name = "cros-charge-control", },
+ 	{ .name = "cros-usbpd-charger", },
+ 	{ .name = "cros-usbpd-logger", },
+ };
+@@ -112,6 +111,10 @@ static const struct mfd_cell cros_ec_ucs
+ 	{ .name = "cros_ec_ucsi", },
+ };
+ 
++static const struct mfd_cell cros_ec_charge_control_cells[] = {
++	{ .name = "cros-charge-control", },
++};
++
+ static const struct cros_feature_to_cells cros_subdevices[] = {
+ 	{
+ 		.id		= EC_FEATURE_CEC,
+@@ -148,6 +151,11 @@ static const struct cros_feature_to_cell
+ 		.mfd_cells	= cros_ec_keyboard_leds_cells,
+ 		.num_cells	= ARRAY_SIZE(cros_ec_keyboard_leds_cells),
+ 	},
++	{
++		.id		= EC_FEATURE_CHARGER,
++		.mfd_cells	= cros_ec_charge_control_cells,
++		.num_cells	= ARRAY_SIZE(cros_ec_charge_control_cells),
++	},
+ };
+ 
+ static const struct mfd_cell cros_ec_platform_cells[] = {
 
 
