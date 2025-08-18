@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6197D322A39;
-	Mon, 18 Aug 2025 14:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278C532A3C7;
+	Mon, 18 Aug 2025 14:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525601; cv=none; b=gmyAtm2fJJz+/T8Dzm7MRUx1V+otZFscBC8a0oNgNK59SbPq3XfnzSoScYyMwPICTUTHLSTq8wjN0VAkLqqrfzym1nPSEgGBPVMyizCeRlNaV+rEdQTdAdjLdtEW5t9BxqbLacf/vR1ndkxVv5UE6s51zqTfu0SYMIfYd7NuHYg=
+	t=1755525605; cv=none; b=o8Wcp85X6UiJ2FIVQD1sE7/BuAqZZNNxMNIEhaXUM9tI1GnjoJTKURukC8T8xJr5Wiz1Fm6047P8m7ohgRY893VDUCYe4FAenRR5ku8knjSM30Y1cjnvq+jVFsWp/rQC2feg8xQp/p+TNhAcBAmxCyVtJWx396udPThgc+K8b7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525601; c=relaxed/simple;
-	bh=+vWya3Av459s1sXEHvtnMRVBAU09U7UsTkHT9ZsZ+Cs=;
+	s=arc-20240116; t=1755525605; c=relaxed/simple;
+	bh=eqJxLxPdTGfBpAJ1Ubk2X7wKLXaAyPhBcQ+n2GCiwnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+3t3DQDNaXfL7bKcqOr5ya5dZGdZSmcSc9jYbfQe11qAuLpNlO4x8nQlEM4ONZ4xbV6aMfiMn3+h75Dq8tgqNLN2SNY3QVKIcNixehWaKqBcoh/NlVrhehHnn+S25R6t/LqnxSSJ7luKRyBnDMp7TsmR688joq6j8gPrpw+NGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhVMKdGr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EDGWrKrV/RrhMOpFTeSXxSrCjctQz7bu2RNTb4bHswQ9nizWRIRPoqgXXhxcwT2b2jP0OSd3MELIZOvi0LiWEX5uU8bQ0qsgMRBkY6a+77EqPjvbTf4CcWFC8mFo/dXW8wt8BiLu3XjipEFTawVN6do8aYt1PsSukLRVHqWfOvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nv/hfWDt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhVMKdGr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C97AC4CEEB;
-	Mon, 18 Aug 2025 13:59:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nv/hfWDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A198C4CEEB;
+	Mon, 18 Aug 2025 14:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525601;
-	bh=+vWya3Av459s1sXEHvtnMRVBAU09U7UsTkHT9ZsZ+Cs=;
+	s=korg; t=1755525604;
+	bh=eqJxLxPdTGfBpAJ1Ubk2X7wKLXaAyPhBcQ+n2GCiwnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhVMKdGrakC93KmaaQ01XV7qoKOgrqcm9ejRKk6sp+UUm5b+dCNJe4gw5OOVyN2Wi
-	 byxSw5ngt1iSbQXSJd+AHcUU1bGM2qblCi3kYRJuhrdsg9LmbXfIiSL04Q78pxDw12
-	 NASYqQVQpB46XW1RiCmOWc21CENanY/twVRDSaX4=
+	b=Nv/hfWDtoImOkE9Jbv7bc89mVtv5lOJeBgX4Bc1do2wmWC9fWLC4QmhrPWSvuyk3F
+	 lvYtdk/hbMSRPuxYcuyZ68OMHBNVy2RizXVwmVp0z/aGt59af/VUO6kVilI0AvYYFd
+	 sN8xtR/sg3hWfleZj1hHb+OTgqcJ/drXSIm5o3K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 270/570] drm/fbdev-client: Skip DRM clients if modesetting is absent
-Date: Mon, 18 Aug 2025 14:44:17 +0200
-Message-ID: <20250818124516.248759190@linuxfoundation.org>
+Subject: [PATCH 6.16 305/570] wifi: iwlwifi: mld: fix last_mlo_scan_time type
+Date: Mon, 18 Aug 2025 14:44:52 +0200
+Message-ID: <20250818124517.615442883@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,66 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit cce91f29c088ba902dd2abfc9c3216ba9a2fb2fe ]
+[ Upstream commit f26281c1b727b90ec18ae90044d5f429d2250e82 ]
 
-Recent generations of Tegra have moved the display components outside of
-host1x, leading to a device that has no CRTCs attached and hence doesn't
-support any of the modesetting functionality. When this is detected, the
-driver clears the DRIVER_MODESET and DRIVER_ATOMIC flags for the device.
+This should be u64, otherwise it rolls over quickly on 32-bit
+systems.
 
-Unfortunately, this causes the following errors during boot:
-
-    [      15.418958] ERR KERN drm drm: [drm] *ERROR* Failed to register client: -95
-    [      15.425311] WARNING KERN drm drm: [drm] Failed to set up DRM client; error -95
-
-These originate from the fbdev client checking for the presence of the
-DRIVER_MODESET flag and returning -EOPNOTSUPP. However, if a driver does
-not support DRIVER_MODESET this is entirely expected and the error isn't
-helpful.
-
-Prevent this misleading error message by setting up the DRM clients only
-if modesetting is enabled.
-
-Changes in v2:
-- use DRIVER_MODESET check to avoid registering any clients
-
-Reported-by: Jonathan Hunter <jonathanh@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250613122838.2082334-1-thierry.reding@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250611222325.5381030253cd.I4e3a7bca5b52fc826e26311055286421508c4d1b@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/clients/drm_client_setup.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mld/scan.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/clients/drm_client_setup.c b/drivers/gpu/drm/clients/drm_client_setup.c
-index e17265039ca8..e460ad354de2 100644
---- a/drivers/gpu/drm/clients/drm_client_setup.c
-+++ b/drivers/gpu/drm/clients/drm_client_setup.c
-@@ -2,6 +2,7 @@
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/scan.h b/drivers/net/wireless/intel/iwlwifi/mld/scan.h
+index 3ae940d55065..4044cac3f086 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/scan.h
++++ b/drivers/net/wireless/intel/iwlwifi/mld/scan.h
+@@ -130,7 +130,7 @@ struct iwl_mld_scan {
+ 	void *cmd;
+ 	unsigned long last_6ghz_passive_jiffies;
+ 	unsigned long last_start_time_jiffies;
+-	unsigned long last_mlo_scan_time;
++	u64 last_mlo_scan_time;
+ };
  
- #include <drm/clients/drm_client_setup.h>
- #include <drm/drm_device.h>
-+#include <drm/drm_drv.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_print.h>
- 
-@@ -31,6 +32,10 @@ MODULE_PARM_DESC(active,
-  */
- void drm_client_setup(struct drm_device *dev, const struct drm_format_info *format)
- {
-+	if (!drm_core_check_feature(dev, DRIVER_MODESET)) {
-+		drm_dbg(dev, "driver does not support mode-setting, skipping DRM clients\n");
-+		return;
-+	}
- 
- #ifdef CONFIG_DRM_FBDEV_EMULATION
- 	if (!strcmp(drm_client_default, "fbdev")) {
+ #endif /* __iwl_mld_scan_h__ */
 -- 
 2.39.5
 
