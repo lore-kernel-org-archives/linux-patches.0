@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F348D31CA55;
-	Mon, 18 Aug 2025 12:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119DF320CC3;
+	Mon, 18 Aug 2025 12:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521568; cv=none; b=Gf/xRDbnGNSiK8Nf8pIjNaykjo5qaCtClL30CBRpdVOrWk+EZBFqOO9frps1ktbo6lQ9tuoI5x3EK1JlQP/jY34PT7ETuVdLu5ZQ9xgPwdgq42+5F1eyOUrEkWq85hfkoPEGg/wvtPY6TWH1UIhDsR6rolVd9a4Of/3DnDUDMHQ=
+	t=1755521571; cv=none; b=kJO96Ht2QnKcXs0hNFIrH/eL2ZC3xMGhMklGWY1TiJeGYu74TVrwxqo75qwLtc7H2XtYNBZtMybA9ifwqzHc+ca8bgiEoUWulufM8LE5RkIe8jWZ0S9OYlGHZn0583qZ71igfswY2nyzuw5K7/NER9akpp4RQg161Kix0jXa0z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521568; c=relaxed/simple;
-	bh=62qe0qcQcmYhPJtMTpGxC9eDsJ3B0rdi+k3VMZcaWwg=;
+	s=arc-20240116; t=1755521571; c=relaxed/simple;
+	bh=O+E3OveGHj14yYpydOpRVspkV9mpozh9WVQ2x36iDDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4PLsRIr9SXBRwHTX5wzwDdxYT2+evZDuvjTs6ZsrcxD1VT9snAjrhhSjbvYi+OsbGiuVle3uruZeNKr/L3FLPJ/UHHIiJFqPW82Ae3cJAjCNmrIMR6zYgPdeZYnltFcfltNbdAQ8ZExYnZl94+mAN1OcQ5+MLNtXTzcUYnYyRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pEPuZGs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=haqP/n1kZc1qFREMQewEcXcQvU25ogaRpawSLoVO0/35KlbdRQjYRG0VmYDEk73/VrfFcOoy77y9CLJ7twlfyAeklP2Ef1WkL36pKPSVET5J61ywsHpQS4yMDQ0KAR+j86sN3zX5S4G2PNm0dHRHoYFEFAwd+2wyvz9wu4RAxus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5i0gXTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pEPuZGs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2767BC4CEF1;
-	Mon, 18 Aug 2025 12:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5i0gXTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7474CC4CEEB;
+	Mon, 18 Aug 2025 12:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521567;
-	bh=62qe0qcQcmYhPJtMTpGxC9eDsJ3B0rdi+k3VMZcaWwg=;
+	s=korg; t=1755521570;
+	bh=O+E3OveGHj14yYpydOpRVspkV9mpozh9WVQ2x36iDDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pEPuZGs2knUVwwLr38Rjg6y6j1LdFn9s1lka1MEE5EzaqFW5u/cCr2a0TYZVBIdk
-	 HYR7KNTEfPGoE7Bkd+g9YEoNUwf5S3IfKjuoSy/IHJ55wTysefFDyTtsv5dO91Orrm
-	 FzPRzqk02X/68I3KEAz6rHzrImipBKl5NSuvm7uk=
+	b=O5i0gXTbOr+54qxdHlF3uXBWU4AzY9iwmIFvWZLzP83A7iFUC9KgUzHng3j7z0hjY
+	 ixjAolovWfGSGLtf8BoPDIaF1OAxZwusp1SoDHK5WHssJnPE94JD36z79ebs6e8Ty7
+	 ZJGZgWxDZV9Y/waDuzqu7lvZi7wH49+4EJPLLsM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Huang Ying <ying.huang@linux.alibaba.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Donet Tom <donettom@linux.ibm.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 042/444] mm/memory-tier: fix abstract distance calculation overflow
-Date: Mon, 18 Aug 2025 14:41:08 +0200
-Message-ID: <20250818124450.514152513@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 060/444] cpuidle: governors: menu: Avoid using invalid recent intervals data
+Date: Mon, 18 Aug 2025 14:41:26 +0200
+Message-ID: <20250818124451.198586972@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -54,65 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit cce35103135c7ffc7bebc32ebfc74fe1f2c3cb5d upstream.
+[ Upstream commit fa3fa55de0d6177fdcaf6fc254f13cc8f33c3eed ]
 
-In mt_perf_to_adistance(), the calculation of abstract distance (adist)
-involves multiplying several int values including
-MEMTIER_ADISTANCE_DRAM.
+Marc has reported that commit 85975daeaa4d ("cpuidle: menu: Avoid
+discarding useful information") caused the number of wakeup interrupts
+to increase on an idle system [1], which was not expected to happen
+after merely allowing shallower idle states to be selected by the
+governor in some cases.
 
-*adist = MEMTIER_ADISTANCE_DRAM *
-		(perf->read_latency + perf->write_latency) /
-		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
-		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
-		(perf->read_bandwidth + perf->write_bandwidth);
+However, on the system in question, all of the idle states deeper than
+WFI are rejected by the driver due to a firmware issue [2].  This causes
+the governor to only consider the recent interval duriation data
+corresponding to attempts to enter WFI that are successful and the
+recent invervals table is filled with values lower than the scheduler
+tick period.  Consequently, the governor predicts an idle duration
+below the scheduler tick period length and avoids stopping the tick
+more often which leads to the observed symptom.
 
-Since these values can be large, the multiplication may exceed the
-maximum value of an int (INT_MAX) and overflow (Our platform did),
-leading to an incorrect adist.
+Address it by modifying the governor to update the recent intervals
+table also when entering the previously selected idle state fails, so
+it knows that the short idle intervals might have been the minority
+had the selected idle states been actually entered every time.
 
-User-visible impact:
-The memory tiering subsystem will misinterpret slow memory (like CXL)
-as faster than DRAM, causing inappropriate demotion of pages from
-CXL (slow memory) to DRAM (fast memory).
-
-For example, we will see the following demotion chains from the dmesg, where
-Node0,1 are DRAM, and Node2,3 are CXL node:
- Demotion targets for Node 0: null
- Demotion targets for Node 1: null
- Demotion targets for Node 2: preferred: 0-1, fallback: 0-1
- Demotion targets for Node 3: preferred: 0-1, fallback: 0-1
-
-Change MEMTIER_ADISTANCE_DRAM to be a long constant by writing it with
-the 'L' suffix.  This prevents the overflow because the multiplication
-will then be done in the long type which has a larger range.
-
-Link: https://lkml.kernel.org/r/20250611023439.2845785-1-lizhijian@fujitsu.com
-Link: https://lkml.kernel.org/r/20250610062751.2365436-1-lizhijian@fujitsu.com
-Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Huang Ying <ying.huang@linux.alibaba.com>
-Acked-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Donet Tom <donettom@linux.ibm.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
+Link: https://lore.kernel.org/linux-pm/86o6sv6n94.wl-maz@kernel.org/ [1]
+Link: https://lore.kernel.org/linux-pm/7ffcb716-9a1b-48c2-aaa4-469d0df7c792@arm.com/ [2]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/2793874.mvXUDI8C0e@rafael.j.wysocki
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memory-tiers.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpuidle/governors/menu.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
---- a/include/linux/memory-tiers.h
-+++ b/include/linux/memory-tiers.h
-@@ -18,7 +18,7 @@
-  * adistance value (slightly faster) than default DRAM adistance to be part of
-  * the same memory tier.
-  */
--#define MEMTIER_ADISTANCE_DRAM	((4 * MEMTIER_CHUNK_SIZE) + (MEMTIER_CHUNK_SIZE >> 1))
-+#define MEMTIER_ADISTANCE_DRAM	((4L * MEMTIER_CHUNK_SIZE) + (MEMTIER_CHUNK_SIZE >> 1))
+diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
+index 97ffadc7e57a..01322a905414 100644
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -153,6 +153,14 @@ static inline int performance_multiplier(unsigned int nr_iowaiters)
  
- struct memory_tier;
- struct memory_dev_type {
+ static DEFINE_PER_CPU(struct menu_device, menu_devices);
+ 
++static void menu_update_intervals(struct menu_device *data, unsigned int interval_us)
++{
++	/* Update the repeating-pattern data. */
++	data->intervals[data->interval_ptr++] = interval_us;
++	if (data->interval_ptr >= INTERVALS)
++		data->interval_ptr = 0;
++}
++
+ static void menu_update(struct cpuidle_driver *drv, struct cpuidle_device *dev);
+ 
+ /*
+@@ -277,6 +285,14 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 	if (data->needs_update) {
+ 		menu_update(drv, dev);
+ 		data->needs_update = 0;
++	} else if (!dev->last_residency_ns) {
++		/*
++		 * This happens when the driver rejects the previously selected
++		 * idle state and returns an error, so update the recent
++		 * intervals table to prevent invalid information from being
++		 * used going forward.
++		 */
++		menu_update_intervals(data, UINT_MAX);
+ 	}
+ 
+ 	nr_iowaiters = nr_iowait_cpu(dev->cpu);
+@@ -546,10 +562,7 @@ static void menu_update(struct cpuidle_driver *drv, struct cpuidle_device *dev)
+ 
+ 	data->correction_factor[data->bucket] = new_factor;
+ 
+-	/* update the repeating-pattern data */
+-	data->intervals[data->interval_ptr++] = ktime_to_us(measured_ns);
+-	if (data->interval_ptr >= INTERVALS)
+-		data->interval_ptr = 0;
++	menu_update_intervals(data, ktime_to_us(measured_ns));
+ }
+ 
+ /**
+-- 
+2.50.1
+
 
 
