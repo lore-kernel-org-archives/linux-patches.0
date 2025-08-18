@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80033469F3;
-	Mon, 18 Aug 2025 13:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65F9346A02;
+	Mon, 18 Aug 2025 13:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525452; cv=none; b=Vmjih/2nsx9nfqTyH5DdtXTYbA7QvRIj8sbtlQl4ZM9Z6RvEMk2L5DZGq/XIAsP7VjC3R1THOcQdzzd+ZOjLBR9ARcmdjYgzsTU2DDs4IYXKpTzqehwfTVOAP4x81eBIs+oJrQYEo2cK1nnZusC6DvyWmoGzNWcmjrW3H7UdpGg=
+	t=1755525455; cv=none; b=OWI2O7k7KN+8wXUpl+VkxPQyhJGPYRt3NyknHiMCiGhNK4SAx7IETQftzIv0mNjCV0YXnDf+COEoU9UECkAc5b/JF7zp7KkDTCi5bc3Au21nyuljGF758If3gJ73ahF9w0oUBQPvsZ4sMdBAlFgeFJQWy28bO27RAsoQiwRynDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525452; c=relaxed/simple;
-	bh=34xeDUdJ2gbrbC8D/u7Q8yO5lmxdcq17yt695WW0FYY=;
+	s=arc-20240116; t=1755525455; c=relaxed/simple;
+	bh=GZM/CTtbD8MDceLxvUPjG4nKkG5stL6TTa3Y0r1A7qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J14kR3+aA2m4WqeK1P/CV3ICWW/DM6Vjjf+EfnX1kJPARPRv7GGo7IOAOXzjuZXrmJ8FdM6wlHizkztOBUxMDu/rb+WZQXH+sk04wqYCHfbKPjSZgf4BV8luiH5Lpq0qEhKJ0kBXeohSKE7M5Clg5SQS4q+jQnxgAiRsPME6Fp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGsWpQZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jPQNzV1uWXYROvhPSOu5d4scvVLa/5u7lLjKXuq7JFWWKMn0Y4X8NN/sZHgor2y3CBUCcw5zDSE9ShEe94nTnd6v4X+vhya9H5U302EheGHbwotdMkNAbTzrFcF1wM04moT4Zu44GnUA+F6g+VdHa92ARXapk8p5GtyOIF56mWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/OJmKY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGsWpQZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAA7C4CEEB;
-	Mon, 18 Aug 2025 13:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/OJmKY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B58C4CEEB;
+	Mon, 18 Aug 2025 13:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525452;
-	bh=34xeDUdJ2gbrbC8D/u7Q8yO5lmxdcq17yt695WW0FYY=;
+	s=korg; t=1755525455;
+	bh=GZM/CTtbD8MDceLxvUPjG4nKkG5stL6TTa3Y0r1A7qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGsWpQZR615rn4PsMocqDV8XUSAHS/GqnchRyarf3KjHdRuzWkWr6IeQt8AYsUFLr
-	 y22WWxvZAwz2GfTJShdQjqnSr6Dij++AjnbBrnJWsvpH10ctFsQz+6RcHajPnL1vqh
-	 K0rFBGaQzdudf8Aeu32SijemyfhQfCsyXXIvUJTU=
+	b=l/OJmKY9pbtoO4r1bQGUa4hVUE10aUrPv/KOsFtq2qAkb/cBpefGFadRMrKWZvDmC
+	 P/03NarP6Q8iqj1Hh5i88ml/hm/nmrwZe98WrrBpfwFVmiCvg5eBh3bsXszCmbjquS
+	 jcRh6C7WZkAjwV3wS5cOE2iUbxcmXw2r4U1RXx3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
+	Hari Chandrakanthan <quic_haric@quicinc.com>,
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 266/570] rcu/nocb: Fix possible invalid rdps->nocb_cb_kthread pointer access
-Date: Mon, 18 Aug 2025 14:44:13 +0200
-Message-ID: <20250818124516.092117363@linuxfoundation.org>
+Subject: [PATCH 6.16 267/570] wifi: mac80211: fix rx link assignment for non-MLO stations
+Date: Mon, 18 Aug 2025 14:44:14 +0200
+Message-ID: <20250818124516.136851295@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,62 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Hari Chandrakanthan <quic_haric@quicinc.com>
 
-[ Upstream commit 1bba3900ca18bdae28d1b9fa10f16a8f8cb2ada1 ]
+[ Upstream commit cc2b722132893164bcb3cee4f08ed056e126eb6c ]
 
-In the preparation stage of CPU online, if the corresponding
-the rdp's->nocb_cb_kthread does not exist, will be created,
-there is a situation where the rdp's rcuop kthreads creation fails,
-and then de-offload this CPU's rdp, does not assign this CPU's
-rdp->nocb_cb_kthread pointer, but this rdp's->nocb_gp_rdp and
-rdp's->rdp_gp->nocb_gp_kthread is still valid.
+Currently, ieee80211_rx_data_set_sta() does not correctly handle the
+case where the interface supports multiple links (MLO), but the station
+does not (non-MLO). This can lead to incorrect link assignment or
+unexpected warnings when accessing link information.
 
-This will cause the subsequent re-offload operation of this offline
-CPU, which will pass the conditional check and the kthread_unpark()
-will access invalid rdp's->nocb_cb_kthread pointer.
+Hence, add a fix to check if the station lacks valid link support and
+use its default link ID for rx->link assignment. If the station
+unexpectedly has valid links, fall back to the default link.
 
-This commit therefore use rdp's->nocb_gp_kthread instead of
-rdp_gp's->nocb_gp_kthread for safety check.
+This ensures correct link association and prevents potential issues
+in mixed MLO/non-MLO environments.
 
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+Signed-off-by: Hari Chandrakanthan <quic_haric@quicinc.com>
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Link: https://patch.msgid.link/20250630084119.3583593-1-quic_sarishar@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_nocb.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/mac80211/rx.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
-index 711043e4eb54..47d1851f23eb 100644
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -1146,7 +1146,6 @@ static bool rcu_nocb_rdp_offload_wait_cond(struct rcu_data *rdp)
- static int rcu_nocb_rdp_offload(struct rcu_data *rdp)
- {
- 	int wake_gp;
--	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 8ec06cf0a9f0..7b801dd3f569 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -4211,10 +4211,16 @@ static bool ieee80211_rx_data_set_sta(struct ieee80211_rx_data *rx,
+ 		rx->link_sta = NULL;
+ 	}
  
- 	WARN_ON_ONCE(cpu_online(rdp->cpu));
- 	/*
-@@ -1156,7 +1155,7 @@ static int rcu_nocb_rdp_offload(struct rcu_data *rdp)
- 	if (!rdp->nocb_gp_rdp)
- 		return -EINVAL;
+-	if (link_id < 0)
+-		rx->link = &rx->sdata->deflink;
+-	else if (!ieee80211_rx_data_set_link(rx, link_id))
++	if (link_id < 0) {
++		if (ieee80211_vif_is_mld(&rx->sdata->vif) &&
++		    sta && !sta->sta.valid_links)
++			rx->link =
++				rcu_dereference(rx->sdata->link[sta->deflink.link_id]);
++		else
++			rx->link = &rx->sdata->deflink;
++	} else if (!ieee80211_rx_data_set_link(rx, link_id)) {
+ 		return false;
++	}
  
--	if (WARN_ON_ONCE(!rdp_gp->nocb_gp_kthread))
-+	if (WARN_ON_ONCE(!rdp->nocb_gp_kthread))
- 		return -EINVAL;
- 
- 	pr_info("Offloading %d\n", rdp->cpu);
-@@ -1166,7 +1165,7 @@ static int rcu_nocb_rdp_offload(struct rcu_data *rdp)
- 
- 	wake_gp = rcu_nocb_queue_toggle_rdp(rdp);
- 	if (wake_gp)
--		wake_up_process(rdp_gp->nocb_gp_kthread);
-+		wake_up_process(rdp->nocb_gp_kthread);
- 
- 	swait_event_exclusive(rdp->nocb_state_wq,
- 			      rcu_nocb_rdp_offload_wait_cond(rdp));
+ 	return true;
+ }
 -- 
 2.39.5
 
