@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351BF32A3D2;
-	Mon, 18 Aug 2025 13:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8391832A3FA;
+	Mon, 18 Aug 2025 13:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523554; cv=none; b=qZqbjtbLf3h7VcuFLe8I7zaIWBPeQ7w8C08P7CxfFhDO9At3GUvnE4nHA4ABDui897xlZlwAdZOnChWG1sZYtm9hHbzucfbAEgAtf0pfXHfa4SNTcW2qfMas1Cp2iu5BDwdD/QfYCceXJYUQlzY9I1CnmgrqblnDsJhOuZmoBc8=
+	t=1755523557; cv=none; b=RQACU8C/wWQjQ6O2qo7kXgWOPGpSh653nTUpq6SDIhL7EG8NxtUdkx7GzXIDk5UnNG9Pz0337q5Fo5KitUYjOeymlKECChGG4dxItZ95AXg8nzLVXEpp6oT2o1U5oMtZ+gArO9Vks5RZ+LF7GXwdaDZ5ETPFcTpVboSJOyxld+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523554; c=relaxed/simple;
-	bh=M8xIW8MEa7ZOxJ95rjrJJgr6k715PBwCP32dStf/5jk=;
+	s=arc-20240116; t=1755523557; c=relaxed/simple;
+	bh=WmPOM6Bn9HYhpLuUdfvNEw8Q215xf2u7IcNkTwlkZxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pdj+w870GwcGqme9Gl9wpoDGGo8WHzIxFdPqy20vOHD6WbEyGzxXj5m7iypwXgrn+KRgj3fzK7yQqXZFjaVNDbePBzB8pvZtvQfhAMdEsURCcGOADjDediBRuoFOS7s4zR/5iojpAsvAsoaHUJrxZo96X9fauzieHt4b4tGeuz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzJnQObA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YhX/N2nEZ7ZpUmpOkxwiC4d5GOqamf3WbD0IimAmEGAlI8jM4UyMUR8L+4rbu9VjN2m/afuHCyEnBQJaj5QpRSPVcmhTMOpo7I21cLpMuLl8OB3ZkGX7mNiYkuvY9F+b23ZJ7R/LIVlGTDjiQPnz36UnfGWjA0C5FBfusjtmuOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nR5UgN+0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzJnQObA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8071C4CEEB;
-	Mon, 18 Aug 2025 13:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nR5UgN+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97707C4CEEB;
+	Mon, 18 Aug 2025 13:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523554;
-	bh=M8xIW8MEa7ZOxJ95rjrJJgr6k715PBwCP32dStf/5jk=;
+	s=korg; t=1755523557;
+	bh=WmPOM6Bn9HYhpLuUdfvNEw8Q215xf2u7IcNkTwlkZxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzJnQObAc20oK0T+M9bWCvPRzChsM0Prdtitd8s9klcvyLnVrCzZw713h7EQeVb14
-	 at6qg+EyiIZVpaF8jRTTF/cz2giKRe3cougB8n0gnf2ZHroxwpP1gmBVPdeZa12ydN
-	 ccPM8amDK7vK0qDNSwIcfsVIp8+rcL/3FOTVorUA=
+	b=nR5UgN+0LZOEysL1vFBV3D8lP9xUWsLlPvxdpzsFC2L6iWYOHcGB4sWLT2Vb87JWT
+	 IRZA995S/RU6nGbfPwpQFFKMzPjJhfpdDu3ZoHrTubLH5VUijTMX7QKFbeCUmfNVah
+	 c/R9SCTlEumxNJUHK+BtJtFVM+pY9OTFO6DGX5oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 206/515] s390/sclp: Use monotonic clock in sclp_sync_wait()
-Date: Mon, 18 Aug 2025 14:43:12 +0200
-Message-ID: <20250818124506.295928003@linuxfoundation.org>
+Subject: [PATCH 6.15 207/515] s390/time: Use monotonic clock in get_cycles()
+Date: Mon, 18 Aug 2025 14:43:13 +0200
+Message-ID: <20250818124506.334166182@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -54,41 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 925f0707a67cae0a974c4bd5b718f0263dc56824 ]
+[ Upstream commit 09e7e29d2b49ba84bcefb3dc1657726d2de5bb24 ]
 
-sclp_sync_wait() should use the monotonic clock for the delay loop.
-Otherwise the code won't work correctly when the clock is changed.
+Otherwise the code might not work correctly when the clock
+is changed.
 
 Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
 Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/sclp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/include/asm/timex.h | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/s390/char/sclp.c b/drivers/s390/char/sclp.c
-index 840be75e75d4..9a55e2d04e63 100644
---- a/drivers/s390/char/sclp.c
-+++ b/drivers/s390/char/sclp.c
-@@ -719,7 +719,7 @@ sclp_sync_wait(void)
- 	timeout = 0;
- 	if (timer_pending(&sclp_request_timer)) {
- 		/* Get timeout TOD value */
--		timeout = get_tod_clock_fast() +
-+		timeout = get_tod_clock_monotonic() +
- 			  sclp_tod_from_jiffies(sclp_request_timer.expires -
- 						jiffies);
- 	}
-@@ -739,7 +739,7 @@ sclp_sync_wait(void)
- 	/* Loop until driver state indicates finished request */
- 	while (sclp_running_state != sclp_running_state_idle) {
- 		/* Check for expired request timer */
--		if (get_tod_clock_fast() > timeout && timer_delete(&sclp_request_timer))
-+		if (get_tod_clock_monotonic() > timeout && timer_delete(&sclp_request_timer))
- 			sclp_request_timer.function(&sclp_request_timer);
- 		cpu_relax();
- 	}
+diff --git a/arch/s390/include/asm/timex.h b/arch/s390/include/asm/timex.h
+index bed8d0b5a282..59dfb8780f62 100644
+--- a/arch/s390/include/asm/timex.h
++++ b/arch/s390/include/asm/timex.h
+@@ -196,13 +196,6 @@ static inline unsigned long get_tod_clock_fast(void)
+ 	asm volatile("stckf %0" : "=Q" (clk) : : "cc");
+ 	return clk;
+ }
+-
+-static inline cycles_t get_cycles(void)
+-{
+-	return (cycles_t) get_tod_clock() >> 2;
+-}
+-#define get_cycles get_cycles
+-
+ int get_phys_clock(unsigned long *clock);
+ void init_cpu_timer(void);
+ 
+@@ -230,6 +223,12 @@ static inline unsigned long get_tod_clock_monotonic(void)
+ 	return tod;
+ }
+ 
++static inline cycles_t get_cycles(void)
++{
++	return (cycles_t)get_tod_clock_monotonic() >> 2;
++}
++#define get_cycles get_cycles
++
+ /**
+  * tod_to_ns - convert a TOD format value to nanoseconds
+  * @todval: to be converted TOD format value
 -- 
 2.39.5
 
