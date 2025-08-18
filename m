@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B628C21C9FD;
-	Mon, 18 Aug 2025 13:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B28220126A;
+	Mon, 18 Aug 2025 13:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522179; cv=none; b=CwOh0ycFPKiTEQPpOmRaXm6KZB7Z0nokkcEboz8RaCT3RGgPeFzjizGHDgD2H1p4ipqYYvD1ajdwz+iho7euowicYVIS2nof/SDH0TjuKPJjas7WFoKvi/gmPejtIRWbw2n8gPDLuAFUoRAOWsYAay0zOUka1V+4ytBKRol/hpA=
+	t=1755522183; cv=none; b=L4fLiTkhiYyOqXfXpENdoFnfsBsxVztz0zkHpiqA9jg2txoGJARxg18PgZRGvas9Nr6jxBaf+EH7BzKhSZGLtOJ3Hcqu3iZbftH0WuMlRK7IZLCACUYHDs1ZM2fUfhzIQA3SrA8xe6G2um5A+/9yhQhks3k5ulsKwf6ygxpZSbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522179; c=relaxed/simple;
-	bh=8PPjL42Q1xyNZ6TYGY501BiNU7Ji14bWD8cBJmiEtGw=;
+	s=arc-20240116; t=1755522183; c=relaxed/simple;
+	bh=cMle9pzfz21fhlZiqiEXE618EgQbz+p3q4ADfLhoEH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFvcvf/lk1+sTdWq37t8jv3DdsKk4nsk+bpH97VciD6o1CcwTYTXNN3J/BPm+0LHS+meeoenqD76scVrgfVg4nCqCGEiY4Q4bua9vtfAG8rWzs26we+99XTUDAbLpd50bynAVhmqNTDvIRZ443ZbLA3YaMgHbYhdrFWk6jMN/fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOpg6ZVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fAG0+4x57HeQ7Q/sGD4yUO51j5Psapg5DjCbTkZUlrwyy7BE/5aXII8qjWG8hKE9zCIp8Ij7MFWzu3/uHu7kAEwcOlSt31kLNqphb7kz6Ndi7za4Rzucpo6XrfKW5Exe95vUs3+JsRjAjwbnrpsgZDrrsiRXlnLGxiQuQvgPZA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkqBmgpo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOpg6ZVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2385CC4CEEB;
-	Mon, 18 Aug 2025 13:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkqBmgpo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21EAC113D0;
+	Mon, 18 Aug 2025 13:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522179;
-	bh=8PPjL42Q1xyNZ6TYGY501BiNU7Ji14bWD8cBJmiEtGw=;
+	s=korg; t=1755522183;
+	bh=cMle9pzfz21fhlZiqiEXE618EgQbz+p3q4ADfLhoEH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOpg6ZVbvNNH59MUqYxXEzM8oy19F88Er8YP+9zABwmnTzOedN90zydMtZv+h+6Bb
-	 370URjtAGldnpBwCX4eHL25kruI7+MFOoaOxKtvts0jQWDECZtctPWSerl4V/lV/sR
-	 qSJFKcrsjKQPihtPq3VpbxTuFscD14hPbSWl3q24=
+	b=XkqBmgpoeVti0QFb2HjBqEwo5dqsyqUrksvqFZ3k6xYDVDZ8XEgfD4vRRJVZy6U1s
+	 bmZuOh5r8KROw9GhmPxAdYivnf1tcMEz6D1MVAVC1VsqhEod7ydSIl38BpAWZmgTTe
+	 MNIxhkSQronK6nBzT30AHfxiXRR6O5v/PtlbeMvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ap420073@gmail.com,
-	Mina Almasry <almasrymina@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	Breno Leitao <leitao@debian.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Petr Mladek <pmladek@suse.com>,
+	Song Liu <song@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 239/444] netmem: fix skb_frag_address_safe with unreadable skbs
-Date: Mon, 18 Aug 2025 14:44:25 +0200
-Message-ID: <20250818124457.790368403@linuxfoundation.org>
+Subject: [PATCH 6.12 240/444] arm64: stacktrace: Check kretprobe_find_ret_addr() return value
+Date: Mon, 18 Aug 2025 14:44:26 +0200
+Message-ID: <20250818124457.827064887@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,43 +58,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mina Almasry <almasrymina@google.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 4672aec56d2e8edabcb74c3e2320301d106a377e ]
+[ Upstream commit beecfd6a88a675e20987e70ec532ba734b230fa4 ]
 
-skb_frag_address_safe() needs a check that the
-skb_frag_page exists check similar to skb_frag_address().
+If kretprobe_find_ret_addr() fails to find the original return address,
+it returns 0. Check for this case so that a reliable stacktrace won't
+silently ignore it.
 
-Cc: ap420073@gmail.com
-
-Signed-off-by: Mina Almasry <almasrymina@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250619175239.3039329-1-almasrymina@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Andrea della Porta <andrea.porta@suse.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Miroslav Benes <mbenes@suse.cz>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Song Liu <song@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-and-tested-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20250521111000.2237470-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/arm64/kernel/stacktrace.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index a726a698aac4..b2827fce5a2d 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -3638,7 +3638,13 @@ static inline void *skb_frag_address(const skb_frag_t *frag)
-  */
- static inline void *skb_frag_address_safe(const skb_frag_t *frag)
- {
--	void *ptr = page_address(skb_frag_page(frag));
-+	struct page *page = skb_frag_page(frag);
-+	void *ptr;
-+
-+	if (!page)
-+		return NULL;
-+
-+	ptr = page_address(page);
- 	if (unlikely(!ptr))
- 		return NULL;
- 
+diff --git a/arch/arm64/kernel/stacktrace.c b/arch/arm64/kernel/stacktrace.c
+index 2729faaee4b4..1d60a08a2184 100644
+--- a/arch/arm64/kernel/stacktrace.c
++++ b/arch/arm64/kernel/stacktrace.c
+@@ -123,6 +123,8 @@ kunwind_recover_return_address(struct kunwind_state *state)
+ 		orig_pc = kretprobe_find_ret_addr(state->task,
+ 						  (void *)state->common.fp,
+ 						  &state->kr_cur);
++		if (!orig_pc)
++			return -EINVAL;
+ 		state->common.pc = orig_pc;
+ 	}
+ #endif /* CONFIG_KRETPROBES */
 -- 
 2.39.5
 
