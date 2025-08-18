@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC7C31B13B;
-	Mon, 18 Aug 2025 13:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8F2286D5E;
+	Mon, 18 Aug 2025 13:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522104; cv=none; b=t26rxHILMleD6Z6UXRVp9+xvtwnxlDbXtTTh3CHI8vjaiRKXjUdT+7kn9i4PKf7PWiNChrKHSjeox6SF7aco659jzB4KelNUp3EN1E6/gzBcAV0lwPvek59xvtqt6TDg2vftZU2FE/tIKe/9/GPx/3AlR5UyIq7lS2QHtLqLks8=
+	t=1755522107; cv=none; b=RC3pjddo2qUfiF72hRJ75UCaKXHzYQJAlklRakhB6iaM+uYfBzYUjMbxqHh2m6pNh344T0ldgl128QrRDO3Ll3NRvCgs/YKFZIDTdCUD/iMxE9kYXOK2wX8UkGV1dsC+Dsz3Ufu0/3OO77PJrDeYm0Gzh+2nS+LyngkzHp/bVyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522104; c=relaxed/simple;
-	bh=nAYuPWWwwXJKJ9xQUh5n11kPEBBSteWyAsdpxM7DDTY=;
+	s=arc-20240116; t=1755522107; c=relaxed/simple;
+	bh=1Ov1fuRJjDiLuyV1VF31GdKbNvUodxq8M96tIdjTSBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXcB/78wmgQl19aa3QH1UPmjRLd2JvD2rYp8TP3tSr+HG10N5CZV5qk6CTlFygtIpy7OTE+57VuqcPngmw4JOfBQoo00qsYV/so35kSQCVnw51FDltUo0q9MwYToP87txUQtAEd4fCvuoCq84waQP/QYaVYBYWvjz4vwFwKWhew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJfJmssO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RgLrXOBOPJBph4rJDmNkcHA+vbZOgMzfibL0U89uL44AHyBUij++3o2btReO4FrOt2sVU3ci/PCgNeUqd/+0YQhT2aEPtyElc9SpuZlMHWYSLPkilG7t+nFFAZh96dJkWrWwcyItkOMSdunsD7/9G33O6huQ5rc/pbGc03PAREE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3lRYF22; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJfJmssO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22FAC4CEEB;
-	Mon, 18 Aug 2025 13:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3lRYF22"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425D5C4CEEB;
+	Mon, 18 Aug 2025 13:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522104;
-	bh=nAYuPWWwwXJKJ9xQUh5n11kPEBBSteWyAsdpxM7DDTY=;
+	s=korg; t=1755522107;
+	bh=1Ov1fuRJjDiLuyV1VF31GdKbNvUodxq8M96tIdjTSBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GJfJmssOjKK5iEtRIONa18RFXOrn+aCywvLAbjVKjUUKPRDoB3dzftQsY+ZrsWnQG
-	 vo+v8xatg4XFIE653QzrSo8HeRYuBXwP4f8Jr93ElZYmzJrMnW9VfbwVJTLHbkpoCH
-	 YZRxfApfEFiOejuPCVke6dcMZr1ojK6YqkGr1q4w=
+	b=a3lRYF22wKtpWRkzbRIcEDC5cyUgMpzeqA2qfSTPlyXxD/uE9evKUrYGHNlSFbQr6
+	 4Dk0vKjuSlQHvOn7JD5q9doMTWU3oMigYj5HBEX4/YagG7OVZ8lql0bDlsaVHXbOhd
+	 QnXwYtQw2/WYwjtkqob+zBgQkelQRCoUzrnBLs90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Bauer <mail@david-bauer.net>,
-	Felix Fietkau <nbd@nbd.name>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 215/444] wifi: mt76: mt7915: mcu: re-init MCU before loading FW patch
-Date: Mon, 18 Aug 2025 14:44:01 +0200
-Message-ID: <20250818124456.908824631@linuxfoundation.org>
+Subject: [PATCH 6.12 216/444] kselftest/arm64: Specify SVE data when testing VL set in sve-ptrace
+Date: Mon, 18 Aug 2025 14:44:02 +0200
+Message-ID: <20250818124456.945770305@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,64 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit ac9c50c79eaef5fca0f165e45d0c5880606db53e ]
+[ Upstream commit 9e8ebfe677f9101bbfe1f75d548a5aec581e8213 ]
 
-Restart the MCU and release the patch semaphore before loading the MCU
-patch firmware from the host.
+Since f916dd32a943 ("arm64/fpsimd: ptrace: Mandate SVE payload for
+streaming-mode state") we reject attempts to write to the streaming mode
+regset even if there is no register data supplied, causing the tests for
+setting vector lengths and setting SVE_VL_INHERIT in sve-ptrace to
+spuriously fail. Set the flag to avoid the issue, we still support not
+supplying register data.
 
-This fixes failures upon error recovery in case the semaphore was
-previously taken and never released by the host.
-
-This happens from time to time upon triggering a full-chip error
-recovery. Under this circumstance, the hardware restart fails and the
-radio is rendered inoperational.
-
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Link: https://patch.msgid.link/20250402004528.1036715-3-mail@david-bauer.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250609-kselftest-arm64-ssve-fixups-v2-3-998fcfa6f240@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7915/mcu.c   | 25 +++++++++++--------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ tools/testing/selftests/arm64/fp/sve-ptrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index 87d0dd040001..3398c25cb03c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -2071,16 +2071,21 @@ static int mt7915_load_firmware(struct mt7915_dev *dev)
- {
- 	int ret;
- 
--	/* make sure fw is download state */
--	if (mt7915_firmware_state(dev, false)) {
--		/* restart firmware once */
--		mt76_connac_mcu_restart(&dev->mt76);
--		ret = mt7915_firmware_state(dev, false);
--		if (ret) {
--			dev_err(dev->mt76.dev,
--				"Firmware is not ready for download\n");
--			return ret;
--		}
-+	/* Release Semaphore if taken by previous failed attempt */
-+	ret = mt76_connac_mcu_patch_sem_ctrl(&dev->mt76, false);
-+	if (ret != PATCH_REL_SEM_SUCCESS) {
-+		dev_err(dev->mt76.dev, "Could not release semaphore\n");
-+		/* Continue anyways */
-+	}
-+
-+	/* Always restart MCU firmware */
-+	mt76_connac_mcu_restart(&dev->mt76);
-+
-+	/* Check if MCU is ready */
-+	ret = mt7915_firmware_state(dev, false);
-+	if (ret) {
-+		dev_err(dev->mt76.dev, "Firmware did not enter download state\n");
-+		return ret;
- 	}
- 
- 	ret = mt76_connac2_load_patch(&dev->mt76, fw_name_var(dev, ROM_PATCH));
+diff --git a/tools/testing/selftests/arm64/fp/sve-ptrace.c b/tools/testing/selftests/arm64/fp/sve-ptrace.c
+index c6228176dd1a..408fb1c5c2f8 100644
+--- a/tools/testing/selftests/arm64/fp/sve-ptrace.c
++++ b/tools/testing/selftests/arm64/fp/sve-ptrace.c
+@@ -168,7 +168,7 @@ static void ptrace_set_get_inherit(pid_t child, const struct vec_type *type)
+ 	memset(&sve, 0, sizeof(sve));
+ 	sve.size = sizeof(sve);
+ 	sve.vl = sve_vl_from_vq(SVE_VQ_MIN);
+-	sve.flags = SVE_PT_VL_INHERIT;
++	sve.flags = SVE_PT_VL_INHERIT | SVE_PT_REGS_SVE;
+ 	ret = set_sve(child, type, &sve);
+ 	if (ret != 0) {
+ 		ksft_test_result_fail("Failed to set %s SVE_PT_VL_INHERIT\n",
+@@ -233,6 +233,7 @@ static void ptrace_set_get_vl(pid_t child, const struct vec_type *type,
+ 	/* Set the VL by doing a set with no register payload */
+ 	memset(&sve, 0, sizeof(sve));
+ 	sve.size = sizeof(sve);
++	sve.flags = SVE_PT_REGS_SVE;
+ 	sve.vl = vl;
+ 	ret = set_sve(child, type, &sve);
+ 	if (ret != 0) {
 -- 
 2.39.5
 
