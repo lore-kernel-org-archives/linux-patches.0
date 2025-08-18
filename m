@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2D522A7E0;
-	Mon, 18 Aug 2025 13:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138E32135CE;
+	Mon, 18 Aug 2025 13:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523439; cv=none; b=BeH1gS40+JvlERGWR96yGRtIwiQ8qTCLRNEu9I2ri0o6BSpQZW89+qab0Ai8bDBIUi4Zb5ohrtwbWLK6xERBG9l6hTNeB3Ygs+h1E+otK1WqOg2Id6SuxZ6S2lt+gjL7lzhawiV6/HBKEPnciHmzzITT/URFIidHQb+sCkhRy8k=
+	t=1755523443; cv=none; b=rEEnpT+YNUpH3OHQozJlO55bo3CafVbe4XXSAB0rw1Dhew1bNQld0GYtC7JWIH6Bay32rPqp/M7lhDe8z5632oh8Ekj4KKcJb47z1dVafWkxDO/tivLLTILwERGQWu/iJ9EBYVkoSivi/nJ28wqsRTtTtjkWsFyJYH+RBd0qNWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523439; c=relaxed/simple;
-	bh=v/kHnaSbWkmMw8mBeG/o6a1AWtp2T+mVjrWTWjxjN2E=;
+	s=arc-20240116; t=1755523443; c=relaxed/simple;
+	bh=/J3hqniTaRoMqxQTS4UqviSgLpzDyilYx7uwD28N98I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doUYqK0LmqyP8w+CBZ1s8egCXiDxaQH82R5ayh11eUO+JiWTRuduhmmZqE40+Qovf0/Zdds5jiMGW5x6pUv4doooJBAWMOSLwno7IVV3TCpygEc6Gn6D2qm7YG2nKcirGRmzKG3jtWxLW9/dE5XrmtfsDH498dpJfxpGf1Zr7+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iaaczN2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gjKu8rNe8Cx5iP7QT69U/WzIvFQ3WTBkCgvni6BsE+VHokuyTXhm2W0mmKY0OCyC8Oc/oSJ46WiY9nHuFw+7oTan1f32IoS8WIqk9N3qO0gaXrhJxAS5XIoV1AHs+Iq4kCOt8095zdCsKj6zobCxpoWk/HOElQ723+t/Ra7s9Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/QLPnxX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iaaczN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169FAC4CEEB;
-	Mon, 18 Aug 2025 13:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/QLPnxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7588EC4CEEB;
+	Mon, 18 Aug 2025 13:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523439;
-	bh=v/kHnaSbWkmMw8mBeG/o6a1AWtp2T+mVjrWTWjxjN2E=;
+	s=korg; t=1755523442;
+	bh=/J3hqniTaRoMqxQTS4UqviSgLpzDyilYx7uwD28N98I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1iaaczN2ska792FAlbJp+S++rhjAvLWbDGm3SyG9uc4Lpv97ywbiQ+L4hbDnbM9ns
-	 XNFxCA0BBh7yx7iTJdk0NTzDhs1UgIbZoDYm6v75XlFt4ecP4iHuh/So8DxsDnBugm
-	 qRS87Nsf983FzfCPgDaWT22lEHw+6DgGfsA2M23k=
+	b=F/QLPnxXHod6qXb+d0v/BR2p1EKlo6xMQrQW0JCKQVR65MqXN31WbR/VPf5KIscGo
+	 S/Xi+PrBdcWNR/HttFYFfH5MwZ7x6iJbQiw7w2VkK6VM5gHsSBcGk0zWGgAlLahCrA
+	 SfbTu9KNjV5JPNP4N7pl097DdVV5viTHRfiyTYMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Gottschall <s.gottschall@dd-wrt.com>,
-	Markus Stockhausen <markus.stockhausen@gmx.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 171/515] irqchip/mips-gic: Allow forced affinity
-Date: Mon, 18 Aug 2025 14:42:37 +0200
-Message-ID: <20250818124504.949448054@linuxfoundation.org>
+Subject: [PATCH 6.15 172/515] ASoC: SOF: topology: Parse the dapm_widget_tokens in case of DSPless mode
+Date: Mon, 18 Aug 2025 14:42:38 +0200
+Message-ID: <20250818124504.986357325@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,58 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Stockhausen <markus.stockhausen@gmx.de>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 2250db8628a0d8293ad2e0671138b848a185fba1 ]
+[ Upstream commit 6b3cb7f4341cbf62d41ccf6ea906dbe66be8aa3d ]
 
-Devices of the Realtek MIPS Otto platform use the official rtl-otto-timer
-as clock event generator and CPU clocksource. It is registered for each CPU
-startup via cpuhp_setup_state() and forces the affinity of the clockevent
-interrupts to the appropriate CPU via irq_force_affinity().
+Parsing the dapm_widget_tokens is also needed for DSPless mode as it is
+setting the snd_soc_dapm_widget.no_wname_in_kcontrol_name flag for the
+kcontrol creation from DAPM widgets.
+Without that flag set, the following warnings might appear because of long
+control names:
+ALSA: Control name 'eqiir.2.1 Post Mixer Analog Playback IIR Eq bytes' truncated to 'eqiir.2.1 Post Mixer Analog Playback IIR Eq'
+ALSA: Control name 'eqfir.2.1 Post Mixer Analog Playback FIR Eq bytes' truncated to 'eqfir.2.1 Post Mixer Analog Playback FIR Eq'
+ALSA: Control name 'drc.2.1 Post Mixer Analog Playback DRC bytes' truncated to 'drc.2.1 Post Mixer Analog Playback DRC byte'
+ALSA: Control name 'drc.2.1 Post Mixer Analog Playback DRC switch' truncated to 'drc.2.1 Post Mixer Analog Playback DRC swit'
+ALSA: Control name 'gain.15.1 Pre Mixer Deepbuffer HDA Analog Volume' truncated to 'gain.15.1 Pre Mixer Deepbuffer HDA Analog V'
 
-On the "smaller" devices with a vendor specific interrupt controller
-(supported by irq-realtek-rtl) the registration works fine. The "larger"
-RTL931x series is based on a MIPS interAptiv dual core with a MIPS GIC
-controller. Interrupt routing setup is cancelled because gic_set_affinity()
-does not accept the current (not yet online) CPU as a target.
-
-Relax the checks by evaluating the force parameter that is provided for
-exactly this purpose like in other drivers. With this the affinity can be
-set as follows:
-
- - force = false: allow to set affinity to any online cpu
- - force = true:  allow to set affinity to any cpu
-
-Co-developed-by: Sebastian Gottschall <s.gottschall@dd-wrt.com>
-Signed-off-by: Sebastian Gottschall <s.gottschall@dd-wrt.com>
-Signed-off-by: Markus Stockhausen <markus.stockhausen@gmx.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250621054952.380374-1-markus.stockhausen@gmx.de
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://patch.msgid.link/20250619102640.12068-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mips-gic.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/sof/topology.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-mips-gic.c b/drivers/irqchip/irq-mips-gic.c
-index bca8053864b2..1c2284297354 100644
---- a/drivers/irqchip/irq-mips-gic.c
-+++ b/drivers/irqchip/irq-mips-gic.c
-@@ -375,9 +375,13 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
- 	/*
- 	 * The GIC specifies that we can only route an interrupt to one VP(E),
- 	 * ie. CPU in Linux parlance, at a time. Therefore we always route to
--	 * the first online CPU in the mask.
-+	 * the first forced or online CPU in the mask.
- 	 */
--	cpu = cpumask_first_and(cpumask, cpu_online_mask);
-+	if (force)
-+		cpu = cpumask_first(cpumask);
-+	else
-+		cpu = cpumask_first_and(cpumask, cpu_online_mask);
+diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
+index 14aa8ecc4bc4..554808d2dc29 100644
+--- a/sound/soc/sof/topology.c
++++ b/sound/soc/sof/topology.c
+@@ -2368,14 +2368,25 @@ static int sof_dspless_widget_ready(struct snd_soc_component *scomp, int index,
+ 				    struct snd_soc_dapm_widget *w,
+ 				    struct snd_soc_tplg_dapm_widget *tw)
+ {
++	struct snd_soc_tplg_private *priv = &tw->priv;
++	int ret;
 +
- 	if (cpu >= NR_CPUS)
- 		return -EINVAL;
++	/* for snd_soc_dapm_widget.no_wname_in_kcontrol_name */
++	ret = sof_parse_tokens(scomp, w, dapm_widget_tokens,
++			       ARRAY_SIZE(dapm_widget_tokens),
++			       priv->array, le32_to_cpu(priv->size));
++	if (ret < 0) {
++		dev_err(scomp->dev, "failed to parse dapm widget tokens for %s\n",
++			w->name);
++		return ret;
++	}
++
+ 	if (WIDGET_IS_DAI(w->id)) {
+ 		static const struct sof_topology_token dai_tokens[] = {
+ 			{SOF_TKN_DAI_TYPE, SND_SOC_TPLG_TUPLE_TYPE_STRING, get_token_dai_type, 0}};
+ 		struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
+-		struct snd_soc_tplg_private *priv = &tw->priv;
+ 		struct snd_sof_widget *swidget;
+ 		struct snd_sof_dai *sdai;
+-		int ret;
  
+ 		swidget = kzalloc(sizeof(*swidget), GFP_KERNEL);
+ 		if (!swidget)
 -- 
 2.39.5
 
