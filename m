@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CAF31CA6E;
-	Mon, 18 Aug 2025 13:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE85B31E0F5;
+	Mon, 18 Aug 2025 13:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522233; cv=none; b=LGN4+o5KBQeFeN2A6nGt5MhZ3+rbV0uNdHpxaYASp99m5hpGrnEPSmDVyoGPAPCUMj4Vbe9ThqSNd9IGixXtX84fuesJbzPJFYns0DNyHU4nbNIRTrM1AYXgyiwqMY6IBtPe85GEZcBOFQJGd4kd3N6m9EwkIJl88jNgMSAM6zY=
+	t=1755522236; cv=none; b=hC6N59Wjbku94LlCPKsPxHhCerrkzRJl0SFeaX6vLPLXfjFW2SjFEaQ33+pm2SF4CkkyNSahuU/Tj98rUz3g1VqGMGXM5BXlFg4O9LAueChNv1CVcQenlwv9+u0jQbgaTw07I4cI4/L69+KN9LqC3tw/cMRIHIQA222tR+NAKJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522233; c=relaxed/simple;
-	bh=I/2zz5wvr252p60Tr0N//cHCsxdBjcC/PWZ+nCCCtqQ=;
+	s=arc-20240116; t=1755522236; c=relaxed/simple;
+	bh=oFOGNvnACJAbxc9AyAeLd5P1z9LceR1J/47chkldNkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBdN6mr9BYaeKV6WcprKVuKyLG4Bg+e+SLe6k7WIcy+AqMsT74y/caV2+2DLh8iGTxQju84/Dh8EwyrTfk7EkJ2yyhFNFWwz1F5kkQachlpsKe5HZ9zx1n+ZPl3W2NcpJ9pdPdzh7q7ZANzkqqNcfzVYPsooZs39a+gJV+rb3V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zq3UHSlr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GB0RHErwWLFEC2ens2OSmXBPK94UABYreHMGDtDoTFA4/2FV+AlQtzWjqy0W4UXBNffoKOqEkcgBmaqkipqAD6UCUtRZ/yRmGE/4H7QojfXTU2+X8klxEXE8eWIZfjGOzt4T+ERTv+9PC2ZfkZPV6f73IcMG3ZaawXFB5lsjyYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnL48oNs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zq3UHSlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A03C4CEEB;
-	Mon, 18 Aug 2025 13:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnL48oNs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28816C4CEEB;
+	Mon, 18 Aug 2025 13:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522233;
-	bh=I/2zz5wvr252p60Tr0N//cHCsxdBjcC/PWZ+nCCCtqQ=;
+	s=korg; t=1755522236;
+	bh=oFOGNvnACJAbxc9AyAeLd5P1z9LceR1J/47chkldNkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zq3UHSlr4+gbyY+yAUw7aDgj1+eYl6A9MIMpAaNsJbXA5w3j6vKizywv4VgRhdqgy
-	 uJmzIgur45KXnzmf5/j9Y+5DSQd+jG7YxRZal2hqcTWjocqcdF8FCtnAhEYjYKxVhN
-	 6DgvvVKQTA59zexA3pdja7DK1pQ2m6H2APS3E+Bs=
+	b=LnL48oNs4ECI21rD4uTBJ0GQXzzboGrjM0Xd6KLSVDj12dPsIxoh/NUeFl0zqxNi/
+	 enxVASKICuYva1DZ3zNcib9OLOJDUWcQHb2t9DxA/dsI9NahFLkDjmuy++IRF3q6YG
+	 gRe7XxM05XHP9BaCqZB3qy6nCkamBs3ynx1SEeT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <chenl311@chinatelecom.cn>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	RubenKelevra <rubenkelevra@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/444] ACPI: Suppress misleading SPCR console message when SPCR table is absent
-Date: Mon, 18 Aug 2025 14:44:08 +0200
-Message-ID: <20250818124457.168346613@linuxfoundation.org>
+Subject: [PATCH 6.12 223/444] net: ieee8021q: fix insufficient table-size assertion
+Date: Mon, 18 Aug 2025 14:44:09 +0200
+Message-ID: <20250818124457.208985479@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,59 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <chenl311@chinatelecom.cn>
+From: RubenKelevra <rubenkelevra@gmail.com>
 
-[ Upstream commit bad3fa2fb9206f4dcec6ddef094ec2fbf6e8dcb2 ]
+[ Upstream commit 21deb2d966920f0d4dd098ca6c3a55efbc0b2f23 ]
 
-The kernel currently alway prints:
-"Use ACPI SPCR as default console: No/Yes "
+_Static_assert(ARRAY_SIZE(map) != IEEE8021Q_TT_MAX - 1) rejects only a
+length of 7 and allows any other mismatch. Replace it with a strict
+equality test via a helper macro so that every mapping table must have
+exactly IEEE8021Q_TT_MAX (8) entries.
 
-even on systems that lack an SPCR table. This can
-mislead users into thinking the SPCR table exists
-on the machines without SPCR.
-
-With this change, the "Yes" is only printed if
-the SPCR table is present, parsed and !param_acpi_nospcr.
-This avoids user confusion on SPCR-less systems.
-
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Acked-by: Hanjun Guo <guohanjun@huawei.com>
-Link: https://lore.kernel.org/r/20250620131309.126555-3-me@linux.beauty
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: RubenKelevra <rubenkelevra@gmail.com>
+Link: https://patch.msgid.link/20250626205907.1566384-1-rubenkelevra@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/acpi.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/core/ieee8021q_helpers.c | 44 +++++++++++-------------------------
+ 1 file changed, 13 insertions(+), 31 deletions(-)
 
-diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
-index e6f66491fbe9..862bb1cba4f0 100644
---- a/arch/arm64/kernel/acpi.c
-+++ b/arch/arm64/kernel/acpi.c
-@@ -197,6 +197,8 @@ static int __init acpi_fadt_sanity_check(void)
-  */
- void __init acpi_boot_table_init(void)
- {
-+	int ret;
-+
- 	/*
- 	 * Enable ACPI instead of device tree unless
- 	 * - ACPI has been disabled explicitly (acpi=off), or
-@@ -250,10 +252,12 @@ void __init acpi_boot_table_init(void)
- 		 * behaviour, use acpi=nospcr to disable console in ACPI SPCR
- 		 * table as default serial console.
- 		 */
--		acpi_parse_spcr(earlycon_acpi_spcr_enable,
-+		ret = acpi_parse_spcr(earlycon_acpi_spcr_enable,
- 			!param_acpi_nospcr);
--		pr_info("Use ACPI SPCR as default console: %s\n",
--				param_acpi_nospcr ? "No" : "Yes");
-+		if (!ret || param_acpi_nospcr || !IS_ENABLED(CONFIG_ACPI_SPCR_TABLE))
-+			pr_info("Use ACPI SPCR as default console: No\n");
-+		else
-+			pr_info("Use ACPI SPCR as default console: Yes\n");
+diff --git a/net/core/ieee8021q_helpers.c b/net/core/ieee8021q_helpers.c
+index 759a9b9f3f89..669b357b73b2 100644
+--- a/net/core/ieee8021q_helpers.c
++++ b/net/core/ieee8021q_helpers.c
+@@ -7,6 +7,11 @@
+ #include <net/dscp.h>
+ #include <net/ieee8021q.h>
  
- 		if (IS_ENABLED(CONFIG_ACPI_BGRT))
- 			acpi_table_parse(ACPI_SIG_BGRT, acpi_parse_bgrt);
++/* verify that table covers all 8 traffic types */
++#define TT_MAP_SIZE_OK(tbl)                                 \
++	compiletime_assert(ARRAY_SIZE(tbl) == IEEE8021Q_TT_MAX, \
++			   #tbl " size mismatch")
++
+ /* The following arrays map Traffic Types (TT) to traffic classes (TC) for
+  * different number of queues as shown in the example provided by
+  * IEEE 802.1Q-2022 in Annex I "I.3 Traffic type to traffic class mapping" and
+@@ -101,51 +106,28 @@ int ieee8021q_tt_to_tc(enum ieee8021q_traffic_type tt, unsigned int num_queues)
+ 
+ 	switch (num_queues) {
+ 	case 8:
+-		compiletime_assert(ARRAY_SIZE(ieee8021q_8queue_tt_tc_map) !=
+-				   IEEE8021Q_TT_MAX - 1,
+-				   "ieee8021q_8queue_tt_tc_map != max - 1");
++		TT_MAP_SIZE_OK(ieee8021q_8queue_tt_tc_map);
+ 		return ieee8021q_8queue_tt_tc_map[tt];
+ 	case 7:
+-		compiletime_assert(ARRAY_SIZE(ieee8021q_7queue_tt_tc_map) !=
+-				   IEEE8021Q_TT_MAX - 1,
+-				   "ieee8021q_7queue_tt_tc_map != max - 1");
+-
++		TT_MAP_SIZE_OK(ieee8021q_7queue_tt_tc_map);
+ 		return ieee8021q_7queue_tt_tc_map[tt];
+ 	case 6:
+-		compiletime_assert(ARRAY_SIZE(ieee8021q_6queue_tt_tc_map) !=
+-				   IEEE8021Q_TT_MAX - 1,
+-				   "ieee8021q_6queue_tt_tc_map != max - 1");
+-
++		TT_MAP_SIZE_OK(ieee8021q_6queue_tt_tc_map);
+ 		return ieee8021q_6queue_tt_tc_map[tt];
+ 	case 5:
+-		compiletime_assert(ARRAY_SIZE(ieee8021q_5queue_tt_tc_map) !=
+-				   IEEE8021Q_TT_MAX - 1,
+-				   "ieee8021q_5queue_tt_tc_map != max - 1");
+-
++		TT_MAP_SIZE_OK(ieee8021q_5queue_tt_tc_map);
+ 		return ieee8021q_5queue_tt_tc_map[tt];
+ 	case 4:
+-		compiletime_assert(ARRAY_SIZE(ieee8021q_4queue_tt_tc_map) !=
+-				   IEEE8021Q_TT_MAX - 1,
+-				   "ieee8021q_4queue_tt_tc_map != max - 1");
+-
++		TT_MAP_SIZE_OK(ieee8021q_4queue_tt_tc_map);
+ 		return ieee8021q_4queue_tt_tc_map[tt];
+ 	case 3:
+-		compiletime_assert(ARRAY_SIZE(ieee8021q_3queue_tt_tc_map) !=
+-				   IEEE8021Q_TT_MAX - 1,
+-				   "ieee8021q_3queue_tt_tc_map != max - 1");
+-
++		TT_MAP_SIZE_OK(ieee8021q_3queue_tt_tc_map);
+ 		return ieee8021q_3queue_tt_tc_map[tt];
+ 	case 2:
+-		compiletime_assert(ARRAY_SIZE(ieee8021q_2queue_tt_tc_map) !=
+-				   IEEE8021Q_TT_MAX - 1,
+-				   "ieee8021q_2queue_tt_tc_map != max - 1");
+-
++		TT_MAP_SIZE_OK(ieee8021q_2queue_tt_tc_map);
+ 		return ieee8021q_2queue_tt_tc_map[tt];
+ 	case 1:
+-		compiletime_assert(ARRAY_SIZE(ieee8021q_1queue_tt_tc_map) !=
+-				   IEEE8021Q_TT_MAX - 1,
+-				   "ieee8021q_1queue_tt_tc_map != max - 1");
+-
++		TT_MAP_SIZE_OK(ieee8021q_1queue_tt_tc_map);
+ 		return ieee8021q_1queue_tt_tc_map[tt];
+ 	}
+ 
 -- 
 2.39.5
 
