@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F42831A04A;
-	Mon, 18 Aug 2025 12:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231B131CA4A;
+	Mon, 18 Aug 2025 12:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521858; cv=none; b=mHAHw1d7m1I4ariYdorMNov+lMf9qezgkLJHY/NSanipLKbqA56phwFYrY0ezXRqe/UaE+UnSQOYR6jkvx176LESvCmdMdogkPV/sHgQtnP10IrLB3qr8GVJt7EDSYeyUPQcVZXl4qWahyL/ay2+SmpS7cUytGFS677RqrxFkBY=
+	t=1755521861; cv=none; b=SF8vSfELqBTN8V5o/NV7pVdi/V1cJqRbtrnWEvCPCGK/nP2OiadEG4IyTtQQj16YAkuOUVQi+C2jLkf9n79vG+zpglGsovzD29hYGMS+T4ltpb5dIercM71aJhFrCI/G6XDXNuJrA8cpiBiA3y7L+xIYXhdK2Og+/y9JSGM2Fp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521858; c=relaxed/simple;
-	bh=qEi5C86ktpXL1L1E4KezxwRmpwynOzPFR2Uf4t62n40=;
+	s=arc-20240116; t=1755521861; c=relaxed/simple;
+	bh=CTujG0ad01nHDEO2/BgQ8vuhX2KFLLusEIOrXyeje9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgcbRigNdycWPiPyu97h4ifUktipKrU31fbBdM2iqGVcI8QzLuzlyljGuLS4FjOU8CpekqjcE1+yrsvgamK5gOOsvT9WbBmNacxeHc1lvpi/WQd3ZuPqR/bWs8mrm9VX7RUhMT+S64og0lIGVxqCA5/PUmXb/Nnq8n2Vfzhf2ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/jz6B67; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NgZJo/XFJNvRSwVjgAKKyNAJJJUOLHr2K9Yej/Rv5YDaAKXYI6Ht89hxjLj9XNOKJQIgkeBE2EyE4G+TsBWaGi3qSDrtcJJahrVne4HcBckgsYmpeR2ja6bSLHGNikboYbYXgmJ1XdIQbDRf1LlSW0ASp2R8DBwgOVZforplCQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rl06iTFO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/jz6B67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67763C4CEF1;
-	Mon, 18 Aug 2025 12:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rl06iTFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9395DC116B1;
+	Mon, 18 Aug 2025 12:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521857;
-	bh=qEi5C86ktpXL1L1E4KezxwRmpwynOzPFR2Uf4t62n40=;
+	s=korg; t=1755521861;
+	bh=CTujG0ad01nHDEO2/BgQ8vuhX2KFLLusEIOrXyeje9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M/jz6B67I9y8EZXR/rLGRbsc04dBzMbVB1fMwaMYI0JT/ylAau0kNlBJ+Yjy1jOTB
-	 JDKbEaAdTSl88Qsn6cjp/iIBoYokxX5gMJ5OyeOMMzDjDDYM9KjjgjrtEgdwd9DsY4
-	 x+Xp2MKNWWTYf522CqWSDlqWrJybjo5vGDiHrF9w=
+	b=Rl06iTFOoUPOHNzERi9LpjDnG+g96o5a4PJ2Gc0Qm7Ht+RIxz7EpjbuxK1JhxQBOf
+	 4OEh516fN17ohSxm42qjERTejgitGol2eu8y8Ca2gMUEl3Juv62WnhbNXc5goYLDNT
+	 7d4ILTCf0uv8IZklN8n3DkZlIvuIBf3CJtd1ZjWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/444] x86/bugs: Avoid warning when overriding return thunk
-Date: Mon, 18 Aug 2025 14:42:48 +0200
-Message-ID: <20250818124454.239274796@linuxfoundation.org>
+Subject: [PATCH 6.12 143/444] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
+Date: Mon, 18 Aug 2025 14:42:49 +0200
+Message-ID: <20250818124454.277955096@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,44 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 9f85fdb9fc5a1bd308a10a0a7d7e34f2712ba58b ]
+[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
 
-The purpose of the warning is to prevent an unexpected change to the return
-thunk mitigation. However, there are legitimate cases where the return
-thunk is intentionally set more than once. For example, ITS and SRSO both
-can set the return thunk after retbleed has set it. In both the cases
-retbleed is still mitigated.
+We currently log parse failures for ELD data and some disconnection events
+as errors without rate limiting. These log messages can be triggered very
+frequently in some situations, especially ELD parsing when there is nothing
+connected to a HDMI port which will generate:
 
-Replace the warning with an info about the active return thunk.
+hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
 
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250611-eibrs-fix-v4-3-5ff86cac6c61@linux.intel.com
+While there's doubtless work that could be done on reducing the number of
+connection notification callbacks it's possible these may be legitimately
+generated by poor quality physical connections so let's use rate limiting
+to mitigate the log spam for the parse errors and lower the severity for
+disconnect logging to debug level.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index c2c7b76d953f..31b4b73e5405 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -71,10 +71,9 @@ void (*x86_return_thunk)(void) __ro_after_init = __x86_return_thunk;
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index e1a7f0b0c0f3..33c7ba842eee 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -1233,7 +1233,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 						>> DRM_ELD_VER_SHIFT;
  
- static void __init set_return_thunk(void *thunk)
- {
--	if (x86_return_thunk != __x86_return_thunk)
--		pr_warn("x86/bugs: return thunk changed\n");
--
- 	x86_return_thunk = thunk;
-+
-+	pr_info("active return thunk: %ps\n", thunk);
- }
+ 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
+-		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: Unknown ELD version %d\n", ver);
+ 		return -EINVAL;
+ 	}
  
- /* Update SPEC_CTRL MSR and its cached copy unconditionally */
+@@ -1241,7 +1242,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
+ 
+ 	if (mnl > ELD_MAX_MNL) {
+-		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: MNL Invalid %d\n", mnl);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1300,8 +1302,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
+ 
+ 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
+ 
+-		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
+-						__func__, pin->nid, port->id);
++		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
++			__func__, pin->nid, port->id);
+ 
+ 		/*
+ 		 * PCMs are not registered during device probe, so don't
 -- 
 2.39.5
 
