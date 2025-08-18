@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FA4321F5A;
-	Mon, 18 Aug 2025 13:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E79321F5A;
+	Mon, 18 Aug 2025 13:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523469; cv=none; b=KaTxE3Z+EazOwKaS4QtoI1vcg2ORNV3jCCEbdIia3tUYkGabPz77t+bYUKRC3wVmO+CwhgbCP5lce4znhxz+LP7RpwxsXNie0r6Qa/0l3q9em35ymzpkAGu/6iCpXa3y5aC3RPRoyk4DdB9hM9MYSmG2idKTSkBhbl6JSUaFBfk=
+	t=1755523472; cv=none; b=o2JyMlrF+R/I2+ldUOW8vzi4q/7t7CW+TC6JQ2F5rIWFi0Y6LPISGNgtf7313KJYKoxINJHzONFh6YR06Dmu/oEGD0VtAEsPChiTxo3yb3R65E78PeF2JlnUPx0raBBu0qhqlENVZfjIWS813SHaF3O2euIYNE9V+/c5pk0TEJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523469; c=relaxed/simple;
-	bh=nVVmF9k/ixeiBlFzBYrTVSplI0osKzxMLhN9FlKOrjo=;
+	s=arc-20240116; t=1755523472; c=relaxed/simple;
+	bh=XOKcHmi4BXbckFEkVLULoaXrPajPggKvZnJvfz+4TvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iK8gGTOJsf6rSJodwMLyQ2RdU24X0p0pH1q/C67ogXs8SGLq+2Pwga+t94zq3uGOil447nA7g5tx63zO6T0egMQpTD8dDh7Qt1fs0vUYmbv+Yx/JDMfiC8hFxP9RqKHrNncV0Ib6EduCpZNe4Ptmogk+g4vVw1VvaY7SDYh5jgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZRJS5VN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Au3wuEo069pJcU+RcPPVczWfm7eSUGOs1GYUy/sQD+AElaPOIm1926E3WtHAe9Qs+WtU3g/rP6RbmJG5pjDoNFXbVO4LoBaShrnCsR7QvpxEGvTl5chSBr+iCn4ZA9fDj9Y0bFUCMAgr2fhhVMgtnhQTq9zHQT3ZDolEFeNqUDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phTd4QNM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZRJS5VN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB134C4CEEB;
-	Mon, 18 Aug 2025 13:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phTd4QNM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DB9C4CEEB;
+	Mon, 18 Aug 2025 13:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523469;
-	bh=nVVmF9k/ixeiBlFzBYrTVSplI0osKzxMLhN9FlKOrjo=;
+	s=korg; t=1755523472;
+	bh=XOKcHmi4BXbckFEkVLULoaXrPajPggKvZnJvfz+4TvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZRJS5VNRHVeUp2LqUlByyBj+i7D6yvhMkOECk9kEAI7VU6SfQKdnV6Y737ow3xRB
-	 bptE92rCIVzPjKuq4sM4MaWfAbmJ5GjisbmM4Y+woocr5tpb7Ff6UxOPOcz1a7stls
-	 /yoqWqoJPJkfLXX46091BG+I5i51L+G1aBkuTsjg=
+	b=phTd4QNM2BvpABIaqHoZ/EiCITCp/ADMVoJYx7G+Jd3WTOJ8oF1XnBGRUKeu+o8+N
+	 NpFxRi8xb8gzwtMrZMVeltkcXNnSPZtFYDCtLTi9c5IJYr5q94A2Pg7edKr/GE1ipI
+	 hsfxT0d15NZwIdnGafNDNPLnkrtX6uvkQ2wWVfu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tuhaowen <tuhaowen@uniontech.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 153/515] PM: sleep: console: Fix the black screen issue
-Date: Mon, 18 Aug 2025 14:42:19 +0200
-Message-ID: <20250818124504.274125954@linuxfoundation.org>
+Subject: [PATCH 6.15 180/515] soc: qcom: mdt_loader: Actually use the e_phoff
+Date: Mon, 18 Aug 2025 14:42:46 +0200
+Message-ID: <20250818124505.303315102@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,75 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: tuhaowen <tuhaowen@uniontech.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 4266e8fa56d3d982bf451d382a410b9db432015c ]
+[ Upstream commit 47e339cac89143709e84a3b71ba8bd9b2fdd2368 ]
 
-When the computer enters sleep status without a monitor
-connected, the system switches the console to the virtual
-terminal tty63(SUSPEND_CONSOLE).
+Rather than relying/assuming that the tools generating the firmware
+places the program headers immediately following the ELF header, use
+e_phoff as intended to find the program headers.
 
-If a monitor is subsequently connected before waking up,
-the system skips the required VT restoration process
-during wake-up, leaving the console on tty63 instead of
-switching back to tty1.
-
-To fix this issue, a global flag vt_switch_done is introduced
-to record whether the system has successfully switched to
-the suspend console via vt_move_to_console() during suspend.
-
-If the switch was completed, vt_switch_done is set to 1.
-Later during resume, this flag is checked to ensure that
-the original console is restored properly by calling
-vt_move_to_console(orig_fgconsole, 0).
-
-This prevents scenarios where the resume logic skips console
-restoration due to incorrect detection of the console state,
-especially when a monitor is reconnected before waking up.
-
-Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
-Link: https://patch.msgid.link/20250611032345.29962-1-tuhaowen@uniontech.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250610-mdt-loader-validation-and-fixes-v2-3-f7073e9ab899@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/console.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/mdt_loader.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/power/console.c b/kernel/power/console.c
-index fcdf0e14a47d..19c48aa5355d 100644
---- a/kernel/power/console.c
-+++ b/kernel/power/console.c
-@@ -16,6 +16,7 @@
- #define SUSPEND_CONSOLE	(MAX_NR_CONSOLES-1)
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index b2c0fb55d4ae..44589d10b15b 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -83,7 +83,7 @@ ssize_t qcom_mdt_get_size(const struct firmware *fw)
+ 	int i;
  
- static int orig_fgconsole, orig_kmsg;
-+static bool vt_switch_done;
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
  
- static DEFINE_MUTEX(vt_switch_mutex);
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
+@@ -135,7 +135,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
+ 	void *data;
  
-@@ -136,17 +137,21 @@ void pm_prepare_console(void)
- 	if (orig_fgconsole < 0)
- 		return;
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
  
-+	vt_switch_done = true;
-+
- 	orig_kmsg = vt_kmsg_redirect(SUSPEND_CONSOLE);
- 	return;
- }
+ 	if (ehdr->e_phnum < 2)
+ 		return ERR_PTR(-EINVAL);
+@@ -215,7 +215,7 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
+ 	int i;
  
- void pm_restore_console(void)
- {
--	if (!pm_vt_switch())
-+	if (!pm_vt_switch() && !vt_switch_done)
- 		return;
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
  
- 	if (orig_fgconsole >= 0) {
- 		vt_move_to_console(orig_fgconsole, 0);
- 		vt_kmsg_redirect(orig_kmsg);
- 	}
-+
-+	vt_switch_done = false;
- }
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
+@@ -270,7 +270,7 @@ static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char *fw_na
+ 	int i;
+ 
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
+ 
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		/*
+@@ -312,7 +312,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 
+ 	is_split = qcom_mdt_bins_are_split(fw, fw_name);
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
+ 
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
 -- 
 2.39.5
 
