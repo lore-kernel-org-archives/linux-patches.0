@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44473335BC1;
-	Mon, 18 Aug 2025 13:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEE3335BCD;
+	Mon, 18 Aug 2025 13:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525255; cv=none; b=iQ4dFjY0iSBgor9fSPKkn/MIUuuwXAVEyBdb3k56aHXQdbEU2iUvewTyYbv5BC0evmzk6EkNoEtTmtdsbq8Skp/E2HWrxIHVPtaoSlVB9cHCpyfIkn20wBndPFEb/uuiKcBH+dRkTj99LK49w20Yn55LXj2cH1B5PdK6wRUdKHk=
+	t=1755525259; cv=none; b=qT3/qEjtiweCkSjxRVmLdGR1OiMHbfOiQFlQD6wFqxS+cWRZ1zKKZ8CSAy1EevNKA3rJaRZ8NjfbL/d4VmVJqzRu5ZH6fC6PoX9iIeC6v37gr7mCxLM4U8G2wDexAZfuNU9RuS8ruDFUuSBerHAILn8v94SdmkwDv1glHRp9fm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525255; c=relaxed/simple;
-	bh=db4yYUMWHkHmgx/Q6E9NBup9omtm/P1J82lKITws3pk=;
+	s=arc-20240116; t=1755525259; c=relaxed/simple;
+	bh=Rilij5UYE76r8Mrz8szJRtJQA+SJPaBCRfiVh1wu4Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2IfsFbFaTvZFq6QSuj5Nl3agwDLn7o5Bkex7Stn84pVL4U67/eNKmtMjJs56yDHrkX4JYf7YQywkn3VZQegYdZYXzErXC2PFdFYwjkvNF/3v+hse+NLfL+Q/2O9BggLvnldEnBf9ZgB+Ok2FAj5rsX/WoaDKIk8TgNM+V0pzFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5A/7578; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jl2aTjsAHfkpKul1Nvz3c6+P6ZTTn7jSyQZlw9DZW5gadGEbJ5HJn11ZY1u7qCPzosZqxG4Huqun3f14a6teVZ7H+Uu0e1RvaCMpePwTMmBndT2qqc0Y9gT7OFyzFmk+m0jyBlFjCfBF2xP5vO/iBXzHRnfot5DSYiD0Ljp79rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuPdu2En; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5A/7578"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5972C4CEEB;
-	Mon, 18 Aug 2025 13:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuPdu2En"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E186C4CEEB;
+	Mon, 18 Aug 2025 13:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525255;
-	bh=db4yYUMWHkHmgx/Q6E9NBup9omtm/P1J82lKITws3pk=;
+	s=korg; t=1755525258;
+	bh=Rilij5UYE76r8Mrz8szJRtJQA+SJPaBCRfiVh1wu4Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W5A/7578pRQJhuZ1e1yOdGIIv9UjHZ17I+G1X1UApqJB575gUWtXpRhUIIYusKGWH
-	 /HiI3ocJRDMbMIUP0196gjZ3HU/YvEMdYCg512/tgKUlYfcd1379VydI/l+HNcrwT0
-	 PirL5iKxxBNzQhiWVLZZ6/W4rl9/1Qst1ZiW52C0=
+	b=yuPdu2EnRarsFNIGO+laYYyeDMSrmYIhLLN+E7xj+xj0OuAbECVGKGar7rG84DVM4
+	 wVX8rUZhB4kge90PEEqLlBPFE15sI+uvK4pg8wMQSDicwld4Mk/oB3N4hKnicc/T2E
+	 4yM1+YOIpX9hU/64TGvSSfqAeHG4oKKlwLLfRNVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 174/570] ASoC: SDCA: Add flag for unused IRQs
-Date: Mon, 18 Aug 2025 14:42:41 +0200
-Message-ID: <20250818124512.500285261@linuxfoundation.org>
+Subject: [PATCH 6.16 165/570] thermal: sysfs: Return ENODATA instead of EAGAIN for reads
+Date: Mon, 18 Aug 2025 14:42:32 +0200
+Message-ID: <20250818124512.162021124@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,50 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit 775f5729b47d8737f4f98e0141f61b3358245398 ]
+[ Upstream commit 1a4aabc27e95674837f2e25f4ef340c0469e6203 ]
 
-Zero is a valid SDCA IRQ interrupt position so add a special value to
-indicate that the IRQ is not used.
+According to POSIX spec, EAGAIN returned by read with O_NONBLOCK set
+means the read would block. Hence, the common implementation in
+nonblocking model will poll the file when the nonblocking read returns
+EAGAIN. However, when the target file is thermal zone, this mechanism
+will totally malfunction because thermal zone doesn't implement sysfs
+notification and thus the poll will never return.
 
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20250624122844.2761627-6-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+For example, the read in Golang implemnts such method and sometimes
+hangs at reading some thermal zones via sysfs.
+
+Change to return -ENODATA instead of -EAGAIN to userspace.
+
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Link: https://patch.msgid.link/20250620-temp-v3-1-6becc6aeb66c@chromium.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/sdca_function.h   | 2 ++
- sound/soc/sdca/sdca_functions.c | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/thermal/thermal_sysfs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/sound/sdca_function.h b/include/sound/sdca_function.h
-index eaedb54a8322..b43bda42eeca 100644
---- a/include/sound/sdca_function.h
-+++ b/include/sound/sdca_function.h
-@@ -16,6 +16,8 @@ struct device;
- struct sdca_entity;
- struct sdca_function_desc;
+diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
+index 24b9055a0b6c..d80612506a33 100644
+--- a/drivers/thermal/thermal_sysfs.c
++++ b/drivers/thermal/thermal_sysfs.c
+@@ -40,10 +40,13 @@ temp_show(struct device *dev, struct device_attribute *attr, char *buf)
  
-+#define SDCA_NO_INTERRUPT -1
+ 	ret = thermal_zone_get_temp(tz, &temperature);
+ 
+-	if (ret)
+-		return ret;
++	if (!ret)
++		return sprintf(buf, "%d\n", temperature);
+ 
+-	return sprintf(buf, "%d\n", temperature);
++	if (ret == -EAGAIN)
++		return -ENODATA;
 +
- /*
-  * The addressing space for SDCA relies on 7 bits for Entities, so a
-  * maximum of 128 Entities per function can be represented.
-diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
-index 28e9e6de6d5d..050f7338aca9 100644
---- a/sound/soc/sdca/sdca_functions.c
-+++ b/sound/soc/sdca/sdca_functions.c
-@@ -912,6 +912,8 @@ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *enti
- 				       &tmp);
- 	if (!ret)
- 		control->interrupt_position = tmp;
-+	else
-+		control->interrupt_position = SDCA_NO_INTERRUPT;
++	return ret;
+ }
  
- 	control->label = find_sdca_control_label(dev, entity, control);
- 	if (!control->label)
+ static ssize_t
 -- 
 2.39.5
 
