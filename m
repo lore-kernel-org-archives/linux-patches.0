@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BE3322759;
-	Mon, 18 Aug 2025 13:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAD4322760;
+	Mon, 18 Aug 2025 13:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525566; cv=none; b=HodtI4W5cV0rUjFROUgycsbZsfOkOG0+6UlCrMZGW4JESR+XSJofb6uw1CqVy1d45fw69VYhTKE71RYPTmkdV+oYDHPc4B4mcJAxAJiXmlTHVz5QIfN4Ng3usS3hjma1aGHbSJ5hcAk1uv90LNS12rBkSmqdWD3srm3iRUIspP4=
+	t=1755525569; cv=none; b=WqFZcSrA2uJq2YxEBKEscxyzRnTz39JRUQLlYQjlVZEWalwMo1NMDiBHM0U3/2m04/8dQD1EepP7Z6fZIBn7YuER7zRZfybul6XYY6BfCaoDEwMhcEu3FfClQDOH8ljKCiB0sBfxS1JUQcujsscWbnh4XJskX4h/REUdaIy90x0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525566; c=relaxed/simple;
-	bh=hIQnPhVSCGnTU1PWv6PzhT3LZxluHMiTqaPFiuqD/FU=;
+	s=arc-20240116; t=1755525569; c=relaxed/simple;
+	bh=3jb6NtrIRc6pqp40mAkL8Lkg+VIG5V5VGDytvT57fgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vBki0f4yrwAf+tvlX6pR5Zb9+dw+rg8xxiWg7jpQiorHocYkBhnGryG5t0jZp8qPOIeUg5S/U8LVhqFa1kaeGv7+YfN2/pN0P9QCls7QO1oZ7kjmvYhgBJD62Dr7xJA6qgPE5pR/Kkc/9YI7M2tSL5ScD30MKhQjmmkXUZaQGQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7Tpv32n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WtsX0y+An7w/WJZg1MxgxnMXQLjIkL6P8zRqugeDNYpCJ/7ncdqU1m7PTsfw/+a8JjBRMqfweoKiLN8zk43x4ISkBbmxfeSXBU6stH2ZCPPE6WmtXwUbXGPUFrKwz10R/B8L74KwwgFe49ss+riKmDiGsyUm7L6Iey4eZoAVRo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuMRdjNS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7Tpv32n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE753C4CEEB;
-	Mon, 18 Aug 2025 13:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuMRdjNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53EA7C4CEEB;
+	Mon, 18 Aug 2025 13:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525566;
-	bh=hIQnPhVSCGnTU1PWv6PzhT3LZxluHMiTqaPFiuqD/FU=;
+	s=korg; t=1755525569;
+	bh=3jb6NtrIRc6pqp40mAkL8Lkg+VIG5V5VGDytvT57fgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7Tpv32nxiTdxb+8LAzqZkV8f3aqayZZ6cwWCQWzIulUS4ALk1C90O6wQAWJkib/I
-	 2bpwDERY5OzH0gDCR4w9Y9+L9YC/PbvXkZNR8YHLg+bbHlxvoFoJcHg70UkYt0G/Yu
-	 hJTeKtnhcgs/b2BidJe07Pl3tfQMyGRqsfahTtU4=
+	b=zuMRdjNSa8gsDbivIHOaP93jZ3VNj+zyWH4RiVuZJhcJfrnvcVwY7iqMaXgTA0ZsG
+	 AX07x8zigl/DjtaqRCbCErcey8DxM4ZcY069/ZdNJhWV9ZNty36W6ZGsf1NzrqIIX2
+	 TqUN2Km8hhHqHGc/NsSG3DaXFqRqjxV8QETUXEdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Braunwarth <daniel.braunwarth@kuka.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Nathan Lynch <nathan.lynch@amd.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 300/570] net: phy: realtek: add error handling to rtl8211f_get_wol
-Date: Mon, 18 Aug 2025 14:44:47 +0200
-Message-ID: <20250818124517.409587765@linuxfoundation.org>
+Subject: [PATCH 6.16 301/570] lib: packing: Include necessary headers
+Date: Mon, 18 Aug 2025 14:44:48 +0200
+Message-ID: <20250818124517.457007341@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,47 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Braunwarth <daniel.braunwarth@kuka.com>
+From: Nathan Lynch <nathan.lynch@amd.com>
 
-[ Upstream commit a9b24b3583ae1da7dbda031f141264f2da260219 ]
+[ Upstream commit 8bd0af3154b2206ce19f8b1410339f7a2a56d0c3 ]
 
-We should check if the WOL settings was successfully read from the PHY.
+packing.h uses ARRAY_SIZE(), BUILD_BUG_ON_MSG(), min(), max(), and
+sizeof_field() without including the headers where they are defined,
+potentially causing build failures.
 
-In case this fails we cannot just use the error code and proceed.
+Fix this in packing.h and sort the result.
 
-Signed-off-by: Daniel Braunwarth <daniel.braunwarth@kuka.com>
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Closes: https://lore.kernel.org/baaa083b-9a69-460f-ab35-2a7cb3246ffd@nvidia.com
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250624-realtek_fixes-v1-1-02a0b7c369bc@kuka.com
+Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20250624-packing-includes-v1-1-c23c81fab508@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek/realtek_main.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/linux/packing.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index c3dcb6257430..dd0d675149ad 100644
---- a/drivers/net/phy/realtek/realtek_main.c
-+++ b/drivers/net/phy/realtek/realtek_main.c
-@@ -436,9 +436,15 @@ static irqreturn_t rtl8211f_handle_interrupt(struct phy_device *phydev)
+diff --git a/include/linux/packing.h b/include/linux/packing.h
+index 0589d70bbe04..20ae4d452c7b 100644
+--- a/include/linux/packing.h
++++ b/include/linux/packing.h
+@@ -5,8 +5,12 @@
+ #ifndef _LINUX_PACKING_H
+ #define _LINUX_PACKING_H
  
- static void rtl8211f_get_wol(struct phy_device *dev, struct ethtool_wolinfo *wol)
- {
-+	int wol_events;
-+
- 	wol->supported = WAKE_MAGIC;
--	if (phy_read_paged(dev, RTL8211F_WOL_SETTINGS_PAGE, RTL8211F_WOL_SETTINGS_EVENTS)
--	    & RTL8211F_WOL_EVENT_MAGIC)
-+
-+	wol_events = phy_read_paged(dev, RTL8211F_WOL_SETTINGS_PAGE, RTL8211F_WOL_SETTINGS_EVENTS);
-+	if (wol_events < 0)
-+		return;
-+
-+	if (wol_events & RTL8211F_WOL_EVENT_MAGIC)
- 		wol->wolopts = WAKE_MAGIC;
- }
+-#include <linux/types.h>
++#include <linux/array_size.h>
+ #include <linux/bitops.h>
++#include <linux/build_bug.h>
++#include <linux/minmax.h>
++#include <linux/stddef.h>
++#include <linux/types.h>
  
+ #define GEN_PACKED_FIELD_STRUCT(__type) \
+ 	struct packed_field_ ## __type { \
 -- 
 2.39.5
 
