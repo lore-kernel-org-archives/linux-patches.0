@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FCC31CA7D;
-	Mon, 18 Aug 2025 13:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FE427A44A;
+	Mon, 18 Aug 2025 13:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522751; cv=none; b=GJNZykKrf5YuWSW8G3fgkcWowDYIGl1cNjh/6mgn1iCJgxkWmXdkKcXvTA2+2dWAKVqsiGwPjhtaX3JhpX0HKf859GQ5832zbup7NqdT2XgEyKieugKFGL73jQO6O5DJB7+4K9bGhyvY2IWPRSkMWlXu4h6PCIvezgij2X7OJaQ=
+	t=1755522755; cv=none; b=mAYOZxRQlCM0QFFovBv3CHt84QFRAsqjgfXHdRPSMrsnmfR2AjU5h3CXW6eQY0imK/9meLJ9+6SLSl6Bhkh2kaSsdEV0mS84vvqGJczRA4aFY6oYf8aEX0cWGImCZLTumbyx6mZf1Q53ynaxYhLdq3iX5mUfX1ImUj2HHfbOW9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522751; c=relaxed/simple;
-	bh=cevtIg4MdZfhmfO8Bgg2mDHsQJTQmpbceQL5AbNIFeQ=;
+	s=arc-20240116; t=1755522755; c=relaxed/simple;
+	bh=9o2XpxvpIwk6PJEGSIfosQOjVrkA78RBX8RXtYsCdHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFeBirTL70RjHneehu54c+OEbWy9jcAtxWd2FXYjggXuEZ52E3KvJnqCkoUnBvIeKdExoGz6oba7urZTVX1RVPFxNLIDXPp6KlnE1Gr0T2wn6REAHpGhkkJEjMMqitpf+gRF5v9xBddz10E9/4HgKezD+zeZCwxu4VeAiFrjaLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6oYY5xU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CSvOCsfmiFm7gz+IWZ00p71xN+yTJNG4juOMz7n+MFy6/OqSRv801Pxl3FNXtHeJz2DTi8mxgFgeCfm9JK4PJYODJHt2Q09tHjdO7/wmAlZj8/t9zGLRAcMOuoZugI9qUb2GjVWqN6WGjtJ1XBOiZfo8ebYJD6oNtfrjVuXInII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZh6bucP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6oYY5xU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C02C4CEEB;
-	Mon, 18 Aug 2025 13:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZh6bucP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5049CC4CEEB;
+	Mon, 18 Aug 2025 13:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522751;
-	bh=cevtIg4MdZfhmfO8Bgg2mDHsQJTQmpbceQL5AbNIFeQ=;
+	s=korg; t=1755522754;
+	bh=9o2XpxvpIwk6PJEGSIfosQOjVrkA78RBX8RXtYsCdHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f6oYY5xUtoX8WVxFZpr9l+WZ83SKo92BGvkRt2q099O1nNwQM9oY4ld+2EXgBYxbE
-	 geO8GXPBM0MTJkl6OqwHkcYotyZqNQ6aj7E9a7kETpctaUcurzmKPkZqjRc9wb+SeB
-	 Ki/HvjZB+so6buCSAW9n3C8FfRddtQ29lFfs7ZZg=
+	b=qZh6bucPKadcGpXoyDNgQUU0j6qcaQNJDeyhopee1qnFj3Cyn/943X5tULIPL7X3/
+	 mrDkwjO/lxC7LQ+ToeMZ2eWR8DHdHTXwU3VGrm0qQz930k7hu4VHRts13VAjLXsGfz
+	 BJWTpMbM8nIGCdqmbuzAClAMYHsD6JcNQ9qO0XuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	linux-parisc@vger.kernel.org
-Subject: [PATCH 6.12 411/444] parisc: Makefile: fix a typo in palo.conf
-Date: Mon, 18 Aug 2025 14:47:17 +0200
-Message-ID: <20250818124504.336839241@linuxfoundation.org>
+	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.12 412/444] mm, slab: restore NUMA policy support for large kmalloc
+Date: Mon, 18 Aug 2025 14:47:18 +0200
+Message-ID: <20250818124504.376499747@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,35 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-commit 963f1b20a8d2a098954606b9725cd54336a2a86c upstream.
+commit e2d18cbf178775ad377ad88ee55e6e183c38d262 upstream.
 
-Correct "objree" to "objtree". "objree" is not defined.
+The slab allocator observes the task's NUMA policy in various places
+such as allocating slab pages. Large kmalloc() allocations used to do
+that too, until an unintended change by c4cab557521a ("mm/slab_common:
+cleanup kmalloc_large()") resulted in ignoring mempolicy and just
+preferring the local node. Restore the NUMA policy support.
 
-Fixes: 75dd47472b92 ("kbuild: remove src and obj from the top Makefile")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Helge Deller <deller@gmx.de>
-Cc: linux-parisc@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.3+
+Fixes: c4cab557521a ("mm/slab_common: cleanup kmalloc_large()")
+Cc: <stable@vger.kernel.org>
+Acked-by: Christoph Lameter (Ampere) <cl@gentwo.org>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/slub.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/parisc/Makefile
-+++ b/arch/parisc/Makefile
-@@ -139,7 +139,7 @@ palo lifimage: vmlinuz
- 	fi
- 	@if test ! -f "$(PALOCONF)"; then \
- 		cp $(srctree)/arch/parisc/defpalo.conf $(objtree)/palo.conf; \
--		echo 'A generic palo config file ($(objree)/palo.conf) has been created for you.'; \
-+		echo 'A generic palo config file ($(objtree)/palo.conf) has been created for you.'; \
- 		echo 'You should check it and re-run "make palo".'; \
- 		echo 'WARNING: the "lifimage" file is now placed in this directory by default!'; \
- 		false; \
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -4225,7 +4225,12 @@ static void *___kmalloc_large_node(size_
+ 		flags = kmalloc_fix_flags(flags);
+ 
+ 	flags |= __GFP_COMP;
+-	folio = (struct folio *)alloc_pages_node_noprof(node, flags, order);
++
++	if (node == NUMA_NO_NODE)
++		folio = (struct folio *)alloc_pages_noprof(flags, order);
++	else
++		folio = (struct folio *)__alloc_pages_noprof(flags, order, node, NULL);
++
+ 	if (folio) {
+ 		ptr = folio_address(folio);
+ 		lruvec_stat_mod_folio(folio, NR_SLAB_UNRECLAIMABLE_B,
 
 
