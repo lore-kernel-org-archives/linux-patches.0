@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DFF335BC8;
-	Mon, 18 Aug 2025 13:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AE4335BCB;
+	Mon, 18 Aug 2025 13:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523230; cv=none; b=pPAu6XxTuES+yiqVr9PqokOfKeXyf4qRmnho+ZGm/i58PV19Ni+FaM6/08bNqnrJBDVPA+WNpOnzP6QL36HQSBh3xfHtsFwo98r6/t4J5Yb/ykcFawp6L1j1udUuotZGteUhL7Cl/oGGiDBXBsb7tLlUgudTADpPX9zDscdVeVk=
+	t=1755523233; cv=none; b=grv7BzmmG+uKA0vzHNaMVzI+aGaDSHZEXKLZt/7pQAFIKR70kB3cfEyO2DvzerKivNgd1xfQ6a/T4UXDQzGWPNhZMXadauX6vaxvfrtdb35AEqN+wG0ZuwqOj/0IclSthgClfJ6wOCAzDoNhlzUbGuu1nSBO83sOYR0MPYjWras=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523230; c=relaxed/simple;
-	bh=E36Wx0jtMChjC58KMxEMss/XjhrKxDJ0in3GAMetehU=;
+	s=arc-20240116; t=1755523233; c=relaxed/simple;
+	bh=rrllElex7TiG+/kOTX9pvN1PUVqTNkZC0eM+AXoJQV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jOSS7VOZiPZvhWUzrTQ3yIt+JOlMiV9cotUPB4XJJ1TsiRgg9007o1zsvt34+4WYLy4qwa8EZfvRhXHJtv4NlCq5pFcQTfp2EmbyuWu0ggpsfqFlB1ivJriHy7zrdK1qefbY2g6DpRedB8XqOsN/0+RHBw4DjIVDGKF6um2vcYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQzcX8c6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZFjJIYqGpooLnNso/YEcCbBZLZAMF2NyzuuFs3aqpkiiusfVoF6KUJCHvpWl+tH+3qudT/SXpgshrJUt6IZmVJyfA7/0phfqY4fXQ/Yx2GGAdPvaetniasmv8CLTWNNDPSNkPc2P8lwIUpow7Wo2+kw4oZwarZSqlEah6HybODI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0olqZ2tx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQzcX8c6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C3EC4CEEB;
-	Mon, 18 Aug 2025 13:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0olqZ2tx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42798C4CEEB;
+	Mon, 18 Aug 2025 13:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523230;
-	bh=E36Wx0jtMChjC58KMxEMss/XjhrKxDJ0in3GAMetehU=;
+	s=korg; t=1755523233;
+	bh=rrllElex7TiG+/kOTX9pvN1PUVqTNkZC0eM+AXoJQV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQzcX8c6VhxlhrqO4Me8GZr+aKQCxFN98zysN+J/WJu818s+Wq9RJxkO2MA+5Uxho
-	 e+GQhLO8/Ks+4f/IznvaXMve3mR1hVy/KJ9Kk/QRaS2jb3PYEKpoDlWwMBl+lmvQjb
-	 4qlRuKlzAlce006W+TVvR4+DmmQjmuUZgGKOCuPg=
+	b=0olqZ2txefR3ZZkruv0S4ffwZZOmwMcBI8dOE7AIuxGg7fjDZe/W+iR5VBZOhrh0l
+	 k6tHC9ZSmuw8oi5W4KjotIE1KqsbGaScc69smP1Nc9+yg6zpSOagd0Vm+X1BJ60w8y
+	 nHB8lO64uwUIg9nOKxELJCdZImBcId9IVrSqXFAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+1107451c16b9eb9d29e6@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 082/515] hfsplus: dont use BUG_ON() in hfsplus_create_attributes_file()
-Date: Mon, 18 Aug 2025 14:41:08 +0200
-Message-ID: <20250818124501.538348419@linuxfoundation.org>
+Subject: [PATCH 6.15 109/515] fix locking in efi_secret_unlink()
+Date: Mon, 18 Aug 2025 14:41:35 +0200
+Message-ID: <20250818124502.557247477@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,44 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit c7c6363ca186747ebc2df10c8a1a51e66e0e32d9 ]
+[ Upstream commit 2c58d42de71f9c73e40afacc9d062892d2cc8862 ]
 
-When the volume header contains erroneous values that do not reflect
-the actual state of the filesystem, hfsplus_fill_super() assumes that
-the attributes file is not yet created, which later results in hitting
-BUG_ON() when hfsplus_create_attributes_file() is called. Replace this
-BUG_ON() with -EIO error with a message to suggest running fsck tool.
+We used to need securityfs_remove() to undo simple_pin_fs() done when
+the file had been created and to drop the second extra reference
+taken at the same time.  Now that neither is needed (or done by
+securityfs_remove()), we can simply call simple_unlink() and be done
+with that - the broken games with locking had been there only for the
+sake of securityfs_remove().
 
-Reported-by: syzbot <syzbot+1107451c16b9eb9d29e6@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=1107451c16b9eb9d29e6
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/7b587d24-c8a1-4413-9b9a-00a33fbd849f@I-love.SAKURA.ne.jp
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/xattr.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/virt/coco/efi_secret/efi_secret.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/fs/hfsplus/xattr.c b/fs/hfsplus/xattr.c
-index 9a1a93e3888b..18dc3d254d21 100644
---- a/fs/hfsplus/xattr.c
-+++ b/fs/hfsplus/xattr.c
-@@ -172,7 +172,11 @@ static int hfsplus_create_attributes_file(struct super_block *sb)
- 		return PTR_ERR(attr_file);
- 	}
+diff --git a/drivers/virt/coco/efi_secret/efi_secret.c b/drivers/virt/coco/efi_secret/efi_secret.c
+index 1864f9f80617..f2da4819ec3b 100644
+--- a/drivers/virt/coco/efi_secret/efi_secret.c
++++ b/drivers/virt/coco/efi_secret/efi_secret.c
+@@ -136,15 +136,7 @@ static int efi_secret_unlink(struct inode *dir, struct dentry *dentry)
+ 		if (s->fs_files[i] == dentry)
+ 			s->fs_files[i] = NULL;
  
--	BUG_ON(i_size_read(attr_file) != 0);
-+	if (i_size_read(attr_file) != 0) {
-+		err = -EIO;
-+		pr_err("detected inconsistent attributes file, running fsck.hfsplus is recommended.\n");
-+		goto end_attr_file_creation;
-+	}
+-	/*
+-	 * securityfs_remove tries to lock the directory's inode, but we reach
+-	 * the unlink callback when it's already locked
+-	 */
+-	inode_unlock(dir);
+-	securityfs_remove(dentry);
+-	inode_lock(dir);
+-
+-	return 0;
++	return simple_unlink(inode, dentry);
+ }
  
- 	hip = HFSPLUS_I(attr_file);
- 
+ static const struct inode_operations efi_secret_dir_inode_operations = {
 -- 
 2.39.5
 
