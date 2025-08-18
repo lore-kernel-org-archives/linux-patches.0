@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87628322A0A;
-	Mon, 18 Aug 2025 13:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF8A322A17;
+	Mon, 18 Aug 2025 13:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523591; cv=none; b=UmLtd87dlZTNRKTOPwliahkOmNfqzlTL13wMQHmtCFDIE+6K1LRR8nyG1DG0ZIrwlVtqSwZ8cK3gE+CXFOlVZINmCYVsFWmD2Y9gPzWjsJNdna+xfkpqNyww3umSlevjJhJ6GnlVnVdmDDAs0UswN9s/hSMuJrpUy4esIMu+kdg=
+	t=1755523594; cv=none; b=WZU5s4o0jcXZGt7OkUCc4tXpovtOeYPeTdCeolQh04RjyVQVp4/ebqEelt6R2tOZIlyf7lIJpIrYp/q2ZCMaJDzpzNfCGhDTUjdBWasYTh3UTBIcFsqHLPMIbudcSIXFow7vPsAJc+vhrgXGGXJwaddi5IZtSvllalnlqvb5VVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523591; c=relaxed/simple;
-	bh=y0A6rE2csm68I+u6FVGly+PWWJSzUDk1h0keEM1Tn5E=;
+	s=arc-20240116; t=1755523594; c=relaxed/simple;
+	bh=UAEqtI4rTMYszST2u6A/ozFCPIvx/njJRap91r99nQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAq8IbwpBznVHDvDGdwsuS+QzCQd/4TjFGmip9myERc+LsXF8cp+u//nD942xUz3hs5ZWVJlol0KknUen/mpQx2BTOvQOfIMEpul/ZC1hpGrLilCpki84LmY7jYi7Ut/1zK8yBUvBNZrZTQMaVohRdU+fOtyhPG8HxkXsYMssgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBRybFP/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPdY7Djdyoq/q5Mfm/N4DDtscgMZBQvkHUdoboWBvH0ZD86ZTnVCaeJp5rknOmUQeSXXmlke9xf2909J8bly/qSIa5U+sWoabLa/MkBeALceIVmcjldpnK5JObSu7YsPo63CyBpUAR4QzZ8I/JO+vsLBZ5y5KbmJ2AMMJsVp32Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9C7t5j7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBRybFP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCDCC4CEEB;
-	Mon, 18 Aug 2025 13:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9C7t5j7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524C0C4CEEB;
+	Mon, 18 Aug 2025 13:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523591;
-	bh=y0A6rE2csm68I+u6FVGly+PWWJSzUDk1h0keEM1Tn5E=;
+	s=korg; t=1755523594;
+	bh=UAEqtI4rTMYszST2u6A/ozFCPIvx/njJRap91r99nQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBRybFP/4cz53RivT6XqmwfgDkQth7vgETpExtHJPw2iz0JyROB320Yxp9/rf0UGc
-	 45MTCI/xOUFXkwX7Qp1xcGAG2Ne4ljDSMFO0lQBU+ILgZXynJfYs/L6ctMDz9zCmFl
-	 MLR89SgFrT7q2QGPj6pZdceKwk3Hb1CKcb1Ckmh4=
+	b=j9C7t5j7UkMYxEmwZuTDXpQ7NFzz+GynXMnsWKFqk1N5bPN1IBdZOtkNdsERMvAiv
+	 pOcxDmKUxm8vkVuH096Bro7LjOK5xMxwX8wMzF/y+7ve9nkgwEMtiXCMgp1ERG4dae
+	 x6+DCe1zTQAT0YuopicLg7IcSDF60PkTUXZPOlsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Ping CHNG <jchng@maxlinear.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 217/515] net: pcs: xpcs: mask readl() return value to 16 bits
-Date: Mon, 18 Aug 2025 14:43:23 +0200
-Message-ID: <20250818124506.723352743@linuxfoundation.org>
+Subject: [PATCH 6.15 218/515] arm64: Mark kernel as tainted on SAE and SError panic
+Date: Mon, 18 Aug 2025 14:43:24 +0200
+Message-ID: <20250818124506.761175992@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,44 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Ping CHNG <jchng@maxlinear.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 2b0ba7b5b010455c4e43ab557860f8b1089e7424 ]
+[ Upstream commit d7ce7e3a84642aadf7c4787f7ec4f58eb163d129 ]
 
-readl() returns 32-bit value but Clause 22/45 registers are 16-bit wide.
-Masking with 0xFFFF avoids using garbage upper bits.
+Set TAINT_MACHINE_CHECK when SError or Synchronous External Abort (SEA)
+interrupts trigger a panic to flag potential hardware faults. This
+tainting mechanism aids in debugging and enables correlation of
+hardware-related crashes in large-scale deployments.
 
-Signed-off-by: Jack Ping CHNG <jchng@maxlinear.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250716030349.3796806-1-jchng@maxlinear.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This change aligns with similar patches[1] that mark machine check
+events when the system crashes due to hardware errors.
+
+Link: https://lore.kernel.org/all/20250702-add_tain-v1-1-9187b10914b9@debian.org/ [1]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250716-vmcore_hw_error-v2-1-f187f7d62aba@debian.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pcs/pcs-xpcs-plat.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/traps.c | 1 +
+ arch/arm64/mm/fault.c     | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/pcs/pcs-xpcs-plat.c b/drivers/net/pcs/pcs-xpcs-plat.c
-index 629315f1e57c..9dcaf7a66113 100644
---- a/drivers/net/pcs/pcs-xpcs-plat.c
-+++ b/drivers/net/pcs/pcs-xpcs-plat.c
-@@ -66,7 +66,7 @@ static int xpcs_mmio_read_reg_indirect(struct dw_xpcs_plat *pxpcs,
- 	switch (pxpcs->reg_width) {
- 	case 4:
- 		writel(page, pxpcs->reg_base + (DW_VR_CSR_VIEWPORT << 2));
--		ret = readl(pxpcs->reg_base + (ofs << 2));
-+		ret = readl(pxpcs->reg_base + (ofs << 2)) & 0xffff;
- 		break;
- 	default:
- 		writew(page, pxpcs->reg_base + (DW_VR_CSR_VIEWPORT << 1));
-@@ -124,7 +124,7 @@ static int xpcs_mmio_read_reg_direct(struct dw_xpcs_plat *pxpcs,
+diff --git a/arch/arm64/kernel/traps.c b/arch/arm64/kernel/traps.c
+index 529cff825531..35eed1942d85 100644
+--- a/arch/arm64/kernel/traps.c
++++ b/arch/arm64/kernel/traps.c
+@@ -931,6 +931,7 @@ void __noreturn panic_bad_stack(struct pt_regs *regs, unsigned long esr, unsigne
  
- 	switch (pxpcs->reg_width) {
- 	case 4:
--		ret = readl(pxpcs->reg_base + (csr << 2));
-+		ret = readl(pxpcs->reg_base + (csr << 2)) & 0xffff;
- 		break;
- 	default:
- 		ret = readw(pxpcs->reg_base + (csr << 1));
+ void __noreturn arm64_serror_panic(struct pt_regs *regs, unsigned long esr)
+ {
++	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
+ 	console_verbose();
+ 
+ 	pr_crit("SError Interrupt on CPU%d, code 0x%016lx -- %s\n",
+diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+index 11eb8d1adc84..f590dc71ce99 100644
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -838,6 +838,7 @@ static int do_sea(unsigned long far, unsigned long esr, struct pt_regs *regs)
+ 		 */
+ 		siaddr  = untagged_addr(far);
+ 	}
++	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
+ 	arm64_notify_die(inf->name, regs, inf->sig, inf->code, siaddr, esr);
+ 
+ 	return 0;
 -- 
 2.39.5
 
