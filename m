@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFF926F2A7;
-	Mon, 18 Aug 2025 12:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C81E33F3;
+	Mon, 18 Aug 2025 12:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521891; cv=none; b=RfYoJbJGHOlEe1G0cWepZ8D+M2h8OiKDJOG/etn9McZgHrnztzWnUyv8XeOdfrJqixYxB4r1z4gYXx0N9t8+otA1rUeBRk3bV97Zh7XfNPJCZpMmJa/VGpJAYUQUdB6BXIfl5DT3sqAXAk5VXnRQTi74F8g5KjSyRD4yPsZYGDU=
+	t=1755521895; cv=none; b=mnw8RQtEsAxDXgIg3UD6WfW98BQFWA6jBJ6vwuBt+xxMPR06p3vw0W8fVnNqzQucOJXvNVsVfXIA/ibJrctdI/d+f7evxHjwEH1V6LZuY0xFit3aBnz8lVsiUCR8Qxi+8+7oAsEOFWDapzDE33x4tvCRAsk5x+6qmffqWjPTwPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521891; c=relaxed/simple;
-	bh=1CdeQAkF6YBMXg96O2iw7r3eOFGsUG+FipFz+Ri6ftg=;
+	s=arc-20240116; t=1755521895; c=relaxed/simple;
+	bh=EJZg4/zezXXb/n1sjEOVFp2DGOe7FSk+VnA1dR9b8us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0Xa6qL19wJZrHdIOdTpk2DZhtkd/kSeSBTLILhYfO+oIpbpzBxqWiOzKzml1gFcZgm+dUGk0mZqe+T9na0wDAFJro/QkJOU0cbCs1Tsx7S747KmQdmUFrNz09MHQ2+IixqAG8XIqWLTAbIHHXsXZBduVITDXUhIFczG3lOkaxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Plo0suiT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZTrM1Rb+yi7MQFMR/XUtsVE6AG3beif8Vhe0PfA08Zk8WiO57Tf3Noy5k60Nly3WLoR/FLjSZubcOZSF4ZYAVmaRgJllloJCRXJZDoiREcloaLZPvf0KYxFWyC+EpdgoAEqPylbf5KMPdiWzuq6t2Rzo/BPJ9NfjlHQc38p0Ur8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l8HjH8ls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Plo0suiT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E020BC4CEEB;
-	Mon, 18 Aug 2025 12:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8HjH8ls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE04C4CEEB;
+	Mon, 18 Aug 2025 12:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521891;
-	bh=1CdeQAkF6YBMXg96O2iw7r3eOFGsUG+FipFz+Ri6ftg=;
+	s=korg; t=1755521895;
+	bh=EJZg4/zezXXb/n1sjEOVFp2DGOe7FSk+VnA1dR9b8us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Plo0suiT+VK4ujdRAqRq55dx9eBXKd5RWHJUjBor4uq+fJM4haKTfpYH26yOOnjcz
-	 xXrNebdqD9SSrEV2mHghk/GWlR9FQpwtlICjFkGSYzGzKdPxtG2Qhj+ZavkQArRbAU
-	 Dg2rzTBq3HIltyo/M5aHaiD8rzmJHNLIFbwfIGfA=
+	b=l8HjH8lsGBHzAJ4RmVaapV1T81ST2WkKUpbP1NuTgSpU/UJHXSlG317zLu4l5psIZ
+	 KH960sGhuuGRHBTjwNwvIiLXPNReWLY0fd25QmZjRpNWpk9LwmRHziaHkIlH2yrpXQ
+	 vJ/YbvoqMwYUTpsRQ9jKEG+MENsWif3kl8NWC9VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/444] cpufreq: Exit governor when failed to start old governor
-Date: Mon, 18 Aug 2025 14:42:16 +0200
-Message-ID: <20250818124453.060406903@linuxfoundation.org>
+Subject: [PATCH 6.12 147/444] ASoC: core: Check for rtd == NULL in snd_soc_remove_pcm_runtime()
+Date: Mon, 18 Aug 2025 14:42:53 +0200
+Message-ID: <20250818124454.423629277@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,41 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 0ae204405095abfbc2d694ee0fbb49bcbbe55c57 ]
+[ Upstream commit 2d91cb261cac6d885954b8f5da28b5c176c18131 ]
 
-Detect the result of starting old governor in cpufreq_set_policy(). If it
-fails, exit the governor and clear policy->governor.
+snd_soc_remove_pcm_runtime() might be called with rtd == NULL which will
+leads to null pointer dereference.
+This was reproduced with topology loading and marking a link as ignore
+due to missing hardware component on the system.
+On module removal the soc_tplg_remove_link() would call
+snd_soc_remove_pcm_runtime() with rtd == NULL since the link was ignored,
+no runtime was created.
 
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/20250709104145.2348017-5-zhenglifeng1@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20250619084222.559-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/soc-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index fab94ffcb22c..bd55c2356303 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -2724,10 +2724,12 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
- 	pr_debug("starting governor %s failed\n", policy->governor->name);
- 	if (old_gov) {
- 		policy->governor = old_gov;
--		if (cpufreq_init_governor(policy))
-+		if (cpufreq_init_governor(policy)) {
- 			policy->governor = NULL;
--		else
--			cpufreq_start_governor(policy);
-+		} else if (cpufreq_start_governor(policy)) {
-+			cpufreq_exit_governor(policy);
-+			policy->governor = NULL;
-+		}
- 	}
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index e3c8d4f20b9c..4ac870c2dafa 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -1138,6 +1138,9 @@ static int snd_soc_compensate_channel_connection_map(struct snd_soc_card *card,
+ void snd_soc_remove_pcm_runtime(struct snd_soc_card *card,
+ 				struct snd_soc_pcm_runtime *rtd)
+ {
++	if (!rtd)
++		return;
++
+ 	lockdep_assert_held(&client_mutex);
  
- 	return ret;
+ 	/*
 -- 
 2.39.5
 
