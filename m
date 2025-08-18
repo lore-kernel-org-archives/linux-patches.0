@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A1E335BAD;
-	Mon, 18 Aug 2025 13:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D306261B97;
+	Mon, 18 Aug 2025 13:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524938; cv=none; b=foTWs1G4k2VVZizytOGdwXIpLfQ+xN1lvV5r4MfsFPsSU+GFOjPbTjBGf/R6moHcSL2T5cX7k+h2kWuBYMUwWe3qlt4FIX0Fxy71e50QFbxoa/Nxwz7CGsIk/eDiTTDkqtTR5eezNrH/ZePFNAoJuBtSLWtWWMcUtaFuDehqfto=
+	t=1755524942; cv=none; b=YOuFdd3Fqbd1xASoNDRbJDErmSpqhQiaY/a2XZoMZcAIT8PavpFQZZx8W6IpnWcPIlJ7V1lkYYkAOZ8FqLmMAcoie5CTCzud/OwAv8jWxfEQdrzluLWBjrGKYWCmoomXPlamNRw5+wLX2G8UG1lCBl/P4jxOaZA11ajvt4pZH4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524938; c=relaxed/simple;
-	bh=iCiQqCxRVwebSnCb+irh3UxMsxxDfpimynne1PFep/w=;
+	s=arc-20240116; t=1755524942; c=relaxed/simple;
+	bh=KcuREEYYg9cGjxj3lw8GstM6psQyxJXs8tXUO15Dqz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLocXEmx/7yO7K34LzQzUKpGfh90HV6tBh+0jJEf1JECy7+3mrmAzQSO4/oszUUulRN0xnPNPkLkZqlRS9L6vrJPUpDNQIQ3h5ygKXYOWCw+HANOwTEqTe8zzdSc7qcC158ki8GV7PFDFd81PI3B2zegfuNGPzjRhjZAEeWebWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCyKw7Sz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQhwxbZQ5BPJMNk2/FyxTdO4ufinIp0sUQ5vbEqdzX9MdSLKpp4lOIOl6O+e+k2iR1fZxKxvL+lA1V6rVON953b4T+Y0+0ZlMK/0hnRV9gEAD/YKw+lqEEmmzP3Vefo5VVPCfwW8j2BcRGJbuvF7oDG1cpf2NyE6mhkXhPDqbn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/8hCBPB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCyKw7Sz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5DAC4CEEB;
-	Mon, 18 Aug 2025 13:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/8hCBPB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6E8C4CEF1;
+	Mon, 18 Aug 2025 13:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524938;
-	bh=iCiQqCxRVwebSnCb+irh3UxMsxxDfpimynne1PFep/w=;
+	s=korg; t=1755524942;
+	bh=KcuREEYYg9cGjxj3lw8GstM6psQyxJXs8tXUO15Dqz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCyKw7SzxeW52PuDblbC9qPZMR6dfAc0cJOh/zO3UMrAUnLh5dBYwcK/9Crzf+Nue
-	 epc2vWyio1cKk4jg7m2GKmwcDtKi83qrcwHfCzcBG5z5B7uOn3jmcOJoANu1kgYY7m
-	 1u3I4nIdCAcNNcXNLpKpvNOQQl+5bIusMH6c4f+Q=
+	b=K/8hCBPBe4n8HteW3gWdlY6Vkfzhx5y2vwRcSERtvUHAi50FAR7qeJ8jjF79kc49V
+	 zKye2I0BsgFFyODP0qsNij0x4OhFfwhKsnUzMlZ8Fa2BdQoTlEKmc1DorRlvbXpCAh
+	 E1Dt6m+FZNSHYOzlhUAIv/NARDAzeoKUlp8aBphk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 110/570] hfs: fix not erasing deleted b-tree node issue
-Date: Mon, 18 Aug 2025 14:41:37 +0200
-Message-ID: <20250818124510.042369517@linuxfoundation.org>
+Subject: [PATCH 6.16 111/570] better lockdep annotations for simple_recursive_removal()
+Date: Mon, 18 Aug 2025 14:41:38 +0200
+Message-ID: <20250818124510.081282823@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,103 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit d3ed6d6981f4756f145766753c872482bc3b28d3 ]
+[ Upstream commit 2a8061ee5e41034eb14170ec4517b5583dbeff9f ]
 
-The generic/001 test of xfstests suite fails and corrupts
-the HFS volume:
+We want a class that nests outside of I_MUTEX_NORMAL (for the sake of
+callbacks that might want to lock the victim) and inside I_MUTEX_PARENT
+(so that a variant of that could be used with parent of the victim
+held locked by the caller).
 
-sudo ./check generic/001
-FSTYP         -- hfs
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2>
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+In reality, simple_recursive_removal()
+	* never holds two locks at once
+	* holds the lock on parent of dentry passed to callback
+	* is used only on the trees with fixed topology, so the depths
+are not changing.
 
-generic/001 32s ... _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
-(see /home/slavad/XFSTESTS-2/xfstests-dev/results//generic/001.full for details)
+So the locking order is actually fine.
 
-Ran: generic/001
-Failures: generic/001
-Failed 1 of 1 tests
+AFAICS, the best solution is to assign I_MUTEX_CHILD to the locks
+grabbed by that thing.
 
-fsck.hfs -d -n ./test-image.bin
-** ./test-image.bin (NO WRITE)
-	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-   Executing fsck_hfs (version 540.1-Linux).
-** Checking HFS volume.
-   The volume name is untitled
-** Checking extents overflow file.
-** Checking catalog file.
-   Unused node is not erased (node = 2)
-   Unused node is not erased (node = 4)
-<skipped>
-   Unused node is not erased (node = 253)
-   Unused node is not erased (node = 254)
-   Unused node is not erased (node = 255)
-   Unused node is not erased (node = 256)
-** Checking catalog hierarchy.
-** Checking volume bitmap.
-** Checking volume information.
-   Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
-                  CBTStat = 0x0004 CatStat = 0x00000000
-** The volume untitled was found corrupt and needs to be repaired.
-	volume type is HFS
-	primary MDB is at block 2 0x02
-	alternate MDB is at block 20971518 0x13ffffe
-	primary VHB is at block 0 0x00
-	alternate VHB is at block 0 0x00
-	sector size = 512 0x200
-	VolumeObject flags = 0x19
-	total sectors for volume = 20971520 0x1400000
-	total sectors for embedded volume = 0 0x00
-
-This patch adds logic of clearing the deleted b-tree node.
-
-sudo ./check generic/001
-FSTYP         -- hfs
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2025
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/001 9s ...  32s
-Ran: generic/001
-Passed all 1 tests
-
-fsck.hfs -d -n ./test-image.bin
-** ./test-image.bin (NO WRITE)
-	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-   Executing fsck_hfs (version 540.1-Linux).
-** Checking HFS volume.
-   The volume name is untitled
-** Checking extents overflow file.
-** Checking catalog file.
-** Checking catalog hierarchy.
-** Checking volume bitmap.
-** Checking volume information.
-** The volume untitled appears to be OK.
-
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20250430001211.1912533-1-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reported-by: syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/bnode.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/libfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
-index 1dac5d9c055f..e8cd1a31f247 100644
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -574,6 +574,7 @@ void hfs_bnode_put(struct hfs_bnode *node)
- 		if (test_bit(HFS_BNODE_DELETED, &node->flags)) {
- 			hfs_bnode_unhash(node);
- 			spin_unlock(&tree->hash_lock);
-+			hfs_bnode_clear(node, 0, tree->node_size);
- 			hfs_bmap_free(node);
- 			hfs_bnode_free(node);
- 			return;
+diff --git a/fs/libfs.c b/fs/libfs.c
+index 6f487fc6be34..972b95cc7433 100644
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -613,7 +613,7 @@ void simple_recursive_removal(struct dentry *dentry,
+ 		struct dentry *victim = NULL, *child;
+ 		struct inode *inode = this->d_inode;
+ 
+-		inode_lock(inode);
++		inode_lock_nested(inode, I_MUTEX_CHILD);
+ 		if (d_is_dir(this))
+ 			inode->i_flags |= S_DEAD;
+ 		while ((child = find_next_child(this, victim)) == NULL) {
+@@ -625,7 +625,7 @@ void simple_recursive_removal(struct dentry *dentry,
+ 			victim = this;
+ 			this = this->d_parent;
+ 			inode = this->d_inode;
+-			inode_lock(inode);
++			inode_lock_nested(inode, I_MUTEX_CHILD);
+ 			if (simple_positive(victim)) {
+ 				d_invalidate(victim);	// avoid lost mounts
+ 				if (d_is_dir(victim))
 -- 
 2.39.5
 
