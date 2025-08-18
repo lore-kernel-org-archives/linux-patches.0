@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4CE32144D;
-	Mon, 18 Aug 2025 13:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FA231E0F8;
+	Mon, 18 Aug 2025 13:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524155; cv=none; b=W2qOlPkuw4GQIV5Hk5sXwxGLZ3gE9jH44z7nHC9+ICmgdNDGbmxWvLWutSJoSB5Hc5vH9xlFwx6NP/yKxGEeLAESKiLXR3OJFgL0Z9XfgJOeAeAsXQsOy6W+mcos+MYb0p2TvwSn5xg9qVbAkcGfIbW7dVORw8F2qzOWEKOIWZQ=
+	t=1755524158; cv=none; b=MnfF4vMr/I6iNEzqDpM0H+A2DcNftu8ksJ5U+Ni2GLwow0nJCn1kN9DIJs5ClUID7AgVafDC+aOpwGCJNAchq5hUUNuCxunME5ZGQ7B6P79w5xPGkdv4zeAHOyZQKWCQ0ECXFZqZxP+bFSkcB+VAf6r27CkDtnU9AA6wkBrSQYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524155; c=relaxed/simple;
-	bh=upsZmpj0lkQ5v2zH0qnNo/zgwC2+CFRv7NT1iH75YUU=;
+	s=arc-20240116; t=1755524158; c=relaxed/simple;
+	bh=TROAZPoJgFZhfFSHfsGifs/IHDrb43B8ckoy9rHSj6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6JpNL65uKoGPStH5yG6vPn+mlo5tjcWkkvTgLeFgwDGAKhHeUoDU9IyauQs7EyYGKtj4baj3QWCGXd/jICLJYmqEVmAAez2HRhOEjvgS4t5NbjBAJkdWvzQhm3Ur/Llamlu/MB+i/Hdmqih5i4MNef+m7pxMKbgZjwtMM1LrRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdMsr9k6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXXOPObDUlAep2gu8uzXKrQYMNU1CySh6/FJCdyjleVidK3wDbgxtp+5IOQvpgMtEci6Lz0SXUDMY1z1hvxuJLECP1XoAQlcE5cC7qNNOt80DExHWNIm0fYNJ6P9dRLNesheOuV8uDpnmOhxk7Sw4FNQf2FVvVJhZv5wB4NPlWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUQhFNxm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdMsr9k6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB3FC2BCAF;
-	Mon, 18 Aug 2025 13:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUQhFNxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480C2C4CEEB;
+	Mon, 18 Aug 2025 13:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524155;
-	bh=upsZmpj0lkQ5v2zH0qnNo/zgwC2+CFRv7NT1iH75YUU=;
+	s=korg; t=1755524158;
+	bh=TROAZPoJgFZhfFSHfsGifs/IHDrb43B8ckoy9rHSj6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zdMsr9k6PR8e/QRhaA4CM6QN1BXastX/r/oaT8FciC5fXb7W7e/ZmBxkn0BrJcn2f
-	 IOxV5IgQcI4UmLVF3BGGnAq2MqTk0qpScWvXgk1HAGkWXEWJkcdMzu+sj4So6FkWwb
-	 11HzEDRkwgVMVuEy5z55OMnLt3z1BilTNsAObKmo=
+	b=OUQhFNxmbi21p+b5VD+w4xVwQd0olxQ3H3YppHPcjIH8iOSpKvpWfooRtFpP8W/jZ
+	 QMeUtk0AL2vWOaiUXHVPgLqUZ1Sonp1kI0DUQefruWpEk1BfcuQqgc07hLDJxBWMVw
+	 3EIzRFpblH6dbW7FFiDJZfgAwG4I5I0Hcg7ZUUAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srujana Challa <schalla@marvell.com>,
-	Bharat Bhushan <bbhushan2@marvell.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 384/515] crypto: octeontx2 - add timeout for load_fvc completion poll
-Date: Mon, 18 Aug 2025 14:46:10 +0200
-Message-ID: <20250818124513.200317163@linuxfoundation.org>
+Subject: [PATCH 6.15 385/515] crypto: ccp - Add missing bootloader info reg for pspv6
+Date: Mon, 18 Aug 2025 14:46:11 +0200
+Message-ID: <20250818124513.238418071@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,63 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bharat Bhushan <bbhushan2@marvell.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 2157e50f65d2030f07ea27ef7ac4cfba772e98ac ]
+[ Upstream commit aaeff14688d0254b39731d9bb303c79bfd610f7d ]
 
-Adds timeout to exit from possible infinite loop, which polls
-on CPT instruction(load_fvc) completion.
+The bootloader info reg for pspv6 is the same as pspv4 and pspv5.
 
-Signed-off-by: Srujana Challa <schalla@marvell.com>
-Signed-off-by: Bharat Bhushan <bbhushan2@marvell.com>
+Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/marvell/octeontx2/otx2_cptpf_ucode.c  | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/crypto/ccp/sp-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c b/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-index 42c5484ce66a..3a818ac89295 100644
---- a/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-+++ b/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-@@ -1494,6 +1494,7 @@ int otx2_cpt_discover_eng_capabilities(struct otx2_cptpf_dev *cptpf)
- 	dma_addr_t rptr_baddr;
- 	struct pci_dev *pdev;
- 	u32 len, compl_rlen;
-+	int timeout = 10000;
- 	int ret, etype;
- 	void *rptr;
- 
-@@ -1556,16 +1557,27 @@ int otx2_cpt_discover_eng_capabilities(struct otx2_cptpf_dev *cptpf)
- 							 etype);
- 		otx2_cpt_fill_inst(&inst, &iq_cmd, rptr_baddr);
- 		lfs->ops->send_cmd(&inst, 1, &cptpf->lfs.lf[0]);
-+		timeout = 10000;
- 
- 		while (lfs->ops->cpt_get_compcode(result) ==
--						OTX2_CPT_COMPLETION_CODE_INIT)
-+						OTX2_CPT_COMPLETION_CODE_INIT) {
- 			cpu_relax();
-+			udelay(1);
-+			timeout--;
-+			if (!timeout) {
-+				ret = -ENODEV;
-+				cptpf->is_eng_caps_discovered = false;
-+				dev_warn(&pdev->dev, "Timeout on CPT load_fvc completion poll\n");
-+				goto error_no_response;
-+			}
-+		}
- 
- 		cptpf->eng_caps[etype].u = be64_to_cpup(rptr);
- 	}
--	dma_unmap_single(&pdev->dev, rptr_baddr, len, DMA_BIDIRECTIONAL);
- 	cptpf->is_eng_caps_discovered = true;
- 
-+error_no_response:
-+	dma_unmap_single(&pdev->dev, rptr_baddr, len, DMA_BIDIRECTIONAL);
- free_result:
- 	kfree(result);
- lf_cleanup:
+diff --git a/drivers/crypto/ccp/sp-pci.c b/drivers/crypto/ccp/sp-pci.c
+index 2ebc878da160..224edaaa737b 100644
+--- a/drivers/crypto/ccp/sp-pci.c
++++ b/drivers/crypto/ccp/sp-pci.c
+@@ -451,6 +451,7 @@ static const struct psp_vdata pspv6 = {
+ 	.cmdresp_reg		= 0x10944,	/* C2PMSG_17 */
+ 	.cmdbuff_addr_lo_reg	= 0x10948,	/* C2PMSG_18 */
+ 	.cmdbuff_addr_hi_reg	= 0x1094c,	/* C2PMSG_19 */
++	.bootloader_info_reg	= 0x109ec,	/* C2PMSG_59 */
+ 	.feature_reg            = 0x109fc,	/* C2PMSG_63 */
+ 	.inten_reg              = 0x10510,	/* P2CMSG_INTEN */
+ 	.intsts_reg             = 0x10514,	/* P2CMSG_INTSTS */
 -- 
 2.39.5
 
