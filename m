@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3214C35A280;
-	Mon, 18 Aug 2025 14:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A2F35A2AD;
+	Mon, 18 Aug 2025 14:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526459; cv=none; b=ZJqORaCYuUoJqDooz3qBFTL0BcsQ8mkYbqTGztQorSZqDkhw4KNYjjifTxWVtSFYj2JaljYFnW4zhuMHfSIosavROZRdiW0DiR0EsFrXSwQ/zLXNk7Lc99tdcVZwQJhmxRfMZehMWNCeZgCqFVIwUoRckq3oPz8n2sm7f1Dd0uk=
+	t=1755526462; cv=none; b=ABzjRheZ6MO358vZpY6YqyV8WKw0rCl6671blTo3j+dsK2tSkHWalAdxkOwen347mC3kmI5LKe+v7LsSuhive1vSN/6tEvky1u0CoFNdA6RanUPLdnSjT6PlL9V/yvzlw1urWTyH1Yj6pQTaIQgstfK3OpYCHIWdttF5C3tFmFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526459; c=relaxed/simple;
-	bh=sNpkr7l/aTy1ihK1yKnKrWtXrF9Zg+eR47DmaeZluUs=;
+	s=arc-20240116; t=1755526462; c=relaxed/simple;
+	bh=FrtqATlk/Uhc5Bgmd5wINCV1jh4TjpZ79hMf+FtaYvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKXyBhhHq6M2WYMfPQOCkbCCikYWJpy11sQMMkmsTm0u1G/srdk3c10heQQKLN6vYBU7ZSoJ4RUP/7075W9E7gDN2IVSLUwrdr5XlGQcB3U4e/2vOW39pWm2E3t/t3UVQvs1xuMuQD/0RQVtcYK3jKUpiJN98id1lC3yQd/40sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqWeJav/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AQjpHm9jR+bSyFZCuEO4mtXI17zkUQ/F7duq+EnwNUWgd+bPJibva0TfH2a1wJbiQF0BgFfcJ0iNnQ8seQCYUCkhoJEfusV1gou6pPGr6zl0IfTse0cQxuEdAxjfFvAoUtYDPk7QDG65ontiXd1+aTlypafxHl2TotXWTAgWskc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ManPuIxt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqWeJav/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4BCC4CEEB;
-	Mon, 18 Aug 2025 14:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ManPuIxt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42409C4CEEB;
+	Mon, 18 Aug 2025 14:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526459;
-	bh=sNpkr7l/aTy1ihK1yKnKrWtXrF9Zg+eR47DmaeZluUs=;
+	s=korg; t=1755526462;
+	bh=FrtqATlk/Uhc5Bgmd5wINCV1jh4TjpZ79hMf+FtaYvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqWeJav/SfVvyRgE+1ClXXIjFFW/hTmXfNVa5AEBDB0Duwk2JcGOWqB7Rdogj2IZM
-	 fWNSmF+2SL+5SyfzfXGiv6/h40626iKmn5OC5LGZaaeaE3gMQr8NOpcsn9OH4Y3cac
-	 j+rTBOOvRv34Nu/3ld+pxnQ/chDWFTTbTFtOflEI=
+	b=ManPuIxtnF1J1f1y1C1rlPwsG9+VDHugzPJMT7L4i7Ko6UJhFQIRmv+TzoyxtmErg
+	 oDJSdvqwDpQ6aWtvI/gfUBQivvv6WT95f1xPcAigLnQvjnDERNYsjRRQHvA0ZQ5TTE
+	 C7HtFmc59g0b68yQj1lS1WGXGSchpmnIrtDyw9r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.16 562/570] io_uring/rw: cast rw->flags assignment to rwf_t
-Date: Mon, 18 Aug 2025 14:49:09 +0200
-Message-ID: <20250818124527.528312326@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Sudeep Holla <sudeep.holla@arm.com>
+Subject: [PATCH 6.16 563/570] firmware: arm_scmi: Convert to SYSTEM_SLEEP_PM_OPS
+Date: Mon, 18 Aug 2025 14:49:10 +0200
+Message-ID: <20250818124527.566315771@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,38 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 825aea662b492571877b32aeeae13689fd9fbee4 upstream.
+commit 62d6b81e8bd207ad44eff39d1a0fe17f0df510a5 upstream.
 
-kernel test robot reports that a recent change of the sqe->rw_flags
-field throws a sparse warning on 32-bit archs:
+The old SET_SYSTEM_SLEEP_PM_OPS() macro leads to a warning about an
+unused function:
 
->> io_uring/rw.c:291:19: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __kernel_rwf_t [usertype] flags @@     got unsigned int @@
-   io_uring/rw.c:291:19: sparse:     expected restricted __kernel_rwf_t [usertype] flags
-   io_uring/rw.c:291:19: sparse:     got unsigned int
+  |  drivers/firmware/arm_scmi/scmi_power_control.c:363:12: error:
+  | 	'scmi_system_power_resume' defined but not used [-Werror=unused-function]
+  |         static int scmi_system_power_resume(struct device *dev)
 
-Force cast it to rwf_t to silence that new sparse warning.
+The proper way to do this these days is to use SYSTEM_SLEEP_PM_OPS()
+and pm_sleep_ptr().
 
-Fixes: cf73d9970ea4 ("io_uring: don't use int for ABI")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202507032211.PwSNPNSP-lkp@intel.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9a0658d3991e ("firmware: arm_scmi: power_control: Ensure SCMI_SYSPOWER_IDLE is set early during resume")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Peng Fan <peng.fan@nxp.com>
+Message-Id: <20250709070107.1388512-1-arnd@kernel.org>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/scmi_power_control.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -288,7 +288,7 @@ static int __io_prep_rw(struct io_kiocb
+--- a/drivers/firmware/arm_scmi/scmi_power_control.c
++++ b/drivers/firmware/arm_scmi/scmi_power_control.c
+@@ -369,7 +369,7 @@ static int scmi_system_power_resume(stru
+ }
  
- 	rw->addr = READ_ONCE(sqe->addr);
- 	rw->len = READ_ONCE(sqe->len);
--	rw->flags = READ_ONCE(sqe->rw_flags);
-+	rw->flags = (__force rwf_t) READ_ONCE(sqe->rw_flags);
+ static const struct dev_pm_ops scmi_system_power_pmops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(NULL, scmi_system_power_resume)
++	SYSTEM_SLEEP_PM_OPS(NULL, scmi_system_power_resume)
+ };
  
- 	attr_type_mask = READ_ONCE(sqe->attr_type_mask);
- 	if (attr_type_mask) {
+ static const struct scmi_device_id scmi_id_table[] = {
+@@ -380,7 +380,7 @@ MODULE_DEVICE_TABLE(scmi, scmi_id_table)
+ 
+ static struct scmi_driver scmi_system_power_driver = {
+ 	.driver	= {
+-		.pm = &scmi_system_power_pmops,
++		.pm = pm_sleep_ptr(&scmi_system_power_pmops),
+ 	},
+ 	.name = "scmi-system-power",
+ 	.probe = scmi_syspower_probe,
 
 
