@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46EC320CD7;
-	Mon, 18 Aug 2025 13:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4DE320CD4;
+	Mon, 18 Aug 2025 13:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523433; cv=none; b=GsfBgxYu3KB8p+ziphwn4ZaXSPdGVBe3NtWhUCN6SvbmJMq7NDae3bJMP1ZME983VuJYcLcg4ZSjJj/3DlqyKoRpvosstsq3WU+gP9HjtMll+r9uVsHNv2Wtlg/3RsOI4/mzKCAoo2KLhypt/25tRL+7RYvL+9ultdOpa6KXXIY=
+	t=1755523436; cv=none; b=HqPsuAGXDyvCT52K7FJBHrTlF/HmYcKf8JxZC2ufFdmjNWA59tYS40aacq8R+ZB4nSn6yUbIbkAgWSD7cFVHRM4iHybcI/hKNydFBBf6iMkuoXmVzSbRMTiNQGtrfbmdgsKTE5zgfusfFXNRMJUkeulyuYgxW+7lp2lyNtoI7WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523433; c=relaxed/simple;
-	bh=hjOI1TVhJVe7FAlJ3NYiR7oEKPa5Yb0eTXjTcQOCVhg=;
+	s=arc-20240116; t=1755523436; c=relaxed/simple;
+	bh=4xTrgjRcc+dzukaVkdiTUTHkrgIUZtaaZcv4TcS4qkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cpn1PWdriEykCkr+V3OIzupreoqCEorGfNQZwRss71skpjr8egT/qjMwJsck4vPqGFVMET2Vta8OCPwnsbPruYz8CNa14NZkwMSvPdrnfp+enzLa3bfDiX1hdwWfhe5Y/XuUwGLKZjSjEHu8N67GfyLRXsYG7P3VJhQku1PTyCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bU2mFXmA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j/Sj6TZQbnkmQ0Yvjw6U1B2zCqTD8gIiqKEWQUIk4BepFWmUfyVJq8r+FXghvwmLDxORzToLv3AVUnxDKFPIXRV5B01IiHGsJ8rOGW5rIjxN2czxO0+DsBp1PXgq0uu80PsVyosliH864EoZhvzeJve5ACM2qz3ZRjCVQBiCUr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fomSicjT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bU2mFXmA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B98C4CEEB;
-	Mon, 18 Aug 2025 13:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fomSicjT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06EFC4CEEB;
+	Mon, 18 Aug 2025 13:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523432;
-	bh=hjOI1TVhJVe7FAlJ3NYiR7oEKPa5Yb0eTXjTcQOCVhg=;
+	s=korg; t=1755523436;
+	bh=4xTrgjRcc+dzukaVkdiTUTHkrgIUZtaaZcv4TcS4qkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bU2mFXmA8bzGpEq2OMjHp1Ldav8GBQNEQNI8QL3AA7b5nNHOIbCcx2DI+659fyYt7
-	 +sy+x+2rVxD9A57RcrpSNfrin9MCtHHZgmG7kkzUeJj7omjQolFU10Yyy8Ze5Nfxsk
-	 EfXsG0tkoPHrsHaKgszkBpEZZsRI3p+CBJJS1PO8=
+	b=fomSicjTpA5fyQ82YRYAeTnHzYiAXknXCRohbmzHyT4xWo7K+S6B+3An8NfqR1Lsb
+	 4deAk3kUrzxXB5uzm99auSgwz1Y4WSz9dAm/vjLgEeWdGwZjYJbszkanq6MfRdlot1
+	 8enslYmHhb6comW3QZMEN6FtvKTnJ488MW1Uk4Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 152/515] thermal: sysfs: Return ENODATA instead of EAGAIN for reads
-Date: Mon, 18 Aug 2025 14:42:18 +0200
-Message-ID: <20250818124504.234626017@linuxfoundation.org>
+Subject: [PATCH 6.15 170/515] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
+Date: Mon, 18 Aug 2025 14:42:36 +0200
+Message-ID: <20250818124504.913009401@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,51 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 1a4aabc27e95674837f2e25f4ef340c0469e6203 ]
+[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
 
-According to POSIX spec, EAGAIN returned by read with O_NONBLOCK set
-means the read would block. Hence, the common implementation in
-nonblocking model will poll the file when the nonblocking read returns
-EAGAIN. However, when the target file is thermal zone, this mechanism
-will totally malfunction because thermal zone doesn't implement sysfs
-notification and thus the poll will never return.
+code mistakenly used a hardcoded index (codec[1]) instead of
+iterating, over the codec array using the loop variable i.
+Use codec[i] instead of codec[1] to match the loop iteration.
 
-For example, the read in Golang implemnts such method and sometimes
-hangs at reading some thermal zones via sysfs.
-
-Change to return -ENODATA instead of -EAGAIN to userspace.
-
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Link: https://patch.msgid.link/20250620-temp-v3-1-6becc6aeb66c@chromium.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_sysfs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/pci/intel8x0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
-index 24b9055a0b6c..d80612506a33 100644
---- a/drivers/thermal/thermal_sysfs.c
-+++ b/drivers/thermal/thermal_sysfs.c
-@@ -40,10 +40,13 @@ temp_show(struct device *dev, struct device_attribute *attr, char *buf)
- 
- 	ret = thermal_zone_get_temp(tz, &temperature);
- 
--	if (ret)
--		return ret;
-+	if (!ret)
-+		return sprintf(buf, "%d\n", temperature);
- 
--	return sprintf(buf, "%d\n", temperature);
-+	if (ret == -EAGAIN)
-+		return -ENODATA;
-+
-+	return ret;
- }
- 
- static ssize_t
+diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
+index e4bb99f71c2c..95f0bd2e1532 100644
+--- a/sound/pci/intel8x0.c
++++ b/sound/pci/intel8x0.c
+@@ -2249,7 +2249,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
+ 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
+ 			for (i = 1; i < 4; i++) {
+ 				if (pcm->r[0].codec[i]) {
+-					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
++					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
+ 					break;
+ 				}
+ 			}
 -- 
 2.39.5
 
