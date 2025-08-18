@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30012343D92;
-	Mon, 18 Aug 2025 14:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A79343D9B;
+	Mon, 18 Aug 2025 14:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526497; cv=none; b=RWVqjZ/bXby7tq2KnRbTVz5ihHychZ5vwq2xemooEjSWfpjd1YaTHw6JPyykCseoFXVzm1vtCGm/491fKn/xdwH2d8ra5fDqHmjqLt3Rbn3tN5F0OiUy3+xFvKM0em1ffr2o9Unn+78ZwsHpNdYYlIdQrk9mXoQRyCwScFWda2Y=
+	t=1755526500; cv=none; b=uOL/+WDLYHDHf3eMRAMtT/MCmrAYs4h9PWHINSCos1UxhshjCyw3ea/ME4mHoP993Rd13uNH/sUcb9RcmArBQ1o7MA67dBMR39TVU9ZEfOsSYryF+nq/WJfTk1RyvFsB9Ii6fxreTb3YihMxCACPW+WFmpbWnvvK/Qvnb+TnPhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526497; c=relaxed/simple;
-	bh=KdFw95re/iHGoSPD0dCuy5WtG974kTCDSNERfS/dDNQ=;
+	s=arc-20240116; t=1755526500; c=relaxed/simple;
+	bh=PBYb9bBqBSjrQfMlv8pfd3MIpbOqy/5L9NUiqouxNfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EchzoNKzmib0Q1l9abeqyg8peXxTPGrXcUiNKSV1rLtMOo6nmwwr1wkxg3uiZHr53kankuCgIdUyK59d0cdBvp1uia7AjQkfCu/Z2iZh5nZDWGyrBdqLr6HB9shzukdIHVHa5QwgV0QKfvkrY5rtVQTXGVzYUHAlnhjwxV6cifQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7bQwaO2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=suEu4OeIvzfKueZsThrGlWVq0ooqMbCmbUqiN5Ojj47DXU7GC4vGqCWC2BEt2RC7HtaA68/FH2++D5OhUlPDatofIycFXZdVXINeIMZqFJxy9sHQt9D3hixRWyHPqWOiFFZoAj/TCo9XaW1emc4O3Gj7zWB5SovhK/ukzC/ToyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPoz9Uqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7bQwaO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95221C4CEEB;
-	Mon, 18 Aug 2025 14:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPoz9Uqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1704C4CEEB;
+	Mon, 18 Aug 2025 14:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526497;
-	bh=KdFw95re/iHGoSPD0dCuy5WtG974kTCDSNERfS/dDNQ=;
+	s=korg; t=1755526500;
+	bh=PBYb9bBqBSjrQfMlv8pfd3MIpbOqy/5L9NUiqouxNfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E7bQwaO2YX9GOgASuGkRd1VMY1nrE9OeW4lK0sF4AeG1mNLLqhTpHeUjjm6Q1MjCy
-	 oUxBu1pkKXTcPRrqYFI5M/Go0/zCg1dGfkHwF8NWMcPV7+X+e74yLRYLk9va74mpIH
-	 QzP+wVbFirtXhQZLsd54wy7Oxe49d+nYg5l6kBTU=
+	b=bPoz9Uqaq9QXhO1MkvjxqTAcylU8lqtt8ypmh9vEO7k8GYUEwpLDkY/yQvcbiEuL6
+	 7BXsqn6Vy5hmFaCVfOKCEVENWyu2kkJb+HiwAA4lfeIXeuWWjlJEo3FbmY3IA2WAtT
+	 rAifHOy7jSc7ixiJTMoBVxXJ5nHIaLjlBjm/vftI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.16 554/570] tracing: fprobe: Fix infinite recursion using preempt_*_notrace()
-Date: Mon, 18 Aug 2025 14:49:01 +0200
-Message-ID: <20250818124527.213710336@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Willy Tarreau <w@1wt.eu>
+Subject: [PATCH 6.16 555/570] tools/nolibc: fix spelling of FD_SETBITMASK in FD_* macros
+Date: Mon, 18 Aug 2025 14:49:02 +0200
+Message-ID: <20250818124527.251631250@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -43,53 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Willy Tarreau <w@1wt.eu>
 
-commit a3e892ab0fc287389176eabdcd74234508f6e52d upstream.
+commit a477629baa2a0e9991f640af418e8c973a1c08e3 upstream.
 
-Since preempt_count_add/del() are tracable functions, it is not allowed
-to use preempt_disable/enable() in ftrace handlers. Without this fix,
-probing on `preempt_count_add%return` will cause an infinite recursion
-of fprobes.
+While nolibc-test does test syscalls, it doesn't test as much the rest
+of the macros, and a wrong spelling of FD_SETBITMASK in commit
+feaf75658783a broke programs using either FD_SET() or FD_CLR() without
+being noticed. Let's fix these macros.
 
-To fix this problem, use preempt_disable/enable_notrace() in
-fprobe_return().
-
-Link: https://lore.kernel.org/all/175374642359.1471729.1054175011228386560.stgit@mhiramat.tok.corp.google.com/
-
-Fixes: 4346ba160409 ("fprobe: Rewrite fprobe on function-graph tracer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: feaf75658783a ("nolibc: fix fd_set type")
+Cc: stable@vger.kernel.org # v6.2+
+Acked-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Willy Tarreau <w@1wt.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fprobe.c |    4 ++--
+ tools/include/nolibc/types.h |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/fprobe.c
-+++ b/kernel/trace/fprobe.c
-@@ -352,7 +352,7 @@ static void fprobe_return(struct ftrace_
- 	size_words = SIZE_IN_LONG(size);
- 	ret_ip = ftrace_regs_get_instruction_pointer(fregs);
+--- a/tools/include/nolibc/types.h
++++ b/tools/include/nolibc/types.h
+@@ -128,7 +128,7 @@ typedef struct {
+ 		int __fd = (fd);					\
+ 		if (__fd >= 0)						\
+ 			__set->fds[__fd / FD_SETIDXMASK] &=		\
+-				~(1U << (__fd & FX_SETBITMASK));	\
++				~(1U << (__fd & FD_SETBITMASK));	\
+ 	} while (0)
  
--	preempt_disable();
-+	preempt_disable_notrace();
- 
- 	curr = 0;
- 	while (size_words > curr) {
-@@ -368,7 +368,7 @@ static void fprobe_return(struct ftrace_
- 		}
- 		curr += size;
- 	}
--	preempt_enable();
-+	preempt_enable_notrace();
- }
- NOKPROBE_SYMBOL(fprobe_return);
+ #define FD_SET(fd, set) do {						\
+@@ -145,7 +145,7 @@ typedef struct {
+ 		int __r = 0;						\
+ 		if (__fd >= 0)						\
+ 			__r = !!(__set->fds[__fd / FD_SETIDXMASK] &	\
+-1U << (__fd & FD_SET_BITMASK));						\
++1U << (__fd & FD_SETBITMASK));						\
+ 		__r;							\
+ 	})
  
 
 
