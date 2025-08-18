@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FFF335BAB;
-	Mon, 18 Aug 2025 14:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42922321F43;
+	Mon, 18 Aug 2025 14:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526055; cv=none; b=YQW1p0udfZqLwHXhDrInIql9iIn6ihLJJ89ccef073oYBAF2yzrJTWRN5J89tko/ewSDohV3yr5ww9awfXqdeGR/4H9z8HNbuHvKtfUH9r46hQhoCUnl62SXT2WVLmfPppf0wSFOIue9jykJIEZFKmcG6ell0zvvSmSSzw3QAGM=
+	t=1755526059; cv=none; b=slVPW/4FuB2SuX3An63CX23MdZcjEfRwbR/QyRtPEEdZSg3YYrQ7KMSSCYWWNp0NWxZaXmlzswQvPH9neH25Mv6TwuwMLBZ+lkz+8ijPrIn/i4MDm49pY96Rh3yy5N9Cshi8eaLRYMMyQNldG2fUf1cWsBHQp3iBGiRYOcWalYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526055; c=relaxed/simple;
-	bh=JK2jwkb+LfjMJNqNrg8lvMm9g/4GuRYdhIA97D4vmJw=;
+	s=arc-20240116; t=1755526059; c=relaxed/simple;
+	bh=4VuVLXAvx81QmyjiGPEm8LD9VK3wLJT2KoHlfTyfFlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amiIn9bGmjrXP5XhaIC0uXWuY4zaxxIVmTbEjzrT8ifKfPUHGWvDoEDSe8GjQRwOmp7IPvwMK8xaOXn5UwtdtOXDhaRxwIQT2MqG8V48wwh6yaVevOWOhulZcaIsbKKH10XHojb8YUEze+pyASeyz13DIKx0cvYPAkEpoxcuxHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I89h4pV7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S/rih0w9ZDH3yS/ta7U9WERecySc0DxH4z+D2yFZ3o/YqfB+vX75rK8soau4GNPZDwlbIKcOiGFxFe7aLyE51U5AB47mly5R4IFruD9066d+75gFJIdZtqbsdvZgaPDaIebDwIYB3kMAqe3CO1Z/HbH9qKSaYzvg88keNHLeBCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQ7S5lhi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I89h4pV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAC0C4CEEB;
-	Mon, 18 Aug 2025 14:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQ7S5lhi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203A6C4CEEB;
+	Mon, 18 Aug 2025 14:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526055;
-	bh=JK2jwkb+LfjMJNqNrg8lvMm9g/4GuRYdhIA97D4vmJw=;
+	s=korg; t=1755526059;
+	bh=4VuVLXAvx81QmyjiGPEm8LD9VK3wLJT2KoHlfTyfFlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I89h4pV72ieGyRGdpa8B51S5wvoLsxOTodDU2EuvBmNOtugP5Zwxh6dInLtHnMyNZ
-	 tKzp5E8XBNGzKVILy1ejmlxCK3Tj5u9WRSboOqhdtGZ5g6KM2HA2TIGPNA0dlpm4o9
-	 xoNYbfcwrEHizAGxRBt0R4nZYT1TLDEfDnK/KiUU=
+	b=YQ7S5lhihtz2pRaP8WQVjkQb3h9SGBRBLIXeVKwoK0k5mdymzNP1hFEFz47t2o2/9
+	 +Q6FiMZZi/qibyGEviBZR5Ht7PGDANgvm6zybs3oLDXs03boc5m1dMOmLVvtYvewHh
+	 g7MBqEbyV5OWKBg6rUyy1kK/TlXxFLrCzIGz80gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Micha=C3=ABl=20Melchiore?= <rohel01@gmail.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 444/570] scsi: aacraid: Stop using PCI_IRQ_AFFINITY
-Date: Mon, 18 Aug 2025 14:47:11 +0200
-Message-ID: <20250818124522.921185265@linuxfoundation.org>
+Subject: [PATCH 6.16 414/570] media: uvcvideo: Add quirk for HP Webcam HD 2300
+Date: Mon, 18 Aug 2025 14:46:41 +0200
+Message-ID: <20250818124521.794003252@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -46,73 +47,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit dafeaf2c03e71255438ffe5a341d94d180e6c88e ]
+[ Upstream commit 53b0b80e5240fec7c5a420bffb310edc83faf4fd ]
 
-When PCI_IRQ_AFFINITY is set for calling pci_alloc_irq_vectors(), it
-means interrupts are spread around the available CPUs. It also means that
-the interrupts become managed, which means that an interrupt is shutdown
-when all the CPUs in the interrupt affinity mask go offline.
+HP Webcam HD 2300 does not seem to flip the FID bit according to spec.
 
-Using managed interrupts in this way means that we should ensure that
-completions should not occur on HW queues where the associated interrupt
-is shutdown. This is typically achieved by ensuring only CPUs which are
-online can generate IO completion traffic to the HW queue which they are
-mapped to (so that they can also serve completion interrupts for that HW
-queue).
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass          239 Miscellaneous Device
+  bDeviceSubClass         2 [unknown]
+  bDeviceProtocol         1 Interface Association
+  bMaxPacketSize0        64
+  idVendor           0x03f0 HP, Inc
+  idProduct          0xe207 HP Webcam HD 2300
+  bcdDevice           10.20
+  iManufacturer           3 Hewlett Packard
+  iProduct                1 HP Webcam HD 2300
+  iSerial                 0
+  bNumConfigurations      1
 
-The problem in the driver is that a CPU can generate completions to a HW
-queue whose interrupt may be shutdown, as the CPUs in the HW queue
-interrupt affinity mask may be offline. This can cause IOs to never
-complete and hang the system. The driver maintains its own CPU <-> HW
-queue mapping for submissions, see aac_fib_vector_assign(), but this does
-not reflect the CPU <-> HW queue interrupt affinity mapping.
-
-Commit 9dc704dcc09e ("scsi: aacraid: Reply queue mapping to CPUs based on
-IRQ affinity") tried to remedy this issue may mapping CPUs properly to HW
-queue interrupts. However this was later reverted in commit c5becf57dd56
-("Revert "scsi: aacraid: Reply queue mapping to CPUs based on IRQ
-affinity") - it seems that there were other reports of hangs. I guess
-that this was due to some implementation issue in the original commit or
-maybe a HW issue.
-
-Fix the very original hang by just not using managed interrupts by not
-setting PCI_IRQ_AFFINITY.  In this way, all CPUs will be in each HW queue
-affinity mask, so should not create completion problems if any CPUs go
-offline.
-
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20250715111535.499853-1-john.g.garry@oracle.com
-Closes: https://lore.kernel.org/linux-scsi/20250618192427.3845724-1-jmeneghi@redhat.com/
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Tested-by: John Meneghini <jmeneghi@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Michaël Melchiore <rohel01@gmail.com>
+Closes: https://lore.kernel.org/linux-media/CA+q66aRvTigH15cUyfvzPJ2mfsDFMt=CjuYNwvAZb29w8b1KDA@mail.gmail.com
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250602-uvc-hp-quirk-v1-1-7047d94d679f@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aacraid/comminit.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/scsi/aacraid/comminit.c b/drivers/scsi/aacraid/comminit.c
-index 28cf18955a08..726c8531b7d3 100644
---- a/drivers/scsi/aacraid/comminit.c
-+++ b/drivers/scsi/aacraid/comminit.c
-@@ -481,8 +481,7 @@ void aac_define_int_mode(struct aac_dev *dev)
- 	    pci_find_capability(dev->pdev, PCI_CAP_ID_MSIX)) {
- 		min_msix = 2;
- 		i = pci_alloc_irq_vectors(dev->pdev,
--					  min_msix, msi_count,
--					  PCI_IRQ_MSIX | PCI_IRQ_AFFINITY);
-+					  min_msix, msi_count, PCI_IRQ_MSIX);
- 		if (i > 0) {
- 			dev->msi_enabled = 1;
- 			msi_count = i;
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index da24a655ab68..bd875d35ec81 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -2514,6 +2514,15 @@ static const struct uvc_device_info uvc_quirk_force_y8 = {
+  * Sort these by vendor/product ID.
+  */
+ static const struct usb_device_id uvc_ids[] = {
++	/* HP Webcam HD 2300 */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x03f0,
++	  .idProduct		= 0xe207,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= (kernel_ulong_t)&uvc_quirk_stream_no_fid },
+ 	/* Quanta ACER HD User Facing */
+ 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
+ 				| USB_DEVICE_ID_MATCH_INT_INFO,
 -- 
 2.39.5
 
