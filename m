@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909DD322DB1;
-	Mon, 18 Aug 2025 13:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D315C322DB1;
+	Mon, 18 Aug 2025 13:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523369; cv=none; b=DUoCB9fBd0iodra8eVsAApuVLyFc0tzkw5jzNIctNWrgOAKYmQWOTw1GjhLbe1bBBmI/o97zRDKWPgk3+gKbnywH7IilBkBAO4ySOlk3XfpErSTj9h7JuSCeWOzWClu2EdAzRi7tNTlCihzM2VpSH+NCUn+nqKG08yJuwvaJ1gE=
+	t=1755523372; cv=none; b=Q+njxEnGDv91MdLrQ+Npt7wnBBaNz5QweI2rOoYqeo/QlzY+9wajjblNsndReDc0bYdj1IZd4VaL6oqPf4XPoXeO+62GjAet1YmXrKGUpOOlB7ZPLGWUnkWFsoBxLBA3a7St6lUks7Vrdc66kZ7B/PDpaaXcCoNfOQZZz8gYv4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523369; c=relaxed/simple;
-	bh=bzfEt7W+HFJm2JEGWXw9TcSwT+aueL6T5QG9/M8XS1w=;
+	s=arc-20240116; t=1755523372; c=relaxed/simple;
+	bh=icrjVBDd31lG935Ru7C0vjzVWeWOHTXhxiZpwn3Iz7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHXK+NxvuqXLAblyKY4LngOUuF99NnxlyIAvvNEDdI7jtc+ajk21GrAg8g3u9FIhrqt37EmC6QvRwuUVpl6OCTzO4dn/3kwusT3oih4PLZ/tvWrSGb77Ijbnm11CFniIg0FK3qAl2cbDW9Fqv79TUIt14JWYAW9l/YHBNka7u/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjRvMM37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aqWT409t3AaMp7ma3o7Rk+axLZACRYuk3CNIsGl0GJXp5hNox1NJDelgRiQVnAxNJ0OxnJPgKBPx4f+QPcq4IjSmSDZ1RiojfQoNuP2hQ3QLnmMgZNa4AOWDJvu+Jw4f+zXQlDmWhS8NSxgzPb8Ms4lfgWPd4kSeLxufO1kdoJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqVlzb95; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjRvMM37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7C7C116B1;
-	Mon, 18 Aug 2025 13:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqVlzb95"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38961C4CEEB;
+	Mon, 18 Aug 2025 13:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523369;
-	bh=bzfEt7W+HFJm2JEGWXw9TcSwT+aueL6T5QG9/M8XS1w=;
+	s=korg; t=1755523372;
+	bh=icrjVBDd31lG935Ru7C0vjzVWeWOHTXhxiZpwn3Iz7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjRvMM37xz74xY41HsWTLw5Eisf0btV38Wc2aWRUahuZThc3Fq57UZRXK4huebBKM
-	 1CrMjRLRkKsStrL9q6cFZo+TnSUPNII3ez/V2ydCX4WyPEvs0ez08RW/Rw0KvKJ/Ip
-	 gOcdUBoV79jzbDyDbiSals807Anhunyrx+37wkbw=
+	b=YqVlzb953znfE2sERYIJMSuR5CeHKnC0jZZ+8ddwiZh7lSSYyfHJL8bKmRYIEystK
+	 n/rAJldFgvCGrf4gb0yYN2rPyH9mOLr9f2F5Z+fy+nT5GW+cZ8JLA1j49ROaelpFF1
+	 HxQPXzYbbiGOBU0X15eCVaQ2iEU9Ecb6J1INtoqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
+	Daniele Palmas <dnlplm@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 149/515] firmware: tegra: Fix IVC dependency problems
-Date: Mon, 18 Aug 2025 14:42:15 +0200
-Message-ID: <20250818124504.114768381@linuxfoundation.org>
+Subject: [PATCH 6.15 118/515] bus: mhi: host: pci_generic: Add Telit FN990B40 modem support
+Date: Mon, 18 Aug 2025 14:41:44 +0200
+Message-ID: <20250818124502.889614797@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,48 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 78eb18020a88a4eed15f5af7700ed570642ff8f1 ]
+[ Upstream commit 00559ba3ae740e7544b48fb509b2b97f56615892 ]
 
-The IVC code is library code that other drivers need to select if they
-need that library. However, if the symbol is user-selectable this can
-lead to conflicts.
+Add SDX72 based modem Telit FN990B40, reusing FN920C04 configuration.
 
-Fix this by making the symbol only selectable for COMPILE_TEST and add
-a select TEGRA_IVC to TEGRA_BPMP, which is currently the only user.
+01:00.0 Unassigned class [ff00]: Qualcomm Device 0309
+        Subsystem: Device 1c5d:201a
 
-Link: https://lore.kernel.org/r/20250506133118.1011777-10-thierry.reding@gmail.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+[mani: added sdx72 in the comment to identify the chipset]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20250716091836.999364-1-dnlplm@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/tegra/Kconfig | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/firmware/tegra/Kconfig b/drivers/firmware/tegra/Kconfig
-index cde1ab8bd9d1..91f2320c0d0f 100644
---- a/drivers/firmware/tegra/Kconfig
-+++ b/drivers/firmware/tegra/Kconfig
-@@ -2,7 +2,7 @@
- menu "Tegra firmware driver"
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index cd274f4dae93..c8f82219006f 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -818,6 +818,16 @@ static const struct mhi_pci_dev_info mhi_telit_fn920c04_info = {
+ 	.edl_trigger = true,
+ };
  
- config TEGRA_IVC
--	bool "Tegra IVC protocol"
-+	bool "Tegra IVC protocol" if COMPILE_TEST
- 	depends on ARCH_TEGRA
- 	help
- 	  IVC (Inter-VM Communication) protocol is part of the IPC
-@@ -13,8 +13,9 @@ config TEGRA_IVC
- 
- config TEGRA_BPMP
- 	bool "Tegra BPMP driver"
--	depends on ARCH_TEGRA && TEGRA_HSP_MBOX && TEGRA_IVC
-+	depends on ARCH_TEGRA && TEGRA_HSP_MBOX
- 	depends on !CPU_BIG_ENDIAN
-+	select TEGRA_IVC
- 	help
- 	  BPMP (Boot and Power Management Processor) is designed to off-loading
- 	  the PM functions which include clock/DVFS/thermal/power from the CPU.
++static const struct mhi_pci_dev_info mhi_telit_fn990b40_info = {
++	.name = "telit-fn990b40",
++	.config = &modem_telit_fn920c04_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.sideband_wake = false,
++	.mru_default = 32768,
++	.edl_trigger = true,
++};
++
+ static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
+ 	.name = "netprisma-lcur57",
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+@@ -865,6 +875,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
++	/* Telit FN990B40 (sdx72) */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x201a),
++		.driver_data = (kernel_ulong_t) &mhi_telit_fn990b40_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
+ 	/* QDU100, x100-DU */
 -- 
 2.39.5
 
