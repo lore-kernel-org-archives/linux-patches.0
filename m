@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E081B31E0FB;
-	Mon, 18 Aug 2025 13:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F863218CA;
+	Mon, 18 Aug 2025 13:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522541; cv=none; b=p9VYSlXxEN2HjfDg4T+cI1aW2JaV2e7R2CxtoRfjQq/DaIhTjdD3ig+zyVgDbJLMTvZqGJu5ST7Kunu2mVGcfgAbVy/LceyDTSe7bDRzpbAYAChKHmwpimfIzKU0VL4sQ2hGAW3l/4SZFXay89tv4JlRH3uHfrWdWUhlerlYdLc=
+	t=1755522544; cv=none; b=J4pI0wtnRltiwpFmeU9B1dmvXAn0qBMO3f5oVqRnym6r9DsZmNE10bTe+Lt7uvbxGNkfUowgFKKsRO60YTSBktptOVUeibrq1gF5UD3UdrAL3bZSxtIK9x6lqXxJQqNNJcBWv5vdYpdNsTNnKlqgjf+7PoXBYe1o5z62Ca52DNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522541; c=relaxed/simple;
-	bh=KwX/ylJXqAMbiKOdYdtlbX40P3Bnspn4DS5rNVxavHc=;
+	s=arc-20240116; t=1755522544; c=relaxed/simple;
+	bh=w8Qj0DsJmoiD4ZDT4lBlUxrHZnDihNONI+65zfXzdKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ds3BoDm9dSh049YKbyry8d8e+2RK1a0yr9pV8VG+qT4vP1N4+TnqDbLe3ll+7HY+9mmE/vvxR5fv+aYRIhjIYuAsZWZbbMcDocwiQABRlSYN/cq5hWDQYCLZgQV1RulwwGVUdp555xsFcN7io6wbpLg5oSL5RIklmDGlQQN1BSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgMavi6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rng9x3V3JYMcmXDsNcVBIynAr/R4HgAnsbal27Yo7qNHRi9y6Gz3D00sikA9jtMKaskicyIfWEXOnAXGVataqtHVbiBa2+nnCYkQFtc9VteYf5SalWYzYZ1TICgH6Q7+F84eidEDQCUKqJf5SdeKP3B29sGSgSLHIhDa3xhbgvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihIy0JxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgMavi6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E539C4CEEB;
-	Mon, 18 Aug 2025 13:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihIy0JxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEA7C4CEEB;
+	Mon, 18 Aug 2025 13:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522540;
-	bh=KwX/ylJXqAMbiKOdYdtlbX40P3Bnspn4DS5rNVxavHc=;
+	s=korg; t=1755522544;
+	bh=w8Qj0DsJmoiD4ZDT4lBlUxrHZnDihNONI+65zfXzdKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgMavi6BE+rY9W7xPF9GeqzRjLYT55fXC1pcm9cHci+w9mRFsMdJ9aJSRt0GAqApi
-	 hToiYf5ijkBDb9p2q5xHcWQIkCY7QjX6kadsn791oKei6uqfLOfhko5NPoMXls34qb
-	 Dvkb0UVYSKeGqJ//wJaqk2DChOs2+Jwuwve4buPI=
+	b=ihIy0JxGHG7rVA/iRneA/n92z9hZDhib+97Ve209/yXQaeF195txBzPrmu5e98uin
+	 5u3BNhd0l1aoSlDqzbsW52saZV7sXJmDwHStmgBudAaqqIVlFvDb91vjkN8ky00K5Y
+	 eSFkzhh8LTYwYY04BNhMxPXo++1ED1fy/p0qsgMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	John Garry <john.g.garry@oracle.com>,
+	John Meneghini <jmeneghi@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 346/444] scsi: target: core: Generate correct identifiers for PR OUT transport IDs
-Date: Mon, 18 Aug 2025 14:46:12 +0200
-Message-ID: <20250818124501.899907620@linuxfoundation.org>
+Subject: [PATCH 6.12 347/444] scsi: aacraid: Stop using PCI_IRQ_AFFINITY
+Date: Mon, 18 Aug 2025 14:46:13 +0200
+Message-ID: <20250818124501.936126624@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,234 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 6e0f6aa44b68335df404a2df955055f416b5f2aa ]
+[ Upstream commit dafeaf2c03e71255438ffe5a341d94d180e6c88e ]
 
-Fix target_parse_pr_out_transport_id() to return a string representing
-the transport ID in a human-readable format (e.g., naa.xxxxxxxx...)  for
-various SCSI protocol types (SAS, FCP, SRP, SBP).
+When PCI_IRQ_AFFINITY is set for calling pci_alloc_irq_vectors(), it
+means interrupts are spread around the available CPUs. It also means that
+the interrupts become managed, which means that an interrupt is shutdown
+when all the CPUs in the interrupt affinity mask go offline.
 
-Previously, the function returned a pointer to the raw binary buffer,
-which was incorrectly compared against human-readable strings, causing
-comparisons to fail.  Now, the function writes a properly formatted
-string into a buffer provided by the caller.  The output format depends
-on the transport protocol:
+Using managed interrupts in this way means that we should ensure that
+completions should not occur on HW queues where the associated interrupt
+is shutdown. This is typically achieved by ensuring only CPUs which are
+online can generate IO completion traffic to the HW queue which they are
+mapped to (so that they can also serve completion interrupts for that HW
+queue).
 
-* SAS: 64-bit identifier, "naa." prefix.
-* FCP: 64-bit identifier, colon separated values.
-* SBP: 64-bit identifier, no prefix.
-* SRP: 128-bit identifier, "0x" prefix.
-* iSCSI: IQN string.
+The problem in the driver is that a CPU can generate completions to a HW
+queue whose interrupt may be shutdown, as the CPUs in the HW queue
+interrupt affinity mask may be offline. This can cause IOs to never
+complete and hang the system. The driver maintains its own CPU <-> HW
+queue mapping for submissions, see aac_fib_vector_assign(), but this does
+not reflect the CPU <-> HW queue interrupt affinity mapping.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Link: https://lore.kernel.org/r/20250714133738.11054-1-mlombard@redhat.com
-Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Commit 9dc704dcc09e ("scsi: aacraid: Reply queue mapping to CPUs based on
+IRQ affinity") tried to remedy this issue may mapping CPUs properly to HW
+queue interrupts. However this was later reverted in commit c5becf57dd56
+("Revert "scsi: aacraid: Reply queue mapping to CPUs based on IRQ
+affinity") - it seems that there were other reports of hangs. I guess
+that this was due to some implementation issue in the original commit or
+maybe a HW issue.
+
+Fix the very original hang by just not using managed interrupts by not
+setting PCI_IRQ_AFFINITY.  In this way, all CPUs will be in each HW queue
+affinity mask, so should not create completion problems if any CPUs go
+offline.
+
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20250715111535.499853-1-john.g.garry@oracle.com
+Closes: https://lore.kernel.org/linux-scsi/20250618192427.3845724-1-jmeneghi@redhat.com/
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Tested-by: John Meneghini <jmeneghi@redhat.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_fabric_lib.c | 63 +++++++++++++++++++------
- drivers/target/target_core_internal.h   |  4 +-
- drivers/target/target_core_pr.c         | 18 +++----
- 3 files changed, 60 insertions(+), 25 deletions(-)
+ drivers/scsi/aacraid/comminit.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/target/target_core_fabric_lib.c b/drivers/target/target_core_fabric_lib.c
-index 43f47e3aa448..ec7bc6e30228 100644
---- a/drivers/target/target_core_fabric_lib.c
-+++ b/drivers/target/target_core_fabric_lib.c
-@@ -257,11 +257,41 @@ static int iscsi_get_pr_transport_id_len(
- 	return len;
- }
- 
--static char *iscsi_parse_pr_out_transport_id(
-+static void sas_parse_pr_out_transport_id(char *buf, char *i_str)
-+{
-+	char hex[17] = {};
-+
-+	bin2hex(hex, buf + 4, 8);
-+	snprintf(i_str, TRANSPORT_IQN_LEN, "naa.%s", hex);
-+}
-+
-+static void srp_parse_pr_out_transport_id(char *buf, char *i_str)
-+{
-+	char hex[33] = {};
-+
-+	bin2hex(hex, buf + 8, 16);
-+	snprintf(i_str, TRANSPORT_IQN_LEN, "0x%s", hex);
-+}
-+
-+static void fcp_parse_pr_out_transport_id(char *buf, char *i_str)
-+{
-+	snprintf(i_str, TRANSPORT_IQN_LEN, "%8phC", buf + 8);
-+}
-+
-+static void sbp_parse_pr_out_transport_id(char *buf, char *i_str)
-+{
-+	char hex[17] = {};
-+
-+	bin2hex(hex, buf + 8, 8);
-+	snprintf(i_str, TRANSPORT_IQN_LEN, "%s", hex);
-+}
-+
-+static bool iscsi_parse_pr_out_transport_id(
- 	struct se_portal_group *se_tpg,
- 	char *buf,
- 	u32 *out_tid_len,
--	char **port_nexus_ptr)
-+	char **port_nexus_ptr,
-+	char *i_str)
- {
- 	char *p;
- 	int i;
-@@ -282,7 +312,7 @@ static char *iscsi_parse_pr_out_transport_id(
- 	if ((format_code != 0x00) && (format_code != 0x40)) {
- 		pr_err("Illegal format code: 0x%02x for iSCSI"
- 			" Initiator Transport ID\n", format_code);
--		return NULL;
-+		return false;
- 	}
- 	/*
- 	 * If the caller wants the TransportID Length, we set that value for the
-@@ -306,7 +336,7 @@ static char *iscsi_parse_pr_out_transport_id(
- 			pr_err("Unable to locate \",i,0x\" separator"
- 				" for Initiator port identifier: %s\n",
- 				&buf[4]);
--			return NULL;
-+			return false;
- 		}
- 		*p = '\0'; /* Terminate iSCSI Name */
- 		p += 5; /* Skip over ",i,0x" separator */
-@@ -339,7 +369,8 @@ static char *iscsi_parse_pr_out_transport_id(
- 	} else
- 		*port_nexus_ptr = NULL;
- 
--	return &buf[4];
-+	strscpy(i_str, &buf[4], TRANSPORT_IQN_LEN);
-+	return true;
- }
- 
- int target_get_pr_transport_id_len(struct se_node_acl *nacl,
-@@ -387,33 +418,35 @@ int target_get_pr_transport_id(struct se_node_acl *nacl,
- 	}
- }
- 
--const char *target_parse_pr_out_transport_id(struct se_portal_group *tpg,
--		char *buf, u32 *out_tid_len, char **port_nexus_ptr)
-+bool target_parse_pr_out_transport_id(struct se_portal_group *tpg,
-+		char *buf, u32 *out_tid_len, char **port_nexus_ptr, char *i_str)
- {
--	u32 offset;
--
- 	switch (tpg->proto_id) {
- 	case SCSI_PROTOCOL_SAS:
- 		/*
- 		 * Assume the FORMAT CODE 00b from spc4r17, 7.5.4.7 TransportID
- 		 * for initiator ports using SCSI over SAS Serial SCSI Protocol.
- 		 */
--		offset = 4;
-+		sas_parse_pr_out_transport_id(buf, i_str);
- 		break;
--	case SCSI_PROTOCOL_SBP:
- 	case SCSI_PROTOCOL_SRP:
-+		srp_parse_pr_out_transport_id(buf, i_str);
-+		break;
- 	case SCSI_PROTOCOL_FCP:
--		offset = 8;
-+		fcp_parse_pr_out_transport_id(buf, i_str);
-+		break;
-+	case SCSI_PROTOCOL_SBP:
-+		sbp_parse_pr_out_transport_id(buf, i_str);
- 		break;
- 	case SCSI_PROTOCOL_ISCSI:
- 		return iscsi_parse_pr_out_transport_id(tpg, buf, out_tid_len,
--					port_nexus_ptr);
-+					port_nexus_ptr, i_str);
- 	default:
- 		pr_err("Unknown proto_id: 0x%02x\n", tpg->proto_id);
--		return NULL;
-+		return false;
- 	}
- 
- 	*port_nexus_ptr = NULL;
- 	*out_tid_len = 24;
--	return buf + offset;
-+	return true;
- }
-diff --git a/drivers/target/target_core_internal.h b/drivers/target/target_core_internal.h
-index 408be26d2e9b..20aab1f50565 100644
---- a/drivers/target/target_core_internal.h
-+++ b/drivers/target/target_core_internal.h
-@@ -103,8 +103,8 @@ int	target_get_pr_transport_id_len(struct se_node_acl *nacl,
- int	target_get_pr_transport_id(struct se_node_acl *nacl,
- 		struct t10_pr_registration *pr_reg, int *format_code,
- 		unsigned char *buf);
--const char *target_parse_pr_out_transport_id(struct se_portal_group *tpg,
--		char *buf, u32 *out_tid_len, char **port_nexus_ptr);
-+bool target_parse_pr_out_transport_id(struct se_portal_group *tpg,
-+		char *buf, u32 *out_tid_len, char **port_nexus_ptr, char *i_str);
- 
- /* target_core_hba.c */
- struct se_hba *core_alloc_hba(const char *, u32, u32);
-diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
-index 47fe50b80c22..82061cbe6781 100644
---- a/drivers/target/target_core_pr.c
-+++ b/drivers/target/target_core_pr.c
-@@ -1478,11 +1478,12 @@ core_scsi3_decode_spec_i_port(
- 	LIST_HEAD(tid_dest_list);
- 	struct pr_transport_id_holder *tidh_new, *tidh, *tidh_tmp;
- 	unsigned char *buf, *ptr, proto_ident;
--	const unsigned char *i_str = NULL;
-+	unsigned char i_str[TRANSPORT_IQN_LEN];
- 	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN];
- 	sense_reason_t ret;
- 	u32 tpdl, tid_len = 0;
- 	u32 dest_rtpi = 0;
-+	bool tid_found;
- 
- 	/*
- 	 * Allocate a struct pr_transport_id_holder and setup the
-@@ -1571,9 +1572,9 @@ core_scsi3_decode_spec_i_port(
- 			dest_rtpi = tmp_lun->lun_tpg->tpg_rtpi;
- 
- 			iport_ptr = NULL;
--			i_str = target_parse_pr_out_transport_id(tmp_tpg,
--					ptr, &tid_len, &iport_ptr);
--			if (!i_str)
-+			tid_found = target_parse_pr_out_transport_id(tmp_tpg,
-+					ptr, &tid_len, &iport_ptr, i_str);
-+			if (!tid_found)
- 				continue;
- 			/*
- 			 * Determine if this SCSI device server requires that
-@@ -3153,13 +3154,14 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
- 	struct t10_pr_registration *pr_reg, *pr_res_holder, *dest_pr_reg;
- 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
- 	unsigned char *buf;
--	const unsigned char *initiator_str;
-+	unsigned char initiator_str[TRANSPORT_IQN_LEN];
- 	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN] = { };
- 	u32 tid_len, tmp_tid_len;
- 	int new_reg = 0, type, scope, matching_iname;
- 	sense_reason_t ret;
- 	unsigned short rtpi;
- 	unsigned char proto_ident;
-+	bool tid_found;
- 
- 	if (!se_sess || !se_lun) {
- 		pr_err("SPC-3 PR: se_sess || struct se_lun is NULL!\n");
-@@ -3278,9 +3280,9 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
- 		ret = TCM_INVALID_PARAMETER_LIST;
- 		goto out;
- 	}
--	initiator_str = target_parse_pr_out_transport_id(dest_se_tpg,
--			&buf[24], &tmp_tid_len, &iport_ptr);
--	if (!initiator_str) {
-+	tid_found = target_parse_pr_out_transport_id(dest_se_tpg,
-+			&buf[24], &tmp_tid_len, &iport_ptr, initiator_str);
-+	if (!tid_found) {
- 		pr_err("SPC-3 PR REGISTER_AND_MOVE: Unable to locate"
- 			" initiator_str from Transport ID\n");
- 		ret = TCM_INVALID_PARAMETER_LIST;
+diff --git a/drivers/scsi/aacraid/comminit.c b/drivers/scsi/aacraid/comminit.c
+index 28cf18955a08..726c8531b7d3 100644
+--- a/drivers/scsi/aacraid/comminit.c
++++ b/drivers/scsi/aacraid/comminit.c
+@@ -481,8 +481,7 @@ void aac_define_int_mode(struct aac_dev *dev)
+ 	    pci_find_capability(dev->pdev, PCI_CAP_ID_MSIX)) {
+ 		min_msix = 2;
+ 		i = pci_alloc_irq_vectors(dev->pdev,
+-					  min_msix, msi_count,
+-					  PCI_IRQ_MSIX | PCI_IRQ_AFFINITY);
++					  min_msix, msi_count, PCI_IRQ_MSIX);
+ 		if (i > 0) {
+ 			dev->msi_enabled = 1;
+ 			msi_count = i;
 -- 
 2.39.5
 
