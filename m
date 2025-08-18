@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8411232254C;
-	Mon, 18 Aug 2025 13:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B3B335BA7;
+	Mon, 18 Aug 2025 13:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524436; cv=none; b=d+3tu3vm+DJ6SOLisSEuDAsRYs04maIo/4sPXn9Uvfl4VVzl2wCn1O8NDB3R/fAz2xmvKO1kj3sdOkGToydw+GmSP6IJtIwhgeIYKteJf9optJTMWlBMaIkgIqOyJIT8V1VKuFOyBNVS4DNqCsbtyAuxINTnx9Y6QWkIotyssRo=
+	t=1755524439; cv=none; b=LBrP6UrV9bHr29+mrNrzNxd0H/KAoAt7eMMA2l0yPqKT0IZlc4AQ2DXfGYZiCNQu13JMJcUslvCO1gO2XQjvVlz6Sbag1aLZ7/e+7ELdQPpf41/VUwdQd+L1gVxfFV2a1vZ6yK62zEYxvLc6DJa557KeJa6bvP5xbvWaD2VLWDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524436; c=relaxed/simple;
-	bh=fzM9aQjd8l6hfF8z8SNWXWXUqlXUPoCUy3crDalv65I=;
+	s=arc-20240116; t=1755524439; c=relaxed/simple;
+	bh=+C1ajYRSVNJXUtTG6LE/lOFcpeaXazyIfzkHojELsGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMnb4A5c7JKUdj6cULSE0czFNjD3mWNO04OhvnvDQIL54k9rDJxRP8xI/u/QH4K4Lz+T+VCx3WplKOmJuwgTh+PK8V+dVJ53gm4iv77QMZEroi8RspsWWzk4JZx8gceKENZ6NMWIysrUmnkhsO1ZPo6a1t5GMs2kr9b3su7Zmww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZGa25+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jY+ZsvLYeRtOEzDtOKmaL7kkXdMF6bXdJBDdUfsfNLYc1Oq/9xuFFHyrGnMR2yumDJduvH2Vw4sfhMgjEz4iq8CsjsMRDXQqgiFFzcRHZiK9xelf7VomGrwhqn+d/z8E+dW1K/B5Egg3A28Wy0ncQvbcgSnYtYA8RI4Be9Yx/Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qF1nDCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZGa25+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC56C116B1;
-	Mon, 18 Aug 2025 13:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qF1nDCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192ACC4CEEB;
+	Mon, 18 Aug 2025 13:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524436;
-	bh=fzM9aQjd8l6hfF8z8SNWXWXUqlXUPoCUy3crDalv65I=;
+	s=korg; t=1755524439;
+	bh=+C1ajYRSVNJXUtTG6LE/lOFcpeaXazyIfzkHojELsGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZGa25+od6gj8BNrQNMio7TvEU1KCs7indFjVDvFS3RNBc+tVc1IlECMo0+1ZyOry
-	 oM9bD2eC8XuT0YuPdnQTitJ3qi4BbUGX0aus+HphhQT8dbGXb7KgPrncA9lzSe7hIP
-	 4vSaruzvEUriduuTWkeF4MZb2azmXdHCmKpEuFxE=
+	b=0qF1nDCYUXlFkRW5tubXM1Ro4dXjkMnwK3ARuLW8Q8ElpdCvLXUPDAyhnQQEYwae2
+	 T7hQxk31y6UFFc44/7OvfHVuwZSoOWx1Rf5Pd/OldCiuYNDDoYQnOUVsmSxjR/poTn
+	 sX9ptMLEtWGTZv1mq6pq+IWiNIdkjmy8DtgthwaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Tamir Duberstein <tamird@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.15 439/515] rust: kbuild: clean output before running `rustdoc`
-Date: Mon, 18 Aug 2025 14:47:05 +0200
-Message-ID: <20250818124515.324156761@linuxfoundation.org>
+	Konstantin Evtushenko <koevtushenko@yandex.com>,
+	Sergey Bashirov <sergeybashirov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 430/515] pNFS: Handle RPC size limit for layoutcommits
+Date: Mon, 18 Aug 2025 14:46:56 +0200
+Message-ID: <20250818124514.976998559@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,79 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Sergey Bashirov <sergeybashirov@gmail.com>
 
-commit 252fea131e15aba2cd487119d1a8f546471199e2 upstream.
+[ Upstream commit d897d81671bc4615c80f4f3bd5e6b218f59df50c ]
 
-`rustdoc` can get confused when generating documentation into a folder
-that contains generated files from other `rustdoc` versions.
+When there are too many block extents for a layoutcommit, they may not
+all fit into the maximum-sized RPC. This patch allows the generic pnfs
+code to properly handle -ENOSPC returned by the block/scsi layout driver
+and trigger additional layoutcommits if necessary.
 
-For instance, running something like:
-
-    rustup default 1.78.0
-    make LLVM=1 rustdoc
-    rustup default 1.88.0
-    make LLVM=1 rustdoc
-
-may generate errors like:
-
-    error: couldn't generate documentation: invalid template: last line expected to start with a comment
-      |
-      = note: failed to create or modify "./Documentation/output/rust/rustdoc/src-files.js"
-
-Thus just always clean the output folder before generating the
-documentation -- we are anyway regenerating it every time the `rustdoc`
-target gets called, at least for the time being.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Reported-by: Daniel Almeida <daniel.almeida@collabora.com>
-Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/288089/topic/x/near/527201113
-Reviewed-by: Tamir Duberstein <tamird@kernel.org>
-Link: https://lore.kernel.org/r/20250726133435.2460085-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250630183537.196479-5-sergeybashirov@gmail.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/Makefile |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/nfs/pnfs.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -103,14 +103,14 @@ rustdoc: rustdoc-core rustdoc-macros rus
- rustdoc-macros: private rustdoc_host = yes
- rustdoc-macros: private rustc_target_flags = --crate-type proc-macro \
-     --extern proc_macro
--rustdoc-macros: $(src)/macros/lib.rs FORCE
-+rustdoc-macros: $(src)/macros/lib.rs rustdoc-clean FORCE
- 	+$(call if_changed,rustdoc)
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 1a7ec68bde15..3fd0971bf16f 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -3340,6 +3340,7 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
+ 	struct nfs_inode *nfsi = NFS_I(inode);
+ 	loff_t end_pos;
+ 	int status;
++	bool mark_as_dirty = false;
  
- # Starting with Rust 1.82.0, skipping `-Wrustdoc::unescaped_backticks` should
- # not be needed -- see https://github.com/rust-lang/rust/pull/128307.
- rustdoc-core: private skip_flags = --edition=2021 -Wrustdoc::unescaped_backticks
- rustdoc-core: private rustc_target_flags = --edition=$(core-edition) $(core-cfgs)
--rustdoc-core: $(RUST_LIB_SRC)/core/src/lib.rs FORCE
-+rustdoc-core: $(RUST_LIB_SRC)/core/src/lib.rs rustdoc-clean FORCE
- 	+$(call if_changed,rustdoc)
+ 	if (!pnfs_layoutcommit_outstanding(inode))
+ 		return 0;
+@@ -3391,19 +3392,23 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
+ 	if (ld->prepare_layoutcommit) {
+ 		status = ld->prepare_layoutcommit(&data->args);
+ 		if (status) {
+-			put_cred(data->cred);
++			if (status != -ENOSPC)
++				put_cred(data->cred);
+ 			spin_lock(&inode->i_lock);
+ 			set_bit(NFS_INO_LAYOUTCOMMIT, &nfsi->flags);
+ 			if (end_pos > nfsi->layout->plh_lwb)
+ 				nfsi->layout->plh_lwb = end_pos;
+-			goto out_unlock;
++			if (status != -ENOSPC)
++				goto out_unlock;
++			spin_unlock(&inode->i_lock);
++			mark_as_dirty = true;
+ 		}
+ 	}
  
- rustdoc-compiler_builtins: $(src)/compiler_builtins.rs rustdoc-core FORCE
-@@ -122,7 +122,8 @@ rustdoc-ffi: $(src)/ffi.rs rustdoc-core
- rustdoc-pin_init_internal: private rustdoc_host = yes
- rustdoc-pin_init_internal: private rustc_target_flags = --cfg kernel \
-     --extern proc_macro --crate-type proc-macro
--rustdoc-pin_init_internal: $(src)/pin-init/internal/src/lib.rs FORCE
-+rustdoc-pin_init_internal: $(src)/pin-init/internal/src/lib.rs \
-+    rustdoc-clean FORCE
- 	+$(call if_changed,rustdoc)
  
- rustdoc-pin_init: private rustdoc_host = yes
-@@ -140,6 +141,9 @@ rustdoc-kernel: $(src)/kernel/lib.rs rus
-     $(obj)/bindings.o FORCE
- 	+$(call if_changed,rustdoc)
- 
-+rustdoc-clean: FORCE
-+	$(Q)rm -rf $(rustdoc_output)
-+
- quiet_cmd_rustc_test_library = $(RUSTC_OR_CLIPPY_QUIET) TL $<
-       cmd_rustc_test_library = \
- 	OBJTREE=$(abspath $(objtree)) \
+ 	status = nfs4_proc_layoutcommit(data, sync);
+ out:
+-	if (status)
++	if (status || mark_as_dirty)
+ 		mark_inode_dirty_sync(inode);
+ 	dprintk("<-- %s status %d\n", __func__, status);
+ 	return status;
+-- 
+2.39.5
+
 
 
