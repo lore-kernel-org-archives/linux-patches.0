@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A454331E0E6;
-	Mon, 18 Aug 2025 13:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3E23218D6;
+	Mon, 18 Aug 2025 13:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522440; cv=none; b=tPPfJmiEklXappq1sZ1q7vIz4Lh9SGZtamRha5SxhBNUvGUsH6bhMjGl3fDRzX741RcujiSB0qZhvTtq3Uzc73R3owb0VdBWDpaHaraQ8bqLp4lEBtzA6q9IjqOkXkm73/yE7l6QIMd7eZDYrWWpCr+LOYg42e9at+UVcmwSlSI=
+	t=1755522444; cv=none; b=YcHFCNX+hFPzxPvC5rhv4SgpDqzxE8hbIlkjzuyG1kWk24S8VzR2IAQk58lx/Tc1hUsY4DS9uZLg+16spFnGPX4XkOeVjvwXnSciNm6MRT6HgQcDFNVR/mqNcXe+V1rYl8NN49c33CtrTKKciiqhmb6pleb8jHEtHyKak1qZBlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522440; c=relaxed/simple;
-	bh=1AG7oJKK9FjT5KnQhQqM16aXtdEl8Xh2NBNKrRJeDr8=;
+	s=arc-20240116; t=1755522444; c=relaxed/simple;
+	bh=ELo4dE+lvwbw6+PkJRUyOKtt569e4EM2Dw1jXGfC+CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UopNantrpnnG7qdaWs7/WCi4EuvNj+01GugPWrAe7WDTz16SyPmJItcDNp33m8wsgA2K1hLVeN1xd7zXFnwLD7a7DS7k/30lJaUff49RfFi+39fwmp1JR1zd8rs5sbX5oShfRd5hx81d/61ZbEDdQYQkhFzLMZ1w40/aaWAy6oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vugcfiD4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BhYMSQhJ+SIS2wkVo3sj7LBlKX4l2PGm8fW4tsEQKPh8OBjFRwwswfctkWkz2OjlAEd94ZV1de5ADgIQq+v3aIEva5iw8bHYdqRrU94WPvLoo+g/Cc4PHJzl30mXJ9o+42hYuYJPDEUYfrOWKkg5mY0EZln64qHp9zcRl9pAhA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OK2vD+gW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vugcfiD4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B07C4CEEB;
-	Mon, 18 Aug 2025 13:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OK2vD+gW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87298C4CEEB;
+	Mon, 18 Aug 2025 13:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522440;
-	bh=1AG7oJKK9FjT5KnQhQqM16aXtdEl8Xh2NBNKrRJeDr8=;
+	s=korg; t=1755522444;
+	bh=ELo4dE+lvwbw6+PkJRUyOKtt569e4EM2Dw1jXGfC+CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vugcfiD4evPRcPJbPJIQOpEEV8UBGuuJyq14o2kwbY9UMcGXkaPs03LsMmX41c3H0
-	 iwDA9oUm3qZZ9PwEQUin4iqUXr5yQsjnQUzU6z1yZYlPFc+s9/blEG0hBtEt2e94hl
-	 LjxLO6YkYH4yvGWij5yTJcOLeZJoqr9OBiBcUA60=
+	b=OK2vD+gWpUXqRZ6ufZ2UCh/5Xz7SLKzFUfMrkrybb9PMj4zU3ERqZBdBXYNLDHiN2
+	 jvnYrLU6a0gaYj8+0UhC1cZA9SGVNxG0taenBuNeGgYVqTOABD5uWdsER8rDClADh+
+	 rJMn9l63H2pWMDmFaCtUKTGyvJbXn61aB8g7GCMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Guo <alexguo1023@gmail.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	jackysliu <1972843537@qq.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 317/444] media: dvb-frontends: dib7090p: fix null-ptr-deref in dib7090p_rw_on_apb()
-Date: Mon, 18 Aug 2025 14:45:43 +0200
-Message-ID: <20250818124500.833971726@linuxfoundation.org>
+Subject: [PATCH 6.12 291/444] scsi: bfa: Double-free fix
+Date: Mon, 18 Aug 2025 14:45:17 +0200
+Message-ID: <20250818124459.869755223@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,43 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Guo <alexguo1023@gmail.com>
+From: jackysliu <1972843537@qq.com>
 
-[ Upstream commit ce5cac69b2edac3e3246fee03e8f4c2a1075238b ]
+[ Upstream commit add4c4850363d7c1b72e8fce9ccb21fdd2cf5dc9 ]
 
-In dib7090p_rw_on_apb, msg is controlled by user. When msg[0].buf is null and
-msg[0].len is zero, former checks on msg[0].buf would be passed. If accessing
-msg[0].buf[2] without sanity check, null pointer deref would happen. We add
-check on msg[0].len to prevent crash. Similar issue occurs when access
-msg[1].buf[0] and msg[1].buf[1].
+When the bfad_im_probe() function fails during initialization, the memory
+pointed to by bfad->im is freed without setting bfad->im to NULL.
 
-Similar commit: commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+Subsequently, during driver uninstallation, when the state machine enters
+the bfad_sm_stopping state and calls the bfad_im_probe_undo() function,
+it attempts to free the memory pointed to by bfad->im again, thereby
+triggering a double-free vulnerability.
 
-Signed-off-by: Alex Guo <alexguo1023@gmail.com>
-Link: https://lore.kernel.org/r/20250616013231.730221-1-alexguo1023@gmail.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Set bfad->im to NULL if probing fails.
+
+Signed-off-by: jackysliu <1972843537@qq.com>
+Link: https://lore.kernel.org/r/tencent_3BB950D6D2D470976F55FC879206DE0B9A09@qq.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/dib7000p.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/bfa/bfad_im.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
-index c5582d4fa5be..24f13a866735 100644
---- a/drivers/media/dvb-frontends/dib7000p.c
-+++ b/drivers/media/dvb-frontends/dib7000p.c
-@@ -2256,8 +2256,12 @@ static int dib7090p_rw_on_apb(struct i2c_adapter *i2c_adap,
- 	u16 word;
+diff --git a/drivers/scsi/bfa/bfad_im.c b/drivers/scsi/bfa/bfad_im.c
+index 66fb701401de..0cc04c84b259 100644
+--- a/drivers/scsi/bfa/bfad_im.c
++++ b/drivers/scsi/bfa/bfad_im.c
+@@ -706,6 +706,7 @@ bfad_im_probe(struct bfad_s *bfad)
  
- 	if (num == 1) {		/* write */
-+		if (msg[0].len < 3)
-+			return -EOPNOTSUPP;
- 		dib7000p_write_word(state, apb_address, ((msg[0].buf[1] << 8) | (msg[0].buf[2])));
- 	} else {
-+		if (msg[1].len < 2)
-+			return -EOPNOTSUPP;
- 		word = dib7000p_read_word(state, apb_address);
- 		msg[1].buf[0] = (word >> 8) & 0xff;
- 		msg[1].buf[1] = (word) & 0xff;
+ 	if (bfad_thread_workq(bfad) != BFA_STATUS_OK) {
+ 		kfree(im);
++		bfad->im = NULL;
+ 		return BFA_STATUS_FAILED;
+ 	}
+ 
 -- 
 2.39.5
 
