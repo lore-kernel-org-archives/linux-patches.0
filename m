@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1D2320CAB;
-	Mon, 18 Aug 2025 13:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EB8326D73;
+	Mon, 18 Aug 2025 13:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523538; cv=none; b=JI2DNlYYMYWSy7Pb/0uCfXDOZeely0aujA6a1vX5fQ1gho9fz5xEYJHxvsBjVkwbj/ZJJSXSkKyzjJjtmFL8g505dhq6mbujg1dJHO4zwS98pih0khINDjYISnsrUrSrZp2c+T67B8WLtA3gDEUcOD+Oukh+FNEDYJgFbVGGZX8=
+	t=1755523541; cv=none; b=NJcJX9LjxQYiykRtuUxfc2xIeBViXhKtilpev0q98qFrzUIxG/5ScaxNQ/4Sa94200dQGj2zqmv1xu5bObx6TwQ4+vNbeV4Xt94LtFz2YDu5SxNwU8OdJHsIdXt8abGjj+3nozMf66gPy0UfmHIe8Eu2qyf5XFgVwdjsmCqv/LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523538; c=relaxed/simple;
-	bh=7JK2NLfgKsHBjYNvSBX8zzuSX0DWY4q1ZfxSg/O1GR4=;
+	s=arc-20240116; t=1755523541; c=relaxed/simple;
+	bh=CKAsYmLB24cn4wfw0Bea59VPZzGmbSQgp1andCJKubs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chMxRvOph4zHAK08pE5kAQiY/xCpBRwz1Ft8E6VNZmmjRJqqhB+swIxSUCYgh99RcjR3LKiB56ut7T9dKOZXuztnoWJgVS/Q32c73xnIJ0rjF8MQdtm+EalLzKZ3CDEGzIsAu+rJS11whCE9crQJnSpwXwZ+SZVtdvAIARvH/7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2wRIzqv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxncL0WtuRFtltouRQejPDT6EJAG0OdFSVkqk+SUbNaUiJWRfaJ7KQmXg862F20Y/Yx8UH7J+N1tweedWaMiPhmKmjrfPHprFYxKcEyoWku2gx+mjS5pmAGP+JsQOazepsB7Z3mSY3fdkflOkoEC86YySNDhBuKphUEqXyHv8nU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xu1BsyAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2wRIzqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F1FC4CEEB;
-	Mon, 18 Aug 2025 13:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xu1BsyAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F509C4CEEB;
+	Mon, 18 Aug 2025 13:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523537;
-	bh=7JK2NLfgKsHBjYNvSBX8zzuSX0DWY4q1ZfxSg/O1GR4=;
+	s=korg; t=1755523540;
+	bh=CKAsYmLB24cn4wfw0Bea59VPZzGmbSQgp1andCJKubs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2wRIzqvzvRhrCn36LQphPy1cAHAicH4CEpDQILurdf5pEddv5J2N+ReszSeT/F5q
-	 pEN81QcOv7xE4jpYIAJKITeSYxe6k7FTeAo/c85xl3EP3NkfLBqMFHWleX4wmQ1Yar
-	 Dr1lq/kbSkwU/CxXtlQjipWn0MxLWP7NIR7+49sA=
+	b=xu1BsyALBCHqPOXk+aLNOMJ0SjUpBbsRuLD8ds0oAG8oi8ls1lvKkGmpKUpqVkCcT
+	 yDb1djmoXYSPrR7pRVrCq+8qZHOzSQ0sAQbMaJbjj4wxCYlR9fMGeof4PkdQOwSaUr
+	 qLTk+s63wzMRPlVest6wjECou62IDLW7DvpaJ3wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 202/515] net: usb: cdc-ncm: check for filtering capability
-Date: Mon, 18 Aug 2025 14:43:08 +0200
-Message-ID: <20250818124506.139000487@linuxfoundation.org>
+Subject: [PATCH 6.15 203/515] wifi: ath12k: Correct tid cleanup when tid setup fails
+Date: Mon, 18 Aug 2025 14:43:09 +0200
+Message-ID: <20250818124506.176086698@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,101 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Sarika Sharma <quic_sarishar@quicinc.com>
 
-[ Upstream commit 61c3e8940f2d8b5bfeaeec4bedc2f3e7d873abb3 ]
+[ Upstream commit 4a2bf707270f897ab8077baee8ed5842a5321686 ]
 
-If the decice does not support filtering, filtering
-must not be used and all packets delivered for the
-upper layers to sort.
+Currently, if any error occurs during ath12k_dp_rx_peer_tid_setup(),
+the tid value is already incremented, even though the corresponding
+TID is not actually allocated. Proceed to
+ath12k_dp_rx_peer_tid_delete() starting from unallocated tid,
+which might leads to freeing unallocated TID and cause potential
+crash or out-of-bounds access.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20250717120649.2090929-1-oneukum@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Hence, fix by correctly decrementing tid before cleanup to match only
+the successfully allocated TIDs.
+
+Also, remove tid-- from failure case of ath12k_dp_rx_peer_frag_setup(),
+as decrementing the tid before cleanup in loop will take care of this.
+
+Compile tested only.
+
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250721061749.886732-1-quic_sarishar@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_ncm.c   | 20 ++++++++++++++++----
- include/linux/usb/cdc_ncm.h |  1 +
- 2 files changed, 17 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
-index 34e82f1e37d9..ea0e5e276cd6 100644
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -892,6 +892,10 @@ int cdc_ncm_bind_common(struct usbnet *dev, struct usb_interface *intf, u8 data_
- 		}
+diff --git a/drivers/net/wireless/ath/ath12k/dp.c b/drivers/net/wireless/ath/ath12k/dp.c
+index 34e1bd2934ce..807c5b345e06 100644
+--- a/drivers/net/wireless/ath/ath12k/dp.c
++++ b/drivers/net/wireless/ath/ath12k/dp.c
+@@ -101,7 +101,7 @@ int ath12k_dp_peer_setup(struct ath12k *ar, int vdev_id, const u8 *addr)
+ 		return -ENOENT;
  	}
  
-+	if (ctx->func_desc)
-+		ctx->filtering_supported = !!(ctx->func_desc->bmNetworkCapabilities
-+			& USB_CDC_NCM_NCAP_ETH_FILTER);
-+
- 	iface_no = ctx->data->cur_altsetting->desc.bInterfaceNumber;
+-	for (; tid >= 0; tid--)
++	for (tid--; tid >= 0; tid--)
+ 		ath12k_dp_rx_peer_tid_delete(ar, peer, tid);
  
- 	/* Device-specific flags */
-@@ -1898,6 +1902,14 @@ static void cdc_ncm_status(struct usbnet *dev, struct urb *urb)
- 	}
- }
- 
-+static void cdc_ncm_update_filter(struct usbnet *dev)
-+{
-+	struct cdc_ncm_ctx *ctx = (struct cdc_ncm_ctx *)dev->data[0];
-+
-+	if (ctx->filtering_supported)
-+		usbnet_cdc_update_filter(dev);
-+}
-+
- static const struct driver_info cdc_ncm_info = {
- 	.description = "CDC NCM (NO ZLP)",
- 	.flags = FLAG_POINTTOPOINT | FLAG_NO_SETINT | FLAG_MULTI_PACKET
-@@ -1908,7 +1920,7 @@ static const struct driver_info cdc_ncm_info = {
- 	.status = cdc_ncm_status,
- 	.rx_fixup = cdc_ncm_rx_fixup,
- 	.tx_fixup = cdc_ncm_tx_fixup,
--	.set_rx_mode = usbnet_cdc_update_filter,
-+	.set_rx_mode = cdc_ncm_update_filter,
- };
- 
- /* Same as cdc_ncm_info, but with FLAG_SEND_ZLP  */
-@@ -1922,7 +1934,7 @@ static const struct driver_info cdc_ncm_zlp_info = {
- 	.status = cdc_ncm_status,
- 	.rx_fixup = cdc_ncm_rx_fixup,
- 	.tx_fixup = cdc_ncm_tx_fixup,
--	.set_rx_mode = usbnet_cdc_update_filter,
-+	.set_rx_mode = cdc_ncm_update_filter,
- };
- 
- /* Same as cdc_ncm_info, but with FLAG_SEND_ZLP */
-@@ -1964,7 +1976,7 @@ static const struct driver_info wwan_info = {
- 	.status = cdc_ncm_status,
- 	.rx_fixup = cdc_ncm_rx_fixup,
- 	.tx_fixup = cdc_ncm_tx_fixup,
--	.set_rx_mode = usbnet_cdc_update_filter,
-+	.set_rx_mode = cdc_ncm_update_filter,
- };
- 
- /* Same as wwan_info, but with FLAG_NOARP  */
-@@ -1978,7 +1990,7 @@ static const struct driver_info wwan_noarp_info = {
- 	.status = cdc_ncm_status,
- 	.rx_fixup = cdc_ncm_rx_fixup,
- 	.tx_fixup = cdc_ncm_tx_fixup,
--	.set_rx_mode = usbnet_cdc_update_filter,
-+	.set_rx_mode = cdc_ncm_update_filter,
- };
- 
- static const struct usb_device_id cdc_devs[] = {
-diff --git a/include/linux/usb/cdc_ncm.h b/include/linux/usb/cdc_ncm.h
-index 2d207cb4837d..4ac082a63173 100644
---- a/include/linux/usb/cdc_ncm.h
-+++ b/include/linux/usb/cdc_ncm.h
-@@ -119,6 +119,7 @@ struct cdc_ncm_ctx {
- 	u32 timer_interval;
- 	u32 max_ndp_size;
- 	u8 is_ndp16;
-+	u8 filtering_supported;
- 	union {
- 		struct usb_cdc_ncm_ndp16 *delayed_ndp16;
- 		struct usb_cdc_ncm_ndp32 *delayed_ndp32;
+ 	spin_unlock_bh(&ab->base_lock);
 -- 
 2.39.5
 
