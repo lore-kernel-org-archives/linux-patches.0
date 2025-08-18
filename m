@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC51322A15;
-	Mon, 18 Aug 2025 14:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E6831E115;
+	Mon, 18 Aug 2025 14:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526076; cv=none; b=ojPcbjIWQqPSjxlb0tRyKPg09zAZRCLUVZdkDm8C86+pfOnZRzLow6hbleCMOe/3CPTgNMwsSgbNbPb/6Y4ZRCiYnqaMSXb2fmmvbyvcWFUnGJXM9uTKiN7aEqouU71aVAyG6jrT5iY5L9Csxaiq/ZMz9l2bAnlDfEDDEJu4Ou8=
+	t=1755526079; cv=none; b=JhETHV6LUqoXtA7GPUujlxS5jPG+vDJ7mehdSnCkRbpO6//4PTEmmn0nbwdUQ5wqhDhQxvsfGhGD7lspTGMCAzGtKf2YRSvdXMzJybVvE0aZhzdMi/P3//RRRD0q5SkZtD8NMxmUfLs3tSRarbOeUBUey9yao61pZUsmv+bDnC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526076; c=relaxed/simple;
-	bh=NqyMA00Nqp6mO/FTtchFaRPZ8nVon/6a91ngrISuL8Y=;
+	s=arc-20240116; t=1755526079; c=relaxed/simple;
+	bh=TgNpWJM3ciLgKxSaIjuoKzRztpQwJurouV65hjcgjec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sV19nmhaaXoiK2ctSNMRjNYms/5SVtgvpS0qjdcwjIobG9fzH7/ymH19ZqSNUpKYTnNRqm/plVkmGG7M5Afk3a7tjleTBYspNHErxckAhhpbhmw8gsQdm2i6dyC+3cS1dX6jVD5s1HH9IuchoB8HGanOuccnACCEEFB3PhZ4v7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J71ru1Gu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7o0v4wm6WlVrtEG32g4ywnAetlCvkVliFtx4pI3ZXKghLQgAZsvIPOlSUasmPSPCPuT/I1o7OVWmCHWHbPb1LyzYR7QZ9XUYGQ+//s20ReNcULxmx3OLRbAnt/0l3aJmS9qGY1h36uE5KqO+llI+OvjAgJdheCeCoK6bwybh1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBJNxv+1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J71ru1Gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3120C113D0;
-	Mon, 18 Aug 2025 14:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBJNxv+1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F82C4CEEB;
+	Mon, 18 Aug 2025 14:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526076;
-	bh=NqyMA00Nqp6mO/FTtchFaRPZ8nVon/6a91ngrISuL8Y=;
+	s=korg; t=1755526079;
+	bh=TgNpWJM3ciLgKxSaIjuoKzRztpQwJurouV65hjcgjec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J71ru1GuKc0pksduCx+d0kWbLreRN6i2Z7+n+nu/a85MhG8IQPbY6avOHZK2NkJGe
-	 /sPfQ/ase5KOA5itQXyKQm53rYCwQEHYs7q9g1mV/ME2q16/SEoNh3Ykfs86tzoMFE
-	 ykdjK3w67rclOii8wWRAcFbMD2hF49FvKhuksj/4=
+	b=DBJNxv+1nEG7DKiKCwNcOfVQYi6+Sjaky4w4hfrEv+jwR/2rXxhxueCVQ6cMKFdP/
+	 HhnaW9f6H8aRo9rRwG6/3kasyUFky/5WoPQCucmufTXS2ydp9ivxOXpVdJwCQWAuMi
+	 eOjIz1OYJHR+AdJjrivIhmzx3WMxUW4InTkpnOMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 419/570] clk: renesas: rzg2l: Postpone updating priv->clks[]
-Date: Mon, 18 Aug 2025 14:46:46 +0200
-Message-ID: <20250818124521.985209348@linuxfoundation.org>
+Subject: [PATCH 6.16 410/570] media: tc358743: Increase FIFO trigger level to 374
+Date: Mon, 18 Aug 2025 14:46:37 +0200
+Message-ID: <20250818124521.641704401@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,51 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 2f96afdffad4ef74e3c511207058c41c54a2d014 ]
+[ Upstream commit 86addd25314a1e77dbdcfddfeed0bab2f27da0e2 ]
 
-Since the sibling data is filled after the priv->clks[] array entry is
-populated, the first clock that is probed and has a sibling will
-temporarily behave as its own sibling until its actual sibling is
-populated. To avoid any issues, postpone updating priv->clks[] until after
-the sibling is populated.
+The existing fixed value of 16 worked for UYVY 720P60 over
+2 lanes at 594MHz, or UYVY 1080P60 over 4 lanes. (RGB888
+1080P60 needs 6 lanes at 594MHz).
+It doesn't allow for lower resolutions to work as the FIFO
+underflows.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250514090415.4098534-2-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+374 is required for 1080P24 or 1080P30 UYVY over 2 lanes @
+972Mbit/s, but >374 means that the FIFO underflows on 1080P50
+UYVY over 2 lanes @ 972Mbit/s.
+
+Whilst it would be nice to compute it, the required information
+isn't published by Toshiba.
+
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/i2c/tc358743.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index a8628f64a03b..c87ad5a972b7 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -1389,10 +1389,6 @@ rzg2l_cpg_register_mod_clk(const struct rzg2l_mod_clk *mod,
- 		goto fail;
- 	}
- 
--	clk = clock->hw.clk;
--	dev_dbg(dev, "Module clock %pC at %lu Hz\n", clk, clk_get_rate(clk));
--	priv->clks[id] = clk;
--
- 	if (mod->is_coupled) {
- 		struct mstp_clock *sibling;
- 
-@@ -1404,6 +1400,10 @@ rzg2l_cpg_register_mod_clk(const struct rzg2l_mod_clk *mod,
- 		}
- 	}
- 
-+	clk = clock->hw.clk;
-+	dev_dbg(dev, "Module clock %pC at %lu Hz\n", clk, clk_get_rate(clk));
-+	priv->clks[id] = clk;
-+
- 	return;
- 
- fail:
+diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
+index 0bf6481dd0d9..1c7546d2ada4 100644
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -1979,8 +1979,19 @@ static int tc358743_probe_of(struct tc358743_state *state)
+ 	state->pdata.refclk_hz = clk_get_rate(refclk);
+ 	state->pdata.ddc5v_delay = DDC5V_DELAY_100_MS;
+ 	state->pdata.enable_hdcp = false;
+-	/* A FIFO level of 16 should be enough for 2-lane 720p60 at 594 MHz. */
+-	state->pdata.fifo_level = 16;
++	/*
++	 * Ideally the FIFO trigger level should be set based on the input and
++	 * output data rates, but the calculations required are buried in
++	 * Toshiba's register settings spreadsheet.
++	 * A value of 16 works with a 594Mbps data rate for 720p60 (using 2
++	 * lanes) and 1080p60 (using 4 lanes), but fails when the data rate
++	 * is increased, or a lower pixel clock is used that result in CSI
++	 * reading out faster than the data is arriving.
++	 *
++	 * A value of 374 works with both those modes at 594Mbps, and with most
++	 * modes on 972Mbps.
++	 */
++	state->pdata.fifo_level = 374;
+ 	/*
+ 	 * The PLL input clock is obtained by dividing refclk by pll_prd.
+ 	 * It must be between 6 MHz and 40 MHz, lower frequency is better.
 -- 
 2.39.5
 
