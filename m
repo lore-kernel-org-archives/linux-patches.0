@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25FA3218C0;
-	Mon, 18 Aug 2025 12:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A8927B355;
+	Mon, 18 Aug 2025 12:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521740; cv=none; b=uPAPrctKQRTu9tRlpBOv1wtB1lK57OF1M1gxWwm9QrY8rkO8K/yD9JEugQDzbK8AVm1YOUX+S2Akfakw3G8K3fCKiMW6WQ/xPWn84HKRFlje2/oj0ysnRhOpAjj9aHaqvkekUhXmvY1QAlESL4V5YoiiEErBCe/XxeSAHWRzhCE=
+	t=1755521744; cv=none; b=n2dDHD0xa3y3y8W2d+4qGjN+72Q6Xl8wm1C+4+5S+YTlDtoUvSmNkYuri5/vEIM5qmm8a6unavvaIuF/nYIUOKRNFcn9yTf8+XLM3vK44i13cDbMwsNAQxCzyNl8giswsUNbp5z585m9HyGN05dP8Q9abhGEhmWV9MaN8hq1VQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521740; c=relaxed/simple;
-	bh=1O4BQQTp7WSNqMrKcNt61hIM85jImXKuv9f99J+kUxo=;
+	s=arc-20240116; t=1755521744; c=relaxed/simple;
+	bh=EoTO161H4hhZfQvVeXfugZzhRf606jeNXySFHY3/Ses=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ABpBYN997HmnNnoSefOnGeaKkHvOlw2SKWuM56fW1zY30asnlDFsC32bO9QS0JtNsfPn/eTrfGdw/ew4lNTRlfJKk/8PfmvElzp5wjMYFx4wRorD5cvC1yI/DB9A9kKDirdpQ/VvpSg4BcG4uhHVk6uPMeknm3A4Dz6nwDcl9bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXzVQYFp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s20wA0aKNqDHdA/IFBZL+mHw5y9yMFXrSu1xfB7hOq7zCCxXnWFQPYf6Ih8BzGaTMsroeQjCvUe/jxi+ZD/6J1rW6vn6cGCVWXg0akS6VZRtt4urW+w5jedvp2w9UQhwT9ZAoRHPqgE2W0TK7R9TUmTBdZzA9Gku+o0+O5zYfxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+dvOW8O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXzVQYFp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B613DC4CEEB;
-	Mon, 18 Aug 2025 12:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+dvOW8O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059E3C4CEEB;
+	Mon, 18 Aug 2025 12:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521740;
-	bh=1O4BQQTp7WSNqMrKcNt61hIM85jImXKuv9f99J+kUxo=;
+	s=korg; t=1755521743;
+	bh=EoTO161H4hhZfQvVeXfugZzhRf606jeNXySFHY3/Ses=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXzVQYFpsO8wOR5+mYmAzLL92XEeNdxxsD2+VFvtqgQVpABGmhcATNBpfJ4ScgPEp
-	 YMXcbrW+cgN08HtLwYavLn282qtH0he8MW9HRJZscTzxQ4Qxj6VuD032DBzk0h5bLn
-	 Z0y2KBBAkcqHWvgahroThxQCkjV2f4i5yGfKYndw=
+	b=q+dvOW8OfYh9EghK7m05DGNfPGf6CXMFMC2VF1UMSnzoZJWVSU1zKPNihJiLqBEYu
+	 ouXHiJkJqPsF7OwAw/+YAYKmSVUUg/QAm6qVdtjuIjGklGpNHzScovx1c8GDrRwrir
+	 UF0FDVh6anG2CbQK86bWkykLGz8GKVdh/f0jiCgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Badhri Jagan Sridharan <badhri@google.com>,
+	Guillaume La Roque <glaroque@baylibre.com>,
+	Nishanth Menon <nm@ti.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/444] usb: typec: tcpm/tcpci_maxim: fix irq wake usage
-Date: Mon, 18 Aug 2025 14:42:13 +0200
-Message-ID: <20250818124452.950807107@linuxfoundation.org>
+Subject: [PATCH 6.12 108/444] pmdomain: ti: Select PM_GENERIC_DOMAINS
+Date: Mon, 18 Aug 2025 14:42:14 +0200
+Message-ID: <20250818124452.988428960@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -45,116 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Guillaume La Roque <glaroque@baylibre.com>
 
-[ Upstream commit 31611223fb34a3e9320cdfc4f4395072a13ea78e ]
+[ Upstream commit fcddcb7e8f38a40db99f87a962c5d0a153a76566 ]
 
-This driver calls enable_irq_wake() during probe() unconditionally, and
-never issues the required corresponding disable_irq_wake() to disable
-hardware interrupt wakeup signals.
+Select PM_GENERIC_DOMAINS instead of depending on it to ensure
+it is always enabled when TI_SCI_PM_DOMAINS is selected.
+Since PM_GENERIC_DOMAINS is an implicit symbol, it can only be enabled
+through 'select' and cannot be explicitly enabled in configuration.
+This simplifies the dependency chain and prevents build issues
 
-Additionally, whether or not a device should wake-up the system is
-meant to be a policy decision based on sysfs (.../power/wakeup) in the
-first place.
-
-Update the driver to use the standard approach to enable/disable IRQ
-wake during the suspend/resume callbacks. This solves both issues
-described above.
-
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Link: https://lore.kernel.org/r/20250707-max77759-irq-wake-v1-1-d367f633e4bc@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Guillaume La Roque <glaroque@baylibre.com>
+Reviewed-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20250715-depspmdomain-v2-1-6f0eda3ce824@baylibre.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpci_maxim_core.c | 46 +++++++++++++++--------
- 1 file changed, 30 insertions(+), 16 deletions(-)
+ drivers/pmdomain/ti/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/tcpm/tcpci_maxim_core.c b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
-index 648311f5e3cf..eeaf79e97261 100644
---- a/drivers/usb/typec/tcpm/tcpci_maxim_core.c
-+++ b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
-@@ -421,21 +421,6 @@ static irqreturn_t max_tcpci_isr(int irq, void *dev_id)
- 	return IRQ_WAKE_THREAD;
- }
- 
--static int max_tcpci_init_alert(struct max_tcpci_chip *chip, struct i2c_client *client)
--{
--	int ret;
--
--	ret = devm_request_threaded_irq(chip->dev, client->irq, max_tcpci_isr, max_tcpci_irq,
--					(IRQF_TRIGGER_LOW | IRQF_ONESHOT), dev_name(chip->dev),
--					chip);
--
--	if (ret < 0)
--		return ret;
--
--	enable_irq_wake(client->irq);
--	return 0;
--}
--
- static int max_tcpci_start_toggling(struct tcpci *tcpci, struct tcpci_data *tdata,
- 				    enum typec_cc_status cc)
- {
-@@ -532,7 +517,9 @@ static int max_tcpci_probe(struct i2c_client *client)
- 
- 	chip->port = tcpci_get_tcpm_port(chip->tcpci);
- 
--	ret = max_tcpci_init_alert(chip, client);
-+	ret = devm_request_threaded_irq(&client->dev, client->irq, max_tcpci_isr, max_tcpci_irq,
-+					(IRQF_TRIGGER_LOW | IRQF_ONESHOT), dev_name(chip->dev),
-+					chip);
- 	if (ret < 0)
- 		return dev_err_probe(&client->dev, ret,
- 				     "IRQ initialization failed\n");
-@@ -541,6 +528,32 @@ static int max_tcpci_probe(struct i2c_client *client)
- 	return 0;
- }
- 
-+#ifdef CONFIG_PM_SLEEP
-+static int max_tcpci_resume(struct device *dev)
-+{
-+	struct i2c_client *client = to_i2c_client(dev);
-+	int ret = 0;
-+
-+	if (client->irq && device_may_wakeup(dev))
-+		ret = disable_irq_wake(client->irq);
-+
-+	return ret;
-+}
-+
-+static int max_tcpci_suspend(struct device *dev)
-+{
-+	struct i2c_client *client = to_i2c_client(dev);
-+	int ret = 0;
-+
-+	if (client->irq && device_may_wakeup(dev))
-+		ret = enable_irq_wake(client->irq);
-+
-+	return ret;
-+}
-+#endif /* CONFIG_PM_SLEEP */
-+
-+static SIMPLE_DEV_PM_OPS(max_tcpci_pm_ops, max_tcpci_suspend, max_tcpci_resume);
-+
- static const struct i2c_device_id max_tcpci_id[] = {
- 	{ "maxtcpc" },
- 	{ }
-@@ -559,6 +572,7 @@ static struct i2c_driver max_tcpci_i2c_driver = {
- 	.driver = {
- 		.name = "maxtcpc",
- 		.of_match_table = of_match_ptr(max_tcpci_of_match),
-+		.pm = &max_tcpci_pm_ops,
- 	},
- 	.probe = max_tcpci_probe,
- 	.id_table = max_tcpci_id,
+diff --git a/drivers/pmdomain/ti/Kconfig b/drivers/pmdomain/ti/Kconfig
+index 67c608bf7ed0..5386b362a7ab 100644
+--- a/drivers/pmdomain/ti/Kconfig
++++ b/drivers/pmdomain/ti/Kconfig
+@@ -10,7 +10,7 @@ if SOC_TI
+ config TI_SCI_PM_DOMAINS
+ 	tristate "TI SCI PM Domains Driver"
+ 	depends on TI_SCI_PROTOCOL
+-	depends on PM_GENERIC_DOMAINS
++	select PM_GENERIC_DOMAINS if PM
+ 	help
+ 	  Generic power domain implementation for TI device implementing
+ 	  the TI SCI protocol.
 -- 
 2.39.5
 
