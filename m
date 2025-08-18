@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8BF322C97;
-	Mon, 18 Aug 2025 14:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F2B340D9A;
+	Mon, 18 Aug 2025 14:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525958; cv=none; b=AQWLXXsMu9k3N4HU1NJTMbBQnH/+JbRhhBiNZBuun1HRwinpANoRl0hWsfTveXwvQ5/2SJ8GQRpsYOVmtTUXtWqMFYqoUgMTZCnIuKGeMa2pReu7ZDWpFytRyJrVaU8z8qfLnoCdbit/PDkCICxbm62lgRV//5oKdyZTg6+wERY=
+	t=1755525961; cv=none; b=GgtM2L97gJR2Ke92lUkTnIlbZKlChFEMwpu0ccbFobvGqCyPv4FK9Y8oLRApuFCr9fEuCa3Ugh9ygYlxywwfz2NpyXv2srt+Yu0qH8lm0g9eBXsjGWq0J6NCAhtPSxXR4EYxVJWyExPO0voJu6AFnDoJXiSHwFn8HqM4ZntKcj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525958; c=relaxed/simple;
-	bh=ky6hTfr8SJOukVmMcn0iGJV/6y8dkdwKFS1QqvOX0Ck=;
+	s=arc-20240116; t=1755525961; c=relaxed/simple;
+	bh=8eeXLC7lINlWHSQJa9IrCnXAF2TwYnlLCVVljYV1bPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wq2kiKZpOunJkRdA4NyXE8835wqQa9R6qK8vAdTXC5eRbT8/IHjUX9C4JsF9thuuavGEQxmtDc6JgREm0QE4eGF0c+ctaeCgAeOX0GeoJQvBrun9ORM3hSz1oy2TAFcNvgyATnhqQg7oCCTO3BCAeqjd/wuppGI/qcYIV+Vw2k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNX2jJ6I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYU0vg5HXbdWrKAVkqa//BpSP70raxQD9GpWcHF3ZWSaXuWfCvjw+r3hd1TRS70769OVaIR+W65IpvMlX9lcFTc3jn99QLTaWhyEEjrO5smuFe6H7Alvm9I/ybQP1poTEZJqExdZ5dTPvfXgqV3bLxPJQzvNyvM49Wiltcacvbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmzNURd8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNX2jJ6I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADE0C4CEEB;
-	Mon, 18 Aug 2025 14:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmzNURd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EDBC4CEEB;
+	Mon, 18 Aug 2025 14:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525957;
-	bh=ky6hTfr8SJOukVmMcn0iGJV/6y8dkdwKFS1QqvOX0Ck=;
+	s=korg; t=1755525961;
+	bh=8eeXLC7lINlWHSQJa9IrCnXAF2TwYnlLCVVljYV1bPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNX2jJ6Igba+YflkIqdzY/srs2seoYNVnApAzbiYllcvCtiPwHVCjqNStOtV2gSzL
-	 a5+V5r2B41rTLkKHQYkkkbRIhu69/Gjp9z/Qd7Q/1u97G0u8+n0N25xQRYWlgHupFU
-	 8s0BUmJ7qWQ9fzp9Kzwk1J4PznA3mAVGja6ax7QM=
+	b=MmzNURd8I0/zi0oNIoYP/QJNdm1UnN4BZGxzKFT7ibBfYkU0+EKdWo6Cv2Hq4yWgc
+	 tDnj+DZ2Q27RYXTsBZVB/0Xcc8BMxe5ZRXqeqNjfB/GADH76UE5Opo8bnMB24ejXTT
+	 yg1n8gIUW/sotf96U2++u/KL/shQMqHSWj6WP6b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Shravya KN <shravya.k-n@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	George Moussalem <george.moussalem@outlook.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 383/570] RDMA/bnxt_re: Fix size of uverbs_copy_to() in BNXT_RE_METHOD_GET_TOGGLE_MEM
-Date: Mon, 18 Aug 2025 14:46:10 +0200
-Message-ID: <20250818124520.602789645@linuxfoundation.org>
+Subject: [PATCH 6.16 374/570] clk: qcom: ipq5018: keep XO clock always on
+Date: Mon, 18 Aug 2025 14:46:01 +0200
+Message-ID: <20250818124520.256819570@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,36 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: George Moussalem <george.moussalem@outlook.com>
 
-[ Upstream commit 09d231ab569ca97478445ccc1ad44ab026de39b1 ]
+[ Upstream commit 693a723291d0634eaea24cff2f9d807f3223f204 ]
 
-Since both "length" and "offset" are of type u32, there is
-no functional issue here.
+The XO clock must not be disabled to avoid the kernel trying to disable
+the it. As such, keep the XO clock always on by flagging it as critical.
 
-Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Link: https://patch.msgid.link/20250704043857.19158-2-kalesh-anakkur.purayil@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250516-ipq5018-cmn-pll-v4-1-389a6b30e504@outlook.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 2 +-
+ drivers/clk/qcom/gcc-ipq5018.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 063801384b2b..3a627acb82ce 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -4738,7 +4738,7 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD_GET_TOGGLE_MEM)(struct uverbs_attr_bund
- 		return err;
- 
- 	err = uverbs_copy_to(attrs, BNXT_RE_TOGGLE_MEM_MMAP_OFFSET,
--			     &offset, sizeof(length));
-+			     &offset, sizeof(offset));
- 	if (err)
- 		return err;
- 
+diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
+index 70f5dcb96700..24eb4c40da63 100644
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -1371,7 +1371,7 @@ static struct clk_branch gcc_xo_clk = {
+ 				&gcc_xo_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
 -- 
 2.39.5
 
