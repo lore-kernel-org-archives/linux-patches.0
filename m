@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289CC335BA0;
-	Mon, 18 Aug 2025 13:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EF2335BCF;
+	Mon, 18 Aug 2025 13:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524270; cv=none; b=DcTKOX8sKMqggfYLTTWb2xtDLthsFQoIkz+VkynfZoLa1A1I4dDD7+pwDryZVpoHeivA8/6KG4WP0AOblw+o68CHU36C0PJs/GhManzZZiQe5mSO+iJvBo8w3YvWdEbuzz629FZU2ktfRMgy+DBUO4KBr3yZ6xhIxH0taPb2br8=
+	t=1755524273; cv=none; b=m4FLH2zQ0fbV68o5Hd7WByOc7wS4hvEUB/Oy8pXKzMJEr+gNsh4EHxpf6/sr2leo5TUbG2rNi5S0qpDksTbQjWoF3YUkAv6nskNPnoC1KJtgWRS2rp6fzsM8ouUktUaGzg5dwR+4kYZHhPLNws5h16OiGmBV1IbqliKoPGOMi8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524270; c=relaxed/simple;
-	bh=cgOPrA4mmtjOi2QuE5/uVnbeHAPCqHiwpu3pzlMClKI=;
+	s=arc-20240116; t=1755524273; c=relaxed/simple;
+	bh=WJr2J+jJPccVCJzrWVPVlwU/UiG7mm7jQgA6jMBcqRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pV73Y7HIAjgEk/IfbeV43Okh97KBkJVUrJ3DlEM7M3YStWJM28sUFe0lXk53esC3sPqVI+qNbJ/5Ni8NVamQYLsUiMpyzo5IYQ/ox7Rnatrpgukv5vJ6i904UmDftTmLIWoP/FH6drv1vCOPm1j6k0ZqRvN0Y5tZgfqkz3eGmZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIF+u78A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZS7YWBYa1GCP9jk0OsQoY63pnSzqZ5wPhhiCxfppoaAO3AEQjDht60bcw9gN+nlYxoFu8yVJ6maRIFIEacQP9wnI+UlN92dCFYX6fATB0aedFoEeSVjCPQeAPTdE22Rxzjfn/gHLHkshRyBohxLItV7//j6U7aI9yLQv1srMla0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpEgD2OM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIF+u78A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C818C116B1;
-	Mon, 18 Aug 2025 13:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpEgD2OM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D559AC116D0;
+	Mon, 18 Aug 2025 13:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524270;
-	bh=cgOPrA4mmtjOi2QuE5/uVnbeHAPCqHiwpu3pzlMClKI=;
+	s=korg; t=1755524273;
+	bh=WJr2J+jJPccVCJzrWVPVlwU/UiG7mm7jQgA6jMBcqRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIF+u78ANjHBalLX5mi8bBmHX9AVIxxBKpdAsri0Ufy85A5NyaInJ9sl7qDYiY3Zy
-	 YwFJQQLkwtUulHNaIWtXiA7P+cmCgHCJmNnSEOlFn4hQRerdRiyAHDYXv/+VbJ7ND5
-	 xnf6eBTZZegyxmG1GC/UaXF4sbSr8soXLhvzDBhs=
+	b=BpEgD2OM6O2n777b0lr4rq657C9hz2+OZT+79CrKSPllBIQL+Xfsm14+PnKcN3o5M
+	 4zQGRYLb63ue8/sLqBxlDkG+te0IF4CHryIYM0gemhlCm3a4O5xy+IoqxEGLeO4t2E
+	 QSvUiN4swUXZDf92nB//m+kBVxvfQTE6Hmrg+UGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Calvin Owens <calvin@wbinvd.org>,
-	Len Brown <len.brown@intel.com>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 420/515] tools/power turbostat: Handle cap_get_proc() ENOSYS
-Date: Mon, 18 Aug 2025 14:46:46 +0200
-Message-ID: <20250818124514.597344675@linuxfoundation.org>
+Subject: [PATCH 6.15 421/515] smb: client: dont call init_waitqueue_head(&info->conn_wait) twice in _smbd_get_connection
+Date: Mon, 18 Aug 2025 14:46:47 +0200
+Message-ID: <20250818124514.634209165@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,43 +56,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit d34fe509f5f76d9dc36291242d67c6528027ebbd ]
+[ Upstream commit 550a194c5998e4e77affc6235e80d3766dc2d27e ]
 
-Kernels configured with CONFIG_MULTIUSER=n have no cap_get_proc().
-Check for ENOSYS to recognize this case, and continue on to
-attempt to access the requested MSRs (such as temperature).
+It is already called long before we may hit this cleanup code path.
 
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/smb/client/smbdirect.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 2c77ec8df67d..dd3c32ab9ec1 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -6527,8 +6527,16 @@ int check_for_cap_sys_rawio(void)
- 	int ret = 0;
- 
- 	caps = cap_get_proc();
--	if (caps == NULL)
-+	if (caps == NULL) {
-+		/*
-+		 * CONFIG_MULTIUSER=n kernels have no cap_get_proc()
-+		 * Allow them to continue and attempt to access MSRs
-+		 */
-+		if (errno == ENOSYS)
-+			return 0;
-+
- 		return 1;
-+	}
- 
- 	if (cap_get_flag(caps, CAP_SYS_RAWIO, CAP_EFFECTIVE, &cap_flag_value)) {
- 		ret = 1;
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index cd4c61932cb2..b9bb531717a6 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1689,7 +1689,6 @@ static struct smbd_connection *_smbd_get_connection(
+ 	cancel_delayed_work_sync(&info->idle_timer_work);
+ 	destroy_caches_and_workqueue(info);
+ 	sc->status = SMBDIRECT_SOCKET_NEGOTIATE_FAILED;
+-	init_waitqueue_head(&info->conn_wait);
+ 	rdma_disconnect(sc->rdma.cm_id);
+ 	wait_event(info->conn_wait,
+ 		sc->status == SMBDIRECT_SOCKET_DISCONNECTED);
 -- 
 2.39.5
 
