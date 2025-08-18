@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EE0221577;
-	Mon, 18 Aug 2025 13:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D64221577;
+	Mon, 18 Aug 2025 13:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524338; cv=none; b=DzVWf2AW+DhxpBFnhkRwlzbpKkDI044GpOyykJdiI9S1MbdAI14KSr9PIyEKlaL+kseBx/dP8jZtA9VFYDIgs2YIvnHaLCOQ77/d/QLFe4CcE7Lx1R3qp01foC27yxyQikt2R4gxHgxsfRzLBe47qwy/7rP3wyvR4KXzwcU2SiU=
+	t=1755524341; cv=none; b=FT8O+I/ufmc53DcU/iOIuSUx6ctsjsACc3NCCeLH0ZK+ooKJZBp1m31AYlsPeeUXno2EaAUUuceV4c98K74SIx8HnpiAL25iR8XpimqEf2eXsav0PoB9xD5n1HYTI4Oeaprl1p2Xvp0+2w/y3kEI26z3ovJ+9dxDMNzI+++OQT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524338; c=relaxed/simple;
-	bh=3jfnXbgWuNvFRC38Md3WmRzn2bBBnepL7jba4qwBKHk=;
+	s=arc-20240116; t=1755524341; c=relaxed/simple;
+	bh=5GlH6Vjx6JKcr1lzJaWVJWIwUREPLOn84fm+IFLALtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XK9dTC2zrY6dquFytGf8Ek6PXjqpMhYc8DmZnoqbwGS2x6L0OWB/+KMvTE38lIeRG6Unu5hvSx3v+rSxkPxvzmeiy/cyEuFR++bUG75bMI5tAL4LOCJYZj+1wuXUPaZ2cVKoVGmjO4BQMZG9i0UvN+bwetHcl843CCamdRTd0E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXUZeAsr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ld2oXfBpYxKuGTVGW6F33mAmve6p1bGZeXufFDRlB3a+CVvu9fMr64Tie9pY0pPEx90PeB7FDZuHZuZ/Te5D9/4t43WJCelyyZuNDvWTte7zqSIwTrQxa6e0Q+POkRJerlpUtVOgXaY/Ug9/8bL/Sw+oo68Dr8FTZFWvcA0lLas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUiHzxQa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXUZeAsr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF19C116C6;
-	Mon, 18 Aug 2025 13:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUiHzxQa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53C5C4CEEB;
+	Mon, 18 Aug 2025 13:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524337;
-	bh=3jfnXbgWuNvFRC38Md3WmRzn2bBBnepL7jba4qwBKHk=;
+	s=korg; t=1755524341;
+	bh=5GlH6Vjx6JKcr1lzJaWVJWIwUREPLOn84fm+IFLALtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXUZeAsrgVGkCKcfB9WPYSUntiyn6nya2zB3KZ/M1cdX4fjtMUqsc3ZulMuIAhQyF
-	 5pHg4b7MQhcv70gdUqXoobR7Ei8EB66XlBM1lnRRRikowpicSEf70mCWj44o43hfO8
-	 Uy7J9Kxw6b77vaz7lcsEoNY5kCjT+S/Q2cBINnic=
+	b=wUiHzxQaBUn5GVTmYW9lZM2iefYRH6XlR7N3KBbtl+SS8GxAemYpw2nDWWJ3BwMr9
+	 hUYflBt+QCCj/WXd2JdtQSSkJxUreWokmAM/A7oTQGQKt0+xOgf/083bGTPF6nyK89
+	 opVBEoqPhU/kfX/y11nJweG+B2nSx9NqxFDh+wDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bijan Tabatabai <bijantabatab@micron.com>,
-	SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Ravi Shankar Jonnalagadda <ravis.opensrc@micron.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 442/515] mm/damon/core: commit damos->target_nid
-Date: Mon, 18 Aug 2025 14:47:08 +0200
-Message-ID: <20250818124515.442086343@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.15 443/515] block: Introduce bio_needs_zone_write_plugging()
+Date: Mon, 18 Aug 2025 14:47:09 +0200
+Message-ID: <20250818124515.480358450@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,39 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bijan Tabatabai <bijantabatab@micron.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 579bd5006fe7f4a7abb32da0160d376476cab67d upstream.
+commit f70291411ba20d50008db90a6f0731efac27872c upstream.
 
-When committing new scheme parameters from the sysfs, the target_nid field
-of the damos struct would not be copied.  This would result in the
-target_nid field to retain its original value, despite being updated in
-the sysfs interface.
+In preparation for fixing device mapper zone write handling, introduce
+the inline helper function bio_needs_zone_write_plugging() to test if a
+BIO requires handling through zone write plugging using the function
+blk_zone_plug_bio(). This function returns true for any write
+(op_is_write(bio) == true) operation directed at a zoned block device
+using zone write plugging, that is, a block device with a disk that has
+a zone write plug hash table.
 
-This patch fixes this issue by copying target_nid in damos_commit().
+This helper allows simplifying the check on entry to blk_zone_plug_bio()
+and used in to protect calls to it for blk-mq devices and DM devices.
 
-Link: https://lkml.kernel.org/r/20250709004729.17252-1-bijan311@gmail.com
-Fixes: 83dc7bbaecae ("mm/damon/sysfs: use damon_commit_ctx()")
-Signed-off-by: Bijan Tabatabai <bijantabatab@micron.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Ravi Shankar Jonnalagadda <ravis.opensrc@micron.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f211268ed1f9 ("dm: Use the block layer zone append emulation")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250625093327.548866-3-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ block/blk-mq.c         |    6 +++--
+ block/blk-zoned.c      |   20 -----------------
+ drivers/md/dm.c        |    4 ++-
+ include/linux/blkdev.h |   55 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 63 insertions(+), 22 deletions(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -978,6 +978,7 @@ static int damos_commit(struct damos *ds
- 		return err;
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3117,8 +3117,10 @@ void blk_mq_submit_bio(struct bio *bio)
+ 	if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
+ 		goto queue_exit;
  
- 	dst->wmarks = src->wmarks;
-+	dst->target_nid = src->target_nid;
+-	if (blk_queue_is_zoned(q) && blk_zone_plug_bio(bio, nr_segs))
+-		goto queue_exit;
++	if (bio_needs_zone_write_plugging(bio)) {
++		if (blk_zone_plug_bio(bio, nr_segs))
++			goto queue_exit;
++	}
  
- 	err = damos_commit_filters(dst, src);
- 	return err;
+ new_request:
+ 	if (rq) {
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -1116,25 +1116,7 @@ bool blk_zone_plug_bio(struct bio *bio,
+ {
+ 	struct block_device *bdev = bio->bi_bdev;
+ 
+-	if (!bdev->bd_disk->zone_wplugs_hash)
+-		return false;
+-
+-	/*
+-	 * If the BIO already has the plugging flag set, then it was already
+-	 * handled through this path and this is a submission from the zone
+-	 * plug bio submit work.
+-	 */
+-	if (bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING))
+-		return false;
+-
+-	/*
+-	 * We do not need to do anything special for empty flush BIOs, e.g
+-	 * BIOs such as issued by blkdev_issue_flush(). The is because it is
+-	 * the responsibility of the user to first wait for the completion of
+-	 * write operations for flush to have any effect on the persistence of
+-	 * the written data.
+-	 */
+-	if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
++	if (WARN_ON_ONCE(!bdev->bd_disk->zone_wplugs_hash))
+ 		return false;
+ 
+ 	/*
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1802,7 +1802,9 @@ static inline bool dm_zone_bio_needs_spl
+ }
+ static inline bool dm_zone_plug_bio(struct mapped_device *md, struct bio *bio)
+ {
+-	return dm_emulate_zone_append(md) && blk_zone_plug_bio(bio, 0);
++	if (!bio_needs_zone_write_plugging(bio))
++		return false;
++	return blk_zone_plug_bio(bio, 0);
+ }
+ 
+ static blk_status_t __send_zone_reset_all_emulated(struct clone_info *ci,
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -835,6 +835,55 @@ static inline unsigned int disk_nr_zones
+ {
+ 	return disk->nr_zones;
+ }
++
++/**
++ * bio_needs_zone_write_plugging - Check if a BIO needs to be handled with zone
++ *				   write plugging
++ * @bio: The BIO being submitted
++ *
++ * Return true whenever @bio execution needs to be handled through zone
++ * write plugging (using blk_zone_plug_bio()). Return false otherwise.
++ */
++static inline bool bio_needs_zone_write_plugging(struct bio *bio)
++{
++	enum req_op op = bio_op(bio);
++
++	/*
++	 * Only zoned block devices have a zone write plug hash table. But not
++	 * all of them have one (e.g. DM devices may not need one).
++	 */
++	if (!bio->bi_bdev->bd_disk->zone_wplugs_hash)
++		return false;
++
++	/* Only write operations need zone write plugging. */
++	if (!op_is_write(op))
++		return false;
++
++	/* Ignore empty flush */
++	if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
++		return false;
++
++	/* Ignore BIOs that already have been handled by zone write plugging. */
++	if (bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING))
++		return false;
++
++	/*
++	 * All zone write operations must be handled through zone write plugging
++	 * using blk_zone_plug_bio().
++	 */
++	switch (op) {
++	case REQ_OP_ZONE_APPEND:
++	case REQ_OP_WRITE:
++	case REQ_OP_WRITE_ZEROES:
++	case REQ_OP_ZONE_FINISH:
++	case REQ_OP_ZONE_RESET:
++	case REQ_OP_ZONE_RESET_ALL:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ bool blk_zone_plug_bio(struct bio *bio, unsigned int nr_segs);
+ 
+ /**
+@@ -864,6 +913,12 @@ static inline unsigned int disk_nr_zones
+ {
+ 	return 0;
+ }
++
++static inline bool bio_needs_zone_write_plugging(struct bio *bio)
++{
++	return false;
++}
++
+ static inline bool blk_zone_plug_bio(struct bio *bio, unsigned int nr_segs)
+ {
+ 	return false;
 
 
