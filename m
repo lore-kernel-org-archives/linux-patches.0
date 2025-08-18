@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB1535A284;
-	Mon, 18 Aug 2025 14:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9680635A280;
+	Mon, 18 Aug 2025 14:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526429; cv=none; b=aCTAPEProXLS9Z8vpqSuhpIBROPyA3MD7Uq+cGS3bP3xPT5L1sPLoAON2WtXKTe4XX4vZJM6Va39tfItCQIm8VG6gZ/2UwfbWujejQP5x+NDt3JuwQGnu3DN4wY0Mhg57To11NhhEFIlyXcyZR67eM82VG5zxgLJsAHanHOjQ7U=
+	t=1755526432; cv=none; b=KV2Q8Jif/wFlbxAxhi8TOcveXbaRLgqOYCkEKgEOQmxXSwF01QRVDg+uLYjDxLdeRAfDK7Uv1rDZoBgtVhrWzUFR0VPa7SZ+HGWRqt80OuxXt6WYuWESj/eJGKgk2gIX5HfgJ5jkYhBDw082MjFtaykZbSVPJxlt1YRNazLSeGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526429; c=relaxed/simple;
-	bh=RobuBXtK43xZ069VJImgSugFDdAYuFoNzGzQILuBJxE=;
+	s=arc-20240116; t=1755526432; c=relaxed/simple;
+	bh=Y7OYnH8oZU87ZVDbm2aYYeEnNOWotlyUQSl4KZ2T+Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GGetG8ujpn36p1suMAxP5dh7N5bsI3dyTuwhDMGyIr32K6ckVvZc1J2nYDJUZoxxzxILmhlSnH1q2WViQiS2lWfET0aJ2zvJva4BFxaJuSCuh7vyQXhCvioTky7wUoZe/DB1Y85FbfCkkdP73yHJmrgrGBBBEOMyYzawI2TuRuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+um+O/K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bvw4j+WgSPJ408RkWz99dlrzgONWsJsm06DkCikk+67RXqQVGQH5JK5EbgPmlR7K3YXNA2XzSRRSVcgDFx3xmEJaABFau/yLJISA+fzuD3UkcD393kyvd8OutXdncrnGo9VvpjMSHXnJlURldjZYWDGJ3k3rHNspbVyBAG4Ps7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjubLw5K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+um+O/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E38C4CEEB;
-	Mon, 18 Aug 2025 14:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjubLw5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DDFC4CEEB;
+	Mon, 18 Aug 2025 14:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526429;
-	bh=RobuBXtK43xZ069VJImgSugFDdAYuFoNzGzQILuBJxE=;
+	s=korg; t=1755526432;
+	bh=Y7OYnH8oZU87ZVDbm2aYYeEnNOWotlyUQSl4KZ2T+Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+um+O/KCKEeQG892+C+nNuVU2Tv4MiQZ5plfOxUKnjxN70cqGuSR9P745lKJHLuA
-	 Tsq4J8rfFnxh7QDnYQiibpdfECPYvUC8JYMtzdWaquWDQ8KQFvZHZnYIwu6u2pxE18
-	 D+Y+7X2LJje0Gm0+1LL8Nq3zICIO/QQc1kprd+4A=
+	b=SjubLw5KFVMOKxfC3ciLJYiNek7Tcd3kHeCCSoRoO5knP/L9nXRxZt6gDD+XYO45p
+	 bgcNZFpul0dOIwz68pxWCG+O9KFz6irTuRkul8uENgBsPaBYkqsyCczQeSAgCn/uyt
+	 aFWTRnLbA3B4xSTYWeMRdDGqEDSc75kL88ktuCL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	cen zhang <zzzccc427@gmail.com>,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 520/570] btrfs: qgroup: fix race between quota disable and quota rescan ioctl
-Date: Mon, 18 Aug 2025 14:48:27 +0200
-Message-ID: <20250818124525.901172549@linuxfoundation.org>
+Subject: [PATCH 6.16 521/570] btrfs: populate otime when logging an inode item
+Date: Mon, 18 Aug 2025 14:48:28 +0200
+Message-ID: <20250818124525.938470405@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,108 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit e1249667750399a48cafcf5945761d39fa584edf upstream.
+commit 1ef94169db0958d6de39f9ea6e063ce887342e2d upstream.
 
-There's a race between a task disabling quotas and another running the
-rescan ioctl that can result in a use-after-free of qgroup records from
-the fs_info->qgroup_tree rbtree.
+[TEST FAILURE WITH EXPERIMENTAL FEATURES]
+When running test case generic/508, the test case will fail with the new
+btrfs shutdown support:
 
-This happens as follows:
+generic/508       - output mismatch (see /home/adam/xfstests/results//generic/508.out.bad)
+#    --- tests/generic/508.out	2022-05-11 11:25:30.806666664 +0930
+#    +++ /home/adam/xfstests/results//generic/508.out.bad	2025-07-02 14:53:22.401824212 +0930
+#    @@ -1,2 +1,6 @@
+#     QA output created by 508
+#     Silence is golden
+#    +Before:
+#    +After : stat.btime = Thu Jan  1 09:30:00 1970
+#    +Before:
+#    +After : stat.btime = Wed Jul  2 14:53:22 2025
+#    ...
+#    (Run 'diff -u /home/adam/xfstests/tests/generic/508.out /home/adam/xfstests/results//generic/508.out.bad'  to see the entire diff)
+Ran: generic/508
+Failures: generic/508
+Failed 1 of 1 tests
 
-1) Task A enters btrfs_ioctl_quota_rescan() -> btrfs_qgroup_rescan();
+Please note that the test case requires shutdown support, thus the test
+case will be skipped using the current upstream kernel, as it doesn't
+have shutdown ioctl support.
 
-2) Task B enters btrfs_quota_disable() and calls
-   btrfs_qgroup_wait_for_completion(), which does nothing because at that
-   point fs_info->qgroup_rescan_running is false (it wasn't set yet by
-   task A);
+[CAUSE]
+The direct cause the 0 time stamp in the log tree:
 
-3) Task B calls btrfs_free_qgroup_config() which starts freeing qgroups
-   from fs_info->qgroup_tree without taking the lock fs_info->qgroup_lock;
+leaf 30507008 items 2 free space 16057 generation 9 owner TREE_LOG
+leaf 30507008 flags 0x1(WRITTEN) backref revision 1
+checksum stored e522548d
+checksum calced e522548d
+fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
+chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
+	item 0 key (257 INODE_ITEM 0) itemoff 16123 itemsize 160
+		generation 9 transid 9 size 0 nbytes 0
+		block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+		sequence 1 flags 0x0(none)
+		atime 1751432947.492000000 (2025-07-02 14:39:07)
+		ctime 1751432947.492000000 (2025-07-02 14:39:07)
+		mtime 1751432947.492000000 (2025-07-02 14:39:07)
+		otime 0.0 (1970-01-01 09:30:00) <<<
 
-4) Task A enters qgroup_rescan_zero_tracking() which starts iterating
-   the fs_info->qgroup_tree tree while holding fs_info->qgroup_lock,
-   but task B is freeing qgroup records from that tree without holding
-   the lock, resulting in a use-after-free.
+But the old fs tree has all the correct time stamp:
 
-Fix this by taking fs_info->qgroup_lock at btrfs_free_qgroup_config().
-Also at btrfs_qgroup_rescan() don't start the rescan worker if quotas
-were already disabled.
+btrfs-progs v6.12
+fs tree key (FS_TREE ROOT_ITEM 0)
+leaf 30425088 items 2 free space 16061 generation 5 owner FS_TREE
+leaf 30425088 flags 0x1(WRITTEN) backref revision 1
+checksum stored 48f6c57e
+checksum calced 48f6c57e
+fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
+chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
+	item 0 key (256 INODE_ITEM 0) itemoff 16123 itemsize 160
+		generation 3 transid 0 size 0 nbytes 16384
+		block group 0 mode 40755 links 1 uid 0 gid 0 rdev 0
+		sequence 0 flags 0x0(none)
+		atime 1751432947.0 (2025-07-02 14:39:07)
+		ctime 1751432947.0 (2025-07-02 14:39:07)
+		mtime 1751432947.0 (2025-07-02 14:39:07)
+		otime 1751432947.0 (2025-07-02 14:39:07) <<<
 
-Reported-by: cen zhang <zzzccc427@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CAFRLqsV+cMDETFuzqdKSHk_FDm6tneea45krsHqPD6B3FetLpQ@mail.gmail.com/
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+The root cause is that fill_inode_item() in tree-log.c is only
+populating a/c/m time, not the otime (or btime in statx output).
+
+Part of the reason is that, the vfs inode only has a/c/m time, no native
+btime support yet.
+
+[FIX]
+Thankfully btrfs has its otime stored in btrfs_inode::i_otime_sec and
+btrfs_inode::i_otime_nsec.
+
+So what we really need is just fill the otime time stamp in
+fill_inode_item() of tree-log.c
+
+There is another fill_inode_item() in inode.c, which is doing the proper
+otime population.
+
+Fixes: 94edf4ae43a5 ("Btrfs: don't bother committing delayed inode updates when fsyncing")
+CC: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/qgroup.c |   31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ fs/btrfs/tree-log.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -630,22 +630,30 @@ bool btrfs_check_quota_leak(const struct
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -4221,6 +4221,9 @@ static void fill_inode_item(struct btrfs
+ 	btrfs_set_token_timespec_nsec(&token, &item->ctime,
+ 				      inode_get_ctime_nsec(inode));
  
- /*
-  * This is called from close_ctree() or open_ctree() or btrfs_quota_disable(),
-- * first two are in single-threaded paths.And for the third one, we have set
-- * quota_root to be null with qgroup_lock held before, so it is safe to clean
-- * up the in-memory structures without qgroup_lock held.
-+ * first two are in single-threaded paths.
-  */
- void btrfs_free_qgroup_config(struct btrfs_fs_info *fs_info)
- {
- 	struct rb_node *n;
- 	struct btrfs_qgroup *qgroup;
- 
-+	/*
-+	 * btrfs_quota_disable() can be called concurrently with
-+	 * btrfs_qgroup_rescan() -> qgroup_rescan_zero_tracking(), so take the
-+	 * lock.
-+	 */
-+	spin_lock(&fs_info->qgroup_lock);
- 	while ((n = rb_first(&fs_info->qgroup_tree))) {
- 		qgroup = rb_entry(n, struct btrfs_qgroup, node);
- 		rb_erase(n, &fs_info->qgroup_tree);
- 		__del_qgroup_rb(qgroup);
-+		spin_unlock(&fs_info->qgroup_lock);
- 		btrfs_sysfs_del_one_qgroup(fs_info, qgroup);
- 		kfree(qgroup);
-+		spin_lock(&fs_info->qgroup_lock);
- 	}
-+	spin_unlock(&fs_info->qgroup_lock);
++	btrfs_set_timespec_sec(leaf, &item->otime, BTRFS_I(inode)->i_otime_sec);
++	btrfs_set_timespec_nsec(leaf, &item->otime, BTRFS_I(inode)->i_otime_nsec);
 +
  	/*
- 	 * We call btrfs_free_qgroup_config() when unmounting
- 	 * filesystem and disabling quota, so we set qgroup_ulist
-@@ -4039,12 +4047,21 @@ btrfs_qgroup_rescan(struct btrfs_fs_info
- 	qgroup_rescan_zero_tracking(fs_info);
- 
- 	mutex_lock(&fs_info->qgroup_rescan_lock);
--	fs_info->qgroup_rescan_running = true;
--	btrfs_queue_work(fs_info->qgroup_rescan_workers,
--			 &fs_info->qgroup_rescan_work);
-+	/*
-+	 * The rescan worker is only for full accounting qgroups, check if it's
-+	 * enabled as it is pointless to queue it otherwise. A concurrent quota
-+	 * disable may also have just cleared BTRFS_FS_QUOTA_ENABLED.
-+	 */
-+	if (btrfs_qgroup_full_accounting(fs_info)) {
-+		fs_info->qgroup_rescan_running = true;
-+		btrfs_queue_work(fs_info->qgroup_rescan_workers,
-+				 &fs_info->qgroup_rescan_work);
-+	} else {
-+		ret = -ENOTCONN;
-+	}
- 	mutex_unlock(&fs_info->qgroup_rescan_lock);
- 
--	return 0;
-+	return ret;
- }
- 
- int btrfs_qgroup_wait_for_completion(struct btrfs_fs_info *fs_info,
+ 	 * We do not need to set the nbytes field, in fact during a fast fsync
+ 	 * its value may not even be correct, since a fast fsync does not wait
 
 
