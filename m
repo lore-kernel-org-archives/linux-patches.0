@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF2F26FD9D;
-	Mon, 18 Aug 2025 12:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB1E26F283;
+	Mon, 18 Aug 2025 12:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521926; cv=none; b=u3K/Auebdu+2xShReR9Cc8fZo/x81M8WtsENdX6gMyI4fotc0oOkhgmTj+/arTKe1UV8hxT05yKqJqmKsZ2gkcCOrPv62zD8i8xqsQAIu5dlu2kd5xgZx1ba/5nKNUbp2CiQLZlsAR+bDJZXFlIyIndzHbs6L09X70UiFq/aihQ=
+	t=1755521929; cv=none; b=h1q4PGa8s9/7qRpYogp8VmEJ2wD8CSHjJ5UpY7cUhD0FRo8Rjp/86na23+VQyTvftNs6sNQj0+RBVIZEA57u7iZ6wi/XkVVUvKEbSFP7jHAd6WB+3m32p8B+V8jZusXpihNm3d2zxKEEjfykMs6wrjw7JrKtqOHgHPpZ0dMna9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521926; c=relaxed/simple;
-	bh=A/CvHRfITogCSDPhhUr09v1TyJfE1Jm9crk6r3gCCnU=;
+	s=arc-20240116; t=1755521929; c=relaxed/simple;
+	bh=FqqKRO1li257K6m5AKY987EdaxRbRESvcpSmZ7+4Gbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHoSI/EJioA4MKtw4c5CSxjkRXn6SKNG08vbtZEoPjH2zEziZc3czHIekbD3uz/foJxKe0Zd4bfH64ElOJ7LaBWotjtSqkFFoar9By805i2k8buNSQeQY1eavsMe/NvyEomIz4QhlhJt9wq50PjYCteBIquyKgo9VFk6OjlfSjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6lU9qd9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RXyGmD/aq0t/snKGAnaOT+6vrh4nNtxoXOA+YHRik9nb8SxSQCBDQTv/Xbvr5xBey51QFWiayIgiVUuyDzw022OieH46rbi0UeDRmIA+ia7to5Z33EaKrd8N7DcDEYGQ//HT/+N8ieDLfQY78J32nB7VVtEo5bL1UsEh8LVaJrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aja4dUH/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6lU9qd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B58C4CEEB;
-	Mon, 18 Aug 2025 12:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aja4dUH/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12C2C4CEEB;
+	Mon, 18 Aug 2025 12:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521926;
-	bh=A/CvHRfITogCSDPhhUr09v1TyJfE1Jm9crk6r3gCCnU=;
+	s=korg; t=1755521929;
+	bh=FqqKRO1li257K6m5AKY987EdaxRbRESvcpSmZ7+4Gbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6lU9qd9/zZBHMNsk2PWR1nKrCI5wZ2Oxdekww1E2AuTxUaMNF4OfFlQQnhadWH7b
-	 VjDAHkhEOmx6oyrgk9JWCjywz2plIBorTdiO6YYBAB/O5DbybkwSOuOYu8RKStoIsE
-	 XTPBsy7N7FcIVvJyNHPtGjowjqlG3TLq3GqYSBgs=
+	b=aja4dUH/NtaesbnzFCx5mdt13uPLQv6CE/dbfxAL12gj+E21AH5pPgrHTYOVD4jAU
+	 ztg4Dr3msZKnAAULxug+TyF/P59UdIyo1/TWViDRC62VFPgDhKpPWyVDE6tpW3X7Do
+	 +NCWaJKrqnOFwA0W0+BPREwM+3Bnl39pj7Fuvf/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <benh@debian.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	En-Wei Wu <en-wei.wu@canonical.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 164/444] bootconfig: Fix unaligned access when building footer
-Date: Mon, 18 Aug 2025 14:43:10 +0200
-Message-ID: <20250818124455.045136639@linuxfoundation.org>
+Subject: [PATCH 6.12 165/444] Bluetooth: btusb: Add new VID/PID 0489/e14e for MT7925
+Date: Mon, 18 Aug 2025 14:43:11 +0200
+Message-ID: <20250818124455.080494696@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,82 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: En-Wei Wu <en-wei.wu@canonical.com>
 
-[ Upstream commit 6ed5e20466c79e3b3350bae39f678f73cf564b4e ]
+[ Upstream commit 942873c8137fe0015ab37f62f159d88079859c5e ]
 
-Currently we add padding between the bootconfig text and footer to
-ensure that the footer is aligned within the initramfs image.
-However, because only the bootconfig data is held in memory, not the
-full initramfs image, the footer may not be naturally aligned in
-memory.
+Add VID 0489 & PID e14e for MediaTek MT7925 USB Bluetooth chip.
 
-This can result in an alignment fault (SIGBUS) when writing the footer
-on some architectures, such as sparc.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-Build the footer in a struct on the stack before adding it to the
-buffer.
+T:  Bus=01 Lev=01 Prnt=01 Port=03 Cnt=03 Dev#=  4 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e14e Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-References: https://buildd.debian.org/status/fetch.php?pkg=linux&arch=sparc64&ver=6.16%7Erc7-1%7Eexp1&stamp=1753209801&raw=0
-Link: https://lore.kernel.org/all/aIC-NTw-cdm9ZGFw@decadent.org.uk/
-
-Signed-off-by: Ben Hutchings <benh@debian.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bootconfig/main.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
-index 8a48cc2536f5..dce2d6ffcca5 100644
---- a/tools/bootconfig/main.c
-+++ b/tools/bootconfig/main.c
-@@ -11,6 +11,7 @@
- #include <string.h>
- #include <errno.h>
- #include <endian.h>
-+#include <assert.h>
- 
- #include <linux/bootconfig.h>
- 
-@@ -359,7 +360,12 @@ static int delete_xbc(const char *path)
- 
- static int apply_xbc(const char *path, const char *xbc_path)
- {
--	char *buf, *data, *p;
-+	struct {
-+		uint32_t size;
-+		uint32_t csum;
-+		char magic[BOOTCONFIG_MAGIC_LEN];
-+	} footer;
-+	char *buf, *data;
- 	size_t total_size;
- 	struct stat stat;
- 	const char *msg;
-@@ -430,17 +436,13 @@ static int apply_xbc(const char *path, const char *xbc_path)
- 	size += pad;
- 
- 	/* Add a footer */
--	p = data + size;
--	*(uint32_t *)p = htole32(size);
--	p += sizeof(uint32_t);
-+	footer.size = htole32(size);
-+	footer.csum = htole32(csum);
-+	memcpy(footer.magic, BOOTCONFIG_MAGIC, BOOTCONFIG_MAGIC_LEN);
-+	static_assert(sizeof(footer) == BOOTCONFIG_FOOTER_SIZE);
-+	memcpy(data + size, &footer, BOOTCONFIG_FOOTER_SIZE);
- 
--	*(uint32_t *)p = htole32(csum);
--	p += sizeof(uint32_t);
--
--	memcpy(p, BOOTCONFIG_MAGIC, BOOTCONFIG_MAGIC_LEN);
--	p += BOOTCONFIG_MAGIC_LEN;
--
--	total_size = p - data;
-+	total_size = size + BOOTCONFIG_FOOTER_SIZE;
- 
- 	ret = write(fd, data, total_size);
- 	if (ret < total_size) {
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 1d2e85b41820..d7aaaeb4fe32 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -702,6 +702,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe139), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe14e), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe14f), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe150), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.39.5
 
