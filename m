@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0243B31B100;
-	Mon, 18 Aug 2025 13:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF8821B199;
+	Mon, 18 Aug 2025 13:10:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522639; cv=none; b=up17dbcGrOnkZ7jLd+U+sFr1oSr1BNyYnHJ9jUE6LQBGfJWa4Brkzak2j32xjqcffdRvVlNYSox51pGm5Ms100L2TUdPVr44TqDzperNnzxol6dE3DaR+Kyt5RreAFqcPp9a0BtFcefQgPqy8A5TQdelazbOkv947uRYG4pLaLE=
+	t=1755522642; cv=none; b=TtZbFR9AqWXywFiieYuFDG0QlY8jSXK74aBQF4TBdUw9nIYlriGqBg5vt7E+zdIO57XBczLw3PDYWJN4EwqO3kBN5bKFOw3sMXpZ799pVKll0gZUVhSWIZe0hSn2q0VWoqn4k0mI3C2tZHeR1YNZzBiohOZNRkv6kiSSD42kLzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522639; c=relaxed/simple;
-	bh=PJXf3tOxhPHhzy6gqZ6QM/RGUu8DsTVfg4c+Qh+MXZo=;
+	s=arc-20240116; t=1755522642; c=relaxed/simple;
+	bh=oGmlzHwuN/bCiJjsXjI+2k/flfnLl/zTXayGQSqBNTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7sRVhGiLNRrX30COYK/D9hYT+RVOiF5yBVUQZJR8MGXD7EZUXcS2wl1tTYq61Op03Ap9t+u/FgdBl6RUAaBwqLm7zDhGexIdbJ8fNaFmGPCoT2e8CaWyRRi3mLOKQb8iY1hjCYU7ZCmT2EXDC8u8HEwbgoDu3fZCePVhdY7tY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyLKGEye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A8qn2gtXpoitFmZBwZYo1D4z7xMZDQbJo9oPII5y6srzg7RP5tpOtho/OHBmeUbFPjdCSsJ5BSOdNTytIjdc7IBvHw+L2FKxo+Zv2VfZNLLFTEn8Grs0Zu/xow2iQ4h+selmCwUDpFVkoSbIFHQyuy5O6aEv/vFSNtcaIK79IdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0zGPAVj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyLKGEye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F157C4CEEB;
-	Mon, 18 Aug 2025 13:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0zGPAVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C086FC4CEEB;
+	Mon, 18 Aug 2025 13:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522638;
-	bh=PJXf3tOxhPHhzy6gqZ6QM/RGUu8DsTVfg4c+Qh+MXZo=;
+	s=korg; t=1755522642;
+	bh=oGmlzHwuN/bCiJjsXjI+2k/flfnLl/zTXayGQSqBNTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hyLKGEyedZUUoWauBX2nWC4E1EWoYIw23MwLSrcRoYKJGIIHB/MZIhhGEY15BFg67
-	 DkpjY41thUbGwv2BJGizq3UmHaNUS0QOFn7TNhdtH4rOjPhVfV6ZVE7bAltdNl3xkU
-	 ti8T7xbrbHCTDcexotBe/zBJuKJ90lqvLN24bTAw=
+	b=i0zGPAVjPqqoobRaAfuVMA916kB+Zs/1RkiQYce2+UNjZNkKbXy1vx1x2q+i7vgP+
+	 z/JsDETXp6BXRQeoLgTReqOxc7Z31UQSrNprpLtL5JiogzQMIKRJcFdK6wjmrJuZuo
+	 XaiL/2GzW8qe+Lq0fI/ju7/z2xy4pHbYYFv0CiO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Robert Marko <robimarko@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 376/444] clk: qcom: gcc-ipq8074: fix broken freq table for nss_port6_tx_clk_src
-Date: Mon, 18 Aug 2025 14:46:42 +0200
-Message-ID: <20250818124502.988607929@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 377/444] cifs: reset iface weights when we cannot find a candidate
+Date: Mon, 18 Aug 2025 14:46:43 +0200
+Message-ID: <20250818124503.024581263@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,56 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit 077ec7bcec9a8987d2a133afb7e13011878c7576 upstream.
+commit 9d5eff7821f6d70f7d1b4d8a60680fba4de868a7 upstream.
 
-With the conversion done by commit e88f03230dc0 ("clk: qcom: gcc-ipq8074:
-rework nss_port5/6 clock to multiple conf") a Copy-Paste error was made
-for the nss_port6_tx_clk_src frequency table.
+We now do a weighted selection of server interfaces when allocating
+new channels. The weights are decided based on the speed advertised.
+The fulfilled weight for an interface is a counter that is used to
+track the interface selection. It should be reset back to zero once
+all interfaces fulfilling their weight.
 
-This was caused by the wrong setting of the parent in
-ftbl_nss_port6_tx_clk_src that was wrongly set to P_UNIPHY1_RX instead
-of P_UNIPHY2_TX.
+In cifs_chan_update_iface, this reset logic was missing. As a result
+when the server interface list changes, the client may not be able
+to find a new candidate for other channels after all interfaces have
+been fulfilled.
 
-This cause the UNIPHY2 port to malfunction when it needs to be scaled to
-higher clock. The malfunction was observed with the example scenario
-with an Aquantia 10G PHY connected and a speed higher than 1G (example
-2.5G)
-
-Fix the broken frequency table to restore original functionality.
-
-Cc: stable@vger.kernel.org
-Fixes: e88f03230dc0 ("clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Tested-by: Robert Marko <robimarko@gmail.com>
-Link: https://lore.kernel.org/r/20250522202600.4028-1-ansuelsmth@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: a6d8fb54a515 ("cifs: distribute channels across interfaces based on speed")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-ipq8074.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/client/sess.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index 7258ba5c0900..1329ea28d703 100644
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -1895,10 +1895,10 @@ static const struct freq_conf ftbl_nss_port6_tx_clk_src_125[] = {
- static const struct freq_multi_tbl ftbl_nss_port6_tx_clk_src[] = {
- 	FMS(19200000, P_XO, 1, 0, 0),
- 	FM(25000000, ftbl_nss_port6_tx_clk_src_25),
--	FMS(78125000, P_UNIPHY1_RX, 4, 0, 0),
-+	FMS(78125000, P_UNIPHY2_TX, 4, 0, 0),
- 	FM(125000000, ftbl_nss_port6_tx_clk_src_125),
--	FMS(156250000, P_UNIPHY1_RX, 2, 0, 0),
--	FMS(312500000, P_UNIPHY1_RX, 1, 0, 0),
-+	FMS(156250000, P_UNIPHY2_TX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY2_TX, 1, 0, 0),
- 	{ }
- };
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -360,6 +360,7 @@ cifs_chan_update_iface(struct cifs_ses *
+ 	struct cifs_server_iface *old_iface = NULL;
+ 	struct cifs_server_iface *last_iface = NULL;
+ 	struct sockaddr_storage ss;
++	int retry = 0;
  
--- 
-2.50.1
-
+ 	spin_lock(&ses->chan_lock);
+ 	chan_index = cifs_ses_get_chan_index(ses, server);
+@@ -388,6 +389,7 @@ cifs_chan_update_iface(struct cifs_ses *
+ 		return;
+ 	}
+ 
++try_again:
+ 	last_iface = list_last_entry(&ses->iface_list, struct cifs_server_iface,
+ 				     iface_head);
+ 	iface_min_speed = last_iface->speed;
+@@ -425,6 +427,13 @@ cifs_chan_update_iface(struct cifs_ses *
+ 	}
+ 
+ 	if (list_entry_is_head(iface, &ses->iface_list, iface_head)) {
++		list_for_each_entry(iface, &ses->iface_list, iface_head)
++			iface->weight_fulfilled = 0;
++
++		/* see if it can be satisfied in second attempt */
++		if (!retry++)
++			goto try_again;
++
+ 		iface = NULL;
+ 		cifs_dbg(FYI, "unable to find a suitable iface\n");
+ 	}
 
 
