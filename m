@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFD313C8E8;
-	Mon, 18 Aug 2025 13:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EBC335BA7;
+	Mon, 18 Aug 2025 13:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525042; cv=none; b=elRPt7tO4rXOYPcU9Z7yoIMWt0cSDMfB6p11QmolRCnTVqCtZ4ag3YPONe/vjCLXbE/OAdLuumsFWz7FjYB5OFMoTwAl8srW5a3PvmP8sPEsKoit3ObDThETBdYnuptKeLOhoCDeM75A6hie3BwVdooAUc9DmuZUNzLXPdgHM6c=
+	t=1755525045; cv=none; b=l5Ja2bspjcdvKsK/hlLEg6upOjxGOatzL85kVEW8foYwpQUNXqtJYt3fxcHj736HkBkFpWkA20E6XDYYf7809mnidONtA9S2BnHbbUz5W5RRQmGwX50aen+pOt+NoW7WjTr28cj07N7yBtv2YF2xihM9OGt6jPaYx9MWKzKRqFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525042; c=relaxed/simple;
-	bh=MqC7y4nyCwDtJpZup8VITGbEg4pgKezsAb3ylPD8GAE=;
+	s=arc-20240116; t=1755525045; c=relaxed/simple;
+	bh=OIi9tMV8SlqSnaBK7J9yKdJTgWFKOa42QhU7+cLXXTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lH9sMTQLLK25HspdKuHohk3sKTwDaimy/OeZTZDnBf49/P2g0DpxB2LL2KavMj1VK3ARWCKxJs/SVEfh85nGvfvGoBwyz14LdXADgNwYb8BWs2/Fv2YOpEnCAxMoWcB/yySAwVv2Vz3dyTsE6KnKVBqaZ2/DX7E+hLdZTIPWl88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAkAmkvO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOidArUatvGR30c2oQkylhMHSSgviljlA5oDbAeTvHjuRHnhqEVRlkFymIVVONXyhAL83iAAhATGbzgIxtf318b71jKuqY0c9h0LO+s8oo7SX8iLf1WXv7Gsn7cJ34/z3M8VVBBngSkaG82KgVGBJJ71DhaneYjqCBzpJnCXLr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFqnZB3M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAkAmkvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F52DC4CEEB;
-	Mon, 18 Aug 2025 13:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFqnZB3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84008C4CEEB;
+	Mon, 18 Aug 2025 13:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525041;
-	bh=MqC7y4nyCwDtJpZup8VITGbEg4pgKezsAb3ylPD8GAE=;
+	s=korg; t=1755525045;
+	bh=OIi9tMV8SlqSnaBK7J9yKdJTgWFKOa42QhU7+cLXXTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAkAmkvOelzBILFfIYqblO7SEy+jTjowogV0zpGA2iw36vsYuCwRRy7t9YuRCeHm5
-	 tg2z6c49RtRfp4cu7uroi1R7ebgk9JbDmHQVatiTDKI25nm23wvYcAPY7sp+attiOK
-	 EsUFtow0xQV8eu8nIshtoy4Y+lNDMdPzw1L4BPxg=
+	b=FFqnZB3Mri0cwizChbhrSjLWU64fQSq9o4eiYNQ84rgyOEd/FvG5DYP1VCss1Ac0F
+	 P24qYJach+nFbp8d/5cL2ssyw9BsyhLuyKE1ERkc+/FwTN9mJJd4lhCHz8Tur7gV2y
+	 iKKc0hEB8wBApfXHpFwkbHJpJLTJq0mlQ4t4ZgN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Jameson Thies <jthies@google.com>,
+	Benson Leung <bleung@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 141/570] gpio: loongson-64bit: Extend GPIO irq support
-Date: Mon, 18 Aug 2025 14:42:08 +0200
-Message-ID: <20250818124511.258156557@linuxfoundation.org>
+Subject: [PATCH 6.16 142/570] usb: typec: ucsi: Add poll_cci operation to cros_ec_ucsi
+Date: Mon, 18 Aug 2025 14:42:09 +0200
+Message-ID: <20250818124511.294586838@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,82 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Zhou <zhoubinbin@loongson.cn>
+From: Jameson Thies <jthies@google.com>
 
-[ Upstream commit 27cb8f702eb789f97f7a8bd5a91d76c65a937b2f ]
+[ Upstream commit 300386d117a98961fc1d612d1f1a61997d731b8a ]
 
-Add the interrupt enable register offset (inten_offset) so that GPIO
-interrupts can be enabled normally on more models.
+cros_ec_ucsi fails to allocate a UCSI instance in it's probe function
+because it does not define all operations checked by ucsi_create.
+Update cros_ec_ucsi operations to use the same function for read_cci
+and poll_cci.
 
-According to the latest interface specifications, the definition of GPIO
-interrupts in ACPI is similar to that in FDT. The GPIO interrupts are
-listed one by one according to the GPIO number, and the corresponding
-interrupt number can be obtained directly through the GPIO number
-specified by the consumer.
-
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://lore.kernel.org/r/20250714064542.2276247-1-zhoubinbin@loongson.cn
-[Bartosz: tweaked the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Jameson Thies <jthies@google.com>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://lore.kernel.org/r/20250711202033.2201305-1-jthies@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-loongson-64bit.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/typec/ucsi/cros_ec_ucsi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-loongson-64bit.c b/drivers/gpio/gpio-loongson-64bit.c
-index 70a01c5b8ad1..add09971d26a 100644
---- a/drivers/gpio/gpio-loongson-64bit.c
-+++ b/drivers/gpio/gpio-loongson-64bit.c
-@@ -222,6 +222,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data0 = {
- 	.conf_offset = 0x0,
- 	.in_offset = 0xc,
- 	.out_offset = 0x8,
-+	.inten_offset = 0x14,
- };
- 
- static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data1 = {
-@@ -230,6 +231,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data1 = {
- 	.conf_offset = 0x0,
- 	.in_offset = 0x20,
- 	.out_offset = 0x10,
-+	.inten_offset = 0x30,
- };
- 
- static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data2 = {
-@@ -246,6 +248,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls3a5000_data = {
- 	.conf_offset = 0x0,
- 	.in_offset = 0xc,
- 	.out_offset = 0x8,
-+	.inten_offset = 0x14,
- };
- 
- static const struct loongson_gpio_chip_data loongson_gpio_ls7a_data = {
-@@ -254,6 +257,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls7a_data = {
- 	.conf_offset = 0x800,
- 	.in_offset = 0xa00,
- 	.out_offset = 0x900,
-+	.inten_offset = 0xb00,
- };
- 
- /* LS7A2000 chipset GPIO */
-@@ -263,6 +267,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls7a2000_data0 = {
- 	.conf_offset = 0x800,
- 	.in_offset = 0xa00,
- 	.out_offset = 0x900,
-+	.inten_offset = 0xb00,
- };
- 
- /* LS7A2000 ACPI GPIO */
-@@ -281,6 +286,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls3a6000_data = {
- 	.conf_offset = 0x0,
- 	.in_offset = 0xc,
- 	.out_offset = 0x8,
-+	.inten_offset = 0x14,
- };
- 
- static const struct of_device_id loongson_gpio_of_match[] = {
+diff --git a/drivers/usb/typec/ucsi/cros_ec_ucsi.c b/drivers/usb/typec/ucsi/cros_ec_ucsi.c
+index 4ec1c6d22310..eed2a7d0ebc6 100644
+--- a/drivers/usb/typec/ucsi/cros_ec_ucsi.c
++++ b/drivers/usb/typec/ucsi/cros_ec_ucsi.c
+@@ -137,6 +137,7 @@ static int cros_ucsi_sync_control(struct ucsi *ucsi, u64 cmd, u32 *cci,
+ static const struct ucsi_operations cros_ucsi_ops = {
+ 	.read_version = cros_ucsi_read_version,
+ 	.read_cci = cros_ucsi_read_cci,
++	.poll_cci = cros_ucsi_read_cci,
+ 	.read_message_in = cros_ucsi_read_message_in,
+ 	.async_control = cros_ucsi_async_control,
+ 	.sync_control = cros_ucsi_sync_control,
 -- 
 2.39.5
 
