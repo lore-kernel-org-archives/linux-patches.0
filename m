@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D311C31E0F8;
-	Mon, 18 Aug 2025 13:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175AF2882DC;
+	Mon, 18 Aug 2025 13:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524162; cv=none; b=YrH+ifRmhSOG5/ekR2c7Qkeo/Y7vQaLk2JuEhIUP/PcY6gwC45iWCi/X6qC2xtYtjDJgn7H3atsG4gifVWuG8iFzfD5kFK0tHawRKtwJC+4BdIYRfD82L57Y3ZsLD0n0/nbfYfh6DjHg4gxIMIVvGVHw/x1YsDB+x24boQ3oSlA=
+	t=1755524166; cv=none; b=HK1uAvElKfL/CpJJfF2uwoy5M6MyK0f9scF1i+slb8LoV8d0c4neZnh1RwG1hIMCldvEpyIEFoH/rv/GRV3pjny+UaFFVm/0nH9mdjGvqSDhawvbixPd3vGMlYupYweZuDZ0mS2XpV9RGZQuwPlul37ThLyQ53cidTzEk7HnFsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524162; c=relaxed/simple;
-	bh=JR6t6XPvi/8GXahGzuFgGSxAJtlV0viAxSQUBeeVBKY=;
+	s=arc-20240116; t=1755524166; c=relaxed/simple;
+	bh=O0MlNt/hO9cX41fGURkVHrJfrIn59EOzsj6inaUNNRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rke6X+rye409b2AEvQ5p1nfLK+3OVTBL38ZDJMtfPYlFGNY7+yJZjr4mzNNeE1FL1LpUcREkqR3D3cexlSS4NtsA909WU4kPJInKVh66ObGjEV0u4FQBDlZ7KuZwB2gssH0MN+UIaXgjtrIreGZWtUGiQLWPFFzS/td12FaLyYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQJmlOiU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FInBlWyXhaemkMM/abhM4PPruttW8CgDHRDSdv5kXacNMXzUU30KQ/LYHxwdDmncSV1PHjo4QOA5p3bRi77M7UNd8LB+2/sevxHj1JwPM5eidcNEDOxzt3/CtKyL10UYWRssJgDWJHmnGWHP/3CgiBQ3WJ9s/WHzKDGu/pLlQhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cNvt7Vg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQJmlOiU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B276AC4CEF1;
-	Mon, 18 Aug 2025 13:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cNvt7Vg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84151C4CEEB;
+	Mon, 18 Aug 2025 13:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524162;
-	bh=JR6t6XPvi/8GXahGzuFgGSxAJtlV0viAxSQUBeeVBKY=;
+	s=korg; t=1755524165;
+	bh=O0MlNt/hO9cX41fGURkVHrJfrIn59EOzsj6inaUNNRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQJmlOiUSxQpwZwPOSiCgJ3qS11579/2DrbkMYOLFiqqAwXKPoOXhvlN39g1kFEzi
-	 hn9/ZKMwoRQXU891XH1GhxJBS/nc/abhWjaHJ0v+Pxm3aPBa2SqLbZcBU3EtqZNDIi
-	 MUcnY2K1DssmWUXJVDF3CZIwegg01td4xDmrt2ow=
+	b=0cNvt7Vgx6h3wwxXlE/dTb5Kqflgu2R22XRTh8hZWVwk01uEd4bey/+fKb63KXW/q
+	 9X63TP88xm7YB43cYXFKEs1FP1jTMuwkiz/7NiCAy/bwxsT8meDv4qppGV1wo/hhwz
+	 8toA3OGPFU2OaxuqOBJH+y6TFS6jbfvYPYXsXiwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 386/515] clk: renesas: rzg2l: Postpone updating priv->clks[]
-Date: Mon, 18 Aug 2025 14:46:12 +0200
-Message-ID: <20250818124513.275196881@linuxfoundation.org>
+Subject: [PATCH 6.15 387/515] soundwire: amd: serialize amd manager resume sequence during pm_prepare
+Date: Mon, 18 Aug 2025 14:46:13 +0200
+Message-ID: <20250818124513.312040601@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,51 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 2f96afdffad4ef74e3c511207058c41c54a2d014 ]
+[ Upstream commit 03837341790039d6f1cbf7a1ae7dfa2cb77ef0a4 ]
 
-Since the sibling data is filled after the priv->clks[] array entry is
-populated, the first clock that is probed and has a sibling will
-temporarily behave as its own sibling until its actual sibling is
-populated. To avoid any issues, postpone updating priv->clks[] until after
-the sibling is populated.
+During pm_prepare callback, pm_request_resume() delays SoundWire manager D0
+entry sequence. Synchronize runtime resume sequence for amd_manager
+instance prior to invoking child devices resume sequence for both the amd
+power modes(ClockStop Mode and Power off mode).
+Change the power_mode_mask check and use pm_runtime_resume() in
+amd_pm_prepare() callback.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250514090415.4098534-2-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://lore.kernel.org/r/20250530054447.1645807-3-Vijendar.Mukunda@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/soundwire/amd_manager.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index b91dfbfb01e3..0dd10c3e2919 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -1388,10 +1388,6 @@ rzg2l_cpg_register_mod_clk(const struct rzg2l_mod_clk *mod,
- 		goto fail;
- 	}
- 
--	clk = clock->hw.clk;
--	dev_dbg(dev, "Module clock %pC at %lu Hz\n", clk, clk_get_rate(clk));
--	priv->clks[id] = clk;
--
- 	if (mod->is_coupled) {
- 		struct mstp_clock *sibling;
- 
-@@ -1403,6 +1399,10 @@ rzg2l_cpg_register_mod_clk(const struct rzg2l_mod_clk *mod,
+diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
+index 7a671a786197..3b335d6eaa94 100644
+--- a/drivers/soundwire/amd_manager.c
++++ b/drivers/soundwire/amd_manager.c
+@@ -1178,10 +1178,10 @@ static int __maybe_unused amd_pm_prepare(struct device *dev)
+ 	 * device is not in runtime suspend state, observed that device alerts are missing
+ 	 * without pm_prepare on AMD platforms in clockstop mode0.
+ 	 */
+-	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
+-		ret = pm_request_resume(dev);
++	if (amd_manager->power_mode_mask) {
++		ret = pm_runtime_resume(dev);
+ 		if (ret < 0) {
+-			dev_err(bus->dev, "pm_request_resume failed: %d\n", ret);
++			dev_err(bus->dev, "pm_runtime_resume failed: %d\n", ret);
+ 			return 0;
  		}
  	}
- 
-+	clk = clock->hw.clk;
-+	dev_dbg(dev, "Module clock %pC at %lu Hz\n", clk, clk_get_rate(clk));
-+	priv->clks[id] = clk;
-+
- 	return;
- 
- fail:
 -- 
 2.39.5
 
