@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0D3321F43;
-	Mon, 18 Aug 2025 13:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8729722AE7A;
+	Mon, 18 Aug 2025 13:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524742; cv=none; b=A+AkNlx6ydaTU3/JzdpoyV6zSLTRqN9h6ew5oWF95mU2bzPJM+fmc7zpwSOlqNciXF6Btdt9TYmqLCtt7dc9cBTbyJisod7ilIi7Qx8+KV/b6dn+6B2M/bd8Tl8SPAqIsAbG9g2d32o5r22zqZOWi93v/porQghVV3AvUjgvvJ4=
+	t=1755524745; cv=none; b=jnUPRswwHwnDeBY7VM85h4Bwk3v12DcFNwgrwyLa50RHUZPHw9vGhhkKtEMIg3LErzT8zrN/GIS15mmp0K56ABl3VddWmYH3X9dwrJONwDB4Mpd8JFz2Y8Rt5IqNcV4hyUq6NUYhERkgAmqPapQJ3jka5/Zl4P3eMyBTH2QLi2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524742; c=relaxed/simple;
-	bh=xv3I08wWxP2VNEENmVnkyAgSOO6fhrEXO38hyk2padw=;
+	s=arc-20240116; t=1755524745; c=relaxed/simple;
+	bh=I5HNoZ27SVtyZB9FQ1tmtqtvEKE3Nf5gG5cPpfhqBII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/FXcxXko/7Z0gE2Sv0CoJqJGiOjvv2I0VfhtJCikYwvNNprKcD50ZnxEmAUHIIQ4lWDl5A/HUvTqyHbKTlaMrq/OKvKW9bectY3ypvo+Sw6m+7LccJTXTzVpa3JT4e+13tPOH+pKN0Y3883zv8+a5AxeiBGs7CI12txTsxmSjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOtCLPNZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGbNU7cnsWoM2V9CtxiON/N9zGXoWb/j1j/NomWPlEsMFCiOtW+f/CTtMrBo9NU8EwzJIoJQSw/x1JRlCO7/bOTsMLJNVKkirGuGCJcfxq4vK3TLnPW4ryKpIjVILk8yb2X22IhhNh/BPweFM/FS3PqkxG6yyz1P8U8F2lMFfDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hu3xDs5m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOtCLPNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E063C4CEEB;
-	Mon, 18 Aug 2025 13:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hu3xDs5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF134C4CEEB;
+	Mon, 18 Aug 2025 13:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524742;
-	bh=xv3I08wWxP2VNEENmVnkyAgSOO6fhrEXO38hyk2padw=;
+	s=korg; t=1755524745;
+	bh=I5HNoZ27SVtyZB9FQ1tmtqtvEKE3Nf5gG5cPpfhqBII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dOtCLPNZbNUSWfYHI4S56QDgtacw4/L0wGM8SKqOIH++5GKy8OIcKfYUj1b7DCTUv
-	 Ef7vv3r/TIH7ris9x9T35EDL7ySd3J4INLgfgiLthWHwxTuhz/1r85VFUMn7d3p8ey
-	 l6OE/Qi8KVTDJYIpdd465DX82MuAHFkbgu7/H7os=
+	b=Hu3xDs5mTtZDsLCMeUBnEuGMDpgwEcY/3HowGwDx5tJxOkJ3g2gZVfwtMbYZ911a4
+	 F22Gi0Zkuouzc21+1lBNQU1AjpjxRzunv+JU9wfeKIpWaIVMvGFErBqur8g+XagQ5/
+	 NrOQBfHh65X3Ga2bm4hbG+kRpUBxKa/b9QHOw5PA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.16 048/570] fs: Prevent file descriptor table allocations exceeding INT_MAX
-Date: Mon, 18 Aug 2025 14:40:35 +0200
-Message-ID: <20250818124507.664671934@linuxfoundation.org>
+	Yevhen Kondrashyn <e.kondrashyn@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.16 049/570] Documentation: ACPI: Fix parent device references
+Date: Mon, 18 Aug 2025 14:40:36 +0200
+Message-ID: <20250818124507.702328644@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,104 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 04a2c4b4511d186b0fce685da21085a5d4acd370 upstream.
+commit e65cb011349e653ded541dddd6469c2ca813edcf upstream.
 
-When sysctl_nr_open is set to a very high value (for example, 1073741816
-as set by systemd), processes attempting to use file descriptors near
-the limit can trigger massive memory allocation attempts that exceed
-INT_MAX, resulting in a WARNING in mm/slub.c:
+The _CRS resources in many cases want to have ResourceSource field
+to be a type of ACPI String. This means that to compile properly
+we need to enclosure the name path into double quotes. This will
+in practice defer the interpretation to a run-time stage, However,
+this may be interpreted differently on different OSes and ACPI
+interpreter implementations. In particular ACPICA might not correctly
+recognize the leading '^' (caret) character and will not resolve
+the relative name path properly. On top of that, this piece may be
+used in SSDTs which are loaded after the DSDT and on itself may also
+not resolve relative name paths outside of their own scopes.
+With this all said, fix documentation to use fully-qualified name
+paths always to avoid any misinterpretations, which is proven to
+work.
 
-  WARNING: CPU: 0 PID: 44 at mm/slub.c:5027 __kvmalloc_node_noprof+0x21a/0x288
-
-This happens because kvmalloc_array() and kvmalloc() check if the
-requested size exceeds INT_MAX and emit a warning when the allocation is
-not flagged with __GFP_NOWARN.
-
-Specifically, when nr_open is set to 1073741816 (0x3ffffff8) and a
-process calls dup2(oldfd, 1073741880), the kernel attempts to allocate:
-- File descriptor array: 1073741880 * 8 bytes = 8,589,935,040 bytes
-- Multiple bitmaps: ~400MB
-- Total allocation size: > 8GB (exceeding INT_MAX = 2,147,483,647)
-
-Reproducer:
-1. Set /proc/sys/fs/nr_open to 1073741816:
-   # echo 1073741816 > /proc/sys/fs/nr_open
-
-2. Run a program that uses a high file descriptor:
-   #include <unistd.h>
-   #include <sys/resource.h>
-
-   int main() {
-       struct rlimit rlim = {1073741824, 1073741824};
-       setrlimit(RLIMIT_NOFILE, &rlim);
-       dup2(2, 1073741880);  // Triggers the warning
-       return 0;
-   }
-
-3. Observe WARNING in dmesg at mm/slub.c:5027
-
-systemd commit a8b627a introduced automatic bumping of fs.nr_open to the
-maximum possible value. The rationale was that systems with memory
-control groups (memcg) no longer need separate file descriptor limits
-since memory is properly accounted. However, this change overlooked
-that:
-
-1. The kernel's allocation functions still enforce INT_MAX as a maximum
-   size regardless of memcg accounting
-2. Programs and tests that legitimately test file descriptor limits can
-   inadvertently trigger massive allocations
-3. The resulting allocations (>8GB) are impractical and will always fail
-
-systemd's algorithm starts with INT_MAX and keeps halving the value
-until the kernel accepts it. On most systems, this results in nr_open
-being set to 1073741816 (0x3ffffff8), which is just under 1GB of file
-descriptors.
-
-While processes rarely use file descriptors near this limit in normal
-operation, certain selftests (like
-tools/testing/selftests/core/unshare_test.c) and programs that test file
-descriptor limits can trigger this issue.
-
-Fix this by adding a check in alloc_fdtable() to ensure the requested
-allocation size does not exceed INT_MAX. This causes the operation to
-fail with -EMFILE instead of triggering a kernel warning and avoids the
-impractical >8GB memory allocation request.
-
-Fixes: 9cfe015aa424 ("get rid of NR_OPEN and introduce a sysctl_nr_open")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/20250629074021.1038845-1-sashal@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 8eb5c87a92c0 ("i2c: add ACPI support for I2C mux ports")
+Reported-by: Yevhen Kondrashyn <e.kondrashyn@gmail.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20250710170225.961303-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Documentation/firmware-guide/acpi/i2c-muxes.rst |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -197,6 +197,21 @@ static struct fdtable *alloc_fdtable(uns
- 			return ERR_PTR(-EMFILE);
- 	}
+--- a/Documentation/firmware-guide/acpi/i2c-muxes.rst
++++ b/Documentation/firmware-guide/acpi/i2c-muxes.rst
+@@ -14,7 +14,7 @@ Consider this topology::
+     |      |   | 0x70 |--CH01--> i2c client B (0x50)
+     +------+   +------+
  
-+	/*
-+	 * Check if the allocation size would exceed INT_MAX. kvmalloc_array()
-+	 * and kvmalloc() will warn if the allocation size is greater than
-+	 * INT_MAX, as filp_cachep objects are not __GFP_NOWARN.
-+	 *
-+	 * This can happen when sysctl_nr_open is set to a very high value and
-+	 * a process tries to use a file descriptor near that limit. For example,
-+	 * if sysctl_nr_open is set to 1073741816 (0x3ffffff8) - which is what
-+	 * systemd typically sets it to - then trying to use a file descriptor
-+	 * close to that value will require allocating a file descriptor table
-+	 * that exceeds 8GB in size.
-+	 */
-+	if (unlikely(nr > INT_MAX / sizeof(struct file *)))
-+		return ERR_PTR(-EMFILE);
-+
- 	fdt = kmalloc(sizeof(struct fdtable), GFP_KERNEL_ACCOUNT);
- 	if (!fdt)
- 		goto out;
+-which corresponds to the following ASL::
++which corresponds to the following ASL (in the scope of \_SB)::
+ 
+     Device (SMB1)
+     {
+@@ -24,7 +24,7 @@ which corresponds to the following ASL::
+             Name (_HID, ...)
+             Name (_CRS, ResourceTemplate () {
+                 I2cSerialBus (0x70, ControllerInitiated, I2C_SPEED,
+-                            AddressingMode7Bit, "^SMB1", 0x00,
++                            AddressingMode7Bit, "\\_SB.SMB1", 0x00,
+                             ResourceConsumer,,)
+             }
+ 
+@@ -37,7 +37,7 @@ which corresponds to the following ASL::
+                     Name (_HID, ...)
+                     Name (_CRS, ResourceTemplate () {
+                         I2cSerialBus (0x50, ControllerInitiated, I2C_SPEED,
+-                                    AddressingMode7Bit, "^CH00", 0x00,
++                                    AddressingMode7Bit, "\\_SB.SMB1.CH00", 0x00,
+                                     ResourceConsumer,,)
+                     }
+                 }
+@@ -52,7 +52,7 @@ which corresponds to the following ASL::
+                     Name (_HID, ...)
+                     Name (_CRS, ResourceTemplate () {
+                         I2cSerialBus (0x50, ControllerInitiated, I2C_SPEED,
+-                                    AddressingMode7Bit, "^CH01", 0x00,
++                                    AddressingMode7Bit, "\\_SB.SMB1.CH01", 0x00,
+                                     ResourceConsumer,,)
+                     }
+                 }
 
 
