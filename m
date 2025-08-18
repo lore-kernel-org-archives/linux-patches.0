@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F861E3DCD;
-	Mon, 18 Aug 2025 13:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4A431AF14;
+	Mon, 18 Aug 2025 13:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522725; cv=none; b=RhYdr9nXtmLX2KFohra6KaxzPxCeP7L7Eel+I7On0LdcIyz+JUo7IKazCOStwFkGe7iDyUtcq62EPV5XiGg1Uu0YpvDisbIz0dhCRyz9obBrzqbteZ/MIKZNJkjDRBMPw1o3woX2m/OtuoU1IQQ6YIpEwgOfBsdvedKVMjhWgY8=
+	t=1755522729; cv=none; b=mdWCrJw953rf5md9Rg5LGOAorDR9IMrc7QfwTZXmRwyJJ3tcYALp7RTq5Uth/r31OXsIkUkVW7LmrB3cMcND1gpae4UH+7VP29QcZsFjxkKvcve4u5k2vrWgygN2a4/SR6tlp6BqHiftxfLKxxNH/DnwVMZNhNz42+4vxfILHw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522725; c=relaxed/simple;
-	bh=nSQfhENvk2JHtBLaoiXsan8eqlHeet8c6MBjd11z9yw=;
+	s=arc-20240116; t=1755522729; c=relaxed/simple;
+	bh=As/38ufJaXlmve227v+rwIzZ7ZcrtFy5m6NSdazVP9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXVXgHiZYMPjFZDE8xvDrf3PYqc1IKk2aKio2DQZ9xhwlXlb0z4Jmvd9HZMGFMmpi3WwSYvGKNOAdbu9S9b6QxhPXGBq1g2j5WdTVOtf8B7eu0g8dBTxiZ7+uY1kW/A+/CljbSrMtYJ2+c25Sa7PEAmkv9QjwCfxmSgo3PjUp4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9Mx8lz0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nidi+CdcggU9Eu/d5sjyPkUPzQUPn8mT4HwKFtK97lDTe5Byal8l5To8B1M1/0gclIxOhdfIZstJLZC45yW1duQf38rdBWXd0DXmVk1KZpLu/MguXsbAVivl+AuKqfSI9Tg87bMCO+XGUneXp10Ts7GMMcIAmtFdK1cSwJXAM3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kngen8kI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9Mx8lz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10593C4CEEB;
-	Mon, 18 Aug 2025 13:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kngen8kI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D71FC4CEEB;
+	Mon, 18 Aug 2025 13:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522725;
-	bh=nSQfhENvk2JHtBLaoiXsan8eqlHeet8c6MBjd11z9yw=;
+	s=korg; t=1755522728;
+	bh=As/38ufJaXlmve227v+rwIzZ7ZcrtFy5m6NSdazVP9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T9Mx8lz0kSlAK3I+KmYas+8Rs9DJhv33p+uY115iw0YORwHW0ZRBcCAQMg00JT9Rf
-	 liqmdyjQxyG4WFGj2fOFtRfeE8NgjywMNdttKV1wlP7zoEXwyLv89LgO1hL+D4kShr
-	 hiC41mlyenr9gd25ntC87pGxxdbu++fZiQDfa8uY=
+	b=kngen8kIT2XacE7uT4Y9pUIjLtCtYjkZxGOfOA2Poo1hApLhdUNpi0xLqRZB1jJeN
+	 uS4L8f4xE1UT4PvplvHWUvEJQHybO18AVfgwZLWcC2RiMpAgRZNR1KdsGtkBam2PuH
+	 HfZqaJi7SBR9UEPhQcpcf7kJUv9GCOrUUZqrtGjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
 	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 395/444] btrfs: dont ignore inode missing when replaying log tree
-Date: Mon, 18 Aug 2025 14:47:01 +0200
-Message-ID: <20250818124503.728841447@linuxfoundation.org>
+Subject: [PATCH 6.12 404/444] btrfs: fix iteration bug in __qgroup_excl_accounting()
+Date: Mon, 18 Aug 2025 14:47:10 +0200
+Message-ID: <20250818124504.079423166@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,78 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Boris Burkov <boris@bur.io>
 
-commit 7ebf381a69421a88265d3c49cd0f007ba7336c9d upstream.
+commit 7b632596188e1973c6b3ac1c9f8252f735e1039f upstream.
 
-During log replay, at add_inode_ref(), we return -ENOENT if our current
-inode isn't found on the subvolume tree or if a parent directory isn't
-found. The error comes from btrfs_iget_logging() <- btrfs_iget() <-
-btrfs_read_locked_inode().
+__qgroup_excl_accounting() uses the qgroup iterator machinery to
+update the account of one qgroups usage for all its parent hierarchy,
+when we either add or remove a relation and have only exclusive usage.
 
-The single caller of add_inode_ref(), replay_one_buffer(), ignores an
--ENOENT error because it expects that error to mean only that a parent
-directory wasn't found and that is ok.
+However, there is a small bug there: we loop with an extra iteration
+temporary qgroup called `cur` but never actually refer to that in the
+body of the loop. As a result, we redundantly account the same usage to
+the first qgroup in the list.
 
-Before commit 5f61b961599a ("btrfs: fix inode lookup error handling during
-log replay") we were converting any error when getting a parent directory
-to -ENOENT and any error when getting the current inode to -EIO, so our
-caller would fail log replay in case we can't find the current inode.
-After that commit however in case the current inode is not found we return
--ENOENT to the caller and therefore it ignores the critical fact that the
-current inode was not found in the subvolume tree.
+This can be reproduced in the following way:
 
-Fix this by converting -ENOENT to 0 when we don't find a parent directory,
-returning -ENOENT when we don't find the current inode and making the
-caller, replay_one_buffer(), not ignore -ENOENT anymore.
+  mkfs.btrfs -f -O squota <dev>
+  mount <dev> <mnt>
+  btrfs subvol create <mnt>/sv
+  dd if=/dev/zero of=<mnt>/sv/f bs=1M count=1
+  sync
+  btrfs qgroup create 1/100 <mnt>
+  btrfs qgroup create 2/200 <mnt>
+  btrfs qgroup assign 1/100 2/200 <mnt>
+  btrfs qgroup assign 0/256 1/100 <mnt>
+  btrfs qgroup show <mnt>
 
-Fixes: 5f61b961599a ("btrfs: fix inode lookup error handling during log replay")
-CC: stable@vger.kernel.org # 6.16
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+and the broken result is (note the 2MiB on 1/100 and 0Mib on 2/100):
+
+  Qgroupid    Referenced    Exclusive   Path
+  --------    ----------    ---------   ----
+  0/5           16.00KiB     16.00KiB   <toplevel>
+  0/256          1.02MiB      1.02MiB   sv
+
+  Qgroupid    Referenced    Exclusive   Path
+  --------    ----------    ---------   ----
+  0/5           16.00KiB     16.00KiB   <toplevel>
+  0/256          1.02MiB      1.02MiB   sv
+  1/100          2.03MiB      2.03MiB   2/100<1 member qgroup>
+  2/100            0.00B        0.00B   <0 member qgroups>
+
+With this fix, which simply re-uses `qgroup` as the iteration variable,
+we see the expected result:
+
+  Qgroupid    Referenced    Exclusive   Path
+  --------    ----------    ---------   ----
+  0/5           16.00KiB     16.00KiB   <toplevel>
+  0/256          1.02MiB      1.02MiB   sv
+
+  Qgroupid    Referenced    Exclusive   Path
+  --------    ----------    ---------   ----
+  0/5           16.00KiB     16.00KiB   <toplevel>
+  0/256          1.02MiB      1.02MiB   sv
+  1/100          1.02MiB      1.02MiB   2/100<1 member qgroup>
+  2/100          1.02MiB      1.02MiB   <0 member qgroups>
+
+The existing fstests did not exercise two layer inheritance so this bug
+was missed. I intend to add that testing there, as well.
+
+Fixes: a0bdc04b0732 ("btrfs: qgroup: use qgroup_iterator in __qgroup_excl_accounting()")
+CC: stable@vger.kernel.org # 6.12+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/btrfs/qgroup.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -1396,6 +1396,8 @@ static noinline int add_inode_ref(struct
- 	dir = btrfs_iget_logging(parent_objectid, root);
- 	if (IS_ERR(dir)) {
- 		ret = PTR_ERR(dir);
-+		if (ret == -ENOENT)
-+			ret = 0;
- 		dir = NULL;
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1492,7 +1492,6 @@ static int __qgroup_excl_accounting(stru
+ 				    struct btrfs_qgroup *src, int sign)
+ {
+ 	struct btrfs_qgroup *qgroup;
+-	struct btrfs_qgroup *cur;
+ 	LIST_HEAD(qgroup_list);
+ 	u64 num_bytes = src->excl;
+ 	int ret = 0;
+@@ -1502,7 +1501,7 @@ static int __qgroup_excl_accounting(stru
  		goto out;
- 	}
-@@ -1420,6 +1422,15 @@ static noinline int add_inode_ref(struct
- 				if (IS_ERR(dir)) {
- 					ret = PTR_ERR(dir);
- 					dir = NULL;
-+					/*
-+					 * A new parent dir may have not been
-+					 * logged and not exist in the subvolume
-+					 * tree, see the comment above before
-+					 * the loop when getting the first
-+					 * parent dir.
-+					 */
-+					if (ret == -ENOENT)
-+						ret = 0;
- 					goto out;
- 				}
- 			}
-@@ -2532,9 +2543,8 @@ static int replay_one_buffer(struct btrf
- 			   key.type == BTRFS_INODE_EXTREF_KEY) {
- 			ret = add_inode_ref(wc->trans, root, log, path,
- 					    eb, i, &key);
--			if (ret && ret != -ENOENT)
-+			if (ret)
- 				break;
--			ret = 0;
- 		} else if (key.type == BTRFS_EXTENT_DATA_KEY) {
- 			ret = replay_one_extent(wc->trans, root, path,
- 						eb, i, &key);
+ 
+ 	qgroup_iterator_add(&qgroup_list, qgroup);
+-	list_for_each_entry(cur, &qgroup_list, iterator) {
++	list_for_each_entry(qgroup, &qgroup_list, iterator) {
+ 		struct btrfs_qgroup_list *glist;
+ 
+ 		qgroup->rfer += sign * num_bytes;
 
 
