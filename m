@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12973219A7E;
-	Mon, 18 Aug 2025 13:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8E5219A7E;
+	Mon, 18 Aug 2025 13:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524116; cv=none; b=hlEuG8FE+1zM5Wt5CeHToTIt+nEY+IQr2qWlZfbFOuo4SbzjU1oYD9H5D7qa7naVrdKn3vZInWswuByZSC4tZ9ATWarpo/N9PgBYnui8jkXouucIVTc3OzsPAS3VXbFoTLdpDgtP3BrRsLRJRXTl+rNviUTQon47/VNfPMZSPvc=
+	t=1755524119; cv=none; b=qxXRMzanewdXxecQM3pVHpRH5uCocSYpyCqV9nKjVCBWXgSJyU0fSnTLDWGVJIP+/C2MKYhdRMRf1KaZDwuLgP+ovzPhUuFJpHQjZzFoOJaaLxEX+WmEYiyPccF7xX+8hZG+JDAHRBBTf9bjzUZGp5zmQ9NqsdGo5HW9vv5ZUAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524116; c=relaxed/simple;
-	bh=Nq/nYQcXg8MuyzJpalYDsCBYT3FtbnGYl54j9m/z92s=;
+	s=arc-20240116; t=1755524119; c=relaxed/simple;
+	bh=ynsWwtNCSodI8gv01lME90OJc90A2o94THvQ1T9xK9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oq762/8v0+CxDx7YEFsPjE6ixKUETZZy4XDrv7LbPU+ojado6dsvU3zlWndOlA29nIvAirvhtjR8oXR+AcIR0qja1pcATqBJYq7muwy3gAsfXjlbA4xkLx2u55zSEJCj6Mcsv+YtDnLciQ+p7WJBL+NAwYPOQykXNkGR63MKRis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ac0Y4Hmb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F+Jzczv5yML21GpGwSF6yWw1Vnp4AwfswQCFK4o3Uz1ExYdf1K2GKLj3vzcQA7QgBgrDc/otSi4nJIijKUWrjNhSAup2F8rIt+m97rgiJsJoxf2jqNAxtAF4g0F/u8r12mKySaVhPuKOmDL6AfaWxRorpBd+TVymya69YKQP89E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oq2MMLPC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ac0Y4Hmb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87330C4CEEB;
-	Mon, 18 Aug 2025 13:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oq2MMLPC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C7FC113D0;
+	Mon, 18 Aug 2025 13:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524115;
-	bh=Nq/nYQcXg8MuyzJpalYDsCBYT3FtbnGYl54j9m/z92s=;
+	s=korg; t=1755524118;
+	bh=ynsWwtNCSodI8gv01lME90OJc90A2o94THvQ1T9xK9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ac0Y4Hmb93nd6YOLbSUCj1Db0olpdgqUA7+YWvSBdZ+6cKgMfLNFDKMyrU5yaks5K
-	 BVz0iGRmDj4w9ZncaWXlr3J5RmPeGUFyetp4QWSNTVj8npcTmJPcpKFjv/WdY6oOom
-	 eTdqOg6ADl+KMEFQ7N9MlV2wi06PFE5OgmC0n9pM=
+	b=Oq2MMLPCGL7mA3OI7/nEDa2HD1rWx6vs6RHV3Fo8AAX+lfwWXYvyy9hr9QxrI9ClE
+	 ZK3ca9DyHceBjAmntxMS/2XejvHdPa7OMlwZ0q5/dHHwhk3ChrbBuQznjZMbuV3R22
+	 K1RBH4wTKPqsJeIN7b6aDKigjpBaSsH1rOxUp8Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheick Traore <cheick.traore@foss.st.com>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 373/515] pinctrl: stm32: Manage irq affinity settings
-Date: Mon, 18 Aug 2025 14:45:59 +0200
-Message-ID: <20250818124512.775658534@linuxfoundation.org>
+Subject: [PATCH 6.15 374/515] media: raspberrypi: cfe: Fix min_reqbufs_allocation
+Date: Mon, 18 Aug 2025 14:46:00 +0200
+Message-ID: <20250818124512.813323883@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,37 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheick Traore <cheick.traore@foss.st.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 4c5cc2f65386e22166ce006efe515c667aa075e4 ]
+[ Upstream commit 57b5a302b5d529db96ddc52fbccec005092ebb3d ]
 
-Trying to set the affinity of the interrupts associated to stm32
-pinctrl results in a write error.
+The driver checks if "vq->max_num_buffers + *nbuffers < 3", but
+vq->max_num_buffers is (by default) 32, so the check is never true. Nor
+does the check make sense.
 
-Fill struct irq_chip::irq_set_affinity to use the default helper
-function.
+The original code in the BSP kernel was "vq->num_buffers + *nbuffers <
+3", but got mangled along the way to upstream. The intention was to make
+sure that at least 3 buffers are allocated.
 
-Signed-off-by: Cheick Traore <cheick.traore@foss.st.com>
-Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Link: https://lore.kernel.org/20250610143042.295376-3-antonio.borneo@foss.st.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fix this by removing the bad lines and setting q->min_reqbufs_allocation
+to three.
+
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/raspberrypi/rp1-cfe/cfe.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index cc0b4d1d7cff..ba9dbb21b497 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -408,6 +408,7 @@ static struct irq_chip stm32_gpio_irq_chip = {
- 	.irq_set_wake	= irq_chip_set_wake_parent,
- 	.irq_request_resources = stm32_gpio_irq_request_resources,
- 	.irq_release_resources = stm32_gpio_irq_release_resources,
-+	.irq_set_affinity = IS_ENABLED(CONFIG_SMP) ? irq_chip_set_affinity_parent : NULL,
- };
+diff --git a/drivers/media/platform/raspberrypi/rp1-cfe/cfe.c b/drivers/media/platform/raspberrypi/rp1-cfe/cfe.c
+index 69a5f23e7954..9af9efc0d7e7 100644
+--- a/drivers/media/platform/raspberrypi/rp1-cfe/cfe.c
++++ b/drivers/media/platform/raspberrypi/rp1-cfe/cfe.c
+@@ -1025,9 +1025,6 @@ static int cfe_queue_setup(struct vb2_queue *vq, unsigned int *nbuffers,
+ 	cfe_dbg(cfe, "%s: [%s] type:%u\n", __func__, node_desc[node->id].name,
+ 		node->buffer_queue.type);
  
- static int stm32_gpio_domain_translate(struct irq_domain *d,
+-	if (vq->max_num_buffers + *nbuffers < 3)
+-		*nbuffers = 3 - vq->max_num_buffers;
+-
+ 	if (*nplanes) {
+ 		if (sizes[0] < size) {
+ 			cfe_err(cfe, "sizes[0] %i < size %u\n", sizes[0], size);
+@@ -1999,6 +1996,7 @@ static int cfe_register_node(struct cfe_device *cfe, int id)
+ 	q->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
+ 	q->lock = &node->lock;
+ 	q->min_queued_buffers = 1;
++	q->min_reqbufs_allocation = 3;
+ 	q->dev = &cfe->pdev->dev;
+ 
+ 	ret = vb2_queue_init(q);
 -- 
 2.39.5
 
