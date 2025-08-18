@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7654335BCA;
-	Mon, 18 Aug 2025 13:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652B1335BD4;
+	Mon, 18 Aug 2025 13:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525218; cv=none; b=ZQ4SJKKtPlT+itdtFqR9wD3VtH1lvtR6G1akSa7q0C9KSNh7TJgmMN+sngC+F2mZOhLJL9iVZgRCxuLeaYbxkMr2zDhOuViR4rso7iHWBN5Ahpov3t8RqRqQmF3K6/ysk/K49xuge4bwVMJDB6hVheVtWPtjEfs/El0mKpKRJgQ=
+	t=1755525222; cv=none; b=Y+Dt9V9CvMkIsyBAPSpk3IgWDVeXHr1gb8JLJG4MVOZwXEKTsir9UeF65ja3HXF12NxKeIQKtyWLxZ8ORYfcISw5t2CrDelZQjNjmnM09ioD058LKyG3MihMhyLWfcGDliRdNFG0Du/NAuh+B4o/TSnz2Go5YIPxOFXAZqPMyBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525218; c=relaxed/simple;
-	bh=zA/r/6vbuQGSw1IzuAjlV/gpLkWLx6zCMFvcJ0+MnCg=;
+	s=arc-20240116; t=1755525222; c=relaxed/simple;
+	bh=JAIXG6+2etU7O0+ofvWTwWDFsiJkxvhuzK9mfXUHNGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPGQ8bA786LgmZEz+AVkQOWk8DTwqu+AqS4oIRfQdfWlyrZGG4rqMKv4d7Xx2L2w7VOPCQ9GOeEaRyUW6xVn5VNoNo1jFU0nJ6lMNjuNaZm9lXhz4566JV+KiMgsOCWOIWr5Dfv6ZQYNEOG9I6o18urw0Mw5as1iwhaM7mfastY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CC3dWYPj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EwzOKOMiMACW5pv88WEqgJ/ccPbu8fH7Imng0+UL+djkzE7DqxeLKDoIsMkpUXA1B9dVeySRWaDprmlP9u2o8XT68Fq3ARUKjUBAg3uxISGUnfK/gc+r0q6zVoE+AlFDLvW/Tfbtm41B3vr0uxSCdKFUShLc0rNzir1/R8mFhLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEkxUHbo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CC3dWYPj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F8CC4CEEB;
-	Mon, 18 Aug 2025 13:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEkxUHbo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D8DC4CEEB;
+	Mon, 18 Aug 2025 13:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525218;
-	bh=zA/r/6vbuQGSw1IzuAjlV/gpLkWLx6zCMFvcJ0+MnCg=;
+	s=korg; t=1755525222;
+	bh=JAIXG6+2etU7O0+ofvWTwWDFsiJkxvhuzK9mfXUHNGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CC3dWYPj5hR0Qmwj/F2uKVAQvDHU1hYVH4MlI6TF2HPZF6EFBEjyKMcD/+k9Lu6im
-	 EqyyEAFjFiv9KsJTcAC8nhBlIFiCEORAPzjqyYHyL06Q2f19nlWQO9x0SySRHpRCJq
-	 LGYc7vg+kXUbCo+SGLUlWuFEUmKB9gFP1UGXQid8=
+	b=nEkxUHboIbq9vRetqE1ubqcVEGFBkgPO/4PL5jPoegSlFBExWc5kI+DneUnV6O5Q2
+	 /VJfJzlLF122mXupk6Dp6M78rqU+GddKtTWOopS2cgpDc0ceezrOIpM8SxOoA1pVe4
+	 6nL41KNqaWfN0jCTnUM5QoYIGNEbacyVN3sZH7Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarthak Garg <quic_sartgarg@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 168/570] mmc: sdhci-msm: Ensure SD card power isnt ON when card removed
-Date: Mon, 18 Aug 2025 14:42:35 +0200
-Message-ID: <20250818124512.273366142@linuxfoundation.org>
+Subject: [PATCH 6.16 195/570] imx8m-blk-ctrl: set ISI panic write hurry level
+Date: Mon, 18 Aug 2025 14:43:02 +0200
+Message-ID: <20250818124513.312839829@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -46,75 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
+From: Krzysztof Hałasa <khalasa@piap.pl>
 
-[ Upstream commit db58532188ebf51d52b1d7693d9e94c76b926e9f ]
+[ Upstream commit c01fba0b4869cada5403fffff416cd1675dba078 ]
 
-Many mobile phones feature multi-card tray designs, where the same
-tray is used for both SD and SIM cards. If the SD card is placed
-at the outermost location in the tray, the SIM card may come in
-contact with SD card power-supply while removing the tray, possibly
-resulting in SIM damage.
+Apparently, ISI needs cache settings similar to LCDIF.
+Otherwise we get artefacts in the image.
+Tested on i.MX8MP.
 
-To prevent that, make sure the SD card is really inserted by reading
-the Card Detect pin state. If it's not, turn off the power in
-sdhci_msm_check_power_status() and also set the BUS_FAIL power state
-on the controller as part of pwr_irq handling for BUS_ON request.
-
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250701100659.3310386-1-quic_sartgarg@quicinc.com
+Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
+Link: https://lore.kernel.org/r/m3ldr69lsw.fsf@t19.piap.pl
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-msm.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/pmdomain/imx/imx8m-blk-ctrl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 66c0d1ba2a33..bc6ca49652f8 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1564,6 +1564,7 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
+diff --git a/drivers/pmdomain/imx/imx8m-blk-ctrl.c b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+index 912802b5215b..5c83e5599f1e 100644
+--- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+@@ -665,6 +665,11 @@ static const struct imx8m_blk_ctrl_data imx8mn_disp_blk_ctl_dev_data = {
+ #define  LCDIF_1_RD_HURRY	GENMASK(15, 13)
+ #define  LCDIF_0_RD_HURRY	GENMASK(12, 10)
+ 
++#define ISI_CACHE_CTRL		0x50
++#define  ISI_V_WR_HURRY		GENMASK(28, 26)
++#define  ISI_U_WR_HURRY		GENMASK(25, 23)
++#define  ISI_Y_WR_HURRY		GENMASK(22, 20)
++
+ static int imx8mp_media_power_notifier(struct notifier_block *nb,
+ 				unsigned long action, void *data)
  {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	struct mmc_host *mmc = host->mmc;
- 	bool done = false;
- 	u32 val = SWITCHABLE_SIGNALING_VOLTAGE;
- 	const struct sdhci_msm_offset *msm_offset =
-@@ -1621,6 +1622,12 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
- 				 "%s: pwr_irq for req: (%d) timed out\n",
- 				 mmc_hostname(host->mmc), req_type);
- 	}
-+
-+	if ((req_type & REQ_BUS_ON) && mmc->card && !mmc->ops->get_cd(mmc)) {
-+		sdhci_writeb(host, 0, SDHCI_POWER_CONTROL);
-+		host->pwr = 0;
-+	}
-+
- 	pr_debug("%s: %s: request %d done\n", mmc_hostname(host->mmc),
- 			__func__, req_type);
- }
-@@ -1679,6 +1686,13 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
- 		udelay(10);
+@@ -694,6 +699,11 @@ static int imx8mp_media_power_notifier(struct notifier_block *nb,
+ 		regmap_set_bits(bc->regmap, LCDIF_ARCACHE_CTRL,
+ 				FIELD_PREP(LCDIF_1_RD_HURRY, 7) |
+ 				FIELD_PREP(LCDIF_0_RD_HURRY, 7));
++		/* Same here for ISI */
++		regmap_set_bits(bc->regmap, ISI_CACHE_CTRL,
++				FIELD_PREP(ISI_V_WR_HURRY, 7) |
++				FIELD_PREP(ISI_U_WR_HURRY, 7) |
++				FIELD_PREP(ISI_Y_WR_HURRY, 7));
  	}
  
-+	if ((irq_status & CORE_PWRCTL_BUS_ON) && mmc->card &&
-+	    !mmc->ops->get_cd(mmc)) {
-+		msm_host_writel(msm_host, CORE_PWRCTL_BUS_FAIL, host,
-+				msm_offset->core_pwrctl_ctl);
-+		return;
-+	}
-+
- 	/* Handle BUS ON/OFF*/
- 	if (irq_status & CORE_PWRCTL_BUS_ON) {
- 		pwr_state = REQ_BUS_ON;
+ 	return NOTIFY_OK;
 -- 
 2.39.5
 
