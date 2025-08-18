@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B093218D1;
-	Mon, 18 Aug 2025 12:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3B130E83F;
+	Mon, 18 Aug 2025 13:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521997; cv=none; b=fzw/ISG/V78bAdLaYELMt+OnkUMSAxmmGH4ELT0G2vuODfqC923OoS4ETAjdzvhkpM1U2CLZGaYmCo77MQU0UwyIdTp9PmA8dn8647CLzaP45NEJcJ4w/iQeSduWYQNINZ4wWy5cZ5PcO98Rtixo5MxcBVXfzvSyjMqsuLGJFMA=
+	t=1755522003; cv=none; b=PQupArSZxab+2Dm2cLP4BFPHZuZiTI2EmE76tY0LiPoVdw8/M1GI/2kj6o1ybwglkXkPCcqjnhZ57wxxb4MWXyoYFO213D5yn1w4XQmsvkhQgYho+XRmMPZ10kr0i6eDvEsjNfzFGs6Qng+YRFC6cIcxi6Tp2URUlGZudh/tkNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521997; c=relaxed/simple;
-	bh=/vHCrMPVTCAR08S6C202eAjl32yLxhynA04061KplVo=;
+	s=arc-20240116; t=1755522003; c=relaxed/simple;
+	bh=pyzUB/Ta4JTc5JhdqflzO4W60jwc22g+3e9GeV2kZ0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9ckApJLGPrWxf7XvA0YsAhkQb4pJ1bW6MMxT67sR8zTxBKrPEizBHzaKp1BRU4i6PaWCj6mEoAwnmdmKVjMmdW4RVOmtQRkbPXCL3Ma5yKrAZrGAf2cqRcqtB6zCDVXYubTrQ7UYZqPEPo1L6fJSmSAfJzntAF/0Nwfpx3PHpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkZLG7VT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Spn6VvelL+AuB9Nn+8IpmP8HzWzGERUIx3ZfgeE3kizGCzth09EWdaKKHfkcML/x9rcX+OXJT5lsFAowYpx1VKhgZw2kfYkUw4fECyEwSiPeVWv3sWFXuPr8/MfUhMR0L0mvpJ0eub3yzbP30La4hqX9mgmrdXLuSbsRckg+m9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqCILdZ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkZLG7VT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BA2C4CEEB;
-	Mon, 18 Aug 2025 12:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqCILdZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F994C4CEEB;
+	Mon, 18 Aug 2025 13:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521997;
-	bh=/vHCrMPVTCAR08S6C202eAjl32yLxhynA04061KplVo=;
+	s=korg; t=1755522002;
+	bh=pyzUB/Ta4JTc5JhdqflzO4W60jwc22g+3e9GeV2kZ0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkZLG7VTUPInO6De7E6wylx/BCTRxT4fEh5minIWwFsz5Ronstj7jRPnsMUZAJHMS
-	 mdEJ278NDf2660WLcz52t6sjoPgl1vuZRpFIm56NnFl4XT/WeQgMTKwICXPzbBgdNs
-	 NKpWaU2702cKyJh9ShOq16lvkopkV91hwD69L05c=
+	b=lqCILdZ9Ab29Eh5Bpzv72azluK9zn7KrO+fO3M2Ee9z8Oe6KPRDS+51bIiglx3XR9
+	 /SYeoFDJNZxMS2yvt+3uk1NN2vFzbkNJskG2fyZAV63xRpKKtMZDyF/HrIP0+PUkK+
+	 fgIcDXlwFDn3xxqtKVAEf5qE7zWvmv4KnPK2nSII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 152/444] soc: qcom: mdt_loader: Actually use the e_phoff
-Date: Mon, 18 Aug 2025 14:42:58 +0200
-Message-ID: <20250818124454.604914964@linuxfoundation.org>
+Subject: [PATCH 6.12 153/444] platform/x86: thinkpad_acpi: Handle KCOV __init vs inline mismatches
+Date: Mon, 18 Aug 2025 14:42:59 +0200
+Message-ID: <20250818124454.640498671@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -46,78 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 47e339cac89143709e84a3b71ba8bd9b2fdd2368 ]
+[ Upstream commit 6418a8504187dc7f5b6f9d0649c03e362cb0664b ]
 
-Rather than relying/assuming that the tools generating the firmware
-places the program headers immediately following the ELF header, use
-e_phoff as intended to find the program headers.
+When KCOV is enabled all functions get instrumented, unless the
+__no_sanitize_coverage attribute is used. To prepare for
+__no_sanitize_coverage being applied to __init functions[1], we have
+to handle differences in how GCC's inline optimizations get resolved.
+For thinkpad_acpi routines, this means forcing two functions to be
+inline with __always_inline.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250610-mdt-loader-validation-and-fixes-v2-3-f7073e9ab899@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/lkml/20250523043935.2009972-11-kees@kernel.org/ [1]
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/20250529181831.work.439-kees@kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/mdt_loader.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/platform/x86/thinkpad_acpi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index b2c0fb55d4ae..44589d10b15b 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -83,7 +83,7 @@ ssize_t qcom_mdt_get_size(const struct firmware *fw)
- 	int i;
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index 0528af4ed8d6..2c67d9758e6b 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -561,12 +561,12 @@ static unsigned long __init tpacpi_check_quirks(
+ 	return 0;
+ }
  
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
+-static inline bool __pure __init tpacpi_is_lenovo(void)
++static __always_inline bool __pure __init tpacpi_is_lenovo(void)
+ {
+ 	return thinkpad_id.vendor == PCI_VENDOR_ID_LENOVO;
+ }
  
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
-@@ -135,7 +135,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
- 	void *data;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	if (ehdr->e_phnum < 2)
- 		return ERR_PTR(-EINVAL);
-@@ -215,7 +215,7 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 	int i;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
-@@ -270,7 +270,7 @@ static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char *fw_na
- 	int i;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		/*
-@@ -312,7 +312,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 
- 	is_split = qcom_mdt_bins_are_split(fw, fw_name);
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
+-static inline bool __pure __init tpacpi_is_ibm(void)
++static __always_inline bool __pure __init tpacpi_is_ibm(void)
+ {
+ 	return thinkpad_id.vendor == PCI_VENDOR_ID_IBM;
+ }
 -- 
 2.39.5
 
