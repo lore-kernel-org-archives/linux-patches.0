@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF981225413;
-	Mon, 18 Aug 2025 14:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082CF334728;
+	Mon, 18 Aug 2025 14:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525641; cv=none; b=MB48uhW6iw0uy9yrJKC5qlUq95nof4gvqkOdJAI+x2OxaJOluCrFRKxZBal/z7lmpk0L+xhiB2vYUlqmPxbdyVBbLcZO+3IU3c6tUoMmhcsgg4fXYVRJ63NJ3Mg278j56hkxsH5dN4TrDkzgGvg3OkxxoEtECovHhA3LGaVUi+o=
+	t=1755525645; cv=none; b=TxYMjVByG85/7CU5o7XXx5UKoKbY3sCyCUbJ6vVpxmmZsTzVYr1ibaojQPO9Gm516qm8xD2iFKqj60+Dep7Oyi10d0stEoaSHBIJ97w3rmSl+vQ6daUGKiHCIwE5HLNpSwM5klPpKmExBI26FPeqwN7/E9O6Wuifk0zaVF1omUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525641; c=relaxed/simple;
-	bh=yjiQmoJuv6gG4YDUnxLyWj7sEZbvusKoDr49Zu2Tb8Q=;
+	s=arc-20240116; t=1755525645; c=relaxed/simple;
+	bh=BQpt/CcAHXOIz8UMetjQBCU7y4iA+FbBfzfsZjxXKoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXlFuxZVQrkT6vz0TTdgpfe2ORkkQPP51Xl+aQzUXeiaG35ryCIY0R3vYkhhMOSOG3Ra/+3lrOmMOWKndLHmChJOhcfm31dUHAA1mAkOXTkm12f6MOmI7xa6O1siyT8O9fbgTDs5Ko2OvMPFkrCXRy9Gg0D06E7luwWiaW9Cna0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8nffxhM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNtwY2MIUlWH1OMToIibl29+VzRlEpkhoBkf4HfhxD08Fe+egmmb6b6f1//fNhsbW3BX5LyrepOvhCPJMYXlvo8sWZwz3plcElT6JF5+z6A7yC0Zjy3oxb8Gaehw1AzQSEDPTVkZLscFeaZ9TP+cTIDdWGd05jtgbKyoM/GzFEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/gtsHpj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8nffxhM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2428C4CEEB;
-	Mon, 18 Aug 2025 14:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/gtsHpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8053DC4CEEB;
+	Mon, 18 Aug 2025 14:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525641;
-	bh=yjiQmoJuv6gG4YDUnxLyWj7sEZbvusKoDr49Zu2Tb8Q=;
+	s=korg; t=1755525644;
+	bh=BQpt/CcAHXOIz8UMetjQBCU7y4iA+FbBfzfsZjxXKoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r8nffxhMa/4fRXXGgoCbMIqIjbrX+z6D22Yad4CP0+994mQZn6CyHb/RRgAXXtsty
-	 mDE+Ikcpnn3O9WZD8jCLz6NEPEE3JLckXIvduvEHpxWwZ6KgNvzyJp3k2e5miKMvSR
-	 6eCS2znCdqRJ8sdJiN7GNyZad7868YiCjx0UNqg4=
+	b=v/gtsHpjVXeBVdCL3KXvMjKbmsrfon79l6okWXEemM81+q/+83t+erXKOqwVP4oS8
+	 2gbobd+tz7w/w2JRfNU/qvjV94b8HxpkC4QRXiahlc0e68rJOR2BsFHYbJurE3IEBG
+	 QFtznCCWJIaBSoi7AvGBVS8/9Yvf4eCx4rfwRyHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 306/570] wifi: iwlwifi: fw: Fix possible memory leak in iwl_fw_dbg_collect
-Date: Mon, 18 Aug 2025 14:44:53 +0200
-Message-ID: <20250818124517.664577835@linuxfoundation.org>
+Subject: [PATCH 6.16 324/570] drm/amd/display: Stop storing failures into adev->dm.cached_state
+Date: Mon, 18 Aug 2025 14:45:11 +0200
+Message-ID: <20250818124518.338638023@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,45 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit cc8d9cbf269dab363c768bfa9312265bc807fca5 ]
+[ Upstream commit 709a37ab9c63297da2194dc36f604537f9d2d417 ]
 
-Ensure descriptor is freed on error to avoid memory leak.
+If drm_atomic_helper_suspend() has failed for any reason, it's stored
+in adev->dm.cached_state.  This isn't expected because the resume
+(or complete()) sequence will attempt to use the stored state to
+resume.
 
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250611222325.8158d15ec866.Ifa3e422c302397111f20a16da7509e6574bc19e3@changeid
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Link: https://lore.kernel.org/r/20250602014432.3538345-3-superm1@kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 25 +++++++++++++------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index ea739ebe7cb0..95a732efce45 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -3008,6 +3008,7 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
- 	struct iwl_fw_dump_desc *desc;
- 	unsigned int delay = 0;
- 	bool monitor_only = false;
-+	int ret;
- 
- 	if (trigger) {
- 		u16 occurrences = le16_to_cpu(trigger->occurrences) - 1;
-@@ -3038,7 +3039,11 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
- 	desc->trig_desc.type = cpu_to_le32(trig);
- 	memcpy(desc->trig_desc.data, str, len);
- 
--	return iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
-+	ret = iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
-+	if (ret)
-+		kfree(desc);
-+
-+	return ret;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index f58fa5da7fe5..5be8c0bf8880 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3060,6 +3060,19 @@ static void hpd_rx_irq_work_suspend(struct amdgpu_display_manager *dm)
+ 	}
  }
- IWL_EXPORT_SYMBOL(iwl_fw_dbg_collect);
  
++static int dm_cache_state(struct amdgpu_device *adev)
++{
++	int r;
++
++	adev->dm.cached_state = drm_atomic_helper_suspend(adev_to_drm(adev));
++	if (IS_ERR(adev->dm.cached_state)) {
++		r = PTR_ERR(adev->dm.cached_state);
++		adev->dm.cached_state = NULL;
++	}
++
++	return adev->dm.cached_state ? 0 : r;
++}
++
+ static int dm_prepare_suspend(struct amdgpu_ip_block *ip_block)
+ {
+ 	struct amdgpu_device *adev = ip_block->adev;
+@@ -3068,11 +3081,8 @@ static int dm_prepare_suspend(struct amdgpu_ip_block *ip_block)
+ 		return 0;
+ 
+ 	WARN_ON(adev->dm.cached_state);
+-	adev->dm.cached_state = drm_atomic_helper_suspend(adev_to_drm(adev));
+-	if (IS_ERR(adev->dm.cached_state))
+-		return PTR_ERR(adev->dm.cached_state);
+ 
+-	return 0;
++	return dm_cache_state(adev);
+ }
+ 
+ static int dm_suspend(struct amdgpu_ip_block *ip_block)
+@@ -3106,9 +3116,10 @@ static int dm_suspend(struct amdgpu_ip_block *ip_block)
+ 	}
+ 
+ 	if (!adev->dm.cached_state) {
+-		adev->dm.cached_state = drm_atomic_helper_suspend(adev_to_drm(adev));
+-		if (IS_ERR(adev->dm.cached_state))
+-			return PTR_ERR(adev->dm.cached_state);
++		int r = dm_cache_state(adev);
++
++		if (r)
++			return r;
+ 	}
+ 
+ 	s3_handle_hdmi_cec(adev_to_drm(adev), true);
 -- 
 2.39.5
 
