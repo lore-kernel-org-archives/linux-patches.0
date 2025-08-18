@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2405A183CC3;
-	Mon, 18 Aug 2025 14:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0807A183CC3;
+	Mon, 18 Aug 2025 14:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526153; cv=none; b=rJYPwaLMXHXFf8U4WbXX1FSLD3vOy1p4QJBLvQmUSMcXs514wCACdGOclFB5Wk13dfh0CXU3ku8PO+h5kY5M9vgqELXJJUKgIgzajplsnx4NFFvhoT3P2Mybx624swAIL8m/4drmcL3aLCHYtbzzUUupcZqq6DtrSVyqO6jPbhk=
+	t=1755526156; cv=none; b=OenkqdJ6LZSVmpVN9cIfR4wzq/rrMXdSAFmkvzMNmODXqd81eAySd48i3x3cfrYxGUkoHAuWjJQ1KRIaPx4Q4flK6NMw53uX195xnU9TqGrvfUgmOJ4K1i6VN84ZfpupuKcv1nvgW6Um9s9TsNblPudkQsQCjxz6L1EBrSdjLaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526153; c=relaxed/simple;
-	bh=cLyz8mcOvvmnWTG814yIn8k0UHWmbPvgewc8N2aQbOo=;
+	s=arc-20240116; t=1755526156; c=relaxed/simple;
+	bh=uHinza1r+FpZd8ytjP/XxB+mSOCXk6ERC6D6cWYInzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CuLTRADw+9Tlf2OCZToEG4EewSDsRE8Nw2r9JRaFZRRbsd3ZZlw78vXOPb+S0HFLN811KAU4JJzZFEAglPozxcCvuf4q38UTQOUdrJ9MndwSq05PdZKpFT6WZQd4i26S2e5qRrhjrj76GvAO/1WLMTCyWifg+CapCE57+DPMQzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwLkAwry; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rr+hOzzFx2YMeL7+dh1CZJXWXJyGz+MmC6jpFsYo7LkMuPKX7impdPnSjQOvR6i45mljlf+ZxGD0tczvijr8YBwmJtkL7u582aviCPyHC5V7SxcznqKP3sLIeoojGYtcHoF7dGkOyIN4XxHd7tWncPXMiXmuvmhnI8JKJSsEJW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZOr8yDa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwLkAwry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F85DC4CEEB;
-	Mon, 18 Aug 2025 14:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZOr8yDa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB37C4CEEB;
+	Mon, 18 Aug 2025 14:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526152;
-	bh=cLyz8mcOvvmnWTG814yIn8k0UHWmbPvgewc8N2aQbOo=;
+	s=korg; t=1755526155;
+	bh=uHinza1r+FpZd8ytjP/XxB+mSOCXk6ERC6D6cWYInzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZwLkAwryL2DnQAYTQ6tw+3pAiXKHqaJPNobWqERiw2myxqBcuuJM0VdftgYUm8jJf
-	 keByTUyNQQngbRc75E7QSx0NmNFWQNOt1aD56RV1mJ/M4oNaWKa/g6S1FG7AdxIAf8
-	 cWCV+iwSOXMHoPSpgptoZ7y6fTSjR2PfCTtJ4Pfk=
+	b=mZOr8yDaUHvgYX8ah4JQBs//GDwRmbVQs3+++Z5Hm1qpdF79/A6K/gzcniX1ETLB6
+	 NcHb+i78dAijQ8rjaMPrINM3xKDP5s3427lPKZlZeV0f6jW7FhDIj2evPzOh/boGDw
+	 F9uqduLCEj+9WJunRsGYfhP3+XRaER7FExGRIMGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 473/570] block: fix kobject double initialization in add_disk
-Date: Mon, 18 Aug 2025 14:47:40 +0200
-Message-ID: <20250818124524.109670473@linuxfoundation.org>
+Subject: [PATCH 6.16 474/570] cifs: Fix collect_sample() to handle any iterator type
+Date: Mon, 18 Aug 2025 14:47:41 +0200
+Message-ID: <20250818124524.148858735@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -55,136 +57,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 343dc5423bfe876c12bb80c56f5e44286e442a07 ]
+[ Upstream commit b63335fb3d32579c5ff0b7038b9cc23688fff528 ]
 
-Device-mapper can call add_disk() multiple times for the same gendisk
-due to its two-phase creation process (dm create + dm load). This leads
-to kobject double initialization errors when the underlying iSCSI devices
-become temporarily unavailable and then reappear.
+collect_sample() is used to gather samples of the data in a Write op for
+analysis to try and determine if the compression algorithm is likely to
+achieve anything more quickly than actually running the compression
+algorithm.
 
-However, if the first add_disk() call fails and is retried, the queue_kobj
-gets initialized twice, causing:
+However, collect_sample() assumes that the data it is going to be sampling
+is stored in an ITER_XARRAY-type iterator (which it now should never be)
+and doesn't actually check that it is before accessing the underlying
+xarray directly.
 
-kobject: kobject (ffff88810c27bb90): tried to init an initialized object,
-something is seriously wrong.
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x5b/0x80
-  kobject_init.cold+0x43/0x51
-  blk_register_queue+0x46/0x280
-  add_disk_fwnode+0xb5/0x280
-  dm_setup_md_queue+0x194/0x1c0
-  table_load+0x297/0x2d0
-  ctl_ioctl+0x2a2/0x480
-  dm_ctl_ioctl+0xe/0x20
-  __x64_sys_ioctl+0xc7/0x110
-  do_syscall_64+0x72/0x390
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Fix this by replacing the code with a loop that just uses the standard
+iterator functions to sample every other 2KiB block, skipping the
+intervening ones.  It's not quite the same as the previous algorithm as it
+doesn't necessarily align to the pages within an ordinary write from the
+pagecache.
 
-Fix this by separating kobject initialization from sysfs registration:
- - Initialize queue_kobj early during gendisk allocation
- - add_disk() only adds the already-initialized kobject to sysfs
- - del_gendisk() removes from sysfs but doesn't destroy the kobject
- - Final cleanup happens when the disk is released
+Note that the btrfs code from which this was derived samples the inode's
+pagecache directly rather than the iterator - but that doesn't necessarily
+work for network filesystems if O_DIRECT is in operation.
 
-Fixes: 2bd85221a625 ("block: untangle request_queue refcounting from sysfs")
-Reported-by: Li Lingfeng <lilingfeng3@huawei.com>
-Closes: https://lore.kernel.org/all/83591d0b-2467-433c-bce0-5581298eb161@huawei.com/
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250808053609.3237836-1-zhengqixing@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 94ae8c3fee94 ("smb: client: compress: LZ77 code improvements cleanup")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+cc: Enzo Matsumiya <ematsumiya@suse.de>
+cc: Shyam Prasad N <sprasad@microsoft.com>
+cc: Tom Talpey <tom@talpey.com>
+cc: linux-cifs@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-sysfs.c | 12 +++++-------
- block/blk.h       |  1 +
- block/genhd.c     |  2 ++
- 3 files changed, 8 insertions(+), 7 deletions(-)
+ fs/smb/client/compress.c | 71 ++++++++++++----------------------------
+ 1 file changed, 21 insertions(+), 50 deletions(-)
 
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index c611444480b3..de39746de18b 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -821,7 +821,7 @@ static void blk_queue_release(struct kobject *kobj)
- 	/* nothing to do here, all data is associated with the parent gendisk */
+diff --git a/fs/smb/client/compress.c b/fs/smb/client/compress.c
+index 766b4de13da7..db709f5cd2e1 100644
+--- a/fs/smb/client/compress.c
++++ b/fs/smb/client/compress.c
+@@ -155,58 +155,29 @@ static int cmp_bkt(const void *_a, const void *_b)
  }
  
--static const struct kobj_type blk_queue_ktype = {
-+const struct kobj_type blk_queue_ktype = {
- 	.default_groups = blk_queue_attr_groups,
- 	.sysfs_ops	= &queue_sysfs_ops,
- 	.release	= blk_queue_release,
-@@ -849,15 +849,14 @@ int blk_register_queue(struct gendisk *disk)
- 	struct request_queue *q = disk->queue;
- 	int ret;
+ /*
+- * TODO:
+- * Support other iter types, if required.
+- * Only ITER_XARRAY is supported for now.
++ * Collect some 2K samples with 2K gaps between.
+  */
+-static int collect_sample(const struct iov_iter *iter, ssize_t max, u8 *sample)
++static int collect_sample(const struct iov_iter *source, ssize_t max, u8 *sample)
+ {
+-	struct folio *folios[16], *folio;
+-	unsigned int nr, i, j, npages;
+-	loff_t start = iter->xarray_start + iter->iov_offset;
+-	pgoff_t last, index = start / PAGE_SIZE;
+-	size_t len, off, foff;
+-	void *p;
+-	int s = 0;
+-
+-	last = (start + max - 1) / PAGE_SIZE;
+-	do {
+-		nr = xa_extract(iter->xarray, (void **)folios, index, last, ARRAY_SIZE(folios),
+-				XA_PRESENT);
+-		if (nr == 0)
+-			return -EIO;
+-
+-		for (i = 0; i < nr; i++) {
+-			folio = folios[i];
+-			npages = folio_nr_pages(folio);
+-			foff = start - folio_pos(folio);
+-			off = foff % PAGE_SIZE;
+-
+-			for (j = foff / PAGE_SIZE; j < npages; j++) {
+-				size_t len2;
+-
+-				len = min_t(size_t, max, PAGE_SIZE - off);
+-				len2 = min_t(size_t, len, SZ_2K);
+-
+-				p = kmap_local_page(folio_page(folio, j));
+-				memcpy(&sample[s], p, len2);
+-				kunmap_local(p);
+-
+-				s += len2;
+-
+-				if (len2 < SZ_2K || s >= max - SZ_2K)
+-					return s;
+-
+-				max -= len;
+-				if (max <= 0)
+-					return s;
+-
+-				start += len;
+-				off = 0;
+-				index++;
+-			}
+-		}
+-	} while (nr == ARRAY_SIZE(folios));
++	struct iov_iter iter = *source;
++	size_t s = 0;
++
++	while (iov_iter_count(&iter) >= SZ_2K) {
++		size_t part = umin(umin(iov_iter_count(&iter), SZ_2K), max);
++		size_t n;
++
++		n = copy_from_iter(sample + s, part, &iter);
++		if (n != part)
++			return -EFAULT;
++
++		s += n;
++		max -= n;
++
++		if (iov_iter_count(&iter) < PAGE_SIZE - SZ_2K)
++			break;
++
++		iov_iter_advance(&iter, SZ_2K);
++	}
  
--	kobject_init(&disk->queue_kobj, &blk_queue_ktype);
- 	ret = kobject_add(&disk->queue_kobj, &disk_to_dev(disk)->kobj, "queue");
- 	if (ret < 0)
--		goto out_put_queue_kobj;
-+		return ret;
- 
- 	if (queue_is_mq(q)) {
- 		ret = blk_mq_sysfs_register(disk);
- 		if (ret)
--			goto out_put_queue_kobj;
-+			goto out_del_queue_kobj;
- 	}
- 	mutex_lock(&q->sysfs_lock);
- 
-@@ -908,8 +907,8 @@ int blk_register_queue(struct gendisk *disk)
- 	mutex_unlock(&q->sysfs_lock);
- 	if (queue_is_mq(q))
- 		blk_mq_sysfs_unregister(disk);
--out_put_queue_kobj:
--	kobject_put(&disk->queue_kobj);
-+out_del_queue_kobj:
-+	kobject_del(&disk->queue_kobj);
- 	return ret;
+ 	return s;
  }
- 
-@@ -960,5 +959,4 @@ void blk_unregister_queue(struct gendisk *disk)
- 		elevator_set_none(q);
- 
- 	blk_debugfs_remove(disk);
--	kobject_put(&disk->queue_kobj);
- }
-diff --git a/block/blk.h b/block/blk.h
-index fae7653a941f..4746a7704856 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -19,6 +19,7 @@ struct elevator_type;
- /* Max future timer expiry for timeouts */
- #define BLK_MAX_TIMEOUT		(5 * HZ)
- 
-+extern const struct kobj_type blk_queue_ktype;
- extern struct dentry *blk_debugfs_root;
- 
- struct blk_flush_queue {
-diff --git a/block/genhd.c b/block/genhd.c
-index c26733f6324b..9bbc38d12792 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1303,6 +1303,7 @@ static void disk_release(struct device *dev)
- 	disk_free_zone_resources(disk);
- 	xa_destroy(&disk->part_tbl);
- 
-+	kobject_put(&disk->queue_kobj);
- 	disk->queue->disk = NULL;
- 	blk_put_queue(disk->queue);
- 
-@@ -1486,6 +1487,7 @@ struct gendisk *__alloc_disk_node(struct request_queue *q, int node_id,
- 	INIT_LIST_HEAD(&disk->slave_bdevs);
- #endif
- 	mutex_init(&disk->rqos_state_mutex);
-+	kobject_init(&disk->queue_kobj, &blk_queue_ktype);
- 	return disk;
- 
- out_erase_part0:
 -- 
 2.50.1
 
