@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C527B333;
-	Mon, 18 Aug 2025 13:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DB51DDA14;
+	Mon, 18 Aug 2025 13:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524076; cv=none; b=b2RYx2axKtdgyTFuWqKbV6FTKTRlfrTT2i8rlDMzXIdz3GQyedlBThTKpM3Hom6zEFQk0F+/S1py//P2sQx7QOBpaFe6dfNbvzqWdG/9knG8+QkKwh9SgZYqZUutwdMSIBlZjsP88plH25kVo4KcNLDsyDEZ+m7wNaujW5c+LBc=
+	t=1755524080; cv=none; b=YObGe9WDrAM5RiFFUEn6LwTuxKWsCCDLi7C6k+aPAfs3c/bQ1H6+jvgxOSVuXEGgwNfaUYFDdyrFPu1KWDSU4rxsMRmU061k1hAgKmouhwElmOljv8I7uH/GMyI07EVUVSyoQOyGDpAgZe4DZh3g3lhoJ9EKEcifOxz7vqRkh+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524076; c=relaxed/simple;
-	bh=uggxG3vF7oNftXFMMYfAZUP2uyVDB2ehPy1kFnc8vZg=;
+	s=arc-20240116; t=1755524080; c=relaxed/simple;
+	bh=o8vobFpedfrovBSPz4ZrnhtB1/q5NFhJauq0EXcnC00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H//WDZ8GeZlNp6wU336jPQf+T2igZlh4xmkZyzXK2tSuKVlUyGuEV1ihYCshvWy6UuPmzpddqdgcggGp/QIXcH2ud03U36juYKs0eUB3T0CsA9gLil+lW+3Eb/yR8hUpflNFG8e/+MTyBHGJj5s143jYTNcoeZ/amGNxODZfiLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2r5d1aTI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RlQru/pp51pEaCR0hCGtmkBnVhmI/+/wScG6tStp9P8h2wr05N6ulQZpn21cz7x8K2sD21oLtz3LiFNXDXZe7ZrpPSlSrts6Jqgm5StxfljJPdo8Bjwm9y12AERz6Rhe18QEM194qsXbg4r6eeQuIZ5FokwTDyUGOGeMxN6hBV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJ3FAOO/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2r5d1aTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED77C4CEEB;
-	Mon, 18 Aug 2025 13:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJ3FAOO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23FAC4CEEB;
+	Mon, 18 Aug 2025 13:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524076;
-	bh=uggxG3vF7oNftXFMMYfAZUP2uyVDB2ehPy1kFnc8vZg=;
+	s=korg; t=1755524079;
+	bh=o8vobFpedfrovBSPz4ZrnhtB1/q5NFhJauq0EXcnC00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2r5d1aTIUNilyce4FYXpCSRQVD+qhsVKoujqZdlEs8WZOQUA+tdKAZHXwioXbnKG6
-	 f/OQGp3tJAs5++HhN7x+5dHt7pqiHahlEwvgUB21FVyE7AxptqBWlh9K3nt0/xKm66
-	 l973oZP9XRFwETCpzNejBPsALkLqmWp+uQLrlIaQ=
+	b=hJ3FAOO/l293y7UtTleNnW3htVMkK5m46k4wxaA7N9IJV3aKG79Y9tDdb0/gY+768
+	 7fEphJUbOTeTJp27yZp3ItOaOAHr84GOFN7tHIttrnMiB5R4F9rgWIt5FuAAQYNFBg
+	 WmoJAwmcRFE6jujVeFJH9Q/CS7uAdbvstXQMuTec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
+	"Sun peng (Leo) Li" <sunpeng.li@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Ivan Lipski <ivan.lipski@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 328/515] drm/amd/display: Only finalize atomic_obj if it was initialized
-Date: Mon, 18 Aug 2025 14:45:14 +0200
-Message-ID: <20250818124511.060773383@linuxfoundation.org>
+Subject: [PATCH 6.15 329/515] drm/amd/display: Avoid configuring PSR granularity if PSR-SU not supported
+Date: Mon, 18 Aug 2025 14:45:15 +0200
+Message-ID: <20250818124511.099083590@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -56,39 +56,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit b174084b3fe15ad1acc69530e673c1535d2e4f85 ]
+[ Upstream commit a5ce8695d6d1b40d6960d2d298b579042c158f25 ]
 
 [Why]
-If amdgpu_dm failed to initalize before amdgpu_dm_initialize_drm_device()
-completed then freeing atomic_obj will lead to list corruption.
+If PSR-SU is disabled on the link, then configuring su_y granularity in
+mod_power_calc_psr_configs() can lead to assertions in
+psr_su_set_dsc_slice_height().
 
 [How]
-Check if atomic_obj state is initialized before trying to free.
+Check the PSR version in amdgpu_dm_link_setup_psr() to determine whether
+or not to configure granularity.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Sun peng (Leo) Li <sunpeng.li@amd.com>
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 9c01496ba590..75e7af5c5a3e 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5309,7 +5309,8 @@ static int amdgpu_dm_initialize_drm_device(struct amdgpu_device *adev)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
+index e140b7a04d72..d63038ec4ec7 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
+@@ -127,8 +127,10 @@ bool amdgpu_dm_link_setup_psr(struct dc_stream_state *stream)
+ 		psr_config.allow_multi_disp_optimizations =
+ 			(amdgpu_dc_feature_mask & DC_PSR_ALLOW_MULTI_DISP_OPT);
  
- static void amdgpu_dm_destroy_drm_device(struct amdgpu_display_manager *dm)
- {
--	drm_atomic_private_obj_fini(&dm->atomic_obj);
-+	if (dm->atomic_obj.state)
-+		drm_atomic_private_obj_fini(&dm->atomic_obj);
- }
+-		if (!psr_su_set_dsc_slice_height(dc, link, stream, &psr_config))
+-			return false;
++		if (link->psr_settings.psr_version == DC_PSR_VERSION_SU_1) {
++			if (!psr_su_set_dsc_slice_height(dc, link, stream, &psr_config))
++				return false;
++		}
  
- /******************************************************************************
+ 		ret = dc_link_setup_psr(link, stream, &psr_config, &psr_context);
+ 
 -- 
 2.39.5
 
