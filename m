@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16306261B97;
-	Mon, 18 Aug 2025 13:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA8233472B;
+	Mon, 18 Aug 2025 13:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525411; cv=none; b=NZSsBczqUgTaGYZQiHjpr4ri2rrHC6QZTDLtz8JsMs18Nf4NvSWsMIs2bwAODnYO5v0f7bD9hE8dKQhlyQwdVqbnhsyIUb6Grqn6jZZGPHR2cV5/iKvHbiLQ5iGtUBRgIMwKRMoiNIbY0F44d4GeMWx9a/reQXLrQWXToW9B/44=
+	t=1755525414; cv=none; b=BaedFlVOlEaPzOuLWVJ5J8P8bR3MhUT6JNhL64buJjfHTT6kr6UPXbT/Fw1a/SIp7rk3VHTwOr7iAPCD/ttZglbHPFSB1HNv1v02n0k8fl4C7giNl1gP410qpAuQhd0As0BamquRt0Zq1F7IUpsg5ZGisFTeflPSrJro9vL7pyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525411; c=relaxed/simple;
-	bh=XigxmDx/mC98HOPwtOaAi5KRnHCWgnKU5gC8dr8zU5A=;
+	s=arc-20240116; t=1755525414; c=relaxed/simple;
+	bh=tBb5AIKA0NtBGSMHidLGZuJNGyuY4jvcvnfrnR5qVWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckQW01d9d+S9/ZIOEbRtOjxmgN9G+GfLAhwFiXmyZiQch9dKD0q8i7Jx/oG+DSHI5Atws7c39mP43WwTr+LdaCKk7cMDpCE07w2HRVNgjUE7TXrDsqvpv8chHjxJopRwDrLw8/ggYI/xNLXosb1JFay5N3Yql0vIo7I4YIrm+XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEARwMVV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIlGa5S3T2ZETOVfsyCOA+HWf/JuvcS2Wu+gYNfxcGRaek3EGVmsTSzIsaRhSr36A06HxbXZB06AbElzrAWOE8xEBxOchsCVMgNqHVlZ2n9OE8CP2R7NT2TF9VhXsag8EIpqtTpmWCv3KB2eC64DCe54WVwVdFYaawo59EAe5vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpVTc4Zh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEARwMVV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CFBC4CEEB;
-	Mon, 18 Aug 2025 13:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpVTc4Zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D17C116D0;
+	Mon, 18 Aug 2025 13:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525410;
-	bh=XigxmDx/mC98HOPwtOaAi5KRnHCWgnKU5gC8dr8zU5A=;
+	s=korg; t=1755525414;
+	bh=tBb5AIKA0NtBGSMHidLGZuJNGyuY4jvcvnfrnR5qVWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEARwMVVvjS3HE0/8xHudT9ns0w+Hkr8MPzIV1jax5iSpf6PxWImnpJvxhWnImbnX
-	 cSRezuu0JC/TQLKdHX55UdF+BSIYeO5Jwn4RUG1kjuoyEdnWo3fobE/OUa4g1njB9p
-	 u2dbbMdGG7N9WAYtcZf/7AOKKMLOUtpVDMKvVUBM=
+	b=RpVTc4ZhQgUmz4fzF1QfN93429+kge93ViTWRFogTTIQmmIWQoPTPtfMUo60OJ78S
+	 bj1OnaCBQyHIrxbj135P+MQyvb0I3o1tbyJd77T2b53df/ozo5lE8TTfrO7ZD4nN7n
+	 wJnUgUM3y0u7K6W0QVh6uPMRear7QBy7WDqqrM4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Philipp Stanner <phasta@kernel.org>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 255/570] drm/sched/tests: Add unit test for cancel_job()
-Date: Mon, 18 Aug 2025 14:44:02 +0200
-Message-ID: <20250818124515.641232068@linuxfoundation.org>
+Subject: [PATCH 6.16 238/570] can: ti_hecc: fix -Woverflow compiler warning
+Date: Mon, 18 Aug 2025 14:43:45 +0200
+Message-ID: <20250818124514.991251388@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,84 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit c2668a0e03501a26cedc82e32fe9f3f692d330db ]
+[ Upstream commit 7cae4d04717b002cffe41169da3f239c845a0723 ]
 
-The scheduler unit tests now provide a new callback, cancel_job(). This
-callback gets used by drm_sched_fini() for all still pending jobs to
-cancel them.
+Fix below default (W=0) warning:
 
-Implement a new unit test to test this.
+  drivers/net/can/ti_hecc.c: In function 'ti_hecc_start':
+  drivers/net/can/ti_hecc.c:386:20: warning: conversion from 'long unsigned int' to 'u32' {aka 'unsigned int'} changes value from '18446744073709551599' to '4294967279' [-Woverflow]
+    386 |         mbx_mask = ~BIT(HECC_RX_LAST_MBOX);
+        |                    ^
 
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://lore.kernel.org/r/20250710125412.128476-6-phasta@kernel.org
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250715-can-compile-test-v2-1-f7fd566db86f@wanadoo.fr
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/scheduler/tests/tests_basic.c | 42 +++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ drivers/net/can/ti_hecc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/scheduler/tests/tests_basic.c b/drivers/gpu/drm/scheduler/tests/tests_basic.c
-index 7230057e0594..b1ae10c6bb37 100644
---- a/drivers/gpu/drm/scheduler/tests/tests_basic.c
-+++ b/drivers/gpu/drm/scheduler/tests/tests_basic.c
-@@ -204,6 +204,47 @@ static struct kunit_suite drm_sched_basic = {
- 	.test_cases = drm_sched_basic_tests,
- };
+diff --git a/drivers/net/can/ti_hecc.c b/drivers/net/can/ti_hecc.c
+index 644e8b8eb91e..e6d6661a908a 100644
+--- a/drivers/net/can/ti_hecc.c
++++ b/drivers/net/can/ti_hecc.c
+@@ -383,7 +383,7 @@ static void ti_hecc_start(struct net_device *ndev)
+ 	 * overflows instead of the hardware silently dropping the
+ 	 * messages.
+ 	 */
+-	mbx_mask = ~BIT(HECC_RX_LAST_MBOX);
++	mbx_mask = ~BIT_U32(HECC_RX_LAST_MBOX);
+ 	hecc_write(priv, HECC_CANOPC, mbx_mask);
  
-+static void drm_sched_basic_cancel(struct kunit *test)
-+{
-+	struct drm_mock_sched_entity *entity;
-+	struct drm_mock_scheduler *sched;
-+	struct drm_mock_sched_job *job;
-+	bool done;
-+
-+	/*
-+	 * Check that drm_sched_fini() uses the cancel_job() callback to cancel
-+	 * jobs that are still pending.
-+	 */
-+
-+	sched = drm_mock_sched_new(test, MAX_SCHEDULE_TIMEOUT);
-+	entity = drm_mock_sched_entity_new(test, DRM_SCHED_PRIORITY_NORMAL,
-+					   sched);
-+
-+	job = drm_mock_sched_job_new(test, entity);
-+
-+	drm_mock_sched_job_submit(job);
-+
-+	done = drm_mock_sched_job_wait_scheduled(job, HZ);
-+	KUNIT_ASSERT_TRUE(test, done);
-+
-+	drm_mock_sched_entity_free(entity);
-+	drm_mock_sched_fini(sched);
-+
-+	KUNIT_ASSERT_EQ(test, job->hw_fence.error, -ECANCELED);
-+}
-+
-+static struct kunit_case drm_sched_cancel_tests[] = {
-+	KUNIT_CASE(drm_sched_basic_cancel),
-+	{}
-+};
-+
-+static struct kunit_suite drm_sched_cancel = {
-+	.name = "drm_sched_basic_cancel_tests",
-+	.init = drm_sched_basic_init,
-+	.exit = drm_sched_basic_exit,
-+	.test_cases = drm_sched_cancel_tests,
-+};
-+
- static void drm_sched_basic_timeout(struct kunit *test)
- {
- 	struct drm_mock_scheduler *sched = test->priv;
-@@ -471,6 +512,7 @@ static struct kunit_suite drm_sched_credits = {
- 
- kunit_test_suites(&drm_sched_basic,
- 		  &drm_sched_timeout,
-+		  &drm_sched_cancel,
- 		  &drm_sched_priority,
- 		  &drm_sched_modify_sched,
- 		  &drm_sched_credits);
+ 	/* Enable interrupts */
 -- 
 2.39.5
 
