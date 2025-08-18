@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E183D8BEC;
-	Mon, 18 Aug 2025 13:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D18BEC;
+	Mon, 18 Aug 2025 13:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524103; cv=none; b=lX+cL0aWduTemAgrAsqQkd8Jf2vp7I974i3ptuQ5AZFuArmku/M23ch9iVAtBdSOJXBDb0vtdhvOmmJF3J+6LgY2tc3Q1dzIrVS1VPtb4Hig3ALIPqpBCjKuz6x7nCuVJ5ot3/+5TrVMDT7tDEglfwseX2+nwhCQQnp8wY/JD7Q=
+	t=1755524106; cv=none; b=Wl01KI08xoeUh9XzK4w7E5SDGfQtrsOU3D2JJ8vTLPIf6wA1hwLvVM1XbKdNR4NWyuYISDWifKfYDlOrE0LBI5xRpCv/0cs6CpuLtralcgP+Ut+Ojk+9AKDj/jTlVbGyorIEJZXkcQFeit0oUUYW0CeJ8uqilvr8Fzd40Bf+Lms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524103; c=relaxed/simple;
-	bh=kZ31hKJr7WIrkvpvbD1v7wbjS9/3FDu9uQKCuhfG2K0=;
+	s=arc-20240116; t=1755524106; c=relaxed/simple;
+	bh=J89ex4MsuY7fgwNplyUuZLRrULH0UvvpTfQQx1xmabA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GOF6bkqAZsmjk09mowQvvTlFic/zqzVqxnaz6l0CgJhYkZ6SkYviySjXKOX6t2nu9Ze+sRhR8KOcs0BaCV8M1MtFzJ1ACq3uwpPEcoMOJv1XlT3I2Um4Oi/DB3/RMS2HlRtkf4/qYcZUPmJrZcpbDFN9OMmgT3VV8IR9Z7B3M/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXfQK5z+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tEb4CNDv6g/ap/ENc7j3ggLw7e1rGcQVDbjxMkkt4XknZxkH2HdFGqRkUyHv6/XmpfZ+Q+cihgZAQlRxrGcPZdwYSoa646UaST0tw0Lp5ctEJ6fuK12qCAxZM93UQS4SHCcIXNfhuSi5EWN/hv5+BUwPnnXmfBBYcox6ClMuUJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsm3JmJy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXfQK5z+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF41C4CEEB;
-	Mon, 18 Aug 2025 13:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsm3JmJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676E5C4CEEB;
+	Mon, 18 Aug 2025 13:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524102;
-	bh=kZ31hKJr7WIrkvpvbD1v7wbjS9/3FDu9uQKCuhfG2K0=;
+	s=korg; t=1755524105;
+	bh=J89ex4MsuY7fgwNplyUuZLRrULH0UvvpTfQQx1xmabA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oXfQK5z+66VguyK31saTwmjVhi/eMNBcBCf3uIvbZOf62PuE+IexfeturkqvpYzwE
-	 x3d++gU18cZj11GOuLsk5/7KORg8IQHK14R1sQmzuGqCUTn2sWnya/ElhHwd2LC01z
-	 uD29n6SYOr1XgQMtEezuqrBN6svlbgofjEULUqo4=
+	b=lsm3JmJyR8acczZ0HSCMnW4fh98+8mxg8IarJ2RnyYapUMsE2u6kQVWRkPznaAZI0
+	 b0yj2RD0TC5TMc1PR2tRtx17Nbz16tHkEOC3RACcawJINvAZ0EE86f4xRM7ElKXH6v
+	 VDhA1sad1wdBt4QYGpe+l+PZFYg6qYOW5H4nGvY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <chenl311@chinatelecom.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 369/515] HID: rate-limit hid_warn to prevent log flooding
-Date: Mon, 18 Aug 2025 14:45:55 +0200
-Message-ID: <20250818124512.611542110@linuxfoundation.org>
+Subject: [PATCH 6.15 370/515] scsi: mpt3sas: Correctly handle ATA device errors
+Date: Mon, 18 Aug 2025 14:45:56 +0200
+Message-ID: <20250818124512.647868241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,59 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <chenl311@chinatelecom.cn>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 4051ead99888f101be92c7ce90d2de09aac6fd1c ]
+[ Upstream commit 15592a11d5a5c8411ac8494ec49736b658f6fbff ]
 
-Syzkaller can create many uhid devices that trigger
-repeated warnings like:
+With the ATA error model, an NCQ command failure always triggers an abort
+(termination) of all NCQ commands queued on the device. In such case, the
+SAT or the host must handle the failed command according to the command
+sense data and immediately retry all other NCQ commands that were aborted
+due to the failed NCQ command.
 
-  "hid-generic xxxx: unknown main item tag 0x0"
+For SAS HBAs controlled by the mpt3sas driver, NCQ command aborts are not
+handled by the HBA SAT and sent back to the host, with an ioc log
+information equal to 0x31080000 (IOC_LOGINFO_PREFIX_PL with the PL code
+PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR). The function
+_scsih_io_done() always forces a retry of commands terminated with the
+status MPI2_IOCSTATUS_SCSI_IOC_TERMINATED using the SCSI result
+DID_SOFT_ERROR, regardless of the log_info for the command.  This
+correctly forces the retry of collateral NCQ abort commands, but with the
+retry counter for the command being incremented. If a command to an ATA
+device is subject to too many retries due to other NCQ commands failing
+(e.g. read commands trying to access unreadable sectors), the collateral
+NCQ abort commands may be terminated with an error as they run out of
+retries. This violates the SAT specification and causes hard-to-debug
+command errors.
 
-These messages can flood the system log, especially if a crash occurs
-(e.g., with a slow UART console, leading to soft lockups). To mitigate
-this, convert `hid_warn()` to use `dev_warn_ratelimited()`.
+Solve this issue by modifying the handling of the
+MPI2_IOCSTATUS_SCSI_IOC_TERMINATED status to check if a command is for an
+ATA device and if the command loginfo indicates an NCQ collateral
+abort. If that is the case, force the command retry using the SCSI result
+DID_IMM_RETRY to avoid incrementing the command retry count.
 
-This helps reduce log noise and improves system stability under fuzzing
-or faulty device scenarios.
-
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250606052747.742998-3-dlemoal@kernel.org
+Tested-by: Yafang Shao <laoar.shao@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 4 ++--
- include/linux/hid.h    | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_scsih.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 9ebbaf8cc131..bd4b4cc785f7 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -663,9 +663,9 @@ static int hid_parser_main(struct hid_parser *parser, struct hid_item *item)
- 	default:
- 		if (item->tag >= HID_MAIN_ITEM_TAG_RESERVED_MIN &&
- 			item->tag <= HID_MAIN_ITEM_TAG_RESERVED_MAX)
--			hid_warn(parser->device, "reserved main item tag 0x%x\n", item->tag);
-+			hid_warn_ratelimited(parser->device, "reserved main item tag 0x%x\n", item->tag);
- 		else
--			hid_warn(parser->device, "unknown main item tag 0x%x\n", item->tag);
-+			hid_warn_ratelimited(parser->device, "unknown main item tag 0x%x\n", item->tag);
- 		ret = 0;
- 	}
- 
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index daae1d6d11a7..ada27535a195 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1233,6 +1233,8 @@ void hid_quirks_exit(__u16 bus);
- 	dev_notice(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_warn(hid, fmt, ...)				\
- 	dev_warn(&(hid)->dev, fmt, ##__VA_ARGS__)
-+#define hid_warn_ratelimited(hid, fmt, ...)				\
-+	dev_warn_ratelimited(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_info(hid, fmt, ...)				\
- 	dev_info(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_dbg(hid, fmt, ...)				\
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
+index 0f900ddb3047..967af259118e 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
+@@ -195,6 +195,14 @@ struct sense_info {
+ #define MPT3SAS_PORT_ENABLE_COMPLETE (0xFFFD)
+ #define MPT3SAS_ABRT_TASK_SET (0xFFFE)
+ #define MPT3SAS_REMOVE_UNRESPONDING_DEVICES (0xFFFF)
++
++/*
++ * SAS Log info code for a NCQ collateral abort after an NCQ error:
++ * IOC_LOGINFO_PREFIX_PL | PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR
++ * See: drivers/message/fusion/lsi/mpi_log_sas.h
++ */
++#define IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR	0x31080000
++
+ /**
+  * struct fw_event_work - firmware event struct
+  * @list: link list framework
+@@ -5814,6 +5822,17 @@ _scsih_io_done(struct MPT3SAS_ADAPTER *ioc, u16 smid, u8 msix_index, u32 reply)
+ 			scmd->result = DID_TRANSPORT_DISRUPTED << 16;
+ 			goto out;
+ 		}
++		if (log_info == IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR) {
++			/*
++			 * This is a ATA NCQ command aborted due to another NCQ
++			 * command failure. We must retry this command
++			 * immediately but without incrementing its retry
++			 * counter.
++			 */
++			WARN_ON_ONCE(xfer_cnt != 0);
++			scmd->result = DID_IMM_RETRY << 16;
++			break;
++		}
+ 		if (log_info == 0x31110630) {
+ 			if (scmd->retries > 2) {
+ 				scmd->result = DID_NO_CONNECT << 16;
 -- 
 2.39.5
 
