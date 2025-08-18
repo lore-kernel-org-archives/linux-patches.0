@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B46B21CC58;
-	Mon, 18 Aug 2025 13:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B832821507C;
+	Mon, 18 Aug 2025 13:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523796; cv=none; b=KX9PIaZMCbbwR7TxErQc2B77YZF+97H7O+DS6RIMWhzXI2h3d3pRiVSqqpYkIgARl3a5OWgnOPI6VC+P2peqRhEBsMf5ZF1Q5mFITABzRM8k03or/+g1GCJ0EjfDwmqkgBZy1njPOE4VkSJT4UI9kT+XaOlCY9s3YQzpQxaTYbY=
+	t=1755523799; cv=none; b=IcskhU7WMrCtL+1S4KxdIOieTWuow+4EP9/1A8OebDy/SBlNgzVmuCCKL9XSs9ucIDcdJBcMsh/PCuKZ2+VoTLDqCLlnImDcCoY6U7/Si4TRzLBoxnkfjJV5VfIu3lxFfOcc0znNPfPAS6+8UXqP06DigTKoz2+TSjI0STdL4eY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523796; c=relaxed/simple;
-	bh=ND/vVST3fuLWkSyrmGStfVUTEYKfrTPtfDfG3FV9Hbw=;
+	s=arc-20240116; t=1755523799; c=relaxed/simple;
+	bh=RuwrOT0s5W9S6yGWwzzZiw4ZGs5pSteB3H2jixirMGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7zgUKaJkFWS6/VLCdsfTq8HN6aszdeBXpLfKRiAXG3qvVApmeuOKrPfzWXArEBjnxkBEiwNrbCHtJj80NtF5F/pSZmE6bOdjSUg2d3bw8cQywWSRoygmg4H6ImC6V5+U6McHHg+aEpcnJGHxFw8O/uxmKQrBzzVv04bUMgE8tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqlN5SUH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUPjWOUcd6q/q2clMDPS9MJ/uT5oIitwsX7EorEKgogzMYX4Ik71pRDa4pqjyteHqVF1RWlZgwoUa8d6no1bnrPtsJi+EIslvAxGk0ACXlU2wZfsaS5w6OuiR6ctXgs5eDmMF5EEyJ7/4P7hAJNHJVy+oxG5IPuNY40xNX5+fso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ikf1wvCR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqlN5SUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D0DC4CEEB;
-	Mon, 18 Aug 2025 13:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ikf1wvCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FE6C4CEEB;
+	Mon, 18 Aug 2025 13:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523796;
-	bh=ND/vVST3fuLWkSyrmGStfVUTEYKfrTPtfDfG3FV9Hbw=;
+	s=korg; t=1755523799;
+	bh=RuwrOT0s5W9S6yGWwzzZiw4ZGs5pSteB3H2jixirMGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oqlN5SUH0bVl7bL8Una/XwShDwLGRzYv3q5B4T7U6/MitUw/a+bSfjNKC14uDLpxJ
-	 S+64deFhv0VF8/tZvky98/9YMVhsuP7QursmqLdamtaOmYPaVtX7mRk5fk2jpZVIE5
-	 UjEfKvaaOpCJ4Q4Yfx9BaC+CjT3HfslbXzvviLt4=
+	b=Ikf1wvCR7P8Y7WA0LYGbHncMxvY8CLjIuYUdaXlCYGo0TRX9+D4JHoO0Fsd4HKM++
+	 X+e4AxuNKaI5nuckEvbsKKZxa9W7uo8dwA8QVPVxbqZqjHImYZam2uRQ8cDXr9sDeG
+	 VQpp5ooP47Q/kD5SN8JfRW5Vh4Ud2E8unBqKUFtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 275/515] drm/panel: raydium-rm67200: Move initialization from enable() to prepare stage
-Date: Mon, 18 Aug 2025 14:44:21 +0200
-Message-ID: <20250818124509.005686034@linuxfoundation.org>
+Subject: [PATCH 6.15 276/515] wifi: ath12k: Add memset and update default rate value in wmi tx completion
+Date: Mon, 18 Aug 2025 14:44:22 +0200
+Message-ID: <20250818124509.054815198@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,83 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Sarika Sharma <quic_sarishar@quicinc.com>
 
-[ Upstream commit 691674a282bdbf8f8bce4094369a2d1e4b5645e9 ]
+[ Upstream commit 9903c0986f782dfc511d7638b6f15fb6e8600cd3 ]
 
-The DSI host has different modes in prepare() and enable() functions,
-prepare() is in LP command mode and enable() is in HS video mode.
+When both AP/STA and monitor interfaces are enabled, ieee80211_tx_status()
+is invoked from two paths: the TX completion handler for data frames
+and the WMI TX completion handler for management frames.
+In the data path, the skb->cb is properly zeroed using memset, but in
+the WMI path, this step is missing.
 
->From our experience, generally the initialization sequence needs to be
-sent in the LP command mode.
+As a result, mac80211 encountered uninitialized (junk) values in
+skb->cb when generating the radiotap header for monitor mode, leading
+to invalid radiotap lengths.
 
-Move the setup init function from enable() to prepare() to fix a display
-shift on rk3568 evb.
+Hence, explicitly zero the status field in the skb->cb using memset
+in WMI TX completion path to ensure consistent and correct behavior
+during WMI tx completion path.
 
-Tested on rk3568/rk3576/rk3588 EVB.
+Additionally, set info->status.rates[0].idx = -1 to indicate that
+no valid rate information is available, avoiding misinterpretation of
+garbage values.
 
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250618091520.691590-1-andyshrk@163.com
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250603063512.1887652-1-quic_sarishar@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-raydium-rm67200.c | 22 ++++++-------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-raydium-rm67200.c b/drivers/gpu/drm/panel/panel-raydium-rm67200.c
-index 64b685dc11f6..6d4d00d4cd74 100644
---- a/drivers/gpu/drm/panel/panel-raydium-rm67200.c
-+++ b/drivers/gpu/drm/panel/panel-raydium-rm67200.c
-@@ -318,6 +318,7 @@ static void w552793baa_setup(struct mipi_dsi_multi_context *ctx)
- static int raydium_rm67200_prepare(struct drm_panel *panel)
- {
- 	struct raydium_rm67200 *ctx = to_raydium_rm67200(panel);
-+	struct mipi_dsi_multi_context mctx = { .dsi = ctx->dsi };
- 	int ret;
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 9ebe4b573f7e..3a39a1be3f7c 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -5465,6 +5465,11 @@ static int wmi_process_mgmt_tx_comp(struct ath12k *ar, u32 desc_id,
+ 	dma_unmap_single(ar->ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
  
- 	ret = regulator_bulk_enable(ctx->num_supplies, ctx->supplies);
-@@ -328,6 +329,12 @@ static int raydium_rm67200_prepare(struct drm_panel *panel)
- 
- 	msleep(60);
- 
-+	ctx->panel_info->panel_setup(&mctx);
-+	mipi_dsi_dcs_exit_sleep_mode_multi(&mctx);
-+	mipi_dsi_msleep(&mctx, 120);
-+	mipi_dsi_dcs_set_display_on_multi(&mctx);
-+	mipi_dsi_msleep(&mctx, 30);
+ 	info = IEEE80211_SKB_CB(msdu);
++	memset(&info->status, 0, sizeof(info->status));
 +
- 	return 0;
- }
- 
-@@ -343,20 +350,6 @@ static int raydium_rm67200_unprepare(struct drm_panel *panel)
- 	return 0;
- }
- 
--static int raydium_rm67200_enable(struct drm_panel *panel)
--{
--	struct raydium_rm67200 *rm67200 = to_raydium_rm67200(panel);
--	struct mipi_dsi_multi_context ctx = { .dsi = rm67200->dsi };
--
--	rm67200->panel_info->panel_setup(&ctx);
--	mipi_dsi_dcs_exit_sleep_mode_multi(&ctx);
--	mipi_dsi_msleep(&ctx, 120);
--	mipi_dsi_dcs_set_display_on_multi(&ctx);
--	mipi_dsi_msleep(&ctx, 30);
--
--	return ctx.accum_err;
--}
--
- static int raydium_rm67200_disable(struct drm_panel *panel)
- {
- 	struct raydium_rm67200 *rm67200 = to_raydium_rm67200(panel);
-@@ -381,7 +374,6 @@ static const struct drm_panel_funcs raydium_rm67200_funcs = {
- 	.prepare = raydium_rm67200_prepare,
- 	.unprepare = raydium_rm67200_unprepare,
- 	.get_modes = raydium_rm67200_get_modes,
--	.enable = raydium_rm67200_enable,
- 	.disable = raydium_rm67200_disable,
- };
++	/* skip tx rate update from ieee80211_status*/
++	info->status.rates[0].idx = -1;
++
+ 	if ((!(info->flags & IEEE80211_TX_CTL_NO_ACK)) && !status)
+ 		info->flags |= IEEE80211_TX_STAT_ACK;
  
 -- 
 2.39.5
