@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A47335BA9;
-	Mon, 18 Aug 2025 13:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933A1335BA3;
+	Mon, 18 Aug 2025 13:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525148; cv=none; b=DDCvnmdGJpIMSx9VMMflxIBCFnAdFpTnwmOpCJ9Pfm9AC7snW506lnq2gprfwyO7hPdlT9DYvSMbwcd3aLfc32sWE2WP9tITJAGpJFcvuYyv2JhKaG0GwTdwybZnylw6uIYAXIwk9N8NUzEDsJVK2KXpH25pTO+t15w4ePBd4EE=
+	t=1755525151; cv=none; b=a2QNsXT6h6oyvSJiKj+6BclFb1egJQw9B+hULhR5To0SX3FSBV1iXWzOw15+6zCgxpmZWCotkdq+YvjUMhSER+CuHz81kWPLuGiQ1QrGToOt1v1oOD9O3598RLuZAJKfb3lJCtQGnozUgaTduvCQKGIqEKtmVTBryLPlNF5OXtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525148; c=relaxed/simple;
-	bh=r+uGZREiG8Qz/x8GdD4OBtCdK+1Eq3g9tT/xhyhGnl0=;
+	s=arc-20240116; t=1755525151; c=relaxed/simple;
+	bh=uKM9rMpQF1IMvPoAI4ergeVP002HV/qVfTHle9UsHno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JmmwpZpqiHB44NHi+SijqOTHm3flJlga+f8fTLOgJQw4xFu5C6XCg7iiWMzW1CsMURzCDwC3raGKcTHwvtJdvIrNS8i0pc77+Sp97qmXy18XkP2HNU9iWfL8ucM61N+x4f+HcUW04HW3jJc3eDJVeMaEhNbHvbPhXVfdaoZc3Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fgcMAOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eSl0fASBtD/iGaV33azKeNtlBC+mlFdB4ViRZ4LXZd3zcwaCSCsWryCoGRL5eI5H2Ml3i6y9Mk21k0h3AePm3X2Qyx66f+yXyk2BopkCGBMcNElF2dNJtacLEBTDTqtlcbSgF+hiCKSZ8UbZWaE/g+s5EzGHX8CjmO4hHiPOQMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjxooPO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fgcMAOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67F4C4CEEB;
-	Mon, 18 Aug 2025 13:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjxooPO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174F6C4CEEB;
+	Mon, 18 Aug 2025 13:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525148;
-	bh=r+uGZREiG8Qz/x8GdD4OBtCdK+1Eq3g9tT/xhyhGnl0=;
+	s=korg; t=1755525151;
+	bh=uKM9rMpQF1IMvPoAI4ergeVP002HV/qVfTHle9UsHno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fgcMAObU8KlyxoCg00Vu9YgbdlzzrVBF/tg995FUPHlA9Ae17P/rhWGPd+xItQQD
-	 vu8U6z6IzTu1MaA5Vq+KeQQuYMyOlvSoGwaO8wxdf9FieyJr/6Ao+yiMsgWIlSRFtG
-	 mHYY4i+foRRthyZFFiOhaZM0AXBb3DYHHeGP7xts=
+	b=XjxooPO1g2g9NhiuJc1mlrZiA9GtsE7REfGm2MuxDUCb8ZEyWPiSXJnMdrVRw4PmT
+	 Au/n/b7p2ArvJcZ2d+nF/9GyIwQlShUUF49twBLJ7Z/xS/4r6Y3ivucudbFTCwEar1
+	 M3Yv57fovMSLyno5xB66Pl+bNuPLtYKe43nF0elw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tuhaowen <tuhaowen@uniontech.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 166/570] PM: sleep: console: Fix the black screen issue
-Date: Mon, 18 Aug 2025 14:42:33 +0200
-Message-ID: <20250818124512.198608354@linuxfoundation.org>
+Subject: [PATCH 6.16 175/570] x86/sev/vc: Fix EFI runtime instruction emulation
+Date: Mon, 18 Aug 2025 14:42:42 +0200
+Message-ID: <20250818124512.540115635@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,75 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: tuhaowen <tuhaowen@uniontech.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-[ Upstream commit 4266e8fa56d3d982bf451d382a410b9db432015c ]
+[ Upstream commit 7b22e0432981c2fa230f1b493082b7e67112c4aa ]
 
-When the computer enters sleep status without a monitor
-connected, the system switches the console to the virtual
-terminal tty63(SUSPEND_CONSOLE).
+In case efi_mm is active go use the userspace instruction decoder which
+supports fetching instructions from active_mm.  This is needed to make
+instruction emulation work for EFI runtime code, so it can use CPUID and
+RDMSR.
 
-If a monitor is subsequently connected before waking up,
-the system skips the required VT restoration process
-during wake-up, leaving the console on tty63 instead of
-switching back to tty1.
+EFI runtime code uses the CPUID instruction to gather information about
+the environment it is running in, such as SEV being enabled or not, and
+choose (if needed) the SEV code path for ioport access.
 
-To fix this issue, a global flag vt_switch_done is introduced
-to record whether the system has successfully switched to
-the suspend console via vt_move_to_console() during suspend.
+EFI runtime code uses the RDMSR instruction to get the location of the
+CAA page (see SVSM spec, section 4.2 - "Post Boot").
 
-If the switch was completed, vt_switch_done is set to 1.
-Later during resume, this flag is checked to ensure that
-the original console is restored properly by calling
-vt_move_to_console(orig_fgconsole, 0).
+The big picture behind this is that the kernel needs to be able to
+properly handle #VC exceptions that come from EFI runtime services.
+Since EFI runtime services have a special page table mapping for the EFI
+virtual address space, the efi_mm context must be used when decoding
+instructions during #VC handling.
 
-This prevents scenarios where the resume logic skips console
-restoration due to incorrect detection of the console state,
-especially when a monitor is reconnected before waking up.
+  [ bp: Massage. ]
 
-Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
-Link: https://patch.msgid.link/20250611032345.29962-1-tuhaowen@uniontech.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Link: https://lore.kernel.org/20250626114014.373748-2-kraxel@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/console.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/coco/sev/vc-handle.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/power/console.c b/kernel/power/console.c
-index fcdf0e14a47d..19c48aa5355d 100644
---- a/kernel/power/console.c
-+++ b/kernel/power/console.c
-@@ -16,6 +16,7 @@
- #define SUSPEND_CONSOLE	(MAX_NR_CONSOLES-1)
+diff --git a/arch/x86/coco/sev/vc-handle.c b/arch/x86/coco/sev/vc-handle.c
+index 0989d98da130..faf1fce89ed4 100644
+--- a/arch/x86/coco/sev/vc-handle.c
++++ b/arch/x86/coco/sev/vc-handle.c
+@@ -17,6 +17,7 @@
+ #include <linux/mm.h>
+ #include <linux/io.h>
+ #include <linux/psp-sev.h>
++#include <linux/efi.h>
+ #include <uapi/linux/sev-guest.h>
  
- static int orig_fgconsole, orig_kmsg;
-+static bool vt_switch_done;
- 
- static DEFINE_MUTEX(vt_switch_mutex);
- 
-@@ -136,17 +137,21 @@ void pm_prepare_console(void)
- 	if (orig_fgconsole < 0)
- 		return;
- 
-+	vt_switch_done = true;
-+
- 	orig_kmsg = vt_kmsg_redirect(SUSPEND_CONSOLE);
- 	return;
+ #include <asm/init.h>
+@@ -178,9 +179,15 @@ static enum es_result __vc_decode_kern_insn(struct es_em_ctxt *ctxt)
+ 		return ES_OK;
  }
  
- void pm_restore_console(void)
++/*
++ * User instruction decoding is also required for the EFI runtime. Even though
++ * the EFI runtime is running in kernel mode, it uses special EFI virtual
++ * address mappings that require the use of efi_mm to properly address and
++ * decode.
++ */
+ static enum es_result vc_decode_insn(struct es_em_ctxt *ctxt)
  {
--	if (!pm_vt_switch())
-+	if (!pm_vt_switch() && !vt_switch_done)
- 		return;
- 
- 	if (orig_fgconsole >= 0) {
- 		vt_move_to_console(orig_fgconsole, 0);
- 		vt_kmsg_redirect(orig_kmsg);
- 	}
-+
-+	vt_switch_done = false;
- }
+-	if (user_mode(ctxt->regs))
++	if (user_mode(ctxt->regs) || mm_is_efi(current->active_mm))
+ 		return __vc_decode_user_insn(ctxt);
+ 	else
+ 		return __vc_decode_kern_insn(ctxt);
 -- 
 2.39.5
 
