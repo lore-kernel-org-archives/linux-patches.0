@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B428B2E22B0;
-	Mon, 18 Aug 2025 14:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A73A335BC1;
+	Mon, 18 Aug 2025 14:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526269; cv=none; b=KvcZo5rWF1ck95aN46a2yaewOT0e2JPdDr9JeMn7b0tHjEbZCG3xzSFzYSEXb6jFBff4Xnw6XsVobKRX8FC53gPEa77OObbv3+cFlegiLoqRa2uFoPk9rKYg4RlfDlNFR3S2RyhXM2yROP7SQqQK9gMdi/vPSykv6q36Hp+LCQg=
+	t=1755526273; cv=none; b=gg+jtcJhnGNN6T60K1gGEfdzKHYxHN8TTct3AKCnEJDG8e39WklseO1I3XXk/1dMDWxgG5kSDox+DgSvf87TN1qsRPW59q9+bCA/JQRURHgAiyukInTqgkzm+zdM9xgWYvU8+grM2PzVTiKkqkESqL5L6k217VDIze/A2C0Sqfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526269; c=relaxed/simple;
-	bh=jFfADVRw6EeStPOFMmEOezp5AMuOAnP6mOesNiYrZ+8=;
+	s=arc-20240116; t=1755526273; c=relaxed/simple;
+	bh=ukKQEB4QIYAe6IqOm6rVfBlqI+EwokLkv03dQmYg+2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqQIxuO0l45c9NKZs+SKFb8ZIAl2FM0vjnJHZ685bUYbdQuBad1FM2ZDgGq6m8odBn43a8FIJc2zKvwliKEAZ8DD9i6L75qZZZDuMmMgDtMwPj9hXKq6Uf2R50kV8C4+RrsWZevL84nUrcpruCzHjkx1zya/NSpywSGzL8kAuLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLTcviCg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tci5qFzdFyJ0hnphJAr1GC1wmiaPNWlue6P4YuUntUvUi/dJbEKZ6ojQXemmv1weOUA3ZUcGhEQWlB7vqHJwsrgkCqD78vXgpPyEW1YVZTkaZLaZXz7OUr1zPnun9xlw1cVkSXDJEBMn7furJVTP5Tb7N+Dqa2g0gz3fjXFoGLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvbMN1Om; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLTcviCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CBFC4CEEB;
-	Mon, 18 Aug 2025 14:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvbMN1Om"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10B2C4CEEB;
+	Mon, 18 Aug 2025 14:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526269;
-	bh=jFfADVRw6EeStPOFMmEOezp5AMuOAnP6mOesNiYrZ+8=;
+	s=korg; t=1755526273;
+	bh=ukKQEB4QIYAe6IqOm6rVfBlqI+EwokLkv03dQmYg+2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLTcviCgjxB3zSHwmj03zcIG85SJc2TzsCbyeoe7QpSMW8CAnY1hzYfEmrXLjjEv2
-	 tnfmejNBkRZ38+qPtW1jaV6OMc8qrruoh/U0wU4FQhLvD71pveNXQMs7GpYwVVMRM5
-	 hDVGzWhjHAggLNRjpJlgSIFCK0/G3jyw+2cel2no=
+	b=CvbMN1Omsprh/K0qQClyKbD+QougJ8Xj4UjdQfsvwDqZ5HP2qWFcEJapQkyCZJ/GQ
+	 3j6O7s7fNMPf2OuL2sYax1wbGMw1VoZCi/zHkN8fNypj5Y4IDiZBHntI90i8fOqepN
+	 Flrx1SKAC6s5bP7iAecHwLtyGiw3M2ZbR6mn41oQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinyu Liu <katieeliu@tencent.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.16 505/570] usb: core: config: Prevent OOB read in SS endpoint companion parsing
-Date: Mon, 18 Aug 2025 14:48:12 +0200
-Message-ID: <20250818124525.311369232@linuxfoundation.org>
+	Ricky Wu <ricky_wu@realtek.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.16 506/570] misc: rtsx: usb: Ensure mmc child device is active when card is present
+Date: Mon, 18 Aug 2025 14:48:13 +0200
+Message-ID: <20250818124525.347756510@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,41 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xinyu Liu <katieeliu@tencent.com>
+From: Ricky Wu <ricky_wu@realtek.com>
 
-commit cf16f408364efd8a68f39011a3b073c83a03612d upstream.
+commit 966c5cd72be8989c8a559ddef8e8ff07a37c5eb0 upstream.
 
-usb_parse_ss_endpoint_companion() checks descriptor type before length,
-enabling a potentially odd read outside of the buffer size.
+When a card is present in the reader, the driver currently defers
+autosuspend by returning -EAGAIN during the suspend callback to
+trigger USB remote wakeup signaling. However, this does not guarantee
+that the mmc child device has been resumed, which may cause issues if
+it remains suspended while the card is accessible.
+This patch ensures that all child devices, including the mmc host
+controller, are explicitly resumed before returning -EAGAIN. This
+fixes a corner case introduced by earlier remote wakeup handling,
+improving reliability of runtime PM when a card is inserted.
 
-Fix this up by checking the size first before looking at any of the
-fields in the descriptor.
-
-Signed-off-by: Xinyu Liu <katieeliu@tencent.com>
-Cc: stable <stable@kernel.org>
+Fixes: 883a87ddf2f1 ("misc: rtsx_usb: Use USB remote wakeup signaling for card insertion detection")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ricky Wu <ricky_wu@realtek.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20250711140143.2105224-1-ricky_wu@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/config.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/misc/cardreader/rtsx_usb.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -107,8 +107,14 @@ static void usb_parse_ss_endpoint_compan
- 	 */
- 	desc = (struct usb_ss_ep_comp_descriptor *) buffer;
+--- a/drivers/misc/cardreader/rtsx_usb.c
++++ b/drivers/misc/cardreader/rtsx_usb.c
+@@ -698,6 +698,12 @@ static void rtsx_usb_disconnect(struct u
+ }
  
--	if (desc->bDescriptorType != USB_DT_SS_ENDPOINT_COMP ||
--			size < USB_DT_SS_EP_COMP_SIZE) {
-+	if (size < USB_DT_SS_EP_COMP_SIZE) {
-+		dev_notice(ddev,
-+			   "invalid SuperSpeed endpoint companion descriptor "
-+			   "of length %d, skipping\n", size);
-+		return;
-+	}
+ #ifdef CONFIG_PM
++static int rtsx_usb_resume_child(struct device *dev, void *data)
++{
++	pm_request_resume(dev);
++	return 0;
++}
 +
-+	if (desc->bDescriptorType != USB_DT_SS_ENDPOINT_COMP) {
- 		dev_notice(ddev, "No SuperSpeed endpoint companion for config %d "
- 				" interface %d altsetting %d ep %d: "
- 				"using minimum values\n",
+ static int rtsx_usb_suspend(struct usb_interface *intf, pm_message_t message)
+ {
+ 	struct rtsx_ucr *ucr =
+@@ -713,8 +719,10 @@ static int rtsx_usb_suspend(struct usb_i
+ 			mutex_unlock(&ucr->dev_mutex);
+ 
+ 			/* Defer the autosuspend if card exists */
+-			if (val & (SD_CD | MS_CD))
++			if (val & (SD_CD | MS_CD)) {
++				device_for_each_child(&intf->dev, NULL, rtsx_usb_resume_child);
+ 				return -EAGAIN;
++			}
+ 		} else {
+ 			/* There is an ongoing operation*/
+ 			return -EAGAIN;
+@@ -724,12 +732,6 @@ static int rtsx_usb_suspend(struct usb_i
+ 	return 0;
+ }
+ 
+-static int rtsx_usb_resume_child(struct device *dev, void *data)
+-{
+-	pm_request_resume(dev);
+-	return 0;
+-}
+-
+ static int rtsx_usb_resume(struct usb_interface *intf)
+ {
+ 	device_for_each_child(&intf->dev, NULL, rtsx_usb_resume_child);
 
 
