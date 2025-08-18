@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B635335BCE;
-	Mon, 18 Aug 2025 13:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A1E335BAD;
+	Mon, 18 Aug 2025 13:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524935; cv=none; b=dIliSbSEK7VE0QPG3BSBuoVrInj3MINWHVwws3a0IBu4zk9aR27NU0QCQn6bgIo+ltfsUJSfc+jEa4MXpQO8k2Qamwx244p8QVPsU8832pO/tyuCs4dQNybhAZ1XV11ItmpVBha6a/rC6bHIaodD/4lvXRESazitalr8BkNwiL8=
+	t=1755524938; cv=none; b=foTWs1G4k2VVZizytOGdwXIpLfQ+xN1lvV5r4MfsFPsSU+GFOjPbTjBGf/R6moHcSL2T5cX7k+h2kWuBYMUwWe3qlt4FIX0Fxy71e50QFbxoa/Nxwz7CGsIk/eDiTTDkqtTR5eezNrH/ZePFNAoJuBtSLWtWWMcUtaFuDehqfto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524935; c=relaxed/simple;
-	bh=ARmU8zgW2r7t1gohITtcNd0NZyVlWx+GpSNsEq2u3Ck=;
+	s=arc-20240116; t=1755524938; c=relaxed/simple;
+	bh=iCiQqCxRVwebSnCb+irh3UxMsxxDfpimynne1PFep/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MJVI/WnfGE8gMELlhdlvGisI6m3lOKihlpc6LxY5aLsLpcgyfhydG7DNDHdVL0ayA+RHBE0umX+gVZ9Kat93CIyL0rBtytJ1C+QWB4MNdBVAH7QNXC8JkNQuuDZeFGJB5M0eCYOzwN5LigfbBrMsLRvynm3fXRFx4YfMJakqdRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/NmTcC+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JLocXEmx/7yO7K34LzQzUKpGfh90HV6tBh+0jJEf1JECy7+3mrmAzQSO4/oszUUulRN0xnPNPkLkZqlRS9L6vrJPUpDNQIQ3h5ygKXYOWCw+HANOwTEqTe8zzdSc7qcC158ki8GV7PFDFd81PI3B2zegfuNGPzjRhjZAEeWebWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCyKw7Sz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/NmTcC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09353C4CEEB;
-	Mon, 18 Aug 2025 13:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCyKw7Sz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5DAC4CEEB;
+	Mon, 18 Aug 2025 13:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524935;
-	bh=ARmU8zgW2r7t1gohITtcNd0NZyVlWx+GpSNsEq2u3Ck=;
+	s=korg; t=1755524938;
+	bh=iCiQqCxRVwebSnCb+irh3UxMsxxDfpimynne1PFep/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/NmTcC+t62C7RH5grANAk+dXf84ldghA+JKExuDdoWI36krrMP6kNGcY/pfh7HRe
-	 TLAKQw+RBHLl+oiMuy+LZiT0NcJoQ/kOOkCw7tjSMz0EOto+Jfsn7lSHxTILOfrp0y
-	 OsMey49Pb87glJnSY5Rean2SkxcbBVdtNxAp06Jo=
+	b=GCyKw7SzxeW52PuDblbC9qPZMR6dfAc0cJOh/zO3UMrAUnLh5dBYwcK/9Crzf+Nue
+	 epc2vWyio1cKk4jg7m2GKmwcDtKi83qrcwHfCzcBG5z5B7uOn3jmcOJoANu1kgYY7m
+	 1u3I4nIdCAcNNcXNLpKpvNOQQl+5bIusMH6c4f+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarah Newman <srn@prgmr.com>,
-	Lars Ellenberg <lars@linbit.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 109/570] drbd: add missing kref_get in handle_write_conflicts
-Date: Mon, 18 Aug 2025 14:41:36 +0200
-Message-ID: <20250818124510.004075890@linuxfoundation.org>
+Subject: [PATCH 6.16 110/570] hfs: fix not erasing deleted b-tree node issue
+Date: Mon, 18 Aug 2025 14:41:37 +0200
+Message-ID: <20250818124510.042369517@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -47,67 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sarah Newman <srn@prgmr.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 00c9c9628b49e368d140cfa61d7df9b8922ec2a8 ]
+[ Upstream commit d3ed6d6981f4756f145766753c872482bc3b28d3 ]
 
-With `two-primaries` enabled, DRBD tries to detect "concurrent" writes
-and handle write conflicts, so that even if you write to the same sector
-simultaneously on both nodes, they end up with the identical data once
-the writes are completed.
+The generic/001 test of xfstests suite fails and corrupts
+the HFS volume:
 
-In handling "superseeded" writes, we forgot a kref_get,
-resulting in a premature drbd_destroy_device and use after free,
-and further to kernel crashes with symptoms.
+sudo ./check generic/001
+FSTYP         -- hfs
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2>
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-Relevance: No one should use DRBD as a random data generator, and apparently
-all users of "two-primaries" handle concurrent writes correctly on layer up.
-That is cluster file systems use some distributed lock manager,
-and live migration in virtualization environments stops writes on one node
-before starting writes on the other node.
+generic/001 32s ... _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
+(see /home/slavad/XFSTESTS-2/xfstests-dev/results//generic/001.full for details)
 
-Which means that other than for "test cases",
-this code path is never taken in real life.
+Ran: generic/001
+Failures: generic/001
+Failed 1 of 1 tests
 
-FYI, in DRBD 9, things are handled differently nowadays.  We still detect
-"write conflicts", but no longer try to be smart about them.
-We decided to disconnect hard instead: upper layers must not submit concurrent
-writes. If they do, that's their fault.
+fsck.hfs -d -n ./test-image.bin
+** ./test-image.bin (NO WRITE)
+	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+   Executing fsck_hfs (version 540.1-Linux).
+** Checking HFS volume.
+   The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+   Unused node is not erased (node = 2)
+   Unused node is not erased (node = 4)
+<skipped>
+   Unused node is not erased (node = 253)
+   Unused node is not erased (node = 254)
+   Unused node is not erased (node = 255)
+   Unused node is not erased (node = 256)
+** Checking catalog hierarchy.
+** Checking volume bitmap.
+** Checking volume information.
+   Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
+                  CBTStat = 0x0004 CatStat = 0x00000000
+** The volume untitled was found corrupt and needs to be repaired.
+	volume type is HFS
+	primary MDB is at block 2 0x02
+	alternate MDB is at block 20971518 0x13ffffe
+	primary VHB is at block 0 0x00
+	alternate VHB is at block 0 0x00
+	sector size = 512 0x200
+	VolumeObject flags = 0x19
+	total sectors for volume = 20971520 0x1400000
+	total sectors for embedded volume = 0 0x00
 
-Signed-off-by: Sarah Newman <srn@prgmr.com>
-Signed-off-by: Lars Ellenberg <lars@linbit.com>
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Link: https://lore.kernel.org/r/20250627095728.800688-1-christoph.boehmwalder@linbit.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This patch adds logic of clearing the deleted b-tree node.
+
+sudo ./check generic/001
+FSTYP         -- hfs
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/001 9s ...  32s
+Ran: generic/001
+Passed all 1 tests
+
+fsck.hfs -d -n ./test-image.bin
+** ./test-image.bin (NO WRITE)
+	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+   Executing fsck_hfs (version 540.1-Linux).
+** Checking HFS volume.
+   The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking catalog hierarchy.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume untitled appears to be OK.
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20250430001211.1912533-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_receiver.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/hfs/bnode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
-index e5a2e5f7887b..975024cf03c5 100644
---- a/drivers/block/drbd/drbd_receiver.c
-+++ b/drivers/block/drbd/drbd_receiver.c
-@@ -2500,7 +2500,11 @@ static int handle_write_conflicts(struct drbd_device *device,
- 			peer_req->w.cb = superseded ? e_send_superseded :
- 						   e_send_retry_write;
- 			list_add_tail(&peer_req->w.list, &device->done_ee);
--			queue_work(connection->ack_sender, &peer_req->peer_device->send_acks_work);
-+			/* put is in drbd_send_acks_wf() */
-+			kref_get(&device->kref);
-+			if (!queue_work(connection->ack_sender,
-+					&peer_req->peer_device->send_acks_work))
-+				kref_put(&device->kref, drbd_destroy_device);
- 
- 			err = -ENOENT;
- 			goto out;
+diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
+index 1dac5d9c055f..e8cd1a31f247 100644
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -574,6 +574,7 @@ void hfs_bnode_put(struct hfs_bnode *node)
+ 		if (test_bit(HFS_BNODE_DELETED, &node->flags)) {
+ 			hfs_bnode_unhash(node);
+ 			spin_unlock(&tree->hash_lock);
++			hfs_bnode_clear(node, 0, tree->node_size);
+ 			hfs_bmap_free(node);
+ 			hfs_bnode_free(node);
+ 			return;
 -- 
 2.39.5
 
