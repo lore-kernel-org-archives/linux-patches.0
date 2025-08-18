@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8729722AE7A;
-	Mon, 18 Aug 2025 13:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2313090C5;
+	Mon, 18 Aug 2025 13:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524745; cv=none; b=jnUPRswwHwnDeBY7VM85h4Bwk3v12DcFNwgrwyLa50RHUZPHw9vGhhkKtEMIg3LErzT8zrN/GIS15mmp0K56ABl3VddWmYH3X9dwrJONwDB4Mpd8JFz2Y8Rt5IqNcV4hyUq6NUYhERkgAmqPapQJ3jka5/Zl4P3eMyBTH2QLi2M=
+	t=1755524748; cv=none; b=jKd9qXhKVUqN0gEPGiKOqQLhgqNcs3fGASW56x8cI7YuB6uYeErBgi2W1yghVBkDNElzArhUH0ZT3yY4WNM9stfBhVVhbbEgahBi6itvSWU4AJn7bRH2I75jemKFs/7G8k+uzC0/eLD2TLPKiIRIfmhLVM3wPcMlQCKuToZUUro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524745; c=relaxed/simple;
-	bh=I5HNoZ27SVtyZB9FQ1tmtqtvEKE3Nf5gG5cPpfhqBII=;
+	s=arc-20240116; t=1755524748; c=relaxed/simple;
+	bh=t0GHapbK5dS2q1niyIvCFURZCgmLdmn/9Vj+7sY3a6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGbNU7cnsWoM2V9CtxiON/N9zGXoWb/j1j/NomWPlEsMFCiOtW+f/CTtMrBo9NU8EwzJIoJQSw/x1JRlCO7/bOTsMLJNVKkirGuGCJcfxq4vK3TLnPW4ryKpIjVILk8yb2X22IhhNh/BPweFM/FS3PqkxG6yyz1P8U8F2lMFfDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hu3xDs5m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdNvy6yk0UoslQyhZIU82dET5I/3HtZRJkGXLNcMZy0qqiJ/ao3vpidmz0Vv37laSM6l/EhFYk6uQ+4gF2GAQ2Xhk3qdndDGD66URacZCEO0EtM99YtBEN3M76bnav/rytZeZWoTnPuhsVf1m6kmkPfS0Ptfe+UB9+AHC7Vb+mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmF+y0g6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hu3xDs5m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF134C4CEEB;
-	Mon, 18 Aug 2025 13:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmF+y0g6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4BEC4CEEB;
+	Mon, 18 Aug 2025 13:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524745;
-	bh=I5HNoZ27SVtyZB9FQ1tmtqtvEKE3Nf5gG5cPpfhqBII=;
+	s=korg; t=1755524748;
+	bh=t0GHapbK5dS2q1niyIvCFURZCgmLdmn/9Vj+7sY3a6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hu3xDs5mTtZDsLCMeUBnEuGMDpgwEcY/3HowGwDx5tJxOkJ3g2gZVfwtMbYZ911a4
-	 F22Gi0Zkuouzc21+1lBNQU1AjpjxRzunv+JU9wfeKIpWaIVMvGFErBqur8g+XagQ5/
-	 NrOQBfHh65X3Ga2bm4hbG+kRpUBxKa/b9QHOw5PA=
+	b=qmF+y0g6U8IaKAt8RJwDlyrKLvp4ZGRjJWwT38TsxAzcVoKH5RXnZ9Y9h6d8ySLFd
+	 42tTHmMXTvkz0kicK2JhP0BEgZNfyvu9We/9ADUOGdtVIoqwWLsKdWNjEv/UYtQi8e
+	 AZnklGtJsPLomchCVh2++DDQKHVniioPwtj1KEyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yevhen Kondrashyn <e.kondrashyn@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jiayi Li <lijiayi@kylinos.cn>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.16 049/570] Documentation: ACPI: Fix parent device references
-Date: Mon, 18 Aug 2025 14:40:36 +0200
-Message-ID: <20250818124507.702328644@linuxfoundation.org>
+Subject: [PATCH 6.16 050/570] ACPI: processor: perflib: Fix initial _PPC limit application
+Date: Mon, 18 Aug 2025 14:40:37 +0200
+Message-ID: <20250818124507.741654000@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,72 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jiayi Li <lijiayi@kylinos.cn>
 
-commit e65cb011349e653ded541dddd6469c2ca813edcf upstream.
+commit d33bd88ac0ebb49e7f7c8f29a8c7ee9eae85d765 upstream.
 
-The _CRS resources in many cases want to have ResourceSource field
-to be a type of ACPI String. This means that to compile properly
-we need to enclosure the name path into double quotes. This will
-in practice defer the interpretation to a run-time stage, However,
-this may be interpreted differently on different OSes and ACPI
-interpreter implementations. In particular ACPICA might not correctly
-recognize the leading '^' (caret) character and will not resolve
-the relative name path properly. On top of that, this piece may be
-used in SSDTs which are loaded after the DSDT and on itself may also
-not resolve relative name paths outside of their own scopes.
-With this all said, fix documentation to use fully-qualified name
-paths always to avoid any misinterpretations, which is proven to
-work.
+If the BIOS sets a _PPC frequency limit upfront, it will fail to take
+effect due to a call ordering issue.  Namely, freq_qos_update_request()
+is called before freq_qos_add_request() for the given request causing
+the constraint update to be ignored.  The call sequence in question is
+as follows:
 
-Fixes: 8eb5c87a92c0 ("i2c: add ACPI support for I2C mux ports")
-Reported-by: Yevhen Kondrashyn <e.kondrashyn@gmail.com>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20250710170225.961303-1-andriy.shevchenko@linux.intel.com
+cpufreq_policy_online()
+  acpi_cpufreq_cpu_init()
+    acpi_processor_register_performance()
+      acpi_processor_get_performance_info()
+        acpi_processor_get_platform_limit()
+         freq_qos_update_request(&perflib_req) <- inactive QoS request
+  blocking_notifier_call_chain(&cpufreq_policy_notifier_list,
+                               CPUFREQ_CREATE_POLICY)
+    acpi_processor_notifier()
+      acpi_processor_ppc_init()
+        freq_qos_add_request(&perflib_req) <- QoS request activation
+
+Address this by adding an acpi_processor_get_platform_limit() call
+to acpi_processor_ppc_init(), after the perflib_req activation via
+freq_qos_add_request(), which causes the initial _PPC limit to be
+picked up as appropriate.  However, also ensure that the _PPC limit
+will not be picked up in the cases when the cpufreq driver does not
+call acpi_processor_register_performance() by adding a pr->performance
+check to the related_cpus loop in acpi_processor_ppc_init().
+
+Fixes: d15ce412737a ("ACPI: cpufreq: Switch to QoS requests instead of cpufreq notifier")
+Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
+Link: https://patch.msgid.link/20250721032606.3459369-1-lijiayi@kylinos.cn
+[ rjw: Consolidate pr-related checks in acpi_processor_ppc_init() ]
+[ rjw: Subject and changelog adjustments ]
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 2d8b39a62a5d ACPI: processor: Avoid NULL pointer dereferences at init time
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 3000ce3c52f8 cpufreq: Use per-policy frequency QoS
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: a1bb46c36ce3 ACPI: processor: Add QoS requests for all CPUs
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/firmware-guide/acpi/i2c-muxes.rst |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/acpi/processor_perflib.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/Documentation/firmware-guide/acpi/i2c-muxes.rst
-+++ b/Documentation/firmware-guide/acpi/i2c-muxes.rst
-@@ -14,7 +14,7 @@ Consider this topology::
-     |      |   | 0x70 |--CH01--> i2c client B (0x50)
-     +------+   +------+
+--- a/drivers/acpi/processor_perflib.c
++++ b/drivers/acpi/processor_perflib.c
+@@ -173,11 +173,14 @@ void acpi_processor_ppc_init(struct cpuf
+ {
+ 	unsigned int cpu;
  
--which corresponds to the following ASL::
-+which corresponds to the following ASL (in the scope of \_SB)::
++	if (ignore_ppc == 1)
++		return;
++
+ 	for_each_cpu(cpu, policy->related_cpus) {
+ 		struct acpi_processor *pr = per_cpu(processors, cpu);
+ 		int ret;
  
-     Device (SMB1)
-     {
-@@ -24,7 +24,7 @@ which corresponds to the following ASL::
-             Name (_HID, ...)
-             Name (_CRS, ResourceTemplate () {
-                 I2cSerialBus (0x70, ControllerInitiated, I2C_SPEED,
--                            AddressingMode7Bit, "^SMB1", 0x00,
-+                            AddressingMode7Bit, "\\_SB.SMB1", 0x00,
-                             ResourceConsumer,,)
-             }
+-		if (!pr)
++		if (!pr || !pr->performance)
+ 			continue;
  
-@@ -37,7 +37,7 @@ which corresponds to the following ASL::
-                     Name (_HID, ...)
-                     Name (_CRS, ResourceTemplate () {
-                         I2cSerialBus (0x50, ControllerInitiated, I2C_SPEED,
--                                    AddressingMode7Bit, "^CH00", 0x00,
-+                                    AddressingMode7Bit, "\\_SB.SMB1.CH00", 0x00,
-                                     ResourceConsumer,,)
-                     }
-                 }
-@@ -52,7 +52,7 @@ which corresponds to the following ASL::
-                     Name (_HID, ...)
-                     Name (_CRS, ResourceTemplate () {
-                         I2cSerialBus (0x50, ControllerInitiated, I2C_SPEED,
--                                    AddressingMode7Bit, "^CH01", 0x00,
-+                                    AddressingMode7Bit, "\\_SB.SMB1.CH01", 0x00,
-                                     ResourceConsumer,,)
-                     }
-                 }
+ 		/*
+@@ -193,6 +196,11 @@ void acpi_processor_ppc_init(struct cpuf
+ 		if (ret < 0)
+ 			pr_err("Failed to add freq constraint for CPU%d (%d)\n",
+ 			       cpu, ret);
++
++		ret = acpi_processor_get_platform_limit(pr);
++		if (ret)
++			pr_err("Failed to update freq constraint for CPU%d (%d)\n",
++			       cpu, ret);
+ 	}
+ }
+ 
 
 
