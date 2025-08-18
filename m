@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284C8321F43;
-	Mon, 18 Aug 2025 13:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0D3321F43;
+	Mon, 18 Aug 2025 13:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524739; cv=none; b=rAtX6viyyvuH8Pa2zNoI/YQSZ61E24N78sZZrMknbgMugyahAnfcKoGjgNqHkUMtBNO2QhFSxS+sAGj8RR60GAJBqtJb7CDJoacMz7RECHYWefUclKy8Giiu7Z7tqUTUzYy4jhic0aWd8WCLFA68wKuCZxyfZI1Z2QMSRVuMGSI=
+	t=1755524742; cv=none; b=A+AkNlx6ydaTU3/JzdpoyV6zSLTRqN9h6ew5oWF95mU2bzPJM+fmc7zpwSOlqNciXF6Btdt9TYmqLCtt7dc9cBTbyJisod7ilIi7Qx8+KV/b6dn+6B2M/bd8Tl8SPAqIsAbG9g2d32o5r22zqZOWi93v/porQghVV3AvUjgvvJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524739; c=relaxed/simple;
-	bh=/pbhzvPcwzz33B+kPqnUBWx983wcT9cgHpJj7YOOWW4=;
+	s=arc-20240116; t=1755524742; c=relaxed/simple;
+	bh=xv3I08wWxP2VNEENmVnkyAgSOO6fhrEXO38hyk2padw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKklx0OHsZrDFm+WvZnkg7UwavZO8IkM+vs+wB8wukzCc/ycyJXuK5R0cSKYRHy5TrxEGXneQv/0bWUI57V95aB5u9cPGaz/33lkymRiSVUb3WgCcok5a4/pOOssjzQTenxpTDwaBR95YlJaiehkbScvamqvByTW8S6hO9F0THk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sl/y/m7L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/FXcxXko/7Z0gE2Sv0CoJqJGiOjvv2I0VfhtJCikYwvNNprKcD50ZnxEmAUHIIQ4lWDl5A/HUvTqyHbKTlaMrq/OKvKW9bectY3ypvo+Sw6m+7LccJTXTzVpa3JT4e+13tPOH+pKN0Y3883zv8+a5AxeiBGs7CI12txTsxmSjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOtCLPNZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sl/y/m7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A0CC4CEEB;
-	Mon, 18 Aug 2025 13:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOtCLPNZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E063C4CEEB;
+	Mon, 18 Aug 2025 13:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524739;
-	bh=/pbhzvPcwzz33B+kPqnUBWx983wcT9cgHpJj7YOOWW4=;
+	s=korg; t=1755524742;
+	bh=xv3I08wWxP2VNEENmVnkyAgSOO6fhrEXO38hyk2padw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sl/y/m7LJaO9BetoK3CYV8cqWmT4Fy4ivC2wq+YNKExzC7tiw2fqi9rVpJ/a9krgN
-	 MNlbGW4M7L1D462OZOKvDEOVUemYrKchfVQn1KJqkTNmIkxYNzkBkVXkhfbouLULxt
-	 qhCwlYmf1JE3zHtuIUFap0MuRcWAe0WhfvHLzZp4=
+	b=dOtCLPNZbNUSWfYHI4S56QDgtacw4/L0wGM8SKqOIH++5GKy8OIcKfYUj1b7DCTUv
+	 Ef7vv3r/TIH7ris9x9T35EDL7ySd3J4INLgfgiLthWHwxTuhz/1r85VFUMn7d3p8ey
+	 l6OE/Qi8KVTDJYIpdd465DX82MuAHFkbgu7/H7os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.16 047/570] lib/crypto: x86/poly1305: Fix performance regression on short messages
-Date: Mon, 18 Aug 2025 14:40:34 +0200
-Message-ID: <20250818124507.627592923@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.16 048/570] fs: Prevent file descriptor table allocations exceeding INT_MAX
+Date: Mon, 18 Aug 2025 14:40:35 +0200
+Message-ID: <20250818124507.664671934@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,66 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Sasha Levin <sashal@kernel.org>
 
-commit 9f65592b7e1f24569bb6ced064df5b4319f725ce upstream.
+commit 04a2c4b4511d186b0fce685da21085a5d4acd370 upstream.
 
-Restore the len >= 288 condition on using the AVX implementation, which
-was incidentally removed by commit 318c53ae02f2 ("crypto: x86/poly1305 -
-Add block-only interface").  This check took into account the overhead
-in key power computation, kernel-mode "FPU", and tail handling
-associated with the AVX code.  Indeed, restoring this check slightly
-improves performance for len < 256 as measured using poly1305_kunit on
-an "AMD Ryzen AI 9 365" (Zen 5) CPU:
+When sysctl_nr_open is set to a very high value (for example, 1073741816
+as set by systemd), processes attempting to use file descriptors near
+the limit can trigger massive memory allocation attempts that exceed
+INT_MAX, resulting in a WARNING in mm/slub.c:
 
-    Length      Before       After
-    ======  ==========  ==========
-         1     30 MB/s     36 MB/s
-        16    516 MB/s    598 MB/s
-        64   1700 MB/s   1882 MB/s
-       127   2265 MB/s   2651 MB/s
-       128   2457 MB/s   2827 MB/s
-       200   2702 MB/s   3238 MB/s
-       256   3841 MB/s   3768 MB/s
-       511   4580 MB/s   4585 MB/s
-       512   5430 MB/s   5398 MB/s
-      1024   7268 MB/s   7305 MB/s
-      3173   8999 MB/s   8948 MB/s
-      4096   9942 MB/s   9921 MB/s
-     16384  10557 MB/s  10545 MB/s
+  WARNING: CPU: 0 PID: 44 at mm/slub.c:5027 __kvmalloc_node_noprof+0x21a/0x288
 
-While the optimal threshold for this CPU might be slightly lower than
-288 (see the len == 256 case), other CPUs would need to be tested too,
-and these sorts of benchmarks can underestimate the true cost of
-kernel-mode "FPU".  Therefore, for now just restore the 288 threshold.
+This happens because kvmalloc_array() and kvmalloc() check if the
+requested size exceeds INT_MAX and emit a warning when the allocation is
+not flagged with __GFP_NOWARN.
 
-Fixes: 318c53ae02f2 ("crypto: x86/poly1305 - Add block-only interface")
+Specifically, when nr_open is set to 1073741816 (0x3ffffff8) and a
+process calls dup2(oldfd, 1073741880), the kernel attempts to allocate:
+- File descriptor array: 1073741880 * 8 bytes = 8,589,935,040 bytes
+- Multiple bitmaps: ~400MB
+- Total allocation size: > 8GB (exceeding INT_MAX = 2,147,483,647)
+
+Reproducer:
+1. Set /proc/sys/fs/nr_open to 1073741816:
+   # echo 1073741816 > /proc/sys/fs/nr_open
+
+2. Run a program that uses a high file descriptor:
+   #include <unistd.h>
+   #include <sys/resource.h>
+
+   int main() {
+       struct rlimit rlim = {1073741824, 1073741824};
+       setrlimit(RLIMIT_NOFILE, &rlim);
+       dup2(2, 1073741880);  // Triggers the warning
+       return 0;
+   }
+
+3. Observe WARNING in dmesg at mm/slub.c:5027
+
+systemd commit a8b627a introduced automatic bumping of fs.nr_open to the
+maximum possible value. The rationale was that systems with memory
+control groups (memcg) no longer need separate file descriptor limits
+since memory is properly accounted. However, this change overlooked
+that:
+
+1. The kernel's allocation functions still enforce INT_MAX as a maximum
+   size regardless of memcg accounting
+2. Programs and tests that legitimately test file descriptor limits can
+   inadvertently trigger massive allocations
+3. The resulting allocations (>8GB) are impractical and will always fail
+
+systemd's algorithm starts with INT_MAX and keeps halving the value
+until the kernel accepts it. On most systems, this results in nr_open
+being set to 1073741816 (0x3ffffff8), which is just under 1GB of file
+descriptors.
+
+While processes rarely use file descriptors near this limit in normal
+operation, certain selftests (like
+tools/testing/selftests/core/unshare_test.c) and programs that test file
+descriptor limits can trigger this issue.
+
+Fix this by adding a check in alloc_fdtable() to ensure the requested
+allocation size does not exceed INT_MAX. This causes the operation to
+fail with -EMFILE instead of triggering a kernel warning and avoids the
+impractical >8GB memory allocation request.
+
+Fixes: 9cfe015aa424 ("get rid of NR_OPEN and introduce a sysctl_nr_open")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20250706231100.176113-6-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20250629074021.1038845-1-sashal@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/lib/crypto/poly1305_glue.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/file.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/arch/x86/lib/crypto/poly1305_glue.c
-+++ b/arch/x86/lib/crypto/poly1305_glue.c
-@@ -98,7 +98,15 @@ void poly1305_blocks_arch(struct poly130
- 	BUILD_BUG_ON(SZ_4K < POLY1305_BLOCK_SIZE ||
- 		     SZ_4K % POLY1305_BLOCK_SIZE);
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -197,6 +197,21 @@ static struct fdtable *alloc_fdtable(uns
+ 			return ERR_PTR(-EMFILE);
+ 	}
  
 +	/*
-+	 * The AVX implementations have significant setup overhead (e.g. key
-+	 * power computation, kernel FPU enabling) which makes them slower for
-+	 * short messages.  Fall back to the scalar implementation for messages
-+	 * shorter than 288 bytes, unless the AVX-specific key setup has already
-+	 * been performed (indicated by ctx->is_base2_26).
++	 * Check if the allocation size would exceed INT_MAX. kvmalloc_array()
++	 * and kvmalloc() will warn if the allocation size is greater than
++	 * INT_MAX, as filp_cachep objects are not __GFP_NOWARN.
++	 *
++	 * This can happen when sysctl_nr_open is set to a very high value and
++	 * a process tries to use a file descriptor near that limit. For example,
++	 * if sysctl_nr_open is set to 1073741816 (0x3ffffff8) - which is what
++	 * systemd typically sets it to - then trying to use a file descriptor
++	 * close to that value will require allocating a file descriptor table
++	 * that exceeds 8GB in size.
 +	 */
- 	if (!static_branch_likely(&poly1305_use_avx) ||
-+	    (len < POLY1305_BLOCK_SIZE * 18 && !ctx->is_base2_26) ||
- 	    unlikely(!irq_fpu_usable())) {
- 		convert_to_base2_64(ctx);
- 		poly1305_blocks_x86_64(ctx, inp, len, padbit);
++	if (unlikely(nr > INT_MAX / sizeof(struct file *)))
++		return ERR_PTR(-EMFILE);
++
+ 	fdt = kmalloc(sizeof(struct fdtable), GFP_KERNEL_ACCOUNT);
+ 	if (!fdt)
+ 		goto out;
 
 
