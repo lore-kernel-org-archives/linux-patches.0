@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D384431984A;
-	Mon, 18 Aug 2025 12:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771EA1E51FE;
+	Mon, 18 Aug 2025 12:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521698; cv=none; b=QvA7TyGD+1HRTicWWJR6OY2Cdpl9J9U1hH6ZbAa6Gfp3NpZdOgJUYZoxGmeyoF+zLhYGPU2U9CJdjG57cw0zLuD3lbQWOmnpBIPbnr31nIEDO2I5ChY6mu7Rsh302cS3gs+rdcwC8n9HjivOmiilvPpga0RtgcVt3YsjqRNto5k=
+	t=1755521702; cv=none; b=VLRQEvuyc6WpCKrRhxiixBv2ZxDBzeBYR1vemRM5/CzPxHqQMvtAmPbLNjDRFJfxNk80VuBO18GbLx+O9JdCZKX3veYbo2jLb+IVSmEOGj9ZoQvBtWMNjs8/oOwtKF0CNPZYyEoqLcmqmHuqioE3ICVD27SV7pdbRNqurmfMnvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521698; c=relaxed/simple;
-	bh=tmn3KtJaDc4Jb8c+3Puqzp3gPdO+l2CfYGYbPWbOwDQ=;
+	s=arc-20240116; t=1755521702; c=relaxed/simple;
+	bh=PnWdPjZR76sYsuBedlmCJjRCTkk50Emb+GyARMF3kdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LuluuTHhzXe8MHgxU3eULeN1Oo8oRi/CctyOyrgvbCLWS2fkJbdc6f0kBxzLJVeMFfDuBi0cvhtscLkg54BmG7aky5//EtHbYNlnTsn3wJ0ZBrOAuebUApSpThiqgr1pa7ZwJShOZvOyikHP7VME4wL8//C0uveGvevIrCHiJqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIzSpuPd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RMhpubNMtpgQDse5l4WfMbfahrFWm8ALrE8LswlTL7B2G1bkrEJLyPxyF7hnsSc5dNaHbsylrRXZmJbQ6dlBB8en/AJvwuEgMJIO0AXDCmrBcl2YOWyadK/XfMjpSGYC1+lZLokypQxU+2centepWjf4g/RfbzEfsZw4H3BDi8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLGtgr/6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIzSpuPd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42528C4CEEB;
-	Mon, 18 Aug 2025 12:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLGtgr/6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C39C4CEEB;
+	Mon, 18 Aug 2025 12:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521698;
-	bh=tmn3KtJaDc4Jb8c+3Puqzp3gPdO+l2CfYGYbPWbOwDQ=;
+	s=korg; t=1755521702;
+	bh=PnWdPjZR76sYsuBedlmCJjRCTkk50Emb+GyARMF3kdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIzSpuPd+237diuYDrhxQ+On/+HCpYERdC+gv+NeFi6JEU9AKSvOJITx6z7/wNH4V
-	 8WJpevTU7Mix+lFe7JN77n0w3IaL6AgUKE79c2zO/e3AFt8dVsdfFet/az2ZXdUC80
-	 zjrUOwU5RFVIaZmZXodmVJS0fn87IGoHhddTIFiY=
+	b=xLGtgr/6DsHYrmaWkwbthqsY0omIfZV/Oo8VWd9exySgFszPq7unUMxYehB1rXVBq
+	 C4NKYw5jSIqQAoYE8Dk7ROSBOI1MxzcQ+Qw5UZNNFYjZtGKuBGLTl7DV5I3GfuwdDU
+	 +GDdKCIAW1oNOKgLIdt+xC4pQZlRo97DJjk/UhWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Berglund <adam.f.berglund@hotmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hansg@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Prashant Malani <pmalani@google.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/444] platform/x86/amd: pmc: Add Lenovo Yoga 6 13ALC6 to pmc quirk list
-Date: Mon, 18 Aug 2025 14:42:02 +0200
-Message-ID: <20250818124452.543854419@linuxfoundation.org>
+Subject: [PATCH 6.12 097/444] cpufreq: CPPC: Mark driver with NEED_UPDATE_LIMITS flag
+Date: Mon, 18 Aug 2025 14:42:03 +0200
+Message-ID: <20250818124452.580267014@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -47,56 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Prashant Malani <pmalani@google.com>
 
-[ Upstream commit 4ff3aeb664f7dfe824ba91ffb0b203397a8d431e ]
+[ Upstream commit 0a1416a49e63c320f6e6c1c8d07e1b58c0d4a3f3 ]
 
-The Lenovo Yoga 6 13ACL6 82ND has a similar BIOS problem as other Lenovo
-laptops from that vintage that causes a rather long resume from suspend.
+AMU counters on certain CPPC-based platforms tend to yield inaccurate
+delivered performance measurements on systems that are idle/mostly idle.
+This results in an inaccurate frequency being stored by cpufreq in its
+policy structure when the CPU is brought online. [1]
 
-Add it to the quirk list that manipulates the scratch register to avoid
-the issue.
+Consequently, if the userspace governor tries to set the frequency to a
+new value, there is a possibility that it would be the erroneous value
+stored earlier. In such a scenario, cpufreq would assume that the
+requested frequency has already been set and return early, resulting in
+the correct/new frequency request never making it to the hardware.
 
-Reported-by: Adam Berglund <adam.f.berglund@hotmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4434
-Tested-by: Adam Berglund <adam.f.berglund@hotmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Link: https://lore.kernel.org/r/20250718172307.1928744-1-superm1@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Since the operating frequency is liable to this sort of inconsistency,
+mark the CPPC driver with CPUFREQ_NEED_UPDATE_LIMITS so that it is always
+invoked when a target frequency update is requested.
+
+Link: https://lore.kernel.org/linux-pm/20250619000925.415528-3-pmalani@google.com/ [1]
+Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Prashant Malani <pmalani@google.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20250722055611.130574-2-pmalani@google.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/cpufreq/cppc_cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index 7ed12c1d3b34..04686ae1e976 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -189,6 +189,15 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
- 		}
- 	},
-+	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
-+	{
-+		.ident = "Lenovo Yoga 6 13ALC6",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
-+		}
-+	},
- 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
- 	{
- 		.ident = "HP Laptop 15s-eq2xxx",
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index 36ea181260c7..8d5279c21e6c 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -841,7 +841,7 @@ static struct freq_attr *cppc_cpufreq_attr[] = {
+ };
+ 
+ static struct cpufreq_driver cppc_cpufreq_driver = {
+-	.flags = CPUFREQ_CONST_LOOPS,
++	.flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
+ 	.verify = cppc_verify_policy,
+ 	.target = cppc_cpufreq_set_target,
+ 	.get = cppc_cpufreq_get_rate,
 -- 
 2.39.5
 
