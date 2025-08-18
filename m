@@ -1,52 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63910335BA0;
-	Mon, 18 Aug 2025 13:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890941DC997;
+	Mon, 18 Aug 2025 13:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524500; cv=none; b=s2a09oCgqpM0esmUuASB6A/pAw3cTAu1JZ0kvyPoyzTclTjK+Hqa3laRP1mxexcirO2vvjTVAp6uoibQn2/3x54mOI6w3CeJxJnGwdXtgkTBdmj+NXZrnKpFabgaZCj4gNw5PKRipD6gcCe2uSYzE5AQiVU1PnxBiaae4vtS3RM=
+	t=1755524503; cv=none; b=GPhaWJ06rdqaaLjR0NxlwlxmVHv+SI31X4E1YzTVmeIkGNR1zIeo3qQy+uYtUOyX/qYQ8EnepK28chiR0/YKNyGd73voV4An1AVWcCQmv0b8TnEx4tkda69QkBeY6zSkbWq2j2NzPEE9+W+thJY3rLGQF7LfNxXM6GbYiJBjutg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524500; c=relaxed/simple;
-	bh=/eSPlJrwaHnUjs4D/EeIAjsurSn80KmJPOBRPG8oHRw=;
+	s=arc-20240116; t=1755524503; c=relaxed/simple;
+	bh=s0+3h5vupvTfojArTr1oKC9Ck7mRWikjAWMC3mY3A1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2umSwvfWzjWcKtuFdxETuUyh3VVUGNla9C+pCzEPJgHyEQGdV28OgboKpzC3L0990SiNuvoL2YYax7Qjl0EuyPabeRHVKrV0QKxB5/OsA0gA3TFwwDce6y8uLCTd+5QtmCgAhGHdPKR27rCgKaozR3/hDqT2ExTzvQLx2BaSws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+mE40Du; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LcSyijekJr4tlJt2zT6UIhMYvCGazNF4N6wS3RVTzdN4W8IBDn+dFPnDpNDzEDNOXdR8FWvuZJyGcXjjXWhgo0+onCOwGhv1aLvkVHKyUOWJHg/a2+st2Cob27AZH9S+HLP0/nCeUQoYP+1wjV9TNwBhZIzaIL1wXg14FeeEUOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcIlBtkn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+mE40Du"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72BFC116B1;
-	Mon, 18 Aug 2025 13:41:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcIlBtkn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D081DC116C6;
+	Mon, 18 Aug 2025 13:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524500;
-	bh=/eSPlJrwaHnUjs4D/EeIAjsurSn80KmJPOBRPG8oHRw=;
+	s=korg; t=1755524503;
+	bh=s0+3h5vupvTfojArTr1oKC9Ck7mRWikjAWMC3mY3A1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+mE40DumWNIBSG+AAHmuX3yKgAEYuxmh6kGGS0H38zHpRlSN/GcoRMhAN8ipx2Hy
-	 Vtz3XEU6IjiCxKSvDUDCTZ8ai7Rmt9SKhokscy8n/W4MJXP/+goZevUrKajsUHIlRx
-	 abi5qRA1a74gD32xQt9u3VFQ7wD28anFXjD+0tmw=
+	b=mcIlBtknM8DOVZOFnCzi0ZcX8gbHjnjQCzX0+x2t+F6pldjMzvHuDe+7GDKV1tonH
+	 oS/zgJXlRJLDolpww6HqHGKFp01UDp/1TB90J0J5yyY1TFjgS44MmqZgSIzZR4Kb6M
+	 NuYSNPH5/EvGKrc14T7aQTcnoNZOgMYPlWMr7WOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
 	David Hildenbrand <david@redhat.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Alistair Popple <apopple@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Dev Jain <dev.jain@arm.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Mariano Pache <npache@redhat.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Ryan Roberts <ryan.roberts@arm.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Zi Yan <ziy@nvidia.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 491/515] mm/huge_memory: dont ignore queried cachemode in vmf_insert_pfn_pud()
-Date: Mon, 18 Aug 2025 14:47:57 +0200
-Message-ID: <20250818124517.338155682@linuxfoundation.org>
+Subject: [PATCH 6.15 492/515] mm/ptdump: take the memory hotplug lock inside ptdump_walk_pgd()
+Date: Mon, 18 Aug 2025 14:47:58 +0200
+Message-ID: <20250818124517.379068002@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -65,99 +63,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-commit 09fefdca80aebd1023e827cb0ee174983d829d18 upstream.
+commit 59305202c67fea50378dcad0cc199dbc13a0e99a upstream.
 
-Patch series "mm/huge_memory: vmf_insert_folio_*() and
-vmf_insert_pfn_pud() fixes", v3.
+Memory hot remove unmaps and tears down various kernel page table regions
+as required.  The ptdump code can race with concurrent modifications of
+the kernel page tables.  When leaf entries are modified concurrently, the
+dump code may log stale or inconsistent information for a VA range, but
+this is otherwise not harmful.
 
-While working on improving vm_normal_page() and friends, I stumbled over
-this issues: refcounted "normal" folios must not be marked using
-pmd_special() / pud_special().  Otherwise, we're effectively telling the
-system that these folios are no "normal", violating the rules we
-documented for vm_normal_page().
+But when intermediate levels of kernel page table are freed, the dump code
+will continue to use memory that has been freed and potentially
+reallocated for another purpose.  In such cases, the ptdump code may
+dereference bogus addresses, leading to a number of potential problems.
 
-Fortunately, there are not many pmd_special()/pud_special() users yet.  So
-far there doesn't seem to be serious damage.
+To avoid the above mentioned race condition, platforms such as arm64,
+riscv and s390 take memory hotplug lock, while dumping kernel page table
+via the sysfs interface /sys/kernel/debug/kernel_page_tables.
 
-Tested using the ndctl tests ("ndctl:dax" suite).
+Similar race condition exists while checking for pages that might have
+been marked W+X via /sys/kernel/debug/kernel_page_tables/check_wx_pages
+which in turn calls ptdump_check_wx().  Instead of solving this race
+condition again, let's just move the memory hotplug lock inside generic
+ptdump_check_wx() which will benefit both the scenarios.
 
+Drop get_online_mems() and put_online_mems() combination from all existing
+platform ptdump code paths.
 
-This patch (of 3):
-
-We set up the cache mode but ...  don't forward the updated pgprot to
-insert_pfn_pud().
-
-Only a problem on x86-64 PAT when mapping PFNs using PUDs that require a
-special cachemode.
-
-Fix it by using the proper pgprot where the cachemode was setup.
-
-It is unclear in which configurations we would get the cachemode wrong:
-through vfio seems possible.  Getting cachemodes wrong is usually ...
-bad.  As the fix is easy, let's backport it to stable.
-
-Identified by code inspection.
-
-Link: https://lkml.kernel.org/r/20250613092702.1943533-1-david@redhat.com
-Link: https://lkml.kernel.org/r/20250613092702.1943533-2-david@redhat.com
-Fixes: 7b806d229ef1 ("mm: remove vmf_insert_pfn_xxx_prot() for huge page-table entries")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Tested-by: Dan Williams <dan.j.williams@intel.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Mariano Pache <npache@redhat.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
+Link: https://lkml.kernel.org/r/20250620052427.2092093-1-anshuman.khandual@arm.com
+Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>	[s390]
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
 Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/arm64/mm/ptdump_debugfs.c |    3 ---
+ arch/riscv/mm/ptdump.c         |    3 ---
+ arch/s390/mm/dump_pagetables.c |    2 --
+ mm/ptdump.c                    |    2 ++
+ 4 files changed, 2 insertions(+), 8 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -1516,10 +1516,9 @@ static pud_t maybe_pud_mkwrite(pud_t pud
- }
+--- a/arch/arm64/mm/ptdump_debugfs.c
++++ b/arch/arm64/mm/ptdump_debugfs.c
+@@ -1,6 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/debugfs.h>
+-#include <linux/memory_hotplug.h>
+ #include <linux/seq_file.h>
  
- static void insert_pfn_pud(struct vm_area_struct *vma, unsigned long addr,
--		pud_t *pud, pfn_t pfn, bool write)
-+		pud_t *pud, pfn_t pfn, pgprot_t prot, bool write)
+ #include <asm/ptdump.h>
+@@ -9,9 +8,7 @@ static int ptdump_show(struct seq_file *
  {
- 	struct mm_struct *mm = vma->vm_mm;
--	pgprot_t prot = vma->vm_page_prot;
- 	pud_t entry;
+ 	struct ptdump_info *info = m->private;
  
- 	if (!pud_none(*pud)) {
-@@ -1581,7 +1580,7 @@ vm_fault_t vmf_insert_pfn_pud(struct vm_
- 	track_pfn_insert(vma, &pgprot, pfn);
+-	get_online_mems();
+ 	ptdump_walk(m, info);
+-	put_online_mems();
+ 	return 0;
+ }
+ DEFINE_SHOW_ATTRIBUTE(ptdump);
+--- a/arch/riscv/mm/ptdump.c
++++ b/arch/riscv/mm/ptdump.c
+@@ -6,7 +6,6 @@
+ #include <linux/efi.h>
+ #include <linux/init.h>
+ #include <linux/debugfs.h>
+-#include <linux/memory_hotplug.h>
+ #include <linux/seq_file.h>
+ #include <linux/ptdump.h>
  
- 	ptl = pud_lock(vma->vm_mm, vmf->pud);
--	insert_pfn_pud(vma, addr, vmf->pud, pfn, write);
-+	insert_pfn_pud(vma, addr, vmf->pud, pfn, pgprot, write);
- 	spin_unlock(ptl);
+@@ -371,9 +370,7 @@ bool ptdump_check_wx(void)
  
- 	return VM_FAULT_NOPAGE;
-@@ -1625,7 +1624,7 @@ vm_fault_t vmf_insert_folio_pud(struct v
- 		add_mm_counter(mm, mm_counter_file(folio), HPAGE_PUD_NR);
+ static int ptdump_show(struct seq_file *m, void *v)
+ {
+-	get_online_mems();
+ 	ptdump_walk(m, m->private);
+-	put_online_mems();
+ 
+ 	return 0;
+ }
+--- a/arch/s390/mm/dump_pagetables.c
++++ b/arch/s390/mm/dump_pagetables.c
+@@ -205,11 +205,9 @@ static int ptdump_show(struct seq_file *
+ 		.marker = markers,
+ 	};
+ 
+-	get_online_mems();
+ 	mutex_lock(&cpa_mutex);
+ 	ptdump_walk_pgd(&st.ptdump, &init_mm, NULL);
+ 	mutex_unlock(&cpa_mutex);
+-	put_online_mems();
+ 	return 0;
+ }
+ DEFINE_SHOW_ATTRIBUTE(ptdump);
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -153,6 +153,7 @@ void ptdump_walk_pgd(struct ptdump_state
+ {
+ 	const struct ptdump_range *range = st->range;
+ 
++	get_online_mems();
+ 	mmap_write_lock(mm);
+ 	while (range->start != range->end) {
+ 		walk_page_range_novma(mm, range->start, range->end,
+@@ -160,6 +161,7 @@ void ptdump_walk_pgd(struct ptdump_state
+ 		range++;
  	}
- 	insert_pfn_pud(vma, addr, vmf->pud, pfn_to_pfn_t(folio_pfn(folio)),
--		write);
-+		       vma->vm_page_prot, write);
- 	spin_unlock(ptl);
+ 	mmap_write_unlock(mm);
++	put_online_mems();
  
- 	return VM_FAULT_NOPAGE;
+ 	/* Flush out the last page */
+ 	st->note_page(st, 0, -1, 0);
 
 
