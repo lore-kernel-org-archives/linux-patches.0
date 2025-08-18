@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BA5320380;
-	Mon, 18 Aug 2025 14:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B27E31E115;
+	Mon, 18 Aug 2025 14:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526083; cv=none; b=Op6LldE9kCZPsRGOXsymkGQdPUA1n3b705z5MGqj5LsMEzfmTeC2FOj6Rxra/+puBUe9HSJmpc9i8QpVnwkLFznpRPvzM7dQ80zLSfieF83pdAmH46Ygfn1+Dyz37NMz6I92A6fI6FPx4H8DHtWwjk4f2vftmD6TRxDqJ+/UCvA=
+	t=1755526087; cv=none; b=SHmNuZwheWx2LE67WWZO801fJii1euRqX6QjR30y83rfoWkghjNO5/jfFQaGs9U9S74B+qZ+J2f1cXDp5sS0jXAXomYGEQrmES8ict3zzoJ8NyrfCqPXmzP/e8IWfDCcT8uEzgva0Z8ozgEIYLfI1Uw+eSp36xFgGVhzPd2Aj9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526083; c=relaxed/simple;
-	bh=jhamu6fqcKLu7wVPe4aXe7YoUoKZrBUjz9Uc9WLOWl4=;
+	s=arc-20240116; t=1755526087; c=relaxed/simple;
+	bh=XUO/HOu64xn0aV2mRSED/5w0tMBAeOVHWd1oI0YB+NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uBM5pyL02IXwvUG0tVWjPwP+XezDFoifuEEEyClyIWFiXpSowERRZa9AUTyYEXQt6J2XVPEeqli6HUul5YhDsurRAVAn5LFg6ccJuKP9UjtVn8tzfzkq+6V+I/4AFEjn6s7ttOIm4emRhAXg64q4ScaPWQnEty6w1QnbVyspNac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUProUV0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hH1TBe6H7+Lmqf4BnFNBD2UCRt4PdVyZnvjAEBvt4B4xxhkmFFUZfT0eJFYfH0cgAVlHumVM81JCszmJotpGOIFGCXWmJCvE54H3HCzW9+aXxrQ3KC6lnTjXD3i2oEhShMoLC7j+0qGiI21Nd8golMhXjJyF6kMBpYo4DD+vZY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvGYF/jR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUProUV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0B1C4CEEB;
-	Mon, 18 Aug 2025 14:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvGYF/jR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2960FC4CEEB;
+	Mon, 18 Aug 2025 14:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526083;
-	bh=jhamu6fqcKLu7wVPe4aXe7YoUoKZrBUjz9Uc9WLOWl4=;
+	s=korg; t=1755526086;
+	bh=XUO/HOu64xn0aV2mRSED/5w0tMBAeOVHWd1oI0YB+NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUProUV0mJbnzmXeWZ4dQO8/HCZOjpaahS1DkW1DyP5VMlgL7DezCmaCOoOYAYF+W
-	 vUvMW7XO6fsaKPV2y/wHlzHgmqGjv/EljTr2Q4UU58pbhYJwIkOyfo0Xzx47vUhnPS
-	 tyzydnHJr/IYiERPgRCKDv06LViGoURZDa/sIhcg=
+	b=IvGYF/jR2llRZR6fslrWXvKQawkAN2U8qhofFxG6w5ra6RGg83y+zIuJ21gOeNVbd
+	 xTUWuaeAnA/DvAOOp9YqL2esjymYgZp+MBjKSqREee0/UfsghNF216iy6e0mW2cpuR
+	 JI9o1s4k2wsutYN2CtmOVjMwW24msaW6zEJbIvn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Corey Minyard <corey@minyard.net>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 446/570] ipmi: Use dev_warn_ratelimited() for incorrect message warnings
-Date: Mon, 18 Aug 2025 14:47:13 +0200
-Message-ID: <20250818124522.997239556@linuxfoundation.org>
+Subject: [PATCH 6.16 455/570] smb: client: dont call init_waitqueue_head(&info->conn_wait) twice in _smbd_get_connection
+Date: Mon, 18 Aug 2025 14:47:22 +0200
+Message-ID: <20250818124523.348923151@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,45 +56,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit ec50ec378e3fd83bde9b3d622ceac3509a60b6b5 ]
+[ Upstream commit 550a194c5998e4e77affc6235e80d3766dc2d27e ]
 
-During BMC firmware upgrades on live systems, the ipmi_msghandler
-generates excessive "BMC returned incorrect response" warnings
-while the BMC is temporarily offline. This can flood system logs
-in large deployments.
+It is already called long before we may hit this cleanup code path.
 
-Replace dev_warn() with dev_warn_ratelimited() to throttle these
-warnings and prevent log spam during BMC maintenance operations.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Message-ID: <20250710-ipmi_ratelimit-v1-1-6d417015ebe9@debian.org>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/smb/client/smbdirect.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 064944ae9fdc..8e9050f99e9e 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -4607,10 +4607,10 @@ static int handle_one_recv_msg(struct ipmi_smi *intf,
- 		 * The NetFN and Command in the response is not even
- 		 * marginally correct.
- 		 */
--		dev_warn(intf->si_dev,
--			 "BMC returned incorrect response, expected netfn %x cmd %x, got netfn %x cmd %x\n",
--			 (msg->data[0] >> 2) | 1, msg->data[1],
--			 msg->rsp[0] >> 2, msg->rsp[1]);
-+		dev_warn_ratelimited(intf->si_dev,
-+				     "BMC returned incorrect response, expected netfn %x cmd %x, got netfn %x cmd %x\n",
-+				     (msg->data[0] >> 2) | 1, msg->data[1],
-+				     msg->rsp[0] >> 2, msg->rsp[1]);
- 
- 		goto return_unspecified;
- 	}
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index cd4c61932cb2..b9bb531717a6 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1689,7 +1689,6 @@ static struct smbd_connection *_smbd_get_connection(
+ 	cancel_delayed_work_sync(&info->idle_timer_work);
+ 	destroy_caches_and_workqueue(info);
+ 	sc->status = SMBDIRECT_SOCKET_NEGOTIATE_FAILED;
+-	init_waitqueue_head(&info->conn_wait);
+ 	rdma_disconnect(sc->rdma.cm_id);
+ 	wait_event(info->conn_wait,
+ 		sc->status == SMBDIRECT_SOCKET_DISCONNECTED);
 -- 
 2.39.5
 
