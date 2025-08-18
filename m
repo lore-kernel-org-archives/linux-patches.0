@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092F932253D;
-	Mon, 18 Aug 2025 13:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4B227F4C7;
+	Mon, 18 Aug 2025 13:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525527; cv=none; b=asikWc9XekU3bQbMjHnAliVNJKfph0/bqHy1hYcErX0b676tLCdtlmLjtPiLC9LQ37nZN6JvdPPx8ES8vyzd18GTaX5qDLLeadlfpf8l7O+7UZmmiKQHi/Wy1/rqjc7YbwkhSbHqjcylHQue+uhLXKNvp7RpNduWRjNOGqUEcuw=
+	t=1755525530; cv=none; b=nKEsBW2Nuy7wfvVXkGbuoeF8Ix79xXUjpY0cW/NDxy/ZebMpRim25qUSt80IvspBo2IER10hYV1SCFqtWyHukD00UwAL//M2oArWy8RkFbR9rP0hoAbwWYtwgTAnT+A0vCqKfx6Xj8uPgm2jD/JXcOSHgiJ9N0Z4AVLUFhotx6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525527; c=relaxed/simple;
-	bh=/wFT6xAyV8JNvuK3815Qh/RGKhEhtxJ3pPHk+IBdLmk=;
+	s=arc-20240116; t=1755525530; c=relaxed/simple;
+	bh=IbG9LtWLRcKhnlDTBjMaoa/Wbp/Tou++ziugwNK53Yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MqGZPhKjdrCafTZ19Ms//FizMU2w1yl5kB9o4nHJq/5viLeLqZsZ0QnT2cj7SksvhOSAD5uHSz1KlTiSAsWS6ltvv7clGTAGsh6Z16ebdWm1T6iKsc5nyiN2RcuBdTqmjB9K9uAZx/pc/Ksakc/5Ry0ajwv7CCa1UXmYQBjpj98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjJLx/On; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gg8JkBTgjeOZyAuIebqAKM/QjuGLiTv/Ura0veTQj4vrarqvIYFYThgPUEIo257nXdk8hfIBTfWY/5EfcRjp6RRkM91AiVERcnRIuEFnoOU2KA9iixOL69Rc//Kh5hVDKP6JjeTJdzD6K2EldsA6iK57MoMP/W6k203ubFWX4go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/Db/7AB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjJLx/On"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF20C4CEEB;
-	Mon, 18 Aug 2025 13:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/Db/7AB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA44CC4CEEB;
+	Mon, 18 Aug 2025 13:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525526;
-	bh=/wFT6xAyV8JNvuK3815Qh/RGKhEhtxJ3pPHk+IBdLmk=;
+	s=korg; t=1755525530;
+	bh=IbG9LtWLRcKhnlDTBjMaoa/Wbp/Tou++ziugwNK53Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sjJLx/OnUm8aslzIGeNPEedT+DhK8iA+OUe7+k/A8yxQ+pUeseRzrnL37LAfqhhQV
-	 T3pNzE/L6K5jeHNw7mtipM2ondVkNMGUbpymnNEozJBGmkJlzfWjfDVYids9iNHNnk
-	 snbusUtEGTWwGyEuarUkJD1iSMCkxD/+C1cORILw=
+	b=T/Db/7ABx9Eswj0BsvsSMnyFnES13PKEzklCIRxWZ1tmh9yTAqKmdDVgnR3Ot+EZ+
+	 HCSYq3V9Z5s4j7ykMxq+YiKb7BI29bO1BlQyfJo1PIamd/Kmx89Jvztth4++xqutQ8
+	 ZpB6YhKEBTW4lYuwFZClNpNT8hL90B0brZMFsPkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Antonino Maniscalco <antomani103@gmail.com>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 272/570] drm/msm: use trylock for debugfs
-Date: Mon, 18 Aug 2025 14:44:19 +0200
-Message-ID: <20250818124516.333750253@linuxfoundation.org>
+Subject: [PATCH 6.16 290/570] net: fec: allow disable coalescing
+Date: Mon, 18 Aug 2025 14:44:37 +0200
+Message-ID: <20250818124517.013334515@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,63 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Jonas Rebmann <jre@pengutronix.de>
 
-[ Upstream commit 0a1ff88ec5b60b41ba830c5bf08b6cd8f45ab411 ]
+[ Upstream commit b7ad21258f9e9a7f58b19595d5ceed2cde3bed68 ]
 
-This resolves a potential deadlock vs msm_gem_vm_close().  Otherwise for
-_NO_SHARE buffers msm_gem_describe() could be trying to acquire the
-shared vm resv, while already holding priv->obj_lock.  But _vm_close()
-might drop the last reference to a GEM obj while already holding the vm
-resv, and msm_gem_free_object() needs to grab priv->obj_lock, a locking
-inversion.
+In the current implementation, IP coalescing is always enabled and
+cannot be disabled.
 
-OTOH this is only for debugfs and it isn't critical if we undercount by
-skipping a locked obj.  So just use trylock() and move along if we can't
-get the lock.
+As setting maximum frames to 0 or 1, or setting delay to zero implies
+immediate delivery of single packets/IRQs, disable coalescing in
+hardware in these cases.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Tested-by: Antonino Maniscalco <antomani103@gmail.com>
-Reviewed-by: Antonino Maniscalco <antomani103@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/661525/
+This also guarantees that coalescing is never enabled with ICFT or ICTT
+set to zero, a configuration that could lead to unpredictable behaviour
+according to i.MX8MP reference manual.
+
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250626-fec_deactivate_coalescing-v2-1-0b217f2e80da@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem.c | 3 ++-
- drivers/gpu/drm/msm/msm_gem.h | 6 ++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/fec_main.c | 34 +++++++++++------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 2995e80fec3b..ebd8a3603359 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -963,7 +963,8 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
- 	uint64_t off = drm_vma_node_start(&obj->vma_node);
- 	const char *madv;
- 
--	msm_gem_lock(obj);
-+	if (!msm_gem_trylock(obj))
-+		return;
- 
- 	stats->all.count++;
- 	stats->all.size += obj->size;
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index ba5c4ff76292..ea001b0a6b64 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -188,6 +188,12 @@ msm_gem_lock(struct drm_gem_object *obj)
- 	dma_resv_lock(obj->resv, NULL);
- }
- 
-+static inline bool __must_check
-+msm_gem_trylock(struct drm_gem_object *obj)
-+{
-+	return dma_resv_trylock(obj->resv);
-+}
-+
- static inline int
- msm_gem_lock_interruptible(struct drm_gem_object *obj)
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 17e9bddb9ddd..651b73163b6e 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3124,27 +3124,25 @@ static int fec_enet_us_to_itr_clock(struct net_device *ndev, int us)
+ static void fec_enet_itr_coal_set(struct net_device *ndev)
  {
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
+-	int rx_itr, tx_itr;
++	u32 rx_itr = 0, tx_itr = 0;
++	int rx_ictt, tx_ictt;
+ 
+-	/* Must be greater than zero to avoid unpredictable behavior */
+-	if (!fep->rx_time_itr || !fep->rx_pkts_itr ||
+-	    !fep->tx_time_itr || !fep->tx_pkts_itr)
+-		return;
+-
+-	/* Select enet system clock as Interrupt Coalescing
+-	 * timer Clock Source
+-	 */
+-	rx_itr = FEC_ITR_CLK_SEL;
+-	tx_itr = FEC_ITR_CLK_SEL;
++	rx_ictt = fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr);
++	tx_ictt = fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr);
+ 
+-	/* set ICFT and ICTT */
+-	rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
+-	rx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr));
+-	tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
+-	tx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr));
++	if (rx_ictt > 0 && fep->rx_pkts_itr > 1) {
++		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
++		rx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
++		rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
++		rx_itr |= FEC_ITR_ICTT(rx_ictt);
++	}
+ 
+-	rx_itr |= FEC_ITR_EN;
+-	tx_itr |= FEC_ITR_EN;
++	if (tx_ictt > 0 && fep->tx_pkts_itr > 1) {
++		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
++		tx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
++		tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
++		tx_itr |= FEC_ITR_ICTT(tx_ictt);
++	}
+ 
+ 	writel(tx_itr, fep->hwp + FEC_TXIC0);
+ 	writel(rx_itr, fep->hwp + FEC_RXIC0);
 -- 
 2.39.5
 
