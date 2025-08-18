@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAE227B358;
-	Mon, 18 Aug 2025 13:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96475235C01;
+	Mon, 18 Aug 2025 13:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524720; cv=none; b=qNlUIqsVt9dWVWlPIRskuGf7EVpKv2SOOGJfrUDM7EbhWeYNov0f7Nv0WmBpdvuIQQyagoJWZVQm4U3dvhOhcPo3+zB3QSQDGCc9OxDKvMIGK4QEt27vMMbam30ZXmgGPL1aWc5ph1XkX7H1m/U4/x/PCoFQaJWN+/iJueYxD5Q=
+	t=1755524723; cv=none; b=mOHMn9nXChH4bxIzGTmas+IdwVHRVnP9SLTIOh67nCdtbvSyfhouyZ/gNh4lZU49UQXAVgos7iI0KAcp0SkbaysobK9yjt+vnnQwl33wDLvILJll9c/LwR87ncpIwkT7aR+3Me1wn4ZhYONO+VKAZ6+fUbrKmjA1StRTi97jLCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524720; c=relaxed/simple;
-	bh=tCJfr12E8YbT4lzX2X+oHH986zAMYbwX0cyJIKEpobo=;
+	s=arc-20240116; t=1755524723; c=relaxed/simple;
+	bh=lr6BuUbRSVBWU+eZdepPtzlo6vzN/u+9nj6jWKWnig8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KfytFLEi+5+G+ca5GsDit+bgF8TkD3Kc+lYBUAO/h089EyMasnTZrDMUB8RVvwAXmion0b6HMSC8+CirMH3Va9biyftGHJLiHEJOZHvphpvj5h3RezQjd+mago34bVe33rWDkx0kT0S0EE/WJZlEAxz4TrzLVgChTcTu75HjZh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khdq+iB2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e1e8ODfv21qKi/pCT348PNPvvekZvdX8LRkF73YycM6AggzhIBBJpx87JrfkWfrJXdU5+4nCeje/T60+j3soMxs259ZMOYbdXk52EC97R2KvWASkgK8ksJpnyw8wgl89caQsOe8yFTNxydadhtFvYTdutJhjKQXcqTlHuZbBnSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzKa4dV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khdq+iB2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CD4C113D0;
-	Mon, 18 Aug 2025 13:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzKa4dV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01822C4CEF1;
+	Mon, 18 Aug 2025 13:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524720;
-	bh=tCJfr12E8YbT4lzX2X+oHH986zAMYbwX0cyJIKEpobo=;
+	s=korg; t=1755524723;
+	bh=lr6BuUbRSVBWU+eZdepPtzlo6vzN/u+9nj6jWKWnig8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khdq+iB2QVJQmHqNw2D6pXZrzllpMi9gJ4t6IEoLEFAr1XqZIaAxNdSkp0uL39LP0
-	 O0FesRpsnbG+SFFb0VD5z59rjl4/V2RaiVQTppxgoGiIZAjCdHNPELV9H6K39ir81T
-	 pcW2K3m0w6wvkvy27ADkyUTOrKOHrotQWctwmiq4=
+	b=vzKa4dV3U+3cHEMpDuYLcw5kVM42+QJWSGJj0PQnpVkuyl/lmrMRrFqqeqMwEgJT+
+	 7pgNafc/fF5z2r8IECpuCLVvprdFtTsYFdGQXK9psOZR94t3dYdXdQHJQ0yC+bUC6r
+	 hXyq3XkiqF2wOVtHiVs+QYFwl20XLfZbZFBmsheg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.16 042/570] clk: samsung: exynos850: fix a comment
-Date: Mon, 18 Aug 2025 14:40:29 +0200
-Message-ID: <20250818124507.433988237@linuxfoundation.org>
+Subject: [PATCH 6.16 043/570] clk: samsung: gs101: fix CLK_DOUT_CMU_G3D_BUSD
+Date: Mon, 18 Aug 2025 14:40:30 +0200
+Message-ID: <20250818124507.479113640@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,30 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: André Draszik <andre.draszik@linaro.org>
 
-commit 320e7efce30e2613c2c7877acc46a8e71192cdcd upstream.
+commit 29a9361f0b50be2b16d308695e30ee030fedea2c upstream.
 
-The code below the updated comment is for CMU_CPUCL1, not CMU_CPUCL0.
+Use the correct Linux clock ID when instantiating the G3D_BUSD
+div_clock.
 
-Fixes: dedf87341ad6 ("clk: samsung: exynos850: Add CMU_CPUCL0 and CMU_CPUCL1")
+Fixes: 2c597bb7d66a ("clk: samsung: clk-gs101: Add cmu_top, cmu_misc and cmu_apm support")
 Cc: stable@vger.kernel.org
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250603-samsung-clk-fixes-v1-3-49daf1ff4592@linaro.org
+Link: https://lore.kernel.org/r/20250603-samsung-clk-fixes-v1-1-49daf1ff4592@linaro.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/samsung/clk-exynos850.c |    2 +-
+ drivers/clk/samsung/clk-gs101.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/samsung/clk-exynos850.c
-+++ b/drivers/clk/samsung/clk-exynos850.c
-@@ -1360,7 +1360,7 @@ static const unsigned long cpucl1_clk_re
- 	CLK_CON_GAT_GATE_CLK_CPUCL1_CPU,
- };
- 
--/* List of parent clocks for Muxes in CMU_CPUCL0 */
-+/* List of parent clocks for Muxes in CMU_CPUCL1 */
- PNAME(mout_pll_cpucl1_p)		 = { "oscclk", "fout_cpucl1_pll" };
- PNAME(mout_cpucl1_switch_user_p)	 = { "oscclk", "dout_cpucl1_switch" };
- PNAME(mout_cpucl1_dbg_user_p)		 = { "oscclk", "dout_cpucl1_dbg" };
+--- a/drivers/clk/samsung/clk-gs101.c
++++ b/drivers/clk/samsung/clk-gs101.c
+@@ -1154,7 +1154,7 @@ static const struct samsung_div_clock cm
+ 	    CLK_CON_DIV_CLKCMU_G2D_MSCL, 0, 4),
+ 	DIV(CLK_DOUT_CMU_G3AA_G3AA, "dout_cmu_g3aa_g3aa", "gout_cmu_g3aa_g3aa",
+ 	    CLK_CON_DIV_CLKCMU_G3AA_G3AA, 0, 4),
+-	DIV(CLK_DOUT_CMU_G3D_SWITCH, "dout_cmu_g3d_busd", "gout_cmu_g3d_busd",
++	DIV(CLK_DOUT_CMU_G3D_BUSD, "dout_cmu_g3d_busd", "gout_cmu_g3d_busd",
+ 	    CLK_CON_DIV_CLKCMU_G3D_BUSD, 0, 4),
+ 	DIV(CLK_DOUT_CMU_G3D_GLB, "dout_cmu_g3d_glb", "gout_cmu_g3d_glb",
+ 	    CLK_CON_DIV_CLKCMU_G3D_GLB, 0, 4),
 
 
