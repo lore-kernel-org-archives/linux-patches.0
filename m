@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42476335BCB;
-	Mon, 18 Aug 2025 13:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D7F222575;
+	Mon, 18 Aug 2025 13:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524614; cv=none; b=G7Ao4I+KE7Iw/pW7IphoEaqhP1o6em0nfBlNjKp+iBgof+XXsM+uAH+FmxXsNm4UDvZTIb7Ks9B6gov/WvGN0ktVB9XyGLFBeZL1Zx+jEs9MuJuUGmyJ2bYHDkOJfQsg3UunX4viwLRI5qChahK5oHFHvvHXRS3C72mQBbIYHIo=
+	t=1755524617; cv=none; b=SrALrGMzCmwGK1dXAvVy7SMznoT54RCe94YykfA4YVOJc5FIMucMZUO/OEMxXBb00gsHWAKxURnCfdAXXV8wtcw+qso0wsrQVID0unrRlztsR+fAWoald+lN7fejyTW5q9XSgLtOYgJU/T8Tiq/TvHVUM0RDhyjbYWFXr0DLG1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524614; c=relaxed/simple;
-	bh=EeFrnRSoPreiKelVYWBOUhsVGjyKhyGCrPnWcl6YSlg=;
+	s=arc-20240116; t=1755524617; c=relaxed/simple;
+	bh=SIvh6KcNCEMHvIttfLm+em4JKh7+c6N8xZGs6I0caQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTs31qDLHBlpzoI6FurwlI0tAse9JbC1LEZW+vPf1xupSP2g3TBk+NOsiHSl0y20fyNBi5GRn046gn57IoGq9zEhvHLHPLPXQ2IHXxvowR9U4LQT6JHycb3gRYxHHki/J5iSTcIOW+ppMwpHvq0AXyFKQ4q1Wk5S3U8pmEHT6ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFn3AyKt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wf6B1Ze/mJF07yATpOTrlUKbDMdgJVW/ecg2YElyh3foqnOUStL+g6ybqrD2FwpoO0Y91ejyVdcJBvLiJJX+ILBYDSLZn9S7dwv1uWFggnnxuHCCHzTLGFTqG5jpCoTLou01isgiGXgVkp+1pVauFXna9UCtADtAIpBkMIlBSMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5y7gQ8U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFn3AyKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF4FC4CEEB;
-	Mon, 18 Aug 2025 13:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5y7gQ8U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E052BC4CEF1;
+	Mon, 18 Aug 2025 13:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524613;
-	bh=EeFrnRSoPreiKelVYWBOUhsVGjyKhyGCrPnWcl6YSlg=;
+	s=korg; t=1755524617;
+	bh=SIvh6KcNCEMHvIttfLm+em4JKh7+c6N8xZGs6I0caQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFn3AyKtBsawtn3ewlPXoqnZ2BVXvpdwiD7SHomuqf2bJeTiU/wPaIY83OAIL6L1x
-	 7Zvj6hoOSKhko+0ujvk/l7u6CwRzdiYvxX+/YFFuDORHO5iD08phZ+S7J3ZHi4NxC2
-	 SemzS6HkatDiLXJRrBJQ+9TYR3FVLyWbS0NcMXj4=
+	b=u5y7gQ8UGHANZcJkZLGQqgdGWinbdTt7GvZC/9l/QVlH59WCSBUPkajl/yBt/lqcM
+	 YoCSNErhIuTP/DOvZjflV+N+ESLbgQQgWqm4FS/fmJjXeISEOq2Hyvh5BNFygDOAkm
+	 g/xYzhgp0LM0FGHV/AV6E352T7XZ9q6ztLY4e54A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.16 010/570] smb3: fix for slab out of bounds on mount to ksmbd
-Date: Mon, 18 Aug 2025 14:39:57 +0200
-Message-ID: <20250818124506.181863696@linuxfoundation.org>
+Subject: [PATCH 6.16 011/570] smb: client: remove redundant lstrp update in negotiate protocol
+Date: Mon, 18 Aug 2025 14:39:58 +0200
+Message-ID: <20250818124506.218175638@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,95 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
 
-commit 7d34ec36abb84fdfb6632a0f2cbda90379ae21fc upstream.
+commit e19d8dd694d261ac26adb2a26121a37c107c81ad upstream.
 
-With KASAN enabled, it is possible to get a slab out of bounds
-during mount to ksmbd due to missing check in parse_server_interfaces()
-(see below):
+Commit 34331d7beed7 ("smb: client: fix first command failure during
+re-negotiation") addressed a race condition by updating lstrp before
+entering negotiate state. However, this approach may have some unintended
+side effects.
 
- BUG: KASAN: slab-out-of-bounds in
- parse_server_interfaces+0x14ee/0x1880 [cifs]
- Read of size 4 at addr ffff8881433dba98 by task mount/9827
+The lstrp field is documented as "when we got last response from this
+server", and updating it before actually receiving a server response
+could potentially affect other mechanisms that rely on this timestamp.
+For example, the SMB echo detection logic also uses lstrp as a reference
+point. In scenarios with frequent user operations during reconnect states,
+the repeated calls to cifs_negotiate_protocol() might continuously
+update lstrp, which could interfere with the echo detection timing.
 
- CPU: 5 UID: 0 PID: 9827 Comm: mount Tainted: G
- OE       6.16.0-rc2-kasan #2 PREEMPT(voluntary)
- Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
- Hardware name: Dell Inc. Precision Tower 3620/0MWYPT,
- BIOS 2.13.1 06/14/2019
- Call Trace:
-  <TASK>
- dump_stack_lvl+0x9f/0xf0
- print_report+0xd1/0x670
- __virt_addr_valid+0x22c/0x430
- ? parse_server_interfaces+0x14ee/0x1880 [cifs]
- ? kasan_complete_mode_report_info+0x2a/0x1f0
- ? parse_server_interfaces+0x14ee/0x1880 [cifs]
-   kasan_report+0xd6/0x110
-   parse_server_interfaces+0x14ee/0x1880 [cifs]
-   __asan_report_load_n_noabort+0x13/0x20
-   parse_server_interfaces+0x14ee/0x1880 [cifs]
- ? __pfx_parse_server_interfaces+0x10/0x10 [cifs]
- ? trace_hardirqs_on+0x51/0x60
- SMB3_request_interfaces+0x1ad/0x3f0 [cifs]
- ? __pfx_SMB3_request_interfaces+0x10/0x10 [cifs]
- ? SMB2_tcon+0x23c/0x15d0 [cifs]
- smb3_qfs_tcon+0x173/0x2b0 [cifs]
- ? __pfx_smb3_qfs_tcon+0x10/0x10 [cifs]
- ? cifs_get_tcon+0x105d/0x2120 [cifs]
- ? do_raw_spin_unlock+0x5d/0x200
- ? cifs_get_tcon+0x105d/0x2120 [cifs]
- ? __pfx_smb3_qfs_tcon+0x10/0x10 [cifs]
- cifs_mount_get_tcon+0x369/0xb90 [cifs]
- ? dfs_cache_find+0xe7/0x150 [cifs]
- dfs_mount_share+0x985/0x2970 [cifs]
- ? check_path.constprop.0+0x28/0x50
- ? save_trace+0x54/0x370
- ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
- ? __lock_acquire+0xb82/0x2ba0
- ? __kasan_check_write+0x18/0x20
- cifs_mount+0xbc/0x9e0 [cifs]
- ? __pfx_cifs_mount+0x10/0x10 [cifs]
- ? do_raw_spin_unlock+0x5d/0x200
- ? cifs_setup_cifs_sb+0x29d/0x810 [cifs]
- cifs_smb3_do_mount+0x263/0x1990 [cifs]
+Additionally, commit 266b5d02e14f ("smb: client: fix race condition in
+negotiate timeout by using more precise timing") introduced a dedicated
+neg_start field specifically for tracking negotiate start time. This
+provides a more precise solution for the original race condition while
+preserving the intended semantics of lstrp.
 
-Reported-by: Namjae Jeon <linkinjeon@kernel.org>
-Tested-by: Namjae Jeon <linkinjeon@kernel.org>
+Since the race condition is now properly handled by the neg_start
+mechanism, the lstrp update in cifs_negotiate_protocol() is no longer
+necessary and can be safely removed.
+
+Fixes: 266b5d02e14f ("smb: client: fix race condition in negotiate timeout by using more precise timing")
 Cc: stable@vger.kernel.org
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/smb/client/connect.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -772,6 +772,13 @@ next_iface:
- 			bytes_left -= sizeof(*p);
- 			break;
- 		}
-+		/* Validate that Next doesn't point beyond the buffer */
-+		if (next > bytes_left) {
-+			cifs_dbg(VFS, "%s: invalid Next pointer %zu > %zd\n",
-+				 __func__, next, bytes_left);
-+			rc = -EINVAL;
-+			goto out;
-+		}
- 		p = (struct network_interface_info_ioctl_rsp *)((u8 *)p+next);
- 		bytes_left -= next;
- 	}
-@@ -783,7 +790,9 @@ next_iface:
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -4204,7 +4204,6 @@ retry:
+ 		return 0;
  	}
  
- 	/* Azure rounds the buffer size up 8, to a 16 byte boundary */
--	if ((bytes_left > 8) || p->Next)
-+	if ((bytes_left > 8) ||
-+	    (bytes_left >= offsetof(struct network_interface_info_ioctl_rsp, Next)
-+	     + sizeof(p->Next) && p->Next))
- 		cifs_dbg(VFS, "%s: incomplete interface info\n", __func__);
- 
- 	ses->iface_last_update = jiffies;
+-	server->lstrp = jiffies;
+ 	server->tcpStatus = CifsInNegotiate;
+ 	server->neg_start = jiffies;
+ 	spin_unlock(&server->srv_lock);
 
 
