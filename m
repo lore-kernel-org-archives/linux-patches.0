@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCEB3375AB;
-	Mon, 18 Aug 2025 14:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2F030DEC8;
+	Mon, 18 Aug 2025 14:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526297; cv=none; b=JHGochB6ry8kdjj3oILqI8C9lzUTwwkZm5i43aNsWMYJs0vNQO/kALsd5wSc81vrDHxJMMhemokpCCOHO4LQeWUQ8XwxZWBadt/MzhuJCIVrTNzNRYv+1lJyFLmD++9Uo7FR/YTpSNIJSfrsTN0aqKEmoVmk0pYd3LsesIdZObY=
+	t=1755526300; cv=none; b=hLZXzZ31z4zFZh3gwrB+YBNuhYA69tF7fqAZlpPzZQr92+bmSlTMcR1qIGi9m93Z4VHuayDXPVaMhnrP+QSlBYrtAbI3piQF4dJz4QMUMtj1QYuNE0KfzO0NdElDAqfAdaFQZ2OfiLHagjc+kU+74A3TVBIC4ERz4u1xP4wJLuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526297; c=relaxed/simple;
-	bh=7NQVLw/wNZbmyX9kZCupsPwZJLv8iENYSXQG16mLdwQ=;
+	s=arc-20240116; t=1755526300; c=relaxed/simple;
+	bh=bdDHYrToAEYfUqvvddh21aozmirazigznsurlf4MJcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxttZd0F2/cyhaOLKAJ21A7aCpIDXlxLuSC0YJJx7A/A3uLdKU1VIg/gode86HdvVwfsiHjKGbVKaKMXHh1gTQHi3rQs1iqopmLvi4XjlRDgRThQfJmJMbnvUvgJpmAnUxXPPLIjW/Lu2Erqix+f0n887vdlXMU4dJGmpTH6MQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEPUkGld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0jydutivT/M2mhVvR/JZOner1ZGV6CsdkdeYy+vsHuz56nr36OB3TGnJTJiac/xiQyTMWgUUIK6/nuYJZioyaK0SQFyHuvmsd/ND9O4OopG9QDJhxeY6ZVKERogpWpknnvhCgSUL0iGLT9wHMZ+qN5DOeXCl91oBQhugajntvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4X+3/8U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEPUkGld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9676C4CEEB;
-	Mon, 18 Aug 2025 14:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4X+3/8U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990E7C4CEF1;
+	Mon, 18 Aug 2025 14:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526296;
-	bh=7NQVLw/wNZbmyX9kZCupsPwZJLv8iENYSXQG16mLdwQ=;
+	s=korg; t=1755526300;
+	bh=bdDHYrToAEYfUqvvddh21aozmirazigznsurlf4MJcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEPUkGldkX2RbYcgErezAbcwJWMeamxiWFEVtjEziI03L4emw1RUhRUB8pOWjIPrK
-	 tNpv8QHrHSQCWrxqe/iTG0FmcdlfQCyKfhV+bcwtZYB441PVKC1WSYa7gj84GwvuD3
-	 j7/x14qff0KYOsnJpOqQa82AIMC1nNXxSr7MsMbM=
+	b=f4X+3/8UK4lnSrVq2rgv5kB80ISul4Zde/O+bipej6+4RouQSnTA9HfCBJvsN7wcc
+	 lOJr4dZd7Dxi4UdW/ZDuRIU4TRqd/wt62dHa9wZB3lwuzyDyKNCRWDYbaqA0gqFCsd
+	 v3JpuD7ZpEYmEBHGTIFLpXtMsD+kCPkF3+MxmKAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 512/570] btrfs: zoned: use filesystem size not disk size for reclaim decision
-Date: Mon, 18 Aug 2025 14:48:19 +0200
-Message-ID: <20250818124525.580371709@linuxfoundation.org>
+Subject: [PATCH 6.16 513/570] btrfs: abort transaction during log replay if walk_log_tree() failed
+Date: Mon, 18 Aug 2025 14:48:20 +0200
+Message-ID: <20250818124525.622076855@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,48 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 55f7c65b2f69c7e4cb7aa7c1654a228ccf734fd8 upstream.
+commit 2a5898c4aac67494c2f0f7fe38373c95c371c930 upstream.
 
-When deciding if a zoned filesystem is reaching the threshold to reclaim
-data block groups, look at the size of the filesystem not to potentially
-total available size of all drives in the filesystem.
+If we failed walking a log tree during replay, we have a missing
+transaction abort to prevent committing a transaction where we didn't
+fully replay all the changes from a log tree and therefore can leave the
+respective subvolume tree in some inconsistent state. So add the missing
+transaction abort.
 
-Especially if a filesystem was created with mkfs' -b option, constraining
-it to only a portion of the block device, the numbers won't match and
-potentially garbage collection is kicking in too late.
-
-Fixes: 3687fcb0752a ("btrfs: zoned: make auto-reclaim less aggressive")
 CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/btrfs/tree-log.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2523,8 +2523,8 @@ bool btrfs_zoned_should_reclaim(const st
- {
- 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
- 	struct btrfs_device *device;
-+	u64 total = btrfs_super_total_bytes(fs_info->super_copy);
- 	u64 used = 0;
--	u64 total = 0;
- 	u64 factor;
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -7279,11 +7279,14 @@ again:
  
- 	ASSERT(btrfs_is_zoned(fs_info));
-@@ -2537,7 +2537,6 @@ bool btrfs_zoned_should_reclaim(const st
- 		if (!device->bdev)
- 			continue;
+ 		wc.replay_dest->log_root = log;
+ 		ret = btrfs_record_root_in_trans(trans, wc.replay_dest);
+-		if (ret)
++		if (ret) {
+ 			/* The loop needs to continue due to the root refs */
+ 			btrfs_abort_transaction(trans, ret);
+-		else
++		} else {
+ 			ret = walk_log_tree(trans, log, &wc);
++			if (ret)
++				btrfs_abort_transaction(trans, ret);
++		}
  
--		total += device->disk_total_bytes;
- 		used += device->bytes_used;
- 	}
- 	mutex_unlock(&fs_devices->device_list_mutex);
+ 		if (!ret && wc.stage == LOG_WALK_REPLAY_ALL) {
+ 			ret = fixup_inode_link_counts(trans, wc.replay_dest,
 
 
