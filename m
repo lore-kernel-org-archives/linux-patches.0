@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80431E51FE;
-	Mon, 18 Aug 2025 12:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3983218CF;
+	Mon, 18 Aug 2025 12:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521968; cv=none; b=ruIOMjkn57IKHuNm7VRtmQ6Kz0I0N+yZxoDS64n/rGTAbOshn1ycNg2fyJCur4SNjG0SCuznH+LZVx70dxbTVQjs16jPhBX1Ma2pXR2fihHbZtrYYgxpSW73SzA4kMYtMb6V3WaXpHQ5cborWIuPZnpj078oJYQYtI0FYF7Ptt4=
+	t=1755521971; cv=none; b=hXmT/M/BCw/QeU/96ox8JmWL06cYb4GfspBjBFcf7ued8VPJhi1/6asDb1kS41Tq3U9N5KYBy+rgNnAFHDIC33Z7+eTFacUM/pTQLy/oBmVdE6Xv4UdwHzolxSeUWYcsN20f6a8YyMJNC3/pFiNTJsdzHDMl3dJlpFy6Q+w8qp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521968; c=relaxed/simple;
-	bh=jgkYcCgqLPq/KJFooc/Dvxv2kXPuqCo9HyjqGT36W1Q=;
+	s=arc-20240116; t=1755521971; c=relaxed/simple;
+	bh=KalT/mNzhwyLZEJUlGZ8RwVtUT2AfABaa/JUdDBy2WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D59cjaAvl4ktIxVZFF8PEOJmwAOzdiJHwg2TnTaYrduoaX6p57DFeBULQVTzqs1daIZSI59S07Y3QlGeFaZg+LMrJaP63mbE0SZDcKDJ1Pej6or8C55ZLabF0QnjprBq3MITxNyQISozp1GP++zkPbyu36DysDvMAn8CbRVcTTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWIJtZwq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RL51kIMuXs7KwraX5roGEIIVKUqSzPjl4QueNxMeGp2iILGYA9vqd8V3EWK0YN4/Ao/cnUmwQYQZ4oA5fqejTB3cz1zON8EWY61wNTVQX+tcguViflQtMb/6VQPcJg7tGhiq/AX9LH5Bx5sAOasBqVgCa/YQUY4DHZ2GEHP++ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUx1Sqag; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWIJtZwq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127AFC4CEEB;
-	Mon, 18 Aug 2025 12:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUx1Sqag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F965C4CEEB;
+	Mon, 18 Aug 2025 12:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521967;
-	bh=jgkYcCgqLPq/KJFooc/Dvxv2kXPuqCo9HyjqGT36W1Q=;
+	s=korg; t=1755521970;
+	bh=KalT/mNzhwyLZEJUlGZ8RwVtUT2AfABaa/JUdDBy2WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWIJtZwqlVeEwZtHXYN11/2sTZB3lqVpoSU4fFFmgKzBqXWa7SF1DsQhZiPPgKsSA
-	 9uEjGQyeZ1Msq3fQn2PgM8294jdq4+uaUiIwqH2MtFWSkT3omuk1eQRpGaYwj/4ghN
-	 Ay7pMZuA/zrb1SGfdGWFhNwft1AfAPK26GOfzSgg=
+	b=tUx1SqagDJEorUf6RKBlm6r3H7+umCplhA2Fmq352rUSYI5z33lkENVDQeYS4mhX+
+	 9IMVfBt829nFfHKGOzuNEqLeNHLneFlsP8kJowBRgopE2accX44vWcmtrqq/aTwY0R
+	 lX8qL0t0qOgc2LecPwaHcSj15YcXIw+TJxwnG0VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 175/444] libbpf: Verify that arena map exists when adding arena relocations
-Date: Mon, 18 Aug 2025 14:43:21 +0200
-Message-ID: <20250818124455.443794877@linuxfoundation.org>
+Subject: [PATCH 6.12 149/444] usb: core: usb_submit_urb: downgrade type check
+Date: Mon, 18 Aug 2025 14:42:55 +0200
+Message-ID: <20250818124454.497240566@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,45 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 42be23e8f2dcb100cb9944b2b54b6bf41aff943d ]
+[ Upstream commit 503bbde34cc3dd2acd231f277ba70c3f9ed22e59 ]
 
-Fuzzer reported a memory access error in bpf_program__record_reloc()
-that happens when:
-- ".addr_space.1" section exists
-- there is a relocation referencing this section
-- there are no arena maps defined in BTF.
+Checking for the endpoint type is no reason for a WARN, as that can
+cause a reboot. A driver not checking the endpoint type must not cause a
+reboot, as there is just no point in this.  We cannot prevent a device
+from doing something incorrect as a reaction to a transfer. Hence
+warning for a mere assumption being wrong is not sensible.
 
-Sanity checks for maps existence are already present in
-bpf_program__record_reloc(), hence this commit adds another one.
-
-[1] https://github.com/libbpf/libbpf/actions/runs/16375110681/job/46272998064
-
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250718222059.281526-1-eddyz87@gmail.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250612122149.2559724-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/core/urb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 747cef47e685..e33cf3caf8b6 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -4546,6 +4546,11 @@ static int bpf_program__record_reloc(struct bpf_program *prog,
+diff --git a/drivers/usb/core/urb.c b/drivers/usb/core/urb.c
+index 7576920e2d5a..9f202f575cec 100644
+--- a/drivers/usb/core/urb.c
++++ b/drivers/usb/core/urb.c
+@@ -500,7 +500,7 @@ int usb_submit_urb(struct urb *urb, gfp_t mem_flags)
  
- 	/* arena data relocation */
- 	if (shdr_idx == obj->efile.arena_data_shndx) {
-+		if (obj->arena_map_idx < 0) {
-+			pr_warn("prog '%s': bad arena data relocation at insn %u, no arena maps defined\n",
-+				prog->name, insn_idx);
-+			return -LIBBPF_ERRNO__RELOC;
-+		}
- 		reloc_desc->type = RELO_DATA;
- 		reloc_desc->insn_idx = insn_idx;
- 		reloc_desc->map_idx = obj->arena_map_idx;
+ 	/* Check that the pipe's type matches the endpoint's type */
+ 	if (usb_pipe_type_check(urb->dev, urb->pipe))
+-		dev_WARN(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
++		dev_warn_once(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
+ 			usb_pipetype(urb->pipe), pipetypes[xfertype]);
+ 
+ 	/* Check against a simple/standard policy */
 -- 
 2.39.5
 
