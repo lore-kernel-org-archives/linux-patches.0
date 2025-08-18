@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96475235C01;
-	Mon, 18 Aug 2025 13:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E1828C014;
+	Mon, 18 Aug 2025 13:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524723; cv=none; b=mOHMn9nXChH4bxIzGTmas+IdwVHRVnP9SLTIOh67nCdtbvSyfhouyZ/gNh4lZU49UQXAVgos7iI0KAcp0SkbaysobK9yjt+vnnQwl33wDLvILJll9c/LwR87ncpIwkT7aR+3Me1wn4ZhYONO+VKAZ6+fUbrKmjA1StRTi97jLCw=
+	t=1755524727; cv=none; b=iH0a3XY4AzbwNSFaWhY5HkVRh0+cJU2V+ESNDBd9JuPbRf3xu/ha0AgbVqM6GsHJgb59UktToxRxXWCSueozF4vDNaowlthtVdsEchi3auvzN8OdsHhnlGBCCjCdreesx5rR9xqULQyH5WDFt/Dc1oczSlDYGlebfbHR5AXn9Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524723; c=relaxed/simple;
-	bh=lr6BuUbRSVBWU+eZdepPtzlo6vzN/u+9nj6jWKWnig8=;
+	s=arc-20240116; t=1755524727; c=relaxed/simple;
+	bh=+fbMYYzNvXZ366E0xAHsX/9iJxkM93HF+s4ggVo7EjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e1e8ODfv21qKi/pCT348PNPvvekZvdX8LRkF73YycM6AggzhIBBJpx87JrfkWfrJXdU5+4nCeje/T60+j3soMxs259ZMOYbdXk52EC97R2KvWASkgK8ksJpnyw8wgl89caQsOe8yFTNxydadhtFvYTdutJhjKQXcqTlHuZbBnSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzKa4dV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hA+KsxAc9ZUeOJX70Fq5Rl4SbYDSigCoV7GnCgfD5kawg0QEmKl/W92F+vkuKLxAjUNoQKoIef5QRCIYk+Xg5agTbfE/8wqzm3VEAvdSXjw2cHVVXqWp9gOzbVxHPnaLls/7MybJobzNSsFEpHxOu16EJk0MPrqA4R0mLx/kC0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2QBkYGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzKa4dV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01822C4CEF1;
-	Mon, 18 Aug 2025 13:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2QBkYGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA54C4CEF1;
+	Mon, 18 Aug 2025 13:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524723;
-	bh=lr6BuUbRSVBWU+eZdepPtzlo6vzN/u+9nj6jWKWnig8=;
+	s=korg; t=1755524726;
+	bh=+fbMYYzNvXZ366E0xAHsX/9iJxkM93HF+s4ggVo7EjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vzKa4dV3U+3cHEMpDuYLcw5kVM42+QJWSGJj0PQnpVkuyl/lmrMRrFqqeqMwEgJT+
-	 7pgNafc/fF5z2r8IECpuCLVvprdFtTsYFdGQXK9psOZR94t3dYdXdQHJQ0yC+bUC6r
-	 hXyq3XkiqF2wOVtHiVs+QYFwl20XLfZbZFBmsheg=
+	b=a2QBkYGneEljaZFHqfKjx40qZYdUvLCfidVF02ujZHEeCAhbTufqUQWmmu1hufAPU
+	 KToF1Q1WH5egNKHsrnQaLmOqx81vHKsDAg6WQZSC4AGdkQXx1KSaal3N9xOla8Xgbo
+	 +5626vpWtw2Ws2+4gjsKkG94fEEUM8MvpnI6Zwhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.16 043/570] clk: samsung: gs101: fix CLK_DOUT_CMU_G3D_BUSD
-Date: Mon, 18 Aug 2025 14:40:30 +0200
-Message-ID: <20250818124507.479113640@linuxfoundation.org>
+Subject: [PATCH 6.16 044/570] clk: samsung: gs101: fix alternate mout_hsi0_usb20_ref parent clock
+Date: Mon, 18 Aug 2025 14:40:31 +0200
+Message-ID: <20250818124507.516913990@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,15 +53,15 @@ Content-Transfer-Encoding: 8bit
 
 From: André Draszik <andre.draszik@linaro.org>
 
-commit 29a9361f0b50be2b16d308695e30ee030fedea2c upstream.
+commit ca243e653f71d8c4724a68c9033923f945b1084d upstream.
 
-Use the correct Linux clock ID when instantiating the G3D_BUSD
-div_clock.
+The alternate parent clock for this mux is mout_pll_usb, not the pll
+itself.
 
-Fixes: 2c597bb7d66a ("clk: samsung: clk-gs101: Add cmu_top, cmu_misc and cmu_apm support")
+Fixes: 1891e4d48755 ("clk: samsung: gs101: add support for cmu_hsi0")
 Cc: stable@vger.kernel.org
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250603-samsung-clk-fixes-v1-1-49daf1ff4592@linaro.org
+Link: https://lore.kernel.org/r/20250603-samsung-clk-fixes-v1-2-49daf1ff4592@linaro.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -70,14 +70,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/clk/samsung/clk-gs101.c
 +++ b/drivers/clk/samsung/clk-gs101.c
-@@ -1154,7 +1154,7 @@ static const struct samsung_div_clock cm
- 	    CLK_CON_DIV_CLKCMU_G2D_MSCL, 0, 4),
- 	DIV(CLK_DOUT_CMU_G3AA_G3AA, "dout_cmu_g3aa_g3aa", "gout_cmu_g3aa_g3aa",
- 	    CLK_CON_DIV_CLKCMU_G3AA_G3AA, 0, 4),
--	DIV(CLK_DOUT_CMU_G3D_SWITCH, "dout_cmu_g3d_busd", "gout_cmu_g3d_busd",
-+	DIV(CLK_DOUT_CMU_G3D_BUSD, "dout_cmu_g3d_busd", "gout_cmu_g3d_busd",
- 	    CLK_CON_DIV_CLKCMU_G3D_BUSD, 0, 4),
- 	DIV(CLK_DOUT_CMU_G3D_GLB, "dout_cmu_g3d_glb", "gout_cmu_g3d_glb",
- 	    CLK_CON_DIV_CLKCMU_G3D_GLB, 0, 4),
+@@ -2129,7 +2129,7 @@ PNAME(mout_hsi0_usbdpdbg_user_p)	= { "os
+ 					    "dout_cmu_hsi0_usbdpdbg" };
+ PNAME(mout_hsi0_bus_p)			= { "mout_hsi0_bus_user",
+ 					    "mout_hsi0_alt_user" };
+-PNAME(mout_hsi0_usb20_ref_p)		= { "fout_usb_pll",
++PNAME(mout_hsi0_usb20_ref_p)		= { "mout_pll_usb",
+ 					    "mout_hsi0_tcxo_user" };
+ PNAME(mout_hsi0_usb31drd_p)		= { "fout_usb_pll",
+ 					    "mout_hsi0_usb31drd_user",
 
 
