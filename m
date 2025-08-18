@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29633203A2;
-	Mon, 18 Aug 2025 13:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F2222A7E0;
+	Mon, 18 Aug 2025 13:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523870; cv=none; b=i1kB53R6Sy3taKH48V4VS3VJymkl3sfBzo0f4UvqCm7htuOqTFHjVeHcN/h1KZuIxmz7O+HGEqVPHvV3K3uRYwF9dduyf9ch7kT5U1NwKVShbj+rc37HbnoxlHdA7Vrz0k46DLtcdnytbGTIcyBxTTq3gKkE73eOFbR9DER31z4=
+	t=1755523872; cv=none; b=qWYJiEXU1scIc4h/UMTTaF6fPFJFjaEk9AkZrHlMX9rZVi3s1zzmQ64B7OLvUoGXMdBDGcqYLpadYjiwadKqMGUam2a5LKlbywE8Ii0vL0/OQCCUN1KqFDr9Qhir64NVHX0FraaDLYg5FiN3wQEhB7LvtHFaZoTLtaI+pdIPqUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523870; c=relaxed/simple;
-	bh=N/7oK+S+8l5bEKf7cC+ipAYKyIomikWleNW0OR4jOys=;
+	s=arc-20240116; t=1755523872; c=relaxed/simple;
+	bh=TQUfqSVVPhAAQyrkuKczSGCK//MikjQk50jj2J2csHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yb4ERpyg6/4aDTFS3SM3ewiTbfiHq0ybqWLLEIbeegV92T1yGNeaq+IBH8pj4CP4+0Jblkj4kbuUDVQ2rLLqiBqgIGOJOL4v8MdLsjF40r/frX+tCI654ss5xi/TRSRu/Ucy2ygrkpTvK4+6nZaHMeKrB5YsHGS9a3fTJKjrq50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFLYov+r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z9yTOp95QDPl3f/YK2EYApP083NI+XpnBag0l09TmInqyCodgwbKK13jOC2JtytvJlAOJCmxAmv+9d7+QtotmjiGwEF3QiGvngWW0ipGraB+ftmfVZJaZCkgNBjdwfvukUM2Qeh/Nw1FJJ+mLalCDJnJNCThjUsM3GuljLvrAsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlVQG1Hn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFLYov+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153D2C4CEEB;
-	Mon, 18 Aug 2025 13:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlVQG1Hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E438C4CEEB;
+	Mon, 18 Aug 2025 13:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523869;
-	bh=N/7oK+S+8l5bEKf7cC+ipAYKyIomikWleNW0OR4jOys=;
+	s=korg; t=1755523872;
+	bh=TQUfqSVVPhAAQyrkuKczSGCK//MikjQk50jj2J2csHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFLYov+rztlUeG8l8PTPa2aUxl+EN0v7xze458kV23V9O1bel6c73nwD+upLWLoB4
-	 V5p9jS+Y20UkKLiw+MA72uBy1MPO5Z62swmTqC0xEUNQa/mFNipL056xQbt4rAAjoi
-	 iRHiHq/6+LXXTfNtcK3LOXTd0h/BfCZD0uPZr2NI=
+	b=UlVQG1HnLiIVHsU7lo4ioJL//ejQIW6LS+bH9cKuaSI2J0KpCaldRxaMFfr26GmnH
+	 tOUEvPHH21P0tCawmZi5AbA6MnOvFczzLBWftN7yJpVyh2mFYAzt7ryzEA/Sc+szy5
+	 I5Tog1osoXkGHiOrYD1uZjBsdmstuff1eppJEddw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Kathirvel <quic_kathirve@quicinc.com>,
-	Sarika Sharma <quic_sarishar@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	ganglxie <ganglxie@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 290/515] wifi: ath12k: Decrement TID on RX peer frag setup error handling
-Date: Mon, 18 Aug 2025 14:44:36 +0200
-Message-ID: <20250818124509.585178789@linuxfoundation.org>
+Subject: [PATCH 6.15 299/515] drm/amdgpu: clear pa and mca record counter when resetting eeprom
+Date: Mon, 18 Aug 2025 14:44:45 +0200
+Message-ID: <20250818124509.939651368@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,42 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
+From: ganglxie <ganglxie@amd.com>
 
-[ Upstream commit 7c0884fcd2ddde0544d2e77f297ae461e1f53f58 ]
+[ Upstream commit d0cc8d2b7df1848f98f0fea8135ba706814b1d13 ]
 
-Currently, TID is not decremented before peer cleanup, during error
-handling path of ath12k_dp_rx_peer_frag_setup(). This could lead to
-out-of-bounds access in peer->rx_tid[].
+clear pa and mca record counter when resetting eeprom, so that
+ras_num_bad_pages can be calculated correctly
 
-Hence, add a decrement operation for TID, before peer cleanup to
-ensures proper cleanup and prevents out-of-bounds access issues when
-the RX peer frag setup fails.
-
-Found during code review. Compile tested only.
-
-Signed-off-by: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
-Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250526034713.712592-1-quic_sarishar@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: ganglxie <ganglxie@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.c b/drivers/net/wireless/ath/ath12k/dp.c
-index 807c5b345e06..a53e4ebdcbfc 100644
---- a/drivers/net/wireless/ath/ath12k/dp.c
-+++ b/drivers/net/wireless/ath/ath12k/dp.c
-@@ -84,6 +84,7 @@ int ath12k_dp_peer_setup(struct ath12k *ar, int vdev_id, const u8 *addr)
- 	ret = ath12k_dp_rx_peer_frag_setup(ar, addr, vdev_id);
- 	if (ret) {
- 		ath12k_warn(ab, "failed to setup rx defrag context\n");
-+		tid--;
- 		goto peer_clean;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
+index e979a6086178..1a7ec674f579 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
+@@ -475,6 +475,8 @@ int amdgpu_ras_eeprom_reset_table(struct amdgpu_ras_eeprom_control *control)
  
+ 	control->ras_num_recs = 0;
+ 	control->ras_num_bad_pages = 0;
++	control->ras_num_mca_recs = 0;
++	control->ras_num_pa_recs = 0;
+ 	control->ras_fri = 0;
+ 
+ 	amdgpu_dpm_send_hbm_bad_pages_num(adev, control->ras_num_bad_pages);
 -- 
 2.39.5
 
