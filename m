@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9914183CC3;
-	Mon, 18 Aug 2025 14:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427E82C2340;
+	Mon, 18 Aug 2025 14:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526162; cv=none; b=uXux7ifworZcLL3UacFATKm9bY6v+v1VwuE7fdq57NhbjtPjKByg3hSnO2rhWzmLNxQ009lsWhjdDhRL79Xv3e58d2TBoJrX0RkMje7GUhwFyRpwBsdHUkT1rEceuS/eJQCw40pHPZliAKvoWHw2reJX28fgyEQ5pZOZtfoL+nU=
+	t=1755526167; cv=none; b=nX2hlmUVSFaRau4nGdoog1Jlp7H31oDdl4FmYHrdRtruCyi+CI2VczszmU0MjfUC6rm1KZzhEFki3k9Ics2eJu1ZgztApzMOlLqq3OXHv/B3kGqkP9trBilBqeSctEkO7Cth+T7N07tgcu6a8np+62RoBQkeZNIntXV8/uVqx5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526162; c=relaxed/simple;
-	bh=llBPYvrJVMHqxbgs/dt0+8SW6yKH1iKHKvv9EjN44M8=;
+	s=arc-20240116; t=1755526167; c=relaxed/simple;
+	bh=hUZ36xEjuEBool6wGkZqYxu4In8ypDo1J9i1Nafz2ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lD2wotUOo4vmzWGgliLvhC6OTx2IFFQJdV+5CqP+1/joPEltyebEw+avWo3hQw9LJXtXxL+vcGNSmmp6M5b5cYK3VY7P+EcDeIwk/Vz87ECj5VaZXPpqrcdYT7xA+Gfo4CKm5WqjPHAY1sEtkm5ceyyicWHW6XPAF/ZexITgt68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWCY+zCn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E01kr8OeQu4M91FzihQK3W6Jr92cQquGyGZNyojCHGhcjMb2vqbSVhpjDKoXUn6csA3Rpde6jzDXEd8gVj67M+bOldNGhxnobaGb+CylULGPXpwpTXH/8v9KLMD4gam3nJP2eWG3V+jPNCBhTD2y4KDMFWntIVR5onhG4k4Kg9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tcl4KLhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWCY+zCn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E611C4CEEB;
-	Mon, 18 Aug 2025 14:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tcl4KLhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DE2C4CEEB;
+	Mon, 18 Aug 2025 14:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526162;
-	bh=llBPYvrJVMHqxbgs/dt0+8SW6yKH1iKHKvv9EjN44M8=;
+	s=korg; t=1755526166;
+	bh=hUZ36xEjuEBool6wGkZqYxu4In8ypDo1J9i1Nafz2ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWCY+zCn8J7NWh22T+sNXD+U4KiibnkGP4kU1OO6nhdh+CYojimFeMzzUhUNw8c4j
-	 utAfqxdyyI0LJOy8JPX6fL9W3PiyZP+lpu0xJ3EBdBU6r+u7zREu0g36M8jX5N879h
-	 6z1GFIeo4zQeZG+Qhg8BmsWxD7ZdDAFkAsp+ksq0=
+	b=Tcl4KLhACH4BzArst8dUjJHVWpb+tFcCD9igO9RXdRyCAsot/I2sJdflg8Ux0r27A
+	 mna3Z8708RUk0meVV/BbIK2FL2OqC7QzkRMh63QiWTqIJHsymgDhAgTDiMzSd6XiUd
+	 x2tfTkepzPfADQHNoTkLNqCNN7wRu6ywsHey6YYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
+	Janna Martl <janna.martl109@gmail.com>,
 	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
 	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 475/570] drm/i915/fbc: fix the implementation of wa_18038517565
-Date: Mon, 18 Aug 2025 14:47:42 +0200
-Message-ID: <20250818124524.186837280@linuxfoundation.org>
+Subject: [PATCH 6.16 476/570] drm/i915/psr: Do not trigger Frame Change events from frontbuffer flush
+Date: Mon, 18 Aug 2025 14:47:43 +0200
+Message-ID: <20250818124524.223804187@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,59 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinod Govindapillai <vinod.govindapillai@intel.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit fd56b9c9507f32b16159f9a922e1af5628254567 ]
+[ Upstream commit 184889dfe0568528fd6d14bba864dd57ed45bbf2 ]
 
-As per the wa_18038517565, we need to disable FBC compressor
-clock gating before enabling FBC and enable after disabling
-FBC. Placing the enabling of clock gating in the fbc deactivate
-function can make the above wa logic go wrong in case of
-frontbuffer rendering FBC mechanism. FBC deactivate can get
-called during fb invalidate and then the corresponding FBC
-activate can get called without properly disabling the clock
-gating and can result in compression stalled. So move the
-enable clock gating at the end of one FBC session after FBC
-is completely disabled for a pipe.
+We want to get rid of triggering "Frame Change" events from
+frontbuffer flush calls. We are about to move using TRANS_PUSH
+register for this on LunarLake and onwards. Touching TRANS_PUSH
+register from fronbuffer flush would be problematic as it's written by
+DSB as well.
 
-Bspec: 74212, 72197, 69741, 65555
-Fixes: 010363c46189 ("drm/i915/display: implement wa_18038517565")
-Signed-off-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
-Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
-Link: https://lore.kernel.org/r/20250729124648.288497-1-vinod.govindapillai@intel.com
-(cherry picked from commit 82dde0407ab126f8413fd6c51429e5057ced5ba2)
+Fix this by using intel_psr_exit when flush or invalidate is done on
+LunarLake and onwards. This is not possible on AlderLake and
+MeteorLake due to HW bug in PSR2 disable.
+
+This patch is also fixing problems with cursor plane where cursor is
+disappearing or duplicate cursor is seen on the screen.
+
+v2: Commit message updated
+
+Bspec: 68927, 68934, 66624
+Reported-by: Janna Martl <janna.martl109@gmail.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/5522
+Fixes: 411ad63877bb ("drm/i915/psr: Use SFF_CTL on invalidate/flush for LunarLake onwards")
+Tested-by: Janna Martl <janna.martl109@gmail.com>
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://lore.kernel.org/r/20250801062905.564453-1-jouni.hogander@intel.com
+(cherry picked from commit 46fb38cb20c0d185a6391ab524b23e0e0219c41f)
 Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_fbc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_fbc.c b/drivers/gpu/drm/i915/display/intel_fbc.c
-index bed2bba20b55..6ddbc682ec1c 100644
---- a/drivers/gpu/drm/i915/display/intel_fbc.c
-+++ b/drivers/gpu/drm/i915/display/intel_fbc.c
-@@ -550,10 +550,6 @@ static void ilk_fbc_deactivate(struct intel_fbc *fbc)
- 	if (dpfc_ctl & DPFC_CTL_EN) {
- 		dpfc_ctl &= ~DPFC_CTL_EN;
- 		intel_de_write(display, ILK_DPFC_CONTROL(fbc->id), dpfc_ctl);
--
--		/* wa_18038517565 Enable DPFC clock gating after FBC disable */
--		if (display->platform.dg2 || DISPLAY_VER(display) >= 14)
--			fbc_compressor_clkgate_disable_wa(fbc, false);
- 	}
- }
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 430ad4ef7146..7da0ad854ed2 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -3250,7 +3250,9 @@ static void intel_psr_configure_full_frame_update(struct intel_dp *intel_dp)
  
-@@ -1708,6 +1704,10 @@ static void __intel_fbc_disable(struct intel_fbc *fbc)
- 
- 	__intel_fbc_cleanup_cfb(fbc);
- 
-+	/* wa_18038517565 Enable DPFC clock gating after FBC disable */
-+	if (display->platform.dg2 || DISPLAY_VER(display) >= 14)
-+		fbc_compressor_clkgate_disable_wa(fbc, false);
+ static void _psr_invalidate_handle(struct intel_dp *intel_dp)
+ {
+-	if (intel_dp->psr.psr2_sel_fetch_enabled) {
++	struct intel_display *display = to_intel_display(intel_dp);
 +
- 	fbc->state.plane = NULL;
- 	fbc->flip_pending = false;
- 	fbc->busy_bits = 0;
++	if (DISPLAY_VER(display) < 20 && intel_dp->psr.psr2_sel_fetch_enabled) {
+ 		if (!intel_dp->psr.psr2_sel_fetch_cff_enabled) {
+ 			intel_dp->psr.psr2_sel_fetch_cff_enabled = true;
+ 			intel_psr_configure_full_frame_update(intel_dp);
+@@ -3338,7 +3340,7 @@ static void _psr_flush_handle(struct intel_dp *intel_dp)
+ 	struct intel_display *display = to_intel_display(intel_dp);
+ 	struct drm_i915_private *dev_priv = to_i915(display->drm);
+ 
+-	if (intel_dp->psr.psr2_sel_fetch_enabled) {
++	if (DISPLAY_VER(display) < 20 && intel_dp->psr.psr2_sel_fetch_enabled) {
+ 		if (intel_dp->psr.psr2_sel_fetch_cff_enabled) {
+ 			/* can we turn CFF off? */
+ 			if (intel_dp->psr.busy_frontbuffer_bits == 0)
+@@ -3355,11 +3357,13 @@ static void _psr_flush_handle(struct intel_dp *intel_dp)
+ 		 * existing SU configuration
+ 		 */
+ 		intel_psr_configure_full_frame_update(intel_dp);
+-	}
+ 
+-	intel_psr_force_update(intel_dp);
++		intel_psr_force_update(intel_dp);
++	} else {
++		intel_psr_exit(intel_dp);
++	}
+ 
+-	if (!intel_dp->psr.psr2_sel_fetch_enabled && !intel_dp->psr.active &&
++	if ((!intel_dp->psr.psr2_sel_fetch_enabled || DISPLAY_VER(display) >= 20) &&
+ 	    !intel_dp->psr.busy_frontbuffer_bits)
+ 		queue_work(dev_priv->unordered_wq, &intel_dp->psr.work);
+ }
 -- 
 2.50.1
 
