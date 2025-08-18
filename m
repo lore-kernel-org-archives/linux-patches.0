@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81A522F14C;
-	Mon, 18 Aug 2025 13:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C6E21FF23;
+	Mon, 18 Aug 2025 13:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523839; cv=none; b=oKIafZR2E8nWKO7GyTKWTU44dWGhKWb/6d2fS8+gcD8td1hhuyV5OizWA/5IsUFh8i1KTag3adTK6igwFbZmCKwOn/9+XqcPGQJ6uu0rjK75HBE+6OImPB8viEXkvsKPa2h4TGyUqbXQ0NYeh/Z3wFiM5uMLpt/3u6qLrPe+3Io=
+	t=1755523843; cv=none; b=PgH4+/YwIt0cFQzSaT7VWg5075KptRkYtABbYlBnHRGwUuEgE9MW3ogynRkbc2KCEBsMLTPZHVywbm6DlHnZ4Vs2aSBmv9sn4dRI/amO5wJf7D5l7ImOg22nk9U8VBTXtUMSRqUC/lnhvQIzJwm7bg/egxC/hXK3XWO7Wi+9YNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523839; c=relaxed/simple;
-	bh=KAONm0WhqrrqY8RpDXeIUdiZYG/f6lT2sf2du4h5hhs=;
+	s=arc-20240116; t=1755523843; c=relaxed/simple;
+	bh=aUivljUl/BzriVt/e01ksWa4nUtri6mfVIqtsuQCYB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6sM0a3K5zN3bKxfqqMvbpFF6O1p15VkC2nWQpKyxZx92YKuoln0P8dJHrp6q0cX/tnl1ahVVVtA9FugXpgyLbo/mytXTEnT7TK5DStSPZIAXAfOe5TW9QiT+AJR0EXmI5ibcuRD1GrqmYoUr6M/ruXltMSfB0lXnXbBGbMK9nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYtGXLYa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJr4XhhDegq9ELxQstZiRCJTItEu8kan9Lyi4Sqa+lDLmf/CNRYQZqYLLjZZ3U/OaDK12LSOvHK2sGbXBN9CDAEFmgPVy4OhU1D97jSsz/ysFaqG6leyWmawm6wyNHGTFPsi1ogb4oxH8XR7owLLJ4fe+PbtB5DIrX+nRKSm82g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIEHPVNW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYtGXLYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4679BC4CEEB;
-	Mon, 18 Aug 2025 13:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIEHPVNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E399C4CEEB;
+	Mon, 18 Aug 2025 13:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523839;
-	bh=KAONm0WhqrrqY8RpDXeIUdiZYG/f6lT2sf2du4h5hhs=;
+	s=korg; t=1755523842;
+	bh=aUivljUl/BzriVt/e01ksWa4nUtri6mfVIqtsuQCYB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EYtGXLYagUqDR/l9IpbS2AKO3GYOmSch0a/XeU/lGm83DZo1cQxTq0pWUiY9Fj9Ov
-	 yNTOF5lNUQ9rblvJ2oDfjGI9QVfrZGHR0tL/LAVXx2ODjmUrSWnEx1QDWhJsi3FsMI
-	 jOdJasd5edh1XaL3roiPlRqwuczN9g4mg7D6QBYY=
+	b=hIEHPVNW2YD4XZEUVMEgHivRNvzqrjkdg17aCCBU4fvayg5nHgRN6V0RcdtsZqcDE
+	 r9J5DpegJQZpAGjWmTXMTRqlqSBShOiAyXXXjc9gqq//wWl2r4JWTWZGn6QSnMcvOK
+	 cnAEXiviAda3kSRHUMpjQWSq2WiLGCTOkavPoTRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	Ching-Te Ku <ku920601@realtek.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 287/515] wifi: rtlwifi: fix possible skb memory leak in `_rtl_pci_rx_interrupt()`.
-Date: Mon, 18 Aug 2025 14:44:33 +0200
-Message-ID: <20250818124509.463412951@linuxfoundation.org>
+Subject: [PATCH 6.15 288/515] wifi: rtw89: coex: Not to set slot duration to zero to avoid firmware issue
+Date: Mon, 18 Aug 2025 14:44:34 +0200
+Message-ID: <20250818124509.500971320@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,55 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Ching-Te Ku <ku920601@realtek.com>
 
-[ Upstream commit 44c0e191004f0e3aa1bdee3be248be14dbe5b020 ]
+[ Upstream commit a7feafea4ce80d5fa5284d05d54b4f108d2ab575 ]
 
-The function `_rtl_pci_init_one_rxdesc()` can fail even when the new
-`skb` is passed because of a DMA mapping error.  If it fails, the `skb`
-is not saved in the rx ringbuffer and thus lost.
+If the duration set to zero, Wi-Fi firmware will trigger some unexpected
+issue when firmware try to enable timer.
 
-Compile tested only
-
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ching-Te Ku <ku920601@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250616105631.444309-4-fourier.thomas@gmail.com
+Link: https://patch.msgid.link/20250616090252.51098-9-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtw89/coex.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 898f597f70a9..2741c3beac4c 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -802,13 +802,19 @@ static void _rtl_pci_rx_interrupt(struct ieee80211_hw *hw)
- 		skb = new_skb;
- no_new:
- 		if (rtlpriv->use_new_trx_flow) {
--			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
--						 rxring_idx,
--						 rtlpci->rx_ring[rxring_idx].idx);
-+			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
-+						      rxring_idx,
-+						      rtlpci->rx_ring[rxring_idx].idx)) {
-+				if (new_skb)
-+					dev_kfree_skb_any(skb);
-+			}
- 		} else {
--			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
--						 rxring_idx,
--						 rtlpci->rx_ring[rxring_idx].idx);
-+			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
-+						      rxring_idx,
-+						      rtlpci->rx_ring[rxring_idx].idx)) {
-+				if (new_skb)
-+					dev_kfree_skb_any(skb);
-+			}
- 			if (rtlpci->rx_ring[rxring_idx].idx ==
- 			    rtlpci->rxringcount - 1)
- 				rtlpriv->cfg->ops->set_desc(hw, (u8 *)pdesc,
+diff --git a/drivers/net/wireless/realtek/rtw89/coex.c b/drivers/net/wireless/realtek/rtw89/coex.c
+index 5ccf0cbaed2f..ea3664103fbf 100644
+--- a/drivers/net/wireless/realtek/rtw89/coex.c
++++ b/drivers/net/wireless/realtek/rtw89/coex.c
+@@ -3836,13 +3836,13 @@ void rtw89_btc_set_policy_v1(struct rtw89_dev *rtwdev, u16 policy_type)
+ 
+ 		switch (policy_type) {
+ 		case BTC_CXP_OFFE_2GBWISOB: /* for normal-case */
+-			_slot_set(btc, CXST_E2G, 0, tbl_w1, SLOT_ISO);
++			_slot_set(btc, CXST_E2G, 5, tbl_w1, SLOT_ISO);
+ 			_slot_set_le(btc, CXST_EBT, s_def[CXST_EBT].dur,
+ 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
+ 			_slot_set_dur(btc, CXST_EBT, dur_2);
+ 			break;
+ 		case BTC_CXP_OFFE_2GISOB: /* for bt no-link */
+-			_slot_set(btc, CXST_E2G, 0, cxtbl[1], SLOT_ISO);
++			_slot_set(btc, CXST_E2G, 5, cxtbl[1], SLOT_ISO);
+ 			_slot_set_le(btc, CXST_EBT, s_def[CXST_EBT].dur,
+ 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
+ 			_slot_set_dur(btc, CXST_EBT, dur_2);
+@@ -3868,15 +3868,15 @@ void rtw89_btc_set_policy_v1(struct rtw89_dev *rtwdev, u16 policy_type)
+ 			break;
+ 		case BTC_CXP_OFFE_2GBWMIXB:
+ 			if (a2dp->exist)
+-				_slot_set(btc, CXST_E2G, 0, cxtbl[2], SLOT_MIX);
++				_slot_set(btc, CXST_E2G, 5, cxtbl[2], SLOT_MIX);
+ 			else
+-				_slot_set(btc, CXST_E2G, 0, tbl_w1, SLOT_MIX);
++				_slot_set(btc, CXST_E2G, 5, tbl_w1, SLOT_MIX);
+ 			_slot_set_le(btc, CXST_EBT, s_def[CXST_EBT].dur,
+ 				     s_def[CXST_EBT].cxtbl, s_def[CXST_EBT].cxtype);
+ 			break;
+ 		case BTC_CXP_OFFE_WL: /* for 4-way */
+-			_slot_set(btc, CXST_E2G, 0, cxtbl[1], SLOT_MIX);
+-			_slot_set(btc, CXST_EBT, 0, cxtbl[1], SLOT_MIX);
++			_slot_set(btc, CXST_E2G, 5, cxtbl[1], SLOT_MIX);
++			_slot_set(btc, CXST_EBT, 5, cxtbl[1], SLOT_MIX);
+ 			break;
+ 		default:
+ 			break;
 -- 
 2.39.5
 
