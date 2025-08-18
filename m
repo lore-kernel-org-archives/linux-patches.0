@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14D613C8E8;
-	Mon, 18 Aug 2025 13:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E3C261B9B;
+	Mon, 18 Aug 2025 13:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525281; cv=none; b=A5rdbhjmWq7Z1tDd3uD8K4Ba2QYQfbBLJKzStY+WAZg7FVbz4IkWs5f7GQBgvKUQ0rfOvO87Qn5dCjEkHOXmbWIzrt/DBXuehKH74ncQaDcKnFix/5mHte+ccfrIkFzLxXphDB55WBDqajgVgPZhBxGAwMrxv/rpBcSlnd9ZaLw=
+	t=1755525285; cv=none; b=cBZDiQTyxOo2jL8AL+BRzzzAUdn07tYkQ6cKDTRO7V7UX3S2rthgkRh0YIRXR6O2uVR+TF/eT7vQ/dRKJQrPDxFFAQmG21IimZRApcKUpZWfRqoxmogcGcYpXZGFaBfzWOyvaTZJIFRPlQsw77t4DE18pZx/eit8dFAous4Ln1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525281; c=relaxed/simple;
-	bh=iWO9JQOmnKaTAZY9yQTVSY+TdPgS7aTtqk4vzOm16VE=;
+	s=arc-20240116; t=1755525285; c=relaxed/simple;
+	bh=nlEMfP9cUhgbAbcaaLTEvk4kp97eiQkvSv/t/8dee3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvRpRZRAbm+UVGusHivhZIs5E5A3dXHtG/PH3DGZdUIGSGeDq/WbIGPh40T/6+K4U91aRN4HJetaWHpgY8gLbNSdKxHGaF7M2bins57hDYFeoBA5WS+z5ceDuhv7YnSmM12q8u9F2XnlCofW0vL8A4LpQiq9vhaNikQBAheAqaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1Er9HFK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0ihmtYxRMQwjeb6jK1rUDGIR9fSsBijoEV25d/v8VMO+bmwehEHR0zKpkPtPNL6gpST+udsOYaZ/2GsdiHqgs4NH8vBPhCI8EOBbFT5B58m1fmHcgsxnIFu0ONZt2+OpfxbfxvxZffPgahh1RGounp8H1XE3YppR48FqlwN4II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/WXw47h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1Er9HFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C44AC113D0;
-	Mon, 18 Aug 2025 13:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/WXw47h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6511EC4CEF1;
+	Mon, 18 Aug 2025 13:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525281;
-	bh=iWO9JQOmnKaTAZY9yQTVSY+TdPgS7aTtqk4vzOm16VE=;
+	s=korg; t=1755525284;
+	bh=nlEMfP9cUhgbAbcaaLTEvk4kp97eiQkvSv/t/8dee3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1Er9HFKgBWlnsuTiGrKJAGlDdx/VWGPVBw/q1XSqN7aI2ysfSB14i3ZQGEeyHZ5k
-	 pjb27V/qEdI/AOlSLIgcakkvWsa7BHh7WPS4fmIS3X1DhZmUzkrD+6g6fEATZpY6C9
-	 UtIfuejQEX0pATxwN3HD1cdiFoRAgT+X0583TGPc=
+	b=s/WXw47hTY9k0vsiGD6KUMvvoRt3ux7ROlyqBLUC3SiJIPfDDb7WF3A0zx6IxFTnA
+	 pQhDEPQeXfuAAvIW0J9JMujy5woz+u6Pn+DPCXJYcs3ChDv8eU8lR8KVMSpeuu2esa
+	 e+S15BgAc3HwQeRJEtc7sCUe96xlJkv24sdyhMnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somashekhar Puttagangaiah <somashekhar.puttagangaiah@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Avraham Stern <avraham.stern@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 215/570] wifi: iwlwifi: mld: use spec link id and not FW link id
-Date: Mon, 18 Aug 2025 14:43:22 +0200
-Message-ID: <20250818124514.085764290@linuxfoundation.org>
+Subject: [PATCH 6.16 216/570] wifi: iwlwifi: mld: avoid outdated reorder buffer head_sn
+Date: Mon, 18 Aug 2025 14:43:23 +0200
+Message-ID: <20250818124514.121460322@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,61 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 170db5f873850a04a8eafd3401b2ea36adb20cea ]
+[ Upstream commit 666357bf3e57c6a68be128825775aee14f9a24f7 ]
 
-In missed beacon handling, we compare the FW link id to the
-bss_param_ch_cnt_link_id, which is a spec link id. Fix it.
+If no frames are received on a queue for a while, the reorder buffer
+head_sn may be an old one. When the next frame that is received on
+that queue and buffered is a subframe of an AMSDU but not the last
+subframe, it will not update the buffer's head_sn. When the frame
+release notification arrives, it will not release the buffered frame
+because it will look like the notification's NSSN is lower than the
+buffer's head_sn (because of a wraparound).
+Fix it by updating the head_sn when the first frame is buffered.
 
-Reviewed-by: Somashekhar Puttagangaiah <somashekhar.puttagangaiah@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250723094230.2104f8cac836.I25ed77c2b87bde82a9153e2aa26e09b8a42f6ee3@changeid
+Link: https://patch.msgid.link/20250723094230.e1f62a9a603c.I7b57a481122074b1f40d39cd31db2e5262668eb2@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/link.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/agg.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/link.c b/drivers/net/wireless/intel/iwlwifi/mld/link.c
-index d0f56189ad3f..2bf4c773ce8a 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/link.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/link.c
-@@ -864,21 +864,23 @@ void iwl_mld_handle_missed_beacon_notif(struct iwl_mld *mld,
- {
- 	const struct iwl_missed_beacons_notif *notif = (const void *)pkt->data;
- 	union iwl_dbg_tlv_tp_data tp_data = { .fw_pkt = pkt };
--	u32 link_id = le32_to_cpu(notif->link_id);
-+	u32 fw_link_id = le32_to_cpu(notif->link_id);
- 	u32 missed_bcon = le32_to_cpu(notif->consec_missed_beacons);
- 	u32 missed_bcon_since_rx =
- 		le32_to_cpu(notif->consec_missed_beacons_since_last_rx);
- 	u32 scnd_lnk_bcn_lost =
- 		le32_to_cpu(notif->consec_missed_beacons_other_link);
- 	struct ieee80211_bss_conf *link_conf =
--		iwl_mld_fw_id_to_link_conf(mld, link_id);
-+		iwl_mld_fw_id_to_link_conf(mld, fw_link_id);
- 	u32 bss_param_ch_cnt_link_id;
- 	struct ieee80211_vif *vif;
-+	u8 link_id;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/agg.c b/drivers/net/wireless/intel/iwlwifi/mld/agg.c
+index 6b349270481d..3bf36f8f6874 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/agg.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/agg.c
+@@ -305,10 +305,15 @@ iwl_mld_reorder(struct iwl_mld *mld, struct napi_struct *napi,
+ 	 * already ahead and it will be dropped.
+ 	 * If the last sub-frame is not on this queue - we will get frame
+ 	 * release notification with up to date NSSN.
++	 * If this is the first frame that is stored in the buffer, the head_sn
++	 * may be outdated. Update it based on the last NSSN to make sure it
++	 * will be released when the frame release notification arrives.
+ 	 */
+ 	if (!amsdu || last_subframe)
+ 		iwl_mld_reorder_release_frames(mld, sta, napi, baid_data,
+ 					       buffer, nssn);
++	else if (buffer->num_stored == 1)
++		buffer->head_sn = nssn;
  
- 	if (WARN_ON(!link_conf))
- 		return;
- 
- 	vif = link_conf->vif;
-+	link_id = link_conf->link_id;
- 	bss_param_ch_cnt_link_id = link_conf->bss_param_ch_cnt_link_id;
- 
- 	IWL_DEBUG_INFO(mld,
-@@ -890,7 +892,7 @@ void iwl_mld_handle_missed_beacon_notif(struct iwl_mld *mld,
- 
- 	mld->trans->dbg.dump_file_name_ext_valid = true;
- 	snprintf(mld->trans->dbg.dump_file_name_ext, IWL_FW_INI_MAX_NAME,
--		 "LinkId_%d_MacType_%d", link_id,
-+		 "LinkId_%d_MacType_%d", fw_link_id,
- 		 iwl_mld_mac80211_iftype_to_fw(vif));
- 
- 	iwl_dbg_tlv_time_point(&mld->fwrt,
+ 	return IWL_MLD_BUFFERED_SKB;
+ }
 -- 
 2.39.5
 
