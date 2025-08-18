@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91E5335BA1;
-	Mon, 18 Aug 2025 13:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C24335BBF;
+	Mon, 18 Aug 2025 13:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523640; cv=none; b=o951Be8yK7gnfi8Hjjy53ZgT3aybAuUT35gv/zny+cSccImhcK1T/7Lk2Zqzsy4715EjVld9MyeeN8NxuLCaO3xwfPj/xSPmOcCbsx3JZ0G45gpKzBA2+Kc/kv6dQHboSWfism849k6daRkX/38HI3fRBAjiVxErgh4vTCKhC7w=
+	t=1755523643; cv=none; b=D5aBCOxANw9ez/cmDRO5rAYT8oH0tLN6mEhpQID5Aq0J2baQqnK077AR5DtTbOyow9wPNC3dfXl1/1xKxnLBTNizmBREUyRbPNriTWvTuY/zXbqe0MLnI+QJYJlYA59yJXTJYuzByqHsYPUmIEp4q0qRTk4wa9+LEv+n6SydJLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523640; c=relaxed/simple;
-	bh=1RxYCdG/8BK5BFGEC4dMF/TEURT3zHdKacg4CBNN3mY=;
+	s=arc-20240116; t=1755523643; c=relaxed/simple;
+	bh=10aHbvIiPJaG+HaIhSZjc8m6sMmEiG1thAj2c27UtOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJbMKQ+0/bjRfR22Mc3Bz8lhZP3Dt+9ZSu7zGsiacISNed3UIw9r3MoPxnqX1XFwz9Cr8F56A6xdEDpQjXwSnvpBDZANvKYIdF2ocEl9XKSSIfY4JAVPgwe24/7VQVcxQJ+2LKPu5wtIde2/Qh6SzZuu05ZLgoVeyOEAfkXxw2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4vXYK37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMLODFX0Sdp8Xu617NzS5SnyIGh9WR01Wj4tzF/93ljlyvYHMdQePFedAmEbjBdO/m+b/TZ0mZoZK7QwQWLkDqWwwM7ZhGWY7r+dvnanBUwc8VO9AiKzXEnhlobAwpmm1X5J9tmTwNO2LTISoeM2hpPKsKEbVD1oHxHQP6bk2ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnaKJctc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4vXYK37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61770C4CEEB;
-	Mon, 18 Aug 2025 13:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnaKJctc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3921C4CEEB;
+	Mon, 18 Aug 2025 13:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523639;
-	bh=1RxYCdG/8BK5BFGEC4dMF/TEURT3zHdKacg4CBNN3mY=;
+	s=korg; t=1755523643;
+	bh=10aHbvIiPJaG+HaIhSZjc8m6sMmEiG1thAj2c27UtOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O4vXYK37gFEwnUOIeYGXRysxFJiRc9rX2K6b3ZEIXndALf4fpM1aOYKYONfFRs5C+
-	 C/+beTe2PwqOUgFijReCY5ibxJkURYfbXcqUvVwOtIgcBuUw4qul+m/koyg5XYjKT5
-	 2Mtw0qVDviloL5R0Gz+JVuBfYmjtE9JvX9A4AbkA=
+	b=NnaKJctcqMEXWPYSOn1oOk2EqIJgo15W1yC7WOcyWtJgVsacEnGMTnRgzxChxsBxS
+	 X5g+ggjrrf7Pr5tSz/jlqDm/CA1brKG2J+hvzrz6eSCMeYOKueyON6w5BmI63rkZec
+	 LaukwWuj2wLisUr0f6ey6l69YjauuF+3ZX3BulGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Avraham Stern <avraham.stern@intel.com>,
+	Daniel Gabay <daniel.gabay@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 234/515] wifi: iwlwifi: mvm: set gtk id also in older FWs
-Date: Mon, 18 Aug 2025 14:43:40 +0200
-Message-ID: <20250818124507.386502328@linuxfoundation.org>
+Subject: [PATCH 6.15 235/515] wifi: iwlwifi: mld: fix scan request validation
+Date: Mon, 18 Aug 2025 14:43:41 +0200
+Message-ID: <20250818124507.428554968@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,42 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 61be9803f322ab46f31ba944c6ef7de195891f64 ]
+[ Upstream commit d1f5f881ac2c5dc185a88c7bfe47d2b3ecbbc501 ]
 
-We use gtk[i].id, but it is not even set in older FW APIs
-(iwl_wowlan_status_v6 and iwl_wowlan_status_v7).
-Set it also in older FWs.
+The scan request validation function uses bitwise and instead
+of logical and. Fix it.
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Reviewed-by: Daniel Gabay <daniel.gabay@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250710212632.e91e49590414.I27d2fdbed1c54aee59929fa11ec169f07e159406@changeid
+Link: https://patch.msgid.link/20250710212632.ec7d665f56a4.I416816b491fafa5d3efdf0a4be78356eedf2bd95@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mld/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index 3e8b7168af01..a30ef33525ec 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -2387,6 +2387,7 @@ static void iwl_mvm_convert_gtk_v2(struct iwl_wowlan_status_data *status,
- 
- 	status->gtk[0].len = data->key_len;
- 	status->gtk[0].flags = data->key_flags;
-+	status->gtk[0].id = status->gtk[0].flags & IWL_WOWLAN_GTK_IDX_MASK;
- 
- 	memcpy(status->gtk[0].key, data->key, sizeof(data->key));
- 
-@@ -2737,6 +2738,7 @@ iwl_mvm_send_wowlan_get_status(struct iwl_mvm *mvm, u8 sta_id)
- 		 * currently used key.
- 		 */
- 		status->gtk[0].flags = v6->gtk.key_index | BIT(7);
-+		status->gtk[0].id = v6->gtk.key_index;
- 	} else if (notif_ver == 7) {
- 		struct iwl_wowlan_status_v7 *v7 = (void *)cmd.resp_pkt->data;
- 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/scan.c b/drivers/net/wireless/intel/iwlwifi/mld/scan.c
+index 7ec04318ec2f..13b9ae18dd7c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/scan.c
+@@ -359,7 +359,7 @@ iwl_mld_scan_fits(struct iwl_mld *mld, int n_ssids,
+ 		  struct ieee80211_scan_ies *ies, int n_channels)
+ {
+ 	return ((n_ssids <= PROBE_OPTION_MAX) &&
+-		(n_channels <= mld->fw->ucode_capa.n_scan_channels) &
++		(n_channels <= mld->fw->ucode_capa.n_scan_channels) &&
+ 		(ies->common_ie_len + ies->len[NL80211_BAND_2GHZ] +
+ 		 ies->len[NL80211_BAND_5GHZ] + ies->len[NL80211_BAND_6GHZ] <=
+ 		 iwl_mld_scan_max_template_size()));
 -- 
 2.39.5
 
