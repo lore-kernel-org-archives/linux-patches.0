@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C383218C0;
-	Mon, 18 Aug 2025 12:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDEC3218B8;
+	Mon, 18 Aug 2025 12:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521829; cv=none; b=LVo7P6h1uUDAEZ3EU1Z8AWKPJ42m7BO908WTml47gzvNh81mh89vXs6Rp3BJbf8o3WWrIGn5TKCIqFhO2Zk2/j1kQq0WCyva/36E8iDpen1J1FHT94zhs+GP4Ud/4AVmWe+waOO9hIFdx7QBg86AbIybHhkveZU1IK6rDwqSoE8=
+	t=1755521832; cv=none; b=TFr3IiJ4qRt1fKc8Dm4e2jWIxhhg/FTfHqhmnY2UQqNSK9RDZsANeHepwwy+A3+ggLv1zkA9bZOej8K5C2WmOMDPYPI5vqJv3Ptpdz+CoLhO4r8hd7/kjWVT/ek5yQ0LWT/xmhDtLL9zmIXVQmcW0hlIXcDbpxs8aaertVivVn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521829; c=relaxed/simple;
-	bh=8HQuoiyIu7APNA9pulGXufujRBa++bXEghZ3G9+34iQ=;
+	s=arc-20240116; t=1755521832; c=relaxed/simple;
+	bh=iVLcUCYjoR5woagI9IKC/kY2S+jZCM0BV+Fd3vJIkCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cTaHMZ0hol+WHTiUA+pMn+tkIzpG1BoNukRrmrrXC4vZQMRYfViVS+R8+sHo7SMG61dNdDJ2o4nNrpXorkn22WDW2m+HMZSwJtC+h9Xbnk3bg0sdaKvi0/o9MwTxqmIyHWfNK+HT++QVFlsxjtA73ZTiEFjXO8n493evBJeg39Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/G8soO5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3Ga01V1mmbpYQAm50om8Zj13Gy136dYzW0AvgZZYj/no0ud2UTtCSJLToLG8Y5GfSGUJARx1wY2t5WXZIkrueRtaF9F0hqhTDfkeApw+dS94EIcJbOjUvr/j3ZDDQjewQZL5N8gAviAxiibeKUnDwafY9XZIazDiasUBfb9u/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZYBZkp6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/G8soO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D49C4CEEB;
-	Mon, 18 Aug 2025 12:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZYBZkp6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2E9C4CEEB;
+	Mon, 18 Aug 2025 12:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521829;
-	bh=8HQuoiyIu7APNA9pulGXufujRBa++bXEghZ3G9+34iQ=;
+	s=korg; t=1755521832;
+	bh=iVLcUCYjoR5woagI9IKC/kY2S+jZCM0BV+Fd3vJIkCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/G8soO5Hpg/hKPYIeVTYZFnyX4YE3bMYbirIOhLwhJ/D4iEJH7EmJ9fFRZn7YM2X
-	 oa/rEBunOYWdZh/29UJbKojQd2JLGeTfduJDbiNspFt8swASSOxLV7nKmAgBW1eyXj
-	 dYpMJzsQbX0AFK3bhj/zLAgSfCiKebltEAFbY8k0=
+	b=VZYBZkp651B7+cMFGAarJw6Y9UtZiVRUa+pHBTFX093XN7g0PyTAStXa6EqQU4app
+	 DgMgZmZfArQSpaENtrTCM1sLpSHpO8DKvggRVxUVfyQoPbOvweql9Frhpqu5+fR2v+
+	 Yc+NvslfIZg0juWQxO6Qu5mHwo1/6K8FBwpPA5xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliav Farber <farbere@amazon.com>,
+	Peter Robinson <pbrobinson@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 134/444] pps: clients: gpio: fix interrupt handling order in remove path
-Date: Mon, 18 Aug 2025 14:42:40 +0200
-Message-ID: <20250818124453.937580095@linuxfoundation.org>
+Subject: [PATCH 6.12 135/444] reset: brcmstb: Enable reset drivers for ARCH_BCM2835
+Date: Mon, 18 Aug 2025 14:42:41 +0200
+Message-ID: <20250818124453.972177765@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -50,56 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eliav Farber <farbere@amazon.com>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-[ Upstream commit 6bca1e955830808dc90e0506b2951b4256b81bbb ]
+[ Upstream commit 1d99f92f71b6b4b2eee776562c991428490f71ef ]
 
-The interrupt handler in pps_gpio_probe() is registered after calling
-pps_register_source() using devm_request_irq(). However, in the
-corresponding remove function, pps_unregister_source() is called before
-the IRQ is freed, since devm-managed resources are released after the
-remove function completes.
+The BRCMSTB and BRCMSTB_RESCAL reset drivers are also
+used in the BCM2712, AKA the RPi5. The RPi platforms
+have typically used the ARCH_BCM2835, and the PCIe
+support for this SoC can use this config which depends
+on these drivers so enable building them when just that
+arch option is enabled to ensure the platform works as
+expected.
 
-This creates a potential race condition where an interrupt may occur
-after the PPS source is unregistered but before the handler is removed,
-possibly leading to a kernel panic.
-
-To prevent this, switch from devm-managed IRQ registration to manual
-management by using request_irq() and calling free_irq() explicitly in
-the remove path before unregistering the PPS source. This ensures the
-interrupt handler is safely removed before deactivating the PPS source.
-
-Signed-off-by: Eliav Farber <farbere@amazon.com>
-Link: https://lore.kernel.org/r/20250527053355.37185-1-farbere@amazon.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20250630175301.846082-1-pbrobinson@gmail.com
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps-gpio.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/reset/Kconfig | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-index 93e662912b53..1412f8af15f2 100644
---- a/drivers/pps/clients/pps-gpio.c
-+++ b/drivers/pps/clients/pps-gpio.c
-@@ -206,8 +206,8 @@ static int pps_gpio_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
+index 5484a65f66b9..1cf577e3223b 100644
+--- a/drivers/reset/Kconfig
++++ b/drivers/reset/Kconfig
+@@ -51,8 +51,8 @@ config RESET_BERLIN
  
- 	/* register IRQ interrupt handler */
--	ret = devm_request_irq(dev, data->irq, pps_gpio_irq_handler,
--			get_irqf_trigger_flags(data), data->info.name, data);
-+	ret = request_irq(data->irq, pps_gpio_irq_handler,
-+			  get_irqf_trigger_flags(data), data->info.name, data);
- 	if (ret) {
- 		pps_unregister_source(data->pps);
- 		dev_err(dev, "failed to acquire IRQ %d\n", data->irq);
-@@ -224,6 +224,7 @@ static void pps_gpio_remove(struct platform_device *pdev)
- {
- 	struct pps_gpio_device_data *data = platform_get_drvdata(pdev);
+ config RESET_BRCMSTB
+ 	tristate "Broadcom STB reset controller"
+-	depends on ARCH_BRCMSTB || COMPILE_TEST
+-	default ARCH_BRCMSTB
++	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
++	default ARCH_BRCMSTB || ARCH_BCM2835
+ 	help
+ 	  This enables the reset controller driver for Broadcom STB SoCs using
+ 	  a SUN_TOP_CTRL_SW_INIT style controller.
+@@ -60,11 +60,11 @@ config RESET_BRCMSTB
+ config RESET_BRCMSTB_RESCAL
+ 	tristate "Broadcom STB RESCAL reset controller"
+ 	depends on HAS_IOMEM
+-	depends on ARCH_BRCMSTB || COMPILE_TEST
+-	default ARCH_BRCMSTB
++	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
++	default ARCH_BRCMSTB || ARCH_BCM2835
+ 	help
+ 	  This enables the RESCAL reset controller for SATA, PCIe0, or PCIe1 on
+-	  BCM7216.
++	  BCM7216 or the BCM2712.
  
-+	free_irq(data->irq, data);
- 	pps_unregister_source(data->pps);
- 	del_timer_sync(&data->echo_timer);
- 	/* reset echo pin in any case */
+ config RESET_EYEQ
+ 	bool "Mobileye EyeQ reset controller"
 -- 
 2.39.5
 
