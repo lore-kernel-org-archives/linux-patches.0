@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98FC270ED2;
-	Mon, 18 Aug 2025 13:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F271A322767;
+	Mon, 18 Aug 2025 13:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523963; cv=none; b=bOVnc/QB3Ljb7DP5ELfTo3UAXpVd7yp4Vq6fc6B9ovEDwPxgzxYcCNcxzrNSM5bT5jrG9x94XZrtDn8KEWWQuzo/joCgHhxzkMEpCJC4d0km6OKDISwdjD25TJwfqbZpWvkp1lRh4kuuWkQfDlt6r26B0emABYubBAx4O76IH4Q=
+	t=1755523967; cv=none; b=WIVUYvQrsOhYmHQtUTR0gTN7uFRViS5HIegcy/UOvoNmZkHTquweIUp4wC+FGDbgukYY/2fxYLtGyrQNyVA40ptI04lH480PYklLdamuRm8Jh1XYiTyhLZnS9Oy5n/sDPRK5ZFFLeTV13DUsYXJrlWtUscOhahx5oyYAUClGT9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523963; c=relaxed/simple;
-	bh=dIwcQS9qG8Utga776u4F74G44AAzkBrMueUhc2CzVIs=;
+	s=arc-20240116; t=1755523967; c=relaxed/simple;
+	bh=ManrpZV5X4k13QFLIkRrgpcX/pm468KGCaZSLyL0RfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GI938DS4uNA/TsNl4QbLjXA99nSSdhaEFJ8c0oN1N0inBkVhZq4Vuscd1xpu0G6QbjoON76WGaFyNKNdcSUzS8LNr5dq+z9SGzeR6jDt/BjNrxt4y8FUVCaIxA9r6cnhtXJpAg03fIMM7hsUSiGqHlOaraJeFbAFX9Z23d+6CpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrCyjclC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ck+8D1AKb+/vLeNp75oeWcYtCqmNVxpGy8xB9AhMTi6QRrsCS+gHmdlQkrHB+6gyQZLOv8rhYoc2Vi8Qw8N0K8em9XKjj45NC+28rw6ZUcg77qgAnrxr0kH+WN5A0s/Xlo/A28ITPg7JY73tVYfDDEJxWh9l+uVVTkyCE/C68Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcKOwZA6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrCyjclC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4539BC4CEEB;
-	Mon, 18 Aug 2025 13:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcKOwZA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5F4C4CEEB;
+	Mon, 18 Aug 2025 13:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523963;
-	bh=dIwcQS9qG8Utga776u4F74G44AAzkBrMueUhc2CzVIs=;
+	s=korg; t=1755523966;
+	bh=ManrpZV5X4k13QFLIkRrgpcX/pm468KGCaZSLyL0RfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PrCyjclCLX8eINhP0cYnV956Qe4HugSDrPC+iiYfjedZL4rSD1yeCYb/yajcjumSk
-	 M4WGWGUvufR9wb4NUFO9vxyr9cPAgtmepiLK4dZiRu38KQ08LrEZvou5w005iBjPN1
-	 kkAJ+uAQyrvYdXQgdOhXtlwXxv5PGDONmBgt99+E=
+	b=tcKOwZA65GtwH+UneE7Y/luqpsIk40DFycNZbx6dG1yPbtrA1pbKtT+uuUHvra7M3
+	 +0diOgMITc+B/O6qol3t75ZisjHNDnf509MPp2WWkEtvUtePqQKEU+dsTOAAkH7WOG
+	 kD2xFocbx2oiXVlZ1vNHXHzC5QIqAZKSISEorYTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexei Safin <a.safin@rosa.ru>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 294/515] wifi: iwlegacy: Check rate_idx range after addition
-Date: Mon, 18 Aug 2025 14:44:40 +0200
-Message-ID: <20250818124509.739356738@linuxfoundation.org>
+Subject: [PATCH 6.15 295/515] dpaa_eth: dont use fixed_phy_change_carrier
+Date: Mon, 18 Aug 2025 14:44:41 +0200
+Message-ID: <20250818124509.776178199@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,41 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 0de19d5ae0b2c5b18b88c5c7f0442f707a207409 ]
+[ Upstream commit d8155c1df5c8b717052567b188455d41fa7a8908 ]
 
-Limit rate_idx to IL_LAST_OFDM_RATE for 5GHz band for thinkable case
-the index is incorrect.
+This effectively reverts 6e8b0ff1ba4c ("dpaa_eth: Add change_carrier()
+for Fixed PHYs"). Usage of fixed_phy_change_carrier() requires that
+fixed_phy_register() has been called before, directly or indirectly.
+And that's not the case in this driver.
 
-Reported-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reported-by: Alexei Safin <a.safin@rosa.ru>
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20250525144524.GA172583@wp.pl
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/7eb189b3-d5fd-4be6-8517-a66671a4e4e3@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlegacy/4965-mac.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/dpaa/dpaa_eth.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlegacy/4965-mac.c b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-index dc8c408902e6..4d2148147b94 100644
---- a/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-@@ -1575,8 +1575,11 @@ il4965_tx_cmd_build_rate(struct il_priv *il,
- 	    || rate_idx > RATE_COUNT_LEGACY)
- 		rate_idx = rate_lowest_index(&il->bands[info->band], sta);
- 	/* For 5 GHZ band, remap mac80211 rate indices into driver indices */
--	if (info->band == NL80211_BAND_5GHZ)
-+	if (info->band == NL80211_BAND_5GHZ) {
- 		rate_idx += IL_FIRST_OFDM_RATE;
-+		if (rate_idx > IL_LAST_OFDM_RATE)
-+			rate_idx = IL_LAST_OFDM_RATE;
-+	}
- 	/* Get PLCP rate for tx_cmd->rate_n_flags */
- 	rate_plcp = il_rates[rate_idx].plcp;
- 	/* Zero out flags for this packet */
+diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+index 4948b4906584..ebdaa3e7e106 100644
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+@@ -28,7 +28,6 @@
+ #include <linux/percpu.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/sort.h>
+-#include <linux/phy_fixed.h>
+ #include <linux/bpf.h>
+ #include <linux/bpf_trace.h>
+ #include <soc/fsl/bman.h>
+@@ -3151,7 +3150,6 @@ static const struct net_device_ops dpaa_ops = {
+ 	.ndo_stop = dpaa_eth_stop,
+ 	.ndo_tx_timeout = dpaa_tx_timeout,
+ 	.ndo_get_stats64 = dpaa_get_stats64,
+-	.ndo_change_carrier = fixed_phy_change_carrier,
+ 	.ndo_set_mac_address = dpaa_set_mac_address,
+ 	.ndo_validate_addr = eth_validate_addr,
+ 	.ndo_set_rx_mode = dpaa_set_rx_mode,
 -- 
 2.39.5
 
