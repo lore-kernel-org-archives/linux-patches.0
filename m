@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD622321425;
-	Mon, 18 Aug 2025 13:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE429321F22;
+	Mon, 18 Aug 2025 13:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525510; cv=none; b=l72kSoNBfZapqTsjdKdrfDMhGkAussjol/qGPjSuQFM7VevxrQWLt/y/SNMCL42F+MeIqtnAxoHLAAHhDXSqnnxay6/7a84AIDaF3CVqq14T9v78og0pOX04CWuXkpAOJKxE6bunaU9zLxRG6SJKOoJHo3Y9x4sD193gRx8Ar9g=
+	t=1755525514; cv=none; b=L7P1823I2tGiPUb8WXzURVYR0Cj9uCzZqpLLS493JkTElByUrRAKvbpJZHZhpN10r9WKerXya8MK+rykWKYrVdtUZG7ctJXmYYeCYP6u1RxOmjeQfUaq1uUKHpnev8POrOlbT9rl1iugMbQw+AKGrZVm/8XqFmr7sHYwduzB7ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525510; c=relaxed/simple;
-	bh=UkSa3f+1yAacqqO5cAC15H0goDhXmK9ZaPWatKiUMK8=;
+	s=arc-20240116; t=1755525514; c=relaxed/simple;
+	bh=IMC1nsV6H1bkwixuwnM9cR1+tgw2k2z1uPkoMmyUzeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PeSyZflOARnTlbSI9Cwu5G4lG1IX2sA1SSLJ2X9ve8UK3w4ibLqtB5EAAohZdTYTSggdkNDjtNnr2G2CJsikZ2zlSZbKb6wuYajj+X62dPM3twxKtZTcBP8uxJYwiWXspLAaT8HUX5OkZYBM7GAkJUoE7AAaku+T2ghM0hVYNpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yVjOhdQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDYqrsI62PLtPfeU+HrHyl5onZhdvYFK+y+QiFDQLSBtWnR134AHj+UDiIiHwfkVKEoUhKaiGBZWotsdBWVOns1fc+d0IWsp/uPq/I8evLOATbbdfAlUhYUG6BtJPfax+b+G61VvBDQmViDcYyUxNjw1VN/nhOy/amnl9rBOnrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrTWvcBx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yVjOhdQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426C6C4CEEB;
-	Mon, 18 Aug 2025 13:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrTWvcBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75699C4CEEB;
+	Mon, 18 Aug 2025 13:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525510;
-	bh=UkSa3f+1yAacqqO5cAC15H0goDhXmK9ZaPWatKiUMK8=;
+	s=korg; t=1755525513;
+	bh=IMC1nsV6H1bkwixuwnM9cR1+tgw2k2z1uPkoMmyUzeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0yVjOhdQKIjaaBFOZxjYJDV6DsL6j++DH0ei2AkjAPA1VdpRsZYSf4FX52Vyve+nM
-	 Gibn6eNAd8Hp1DoilfdoTyOzPJ5i7WuY6hBskdEZ8ttUN/6+dqQs1g1oxLxpigC6iO
-	 WU6z6qpFvntmmttc2BKcJxRwrsdxzca7+MuK+QlM=
+	b=rrTWvcBxdlnww26pYoeGSEY23SdlJ7jh80ljXCfR9F2Ng4wlpPbz/7lxx9Sk4W0hS
+	 j8JCbYfOiFR8ZByl/lTr6Rv9vcVflNUZSZvw6qFOrGQmo1S2xyZRTTJHV7NR6F11Mz
+	 OFxPjATYBYbgb70ybEI8Lz8h4gW/Dyx5S13QRVOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lucien.Jheng" <lucienzx159@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Eric Work <work.eric@gmail.com>,
+	Igor Russkikh <irusskikh@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 285/570] net: phy: air_en8811h: Introduce resume/suspend and clk_restore_context to ensure correct CKO settings after network interface reinitialization.
-Date: Mon, 18 Aug 2025 14:44:32 +0200
-Message-ID: <20250818124516.823231262@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Mark Starovoitov <mstarovoitov@marvell.com>,
+	Dmitry Bogdanov <dbogdanov@marvell.com>,
+	Pavel Belous <pbelous@marvell.com>,
+	Nikita Danilov <ndanilov@marvell.com>
+Subject: [PATCH 6.16 286/570] net: atlantic: add set_power to fw_ops for atl2 to fix wol
+Date: Mon, 18 Aug 2025 14:44:33 +0200
+Message-ID: <20250818124516.862451436@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,110 +56,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucien.Jheng <lucienzx159@gmail.com>
+From: Eric Work <work.eric@gmail.com>
 
-[ Upstream commit 6b9c9def95cb402374730d51a1f44927f467b774 ]
+[ Upstream commit fad9cf216597a71936ac87143d1618fbbcf97cbe ]
 
-If the user reinitializes the network interface, the PHY will reinitialize,
-and the CKO settings will revert to their initial configuration(be enabled).
-To prevent CKO from being re-enabled,
-en8811h_clk_restore_context and en8811h_resume were added
-to ensure the CKO settings remain correct.
+Aquantia AQC113(C) using ATL2FW doesn't properly prepare the NIC for
+enabling wake-on-lan. The FW operation `set_power` was only implemented
+for `hw_atl` and not `hw_atl2`. Implement the `set_power` functionality
+for `hw_atl2`.
 
-Signed-off-by: Lucien.Jheng <lucienzx159@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250630154147.80388-1-lucienzx159@gmail.com
+Tested with both AQC113 and AQC113C devices. Confirmed you can shutdown
+the system and wake from S5 using magic packets. NIC was previously
+powered off when entering S5. If the NIC was configured for WOL by the
+Windows driver, loading the atlantic driver would disable WOL.
+
+Partially cherry-picks changes from commit,
+https://github.com/Aquantia/AQtion/commit/37bd5cc
+
+Attributing original authors from Marvell for the referenced commit.
+
+Closes: https://github.com/Aquantia/AQtion/issues/70
+Co-developed-by: Igor Russkikh <irusskikh@marvell.com>
+Co-developed-by: Mark Starovoitov <mstarovoitov@marvell.com>
+Co-developed-by: Dmitry Bogdanov <dbogdanov@marvell.com>
+Co-developed-by: Pavel Belous <pbelous@marvell.com>
+Co-developed-by: Nikita Danilov <ndanilov@marvell.com>
+Signed-off-by: Eric Work <work.eric@gmail.com>
+Reviewed-by: Igor Russkikh <irusskikh@marvell.com>
+Link: https://patch.msgid.link/20250629051535.5172-1-work.eric@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/air_en8811h.c | 45 +++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 4 deletions(-)
+ .../net/ethernet/aquantia/atlantic/aq_hw.h    |  2 +
+ .../atlantic/hw_atl2/hw_atl2_utils_fw.c       | 39 +++++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
-diff --git a/drivers/net/phy/air_en8811h.c b/drivers/net/phy/air_en8811h.c
-index 57fbd8df9438..badd65f0ccee 100644
---- a/drivers/net/phy/air_en8811h.c
-+++ b/drivers/net/phy/air_en8811h.c
-@@ -11,6 +11,7 @@
-  * Copyright (C) 2023 Airoha Technology Corp.
-  */
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw.h b/drivers/net/ethernet/aquantia/atlantic/aq_hw.h
+index 42c0efc1b455..4e66fd9b2ab1 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_hw.h
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw.h
+@@ -113,6 +113,8 @@ struct aq_stats_s {
+ #define AQ_HW_POWER_STATE_D0   0U
+ #define AQ_HW_POWER_STATE_D3   3U
  
-+#include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/phy.h>
- #include <linux/firmware.h>
-@@ -157,6 +158,7 @@ struct en8811h_priv {
- 	struct led		led[EN8811H_LED_COUNT];
- 	struct clk_hw		hw;
- 	struct phy_device	*phydev;
-+	unsigned int		cko_is_enabled;
- };
- 
- enum {
-@@ -865,11 +867,30 @@ static int en8811h_clk_is_enabled(struct clk_hw *hw)
- 	return (pbus_value & EN8811H_CLK_CGM_CKO);
++#define	AQ_FW_WAKE_ON_LINK_RTPM BIT(10)
++
+ #define AQ_HW_FLAG_STARTED     0x00000004U
+ #define AQ_HW_FLAG_STOPPING    0x00000008U
+ #define AQ_HW_FLAG_RESETTING   0x00000010U
+diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2_utils_fw.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2_utils_fw.c
+index 52e2070a4a2f..7370e3f76b62 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2_utils_fw.c
++++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2_utils_fw.c
+@@ -462,6 +462,44 @@ static int aq_a2_fw_get_mac_temp(struct aq_hw_s *self, int *temp)
+ 	return aq_a2_fw_get_phy_temp(self, temp);
  }
  
-+static int en8811h_clk_save_context(struct clk_hw *hw)
++static int aq_a2_fw_set_wol_params(struct aq_hw_s *self, const u8 *mac, u32 wol)
 +{
-+	struct en8811h_priv *priv = clk_hw_to_en8811h_priv(hw);
++	struct mac_address_aligned_s mac_address;
++	struct link_control_s link_control;
++	struct wake_on_lan_s wake_on_lan;
 +
-+	priv->cko_is_enabled = en8811h_clk_is_enabled(hw);
++	memcpy(mac_address.aligned.mac_address, mac, ETH_ALEN);
++	hw_atl2_shared_buffer_write(self, mac_address, mac_address);
 +
-+	return 0;
++	memset(&wake_on_lan, 0, sizeof(wake_on_lan));
++
++	if (wol & WAKE_MAGIC)
++		wake_on_lan.wake_on_magic_packet = 1U;
++
++	if (wol & (WAKE_PHY | AQ_FW_WAKE_ON_LINK_RTPM))
++		wake_on_lan.wake_on_link_up = 1U;
++
++	hw_atl2_shared_buffer_write(self, sleep_proxy, wake_on_lan);
++
++	hw_atl2_shared_buffer_get(self, link_control, link_control);
++	link_control.mode = AQ_HOST_MODE_SLEEP_PROXY;
++	hw_atl2_shared_buffer_write(self, link_control, link_control);
++
++	return hw_atl2_shared_buffer_finish_ack(self);
 +}
 +
-+static void en8811h_clk_restore_context(struct clk_hw *hw)
++static int aq_a2_fw_set_power(struct aq_hw_s *self, unsigned int power_state,
++			      const u8 *mac)
 +{
-+	struct en8811h_priv *priv = clk_hw_to_en8811h_priv(hw);
++	u32 wol = self->aq_nic_cfg->wol;
++	int err = 0;
 +
-+	if (!priv->cko_is_enabled)
-+		en8811h_clk_disable(hw);
++	if (wol)
++		err = aq_a2_fw_set_wol_params(self, mac, wol);
++
++	return err;
 +}
 +
- static const struct clk_ops en8811h_clk_ops = {
--	.recalc_rate	= en8811h_clk_recalc_rate,
--	.enable		= en8811h_clk_enable,
--	.disable	= en8811h_clk_disable,
--	.is_enabled	= en8811h_clk_is_enabled,
-+	.recalc_rate		= en8811h_clk_recalc_rate,
-+	.enable			= en8811h_clk_enable,
-+	.disable		= en8811h_clk_disable,
-+	.is_enabled		= en8811h_clk_is_enabled,
-+	.save_context		= en8811h_clk_save_context,
-+	.restore_context	= en8811h_clk_restore_context,
- };
- 
- static int en8811h_clk_provider_setup(struct device *dev, struct clk_hw *hw)
-@@ -1149,6 +1170,20 @@ static irqreturn_t en8811h_handle_interrupt(struct phy_device *phydev)
- 	return IRQ_HANDLED;
- }
- 
-+static int en8811h_resume(struct phy_device *phydev)
-+{
-+	clk_restore_context();
-+
-+	return genphy_resume(phydev);
-+}
-+
-+static int en8811h_suspend(struct phy_device *phydev)
-+{
-+	clk_save_context();
-+
-+	return genphy_suspend(phydev);
-+}
-+
- static struct phy_driver en8811h_driver[] = {
+ static int aq_a2_fw_set_eee_rate(struct aq_hw_s *self, u32 speed)
  {
- 	PHY_ID_MATCH_MODEL(EN8811H_PHY_ID),
-@@ -1159,6 +1194,8 @@ static struct phy_driver en8811h_driver[] = {
- 	.get_rate_matching	= en8811h_get_rate_matching,
- 	.config_aneg		= en8811h_config_aneg,
- 	.read_status		= en8811h_read_status,
-+	.resume			= en8811h_resume,
-+	.suspend		= en8811h_suspend,
- 	.config_intr		= en8811h_clear_intr,
- 	.handle_interrupt	= en8811h_handle_interrupt,
- 	.led_hw_is_supported	= en8811h_led_hw_is_supported,
+ 	struct link_options_s link_options;
+@@ -605,6 +643,7 @@ const struct aq_fw_ops aq_a2_fw_ops = {
+ 	.set_state          = aq_a2_fw_set_state,
+ 	.update_link_status = aq_a2_fw_update_link_status,
+ 	.update_stats       = aq_a2_fw_update_stats,
++	.set_power          = aq_a2_fw_set_power,
+ 	.get_mac_temp       = aq_a2_fw_get_mac_temp,
+ 	.get_phy_temp       = aq_a2_fw_get_phy_temp,
+ 	.set_eee_rate       = aq_a2_fw_set_eee_rate,
 -- 
 2.39.5
 
