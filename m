@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5F631CA6E;
-	Mon, 18 Aug 2025 13:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A792013C8E8;
+	Mon, 18 Aug 2025 13:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523686; cv=none; b=JKzriRg2BDcaly0nLCTCWDzX6Th5RAD1ER5IZDoDnnAv6Ku3AgwzX4mMurijUDMbr2hKF3CHe6RiunYGinPzbJooXhdYbS17AxRvP0Arz13E7iKNnribb2ujfUjgzk8y3ip9vHVswAbLYeBbGsumFOHu7CIVWLwgGfOi8dz0hxk=
+	t=1755523689; cv=none; b=ZpwCGl9vxWzBn0L/xWKKnYICWLfvyiGMdq45D8sG/TQD4VYfh2riUhjFUa5Wes1b8rx97uNlLltOrmmYHLxpUsfARoJhfGqiMkXTo7IJw201S4mltIYn+tx6Ssb+G4wFhExzgEgQB4h5HXwoKU/910MgSOUjXsyqEKbMSOsDwOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523686; c=relaxed/simple;
-	bh=nPlH7HDKDexz4qvkNNo9ikqfKxSnC/Fb8cSgfrqyAMY=;
+	s=arc-20240116; t=1755523689; c=relaxed/simple;
+	bh=URtdvqASFaXzRckEMvP3XjUNZTMnp67MoajcI1jIoco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6jv3useczXhopZs9CsAIdqs61p/VbgFuZobP7Egj0Pqf201YakkoGfnoEczxixL8XTz8nhCt+DyHgCGoob+B7kzphwT8NElTUxWtz2HknW1Bs6id4WJpLK2X80fA/iHenuSbW4gAkpPSXmvf8mdD9Mr0zoJYNrydvOIYoBBrVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=se16CTcM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFVqTF8TrLLya1r0E87eJHi0moHrYckfGMJrfk16QU6sQaWFNhheIacAwAUoLBEUSXWuABVgTOf55iSiHTBCY3dTYkBrpzbZ9C/bO+XCzAn9nlilGbCj2vYyL/XjWRLBeGV6n3rtiApd5AcF0KZODks/EWf4MRnbF7czGv2o6mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMouQyQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="se16CTcM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC9BC4CEEB;
-	Mon, 18 Aug 2025 13:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMouQyQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F96C4CEEB;
+	Mon, 18 Aug 2025 13:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523685;
-	bh=nPlH7HDKDexz4qvkNNo9ikqfKxSnC/Fb8cSgfrqyAMY=;
+	s=korg; t=1755523689;
+	bh=URtdvqASFaXzRckEMvP3XjUNZTMnp67MoajcI1jIoco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=se16CTcM1DM+wJrDp8jbnSTrYXmuPJ6szMWMJ4erCBjxQaKT/0p8ortnUlLItvFsW
-	 bmlDI6oO8lr6LdmE4SHASkDyLUnCB4bEgvaQH5Kj5RwfGklDYjTaHNOAsAS+7CEKYR
-	 woCp/o9CytT8tZjOLwHgiZEjTu4pq6cru4LfFycw=
+	b=bMouQyQyly8eCViOUjCWU+Xiw35zFfvKIfvYMMIib3JNfbT0U5KE8umXHGxAAZVWI
+	 o0MoMXXamd8yLF+h62dBtvhM/c464I/Cpyn+ZIrOrSsKC43NyIAzmSSwt+gKThvQui
+	 e1lB2u+0MXfycbl4EhlR1xvF038EorMNo4rQItCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 247/515] ipv6: mcast: Check inet6_dev->dead under idev->mc_lock in __ipv6_dev_mc_inc().
-Date: Mon, 18 Aug 2025 14:43:53 +0200
-Message-ID: <20250818124507.903135435@linuxfoundation.org>
+Subject: [PATCH 6.15 248/515] rcu/nocb: Fix possible invalid rdps->nocb_cb_kthread pointer access
+Date: Mon, 18 Aug 2025 14:43:54 +0200
+Message-ID: <20250818124507.942087362@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,115 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-[ Upstream commit dbd40f318cf2f59759bd170c401adc20ba360a3e ]
+[ Upstream commit 1bba3900ca18bdae28d1b9fa10f16a8f8cb2ada1 ]
 
-Since commit 63ed8de4be81 ("mld: add mc_lock for protecting
-per-interface mld data"), every multicast resource is protected
-by inet6_dev->mc_lock.
+In the preparation stage of CPU online, if the corresponding
+the rdp's->nocb_cb_kthread does not exist, will be created,
+there is a situation where the rdp's rcuop kthreads creation fails,
+and then de-offload this CPU's rdp, does not assign this CPU's
+rdp->nocb_cb_kthread pointer, but this rdp's->nocb_gp_rdp and
+rdp's->rdp_gp->nocb_gp_kthread is still valid.
 
-RTNL is unnecessary in terms of protection but still needed for
-synchronisation between addrconf_ifdown() and __ipv6_dev_mc_inc().
+This will cause the subsequent re-offload operation of this offline
+CPU, which will pass the conditional check and the kthread_unpark()
+will access invalid rdp's->nocb_cb_kthread pointer.
 
-Once we removed RTNL, there would be a race below, where we could
-add a multicast address to a dead inet6_dev.
+This commit therefore use rdp's->nocb_gp_kthread instead of
+rdp_gp's->nocb_gp_kthread for safety check.
 
-  CPU1                            CPU2
-  ====                            ====
-  addrconf_ifdown()               __ipv6_dev_mc_inc()
-                                    if (idev->dead) <-- false
-    dead = true                       return -ENODEV;
-    ipv6_mc_destroy_dev() / ipv6_mc_down()
-      mutex_lock(&idev->mc_lock)
-      ...
-      mutex_unlock(&idev->mc_lock)
-                                    mutex_lock(&idev->mc_lock)
-                                    ...
-                                    mutex_unlock(&idev->mc_lock)
-
-The race window can be easily closed by checking inet6_dev->dead
-under inet6_dev->mc_lock in __ipv6_dev_mc_inc() as addrconf_ifdown()
-will acquire it after marking inet6_dev dead.
-
-Let's check inet6_dev->dead under mc_lock in __ipv6_dev_mc_inc().
-
-Note that now __ipv6_dev_mc_inc() no longer depends on RTNL and
-we can remove ASSERT_RTNL() there and the RTNL comment above
-addrconf_join_solict().
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250702230210.3115355-4-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c |  7 +++----
- net/ipv6/mcast.c    | 11 +++++------
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ kernel/rcu/tree_nocb.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 4ef3a3c166c6..7881637f6518 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2229,13 +2229,12 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 	in6_ifa_put(ifp);
- }
- 
--/* Join to solicited addr multicast group.
-- * caller must hold RTNL */
-+/* Join to solicited addr multicast group. */
- void addrconf_join_solict(struct net_device *dev, const struct in6_addr *addr)
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index 6b3118a4dde3..2083d2343bd4 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -1152,7 +1152,6 @@ static bool rcu_nocb_rdp_offload_wait_cond(struct rcu_data *rdp)
+ static int rcu_nocb_rdp_offload(struct rcu_data *rdp)
  {
- 	struct in6_addr maddr;
+ 	int wake_gp;
+-	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
  
--	if (dev->flags&(IFF_LOOPBACK|IFF_NOARP))
-+	if (READ_ONCE(dev->flags) & (IFF_LOOPBACK | IFF_NOARP))
- 		return;
- 
- 	addrconf_addr_solict_mult(addr, &maddr);
-@@ -3860,7 +3859,7 @@ static int addrconf_ifdown(struct net_device *dev, bool unregister)
- 	 *	   Do not dev_put!
- 	 */
- 	if (unregister) {
--		idev->dead = 1;
-+		WRITE_ONCE(idev->dead, 1);
- 
- 		/* protected by rtnl_lock */
- 		RCU_INIT_POINTER(dev->ip6_ptr, NULL);
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 616bf4c0c8fd..b91538e90c54 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -945,23 +945,22 @@ static void inet6_ifmcaddr_notify(struct net_device *dev,
- static int __ipv6_dev_mc_inc(struct net_device *dev,
- 			     const struct in6_addr *addr, unsigned int mode)
- {
--	struct ifmcaddr6 *mc;
- 	struct inet6_dev *idev;
--
--	ASSERT_RTNL();
-+	struct ifmcaddr6 *mc;
- 
- 	/* we need to take a reference on idev */
- 	idev = in6_dev_get(dev);
--
- 	if (!idev)
+ 	WARN_ON_ONCE(cpu_online(rdp->cpu));
+ 	/*
+@@ -1162,7 +1161,7 @@ static int rcu_nocb_rdp_offload(struct rcu_data *rdp)
+ 	if (!rdp->nocb_gp_rdp)
  		return -EINVAL;
  
--	if (idev->dead) {
-+	mutex_lock(&idev->mc_lock);
-+
-+	if (READ_ONCE(idev->dead)) {
-+		mutex_unlock(&idev->mc_lock);
- 		in6_dev_put(idev);
- 		return -ENODEV;
- 	}
+-	if (WARN_ON_ONCE(!rdp_gp->nocb_gp_kthread))
++	if (WARN_ON_ONCE(!rdp->nocb_gp_kthread))
+ 		return -EINVAL;
  
--	mutex_lock(&idev->mc_lock);
- 	for_each_mc_mclock(idev, mc) {
- 		if (ipv6_addr_equal(&mc->mca_addr, addr)) {
- 			mc->mca_users++;
+ 	pr_info("Offloading %d\n", rdp->cpu);
+@@ -1172,7 +1171,7 @@ static int rcu_nocb_rdp_offload(struct rcu_data *rdp)
+ 
+ 	wake_gp = rcu_nocb_queue_toggle_rdp(rdp);
+ 	if (wake_gp)
+-		wake_up_process(rdp_gp->nocb_gp_kthread);
++		wake_up_process(rdp->nocb_gp_kthread);
+ 
+ 	swait_event_exclusive(rdp->nocb_state_wq,
+ 			      rcu_nocb_rdp_offload_wait_cond(rdp));
 -- 
 2.39.5
 
