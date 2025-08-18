@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBC1322A1A;
-	Mon, 18 Aug 2025 14:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD75322A1A;
+	Mon, 18 Aug 2025 14:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526098; cv=none; b=uuummVUDb5SZN4RV2Su8bqoSK4ws+GKcff4jXP4rtGxSv1I7mGGIYCF2pwXc4E2ctTSVj3nr0jm0ZigqBBNQpx++lo3qhNInOBwp+v3zNKHon+7Z4A1opM/d6LEVP8o7tFzLv1pQ/bW9Z2w0Sbvn5lEQ8iPh9CpqX+Xf/NX3pxA=
+	t=1755526101; cv=none; b=SnJkTaSq2AQnigy8pHxA6jRIWlflvjFSXzbkbnOi8SOepdDl24Zfwwa90fI+XO9NsBfuSAyT1ZwGasaJgcp1XbxIWZsbhALhtvXbBjT3p+Yve/Y+h8lQLrhIh3vXdymUgqa5U27xczuSQDZ8kV2P6Y/z5SgNegnqDB41+6hO5nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526098; c=relaxed/simple;
-	bh=we7xIqrKv7D84adXaklFZhWC9yl5ZbLZ06d+ExIy2LM=;
+	s=arc-20240116; t=1755526101; c=relaxed/simple;
+	bh=cox8OjX+mbGrzJlKivezC6C4e6zul0qDpuBq/SYHOeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEiPcPd8WhKM/YmhKDpCBGkM6MRUg88mKxYDIPBxUxbkAMvDlov7eHmAADyn1n71WRAlglImjKi/4+mqwlZiT8B/7ezqDoo6A6JO15+10g1qniPzHoQonJDWDnVm8N4oWLjPg+oyNPwodT8mKAn+IuPLTuMWQWBGBNm2ncQcX5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TeNYzlE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anr9x38phq9UbwYJWVrodmSsY6tJD2aP8cCc4x1sGLv2FCREm95wV5lQZ9zQXknEu4y2Bvjly6jHgTvBDK4TyDqUR5KH5fwyKXViJx58tHaqd3C/Sn2gj+O3/B0aN4nG+CUm7g5XCK6SjKQ3dEG2lIUKxMp12k4q9dN2jUD3aeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdUEBRUr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TeNYzlE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EACC4CEEB;
-	Mon, 18 Aug 2025 14:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdUEBRUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ECCC116C6;
+	Mon, 18 Aug 2025 14:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526098;
-	bh=we7xIqrKv7D84adXaklFZhWC9yl5ZbLZ06d+ExIy2LM=;
+	s=korg; t=1755526101;
+	bh=cox8OjX+mbGrzJlKivezC6C4e6zul0qDpuBq/SYHOeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TeNYzlEhvexw+HGaWmR3vzDFkRyI0dcXlWmwT5Ialz5XBZp7GG3nqZM9fVZaWoIC
-	 SANxRdTEhSNgvRTzzAuuYcwzCossNdCW7aPmUy2NpiRjp6eLSXmpfPmOwx4m4bxn5H
-	 m3BpbFyUCgRpPZ4K28rO9HBpaznbMrz+S8W/UTnE=
+	b=jdUEBRUrqkBTP6PrmJ0beJ3SxGNRs0rXsLcTmAtXqgwpHxoZ3Oy7iSnWGIrXgwARv
+	 Aoq/yjGWzudpoNMy9fXTTf0c3jaAfr/xtarVL9bjOkI7hX+ZClqdfxdHjgFXljkeeN
+	 8yMpAr1loRdnvYNmAKlHT6UbL4ERQW3cYr1gowNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Croft <thomasmcft@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Peter Jakubek <peterjakubek@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 458/570] ALSA: hda/realtek: add LG gram 16Z90R-A to alc269 fixup table
-Date: Mon, 18 Aug 2025 14:47:25 +0200
-Message-ID: <20250818124523.497210070@linuxfoundation.org>
+Subject: [PATCH 6.16 459/570] ASoC: Intel: sof_sdw: Add quirk for Alienware Area 51 (2025) 0CCC SKU
+Date: Mon, 18 Aug 2025 14:47:26 +0200
+Message-ID: <20250818124523.542564979@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,46 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Croft <thomasmcft@gmail.com>
+From: Peter Jakubek <peterjakubek@gmail.com>
 
-[ Upstream commit dbe05428c4e54068a86e7e02405f3b30b1d2b3dd ]
+[ Upstream commit 1b03391d073dad748636a1ad9668b837cce58265 ]
 
-Several months ago, Joshua Grisham submitted a patch [1]
-for several ALC298 based sound cards.
+Add DMI quirk entry for Alienware systems with SKU "0CCC" to enable
+proper speaker codec configuration (SOC_SDW_CODEC_SPKR).
 
-The entry for the LG gram 16 in the alc269_fixup_tbl only matches the
-Subsystem ID for the 16Z90R-Q and 16Z90R-K models [2]. My 16Z90R-A has a
-different Subsystem ID [3]. I'm not sure why these IDs differ, but I
-speculate it's due to the NVIDIA GPU included in the 16Z90R-A model that
-isn't present in the other models.
+This system requires the same audio configuration as some existing Dell systems.
+Without this patch, the laptop's speakers and microphone will not work.
 
-I applied the patch to the latest Arch Linux kernel and the card was
-initialized as expected.
-
-[1]: https://lore.kernel.org/linux-sound/20240909193000.838815-1-josh@joshuagrisham.com/
-[2]: https://linux-hardware.org/?id=pci:8086-51ca-1854-0488
-[3]: https://linux-hardware.org/?id=pci:8086-51ca-1854-0489
-
-Signed-off-by: Thomas Croft <thomasmcft@gmail.com>
-Link: https://patch.msgid.link/20250804151457.134761-2-thomasmcft@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Peter Jakubek <peterjakubek@gmail.com>
+Link: https://patch.msgid.link/20250731172104.2009007-1-peterjakubek@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 88a5d659dc78..2ab2666d4058 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11401,6 +11401,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1854, 0x0440, "LG CQ6", ALC256_FIXUP_HEADPHONE_AMP_VOL),
- 	SND_PCI_QUIRK(0x1854, 0x0441, "LG CQ6 AIO", ALC256_FIXUP_HEADPHONE_AMP_VOL),
- 	SND_PCI_QUIRK(0x1854, 0x0488, "LG gram 16 (16Z90R)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
-+	SND_PCI_QUIRK(0x1854, 0x0489, "LG gram 16 (16Z90R-A)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
- 	SND_PCI_QUIRK(0x1854, 0x048a, "LG gram 17 (17ZD90R)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
- 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
- 	SND_PCI_QUIRK(0x19e5, 0x320f, "Huawei WRT-WX9 ", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 504887505e68..c576ec5527f9 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -741,6 +741,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
+ 	},
++	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0CCC")
++		},
++		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
++	},
+ 	/* Pantherlake devices*/
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
 -- 
 2.39.5
 
