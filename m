@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30BC31E0FE;
-	Mon, 18 Aug 2025 14:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E945B343D80;
+	Mon, 18 Aug 2025 14:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525838; cv=none; b=bYMTFLwkncvhM1Y2ZqG+1PqIjVEqWdHhYrl2Xa09KAb/O6VYquqw3iI33vTip6DMLgezfw9OU1hiccbzJ+/XOhw9sKLP5eaZOmIYJ/kL0yLeImyxjdbwtbaGHJ9QuMpGRhMLzBHl7ZpZxgErfFSWtHbKmCAHcq+uSbudofvpw8g=
+	t=1755525842; cv=none; b=toJTlZr6QqKHgHjFuOa/BULt0z3epiN/BjFR/GGiBOtWN2A1dysAjb3aXLzPjVckFYmLliyh4/vIPgt16ZvKp2wsK/dDnwjtWHd3f0QwDWz2DOmE0aXeaoAx9LsRzS5XmEur0NmfkNJqm6uvx6cTl4/Aa6h3HlNaYd6CuJhVR1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525838; c=relaxed/simple;
-	bh=ylf7zLL9oiF0fCOLlxWf3JqZ9qgELC4ZyYM9MnMxvX8=;
+	s=arc-20240116; t=1755525842; c=relaxed/simple;
+	bh=BB2Lz0z7gGFB9oIA9YfA9iDySIsmI99cZMsGAOuumLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MzG7LXEl1M+JTGhESeMFANsy0di+R3MT++rW0ESkvLKJLWW8XKhLwV6QnHLrWvpvLCfmzLAacfTGGBBXHgRv7qfWX3mhlyoN5UjWm3rImMIiEUpd5VJalTZCCT27jOijfGAZTVVvGt0ryMqacQH3hBU9wt4CvHKabjwKsXkT6Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVRNHWrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ikX1jC/X42/2RLgDyRckQHORXROwtCnft7g0JEQweRoyWTlgRR03mgCtcZitBFnItH3XWM2T4Nh4tAa7jHAM1uRwbHoSShKdehXzqiD20V2XGGMN7L5v/+v78D8uU/e4LkfFwIiH5wyzIDg7v+dnD+mGiJPCTyRouu0etiWu21E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ommeOs19; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVRNHWrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F65FC4CEEB;
-	Mon, 18 Aug 2025 14:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ommeOs19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52176C4CEEB;
+	Mon, 18 Aug 2025 14:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525838;
-	bh=ylf7zLL9oiF0fCOLlxWf3JqZ9qgELC4ZyYM9MnMxvX8=;
+	s=korg; t=1755525841;
+	bh=BB2Lz0z7gGFB9oIA9YfA9iDySIsmI99cZMsGAOuumLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVRNHWrEh7DFAleDzeoc/dmbJJ6+O/02LIkJmQ2ly5g2x7tXKnJaqoYiV5Ldut4kK
-	 /qCYVIny2fqRNThtmC+EBnKRtLLB433vAIp9E9NWZJ7H1X9Wux1aOqdIAgZkPpforl
-	 NMXflrzIq1TCLE49LcI6XHvDtA/b6fkDLowSGL34=
+	b=ommeOs1995pKEv4J+bGD7Q1tukg9dXRMv4zaNA/G+lg9J5BYdOVRupOI34ap4u+Fl
+	 41xcDuK3/tZBOJZK7fEt+fvxiHkES3VaMDBblNm3eEdzAIqKJKMGuzZDOwssdoK6RF
+	 ENcyZsASeRC+vN3V51RRNynDNHOr+h8vLCJgM+M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Joe Damato <joe@dama.to>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 339/570] ionic: clean dbpage in de-init
-Date: Mon, 18 Aug 2025 14:45:26 +0200
-Message-ID: <20250818124518.914282916@linuxfoundation.org>
+Subject: [PATCH 6.16 375/570] MIPS: vpe-mt: add missing prototypes for vpe_{alloc,start,stop,free}
+Date: Mon, 18 Aug 2025 14:46:02 +0200
+Message-ID: <20250818124520.302322760@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,53 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit c9080abea1e69b8b1408ec7dec0acdfdc577a3e2 ]
+[ Upstream commit 844615dd0f2d95c018ec66b943e08af22b62aff3 ]
 
-Since the kern_dbpage gets set up in ionic_lif_init() and that
-function's error path will clean it if needed, the kern_dbpage
-on teardown should be cleaned in ionic_lif_deinit(), not in
-ionic_lif_free().  As it is currently we get a double call
-to iounmap() on kern_dbpage if the PCI ionic fails setting up
-the lif.  One example of this is when firmware isn't responding
-to AdminQ requests and ionic's first AdminQ call fails to
-setup the NotifyQ.
+These functions are exported but their prototypes are not defined.
+This patch adds the missing function prototypes to fix the following
+compilation warnings:
 
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Joe Damato <joe@dama.to>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+arch/mips/kernel/vpe-mt.c:180:7: error: no previous prototype for 'vpe_alloc' [-Werror=missing-prototypes]
+  180 | void *vpe_alloc(void)
+      |       ^~~~~~~~~
+arch/mips/kernel/vpe-mt.c:198:5: error: no previous prototype for 'vpe_start' [-Werror=missing-prototypes]
+  198 | int vpe_start(void *vpe, unsigned long start)
+      |     ^~~~~~~~~
+arch/mips/kernel/vpe-mt.c:208:5: error: no previous prototype for 'vpe_stop' [-Werror=missing-prototypes]
+  208 | int vpe_stop(void *vpe)
+      |     ^~~~~~~~
+arch/mips/kernel/vpe-mt.c:229:5: error: no previous prototype for 'vpe_free' [-Werror=missing-prototypes]
+  229 | int vpe_free(void *vpe)
+      |     ^~~~~~~~
+
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/mips/include/asm/vpe.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index 7707a9e53c43..48cb5d30b5f6 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -3526,10 +3526,6 @@ void ionic_lif_free(struct ionic_lif *lif)
- 	lif->info = NULL;
- 	lif->info_pa = 0;
+diff --git a/arch/mips/include/asm/vpe.h b/arch/mips/include/asm/vpe.h
+index 61fd4d0aeda4..c0769dc4b853 100644
+--- a/arch/mips/include/asm/vpe.h
++++ b/arch/mips/include/asm/vpe.h
+@@ -119,4 +119,12 @@ void cleanup_tc(struct tc *tc);
  
--	/* unmap doorbell page */
--	ionic_bus_unmap_dbpage(lif->ionic, lif->kern_dbpage);
--	lif->kern_dbpage = NULL;
--
- 	mutex_destroy(&lif->config_lock);
- 	mutex_destroy(&lif->queue_lock);
- 
-@@ -3555,6 +3551,9 @@ void ionic_lif_deinit(struct ionic_lif *lif)
- 	ionic_lif_qcq_deinit(lif, lif->notifyqcq);
- 	ionic_lif_qcq_deinit(lif, lif->adminqcq);
- 
-+	ionic_bus_unmap_dbpage(lif->ionic, lif->kern_dbpage);
-+	lif->kern_dbpage = NULL;
+ int __init vpe_module_init(void);
+ void __exit vpe_module_exit(void);
 +
- 	ionic_lif_reset(lif);
- }
- 
++#ifdef CONFIG_MIPS_VPE_LOADER_MT
++void *vpe_alloc(void);
++int vpe_start(void *vpe, unsigned long start);
++int vpe_stop(void *vpe);
++int vpe_free(void *vpe);
++#endif /* CONFIG_MIPS_VPE_LOADER_MT */
++
+ #endif /* _ASM_VPE_H */
 -- 
 2.39.5
 
