@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10128335BB3;
-	Mon, 18 Aug 2025 13:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F9C335BA0;
+	Mon, 18 Aug 2025 13:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524248; cv=none; b=JOTs0Hd25dHz8YdijvLd6kgzonDYAj+Pf/va11qSpXpXvCCpAfbm+d53tOe+GOTfItfYjP5ZxN7IoCMTLfJtGGx+Nko8cM1WBf97g7uYSGTgapsKsaRcw3LIGLfOsUhqve+esOi8Kl5zZ4zqeY01rvN23Q4GAPmBSAdY3DhkBVs=
+	t=1755524251; cv=none; b=coxvFdE5cD0ikoBhIEUvWzVS4WR97FW5z7hqFxug4Mb2qKHA0EhW7z+9E2s5d5ujUrr5GzDA1eJ1L4QH0UhJ/4ckqUjyOxOTyBySozvnLA6VpXbz3hfP6r43nFE7rl++iTIoJap+IrDk1MLv8D50v57N2drIiVRmfg+KCVF8rO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524248; c=relaxed/simple;
-	bh=KEa16O2Y/xHGMqcOiNdqKGsMa2OOdHHUet4JyIZ9Aw8=;
+	s=arc-20240116; t=1755524251; c=relaxed/simple;
+	bh=FrQZMWUiWjsAiyl65j6AZR/zjwtMHFBoqEy1yo3eox8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNLoLuf1/2cAeTv2T2lRhg2jQLylqI2u2kuMTp/47dM6v3A5F8oPEeAwsH8ano17fBdEdg2qB9ehCL6LbX2IUFFqely9apFIzKkbOMkJnaL0wX4agEls3EbWlpL+ALjgO6BxyO/ZJXkpfxXtFB9KzB5NNEOcoU5bXLvh0rNDfEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkIrNMkI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bino1NFTHUzOk9U5SMV4X2xujuUe4BQcsL85ea1VW4l6WOeFzSJsgKBad2Ke0WmumhGIG96KTtE3bbpT94BM1lzDe5QNzXerUiLU/oQAe/qdamoh7fGPLwJ1q4jYk6QxlhUW0mv/iBu4RvlebNRC+ePB0s6lnH1+QCJmvI+SqAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfH6EDSM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkIrNMkI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D40C113D0;
-	Mon, 18 Aug 2025 13:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfH6EDSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99967C116C6;
+	Mon, 18 Aug 2025 13:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524247;
-	bh=KEa16O2Y/xHGMqcOiNdqKGsMa2OOdHHUet4JyIZ9Aw8=;
+	s=korg; t=1755524251;
+	bh=FrQZMWUiWjsAiyl65j6AZR/zjwtMHFBoqEy1yo3eox8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VkIrNMkIte5WIXD0EDpp9JlFgDvL7sUya5h1NyVHWqzGQb+QZ2KUwiHDw3NcaVjCq
-	 db/hL7yAbzIofKrTd63884MaB2rNNaO4U9XO0DwMDTCS4jGAAqFtxV7KMgov9e9672
-	 pmdQ4kejYahaW9AslED1Pi3Tqv9qN8xla2ZQC5og=
+	b=YfH6EDSMWCbflnJalSgIINaWhgZhcfoF9wNXCklGTcrKqa5IQMY40sCoIoeBHWXnn
+	 qGl6z6qJ793WD3c3v3QxCNiLLTf1EsnL3Xpn+T4L65Bzqs/ZCVDDmPz95m8DpFkx7s
+	 Aplq//ZGyNIaX8i2EkQQs//9e5IGEmmXtt1G3e1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Marques <jorge.marques@analog.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 396/515] i3c: master: Initialize ret in i3c_i2c_notifier_call()
-Date: Mon, 18 Aug 2025 14:46:22 +0200
-Message-ID: <20250818124513.656018704@linuxfoundation.org>
+Subject: [PATCH 6.15 414/515] kconfig: gconf: fix potential memory leak in renderer_edited()
+Date: Mon, 18 Aug 2025 14:46:40 +0200
+Message-ID: <20250818124514.355389442@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,34 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Marques <jorge.marques@analog.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 290ce8b2d0745e45a3155268184523a8c75996f1 ]
+[ Upstream commit f72ed4c6a375e52a3f4b75615e4a89d29d8acea7 ]
 
-Set ret to -EINVAL if i3c_i2c_notifier_call() receives an invalid
-action, resolving uninitialized warning.
+If gtk_tree_model_get_iter() fails, gtk_tree_path_free() is not called.
 
-Signed-off-by: Jorge Marques <jorge.marques@analog.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250622-i3c-master-ret-uninitialized-v1-1-aabb5625c932@analog.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/kconfig/gconf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index e53c69d24873..dfa0bad991cf 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2467,6 +2467,8 @@ static int i3c_i2c_notifier_call(struct notifier_block *nb, unsigned long action
- 	case BUS_NOTIFY_DEL_DEVICE:
- 		ret = i3c_master_i2c_detach(adap, client);
- 		break;
-+	default:
-+		ret = -EINVAL;
- 	}
- 	i3c_bus_maintenance_unlock(&master->bus);
+diff --git a/scripts/kconfig/gconf.c b/scripts/kconfig/gconf.c
+index abe4cfe66b14..0caf0ced13df 100644
+--- a/scripts/kconfig/gconf.c
++++ b/scripts/kconfig/gconf.c
+@@ -748,7 +748,7 @@ static void renderer_edited(GtkCellRendererText * cell,
+ 	struct symbol *sym;
+ 
+ 	if (!gtk_tree_model_get_iter(model2, &iter, path))
+-		return;
++		goto free;
+ 
+ 	gtk_tree_model_get(model2, &iter, COL_MENU, &menu, -1);
+ 	sym = menu->sym;
+@@ -760,6 +760,7 @@ static void renderer_edited(GtkCellRendererText * cell,
+ 
+ 	update_tree(&rootmenu, NULL);
+ 
++free:
+ 	gtk_tree_path_free(path);
+ }
  
 -- 
 2.39.5
