@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3082192F4;
-	Mon, 18 Aug 2025 13:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67112225397;
+	Mon, 18 Aug 2025 13:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524863; cv=none; b=i056rWlWcO5rhXBEvAB1yLetPJXAFJfmZei3lvmU8ZqB5rdJhv5yeFDzl3gKdCo0SBmAcdq5nXIEP9yKDg/4xdYg6IcpdgEN5d5KTC1eo6lpyVaWKQL1fBS+LKIcTZM0JxKu1dfkgjxwpJnh9VjUrdpDBqJ2UVfFFvmfT/OGrZs=
+	t=1755524867; cv=none; b=uFUzW7jzF6y4MHV7XaPAFlNxjUuQr7zbOQZOjOCz0oxMFemKl8qZKIHDGjmzGkrQjX/6ESdakzHrgY9HCrwZ/m1vzgR0yKpWBLka68swRqSeNWbh4RBgbu+sXLPfBcAMSb7NxWZSUFzmFgbSJf2gyoBowmdNk6OeDDSE5fcOwKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524863; c=relaxed/simple;
-	bh=1IV3pEBcg7xaKGcTIuUjQ86LVWucN+Cx0HRi3cCo95s=;
+	s=arc-20240116; t=1755524867; c=relaxed/simple;
+	bh=N99DexYOGN/gsq154IgcIcEyE6kvYiB5YHHCqUZ92VU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfmTwt8RHo1ieVN2g9bwzOie0hTt+aj/lRLccg6Oo3leFPfHZ9K7vc7lVkwZ9fEzLvvzDJl7QspxYjyuGY+uIminx1mI2c3pA2CiZI9i0koyvxvaoxZrIsRpgQXPf/HqpeiFQn+wWv4hzmIPdRys6AMuWhXDuxz/Mg9LGb/KBGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysgUimNn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qESkE142USA95MNLkYqhWY9pzwSJIPXg0a3GSw8ghyEKgj/uDHQKDK8C1xrMQ2iyD7yywxMJN369OFgbGdjwvqC7EcjP/vWXqMnYn4ivUFFeg1ZoUSbEhUFDyKpfiSJ7SxPNAdp3lzJ0IXxxOblzHfKyD+L6ywGZmMYCeuHIXJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qc0TDB97; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysgUimNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144A9C4CEEB;
-	Mon, 18 Aug 2025 13:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qc0TDB97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41999C4CEEB;
+	Mon, 18 Aug 2025 13:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524863;
-	bh=1IV3pEBcg7xaKGcTIuUjQ86LVWucN+Cx0HRi3cCo95s=;
+	s=korg; t=1755524867;
+	bh=N99DexYOGN/gsq154IgcIcEyE6kvYiB5YHHCqUZ92VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ysgUimNn236iMDEAFeUIE3m0y5c8fT9FwxXwN7qS/FL7/58pl0Bfp17MQltJT0DW2
-	 KBoh7VY28R0KI7FB098RmYQQJmP/+6Sj2etfs74YfRwJvCgZESayNnEJ7EXbngIXK9
-	 DQ5+ZxYT6mKx8Djul6RRWx5WBTeB0KT1gMDl4Jrs=
+	b=Qc0TDB97444p4VUE96pMBpiSVc694SioeYiuUg4IxlKCb09cHRpYaZHEoQQ+Nk2i5
+	 mhbw+MVTyTrznS+2M5FIVI5Y88ly1X7UZVD/UAkrwIEtqkrlwQFCe4uXlA0h0tuuZI
+	 2pt3N0HGS5dulVP8xKnGsHwQ8/k46ud84AES0REk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Michael Chan <michael.chan@broadcom.com>,
+	David Wei <dw@davidwei.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 086/570] netfilter: nf_tables: reject duplicate device on updates
-Date: Mon, 18 Aug 2025 14:41:13 +0200
-Message-ID: <20250818124509.129065089@linuxfoundation.org>
+Subject: [PATCH 6.16 087/570] bnxt: fill data page pool with frags if PAGE_SIZE > BNXT_RX_PAGE_SIZE
+Date: Mon, 18 Aug 2025 14:41:14 +0200
+Message-ID: <20250818124509.166598508@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,95 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: David Wei <dw@davidwei.uk>
 
-[ Upstream commit cf5fb87fcdaaaafec55dcc0dc5a9e15ead343973 ]
+[ Upstream commit 39f8fcda2088382a4aa70b258d6f7225aa386f11 ]
 
-A chain/flowtable update with duplicated devices in the same batch is
-possible. Unfortunately, netdev event path only removes the first
-device that is found, leaving unregistered the hook of the duplicated
-device.
+The data page pool always fills the HW rx ring with pages. On arm64 with
+64K pages, this will waste _at least_ 32K of memory per entry in the rx
+ring.
 
-Check if a duplicated device exists in the transaction batch, bail out
-with EEXIST in such case.
+Fix by fragmenting the pages if PAGE_SIZE > BNXT_RX_PAGE_SIZE. This
+makes the data page pool the same as the header pool.
 
-WARNING is hit when unregistering the hook:
+Tested with iperf3 with a small (64 entries) rx ring to encourage buffer
+circulation.
 
- [49042.221275] WARNING: CPU: 4 PID: 8425 at net/netfilter/core.c:340 nf_hook_entry_head+0xaa/0x150
- [49042.221375] CPU: 4 UID: 0 PID: 8425 Comm: nft Tainted: G S                  6.16.0+ #170 PREEMPT(full)
- [...]
- [49042.221382] RIP: 0010:nf_hook_entry_head+0xaa/0x150
-
-Fixes: 78d9f48f7f44 ("netfilter: nf_tables: add devices to existing flowtable")
-Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: cd1fafe7da1f ("eth: bnxt: add support rx side device memory TCP")
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David Wei <dw@davidwei.uk>
+Link: https://patch.msgid.link/20250812182907.1540755-1-dw@davidwei.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 064f18792d98..46ca725d6538 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2790,6 +2790,7 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 	struct nft_chain *chain = ctx->chain;
- 	struct nft_chain_hook hook = {};
- 	struct nft_stats __percpu *stats = NULL;
-+	struct nftables_pernet *nft_net;
- 	struct nft_hook *h, *next;
- 	struct nf_hook_ops *ops;
- 	struct nft_trans *trans;
-@@ -2832,6 +2833,20 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 				if (nft_hook_list_find(&basechain->hook_list, h)) {
- 					list_del(&h->list);
- 					nft_netdev_hook_free(h);
-+					continue;
-+				}
-+
-+				nft_net = nft_pernet(ctx->net);
-+				list_for_each_entry(trans, &nft_net->commit_list, list) {
-+					if (trans->msg_type != NFT_MSG_NEWCHAIN ||
-+					    trans->table != ctx->table ||
-+					    !nft_trans_chain_update(trans))
-+						continue;
-+
-+					if (nft_hook_list_find(&nft_trans_chain_hooks(trans), h)) {
-+						nft_chain_release_hook(&hook);
-+						return -EEXIST;
-+					}
- 				}
- 			}
- 		} else {
-@@ -9033,6 +9048,7 @@ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 8d950b43846e..e165490af6ac 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -921,15 +921,21 @@ static struct page *__bnxt_alloc_rx_page(struct bnxt *bp, dma_addr_t *mapping,
+ 
+ static netmem_ref __bnxt_alloc_rx_netmem(struct bnxt *bp, dma_addr_t *mapping,
+ 					 struct bnxt_rx_ring_info *rxr,
++					 unsigned int *offset,
+ 					 gfp_t gfp)
  {
- 	const struct nlattr * const *nla = ctx->nla;
- 	struct nft_flowtable_hook flowtable_hook;
-+	struct nftables_pernet *nft_net;
- 	struct nft_hook *hook, *next;
- 	struct nf_hook_ops *ops;
- 	struct nft_trans *trans;
-@@ -9049,6 +9065,20 @@ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
- 		if (nft_hook_list_find(&flowtable->hook_list, hook)) {
- 			list_del(&hook->list);
- 			nft_netdev_hook_free(hook);
-+			continue;
-+		}
-+
-+		nft_net = nft_pernet(ctx->net);
-+		list_for_each_entry(trans, &nft_net->commit_list, list) {
-+			if (trans->msg_type != NFT_MSG_NEWFLOWTABLE ||
-+			    trans->table != ctx->table ||
-+			    !nft_trans_flowtable_update(trans))
-+				continue;
-+
-+			if (nft_hook_list_find(&nft_trans_flowtable_hooks(trans), hook)) {
-+				err = -EEXIST;
-+				goto err_flowtable_update_hook;
-+			}
- 		}
- 	}
+ 	netmem_ref netmem;
+ 
+-	netmem = page_pool_alloc_netmems(rxr->page_pool, gfp);
++	if (PAGE_SIZE > BNXT_RX_PAGE_SIZE) {
++		netmem = page_pool_alloc_frag_netmem(rxr->page_pool, offset, BNXT_RX_PAGE_SIZE, gfp);
++	} else {
++		netmem = page_pool_alloc_netmems(rxr->page_pool, gfp);
++		*offset = 0;
++	}
+ 	if (!netmem)
+ 		return 0;
+ 
+-	*mapping = page_pool_get_dma_addr_netmem(netmem);
++	*mapping = page_pool_get_dma_addr_netmem(netmem) + *offset;
+ 	return netmem;
+ }
+ 
+@@ -1024,7 +1030,7 @@ static int bnxt_alloc_rx_netmem(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+ 	dma_addr_t mapping;
+ 	netmem_ref netmem;
+ 
+-	netmem = __bnxt_alloc_rx_netmem(bp, &mapping, rxr, gfp);
++	netmem = __bnxt_alloc_rx_netmem(bp, &mapping, rxr, &offset, gfp);
+ 	if (!netmem)
+ 		return -ENOMEM;
  
 -- 
 2.50.1
