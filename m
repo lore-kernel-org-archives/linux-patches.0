@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD4321B199;
-	Mon, 18 Aug 2025 13:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E081B31E0FB;
+	Mon, 18 Aug 2025 13:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522537; cv=none; b=XgT8eZXVEwZWSwfpTyjhqATGpxip9+whUCU7PZgyRUPdrllP36ob4/bTGsRrjBlOcf91c99CE9Tc6V+T5R/fLTbROdiEnx2YEfjxFYA8brtUGnL9BAhCrljFoVamGv7dAKyPHEZCrdnqqpH2h15RMHuuIZUbgYk/XUHHbreH6io=
+	t=1755522541; cv=none; b=p9VYSlXxEN2HjfDg4T+cI1aW2JaV2e7R2CxtoRfjQq/DaIhTjdD3ig+zyVgDbJLMTvZqGJu5ST7Kunu2mVGcfgAbVy/LceyDTSe7bDRzpbAYAChKHmwpimfIzKU0VL4sQ2hGAW3l/4SZFXay89tv4JlRH3uHfrWdWUhlerlYdLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522537; c=relaxed/simple;
-	bh=HYV5nT7/M/C++8LVhEBH45g+rlkdYJxfpwiSbDxZprI=;
+	s=arc-20240116; t=1755522541; c=relaxed/simple;
+	bh=KwX/ylJXqAMbiKOdYdtlbX40P3Bnspn4DS5rNVxavHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWsozQ9qTUr3PTyvTWdrskHDP8rGH3Q9KE500+r59VC3B9IB/64AwEaU+IEBxHuMu44QeV9ca8MdQkP/W6ooJ+rs4GjopS4vekNyifVj09uhVrJO79CU+Iyq5dZh2WRwyIBlHVhGSjJuRylH/Y6ZLtcazYdgQRd8tc90p8MqhXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJAe+rtw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ds3BoDm9dSh049YKbyry8d8e+2RK1a0yr9pV8VG+qT4vP1N4+TnqDbLe3ll+7HY+9mmE/vvxR5fv+aYRIhjIYuAsZWZbbMcDocwiQABRlSYN/cq5hWDQYCLZgQV1RulwwGVUdp555xsFcN7io6wbpLg5oSL5RIklmDGlQQN1BSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgMavi6B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJAe+rtw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C2AC4CEEB;
-	Mon, 18 Aug 2025 13:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgMavi6B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E539C4CEEB;
+	Mon, 18 Aug 2025 13:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522537;
-	bh=HYV5nT7/M/C++8LVhEBH45g+rlkdYJxfpwiSbDxZprI=;
+	s=korg; t=1755522540;
+	bh=KwX/ylJXqAMbiKOdYdtlbX40P3Bnspn4DS5rNVxavHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJAe+rtw3iQZ6pXMzvZ3vzqxyzw0gmXnAJWzCRhXA+uxosFfRD76Ywx/kC/PJiQOx
-	 11JGhMqdjWxGizGVQ+v3GlCAp+BrCGsF2ttYkqW4kzzucV21PbyEGeq9v2pTZhUlMb
-	 g/a3k22+QTme/+5CCJjxMf+k52mLfDvDRuW6UAEs=
+	b=mgMavi6BE+rY9W7xPF9GeqzRjLYT55fXC1pcm9cHci+w9mRFsMdJ9aJSRt0GAqApi
+	 hToiYf5ijkBDb9p2q5xHcWQIkCY7QjX6kadsn791oKei6uqfLOfhko5NPoMXls34qb
+	 Dvkb0UVYSKeGqJ//wJaqk2DChOs2+Jwuwve4buPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 345/444] scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans
-Date: Mon, 18 Aug 2025 14:46:11 +0200
-Message-ID: <20250818124501.864066655@linuxfoundation.org>
+Subject: [PATCH 6.12 346/444] scsi: target: core: Generate correct identifiers for PR OUT transport IDs
+Date: Mon, 18 Aug 2025 14:46:12 +0200
+Message-ID: <20250818124501.899907620@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,134 +52,234 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 37c4e72b0651e7697eb338cd1fb09feef472cc1a ]
+[ Upstream commit 6e0f6aa44b68335df404a2df955055f416b5f2aa ]
 
-sas_user_scan() did not fully process wildcard channel scans
-(SCAN_WILD_CARD) when a transport-specific user_scan() callback was
-present. Only channel 0 would be scanned via user_scan(), while the
-remaining channels were skipped, potentially missing devices.
+Fix target_parse_pr_out_transport_id() to return a string representing
+the transport ID in a human-readable format (e.g., naa.xxxxxxxx...)  for
+various SCSI protocol types (SAS, FCP, SRP, SBP).
 
-user_scan() invokes updated sas_user_scan() for channel 0, and if
-successful, iteratively scans remaining channels (1 to
-shost->max_channel) via scsi_scan_host_selected().  This ensures complete
-wildcard scanning without affecting transport-specific scanning behavior.
+Previously, the function returned a pointer to the raw binary buffer,
+which was incorrectly compared against human-readable strings, causing
+comparisons to fail.  Now, the function writes a properly formatted
+string into a buffer provided by the caller.  The output format depends
+on the transport protocol:
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20250624061649.17990-1-ranjan.kumar@broadcom.com
+* SAS: 64-bit identifier, "naa." prefix.
+* FCP: 64-bit identifier, colon separated values.
+* SBP: 64-bit identifier, no prefix.
+* SRP: 128-bit identifier, "0x" prefix.
+* iSCSI: IQN string.
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20250714133738.11054-1-mlombard@redhat.com
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_scan.c          |  2 +-
- drivers/scsi/scsi_transport_sas.c | 60 ++++++++++++++++++++++++-------
- 2 files changed, 49 insertions(+), 13 deletions(-)
+ drivers/target/target_core_fabric_lib.c | 63 +++++++++++++++++++------
+ drivers/target/target_core_internal.h   |  4 +-
+ drivers/target/target_core_pr.c         | 18 +++----
+ 3 files changed, 60 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index fe08af4dcb67..36e0b3105460 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1881,7 +1881,7 @@ int scsi_scan_host_selected(struct Scsi_Host *shost, unsigned int channel,
- 
- 	return 0;
+diff --git a/drivers/target/target_core_fabric_lib.c b/drivers/target/target_core_fabric_lib.c
+index 43f47e3aa448..ec7bc6e30228 100644
+--- a/drivers/target/target_core_fabric_lib.c
++++ b/drivers/target/target_core_fabric_lib.c
+@@ -257,11 +257,41 @@ static int iscsi_get_pr_transport_id_len(
+ 	return len;
  }
--
-+EXPORT_SYMBOL(scsi_scan_host_selected);
- static void scsi_sysfs_add_devices(struct Scsi_Host *shost)
- {
- 	struct scsi_device *sdev;
-diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
-index 4e33f1661e4c..d322802c7790 100644
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -40,6 +40,8 @@
- #include <scsi/scsi_transport_sas.h>
  
- #include "scsi_sas_internal.h"
-+#include "scsi_priv.h"
-+
- struct sas_host_attrs {
- 	struct list_head rphy_list;
- 	struct mutex lock;
-@@ -1681,32 +1683,66 @@ int scsi_is_sas_rphy(const struct device *dev)
- }
- EXPORT_SYMBOL(scsi_is_sas_rphy);
- 
--
--/*
-- * SCSI scan helper
-- */
--
--static int sas_user_scan(struct Scsi_Host *shost, uint channel,
--		uint id, u64 lun)
-+static void scan_channel_zero(struct Scsi_Host *shost, uint id, u64 lun)
- {
- 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
- 	struct sas_rphy *rphy;
- 
--	mutex_lock(&sas_host->lock);
- 	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
- 		if (rphy->identify.device_type != SAS_END_DEVICE ||
- 		    rphy->scsi_target_id == -1)
- 			continue;
- 
--		if ((channel == SCAN_WILD_CARD || channel == 0) &&
--		    (id == SCAN_WILD_CARD || id == rphy->scsi_target_id)) {
-+		if (id == SCAN_WILD_CARD || id == rphy->scsi_target_id) {
- 			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
- 					 lun, SCSI_SCAN_MANUAL);
- 		}
- 	}
--	mutex_unlock(&sas_host->lock);
-+}
- 
--	return 0;
-+/*
-+ * SCSI scan helper
-+ */
-+
-+static int sas_user_scan(struct Scsi_Host *shost, uint channel,
-+		uint id, u64 lun)
+-static char *iscsi_parse_pr_out_transport_id(
++static void sas_parse_pr_out_transport_id(char *buf, char *i_str)
 +{
-+	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
-+	int res = 0;
-+	int i;
++	char hex[17] = {};
 +
-+	switch (channel) {
-+	case 0:
-+		mutex_lock(&sas_host->lock);
-+		scan_channel_zero(shost, id, lun);
-+		mutex_unlock(&sas_host->lock);
-+		break;
++	bin2hex(hex, buf + 4, 8);
++	snprintf(i_str, TRANSPORT_IQN_LEN, "naa.%s", hex);
++}
 +
-+	case SCAN_WILD_CARD:
-+		mutex_lock(&sas_host->lock);
-+		scan_channel_zero(shost, id, lun);
-+		mutex_unlock(&sas_host->lock);
++static void srp_parse_pr_out_transport_id(char *buf, char *i_str)
++{
++	char hex[33] = {};
 +
-+		for (i = 1; i <= shost->max_channel; i++) {
-+			res = scsi_scan_host_selected(shost, i, id, lun,
-+						      SCSI_SCAN_MANUAL);
-+			if (res)
-+				goto exit_scan;
-+		}
-+		break;
++	bin2hex(hex, buf + 8, 16);
++	snprintf(i_str, TRANSPORT_IQN_LEN, "0x%s", hex);
++}
 +
-+	default:
-+		if (channel < shost->max_channel) {
-+			res = scsi_scan_host_selected(shost, channel, id, lun,
-+						      SCSI_SCAN_MANUAL);
-+		} else {
-+			res = -EINVAL;
-+		}
-+		break;
-+	}
++static void fcp_parse_pr_out_transport_id(char *buf, char *i_str)
++{
++	snprintf(i_str, TRANSPORT_IQN_LEN, "%8phC", buf + 8);
++}
 +
-+exit_scan:
-+	return res;
++static void sbp_parse_pr_out_transport_id(char *buf, char *i_str)
++{
++	char hex[17] = {};
++
++	bin2hex(hex, buf + 8, 8);
++	snprintf(i_str, TRANSPORT_IQN_LEN, "%s", hex);
++}
++
++static bool iscsi_parse_pr_out_transport_id(
+ 	struct se_portal_group *se_tpg,
+ 	char *buf,
+ 	u32 *out_tid_len,
+-	char **port_nexus_ptr)
++	char **port_nexus_ptr,
++	char *i_str)
+ {
+ 	char *p;
+ 	int i;
+@@ -282,7 +312,7 @@ static char *iscsi_parse_pr_out_transport_id(
+ 	if ((format_code != 0x00) && (format_code != 0x40)) {
+ 		pr_err("Illegal format code: 0x%02x for iSCSI"
+ 			" Initiator Transport ID\n", format_code);
+-		return NULL;
++		return false;
+ 	}
+ 	/*
+ 	 * If the caller wants the TransportID Length, we set that value for the
+@@ -306,7 +336,7 @@ static char *iscsi_parse_pr_out_transport_id(
+ 			pr_err("Unable to locate \",i,0x\" separator"
+ 				" for Initiator port identifier: %s\n",
+ 				&buf[4]);
+-			return NULL;
++			return false;
+ 		}
+ 		*p = '\0'; /* Terminate iSCSI Name */
+ 		p += 5; /* Skip over ",i,0x" separator */
+@@ -339,7 +369,8 @@ static char *iscsi_parse_pr_out_transport_id(
+ 	} else
+ 		*port_nexus_ptr = NULL;
+ 
+-	return &buf[4];
++	strscpy(i_str, &buf[4], TRANSPORT_IQN_LEN);
++	return true;
  }
  
+ int target_get_pr_transport_id_len(struct se_node_acl *nacl,
+@@ -387,33 +418,35 @@ int target_get_pr_transport_id(struct se_node_acl *nacl,
+ 	}
+ }
  
+-const char *target_parse_pr_out_transport_id(struct se_portal_group *tpg,
+-		char *buf, u32 *out_tid_len, char **port_nexus_ptr)
++bool target_parse_pr_out_transport_id(struct se_portal_group *tpg,
++		char *buf, u32 *out_tid_len, char **port_nexus_ptr, char *i_str)
+ {
+-	u32 offset;
+-
+ 	switch (tpg->proto_id) {
+ 	case SCSI_PROTOCOL_SAS:
+ 		/*
+ 		 * Assume the FORMAT CODE 00b from spc4r17, 7.5.4.7 TransportID
+ 		 * for initiator ports using SCSI over SAS Serial SCSI Protocol.
+ 		 */
+-		offset = 4;
++		sas_parse_pr_out_transport_id(buf, i_str);
+ 		break;
+-	case SCSI_PROTOCOL_SBP:
+ 	case SCSI_PROTOCOL_SRP:
++		srp_parse_pr_out_transport_id(buf, i_str);
++		break;
+ 	case SCSI_PROTOCOL_FCP:
+-		offset = 8;
++		fcp_parse_pr_out_transport_id(buf, i_str);
++		break;
++	case SCSI_PROTOCOL_SBP:
++		sbp_parse_pr_out_transport_id(buf, i_str);
+ 		break;
+ 	case SCSI_PROTOCOL_ISCSI:
+ 		return iscsi_parse_pr_out_transport_id(tpg, buf, out_tid_len,
+-					port_nexus_ptr);
++					port_nexus_ptr, i_str);
+ 	default:
+ 		pr_err("Unknown proto_id: 0x%02x\n", tpg->proto_id);
+-		return NULL;
++		return false;
+ 	}
+ 
+ 	*port_nexus_ptr = NULL;
+ 	*out_tid_len = 24;
+-	return buf + offset;
++	return true;
+ }
+diff --git a/drivers/target/target_core_internal.h b/drivers/target/target_core_internal.h
+index 408be26d2e9b..20aab1f50565 100644
+--- a/drivers/target/target_core_internal.h
++++ b/drivers/target/target_core_internal.h
+@@ -103,8 +103,8 @@ int	target_get_pr_transport_id_len(struct se_node_acl *nacl,
+ int	target_get_pr_transport_id(struct se_node_acl *nacl,
+ 		struct t10_pr_registration *pr_reg, int *format_code,
+ 		unsigned char *buf);
+-const char *target_parse_pr_out_transport_id(struct se_portal_group *tpg,
+-		char *buf, u32 *out_tid_len, char **port_nexus_ptr);
++bool target_parse_pr_out_transport_id(struct se_portal_group *tpg,
++		char *buf, u32 *out_tid_len, char **port_nexus_ptr, char *i_str);
+ 
+ /* target_core_hba.c */
+ struct se_hba *core_alloc_hba(const char *, u32, u32);
+diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
+index 47fe50b80c22..82061cbe6781 100644
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -1478,11 +1478,12 @@ core_scsi3_decode_spec_i_port(
+ 	LIST_HEAD(tid_dest_list);
+ 	struct pr_transport_id_holder *tidh_new, *tidh, *tidh_tmp;
+ 	unsigned char *buf, *ptr, proto_ident;
+-	const unsigned char *i_str = NULL;
++	unsigned char i_str[TRANSPORT_IQN_LEN];
+ 	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN];
+ 	sense_reason_t ret;
+ 	u32 tpdl, tid_len = 0;
+ 	u32 dest_rtpi = 0;
++	bool tid_found;
+ 
+ 	/*
+ 	 * Allocate a struct pr_transport_id_holder and setup the
+@@ -1571,9 +1572,9 @@ core_scsi3_decode_spec_i_port(
+ 			dest_rtpi = tmp_lun->lun_tpg->tpg_rtpi;
+ 
+ 			iport_ptr = NULL;
+-			i_str = target_parse_pr_out_transport_id(tmp_tpg,
+-					ptr, &tid_len, &iport_ptr);
+-			if (!i_str)
++			tid_found = target_parse_pr_out_transport_id(tmp_tpg,
++					ptr, &tid_len, &iport_ptr, i_str);
++			if (!tid_found)
+ 				continue;
+ 			/*
+ 			 * Determine if this SCSI device server requires that
+@@ -3153,13 +3154,14 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
+ 	struct t10_pr_registration *pr_reg, *pr_res_holder, *dest_pr_reg;
+ 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
+ 	unsigned char *buf;
+-	const unsigned char *initiator_str;
++	unsigned char initiator_str[TRANSPORT_IQN_LEN];
+ 	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN] = { };
+ 	u32 tid_len, tmp_tid_len;
+ 	int new_reg = 0, type, scope, matching_iname;
+ 	sense_reason_t ret;
+ 	unsigned short rtpi;
+ 	unsigned char proto_ident;
++	bool tid_found;
+ 
+ 	if (!se_sess || !se_lun) {
+ 		pr_err("SPC-3 PR: se_sess || struct se_lun is NULL!\n");
+@@ -3278,9 +3280,9 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
+ 		ret = TCM_INVALID_PARAMETER_LIST;
+ 		goto out;
+ 	}
+-	initiator_str = target_parse_pr_out_transport_id(dest_se_tpg,
+-			&buf[24], &tmp_tid_len, &iport_ptr);
+-	if (!initiator_str) {
++	tid_found = target_parse_pr_out_transport_id(dest_se_tpg,
++			&buf[24], &tmp_tid_len, &iport_ptr, initiator_str);
++	if (!tid_found) {
+ 		pr_err("SPC-3 PR REGISTER_AND_MOVE: Unable to locate"
+ 			" initiator_str from Transport ID\n");
+ 		ret = TCM_INVALID_PARAMETER_LIST;
 -- 
 2.39.5
 
