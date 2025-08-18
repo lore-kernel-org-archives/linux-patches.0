@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BCE335BA7;
-	Mon, 18 Aug 2025 13:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CBD335BBE;
+	Mon, 18 Aug 2025 13:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524958; cv=none; b=g1cEN2ClMczedSDJhbR2o+QipHtj97nDcXBGDUpCCUogka6XZHIJmg+sQs2C219nHYcsy++5QufYKbcZmMkZZA0FjsJXN4CXziz+fHtX/mRpuQ0eIC/oQAQJwMyjDQ1DyE08U/3I43ROhgG+NBYsbqd5V8QeQ0pKZZv42+KiydA=
+	t=1755524961; cv=none; b=ixPBVb5ee8vyexRZfFdouC0wbiKVxXGx42lt713QTVtANwFbX7qsZGPlcEQbyO6FLjUWL4H294aMedJAhpIgeuoeZJgkcXOFavZMWPhLoETyM/JvKkEKpTA42g8zEFW2lwrDY1J22E+HHNQNU2vHQlYvuR3nxrShaUp6ij95bhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524958; c=relaxed/simple;
-	bh=9G5FUPXq+F6yPfOlH+0EdaqIRjpHDoea3KM9vrk7S+8=;
+	s=arc-20240116; t=1755524961; c=relaxed/simple;
+	bh=KBbtz+A+Hr3p1o+g1TP0QNWrhg8iLiEjC3mKuP79S7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMo3m4cRxn+Ll6N3yRAuVZ++p2B0iRZ3IccMO2DPo+8IAECIvz618eCqzMAm2oMKjUc5KQc+dlUgoPNIB58qP0qURb6M02fr1AubJBsVdARXmY6K2j/sf1TSIeuNi1NQkzUeV0QtyiQbPEzdATi3+PSpHvC3jSbs1McG3WdstgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/tFx/W7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MiwL+29nLYZEEq1K2n+rzphJ3z3fztQeBWCjQz74XIjyHbUu+ygkgMY+iMMlR+K55i3NBD2CykdrGuJXevgMO4WLlwrcTytLcsxybi6K5QrbjPnoX87oRervEuIL3z63cMSCOCj1MY1P7GMuZwSnpEcpR4DLVQLL6rk7f3D3iEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKmZonDI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/tFx/W7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E112BC4CEF1;
-	Mon, 18 Aug 2025 13:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKmZonDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA25C4CEEB;
+	Mon, 18 Aug 2025 13:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524958;
-	bh=9G5FUPXq+F6yPfOlH+0EdaqIRjpHDoea3KM9vrk7S+8=;
+	s=korg; t=1755524961;
+	bh=KBbtz+A+Hr3p1o+g1TP0QNWrhg8iLiEjC3mKuP79S7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/tFx/W7e03ceFxaOVaa+FlJDeZlNZZ6ISqeKnTixj9OkJkH1jYhL95jni2WpEGD0
-	 0u5+6mPbmjdutD/CFWnoMX4zOfoaKIUVpWVZ0AJyVEIY+TCeem5T9HbqVG7pns/bC9
-	 EKCLYFpcoAv28mYUaDDjPYwSYssgh/UM727ceQ0Q=
+	b=VKmZonDI0g+fJcnm6gzkK5Z3Yrg2rvTghMnVLbl5jKWvt79Kc3g4rNGvDEtFrx7BQ
+	 QeexgOs9JulExJiKi8c8szrE56tdNER5SdPYkvhaaEVOEUkpJFssuw3+aF9XjASsrf
+	 ArpCBiSh7yTB8HPQM0IwgYZRzNofiCVvtiQc92jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Rong Zhang <ulin0208@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 098/570] btrfs: fix -ENOSPC mmap write failure on NOCOW files/extents
-Date: Mon, 18 Aug 2025 14:41:25 +0200
-Message-ID: <20250818124509.590997337@linuxfoundation.org>
+Subject: [PATCH 6.16 116/570] fs/ntfs3: correctly create symlink for relative path
+Date: Mon, 18 Aug 2025 14:41:43 +0200
+Message-ID: <20250818124510.290686552@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,193 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Rong Zhang <ulin0208@gmail.com>
 
-[ Upstream commit 6599716de2d68ab7b3c0429221deca306dbda878 ]
+[ Upstream commit b1e9d89408f402858c00103f9831b25ffa0994d3 ]
 
-If we attempt a mmap write into a NOCOW file or a prealloc extent when
-there is no more available data space (or unallocated space to allocate a
-new data block group) and we can do a NOCOW write (there are no reflinks
-for the target extent or snapshots), we always fail due to -ENOSPC, unlike
-for the regular buffered write and direct IO paths where we check that we
-can do a NOCOW write in case we can't reserve data space.
+After applying this patch, could correctly create symlink:
 
-Simple reproducer:
+ln -s "relative/path/to/file" symlink
 
-  $ cat test.sh
-  #!/bin/bash
-
-  DEV=/dev/sdi
-  MNT=/mnt/sdi
-
-  umount $DEV &> /dev/null
-  mkfs.btrfs -f -b $((512 * 1024 * 1024)) $DEV
-  mount $DEV $MNT
-
-  touch $MNT/foobar
-  # Make it a NOCOW file.
-  chattr +C $MNT/foobar
-
-  # Add initial data to file.
-  xfs_io -c "pwrite -S 0xab 0 1M" $MNT/foobar
-
-  # Fill all the remaining data space and unallocated space with data.
-  dd if=/dev/zero of=$MNT/filler bs=4K &> /dev/null
-
-  # Overwrite the file with a mmap write. Should succeed.
-  xfs_io -c "mmap -w 0 1M"        \
-         -c "mwrite -S 0xcd 0 1M" \
-         -c "munmap"              \
-         $MNT/foobar
-
-  # Unmount, mount again and verify the new data was persisted.
-  umount $MNT
-  mount $DEV $MNT
-
-  od -A d -t x1 $MNT/foobar
-
-  umount $MNT
-
-Running this:
-
-  $ ./test.sh
-  (...)
-  wrote 1048576/1048576 bytes at offset 0
-  1 MiB, 256 ops; 0.0008 sec (1.188 GiB/sec and 311435.5231 ops/sec)
-  ./test.sh: line 24: 234865 Bus error               xfs_io -c "mmap -w 0 1M" -c "mwrite -S 0xcd 0 1M" -c "munmap" $MNT/foobar
-  0000000 ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab
-  *
-  1048576
-
-Fix this by not failing in case we can't allocate data space and we can
-NOCOW into the target extent - reserving only metadata space in this case.
-
-After this change the test passes:
-
-  $ ./test.sh
-  (...)
-  wrote 1048576/1048576 bytes at offset 0
-  1 MiB, 256 ops; 0.0007 sec (1.262 GiB/sec and 330749.3540 ops/sec)
-  0000000 cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd
-  *
-  1048576
-
-A test case for fstests will be added soon.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Rong Zhang <ulin0208@gmail.com>
+[almaz.alexandrovich@paragon-software.com: added cpu_to_le32 macro to
+rs->Flags assignment]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/file.c | 59 ++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 51 insertions(+), 8 deletions(-)
+ fs/ntfs3/inode.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
-index 8ce6f45f45e0..0a468bbfe015 100644
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -1842,6 +1842,7 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 	loff_t size;
- 	size_t fsize = folio_size(folio);
- 	int ret;
-+	bool only_release_metadata = false;
- 	u64 reserved_space;
- 	u64 page_start;
- 	u64 page_end;
-@@ -1862,10 +1863,34 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 	 * end up waiting indefinitely to get a lock on the page currently
- 	 * being processed by btrfs_page_mkwrite() function.
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 0f0d27d4644a..8214970f4594 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1062,10 +1062,10 @@ int inode_read_data(struct inode *inode, void *data, size_t bytes)
+  * Number of bytes for REPARSE_DATA_BUFFER(IO_REPARSE_TAG_SYMLINK)
+  * for unicode string of @uni_len length.
+  */
+-static inline u32 ntfs_reparse_bytes(u32 uni_len)
++static inline u32 ntfs_reparse_bytes(u32 uni_len, bool is_absolute)
+ {
+ 	/* Header + unicode string + decorated unicode string. */
+-	return sizeof(short) * (2 * uni_len + 4) +
++	return sizeof(short) * (2 * uni_len + (is_absolute ? 4 : 0)) +
+ 	       offsetof(struct REPARSE_DATA_BUFFER,
+ 			SymbolicLinkReparseBuffer.PathBuffer);
+ }
+@@ -1078,8 +1078,11 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 	struct REPARSE_DATA_BUFFER *rp;
+ 	__le16 *rp_name;
+ 	typeof(rp->SymbolicLinkReparseBuffer) *rs;
++	bool is_absolute;
+ 
+-	rp = kzalloc(ntfs_reparse_bytes(2 * size + 2), GFP_NOFS);
++	is_absolute = (strlen(symname) > 1 && symname[1] == ':');
++
++	rp = kzalloc(ntfs_reparse_bytes(2 * size + 2, is_absolute), GFP_NOFS);
+ 	if (!rp)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -1094,7 +1097,7 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 		goto out;
+ 
+ 	/* err = the length of unicode name of symlink. */
+-	*nsize = ntfs_reparse_bytes(err);
++	*nsize = ntfs_reparse_bytes(err, is_absolute);
+ 
+ 	if (*nsize > sbi->reparse.max_size) {
+ 		err = -EFBIG;
+@@ -1114,7 +1117,7 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 
+ 	/* PrintName + SubstituteName. */
+ 	rs->SubstituteNameOffset = cpu_to_le16(sizeof(short) * err);
+-	rs->SubstituteNameLength = cpu_to_le16(sizeof(short) * err + 8);
++	rs->SubstituteNameLength = cpu_to_le16(sizeof(short) * err + (is_absolute ? 8 : 0));
+ 	rs->PrintNameLength = rs->SubstituteNameOffset;
+ 
+ 	/*
+@@ -1122,16 +1125,18 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 	 * parse this path.
+ 	 * 0-absolute path 1- relative path (SYMLINK_FLAG_RELATIVE).
  	 */
--	ret = btrfs_delalloc_reserve_space(BTRFS_I(inode), &data_reserved,
--					   page_start, reserved_space);
--	if (ret < 0)
-+	ret = btrfs_check_data_free_space(BTRFS_I(inode), &data_reserved,
-+					  page_start, reserved_space, false);
-+	if (ret < 0) {
-+		size_t write_bytes = reserved_space;
-+
-+		if (btrfs_check_nocow_lock(BTRFS_I(inode), page_start,
-+					   &write_bytes, false) <= 0)
-+			goto out_noreserve;
-+
-+		only_release_metadata = true;
-+
-+		/*
-+		 * Can't write the whole range, there may be shared extents or
-+		 * holes in the range, bail out with @only_release_metadata set
-+		 * to true so that we unlock the nocow lock before returning the
-+		 * error.
-+		 */
-+		if (write_bytes < reserved_space)
-+			goto out_noreserve;
-+	}
-+	ret = btrfs_delalloc_reserve_metadata(BTRFS_I(inode), reserved_space,
-+					      reserved_space, false);
-+	if (ret < 0) {
-+		if (!only_release_metadata)
-+			btrfs_free_reserved_data_space(BTRFS_I(inode), data_reserved,
-+						       page_start, reserved_space);
- 		goto out_noreserve;
+-	rs->Flags = 0;
++	rs->Flags = cpu_to_le32(is_absolute ? 0 : SYMLINK_FLAG_RELATIVE);
+ 
+-	memmove(rp_name + err + 4, rp_name, sizeof(short) * err);
++	memmove(rp_name + err + (is_absolute ? 4 : 0), rp_name, sizeof(short) * err);
+ 
+-	/* Decorate SubstituteName. */
+-	rp_name += err;
+-	rp_name[0] = cpu_to_le16('\\');
+-	rp_name[1] = cpu_to_le16('?');
+-	rp_name[2] = cpu_to_le16('?');
+-	rp_name[3] = cpu_to_le16('\\');
++	if (is_absolute) {
++		/* Decorate SubstituteName. */
++		rp_name += err;
++		rp_name[0] = cpu_to_le16('\\');
++		rp_name[1] = cpu_to_le16('?');
++		rp_name[2] = cpu_to_le16('?');
++		rp_name[3] = cpu_to_le16('\\');
 +	}
  
- 	ret = file_update_time(vmf->vma->vm_file);
- 	if (ret < 0)
-@@ -1906,10 +1931,16 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 	if (folio_contains(folio, (size - 1) >> PAGE_SHIFT)) {
- 		reserved_space = round_up(size - page_start, fs_info->sectorsize);
- 		if (reserved_space < fsize) {
-+			const u64 to_free = fsize - reserved_space;
-+
- 			end = page_start + reserved_space - 1;
--			btrfs_delalloc_release_space(BTRFS_I(inode),
--					data_reserved, end + 1,
--					fsize - reserved_space, true);
-+			if (only_release_metadata)
-+				btrfs_delalloc_release_metadata(BTRFS_I(inode),
-+								to_free, true);
-+			else
-+				btrfs_delalloc_release_space(BTRFS_I(inode),
-+							     data_reserved, end + 1,
-+							     to_free, true);
- 		}
- 	}
- 
-@@ -1946,10 +1977,16 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 
- 	btrfs_set_inode_last_sub_trans(BTRFS_I(inode));
- 
-+	if (only_release_metadata)
-+		btrfs_set_extent_bit(io_tree, page_start, end, EXTENT_NORESERVE,
-+				     &cached_state);
-+
- 	btrfs_unlock_extent(io_tree, page_start, page_end, &cached_state);
- 	up_read(&BTRFS_I(inode)->i_mmap_lock);
- 
- 	btrfs_delalloc_release_extents(BTRFS_I(inode), fsize);
-+	if (only_release_metadata)
-+		btrfs_check_nocow_unlock(BTRFS_I(inode));
- 	sb_end_pagefault(inode->i_sb);
- 	extent_changeset_free(data_reserved);
- 	return VM_FAULT_LOCKED;
-@@ -1959,10 +1996,16 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 	up_read(&BTRFS_I(inode)->i_mmap_lock);
+ 	return rp;
  out:
- 	btrfs_delalloc_release_extents(BTRFS_I(inode), fsize);
--	btrfs_delalloc_release_space(BTRFS_I(inode), data_reserved, page_start,
--				     reserved_space, true);
-+	if (only_release_metadata)
-+		btrfs_delalloc_release_metadata(BTRFS_I(inode), reserved_space, true);
-+	else
-+		btrfs_delalloc_release_space(BTRFS_I(inode), data_reserved,
-+					     page_start, reserved_space, true);
- 	extent_changeset_free(data_reserved);
- out_noreserve:
-+	if (only_release_metadata)
-+		btrfs_check_nocow_unlock(BTRFS_I(inode));
-+
- 	sb_end_pagefault(inode->i_sb);
- 
- 	if (ret < 0)
 -- 
 2.39.5
 
