@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD75322A1A;
-	Mon, 18 Aug 2025 14:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14F5322A1A;
+	Mon, 18 Aug 2025 14:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526101; cv=none; b=SnJkTaSq2AQnigy8pHxA6jRIWlflvjFSXzbkbnOi8SOepdDl24Zfwwa90fI+XO9NsBfuSAyT1ZwGasaJgcp1XbxIWZsbhALhtvXbBjT3p+Yve/Y+h8lQLrhIh3vXdymUgqa5U27xczuSQDZ8kV2P6Y/z5SgNegnqDB41+6hO5nQ=
+	t=1755526104; cv=none; b=IyEGiAdqgZik6luZcRU6duFGf/EgUoZoa/rRms9y3udqnWPbRzky5e4dMaTvMH+82da6BS3Fq2i0QjUV/iMBy4Ld7TOSN783CUQa3oVwX7ClbKeKg4EbYSUCX37bgoyil7EbNK/CNOCAmceiUmdWc9Zt+KZqp+i7OVRC+RLj5nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526101; c=relaxed/simple;
-	bh=cox8OjX+mbGrzJlKivezC6C4e6zul0qDpuBq/SYHOeo=;
+	s=arc-20240116; t=1755526104; c=relaxed/simple;
+	bh=NejPIpGfctKCodSnhHpFTXqEKhZj/FbqT2iiodajsDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anr9x38phq9UbwYJWVrodmSsY6tJD2aP8cCc4x1sGLv2FCREm95wV5lQZ9zQXknEu4y2Bvjly6jHgTvBDK4TyDqUR5KH5fwyKXViJx58tHaqd3C/Sn2gj+O3/B0aN4nG+CUm7g5XCK6SjKQ3dEG2lIUKxMp12k4q9dN2jUD3aeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdUEBRUr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plbNKY8IraxupWQUtACvNShEiBsqEpjzrqy+eQgutj6bwqWG3Qc8Z48l0/DOlP8joCGT8v9GnOEwkIoC+A2tcz2QtiH+L2BABYCUBBvblrbOzzJNp0aTRZfGAKdY4RqoSoCI09e0Bn2yYtbTpyph9RMcBhG7ZmD4tZ7sx7OGK3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiQWr9pl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdUEBRUr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ECCC116C6;
-	Mon, 18 Aug 2025 14:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiQWr9pl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31914C4CEEB;
+	Mon, 18 Aug 2025 14:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526101;
-	bh=cox8OjX+mbGrzJlKivezC6C4e6zul0qDpuBq/SYHOeo=;
+	s=korg; t=1755526104;
+	bh=NejPIpGfctKCodSnhHpFTXqEKhZj/FbqT2iiodajsDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdUEBRUrqkBTP6PrmJ0beJ3SxGNRs0rXsLcTmAtXqgwpHxoZ3Oy7iSnWGIrXgwARv
-	 Aoq/yjGWzudpoNMy9fXTTf0c3jaAfr/xtarVL9bjOkI7hX+ZClqdfxdHjgFXljkeeN
-	 8yMpAr1loRdnvYNmAKlHT6UbL4ERQW3cYr1gowNo=
+	b=JiQWr9plCMEU8gY3TytBudJFI2AlgFWPuQ9H+nABj5MYk6pPZv4IXnZPfVHGdesn6
+	 Jq9ae6/iDaETCrlWrva3PQonPvXNx1T4uC0fkTIbkA08fSBwAUhVLf7xLe+w2LJlue
+	 2dghzp7wQ0gH25DG83cSOgA3LKjLPnIo7ODxFedg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Jakubek <peterjakubek@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 459/570] ASoC: Intel: sof_sdw: Add quirk for Alienware Area 51 (2025) 0CCC SKU
-Date: Mon, 18 Aug 2025 14:47:26 +0200
-Message-ID: <20250818124523.542564979@linuxfoundation.org>
+Subject: [PATCH 6.16 460/570] regmap: irq: Free the regmap-irq mutex
+Date: Mon, 18 Aug 2025 14:47:27 +0200
+Message-ID: <20250818124523.581582722@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,43 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Jakubek <peterjakubek@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 1b03391d073dad748636a1ad9668b837cce58265 ]
+[ Upstream commit 1da33858af6250184d2ef907494d698af03283de ]
 
-Add DMI quirk entry for Alienware systems with SKU "0CCC" to enable
-proper speaker codec configuration (SOC_SDW_CODEC_SPKR).
+We do not currently free the mutex allocated by regmap-irq, do so.
 
-This system requires the same audio configuration as some existing Dell systems.
-Without this patch, the laptop's speakers and microphone will not work.
-
-Signed-off-by: Peter Jakubek <peterjakubek@gmail.com>
-Link: https://patch.msgid.link/20250731172104.2009007-1-peterjakubek@gmail.com
+Tested-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250731-regmap-irq-nesting-v1-1-98b4d1bf20f0@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/base/regmap/regmap-irq.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index 504887505e68..c576ec5527f9 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -741,6 +741,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
- 	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0CCC")
-+		},
-+		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
-+	},
- 	/* Pantherlake devices*/
- 	{
- 		.callback = sof_sdw_quirk_cb,
+diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
+index d1585f073776..4aac12d38215 100644
+--- a/drivers/base/regmap/regmap-irq.c
++++ b/drivers/base/regmap/regmap-irq.c
+@@ -816,7 +816,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 						     d->mask_buf[i],
+ 						     chip->irq_drv_data);
+ 			if (ret)
+-				goto err_alloc;
++				goto err_mutex;
+ 		}
+ 
+ 		if (chip->mask_base && !chip->handle_mask_sync) {
+@@ -827,7 +827,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret) {
+ 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
+ 					reg, ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 
+@@ -838,7 +838,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret) {
+ 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
+ 					reg, ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 
+@@ -855,7 +855,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret != 0) {
+ 				dev_err(map->dev, "Failed to read IRQ status: %d\n",
+ 					ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 
+@@ -879,7 +879,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret != 0) {
+ 				dev_err(map->dev, "Failed to ack 0x%x: %d\n",
+ 					reg, ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 	}
+@@ -901,7 +901,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret != 0) {
+ 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
+ 					reg, ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 	}
+@@ -910,7 +910,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 	if (chip->status_is_level) {
+ 		ret = read_irq_data(d);
+ 		if (ret < 0)
+-			goto err_alloc;
++			goto err_mutex;
+ 
+ 		memcpy(d->prev_status_buf, d->status_buf,
+ 		       array_size(d->chip->num_regs, sizeof(d->prev_status_buf[0])));
+@@ -918,7 +918,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 
+ 	ret = regmap_irq_create_domain(fwnode, irq_base, chip, d);
+ 	if (ret)
+-		goto err_alloc;
++		goto err_mutex;
+ 
+ 	ret = request_threaded_irq(irq, NULL, regmap_irq_thread,
+ 				   irq_flags | IRQF_ONESHOT,
+@@ -935,6 +935,8 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 
+ err_domain:
+ 	/* Should really dispose of the domain but... */
++err_mutex:
++	mutex_destroy(&d->lock);
+ err_alloc:
+ 	kfree(d->type_buf);
+ 	kfree(d->type_buf_def);
+@@ -1027,6 +1029,7 @@ void regmap_del_irq_chip(int irq, struct regmap_irq_chip_data *d)
+ 			kfree(d->config_buf[i]);
+ 		kfree(d->config_buf);
+ 	}
++	mutex_destroy(&d->lock);
+ 	kfree(d);
+ }
+ EXPORT_SYMBOL_GPL(regmap_del_irq_chip);
 -- 
 2.39.5
 
