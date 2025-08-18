@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1012032038F;
-	Mon, 18 Aug 2025 13:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7565812DDA1;
+	Mon, 18 Aug 2025 13:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522098; cv=none; b=l2JKsV2/tjEp8JcWH/Hv2Lsdr/Z7/yXSDN2itV1QDbfy7N1qY+BRE9KGriWCjR32MXhrsg9Z3Wt9rgsQj1jnrAp/rMI2b9pMZjh+sbsQtQdo8r488WMAJpiDUi878hcuXjIyxm9rFLz7gAW4L+fYpJbngr0O7Z6YSUk1b7KJrU4=
+	t=1755522101; cv=none; b=PR9DgcVVUjh/jvmsu6zxfJg6kLJouMztbmWVm2pAosbM+NPdOf0RgShnsbDq3XB1j/jFnMRKDiJexswEsP9am+zMYsA/cJ2fVPHuhhTIaBpmuJMlH09wzslKtnU4c9xGVg/At1bRWiFZ4/v944+Q7OqRsWBFR1sDwOVZH34lbiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522098; c=relaxed/simple;
-	bh=PmEIP233efkHNNG6kCqMJ7Y/No224JHLKaX1rFvEilg=;
+	s=arc-20240116; t=1755522101; c=relaxed/simple;
+	bh=JDf33uweRbucOu1IMWHnEE2x6xQy/eX/0JIvd0F1Zag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q77xQr8FFwMJLCQnHYz2/FI2EdCmT4s9kYaxL25Mv59Qz+hE9RwjkYqVd9KFTjLxXQmG51soAHIfjtXitXr63bWk/fIjDhABlK0XOIFAVLD84fcRsUU42zZ8cLrTqZtTg4VqP+sKcp8qE6vWiE/LNOHhEMN4I3kPPsHk/yvfYcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQ+XpsWt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mI5voHTnCbYmMslrqK2eWYWMFpsqnwNLB6QVWOTrkrFgOXEl63aAv3rOvGzn465RXSrUKuJxmd9bUhiN6A9rmh32tNMQDXcJfAAeCJsMhRmwJnRdsv/vAwwB0qIvoCXdWmoC0BsPM65tOUDW9GWHRe2iW4t/ziRsg9Yse79mX94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hb7YhcYn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQ+XpsWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EC2C116C6;
-	Mon, 18 Aug 2025 13:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hb7YhcYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7E3C4CEEB;
+	Mon, 18 Aug 2025 13:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522097;
-	bh=PmEIP233efkHNNG6kCqMJ7Y/No224JHLKaX1rFvEilg=;
+	s=korg; t=1755522101;
+	bh=JDf33uweRbucOu1IMWHnEE2x6xQy/eX/0JIvd0F1Zag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQ+XpsWtQZVSOOCs9oe2tDsM4LfIFDJaXzMwD+vvK/ZadrztVSMZ9v3eO8sPAQ93Z
-	 4Wg+B9/5PofKFv1CYG1hlnmDopResjCe06aAt2kVOnl67M61p77TdK/aFcmzHsOTmF
-	 ingnpUMjzgCn2YjC7SoxedfPzvykAOtIC6SrpSTQ=
+	b=Hb7YhcYn28UjwFSLmtqhVNtnn+T0Pnhx28J+Q16ZNzti1Se17LGMf3PQ50o3l5+ag
+	 xzJxBwS6PCYOHgZ17Jmy/XsmfkJcFS3gB5CLycwCyvBMrZsioAIPiSvam6ZPfmUGU8
+	 qwsU1bFojMbteBU2hjxb7pcQhxFJ3817048FYThc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/444] drm/imagination: Clear runtime PM errors while resetting the GPU
-Date: Mon, 18 Aug 2025 14:43:59 +0200
-Message-ID: <20250818124456.834199585@linuxfoundation.org>
+Subject: [PATCH 6.12 214/444] wifi: rtw89: Fix rtw89_mac_power_switch() for USB
+Date: Mon, 18 Aug 2025 14:44:00 +0200
+Message-ID: <20250818124456.870955109@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,108 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessio Belle <alessio.belle@imgtec.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 551507e0d0bf32ce1d7d27533c4b98307380804c ]
+[ Upstream commit e2b71603333a9dd73ee88347d8894fffc3456ac1 ]
 
-The runtime PM might be left in error state if one of the callbacks
-returned an error, e.g. if the (auto)suspend callback failed following
-a firmware crash.
+Clear some bits in some registers in order to allow RTL8851BU to power
+on. This is done both when powering on and when powering off because
+that's what the vendor driver does.
 
-When that happens, any further attempt to acquire or release a power
-reference will then also fail, making it impossible to do anything else
-with the GPU. The driver logic will eventually reach the reset code.
+Also tested with RTL8832BU and RTL8832CU.
 
-In pvr_power_reset(), replace pvr_power_get() with a new API
-pvr_power_get_clear() which also attempts to clear any runtime PM error
-state if acquiring a power reference is not possible.
-
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://lore.kernel.org/r/20250624-clear-rpm-errors-gpu-reset-v1-1-b8ff2ae55aac@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/a39da939-d640-4486-ad38-f658f220afc8@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_power.c | 59 ++++++++++++++++++++++++-
- 1 file changed, 58 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/mac.c | 19 +++++++++++++++++++
+ drivers/net/wireless/realtek/rtw89/reg.h |  1 +
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_power.c b/drivers/gpu/drm/imagination/pvr_power.c
-index 850b318605da..d97613c6a0a9 100644
---- a/drivers/gpu/drm/imagination/pvr_power.c
-+++ b/drivers/gpu/drm/imagination/pvr_power.c
-@@ -317,6 +317,63 @@ pvr_power_device_idle(struct device *dev)
- 	return pvr_power_is_idle(pvr_dev) ? 0 : -EBUSY;
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index 2188bca899e3..8b7ca63af7ed 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -1441,6 +1441,23 @@ void rtw89_mac_notify_wake(struct rtw89_dev *rtwdev)
+ 	rtw89_mac_send_rpwm(rtwdev, state, true);
  }
  
-+static int
-+pvr_power_clear_error(struct pvr_device *pvr_dev)
++static void rtw89_mac_power_switch_boot_mode(struct rtw89_dev *rtwdev)
 +{
-+	struct device *dev = from_pvr_device(pvr_dev)->dev;
-+	int err;
++	u32 boot_mode;
 +
-+	/* Ensure the device state is known and nothing is happening past this point */
-+	pm_runtime_disable(dev);
++	if (rtwdev->hci.type != RTW89_HCI_TYPE_USB)
++		return;
 +
-+	/* Attempt to clear the runtime PM error by setting the current state again */
-+	if (pm_runtime_status_suspended(dev))
-+		err = pm_runtime_set_suspended(dev);
-+	else
-+		err = pm_runtime_set_active(dev);
++	boot_mode = rtw89_read32_mask(rtwdev, R_AX_GPIO_MUXCFG, B_AX_BOOT_MODE);
++	if (!boot_mode)
++		return;
 +
-+	if (err) {
-+		drm_err(from_pvr_device(pvr_dev),
-+			"%s: Failed to clear runtime PM error (new error %d)\n",
-+			__func__, err);
-+	}
-+
-+	pm_runtime_enable(dev);
-+
-+	return err;
++	rtw89_write32_clr(rtwdev, R_AX_SYS_PW_CTRL, B_AX_APFN_ONMAC);
++	rtw89_write32_clr(rtwdev, R_AX_SYS_STATUS1, B_AX_AUTO_WLPON);
++	rtw89_write32_clr(rtwdev, R_AX_GPIO_MUXCFG, B_AX_BOOT_MODE);
++	rtw89_write32_clr(rtwdev, R_AX_RSV_CTRL, B_AX_R_DIS_PRST);
 +}
 +
-+/**
-+ * pvr_power_get_clear() - Acquire a power reference, correcting any errors
-+ * @pvr_dev: Device pointer
-+ *
-+ * Attempt to acquire a power reference on the device. If the runtime PM
-+ * is in error state, attempt to clear the error and retry.
-+ *
-+ * Returns:
-+ *  * 0 on success, or
-+ *  * Any error code returned by pvr_power_get() or the runtime PM API.
-+ */
-+static int
-+pvr_power_get_clear(struct pvr_device *pvr_dev)
-+{
-+	int err;
-+
-+	err = pvr_power_get(pvr_dev);
-+	if (err == 0)
-+		return err;
-+
-+	drm_warn(from_pvr_device(pvr_dev),
-+		 "%s: pvr_power_get returned error %d, attempting recovery\n",
-+		 __func__, err);
-+
-+	err = pvr_power_clear_error(pvr_dev);
-+	if (err)
-+		return err;
-+
-+	return pvr_power_get(pvr_dev);
-+}
-+
- /**
-  * pvr_power_reset() - Reset the GPU
-  * @pvr_dev: Device pointer
-@@ -341,7 +398,7 @@ pvr_power_reset(struct pvr_device *pvr_dev, bool hard_reset)
- 	 * Take a power reference during the reset. This should prevent any interference with the
- 	 * power state during reset.
- 	 */
--	WARN_ON(pvr_power_get(pvr_dev));
-+	WARN_ON(pvr_power_get_clear(pvr_dev));
+ static int rtw89_mac_power_switch(struct rtw89_dev *rtwdev, bool on)
+ {
+ #define PWR_ACT 1
+@@ -1450,6 +1467,8 @@ static int rtw89_mac_power_switch(struct rtw89_dev *rtwdev, bool on)
+ 	int ret;
+ 	u8 val;
  
- 	down_write(&pvr_dev->reset_sem);
++	rtw89_mac_power_switch_boot_mode(rtwdev);
++
+ 	if (on) {
+ 		cfg_seq = chip->pwr_on_seq;
+ 		cfg_func = chip->ops->pwr_on_func;
+diff --git a/drivers/net/wireless/realtek/rtw89/reg.h b/drivers/net/wireless/realtek/rtw89/reg.h
+index 9fbcc7fee290..7ec516979fe2 100644
+--- a/drivers/net/wireless/realtek/rtw89/reg.h
++++ b/drivers/net/wireless/realtek/rtw89/reg.h
+@@ -182,6 +182,7 @@
  
+ #define R_AX_SYS_STATUS1 0x00F4
+ #define B_AX_SEL_0XC0_MASK GENMASK(17, 16)
++#define B_AX_AUTO_WLPON BIT(10)
+ #define B_AX_PAD_HCI_SEL_V2_MASK GENMASK(5, 3)
+ #define MAC_AX_HCI_SEL_SDIO_UART 0
+ #define MAC_AX_HCI_SEL_MULTI_USB 1
 -- 
 2.39.5
 
