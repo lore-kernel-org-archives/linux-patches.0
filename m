@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205F131A04F;
-	Mon, 18 Aug 2025 12:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A36F31A04F;
+	Mon, 18 Aug 2025 12:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521672; cv=none; b=jSCC90L/ZRTEv5MTd/JivzLyJZ6o5E1gvfvcjOjFWwe7M/D3VYszgJh2QM+WlYwDphUcmBPuREmaz6l4ZeeCkVLROZ2yKBNk/7C230+fWe88DGMpXS1qP2SH+P79+WYU6U78Hee42I7O8SJyX7izrECieci0+wsmHxy46QkSe4I=
+	t=1755521675; cv=none; b=gFTsc9DzpbXG1rbyMbv1DIYx6MxfHSt5ykMLV+DRSrGHoHD1dQe6R/XANh99Fz8L6F4uLg5gqmqRgG+uO/x6LS1hPLM2KRFIhMC0bjL6RapDesGdgdsIMvyr9VSOq68nOWihtQBROWvo2SUkerSvKdNbyeo7yzwrZj6V283PgNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521672; c=relaxed/simple;
-	bh=AxgdvljR/BqxouG0EsB02x/waAk5QINpo/PktoOou5M=;
+	s=arc-20240116; t=1755521675; c=relaxed/simple;
+	bh=K43SHj670n83h8SEMtykGxV7MWOWuluL052pp70zP70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IcoUCVQsqFH7+jIE2H2uACl+43cN4elka+8Id9/0OuhoS2HFTw82eg2Ip4LrSnYTJNGD2s82i2q7xqZnCvuaceJw5eeapEmapxF0toe1vliMBZbkx/ujbBZSFBFmIqlJOYmzWNbwWoAyKCeks5RQ+0Q/YsShru7mEeud+e3gWbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKMUc6v5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ip+NplKnW5Qze4jEdQimn2plLI4j55tnkV9JIR8ZGKaGYRnvi2X3nPR18pd+FqMu+LI6lhReh3iadvLF5Khyv1Q/ognQ9JXYrJWcxop1SVMuckhwgRE+R2QPVNS891nqW8YB4W77cBLHiEoQbdx7hmH4bURK5sYZFH/1z6JNzTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP5PoTRM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKMUc6v5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854E4C4CEEB;
-	Mon, 18 Aug 2025 12:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP5PoTRM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3070C4CEEB;
+	Mon, 18 Aug 2025 12:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521672;
-	bh=AxgdvljR/BqxouG0EsB02x/waAk5QINpo/PktoOou5M=;
+	s=korg; t=1755521675;
+	bh=K43SHj670n83h8SEMtykGxV7MWOWuluL052pp70zP70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKMUc6v5nfz5joplOx1mvTdeXDCmOr/juxFWqGxMUqoIDTJVjsyzrvsExZtGKRzgx
-	 bP3sPQ8wlXyLDPGPJNbsGbEibKZTmTdPU/SgdEjzvybEcGNb1sFsgZPbb2V+MjybFv
-	 kP42CrbrFnnZUlqR/StX0FrCAg1f427nfid/f9xY=
+	b=CP5PoTRMGLw3WYFO9QQmUygruWPBrq0Rqpw5yTe9Ccxf0f3guQliaXn1rloW3x4pQ
+	 sVS6lQW8021jXIOlTS/rjtZqDSrX0VjwzayRLApHascA9YKv2AR+W5A2nvyL3sDPdc
+	 SvMAe2o1V08ynmEVekYJUa/aKHz1rbn0squ/CXNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Xiao Ni <xni@redhat.com>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/444] md: Dont clear MD_CLOSING until mddev is freed
-Date: Mon, 18 Aug 2025 14:41:55 +0200
-Message-ID: <20250818124452.283798260@linuxfoundation.org>
+Subject: [PATCH 6.12 090/444] pidfs: raise SB_I_NODEV and SB_I_NOEXEC
+Date: Mon, 18 Aug 2025 14:41:56 +0200
+Message-ID: <20250818124452.320129466@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,60 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Ni <xni@redhat.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 5f286f33553d600e6c2fb5a23dd6afcf99b3ebac ]
+[ Upstream commit 1a1ad73aa1a66787f05f7f10f686b74bab77be72 ]
 
-UNTIL_STOP is used to avoid mddev is freed on the last close before adding
-disks to mddev. And it should be cleared when stopping an array which is
-mentioned in commit efeb53c0e572 ("md: Allow md devices to be created by
-name."). So reset ->hold_active to 0 in md_clean.
+Similar to commit 1ed95281c0c7 ("anon_inode: raise SB_I_NODEV and SB_I_NOEXEC"):
+it shouldn't be possible to execute pidfds via
+execveat(fd_anon_inode, "", NULL, NULL, AT_EMPTY_PATH)
+so raise SB_I_NOEXEC so that no one gets any creative ideas.
 
-And MD_CLOSING should be kept until mddev is freed to avoid reopen.
+Also raise SB_I_NODEV as we don't expect or support any devices on pidfs.
 
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Link: https://lore.kernel.org/linux-raid/20250611073108.25463-3-xni@redhat.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/20250618-work-pidfs-persistent-v2-1-98f3456fd552@kernel.org
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ fs/pidfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 91cece996250..6b5b69a7a3f0 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -6380,15 +6380,10 @@ static void md_clean(struct mddev *mddev)
- 	mddev->persistent = 0;
- 	mddev->level = LEVEL_NONE;
- 	mddev->clevel[0] = 0;
--	/*
--	 * Don't clear MD_CLOSING, or mddev can be opened again.
--	 * 'hold_active != 0' means mddev is still in the creation
--	 * process and will be used later.
--	 */
--	if (mddev->hold_active)
--		mddev->flags = 0;
--	else
--		mddev->flags &= BIT_ULL_MASK(MD_CLOSING);
-+	/* if UNTIL_STOP is set, it's cleared here */
-+	mddev->hold_active = 0;
-+	/* Don't clear MD_CLOSING, or mddev can be opened again. */
-+	mddev->flags &= BIT_ULL_MASK(MD_CLOSING);
- 	mddev->sb_flags = 0;
- 	mddev->ro = MD_RDWR;
- 	mddev->metadata_type[0] = 0;
-@@ -6615,9 +6610,6 @@ static int do_md_stop(struct mddev *mddev, int mode)
- 		export_array(mddev);
- 		md_clean(mddev);
- 		set_bit(MD_DELETED, &mddev->flags);
--
--		if (mddev->hold_active == UNTIL_STOP)
--			mddev->hold_active = 0;
- 	}
- 	md_new_event();
- 	sysfs_notify_dirent_safe(mddev->sysfs_state);
+diff --git a/fs/pidfs.c b/fs/pidfs.c
+index 52b7e4f76732..5a8d8eb8df23 100644
+--- a/fs/pidfs.c
++++ b/fs/pidfs.c
+@@ -382,6 +382,8 @@ static int pidfs_init_fs_context(struct fs_context *fc)
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
++	fc->s_iflags |= SB_I_NOEXEC;
++	fc->s_iflags |= SB_I_NODEV;
+ 	ctx->ops = &pidfs_sops;
+ 	ctx->dops = &pidfs_dentry_operations;
+ 	fc->s_fs_info = (void *)&pidfs_stashed_ops;
 -- 
 2.39.5
 
