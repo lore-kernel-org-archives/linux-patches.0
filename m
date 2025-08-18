@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06722322A32;
-	Mon, 18 Aug 2025 13:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AC932A3DE;
+	Mon, 18 Aug 2025 13:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523703; cv=none; b=qZBzMJX5BPZR+kwB5D/62jZcy7b+BD0jN8UBLfaE1KPJx06UlVmMCIz7oo+HytAIJqJj45Lq3yFeCTWsFc+jvvrXlaCMSh4GyKJlIIgTIgiFaQ6zlKkkbgbEVlGaGEN54KRBNgOfRxDMukXC1iAyuq581NjSx+cw8/JhiY3LTjo=
+	t=1755523706; cv=none; b=TByxktHBX5lM8SfxhcaYCdTyeQovTZyAnJJ9etgrmA67u9sl8W0q/wXXJlTTfRIJwFBP6XmtsnWxqC5QcqW7fFqOXXTpwfRIDU8/kTlhWdP29pAfBOeCkO5CR1cD5yRlC4OBFgSJ7iGrDWJ/iOtwAqOJbE2efUt5ihJW3XnTfX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523703; c=relaxed/simple;
-	bh=zLp4qfuAlv66azCdtTE3QVQ0jFtRGDSq8GT0lQ1USsQ=;
+	s=arc-20240116; t=1755523706; c=relaxed/simple;
+	bh=WFaZ8bmVyn/oKGmImXkEPVWrY2q6KcV+aRXdDDnaAYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JW8SK0xLY8qoCBlCJEYWDeesFRhO6bTp6MoT5tVWg1u4/rcAaxg/4eze4RCQadP1D+3r2MJCAm+hdUQIX8F0Edzwrf2Blu0xONKEz4h0pqRt/cRNEBbpXOxiIElkp3Hb5vvCXUrEI/Z3+7J9ht60jgbzHC2layeZBNF2vikSDpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBqOEoxX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J4l2Cv6vhYbIBVB60Vb5CZMyJpwXY1tgvGjp5DX63rRxkDb7itDSoIATvIkouRDXp7fSDeb0dFarqKCCp2pSQ/cVsA3Jh9byq6Coy8nKQGl9AwN1elvmkRMYHqy6tNxdb1quOtGlaEctS2Y4zuxDzE2PyGOWKvypT39rK1+2m48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+6J/DKO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBqOEoxX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1A9C4CEEB;
-	Mon, 18 Aug 2025 13:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+6J/DKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AACDC4CEEB;
+	Mon, 18 Aug 2025 13:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523702;
-	bh=zLp4qfuAlv66azCdtTE3QVQ0jFtRGDSq8GT0lQ1USsQ=;
+	s=korg; t=1755523706;
+	bh=WFaZ8bmVyn/oKGmImXkEPVWrY2q6KcV+aRXdDDnaAYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBqOEoxXdBDASUVDKxrkU6d7I7wjJ6EFrwcPbRtiYmCmpvrguFvXA0DZQ7GNfn0Q7
-	 X2l6xful5sIvHWoxpStOXuFTVOkDZb+3A0E+GHgN+2lBn90s9C1BtsHbpyyHEMVE5N
-	 CQez6dN+pjj8shKZ82NUsOo1UQpniOz2cJMviWOY=
+	b=G+6J/DKOsXKxDVgS2Pwuo4O2IVXJIAHyqhnObiUf+M2nuP/hi24GyxBHY1OWkkCdo
+	 mk4ooUr8KslgamX/rvOulhcjl/mQ/D3mP4uba2Na0SqRMX8VGoUstZ8MGDrf2SE4TQ
+	 qG+0qZI2Jfvlplx9YH8ed/z85b2qA/WBFGFK9sEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 251/515] wifi: mt76: fix vif link allocation
-Date: Mon, 18 Aug 2025 14:43:57 +0200
-Message-ID: <20250818124508.056661327@linuxfoundation.org>
+Subject: [PATCH 6.15 252/515] drm/fbdev-client: Skip DRM clients if modesetting is absent
+Date: Mon, 18 Aug 2025 14:43:58 +0200
+Message-ID: <20250818124508.092267880@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,64 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit 53a5d72bdd70e262623b6009cc4754927b428bad ]
+[ Upstream commit cce91f29c088ba902dd2abfc9c3216ba9a2fb2fe ]
 
-Reuse the vif deflink for link_id = 0 in order to avoid confusion with
-vif->bss_conf, which also gets a link id of 0.
+Recent generations of Tegra have moved the display components outside of
+host1x, leading to a device that has no CRTCs attached and hence doesn't
+support any of the modesetting functionality. When this is detected, the
+driver clears the DRIVER_MODESET and DRIVER_ATOMIC flags for the device.
 
-Link: https://patch.msgid.link/20250704-mt7996-mlo-fixes-v1-1-356456c73f43@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Unfortunately, this causes the following errors during boot:
+
+    [      15.418958] ERR KERN drm drm: [drm] *ERROR* Failed to register client: -95
+    [      15.425311] WARNING KERN drm drm: [drm] Failed to set up DRM client; error -95
+
+These originate from the fbdev client checking for the presence of the
+DRIVER_MODESET flag and returning -EOPNOTSUPP. However, if a driver does
+not support DRIVER_MODESET this is entirely expected and the error isn't
+helpful.
+
+Prevent this misleading error message by setting up the DRM clients only
+if modesetting is enabled.
+
+Changes in v2:
+- use DRIVER_MODESET check to avoid registering any clients
+
+Reported-by: Jonathan Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://lore.kernel.org/r/20250613122838.2082334-1-thierry.reding@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/channel.c | 4 ++--
- drivers/net/wireless/mediatek/mt76/mt76.h    | 5 ++++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/clients/drm_client_setup.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
-index cc2d888e3f17..77b75792eb48 100644
---- a/drivers/net/wireless/mediatek/mt76/channel.c
-+++ b/drivers/net/wireless/mediatek/mt76/channel.c
-@@ -173,13 +173,13 @@ void mt76_unassign_vif_chanctx(struct ieee80211_hw *hw,
- 	if (!mlink)
- 		goto out;
+diff --git a/drivers/gpu/drm/clients/drm_client_setup.c b/drivers/gpu/drm/clients/drm_client_setup.c
+index e17265039ca8..e460ad354de2 100644
+--- a/drivers/gpu/drm/clients/drm_client_setup.c
++++ b/drivers/gpu/drm/clients/drm_client_setup.c
+@@ -2,6 +2,7 @@
  
--	if (link_conf != &vif->bss_conf)
-+	if (mlink != (struct mt76_vif_link *)vif->drv_priv)
- 		rcu_assign_pointer(mvif->link[link_id], NULL);
+ #include <drm/clients/drm_client_setup.h>
+ #include <drm/drm_device.h>
++#include <drm/drm_drv.h>
+ #include <drm/drm_fourcc.h>
+ #include <drm/drm_print.h>
  
- 	dev->drv->vif_link_remove(phy, vif, link_conf, mlink);
- 	mlink->ctx = NULL;
+@@ -31,6 +32,10 @@ MODULE_PARM_DESC(active,
+  */
+ void drm_client_setup(struct drm_device *dev, const struct drm_format_info *format)
+ {
++	if (!drm_core_check_feature(dev, DRIVER_MODESET)) {
++		drm_dbg(dev, "driver does not support mode-setting, skipping DRM clients\n");
++		return;
++	}
  
--	if (link_conf != &vif->bss_conf)
-+	if (mlink != (struct mt76_vif_link *)vif->drv_priv)
- 		kfree_rcu(mlink, rcu_head);
- 
- out:
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index d7cd467b812f..cc92eb9e5b1d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1852,6 +1852,9 @@ mt76_vif_link(struct mt76_dev *dev, struct ieee80211_vif *vif, int link_id)
- 	struct mt76_vif_link *mlink = (struct mt76_vif_link *)vif->drv_priv;
- 	struct mt76_vif_data *mvif = mlink->mvif;
- 
-+	if (!link_id)
-+		return mlink;
-+
- 	return mt76_dereference(mvif->link[link_id], dev);
- }
- 
-@@ -1862,7 +1865,7 @@ mt76_vif_conf_link(struct mt76_dev *dev, struct ieee80211_vif *vif,
- 	struct mt76_vif_link *mlink = (struct mt76_vif_link *)vif->drv_priv;
- 	struct mt76_vif_data *mvif = mlink->mvif;
- 
--	if (link_conf == &vif->bss_conf)
-+	if (link_conf == &vif->bss_conf || !link_conf->link_id)
- 		return mlink;
- 
- 	return mt76_dereference(mvif->link[link_conf->link_id], dev);
+ #ifdef CONFIG_DRM_FBDEV_EMULATION
+ 	if (!strcmp(drm_client_default, "fbdev")) {
 -- 
 2.39.5
 
