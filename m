@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A78A342CA2;
-	Mon, 18 Aug 2025 13:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECD6343D97;
+	Mon, 18 Aug 2025 13:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525427; cv=none; b=mZaDoWei7TofxkNBZuWekTPngXUfVrEg6DH58/eU4G0TkkwHIV36dQL5ObT28V1uBCJxscJzCHng5iawyBajC/88nBdQhRZgr0dxB3dqy+TP10nY49tvZTD0lklChwfKNubY4HpZDzZewlkAgcCOdN9XgC744do4NN0T6f3/bxc=
+	t=1755525430; cv=none; b=eypl/ZInmLmDL0yICCv0SwGJPkd+4PoV2apkV3a/CH6QAYsx0pgWTLeTnW9QwMUkfSxIaX/ehwkLIGcygAav0GsmHyNacryUcNjgRpsGwY4obT0Y9P/v7x0F9rJX6qwUapHKJ5A6lYeYsnbp3dS1qHsDsAJLZHd73CZ8L62MOWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525427; c=relaxed/simple;
-	bh=vt3fPhWuj3JStvcTK8Hlnl4v1vHoUQm4R684+vn3EH0=;
+	s=arc-20240116; t=1755525430; c=relaxed/simple;
+	bh=WDAZOQjTXLY0x/rQyzOgXATD60+P7kZDepZmUXs8Ujw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFRJzT8/TFjcLWL/uaNVeehz2zPzAEw21psl7RTWitCmaduw5Cwl+xlk4wzwrrzX8JAq6PB+PkVIJSHxZ2WnxSJA7ROtHZ+et5p4vsZgEkyj/WTCwWqb1lysb4/e6JMcPMSt97db9YqikhoBgNvk1dNbM2KNecNLifLH0gE4lso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TTpAScq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qyiz02foMHexmPsmz1yfTEe7XI/OMHOvwJUaZpqx6plzI948rkDFypHh+Lauabi2BpT9mTbNmKVf2Yi0Oix4BqDFQyneT4YESZ0zzYlGDQSKj5yPyfNalvO7iXbj8+v194paCLQYZfdfRXFu4uwbnP4Z18Bek6n3H8fE3iOyisY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/sCouS+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TTpAScq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26C5C4CEF1;
-	Mon, 18 Aug 2025 13:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/sCouS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C57C4CEEB;
+	Mon, 18 Aug 2025 13:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525427;
-	bh=vt3fPhWuj3JStvcTK8Hlnl4v1vHoUQm4R684+vn3EH0=;
+	s=korg; t=1755525430;
+	bh=WDAZOQjTXLY0x/rQyzOgXATD60+P7kZDepZmUXs8Ujw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TTpAScq5Nj4BFQHT71wlMdlV/3T+aXtQaRIMcxBr6xBSOts0STduFDDOj66I0W44
-	 xKRuVhcyNxD03k1IVcTFXyqwvg7yzAJvX1i38P/vwF+nPT/PLD6qmLeJhM/poujmeN
-	 VDlpgowGQoe9XCaXvEQ4KWtAvkRN7zl86zC66vwM=
+	b=D/sCouS+KNNLE5G78hx5YshKdy1wcWTa3aG2ZBhdjm4q9s7Xgt7r9pGuOU2WGyS2d
+	 vZcHjh6hlKKwAnl492dx+Ed3ADR6XlSsiZCdLWKBw3nrh1xP+AyrTXUggnHi4oCC7g
+	 davciJnn9lPBnJr7YlGhuCRgmaeCXLSGZhq0mkMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	Nam Cao <namcao@linutronix.de>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chris Mason <clm@fb.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 259/570] rv: Add #undef TRACE_INCLUDE_FILE
-Date: Mon, 18 Aug 2025 14:44:06 +0200
-Message-ID: <20250818124515.799715622@linuxfoundation.org>
+Subject: [PATCH 6.16 260/570] sched/fair: Bump sd->max_newidle_lb_cost when newidle balance fails
+Date: Mon, 18 Aug 2025 14:44:07 +0200
+Message-ID: <20250818124515.838144158@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -55,42 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Chris Mason <clm@fb.com>
 
-[ Upstream commit 2d088762631b212eb0809e112642843844ef64eb ]
+[ Upstream commit 155213a2aed42c85361bf4f5c817f5cb68951c3b ]
 
-Without "#undef TRACE_INCLUDE_FILE", there could be a build error due to
-TRACE_INCLUDE_FILE being redefined. Therefore add it.
+schbench (https://github.com/masoncl/schbench.git) is showing a
+regression from previous production kernels that bisected down to:
 
-Also fix a typo while at it.
+sched/fair: Remove sysctl_sched_migration_cost condition (c5b0a7eefc)
 
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/f805e074581e927bb176c742c981fa7675b6ebe5.1752088709.git.namcao@linutronix.de
-Reviewed-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+The schbench command line was:
+
+schbench -L -m 4 -M auto -t 256 -n 0 -r 0 -s 0
+
+This creates 4 message threads pinned to CPUs 0-3, and 256x4 worker
+threads spread across the rest of the CPUs.  Neither the worker threads
+or the message threads do any work, they just wake each other up and go
+back to sleep as soon as possible.
+
+The end result is the first 4 CPUs are pegged waking up those 1024
+workers, and the rest of the CPUs are constantly banging in and out of
+idle.  If I take a v6.9 Linus kernel and revert that one commit,
+performance goes from 3.4M RPS to 5.4M RPS.
+
+schedstat shows there are ~100x  more new idle balance operations, and
+profiling shows the worker threads are spending ~20% of their CPU time
+on new idle balance.  schedstats also shows that almost all of these new
+idle balance attemps are failing to find busy groups.
+
+The fix used here is to crank up the cost of the newidle balance whenever it
+fails.  Since we don't want sd->max_newidle_lb_cost to grow out of
+control, this also changes update_newidle_cost() to use
+sysctl_sched_migration_cost as the upper limit on max_newidle_lb_cost.
+
+Signed-off-by: Chris Mason <clm@fb.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20250626144017.1510594-2-clm@fb.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/rv/rv_trace.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/sched/fair.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/rv/rv_trace.h b/kernel/trace/rv/rv_trace.h
-index 01fa84824bcb..f1ea75683fc7 100644
---- a/kernel/trace/rv/rv_trace.h
-+++ b/kernel/trace/rv/rv_trace.h
-@@ -129,8 +129,9 @@ DECLARE_EVENT_CLASS(error_da_monitor_id,
- #endif /* CONFIG_DA_MON_EVENTS_ID */
- #endif /* _TRACE_RV_H */
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 7a14da5396fb..042ab0863ccc 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -12174,8 +12174,14 @@ static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
+ 		/*
+ 		 * Track max cost of a domain to make sure to not delay the
+ 		 * next wakeup on the CPU.
++		 *
++		 * sched_balance_newidle() bumps the cost whenever newidle
++		 * balance fails, and we don't want things to grow out of
++		 * control.  Use the sysctl_sched_migration_cost as the upper
++		 * limit, plus a litle extra to avoid off by ones.
+ 		 */
+-		sd->max_newidle_lb_cost = cost;
++		sd->max_newidle_lb_cost =
++			min(cost, sysctl_sched_migration_cost + 200);
+ 		sd->last_decay_max_lb_cost = jiffies;
+ 	} else if (time_after(jiffies, sd->last_decay_max_lb_cost + HZ)) {
+ 		/*
+@@ -12867,10 +12873,17 @@ static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
  
--/* This part ust be outside protection */
-+/* This part must be outside protection */
- #undef TRACE_INCLUDE_PATH
- #define TRACE_INCLUDE_PATH .
-+#undef TRACE_INCLUDE_FILE
- #define TRACE_INCLUDE_FILE rv_trace
- #include <trace/define_trace.h>
+ 			t1 = sched_clock_cpu(this_cpu);
+ 			domain_cost = t1 - t0;
+-			update_newidle_cost(sd, domain_cost);
+-
+ 			curr_cost += domain_cost;
+ 			t0 = t1;
++
++			/*
++			 * Failing newidle means it is not effective;
++			 * bump the cost so we end up doing less of it.
++			 */
++			if (!pulled_task)
++				domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
++
++			update_newidle_cost(sd, domain_cost);
+ 		}
+ 
+ 		/*
 -- 
 2.39.5
 
