@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD554322746;
-	Mon, 18 Aug 2025 13:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1691320392;
+	Mon, 18 Aug 2025 13:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522414; cv=none; b=H5CuYjn64mcwG5HR3hAoWFRYF22bFIj2JA/X8q2SAWxGxvv5bpLiXE7jL/mjcM2XwAmz4fPerhNWHiXfQ04nz+xvw9TC3xZqWc+3kHUuCHZjInPigCl37ZKQEM6R/AgeC8yGxmzglnW79mFB/f3aZxuEpjdFJQGFziVu6zDhUBs=
+	t=1755522418; cv=none; b=lY2tPVhvdZOWT2RgoqEWaPU7J8+XL0UXjmhYsYKncdP3/2lLTHWU3e+Yir2jpoagp4+AATH/M7CSGcWGnYHcI6T8VcIU9HgZDyctkC2rdFkALQym8rVIyqYDN+tpu0z2dCKQxckGyiDQ72odrWgXjO0N3ENleLajYRmJVu42lgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522414; c=relaxed/simple;
-	bh=u28pbMEeVseTvunkxDEnF5uHqqVQI4XJ4J3c8HHkupg=;
+	s=arc-20240116; t=1755522418; c=relaxed/simple;
+	bh=PNYb9W+w5rBGplnyyW5DiisPdNpJbAUwSTexTe7GmwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unicTnWhW0x7e9cgDues27mUKKsRGdLM4f8+5K2aB98mkwX3rWkRvruTNiHHYeNsUVbnHVFgJ+/xMTxeL86uVP2BkX9KwGwQiuzkb6eayJSriEpjP+tN2pobmuQivZkabXP1OquOAAE3XgEHDO/0AMn0SSZi9Obsz6rDOVQt9T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fthDjQtx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=um5UkvgZfYOmHuH5NbyEI1oFZKw/BlTwdYtOnB1GrtS1vUBvVqmDVPEh9vAPZLRqA0/ruHBtIsRSntdllOCKSAGxUB+6T7XxmktgpbaySefpqHps0VfAXtb6IQvJBBMJ4ywl1IbksU6WsMsJMv440VCXSqW5PQorYCOECHCUFQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCgTcN8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fthDjQtx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1D9C4CEF1;
-	Mon, 18 Aug 2025 13:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCgTcN8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5263BC4CEEB;
+	Mon, 18 Aug 2025 13:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522414;
-	bh=u28pbMEeVseTvunkxDEnF5uHqqVQI4XJ4J3c8HHkupg=;
+	s=korg; t=1755522417;
+	bh=PNYb9W+w5rBGplnyyW5DiisPdNpJbAUwSTexTe7GmwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fthDjQtxR0ZVzjd/8EplAJtVt2yrRWNQe0szrVZfLp0Nu4xvXb0tgY0huYSpq8TfQ
-	 KU8s4szE42OSLQJiqv1qrR2N1UwlXHE9CPL0Z7WPkz3jw8ol5sOPodiEKWCGMoMdXe
-	 BZHyG5rUit1ykvgxy6hK2PnYOVPqkMLTQYLUJ1AU=
+	b=VCgTcN8gim+LekTWu2V1ZxPDsuMHCALzk3dNifYab3o7WFm2fhyuy5eHvvxFsJ2Cb
+	 kpGbfFuswO1lTmf7fHZnL2e0dcgd6Sd82IQFNsuwiH++aMMbuc3tp2RagPnwBJmMsT
+	 /gO0GxfD3VlKYdFuoTygAghFmwJu1xk9aBZqoWsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 309/444] power: supply: qcom_battmgr: Add lithium-polymer entry
-Date: Mon, 18 Aug 2025 14:45:35 +0200
-Message-ID: <20250818124500.537149218@linuxfoundation.org>
+Subject: [PATCH 6.12 310/444] scsi: mpt3sas: Correctly handle ATA device errors
+Date: Mon, 18 Aug 2025 14:45:36 +0200
+Message-ID: <20250818124500.573778931@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,41 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 202ac22b8e2e015e6c196fd8113f3d2a62dd1afc ]
+[ Upstream commit 15592a11d5a5c8411ac8494ec49736b658f6fbff ]
 
-On some Dell XPS 13 (9345) variants, the battery used is lithium-polymer
-based. Currently, this is reported as unknown technology due to the entry
-missing.
+With the ATA error model, an NCQ command failure always triggers an abort
+(termination) of all NCQ commands queued on the device. In such case, the
+SAT or the host must handle the failed command according to the command
+sense data and immediately retry all other NCQ commands that were aborted
+due to the failed NCQ command.
 
-[ 4083.135325] Unknown battery technology 'LIP'
+For SAS HBAs controlled by the mpt3sas driver, NCQ command aborts are not
+handled by the HBA SAT and sent back to the host, with an ioc log
+information equal to 0x31080000 (IOC_LOGINFO_PREFIX_PL with the PL code
+PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR). The function
+_scsih_io_done() always forces a retry of commands terminated with the
+status MPI2_IOCSTATUS_SCSI_IOC_TERMINATED using the SCSI result
+DID_SOFT_ERROR, regardless of the log_info for the command.  This
+correctly forces the retry of collateral NCQ abort commands, but with the
+retry counter for the command being incremented. If a command to an ATA
+device is subject to too many retries due to other NCQ commands failing
+(e.g. read commands trying to access unreadable sectors), the collateral
+NCQ abort commands may be terminated with an error as they run out of
+retries. This violates the SAT specification and causes hard-to-debug
+command errors.
 
-Add another check for lithium-polymer in the technology parsing callback
-and return that instead of unknown.
+Solve this issue by modifying the handling of the
+MPI2_IOCSTATUS_SCSI_IOC_TERMINATED status to check if a command is for an
+ATA device and if the command loginfo indicates an NCQ collateral
+abort. If that is the case, force the command retry using the SCSI result
+DID_IMM_RETRY to avoid incrementing the command retry count.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250523-psy-qcom-battmgr-add-lipo-entry-v1-1-938c20a43a25@linaro.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250606052747.742998-3-dlemoal@kernel.org
+Tested-by: Yafang Shao <laoar.shao@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/mpt3sas/mpt3sas_scsih.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index f0a64c00ddaa..c2037b58fbcd 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -980,6 +980,8 @@ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry
- {
- 	if (!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN))
- 		return POWER_SUPPLY_TECHNOLOGY_LION;
-+	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
-+		return POWER_SUPPLY_TECHNOLOGY_LIPO;
- 
- 	pr_err("Unknown battery technology '%s'\n", chemistry);
- 	return POWER_SUPPLY_TECHNOLOGY_UNKNOWN;
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
+index 91aa9de3b84f..9719da76461c 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
+@@ -195,6 +195,14 @@ struct sense_info {
+ #define MPT3SAS_PORT_ENABLE_COMPLETE (0xFFFD)
+ #define MPT3SAS_ABRT_TASK_SET (0xFFFE)
+ #define MPT3SAS_REMOVE_UNRESPONDING_DEVICES (0xFFFF)
++
++/*
++ * SAS Log info code for a NCQ collateral abort after an NCQ error:
++ * IOC_LOGINFO_PREFIX_PL | PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR
++ * See: drivers/message/fusion/lsi/mpi_log_sas.h
++ */
++#define IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR	0x31080000
++
+ /**
+  * struct fw_event_work - firmware event struct
+  * @list: link list framework
+@@ -5814,6 +5822,17 @@ _scsih_io_done(struct MPT3SAS_ADAPTER *ioc, u16 smid, u8 msix_index, u32 reply)
+ 			scmd->result = DID_TRANSPORT_DISRUPTED << 16;
+ 			goto out;
+ 		}
++		if (log_info == IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR) {
++			/*
++			 * This is a ATA NCQ command aborted due to another NCQ
++			 * command failure. We must retry this command
++			 * immediately but without incrementing its retry
++			 * counter.
++			 */
++			WARN_ON_ONCE(xfer_cnt != 0);
++			scmd->result = DID_IMM_RETRY << 16;
++			break;
++		}
+ 		if (log_info == 0x31110630) {
+ 			if (scmd->retries > 2) {
+ 				scmd->result = DID_NO_CONNECT << 16;
 -- 
 2.39.5
 
