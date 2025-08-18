@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA2621B199;
-	Mon, 18 Aug 2025 13:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEB63218CA;
+	Mon, 18 Aug 2025 13:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522530; cv=none; b=ZlDHgP9uWbUY+36EGhu2H6lA3NVTBLGFnBe4gj4xnUCqaqS47raXYnK1kb258Zqk+7S4GYYjrRQsqrvLCPLM2Ao3rwz0TQEoRPdeTyIrg9P/05Z1ATaIiXm7OGIE+7StjTCa6NddlvmOtMOdHmbScGZ5jB1hX/GVm1zuxbxUAog=
+	t=1755522533; cv=none; b=KsTNmyMFrY/Cc2tCQszh4bjw5DTVD2otIjol9WmI2lD5bVtyQl9js7ZQbPoHej83cLfCAd4fKFVRFLRFWa0yBH39c36OF9RwdrbunAyioM5cnjfGzBMRwlEtSe9dRWuFSrQrtN+fYmB/3E+mZ5SCqBsZo0ZVbhI5dS4mKvuUHO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522530; c=relaxed/simple;
-	bh=soXJ5f2uwh7ft7fui84pQmuGzFZLybv4TyLmuQ+qLGE=;
+	s=arc-20240116; t=1755522533; c=relaxed/simple;
+	bh=KyH/XZH812HYI74nJpca9gc0ng2BO301rD5tWnb1p08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwVc2YknzIHCInSvnncgqIp5bVRmxz9PMHPG+O8OeE89TS4CAJDJauZjSDq6nfDr+k7Q+jKm4mhQtOxMZO7xaGond//Xo/ykzUObew8BSsFQy7Q5+/44LsOyKvhGQK2MS4VeO6T5PeOvNK/tVlsu8gjdpMXJ5yZB4BQXWdn79AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHnAJvl9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dG36QJcMYFv/81EIqWwwqFiRzPRLX+PxSxljAKHrfLSFiTDE1z4bj6BhMUKFgyyVcSvEFA9I/4gM6OZyuo0PTdyv9DNVIsE0VKg548ZGzekVG5Cujx86Y2ncYLscxSjluHsHFP4zlvIhLniTC3s3SGvg8Z/Oae5TcuutB+/KJvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UL7YUpXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHnAJvl9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7ECC4CEEB;
-	Mon, 18 Aug 2025 13:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UL7YUpXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAA5C4CEEB;
+	Mon, 18 Aug 2025 13:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522530;
-	bh=soXJ5f2uwh7ft7fui84pQmuGzFZLybv4TyLmuQ+qLGE=;
+	s=korg; t=1755522533;
+	bh=KyH/XZH812HYI74nJpca9gc0ng2BO301rD5tWnb1p08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lHnAJvl9Ea4Kkmg6YKsjdd7YWsGrmVBWlp/Qozbuq+cfYTtOACY/4c587xDjc8Lei
-	 zdO4X7j1b42foa/6D8h0lTfbIWdhUfZohrdi170EJXIyIcGjrYVGdHzY+tPyj9quQj
-	 3OCPaeyk/Kt88Q3nTbDYffGYLS9kB14/R+vsDN90=
+	b=UL7YUpXYwGX2yTwVvRkGZRU14A3xs2DUN9pyHCZr0TakNFTInxQQc4upcXKfFV3ll
+	 A22KwEueZpB/0LkCmPV8jAleQ/8q4haQaIzlGL0V25md/eBYSGCarPb4xYFnTC03cp
+	 xOAOdZmo6nD4De6rfCWF61ZwcRwz1NU6f+Q0owew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Shankari Anand <shankari.ak0208@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Nicolas Schier <n.schier@avm.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 326/444] soundwire: Move handle_nested_irq outside of sdw_dev_lock
-Date: Mon, 18 Aug 2025 14:45:52 +0200
-Message-ID: <20250818124501.161884549@linuxfoundation.org>
+Subject: [PATCH 6.12 344/444] kconfig: nconf: Ensure null termination where strncpy is used
+Date: Mon, 18 Aug 2025 14:46:10 +0200
+Message-ID: <20250818124501.824856728@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,69 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Shankari Anand <shankari.ak0208@gmail.com>
 
-[ Upstream commit ccb7bb13c00bcc3178d270da052635c56148bc16 ]
+[ Upstream commit f468992936894c9ce3b1659cf38c230d33b77a16 ]
 
-The sdw_dev_lock protects the SoundWire driver callbacks against
-the probed flag, which is used to skip the callbacks if the
-driver gets removed. For more information see commit bd29c00edd0a
-("soundwire: revisit driver bind/unbind and callbacks").
+strncpy() does not guarantee null-termination if the source string is
+longer than the destination buffer.
 
-However, this lock is a frequent source of mutex inversions.
-Many audio operations eventually hit the hardware resulting in a
-SoundWire callback, this means that typically the driver has the
-locking order ALSA/ASoC locks -> sdw_dev_lock. Conversely, the IRQ
-comes in directly from the SoundWire hardware, but then will often
-want to access ALSA/ASoC, such as updating something in DAPM or
-an ALSA control. This gives the other lock order sdw_dev_lock ->
-ALSA/ASoC locks.
+Ensure the buffer is explicitly null-terminated to prevent potential
+string overflows or undefined behavior.
 
-When the IRQ handling was initially added to SoundWire this was
-through a callback mechanism. As such it required being covered by
-the lock because the callbacks are part of the sdw_driver structure
-and are thus present regardless of if the driver is currently
-probed.
-
-Since then a newer mechanism using the IRQ framework has been
-added, which is currently covered by the same lock but this isn't
-actually required. Handlers for the IRQ framework are registered in
-probe and should by released during remove, thus the IRQ framework
-will have already unbound the IRQ before the slave driver is
-removed. Avoid the aforementioned mutex inversion by moving the
-handle_nested_irq call outside of the sdw_dev_lock.
-
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20250609143041.495049-3-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Shankari Anand <shankari.ak0208@gmail.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Nicolas Schier <n.schier@avm.de>
+Acked-by: Nicolas Schier <n.schier@avm.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/bus.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ scripts/kconfig/nconf.c     | 2 ++
+ scripts/kconfig/nconf.gui.c | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
-index 6ca06cce41d3..6c7989e2079e 100644
---- a/drivers/soundwire/bus.c
-+++ b/drivers/soundwire/bus.c
-@@ -1732,15 +1732,15 @@ static int sdw_handle_slave_alerts(struct sdw_slave *slave)
+diff --git a/scripts/kconfig/nconf.c b/scripts/kconfig/nconf.c
+index 063b4f7ccbdb..5f484422278e 100644
+--- a/scripts/kconfig/nconf.c
++++ b/scripts/kconfig/nconf.c
+@@ -593,6 +593,8 @@ static void item_add_str(const char *fmt, ...)
+ 		tmp_str,
+ 		sizeof(k_menu_items[index].str));
  
- 		/* Update the Slave driver */
- 		if (slave_notify) {
-+			if (slave->prop.use_domain_irq && slave->irq)
-+				handle_nested_irq(slave->irq);
++	k_menu_items[index].str[sizeof(k_menu_items[index].str) - 1] = '\0';
 +
- 			mutex_lock(&slave->sdw_dev_lock);
+ 	free_item(curses_menu_items[index]);
+ 	curses_menu_items[index] = new_item(
+ 			k_menu_items[index].str,
+diff --git a/scripts/kconfig/nconf.gui.c b/scripts/kconfig/nconf.gui.c
+index 72b605efe549..1526c52bc34c 100644
+--- a/scripts/kconfig/nconf.gui.c
++++ b/scripts/kconfig/nconf.gui.c
+@@ -350,6 +350,7 @@ int dialog_inputbox(WINDOW *main_window,
+ 	x = (columns-win_cols)/2;
  
- 			if (slave->probed) {
- 				struct device *dev = &slave->dev;
- 				struct sdw_driver *drv = drv_to_sdw_driver(dev->driver);
+ 	strncpy(result, init, *result_len);
++	result[*result_len - 1] = '\0';
  
--				if (slave->prop.use_domain_irq && slave->irq)
--					handle_nested_irq(slave->irq);
--
- 				if (drv->ops && drv->ops->interrupt_callback) {
- 					slave_intr.sdca_cascade = sdca_cascade;
- 					slave_intr.control_port = clear;
+ 	/* create the windows */
+ 	win = newwin(win_lines, win_cols, y, x);
 -- 
 2.39.5
 
