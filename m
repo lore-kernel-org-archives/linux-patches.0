@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4639E34AB12;
-	Mon, 18 Aug 2025 14:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBFF3375D7;
+	Mon, 18 Aug 2025 14:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525706; cv=none; b=RTMBGtAmImLWqMLXfvB4WAieoAdk8Rjgx9Nfaulde9+kHtLjZtVQ37wZUxNssr1tne+E2QsTsjfQxGQLpEDWrvkk9rzHR3+P6JgJQxcUpcZ/sZkkysQBREtD8ZFccT5gXtMPQ8jPEZT0G9lsWEkpOUIvs8XY4s+Q4BhORGgmIhI=
+	t=1755525709; cv=none; b=flJEg1e58RSuUq1y2ndnr1GUxcPFLhVg7fiyVqyFApP1R0MF3+AOz5/Idqwbkw4o7lzKglUDJ4cubDdohQ6c3nJb3eCXNn1p8SCdA0YgRGDQLgn6pJ5ksw5OviyCFAr0Ipu3Pkp9bYFfifWPy7Di/g/aFsIWEvvsBaXC1mZnkFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525706; c=relaxed/simple;
-	bh=QHPX4hp/jzSGQh55Zk7icKeUeFvuLrerxfDQpOY3aH8=;
+	s=arc-20240116; t=1755525709; c=relaxed/simple;
+	bh=TDEfV52WJ9dhGoOfUiAYkQFSvYTe+T7wEbOOkVumnZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A+LPCT6YmMUuSrifill6pJD8ki2yOU1v/yVLtQIoXxLOSsl6HHDK3umRcgtoRVuQXcE+cnvyB2UwqtVjIKpoZs1aw5GwALfqydvsOoKTGjJfHZBktcYBW1y2TKdRHL8U/XMIamoPKLvKXidZu9L2aeQpRbC34C3vkS3lpHzDZg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1uf+fos; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QqD6d//4Q0pj309MWYKfPo1dbxvk9jdJaOojk+PREAN6vkJyKwLPdCnfzmtsZIzHbbFTNh8v0pUDZNjjJ85CGeerttoaQOuGtUgMDtA0hYsJr/PiM1vd/VV235iUqX41mfogdyB69KxmzjVrDgi8K8kcajsyMh55g0GcsYiy8D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyVl+IL8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1uf+fos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAC9C4CEEB;
-	Mon, 18 Aug 2025 14:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyVl+IL8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BACC4CEEB;
+	Mon, 18 Aug 2025 14:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525706;
-	bh=QHPX4hp/jzSGQh55Zk7icKeUeFvuLrerxfDQpOY3aH8=;
+	s=korg; t=1755525709;
+	bh=TDEfV52WJ9dhGoOfUiAYkQFSvYTe+T7wEbOOkVumnZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1uf+fosHorhjxfLLSFwjzpfiQ7aOEREyYSwetOgI2upKrYpyZt9Nwg5V6xQZ51eq
-	 jAX0YyE0fNiKM3m+Yov2vCQ/8jY4O3V8KLVKYDKrygePGlAvwhjgaerQ+oeYzkv52L
-	 orB1cQ1bmEBabsLWwEG7Bc3A+/YkTviB+u/iCjCE=
+	b=HyVl+IL8xkba7hFRc5wq/49myfsW4rM96hiuDizmLcu1A6Go+rIK28rMZUBcDsBvF
+	 MBF4FMxOKIZGGzVPZ7OAn2gCdX9+y06Xq4IWbb8+/nEJg+yARl7Rv8p4XYpklYcalm
+	 WDwWiSLsN8RDSc9KLmPEZkqjJDjXTPC5KnsSuGIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Wen Chen <Wen.Chen3@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Fangzhi Zuo <jerry.zuo@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 310/570] drm/amd/display: Fix failed to blank crtc!
-Date: Mon, 18 Aug 2025 14:44:57 +0200
-Message-ID: <20250818124517.812389651@linuxfoundation.org>
+Subject: [PATCH 6.16 311/570] drm/amd/display: Initialize mode_select to 0
+Date: Mon, 18 Aug 2025 14:44:58 +0200
+Message-ID: <20250818124517.849719928@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -48,50 +48,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wen Chen <Wen.Chen3@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 01f60348d8fb6b3fbcdfc7bdde5d669f95b009a4 ]
+[ Upstream commit 592ddac93f8c02e13f19175745465f8c4d0f56cd ]
 
-[why]
-DCN35 is having “DC: failed to blank crtc!” when running HPO
-test cases. It's caused by not having sufficient udelay time.
+[WHAT]
+mode_select was supposed to be initialized in mpc_read_gamut_remap but
+is not set in default case. This can cause indeterminate
+behaviors.
 
-[how]
-Replace the old wait_for_blank_complete function with fsleep function to
-sleep just until the next frame should come up. This way it doesn't poll
-in case the pixel clock or other clock was bugged or until vactive and
-the vblank are hit again.
+This is reported as an UNINIT error by Coverity.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Wen Chen <Wen.Chen3@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 2 +-
+ drivers/gpu/drm/amd/display/dc/mpc/dcn401/dcn401_mpc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-index a93282d6e5a4..cdb8685ae7d7 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -955,7 +955,7 @@ enum dc_status dcn20_enable_stream_timing(
- 		return DC_ERROR_UNEXPECTED;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/mpc/dcn401/dcn401_mpc.c b/drivers/gpu/drm/amd/display/dc/mpc/dcn401/dcn401_mpc.c
+index 98cf0cbd59ba..591af5a3d3e3 100644
+--- a/drivers/gpu/drm/amd/display/dc/mpc/dcn401/dcn401_mpc.c
++++ b/drivers/gpu/drm/amd/display/dc/mpc/dcn401/dcn401_mpc.c
+@@ -561,7 +561,7 @@ void mpc401_get_gamut_remap(struct mpc *mpc,
+ 	struct mpc_grph_gamut_adjustment *adjust)
+ {
+ 	uint16_t arr_reg_val[12] = {0};
+-	uint32_t mode_select;
++	uint32_t mode_select = MPCC_GAMUT_REMAP_MODE_SELECT_0;
  
--	hws->funcs.wait_for_blank_complete(pipe_ctx->stream_res.opp);
-+	fsleep(stream->timing.v_total * (stream->timing.h_total * 10000u / stream->timing.pix_clk_100hz));
+ 	read_gamut_remap(mpc, mpcc_id, arr_reg_val, adjust->mpcc_gamut_remap_block_id, &mode_select);
  
- 	params.vertical_total_min = stream->adjust.v_total_min;
- 	params.vertical_total_max = stream->adjust.v_total_max;
 -- 
 2.39.5
 
