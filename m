@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7331A5B92;
-	Mon, 18 Aug 2025 13:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2C322AE7A;
+	Mon, 18 Aug 2025 13:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525353; cv=none; b=fmx7Egaj9Bsfu+y1PAwPnpFO0MLzyntptdZQcJtJB+QzQ5ODmht+bXEGWHp5UOzsf9zrEjaohFlSKXQdfDEXG7o65F/kDo0y5uFK2eZ0GDq7NnrgCCFVHnztMr+mJtndG+K6s67yPb1FIdJ0AnzVNSIzLeByH8rsNeaYB1CCXuc=
+	t=1755525356; cv=none; b=UmGIXfllUy2meB2/2Z4kxxw3F6R/9dqY/gDdg0rg4k4ugKUN8XkgjDQcqAWcPaVJlCgbfd/256EOXZZCCjGAJdqXIzUhkoQ4Kh6hGhPRwO3alDW+Fqwc9KNuaVcXd56cJHDdNkSBpWzsG4/wF+tlQIi3zezTkGVSfQQdolY4Yz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525353; c=relaxed/simple;
-	bh=alqmlaJ14aM9oJW12CB0IuAnpH01B595bmPyiA91LK4=;
+	s=arc-20240116; t=1755525356; c=relaxed/simple;
+	bh=7mV94fo5usNWPJqpAIDWlZgVbfqK5Lf96aQ5M51xiOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6sGcOICPp+446dpx/O0qoEa8tMStnubygRpwZEPyie6YGnbTvpb73qm9s8Ak1YuXdyHf7okwh5Wg6U7WFGmCrHsS0wR5vSkW7Y8gC7XtAZAg/mKCpEAQdAq8pSTaPJGZu+WBspUdWNNd13hRpQgsMkZWun+LA8hiE1NA4LX4d4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGgRlUet; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hx2ncqi2la8mSlkElhvypEZEAWiKrK/ys93o+4ms7wkPY+Yf0+c1tUsCZNnNnySmfVl9MKkv2slSeeQ8xMFUbpD7NY2ZgYl533JZfPIpkaoIqyOMx9DiJn+7GzxfhmMYNrWFZ07xZ5SlKGL/jTlNv9IXpTIZqx3ghMcaCHDkg30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5wHWeUY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGgRlUet"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829F9C4CEEB;
-	Mon, 18 Aug 2025 13:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5wHWeUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBB9C4CEEB;
+	Mon, 18 Aug 2025 13:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525352;
-	bh=alqmlaJ14aM9oJW12CB0IuAnpH01B595bmPyiA91LK4=;
+	s=korg; t=1755525356;
+	bh=7mV94fo5usNWPJqpAIDWlZgVbfqK5Lf96aQ5M51xiOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGgRlUetAKh61BR9A0MFa7Sq4m/9IZXNf3Euxssf3RvlOKrkLb+QWsy+R84eLLtJe
-	 Jsl47E06BtGexyrHXA5L2Uoa3U5EM5J2RH8EALSxJct+e7/NqQjLM4JCEHOEslV86b
-	 HAQM8JgubLe/dFjGJc13dHbKrF55+YfVMLywOoDE=
+	b=j5wHWeUYWEbkFzA7ozGLkF84Hqk4xFvkkEIETWtEau4PoMvFJguUJpnsvI5QRqHyU
+	 b2+xBORmLN8SHz8vgE9RyLv0IEbyuhm7xyi2YBGBew1KLilyyEtrtqpG5bKRuOKSNV
+	 0KqUs0PX+WPfDtQoeCGhG3EI3gyR6TUF/MwUJiK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umio Yasuno <coelacanth_dream@protonmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 235/570] drm/amd/pm: fix null pointer access
-Date: Mon, 18 Aug 2025 14:43:42 +0200
-Message-ID: <20250818124514.877655835@linuxfoundation.org>
+Subject: [PATCH 6.16 204/570] ASoC: qcom: use drvdata instead of component to keep id
+Date: Mon, 18 Aug 2025 14:43:11 +0200
+Message-ID: <20250818124513.668322557@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,46 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umio Yasuno <coelacanth_dream@protonmail.com>
+From: Srinivas Kandagatla <srini@kernel.org>
 
-[ Upstream commit d524d40e3a6152a3ea1125af729f8cd8ca65efde ]
+[ Upstream commit 8167f4f42572818fa8153be2b03e4c2120846603 ]
 
-Writing a string without delimiters (' ', '\n', '\0') to the under
-gpu_od/fan_ctrl sysfs or pp_power_profile_mode for the CUSTOM profile
-will result in a null pointer dereference.
+Qcom lpass is using component->id to keep DAI ID (A).
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4401
-Signed-off-by: Umio Yasuno <coelacanth_dream@protonmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(S)	static int lpass_platform_pcmops_open(
+				sruct snd_soc_component *component,
+				struct snd_pcm_substream *substream)
+	{			                          ^^^^^^^^^(B0)
+		...
+(B1)		struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
+(B2)		struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
+		...
+(B3)		unsigned int dai_id = cpu_dai->driver->id;
+
+(A)		component->id = dai_id;
+		...
+	}
+
+This driver can get dai_id from substream (B0 - B3).
+In this driver, below functions get dai_id from component->id (A).
+
+(X)	lpass_platform_pcmops_suspend()
+(Y)	lpass_platform_pcmops_resume()
+(Z)	lpass_platform_copy()
+
+Here, (Z) can get it from substream (B0 - B3), don't need to use
+component->id (A). On suspend/resume (X)(Y), dai_id can only be obtained
+from component->id (A), because there is no substream (B0) in function
+parameter.
+
+But, component->id (A) itself should not be used for such purpose.
+It is intilialized at snd_soc_component_initialize(), and parsed its ID
+(= component->id) from device name (a).
+
+	int snd_soc_component_initialize(...)
+	{
+		...
+		if (!component->name) {
+(a)			component->name = fmt_single_name(dev, &component->id);
+			...                                     ^^^^^^^^^^^^^
+		}
+		...
+	}
+
+Unfortunately, current code is broken to start with.
+
+There are many regmaps that the driver cares about, however its only
+managing one (either dp or i2s) in component suspend/resume path.
+
+I2S regmap is mandatory however other regmaps are setup based on flags
+like "hdmi_port_enable" and "codec_dma_enable".
+
+Correct thing for suspend/resume path to handle is by checking these
+flags, instead of using component->id.
+
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87a56ouuob.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/qcom/lpass-platform.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-index edd9895b46c0..39ee81085088 100644
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -1398,6 +1398,8 @@ static ssize_t amdgpu_set_pp_power_profile_mode(struct device *dev,
- 			if (ret)
- 				return -EINVAL;
- 			parameter_size++;
-+			if (!tmp_str)
-+				break;
- 			while (isspace(*tmp_str))
- 				tmp_str++;
- 		}
-@@ -3645,6 +3647,9 @@ static int parse_input_od_command_lines(const char *buf,
- 			return -EINVAL;
- 		parameter_size++;
+diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+index 9946f12254b3..b456e096f138 100644
+--- a/sound/soc/qcom/lpass-platform.c
++++ b/sound/soc/qcom/lpass-platform.c
+@@ -202,7 +202,6 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
+ 	struct regmap *map;
+ 	unsigned int dai_id = cpu_dai->driver->id;
  
-+		if (!tmp_str)
-+			break;
+-	component->id = dai_id;
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+@@ -1190,13 +1189,14 @@ static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
+ {
+ 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+ 	struct regmap *map;
+-	unsigned int dai_id = component->id;
+ 
+-	if (dai_id == LPASS_DP_RX)
++	if (drvdata->hdmi_port_enable) {
+ 		map = drvdata->hdmiif_map;
+-	else
+-		map = drvdata->lpaif_map;
++		regcache_cache_only(map, true);
++		regcache_mark_dirty(map);
++	}
+ 
++	map = drvdata->lpaif_map;
+ 	regcache_cache_only(map, true);
+ 	regcache_mark_dirty(map);
+ 
+@@ -1207,14 +1207,19 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
+ {
+ 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+ 	struct regmap *map;
+-	unsigned int dai_id = component->id;
++	int ret;
+ 
+-	if (dai_id == LPASS_DP_RX)
++	if (drvdata->hdmi_port_enable) {
+ 		map = drvdata->hdmiif_map;
+-	else
+-		map = drvdata->lpaif_map;
++		regcache_cache_only(map, false);
++		ret = regcache_sync(map);
++		if (ret)
++			return ret;
++	}
+ 
++	map = drvdata->lpaif_map;
+ 	regcache_cache_only(map, false);
 +
- 		while (isspace(*tmp_str))
- 			tmp_str++;
- 	}
+ 	return regcache_sync(map);
+ }
+ 
+@@ -1224,7 +1229,9 @@ static int lpass_platform_copy(struct snd_soc_component *component,
+ 			       unsigned long bytes)
+ {
+ 	struct snd_pcm_runtime *rt = substream->runtime;
+-	unsigned int dai_id = component->id;
++	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
++	unsigned int dai_id = cpu_dai->driver->id;
+ 	int ret = 0;
+ 
+ 	void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
 -- 
 2.39.5
 
