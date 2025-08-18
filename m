@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9814B346A09;
-	Mon, 18 Aug 2025 13:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD30346A09;
+	Mon, 18 Aug 2025 13:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525472; cv=none; b=iptMSongfYVgIOjUmbUushKti7iJIiL7HGIJ3S5o3dm3u9BA97vFkynjQO6k4eks4FkEnP7BmXOvsLTD6v+Sv5fW1W7miehJAFrdDLCpKennR7XFZNYbjmI4z2btVEILiRG2Qb+OrEM5yX0FfZYbaD/OILUJJ2ZooAqIAmYlyXM=
+	t=1755525475; cv=none; b=GlxeOV13yN5P3WvF6neHPKtPT+4Kse2rWcwktb/705Rb4ZMeirMYZP4Nx8Elr2Cumf8Q5kqTS86+hNyRNeDjtKRJlylSBF/TAEkcioqtHnV+b7hH+BUVMXLriUFLs+BaYKH0tciSAho7u/xbKtcd6JeHhhydQTdnB575YADuVc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525472; c=relaxed/simple;
-	bh=xksyfWOY8fJ2wd93Q/0+6QChfYBkjSWmTI3q8/hA4BY=;
+	s=arc-20240116; t=1755525475; c=relaxed/simple;
+	bh=3inpm9HEl7Ag3K04oEvqQBtFS9zzwcsVYY6PUSyEsjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBUbDcV/kniT25fwdKAKCi3wNVUjVGqJsUW3Cfh3RspFnbV2PNMIn1dIo26UA1MHv1mXKjmkEh0ELivealwBeCpv4Zp6fSq1+037S3gxLHkL/8+sbXW3ykOIgodXKdiyjOjofexgA5U8FvbMoAOer/4N3tZI3HuWJYjCxeAZi4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0zv2on4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=guRyBBTTEkcrzYHl29gAXzh/ZjOFeSDLb38hLWR9mluRH2By3p3lF2ZV5HAwcZJbEWfWeQ10lTpbzvnQ2fY1ZNtax3ZviwABTqqT4pZP8mGtqMCjyIBtL0/7vWnGVWFKmJ/n2JD3HRaFd2KO+IHcQyGLOgDlUFbzFD2TBjmLxSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ib2dMJ6x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0zv2on4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C0AC4CEEB;
-	Mon, 18 Aug 2025 13:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ib2dMJ6x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB923C4CEEB;
+	Mon, 18 Aug 2025 13:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525472;
-	bh=xksyfWOY8fJ2wd93Q/0+6QChfYBkjSWmTI3q8/hA4BY=;
+	s=korg; t=1755525475;
+	bh=3inpm9HEl7Ag3K04oEvqQBtFS9zzwcsVYY6PUSyEsjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X0zv2on4KHdCDCE/qVU0JHxmwk51c3LUVt6Ir5x6fiAtXBOT7a261tc3GgU67eK8K
-	 B3MQyD45lDFLbQ5shdSUSmUXbUTog6jVZtCCwb3ZPzUhwpuXw23fm0aYYjpbbTlmJV
-	 m1nJxHmADPK/EtRldcsR/FlMS13E1Cx5CW9qroL8=
+	b=Ib2dMJ6xcjuPWejK3776k615f3O3WNw86faHx3TF3sr4Lq/FLzt5NQ0YKH8sRFGPZ
+	 lKTPEGfHfClInhwLCY2x8RZNwsnAdL0y49K9Xmgy/0SVEStJSxeLtzTOO57v3i14F1
+	 czMICEe3ZXw0VHKEMH7GtvKKE8nVkt17J28f2gZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 242/570] wifi: cfg80211: Fix interface type validation
-Date: Mon, 18 Aug 2025 14:43:49 +0200
-Message-ID: <20250818124515.145057362@linuxfoundation.org>
+Subject: [PATCH 6.16 243/570] wifi: mac80211: dont unreserve never reserved chanctx
+Date: Mon, 18 Aug 2025 14:43:50 +0200
+Message-ID: <20250818124515.182474620@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,34 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 14450be2332a49445106403492a367412b8c23f4 ]
+[ Upstream commit a6d521bafcb290294128a51b13dbf4baae5748fc ]
 
-Fix a condition that verified valid values of interface types.
+If a link has no chanctx, indicating it is an inactive link
+that we tracked CSA for, then attempting to unreserve the
+reserved chanctx will throw a warning and fail, since there
+never was a reserved chanctx. Skip the unreserve.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250709233537.7ad199ca5939.I0ac1ff74798bf59a87a57f2e18f2153c308b119b@changeid
+Link: https://patch.msgid.link/20250709233537.022192f4b1ae.Ib58156ac13e674a9f4d714735be0764a244c0aae@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/mlme.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 10248d527616..1faeb587988f 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -633,7 +633,7 @@ ieee80211_get_sband_iftype_data(const struct ieee80211_supported_band *sband,
- 	const struct ieee80211_sband_iftype_data *data;
- 	int i;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 42bb996157e9..60f943f133ac 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -2535,7 +2535,8 @@ ieee80211_sta_abort_chanswitch(struct ieee80211_link_data *link)
+ 	if (!local->ops->abort_channel_switch)
+ 		return;
  
--	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
-+	if (WARN_ON(iftype >= NUM_NL80211_IFTYPES))
- 		return NULL;
+-	ieee80211_link_unreserve_chanctx(link);
++	if (rcu_access_pointer(link->conf->chanctx_conf))
++		ieee80211_link_unreserve_chanctx(link);
  
- 	if (iftype == NL80211_IFTYPE_AP_VLAN)
+ 	ieee80211_vif_unblock_queues_csa(sdata);
+ 
 -- 
 2.39.5
 
