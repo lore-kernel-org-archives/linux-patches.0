@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EBF27B355;
-	Mon, 18 Aug 2025 12:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51E53218C0;
+	Mon, 18 Aug 2025 12:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521748; cv=none; b=iHkZmvSQbXx7+oOSGMZvYsrb/Qg5yjhf3dM15HT5cmrAmfB7crRYGZg3+Enu3FlWj95Hz51365upKjFHHpnantAsUp3VP6vZwH2vxHRAbh7WRxKKiEa91GnLSjsvmUcqf4Xh4n8GpRU+t4lDjPn5yfK+dy4AG8DSocy1iTAJINs=
+	t=1755521751; cv=none; b=c9OdpVdBdiFe7b8VwiGhFGHpLEQTEehiUzGO21bOhdpZlOVKMsmdU+/OP12gPIRSV+F4uQiz8IEAaA7fwdGq1QrXXcaa6fz5l9gdc7HWSerw79s9wcdL8v5UVfi92bbxqble1QxiRy7ruw/HvIdpfPc/TYL7ZrEkuGh9vLNouiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521748; c=relaxed/simple;
-	bh=1XSmO+/e3Z7Iw+aBDKI30Q3uagmr9SytoQBPcWJjz10=;
+	s=arc-20240116; t=1755521751; c=relaxed/simple;
+	bh=nbuywhruEpOj2CREJPfPZsCXNMRAiALg3X1RfAh5C38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r96LkzIzauE++Slp5O++IISR0BDI13KM5ZlJZfa3MkdxFbnbpns6X/4r2dgoeLJoNrJf66IoFHf6T9yrgYK7j/XRv4TN7XjN4XKWrcBVQdrc84oH/4ugf2+i5U88GE72EnErXvmfQ6NOBcmDTEKvVXdwYLFion5wZou1tIn6Rqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uk2jmUQO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jF8ak+I7J4xNYudQ1RspX7eIDgaEjJAwqIGxzLLmj6vA0vl212SIQ6QA2f+bnnXmMMFQE9wbBmP77sngDzLKVPJnTxcU2e5SA9Zws7TI+yVSi2Y3+ByzErI9E3SA+yCptKIR/hUmX6lN1qPrveEol3R4S5PJf80Irp6MGkwOBIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9bMiy97; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uk2jmUQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E77CC4CEEB;
-	Mon, 18 Aug 2025 12:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9bMiy97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346C3C4CEEB;
+	Mon, 18 Aug 2025 12:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521747;
-	bh=1XSmO+/e3Z7Iw+aBDKI30Q3uagmr9SytoQBPcWJjz10=;
+	s=korg; t=1755521751;
+	bh=nbuywhruEpOj2CREJPfPZsCXNMRAiALg3X1RfAh5C38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uk2jmUQOZSdiAWNtvPrVL0cC4Yj7mGkUu8ebzOeHUfjzMJqd19lcBQKKLf5KgVGuF
-	 roORo6HGWjmTNM89eYq3NBjSNUj2WNYyiyI85wKlcXlFsk5zV7SF9D4LaV+qBVirh7
-	 VxBIX4R8B3y9/NaqLbood2gYzZy04NDXc27qUwcE=
+	b=Y9bMiy977Qov5JL4rnBmxteojTs1CHxYQJoU8LBxE8QvKRbft14CyjpVaE8ixDYe7
+	 wLgY7wYvHyssNaq1M/pwuexSlFlUohZcYXRzHiRGXU9MX+09NnGiJwgM04tj+ZarQL
+	 no7NEOxsrAJX2L98S566ms9vWncKjDJqOXySYaD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/444] gpio: wcd934x: check the return value of regmap_update_bits()
-Date: Mon, 18 Aug 2025 14:42:15 +0200
-Message-ID: <20250818124453.024796176@linuxfoundation.org>
+Subject: [PATCH 6.12 079/444] loop: Avoid updating block size under exclusive owner
+Date: Mon, 18 Aug 2025 14:41:45 +0200
+Message-ID: <20250818124451.916323870@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -50,40 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit ff0f0d7c6587e38c308be9905e36f86e98fb9c1f ]
+[ Upstream commit 7e49538288e523427beedd26993d446afef1a6fb ]
 
-regmap_update_bits() can fail so check its return value in
-wcd_gpio_direction_output() for consistency with the rest of the code
-and propagate any errors.
+Syzbot came up with a reproducer where a loop device block size is
+changed underneath a mounted filesystem. This causes a mismatch between
+the block device block size and the block size stored in the superblock
+causing confusion in various places such as fs/buffer.c. The particular
+issue triggered by syzbot was a warning in __getblk_slow() due to
+requested buffer size not matching block device block size.
 
-Link: https://lore.kernel.org/r/20250709-gpiochip-set-rv-gpio-remaining-v1-2-b8950f69618d@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fix the problem by getting exclusive hold of the loop device to change
+its block size. This fails if somebody (such as filesystem) has already
+an exclusive ownership of the block device and thus prevents modifying
+the loop device under some exclusive owner which doesn't expect it.
+
+Reported-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+Tested-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/20250711163202.19623-2-jack@suse.cz
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-wcd934x.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/block/loop.c | 38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpio/gpio-wcd934x.c b/drivers/gpio/gpio-wcd934x.c
-index 2bba27b13947..cfa7b0a50c8e 100644
---- a/drivers/gpio/gpio-wcd934x.c
-+++ b/drivers/gpio/gpio-wcd934x.c
-@@ -46,9 +46,12 @@ static int wcd_gpio_direction_output(struct gpio_chip *chip, unsigned int pin,
- 				     int val)
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 2f42d1644618..db9b5164ccca 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1404,16 +1404,33 @@ static int loop_set_dio(struct loop_device *lo, unsigned long arg)
+ 	return error;
+ }
+ 
+-static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
++static int loop_set_block_size(struct loop_device *lo, blk_mode_t mode,
++			       struct block_device *bdev, unsigned long arg)
  {
- 	struct wcd_gpio_data *data = gpiochip_get_data(chip);
-+	int ret;
+ 	struct queue_limits lim;
+ 	int err = 0;
  
--	regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
--			   WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
-+	ret = regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
-+				 WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
-+	if (ret)
-+		return ret;
+-	if (lo->lo_state != Lo_bound)
+-		return -ENXIO;
++	/*
++	 * If we don't hold exclusive handle for the device, upgrade to it
++	 * here to avoid changing device under exclusive owner.
++	 */
++	if (!(mode & BLK_OPEN_EXCL)) {
++		err = bd_prepare_to_claim(bdev, loop_set_block_size, NULL);
++		if (err)
++			return err;
++	}
++
++	err = mutex_lock_killable(&lo->lo_mutex);
++	if (err)
++		goto abort_claim;
++
++	if (lo->lo_state != Lo_bound) {
++		err = -ENXIO;
++		goto unlock;
++	}
  
- 	return regmap_update_bits(data->map, WCD_REG_VAL_CTL_OFFSET,
- 				  WCD_PIN_MASK(pin),
+ 	if (lo->lo_queue->limits.logical_block_size == arg)
+-		return 0;
++		goto unlock;
+ 
+ 	sync_blockdev(lo->lo_device);
+ 	invalidate_bdev(lo->lo_device);
+@@ -1425,6 +1442,11 @@ static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
+ 	loop_update_dio(lo);
+ 	blk_mq_unfreeze_queue(lo->lo_queue);
+ 
++unlock:
++	mutex_unlock(&lo->lo_mutex);
++abort_claim:
++	if (!(mode & BLK_OPEN_EXCL))
++		bd_abort_claiming(bdev, loop_set_block_size);
+ 	return err;
+ }
+ 
+@@ -1443,9 +1465,6 @@ static int lo_simple_ioctl(struct loop_device *lo, unsigned int cmd,
+ 	case LOOP_SET_DIRECT_IO:
+ 		err = loop_set_dio(lo, arg);
+ 		break;
+-	case LOOP_SET_BLOCK_SIZE:
+-		err = loop_set_block_size(lo, arg);
+-		break;
+ 	default:
+ 		err = -EINVAL;
+ 	}
+@@ -1500,9 +1519,12 @@ static int lo_ioctl(struct block_device *bdev, blk_mode_t mode,
+ 		break;
+ 	case LOOP_GET_STATUS64:
+ 		return loop_get_status64(lo, argp);
++	case LOOP_SET_BLOCK_SIZE:
++		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
++			return -EPERM;
++		return loop_set_block_size(lo, mode, bdev, arg);
+ 	case LOOP_SET_CAPACITY:
+ 	case LOOP_SET_DIRECT_IO:
+-	case LOOP_SET_BLOCK_SIZE:
+ 		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
+ 			return -EPERM;
+ 		fallthrough;
 -- 
 2.39.5
 
