@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0474310627;
-	Mon, 18 Aug 2025 13:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085981DED52;
+	Mon, 18 Aug 2025 13:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522798; cv=none; b=IOaueglz8tiDUQ4G/R39PuS3+nAlW6HPWG8joUu4CJVtOH9xEj19pw9tzgutNYyb4X3/1dPH5NjKQ4+qQC6pmg3PE20iBv8y1oQ6ZUwAzfVY/PmZ1o0tSD3Mc1Tu9ALeNQDEJ02Wz0rDiMtoLNe4ayN1VAJzjqgZMD1tUOeirfM=
+	t=1755522802; cv=none; b=JqjK/g+ztQG5SvPRUbLkpJqWsX/2egdmPpBhGWt/rHQ0zf5ktQDK/1GYxnZfi1EmPybOh/h64CsTTqKkuKClKQo3HStLtonAaDFsi11j63CWdZOI8zipJZ/Q0NXDuBzhGy+ak9OmY+8OFJVkcCYBlD4F+vZh1l8qXXI6VQ8RWdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522798; c=relaxed/simple;
-	bh=wphpMCl0toptSqKkD0lSEPVQlV5A+AYXwy1xLH7lEpw=;
+	s=arc-20240116; t=1755522802; c=relaxed/simple;
+	bh=wPa+cY1cZkkNjE99VaEKekqHDFbS9nWEVraVJ9PFL9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRbW8mJkGc/GzAgRlgz9rpzkxJXaiSxECBjthB66FN15UuQzb9KJQeaYvpEoSlnQ5ya81gEa2Gu6UORRcxs4JV1FDs3+GfLjc8dWtnpxg2byHrh6Z1Qo/yeKKvLFAw+kNA/wvZiPd+C4PZweliZJGVFO/J7dC2J1ofOx1N8HtR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO4ggDN/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iws8BWf6B4geG/d486RqL9LDc7tmeELArtPoscEs+w8jQTIUxgyqCJ157GjkaH0pmdB7sQfcTDhL1I5NOWaChJO69+NOMUTfqcwEtKixCJ0KWKo3/0e1aJK2NwwvQARe+VP3mLGYYxvnXcmmaxR43Vh5mcGZ5q+asGMQO9KUD2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsiRo+iR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO4ggDN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C2CC4CEEB;
-	Mon, 18 Aug 2025 13:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsiRo+iR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADC9C4CEEB;
+	Mon, 18 Aug 2025 13:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522798;
-	bh=wphpMCl0toptSqKkD0lSEPVQlV5A+AYXwy1xLH7lEpw=;
+	s=korg; t=1755522801;
+	bh=wPa+cY1cZkkNjE99VaEKekqHDFbS9nWEVraVJ9PFL9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nO4ggDN/0qNt5IV+e/ZISye72z1kCSvBrEjFyTYEMPydpEfBnzTG4GjzHrnXRIFQh
-	 rTj0LyUzaCRJOnBNX6z0OY5x5K41g5V9Q4jrWM8sO0vl+ejP3wmka8m0IC/XW9hiBO
-	 ZjSTP33q94yyGA+foY+uCumn2b2TgfRHvB1bu72c=
+	b=EsiRo+iRt8NCpaoSfdqdg8mrZXu3RI2bp+jbR6C00lNiFb0UU34VqGMCcHPdObKwB
+	 uV/yDaw3mDlxiqACdB/hk/r7M4JgjKsLMW0PTc4D44q6jdSB0y/NmvbMRoHCT39U3a
+	 uCrThXGHAJWx6rH9CXRKOrk0p/t2kbid9paEkTnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 397/444] btrfs: populate otime when logging an inode item
-Date: Mon, 18 Aug 2025 14:47:03 +0200
-Message-ID: <20250818124503.805652904@linuxfoundation.org>
+	Naman Jain <namjain@linux.microsoft.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.12 424/444] tools/hv: fcopy: Fix irregularities with size of ring buffer
+Date: Mon, 18 Aug 2025 14:47:30 +0200
+Message-ID: <20250818124504.838725498@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,109 +52,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-commit 1ef94169db0958d6de39f9ea6e063ce887342e2d upstream.
+commit a4131a50d072b369bfed0b41e741c41fd8048641 upstream.
 
-[TEST FAILURE WITH EXPERIMENTAL FEATURES]
-When running test case generic/508, the test case will fail with the new
-btrfs shutdown support:
+Size of ring buffer, as defined in uio_hv_generic driver, is no longer
+fixed to 16 KB. This creates a problem in fcopy, since this size was
+hardcoded. With the change in place to make ring sysfs node actually
+reflect the size of underlying ring buffer, it is safe to get the size
+of ring sysfs file and use it for ring buffer size in fcopy daemon.
+Fix the issue of disparity in ring buffer size, by making it dynamic
+in fcopy uio daemon.
 
-generic/508       - output mismatch (see /home/adam/xfstests/results//generic/508.out.bad)
-#    --- tests/generic/508.out	2022-05-11 11:25:30.806666664 +0930
-#    +++ /home/adam/xfstests/results//generic/508.out.bad	2025-07-02 14:53:22.401824212 +0930
-#    @@ -1,2 +1,6 @@
-#     QA output created by 508
-#     Silence is golden
-#    +Before:
-#    +After : stat.btime = Thu Jan  1 09:30:00 1970
-#    +Before:
-#    +After : stat.btime = Wed Jul  2 14:53:22 2025
-#    ...
-#    (Run 'diff -u /home/adam/xfstests/tests/generic/508.out /home/adam/xfstests/results//generic/508.out.bad'  to see the entire diff)
-Ran: generic/508
-Failures: generic/508
-Failed 1 of 1 tests
-
-Please note that the test case requires shutdown support, thus the test
-case will be skipped using the current upstream kernel, as it doesn't
-have shutdown ioctl support.
-
-[CAUSE]
-The direct cause the 0 time stamp in the log tree:
-
-leaf 30507008 items 2 free space 16057 generation 9 owner TREE_LOG
-leaf 30507008 flags 0x1(WRITTEN) backref revision 1
-checksum stored e522548d
-checksum calced e522548d
-fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
-chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
-	item 0 key (257 INODE_ITEM 0) itemoff 16123 itemsize 160
-		generation 9 transid 9 size 0 nbytes 0
-		block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
-		sequence 1 flags 0x0(none)
-		atime 1751432947.492000000 (2025-07-02 14:39:07)
-		ctime 1751432947.492000000 (2025-07-02 14:39:07)
-		mtime 1751432947.492000000 (2025-07-02 14:39:07)
-		otime 0.0 (1970-01-01 09:30:00) <<<
-
-But the old fs tree has all the correct time stamp:
-
-btrfs-progs v6.12
-fs tree key (FS_TREE ROOT_ITEM 0)
-leaf 30425088 items 2 free space 16061 generation 5 owner FS_TREE
-leaf 30425088 flags 0x1(WRITTEN) backref revision 1
-checksum stored 48f6c57e
-checksum calced 48f6c57e
-fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
-chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
-	item 0 key (256 INODE_ITEM 0) itemoff 16123 itemsize 160
-		generation 3 transid 0 size 0 nbytes 16384
-		block group 0 mode 40755 links 1 uid 0 gid 0 rdev 0
-		sequence 0 flags 0x0(none)
-		atime 1751432947.0 (2025-07-02 14:39:07)
-		ctime 1751432947.0 (2025-07-02 14:39:07)
-		mtime 1751432947.0 (2025-07-02 14:39:07)
-		otime 1751432947.0 (2025-07-02 14:39:07) <<<
-
-The root cause is that fill_inode_item() in tree-log.c is only
-populating a/c/m time, not the otime (or btime in statx output).
-
-Part of the reason is that, the vfs inode only has a/c/m time, no native
-btime support yet.
-
-[FIX]
-Thankfully btrfs has its otime stored in btrfs_inode::i_otime_sec and
-btrfs_inode::i_otime_nsec.
-
-So what we really need is just fill the otime time stamp in
-fill_inode_item() of tree-log.c
-
-There is another fill_inode_item() in inode.c, which is doing the proper
-otime population.
-
-Fixes: 94edf4ae43a5 ("Btrfs: don't bother committing delayed inode updates when fsyncing")
-CC: stable@vger.kernel.org
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Link: https://lore.kernel.org/r/20250711060846.9168-1-namjain@linux.microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250711060846.9168-1-namjain@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/hv/hv_fcopy_uio_daemon.c |   91 ++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 81 insertions(+), 10 deletions(-)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -4235,6 +4235,9 @@ static void fill_inode_item(struct btrfs
- 	btrfs_set_token_timespec_nsec(&token, &item->ctime,
- 				      inode_get_ctime_nsec(inode));
+--- a/tools/hv/hv_fcopy_uio_daemon.c
++++ b/tools/hv/hv_fcopy_uio_daemon.c
+@@ -35,7 +35,10 @@
+ #define WIN8_SRV_MINOR		1
+ #define WIN8_SRV_VERSION	(WIN8_SRV_MAJOR << 16 | WIN8_SRV_MINOR)
  
-+	btrfs_set_timespec_sec(leaf, &item->otime, BTRFS_I(inode)->i_otime_sec);
-+	btrfs_set_timespec_nsec(leaf, &item->otime, BTRFS_I(inode)->i_otime_nsec);
+-#define FCOPY_UIO		"/sys/bus/vmbus/devices/eb765408-105f-49b6-b4aa-c123b64d17d4/uio"
++#define FCOPY_DEVICE_PATH(subdir) \
++	"/sys/bus/vmbus/devices/eb765408-105f-49b6-b4aa-c123b64d17d4/" #subdir
++#define FCOPY_UIO_PATH          FCOPY_DEVICE_PATH(uio)
++#define FCOPY_CHANNELS_PATH     FCOPY_DEVICE_PATH(channels)
+ 
+ #define FCOPY_VER_COUNT		1
+ static const int fcopy_versions[] = {
+@@ -47,9 +50,62 @@ static const int fw_versions[] = {
+ 	UTIL_FW_VERSION
+ };
+ 
+-#define HV_RING_SIZE		0x4000 /* 16KB ring buffer size */
++static uint32_t get_ring_buffer_size(void)
++{
++	char ring_path[PATH_MAX];
++	DIR *dir;
++	struct dirent *entry;
++	struct stat st;
++	uint32_t ring_size = 0;
++	int retry_count = 0;
+ 
+-static unsigned char desc[HV_RING_SIZE];
++	/* Find the channel directory */
++	dir = opendir(FCOPY_CHANNELS_PATH);
++	if (!dir) {
++		usleep(100 * 1000); /* Avoid race with kernel, wait 100ms and retry once */
++		dir = opendir(FCOPY_CHANNELS_PATH);
++		if (!dir) {
++			syslog(LOG_ERR, "Failed to open channels directory: %s", strerror(errno));
++			return 0;
++		}
++	}
 +
- 	/*
- 	 * We do not need to set the nbytes field, in fact during a fast fsync
- 	 * its value may not even be correct, since a fast fsync does not wait
++retry_once:
++	while ((entry = readdir(dir)) != NULL) {
++		if (entry->d_type == DT_DIR && strcmp(entry->d_name, ".") != 0 &&
++		    strcmp(entry->d_name, "..") != 0) {
++			snprintf(ring_path, sizeof(ring_path), "%s/%s/ring",
++				 FCOPY_CHANNELS_PATH, entry->d_name);
++
++			if (stat(ring_path, &st) == 0) {
++				/*
++				 * stat returns size of Tx, Rx rings combined,
++				 * so take half of it for individual ring size.
++				 */
++				ring_size = (uint32_t)st.st_size / 2;
++				syslog(LOG_INFO, "Ring buffer size from %s: %u bytes",
++				       ring_path, ring_size);
++				break;
++			}
++		}
++	}
++
++	if (!ring_size && retry_count == 0) {
++		retry_count = 1;
++		rewinddir(dir);
++		usleep(100 * 1000); /* Wait 100ms and retry once */
++		goto retry_once;
++	}
++
++	closedir(dir);
++
++	if (!ring_size)
++		syslog(LOG_ERR, "Could not determine ring size");
++
++	return ring_size;
++}
++
++static unsigned char *desc;
+ 
+ static int target_fd;
+ static char target_fname[PATH_MAX];
+@@ -397,7 +453,7 @@ int main(int argc, char *argv[])
+ 	int daemonize = 1, long_index = 0, opt, ret = -EINVAL;
+ 	struct vmbus_br txbr, rxbr;
+ 	void *ring;
+-	uint32_t len = HV_RING_SIZE;
++	uint32_t ring_size, len;
+ 	char uio_name[NAME_MAX] = {0};
+ 	char uio_dev_path[PATH_MAX] = {0};
+ 
+@@ -428,7 +484,20 @@ int main(int argc, char *argv[])
+ 	openlog("HV_UIO_FCOPY", 0, LOG_USER);
+ 	syslog(LOG_INFO, "starting; pid is:%d", getpid());
+ 
+-	fcopy_get_first_folder(FCOPY_UIO, uio_name);
++	ring_size = get_ring_buffer_size();
++	if (!ring_size) {
++		ret = -ENODEV;
++		goto exit;
++	}
++
++	desc = malloc(ring_size * sizeof(unsigned char));
++	if (!desc) {
++		syslog(LOG_ERR, "malloc failed for desc buffer");
++		ret = -ENOMEM;
++		goto exit;
++	}
++
++	fcopy_get_first_folder(FCOPY_UIO_PATH, uio_name);
+ 	snprintf(uio_dev_path, sizeof(uio_dev_path), "/dev/%s", uio_name);
+ 	fcopy_fd = open(uio_dev_path, O_RDWR);
+ 
+@@ -436,17 +505,17 @@ int main(int argc, char *argv[])
+ 		syslog(LOG_ERR, "open %s failed; error: %d %s",
+ 		       uio_dev_path, errno, strerror(errno));
+ 		ret = fcopy_fd;
+-		goto exit;
++		goto free_desc;
+ 	}
+ 
+-	ring = vmbus_uio_map(&fcopy_fd, HV_RING_SIZE);
++	ring = vmbus_uio_map(&fcopy_fd, ring_size);
+ 	if (!ring) {
+ 		ret = errno;
+ 		syslog(LOG_ERR, "mmap ringbuffer failed; error: %d %s", ret, strerror(ret));
+ 		goto close;
+ 	}
+-	vmbus_br_setup(&txbr, ring, HV_RING_SIZE);
+-	vmbus_br_setup(&rxbr, (char *)ring + HV_RING_SIZE, HV_RING_SIZE);
++	vmbus_br_setup(&txbr, ring, ring_size);
++	vmbus_br_setup(&rxbr, (char *)ring + ring_size, ring_size);
+ 
+ 	rxbr.vbr->imask = 0;
+ 
+@@ -461,7 +530,7 @@ int main(int argc, char *argv[])
+ 			continue;
+ 		}
+ 
+-		len = HV_RING_SIZE;
++		len = ring_size;
+ 		ret = rte_vmbus_chan_recv_raw(&rxbr, desc, &len);
+ 		if (unlikely(ret <= 0)) {
+ 			/* This indicates a failure to communicate (or worse) */
+@@ -481,6 +550,8 @@ int main(int argc, char *argv[])
+ 	}
+ close:
+ 	close(fcopy_fd);
++free_desc:
++	free(desc);
+ exit:
+ 	return ret;
+ }
 
 
