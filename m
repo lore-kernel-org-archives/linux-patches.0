@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E47633EAF5;
-	Mon, 18 Aug 2025 14:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5DE3570AD;
+	Mon, 18 Aug 2025 14:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526382; cv=none; b=KWLMWQ5SRrywOiCZEnrGiE1p+dlUigf20FkNblkBZmjrG4EMlbYmXTyTqa7IQ5LqoqrD+JVZxC+K0H/unM4/fk3XG+j3XvwcMHysmF10UrRXq905lvjA6iNw99jrTNoep3zPmZhtDl/vvNquJZ3kqtyR8VD269NW/AoL9aJh1a0=
+	t=1755526385; cv=none; b=Xa1E2gNf21yGN2hHVF4JOAKXmft97fWDDCy/jPBJLO4ddShR7C07Z1KebepPoN5iNDCMYpCOxaFaEpqkCST9RWl+RjWIj6ATC7EZDLRXzmLNVyimCWpEOf+f7STVCaENX8WW/uBAUZzErCheg4Cer6KSY4hHHTx3oxkVbo89sI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526382; c=relaxed/simple;
-	bh=2QIHucIvrgXN6PgRI0Q/doNEkKeCebWDxhTAwy9i7I8=;
+	s=arc-20240116; t=1755526385; c=relaxed/simple;
+	bh=eBUvJ2OXiMlur/JMtlTKtiNAjZRuBJ6lQB9oZNzvGbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4uZG7xhlpK2bSJj3t5m7wIqf1/VxtdOp9qIB3J4OgiLEphJhKyf4eZxY4FlOlj9eRFDFlJXyPv/VIzIlkhzM6RBz9jVRqiuJpQMI689QvHMuQkaNIdCqcfrquWY7fGHGJtxbxQ+pzNJAYl8jeWU+5LuEt6n6prGDFXy8kO1M98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnl4BQhw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oMZS0LFQ6Pr8qeP9DskU06yX5MRsg3pJjOtKSHmG1MWRN7Qs0f2TZYwZliaNf5+qmYc3qkz3iJ+n9zuZyBxgIU099ggTe3uLsZuQoV0hdALhc+jJK7kGJOP/US7s5Kp3+qcFIzDFni3YHKuXgk0wFqfvSlzdME4hResTAxa1/tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8WzTLyp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnl4BQhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE81AC4CEEB;
-	Mon, 18 Aug 2025 14:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8WzTLyp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FA9C4CEEB;
+	Mon, 18 Aug 2025 14:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526382;
-	bh=2QIHucIvrgXN6PgRI0Q/doNEkKeCebWDxhTAwy9i7I8=;
+	s=korg; t=1755526385;
+	bh=eBUvJ2OXiMlur/JMtlTKtiNAjZRuBJ6lQB9oZNzvGbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jnl4BQhw7qlwNuAeQ5NaY4gl0YK3LCw1q74G0zuRrQdKaglFJtelSJpTggQDSQV/s
-	 3bA8SiRBaDJc0gcxUdwIPtNUC7z9DAR7UKxiesU1ywNcDgwvo4X3YjUJlBVniDvK+V
-	 KalnG9Cg+NpD9lHJ2Ia74GRmDdgMaPqpizFfByMM=
+	b=K8WzTLypNWTn1pT54Jl2ro8InEaPfpVya4aJvsU1AUEPxn9Gv1NrJfNWeugfMrG8i
+	 DUAV2O/mgBFzZMtzfEvjxj953CK1Kjjk6m5sEa/F8LN62BSgGWCCQGLE6M4x5bibFu
+	 dwo/h0pFe1i3jRZoPJPtgdwPDwMx677ApPGtfBWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 539/570] hv_netvsc: Fix panic during namespace deletion with VF
-Date: Mon, 18 Aug 2025 14:48:46 +0200
-Message-ID: <20250818124526.645449225@linuxfoundation.org>
+	Hans de Goede <hansg@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.16 540/570] i2c: core: Fix double-free of fwnode in i2c_unregister_device()
+Date: Mon, 18 Aug 2025 14:48:47 +0200
+Message-ID: <20250818124526.681815204@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,145 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Hans de Goede <hansg@kernel.org>
 
-commit 33caa208dba6fa639e8a92fd0c8320b652e5550c upstream.
+commit 1c24e5fc0c7096e00c202a6a3e0c342c1afb47c2 upstream.
 
-The existing code move the VF NIC to new namespace when NETDEV_REGISTER is
-received on netvsc NIC. During deletion of the namespace,
-default_device_exit_batch() >> default_device_exit_net() is called. When
-netvsc NIC is moved back and registered to the default namespace, it
-automatically brings VF NIC back to the default namespace. This will cause
-the default_device_exit_net() >> for_each_netdev_safe loop unable to detect
-the list end, and hit NULL ptr:
+Before commit df6d7277e552 ("i2c: core: Do not dereference fwnode in struct
+device"), i2c_unregister_device() only called fwnode_handle_put() on
+of_node-s in the form of calling of_node_put(client->dev.of_node).
 
-[  231.449420] mana 7870:00:00.0 enP30832s1: Moved VF to namespace with: eth0
-[  231.449656] BUG: kernel NULL pointer dereference, address: 0000000000000010
-[  231.450246] #PF: supervisor read access in kernel mode
-[  231.450579] #PF: error_code(0x0000) - not-present page
-[  231.450916] PGD 17b8a8067 P4D 0
-[  231.451163] Oops: Oops: 0000 [#1] SMP NOPTI
-[  231.451450] CPU: 82 UID: 0 PID: 1394 Comm: kworker/u768:1 Not tainted 6.16.0-rc4+ #3 VOLUNTARY
-[  231.452042] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 11/21/2024
-[  231.452692] Workqueue: netns cleanup_net
-[  231.452947] RIP: 0010:default_device_exit_batch+0x16c/0x3f0
-[  231.453326] Code: c0 0c f5 b3 e8 d5 db fe ff 48 85 c0 74 15 48 c7 c2 f8 fd ca b2 be 10 00 00 00 48 8d 7d c0 e8 7b 77 25 00 49 8b 86 28 01 00 00 <48> 8b 50 10 4c 8b 2a 4c 8d 62 f0 49 83 ed 10 4c 39 e0 0f 84 d6 00
-[  231.454294] RSP: 0018:ff75fc7c9bf9fd00 EFLAGS: 00010246
-[  231.454610] RAX: 0000000000000000 RBX: 0000000000000002 RCX: 61c8864680b583eb
-[  231.455094] RDX: ff1fa9f71462d800 RSI: ff75fc7c9bf9fd38 RDI: 0000000030766564
-[  231.455686] RBP: ff75fc7c9bf9fd78 R08: 0000000000000000 R09: 0000000000000000
-[  231.456126] R10: 0000000000000001 R11: 0000000000000004 R12: ff1fa9f70088e340
-[  231.456621] R13: ff1fa9f70088e340 R14: ffffffffb3f50c20 R15: ff1fa9f7103e6340
-[  231.457161] FS:  0000000000000000(0000) GS:ff1faa6783a08000(0000) knlGS:0000000000000000
-[  231.457707] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  231.458031] CR2: 0000000000000010 CR3: 0000000179ab2006 CR4: 0000000000b73ef0
-[  231.458434] Call Trace:
-[  231.458600]  <TASK>
-[  231.458777]  ops_undo_list+0x100/0x220
-[  231.459015]  cleanup_net+0x1b8/0x300
-[  231.459285]  process_one_work+0x184/0x340
+But after this commit the i2c_client's fwnode now unconditionally gets
+fwnode_handle_put() on it.
 
-To fix it, move the ns change to a workqueue, and take rtnl_lock to avoid
-changing the netdev list when default_device_exit_net() is using it.
+When the i2c_client has no primary (ACPI / OF) fwnode but it does have
+a software fwnode, the software-node will be the primary node and
+fwnode_handle_put() will put() it.
 
+But for the software fwnode device_remove_software_node() will also put()
+it leading to a double free:
+
+[   82.665598] ------------[ cut here ]------------
+[   82.665609] refcount_t: underflow; use-after-free.
+[   82.665808] WARNING: CPU: 3 PID: 1502 at lib/refcount.c:28 refcount_warn_saturate+0xba/0x11
+...
+[   82.666830] RIP: 0010:refcount_warn_saturate+0xba/0x110
+...
+[   82.666962]  <TASK>
+[   82.666971]  i2c_unregister_device+0x60/0x90
+
+Fix this by not calling fwnode_handle_put() when the primary fwnode is
+a software-node.
+
+Fixes: df6d7277e552 ("i2c: core: Do not dereference fwnode in struct device")
 Cc: stable@vger.kernel.org
-Fixes: 4c262801ea60 ("hv_netvsc: Fix VF namespace also in synthetic NIC NETDEV_REGISTER event")
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Link: https://patch.msgid.link/1754511711-11188-1-git-send-email-haiyangz@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/hyperv_net.h |    3 +++
- drivers/net/hyperv/netvsc_drv.c |   29 ++++++++++++++++++++++++++++-
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ drivers/i2c/i2c-core-base.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/hyperv/hyperv_net.h
-+++ b/drivers/net/hyperv/hyperv_net.h
-@@ -1061,6 +1061,7 @@ struct net_device_context {
- 	struct net_device __rcu *vf_netdev;
- 	struct netvsc_vf_pcpu_stats __percpu *vf_stats;
- 	struct delayed_work vf_takeover;
-+	struct delayed_work vfns_work;
- 
- 	/* 1: allocated, serial number is valid. 0: not allocated */
- 	u32 vf_alloc;
-@@ -1075,6 +1076,8 @@ struct net_device_context {
- 	struct netvsc_device_info *saved_netvsc_dev_info;
- };
- 
-+void netvsc_vfns_work(struct work_struct *w);
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index 2ad2b1838f0f..0849aa44952d 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -1066,7 +1066,13 @@ void i2c_unregister_device(struct i2c_client *client)
+ 		of_node_clear_flag(to_of_node(fwnode), OF_POPULATED);
+ 	else if (is_acpi_device_node(fwnode))
+ 		acpi_device_clear_enumerated(to_acpi_device_node(fwnode));
+-	fwnode_handle_put(fwnode);
 +
- /* Azure hosts don't support non-TCP port numbers in hashing for fragmented
-  * packets. We can use ethtool to change UDP hash level when necessary.
-  */
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2530,6 +2530,7 @@ static int netvsc_probe(struct hv_device
- 	spin_lock_init(&net_device_ctx->lock);
- 	INIT_LIST_HEAD(&net_device_ctx->reconfig_events);
- 	INIT_DELAYED_WORK(&net_device_ctx->vf_takeover, netvsc_vf_setup);
-+	INIT_DELAYED_WORK(&net_device_ctx->vfns_work, netvsc_vfns_work);
++	/*
++	 * If the primary fwnode is a software node it is free-ed by
++	 * device_remove_software_node() below, avoid double-free.
++	 */
++	if (!is_software_node(fwnode))
++		fwnode_handle_put(fwnode);
  
- 	net_device_ctx->vf_stats
- 		= netdev_alloc_pcpu_stats(struct netvsc_vf_pcpu_stats);
-@@ -2674,6 +2675,8 @@ static void netvsc_remove(struct hv_devi
- 	cancel_delayed_work_sync(&ndev_ctx->dwork);
- 
- 	rtnl_lock();
-+	cancel_delayed_work_sync(&ndev_ctx->vfns_work);
-+
- 	nvdev = rtnl_dereference(ndev_ctx->nvdev);
- 	if (nvdev) {
- 		cancel_work_sync(&nvdev->subchan_work);
-@@ -2715,6 +2718,7 @@ static int netvsc_suspend(struct hv_devi
- 	cancel_delayed_work_sync(&ndev_ctx->dwork);
- 
- 	rtnl_lock();
-+	cancel_delayed_work_sync(&ndev_ctx->vfns_work);
- 
- 	nvdev = rtnl_dereference(ndev_ctx->nvdev);
- 	if (nvdev == NULL) {
-@@ -2808,6 +2812,27 @@ static void netvsc_event_set_vf_ns(struc
- 	}
- }
- 
-+void netvsc_vfns_work(struct work_struct *w)
-+{
-+	struct net_device_context *ndev_ctx =
-+		container_of(w, struct net_device_context, vfns_work.work);
-+	struct net_device *ndev;
-+
-+	if (!rtnl_trylock()) {
-+		schedule_delayed_work(&ndev_ctx->vfns_work, 1);
-+		return;
-+	}
-+
-+	ndev = hv_get_drvdata(ndev_ctx->device_ctx);
-+	if (!ndev)
-+		goto out;
-+
-+	netvsc_event_set_vf_ns(ndev);
-+
-+out:
-+	rtnl_unlock();
-+}
-+
- /*
-  * On Hyper-V, every VF interface is matched with a corresponding
-  * synthetic interface. The synthetic interface is presented first
-@@ -2818,10 +2843,12 @@ static int netvsc_netdev_event(struct no
- 			       unsigned long event, void *ptr)
- {
- 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
-+	struct net_device_context *ndev_ctx;
- 	int ret = 0;
- 
- 	if (event_dev->netdev_ops == &device_ops && event == NETDEV_REGISTER) {
--		netvsc_event_set_vf_ns(event_dev);
-+		ndev_ctx = netdev_priv(event_dev);
-+		schedule_delayed_work(&ndev_ctx->vfns_work, 0);
- 		return NOTIFY_DONE;
- 	}
- 
+ 	device_remove_software_node(&client->dev);
+ 	device_unregister(&client->dev);
+-- 
+2.50.1
+
 
 
