@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA2A31AF2D;
-	Mon, 18 Aug 2025 12:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13573218C0;
+	Mon, 18 Aug 2025 12:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521864; cv=none; b=RsXI9ZBAbhj18Ibtpuwc7xEIRBhes3U1HS5XCpcej37O4ex5quRe6asgdhTwm/VYjQAQIarjfiS3aFgkXd5d7e1j29qD+9ENR7AszW7gBZvnik8V9V+DWV71F26K8esZjYjHWfvIPjuPN14ChQG8XptF9iz26CIziaewUoTIf4A=
+	t=1755521867; cv=none; b=oI9DoeaYwHRWBhJOfHjrFbZB47CH37EsVbcWKXxwfVv+hYuLgF6zq6XRPSFKT5t12cOv4fE4k4r7aPNs/eloTOBECWB+rgRQ1ezTh+axQEK3XNne6QaicIKkcddUbzOM6cjH6ws4VETQO+bg3mnFxk8YN1ZqFZnPeTthRMGwQsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521864; c=relaxed/simple;
-	bh=LGa45sBthclR3bqOELsNJGsGasVYvhkiX+FZqVVRiiQ=;
+	s=arc-20240116; t=1755521867; c=relaxed/simple;
+	bh=dpKsfGfRx4aifuN/MP4ZYqbGRIsHsxxMuBM6hvkgh6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzOs85yoF1DUIDFsFSj0UuLce97robornMwAIW4+TAXiz1dYfbgMXf8BHZQC02ywIFrIcep7I6s6o5skzQ80tTljxf+pVODMOqNYkhKRs1LvYTiDPuACKJhUAebm/c2/Xh9lxiwSBjPgeM1zaoN76hUVstm0RBXBwzpXGZFCrso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbZ8Mzd2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IpKZQGHREullCAwUv0t28IoTl4jRkED6U9h+vz0eV9G1OKHgKyc4W5Tf8xayTRqzjMr6vT0UfWvwCfC14zFJXZYqC/B2RnR+FnLpqNdyi2k4Ab88Ws9LxKUd6BUU6ktNUteJEwgODui6NjXmVGNECI+EFLX+4ViQa60S1VPgrqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkPtcM0v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbZ8Mzd2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC7BC4CEF1;
-	Mon, 18 Aug 2025 12:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkPtcM0v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E426AC4CEEB;
+	Mon, 18 Aug 2025 12:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521864;
-	bh=LGa45sBthclR3bqOELsNJGsGasVYvhkiX+FZqVVRiiQ=;
+	s=korg; t=1755521867;
+	bh=dpKsfGfRx4aifuN/MP4ZYqbGRIsHsxxMuBM6hvkgh6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wbZ8Mzd2UgJl+dxpIbdiU0k+Gr8Zn1dPn49rDJljaJLN5RWfz+XmBp4+Ld3HUEuY+
-	 lHU6IwdVAJ7XPbPcEv6v+6LTsT9GYx5anAjzsi6onk7lpJvfv90a4Z+Rfm2aZPGTTj
-	 G3HmB1ROIhbpeTOFFr+yVMWLlbPVvxXNNAj16VLI=
+	b=KkPtcM0vKmByOPdWNkXFxw/Igkxb1uV/pBpK60WRrwit4CDqVIneJn3kv4rnoyOiQ
+	 19CATqr6wJ/jhlytY64qIdjz6b1TB+q1DaJpHzuujCP+qB99urr0VJELG/xz0XT7lC
+	 DNRgMhF0urOyDLHA52VXqXEn7DiSzeiAKm5qbkig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 144/444] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
-Date: Mon, 18 Aug 2025 14:42:50 +0200
-Message-ID: <20250818124454.314705261@linuxfoundation.org>
+Subject: [PATCH 6.12 145/444] ASoC: SOF: topology: Parse the dapm_widget_tokens in case of DSPless mode
+Date: Mon, 18 Aug 2025 14:42:51 +0200
+Message-ID: <20250818124454.351146116@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,35 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
+[ Upstream commit 6b3cb7f4341cbf62d41ccf6ea906dbe66be8aa3d ]
 
-code mistakenly used a hardcoded index (codec[1]) instead of
-iterating, over the codec array using the loop variable i.
-Use codec[i] instead of codec[1] to match the loop iteration.
+Parsing the dapm_widget_tokens is also needed for DSPless mode as it is
+setting the snd_soc_dapm_widget.no_wname_in_kcontrol_name flag for the
+kcontrol creation from DAPM widgets.
+Without that flag set, the following warnings might appear because of long
+control names:
+ALSA: Control name 'eqiir.2.1 Post Mixer Analog Playback IIR Eq bytes' truncated to 'eqiir.2.1 Post Mixer Analog Playback IIR Eq'
+ALSA: Control name 'eqfir.2.1 Post Mixer Analog Playback FIR Eq bytes' truncated to 'eqfir.2.1 Post Mixer Analog Playback FIR Eq'
+ALSA: Control name 'drc.2.1 Post Mixer Analog Playback DRC bytes' truncated to 'drc.2.1 Post Mixer Analog Playback DRC byte'
+ALSA: Control name 'drc.2.1 Post Mixer Analog Playback DRC switch' truncated to 'drc.2.1 Post Mixer Analog Playback DRC swit'
+ALSA: Control name 'gain.15.1 Pre Mixer Deepbuffer HDA Analog Volume' truncated to 'gain.15.1 Pre Mixer Deepbuffer HDA Analog V'
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://patch.msgid.link/20250619102640.12068-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/intel8x0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sof/topology.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
-index e4bb99f71c2c..95f0bd2e1532 100644
---- a/sound/pci/intel8x0.c
-+++ b/sound/pci/intel8x0.c
-@@ -2249,7 +2249,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
- 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
- 			for (i = 1; i < 4; i++) {
- 				if (pcm->r[0].codec[i]) {
--					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
-+					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
- 					break;
- 				}
- 			}
+diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
+index f9708b8fd73b..0104257df930 100644
+--- a/sound/soc/sof/topology.c
++++ b/sound/soc/sof/topology.c
+@@ -2364,14 +2364,25 @@ static int sof_dspless_widget_ready(struct snd_soc_component *scomp, int index,
+ 				    struct snd_soc_dapm_widget *w,
+ 				    struct snd_soc_tplg_dapm_widget *tw)
+ {
++	struct snd_soc_tplg_private *priv = &tw->priv;
++	int ret;
++
++	/* for snd_soc_dapm_widget.no_wname_in_kcontrol_name */
++	ret = sof_parse_tokens(scomp, w, dapm_widget_tokens,
++			       ARRAY_SIZE(dapm_widget_tokens),
++			       priv->array, le32_to_cpu(priv->size));
++	if (ret < 0) {
++		dev_err(scomp->dev, "failed to parse dapm widget tokens for %s\n",
++			w->name);
++		return ret;
++	}
++
+ 	if (WIDGET_IS_DAI(w->id)) {
+ 		static const struct sof_topology_token dai_tokens[] = {
+ 			{SOF_TKN_DAI_TYPE, SND_SOC_TPLG_TUPLE_TYPE_STRING, get_token_dai_type, 0}};
+ 		struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
+-		struct snd_soc_tplg_private *priv = &tw->priv;
+ 		struct snd_sof_widget *swidget;
+ 		struct snd_sof_dai *sdai;
+-		int ret;
+ 
+ 		swidget = kzalloc(sizeof(*swidget), GFP_KERNEL);
+ 		if (!swidget)
 -- 
 2.39.5
 
