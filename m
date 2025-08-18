@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1BC225397;
-	Mon, 18 Aug 2025 13:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F205335BAA;
+	Mon, 18 Aug 2025 13:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524810; cv=none; b=DEp8dXnQUj/m1l4ZRMGOfLJIBj0Ilb0K/z6bro5J9iscLd4w69+aarCgHzuKWLI8iQzo8uZt8Bbl5WTpGaIKZAYe7gs1/pib1hC2i/kJXM1frt6Q6NoTrpBB7kRDHtIEiHx9Nl0xkDJCoA1xxB35V3TlSxLoTCGW4oGnCWGlYtE=
+	t=1755524812; cv=none; b=V2uRGXL6sBImqlQVFc+zv3QB9fBA4uEHyMm9dcTHWYfdvTEe/wfgZKPyk8wcfVwBGuCzplPu6U4GWa56RjALCJaIVgVQ/JSCWcuZwg0cYLtp4wy8JBUtjOz68lJu1oa8W2Wi5AhXy0/HLSRZ0tJog25MPOwi6BHAsJVBXPu6ge8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524810; c=relaxed/simple;
-	bh=GCaOvX7vSgoE3sBrAwW4/3+F31CP9eyNrwUWKpVaSns=;
+	s=arc-20240116; t=1755524812; c=relaxed/simple;
+	bh=+9scMvNloXksP/11cI7uCGc3v9+VfG25Apr6QKe47Yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lAkwCQ+/7sbfbZE0KBhu7PFqkYO350g0cOS4EdK2B+h+Ph90AmX1q6eSvfk/d+bSiPuMPT9eNqc7kug0Am9CMCPjv/k973z7SeJW4S4Ulwmc6GhhFd5fsXfXwFWX21Yv1nxPPkqwbvfZWNGUW8Q9kKE7ZgELOeG/WNxni5mQNHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByTbuNjJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n5gKLEEFjenh1PsGiBYtubmpQN9cNIkgdbkuw3YC1McBpe+XCstkgq6VbbHhjz7p8/+C0awgHhInyxYoJHHww2guP7EVCwdLztKvo7gmQFD7rUNzCi+rdLSX6yLN2u3YsGZFS5UsGvyz+/frKardQYshoL2BrJm/rHsuw0FXdVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSGvisLN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByTbuNjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E1AC4CEF1;
-	Mon, 18 Aug 2025 13:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSGvisLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E254C4CEEB;
+	Mon, 18 Aug 2025 13:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524809;
-	bh=GCaOvX7vSgoE3sBrAwW4/3+F31CP9eyNrwUWKpVaSns=;
+	s=korg; t=1755524812;
+	bh=+9scMvNloXksP/11cI7uCGc3v9+VfG25Apr6QKe47Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ByTbuNjJ9LlXgq/tyupiC2YbJkfLAMl2GvYThSuIyrW/WB3/66Jy8JLwkp6SSVLSp
-	 9x/lEHDvdaHCxsMGIxIUQpkSxI3ZD9r8tW7lm1elV7zE99Sc+O9xJjiZFPdJsqUgKv
-	 psKcjUkaTURSx1tjRuyrYA02W8ivlpylRZMsGE34=
+	b=aSGvisLNAgGAJGsrp5VeYjwegm3CRsk4dPybfsgXQA0fJ1+5CdxNlBr7ZSf26MyFM
+	 6P3rDLx4I1xpsSVHbDnqevP6xRhMS13NTvUieW0gM9DBT0Tas9WvM6HvvzcjXWHdls
+	 8ytngyjnBaky30g1Op5CqnXJLX01UqNNrZkXQyz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	David Wei <dw@davidwei.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 062/570] xfrm: restore GSO for SW crypto
-Date: Mon, 18 Aug 2025 14:40:49 +0200
-Message-ID: <20250818124508.208178502@linuxfoundation.org>
+Subject: [PATCH 6.16 071/570] net: page_pool: allow enabling recycling late, fix false positive warning
+Date: Mon, 18 Aug 2025 14:40:58 +0200
+Message-ID: <20250818124508.562074494@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,56 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 234d1eff5d4987024be9d40ac07b918a5ae8db1a ]
+[ Upstream commit 64fdaa94bfe0cca3a0f4b2dd922486c5f59fe678 ]
 
-Commit 49431af6c4ef incorrectly assumes that the GSO path is only used
-by HW offload, but it's also useful for SW crypto.
+Page pool can have pages "directly" (locklessly) recycled to it,
+if the NAPI that owns the page pool is scheduled to run on the same CPU.
+To make this safe we check that the NAPI is disabled while we destroy
+the page pool. In most cases NAPI and page pool lifetimes are tied
+together so this happens naturally.
 
-This patch re-enables GSO for SW crypto. It's not an exact revert to
-preserve the other changes made to xfrm_dev_offload_ok afterwards, but
-it reverts all of its effects.
+The queue API expects the following order of calls:
+ -> mem_alloc
+    alloc new pp
+ -> stop
+    napi_disable
+ -> start
+    napi_enable
+ -> mem_free
+    free old pp
 
-Fixes: 49431af6c4ef ("xfrm: rely on XFRM offload")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Here we allocate the page pool in ->mem_alloc and free in ->mem_free.
+But the NAPIs are only stopped between ->stop and ->start. We created
+page_pool_disable_direct_recycling() to safely shut down the recycling
+in ->stop. This way the page_pool_destroy() call in ->mem_free doesn't
+have to worry about recycling any more.
+
+Unfortunately, the page_pool_disable_direct_recycling() is not enough
+to deal with failures which necessitate freeing the _new_ page pool.
+If we hit a failure in ->mem_alloc or ->stop the new page pool has
+to be freed while the NAPI is active (assuming driver attaches the
+page pool to an existing NAPI instance and doesn't reallocate NAPIs).
+
+Freeing the new page pool is technically safe because it hasn't been
+used for any packets, yet, so there can be no recycling. But the check
+in napi_assert_will_not_race() has no way of knowing that. We could
+check if page pool is empty but that'd make the check much less likely
+to trigger during development.
+
+Add page_pool_enable_direct_recycling(), pairing with
+page_pool_disable_direct_recycling(). It will allow us to create the new
+page pools in "disabled" state and only enable recycling when we know
+the reconfig operation will not fail.
+
+Coincidentally it will also let us re-enable the recycling for the old
+pool, if the reconfig failed:
+
+ -> mem_alloc (new)
+ -> stop (old)
+    # disables direct recycling for old
+ -> start (new)
+    # fail!!
+ -> start (old)
+    # go back to old pp but direct recycling is lost :(
+ -> mem_free (new)
+
+The new helper is idempotent to make the life easier for drivers,
+which can operate in HDS mode and support zero-copy Rx.
+The driver can call the helper twice whether there are two pools
+or it has multiple references to a single pool.
+
+Fixes: 40eca00ae605 ("bnxt_en: unlink page pool when stopping Rx queue")
+Tested-by: David Wei <dw@davidwei.uk>
+Link: https://patch.msgid.link/20250805003654.2944974-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_device.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |  9 ++++++-
+ include/net/page_pool/types.h             |  2 ++
+ net/core/page_pool.c                      | 29 +++++++++++++++++++++++
+ 3 files changed, 39 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
-index d2819baea414..1f88472aaac0 100644
---- a/net/xfrm/xfrm_device.c
-+++ b/net/xfrm/xfrm_device.c
-@@ -415,10 +415,12 @@ bool xfrm_dev_offload_ok(struct sk_buff *skb, struct xfrm_state *x)
- 	struct net_device *dev = x->xso.dev;
- 	bool check_tunnel_size;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 243cb13cb01c..8d950b43846e 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -3810,7 +3810,6 @@ static int bnxt_alloc_rx_page_pool(struct bnxt *bp,
+ 	if (BNXT_RX_PAGE_MODE(bp))
+ 		pp.pool_size += bp->rx_ring_size;
+ 	pp.nid = numa_node;
+-	pp.napi = &rxr->bnapi->napi;
+ 	pp.netdev = bp->dev;
+ 	pp.dev = &bp->pdev->dev;
+ 	pp.dma_dir = bp->rx_dir;
+@@ -3842,6 +3841,12 @@ static int bnxt_alloc_rx_page_pool(struct bnxt *bp,
+ 	return PTR_ERR(pool);
+ }
  
--	if (x->xso.type == XFRM_DEV_OFFLOAD_UNSPECIFIED)
-+	if (!x->type_offload ||
-+	    (x->xso.type == XFRM_DEV_OFFLOAD_UNSPECIFIED && x->encap))
- 		return false;
- 
--	if ((dev == xfrm_dst_path(dst)->dev) && !xdst->child->xfrm) {
-+	if ((!dev || dev == xfrm_dst_path(dst)->dev) &&
-+	    !xdst->child->xfrm) {
- 		mtu = xfrm_state_mtu(x, xdst->child_mtu_cached);
- 		if (skb->len <= mtu)
- 			goto ok;
-@@ -430,6 +432,9 @@ bool xfrm_dev_offload_ok(struct sk_buff *skb, struct xfrm_state *x)
- 	return false;
- 
- ok:
-+	if (!dev)
-+		return true;
++static void bnxt_enable_rx_page_pool(struct bnxt_rx_ring_info *rxr)
++{
++	page_pool_enable_direct_recycling(rxr->head_pool, &rxr->bnapi->napi);
++	page_pool_enable_direct_recycling(rxr->page_pool, &rxr->bnapi->napi);
++}
 +
- 	check_tunnel_size = x->xso.type == XFRM_DEV_OFFLOAD_PACKET &&
- 			    x->props.mode == XFRM_MODE_TUNNEL;
- 	switch (x->props.family) {
+ static int bnxt_alloc_rx_agg_bmap(struct bnxt *bp, struct bnxt_rx_ring_info *rxr)
+ {
+ 	u16 mem_size;
+@@ -3880,6 +3885,7 @@ static int bnxt_alloc_rx_rings(struct bnxt *bp)
+ 		rc = bnxt_alloc_rx_page_pool(bp, rxr, cpu_node);
+ 		if (rc)
+ 			return rc;
++		bnxt_enable_rx_page_pool(rxr);
+ 
+ 		rc = xdp_rxq_info_reg(&rxr->xdp_rxq, bp->dev, i, 0);
+ 		if (rc < 0)
+@@ -16042,6 +16048,7 @@ static int bnxt_queue_start(struct net_device *dev, void *qmem, int idx)
+ 			goto err_reset;
+ 	}
+ 
++	bnxt_enable_rx_page_pool(rxr);
+ 	napi_enable_locked(&bnapi->napi);
+ 	bnxt_db_nq_arm(bp, &cpr->cp_db, cpr->cp_raw_cons);
+ 
+diff --git a/include/net/page_pool/types.h b/include/net/page_pool/types.h
+index 431b593de709..1509a536cb85 100644
+--- a/include/net/page_pool/types.h
++++ b/include/net/page_pool/types.h
+@@ -265,6 +265,8 @@ struct page_pool *page_pool_create_percpu(const struct page_pool_params *params,
+ struct xdp_mem_info;
+ 
+ #ifdef CONFIG_PAGE_POOL
++void page_pool_enable_direct_recycling(struct page_pool *pool,
++				       struct napi_struct *napi);
+ void page_pool_disable_direct_recycling(struct page_pool *pool);
+ void page_pool_destroy(struct page_pool *pool);
+ void page_pool_use_xdp_mem(struct page_pool *pool, void (*disconnect)(void *),
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index ba7cf3e3c32f..368412baad26 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -1201,6 +1201,35 @@ void page_pool_use_xdp_mem(struct page_pool *pool, void (*disconnect)(void *),
+ 	pool->xdp_mem_id = mem->id;
+ }
+ 
++/**
++ * page_pool_enable_direct_recycling() - mark page pool as owned by NAPI
++ * @pool: page pool to modify
++ * @napi: NAPI instance to associate the page pool with
++ *
++ * Associate a page pool with a NAPI instance for lockless page recycling.
++ * This is useful when a new page pool has to be added to a NAPI instance
++ * without disabling that NAPI instance, to mark the point at which control
++ * path "hands over" the page pool to the NAPI instance. In most cases driver
++ * can simply set the @napi field in struct page_pool_params, and does not
++ * have to call this helper.
++ *
++ * The function is idempotent, but does not implement any refcounting.
++ * Single page_pool_disable_direct_recycling() will disable recycling,
++ * no matter how many times enable was called.
++ */
++void page_pool_enable_direct_recycling(struct page_pool *pool,
++				       struct napi_struct *napi)
++{
++	if (READ_ONCE(pool->p.napi) == napi)
++		return;
++	WARN_ON(!napi || pool->p.napi);
++
++	mutex_lock(&page_pools_lock);
++	WRITE_ONCE(pool->p.napi, napi);
++	mutex_unlock(&page_pools_lock);
++}
++EXPORT_SYMBOL(page_pool_enable_direct_recycling);
++
+ void page_pool_disable_direct_recycling(struct page_pool *pool)
+ {
+ 	/* Disable direct recycling based on pool->cpuid.
 -- 
 2.50.1
 
