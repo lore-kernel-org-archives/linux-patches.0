@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2286F2E22AF;
-	Mon, 18 Aug 2025 13:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2929E30DEC8;
+	Mon, 18 Aug 2025 13:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524634; cv=none; b=mkgcKSlMBnLJB4uhnbr44leSY2sYlKQeO4clue3soaR3ZSxCq6WUlVyyGGFzAeD9o7rMU5BY9U33JWtMwAWMBqI8J9F/XC2OabvAJFY1C8k5Nxwca1MS857L5lBRWu07hUZnTFWWaDVnvphSA6qpS62h6dBEUrtyQKjX0MCM/Mk=
+	t=1755524637; cv=none; b=tBVi7U8aeiot8tJorL5zqoXa5OmM3s+dBxkl8IrOzX1Z1WZoZeokyq24edWUsOym+j2TdRWsfP6Z5trC/rLonOYG8HtHVEN9sm+PgilFThCQRXv33Wegxf1BOtYgYCIKEDHq12M5B9g8dAMQaQHOMORcovD2yOYCPMR1mBlDS7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524634; c=relaxed/simple;
-	bh=uGk38xlSHKiIF4pMwENR/Wxe1ecqR9AddOy/ORlpHY0=;
+	s=arc-20240116; t=1755524637; c=relaxed/simple;
+	bh=Wt6oXE7rNSLsPdVqn2QBFrZ5csCQq/SzkcIYaeF7bCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fONVlpfatqxjIxsy+Yl0Y/Box15foP/SpBAAwgdQhBOd4KzuABNRr4B2IoqCLtdeHT5+nXcrz1iMRVbfJXSVEoVc+l6EsRnJhiaguu6hUtsA3q0HlqoIjuIbkUEMOKLQBLfSfj9HUoSzCFPPmfT32Np29CY3lbJly1NXyGZRLkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pD6D330C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgOIFYiIA9swniR/2CglE4psaTGqW+XE8Txa+rZXLPxH0LES7DvjaGpme6BObt1IacIuih2L8CCiCT+8IuaVNxCyp15+ZLdIJhr78h+xVtRu5Z0YOP9AGZQ8TL58GR466/2K1Krzr8VstL0Nr7R/vNwNBkwTmTNAZOrTxiElh60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USo96jxq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pD6D330C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31508C4CEEB;
-	Mon, 18 Aug 2025 13:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USo96jxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEA3C4CEEB;
+	Mon, 18 Aug 2025 13:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524633;
-	bh=uGk38xlSHKiIF4pMwENR/Wxe1ecqR9AddOy/ORlpHY0=;
+	s=korg; t=1755524637;
+	bh=Wt6oXE7rNSLsPdVqn2QBFrZ5csCQq/SzkcIYaeF7bCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pD6D330CO3ATfO3xJg70/lqDtr1s6lF/5QtUct2wk7PVge0EGO7zw5mXLamnSScQM
-	 m3dzFeXBv9/6spoe4BHaZV6tv4JsbdpMFVwyhB8r3NBvQEueODCaXggUonIlwqdgTI
-	 iwgOSRLWb/kkEfwxIBsw1xUyv6qPg8R70e0ps/qs=
+	b=USo96jxqYOudIBJ3DZLorGT17UKbzI03xibRUPBvilVX4P0u3q7tU8mEaoy7tWKTz
+	 6zRS6r7Z0UswCEdEfzpwUszgMdiTmIaVAQoCt7nKGc1aBnxYx8yLMQtjVre1g8rCht
+	 TKE9FekB9RMqLwJJO3q/4vxGbEydFmKumlvVVM9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje@dujemihanovic.xyz>,
+	David Thompson <davthompson@nvidia.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.16 016/570] Revert "gpio: pxa: Make irq_chip immutable"
-Date: Mon, 18 Aug 2025 14:40:03 +0200
-Message-ID: <20250818124506.418205523@linuxfoundation.org>
+Subject: [PATCH 6.16 017/570] Revert "gpio: mlxbf3: only get IRQ for device instance 0"
+Date: Mon, 18 Aug 2025 14:40:04 +0200
+Message-ID: <20250818124506.460902042@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -44,66 +45,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: David Thompson <davthompson@nvidia.com>
 
-commit b644c640923b625340c603cdb8d8f456406eb4de upstream.
+commit 56bdf7270ff4f870e2d4bfacdc00161e766dba2d upstream.
 
-This reverts commit 20117cf426b6 ("gpio: pxa: Make irq_chip immutableas")
-as it caused a regression on samsung coreprimevelte and we've not been
-able to fix it so far.
+This reverts commit 10af0273a35ab4513ca1546644b8c853044da134.
 
-Cc: stable@vger.kernel.org # v6.16
-Fixes: 20117cf426b6 ("gpio: pxa: Make irq_chip immutableas")
-Reported-by: Duje Mihanović <duje@dujemihanovic.xyz>
-Closes: https://lore.kernel.org/all/3367665.aeNJFYEL58@radijator/
-Tested-by: Duje Mihanović <duje@dujemihanovic.xyz>
-Link: https://lore.kernel.org/r/20250801071858.7554-1-brgl@bgdev.pl
+While this change was merged, it is not the preferred solution.
+During review of a similar change to the gpio-mlxbf2 driver, the
+use of "platform_get_irq_optional" was identified as the preferred
+solution, so let's use it for gpio-mlxbf3 driver as well.
+
+Cc: stable@vger.kernel.org
+Fixes: 10af0273a35a ("gpio: mlxbf3: only get IRQ for device instance 0")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/8d2b630c71b3742f2c74242cf7d602706a6108e6.1754928650.git.davthompson@nvidia.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-pxa.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/gpio/gpio-mlxbf3.c |   54 +++++++++++++++------------------------------
+ 1 file changed, 19 insertions(+), 35 deletions(-)
 
---- a/drivers/gpio/gpio-pxa.c
-+++ b/drivers/gpio/gpio-pxa.c
-@@ -497,8 +497,6 @@ static void pxa_mask_muxed_gpio(struct i
- 	gfer = readl_relaxed(base + GFER_OFFSET) & ~GPIO_bit(gpio);
- 	writel_relaxed(grer, base + GRER_OFFSET);
- 	writel_relaxed(gfer, base + GFER_OFFSET);
+--- a/drivers/gpio/gpio-mlxbf3.c
++++ b/drivers/gpio/gpio-mlxbf3.c
+@@ -190,9 +190,7 @@ static int mlxbf3_gpio_probe(struct plat
+ 	struct mlxbf3_gpio_context *gs;
+ 	struct gpio_irq_chip *girq;
+ 	struct gpio_chip *gc;
+-	char *colon_ptr;
+ 	int ret, irq;
+-	long num;
+ 
+ 	gs = devm_kzalloc(dev, sizeof(*gs), GFP_KERNEL);
+ 	if (!gs)
+@@ -229,39 +227,25 @@ static int mlxbf3_gpio_probe(struct plat
+ 	gc->owner = THIS_MODULE;
+ 	gc->add_pin_ranges = mlxbf3_gpio_add_pin_ranges;
+ 
+-	colon_ptr = strchr(dev_name(dev), ':');
+-	if (!colon_ptr) {
+-		dev_err(dev, "invalid device name format\n");
+-		return -EINVAL;
+-	}
 -
--	gpiochip_disable_irq(&pchip->chip, gpio);
- }
- 
- static int pxa_gpio_set_wake(struct irq_data *d, unsigned int on)
-@@ -518,21 +516,17 @@ static void pxa_unmask_muxed_gpio(struct
- 	unsigned int gpio = irqd_to_hwirq(d);
- 	struct pxa_gpio_bank *c = gpio_to_pxabank(&pchip->chip, gpio);
- 
--	gpiochip_enable_irq(&pchip->chip, gpio);
+-	ret = kstrtol(++colon_ptr, 16, &num);
+-	if (ret) {
+-		dev_err(dev, "invalid device instance\n");
+-		return ret;
+-	}
 -
- 	c->irq_mask |= GPIO_bit(gpio);
- 	update_edge_detect(c);
- }
+-	if (!num) {
+-		irq = platform_get_irq(pdev, 0);
+-		if (irq >= 0) {
+-			girq = &gs->gc.irq;
+-			gpio_irq_chip_set_chip(girq, &gpio_mlxbf3_irqchip);
+-			girq->default_type = IRQ_TYPE_NONE;
+-			/* This will let us handle the parent IRQ in the driver */
+-			girq->num_parents = 0;
+-			girq->parents = NULL;
+-			girq->parent_handler = NULL;
+-			girq->handler = handle_bad_irq;
+-
+-			/*
+-			 * Directly request the irq here instead of passing
+-			 * a flow-handler because the irq is shared.
+-			 */
+-			ret = devm_request_irq(dev, irq, mlxbf3_gpio_irq_handler,
+-					       IRQF_SHARED, dev_name(dev), gs);
+-			if (ret)
+-				return dev_err_probe(dev, ret, "failed to request IRQ");
+-		}
++	irq = platform_get_irq(pdev, 0);
++	if (irq >= 0) {
++		girq = &gs->gc.irq;
++		gpio_irq_chip_set_chip(girq, &gpio_mlxbf3_irqchip);
++		girq->default_type = IRQ_TYPE_NONE;
++		/* This will let us handle the parent IRQ in the driver */
++		girq->num_parents = 0;
++		girq->parents = NULL;
++		girq->parent_handler = NULL;
++		girq->handler = handle_bad_irq;
++
++		/*
++		 * Directly request the irq here instead of passing
++		 * a flow-handler because the irq is shared.
++		 */
++		ret = devm_request_irq(dev, irq, mlxbf3_gpio_irq_handler,
++				       IRQF_SHARED, dev_name(dev), gs);
++		if (ret)
++			return dev_err_probe(dev, ret, "failed to request IRQ");
+ 	}
  
--static const struct irq_chip pxa_muxed_gpio_chip = {
-+static struct irq_chip pxa_muxed_gpio_chip = {
- 	.name		= "GPIO",
- 	.irq_ack	= pxa_ack_muxed_gpio,
- 	.irq_mask	= pxa_mask_muxed_gpio,
- 	.irq_unmask	= pxa_unmask_muxed_gpio,
- 	.irq_set_type	= pxa_gpio_irq_type,
- 	.irq_set_wake	= pxa_gpio_set_wake,
--	.flags = IRQCHIP_IMMUTABLE,
--	GPIOCHIP_IRQ_RESOURCE_HELPERS,
- };
- 
- static int pxa_gpio_nums(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, gs);
 
 
