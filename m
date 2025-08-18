@@ -1,135 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4C926FD8E;
-	Mon, 18 Aug 2025 06:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6555D25C81E
+	for <patches@lists.linux.dev>; Mon, 18 Aug 2025 06:48:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755498847; cv=none; b=tOFzOnKEBu8Zmf8stjfxQsflZfkEslMpY6TUXOBtR+dbknf2thizSehoMfAiKCYZMnZpKWYz7ibqrfE0hlodhNEZE+IvKR8eTV5EwtqECIailVA6mJmb+7EG8ntbtZCQkI8/kfZoNOFN0vu2Djxe02pirCd7fgdbD/84qCF0Mtg=
+	t=1755499682; cv=none; b=Ns1khXdexpp/lYSa7B3NgVGTUiYjGdrTgu3mR8g2djXcGTXabLymz5IL4P7E/C8ywwp/pEUm+zRYQCW/qgWLVMaAc3t2v7gvUf82lm7REVvmAFiGLGj0Vkex0HCzEAKLeHHXTzqexxdLPbI6hVh00IyaYUauSSnjHjdReW1nJak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755498847; c=relaxed/simple;
-	bh=TuT1Q3ab9MEdA63O5u8QSJxHcrlpKFyOYhq7iu8xQKc=;
-	h=Content-Type:Date:Message-Id:Subject:Cc:From:To:References:
-	 In-Reply-To; b=mfskBrWbGWpnjWKozY3yTjMUMaYli0pBwEc5qhiHghAQLpwCpItIXwkLkHRPUKWROyvcm8IF3A2+byu408ra1oWwj/oaWYAFpftjjSyWGNTRNsHhjnnLoGBvjF8wPxN3QvXd0xS/JS8tSFtuRAVDuE9CSiWzd83LS0bqFUtBB6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kqjgh3cx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755499682; c=relaxed/simple;
+	bh=4f6LJZiRndmUfvc5xeffNXg78yFNRvxk90kZiuVnZPQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VB+Qon9zUCwc0Xp44SAC8VxSZbShDuycQZqCm5Gi/SxUhdy1bELbyik7eNQpkMVdnQWpaiccVqLbf9zzPjThHNNBPcIxbxqXwgGnKsVJkrXquWPBsjaLUzf1mrwPIEc/aLEaVxtRjllrd0K1FwkG1MJABQld3txWJahHvdX5YhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Q0tN71tK; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kqjgh3cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13DAC4CEEB;
-	Mon, 18 Aug 2025 06:34:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755498847;
-	bh=TuT1Q3ab9MEdA63O5u8QSJxHcrlpKFyOYhq7iu8xQKc=;
-	h=Date:Subject:Cc:From:To:References:In-Reply-To:From;
-	b=kqjgh3cxyMw2Zu0BIe0IRTM5G68fDYWwP4MyCD0hkzIBjTBHFRTDilNoi2S1NWfYz
-	 3owbAQAqsDS60lpBfzTIwqepD/5hVR1jF8HMPN6iCl9eSUaxsV3YUPBP8VhWvaMDem
-	 On2OBFN7mrY0qbluRaYLfmDqEhmz4zFKWy1EDKSky+VjLp6OuFg4MWUwBuMwcVAjQY
-	 Bh7Na2xUQaAk0p6ObgIDXFjzeMsoep6aaFAIN/+1F/Gbl9M7KM+cuEnGEK7WA4vI/A
-	 AGwF+qc0WPmJE18lqK0OIacQ2BuBXE7oVmNaNIJrxa7hOvMFsIyGjCiOmnzGYLSsK1
-	 MYdha2NyC2oxg==
-Content-Type: multipart/signed;
- boundary=b0bb75deace1dbc2ddd5574427033e423afc4aadde330d8d0257abae0a9d;
- micalg=pgp-sha384; protocol="application/pgp-signature"
-Date: Mon, 18 Aug 2025 08:34:03 +0200
-Message-Id: <DC5CEJ4YYRRB.3VTJAONRBJPVB@kernel.org>
-Subject: Re: [PATCH AUTOSEL 6.12 27/69] mfd: tps6594: Add TI TPS652G1
- support
-Cc: "Lee Jones" <lee@kernel.org>
-From: "Michael Walle" <mwalle@kernel.org>
-To: "Sasha Levin" <sashal@kernel.org>, <patches@lists.linux.dev>,
- <stable@vger.kernel.org>
-X-Mailer: aerc 0.16.0
-References: <20250804003119.3620476-1-sashal@kernel.org>
- <20250804003119.3620476-27-sashal@kernel.org>
-In-Reply-To: <20250804003119.3620476-27-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Q0tN71tK"
+Received: from [10.95.64.75] (unknown [167.220.238.11])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 0CC072113343;
+	Sun, 17 Aug 2025 23:47:58 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0CC072113343
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1755499680;
+	bh=AJvrjplhI4XgVj15uOIDsZ9E1MSOHTMWF+jfyprUxbk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Q0tN71tKJGZv2Fo4TL+Tp2ywMwcSJrXeYrLgOZgOyf/EwtJsC+/t22OLYKkkdpptJ
+	 Sl62RW6qH3wqQDnlpvpECFxiGy0+4SOK4IGFtjHqhRhuB0TLBKEUPq0mYx1MHmh+NO
+	 KoLwu3+W6C/44470wMFIW0JsDZleFTSQ3uDwnxR0=
+Message-ID: <fbf3a795-bf18-4970-a320-ec06e0758d3b@linux.microsoft.com>
+Date: Mon, 18 Aug 2025 12:17:56 +0530
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 020/158] tools/hv: fcopy: Fix irregularities with
+ size of ring buffer
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Saurabh Sengar <ssengar@linux.microsoft.com>, Long Li
+ <longli@microsoft.com>, Wei Liu <wei.liu@kernel.org>
+References: <20250722134340.596340262@linuxfoundation.org>
+ <20250722134341.490321531@linuxfoundation.org>
+ <d9be2bb3-5f84-4182-91e8-ec1a4abd8f5f@linux.microsoft.com>
+ <2025072316-mop-manhood-b63e@gregkh>
+ <08158da3-82a0-4eb0-a805-87afe34e288a@linux.microsoft.com>
+ <2025081834-bullfrog-elixir-6a96@gregkh>
+Content-Language: en-US
+From: Naman Jain <namjain@linux.microsoft.com>
+In-Reply-To: <2025081834-bullfrog-elixir-6a96@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---b0bb75deace1dbc2ddd5574427033e423afc4aadde330d8d0257abae0a9d
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
 
-Hi Sasha,
 
-On Mon Aug 4, 2025 at 2:30 AM CEST, Sasha Levin wrote:
-> From: Michael Walle <mwalle@kernel.org>
->
-> [ Upstream commit 626bb0a45584d544d84eab909795ccb355062bcc ]
->
-> The TPS652G1 is a stripped down version of the TPS65224. From a software
-> point of view, it lacks any voltage monitoring, the watchdog, the ESM
-> and the ADC.
->
-> Signed-off-by: Michael Walle <mwalle@kernel.org>
-> Link: https://lore.kernel.org/r/20250613114518.1772109-2-mwalle@kernel.or=
-g
-> Signed-off-by: Lee Jones <lee@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->
-> LLM Generated explanations, may be completely bogus:
->
-> **YES**
->
-> This commit should be backported to stable kernel trees for the
-> following reasons:
->
-> 1. **Hardware Enablement (Device ID Addition)**: This patch adds support
->    for a new PMIC variant (TPS652G1) by adding its device ID and
->    configuration. According to stable kernel rules, patches that "just
->    add a device ID" are explicitly allowed for stable backporting.
->
-> 2. **Self-Contained Changes**: The modifications are isolated to adding
->    support for the new device without altering existing functionality:
->    - Adds `TPS652G1` to the `enum pmic_id`
->    - Adds TPS652G1-specific MFD cells configuration
->    - Adds device-specific IRQ mappings (subset of TPS65224 IRQs)
->    - Adds compatible strings "ti,tps652g1" to I2C and SPI device tables
->    - Properly handles the stripped-down nature of TPS652G1 (no RTC, ADC,
->      watchdog, ESM)
->
-> 3. **Low Risk**: The changes follow the existing driver pattern and only
->    add conditional paths for the new device:
->   ```c
->   if (tps->chip_id =3D=3D TPS65224 || tps->chip_id =3D=3D TPS652G1)
->   ```
->   This ensures existing device support remains unaffected.
->
-> 4. **User Benefit**: Without this patch, users with TPS652G1 hardware
->    cannot use their devices on stable kernels. This directly impacts
->    hardware functionality for affected users.
->
-> 5. **Proper Implementation**: The patch correctly handles the TPS652G1
->    as a feature-reduced variant of TPS65224, sharing the same register
->    layout and CRC handling while properly excluding unsupported
->    features.
->
-> The patch is relatively small, follows established driver patterns, and
-> enables essential hardware support without introducing architectural
-> changes or new features beyond device enablement.
+On 8/18/2025 11:22 AM, Greg Kroah-Hartman wrote:
+> On Mon, Aug 18, 2025 at 10:54:10AM +0530, Naman Jain wrote:
+>>
+>>
+>> On 7/23/2025 12:12 PM, Greg Kroah-Hartman wrote:
+>>> On Tue, Jul 22, 2025 at 08:29:07PM +0530, Naman Jain wrote:
+>>>>
+>>>>
+>>>> On 7/22/2025 7:13 PM, Greg Kroah-Hartman wrote:
+>>>>> 6.12-stable review patch.  If anyone has any objections, please let me know.
+>>>>>
+>>>>> ------------------
+>>>>>
+>>>>> From: Naman Jain <namjain@linux.microsoft.com>
+>>>>>
+>>>>> commit a4131a50d072b369bfed0b41e741c41fd8048641 upstream.
+>>>>>
+>>>>> Size of ring buffer, as defined in uio_hv_generic driver, is no longer
+>>>>> fixed to 16 KB. This creates a problem in fcopy, since this size was
+>>>>> hardcoded. With the change in place to make ring sysfs node actually
+>>>>> reflect the size of underlying ring buffer, it is safe to get the size
+>>>>> of ring sysfs file and use it for ring buffer size in fcopy daemon.
+>>>>> Fix the issue of disparity in ring buffer size, by making it dynamic
+>>>>> in fcopy uio daemon.
+>>>>>
+>>>>> Cc: stable@vger.kernel.org
+>>>>> Fixes: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
+>>>>> Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+>>>>> Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+>>>>> Reviewed-by: Long Li <longli@microsoft.com>
+>>>>> Link: https://lore.kernel.org/r/20250711060846.9168-1-namjain@linux.microsoft.com
+>>>>> Signed-off-by: Wei Liu <wei.liu@kernel.org>
+>>>>> Message-ID: <20250711060846.9168-1-namjain@linux.microsoft.com>
+>>>>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>>>> ---
+>>>>
+>>>>
+>>>> Hello Greg,
+>>>> Please don't pick this change yet. I have shared the reason in the other
+>>>> thread:
+>>>> "Re: Patch "tools/hv: fcopy: Fix irregularities with size of ring buffer"
+>>>> has been added to the 6.12-stable tree"
+>>>
+>>> Ok, I have dropped this from the 6.12.y tree now.
+>>>
+>>> thanks,
+>>>
+>>> greg k-h
+>>
+>> Hello Greg,
+>> Can you please consider picking this change for next release of 6.12 kernel.
+>> The dependent change [1] is now part of 6.12 kernel, so we need this change
+>> to fix fcopy in 6.12 kernel.
+>>
+>> [1]: Drivers: hv: Make the sysfs node size for the ring buffer dynamic
+> 
+> What are the exact git commit ids you want to have applied here?  [1]
+> does not reference much to me :)
+> 
+> thanks,
+> 
+> greg k-h
 
-While this is correct, the MFD patch on it's own is rather useless,
-as the individual driver implementations are missing. See
-https://lore.kernel.org/all/20250703113153.2447110-1-mwalle@kernel.org/
+My bad :)
 
-I don't care too much, I just want to point out, that just having
-this patch might be misleading regarding the support of this PMIC.
+Please pick the commit a4131a50d072 ("tools/hv: fcopy: Fix 
+irregularities with size of ring buffer") in next 6.12 release, which is 
+supposed to fix fcopy.
 
--michael
 
---b0bb75deace1dbc2ddd5574427033e423afc4aadde330d8d0257abae0a9d
-Content-Type: application/pgp-signature; name="signature.asc"
+The commit which added the missing dependency is now already part of 
+v6.12.42 kernel
+c7f864d34529 ("Drivers: hv: Make the sysfs node size for the ring buffer 
+dynamic")
 
------BEGIN PGP SIGNATURE-----
+Earlier, when I requested you to drop the change from backport list 
+because above change was not part of latest 6.12 kernel.
 
-iKgEABMJADAWIQTIVZIcOo5wfU/AngkSJzzuPgIf+AUCaKLJWxIcbXdhbGxlQGtl
-cm5lbC5vcmcACgkQEic87j4CH/hUVQF+KHDTV7ZjbafCPzJFfLz7eU+lFnOpjOye
-22pVQzCxqiSjaU0s69DCCRq22OVpF0LkAYDahGM/kSaSBhm/GSiMQtNhwohhQCuu
-M9OuRbwrt+EPOFB8ksLrC0G2kvqL9sZcdxY=
-=mxBt
------END PGP SIGNATURE-----
-
---b0bb75deace1dbc2ddd5574427033e423afc4aadde330d8d0257abae0a9d--
+Regards,
+Naman
