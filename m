@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742E93218C9;
-	Mon, 18 Aug 2025 13:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45D53218C2;
+	Mon, 18 Aug 2025 13:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522609; cv=none; b=eEtl77u3AUGs+1P1gDijTVkZy3Pv9xVXYTxYExAUQ/7QxG2pWDA+BBc6876iuMAbwY8hCfWUm3bD1TEayebI4wNCraiOmpK4aNQdAiXP4qI4SJX2gjcomIppuTRfRdHt01ekmPLr4cKDGJCi9RjXvnVnKv9m+jrD3IXd3E4BUfw=
+	t=1755522612; cv=none; b=YnZlOXW5dT2ePD3E9Cj+zclVx/0sSKpOjJDAR8gVnTZKfNEFUUfqrcqRhZqP1fNOc1JpVoevnvQ2YZ/xZz0wBgi0ELEhlSr5YPLQDD3I0AdDPm/PmrNoVh52BZBXdKqhUoFfd+UMpX4KhZwKptX7KcomGBumu3ziRBqgEA6PMFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522609; c=relaxed/simple;
-	bh=rWDMWMZd+RfJMApEDkTPvn7TpX5q0aN4wg9ZjqGGe+I=;
+	s=arc-20240116; t=1755522612; c=relaxed/simple;
+	bh=dE4sytdHcp7yQnPreS6mmG5UQrLts0e2Mm4W6thv+KA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHcFM0akyA47XUSDGo7wsViQvNnopb1nifM8EnhfypdXSQtx6Siec7FOpa8eHKjXbuI7ec+zn6q1XCh7+xkWwldb/9/Olr+gIqMc/Al05Ub9GAXfWwjsK7QdZ8/EYUOSLkM3xiTQ1IRXYofKoXyu92YAb66R/iUtam4nWu6RU8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzUnyob6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nIuV5SQeufMGEMxmjsDN52A3T0rN2/gBjttJ33w7+XT26G9rvnWCsBNGNITo0QaPNPqCLyPNOqmNrS4DvHgPXVZ611PpPOncDcSSOhXEQZRrl6j+iqZHkYroswCi0RS2JTcVdTqxHArjvy3OuQO1F+DlfRhDw+SKVl0Iwl9IWAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDdEcD33; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzUnyob6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D31C4CEEB;
-	Mon, 18 Aug 2025 13:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDdEcD33"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF4FC4CEF1;
+	Mon, 18 Aug 2025 13:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522609;
-	bh=rWDMWMZd+RfJMApEDkTPvn7TpX5q0aN4wg9ZjqGGe+I=;
+	s=korg; t=1755522612;
+	bh=dE4sytdHcp7yQnPreS6mmG5UQrLts0e2Mm4W6thv+KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PzUnyob6QFtA8jf3HIsKh6wNrLv0ze8FW3zskbIVXshJZJr4JLs7ccnilX/rE6UT0
-	 ie9BtRTSS6yEG1fik4gFNCNy1QNhtd+SEXPXUB+qUXQYE9OJsUD+KkFXTu8iI/fL6M
-	 PaJEePQFTr+ObJAze+KsqR3+qL9T442o13Ur+8UE=
+	b=tDdEcD33v/b3oBRhNfG3OJLx/FycpQzDBAQBm1UwBQkRii0rLszdKatrWEeWTqm0S
+	 DPOIh+L8GcI3qcMhK537g79AcAKkt1P0IHq+1i+kleJCJ3ov1KiYw9VzAoLt2dj2Fb
+	 bBlAVzq60FVYq3sSe7VHxLB+8ZiEjIh7cJgvDXDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Buday Csaba <buday.csaba@prolan.hu>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s=20Bence?= <csokas.bence@prolan.hu>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 324/444] soundwire: amd: serialize amd manager resume sequence during pm_prepare
-Date: Mon, 18 Aug 2025 14:45:50 +0200
-Message-ID: <20250818124501.089025992@linuxfoundation.org>
+Subject: [PATCH 6.12 360/444] net: phy: smsc: add proper reset flags for LAN8710A
+Date: Mon, 18 Aug 2025 14:46:26 +0200
+Message-ID: <20250818124502.407349883@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -45,49 +47,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Buday Csaba <buday.csaba@prolan.hu>
 
-[ Upstream commit 03837341790039d6f1cbf7a1ae7dfa2cb77ef0a4 ]
+[ Upstream commit 57ec5a8735dc5dccd1ee68afdb1114956a3fce0d ]
 
-During pm_prepare callback, pm_request_resume() delays SoundWire manager D0
-entry sequence. Synchronize runtime resume sequence for amd_manager
-instance prior to invoking child devices resume sequence for both the amd
-power modes(ClockStop Mode and Power off mode).
-Change the power_mode_mask check and use pm_runtime_resume() in
-amd_pm_prepare() callback.
+According to the LAN8710A datasheet (Rev. B, section 3.8.5.1), a hardware
+reset is required after power-on, and the reference clock (REF_CLK) must be
+established before asserting reset.
 
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20250530054447.1645807-3-Vijendar.Mukunda@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Buday Csaba <buday.csaba@prolan.hu>
+Cc: Csókás Bence <csokas.bence@prolan.hu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250728152916.46249-2-csokas.bence@prolan.hu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/amd_manager.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/phy/smsc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
-index 1895fba5e70b..dc7d54cb1740 100644
---- a/drivers/soundwire/amd_manager.c
-+++ b/drivers/soundwire/amd_manager.c
-@@ -1076,10 +1076,10 @@ static int __maybe_unused amd_pm_prepare(struct device *dev)
- 	 * device is not in runtime suspend state, observed that device alerts are missing
- 	 * without pm_prepare on AMD platforms in clockstop mode0.
- 	 */
--	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
--		ret = pm_request_resume(dev);
-+	if (amd_manager->power_mode_mask) {
-+		ret = pm_runtime_resume(dev);
- 		if (ret < 0) {
--			dev_err(bus->dev, "pm_request_resume failed: %d\n", ret);
-+			dev_err(bus->dev, "pm_runtime_resume failed: %d\n", ret);
- 			return 0;
- 		}
- 	}
+diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
+index 6a43f6d6e85c..de66b621eb99 100644
+--- a/drivers/net/phy/smsc.c
++++ b/drivers/net/phy/smsc.c
+@@ -784,6 +784,7 @@ static struct phy_driver smsc_phy_driver[] = {
+ 
+ 	/* PHY_BASIC_FEATURES */
+ 
++	.flags		= PHY_RST_AFTER_CLK_EN,
+ 	.probe		= smsc_phy_probe,
+ 
+ 	/* basic functions */
 -- 
 2.39.5
 
