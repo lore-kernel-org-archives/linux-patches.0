@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8E5219A7E;
-	Mon, 18 Aug 2025 13:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65632221577;
+	Mon, 18 Aug 2025 13:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524119; cv=none; b=qxXRMzanewdXxecQM3pVHpRH5uCocSYpyCqV9nKjVCBWXgSJyU0fSnTLDWGVJIP+/C2MKYhdRMRf1KaZDwuLgP+ovzPhUuFJpHQjZzFoOJaaLxEX+WmEYiyPccF7xX+8hZG+JDAHRBBTf9bjzUZGp5zmQ9NqsdGo5HW9vv5ZUAM=
+	t=1755524122; cv=none; b=YBkGMAiK1fXgI4Ih70kLV5wKukkStEtO2p4j3As0cF+D54B+3qwqTG1Hq19fx6Hd5P0Nb8wJ6n7KYMy1iMT7O+mXq6QqwZCrn/jJ4sPPcDYcvBFz8kcV34fi4eUeLpRDSbMIoWYTbHZo1nMGNWjO2Ptqw+ve6Z/94+W5dcl4wpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524119; c=relaxed/simple;
-	bh=ynsWwtNCSodI8gv01lME90OJc90A2o94THvQ1T9xK9o=;
+	s=arc-20240116; t=1755524122; c=relaxed/simple;
+	bh=b0RqATfCrtPb7mDlqaidCig5Vq/9gH0y7lmfDWVdo50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+Jzczv5yML21GpGwSF6yWw1Vnp4AwfswQCFK4o3Uz1ExYdf1K2GKLj3vzcQA7QgBgrDc/otSi4nJIijKUWrjNhSAup2F8rIt+m97rgiJsJoxf2jqNAxtAF4g0F/u8r12mKySaVhPuKOmDL6AfaWxRorpBd+TVymya69YKQP89E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oq2MMLPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SqufxAwEbxWmUEgIJ1MrLJrokSNGEEUHsJE42xM+Rootjc3gngn1s8dUEyjPqTyUX3B4A/6nzl4oFjgfhCL0Ow+va8vfrTKMY83f7NIBojIc/Q9ooxWrA8Z3wRdXVKFrfS3WxvTjz+VQ4LDVZA3DARPonsW7vrgrsrjDmy4NgLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1f5XSXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oq2MMLPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C7FC113D0;
-	Mon, 18 Aug 2025 13:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1f5XSXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C91C4CEEB;
+	Mon, 18 Aug 2025 13:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524118;
-	bh=ynsWwtNCSodI8gv01lME90OJc90A2o94THvQ1T9xK9o=;
+	s=korg; t=1755524122;
+	bh=b0RqATfCrtPb7mDlqaidCig5Vq/9gH0y7lmfDWVdo50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oq2MMLPCGL7mA3OI7/nEDa2HD1rWx6vs6RHV3Fo8AAX+lfwWXYvyy9hr9QxrI9ClE
-	 ZK3ca9DyHceBjAmntxMS/2XejvHdPa7OMlwZ0q5/dHHwhk3ChrbBuQznjZMbuV3R22
-	 K1RBH4wTKPqsJeIN7b6aDKigjpBaSsH1rOxUp8Zs=
+	b=g1f5XSXW41YWP5oHcuU+5VKfb2FT+TWKRKz8BzXO2haLKXHcriONkRi3h8/NtOoBX
+	 lAKPIiSfineTHJTkuhxcyaQRC9aEwg46xmlJtB17J70zdwHQkFLv51UFP6D7aKkdNt
+	 Q0xw6Gx61ya8hMg47cM/wbacZ6rfCWI5G9viJU9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 374/515] media: raspberrypi: cfe: Fix min_reqbufs_allocation
-Date: Mon, 18 Aug 2025 14:46:00 +0200
-Message-ID: <20250818124512.813323883@linuxfoundation.org>
+Subject: [PATCH 6.15 375/515] media: tc358743: Check I2C succeeded during probe
+Date: Mon, 18 Aug 2025 14:46:01 +0200
+Message-ID: <20250818124512.862593226@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,51 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 57b5a302b5d529db96ddc52fbccec005092ebb3d ]
+[ Upstream commit 303d81635e1d9c949b370215cc94526ed81f2e3d ]
 
-The driver checks if "vq->max_num_buffers + *nbuffers < 3", but
-vq->max_num_buffers is (by default) 32, so the check is never true. Nor
-does the check make sense.
+The probe for the TC358743 reads the CHIPID register from
+the device and compares it to the expected value of 0.
+If the I2C request fails then that also returns 0, so
+the driver loads thinking that the device is there.
 
-The original code in the BSP kernel was "vq->num_buffers + *nbuffers <
-3", but got mangled along the way to upstream. The intention was to make
-sure that at least 3 buffers are allocated.
+Generally I2C communications are reliable so there is
+limited need to check the return value on every transfer,
+therefore only amend the one read during probe to check
+for I2C errors.
 
-Fix this by removing the bad lines and setting q->min_reqbufs_allocation
-to three.
-
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/raspberrypi/rp1-cfe/cfe.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/i2c/tc358743.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/raspberrypi/rp1-cfe/cfe.c b/drivers/media/platform/raspberrypi/rp1-cfe/cfe.c
-index 69a5f23e7954..9af9efc0d7e7 100644
---- a/drivers/media/platform/raspberrypi/rp1-cfe/cfe.c
-+++ b/drivers/media/platform/raspberrypi/rp1-cfe/cfe.c
-@@ -1025,9 +1025,6 @@ static int cfe_queue_setup(struct vb2_queue *vq, unsigned int *nbuffers,
- 	cfe_dbg(cfe, "%s: [%s] type:%u\n", __func__, node_desc[node->id].name,
- 		node->buffer_queue.type);
+diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
+index dcef93e1a3bc..bffff5d0ce40 100644
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -114,7 +114,7 @@ static inline struct tc358743_state *to_state(struct v4l2_subdev *sd)
  
--	if (vq->max_num_buffers + *nbuffers < 3)
--		*nbuffers = 3 - vq->max_num_buffers;
--
- 	if (*nplanes) {
- 		if (sizes[0] < size) {
- 			cfe_err(cfe, "sizes[0] %i < size %u\n", sizes[0], size);
-@@ -1999,6 +1996,7 @@ static int cfe_register_node(struct cfe_device *cfe, int id)
- 	q->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
- 	q->lock = &node->lock;
- 	q->min_queued_buffers = 1;
-+	q->min_reqbufs_allocation = 3;
- 	q->dev = &cfe->pdev->dev;
+ /* --------------- I2C --------------- */
  
- 	ret = vb2_queue_init(q);
+-static void i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
++static int i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+ {
+ 	struct tc358743_state *state = to_state(sd);
+ 	struct i2c_client *client = state->i2c_client;
+@@ -140,6 +140,7 @@ static void i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+ 		v4l2_err(sd, "%s: reading register 0x%x from 0x%x failed: %d\n",
+ 				__func__, reg, client->addr, err);
+ 	}
++	return err != ARRAY_SIZE(msgs);
+ }
+ 
+ static void i2c_wr(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+@@ -196,15 +197,24 @@ static void i2c_wr(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+ 	}
+ }
+ 
+-static noinline u32 i2c_rdreg(struct v4l2_subdev *sd, u16 reg, u32 n)
++static noinline u32 i2c_rdreg_err(struct v4l2_subdev *sd, u16 reg, u32 n,
++				  int *err)
+ {
++	int error;
+ 	__le32 val = 0;
+ 
+-	i2c_rd(sd, reg, (u8 __force *)&val, n);
++	error = i2c_rd(sd, reg, (u8 __force *)&val, n);
++	if (err)
++		*err = error;
+ 
+ 	return le32_to_cpu(val);
+ }
+ 
++static inline u32 i2c_rdreg(struct v4l2_subdev *sd, u16 reg, u32 n)
++{
++	return i2c_rdreg_err(sd, reg, n, NULL);
++}
++
+ static noinline void i2c_wrreg(struct v4l2_subdev *sd, u16 reg, u32 val, u32 n)
+ {
+ 	__le32 raw = cpu_to_le32(val);
+@@ -233,6 +243,13 @@ static u16 i2c_rd16(struct v4l2_subdev *sd, u16 reg)
+ 	return i2c_rdreg(sd, reg, 2);
+ }
+ 
++static int i2c_rd16_err(struct v4l2_subdev *sd, u16 reg, u16 *value)
++{
++	int err;
++	*value = i2c_rdreg_err(sd, reg, 2, &err);
++	return err;
++}
++
+ static void i2c_wr16(struct v4l2_subdev *sd, u16 reg, u16 val)
+ {
+ 	i2c_wrreg(sd, reg, val, 2);
+@@ -2061,6 +2078,7 @@ static int tc358743_probe(struct i2c_client *client)
+ 	struct tc358743_platform_data *pdata = client->dev.platform_data;
+ 	struct v4l2_subdev *sd;
+ 	u16 irq_mask = MASK_HDMI_MSK | MASK_CSI_MSK;
++	u16 chipid;
+ 	int err;
+ 
+ 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_SMBUS_BYTE_DATA))
+@@ -2092,7 +2110,8 @@ static int tc358743_probe(struct i2c_client *client)
+ 	sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE | V4L2_SUBDEV_FL_HAS_EVENTS;
+ 
+ 	/* i2c access */
+-	if ((i2c_rd16(sd, CHIPID) & MASK_CHIPID) != 0) {
++	if (i2c_rd16_err(sd, CHIPID, &chipid) ||
++	    (chipid & MASK_CHIPID) != 0) {
+ 		v4l2_info(sd, "not a TC358743 on address 0x%x\n",
+ 			  client->addr << 1);
+ 		return -ENODEV;
 -- 
 2.39.5
 
