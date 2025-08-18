@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE3F335BA3;
-	Mon, 18 Aug 2025 13:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A172335BBF;
+	Mon, 18 Aug 2025 13:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525114; cv=none; b=YyjKQ/wQZZLusiOIYQiCbu/MOzbvx16jrMDGS4O7YiPQjH0zL9Jj3I82M7jC6Bxe7pt/Xsp6THQY3zVZb1VFjHmUsct1/zknXyUSI5f3pvvX4W4tjubWHh9aFtyEM5Cevs3deQRbjBc2T1u+8EL2Tp4zLQMo5GiIicS4wEpEwlo=
+	t=1755525117; cv=none; b=qhlb/xC5IxwrOoHiw6oL4+2+DoVn7HyHiNui/13AgiOZOnuhFbzTJ7CkZmojJ9XexaHmAqc8x9NMUP7S03slmxpXt+2n+rf7qi5L2+TckcyI0fVfr5AmS+FfPHW/lYuBQrLNlTLLSJNCfcF89EicyL29RO+y/2cNwhWCcNTFDFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525114; c=relaxed/simple;
-	bh=BDsIDIv4vqp3O7fz/NawRuifzLAy9V1hoxn1XGBemiA=;
+	s=arc-20240116; t=1755525117; c=relaxed/simple;
+	bh=/C/m5yF9Q9WWA/xeLn+PT6O7+aIYTOxQ/9orc5RUu7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsB9YPiHnvqhBgzWB/y+JQg19iZDeJTqp9zotq0OKKc0PsCvRh8k74X6jQtA4/gSQIK6yEAYGtcZlPSVsuZua2GjDWZbAXkAJSsA+2yqNQq+Ie6VgDeAAWrx4yRWU6mIxurdSY6+c0o5/S5Uxv8qAAznj/lrVQIL4MuWUDs7bfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Coz2//+4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uLr4IuIWl2zU7MR63zzgHMMa1zTXdLqvpyKQ/bzgz6aUpHUGERLTFlokkeSQSn7O0nVK59nwdG9MdP2fIz/CItW4IucZCbtepIn7VcUjcYIjRGYDZcbYj0CtwDKwJWWmLSW2Pxtx4DN4vkI4HIdy3120v/DiO7pIO1ynCW8mlzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLnoazMc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Coz2//+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90C9C4CEEB;
-	Mon, 18 Aug 2025 13:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLnoazMc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2428C4CEF1;
+	Mon, 18 Aug 2025 13:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525114;
-	bh=BDsIDIv4vqp3O7fz/NawRuifzLAy9V1hoxn1XGBemiA=;
+	s=korg; t=1755525117;
+	bh=/C/m5yF9Q9WWA/xeLn+PT6O7+aIYTOxQ/9orc5RUu7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Coz2//+494/ZHxBalsKIBLxbZH9sWdJ0Kyw2SjMZUwPl6mmQO48DlkwuXHkAhI24i
-	 IgE9xP5Tl67cAlvmnoUBONNE9iJHeLg951t4svPDlCGVfbTH8agllIqZBMBPDSa4SE
-	 A3w22ID6qqlu1gR+sAAFg9HccJJRowa99NsQOh9E=
+	b=rLnoazMcz0RJ17ztqsv5416qFvSBQLE/1B7LSJ0RvIv2zHx8DLPUJP5MEKc3WnUam
+	 9nIORKqPLZBULoLFnBTmNApVH+n/ViUcf+w9AMGpymkAKX/IS2pt1bfzysSeBLnE9H
+	 HtKhEZ6uotJOqpKapFPf/az/T4Dz5Pg/n6M5ZC9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 161/570] firmware: arm_scmi: power_control: Ensure SCMI_SYSPOWER_IDLE is set early during resume
-Date: Mon, 18 Aug 2025 14:42:28 +0200
-Message-ID: <20250818124512.011626069@linuxfoundation.org>
+Subject: [PATCH 6.16 162/570] firmware: tegra: Fix IVC dependency problems
+Date: Mon, 18 Aug 2025 14:42:29 +0200
+Message-ID: <20250818124512.048598129@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,95 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit 9a0658d3991e6c82df87584b253454842f22f965 ]
+[ Upstream commit 78eb18020a88a4eed15f5af7700ed570642ff8f1 ]
 
-Fix a race condition where a second suspend notification from another
-SCMI agent wakes the system before SCMI_SYSPOWER_IDLE is set, leading
-to ignored suspend requests. This is due to interrupts triggering early
-execution of `scmi_userspace_notifier()` before the SCMI state is updated.
+The IVC code is library code that other drivers need to select if they
+need that library. However, if the symbol is user-selectable this can
+lead to conflicts.
 
-To resolve this, set SCMI_SYSPOWER_IDLE earlier in the device resume
-path, prior to `thaw_processes()`. This ensures the SCMI state is
-correct when the notifier runs, allowing the system to suspend again
-as expected.
+Fix this by making the symbol only selectable for COMPILE_TEST and add
+a select TEGRA_IVC to TEGRA_BPMP, which is currently the only user.
 
-On some platforms using SCMI, SCP cannot distinguish between CPU idle
-and suspend since both result in cluster power-off. By explicitly setting
-the idle state early, the Linux SCMI agent can correctly re-suspend in
-response to external notifications.
-
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Message-Id: <20250704-scmi-pm-v2-2-9316cec2f9cc@nxp.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Link: https://lore.kernel.org/r/20250506133118.1011777-10-thierry.reding@gmail.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../firmware/arm_scmi/scmi_power_control.c    | 22 ++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/firmware/tegra/Kconfig | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/scmi_power_control.c b/drivers/firmware/arm_scmi/scmi_power_control.c
-index 21f467a92942..ab0cee0d4bec 100644
---- a/drivers/firmware/arm_scmi/scmi_power_control.c
-+++ b/drivers/firmware/arm_scmi/scmi_power_control.c
-@@ -46,6 +46,7 @@
- #include <linux/math.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
-+#include <linux/pm.h>
- #include <linux/printk.h>
- #include <linux/reboot.h>
- #include <linux/scmi_protocol.h>
-@@ -324,12 +325,7 @@ static int scmi_userspace_notifier(struct notifier_block *nb,
+diff --git a/drivers/firmware/tegra/Kconfig b/drivers/firmware/tegra/Kconfig
+index cde1ab8bd9d1..91f2320c0d0f 100644
+--- a/drivers/firmware/tegra/Kconfig
++++ b/drivers/firmware/tegra/Kconfig
+@@ -2,7 +2,7 @@
+ menu "Tegra firmware driver"
  
- static void scmi_suspend_work_func(struct work_struct *work)
- {
--	struct scmi_syspower_conf *sc =
--		container_of(work, struct scmi_syspower_conf, suspend_work);
--
- 	pm_suspend(PM_SUSPEND_MEM);
--
--	sc->state = SCMI_SYSPOWER_IDLE;
- }
+ config TEGRA_IVC
+-	bool "Tegra IVC protocol"
++	bool "Tegra IVC protocol" if COMPILE_TEST
+ 	depends on ARCH_TEGRA
+ 	help
+ 	  IVC (Inter-VM Communication) protocol is part of the IPC
+@@ -13,8 +13,9 @@ config TEGRA_IVC
  
- static int scmi_syspower_probe(struct scmi_device *sdev)
-@@ -354,6 +350,7 @@ static int scmi_syspower_probe(struct scmi_device *sdev)
- 	sc->required_transition = SCMI_SYSTEM_MAX;
- 	sc->userspace_nb.notifier_call = &scmi_userspace_notifier;
- 	sc->dev = &sdev->dev;
-+	dev_set_drvdata(&sdev->dev, sc);
- 
- 	INIT_WORK(&sc->suspend_work, scmi_suspend_work_func);
- 
-@@ -363,6 +360,18 @@ static int scmi_syspower_probe(struct scmi_device *sdev)
- 						       NULL, &sc->userspace_nb);
- }
- 
-+static int scmi_system_power_resume(struct device *dev)
-+{
-+	struct scmi_syspower_conf *sc = dev_get_drvdata(dev);
-+
-+	sc->state = SCMI_SYSPOWER_IDLE;
-+	return 0;
-+}
-+
-+static const struct dev_pm_ops scmi_system_power_pmops = {
-+	SET_SYSTEM_SLEEP_PM_OPS(NULL, scmi_system_power_resume)
-+};
-+
- static const struct scmi_device_id scmi_id_table[] = {
- 	{ SCMI_PROTOCOL_SYSTEM, "syspower" },
- 	{ },
-@@ -370,6 +379,9 @@ static const struct scmi_device_id scmi_id_table[] = {
- MODULE_DEVICE_TABLE(scmi, scmi_id_table);
- 
- static struct scmi_driver scmi_system_power_driver = {
-+	.driver	= {
-+		.pm = &scmi_system_power_pmops,
-+	},
- 	.name = "scmi-system-power",
- 	.probe = scmi_syspower_probe,
- 	.id_table = scmi_id_table,
+ config TEGRA_BPMP
+ 	bool "Tegra BPMP driver"
+-	depends on ARCH_TEGRA && TEGRA_HSP_MBOX && TEGRA_IVC
++	depends on ARCH_TEGRA && TEGRA_HSP_MBOX
+ 	depends on !CPU_BIG_ENDIAN
++	select TEGRA_IVC
+ 	help
+ 	  BPMP (Boot and Power Management Processor) is designed to off-loading
+ 	  the PM functions which include clock/DVFS/thermal/power from the CPU.
 -- 
 2.39.5
 
