@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B984C335BA3;
-	Mon, 18 Aug 2025 13:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73693335BB3;
+	Mon, 18 Aug 2025 13:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524595; cv=none; b=ol9OT+V7bvgpvDrtUjZNvulCG9WVbCeS2db+69Nzdys/Ex5d+V3wOMebLW7t1Wg08u2V9rlflactTHWiNoXcjtM6/DbbjYbL9tfMBjgfXKY/DnbPcQChO6bUGeGK20zf16rbkEtDUrA5Ezi0aULUCJgzIvsAvVG8JdFYaFMBKYk=
+	t=1755524598; cv=none; b=YPaxtWAkLooeqlZY0oedKsd2cHbVtgBL+ZF8Azu4Jpp1xJKL0Czj0u6XAcLTHEyg9IweKhnk8AJDEZZo+fLWLziWuJ182Z99NPVG3mHyb7enRSy9Af0VirsBDWrnPL2B/Dfs6XUykhBq302QGiyuY2WyuVUSWRNN9/9A6xbyhGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524595; c=relaxed/simple;
-	bh=wcALTnweJCQy19a399gZdjRXHoREyQO5VjjdcQbLcFI=;
+	s=arc-20240116; t=1755524598; c=relaxed/simple;
+	bh=n49+bR+G++s5HuF8ZrYTdQj8ATx6DoJMsuPag3qVlrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G80IdgWUQUc01PKkhjGboOsgb9uby3hHf8znc4s8G97ztMda7hkh5avwx1EMp+WgeMZs9OqMnXrEnYjStpFtpb3Wzaxo8iCMFpA2VtpxA7Ofasw16yK6T2tDU8CMuw7vg6ElvZfoI487m8zw0GIJdHD2DcjKnLF9UeSDq4yORlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUs/X7C6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1klcIYK+8nobyTntg2QZ/YzttAyFGmvgktGLyPqvxjYh0g++i4XW4+jHCpmeb4ayfGG9coyCbWFbvVw9vUNVCAaJdjE4DY5YAGVjF4Sn/rkBtO86FTSUxHRfQawVti2TWEi/HZE7PbVX+91axfQacZ+achDZNXW3B81DPoXluM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtZ8tL6Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUs/X7C6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EBFC4CEF1;
-	Mon, 18 Aug 2025 13:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtZ8tL6Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AFAC116B1;
+	Mon, 18 Aug 2025 13:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524595;
-	bh=wcALTnweJCQy19a399gZdjRXHoREyQO5VjjdcQbLcFI=;
+	s=korg; t=1755524598;
+	bh=n49+bR+G++s5HuF8ZrYTdQj8ATx6DoJMsuPag3qVlrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUs/X7C6h7NBnRxRlvJiDFRCyhhCDQVaHrKeBUxMApu79CP7fHqezrRCtcUhyst6v
-	 XTS8L+mSM0QcWu25ZeX4XBneIMo2Cni3h3PQuppqb/Y3B0q4mO5nNAi+ZTz77fLBK1
-	 Cvy82nh23sNm9cquKvrKe/k8bSsw2Zq7jm6lqvo8=
+	b=LtZ8tL6QaOIMBvQsPXzSA3xBIgj93wM96Xn4j32EJ7XqAPSMeynQipAy7tOipv1pm
+	 U187sLWf896X5xnOTFigqnTCy8edKe4KbUdkaHNC+mQBLXvO7faDXUm7JdwfaNJCjM
+	 XB8mu6figoehl9/0JB0k6xRG3L7BNyFHu5oAHwTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 506/515] KVM: x86: Convert vcpu_run()s immediate exit param into a generic bitmap
-Date: Mon, 18 Aug 2025 14:48:12 +0200
-Message-ID: <20250818124517.921217932@linuxfoundation.org>
+	Aditya Garg <gargaditya08@live.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.15 507/515] HID: magicmouse: avoid setting up battery timer when not needed
+Date: Mon, 18 Aug 2025 14:48:13 +0200
+Message-ID: <20250818124517.958815049@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,139 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Aditya Garg <gargaditya08@live.com>
 
-commit 2478b1b220c49d25cb1c3f061ec4f9b351d9a131 upstream.
+commit 9bdc30e35cbc1aa78ccf01040354209f1e11ca22 upstream.
 
-Convert kvm_x86_ops.vcpu_run()'s "force_immediate_exit" boolean parameter
-into an a generic bitmap so that similar "take action" information can be
-passed to vendor code without creating a pile of boolean parameters.
+Currently, the battery timer is set up for all devices using
+hid-magicmouse, irrespective of whether they actually need it or not.
 
-This will allow dropping kvm_x86_ops.set_dr6() in favor of a new flag, and
-will also allow for adding similar functionality for re-loading debugctl
-in the active VMCS.
+The current implementation requires the battery timer for Magic Mouse 2
+and Magic Trackpad 2 when connected via USB only. Add checks to ensure
+that the battery timer is only set up when they are connected via USB.
 
-Opportunistically massage the TDX WARN and comment to prepare for adding
-more run_flags, all of which are expected to be mutually exclusive with
-TDX, i.e. should be WARNed on.
-
-No functional change intended.
-
+Fixes: 0b91b4e4dae6 ("HID: magicmouse: Report battery level over USB")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250610232010.162191-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ Removed TDX-specific changes ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/x86/include/asm/kvm_host.h |    6 +++++-
- arch/x86/kvm/svm/svm.c          |    4 ++--
- arch/x86/kvm/vmx/vmx.c          |    3 ++-
- arch/x86/kvm/vmx/x86_ops.h      |    2 +-
- arch/x86/kvm/x86.c              |   11 ++++++++---
- 5 files changed, 18 insertions(+), 8 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1658,6 +1658,10 @@ static inline u16 kvm_lapic_irq_dest_mod
- 	return dest_mode_logical ? APIC_DEST_LOGICAL : APIC_DEST_PHYSICAL;
+---
+ drivers/hid/hid-magicmouse.c |   58 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 38 insertions(+), 20 deletions(-)
+
+--- a/drivers/hid/hid-magicmouse.c
++++ b/drivers/hid/hid-magicmouse.c
+@@ -779,16 +779,30 @@ static void magicmouse_enable_mt_work(st
+ 		hid_err(msc->hdev, "unable to request touch data (%d)\n", ret);
  }
  
-+enum kvm_x86_run_flags {
-+	KVM_RUN_FORCE_IMMEDIATE_EXIT	= BIT(0),
-+};
++static bool is_usb_magicmouse2(__u32 vendor, __u32 product)
++{
++	if (vendor != USB_VENDOR_ID_APPLE)
++		return false;
++	return product == USB_DEVICE_ID_APPLE_MAGICMOUSE2;
++}
 +
- struct kvm_x86_ops {
- 	const char *name;
- 
-@@ -1738,7 +1742,7 @@ struct kvm_x86_ops {
- 
- 	int (*vcpu_pre_run)(struct kvm_vcpu *vcpu);
- 	enum exit_fastpath_completion (*vcpu_run)(struct kvm_vcpu *vcpu,
--						  bool force_immediate_exit);
-+						  u64 run_flags);
- 	int (*handle_exit)(struct kvm_vcpu *vcpu,
- 		enum exit_fastpath_completion exit_fastpath);
- 	int (*skip_emulated_instruction)(struct kvm_vcpu *vcpu);
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4319,9 +4319,9 @@ static noinstr void svm_vcpu_enter_exit(
- 	guest_state_exit_irqoff();
- }
- 
--static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu,
--					  bool force_immediate_exit)
-+static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
++static bool is_usb_magictrackpad2(__u32 vendor, __u32 product)
++{
++	if (vendor != USB_VENDOR_ID_APPLE)
++		return false;
++	return product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++	       product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC;
++}
++
+ static int magicmouse_fetch_battery(struct hid_device *hdev)
  {
-+	bool force_immediate_exit = run_flags & KVM_RUN_FORCE_IMMEDIATE_EXIT;
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 	bool spec_ctrl_intercepted = msr_write_intercepted(vcpu, MSR_IA32_SPEC_CTRL);
+ #ifdef CONFIG_HID_BATTERY_STRENGTH
+ 	struct hid_report_enum *report_enum;
+ 	struct hid_report *report;
  
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -7416,8 +7416,9 @@ out:
- 	guest_state_exit_irqoff();
- }
+-	if (!hdev->battery || hdev->vendor != USB_VENDOR_ID_APPLE ||
+-	    (hdev->product != USB_DEVICE_ID_APPLE_MAGICMOUSE2 &&
+-	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
+-	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC))
++	if (!hdev->battery ||
++	    (!is_usb_magicmouse2(hdev->vendor, hdev->product) &&
++	     !is_usb_magictrackpad2(hdev->vendor, hdev->product)))
+ 		return -1;
  
--fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, bool force_immediate_exit)
-+fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
- {
-+	bool force_immediate_exit = run_flags & KVM_RUN_FORCE_IMMEDIATE_EXIT;
- 	struct vcpu_vmx *vmx = to_vmx(vcpu);
- 	unsigned long cr3, cr4;
- 
---- a/arch/x86/kvm/vmx/x86_ops.h
-+++ b/arch/x86/kvm/vmx/x86_ops.h
-@@ -21,7 +21,7 @@ void vmx_vm_destroy(struct kvm *kvm);
- int vmx_vcpu_precreate(struct kvm *kvm);
- int vmx_vcpu_create(struct kvm_vcpu *vcpu);
- int vmx_vcpu_pre_run(struct kvm_vcpu *vcpu);
--fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, bool force_immediate_exit);
-+fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags);
- void vmx_vcpu_free(struct kvm_vcpu *vcpu);
- void vmx_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event);
- void vmx_vcpu_load(struct kvm_vcpu *vcpu, int cpu);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10724,6 +10724,7 @@ static int vcpu_enter_guest(struct kvm_v
- 		dm_request_for_irq_injection(vcpu) &&
- 		kvm_cpu_accept_dm_intr(vcpu);
- 	fastpath_t exit_fastpath;
-+	u64 run_flags;
- 
- 	bool req_immediate_exit = false;
- 
-@@ -10968,8 +10969,11 @@ static int vcpu_enter_guest(struct kvm_v
- 		goto cancel_injection;
+ 	report_enum = &hdev->report_enum[hdev->battery_report_type];
+@@ -850,16 +864,17 @@ static int magicmouse_probe(struct hid_d
+ 		return ret;
  	}
  
--	if (req_immediate_exit)
-+	run_flags = 0;
-+	if (req_immediate_exit) {
-+		run_flags |= KVM_RUN_FORCE_IMMEDIATE_EXIT;
- 		kvm_make_request(KVM_REQ_EVENT, vcpu);
+-	timer_setup(&msc->battery_timer, magicmouse_battery_timer_tick, 0);
+-	mod_timer(&msc->battery_timer,
+-		  jiffies + msecs_to_jiffies(USB_BATTERY_TIMEOUT_MS));
+-	magicmouse_fetch_battery(hdev);
+-
+-	if (id->vendor == USB_VENDOR_ID_APPLE &&
+-	    (id->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
+-	     ((id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
+-	       id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
+-	      hdev->type != HID_TYPE_USBMOUSE)))
++	if (is_usb_magicmouse2(id->vendor, id->product) ||
++	    is_usb_magictrackpad2(id->vendor, id->product)) {
++		timer_setup(&msc->battery_timer, magicmouse_battery_timer_tick, 0);
++		mod_timer(&msc->battery_timer,
++			  jiffies + msecs_to_jiffies(USB_BATTERY_TIMEOUT_MS));
++		magicmouse_fetch_battery(hdev);
 +	}
- 
- 	fpregs_assert_state_consistent();
- 	if (test_thread_flag(TIF_NEED_FPU_LOAD))
-@@ -11005,8 +11009,7 @@ static int vcpu_enter_guest(struct kvm_v
- 		WARN_ON_ONCE((kvm_vcpu_apicv_activated(vcpu) != kvm_vcpu_apicv_active(vcpu)) &&
- 			     (kvm_get_apic_mode(vcpu) != LAPIC_MODE_DISABLED));
- 
--		exit_fastpath = kvm_x86_call(vcpu_run)(vcpu,
--						       req_immediate_exit);
-+		exit_fastpath = kvm_x86_call(vcpu_run)(vcpu, run_flags);
- 		if (likely(exit_fastpath != EXIT_FASTPATH_REENTER_GUEST))
- 			break;
- 
-@@ -11018,6 +11021,8 @@ static int vcpu_enter_guest(struct kvm_v
- 			break;
- 		}
- 
-+		run_flags = 0;
 +
- 		/* Note, VM-Exits that go down the "slow" path are accounted below. */
- 		++vcpu->stat.exits;
++	if (is_usb_magicmouse2(id->vendor, id->product) ||
++	    (is_usb_magictrackpad2(id->vendor, id->product) &&
++	     hdev->type != HID_TYPE_USBMOUSE))
+ 		return 0;
+ 
+ 	if (!msc->input) {
+@@ -915,7 +930,10 @@ static int magicmouse_probe(struct hid_d
+ 
+ 	return 0;
+ err_stop_hw:
+-	timer_delete_sync(&msc->battery_timer);
++	if (is_usb_magicmouse2(id->vendor, id->product) ||
++	    is_usb_magictrackpad2(id->vendor, id->product))
++		timer_delete_sync(&msc->battery_timer);
++
+ 	hid_hw_stop(hdev);
+ 	return ret;
+ }
+@@ -926,7 +944,9 @@ static void magicmouse_remove(struct hid
+ 
+ 	if (msc) {
+ 		cancel_delayed_work_sync(&msc->work);
+-		timer_delete_sync(&msc->battery_timer);
++		if (is_usb_magicmouse2(hdev->vendor, hdev->product) ||
++		    is_usb_magictrackpad2(hdev->vendor, hdev->product))
++			timer_delete_sync(&msc->battery_timer);
  	}
+ 
+ 	hid_hw_stop(hdev);
+@@ -943,10 +963,8 @@ static const __u8 *magicmouse_report_fix
+ 	 *   0x05, 0x01,       // Usage Page (Generic Desktop)        0
+ 	 *   0x09, 0x02,       // Usage (Mouse)                       2
+ 	 */
+-	if (hdev->vendor == USB_VENDOR_ID_APPLE &&
+-	    (hdev->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
+-	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
+-	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
++	if ((is_usb_magicmouse2(hdev->vendor, hdev->product) ||
++	     is_usb_magictrackpad2(hdev->vendor, hdev->product)) &&
+ 	    *rsize == 83 && rdesc[46] == 0x84 && rdesc[58] == 0x85) {
+ 		hid_info(hdev,
+ 			 "fixing up magicmouse battery report descriptor\n");
 
 
