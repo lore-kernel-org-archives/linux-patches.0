@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519EC3218C0;
-	Mon, 18 Aug 2025 13:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6339D321443;
+	Mon, 18 Aug 2025 13:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523056; cv=none; b=mAoJWk3hMFtTrrjRRwuutPeI+4lZ0Bwf43GVooYn9FZJvLPvRUEDHcoZRfOSk1Ckm/CMPS89wlhxdrXpvhVsFR8v/NVQpDwmzOx+zvcqgDDFUVc2sQr0IrIwurbKyJ0CH6k7r8ES+Idxrt0rTaltLnNoNgRD23ltoxvlC3phgks=
+	t=1755523059; cv=none; b=AgM0g5IJXJ9MmAfzd8XvE+mDqhNYKkyG/SxZgkVx5ps8DyXdJAM+fNGAkuD5rTtz4FSC5ruqv8A5qgcBG77tr1rrwARXjpJYXUiueTjWubUtMhwOnQ++tyYV2kE13KCnsZkZeeEwQ0XqyH2sydnQE7PMnUegdmkLRlOcpXJ1LBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523056; c=relaxed/simple;
-	bh=3QtItzwadrzmUAKoA8AeFwzMhLphp6316hvr3fOicts=;
+	s=arc-20240116; t=1755523059; c=relaxed/simple;
+	bh=cCHOwq2liHFL63xv3rOTCi6kjW5KXBHv3rb6sDlA4E8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=euHAR/wCvF3C1qM5TBJDx5pR+MJRYhqZKMgQvIN1l6b8TXE+ig8wr2jX2LvHO72mxGlf/nTUUyOqjs8RWqYLcgJjJT+OX9UIu4BOGol7o9UCPL2wtwlWkdmBIrlVoDdvuUIsGuGN1lbw+1Tm+iHHJ9ny8U6wx7S6y2ceNL3hjNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6WBrK1X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJWDmgua5DrSO8+7QDdmlHTAr7y0E0UghmpQX18Us9zGdiTTMaTATWEBujTNCQL5zxRvaFkv2eZ/PsMZ6ZChB2BBo9yZe659+exIrV/BciFnjMgs5KTXuKAPS72gRVAqbT/431MKsI0BNsneuVZY1LF9JAI6iUsdbGZ72et+owE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h04fJAqW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6WBrK1X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6990C4CEF1;
-	Mon, 18 Aug 2025 13:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h04fJAqW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC85C4CEF1;
+	Mon, 18 Aug 2025 13:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523056;
-	bh=3QtItzwadrzmUAKoA8AeFwzMhLphp6316hvr3fOicts=;
+	s=korg; t=1755523059;
+	bh=cCHOwq2liHFL63xv3rOTCi6kjW5KXBHv3rb6sDlA4E8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6WBrK1X3ZsiAijxMh0hJ2BejAJLeFW6Vo0yf7WLkOzX7AACVaMlonktLvCB8cVX0
-	 KBNyj5L4gbtAt5t+cLl9Rze9VYkR7Ru5twZj4RNPS6Ul5gMmPPgccQ9yVp3GKtH6aM
-	 Z1njG0T24l8Uk35CcPgXzCMp0matFIVJzCVcRAuU=
+	b=h04fJAqWJrIpe0dQRT13aZA09p6dkW2/qbzHP3JG04d/bpx+uYdAj2hs+gj/bCa24
+	 pkKW80T8+d6AOMc9dC4pYffCmwJOcVQERpuAeyBltIlNEZ+/HtrFCFLZ9IdFQHGIjg
+	 dMviYXN3b259bWfaas+5w6ywMqZa77TkjCELnpOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 058/515] udp: also consider secpath when evaluating ipsec use for checksumming
-Date: Mon, 18 Aug 2025 14:40:44 +0200
-Message-ID: <20250818124500.651353349@linuxfoundation.org>
+Subject: [PATCH 6.15 059/515] netfilter: ctnetlink: fix refcount leak on table dump
+Date: Mon, 18 Aug 2025 14:40:45 +0200
+Message-ID: <20250818124500.687017584@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,49 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 1118aaa3b35157777890fffab91d8c1da841b20b ]
+[ Upstream commit de788b2e6227462b6dcd0e07474e72c089008f74 ]
 
-Commit b40c5f4fde22 ("udp: disable inner UDP checksum offloads in
-IPsec case") tried to fix checksumming in UFO when the packets are
-going through IPsec, so that we can't rely on offloads because the UDP
-header and payload will be encrypted.
+There is a reference count leak in ctnetlink_dump_table():
+      if (res < 0) {
+                nf_conntrack_get(&ct->ct_general); // HERE
+                cb->args[1] = (unsigned long)ct;
+                ...
 
-But when doing a TCP test over VXLAN going through IPsec transport
-mode with GSO enabled (esp4_offload module loaded), I'm seeing broken
-UDP checksums on the encap after successful decryption.
+While its very unlikely, its possible that ct == last.
+If this happens, then the refcount of ct was already incremented.
+This 2nd increment is never undone.
 
-The skbs get to udp4_ufo_fragment/__skb_udp_tunnel_segment via
-__dev_queue_xmit -> validate_xmit_skb -> skb_gso_segment and at this
-point we've already dropped the dst (unless the device sets
-IFF_XMIT_DST_RELEASE, which is not common), so need_ipsec is false and
-we proceed with checksum offload.
+This prevents the conntrack object from being released, which in turn
+keeps prevents cnet->count from dropping back to 0.
 
-Make need_ipsec also check the secpath, which is not dropped on this
-callpath.
+This will then block the netns dismantle (or conntrack rmmod) as
+nf_conntrack_cleanup_net_list() will wait forever.
 
-Fixes: b40c5f4fde22 ("udp: disable inner UDP checksum offloads in IPsec case")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+This can be reproduced by running conntrack_resize.sh selftest in a loop.
+It takes ~20 minutes for me on a preemptible kernel on average before
+I see a runaway kworker spinning in nf_conntrack_cleanup_net_list.
+
+One fix would to change this to:
+        if (res < 0) {
+		if (ct != last)
+	                nf_conntrack_get(&ct->ct_general);
+
+But this reference counting isn't needed in the first place.
+We can just store a cookie value instead.
+
+A followup patch will do the same for ctnetlink_exp_dump_table,
+it looks to me as if this has the same problem and like
+ctnetlink_dump_table, we only need a 'skip hint', not the actual
+object so we can apply the same cookie strategy there as well.
+
+Fixes: d205dc40798d ("[NETFILTER]: ctnetlink: fix deadlock in table dumping")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index a1aca6308677..4245522d4201 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -61,7 +61,7 @@ static struct sk_buff *__skb_udp_tunnel_segment(struct sk_buff *skb,
- 	remcsum = !!(skb_shinfo(skb)->gso_type & SKB_GSO_TUNNEL_REMCSUM);
- 	skb->remcsum_offload = remcsum;
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 2cc0fde23344..5fdcae45e0bc 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -884,8 +884,6 @@ ctnetlink_conntrack_event(unsigned int events, const struct nf_ct_event *item)
  
--	need_ipsec = skb_dst(skb) && dst_xfrm(skb_dst(skb));
-+	need_ipsec = (skb_dst(skb) && dst_xfrm(skb_dst(skb))) || skb_sec_path(skb);
- 	/* Try to offload checksum if possible */
- 	offload_csum = !!(need_csum &&
- 			  !need_ipsec &&
+ static int ctnetlink_done(struct netlink_callback *cb)
+ {
+-	if (cb->args[1])
+-		nf_ct_put((struct nf_conn *)cb->args[1]);
+ 	kfree(cb->data);
+ 	return 0;
+ }
+@@ -1208,19 +1206,26 @@ static int ctnetlink_filter_match(struct nf_conn *ct, void *data)
+ 	return 0;
+ }
+ 
++static unsigned long ctnetlink_get_id(const struct nf_conn *ct)
++{
++	unsigned long id = nf_ct_get_id(ct);
++
++	return id ? id : 1;
++}
++
+ static int
+ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	unsigned int flags = cb->data ? NLM_F_DUMP_FILTERED : 0;
+ 	struct net *net = sock_net(skb->sk);
+-	struct nf_conn *ct, *last;
++	unsigned long last_id = cb->args[1];
+ 	struct nf_conntrack_tuple_hash *h;
+ 	struct hlist_nulls_node *n;
+ 	struct nf_conn *nf_ct_evict[8];
++	struct nf_conn *ct;
+ 	int res, i;
+ 	spinlock_t *lockp;
+ 
+-	last = (struct nf_conn *)cb->args[1];
+ 	i = 0;
+ 
+ 	local_bh_disable();
+@@ -1257,7 +1262,7 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 				continue;
+ 
+ 			if (cb->args[1]) {
+-				if (ct != last)
++				if (ctnetlink_get_id(ct) != last_id)
+ 					continue;
+ 				cb->args[1] = 0;
+ 			}
+@@ -1270,8 +1275,7 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 					    NFNL_MSG_TYPE(cb->nlh->nlmsg_type),
+ 					    ct, true, flags);
+ 			if (res < 0) {
+-				nf_conntrack_get(&ct->ct_general);
+-				cb->args[1] = (unsigned long)ct;
++				cb->args[1] = ctnetlink_get_id(ct);
+ 				spin_unlock(lockp);
+ 				goto out;
+ 			}
+@@ -1284,12 +1288,10 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 	}
+ out:
+ 	local_bh_enable();
+-	if (last) {
++	if (last_id) {
+ 		/* nf ct hash resize happened, now clear the leftover. */
+-		if ((struct nf_conn *)cb->args[1] == last)
++		if (cb->args[1] == last_id)
+ 			cb->args[1] = 0;
+-
+-		nf_ct_put(last);
+ 	}
+ 
+ 	while (i) {
 -- 
 2.50.1
 
