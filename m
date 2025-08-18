@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D3432274B;
-	Mon, 18 Aug 2025 13:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985FF3203BA;
+	Mon, 18 Aug 2025 13:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523929; cv=none; b=Q9fcKTJ0yF8z5shpn0gEVHjQgD78TGrW8RTsH6+GcRHNeMfVIDAHn6zwRl8BdHeoR1uPr3Sa+KPHF1bIiU2Iu/SFOuIf71wtTqGCOwS6P+J6aLPKFhqXuM96fURYVsxx4t8DYmyGls5wJzMZrI5rH0u5yNS+k5fZHnTOD6JfZas=
+	t=1755523931; cv=none; b=LX92+szx4Y9+HxFgyMF9nw4HDegjV2hhlTYp5+3WDTuwv9P4PY1fRmc2h+15hNsBkkbyk00nvBq7wzBvabMwDaIFRUp+DnD/ZZ3iSPHFOk1IJTNOVlJSV6r2poCH7DFy9uzzRLWylmZcbC/jAZYSo2ozEzd7IxftqoDDpK6lAa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523929; c=relaxed/simple;
-	bh=PAff590vJRw8ScjbHkCkmsAMKefD6vw0zUyjzOXRvU0=;
+	s=arc-20240116; t=1755523931; c=relaxed/simple;
+	bh=fFWFU7yA1jegddCUFJKghYioP3ekDnP1eJ5G342Qpxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7fNoWw5Rm703NQQlOIfncyFoOQryJfIjPRMRZw/Ofyb0DsdAppINxg+ILmg3KtAR27Yg2uu10wbvvCMzBpwDFOIcgyuYSMW4x4b91O/GsIMuK78KGBNmHTAuV+fEcJHmZzg4hDgxWinF18CmmA9rO/XN/JSfZ63m1/i0RuG7E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvveJjBJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iPxjfUaGyG3FAKWP/i9LWDb0LRM0Y9Uw6zMm2KlZ6nkXQ3po2mg5rGQ0jB5RgzRfLUOTg1i+Tf3qOFXX5KWxwGWKN9Y/R94Ziy+iSzi4jRUdu6bTAcqqxxD7aZE7e03mrVqzNrffc5uVWL1VUi8Oy/PFrCI320TI9tzXeUbDv8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNLpnbt6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvveJjBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11360C4CEEB;
-	Mon, 18 Aug 2025 13:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNLpnbt6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D46C4CEEB;
+	Mon, 18 Aug 2025 13:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523928;
-	bh=PAff590vJRw8ScjbHkCkmsAMKefD6vw0zUyjzOXRvU0=;
+	s=korg; t=1755523931;
+	bh=fFWFU7yA1jegddCUFJKghYioP3ekDnP1eJ5G342Qpxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JvveJjBJcHDRRIeY2atdIlsuG3ob74mhR6MM+JwMw0ho/iHF4R7iFn19ZAGJdqsXO
-	 xTLHkSH6cMVF1CRTUK8DzoEfPHel6nUPW7XLfOWit3ze6bcCCmWjAbTfF9pvd3ASdq
-	 emfS5ThA/XiPigZY9C2Y5bPFJgryLwNmPuEfWoA8=
+	b=SNLpnbt6qXsWgdYglqwX+FjIxOSe2bOfeTCp5XinrgMBHiPzWTOjd/9afoc+rmO5W
+	 WGptsp5BwCTBH6/euL7BI6uRjBrYnOhlf0HRXrkVHXXc2FiLzCLTjhcN6ht0aVOIKP
+	 XfKf7KrHzDzdw8xYJLiV5TEt/R+br5EBk9huVgYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Emily Deng <Emily.Deng@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 315/515] drm: renesas: rz-du: mipi_dsi: Add min check for VCLK range
-Date: Mon, 18 Aug 2025 14:45:01 +0200
-Message-ID: <20250818124510.561007800@linuxfoundation.org>
+Subject: [PATCH 6.15 316/515] drm/ttm: Should to return the evict error
+Date: Mon, 18 Aug 2025 14:45:02 +0200
+Message-ID: <20250818124510.598324820@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -47,46 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Emily Deng <Emily.Deng@amd.com>
 
-[ Upstream commit e37a95d01d5acce211da8446fefbd8684c67f516 ]
+[ Upstream commit 4e16a9a00239db5d819197b9a00f70665951bf50 ]
 
-The VCLK range for Renesas RZ/G2L SoC is 5.803 MHz to 148.5 MHz. Add a
-minimum clock check in the mode_valid callback to ensure that the clock
-value does not fall below the valid range.
+For the evict fail case, the evict error should be returned.
 
-Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250609225630.502888-2-prabhakar.mahadev-lad.rj@bp.renesas.com
+v2: Consider ENOENT case.
+
+v3: Abort directly when the eviction failed for some reason (except for -ENOENT)
+ and not wait for the move to finish
+
+Signed-off-by: Emily Deng <Emily.Deng@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250603091154.3472646-1-Emily.Deng@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c | 3 +++
+ drivers/gpu/drm/ttm/ttm_resource.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-index 4550c6d84796..ec8baecb9ba5 100644
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-@@ -584,6 +584,9 @@ rzg2l_mipi_dsi_bridge_mode_valid(struct drm_bridge *bridge,
- 	if (mode->clock > 148500)
- 		return MODE_CLOCK_HIGH;
+diff --git a/drivers/gpu/drm/ttm/ttm_resource.c b/drivers/gpu/drm/ttm/ttm_resource.c
+index 7e5a60c55813..bb84528276cd 100644
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -558,6 +558,9 @@ int ttm_resource_manager_evict_all(struct ttm_device *bdev,
+ 		cond_resched();
+ 	} while (!ret);
  
-+	if (mode->clock < 5803)
-+		return MODE_CLOCK_LOW;
++	if (ret && ret != -ENOENT)
++		return ret;
 +
- 	return MODE_OK;
- }
- 
+ 	spin_lock(&man->move_lock);
+ 	fence = dma_fence_get(man->move);
+ 	spin_unlock(&man->move_lock);
 -- 
 2.39.5
 
