@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1059350843;
-	Mon, 18 Aug 2025 14:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ED9350847;
+	Mon, 18 Aug 2025 14:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525879; cv=none; b=fQBkXKgBI95m9FtIEFV2PppsB9aPj3LtUSfmBE42Y/H/v/9C09rBOlKNPfdsib3cAaoSreeA16L1WAvdI2amMluobwfs8nHe7cREG5THfPu0Jfp3oYNkEO0KW8oZFL9TOEsgeBdXO6EQLtnc1gNgnnziCkE/BsszKny/VQ4gq1Y=
+	t=1755525883; cv=none; b=J229IAL48kR6mPOOdTJaz6FLBfhW3M7T+3XKphHneaIKh1qDSGTnCQgDvG9qDoMIRthyQegXqX/bwp0pmpgbHvkxdUMtfnFIaPVECeQfq/Oq2E++JzzadHBtkeEat+gI1bE6A2wu9dRcD4XEw1BUzVIBXegTeWxmZnicqb1oj9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525879; c=relaxed/simple;
-	bh=dn6EIixy8iV2qMVI7r1/6jCnV7gt5spcBP34c+rNGJ8=;
+	s=arc-20240116; t=1755525883; c=relaxed/simple;
+	bh=u4tzslceDC1RFfZgNmun+qiSma9uC6iOIl/yK+4hZEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8hY8TeJ/yT0+4hcjCuIt+HTNUc4YZcYyCe9exhZvHHKMRzP324O9JoLPbhTigdbhdJmeo2em+byk1mgrxry2ZJyKsGnnbA7JHRgzqH/it5Tke87PHJChVr2dMq1ulP1M1bXOGHQyA7To+Y06R6qknijMYzLS7sMiPKQNbqT0rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjGSWjx4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lod/wBklFtJM88sh20sl0DGjWxfPZyo5CePtZoqyF9o4zTff+xlxP0WFHctTGi3jllMw0ElmQ2ruh+pQR4i0y8jG8YozZSA0MFyJ3FWu3AewLEFgI4YFxJ52OphlYkQlIZ9VbjIDcpUp62SHIgRh5gkwethBKpYUxpBKfSgR/O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFrFOX9b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjGSWjx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E8AC116C6;
-	Mon, 18 Aug 2025 14:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFrFOX9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B791AC4CEEB;
+	Mon, 18 Aug 2025 14:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525879;
-	bh=dn6EIixy8iV2qMVI7r1/6jCnV7gt5spcBP34c+rNGJ8=;
+	s=korg; t=1755525883;
+	bh=u4tzslceDC1RFfZgNmun+qiSma9uC6iOIl/yK+4hZEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjGSWjx4ARofhfBTiakmrVU5DUvYxWvTGlbax7i4HvC5Tv+5RL2OzACRCeIWDWF8c
-	 dESZz9Gm5PIh6eyOXH32WISnbzvVZQPDXl8LshNokzEqwAgIjr9G5xwpCkQRe0sJtE
-	 JcGGR7nD648fC7jdKHqvmXeWj1zP/Fg7QDYw+RJo=
+	b=oFrFOX9b1jf269M5r/jaL9xbJb2dDhlxffvsTG06+5sqqe6WcgPiX34AboJ9fODyF
+	 kV560l6uPh2BE7YxVqN1wlf7eBIlKpK95HSUc2oNpd1604+N2GSvqg+Cnw6OBoSCDj
+	 U2sp7uxX3CGmgOOZnMvpCP7mmt3Fprz0Fh42ovJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyan Fu <fuzy5@lenovo.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 376/570] watchdog: iTCO_wdt: Report error if timeout configuration fails
-Date: Mon, 18 Aug 2025 14:46:03 +0200
-Message-ID: <20250818124520.340418145@linuxfoundation.org>
+Subject: [PATCH 6.16 394/570] dmaengine: stm32-dma: configure next sg only if there are more than 2 sgs
+Date: Mon, 18 Aug 2025 14:46:21 +0200
+Message-ID: <20250818124521.034434219@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,52 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyan Fu <fuzy5@lenovo.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 40efc43eb7ffb5a4e2f998c13b8cfb555e671b92 ]
+[ Upstream commit e19bdbaa31082b43dab1d936e20efcebc30aa73d ]
 
-The driver probes with the invalid timeout value when
-'iTCO_wdt_set_timeout()' fails, as its return value is not checked. In
-this case, when executing "wdctl", we may get:
+DMA operates in Double Buffer Mode (DBM) when the transfer is cyclic and
+there are at least two periods.
+When DBM is enabled, the DMA toggles between two memory targets (SxM0AR and
+SxM1AR), indicated by the SxSCR.CT bit (Current Target).
+There is no need to update the next memory address if two periods are
+configured, as SxM0AR and SxM1AR are already properly set up before the
+transfer begins in the stm32_dma_start_transfer() function.
+This avoids unnecessary updates to SxM0AR/SxM1AR, thereby preventing
+potential Transfer Errors. Specifically, when the channel is enabled,
+SxM0AR and SxM1AR can only be written if SxSCR.CT=1 and SxSCR.CT=0,
+respectively. Otherwise, a Transfer Error interrupt is triggered, and the
+stream is automatically disabled.
 
-Device:        /dev/watchdog0
-Timeout:       30 seconds
-Timeleft:      613 seconds
-
-The timeout value is the value of "heartbeat" or "WATCHDOG_TIMEOUT", and
-the timeleft value is calculated from the register value we actually read
-(0xffff) by masking with 0x3ff and converting ticks to seconds (* 6 / 10).
-
-Add error handling to return the failure code if 'iTCO_wdt_set_timeout()'
-fails, ensuring the driver probe fails and prevents invalid operation.
-
-Signed-off-by: Ziyan Fu <fuzy5@lenovo.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250704073518.7838-1-13281011316@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20250624-stm32_dma_dbm_fix-v1-1-337c40d6c93e@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/iTCO_wdt.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/dma/stm32/stm32-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index 9ab769aa0244..4ab3405ef8e6 100644
---- a/drivers/watchdog/iTCO_wdt.c
-+++ b/drivers/watchdog/iTCO_wdt.c
-@@ -577,7 +577,11 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
- 	/* Check that the heartbeat value is within it's range;
- 	   if not reset to the default */
- 	if (iTCO_wdt_set_timeout(&p->wddev, heartbeat)) {
--		iTCO_wdt_set_timeout(&p->wddev, WATCHDOG_TIMEOUT);
-+		ret = iTCO_wdt_set_timeout(&p->wddev, WATCHDOG_TIMEOUT);
-+		if (ret != 0) {
-+			dev_err(dev, "Failed to set watchdog timeout (%d)\n", WATCHDOG_TIMEOUT);
-+			return ret;
-+		}
- 		dev_info(dev, "timeout value out of range, using %d\n",
- 			WATCHDOG_TIMEOUT);
- 		heartbeat = WATCHDOG_TIMEOUT;
+diff --git a/drivers/dma/stm32/stm32-dma.c b/drivers/dma/stm32/stm32-dma.c
+index 917f8e922373..0e39f99bce8b 100644
+--- a/drivers/dma/stm32/stm32-dma.c
++++ b/drivers/dma/stm32/stm32-dma.c
+@@ -744,7 +744,7 @@ static void stm32_dma_handle_chan_done(struct stm32_dma_chan *chan, u32 scr)
+ 		/* cyclic while CIRC/DBM disable => post resume reconfiguration needed */
+ 		if (!(scr & (STM32_DMA_SCR_CIRC | STM32_DMA_SCR_DBM)))
+ 			stm32_dma_post_resume_reconfigure(chan);
+-		else if (scr & STM32_DMA_SCR_DBM)
++		else if (scr & STM32_DMA_SCR_DBM && chan->desc->num_sgs > 2)
+ 			stm32_dma_configure_next_sg(chan);
+ 	} else {
+ 		chan->busy = false;
 -- 
 2.39.5
 
