@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45F332A3E6;
-	Mon, 18 Aug 2025 14:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BFD288C1F;
+	Mon, 18 Aug 2025 14:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526187; cv=none; b=HaCHfxmdREBhgiYbaCPy/9wADWN+xnPRINTp6sj7Jdx6GUrPyPczGOuWJbRfhGlyLNapMZNEOeSpnZPMDIYuYU3fU3MzcMPiecST7+DTiPAl0L2//ZlvaRTT7P/JMuO28yCcx9sXeeREs6G1SntxXdMT8UolP7KU54EZBvMPeJY=
+	t=1755526193; cv=none; b=COfJ8rtsITOT/uA/NZ9C6U1q2HsRCFJK8A9Fh1XKrX3Q3d+AjTGClHI4miEzPLhnlCaMbmssrvnhjk2CHkqhHiCeXnx0pxgnOQjodbtfdBbMYMygUQyLHZOaS4h2QngyGp3wsMO4kyObO/JgKx+XB0jiXSZFyzsKFJi6Nc3JSuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526187; c=relaxed/simple;
-	bh=DuZfhSKsqRbNs/yDj+ZtO5vm8Z+BwEuxnY2ZhZmxekE=;
+	s=arc-20240116; t=1755526193; c=relaxed/simple;
+	bh=yej5aNuMCBioetOZzmmAWipA8XYs3as3+jsjnUkAwJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFuW4/XMpZFTztMnYdP1R0wZv8B9Fp3t9wOUYdFutwiVI2FHeKzI/rp46fNufB/FLJpfuqdG/yBFDJZ2D+cR6POQTCnsrAVFARQpUR/dbWZG76ZnjkyLXICFsXuRPOoptvRlJgWGtHdgJZFNTJJTwJttF7XfkIs0ncdlaQFqp6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwOay5ye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=upGOwNvOA8IffOfVjLmTUpLuaKRPCsJoYsGkOc8UKYljjqRW6Z8YIU/Pd+ejxPkkF+eCaaiRYZ4Uk/M9EzVvTkzgz90c04yN4KhI30KOHmXJ3GUzjbwqNbNfqLZl2Ddw7XMUXUUIk/oobf5EvEQLZ8119/AnGexFz/LTEjN0ul4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYbajddw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwOay5ye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F055EC113D0;
-	Mon, 18 Aug 2025 14:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYbajddw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BE3C4CEEB;
+	Mon, 18 Aug 2025 14:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526187;
-	bh=DuZfhSKsqRbNs/yDj+ZtO5vm8Z+BwEuxnY2ZhZmxekE=;
+	s=korg; t=1755526191;
+	bh=yej5aNuMCBioetOZzmmAWipA8XYs3as3+jsjnUkAwJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwOay5yeC14qTi9wZ7JRuoE9dP1e12k+bSEbzNC/3Q9LCFKVSi2A0QugAkbTOpee1
-	 10wroWfn3Bfxmmr5P9yvEfbh4Vi2nRiHHe1CHdkbMegaZ8SdB98978OjMNvos8QNK6
-	 0yhS2wdAsiAJeeIEA5cyZT1k1sHrkYHwN+PHWeG8=
+	b=rYbajddwvi0b4cBm4uVSdZo9CBwbDlwS5tvATKoH5+25jyAG8yXKbCiPiuKG0M/Ui
+	 YgIVAjDpCv/41S3/RRXHnUXB3sy9ShBq5WkV1mR97UeBEq0H9CtGQqsVJW5Q8aD67B
+	 6w3iczkh3xmdYOhAbnJcDJ0uRQdYOdPz6+hliVZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Corey Minyard <corey@minyard.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 451/570] ipmi: Fix strcpy source and destination the same
-Date: Mon, 18 Aug 2025 14:47:18 +0200
-Message-ID: <20250818124523.194821985@linuxfoundation.org>
+	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
+	Len Brown <len.brown@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>
+Subject: [PATCH 6.16 452/570] tools/power turbostat: Handle non-root legacy-uncore sysfs permissions
+Date: Mon, 18 Aug 2025 14:47:19 +0200
+Message-ID: <20250818124523.232582730@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,148 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 8ffcb7560b4a15faf821df95e3ab532b2b020f8c ]
+[ Upstream commit e60a13bcef206795d3ddf82f130fe8f570176d06 ]
 
-The source and destination of some strcpy operations was the same.
-Split out the part of the operations that needed to be done for those
-particular calls so the unnecessary copy wasn't done.
+/sys/devices/system/cpu/intel_uncore_frequency/package_X_die_Y/
+may be readable by all, but
+/sys/devices/system/cpu/intel_uncore_frequency/package_X_die_Y/current_freq_khz
+may be readable only by root.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506140756.EFXXvIP4-lkp@intel.com/
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Non-root turbostat users see complaints in this scenario.
+
+Fail probe of the interface if we can't read current_freq_khz.
+
+Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+Original-patch-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_watchdog.c | 59 ++++++++++++++++++++++---------
- 1 file changed, 42 insertions(+), 17 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/ipmi/ipmi_watchdog.c b/drivers/char/ipmi/ipmi_watchdog.c
-index ab759b492fdd..a013ddbf1466 100644
---- a/drivers/char/ipmi/ipmi_watchdog.c
-+++ b/drivers/char/ipmi/ipmi_watchdog.c
-@@ -1146,14 +1146,8 @@ static struct ipmi_smi_watcher smi_watcher = {
- 	.smi_gone = ipmi_smi_gone
- };
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 426eabc10d76..291c98b5d209 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -6740,7 +6740,8 @@ static void probe_intel_uncore_frequency_legacy(void)
+ 			sprintf(path_base, "/sys/devices/system/cpu/intel_uncore_frequency/package_%02d_die_%02d", i,
+ 				j);
  
--static int action_op(const char *inval, char *outval)
-+static int action_op_set_val(const char *inval)
- {
--	if (outval)
--		strcpy(outval, action);
--
--	if (!inval)
--		return 0;
--
- 	if (strcmp(inval, "reset") == 0)
- 		action_val = WDOG_TIMEOUT_RESET;
- 	else if (strcmp(inval, "none") == 0)
-@@ -1164,18 +1158,26 @@ static int action_op(const char *inval, char *outval)
- 		action_val = WDOG_TIMEOUT_POWER_DOWN;
- 	else
- 		return -EINVAL;
--	strcpy(action, inval);
- 	return 0;
- }
+-			if (access(path_base, R_OK))
++			sprintf(path, "%s/current_freq_khz", path_base);
++			if (access(path, R_OK))
+ 				continue;
  
--static int preaction_op(const char *inval, char *outval)
-+static int action_op(const char *inval, char *outval)
- {
-+	int rv;
-+
- 	if (outval)
--		strcpy(outval, preaction);
-+		strcpy(outval, action);
- 
- 	if (!inval)
- 		return 0;
-+	rv = action_op_set_val(inval);
-+	if (!rv)
-+		strcpy(action, inval);
-+	return rv;
-+}
- 
-+static int preaction_op_set_val(const char *inval)
-+{
- 	if (strcmp(inval, "pre_none") == 0)
- 		preaction_val = WDOG_PRETIMEOUT_NONE;
- 	else if (strcmp(inval, "pre_smi") == 0)
-@@ -1188,18 +1190,26 @@ static int preaction_op(const char *inval, char *outval)
- 		preaction_val = WDOG_PRETIMEOUT_MSG_INT;
- 	else
- 		return -EINVAL;
--	strcpy(preaction, inval);
- 	return 0;
- }
- 
--static int preop_op(const char *inval, char *outval)
-+static int preaction_op(const char *inval, char *outval)
- {
-+	int rv;
-+
- 	if (outval)
--		strcpy(outval, preop);
-+		strcpy(outval, preaction);
- 
- 	if (!inval)
- 		return 0;
-+	rv = preaction_op_set_val(inval);
-+	if (!rv)
-+		strcpy(preaction, inval);
-+	return 0;
-+}
- 
-+static int preop_op_set_val(const char *inval)
-+{
- 	if (strcmp(inval, "preop_none") == 0)
- 		preop_val = WDOG_PREOP_NONE;
- 	else if (strcmp(inval, "preop_panic") == 0)
-@@ -1208,7 +1218,22 @@ static int preop_op(const char *inval, char *outval)
- 		preop_val = WDOG_PREOP_GIVE_DATA;
- 	else
- 		return -EINVAL;
--	strcpy(preop, inval);
-+	return 0;
-+}
-+
-+static int preop_op(const char *inval, char *outval)
-+{
-+	int rv;
-+
-+	if (outval)
-+		strcpy(outval, preop);
-+
-+	if (!inval)
-+		return 0;
-+
-+	rv = preop_op_set_val(inval);
-+	if (!rv)
-+		strcpy(preop, inval);
- 	return 0;
- }
- 
-@@ -1245,18 +1270,18 @@ static int __init ipmi_wdog_init(void)
- {
- 	int rv;
- 
--	if (action_op(action, NULL)) {
-+	if (action_op_set_val(action)) {
- 		action_op("reset", NULL);
- 		pr_info("Unknown action '%s', defaulting to reset\n", action);
- 	}
- 
--	if (preaction_op(preaction, NULL)) {
-+	if (preaction_op_set_val(preaction)) {
- 		preaction_op("pre_none", NULL);
- 		pr_info("Unknown preaction '%s', defaulting to none\n",
- 			preaction);
- 	}
- 
--	if (preop_op(preop, NULL)) {
-+	if (preop_op_set_val(preop)) {
- 		preop_op("preop_none", NULL);
- 		pr_info("Unknown preop '%s', defaulting to none\n", preop);
- 	}
+ 			BIC_PRESENT(BIC_UNCORE_MHZ);
 -- 
 2.39.5
 
