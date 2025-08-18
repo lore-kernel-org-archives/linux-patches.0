@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6296C31CA72;
-	Mon, 18 Aug 2025 12:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9002F28E0;
+	Mon, 18 Aug 2025 12:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521497; cv=none; b=NRNQ6DY9dk9n/o2Qs4Yn+Fpv4unuqNLcnbrQWH+Ot3HdfO93Jn2DvTHzYKcX16PHs08f6XlXOuDIOrakxXQ2KnjSK+GSYy8q4rxzFXYazwDYRjVpAJKfLjOKoeKksegcsZF6f19mAXnJ9nI8nyI8zA2TeAIgymBm3gCOiyd5qCc=
+	t=1755521501; cv=none; b=toWb72ozdoywIcuQLc4a+skIRWE3gqqkDpqCDBAW4KJ3rfmMvPRftr6fZ41NjfP+u7B7KWRk6gMHPEOqKWPle5IDdoG5VqggrLEaHKsgOiQEVCZoHdCRXiMsxt62L88oGhLZqfaAKErg3UUR94nmc9BtfOykbB07xNKkGflXuOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521497; c=relaxed/simple;
-	bh=qbivW+S6+96HoVPlEX6nqSkDpPS9BWqtqVh1k2A/dto=;
+	s=arc-20240116; t=1755521501; c=relaxed/simple;
+	bh=ZWD/WjrngTqyYiWSvoTRkPdX80n3IcP6aL8ohexxgJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJNNB4nhufSwyrDAOd0OYj5HIHyNGSj3FL/laUXlsDlGmr33bSlKiyUBRcFVAUNjj1d064f9SMQPScw5SQ9u7bsF/C1tEvlWNvVZ09B08q6Q+92mFtnTOzv3OxILeSmXRc1EVQCnGCbv7mjqnDXzQlE9mn+edbsZ4E0ZjCMmSR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/3n9Qlr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nI5D2h3XEcUgITdjNvAClFASS3si5G/fpX6HeWyGAKqa5gUvAwyJyYv8CcXjswnR6Gzk6xOlNOYo8Tqkx00UfAfJFj43f7CeceFaJuEdkc+/GlPvkcvLO1L5VrelZ4EAVufDdb+CMhQ7R4yzjgx81vcIBhzOLk00QHk3kXzK1Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nq6KcETq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/3n9Qlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7BFC4CEEB;
-	Mon, 18 Aug 2025 12:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nq6KcETq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEC4C4CEEB;
+	Mon, 18 Aug 2025 12:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521497;
-	bh=qbivW+S6+96HoVPlEX6nqSkDpPS9BWqtqVh1k2A/dto=;
+	s=korg; t=1755521501;
+	bh=ZWD/WjrngTqyYiWSvoTRkPdX80n3IcP6aL8ohexxgJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/3n9Qlr+JfNCbDtQ6/c+UpbWz8Y+bM+4RBwMvHYYqTxO6142zNS+0pyKK47dTSuH
-	 zwjguEUhHwm7aXmkNXF8mhnarknDkoTC8L8CeoVKIvSNaoSjiMUGbE3QTEkduosIBR
-	 n8pIznjKqhnN0CtvhAObK1hU8254VTtZqSirY7vY=
+	b=nq6KcETqDFGDQKAbqCTg2UOrxRzNeiotELW+JS/fV53WKGiAHOWwIXu+xXicxpOOp
+	 yKFRXfgIhzSEQ7mGpSTXwrppP/yp/aN/9GIeDSlIj29+hsWSiUNutim48pWGGfLPRa
+	 7qq8xazS7KHGd/ffcgTvYzhsMhgg0m38NmXSccYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 037/444] eventpoll: Fix semi-unbounded recursion
-Date: Mon, 18 Aug 2025 14:41:03 +0200
-Message-ID: <20250818124450.329666167@linuxfoundation.org>
+	Yevhen Kondrashyn <e.kondrashyn@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 038/444] Documentation: ACPI: Fix parent device references
+Date: Mon, 18 Aug 2025 14:41:04 +0200
+Message-ID: <20250818124450.364632896@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -50,166 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit f2e467a48287c868818085aa35389a224d226732 upstream.
+commit e65cb011349e653ded541dddd6469c2ca813edcf upstream.
 
-Ensure that epoll instances can never form a graph deeper than
-EP_MAX_NESTS+1 links.
+The _CRS resources in many cases want to have ResourceSource field
+to be a type of ACPI String. This means that to compile properly
+we need to enclosure the name path into double quotes. This will
+in practice defer the interpretation to a run-time stage, However,
+this may be interpreted differently on different OSes and ACPI
+interpreter implementations. In particular ACPICA might not correctly
+recognize the leading '^' (caret) character and will not resolve
+the relative name path properly. On top of that, this piece may be
+used in SSDTs which are loaded after the DSDT and on itself may also
+not resolve relative name paths outside of their own scopes.
+With this all said, fix documentation to use fully-qualified name
+paths always to avoid any misinterpretations, which is proven to
+work.
 
-Currently, ep_loop_check_proc() ensures that the graph is loop-free and
-does some recursion depth checks, but those recursion depth checks don't
-limit the depth of the resulting tree for two reasons:
-
- - They don't look upwards in the tree.
- - If there are multiple downwards paths of different lengths, only one of
-   the paths is actually considered for the depth check since commit
-   28d82dc1c4ed ("epoll: limit paths").
-
-Essentially, the current recursion depth check in ep_loop_check_proc() just
-serves to prevent it from recursing too deeply while checking for loops.
-
-A more thorough check is done in reverse_path_check() after the new graph
-edge has already been created; this checks, among other things, that no
-paths going upwards from any non-epoll file with a length of more than 5
-edges exist. However, this check does not apply to non-epoll files.
-
-As a result, it is possible to recurse to a depth of at least roughly 500,
-tested on v6.15. (I am unsure if deeper recursion is possible; and this may
-have changed with commit 8c44dac8add7 ("eventpoll: Fix priority inversion
-problem").)
-
-To fix it:
-
-1. In ep_loop_check_proc(), note the subtree depth of each visited node,
-and use subtree depths for the total depth calculation even when a subtree
-has already been visited.
-2. Add ep_get_upwards_depth_proc() for similarly determining the maximum
-depth of an upwards walk.
-3. In ep_loop_check(), use these values to limit the total path length
-between epoll nodes to EP_MAX_NESTS edges.
-
-Fixes: 22bacca48a17 ("epoll: prevent creating circular epoll structures")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/20250711-epoll-recursion-fix-v1-1-fb2457c33292@google.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 8eb5c87a92c0 ("i2c: add ACPI support for I2C mux ports")
+Reported-by: Yevhen Kondrashyn <e.kondrashyn@gmail.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20250710170225.961303-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c |   60 +++++++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 46 insertions(+), 14 deletions(-)
+ Documentation/firmware-guide/acpi/i2c-muxes.rst |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -218,6 +218,7 @@ struct eventpoll {
- 	/* used to optimize loop detection check */
- 	u64 gen;
- 	struct hlist_head refs;
-+	u8 loop_check_depth;
+--- a/Documentation/firmware-guide/acpi/i2c-muxes.rst
++++ b/Documentation/firmware-guide/acpi/i2c-muxes.rst
+@@ -14,7 +14,7 @@ Consider this topology::
+     |      |   | 0x70 |--CH01--> i2c client B (0x50)
+     +------+   +------+
  
- 	/*
- 	 * usage count, used together with epitem->dying to
-@@ -2091,23 +2092,24 @@ static int ep_poll(struct eventpoll *ep,
- }
+-which corresponds to the following ASL::
++which corresponds to the following ASL (in the scope of \_SB)::
  
- /**
-- * ep_loop_check_proc - verify that adding an epoll file inside another
-- *                      epoll structure does not violate the constraints, in
-- *                      terms of closed loops, or too deep chains (which can
-- *                      result in excessive stack usage).
-+ * ep_loop_check_proc - verify that adding an epoll file @ep inside another
-+ *                      epoll file does not create closed loops, and
-+ *                      determine the depth of the subtree starting at @ep
-  *
-  * @ep: the &struct eventpoll to be currently checked.
-  * @depth: Current depth of the path being checked.
-  *
-- * Return: %zero if adding the epoll @file inside current epoll
-- *          structure @ep does not violate the constraints, or %-1 otherwise.
-+ * Return: depth of the subtree, or INT_MAX if we found a loop or went too deep.
-  */
- static int ep_loop_check_proc(struct eventpoll *ep, int depth)
- {
--	int error = 0;
-+	int result = 0;
- 	struct rb_node *rbp;
- 	struct epitem *epi;
+     Device (SMB1)
+     {
+@@ -24,7 +24,7 @@ which corresponds to the following ASL::
+             Name (_HID, ...)
+             Name (_CRS, ResourceTemplate () {
+                 I2cSerialBus (0x70, ControllerInitiated, I2C_SPEED,
+-                            AddressingMode7Bit, "^SMB1", 0x00,
++                            AddressingMode7Bit, "\\_SB.SMB1", 0x00,
+                             ResourceConsumer,,)
+             }
  
-+	if (ep->gen == loop_check_gen)
-+		return ep->loop_check_depth;
-+
- 	mutex_lock_nested(&ep->mtx, depth + 1);
- 	ep->gen = loop_check_gen;
- 	for (rbp = rb_first_cached(&ep->rbr); rbp; rbp = rb_next(rbp)) {
-@@ -2115,13 +2117,11 @@ static int ep_loop_check_proc(struct eve
- 		if (unlikely(is_file_epoll(epi->ffd.file))) {
- 			struct eventpoll *ep_tovisit;
- 			ep_tovisit = epi->ffd.file->private_data;
--			if (ep_tovisit->gen == loop_check_gen)
--				continue;
- 			if (ep_tovisit == inserting_into || depth > EP_MAX_NESTS)
--				error = -1;
-+				result = INT_MAX;
- 			else
--				error = ep_loop_check_proc(ep_tovisit, depth + 1);
--			if (error != 0)
-+				result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1);
-+			if (result > EP_MAX_NESTS)
- 				break;
- 		} else {
- 			/*
-@@ -2135,9 +2135,27 @@ static int ep_loop_check_proc(struct eve
- 			list_file(epi->ffd.file);
- 		}
- 	}
-+	ep->loop_check_depth = result;
- 	mutex_unlock(&ep->mtx);
- 
--	return error;
-+	return result;
-+}
-+
-+/**
-+ * ep_get_upwards_depth_proc - determine depth of @ep when traversed upwards
-+ */
-+static int ep_get_upwards_depth_proc(struct eventpoll *ep, int depth)
-+{
-+	int result = 0;
-+	struct epitem *epi;
-+
-+	if (ep->gen == loop_check_gen)
-+		return ep->loop_check_depth;
-+	hlist_for_each_entry_rcu(epi, &ep->refs, fllink)
-+		result = max(result, ep_get_upwards_depth_proc(epi->ep, depth + 1) + 1);
-+	ep->gen = loop_check_gen;
-+	ep->loop_check_depth = result;
-+	return result;
- }
- 
- /**
-@@ -2153,8 +2171,22 @@ static int ep_loop_check_proc(struct eve
-  */
- static int ep_loop_check(struct eventpoll *ep, struct eventpoll *to)
- {
-+	int depth, upwards_depth;
-+
- 	inserting_into = ep;
--	return ep_loop_check_proc(to, 0);
-+	/*
-+	 * Check how deep down we can get from @to, and whether it is possible
-+	 * to loop up to @ep.
-+	 */
-+	depth = ep_loop_check_proc(to, 0);
-+	if (depth > EP_MAX_NESTS)
-+		return -1;
-+	/* Check how far up we can go from @ep. */
-+	rcu_read_lock();
-+	upwards_depth = ep_get_upwards_depth_proc(ep, 0);
-+	rcu_read_unlock();
-+
-+	return (depth+1+upwards_depth > EP_MAX_NESTS) ? -1 : 0;
- }
- 
- static void clear_tfile_check_list(void)
+@@ -37,7 +37,7 @@ which corresponds to the following ASL::
+                     Name (_HID, ...)
+                     Name (_CRS, ResourceTemplate () {
+                         I2cSerialBus (0x50, ControllerInitiated, I2C_SPEED,
+-                                    AddressingMode7Bit, "^CH00", 0x00,
++                                    AddressingMode7Bit, "\\_SB.SMB1.CH00", 0x00,
+                                     ResourceConsumer,,)
+                     }
+                 }
+@@ -52,7 +52,7 @@ which corresponds to the following ASL::
+                     Name (_HID, ...)
+                     Name (_CRS, ResourceTemplate () {
+                         I2cSerialBus (0x50, ControllerInitiated, I2C_SPEED,
+-                                    AddressingMode7Bit, "^CH01", 0x00,
++                                    AddressingMode7Bit, "\\_SB.SMB1.CH01", 0x00,
+                                     ResourceConsumer,,)
+                     }
+                 }
 
 
