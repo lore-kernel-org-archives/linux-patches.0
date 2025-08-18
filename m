@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF8A322A17;
-	Mon, 18 Aug 2025 13:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D972531A04F;
+	Mon, 18 Aug 2025 13:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523594; cv=none; b=WZU5s4o0jcXZGt7OkUCc4tXpovtOeYPeTdCeolQh04RjyVQVp4/ebqEelt6R2tOZIlyf7lIJpIrYp/q2ZCMaJDzpzNfCGhDTUjdBWasYTh3UTBIcFsqHLPMIbudcSIXFow7vPsAJc+vhrgXGGXJwaddi5IZtSvllalnlqvb5VVs=
+	t=1755523597; cv=none; b=BCkYlFA3do6zoWDhQj56rRMBF5t3xPwIU2E9nKeW0QPLSGx4tuXOH112+sUdQ8AfsVlX+m/sApMi0n4X+UWheMnuq2arYJz2Y69v0p0C7050biRvnNgssHlWfPTf8JQPUHjHI+CdQuNPcxizH+Ruu9FxRzmifqG4qk4NsB7VUDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523594; c=relaxed/simple;
-	bh=UAEqtI4rTMYszST2u6A/ozFCPIvx/njJRap91r99nQQ=;
+	s=arc-20240116; t=1755523597; c=relaxed/simple;
+	bh=Ds88bNaeRLL9NNMKjUvrFw2r3fuC5zBDhFLHknBJ1eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPdY7Djdyoq/q5Mfm/N4DDtscgMZBQvkHUdoboWBvH0ZD86ZTnVCaeJp5rknOmUQeSXXmlke9xf2909J8bly/qSIa5U+sWoabLa/MkBeALceIVmcjldpnK5JObSu7YsPo63CyBpUAR4QzZ8I/JO+vsLBZ5y5KbmJ2AMMJsVp32Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9C7t5j7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D4140E8Uwfaz3ShMN1JcSVr16WZ8pxoMCIB7nd/c3pwRuEBFhHd4CnRm4Cwh9+5KluxC79G6Tu2CGp/fQutDGyea2GHo2JO9udbMwy+GXnvLkl9IGPNhKA+lDtLefZcAIxyXI5MziudVIhvrMAlYyPifDUqjri8PKYr8ntnfviQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQRSN9kP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9C7t5j7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524C0C4CEEB;
-	Mon, 18 Aug 2025 13:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQRSN9kP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6264EC4CEEB;
+	Mon, 18 Aug 2025 13:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523594;
-	bh=UAEqtI4rTMYszST2u6A/ozFCPIvx/njJRap91r99nQQ=;
+	s=korg; t=1755523597;
+	bh=Ds88bNaeRLL9NNMKjUvrFw2r3fuC5zBDhFLHknBJ1eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9C7t5j7UkMYxEmwZuTDXpQ7NFzz+GynXMnsWKFqk1N5bPN1IBdZOtkNdsERMvAiv
-	 pOcxDmKUxm8vkVuH096Bro7LjOK5xMxwX8wMzF/y+7ve9nkgwEMtiXCMgp1ERG4dae
-	 x6+DCe1zTQAT0YuopicLg7IcSDF60PkTUXZPOlsk=
+	b=SQRSN9kP7lUB22MRrth2Nhlz+Nykm6NNZY1D/gQ+UHEHW+OZOJgDLmMwLHGpP0c4T
+	 Uuo+AkuFnmEPAin6q97Ums3QO/GkM3omlXzlKQti+V9E98UujXW31kKb6hJYHGR0VJ
+	 LHWy6wmSQinE7VqafJ7RQMo2SuhCgnwSzIBU7htE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Umio Yasuno <coelacanth_dream@protonmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 218/515] arm64: Mark kernel as tainted on SAE and SError panic
-Date: Mon, 18 Aug 2025 14:43:24 +0200
-Message-ID: <20250818124506.761175992@linuxfoundation.org>
+Subject: [PATCH 6.15 219/515] drm/amd/pm: fix null pointer access
+Date: Mon, 18 Aug 2025 14:43:25 +0200
+Message-ID: <20250818124506.800200029@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,53 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Umio Yasuno <coelacanth_dream@protonmail.com>
 
-[ Upstream commit d7ce7e3a84642aadf7c4787f7ec4f58eb163d129 ]
+[ Upstream commit d524d40e3a6152a3ea1125af729f8cd8ca65efde ]
 
-Set TAINT_MACHINE_CHECK when SError or Synchronous External Abort (SEA)
-interrupts trigger a panic to flag potential hardware faults. This
-tainting mechanism aids in debugging and enables correlation of
-hardware-related crashes in large-scale deployments.
+Writing a string without delimiters (' ', '\n', '\0') to the under
+gpu_od/fan_ctrl sysfs or pp_power_profile_mode for the CUSTOM profile
+will result in a null pointer dereference.
 
-This change aligns with similar patches[1] that mark machine check
-events when the system crashes due to hardware errors.
-
-Link: https://lore.kernel.org/all/20250702-add_tain-v1-1-9187b10914b9@debian.org/ [1]
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250716-vmcore_hw_error-v2-1-f187f7d62aba@debian.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4401
+Signed-off-by: Umio Yasuno <coelacanth_dream@protonmail.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/traps.c | 1 +
- arch/arm64/mm/fault.c     | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/kernel/traps.c b/arch/arm64/kernel/traps.c
-index 529cff825531..35eed1942d85 100644
---- a/arch/arm64/kernel/traps.c
-+++ b/arch/arm64/kernel/traps.c
-@@ -931,6 +931,7 @@ void __noreturn panic_bad_stack(struct pt_regs *regs, unsigned long esr, unsigne
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+index 922def51685b..21da5123d95e 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -1398,6 +1398,8 @@ static ssize_t amdgpu_set_pp_power_profile_mode(struct device *dev,
+ 			if (ret)
+ 				return -EINVAL;
+ 			parameter_size++;
++			if (!tmp_str)
++				break;
+ 			while (isspace(*tmp_str))
+ 				tmp_str++;
+ 		}
+@@ -3618,6 +3620,9 @@ static int parse_input_od_command_lines(const char *buf,
+ 			return -EINVAL;
+ 		parameter_size++;
  
- void __noreturn arm64_serror_panic(struct pt_regs *regs, unsigned long esr)
- {
-+	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
- 	console_verbose();
- 
- 	pr_crit("SError Interrupt on CPU%d, code 0x%016lx -- %s\n",
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index 11eb8d1adc84..f590dc71ce99 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -838,6 +838,7 @@ static int do_sea(unsigned long far, unsigned long esr, struct pt_regs *regs)
- 		 */
- 		siaddr  = untagged_addr(far);
++		if (!tmp_str)
++			break;
++
+ 		while (isspace(*tmp_str))
+ 			tmp_str++;
  	}
-+	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
- 	arm64_notify_die(inf->name, regs, inf->sig, inf->code, siaddr, esr);
- 
- 	return 0;
 -- 
 2.39.5
 
