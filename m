@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F47335BA3;
-	Mon, 18 Aug 2025 13:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA01335BD3;
+	Mon, 18 Aug 2025 13:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523993; cv=none; b=kAhffTV/BHTpnvySsTNhPYcPxIB3slTbj9nR7t3yOHakO6Xw48xLwOeC5khs2Yx/W88UO5e5fQpaIkEveeAhwHFybmYlBn3RzlFL5SuGASMtskV7acIVwc3qsQv1YYUAtS644qkVdXtGJfAve+dLGnqTCTlMjTlFb8o0yVLgHMY=
+	t=1755523996; cv=none; b=Y++X1Hg+sqUykqLQyzQ5CV8Kwx7R8JJea825YaH+z6XulD4tUYf7zRcHiO+51Xdp21hzF6uXniuqygs8LlrQ90Y/RhU9Ylqz2z7nLK6LuBs5rYeTf0Nj21SaU19KIsxsmpIFWfrw+sTLir4aOWXyipBEqA9V/aUi83NUjzh2M7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523993; c=relaxed/simple;
-	bh=7VS534ik33nZd3E51QLILRFLf1n2v/NH0I8Pns+6sqQ=;
+	s=arc-20240116; t=1755523996; c=relaxed/simple;
+	bh=rBvNH53nbDQvh1cbU84nVJmnvOJNLk3Oxrj/ONm+LO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtnqW6O2oT/ZnFNOW45RU9stqGVAWaynDilLDK1Cf85uKim2aMTXXwlo8ssrzWt/wHN1XGnT+eN5DMvFODsqGo4Pu3hGjXEMjAUQ6ftI4nBiThhO68wtbRrnhbgN9atzuWgTwUUCp2wuGLphWBzOqLfgwxNF+yEIXQxaj2JxfkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PC79cFD7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NMPw7VQAf8JSdViOD0UA4AaHB4Eyt+y7NaostNcWAYRStA0zgz+WX8RzEtk/G1l3FAkon/iNdsKTg50gPbqkAjN0CbcypRsIPW+bWIfOS5ueQ8bZWrb0CZY+iyzT/vXsPEmLQu4pYFFafh9nF4Q3nHAQT0VpB8bMJTjFOXtV6g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsLiMf8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PC79cFD7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F338C4CEEB;
-	Mon, 18 Aug 2025 13:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsLiMf8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AE6C4CEEB;
+	Mon, 18 Aug 2025 13:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523993;
-	bh=7VS534ik33nZd3E51QLILRFLf1n2v/NH0I8Pns+6sqQ=;
+	s=korg; t=1755523996;
+	bh=rBvNH53nbDQvh1cbU84nVJmnvOJNLk3Oxrj/ONm+LO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PC79cFD7FrsAInph8Mufbbgg6yJCgOpt3Q71HC2ZYUS//JnCDiZQYbz8F3ilUMhrX
-	 p/gUQSn6+bphQTTOvVTAlyNW5qKYzJKA9ZvCelvFJtI4m5/IrwNup0EDHUvuL0+U7i
-	 yxF57P7m0WrZ/xWBsmkJ8jokn9HshVWvutXpye70=
+	b=bsLiMf8uIv4OSuH7YYhblbnZTNApXVDwwM0bIzZ5BiTc108zLQzxtAhpnyqBdEajx
+	 O4pvVsB/bmV7bu1frUOzOx8bfnlPf52BjabTkvyy8gtX7oeh6Hn5KRIFOOjk3CT/It
+	 uCeBXny+ij9RvLkkhT9fgLsQrVvFQKpPEukhTgMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+544248a761451c0df72f@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Thierry Reding <treding@nvidia.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 336/515] ext4: do not BUG when INLINE_DATA_FL lacks system.data xattr
-Date: Mon, 18 Aug 2025 14:45:22 +0200
-Message-ID: <20250818124511.371625252@linuxfoundation.org>
+Subject: [PATCH 6.15 337/515] clk: tegra: periph: Fix error handling and resolve unsigned compare warning
+Date: Mon, 18 Aug 2025 14:45:23 +0200
+Message-ID: <20250818124511.407291625@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,71 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 099b847ccc6c1ad2f805d13cfbcc83f5b6d4bc42 ]
+[ Upstream commit 2dc2ca9000eea2eb749f658196204cb84d4306f7 ]
 
-A syzbot fuzzed image triggered a BUG_ON in ext4_update_inline_data()
-when an inode had the INLINE_DATA_FL flag set but was missing the
-system.data extended attribute.
+./drivers/clk/tegra/clk-periph.c:59:5-9: WARNING:
+	Unsigned expression compared with zero: rate < 0
 
-Since this can happen due to a maiciouly fuzzed file system, we
-shouldn't BUG, but rather, report it as a corrupted file system.
+The unsigned long 'rate' variable caused:
+- Incorrect handling of negative errors
+- Compile warning: "Unsigned expression compared with zero"
 
-Add similar replacements of BUG_ON with EXT4_ERROR_INODE() ii
-ext4_create_inline_data() and ext4_inline_data_truncate().
+Fix by changing to long type and adding req->rate cast.
 
-Reported-by: syzbot+544248a761451c0df72f@syzkaller.appspotmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/79c7f01e29876c612e90d6d0157fb1572ca8b3fb.1752046270.git.xiaopei01@kylinos.cn
+Acked-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inline.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/clk/tegra/clk-periph.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
-index f27d9da53fb7..372058706cce 100644
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -303,7 +303,11 @@ static int ext4_create_inline_data(handle_t *handle,
- 	if (error)
- 		goto out;
+diff --git a/drivers/clk/tegra/clk-periph.c b/drivers/clk/tegra/clk-periph.c
+index 0626650a7011..c9fc52a36fce 100644
+--- a/drivers/clk/tegra/clk-periph.c
++++ b/drivers/clk/tegra/clk-periph.c
+@@ -51,7 +51,7 @@ static int clk_periph_determine_rate(struct clk_hw *hw,
+ 	struct tegra_clk_periph *periph = to_clk_periph(hw);
+ 	const struct clk_ops *div_ops = periph->div_ops;
+ 	struct clk_hw *div_hw = &periph->divider.hw;
+-	unsigned long rate;
++	long rate;
  
--	BUG_ON(!is.s.not_found);
-+	if (!is.s.not_found) {
-+		EXT4_ERROR_INODE(inode, "unexpected inline data xattr");
-+		error = -EFSCORRUPTED;
-+		goto out;
-+	}
+ 	__clk_hw_set_clk(div_hw, hw);
  
- 	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
- 	if (error) {
-@@ -354,7 +358,11 @@ static int ext4_update_inline_data(handle_t *handle, struct inode *inode,
- 	if (error)
- 		goto out;
+@@ -59,7 +59,7 @@ static int clk_periph_determine_rate(struct clk_hw *hw,
+ 	if (rate < 0)
+ 		return rate;
  
--	BUG_ON(is.s.not_found);
-+	if (is.s.not_found) {
-+		EXT4_ERROR_INODE(inode, "missing inline data xattr");
-+		error = -EFSCORRUPTED;
-+		goto out;
-+	}
+-	req->rate = rate;
++	req->rate = (unsigned long)rate;
+ 	return 0;
+ }
  
- 	len -= EXT4_MIN_INLINE_DATA_SIZE;
- 	value = kzalloc(len, GFP_NOFS);
-@@ -1904,7 +1912,12 @@ int ext4_inline_data_truncate(struct inode *inode, int *has_inline)
- 			if ((err = ext4_xattr_ibody_find(inode, &i, &is)) != 0)
- 				goto out_error;
- 
--			BUG_ON(is.s.not_found);
-+			if (is.s.not_found) {
-+				EXT4_ERROR_INODE(inode,
-+						 "missing inline data xattr");
-+				err = -EFSCORRUPTED;
-+				goto out_error;
-+			}
- 
- 			value_len = le32_to_cpu(is.s.here->e_value_size);
- 			value = kmalloc(value_len, GFP_NOFS);
 -- 
 2.39.5
 
