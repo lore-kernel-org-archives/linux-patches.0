@@ -1,194 +1,229 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2065.outbound.protection.outlook.com [40.107.237.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8573314B0;
-	Mon, 18 Aug 2025 18:29:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.65
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755541779; cv=fail; b=kApQAJG7jxBUoM4UqB5ksfP/9L6Fim5HPp+cq/XoDPIm8CBEzeekZRnqaL0yEALrFDuQAgf8D/70qgrscawNv9Vb6jfGJKeUA7T/L9V95WIIyFqjCmpxT9bEyq+hX6y2hFBopAyTZkdyY0WQZLNBsOkW5zSQ5V3LD9/BSMiTiFM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755541779; c=relaxed/simple;
-	bh=CrUl0YqU4mNldd4bcx2K3jL3iWpsHQxSXVi1Cg4o++0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mja7G8oC+9xE9mxxOC9Qj0XbT4zU+vyBZxnmN/hbTqVa+mUIOZ+ZARen5bDFkbFwc0n6KKvlgaebipHucKBnblMY8JPXvGJYfRt8urEMsD7SsCNLCElZcajKqIUnoAImIf7qWgGvbX6qozrBhaAa9Jir45kbXlMayiA5bQhM8fo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=sQyxZCr9; arc=fail smtp.client-ip=40.107.237.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089E126FA70
+	for <patches@lists.linux.dev>; Mon, 18 Aug 2025 18:48:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755542927; cv=none; b=XPQfdVjEu7VbgA+YQJXtaQVpP0h1PdUayB/3y1VWmx2yb6G/N1/TsGokr8ETsSVy7ysfvWXU9YAE1qxDsbFrqyUVXCVguHZI62T3yXTwzJ+S3hLKOBRrXz27XWhgPk+1RcS3iKo/6J9NXLAdCEAm99+s17Tu13I0ww+ZfM5nLts=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755542927; c=relaxed/simple;
+	bh=pcQbWfmvaZOJq8LTxdPwJOEnZsClRjrrGSQ0kCojTns=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TVCU+kRiGfx6VWYhGR4P/gzdbuuG1Z4Zru2RgE6abVJivZYp7eQwZ83ngyph6unfYO1roIvOKYjultCh5bnR+QiJ86btCIhW66611BBryQjEhEg2v7DHZl1RAJrBmYJFsiN8d7zAdv5S4HLJi3GGjIbEEFwhHrb24UB2ErA7Y3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zKM00YE/; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="sQyxZCr9"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uotCfpIxegLEaRAEWQ1zQEwxRlc3KLuxOcotnzftQZ4M3h6coarl6WsmAvUdCjh/GBy5YJpsJOPijV+ibtLFbaNcxq3K89WPGodR6MhoSlfXT+Hqjlrew0rwHc6/bh7GKuVX708hmYDTFNMNtTMboy+PfxFTFR0ojBI68YevOu4WQnR0sa784BH730cWhxOpGJBKT0ArRirnQbtOC1KPi3Dy58bLBNnmVFKDDOxOlOa5zDdMSqjJX4PNUFXNwPEyLB+S2L6KW9g5t+drj01KCWPGrTvFNMDJlhWUXsjCfz6Q3ZXlzBlE+kPT0xxLK/lRRWFvQEy5pZ6a/bEg5XZ8zA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yrmp5QflK+LSCJSK9jBedyKcAa7bSvHOSwLDsJx919k=;
- b=HbPbEoyqA18YffXLV8hFKeICWQ9CHm7HDXZqdmERW7aB1zdJWnor8bf10TmC+2Q6LWV94yYN8VX77LhO2hU5wHnu5RxHPDuW7/aHdUgBnFmHRz/DE2LgVVyOOdyTltMYEVoAachhZen+CeE4Kk2R3YuixI7uTnpVrSbSNzoWGt5lMFmnkpQ7uJ48V85M5UeIGMIGCcMUi7NP3zyodpfPjJ5e8zBpkG/o4/H8XhjQ/oRGqPsDjd7ijcXIE47I/R18is/gSH+/fYkO7ERZPS6nTFzXkGu/s1ulTOGK89n1/54eXiFyH3M1E4fq/QpKvcnqJMQqfAQtJmYglpRV39i9rQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yrmp5QflK+LSCJSK9jBedyKcAa7bSvHOSwLDsJx919k=;
- b=sQyxZCr9FentSeCjqvJIJXIDjza1AknPsH1ECviP3BcSWPU8LzmfRyIbwTOTtTMxfdtMHeaZj+/dQfrteCZj3rCN+IDbwOWrJUAoK+V40GBYGcMUuWQ0wW4fEyOIasqn66zubtL9OLC4XtKlT+5FIP1lBxbJS7mpdYCVutlXV1GdM6tD7Ozo7c9Ezc20Fc7Ro3WsYhpDLBoIk1Wz0UVxqHYrhpH81DvLuQygF9kh5u/jGgwhvLgg3QNB8RiNYv0PvcaWRn7bdQzaSCLIwDCzCURVL5iCewnwN17Lcox8y0W35bKjuSVEBukPldjTvkLfeFtk064BDuDYanx3xN/Fsw==
-Received: from MW4PR03CA0241.namprd03.prod.outlook.com (2603:10b6:303:b4::6)
- by DS7PR12MB8274.namprd12.prod.outlook.com (2603:10b6:8:da::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Mon, 18 Aug
- 2025 18:29:31 +0000
-Received: from MWH0EPF000971E4.namprd02.prod.outlook.com
- (2603:10b6:303:b4:cafe::af) by MW4PR03CA0241.outlook.office365.com
- (2603:10b6:303:b4::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9031.20 via Frontend Transport; Mon,
- 18 Aug 2025 18:29:31 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- MWH0EPF000971E4.mail.protection.outlook.com (10.167.243.72) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9052.8 via Frontend Transport; Mon, 18 Aug 2025 18:29:31 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 18 Aug
- 2025 11:29:08 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 18 Aug
- 2025 11:29:07 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Mon, 18 Aug 2025 11:29:05 -0700
-Date: Mon, 18 Aug 2025 11:29:04 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: "Tian, Kevin" <kevin.tian@intel.com>, "robin.murphy@arm.com"
-	<robin.murphy@arm.com>, "joro@8bytes.org" <joro@8bytes.org>,
-	"bhelgaas@google.com" <bhelgaas@google.com>, "will@kernel.org"
-	<will@kernel.org>, "robin.clark@oss.qualcomm.com"
-	<robin.clark@oss.qualcomm.com>, "yong.wu@mediatek.com"
-	<yong.wu@mediatek.com>, "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-	"angelogioacchino.delregno@collabora.com"
-	<angelogioacchino.delregno@collabora.com>, "thierry.reding@gmail.com"
-	<thierry.reding@gmail.com>, "vdumpa@nvidia.com" <vdumpa@nvidia.com>,
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "rafael@kernel.org"
-	<rafael@kernel.org>, "lenb@kernel.org" <lenb@kernel.org>, "Liu, Yi L"
-	<yi.l.liu@intel.com>, "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "iommu@lists.linux.dev"
-	<iommu@lists.linux.dev>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "linux-mediatek@lists.infradead.org"
-	<linux-mediatek@lists.infradead.org>, "linux-tegra@vger.kernel.org"
-	<linux-tegra@vger.kernel.org>, "linux-acpi@vger.kernel.org"
-	<linux-acpi@vger.kernel.org>, "linux-pci@vger.kernel.org"
-	<linux-pci@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, "Jaroszynski, Piotr" <pjaroszynski@nvidia.com>,
-	"Sethi, Vikram" <vsethi@nvidia.com>, "helgaas@kernel.org"
-	<helgaas@kernel.org>, "etzhao1900@gmail.com" <etzhao1900@gmail.com>
-Subject: Re: [PATCH v3 1/5] iommu: Lock group->mutex in iommu_deferred_attach
-Message-ID: <aKNw8CWEJ4/fJP2b@Asurada-Nvidia>
-References: <cover.1754952762.git.nicolinc@nvidia.com>
- <44783ca52e17a9ca0ce7acfe8daae3edc3d7b45b.1754952762.git.nicolinc@nvidia.com>
- <BN9PR11MB5276F543286807E05FB465F58C34A@BN9PR11MB5276.namprd11.prod.outlook.com>
- <20250818141751.GN802098@nvidia.com>
- <aKNmo/O5aXb88GKK@Asurada-Nvidia>
- <20250818180920.GC802098@nvidia.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zKM00YE/"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-24458317464so49485765ad.3
+        for <patches@lists.linux.dev>; Mon, 18 Aug 2025 11:48:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755542925; x=1756147725; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=O1Na1G1GEfTB1Z7+rFe2hu/qJ/LK+DYFvyX3BQfjabc=;
+        b=zKM00YE/xTY+VRODgDE+NsNygXMAQsF4oonTj/SHw25vc/s/eabfjRRFyQqM6gpVg/
+         t1dg85BLRvvEcqLVUydo2QggmxS7WQ9Ib+H/w4pJVGP1Sr47RABhk6SCebSzI74Su8bm
+         HyhGn8IJpFdeYCi+bp0tiNHlNXZI67R4n3CqkmZp414oHMKGn6wRTpqwGXx6fzeETRh2
+         dpNARdZuMUnXxUo5pKPgDhq3jpic/PIu+kJJBNkcgb/9HkhJE9xnNtevj7b4GUx/hIr+
+         +AvTbyj2uG0kJtObtH79OB94c015pc5ywKcFa2eFPgXvJQn89J2LylY0BCxw8n+fuP7f
+         NNzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755542925; x=1756147725;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O1Na1G1GEfTB1Z7+rFe2hu/qJ/LK+DYFvyX3BQfjabc=;
+        b=Lac6BP2csQDMQ0yWP301CjBP1/YNuQdUhM1symWL2QDyn+/PFjDu7ovvn4V3Oj+G1i
+         TQKixEXXwZFxZaus1M5BWpNPRsLDIg7CjKHDND25snPJJ0/5ie3f73kv9zvO9fJvmFtR
+         D2YTH7ILu1hBHtisxDXKiPDYsi0l2Pl9LA7Lbe+rqKL8Vt9YMvqVOXJbTDGpf6rTi1Qb
+         0MyIKA3owdEd6rpWvzWcjI9WUKIxMaBPetNXXTTW+y5j96waqTMl5BdnvIw2cfw4+20w
+         LnuljnbyAF3tQSNst856JjyNrU3rHOLZp9SqtmpOTJYv0ZfDyRepIg193yHmrby5pkIk
+         b4fw==
+X-Forwarded-Encrypted: i=1; AJvYcCXOSKw8neiyua6ilodKJw2fZ603rx4oOZhEuTLtrsDIt4W2DqMpiyVszCM6x/Ekz4S+iDc1D8Uy@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJsTBFmt+l6FxAP+cbiGcSXb5dF/IRMvp7LY0fv13LhOcZwlRX
+	1cZWjJAFK3Xk71b95a1vbANKTxkFD2uyqygsWMx+kB6CGmF6SJxoVTWbQaPbrnzgiqkHnWiWfEO
+	v6oT6SnLPVgTkMyqh/66nszr9iX7FSa2WhEShkmuB5A==
+X-Gm-Gg: ASbGncvCXvuw5uSpoA6mYhdFLsk2kynVM5xLTaPR68OgjaB9PJoDQM0xjFCUcTwcUaY
+	YlPX08jjScLbBu93v5a9b0K6mxLM2pHwE3+QG9RDIUjC6gTCut3siz48rOOyFZZJDMzUA6IUlS0
+	lg1ffnHVzz6vCOmFw8J5A7vnpydgSD149Oh1hgL8MbcNMxCfy4dkDkVgOcg4VnAz+gtdtPFi3MG
+	qKSHzQeHwyoCSeBPOYL5ENytrG8JmKQmPkxnGfhbFWpp9EPVUM=
+X-Google-Smtp-Source: AGHT+IHmOMJz7nCYS/tZ+DC/rzqutFB5PsuRPGV79kAw2iKn1BK0MGU5HrYZKUaPZJ8Wp385fx6Fyv1c//DR81jG32o=
+X-Received: by 2002:a17:902:f78a:b0:240:84b:a11a with SMTP id
+ d9443c01a7336-2449cf43f7fmr5618825ad.17.1755542925263; Mon, 18 Aug 2025
+ 11:48:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250818180920.GC802098@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000971E4:EE_|DS7PR12MB8274:EE_
-X-MS-Office365-Filtering-Correlation-Id: becdc750-6317-4f35-ef77-08ddde852c65
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|1800799024|36860700013|376014|7416014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?7lReftFSbAwlTh0FfjFvlXp5gG/hpEty6caJUem2Uc4mJKkuaoRHyyXCO4Rm?=
- =?us-ascii?Q?TZuAhJmEy0wJqGM/ZKzWgBE5wiD3YLQUzsyUGttkGG1q1ULzd81hNVr324Tk?=
- =?us-ascii?Q?mAArDficRw1Fwcqgr1FflcsAsvkPvA31TSMuNvdMveeIQ6Ac7oSViyWBIlED?=
- =?us-ascii?Q?pzkxjl3ESfRVdDq5j1OZOYOgfaR2kOu9HPp2gBMs5eF4Y1wfoZJfVi9KWiJE?=
- =?us-ascii?Q?FvA9nZL2nJRzLmNVjSywY9GYC43oZ9ocsnuoerA2T26zSlF/J4933aEnSB0p?=
- =?us-ascii?Q?/qina7DNcJiiNlj3NY4t0nVZiqLAkXHudpAoX6f/NyFv8Kvdv3b3p35haIXy?=
- =?us-ascii?Q?XSFrxAIU3DzpYW5F94/R35gCj8Y0YF+YUWrQOBkJoX3pyrvSgVbwmGY5aQpc?=
- =?us-ascii?Q?jWpJw13URFvMM1Z0zNEd/VpgS/h71A640N3K6h4gv4H9e0abuIZqwBZ7Ap3u?=
- =?us-ascii?Q?eJy7Grqww0M2QoNtdSqLaNH4DNb29wN54vV39rxRVtmkU3h2Pb6CqWPolRi1?=
- =?us-ascii?Q?cIyst/S54c6ryffBgv+fora38aTL9Wqc0TQOwmSL1ndv0hrYxDK8E8Tv71K1?=
- =?us-ascii?Q?hQLIEzWIoEY9FVQqRa4iBSZZ5LOa437Q6zyL5TXny6lBUYBgKoCdUusqBnfw?=
- =?us-ascii?Q?ew+HkrzZR5mo9vrKARcE5Sbl6Z/i7f/v6LuzOEabpVQyZ8Gl2la1ILyglMqp?=
- =?us-ascii?Q?lZBj5DznDaSHUYZEdh8sdgnFdv7zqZiQE7sg7NEu9CXkFgwtFCovdHChLO3n?=
- =?us-ascii?Q?FJCIdVL+wUqcMfz4LDEJyjXvBhh6tzd7lBxozEO3BsgVBdGtE71HEEAs0Nwf?=
- =?us-ascii?Q?ComdpvvApEv2SkYFXFr0DiQ1DW38292XzbRUYlqJoJa5CMwTA6bEB+NeWHZ6?=
- =?us-ascii?Q?AmG1XpmG96ktHr7TFhcPYYacKB1CUZPsNLjLnmvp7n4+tKklTWZYvTk7U36X?=
- =?us-ascii?Q?yY/qHjlYXCwtFJ5L8f76rGlgILjBQBaY8k6lNF3e/FmPnqvRCbLB9TwhNiZs?=
- =?us-ascii?Q?Ret71lCZp0q0UPYNQQvRr8G7Y50/XR3N2ay+9xBdBFi86D/5gSaOftAAeMyl?=
- =?us-ascii?Q?/Wo/jaLF2qJv8Ht2s/AGMiVRmyOyVkkK6EuEfL4w10pNraNzqC3ELAk31Ovd?=
- =?us-ascii?Q?VymNNM+kvNE8qQA876r5iWE3Nqn2MizFskKHJ9lL8Q/ci1Skd2qdmZ7V4IiL?=
- =?us-ascii?Q?bzjT2luw9kq57PXNW+rwlzjmJvfqJG1ve3l8T4sceqGCKMS8wdDAF8tg9/b5?=
- =?us-ascii?Q?DWn+BZjpTzYEzQtJwleG/f/KMfoW5ZfMl2L71FJy4JQ2seo1iH9LroSgbumi?=
- =?us-ascii?Q?PUOwDSlet1dXbrA3BneJFTxXES4IxTDg6CofkgFs0vCEPKwqWhpC6CCDxln3?=
- =?us-ascii?Q?GQPJ+N/Urbo/hqX5bX1BMO6G2V622E1lzoS1/ZdEFe4Mxq+nf9KLr63n5l/6?=
- =?us-ascii?Q?XL46qJ3Rxa91VsCc6Gn1ewNFVV3ez5Q5mvPgCsdFwU+bXlDTvk53D6O3M+PL?=
- =?us-ascii?Q?2JjQ7P7SpyQWVjGkuDv8lz0KW8jSyGcfRd+x?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(36860700013)(376014)(7416014);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2025 18:29:31.2004
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: becdc750-6317-4f35-ef77-08ddde852c65
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MWH0EPF000971E4.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8274
+References: <20250818124458.334548733@linuxfoundation.org>
+In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 19 Aug 2025 00:18:33 +0530
+X-Gm-Features: Ac12FXy3q6ijpYJlZM9lDBDRg0-eeJWhMQBu6-QX-xroiq3SJXWRlW-B4Umf5T8
+Message-ID: <CA+G9fYt5sknJ3jbebYZrqMRhbcLZKLCvTDHfg5feNnOpj-j9Wg@mail.gmail.com>
+Subject: Re: [PATCH 6.15 000/515] 6.15.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org, 
+	Ben Copeland <benjamin.copeland@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	Linux ARM <linux-arm-kernel@lists.infradead.org>, srinivas.kandagatla@oss.qualcomm.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Aug 18, 2025 at 03:09:20PM -0300, Jason Gunthorpe wrote:
-> On Mon, Aug 18, 2025 at 10:45:07AM -0700, Nicolin Chen wrote:
-> > On Mon, Aug 18, 2025 at 11:17:51AM -0300, Jason Gunthorpe wrote:
-> > > On Fri, Aug 15, 2025 at 08:24:57AM +0000, Tian, Kevin wrote:
-> > > > > From: Nicolin Chen <nicolinc@nvidia.com>
-> > > > > Sent: Tuesday, August 12, 2025 6:59 AM
-> > > > > 
-> > > > > The iommu_deferred_attach() is a runtime asynchronous function called by
-> > > > > iommu-dma function, which could race against other attach functions if it
-> > > > > accesses something in the dev->iommu_group.
-> > > > 
-> > > > Is there a real racing scenario being observed or more theoretical?
-> > > 
-> > > I think the commit message should explain the actual reason this is
-> > > being done, which AFAICT because the new lockdeps added in following
-> > > patches will fail on this path otherwise.
-> > 
-> > Hmm, I can mention that. But I think that's just a part of the
-> > reason. It still doesn't seem correct to invoke an attach_dev
-> > function without the lock since iommu_group_mutex_assert() may
-> > be used in the path?
-> 
-> Last time this was brought up there was a bit of an argument that it
-> couldn't happen in parallel with anything anyhow so it doesn't
-> technically need locking. But I think we should not make such
-> arguments and be strict about our locking. It is too hard to
-> understand the system correctness otherwise.
+On Mon, 18 Aug 2025 at 18:45, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.15.11 release.
+> There are 515 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 20 Aug 2025 12:43:43 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.11-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Yes. I will make the commit message clear that it isn't about a
-bug fix, but to align with the locking policy at the attach_dev
-callback and (more importantly) to fence gdev for the new flag.
+Boot regression occurs on the Qualcomm DragonBoard 410c (arm64) with
+stable-rc 6.15.11-rc1. The kernel crashes during early boot with a
+NULL pointer dereference in the Qualcomm SCM/TZMEM subsystem.
 
-Thanks
-Nicolin
+The crash originates in qcom_scm_shm_bridge_enable()
+(drivers/firmware/qcom/qcom_scm.c:1618) and is invoked by
+qcom_tzmem_enable() (drivers/firmware/qcom/qcom_tzmem.c:97 and :474).
+This happens while probing SCM during platform initialization, preventing
+the board from reaching userspace due to kernel panic.
+
+Regression Analysis:
+- New regression? yes
+- Reproducibility? yes
+
+Boot regression: stable-rc 6.15.11-rc1 arm64 Qualcomm Dragonboard 410c
+Unable to handle kernel NULL pointer dereference
+qcom_scm_shm_bridge_enable
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Test log oom03
+[    1.191790] scmi_core: SCMI protocol bus registered
+[    1.194074] Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000000
+[    1.198306] Mem abort info:
+[    1.207295]   ESR = 0x0000000096000004
+[    1.209796]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    1.213635]   SET = 0, FnV = 0
+[    1.219095]   EA = 0, S1PTW = 0
+[    1.221945]   FSC = 0x04: level 0 translation fault
+[    1.225004] Data abort info:
+[    1.229874]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    1.232977]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    1.238286]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    1.243409] [0000000000000000] user address but active_mm is swapper
+[    1.248798] Internal error: Oops: 0000000096000004 [#1]  SMP
+[    1.255110] Modules linked in:
+[    1.260744] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted
+6.15.11-rc1 #1 PREEMPT
+[    1.263622] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
+[    1.271517] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    1.278199] pc : qcom_scm_shm_bridge_enable
+(drivers/firmware/qcom/qcom_scm.c:1618)
+[    1.284878] lr : qcom_tzmem_enable
+(drivers/firmware/qcom/qcom_tzmem.c:97
+drivers/firmware/qcom/qcom_tzmem.c:474)
+[    1.290085] sp : ffff80008002b720
+[    1.294508] x29: ffff80008002b7b0 x28: 0000000000000000 x27: 0000000000000000
+[    1.297819] x26: 0000000000000000 x25: 0000000000000000 x24: ffff00003faf6128
+[    1.304937] x23: ffff00003fac6c68 x22: 0000000000000000 x21: ffff0000036ba410
+[    1.312055] x20: ffff0000036ba400 x19: ffff8000831a4000 x18: 0000000000000352
+[    1.319173] x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000002
+[    1.326292] x14: ffffffffffffffff x13: 0000000000000000 x12: 0000000000000002
+[    1.333410] x11: 0000000000000000 x10: 0000000000000019 x9 : ffff8000813e6d74
+[    1.340527] x8 : 0000000000000000 x7 : 7f7f7f7f7f7f7f7f x6 : fefefeff35302f37
+[    1.347645] x5 : 8080808000000000 x4 : 0000000000000020 x3 : 0000000000000010
+[    1.354763] x2 : 000000000000001c x1 : 000000000000000c x0 : 0000000000000000
+[    1.361882] Call trace:
+[    1.368986] qcom_scm_shm_bridge_enable
+(drivers/firmware/qcom/qcom_scm.c:1618) (P)
+[    1.371251] qcom_tzmem_enable
+(drivers/firmware/qcom/qcom_tzmem.c:97
+drivers/firmware/qcom/qcom_tzmem.c:474)
+[    1.376455] qcom_scm_probe (drivers/firmware/qcom/qcom_scm.c:2256)
+[    1.380534] platform_probe (drivers/base/platform.c:1405)
+[    1.384180] really_probe (drivers/base/dd.c:581)
+[    1.387998] __driver_probe_device (drivers/base/dd.c:?)
+[    1.391647] driver_probe_device (drivers/base/dd.c:829)
+[    1.395987] __driver_attach (drivers/base/dd.c:1216)
+[    1.399978] bus_for_each_dev (drivers/base/bus.c:369)
+[    1.403798] driver_attach (drivers/base/dd.c:1233)
+[    1.407965] bus_add_driver (drivers/base/bus.c:679)
+[    1.411523] driver_register (drivers/base/driver.c:250)
+[    1.415083] __platform_driver_register (drivers/base/platform.c:867)
+[    1.418905] qcom_scm_init (drivers/firmware/qcom/qcom_scm.c:2362)
+[    1.423763] do_one_initcall (init/main.c:1257)
+[    1.427409] do_initcall_level (init/main.c:1318)
+[    1.430969] do_initcalls (init/main.c:1332)
+[    1.435134] do_basic_setup (init/main.c:1355)
+[    1.438434] kernel_init_freeable (init/main.c:1571)
+[    1.442254] kernel_init (init/main.c:1459)
+[    1.446593] ret_from_fork (arch/arm64/kernel/entry.S:865)
+[ 1.449810] Code: a905ffff a904ffff a903ffff f9001bff (f9400100)
+All code
+========
+   0: a905ffff stp xzr, xzr, [sp, #88]
+   4: a904ffff stp xzr, xzr, [sp, #72]
+   8: a903ffff stp xzr, xzr, [sp, #56]
+   c: f9001bff str xzr, [sp, #48]
+  10:* f9400100 ldr x0, [x8] <-- trapping instruction
+
+Code starting with the faulting instruction
+===========================================
+   0: f9400100 ldr x0, [x8]
+[    1.453637] ---[ end trace 0000000000000000 ]---
+[    1.459661] Kernel panic - not syncing: Attempted to kill init!
+exitcode=0x0000000b
+[    1.464318] SMP: stopping secondary CPUs
+[    1.471696] ---[ end Kernel panic - not syncing: Attempted to kill
+init! exitcode=0x0000000b ]---
+
+Please refer full test log information in the below links.
+
+## Source
+* Kernel version: 6.15.11-rc1
+* Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* Git describe: v6.15.9-993-g1cf711608500
+* Git commit: 1cf71160850064e9e506eda37e0386948bedd6b4
+* Architectures: arm64 Dragonboard 410c
+* Toolchains: gcc-13, clang-20
+* Kconfigs: defconfig+lkft
+
+## Test
+* Boot log: https://qa-reports.linaro.org/api/testruns/29589408/log_file/
+* Boot lava log: https://lkft.validation.linaro.org/scheduler/job/8407660#L2708
+* Boot details:
+https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.15.y/v6.15.9-993-g1cf711608500/log-parser-boot/panic-multiline-kernel-panic-not-syncing-attempted-to-kill-init-exitcode/
+* Boot plan: https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/31SjnwYvj7Mmcay6Qa54CFbNfP9
+* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/31SjkxSlW3Ssjf1eGdFHJPPU4Yw/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/31SjkxSlW3Ssjf1eGdFHJPPU4Yw/config
+
+--
+Linaro LKFT
+https://lkft.linaro.org
