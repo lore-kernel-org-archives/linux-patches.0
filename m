@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0307D22AE7A;
-	Mon, 18 Aug 2025 13:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7C8225413;
+	Mon, 18 Aug 2025 13:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525360; cv=none; b=akzNR4tYSKNpFfsh2b141lp/shPgzSL3nVCFPX3LjJFezj8Od/ZUaoBrH8L2NJJFkA1WHrhr2U79KuNYyMltis0RYUf2N8zY4UjW0RGLWIwfbbG8agZuUW/SvgmOW6nwhgVicSv6XxNb97EfWRQPlusGU+TsfQZn2a1O/hyN9Ys=
+	t=1755525362; cv=none; b=cGjsu1e+KBSC4XmaYXZpE2aMK8uvIwL7+H4NXo3cI/nOFIdeY289pol7HEq5LMcgudr5ucDT6AhtIFsyGlms/r4WOO9u+uUeR5AtOLhdeZSduHSKzfOPEn2cgW6Np0Qf78MVpD01lOa2jjq0EbCZr+RmpqjogYj1TZ8RdvVKzig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525360; c=relaxed/simple;
-	bh=gPDqd5oQgQ5XSQOgJVKsFMaWWHf3lR2AD4nnko9MHvM=;
+	s=arc-20240116; t=1755525362; c=relaxed/simple;
+	bh=7u2iPHZQFr6eUPXAW/bKvYILCOjHZJ8UoD5D1kNEoxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QhP1T32gwMv1HVOH19xuxrhuUEOBs7QZaS2BkPsElMgxldrlliC75+eVQ5p31vVSvt4BF1hricDxP/YlX8aeDgw2COFl6zwUyEvhVmJd2V7CxXFfBi+6cORPlxtOxGR4l7VTIjdBgNWrWVmLWLiWsvqAo9zTqOBSutsbObM5suE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwjdBrda; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2ljUlzZWdV10G9GZM4j/iWe7ojb54nJPISDY1fpu+CgmPciExWQLfX7Cf8tAHwSSfTHa8E1+VSt1G34ctssIMD8TPLuFCbvjPjFFj2ZYNlEAxDroCxJXmbRGYT6eqKa+2i8ECkYhDoZ4kE0muUgzY7XBvH+dTm0jp9EsNZDa6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWz/LXcq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwjdBrda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD402C4CEEB;
-	Mon, 18 Aug 2025 13:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWz/LXcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D30C4CEEB;
+	Mon, 18 Aug 2025 13:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525359;
-	bh=gPDqd5oQgQ5XSQOgJVKsFMaWWHf3lR2AD4nnko9MHvM=;
+	s=korg; t=1755525362;
+	bh=7u2iPHZQFr6eUPXAW/bKvYILCOjHZJ8UoD5D1kNEoxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwjdBrdaYQNeF0/xZV/A8fsRtmrtPgaf7GZa5xqBcEXMlzdBzO+kCMAymI21Y6iJW
-	 SWzE0lkRxE0SgGkYXACFt5dCvav+aZAbdfCUpEpz7UbWM6LE0xiUi1w0j2K7BWd3R+
-	 PcjAnPKJwvIU7xwu42PZXCozFBxjG7tMbr0wN758=
+	b=ZWz/LXcqdDtzOUZw+dhhbY6eousVQJVuunIcNhuPS1xGSoXAXz11TajMahYWrP/VN
+	 iUmfjzg5s/X2fxxSJ2MvXQ2rx7nrrDIaDTpFiW1U2WKpswQMifZwIAu5ymvLMRiwd5
+	 0zdqa0gB0iRnoY57qhryfSvLKpcnwtmxcMvfEG6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Stefano Brivio <sbrivio@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 205/570] netfilter: nft_set_pipapo: prefer kvmalloc for scratch maps
-Date: Mon, 18 Aug 2025 14:43:12 +0200
-Message-ID: <20250818124513.705444216@linuxfoundation.org>
+Subject: [PATCH 6.16 206/570] selftests: netfilter: Enable CONFIG_INET_SCTP_DIAG
+Date: Mon, 18 Aug 2025 14:43:13 +0200
+Message-ID: <20250818124513.743357024@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,50 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 897eefee2eb73ec6c119a0ca357d7b4a3e92c5ef ]
+[ Upstream commit ba71a6e58b38aa6f86865d4e18579cb014903692 ]
 
-The scratchmap size depends on the number of elements in the set.
-For huge sets, each scratch map can easily require very large
-allocations, e.g. for 100k entries each scratch map will require
-close to 64kbyte of memory.
+The config snippet specifies CONFIG_SCTP_DIAG. This was never an option.
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Replace CONFIG_SCTP_DIAG with the intended CONFIG_INET_SCTP_DIAG.
+
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/netfilter/config | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index c5855069bdab..9e4e25f2458f 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1219,7 +1219,7 @@ static void pipapo_free_scratch(const struct nft_pipapo_match *m, unsigned int c
- 
- 	mem = s;
- 	mem -= s->align_off;
--	kfree(mem);
-+	kvfree(mem);
- }
- 
- /**
-@@ -1240,10 +1240,9 @@ static int pipapo_realloc_scratch(struct nft_pipapo_match *clone,
- 		void *scratch_aligned;
- 		u32 align_off;
- #endif
--		scratch = kzalloc_node(struct_size(scratch, map,
--						   bsize_max * 2) +
--				       NFT_PIPAPO_ALIGN_HEADROOM,
--				       GFP_KERNEL_ACCOUNT, cpu_to_node(i));
-+		scratch = kvzalloc_node(struct_size(scratch, map, bsize_max * 2) +
-+					NFT_PIPAPO_ALIGN_HEADROOM,
-+					GFP_KERNEL_ACCOUNT, cpu_to_node(i));
- 		if (!scratch) {
- 			/* On failure, there's no need to undo previous
- 			 * allocations: this means that some scratch maps have
+diff --git a/tools/testing/selftests/net/netfilter/config b/tools/testing/selftests/net/netfilter/config
+index 363646f4fefe..142eb2b03643 100644
+--- a/tools/testing/selftests/net/netfilter/config
++++ b/tools/testing/selftests/net/netfilter/config
+@@ -92,4 +92,4 @@ CONFIG_XFRM_STATISTICS=y
+ CONFIG_NET_PKTGEN=m
+ CONFIG_TUN=m
+ CONFIG_INET_DIAG=m
+-CONFIG_SCTP_DIAG=m
++CONFIG_INET_SCTP_DIAG=m
 -- 
 2.39.5
 
