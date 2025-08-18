@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DFC31CA5C;
-	Mon, 18 Aug 2025 13:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C28A30F7F8;
+	Mon, 18 Aug 2025 13:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522619; cv=none; b=jhngKRIdGIFQCHIvVvYstvSu9YrLjBx0OTeHCzR8CYL8EfiZaGL1wY+MLHXZHV0kwDx5vzi1PcSmniQEDQz16qri8JW72dqGr59SMKZcJ45iiX/54HDpJ4Jycwxd2kBjtfRO2MDwm706HjbDmCWrSvXRWAMaBSq8DS97c8WiPjk=
+	t=1755522622; cv=none; b=NOQyq1nfZGNSHrAIXhsivguvJEC325t1khTV9pptJLNkKy7FrrJwYHmiWVnHBmz+LTSOdRl8+TbIkoLaKMbuKpVU9zfVXy7rwpyiFR8GXt5msv3E2yRx6sHR5wVR89AnDceR8TOMleilgSI2P+QpSQvqwEQjDx5b+6nRLfHqWYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522619; c=relaxed/simple;
-	bh=O2oIcunaZi9UXmj3GKIsyy671wHBj2sNzVgNOxPiXH0=;
+	s=arc-20240116; t=1755522622; c=relaxed/simple;
+	bh=Vx/bCtmHCiYtWeYFyaLcQk5Hnt5BCY+hWI+NSqLC/JA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXe7to37lR2va8hkmdxoMTfyRcWbGHSelIFCfLTytIvYxOB/xoQKCN8HfYHmP2SjbRdx1j79fcRJKh0qa0LJ15H8zBIVegL+YrdMyofIA8lIRLIQC6S0jdnopSrxCEoSQ6FMmSns2MV/38UB9fUd/QXbBf5rHlxzhjT1I+eyPeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2KjOzGG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCMj+lgs4mQPxYFUeLfjwsZDzKmUSKuQaI2Ie+YXwE8mhaVElrPeVXqqzwmQtn9vJxE4v2XmEPWw6MRJQMo0IoJ5b1xJkFyxxKWkxobRnfAz55XCSqVAh0Gg9v5ePPj1N2ZRLAY8r2d/01urKVZ6Du5/k9rGvrvLc5Lm2/hom80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLFrE6GQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2KjOzGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1AFC4CEEB;
-	Mon, 18 Aug 2025 13:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLFrE6GQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F31C4CEEB;
+	Mon, 18 Aug 2025 13:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522618;
-	bh=O2oIcunaZi9UXmj3GKIsyy671wHBj2sNzVgNOxPiXH0=;
+	s=korg; t=1755522622;
+	bh=Vx/bCtmHCiYtWeYFyaLcQk5Hnt5BCY+hWI+NSqLC/JA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2KjOzGGaWOuNCfGLL+Nks4Zc0Pal39FOVByA/l3OhMVgV/2v4nlyFGscyVeSUSCN
-	 SgAPaD+9XlYXnz1pqrnblXaBLN2uaCcWv19lXTYLILVUUDgFJ1Luifrt9v7gqUcG4D
-	 aLb1QAiP/SfqusBoQPP2fhAa1DlM8Nhj7xPI/j2Y=
+	b=wLFrE6GQRyYDbRE+BfkvaDS7LasihDpejkhlc7rfzVXFwyE7r7Q0SB3fXf3Kf8+Aa
+	 4hmQeQVL5snBhgpvQGtvXelx88/tNTY8OKumy1cy53+9ZC1PYPvOfxNbjkeKwQoJnG
+	 m/eSQnnJfkif/22UnQb5bdOAqlECTXFI/6ue+qwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	YiPeng Chai <YiPeng.Chai@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 370/444] cifs: Fix collect_sample() to handle any iterator type
-Date: Mon, 18 Aug 2025 14:46:36 +0200
-Message-ID: <20250818124502.769605330@linuxfoundation.org>
+Subject: [PATCH 6.12 371/444] drm/amdgpu: fix vram reservation issue
+Date: Mon, 18 Aug 2025 14:46:37 +0200
+Message-ID: <20250818124502.806056433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -57,128 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: YiPeng Chai <YiPeng.Chai@amd.com>
 
-[ Upstream commit b63335fb3d32579c5ff0b7038b9cc23688fff528 ]
+[ Upstream commit 10ef476aad1c848449934e7bec2ab2374333c7b6 ]
 
-collect_sample() is used to gather samples of the data in a Write op for
-analysis to try and determine if the compression algorithm is likely to
-achieve anything more quickly than actually running the compression
-algorithm.
+The vram block allocation flag must be cleared
+before making vram reservation, otherwise reserving
+addresses within the currently freed memory range
+will always fail.
 
-However, collect_sample() assumes that the data it is going to be sampling
-is stored in an ITER_XARRAY-type iterator (which it now should never be)
-and doesn't actually check that it is before accessing the underlying
-xarray directly.
-
-Fix this by replacing the code with a loop that just uses the standard
-iterator functions to sample every other 2KiB block, skipping the
-intervening ones.  It's not quite the same as the previous algorithm as it
-doesn't necessarily align to the pages within an ordinary write from the
-pagecache.
-
-Note that the btrfs code from which this was derived samples the inode's
-pagecache directly rather than the iterator - but that doesn't necessarily
-work for network filesystems if O_DIRECT is in operation.
-
-Fixes: 94ae8c3fee94 ("smb: client: compress: LZ77 code improvements cleanup")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Enzo Matsumiya <ematsumiya@suse.de>
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: Tom Talpey <tom@talpey.com>
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c9cad937c0c5 ("drm/amdgpu: add drm buddy support to amdgpu")
+Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d38eaf27de1b8584f42d6fb3f717b7ec44b3a7a1)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/compress.c | 71 ++++++++++++----------------------------
- 1 file changed, 21 insertions(+), 50 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/compress.c b/fs/smb/client/compress.c
-index 766b4de13da7..db709f5cd2e1 100644
---- a/fs/smb/client/compress.c
-+++ b/fs/smb/client/compress.c
-@@ -155,58 +155,29 @@ static int cmp_bkt(const void *_a, const void *_b)
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+index 732c79e201c6..ea4df412decf 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+@@ -648,9 +648,8 @@ static void amdgpu_vram_mgr_del(struct ttm_resource_manager *man,
+ 	list_for_each_entry(block, &vres->blocks, link)
+ 		vis_usage += amdgpu_vram_mgr_vis_size(adev, block);
  
- /*
-- * TODO:
-- * Support other iter types, if required.
-- * Only ITER_XARRAY is supported for now.
-+ * Collect some 2K samples with 2K gaps between.
-  */
--static int collect_sample(const struct iov_iter *iter, ssize_t max, u8 *sample)
-+static int collect_sample(const struct iov_iter *source, ssize_t max, u8 *sample)
- {
--	struct folio *folios[16], *folio;
--	unsigned int nr, i, j, npages;
--	loff_t start = iter->xarray_start + iter->iov_offset;
--	pgoff_t last, index = start / PAGE_SIZE;
--	size_t len, off, foff;
--	void *p;
--	int s = 0;
+-	amdgpu_vram_mgr_do_reserve(man);
 -
--	last = (start + max - 1) / PAGE_SIZE;
--	do {
--		nr = xa_extract(iter->xarray, (void **)folios, index, last, ARRAY_SIZE(folios),
--				XA_PRESENT);
--		if (nr == 0)
--			return -EIO;
--
--		for (i = 0; i < nr; i++) {
--			folio = folios[i];
--			npages = folio_nr_pages(folio);
--			foff = start - folio_pos(folio);
--			off = foff % PAGE_SIZE;
--
--			for (j = foff / PAGE_SIZE; j < npages; j++) {
--				size_t len2;
--
--				len = min_t(size_t, max, PAGE_SIZE - off);
--				len2 = min_t(size_t, len, SZ_2K);
--
--				p = kmap_local_page(folio_page(folio, j));
--				memcpy(&sample[s], p, len2);
--				kunmap_local(p);
--
--				s += len2;
--
--				if (len2 < SZ_2K || s >= max - SZ_2K)
--					return s;
--
--				max -= len;
--				if (max <= 0)
--					return s;
--
--				start += len;
--				off = 0;
--				index++;
--			}
--		}
--	} while (nr == ARRAY_SIZE(folios));
-+	struct iov_iter iter = *source;
-+	size_t s = 0;
-+
-+	while (iov_iter_count(&iter) >= SZ_2K) {
-+		size_t part = umin(umin(iov_iter_count(&iter), SZ_2K), max);
-+		size_t n;
-+
-+		n = copy_from_iter(sample + s, part, &iter);
-+		if (n != part)
-+			return -EFAULT;
-+
-+		s += n;
-+		max -= n;
-+
-+		if (iov_iter_count(&iter) < PAGE_SIZE - SZ_2K)
-+			break;
-+
-+		iov_iter_advance(&iter, SZ_2K);
-+	}
+ 	drm_buddy_free_list(mm, &vres->blocks, vres->flags);
++	amdgpu_vram_mgr_do_reserve(man);
+ 	mutex_unlock(&mgr->lock);
  
- 	return s;
- }
+ 	atomic64_sub(vis_usage, &mgr->vis_usage);
 -- 
 2.50.1
 
