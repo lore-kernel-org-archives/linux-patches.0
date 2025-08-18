@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DFA31CA76;
-	Mon, 18 Aug 2025 14:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A46F334700;
+	Mon, 18 Aug 2025 14:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526207; cv=none; b=YpIsuY/eaGNsxklJMIjoK7U+MJYgP+AX8RnQt2fBThzgmJ+i+u2gFfuQR8Slctk3/w2ViLXzw19mezbexRzSCJVR9JSJXQFrbsI+8+SSPL3G3d5fohA+zFUOnAWbunEfZp24HOP52nw7rNo2GJAKWrsje4LDcd/R4kBnvVf4Asw=
+	t=1755526210; cv=none; b=HiA8zclahzk58zy4xKV308/bpi8ijwv6nDBblHuk5K9nigzxkzXeP8dD0bhCVQ+LZbvSw8Rqy6dB7k542cWyMAil+c6MZoBAOwsAeXPCC70F7XW7ajlZJwcGVRNuZzUeZreENFKMlNxyCFYORB5xC23prOGwl35X0at+xOPJrSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526207; c=relaxed/simple;
-	bh=RvluxLZkhl6ZseRoNS4h9aG9wVV/H6f9OQfLj5fFgqo=;
+	s=arc-20240116; t=1755526210; c=relaxed/simple;
+	bh=edy7oyT8Usr9ZC61e72XcdVnnUeiqRb3j/KTKiEMoj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6YtOHvVc9RnJ2o4c0E7arBrD8RklLOf7sQUd99Lf9EVn3JsiHDCU5KX1rxl885uOyvoZms+0o0pVH+iW1GxrDuUguXRrU9hq7kfN/lnGuGO4BEa1sVOjs86kyglnRvqFPrCmRIgV0o/spHQhXYOmLDzxX1aoKndJVu0L5DJskY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2MTOGJm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AqT1faK/W+uH/gh8oIiMUVHnT9k3X+0rm0LTH5Akk3ZE73Hb/R48G88BJpj1iB0fnCt2B9z2MEAdgL3jZMOsFrDY5S9698aRM9UIPYXBGEXilxGY+w7+SOJBXUTYu+6XH/bEuyAc8s/Zs3zrnJEA0DvgKXEbL+GyW9niwCmKcfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxMXsq38; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2MTOGJm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7B6C4CEEB;
-	Mon, 18 Aug 2025 14:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxMXsq38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C102C4CEEB;
+	Mon, 18 Aug 2025 14:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526206;
-	bh=RvluxLZkhl6ZseRoNS4h9aG9wVV/H6f9OQfLj5fFgqo=;
+	s=korg; t=1755526210;
+	bh=edy7oyT8Usr9ZC61e72XcdVnnUeiqRb3j/KTKiEMoj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2MTOGJmFOUKvffHnC5Ewc+1cM3Ei/zJpY32y87+FMoBHMIVzkIg9sJPLhA9K8diz
-	 SiHfLZLS5t6yRjbRxviQbVcMUGaYlgGeeU3pAY7hCwWEGNkN0Y1CjcfHI0qFkkDhwH
-	 gILXuQACo405+v5CmE84g/RxKWLNgkxczdCfsV2c=
+	b=UxMXsq38U9A8OkXHSrXE+IOYRVcVSNsJvIIK4VLDDWGM/tu96PeCpn9bDmYre7qFk
+	 Pnz01o/CMo3ZPONy2CDTuQy35q4dtZnCgDVp4jhnLP8oR4JjI9CtNDZQ0RDzqo1Ad8
+	 +eUVJussHqrHza6MSMGqzwZmiGHP2txThBWfgktI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YiPeng Chai <YiPeng.Chai@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 481/570] drm/amdgpu: fix vram reservation issue
-Date: Mon, 18 Aug 2025 14:47:48 +0200
-Message-ID: <20250818124524.412933034@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 490/570] samples/damon/mtier: support boot time enable setup
+Date: Mon, 18 Aug 2025 14:47:57 +0200
+Message-ID: <20250818124524.753272322@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,42 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YiPeng Chai <YiPeng.Chai@amd.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 10ef476aad1c848449934e7bec2ab2374333c7b6 ]
+commit 964314344eab7bc43e38a32be281c5ea0609773b upstream.
 
-The vram block allocation flag must be cleared
-before making vram reservation, otherwise reserving
-addresses within the currently freed memory range
-will always fail.
+If 'enable' parameter of the 'mtier' DAMON sample module is set at boot
+time via the kernel command line, memory allocation is tried before the
+slab is initialized.  As a result kernel NULL pointer dereference BUG can
+happen.  Fix it by checking the initialization status.
 
-Fixes: c9cad937c0c5 ("drm/amdgpu: add drm buddy support to amdgpu")
-Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d38eaf27de1b8584f42d6fb3f717b7ec44b3a7a1)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250706193207.39810-4-sj@kernel.org
+Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ samples/damon/mtier.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-index 07c936e90d8e..78f9e86ccc09 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-@@ -648,9 +648,8 @@ static void amdgpu_vram_mgr_del(struct ttm_resource_manager *man,
- 	list_for_each_entry(block, &vres->blocks, link)
- 		vis_usage += amdgpu_vram_mgr_vis_size(adev, block);
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -151,6 +151,8 @@ static void damon_sample_mtier_stop(void
+ 	damon_destroy_ctx(ctxs[1]);
+ }
  
--	amdgpu_vram_mgr_do_reserve(man);
--
- 	drm_buddy_free_list(mm, &vres->blocks, vres->flags);
-+	amdgpu_vram_mgr_do_reserve(man);
- 	mutex_unlock(&mgr->lock);
++static bool init_called;
++
+ static int damon_sample_mtier_enable_store(
+ 		const char *val, const struct kernel_param *kp)
+ {
+@@ -176,6 +178,14 @@ static int damon_sample_mtier_enable_sto
  
- 	atomic64_sub(vis_usage, &mgr->vis_usage);
--- 
-2.50.1
-
+ static int __init damon_sample_mtier_init(void)
+ {
++	int err = 0;
++
++	init_called = true;
++	if (enable) {
++		err = damon_sample_mtier_start();
++		if (err)
++			enable = false;
++	}
+ 	return 0;
+ }
+ 
 
 
