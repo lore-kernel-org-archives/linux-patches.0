@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB84335BB3;
-	Mon, 18 Aug 2025 13:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7898F335BB8;
+	Mon, 18 Aug 2025 13:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523672; cv=none; b=p9Onbpw6iYbytKLaAG88kbYPVjtxa7SQS+p0KxW/d+quQIFzo4q44SY/XILgZgVyfyc2StToBGlrUeADIL1NgSfqZ52Jbdvxp56UKRr9ggGEheHTXmVI5sYR4+xEayOMqMhkvkKW57V++Zn2675Eq7T/A7t7r8vgbGC1uYaXih0=
+	t=1755523676; cv=none; b=p8cO6nbvzc0lzD9l9n8rNsKbrYHIYrlSMlair5201AukHG4hjbA2FQuo+oCYcb99tTg9jNBfM6CpnFSF5Xt07XgTOcbfm0pfyEOCnxCmruBDN/KYla9UigqJDmWvT2sThOSHnDKjw2gtUoxqn/KstwSGq/scTyX+FZMIZ0siuuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523672; c=relaxed/simple;
-	bh=kJ17f2Iw1Oiq3Gyck0sMxih5gMULBtGJzcBTJ16X2DI=;
+	s=arc-20240116; t=1755523676; c=relaxed/simple;
+	bh=1YKMc+O7bszezgWmwJ/ngpBvjNoCgse3TYGD4MK24NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J4WD66GAZBw3nhjyMn176Su5PEKyilvx8VyfyDlBW2aafyTvt0kKLnY5yMkBC/MR0dP1z0Tn4uVOpfhTCWJIaGSWpumn9pqO0VEsXzWDA20B47qfdUsiePk+JVzL093jTK71EDP7RQ/FOUpCOCq+Wb0afgEV8yLOI2UdceyQBuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHtCNX2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QsZBbci2owBuItGbEsONAQBUKmkBr1HVtSHeHm3var07lLTHSA9G8cyBe4J3rx4+7epYs/OvQJlWQgKFVIBFJ6H6JcAcFN5EzWvJDaScJz5TLRGwriJHz+0qvf++eje6u4Hzo5vderDUNr3/PivnrNOdG4gx9ha8WT5j3mDCOyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zu3/XgU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHtCNX2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28351C4CEEB;
-	Mon, 18 Aug 2025 13:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zu3/XgU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9443FC4CEEB;
+	Mon, 18 Aug 2025 13:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523672;
-	bh=kJ17f2Iw1Oiq3Gyck0sMxih5gMULBtGJzcBTJ16X2DI=;
+	s=korg; t=1755523676;
+	bh=1YKMc+O7bszezgWmwJ/ngpBvjNoCgse3TYGD4MK24NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHtCNX2pdNfcAt1wqc0t/mZdrNUyjgrsWnhrHVrK/LNtLtDXrEFFhYSwbAKW+Qvs/
-	 XlixLsw9UssBKOLlGccbY9knxdoM45icUm0yGbKdqrhlo8W1A6yQw2paUM78NSy9hw
-	 zRY4KiSA2NxOvfWJhqB3kicUcmCN8+26VSqjBvdU=
+	b=0zu3/XgUBPEZSR9s8HFw7NR3MxmtG2jnIYdEE2ZaQyuamfoo2YGu67/47P2v2Y1X6
+	 5QPpmK6mjw7e+kHZNY1rtmbX+i/4XE2rwjoR3OWZr90YW1GlJf5lHGAS85HVPlW6VJ
+	 jbOKbCFAmEYhiDydxNKoYMaF3MiQvbg80qjx2e18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Hendrik Farr <kernel@jfarr.cc>,
-	Johannes Berg <johannes.berg@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 243/515] wifi: mac80211: dont complete management TX on SAE commit
-Date: Mon, 18 Aug 2025 14:43:49 +0200
-Message-ID: <20250818124507.741257761@linuxfoundation.org>
+Subject: [PATCH 6.15 244/515] wifi: mac80211: avoid weird state in error path
+Date: Mon, 18 Aug 2025 14:43:50 +0200
+Message-ID: <20250818124507.780212667@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,97 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 6b04716cdcac37bdbacde34def08bc6fdb5fc4e2 ]
+[ Upstream commit be1ba9ed221ffb95a8bb15f4c83d0694225ba808 ]
 
-When SAE commit is sent and received in response, there's no
-ordering for the SAE confirm messages. As such, don't call
-drivers to stop listening on the channel when the confirm
-message is still expected.
+If we get to the error path of ieee80211_prep_connection, for example
+because of a FW issue, then ieee80211_vif_set_links is called
+with 0.
+But the call to drv_change_vif_links from ieee80211_vif_update_links
+will probably fail as well, for the same reason.
+In this case, the valid_links and active_links bitmaps will be reverted
+to the value of the failing connection.
+Then, in the next connection, due to the logic of
+ieee80211_set_vif_links_bitmaps, valid_links will be set to the ID of
+the new connection assoc link, but the active_links will remain with the
+ID of the old connection's assoc link.
+If those IDs are different, we get into a weird state of valid_links and
+active_links being different. One of the consequences of this state is
+to call drv_change_vif_links with new_links as 0, since the & operation
+between the bitmaps will be 0.
 
-This fixes an issue if the local confirm is transmitted later
-than the AP's confirm, for iwlwifi (and possibly mt76) the
-AP's confirm would then get lost since the device isn't on
-the channel at the time the AP transmit the confirm.
+Since a removal of a link should always succeed, ignore the return value
+of drv_change_vif_links if it was called to only remove links, which is
+the case for the ieee80211_prep_connection's error path.
+That way, the bitmaps will not be reverted to have the value from the
+failing connection and will have 0, so the next connection will have a
+good state.
 
-For iwlwifi at least, this also improves the overall timing
-of the authentication handshake (by about 15ms according to
-the report), likely since the session protection won't be
-aborted and rescheduled.
-
-Note that even before this, mgd_complete_tx() wasn't always
-called for each call to mgd_prepare_tx() (e.g. in the case
-of WEP key shared authentication), and the current drivers
-that have the complete callback don't seem to mind. Document
-this as well though.
-
-Reported-by: Jan Hendrik Farr <kernel@jfarr.cc>
-Closes: https://lore.kernel.org/all/aB30Ea2kRG24LINR@archlinux/
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250609213232.12691580e140.I3f1d3127acabcd58348a110ab11044213cf147d3@changeid
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20250609213231.ba2011fb435f.Id87ff6dab5e1cf757b54094ac2d714c656165059@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  include/net/mac80211.h | 2 ++
- net/mac80211/mlme.c    | 9 ++++++++-
+ net/mac80211/link.c    | 9 ++++++++-
  2 files changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 5349df596157..829032258978 100644
+index 829032258978..5989cacb9d50 100644
 --- a/include/net/mac80211.h
 +++ b/include/net/mac80211.h
-@@ -4296,6 +4296,8 @@ struct ieee80211_prep_tx_info {
-  * @mgd_complete_tx: Notify the driver that the response frame for a previously
-  *	transmitted frame announced with @mgd_prepare_tx was received, the data
-  *	is filled similarly to @mgd_prepare_tx though the duration is not used.
-+ *	Note that this isn't always called for each mgd_prepare_tx() call, for
-+ *	example for SAE the 'confirm' messages can be on the air in any order.
+@@ -4462,6 +4462,8 @@ struct ieee80211_prep_tx_info {
+  *	new links bitmaps may be 0 if going from/to a non-MLO situation.
+  *	The @old array contains pointers to the old bss_conf structures
+  *	that were already removed, in case they're needed.
++ *	Note that removal of link should always succeed, so the return value
++ *	will be ignored in a removal only case.
+  *	This callback can sleep.
+  * @change_sta_links: Change the valid links of a station, similar to
+  *	@change_vif_links. This callback can sleep.
+diff --git a/net/mac80211/link.c b/net/mac80211/link.c
+index 4f7b7d0f64f2..d71eabe5abf8 100644
+--- a/net/mac80211/link.c
++++ b/net/mac80211/link.c
+@@ -2,7 +2,7 @@
+ /*
+  * MLO link handling
   *
-  * @mgd_protect_tdls_discover: Protect a TDLS discovery session. After sending
-  *	a TDLS discovery-request, we expect a reply to arrive on the AP's
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index f4f13e170732..160821e42524 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -4754,6 +4754,7 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
- 	struct ieee80211_prep_tx_info info = {
- 		.subtype = IEEE80211_STYPE_AUTH,
- 	};
-+	bool sae_need_confirm = false;
+- * Copyright (C) 2022-2024 Intel Corporation
++ * Copyright (C) 2022-2025 Intel Corporation
+  */
+ #include <linux/slab.h>
+ #include <linux/kernel.h>
+@@ -368,6 +368,13 @@ static int ieee80211_vif_update_links(struct ieee80211_sub_if_data *sdata,
+ 			ieee80211_update_apvlan_links(sdata);
+ 	}
  
- 	lockdep_assert_wiphy(sdata->local->hw.wiphy);
- 
-@@ -4799,6 +4800,8 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
- 				jiffies + IEEE80211_AUTH_WAIT_SAE_RETRY;
- 			ifmgd->auth_data->timeout_started = true;
- 			run_again(sdata, ifmgd->auth_data->timeout);
-+			if (auth_transaction == 1)
-+				sae_need_confirm = true;
- 			goto notify_driver;
- 		}
- 
-@@ -4841,6 +4844,9 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
- 	     ifmgd->auth_data->expected_transaction == 2)) {
- 		if (!ieee80211_mark_sta_auth(sdata))
- 			return; /* ignore frame -- wait for timeout */
-+	} else if (ifmgd->auth_data->algorithm == WLAN_AUTH_SAE &&
-+		   auth_transaction == 1) {
-+		sae_need_confirm = true;
- 	} else if (ifmgd->auth_data->algorithm == WLAN_AUTH_SAE &&
- 		   auth_transaction == 2) {
- 		sdata_info(sdata, "SAE peer confirmed\n");
-@@ -4849,7 +4855,8 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
- 
- 	cfg80211_rx_mlme_mgmt(sdata->dev, (u8 *)mgmt, len);
- notify_driver:
--	drv_mgd_complete_tx(sdata->local, sdata, &info);
-+	if (!sae_need_confirm)
-+		drv_mgd_complete_tx(sdata->local, sdata, &info);
- }
- 
- #define case_WLAN(type) \
++	/*
++	 * Ignore errors if we are only removing links as removal should
++	 * always succeed
++	 */
++	if (!new_links)
++		ret = 0;
++
+ 	if (ret) {
+ 		/* restore config */
+ 		memcpy(sdata->link, old_data, sizeof(old_data));
 -- 
 2.39.5
 
