@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7161E51FE;
-	Mon, 18 Aug 2025 12:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA60D3218D1;
+	Mon, 18 Aug 2025 12:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521845; cv=none; b=gFc4kVQqy0/CX9b99LkCBfPeOHCaQ+Q1TruM0yNKCRDNtmLzTTY699RtHimFDa2yOeudqGG2CILU02rjvWViYAQRdO7+WkpsvFR/iMMvEpCvF1sUW2oRwuyY0B/r6wWN3zRgsqhgwPy12eZiEDldh8HKPV7CViYYcTEkmz2zctc=
+	t=1755521848; cv=none; b=NNn5nZKyuTayaL0g+/XCgrvSRcS75a//A+bybEKj3AA8vZ0Ffnxxf0PGiB8Bj1Js7cNM6HxaDZJ2f15mWkI9T2tlU7YcYKDfI0QVJnMxEZMrsBOTyTmVAjGBgp+BEk9iAfbytc2afeEGt5XwrOSV4oSRwFD5E4fPIrli3q9lpuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521845; c=relaxed/simple;
-	bh=+X0gWPys+exBz7JYqQqgb6cy19GFu2k1ibxC29d9Kr0=;
+	s=arc-20240116; t=1755521848; c=relaxed/simple;
+	bh=LuWrDhlOJzNhXAKuhLyAiCK+s6uG9fT4mWSl/4L4Hgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKpp+Vz38BttSGYi5IuGl+liDSQcfImb22hJn/1xaWpaPDq7uLW9RCrkVWVUUJY5P29TTi0nb0WeGBDXMbPWar7JPYTO9hE0B4z1ZsKFD1rF2TfvBz7mJQ+U92cRREv3U0hKU9p5C478kWnP/bZw4otpyPmmhpqaWx0NaVyWnLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVwSQr6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r+qsVc2UZzGjBXPaHRUmVH8B+K/79NY0zLUX5zvGz4d9Sa3px6JkgMBLielOgFlqXgPnxHY6RURD5hpiPyUkUVFp0pvsSezws/IqrSNfJV3ydQrsOccyQJoFoHBfbQQEaLWFXQpXSSV3IUE5yIokwttqN/AAkf4ovTF7yadCJ+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcIffwjZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVwSQr6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7DCC4CEEB;
-	Mon, 18 Aug 2025 12:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcIffwjZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC3DC4CEEB;
+	Mon, 18 Aug 2025 12:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521845;
-	bh=+X0gWPys+exBz7JYqQqgb6cy19GFu2k1ibxC29d9Kr0=;
+	s=korg; t=1755521848;
+	bh=LuWrDhlOJzNhXAKuhLyAiCK+s6uG9fT4mWSl/4L4Hgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVwSQr6AL8tc+cBsjRuvdTRrPFFx1Wg+YN/DnNillk8EtcuBRcuzAwWMG4HVMDviA
-	 cbcwDvD04blYkaPQuCnEbf/d4OFKldDzyImmo+o1m2rxwC+B/0FYEtTVeCR1Y1GBmH
-	 nkDfapuB3bS0By6ol3bX8LBv5Is7IqjKdTrioaZI=
+	b=IcIffwjZ1Dr0WPxBnyj+Z+ZPU5RtxJ2LWD5Ez5kx7Grsec67hYPs/iyH6Rxe/jUlz
+	 v2qErm0aotAauIYAr/ObuKgh7uObydVPgaem4B72XADHeoT00Az46fjpb8ZhwnQdYH
+	 7bshpvFHf/J39XogVcwRew2A5tfYeaT5ufVPYmo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gwendal Grignou <gwendal@google.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/444] platform/chrome: cros_ec_sensorhub: Retries when a sensor is not ready
-Date: Mon, 18 Aug 2025 14:42:45 +0200
-Message-ID: <20250818124454.126337998@linuxfoundation.org>
+Subject: [PATCH 6.12 113/444] PM / devfreq: governor: Replace sscanf() with kstrtoul() in set_freq_store()
+Date: Mon, 18 Aug 2025 14:42:19 +0200
+Message-ID: <20250818124453.167067654@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,85 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gwendal Grignou <gwendal@chromium.org>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit 981d7f91aeda17424b29f033249f4fa7cd2a7556 ]
+[ Upstream commit 914cc799b28f17d369d5b4db3b941957d18157e8 ]
 
-When the EC/ISH starts, it can take a while for all the sensors to be up
-and running or declared broken.
+Replace sscanf() with kstrtoul() in set_freq_store() and check the result
+to avoid invalid input.
 
-If the sensor stack return -EBUSY when checking for sensor information,
-retry up to 50 times.
-It has been observed 100ms wait time is enough to have valid sensors
-ready. It can take more time in case a sensor is really broken and is
-not coming up.
-
-Signed-off-by: Gwendal Grignou <gwendal@google.com>
-Link: https://lore.kernel.org/r/20250623210518.306740-1-gwendal@google.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://lore.kernel.org/lkml/20250421030020.3108405-2-zhenglifeng1@huawei.com/
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub.c | 23 +++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/devfreq/governor_userspace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_sensorhub.c b/drivers/platform/chrome/cros_ec_sensorhub.c
-index 50cdae67fa32..9bad8f72680e 100644
---- a/drivers/platform/chrome/cros_ec_sensorhub.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub.c
-@@ -8,6 +8,7 @@
- 
- #include <linux/init.h>
+diff --git a/drivers/devfreq/governor_userspace.c b/drivers/devfreq/governor_userspace.c
+index d1aa6806b683..175de0c0b50e 100644
+--- a/drivers/devfreq/governor_userspace.c
++++ b/drivers/devfreq/governor_userspace.c
+@@ -9,6 +9,7 @@
+ #include <linux/slab.h>
  #include <linux/device.h>
-+#include <linux/delay.h>
- #include <linux/mod_devicetable.h>
+ #include <linux/devfreq.h>
++#include <linux/kstrtox.h>
+ #include <linux/pm.h>
+ #include <linux/mutex.h>
  #include <linux/module.h>
- #include <linux/platform_data/cros_ec_commands.h>
-@@ -18,6 +19,7 @@
- #include <linux/types.h>
+@@ -39,10 +40,13 @@ static ssize_t set_freq_store(struct device *dev, struct device_attribute *attr,
+ 	unsigned long wanted;
+ 	int err = 0;
  
- #define DRV_NAME		"cros-ec-sensorhub"
-+#define CROS_EC_CMD_INFO_RETRIES 50
- 
- static void cros_ec_sensorhub_free_sensor(void *arg)
- {
-@@ -53,7 +55,7 @@ static int cros_ec_sensorhub_register(struct device *dev,
- 	int sensor_type[MOTIONSENSE_TYPE_MAX] = { 0 };
- 	struct cros_ec_command *msg = sensorhub->msg;
- 	struct cros_ec_dev *ec = sensorhub->ec;
--	int ret, i;
-+	int ret, i, retries;
- 	char *name;
- 
- 
-@@ -65,12 +67,25 @@ static int cros_ec_sensorhub_register(struct device *dev,
- 		sensorhub->params->cmd = MOTIONSENSE_CMD_INFO;
- 		sensorhub->params->info.sensor_num = i;
- 
--		ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
-+		retries = CROS_EC_CMD_INFO_RETRIES;
-+		do {
-+			ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
-+			if (ret == -EBUSY) {
-+				/* The EC is still busy initializing sensors. */
-+				usleep_range(5000, 6000);
-+				retries--;
-+			}
-+		} while (ret == -EBUSY && retries);
++	err = kstrtoul(buf, 0, &wanted);
++	if (err)
++		return err;
 +
- 		if (ret < 0) {
--			dev_warn(dev, "no info for EC sensor %d : %d/%d\n",
--				 i, ret, msg->result);
-+			dev_err(dev, "no info for EC sensor %d : %d/%d\n",
-+				i, ret, msg->result);
- 			continue;
- 		}
-+		if (retries < CROS_EC_CMD_INFO_RETRIES) {
-+			dev_warn(dev, "%d retries needed to bring up sensor %d\n",
-+				 CROS_EC_CMD_INFO_RETRIES - retries, i);
-+		}
+ 	mutex_lock(&devfreq->lock);
+ 	data = devfreq->governor_data;
  
- 		switch (sensorhub->resp->info.type) {
- 		case MOTIONSENSE_TYPE_ACCEL:
+-	sscanf(buf, "%lu", &wanted);
+ 	data->user_frequency = wanted;
+ 	data->valid = true;
+ 	err = update_devfreq(devfreq);
 -- 
 2.39.5
 
