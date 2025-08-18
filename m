@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD65233735;
-	Mon, 18 Aug 2025 14:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503F02E22B0;
+	Mon, 18 Aug 2025 14:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526290; cv=none; b=aC+a3UQc4MoQ6C7NPf0iHPl7LYSbSBHsgVYoYtuBpzRv+tyBTM1flVTfHYmOnYBAEwQ9GsKTa7TIaT4GqagoRL+VdAJE1E34xRew2Hl7UkYMBxxjwxxpX4gzSioQaUaZKezi7lGXAB8pThCFEew8LM7tJRTaFfsOosTQ2S3KhKc=
+	t=1755526293; cv=none; b=pBbOfYLmy522O1vjYLmDmJHRfqsCWAjeb7nlptUuVFxdVAHs5rcP09h3aB2kebMfIKfh8X3nprcuYM4SZab5HMol9cElo47lVL5XFlWGn23tNviD1CYuZhUomG5ME2iDJpiy90wo1AWdll7TfpYNtZcp7hjQOlZ66yOoytVq8JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526290; c=relaxed/simple;
-	bh=nu49hzXVREM0HY6c0UzpUSGUxwEzAHiNMqIKQhwghIA=;
+	s=arc-20240116; t=1755526293; c=relaxed/simple;
+	bh=xWbveJ6YuCRD9z8OGGCl7cMAj1UrvvRyP62547fJCrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXtThdTheuF7XKqAWpAYHIFm6x914+OcR+0ZSy30kza+gRd0F17Cy+75aZgyLBghPWGVm+oP4S7vXDz69RvnqL5wtWtqbewQ8cHu0vl8EglgoqQxLs1dVdKdUgLz6wZurN2PdcrVvU0Vp7xN3S1ErW9fZH2+teqdDaeq9TVVOO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMGUt/FN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjqclnFRAv5WOYwVqToApXeEOCFywU88nJYBM2bz0RKTDMPMWskZJqnIM2PUvKV/AD6y8Ko+3vgxMfxj2Dk0QKwCyGZZimO1/eCoDjiTliD4fwNqLMYflYyYYuBIRxIDljIAJTaPVWIO3NHeWDHqEOTMIQfhSJdteiHaySp2dJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5PQVkqf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMGUt/FN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD07AC4CEEB;
-	Mon, 18 Aug 2025 14:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5PQVkqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF287C4CEEB;
+	Mon, 18 Aug 2025 14:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526290;
-	bh=nu49hzXVREM0HY6c0UzpUSGUxwEzAHiNMqIKQhwghIA=;
+	s=korg; t=1755526293;
+	bh=xWbveJ6YuCRD9z8OGGCl7cMAj1UrvvRyP62547fJCrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sMGUt/FNH2HJJqM1uXiYRlvMW8wu//THmfuWHbDGGvAAFiZwQE3RfC26HTH361GU4
-	 KKg2AlTRip6DLyi7wUCi7okUE4CE7jmVBqhVa3oByfZy1b5y1gg8lTq7F/2u5vXg2C
-	 JeZLQf0ZmL0JDWQ/RvCZIn46p5Z+VQ/4SoaYbKEE=
+	b=Z5PQVkqfGU0E6olQTA44/skE8R11+2wC1g238OisHYzEDl8COs+uvx0GlUSA4nzTw
+	 nPpE3Cu4qX4zbgRrjBrerP70XlyOABXSIBgoyfZiCGe+GvQjfYn7+urYDNSJjD1zWu
+	 K8EDOHtMDp9RexzQBKkpvy54U4Xzgwz3jGFggsqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.16 510/570] usb: typec: fusb302: cache PD RX state
-Date: Mon, 18 Aug 2025 14:48:17 +0200
-Message-ID: <20250818124525.505580996@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.16 511/570] cdc-acm: fix race between initial clearing halt and open
+Date: Mon, 18 Aug 2025 14:48:18 +0200
+Message-ID: <20250818124525.542847923@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,92 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 1e61f6ab08786d66a11cfc51e13d6f08a6b06c56 upstream.
+commit 64690a90cd7c6db16d3af8616be1f4bf8d492850 upstream.
 
-This patch fixes a race condition communication error, which ends up in
-PD hard resets when losing the race. Some systems, like the Radxa ROCK
-5B are powered through USB-C without any backup power source and use a
-FUSB302 chip to do the PD negotiation. This means it is quite important
-to avoid hard resets, since that effectively kills the system's
-power-supply.
+On the devices that need their endpoints to get an
+initial clear_halt, this needs to be done before
+the devices can be opened. That means it needs to be
+before the devices are registered.
 
-I've found the following race condition while debugging unplanned power
-loss during booting the board every now and then:
-
-1. lots of TCPM/FUSB302/PD initialization stuff
-2. TCPM ends up in SNK_WAIT_CAPABILITIES (tcpm_set_pd_rx is enabled here)
-3. the remote PD source does not send anything, so TCPM does a SOFT RESET
-4. TCPM ends up in SNK_WAIT_CAPABILITIES for the second time
-   (tcpm_set_pd_rx is enabled again, even though it is still on)
-
-At this point I've seen broken CRC good messages being send by the
-FUSB302 with a logic analyzer sniffing the CC lines. Also it looks like
-messages are being lost and things generally going haywire with one of
-the two sides doing a hard reset once a broken CRC good message was send
-to the bus.
-
-I think the system is running into a race condition, that the FIFOs are
-being cleared and/or the automatic good CRC message generation flag is
-being updated while a message is already arriving.
-
-Let's avoid this by caching the PD RX enabled state, as we have already
-processed anything in the FIFOs and are in a good state. As a side
-effect that this also optimizes I2C bus usage :)
-
-As far as I can tell the problem theoretically also exists when TCPM
-enters SNK_WAIT_CAPABILITIES the first time, but I believe this is less
-critical for the following reason:
-
-On devices like the ROCK 5B, which are powered through a TCPM backed
-USB-C port, the bootloader must have done some prior PD communication
-(initial communication must happen within 5 seconds after plugging the
-USB-C plug). This means the first time the kernel TCPM state machine
-reaches SNK_WAIT_CAPABILITIES, the remote side is not sending messages
-actively. On other devices a hard reset simply adds some extra delay and
-things should be good afterwards.
-
-Fixes: c034a43e72dda ("staging: typec: Fairchild FUSB302 Type-c chip driver")
+Fixes: 15bf722e6f6c0 ("cdc-acm: Add support of ATOL FPrint fiscal printers")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250704-fusb302-race-condition-fix-v1-1-239012c0e27a@kernel.org
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250717141259.2345605-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/fusb302.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/class/cdc-acm.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/typec/tcpm/fusb302.c
-+++ b/drivers/usb/typec/tcpm/fusb302.c
-@@ -104,6 +104,7 @@ struct fusb302_chip {
- 	bool vconn_on;
- 	bool vbus_on;
- 	bool charge_on;
-+	bool pd_rx_on;
- 	bool vbus_present;
- 	enum typec_cc_polarity cc_polarity;
- 	enum typec_cc_status cc1;
-@@ -841,6 +842,11 @@ static int tcpm_set_pd_rx(struct tcpc_de
- 	int ret = 0;
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1520,6 +1520,12 @@ skip_countries:
+ 			goto err_remove_files;
+ 	}
  
- 	mutex_lock(&chip->lock);
-+	if (chip->pd_rx_on == on) {
-+		fusb302_log(chip, "pd is already %s", str_on_off(on));
-+		goto done;
++	if (quirks & CLEAR_HALT_CONDITIONS) {
++		/* errors intentionally ignored */
++		usb_clear_halt(usb_dev, acm->in);
++		usb_clear_halt(usb_dev, acm->out);
 +	}
 +
- 	ret = fusb302_pd_rx_flush(chip);
- 	if (ret < 0) {
- 		fusb302_log(chip, "cannot flush pd rx buffer, ret=%d", ret);
-@@ -863,6 +869,8 @@ static int tcpm_set_pd_rx(struct tcpc_de
- 			    str_on_off(on), ret);
- 		goto done;
+ 	tty_dev = tty_port_register_device(&acm->port, acm_tty_driver, minor,
+ 			&control_interface->dev);
+ 	if (IS_ERR(tty_dev)) {
+@@ -1527,11 +1533,6 @@ skip_countries:
+ 		goto err_release_data_interface;
  	}
-+
-+	chip->pd_rx_on = on;
- 	fusb302_log(chip, "pd := %s", str_on_off(on));
- done:
- 	mutex_unlock(&chip->lock);
+ 
+-	if (quirks & CLEAR_HALT_CONDITIONS) {
+-		usb_clear_halt(usb_dev, acm->in);
+-		usb_clear_halt(usb_dev, acm->out);
+-	}
+-
+ 	dev_info(&intf->dev, "ttyACM%d: USB ACM device\n", minor);
+ 
+ 	return 0;
 
 
