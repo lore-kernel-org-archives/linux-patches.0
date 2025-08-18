@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D64221577;
-	Mon, 18 Aug 2025 13:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8376722A7E0;
+	Mon, 18 Aug 2025 13:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524341; cv=none; b=FT8O+I/ufmc53DcU/iOIuSUx6ctsjsACc3NCCeLH0ZK+ooKJZBp1m31AYlsPeeUXno2EaAUUuceV4c98K74SIx8HnpiAL25iR8XpimqEf2eXsav0PoB9xD5n1HYTI4Oeaprl1p2Xvp0+2w/y3kEI26z3ovJ+9dxDMNzI+++OQT4=
+	t=1755524344; cv=none; b=b90akMBSuO0SAIzXmf4qYtuPTJUqMe/OTFDJBiuhUwbgDGGf0S6BpcOapwFFtRvS/i+IxMyTpGLx3xqRytyeQgOlyIpRt7sfl5yY+hHUMHWTEWOsPyQ6RESMf/ZQj3EfS1yDpOMhZCiCzg9ENZJX87XMgFMADsJb1Q7oQx4Uang=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524341; c=relaxed/simple;
-	bh=5GlH6Vjx6JKcr1lzJaWVJWIwUREPLOn84fm+IFLALtA=;
+	s=arc-20240116; t=1755524344; c=relaxed/simple;
+	bh=KaMQZ5OPsaWg3Sd/9C84FzKyf0cxPTlAlHdVISx04D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ld2oXfBpYxKuGTVGW6F33mAmve6p1bGZeXufFDRlB3a+CVvu9fMr64Tie9pY0pPEx90PeB7FDZuHZuZ/Te5D9/4t43WJCelyyZuNDvWTte7zqSIwTrQxa6e0Q+POkRJerlpUtVOgXaY/Ug9/8bL/Sw+oo68Dr8FTZFWvcA0lLas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUiHzxQa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UGrUIcMb/8UP8DxU9WNMOB7ISl5jZsqRsy+DO33IbflXjHe+KTNRwEpnvpK2p6FwtJcar3o46TKGtmtC2q9HUeD60BAJyAt8pyCViRWj/acuMzV0+L2x+vYFA9ODIVYqWP0puJabTr4uH8r6YtEZC3sDNYXSR0l6UR4UmGOb/rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSoC4YGZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUiHzxQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53C5C4CEEB;
-	Mon, 18 Aug 2025 13:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSoC4YGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB033C4CEEB;
+	Mon, 18 Aug 2025 13:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524341;
-	bh=5GlH6Vjx6JKcr1lzJaWVJWIwUREPLOn84fm+IFLALtA=;
+	s=korg; t=1755524344;
+	bh=KaMQZ5OPsaWg3Sd/9C84FzKyf0cxPTlAlHdVISx04D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wUiHzxQaBUn5GVTmYW9lZM2iefYRH6XlR7N3KBbtl+SS8GxAemYpw2nDWWJ3BwMr9
-	 hUYflBt+QCCj/WXd2JdtQSSkJxUreWokmAM/A7oTQGQKt0+xOgf/083bGTPF6nyK89
-	 opVBEoqPhU/kfX/y11nJweG+B2nSx9NqxFDh+wDo=
+	b=BSoC4YGZ0jfdZIYvrlpVoObWravgB53HVnPd2yvja2UcjvYmRgPJS2mxnFW9KQMDl
+	 ZDtgSaQN9syXVIMeOu28JMUgXHQzBWU5zkLFVfamKmZh9w38oS5VfH4m+V0QLpzT/G
+	 UiijNENq32fm5ML6WFxJbyX+dzR42r2VcPlAkdE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.15 443/515] block: Introduce bio_needs_zone_write_plugging()
-Date: Mon, 18 Aug 2025 14:47:09 +0200
-Message-ID: <20250818124515.480358450@linuxfoundation.org>
+Subject: [PATCH 6.15 444/515] dm: Always split write BIOs to zoned device limits
+Date: Mon, 18 Aug 2025 14:47:10 +0200
+Message-ID: <20250818124515.517774328@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,160 +54,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-commit f70291411ba20d50008db90a6f0731efac27872c upstream.
+commit 2df7168717b7d2d32bcf017c68be16e4aae9dd13 upstream.
 
-In preparation for fixing device mapper zone write handling, introduce
-the inline helper function bio_needs_zone_write_plugging() to test if a
-BIO requires handling through zone write plugging using the function
-blk_zone_plug_bio(). This function returns true for any write
-(op_is_write(bio) == true) operation directed at a zoned block device
-using zone write plugging, that is, a block device with a disk that has
-a zone write plug hash table.
+Any zoned DM target that requires zone append emulation will use the
+block layer zone write plugging. In such case, DM target drivers must
+not split BIOs using dm_accept_partial_bio() as doing so can potentially
+lead to deadlocks with queue freeze operations. Regular write operations
+used to emulate zone append operations also cannot be split by the
+target driver as that would result in an invalid writen sector value
+return using the BIO sector.
 
-This helper allows simplifying the check on entry to blk_zone_plug_bio()
-and used in to protect calls to it for blk-mq devices and DM devices.
+In order for zoned DM target drivers to avoid such incorrect BIO
+splitting, we must ensure that large BIOs are split before being passed
+to the map() function of the target, thus guaranteeing that the
+limits for the mapped device are not exceeded.
+
+dm-crypt and dm-flakey are the only target drivers supporting zoned
+devices and using dm_accept_partial_bio().
+
+In the case of dm-crypt, this function is used to split BIOs to the
+internal max_write_size limit (which will be suppressed in a different
+patch). However, since crypt_alloc_buffer() uses a bioset allowing only
+up to BIO_MAX_VECS (256) vectors in a BIO. The dm-crypt device
+max_segments limit, which is not set and so default to BLK_MAX_SEGMENTS
+(128), must thus be respected and write BIOs split accordingly.
+
+In the case of dm-flakey, since zone append emulation is not required,
+the block layer zone write plugging is not used and no splitting of BIOs
+required.
+
+Modify the function dm_zone_bio_needs_split() to use the block layer
+helper function bio_needs_zone_write_plugging() to force a call to
+bio_split_to_limits() in dm_split_and_process_bio(). This allows DM
+target drivers to avoid using dm_accept_partial_bio() for write
+operations on zoned DM devices.
 
 Fixes: f211268ed1f9 ("dm: Use the block layer zone append emulation")
 Cc: stable@vger.kernel.org
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250625093327.548866-3-dlemoal@kernel.org
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20250625093327.548866-4-dlemoal@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c         |    6 +++--
- block/blk-zoned.c      |   20 -----------------
- drivers/md/dm.c        |    4 ++-
- include/linux/blkdev.h |   55 +++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 63 insertions(+), 22 deletions(-)
+ drivers/md/dm.c |   29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3117,8 +3117,10 @@ void blk_mq_submit_bio(struct bio *bio)
- 	if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
- 		goto queue_exit;
- 
--	if (blk_queue_is_zoned(q) && blk_zone_plug_bio(bio, nr_segs))
--		goto queue_exit;
-+	if (bio_needs_zone_write_plugging(bio)) {
-+		if (blk_zone_plug_bio(bio, nr_segs))
-+			goto queue_exit;
-+	}
- 
- new_request:
- 	if (rq) {
---- a/block/blk-zoned.c
-+++ b/block/blk-zoned.c
-@@ -1116,25 +1116,7 @@ bool blk_zone_plug_bio(struct bio *bio,
- {
- 	struct block_device *bdev = bio->bi_bdev;
- 
--	if (!bdev->bd_disk->zone_wplugs_hash)
--		return false;
--
--	/*
--	 * If the BIO already has the plugging flag set, then it was already
--	 * handled through this path and this is a submission from the zone
--	 * plug bio submit work.
--	 */
--	if (bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING))
--		return false;
--
--	/*
--	 * We do not need to do anything special for empty flush BIOs, e.g
--	 * BIOs such as issued by blkdev_issue_flush(). The is because it is
--	 * the responsibility of the user to first wait for the completion of
--	 * write operations for flush to have any effect on the persistence of
--	 * the written data.
--	 */
--	if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
-+	if (WARN_ON_ONCE(!bdev->bd_disk->zone_wplugs_hash))
- 		return false;
- 
- 	/*
 --- a/drivers/md/dm.c
 +++ b/drivers/md/dm.c
-@@ -1802,7 +1802,9 @@ static inline bool dm_zone_bio_needs_spl
- }
- static inline bool dm_zone_plug_bio(struct mapped_device *md, struct bio *bio)
+@@ -1794,12 +1794,29 @@ static inline bool dm_zone_bio_needs_spl
+ 					   struct bio *bio)
  {
--	return dm_emulate_zone_append(md) && blk_zone_plug_bio(bio, 0);
-+	if (!bio_needs_zone_write_plugging(bio))
-+		return false;
-+	return blk_zone_plug_bio(bio, 0);
- }
- 
- static blk_status_t __send_zone_reset_all_emulated(struct clone_info *ci,
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -835,6 +835,55 @@ static inline unsigned int disk_nr_zones
- {
- 	return disk->nr_zones;
- }
-+
-+/**
-+ * bio_needs_zone_write_plugging - Check if a BIO needs to be handled with zone
-+ *				   write plugging
-+ * @bio: The BIO being submitted
-+ *
-+ * Return true whenever @bio execution needs to be handled through zone
-+ * write plugging (using blk_zone_plug_bio()). Return false otherwise.
-+ */
-+static inline bool bio_needs_zone_write_plugging(struct bio *bio)
-+{
-+	enum req_op op = bio_op(bio);
-+
-+	/*
-+	 * Only zoned block devices have a zone write plug hash table. But not
-+	 * all of them have one (e.g. DM devices may not need one).
-+	 */
-+	if (!bio->bi_bdev->bd_disk->zone_wplugs_hash)
-+		return false;
-+
-+	/* Only write operations need zone write plugging. */
-+	if (!op_is_write(op))
-+		return false;
-+
-+	/* Ignore empty flush */
-+	if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
-+		return false;
-+
-+	/* Ignore BIOs that already have been handled by zone write plugging. */
-+	if (bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING))
-+		return false;
-+
-+	/*
-+	 * All zone write operations must be handled through zone write plugging
-+	 * using blk_zone_plug_bio().
-+	 */
-+	switch (op) {
+ 	/*
+-	 * For mapped device that need zone append emulation, we must
+-	 * split any large BIO that straddles zone boundaries.
++	 * Special case the zone operations that cannot or should not be split.
+ 	 */
+-	return dm_emulate_zone_append(md) && bio_straddles_zones(bio) &&
+-		!bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING);
++	switch (bio_op(bio)) {
 +	case REQ_OP_ZONE_APPEND:
-+	case REQ_OP_WRITE:
-+	case REQ_OP_WRITE_ZEROES:
 +	case REQ_OP_ZONE_FINISH:
 +	case REQ_OP_ZONE_RESET:
 +	case REQ_OP_ZONE_RESET_ALL:
-+		return true;
-+	default:
 +		return false;
++	default:
++		break;
 +	}
-+}
 +
- bool blk_zone_plug_bio(struct bio *bio, unsigned int nr_segs);
- 
- /**
-@@ -864,6 +913,12 @@ static inline unsigned int disk_nr_zones
- {
- 	return 0;
++	/*
++	 * Mapped devices that require zone append emulation will use the block
++	 * layer zone write plugging. In such case, we must split any large BIO
++	 * to the mapped device limits to avoid potential deadlocks with queue
++	 * freeze operations.
++	 */
++	if (!dm_emulate_zone_append(md))
++		return false;
++	return bio_needs_zone_write_plugging(bio) || bio_straddles_zones(bio);
  }
 +
-+static inline bool bio_needs_zone_write_plugging(struct bio *bio)
-+{
-+	return false;
-+}
-+
- static inline bool blk_zone_plug_bio(struct bio *bio, unsigned int nr_segs)
+ static inline bool dm_zone_plug_bio(struct mapped_device *md, struct bio *bio)
  {
- 	return false;
+ 	if (!bio_needs_zone_write_plugging(bio))
+@@ -1948,9 +1965,7 @@ static void dm_split_and_process_bio(str
+ 
+ 	is_abnormal = is_abnormal_io(bio);
+ 	if (static_branch_unlikely(&zoned_enabled)) {
+-		/* Special case REQ_OP_ZONE_RESET_ALL as it cannot be split. */
+-		need_split = (bio_op(bio) != REQ_OP_ZONE_RESET_ALL) &&
+-			(is_abnormal || dm_zone_bio_needs_split(md, bio));
++		need_split = is_abnormal || dm_zone_bio_needs_split(md, bio);
+ 	} else {
+ 		need_split = is_abnormal;
+ 	}
 
 
