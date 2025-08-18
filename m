@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC2D320CA0;
-	Mon, 18 Aug 2025 13:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686F2320CCA;
+	Mon, 18 Aug 2025 13:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524370; cv=none; b=YEg0BrEFaoDPybH7PT8R5mzxlq6lpg/qAcG3AA5A0JRbprEmYjGc6lDmEoW+jMB6afHSLsF5cyGu6OSF69axednK65Eh5r2m9KKIaegkuH4+2XLmVlR2iKvUMLoJR7uHd+bDMATOMitxgCNhLOs+f1gOmZjrNJC/zh7x8EIkdbE=
+	t=1755524374; cv=none; b=dB5Aj82c19uUEt7gyixNOgapyyCJAXvWDkpIMpF0hmQ5ILFmp+7IFJNJOvhY7oL48VWOQ9l6kIeD3VFLeyDlUkuekaVQQK/J5USHolG0kRZCJzOcqYfQ7WCB0qPZXOEETzjwpg8J18s/3TZRI3n7xFF7vXUKHQOxsmeXuYmxxd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524370; c=relaxed/simple;
-	bh=DuMIwXnhghcZ1sYS4rLV5KGx4H3Hqq4vmLYMyxbugls=;
+	s=arc-20240116; t=1755524374; c=relaxed/simple;
+	bh=nh5mwMDOEodwJLhqTLpfjbLs+Ir+ab8FN6YXC5M7c34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpNQ9c8JtiOtZv+6n10hhzxTcI7OnYaQuIinU1BAyK6oGmyQ6vnCBovvSsBX/fqUm1t4HNBynkWK2Ia8wqC/H6Q6nss4SpBr+EAYQbN/wdBpbc2I+8KOKZkO6FVNhGH5m0N6e6GA5n9F5wmSqhuPzrmb7qR0B8BmgHPxWPDTV44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txrGlX2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UbRbq4+rb2hKstRYsHkk3jcEME6Y3fPZHhauUHBvvB8WiZih/TmgBzyUBQK1ViL+a3A51nFKzW+TgzVRXVUMaDRrQWhxmROQRMEFQbsIDOn5CQIdNuAbdfkmctmdWBmSj4Q4Q4hvofLRaYTs+ri6r4/CrZwfUeGvEXnud6QGxxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAneWf9r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txrGlX2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D91EC4CEEB;
-	Mon, 18 Aug 2025 13:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAneWf9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DC0C116D0;
+	Mon, 18 Aug 2025 13:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524370;
-	bh=DuMIwXnhghcZ1sYS4rLV5KGx4H3Hqq4vmLYMyxbugls=;
+	s=korg; t=1755524374;
+	bh=nh5mwMDOEodwJLhqTLpfjbLs+Ir+ab8FN6YXC5M7c34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txrGlX2IW98dksZ8bXY0sjTR5493f3VOeURvqzkMhNmjGv+56smpNr86pckFdrRLw
-	 /3XLpiQC51UAMlP/ZpH1BGzFVfy5oGcUUFKnRRJueGBaWy1gzg6l+p8mALsJDxri31
-	 tG3dJBaNNvYANlq1bME+oj5uFVw6BHf/UQI6LpdY=
+	b=DAneWf9rIglMUsw1j1aIKqqqlsR6OEvFR+IWFr63zKKeEg2X20AZzWStkhgpgwPmc
+	 u8O6p7t+rBwu+CGBHQPSVKmzDbj+mmZEFdE+4dFL1DX4Ydi/P6B031Uz75GFubSuce
+	 MzRQynwvmtlrPCnzy6BO5CehWtF17xn59l2lwtzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com,
-	Yi Liu <yi.l.liu@intel.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.15 451/515] iommufd: Prevent ALIGN() overflow
-Date: Mon, 18 Aug 2025 14:47:17 +0200
-Message-ID: <20250818124515.780138745@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.15 452/515] ext4: fix zombie groups in average fragment size lists
+Date: Mon, 18 Aug 2025 14:47:18 +0200
+Message-ID: <20250818124515.820244347@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,97 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit b42497e3c0e74db061eafad41c0cd7243c46436b upstream.
+commit 1c320d8e92925bb7615f83a7b6e3f402a5c2ca63 upstream.
 
-When allocating IOVA the candidate range gets aligned to the target
-alignment. If the range is close to ULONG_MAX then the ALIGN() can
-wrap resulting in a corrupted iova.
+Groups with no free blocks shouldn't be in any average fragment size list.
+However, when all blocks in a group are allocated(i.e., bb_fragments or
+bb_free is 0), we currently skip updating the average fragment size, which
+means the group isn't removed from its previous s_mb_avg_fragment_size[old]
+list.
 
-Open code the ALIGN() using get_add_overflow() to prevent this.
-This simplifies the checks as we don't need to check for length earlier
-either.
+This created "zombie" groups that were always skipped during traversal as
+they couldn't satisfy any block allocation requests, negatively impacting
+traversal efficiency.
 
-Consolidate the two copies of this code under a single helper.
+Therefore, when a group becomes completely full, bb_avg_fragment_size_order
+is now set to -1. If the old order was not -1, a removal operation is
+performed; if the new order is not -1, an insertion is performed.
 
-This bug would allow userspace to create a mapping that overlaps with some
-other mapping or a reserved range.
-
-Cc: stable@vger.kernel.org
-Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
-Reported-by: syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/685af644.a00a0220.2e5631.0094.GAE@google.com
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://patch.msgid.link/all/1-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com/
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 196e402adf2e ("ext4: improve cr 0 / cr 1 group scanning")
+CC: stable@vger.kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250714130327.1830534-11-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/io_pagetable.c |   41 +++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
+ fs/ext4/mballoc.c |   34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
---- a/drivers/iommu/iommufd/io_pagetable.c
-+++ b/drivers/iommu/iommufd/io_pagetable.c
-@@ -70,36 +70,45 @@ struct iopt_area *iopt_area_contig_next(
- 	return iter->area;
- }
- 
--static bool __alloc_iova_check_hole(struct interval_tree_double_span_iter *span,
--				    unsigned long length,
--				    unsigned long iova_alignment,
--				    unsigned long page_offset)
-+static bool __alloc_iova_check_range(unsigned long *start, unsigned long last,
-+				     unsigned long length,
-+				     unsigned long iova_alignment,
-+				     unsigned long page_offset)
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -841,30 +841,30 @@ static void
+ mb_update_avg_fragment_size(struct super_block *sb, struct ext4_group_info *grp)
  {
--	if (span->is_used || span->last_hole - span->start_hole < length - 1)
-+	unsigned long aligned_start;
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+-	int new_order;
++	int new, old;
+ 
+-	if (!test_opt2(sb, MB_OPTIMIZE_SCAN) || grp->bb_fragments == 0)
++	if (!test_opt2(sb, MB_OPTIMIZE_SCAN))
+ 		return;
+ 
+-	new_order = mb_avg_fragment_size_order(sb,
+-					grp->bb_free / grp->bb_fragments);
+-	if (new_order == grp->bb_avg_fragment_size_order)
++	old = grp->bb_avg_fragment_size_order;
++	new = grp->bb_fragments == 0 ? -1 :
++	      mb_avg_fragment_size_order(sb, grp->bb_free / grp->bb_fragments);
++	if (new == old)
+ 		return;
+ 
+-	if (grp->bb_avg_fragment_size_order != -1) {
+-		write_lock(&sbi->s_mb_avg_fragment_size_locks[
+-					grp->bb_avg_fragment_size_order]);
++	if (old >= 0) {
++		write_lock(&sbi->s_mb_avg_fragment_size_locks[old]);
+ 		list_del(&grp->bb_avg_fragment_size_node);
+-		write_unlock(&sbi->s_mb_avg_fragment_size_locks[
+-					grp->bb_avg_fragment_size_order]);
++		write_unlock(&sbi->s_mb_avg_fragment_size_locks[old]);
++	}
 +
-+	/* ALIGN_UP() */
-+	if (check_add_overflow(*start, iova_alignment - 1, &aligned_start))
- 		return false;
-+	aligned_start &= ~(iova_alignment - 1);
-+	aligned_start |= page_offset;
- 
--	span->start_hole = ALIGN(span->start_hole, iova_alignment) |
--			   page_offset;
--	if (span->start_hole > span->last_hole ||
--	    span->last_hole - span->start_hole < length - 1)
-+	if (aligned_start >= last || last - aligned_start < length - 1)
- 		return false;
-+	*start = aligned_start;
- 	return true;
- }
- 
--static bool __alloc_iova_check_used(struct interval_tree_span_iter *span,
-+static bool __alloc_iova_check_hole(struct interval_tree_double_span_iter *span,
- 				    unsigned long length,
- 				    unsigned long iova_alignment,
- 				    unsigned long page_offset)
- {
--	if (span->is_hole || span->last_used - span->start_used < length - 1)
-+	if (span->is_used)
- 		return false;
-+	return __alloc_iova_check_range(&span->start_hole, span->last_hole,
-+					length, iova_alignment, page_offset);
-+}
- 
--	span->start_used = ALIGN(span->start_used, iova_alignment) |
--			   page_offset;
--	if (span->start_used > span->last_used ||
--	    span->last_used - span->start_used < length - 1)
-+static bool __alloc_iova_check_used(struct interval_tree_span_iter *span,
-+				    unsigned long length,
-+				    unsigned long iova_alignment,
-+				    unsigned long page_offset)
-+{
-+	if (span->is_hole)
- 		return false;
--	return true;
-+	return __alloc_iova_check_range(&span->start_used, span->last_used,
-+					length, iova_alignment, page_offset);
++	grp->bb_avg_fragment_size_order = new;
++	if (new >= 0) {
++		write_lock(&sbi->s_mb_avg_fragment_size_locks[new]);
++		list_add_tail(&grp->bb_avg_fragment_size_node,
++				&sbi->s_mb_avg_fragment_size[new]);
++		write_unlock(&sbi->s_mb_avg_fragment_size_locks[new]);
+ 	}
+-	grp->bb_avg_fragment_size_order = new_order;
+-	write_lock(&sbi->s_mb_avg_fragment_size_locks[
+-					grp->bb_avg_fragment_size_order]);
+-	list_add_tail(&grp->bb_avg_fragment_size_node,
+-		&sbi->s_mb_avg_fragment_size[grp->bb_avg_fragment_size_order]);
+-	write_unlock(&sbi->s_mb_avg_fragment_size_locks[
+-					grp->bb_avg_fragment_size_order]);
  }
  
  /*
