@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92725322DA8;
-	Mon, 18 Aug 2025 13:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9939322DA3;
+	Mon, 18 Aug 2025 13:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523772; cv=none; b=o+uh+l9l4MTVSGGr0qOlU02ONpfbVP12pcE/VwSdXaUwWPnMQfk4rV1B6fJHcwrhbTGq5qXcuBRBmvzma0JVCLB020+a8hA+Pryh9nBpQZvxDS+LBw8zbmu+PAaku2Ukb07xJnpj0ZUNspc/pxs4oXZ0qRjjSvIBnmakF3Rgess=
+	t=1755523779; cv=none; b=hFPK90xLDgeKvCoGY2t4izkgZg2HDm6qgsaWY3IZ40+JzSTrLnobMgIxJfoKmQ6blGASdW/3aUSZiKzLNHBprqPDw1zTteomV3FJ0M1vI5KWu7www5M9UVpcb50mEjTVE2X3W9/9QWl7qowrmEe/+GsYG9kyiYpfYvVizLwdhDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523772; c=relaxed/simple;
-	bh=uo3WRt/Id1ccnArK++SwDiJlTfM7nt5OVZ2/2gD82n0=;
+	s=arc-20240116; t=1755523779; c=relaxed/simple;
+	bh=NoJEhU7JfyyQZeZRmRUxblGxyszg1Veaa94yRy682PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KpyPL87g/Z4vZoGenp2aaX4KaMkkG9XMWp1gEI6J7qOA5G5Lk5IZOQlWv1DkBUpixMsMfVCnHpNJgsGK+DKAQGGhBXJIEHsI805WfX9KZftmk/CvWAO6tL4QUvlst+RA4ZLRlPd94CAKOeCp7A2u84e+Ba+Vq1ky+kFg7lfTz2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQN+StgS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPdcTgrVwU5C2fbw2TTPdIPUZVZbv27i081qIllv9XFgDOlLMAXta2721fOP623vTA3UIg2X9D5dO4rDiBQgPlRptMqDiSNvkzxujclpE/iaW+HrsMTP+tI4sKMsOAnVNvSa6HhIQL4WSGN93NQ2gfFYr0Ug1vJ1HnTtwmenPqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlPOPem7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQN+StgS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C91C4CEEB;
-	Mon, 18 Aug 2025 13:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlPOPem7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67190C4CEF1;
+	Mon, 18 Aug 2025 13:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523772;
-	bh=uo3WRt/Id1ccnArK++SwDiJlTfM7nt5OVZ2/2gD82n0=;
+	s=korg; t=1755523778;
+	bh=NoJEhU7JfyyQZeZRmRUxblGxyszg1Veaa94yRy682PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQN+StgSQ+d8EwG/QlgoHf3K1/KRwHZd82dyyKllAP5Nbxsc07VABCbzhdopDDOPq
-	 utfnb2AQDYGXpT1DbBap1LlueAiC2pLCaJ+NK6y2vxibbwe5rvKsx6J+AoWHzaPeIX
-	 uYT48tLTxySpIn/FJQ41uVF56L67IJvr6E4eSw0w=
+	b=dlPOPem7mD1qWOCSb61gllXOoUmTfuU5c+dzVJ47WY3wASAt/hB1D3JMciGpYc2fq
+	 P2s+iKOF1kShF9Bi1eWsNidrdyNezIwRXq5Nn+IbjsxrF4/qx+Xv64VB8WZxGvBOrv
+	 NxIxAhidce+aUObYjW1fXAQ7G3yEcLRHy0uG9RT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RubenKelevra <rubenkelevra@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiang Liu <xiang.liu@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 269/515] net: ieee8021q: fix insufficient table-size assertion
-Date: Mon, 18 Aug 2025 14:44:15 +0200
-Message-ID: <20250818124508.777106523@linuxfoundation.org>
+Subject: [PATCH 6.15 271/515] drm/amdgpu: Use correct severity for BP threshold exceed event
+Date: Mon, 18 Aug 2025 14:44:17 +0200
+Message-ID: <20250818124508.852443212@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,99 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RubenKelevra <rubenkelevra@gmail.com>
+From: Xiang Liu <xiang.liu@amd.com>
 
-[ Upstream commit 21deb2d966920f0d4dd098ca6c3a55efbc0b2f23 ]
+[ Upstream commit 4a33ca3f6ee9a013a423a867426704e9c9d785bd ]
 
-_Static_assert(ARRAY_SIZE(map) != IEEE8021Q_TT_MAX - 1) rejects only a
-length of 7 and allows any other mismatch. Replace it with a strict
-equality test via a helper macro so that every mapping table must have
-exactly IEEE8021Q_TT_MAX (8) entries.
+The severity of CPER for BP threshold exceed event should be set as
+CPER_SEV_FATAL to match the OOB implementation.
 
-Signed-off-by: RubenKelevra <rubenkelevra@gmail.com>
-Link: https://patch.msgid.link/20250626205907.1566384-1-rubenkelevra@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Xiang Liu <xiang.liu@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/ieee8021q_helpers.c | 44 +++++++++++-------------------------
- 1 file changed, 13 insertions(+), 31 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/ieee8021q_helpers.c b/net/core/ieee8021q_helpers.c
-index 759a9b9f3f89..669b357b73b2 100644
---- a/net/core/ieee8021q_helpers.c
-+++ b/net/core/ieee8021q_helpers.c
-@@ -7,6 +7,11 @@
- #include <net/dscp.h>
- #include <net/ieee8021q.h>
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
+index 360e07a5c7c1..1a1f30654b14 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
+@@ -212,7 +212,7 @@ int amdgpu_cper_entry_fill_bad_page_threshold_section(struct amdgpu_device *adev
+ 		   NONSTD_SEC_OFFSET(hdr->sec_cnt, idx));
  
-+/* verify that table covers all 8 traffic types */
-+#define TT_MAP_SIZE_OK(tbl)                                 \
-+	compiletime_assert(ARRAY_SIZE(tbl) == IEEE8021Q_TT_MAX, \
-+			   #tbl " size mismatch")
-+
- /* The following arrays map Traffic Types (TT) to traffic classes (TC) for
-  * different number of queues as shown in the example provided by
-  * IEEE 802.1Q-2022 in Annex I "I.3 Traffic type to traffic class mapping" and
-@@ -101,51 +106,28 @@ int ieee8021q_tt_to_tc(enum ieee8021q_traffic_type tt, unsigned int num_queues)
+ 	amdgpu_cper_entry_fill_section_desc(adev, section_desc, true, false,
+-					    CPER_SEV_NUM, RUNTIME, NONSTD_SEC_LEN,
++					    CPER_SEV_FATAL, RUNTIME, NONSTD_SEC_LEN,
+ 					    NONSTD_SEC_OFFSET(hdr->sec_cnt, idx));
  
- 	switch (num_queues) {
- 	case 8:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_8queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_8queue_tt_tc_map != max - 1");
-+		TT_MAP_SIZE_OK(ieee8021q_8queue_tt_tc_map);
- 		return ieee8021q_8queue_tt_tc_map[tt];
- 	case 7:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_7queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_7queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_7queue_tt_tc_map);
- 		return ieee8021q_7queue_tt_tc_map[tt];
- 	case 6:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_6queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_6queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_6queue_tt_tc_map);
- 		return ieee8021q_6queue_tt_tc_map[tt];
- 	case 5:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_5queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_5queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_5queue_tt_tc_map);
- 		return ieee8021q_5queue_tt_tc_map[tt];
- 	case 4:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_4queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_4queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_4queue_tt_tc_map);
- 		return ieee8021q_4queue_tt_tc_map[tt];
- 	case 3:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_3queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_3queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_3queue_tt_tc_map);
- 		return ieee8021q_3queue_tt_tc_map[tt];
- 	case 2:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_2queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_2queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_2queue_tt_tc_map);
- 		return ieee8021q_2queue_tt_tc_map[tt];
- 	case 1:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_1queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_1queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_1queue_tt_tc_map);
- 		return ieee8021q_1queue_tt_tc_map[tt];
+ 	section->hdr.valid_bits.err_info_cnt = 1;
+@@ -326,7 +326,9 @@ int amdgpu_cper_generate_bp_threshold_record(struct amdgpu_device *adev)
+ 		return -ENOMEM;
  	}
  
+-	amdgpu_cper_entry_fill_hdr(adev, bp_threshold, AMDGPU_CPER_TYPE_BP_THRESHOLD, CPER_SEV_NUM);
++	amdgpu_cper_entry_fill_hdr(adev, bp_threshold,
++				   AMDGPU_CPER_TYPE_BP_THRESHOLD,
++				   CPER_SEV_FATAL);
+ 	ret = amdgpu_cper_entry_fill_bad_page_threshold_section(adev, bp_threshold, 0);
+ 	if (ret)
+ 		return ret;
 -- 
 2.39.5
 
