@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD10320CBC;
-	Mon, 18 Aug 2025 14:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5264331B107;
+	Mon, 18 Aug 2025 14:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525974; cv=none; b=L2dpgfv7LBGmmhjg4KH9hOblIyPcUrkNT6zsIvDJL/069+HJ9sMpfvp3k86+03Oqpdp+USwOezScF1h94G9hBzu8VuXAECUEbPCdPT/pMnKQvO4kdL7MKdveRQ+ldt6cxnqKFSp+kHlsAr62TWy1Hw55k3Ij7lcdDiyxW+eD01k=
+	t=1755525977; cv=none; b=aIQom3xyTd9z8TfR/hmbLBkoj4Zoh59SYNUdc55gIoE+oW3plxERdc79d0O3CMrZn25JH5yvt1FyMqzo9u0aVadqzsPbY8mDREskDTK//0gsR/Z+DDvAKuAHnCKK1y2CBFrGNUcdI1zB018PKjCxl6ImE4Mb9OQVt/PnyccKB5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525974; c=relaxed/simple;
-	bh=XKSCo2VTat5NsCWwjJriu2x3WiwVTqGyfe40u6AOOkk=;
+	s=arc-20240116; t=1755525977; c=relaxed/simple;
+	bh=roszR7h4eLmbKTSx8QRTZzJZq15IS4IsyyIKYMFWrIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuOE8vxzS5LWeGOETJWibZrTuYmeBMIa1uNX3N9YNsYFRyvGb0E2OHVdvNT90VbEhqzPff9S9dzAXApIL4iF34+nDl06lSisOVxu/gVaguWuzuOuKeb5Hxft5Rg5DeHsTrLLRiUfq2o3tWsM33sHJ2tfl0JE40AEcUCE8gyuQU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9R/J3nf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hBowrVZ6wovC2HCJoRBSr6b5EV2diupjrFvOVhNbqULOlJsR9IA3XJQ3t3KZSz7RlObrWF6SWLr+1Ue76Huh3z+2gUfhOrADWkEhvnP80+8IIcCsSXyMQzJrbeKGf4dK9jJCE9L28qe+KXbehR1JcIaFuPuOBCYdgayDEkfrUyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DHZ8OKK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9R/J3nf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D68C4CEEB;
-	Mon, 18 Aug 2025 14:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DHZ8OKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7AEC4CEEB;
+	Mon, 18 Aug 2025 14:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525974;
-	bh=XKSCo2VTat5NsCWwjJriu2x3WiwVTqGyfe40u6AOOkk=;
+	s=korg; t=1755525977;
+	bh=roszR7h4eLmbKTSx8QRTZzJZq15IS4IsyyIKYMFWrIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S9R/J3nfBi/H57KsxL71/Zpfy9Sr5VHLsaO2hYquc2d885z1IJQcgL0x/2mgtZFlH
-	 WdnRPSbnmUGIz5Ous2fDFEZrpT10PxfsH0LQECaTYubzSqCd1iTF/d6kbuu7uX1tOD
-	 7ShWHeRpoB3P/mOCx5MuJU+B86nc28t696QoVrr8=
+	b=1DHZ8OKKl2/cfXv8XOeVaiLECMck4QBkUWoOcALyNOYtIbkYcLuGLXwSXtxIxIyEq
+	 SKIEA8iH5Pk5jgEfJ8TtHbN20zJUU3e3KLYoJ1ykYGW8HaQRzfMcPYiC+h0rFsZMmq
+	 tJKyvz1jE0GHyBNAuf+IaIMj8y+x3T5F8WevpvkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Purva Yeshi <purvayeshi550@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 422/570] soundwire: Move handle_nested_irq outside of sdw_dev_lock
-Date: Mon, 18 Aug 2025 14:46:49 +0200
-Message-ID: <20250818124522.094685024@linuxfoundation.org>
+Subject: [PATCH 6.16 423/570] md: dm-zoned-target: Initialize return variable r to avoid uninitialized use
+Date: Mon, 18 Aug 2025 14:46:50 +0200
+Message-ID: <20250818124522.132393011@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,69 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Purva Yeshi <purvayeshi550@gmail.com>
 
-[ Upstream commit ccb7bb13c00bcc3178d270da052635c56148bc16 ]
+[ Upstream commit 487767bff572d46f7c37ad846c4078f6d6c9cc55 ]
 
-The sdw_dev_lock protects the SoundWire driver callbacks against
-the probed flag, which is used to skip the callbacks if the
-driver gets removed. For more information see commit bd29c00edd0a
-("soundwire: revisit driver bind/unbind and callbacks").
+Fix Smatch-detected error:
+drivers/md/dm-zoned-target.c:1073 dmz_iterate_devices()
+error: uninitialized symbol 'r'.
 
-However, this lock is a frequent source of mutex inversions.
-Many audio operations eventually hit the hardware resulting in a
-SoundWire callback, this means that typically the driver has the
-locking order ALSA/ASoC locks -> sdw_dev_lock. Conversely, the IRQ
-comes in directly from the SoundWire hardware, but then will often
-want to access ALSA/ASoC, such as updating something in DAPM or
-an ALSA control. This gives the other lock order sdw_dev_lock ->
-ALSA/ASoC locks.
+Smatch detects a possible use of the uninitialized variable 'r' in
+dmz_iterate_devices() because if dmz->nr_ddevs is zero, the loop is
+skipped and 'r' is returned without being set, leading to undefined
+behavior.
 
-When the IRQ handling was initially added to SoundWire this was
-through a callback mechanism. As such it required being covered by
-the lock because the callbacks are part of the sdw_driver structure
-and are thus present regardless of if the driver is currently
-probed.
+Initialize 'r' to 0 before the loop. This ensures that if there are no
+devices to iterate over, the function still returns a defined value.
 
-Since then a newer mechanism using the IRQ framework has been
-added, which is currently covered by the same lock but this isn't
-actually required. Handlers for the IRQ framework are registered in
-probe and should by released during remove, thus the IRQ framework
-will have already unbound the IRQ before the slave driver is
-removed. Avoid the aforementioned mutex inversion by moving the
-handle_nested_irq call outside of the sdw_dev_lock.
-
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20250609143041.495049-3-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/bus.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/dm-zoned-target.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
-index 68db4b67a86f..4fd5cac799c5 100644
---- a/drivers/soundwire/bus.c
-+++ b/drivers/soundwire/bus.c
-@@ -1753,15 +1753,15 @@ static int sdw_handle_slave_alerts(struct sdw_slave *slave)
+diff --git a/drivers/md/dm-zoned-target.c b/drivers/md/dm-zoned-target.c
+index 5da3db06da10..9da329078ea4 100644
+--- a/drivers/md/dm-zoned-target.c
++++ b/drivers/md/dm-zoned-target.c
+@@ -1062,7 +1062,7 @@ static int dmz_iterate_devices(struct dm_target *ti,
+ 	struct dmz_target *dmz = ti->private;
+ 	unsigned int zone_nr_sectors = dmz_zone_nr_sectors(dmz->metadata);
+ 	sector_t capacity;
+-	int i, r;
++	int i, r = 0;
  
- 		/* Update the Slave driver */
- 		if (slave_notify) {
-+			if (slave->prop.use_domain_irq && slave->irq)
-+				handle_nested_irq(slave->irq);
-+
- 			mutex_lock(&slave->sdw_dev_lock);
- 
- 			if (slave->probed) {
- 				struct device *dev = &slave->dev;
- 				struct sdw_driver *drv = drv_to_sdw_driver(dev->driver);
- 
--				if (slave->prop.use_domain_irq && slave->irq)
--					handle_nested_irq(slave->irq);
--
- 				if (drv->ops && drv->ops->interrupt_callback) {
- 					slave_intr.sdca_cascade = sdca_cascade;
- 					slave_intr.control_port = clear;
+ 	for (i = 0; i < dmz->nr_ddevs; i++) {
+ 		capacity = dmz->dev[i].capacity & ~(zone_nr_sectors - 1);
 -- 
 2.39.5
 
