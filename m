@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E463218CF;
-	Mon, 18 Aug 2025 12:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CE63218C2;
+	Mon, 18 Aug 2025 12:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521798; cv=none; b=NmtSTkcosQxGdPt5O2rb7603vTKyq9s+dCmUu1zojxh7qreJz0HBgByBicU0BhwjJLXPmxLcOXHpqPo1QOWsTeVE5c6FRzWu7+jxdh7/+c16/QndN8PIU6d9OXmDXAkRrIUVMEoIvCJXnG3qtO/M5fmUWugNdrkdBmWIRYdUgBM=
+	t=1755521802; cv=none; b=jzfXKj4xPCQeSFp98nmTBn/vCrZXTPdzlWmNd/cW3FfLWRhr2FEu8a4OME8jX2dz3e/GfpD7b+Ft8W15M3d53iCRm1dfMnhE4NQPQibSWok4qbQ7ORRx6PRdYgrntehHaF3CZzIpyz1d1F8LwEgGfOVXrov21CBvpWjA2kWZ4Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521798; c=relaxed/simple;
-	bh=J0tYxburseI+5yjW2vQsYgase/hn57Fko44Sfyy1Blw=;
+	s=arc-20240116; t=1755521802; c=relaxed/simple;
+	bh=dS8BO6rgb00BffjGHoddYmrWqYBrwak8cjmyX4SGIdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pLknRAq/ybn8NSrMA+IV77EBIPD7St1IcW6q6+eSLRLezWATNV9g6pKXsUneIrY6VHsU2qS7iPlWqOrckKqQHXtj1aB+Wdz3OVHFmrnfik3xFUXyJdRpLPEfvB3BsJS9Il6KhhEIRxQWou0sWQf3WKeN4UkbPzit1IJZeKesG7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zE4mshLA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nkprv+FvwNLNpj8ZNheNdBY84lNgD9kGZXoQg3K5/CaoIg2EpK8kjJodgtXAWvrzXw0Kwc5k6mpgVvTT4KB/Noraa5ut32i4bSUHE3hCzwWNWY0DfNIGfZFq++5vSsX64Z+CxXsB4Xh0RuarGP1CDZxoC1Et/ipTz1bFzLJOjAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzD93Z+M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zE4mshLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE667C4CEEB;
-	Mon, 18 Aug 2025 12:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzD93Z+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C19C4CEEB;
+	Mon, 18 Aug 2025 12:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521798;
-	bh=J0tYxburseI+5yjW2vQsYgase/hn57Fko44Sfyy1Blw=;
+	s=korg; t=1755521802;
+	bh=dS8BO6rgb00BffjGHoddYmrWqYBrwak8cjmyX4SGIdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zE4mshLAmbmvKfafTCYE3AMKQCOIyAhWD9zUPIZ7p1EtyQPUG+ETXU7o2yusqEYci
-	 cv4A/irxa+Gukvo5k0iDs2yUmqqHv7IMNjWAlsEogVwjdeTxKMkz4immXyQ7zDCNps
-	 vACra2tcammo3w5aTr5Jqrs8HyYOCSra5us5hyw4=
+	b=xzD93Z+M4uUMfU91l732FtlfrQlD9a3OBCqBasb8I6AiQ4a6+xrJa0Sear+xujBjL
+	 1sQeszuXU1LVPgRgo01jAIENHoWb1ufa3WRJqRcEIzWswoaIsQXs0qriAq+e88dMkb
+	 2gwXHEX9PiX0g2ysSyIqTOwykhdZusa98VZs4J48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 126/444] firmware: tegra: Fix IVC dependency problems
-Date: Mon, 18 Aug 2025 14:42:32 +0200
-Message-ID: <20250818124453.637688070@linuxfoundation.org>
+Subject: [PATCH 6.12 127/444] PM: runtime: Clear power.needs_force_resume in pm_runtime_reinit()
+Date: Mon, 18 Aug 2025 14:42:33 +0200
+Message-ID: <20250818124453.672650808@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -50,48 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 78eb18020a88a4eed15f5af7700ed570642ff8f1 ]
+[ Upstream commit 89d9cec3b1e9c49bae9375a2db6dc49bc7468af0 ]
 
-The IVC code is library code that other drivers need to select if they
-need that library. However, if the symbol is user-selectable this can
-lead to conflicts.
+Clear power.needs_force_resume in pm_runtime_reinit() in case it has
+been set by pm_runtime_force_suspend() invoked from a driver remove
+callback.
 
-Fix this by making the symbol only selectable for COMPILE_TEST and add
-a select TEGRA_IVC to TEGRA_BPMP, which is currently the only user.
-
-Link: https://lore.kernel.org/r/20250506133118.1011777-10-thierry.reding@gmail.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/9495163.CDJkKcVGEf@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/tegra/Kconfig | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/base/power/runtime.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/firmware/tegra/Kconfig b/drivers/firmware/tegra/Kconfig
-index cde1ab8bd9d1..91f2320c0d0f 100644
---- a/drivers/firmware/tegra/Kconfig
-+++ b/drivers/firmware/tegra/Kconfig
-@@ -2,7 +2,7 @@
- menu "Tegra firmware driver"
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 99f25d6b2027..317505eab126 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1787,6 +1787,11 @@ void pm_runtime_reinit(struct device *dev)
+ 				pm_runtime_put(dev->parent);
+ 		}
+ 	}
++	/*
++	 * Clear power.needs_force_resume in case it has been set by
++	 * pm_runtime_force_suspend() invoked from a driver remove callback.
++	 */
++	dev->power.needs_force_resume = false;
+ }
  
- config TEGRA_IVC
--	bool "Tegra IVC protocol"
-+	bool "Tegra IVC protocol" if COMPILE_TEST
- 	depends on ARCH_TEGRA
- 	help
- 	  IVC (Inter-VM Communication) protocol is part of the IPC
-@@ -13,8 +13,9 @@ config TEGRA_IVC
- 
- config TEGRA_BPMP
- 	bool "Tegra BPMP driver"
--	depends on ARCH_TEGRA && TEGRA_HSP_MBOX && TEGRA_IVC
-+	depends on ARCH_TEGRA && TEGRA_HSP_MBOX
- 	depends on !CPU_BIG_ENDIAN
-+	select TEGRA_IVC
- 	help
- 	  BPMP (Boot and Power Management Processor) is designed to off-loading
- 	  the PM functions which include clock/DVFS/thermal/power from the CPU.
+ /**
 -- 
 2.39.5
 
