@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C413321ABAA;
-	Mon, 18 Aug 2025 12:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B093218D1;
+	Mon, 18 Aug 2025 12:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521994; cv=none; b=ktvMfOEt7snrvrb7q7rrnFK1lh8zzdpj5MLVA46E8HfaOFtkZGwg+OoNbm+lYy1HB+ajxKPqvDz3Fvvi2j7FIpGbJA8f5eWopReRpUTK98tA0D4hDq8YnTV4J1dagvqNq+gOFJFsvbDupjfK5VJDshybbhyMIt0tYnc3PnCvY50=
+	t=1755521997; cv=none; b=fzw/ISG/V78bAdLaYELMt+OnkUMSAxmmGH4ELT0G2vuODfqC923OoS4ETAjdzvhkpM1U2CLZGaYmCo77MQU0UwyIdTp9PmA8dn8647CLzaP45NEJcJ4w/iQeSduWYQNINZ4wWy5cZ5PcO98Rtixo5MxcBVXfzvSyjMqsuLGJFMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521994; c=relaxed/simple;
-	bh=HSPIJUW0ooJgOT69nhiq+/yD67ZJ/1Dh/ligV4A+z1I=;
+	s=arc-20240116; t=1755521997; c=relaxed/simple;
+	bh=/vHCrMPVTCAR08S6C202eAjl32yLxhynA04061KplVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E7hyZGxUUjGPTzVplIGbHQGnyOES51eFIcm4tRA3PTK+CYhh8Ey7uY5pIfbrv0Dnl32ujwmfqEJi7DvW9WPy9P5+JmxOZ0EXStkC4iv4D6PZtdWw6cS0ger2AgpO6m86nZvSrahU6sG/PdEe/Mc4Reg7yZqdlSdkdkauY6YkuKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5eyk43B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G9ckApJLGPrWxf7XvA0YsAhkQb4pJ1bW6MMxT67sR8zTxBKrPEizBHzaKp1BRU4i6PaWCj6mEoAwnmdmKVjMmdW4RVOmtQRkbPXCL3Ma5yKrAZrGAf2cqRcqtB6zCDVXYubTrQ7UYZqPEPo1L6fJSmSAfJzntAF/0Nwfpx3PHpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkZLG7VT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5eyk43B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33011C4CEEB;
-	Mon, 18 Aug 2025 12:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkZLG7VT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BA2C4CEEB;
+	Mon, 18 Aug 2025 12:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521994;
-	bh=HSPIJUW0ooJgOT69nhiq+/yD67ZJ/1Dh/ligV4A+z1I=;
+	s=korg; t=1755521997;
+	bh=/vHCrMPVTCAR08S6C202eAjl32yLxhynA04061KplVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5eyk43Buu7jBSxfyGvlF7PAUuGisKWZX61z4eqZUXxq2V5c4GVqG2zvQF0vpxNeG
-	 f29prwrU9L5BJY0UjrbFr3+BnCHhnSIoEZEwj9jsOVY5U0ly9GlvzBT9v7Y07kVj6y
-	 rJ53Xyi4YeWKSMWmFEqL03liK1vOHDtNBo091gAU=
+	b=HkZLG7VTUPInO6De7E6wylx/BCTRxT4fEh5minIWwFsz5Ronstj7jRPnsMUZAJHMS
+	 mdEJ278NDf2660WLcz52t6sjoPgl1vuZRpFIm56NnFl4XT/WeQgMTKwICXPzbBgdNs
+	 NKpWaU2702cKyJh9ShOq16lvkopkV91hwD69L05c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/444] imx8m-blk-ctrl: set ISI panic write hurry level
-Date: Mon, 18 Aug 2025 14:42:57 +0200
-Message-ID: <20250818124454.569091428@linuxfoundation.org>
+Subject: [PATCH 6.12 152/444] soc: qcom: mdt_loader: Actually use the e_phoff
+Date: Mon, 18 Aug 2025 14:42:58 +0200
+Message-ID: <20250818124454.604914964@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -45,57 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Hałasa <khalasa@piap.pl>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit c01fba0b4869cada5403fffff416cd1675dba078 ]
+[ Upstream commit 47e339cac89143709e84a3b71ba8bd9b2fdd2368 ]
 
-Apparently, ISI needs cache settings similar to LCDIF.
-Otherwise we get artefacts in the image.
-Tested on i.MX8MP.
+Rather than relying/assuming that the tools generating the firmware
+places the program headers immediately following the ELF header, use
+e_phoff as intended to find the program headers.
 
-Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
-Link: https://lore.kernel.org/r/m3ldr69lsw.fsf@t19.piap.pl
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250610-mdt-loader-validation-and-fixes-v2-3-f7073e9ab899@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/imx/imx8m-blk-ctrl.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/soc/qcom/mdt_loader.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pmdomain/imx/imx8m-blk-ctrl.c b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-index ca942d7929c2..8b7b175f5896 100644
---- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-@@ -665,6 +665,11 @@ static const struct imx8m_blk_ctrl_data imx8mn_disp_blk_ctl_dev_data = {
- #define  LCDIF_1_RD_HURRY	GENMASK(15, 13)
- #define  LCDIF_0_RD_HURRY	GENMASK(12, 10)
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index b2c0fb55d4ae..44589d10b15b 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -83,7 +83,7 @@ ssize_t qcom_mdt_get_size(const struct firmware *fw)
+ 	int i;
  
-+#define ISI_CACHE_CTRL		0x50
-+#define  ISI_V_WR_HURRY		GENMASK(28, 26)
-+#define  ISI_U_WR_HURRY		GENMASK(25, 23)
-+#define  ISI_Y_WR_HURRY		GENMASK(22, 20)
-+
- static int imx8mp_media_power_notifier(struct notifier_block *nb,
- 				unsigned long action, void *data)
- {
-@@ -694,6 +699,11 @@ static int imx8mp_media_power_notifier(struct notifier_block *nb,
- 		regmap_set_bits(bc->regmap, LCDIF_ARCACHE_CTRL,
- 				FIELD_PREP(LCDIF_1_RD_HURRY, 7) |
- 				FIELD_PREP(LCDIF_0_RD_HURRY, 7));
-+		/* Same here for ISI */
-+		regmap_set_bits(bc->regmap, ISI_CACHE_CTRL,
-+				FIELD_PREP(ISI_V_WR_HURRY, 7) |
-+				FIELD_PREP(ISI_U_WR_HURRY, 7) |
-+				FIELD_PREP(ISI_Y_WR_HURRY, 7));
- 	}
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
  
- 	return NOTIFY_OK;
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
+@@ -135,7 +135,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
+ 	void *data;
+ 
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
+ 
+ 	if (ehdr->e_phnum < 2)
+ 		return ERR_PTR(-EINVAL);
+@@ -215,7 +215,7 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
+ 	int i;
+ 
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
+ 
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
+@@ -270,7 +270,7 @@ static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char *fw_na
+ 	int i;
+ 
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
+ 
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		/*
+@@ -312,7 +312,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 
+ 	is_split = qcom_mdt_bins_are_split(fw, fw_name);
+ 	ehdr = (struct elf32_hdr *)fw->data;
+-	phdrs = (struct elf32_phdr *)(ehdr + 1);
++	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
+ 
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
 -- 
 2.39.5
 
