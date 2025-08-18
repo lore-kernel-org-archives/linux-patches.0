@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DD332277F;
-	Mon, 18 Aug 2025 13:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E4932A3C8;
+	Mon, 18 Aug 2025 13:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523078; cv=none; b=Byioa0pVYdu5CDxZ9KKXh546kTxwTKf7WD9QRDVbg3r7Sivrg/+xWGaQj5CRKHqXi+eTy3I+qRwB+JR4IYHFNtgJM5dgO0WBqtO1oWZ9lWAoH9frimC06L797jcOst5eK3YHrmLfm89LORLCtr267A0IYXQe1diOmy1cexWq8II=
+	t=1755523083; cv=none; b=eBc2CRpqRNYwPEDo1EAqGHTa9iG0YUQ6eynFxHxdqAF+aOIg0Ko8UoqazO2BNfQKvFeD0YFw3Lc6TxcAnvJBpC4O+xakp21o/u7tl/Vw9BxucRPuc/DjY2sOpghigXkrEdA3qsAscAo6Fw+960xnawzzdUexLjrJQQRYUt3kMdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523078; c=relaxed/simple;
-	bh=hO03T6sJTdesA/pPy+V8lJJYI1Y/htMfkdIr5iJFPuA=;
+	s=arc-20240116; t=1755523083; c=relaxed/simple;
+	bh=LJuoFT7H2DmSxRChWgKPOwQi/tFtUxZjbd+jTL3fd24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nosx8yQC7Ea+iLrOnkjAZNn4XcqSHIHTnnN0c0Zey2JLX9wRvxL7MpZtYIkhQ5yB4qQ1xBN8KcPLLMRIIEw99rD5nr4NiGBBqusEf9/HlvyCTd8L7jWMpEc9ckk/0xGZ/sZF4mE/mWe5/tCw9zGUqConYOwlivGcx0ayHz8wMsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouH1bhFP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iY95SrdIY6laHOT8ctYEpGyypDvMr5AvRYi2RJ9ty8CYhn++dJky0webWc+nhd1fkRdbFh7vybJaCKWlhLtLVgUzCZq0IbmbFPJulnQtaNRGuam6ssSglvvEao5fEGV85dyOYUQwbV6EKAeJ/etLOrlHkShu3wYBQFrvc/K+G8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E11Q5wNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouH1bhFP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BABC4CEF1;
-	Mon, 18 Aug 2025 13:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E11Q5wNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F30C116B1;
+	Mon, 18 Aug 2025 13:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523078;
-	bh=hO03T6sJTdesA/pPy+V8lJJYI1Y/htMfkdIr5iJFPuA=;
+	s=korg; t=1755523082;
+	bh=LJuoFT7H2DmSxRChWgKPOwQi/tFtUxZjbd+jTL3fd24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ouH1bhFP9h5a9KJ8ywMEeP8JRGxhu1adWbioU33zVjZzkTMwRo9B4yO0aNU092ga4
-	 MjalSD8W499haLj32dQy0tWp951dZavuL1xgw4G0tKasJsb4mr+J4rVzRh0oEXBH70
-	 JiMsNMMqhMj3uDeoeCnJKFFsR/35lKFWEi8BAYlU=
+	b=E11Q5wNxpP9sW8coh/KIKUo/noulbYFL5M7uUqOsl77Xxd67XvSCd3tr18KW9Sm7T
+	 FJWtxLDPfT26bOtqxsfZKlYTwYGCRSrKrEfaBT4YUBJssAaEYK5dJZK7R5gk7EK9vl
+	 iQNALoJarDPx455dUmzU3ksxgodd3SDYtCn1QnWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.15 047/515] ACPI: processor: perflib: Fix initial _PPC limit application
-Date: Mon, 18 Aug 2025 14:40:33 +0200
-Message-ID: <20250818124500.232391465@linuxfoundation.org>
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 065/515] net: ti: icss-iep: Fix incorrect type for return value in extts_enable()
+Date: Mon, 18 Aug 2025 14:40:51 +0200
+Message-ID: <20250818124500.904750878@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,80 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit d33bd88ac0ebb49e7f7c8f29a8c7ee9eae85d765 upstream.
+[ Upstream commit 5f1d1d14db7dabce9c815e7d7cd351f8d58b8585 ]
 
-If the BIOS sets a _PPC frequency limit upfront, it will fail to take
-effect due to a call ordering issue.  Namely, freq_qos_update_request()
-is called before freq_qos_add_request() for the given request causing
-the constraint update to be ignored.  The call sequence in question is
-as follows:
+The variable ret in icss_iep_extts_enable() was incorrectly declared
+as u32, while the function returns int and may return negative error
+codes. This will cause sign extension issues and incorrect error
+propagation. Update ret to be int to fix error handling.
 
-cpufreq_policy_online()
-  acpi_cpufreq_cpu_init()
-    acpi_processor_register_performance()
-      acpi_processor_get_performance_info()
-        acpi_processor_get_platform_limit()
-         freq_qos_update_request(&perflib_req) <- inactive QoS request
-  blocking_notifier_call_chain(&cpufreq_policy_notifier_list,
-                               CPUFREQ_CREATE_POLICY)
-    acpi_processor_notifier()
-      acpi_processor_ppc_init()
-        freq_qos_add_request(&perflib_req) <- QoS request activation
+This change corrects the declaration to avoid potential type mismatch.
 
-Address this by adding an acpi_processor_get_platform_limit() call
-to acpi_processor_ppc_init(), after the perflib_req activation via
-freq_qos_add_request(), which causes the initial _PPC limit to be
-picked up as appropriate.  However, also ensure that the _PPC limit
-will not be picked up in the cases when the cpufreq driver does not
-call acpi_processor_register_performance() by adding a pr->performance
-check to the related_cpus loop in acpi_processor_ppc_init().
-
-Fixes: d15ce412737a ("ACPI: cpufreq: Switch to QoS requests instead of cpufreq notifier")
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
-Link: https://patch.msgid.link/20250721032606.3459369-1-lijiayi@kylinos.cn
-[ rjw: Consolidate pr-related checks in acpi_processor_ppc_init() ]
-[ rjw: Subject and changelog adjustments ]
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 2d8b39a62a5d ACPI: processor: Avoid NULL pointer dereferences at init time
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 3000ce3c52f8 cpufreq: Use per-policy frequency QoS
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: a1bb46c36ce3 ACPI: processor: Add QoS requests for all CPUs
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c1e0230eeaab ("net: ti: icss-iep: Add IEP driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250805142323.1949406-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_perflib.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/icssg/icss_iep.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/processor_perflib.c
-+++ b/drivers/acpi/processor_perflib.c
-@@ -172,11 +172,14 @@ void acpi_processor_ppc_init(struct cpuf
+diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
+index 50bfbc2779e4..d8c9fe1d98c4 100644
+--- a/drivers/net/ethernet/ti/icssg/icss_iep.c
++++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
+@@ -621,7 +621,8 @@ static int icss_iep_pps_enable(struct icss_iep *iep, int on)
+ 
+ static int icss_iep_extts_enable(struct icss_iep *iep, u32 index, int on)
  {
- 	unsigned int cpu;
+-	u32 val, cap, ret = 0;
++	u32 val, cap;
++	int ret = 0;
  
-+	if (ignore_ppc == 1)
-+		return;
-+
- 	for_each_cpu(cpu, policy->related_cpus) {
- 		struct acpi_processor *pr = per_cpu(processors, cpu);
- 		int ret;
+ 	mutex_lock(&iep->ptp_clk_mutex);
  
--		if (!pr)
-+		if (!pr || !pr->performance)
- 			continue;
- 
- 		/*
-@@ -192,6 +195,11 @@ void acpi_processor_ppc_init(struct cpuf
- 		if (ret < 0)
- 			pr_err("Failed to add freq constraint for CPU%d (%d)\n",
- 			       cpu, ret);
-+
-+		ret = acpi_processor_get_platform_limit(pr);
-+		if (ret)
-+			pr_err("Failed to update freq constraint for CPU%d (%d)\n",
-+			       cpu, ret);
- 	}
- }
- 
+-- 
+2.50.1
+
 
 
