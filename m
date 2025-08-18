@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C034335BA9;
-	Mon, 18 Aug 2025 13:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43386335BA0;
+	Mon, 18 Aug 2025 13:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524484; cv=none; b=sRWFr7AmQIRIUJUYVCn05onQoKkwLh3lPGVJO/wmdCsu+uuy7IoaJRIMVE4kXznrKfKdP+dZNapcPvC9msUAk2qlRZ6RuWnBMhel7ohsIpHlY8UFxAkx1YsIpmNJj+4Q9O3moWWI6BLKHARBknmY1fNkL1R4uz13+RnAq/cqiZY=
+	t=1755524487; cv=none; b=AEzXgzyy9NnsbMQJkV+y3kJxpbmzr4PsNXFx62TS9/lBbdZa7ic3E8Igg2vLGPIWDaWws9xjQ8hYcGQhG7iM+2/Ml14E0P6mhDE+2lri4REmSyl374itfFyeKGsw8cjChj0+TIyjId2pUkgoxXM8+0+oy6CRud7NkRiysJxTRnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524484; c=relaxed/simple;
-	bh=SkVwGIOAIr7m8FlQyYs6X5suepNzUJ94o+kx7z0nuDk=;
+	s=arc-20240116; t=1755524487; c=relaxed/simple;
+	bh=6dkMk33EiyfdckZzo5Ze+oYXo2CXTlpaD1D5Y57/iKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+ip2mXYY1GiYM+2Ub1jw8+Hww9V2+MqMuBZWPMBU0w7M8c4pU/8CXnTFdCjurXStdU2PJGBnJzRmz+4pcgGl6YYsl7ArOWT5s7YVLCd6aaU6n4BZAY+9FH2Xl5pgGbXWs50uePRZoSetD6vfCDjPDEcCYCQxp0wsT8rTO+M9/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VovXalm1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D7ZRPC+kdA0yGPo1vMJE38OYivbMrba7IMp4KxZdlU8CctOvmV4CzfyT1ppqhH01l9fBrf7i5KwAM3Rw1qwYd2oiK2BpYFgfEtpqPDtOhSJMBiLlYgjMGDLGvoH3qM+FI+voXiaU/QPV1entiYwdDf1obRsqJASiL/ToeAbvy8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eo1wquTL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VovXalm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92095C116B1;
-	Mon, 18 Aug 2025 13:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eo1wquTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A274EC113D0;
+	Mon, 18 Aug 2025 13:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524484;
-	bh=SkVwGIOAIr7m8FlQyYs6X5suepNzUJ94o+kx7z0nuDk=;
+	s=korg; t=1755524487;
+	bh=6dkMk33EiyfdckZzo5Ze+oYXo2CXTlpaD1D5Y57/iKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VovXalm1fTAzAoxK8DUIjylM+zq1bn4uMxQI/GlqZPcmfSIIq32UK+sJlfnZnv832
-	 aNiOnPkwWJtGYH/IxikMOXIEHdr1/5cED8p8pNovgJpqdRtLBlS6kLlqX3LMXQ7JVL
-	 80VNZKzqwXJQm6HQE+BWgCOemgmXuNy9HX+XzK8Y=
+	b=eo1wquTLVNPQ6iKTFIMvMSRX3H+scysBoY+AwBCNK0VXMbTYSBQCur2cS5GtwpTU8
+	 2n1FUL34+WYk5kgmJXmInRHHFNnh+0bSrYm4jQJ+ChJ7A+R+JHGzJkdrfMDQMmhArC
+	 Z/997vmvsn5V7L2v+Q4pUINz01meFND6D0xkNMqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c2ea94ae47cd7e3881ec@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 486/515] ocfs2: reset folio to NULL when get folio fails
-Date: Mon, 18 Aug 2025 14:47:52 +0200
-Message-ID: <20250818124517.134425129@linuxfoundation.org>
+	Li Shuang <shuali@redhat.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 487/515] net/sched: ets: use old nbands while purging unused classes
+Date: Mon, 18 Aug 2025 14:47:53 +0200
+Message-ID: <20250818124517.172829235@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -57,43 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-commit 2ae826799932ff89409f56636ad3c25578fe7cf5 upstream.
+commit 87c6efc5ce9c126ae4a781bc04504b83780e3650 upstream.
 
-The reproducer uses FAULT_INJECTION to make memory allocation fail, which
-causes __filemap_get_folio() to fail, when initializing w_folios[i] in
-ocfs2_grab_folios_for_write(), it only returns an error code and the value
-of w_folios[i] is the error code, which causes
-ocfs2_unlock_and_free_folios() to recycle the invalid w_folios[i] when
-releasing folios.
+Shuang reported sch_ets test-case [1] crashing in ets_class_qlen_notify()
+after recent changes from Lion [2]. The problem is: in ets_qdisc_change()
+we purge unused DWRR queues; the value of 'q->nbands' is the new one, and
+the cleanup should be done with the old one. The problem is here since my
+first attempts to fix ets_qdisc_change(), but it surfaced again after the
+recent qdisc len accounting fixes. Fix it purging idle DWRR queues before
+assigning a new value of 'q->nbands', so that all purge operations find a
+consistent configuration:
 
-Link: https://lkml.kernel.org/r/20250616013140.3602219-1-lizhi.xu@windriver.com
-Reported-by: syzbot+c2ea94ae47cd7e3881ec@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c2ea94ae47cd7e3881ec
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+ - old 'q->nbands' because it's needed by ets_class_find()
+ - old 'q->nstrict' because it's needed by ets_class_is_strict()
+
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP NOPTI
+ CPU: 62 UID: 0 PID: 39457 Comm: tc Kdump: loaded Not tainted 6.12.0-116.el10.x86_64 #1 PREEMPT(voluntary)
+ Hardware name: Dell Inc. PowerEdge R640/06DKY5, BIOS 2.12.2 07/09/2021
+ RIP: 0010:__list_del_entry_valid_or_report+0x4/0x80
+ Code: ff 4c 39 c7 0f 84 39 19 8e ff b8 01 00 00 00 c3 cc cc cc cc 66 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa <48> 8b 17 48 8b 4f 08 48 85 d2 0f 84 56 19 8e ff 48 85 c9 0f 84 ab
+ RSP: 0018:ffffba186009f400 EFLAGS: 00010202
+ RAX: 00000000000000d6 RBX: 0000000000000000 RCX: 0000000000000004
+ RDX: ffff9f0fa29b69c0 RSI: 0000000000000000 RDI: 0000000000000000
+ RBP: ffffffffc12c2400 R08: 0000000000000008 R09: 0000000000000004
+ R10: ffffffffffffffff R11: 0000000000000004 R12: 0000000000000000
+ R13: ffff9f0f8cfe0000 R14: 0000000000100005 R15: 0000000000000000
+ FS:  00007f2154f37480(0000) GS:ffff9f269c1c0000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000000 CR3: 00000001530be001 CR4: 00000000007726f0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  ets_class_qlen_notify+0x65/0x90 [sch_ets]
+  qdisc_tree_reduce_backlog+0x74/0x110
+  ets_qdisc_change+0x630/0xa40 [sch_ets]
+  __tc_modify_qdisc.constprop.0+0x216/0x7f0
+  tc_modify_qdisc+0x7c/0x120
+  rtnetlink_rcv_msg+0x145/0x3f0
+  netlink_rcv_skb+0x53/0x100
+  netlink_unicast+0x245/0x390
+  netlink_sendmsg+0x21b/0x470
+  ____sys_sendmsg+0x39d/0x3d0
+  ___sys_sendmsg+0x9a/0xe0
+  __sys_sendmsg+0x7a/0xd0
+  do_syscall_64+0x7d/0x160
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ RIP: 0033:0x7f2155114084
+ Code: 89 02 b8 ff ff ff ff eb bb 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 80 3d 25 f0 0c 00 00 74 13 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 48 83 ec 28 89 54 24 1c 48 89
+ RSP: 002b:00007fff1fd7a988 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
+ RAX: ffffffffffffffda RBX: 0000560ec063e5e0 RCX: 00007f2155114084
+ RDX: 0000000000000000 RSI: 00007fff1fd7a9f0 RDI: 0000000000000003
+ RBP: 00007fff1fd7aa60 R08: 0000000000000010 R09: 000000000000003f
+ R10: 0000560ee9b3a010 R11: 0000000000000202 R12: 00007fff1fd7aae0
+ R13: 000000006891ccde R14: 0000560ec063e5e0 R15: 00007fff1fd7aad0
+  </TASK>
+
+ [1] https://lore.kernel.org/netdev/e08c7f4a6882f260011909a868311c6e9b54f3e4.1639153474.git.dcaratti@redhat.com/
+ [2] https://lore.kernel.org/netdev/d912cbd7-193b-4269-9857-525bee8bbb6a@gmail.com/
+
+Cc: stable@vger.kernel.org
+Fixes: 103406b38c60 ("net/sched: Always pass notifications when child class becomes empty")
+Fixes: c062f2a0b04d ("net/sched: sch_ets: don't remove idle classes from the round-robin list")
+Fixes: dcc68b4d8084 ("net: sch_ets: Add a new Qdisc")
+Reported-by: Li Shuang <shuali@redhat.com>
+Closes: https://issues.redhat.com/browse/RHEL-108026
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Co-developed-by: Ivan Vecera <ivecera@redhat.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/7928ff6d17db47a2ae7cc205c44777b1f1950545.1755016081.git.dcaratti@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sched/sch_ets.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -1071,6 +1071,7 @@ static int ocfs2_grab_folios_for_write(s
- 			if (IS_ERR(wc->w_folios[i])) {
- 				ret = PTR_ERR(wc->w_folios[i]);
- 				mlog_errno(ret);
-+				wc->w_folios[i] = NULL;
- 				goto out;
- 			}
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -651,6 +651,12 @@ static int ets_qdisc_change(struct Qdisc
+ 
+ 	sch_tree_lock(sch);
+ 
++	for (i = nbands; i < oldbands; i++) {
++		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
++			list_del_init(&q->classes[i].alist);
++		qdisc_purge_queue(q->classes[i].qdisc);
++	}
++
+ 	WRITE_ONCE(q->nbands, nbands);
+ 	for (i = nstrict; i < q->nstrict; i++) {
+ 		if (q->classes[i].qdisc->q.qlen) {
+@@ -658,11 +664,6 @@ static int ets_qdisc_change(struct Qdisc
+ 			q->classes[i].deficit = quanta[i];
  		}
+ 	}
+-	for (i = q->nbands; i < oldbands; i++) {
+-		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
+-			list_del_init(&q->classes[i].alist);
+-		qdisc_purge_queue(q->classes[i].qdisc);
+-	}
+ 	WRITE_ONCE(q->nstrict, nstrict);
+ 	memcpy(q->prio2band, priomap, sizeof(priomap));
+ 
 
 
