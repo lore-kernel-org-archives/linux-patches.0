@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C160919E82A;
-	Mon, 18 Aug 2025 13:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666C0335BC5;
+	Mon, 18 Aug 2025 13:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525332; cv=none; b=auEHts9Xo/EYBTNq/kJR9YcBPOS4W8ZCh+ymGTNnHcOMQiH2CoD4ucZQX6XXPV7xD0iDVHK9M30hOuJ817SS+5Prws+2paS3GMn5yH0OIycsWcd5ZoCq8wIR9SIKgEzMArMEUhGA9jg9r0C8cPxUV8+Trd1X2jlV/ICAh3ThCJw=
+	t=1755525337; cv=none; b=OSWMxerrXaf7unUVbPWLaVyi2ZY0ZnAp/2yE1c9R68e3u3QALWsji7mo4JJ0JptekgtPvZmLt4jWtKO9XJSDzuQqqPdjb8nkWzEOajkI37b/OsjFdIU/KNF23pcG83ZtS+fMxbGQyf4mEMVmkpqleL6U05w00sSJff5eMka0Rog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525332; c=relaxed/simple;
-	bh=7DkWEq+YwDPgM5mhwtHlutbG9rCMD1ORf1Y9Jj2iYJM=;
+	s=arc-20240116; t=1755525337; c=relaxed/simple;
+	bh=QM1/2iDSVtQhv7+wVmfs0ne9CuDGrl1NkycNU8yR8zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CsnW5vnmHlptIXyxvdk+TU7b9gT5AFd9ofRQYi51mOCQGB2U7Xn0fX21+sgExMbJ006W6yc43KmN1HgTAJDWMxC3v1v1jEr0RQWFgs4OoLsBqSICrNAB6XP/biBwa3OqZ2rG7oj55KoyHwaO6bG6XZQ0f32XlqKOWsdwQZBHGeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avHhlJdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GWEjLEmwSVCc/q+E5Aj8v2W4TnMN14t3CoSwJZqAp6Y1vgiZEOUUQ2XnuJ59ZxitScrnurXByz/R/gfRHsCYlxbQpNCP48yE69YCZuuews037OpB9Ewm8OrxVoS2TfP5KWhA6ruDSZZQla3mU69C8zuvPv2x17Cr1uEFDd3/N88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEGw0d6M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avHhlJdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4177CC4CEEB;
-	Mon, 18 Aug 2025 13:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEGw0d6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6397EC4CEEB;
+	Mon, 18 Aug 2025 13:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525332;
-	bh=7DkWEq+YwDPgM5mhwtHlutbG9rCMD1ORf1Y9Jj2iYJM=;
+	s=korg; t=1755525337;
+	bh=QM1/2iDSVtQhv7+wVmfs0ne9CuDGrl1NkycNU8yR8zM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avHhlJdb50NoLazqK7OPZKN8bwjI0FPkKFr2w9kdb4IWn7RcOB+TqByn9rMAAT2L6
-	 dNe2QCart37p5k+tR3fSmpNNuF0hBpbgLceNcusjw/d5/D0PwJywDvzCm7Szbj6iJw
-	 ftWuwtHCKSa8Biv6+Bh0Rz+qPYbK7RN6a4pYH2Qg=
+	b=SEGw0d6MVSxjqufW2m5d3DzNwZRfaULFLzvfNZBcFKvy2nEF+z/b0DrQLvUiw/Jms
+	 tV9xzFV+yMDBsz3lg2Rvk+vS5cdQzETTu2jd+kEQVzF3ncTS8FcKngIhbQ8ld/IsLV
+	 UpZfwHLhFYkRDVChG5G1if8gGXUNRthSwlKBKYfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Xinxin Wan <xinxin.wan@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Mark Einon <mark.einon@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 203/570] ASoC: codecs: rt5640: Retry DEVICE_ID verification
-Date: Mon, 18 Aug 2025 14:43:10 +0200
-Message-ID: <20250818124513.631343117@linuxfoundation.org>
+Subject: [PATCH 6.16 230/570] et131x: Add missing check after DMA map
+Date: Mon, 18 Aug 2025 14:43:37 +0200
+Message-ID: <20250818124514.680842504@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -47,50 +47,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xinxin Wan <xinxin.wan@intel.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 19f971057b2d7b99c80530ec1052b45de236a8da ]
+[ Upstream commit d61f6cb6f6ef3c70d2ccc0d9c85c508cb8017da9 ]
 
-To be more resilient to codec-detection failures when the hardware
-powers on slowly, add retry mechanism to the device verification check.
-Similar pattern is found throughout a number of Realtek codecs. Our
-tests show that 60ms delay is sufficient to address readiness issues on
-rt5640 chip.
+The DMA map functions can fail and should be tested for errors.
+If the mapping fails, unmap and return an error.
 
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Xinxin Wan <xinxin.wan@intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20250530142120.2944095-3-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Mark Einon <mark.einon@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250716094733.28734-2-fourier.thomas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5640.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/agere/et131x.c | 36 +++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
-index 21a18012b4c0..55881a5669e2 100644
---- a/sound/soc/codecs/rt5640.c
-+++ b/sound/soc/codecs/rt5640.c
-@@ -3013,6 +3013,11 @@ static int rt5640_i2c_probe(struct i2c_client *i2c)
+diff --git a/drivers/net/ethernet/agere/et131x.c b/drivers/net/ethernet/agere/et131x.c
+index 678eddb36172..5c8217638dda 100644
+--- a/drivers/net/ethernet/agere/et131x.c
++++ b/drivers/net/ethernet/agere/et131x.c
+@@ -2459,6 +2459,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 							  skb->data,
+ 							  skb_headlen(skb),
+ 							  DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      dma_addr))
++					return -ENOMEM;
++
+ 				desc[frag].addr_lo = lower_32_bits(dma_addr);
+ 				desc[frag].addr_hi = upper_32_bits(dma_addr);
+ 				frag++;
+@@ -2468,6 +2472,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 							  skb->data,
+ 							  skb_headlen(skb) / 2,
+ 							  DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      dma_addr))
++					return -ENOMEM;
++
+ 				desc[frag].addr_lo = lower_32_bits(dma_addr);
+ 				desc[frag].addr_hi = upper_32_bits(dma_addr);
+ 				frag++;
+@@ -2478,6 +2486,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 							  skb_headlen(skb) / 2,
+ 							  skb_headlen(skb) / 2,
+ 							  DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      dma_addr))
++					goto unmap_first_out;
++
+ 				desc[frag].addr_lo = lower_32_bits(dma_addr);
+ 				desc[frag].addr_hi = upper_32_bits(dma_addr);
+ 				frag++;
+@@ -2489,6 +2501,9 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 						    0,
+ 						    desc[frag].len_vlan,
+ 						    DMA_TO_DEVICE);
++			if (dma_mapping_error(&adapter->pdev->dev, dma_addr))
++				goto unmap_out;
++
+ 			desc[frag].addr_lo = lower_32_bits(dma_addr);
+ 			desc[frag].addr_hi = upper_32_bits(dma_addr);
+ 			frag++;
+@@ -2578,6 +2593,27 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 		       &adapter->regs->global.watchdog_timer);
  	}
- 
- 	regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
-+	if (val != RT5640_DEVICE_ID) {
-+		usleep_range(60000, 100000);
-+		regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
+ 	return 0;
++
++unmap_out:
++	// Unmap the body of the packet with map_page
++	while (--i) {
++		frag--;
++		dma_addr = desc[frag].addr_lo;
++		dma_addr |= (u64)desc[frag].addr_hi << 32;
++		dma_unmap_page(&adapter->pdev->dev, dma_addr,
++			       desc[frag].len_vlan, DMA_TO_DEVICE);
 +	}
 +
- 	if (val != RT5640_DEVICE_ID) {
- 		dev_err(&i2c->dev,
- 			"Device with ID register %#x is not rt5640/39\n", val);
++unmap_first_out:
++	// Unmap the header with map_single
++	while (frag--) {
++		dma_addr = desc[frag].addr_lo;
++		dma_addr |= (u64)desc[frag].addr_hi << 32;
++		dma_unmap_single(&adapter->pdev->dev, dma_addr,
++				 desc[frag].len_vlan, DMA_TO_DEVICE);
++	}
++
++	return -ENOMEM;
+ }
+ 
+ static int send_packet(struct sk_buff *skb, struct et131x_adapter *adapter)
 -- 
 2.39.5
 
