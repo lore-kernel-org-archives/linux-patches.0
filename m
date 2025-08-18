@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBB38BEC;
-	Mon, 18 Aug 2025 13:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA878BEC;
+	Mon, 18 Aug 2025 13:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522684; cv=none; b=tgCJVhpRsmHq8Aw9j/A96XVsthsWJOJXiVkzZe9ssUopqIa3lV6D5CXr520e9X6aUDnEsjGzzx/m4HaTmszcEg90a4XMK+0hGCXIquboHTS23wXkZfpDmRQBggDLl+mAHBgaDFGl8/gQN5S2k5128qB+rruoUYzXsssWmmM5hPw=
+	t=1755522687; cv=none; b=dsEfhUxb4Kw++moSGQGCyoCAR+nB/ChqSL73wAXsl2EfsDvg6ZfSrXF5/64L7jEeU1ih9L6WKD3pZz34TrnEBkDd6V4kxMygat7EI+z3BLiKOxLMHPtzFkv8rHmk8ocdTYXYsT0BE2SXPP/zNO0SZCU0ztb1PHI9BmlqvuV35KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522684; c=relaxed/simple;
-	bh=hjKgG4zTjdrGvMtusdgHBW2IiXgFuvTvHmwNfvSSCj4=;
+	s=arc-20240116; t=1755522687; c=relaxed/simple;
+	bh=TXwvzAv8Hwi3ybp6dP9DUfbw0AF0X5wtMAFKGdpCjaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EErBvdvWBy+jlR4sjurKe5lf4zxglPb1ofmtfyyvhE4Ldb3ypqMnJghxQ5jSleL8Lih+pMHIjtejF/vy//1KXLSzcUKo0mZQ0yMwalpsKPf8PHjNptMZ5MqDALHQnf6o7HKiGRv8akTVLW+CSF5+LfqtXz/Cp1pysxQ3KJ9XXAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejAA4n0b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FMC8WO6GIqiT236hwszSIsagO3MArg7u1R9zn5I2VkdL3bgYPm+FjAgLAko/SqflSfVXTbPmJvUD1YHEDFF+DE38NSUCtpmDFSfQzyHLkVzQsI5xaPXDoNmWBgG8vyGagGmzulHUN7KGg1yWZtJu7iJkUWPVm8f+8f4CzmUhm/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mq/5aQ3J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejAA4n0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACE5C4CEEB;
-	Mon, 18 Aug 2025 13:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mq/5aQ3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1023C4CEEB;
+	Mon, 18 Aug 2025 13:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522683;
-	bh=hjKgG4zTjdrGvMtusdgHBW2IiXgFuvTvHmwNfvSSCj4=;
+	s=korg; t=1755522687;
+	bh=TXwvzAv8Hwi3ybp6dP9DUfbw0AF0X5wtMAFKGdpCjaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejAA4n0bMLZgXCjKWAQ9tDitF116Y248MSqYOpS2l7MD2yzwhCDyc4Uq4fvIxsWbv
-	 yrYo7446/ir8Hjw9npYfSneP8QXPYQqwG6AWGPiCbR2tGXLAd/grGy+GNvEBr/8aL8
-	 XtVdMtM1nPZw3Nb+BlU8nnpFoW0DS5wFIY2oFQCQ=
+	b=Mq/5aQ3J4V9E/pcTjmg/gxgjcfiQYBqgYa1ZSZgDwS6o/V1+M6KX1+FFr5tkzfTCi
+	 LYmD0BnAdR1mUoazaAhw9EKKWzDqSYqP1L2zGXBwXE2vAfK1S6bBuSDn/00g+GJ5b+
+	 E/KEGNXyC1OinlFhRoiLhU53RHBwszk+U4R52ZoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 362/444] block: avoid possible overflow for chunk_sectors check in blk_stack_limits()
-Date: Mon, 18 Aug 2025 14:46:28 +0200
-Message-ID: <20250818124502.480504999@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.12 389/444] thunderbolt: Fix copy+paste error in match_service_id()
+Date: Mon, 18 Aug 2025 14:46:55 +0200
+Message-ID: <20250818124503.484951701@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -54,43 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 448dfecc7ff807822ecd47a5c052acedca7d09e8 ]
+commit 5cc1f66cb23cccc704e3def27ad31ed479e934a5 upstream.
 
-In blk_stack_limits(), we check that the t->chunk_sectors value is a
-multiple of the t->physical_block_size value.
+The second instance of TBSVC_MATCH_PROTOCOL_VERSION seems to have been
+intended to be TBSVC_MATCH_PROTOCOL_REVISION.
 
-However, by finding the chunk_sectors value in bytes, we may overflow
-the unsigned int which holds chunk_sectors, so change the check to be
-based on sectors.
-
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250729091448.1691334-2-john.g.garry@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d1ff70241a27 ("thunderbolt: Add support for XDomain discovery protocol")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://lore.kernel.org/r/20250721050136.30004-1-ebiggers@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-settings.c | 2 +-
+ drivers/thunderbolt/domain.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index 22ce7fa4fe20..9ae3eee4b5ae 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -623,7 +623,7 @@ int blk_stack_limits(struct queue_limits *t, struct queue_limits *b,
+--- a/drivers/thunderbolt/domain.c
++++ b/drivers/thunderbolt/domain.c
+@@ -36,7 +36,7 @@ static bool match_service_id(const struc
+ 			return false;
  	}
  
- 	/* chunk_sectors a multiple of the physical block size? */
--	if ((t->chunk_sectors << 9) & (t->physical_block_size - 1)) {
-+	if (t->chunk_sectors % (t->physical_block_size >> SECTOR_SHIFT)) {
- 		t->chunk_sectors = 0;
- 		t->flags |= BLK_FLAG_MISALIGNED;
- 		ret = -1;
--- 
-2.39.5
-
+-	if (id->match_flags & TBSVC_MATCH_PROTOCOL_VERSION) {
++	if (id->match_flags & TBSVC_MATCH_PROTOCOL_REVISION) {
+ 		if (id->protocol_revision != svc->prtcrevs)
+ 			return false;
+ 	}
 
 
