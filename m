@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13573218C0;
-	Mon, 18 Aug 2025 12:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEC733F3;
+	Mon, 18 Aug 2025 12:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521867; cv=none; b=oI9DoeaYwHRWBhJOfHjrFbZB47CH37EsVbcWKXxwfVv+hYuLgF6zq6XRPSFKT5t12cOv4fE4k4r7aPNs/eloTOBECWB+rgRQ1ezTh+axQEK3XNne6QaicIKkcddUbzOM6cjH6ws4VETQO+bg3mnFxk8YN1ZqFZnPeTthRMGwQsE=
+	t=1755521870; cv=none; b=WZ1rNeSeIUyPt9hdAPZ8RMmUF4EHitc2kQ+/Kt3I3Uho2Va1pjSRUXerOby/GANUU23oaU/HfZMTtg6Dz7D2s1K4KSoP6GBleI/LVeVz9Nvzc0b5tRY47tFKf+2yA5dpY95yGKa++U1m+jMg40ele3Y7e8+lGPzB4sFKs3EDjPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521867; c=relaxed/simple;
-	bh=dpKsfGfRx4aifuN/MP4ZYqbGRIsHsxxMuBM6hvkgh6I=;
+	s=arc-20240116; t=1755521870; c=relaxed/simple;
+	bh=cJaVDADiCHZe9yx7gnDW3xb9oiJnX+MXkQkT453RQz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpKZQGHREullCAwUv0t28IoTl4jRkED6U9h+vz0eV9G1OKHgKyc4W5Tf8xayTRqzjMr6vT0UfWvwCfC14zFJXZYqC/B2RnR+FnLpqNdyi2k4Ab88Ws9LxKUd6BUU6ktNUteJEwgODui6NjXmVGNECI+EFLX+4ViQa60S1VPgrqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkPtcM0v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eaTz6EGJeVmrlFrZ24YkOIgh2EbRujf4ZvMlNQtThnYmgAuzB8VzatkP4bBKZq9H6ow1BSt85OHiNE3C4xqmGJQ9aArdwcjzDV+9egi3PBU9x2f+xyLMGYY60f3g2CRytpr8l1BWc8x6XUvUZKSiW6DTclCtL81T1j001Ditqxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g62W8xlz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkPtcM0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E426AC4CEEB;
-	Mon, 18 Aug 2025 12:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g62W8xlz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F05C4CEEB;
+	Mon, 18 Aug 2025 12:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521867;
-	bh=dpKsfGfRx4aifuN/MP4ZYqbGRIsHsxxMuBM6hvkgh6I=;
+	s=korg; t=1755521870;
+	bh=cJaVDADiCHZe9yx7gnDW3xb9oiJnX+MXkQkT453RQz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkPtcM0vKmByOPdWNkXFxw/Igkxb1uV/pBpK60WRrwit4CDqVIneJn3kv4rnoyOiQ
-	 19CATqr6wJ/jhlytY64qIdjz6b1TB+q1DaJpHzuujCP+qB99urr0VJELG/xz0XT7lC
-	 DNRgMhF0urOyDLHA52VXqXEn7DiSzeiAKm5qbkig=
+	b=g62W8xlzgd+M2oAF0piNiF3zBZmE5SrmKUFS5G3nuhaSDPxw0jxyLesw9fYVOtb86
+	 +5O4cHrRbE5VKd3aH/mdRzFCcLgeJ3oY5VWXVjDPqmn5E67lxCGZM7U0uapBTAjeUe
+	 g8VJud4kuq2tunZdNpk3nIo3m0IM0IOczO1WTMmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 145/444] ASoC: SOF: topology: Parse the dapm_widget_tokens in case of DSPless mode
-Date: Mon, 18 Aug 2025 14:42:51 +0200
-Message-ID: <20250818124454.351146116@linuxfoundation.org>
+Subject: [PATCH 6.12 114/444] EDAC/synopsys: Clear the ECC counters on init
+Date: Mon, 18 Aug 2025 14:42:20 +0200
+Message-ID: <20250818124453.203708879@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,63 +51,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
 
-[ Upstream commit 6b3cb7f4341cbf62d41ccf6ea906dbe66be8aa3d ]
+[ Upstream commit b1dc7f097b78eb8d25b071ead2384b07a549692b ]
 
-Parsing the dapm_widget_tokens is also needed for DSPless mode as it is
-setting the snd_soc_dapm_widget.no_wname_in_kcontrol_name flag for the
-kcontrol creation from DAPM widgets.
-Without that flag set, the following warnings might appear because of long
-control names:
-ALSA: Control name 'eqiir.2.1 Post Mixer Analog Playback IIR Eq bytes' truncated to 'eqiir.2.1 Post Mixer Analog Playback IIR Eq'
-ALSA: Control name 'eqfir.2.1 Post Mixer Analog Playback FIR Eq bytes' truncated to 'eqfir.2.1 Post Mixer Analog Playback FIR Eq'
-ALSA: Control name 'drc.2.1 Post Mixer Analog Playback DRC bytes' truncated to 'drc.2.1 Post Mixer Analog Playback DRC byte'
-ALSA: Control name 'drc.2.1 Post Mixer Analog Playback DRC switch' truncated to 'drc.2.1 Post Mixer Analog Playback DRC swit'
-ALSA: Control name 'gain.15.1 Pre Mixer Deepbuffer HDA Analog Volume' truncated to 'gain.15.1 Pre Mixer Deepbuffer HDA Analog V'
+Clear the ECC error and counter registers during initialization/probe to avoid
+reporting stale errors that may have occurred before EDAC registration.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20250619102640.12068-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+For that, unify the Zynq and ZynqMP ECC state reading paths and simplify the
+code.
+
+  [ bp: Massage commit message.
+    Fix an -Wsometimes-uninitialized warning as reported by
+    Reported-by: kernel test robot <lkp@intel.com>
+    Closes: https://lore.kernel.org/oe-kbuild-all/202507141048.obUv3ZUm-lkp@intel.com ]
+
+Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250713050753.7042-1-shubhrajyoti.datta@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/topology.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/edac/synopsys_edac.c | 97 +++++++++++++++++-------------------
+ 1 file changed, 46 insertions(+), 51 deletions(-)
 
-diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
-index f9708b8fd73b..0104257df930 100644
---- a/sound/soc/sof/topology.c
-+++ b/sound/soc/sof/topology.c
-@@ -2364,14 +2364,25 @@ static int sof_dspless_widget_ready(struct snd_soc_component *scomp, int index,
- 				    struct snd_soc_dapm_widget *w,
- 				    struct snd_soc_tplg_dapm_widget *tw)
- {
-+	struct snd_soc_tplg_private *priv = &tw->priv;
-+	int ret;
+diff --git a/drivers/edac/synopsys_edac.c b/drivers/edac/synopsys_edac.c
+index d7416166fd8a..ec3ed5e2b2d7 100644
+--- a/drivers/edac/synopsys_edac.c
++++ b/drivers/edac/synopsys_edac.c
+@@ -332,20 +332,26 @@ struct synps_edac_priv {
+ #endif
+ };
+ 
++enum synps_platform_type {
++	ZYNQ,
++	ZYNQMP,
++	SYNPS,
++};
 +
-+	/* for snd_soc_dapm_widget.no_wname_in_kcontrol_name */
-+	ret = sof_parse_tokens(scomp, w, dapm_widget_tokens,
-+			       ARRAY_SIZE(dapm_widget_tokens),
-+			       priv->array, le32_to_cpu(priv->size));
-+	if (ret < 0) {
-+		dev_err(scomp->dev, "failed to parse dapm widget tokens for %s\n",
-+			w->name);
-+		return ret;
+ /**
+  * struct synps_platform_data -  synps platform data structure.
++ * @platform:		Identifies the target hardware platform
+  * @get_error_info:	Get EDAC error info.
+  * @get_mtype:		Get mtype.
+  * @get_dtype:		Get dtype.
+- * @get_ecc_state:	Get ECC state.
+  * @get_mem_info:	Get EDAC memory info
+  * @quirks:		To differentiate IPs.
+  */
+ struct synps_platform_data {
++	enum synps_platform_type platform;
+ 	int (*get_error_info)(struct synps_edac_priv *priv);
+ 	enum mem_type (*get_mtype)(const void __iomem *base);
+ 	enum dev_type (*get_dtype)(const void __iomem *base);
+-	bool (*get_ecc_state)(void __iomem *base);
+ #ifdef CONFIG_EDAC_DEBUG
+ 	u64 (*get_mem_info)(struct synps_edac_priv *priv);
+ #endif
+@@ -720,51 +726,38 @@ static enum dev_type zynqmp_get_dtype(const void __iomem *base)
+ 	return dt;
+ }
+ 
+-/**
+- * zynq_get_ecc_state - Return the controller ECC enable/disable status.
+- * @base:	DDR memory controller base address.
+- *
+- * Get the ECC enable/disable status of the controller.
+- *
+- * Return: true if enabled, otherwise false.
+- */
+-static bool zynq_get_ecc_state(void __iomem *base)
++static bool get_ecc_state(struct synps_edac_priv *priv)
+ {
++	u32 ecctype, clearval;
+ 	enum dev_type dt;
+-	u32 ecctype;
+-
+-	dt = zynq_get_dtype(base);
+-	if (dt == DEV_UNKNOWN)
+-		return false;
+ 
+-	ecctype = readl(base + SCRUB_OFST) & SCRUB_MODE_MASK;
+-	if ((ecctype == SCRUB_MODE_SECDED) && (dt == DEV_X2))
+-		return true;
+-
+-	return false;
+-}
+-
+-/**
+- * zynqmp_get_ecc_state - Return the controller ECC enable/disable status.
+- * @base:	DDR memory controller base address.
+- *
+- * Get the ECC enable/disable status for the controller.
+- *
+- * Return: a ECC status boolean i.e true/false - enabled/disabled.
+- */
+-static bool zynqmp_get_ecc_state(void __iomem *base)
+-{
+-	enum dev_type dt;
+-	u32 ecctype;
+-
+-	dt = zynqmp_get_dtype(base);
+-	if (dt == DEV_UNKNOWN)
+-		return false;
+-
+-	ecctype = readl(base + ECC_CFG0_OFST) & SCRUB_MODE_MASK;
+-	if ((ecctype == SCRUB_MODE_SECDED) &&
+-	    ((dt == DEV_X2) || (dt == DEV_X4) || (dt == DEV_X8)))
+-		return true;
++	if (priv->p_data->platform == ZYNQ) {
++		dt = zynq_get_dtype(priv->baseaddr);
++		if (dt == DEV_UNKNOWN)
++			return false;
++
++		ecctype = readl(priv->baseaddr + SCRUB_OFST) & SCRUB_MODE_MASK;
++		if (ecctype == SCRUB_MODE_SECDED && dt == DEV_X2) {
++			clearval = ECC_CTRL_CLR_CE_ERR | ECC_CTRL_CLR_UE_ERR;
++			writel(clearval, priv->baseaddr + ECC_CTRL_OFST);
++			writel(0x0, priv->baseaddr + ECC_CTRL_OFST);
++			return true;
++		}
++	} else {
++		dt = zynqmp_get_dtype(priv->baseaddr);
++		if (dt == DEV_UNKNOWN)
++			return false;
++
++		ecctype = readl(priv->baseaddr + ECC_CFG0_OFST) & SCRUB_MODE_MASK;
++		if (ecctype == SCRUB_MODE_SECDED &&
++		    (dt == DEV_X2 || dt == DEV_X4 || dt == DEV_X8)) {
++			clearval = readl(priv->baseaddr + ECC_CLR_OFST) |
++			ECC_CTRL_CLR_CE_ERR | ECC_CTRL_CLR_CE_ERRCNT |
++			ECC_CTRL_CLR_UE_ERR | ECC_CTRL_CLR_UE_ERRCNT;
++			writel(clearval, priv->baseaddr + ECC_CLR_OFST);
++			return true;
++		}
++	}
+ 
+ 	return false;
+ }
+@@ -934,18 +927,18 @@ static int setup_irq(struct mem_ctl_info *mci,
+ }
+ 
+ static const struct synps_platform_data zynq_edac_def = {
++	.platform = ZYNQ,
+ 	.get_error_info	= zynq_get_error_info,
+ 	.get_mtype	= zynq_get_mtype,
+ 	.get_dtype	= zynq_get_dtype,
+-	.get_ecc_state	= zynq_get_ecc_state,
+ 	.quirks		= 0,
+ };
+ 
+ static const struct synps_platform_data zynqmp_edac_def = {
++	.platform = ZYNQMP,
+ 	.get_error_info	= zynqmp_get_error_info,
+ 	.get_mtype	= zynqmp_get_mtype,
+ 	.get_dtype	= zynqmp_get_dtype,
+-	.get_ecc_state	= zynqmp_get_ecc_state,
+ #ifdef CONFIG_EDAC_DEBUG
+ 	.get_mem_info	= zynqmp_get_mem_info,
+ #endif
+@@ -957,10 +950,10 @@ static const struct synps_platform_data zynqmp_edac_def = {
+ };
+ 
+ static const struct synps_platform_data synopsys_edac_def = {
++	.platform = SYNPS,
+ 	.get_error_info	= zynqmp_get_error_info,
+ 	.get_mtype	= zynqmp_get_mtype,
+ 	.get_dtype	= zynqmp_get_dtype,
+-	.get_ecc_state	= zynqmp_get_ecc_state,
+ 	.quirks         = (DDR_ECC_INTR_SUPPORT | DDR_ECC_INTR_SELF_CLEAR
+ #ifdef CONFIG_EDAC_DEBUG
+ 			  | DDR_ECC_DATA_POISON_SUPPORT
+@@ -1390,10 +1383,6 @@ static int mc_probe(struct platform_device *pdev)
+ 	if (!p_data)
+ 		return -ENODEV;
+ 
+-	if (!p_data->get_ecc_state(baseaddr)) {
+-		edac_printk(KERN_INFO, EDAC_MC, "ECC not enabled\n");
+-		return -ENXIO;
+-	}
+ 
+ 	layers[0].type = EDAC_MC_LAYER_CHIP_SELECT;
+ 	layers[0].size = SYNPS_EDAC_NR_CSROWS;
+@@ -1413,6 +1402,12 @@ static int mc_probe(struct platform_device *pdev)
+ 	priv = mci->pvt_info;
+ 	priv->baseaddr = baseaddr;
+ 	priv->p_data = p_data;
++	if (!get_ecc_state(priv)) {
++		edac_printk(KERN_INFO, EDAC_MC, "ECC not enabled\n");
++		rc = -ENODEV;
++		goto free_edac_mc;
 +	}
 +
- 	if (WIDGET_IS_DAI(w->id)) {
- 		static const struct sof_topology_token dai_tokens[] = {
- 			{SOF_TKN_DAI_TYPE, SND_SOC_TPLG_TUPLE_TYPE_STRING, get_token_dai_type, 0}};
- 		struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
--		struct snd_soc_tplg_private *priv = &tw->priv;
- 		struct snd_sof_widget *swidget;
- 		struct snd_sof_dai *sdai;
--		int ret;
+ 	spin_lock_init(&priv->reglock);
  
- 		swidget = kzalloc(sizeof(*swidget), GFP_KERNEL);
- 		if (!swidget)
+ 	mc_init(mci, pdev);
 -- 
 2.39.5
 
