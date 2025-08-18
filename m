@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BDA22A7E0;
-	Mon, 18 Aug 2025 13:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47637258EEE;
+	Mon, 18 Aug 2025 13:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523855; cv=none; b=AzFb/rFeMwPrfdN8haGxrAqkRFnHRHAGeVup1fpuoevOKZCruYd8khXcPE1sHu63XYe1Na5pFjhovLUfgMY7p/tsXhajHghw65A2T6gITJKE5YT1mNXabmSVoOjzPX14Nmf/Z8MSmsKwVQJUlWkHoT85wp6vBDKOvpEI9yJj1Mw=
+	t=1755523859; cv=none; b=sowjmMDWSPmRHoxmOMuIRgfrlEgzw4G+GPF60TbqBd+zZLRIXbkclsBHyrhkh6qdK4CeRWCOUbv8tHAK1xJlJTc+QD8+Sa0X+w+x9dcFKwmhYWVjc5+iglUhtvRAO1IKXlyVKSySLP45AEQJB4c48G/lsDjSbq5t/uOsckOY30s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523855; c=relaxed/simple;
-	bh=aA25WD4uNjeTRql57BX2I4XTriD2zitYYJwu67ATZaU=;
+	s=arc-20240116; t=1755523859; c=relaxed/simple;
+	bh=SNcX2MRleXjGwRl9y/KFccud+iLQCMyrscpV5bEKz14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kDtl/8p0i4UsbIYrJNiaJyHqb7DorYcnL2CbF6CeZ2DX6/shdSvV0f4hoT/c3MxM+vITSihVoa0EM+qWQyhlrKPdIqYWBRuo2WayIaJ9lDnBd02Uy5d6fwY4AQgg8WMFEzAlPZP5wqBGzsgX/1RaFaLSuJURY4WSKws8YLB1yLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rctK4Fxe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E2afNSQRkHDKNmf0uVYm95qk5Bsw/zckGa762lUiF9JXBRt+uib7+ca/6n8fjmEapPnLKFHNG60QaMASYl+EiJKk6XAx17/IA1xe4Ufeft+fz1Lzt9jGVyN6m7H9syOc4JozKFIu7aUEwOcgkJhPICXWJSejrxl0SIuQk7ywrP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTkCmKpC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rctK4Fxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533A6C4CEEB;
-	Mon, 18 Aug 2025 13:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTkCmKpC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA01DC4CEEB;
+	Mon, 18 Aug 2025 13:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523855;
-	bh=aA25WD4uNjeTRql57BX2I4XTriD2zitYYJwu67ATZaU=;
+	s=korg; t=1755523859;
+	bh=SNcX2MRleXjGwRl9y/KFccud+iLQCMyrscpV5bEKz14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rctK4FxexXADZ11kIVO4qwkmYrvyBURCmFFK/o71yxWVKNoELMqhYyRvSVOfFMXTE
-	 uczf/i+WO04AX5cvMTrGNaGAuCFv//ZWy+bskhHjqeZHkvQm6kQzqra4nSDLSRg85E
-	 9CRQh0zso8xmCGZROHna3UB4M9C64xu33CGnQeEc=
+	b=pTkCmKpCR7pmhwKH4MP3fK8cEkp6QhWNkunXsFYAbKIZOSE+q3Yao6BmSDnk5fpy6
+	 3WSm2KDdG4BoilvgTD6VtqeFPkK84TBGHllqDkaHiQUDRskpPNeiyd8sT1iMIGPyJc
+	 3Hg5QFRzQOSOxTPLOo8e7HtZvgl/s9/3hZtRcWNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Bauer <mail@david-bauer.net>,
-	Felix Fietkau <nbd@nbd.name>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 261/515] wifi: mt76: mt7915: mcu: increase eeprom command timeout
-Date: Mon, 18 Aug 2025 14:44:07 +0200
-Message-ID: <20250818124508.470814430@linuxfoundation.org>
+Subject: [PATCH 6.15 262/515] kselftest/arm64: Specify SVE data when testing VL set in sve-ptrace
+Date: Mon, 18 Aug 2025 14:44:08 +0200
+Message-ID: <20250818124508.509208377@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,37 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit efd31873cdb3e5580fb76eeded6314856f52b06e ]
+[ Upstream commit 9e8ebfe677f9101bbfe1f75d548a5aec581e8213 ]
 
-Increase the timeout for MCU_EXT_CMD_EFUSE_BUFFER_MODE command.
+Since f916dd32a943 ("arm64/fpsimd: ptrace: Mandate SVE payload for
+streaming-mode state") we reject attempts to write to the streaming mode
+regset even if there is no register data supplied, causing the tests for
+setting vector lengths and setting SVE_VL_INHERIT in sve-ptrace to
+spuriously fail. Set the flag to avoid the issue, we still support not
+supplying register data.
 
-Regular retries upon hardware-recovery have been observed. Increasing
-the timeout slightly remedies this problem.
-
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Link: https://patch.msgid.link/20250402004528.1036715-2-mail@david-bauer.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250609-kselftest-arm64-ssve-fixups-v2-3-998fcfa6f240@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/arm64/fp/sve-ptrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index 45dd444ce360..cac176ee5152 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -208,6 +208,9 @@ mt7915_mcu_set_timeout(struct mt76_dev *mdev, int cmd)
- 	case MCU_EXT_CMD_BSS_INFO_UPDATE:
- 		mdev->mcu.timeout = 2 * HZ;
- 		return;
-+	case MCU_EXT_CMD_EFUSE_BUFFER_MODE:
-+		mdev->mcu.timeout = 10 * HZ;
-+		return;
- 	default:
- 		break;
- 	}
+diff --git a/tools/testing/selftests/arm64/fp/sve-ptrace.c b/tools/testing/selftests/arm64/fp/sve-ptrace.c
+index c499d5789dd5..16320aeaff85 100644
+--- a/tools/testing/selftests/arm64/fp/sve-ptrace.c
++++ b/tools/testing/selftests/arm64/fp/sve-ptrace.c
+@@ -170,7 +170,7 @@ static void ptrace_set_get_inherit(pid_t child, const struct vec_type *type)
+ 	memset(&sve, 0, sizeof(sve));
+ 	sve.size = sizeof(sve);
+ 	sve.vl = sve_vl_from_vq(SVE_VQ_MIN);
+-	sve.flags = SVE_PT_VL_INHERIT;
++	sve.flags = SVE_PT_VL_INHERIT | SVE_PT_REGS_SVE;
+ 	ret = set_sve(child, type, &sve);
+ 	if (ret != 0) {
+ 		ksft_test_result_fail("Failed to set %s SVE_PT_VL_INHERIT\n",
+@@ -235,6 +235,7 @@ static void ptrace_set_get_vl(pid_t child, const struct vec_type *type,
+ 	/* Set the VL by doing a set with no register payload */
+ 	memset(&sve, 0, sizeof(sve));
+ 	sve.size = sizeof(sve);
++	sve.flags = SVE_PT_REGS_SVE;
+ 	sve.vl = vl;
+ 	ret = set_sve(child, type, &sve);
+ 	if (ret != 0) {
 -- 
 2.39.5
 
