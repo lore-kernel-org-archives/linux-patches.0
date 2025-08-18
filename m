@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D409E335BA3;
-	Mon, 18 Aug 2025 13:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE5E335BA3;
+	Mon, 18 Aug 2025 13:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525184; cv=none; b=AtqMZSn7GnDkmD7iQkMLZINCuMhILDOtrSILwWqjUJtVIujGlMk4yU7lag3Z0PK+96OCEnl69nptVRcmRBoaRUZ6q5f1K3+eyPpeyc8/jkdKZTfQ9z7azzJ5AF7vRJShtryLlv+7Zxuo73HydYxR6/lt7vjze06TuG76j5q+TN4=
+	t=1755525187; cv=none; b=gNaO7C9S3jpfvPlu9g8NlfVN8VK1sDvW8nwvDpbWGKLFHXu/ihzaMTPZP4AByBhRUGWwEj9jYCTOruUn9nDWX0Kq9RBHQEIfWVy5RR+ZztJoxTQTUPD0ztVlarANfmOIcOF4QLzUrxiA7bV81C8sPl+UMxXVtgzSAE127vxKXy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525184; c=relaxed/simple;
-	bh=dzX5Fy+5McRwrgj/ytbRh13InOiK+bGCYmx85TTNslQ=;
+	s=arc-20240116; t=1755525187; c=relaxed/simple;
+	bh=Y/ZXRiTvniIpVl8biIJzOffmwQJVG/2oZBd2EEUTNQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDN4PsvKpj9/KiZQp0sNH7Tlegh8lJrJbpyVzthhaWuYQUQiAvTF3QR1Igs+wT6/8Gct2EMz+ybndAB71vS9lqZa70ASGhhxbI65QPZhQBeiezkr8F6gtNl6K6c8UN7xewOsyGSTN53I/tMliEy7F0C6Ut/kRvwyycgStSF1buA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnXt4z75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=luaQWY5bZES8iHev47T3vdFq9O+vfAoAPVR5b09czgOb/5UN80xQVGCA4FFQptOa8MizkF9zVRZWB1C2eZyhqRNcRElNYF98QrRKM//O2Id02huJlSLhHycFwtJDWsc7X9+T+I7CAEDS3MdmA9X/9kzYpqnWD8c4hjpDYi7b/1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqlObIUg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnXt4z75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE98C4CEEB;
-	Mon, 18 Aug 2025 13:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqlObIUg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47832C4CEEB;
+	Mon, 18 Aug 2025 13:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525184;
-	bh=dzX5Fy+5McRwrgj/ytbRh13InOiK+bGCYmx85TTNslQ=;
+	s=korg; t=1755525187;
+	bh=Y/ZXRiTvniIpVl8biIJzOffmwQJVG/2oZBd2EEUTNQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZnXt4z7584NTjeUb/emVfb0XGivfQLSubD1tDwK+cpmwVm/UKLySK71n6XintAqDB
-	 QrvN6gi03eDiuii+qyBDVGOom2tVWICWn3+8DaKZWqloxsqGqjOjuPTjvNQuAeRRJp
-	 PBanTSydGwgss2gJ0PcVrN7iRo3Qg9GEw0GHsK38=
+	b=IqlObIUgu4gP8wYXqW/lo89QlrQknE1zULqEkJfQ4TGx1wlwfCx/nSLnnH4wOOCOX
+	 4ZLuyXpQI9tzJQ0sH9LIjH8cAKpM5A64WNJMf3gjCUJwrAQDJ5n/DAu6+MNuet91aH
+	 w2Vc+omYEIW5psoFQBdFEuImesDcrfGxbqB8YvYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Ott <sebott@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 167/570] ACPI: processor: fix acpi_object initialization
-Date: Mon, 18 Aug 2025 14:42:34 +0200
-Message-ID: <20250818124512.236316793@linuxfoundation.org>
+Subject: [PATCH 6.16 185/570] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
+Date: Mon, 18 Aug 2025 14:42:52 +0200
+Message-ID: <20250818124512.939074250@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,39 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Ott <sebott@redhat.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 13edf7539211d8f7d0068ce3ed143005f1da3547 ]
+[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
 
-Initialization of the local acpi_object in acpi_processor_get_info()
-only sets the first 4 bytes to zero and is thus incomplete. This is
-indicated by messages like:
-	acpi ACPI0007:be: Invalid PBLK length [166288104]
+We currently log parse failures for ELD data and some disconnection events
+as errors without rate limiting. These log messages can be triggered very
+frequently in some situations, especially ELD parsing when there is nothing
+connected to a HDMI port which will generate:
 
-Fix this by initializing all 16 bytes of the processor member of that
-union.
+hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
 
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Link: https://patch.msgid.link/20250703124215.12522-1-sebott@redhat.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+While there's doubtless work that could be done on reducing the number of
+connection notification callbacks it's possible these may be legitimately
+generated by poor quality physical connections so let's use rate limiting
+to mitigate the log spam for the parse errors and lower the severity for
+disconnect logging to debug level.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_processor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
-index 7cf6101cb4c7..2a99f5eb6962 100644
---- a/drivers/acpi/acpi_processor.c
-+++ b/drivers/acpi/acpi_processor.c
-@@ -275,7 +275,7 @@ static inline int acpi_processor_hotadd_init(struct acpi_processor *pr,
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 1139a2754ca3..056d98154682 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -1232,7 +1232,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 						>> DRM_ELD_VER_SHIFT;
  
- static int acpi_processor_get_info(struct acpi_device *device)
- {
--	union acpi_object object = { 0 };
-+	union acpi_object object = { .processor = { 0 } };
- 	struct acpi_buffer buffer = { sizeof(union acpi_object), &object };
- 	struct acpi_processor *pr = acpi_driver_data(device);
- 	int device_declaration = 0;
+ 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
+-		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: Unknown ELD version %d\n", ver);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1240,7 +1241,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
+ 
+ 	if (mnl > ELD_MAX_MNL) {
+-		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: MNL Invalid %d\n", mnl);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1299,8 +1301,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
+ 
+ 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
+ 
+-		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
+-						__func__, pin->nid, port->id);
++		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
++			__func__, pin->nid, port->id);
+ 
+ 		/*
+ 		 * PCMs are not registered during device probe, so don't
 -- 
 2.39.5
 
