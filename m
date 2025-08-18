@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD93322532;
-	Mon, 18 Aug 2025 13:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3520927B358;
+	Mon, 18 Aug 2025 13:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525544; cv=none; b=fiJ59EsZ+VmMUunnrzcGJAP29q4q/sp/+q78RvzknCucsgR9jTQqYY74sgPmK6DVyLoNqyOvYF9pFr5NNNq2sFJKXbEMi9uevE3NJGq78wEV5OoN5Dz3ov1CJO1yN/KiaA0dyQkS+vzKHDgVks5knupLoZIlIDYPeL0laRnraOE=
+	t=1755525547; cv=none; b=rwjYnCNF1MKT+WJs+Hjsl23uCcM5r9q51qW8hETG03/fKCcgnDa0M8SxIt8kvE1a1ieE8NzZjAmlLGDEO7MhH3cUxXiUrKCJCoBY+iMNorRIqHbFnPy5E8ueFS8REy6CKXuPMJzGhCHdUB2D6zoOcNXBk8hi968n3VX8551MvOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525544; c=relaxed/simple;
-	bh=bVbDpvWopZIKQ7AcPnu2Sig/tt5/YzwX/KRtdaDss+g=;
+	s=arc-20240116; t=1755525547; c=relaxed/simple;
+	bh=Gk16XEps7z2W5oGGPkWamH1dP9b+KopYJg8HZn75R10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P6Y8b7EiE/CG13yxxrLHUtOsYnfK2aHF2ChhszRVxaNRvTMkJXwXGhvAu4E8I03e8FivqdW+CIW8XWpDGgb+yfRE/Ks/XuhfwWraqEokKVOuuDqqaE5LjuQ5NNGloEySOswweo5fK7x2xNnrwIJJVoUEHajSle6fA1MiXct+Vbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdfbDxg1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rAbwTPe7GZg3jw56KeWL9ue4yG+yI7MRwUewDE+RHwwUgfkqlKBM4eIle9+AK6Xr5adFdl3m992Q0x1YDE0YKjarC+QxQVFDghSrasU+eTUy+iMhdEkvZ1DRWGu2RIUBcFh5a7hgZPm02UEU3vUXBMhZKK/pVEaBioNC8oSCeR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWHswkYz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdfbDxg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39541C4CEEB;
-	Mon, 18 Aug 2025 13:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWHswkYz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987C5C4CEEB;
+	Mon, 18 Aug 2025 13:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525543;
-	bh=bVbDpvWopZIKQ7AcPnu2Sig/tt5/YzwX/KRtdaDss+g=;
+	s=korg; t=1755525547;
+	bh=Gk16XEps7z2W5oGGPkWamH1dP9b+KopYJg8HZn75R10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdfbDxg19IvIL1D0cnPyHwdek17xDW3vXhsF/TtnpY4D4n0luhR7wt9Tgd8dKF604
-	 ZY/xIDjPfaoF++GpMSZm0NsiwiBTgQDLpSacnW0m7NmqiBOUc/HMpJUkEGOXHNNf/R
-	 mLZWg5Wb7q9QTMh1KmKpB0FK24ZdllNh4kXQiIlg=
+	b=QWHswkYzm9qT1WD8G9Yww/LgQBgsRcHRJf0L35vg04ZHbfYAtK1cwSRSDXrvti1XK
+	 YCKHyeer2GqXZUqOfehgqD+8V1qBpGrI9nPjA8Cpg9ZMCTawccUUWCT1ZO4Fqeee/8
+	 d/EXnElOfKts8gRGWIQKcO4C0lplcvuXuTuplHCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@oss.qualcomm.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 294/570] wifi: ath10k: shutdown driver when hardware is unreliable
-Date: Mon, 18 Aug 2025 14:44:41 +0200
-Message-ID: <20250818124517.170395790@linuxfoundation.org>
+Subject: [PATCH 6.16 295/570] drm/panel: raydium-rm67200: Move initialization from enable() to prepare stage
+Date: Mon, 18 Aug 2025 14:44:42 +0200
+Message-ID: <20250818124517.215844091@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,209 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <kang.yang@oss.qualcomm.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit c256a94d1b1b15109740306f7f2a7c2173e12072 ]
+[ Upstream commit 691674a282bdbf8f8bce4094369a2d1e4b5645e9 ]
 
-In rare cases, ath10k may lose connection with the PCIe bus due to
-some unknown reasons, which could further lead to system crashes during
-resuming due to watchdog timeout:
+The DSI host has different modes in prepare() and enable() functions,
+prepare() is in LP command mode and enable() is in HS video mode.
 
-ath10k_pci 0000:01:00.0: wmi command 20486 timeout, restarting hardware
-ath10k_pci 0000:01:00.0: already restarting
-ath10k_pci 0000:01:00.0: failed to stop WMI vdev 0: -11
-ath10k_pci 0000:01:00.0: failed to stop vdev 0: -11
-ieee80211 phy0: PM: **** DPM device timeout ****
-Call Trace:
- panic+0x125/0x315
- dpm_watchdog_set+0x54/0x54
- dpm_watchdog_handler+0x57/0x57
- call_timer_fn+0x31/0x13c
+>From our experience, generally the initialization sequence needs to be
+sent in the LP command mode.
 
-At this point, all WMI commands will timeout and attempt to restart
-device. So set a threshold for consecutive restart failures. If the
-threshold is exceeded, consider the hardware is unreliable and all
-ath10k operations should be skipped to avoid system crash.
+Move the setup init function from enable() to prepare() to fix a display
+shift on rk3568 evb.
 
-fail_cont_count and pending_recovery are atomic variables, and
-do not involve complex conditional logic. Therefore, even if recovery
-check and reconfig complete are executed concurrently, the recovery
-mechanism will not be broken.
+Tested on rk3568/rk3576/rk3588 EVB.
 
-Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00288-QCARMSWPZ-1
-
-Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250623022731.509-1-kang.yang@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250618091520.691590-1-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c | 48 +++++++++++++++++++++++---
- drivers/net/wireless/ath/ath10k/core.h | 11 ++++--
- drivers/net/wireless/ath/ath10k/mac.c  |  7 +++-
- drivers/net/wireless/ath/ath10k/wmi.c  |  6 ++++
- 4 files changed, 63 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/panel/panel-raydium-rm67200.c | 22 ++++++-------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index fe3a8f4a1cc1..8b659678856d 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -2491,12 +2491,50 @@ static int ath10k_init_hw_params(struct ath10k *ar)
+diff --git a/drivers/gpu/drm/panel/panel-raydium-rm67200.c b/drivers/gpu/drm/panel/panel-raydium-rm67200.c
+index 64b685dc11f6..6d4d00d4cd74 100644
+--- a/drivers/gpu/drm/panel/panel-raydium-rm67200.c
++++ b/drivers/gpu/drm/panel/panel-raydium-rm67200.c
+@@ -318,6 +318,7 @@ static void w552793baa_setup(struct mipi_dsi_multi_context *ctx)
+ static int raydium_rm67200_prepare(struct drm_panel *panel)
+ {
+ 	struct raydium_rm67200 *ctx = to_raydium_rm67200(panel);
++	struct mipi_dsi_multi_context mctx = { .dsi = ctx->dsi };
+ 	int ret;
+ 
+ 	ret = regulator_bulk_enable(ctx->num_supplies, ctx->supplies);
+@@ -328,6 +329,12 @@ static int raydium_rm67200_prepare(struct drm_panel *panel)
+ 
+ 	msleep(60);
+ 
++	ctx->panel_info->panel_setup(&mctx);
++	mipi_dsi_dcs_exit_sleep_mode_multi(&mctx);
++	mipi_dsi_msleep(&mctx, 120);
++	mipi_dsi_dcs_set_display_on_multi(&mctx);
++	mipi_dsi_msleep(&mctx, 30);
++
  	return 0;
  }
  
-+static bool ath10k_core_needs_recovery(struct ath10k *ar)
-+{
-+	long time_left;
-+
-+	/* Sometimes the recovery will fail and then the next all recovery fail,
-+	 * so avoid infinite recovery.
-+	 */
-+	if (atomic_read(&ar->fail_cont_count) >= ATH10K_RECOVERY_MAX_FAIL_COUNT) {
-+		ath10k_err(ar, "consecutive fail %d times, will shutdown driver!",
-+			   atomic_read(&ar->fail_cont_count));
-+		ar->state = ATH10K_STATE_WEDGED;
-+		return false;
-+	}
-+
-+	ath10k_dbg(ar, ATH10K_DBG_BOOT, "total recovery count: %d", ++ar->recovery_count);
-+
-+	if (atomic_read(&ar->pending_recovery)) {
-+		/* Sometimes it happened another recovery work before the previous one
-+		 * completed, then the second recovery work will destroy the previous
-+		 * one, thus below is to avoid that.
-+		 */
-+		time_left = wait_for_completion_timeout(&ar->driver_recovery,
-+							ATH10K_RECOVERY_TIMEOUT_HZ);
-+		if (time_left) {
-+			ath10k_warn(ar, "previous recovery succeeded, skip this!\n");
-+			return false;
-+		}
-+
-+		/* Record the continuous recovery fail count when recovery failed. */
-+		atomic_inc(&ar->fail_cont_count);
-+
-+		/* Avoid having multiple recoveries at the same time. */
-+		return false;
-+	}
-+
-+	atomic_inc(&ar->pending_recovery);
-+
-+	return true;
-+}
-+
- void ath10k_core_start_recovery(struct ath10k *ar)
+@@ -343,20 +350,6 @@ static int raydium_rm67200_unprepare(struct drm_panel *panel)
+ 	return 0;
+ }
+ 
+-static int raydium_rm67200_enable(struct drm_panel *panel)
+-{
+-	struct raydium_rm67200 *rm67200 = to_raydium_rm67200(panel);
+-	struct mipi_dsi_multi_context ctx = { .dsi = rm67200->dsi };
+-
+-	rm67200->panel_info->panel_setup(&ctx);
+-	mipi_dsi_dcs_exit_sleep_mode_multi(&ctx);
+-	mipi_dsi_msleep(&ctx, 120);
+-	mipi_dsi_dcs_set_display_on_multi(&ctx);
+-	mipi_dsi_msleep(&ctx, 30);
+-
+-	return ctx.accum_err;
+-}
+-
+ static int raydium_rm67200_disable(struct drm_panel *panel)
  {
--	if (test_and_set_bit(ATH10K_FLAG_RESTARTING, &ar->dev_flags)) {
--		ath10k_warn(ar, "already restarting\n");
-+	if (!ath10k_core_needs_recovery(ar))
- 		return;
--	}
- 
- 	queue_work(ar->workqueue, &ar->restart_work);
- }
-@@ -2532,6 +2570,8 @@ static void ath10k_core_restart(struct work_struct *work)
- 	struct ath10k *ar = container_of(work, struct ath10k, restart_work);
- 	int ret;
- 
-+	reinit_completion(&ar->driver_recovery);
-+
- 	set_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
- 
- 	/* Place a barrier to make sure the compiler doesn't reorder
-@@ -2596,8 +2636,6 @@ static void ath10k_core_restart(struct work_struct *work)
- 	if (ret)
- 		ath10k_warn(ar, "failed to send firmware crash dump via devcoredump: %d",
- 			    ret);
--
--	complete(&ar->driver_recovery);
- }
- 
- static void ath10k_core_set_coverage_class_work(struct work_struct *work)
-diff --git a/drivers/net/wireless/ath/ath10k/core.h b/drivers/net/wireless/ath/ath10k/core.h
-index 446dca74f06a..85e16c945b5c 100644
---- a/drivers/net/wireless/ath/ath10k/core.h
-+++ b/drivers/net/wireless/ath/ath10k/core.h
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #ifndef _CORE_H_
-@@ -87,6 +88,8 @@
- 				  IEEE80211_IFACE_SKIP_SDATA_NOT_IN_DRIVER)
- #define ATH10K_ITER_RESUME_FLAGS (IEEE80211_IFACE_ITER_RESUME_ALL |\
- 				  IEEE80211_IFACE_SKIP_SDATA_NOT_IN_DRIVER)
-+#define ATH10K_RECOVERY_TIMEOUT_HZ			(5 * HZ)
-+#define ATH10K_RECOVERY_MAX_FAIL_COUNT			4
- 
- struct ath10k;
- 
-@@ -865,9 +868,6 @@ enum ath10k_dev_flags {
- 	/* Per Station statistics service */
- 	ATH10K_FLAG_PEER_STATS,
- 
--	/* Indicates that ath10k device is during recovery process and not complete */
--	ATH10K_FLAG_RESTARTING,
--
- 	/* protected by conf_mutex */
- 	ATH10K_FLAG_NAPI_ENABLED,
+ 	struct raydium_rm67200 *rm67200 = to_raydium_rm67200(panel);
+@@ -381,7 +374,6 @@ static const struct drm_panel_funcs raydium_rm67200_funcs = {
+ 	.prepare = raydium_rm67200_prepare,
+ 	.unprepare = raydium_rm67200_unprepare,
+ 	.get_modes = raydium_rm67200_get_modes,
+-	.enable = raydium_rm67200_enable,
+ 	.disable = raydium_rm67200_disable,
  };
-@@ -1211,6 +1211,11 @@ struct ath10k {
- 	struct work_struct bundle_tx_work;
- 	struct work_struct tx_complete_work;
- 
-+	atomic_t pending_recovery;
-+	unsigned int recovery_count;
-+	/* continuous recovery fail count */
-+	atomic_t fail_cont_count;
-+
- 	/* cycle count is reported twice for each visited channel during scan.
- 	 * access protected by data_lock
- 	 */
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index 07fe05384cdf..9e6f294cd5b6 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -8156,7 +8156,12 @@ static void ath10k_reconfig_complete(struct ieee80211_hw *hw,
- 		ath10k_info(ar, "device successfully recovered\n");
- 		ar->state = ATH10K_STATE_ON;
- 		ieee80211_wake_queues(ar->hw);
--		clear_bit(ATH10K_FLAG_RESTARTING, &ar->dev_flags);
-+
-+		/* Clear recovery state. */
-+		complete(&ar->driver_recovery);
-+		atomic_set(&ar->fail_cont_count, 0);
-+		atomic_set(&ar->pending_recovery, 0);
-+
- 		if (ar->hw_params.hw_restart_disconnect) {
- 			list_for_each_entry(arvif, &ar->arvifs, list) {
- 				if (arvif->is_up && arvif->vdev_type == WMI_VDEV_TYPE_STA)
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index df6a24f8f8d5..cb8ae751eb31 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include <linux/skbuff.h>
-@@ -1941,6 +1942,11 @@ int ath10k_wmi_cmd_send(struct ath10k *ar, struct sk_buff *skb, u32 cmd_id)
- 	}
- 
- 	wait_event_timeout(ar->wmi.tx_credits_wq, ({
-+		if (ar->state == ATH10K_STATE_WEDGED) {
-+			ret = -ESHUTDOWN;
-+			ath10k_dbg(ar, ATH10K_DBG_WMI,
-+				   "drop wmi command %d, hardware is wedged\n", cmd_id);
-+		}
- 		/* try to send pending beacons first. they take priority */
- 		ath10k_wmi_tx_beacons_nowait(ar);
  
 -- 
 2.39.5
