@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717B931E0E4;
-	Mon, 18 Aug 2025 13:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C2C31E0FB;
+	Mon, 18 Aug 2025 13:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522240; cv=none; b=FPHWEjjsMmXWZbf6M2/aXx+pNnZh0qCeiDCVLKigFW1r7lilo0EqzG5ZsQZhYA1AHRRAqOOsdeN6M0Oma3Y961qFbmsEc/0HvlfnmGehF5Qou5yIpF52bNmDpEF7CDrLgpOquvDyFIt31jjG7Bun4Gnghvlf/4iqHFQK2+xiOcM=
+	t=1755522244; cv=none; b=VbCrCmxgBivP7ywzRHrDRo9ebnGLt9lTFwukhbHFhG3++qoMUvla2YEPewbW8u39JTKf1WGigbe5bYy+TV67+DMe3/WwUmcuyZjBfQuuVwtGi4V0MgFg46KlJf/sLSL0wuE2cPnW3zsZMbrC9huX7VGv1sxlh7k+pFIBwj+cqFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522240; c=relaxed/simple;
-	bh=B3H0TggdmFV211LQOXRA2P4jk5SCPQ6tKZU/EmRN7Zs=;
+	s=arc-20240116; t=1755522244; c=relaxed/simple;
+	bh=lPlDjVAplw4bGr0939b0ZF4NmKpGFo+yFDoTFeA8JcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lO4hjMqA77oBgF9IjU0Q6eHbdlsNwqyt3RQ9nxB+l0LuVdbJqfpRJ6qQM2OTAswFBmF8ZVskyKv9biEjsv+1ZeMgCNs9ReIoM+oCnqesHH3I98DKG2n9MiqEgZIFoh2abolfQwPobUPT6EZVRyDXabNMWVEcfobh9yQZid4BHVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9HuL+yU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNEf86wTIwkj9YTPSLpNq9KsVY1LavruU63ROBqY0R7ajtICHMQTyGB9DycDT5sVOI3pWT0iYnJ5vrllAZ2vX+qSbtk6x+lq9GHgdEMRLM1GG6chS7+EQmh2aHSz3Rl1HrCJKQVhNocz87bTurzPBqvGpKf1hPF4qNDvo4XMv1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J52UzB8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9HuL+yU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BEAC4CEEB;
-	Mon, 18 Aug 2025 13:03:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J52UzB8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5819DC4CEEB;
+	Mon, 18 Aug 2025 13:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522240;
-	bh=B3H0TggdmFV211LQOXRA2P4jk5SCPQ6tKZU/EmRN7Zs=;
+	s=korg; t=1755522243;
+	bh=lPlDjVAplw4bGr0939b0ZF4NmKpGFo+yFDoTFeA8JcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9HuL+yUJZar+eGetsNq2/YgfCaVgavW34mquoADiNOe4VyD3BsUpEPMcbN9ey314
-	 gxhciedm63wDYgrAk2z4dVP3xzyWRzs0NR9fiqHxy6ybIoTXAYJoBVUX76RVwSq1im
-	 2n8O1ScKra4FXciFpCb/kVhbFy6Rfr76hVgj9PNg=
+	b=J52UzB8um7MKIndNoqsPh3LmGqvjzo5dluTCAE+3hg594zkmqYks6shmnj5JesPYs
+	 F57P7LS+Li1uYbm4Tn7hfDlBfmsw0kXcU3nrWa+V/X2ODMovwMKnh8fm0qoSZ1Bvbi
+	 KSbTUTqdFmZH1/X/3wbl4Yceg7fKJEjwFFSPwJ/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Rebmann <jre@pengutronix.de>,
-	Wei Fang <wei.fang@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nevenko Stupar <nevenko.stupar@amd.com>,
+	Ilya Bakoulin <Ilya.Bakoulin@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 224/444] net: fec: allow disable coalescing
-Date: Mon, 18 Aug 2025 14:44:10 +0200
-Message-ID: <20250818124457.245189494@linuxfoundation.org>
+Subject: [PATCH 6.12 225/444] drm/amd/display: Separate set_gsl from set_gsl_source_select
+Date: Mon, 18 Aug 2025 14:44:11 +0200
+Message-ID: <20250818124457.281587699@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,78 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Rebmann <jre@pengutronix.de>
+From: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
 
-[ Upstream commit b7ad21258f9e9a7f58b19595d5ceed2cde3bed68 ]
+[ Upstream commit 660a467a5e7366cd6642de61f1aaeaf0d253ee68 ]
 
-In the current implementation, IP coalescing is always enabled and
-cannot be disabled.
+[Why/How]
+Separate the checks for set_gsl and set_gsl_source_select, since
+source_select may not be implemented/necessary.
 
-As setting maximum frames to 0 or 1, or setting delay to zero implies
-immediate delivery of single packets/IRQs, disable coalescing in
-hardware in these cases.
-
-This also guarantees that coalescing is never enabled with ICFT or ICTT
-set to zero, a configuration that could lead to unpredictable behaviour
-according to i.MX8MP reference manual.
-
-Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20250626-fec_deactivate_coalescing-v2-1-0b217f2e80da@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
+Signed-off-by: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 34 +++++++++++------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 479ced24096b..a1cc338cf20f 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3122,27 +3122,25 @@ static int fec_enet_us_to_itr_clock(struct net_device *ndev, int us)
- static void fec_enet_itr_coal_set(struct net_device *ndev)
- {
- 	struct fec_enet_private *fep = netdev_priv(ndev);
--	int rx_itr, tx_itr;
-+	u32 rx_itr = 0, tx_itr = 0;
-+	int rx_ictt, tx_ictt;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index 9c5cdb3b80b5..d9de8e17ccf4 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -273,14 +273,13 @@ void dcn20_setup_gsl_group_as_lock(
+ 	}
  
--	/* Must be greater than zero to avoid unpredictable behavior */
--	if (!fep->rx_time_itr || !fep->rx_pkts_itr ||
--	    !fep->tx_time_itr || !fep->tx_pkts_itr)
--		return;
+ 	/* at this point we want to program whether it's to enable or disable */
+-	if (pipe_ctx->stream_res.tg->funcs->set_gsl != NULL &&
+-		pipe_ctx->stream_res.tg->funcs->set_gsl_source_select != NULL) {
++	if (pipe_ctx->stream_res.tg->funcs->set_gsl != NULL) {
+ 		pipe_ctx->stream_res.tg->funcs->set_gsl(
+ 			pipe_ctx->stream_res.tg,
+ 			&gsl);
 -
--	/* Select enet system clock as Interrupt Coalescing
--	 * timer Clock Source
--	 */
--	rx_itr = FEC_ITR_CLK_SEL;
--	tx_itr = FEC_ITR_CLK_SEL;
-+	rx_ictt = fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr);
-+	tx_ictt = fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr);
- 
--	/* set ICFT and ICTT */
--	rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
--	rx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr));
--	tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
--	tx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr));
-+	if (rx_ictt > 0 && fep->rx_pkts_itr > 1) {
-+		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
-+		rx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
-+		rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
-+		rx_itr |= FEC_ITR_ICTT(rx_ictt);
-+	}
- 
--	rx_itr |= FEC_ITR_EN;
--	tx_itr |= FEC_ITR_EN;
-+	if (tx_ictt > 0 && fep->tx_pkts_itr > 1) {
-+		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
-+		tx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
-+		tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
-+		tx_itr |= FEC_ITR_ICTT(tx_ictt);
-+	}
- 
- 	writel(tx_itr, fep->hwp + FEC_TXIC0);
- 	writel(rx_itr, fep->hwp + FEC_RXIC0);
+-		pipe_ctx->stream_res.tg->funcs->set_gsl_source_select(
+-			pipe_ctx->stream_res.tg, group_idx,	enable ? 4 : 0);
++		if (pipe_ctx->stream_res.tg->funcs->set_gsl_source_select != NULL)
++			pipe_ctx->stream_res.tg->funcs->set_gsl_source_select(
++				pipe_ctx->stream_res.tg, group_idx, enable ? 4 : 0);
+ 	} else
+ 		BREAK_TO_DEBUGGER();
+ }
 -- 
 2.39.5
 
