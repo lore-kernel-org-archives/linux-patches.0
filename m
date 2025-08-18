@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAA0218AAB;
-	Mon, 18 Aug 2025 13:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE66332039A;
+	Mon, 18 Aug 2025 13:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522585; cv=none; b=QfGqp5udwSbueqrNdrK89hg2r9DVmT1ja67AOAKGz7+FhPu3VHgrTFUOx+/49o2tRQPraSETSxCAaBaKxvyapuQg+EnU99B8CvEuLjavN8Fb6bpHMlx+UDLj71yjNPUGblull7DlWoJHnvFqbXR819I2gUgmnpBFX+hZe/gDCqk=
+	t=1755522589; cv=none; b=OH0nyFinK7exyoObbLaLpBSjMnDICayawRXMN9ZxhQhwnFq1bP1Fr+74HZ7knQcEUuqLr8lpuF7hFIKjVlLJhoJ6I44wRoNjnJyW2OQBI49HgAh5EinHv3O1RPHDgB0+bWp3ut/6a/YzFmiCk3IoSY7jGlSDa5muEyDibQ8EiPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522585; c=relaxed/simple;
-	bh=yK3RvMbVs0gjvZ+4CLynDAlPG8xPWkKVdd1NN9+PuLs=;
+	s=arc-20240116; t=1755522589; c=relaxed/simple;
+	bh=Tew0UHTg/OI1WOdwpaGmeq9L9KA40rmD5rBGCOw13hI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dTVzwKy3JuGig3vL4LPcQ3IYWrgoQDmKO+AO+Pf/NYNrx4VPu/1qqEKUjbdPYFsRsMPHYqTiI0mFIIw+ZMGDSGFXvIg7GSKw8mL696Lq9QY2Ye88AbwGTOOQkRXOLOtjrJ2y67zCuzCabquQduwjHcTEp/aT8h+b6tAz0zAby1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SASX6WCq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZjAL68I6WXvqeG6WVBvwDR6jspvV1Fy0gowgaCmOWmUw389JJ7xa/a5/22fqjHsFdRBcV7qD/+X8IJnLyWd1svCqe6NtnNm8PD6pbJy1+e3TytZgC7j+CW7/KPx4kPDA6qIoNnqak7lMsuAf09aCwOW7P0Olr4FC/95V3j7F2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YxhUKXbL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SASX6WCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D16C4CEEB;
-	Mon, 18 Aug 2025 13:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YxhUKXbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D26C4CEEB;
+	Mon, 18 Aug 2025 13:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522585;
-	bh=yK3RvMbVs0gjvZ+4CLynDAlPG8xPWkKVdd1NN9+PuLs=;
+	s=korg; t=1755522588;
+	bh=Tew0UHTg/OI1WOdwpaGmeq9L9KA40rmD5rBGCOw13hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SASX6WCqJ0BqtiHOh5XJaaBcF9YpY2weoLOkuEpknEa4jHMZhaqvuZaHVIIvhk/30
-	 gu6yvWJXyzcichOFSs1lV6bnaWVHkYvdP0+A+yNNcCFVcROyCPzrFh24t6FkkDdWfn
-	 MKTasWv9o+mFrrJWtvp1by0PPCppINkry8ZSjLO0=
+	b=YxhUKXbLJLbjPD7wGo0y4cBeMNyGz4f704NBfFcxwsCP+pqDf8EQ2ZTg3Zg0WcDuc
+	 0BYi64QPAdju6TIYC4p1lGjs71xkuhNE2DiEJ+aEQ4PZh3WN2f8E5SXdH5Oa04rbJr
+	 vUZEnqSL8yRBylADASMBWWuj62ZhnlnuH02Wso+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 358/444] lib/sbitmap: convert shallow_depth from one word to the whole sbitmap
-Date: Mon, 18 Aug 2025 14:46:24 +0200
-Message-ID: <20250818124502.336229902@linuxfoundation.org>
+Subject: [PATCH 6.12 328/444] module: Prevent silent truncation of module name in delete_module(2)
+Date: Mon, 18 Aug 2025 14:45:54 +0200
+Message-ID: <20250818124501.233041350@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,323 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit 42e6c6ce03fd3e41e39a0f93f9b1a1d9fa664338 ]
+[ Upstream commit a6323bd4e611567913e23df5b58f2d4e4da06789 ]
 
-Currently elevators will record internal 'async_depth' to throttle
-asynchronous requests, and they both calculate shallow_dpeth based on
-sb->shift, with the respect that sb->shift is the available tags in one
-word.
+Passing a module name longer than MODULE_NAME_LEN to the delete_module
+syscall results in its silent truncation. This really isn't much of
+a problem in practice, but it could theoretically lead to the removal of an
+incorrect module. It is more sensible to return ENAMETOOLONG or ENOENT in
+such a case.
 
-However, sb->shift is not the availbale tags in the last word, see
-__map_depth:
+Update the syscall to return ENOENT, as documented in the delete_module(2)
+man page to mean "No module by that name exists." This is appropriate
+because a module with a name longer than MODULE_NAME_LEN cannot be loaded
+in the first place.
 
-if (index == sb->map_nr - 1)
-  return sb->depth - (index << sb->shift);
-
-For consequence, if the last word is used, more tags can be get than
-expected, for example, assume nr_requests=256 and there are four words,
-in the worst case if user set nr_requests=32, then the first word is
-the last word, and still use bits per word, which is 64, to calculate
-async_depth is wrong.
-
-One the ohter hand, due to cgroup qos, bfq can allow only one request
-to be allocated, and set shallow_dpeth=1 will still allow the number
-of words request to be allocated.
-
-Fix this problems by using shallow_depth to the whole sbitmap instead
-of per word, also change kyber, mq-deadline and bfq to follow this,
-a new helper __map_depth_with_shallow() is introduced to calculate
-available bits in each word.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20250807032413.1469456-2-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Link: https://lore.kernel.org/r/20250630143535.267745-2-petr.pavlu@suse.com
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c     | 35 ++++++++++++--------------
- block/bfq-iosched.h     |  3 +--
- block/kyber-iosched.c   |  9 ++-----
- block/mq-deadline.c     | 16 +-----------
- include/linux/sbitmap.h |  6 ++---
- lib/sbitmap.c           | 56 +++++++++++++++++++++--------------------
- 6 files changed, 52 insertions(+), 73 deletions(-)
+ kernel/module/main.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index cad16c163611..68359e1b92e2 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -701,17 +701,13 @@ static void bfq_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
- {
- 	struct bfq_data *bfqd = data->q->elevator->elevator_data;
- 	struct bfq_io_cq *bic = bfq_bic_lookup(data->q);
--	int depth;
--	unsigned limit = data->q->nr_requests;
--	unsigned int act_idx;
-+	unsigned int limit, act_idx;
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 6908062f4560..4511d0a4762a 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -703,14 +703,16 @@ SYSCALL_DEFINE2(delete_module, const char __user *, name_user,
+ 	struct module *mod;
+ 	char name[MODULE_NAME_LEN];
+ 	char buf[MODULE_FLAGS_BUF_SIZE];
+-	int ret, forced = 0;
++	int ret, len, forced = 0;
  
- 	/* Sync reads have full depth available */
--	if (op_is_sync(opf) && !op_is_write(opf)) {
--		depth = 0;
--	} else {
--		depth = bfqd->word_depths[!!bfqd->wr_busy_queues][op_is_sync(opf)];
--		limit = (limit * depth) >> bfqd->full_depth_shift;
--	}
-+	if (op_is_sync(opf) && !op_is_write(opf))
-+		limit = data->q->nr_requests;
-+	else
-+		limit = bfqd->async_depths[!!bfqd->wr_busy_queues][op_is_sync(opf)];
+ 	if (!capable(CAP_SYS_MODULE) || modules_disabled)
+ 		return -EPERM;
  
- 	for (act_idx = 0; bic && act_idx < bfqd->num_actuators; act_idx++) {
- 		/* Fast path to check if bfqq is already allocated. */
-@@ -725,14 +721,16 @@ static void bfq_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
- 		 * available requests and thus starve other entities.
- 		 */
- 		if (bfqq_request_over_limit(bfqd, bic, opf, act_idx, limit)) {
--			depth = 1;
-+			limit = 1;
- 			break;
- 		}
- 	}
-+
- 	bfq_log(bfqd, "[%s] wr_busy %d sync %d depth %u",
--		__func__, bfqd->wr_busy_queues, op_is_sync(opf), depth);
--	if (depth)
--		data->shallow_depth = depth;
-+		__func__, bfqd->wr_busy_queues, op_is_sync(opf), limit);
-+
-+	if (limit < data->q->nr_requests)
-+		data->shallow_depth = limit;
- }
+-	if (strncpy_from_user(name, name_user, MODULE_NAME_LEN-1) < 0)
+-		return -EFAULT;
+-	name[MODULE_NAME_LEN-1] = '\0';
++	len = strncpy_from_user(name, name_user, MODULE_NAME_LEN);
++	if (len == 0 || len == MODULE_NAME_LEN)
++		return -ENOENT;
++	if (len < 0)
++		return len;
  
- static struct bfq_queue *
-@@ -7128,9 +7126,8 @@ void bfq_put_async_queues(struct bfq_data *bfqd, struct bfq_group *bfqg)
-  */
- static void bfq_update_depths(struct bfq_data *bfqd, struct sbitmap_queue *bt)
- {
--	unsigned int depth = 1U << bt->sb.shift;
-+	unsigned int nr_requests = bfqd->queue->nr_requests;
+ 	audit_log_kern_module(name);
  
--	bfqd->full_depth_shift = bt->sb.shift;
- 	/*
- 	 * In-word depths if no bfq_queue is being weight-raised:
- 	 * leaving 25% of tags only for sync reads.
-@@ -7142,13 +7139,13 @@ static void bfq_update_depths(struct bfq_data *bfqd, struct sbitmap_queue *bt)
- 	 * limit 'something'.
- 	 */
- 	/* no more than 50% of tags for async I/O */
--	bfqd->word_depths[0][0] = max(depth >> 1, 1U);
-+	bfqd->async_depths[0][0] = max(nr_requests >> 1, 1U);
- 	/*
- 	 * no more than 75% of tags for sync writes (25% extra tags
- 	 * w.r.t. async I/O, to prevent async I/O from starving sync
- 	 * writes)
- 	 */
--	bfqd->word_depths[0][1] = max((depth * 3) >> 2, 1U);
-+	bfqd->async_depths[0][1] = max((nr_requests * 3) >> 2, 1U);
- 
- 	/*
- 	 * In-word depths in case some bfq_queue is being weight-
-@@ -7158,9 +7155,9 @@ static void bfq_update_depths(struct bfq_data *bfqd, struct sbitmap_queue *bt)
- 	 * shortage.
- 	 */
- 	/* no more than ~18% of tags for async I/O */
--	bfqd->word_depths[1][0] = max((depth * 3) >> 4, 1U);
-+	bfqd->async_depths[1][0] = max((nr_requests * 3) >> 4, 1U);
- 	/* no more than ~37% of tags for sync writes (~20% extra tags) */
--	bfqd->word_depths[1][1] = max((depth * 6) >> 4, 1U);
-+	bfqd->async_depths[1][1] = max((nr_requests * 6) >> 4, 1U);
- }
- 
- static void bfq_depth_updated(struct blk_mq_hw_ctx *hctx)
-diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
-index 687a3a7ba784..31217f196f4f 100644
---- a/block/bfq-iosched.h
-+++ b/block/bfq-iosched.h
-@@ -813,8 +813,7 @@ struct bfq_data {
- 	 * Depth limits used in bfq_limit_depth (see comments on the
- 	 * function)
- 	 */
--	unsigned int word_depths[2][2];
--	unsigned int full_depth_shift;
-+	unsigned int async_depths[2][2];
- 
- 	/*
- 	 * Number of independent actuators. This is equal to 1 in
-diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
-index 4155594aefc6..ccfefa6a3669 100644
---- a/block/kyber-iosched.c
-+++ b/block/kyber-iosched.c
-@@ -157,10 +157,7 @@ struct kyber_queue_data {
- 	 */
- 	struct sbitmap_queue domain_tokens[KYBER_NUM_DOMAINS];
- 
--	/*
--	 * Async request percentage, converted to per-word depth for
--	 * sbitmap_get_shallow().
--	 */
-+	/* Number of allowed async requests. */
- 	unsigned int async_depth;
- 
- 	struct kyber_cpu_latency __percpu *cpu_latency;
-@@ -454,10 +451,8 @@ static void kyber_depth_updated(struct blk_mq_hw_ctx *hctx)
- {
- 	struct kyber_queue_data *kqd = hctx->queue->elevator->elevator_data;
- 	struct blk_mq_tags *tags = hctx->sched_tags;
--	unsigned int shift = tags->bitmap_tags.sb.shift;
--
--	kqd->async_depth = (1U << shift) * KYBER_ASYNC_PERCENT / 100U;
- 
-+	kqd->async_depth = hctx->queue->nr_requests * KYBER_ASYNC_PERCENT / 100U;
- 	sbitmap_queue_min_shallow_depth(&tags->bitmap_tags, kqd->async_depth);
- }
- 
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 91b3789f710e..19473a9b5044 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -487,20 +487,6 @@ static struct request *dd_dispatch_request(struct blk_mq_hw_ctx *hctx)
- 	return rq;
- }
- 
--/*
-- * 'depth' is a number in the range 1..INT_MAX representing a number of
-- * requests. Scale it with a factor (1 << bt->sb.shift) / q->nr_requests since
-- * 1..(1 << bt->sb.shift) is the range expected by sbitmap_get_shallow().
-- * Values larger than q->nr_requests have the same effect as q->nr_requests.
-- */
--static int dd_to_word_depth(struct blk_mq_hw_ctx *hctx, unsigned int qdepth)
--{
--	struct sbitmap_queue *bt = &hctx->sched_tags->bitmap_tags;
--	const unsigned int nrr = hctx->queue->nr_requests;
--
--	return ((qdepth << bt->sb.shift) + nrr - 1) / nrr;
--}
--
- /*
-  * Called by __blk_mq_alloc_request(). The shallow_depth value set by this
-  * function is used by __blk_mq_get_tag().
-@@ -517,7 +503,7 @@ static void dd_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
- 	 * Throttle asynchronous requests and writes such that these requests
- 	 * do not block the allocation of synchronous requests.
- 	 */
--	data->shallow_depth = dd_to_word_depth(data->hctx, dd->async_depth);
-+	data->shallow_depth = dd->async_depth;
- }
- 
- /* Called by blk_mq_update_nr_requests(). */
-diff --git a/include/linux/sbitmap.h b/include/linux/sbitmap.h
-index 189140bf11fc..4adf4b364fcd 100644
---- a/include/linux/sbitmap.h
-+++ b/include/linux/sbitmap.h
-@@ -213,12 +213,12 @@ int sbitmap_get(struct sbitmap *sb);
-  * sbitmap_get_shallow() - Try to allocate a free bit from a &struct sbitmap,
-  * limiting the depth used from each word.
-  * @sb: Bitmap to allocate from.
-- * @shallow_depth: The maximum number of bits to allocate from a single word.
-+ * @shallow_depth: The maximum number of bits to allocate from the bitmap.
-  *
-  * This rather specific operation allows for having multiple users with
-  * different allocation limits. E.g., there can be a high-priority class that
-  * uses sbitmap_get() and a low-priority class that uses sbitmap_get_shallow()
-- * with a @shallow_depth of (1 << (@sb->shift - 1)). Then, the low-priority
-+ * with a @shallow_depth of (sb->depth >> 1). Then, the low-priority
-  * class can only allocate half of the total bits in the bitmap, preventing it
-  * from starving out the high-priority class.
-  *
-@@ -478,7 +478,7 @@ unsigned long __sbitmap_queue_get_batch(struct sbitmap_queue *sbq, int nr_tags,
-  * sbitmap_queue, limiting the depth used from each word, with preemption
-  * already disabled.
-  * @sbq: Bitmap queue to allocate from.
-- * @shallow_depth: The maximum number of bits to allocate from a single word.
-+ * @shallow_depth: The maximum number of bits to allocate from the queue.
-  * See sbitmap_get_shallow().
-  *
-  * If you call this, make sure to call sbitmap_queue_min_shallow_depth() after
-diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index d3412984170c..c07e3cd82e29 100644
---- a/lib/sbitmap.c
-+++ b/lib/sbitmap.c
-@@ -208,8 +208,28 @@ static int sbitmap_find_bit_in_word(struct sbitmap_word *map,
- 	return nr;
- }
- 
-+static unsigned int __map_depth_with_shallow(const struct sbitmap *sb,
-+					     int index,
-+					     unsigned int shallow_depth)
-+{
-+	u64 shallow_word_depth;
-+	unsigned int word_depth, reminder;
-+
-+	word_depth = __map_depth(sb, index);
-+	if (shallow_depth >= sb->depth)
-+		return word_depth;
-+
-+	shallow_word_depth = word_depth * shallow_depth;
-+	reminder = do_div(shallow_word_depth, sb->depth);
-+
-+	if (reminder >= (index + 1) * word_depth)
-+		shallow_word_depth++;
-+
-+	return (unsigned int)shallow_word_depth;
-+}
-+
- static int sbitmap_find_bit(struct sbitmap *sb,
--			    unsigned int depth,
-+			    unsigned int shallow_depth,
- 			    unsigned int index,
- 			    unsigned int alloc_hint,
- 			    bool wrap)
-@@ -218,12 +238,12 @@ static int sbitmap_find_bit(struct sbitmap *sb,
- 	int nr = -1;
- 
- 	for (i = 0; i < sb->map_nr; i++) {
--		nr = sbitmap_find_bit_in_word(&sb->map[index],
--					      min_t(unsigned int,
--						    __map_depth(sb, index),
--						    depth),
--					      alloc_hint, wrap);
-+		unsigned int depth = __map_depth_with_shallow(sb, index,
-+							      shallow_depth);
- 
-+		if (depth)
-+			nr = sbitmap_find_bit_in_word(&sb->map[index], depth,
-+						      alloc_hint, wrap);
- 		if (nr != -1) {
- 			nr += index << sb->shift;
- 			break;
-@@ -406,27 +426,9 @@ EXPORT_SYMBOL_GPL(sbitmap_bitmap_show);
- static unsigned int sbq_calc_wake_batch(struct sbitmap_queue *sbq,
- 					unsigned int depth)
- {
--	unsigned int wake_batch;
--	unsigned int shallow_depth;
--
--	/*
--	 * Each full word of the bitmap has bits_per_word bits, and there might
--	 * be a partial word. There are depth / bits_per_word full words and
--	 * depth % bits_per_word bits left over. In bitwise arithmetic:
--	 *
--	 * bits_per_word = 1 << shift
--	 * depth / bits_per_word = depth >> shift
--	 * depth % bits_per_word = depth & ((1 << shift) - 1)
--	 *
--	 * Each word can be limited to sbq->min_shallow_depth bits.
--	 */
--	shallow_depth = min(1U << sbq->sb.shift, sbq->min_shallow_depth);
--	depth = ((depth >> sbq->sb.shift) * shallow_depth +
--		 min(depth & ((1U << sbq->sb.shift) - 1), shallow_depth));
--	wake_batch = clamp_t(unsigned int, depth / SBQ_WAIT_QUEUES, 1,
--			     SBQ_WAKE_BATCH);
--
--	return wake_batch;
-+	return clamp_t(unsigned int,
-+		       min(depth, sbq->min_shallow_depth) / SBQ_WAIT_QUEUES,
-+		       1, SBQ_WAKE_BATCH);
- }
- 
- int sbitmap_queue_init_node(struct sbitmap_queue *sbq, unsigned int depth,
 -- 
 2.39.5
 
