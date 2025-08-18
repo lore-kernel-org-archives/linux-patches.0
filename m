@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E513632142A;
-	Mon, 18 Aug 2025 13:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1AA335BD8;
+	Mon, 18 Aug 2025 13:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523258; cv=none; b=GC49OZO5rLJ1OBcUGnFfhasBwkZDRFp87GtKXm1xtCE6ffG33Ovsld/UvE8aOu6pRWgFp58czFd3ohhpJkHV/8Yagk/wAkxXtYAbrVYiCa5Vym+LST2aXyZqYamzi8Fdp206xe9l6Y1Md3F+Nea4PzARzh4Sx6MPi3J7mIcGYZ0=
+	t=1755523261; cv=none; b=UgLm7zVJWH5As/RR0x78tKiqhdKmcaHSjEKDK2mDMGs6GAlbdQdIJkG8qAXIPe6eXdkTrQhrgDU2Hh1s7tgtc2MP5RSBLnSNIv5DBnBQ9LArQI+V8fYXVetCi6QiN0NJ8bYa0QPj9PXuqOR5VQyi2uFzxreNfESNterKil7+HGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523258; c=relaxed/simple;
-	bh=TBTtTnTd2KQzmAshqP25JRuaJGpx3TPNa+IufaLLRLM=;
+	s=arc-20240116; t=1755523261; c=relaxed/simple;
+	bh=L/YdTlTrngD96KqCmNGXSlO3ZsWr+8Rsx2sXRws2kDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kj2bdO+14UPw28DYPJKcEj74VQO8iFapKIV49G49SS+MeuM8h3VoVRmMQAU82MaMTyyjcnIXF6kwDUqty6CT09c4iuv/WxWvFZQxoEXyDHA+igina9HrRUYNP0NRXBpHB7pIwNmwgtCmo+SLFpkFgtdH8irCSUTpdv5R98/etFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY9YXi90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PBbx5MBijqspibMr/0Vr991uhPkGUVnhsY7LY+0n5ugbQ+gFrwCESD1Sek5RG9h/TO+oVjP9IAGGatTh405icNFo1GMurivBb07S28dMinhp4AAPWpb6X50pwFoawd9h+BwHc+zf7rzB85ur+px+FOVQgBPCbMZIVVn0ip43IIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNC+1Y/g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY9YXi90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6394FC4CEF1;
-	Mon, 18 Aug 2025 13:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNC+1Y/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C699BC4CEEB;
+	Mon, 18 Aug 2025 13:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523257;
-	bh=TBTtTnTd2KQzmAshqP25JRuaJGpx3TPNa+IufaLLRLM=;
+	s=korg; t=1755523261;
+	bh=L/YdTlTrngD96KqCmNGXSlO3ZsWr+8Rsx2sXRws2kDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uY9YXi90l2JB7fQehnTsK53Nj++bvoCRl6CooE7AbWfsW2xi9a8B/ZZpG8gF5Yc/i
-	 EFIRiZ2Q3PcFcqR3BUNSQcUelMnYMiOf9RG7tLR+4jEdTiDSN24jNXaaefoHezyDGo
-	 NJ6Ot4Z85F0dRaHM/hGOaU2nB6Po+eyJNhMkMx70=
+	b=oNC+1Y/gUSJ0V6H8G8d4Dbps3pyqJinw8s/ZyDuvu39JV3mBQSt/9gYSaYFYW9q1/
+	 jTAV5F9PQk0lxye2/LuL4OXj4pblkbSwn68J2297GetT7oRhaDYWh9kM3zg7cu/QCb
+	 +YURmyxe+1bO0YhghLF8eK0miD9cKHW688pTJG7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 085/515] tpm: tpm_crb_ffa: try to probe tpm_crb_ffa when its built-in
-Date: Mon, 18 Aug 2025 14:41:11 +0200
-Message-ID: <20250818124501.646601752@linuxfoundation.org>
+Subject: [PATCH 6.15 086/515] firmware: arm_ffa: Change initcall level of ffa_init() to rootfs_initcall
+Date: Mon, 18 Aug 2025 14:41:12 +0200
+Message-ID: <20250818124501.682474377@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -56,39 +56,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 746d9e9f62a6e8ba0eba2b83fc61cfe7fa8797ce ]
+[ Upstream commit 0e0546eabcd6c19765a8dbf5b5db3723e7b0ea75 ]
 
-To generate the boot_aggregate log in the IMA subsystem using TPM PCR
-values, the TPM driver must be built as built-in and must be probed
-before the IMA subsystem is initialized.
+The Linux IMA (Integrity Measurement Architecture) subsystem used for
+secure boot, file integrity, or remote attestation cannot be a loadable
+module for few reasons listed below:
 
-However, when the TPM device operates over the FF-A protocol using the
-CRB interface, probing fails and returns -EPROBE_DEFER if the
-tpm_crb_ffa device — an FF-A device that provides the communication
-interface to the tpm_crb driver — has not yet been probed.
+ o Boot-Time Integrity: IMA’s main role is to measure and appraise files
+ before they are used. This includes measuring critical system files during
+ early boot (e.g., init, init scripts, login binaries). If IMA were a
+ module, it would be loaded too late to cover those.
 
-This issue occurs because both crb_acpi_driver_init() and
-tpm_crb_ffa_driver_init() are registered with device_initcall.  As a
-result, crb_acpi_driver_init() may be invoked before
-tpm_crb_ffa_driver_init(), which is responsible for probing the
-tpm_crb_ffa device.
+ o TPM Dependency: IMA integrates tightly with the TPM to record
+ measurements into PCRs. The TPM must be initialized early (ideally before
+ init_ima()), which aligns with IMA being built-in.
 
-When this happens, IMA fails to detect the TPM device and logs the
-following message:
+ o Security Model: IMA is part of a Trusted Computing Base (TCB). Making it
+ a module would weaken the security model, as a potentially compromised
+ system could delay or tamper with its initialization.
 
-  | ima: No TPM chip found, activating TPM-bypass!
+IMA must be built-in to ensure it starts measuring from the earliest
+possible point in boot which inturn implies TPM must be initialised and
+ready to use before IMA.
 
-Consequently, it cannot generate the boot_aggregate log with the PCR
-values provided by the TPM.
+To enable integration of tpm_event_log with the IMA subsystem, the TPM
+drivers (tpm_crb and tpm_crb_ffa) also needs to be built-in. However with
+FF-A driver also being initialised at device initcall level, it can lead to
+an initialization order issue where:
+ - crb_acpi_driver_init() may run before tpm_crb_ffa_driver()_init and
+   ffa_init()
+ - As a result, probing the TPM device via CRB over FFA is deferred
+ - ima_init() (called as a late initcall) runs before deferred probe
+   completes, IMA fails to find the TPM and logs the below error:
 
-To resolve this issue, the tpm_crb_ffa_init() function explicitly
-attempts to probe the tpm_crb_ffa by register tpm_crb_ffa driver so that
-when tpm_crb_ffa device is created before tpm_crb_ffa_init(), probe the
-tpm_crb_ffa device in tpm_crb_ffa_init() to finish probe the TPM device
-completely.
+   |  ima: No TPM chip found, activating TPM-bypass!
 
-This ensures that the TPM device using CRB over FF-A can be successfully
-probed, even if crb_acpi_driver_init() is called first.
+Eventually it fails to generate boot_aggregate with PCR values.
+
+Because of the above stated dependency, the ffa driver needs to initialised
+before tpm_crb_ffa module to ensure IMA finds the TPM successfully when
+present.
 
 [ jarkko: reformatted some of the paragraphs because they were going past
   the 75 character boundary. ]
@@ -100,58 +107,22 @@ Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_crb_ffa.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm_crb_ffa.c b/drivers/char/tpm/tpm_crb_ffa.c
-index 3169a87a56b6..430b99c04124 100644
---- a/drivers/char/tpm/tpm_crb_ffa.c
-+++ b/drivers/char/tpm/tpm_crb_ffa.c
-@@ -109,6 +109,7 @@ struct tpm_crb_ffa {
- };
- 
- static struct tpm_crb_ffa *tpm_crb_ffa;
-+static struct ffa_driver tpm_crb_ffa_driver;
- 
- static int tpm_crb_ffa_to_linux_errno(int errno)
- {
-@@ -162,13 +163,23 @@ static int tpm_crb_ffa_to_linux_errno(int errno)
-  */
- int tpm_crb_ffa_init(void)
- {
-+	int ret = 0;
-+
-+	if (!IS_MODULE(CONFIG_TCG_ARM_CRB_FFA)) {
-+		ret = ffa_register(&tpm_crb_ffa_driver);
-+		if (ret) {
-+			tpm_crb_ffa = ERR_PTR(-ENODEV);
-+			return ret;
-+		}
-+	}
-+
- 	if (!tpm_crb_ffa)
--		return -ENOENT;
-+		ret = -ENOENT;
- 
- 	if (IS_ERR_VALUE(tpm_crb_ffa))
--		return -ENODEV;
-+		ret = -ENODEV;
- 
--	return 0;
-+	return ret;
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 37eb2e6c2f9f..65bf1685350a 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -2059,7 +2059,7 @@ static int __init ffa_init(void)
+ 	kfree(drv_info);
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(tpm_crb_ffa_init);
+-module_init(ffa_init);
++rootfs_initcall(ffa_init);
  
-@@ -341,7 +352,9 @@ static struct ffa_driver tpm_crb_ffa_driver = {
- 	.id_table = tpm_crb_ffa_device_id,
- };
- 
-+#ifdef MODULE
- module_ffa_driver(tpm_crb_ffa_driver);
-+#endif
- 
- MODULE_AUTHOR("Arm");
- MODULE_DESCRIPTION("TPM CRB FFA driver");
+ static void __exit ffa_exit(void)
+ {
 -- 
 2.39.5
 
