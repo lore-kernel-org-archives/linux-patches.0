@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC33F31CA55;
-	Mon, 18 Aug 2025 12:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C383218C0;
+	Mon, 18 Aug 2025 12:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521825; cv=none; b=h0ddw7m8ZRA2x9TTJAqDTlhbduIv0S4NgBsiaXcY+AXTbEYCr+bZ6m0BKwpZzHqyGBSQBPkz4H00GmBhtkU/o2+/B79WjDIHoejFexXxJCLnpLHhqQJfMAelsOq7oUULe7FS9OaF3MXJDe5vhaMaHv3YjCWl0BV1xQzlObSeS+8=
+	t=1755521829; cv=none; b=LVo7P6h1uUDAEZ3EU1Z8AWKPJ42m7BO908WTml47gzvNh81mh89vXs6Rp3BJbf8o3WWrIGn5TKCIqFhO2Zk2/j1kQq0WCyva/36E8iDpen1J1FHT94zhs+GP4Ud/4AVmWe+waOO9hIFdx7QBg86AbIybHhkveZU1IK6rDwqSoE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521825; c=relaxed/simple;
-	bh=Eq6/YGDuiaQBWImC1DvEmiDNQTmlJDsdLL0N567XjIM=;
+	s=arc-20240116; t=1755521829; c=relaxed/simple;
+	bh=8HQuoiyIu7APNA9pulGXufujRBa++bXEghZ3G9+34iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XIZbZ38mbWNNfekyVu+MkkKTdlzRWQp3S7AJnqXYNFxqo+0mzgTCS/J3mq7ZMlmXSL15/kXtu2faBQK470xTeYvcbhVbUfIk4twF4K3S9BUg5gR0b+S+qxqSi+qs+ozG8YYI6Tr65BzEA2psAdG7WSAKJjeYNMc+KY4D+nJ7XjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEWSGfrh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cTaHMZ0hol+WHTiUA+pMn+tkIzpG1BoNukRrmrrXC4vZQMRYfViVS+R8+sHo7SMG61dNdDJ2o4nNrpXorkn22WDW2m+HMZSwJtC+h9Xbnk3bg0sdaKvi0/o9MwTxqmIyHWfNK+HT++QVFlsxjtA73ZTiEFjXO8n493evBJeg39Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/G8soO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEWSGfrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD71C4CEEB;
-	Mon, 18 Aug 2025 12:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/G8soO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D49C4CEEB;
+	Mon, 18 Aug 2025 12:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521825;
-	bh=Eq6/YGDuiaQBWImC1DvEmiDNQTmlJDsdLL0N567XjIM=;
+	s=korg; t=1755521829;
+	bh=8HQuoiyIu7APNA9pulGXufujRBa++bXEghZ3G9+34iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEWSGfrhjbFVupDnqYMERwjCxt0sigmofD0qGBhFguMyetw3EUAUvt0VHOiArnEY6
-	 BRtuNZG6OqE6qiDsWv/MmzJ/rJ7ld5q7lts2uUPxTVmqASoMKt/+Ya79apdQE7WQFE
-	 lW+hy2WYMKkmXSD+vX5RTTl6b2gVZG7LN21kiyDk=
+	b=P/G8soO5Hpg/hKPYIeVTYZFnyX4YE3bMYbirIOhLwhJ/D4iEJH7EmJ9fFRZn7YM2X
+	 oa/rEBunOYWdZh/29UJbKojQd2JLGeTfduJDbiNspFt8swASSOxLV7nKmAgBW1eyXj
+	 dYpMJzsQbX0AFK3bhj/zLAgSfCiKebltEAFbY8k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Eliav Farber <farbere@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/444] selftests: vDSO: vdso_test_getrandom: Always print TAP header
-Date: Mon, 18 Aug 2025 14:42:39 +0200
-Message-ID: <20250818124453.900792411@linuxfoundation.org>
+Subject: [PATCH 6.12 134/444] pps: clients: gpio: fix interrupt handling order in remove path
+Date: Mon, 18 Aug 2025 14:42:40 +0200
+Message-ID: <20250818124453.937580095@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -46,62 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Eliav Farber <farbere@amazon.com>
 
-[ Upstream commit 1158220b24674edaf885433153deb4f0e5c7d331 ]
+[ Upstream commit 6bca1e955830808dc90e0506b2951b4256b81bbb ]
 
-The TAP specification requires that the output begins with a header line.
-If vgetrandom_init() fails and skips the test, that header line is missing.
+The interrupt handler in pps_gpio_probe() is registered after calling
+pps_register_source() using devm_request_irq(). However, in the
+corresponding remove function, pps_unregister_source() is called before
+the IRQ is freed, since devm-managed resources are released after the
+remove function completes.
 
-Call vgetrandom_init() after ksft_print_header().
+This creates a potential race condition where an interrupt may occur
+after the PPS source is unregistered but before the handler is removed,
+possibly leading to a kernel panic.
 
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/all/20250611-selftests-vdso-fixes-v3-8-e62e37a6bcf5@linutronix.de
+To prevent this, switch from devm-managed IRQ registration to manual
+management by using request_irq() and calling free_irq() explicitly in
+the remove path before unregistering the PPS source. This ensures the
+interrupt handler is safely removed before deactivating the PPS source.
+
+Signed-off-by: Eliav Farber <farbere@amazon.com>
+Link: https://lore.kernel.org/r/20250527053355.37185-1-farbere@amazon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/vdso_test_getrandom.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pps/clients/pps-gpio.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/vdso_test_getrandom.c b/tools/testing/selftests/vDSO/vdso_test_getrandom.c
-index 95057f7567db..ff8d5675da2b 100644
---- a/tools/testing/selftests/vDSO/vdso_test_getrandom.c
-+++ b/tools/testing/selftests/vDSO/vdso_test_getrandom.c
-@@ -242,6 +242,7 @@ static void kselftest(void)
- 	pid_t child;
- 
- 	ksft_print_header();
-+	vgetrandom_init();
- 	ksft_set_plan(2);
- 
- 	for (size_t i = 0; i < 1000; ++i) {
-@@ -295,8 +296,6 @@ static void usage(const char *argv0)
- 
- int main(int argc, char *argv[])
- {
--	vgetrandom_init();
--
- 	if (argc == 1) {
- 		kselftest();
- 		return 0;
-@@ -306,6 +305,9 @@ int main(int argc, char *argv[])
- 		usage(argv[0]);
- 		return 1;
+diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
+index 93e662912b53..1412f8af15f2 100644
+--- a/drivers/pps/clients/pps-gpio.c
++++ b/drivers/pps/clients/pps-gpio.c
+@@ -206,8 +206,8 @@ static int pps_gpio_probe(struct platform_device *pdev)
  	}
-+
-+	vgetrandom_init();
-+
- 	if (!strcmp(argv[1], "bench-single"))
- 		bench_single();
- 	else if (!strcmp(argv[1], "bench-multi"))
+ 
+ 	/* register IRQ interrupt handler */
+-	ret = devm_request_irq(dev, data->irq, pps_gpio_irq_handler,
+-			get_irqf_trigger_flags(data), data->info.name, data);
++	ret = request_irq(data->irq, pps_gpio_irq_handler,
++			  get_irqf_trigger_flags(data), data->info.name, data);
+ 	if (ret) {
+ 		pps_unregister_source(data->pps);
+ 		dev_err(dev, "failed to acquire IRQ %d\n", data->irq);
+@@ -224,6 +224,7 @@ static void pps_gpio_remove(struct platform_device *pdev)
+ {
+ 	struct pps_gpio_device_data *data = platform_get_drvdata(pdev);
+ 
++	free_irq(data->irq, data);
+ 	pps_unregister_source(data->pps);
+ 	del_timer_sync(&data->echo_timer);
+ 	/* reset echo pin in any case */
 -- 
 2.39.5
 
