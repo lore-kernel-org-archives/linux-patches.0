@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF2112DDA1;
-	Mon, 18 Aug 2025 13:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF00E1F462D;
+	Mon, 18 Aug 2025 13:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522196; cv=none; b=Dccm6OFrqp7A561bLdoPiooBND46agoMPM/BQhbsi891YHyyYHUaz3WMiT7l0Awvyr3fQldc1yep7Z1ahk2o87PdtelPfAF9Gj/SAzC6EF5KkqjwSwZZVuEnSZWgntjVQVTkU8EUtsApPKccMWp8zM+fXWwRVahaDyWxnM9lIQs=
+	t=1755522200; cv=none; b=Vq5I2ZuOfuwjpWw1oQa4JYbtHODo0etUo0oY1ZS/7fsuqe1kv4PQVplTXj1kD3STgbREd/nLhVW5Q7lmKHf2w2dAHYJ45m72jGkvT5+u5igS7igfZkVGE5+XN2d6ll3hlaIXn6kg14wTnKdhAYbdb4NqA4e8UY8U8RIjM2lN8I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522196; c=relaxed/simple;
-	bh=vipGDLADZUbaKbZFjqLhNIFicTK5YvULto/0PDI64CM=;
+	s=arc-20240116; t=1755522200; c=relaxed/simple;
+	bh=xBs/9OhLKA04ybXBF3KW6RznnuRJ5P/hd+Q5ZAUMFHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDqzUf0vrN0L55/lboFRTX1kf2Q07WFhH1f38qtTLMrPysiZhZ78yDsldpkHHmWzAeDYSpB21yySp9tlu0DtptgCBx5zchSODt4i3kDu9RORjm6g9z5fQviptMFRrO1OyYWx3Gk3rUtVzenHcFIgF9C0DquC4MVOubDuSDfM0V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGBXD70E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZF4TKIjrSbKP+wRNzVutTf0icYT+tTa1WlAIR3GLa50Ms/7S4clbM9GeBdJJpUw9SVLPO23LKp8pERy9lBLwILTimQUVYY/43Vr8AQCRKyn8KyJduB2Jtw9fLge2c0wNtKu7x2Z2wpEhJ0xJrC9AMFTgsJ2CBABHEH2BzC1wvos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8WDwC/2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGBXD70E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3E6C4CEEB;
-	Mon, 18 Aug 2025 13:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8WDwC/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7DBC4CEEB;
+	Mon, 18 Aug 2025 13:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522196;
-	bh=vipGDLADZUbaKbZFjqLhNIFicTK5YvULto/0PDI64CM=;
+	s=korg; t=1755522199;
+	bh=xBs/9OhLKA04ybXBF3KW6RznnuRJ5P/hd+Q5ZAUMFHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGBXD70Ewg+gChp13ddVrf8XHbhvGK5BUg+jOLXVfpdQ2Rx+IpnENJHKCd/sUBcOH
-	 Y1dbx/uPlkzo+m+/X2xlc0kOgF+o6TVkuocNEqiZvymfbhTbG8f64LGipGr70YSwRg
-	 D0mWhSlC8TQZtaPiircUfPrAxWvC2iOR9xpewWEM=
+	b=J8WDwC/2TUCCYzEf/P/6yWEkYrNfsciuFlf1zAGYGt9YJ4dIQJtU3YXvVrIVrfJAR
+	 LbLWJM9adpjOtJ4yslqSNbcx+qzayffElTp5HWqwNoNcJlV/OJgr8QHdIgrxb69BQi
+	 ZhklFmUTrgRsui6i9b9QU8WRUW5McOF5xvBCrpKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
-	Vicki Pfau <vi@endrift.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 244/444] drm/amd: Allow printing VanGogh OD SCLK levels without setting dpm to manual
-Date: Mon, 18 Aug 2025 14:44:30 +0200
-Message-ID: <20250818124457.981099548@linuxfoundation.org>
+Subject: [PATCH 6.12 245/444] net: vlan: Make is_vlan_dev() a stub when VLAN is not configured
+Date: Mon, 18 Aug 2025 14:44:31 +0200
+Message-ID: <20250818124458.017156943@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,85 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 2d1ec1e955414e8e8358178011c35afca1a1c0b1 ]
+[ Upstream commit 2de1ba0887e5d3bf02d7c212f380039b34e10aa3 ]
 
-Several other ASICs allow printing OD SCLK levels without setting DPM
-control to manual.  When OD is disabled it will show the range the
-hardware supports. When OD is enabled it will show what values have
-been programmed. Adjust VanGogh to work the same.
+Add a stub implementation of is_vlan_dev() that returns false when
+VLAN support is not compiled in (CONFIG_VLAN_8021Q=n).
 
-Cc: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
-Reported-by: Vicki Pfau <vi@endrift.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20250609031227.479079-1-superm1@kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This allows us to compile-out VLAN-dependent dead code when it is not
+needed.
+
+This also resolves the following compilation error when:
+* CONFIG_VLAN_8021Q=n
+* CONFIG_OBJTOOL=y
+* CONFIG_OBJTOOL_WERROR=y
+
+drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.o: error: objtool: parse_mirred.isra.0+0x370: mlx5e_tc_act_vlan_add_push_action() missing __noreturn in .c/.h or NORETURN() in noreturns.h
+
+The error occurs because objtool cannot determine that unreachable BUG()
+(which doesn't return) calls in VLAN code paths are actually dead code
+when VLAN support is disabled.
+
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://patch.msgid.link/20250616132626.1749331-2-gal@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c  | 37 ++++++++-----------
- 1 file changed, 15 insertions(+), 22 deletions(-)
+ include/linux/if_vlan.h | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-index 9bca748ac2e9..3d3765815e24 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-@@ -664,7 +664,6 @@ static int vangogh_print_clk_levels(struct smu_context *smu,
- {
- 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
- 	SmuMetrics_t metrics;
--	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
- 	int i, idx, size = 0, ret = 0;
- 	uint32_t cur_value = 0, value = 0, count = 0;
- 	bool cur_value_match_level = false;
-@@ -680,31 +679,25 @@ static int vangogh_print_clk_levels(struct smu_context *smu,
+diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
+index d65b5d71b93b..4354f6ad8887 100644
+--- a/include/linux/if_vlan.h
++++ b/include/linux/if_vlan.h
+@@ -79,11 +79,6 @@ static inline struct vlan_ethhdr *skb_vlan_eth_hdr(const struct sk_buff *skb)
+ /* found in socket.c */
+ extern void vlan_ioctl_set(int (*hook)(struct net *, void __user *));
  
- 	switch (clk_type) {
- 	case SMU_OD_SCLK:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "%s:\n", "OD_SCLK");
--			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
--			(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
--			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
--			(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "%s:\n", "OD_SCLK");
-+		size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
-+		(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
-+		size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
-+		(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
- 		break;
- 	case SMU_OD_CCLK:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "CCLK_RANGE in Core%d:\n",  smu->cpu_core_id_select);
--			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
--			(smu->cpu_actual_soft_min_freq > 0) ? smu->cpu_actual_soft_min_freq : smu->cpu_default_soft_min_freq);
--			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
--			(smu->cpu_actual_soft_max_freq > 0) ? smu->cpu_actual_soft_max_freq : smu->cpu_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "CCLK_RANGE in Core%d:\n",  smu->cpu_core_id_select);
-+		size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
-+		(smu->cpu_actual_soft_min_freq > 0) ? smu->cpu_actual_soft_min_freq : smu->cpu_default_soft_min_freq);
-+		size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
-+		(smu->cpu_actual_soft_max_freq > 0) ? smu->cpu_actual_soft_max_freq : smu->cpu_default_soft_max_freq);
- 		break;
- 	case SMU_OD_RANGE:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
--			size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
--				smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
--			size += sysfs_emit_at(buf, size, "CCLK: %7uMhz %10uMhz\n",
--				smu->cpu_default_soft_min_freq, smu->cpu_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
-+		size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
-+			smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
-+		size += sysfs_emit_at(buf, size, "CCLK: %7uMhz %10uMhz\n",
-+			smu->cpu_default_soft_min_freq, smu->cpu_default_soft_max_freq);
- 		break;
- 	case SMU_SOCCLK:
- 		/* the level 3 ~ 6 of socclk use the same frequency for vangogh */
+-static inline bool is_vlan_dev(const struct net_device *dev)
+-{
+-        return dev->priv_flags & IFF_802_1Q_VLAN;
+-}
+-
+ #define skb_vlan_tag_present(__skb)	(!!(__skb)->vlan_all)
+ #define skb_vlan_tag_get(__skb)		((__skb)->vlan_tci)
+ #define skb_vlan_tag_get_id(__skb)	((__skb)->vlan_tci & VLAN_VID_MASK)
+@@ -199,6 +194,11 @@ struct vlan_dev_priv {
+ #endif
+ };
+ 
++static inline bool is_vlan_dev(const struct net_device *dev)
++{
++	return dev->priv_flags & IFF_802_1Q_VLAN;
++}
++
+ static inline struct vlan_dev_priv *vlan_dev_priv(const struct net_device *dev)
+ {
+ 	return netdev_priv(dev);
+@@ -236,6 +236,11 @@ extern void vlan_vids_del_by_dev(struct net_device *dev,
+ extern bool vlan_uses_dev(const struct net_device *dev);
+ 
+ #else
++static inline bool is_vlan_dev(const struct net_device *dev)
++{
++	return false;
++}
++
+ static inline struct net_device *
+ __vlan_find_dev_deep_rcu(struct net_device *real_dev,
+ 		     __be16 vlan_proto, u16 vlan_id)
 -- 
 2.39.5
 
