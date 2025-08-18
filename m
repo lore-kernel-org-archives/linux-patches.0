@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A68322DA4;
-	Mon, 18 Aug 2025 13:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAD033A01F;
+	Mon, 18 Aug 2025 13:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523765; cv=none; b=hFSHIMaKyc5/87plmBTXZAmiptVeo8jh7YiAOMUwOVPEWvwm/65e8WYg0Rzc6kif0wp+/hFb4oktb855ErcRgjg5FnJguKQcJX43R5Zs04DvhcK349JHpvU2Lxud6bHyYxrSzeLbtGlXw2PTUXVO8rkc2cbSC8prkd96vEqAMA8=
+	t=1755523768; cv=none; b=EXo8+hoZexsWuvK+Y4e6z9LOhbkKaEdua80PXlkki07XvxK9bE47URuHtexNvUIiznAjcfUK37CHL6IXH2Q2yBsTHbiZEwmvLh/1O5poihpMXIc6u1fzTPqVYQf9zcv6mxDCCsrWps6npmpcUijM8FnuTYjT7QDKiqEyFCnMqcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523765; c=relaxed/simple;
-	bh=ccLErgDgkPURkqNrNRrinerhk4t/OWbFahDMHqassdM=;
+	s=arc-20240116; t=1755523768; c=relaxed/simple;
+	bh=zU6Fo75mPV49tbvL5+am5zYB3CFf85vry7gFxJfszbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6FLLrUIBlbPchqHWWe1GUTOI3ACQ61pgbizFS/0H/6t26rrvxTP9ieIQad3M0d5uRmrs7tR6awcyYt0RtEWcdiwL7r86xb23jKQerUEYyhi7nEU8ZNj7VB4kRWZCM6H+KKexw0dei0oCHJngqmrn078mzODwClZccvxyatqCwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7tpOGlA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXUjYuZtWyGbUR7QmbQC7Iv7pRlX2Keo9qwXIC/0wUrw91Gd0xP4tn0xhi57utNczVSSe3vlWfsLq9HaWWY4UwJp+reIdU9pmsB8oGxUKICnHZVatR5QCDu3lCwkmdzKF8w+Yo4kMmTVCfuZHxWQY09EyW3fj+HD0XcZdxmlDyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fz2fIfen; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7tpOGlA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0DFC4CEEB;
-	Mon, 18 Aug 2025 13:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fz2fIfen"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A6DC4CEEB;
+	Mon, 18 Aug 2025 13:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523765;
-	bh=ccLErgDgkPURkqNrNRrinerhk4t/OWbFahDMHqassdM=;
+	s=korg; t=1755523768;
+	bh=zU6Fo75mPV49tbvL5+am5zYB3CFf85vry7gFxJfszbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7tpOGlAafSIgVqXi6oC9orJSYbb1VmoCZIB5L0taAB4QeF5mN4WNt7x8aGUuyKKM
-	 nFrTGglJI9VZxDysTYfYRMWDQ43cM8t+4vHR3KXqMbiL5WIEi5eXcYRxmHG8cDgG8x
-	 7+0M5vKKFyU56rqOHYWyLLC9NNNRrknY3zL8NmVc=
+	b=Fz2fIfencrhYWTCKS4nUczL5eXDIpGTU+OF3wcTqg1MbAR8FCiGJjiBB1aboDGvem
+	 iwqVo42eYQRK4NnQBhulTZPepbHqOikIztyATWfVh3D03tpw0H5kj6XvNB5eMkNc3v
+	 lu9Ze3RGfYetMGzUu/PAaY20laUAcb/rnXCu2phc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Work <work.eric@gmail.com>,
-	Igor Russkikh <irusskikh@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Mark Starovoitov <mstarovoitov@marvell.com>,
-	Dmitry Bogdanov <dbogdanov@marvell.com>,
-	Pavel Belous <pbelous@marvell.com>,
-	Nikita Danilov <ndanilov@marvell.com>
-Subject: [PATCH 6.15 267/515] net: atlantic: add set_power to fw_ops for atl2 to fix wol
-Date: Mon, 18 Aug 2025 14:44:13 +0200
-Message-ID: <20250818124508.701966354@linuxfoundation.org>
+	Li Chen <chenl311@chinatelecom.cn>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 268/515] ACPI: Suppress misleading SPCR console message when SPCR table is absent
+Date: Mon, 18 Aug 2025 14:44:14 +0200
+Message-ID: <20250818124508.738416946@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -56,111 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Work <work.eric@gmail.com>
+From: Li Chen <chenl311@chinatelecom.cn>
 
-[ Upstream commit fad9cf216597a71936ac87143d1618fbbcf97cbe ]
+[ Upstream commit bad3fa2fb9206f4dcec6ddef094ec2fbf6e8dcb2 ]
 
-Aquantia AQC113(C) using ATL2FW doesn't properly prepare the NIC for
-enabling wake-on-lan. The FW operation `set_power` was only implemented
-for `hw_atl` and not `hw_atl2`. Implement the `set_power` functionality
-for `hw_atl2`.
+The kernel currently alway prints:
+"Use ACPI SPCR as default console: No/Yes "
 
-Tested with both AQC113 and AQC113C devices. Confirmed you can shutdown
-the system and wake from S5 using magic packets. NIC was previously
-powered off when entering S5. If the NIC was configured for WOL by the
-Windows driver, loading the atlantic driver would disable WOL.
+even on systems that lack an SPCR table. This can
+mislead users into thinking the SPCR table exists
+on the machines without SPCR.
 
-Partially cherry-picks changes from commit,
-https://github.com/Aquantia/AQtion/commit/37bd5cc
+With this change, the "Yes" is only printed if
+the SPCR table is present, parsed and !param_acpi_nospcr.
+This avoids user confusion on SPCR-less systems.
 
-Attributing original authors from Marvell for the referenced commit.
-
-Closes: https://github.com/Aquantia/AQtion/issues/70
-Co-developed-by: Igor Russkikh <irusskikh@marvell.com>
-Co-developed-by: Mark Starovoitov <mstarovoitov@marvell.com>
-Co-developed-by: Dmitry Bogdanov <dbogdanov@marvell.com>
-Co-developed-by: Pavel Belous <pbelous@marvell.com>
-Co-developed-by: Nikita Danilov <ndanilov@marvell.com>
-Signed-off-by: Eric Work <work.eric@gmail.com>
-Reviewed-by: Igor Russkikh <irusskikh@marvell.com>
-Link: https://patch.msgid.link/20250629051535.5172-1-work.eric@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+Acked-by: Hanjun Guo <guohanjun@huawei.com>
+Link: https://lore.kernel.org/r/20250620131309.126555-3-me@linux.beauty
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/aquantia/atlantic/aq_hw.h    |  2 +
- .../atlantic/hw_atl2/hw_atl2_utils_fw.c       | 39 +++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ arch/arm64/kernel/acpi.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw.h b/drivers/net/ethernet/aquantia/atlantic/aq_hw.h
-index 42c0efc1b455..4e66fd9b2ab1 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_hw.h
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw.h
-@@ -113,6 +113,8 @@ struct aq_stats_s {
- #define AQ_HW_POWER_STATE_D0   0U
- #define AQ_HW_POWER_STATE_D3   3U
- 
-+#define	AQ_FW_WAKE_ON_LINK_RTPM BIT(10)
-+
- #define AQ_HW_FLAG_STARTED     0x00000004U
- #define AQ_HW_FLAG_STOPPING    0x00000008U
- #define AQ_HW_FLAG_RESETTING   0x00000010U
-diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2_utils_fw.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2_utils_fw.c
-index 52e2070a4a2f..7370e3f76b62 100644
---- a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2_utils_fw.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2_utils_fw.c
-@@ -462,6 +462,44 @@ static int aq_a2_fw_get_mac_temp(struct aq_hw_s *self, int *temp)
- 	return aq_a2_fw_get_phy_temp(self, temp);
- }
- 
-+static int aq_a2_fw_set_wol_params(struct aq_hw_s *self, const u8 *mac, u32 wol)
-+{
-+	struct mac_address_aligned_s mac_address;
-+	struct link_control_s link_control;
-+	struct wake_on_lan_s wake_on_lan;
-+
-+	memcpy(mac_address.aligned.mac_address, mac, ETH_ALEN);
-+	hw_atl2_shared_buffer_write(self, mac_address, mac_address);
-+
-+	memset(&wake_on_lan, 0, sizeof(wake_on_lan));
-+
-+	if (wol & WAKE_MAGIC)
-+		wake_on_lan.wake_on_magic_packet = 1U;
-+
-+	if (wol & (WAKE_PHY | AQ_FW_WAKE_ON_LINK_RTPM))
-+		wake_on_lan.wake_on_link_up = 1U;
-+
-+	hw_atl2_shared_buffer_write(self, sleep_proxy, wake_on_lan);
-+
-+	hw_atl2_shared_buffer_get(self, link_control, link_control);
-+	link_control.mode = AQ_HOST_MODE_SLEEP_PROXY;
-+	hw_atl2_shared_buffer_write(self, link_control, link_control);
-+
-+	return hw_atl2_shared_buffer_finish_ack(self);
-+}
-+
-+static int aq_a2_fw_set_power(struct aq_hw_s *self, unsigned int power_state,
-+			      const u8 *mac)
-+{
-+	u32 wol = self->aq_nic_cfg->wol;
-+	int err = 0;
-+
-+	if (wol)
-+		err = aq_a2_fw_set_wol_params(self, mac, wol);
-+
-+	return err;
-+}
-+
- static int aq_a2_fw_set_eee_rate(struct aq_hw_s *self, u32 speed)
+diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
+index b9a66fc146c9..4d529ff7ba51 100644
+--- a/arch/arm64/kernel/acpi.c
++++ b/arch/arm64/kernel/acpi.c
+@@ -197,6 +197,8 @@ static int __init acpi_fadt_sanity_check(void)
+  */
+ void __init acpi_boot_table_init(void)
  {
- 	struct link_options_s link_options;
-@@ -605,6 +643,7 @@ const struct aq_fw_ops aq_a2_fw_ops = {
- 	.set_state          = aq_a2_fw_set_state,
- 	.update_link_status = aq_a2_fw_update_link_status,
- 	.update_stats       = aq_a2_fw_update_stats,
-+	.set_power          = aq_a2_fw_set_power,
- 	.get_mac_temp       = aq_a2_fw_get_mac_temp,
- 	.get_phy_temp       = aq_a2_fw_get_phy_temp,
- 	.set_eee_rate       = aq_a2_fw_set_eee_rate,
++	int ret;
++
+ 	/*
+ 	 * Enable ACPI instead of device tree unless
+ 	 * - ACPI has been disabled explicitly (acpi=off), or
+@@ -250,10 +252,12 @@ void __init acpi_boot_table_init(void)
+ 		 * behaviour, use acpi=nospcr to disable console in ACPI SPCR
+ 		 * table as default serial console.
+ 		 */
+-		acpi_parse_spcr(earlycon_acpi_spcr_enable,
++		ret = acpi_parse_spcr(earlycon_acpi_spcr_enable,
+ 			!param_acpi_nospcr);
+-		pr_info("Use ACPI SPCR as default console: %s\n",
+-				param_acpi_nospcr ? "No" : "Yes");
++		if (!ret || param_acpi_nospcr || !IS_ENABLED(CONFIG_ACPI_SPCR_TABLE))
++			pr_info("Use ACPI SPCR as default console: No\n");
++		else
++			pr_info("Use ACPI SPCR as default console: Yes\n");
+ 
+ 		if (IS_ENABLED(CONFIG_ACPI_BGRT))
+ 			acpi_table_parse(ACPI_SIG_BGRT, acpi_parse_bgrt);
 -- 
 2.39.5
 
