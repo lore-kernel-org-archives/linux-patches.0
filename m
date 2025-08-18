@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87B235A282;
-	Mon, 18 Aug 2025 14:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FDB35A280;
+	Mon, 18 Aug 2025 14:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526418; cv=none; b=f2Osh6PrWCXHffiFK0N+ZphF6p59Zb9xJ6RichPraTFMfXfSR1l7eP+Ga9qN7ESPvhZX6FYXaDqJi6hdTTSzgqH+sCc94fffW6H5ci+1z31mghVWcVIrFlI5puw5pDBJArQTEgHgkFlPwrh6gMHoyJdcTgY5UF+UdyaCejpmKVM=
+	t=1755526422; cv=none; b=H4Q/Lz9wZhB5f04ZAt4MR7eNQe/NPmYsl0mAMYIfURmPbixbA61ycuzJivLsdIRWnuHXKfiiXNbTS748dEG476lS5B400VGv8s9YQU5QLLu/ynHmIakDaCZxgOSxyzVB7fRAkUAx4puhX1ySvimve7XE4xVo6vYYM5wfGOOuifE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526418; c=relaxed/simple;
-	bh=rUyLp2oSB7F3kKgS9VQ5KWAGnUqwBAlkMIAbeQjmB20=;
+	s=arc-20240116; t=1755526422; c=relaxed/simple;
+	bh=2xlEgcr55/GyXKfoGxnFJKPsNGFQSOQg6ytt6DCYpJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDmtlXCpxEBKQyvESkhmVXlc38YVJkL2kQzz23Ucx8ahrnSuKMsdpwcsflqAjjTIehjZ2GbRbF51VoHf4R535GaGjvuPmEALqPUcN2SyxZQgzJExJL5w0h08rU3atykjURq8CVXJ6k8hlrLUhLnrIx/YUUAgMx5+dUt3/6nvPL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btq3nOvO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XfrXH+773c746y3qKXalftnyvzOan7YhDg9zO111oO/fXmKvG4xnLjHqSal/GrnTrrfqJg8nUozypkF7B9E/0+2MZl2+qwLAJihLV+ayr71odIxJtJbeQvrDhdMePkVkwFncNqccTSdpx6ecQNx40zAMCZ7h/uqufWrPQEt583c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SB8UF5tg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btq3nOvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997DAC4CEEB;
-	Mon, 18 Aug 2025 14:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SB8UF5tg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20303C4CEEB;
+	Mon, 18 Aug 2025 14:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526418;
-	bh=rUyLp2oSB7F3kKgS9VQ5KWAGnUqwBAlkMIAbeQjmB20=;
+	s=korg; t=1755526421;
+	bh=2xlEgcr55/GyXKfoGxnFJKPsNGFQSOQg6ytt6DCYpJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btq3nOvOwgOUzJCYwaFPeQHFgH5FLhkMJqJ2yzrXBVR0Cfxx/cRi2yosnGodX4YdM
-	 scRyaMDPfkxFJSACJ3T7H50anCCUJAjzOiZZgX1JnlMp4nDl7L+mQcWwU4hsEPuHoM
-	 smVwvDYqxof2vZto5m618UlgJE/leIE3S2NMkS+I=
+	b=SB8UF5tgcTcvBJoVsRnFa1RvPU2M6OkaYVUxgQiZmEnLukLLx28vG62AAKh2Yqu0N
+	 jnEFIsJOCRjIuXPV2VPGZw0Fj+59xN5zInrhnE5r5L/z1bXxnXMZtTaOB3vgsZo3RO
+	 aara932nG/l71f3gm+ni5GNTjvfQe51UGNgXzt/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngjun Lee <yjjuny.lee@samsung.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Vedang Nagar <quic_vnagar@quicinc.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.16 548/570] media: uvcvideo: Fix 1-byte out-of-bounds read in uvc_parse_format()
-Date: Mon, 18 Aug 2025 14:48:55 +0200
-Message-ID: <20250818124526.981100350@linuxfoundation.org>
+Subject: [PATCH 6.16 549/570] media: venus: Fix OOB read due to missing payload bound check
+Date: Mon, 18 Aug 2025 14:48:56 +0200
+Message-ID: <20250818124527.018535946@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,43 +54,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngjun Lee <yjjuny.lee@samsung.com>
+From: Vedang Nagar <quic_vnagar@quicinc.com>
 
-commit 782b6a718651eda3478b1824b37a8b3185d2740c upstream.
+commit 06d6770ff0d8cc8dfd392329a8cc03e2a83e7289 upstream.
 
-The buffer length check before calling uvc_parse_format() only ensured
-that the buffer has at least 3 bytes (buflen > 2), buf the function
-accesses buffer[3], requiring at least 4 bytes.
+Currently, The event_seq_changed() handler processes a variable number
+of properties sent by the firmware. The number of properties is indicated
+by the firmware and used to iterate over the payload. However, the
+payload size is not being validated against the actual message length.
 
-This can lead to an out-of-bounds read if the buffer has exactly 3 bytes.
+This can lead to out-of-bounds memory access if the firmware provides a
+property count that exceeds the data available in the payload. Such a
+condition can result in kernel crashes or potential information leaks if
+memory beyond the buffer is accessed.
 
-Fix it by checking that the buffer has at least 4 bytes in
-uvc_parse_format().
+Fix this by properly validating the remaining size of the payload before
+each property access and updating bounds accordingly as properties are
+parsed.
 
-Signed-off-by: Youngjun Lee <yjjuny.lee@samsung.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
+This ensures that property parsing is safely bounded within the received
+message buffer and protects against malformed or malicious firmware
+behavior.
+
+Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20250610124107.37360-1-yjjuny.lee@samsung.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/qcom/venus/hfi_msgs.c |   83 ++++++++++++++++++---------
+ 1 file changed, 58 insertions(+), 25 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -344,6 +344,9 @@ static int uvc_parse_format(struct uvc_d
- 	u8 ftype;
- 	int ret;
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.c
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+@@ -33,8 +33,9 @@ static void event_seq_changed(struct ven
+ 	struct hfi_buffer_requirements *bufreq;
+ 	struct hfi_extradata_input_crop *crop;
+ 	struct hfi_dpb_counts *dpb_count;
++	u32 ptype, rem_bytes;
++	u32 size_read = 0;
+ 	u8 *data_ptr;
+-	u32 ptype;
  
-+	if (buflen < 4)
-+		return -EINVAL;
+ 	inst->error = HFI_ERR_NONE;
+ 
+@@ -44,86 +45,118 @@ static void event_seq_changed(struct ven
+ 		break;
+ 	default:
+ 		inst->error = HFI_ERR_SESSION_INVALID_PARAMETER;
+-		goto done;
++		inst->ops->event_notify(inst, EVT_SYS_EVENT_CHANGE, &event);
++		return;
+ 	}
+ 
+ 	event.event_type = pkt->event_data1;
+ 
+ 	num_properties_changed = pkt->event_data2;
+-	if (!num_properties_changed) {
+-		inst->error = HFI_ERR_SESSION_INSUFFICIENT_RESOURCES;
+-		goto done;
+-	}
++	if (!num_properties_changed)
++		goto error;
+ 
+ 	data_ptr = (u8 *)&pkt->ext_event_data[0];
++	rem_bytes = pkt->shdr.hdr.size - sizeof(*pkt);
 +
- 	format->type = buffer[2];
- 	format->index = buffer[3];
- 	format->frames = frames;
+ 	do {
++		if (rem_bytes < sizeof(u32))
++			goto error;
+ 		ptype = *((u32 *)data_ptr);
++
++		data_ptr += sizeof(u32);
++		rem_bytes -= sizeof(u32);
++
+ 		switch (ptype) {
+ 		case HFI_PROPERTY_PARAM_FRAME_SIZE:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_framesize))
++				goto error;
++
+ 			frame_sz = (struct hfi_framesize *)data_ptr;
+ 			event.width = frame_sz->width;
+ 			event.height = frame_sz->height;
+-			data_ptr += sizeof(*frame_sz);
++			size_read = sizeof(struct hfi_framesize);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_PROFILE_LEVEL_CURRENT:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_profile_level))
++				goto error;
++
+ 			profile_level = (struct hfi_profile_level *)data_ptr;
+ 			event.profile = profile_level->profile;
+ 			event.level = profile_level->level;
+-			data_ptr += sizeof(*profile_level);
++			size_read = sizeof(struct hfi_profile_level);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_bit_depth))
++				goto error;
++
+ 			pixel_depth = (struct hfi_bit_depth *)data_ptr;
+ 			event.bit_depth = pixel_depth->bit_depth;
+-			data_ptr += sizeof(*pixel_depth);
++			size_read = sizeof(struct hfi_bit_depth);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_pic_struct))
++				goto error;
++
+ 			pic_struct = (struct hfi_pic_struct *)data_ptr;
+ 			event.pic_struct = pic_struct->progressive_only;
+-			data_ptr += sizeof(*pic_struct);
++			size_read = sizeof(struct hfi_pic_struct);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_colour_space))
++				goto error;
++
+ 			colour_info = (struct hfi_colour_space *)data_ptr;
+ 			event.colour_space = colour_info->colour_space;
+-			data_ptr += sizeof(*colour_info);
++			size_read = sizeof(struct hfi_colour_space);
+ 			break;
+ 		case HFI_PROPERTY_CONFIG_VDEC_ENTROPY:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(u32))
++				goto error;
++
+ 			event.entropy_mode = *(u32 *)data_ptr;
+-			data_ptr += sizeof(u32);
++			size_read = sizeof(u32);
+ 			break;
+ 		case HFI_PROPERTY_CONFIG_BUFFER_REQUIREMENTS:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_buffer_requirements))
++				goto error;
++
+ 			bufreq = (struct hfi_buffer_requirements *)data_ptr;
+ 			event.buf_count = hfi_bufreq_get_count_min(bufreq, ver);
+-			data_ptr += sizeof(*bufreq);
++			size_read = sizeof(struct hfi_buffer_requirements);
+ 			break;
+ 		case HFI_INDEX_EXTRADATA_INPUT_CROP:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_extradata_input_crop))
++				goto error;
++
+ 			crop = (struct hfi_extradata_input_crop *)data_ptr;
+ 			event.input_crop.left = crop->left;
+ 			event.input_crop.top = crop->top;
+ 			event.input_crop.width = crop->width;
+ 			event.input_crop.height = crop->height;
+-			data_ptr += sizeof(*crop);
++			size_read = sizeof(struct hfi_extradata_input_crop);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_VDEC_DPB_COUNTS:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_dpb_counts))
++				goto error;
++
+ 			dpb_count = (struct hfi_dpb_counts *)data_ptr;
+ 			event.buf_count = dpb_count->fw_min_cnt;
+-			data_ptr += sizeof(*dpb_count);
++			size_read = sizeof(struct hfi_dpb_counts);
+ 			break;
+ 		default:
++			size_read = 0;
+ 			break;
+ 		}
++		data_ptr += size_read;
++		rem_bytes -= size_read;
+ 		num_properties_changed--;
+ 	} while (num_properties_changed > 0);
+ 
+-done:
++	inst->ops->event_notify(inst, EVT_SYS_EVENT_CHANGE, &event);
++	return;
++
++error:
++	inst->error = HFI_ERR_SESSION_INSUFFICIENT_RESOURCES;
+ 	inst->ops->event_notify(inst, EVT_SYS_EVENT_CHANGE, &event);
+ }
+ 
 
 
