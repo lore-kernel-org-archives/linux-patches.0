@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C592F3218C2;
-	Mon, 18 Aug 2025 13:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED591318126;
+	Mon, 18 Aug 2025 13:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522595; cv=none; b=TiNCpPst6qkpK7anEs7/34b8ZeFppaL7XMI3U+TqG5qHkoBnXvivND8iC3ZRMu4BUhQA2B3u/KkUVSfZp5oZb5aFujOlO0ekX3ag6ctk0kdrCYRraiHVzOaKiSaOMqkmx6aPbmj3+1vRDK8d90XyL1zYF5tgBxN4G7v0odlhJwM=
+	t=1755522599; cv=none; b=I+EXqtts1I0Ra5Bqwhx8YsMY58zlJZuSuC+Hccm3EK9zug9JrSNvyinUsdgjo1EIbYqgUmdD/1myE90VSMX3G7K4f/WO/20+KJFbvEgrNiQJps4UGFSShQEpFOf6paHZ+7J4eWRCdfVcf32VwRDRumQZKvcspWQDr/+44xcq95s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522595; c=relaxed/simple;
-	bh=H4e2lzp0us3Ya3BW5lDlYF+YwfWc9vTN43hXv7U3X6Y=;
+	s=arc-20240116; t=1755522599; c=relaxed/simple;
+	bh=v7rLKxRfXL446stmEKcyOTrj965HoK+mRhf27+d1eI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dIkXuu5Zw07GaoF2L706k8dTPbLWe0VQDe7ake/SVdsuP9uWmkmTTF5rUkZNIBL/36CqhdexGwWMfMIbx82SQw4uUakGqIoFwne8e0FbOZZfRiLUz2L93pOW/hiNDOy2GJf/SAAKkJsC9E+AqElWa1jmqT3nsW2zY8/0Baykizo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQuUwIb0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzjBNiGMOWAp+bLhiD3yGcvdJyk2y2S/v0i6PXegOg3+Xr0jxgd5W/7IPX0fftFc9pUcOrKr/6QT6/iOjix7/Ihw3Pk+oHduKIdzIn+eyjBJnpZP49HV7Q1l7Nq1Do8eictIdKNVc5q7Um+MmX3Cz7JQazEM5TBPdQFlIrgBrAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToMpBaB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQuUwIb0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000D6C4CEEB;
-	Mon, 18 Aug 2025 13:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToMpBaB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC11C4CEEB;
+	Mon, 18 Aug 2025 13:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522595;
-	bh=H4e2lzp0us3Ya3BW5lDlYF+YwfWc9vTN43hXv7U3X6Y=;
+	s=korg; t=1755522598;
+	bh=v7rLKxRfXL446stmEKcyOTrj965HoK+mRhf27+d1eI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQuUwIb04No7P1XNQtq8GjXtc/sQ4eXTseBNiXWnfa9VtHa8nr504KkNj3ba8GYq8
-	 RMpkfGkd7ggZQqALxQppuFj7rKX1hIjUNm1PGEqSbRmBklvxExtCM6zDVdEvDc65vw
-	 Td6nEWrcbV1VXJLZBK427PY43s/sgBETFfVV4qmo=
+	b=ToMpBaB2psmIskbH2S4OHVgkHTdtxdjWuOWcohTDqunUCeEjasLn58voWcernjYr/
+	 Vcr54LlGp2JIXAEd8XZczcEShmtiiAX1hJd1lrLDuye/FpfSMZglJvqkLSMsX20WvV
+	 VUHxholg3X2KuDrw+XpHJD/YKB4fR2FPv7/V+EiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Gabriel Totev <gabriel.totev@zetier.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 330/444] rtc: ds1307: handle oscillator stop flag (OSF) for ds1341
-Date: Mon, 18 Aug 2025 14:45:56 +0200
-Message-ID: <20250818124501.306278296@linuxfoundation.org>
+Subject: [PATCH 6.12 331/444] apparmor: shift ouid when mediating hard links in userns
+Date: Mon, 18 Aug 2025 14:45:57 +0200
+Message-ID: <20250818124501.348388958@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,61 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+From: Gabriel Totev <gabriel.totev@zetier.com>
 
-[ Upstream commit 523923cfd5d622b8f4ba893fdaf29fa6adeb8c3e ]
+[ Upstream commit c5bf96d20fd787e4909b755de4705d52f3458836 ]
 
-In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-kernel time as long as rtc_read_time() succeeds. In some power loss
-situations, our supercapacitor-backed DS1342 RTC comes up with either an
-unpredictable future time or the default 01/01/00 from the datasheet.
-The oscillator stop flag (OSF) is set in these scenarios due to the
-power loss and can be used to determine the validity of the RTC data.
+When using AppArmor profiles inside an unprivileged container,
+the link operation observes an unshifted ouid.
+(tested with LXD and Incus)
 
-This change expands the oscillator stop flag (OSF) handling that has
-already been implemented for some chips to the ds1341 chip (DS1341 and
-DS1342 share a datasheet). This handling manages the validity of the RTC
-data in .read_time and .set_time based on the OSF.
+For example, root inside container and uid 1000000 outside, with
+`owner /root/link l,` profile entry for ln:
 
-Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/1749665656-30108-3-git-send-email-meaganlloyd@linux.microsoft.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+/root$ touch chain && ln chain link
+==> dmesg
+apparmor="DENIED" operation="link" class="file"
+namespace="root//lxd-feet_<var-snap-lxd-common-lxd>" profile="linkit"
+name="/root/link" pid=1655 comm="ln" requested_mask="l" denied_mask="l"
+fsuid=1000000 ouid=0 [<== should be 1000000] target="/root/chain"
+
+Fix by mapping inode uid of old_dentry in aa_path_link() rather than
+using it directly, similarly to how it's mapped in __file_path_perm()
+later in the file.
+
+Signed-off-by: Gabriel Totev <gabriel.totev@zetier.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ security/apparmor/file.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index c8a666de9cbe..c6d388bb4a19 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -279,6 +279,13 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 		if (tmp & DS1340_BIT_OSF)
- 			return -EINVAL;
- 		break;
-+	case ds_1341:
-+		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
-+		if (ret)
-+			return ret;
-+		if (tmp & DS1337_BIT_OSF)
-+			return -EINVAL;
-+		break;
- 	case ds_1388:
- 		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
- 		if (ret)
-@@ -377,6 +384,10 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
- 		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
- 				   DS1340_BIT_OSF, 0);
- 		break;
-+	case ds_1341:
-+		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
-+				   DS1337_BIT_OSF, 0);
-+		break;
- 	case ds_1388:
- 		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
- 				   DS1388_BIT_OSF, 0);
+diff --git a/security/apparmor/file.c b/security/apparmor/file.c
+index d52a5b14dad4..62bc46e03758 100644
+--- a/security/apparmor/file.c
++++ b/security/apparmor/file.c
+@@ -423,9 +423,11 @@ int aa_path_link(const struct cred *subj_cred,
+ {
+ 	struct path link = { .mnt = new_dir->mnt, .dentry = new_dentry };
+ 	struct path target = { .mnt = new_dir->mnt, .dentry = old_dentry };
++	struct inode *inode = d_backing_inode(old_dentry);
++	vfsuid_t vfsuid = i_uid_into_vfsuid(mnt_idmap(target.mnt), inode);
+ 	struct path_cond cond = {
+-		d_backing_inode(old_dentry)->i_uid,
+-		d_backing_inode(old_dentry)->i_mode
++		.uid = vfsuid_into_kuid(vfsuid),
++		.mode = inode->i_mode,
+ 	};
+ 	char *buffer = NULL, *buffer2 = NULL;
+ 	struct aa_profile *profile;
 -- 
 2.39.5
 
