@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A4B340D98;
-	Mon, 18 Aug 2025 14:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D708431B11A;
+	Mon, 18 Aug 2025 14:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525773; cv=none; b=BWTVZVH6qoUx2Fpf+gJ/+JZKCDa4rJtSizupNYrbcPdSADRKsUkIy2COw+zZC1TnJ6pzzcv8K1XsIadafkWWwWoD3nELmS/ksJRnNNopttQNq2YtfTjBxHdFDs5eOILCK3NE1+x+7164wtP3YsbWrpPqP7//37MTY8bBrQK2sBU=
+	t=1755525775; cv=none; b=lQDzjhp+Qize9LR9fNLz619u+uNiJrHJN3yzm4+22O8idBPn48T0k3GLLPG/Rr7rY4CctVrSwYEI0NDssuOTaCgZ0XT5GQug3eEtfntthr++ny8DQi7cRylOlJhR7RoHtX5kSCxq459HXv+/ASIo0tz0isRnUC6Wn86auihmZgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525773; c=relaxed/simple;
-	bh=willZGGSEIhZHdXCISANgxVZMBoGxQxm9C74TSXoYiM=;
+	s=arc-20240116; t=1755525775; c=relaxed/simple;
+	bh=5UPAwShH11hPAp7RWW8HAcwSvVKtzU3pbqtJ9E721RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/pdifyk8fBfdKi+Mr3joOTGCD7pRVDBb4ItbmUd9ibs/jpJOoWEkTNYGYPPnR/WDrsuz/R1oOPNOF53kjs1ZaDh8wAWGsp76oiCjberwi2+ECxNr0wTd3ySkeN3MQ+PvGNOvAB6kT58fIhjeKV6s1ocV/4ADcYqgAsEVbEKP9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVv1zAtM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3FIvTnsPmMlmdCSnCTJS/32LwmX0o8DdltzIC9wdtDWqZ5brPgcjKqI9vekWibkPvaQTJvI88Q+5jI5D41WVHPbIpzyb4S7b5yyRXPa72tKXFAFU680K1y4jTWGXxKyP2R8oUtd4KI2hREn6qn0JCrZ+uEukMeGsNWN/bWbEyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDsZ1Hkv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVv1zAtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4D3C4CEEB;
-	Mon, 18 Aug 2025 14:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDsZ1Hkv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BBEC4CEEB;
+	Mon, 18 Aug 2025 14:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525772;
-	bh=willZGGSEIhZHdXCISANgxVZMBoGxQxm9C74TSXoYiM=;
+	s=korg; t=1755525775;
+	bh=5UPAwShH11hPAp7RWW8HAcwSvVKtzU3pbqtJ9E721RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cVv1zAtMQlSCYkSyfwLGbUS8SEy7IO99TQPqwv6Eg+gAzDGK4q/rtk/Ipp/P+bR2k
-	 zp19uLJhDoYL19bd8ijmjA9vJ9hPfD10MeOgkHL8xrFK77zxkvgxsPjhE6h8k+hP/4
-	 NWDflgqvaIXhKtznIbEjAStAeRIsbOLBb1HpLNX4=
+	b=fDsZ1HkvAeQ2Sr/z0qf0XeMMTXvuGhbRBs4C545xklKA4mtPwpo/5+dXUs13Mohc4
+	 MPa8BpDCtO2PeOhpkB4G27glju2Enss8HHH2feqNngSM+8CWNY1FuqaMFgmoZ+5wWn
+	 RVI/pWvHkr8mWmnNv4uJWR4baKQs1S3JZmewK8h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongzhen Zhang <zhangyongzhen@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+	Zhiqi Song <songzhiqi1@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 362/570] fbdev: fix potential buffer overflow in do_register_framebuffer()
-Date: Mon, 18 Aug 2025 14:45:49 +0200
-Message-ID: <20250818124519.810624237@linuxfoundation.org>
+Subject: [PATCH 6.16 363/570] crypto: hisilicon/hpre - fix dma unmap sequence
+Date: Mon, 18 Aug 2025 14:45:50 +0200
+Message-ID: <20250818124519.847513666@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,38 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongzhen Zhang <zhangyongzhen@kylinos.cn>
+From: Zhiqi Song <songzhiqi1@huawei.com>
 
-[ Upstream commit 523b84dc7ccea9c4d79126d6ed1cf9033cf83b05 ]
+[ Upstream commit 982fd1a74de63c388c060e4fa6f7fbd088d6d02e ]
 
-The current implementation may lead to buffer overflow when:
-1.  Unregistration creates NULL gaps in registered_fb[]
-2.  All array slots become occupied despite num_registered_fb < FB_MAX
-3.  The registration loop exceeds array bounds
+Perform DMA unmapping operations before processing data.
+Otherwise, there may be unsynchronized data accessed by
+the CPU when the SWIOTLB is enabled.
 
-Add boundary check to prevent registered_fb[FB_MAX] access.
-
-Signed-off-by: Yongzhen Zhang <zhangyongzhen@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbmem.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index dfcf5e4d1d4c..53f1719b1ae1 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -449,6 +449,9 @@ static int do_register_framebuffer(struct fb_info *fb_info)
- 		if (!registered_fb[i])
- 			break;
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index 61b5e1c5d019..1550c3818383 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -1491,11 +1491,13 @@ static void hpre_ecdh_cb(struct hpre_ctx *ctx, void *resp)
+ 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
+ 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
  
-+	if (i >= FB_MAX)
-+		return -ENXIO;
++	/* Do unmap before data processing */
++	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
 +
- 	if (!fb_info->modelist.prev || !fb_info->modelist.next)
- 		INIT_LIST_HEAD(&fb_info->modelist);
+ 	p = sg_virt(areq->dst);
+ 	memmove(p, p + ctx->key_sz - curve_sz, curve_sz);
+ 	memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);
  
+-	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
+ 	kpp_request_complete(areq, ret);
+ 
+ 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
+@@ -1808,9 +1810,11 @@ static void hpre_curve25519_cb(struct hpre_ctx *ctx, void *resp)
+ 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
+ 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
+ 
++	/* Do unmap before data processing */
++	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
++
+ 	hpre_key_to_big_end(sg_virt(areq->dst), CURVE25519_KEY_SIZE);
+ 
+-	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
+ 	kpp_request_complete(areq, ret);
+ 
+ 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
 -- 
 2.39.5
 
