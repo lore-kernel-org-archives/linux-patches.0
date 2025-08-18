@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE08F34AB12;
-	Mon, 18 Aug 2025 14:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F4433A00E;
+	Mon, 18 Aug 2025 14:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525716; cv=none; b=eevVmUMV+ywByct8W6Z7iFORC5K5x+xbsVeqKygYwc9JphW6mEZPnjC94WNvL19e26cfBvSglhoY25VuV44n+uUQnVoY4TvR6rtfjx9PT8h+CCEOUm78JwFuC2GC5xxFIylnzdrfyNNI4XXDeATgJwKp/DJ0DR3JRPvq1rqS2js=
+	t=1755525719; cv=none; b=AsABHJU5hX28UJ8ZPVa5GqKjAvkB/iIhvg56z3dcDpdIoVIIddsxJOG3VqHuJ9eFf9Qe4QMKauq9TwudAE0a2NSiUakB8IFahhzJMeTx4x0/A9M9BdUdRPVu7qc6uBMETS4ug0AiicmGOIx34pRcFO1qbD4uP/QtWcPqFMPmoQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525716; c=relaxed/simple;
-	bh=6L9driD62lbPkzRMEdL9JePXW8mkElxCl3vk/PooXfA=;
+	s=arc-20240116; t=1755525719; c=relaxed/simple;
+	bh=eNUUdnXxne5mlzshCF5uYNeC+BR2pQIKMdVK4caGEnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TifINYU4TF26ud7Tvg+qdSYlXOOn+LPpaJXThiYcLxQYIPlsSrM8mHVAhNdu1MA8eNGmJForTOvonpZokpFCok9BQTEfPspMueUtAxm8khc8iA0xNuo0aZW/tW0HpWyf0E2MlnDuPz85bMH/AmrUEEqKkeuSKwS78C9WTeyrwpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVfPEheu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vGloxbWnj9vALhSNLgL7kidV8NIrrbQ0G2eN6b2Bjs/C6pWwmDRRRDbM21HDckI58CfqE9q6QOi66T5h/rQo0k5CV3fB5x53Aa8DcYFBqwclbdzJTUVsny5fMGyLQVFVRJ1wa09GYMpsRVU42c2IxQ34zgGH5MFQIN8LtXpMriM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndl3IJn7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVfPEheu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E11EC4CEEB;
-	Mon, 18 Aug 2025 14:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndl3IJn7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBB3C4CEEB;
+	Mon, 18 Aug 2025 14:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525715;
-	bh=6L9driD62lbPkzRMEdL9JePXW8mkElxCl3vk/PooXfA=;
+	s=korg; t=1755525719;
+	bh=eNUUdnXxne5mlzshCF5uYNeC+BR2pQIKMdVK4caGEnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVfPEheuo/ACSW4XSn2i3r7zNkbi1xTNJ0njUNEl/jXx2vHx8xyNbTaMnLl+JEKLI
-	 9DVmH9Knx+aa0AxtGiLwYn0ZTrdw1MNlIxlcvx3iA6Q+Mmsnz9IBhacSQuX8UFB8sU
-	 jVSeVgkGsWXkIFOquxBBTzEUdUYuCUx3rheqwmD0=
+	b=ndl3IJn7UVjIyHl7+Xr0rZcaA9MmAGQ6VhHZxW5loS6TnTj+5eLf0Xo1n9WFmSVpP
+	 EgFCGETj7L1YYEqDq16d9SycEYnTWcBsYGDgeRlhE/KpiCrOgR0viSKiRdQIjcPzpB
+	 oqvLY5a31ZCC8tnHaBmfdHzQ7cKCaCcr3K1l1E3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 313/570] wifi: rtlwifi: fix possible skb memory leak in `_rtl_pci_rx_interrupt()`.
-Date: Mon, 18 Aug 2025 14:45:00 +0200
-Message-ID: <20250818124517.922421289@linuxfoundation.org>
+Subject: [PATCH 6.16 304/570] wifi: iwlwifi: mld: use the correct struct size for tracing
+Date: Mon, 18 Aug 2025 14:44:51 +0200
+Message-ID: <20250818124517.572186338@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,55 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 44c0e191004f0e3aa1bdee3be248be14dbe5b020 ]
+[ Upstream commit b2c1f9b6e3aac9567c84208b73d716cc5d456404 ]
 
-The function `_rtl_pci_init_one_rxdesc()` can fail even when the new
-`skb` is passed because of a DMA mapping error.  If it fails, the `skb`
-is not saved in the rx ringbuffer and thus lost.
+For the iwlmld driver the RX command is using struct iwl_rx_mpdu_desc
+and not the much older struct iwl_rx_mpdu_res_start. Adjust the value of
+rx_mpdu_cmd_hdr_size accordingly so that the trace data is correct.
 
-Compile tested only
-
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250616105631.444309-4-fourier.thomas@gmail.com
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250612144708.688d95d99ff3.Id3055ca6c19cf8c821cbbd80c09ca2a21d9acec7@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/mld.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 898f597f70a9..2741c3beac4c 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -802,13 +802,19 @@ static void _rtl_pci_rx_interrupt(struct ieee80211_hw *hw)
- 		skb = new_skb;
- no_new:
- 		if (rtlpriv->use_new_trx_flow) {
--			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
--						 rxring_idx,
--						 rtlpci->rx_ring[rxring_idx].idx);
-+			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
-+						      rxring_idx,
-+						      rtlpci->rx_ring[rxring_idx].idx)) {
-+				if (new_skb)
-+					dev_kfree_skb_any(skb);
-+			}
- 		} else {
--			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
--						 rxring_idx,
--						 rtlpci->rx_ring[rxring_idx].idx);
-+			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
-+						      rxring_idx,
-+						      rtlpci->rx_ring[rxring_idx].idx)) {
-+				if (new_skb)
-+					dev_kfree_skb_any(skb);
-+			}
- 			if (rtlpci->rx_ring[rxring_idx].idx ==
- 			    rtlpci->rxringcount - 1)
- 				rtlpriv->cfg->ops->set_desc(hw, (u8 *)pdesc,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+index 1774bb84dd3f..2a6088e8f4c7 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+@@ -357,7 +357,7 @@ iwl_mld_configure_trans(struct iwl_op_mode *op_mode)
+ 	trans->conf.n_no_reclaim_cmds = ARRAY_SIZE(no_reclaim_cmds);
+ 
+ 	trans->conf.rx_mpdu_cmd = REPLY_RX_MPDU_CMD;
+-	trans->conf.rx_mpdu_cmd_hdr_size = sizeof(struct iwl_rx_mpdu_res_start);
++	trans->conf.rx_mpdu_cmd_hdr_size = sizeof(struct iwl_rx_mpdu_desc);
+ 	trans->conf.wide_cmd_header = true;
+ 
+ 	iwl_trans_op_mode_enter(trans, op_mode);
 -- 
 2.39.5
 
