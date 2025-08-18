@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229DC226D1F;
-	Mon, 18 Aug 2025 13:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9469B321F20;
+	Mon, 18 Aug 2025 13:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523399; cv=none; b=pr9+M7xt5NSsBiVM4ZSA4JiLEhqib7JNb1Ohzmis9ItactSG0M5tGJDEQ/Z9B63z3vjUY/g2FfvG5/5tUfc2ZyI07QrIRdqeR4mAcTXZblXJQmpmebNVfSd8/Ua9NKjRsgDFY4zldqvVu4RWa07XtOmZkYMP8prWgAoO9GbZmrc=
+	t=1755523402; cv=none; b=Pio5KT3UPzNbpQ7H16wr8Ay5xy5IvMbOmY7V2X7TQzuj4HcmIjhqsw+586Cpn038jkHDWwnktuFrH3/WFmCC7tW5aEtU/TlwbfQuePhmPQZIc9eo/KqNJXxVsY9hr7J05i0c/L9XkBBrOaqplK0/Lh+P1TSRay9B5O2lPs54A9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523399; c=relaxed/simple;
-	bh=cXn/ug5C4K5zFoIxujM+Eji7OgPn1h695sc+ITM7Up0=;
+	s=arc-20240116; t=1755523402; c=relaxed/simple;
+	bh=el5m8y5mGmFYQO+MCZxIVeV1qFSeVQfC+scHDlPW6KA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cXf17NZCgf9luHhngwDyzuXiNIgHNxqBdPq3xb79mmF8r/HzpzlQ7g61V7w1u5xzi8egLgA0z6aWV8CnNkuG+kYD+QmCgIhPIMebFPmZOET9DqF5YDJThSGQwrY/5V+TIEH+EQPj8eWcNAvBdHu4T2S1yBOCuFneadtVh57vpB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Js5bjhXV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=igEgX2rCQnKMFpfjbsgrWbwCM4858BtBpZylG0kZA/vY5so1nbcDMtm/hIqR2Zx8mocyM23j3o+2a9bjMkDOnbBuBTXxcPF6T9PaYjc8GbU+eYOqN3XROljt2IWUDZekKDFnj8sVR+LfHyxYQeM7ejEVN2HkRJWVnCA20nkwZ1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVHiYqdp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Js5bjhXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99012C4CEEB;
-	Mon, 18 Aug 2025 13:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVHiYqdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05521C4CEEB;
+	Mon, 18 Aug 2025 13:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523399;
-	bh=cXn/ug5C4K5zFoIxujM+Eji7OgPn1h695sc+ITM7Up0=;
+	s=korg; t=1755523402;
+	bh=el5m8y5mGmFYQO+MCZxIVeV1qFSeVQfC+scHDlPW6KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Js5bjhXVIgE8XKXgHtffftwxeA7eVv+aLdDx2TEkPC7eSGa+9dxask+39A1Rkj6sz
-	 awl50gws1hTDTSjOGgxIJWFQCPLHtLMHgIJdBvuMpGMF+MJhgkuqWStqbQyoggIMsC
-	 FZ4tDTkDzug3Hq59a1VrYYmgCJjDM80AuyRxtSPc=
+	b=AVHiYqdp1kPAGRvagKE6nkGngwLFhDVEUcYnsy6bltNM0jrBR+2qP/ZvZh96EU1xm
+	 mkvzfDz+FO74sTYCCwB9DwiDf21SGMrtZBTY4aiPLFUsbFwo/5li1NyeiGW2MpK6hl
+	 vLVL/idocKY+IwoQAM9vDLZqlVSpJE9YOznAvz9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 160/515] reset: brcmstb: Enable reset drivers for ARCH_BCM2835
-Date: Mon, 18 Aug 2025 14:42:26 +0200
-Message-ID: <20250818124504.542962084@linuxfoundation.org>
+Subject: [PATCH 6.15 161/515] ASoC: SDCA: Add flag for unused IRQs
+Date: Mon, 18 Aug 2025 14:42:27 +0200
+Message-ID: <20250818124504.581377603@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,57 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Robinson <pbrobinson@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 1d99f92f71b6b4b2eee776562c991428490f71ef ]
+[ Upstream commit 775f5729b47d8737f4f98e0141f61b3358245398 ]
 
-The BRCMSTB and BRCMSTB_RESCAL reset drivers are also
-used in the BCM2712, AKA the RPi5. The RPi platforms
-have typically used the ARCH_BCM2835, and the PCIe
-support for this SoC can use this config which depends
-on these drivers so enable building them when just that
-arch option is enabled to ensure the platform works as
-expected.
+Zero is a valid SDCA IRQ interrupt position so add a special value to
+indicate that the IRQ is not used.
 
-Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20250630175301.846082-1-pbrobinson@gmail.com
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20250624122844.2761627-6-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/reset/Kconfig | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/sound/sdca_function.h   | 2 ++
+ sound/soc/sdca/sdca_functions.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-index 99f6f9784e68..c9bbdc6ac382 100644
---- a/drivers/reset/Kconfig
-+++ b/drivers/reset/Kconfig
-@@ -51,8 +51,8 @@ config RESET_BERLIN
+diff --git a/include/sound/sdca_function.h b/include/sound/sdca_function.h
+index 253654568a41..1403a9f46976 100644
+--- a/include/sound/sdca_function.h
++++ b/include/sound/sdca_function.h
+@@ -16,6 +16,8 @@ struct device;
+ struct sdca_entity;
+ struct sdca_function_desc;
  
- config RESET_BRCMSTB
- 	tristate "Broadcom STB reset controller"
--	depends on ARCH_BRCMSTB || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
-+	default ARCH_BRCMSTB || ARCH_BCM2835
- 	help
- 	  This enables the reset controller driver for Broadcom STB SoCs using
- 	  a SUN_TOP_CTRL_SW_INIT style controller.
-@@ -60,11 +60,11 @@ config RESET_BRCMSTB
- config RESET_BRCMSTB_RESCAL
- 	tristate "Broadcom STB RESCAL reset controller"
- 	depends on HAS_IOMEM
--	depends on ARCH_BRCMSTB || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
-+	default ARCH_BRCMSTB || ARCH_BCM2835
- 	help
- 	  This enables the RESCAL reset controller for SATA, PCIe0, or PCIe1 on
--	  BCM7216.
-+	  BCM7216 or the BCM2712.
++#define SDCA_NO_INTERRUPT -1
++
+ /*
+  * The addressing space for SDCA relies on 7 bits for Entities, so a
+  * maximum of 128 Entities per function can be represented.
+diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
+index 15aa57a07c73..e1803f0dc590 100644
+--- a/sound/soc/sdca/sdca_functions.c
++++ b/sound/soc/sdca/sdca_functions.c
+@@ -912,6 +912,8 @@ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *enti
+ 				       &tmp);
+ 	if (!ret)
+ 		control->interrupt_position = tmp;
++	else
++		control->interrupt_position = SDCA_NO_INTERRUPT;
  
- config RESET_EYEQ
- 	bool "Mobileye EyeQ reset controller"
+ 	control->label = find_sdca_control_label(dev, entity, control);
+ 	if (!control->label)
 -- 
 2.39.5
 
