@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF41731E10F;
-	Mon, 18 Aug 2025 13:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EEE31E0F2;
+	Mon, 18 Aug 2025 13:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522324; cv=none; b=ZYj6m4HDZM8or+lzsnG63PghGzN1/9d38AhJtmpFx033sI4XUXQ1ock4HI27HRTifntXc6IDZRsbWOQgk7KuNhULrHOeabpEc9d+qu3Yl4ZJ58qQZBr3k3mnyqOBJxWPMNzeNyVhL6EjCx1nVXznlPqG9USpLBSTVc5GUG+uk+8=
+	t=1755522328; cv=none; b=J95sA9EmVQNNb9/9gdqMIVu63RvFD3BOnW3xlyhtzWiB0GA6boRFCCJ8nhNi8WFTm0w3jWWiAU6onzZ7fT0wVfBxtAefxDimJk/1BUVViyXtb8yAfJO7rb2fO6Eu0BUFMPPzlkwx5WDAZj5htQEWb/Ajr5Z6vKSytZLx0iAFBKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522324; c=relaxed/simple;
-	bh=3RyiJk7Tkn2xviZ8KZMVN+UD72jrCRz1ogOrrzMx9kI=;
+	s=arc-20240116; t=1755522328; c=relaxed/simple;
+	bh=jyFzuMAG6WmVNF0BPNRguU1BqccO17jNULPynGhTiek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzG408uBsXMHLjF6Tvzqv0mg9Yapq3q6OIIVzDehIT0NM4MwU9fHSum0GgKc9++gORqCeX+ff8L6LhODarJoXNpwspzykBO8leJkvvJstQO54PPOnbfPIhGTsaou+rnujgTcbTtFJG6wr6DJ5g6LMjTG7WOTj6o+xM2WeMSFEMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6IeI14w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AjGxtfsQw2ITjomJ40l68vHK8yrNg7v7FfI8cYw9kGLdcHxQ/s/vBHSaYD0xf6xep1nX0u4TBuoP3exCgJ8jBgZnrzoYV7k2XW/Gmay8G+GWwfOqZMUv+dBvJ9RFKiZ+LF4DQesVhl3lrluiQu15MPLCse9z6qDTTILX55nEurk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLQJqGH/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6IeI14w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4BAC4CEEB;
-	Mon, 18 Aug 2025 13:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLQJqGH/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A729C4CEEB;
+	Mon, 18 Aug 2025 13:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522324;
-	bh=3RyiJk7Tkn2xviZ8KZMVN+UD72jrCRz1ogOrrzMx9kI=;
+	s=korg; t=1755522328;
+	bh=jyFzuMAG6WmVNF0BPNRguU1BqccO17jNULPynGhTiek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6IeI14w8cknYSwfs/58piITDsdrFHjNQfWlA9B1PBp8bK5+uxqw/bPTusMKnY2iE
-	 S7FVAjTXKIZle1qEPJlS4h9fqZiagk5VX8KqGwFoLkEKXKXgpI8XwKpq+tk5ax1DVQ
-	 WnrD87a2ETdLuUj+m/TzjCVRg8q1WBhdoKqvLiZ8=
+	b=kLQJqGH/QB9PS4rpPPdMoesBuhjGDgN46czV6YTkn0OtKrTxZFbi5UuTylvUPbMtr
+	 yeZK2I8RyPqIc/oYZaNJOJ9L2AlxwcxrGFIyyPBbmdrJCm5AMuhUUtrlSwTv7loEOf
+	 gpm7FNDVPiCt2LPZxC+72VWO6eCQzi03h0Fwc/mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@csie.org>,
-	Lee Jones <lee@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 282/444] mfd: axp20x: Set explicit ID for AXP313 regulator
-Date: Mon, 18 Aug 2025 14:45:08 +0200
-Message-ID: <20250818124459.539580632@linuxfoundation.org>
+Subject: [PATCH 6.12 256/444] wifi: rtlwifi: fix possible skb memory leak in _rtl_pci_init_one_rxdesc()
+Date: Mon, 18 Aug 2025 14:44:42 +0200
+Message-ID: <20250818124458.429571005@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,47 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@csie.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 88828c7e940dd45d139ad4a39d702b23840a37c5 ]
+[ Upstream commit 76b3e5078d76f0eeadb7aacf9845399f8473da0d ]
 
-On newer boards featuring the A523 SoC, the AXP323 (related to the
-AXP313) is paired with the AXP717 and serves as a secondary PMIC
-providing additional regulator outputs. However the MFD cells are all
-registered with PLATFORM_DEVID_NONE, which causes the regulator cells
-to conflict with each other.
+When `dma_mapping_error()` is true, if a new `skb` has been allocated,
+then it must be de-allocated.
 
-Commit e37ec3218870 ("mfd: axp20x: Allow multiple regulators") attempted
-to fix this by switching to PLATFORM_DEVID_AUTO so that the device names
-would all be different, however that broke IIO channel mapping, which is
-also tied to the device names. As a result the change was later reverted.
+Compile tested only
 
-Instead, here we attempt to make sure the AXP313/AXP323 regulator cell
-does not conflict by explicitly giving it an ID number. This was
-previously done for the AXP809+AXP806 pair used with the A80 SoC.
-
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://lore.kernel.org/r/20250619173207.3367126-1-wens@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250613074014.69856-2-fourier.thomas@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/axp20x.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
-index 378092903971..cbf1029d0333 100644
---- a/drivers/mfd/axp20x.c
-+++ b/drivers/mfd/axp20x.c
-@@ -1034,7 +1034,8 @@ static const struct mfd_cell axp152_cells[] = {
- };
- 
- static struct mfd_cell axp313a_cells[] = {
--	MFD_CELL_NAME("axp20x-regulator"),
-+	/* AXP323 is sometimes paired with AXP717 as sub-PMIC */
-+	MFD_CELL_BASIC("axp20x-regulator", NULL, NULL, 0, 1),
- 	MFD_CELL_RES("axp313a-pek", axp313a_pek_resources),
- };
- 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 2741c3beac4c..d080469264cf 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -572,8 +572,11 @@ static int _rtl_pci_init_one_rxdesc(struct ieee80211_hw *hw,
+ 		dma_map_single(&rtlpci->pdev->dev, skb_tail_pointer(skb),
+ 			       rtlpci->rxbuffersize, DMA_FROM_DEVICE);
+ 	bufferaddress = *((dma_addr_t *)skb->cb);
+-	if (dma_mapping_error(&rtlpci->pdev->dev, bufferaddress))
++	if (dma_mapping_error(&rtlpci->pdev->dev, bufferaddress)) {
++		if (!new_skb)
++			kfree_skb(skb);
+ 		return 0;
++	}
+ 	rtlpci->rx_ring[rxring_idx].rx_buf[desc_idx] = skb;
+ 	if (rtlpriv->use_new_trx_flow) {
+ 		/* skb->cb may be 64 bit address */
 -- 
 2.39.5
 
