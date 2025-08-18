@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FF9322A3B;
-	Mon, 18 Aug 2025 13:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EDA2206AF;
+	Mon, 18 Aug 2025 13:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524089; cv=none; b=A9nokB8BCJOzrwK6xWzPfLQEIVv+k62inClQDtHwMh28N/KZmcYH1Z+vdLTLD8QzkrAZwRq4FMl+q2TJCEBBAG4ig40plo8f+oos+9zEbuklWF7RGMGQWC6JMZw7oj3+7eAGCys0hc1q3TKBIz/tGe9iU26p1B8XG7L1KPxW0X8=
+	t=1755524092; cv=none; b=mhbrq9fAHqiq/O84P0+vLBVQNPH1+aWPa1DPFkc8os/BvC70KRWysIK3nUcfuJDuiFqNAV5FYjywLC81rEhJyx6n3AK3Arn4e/1A5OLBoayZ53Ax19zaolYyagP1kfMtJ5LiFG5cuFl1q+TILh13MZYm+fAX7g+Luz4X0twkA+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524089; c=relaxed/simple;
-	bh=d249Xq/0KMFhKiOcBfcIjX5dtUuDLjkFVRKgPsdongE=;
+	s=arc-20240116; t=1755524092; c=relaxed/simple;
+	bh=XGj9quBjVw+uok/kcuJrIehuBxpYrEuz5s1hDZkH7HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rgZ8N6TyO/KOw9Jx6yloE1ck0M49Qq1rfY/dM8W3fsy1Y7wHDzbSbbM8cpDLcWTgg9sxCmK4X49DWzb4EcyhODZB/xR4fIim4gh6VSO6CLf6p3O7a4afL2bKQ9QbNqTIJ6FeTJlcSkqCt16bYrtWw9AlHhmiqN29URm6nw3KzPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCSQ5aEg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=th3tz59ftOL+y6mkHLq5uBo/OuZ3FZaGi4ojz6QrJoTf6W3e8WDePwQSImachh1p8Ou20iEei+5Fzp0dHpDzEbId1b0EL2oQ4Wf9VkmeElD7UJZTQsy3fqXQbQ+fLzoP/zRXut5LEAzeRUBIFJw3+IikLcjRvvOat87vlwH22W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUGqYtxv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCSQ5aEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76843C4CEF1;
-	Mon, 18 Aug 2025 13:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUGqYtxv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA59C4CEEB;
+	Mon, 18 Aug 2025 13:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524088;
-	bh=d249Xq/0KMFhKiOcBfcIjX5dtUuDLjkFVRKgPsdongE=;
+	s=korg; t=1755524092;
+	bh=XGj9quBjVw+uok/kcuJrIehuBxpYrEuz5s1hDZkH7HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PCSQ5aEgvkO0ON3Fpn7ANmCY1c/cXArUuWXr7UM/xojrgCeVO+EEtBJo5HPCrDWtA
-	 8N/LgG7rb5/wwNXGBWX2aIlcoE8CzcF2bxvMcKWVhbsUpL9hV6as6KQJTVLjTlN/z0
-	 9yNufv3o1/GQmu6KtHfvSfEVsXPg42DW1+2pAiP8=
+	b=zUGqYtxv2ikimw+cvG8eREJ8o1Uq3fDOm81V88tqg3sLhPWcgn8t4zUOYhfEIbP28
+	 q7BLcOI3d7+OjSotDZ9CQ9xjxz9AhGqMUgBWzWDly2rmPUFZolbrohWxGnW/tF4f8H
+	 U1JYo3c+Xal2SiGIvzMSLVf14JbZaQ/5Gy4zt1kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	David Howells <dhowells@redhat.com>,
+	Pierguido Lambri <plambri@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 332/515] cifs: Fix calling CIFSFindFirst() for root path without msearch
-Date: Mon, 18 Aug 2025 14:45:18 +0200
-Message-ID: <20250818124511.212077996@linuxfoundation.org>
+Subject: [PATCH 6.15 333/515] smb: client: fix session setup against servers that require SPN
+Date: Mon, 18 Aug 2025 14:45:19 +0200
+Message-ID: <20250818124511.248546758@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -45,62 +48,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit b460249b9a1dab7a9f58483e5349d045ad6d585c ]
+[ Upstream commit 33cfdd726381828b9907a61c038a9f48b6690a31 ]
 
-To query root path (without msearch wildcard) it is needed to
-send pattern '\' instead of '' (empty string).
+Some servers might enforce the SPN to be set in the target info
+blob (AV pairs) when sending NTLMSSP_AUTH message.  In Windows Server,
+this could be enforced with SmbServerNameHardeningLevel set to 2.
 
-This allows to use CIFSFindFirst() to query information about root path
-which is being used in followup changes.
+Fix this by always appending SPN (cifs/<hostname>) to the existing
+list of target infos when setting up NTLMv2 response blob.
 
-This change fixes the stat() syscall called on the root path on the mount.
-It is because stat() syscall uses the cifs_query_path_info() function and
-it can fallback to the CIFSFindFirst() usage with msearch=false.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: David Howells <dhowells@redhat.com>
+Reported-by: Pierguido Lambri <plambri@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/smb/client/cifsencrypt.c | 79 ++++++++++++++++++++++++++++---------
+ 1 file changed, 61 insertions(+), 18 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 0e509a0433fb..4a6d1d83630f 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -4000,6 +4000,12 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- 			pSMB->FileName[name_len] = 0;
- 			pSMB->FileName[name_len+1] = 0;
- 			name_len += 2;
-+		} else if (!searchName[0]) {
-+			pSMB->FileName[0] = CIFS_DIR_SEP(cifs_sb);
-+			pSMB->FileName[1] = 0;
-+			pSMB->FileName[2] = 0;
-+			pSMB->FileName[3] = 0;
-+			name_len = 4;
- 		}
- 	} else {
- 		name_len = copy_path_name(pSMB->FileName, searchName);
-@@ -4011,6 +4017,10 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- 			pSMB->FileName[name_len] = '*';
- 			pSMB->FileName[name_len+1] = 0;
- 			name_len += 2;
-+		} else if (!searchName[0]) {
-+			pSMB->FileName[0] = CIFS_DIR_SEP(cifs_sb);
-+			pSMB->FileName[1] = 0;
-+			name_len = 2;
- 		}
- 	}
+diff --git a/fs/smb/client/cifsencrypt.c b/fs/smb/client/cifsencrypt.c
+index 6be850d2a346..3cc686246908 100644
+--- a/fs/smb/client/cifsencrypt.c
++++ b/fs/smb/client/cifsencrypt.c
+@@ -532,17 +532,67 @@ CalcNTLMv2_response(const struct cifs_ses *ses, char *ntlmv2_hash, struct shash_
+ 	return rc;
+ }
  
++/*
++ * Set up NTLMv2 response blob with SPN (cifs/<hostname>) appended to the
++ * existing list of AV pairs.
++ */
++static int set_auth_key_response(struct cifs_ses *ses)
++{
++	size_t baselen = CIFS_SESS_KEY_SIZE + sizeof(struct ntlmv2_resp);
++	size_t len, spnlen, tilen = 0, num_avs = 2 /* SPN + EOL */;
++	struct TCP_Server_Info *server = ses->server;
++	char *spn __free(kfree) = NULL;
++	struct ntlmssp2_name *av;
++	char *rsp = NULL;
++	int rc;
++
++	spnlen = strlen(server->hostname);
++	len = sizeof("cifs/") + spnlen;
++	spn = kmalloc(len, GFP_KERNEL);
++	if (!spn) {
++		rc = -ENOMEM;
++		goto out;
++	}
++
++	spnlen = scnprintf(spn, len, "cifs/%.*s",
++			   (int)spnlen, server->hostname);
++
++	av_for_each_entry(ses, av)
++		tilen += sizeof(*av) + AV_LEN(av);
++
++	len = baselen + tilen + spnlen * sizeof(__le16) + num_avs * sizeof(*av);
++	rsp = kmalloc(len, GFP_KERNEL);
++	if (!rsp) {
++		rc = -ENOMEM;
++		goto out;
++	}
++
++	memcpy(rsp + baselen, ses->auth_key.response, tilen);
++	av = (void *)(rsp + baselen + tilen);
++	av->type = cpu_to_le16(NTLMSSP_AV_TARGET_NAME);
++	av->length = cpu_to_le16(spnlen * sizeof(__le16));
++	cifs_strtoUTF16((__le16 *)av->data, spn, spnlen, ses->local_nls);
++	av = (void *)((__u8 *)av + sizeof(*av) + AV_LEN(av));
++	av->type = cpu_to_le16(NTLMSSP_AV_EOL);
++	av->length = 0;
++
++	rc = 0;
++	ses->auth_key.len = len;
++out:
++	ses->auth_key.response = rsp;
++	return rc;
++}
++
+ int
+ setup_ntlmv2_rsp(struct cifs_ses *ses, const struct nls_table *nls_cp)
+ {
+ 	struct shash_desc *hmacmd5 = NULL;
+-	int rc;
+-	int baselen;
+-	unsigned int tilen;
++	unsigned char *tiblob = NULL; /* target info blob */
+ 	struct ntlmv2_resp *ntlmv2;
+ 	char ntlmv2_hash[16];
+-	unsigned char *tiblob = NULL; /* target info blob */
+ 	__le64 rsp_timestamp;
++	__u64 cc;
++	int rc;
+ 
+ 	if (nls_cp == NULL) {
+ 		cifs_dbg(VFS, "%s called with nls_cp==NULL\n", __func__);
+@@ -588,32 +638,25 @@ setup_ntlmv2_rsp(struct cifs_ses *ses, const struct nls_table *nls_cp)
+ 	 * (as Windows 7 does)
+ 	 */
+ 	rsp_timestamp = find_timestamp(ses);
++	get_random_bytes(&cc, sizeof(cc));
+ 
+-	baselen = CIFS_SESS_KEY_SIZE + sizeof(struct ntlmv2_resp);
+-	tilen = ses->auth_key.len;
+-	tiblob = ses->auth_key.response;
++	cifs_server_lock(ses->server);
+ 
+-	ses->auth_key.response = kmalloc(baselen + tilen, GFP_KERNEL);
+-	if (!ses->auth_key.response) {
+-		rc = -ENOMEM;
++	tiblob = ses->auth_key.response;
++	rc = set_auth_key_response(ses);
++	if (rc) {
+ 		ses->auth_key.len = 0;
+-		goto setup_ntlmv2_rsp_ret;
++		goto unlock;
+ 	}
+-	ses->auth_key.len += baselen;
+ 
+ 	ntlmv2 = (struct ntlmv2_resp *)
+ 			(ses->auth_key.response + CIFS_SESS_KEY_SIZE);
+ 	ntlmv2->blob_signature = cpu_to_le32(0x00000101);
+ 	ntlmv2->reserved = 0;
+ 	ntlmv2->time = rsp_timestamp;
+-
+-	get_random_bytes(&ntlmv2->client_chal, sizeof(ntlmv2->client_chal));
++	ntlmv2->client_chal = cc;
+ 	ntlmv2->reserved2 = 0;
+ 
+-	memcpy(ses->auth_key.response + baselen, tiblob, tilen);
+-
+-	cifs_server_lock(ses->server);
+-
+ 	rc = cifs_alloc_hash("hmac(md5)", &hmacmd5);
+ 	if (rc) {
+ 		cifs_dbg(VFS, "Could not allocate HMAC-MD5, rc=%d\n", rc);
 -- 
 2.39.5
 
