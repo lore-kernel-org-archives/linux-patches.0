@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3473218C2;
-	Mon, 18 Aug 2025 13:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32AA27B33A;
+	Mon, 18 Aug 2025 13:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522602; cv=none; b=gEOBlnZAdQDO2TYsDxZov+k6kBi4loZpc7SAzmkdaHZIQUlFVaDnPgsGNLZrflyp1yE7vpdOoXIwdrZ5WkvB7A7KXMV/sgn+CkhQK7fvQeMIOXxJhYGQXWxCBUdkR9ZLqCaIQNe8XzfWoZZpJ/jbR0rdBSxNwMalhDXjRDw4HQM=
+	t=1755522605; cv=none; b=lA/PG5DzRFXF3/fDLnLYaVtqNsean2cpUoO7dD3ZE3BjvlePzV8IPSmiM/rrUYhBXz8l0NOcO3utv1Q8NkpBbVJsZAQ9Y/BlP24qnz1I5Y1EFFmx38fIqHTdbvAmMwSNqM4DaG+njXv2HKYnRwl/F4KqpCUw3+9tUVZfpSlm018=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522602; c=relaxed/simple;
-	bh=3vxscwt8MUZob2lmux8JLPRFMLlo7o+s6mF2sXfT07c=;
+	s=arc-20240116; t=1755522605; c=relaxed/simple;
+	bh=w0nLIXYHF9W/qTkDEuzwIRE7ChgtavOvUZqZf7ozRNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEKOS3PGZiv68Q3UNG8qnq+qeYlFnKZTCVqZ/aJbeHAU86GfPZTLO905cDCJAcHKtrYmQpg3XJyy6oxcwnR9LGBEl9ugWKvCXzBkuKb2MuIhE0XXmN275Y3AnFUg46UKRvNVFYRuz8Svl8ip5N+sKt2jin5+w+HgwSwSqLTBrZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgeSXnmz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XRwVhWLcthazIXgGI2HhprtZkUaI1xuoyVlhqfzrd3vhDa8vSYHNvDHHByNEL5Qsjf9XCd2FJxCH5SNiKQr6SrpReEF+MPoCGIg9IsCkKHG6osf21SDLRChJttWWbqrLCi5N0hws9QbiJe17OSPa2WBOzJifY/8BCa9Xdnf+Ekc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+0UaCFd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgeSXnmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4A0C4CEEB;
-	Mon, 18 Aug 2025 13:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+0UaCFd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23097C4CEEB;
+	Mon, 18 Aug 2025 13:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522602;
-	bh=3vxscwt8MUZob2lmux8JLPRFMLlo7o+s6mF2sXfT07c=;
+	s=korg; t=1755522605;
+	bh=w0nLIXYHF9W/qTkDEuzwIRE7ChgtavOvUZqZf7ozRNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgeSXnmzKTeGDGQ9d70tguF07Mep6gNnzCwR+u+jCUkzoOtbDXMZ18U3FoYcOYhY1
-	 hMg6DyOAnw9S2WfJ4g1o+KNGpBAh+ZXhPMPFI3eKyp/+GiRw127tx63vXKqTF1xF+u
-	 sgFnIN2MrZBLGk/kVo/vu+ArrbKhytny39oeZgQ8=
+	b=f+0UaCFdVDgdgZ3WpI/qQZqUPs1IElV87UHoomGBtLVbSLVsCRTFnnR7+1LNo4V9Y
+	 ao5nPM1RYqfhQtMGli6uBGbqm2CK9p7PGWNK4X7KbKypWEiC6dYqXeCx9GIUqwezIf
+	 2LF8TSP1LAJ+AUtAynauTx/sgw2b52kMJdaLr0o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Jorge Marques <jorge.marques@analog.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 332/444] i3c: dont fail if GETHDRCAP is unsupported
-Date: Mon, 18 Aug 2025 14:45:58 +0200
-Message-ID: <20250818124501.384772001@linuxfoundation.org>
+Subject: [PATCH 6.12 333/444] i3c: master: Initialize ret in i3c_i2c_notifier_call()
+Date: Mon, 18 Aug 2025 14:45:59 +0200
+Message-ID: <20250818124501.420966556@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,40 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Jorge Marques <jorge.marques@analog.com>
 
-[ Upstream commit 447270cdb41b1c8c3621bb14b93a6749f942556e ]
+[ Upstream commit 290ce8b2d0745e45a3155268184523a8c75996f1 ]
 
-'I3C_BCR_HDR_CAP' is still spec v1.0 and has been renamed to 'advanced
-capabilities' in v1.1 onwards. The ST pressure sensor LPS22DF does not
-have HDR, but has the 'advanced cap' bit set. The core still wants to
-get additional information using the CCC 'GETHDRCAP' (or GETCAPS in v1.1
-onwards). Not all controllers support this CCC and will notify the upper
-layers about it. For instantiating the device, we can ignore this
-unsupported CCC as standard communication will work. Without this patch,
-the device will not be instantiated at all.
+Set ret to -EINVAL if i3c_i2c_notifier_call() receives an invalid
+action, resolving uninitialized warning.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Jorge Marques <jorge.marques@analog.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250704204524.6124-1-wsa+renesas@sang-engineering.com
+Link: https://lore.kernel.org/r/20250622-i3c-master-ret-uninitialized-v1-1-aabb5625c932@analog.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 7c1dc42b809b..9b7a34f9eca2 100644
+index 9b7a34f9eca2..c8e5c9291ea4 100644
 --- a/drivers/i3c/master.c
 +++ b/drivers/i3c/master.c
-@@ -1439,7 +1439,7 @@ static int i3c_master_retrieve_dev_info(struct i3c_dev_desc *dev)
- 
- 	if (dev->info.bcr & I3C_BCR_HDR_CAP) {
- 		ret = i3c_master_gethdrcap_locked(master, &dev->info);
--		if (ret)
-+		if (ret && ret != -ENOTSUPP)
- 			return ret;
+@@ -2471,6 +2471,8 @@ static int i3c_i2c_notifier_call(struct notifier_block *nb, unsigned long action
+ 	case BUS_NOTIFY_DEL_DEVICE:
+ 		ret = i3c_master_i2c_detach(adap, client);
+ 		break;
++	default:
++		ret = -EINVAL;
  	}
+ 	i3c_bus_maintenance_unlock(&master->bus);
  
 -- 
 2.39.5
