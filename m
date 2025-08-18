@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF8B2206AF;
-	Mon, 18 Aug 2025 13:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AFE30C37D;
+	Mon, 18 Aug 2025 13:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524536; cv=none; b=QXAc3IP4FZgvDip9FR4pqTbHBo7LQdHNfgbxB8bQqT9NlQC5kh4vkt8V7mPeXXm1l+i1SYkXanxa/nzTlp/WF9s60trqXcx1aNl043OrbjkyRZfRGeMGHC8Ha2135ejlsqMr7EAjQI39hSKvv7Vtfae2CeCPOchNQuiftXaHv94=
+	t=1755524540; cv=none; b=OM1g617Ci7KELEvFLhl4F9/OOyvqGFAefDR6YyFidKDRFVMIXu1oInf2dL+IX2+nwpiVhJbDs2OBSKWveEDvup6igWbz3HHuWWesd+EHAI9c4oo8MPVrDQ6XUfxwW/EcLbMt51yglW+EtQjdCJUuAjzILsBO3DxvYOz3KROK7aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524536; c=relaxed/simple;
-	bh=4x7eWrwJ4zmn+cOI3n2P0+FNf6aPsKxWgHea9i/UmTQ=;
+	s=arc-20240116; t=1755524540; c=relaxed/simple;
+	bh=Gvk3ywyxTn02MVbFKPjtSPoDtdbMb/vwSirCps4vIbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hHxmsuFmxcN/4uvMFqj5We6QAlRbGR2CJw99QF9fq+jChVCmKM5HbxvIhSTtE9KKCMKfmGTCXkthaGY4QeGh+8yyHY6sUwuZrfxq3vdKQBLDNeBHdRqX4NGBiQAo9yREVnB0uQozech0MMO+JRTKPC87OiOh6OZdjTwPwdx05ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBtLsXbX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJL0aRWYrYGUwPThCdQKQFwjKO6a/XGG2ZKf2+mBZ3ZWFBhoauyIJQPmRT4w8WJCUyVYIMKUxNAJpVrYSf1nxasCnaNbb8UE5yK+YV/Pb/dAsGrMDXInCFLfpGZaQwHk+mlT/JR62/lvI9zZqEKek1VkfFQLzwMXbetb1zqJZOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFEy2gvH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBtLsXbX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF68DC116B1;
-	Mon, 18 Aug 2025 13:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFEy2gvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37827C4CEEB;
+	Mon, 18 Aug 2025 13:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524536;
-	bh=4x7eWrwJ4zmn+cOI3n2P0+FNf6aPsKxWgHea9i/UmTQ=;
+	s=korg; t=1755524539;
+	bh=Gvk3ywyxTn02MVbFKPjtSPoDtdbMb/vwSirCps4vIbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBtLsXbXEqN8YnZfqzoImEt1+HBOuH0aoWjDXs3dM5git2kCtqtvDcLkxudDyGGJ1
-	 4fuc5ZIZy8RkMsr5L1OtEBJwagNOtLcqzIfuNdRoPv/sUiWJIHFUZhoRiEtuuMWVyG
-	 OOudObCWMSqg7t9uTonFeAkQh33c15smKT8MWeGI=
+	b=lFEy2gvHOItZ1+hHFudbyMYBEXTUAXiYYs5GPwyTNLFxv4Nz7lNF5oZeeBC7PAPMJ
+	 VGXpYgBK53tm4OhXEj7jhWpTQW/4IYb0rMW5UxXi/FLPj9HqUW6tvgdV4LBWAlqgWS
+	 UxUXoY749pGLU1fguWsfbtO8sJ/rRR7vJIbhuyEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.15 471/515] btrfs: dont skip accounting in early ENOTTY return in btrfs_uring_encoded_read()
-Date: Mon, 18 Aug 2025 14:47:37 +0200
-Message-ID: <20250818124516.553493382@linuxfoundation.org>
+Subject: [PATCH 6.15 472/515] btrfs: qgroup: fix qgroup create ioctl returning success after quotas disabled
+Date: Mon, 18 Aug 2025 14:47:38 +0200
+Message-ID: <20250818124516.591415449@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,36 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit ea124ec327086325fc096abf42837dac471ac7ae upstream.
+commit 08530d6e638427e7e1344bd67bacc03882ba95b9 upstream.
 
-btrfs_uring_encoded_read() returns early with -ENOTTY if the uring_cmd
-is issued with IO_URING_F_COMPAT but the kernel doesn't support compat
-syscalls. However, this early return bypasses the syscall accounting.
-Go to out_acct instead to ensure the syscall is counted.
+When quotas are disabled qgroup ioctls are supposed to return -ENOTCONN,
+but the qgroup create ioctl stopped doing that when it races with a quota
+disable operation, returning 0 instead. This change of behaviour happened
+in commit 6ed05643ddb1 ("btrfs: create qgroup earlier in snapshot
+creation").
 
-Fixes: 34310c442e17 ("btrfs: add io_uring command for encoded reads (ENCODED_READ ioctl)")
-CC: stable@vger.kernel.org # 6.15+
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+The issue happens as follows:
+
+1) Task A enters btrfs_ioctl_qgroup_create(), qgroups are enabled and so
+   qgroup_enabled() returns true since fs_info->quota_root is not NULL;
+
+2) Task B enters btrfs_ioctl_quota_ctl() -> btrfs_quota_disable() and
+   disables qgroups, so now fs_info->quota_root is NULL;
+
+3) Task A enters btrfs_create_qgroup() and calls btrfs_qgroup_mode(),
+   which returns BTRFS_QGROUP_MODE_DISABLED since quotas are disabled,
+   and then btrfs_create_qgroup() returns 0 to the caller, which makes
+   the ioctl return 0 instead of -ENOTCONN.
+
+   The check for fs_info->quota_root and returning -ENOTCONN if it's NULL
+   is made only after the call btrfs_qgroup_mode().
+
+Fix this by moving the check for disabled quotas with btrfs_qgroup_mode()
+into transaction.c:create_pending_snapshot(), so that we don't abort the
+transaction if btrfs_create_qgroup() returns -ENOTCONN and quotas are
+disabled.
+
+Fixes: 6ed05643ddb1 ("btrfs: create qgroup earlier in snapshot creation")
+CC: stable@vger.kernel.org # 6.12+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/qgroup.c      |    3 ---
+ fs/btrfs/transaction.c |    6 ++++--
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4832,7 +4832,8 @@ static int btrfs_uring_encoded_read(stru
- #if defined(CONFIG_64BIT) && defined(CONFIG_COMPAT)
- 		copy_end = offsetofend(struct btrfs_ioctl_encoded_io_args_32, flags);
- #else
--		return -ENOTTY;
-+		ret = -ENOTTY;
-+		goto out_acct;
- #endif
- 	} else {
- 		copy_end = copy_end_kernel;
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1690,9 +1690,6 @@ int btrfs_create_qgroup(struct btrfs_tra
+ 	struct btrfs_qgroup *prealloc = NULL;
+ 	int ret = 0;
+ 
+-	if (btrfs_qgroup_mode(fs_info) == BTRFS_QGROUP_MODE_DISABLED)
+-		return 0;
+-
+ 	mutex_lock(&fs_info->qgroup_ioctl_lock);
+ 	if (!fs_info->quota_root) {
+ 		ret = -ENOTCONN;
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1736,8 +1736,10 @@ static noinline int create_pending_snaps
+ 
+ 	ret = btrfs_create_qgroup(trans, objectid);
+ 	if (ret && ret != -EEXIST) {
+-		btrfs_abort_transaction(trans, ret);
+-		goto fail;
++		if (ret != -ENOTCONN || btrfs_qgroup_enabled(fs_info)) {
++			btrfs_abort_transaction(trans, ret);
++			goto fail;
++		}
+ 	}
+ 
+ 	/*
 
 
