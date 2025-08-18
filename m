@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A52322A07;
-	Mon, 18 Aug 2025 13:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7C8322A07;
+	Mon, 18 Aug 2025 13:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523582; cv=none; b=Y6Mw3olBS8AKA2RM+dzC5h9LBJFysr4juDqeWjF3WWXaYqoJJfiPhswlqvfyPoT5gAELPZhWPTH8wKVVfjCxf2xGcIeohbP0v+CFSKjs94s9My5dMV5dog5/8oWHZaf5/QNj9tJlgkvd5V6+N1Mz5Sx1uDe3RBWNC4YK8HZa1Q0=
+	t=1755523585; cv=none; b=aeFbf5TT1+AgpbASA0gAYsHVSbqE63yb78WAC7y4v6In7EwmqubWU86mHuD7tYGx9as2zbbMErVMOLvWGwuo4sDmfx9X3pQwGUFVEw8d5NwzYq99nKgQ1vQy9c7na7sd3Cdi0hAg29yaxnNfIChA1IPujGn0lNPFyTDqRqZhGlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523582; c=relaxed/simple;
-	bh=ljpF81p7OvY5DFk5CVHEC95H1fnGRF6ecd4kpBDvKpM=;
+	s=arc-20240116; t=1755523585; c=relaxed/simple;
+	bh=rxMF7g2jlaGJsl05a5P9ltISdQKX5YGTyJa9FfeipE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4xHu0nP71scDLBUWPws/7L+9T9fssAczPNENb9yN9/VR0iOldJWOGarI7c9+YVuRpwFK+v9iCvFFdYkrZUYvWJ5uD14fN918mBxETErTJwgGULI19KqgLsURO8De189oI2tTZkrO1LklPEoz4o4Sma4ThOU2SmHIgvKbyQmp0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0oHLZCw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lwVwyJGi8khvMq/chMY/cwSgy19OkhHwJ9/OxTvbvfbZ2NG9RYG7iQw4EVmDm+AtfV+XkkHc3xC7shcx6T8WZbaAmA+LqYtEam4eliAb5TMVXnUSIkPHQN9rjHS+kMPKkyvnhKdVMjubbKUJF4Ksbp7s21c84pstrffyx/Dh1ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrBSFz2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0oHLZCw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8782C4CEEB;
-	Mon, 18 Aug 2025 13:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrBSFz2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41CBC4CEEB;
+	Mon, 18 Aug 2025 13:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523582;
-	bh=ljpF81p7OvY5DFk5CVHEC95H1fnGRF6ecd4kpBDvKpM=;
+	s=korg; t=1755523585;
+	bh=rxMF7g2jlaGJsl05a5P9ltISdQKX5YGTyJa9FfeipE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0oHLZCwWwjWNqz6KLoPhb3P3XOnFs471XzfJ9ocgJtqNeurBEdrJ5n8r1CEED5Tl
-	 mgtbcrj/xvFz2+0wahr4M8QwRDsvCZO4Idpe/AB4g+DVTU7G8YYvc6HzZ6mKZFfRd8
-	 +4Rqy3MnBZNsUCN7/5/5owKZEelPpBy3RANcKg+U=
+	b=BrBSFz2Yd/ST+AHOSqcr38188T1pY7GIjWyz0crpax2o82BlyAFdQAdE2h1d3DxBe
+	 IoUlYVZF3iEO+NBJva9ZkY+imdNjvO3tqWHLHQTstbeS3hFH8azXjMx1pjjcc7Ez1Q
+	 KCgoR8KUaLhLOSLL5nHu/9XQ5m6aMyQiiZWA2ibQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 188/515] ASoC: qcom: use drvdata instead of component to keep id
-Date: Mon, 18 Aug 2025 14:42:54 +0200
-Message-ID: <20250818124505.613341754@linuxfoundation.org>
+Subject: [PATCH 6.15 215/515] net: ag71xx: Add missing check after DMA map
+Date: Mon, 18 Aug 2025 14:43:21 +0200
+Message-ID: <20250818124506.648952861@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,139 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srini@kernel.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 8167f4f42572818fa8153be2b03e4c2120846603 ]
+[ Upstream commit 96a1e15e60216b52da0e6da5336b6d7f5b0188b0 ]
 
-Qcom lpass is using component->id to keep DAI ID (A).
+The DMA map functions can fail and should be tested for errors.
 
-(S)	static int lpass_platform_pcmops_open(
-				sruct snd_soc_component *component,
-				struct snd_pcm_substream *substream)
-	{			                          ^^^^^^^^^(B0)
-		...
-(B1)		struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
-(B2)		struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-		...
-(B3)		unsigned int dai_id = cpu_dai->driver->id;
-
-(A)		component->id = dai_id;
-		...
-	}
-
-This driver can get dai_id from substream (B0 - B3).
-In this driver, below functions get dai_id from component->id (A).
-
-(X)	lpass_platform_pcmops_suspend()
-(Y)	lpass_platform_pcmops_resume()
-(Z)	lpass_platform_copy()
-
-Here, (Z) can get it from substream (B0 - B3), don't need to use
-component->id (A). On suspend/resume (X)(Y), dai_id can only be obtained
-from component->id (A), because there is no substream (B0) in function
-parameter.
-
-But, component->id (A) itself should not be used for such purpose.
-It is intilialized at snd_soc_component_initialize(), and parsed its ID
-(= component->id) from device name (a).
-
-	int snd_soc_component_initialize(...)
-	{
-		...
-		if (!component->name) {
-(a)			component->name = fmt_single_name(dev, &component->id);
-			...                                     ^^^^^^^^^^^^^
-		}
-		...
-	}
-
-Unfortunately, current code is broken to start with.
-
-There are many regmaps that the driver cares about, however its only
-managing one (either dp or i2s) in component suspend/resume path.
-
-I2S regmap is mandatory however other regmaps are setup based on flags
-like "hdmi_port_enable" and "codec_dma_enable".
-
-Correct thing for suspend/resume path to handle is by checking these
-flags, instead of using component->id.
-
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87a56ouuob.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250716095733.37452-3-fourier.thomas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/lpass-platform.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/atheros/ag71xx.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index 9946f12254b3..b456e096f138 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -202,7 +202,6 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
- 	struct regmap *map;
- 	unsigned int dai_id = cpu_dai->driver->id;
- 
--	component->id = dai_id;
- 	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
-@@ -1190,13 +1189,14 @@ static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
- {
- 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
- 	struct regmap *map;
--	unsigned int dai_id = component->id;
- 
--	if (dai_id == LPASS_DP_RX)
-+	if (drvdata->hdmi_port_enable) {
- 		map = drvdata->hdmiif_map;
--	else
--		map = drvdata->lpaif_map;
-+		regcache_cache_only(map, true);
-+		regcache_mark_dirty(map);
+diff --git a/drivers/net/ethernet/atheros/ag71xx.c b/drivers/net/ethernet/atheros/ag71xx.c
+index 67b654889cae..d1be8928b985 100644
+--- a/drivers/net/ethernet/atheros/ag71xx.c
++++ b/drivers/net/ethernet/atheros/ag71xx.c
+@@ -1213,6 +1213,11 @@ static bool ag71xx_fill_rx_buf(struct ag71xx *ag, struct ag71xx_buf *buf,
+ 	buf->rx.rx_buf = data;
+ 	buf->rx.dma_addr = dma_map_single(&ag->pdev->dev, data, ag->rx_buf_size,
+ 					  DMA_FROM_DEVICE);
++	if (dma_mapping_error(&ag->pdev->dev, buf->rx.dma_addr)) {
++		skb_free_frag(data);
++		buf->rx.rx_buf = NULL;
++		return false;
 +	}
- 
-+	map = drvdata->lpaif_map;
- 	regcache_cache_only(map, true);
- 	regcache_mark_dirty(map);
- 
-@@ -1207,14 +1207,19 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
- {
- 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
- 	struct regmap *map;
--	unsigned int dai_id = component->id;
-+	int ret;
- 
--	if (dai_id == LPASS_DP_RX)
-+	if (drvdata->hdmi_port_enable) {
- 		map = drvdata->hdmiif_map;
--	else
--		map = drvdata->lpaif_map;
-+		regcache_cache_only(map, false);
-+		ret = regcache_sync(map);
-+		if (ret)
-+			return ret;
-+	}
- 
-+	map = drvdata->lpaif_map;
- 	regcache_cache_only(map, false);
-+
- 	return regcache_sync(map);
+ 	desc->data = (u32)buf->rx.dma_addr + offset;
+ 	return true;
  }
+@@ -1511,6 +1516,10 @@ static netdev_tx_t ag71xx_hard_start_xmit(struct sk_buff *skb,
  
-@@ -1224,7 +1229,9 @@ static int lpass_platform_copy(struct snd_soc_component *component,
- 			       unsigned long bytes)
- {
- 	struct snd_pcm_runtime *rt = substream->runtime;
--	unsigned int dai_id = component->id;
-+	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-+	unsigned int dai_id = cpu_dai->driver->id;
- 	int ret = 0;
+ 	dma_addr = dma_map_single(&ag->pdev->dev, skb->data, skb->len,
+ 				  DMA_TO_DEVICE);
++	if (dma_mapping_error(&ag->pdev->dev, dma_addr)) {
++		netif_dbg(ag, tx_err, ndev, "DMA mapping error\n");
++		goto err_drop;
++	}
  
- 	void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
+ 	i = ring->curr & ring_mask;
+ 	desc = ag71xx_ring_desc(ring, i);
 -- 
 2.39.5
 
