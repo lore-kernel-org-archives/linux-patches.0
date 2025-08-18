@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F462765D9;
-	Mon, 18 Aug 2025 13:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5821DED52;
+	Mon, 18 Aug 2025 13:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522808; cv=none; b=dJviCOzcu4Z5mXrpb6vozGLuWI1UK8CbGxhRkZzHsCAYVt6iJX0a5VYqVoBLRdHZ/0CUPpW0O7wqzkg/uhDFKaay8oSz8EJCgoeoLqFexyYz5W28C9qEOv4Pj2H3iuWGgM20Aoz9BqT/NZu3ZF7lpnf5Kpm6hPobmkIGOe+WD7g=
+	t=1755522812; cv=none; b=VFU36Rn8w7ZDq4J0CUhv8N1s9ixo1aOigifGUdM06p8wVm3mjAk7bgkxRVSP8iKsZTkPqpDUd4bCPIGX1vXb5k295xiusyZQL7cPpDe7kRCetEm1+Q5F47uSuOrPz9pK1sySPkLbYUwdSPhwB6EgYIH7+pYpDgNBhFFoe0mawU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522808; c=relaxed/simple;
-	bh=QpuBbwPa0wk1G/SdyTQoc8NmHazaYfC845h8qbW8Qx8=;
+	s=arc-20240116; t=1755522812; c=relaxed/simple;
+	bh=qhm8uwkUkCUumNgaHH94RwYFxdehaUbR8vsnrN39knc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q8mwm5AfaKYumfpANy7lTDaBV9Ok1TRbJB6aJ6gF54oG5u1vhjGQtsvUa2BiOZ5upH2q5LmzpeN7upOAfI0qLdI413L6JVzKX+kQn60o1q/Wzh2qhv+vQMsKgsDeOwk0N+kUlLhQCtNsmy4C19Y0+YJZJYQO1XY0LoHNKaT249o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQPVHDOm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gP5fkDMl31zdO05MXUjfamai+gfgUhVEEy95Uks4AkCzxjc+oiFvQDy+8+yKg4VUcittEYaUt8c9mOIQj41IlAUef4NiWyuf+IRvKA0B+yTbsatlDf4trzr9i9j5XX3ET7HWD9Jh2GGgKC+qd2xX07XFxy6j7ncSeCSgIFIKzWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJ4Yq2ov; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQPVHDOm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305EAC4CEEB;
-	Mon, 18 Aug 2025 13:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJ4Yq2ov"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD0DC4CEEB;
+	Mon, 18 Aug 2025 13:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522808;
-	bh=QpuBbwPa0wk1G/SdyTQoc8NmHazaYfC845h8qbW8Qx8=;
+	s=korg; t=1755522811;
+	bh=qhm8uwkUkCUumNgaHH94RwYFxdehaUbR8vsnrN39knc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQPVHDOmd0anDsBRQWNruu1AHUvwSuiqq40Oxb3OXYxtJ5SvYzdOMHiRe/IG6kivV
-	 6T6jGIZcVKIgaJ6/VhBU8bPtT3s7vl8j9RVtl9qeWL93uho5wa+1s7ibXqxGizse8k
-	 JRF4dXWFX07SCJfL4uxQS3aqqL66tdr8J3TuMSLM=
+	b=tJ4Yq2ovf22LowsCE5i+vWX/NhwA9L2XmEr0sf+q5gbxOm9L7aGapr3Nu61vy+gew
+	 VuZNuzVSMGOtrokl0erfZaLoTk47CPVvWKRS7TSNQ6y1NTY6fa8OmfYfUNFjxNzGpT
+	 UwNLNU6bpX7UqwEqb1hqGTZ9RYkoSkxPN/+vikE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Tom Vincent <linux@tlvince.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 426/444] mfd: cros_ec: Separate charge-control probing from USB-PD
-Date: Mon, 18 Aug 2025 14:47:32 +0200
-Message-ID: <20250818124504.924446596@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 427/444] net: Add net_passive_inc() and net_passive_dec().
+Date: Mon, 18 Aug 2025 14:47:33 +0200
+Message-ID: <20250818124504.959779162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -46,75 +46,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit e40fc1160d491c3bcaf8e940ae0dde0a7c5e8e14 upstream.
+[ Upstream commit e57a6320215c3967f51ab0edeff87db2095440e4 ]
 
-The charge-control subsystem in the ChromeOS EC is not strictly tied to
-its USB-PD subsystem.
+net_drop_ns() is NULL when CONFIG_NET_NS is disabled.
 
-Since commit 7613bc0d116a ("mfd: cros_ec: Don't load charger with UCSI")
-the presence of EC_FEATURE_UCSI_PPM would inhibit the probing of the
-charge-control driver.
+The next patch introduces a function that increments
+and decrements net->passive.
 
-Furthermore recent versions of the EC firmware in Framework laptops
-hard-disable EC_FEATURE_USB_PD to avoid probing cros-usbpd-charger,
-which then also breaks cros-charge-control.
+As a prep, let's rename and export net_free() to
+net_passive_dec() and add net_passive_inc().
 
-Instead use the dedicated EC_FEATURE_CHARGER.
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/FrameworkComputer/EmbeddedController/commit/1d7bcf1d50137c8c01969eb65880bc83e424597e
-Fixes: 555b5fcdb844 ("mfd: cros_ec: Register charge control subdevice")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Tested-by: Tom Vincent <linux@tlvince.com>
-Link: https://lore.kernel.org/r/20250521-cros-ec-mfd-chctl-probe-v1-1-6ebfe3a6efa7@weissschuh.net
-Signed-off-by: Lee Jones <lee@kernel.org>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/netdev/CANn89i+oUCt2VGvrbrweniTendZFEh+nwS=uonc004-aPkWy-Q@mail.gmail.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250217191129.19967-2-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 59b33fab4ca4 ("smb: client: fix netns refcount leak after net_passive changes")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/cros_ec_dev.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/net/net_namespace.h |   16 ++++++++++++++++
+ net/core/net_namespace.c    |    8 ++++----
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
---- a/drivers/mfd/cros_ec_dev.c
-+++ b/drivers/mfd/cros_ec_dev.c
-@@ -87,7 +87,6 @@ static const struct mfd_cell cros_ec_sen
- };
+--- a/include/net/net_namespace.h
++++ b/include/net/net_namespace.h
+@@ -291,6 +291,7 @@ static inline int check_net(const struct
+ }
  
- static const struct mfd_cell cros_usbpd_charger_cells[] = {
--	{ .name = "cros-charge-control", },
- 	{ .name = "cros-usbpd-charger", },
- 	{ .name = "cros-usbpd-logger", },
- };
-@@ -108,6 +107,10 @@ static const struct mfd_cell cros_ec_key
- 	{ .name = "cros-keyboard-leds", },
- };
+ void net_drop_ns(void *);
++void net_passive_dec(struct net *net);
  
-+static const struct mfd_cell cros_ec_charge_control_cells[] = {
-+	{ .name = "cros-charge-control", },
-+};
+ #else
+ 
+@@ -320,8 +321,23 @@ static inline int check_net(const struct
+ }
+ 
+ #define net_drop_ns NULL
 +
- static const struct cros_feature_to_cells cros_subdevices[] = {
- 	{
- 		.id		= EC_FEATURE_CEC,
-@@ -144,6 +147,11 @@ static const struct cros_feature_to_cell
- 		.mfd_cells	= cros_ec_keyboard_leds_cells,
- 		.num_cells	= ARRAY_SIZE(cros_ec_keyboard_leds_cells),
- 	},
-+	{
-+		.id		= EC_FEATURE_CHARGER,
-+		.mfd_cells	= cros_ec_charge_control_cells,
-+		.num_cells	= ARRAY_SIZE(cros_ec_charge_control_cells),
-+	},
- };
++static inline void net_passive_dec(struct net *net)
++{
++	refcount_dec(&net->passive);
++}
+ #endif
  
- static const struct mfd_cell cros_ec_platform_cells[] = {
++static inline void net_passive_inc(struct net *net)
++{
++	refcount_inc(&net->passive);
++}
++
++/* Returns true if the netns initialization is completed successfully */
++static inline bool net_initialized(const struct net *net)
++{
++	return READ_ONCE(net->list.next);
++}
+ 
+ static inline void __netns_tracker_alloc(struct net *net,
+ 					 netns_tracker *tracker,
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -458,7 +458,7 @@ static void net_complete_free(void)
+ 
+ }
+ 
+-static void net_free(struct net *net)
++void net_passive_dec(struct net *net)
+ {
+ 	if (refcount_dec_and_test(&net->passive)) {
+ 		kfree(rcu_access_pointer(net->gen));
+@@ -476,7 +476,7 @@ void net_drop_ns(void *p)
+ 	struct net *net = (struct net *)p;
+ 
+ 	if (net)
+-		net_free(net);
++		net_passive_dec(net);
+ }
+ 
+ struct net *copy_net_ns(unsigned long flags,
+@@ -517,7 +517,7 @@ put_userns:
+ 		key_remove_domain(net->key_domain);
+ #endif
+ 		put_user_ns(user_ns);
+-		net_free(net);
++		net_passive_dec(net);
+ dec_ucounts:
+ 		dec_net_namespaces(ucounts);
+ 		return ERR_PTR(rv);
+@@ -662,7 +662,7 @@ static void cleanup_net(struct work_stru
+ 		key_remove_domain(net->key_domain);
+ #endif
+ 		put_user_ns(net->user_ns);
+-		net_free(net);
++		net_passive_dec(net);
+ 	}
+ }
+ 
 
 
