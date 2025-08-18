@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778D1321F42;
-	Mon, 18 Aug 2025 13:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE0D322534;
+	Mon, 18 Aug 2025 13:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524416; cv=none; b=S4IyvlFJbqMQ7SDRmsS4IuuyL8vNusOg4vDssL1k//p/jTp1Fqtit1GcEa5IEm0lPZxiSXcuFaq1nRl6hgwNUrVXJ9De2jqTLya9Awtra1aVlWU9Xx+f4nJN7YZjhuA6mNDjwBXg9FYSb3WS+kz9A8Rq6yp6fW+zXhmUiTRKA5A=
+	t=1755524420; cv=none; b=Mfypue6KvM69KQg5UCTsghyrhA+tUx25dnd3uga8NwhehjepJ4U+JtINrCzRx5uVP2PQeh9eRruukiGhQWXaaSLtMnmZ2OOQXGuEdPlfs8YUkSl2HHFUaz6h1Qmfh6MyIgOcyRc7runXjzFSC1LtXtq9lpiYYJ0wAd6LX32/nCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524416; c=relaxed/simple;
-	bh=eVhoad7wBIEiLwWBgq4r3MXMU4AJN3CbrVGW3+quSpQ=;
+	s=arc-20240116; t=1755524420; c=relaxed/simple;
+	bh=bD0N63tNPwIqy/WsL5bvow8+UiWZPqduMlfbqLRQQHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SmDC/5VB5+HtEpg/CoLVyu87xibNn/I7YoKsjyQWMf/2/HiMq9oAlTXny+TaPiGwA4jTJNMKMpfdZv/mTqEMTNb49ytyA3IzOR1JW4U6Ihs9BLX+A9WPqrSn9TP1D+YZVr24k2YtdkqXcaYEtbZyj6TXoXVENQQL/jFfU5TixA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOYULVvz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEvW2szvgqDqRKJVt50jEiQkixHaUYW2qUcpfFl1FEFbfwD/JxbsKuwqKcz5YHjO6r2kk2LgBYwulzrukHRT51vFvtUhPdugwACSipGlDgj7nCwn2EdckqgqRFEfnPcaV5ZTOB6WojFZlP33Lc7cdUdgE0lgGfru9jyjg4seGco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=178rxHzF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOYULVvz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926A5C4CEF1;
-	Mon, 18 Aug 2025 13:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="178rxHzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91C4C4CEEB;
+	Mon, 18 Aug 2025 13:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524416;
-	bh=eVhoad7wBIEiLwWBgq4r3MXMU4AJN3CbrVGW3+quSpQ=;
+	s=korg; t=1755524419;
+	bh=bD0N63tNPwIqy/WsL5bvow8+UiWZPqduMlfbqLRQQHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOYULVvzEQZmHhmloVzxihJcCvrArpmG1XdxKLLsnpoc3n6cGXtBWWmbh7C4iDapW
-	 vkd9/P8k6YaO5UXwDxOoBaQJ10BNH/4Q5Z5zvH6sDjzVSQN5k3OIksef3bo/chUpp2
-	 bqcBPCtweiyazv/rfDva+Jjw1E01befMza8ey5/c=
+	b=178rxHzFLxX6xAwQcjoVs8lMW31d2tx4o29R1hDPeiqi2xE3ZLpsXbdk3ELKAa8SY
+	 YxJqO3adB6C1AhI3oPhSmWDkXM3k9icsYTdOCtYOpHF6vd8boGF7Tmd5impO3gyZZh
+	 Jc9Y/OUD/IN6ikvtMyemV+NVSREo1QiIQei/4lY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.15 464/515] btrfs: zoned: requeue to unused block group list if zone finish failed
-Date: Mon, 18 Aug 2025 14:47:30 +0200
-Message-ID: <20250818124516.281752967@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 434/515] ASoC: fsl_sai: replace regmap_write with regmap_update_bits
+Date: Mon, 18 Aug 2025 14:47:00 +0200
+Message-ID: <20250818124515.133638997@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,39 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit 62be7afcc13b2727bdc6a4c91aefed6b452e6ecc upstream.
+[ Upstream commit 0e270f32975fd21874185ba53653630dd40bf560 ]
 
-btrfs_zone_finish() can fail for several reason. If it is -EAGAIN, we need
-to try it again later. So, put the block group to the retry list properly.
+Use the regmap_write() for software reset in fsl_sai_config_disable would
+cause the FSL_SAI_CSR_BCE bit to be cleared. Refer to
+commit 197c53c8ecb34 ("ASoC: fsl_sai: Don't disable bitclock for i.MX8MP")
+FSL_SAI_CSR_BCE should not be cleared. So need to use regmap_update_bits()
+instead of regmap_write() for these bit operations.
 
-Failing to do so will keep the removable block group intact until remount
-and can causes unnecessary ENOSPC.
-
-Fixes: 74e91b12b115 ("btrfs: zoned: zone finish unused block group")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dc78f7e59169d ("ASoC: fsl_sai: Force a software reset when starting in consumer mode")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20250807020318.2143219-1-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_sai.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1619,8 +1619,10 @@ void btrfs_delete_unused_bgs(struct btrf
- 		ret = btrfs_zone_finish(block_group);
- 		if (ret < 0) {
- 			btrfs_dec_block_group_ro(block_group);
--			if (ret == -EAGAIN)
-+			if (ret == -EAGAIN) {
-+				btrfs_link_bg_list(block_group, &retry_list);
- 				ret = 0;
-+			}
- 			goto next;
- 		}
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index f244e3679975..01944860a264 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -777,9 +777,9 @@ static void fsl_sai_config_disable(struct fsl_sai *sai, int dir)
+ 	 * are running concurrently.
+ 	 */
+ 	/* Software Reset */
+-	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
+ 	/* Clear SR bit to finish the reset */
+-	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR, 0);
+ }
  
+ static int fsl_sai_trigger(struct snd_pcm_substream *substream, int cmd,
+@@ -898,11 +898,11 @@ static int fsl_sai_dai_probe(struct snd_soc_dai *cpu_dai)
+ 	unsigned int ofs = sai->soc_data->reg_offset;
+ 
+ 	/* Software Reset for both Tx and Rx */
+-	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR);
+-	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
+ 	/* Clear SR bit to finish the reset */
+-	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), 0);
+-	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, 0);
+ 
+ 	regmap_update_bits(sai->regmap, FSL_SAI_TCR1(ofs),
+ 			   FSL_SAI_CR1_RFW_MASK(sai->soc_data->fifo_depth),
+@@ -1790,11 +1790,11 @@ static int fsl_sai_runtime_resume(struct device *dev)
+ 
+ 	regcache_cache_only(sai->regmap, false);
+ 	regcache_mark_dirty(sai->regmap);
+-	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR);
+-	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
+ 	usleep_range(1000, 2000);
+-	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), 0);
+-	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, 0);
+ 
+ 	ret = regcache_sync(sai->regmap);
+ 	if (ret)
+-- 
+2.50.1
+
 
 
