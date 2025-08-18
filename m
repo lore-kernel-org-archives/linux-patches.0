@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A8331CA51;
-	Mon, 18 Aug 2025 13:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC01C12DDA1;
+	Mon, 18 Aug 2025 13:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522130; cv=none; b=e35Mw0sd2Xy0UTgrK+r+AVNWBa6gWQZtoCi5N3TbXYApqduF9hvjcUFdgmJl+pXAOdR820Q+sXixUFrTm0mCi6Ea25ggITvaSuy3rAwn8/1Ae8V44oDrIh/noPfrzpU2wDNUanZP5xF3FUxliJoqCe5KRP0l5Syajzv6iU7iB6E=
+	t=1755522133; cv=none; b=UYy+F5Bt41mJ7vaWTXySKM3yp/Bt653OcjzADAFKTXTGeF9Ve23m86vBuKStCiZke/vz89eyUbAllglLZ94YTGehuzz/K41IvbGDfWeBA4upIm7j2COc8Ha/Qluq79A/amLZjvYF/UrsCewVe6kSUc+w16gLf6UQRMHaldKddA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522130; c=relaxed/simple;
-	bh=VN382YUXGIHrORcccBu3kqOGaJ+qafhfiwhcuVuV59U=;
+	s=arc-20240116; t=1755522133; c=relaxed/simple;
+	bh=w1W/+wOvbij+5OJ9D01HlDPMEbcXNj49aqZXn2XSEn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDy6omBjlNQQ5rfLIb/X3aiIRUhMusjfG84Qe7wMk5ccwd6Wq9pn5zTEGdKxgW6svInVu23AD7gER57lm6MCEv6hVL+ACR5sMci3vGZZoBcNtKI4QpkJ7I42jRvoyKy+PrqZmFxk/5L064z10pElNxu5MbOvfkYsoidhh+A0KZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T602whUC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WYuZPZfv7++kKpyK2pqmwv6BQFwUCC7CcOXQFsGAKqEyft74wxT6PGmtI9dybV3x0OThr9ZLg4OGRKZCdfgd/67RO37jDeMzpp31DXlm4z2JY4DVERK1F2lxQth7Gp7g1HKNzqwH4/mlGrTlJANySw+qNkF+ptud54P8w3sD2c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLUwDvUJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T602whUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B22EC4CEEB;
-	Mon, 18 Aug 2025 13:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLUwDvUJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F6FC4CEEB;
+	Mon, 18 Aug 2025 13:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522130;
-	bh=VN382YUXGIHrORcccBu3kqOGaJ+qafhfiwhcuVuV59U=;
+	s=korg; t=1755522133;
+	bh=w1W/+wOvbij+5OJ9D01HlDPMEbcXNj49aqZXn2XSEn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T602whUCMSsgzF54t2iirH0UrWoyV6CANrRV7jYaJh2WD0lw1e0IDLekSauTeB4uy
-	 w7DyXxnK+QMNpGkQI0EUH7RJb6c/Wq/a+xJNZEw3F+uPLrBmTeiBvGggxo5GRwgWYv
-	 8gyM3d5Glb82YnObQvw6GgKfMnzjByolSvxE4sTg=
+	b=bLUwDvUJKWRkh56cdP6xuFFUmOOig93uwYODC8Gy2QtUVtLga2iz3/KefP/ZqSB7R
+	 s1Lf1+XK7mKGyZ1I61MRBuOWPxSLni9f05Lw2wmXDVK1QgNmuRlB/rwMBFkDAKZ4yc
+	 XVGFWSboZez3EnFAb6FRKZNdzhKjQQ4qH84PbZaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	zhangjianrong <zhangjianrong5@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 181/444] net/mlx5e: Properly access RCU protected qdisc_sleeping variable
-Date: Mon, 18 Aug 2025 14:43:27 +0200
-Message-ID: <20250818124455.661629068@linuxfoundation.org>
+Subject: [PATCH 6.12 218/444] net: thunderbolt: Enable end-to-end flow control also in transmit
+Date: Mon, 18 Aug 2025 14:44:04 +0200
+Message-ID: <20250818124457.018174995@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,45 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: zhangjianrong <zhangjianrong5@huawei.com>
 
-[ Upstream commit 2a601b2d35623065d31ebaf697b07502d54878c9 ]
+[ Upstream commit a8065af3346ebd7c76ebc113451fb3ba94cf7769 ]
 
-qdisc_sleeping variable is declared as "struct Qdisc __rcu" and
-as such needs proper annotation while accessing it.
+According to USB4 specification, if E2E flow control is disabled for
+the Transmit Descriptor Ring, the Host Interface Adapter Layer shall
+not require any credits to be available before transmitting a Tunneled
+Packet from this Transmit Descriptor Ring, so e2e flow control should
+be enabled in both directions.
 
-Without rtnl_dereference(), the following error is generated by sparse:
-
-drivers/net/ethernet/mellanox/mlx5/core/en/qos.c:377:40: warning:
-  incorrect type in initializer (different address spaces)
-drivers/net/ethernet/mellanox/mlx5/core/en/qos.c:377:40:    expected
-  struct Qdisc *qdisc
-drivers/net/ethernet/mellanox/mlx5/core/en/qos.c:377:40:    got struct
-  Qdisc [noderef] __rcu *qdisc_sleeping
-
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/1752675472-201445-4-git-send-email-tariqt@nvidia.com
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/20250624153805.GC2824380@black.fi.intel.com
+Signed-off-by: zhangjianrong <zhangjianrong5@huawei.com>
+Link: https://patch.msgid.link/20250628093813.647005-1-zhangjianrong5@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/qos.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/thunderbolt/main.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-index f0744a45db92..4e461cb03b83 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-@@ -374,7 +374,7 @@ void mlx5e_reactivate_qos_sq(struct mlx5e_priv *priv, u16 qid, struct netdev_que
- void mlx5e_reset_qdisc(struct net_device *dev, u16 qid)
- {
- 	struct netdev_queue *dev_queue = netdev_get_tx_queue(dev, qid);
--	struct Qdisc *qdisc = dev_queue->qdisc_sleeping;
-+	struct Qdisc *qdisc = rtnl_dereference(dev_queue->qdisc_sleeping);
+diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
+index 0a53ec293d04..643cf67840b5 100644
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -924,8 +924,12 @@ static int tbnet_open(struct net_device *dev)
  
- 	if (!qdisc)
- 		return;
+ 	netif_carrier_off(dev);
+ 
+-	ring = tb_ring_alloc_tx(xd->tb->nhi, -1, TBNET_RING_SIZE,
+-				RING_FLAG_FRAME);
++	flags = RING_FLAG_FRAME;
++	/* Only enable full E2E if the other end supports it too */
++	if (tbnet_e2e && net->svc->prtcstns & TBNET_E2E)
++		flags |= RING_FLAG_E2E;
++
++	ring = tb_ring_alloc_tx(xd->tb->nhi, -1, TBNET_RING_SIZE, flags);
+ 	if (!ring) {
+ 		netdev_err(dev, "failed to allocate Tx ring\n");
+ 		return -ENOMEM;
+@@ -944,11 +948,6 @@ static int tbnet_open(struct net_device *dev)
+ 	sof_mask = BIT(TBIP_PDF_FRAME_START);
+ 	eof_mask = BIT(TBIP_PDF_FRAME_END);
+ 
+-	flags = RING_FLAG_FRAME;
+-	/* Only enable full E2E if the other end supports it too */
+-	if (tbnet_e2e && net->svc->prtcstns & TBNET_E2E)
+-		flags |= RING_FLAG_E2E;
+-
+ 	ring = tb_ring_alloc_rx(xd->tb->nhi, -1, TBNET_RING_SIZE, flags,
+ 				net->tx_ring.ring->hop, sof_mask,
+ 				eof_mask, tbnet_start_poll, net);
 -- 
 2.39.5
 
