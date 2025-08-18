@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6339D321443;
-	Mon, 18 Aug 2025 13:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8253531B11A;
+	Mon, 18 Aug 2025 13:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523059; cv=none; b=AgM0g5IJXJ9MmAfzd8XvE+mDqhNYKkyG/SxZgkVx5ps8DyXdJAM+fNGAkuD5rTtz4FSC5ruqv8A5qgcBG77tr1rrwARXjpJYXUiueTjWubUtMhwOnQ++tyYV2kE13KCnsZkZeeEwQ0XqyH2sydnQE7PMnUegdmkLRlOcpXJ1LBA=
+	t=1755523062; cv=none; b=bs0DoZ6vmTDqzLK4kzMc68LzkgAZ4fyFvkiRY4fcYo4Fn9ev8kRWLGKirYdrZhH37ta5qcUV0BoEl9wzSo2lzKuY0S4EWh7MqCXzc3vDtTH7/nqcGdcLJz5KAuqNCJzZq/++NkgGJ9re9w1P/M6vXYUWwQc84LOVad5gCiNkGOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523059; c=relaxed/simple;
-	bh=cCHOwq2liHFL63xv3rOTCi6kjW5KXBHv3rb6sDlA4E8=;
+	s=arc-20240116; t=1755523062; c=relaxed/simple;
+	bh=5nhd9Mh9ITTxnF1EI/fYhZsV8srvggHEwD5niFDPOco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJWDmgua5DrSO8+7QDdmlHTAr7y0E0UghmpQX18Us9zGdiTTMaTATWEBujTNCQL5zxRvaFkv2eZ/PsMZ6ZChB2BBo9yZe659+exIrV/BciFnjMgs5KTXuKAPS72gRVAqbT/431MKsI0BNsneuVZY1LF9JAI6iUsdbGZ72et+owE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h04fJAqW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBc6RRfagxWd/BGEqM0I11xDbnZ5DJvbmnGLZxjJvKIP76RU7CqHtLA8ai8uFTD0PXziLjn0ouFHh4STRWWcr1DlbTHzNw67LgS1ac2DrwcZ7xrzSYLEjOSL872gBawBTxW+xCNy2UeGA4NsBSNfSmC8K3JzDxO31SSRrG+XNfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaWLFdMI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h04fJAqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC85C4CEF1;
-	Mon, 18 Aug 2025 13:17:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaWLFdMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D254C4CEEB;
+	Mon, 18 Aug 2025 13:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523059;
-	bh=cCHOwq2liHFL63xv3rOTCi6kjW5KXBHv3rb6sDlA4E8=;
+	s=korg; t=1755523062;
+	bh=5nhd9Mh9ITTxnF1EI/fYhZsV8srvggHEwD5niFDPOco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h04fJAqWJrIpe0dQRT13aZA09p6dkW2/qbzHP3JG04d/bpx+uYdAj2hs+gj/bCa24
-	 pkKW80T8+d6AOMc9dC4pYffCmwJOcVQERpuAeyBltIlNEZ+/HtrFCFLZ9IdFQHGIjg
-	 dMviYXN3b259bWfaas+5w6ywMqZa77TkjCELnpOU=
+	b=UaWLFdMIGEshtb32EWzKyQsgAOgdb001mCpAPObWsyJTrwMArVWdxJpE6IQj+K1b2
+	 vlC0hkf0UZMmnu9Prte/BDSiqZz/zNFEAgiVkrcv1mq3/o89urHpzB+ZvxygN3rCKw
+	 IEx0plwNBJ8occpspweewFUw3I+6S14t7ZJdZGD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 059/515] netfilter: ctnetlink: fix refcount leak on table dump
-Date: Mon, 18 Aug 2025 14:40:45 +0200
-Message-ID: <20250818124500.687017584@linuxfoundation.org>
+Subject: [PATCH 6.15 060/515] net: hibmcge: fix rtnl deadlock issue
+Date: Mon, 18 Aug 2025 14:40:46 +0200
+Message-ID: <20250818124500.722166920@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,127 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit de788b2e6227462b6dcd0e07474e72c089008f74 ]
+[ Upstream commit c875503a9b9082928d7d3fc60b5400d16fbfae4e ]
 
-There is a reference count leak in ctnetlink_dump_table():
-      if (res < 0) {
-                nf_conntrack_get(&ct->ct_general); // HERE
-                cb->args[1] = (unsigned long)ct;
-                ...
+Currently, the hibmcge netdev acquires the rtnl_lock in
+pci_error_handlers.reset_prepare() and releases it in
+pci_error_handlers.reset_done().
 
-While its very unlikely, its possible that ct == last.
-If this happens, then the refcount of ct was already incremented.
-This 2nd increment is never undone.
+However, in the PCI framework:
+pci_reset_bus - __pci_reset_slot - pci_slot_save_and_disable_locked -
+ pci_dev_save_and_disable - err_handler->reset_prepare(dev);
 
-This prevents the conntrack object from being released, which in turn
-keeps prevents cnet->count from dropping back to 0.
+In pci_slot_save_and_disable_locked():
+	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+		if (!dev->slot || dev->slot!= slot)
+			continue;
+		pci_dev_save_and_disable(dev);
+		if (dev->subordinate)
+			pci_bus_save_and_disable_locked(dev->subordinate);
+	}
 
-This will then block the netns dismantle (or conntrack rmmod) as
-nf_conntrack_cleanup_net_list() will wait forever.
+This will iterate through all devices under the current bus and execute
+err_handler->reset_prepare(), causing two devices of the hibmcge driver
+to sequentially request the rtnl_lock, leading to a deadlock.
 
-This can be reproduced by running conntrack_resize.sh selftest in a loop.
-It takes ~20 minutes for me on a preemptible kernel on average before
-I see a runaway kworker spinning in nf_conntrack_cleanup_net_list.
+Since the driver now executes netif_device_detach()
+before the reset process, it will not concurrently with
+other netdev APIs, so there is no need to hold the rtnl_lock now.
 
-One fix would to change this to:
-        if (res < 0) {
-		if (ct != last)
-	                nf_conntrack_get(&ct->ct_general);
+Therefore, this patch removes the rtnl_lock during the reset process and
+adjusts the position of HBG_NIC_STATE_RESETTING to ensure
+that multiple resets are not executed concurrently.
 
-But this reference counting isn't needed in the first place.
-We can just store a cookie value instead.
-
-A followup patch will do the same for ctnetlink_exp_dump_table,
-it looks to me as if this has the same problem and like
-ctnetlink_dump_table, we only need a 'skip hint', not the actual
-object so we can apply the same cookie strategy there as well.
-
-Fixes: d205dc40798d ("[NETFILTER]: ctnetlink: fix deadlock in table dumping")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 3f5a61f6d504f ("net: hibmcge: Add reset supported in this module")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 2cc0fde23344..5fdcae45e0bc 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -884,8 +884,6 @@ ctnetlink_conntrack_event(unsigned int events, const struct nf_ct_event *item)
- 
- static int ctnetlink_done(struct netlink_callback *cb)
+diff --git a/drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c b/drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c
+index ff3295b60a69..dee1e8681157 100644
+--- a/drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c
++++ b/drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c
+@@ -53,9 +53,11 @@ static int hbg_reset_prepare(struct hbg_priv *priv, enum hbg_reset_type type)
  {
--	if (cb->args[1])
--		nf_ct_put((struct nf_conn *)cb->args[1]);
- 	kfree(cb->data);
- 	return 0;
- }
-@@ -1208,19 +1206,26 @@ static int ctnetlink_filter_match(struct nf_conn *ct, void *data)
- 	return 0;
- }
+ 	int ret;
  
-+static unsigned long ctnetlink_get_id(const struct nf_conn *ct)
-+{
-+	unsigned long id = nf_ct_get_id(ct);
-+
-+	return id ? id : 1;
-+}
-+
- static int
- ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- {
- 	unsigned int flags = cb->data ? NLM_F_DUMP_FILTERED : 0;
- 	struct net *net = sock_net(skb->sk);
--	struct nf_conn *ct, *last;
-+	unsigned long last_id = cb->args[1];
- 	struct nf_conntrack_tuple_hash *h;
- 	struct hlist_nulls_node *n;
- 	struct nf_conn *nf_ct_evict[8];
-+	struct nf_conn *ct;
- 	int res, i;
- 	spinlock_t *lockp;
+-	ASSERT_RTNL();
++	if (test_and_set_bit(HBG_NIC_STATE_RESETTING, &priv->state))
++		return -EBUSY;
  
--	last = (struct nf_conn *)cb->args[1];
- 	i = 0;
+ 	if (netif_running(priv->netdev)) {
++		clear_bit(HBG_NIC_STATE_RESETTING, &priv->state);
+ 		dev_warn(&priv->pdev->dev,
+ 			 "failed to reset because port is up\n");
+ 		return -EBUSY;
+@@ -64,7 +66,6 @@ static int hbg_reset_prepare(struct hbg_priv *priv, enum hbg_reset_type type)
+ 	netif_device_detach(priv->netdev);
  
- 	local_bh_disable();
-@@ -1257,7 +1262,7 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 				continue;
+ 	priv->reset_type = type;
+-	set_bit(HBG_NIC_STATE_RESETTING, &priv->state);
+ 	clear_bit(HBG_NIC_STATE_RESET_FAIL, &priv->state);
+ 	ret = hbg_hw_event_notify(priv, HBG_HW_EVENT_RESET);
+ 	if (ret) {
+@@ -83,28 +84,25 @@ static int hbg_reset_done(struct hbg_priv *priv, enum hbg_reset_type type)
+ 	    type != priv->reset_type)
+ 		return 0;
  
- 			if (cb->args[1]) {
--				if (ct != last)
-+				if (ctnetlink_get_id(ct) != last_id)
- 					continue;
- 				cb->args[1] = 0;
- 			}
-@@ -1270,8 +1275,7 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 					    NFNL_MSG_TYPE(cb->nlh->nlmsg_type),
- 					    ct, true, flags);
- 			if (res < 0) {
--				nf_conntrack_get(&ct->ct_general);
--				cb->args[1] = (unsigned long)ct;
-+				cb->args[1] = ctnetlink_get_id(ct);
- 				spin_unlock(lockp);
- 				goto out;
- 			}
-@@ -1284,12 +1288,10 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- out:
- 	local_bh_enable();
--	if (last) {
-+	if (last_id) {
- 		/* nf ct hash resize happened, now clear the leftover. */
--		if ((struct nf_conn *)cb->args[1] == last)
-+		if (cb->args[1] == last_id)
- 			cb->args[1] = 0;
+-	ASSERT_RTNL();
 -
--		nf_ct_put(last);
+-	clear_bit(HBG_NIC_STATE_RESETTING, &priv->state);
+ 	ret = hbg_rebuild(priv);
+ 	if (ret) {
+ 		set_bit(HBG_NIC_STATE_RESET_FAIL, &priv->state);
++		clear_bit(HBG_NIC_STATE_RESETTING, &priv->state);
+ 		dev_err(&priv->pdev->dev, "failed to rebuild after reset\n");
+ 		return ret;
  	}
  
- 	while (i) {
+ 	netif_device_attach(priv->netdev);
++	clear_bit(HBG_NIC_STATE_RESETTING, &priv->state);
+ 
+ 	dev_info(&priv->pdev->dev, "reset done\n");
+ 	return ret;
+ }
+ 
+-/* must be protected by rtnl lock */
+ int hbg_reset(struct hbg_priv *priv)
+ {
+ 	int ret;
+ 
+-	ASSERT_RTNL();
+ 	ret = hbg_reset_prepare(priv, HBG_RESET_TYPE_FUNCTION);
+ 	if (ret)
+ 		return ret;
+@@ -169,7 +167,6 @@ static void hbg_pci_err_reset_prepare(struct pci_dev *pdev)
+ 	struct net_device *netdev = pci_get_drvdata(pdev);
+ 	struct hbg_priv *priv = netdev_priv(netdev);
+ 
+-	rtnl_lock();
+ 	hbg_reset_prepare(priv, HBG_RESET_TYPE_FLR);
+ }
+ 
+@@ -179,7 +176,6 @@ static void hbg_pci_err_reset_done(struct pci_dev *pdev)
+ 	struct hbg_priv *priv = netdev_priv(netdev);
+ 
+ 	hbg_reset_done(priv, HBG_RESET_TYPE_FLR);
+-	rtnl_unlock();
+ }
+ 
+ static const struct pci_error_handlers hbg_pci_err_handler = {
 -- 
 2.50.1
 
