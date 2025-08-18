@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60313218C0;
-	Mon, 18 Aug 2025 13:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515D43218C0;
+	Mon, 18 Aug 2025 13:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522652; cv=none; b=eLFa/DffLdoj5kSmhlHEUJtOIvZUx3TZXj0/xIS8yFWfctgdpnnQCa9LUGSK/HYHDu0nOLzP1goL/J/ilFD+Jnja3A0Jrp77L4tEW8Y3pFk+1jDKxzWOFw7u5WRLz3Nj2FsXAsKWTCgDknavQ494jwDDGiu78Za57YtKXliuCDM=
+	t=1755522655; cv=none; b=BqdWJ4QmbtlvYRN8AMaRCdtOI0ar7d+6SF+paqJCSA68bupjTsTw3QqvVIuBjPaV+Ndz0VeeboQ0JEqMrTz99C2KSddOSfDXgAUF/n07uVPPNUmVSkovro6dLvtJTHVbKk1cGeCbHDHlypaf97uLJt0+Y1SkGaBbxmCrC+f2W3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522652; c=relaxed/simple;
-	bh=iNwmQ5fp2w0ybjFh//UmmSSM7SVStnTxglq3uQSrZ6o=;
+	s=arc-20240116; t=1755522655; c=relaxed/simple;
+	bh=GfiKsblZCmgnsxfbr+wr11VTmvKHpXa1uixi5oD7dkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=np2Ob3Sqnaq3mf1mdD+0dlPqMYbo4kXJaccQtsGiZfqkw857dj8yFkzBClHyhxvUBvkHXxaXfyJ7cMtByjI5ODjrZYgJCwdF2oYbzmVWgedZCbjd8DOW1QCSTpgczhs5k/UCLy+9GBCS0XxZIi6dn2OQ7/cl/p+J4r+wNcDQdr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LNM/CMT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R3rxOJAYRVIv2UO1+d8gRgivWG89sdJULqph6OWttrTS7adTrcAqA3PTgTTkQ+DWuyCNwr5BEo6HzPbmSa+cJpeMr1MC4E0GAgPC/g/1g255BEJOEhwQ/Zmim7PBuDZ22v0B3I/4DNUjWwuu7uDYZBsZGv+rcgxYlN5GV+W0kpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzCgsHsa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LNM/CMT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500E4C4CEEB;
-	Mon, 18 Aug 2025 13:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzCgsHsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD57C4CEEB;
+	Mon, 18 Aug 2025 13:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522651;
-	bh=iNwmQ5fp2w0ybjFh//UmmSSM7SVStnTxglq3uQSrZ6o=;
+	s=korg; t=1755522655;
+	bh=GfiKsblZCmgnsxfbr+wr11VTmvKHpXa1uixi5oD7dkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1LNM/CMTUHf8fC5ejjLwYSWNt3OFwRke6cfGaoxcP86TgPt4YQ5nZpQbDwolyvzeM
-	 sP3fXN6iOMDJRxZ8u/+mDUiR09KGYc/KGGiq8HQkvQpq1bzna8JuZNb9ZTxy5qlSEo
-	 o3jc2t49P/PbXy2zJIbyvgXrJZeOR5HeZV+o018A=
+	b=uzCgsHsaWiguIvDF0EvB4NYYH5RR2h6c9et0gyMUjujPmYSmqUDsKEvRZVBiows5+
+	 A2DKLSyJV66qhkkRgqCPuuGvlcR6zgpQRp758TM8YIjryOo9z2kicvF/LV7+owUatx
+	 HqJzViGwiY43uay1W3VjbrvdsbzW4iVkZ9Zgmipo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 379/444] iommu/arm-smmu-qcom: Add SM6115 MDSS compatible
-Date: Mon, 18 Aug 2025 14:46:45 +0200
-Message-ID: <20250818124503.097286150@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>
+Subject: [PATCH 6.12 380/444] iommufd: Report unmapped bytes in the error path of iopt_unmap_iova_range
+Date: Mon, 18 Aug 2025 14:46:46 +0200
+Message-ID: <20250818124503.134167102@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,111 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit f7fa8520f30373ce99c436c4d57c76befdacbef3 upstream.
+commit b23e09f9997771b4b739c1c694fa832b5fa2de02 upstream.
 
-Add the SM6115 MDSS compatible to clients compatible list, as it also
-needs that workaround.
-Without this workaround, for example, QRB4210 RB2 which is based on
-SM4250/SM6115 generates a lot of smmu unhandled context faults during
-boot:
+There are callers that read the unmapped bytes even when rc != 0. Thus, do
+not forget to report it in the error path too.
 
-arm_smmu_context_fault: 116854 callbacks suppressed
-arm-smmu c600000.iommu: Unhandled context fault: fsr=0x402,
-iova=0x5c0ec600, fsynr=0x320021, cbfrsynra=0x420, cb=5
-arm-smmu c600000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x420
-arm-smmu c600000.iommu: FSYNR0 = 00320021 [S1CBNDX=50 PNU PLVL=1]
-arm-smmu c600000.iommu: Unhandled context fault: fsr=0x402,
-iova=0x5c0d7800, fsynr=0x320021, cbfrsynra=0x420, cb=5
-arm-smmu c600000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x420
-
-and also failed initialisation of lontium lt9611uxc, gpu and dpu is
-observed:
-(binding MDSS components triggered by lt9611uxc have failed)
-
- ------------[ cut here ]------------
- !aspace
- WARNING: CPU: 6 PID: 324 at drivers/gpu/drm/msm/msm_gem_vma.c:130 msm_gem_vma_init+0x150/0x18c [msm]
- Modules linked in: ... (long list of modules)
- CPU: 6 UID: 0 PID: 324 Comm: (udev-worker) Not tainted 6.15.0-03037-gaacc73ceeb8b #4 PREEMPT
- Hardware name: Qualcomm Technologies, Inc. QRB4210 RB2 (DT)
- pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : msm_gem_vma_init+0x150/0x18c [msm]
- lr : msm_gem_vma_init+0x150/0x18c [msm]
- sp : ffff80008144b280
-  		...
- Call trace:
-  msm_gem_vma_init+0x150/0x18c [msm] (P)
-  get_vma_locked+0xc0/0x194 [msm]
-  msm_gem_get_and_pin_iova_range+0x4c/0xdc [msm]
-  msm_gem_kernel_new+0x48/0x160 [msm]
-  msm_gpu_init+0x34c/0x53c [msm]
-  adreno_gpu_init+0x1b0/0x2d8 [msm]
-  a6xx_gpu_init+0x1e8/0x9e0 [msm]
-  adreno_bind+0x2b8/0x348 [msm]
-  component_bind_all+0x100/0x230
-  msm_drm_bind+0x13c/0x3d0 [msm]
-  try_to_bring_up_aggregate_device+0x164/0x1d0
-  __component_add+0xa4/0x174
-  component_add+0x14/0x20
-  dsi_dev_attach+0x20/0x34 [msm]
-  dsi_host_attach+0x58/0x98 [msm]
-  devm_mipi_dsi_attach+0x34/0x90
-  lt9611uxc_attach_dsi.isra.0+0x94/0x124 [lontium_lt9611uxc]
-  lt9611uxc_probe+0x540/0x5fc [lontium_lt9611uxc]
-  i2c_device_probe+0x148/0x2a8
-  really_probe+0xbc/0x2c0
-  __driver_probe_device+0x78/0x120
-  driver_probe_device+0x3c/0x154
-  __driver_attach+0x90/0x1a0
-  bus_for_each_dev+0x68/0xb8
-  driver_attach+0x24/0x30
-  bus_add_driver+0xe4/0x208
-  driver_register+0x68/0x124
-  i2c_register_driver+0x48/0xcc
-  lt9611uxc_driver_init+0x20/0x1000 [lontium_lt9611uxc]
-  do_one_initcall+0x60/0x1d4
-  do_init_module+0x54/0x1fc
-  load_module+0x1748/0x1c8c
-  init_module_from_file+0x74/0xa0
-  __arm64_sys_finit_module+0x130/0x2f8
-  invoke_syscall+0x48/0x104
-  el0_svc_common.constprop.0+0xc0/0xe0
-  do_el0_svc+0x1c/0x28
-  el0_svc+0x2c/0x80
-  el0t_64_sync_handler+0x10c/0x138
-  el0t_64_sync+0x198/0x19c
- ---[ end trace 0000000000000000 ]---
- msm_dpu 5e01000.display-controller: [drm:msm_gpu_init [msm]] *ERROR* could not allocate memptrs: -22
- msm_dpu 5e01000.display-controller: failed to load adreno gpu
- platform a400000.remoteproc:glink-edge:apr:service@7:dais: Adding to iommu group 19
- msm_dpu 5e01000.display-controller: failed to bind 5900000.gpu (ops a3xx_ops [msm]): -22
- msm_dpu 5e01000.display-controller: adev bind failed: -22
- lt9611uxc 0-002b: failed to attach dsi to host
- lt9611uxc 0-002b: probe with driver lt9611uxc failed with error -22
-
-Suggested-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Fixes: 3581b7062cec ("drm/msm/disp/dpu1: add support for display on SM6115")
+Fixes: 8d40205f6093 ("iommufd: Add kAPI toward external drivers for kernel access")
+Link: https://patch.msgid.link/r/e2b61303bbc008ba1a4e2d7c2a2894749b59fdac.1752126748.git.nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://lore.kernel.org/r/20250613173238.15061-1-alexey.klimov@linaro.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/iommufd/io_pagetable.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -258,6 +258,7 @@ static const struct of_device_id qcom_sm
- 	{ .compatible = "qcom,sdm670-mdss" },
- 	{ .compatible = "qcom,sdm845-mdss" },
- 	{ .compatible = "qcom,sdm845-mss-pil" },
-+	{ .compatible = "qcom,sm6115-mdss" },
- 	{ .compatible = "qcom,sm6350-mdss" },
- 	{ .compatible = "qcom,sm6375-mdss" },
- 	{ .compatible = "qcom,sm8150-mdss" },
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -696,8 +696,10 @@ again:
+ 			iommufd_access_notify_unmap(iopt, area_first, length);
+ 			/* Something is not responding to unmap requests. */
+ 			tries++;
+-			if (WARN_ON(tries > 100))
+-				return -EDEADLOCK;
++			if (WARN_ON(tries > 100)) {
++				rc = -EDEADLOCK;
++				goto out_unmapped;
++			}
+ 			goto again;
+ 		}
+ 
+@@ -719,6 +721,7 @@ again:
+ out_unlock_iova:
+ 	up_write(&iopt->iova_rwsem);
+ 	up_read(&iopt->domains_rwsem);
++out_unmapped:
+ 	if (unmapped)
+ 		*unmapped = unmapped_bytes;
+ 	return rc;
 
 
