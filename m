@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E3931E115;
-	Mon, 18 Aug 2025 13:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3F732144E;
+	Mon, 18 Aug 2025 13:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524426; cv=none; b=EcrhUURq6v41maNCV3gnC2nUU5PkCAwLOr1Jt/+ZlC6KhloEud5eH+O/iUX3YAafpSTpavawnp+Xa9jxjgEWePZ5+eiX/ljiLdM6lS/SsDTIdBi0WVQUbBYwOqr8LdG+SmqX9e7H5ed+nMxqlmVdEJX+xu4S7Gny8BOp978xHTs=
+	t=1755524429; cv=none; b=lceSn/Yozys7byvkX9ptKbDE7WCHFtGCfsaRSxH4hNhzCrVg13JvBRGt4PM0AVUUkVo6LExidjzc2gmQR3soS4lRt/5TXzYAh/ZOqUKKiKQlQ6wa9Hgo6cdXNh72XLajYAen/O+IlrmOeH5Glnz/9/kR1csg1P7croeXUAm/Fjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524426; c=relaxed/simple;
-	bh=TT4xYXKjbpC4G5eQyN4DiM+eqCKB2NUEkjMFHHOcALk=;
+	s=arc-20240116; t=1755524429; c=relaxed/simple;
+	bh=fX/UWJTcNPy5Oo685zOgQ3bL78WkK1wAtRN3XniAHwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K0ncNoYcezA7oPIMlMoK6QHajeDr1UlLhb1KrYHQqW7s5r8wYYwEkCWKBZloFARZH6AJM64k7zZwTuwTZX8rExZiHF6N9kTOAKFTYkS7f8CkAxINnxkB0BkjAOiV2XkcYhIsCrMEdByz+mI2/nk1p6Zl2OLS6VMeslPCABs6lM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKEIZzwu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGjNZc19Wkw2DOfma0Jba1f6OKOGvAXvEn5zlZ4JPSvMIPcyPHo9KxvwnZARUfu+P/+hNUYt123lT6YaGdPENIvR/wdq0uwradr+kDxsqtY4J2ctab/zaPdlbYq7qI7vEwMkBnVWQ5sI910Mzx+ZwM+sezdGfs3EiQhHxmeBzU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYCGP1Ue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKEIZzwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2C3C113D0;
-	Mon, 18 Aug 2025 13:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYCGP1Ue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3A1C4CEF1;
+	Mon, 18 Aug 2025 13:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524426;
-	bh=TT4xYXKjbpC4G5eQyN4DiM+eqCKB2NUEkjMFHHOcALk=;
+	s=korg; t=1755524429;
+	bh=fX/UWJTcNPy5Oo685zOgQ3bL78WkK1wAtRN3XniAHwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zKEIZzwuzTu3s6MfdZfSM8h1iBu8L+i8sz2mn5+ncCql+QjRLKvV9CwzgQWWosCsJ
-	 JrJw1fJ+wK9tgfcm7Lr7mZv4LHh8HitasqZvrA2KcWXfbIdCZ3OoAPTFi930W6SXCd
-	 b1p4krK3iG5IHS99s+3DfnUFeibbUK5m2h2Y5KY4=
+	b=xYCGP1UeE/KtkGRRRW4Rj/ZMh0cJzPY33Up3jNdix7tVsDM9DOevlTMTdVI09yue6
+	 AytFuRZoZQskG0kH6FSp8uDWgNXZPFh/+FQ/eS8l414lRV5fSpAFcEn2KnPX9fh9m+
+	 xy8xFsgNHVzqt+YfICSieMjDThEHh3eT9NiEMnaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janna Martl <janna.martl109@gmail.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	YiPeng Chai <YiPeng.Chai@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 436/515] drm/i915/psr: Do not trigger Frame Change events from frontbuffer flush
-Date: Mon, 18 Aug 2025 14:47:02 +0200
-Message-ID: <20250818124515.211960856@linuxfoundation.org>
+Subject: [PATCH 6.15 437/515] drm/amdgpu: fix vram reservation issue
+Date: Mon, 18 Aug 2025 14:47:03 +0200
+Message-ID: <20250818124515.249837963@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -47,88 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: YiPeng Chai <YiPeng.Chai@amd.com>
 
-[ Upstream commit 184889dfe0568528fd6d14bba864dd57ed45bbf2 ]
+[ Upstream commit 10ef476aad1c848449934e7bec2ab2374333c7b6 ]
 
-We want to get rid of triggering "Frame Change" events from
-frontbuffer flush calls. We are about to move using TRANS_PUSH
-register for this on LunarLake and onwards. Touching TRANS_PUSH
-register from fronbuffer flush would be problematic as it's written by
-DSB as well.
+The vram block allocation flag must be cleared
+before making vram reservation, otherwise reserving
+addresses within the currently freed memory range
+will always fail.
 
-Fix this by using intel_psr_exit when flush or invalidate is done on
-LunarLake and onwards. This is not possible on AlderLake and
-MeteorLake due to HW bug in PSR2 disable.
-
-This patch is also fixing problems with cursor plane where cursor is
-disappearing or duplicate cursor is seen on the screen.
-
-v2: Commit message updated
-
-Bspec: 68927, 68934, 66624
-Reported-by: Janna Martl <janna.martl109@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/5522
-Fixes: 411ad63877bb ("drm/i915/psr: Use SFF_CTL on invalidate/flush for LunarLake onwards")
-Tested-by: Janna Martl <janna.martl109@gmail.com>
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://lore.kernel.org/r/20250801062905.564453-1-jouni.hogander@intel.com
-(cherry picked from commit 46fb38cb20c0d185a6391ab524b23e0e0219c41f)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: c9cad937c0c5 ("drm/amdgpu: add drm buddy support to amdgpu")
+Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d38eaf27de1b8584f42d6fb3f717b7ec44b3a7a1)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 4e938bad808c..ccefdcb833dd 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -3171,7 +3171,9 @@ static void intel_psr_configure_full_frame_update(struct intel_dp *intel_dp)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+index 07c936e90d8e..78f9e86ccc09 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+@@ -648,9 +648,8 @@ static void amdgpu_vram_mgr_del(struct ttm_resource_manager *man,
+ 	list_for_each_entry(block, &vres->blocks, link)
+ 		vis_usage += amdgpu_vram_mgr_vis_size(adev, block);
  
- static void _psr_invalidate_handle(struct intel_dp *intel_dp)
- {
--	if (intel_dp->psr.psr2_sel_fetch_enabled) {
-+	struct intel_display *display = to_intel_display(intel_dp);
-+
-+	if (DISPLAY_VER(display) < 20 && intel_dp->psr.psr2_sel_fetch_enabled) {
- 		if (!intel_dp->psr.psr2_sel_fetch_cff_enabled) {
- 			intel_dp->psr.psr2_sel_fetch_cff_enabled = true;
- 			intel_psr_configure_full_frame_update(intel_dp);
-@@ -3259,7 +3261,7 @@ static void _psr_flush_handle(struct intel_dp *intel_dp)
- 	struct intel_display *display = to_intel_display(intel_dp);
- 	struct drm_i915_private *dev_priv = to_i915(display->drm);
+-	amdgpu_vram_mgr_do_reserve(man);
+-
+ 	drm_buddy_free_list(mm, &vres->blocks, vres->flags);
++	amdgpu_vram_mgr_do_reserve(man);
+ 	mutex_unlock(&mgr->lock);
  
--	if (intel_dp->psr.psr2_sel_fetch_enabled) {
-+	if (DISPLAY_VER(display) < 20 && intel_dp->psr.psr2_sel_fetch_enabled) {
- 		if (intel_dp->psr.psr2_sel_fetch_cff_enabled) {
- 			/* can we turn CFF off? */
- 			if (intel_dp->psr.busy_frontbuffer_bits == 0)
-@@ -3276,11 +3278,13 @@ static void _psr_flush_handle(struct intel_dp *intel_dp)
- 		 * existing SU configuration
- 		 */
- 		intel_psr_configure_full_frame_update(intel_dp);
--	}
- 
--	intel_psr_force_update(intel_dp);
-+		intel_psr_force_update(intel_dp);
-+	} else {
-+		intel_psr_exit(intel_dp);
-+	}
- 
--	if (!intel_dp->psr.psr2_sel_fetch_enabled && !intel_dp->psr.active &&
-+	if ((!intel_dp->psr.psr2_sel_fetch_enabled || DISPLAY_VER(display) >= 20) &&
- 	    !intel_dp->psr.busy_frontbuffer_bits)
- 		queue_work(dev_priv->unordered_wq, &intel_dp->psr.work);
- }
+ 	atomic64_sub(vis_usage, &mgr->vis_usage);
 -- 
 2.50.1
 
