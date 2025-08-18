@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5311E3DCD;
-	Mon, 18 Aug 2025 13:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4955F3218CB;
+	Mon, 18 Aug 2025 13:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522674; cv=none; b=R965+2Auw884BNZx7VYI+a6DcDu+4HMY/U/WXDFLI7YyNrMMv5qLMbVct+AZfqHa5fVFpNlb2ZGBq7aAi0Xhg4XZLYZBooDrSCr/Tol4RHKHwb7K2yEGjjv1/KyKpLaJ2/Qtbe5z2z6twDJ+viesSeEhd+Ny+NXf0lFPmSD0MyE=
+	t=1755522679; cv=none; b=NzSnkFSSNeX582+M5IOSbLwVT/CjtmgfchJURCepKRYjUSgb+kSjVCIqQl4/E1rA1p4fVwP4xWnTZXFZIAk5+RPpidVyS/QpCnqUF61YVuF9ObwmAUPg+76ybHP/2FiP4WCtBH8z+3EJFn11jzxW3RjkZznKRlZwy9uaq8b631I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522674; c=relaxed/simple;
-	bh=OqzYYaTcDt8hfcCcY97V7Jkm5ONn13qGJnbCtHMJp3U=;
+	s=arc-20240116; t=1755522679; c=relaxed/simple;
+	bh=lSgXTWRnXojVT66Uvd8cd6WcrhRbBDIDyDkK28BX0G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uCxHLwPaH2opG/cenUfnEW85pbGcWV/Dz6FPKIDrgr8kRrr8itRzH35REyFExyIeikCxQG/BlOUY5LpuXJboA6OfDY6vZj8dSAVgReHsLyCy6R3dU9JdRxviQgV8I/NnxzUfzA6ueTHr3OmSQYSeT/CPy5oBebHjPfwLTNxV/jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axoXjou9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jNwDxXu+lpbYYUciSQ3xNHxTxKKtcd5+3KrxezUjwOlGXUK2kHzm5iZ/LdJS8dMkGhPejn9n1jA/1Hg8kF+N0eZPLh0ftyDeef40kK20j2jI8ZOKdqbX1Cui/6R3q00S35ToAfEEcijj+1DvMIBnhB163RDcA58egBZ/FuOmxLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKbvjZPi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axoXjou9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33354C4CEEB;
-	Mon, 18 Aug 2025 13:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKbvjZPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59558C4CEEB;
+	Mon, 18 Aug 2025 13:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522674;
-	bh=OqzYYaTcDt8hfcCcY97V7Jkm5ONn13qGJnbCtHMJp3U=;
+	s=korg; t=1755522677;
+	bh=lSgXTWRnXojVT66Uvd8cd6WcrhRbBDIDyDkK28BX0G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axoXjou9shevbUsq+1EVMQHt+IzXIgsVPsBAbyYATdjmWRvn2vvkkY6MVqC/+618b
-	 QrlHx901ivGYPl4RrUGpzbBtycQvkJXLibNPkfs/HeTwALMFhcZFmmz3dMeA0+m9Mh
-	 n/qIS6upJMCU/q3E2ebzUTFYuHBdoQI47B/5nU6A=
+	b=RKbvjZPiw2Ibfr2Pq/a9UB7UJxA1sp7OCMe3WyRT2Dq/jCGLLR0onBQaz9cwegCL8
+	 AmFdHbF103ou26SQfsJLFsnftXuFopLFS0F1mYYdOi8oRIF8pEcBsfF3GUbu+GNulf
+	 E/DXO0HfMXXv1kVBaI4VwBCoiPToBuu/eI9V4sW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricky Wu <ricky_wu@realtek.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 386/444] misc: rtsx: usb: Ensure mmc child device is active when card is present
-Date: Mon, 18 Aug 2025 14:46:52 +0200
-Message-ID: <20250818124503.373131147@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 387/444] usb: typec: ucsi: Update power_supply on power role change
+Date: Mon, 18 Aug 2025 14:46:53 +0200
+Message-ID: <20250818124503.409019362@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -50,69 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricky Wu <ricky_wu@realtek.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-commit 966c5cd72be8989c8a559ddef8e8ff07a37c5eb0 upstream.
+commit 7616f006db07017ef5d4ae410fca99279aaca7aa upstream.
 
-When a card is present in the reader, the driver currently defers
-autosuspend by returning -EAGAIN during the suspend callback to
-trigger USB remote wakeup signaling. However, this does not guarantee
-that the mmc child device has been resumed, which may cause issues if
-it remains suspended while the card is accessible.
-This patch ensures that all child devices, including the mmc host
-controller, are explicitly resumed before returning -EAGAIN. This
-fixes a corner case introduced by earlier remote wakeup handling,
-improving reliability of runtime PM when a card is inserted.
+The current power direction of an USB-C port also influences the
+power_supply's online status, so a power role change should also update
+the power_supply.
 
-Fixes: 883a87ddf2f1 ("misc: rtsx_usb: Use USB remote wakeup signaling for card insertion detection")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ricky Wu <ricky_wu@realtek.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://lore.kernel.org/r/20250711140143.2105224-1-ricky_wu@realtek.com
+Fixes an issue on some systems where plugging in a normal USB device in
+for the first time after a reboot will cause upower to erroneously
+consider the system to be connected to AC power.
+
+Cc: stable <stable@kernel.org>
+Fixes: 0e6371fbfba3 ("usb: typec: ucsi: Report power supply changes")
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250721-fix-ucsi-pwr-dir-notify-v1-1-e53d5340cb38@qtmlabs.xyz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/cardreader/rtsx_usb.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/misc/cardreader/rtsx_usb.c
-+++ b/drivers/misc/cardreader/rtsx_usb.c
-@@ -698,6 +698,12 @@ static void rtsx_usb_disconnect(struct u
- }
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1225,6 +1225,7 @@ static void ucsi_handle_connector_change
  
- #ifdef CONFIG_PM
-+static int rtsx_usb_resume_child(struct device *dev, void *data)
-+{
-+	pm_request_resume(dev);
-+	return 0;
-+}
-+
- static int rtsx_usb_suspend(struct usb_interface *intf, pm_message_t message)
- {
- 	struct rtsx_ucr *ucr =
-@@ -713,8 +719,10 @@ static int rtsx_usb_suspend(struct usb_i
- 			mutex_unlock(&ucr->dev_mutex);
+ 	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
+ 		typec_set_pwr_role(con->port, role);
++		ucsi_port_psy_changed(con);
  
- 			/* Defer the autosuspend if card exists */
--			if (val & (SD_CD | MS_CD))
-+			if (val & (SD_CD | MS_CD)) {
-+				device_for_each_child(&intf->dev, NULL, rtsx_usb_resume_child);
- 				return -EAGAIN;
-+			}
- 		} else {
- 			/* There is an ongoing operation*/
- 			return -EAGAIN;
-@@ -724,12 +732,6 @@ static int rtsx_usb_suspend(struct usb_i
- 	return 0;
- }
- 
--static int rtsx_usb_resume_child(struct device *dev, void *data)
--{
--	pm_request_resume(dev);
--	return 0;
--}
--
- static int rtsx_usb_resume(struct usb_interface *intf)
- {
- 	device_for_each_child(&intf->dev, NULL, rtsx_usb_resume_child);
+ 		/* Complete pending power role swap */
+ 		if (!completion_done(&con->complete))
 
 
