@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63DE20010A;
-	Mon, 18 Aug 2025 14:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079CB1D61BB;
+	Mon, 18 Aug 2025 14:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526132; cv=none; b=fWLDVSnyPMCGXQu/3qQobjf5tQyd6q93pCDuyl6DOZaVwFPhV7u55+op2++vv3ehw4J7tGy+aRS4btk3G5/bmqt5RwfnGt/CdqXed4dTZ8MJVS2NnI0g5nvoweX/ch+2Qp0joy99QIIEY6fTd5hC5IPz9wYN/RPAqaKuGhEVoMg=
+	t=1755526136; cv=none; b=fn6XLxAgKcjgbNAuTWrCH8PCbN+7cFH7bUO1doWMuOKmdbG3Urb1MC+0ntcAp1/XIWoyE7Zp4t4zDe6HaXYypmUPYlxnCZPlZCwfck0Rh1Aas2goGxf0yH/2yAvx99MtRDcWpwKE59iWhQb2WRXY0mlFoBXVke8AyAtiNqtxMG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526132; c=relaxed/simple;
-	bh=wFkRHHsfDEX6zMc7ZIui19n/as6m2KjzroRiwA+y6jU=;
+	s=arc-20240116; t=1755526136; c=relaxed/simple;
+	bh=UYofjXticcb/N1J8MTxSEvLBZrewNDCShqlphaoK/RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCLB1ODdl7qlzFeqskKDg/fVKfm/ZK4ahTpX01GeXhglgU66oX1XbthawgCoNPOeMVFlGwdKVKhJPZFrj5wKni/pUI86KEqkE4OLnxZSKglNvbRVNXvIOuLL1NHQ58ChscBvzGFi+SQbQ7Ig+s/LzHsLuo8VAmcR+Xz/2PBlNSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8s2WgR5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NccQ5g5K126O7Sx3WCFCOafxWYrsGm2bneYgOFhMPdL7+1Pr1eX0b6+4ThKFHZNhhlUd+nnESK9rXJEztenmzieCNJoGABbdNvLdstGVXcvDA4g05ijsZgZG9cSnqQY+dXtAwbBHO35k1Fyx8ncuOk5Yctx9tOPNwSkZFcTJqrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kd4fC2tN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8s2WgR5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0815C4CEF1;
-	Mon, 18 Aug 2025 14:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kd4fC2tN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CC3C4CEEB;
+	Mon, 18 Aug 2025 14:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526132;
-	bh=wFkRHHsfDEX6zMc7ZIui19n/as6m2KjzroRiwA+y6jU=;
+	s=korg; t=1755526135;
+	bh=UYofjXticcb/N1J8MTxSEvLBZrewNDCShqlphaoK/RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8s2WgR5pN/rzkNIQuJA10vvLrKPSTXMwsFxwBRsFqUHEkdkeFw+SSkXE6+DGkFNd
-	 ummJMsfdbYPSvhmBDyYW7C2d1az/2DQhldSpUG0hVqhhUvOhI/xVlqwGiSaU3POJq4
-	 IcrNcA3VellLZEl90fOEO0heVTygNmIhmoRsVtWQ=
+	b=Kd4fC2tNdL9/30gwhUAXy0pdTqr7Nye47ZCQaEfoI9ZnNHvbDuGzUWN6uMsueO990
+	 uvdhckKx/9Oc7W/v7EBGEvp47P841MtOmGJDNJX0D34mWTGJk74rkYvpF7JSrpXTIl
+	 devojGGCrlMv8sKnc7chq6k2aBC8q7TY7nLBnW20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Evtushenko <koevtushenko@yandex.com>,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
+	Tyler Hicks <code@tyhicks.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 467/570] pNFS: Fix uninited ptr deref in block/scsi layout
-Date: Mon, 18 Aug 2025 14:47:34 +0200
-Message-ID: <20250818124523.866760355@linuxfoundation.org>
+Subject: [PATCH 6.16 468/570] rtc: ds1307: remove clear of oscillator stop flag (OSF) in probe
+Date: Mon, 18 Aug 2025 14:47:35 +0200
+Message-ID: <20250818124523.905426519@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -53,97 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
 
-[ Upstream commit 9768797c219326699778fba9cd3b607b2f1e7950 ]
+[ Upstream commit 48458654659c9c2e149c211d86637f1592470da5 ]
 
-The error occurs on the third attempt to encode extents. When function
-ext_tree_prepare_commit() reallocates a larger buffer to retry encoding
-extents, the "layoutupdate_pages" page array is initialized only after the
-retry loop. But ext_tree_free_commitdata() is called on every iteration
-and tries to put pages in the array, thus dereferencing uninitialized
-pointers.
+In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
+kernel time as long as rtc_read_time() succeeds. In some power loss
+situations, our supercapacitor-backed DS1342 RTC comes up with either an
+unpredictable future time or the default 01/01/00 from the datasheet.
+The oscillator stop flag (OSF) is set in these scenarios due to the
+power loss and can be used to determine the validity of the RTC data.
 
-An additional problem is that there is no limit on the maximum possible
-buffer_size. When there are too many extents, the client may create a
-layoutcommit that is larger than the maximum possible RPC size accepted
-by the server.
+Some chip types in the ds1307 driver already have OSF handling to
+determine whether .read_time provides valid RTC data or returns -EINVAL.
 
-During testing, we observed two typical scenarios. First, one memory page
-for extents is enough when we work with small files, append data to the
-end of the file, or preallocate extents before writing. But when we fill
-a new large file without preallocating, the number of extents can be huge,
-and counting the number of written extents in ext_tree_encode_commit()
-does not help much. Since this number increases even more between
-unlocking and locking of ext_tree, the reallocated buffer may not be
-large enough again and again.
+This change removes the clear of the OSF in .probe as the OSF needs to
+be preserved to expand the OSF handling to the ds1341 chip type (note
+that DS1341 and DS1342 share a datasheet).
 
-Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250630183537.196479-2-sergeybashirov@gmail.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+Reviewed-by: Tyler Hicks <code@tyhicks.com>
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://lore.kernel.org/r/1749665656-30108-2-git-send-email-meaganlloyd@linux.microsoft.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/extent_tree.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/rtc/rtc-ds1307.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/nfs/blocklayout/extent_tree.c b/fs/nfs/blocklayout/extent_tree.c
-index 8f7cff7a4293..0add0f329816 100644
---- a/fs/nfs/blocklayout/extent_tree.c
-+++ b/fs/nfs/blocklayout/extent_tree.c
-@@ -552,6 +552,15 @@ static int ext_tree_encode_commit(struct pnfs_block_layout *bl, __be32 *p,
- 	return ret;
- }
+diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
+index c6d388bb4a19..1960d1bd851c 100644
+--- a/drivers/rtc/rtc-ds1307.c
++++ b/drivers/rtc/rtc-ds1307.c
+@@ -1824,10 +1824,8 @@ static int ds1307_probe(struct i2c_client *client)
+ 		regmap_write(ds1307->regmap, DS1337_REG_CONTROL,
+ 			     regs[0]);
  
-+/**
-+ * ext_tree_prepare_commit - encode extents that need to be committed
-+ * @arg: layout commit data
-+ *
-+ * Return values:
-+ *   %0: Success, all required extents are encoded
-+ *   %-ENOSPC: Some extents are encoded, but not all, due to RPC size limit
-+ *   %-ENOMEM: Out of memory, extents not encoded
-+ */
- int
- ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
- {
-@@ -568,12 +577,12 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
- 	start_p = page_address(arg->layoutupdate_page);
- 	arg->layoutupdate_pages = &arg->layoutupdate_page;
- 
--retry:
--	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size, &count, &arg->lastbytewritten);
-+	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
-+			&count, &arg->lastbytewritten);
- 	if (unlikely(ret)) {
- 		ext_tree_free_commitdata(arg, buffer_size);
- 
--		buffer_size = ext_tree_layoutupdate_size(bl, count);
-+		buffer_size = NFS_SERVER(arg->inode)->wsize;
- 		count = 0;
- 
- 		arg->layoutupdate_pages =
-@@ -588,7 +597,8 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
- 			return -ENOMEM;
+-		/* oscillator fault?  clear flag, and warn */
++		/* oscillator fault? warn */
+ 		if (regs[1] & DS1337_BIT_OSF) {
+-			regmap_write(ds1307->regmap, DS1337_REG_STATUS,
+-				     regs[1] & ~DS1337_BIT_OSF);
+ 			dev_warn(ds1307->dev, "SET TIME!\n");
  		}
- 
--		goto retry;
-+		ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
-+				&count, &arg->lastbytewritten);
- 	}
- 
- 	*start_p = cpu_to_be32(count);
-@@ -608,7 +618,7 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
- 	}
- 
- 	dprintk("%s found %zu ranges\n", __func__, count);
--	return 0;
-+	return ret;
- }
- 
- void
+ 		break;
 -- 
 2.39.5
 
