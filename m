@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8DC335BB3;
-	Mon, 18 Aug 2025 13:27:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393A6335BCA;
+	Mon, 18 Aug 2025 13:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523656; cv=none; b=tIZjI+R8s/F0PT1Nb6IJU2J8MBttgkR5EEKGVSIVzxPBfJyhj+tuOeQUQ4SWZUJo4+cl9/QRarIVCD0seVke4UkkWMEbcaIEoZrVN8/2SAFa6E2sLW1F+9VROCnTxw7yk5GQEw8MmIpdHU8TsuKoI0xsKEHa/Tg7XCJZsAjibFs=
+	t=1755523659; cv=none; b=VtMvPLfypbPkTJpPJv6fylQsmpxe3/ECwP4rGsU8gybCqHqNibpU4mdRgRA/lnTY/SOLPFscTAcsH+7INRfeoNK/eAQlpNv0d6v/eAYpCbVupW4PC8YyTPsoXLolT0o2cKeO8w9ghE+QMD6rXoVjKoGNDkRqF0u4vHrDrw14QoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523656; c=relaxed/simple;
-	bh=oMYmKYhEot1hVoTsu3SXV+GUSYj7Bxdd51HzZUcKIIU=;
+	s=arc-20240116; t=1755523659; c=relaxed/simple;
+	bh=R6QZMF/V7qdaKNmAbTuFWfOR+T9LSRzbat9wsEI4mCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bg/6svR1GfjkebsnZA5Ip52UxnsrLZbkKFYOJ8tpmEI7onq0+hvhRWcTIOIkFE57vFhU+QgxCfD9BqaoHsmzXeQryyaGzPwY8hIhStFUkjUg5LmOd2NF4qdHWqbB6AaUM+S6ARDd91kHD6C7Yi2laqcQdnVApHB85/F4dP0NiQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d18NIQDx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I42sw1Jx867GIbffba1bR35+HXRusjUIDB1xC69XJeaaGrSbBYuUdP/6OclkhoUor+CUeVirPpGwwVkoiwmPOaG5DP3QBnmN7qhQWteV4fIJhuV6ySfpmHwJ4Rdb9ilC78dNq9ZePeHMgy6pmPA3HG5fXjIQRige3bCw87X78gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNK12WKU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d18NIQDx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AF0C4CEEB;
-	Mon, 18 Aug 2025 13:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNK12WKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4AB7C4CEF1;
+	Mon, 18 Aug 2025 13:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523656;
-	bh=oMYmKYhEot1hVoTsu3SXV+GUSYj7Bxdd51HzZUcKIIU=;
+	s=korg; t=1755523659;
+	bh=R6QZMF/V7qdaKNmAbTuFWfOR+T9LSRzbat9wsEI4mCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d18NIQDxS4oMu99OWASjqyILKLLYLNX37svGjTWe6ZLFT/YWMM9JN+XLUHe5bevOn
-	 mD+sbDWPsSGBjNruwjMFB62HhTiy5La//rGqV+BdmUrR1xzKV9BrPKzKop1HNUsBH0
-	 MdGUaDEbVc2UBz6LSjtWZ41/L7XAcEZuroeG8HqI=
+	b=LNK12WKUHQN1FxaqV8uVjQRIEhtDaJfevgDljBPDM0QM2nxWWFnCPs2sLgWbFPN4X
+	 vybTktP1SkZa/Ax8E7cc9qAxyelbLD5TO4WZq/Qc7TnyF+xUM6rfeZSpgrMpmzF6xL
+	 FnzKlp/i816TgxEqnzK4o5b4CnnduNqAl1hQwi8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 239/515] s390/stp: Remove udelay from stp_sync_clock()
-Date: Mon, 18 Aug 2025 14:43:45 +0200
-Message-ID: <20250818124507.586277842@linuxfoundation.org>
+Subject: [PATCH 6.15 222/515] can: ti_hecc: fix -Woverflow compiler warning
+Date: Mon, 18 Aug 2025 14:43:28 +0200
+Message-ID: <20250818124506.912539860@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,42 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit b367017cdac21781a74eff4e208d3d38e1f38d3f ]
+[ Upstream commit 7cae4d04717b002cffe41169da3f239c845a0723 ]
 
-When an stp sync check is handled on a system with multiple
-cpus each cpu gets a machine check but only the first one
-actually handles the sync operation. All other CPUs spin
-waiting for the first one to finish with a short udelay().
-But udelay can't be used here as the first CPU modifies tod_clock_base
-before performing the sync op. During this timeframe
-get_tod_clock_monotonic() might return a non-monotonic time.
+Fix below default (W=0) warning:
 
-The time spent waiting should be very short and udelay is a busy loop
-anyways, therefore simply remove the udelay.
+  drivers/net/can/ti_hecc.c: In function 'ti_hecc_start':
+  drivers/net/can/ti_hecc.c:386:20: warning: conversion from 'long unsigned int' to 'u32' {aka 'unsigned int'} changes value from '18446744073709551599' to '4294967279' [-Woverflow]
+    386 |         mbx_mask = ~BIT(HECC_RX_LAST_MBOX);
+        |                    ^
 
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250715-can-compile-test-v2-1-f7fd566db86f@wanadoo.fr
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/time.c | 2 +-
+ drivers/net/can/ti_hecc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/time.c b/arch/s390/kernel/time.c
-index fed17d407a44..cb7ed55e24d2 100644
---- a/arch/s390/kernel/time.c
-+++ b/arch/s390/kernel/time.c
-@@ -580,7 +580,7 @@ static int stp_sync_clock(void *data)
- 		atomic_dec(&sync->cpus);
- 		/* Wait for in_sync to be set. */
- 		while (READ_ONCE(sync->in_sync) == 0)
--			__udelay(1);
-+			;
- 	}
- 	if (sync->in_sync != 1)
- 		/* Didn't work. Clear per-cpu in sync bit again. */
+diff --git a/drivers/net/can/ti_hecc.c b/drivers/net/can/ti_hecc.c
+index 644e8b8eb91e..e6d6661a908a 100644
+--- a/drivers/net/can/ti_hecc.c
++++ b/drivers/net/can/ti_hecc.c
+@@ -383,7 +383,7 @@ static void ti_hecc_start(struct net_device *ndev)
+ 	 * overflows instead of the hardware silently dropping the
+ 	 * messages.
+ 	 */
+-	mbx_mask = ~BIT(HECC_RX_LAST_MBOX);
++	mbx_mask = ~BIT_U32(HECC_RX_LAST_MBOX);
+ 	hecc_write(priv, HECC_CANOPC, mbx_mask);
+ 
+ 	/* Enable interrupts */
 -- 
 2.39.5
 
