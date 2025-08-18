@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F1333EB0D;
-	Mon, 18 Aug 2025 14:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772EF33EB0C;
+	Mon, 18 Aug 2025 14:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526399; cv=none; b=s1ONRf9nnXvOWh/wDbrTWk6IA9pjkMN1Q0q31fUHIiR0LFnnu/6ebqLioepAHUMhdjqwmqKriEHJM6F2n68J4iKbKER13u19PQms8OmqEw+6T/AP0MRwoUx68oclG8S/awBtigYYrfbhVek7oOM2F2tbs3FZV7y2QKl9Vho0g3o=
+	t=1755526402; cv=none; b=MdbUUENFZage1uWXST43iTwQtnvLmXRSco2q5QIIO7d1dka3uWcBXwWMWJUDH+pXWsF2ux8swnmqaMDeVJWU141qX1P3mG0jyGT7JVio4xH8Y01RGRX8sSH5UxnrToS6fM+a9pM1g2b5GtjLRQFlmOfQE7HZur3hdazQecjVm/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526399; c=relaxed/simple;
-	bh=PlYqzt+IX4CrnScvEnN4gp6KJhhJrcxuiHYBSe83d4Q=;
+	s=arc-20240116; t=1755526402; c=relaxed/simple;
+	bh=9E8kn1e6rd8AxmgpPnMcbV8RtIn+h/ttqbYONQNrdpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WT62obzJz+SxdNYYlwAuegzOHwZu/IVR6QcV+GATSlz6+1W5M4jXQpThYM0OaLKzm8cCta6N/wCQ+/mZeapZwDWtEiqX6CDND0OeG6B9HJhzmspVKVBdVkMkhJOnRVRPmC14E2u6sEmacAdieeUi40EHmKeIrWuJ7fQXTpEnlcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+7yubD6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jMn9iNTmJb7z6LwQJOCSt5PdqXJkQETEcYwDJQU0/9pzyBprD2RTpMbgEdRfT/Tr5MfQ9XRL+4ElG8sOu2Sng9MZZfS5LN5RFHKWepPBVIEWqUEiobjeqU/BdcXpbzDkFMcoLImpzZFfuY7BrRzjFmi5P5TDoSFsmoEClZZuwbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deKrh4fJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+7yubD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F6CC4CEF1;
-	Mon, 18 Aug 2025 14:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deKrh4fJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC65FC113D0;
+	Mon, 18 Aug 2025 14:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526399;
-	bh=PlYqzt+IX4CrnScvEnN4gp6KJhhJrcxuiHYBSe83d4Q=;
+	s=korg; t=1755526402;
+	bh=9E8kn1e6rd8AxmgpPnMcbV8RtIn+h/ttqbYONQNrdpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+7yubD6sUC6UNaQ3h54Q1F06hLYLRgZsLRBf5tPj0afpgLgjR42CV9jmnCAQkjok
-	 BixH+dJyMW6ozN/KoMPlwwjYc6XZOk9Nkt5Ebi9KhH+kV46bTWRv04RmBm7Sc9p+Wi
-	 dle4aV/P2ExcE873Z8pb2cmS40zOmNe7hwoVXbPo=
+	b=deKrh4fJqyNyIqXno2Pl9EMcC6IeCgp/2PoulvJ1zDYIhkZSKNeMha0G1sUtBkpBg
+	 0jSp/z9m9RD8rXZuil5yw3Nkjy36kzNuUrKRgYsqfdSAk34OK9Kjrevp+mxBndkPmR
+	 n1hjr3oZV7UJhLVI9woIt3eJIXNVPLaK/G/VMy0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 544/570] mm/ptdump: take the memory hotplug lock inside ptdump_walk_pgd()
-Date: Mon, 18 Aug 2025 14:48:51 +0200
-Message-ID: <20250818124526.830577239@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.16 518/570] btrfs: dont ignore inode missing when replaying log tree
+Date: Mon, 18 Aug 2025 14:48:25 +0200
+Message-ID: <20250818124525.821368278@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -63,131 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 59305202c67fea50378dcad0cc199dbc13a0e99a upstream.
+commit 7ebf381a69421a88265d3c49cd0f007ba7336c9d upstream.
 
-Memory hot remove unmaps and tears down various kernel page table regions
-as required.  The ptdump code can race with concurrent modifications of
-the kernel page tables.  When leaf entries are modified concurrently, the
-dump code may log stale or inconsistent information for a VA range, but
-this is otherwise not harmful.
+During log replay, at add_inode_ref(), we return -ENOENT if our current
+inode isn't found on the subvolume tree or if a parent directory isn't
+found. The error comes from btrfs_iget_logging() <- btrfs_iget() <-
+btrfs_read_locked_inode().
 
-But when intermediate levels of kernel page table are freed, the dump code
-will continue to use memory that has been freed and potentially
-reallocated for another purpose.  In such cases, the ptdump code may
-dereference bogus addresses, leading to a number of potential problems.
+The single caller of add_inode_ref(), replay_one_buffer(), ignores an
+-ENOENT error because it expects that error to mean only that a parent
+directory wasn't found and that is ok.
 
-To avoid the above mentioned race condition, platforms such as arm64,
-riscv and s390 take memory hotplug lock, while dumping kernel page table
-via the sysfs interface /sys/kernel/debug/kernel_page_tables.
+Before commit 5f61b961599a ("btrfs: fix inode lookup error handling during
+log replay") we were converting any error when getting a parent directory
+to -ENOENT and any error when getting the current inode to -EIO, so our
+caller would fail log replay in case we can't find the current inode.
+After that commit however in case the current inode is not found we return
+-ENOENT to the caller and therefore it ignores the critical fact that the
+current inode was not found in the subvolume tree.
 
-Similar race condition exists while checking for pages that might have
-been marked W+X via /sys/kernel/debug/kernel_page_tables/check_wx_pages
-which in turn calls ptdump_check_wx().  Instead of solving this race
-condition again, let's just move the memory hotplug lock inside generic
-ptdump_check_wx() which will benefit both the scenarios.
+Fix this by converting -ENOENT to 0 when we don't find a parent directory,
+returning -ENOENT when we don't find the current inode and making the
+caller, replay_one_buffer(), not ignore -ENOENT anymore.
 
-Drop get_online_mems() and put_online_mems() combination from all existing
-platform ptdump code paths.
-
-Link: https://lkml.kernel.org/r/20250620052427.2092093-1-anshuman.khandual@arm.com
-Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>	[s390]
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5f61b961599a ("btrfs: fix inode lookup error handling during log replay")
+CC: stable@vger.kernel.org # 6.16
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/ptdump_debugfs.c |    3 ---
- arch/riscv/mm/ptdump.c         |    3 ---
- arch/s390/mm/dump_pagetables.c |    2 --
- mm/ptdump.c                    |    2 ++
- 4 files changed, 2 insertions(+), 8 deletions(-)
+ fs/btrfs/tree-log.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/mm/ptdump_debugfs.c
-+++ b/arch/arm64/mm/ptdump_debugfs.c
-@@ -1,6 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/debugfs.h>
--#include <linux/memory_hotplug.h>
- #include <linux/seq_file.h>
- 
- #include <asm/ptdump.h>
-@@ -9,9 +8,7 @@ static int ptdump_show(struct seq_file *
- {
- 	struct ptdump_info *info = m->private;
- 
--	get_online_mems();
- 	ptdump_walk(m, info);
--	put_online_mems();
- 	return 0;
- }
- DEFINE_SHOW_ATTRIBUTE(ptdump);
---- a/arch/riscv/mm/ptdump.c
-+++ b/arch/riscv/mm/ptdump.c
-@@ -6,7 +6,6 @@
- #include <linux/efi.h>
- #include <linux/init.h>
- #include <linux/debugfs.h>
--#include <linux/memory_hotplug.h>
- #include <linux/seq_file.h>
- #include <linux/ptdump.h>
- 
-@@ -413,9 +412,7 @@ bool ptdump_check_wx(void)
- 
- static int ptdump_show(struct seq_file *m, void *v)
- {
--	get_online_mems();
- 	ptdump_walk(m, m->private);
--	put_online_mems();
- 
- 	return 0;
- }
---- a/arch/s390/mm/dump_pagetables.c
-+++ b/arch/s390/mm/dump_pagetables.c
-@@ -247,11 +247,9 @@ static int ptdump_show(struct seq_file *
- 		.marker = markers,
- 	};
- 
--	get_online_mems();
- 	mutex_lock(&cpa_mutex);
- 	ptdump_walk_pgd(&st.ptdump, &init_mm, NULL);
- 	mutex_unlock(&cpa_mutex);
--	put_online_mems();
- 	return 0;
- }
- DEFINE_SHOW_ATTRIBUTE(ptdump);
---- a/mm/ptdump.c
-+++ b/mm/ptdump.c
-@@ -175,6 +175,7 @@ void ptdump_walk_pgd(struct ptdump_state
- {
- 	const struct ptdump_range *range = st->range;
- 
-+	get_online_mems();
- 	mmap_write_lock(mm);
- 	while (range->start != range->end) {
- 		walk_page_range_novma(mm, range->start, range->end,
-@@ -182,6 +183,7 @@ void ptdump_walk_pgd(struct ptdump_state
- 		range++;
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -1383,6 +1383,8 @@ static noinline int add_inode_ref(struct
+ 	dir = btrfs_iget_logging(parent_objectid, root);
+ 	if (IS_ERR(dir)) {
+ 		ret = PTR_ERR(dir);
++		if (ret == -ENOENT)
++			ret = 0;
+ 		dir = NULL;
+ 		goto out;
  	}
- 	mmap_write_unlock(mm);
-+	put_online_mems();
- 
- 	/* Flush out the last page */
- 	st->note_page_flush(st);
+@@ -1407,6 +1409,15 @@ static noinline int add_inode_ref(struct
+ 				if (IS_ERR(dir)) {
+ 					ret = PTR_ERR(dir);
+ 					dir = NULL;
++					/*
++					 * A new parent dir may have not been
++					 * logged and not exist in the subvolume
++					 * tree, see the comment above before
++					 * the loop when getting the first
++					 * parent dir.
++					 */
++					if (ret == -ENOENT)
++						ret = 0;
+ 					goto out;
+ 				}
+ 			}
+@@ -2519,9 +2530,8 @@ static int replay_one_buffer(struct btrf
+ 			   key.type == BTRFS_INODE_EXTREF_KEY) {
+ 			ret = add_inode_ref(wc->trans, root, log, path,
+ 					    eb, i, &key);
+-			if (ret && ret != -ENOENT)
++			if (ret)
+ 				break;
+-			ret = 0;
+ 		} else if (key.type == BTRFS_EXTENT_DATA_KEY) {
+ 			ret = replay_one_extent(wc->trans, root, path,
+ 						eb, i, &key);
 
 
