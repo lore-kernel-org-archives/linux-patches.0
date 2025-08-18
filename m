@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681EE1F462D;
-	Mon, 18 Aug 2025 13:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A8331CA51;
+	Mon, 18 Aug 2025 13:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522127; cv=none; b=K7ZEWkSYsc50NseWvsY/D8cuGaCZ5yt1cwncIcExdi0ftgnzvAWnF1JhxxKICM8Tt/xcH9jH2wBmqxGuvrm9kHC2TMXwvk10+4YMTeTlmJHozKEu78SIhHDFSAUhTZ+D3MUUIkKWKt/cGzd0bqINbXdOdyeHa0k5oQt7Dxied38=
+	t=1755522130; cv=none; b=e35Mw0sd2Xy0UTgrK+r+AVNWBa6gWQZtoCi5N3TbXYApqduF9hvjcUFdgmJl+pXAOdR820Q+sXixUFrTm0mCi6Ea25ggITvaSuy3rAwn8/1Ae8V44oDrIh/noPfrzpU2wDNUanZP5xF3FUxliJoqCe5KRP0l5Syajzv6iU7iB6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522127; c=relaxed/simple;
-	bh=7TVdYu8t87gsewO/0MG1BwcgxYfbzdiCTufkYnjwOmA=;
+	s=arc-20240116; t=1755522130; c=relaxed/simple;
+	bh=VN382YUXGIHrORcccBu3kqOGaJ+qafhfiwhcuVuV59U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OauaPKpjrMDDhi/xlgDdMtl7Az6mnLIWb3+9Py3tSwp91YxJ0WZW/hIe01ZhZnn842pNinELhZex7NA1pSViHLX9aEVebPJ17t1v8KbNWF4n3ybFc+T7YKDrCk6TUe0JbZHZSCFZoA7E6N5R0N053K5TVRw+nKJWG99NK9RZpd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zc3NTU5G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDy6omBjlNQQ5rfLIb/X3aiIRUhMusjfG84Qe7wMk5ccwd6Wq9pn5zTEGdKxgW6svInVu23AD7gER57lm6MCEv6hVL+ACR5sMci3vGZZoBcNtKI4QpkJ7I42jRvoyKy+PrqZmFxk/5L064z10pElNxu5MbOvfkYsoidhh+A0KZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T602whUC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc3NTU5G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D38C4CEEB;
-	Mon, 18 Aug 2025 13:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T602whUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B22EC4CEEB;
+	Mon, 18 Aug 2025 13:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522127;
-	bh=7TVdYu8t87gsewO/0MG1BwcgxYfbzdiCTufkYnjwOmA=;
+	s=korg; t=1755522130;
+	bh=VN382YUXGIHrORcccBu3kqOGaJ+qafhfiwhcuVuV59U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zc3NTU5GRoo+PaNyRWgvWXWL9tIePaltBv+Rp4cfQHuyq+MeivCRulTjmo6CXq6Ia
-	 b5PIP6BXZk4CLTn1KncAshFRyNOj/WhUx34jW8A6ydjuLiNs4DA4r+xqxgOoZ+/CX0
-	 PWAZvPyoPX4IX1/GNKqZUAn1nbjsFoFYHyGPasoE=
+	b=T602whUCMSsgzF54t2iirH0UrWoyV6CANrRV7jYaJh2WD0lw1e0IDLekSauTeB4uy
+	 w7DyXxnK+QMNpGkQI0EUH7RJb6c/Wq/a+xJNZEw3F+uPLrBmTeiBvGggxo5GRwgWYv
+	 8gyM3d5Glb82YnObQvw6GgKfMnzjByolSvxE4sTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 190/444] wifi: mac80211: dont unreserve never reserved chanctx
-Date: Mon, 18 Aug 2025 14:43:36 +0200
-Message-ID: <20250818124455.991616928@linuxfoundation.org>
+Subject: [PATCH 6.12 181/444] net/mlx5e: Properly access RCU protected qdisc_sleeping variable
+Date: Mon, 18 Aug 2025 14:43:27 +0200
+Message-ID: <20250818124455.661629068@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,38 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit a6d521bafcb290294128a51b13dbf4baae5748fc ]
+[ Upstream commit 2a601b2d35623065d31ebaf697b07502d54878c9 ]
 
-If a link has no chanctx, indicating it is an inactive link
-that we tracked CSA for, then attempting to unreserve the
-reserved chanctx will throw a warning and fail, since there
-never was a reserved chanctx. Skip the unreserve.
+qdisc_sleeping variable is declared as "struct Qdisc __rcu" and
+as such needs proper annotation while accessing it.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250709233537.022192f4b1ae.Ib58156ac13e674a9f4d714735be0764a244c0aae@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Without rtnl_dereference(), the following error is generated by sparse:
+
+drivers/net/ethernet/mellanox/mlx5/core/en/qos.c:377:40: warning:
+  incorrect type in initializer (different address spaces)
+drivers/net/ethernet/mellanox/mlx5/core/en/qos.c:377:40:    expected
+  struct Qdisc *qdisc
+drivers/net/ethernet/mellanox/mlx5/core/en/qos.c:377:40:    got struct
+  Qdisc [noderef] __rcu *qdisc_sleeping
+
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/1752675472-201445-4-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/qos.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index fd7434995a47..1bcd4eef73e6 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -2243,7 +2243,8 @@ ieee80211_sta_abort_chanswitch(struct ieee80211_link_data *link)
- 	if (!local->ops->abort_channel_switch)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
+index f0744a45db92..4e461cb03b83 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
+@@ -374,7 +374,7 @@ void mlx5e_reactivate_qos_sq(struct mlx5e_priv *priv, u16 qid, struct netdev_que
+ void mlx5e_reset_qdisc(struct net_device *dev, u16 qid)
+ {
+ 	struct netdev_queue *dev_queue = netdev_get_tx_queue(dev, qid);
+-	struct Qdisc *qdisc = dev_queue->qdisc_sleeping;
++	struct Qdisc *qdisc = rtnl_dereference(dev_queue->qdisc_sleeping);
+ 
+ 	if (!qdisc)
  		return;
- 
--	ieee80211_link_unreserve_chanctx(link);
-+	if (rcu_access_pointer(link->conf->chanctx_conf))
-+		ieee80211_link_unreserve_chanctx(link);
- 
- 	ieee80211_vif_unblock_queues_csa(sdata);
- 
 -- 
 2.39.5
 
