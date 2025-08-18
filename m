@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662C8322A16;
-	Mon, 18 Aug 2025 13:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E55E322A17;
+	Mon, 18 Aug 2025 13:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523189; cv=none; b=O0vTCmQhIVD00b7gaNdhNmfVmMgzk9qORPaLDYIklCELU9SVErfrFLbWP8rOuZVIEB4E/vyYr1PGcBnPjs2l8NofuFvyYoqPs6Iekz/MaZhyddabF99sHfvPt2Z2/cH9vLc4+tHpejAFiwkHUj2X6frZSIhEHtKRdQr106AbicM=
+	t=1755523193; cv=none; b=Ilr8USN86d7+HK4yfog7cIyIXnTFzO922cnxcTCBEKGKoXhYx2y4QVq65rKJQ+FVSvF70BJj/tadNzs631weG1umDF+pSiSTz5lb/ibZMrMb/47XsxQ11UqGKjKE2UF46vmGwwvA6JjHhy0IkZuYuHp2sQTF4MUkSdC6xq9CQSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523189; c=relaxed/simple;
-	bh=Mm2HBa3xdt35GnMwJhPd0TnT7R9l5grxN7t9/bTIn/k=;
+	s=arc-20240116; t=1755523193; c=relaxed/simple;
+	bh=NJPFR2A4WPp4g+sxjv5dLpSUe8kIBluBVupLeRSP1Sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WvC+Ki4k3TWJuqUPipZjz0hvmataZbDXHFRpM7pRep60CC8kfB+EZnDxM9APfzcSVkwY76tZrPUXpFcUfSNkfXkogzjZNLAPe7ciNk+odezue4avUA2r6+l1m6dxdHMM5gw/ym5f+u5cVYhRsv+C/OqDAQKY4ew91B4RjX8zjlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqELUtql; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RSQ0VD9vTFKeL/IFEw0Q4g/tJqfPJBCVMIPGMo+XxcZFo80emQloM6K9pRph/lh84NktkVUD2bPIJctsh4UOUE+VPE3kvR+YkxIHWMAxL2netQXJWSHKfgtphVb2636d3UII54gM7iau4oxXQ36lYH8vgm98IRKsLB4+R5fQJv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNMd3Uj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqELUtql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACE8C4CEEB;
-	Mon, 18 Aug 2025 13:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNMd3Uj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339D5C4CEEB;
+	Mon, 18 Aug 2025 13:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523189;
-	bh=Mm2HBa3xdt35GnMwJhPd0TnT7R9l5grxN7t9/bTIn/k=;
+	s=korg; t=1755523192;
+	bh=NJPFR2A4WPp4g+sxjv5dLpSUe8kIBluBVupLeRSP1Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqELUtql/xQ4krX8K8rjFhlV5aNkeeLP+BBsuiPADhcKo7os5q2k3vp9RhWJyPiM8
-	 LHyGZuS3PCZoHdN0ZJ79mwa9P4ab85HjArRFJ8nUwsZF/csNV82gQJTJAiItRO+Zd2
-	 wj2HNsr6b5ZdbFUgGzPTgQVfzjoUhKorGy/6VTcc=
+	b=dNMd3Uj4g3MkQCZmZ7f/TX17Rng2ZH3+ya3E5MwuwCxlmY6SZu1OcmpAu7OQEz4Cm
+	 SjQs/Ouayjhz4ezYtD/XYztd/MhM3suon2idZ+Wc22X5g4oK9MgkqH2pYW7VWJwjPG
+	 CjR7ANS6aJrlVaVQO7r49vbv9O6P5Keqttu+SV3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wenzhi Wang <wenzhi.wang@uwaterloo.ca>,
+	Liu Shixin <liushixin2@huawei.com>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 098/515] hfs: fix not erasing deleted b-tree node issue
-Date: Mon, 18 Aug 2025 14:41:24 +0200
-Message-ID: <20250818124502.150573253@linuxfoundation.org>
+Subject: [PATCH 6.15 081/515] hfsplus: fix slab-out-of-bounds read in hfsplus_uni2asc()
+Date: Mon, 18 Aug 2025 14:41:07 +0200
+Message-ID: <20250818124501.502796334@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,101 +57,173 @@ Content-Transfer-Encoding: 8bit
 
 From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit d3ed6d6981f4756f145766753c872482bc3b28d3 ]
+[ Upstream commit 94458781aee6045bd3d0ad4b80b02886b9e2219b ]
 
-The generic/001 test of xfstests suite fails and corrupts
-the HFS volume:
+The hfsplus_readdir() method is capable to crash by calling
+hfsplus_uni2asc():
 
-sudo ./check generic/001
-FSTYP         -- hfs
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2>
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+[  667.121659][ T9805] ==================================================================
+[  667.122651][ T9805] BUG: KASAN: slab-out-of-bounds in hfsplus_uni2asc+0x902/0xa10
+[  667.123627][ T9805] Read of size 2 at addr ffff88802592f40c by task repro/9805
+[  667.124578][ T9805]
+[  667.124876][ T9805] CPU: 3 UID: 0 PID: 9805 Comm: repro Not tainted 6.16.0-rc3 #1 PREEMPT(full)
+[  667.124886][ T9805] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[  667.124890][ T9805] Call Trace:
+[  667.124893][ T9805]  <TASK>
+[  667.124896][ T9805]  dump_stack_lvl+0x10e/0x1f0
+[  667.124911][ T9805]  print_report+0xd0/0x660
+[  667.124920][ T9805]  ? __virt_addr_valid+0x81/0x610
+[  667.124928][ T9805]  ? __phys_addr+0xe8/0x180
+[  667.124934][ T9805]  ? hfsplus_uni2asc+0x902/0xa10
+[  667.124942][ T9805]  kasan_report+0xc6/0x100
+[  667.124950][ T9805]  ? hfsplus_uni2asc+0x902/0xa10
+[  667.124959][ T9805]  hfsplus_uni2asc+0x902/0xa10
+[  667.124966][ T9805]  ? hfsplus_bnode_read+0x14b/0x360
+[  667.124974][ T9805]  hfsplus_readdir+0x845/0xfc0
+[  667.124984][ T9805]  ? __pfx_hfsplus_readdir+0x10/0x10
+[  667.124994][ T9805]  ? stack_trace_save+0x8e/0xc0
+[  667.125008][ T9805]  ? iterate_dir+0x18b/0xb20
+[  667.125015][ T9805]  ? trace_lock_acquire+0x85/0xd0
+[  667.125022][ T9805]  ? lock_acquire+0x30/0x80
+[  667.125029][ T9805]  ? iterate_dir+0x18b/0xb20
+[  667.125037][ T9805]  ? down_read_killable+0x1ed/0x4c0
+[  667.125044][ T9805]  ? putname+0x154/0x1a0
+[  667.125051][ T9805]  ? __pfx_down_read_killable+0x10/0x10
+[  667.125058][ T9805]  ? apparmor_file_permission+0x239/0x3e0
+[  667.125069][ T9805]  iterate_dir+0x296/0xb20
+[  667.125076][ T9805]  __x64_sys_getdents64+0x13c/0x2c0
+[  667.125084][ T9805]  ? __pfx___x64_sys_getdents64+0x10/0x10
+[  667.125091][ T9805]  ? __x64_sys_openat+0x141/0x200
+[  667.125126][ T9805]  ? __pfx_filldir64+0x10/0x10
+[  667.125134][ T9805]  ? do_user_addr_fault+0x7fe/0x12f0
+[  667.125143][ T9805]  do_syscall_64+0xc9/0x480
+[  667.125151][ T9805]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[  667.125158][ T9805] RIP: 0033:0x7fa8753b2fc9
+[  667.125164][ T9805] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 48
+[  667.125172][ T9805] RSP: 002b:00007ffe96f8e0f8 EFLAGS: 00000217 ORIG_RAX: 00000000000000d9
+[  667.125181][ T9805] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fa8753b2fc9
+[  667.125185][ T9805] RDX: 0000000000000400 RSI: 00002000000063c0 RDI: 0000000000000004
+[  667.125190][ T9805] RBP: 00007ffe96f8e110 R08: 00007ffe96f8e110 R09: 00007ffe96f8e110
+[  667.125195][ T9805] R10: 0000000000000000 R11: 0000000000000217 R12: 0000556b1e3b4260
+[  667.125199][ T9805] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[  667.125207][ T9805]  </TASK>
+[  667.125210][ T9805]
+[  667.145632][ T9805] Allocated by task 9805:
+[  667.145991][ T9805]  kasan_save_stack+0x20/0x40
+[  667.146352][ T9805]  kasan_save_track+0x14/0x30
+[  667.146717][ T9805]  __kasan_kmalloc+0xaa/0xb0
+[  667.147065][ T9805]  __kmalloc_noprof+0x205/0x550
+[  667.147448][ T9805]  hfsplus_find_init+0x95/0x1f0
+[  667.147813][ T9805]  hfsplus_readdir+0x220/0xfc0
+[  667.148174][ T9805]  iterate_dir+0x296/0xb20
+[  667.148549][ T9805]  __x64_sys_getdents64+0x13c/0x2c0
+[  667.148937][ T9805]  do_syscall_64+0xc9/0x480
+[  667.149291][ T9805]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[  667.149809][ T9805]
+[  667.150030][ T9805] The buggy address belongs to the object at ffff88802592f000
+[  667.150030][ T9805]  which belongs to the cache kmalloc-2k of size 2048
+[  667.151282][ T9805] The buggy address is located 0 bytes to the right of
+[  667.151282][ T9805]  allocated 1036-byte region [ffff88802592f000, ffff88802592f40c)
+[  667.152580][ T9805]
+[  667.152798][ T9805] The buggy address belongs to the physical page:
+[  667.153373][ T9805] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x25928
+[  667.154157][ T9805] head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[  667.154916][ T9805] anon flags: 0xfff00000000040(head|node=0|zone=1|lastcpupid=0x7ff)
+[  667.155631][ T9805] page_type: f5(slab)
+[  667.155997][ T9805] raw: 00fff00000000040 ffff88801b442f00 0000000000000000 dead000000000001
+[  667.156770][ T9805] raw: 0000000000000000 0000000080080008 00000000f5000000 0000000000000000
+[  667.157536][ T9805] head: 00fff00000000040 ffff88801b442f00 0000000000000000 dead000000000001
+[  667.158317][ T9805] head: 0000000000000000 0000000080080008 00000000f5000000 0000000000000000
+[  667.159088][ T9805] head: 00fff00000000003 ffffea0000964a01 00000000ffffffff 00000000ffffffff
+[  667.159865][ T9805] head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
+[  667.160643][ T9805] page dumped because: kasan: bad access detected
+[  667.161216][ T9805] page_owner tracks the page as allocated
+[  667.161732][ T9805] page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN9
+[  667.163566][ T9805]  post_alloc_hook+0x1c0/0x230
+[  667.164003][ T9805]  get_page_from_freelist+0xdeb/0x3b30
+[  667.164503][ T9805]  __alloc_frozen_pages_noprof+0x25c/0x2460
+[  667.165040][ T9805]  alloc_pages_mpol+0x1fb/0x550
+[  667.165489][ T9805]  new_slab+0x23b/0x340
+[  667.165872][ T9805]  ___slab_alloc+0xd81/0x1960
+[  667.166313][ T9805]  __slab_alloc.isra.0+0x56/0xb0
+[  667.166767][ T9805]  __kmalloc_cache_noprof+0x255/0x3e0
+[  667.167255][ T9805]  psi_cgroup_alloc+0x52/0x2d0
+[  667.167693][ T9805]  cgroup_mkdir+0x694/0x1210
+[  667.168118][ T9805]  kernfs_iop_mkdir+0x111/0x190
+[  667.168568][ T9805]  vfs_mkdir+0x59b/0x8d0
+[  667.168956][ T9805]  do_mkdirat+0x2ed/0x3d0
+[  667.169353][ T9805]  __x64_sys_mkdir+0xef/0x140
+[  667.169784][ T9805]  do_syscall_64+0xc9/0x480
+[  667.170195][ T9805]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[  667.170730][ T9805] page last free pid 1257 tgid 1257 stack trace:
+[  667.171304][ T9805]  __free_frozen_pages+0x80c/0x1250
+[  667.171770][ T9805]  vfree.part.0+0x12b/0xab0
+[  667.172182][ T9805]  delayed_vfree_work+0x93/0xd0
+[  667.172612][ T9805]  process_one_work+0x9b5/0x1b80
+[  667.173067][ T9805]  worker_thread+0x630/0xe60
+[  667.173486][ T9805]  kthread+0x3a8/0x770
+[  667.173857][ T9805]  ret_from_fork+0x517/0x6e0
+[  667.174278][ T9805]  ret_from_fork_asm+0x1a/0x30
+[  667.174703][ T9805]
+[  667.174917][ T9805] Memory state around the buggy address:
+[  667.175411][ T9805]  ffff88802592f300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[  667.176114][ T9805]  ffff88802592f380: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[  667.176830][ T9805] >ffff88802592f400: 00 04 fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  667.177547][ T9805]                       ^
+[  667.177933][ T9805]  ffff88802592f480: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  667.178640][ T9805]  ffff88802592f500: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  667.179350][ T9805] ==================================================================
 
-generic/001 32s ... _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
-(see /home/slavad/XFSTESTS-2/xfstests-dev/results//generic/001.full for details)
+The hfsplus_uni2asc() method operates by struct hfsplus_unistr:
 
-Ran: generic/001
-Failures: generic/001
-Failed 1 of 1 tests
+struct hfsplus_unistr {
+	__be16 length;
+	hfsplus_unichr unicode[HFSPLUS_MAX_STRLEN];
+} __packed;
 
-fsck.hfs -d -n ./test-image.bin
-** ./test-image.bin (NO WRITE)
-	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-   Executing fsck_hfs (version 540.1-Linux).
-** Checking HFS volume.
-   The volume name is untitled
-** Checking extents overflow file.
-** Checking catalog file.
-   Unused node is not erased (node = 2)
-   Unused node is not erased (node = 4)
-<skipped>
-   Unused node is not erased (node = 253)
-   Unused node is not erased (node = 254)
-   Unused node is not erased (node = 255)
-   Unused node is not erased (node = 256)
-** Checking catalog hierarchy.
-** Checking volume bitmap.
-** Checking volume information.
-   Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
-                  CBTStat = 0x0004 CatStat = 0x00000000
-** The volume untitled was found corrupt and needs to be repaired.
-	volume type is HFS
-	primary MDB is at block 2 0x02
-	alternate MDB is at block 20971518 0x13ffffe
-	primary VHB is at block 0 0x00
-	alternate VHB is at block 0 0x00
-	sector size = 512 0x200
-	VolumeObject flags = 0x19
-	total sectors for volume = 20971520 0x1400000
-	total sectors for embedded volume = 0 0x00
+where HFSPLUS_MAX_STRLEN is 255 bytes. The issue happens if length
+of the structure instance has value bigger than 255 (for example,
+65283). In such case, pointer on unicode buffer is going beyond of
+the allocated memory.
 
-This patch adds logic of clearing the deleted b-tree node.
+The patch fixes the issue by checking the length value of
+hfsplus_unistr instance and using 255 value in the case if length
+value is bigger than HFSPLUS_MAX_STRLEN. Potential reason of such
+situation could be a corruption of Catalog File b-tree's node.
 
-sudo ./check generic/001
-FSTYP         -- hfs
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2025
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/001 9s ...  32s
-Ran: generic/001
-Passed all 1 tests
-
-fsck.hfs -d -n ./test-image.bin
-** ./test-image.bin (NO WRITE)
-	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-   Executing fsck_hfs (version 540.1-Linux).
-** Checking HFS volume.
-   The volume name is untitled
-** Checking extents overflow file.
-** Checking catalog file.
-** Checking catalog hierarchy.
-** Checking volume bitmap.
-** Checking volume information.
-** The volume untitled appears to be OK.
-
+Reported-by: Wenzhi Wang <wenzhi.wang@uwaterloo.ca>
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20250430001211.1912533-1-slava@dubeyko.com
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Reviewed-by: Yangtao Li <frank.li@vivo.com>
+Link: https://lore.kernel.org/r/20250710230830.110500-1-slava@dubeyko.com
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/bnode.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/hfsplus/unicode.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
-index 1dac5d9c055f..e8cd1a31f247 100644
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -574,6 +574,7 @@ void hfs_bnode_put(struct hfs_bnode *node)
- 		if (test_bit(HFS_BNODE_DELETED, &node->flags)) {
- 			hfs_bnode_unhash(node);
- 			spin_unlock(&tree->hash_lock);
-+			hfs_bnode_clear(node, 0, tree->node_size);
- 			hfs_bmap_free(node);
- 			hfs_bnode_free(node);
- 			return;
+diff --git a/fs/hfsplus/unicode.c b/fs/hfsplus/unicode.c
+index 73342c925a4b..36b6cf2a3abb 100644
+--- a/fs/hfsplus/unicode.c
++++ b/fs/hfsplus/unicode.c
+@@ -132,7 +132,14 @@ int hfsplus_uni2asc(struct super_block *sb,
+ 
+ 	op = astr;
+ 	ip = ustr->unicode;
++
+ 	ustrlen = be16_to_cpu(ustr->length);
++	if (ustrlen > HFSPLUS_MAX_STRLEN) {
++		ustrlen = HFSPLUS_MAX_STRLEN;
++		pr_err("invalid length %u has been corrected to %d\n",
++			be16_to_cpu(ustr->length), ustrlen);
++	}
++
+ 	len = *len_p;
+ 	ce1 = NULL;
+ 	compose = !test_bit(HFSPLUS_SB_NODECOMPOSE, &HFSPLUS_SB(sb)->flags);
 -- 
 2.39.5
 
