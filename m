@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9889320CDC;
-	Mon, 18 Aug 2025 13:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6612C235C;
+	Mon, 18 Aug 2025 13:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523901; cv=none; b=DQCCY40s62/FcgWpbP8ddWL+yloo5P8GXUz9hwBumk246GNbEXhZqzG3FyoWlf5x6fm5dwU7JiFVhFgRQDp9HdvgkQw50orc/ypBSzwcgVpFRUKGx89JP+sKIamHO9Ha3XghzN0+Ii6FjjtBC+JaGhclr2Kz/OcWowHJRRoVWy0=
+	t=1755523905; cv=none; b=tDLjciE3+QnsZkuC+hbqbXL1kmxyU60c/BeUgRwg6lEEJHJkBDXhZ2lkEduvqFOjlZmTr0+cMR1EQQB1Za1jLbXSPyz9JWPUHY+KAT3UAnFf89rw1QUq9w7VVrTKC2ME8On+TVvPjUXK0hVVahHZPVfH/1RhnVUZk8puMz1Mk/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523901; c=relaxed/simple;
-	bh=YpS5FfSFbGuwKB8BU0BlnKv4tU+BavGJegnnNkygYVY=;
+	s=arc-20240116; t=1755523905; c=relaxed/simple;
+	bh=LzBJjkWqb1j2LtrnS0f2HcIFHG9e/L/II3DIFHdlxqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UiepAlqdxweA+7n11s233o9Z4ux2yl1D97xPlZStfIT3JT7uEbfI479z3XVDIBnq+KhUmMPAzucRi9SSNDwQMVVBE85MKH6O1rgNHflR62lGNpyeOoE022cJcv+tvrbmBjGSneZOukgy4mx9aoi0iY1zgwd45EiAkrJ94b82+bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZE51DSm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JOVzwNxP3n9PVjJ+DOCyb0ew+84dezCVjsckXVUF1h/iJMABw7JqGUtF9LULffXJn7DGss6xaA8OXZwoEVYQm8adj+Hqe5G38kK6tvCATocU6FngQ/TPLjECdG12thT2jULtMvsMyXduRxyfyvVLM9aeoGSKm/g7TDQgJeeXVpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnoQC+Pi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZE51DSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E25C4CEF1;
-	Mon, 18 Aug 2025 13:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnoQC+Pi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9772DC2BC9E;
+	Mon, 18 Aug 2025 13:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523901;
-	bh=YpS5FfSFbGuwKB8BU0BlnKv4tU+BavGJegnnNkygYVY=;
+	s=korg; t=1755523905;
+	bh=LzBJjkWqb1j2LtrnS0f2HcIFHG9e/L/II3DIFHdlxqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZE51DSmjB57ypSpXKuLkIyEaXdWlXiDJ/k2q2JNlT7JdsXtDIGSntauNuYW73LmR
-	 5BxE6UZH6d4P76WvNDm1ZQCNIgFwmc4lMVNXXjRK/mhM+1hcitKyUe4Q3oh4X8uBuD
-	 CRR25eiYZenZad2vCaBNGF36Y5a1iR0L9llgNaL0=
+	b=gnoQC+PiHEtERkhqYLKdPdSEYv4uyfBEmHYehoUCj/4VlUiaohouSwR6kCVLYpIRM
+	 bt07E2/vHtfccMuLKWMp/eDXUeN7H8M1vADw9Te/J/C1DKMjnJbtcdPuxCyRWadmPu
+	 an76eHm80s5acLJGDGzXoItHbpfijGkHSM7fvfFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <qmo@kernel.org>,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 308/515] bpftool: Fix JSON writer resource leak in version command
-Date: Mon, 18 Aug 2025 14:44:54 +0200
-Message-ID: <20250818124510.295617661@linuxfoundation.org>
+Subject: [PATCH 6.15 291/515] powerpc: floppy: Add missing checks after DMA map
+Date: Mon, 18 Aug 2025 14:44:37 +0200
+Message-ID: <20250818124509.622047690@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 85cd83fed8267cde0dd1cea719808aad95ae4de7 ]
+[ Upstream commit cf183c1730f2634245da35e9b5d53381b787d112 ]
 
-When using `bpftool --version -j/-p`, the JSON writer object
-created in do_version() was not properly destroyed after use.
-This caused a memory leak each time the version command was
-executed with JSON output.
+The DMA map functions can fail and should be tested for errors.
 
-Fix: 004b45c0e51a (tools: bpftool: provide JSON output for all possible commands)
-
-Suggested-by: Quentin Monnet <qmo@kernel.org>
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20250617132442.9998-1-chenyuan_fl@163.com
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250620075602.12575-1-fourier.thomas@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/powerpc/include/asm/floppy.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/main.c b/tools/bpf/bpftool/main.c
-index cd5963cb6058..2b7f2bd3a7db 100644
---- a/tools/bpf/bpftool/main.c
-+++ b/tools/bpf/bpftool/main.c
-@@ -534,9 +534,9 @@ int main(int argc, char **argv)
- 		usage();
+diff --git a/arch/powerpc/include/asm/floppy.h b/arch/powerpc/include/asm/floppy.h
+index f8ce178b43b7..34abf8bea2cc 100644
+--- a/arch/powerpc/include/asm/floppy.h
++++ b/arch/powerpc/include/asm/floppy.h
+@@ -144,9 +144,12 @@ static int hard_dma_setup(char *addr, unsigned long size, int mode, int io)
+ 		bus_addr = 0;
+ 	}
  
- 	if (version_requested)
--		return do_version(argc, argv);
--
--	ret = cmd_select(commands, argc, argv, do_help);
-+		ret = do_version(argc, argv);
-+	else
-+		ret = cmd_select(commands, argc, argv, do_help);
+-	if (!bus_addr)	/* need to map it */
++	if (!bus_addr) {	/* need to map it */
+ 		bus_addr = dma_map_single(&isa_bridge_pcidev->dev, addr, size,
+ 					  dir);
++		if (dma_mapping_error(&isa_bridge_pcidev->dev, bus_addr))
++			return -ENOMEM;
++	}
  
- 	if (json_output)
- 		jsonw_destroy(&json_wtr);
+ 	/* remember this one as prev */
+ 	prev_addr = addr;
 -- 
 2.39.5
 
