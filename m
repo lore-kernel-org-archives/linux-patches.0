@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17A61F462D;
-	Mon, 18 Aug 2025 13:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779CE1F462D;
+	Mon, 18 Aug 2025 13:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522159; cv=none; b=n1UY6Ko81aEdtMHgLZpzQdVZRzMhT5OQfgMctGOKhYsobZcvyF2pAzQ49Z7/qBxlPoV6dqVaeOiQ8c42asK3sBbj8kZbCVsMs/v4XdNyOHmCpwfMPjyu7j9r69p/J6kL4reKzO5sTGESf4A3Hi8LPUzBdmDAqyhLIgoRqxwUFCU=
+	t=1755522163; cv=none; b=XGJzPs+ilWMTXMKZvT9xwTnpXsq78lttaWjdcQ1fGsjY9f+A9bfS37Si9xCAfKM+CZyjakhWXPloTJtbhMU+O6rnzzdwu2pZuXWb9Rv1a+nMCIpi4BE4+bqsmw87nkDGJYMW1MgCw3KzFdXgsHi+BF74o9zZFGqdnHBi0MxtQrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522159; c=relaxed/simple;
-	bh=o4QWapWgNj6Bk43uYtRWWdsCWyA4LH/cDfy7jFyhCVk=;
+	s=arc-20240116; t=1755522163; c=relaxed/simple;
+	bh=IqHEy9sfWbNXQqZ8lnC6MQyCVyXrGO4TTmlThjeB/88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XTiwDByvkBXS28r/txf5XdiyynOemlxiDij/9ozAZqm0c5VwfywpXrizXexg2uUZRWgujTrFWaHJ9i5CLDkhFx7RPY/cHr/wf5aoYGuKQpk0hxJbwbjC3ezesm8fON1qx2fhYJiAyFSNNJMuJ1dd+pFv08urDH16eFJczwJ+T+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rh7A2IBH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJb+F18uldozytp6ED43Lq8wMdtimST/suLijrBD3RrpTRm1RAXq+1ZxZa83OU3hzXpdXd8RMXPWzSYjWOhtKJd078wZ79UkxoN3uKj9I2N0+p82mf8c/XmElXrW1uzGtvykoztKlCZZmBJNRCY64DOK7mZvywEZ6W67pc4Zcc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiwA6xJb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rh7A2IBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E915EC4CEEB;
-	Mon, 18 Aug 2025 13:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiwA6xJb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1292C4CEEB;
+	Mon, 18 Aug 2025 13:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522159;
-	bh=o4QWapWgNj6Bk43uYtRWWdsCWyA4LH/cDfy7jFyhCVk=;
+	s=korg; t=1755522163;
+	bh=IqHEy9sfWbNXQqZ8lnC6MQyCVyXrGO4TTmlThjeB/88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rh7A2IBHUQq5ewOBmFQiEfmP3m8UUVWf52f0OsWjtpsCRRcsI7USajMepeXuaxesx
-	 ZK7VpC/UgzoNJSuWQEEEmnNEF3ChZjmfIGJIrzEf0QW4ptDmcTqdsf51mdOMiRuJpM
-	 gziIrc04/QD++9IZOz7OZO2nKzM8VCZC+VOLpBg8=
+	b=UiwA6xJbO3MuKCEdEqJGupvMEzbQsh+R7cSXtjtqe+lmvI24LuPbr1GBSQlk+mQOG
+	 o6VxqXe0DmeVZBLQR3oskJvWEOuVFMIi8tXJ57JI75uFUlJ8vNeMP90x5kwJO5kq9O
+	 Hibb17G4K0g21Z+8E59xSdyLAb7Bzbuv5IbtLivE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>,
-	Ramasamy Kaliappan <ramasamy.kaliappan@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 234/444] wifi: mac80211: update radar_required in channel context after channel switch
-Date: Mon, 18 Aug 2025 14:44:20 +0200
-Message-ID: <20250818124457.609418899@linuxfoundation.org>
+Subject: [PATCH 6.12 235/444] wifi: rtlwifi: fix possible skb memory leak in `_rtl_pci_rx_interrupt()`.
+Date: Mon, 18 Aug 2025 14:44:21 +0200
+Message-ID: <20250818124457.645592254@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,46 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 140c6a61d83cbd85adba769b5ef8d61acfa5b392 ]
+[ Upstream commit 44c0e191004f0e3aa1bdee3be248be14dbe5b020 ]
 
-Currently, when a non-DFS channel is brought up and the bandwidth is
-expanded from 80 MHz to 160 MHz, where the primary 80 MHz is non-DFS
-and the secondary 80 MHz consists of DFS channels, radar detection
-fails if radar occurs in the secondary 80 MHz.
+The function `_rtl_pci_init_one_rxdesc()` can fail even when the new
+`skb` is passed because of a DMA mapping error.  If it fails, the `skb`
+is not saved in the rx ringbuffer and thus lost.
 
-When the channel is switched from 80 MHz to 160 MHz, with the primary
-80 MHz being non-DFS and the secondary 80 MHz consisting of DFS
-channels, the radar required flag in the channel switch parameters
-is set to true. However, when using a reserved channel context,
-it is not updated in sdata, which disables radar detection in the
-secondary 80 MHz DFS channels.
+Compile tested only
 
-Update the radar required flag in sdata to fix this issue when using
-a reserved channel context.
-
-Signed-off-by: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
-Signed-off-by: Ramasamy Kaliappan <ramasamy.kaliappan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250608140324.1687117-1-ramasamy.kaliappan@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250616105631.444309-4-fourier.thomas@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/chan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
-index 282e8c13e2bf..e3b46df95b71 100644
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -1349,6 +1349,7 @@ ieee80211_link_use_reserved_reassign(struct ieee80211_link_data *link)
- 		goto out;
- 	}
- 
-+	link->radar_required = link->reserved_radar_required;
- 	list_move(&link->assigned_chanctx_list, &new_ctx->assigned_links);
- 	rcu_assign_pointer(link_conf->chanctx_conf, &new_ctx->conf);
- 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 898f597f70a9..2741c3beac4c 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -802,13 +802,19 @@ static void _rtl_pci_rx_interrupt(struct ieee80211_hw *hw)
+ 		skb = new_skb;
+ no_new:
+ 		if (rtlpriv->use_new_trx_flow) {
+-			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
+-						 rxring_idx,
+-						 rtlpci->rx_ring[rxring_idx].idx);
++			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
++						      rxring_idx,
++						      rtlpci->rx_ring[rxring_idx].idx)) {
++				if (new_skb)
++					dev_kfree_skb_any(skb);
++			}
+ 		} else {
+-			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
+-						 rxring_idx,
+-						 rtlpci->rx_ring[rxring_idx].idx);
++			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
++						      rxring_idx,
++						      rtlpci->rx_ring[rxring_idx].idx)) {
++				if (new_skb)
++					dev_kfree_skb_any(skb);
++			}
+ 			if (rtlpci->rx_ring[rxring_idx].idx ==
+ 			    rtlpci->rxringcount - 1)
+ 				rtlpriv->cfg->ops->set_desc(hw, (u8 *)pdesc,
 -- 
 2.39.5
 
