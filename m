@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE88A335BA0;
-	Mon, 18 Aug 2025 13:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10128335BB3;
+	Mon, 18 Aug 2025 13:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524244; cv=none; b=D6YXcPnFKRPbwlVSqSVbSYXS7BLXnc2ArNlzG5V9F3A++GDh204wefUDoF+/udihSHzKC+sVorG1L6fv9yDzutZkOmwvs/CKUgQ8SEl+49Ne46RQTua2EfR6SpbFZkLKpjC1i59djCLm0P3bLbp4+z+hgBLNv9NSouImgK9Lk5s=
+	t=1755524248; cv=none; b=JOTs0Hd25dHz8YdijvLd6kgzonDYAj+Pf/va11qSpXpXvCCpAfbm+d53tOe+GOTfItfYjP5ZxN7IoCMTLfJtGGx+Nko8cM1WBf97g7uYSGTgapsKsaRcw3LIGLfOsUhqve+esOi8Kl5zZ4zqeY01rvN23Q4GAPmBSAdY3DhkBVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524244; c=relaxed/simple;
-	bh=SwoBefCQlFgOZEWKvS2Feg9hn5hRC07gjdGgf8x+wsU=;
+	s=arc-20240116; t=1755524248; c=relaxed/simple;
+	bh=KEa16O2Y/xHGMqcOiNdqKGsMa2OOdHHUet4JyIZ9Aw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N5VIkJOhX0sgLoACIURXWn9XkSVHEbbmJWNs/vwTk0KcOJ+20CvBSqRb9F8JD797WeWzLHeegAUNiSGCsD0Tx/TZDj8JyPOLJ762Xs9oYEZIv271zZBgyoS+H2XiLT6/HtJMcuusxsKEBZO3j5pchzQDin3luyaiOKkwaH24ges=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsSfit52; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FNLoLuf1/2cAeTv2T2lRhg2jQLylqI2u2kuMTp/47dM6v3A5F8oPEeAwsH8ano17fBdEdg2qB9ehCL6LbX2IUFFqely9apFIzKkbOMkJnaL0wX4agEls3EbWlpL+ALjgO6BxyO/ZJXkpfxXtFB9KzB5NNEOcoU5bXLvh0rNDfEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkIrNMkI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsSfit52"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448E1C4CEF1;
-	Mon, 18 Aug 2025 13:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkIrNMkI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D40C113D0;
+	Mon, 18 Aug 2025 13:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524244;
-	bh=SwoBefCQlFgOZEWKvS2Feg9hn5hRC07gjdGgf8x+wsU=;
+	s=korg; t=1755524247;
+	bh=KEa16O2Y/xHGMqcOiNdqKGsMa2OOdHHUet4JyIZ9Aw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dsSfit52J0oGqoG6tkCp5TJrrAQt1cXdbjFkEBAW4m8Lc7ta+E3cRIwFZ/FOFNjGs
-	 MbqLwWb7Hk97CHtIvOkVTCGoVW8ElqXdsfSZi1Be2aPb7DwQ0uG62Rx3yA4691X/XQ
-	 LYLVmqXeSZIHgX3zTzCdrYyVC5693SDkVQUEuXGY=
+	b=VkIrNMkIte5WIXD0EDpp9JlFgDvL7sUya5h1NyVHWqzGQb+QZ2KUwiHDw3NcaVjCq
+	 db/hL7yAbzIofKrTd63884MaB2rNNaO4U9XO0DwMDTCS4jGAAqFtxV7KMgov9e9672
+	 pmdQ4kejYahaW9AslED1Pi3Tqv9qN8xla2ZQC5og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Jorge Marques <jorge.marques@analog.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 413/515] kconfig: gconf: avoid hardcoding model2 in on_treeview2_cursor_changed()
-Date: Mon, 18 Aug 2025 14:46:39 +0200
-Message-ID: <20250818124514.317187916@linuxfoundation.org>
+Subject: [PATCH 6.15 396/515] i3c: master: Initialize ret in i3c_i2c_notifier_call()
+Date: Mon, 18 Aug 2025 14:46:22 +0200
+Message-ID: <20250818124513.656018704@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,42 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Jorge Marques <jorge.marques@analog.com>
 
-[ Upstream commit cae9cdbcd9af044810bcceeb43a87accca47c71d ]
+[ Upstream commit 290ce8b2d0745e45a3155268184523a8c75996f1 ]
 
-The on_treeview2_cursor_changed() handler is connected to both the left
-and right tree views, but it hardcodes model2 (the GtkTreeModel of the
-right tree view). This is incorrect. Get the associated model from the
-view.
+Set ret to -EINVAL if i3c_i2c_notifier_call() receives an invalid
+action, resolving uninitialized warning.
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Jorge Marques <jorge.marques@analog.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250622-i3c-master-ret-uninitialized-v1-1-aabb5625c932@analog.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/gconf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/i3c/master.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/scripts/kconfig/gconf.c b/scripts/kconfig/gconf.c
-index c0f46f189060..abe4cfe66b14 100644
---- a/scripts/kconfig/gconf.c
-+++ b/scripts/kconfig/gconf.c
-@@ -942,13 +942,14 @@ on_treeview2_key_press_event(GtkWidget * widget,
- void
- on_treeview2_cursor_changed(GtkTreeView * treeview, gpointer user_data)
- {
-+	GtkTreeModel *model = gtk_tree_view_get_model(treeview);
- 	GtkTreeSelection *selection;
- 	GtkTreeIter iter;
- 	struct menu *menu;
- 
- 	selection = gtk_tree_view_get_selection(treeview);
--	if (gtk_tree_selection_get_selected(selection, &model2, &iter)) {
--		gtk_tree_model_get(model2, &iter, COL_MENU, &menu, -1);
-+	if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
-+		gtk_tree_model_get(model, &iter, COL_MENU, &menu, -1);
- 		text_insert_help(menu);
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index e53c69d24873..dfa0bad991cf 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2467,6 +2467,8 @@ static int i3c_i2c_notifier_call(struct notifier_block *nb, unsigned long action
+ 	case BUS_NOTIFY_DEL_DEVICE:
+ 		ret = i3c_master_i2c_detach(adap, client);
+ 		break;
++	default:
++		ret = -EINVAL;
  	}
- }
+ 	i3c_bus_maintenance_unlock(&master->bus);
+ 
 -- 
 2.39.5
 
