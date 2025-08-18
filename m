@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D6F27B324;
-	Mon, 18 Aug 2025 13:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8841C3BEB;
+	Mon, 18 Aug 2025 13:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522006; cv=none; b=fz2eFitQG9pTLqoNecNL+HzK/3dS9RY2QyiHMmlRjtLz9FsHtYLz4/N0fF0FG+inGKgRxRHzg5g1glHU/fS+xaPL695lL+r3DwK/vgu0FKUDH3NzxeP8ZjJqaYhyls+ecjR+EIj90U2JKzDoNBzc254nYkHkGVx37s8f2gc7CrY=
+	t=1755522009; cv=none; b=Bu9Fbwc8M5P9LFIJcbatReXvV1nwuRYzA6pT3/uRkLlruzI2i7syzsBjCbc7VWKAszqb76qf0Sf90oLUSEWRjOcch77wwcbYOLlMveJ5Zeblo+mcknXdFxRRYtEbKIMOhKsl40etUxqGPwKqUq8RT3HKXIGip0Cqzwph6oygoWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522006; c=relaxed/simple;
-	bh=DFy8OvAyX0pD7lU2lM9xzItnluDj8KEqN7i5W5akke0=;
+	s=arc-20240116; t=1755522009; c=relaxed/simple;
+	bh=th5Scw5NFJWxmy1EL9YNzqgi4tm0vGcUhJEAZ4L/UxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6MbIpsdbtW5v5IhEkcwlHZiC7N2lWyBz+yXBFoT24zABejUYieTPvJ8Utu03b2mS8YdsKjwwFsi1tu+TCNat71P90dKsDWStFKujM8VWQMTQxwLeYFBmmHnaWEuenK+ImqIFfQPgC4JPkayow5J1VUxRnl1DR4F9ph5u7dezpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THT6qOlH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWgJ4c5+b0KXldz6dLitaQUCUVIqsRxtECxIJH5gTYaXzEFhIJCBZ8vOut8aw3S1ljWafUVebF4w2Rlf3QJ9MF/SqHk0dDibpzSEs+kwXTtPfYD3PRuiMYv2BFolCdyaYaHAlcj87meyRIDdrvc7MJJRf+skndSgf2CMfKFd6KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0oIsuk+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THT6qOlH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5FDC4CEEB;
-	Mon, 18 Aug 2025 13:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0oIsuk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC27C4CEF1;
+	Mon, 18 Aug 2025 13:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522006;
-	bh=DFy8OvAyX0pD7lU2lM9xzItnluDj8KEqN7i5W5akke0=;
+	s=korg; t=1755522009;
+	bh=th5Scw5NFJWxmy1EL9YNzqgi4tm0vGcUhJEAZ4L/UxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THT6qOlHLKxqTTiF5JlQfiw57AjhaJwVe2nUaV4p19rGTRxNXaaLH77G+XXsM1KDS
-	 1ab+iEhxyy4+mbod2X8hXtnNfYjiXZrUjDIUhzUP/rTDdUyH5y/B1w+R8wI1DA9Oki
-	 F6OsPfgwDq/YPGZBveiVq7EyuvGnob0EaEOHAIvc=
+	b=L0oIsuk+iTqSO2TeoErSSn0JGqF7ciUB+c94QL5+dnj6vTuD5o9h5lPO9yii8s+Uf
+	 Gx7SAyTB4IGNnRvwI95O+CZWnluziOJimr7xf8WcINu9+58ooGsszrJ0yQZAAhw4I+
+	 WjwqS732dBHWTLVe5C8XKALFDuLUYCCdKi226SmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Michalec <tmichalec@google.com>,
-	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Lucy Thrun <lucy.thrun@digital-rabbithole.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/444] platform/chrome: cros_ec_typec: Defer probe on missing EC parent
-Date: Mon, 18 Aug 2025 14:43:00 +0200
-Message-ID: <20250818124454.676797356@linuxfoundation.org>
+Subject: [PATCH 6.12 155/444] ALSA: hda/ca0132: Fix buffer overflow in add_tuning_control
+Date: Mon, 18 Aug 2025 14:43:01 +0200
+Message-ID: <20250818124454.713238322@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,42 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomasz Michalec <tmichalec@google.com>
+From: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
 
-[ Upstream commit 8866f4e557eba43e991f99711515217a95f62d2e ]
+[ Upstream commit a409c60111e6bb98fcabab2aeaa069daa9434ca0 ]
 
-If cros_typec_probe is called before EC device is registered,
-cros_typec_probe will fail. It may happen when cros-ec-typec.ko is
-loaded before EC bus layer module (e.g. cros_ec_lpcs.ko,
-cros_ec_spi.ko).
+The 'sprintf' call in 'add_tuning_control' may exceed the 44-byte
+buffer if either string argument is too long. This triggers a compiler
+warning.
+Replaced 'sprintf' with 'snprintf' to limit string lengths to prevent
+overflow.
 
-Return -EPROBE_DEFER when cros_typec_probe doesn't get EC device, so
-the probe function can be called again after EC device is registered.
-
-Signed-off-by: Tomasz Michalec <tmichalec@google.com>
-Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Link: https://lore.kernel.org/r/20250610153748.1858519-1-tmichalec@google.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506100642.95jpuMY1-lkp@intel.com/
+Signed-off-by: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
+Link: https://patch.msgid.link/20250610175012.918-3-lucy.thrun@digital-rabbithole.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_ca0132.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index f1324466efac..ca665b901010 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -1226,8 +1226,8 @@ static int cros_typec_probe(struct platform_device *pdev)
- 
- 	typec->ec = dev_get_drvdata(pdev->dev.parent);
- 	if (!typec->ec) {
--		dev_err(dev, "couldn't find parent EC device\n");
--		return -ENODEV;
-+		dev_warn(dev, "couldn't find parent EC device\n");
-+		return -EPROBE_DEFER;
+diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
+index 77432e06f3e3..a2f57d7424bb 100644
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -4410,7 +4410,7 @@ static int add_tuning_control(struct hda_codec *codec,
  	}
+ 	knew.private_value =
+ 		HDA_COMPOSE_AMP_VAL(nid, 1, 0, type);
+-	sprintf(namestr, "%s %s Volume", name, dirstr[dir]);
++	snprintf(namestr, sizeof(namestr), "%s %s Volume", name, dirstr[dir]);
+ 	return snd_hda_ctl_add(codec, nid, snd_ctl_new1(&knew, codec));
+ }
  
- 	platform_set_drvdata(pdev, typec);
 -- 
 2.39.5
 
