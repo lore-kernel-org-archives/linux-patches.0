@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAB1321F3C;
-	Mon, 18 Aug 2025 13:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A073722A7E0;
+	Mon, 18 Aug 2025 13:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523456; cv=none; b=iSAZyBnDmf+sqbg7/9lGE3X8FCjwNtExzPHie9+9dBm/lm/vEExfE+ZIZwNPpbKXvMF0bumoGfZrAK3T64XUjOvv90AhRdY6rE0IR/AhFslmSx34joVYTpauYoYotnm2PJbji195LzC3Z7lXT+BiWR3JPrw+FLYybaFzts/VB3c=
+	t=1755523459; cv=none; b=TIPS35iNZP+YGaXFHRr6hyJpisDR56Gi+cRd+Sh0vmFb+U2Vxg3T+0XxoGl+LXHGBq5JzcM2H1SZN9eS0mXuQwfO92FjI+m/WeWqXH1dWzq/1HmTZ8ZK10A7/JAeslb8AW6v+T4HGt/sMPd4l7FIrIij8blttzwK/2dp4Blt0+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523456; c=relaxed/simple;
-	bh=cfbq+BrPbZKXt05IQ5TNIhEWKOXNmAiecctYCbK61UA=;
+	s=arc-20240116; t=1755523459; c=relaxed/simple;
+	bh=YTKzFVmxvix36OVONbphBoT3WOE9LlBtEl3FKXRid4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sp0YmJJUr2nbfDKe6QO0E9Xw4+tFxPc3Kx+n5djuy1WymwT6K8MfCJvmqtj6aSkciXLDd10eseeHjPbGdlLm+CmI0IHMNh1YYNUp6yke7b4iX88vIVWEw3n7MwQv6nw6qARzEwL79hRsvKi0/NA4YSoqnRhYf0fu10WhSEKTWq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWI24uW+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P6CQe5sEB2h5rCHw5xgbGV+YEOcbuEEPhn1bpkiGPSUTG2zMIqJsWaVYggwGKimsOMJcSs1t7Upkjn6PvquqdgncoYuzlixyHWLe+LBEgZUbNJ1RkBfIGTS+eQXdd9bmSbTnXPELYAWLX1tzXRuaSOdDCp6pOVLUgyWZjK0KmA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAiRWnrU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWI24uW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7242C4CEEB;
-	Mon, 18 Aug 2025 13:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAiRWnrU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F901C4CEEB;
+	Mon, 18 Aug 2025 13:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523456;
-	bh=cfbq+BrPbZKXt05IQ5TNIhEWKOXNmAiecctYCbK61UA=;
+	s=korg; t=1755523459;
+	bh=YTKzFVmxvix36OVONbphBoT3WOE9LlBtEl3FKXRid4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWI24uW+ba+Vwo1oPj9170mXVBCtyy+j4wMZknGI5UGegtXjDuSvpQdVyWFIv8t92
-	 bH/ztljXhKAMiedD3tnDvAOpH1ejGQCwKIsJc94u1lBV0aTHrEZO+9a10rBjttum4V
-	 zn6tCs5KwxVUNwdrphut66CIWMdY3hBEQsAHQ1uk=
+	b=kAiRWnrUm2suwrl0K1OAHPB2SkCbeA4F1WRN+Hr1INg/7yVjFyBy+miCkWmrx+0tK
+	 /5ZEuOJizEFkZMidWoI6KR9t6y9aH2be5w26PXq3vRgWSat1nLcoqVvayVnlH0LZbo
+	 hSGK9ve4Gly/VplnNLdt8+qs28PrzO/CGwV5c5Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 176/515] usb: core: usb_submit_urb: downgrade type check
-Date: Mon, 18 Aug 2025 14:42:42 +0200
-Message-ID: <20250818124505.140551518@linuxfoundation.org>
+Subject: [PATCH 6.15 177/515] usb: dwc3: xilinx: add shutdown callback
+Date: Mon, 18 Aug 2025 14:42:43 +0200
+Message-ID: <20250818124505.180855093@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,38 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit 503bbde34cc3dd2acd231f277ba70c3f9ed22e59 ]
+[ Upstream commit 70627bf82e36e61c40c3315e1206e4ea4c02e668 ]
 
-Checking for the endpoint type is no reason for a WARN, as that can
-cause a reboot. A driver not checking the endpoint type must not cause a
-reboot, as there is just no point in this.  We cannot prevent a device
-from doing something incorrect as a reaction to a transfer. Hence
-warning for a mere assumption being wrong is not sensible.
+Adds a shutdown callback to ensure that the XHCI stack is properly
+shutdown in reboot/shutdown path.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250612122149.2559724-1-oneukum@suse.com
+In kexec flow, kernel_restart_prepare() performs actions necessary
+to prepare the system for a restart and invokes device_shutdown. To
+ensure proper shutdown attach the dwc3 shutdown implementation which
+mirrors the remove method.
+
+$ kexec -e
+
+<snip>
+xhci-hcd xhci-hcd.0.auto: remove, state 1
+usb usb1: USB disconnect, device number 1
+usb 1-1: USB disconnect, device number 6
+xhci-hcd xhci-hcd.0.auto: USB bus 1 deregistered
+kexec_core: Starting new kernel
+
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/1748977771-714153-1-git-send-email-radhey.shyam.pandey@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/urb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-xilinx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/core/urb.c b/drivers/usb/core/urb.c
-index 5e52a35486af..120de3c499d2 100644
---- a/drivers/usb/core/urb.c
-+++ b/drivers/usb/core/urb.c
-@@ -500,7 +500,7 @@ int usb_submit_urb(struct urb *urb, gfp_t mem_flags)
- 
- 	/* Check that the pipe's type matches the endpoint's type */
- 	if (usb_pipe_type_check(urb->dev, urb->pipe))
--		dev_WARN(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
-+		dev_warn_once(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
- 			usb_pipetype(urb->pipe), pipetypes[xfertype]);
- 
- 	/* Check against a simple/standard policy */
+diff --git a/drivers/usb/dwc3/dwc3-xilinx.c b/drivers/usb/dwc3/dwc3-xilinx.c
+index 4ca7f6240d07..09c3c5c226ab 100644
+--- a/drivers/usb/dwc3/dwc3-xilinx.c
++++ b/drivers/usb/dwc3/dwc3-xilinx.c
+@@ -422,6 +422,7 @@ static const struct dev_pm_ops dwc3_xlnx_dev_pm_ops = {
+ static struct platform_driver dwc3_xlnx_driver = {
+ 	.probe		= dwc3_xlnx_probe,
+ 	.remove		= dwc3_xlnx_remove,
++	.shutdown	= dwc3_xlnx_remove,
+ 	.driver		= {
+ 		.name		= "dwc3-xilinx",
+ 		.of_match_table	= dwc3_xlnx_of_match,
 -- 
 2.39.5
 
