@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051B1218AAB;
-	Mon, 18 Aug 2025 13:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6109231CA63;
+	Mon, 18 Aug 2025 13:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522277; cv=none; b=vGdIvEtdo9KUZHNiK04atxLzzGMNGK9muVkziF3U7k0pRjnfUEccGvSn+05AGy0UEa8jVN9S2eVcz9COIAZfsiBQkHddgzDUagY8m3dCAu9PQQ6BgIpe84ISXuvIeVeCg4L3oDO7M/c8aPtgVZbcbHX1WRdxwZ7g/sFmZSSkrI8=
+	t=1755522280; cv=none; b=eBZfm4kmXGl68/orrXPN53HGbYJQn2GFztZWQouFUWEPtGBtcxJlflahegQc+LrdZQj2BPBn1BHJmEOG/6MhaD6MTotrEseAwZOFIw2Yi9mbA/bksgokt5/FDVwZOnjPaj7qXWLiArffPdBK2joaLoc2LFXZOTVkdxyoZBqLiBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522277; c=relaxed/simple;
-	bh=JxhvUy1otdYHP84+h2fhnIF2EVbGx174ymEyNsM05Wk=;
+	s=arc-20240116; t=1755522280; c=relaxed/simple;
+	bh=YyHoWBYGLiV0Cp+EZH5GHQBajhHfOWVtmn+2+KgpMb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fON2KHtr8+UFZHlXbrxc/rvxtl6KdJKriOKjHAjhqMNY+ut0y9N/NUaiG+kzDtHoygkggsKJclaZfgx1Lv5XSPwnlZPDTXOvOy5w3a1zHEh8zbdzC7qgKu541M0DJbaPwInyrMCfkC7qseP+cHk9zbfpT+m6eM/cHdobVmAltKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYWFUEqn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=thm01fiXfa1wVAFPY/5g8mWVXNJPe9CuC+6YOqh6DWWEq9g0a7c3ilmfNGemIkJEh/qvZCONLd4pSGdXi/dwMEcgxwp2jkJrZ524ZTPb0GV8X55oscycABs7DoBIVtF1xHSxj0C2R20qAy2yR9p47T3dB+ophqYI6L+gxH+f11o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryZPCH9g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYWFUEqn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6972DC4CEEB;
-	Mon, 18 Aug 2025 13:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryZPCH9g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6183C4CEEB;
+	Mon, 18 Aug 2025 13:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522276;
-	bh=JxhvUy1otdYHP84+h2fhnIF2EVbGx174ymEyNsM05Wk=;
+	s=korg; t=1755522280;
+	bh=YyHoWBYGLiV0Cp+EZH5GHQBajhHfOWVtmn+2+KgpMb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LYWFUEqnhAT8qb7KKNvzWThmh7X+a9Q97TLeaK5R7tfP7vUWnTkwy1Flx66qJyFSl
-	 DxQsiFK+oivgm0kX8YMVoj35qrAkT1g25Uk+0oynja+UlkCN070DlQ07/hoCMLsK1W
-	 0whjX/78M8pevrhVRNojuZRcR1CMEiDEsJnUFnzk=
+	b=ryZPCH9gb6EpgvZF2m9TS2aEUvRdpgJQyCUClunUdIBstk09gsyhM3mpZtqVWMytv
+	 LLTNT4oizacBozthYqjfHhPB1o351ypgrSzWMWK2qo8fOyr1jJLSRJlEGWJrf5NERr
+	 cEUvXhx4/DyCxMYreuAUsz2T/QjynHem859TJlGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Qi Xi <xiqi2@huawei.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 269/444] rcu: Fix rcu_read_unlock() deadloop due to IRQ work
-Date: Mon, 18 Aug 2025 14:44:55 +0200
-Message-ID: <20250818124458.914310816@linuxfoundation.org>
+Subject: [PATCH 6.12 270/444] net: dsa: b53: fix IP_MULTICAST_CTRL on BCM5325
+Date: Mon, 18 Aug 2025 14:44:56 +0200
+Message-ID: <20250818124458.950069082@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -49,163 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit b41642c87716bbd09797b1e4ea7d904f06c39b7b ]
+[ Upstream commit 044d5ce2788b165798bfd173548e61bf7b6baf4d ]
 
-During rcu_read_unlock_special(), if this happens during irq_exit(), we
-can lockup if an IPI is issued. This is because the IPI itself triggers
-the irq_exit() path causing a recursive lock up.
+BCM5325 doesn't implement B53_UC_FWD_EN, B53_MC_FWD_EN or B53_IPMC_FWD_EN.
 
-This is precisely what Xiongfeng found when invoking a BPF program on
-the trace_tick_stop() tracepoint As shown in the trace below. Fix by
-managing the irq_work state correctly.
-
-irq_exit()
-  __irq_exit_rcu()
-    /* in_hardirq() returns false after this */
-    preempt_count_sub(HARDIRQ_OFFSET)
-    tick_irq_exit()
-      tick_nohz_irq_exit()
-	    tick_nohz_stop_sched_tick()
-	      trace_tick_stop()  /* a bpf prog is hooked on this trace point */
-		   __bpf_trace_tick_stop()
-		      bpf_trace_run2()
-			    rcu_read_unlock_special()
-                              /* will send a IPI to itself */
-			      irq_work_queue_on(&rdp->defer_qs_iw, rdp->cpu);
-
-A simple reproducer can also be obtained by doing the following in
-tick_irq_exit(). It will hang on boot without the patch:
-
-  static inline void tick_irq_exit(void)
-  {
- +	rcu_read_lock();
- +	WRITE_ONCE(current->rcu_read_unlock_special.b.need_qs, true);
- +	rcu_read_unlock();
- +
-
-Reported-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Closes: https://lore.kernel.org/all/9acd5f9f-6732-7701-6880-4b51190aa070@huawei.com/
-Tested-by: Qi Xi <xiqi2@huawei.com>
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Reviewed-by: "Paul E. McKenney" <paulmck@kernel.org>
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-[neeraj: Apply Frederic's suggested fix for PREEMPT_RT]
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Link: https://patch.msgid.link/20250614080000.1884236-9-noltari@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.h        | 13 ++++++++++++-
- kernel/rcu/tree_plugin.h | 37 ++++++++++++++++++++++++++-----------
- 2 files changed, 38 insertions(+), 12 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 18 +++++++++++-------
+ drivers/net/dsa/b53/b53_regs.h   |  1 +
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
-index 1bba2225e744..f99677bf97ca 100644
---- a/kernel/rcu/tree.h
-+++ b/kernel/rcu/tree.h
-@@ -174,6 +174,17 @@ struct rcu_snap_record {
- 	unsigned long   jiffies;	/* Track jiffies value */
- };
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index aacdfc64d3b6..844cf2b8f727 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -364,14 +364,18 @@ static void b53_set_forwarding(struct b53_device *dev, int enable)
+ 		b53_read8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, &mgmt);
+ 		mgmt |= B53_MII_DUMB_FWDG_EN;
+ 		b53_write8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, mgmt);
+-	}
  
-+/*
-+ * An IRQ work (deferred_qs_iw) is used by RCU to get the scheduler's attention.
-+ * to report quiescent states at the soonest possible time.
-+ * The request can be in one of the following states:
-+ * - DEFER_QS_IDLE: An IRQ work is yet to be scheduled.
-+ * - DEFER_QS_PENDING: An IRQ work was scheduled but either not yet run, or it
-+ *                     ran and we still haven't reported a quiescent state.
-+ */
-+#define DEFER_QS_IDLE		0
-+#define DEFER_QS_PENDING	1
-+
- /* Per-CPU data for read-copy update. */
- struct rcu_data {
- 	/* 1) quiescent-state and grace-period handling : */
-@@ -191,7 +202,7 @@ struct rcu_data {
- 					/*  during and after the last grace */
- 					/* period it is aware of. */
- 	struct irq_work defer_qs_iw;	/* Obtain later scheduler attention. */
--	bool defer_qs_iw_pending;	/* Scheduler attention pending? */
-+	int defer_qs_iw_pending;	/* Scheduler attention pending? */
- 	struct work_struct strict_work;	/* Schedule readers for strict GPs. */
- 
- 	/* 2) batch handling */
-diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
-index 27ab715569f2..edcf534fe082 100644
---- a/kernel/rcu/tree_plugin.h
-+++ b/kernel/rcu/tree_plugin.h
-@@ -485,13 +485,16 @@ rcu_preempt_deferred_qs_irqrestore(struct task_struct *t, unsigned long flags)
- 	struct rcu_node *rnp;
- 	union rcu_special special;
- 
-+	rdp = this_cpu_ptr(&rcu_data);
-+	if (rdp->defer_qs_iw_pending == DEFER_QS_PENDING)
-+		rdp->defer_qs_iw_pending = DEFER_QS_IDLE;
-+
- 	/*
- 	 * If RCU core is waiting for this CPU to exit its critical section,
- 	 * report the fact that it has exited.  Because irqs are disabled,
- 	 * t->rcu_read_unlock_special cannot change.
- 	 */
- 	special = t->rcu_read_unlock_special;
--	rdp = this_cpu_ptr(&rcu_data);
- 	if (!special.s && !rdp->cpu_no_qs.b.exp) {
- 		local_irq_restore(flags);
- 		return;
-@@ -628,7 +631,23 @@ static void rcu_preempt_deferred_qs_handler(struct irq_work *iwp)
- 
- 	rdp = container_of(iwp, struct rcu_data, defer_qs_iw);
- 	local_irq_save(flags);
--	rdp->defer_qs_iw_pending = false;
-+
-+	/*
-+	 * If the IRQ work handler happens to run in the middle of RCU read-side
-+	 * critical section, it could be ineffective in getting the scheduler's
-+	 * attention to report a deferred quiescent state (the whole point of the
-+	 * IRQ work). For this reason, requeue the IRQ work.
-+	 *
-+	 * Basically, we want to avoid following situation:
-+	 * 1. rcu_read_unlock() queues IRQ work (state -> DEFER_QS_PENDING)
-+	 * 2. CPU enters new rcu_read_lock()
-+	 * 3. IRQ work runs but cannot report QS due to rcu_preempt_depth() > 0
-+	 * 4. rcu_read_unlock() does not re-queue work (state still PENDING)
-+	 * 5. Deferred QS reporting does not happen.
-+	 */
-+	if (rcu_preempt_depth() > 0)
-+		WRITE_ONCE(rdp->defer_qs_iw_pending, DEFER_QS_IDLE);
-+
- 	local_irq_restore(flags);
+-	/* Look at B53_UC_FWD_EN and B53_MC_FWD_EN to decide whether
+-	 * frames should be flooded or not.
+-	 */
+-	b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
+-	mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IPMC_FWD_EN;
+-	b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
++		/* Look at B53_UC_FWD_EN and B53_MC_FWD_EN to decide whether
++		 * frames should be flooded or not.
++		 */
++		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
++		mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IPMC_FWD_EN;
++		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
++	} else {
++		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
++		mgmt |= B53_IP_MCAST_25;
++		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
++	}
  }
  
-@@ -675,17 +694,13 @@ static void rcu_read_unlock_special(struct task_struct *t)
- 			set_tsk_need_resched(current);
- 			set_preempt_need_resched();
- 			if (IS_ENABLED(CONFIG_IRQ_WORK) && irqs_were_disabled &&
--			    expboost && !rdp->defer_qs_iw_pending && cpu_online(rdp->cpu)) {
-+			    expboost && rdp->defer_qs_iw_pending != DEFER_QS_PENDING &&
-+			    cpu_online(rdp->cpu)) {
- 				// Get scheduler to re-evaluate and call hooks.
- 				// If !IRQ_WORK, FQS scan will eventually IPI.
--				if (IS_ENABLED(CONFIG_RCU_STRICT_GRACE_PERIOD) &&
--				    IS_ENABLED(CONFIG_PREEMPT_RT))
--					rdp->defer_qs_iw = IRQ_WORK_INIT_HARD(
--								rcu_preempt_deferred_qs_handler);
--				else
--					init_irq_work(&rdp->defer_qs_iw,
--						      rcu_preempt_deferred_qs_handler);
--				rdp->defer_qs_iw_pending = true;
-+				rdp->defer_qs_iw =
-+					IRQ_WORK_INIT_HARD(rcu_preempt_deferred_qs_handler);
-+				rdp->defer_qs_iw_pending = DEFER_QS_PENDING;
- 				irq_work_queue_on(&rdp->defer_qs_iw, rdp->cpu);
- 			}
- 		}
+ static void b53_enable_vlan(struct b53_device *dev, int port, bool enable,
+diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
+index 719c2ac94a4f..5741231e0841 100644
+--- a/drivers/net/dsa/b53/b53_regs.h
++++ b/drivers/net/dsa/b53/b53_regs.h
+@@ -110,6 +110,7 @@
+ 
+ /* IP Multicast control (8 bit) */
+ #define B53_IP_MULTICAST_CTRL		0x21
++#define  B53_IP_MCAST_25		BIT(0)
+ #define  B53_IPMC_FWD_EN		BIT(1)
+ #define  B53_UC_FWD_EN			BIT(6)
+ #define  B53_MC_FWD_EN			BIT(7)
 -- 
 2.39.5
 
