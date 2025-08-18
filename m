@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4856F335BBF;
-	Mon, 18 Aug 2025 13:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC05335BBF;
+	Mon, 18 Aug 2025 13:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525018; cv=none; b=eQm6Pc9l9hjZr5Eo80H+yiDuVBOQ7XIKsI66MvYsGW+STJh/POTLlE5K2KtT+BMgrKi33tXgEU49qlLAALdgrhbZ/w2h9INKEFEgzlTG+jMrSXThSsPBdQbmQod4PuCsp/icUh4uklySQg6FEC63QOu+FSxvFANT/46tN0Opht4=
+	t=1755525021; cv=none; b=UouOe4fI5n/Dsv6PGWTb4riqKk6BayXEsRUOqUFyP7/RtTP2QLHLe5qtbs/guOImGLIP22uodWEA0lOumiD3ZUVqsV8qALyosSyb6zVZux5UgwA0TWQeWCRVx1iG+8OrWs/uyy/EJKZ9qaBr4hsZn9Ic8cJigGxHrQt/ANvUVO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525018; c=relaxed/simple;
-	bh=ykJA7gqkuM67f6ZdJIwTgaoPZOj/GBAfR/hALw+DiP0=;
+	s=arc-20240116; t=1755525021; c=relaxed/simple;
+	bh=8ChRynjqmwz66UI6rPsfK/J86BG9ekSznx4ftjSu7y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OykFSlO98oBNr9+VchkpbcJrCgZ5n4euRM4L5/uDfsNRHyXhdB6MrK9rD+MfbBbnFqiU6FEOhnBqwg4Y6PUTHZTEGoXzfJbwzsVcA4uC+TDPQwawN+Vy07UxQojfQvrcLsGkZGmyDZRkRL0M2hVuoAH1sAnsCl0pj6Ov61UTeyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OazPkfxn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TGOFzrFJ2TBH+IvvvQq5MTUVb8PE5SU8xIGUlYerZBPcmOqv9HIOkVCefXZvXWps6hObKgYfiBZOM8tt/fPFPhTu3GRvVNhviFZHxhhVMa1MQlaJqJ2Qu+OHIoeq+5ult6r9tvs0YAI3qUyBLBXkPuHj6PaBbBp9SwyFrXzOMT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/hStNJG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OazPkfxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEDFC4CEEB;
-	Mon, 18 Aug 2025 13:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/hStNJG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69DDC4CEEB;
+	Mon, 18 Aug 2025 13:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525018;
-	bh=ykJA7gqkuM67f6ZdJIwTgaoPZOj/GBAfR/hALw+DiP0=;
+	s=korg; t=1755525021;
+	bh=8ChRynjqmwz66UI6rPsfK/J86BG9ekSznx4ftjSu7y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OazPkfxn/pkLOTSUEdddQMTZ0WC8/EoClQyPafM9fdZ9vUvsz/ypl0Z0We24wV8nC
-	 UjWMk4rRURVfifygNzOJxmht2S/LsrtLP74ycOrdn5vmSVySrBd2TSr1CSHeX/eUnm
-	 qm15UE2BhxqnJCTJfv3o++9coti2h0G2gqzA2OPg=
+	b=Z/hStNJGor1VKSZRXwWkorQ4kyjWZL+kkEUCT78LLNQRQF4kGD85i6YQf7Olnt5ff
+	 9tkIQJjOS+PeodiQQzDjp7fMBdjGTbccHniGgLyhgMf4A+B1kufv/exhB3/IedRhMf
+	 GbhNmsyoIiUTUKzKmFHt5q0ldaBYVhhQPxgztnmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 102/570] md/raid10: set chunk_sectors limit
-Date: Mon, 18 Aug 2025 14:41:29 +0200
-Message-ID: <20250818124509.740415706@linuxfoundation.org>
+Subject: [PATCH 6.16 103/570] nvme-tcp: log TLS handshake failures at error level
+Date: Mon, 18 Aug 2025 14:41:30 +0200
+Message-ID: <20250818124509.778785123@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -54,36 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 7ef50c4c6a9c36fa3ea6f1681a80c0bf9a797345 ]
+[ Upstream commit 5a58ac9bfc412a58c3cf26c6a7e54d4308e9d109 ]
 
-Same as done for raid0, set chunk_sectors limit to appropriately set the
-atomic write size limit.
+Update the nvme_tcp_start_tls() function to use dev_err() instead of
+dev_dbg() when a TLS error is detected. This ensures that handshake
+failures are visible by default, aiding in debugging.
 
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20250711105258.3135198-5-john.g.garry@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/tcp.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index d2b237652d7e..95dc354a86a0 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -4009,6 +4009,7 @@ static int raid10_set_queue_limits(struct mddev *mddev)
- 	md_init_stacking_limits(&lim);
- 	lim.max_write_zeroes_sectors = 0;
- 	lim.io_min = mddev->chunk_sectors << 9;
-+	lim.chunk_sectors = mddev->chunk_sectors;
- 	lim.io_opt = lim.io_min * raid10_nr_stripes(conf);
- 	lim.features |= BLK_FEAT_ATOMIC_WRITES;
- 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index d924008c3949..9233f088fac8 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1745,9 +1745,14 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
+ 			qid, ret);
+ 		tls_handshake_cancel(queue->sock->sk);
+ 	} else {
+-		dev_dbg(nctrl->device,
+-			"queue %d: TLS handshake complete, error %d\n",
+-			qid, queue->tls_err);
++		if (queue->tls_err) {
++			dev_err(nctrl->device,
++				"queue %d: TLS handshake complete, error %d\n",
++				qid, queue->tls_err);
++		} else {
++			dev_dbg(nctrl->device,
++				"queue %d: TLS handshake complete\n", qid);
++		}
+ 		ret = queue->tls_err;
+ 	}
+ 	return ret;
 -- 
 2.39.5
 
