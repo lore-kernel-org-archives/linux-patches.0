@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E360218AAB;
-	Mon, 18 Aug 2025 13:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10AE218AAB;
+	Mon, 18 Aug 2025 13:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522264; cv=none; b=QMNMo1cKhaewDNKEjMwyzFPuQzHCYYn80eXl5ppjx4Jh9O+iYLkIgTccWKF5FXrhnl/GFmBRdA06mpwt0H7jnafI79Tw/1v726sARQTSN4pMd+h00lWVKZx++jX9Km2+77lp/EB70qW+cd/SIz8ku0Q9w31pr7JKODkdxcO1Fqc=
+	t=1755522267; cv=none; b=nuV8S1JjZyeXgjh5GmVIwyncS20DEViQqGePHsAl0Q7ltT0jKwnCPj7hWbV/S2s0lf0/bSMwi/pXtXKbGdm6O33w5MUkD/88z4uSf2CFE4TfwbkQQ9S/Rl1xYwGt/mvceAkN38UCcOZp5EYUduTk5Ov2e81JAPHCDKjzIDM6hok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522264; c=relaxed/simple;
-	bh=L5ZDbNfwWlpF8ZqkwBMqPgbs6QltwPtOVMU2WSCRMmI=;
+	s=arc-20240116; t=1755522267; c=relaxed/simple;
+	bh=fKAjy5YlPLC/80BxTAIjibigXh7h6ej+Xrvj1m10Vgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8Q3SFtpXvo3f9dIML8jC5kmFInk4JL+A7SzGaY8mvQZg7i9d2+9UyuriwKQSbvfM5gwqVUP2Qzgdhm0ObrH+S7AQNpfVesjboLhGbfEPdIAUZL3fG8PtWg7UbVz/KUz9FIoJ247p+YS5beYSH/kmyDrKV1P1khxa5DIFtxPUcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsZRLLUB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHnJ4zDwzkZN1cKC3yj5Q35ud4xNbRrZMTcRNLPaq6AtV9G1VvZXmuws6iGRhIn4NUPxX8+NZXNlsS50lpnqqnN+1FepmTVJoLm9sEaoSf81Pm8iMNKWgvtnARORWRd3L94u7rVjehCcf+/zosAmMHLEgjAUThC9oYmRoFXF5C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+QJntGM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsZRLLUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F0FC4CEEB;
-	Mon, 18 Aug 2025 13:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+QJntGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB4BC113D0;
+	Mon, 18 Aug 2025 13:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522263;
-	bh=L5ZDbNfwWlpF8ZqkwBMqPgbs6QltwPtOVMU2WSCRMmI=;
+	s=korg; t=1755522266;
+	bh=fKAjy5YlPLC/80BxTAIjibigXh7h6ej+Xrvj1m10Vgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gsZRLLUB/fN6VYT6h16ZpgeQAkJ6Ji9FX7lXQXf4rEo8/CmS1UC+YoBPVGQ7GFdlF
-	 GFEpQ4WTLdbNsfTcyYJy2xtpKVoMlGdGlmUVGRPX1Anebk+p6Tj0x9K/CKI/CqDgf6
-	 yjMqn4FmQknZGTb3vWlVccqbCFMijTTeHmzuOe7U=
+	b=e+QJntGMN0MPuZKFVsuMKUtoLPV0G/deNE0XZ4zfZlGzeWLz6Zpn6DqnJ9Wqv5eOe
+	 9Qj1PDj+0QemAp1vfsTHzat9p1E+49lOQlr4TnC0U+P0NmaFJpRu8YE8gPAZbCJRsy
+	 769bpHcob7jUqhz7aHp68AazzU8ZWH4bTjir+J4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ovidiu Bunea <ovidiu.bunea@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 265/444] selftests/bpf: Fix a user_ringbuf failure with arm64 64KB page size
-Date: Mon, 18 Aug 2025 14:44:51 +0200
-Message-ID: <20250818124458.760032497@linuxfoundation.org>
+Subject: [PATCH 6.12 266/444] drm/amd/display: Update DMCUB loading sequence for DCN3.5
+Date: Mon, 18 Aug 2025 14:44:52 +0200
+Message-ID: <20250818124458.807381249@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,57 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit bbc7bd658ddc662083639b9e9a280b90225ecd9a ]
+[ Upstream commit d42b2331e158fa6bcdc89e4c8c470dc5da20be1f ]
 
-The ringbuf max_entries must be PAGE_ALIGNED. See kernel function
-ringbuf_map_alloc(). So for arm64 64KB page size, adjust max_entries
-properly.
+[Why]
+New sequence from HW for reset and firmware reloading has been
+provided that aims to stabilize the reload sequence in the case the
+firmware is hung or has outstanding requests.
 
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20250607013626.1553001-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[How]
+Update the sequence to remove the DMUIF reset and the redundant
+writes in the release.
+
+Reviewed-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/user_ringbuf.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ .../gpu/drm/amd/display/dmub/src/dmub_dcn35.c    | 16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-index d424e7ecbd12..9fd3ae987321 100644
---- a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-@@ -21,8 +21,7 @@
- #include "../progs/test_user_ringbuf.h"
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn35.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn35.c
+index 4581eb479451..01e83c6ce701 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn35.c
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn35.c
+@@ -92,19 +92,15 @@ void dmub_dcn35_reset(struct dmub_srv *dmub)
+ 	uint32_t in_reset, is_enabled, scratch, i, pwait_mode;
  
- static const long c_sample_size = sizeof(struct sample) + BPF_RINGBUF_HDR_SZ;
--static const long c_ringbuf_size = 1 << 12; /* 1 small page */
--static const long c_max_entries = c_ringbuf_size / c_sample_size;
-+static long c_ringbuf_size, c_max_entries;
+ 	REG_GET(DMCUB_CNTL2, DMCUB_SOFT_RESET, &in_reset);
++	REG_GET(DMCUB_CNTL, DMCUB_ENABLE, &is_enabled);
  
- static void drain_current_samples(void)
- {
-@@ -424,7 +423,9 @@ static void test_user_ringbuf_loop(void)
- 	uint32_t remaining_samples = total_samples;
- 	int err;
+-	if (in_reset == 0) {
++	if (in_reset == 0 && is_enabled != 0) {
+ 		cmd.bits.status = 1;
+ 		cmd.bits.command_code = DMUB_GPINT__STOP_FW;
+ 		cmd.bits.param = 0;
  
--	BUILD_BUG_ON(total_samples <= c_max_entries);
-+	if (!ASSERT_LT(c_max_entries, total_samples, "compare_c_max_entries"))
-+		return;
-+
- 	err = load_skel_create_user_ringbuf(&skel, &ringbuf);
- 	if (err)
- 		return;
-@@ -686,6 +687,9 @@ void test_user_ringbuf(void)
- {
- 	int i;
+ 		dmub->hw_funcs.set_gpint(dmub, cmd);
  
-+	c_ringbuf_size = getpagesize(); /* 1 page */
-+	c_max_entries = c_ringbuf_size / c_sample_size;
-+
- 	for (i = 0; i < ARRAY_SIZE(success_tests); i++) {
- 		if (!test__start_subtest(success_tests[i].test_name))
- 			continue;
+-		/**
+-		 * Timeout covers both the ACK and the wait
+-		 * for remaining work to finish.
+-		 */
+-
+ 		for (i = 0; i < timeout; ++i) {
+ 			if (dmub->hw_funcs.is_gpint_acked(dmub, cmd))
+ 				break;
+@@ -130,11 +126,9 @@ void dmub_dcn35_reset(struct dmub_srv *dmub)
+ 		/* Force reset in case we timed out, DMCUB is likely hung. */
+ 	}
+ 
+-	REG_GET(DMCUB_CNTL, DMCUB_ENABLE, &is_enabled);
+-
+ 	if (is_enabled) {
+ 		REG_UPDATE(DMCUB_CNTL2, DMCUB_SOFT_RESET, 1);
+-		REG_UPDATE(MMHUBBUB_SOFT_RESET, DMUIF_SOFT_RESET, 1);
++		udelay(1);
+ 		REG_UPDATE(DMCUB_CNTL, DMCUB_ENABLE, 0);
+ 	}
+ 
+@@ -160,11 +154,7 @@ void dmub_dcn35_reset_release(struct dmub_srv *dmub)
+ 		     LONO_SOCCLK_GATE_DISABLE, 1,
+ 		     LONO_DMCUBCLK_GATE_DISABLE, 1);
+ 
+-	REG_UPDATE(MMHUBBUB_SOFT_RESET, DMUIF_SOFT_RESET, 1);
+-	udelay(1);
+ 	REG_UPDATE_2(DMCUB_CNTL, DMCUB_ENABLE, 1, DMCUB_TRACEPORT_EN, 1);
+-	REG_UPDATE(DMCUB_CNTL2, DMCUB_SOFT_RESET, 1);
+-	udelay(1);
+ 	REG_UPDATE(MMHUBBUB_SOFT_RESET, DMUIF_SOFT_RESET, 0);
+ 	REG_UPDATE(DMCUB_CNTL2, DMCUB_SOFT_RESET, 0);
+ }
 -- 
 2.39.5
 
