@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C874831B107;
-	Mon, 18 Aug 2025 12:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D3D31E0F5;
+	Mon, 18 Aug 2025 12:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521654; cv=none; b=agTHul8DvJfXtEAx7lvgIT2dqaa4RIQvlEQ6D0xgu+f5vkTYRdyLy+RRFZQWUw9Qmh3TGw3ErU44a731LWNroiTQ+TMXQw6C/IbBxH519egJvRMWMVWas/D13TY7HvroXh0kpO+WeoIY29kgpgo2eT1AYhywRCXhYMi3FBxCXwE=
+	t=1755521658; cv=none; b=MnVWz1pJsPEXaZhEQHMS817Q3q4I1RvsKNe7mbAEhKqMN90QEDXzls/ayhk3xkM3SUVPKE8ZfulH34L0B6iyrec4dt8fM2oda0e2UsVQX4//0fYWmG5/rk0EofJ7bZ1iR2xiMrYMFewlZBCK33H7JVcVtM9pJjwkdB7zh5JlluI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521654; c=relaxed/simple;
-	bh=A1UUuXs+n0XZhKwL2X+9BiEKGIYzibnHbjOqIJKf+zg=;
+	s=arc-20240116; t=1755521658; c=relaxed/simple;
+	bh=lU9S8QwJOndeIwQJQw1h4rm13u+W/nqkaXHC95hO1/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nP8bx2tl0ACRUByLRb658nx/W4bbjAuDHWAjzle33wZF66931axn8oQl+jSJwMV+cIPbf7Qz9gzw6u1gCZxYA2LHdMEbZVFmGGVoRQ+CF25NDyY3O1T1LhpBaYw99Nr394b7T66/mRXTe1FX6b/rEJ2LqeuT08Gs97US37pE/l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keom/DYn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PQOaIUdUiWYuJ9pP941UC6ZJ094Qi0QLKmiHulX0YJGuAV26Wzl+ihF04F56JVaYDQX81Yv6og2IYJHw/mY0lhe7E7ae6/XbULuwsyDoexDCOGmGLl3LzIjZhvIQB3ekkJ8nX4DsHmDYNk8GG+hOliqf1zXNcc16TWMMIToXGLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwTbK8HU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keom/DYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06537C4CEEB;
-	Mon, 18 Aug 2025 12:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwTbK8HU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9DEC116D0;
+	Mon, 18 Aug 2025 12:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521654;
-	bh=A1UUuXs+n0XZhKwL2X+9BiEKGIYzibnHbjOqIJKf+zg=;
+	s=korg; t=1755521657;
+	bh=lU9S8QwJOndeIwQJQw1h4rm13u+W/nqkaXHC95hO1/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=keom/DYnFzDnvtAd1j/eLcgsYSadE+YhvJmEGN8gZDL5/joQK5kXrdcosb+E8rvm0
-	 Zca59S9K+d37MDmPmLwjvPwpLuN0IAsi0s66i5J9nWJ/Ncl+5DBXWeTVvsyfKUF3ZK
-	 MAUv6kHnTfJIV/QBs5GT4LbQ2H/RJwIeMbZOjeQk=
+	b=UwTbK8HUx1BUpbLabrtaVcpKtR3nyoP4b+xXneOk1fORmVmyvMZeSrpYdLt8Fs+0w
+	 U9ypVxL31vcSdPlJ9hCK42RNpd5dflncyAxbs0oDnosIKU3rQbKIUefz6B9gN1V/2g
+	 RWcnMeI/t7ZIm4+TDHyH93psVG7G0JlMF+yDQO1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4708579bb230a0582a57@syzkaller.appspotmail.com,
-	Andrew Price <anprice@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/444] gfs2: Validate i_depth for exhash directories
-Date: Mon, 18 Aug 2025 14:41:42 +0200
-Message-ID: <20250818124451.802856051@linuxfoundation.org>
+Subject: [PATCH 6.12 085/444] ata: ahci: Disable DIPM if host lacks support
+Date: Mon, 18 Aug 2025 14:41:51 +0200
+Message-ID: <20250818124452.137120579@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -46,98 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Price <anprice@redhat.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 557c024ca7250bb65ae60f16c02074106c2f197b ]
+[ Upstream commit f7870e8d345cdabfb94bcbdcba6a07e050f8705e ]
 
-A fuzzer test introduced corruption that ends up with a depth of 0 in
-dir_e_read(), causing an undefined shift by 32 at:
+The AHCI specification version 1.3.1 section 8.3.1.4 (Software
+Requirements and Precedence) states that:
 
-  index = hash >> (32 - dip->i_depth);
+If CAP.SSC or CAP.PSC is cleared to ‘0’, software should disable
+device-initiated power management by issuing the appropriate SET
+FEATURES command to the device.
 
-As calculated in an open-coded way in dir_make_exhash(), the minimum
-depth for an exhash directory is ilog2(sdp->sd_hash_ptrs) and 0 is
-invalid as sdp->sd_hash_ptrs is fixed as sdp->bsize / 16 at mount time.
+To satisfy this constraint and force ata_dev_configure to disable the
+device DIPM feature, modify ahci_update_initial_lpm_policy() to set the
+ATA_FLAG_NO_DIPM flag on ports that have a host with either the
+ATA_HOST_NO_PART flag set or the ATA_HOST_NO_SSC flag set.
 
-So we can avoid the undefined behaviour by checking for depth values
-lower than the minimum in gfs2_dinode_in(). Values greater than the
-maximum are already being checked for there.
-
-Also switch the calculation in dir_make_exhash() to use ilog2() to
-clarify how the depth is calculated.
-
-Tested with the syzkaller repro.c and xfstests '-g quick'.
-
-Reported-by: syzbot+4708579bb230a0582a57@syzkaller.appspotmail.com
-Signed-off-by: Andrew Price <anprice@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de.>
+Link: https://lore.kernel.org/r/20250701125321.69496-7-dlemoal@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/dir.c   | 6 ++----
- fs/gfs2/glops.c | 6 ++++++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/ata/ahci.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/gfs2/dir.c b/fs/gfs2/dir.c
-index dbf1aede744c..509e2f0d97e7 100644
---- a/fs/gfs2/dir.c
-+++ b/fs/gfs2/dir.c
-@@ -60,6 +60,7 @@
- #include <linux/crc32.h>
- #include <linux/vmalloc.h>
- #include <linux/bio.h>
-+#include <linux/log2.h>
- 
- #include "gfs2.h"
- #include "incore.h"
-@@ -912,7 +913,6 @@ static int dir_make_exhash(struct inode *inode)
- 	struct qstr args;
- 	struct buffer_head *bh, *dibh;
- 	struct gfs2_leaf *leaf;
--	int y;
- 	u32 x;
- 	__be64 *lp;
- 	u64 bn;
-@@ -979,9 +979,7 @@ static int dir_make_exhash(struct inode *inode)
- 	i_size_write(inode, sdp->sd_sb.sb_bsize / 2);
- 	gfs2_add_inode_blocks(&dip->i_inode, 1);
- 	dip->i_diskflags |= GFS2_DIF_EXHASH;
--
--	for (x = sdp->sd_hash_ptrs, y = -1; x; x >>= 1, y++) ;
--	dip->i_depth = y;
-+	dip->i_depth = ilog2(sdp->sd_hash_ptrs);
- 
- 	gfs2_dinode_out(dip, dibh->b_data);
- 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 4b6b23c638e2..1ed42f0e6ec7 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -11,6 +11,7 @@
- #include <linux/bio.h>
- #include <linux/posix_acl.h>
- #include <linux/security.h>
-+#include <linux/log2.h>
- 
- #include "gfs2.h"
- #include "incore.h"
-@@ -450,6 +451,11 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 		gfs2_consist_inode(ip);
- 		return -EIO;
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 61d34ca0d9f4..944e44caa260 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -1781,6 +1781,13 @@ static void ahci_update_initial_lpm_policy(struct ata_port *ap)
+ 		return;
  	}
-+	if ((ip->i_diskflags & GFS2_DIF_EXHASH) &&
-+	    depth < ilog2(sdp->sd_hash_ptrs)) {
-+		gfs2_consist_inode(ip);
-+		return -EIO;
-+	}
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
  
++	/* If no Partial or no Slumber, we cannot support DIPM. */
++	if ((ap->host->flags & ATA_HOST_NO_PART) ||
++	    (ap->host->flags & ATA_HOST_NO_SSC)) {
++		ata_port_dbg(ap, "Host does not support DIPM\n");
++		ap->flags |= ATA_FLAG_NO_DIPM;
++	}
++
+ 	/* If no LPM states are supported by the HBA, do not bother with LPM */
+ 	if ((ap->host->flags & ATA_HOST_NO_PART) &&
+ 	    (ap->host->flags & ATA_HOST_NO_SSC) &&
 -- 
 2.39.5
 
