@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282062727E2;
-	Mon, 18 Aug 2025 13:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6546E2727E2;
+	Mon, 18 Aug 2025 13:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522849; cv=none; b=DqDHBRY22GOQqLrUtkbY3zeIazIQoiIXxF2+XzPcZVXfGtVEVHEC6he1tf1LR1m7mi/6isP6N4iOazHpOpewUGgxU13pasZOw/POxFvtSiFonawSfuiQmHwt9jMQCHux5DMSrzlr5Am5CROIPur/0Mj5iclFGctEX/qtfreY3Wc=
+	t=1755522852; cv=none; b=Gi4apKZ9Mnc37Zo8L0nSEs+7MUnA++Y3ebzAviItFa4Z0V8U/WnJuJ/vinECyMCGHkPJ1lOVN2Df9SsUQfzYBIOBz1CwuEgnOmWke3IpU9npevVkxIAAIRhL0xuA1nc6YtI6Hnb3b9ZOnuBbrjeuUiXKg1T1SLNDd8YxtW3xMWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522849; c=relaxed/simple;
-	bh=E4YwzDfbuF9o6OIpjlBhvlR7qGr/L0hoa4wjqTzQZ0w=;
+	s=arc-20240116; t=1755522852; c=relaxed/simple;
+	bh=KxCBCsXWXguVc7TMlFUeOLyeO4Hp2tqV6uxmwYIlDNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nLHVycif55aJ6t5vFdjohtdvZl9rE8ftasPLziDtzXG58qI/IDuHTQbpIXJ7bcRxJcjgEuyG4QThltSo6vlBB4fCR3R/40qLVI7e4taTKyE0sm/nJJ9LbFMnjR+OVStEKFGbGHIZsm/0d0hbepdWK1SO/mcdrvyH0WU2ZyWn8N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aj39rzZP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X4k488rLGy+fhb0lcUHJS4ckWQ2AzcjRqGOnUk4ptSa2LieiF/2mYkW5PXjdYO8IytUKvgZdRUYrczKVC6wmZVUn2iT741W6yQaUAazehSMF0HL8S0lPWgjUgqCNzW5PU6lI+kw0ghytnYBGgW4FEVTghu4F5LdBaIhgOIVkPmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKopikGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aj39rzZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871D8C4CEEB;
-	Mon, 18 Aug 2025 13:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKopikGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A77C4CEEB;
+	Mon, 18 Aug 2025 13:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522849;
-	bh=E4YwzDfbuF9o6OIpjlBhvlR7qGr/L0hoa4wjqTzQZ0w=;
+	s=korg; t=1755522852;
+	bh=KxCBCsXWXguVc7TMlFUeOLyeO4Hp2tqV6uxmwYIlDNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aj39rzZPEgM/nu6qr0nxcJDNEqBPhVZ12wRwqG+r4sFcZhDvLrHtMAbPtt0IZt9Vl
-	 aA5js9cBp/VpcfntBxUdpkfGnPnZRz/u2k08yanUE2Ww6MxE2RdKzZec/CKxlCYjJl
-	 Au3WTAVYhtdEuU+HZoQhJkbLQ8QsYC7LM8KcfWV0=
+	b=tKopikGeROZpKqY6hOkZdPMpu80e9XWC9cn5BU14zCIUJjZAqFgbVfAalCznZcMdM
+	 uBWso5T83jWFrYC+g+wH1ESIw/szT1ZHjjeOrJVf0TAwhZK/rDNi9V8Nk0/8GV/AX5
+	 /8Ma4dRl9OqKLqPII3H7DAhZhyy/h5AVwpvw8ah0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 440/444] drm/amd/display: Allow DCN301 to clear update flags
-Date: Mon, 18 Aug 2025 14:47:46 +0200
-Message-ID: <20250818124505.461267397@linuxfoundation.org>
+	syzbot+9921e319bd6168140b40@syzkaller.appspotmail.com,
+	syzbot+fa3a12519f0d3fd4ec16@syzkaller.appspotmail.com,
+	Yu Kuai <yukuai3@huawei.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Xiao Ni <xni@redhat.com>
+Subject: [PATCH 6.12 441/444] md: fix create on open mddev lifetime regression
+Date: Mon, 18 Aug 2025 14:47:47 +0200
+Message-ID: <20250818124505.496997091@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,37 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Lipski <ivan.lipski@amd.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 2d418e4fd9f1eca7dfce80de86dd702d36a06a25 upstream.
+commit 1df1fc845d221eb646539836dbf509eb96b41afd upstream.
 
-[Why & How]
-Not letting DCN301 to clear after surface/stream update results
-in artifacts when switching between active overlay planes. The issue
-is known and has been solved initially. See below:
-(https://gitlab.freedesktop.org/drm/amd/-/issues/3441)
+Commit 9e59d609763f ("md: call del_gendisk in control path") moves
+setting MD_DELETED from __mddev_put() to do_md_stop(), however, for the
+case create on open, mddev can be freed without do_md_stop():
 
-Fixes: f354556e29f4 ("drm/amd/display: limit clear_update_flags t dcn32 and above")
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+1) open
+
+md_probe
+ md_alloc_and_put
+  md_alloc
+   mddev_alloc
+   atomic_set(&mddev->active, 1);
+   mddev->hold_active = UNTIL_IOCTL
+  mddev_put
+   atomic_dec_and_test(&mddev->active)
+    if (mddev->hold_active)
+    -> active is 0, hold_active is set
+md_open
+ mddev_get
+  atomic_inc(&mddev->active);
+
+2) ioctl that is not STOP_ARRAY, for example, GET_ARRAY_INFO:
+
+md_ioctl
+ mddev->hold_active = 0
+
+3) close
+
+md_release
+ mddev_put(mddev);
+  atomic_dec_and_lock(&mddev->active, &all_mddevs_lock)
+  __mddev_put
+  -> hold_active is cleared, mddev will be freed
+  queue_work(md_misc_wq, &mddev->del_work)
+
+Now that MD_DELETED is not set, before mddev is freed by
+mddev_delayed_delete(), md_open can still succeed and break mddev
+lifetime, causing mddev->kobj refcount underflow or mddev uaf
+problem.
+
+Fix this problem by setting MD_DELETED before queuing del_work.
+
+Reported-by: syzbot+9921e319bd6168140b40@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68894408.a00a0220.26d0e1.0012.GAE@google.com/
+Reported-by: syzbot+fa3a12519f0d3fd4ec16@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68894408.a00a0220.26d0e1.0013.GAE@google.com/
+Fixes: 9e59d609763f ("md: call del_gendisk in control path")
+Link: https://lore.kernel.org/linux-raid/20250730073321.2583158-1-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Xiao Ni <xni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/md.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -5121,7 +5121,8 @@ bool dc_update_planes_and_stream(struct
- 	else
- 		ret = update_planes_and_stream_v2(dc, srf_updates,
- 			surface_count, stream, stream_update);
--	if (ret && dc->ctx->dce_version >= DCN_VERSION_3_2)
-+	if (ret && (dc->ctx->dce_version >= DCN_VERSION_3_2 ||
-+		dc->ctx->dce_version == DCN_VERSION_3_01))
- 		clear_update_flags(srf_updates, surface_count, stream);
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -620,6 +620,12 @@ static void __mddev_put(struct mddev *md
+ 		return;
  
- 	return ret;
+ 	/*
++	 * If array is freed by stopping array, MD_DELETED is set by
++	 * do_md_stop(), MD_DELETED is still set here in case mddev is freed
++	 * directly by closing a mddev that is created by create_on_open.
++	 */
++	set_bit(MD_DELETED, &mddev->flags);
++	/*
+ 	 * Call queue_work inside the spinlock so that flush_workqueue() after
+ 	 * mddev_find will succeed in waiting for the work to be done.
+ 	 */
 
 
