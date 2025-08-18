@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45407288C1F;
-	Mon, 18 Aug 2025 14:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC9E32A3EB;
+	Mon, 18 Aug 2025 14:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526177; cv=none; b=Fkrfd0KFUPhxqpdzgdPc9wg2h7BgO0Q4SS8Xv50nWnPHPgIFp0TZcj1wFJlUGkk80wVgDK8dVvEBS7bThL+FvIs2whLyErb30aiCrobQT/efnfpBzI68apyVz6nGiDFk1s2Ew5RiibybKhuAF0JltraIy63l8k8nLr3hak7ws0w=
+	t=1755526180; cv=none; b=Iiv4SjgzOmZHTMeWja0b8XS84hVjCssqG+1Y/rq52rkbImNZUooFl/qmGvvEzM+F4evt/q+zqSlIuRXiayNiyRgyJq2Znw0+m54vhcm+YFp0FztwBAqTXD38DddwfV5ynar7FmTcFgXbtVEmMWX/evYJnMTy8MJ/vzLVesSHFUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526177; c=relaxed/simple;
-	bh=ahsuBlpgvSvGeuuM0e9LV4+V/rYVVm6xYdGKhAsLpDg=;
+	s=arc-20240116; t=1755526180; c=relaxed/simple;
+	bh=kh7bsuNwWpxRz+nZbYYaWn2JTsEooSWYwkLEmbn9Kv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bzwfi6TjxDOS5Idl7VRmzHkhTMMLyAfUxcc9dPL2DVN0z6Ctn4arTJaXBUqXbmPGv6GgX6bTKoN50L3k0rPdN0MUSMiZ9sz+eYMYU/m51+/gHqrw1iCcPYZaOBiuctmgjW+Qv7saj4VW/OMYMRBpdkKNQz9ezwDyM5eRmyuHR4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozkwH3Rt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YZPVB9KF5HfStZB6PtecTlDNlrf5VmQd0YK90AfU7VUTofNLX6VMndO8TvCczNfRqL+qCQoTFJftWha7lwzRR7r1r071nnWcqTqLzDYinQjDuNFP4yYba9s+XZ8VULSLEcR6FP/9g3Q0c+WxGQgAamwmCNlhiENM8SMMDtDNLKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqIaYMWf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozkwH3Rt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB196C4CEEB;
-	Mon, 18 Aug 2025 14:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqIaYMWf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA12AC4CEEB;
+	Mon, 18 Aug 2025 14:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526177;
-	bh=ahsuBlpgvSvGeuuM0e9LV4+V/rYVVm6xYdGKhAsLpDg=;
+	s=korg; t=1755526180;
+	bh=kh7bsuNwWpxRz+nZbYYaWn2JTsEooSWYwkLEmbn9Kv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozkwH3RteAXWdWcyfvtG1HgVcWKcWm1qnVJ+MUOBQz02OBG3avhJWKTVKL0pik4gp
-	 pcvhk17o3VvGz07b2m9TeMFkcPN2bw8B2pYBFtz8ANzRlPma4smm9xEAw0KKiw9Y/H
-	 VQLwXR/NF3opadik5e0dXCVwFGNaCWeM1xmJNKoM=
+	b=FqIaYMWfuSj0J+wg36gL86QOHDGM32Q45Nsm85sksvU2jpGfo0SXWFCanBX4Y5HH0
+	 V2xiozglYYnMqS5HzEqD1wzt7pDA/8Yb8RUyPizq7DNqKywvV2VlyTSAB2c+T+O65j
+	 uQ6fRihwAZQJX+gnbRhe6dXQqf4POU11pJEYPRsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Maciej Patelczyk <maciej.patelczyk@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 479/570] drm/xe/migrate: prevent potential UAF
-Date: Mon, 18 Aug 2025 14:47:46 +0200
-Message-ID: <20250818124524.337467323@linuxfoundation.org>
+Subject: [PATCH 6.16 449/570] kheaders: rebuild kheaders_data.tar.xz when a file is modified within a minute
+Date: Mon, 18 Aug 2025 14:47:16 +0200
+Message-ID: <20250818124523.111195781@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -54,60 +50,246 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 145832fbdd17b1d77ffd6cdd1642259e101d1b7e ]
+[ Upstream commit 626c54af35764b0b8a4ed5c446458ba6ddfe9cc8 ]
 
-If we hit the error path, the previous fence (if there is one) has
-already been put() prior to this, so doing a fence_wait could lead to
-UAF. Tweak the flow to do to the put() until after we do the wait.
+When a header file is changed, kernel/gen_kheaders.sh may fail to update
+kernel/kheaders_data.tar.xz.
 
-Fixes: 270172f64b11 ("drm/xe: Update xe_ttm_access_memory to use GPU for non-visible access")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Maciej Patelczyk <maciej.patelczyk@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://lore.kernel.org/r/20250731093807.207572-8-matthew.auld@intel.com
-(cherry picked from commit 9b7ca35ed28fe5fad86e9d9c24ebd1271e4c9c3e)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[steps to reproduce]
+
+[1] Build kernel/kheaders_data.tar.xz
+
+  $ make -j$(nproc) kernel/kheaders.o
+    DESCEND objtool
+    INSTALL libsubcmd_headers
+    CALL    scripts/checksyscalls.sh
+    CHK     kernel/kheaders_data.tar.xz
+    GEN     kernel/kheaders_data.tar.xz
+    CC      kernel/kheaders.o
+
+[2] Modify a header without changing the file size
+
+  $ sed -i s/0xdeadbeef/0xfeedbeef/ include/linux/elfnote.h
+
+[3] Rebuild kernel/kheaders_data.tar.xz
+
+  $ make -j$(nproc) kernel/kheaders.o
+    DESCEND objtool
+    INSTALL libsubcmd_headers
+    CALL    scripts/checksyscalls.sh
+    CHK     kernel/kheaders_data.tar.xz
+
+kernel/kheaders_data.tar.xz is not updated if steps [1] - [3] are run
+within the same minute.
+
+The headers_md5 variable stores the MD5 hash of the 'ls -l' output
+for all header files. This hash value is used to determine whether
+kheaders_data.tar.xz needs to be rebuilt. However, 'ls -l' prints the
+modification times with minute-level granularity. If a file is modified
+within the same minute and its size remains the same, the MD5 hash does
+not change.
+
+To reliably detect file modifications, this commit rewrites
+kernel/gen_kheaders.sh to output header dependencies to
+kernel/.kheaders_data.tar.xz.cmd. Then, Make compares the timestamps
+and reruns kernel/gen_kheaders.sh when necessary. This is the standard
+mechanism used by Make and Kbuild.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_migrate.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/.gitignore      |  2 +
+ kernel/Makefile        | 47 ++++++++++++++++++---
+ kernel/gen_kheaders.sh | 94 ++++++++++--------------------------------
+ 3 files changed, 66 insertions(+), 77 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
-index 02c0a4a7372c..1e3fd139dfcb 100644
---- a/drivers/gpu/drm/xe/xe_migrate.c
-+++ b/drivers/gpu/drm/xe/xe_migrate.c
-@@ -1893,9 +1893,6 @@ int xe_migrate_access_memory(struct xe_migrate *m, struct xe_bo *bo,
- 			current_bytes = min_t(int, current_bytes, S16_MAX * pitch);
- 		}
+diff --git a/kernel/.gitignore b/kernel/.gitignore
+index c6b299a6b786..a501bfc80694 100644
+--- a/kernel/.gitignore
++++ b/kernel/.gitignore
+@@ -1,3 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ /config_data
+ /kheaders.md5
++/kheaders-objlist
++/kheaders-srclist
+diff --git a/kernel/Makefile b/kernel/Makefile
+index 32e80dd626af..9a9ff405ea89 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -158,11 +158,48 @@ filechk_cat = cat $<
+ $(obj)/config_data: $(KCONFIG_CONFIG) FORCE
+ 	$(call filechk,cat)
  
--		if (fence)
--			dma_fence_put(fence);
--
- 		__fence = xe_migrate_vram(m, current_bytes,
- 					  (unsigned long)buf & ~PAGE_MASK,
- 					  dma_addr + current_page,
-@@ -1903,11 +1900,15 @@ int xe_migrate_access_memory(struct xe_migrate *m, struct xe_bo *bo,
- 					  XE_MIGRATE_COPY_TO_VRAM :
- 					  XE_MIGRATE_COPY_TO_SRAM);
- 		if (IS_ERR(__fence)) {
--			if (fence)
-+			if (fence) {
- 				dma_fence_wait(fence, false);
-+				dma_fence_put(fence);
-+			}
- 			fence = __fence;
- 			goto out_err;
- 		}
++# kheaders_data.tar.xz
+ $(obj)/kheaders.o: $(obj)/kheaders_data.tar.xz
+ 
+-quiet_cmd_genikh = CHK     $(obj)/kheaders_data.tar.xz
+-      cmd_genikh = $(CONFIG_SHELL) $(srctree)/kernel/gen_kheaders.sh $@
+-$(obj)/kheaders_data.tar.xz: FORCE
+-	$(call cmd,genikh)
++quiet_cmd_kheaders_data = GEN     $@
++      cmd_kheaders_data = "$<" "$@" "$(obj)/kheaders-srclist" "$(obj)/kheaders-objlist"
++      cmd_kheaders_data_dep = cat $(depfile) >> $(dot-target).cmd; rm -f $(depfile)
+ 
+-clean-files := kheaders_data.tar.xz kheaders.md5
++define rule_kheaders_data
++	$(call cmd_and_savecmd,kheaders_data)
++	$(call cmd,kheaders_data_dep)
++endef
 +
-+		dma_fence_put(fence);
- 		fence = __fence;
++targets += kheaders_data.tar.xz
++$(obj)/kheaders_data.tar.xz: $(src)/gen_kheaders.sh $(obj)/kheaders-srclist $(obj)/kheaders-objlist $(obj)/kheaders.md5 FORCE
++	$(call if_changed_rule,kheaders_data)
++
++# generated headers in objtree
++#
++# include/generated/utsversion.h is ignored because it is generated
++# after gen_kheaders.sh is executed. (utsversion.h is unneeded for kheaders)
++filechk_kheaders_objlist = \
++	for d in include "arch/$(SRCARCH)/include"; do \
++		find "$${d}/generated" ! -path "include/generated/utsversion.h" -a -name "*.h" -print; \
++	done
++
++$(obj)/kheaders-objlist: FORCE
++	$(call filechk,kheaders_objlist)
++
++# non-generated headers in srctree
++filechk_kheaders_srclist = \
++	for d in include "arch/$(SRCARCH)/include"; do \
++		find "$(srctree)/$${d}" -path "$(srctree)/$${d}/generated" -prune -o -name "*.h" -print; \
++	done
++
++$(obj)/kheaders-srclist: FORCE
++	$(call filechk,kheaders_srclist)
++
++# Some files are symlinks. If symlinks are changed, kheaders_data.tar.xz should
++# be rebuilt.
++filechk_kheaders_md5sum = xargs -r -a $< stat -c %N | md5sum
++
++$(obj)/kheaders.md5: $(obj)/kheaders-srclist FORCE
++	$(call filechk,kheaders_md5sum)
++
++clean-files := kheaders.md5 kheaders-srclist kheaders-objlist
+diff --git a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
+index c9e5dc068e85..0ff7beabb21a 100755
+--- a/kernel/gen_kheaders.sh
++++ b/kernel/gen_kheaders.sh
+@@ -4,79 +4,33 @@
+ # This script generates an archive consisting of kernel headers
+ # for CONFIG_IKHEADERS.
+ set -e
+-sfile="$(readlink -f "$0")"
+-outdir="$(pwd)"
+ tarfile=$1
+-tmpdir=$outdir/${tarfile%/*}/.tmp_dir
+-
+-dir_list="
+-include/
+-arch/$SRCARCH/include/
+-"
+-
+-# Support incremental builds by skipping archive generation
+-# if timestamps of files being archived are not changed.
+-
+-# This block is useful for debugging the incremental builds.
+-# Uncomment it for debugging.
+-# if [ ! -f /tmp/iter ]; then iter=1; echo 1 > /tmp/iter;
+-# else iter=$(($(cat /tmp/iter) + 1)); echo $iter > /tmp/iter; fi
+-# find $all_dirs -name "*.h" | xargs ls -l > /tmp/ls-$iter
+-
+-all_dirs=
+-if [ "$building_out_of_srctree" ]; then
+-	for d in $dir_list; do
+-		all_dirs="$all_dirs $srctree/$d"
+-	done
+-fi
+-all_dirs="$all_dirs $dir_list"
+-
+-# include/generated/utsversion.h is ignored because it is generated after this
+-# script is executed. (utsversion.h is unneeded for kheaders)
+-#
+-# When Kconfig regenerates include/generated/autoconf.h, its timestamp is
+-# updated, but the contents might be still the same. When any CONFIG option is
+-# changed, Kconfig touches the corresponding timestamp file include/config/*.
+-# Hence, the md5sum detects the configuration change anyway. We do not need to
+-# check include/generated/autoconf.h explicitly.
+-#
+-# Ignore them for md5 calculation to avoid pointless regeneration.
+-headers_md5="$(find $all_dirs -name "*.h" -a			\
+-		! -path include/generated/utsversion.h -a	\
+-		! -path include/generated/autoconf.h		|
+-		xargs ls -l | md5sum | cut -d ' ' -f1)"
+-
+-# Any changes to this script will also cause a rebuild of the archive.
+-this_file_md5="$(ls -l $sfile | md5sum | cut -d ' ' -f1)"
+-if [ -f $tarfile ]; then tarfile_md5="$(md5sum $tarfile | cut -d ' ' -f1)"; fi
+-if [ -f kernel/kheaders.md5 ] &&
+-	[ "$(head -n 1 kernel/kheaders.md5)" = "$headers_md5" ] &&
+-	[ "$(head -n 2 kernel/kheaders.md5 | tail -n 1)" = "$this_file_md5" ] &&
+-	[ "$(tail -n 1 kernel/kheaders.md5)" = "$tarfile_md5" ]; then
+-		exit
+-fi
+-
+-echo "  GEN     $tarfile"
++srclist=$2
++objlist=$3
++
++dir=$(dirname "${tarfile}")
++tmpdir=${dir}/.tmp_dir
++depfile=${dir}/.$(basename "${tarfile}").d
++
++# generate dependency list.
++{
++	echo
++	echo "deps_${tarfile} := \\"
++	sed 's:\(.*\):  \1 \\:' "${srclist}"
++	sed -n '/^include\/generated\/autoconf\.h$/!s:\(.*\):  \1 \\:p' "${objlist}"
++	echo
++	echo "${tarfile}: \$(deps_${tarfile})"
++	echo
++	echo "\$(deps_${tarfile}):"
++
++} > "${depfile}"
  
- 		buf += current_bytes;
+ rm -rf "${tmpdir}"
+ mkdir "${tmpdir}"
+ 
+-if [ "$building_out_of_srctree" ]; then
+-	(
+-		cd $srctree
+-		for f in $dir_list
+-			do find "$f" -name "*.h";
+-		done | tar -c -f - -T - | tar -xf - -C "${tmpdir}"
+-	)
+-fi
+-
+-for f in $dir_list;
+-	do find "$f" -name "*.h";
+-done | tar -c -f - -T - | tar -xf - -C "${tmpdir}"
+-
+-# Always exclude include/generated/utsversion.h
+-# Otherwise, the contents of the tarball may vary depending on the build steps.
+-rm -f "${tmpdir}/include/generated/utsversion.h"
++# shellcheck disable=SC2154 # srctree is passed as an env variable
++sed "s:^${srctree}/::" "${srclist}" | tar -c -f - -C "${srctree}" -T - | tar -xf - -C "${tmpdir}"
++tar -c -f - -T "${objlist}" | tar -xf - -C "${tmpdir}"
+ 
+ # Remove comments except SDPX lines
+ # Use a temporary file to store directory contents to prevent find/xargs from
+@@ -92,8 +46,4 @@ tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
+     --owner=0 --group=0 --sort=name --numeric-owner --mode=u=rw,go=r,a+X \
+     -I $XZ -cf $tarfile -C "${tmpdir}/" . > /dev/null
+ 
+-echo $headers_md5 > kernel/kheaders.md5
+-echo "$this_file_md5" >> kernel/kheaders.md5
+-echo "$(md5sum $tarfile | cut -d ' ' -f1)" >> kernel/kheaders.md5
+-
+ rm -rf "${tmpdir}"
 -- 
-2.50.1
+2.39.5
 
 
 
