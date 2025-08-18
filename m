@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14F5322A1A;
-	Mon, 18 Aug 2025 14:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5C8322A37;
+	Mon, 18 Aug 2025 14:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526104; cv=none; b=IyEGiAdqgZik6luZcRU6duFGf/EgUoZoa/rRms9y3udqnWPbRzky5e4dMaTvMH+82da6BS3Fq2i0QjUV/iMBy4Ld7TOSN783CUQa3oVwX7ClbKeKg4EbYSUCX37bgoyil7EbNK/CNOCAmceiUmdWc9Zt+KZqp+i7OVRC+RLj5nE=
+	t=1755526108; cv=none; b=M/Agt4c5UF5Kwoagp6aHzJco8We6Ix4LY1rKWZdujac3GGHTdespZfehSld0CNzNvFweixXrZ2Hu7rV2PaO+y9HVv6J3OsQNJcuj0qxHol05uEjWKdXdaIuS37DzJvUQmN+TfEFjGAx/1cB9EUYY0Kv6bMat2dX1nApiRaXVpBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526104; c=relaxed/simple;
-	bh=NejPIpGfctKCodSnhHpFTXqEKhZj/FbqT2iiodajsDM=;
+	s=arc-20240116; t=1755526108; c=relaxed/simple;
+	bh=kj5CHvj6FCSiz3ogt34t4yOS1YSj64iDgZPQJ9Gs9/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plbNKY8IraxupWQUtACvNShEiBsqEpjzrqy+eQgutj6bwqWG3Qc8Z48l0/DOlP8joCGT8v9GnOEwkIoC+A2tcz2QtiH+L2BABYCUBBvblrbOzzJNp0aTRZfGAKdY4RqoSoCI09e0Bn2yYtbTpyph9RMcBhG7ZmD4tZ7sx7OGK3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiQWr9pl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HwRGKhPBQGqcvqjPspznSM2HRIv2vE1zJ/khA3w6ZeJUP7mQIywrwdtBOhCwTAlLqXAbw51RjVmS/f/WOMAaWthBvBdfLVzE3Jqe/9KIBITSba6pGHMtdeP/USiXsy2lmcy4aOARr8AbVGd23b07cNLOLBNHll1t211MVvDuRoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BacuxlVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiQWr9pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31914C4CEEB;
-	Mon, 18 Aug 2025 14:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BacuxlVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760D9C4CEEB;
+	Mon, 18 Aug 2025 14:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526104;
-	bh=NejPIpGfctKCodSnhHpFTXqEKhZj/FbqT2iiodajsDM=;
+	s=korg; t=1755526108;
+	bh=kj5CHvj6FCSiz3ogt34t4yOS1YSj64iDgZPQJ9Gs9/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiQWr9plCMEU8gY3TytBudJFI2AlgFWPuQ9H+nABj5MYk6pPZv4IXnZPfVHGdesn6
-	 Jq9ae6/iDaETCrlWrva3PQonPvXNx1T4uC0fkTIbkA08fSBwAUhVLf7xLe+w2LJlue
-	 2dghzp7wQ0gH25DG83cSOgA3LKjLPnIo7ODxFedg=
+	b=BacuxlVshyqB6USE+JyoZHdCutgFx/fO/ACZ7jrJ0w9de2aC0X9z0x3NxR9GdtS5X
+	 YalYPK0D6umB1cGt3xH4mBYAxeeMQCxlyRjtBXX+DYG6ZVg+w8IhV9rngTz5jdY1Gi
+	 AQT+lw2kNkyhU0QCad5Zjddv6fHqfyAiHt796ZHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Mark Brown <broonie@kernel.org>,
+	Buday Csaba <buday.csaba@prolan.hu>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s=20Bence?= <csokas.bence@prolan.hu>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 460/570] regmap: irq: Free the regmap-irq mutex
-Date: Mon, 18 Aug 2025 14:47:27 +0200
-Message-ID: <20250818124523.581582722@linuxfoundation.org>
+Subject: [PATCH 6.16 461/570] net: phy: smsc: add proper reset flags for LAN8710A
+Date: Mon, 18 Aug 2025 14:47:28 +0200
+Message-ID: <20250818124523.622258281@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -45,121 +47,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Buday Csaba <buday.csaba@prolan.hu>
 
-[ Upstream commit 1da33858af6250184d2ef907494d698af03283de ]
+[ Upstream commit 57ec5a8735dc5dccd1ee68afdb1114956a3fce0d ]
 
-We do not currently free the mutex allocated by regmap-irq, do so.
+According to the LAN8710A datasheet (Rev. B, section 3.8.5.1), a hardware
+reset is required after power-on, and the reference clock (REF_CLK) must be
+established before asserting reset.
 
-Tested-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250731-regmap-irq-nesting-v1-1-98b4d1bf20f0@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Buday Csaba <buday.csaba@prolan.hu>
+Cc: Csókás Bence <csokas.bence@prolan.hu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250728152916.46249-2-csokas.bence@prolan.hu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-irq.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/net/phy/smsc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
-index d1585f073776..4aac12d38215 100644
---- a/drivers/base/regmap/regmap-irq.c
-+++ b/drivers/base/regmap/regmap-irq.c
-@@ -816,7 +816,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 						     d->mask_buf[i],
- 						     chip->irq_drv_data);
- 			if (ret)
--				goto err_alloc;
-+				goto err_mutex;
- 		}
+diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
+index b6489da5cfcd..48487149c225 100644
+--- a/drivers/net/phy/smsc.c
++++ b/drivers/net/phy/smsc.c
+@@ -785,6 +785,7 @@ static struct phy_driver smsc_phy_driver[] = {
  
- 		if (chip->mask_base && !chip->handle_mask_sync) {
-@@ -827,7 +827,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 			if (ret) {
- 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
- 					reg, ret);
--				goto err_alloc;
-+				goto err_mutex;
- 			}
- 		}
+ 	/* PHY_BASIC_FEATURES */
  
-@@ -838,7 +838,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 			if (ret) {
- 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
- 					reg, ret);
--				goto err_alloc;
-+				goto err_mutex;
- 			}
- 		}
++	.flags		= PHY_RST_AFTER_CLK_EN,
+ 	.probe		= smsc_phy_probe,
  
-@@ -855,7 +855,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 			if (ret != 0) {
- 				dev_err(map->dev, "Failed to read IRQ status: %d\n",
- 					ret);
--				goto err_alloc;
-+				goto err_mutex;
- 			}
- 		}
- 
-@@ -879,7 +879,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 			if (ret != 0) {
- 				dev_err(map->dev, "Failed to ack 0x%x: %d\n",
- 					reg, ret);
--				goto err_alloc;
-+				goto err_mutex;
- 			}
- 		}
- 	}
-@@ -901,7 +901,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 			if (ret != 0) {
- 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
- 					reg, ret);
--				goto err_alloc;
-+				goto err_mutex;
- 			}
- 		}
- 	}
-@@ -910,7 +910,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 	if (chip->status_is_level) {
- 		ret = read_irq_data(d);
- 		if (ret < 0)
--			goto err_alloc;
-+			goto err_mutex;
- 
- 		memcpy(d->prev_status_buf, d->status_buf,
- 		       array_size(d->chip->num_regs, sizeof(d->prev_status_buf[0])));
-@@ -918,7 +918,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 
- 	ret = regmap_irq_create_domain(fwnode, irq_base, chip, d);
- 	if (ret)
--		goto err_alloc;
-+		goto err_mutex;
- 
- 	ret = request_threaded_irq(irq, NULL, regmap_irq_thread,
- 				   irq_flags | IRQF_ONESHOT,
-@@ -935,6 +935,8 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 
- err_domain:
- 	/* Should really dispose of the domain but... */
-+err_mutex:
-+	mutex_destroy(&d->lock);
- err_alloc:
- 	kfree(d->type_buf);
- 	kfree(d->type_buf_def);
-@@ -1027,6 +1029,7 @@ void regmap_del_irq_chip(int irq, struct regmap_irq_chip_data *d)
- 			kfree(d->config_buf[i]);
- 		kfree(d->config_buf);
- 	}
-+	mutex_destroy(&d->lock);
- 	kfree(d);
- }
- EXPORT_SYMBOL_GPL(regmap_del_irq_chip);
+ 	/* basic functions */
 -- 
 2.39.5
 
