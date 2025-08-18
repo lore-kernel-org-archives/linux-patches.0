@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83DE3218B8;
-	Mon, 18 Aug 2025 12:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376C03218B8;
+	Mon, 18 Aug 2025 12:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521813; cv=none; b=BX4xjGLQh2rO3SOjg3nDySPzsTiBpo67PVIYV1GQk/pyHVDmSRHLVv7zREejZXknoL39hKdtosa33V7nYskGtRykG2Do4IB50qwV9+XW1dmL4FXgQMNPYnvlCdvbSzw8ViKYZvovWQebAs9XazsoXvOcMz2Nw1T8/O8s9mjONCE=
+	t=1755521816; cv=none; b=OzGxrddqbDqVhB3mMXhfh7qt9zHjgGxHKeehN0f9hSTXYJCVbqNYM/XPeSi15gBxYL5uelT5xih6T2YIal1a1ACBBdqcnAFXbegW8x0K1xWg6aG+Yi1Y7R7cYjdL5v78VFKVsnZJc0J86Vap45ZQ58DNVoauh7yKEM6fQifkiEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521813; c=relaxed/simple;
-	bh=DdPO/lEilgQ3Qbc1zhriTREw1ESSQ+4LwzfzoZrWcqM=;
+	s=arc-20240116; t=1755521816; c=relaxed/simple;
+	bh=NwTu1Ao2PpbNzZ8WOS9nL8R5mKjzt9QuMQEDU3jo18Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/vq7hsCrzECHV5rH6bxHW+wVPCLWzbWIGiRQ4yrBvdn/8UsYpjWpQeEt7k8fEEWIycqm9+YwoB3anBtzhFx9wYdjuIHaxqB1L5qCuPv0aZd2jUlMrpFSSxtenP/3fZKJ8qu44FuOq7IyHeoxxcQp+75XYUftpqWkb0y4eQY21w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7ZF41XP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kl/WzUWBR4YkioKI5wW77kZoNmxEq+TulenDDyWpySybmNgkvdyt2s7A57Yw/TBZbvOzWNbBJA3PzsnwQa0aVFHCcTXL4LIPVG5Z7h60f4zmzsGrvEsKumySoF8sl3TYdLa7jecOhJ+ISMPMFjN69MziKigtG+yyhViHyBvsSQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciT9IR2w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7ZF41XP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEB3C4CEEB;
-	Mon, 18 Aug 2025 12:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciT9IR2w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E91C4CEEB;
+	Mon, 18 Aug 2025 12:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521812;
-	bh=DdPO/lEilgQ3Qbc1zhriTREw1ESSQ+4LwzfzoZrWcqM=;
+	s=korg; t=1755521816;
+	bh=NwTu1Ao2PpbNzZ8WOS9nL8R5mKjzt9QuMQEDU3jo18Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X7ZF41XPfOVViXb6JfCynuXqFEZkdwwzS5GcOZjg6pIl1AsXhysZ0FHyTYfoHJuXP
-	 2v5II9W2efl9LQgmIrRy9ZzSmX0lA/WgadjIMfyHZbi+q0Rj3R2eUmFvLXBewRwWZz
-	 WMBIbCsxxf8B0jOD6e3wiv2hCzey6WPQI8xzGGi0=
+	b=ciT9IR2wwe/hccEg7pCOIPT6w4bCFKtnv7ZyLb+yVgdeknpV1KnJCpfLG9UxVxnZm
+	 94rMHMrLWYkG2K1k98laTZvoCwYEaU/cZR84fWeYgH+STrztSylFw/SvzY8FN2Ddki
+	 5M8dLC2m71R+ZNrMkEv3fbQBsjmKIby+/UPC+f1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kochetkov <al.kochet@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sebastian Ott <sebott@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/444] ARM: rockchip: fix kernel hang during smp initialization
-Date: Mon, 18 Aug 2025 14:42:18 +0200
-Message-ID: <20250818124453.130978158@linuxfoundation.org>
+Subject: [PATCH 6.12 130/444] ACPI: processor: fix acpi_object initialization
+Date: Mon, 18 Aug 2025 14:42:36 +0200
+Message-ID: <20250818124453.791513605@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,68 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Kochetkov <al.kochet@gmail.com>
+From: Sebastian Ott <sebott@redhat.com>
 
-[ Upstream commit 7cdb433bb44cdc87dc5260cdf15bf03cc1cd1814 ]
+[ Upstream commit 13edf7539211d8f7d0068ce3ed143005f1da3547 ]
 
-In order to bring up secondary CPUs main CPU write trampoline
-code to SRAM. The trampoline code is written while secondary
-CPUs are powered on (at least that true for RK3188 CPU).
-Sometimes that leads to kernel hang. Probably because secondary
-CPU execute trampoline code while kernel doesn't expect.
+Initialization of the local acpi_object in acpi_processor_get_info()
+only sets the first 4 bytes to zero and is thus incomplete. This is
+indicated by messages like:
+	acpi ACPI0007:be: Invalid PBLK length [166288104]
 
-The patch moves SRAM initialization step to the point where all
-secondary CPUs are powered down.
+Fix this by initializing all 16 bytes of the processor member of that
+union.
 
-That fixes rarely hangs on RK3188:
-[    0.091568] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
-[    0.091996] rockchip_smp_prepare_cpus: ncores 4
-
-Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
-Link: https://lore.kernel.org/r/20250703140453.1273027-1-al.kochet@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Link: https://patch.msgid.link/20250703124215.12522-1-sebott@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-rockchip/platsmp.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/acpi/acpi_processor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-rockchip/platsmp.c b/arch/arm/mach-rockchip/platsmp.c
-index 36915a073c23..f432d22bfed8 100644
---- a/arch/arm/mach-rockchip/platsmp.c
-+++ b/arch/arm/mach-rockchip/platsmp.c
-@@ -279,11 +279,6 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
- 	}
+diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
+index 7cf6101cb4c7..2a99f5eb6962 100644
+--- a/drivers/acpi/acpi_processor.c
++++ b/drivers/acpi/acpi_processor.c
+@@ -275,7 +275,7 @@ static inline int acpi_processor_hotadd_init(struct acpi_processor *pr,
  
- 	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
--		if (rockchip_smp_prepare_sram(node)) {
--			of_node_put(node);
--			return;
--		}
--
- 		/* enable the SCU power domain */
- 		pmu_set_power_domain(PMU_PWRDN_SCU, true);
- 
-@@ -316,11 +311,19 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
- 		asm ("mrc p15, 1, %0, c9, c0, 2\n" : "=r" (l2ctlr));
- 		ncores = ((l2ctlr >> 24) & 0x3) + 1;
- 	}
--	of_node_put(node);
- 
- 	/* Make sure that all cores except the first are really off */
- 	for (i = 1; i < ncores; i++)
- 		pmu_set_power_domain(0 + i, false);
-+
-+	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
-+		if (rockchip_smp_prepare_sram(node)) {
-+			of_node_put(node);
-+			return;
-+		}
-+	}
-+
-+	of_node_put(node);
- }
- 
- static void __init rk3036_smp_prepare_cpus(unsigned int max_cpus)
+ static int acpi_processor_get_info(struct acpi_device *device)
+ {
+-	union acpi_object object = { 0 };
++	union acpi_object object = { .processor = { 0 } };
+ 	struct acpi_buffer buffer = { sizeof(union acpi_object), &object };
+ 	struct acpi_processor *pr = acpi_driver_data(device);
+ 	int device_declaration = 0;
 -- 
 2.39.5
 
