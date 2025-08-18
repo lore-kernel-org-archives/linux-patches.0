@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9D9310640;
-	Mon, 18 Aug 2025 12:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D75631076A;
+	Mon, 18 Aug 2025 12:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521459; cv=none; b=NrdG/BUewT+DItrbh/oy1I6lbtQCP+dkNZ2vKGqDY09EPuvR1JhKLCJB75WpkWV3ZOA+KZvBj6wH7ZLWxM48LNKmQoyhdDoVzXE13jA7T7fW6xEk+zHbhd9BWLYGUp7mHXrD+QN6X9oLHx/zErbm8l0OrQZ2uuRez1zsdNfrA8k=
+	t=1755521462; cv=none; b=AESNo4bMJxG80JT0wI4vTbCJr2PLONKo8dfZ6HxTVKo2vIcrXW9FKGtjWw6ybJAzf4ZVhoXGB4L1VhUmQa8nPIHCKJgpBfzJaa/G+6kntZLBdANecD55E72wwqi6wDc/MbMnL7TW/wSsUeGDITIyBnEG8Wq1dAZ9vg8r3dIq+b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521459; c=relaxed/simple;
-	bh=bL6amZkqR3Bx+gQyH/iOyx+kxN3Oj2L5Lksh6LWSm4g=;
+	s=arc-20240116; t=1755521462; c=relaxed/simple;
+	bh=OLUHCM4k4tH1pphi4ueX3+3dnuCwrJw84IRyF+taO4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEohbc2xl4jhya3Gu2hQoTaHiwuO7t4kop5SAjUHtJZjUnoIPkGtBovoXhPVUt5cuOVLyG79oU7KVWKsjYUAg6dFuvHfyrGGhR4SshvxMQ1HLyUoHR9ctQz7i+yqCOyd+HkW5WYEx+cFa3xydmwpqUJlwv6IV0pwKABHkkTv9L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXEC+Wno; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0Z3TigQATzBweBc0pk44fe6jjPWS6P5zhR8tPE4loZcP7fQBEwMkhI6VAfeD6ZcGgmVaB7UH/ijF+SKTv/0kVWoa9GzEVgHk0dBW55FZeEHW7SuJ6t03gZl+NxG4vM7ZpWm6w+afuBR4njY3q70wv4/6u5TtPiflE0Ic9d9LVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgRvjDrD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXEC+Wno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86B5C4CEEB;
-	Mon, 18 Aug 2025 12:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgRvjDrD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA07BC4CEF1;
+	Mon, 18 Aug 2025 12:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521459;
-	bh=bL6amZkqR3Bx+gQyH/iOyx+kxN3Oj2L5Lksh6LWSm4g=;
+	s=korg; t=1755521462;
+	bh=OLUHCM4k4tH1pphi4ueX3+3dnuCwrJw84IRyF+taO4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXEC+Wnoe8S42Lnwmxi59gUOEufl0QoZLT7JiUx92oM7FPbUVUTgCeTy/FBBMYdN0
-	 M/l+dzMRegO5ePpbeU6NflIDf2ZudPvuAiPRXzMDyyswsBNE5r3/zOt/B5E4p2ifZW
-	 YscL6rahXcA1o9utz4jd/2+0yA8YFCYkftYkMdSg=
+	b=fgRvjDrDbGZz1mFd/UvCiA+yAApy/MS3tSeYis9Hm3UOgNF+A8qZJ73tSsRtaCa8a
+	 jQbhC73Uv+3JOJM5fatgEAMQKOVwr9hzPUtgiEK09NqSSaW7WSqvO6cL/bh+Afw4gI
+	 UItP/o1ioWUYfjDiX/4ujRxgmRnUQNpMqgOKvvp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.12 026/444] PCI: Extend isolated function probing to LoongArch
-Date: Mon, 18 Aug 2025 14:40:52 +0200
-Message-ID: <20250818124449.915220388@linuxfoundation.org>
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Haoran Jiang <jianghaoran@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 027/444] LoongArch: BPF: Fix jump offset calculation in tailcall
+Date: Mon, 18 Aug 2025 14:40:53 +0200
+Message-ID: <20250818124449.950112137@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -50,41 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Haoran Jiang <jianghaoran@kylinos.cn>
 
-commit a02fd05661d73a8507dd70dd820e9b984490c545 upstream.
+commit cd39d9e6b7e4c58fa77783e7aedf7ada51d02ea3 upstream.
 
-Like s390 and the jailhouse hypervisor, LoongArch's PCI architecture allows
-passing isolated PCI functions to a guest OS instance. So it is possible
-that there is a multi-function device without function 0 for the host or
-guest.
+The extra pass of bpf_int_jit_compile() skips JIT context initialization
+which essentially skips offset calculation leaving out_offset = -1, so
+the jmp_offset in emit_bpf_tail_call is calculated by
 
-Allow probing such functions by adding a IS_ENABLED(CONFIG_LOONGARCH) case
-in the hypervisor_isolated_pci_functions() helper.
+"#define jmp_offset (out_offset - (cur_offset))"
 
-This is similar to commit 189c6c33ff42 ("PCI: Extend isolated function
-probing to s390").
+is a negative number, which is wrong. The final generated assembly are
+as follow.
 
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+54:	bgeu        	$a2, $t1, -8	    # 0x0000004c
+58:	addi.d      	$a6, $s5, -1
+5c:	bltz        	$a6, -16	    # 0x0000004c
+60:	alsl.d      	$t2, $a2, $a1, 0x3
+64:	ld.d        	$t2, $t2, 264
+68:	beq         	$t2, $zero, -28	    # 0x0000004c
+
+Before apply this patch, the follow test case will reveal soft lock issues.
+
+cd tools/testing/selftests/bpf/
+./test_progs --allow=tailcalls/tailcall_bpf2bpf_1
+
+dmesg:
+watchdog: BUG: soft lockup - CPU#2 stuck for 26s! [test_progs:25056]
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250624062927.4037734-1-chenhuacai@loongson.cn
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Reviewed-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Haoran Jiang <jianghaoran@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hypervisor.h |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/net/bpf_jit.c |   21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
---- a/include/linux/hypervisor.h
-+++ b/include/linux/hypervisor.h
-@@ -37,6 +37,9 @@ static inline bool hypervisor_isolated_p
- 	if (IS_ENABLED(CONFIG_S390))
- 		return true;
- 
-+	if (IS_ENABLED(CONFIG_LOONGARCH))
-+		return true;
-+
- 	return jailhouse_paravirt();
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -208,11 +208,9 @@ bool bpf_jit_supports_far_kfunc_call(voi
+ 	return true;
  }
+ 
+-/* initialized on the first pass of build_body() */
+-static int out_offset = -1;
+-static int emit_bpf_tail_call(struct jit_ctx *ctx)
++static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
+ {
+-	int off;
++	int off, tc_ninsn = 0;
+ 	u8 tcc = tail_call_reg(ctx);
+ 	u8 a1 = LOONGARCH_GPR_A1;
+ 	u8 a2 = LOONGARCH_GPR_A2;
+@@ -222,7 +220,7 @@ static int emit_bpf_tail_call(struct jit
+ 	const int idx0 = ctx->idx;
+ 
+ #define cur_offset (ctx->idx - idx0)
+-#define jmp_offset (out_offset - (cur_offset))
++#define jmp_offset (tc_ninsn - (cur_offset))
+ 
+ 	/*
+ 	 * a0: &ctx
+@@ -232,6 +230,7 @@ static int emit_bpf_tail_call(struct jit
+ 	 * if (index >= array->map.max_entries)
+ 	 *	 goto out;
+ 	 */
++	tc_ninsn = insn ? ctx->offset[insn+1] - ctx->offset[insn] : ctx->offset[0];
+ 	off = offsetof(struct bpf_array, map.max_entries);
+ 	emit_insn(ctx, ldwu, t1, a1, off);
+ 	/* bgeu $a2, $t1, jmp_offset */
+@@ -263,15 +262,6 @@ static int emit_bpf_tail_call(struct jit
+ 	emit_insn(ctx, ldd, t3, t2, off);
+ 	__build_epilogue(ctx, true);
+ 
+-	/* out: */
+-	if (out_offset == -1)
+-		out_offset = cur_offset;
+-	if (cur_offset != out_offset) {
+-		pr_err_once("tail_call out_offset = %d, expected %d!\n",
+-			    cur_offset, out_offset);
+-		return -1;
+-	}
+-
+ 	return 0;
+ 
+ toofar:
+@@ -916,7 +906,7 @@ static int build_insn(const struct bpf_i
+ 	/* tail call */
+ 	case BPF_JMP | BPF_TAIL_CALL:
+ 		mark_tail_call(ctx);
+-		if (emit_bpf_tail_call(ctx) < 0)
++		if (emit_bpf_tail_call(ctx, i) < 0)
+ 			return -EINVAL;
+ 		break;
+ 
+@@ -1342,7 +1332,6 @@ out:
+ 	if (tmp_blinded)
+ 		bpf_jit_prog_release_other(prog, prog == orig_prog ? tmp : orig_prog);
+ 
+-	out_offset = -1;
+ 
+ 	return prog;
  
 
 
