@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B90C21FF5D;
-	Mon, 18 Aug 2025 13:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10082206B8;
+	Mon, 18 Aug 2025 13:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524354; cv=none; b=QY5D79n/2XGJeTIp+kt/W7pRdrZHmp+WFQKhwkFhtzQoS8dVRGSoJiOj9r12A3o7AzW6E/1uFUfVGmUJB0nLk1LM4XcgfJUxkZVF8L6Branbp12HW4NB8O2VRtbpXBOyTuaKyi5zNVsPKl4zsdlktvXRfgwFDNBt1OaHBwayszI=
+	t=1755524357; cv=none; b=GWQDyVbfcesc7quxohnNpXjf9RUw+b6QZos43X1GZc8XeGH7m8xzLhZkEZKvy5hKQ/Z9iKF/rHLHkH3SUdsijzD+o+53Qa5lafJAyVL2iFVD6yIKYROaniHv7XPPGosJXYG53hV+OOedhmk0wLtasD3/QH8OprOzBqsVQysS8so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524354; c=relaxed/simple;
-	bh=wCM+W3PCx6jIoUtwzyQYHTU5UA3w+YzMoNPyk5KcRn0=;
+	s=arc-20240116; t=1755524357; c=relaxed/simple;
+	bh=sioq3D3fScmodQRnCHc+4f1BuDN9wmLbQtJGA+8LXak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UUz9QNjg/lRFz5xaopPCfzLmUv7XmSZOhkJATOpO4B+qcXV4wnv2LORt6HsVlnC0+5PfRhtsL7vZHyLj/r2Gl7D3OL0181blWlJDlAq5ZEz5DmPqxu5/saSt2GFzXcalXf+j9VyEXXY+JHztdkgg9nEIJ4gCBM1v1Z5Aq7Z3zJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhID4EVs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VVAMEJ8WD1IqOr066YE1hn3b/Cal+X/rVA6TGBMa0VxFroWXdaBb/Vea0jFUBdxRgeLIcG0iep5fVqmKFh2ogfCAkukAtGBtw4AdAYxu+CblepKYrGhyiOp16gfxcSw0qoWRANDtBG27GIfxSFZdcjWB0cF7KrpEUlgz4kbha0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TY3Ik3B3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhID4EVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8B1C4CEF1;
-	Mon, 18 Aug 2025 13:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TY3Ik3B3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F139C4CEF1;
+	Mon, 18 Aug 2025 13:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524354;
-	bh=wCM+W3PCx6jIoUtwzyQYHTU5UA3w+YzMoNPyk5KcRn0=;
+	s=korg; t=1755524357;
+	bh=sioq3D3fScmodQRnCHc+4f1BuDN9wmLbQtJGA+8LXak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhID4EVsuHayqsoBldks2t/uqjjIDz7CruCx+9yfRlkgkRULpZRq/bLMFGV3CzbDm
-	 icQmDHqdzYaM4AfCJZhLQJ5QFl5SqEywO1qr6zTIwb5cmEuvdVnZswtUzxca0Mm/Yz
-	 DTiruqC8WMoeOhpOEv+8yWL/oUkfMi5AaoikCbLE=
+	b=TY3Ik3B30Bd5uxQqKId2WJxY1WMYhiZnIY4TWcye0XLtuzFpNrNIUnKoZose1Hm8j
+	 6AiPri5dcR390LIMccitRMkc/O4jf+1Ylt8Bh9qvdGnSr844Dn1w7Ms8VFSMNcuj1l
+	 N0V8BGzNInPpsJiv47XqHW+LqE4LRfGaodgs65Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.15 447/515] cifs: reset iface weights when we cannot find a candidate
-Date: Mon, 18 Aug 2025 14:47:13 +0200
-Message-ID: <20250818124515.632440947@linuxfoundation.org>
+	Ioanna Alifieraki <ioanna-maria.alifieraki@canonical.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.15 448/515] iommu/vt-d: Optimize iotlb_sync_map for non-caching/non-RWBF modes
+Date: Mon, 18 Aug 2025 14:47:14 +0200
+Message-ID: <20250818124515.669609986@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,61 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 9d5eff7821f6d70f7d1b4d8a60680fba4de868a7 upstream.
+commit 12724ce3fe1a3d8f30d56e48b4f272d8860d1970 upstream.
 
-We now do a weighted selection of server interfaces when allocating
-new channels. The weights are decided based on the speed advertised.
-The fulfilled weight for an interface is a counter that is used to
-track the interface selection. It should be reset back to zero once
-all interfaces fulfilling their weight.
+The iotlb_sync_map iommu ops allows drivers to perform necessary cache
+flushes when new mappings are established. For the Intel iommu driver,
+this callback specifically serves two purposes:
 
-In cifs_chan_update_iface, this reset logic was missing. As a result
-when the server interface list changes, the client may not be able
-to find a new candidate for other channels after all interfaces have
-been fulfilled.
+- To flush caches when a second-stage page table is attached to a device
+  whose iommu is operating in caching mode (CAP_REG.CM==1).
+- To explicitly flush internal write buffers to ensure updates to memory-
+  resident remapping structures are visible to hardware (CAP_REG.RWBF==1).
 
-Fixes: a6d8fb54a515 ("cifs: distribute channels across interfaces based on speed")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+However, in scenarios where neither caching mode nor the RWBF flag is
+active, the cache_tag_flush_range_np() helper, which is called in the
+iotlb_sync_map path, effectively becomes a no-op.
+
+Despite being a no-op, cache_tag_flush_range_np() involves iterating
+through all cache tags of the iommu's attached to the domain, protected
+by a spinlock. This unnecessary execution path introduces overhead,
+leading to a measurable I/O performance regression. On systems with NVMes
+under the same bridge, performance was observed to drop from approximately
+~6150 MiB/s down to ~4985 MiB/s.
+
+Introduce a flag in the dmar_domain structure. This flag will only be set
+when iotlb_sync_map is required (i.e., when CM or RWBF is set). The
+cache_tag_flush_range_np() is called only for domains where this flag is
+set. This flag, once set, is immutable, given that there won't be mixed
+configurations in real-world scenarios where some IOMMUs in a system
+operate in caching mode while others do not. Theoretically, the
+immutability of this flag does not impact functionality.
+
+Reported-by: Ioanna Alifieraki <ioanna-maria.alifieraki@canonical.com>
+Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2115738
+Link: https://lore.kernel.org/r/20250701171154.52435-1-ioanna-maria.alifieraki@canonical.com
+Fixes: 129dab6e1286 ("iommu/vt-d: Use cache_tag_flush_range_np() in iotlb_sync_map")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20250703031545.3378602-1-baolu.lu@linux.intel.com
+Link: https://lore.kernel.org/r/20250714045028.958850-3-baolu.lu@linux.intel.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/sess.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/iommu/intel/iommu.c |   19 ++++++++++++++++++-
+ drivers/iommu/intel/iommu.h |    3 +++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -332,6 +332,7 @@ cifs_chan_update_iface(struct cifs_ses *
- 	struct cifs_server_iface *old_iface = NULL;
- 	struct cifs_server_iface *last_iface = NULL;
- 	struct sockaddr_storage ss;
-+	int retry = 0;
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -1845,6 +1845,18 @@ static int domain_setup_first_level(stru
+ 					  (pgd_t *)pgd, flags, old);
+ }
  
- 	spin_lock(&ses->chan_lock);
- 	chan_index = cifs_ses_get_chan_index(ses, server);
-@@ -360,6 +361,7 @@ cifs_chan_update_iface(struct cifs_ses *
- 		return;
- 	}
- 
-+try_again:
- 	last_iface = list_last_entry(&ses->iface_list, struct cifs_server_iface,
- 				     iface_head);
- 	iface_min_speed = last_iface->speed;
-@@ -397,6 +399,13 @@ cifs_chan_update_iface(struct cifs_ses *
- 	}
- 
- 	if (list_entry_is_head(iface, &ses->iface_list, iface_head)) {
-+		list_for_each_entry(iface, &ses->iface_list, iface_head)
-+			iface->weight_fulfilled = 0;
++static bool domain_need_iotlb_sync_map(struct dmar_domain *domain,
++				       struct intel_iommu *iommu)
++{
++	if (cap_caching_mode(iommu->cap) && !domain->use_first_level)
++		return true;
 +
-+		/* see if it can be satisfied in second attempt */
-+		if (!retry++)
-+			goto try_again;
++	if (rwbf_quirk || cap_rwbf(iommu->cap))
++		return true;
 +
- 		iface = NULL;
- 		cifs_dbg(FYI, "unable to find a suitable iface\n");
- 	}
++	return false;
++}
++
+ static int dmar_domain_attach_device(struct dmar_domain *domain,
+ 				     struct device *dev)
+ {
+@@ -1882,6 +1894,8 @@ static int dmar_domain_attach_device(str
+ 	if (ret)
+ 		goto out_block_translation;
+ 
++	domain->iotlb_sync_map |= domain_need_iotlb_sync_map(domain, iommu);
++
+ 	return 0;
+ 
+ out_block_translation:
+@@ -4020,7 +4034,10 @@ static bool risky_device(struct pci_dev
+ static int intel_iommu_iotlb_sync_map(struct iommu_domain *domain,
+ 				      unsigned long iova, size_t size)
+ {
+-	cache_tag_flush_range_np(to_dmar_domain(domain), iova, iova + size - 1);
++	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
++
++	if (dmar_domain->iotlb_sync_map)
++		cache_tag_flush_range_np(dmar_domain, iova, iova + size - 1);
+ 
+ 	return 0;
+ }
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -615,6 +615,9 @@ struct dmar_domain {
+ 	u8 has_mappings:1;		/* Has mappings configured through
+ 					 * iommu_map() interface.
+ 					 */
++	u8 iotlb_sync_map:1;		/* Need to flush IOTLB cache or write
++					 * buffer when creating mappings.
++					 */
+ 
+ 	spinlock_t lock;		/* Protect device tracking lists */
+ 	struct list_head devices;	/* all devices' list */
 
 
