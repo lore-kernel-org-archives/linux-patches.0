@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CD731CA6E;
-	Mon, 18 Aug 2025 13:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEAC320CD4;
+	Mon, 18 Aug 2025 13:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522870; cv=none; b=GTPVfdhAl6g22M9Yx8RHB9G6O2nDMcacKiedo1eSfy2BglneP6aS1fvkqObGMAH3fObU9g902zJn6LGx0JiFoy/CvjP/+bauqxIemu5+7PcwX+EYnC7Y4leT++8nSNd3wW079i+Kyf/nxUi7d7n+t2P3Aj5lcyux8X6lwrJrryc=
+	t=1755522873; cv=none; b=VvixhVoRs1XqXHJL1mAvqOj/Y2E4z1AWi46Xqkfa0UNGWSOgbp6aK4VtG9vGySbn50aF32B79LVcojK12Gctj7UTZuOKiiZIjht4eVmr04MB4boaQmIRXHmXh/h2YnLfd5znZ2nQtqXI97c6+K965fRB94YcafWzq8QmJagIQ+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522870; c=relaxed/simple;
-	bh=Gu3Xl2Dm1pqYZTWXZJWCjOEfeY0S16wWJUCcVoSFBrE=;
+	s=arc-20240116; t=1755522873; c=relaxed/simple;
+	bh=yNkNat653nSpSkrmPusKxp3CCqnsACxc0fMQe5z1h54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gpCJVxgY/q7L4fB59SuRo/JFkfkFgdl0VF4F5mYOzXjwdmrzhj4SzY7f6fIK+piauQDBBCv02IvKNXfUWJPhAehWSlTYerli8FcbzYULibxHiQCOSPrvnxWQDDFALq8PSnzWW4Evarf5IO4eV6g1WFHWlwHo7/Nf0nSk1QQJ/+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEZHuwKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fZciEkCgJL+ov4urihSDkk/mJXX+CNXkt9yhTh1gpbF5XtFsMsLYFq65uqcMnmfQhrSAgO5BWP6/c6uqL0pZJDnNYhFp04Bjqyvdr1Y0SSLhsOoZ3UnNsGBnnjko+MXFAZTNf9OH3ioMMM8+9q1QwXRADSAjtH/f5ve/c47BROQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmYG6K3B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEZHuwKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50076C4CEEB;
-	Mon, 18 Aug 2025 13:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmYG6K3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3BDC4CEF1;
+	Mon, 18 Aug 2025 13:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522869;
-	bh=Gu3Xl2Dm1pqYZTWXZJWCjOEfeY0S16wWJUCcVoSFBrE=;
+	s=korg; t=1755522873;
+	bh=yNkNat653nSpSkrmPusKxp3CCqnsACxc0fMQe5z1h54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEZHuwKA2DV4HrU5l92ufefCQETY+Q+4ze+CpMb3o6eW4ta25BPPHGCqQN8HQOx1X
-	 7pZET1FXKkCXAYuL2jHtjAiWik4ASewhnQb4Jv2SUg6xlM/alOsjaQVkPMy69jCcLp
-	 E8Zy7Kkc9MuZpyBK3aNdTPAr/1u4YNFrFPY0koNM=
+	b=fmYG6K3BPZwOSMSPAlp/S/bGGHHQejZBTmePPlxBGYk/Zq5xVXqV0iMbVfNfrViXU
+	 G/uTsLY9qKTXW9n4LAX7FdV/YaPlA6KnsUbEXHJsShtfNGEhze6VYyG/0dEP8xQWh0
+	 1u4Y4FgxJ4MuWGFKnsx1ZYRKAdx1Bge4Pj3m8OMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Bigonville <bigon@bigon.be>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Hrushikesh Salunke <h-salunke@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 432/444] PCI/ACPI: Fix runtime PM ref imbalance on Hot-Plug Capable ports
-Date: Mon, 18 Aug 2025 14:47:38 +0200
-Message-ID: <20250818124505.155578846@linuxfoundation.org>
+Subject: [PATCH 6.12 433/444] arm64: dts: ti: k3-j722s-evm: Fix USB2.0_MUX_SEL to select Type-C
+Date: Mon, 18 Aug 2025 14:47:39 +0200
+Message-ID: <20250818124505.192287798@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -54,132 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Hrushikesh Salunke <h-salunke@ti.com>
 
-[ Upstream commit 6cff20ce3b92ffbf2fc5eb9e5a030b3672aa414a ]
+[ Upstream commit bc8d9e6b5821c40ab5dd3a81e096cb114939de50 ]
 
-pci_bridge_d3_possible() is called from both pcie_portdrv_probe() and
-pcie_portdrv_remove() to determine whether runtime power management shall
-be enabled (on probe) or disabled (on remove) on a PCIe port.
+J722S SOC has two usb controllers USB0 and USB1. USB0 is brought out on
+the EVM as a stacked USB connector which has one Type-A and one Type-C
+port. These Type-A and Type-C ports are connected to MUX so only
+one of them can be enabled at a time.
 
-The underlying assumption is that pci_bridge_d3_possible() always returns
-the same value, else a runtime PM reference imbalance would occur.  That
-assumption is not given if the PCIe port is inaccessible on remove due to
-hot-unplug:  pci_bridge_d3_possible() calls pciehp_is_native(), which
-accesses Config Space to determine whether the port is Hot-Plug Capable.
-An inaccessible port returns "all ones", which is converted to "all
-zeroes" by pcie_capability_read_dword().  Hence the port no longer seems
-Hot-Plug Capable on remove even though it was on probe.
+Commit under Fixes, tries to enable the USB0 instance of USB to
+interface with the Type-C port via the USB hub, by configuring the
+USB2.0_MUX_SEL to GPIO_ACTIVE_HIGH. But it is observed on J722S-EVM
+that Type-A port is enabled instead of Type-C port.
 
-The resulting runtime PM ref imbalance causes warning messages such as:
+Fix this by setting USB2.0_MUX_SEL to GPIO_ACTIVE_LOW to enable Type-C
+port.
 
-  pcieport 0000:02:04.0: Runtime PM usage count underflow!
-
-Avoid the Config Space access (and thus the runtime PM ref imbalance) by
-caching the Hot-Plug Capable bit in struct pci_dev.
-
-The struct already contains an "is_hotplug_bridge" flag, which however is
-not only set on Hot-Plug Capable PCIe ports, but also Conventional PCI
-Hot-Plug bridges and ACPI slots.  The flag identifies bridges which are
-allocated additional MMIO and bus number resources to allow for hierarchy
-expansion.
-
-The kernel is somewhat sloppily using "is_hotplug_bridge" in a number of
-places to identify Hot-Plug Capable PCIe ports, even though the flag
-encompasses other devices.  Subsequent commits replace these occurrences
-with the new flag to clearly delineate Hot-Plug Capable PCIe ports from
-other kinds of hotplug bridges.
-
-Document the existing "is_hotplug_bridge" and the new "is_pciehp" flag
-and document the (non-obvious) requirement that pci_bridge_d3_possible()
-always returns the same value across the entire lifetime of a bridge,
-including its hot-removal.
-
-Fixes: 5352a44a561d ("PCI: pciehp: Make pciehp_is_native() stricter")
-Reported-by: Laurent Bigonville <bigon@bigon.be>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220216
-Reported-by: Mario Limonciello <mario.limonciello@amd.com>
-Closes: https://lore.kernel.org/r/20250609020223.269407-3-superm1@kernel.org/
-Link: https://lore.kernel.org/all/20250620025535.3425049-3-superm1@kernel.org/T/#u
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Cc: stable@vger.kernel.org # v4.18+
-Link: https://patch.msgid.link/fe5dcc3b2e62ee1df7905d746bde161eb1b3291c.1752390101.git.lukas@wunner.de
+Fixes: 485705df5d5f ("arm64: dts: ti: k3-j722s: Enable PCIe and USB support on J722S-EVM")
+Signed-off-by: Hrushikesh Salunke <h-salunke@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20250116125726.2549489-1-h-salunke@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Stable-dep-of: 65ba2a6e77e9 ("arm64: dts: ti: k3-j722s-evm: Fix USB gpio-hog level for Type-C")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-acpi.c |    4 +---
- drivers/pci/pci.c      |    6 +++++-
- drivers/pci/probe.c    |    2 +-
- include/linux/pci.h    |    6 ++++++
- 4 files changed, 13 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j722s-evm.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -816,13 +816,11 @@ int pci_acpi_program_hp_params(struct pc
- bool pciehp_is_native(struct pci_dev *bridge)
- {
- 	const struct pci_host_bridge *host;
--	u32 slot_cap;
+--- a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
++++ b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
+@@ -495,7 +495,7 @@
+ 		p05-hog {
+ 			/* P05 - USB2.0_MUX_SEL */
+ 			gpio-hog;
+-			gpios = <5 GPIO_ACTIVE_HIGH>;
++			gpios = <5 GPIO_ACTIVE_LOW>;
+ 			output-high;
+ 		};
  
- 	if (!IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE))
- 		return false;
- 
--	pcie_capability_read_dword(bridge, PCI_EXP_SLTCAP, &slot_cap);
--	if (!(slot_cap & PCI_EXP_SLTCAP_HPC))
-+	if (!bridge->is_pciehp)
- 		return false;
- 
- 	if (pcie_ports_native)
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3023,8 +3023,12 @@ static const struct dmi_system_id bridge
-  * pci_bridge_d3_possible - Is it possible to put the bridge into D3
-  * @bridge: Bridge to check
-  *
-- * This function checks if it is possible to move the bridge to D3.
-  * Currently we only allow D3 for some PCIe ports and for Thunderbolt.
-+ *
-+ * Return: Whether it is possible to move the bridge to D3.
-+ *
-+ * The return value is guaranteed to be constant across the entire lifetime
-+ * of the bridge, including its hot-removal.
-  */
- bool pci_bridge_d3_possible(struct pci_dev *bridge)
- {
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -1627,7 +1627,7 @@ void set_pcie_hotplug_bridge(struct pci_
- 
- 	pcie_capability_read_dword(pdev, PCI_EXP_SLTCAP, &reg32);
- 	if (reg32 & PCI_EXP_SLTCAP_HPC)
--		pdev->is_hotplug_bridge = 1;
-+		pdev->is_hotplug_bridge = pdev->is_pciehp = 1;
- }
- 
- static void set_pcie_thunderbolt(struct pci_dev *dev)
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -327,6 +327,11 @@ struct rcec_ea;
-  *			determined (e.g., for Root Complex Integrated
-  *			Endpoints without the relevant Capability
-  *			Registers).
-+ * @is_hotplug_bridge:	Hotplug bridge of any kind (e.g. PCIe Hot-Plug Capable,
-+ *			Conventional PCI Hot-Plug, ACPI slot).
-+ *			Such bridges are allocated additional MMIO and bus
-+ *			number resources to allow for hierarchy expansion.
-+ * @is_pciehp:		PCIe Hot-Plug Capable bridge.
-  */
- struct pci_dev {
- 	struct list_head bus_list;	/* Node in per-bus list */
-@@ -450,6 +455,7 @@ struct pci_dev {
- 	unsigned int	is_physfn:1;
- 	unsigned int	is_virtfn:1;
- 	unsigned int	is_hotplug_bridge:1;
-+	unsigned int	is_pciehp:1;
- 	unsigned int	shpc_managed:1;		/* SHPC owned by shpchp */
- 	unsigned int	is_thunderbolt:1;	/* Thunderbolt controller */
- 	/*
 
 
