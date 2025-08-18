@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EC732254B;
-	Mon, 18 Aug 2025 13:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943E832254B;
+	Mon, 18 Aug 2025 13:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524210; cv=none; b=r3zgHOaIeH/iEworZuMlbhBmZ6ophAR/aVNQ6XYqI+FQCI8x+fY12v6knLhXufE9vCbYhY+SG3B5m4V04PH6VJc1qf/gnMweRMedU9Xm0VwPSztTiIi0mtcJxT4DSkI+9ibDlM+BW/zZiL5P7A58lwho3wfv0xcx5ELSjzEhIqc=
+	t=1755524213; cv=none; b=aSF6nN9FMg4DIYA+qgMtkBg6KhfM5OOrP52hYVrklRJ1n3cKYObWwPD4vibSybVaAN4QD8ctmXWtgkCY2J9EbWSW8VlwL8JkhOtGMQvPuiCeAgl0zn63xT2FE8GRMcjKkMS/95QqkrYznPrq+2q1zbbIqjJqnxZffqqpuuvFk8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524210; c=relaxed/simple;
-	bh=srjmoMREC48C6Gl/EbksJGOvPCRN9sfXNGTFG45g2lw=;
+	s=arc-20240116; t=1755524213; c=relaxed/simple;
+	bh=VrcFrztr9oENubPqFT/YRg8jbJlnWmF0PwOTf/+vTDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BM3TgXUY4jYc7VczzbQavR0kuH/bEnya3CF4ZipFS2gMBLvgqKOob3+3XvNFxNKkHVS1+WKbi9Z0UfgdY92o48yDLNXeQ4fkYmiddL9eURZg+XiiKgttGuupPm3jyATTU+WIFCGFKhIsv/GZ7lpMCK1AymCWpIu+qKVhunmyNm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ph5a7luu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EBQQEHd/WnO1wj2uc7HwgJmXqW2n7Bc/a0TjmYOH9C6o+jBRAfaKAtMB6RjcHqEtqhBWWTHSS4qDGJ05TE2qay1Me4T9prW3ZJghpCY2n7acYMtikqmNktLzi731B+tQXZad403aC3pLG1kLWNXemdXnuZq7eb/B2eY+b9env9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCm66K01; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ph5a7luu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD659C4CEEB;
-	Mon, 18 Aug 2025 13:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCm66K01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D845C4CEEB;
+	Mon, 18 Aug 2025 13:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524210;
-	bh=srjmoMREC48C6Gl/EbksJGOvPCRN9sfXNGTFG45g2lw=;
+	s=korg; t=1755524213;
+	bh=VrcFrztr9oENubPqFT/YRg8jbJlnWmF0PwOTf/+vTDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ph5a7luuB5ZPOcniapva6Z0F9ZkA3cd6kh5SkM89AUbuBDztzLpAtpEDEKKXHmlob
-	 GSzjuokyoH3T14PVSUA/cjoZ7BBrE2scvkmDzDNr/HHFZRGQx5LBHkvkrKf51TrZpX
-	 3YoXLLwNKCNIJJRmjDJrKrVuzY29ZReNdEWrN7c4=
+	b=vCm66K01HnbmWGDqD/xDJh5+r8VZG2FOozY+HctU5SYbfVzaWIiL37sWIqM3qTGJO
+	 Gpgpi2NHeMZWwQ5VZmEabDkFCFjyEtIRhEoDwMow/eRp0X5Ib4djUmbrkHIf+p4x3l
+	 I9cQCD7WWTqWpHpZZczXIbheUk0I5fcu+kNBQ+Tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Drew Fustini <drew@pdp7.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Michal Wilczynski <m.wilczynski@samsung.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 359/515] clk: thead: Mark essential bus clocks as CLK_IGNORE_UNUSED
-Date: Mon, 18 Aug 2025 14:45:45 +0200
-Message-ID: <20250818124512.230216046@linuxfoundation.org>
+Subject: [PATCH 6.15 395/515] i3c: dont fail if GETHDRCAP is unsupported
+Date: Mon, 18 Aug 2025 14:46:21 +0200
+Message-ID: <20250818124513.618380265@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,62 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Wilczynski <m.wilczynski@samsung.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 0370395d45ca6dd53bb931978f0e91ac8dd6f1c5 ]
+[ Upstream commit 447270cdb41b1c8c3621bb14b93a6749f942556e ]
 
-Probing peripherals in the AON and PERI domains, such as the PVT thermal
-sensor and the PWM controller, can lead to boot hangs or unresponsive
-devices on the LPi4A board. The root cause is that their parent bus
-clocks ('CLK_CPU2AON_X2H' and the 'CLK_PERISYS_APB' clocks) are
-automatically gated by the kernel's power-saving mechanisms when the bus
-is perceived as idle.
+'I3C_BCR_HDR_CAP' is still spec v1.0 and has been renamed to 'advanced
+capabilities' in v1.1 onwards. The ST pressure sensor LPS22DF does not
+have HDR, but has the 'advanced cap' bit set. The core still wants to
+get additional information using the CCC 'GETHDRCAP' (or GETCAPS in v1.1
+onwards). Not all controllers support this CCC and will notify the upper
+layers about it. For instantiating the device, we can ignore this
+unsupported CCC as standard communication will work. Without this patch,
+the device will not be instantiated at all.
 
-Alternative solutions were investigated, including modeling the parent
-bus in the Device Tree with 'simple-pm-bus' or refactoring the clock
-driver's parentage. The 'simple-pm-bus' approach is not viable due to
-the lack of defined bus address ranges in the hardware manual and its
-creation of improper dependencies on the 'pm_runtime' API for consumer
-drivers.
-
-Therefore, applying the'`CLK_IGNORE_UNUSED' flag directly to the
-essential bus clocks is the most direct and targeted fix. This prevents
-the kernel from auto-gating these buses and ensures peripherals remain
-accessible.
-
-This change fixes the boot hang associated with the PVT sensor and
-resolves the functional issues with the PWM controller.
-
-Link: https://lore.kernel.org/all/9e8a12db-236d-474c-b110-b3be96edf057@samsung.com/ [1]
-
-Reviewed-by: Drew Fustini <drew@pdp7.com>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Michal Wilczynski <m.wilczynski@samsung.com>
-Signed-off-by: Drew Fustini <drew@pdp7.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250704204524.6124-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/thead/clk-th1520-ap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/i3c/master.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
-index 6ab89245af12..c8ebacc6934a 100644
---- a/drivers/clk/thead/clk-th1520-ap.c
-+++ b/drivers/clk/thead/clk-th1520-ap.c
-@@ -799,11 +799,12 @@ static CCU_GATE(CLK_AON2CPU_A2X, aon2cpu_a2x_clk, "aon2cpu-a2x", axi4_cpusys2_ac
- 		0x134, BIT(8), 0);
- static CCU_GATE(CLK_X2X_CPUSYS, x2x_cpusys_clk, "x2x-cpusys", axi4_cpusys2_aclk_pd,
- 		0x134, BIT(7), 0);
--static CCU_GATE(CLK_CPU2AON_X2H, cpu2aon_x2h_clk, "cpu2aon-x2h", axi_aclk_pd, 0x138, BIT(8), 0);
-+static CCU_GATE(CLK_CPU2AON_X2H, cpu2aon_x2h_clk, "cpu2aon-x2h", axi_aclk_pd,
-+		0x138, BIT(8), CLK_IGNORE_UNUSED);
- static CCU_GATE(CLK_CPU2PERI_X2H, cpu2peri_x2h_clk, "cpu2peri-x2h", axi4_cpusys2_aclk_pd,
- 		0x140, BIT(9), CLK_IGNORE_UNUSED);
- static CCU_GATE(CLK_PERISYS_APB1_HCLK, perisys_apb1_hclk, "perisys-apb1-hclk", perisys_ahb_hclk_pd,
--		0x150, BIT(9), 0);
-+		0x150, BIT(9), CLK_IGNORE_UNUSED);
- static CCU_GATE(CLK_PERISYS_APB2_HCLK, perisys_apb2_hclk, "perisys-apb2-hclk", perisys_ahb_hclk_pd,
- 		0x150, BIT(10), CLK_IGNORE_UNUSED);
- static CCU_GATE(CLK_PERISYS_APB3_HCLK, perisys_apb3_hclk, "perisys-apb3-hclk", perisys_ahb_hclk_pd,
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index fd81871609d9..e53c69d24873 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1439,7 +1439,7 @@ static int i3c_master_retrieve_dev_info(struct i3c_dev_desc *dev)
+ 
+ 	if (dev->info.bcr & I3C_BCR_HDR_CAP) {
+ 		ret = i3c_master_gethdrcap_locked(master, &dev->info);
+-		if (ret)
++		if (ret && ret != -ENOTSUPP)
+ 			return ret;
+ 	}
+ 
 -- 
 2.39.5
 
