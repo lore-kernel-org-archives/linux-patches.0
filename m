@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5821DED52;
-	Mon, 18 Aug 2025 13:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8869430F7F8;
+	Mon, 18 Aug 2025 13:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522812; cv=none; b=VFU36Rn8w7ZDq4J0CUhv8N1s9ixo1aOigifGUdM06p8wVm3mjAk7bgkxRVSP8iKsZTkPqpDUd4bCPIGX1vXb5k295xiusyZQL7cPpDe7kRCetEm1+Q5F47uSuOrPz9pK1sySPkLbYUwdSPhwB6EgYIH7+pYpDgNBhFFoe0mawU0=
+	t=1755522815; cv=none; b=nLmGsrwoeEZp/fc0LgZaN2B/ABYdDCzKRxyH9AnpVOuJBHbz0rW8/muyZF3NOsaK/r6hwsE3e5ufD06s/GXRM6e5aTx7UV+VOk2mDGrxzTCkzVwPPzImLF78SEkpJtjjhiGHFBjECw4qOv5lAEbENbEanwx0OgCZ3wvHmTkV85Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522812; c=relaxed/simple;
-	bh=qhm8uwkUkCUumNgaHH94RwYFxdehaUbR8vsnrN39knc=;
+	s=arc-20240116; t=1755522815; c=relaxed/simple;
+	bh=RN/lZZo4EuRpIoX7fksll+dBGwdvuVb9KAawNNhvCdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gP5fkDMl31zdO05MXUjfamai+gfgUhVEEy95Uks4AkCzxjc+oiFvQDy+8+yKg4VUcittEYaUt8c9mOIQj41IlAUef4NiWyuf+IRvKA0B+yTbsatlDf4trzr9i9j5XX3ET7HWD9Jh2GGgKC+qd2xX07XFxy6j7ncSeCSgIFIKzWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJ4Yq2ov; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oskyrW2jdRIzoe/7bKLx+1Q0bB2k71kz7mJaQ9JhepNBYniKuZ6NjW8N8oQIdpffY9kSwPxg68SPbGitv+12BxZ64wwBPpvVeB3B1PqgZADWYLX+7R0Gq/WMl1SPrSxU5ayArYLrwcMwGTlcbVBgiJ9aZOyaEp3mZi5icZ/7zp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2UuGmbd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJ4Yq2ov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD0DC4CEEB;
-	Mon, 18 Aug 2025 13:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2UuGmbd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E72C4CEEB;
+	Mon, 18 Aug 2025 13:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522811;
-	bh=qhm8uwkUkCUumNgaHH94RwYFxdehaUbR8vsnrN39knc=;
+	s=korg; t=1755522815;
+	bh=RN/lZZo4EuRpIoX7fksll+dBGwdvuVb9KAawNNhvCdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJ4Yq2ovf22LowsCE5i+vWX/NhwA9L2XmEr0sf+q5gbxOm9L7aGapr3Nu61vy+gew
-	 VuZNuzVSMGOtrokl0erfZaLoTk47CPVvWKRS7TSNQ6y1NTY6fa8OmfYfUNFjxNzGpT
-	 UwNLNU6bpX7UqwEqb1hqGTZ9RYkoSkxPN/+vikE0=
+	b=m2UuGmbdiZiQxiPM3PpmSOAZur+iu+aTt03GVVFhiJoLhYe20Yv8enZrzdGd15CMh
+	 kvw79M2Ov28fe9FJbywrjDygxpUE/n7ZdYR3IUjMwUGv0AC3oqs7yfbBOfituh+NHI
+	 6FuncZ6kXrTrB+MUnMQKgzjg8BmozUYKcy7dJyw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+30a19e01a97420719891@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 427/444] net: Add net_passive_inc() and net_passive_dec().
-Date: Mon, 18 Aug 2025 14:47:33 +0200
-Message-ID: <20250818124504.959779162@linuxfoundation.org>
+Subject: [PATCH 6.12 428/444] net: better track kernel sockets lifetime
+Date: Mon, 18 Aug 2025 14:47:34 +0200
+Message-ID: <20250818124504.996245974@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,103 +53,239 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e57a6320215c3967f51ab0edeff87db2095440e4 ]
+[ Upstream commit 5c70eb5c593d64d93b178905da215a9fd288a4b5 ]
 
-net_drop_ns() is NULL when CONFIG_NET_NS is disabled.
+While kernel sockets are dismantled during pernet_operations->exit(),
+their freeing can be delayed by any tx packets still held in qdisc
+or device queues, due to skb_set_owner_w() prior calls.
 
-The next patch introduces a function that increments
-and decrements net->passive.
+This then trigger the following warning from ref_tracker_dir_exit() [1]
 
-As a prep, let's rename and export net_free() to
-net_passive_dec() and add net_passive_inc().
+To fix this, make sure that kernel sockets own a reference on net->passive.
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/netdev/CANn89i+oUCt2VGvrbrweniTendZFEh+nwS=uonc004-aPkWy-Q@mail.gmail.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250217191129.19967-2-kuniyu@amazon.com
+Add sk_net_refcnt_upgrade() helper, used whenever a kernel socket
+is converted to a refcounted one.
+
+[1]
+
+[  136.263918][   T35] ref_tracker: net notrefcnt@ffff8880638f01e0 has 1/2 users at
+[  136.263918][   T35]      sk_alloc+0x2b3/0x370
+[  136.263918][   T35]      inet6_create+0x6ce/0x10f0
+[  136.263918][   T35]      __sock_create+0x4c0/0xa30
+[  136.263918][   T35]      inet_ctl_sock_create+0xc2/0x250
+[  136.263918][   T35]      igmp6_net_init+0x39/0x390
+[  136.263918][   T35]      ops_init+0x31e/0x590
+[  136.263918][   T35]      setup_net+0x287/0x9e0
+[  136.263918][   T35]      copy_net_ns+0x33f/0x570
+[  136.263918][   T35]      create_new_namespaces+0x425/0x7b0
+[  136.263918][   T35]      unshare_nsproxy_namespaces+0x124/0x180
+[  136.263918][   T35]      ksys_unshare+0x57d/0xa70
+[  136.263918][   T35]      __x64_sys_unshare+0x38/0x40
+[  136.263918][   T35]      do_syscall_64+0xf3/0x230
+[  136.263918][   T35]      entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[  136.263918][   T35]
+[  136.343488][   T35] ref_tracker: net notrefcnt@ffff8880638f01e0 has 1/2 users at
+[  136.343488][   T35]      sk_alloc+0x2b3/0x370
+[  136.343488][   T35]      inet6_create+0x6ce/0x10f0
+[  136.343488][   T35]      __sock_create+0x4c0/0xa30
+[  136.343488][   T35]      inet_ctl_sock_create+0xc2/0x250
+[  136.343488][   T35]      ndisc_net_init+0xa7/0x2b0
+[  136.343488][   T35]      ops_init+0x31e/0x590
+[  136.343488][   T35]      setup_net+0x287/0x9e0
+[  136.343488][   T35]      copy_net_ns+0x33f/0x570
+[  136.343488][   T35]      create_new_namespaces+0x425/0x7b0
+[  136.343488][   T35]      unshare_nsproxy_namespaces+0x124/0x180
+[  136.343488][   T35]      ksys_unshare+0x57d/0xa70
+[  136.343488][   T35]      __x64_sys_unshare+0x38/0x40
+[  136.343488][   T35]      do_syscall_64+0xf3/0x230
+[  136.343488][   T35]      entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 0cafd77dcd03 ("net: add a refcount tracker for kernel sockets")
+Reported-by: syzbot+30a19e01a97420719891@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67b72aeb.050a0220.14d86d.0283.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250220131854.4048077-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 59b33fab4ca4 ("smb: client: fix netns refcount leak after net_passive changes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/net_namespace.h |   16 ++++++++++++++++
- net/core/net_namespace.c    |    8 ++++----
- 2 files changed, 20 insertions(+), 4 deletions(-)
+ include/net/sock.h       |    1 +
+ net/core/sock.c          |   27 ++++++++++++++++++++++-----
+ net/mptcp/subflow.c      |    5 +----
+ net/netlink/af_netlink.c |   10 ----------
+ net/rds/tcp.c            |    8 ++------
+ net/smc/af_smc.c         |    5 +----
+ net/sunrpc/svcsock.c     |    5 +----
+ net/sunrpc/xprtsock.c    |    8 ++------
+ 8 files changed, 30 insertions(+), 39 deletions(-)
 
---- a/include/net/net_namespace.h
-+++ b/include/net/net_namespace.h
-@@ -291,6 +291,7 @@ static inline int check_net(const struct
- }
- 
- void net_drop_ns(void *);
-+void net_passive_dec(struct net *net);
- 
- #else
- 
-@@ -320,8 +321,23 @@ static inline int check_net(const struct
- }
- 
- #define net_drop_ns NULL
-+
-+static inline void net_passive_dec(struct net *net)
-+{
-+	refcount_dec(&net->passive);
-+}
- #endif
- 
-+static inline void net_passive_inc(struct net *net)
-+{
-+	refcount_inc(&net->passive);
-+}
-+
-+/* Returns true if the netns initialization is completed successfully */
-+static inline bool net_initialized(const struct net *net)
-+{
-+	return READ_ONCE(net->list.next);
-+}
- 
- static inline void __netns_tracker_alloc(struct net *net,
- 					 netns_tracker *tracker,
---- a/net/core/net_namespace.c
-+++ b/net/core/net_namespace.c
-@@ -458,7 +458,7 @@ static void net_complete_free(void)
- 
- }
- 
--static void net_free(struct net *net)
-+void net_passive_dec(struct net *net)
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1780,6 +1780,7 @@ static inline bool sock_allow_reclassifi
+ struct sock *sk_alloc(struct net *net, int family, gfp_t priority,
+ 		      struct proto *prot, int kern);
+ void sk_free(struct sock *sk);
++void sk_net_refcnt_upgrade(struct sock *sk);
+ void sk_destruct(struct sock *sk);
+ struct sock *sk_clone_lock(const struct sock *sk, const gfp_t priority);
+ void sk_free_unlock_clone(struct sock *sk);
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2243,6 +2243,7 @@ struct sock *sk_alloc(struct net *net, i
+ 			get_net_track(net, &sk->ns_tracker, priority);
+ 			sock_inuse_add(net, 1);
+ 		} else {
++			net_passive_inc(net);
+ 			__netns_tracker_alloc(net, &sk->ns_tracker,
+ 					      false, priority);
+ 		}
+@@ -2267,6 +2268,7 @@ EXPORT_SYMBOL(sk_alloc);
+ static void __sk_destruct(struct rcu_head *head)
  {
- 	if (refcount_dec_and_test(&net->passive)) {
- 		kfree(rcu_access_pointer(net->gen));
-@@ -476,7 +476,7 @@ void net_drop_ns(void *p)
- 	struct net *net = (struct net *)p;
+ 	struct sock *sk = container_of(head, struct sock, sk_rcu);
++	struct net *net = sock_net(sk);
+ 	struct sk_filter *filter;
  
- 	if (net)
--		net_free(net);
+ 	if (sk->sk_destruct)
+@@ -2298,14 +2300,28 @@ static void __sk_destruct(struct rcu_hea
+ 	put_cred(sk->sk_peer_cred);
+ 	put_pid(sk->sk_peer_pid);
+ 
+-	if (likely(sk->sk_net_refcnt))
+-		put_net_track(sock_net(sk), &sk->ns_tracker);
+-	else
+-		__netns_tracker_free(sock_net(sk), &sk->ns_tracker, false);
+-
++	if (likely(sk->sk_net_refcnt)) {
++		put_net_track(net, &sk->ns_tracker);
++	} else {
++		__netns_tracker_free(net, &sk->ns_tracker, false);
 +		net_passive_dec(net);
++	}
+ 	sk_prot_free(sk->sk_prot_creator, sk);
  }
  
- struct net *copy_net_ns(unsigned long flags,
-@@ -517,7 +517,7 @@ put_userns:
- 		key_remove_domain(net->key_domain);
- #endif
- 		put_user_ns(user_ns);
--		net_free(net);
-+		net_passive_dec(net);
- dec_ucounts:
- 		dec_net_namespaces(ucounts);
- 		return ERR_PTR(rv);
-@@ -662,7 +662,7 @@ static void cleanup_net(struct work_stru
- 		key_remove_domain(net->key_domain);
- #endif
- 		put_user_ns(net->user_ns);
--		net_free(net);
-+		net_passive_dec(net);
++void sk_net_refcnt_upgrade(struct sock *sk)
++{
++	struct net *net = sock_net(sk);
++
++	WARN_ON_ONCE(sk->sk_net_refcnt);
++	__netns_tracker_free(net, &sk->ns_tracker, false);
++	net_passive_dec(net);
++	sk->sk_net_refcnt = 1;
++	get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
++	sock_inuse_add(net, 1);
++}
++EXPORT_SYMBOL_GPL(sk_net_refcnt_upgrade);
++
+ void sk_destruct(struct sock *sk)
+ {
+ 	bool use_call_rcu = sock_flag(sk, SOCK_RCU_FREE);
+@@ -2402,6 +2418,7 @@ struct sock *sk_clone_lock(const struct
+ 		 * is not properly dismantling its kernel sockets at netns
+ 		 * destroy time.
+ 		 */
++		net_passive_inc(sock_net(newsk));
+ 		__netns_tracker_alloc(sock_net(newsk), &newsk->ns_tracker,
+ 				      false, priority);
  	}
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1768,10 +1768,7 @@ int mptcp_subflow_create_socket(struct s
+ 	 * needs it.
+ 	 * Update ns_tracker to current stack trace and refcounted tracker.
+ 	 */
+-	__netns_tracker_free(net, &sf->sk->ns_tracker, false);
+-	sf->sk->sk_net_refcnt = 1;
+-	get_net_track(net, &sf->sk->ns_tracker, GFP_KERNEL);
+-	sock_inuse_add(net, 1);
++	sk_net_refcnt_upgrade(sf->sk);
+ 	err = tcp_set_ulp(sf->sk, "mptcp");
+ 	if (err)
+ 		goto err_free;
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -794,16 +794,6 @@ static int netlink_release(struct socket
+ 
+ 	sock_prot_inuse_add(sock_net(sk), &netlink_proto, -1);
+ 
+-	/* Because struct net might disappear soon, do not keep a pointer. */
+-	if (!sk->sk_net_refcnt && sock_net(sk) != &init_net) {
+-		__netns_tracker_free(sock_net(sk), &sk->ns_tracker, false);
+-		/* Because of deferred_put_nlk_sk and use of work queue,
+-		 * it is possible  netns will be freed before this socket.
+-		 */
+-		sock_net_set(sk, &init_net);
+-		__netns_tracker_alloc(&init_net, &sk->ns_tracker,
+-				      false, GFP_KERNEL);
+-	}
+ 	call_rcu(&nlk->rcu, deferred_put_nlk_sk);
+ 	return 0;
+ }
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -504,12 +504,8 @@ bool rds_tcp_tune(struct socket *sock)
+ 			release_sock(sk);
+ 			return false;
+ 		}
+-		/* Update ns_tracker to current stack trace and refcounted tracker */
+-		__netns_tracker_free(net, &sk->ns_tracker, false);
+-
+-		sk->sk_net_refcnt = 1;
+-		netns_tracker_alloc(net, &sk->ns_tracker, GFP_KERNEL);
+-		sock_inuse_add(net, 1);
++		sk_net_refcnt_upgrade(sk);
++		put_net(net);
+ 	}
+ 	rtn = net_generic(net, rds_tcp_netid);
+ 	if (rtn->sndbuf_size > 0) {
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -3353,10 +3353,7 @@ int smc_create_clcsk(struct net *net, st
+ 	 * which need net ref.
+ 	 */
+ 	sk = smc->clcsock->sk;
+-	__netns_tracker_free(net, &sk->ns_tracker, false);
+-	sk->sk_net_refcnt = 1;
+-	get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
+-	sock_inuse_add(net, 1);
++	sk_net_refcnt_upgrade(sk);
+ 	return 0;
  }
  
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -1568,10 +1568,7 @@ static struct svc_xprt *svc_create_socke
+ 	newlen = error;
+ 
+ 	if (protocol == IPPROTO_TCP) {
+-		__netns_tracker_free(net, &sock->sk->ns_tracker, false);
+-		sock->sk->sk_net_refcnt = 1;
+-		get_net_track(net, &sock->sk->ns_tracker, GFP_KERNEL);
+-		sock_inuse_add(net, 1);
++		sk_net_refcnt_upgrade(sock->sk);
+ 		if ((error = kernel_listen(sock, 64)) < 0)
+ 			goto bummer;
+ 	}
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -1960,12 +1960,8 @@ static struct socket *xs_create_sock(str
+ 		goto out;
+ 	}
+ 
+-	if (protocol == IPPROTO_TCP) {
+-		__netns_tracker_free(xprt->xprt_net, &sock->sk->ns_tracker, false);
+-		sock->sk->sk_net_refcnt = 1;
+-		get_net_track(xprt->xprt_net, &sock->sk->ns_tracker, GFP_KERNEL);
+-		sock_inuse_add(xprt->xprt_net, 1);
+-	}
++	if (protocol == IPPROTO_TCP)
++		sk_net_refcnt_upgrade(sock->sk);
+ 
+ 	filp = sock_alloc_file(sock, O_NONBLOCK, NULL);
+ 	if (IS_ERR(filp))
 
 
