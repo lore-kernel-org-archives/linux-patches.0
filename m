@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C401E51FE;
-	Mon, 18 Aug 2025 12:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F15E31E0FF;
+	Mon, 18 Aug 2025 12:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521782; cv=none; b=LduVTsf7F9e5viLhUOEKrFk2sTeTgBncUH9GOHYWH9O9PSWiSSA1e7wWSRn55jK+ST5FbGcaYqZLSOPNd6/qPMPbPWrFWUXr6BBg3RWJR8U3mPna77yw1yLZP2X/1aQNvB9y6Lsj3qJblkt8MY22E0qn9+06RCtHVs9PTEaJ9ZI=
+	t=1755521785; cv=none; b=Cu8sInqyG7vWvbkhLWZWYjY+y6djLOp8CKidfYafkYZTGrBy1acu9B9n2Bl9nA8f2Qv/j7kWJLquN34w3SEqkmFZDcq/Rmkgusc/wUZuZZxUok7/GxRknwPQZj3RS5SlDdtXWq7aZuaUj3Qo081MBfyGVlgvZe5UwMw1IsBLlO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521782; c=relaxed/simple;
-	bh=i586I4XE0WushWhzx1G9Crt4ttb0NoHiOFOk4ZtTHx8=;
+	s=arc-20240116; t=1755521785; c=relaxed/simple;
+	bh=GVAxfwnTCTzyTs/iSEYJVIxcbSdZZEo94EYhdME4HgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pL38n9ES14/x2wjqP/9Pc+1u72cGQ2ab00tCfCd6BR2JHN+XLzmQcL7zLasPfN8+inbD8hoj+ml/G2hsRh019rpSegUtyKAge+UfpTkV2a6etrhdwK23FKB40yNdgfTclvXMTC6RUJmPF23RrrscEn3X2RMYi+Vb0ZGmn249DOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5sK5IXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KSzAzfPESG6ccp+R1iLpRQ1CgpbX1ZTMJVwzYm4x3xumUChkXmlf6dR4dmMWyYI0eTWnfhBySI6Vsu5lreHUI3A0qSLj2sY7N0vnxQt2ErKk8FcRn1uLEdt0Y0us/wpvdby2EPvDkCbPiJ/UT9YyPu+melHmDinynotbJxkSj/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nG0A+uT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5sK5IXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8B5C4CEEB;
-	Mon, 18 Aug 2025 12:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nG0A+uT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB247C4CEEB;
+	Mon, 18 Aug 2025 12:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521781;
-	bh=i586I4XE0WushWhzx1G9Crt4ttb0NoHiOFOk4ZtTHx8=;
+	s=korg; t=1755521785;
+	bh=GVAxfwnTCTzyTs/iSEYJVIxcbSdZZEo94EYhdME4HgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5sK5IXNNmQ+xELa2ZjKbDvqOlXQc7hdV7aOmpAuCxSj6GCmjkGq07R+qf7QuUVyL
-	 3IeHJ3qpU3b/Zz0odu5XbNhKm9PuDIvTZKUFX3wFQ3vWMHzScE6gbci7AXhUDsdhfi
-	 YwM72vZOrksE8S0sECRsCNfzEkf5UKCptrFZq6pQ=
+	b=0nG0A+uTM6cnSsDyxTI6+ER1TKNQx0HZZartecP/nAiBSpmsiL0aywMU5PJFjZdIp
+	 12ovjh74JKURcCXL4f6AJ8W1hHAPGF5IXRrmIIovlqfCeize9TJPy4kbqb1Lk50EuH
+	 xUCe3P0Z9EXWxWXAbKE2HU887SEbsLVXXrAkh7dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/444] ARM: tegra: Use I/O memcpy to write to IRAM
-Date: Mon, 18 Aug 2025 14:42:27 +0200
-Message-ID: <20250818124453.456266972@linuxfoundation.org>
+Subject: [PATCH 6.12 122/444] tools/build: Fix s390(x) cross-compilation with clang
+Date: Mon, 18 Aug 2025 14:42:28 +0200
+Message-ID: <20250818124453.491395420@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -45,40 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 398e67e0f5ae04b29bcc9cbf342e339fe9d3f6f1 ]
+[ Upstream commit a40f0cdce78be8a559ee8a85c908049c65a410b2 ]
 
-Kasan crashes the kernel trying to check boundaries when using the
-normal memcpy.
+The heuristic to derive a clang target triple from a GCC one does not work
+for s390. GCC uses "s390-linux" while clang expects "s390x-linux" or
+"powerz-linux".
 
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Link: https://lore.kernel.org/r/20250522-mach-tegra-kasan-v1-1-419041b8addb@gmail.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Add an explicit override.
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://lore.kernel.org/r/20250620-tools-cross-s390-v2-1-ecda886e00e5@linutronix.de
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-tegra/reset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/scripts/Makefile.include | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-tegra/reset.c b/arch/arm/mach-tegra/reset.c
-index d5c805adf7a8..ea706fac6358 100644
---- a/arch/arm/mach-tegra/reset.c
-+++ b/arch/arm/mach-tegra/reset.c
-@@ -63,7 +63,7 @@ static void __init tegra_cpu_reset_handler_enable(void)
- 	BUG_ON(is_enabled);
- 	BUG_ON(tegra_cpu_reset_handler_size > TEGRA_IRAM_RESET_HANDLER_SIZE);
- 
--	memcpy(iram_base, (void *)__tegra_cpu_reset_handler_start,
-+	memcpy_toio(iram_base, (void *)__tegra_cpu_reset_handler_start,
- 			tegra_cpu_reset_handler_size);
- 
- 	err = call_firmware_op(set_cpu_boot_addr, 0, reset_address);
+diff --git a/tools/scripts/Makefile.include b/tools/scripts/Makefile.include
+index 0aa4005017c7..5f2afd95de43 100644
+--- a/tools/scripts/Makefile.include
++++ b/tools/scripts/Makefile.include
+@@ -98,7 +98,9 @@ else ifneq ($(CROSS_COMPILE),)
+ # Allow userspace to override CLANG_CROSS_FLAGS to specify their own
+ # sysroots and flags or to avoid the GCC call in pure Clang builds.
+ ifeq ($(CLANG_CROSS_FLAGS),)
+-CLANG_CROSS_FLAGS := --target=$(notdir $(CROSS_COMPILE:%-=%))
++CLANG_TARGET := $(notdir $(CROSS_COMPILE:%-=%))
++CLANG_TARGET := $(subst s390-linux,s390x-linux,$(CLANG_TARGET))
++CLANG_CROSS_FLAGS := --target=$(CLANG_TARGET)
+ GCC_TOOLCHAIN_DIR := $(dir $(shell which $(CROSS_COMPILE)gcc 2>/dev/null))
+ ifneq ($(GCC_TOOLCHAIN_DIR),)
+ CLANG_CROSS_FLAGS += --prefix=$(GCC_TOOLCHAIN_DIR)$(notdir $(CROSS_COMPILE))
 -- 
 2.39.5
 
