@@ -1,82 +1,162 @@
-Received: from zeniv.linux.org.uk (zeniv.linux.org.uk [62.89.141.173])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEFB1FFC49;
-	Sun, 17 Aug 2025 18:01:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.89.141.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8411E8337
+	for <patches@lists.linux.dev>; Mon, 18 Aug 2025 05:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755453663; cv=none; b=kFxUi9A1zOedwcoIgI3fWQsCHqOeBQzAwKugRL2j4+NS5fCFp4XwR1KJcyrpV6LBw9Cc9DQRdByc07eywQ/iEIjUx192RzK8z43/rjzu48gMe1BArKe6axdb89qv0wVQaYboYcU5mDjHifqmmGWB3zEXEYicyoD2iL06wP1Tktw=
+	t=1755494258; cv=none; b=aFwYovFuNj6tlSbRFnZy/qnNlfGBR0bZ2LuDQiadzaaw4+Rh2AgliBi00iXT8MkCP9lB+Y5JSWWm6NWbzxisIRn33NN9+eUWF3idAySYMnbmQgB1zo/2nm6cHjjUbBZx93IMIAKH9kIOGkNu6NfvsXS12p1oevHNT461IT+fFqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755453663; c=relaxed/simple;
-	bh=5G8wDbGUwIBciPcf06PoCtuYzmZOgEBaS6ztpmz5bHA=;
+	s=arc-20240116; t=1755494258; c=relaxed/simple;
+	bh=Jfd2dTFyeKB2xDn34tvF4QC2QdcK0s/wj6YimXhuieo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UAs+hACXPnojjS2M5OQAWF6KK9xC3O0xkiFQ7Ep4lOaMjuUV8NlBUOGI/OQA3PDEfIHgAENRzkAtwjoyxLeZM4+px+H+JWiq5/aOVN9Hehwyx7Ck7rqOycdUTy/457T7aXFhcy+ImtnH28EcoMAruGqtmAoNJ36b6Q0Cv86MmFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk; spf=none smtp.mailfrom=ftp.linux.org.uk; dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b=ct4tyTp5; arc=none smtp.client-ip=62.89.141.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ftp.linux.org.uk
+	 Content-Type:Content-Disposition:In-Reply-To; b=pMJZtmQkWuF9S/7TIom7IAJ3DGh2o/YRU+fnWQnKSHt2zuu2GRbQo2srq/G88VBIOoUHgRcgUevcixUVVEDNZvd+fTD4FHXzkP2RztYrBwzlNJuxKK5/y+8UObBkPLbakfgrT0loFK6nBYjovDr98cKz6P0qkNKrHgrHhHKjQ/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyphar.com; spf=pass smtp.mailfrom=cyphar.com; dkim=pass (2048-bit key) header.d=cyphar.com header.i=@cyphar.com header.b=xeIEMq+J; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyphar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cyphar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b="ct4tyTp5"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=linux.org.uk; s=zeniv-20220401; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=khGrxNAJPB9gBEYB/7VaQ6Jo4BeO32XSLT8lL6wysdw=; b=ct4tyTp5ZBhb0ioWgZXWe4G3Yw
-	8Ik0lmw3509y+PqO54lrgMVKxNAKHr3qQ2Howrf6r1VVU5LShreRYKzUpJrhoUk40ifla620Fwd4a
-	zRdoWj08LPzeaRYpa6TwQVWKiuJcFRyNr1cg5F8wGz5UcLRVM6623XOzreynOuKuPvdW7tdBsDFdC
-	WgX0uefluNJIOg4mYYJ9MtDiIfaalgSz+qCQYq1riRF+ohahB7L5zK4ypsFBGMHHHTkqjIFGGd+RL
-	GSaXf7cJSm4Rh4WJTtcFgqboYiUMgcM8d9Z6e9nlzi8VXanctBGbUV9StE19/4gLt/qA0RXraj16S
-	wRvvvBkg==;
-Received: from viro by zeniv.linux.org.uk with local (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1unhgf-0000000BZpU-3CcG;
-	Sun, 17 Aug 2025 18:00:57 +0000
-Date: Sun, 17 Aug 2025 19:00:57 +0100
-From: Al Viro <viro@zeniv.linux.org.uk>
+	dkim=pass (2048-bit key) header.d=cyphar.com header.i=@cyphar.com header.b="xeIEMq+J"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4c51Dr2Jp2z9ss7;
+	Mon, 18 Aug 2025 07:17:32 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyphar.com; s=MBO0001;
+	t=1755494252;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=syTe/uAIV0t2r9xXhONHX6f7WtloSr6P6gMiq4MxqOE=;
+	b=xeIEMq+J1v3//TRDOFKVvHZOHOSXlvHahsW4EQSTkTDsD88ScDLolCYEp1fQPVw52wiAb7
+	CXB6e7u+3OELIG4E955g5VRTrxCidMVUbQkF7g3aRwIGwMLXsKyOMplcWP3kBZl5bgRSpG
+	ho+yueGVKMxEtIDIkKIr2fK/joKjRFTpJNNlbtcp5+xIhDLnQVEuO0FNzzQzZMbrykZ6kx
+	3m2NSoauOcWkCC8fboHzHNMFOacc7N68ap8G+AT5iHio74HqtU9sUXwrALwk6SU/YonCC7
+	EkKi82gr+zBkugBbIjOeBZlQNLUJJ90ZxnyOZUZxqVYodAz9ORy91kyOmWZywg==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of cyphar@cyphar.com designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=cyphar@cyphar.com
+Date: Mon, 18 Aug 2025 15:17:20 +1000
+From: Aleksa Sarai <cyphar@cyphar.com>
 To: Askar Safin <safinaskar@zohomail.com>
-Cc: Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
-	cyphar@cyphar.com, Ian Kent <raven@themaw.net>,
-	linux-fsdevel@vger.kernel.org, David Howells <dhowells@redhat.com>,
-	autofs mailing list <autofs@vger.kernel.org>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 2/4] vfs: fs/namei.c: remove LOOKUP_NO_XDEV check from
- handle_mounts
-Message-ID: <20250817180057.GA222315@ZenIV>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, Ian Kent <raven@themaw.net>, 
+	linux-fsdevel@vger.kernel.org, David Howells <dhowells@redhat.com>, 
+	autofs mailing list <autofs@vger.kernel.org>, patches@lists.linux.dev
+Subject: Re: [PATCH 4/4] vfs: fs/namei.c: if RESOLVE_NO_XDEV passed to
+ openat2, don't *trigger* automounts
+Message-ID: <2025-08-18.1755493390-violent-felt-issues-dares-AIMnxT@cyphar.com>
 References: <20250817171513.259291-1-safinaskar@zohomail.com>
- <20250817171513.259291-3-safinaskar@zohomail.com>
+ <20250817171513.259291-5-safinaskar@zohomail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jsoapanaxm6je7aj"
 Content-Disposition: inline
-In-Reply-To: <20250817171513.259291-3-safinaskar@zohomail.com>
-Sender: Al Viro <viro@ftp.linux.org.uk>
+In-Reply-To: <20250817171513.259291-5-safinaskar@zohomail.com>
+X-Rspamd-Queue-Id: 4c51Dr2Jp2z9ss7
 
-On Sun, Aug 17, 2025 at 05:15:11PM +0000, Askar Safin wrote:
-> This is preparation to RESOLVE_NO_XDEV fix in following commits.
-> No functional change intended
-> 
+
+--jsoapanaxm6je7aj
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 4/4] vfs: fs/namei.c: if RESOLVE_NO_XDEV passed to
+ openat2, don't *trigger* automounts
+MIME-Version: 1.0
+
+On 2025-08-17, Askar Safin <safinaskar@zohomail.com> wrote:
+> openat2 had a bug: if we pass RESOLVE_NO_XDEV, then openat2
+> doesn't traverse through automounts, but may still trigger them.
+> (See the link for full bug report with reproducer.)
+>=20
+> This commit fixes this bug.
+>=20
+> Link: https://lore.kernel.org/linux-fsdevel/20250817075252.4137628-1-safi=
+naskar@zohomail.com/
+> Fixes: fddb5d430ad9fa91b49b1 ("open: introduce openat2(2) syscall")
 > Signed-off-by: Askar Safin <safinaskar@zohomail.com>
+
+Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
+
 > ---
->  fs/namei.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
+>  fs/namei.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+>=20
 > diff --git a/fs/namei.c b/fs/namei.c
-> index 1e13d8e119a4..00f79559e135 100644
+> index 6f43f96f506d..55e2447699a4 100644
 > --- a/fs/namei.c
 > +++ b/fs/namei.c
-> @@ -1635,10 +1635,8 @@ static inline int handle_mounts(struct nameidata *nd, struct dentry *dentry,
->  			return -ECHILD;
->  	}
->  	ret = traverse_mounts(path, &jumped, &nd->total_link_count, nd->flags);
-> -	if (jumped) {
-> -		if (!unlikely(nd->flags & LOOKUP_NO_XDEV))
-> -			nd->state |= ND_JUMPED;
-> -	}
-> +	if (jumped)
-> +		nd->state |= ND_JUMPED;
+> @@ -1449,6 +1449,18 @@ static int follow_automount(struct path *path, int=
+ *count, unsigned lookup_flags
+>  	    dentry->d_inode)
+>  		return -EISDIR;
+> =20
+> +	/* "if" above returned -EISDIR if we want to get automount point itself
+> +	 * as opposed to new mount. Getting automount point itself is, of cours=
+e,
+> +	 * totally okay even if we have LOOKUP_NO_XDEV.
+> +	 *
+> +	 * But if we got here, then we want to get
+> +	 * new mount. Let's deny this if LOOKUP_NO_XDEV is specified.
+> +	 * If we have LOOKUP_NO_XDEV, then we want to deny not only
+> +	 * traversing through automounts, but also triggering them
+> +	 */
 
-I'd add something along the lines of "the only place that ever looks at
-ND_JUMPED in nd->state is complete_walk() and we are not going to reach
-it if handle_mounts() returns an error" to commit message.
+This comment really could be one sentence:
+
+  /* No need to trigger automounts if mountpoint crossing is disabled. */
+
+Or if you really want to mention -EISDIR, then:
+
+  /*
+   * No need to trigger automounts if mountpoint crossing is disabled.
+   * If the caller is trying to check the autmount point itself, -EISDIR
+   * above handles that case for us.
+   */
+
+> +	if (lookup_flags & LOOKUP_NO_XDEV)
+> +		return -EXDEV;
+> +
+>  	if (count && (*count)++ >=3D MAXSYMLINKS)
+>  		return -ELOOP;
+> =20
+> @@ -1472,6 +1484,10 @@ static int __traverse_mounts(struct path *path, un=
+signed flags, bool *jumped,
+>  		/* Allow the filesystem to manage the transit without i_rwsem
+>  		 * being held. */
+>  		if (flags & DCACHE_MANAGE_TRANSIT) {
+> +			if (lookup_flags & LOOKUP_NO_XDEV) {
+> +				ret =3D -EXDEV;
+> +				break;
+> +			}
+>  			ret =3D path->dentry->d_op->d_manage(path, false);
+>  			flags =3D smp_load_acquire(&path->dentry->d_flags);
+>  			if (ret < 0)
+> --=20
+> 2.47.2
+>=20
+
+--=20
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+https://www.cyphar.com/
+
+--jsoapanaxm6je7aj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJEEABYKADkWIQS2TklVsp+j1GPyqQYol/rSt+lEbwUCaKK3YBsUgAAAAAAEAA5t
+YW51MiwyLjUrMS4xMSwyLDIACgkQKJf60rfpRG/zZwEA3uOoe6tqsP76hjwmV8US
+yYybxOB07UZ/EkSRCgRv5EABAKd138R9BsEp5wytLcgmgqcD88nt35SD9RDYoi6g
+i/UF
+=778d
+-----END PGP SIGNATURE-----
+
+--jsoapanaxm6je7aj--
