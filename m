@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137A51E48A;
-	Mon, 18 Aug 2025 13:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B635335BCE;
+	Mon, 18 Aug 2025 13:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524932; cv=none; b=CovZwdTZLAJn3GCP1mNmRM7jdVe7/19JtK2ZJej9W926DSmTQXKKhTwSDWKvwTDzg4yqIq+fKCY/EeLVrh8PjtYFhaAd1VRUkCYe3Lr9sXk5IawhhbPGD4IPcAxtOkplBafo2EMKVdvf5eBuMQHO8ymuwybRQLFdVzotO5ioWd0=
+	t=1755524935; cv=none; b=dIliSbSEK7VE0QPG3BSBuoVrInj3MINWHVwws3a0IBu4zk9aR27NU0QCQn6bgIo+ltfsUJSfc+jEa4MXpQO8k2Qamwx244p8QVPsU8832pO/tyuCs4dQNybhAZ1XV11ItmpVBha6a/rC6bHIaodD/4lvXRESazitalr8BkNwiL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524932; c=relaxed/simple;
-	bh=9wLxvVKDFZ9EoYYIYdJoK+y1w4iBCWWGjfRjfs4o33M=;
+	s=arc-20240116; t=1755524935; c=relaxed/simple;
+	bh=ARmU8zgW2r7t1gohITtcNd0NZyVlWx+GpSNsEq2u3Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btyFTlkTwwc+4pudMxW+1P9xcVih/4xM/6Y3nPeaPIBUulNS/aA2ZWcMAyAXVs5q0aPxmTqKIppQ2QjXmv1kMq6HW38Oij1rO7j9vtT7LgA+f2qhIMfLGtwh+pfP9eEvkHM7ZoVopgMVipGzjeBshXAn27wBDCXNMrZWI9q91r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nii7ahWs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MJVI/WnfGE8gMELlhdlvGisI6m3lOKihlpc6LxY5aLsLpcgyfhydG7DNDHdVL0ayA+RHBE0umX+gVZ9Kat93CIyL0rBtytJ1C+QWB4MNdBVAH7QNXC8JkNQuuDZeFGJB5M0eCYOzwN5LigfbBrMsLRvynm3fXRFx4YfMJakqdRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/NmTcC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nii7ahWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7989CC4CEF1;
-	Mon, 18 Aug 2025 13:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/NmTcC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09353C4CEEB;
+	Mon, 18 Aug 2025 13:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524931;
-	bh=9wLxvVKDFZ9EoYYIYdJoK+y1w4iBCWWGjfRjfs4o33M=;
+	s=korg; t=1755524935;
+	bh=ARmU8zgW2r7t1gohITtcNd0NZyVlWx+GpSNsEq2u3Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nii7ahWsnAQpg2cFn+7dAdrhITD3HIDlR6EsyHT8luA0zTK5+MfSOxcj/EyY/XwtM
-	 UWJuofgpYbEcrxqX4gq6KHUeUELqwaWWJKrBqPV8IpPRb6LDhFYN7IoUBZ5wuD+vHD
-	 JOod7rMASj+GCpbpc1zyOehGjZoQlL190n2COChY=
+	b=S/NmTcC+t62C7RH5grANAk+dXf84ldghA+JKExuDdoWI36krrMP6kNGcY/pfh7HRe
+	 TLAKQw+RBHLl+oiMuy+LZiT0NcJoQ/kOOkCw7tjSMz0EOto+Jfsn7lSHxTILOfrp0y
+	 OsMey49Pb87glJnSY5Rean2SkxcbBVdtNxAp06Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
+	Sarah Newman <srn@prgmr.com>,
+	Lars Ellenberg <lars@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 108/570] udf: Verify partition map count
-Date: Mon, 18 Aug 2025 14:41:35 +0200
-Message-ID: <20250818124509.967312698@linuxfoundation.org>
+Subject: [PATCH 6.16 109/570] drbd: add missing kref_get in handle_write_conflicts
+Date: Mon, 18 Aug 2025 14:41:36 +0200
+Message-ID: <20250818124510.004075890@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -45,58 +47,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Sarah Newman <srn@prgmr.com>
 
-[ Upstream commit 1a11201668e8635602577dcf06f2e96c591d8819 ]
+[ Upstream commit 00c9c9628b49e368d140cfa61d7df9b8922ec2a8 ]
 
-Verify that number of partition maps isn't insanely high which can lead
-to large allocation in udf_sb_alloc_partition_maps(). All partition maps
-have to fit in the LVD which is in a single block.
+With `two-primaries` enabled, DRBD tries to detect "concurrent" writes
+and handle write conflicts, so that even if you write to the same sector
+simultaneously on both nodes, they end up with the identical data once
+the writes are completed.
 
-Reported-by: syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+In handling "superseeded" writes, we forgot a kref_get,
+resulting in a premature drbd_destroy_device and use after free,
+and further to kernel crashes with symptoms.
+
+Relevance: No one should use DRBD as a random data generator, and apparently
+all users of "two-primaries" handle concurrent writes correctly on layer up.
+That is cluster file systems use some distributed lock manager,
+and live migration in virtualization environments stops writes on one node
+before starting writes on the other node.
+
+Which means that other than for "test cases",
+this code path is never taken in real life.
+
+FYI, in DRBD 9, things are handled differently nowadays.  We still detect
+"write conflicts", but no longer try to be smart about them.
+We decided to disconnect hard instead: upper layers must not submit concurrent
+writes. If they do, that's their fault.
+
+Signed-off-by: Sarah Newman <srn@prgmr.com>
+Signed-off-by: Lars Ellenberg <lars@linbit.com>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://lore.kernel.org/r/20250627095728.800688-1-christoph.boehmwalder@linbit.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/super.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/block/drbd/drbd_receiver.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index 1c8a736b3309..b2f168b0a0d1 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1440,7 +1440,7 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
- 	struct genericPartitionMap *gpm;
- 	uint16_t ident;
- 	struct buffer_head *bh;
--	unsigned int table_len;
-+	unsigned int table_len, part_map_count;
- 	int ret;
+diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
+index e5a2e5f7887b..975024cf03c5 100644
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -2500,7 +2500,11 @@ static int handle_write_conflicts(struct drbd_device *device,
+ 			peer_req->w.cb = superseded ? e_send_superseded :
+ 						   e_send_retry_write;
+ 			list_add_tail(&peer_req->w.list, &device->done_ee);
+-			queue_work(connection->ack_sender, &peer_req->peer_device->send_acks_work);
++			/* put is in drbd_send_acks_wf() */
++			kref_get(&device->kref);
++			if (!queue_work(connection->ack_sender,
++					&peer_req->peer_device->send_acks_work))
++				kref_put(&device->kref, drbd_destroy_device);
  
- 	bh = udf_read_tagged(sb, block, block, &ident);
-@@ -1461,7 +1461,16 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
- 					   "logical volume");
- 	if (ret)
- 		goto out_bh;
--	ret = udf_sb_alloc_partition_maps(sb, le32_to_cpu(lvd->numPartitionMaps));
-+
-+	part_map_count = le32_to_cpu(lvd->numPartitionMaps);
-+	if (part_map_count > table_len / sizeof(struct genericPartitionMap1)) {
-+		udf_err(sb, "error loading logical volume descriptor: "
-+			"Too many partition maps (%u > %u)\n", part_map_count,
-+			table_len / (unsigned)sizeof(struct genericPartitionMap1));
-+		ret = -EIO;
-+		goto out_bh;
-+	}
-+	ret = udf_sb_alloc_partition_maps(sb, part_map_count);
- 	if (ret)
- 		goto out_bh;
- 
+ 			err = -ENOENT;
+ 			goto out;
 -- 
 2.39.5
 
