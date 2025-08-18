@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0068E321F20;
-	Mon, 18 Aug 2025 13:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EC3321F39;
+	Mon, 18 Aug 2025 13:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522983; cv=none; b=n/wBoufdGT3SsWvPRkXOhJXunsR84WrBQSklJWHuHK/9QqUMTwInp57gkpjUUUqJqf0N+NyoqfW2puo1KGlwBY0Yw+LNS54Zk6+6VksKTNwaRX75AzNVSVC8SB+cK0drL/TuPiox3yrqEcjVCZ/CfaXLH3AOujF5Dii8GexJDic=
+	t=1755522986; cv=none; b=qNbo1yh064YF9e4nWd4YOqIZ7fe92qHPmzM5rkQzgBmtdhAFwfc2is8v9u5CoORDXmTzW3EqmTRQUPd6d3eskPG3G7WIKZg3xtJfMi0XSqYlirNPYBGhs8fzvhqNKbZywYQN8vYtdLgdmBzw9DjUNmDJxaQD2LvGyN7EBcWAuJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522983; c=relaxed/simple;
-	bh=98EBs2zcM3QzgbFmDaIjqQs+lAWqNcT2ZJ83DlecipU=;
+	s=arc-20240116; t=1755522986; c=relaxed/simple;
+	bh=zPkEzAbXLc/GvWDpd45ikQ/wtHsWw4CerpBbxBgdI3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmJacgNiP7UNuiWm9vZkyynKObZGvwZ08P0Hu8jp6cNnD6GRJIBGpGiCOjx4Cp8+Hn1Rz0cfrwMG1TBG7g/nE/QnuUP5JcJnBIMw4oV6J11ZT6SSufYsFzD6RWMxJq3/nES6eFrE8Ojayzp9hAXCTYByFPHqZU5MlWYPg5dJ2Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+1uw4I1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rFjfjvS8YuW7fyy0zU4VuJuPP8ZT1yxpoqdmD0UeQF42Co3WEo415UnNWJRBED4mR9+x+TgJg26OfkQGXQ4FgN3RMfe8qJJL8XOFaQ1X+8biqXK+CCuBfiO0aIFk1n03ThrZlEDIy//Hm95/T4wd89nmumMTojDRmgisCU8DWKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnvHgHLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+1uw4I1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77EAAC4CEEB;
-	Mon, 18 Aug 2025 13:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnvHgHLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F62C4CEEB;
+	Mon, 18 Aug 2025 13:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522982;
-	bh=98EBs2zcM3QzgbFmDaIjqQs+lAWqNcT2ZJ83DlecipU=;
+	s=korg; t=1755522985;
+	bh=zPkEzAbXLc/GvWDpd45ikQ/wtHsWw4CerpBbxBgdI3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+1uw4I1C+CazoBUTWU+l5r1Pw+GO1iWqqpk1LQd0VliWibhd1QDdrzmIdoMhJ5Re
-	 HXSc3ahUQroVGyc0i+dcycwhEwSOU3jWgrJtNIcrvoTi95wXJP3Icz7DgsFDYoK/pp
-	 DML3yGV0VgsE29SubBPocrBofympHO/svXfIsHtg=
+	b=XnvHgHLqTla2pJV8mXz8XTb5aTjvWicBpd2hnhWC9LvNbx2eSVUEPuKKFLq4hwWAH
+	 lw6eBdCGr/UKRnxb7xfFPf7VUFsN+xDpRKOjvyQ05qAH2FHhBeZeKjl/hrJMjA5YhN
+	 xhn1iOP9umySjha/XR9EG+OQYZL0KMMdH4OHFOCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengqi Chen <hengqi.chen@gmail.com>,
-	Haoran Jiang <jianghaoran@kylinos.cn>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.15 034/515] LoongArch: BPF: Fix jump offset calculation in tailcall
-Date: Mon, 18 Aug 2025 14:40:20 +0200
-Message-ID: <20250818124459.761701689@linuxfoundation.org>
+Subject: [PATCH 6.15 035/515] LoongArch: Dont use %pK through printk() in unwinder
+Date: Mon, 18 Aug 2025 14:40:21 +0200
+Message-ID: <20250818124459.798159433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -45,115 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoran Jiang <jianghaoran@kylinos.cn>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit cd39d9e6b7e4c58fa77783e7aedf7ada51d02ea3 upstream.
+commit 2362e8124ed21445c6886806e5deaee717629ddd upstream.
 
-The extra pass of bpf_int_jit_compile() skips JIT context initialization
-which essentially skips offset calculation leaving out_offset = -1, so
-the jmp_offset in emit_bpf_tail_call is calculated by
+In the past %pK was preferable to %p as it would not leak raw pointer
+values into the kernel log.
 
-"#define jmp_offset (out_offset - (cur_offset))"
+Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+the regular %p has been improved to avoid this issue.
 
-is a negative number, which is wrong. The final generated assembly are
-as follow.
+Furthermore, restricted pointers ("%pK") were never meant to be used
+through printk(). They can still unintentionally leak raw pointers or
+acquire sleeping locks in atomic contexts.
 
-54:	bgeu        	$a2, $t1, -8	    # 0x0000004c
-58:	addi.d      	$a6, $s5, -1
-5c:	bltz        	$a6, -16	    # 0x0000004c
-60:	alsl.d      	$t2, $a2, $a1, 0x3
-64:	ld.d        	$t2, $t2, 264
-68:	beq         	$t2, $zero, -28	    # 0x0000004c
-
-Before apply this patch, the follow test case will reveal soft lock issues.
-
-cd tools/testing/selftests/bpf/
-./test_progs --allow=tailcalls/tailcall_bpf2bpf_1
-
-dmesg:
-watchdog: BUG: soft lockup - CPU#2 stuck for 26s! [test_progs:25056]
+Switch to the regular pointer formatting which is safer and easier to
+reason about.
 
 Cc: stable@vger.kernel.org
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Reviewed-by: Hengqi Chen <hengqi.chen@gmail.com>
-Signed-off-by: Haoran Jiang <jianghaoran@kylinos.cn>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c |   21 +++++----------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+ arch/loongarch/kernel/unwind_orc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -208,11 +208,9 @@ bool bpf_jit_supports_far_kfunc_call(voi
- 	return true;
- }
+--- a/arch/loongarch/kernel/unwind_orc.c
++++ b/arch/loongarch/kernel/unwind_orc.c
+@@ -507,7 +507,7 @@ bool unwind_next_frame(struct unwind_sta
  
--/* initialized on the first pass of build_body() */
--static int out_offset = -1;
--static int emit_bpf_tail_call(struct jit_ctx *ctx)
-+static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
- {
--	int off;
-+	int off, tc_ninsn = 0;
- 	u8 tcc = tail_call_reg(ctx);
- 	u8 a1 = LOONGARCH_GPR_A1;
- 	u8 a2 = LOONGARCH_GPR_A2;
-@@ -222,7 +220,7 @@ static int emit_bpf_tail_call(struct jit
- 	const int idx0 = ctx->idx;
- 
- #define cur_offset (ctx->idx - idx0)
--#define jmp_offset (out_offset - (cur_offset))
-+#define jmp_offset (tc_ninsn - (cur_offset))
- 
- 	/*
- 	 * a0: &ctx
-@@ -232,6 +230,7 @@ static int emit_bpf_tail_call(struct jit
- 	 * if (index >= array->map.max_entries)
- 	 *	 goto out;
- 	 */
-+	tc_ninsn = insn ? ctx->offset[insn+1] - ctx->offset[insn] : ctx->offset[0];
- 	off = offsetof(struct bpf_array, map.max_entries);
- 	emit_insn(ctx, ldwu, t1, a1, off);
- 	/* bgeu $a2, $t1, jmp_offset */
-@@ -263,15 +262,6 @@ static int emit_bpf_tail_call(struct jit
- 	emit_insn(ctx, ldd, t3, t2, off);
- 	__build_epilogue(ctx, true);
- 
--	/* out: */
--	if (out_offset == -1)
--		out_offset = cur_offset;
--	if (cur_offset != out_offset) {
--		pr_err_once("tail_call out_offset = %d, expected %d!\n",
--			    cur_offset, out_offset);
--		return -1;
--	}
--
- 	return 0;
- 
- toofar:
-@@ -916,7 +906,7 @@ static int build_insn(const struct bpf_i
- 	/* tail call */
- 	case BPF_JMP | BPF_TAIL_CALL:
- 		mark_tail_call(ctx);
--		if (emit_bpf_tail_call(ctx) < 0)
-+		if (emit_bpf_tail_call(ctx, i) < 0)
- 			return -EINVAL;
- 		break;
- 
-@@ -1342,7 +1332,6 @@ out:
- 	if (tmp_blinded)
- 		bpf_jit_prog_release_other(prog, prog == orig_prog ? tmp : orig_prog);
- 
--	out_offset = -1;
- 
- 	return prog;
+ 	state->pc = bt_address(pc);
+ 	if (!state->pc) {
+-		pr_err("cannot find unwind pc at %pK\n", (void *)pc);
++		pr_err("cannot find unwind pc at %p\n", (void *)pc);
+ 		goto err;
+ 	}
  
 
 
