@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CA428C849;
-	Mon, 18 Aug 2025 13:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EEA3218CA;
+	Mon, 18 Aug 2025 13:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522342; cv=none; b=tN+COhN/gRHBwTX7McE2qHZBoUKflCmQLeL0J4cMRCLgr/FBw8yiGO8yiHi2nbM5spXJI11QOx9vNt+7Vwp+IIjEgPyYyH+DJgSnYHmqIHdERlce8nJszR0D1DeqWCw5WvBA4r62pBsHyqNAcH5taVYeGKoczEyhZOu5B2nCZqs=
+	t=1755522345; cv=none; b=iQ1wARsuPg2QlRmFn5KPZqu45STIMpMuP4bUnMsw68SxLpp8CnT1hJZjyTePqQSiNnBV9GT23jNW9kN/Kgt5c/qaQefmAjyFVAoE051q6mvaa+aGJTpGXImZZ6SaXMkEQtXHqxK86xs0EcXCu/sWFlMQjclK53+XgS1bbDuwaw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522342; c=relaxed/simple;
-	bh=TgS5Po55zlQWLIteRZwK7/aM3/Zn/JJz020PCFDA1i4=;
+	s=arc-20240116; t=1755522345; c=relaxed/simple;
+	bh=2RlCWpnLbwMjHtgJOhCRA23GtLXykNKlOqoJ6yt4Mkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SOmGQxpqTFLQ4OHuMZCDi4id6be14lJSUgwZMzG+Ho+iUCs1JSWEL4FWdNI8tGlmherI5LfrCrqZN93oryBpk73IRJgaB4k5O6jsIZbPcvHcfrDohiXIDhIfaBSPDBbeCnO8a5lVJxPa91dZOxuwy7/Or5ENtJLlRRA199EJduk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0VNn7aN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U7a+gsxCbr1Yae6jiALzzw+h0fFS/IH9wgMdxQ4O/6EoVLD7vjW/z1FkHusocFvFJYqUx9zbb9e/Ub3R0lw52au9s40iV5X0sIJXRDpbKkwWq/kk1+QkxOraCsXJTZ89WR3GoP6JHxtnur/OAjoDyHeSrFArO7x9JcPby4/Y6W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWW2B3u2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0VNn7aN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246FBC4CEEB;
-	Mon, 18 Aug 2025 13:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWW2B3u2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53AEC4CEEB;
+	Mon, 18 Aug 2025 13:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522341;
-	bh=TgS5Po55zlQWLIteRZwK7/aM3/Zn/JJz020PCFDA1i4=;
+	s=korg; t=1755522345;
+	bh=2RlCWpnLbwMjHtgJOhCRA23GtLXykNKlOqoJ6yt4Mkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0VNn7aNHMgdgxOp7XGyCZR9ZhsbBcXUze/SgyzNR9BdOakYdtfH0Kvj6rNHPCG4h
-	 jGlzgNc7N3sA51LfVqffYrldO+zlBOZ7ZC9oGvw+80Vp3e66VmGKw83jNR5Qv618b2
-	 osp5ys0lu0qiLCalFczy+E7Rcsx2owlvKWqa/6kg=
+	b=MWW2B3u2CZsSdQDKDOUjTB8+w5OPcn63/adnKehn1KGLpPfqc20+lvyQdJtspB/uM
+	 TjmGPpWqVLwLanFf2iI618cV2dNkJ+mNN4fs7ZRQfs17rtcO/S/VPjyRRKcGKnrLN3
+	 DkFIZMVLbinZJCIwNQsQc4zfepHn3Zue2LwfSnuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Florin Leotescu <florin.leotescu@nxp.com>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 286/444] watchdog: dw_wdt: Fix default timeout
-Date: Mon, 18 Aug 2025 14:45:12 +0200
-Message-ID: <20250818124459.686923765@linuxfoundation.org>
+Subject: [PATCH 6.12 287/444] hwmon: (emc2305) Set initial PWM minimum value during probe based on thermal state
+Date: Mon, 18 Aug 2025 14:45:13 +0200
+Message-ID: <20250818124459.723940858@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,41 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Florin Leotescu <florin.leotescu@nxp.com>
 
-[ Upstream commit ac3dbb91e0167d017f44701dd51c1efe30d0c256 ]
+[ Upstream commit 0429415a084a15466e87d504e8c2a502488184a5 ]
 
-The Synopsys Watchdog driver sets the default timeout to 30 seconds,
-but on some devices this is not a valid timeout. E.g. on RK3588 the
-actual timeout being used is 44 seconds instead.
+Prevent the PWM value from being set to minimum when thermal zone
+temperature exceeds any trip point during driver probe. Otherwise, the
+PWM fan speed will remains at minimum speed and not respond to
+temperature changes.
 
-Once the watchdog is started the value is updated accordingly, but
-it would be better to expose a sensible timeout to userspace without
-the need to first start the watchdog.
-
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250717-dw-wdt-fix-initial-timeout-v1-1-86dc864d48dd@kernel.org
+Signed-off-by: Florin Leotescu <florin.leotescu@nxp.com>
+Link: https://lore.kernel.org/r/20250603113125.3175103-5-florin.leotescu@oss.nxp.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/dw_wdt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/emc2305.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/dw_wdt.c b/drivers/watchdog/dw_wdt.c
-index 84dca3695f86..e5e6d7f15918 100644
---- a/drivers/watchdog/dw_wdt.c
-+++ b/drivers/watchdog/dw_wdt.c
-@@ -644,6 +644,8 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
- 	} else {
- 		wdd->timeout = DW_WDT_DEFAULT_SECONDS;
- 		watchdog_init_timeout(wdd, 0, dev);
-+		/* Limit timeout value to hardware constraints. */
-+		dw_wdt_set_timeout(wdd, wdd->timeout);
+diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
+index 4d39fbd83769..5b5fccac9635 100644
+--- a/drivers/hwmon/emc2305.c
++++ b/drivers/hwmon/emc2305.c
+@@ -300,6 +300,12 @@ static int emc2305_set_single_tz(struct device *dev, int idx)
+ 		dev_err(dev, "Failed to register cooling device %s\n", emc2305_fan_name[idx]);
+ 		return PTR_ERR(data->cdev_data[cdev_idx].cdev);
  	}
- 
- 	platform_set_drvdata(pdev, dw_wdt);
++
++	if (data->cdev_data[cdev_idx].cur_state > 0)
++		/* Update pwm when temperature is above trips */
++		pwm = EMC2305_PWM_STATE2DUTY(data->cdev_data[cdev_idx].cur_state,
++					     data->max_state, EMC2305_FAN_MAX);
++
+ 	/* Set minimal PWM speed. */
+ 	if (data->pwm_separate) {
+ 		ret = emc2305_set_pwm(dev, pwm, cdev_idx);
+@@ -313,10 +319,10 @@ static int emc2305_set_single_tz(struct device *dev, int idx)
+ 		}
+ 	}
+ 	data->cdev_data[cdev_idx].cur_state =
+-		EMC2305_PWM_DUTY2STATE(data->pwm_min[cdev_idx], data->max_state,
++		EMC2305_PWM_DUTY2STATE(pwm, data->max_state,
+ 				       EMC2305_FAN_MAX);
+ 	data->cdev_data[cdev_idx].last_hwmon_state =
+-		EMC2305_PWM_DUTY2STATE(data->pwm_min[cdev_idx], data->max_state,
++		EMC2305_PWM_DUTY2STATE(pwm, data->max_state,
+ 				       EMC2305_FAN_MAX);
+ 	return 0;
+ }
 -- 
 2.39.5
 
