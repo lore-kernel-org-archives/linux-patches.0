@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A8A3218B8;
-	Mon, 18 Aug 2025 12:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE73B1E51FE;
+	Mon, 18 Aug 2025 12:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521835; cv=none; b=ooSKYzXz2XWHCk7ZTNI4Gz1jY83cVfYCq5550FDbJkBF6dCowXgFb5QPrXtZaD164JREhrYKcwgBZqadm6gTFf0b8RTGt2NvHRtw0BD4vq1fOgg8KBjzRjIDmRNcGKKyD3R4R9nFvwpzpMSEgsHVVdmZWCo5g4yAHxbnwlF78f4=
+	t=1755521838; cv=none; b=Z0tGyIdEne0rL52dmjdIdDQivXpuuvOkHs8lEOpU6LfXsCGo0yYa4P5s2FmutMtVMjHpYrYej2+PZap2YP3FZsUFoSijGezID1RFJ/OPwCfsm4ZH+RHypYZD5ECZdtowq0N5bkAW9QawmLwhbew9gBWMK0EU5VCCh3N26CwqjE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521835; c=relaxed/simple;
-	bh=P4UvKsKmop1+EYNBilNqpU+0saO/k1G7iz3BmIZ8acg=;
+	s=arc-20240116; t=1755521838; c=relaxed/simple;
+	bh=cXd8lGme1eUbCSA3binFW1ngvK9ARf4XI7O1Ulk9mVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvTChtOadgAC8KOk4FQY7g3+8TJG4Kb1wdrQ0cSu1stjgVUpvFt6tHr5RZXZgBkpxgc7dW4d4sVHbnjXg80VbKipCG+aTHpYRnXft94iloE87TJnhXDR46Ax4kIYQMvR/E55jbK3ZV1mfx12HykOkIiU7gs7b1qiP4k9igHy8Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJxUBDmV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfKjtHgzRWDbtGKj5exf/UpI14PuTY1PivZKZiJcBa2AZZIpan+tw57Y8vLKPgEKfDDVo7MKpchGGqsSJG/ATO1eIsQM4zACGqmurllMO/IljSbed+dFsqUXd3CSb+yRfSdGUBcPy0tCPoxqYo5U6h/SSkDv448NwdDHtQkAECM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTgAzYLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJxUBDmV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D726DC4CEEB;
-	Mon, 18 Aug 2025 12:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTgAzYLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE5BC4CEEB;
+	Mon, 18 Aug 2025 12:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521835;
-	bh=P4UvKsKmop1+EYNBilNqpU+0saO/k1G7iz3BmIZ8acg=;
+	s=korg; t=1755521838;
+	bh=cXd8lGme1eUbCSA3binFW1ngvK9ARf4XI7O1Ulk9mVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJxUBDmVZtMrnAf370voVY4Oc6GxqOC1kvWtvZr/TsFQAwlGm2ymdN4cLGae6WmGG
-	 hLwjU+2P6GbAsz7CYtgeIn+UgKyMMqdALrnLci8AvA7X/mLbtmBOipduH92l4KOC/E
-	 aaEVBeyJfp7N5obFGIP5b+hWB3Bz9gcrpoe0Y0OE=
+	b=HTgAzYLqDOh7yAZ3tG1zIU1S8Sjod5lj73XDwbjOWD0gGi3+dfH9eqJ+3ogkEGYaZ
+	 jfVRnmq+gov8qWyE//vX6o9C6/TAAbVznROqX7C72m+9uLg+Y9co+JZm6bR3DqPOM5
+	 HLOsKoFKEIRXa7V6jCeKUeJOPGxAyqYUJNkV0BWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Hans de Goede <hansg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 136/444] char: misc: Fix improper and inaccurate error code returned by misc_init()
-Date: Mon, 18 Aug 2025 14:42:42 +0200
-Message-ID: <20250818124454.008285590@linuxfoundation.org>
+Subject: [PATCH 6.12 137/444] mei: bus: Check for still connected devices in mei_cl_bus_dev_release()
+Date: Mon, 18 Aug 2025 14:42:43 +0200
+Message-ID: <20250818124454.044081027@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -50,40 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 0ef1fe4bc38673db72e39b700b29c50dfcc5a415 ]
+[ Upstream commit 35e8a426b16adbecae7a4e0e3c00fc8d0273db53 ]
 
-misc_init() returns -EIO for __register_chrdev() invocation failure, but:
+mei_cl_bus_dev_release() also frees the mei-client (struct mei_cl)
+belonging to the device being released.
 
-- -EIO is for I/O error normally, but __register_chrdev() does not do I/O.
-- -EIO can not cover various error codes returned by __register_chrdev().
+If there are bugs like the just fixed bug in the ACE/CSI2 mei drivers,
+the mei-client being freed might still be part of the mei_device's
+file_list and iterating over this list after the freeing will then trigger
+a use-afer-free bug.
 
-Fix by returning error code of __register_chrdev().
+Add a check to mei_cl_bus_dev_release() to make sure that the to-be-freed
+mei-client is not on the mei_device's file_list.
 
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250620-fix_mischar-v1-3-6c2716bbf1fa@oss.qualcomm.com
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250623085052.12347-11-hansg@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/misc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/mei/bus.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/char/misc.c b/drivers/char/misc.c
-index dda466f9181a..30178e20d962 100644
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -314,8 +314,8 @@ static int __init misc_init(void)
- 	if (err)
- 		goto fail_remove;
+diff --git a/drivers/misc/mei/bus.c b/drivers/misc/mei/bus.c
+index 5576146ab13b..04f9a4b79d85 100644
+--- a/drivers/misc/mei/bus.c
++++ b/drivers/misc/mei/bus.c
+@@ -1353,10 +1353,16 @@ static void mei_dev_bus_put(struct mei_device *bus)
+ static void mei_cl_bus_dev_release(struct device *dev)
+ {
+ 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
++	struct mei_device *mdev = cldev->cl->dev;
++	struct mei_cl *cl;
  
--	err = -EIO;
--	if (__register_chrdev(MISC_MAJOR, 0, MINORMASK + 1, "misc", &misc_fops))
-+	err = __register_chrdev(MISC_MAJOR, 0, MINORMASK + 1, "misc", &misc_fops);
-+	if (err < 0)
- 		goto fail_printk;
- 	return 0;
- 
+ 	mei_cl_flush_queues(cldev->cl, NULL);
+ 	mei_me_cl_put(cldev->me_cl);
+ 	mei_dev_bus_put(cldev->bus);
++
++	list_for_each_entry(cl, &mdev->file_list, link)
++		WARN_ON(cl == cldev->cl);
++
+ 	kfree(cldev->cl);
+ 	kfree(cldev);
+ }
 -- 
 2.39.5
 
