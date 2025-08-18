@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF454223337;
-	Mon, 18 Aug 2025 14:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C78207A0B;
+	Mon, 18 Aug 2025 14:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525618; cv=none; b=gsgCT8StUURyNCP4sXe947+8GxocI3P/f1XgVLkYl1CVwF1Azp0lzxpC692coyPOQz4YTwvS+XFHg7OdZmWPAdriiKqanePA7XBR5w1h+1lZ9+LQLEsRKHsf1RghAsUykMIfxQoY09aUwCrqX89AtiItonDLZPMCCS+SMucVC1E=
+	t=1755525621; cv=none; b=hNS50nnuxZeOZvuJ0uC+PJKYfAukFKj5U7MGsb3b0veA0JdHdwKApG9XXmVSKY9RDL9pYlEkX33ctQdC2uJv4SE9FC7/OZqzeWkBgr4VlwfLYTXbrrl4mfY2l0WKZlhzW6qx/7moEGJtpmO7LdzQ2YrDLHLyg4Q6ITAnXgwHZ7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525618; c=relaxed/simple;
-	bh=OV82ttCaOUVeJ538w5Xzr3j3QmefR1tt5Y5Ql7BCJ0Q=;
+	s=arc-20240116; t=1755525621; c=relaxed/simple;
+	bh=Re0hP8YYrPvbPiHA9E6DZbuigQM/75Eu3wGPP20Ch2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kbEkfO4kHRjHX/TbedwCvN8LNsLVlLvzAzO8q6aiz0UG58rOS+vPOMJtz+l6Mclpwsj6pTzTkkTpxgZ3CpMbEJYEWKY00n1vs/HTj0bBOKT8aOvOgEnULjswBezvecsgeuIJwSK/563/rDqrIdcxK1FvUw9gonMJ4Zr6SRi3dn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWsewurm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bGHcKwlUfi18xBTqAzjMBCaesoyZXJEKHQeDDAwwsI5S4PfmlaRLb9LzwNTSCJGs0yXxehF1LTmSq24tXXcZvy7BAzWiBN93XdYq4NaAzf+3zmnqJfV5PK997O88fldMuHVBpzhgVJdIaREqMrwWr24BZe8Ke/2kXAya7pTVP30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kz+hOCn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWsewurm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F01BC4CEEB;
-	Mon, 18 Aug 2025 14:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kz+hOCn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FE5C4CEEB;
+	Mon, 18 Aug 2025 14:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525617;
-	bh=OV82ttCaOUVeJ538w5Xzr3j3QmefR1tt5Y5Ql7BCJ0Q=;
+	s=korg; t=1755525621;
+	bh=Re0hP8YYrPvbPiHA9E6DZbuigQM/75Eu3wGPP20Ch2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWsewurmEQz7/ql1wVjeihthsyQ9vSRjHSjKO95WUK5WTPIS91UicVwmXUUB5LwwK
-	 SaXCf8wgOidjbXMIuh3cjmTdJumT20Dq7GRyl/jogqdp3H/V/oRqJ2XiOJQfSMdvdU
-	 8SjFA6drqg9Yu/NHAHEeDV4m6KPYw+fgYsv6nlQY=
+	b=Kz+hOCn3qqtw1TYCgE3iFKK4OdJVCxHNER+86C6tz2y6iXTVIHsjDwMp0tZ/GeroM
+	 44/9c8OaZglP8obdN90/YK2PqLaniIfMIaoea6IpjKiHSRNUcvF9uBmYWnRff+DVoJ
+	 4vQHdCp9RwWd+UNUFJJ0T8Sh4bdLASBR17i3t1Ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	ap420073@gmail.com,
+	Mina Almasry <almasrymina@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 317/570] powerpc: floppy: Add missing checks after DMA map
-Date: Mon, 18 Aug 2025 14:45:04 +0200
-Message-ID: <20250818124518.075135683@linuxfoundation.org>
+Subject: [PATCH 6.16 318/570] netmem: fix skb_frag_address_safe with unreadable skbs
+Date: Mon, 18 Aug 2025 14:45:05 +0200
+Message-ID: <20250818124518.112486141@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,39 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Mina Almasry <almasrymina@google.com>
 
-[ Upstream commit cf183c1730f2634245da35e9b5d53381b787d112 ]
+[ Upstream commit 4672aec56d2e8edabcb74c3e2320301d106a377e ]
 
-The DMA map functions can fail and should be tested for errors.
+skb_frag_address_safe() needs a check that the
+skb_frag_page exists check similar to skb_frag_address().
 
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250620075602.12575-1-fourier.thomas@gmail.com
+Cc: ap420073@gmail.com
+
+Signed-off-by: Mina Almasry <almasrymina@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250619175239.3039329-1-almasrymina@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/floppy.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/skbuff.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/floppy.h b/arch/powerpc/include/asm/floppy.h
-index f8ce178b43b7..34abf8bea2cc 100644
---- a/arch/powerpc/include/asm/floppy.h
-+++ b/arch/powerpc/include/asm/floppy.h
-@@ -144,9 +144,12 @@ static int hard_dma_setup(char *addr, unsigned long size, int mode, int io)
- 		bus_addr = 0;
- 	}
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 37f5c6099b1f..67a906702830 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -3688,7 +3688,13 @@ static inline void *skb_frag_address(const skb_frag_t *frag)
+  */
+ static inline void *skb_frag_address_safe(const skb_frag_t *frag)
+ {
+-	void *ptr = page_address(skb_frag_page(frag));
++	struct page *page = skb_frag_page(frag);
++	void *ptr;
++
++	if (!page)
++		return NULL;
++
++	ptr = page_address(page);
+ 	if (unlikely(!ptr))
+ 		return NULL;
  
--	if (!bus_addr)	/* need to map it */
-+	if (!bus_addr) {	/* need to map it */
- 		bus_addr = dma_map_single(&isa_bridge_pcidev->dev, addr, size,
- 					  dir);
-+		if (dma_mapping_error(&isa_bridge_pcidev->dev, bus_addr))
-+			return -ENOMEM;
-+	}
- 
- 	/* remember this one as prev */
- 	prev_addr = addr;
 -- 
 2.39.5
 
