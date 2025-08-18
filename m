@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D92321F2F;
-	Mon, 18 Aug 2025 14:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29588321F33;
+	Mon, 18 Aug 2025 14:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526001; cv=none; b=bn4DOkPtz+aG1eb22wh4vmx+AEpboJDaGUjBG9yPCRsvlRTw/Qn7CWIeuczSw5DUDraXNJXSl3P3TGXKP54UEBB8tTlf+lnpesOD/CG5j3L1fCA1u7NY6G4l1gomBLi9GulEmt9n42VNsOhsjffbhoVVINykhiLamaW2VNUuhzE=
+	t=1755526004; cv=none; b=JER6Khki+DnpjIzrEmJRlfSUY0sWxoTsiWJO2o01PY83dOgAut6dqGGy4zvLJDxJPEXaRBHjnqSAc1fVo3qx2rXJg5TU9ad8XwFzJQLHYUJFhUd8NYZs4R4B0v7cntT+k4Kf+HWKRlGDYquaVlzNyzsoPZA/qUvbfHbGxknp/5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526001; c=relaxed/simple;
-	bh=R2fE6NlI20T3vHkeVxa4Y0DcgPqy9D/5eRg0qFCsqAM=;
+	s=arc-20240116; t=1755526004; c=relaxed/simple;
+	bh=vYMjhFDzNcDDfKocDVIrKEagR9FSmb/9gC+IiFESwg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNRyluJ3CsVG/oKnTkM9OTTE6N27Cy0V7sa0p/5cV/OqsSnCyaJCZG/CT065f6akz92w5BZB+1id2eTdzlL/akR/xacSzlvEFUY31/Dpf27ZuITROvoJZVz6vZA8f3xOEtq3PDCYdsWBoRzXDzXdUww+Tyf+TEfsWrNJ8p3Ario=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l8Kva2H0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PwKBjHmL+yYxc//n7JBnLzUZ1P2zWvAfvSjPGzv5RUB9ChECyCxB3oxwn/M7DfKblUPg7xreh/J5PWUsRO9NmzNJsFup/enPmGSi6Nyz0fyjVZ1FB6H7gFFRBQ3XSFjg90LzdFRnQbVMewDVUOk/KGOjXXanGMpeMcKQ0OLDEeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chElIdsJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8Kva2H0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74982C2BCB9;
-	Mon, 18 Aug 2025 14:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chElIdsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0ECBC4CEEB;
+	Mon, 18 Aug 2025 14:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526000;
-	bh=R2fE6NlI20T3vHkeVxa4Y0DcgPqy9D/5eRg0qFCsqAM=;
+	s=korg; t=1755526004;
+	bh=vYMjhFDzNcDDfKocDVIrKEagR9FSmb/9gC+IiFESwg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l8Kva2H0iFke/gYE1WpfnsStfAw/V3LrKbRqm1L3Wu0Tv6xF1nPwVirAJVV6/bO5E
-	 Mn5/PVRkLhc9jNjM6MqsXDqOb4t/YwpTyXj/3yfzGKPTlNAd5pWhqEKGI1upE1rZ3y
-	 Whgy9em0wZOGsSUcmNd6X3aw221whsevL9Gr7a9o=
+	b=chElIdsJVwwbo92Xq9hpR8Ww70dsIRFJ7J+P6EM5LflmEQUSUqjcsKCSySy0BwZ2X
+	 6a7/FLmG5+TKJuPuzdOlZo6Q7XUzjZ85xvr2aCfMC/XAt2BERektRjVqVdz5H0Qi8B
+	 4LSNP3Cwpqg97lqAgMiKDBqnF40wA7IBA+BhKXTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Guo <alexguo1023@gmail.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 412/570] media: dvb-frontends: dib7090p: fix null-ptr-deref in dib7090p_rw_on_apb()
-Date: Mon, 18 Aug 2025 14:46:39 +0200
-Message-ID: <20250818124521.719797037@linuxfoundation.org>
+Subject: [PATCH 6.16 430/570] dm-mpath: dont print the "loaded" message if registering fails
+Date: Mon, 18 Aug 2025 14:46:57 +0200
+Message-ID: <20250818124522.400456634@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,43 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Guo <alexguo1023@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit ce5cac69b2edac3e3246fee03e8f4c2a1075238b ]
+[ Upstream commit 6e11952a6abc4641dc8ae63f01b318b31b44e8db ]
 
-In dib7090p_rw_on_apb, msg is controlled by user. When msg[0].buf is null and
-msg[0].len is zero, former checks on msg[0].buf would be passed. If accessing
-msg[0].buf[2] without sanity check, null pointer deref would happen. We add
-check on msg[0].len to prevent crash. Similar issue occurs when access
-msg[1].buf[0] and msg[1].buf[1].
+If dm_register_path_selector, don't print the "version X loaded" message.
 
-Similar commit: commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
-
-Signed-off-by: Alex Guo <alexguo1023@gmail.com>
-Link: https://lore.kernel.org/r/20250616013231.730221-1-alexguo1023@gmail.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/dib7000p.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/md/dm-ps-historical-service-time.c | 4 +++-
+ drivers/md/dm-ps-queue-length.c            | 4 +++-
+ drivers/md/dm-ps-round-robin.c             | 4 +++-
+ drivers/md/dm-ps-service-time.c            | 4 +++-
+ 4 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
-index b40daf242046..360a2d7dd3ed 100644
---- a/drivers/media/dvb-frontends/dib7000p.c
-+++ b/drivers/media/dvb-frontends/dib7000p.c
-@@ -2256,8 +2256,12 @@ static int dib7090p_rw_on_apb(struct i2c_adapter *i2c_adap,
- 	u16 word;
+diff --git a/drivers/md/dm-ps-historical-service-time.c b/drivers/md/dm-ps-historical-service-time.c
+index b49e10d76d03..2c8626a83de4 100644
+--- a/drivers/md/dm-ps-historical-service-time.c
++++ b/drivers/md/dm-ps-historical-service-time.c
+@@ -541,8 +541,10 @@ static int __init dm_hst_init(void)
+ {
+ 	int r = dm_register_path_selector(&hst_ps);
  
- 	if (num == 1) {		/* write */
-+		if (msg[0].len < 3)
-+			return -EOPNOTSUPP;
- 		dib7000p_write_word(state, apb_address, ((msg[0].buf[1] << 8) | (msg[0].buf[2])));
- 	} else {
-+		if (msg[1].len < 2)
-+			return -EOPNOTSUPP;
- 		word = dib7000p_read_word(state, apb_address);
- 		msg[1].buf[0] = (word >> 8) & 0xff;
- 		msg[1].buf[1] = (word) & 0xff;
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " HST_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-queue-length.c b/drivers/md/dm-ps-queue-length.c
+index e305f05ad1e5..eb543e6431e0 100644
+--- a/drivers/md/dm-ps-queue-length.c
++++ b/drivers/md/dm-ps-queue-length.c
+@@ -260,8 +260,10 @@ static int __init dm_ql_init(void)
+ {
+ 	int r = dm_register_path_selector(&ql_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " QL_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-round-robin.c b/drivers/md/dm-ps-round-robin.c
+index d1745b123dc1..66a15ac0c22c 100644
+--- a/drivers/md/dm-ps-round-robin.c
++++ b/drivers/md/dm-ps-round-robin.c
+@@ -220,8 +220,10 @@ static int __init dm_rr_init(void)
+ {
+ 	int r = dm_register_path_selector(&rr_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " RR_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-service-time.c b/drivers/md/dm-ps-service-time.c
+index 969d31c40272..f8c43aecdb27 100644
+--- a/drivers/md/dm-ps-service-time.c
++++ b/drivers/md/dm-ps-service-time.c
+@@ -341,8 +341,10 @@ static int __init dm_st_init(void)
+ {
+ 	int r = dm_register_path_selector(&st_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " ST_VERSION " loaded");
+ 
 -- 
 2.39.5
 
