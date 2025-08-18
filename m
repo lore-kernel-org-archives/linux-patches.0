@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EEE31E0F2;
-	Mon, 18 Aug 2025 13:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55AA3218D5;
+	Mon, 18 Aug 2025 13:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522328; cv=none; b=J95sA9EmVQNNb9/9gdqMIVu63RvFD3BOnW3xlyhtzWiB0GA6boRFCCJ8nhNi8WFTm0w3jWWiAU6onzZ7fT0wVfBxtAefxDimJk/1BUVViyXtb8yAfJO7rb2fO6Eu0BUFMPPzlkwx5WDAZj5htQEWb/Ajr5Z6vKSytZLx0iAFBKQ=
+	t=1755522331; cv=none; b=nI1in5Njv/bU3oDztuD4GaK5R7K8KYYyuGJ9Rbf3VegXD86u/iONxuDSwwvnCahCp1SmdaUk6/ko6twT5mqOhYaaOCC5Pm887jQukBWhqMWxhoNbSh6KQWGleMm6U5pdpjkZVBlCsAkvyabjyKGPRUQe9ORpOq+qeVByc5v3szY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522328; c=relaxed/simple;
-	bh=jyFzuMAG6WmVNF0BPNRguU1BqccO17jNULPynGhTiek=;
+	s=arc-20240116; t=1755522331; c=relaxed/simple;
+	bh=g6yAQmPlG3D2ItiqLRNr5Js4uf5gmzPWs04RA41Xh6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AjGxtfsQw2ITjomJ40l68vHK8yrNg7v7FfI8cYw9kGLdcHxQ/s/vBHSaYD0xf6xep1nX0u4TBuoP3exCgJ8jBgZnrzoYV7k2XW/Gmay8G+GWwfOqZMUv+dBvJ9RFKiZ+LF4DQesVhl3lrluiQu15MPLCse9z6qDTTILX55nEurk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLQJqGH/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sER/MxNnOv0lJfY1R9CqCn2ckXuYV3aN4AD0FaLcPgW0zUpgtba2Jtvv3ZHLzeHyIa5fKP10HMI9Qi+fxygusLBOL92NXu7UQMvfZvgi2uibKzlVXLs2Sg1UFXl/H/PqX+gP6cDgmizxRm/NSA37W1txU+eEtPCC4h3tfrbHLCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb48Xey3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLQJqGH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A729C4CEEB;
-	Mon, 18 Aug 2025 13:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb48Xey3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C6EC4CEEB;
+	Mon, 18 Aug 2025 13:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522328;
-	bh=jyFzuMAG6WmVNF0BPNRguU1BqccO17jNULPynGhTiek=;
+	s=korg; t=1755522331;
+	bh=g6yAQmPlG3D2ItiqLRNr5Js4uf5gmzPWs04RA41Xh6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLQJqGH/QB9PS4rpPPdMoesBuhjGDgN46czV6YTkn0OtKrTxZFbi5UuTylvUPbMtr
-	 yeZK2I8RyPqIc/oYZaNJOJ9L2AlxwcxrGFIyyPBbmdrJCm5AMuhUUtrlSwTv7loEOf
-	 gpm7FNDVPiCt2LPZxC+72VWO6eCQzi03h0Fwc/mQ=
+	b=Pb48Xey39nv/jrr69TC9pV1X0yYPb8iH9L9d6i1qPt2LjU6nrFTx1eO9OoGYvjcfe
+	 ze6KumZ/9ymEQODe5RFgjQxragCoz2Pm/168Wx1ET7HxkPnOAmvaJyCB//kjLhtJ90
+	 y5nQVFULQ53zwLd+dnHdQUkG+gmMEAAaFbJRe+oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 256/444] wifi: rtlwifi: fix possible skb memory leak in _rtl_pci_init_one_rxdesc()
-Date: Mon, 18 Aug 2025 14:44:42 +0200
-Message-ID: <20250818124458.429571005@linuxfoundation.org>
+Subject: [PATCH 6.12 283/444] phy: rockchip-pcie: Properly disable TEST_WRITE strobe signal
+Date: Mon, 18 Aug 2025 14:45:09 +0200
+Message-ID: <20250818124459.575538217@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,40 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Geraldo Nascimento <geraldogabriel@gmail.com>
 
-[ Upstream commit 76b3e5078d76f0eeadb7aacf9845399f8473da0d ]
+[ Upstream commit 25facbabc3fc33c794ad09d73f73268c0f8cbc7d ]
 
-When `dma_mapping_error()` is true, if a new `skb` has been allocated,
-then it must be de-allocated.
+pcie_conf is used to touch TEST_WRITE strobe signal. This signal should
+be enabled, a little time waited, and then disabled. Current code clearly
+was copy-pasted and never disables the strobe signal. Adjust the define.
+While at it, remove PHY_CFG_RD_MASK which has been unused since
+64cdc0360811 ("phy: rockchip-pcie: remove unused phy_rd_cfg function").
 
-Compile tested only
-
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250613074014.69856-2-fourier.thomas@gmail.com
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Link: https://lore.kernel.org/r/d514d5d5627680caafa8b7548cbdfee4307f5440.1751322015.git.geraldogabriel@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/phy/rockchip/phy-rockchip-pcie.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 2741c3beac4c..d080469264cf 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -572,8 +572,11 @@ static int _rtl_pci_init_one_rxdesc(struct ieee80211_hw *hw,
- 		dma_map_single(&rtlpci->pdev->dev, skb_tail_pointer(skb),
- 			       rtlpci->rxbuffersize, DMA_FROM_DEVICE);
- 	bufferaddress = *((dma_addr_t *)skb->cb);
--	if (dma_mapping_error(&rtlpci->pdev->dev, bufferaddress))
-+	if (dma_mapping_error(&rtlpci->pdev->dev, bufferaddress)) {
-+		if (!new_skb)
-+			kfree_skb(skb);
- 		return 0;
-+	}
- 	rtlpci->rx_ring[rxring_idx].rx_buf[desc_idx] = skb;
- 	if (rtlpriv->use_new_trx_flow) {
- 		/* skb->cb may be 64 bit address */
+diff --git a/drivers/phy/rockchip/phy-rockchip-pcie.c b/drivers/phy/rockchip/phy-rockchip-pcie.c
+index 51cc5ece0e63..a75affbb49b6 100644
+--- a/drivers/phy/rockchip/phy-rockchip-pcie.c
++++ b/drivers/phy/rockchip/phy-rockchip-pcie.c
+@@ -30,9 +30,8 @@
+ #define PHY_CFG_ADDR_SHIFT    1
+ #define PHY_CFG_DATA_MASK     0xf
+ #define PHY_CFG_ADDR_MASK     0x3f
+-#define PHY_CFG_RD_MASK       0x3ff
+ #define PHY_CFG_WR_ENABLE     1
+-#define PHY_CFG_WR_DISABLE    1
++#define PHY_CFG_WR_DISABLE    0
+ #define PHY_CFG_WR_SHIFT      0
+ #define PHY_CFG_WR_MASK       1
+ #define PHY_CFG_PLL_LOCK      0x10
 -- 
 2.39.5
 
