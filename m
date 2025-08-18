@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29588321F33;
-	Mon, 18 Aug 2025 14:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B553218C0;
+	Mon, 18 Aug 2025 14:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526004; cv=none; b=JER6Khki+DnpjIzrEmJRlfSUY0sWxoTsiWJO2o01PY83dOgAut6dqGGy4zvLJDxJPEXaRBHjnqSAc1fVo3qx2rXJg5TU9ad8XwFzJQLHYUJFhUd8NYZs4R4B0v7cntT+k4Kf+HWKRlGDYquaVlzNyzsoPZA/qUvbfHbGxknp/5E=
+	t=1755526007; cv=none; b=bSyzfBqhgnhKt5bVAswGmxqpHVkrTle7UBYZo3K7DoWVvStPVLxT3SAGtsfjgFiUQ5Vg0zaS7KfRWcoQUqT7l3pwvSCaOWylTcirXAdQ8gTtk7+VlfdP+z1l+lanOWAcMm8zFPTfYXcilCe7NpM1++0WqHGpwXWh76i9JOLsBok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526004; c=relaxed/simple;
-	bh=vYMjhFDzNcDDfKocDVIrKEagR9FSmb/9gC+IiFESwg0=;
+	s=arc-20240116; t=1755526007; c=relaxed/simple;
+	bh=aTqbBptv9qMbItI48qahctAfL8NCuIWyphwqOi6azv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwKBjHmL+yYxc//n7JBnLzUZ1P2zWvAfvSjPGzv5RUB9ChECyCxB3oxwn/M7DfKblUPg7xreh/J5PWUsRO9NmzNJsFup/enPmGSi6Nyz0fyjVZ1FB6H7gFFRBQ3XSFjg90LzdFRnQbVMewDVUOk/KGOjXXanGMpeMcKQ0OLDEeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chElIdsJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qudyov+glFyJljOnYwgIUbZVselzyBuI0aUi8voDECHsF0PvPtlxgV4nFFtZ3Yi7t2n2eSfAmM9DuFQWKnEI+jeNb6Q8CDeQ+cJc0NedlqfmtcdF4iHbI+uuWJYqIH2CyPL18yB0UHajmPCQmQRPFaRzywFDXqSo9xgUx9xqejU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnZw84Py; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chElIdsJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0ECBC4CEEB;
-	Mon, 18 Aug 2025 14:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnZw84Py"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0ECBC4CEEB;
+	Mon, 18 Aug 2025 14:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526004;
-	bh=vYMjhFDzNcDDfKocDVIrKEagR9FSmb/9gC+IiFESwg0=;
+	s=korg; t=1755526007;
+	bh=aTqbBptv9qMbItI48qahctAfL8NCuIWyphwqOi6azv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=chElIdsJVwwbo92Xq9hpR8Ww70dsIRFJ7J+P6EM5LflmEQUSUqjcsKCSySy0BwZ2X
-	 6a7/FLmG5+TKJuPuzdOlZo6Q7XUzjZ85xvr2aCfMC/XAt2BERektRjVqVdz5H0Qi8B
-	 4LSNP3Cwpqg97lqAgMiKDBqnF40wA7IBA+BhKXTg=
+	b=xnZw84PyAqxyKqAirzxfhQqaAcnwIISCWZyBof2V8dqp3+uDJppZZneqrYxjMi2ju
+	 OkHDcQK3bo/96pU3xgzwMXu3fA6csk4h1oyrmRfCTz3+mRDU5zLZaD7x30j2le7e/5
+	 XmSoIyCxpwnKc+lyvs5kqUh9lItvJbbLp7XPm3Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 430/570] dm-mpath: dont print the "loaded" message if registering fails
-Date: Mon, 18 Aug 2025 14:46:57 +0200
-Message-ID: <20250818124522.400456634@linuxfoundation.org>
+Subject: [PATCH 6.16 431/570] dm-table: fix checking for rq stackable devices
+Date: Mon, 18 Aug 2025 14:46:58 +0200
+Message-ID: <20250818124522.436893533@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,85 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 6e11952a6abc4641dc8ae63f01b318b31b44e8db ]
+[ Upstream commit 8ca719b81987be690f197e82fdb030580c0a07f3 ]
 
-If dm_register_path_selector, don't print the "version X loaded" message.
+Due to the semantics of iterate_devices(), the current code allows a
+request-based dm table as long as it includes one request-stackable
+device. It is supposed to only allow tables where there are no
+non-request-stackable devices.
 
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-ps-historical-service-time.c | 4 +++-
- drivers/md/dm-ps-queue-length.c            | 4 +++-
- drivers/md/dm-ps-round-robin.c             | 4 +++-
- drivers/md/dm-ps-service-time.c            | 4 +++-
- 4 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/md/dm-table.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/dm-ps-historical-service-time.c b/drivers/md/dm-ps-historical-service-time.c
-index b49e10d76d03..2c8626a83de4 100644
---- a/drivers/md/dm-ps-historical-service-time.c
-+++ b/drivers/md/dm-ps-historical-service-time.c
-@@ -541,8 +541,10 @@ static int __init dm_hst_init(void)
+diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
+index 24a857ff6d0b..79ba4bacd0f9 100644
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -899,17 +899,17 @@ static bool dm_table_supports_dax(struct dm_table *t,
+ 	return true;
+ }
+ 
+-static int device_is_rq_stackable(struct dm_target *ti, struct dm_dev *dev,
+-				  sector_t start, sector_t len, void *data)
++static int device_is_not_rq_stackable(struct dm_target *ti, struct dm_dev *dev,
++				      sector_t start, sector_t len, void *data)
  {
- 	int r = dm_register_path_selector(&hst_ps);
+ 	struct block_device *bdev = dev->bdev;
+ 	struct request_queue *q = bdev_get_queue(bdev);
  
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
+ 	/* request-based cannot stack on partitions! */
+ 	if (bdev_is_partition(bdev))
+-		return false;
++		return true;
  
- 	DMINFO("version " HST_VERSION " loaded");
+-	return queue_is_mq(q);
++	return !queue_is_mq(q);
+ }
  
-diff --git a/drivers/md/dm-ps-queue-length.c b/drivers/md/dm-ps-queue-length.c
-index e305f05ad1e5..eb543e6431e0 100644
---- a/drivers/md/dm-ps-queue-length.c
-+++ b/drivers/md/dm-ps-queue-length.c
-@@ -260,8 +260,10 @@ static int __init dm_ql_init(void)
- {
- 	int r = dm_register_path_selector(&ql_ps);
+ static int dm_table_determine_type(struct dm_table *t)
+@@ -1005,7 +1005,7 @@ static int dm_table_determine_type(struct dm_table *t)
  
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " QL_VERSION " loaded");
- 
-diff --git a/drivers/md/dm-ps-round-robin.c b/drivers/md/dm-ps-round-robin.c
-index d1745b123dc1..66a15ac0c22c 100644
---- a/drivers/md/dm-ps-round-robin.c
-+++ b/drivers/md/dm-ps-round-robin.c
-@@ -220,8 +220,10 @@ static int __init dm_rr_init(void)
- {
- 	int r = dm_register_path_selector(&rr_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " RR_VERSION " loaded");
- 
-diff --git a/drivers/md/dm-ps-service-time.c b/drivers/md/dm-ps-service-time.c
-index 969d31c40272..f8c43aecdb27 100644
---- a/drivers/md/dm-ps-service-time.c
-+++ b/drivers/md/dm-ps-service-time.c
-@@ -341,8 +341,10 @@ static int __init dm_st_init(void)
- {
- 	int r = dm_register_path_selector(&st_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " ST_VERSION " loaded");
- 
+ 	/* Non-request-stackable devices can't be used for request-based dm */
+ 	if (!ti->type->iterate_devices ||
+-	    !ti->type->iterate_devices(ti, device_is_rq_stackable, NULL)) {
++	    ti->type->iterate_devices(ti, device_is_not_rq_stackable, NULL)) {
+ 		DMERR("table load rejected: including non-request-stackable devices");
+ 		return -EINVAL;
+ 	}
 -- 
 2.39.5
 
