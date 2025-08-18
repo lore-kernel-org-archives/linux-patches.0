@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49255320CDB;
-	Mon, 18 Aug 2025 13:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB5322DCE;
+	Mon, 18 Aug 2025 13:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523521; cv=none; b=D1qjxgQ9kYcnoCb8uDuA3twN6EMLuxq8bwYDJtZWQiu+hxZwBMZuTVrmfMhpHHjorhU3zN/x0N8w0lS3G+8X8gdM1WMPCOnMX3QE28vSHyaFcaNY7m9rVc8FwvcPM7e78SmW/OM79OflDETotP6pO+F2K1l0zcdf8lJrg3Z09GA=
+	t=1755523524; cv=none; b=Jg94swR0z7EJIo+oHP9l34Z4f0aBYbVn7lxKAXSLaUgg7+0wAJD09RbXWQrxkKhebbChWfgktbC6gPjaT6mIWxehbVg+MriXe5YDXnw53Nvc+xezkGWya1KB33uKC2QxjcdGGNEJnt6rgX13ovewKTUAr5SlCPwwFxnRE0OXUTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523521; c=relaxed/simple;
-	bh=q2R+UZR25tIAuDAMTvpr8tHLnBj8GEgPFv0xLWtB9Qs=;
+	s=arc-20240116; t=1755523524; c=relaxed/simple;
+	bh=BYaRKlcUHE0SC8OsZU0ZdC6KHgJOB+tGcFLExpcCGqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iDLHcEiQQT715GzxCgba1hrkDogR/pE2o1uzjY9MUwC2rAPuo9cX4LLblMkt9+zzzVqBWFfjMl9SdzyLDCUBVPc6r5ZXt7YdOGeKg7AhPk6Ief/BnmsAGg1eqQBn7macHKhCd5HZxmTPmrjiZE1T9/CN46FKJDVSnQngudIyr+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+DdR8+U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rwCSY96yZcvRYTW/8rRSlWFT+8Qo23duC18Uk6+Umf1sERq2vOx+9ZNeeU4SzgXpVFrbM5XM+8AQ4lzyUXjzSckhmDRXAjFeefXvT/6hFYWLmjeMyWn9th0NQgLKr/QKMqAtvLnQ18ACbsueGI+W+waddBVlSZvjseEwulvxOJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iufSE74m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+DdR8+U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F36C4CEEB;
-	Mon, 18 Aug 2025 13:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iufSE74m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29E1C4CEEB;
+	Mon, 18 Aug 2025 13:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523521;
-	bh=q2R+UZR25tIAuDAMTvpr8tHLnBj8GEgPFv0xLWtB9Qs=;
+	s=korg; t=1755523524;
+	bh=BYaRKlcUHE0SC8OsZU0ZdC6KHgJOB+tGcFLExpcCGqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+DdR8+U+NI1Yao3yN2hNxEIbncltKWhdnqhaCpFzk55VO+YImC2zA6PFCnf4n2wt
-	 M7E2gvV9NPUz73wjgBsdi8PAtExs4qoEPSgJiw7TRp/IJCi3QxFgK1eQ7kqXK5h8bB
-	 2P7Gd9eCS5P0Lf4zZQ7GL88r5kPZh6Mn8UbdKhgU=
+	b=iufSE74mwhK9Mzj9rItoE4jVuhcXTgx4cJMGqjgKoYBd5+igc3gx49G0OC3vbQ87k
+	 K6sPU3qag5xJi/xZCUNj4w2zc8DyCjv4ThILlUJBgDA7MN2vRbaZ1uLaEzsOAyHRll
+	 oa99bP3SB8Bq9GSCshmhQYBqd+rllvPa3pxS1jno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shdeb <shdeb3000000@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Anthoine Bourgeois <anthoine.bourgeois@vates.tech>,
+	Juergen Gross <jgross@suse.com>,
+	Elliott Mitchell <ehem+xen@m5p.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 197/515] Bluetooth: btusb: Add support for variant of RTL8851BE (USB ID 13d3:3601)
-Date: Mon, 18 Aug 2025 14:43:03 +0200
-Message-ID: <20250818124505.954611300@linuxfoundation.org>
+Subject: [PATCH 6.15 198/515] xen/netfront: Fix TX response spurious interrupts
+Date: Mon, 18 Aug 2025 14:43:04 +0200
+Message-ID: <20250818124505.991460691@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -46,76 +46,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <ukleinek@debian.org>
+From: Anthoine Bourgeois <anthoine.bourgeois@vates.tech>
 
-[ Upstream commit 65b0dca6f9f2c912a77a6ad6cf56f60a895a496b ]
+[ Upstream commit 114a2de6fa86d99ed9546cc9113a3cad58beef79 ]
 
-Teach the btusb driver to recognize another variant of the RTL8851BE
-bluetooth radio.
+We found at Vates that there are lot of spurious interrupts when
+benchmarking the xen-net PV driver frontend. This issue appeared with a
+patch that addresses security issue XSA-391 (b27d47950e48 "xen/netfront:
+harden netfront against event channel storms"). On an iperf benchmark,
+spurious interrupts can represent up to 50% of the interrupts.
 
-/sys/kernel/debug/usb/devices reports for that device:
+Spurious interrupts are interrupts that are rised for nothing, there is
+no work to do. This appends because the function that handles the
+interrupts ("xennet_tx_buf_gc") is also called at the end of the request
+path to garbage collect the responses received during the transmission
+load.
 
-	T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-	D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-	P:  Vendor=13d3 ProdID=3601 Rev= 0.00
-	S:  Manufacturer=Realtek
-	S:  Product=Bluetooth Radio
-	S:  SerialNumber=00e04c000001
-	C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-	I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-	E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-	E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-	I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-	I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-	I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-	I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-	I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-	I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-	I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+The request path is doing the work that the interrupt handler should
+have done otherwise. This is particurary true when there is more than
+one vcpu and get worse linearly with the number of vcpu/queue.
 
-Reported-by: shdeb <shdeb3000000@gmail.com>
-Link: https://bugs.debian.org/1106386
-Signed-off-by: Uwe Kleine-König <ukleinek@debian.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Moreover, this problem is amplifyed by the penalty imposed by a spurious
+interrupt. When an interrupt is found spurious the interrupt chip will
+delay the EOI to slowdown the backend. This delay will allow more
+responses to be handled by the request path and then there will be more
+chance the next interrupt will not find any work to do, creating a new
+spurious interrupt.
+
+This causes performance issue. The solution here is to remove the calls
+from the request path and let the interrupt handler do the processing of
+the responses. This approch removes most of the spurious interrupts
+(<0.05%) and also has the benefit of freeing up cycles in the request
+path, allowing it to process more work, which improves performance
+compared to masking the spurious interrupt one way or another.
+
+This optimization changes a part of the code that is present since the
+net frontend driver was upstreamed. There is no similar pattern in the
+other xen PV drivers. Since the first commit of xen-netfront is a blob
+that doesn't explain all the design choices I can only guess why this
+specific mecanism was here. This could have been introduce to compensate
+a slow backend at the time (maybe the backend was fixed or optimize
+later) or a small queue. In 18 years, both frontend and backend gain lot
+of features and optimizations that could have obsolete the feature of
+reaping completions from the TX path.
+
+Some vif throughput performance figures from a 8 vCPUs, 4GB of RAM HVM
+guest(s):
+
+Without this patch on the :
+vm -> dom0: 4.5Gb/s
+vm -> vm:   7.0Gb/s
+
+Without XSA-391 patch (revert of b27d47950e48):
+vm -> dom0: 8.3Gb/s
+vm -> vm:   8.7Gb/s
+
+With XSA-391 and this patch:
+vm -> dom0: 11.5Gb/s
+vm -> vm:   12.6Gb/s
+
+v2:
+- add revewed and tested by tags
+- resend with the maintainers in the recipients list
+
+v3:
+- remove Fixes tag but keep the commit ref in the explanation
+- add a paragraph on why this code was here
+
+Signed-off-by: Anthoine Bourgeois <anthoine.bourgeois@vates.tech>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Elliott Mitchell <ehem+xen@m5p.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250721093316.23560-1-anthoine.bourgeois@vates.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/xen-netfront.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 338f426e92e2..c83de1772fdd 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -515,6 +515,7 @@ static const struct usb_device_id quirks_table[] = {
- 	/* Realtek 8851BE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0xb850), .driver_info = BTUSB_REALTEK },
- 	{ USB_DEVICE(0x13d3, 0x3600), .driver_info = BTUSB_REALTEK },
-+	{ USB_DEVICE(0x13d3, 0x3601), .driver_info = BTUSB_REALTEK },
+diff --git a/drivers/net/xen-netfront.c b/drivers/net/xen-netfront.c
+index 5091e1fa4a0d..186d8ec1eaa6 100644
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -637,8 +637,6 @@ static int xennet_xdp_xmit_one(struct net_device *dev,
+ 	tx_stats->packets++;
+ 	u64_stats_update_end(&tx_stats->syncp);
  
- 	/* Realtek 8851BU Bluetooth devices */
- 	{ USB_DEVICE(0x3625, 0x010b), .driver_info = BTUSB_REALTEK |
+-	xennet_tx_buf_gc(queue);
+-
+ 	return 0;
+ }
+ 
+@@ -848,9 +846,6 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
+ 	tx_stats->packets++;
+ 	u64_stats_update_end(&tx_stats->syncp);
+ 
+-	/* Note: It is not safe to access skb after xennet_tx_buf_gc()! */
+-	xennet_tx_buf_gc(queue);
+-
+ 	if (!netfront_tx_slot_available(queue))
+ 		netif_tx_stop_queue(netdev_get_tx_queue(dev, queue->id));
+ 
 -- 
 2.39.5
 
