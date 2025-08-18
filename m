@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B001335BA7;
-	Mon, 18 Aug 2025 13:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D0F335BAA;
+	Mon, 18 Aug 2025 13:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525120; cv=none; b=nkONAlxd4DuRW9WNIAhDEZ78dyQXj/sRaLjQbGQy1EQG7u5Bg4Sp7SbZuJxNESco5gspqhr3nUrnmyKBf3sNt/KTCM1d443g0+hV71xaXqaCbMqjkOvs4LXHoiHla04Ry1cvUWjvE6WYPjSDi0g3uwB4eDPYJRmFwRYsVmxsG44=
+	t=1755525123; cv=none; b=s4vM3nnGOtHXelEf8JszRc4+mMAaT6JMvRwhVtHz46wGUN4ZDwpyu4f43/pSVfwwoqTQqU4QDD413ZFkP03MyuVhgBD0rbBRIkYEy2EmUvDV4DYNOi+WjqjSs23cUU11sMdLlyNR03DDJPWmoEQh2BaVFgzJTf+X+QFc24zD2Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525120; c=relaxed/simple;
-	bh=gLSkRiMgEqStu03dKxTQ6d17A5IZSAJcW8s9UVuR9Iw=;
+	s=arc-20240116; t=1755525123; c=relaxed/simple;
+	bh=hsrwDM33Pcb2oqokXTlUOvrJBoK2tddqMSQNlCRwtdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SggYDkQ40vEM+ANLyaQkaUNZEDlXC1XLZOP8+hDG3kWMbaNouc+pblhCDyvVQofhZRrxegpiJFkMSFQpipd/pI2eqVpsvkYMHr1Z+CgjAPsFnLYu5E4oGP9kvmRqu4JGARKlscDq/hGcBqeVuQXTlgEU037m0c46pJHQaRtw/eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSlqmIdo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MzvvseDnw93tned6zOFW2bg5C8odERCd3CG8vn3l8AH4M+ffSQSKgiZXudLV3qSjvb8DxV2Ps0r4gGjd9UsmNT1CZQrADgaEbId96GGJ4fjjnCCDYNDze3Kx7Q1pbuxTk5dOYA25ns7g/dAAOuQYK/e0R5QH2CB8Yhmz/I6gYlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTC6/+tm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSlqmIdo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E67C4CEEB;
-	Mon, 18 Aug 2025 13:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTC6/+tm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBADCC4CEEB;
+	Mon, 18 Aug 2025 13:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525120;
-	bh=gLSkRiMgEqStu03dKxTQ6d17A5IZSAJcW8s9UVuR9Iw=;
+	s=korg; t=1755525123;
+	bh=hsrwDM33Pcb2oqokXTlUOvrJBoK2tddqMSQNlCRwtdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSlqmIdosID5I7TKD+fcGbX1AsJIOSDgcM2QlFfRoFn1YAsWHFCWZsIP0q2IfrwWd
-	 ZCxJjywXcMeArh315HxuQ7RCfia5R80d+gBDB56RVk1WCcHsWPT3UmmQmMKByxY7oB
-	 oXIgU3KuyIJyKwIdphMu6rMkR8XbxLhytQRDfGq4=
+	b=gTC6/+tmTcNc+NcxlB0VQ8/rHrFM/rGWejr1i+y46+j7NFfOYXyrF99HMxoOAigBo
+	 piZGP3vySnnhTUa8ueUec0fKBzNT4nKoOVQ3N6+5+/HkgxBy3sLVRI1boyO2rf8ImT
+	 OfGb0xB3QVtTW6UATrj2rPaMgCuzjQbozlmkb+xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GalaxySnail <me@glxys.nl>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 163/570] ALSA: hda: add MODULE_FIRMWARE for cs35l41/cs35l56
-Date: Mon, 18 Aug 2025 14:42:30 +0200
-Message-ID: <20250818124512.085596549@linuxfoundation.org>
+Subject: [PATCH 6.16 164/570] PM: runtime: Clear power.needs_force_resume in pm_runtime_reinit()
+Date: Mon, 18 Aug 2025 14:42:31 +0200
+Message-ID: <20250818124512.124180745@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,45 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: GalaxySnail <me@glxys.nl>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 6eda9429501508196001845998bb8c73307d311a ]
+[ Upstream commit 89d9cec3b1e9c49bae9375a2db6dc49bc7468af0 ]
 
-add firmware information in the .modinfo section, so that userspace
-tools can find out firmware required by cs35l41/cs35l56 kernel module
+Clear power.needs_force_resume in pm_runtime_reinit() in case it has
+been set by pm_runtime_force_suspend() invoked from a driver remove
+callback.
 
-Signed-off-by: GalaxySnail <me@glxys.nl>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250624101716.2365302-2-me@glxys.nl
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/9495163.CDJkKcVGEf@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l41_hda.c | 2 ++
- sound/pci/hda/cs35l56_hda.c | 4 ++++
- 2 files changed, 6 insertions(+)
+ drivers/base/power/runtime.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/pci/hda/cs35l41_hda.c b/sound/pci/hda/cs35l41_hda.c
-index d5bc81099d0d..17cdce91fdbf 100644
---- a/sound/pci/hda/cs35l41_hda.c
-+++ b/sound/pci/hda/cs35l41_hda.c
-@@ -2085,3 +2085,5 @@ MODULE_IMPORT_NS("SND_SOC_CS_AMP_LIB");
- MODULE_AUTHOR("Lucas Tanure, Cirrus Logic Inc, <tanureal@opensource.cirrus.com>");
- MODULE_LICENSE("GPL");
- MODULE_IMPORT_NS("FW_CS_DSP");
-+MODULE_FIRMWARE("cirrus/cs35l41-*.wmfw");
-+MODULE_FIRMWARE("cirrus/cs35l41-*.bin");
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 886c53184fec..f48077f5ca45 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -1176,3 +1176,7 @@ MODULE_IMPORT_NS("SND_SOC_CS_AMP_LIB");
- MODULE_AUTHOR("Richard Fitzgerald <rf@opensource.cirrus.com>");
- MODULE_AUTHOR("Simon Trimmer <simont@opensource.cirrus.com>");
- MODULE_LICENSE("GPL");
-+MODULE_FIRMWARE("cirrus/cs35l54-*.wmfw");
-+MODULE_FIRMWARE("cirrus/cs35l54-*.bin");
-+MODULE_FIRMWARE("cirrus/cs35l56-*.wmfw");
-+MODULE_FIRMWARE("cirrus/cs35l56-*.bin");
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index c55a7c70bc1a..1ef26216f971 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1854,6 +1854,11 @@ void pm_runtime_reinit(struct device *dev)
+ 				pm_runtime_put(dev->parent);
+ 		}
+ 	}
++	/*
++	 * Clear power.needs_force_resume in case it has been set by
++	 * pm_runtime_force_suspend() invoked from a driver remove callback.
++	 */
++	dev->power.needs_force_resume = false;
+ }
+ 
+ /**
 -- 
 2.39.5
 
