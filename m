@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059383112AE;
-	Mon, 18 Aug 2025 14:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C3733769A;
+	Mon, 18 Aug 2025 14:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526319; cv=none; b=ZlWziFrlQ3buuH8hrNaytsDcKkeJ18ft393e8BHuUqEMDep3XARJl6pfF9K4xL1UIgEI70iSYEuwulEh/sv4SudnVjMoSA9lUaFnIA9o2ad0d+zoqmXwYmBzkBp5YNWh3rzGiw4yGjhNF1KB8wZzTGt3F271k0i4bMi25VPciC0=
+	t=1755526322; cv=none; b=oHZ3pVgVrTa27COq1PC+E65GRqUft8mxWkya8shny/1ZZpbEWe8u5s3uD9MBdLq2CH7c77jjYZTVtC/toSgg56ek+e4W72jr1s3PbfdVO1Cf1c9tIq3k/KetUsQso5/hSMdHIV6G5/2CvyNiyxpfz/L0qoVNzLeQemiXJH/Ppug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526319; c=relaxed/simple;
-	bh=oxVFNjM8mIED8fckeAO2jYJR5EE/Fr9Nw458I2nj+ws=;
+	s=arc-20240116; t=1755526322; c=relaxed/simple;
+	bh=rsVn11esHPP0gQ8fas8gbdHr8gasH5Pv9Ifu2XWpok0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/IB8pVx0akNpb2P4gR1xBCcYa0JWQpXVd0brezuaib8gYGAHN6f98uYhmqUSUartQuKckA83qtLafwW/V9nNpSvlK6DdheEaaQ1hOL1b/jPKXDil0sqNxOaoL1zQ/pJdjdNYcUaBsoG8cDduy6b0QjCeFqmv3n69zB0K311RMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IW+Qusu9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJSZpn209f3whgn84PfO3Gp7iLZ+ZApflfUkowW56bnno56MXhxYPa6aSuCd24FnrHcmOA8LD1lIeFxx+ZOG0JqfCk6AzmGES4B3TweBH8yAK2186b4JREwbedPYPbX/reUYrdKbpmV6VVSWWx50kDB5VA9L0UKhjcxUAT4eWLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOxWXz5Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IW+Qusu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F3DC4CEEB;
-	Mon, 18 Aug 2025 14:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOxWXz5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E29C4CEEB;
+	Mon, 18 Aug 2025 14:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526318;
-	bh=oxVFNjM8mIED8fckeAO2jYJR5EE/Fr9Nw458I2nj+ws=;
+	s=korg; t=1755526322;
+	bh=rsVn11esHPP0gQ8fas8gbdHr8gasH5Pv9Ifu2XWpok0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IW+Qusu9oodqgR4bP2bjrnlHwbWWWdGM24NDTiSmfYimnTO/EygoUMMndQJl9/Bbx
-	 kCTcRUHeepM5Qk+Hk4fP/P7hqMOMe0IdE6tBzUiKfsYe5XC9tOga6MOwam0i5bsvoi
-	 SHPDToXh01agMy62HA5cXxJxruF/8ArWi5OmyxDA=
+	b=cOxWXz5ZRDNqFiMJHb//UPF1X54Gnt1Grqc0Cf8kMxutir0W83V+mmSoEnL6h6qeJ
+	 xptCLEEh2tEAPzCLdnogm5MyKP6ADu/Rv1dWEtCc7KuNkAMm58Vd727Jw8ruBPsy5a
+	 vATUVvZq4vOUfcZFQkouIfqAvd07RjowER0HUM5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.16 488/570] rust: workaround `rustdoc` target modifiers bug
-Date: Mon, 18 Aug 2025 14:47:55 +0200
-Message-ID: <20250818124524.678331970@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 489/570] samples/damon/wsse: fix boot time enable handling
+Date: Mon, 18 Aug 2025 14:47:56 +0200
+Message-ID: <20250818124524.716489015@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,81 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: SeongJae Park <sj@kernel.org>
 
-commit abbf9a44944171ca99c150adad9361a2f517d3b6 upstream.
+commit 0ed1165c37277822b519f519d0982d36efc30006 upstream.
 
-Starting with Rust 1.88.0 (released 2025-06-26), `rustdoc` complains
-about a target modifier mismatch in configurations where `-Zfixed-x18`
-is passed:
+Patch series "mm/damon: fix misc bugs in DAMON modules".
 
-    error: mixing `-Zfixed-x18` will cause an ABI mismatch in crate `rust_out`
-      |
-      = help: the `-Zfixed-x18` flag modifies the ABI so Rust crates compiled with different values of this flag cannot be used together safely
-      = note: unset `-Zfixed-x18` in this crate is incompatible with `-Zfixed-x18=` in dependency `core`
-      = help: set `-Zfixed-x18=` in this crate or unset `-Zfixed-x18` in `core`
-      = help: if you are sure this will not cause problems, you may use `-Cunsafe-allow-abi-mismatch=fixed-x18` to silence this error
+>From manual code review, I found below bugs in DAMON modules.
 
-The reason is that `rustdoc` was not passing the target modifiers when
-configuring the session options, and thus it would report a mismatch
-that did not exist as soon as a target modifier is used in a dependency.
+DAMON sample modules crash if those are enabled at boot time, via kernel
+command line.  A similar issue was found and fixed on DAMON non-sample
+modules in the past, but we didn't check that for sample modules.
 
-We did not notice it in the kernel until now because `-Zfixed-x18` has
-been a target modifier only since 1.88.0 (and it is the only one we use
-so far).
+DAMON non-sample modules are not setting 'enabled' parameters accordingly
+when real enabling is failed.  Honggyu found and fixed[1] this type of
+bugs in DAMON sample modules, and my inspection was motivated by the great
+work.  Kudos to Honggyu.
 
-The issue has been reported upstream [1] and a fix has been submitted
-[2], including a test similar to the kernel case.
+Finally, DAMON_RECLIAM is mistakenly losing scheme internal status due to
+misuse of damon_commit_ctx().  DAMON_LRU_SORT has a similar misuse, but
+fortunately it is not causing real status loss.
 
-  [ This is now fixed upstream (thanks Guillaume for the quick review),
-    so it will be fixed in Rust 1.90.0 (expected 2025-09-18).
+Fix the bugs.  Since these are similar patterns of bugs that were found in
+the past, it would be better to add tests or refactor the code, in future.
 
-      - Miguel ]
 
-Meanwhile, conditionally pass `-Cunsafe-allow-abi-mismatch=fixed-x18`
-to workaround the issue on our side.
+This patch (of 6):
 
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Closes: https://lore.kernel.org/rust-for-linux/36cdc798-524f-4910-8b77-d7b9fac08d77@oss.qualcomm.com/
-Link: https://github.com/rust-lang/rust/issues/144521 [1]
-Link: https://github.com/rust-lang/rust/pull/144523 [2]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20250727092317.2930617-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+If 'enable' parameter of the 'wsse' DAMON sample module is set at boot
+time via the kernel command line, memory allocation is tried before the
+slab is initialized.  As a result kernel NULL pointer dereference BUG can
+happen.  Fix it by checking the initialization status.
+
+Link: https://lkml.kernel.org/r/20250706193207.39810-1-sj@kernel.org
+Link: https://lkml.kernel.org/r/20250706193207.39810-2-sj@kernel.org
+Link: https://lore.kernel.org/20250702000205.1921-1-honggyu.kim@sk.com [1]
+Fixes: b757c6cfc696 ("samples/damon/wsse: start and stop DAMON as the user requests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/Makefile |    6 ++++++
- 1 file changed, 6 insertions(+)
+ samples/damon/wsse.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -62,6 +62,10 @@ core-cfgs = \
+--- a/samples/damon/wsse.c
++++ b/samples/damon/wsse.c
+@@ -89,6 +89,8 @@ static void damon_sample_wsse_stop(void)
+ 		put_pid(target_pidp);
+ }
  
- core-edition := $(if $(call rustc-min-version,108700),2024,2021)
- 
-+# `rustdoc` did not save the target modifiers, thus workaround for
-+# the time being (https://github.com/rust-lang/rust/issues/144521).
-+rustdoc_modifiers_workaround := $(if $(call rustc-min-version,108800),-Cunsafe-allow-abi-mismatch=fixed-x18)
++static bool init_called;
 +
- # `rustc` recognizes `--remap-path-prefix` since 1.26.0, but `rustdoc` only
- # since Rust 1.81.0. Moreover, `rustdoc` ICEs on out-of-tree builds since Rust
- # 1.82.0 (https://github.com/rust-lang/rust/issues/138520). Thus workaround both
-@@ -74,6 +78,7 @@ quiet_cmd_rustdoc = RUSTDOC $(if $(rustd
- 		-Zunstable-options --generate-link-to-definition \
- 		--output $(rustdoc_output) \
- 		--crate-name $(subst rustdoc-,,$@) \
-+		$(rustdoc_modifiers_workaround) \
- 		$(if $(rustdoc_host),,--sysroot=/dev/null) \
- 		@$(objtree)/include/generated/rustc_cfg $<
+ static int damon_sample_wsse_enable_store(
+ 		const char *val, const struct kernel_param *kp)
+ {
+@@ -114,7 +116,15 @@ static int damon_sample_wsse_enable_stor
  
-@@ -216,6 +221,7 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC
- 		--extern bindings --extern uapi \
- 		--no-run --crate-name kernel -Zunstable-options \
- 		--sysroot=/dev/null \
-+		$(rustdoc_modifiers_workaround) \
- 		--test-builder $(objtree)/scripts/rustdoc_test_builder \
- 		$< $(rustdoc_test_kernel_quiet); \
- 	$(objtree)/scripts/rustdoc_test_gen
+ static int __init damon_sample_wsse_init(void)
+ {
+-	return 0;
++	int err = 0;
++
++	init_called = true;
++	if (enable) {
++		err = damon_sample_wsse_start();
++		if (err)
++			enable = false;
++	}
++	return err;
+ }
+ 
+ module_init(damon_sample_wsse_init);
 
 
