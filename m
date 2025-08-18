@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444EB335BA1;
-	Mon, 18 Aug 2025 13:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F29C335BA1;
+	Mon, 18 Aug 2025 13:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524010; cv=none; b=QDSParJorXY+2BjMGOlw+fhtvmMDUyXbzM+AjbHFHq5BRwNLyBo14MhHCjzZqU565jZDc8xiLj1R5KEjT+qjhYvI/dX6su9ldsPiucniZ7vKitfGgs4CPoEXtc4+tJh5q4R9IbAX54qKMtbQwfAllTp4agAHoiW5Mdd4XDoC1h4=
+	t=1755524013; cv=none; b=oNRENzZJcnswj0blv9PFlNXtIVkb7LGCD5ihnvc7Z7OL0CT5K72Cp6rMmNo4aV7uBNpL1WHu4DdIVm5cQpQkhrEG+UcRWZLURkepalicPbDLJy3FJuIhENdxi86e/ftxLmPb94KitVwDnzHJrH+OJHU0ggm+U/biDJe+7u1e1r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524010; c=relaxed/simple;
-	bh=8MJ0LrtYpQKXduGvQwj1SCfdhebBs9C4DHyznQXJF+Q=;
+	s=arc-20240116; t=1755524013; c=relaxed/simple;
+	bh=CuMdK5ugT7gPialUHZwd7VJa3dmV+RsMjBC66PoMtZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWKPOsdB2RIMVGb3hFp1vaxd7PIwLTZS6pY+VdcMWQSr+5jImhKsreMN6d1cQ2MRdaNM4wAmPslOUOD+Tycr23BX55h4TmxuRqvBcq+sH59esC32cd5KtRAHcLGmfbj4eN49ze9/TlPbg2h1EEiD0mEnbD6jNvS43MR8nVMHYJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5JPldfi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZqY1Oc1pFHghxJ3foWoHF44WzUo85FeAYHT7NlTpSFAWq3nK5vNC6uPLjLwIsKCKM10PRRX7bcyTIm1DSFuT/d3uFGEHhaRluOEyzOosay15kClrjn2G06+znrp1AOMG3wjZZsrItaKT9KP2opjaZbd4JhNAAMoxPdyQFYwPpu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GfoGCJRe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5JPldfi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5175C4CEEB;
-	Mon, 18 Aug 2025 13:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GfoGCJRe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1292C4CEEB;
+	Mon, 18 Aug 2025 13:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524010;
-	bh=8MJ0LrtYpQKXduGvQwj1SCfdhebBs9C4DHyznQXJF+Q=;
+	s=korg; t=1755524013;
+	bh=CuMdK5ugT7gPialUHZwd7VJa3dmV+RsMjBC66PoMtZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5JPldfiAcFZx9NdhwQ3cj8KgCvvHTv4RGoaiapubutlczfaZhYzsf5fbPI8q5LOT
-	 L7hd49IrGXzm+y+kL2jbzzOXf44OthvHHhtx/0gTut3tmOFTo1HwIamuNTRIjeTbOy
-	 74QbJSp+w+2Mfc9B6/sFzu/X81CvucZLFbMjSsw4=
+	b=GfoGCJReTOPtjWaHTl0jrcKuWkxD07UPvt6XSLG8V1zaWMWIma6w/mlUZBPf9wJIx
+	 +ZPPI3pRr/lqme/YWeiWN+Eovz2U1jqcEdkb0RofOKWGNzrt/5Dqz5BH5vjF6u4v6k
+	 EGYDvXwXCGnIYp7uoIuCWXp2rnrndL1DpaE8ncbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Valmantas Paliksa <walmis@gmail.com>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Showrya M N <showrya@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 341/515] phy: rockchip-pcie: Enable all four lanes if required
-Date: Mon, 18 Aug 2025 14:45:27 +0200
-Message-ID: <20250818124511.554635376@linuxfoundation.org>
+Subject: [PATCH 6.15 342/515] scsi: libiscsi: Initialize iscsi_conn->dd_data only if memory is allocated
+Date: Mon, 18 Aug 2025 14:45:28 +0200
+Message-ID: <20250818124511.592493805@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -54,58 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valmantas Paliksa <walmis@gmail.com>
+From: Showrya M N <showrya@chelsio.com>
 
-[ Upstream commit c3fe7071e196e25789ecf90dbc9e8491a98884d7 ]
+[ Upstream commit 3ea3a256ed81f95ab0f3281a0e234b01a9cae605 ]
 
-Current code enables only Lane 0 because pwr_cnt will be incremented on
-first call to the function. Let's reorder the enablement code to enable
-all 4 lanes through GRF.
+In case of an ib_fast_reg_mr allocation failure during iSER setup, the
+machine hits a panic because iscsi_conn->dd_data is initialized
+unconditionally, even when no memory is allocated (dd_size == 0).  This
+leads invalid pointer dereference during connection teardown.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Fix by setting iscsi_conn->dd_data only if memory is actually allocated.
 
-Signed-off-by: Valmantas Paliksa <walmis@gmail.com>
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/16b610aab34e069fd31d9f57260c10df2a968f80.1751322015.git.geraldogabriel@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Panic trace:
+------------
+ iser: iser_create_fastreg_desc: Failed to allocate ib_fast_reg_mr err=-12
+ iser: iser_alloc_rx_descriptors: failed allocating rx descriptors / data buffers
+ BUG: unable to handle page fault for address: fffffffffffffff8
+ RIP: 0010:swake_up_locked.part.5+0xa/0x40
+ Call Trace:
+  complete+0x31/0x40
+  iscsi_iser_conn_stop+0x88/0xb0 [ib_iser]
+  iscsi_stop_conn+0x66/0xc0 [scsi_transport_iscsi]
+  iscsi_if_stop_conn+0x14a/0x150 [scsi_transport_iscsi]
+  iscsi_if_rx+0x1135/0x1834 [scsi_transport_iscsi]
+  ? netlink_lookup+0x12f/0x1b0
+  ? netlink_deliver_tap+0x2c/0x200
+  netlink_unicast+0x1ab/0x280
+  netlink_sendmsg+0x257/0x4f0
+  ? _copy_from_user+0x29/0x60
+  sock_sendmsg+0x5f/0x70
+
+Signed-off-by: Showrya M N <showrya@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Link: https://lore.kernel.org/r/20250627112329.19763-1-showrya@chelsio.com
+Reviewed-by: Chris Leech <cleech@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-pcie.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/scsi/libiscsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-pcie.c b/drivers/phy/rockchip/phy-rockchip-pcie.c
-index 63e88abc66c6..4e2dfd01adf2 100644
---- a/drivers/phy/rockchip/phy-rockchip-pcie.c
-+++ b/drivers/phy/rockchip/phy-rockchip-pcie.c
-@@ -159,6 +159,12 @@ static int rockchip_pcie_phy_power_on(struct phy *phy)
+diff --git a/drivers/scsi/libiscsi.c b/drivers/scsi/libiscsi.c
+index 1ddaf7228340..09d5724db32a 100644
+--- a/drivers/scsi/libiscsi.c
++++ b/drivers/scsi/libiscsi.c
+@@ -3184,7 +3184,8 @@ iscsi_conn_setup(struct iscsi_cls_session *cls_session, int dd_size,
+ 		return NULL;
+ 	conn = cls_conn->dd_data;
  
- 	guard(mutex)(&rk_phy->pcie_mutex);
- 
-+	regmap_write(rk_phy->reg_base,
-+		     rk_phy->phy_data->pcie_laneoff,
-+		     HIWORD_UPDATE(!PHY_LANE_IDLE_OFF,
-+				   PHY_LANE_IDLE_MASK,
-+				   PHY_LANE_IDLE_A_SHIFT + inst->index));
-+
- 	if (rk_phy->pwr_cnt++) {
- 		return 0;
- 	}
-@@ -175,12 +181,6 @@ static int rockchip_pcie_phy_power_on(struct phy *phy)
- 				   PHY_CFG_ADDR_MASK,
- 				   PHY_CFG_ADDR_SHIFT));
- 
--	regmap_write(rk_phy->reg_base,
--		     rk_phy->phy_data->pcie_laneoff,
--		     HIWORD_UPDATE(!PHY_LANE_IDLE_OFF,
--				   PHY_LANE_IDLE_MASK,
--				   PHY_LANE_IDLE_A_SHIFT + inst->index));
--
- 	/*
- 	 * No documented timeout value for phy operation below,
- 	 * so we make it large enough here. And we use loop-break
+-	conn->dd_data = cls_conn->dd_data + sizeof(*conn);
++	if (dd_size)
++		conn->dd_data = cls_conn->dd_data + sizeof(*conn);
+ 	conn->session = session;
+ 	conn->cls_conn = cls_conn;
+ 	conn->c_stage = ISCSI_CONN_INITIAL_STAGE;
 -- 
 2.39.5
 
