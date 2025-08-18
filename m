@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3526335BA0;
-	Mon, 18 Aug 2025 13:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260762253FC;
+	Mon, 18 Aug 2025 13:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524282; cv=none; b=Xbk1oNCUsO65i43VqZEUy+b4UDoWDHNmU7UqVNbVq9tMeaRduwejF70ZvTAv7nKoVdUcrQUI4cvshvWNJ51znIkyLRYlbamp08TJaqDDeWLHaIXN+4jx/qIRCe3VIwshtB7cfx4B4EYuVN4g51n9POb3K0afz/VFhNU+XdPDXCc=
+	t=1755524286; cv=none; b=Hj8QbnVbLyRwhokgUDDexnm9edNiOrX4XIpM8QztACCO9ncqWsuW9mZe2C1HHMVSG1YkLRfLB7W0J5Ay8pGDvkC1nuTSVHnocvjsb2YEoeIbnREUtkQSmmfhAW4LDyZJ49YoB0sNjRJ/I+yM5QpMl7+Y+JnH3mNrHiyCIy0sSdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524282; c=relaxed/simple;
-	bh=jQReOy/bcxITP9RcQPSw802unHrIfxBgsruQLNVYYZE=;
+	s=arc-20240116; t=1755524286; c=relaxed/simple;
+	bh=S/rFdGZ/fOtapMkXLCBu/HUvewUqr73cxlsSAycRRDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIHL+x2WwjKYeIqG0fx4vm7EluDIm2veHnzbY5iV4f84OcVfpdxOpI8iwbpT5HIC0KSJkcNz81mgRyuU7RzNEDHMG4nxiWotGfMbFqSTZHK/HIVVsebbOb2ZF3ttEEiScSoZZKK5fXXb/EaWhO23HTzxqHvEp05YEOpQK0xeD1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYxRl7GJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kmMYTFONCzqi0awOHiH5goIw6gcb3PMWfv3ZgHIUcE5zfkKMoffYxWEI8gsMjGjXUgeaZGMHezvnnbKwRFxLYvsp7+mrPdJAYMz8A4kKOOrPTNucbVD1VsflCVbRcLJiPI3CjLd0oYatUFhtwhTAq2cwAOWK7jZmUl4WuJMCOeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDnHVILX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYxRl7GJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421E6C116C6;
-	Mon, 18 Aug 2025 13:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDnHVILX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983BCC113D0;
+	Mon, 18 Aug 2025 13:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524282;
-	bh=jQReOy/bcxITP9RcQPSw802unHrIfxBgsruQLNVYYZE=;
+	s=korg; t=1755524286;
+	bh=S/rFdGZ/fOtapMkXLCBu/HUvewUqr73cxlsSAycRRDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYxRl7GJpbZLko0SVVdBKOeld8wUGTPLtZ67otVgpANFUUh1+z5XsmV8Yjr1f4Jei
-	 N/yCPu0GuUZxVdHh1idUcySCrhq5vNUv2EIEBE8u8AXaWQ/8D2enCn72hhPKb7tsxn
-	 3Myzib+MwRgXpU5mSC7uMTGSigAU2z7Y/6U8Q8m4=
+	b=kDnHVILXk4CzOa6eIz+lv6t6IttkAdzWBZHQNPPUkJosBwJ4dgGXg0E0Lb/WOfuDY
+	 7cQbtixhkBNCYKDsTZ6KjI7JpMl3gBP8NAABVPiyO00nFQjT2GU0af5et+oUtz8z1g
+	 gJQOsdUsjKtboGjeIwv2q0XeSl5gFbitdMQ/uORA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Peter Jakubek <peterjakubek@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 397/515] dm-mpath: dont print the "loaded" message if registering fails
-Date: Mon, 18 Aug 2025 14:46:23 +0200
-Message-ID: <20250818124513.693711792@linuxfoundation.org>
+Subject: [PATCH 6.15 424/515] ASoC: Intel: sof_sdw: Add quirk for Alienware Area 51 (2025) 0CCC SKU
+Date: Mon, 18 Aug 2025 14:46:50 +0200
+Message-ID: <20250818124514.745839412@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,85 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Peter Jakubek <peterjakubek@gmail.com>
 
-[ Upstream commit 6e11952a6abc4641dc8ae63f01b318b31b44e8db ]
+[ Upstream commit 1b03391d073dad748636a1ad9668b837cce58265 ]
 
-If dm_register_path_selector, don't print the "version X loaded" message.
+Add DMI quirk entry for Alienware systems with SKU "0CCC" to enable
+proper speaker codec configuration (SOC_SDW_CODEC_SPKR).
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+This system requires the same audio configuration as some existing Dell systems.
+Without this patch, the laptop's speakers and microphone will not work.
+
+Signed-off-by: Peter Jakubek <peterjakubek@gmail.com>
+Link: https://patch.msgid.link/20250731172104.2009007-1-peterjakubek@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-ps-historical-service-time.c | 4 +++-
- drivers/md/dm-ps-queue-length.c            | 4 +++-
- drivers/md/dm-ps-round-robin.c             | 4 +++-
- drivers/md/dm-ps-service-time.c            | 4 +++-
- 4 files changed, 12 insertions(+), 4 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/md/dm-ps-historical-service-time.c b/drivers/md/dm-ps-historical-service-time.c
-index b49e10d76d03..2c8626a83de4 100644
---- a/drivers/md/dm-ps-historical-service-time.c
-+++ b/drivers/md/dm-ps-historical-service-time.c
-@@ -541,8 +541,10 @@ static int __init dm_hst_init(void)
- {
- 	int r = dm_register_path_selector(&hst_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " HST_VERSION " loaded");
- 
-diff --git a/drivers/md/dm-ps-queue-length.c b/drivers/md/dm-ps-queue-length.c
-index e305f05ad1e5..eb543e6431e0 100644
---- a/drivers/md/dm-ps-queue-length.c
-+++ b/drivers/md/dm-ps-queue-length.c
-@@ -260,8 +260,10 @@ static int __init dm_ql_init(void)
- {
- 	int r = dm_register_path_selector(&ql_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " QL_VERSION " loaded");
- 
-diff --git a/drivers/md/dm-ps-round-robin.c b/drivers/md/dm-ps-round-robin.c
-index d1745b123dc1..66a15ac0c22c 100644
---- a/drivers/md/dm-ps-round-robin.c
-+++ b/drivers/md/dm-ps-round-robin.c
-@@ -220,8 +220,10 @@ static int __init dm_rr_init(void)
- {
- 	int r = dm_register_path_selector(&rr_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " RR_VERSION " loaded");
- 
-diff --git a/drivers/md/dm-ps-service-time.c b/drivers/md/dm-ps-service-time.c
-index 969d31c40272..f8c43aecdb27 100644
---- a/drivers/md/dm-ps-service-time.c
-+++ b/drivers/md/dm-ps-service-time.c
-@@ -341,8 +341,10 @@ static int __init dm_st_init(void)
- {
- 	int r = dm_register_path_selector(&st_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " ST_VERSION " loaded");
- 
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 095d08b3fc82..c479b65d73df 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -741,6 +741,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
+ 	},
++	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0CCC")
++		},
++		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
++	},
+ 	/* Pantherlake devices*/
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
 -- 
 2.39.5
 
