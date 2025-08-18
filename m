@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A9E31B11A;
-	Mon, 18 Aug 2025 14:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F43340DAD;
+	Mon, 18 Aug 2025 14:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525787; cv=none; b=KH+Ue+9CN03pl3ljDWuUrdUdWgk0eN8xvh+mpnIvZkaBSoxpAEx9FMQy9vpoA4f8DmXojviocpSfzYGPbbaVor1iuzYKB45wFJrCB8vGc1dJCegQ1qTGuQkCcfBES98zOMR4DJY6TLquFgldTQ3rgMz/P0lNG/rnfI8gjDfyt0Y=
+	t=1755525790; cv=none; b=EkwkJMHHOXHRU/B0ONsrwJh9Cv7x9SdzxSC95KeDIfj6ZDiexC6xWyFodMOfAU7cMXEOkWDkq4NNRTezFLLHhgCAfi3SjksEmOZ+YootStrklVX1QjwjZUy9yVRD+OZ0piuFSpVB5VxpQE7eSaWhI+08W8kX3cA3YVaMZLgQaYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525787; c=relaxed/simple;
-	bh=XUJnb3FDMe7bLh9ictAtreLNox21ZQB1xXMyCoqfYEA=;
+	s=arc-20240116; t=1755525790; c=relaxed/simple;
+	bh=N5JCx3rmLYo7CqZEyf7dK6x2o90aI1M8XE4R4OuAAe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZg0cVWgNlGaJjluChZYY7AfWVR1XhLpBK+KSFECV48PLOuw70ZKksDB/0W02Gn7tu8/OpfEGCCYT9lzxiwmQBXWP7dX3VxouTRO+rutujf0OXX1QmIQYPfgDV0F8x6jUPHcDfTU7YMTP10+w5Yvmpp2tXOh8AYd4jY+Qm8soBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eiivx/f6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mdNMFbybYmPz6l3PehJ+Muza3KorO+e36uZNz9oUTu0ROE1JbSoKg4mLOcRV9dhqFPN1+OREusS+phzcAHNHbRqM43AHOQNoNzcxt36+ULwGb5dVnSm93wuAnIYx7tlTGihlDfN2aEm7EqqaP9zS5g3DwOrZ5InYXKkIEJ4TpnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FoxYd+d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eiivx/f6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DAAC4CEEB;
-	Mon, 18 Aug 2025 14:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FoxYd+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34E1C4CEEB;
+	Mon, 18 Aug 2025 14:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525787;
-	bh=XUJnb3FDMe7bLh9ictAtreLNox21ZQB1xXMyCoqfYEA=;
+	s=korg; t=1755525790;
+	bh=N5JCx3rmLYo7CqZEyf7dK6x2o90aI1M8XE4R4OuAAe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eiivx/f6esROpfiZhRpv05nTpPwa3ASEnRcTyswcKEM9ZFcFdRUXx34bx7hq6OdiX
-	 7o8w47/8a0TpC4HWzOSRa+kbGTP2deXEegVrnivgiav0nGs/HqUDbZv5lvuY2cjRdd
-	 jPbXIdnJOShuAkm1ifBTaRqXBDSlWHR0z2n3EK7E=
+	b=0FoxYd+dPvub9Eg6A5NX+n5GH1lnt6hezn1e/htQKpny8YGAIs7xMvQ+4yLu2R0sA
+	 0IJbBNnjIskJBTZ9jCJSHkXGcm/QtsmEa/1OQbLzcIOKc+sgkhEh3BUqofdGBMZZYk
+	 Ttvpjx/jPnlnU9HQwuYydBAHqAyN+QgAjAbaBkV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 366/570] sphinx: kernel_abi: fix performance regression with O=<dir>
-Date: Mon, 18 Aug 2025 14:45:53 +0200
-Message-ID: <20250818124519.960459256@linuxfoundation.org>
+Subject: [PATCH 6.16 367/570] mfd: axp20x: Set explicit ID for AXP313 regulator
+Date: Mon, 18 Aug 2025 14:45:54 +0200
+Message-ID: <20250818124519.997666624@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,79 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit 2b16b71a05a7f056221751b906c13f8809656b1f ]
+[ Upstream commit 88828c7e940dd45d139ad4a39d702b23840a37c5 ]
 
-The logic there which adds a dependency note to Sphinx cache
-is not taking into account that the build dir may not be
-the source dir. This causes a performance regression:
+On newer boards featuring the A523 SoC, the AXP323 (related to the
+AXP313) is paired with the AXP717 and serves as a secondary PMIC
+providing additional regulator outputs. However the MFD cells are all
+registered with PLATFORM_DEVID_NONE, which causes the regulator cells
+to conflict with each other.
 
-$ time make O=/tmp/foo SPHINXDIRS=admin-guide htmldocs
+Commit e37ec3218870 ("mfd: axp20x: Allow multiple regulators") attempted
+to fix this by switching to PLATFORM_DEVID_AUTO so that the device names
+would all be different, however that broke IIO channel mapping, which is
+also tied to the device names. As a result the change was later reverted.
 
-	[OUTDATED]
-	Added: set()
-	Changed: {'abi-obsolete', 'abi-removed', 'abi-stable-files', 'abi-obsolete-files', 'abi-stable', 'abi', 'abi-removed-files', 'abi-testing-files', 'abi-testing', 'gpio/index', 'gpio/obsolete'}
-	Removed: set()
-	All docs count: 385
-	Found docs count: 385
+Instead, here we attempt to make sure the AXP313/AXP323 regulator cell
+does not conflict by explicitly giving it an ID number. This was
+previously done for the AXP809+AXP806 pair used with the A80 SoC.
 
-	real    0m11,324s
-	user    0m15,783s
-	sys     0m1,164s
-
-To get the root cause of the problem (ABI files reported as changed),
-I used this changeset:
-
-#	diff --git a/Documentation/conf.py b/Documentation/conf.py
-#	index e8766e689c1b..ab486623bd8b 100644
-#	--- a/Documentation/conf.py
-#	+++ b/Documentation/conf.py
-#	@@ -571,3 +571,16 @@ def setup(app):
-#	     """Patterns need to be updated at init time on older Sphinx versions"""
-#
-#	     app.connect('config-inited', update_patterns)
-#	+    app.connect('env-get-outdated', on_outdated)
-#	+
-#	+def on_outdated(app, env, added, changed, removed):
-#	+    """Track cache outdated due to added/changed/removed files"""
-#	+    print("\n[OUTDATED]")
-#	+    print(f"Added: {added}")
-#	+    print(f"Changed: {changed}")
-#	+    print(f"Removed: {removed}")
-#	+    print(f"All docs count: {len(env.all_docs)}")
-#	+    print(f"Found docs count: {len(env.found_docs)}")
-#	+
-#	+    # Just return what we have
-#	+    return added | changed | removed
-
-Reported-by: Akira Yokosawa <akiyks@gmail.com>
-Closes: https://lore.kernel.org/linux-doc/c174f7c5-ec21-4eae-b1c3-f643cca90d9d@gmail.com/
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Tested-by: Akira Yokosawa <akiyks@gmail.com>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/e25673d87357457bc54ee863e97ff8f75956580d.1752752211.git.mchehab+huawei@kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20250619173207.3367126-1-wens@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/sphinx/kernel_abi.py | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mfd/axp20x.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/sphinx/kernel_abi.py b/Documentation/sphinx/kernel_abi.py
-index db6f0380de94..4c4375201b9e 100644
---- a/Documentation/sphinx/kernel_abi.py
-+++ b/Documentation/sphinx/kernel_abi.py
-@@ -146,8 +146,10 @@ class KernelCmd(Directive):
-                 n += 1
+diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
+index e9914e8a29a3..25c639b348cd 100644
+--- a/drivers/mfd/axp20x.c
++++ b/drivers/mfd/axp20x.c
+@@ -1053,7 +1053,8 @@ static const struct mfd_cell axp152_cells[] = {
+ };
  
-             if f != old_f:
--                # Add the file to Sphinx build dependencies
--                env.note_dependency(os.path.abspath(f))
-+                # Add the file to Sphinx build dependencies if the file exists
-+                fname = os.path.join(srctree, f)
-+                if os.path.isfile(fname):
-+                    env.note_dependency(fname)
- 
-                 old_f = f
+ static struct mfd_cell axp313a_cells[] = {
+-	MFD_CELL_NAME("axp20x-regulator"),
++	/* AXP323 is sometimes paired with AXP717 as sub-PMIC */
++	MFD_CELL_BASIC("axp20x-regulator", NULL, NULL, 0, 1),
+ 	MFD_CELL_RES("axp313a-pek", axp313a_pek_resources),
+ };
  
 -- 
 2.39.5
