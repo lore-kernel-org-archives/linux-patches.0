@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5353112AE;
-	Mon, 18 Aug 2025 14:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C42280CE0;
+	Mon, 18 Aug 2025 14:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526325; cv=none; b=vEHr3M23SrNK1tM46l3lxM8G3ZCoVkW1zOzCRlB+9+D8qUGcs+a9RoIcpBgCgRqWc1T7XK6JZkCGe1pYc8ZByrNxnPUTLXKxEeidutnuFBhj94Zh1B6QslrXqYkVbbSYNi5qnu1K3DKufAP7fvAmHH8swHAA+RjbxOHUKPJjYF0=
+	t=1755526328; cv=none; b=F5XR20sZmYIAR5zFW2Qah7bsaiQsGNqg2Z1l+wsNIWhP+7AtEZHd+T2RSLJFr7F/hLOARzebPmQBoJTNKn8wZzcHA/HhzE38M3Ny/uLf/fm/Qq0ndQsWrf84BPelrFsKfuylgBSww09BSfhj/OfXChevdvCUq17xUYr8xfwCdiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526325; c=relaxed/simple;
-	bh=eXD7nvzId624pDZvDWDJlG10CZZ06JWIsTM9B4PZ4Dg=;
+	s=arc-20240116; t=1755526328; c=relaxed/simple;
+	bh=e9o5zgw0ZPR+dGkH1QGarqd2mTmuGidk0/H9XvbfZp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foMqKyVz8x2trIggR9mZIWm8MkSSGnM1mc2x43bbYmTpyppza0S5pSHByp5PZYxv+3B46wwBiBwtr96ZMtbX975OTqUDoWgNZJR0s+ubii2R28vdOKI9WK1B+tJLU9vIqUKKjatblz2X4jOw0EBmy/1cjfjN0cud6xxl58MpqY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrjKAFYB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OG8AdeNBiGF4/xVm7RBqBX3X8ggyX/M0CzklDn+jc7DtiS9+8R5dHHdauhsfKbDarQUUrtnHB8FwOPFe/qV6JKPjTEgHP3TcyOK/uDX5Y8iDhz6Tr7v6MjMZGDifALBp+2RyZYVa1oHknSDYawsOT71bcwoBQUuZca5U9cWnOIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcqPsH/r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrjKAFYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3BEC113D0;
-	Mon, 18 Aug 2025 14:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcqPsH/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E208DC4CEF1;
+	Mon, 18 Aug 2025 14:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526325;
-	bh=eXD7nvzId624pDZvDWDJlG10CZZ06JWIsTM9B4PZ4Dg=;
+	s=korg; t=1755526328;
+	bh=e9o5zgw0ZPR+dGkH1QGarqd2mTmuGidk0/H9XvbfZp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TrjKAFYBNDN880GN2mXmpDow9HYli4rDc2W7AudppNv9qDZm4Sxx+s3LqtGL5nQme
-	 gpFi+7/jtiWzPwbjeIxG91M2dOfCIIxSZq44oOTR35YNk7o+IUnoFgM27h3PVH11rB
-	 Ix3n09ju4g42GBGb27HfnQn+Whmk6tGADBw0ZSGc=
+	b=dcqPsH/rwY7yjB/6mseqWXDOHig93iTWwy4w9UNR29U8NhAsofZPtoJ+y4GzokYrf
+	 gJ37y7iuCfjLjJ7j60+pfB7tlacEKElhXr3f5DNPur85A7HsiMFneDPtTRg6WtM6Cz
+	 bySBe86YUNFSG3T19wnawUlYTP7hxzpcPP3TS+x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Riana Tauro <riana.tauro@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 480/570] drm/xe/hwmon: Add SW clamp for power limits writes
-Date: Mon, 18 Aug 2025 14:47:47 +0200
-Message-ID: <20250818124524.374183271@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.16 516/570] btrfs: zoned: do not remove unwritten non-data block group
+Date: Mon, 18 Aug 2025 14:48:23 +0200
+Message-ID: <20250818124525.741438977@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,106 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthik Poosa <karthik.poosa@intel.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 55d49f06162e45686399df4ae6292167f0deab7c ]
+commit 3061801420469610c8fa6080a950e56770773ef1 upstream.
 
-Clamp writes to power limits powerX_crit/currX_crit, powerX_cap,
-powerX_max, to the maximum supported by the pcode mailbox
-when sysfs-provided values exceed this limit.
-Although the pcode already performs clamping, values beyond the pcode
-mailbox's supported range get truncated, leading to incorrect
-critical power settings.
-This patch ensures proper clamping to prevent such truncation.
+There are some reports of "unable to find chunk map for logical 2147483648
+length 16384" error message appears in dmesg. This means some IOs are
+occurring after a block group is removed.
 
-v2:
- - Address below review comments. (Riana)
- - Split comments into multiple sentences.
- - Use local variables for readability.
- - Add a debug log.
- - Use u64 instead of unsigned long.
+When a metadata tree node is cleaned on a zoned setup, we keep that node
+still dirty and write it out not to create a write hole. However, this can
+make a block group's used bytes == 0 while there is a dirty region left.
 
-v3:
- - Change drm_dbg logs to drm_info. (Badal)
+Such an unused block group is moved into the unused_bg list and processed
+for removal. When the removal succeeds, the block group is removed from the
+transaction->dirty_bgs list, so the unused dirty nodes in the block group
+are not sent at the transaction commit time. It will be written at some
+later time e.g, sync or umount, and causes "unable to find chunk map"
+errors.
 
-v4:
- - Rephrase the drm_info log. (Rodrigo, Riana)
- - Rename variable max_mbx_power_limit to max_supp_power_limit, as
-   limit is same for platforms with and without mailbox power limit
-   support.
+This can happen relatively easy on SMR whose zone size is 256MB. However,
+calling do_zone_finish() on such block group returns -EAGAIN and keep that
+block group intact, which is why the issue is hidden until now.
 
-Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Fixes: 92d44a422d0d ("drm/xe/hwmon: Expose card reactive critical power")
-Fixes: fb1b70607f73 ("drm/xe/hwmon: Expose power attributes")
-Reviewed-by: Riana Tauro <riana.tauro@intel.com>
-Link: https://lore.kernel.org/r/20250808185310.3466529-1-karthik.poosa@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit d301eb950da59f962bafe874cf5eb6d61a85b2c2)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: afba2bc036b0 ("btrfs: zoned: implement active zone tracking")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_hwmon.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ fs/btrfs/block-group.c |   27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
-index f008e8049700..be2948dfc8b3 100644
---- a/drivers/gpu/drm/xe/xe_hwmon.c
-+++ b/drivers/gpu/drm/xe/xe_hwmon.c
-@@ -329,6 +329,7 @@ static int xe_hwmon_power_max_write(struct xe_hwmon *hwmon, u32 attr, int channe
- 	int ret = 0;
- 	u32 reg_val;
- 	struct xe_reg rapl_limit;
-+	u64 max_supp_power_limit = 0;
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -34,6 +34,19 @@ int btrfs_should_fragment_free_space(con
+ }
+ #endif
  
- 	mutex_lock(&hwmon->hwmon_lock);
- 
-@@ -353,6 +354,20 @@ static int xe_hwmon_power_max_write(struct xe_hwmon *hwmon, u32 attr, int channe
- 		goto unlock;
- 	}
- 
-+	/*
-+	 * If the sysfs value exceeds the maximum pcode supported power limit value, clamp it to
-+	 * the supported maximum (U12.3 format).
-+	 * This is to avoid truncation during reg_val calculation below and ensure the valid
-+	 * power limit is sent for pcode which would clamp it to card-supported value.
-+	 */
-+	max_supp_power_limit = ((PWR_LIM_VAL) >> hwmon->scl_shift_power) * SF_POWER;
-+	if (value > max_supp_power_limit) {
-+		value = max_supp_power_limit;
-+		drm_info(&hwmon->xe->drm,
-+			 "Power limit clamped as selected %s exceeds channel %d limit\n",
-+			 PWR_ATTR_TO_STR(attr), channel);
-+	}
++static inline bool has_unwritten_metadata(struct btrfs_block_group *block_group)
++{
++	/* The meta_write_pointer is available only on the zoned setup. */
++	if (!btrfs_is_zoned(block_group->fs_info))
++		return false;
 +
- 	/* Computation in 64-bits to avoid overflow. Round to nearest. */
- 	reg_val = DIV_ROUND_CLOSEST_ULL((u64)value << hwmon->scl_shift_power, SF_POWER);
- 	reg_val = PWR_LIM_EN | REG_FIELD_PREP(PWR_LIM_VAL, reg_val);
-@@ -697,9 +712,23 @@ static int xe_hwmon_power_curr_crit_write(struct xe_hwmon *hwmon, int channel,
- {
- 	int ret;
- 	u32 uval;
-+	u64 max_crit_power_curr = 0;
++	if (block_group->flags & BTRFS_BLOCK_GROUP_DATA)
++		return false;
++
++	return block_group->start + block_group->alloc_offset >
++		block_group->meta_write_pointer;
++}
++
+ /*
+  * Return target flags in extended format or 0 if restripe for this chunk_type
+  * is not in progress
+@@ -1244,6 +1257,15 @@ int btrfs_remove_block_group(struct btrf
+ 		goto out;
  
- 	mutex_lock(&hwmon->hwmon_lock);
- 
+ 	spin_lock(&block_group->lock);
 +	/*
-+	 * If the sysfs value exceeds the pcode mailbox cmd POWER_SETUP_SUBCOMMAND_WRITE_I1
-+	 * max supported value, clamp it to the command's max (U10.6 format).
-+	 * This is to avoid truncation during uval calculation below and ensure the valid power
-+	 * limit is sent for pcode which would clamp it to card-supported value.
++	 * Hitting this WARN means we removed a block group with an unwritten
++	 * region. It will cause "unable to find chunk map for logical" errors.
 +	 */
-+	max_crit_power_curr = (POWER_SETUP_I1_DATA_MASK >> POWER_SETUP_I1_SHIFT) * scale_factor;
-+	if (value > max_crit_power_curr) {
-+		value = max_crit_power_curr;
-+		drm_info(&hwmon->xe->drm,
-+			 "Power limit clamped as selected exceeds channel %d limit\n",
-+			 channel);
-+	}
- 	uval = DIV_ROUND_CLOSEST_ULL(value << POWER_SETUP_I1_SHIFT, scale_factor);
- 	ret = xe_hwmon_pcode_write_i1(hwmon, uval);
++	if (WARN_ON(has_unwritten_metadata(block_group)))
++		btrfs_warn(fs_info,
++			   "block group %llu is removed before metadata write out",
++			   block_group->start);
++
+ 	set_bit(BLOCK_GROUP_FLAG_REMOVED, &block_group->runtime_flags);
  
--- 
-2.50.1
-
+ 	/*
+@@ -1586,8 +1608,9 @@ void btrfs_delete_unused_bgs(struct btrf
+ 		 * needing to allocate extents from the block group.
+ 		 */
+ 		used = btrfs_space_info_used(space_info, true);
+-		if (space_info->total_bytes - block_group->length < used &&
+-		    block_group->zone_unusable < block_group->length) {
++		if ((space_info->total_bytes - block_group->length < used &&
++		     block_group->zone_unusable < block_group->length) ||
++		    has_unwritten_metadata(block_group)) {
+ 			/*
+ 			 * Add a reference for the list, compensate for the ref
+ 			 * drop under the "next" label for the
 
 
