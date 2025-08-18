@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A2C320CC3;
-	Mon, 18 Aug 2025 13:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE6D320CAB;
+	Mon, 18 Aug 2025 13:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524664; cv=none; b=Ei0SrfKaj/4SJHhQ5GKt+Gj94+11orPpgqUROb8WpYne/oEfTq2V2ZldlHBMx8AHiJASUtP+iuZtFQYYdNpefYzxJPa5vL0Wfe8WvQ0i6BbrBQ/KpEPcpvFuuKWpKKr21jfPFwC9X+xi0M5vjajHEdOftU5kTlU5akkdnI5tmvs=
+	t=1755524667; cv=none; b=TqNAsOJgL61hN782IrSvDDVIP/oxqNnNiUb72xEEBSceY+GE2bcbE5BulODEkyvL8WEoQ+nTDPBEZg5ZTWNyQACaiUyz09u6rOPWw3ZldlOTfBZyfA09sS8bNvlxfBy6QA+2E0M5ad0r9n8QoP73XRq91YX7zfKrhlutb8F7ncM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524664; c=relaxed/simple;
-	bh=H9Cb2HatwdVMhYZOeAZgrSMw7ZyNu508FySmvQ+cokk=;
+	s=arc-20240116; t=1755524667; c=relaxed/simple;
+	bh=TCVIEVQpSKmo9fk9gSGyHfcO5UWudAVbTdpoMpBCeCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfW1uSCO0ye2qoWas0za2NH/U0Sw5FeNvccJogIJVOmJAIrk43ANCohiNzyODwU3pnXgl7vwb9Zq6LgcOy+eErduTD+tudBE5tUxpg/KHXEwkACJcCe0fGRKuKQKtqkK7xg5G5ujqXGZvWEKjGMCV9TO7o6DcR4rci3dMSdDmG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWZouown; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SIrt75+0UXMgp9G0f+e8V8A7FBs8cI8i4FkbvY3s5PSdKs7I6epvQ92sflIdX1ngZ2E0Vp1AkONPMV16MCa8nr9Y4S2rOiL9o+SrB3CHo9d+PRzUtTQDUM+WNLXYK/+CLHGdlLotoKM7mz8wCnvNBpddDLP0JQubnKphx3rc4/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFvT01sY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWZouown"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97419C4CEF1;
-	Mon, 18 Aug 2025 13:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFvT01sY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27D7C4CEEB;
+	Mon, 18 Aug 2025 13:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524664;
-	bh=H9Cb2HatwdVMhYZOeAZgrSMw7ZyNu508FySmvQ+cokk=;
+	s=korg; t=1755524667;
+	bh=TCVIEVQpSKmo9fk9gSGyHfcO5UWudAVbTdpoMpBCeCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWZouownD51cNtCOSr4xt3GJkaELUUYsOOeL4aVn16BmNmU4Hgk2vvQd2EfAVQFXY
-	 GON/VU/uwowo6QGRHz65G/k5NnHmO0+u/jPL71lVMPUPJlcHDOW1ZYu9VsLW2RKlvl
-	 brYqJynGssRR1O0tryapSI7KzuCf/xShO6Xl4a2Y=
+	b=bFvT01sY8E8YxMUV+IP0H+8bhujAqnItWcOdHXiZERY+AOsSl58xR/bJOQxZB2CtV
+	 DWQz2HXI1H2EKcWa1z/gVU75mX9H+GaB+GapVjJTl/NkafsyJeZpVdD208UHK5CuSt
+	 bRYsv8l9T8DD849MTpONusfaUozH7zzH7VZTY60A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangbo Lu <yangbo.lu@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Johan Hovold <johan@kernel.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 024/570] net: gianfar: fix device leak when querying time stamp info
-Date: Mon, 18 Aug 2025 14:40:11 +0200
-Message-ID: <20250818124506.738526771@linuxfoundation.org>
+Subject: [PATCH 6.16 025/570] net: enetc: fix device and OF node leak at probe
+Date: Mon, 18 Aug 2025 14:40:12 +0200
+Message-ID: <20250818124506.784353653@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -54,39 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit da717540acd34e5056e3fa35791d50f6b3303f55 upstream.
+commit 70458f8a6b44daf3ad39f0d9b6d1097c8a7780ed upstream.
 
-Make sure to drop the reference to the ptp device taken by
-of_find_device_by_node() when querying the time stamping capabilities.
+Make sure to drop the references to the IERB OF node and platform device
+taken by of_parse_phandle() and of_find_device_by_node() during probe.
 
-Note that holding a reference to the ptp device does not prevent its
-driver data from going away.
-
-Fixes: 7349a74ea75c ("net: ethernet: gianfar_ethtool: get phc index through drvdata")
-Cc: stable@vger.kernel.org	# 4.18
-Cc: Yangbo Lu <yangbo.lu@nxp.com>
+Fixes: e7d48e5fbf30 ("net: enetc: add a mini driver for the Integrated Endpoint Register Block")
+Cc: stable@vger.kernel.org	# 5.13
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250725171213.880-4-johan@kernel.org
+Link: https://patch.msgid.link/20250725171213.880-3-johan@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/gianfar_ethtool.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc_pf.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/freescale/gianfar_ethtool.c
-+++ b/drivers/net/ethernet/freescale/gianfar_ethtool.c
-@@ -1466,8 +1466,10 @@ static int gfar_get_ts_info(struct net_d
- 	if (ptp_node) {
- 		ptp_dev = of_find_device_by_node(ptp_node);
- 		of_node_put(ptp_node);
--		if (ptp_dev)
-+		if (ptp_dev) {
- 			ptp = platform_get_drvdata(ptp_dev);
-+			put_device(&ptp_dev->dev);
-+		}
- 	}
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -829,19 +829,29 @@ static int enetc_pf_register_with_ierb(s
+ {
+ 	struct platform_device *ierb_pdev;
+ 	struct device_node *ierb_node;
++	int ret;
  
- 	if (ptp)
+ 	ierb_node = of_find_compatible_node(NULL, NULL,
+ 					    "fsl,ls1028a-enetc-ierb");
+-	if (!ierb_node || !of_device_is_available(ierb_node))
++	if (!ierb_node)
+ 		return -ENODEV;
+ 
++	if (!of_device_is_available(ierb_node)) {
++		of_node_put(ierb_node);
++		return -ENODEV;
++	}
++
+ 	ierb_pdev = of_find_device_by_node(ierb_node);
+ 	of_node_put(ierb_node);
+ 
+ 	if (!ierb_pdev)
+ 		return -EPROBE_DEFER;
+ 
+-	return enetc_ierb_register_pf(ierb_pdev, pdev);
++	ret = enetc_ierb_register_pf(ierb_pdev, pdev);
++
++	put_device(&ierb_pdev->dev);
++
++	return ret;
+ }
+ 
+ static const struct enetc_si_ops enetc_psi_ops = {
 
 
