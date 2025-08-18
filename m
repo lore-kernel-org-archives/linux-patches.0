@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A517E271A6D;
-	Mon, 18 Aug 2025 13:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77C020C461;
+	Mon, 18 Aug 2025 13:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523823; cv=none; b=KFtgu9SMSNBTCeJWBI/jllMgp5zsTMuzGSFuNVNeWKCvrqrLO3xA0FomuY/tJ8pa6LTA8z9M3vxeFNr4TwYOSXRJJ88tAuipx8WM2x04KNjgi0cM82hwrpb11mDBhVgmHPoJoOk46rMXNi6OvZ9q+B5ezTyQR4odmyT5DE+cq7w=
+	t=1755523826; cv=none; b=BRrDvuBJCKoE6BNmb+lvfM4NasbZfZvBfuUYyGWX8f936lodmySiAF5KMaAfdtjc7E8jvMrB7tPT+6H6uy18jkn2csdSpNMLuVWpEASiW0YTq28C0z07dbKUU8wvVPArRqhR8tzQdqz/F8FYPSDcpjTOpR28ff2m5u+RoSr29Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523823; c=relaxed/simple;
-	bh=YRbXaiyrRE6Pq2wctI7WyxzKaz0xZitAAPsf9TBWLe0=;
+	s=arc-20240116; t=1755523826; c=relaxed/simple;
+	bh=mHbhihw2gsa4LdV+qJYcKvZLrJLxqzq4v1v/YIASBPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hoeXM51iEKihBHNWqQGRagxxX88pqkWCU6ocaRaawSgr1soLb27c+Sumys5pEH/g4QSACkOaTsNET4gQQeu3TAWnkJV0jyIx/3rOtZv4Q0xBlyRfB5ISmMvNGkyr1gW4D5pgfBCDrLvNTkvo/7Kcl0GUYVS0fX2F0WnMNQi+NqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4yjl+AT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brovADzm3mUt7v8WfwpYm7iU0Ty0O6uTK4L1YMn58wkqEoP73GBAS6x0sQXWbvJG1BXb7ucs3HRX6MIRR4UJNyqLMm1LJQxHaoPhXwDP9C/qPi4MFLv/1PB7uswLCiCB3cfg2GVNS0dLTapng5AyIXLRZ+wc5ns/taR4efoxqo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjRFOPAv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4yjl+AT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C85C4CEEB;
-	Mon, 18 Aug 2025 13:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjRFOPAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA3CC4CEEB;
+	Mon, 18 Aug 2025 13:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523823;
-	bh=YRbXaiyrRE6Pq2wctI7WyxzKaz0xZitAAPsf9TBWLe0=;
+	s=korg; t=1755523826;
+	bh=mHbhihw2gsa4LdV+qJYcKvZLrJLxqzq4v1v/YIASBPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4yjl+ATqjqa9fruozTrm5qJ830kVbiTQW+rOaUW5ca7Wb11AKS5KsGd2t8wvqDWR
-	 Eas5iX6yENAuhWUtWaPG+YZIlUk6P93j0XtSoEidk6Pn9gPuI+g7p0wCvvPDOKW6om
-	 RqUmI6aw/BnyXVJ8x98TgTdmLKJzuoYoaLgeefrw=
+	b=ZjRFOPAvXALRbDvQ9UjH/CvBeNL8jLjZhROflfkT2lkv9dIjCoEoimyXP76lsKysm
+	 TovOfwaZMLemkUfg6QSDe9vudIVX0l+1LnVHW4RHP/CB9wbDsmKe/yyEgDR3g8LyDl
+	 J+wFK5hSKdEQQJcq40qRwhYVjkE+op+H+ovptVZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 283/515] rcutorture: Fix rcutorture_one_extend_check() splat in RT kernels
-Date: Mon, 18 Aug 2025 14:44:29 +0200
-Message-ID: <20250818124509.314830070@linuxfoundation.org>
+Subject: [PATCH 6.15 257/515] drm/imagination: Clear runtime PM errors while resetting the GPU
+Date: Mon, 18 Aug 2025 14:44:03 +0200
+Message-ID: <20250818124508.306751041@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,82 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Alessio Belle <alessio.belle@imgtec.com>
 
-[ Upstream commit 8d71351d88e478d3c4e945e3218e97ec677fd807 ]
+[ Upstream commit 551507e0d0bf32ce1d7d27533c4b98307380804c ]
 
-For built with CONFIG_PREEMPT_RT=y kernels, running rcutorture
-tests resulted in the following splat:
+The runtime PM might be left in error state if one of the callbacks
+returned an error, e.g. if the (auto)suspend callback failed following
+a firmware crash.
 
-[   68.797425] rcutorture_one_extend_check during change: Current 0x1  To add 0x1  To remove 0x0  preempt_count() 0x0
-[   68.797533] WARNING: CPU: 2 PID: 512 at kernel/rcu/rcutorture.c:1993 rcutorture_one_extend_check+0x419/0x560 [rcutorture]
-[   68.797601] Call Trace:
-[   68.797602]  <TASK>
-[   68.797619]  ? lockdep_softirqs_off+0xa5/0x160
-[   68.797631]  rcutorture_one_extend+0x18e/0xcc0 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
-[   68.797646]  ? local_clock+0x19/0x40
-[   68.797659]  rcu_torture_one_read+0xf0/0x280 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
-[   68.797678]  ? __pfx_rcu_torture_one_read+0x10/0x10 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
-[   68.797804]  ? __pfx_rcu_torture_timer+0x10/0x10 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
-[   68.797815] rcu-torture: rcu_torture_reader task started
-[   68.797824] rcu-torture: Creating rcu_torture_reader task
-[   68.797824]  rcu_torture_reader+0x238/0x580 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
-[   68.797836]  ? kvm_sched_clock_read+0x15/0x30
+When that happens, any further attempt to acquire or release a power
+reference will then also fail, making it impossible to do anything else
+with the GPU. The driver logic will eventually reach the reset code.
 
-Disable BH does not change the SOFTIRQ corresponding bits in
-preempt_count() for RT kernels, this commit therefore use
-softirq_count() to check the if BH is disabled.
+In pvr_power_reset(), replace pvr_power_get() with a new API
+pvr_power_get_clear() which also attempts to clear any runtime PM error
+state if acquiring a power reference is not possible.
 
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://lore.kernel.org/r/20250624-clear-rpm-errors-gpu-reset-v1-1-b8ff2ae55aac@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcutorture.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/imagination/pvr_power.c | 59 ++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index 4fa7772be183..a6202cbef9c5 100644
---- a/kernel/rcu/rcutorture.c
-+++ b/kernel/rcu/rcutorture.c
-@@ -458,7 +458,7 @@ rcu_read_delay(struct torture_random_state *rrsp, struct rt_read_seg *rtrsp)
- 	    !(torture_random(rrsp) % (nrealreaders * 2000 * longdelay_ms))) {
- 		started = cur_ops->get_gp_seq();
- 		ts = rcu_trace_clock_local();
--		if (preempt_count() & (SOFTIRQ_MASK | HARDIRQ_MASK))
-+		if ((preempt_count() & HARDIRQ_MASK) || softirq_count())
- 			longdelay_ms = 5; /* Avoid triggering BH limits. */
- 		mdelay(longdelay_ms);
- 		rtrsp->rt_delay_ms = longdelay_ms;
-@@ -1922,7 +1922,7 @@ static void rcutorture_one_extend_check(char *s, int curstate, int new, int old,
- 		return;
- 
- 	WARN_ONCE((curstate & (RCUTORTURE_RDR_BH | RCUTORTURE_RDR_RBH)) &&
--		  !(preempt_count() & SOFTIRQ_MASK), ROEC_ARGS);
-+		  !softirq_count(), ROEC_ARGS);
- 	WARN_ONCE((curstate & (RCUTORTURE_RDR_PREEMPT | RCUTORTURE_RDR_SCHED)) &&
- 		  !(preempt_count() & PREEMPT_MASK), ROEC_ARGS);
- 	WARN_ONCE(cur_ops->readlock_nesting &&
-@@ -1936,7 +1936,7 @@ static void rcutorture_one_extend_check(char *s, int curstate, int new, int old,
- 
- 	WARN_ONCE(cur_ops->extendables &&
- 		  !(curstate & (RCUTORTURE_RDR_BH | RCUTORTURE_RDR_RBH)) &&
--		  (preempt_count() & SOFTIRQ_MASK), ROEC_ARGS);
-+		  softirq_count(), ROEC_ARGS);
- 
- 	/*
- 	 * non-preemptible RCU in a preemptible kernel uses preempt_disable()
-@@ -1957,6 +1957,9 @@ static void rcutorture_one_extend_check(char *s, int curstate, int new, int old,
- 	if (!IS_ENABLED(CONFIG_PREEMPT_RCU))
- 		mask |= RCUTORTURE_RDR_PREEMPT | RCUTORTURE_RDR_SCHED;
- 
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT) && softirq_count())
-+		mask |= RCUTORTURE_RDR_BH | RCUTORTURE_RDR_RBH;
-+
- 	WARN_ONCE(cur_ops->readlock_nesting && !(curstate & mask) &&
- 		  cur_ops->readlock_nesting() > 0, ROEC_ARGS);
+diff --git a/drivers/gpu/drm/imagination/pvr_power.c b/drivers/gpu/drm/imagination/pvr_power.c
+index 850b318605da..d97613c6a0a9 100644
+--- a/drivers/gpu/drm/imagination/pvr_power.c
++++ b/drivers/gpu/drm/imagination/pvr_power.c
+@@ -317,6 +317,63 @@ pvr_power_device_idle(struct device *dev)
+ 	return pvr_power_is_idle(pvr_dev) ? 0 : -EBUSY;
  }
+ 
++static int
++pvr_power_clear_error(struct pvr_device *pvr_dev)
++{
++	struct device *dev = from_pvr_device(pvr_dev)->dev;
++	int err;
++
++	/* Ensure the device state is known and nothing is happening past this point */
++	pm_runtime_disable(dev);
++
++	/* Attempt to clear the runtime PM error by setting the current state again */
++	if (pm_runtime_status_suspended(dev))
++		err = pm_runtime_set_suspended(dev);
++	else
++		err = pm_runtime_set_active(dev);
++
++	if (err) {
++		drm_err(from_pvr_device(pvr_dev),
++			"%s: Failed to clear runtime PM error (new error %d)\n",
++			__func__, err);
++	}
++
++	pm_runtime_enable(dev);
++
++	return err;
++}
++
++/**
++ * pvr_power_get_clear() - Acquire a power reference, correcting any errors
++ * @pvr_dev: Device pointer
++ *
++ * Attempt to acquire a power reference on the device. If the runtime PM
++ * is in error state, attempt to clear the error and retry.
++ *
++ * Returns:
++ *  * 0 on success, or
++ *  * Any error code returned by pvr_power_get() or the runtime PM API.
++ */
++static int
++pvr_power_get_clear(struct pvr_device *pvr_dev)
++{
++	int err;
++
++	err = pvr_power_get(pvr_dev);
++	if (err == 0)
++		return err;
++
++	drm_warn(from_pvr_device(pvr_dev),
++		 "%s: pvr_power_get returned error %d, attempting recovery\n",
++		 __func__, err);
++
++	err = pvr_power_clear_error(pvr_dev);
++	if (err)
++		return err;
++
++	return pvr_power_get(pvr_dev);
++}
++
+ /**
+  * pvr_power_reset() - Reset the GPU
+  * @pvr_dev: Device pointer
+@@ -341,7 +398,7 @@ pvr_power_reset(struct pvr_device *pvr_dev, bool hard_reset)
+ 	 * Take a power reference during the reset. This should prevent any interference with the
+ 	 * power state during reset.
+ 	 */
+-	WARN_ON(pvr_power_get(pvr_dev));
++	WARN_ON(pvr_power_get_clear(pvr_dev));
+ 
+ 	down_write(&pvr_dev->reset_sem);
+ 
 -- 
 2.39.5
 
