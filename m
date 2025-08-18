@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D98127A44A;
-	Mon, 18 Aug 2025 13:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383FD27A44A;
+	Mon, 18 Aug 2025 13:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522758; cv=none; b=KtAzZFJSiXqGKgMzweF8v4CyUyiOb1ObWA5dQSKGshJwoCefMxCKMXBZjPNitJqwQ84frUFcKQa8lU71OTflsWFfSCCygxcRfJL66W4Earbsix/F/vtrwr2stYLcX8SLrkida1EUeZ73e9Fd0cRFiPrHH05kj/Ty0JNIJj3IJL8=
+	t=1755522762; cv=none; b=YPDZqIJ6Q2QC5LVhzp5NvtnaEOoD+2DzVM2hFuj3FkyK+rFySo4WqPxzvQ2rnwzXE8dir4uMeqdPlWxMY+w+r6DrZCdbKg9zKsqzsZ3sIAD7AJGb2vfnvRfWLMJibw6nbUbvgCaRGYzE9CdFKsA/pX5T1jTqcqbDyBE/evtHeSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522758; c=relaxed/simple;
-	bh=6KV6kuYvjylAI091QQu9Peesg+bgUQ4E6sNuqXV1+VQ=;
+	s=arc-20240116; t=1755522762; c=relaxed/simple;
+	bh=XNwvBO41ujcDSFx/8F5o7hW1FT2lp71DuDA/Wo6NfLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dtiqd1rF3+KuaFcS/5ItgMK54WbAZQqwXDq6ryRu12rNuhRlYicOEFVRpoAAfL8oMbibMTnb2yPQXwVSXA/1MpX26XAwE5HwMrSAkJ8hdvTKtbnRHUplZdr6R3VXIrTO9g2PFuyZQk7k329RhpEh1aqpuKhcFnmLl9C7l/avils=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9O6BWLr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7lOCjbwdVc8vk+ZSGPJE2IdKFsTtika5mpX8TiZDz6qvBvMPLRtjl8f/UyOHPi9xzfGIec7YmDvLVf1TxU0Eejp4SNgUgNoj5pT53mBWNcIJKj/BQuFmUT7UzYgb9GNqxqJHXZMDNLcuOfYupi787+6EuqQpqQXpRhGQIi0VDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/bzRsV0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9O6BWLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD41C4CEEB;
-	Mon, 18 Aug 2025 13:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/bzRsV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEB9C4CEEB;
+	Mon, 18 Aug 2025 13:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522758;
-	bh=6KV6kuYvjylAI091QQu9Peesg+bgUQ4E6sNuqXV1+VQ=;
+	s=korg; t=1755522761;
+	bh=XNwvBO41ujcDSFx/8F5o7hW1FT2lp71DuDA/Wo6NfLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9O6BWLrrikaxBuivmuyWO75ZHbpZTvdBcS9HJDRYpc/5y29IFWvRQZb95YS7+4fU
-	 TDp73Q2djEFcJFHYUnnwGDnTQwWzNy8dlNfCCpW87douBSR6R6aK9Fu5Dm3C/puCZW
-	 1hLgrk/oUri2shpLwESukJwBafiXAyq5xl9Q8RXU=
+	b=x/bzRsV0JzWf5yCxemSUK2mhp1tyFy7bM64KjMh+ukjwc3t/pKU8fvFuXKcIF59MC
+	 XPrXxJjHIgK8JDFySDCwKppgmq3WqAE1p7Aj4xtZBAUnBcoLbj+QAAH8OJjrFzO4VD
+	 WSIgBvHq2Gt9HZi6sXR4pdTJQGeYpMP4d/ds7Hwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 413/444] mm/ptdump: take the memory hotplug lock inside ptdump_walk_pgd()
-Date: Mon, 18 Aug 2025 14:47:19 +0200
-Message-ID: <20250818124504.413252099@linuxfoundation.org>
+	David Sterba <dsterba@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>
+Subject: [PATCH 6.12 396/444] btrfs: fix ssd_spread overallocation
+Date: Mon, 18 Aug 2025 14:47:02 +0200
+Message-ID: <20250818124503.768639292@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -63,131 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Boris Burkov <boris@bur.io>
 
-commit 59305202c67fea50378dcad0cc199dbc13a0e99a upstream.
+commit 807d9023e75fc20bfd6dd2ac0408ce4af53f1648 upstream.
 
-Memory hot remove unmaps and tears down various kernel page table regions
-as required.  The ptdump code can race with concurrent modifications of
-the kernel page tables.  When leaf entries are modified concurrently, the
-dump code may log stale or inconsistent information for a VA range, but
-this is otherwise not harmful.
+If the ssd_spread mount option is enabled, then we run the so called
+clustered allocator for data block groups. In practice, this results in
+creating a btrfs_free_cluster which caches a block_group and borrows its
+free extents for allocation.
 
-But when intermediate levels of kernel page table are freed, the dump code
-will continue to use memory that has been freed and potentially
-reallocated for another purpose.  In such cases, the ptdump code may
-dereference bogus addresses, leading to a number of potential problems.
+Since the introduction of allocation size classes in 6.1, there has been
+a bug in the interaction between that feature and ssd_spread.
+find_free_extent() has a number of nested loops. The loop going over the
+allocation stages, stored in ffe_ctl->loop and managed by
+find_free_extent_update_loop(), the loop over the raid levels, and the
+loop over all the block_groups in a space_info. The size class feature
+relies on the block_group loop to ensure it gets a chance to see a
+block_group of a given size class.  However, the clustered allocator
+uses the cached cluster block_group and breaks that loop. Each call to
+do_allocation() will really just go back to the same cached block_group.
+Normally, this is OK, as the allocation either succeeds and we don't
+want to loop any more or it fails, and we clear the cluster and return
+its space to the block_group.
 
-To avoid the above mentioned race condition, platforms such as arm64,
-riscv and s390 take memory hotplug lock, while dumping kernel page table
-via the sysfs interface /sys/kernel/debug/kernel_page_tables.
+But with size classes, the allocation can succeed, then later fail,
+outside of do_allocation() due to size class mismatch. That latter
+failure is not properly handled due to the highly complex multi loop
+logic. The result is a painful loop where we continue to allocate the
+same num_bytes from the cluster in a tight loop until it fails and
+releases the cluster and lets us try a new block_group. But by then, we
+have skipped great swaths of the available block_groups and are likely
+to fail to allocate, looping the outer loop. In pathological cases like
+the reproducer below, the cached block_group is often the very last one,
+in which case we don't perform this tight bg loop but instead rip
+through the ffe stages to LOOP_CHUNK_ALLOC and allocate a chunk, which
+is now the last one, and we enter the tight inner loop until an
+allocation failure. Then allocation succeeds on the final block_group
+and if the next allocation is a size mismatch, the exact same thing
+happens again.
 
-Similar race condition exists while checking for pages that might have
-been marked W+X via /sys/kernel/debug/kernel_page_tables/check_wx_pages
-which in turn calls ptdump_check_wx().  Instead of solving this race
-condition again, let's just move the memory hotplug lock inside generic
-ptdump_check_wx() which will benefit both the scenarios.
+Triggering this is as easy as mounting with -o ssd_spread and then
+running:
 
-Drop get_online_mems() and put_online_mems() combination from all existing
-platform ptdump code paths.
+  mount -o ssd_spread $dev $mnt
+  dd if=/dev/zero of=$mnt/big bs=16M count=1 &>/dev/null
+  dd if=/dev/zero of=$mnt/med bs=4M count=1 &>/dev/null
+  sync
 
-Link: https://lkml.kernel.org/r/20250620052427.2092093-1-anshuman.khandual@arm.com
-Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>	[s390]
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+if you do the two writes + sync in a loop, you can force btrfs to spin
+an excessive amount on semi-successful clustered allocations, before
+ultimately failing and advancing to the stage where we force a chunk
+allocation. This results in 2G of data allocated per iteration, despite
+only using ~20M of data. By using a small size classed extent, the inner
+loop takes longer and we can spin for longer.
+
+The simplest, shortest term fix to unbreak this is to make the clustered
+allocator size_class aware in the dumbest way, where it fails on size
+class mismatch. This may hinder the operation of the clustered
+allocator, but better hindered than completely broken and terribly
+overallocating.
+
+Further re-design improvements are also in the works.
+
+Fixes: 52bb7a2166af ("btrfs: introduce size class to block group allocator")
+CC: stable@vger.kernel.org # 6.1+
+Reported-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/ptdump_debugfs.c |    3 ---
- arch/riscv/mm/ptdump.c         |    3 ---
- arch/s390/mm/dump_pagetables.c |    2 --
- mm/ptdump.c                    |    2 ++
- 4 files changed, 2 insertions(+), 8 deletions(-)
+ fs/btrfs/extent-tree.c |   33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
---- a/arch/arm64/mm/ptdump_debugfs.c
-+++ b/arch/arm64/mm/ptdump_debugfs.c
-@@ -1,6 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/debugfs.h>
--#include <linux/memory_hotplug.h>
- #include <linux/seq_file.h>
- 
- #include <asm/ptdump.h>
-@@ -9,9 +8,7 @@ static int ptdump_show(struct seq_file *
- {
- 	struct ptdump_info *info = m->private;
- 
--	get_online_mems();
- 	ptdump_walk(m, info);
--	put_online_mems();
- 	return 0;
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -3654,6 +3654,21 @@ btrfs_release_block_group(struct btrfs_b
+ 	btrfs_put_block_group(cache);
  }
- DEFINE_SHOW_ATTRIBUTE(ptdump);
---- a/arch/riscv/mm/ptdump.c
-+++ b/arch/riscv/mm/ptdump.c
-@@ -6,7 +6,6 @@
- #include <linux/efi.h>
- #include <linux/init.h>
- #include <linux/debugfs.h>
--#include <linux/memory_hotplug.h>
- #include <linux/seq_file.h>
- #include <linux/ptdump.h>
  
-@@ -371,9 +370,7 @@ bool ptdump_check_wx(void)
++static bool find_free_extent_check_size_class(const struct find_free_extent_ctl *ffe_ctl,
++					      const struct btrfs_block_group *bg)
++{
++	if (ffe_ctl->policy == BTRFS_EXTENT_ALLOC_ZONED)
++		return true;
++	if (!btrfs_block_group_should_use_size_class(bg))
++		return true;
++	if (ffe_ctl->loop >= LOOP_WRONG_SIZE_CLASS)
++		return true;
++	if (ffe_ctl->loop >= LOOP_UNSET_SIZE_CLASS &&
++	    bg->size_class == BTRFS_BG_SZ_NONE)
++		return true;
++	return ffe_ctl->size_class == bg->size_class;
++}
++
+ /*
+  * Helper function for find_free_extent().
+  *
+@@ -3675,7 +3690,8 @@ static int find_free_extent_clustered(st
+ 	if (!cluster_bg)
+ 		goto refill_cluster;
+ 	if (cluster_bg != bg && (cluster_bg->ro ||
+-	    !block_group_bits(cluster_bg, ffe_ctl->flags)))
++	    !block_group_bits(cluster_bg, ffe_ctl->flags) ||
++	    !find_free_extent_check_size_class(ffe_ctl, cluster_bg)))
+ 		goto release_cluster;
  
- static int ptdump_show(struct seq_file *m, void *v)
- {
--	get_online_mems();
- 	ptdump_walk(m, m->private);
--	put_online_mems();
- 
- 	return 0;
+ 	offset = btrfs_alloc_from_cluster(cluster_bg, last_ptr,
+@@ -4231,21 +4247,6 @@ static int find_free_extent_update_loop(
+ 	return -ENOSPC;
  }
---- a/arch/s390/mm/dump_pagetables.c
-+++ b/arch/s390/mm/dump_pagetables.c
-@@ -203,11 +203,9 @@ static int ptdump_show(struct seq_file *
- 		.marker = markers,
- 	};
  
--	get_online_mems();
- 	mutex_lock(&cpa_mutex);
- 	ptdump_walk_pgd(&st.ptdump, &init_mm, NULL);
- 	mutex_unlock(&cpa_mutex);
--	put_online_mems();
- 	return 0;
- }
- DEFINE_SHOW_ATTRIBUTE(ptdump);
---- a/mm/ptdump.c
-+++ b/mm/ptdump.c
-@@ -153,6 +153,7 @@ void ptdump_walk_pgd(struct ptdump_state
- {
- 	const struct ptdump_range *range = st->range;
- 
-+	get_online_mems();
- 	mmap_write_lock(mm);
- 	while (range->start != range->end) {
- 		walk_page_range_novma(mm, range->start, range->end,
-@@ -160,6 +161,7 @@ void ptdump_walk_pgd(struct ptdump_state
- 		range++;
- 	}
- 	mmap_write_unlock(mm);
-+	put_online_mems();
- 
- 	/* Flush out the last page */
- 	st->note_page(st, 0, -1, 0);
+-static bool find_free_extent_check_size_class(struct find_free_extent_ctl *ffe_ctl,
+-					      struct btrfs_block_group *bg)
+-{
+-	if (ffe_ctl->policy == BTRFS_EXTENT_ALLOC_ZONED)
+-		return true;
+-	if (!btrfs_block_group_should_use_size_class(bg))
+-		return true;
+-	if (ffe_ctl->loop >= LOOP_WRONG_SIZE_CLASS)
+-		return true;
+-	if (ffe_ctl->loop >= LOOP_UNSET_SIZE_CLASS &&
+-	    bg->size_class == BTRFS_BG_SZ_NONE)
+-		return true;
+-	return ffe_ctl->size_class == bg->size_class;
+-}
+-
+ static int prepare_allocation_clustered(struct btrfs_fs_info *fs_info,
+ 					struct find_free_extent_ctl *ffe_ctl,
+ 					struct btrfs_space_info *space_info,
 
 
