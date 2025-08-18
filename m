@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B28220126A;
-	Mon, 18 Aug 2025 13:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F7F31CA5B;
+	Mon, 18 Aug 2025 13:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522183; cv=none; b=L4fLiTkhiYyOqXfXpENdoFnfsBsxVztz0zkHpiqA9jg2txoGJARxg18PgZRGvas9Nr6jxBaf+EH7BzKhSZGLtOJ3Hcqu3iZbftH0WuMlRK7IZLCACUYHDs1ZM2fUfhzIQA3SrA8xe6G2um5A+/9yhQhks3k5ulsKwf6ygxpZSbw=
+	t=1755522186; cv=none; b=Pv1b32KT6qMHT+LbgVegUFyR4XthAPhbCTsQGUB4+vWNd/rDJp3ISUHrridvi2kDfeuij0N0UQDR0sxgQWF2GjuV+YnxcNXiliylq/W6D4Vt5n8GMhjdxosDOMvAuTgCUZjKsVe8Ez6hO4P5pZscWkqWKXLn+WkHcIoUTUqNf8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522183; c=relaxed/simple;
-	bh=cMle9pzfz21fhlZiqiEXE618EgQbz+p3q4ADfLhoEH8=;
+	s=arc-20240116; t=1755522186; c=relaxed/simple;
+	bh=p2WA4bg0yiVi2uuW+EqQlNnvYMcrOa+TxCfCLlsU6/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fAG0+4x57HeQ7Q/sGD4yUO51j5Psapg5DjCbTkZUlrwyy7BE/5aXII8qjWG8hKE9zCIp8Ij7MFWzu3/uHu7kAEwcOlSt31kLNqphb7kz6Ndi7za4Rzucpo6XrfKW5Exe95vUs3+JsRjAjwbnrpsgZDrrsiRXlnLGxiQuQvgPZA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkqBmgpo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WbDZmAjC4Xf9SYaCdnANByTrpTpS3NU6je0Jf+VPAG2/Lw94kOA9udj7p++s2FXwepQae4RqNHNG919T4ZSYVpRy6qUIA0pcQpBL2Sr2asMZ/fg5Y87HGMA2cxwsJ8kvTEuxHjRYDD6Huqoc2ssb82t7QI1ec2dbAhHY6lWfyQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJ4N3vaz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkqBmgpo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21EAC113D0;
-	Mon, 18 Aug 2025 13:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJ4N3vaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33869C4CEEB;
+	Mon, 18 Aug 2025 13:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522183;
-	bh=cMle9pzfz21fhlZiqiEXE618EgQbz+p3q4ADfLhoEH8=;
+	s=korg; t=1755522186;
+	bh=p2WA4bg0yiVi2uuW+EqQlNnvYMcrOa+TxCfCLlsU6/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkqBmgpoeVti0QFb2HjBqEwo5dqsyqUrksvqFZ3k6xYDVDZ8XEgfD4vRRJVZy6U1s
-	 bmZuOh5r8KROw9GhmPxAdYivnf1tcMEz6D1MVAVC1VsqhEod7ydSIl38BpAWZmgTTe
-	 MNIxhkSQronK6nBzT30AHfxiXRR6O5v/PtlbeMvk=
+	b=qJ4N3vazwAKV1oQgKS1p2U2GKmeebt7ptFtC0bSWSbcLk9FmpIvVaMeuIJC3JZZrk
+	 EjEpxbERK2fCP5o8eeCvBG0opGltGqnMaa4y+PtPxXKs1RykG1EsUa0/+6eDpz2Y8Y
+	 buh6P0pxkjuqZ5Og+KMRYgz6ZWv1mCd3sNWZveoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	Breno Leitao <leitao@debian.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Miroslav Benes <mbenes@suse.cz>,
-	Petr Mladek <pmladek@suse.com>,
-	Song Liu <song@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexei Safin <a.safin@rosa.ru>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 240/444] arm64: stacktrace: Check kretprobe_find_ret_addr() return value
-Date: Mon, 18 Aug 2025 14:44:26 +0200
-Message-ID: <20250818124457.827064887@linuxfoundation.org>
+Subject: [PATCH 6.12 241/444] wifi: iwlegacy: Check rate_idx range after addition
+Date: Mon, 18 Aug 2025 14:44:27 +0200
+Message-ID: <20250818124457.872741612@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -58,43 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-[ Upstream commit beecfd6a88a675e20987e70ec532ba734b230fa4 ]
+[ Upstream commit 0de19d5ae0b2c5b18b88c5c7f0442f707a207409 ]
 
-If kretprobe_find_ret_addr() fails to find the original return address,
-it returns 0. Check for this case so that a reliable stacktrace won't
-silently ignore it.
+Limit rate_idx to IL_LAST_OFDM_RATE for 5GHz band for thinkable case
+the index is incorrect.
 
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrea della Porta <andrea.porta@suse.com>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Miroslav Benes <mbenes@suse.cz>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Song Liu <song@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-and-tested-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20250521111000.2237470-2-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Reported-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reported-by: Alexei Safin <a.safin@rosa.ru>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20250525144524.GA172583@wp.pl
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/stacktrace.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/intel/iwlegacy/4965-mac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/stacktrace.c b/arch/arm64/kernel/stacktrace.c
-index 2729faaee4b4..1d60a08a2184 100644
---- a/arch/arm64/kernel/stacktrace.c
-+++ b/arch/arm64/kernel/stacktrace.c
-@@ -123,6 +123,8 @@ kunwind_recover_return_address(struct kunwind_state *state)
- 		orig_pc = kretprobe_find_ret_addr(state->task,
- 						  (void *)state->common.fp,
- 						  &state->kr_cur);
-+		if (!orig_pc)
-+			return -EINVAL;
- 		state->common.pc = orig_pc;
- 	}
- #endif /* CONFIG_KRETPROBES */
+diff --git a/drivers/net/wireless/intel/iwlegacy/4965-mac.c b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
+index 05c4af41bdb9..a94cf27ffe4b 100644
+--- a/drivers/net/wireless/intel/iwlegacy/4965-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
+@@ -1575,8 +1575,11 @@ il4965_tx_cmd_build_rate(struct il_priv *il,
+ 	    || rate_idx > RATE_COUNT_LEGACY)
+ 		rate_idx = rate_lowest_index(&il->bands[info->band], sta);
+ 	/* For 5 GHZ band, remap mac80211 rate indices into driver indices */
+-	if (info->band == NL80211_BAND_5GHZ)
++	if (info->band == NL80211_BAND_5GHZ) {
+ 		rate_idx += IL_FIRST_OFDM_RATE;
++		if (rate_idx > IL_LAST_OFDM_RATE)
++			rate_idx = IL_LAST_OFDM_RATE;
++	}
+ 	/* Get PLCP rate for tx_cmd->rate_n_flags */
+ 	rate_plcp = il_rates[rate_idx].plcp;
+ 	/* Zero out flags for this packet */
 -- 
 2.39.5
 
