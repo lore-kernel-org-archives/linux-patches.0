@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA2F320397;
-	Mon, 18 Aug 2025 13:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E997C31E115;
+	Mon, 18 Aug 2025 13:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522475; cv=none; b=o02CORkKs23Gkv4MucO93xSpLtCBBYzqZKNCBLto98saYr/9tGbIYm/WO9eSnOLJexrhNu+B8ybjDuAhl2iZrM3MGxUM8COjdLRLcMdKobivWSJMM3IRMkGB4xJhyEEpn2QDt26JAS0K13s3r4kTd7eQEhiriyvxJbwWt9TptZ0=
+	t=1755522479; cv=none; b=ljYHVXZYG6P77QGjoA/ViXyWPqXkxj0vg5FXlIgPd5jwxByuT7iw0rEiCCdCafY+kE7zJFj3xDTHWoqUeURqTQ0cjMj+++JlzWRfgcF50o56mnbl1EBH39eaaB27WnSL9XdCadq+e2TFoteL646iZHYnms5FfahalDVNVFXDoeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522475; c=relaxed/simple;
-	bh=lzYXAkeP6AuMkSpkFAQGarexW4aREpxRVfxM4CKYH+Y=;
+	s=arc-20240116; t=1755522479; c=relaxed/simple;
+	bh=R6Z6JdZZPBW5IMg1CC3DVqp5eLMuT9BxKsMucs/5ZDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Os7UETTSrZ4JbbIVVqymKDcLZNXm1/JiIsWVcuJB0DgdNWLVaxUzKCh/NpsPNQyEWYjM9RcfmC/zm/z6au6ZjP4MBJ9v1eC+zgl8hRwBSESlBNCjp7VSdkh126LY1yLDTFfPQGYLSDBG8juuSITpY+mFAH0nmjT/lX22NdnL+Ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XPPcgWs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hpzfUu7qzyXlGHWZXhtTvAFdJ2eBWkip88bc2d9mYZnBxIER5sdRrg2FJ0p/m0PxZZHCD93304YEts2DvcfJcjE3akkOLJZnAfBwAVZoUWfkPbQDWbNW1veGaa4mmvfNrqWEc+ga2SWrqhuH0rzgkKTTz0IGc/ppWICLjyze+Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmBiH6Kp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XPPcgWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0383C4CEEB;
-	Mon, 18 Aug 2025 13:07:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmBiH6Kp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4CDC4CEEB;
+	Mon, 18 Aug 2025 13:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522475;
-	bh=lzYXAkeP6AuMkSpkFAQGarexW4aREpxRVfxM4CKYH+Y=;
+	s=korg; t=1755522478;
+	bh=R6Z6JdZZPBW5IMg1CC3DVqp5eLMuT9BxKsMucs/5ZDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XPPcgWs+2wzPdq6C2DHqYSTJ+3CvMG94ArXQSo6VbDQeom2J7Uj3ZtqCoThQRrbg
-	 oITi0Ft4NWZiMl7nt4+C6Q7pBmFaD/qClJO2tqrIfqrGpRZjGjvO7qL5A7uL0vxUPy
-	 6ovYLCf4i7nX8Md89s8gfL1Elm72RMIQbhAIFBlI=
+	b=vmBiH6KpJlem3zRw00LBzwvQAOp49w80ymOLYxF2dnpyR/ClVTKSm/8zlFTxX7qLb
+	 tSalVj1Q8Bxqf7Y6l9TZOpySwBVa48LKXN95++YkxBtBT0XCPjiqly60pqeY3dLWea
+	 zQbjbBbNpEO2/XNYW+CL2rFiEj0l1atQiGPL9o9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 294/444] jfs: upper bound check of tree index in dbAllocAG
-Date: Mon, 18 Aug 2025 14:45:20 +0200
-Message-ID: <20250818124459.982813548@linuxfoundation.org>
+Subject: [PATCH 6.12 295/444] media: hi556: Fix reset GPIO timings
+Date: Mon, 18 Aug 2025 14:45:21 +0200
+Message-ID: <20250818124500.019315721@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,42 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit c214006856ff52a8ff17ed8da52d50601d54f9ce ]
+[ Upstream commit 99f2211a9d89fe34b3fa847fd7a4475171406cd0 ]
 
-When computing the tree index in dbAllocAG, we never check if we are
-out of bounds realative to the size of the stree.
-This could happen in a scenario where the filesystem metadata are
-corrupted.
+probe() requests the reset GPIO to be set to high when getting it.
+Immeditately after this hi556_resume() is called and sets the GPIO low.
 
-Reported-by: syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cffd18309153948f3c3e
-Tested-by: syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+If the GPIO was low before requesting it this will result in the GPIO
+only very briefly spiking high and the sensor not being properly reset.
+The same problem also happens on back to back runtime suspend + resume.
+
+Fix this by adding a sleep of 2 ms in hi556_resume() before setting
+the GPIO low (if there is a reset GPIO).
+
+The final sleep is kept unconditional, because if there is e.g. no reset
+GPIO but a controllable clock then the sensor also needs some time after
+enabling the clock.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/i2c/hi556.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 5a877261c3fe..cdfa699cd7c8 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -1389,6 +1389,12 @@ dbAllocAG(struct bmap * bmp, int agno, s64 nblocks, int l2nb, s64 * results)
- 	    (1 << (L2LPERCTL - (bmp->db_agheight << 1))) / bmp->db_agwidth;
- 	ti = bmp->db_agstart + bmp->db_agwidth * (agno & (agperlev - 1));
+diff --git a/drivers/media/i2c/hi556.c b/drivers/media/i2c/hi556.c
+index 0e89aff9c664..3c84cf07275f 100644
+--- a/drivers/media/i2c/hi556.c
++++ b/drivers/media/i2c/hi556.c
+@@ -1321,7 +1321,12 @@ static int hi556_resume(struct device *dev)
+ 		return ret;
+ 	}
  
-+	if (ti < 0 || ti >= le32_to_cpu(dcp->nleafs)) {
-+		jfs_error(bmp->db_ipbmap->i_sb, "Corrupt dmapctl page\n");
-+		release_metapage(mp);
-+		return -EIO;
+-	gpiod_set_value_cansleep(hi556->reset_gpio, 0);
++	if (hi556->reset_gpio) {
++		/* Assert reset for at least 2ms on back to back off-on */
++		usleep_range(2000, 2200);
++		gpiod_set_value_cansleep(hi556->reset_gpio, 0);
 +	}
 +
- 	/* dmap control page trees fan-out by 4 and a single allocation
- 	 * group may be described by 1 or 2 subtrees within the ag level
- 	 * dmap control page, depending upon the ag size. examine the ag's
+ 	usleep_range(5000, 5500);
+ 	return 0;
+ }
 -- 
 2.39.5
 
