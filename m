@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF2F322779;
-	Mon, 18 Aug 2025 13:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42006322DA8;
+	Mon, 18 Aug 2025 13:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525590; cv=none; b=Z+vZXghPAe9mQhxWqQg1MZ2ssp+kBBdI+1e/Ju2GZWH4PPw/Kp1x5fQoITfDzV0edjTEp4t+h6VrInBrrBqlNJE6vTMqU0ezVZ62MO34KYVsxK//yWW2VUP/L/ChUnxFKNzVaz2Anfh5Xaq3YJMHiU9r/Jti6+Il5wblZqPtx8A=
+	t=1755525594; cv=none; b=p9suLH1YCQe3FMGUMFBgui3iK6yF9RUImP2vlLfF9Up4xmfs8BSzh8ptV9NAW2FXS/3ZzjQMILe2KUARVwY4HWJaHag+SddOX1FYbXxyDKXgN1ZA3+kro7zePFXMJ78wDfQQMNKeojf9drS5tsg1+kUCGmqmhwJnxBbZmAEUo0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525590; c=relaxed/simple;
-	bh=gKeu5ptb65IaJm2ykD6Cdq/GiZxiWCZg8+1hGayUp1Q=;
+	s=arc-20240116; t=1755525594; c=relaxed/simple;
+	bh=qrSiE2kyLrMyk89ViCV5IkZqVEd6Tb7lLgXjzpiWwc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bm2hcdHVGz9rfd5v4PaJPiysJFZpfYR81O24uT67wU0uV2Iq/SD9R0ouEXjBKPVYmBwD0fERcJxqlbqiLr16kFiE4DRQlIlenzV6Xy1fMWgfmOCp6cTt+1koKnzE4AV+2EAwwZ5XaqiZMZmgwr+BwjVaYTf+WuY762tY7rYyt6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vdg4tjt4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tqC/boQizp38uN48+UgRZAwSbmBWI2IsF9Nap6Afj5GzUoTsmq0QcfTurgxbxgHvHEweaR61aZRkvD4VtUOl7/vrVkjrJGvH8pw7IXJeULX7u46mOr0YhKfz4gbaMd5nrm8TxY6bpwPfvUZb2YckDjFo/d7UCYUBJmilicTCx/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHKPssmz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vdg4tjt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DD7C116C6;
-	Mon, 18 Aug 2025 13:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHKPssmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBC4C113D0;
+	Mon, 18 Aug 2025 13:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525590;
-	bh=gKeu5ptb65IaJm2ykD6Cdq/GiZxiWCZg8+1hGayUp1Q=;
+	s=korg; t=1755525593;
+	bh=qrSiE2kyLrMyk89ViCV5IkZqVEd6Tb7lLgXjzpiWwc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vdg4tjt4N+lc3I95yGKlwyfAZMQKOMhev2Uz6oXwOHzYrl1lhsK7u/yUcLz5YDBEk
-	 KPdCBeWxgGsbHr1QqblhqF3dlQXIoSYn9oIl64VYQ2ixE5bdInPWKz+mfUzgMd/nKW
-	 Hln2JAcnmsApAur4AHGgppE/ETKzor4cFEw5wd5M=
+	b=bHKPssmzLVXM0bSFHWLJDcy55ZzzuTGJa9BCklzxzjHdofNf9viL7RCy+3LWeoYS2
+	 W8fF5YLHk1X8stmjHZpmWFwNot7lNRk3gHpih5rqoWuMhh+TQlUbY+e+b1VdQEDFdt
+	 Y0dfQuyLsgFcsUlsG4ZO07uHWkZ0gHHGFETadtw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	David Bauer <mail@david-bauer.net>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 277/570] wifi: rtw89: Disable deep power saving for USB/SDIO
-Date: Mon, 18 Aug 2025 14:44:24 +0200
-Message-ID: <20250818124516.523142199@linuxfoundation.org>
+Subject: [PATCH 6.16 278/570] wifi: mt76: mt7915: mcu: re-init MCU before loading FW patch
+Date: Mon, 18 Aug 2025 14:44:25 +0200
+Message-ID: <20250818124516.562203614@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,37 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: David Bauer <mail@david-bauer.net>
 
-[ Upstream commit a3b871a0f7c083c2a632a31da8bc3de554ae8550 ]
+[ Upstream commit ac9c50c79eaef5fca0f165e45d0c5880606db53e ]
 
-Disable deep power saving for USB and SDIO because rtw89_mac_send_rpwm()
-is called in atomic context and accessing hardware registers results in
-"scheduling while atomic" errors.
+Restart the MCU and release the patch semaphore before loading the MCU
+patch firmware from the host.
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/0f49eceb-0de0-47e2-ba36-3c6a0dddd17d@gmail.com
+This fixes failures upon error recovery in case the semaphore was
+previously taken and never released by the host.
+
+This happens from time to time upon triggering a full-chip error
+recovery. Under this circumstance, the hardware restart fails and the
+radio is rendered inoperational.
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+Link: https://patch.msgid.link/20250402004528.1036715-3-mail@david-bauer.net
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/wireless/mediatek/mt76/mt7915/mcu.c   | 25 +++++++++++--------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index c886dd2a73b4..894ab7ab94cc 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -2839,6 +2839,9 @@ static enum rtw89_ps_mode rtw89_update_ps_mode(struct rtw89_dev *rtwdev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index c6584d2b7509..4c7f193a1158 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -2110,16 +2110,21 @@ static int mt7915_load_firmware(struct mt7915_dev *dev)
  {
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
+ 	int ret;
  
-+	if (rtwdev->hci.type != RTW89_HCI_TYPE_PCIE)
-+		return RTW89_PS_MODE_NONE;
+-	/* make sure fw is download state */
+-	if (mt7915_firmware_state(dev, false)) {
+-		/* restart firmware once */
+-		mt76_connac_mcu_restart(&dev->mt76);
+-		ret = mt7915_firmware_state(dev, false);
+-		if (ret) {
+-			dev_err(dev->mt76.dev,
+-				"Firmware is not ready for download\n");
+-			return ret;
+-		}
++	/* Release Semaphore if taken by previous failed attempt */
++	ret = mt76_connac_mcu_patch_sem_ctrl(&dev->mt76, false);
++	if (ret != PATCH_REL_SEM_SUCCESS) {
++		dev_err(dev->mt76.dev, "Could not release semaphore\n");
++		/* Continue anyways */
++	}
 +
- 	if (rtw89_disable_ps_mode || !chip->ps_mode_supported ||
- 	    RTW89_CHK_FW_FEATURE(NO_DEEP_PS, &rtwdev->fw))
- 		return RTW89_PS_MODE_NONE;
++	/* Always restart MCU firmware */
++	mt76_connac_mcu_restart(&dev->mt76);
++
++	/* Check if MCU is ready */
++	ret = mt7915_firmware_state(dev, false);
++	if (ret) {
++		dev_err(dev->mt76.dev, "Firmware did not enter download state\n");
++		return ret;
+ 	}
+ 
+ 	ret = mt76_connac2_load_patch(&dev->mt76, fw_name_var(dev, ROM_PATCH));
 -- 
 2.39.5
 
