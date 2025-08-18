@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BBE320CDB;
-	Mon, 18 Aug 2025 13:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094FF32253A;
+	Mon, 18 Aug 2025 13:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523096; cv=none; b=AAuskx023Ousn+XNJQoP+IoBVDQmmEXR+azNCKLBB0EdLdXa1jaNcW9u4VpmawKeZhFDKrxToaL5KPOhUCcAs72HruiOPzuTkvItQFUvezKLxhnnv49c3cKfwBF/cLMUn+XgmosuOGFnbScNh7gIdz0dmEvZV/IcOLZv3nm4ULo=
+	t=1755523100; cv=none; b=aVEfoaQJCT8lDNJUuCnsXZ35ecvyIz+Kxi9ckfA0+lkEeodtHSvYqSj6mEZ2ojj/iXo4kRwBlxWougQcLbgxHdVEj8AuWg5rHFqX3T+xEXOuGYC0LbpTgZDHfhSGextqhT8MJv9gxk0KTjp4oSpV1BNVMHwndn1NSOH10ttKNYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523096; c=relaxed/simple;
-	bh=k9R5dw89WnMdRXi1D3XsR0HuyWVts8VVe+Bk5xo2olw=;
+	s=arc-20240116; t=1755523100; c=relaxed/simple;
+	bh=JdwayqzvnxvLlIDKcbXM4ZBDqtItUNpdrdvLDTYKPyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ThT8HbIuRpKE9pkxUmWap84mcn5XEb5dMgNLLPB92Rgilt5SChSvXZYTNyCNLMb70LwBvOHdsZTXzVLN3J4huVr4WkVfp8xFQCej50zyDG2PXJgC5+tNo83yJWKbX5nJL20TpOnyvr7dZVRgy+OiCLGbY4QRtqIBNGaIpXvtgJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukHWDEpO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X15ADao+hZfnEH802Mmb9f55kbWC0mejY9fzEB9219g0On/Npyo2Z4Kx+vN6bbu+8CuG1YrR+m7ICvFWiKMVcPDrkp06qe59c+skhop0kb3X1a5deSnobfPApxHi4Y1VgiB27Vc4bbnjPEwfLG0MMcr0Gd4o9YNET/xw6AxLyds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMNnvFDC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukHWDEpO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25206C113D0;
-	Mon, 18 Aug 2025 13:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMNnvFDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3D2C4CEEB;
+	Mon, 18 Aug 2025 13:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523096;
-	bh=k9R5dw89WnMdRXi1D3XsR0HuyWVts8VVe+Bk5xo2olw=;
+	s=korg; t=1755523099;
+	bh=JdwayqzvnxvLlIDKcbXM4ZBDqtItUNpdrdvLDTYKPyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukHWDEpO+UjWN3hFSMJ1syRTDGari92/WmUehAgxQKYf4uBsLCbQxmEBa7W1UdzAj
-	 kw0qgzdcW0ybrm92Gffhfy6Qdg4A85w9kKXXE1pGfGiajwwf9aCP45kty2vNK+E6C0
-	 0LzyLwyhMe13M0Zo/+GMGZBG9mQ3hrZyYkVGTJu8=
+	b=ZMNnvFDCP9KsqsTh0qZQMtYFxEFY9nBRWjDCI7iCktnFYGxtHT+zQgdfEo8DXDnJ1
+	 KjQ/U1rAHcTvUmiTHhti/iPwMmoX0kzvq1mh4sy6KKflEbwcOWAld2sTMaN6MU/U2Q
+	 7ZMQLeLwk38oM1YnTqeocg02qPozQ1YmjgAj8ilw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Len Brown <len.brown@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 069/515] erofs: fix block count report when 48-bit layout is on
-Date: Mon, 18 Aug 2025 14:40:55 +0200
-Message-ID: <20250818124501.051577161@linuxfoundation.org>
+Subject: [PATCH 6.15 070/515] intel_idle: Allow loading ACPI tables for any family
+Date: Mon, 18 Aug 2025 14:40:56 +0200
+Message-ID: <20250818124501.087909154@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,35 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 0b96d9bed324a1c1b7d02bfb9596351ef178428d ]
+[ Upstream commit e91a158b694d7f4bd937763dde79ed0afa472d8a ]
 
-Fix incorrect shift order when combining the 48-bit block count.
+There is no reason to limit intel_idle's loading of ACPI tables to
+family 6.  Upcoming Intel processors are not in family 6.
 
-Fixes: 2e1473d5195f ("erofs: implement 48-bit block addressing for unencoded inodes")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250807082019.3093539-1-hsiangkao@linux.alibaba.com
+Below "Fixes" really means "applies cleanly until".
+That syntax commit didn't change the previous logic,
+but shows this patch applies back 5-years.
+
+Fixes: 4a9f45a0533f ("intel_idle: Convert to new X86 CPU match macros")
+Signed-off-by: Len Brown <len.brown@intel.com>
+Link: https://patch.msgid.link/06101aa4fe784e5b0be1cb2c0bdd9afcf16bd9d4.1754681697.git.len.brown@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/super.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/idle/intel_idle.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index 6e57b9cc6ed2..cfe454dbf415 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -313,8 +313,8 @@ static int erofs_read_superblock(struct super_block *sb)
- 	sbi->islotbits = ilog2(sizeof(struct erofs_inode_compact));
- 	if (erofs_sb_has_48bit(sbi) && dsb->rootnid_8b) {
- 		sbi->root_nid = le64_to_cpu(dsb->rootnid_8b);
--		sbi->dif0.blocks = (sbi->dif0.blocks << 32) |
--				le16_to_cpu(dsb->rb.blocks_hi);
-+		sbi->dif0.blocks = sbi->dif0.blocks |
-+				((u64)le16_to_cpu(dsb->rb.blocks_hi) << 32);
- 	} else {
- 		sbi->root_nid = le16_to_cpu(dsb->rb.rootnid_2b);
- 	}
+diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
+index 976f5be54e36..039dc42dd509 100644
+--- a/drivers/idle/intel_idle.c
++++ b/drivers/idle/intel_idle.c
+@@ -1665,7 +1665,7 @@ static const struct x86_cpu_id intel_idle_ids[] __initconst = {
+ };
+ 
+ static const struct x86_cpu_id intel_mwait_ids[] __initconst = {
+-	X86_MATCH_VENDOR_FAM_FEATURE(INTEL, 6, X86_FEATURE_MWAIT, NULL),
++	X86_MATCH_VENDOR_FAM_FEATURE(INTEL, X86_FAMILY_ANY, X86_FEATURE_MWAIT, NULL),
+ 	{}
+ };
+ 
 -- 
 2.50.1
 
