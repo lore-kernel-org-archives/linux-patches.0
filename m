@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE9B335BCB;
-	Mon, 18 Aug 2025 13:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422E1335BA0;
+	Mon, 18 Aug 2025 13:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524471; cv=none; b=mKdINca0jRwYLh3TGHjFQGSFPVTqCgA3Fl0ZDmwUAm/Se3awqbidPG1yF2KH1w1hufd+a46Nj4WOaHYjXfJ7vcopEhJ3G3XvDu0SQTSOz1olzXst0bB4vQxpV0gtCx5L9BPKbOBWDj1G9wPSVUU1vWSv3QbrpSfnP/9qYai2bAE=
+	t=1755524475; cv=none; b=mDWcZrrrEI0HQDQVqOg3uShfCrdNtPFTP9/G3zj5nsPs/BkpjiScuiIAxY9um/c5aHREXqWNGZAqBg5rjH7F06nDlJKwZJVEBgIoHOl97EfikVY6tVvmeNKQlQ0P76vb8OWhVBgClhKLOG81oUo5CvZ/lWW6KB9533wsdu/qJxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524471; c=relaxed/simple;
-	bh=Ww8B96CE4oNz/6Up3c5VntK52MemCqumPkpupiHmc/k=;
+	s=arc-20240116; t=1755524475; c=relaxed/simple;
+	bh=zh+WbuBsNHywc1w+1vQAWCABG5r+2Ccf7JbZ65KLW8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TsvNYfjNKYrXuIxnB/MIlJkrQFBFCDYjZpnqXEQtPZ8cGEfqiHTZ5Ewa4Of91QbYLzWyUiYQW8Wl5KNu5dMHFCFCn1SFuTI8Pb/dode6sr0QHLWtg5DDVtAFnjcT+burvnE7BkI+9rshVhkrEHHW7zoP388aiaI4mJELgtrP8jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFQblKfq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMGASONEjXfa4aq/v0smlQmkWDvMSqSFJjcZqB37xYa9oQaItL1V3M883pak0IlOx3ilDeoaew9izq9OJDKbKXkqo7CqsPhiM4mBkVHHsRJKAsUkLqhpptBb8gsCI/Cb5hRrcZky8Fk+nCf4JxYay3R2u/xcd/w6hgwDNQJtWZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaWPbbf2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFQblKfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A361C4CEF1;
-	Mon, 18 Aug 2025 13:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaWPbbf2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4369CC4CEEB;
+	Mon, 18 Aug 2025 13:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524471;
-	bh=Ww8B96CE4oNz/6Up3c5VntK52MemCqumPkpupiHmc/k=;
+	s=korg; t=1755524474;
+	bh=zh+WbuBsNHywc1w+1vQAWCABG5r+2Ccf7JbZ65KLW8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFQblKfqpLGPFjekFX6lvWGAksMcyidvukKwaLOfnfSnKaBYVPBkR8xEtqLyP2deO
-	 d6qwropvs2hthoF0b7DUmMz/ZEf83gwawgDcMOgA96GefcN+DhPqBYS9zJHEOcmNHh
-	 NHXMOyCz0l2dQHIgwtoZEU2iOaVFIcfQQDvagHjA=
+	b=AaWPbbf2YR+eoeHDOWmq0nk/AXBnNuSKHnopWHbw/01szjErtR/ciXun0Rqi5dd8J
+	 dI2CEtHQ74gjAOC5WHoOwEhTIf6npG+mghiQNZTZAibVfWldMwRbri5Q2mtZU2beZG
+	 49WYetePYAQOl5ADsmNtsFjKrqX5VvjiuL+5K6vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suren Baghdasaryan <surenb@google.com>,
-	syzbot+b446dbe27035ef6bd6c2@syzkaller.appspotmail.com,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Lokesh Gidra <lokeshgidra@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 483/515] userfaultfd: fix a crash in UFFDIO_MOVE when PMD is a migration entry
-Date: Mon, 18 Aug 2025 14:47:49 +0200
-Message-ID: <20250818124517.018652504@linuxfoundation.org>
+	Sravan Kumar Gundu <sravankumarlpu@gmail.com>,
+	Helge Deller <deller@gmx.de>,
+	syzbot+c4b7aa0513823e2ea880@syzkaller.appspotmail.com
+Subject: [PATCH 6.15 484/515] fbdev: Fix vmalloc out-of-bounds write in fast_imageblit
+Date: Mon, 18 Aug 2025 14:47:50 +0200
+Message-ID: <20250818124517.058375336@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -55,57 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suren Baghdasaryan <surenb@google.com>
+From: Sravan Kumar Gundu <sravankumarlpu@gmail.com>
 
-commit aba6faec0103ed8f169be8dce2ead41fcb689446 upstream.
+commit af0db3c1f898144846d4c172531a199bb3ca375d upstream.
 
-When UFFDIO_MOVE encounters a migration PMD entry, it proceeds with
-obtaining a folio and accessing it even though the entry is swp_entry_t.
-Add the missing check and let split_huge_pmd() handle migration entries.
-While at it also remove unnecessary folio check.
+This issue triggers when a userspace program does an ioctl
+FBIOPUT_CON2FBMAP by passing console number and frame buffer number.
+Ideally this maps console to frame buffer and updates the screen if
+console is visible.
 
-[surenb@google.com: remove extra folio check, per David]
-  Link: https://lkml.kernel.org/r/20250807200418.1963585-1-surenb@google.com
-Link: https://lkml.kernel.org/r/20250806220022.926763-1-surenb@google.com
-Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-Reported-by: syzbot+b446dbe27035ef6bd6c2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68794b5c.a70a0220.693ce.0050.GAE@google.com/
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Lokesh Gidra <lokeshgidra@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+As part of mapping it has to do resize of console according to frame
+buffer info. if this resize fails and returns from vc_do_resize() and
+continues further. At this point console and new frame buffer are mapped
+and sets display vars. Despite failure still it continue to proceed
+updating the screen at later stages where vc_data is related to previous
+frame buffer and frame buffer info and display vars are mapped to new
+frame buffer and eventully leading to out-of-bounds write in
+fast_imageblit(). This bheviour is excepted only when fg_console is
+equal to requested console which is a visible console and updates screen
+with invalid struct references in fbcon_putcs().
+
+Reported-and-tested-by: syzbot+c4b7aa0513823e2ea880@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c4b7aa0513823e2ea880
+Signed-off-by: Sravan Kumar Gundu <sravankumarlpu@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/userfaultfd.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/core/fbcon.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -1829,13 +1829,16 @@ ssize_t move_pages(struct userfaultfd_ct
- 			/* Check if we can move the pmd without splitting it. */
- 			if (move_splits_huge_pmd(dst_addr, src_addr, src_start + len) ||
- 			    !pmd_none(dst_pmdval)) {
--				struct folio *folio = pmd_folio(*src_pmd);
-+				/* Can be a migration entry */
-+				if (pmd_present(*src_pmd)) {
-+					struct folio *folio = pmd_folio(*src_pmd);
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -825,7 +825,8 @@ static void con2fb_init_display(struct v
+ 				   fg_vc->vc_rows);
+ 	}
  
--				if (!folio || (!is_huge_zero_folio(folio) &&
--					       !PageAnonExclusive(&folio->page))) {
--					spin_unlock(ptl);
--					err = -EBUSY;
--					break;
-+					if (!is_huge_zero_folio(folio) &&
-+					    !PageAnonExclusive(&folio->page)) {
-+						spin_unlock(ptl);
-+						err = -EBUSY;
-+						break;
-+					}
- 				}
+-	update_screen(vc_cons[fg_console].d);
++	if (fg_console != unit)
++		update_screen(vc_cons[fg_console].d);
+ }
  
- 				spin_unlock(ptl);
+ /**
+@@ -1362,6 +1363,7 @@ static void fbcon_set_disp(struct fb_inf
+ 	struct vc_data *svc;
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 	int rows, cols;
++	unsigned long ret = 0;
+ 
+ 	p = &fb_display[unit];
+ 
+@@ -1412,11 +1414,10 @@ static void fbcon_set_disp(struct fb_inf
+ 	rows = FBCON_SWAP(ops->rotate, info->var.yres, info->var.xres);
+ 	cols /= vc->vc_font.width;
+ 	rows /= vc->vc_font.height;
+-	vc_resize(vc, cols, rows);
++	ret = vc_resize(vc, cols, rows);
+ 
+-	if (con_is_visible(vc)) {
++	if (con_is_visible(vc) && !ret)
+ 		update_screen(vc);
+-	}
+ }
+ 
+ static __inline__ void ywrap_up(struct vc_data *vc, int count)
 
 
