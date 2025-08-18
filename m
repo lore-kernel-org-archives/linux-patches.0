@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5B831A068;
-	Mon, 18 Aug 2025 12:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F348D31CA55;
+	Mon, 18 Aug 2025 12:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521564; cv=none; b=bNP9ww+4ZUM6RLfeBfDoKzUTbeOK0i+OiI2OpHfRaQjoBL1AvHSZmZQ+IZPwbrN3eRAGGMmc0pVO3L1dlFamenwNYzB6BDpFRS7ToRmOcwXTkv//wBKWA4eruPwSOvYb1cyepuQXCEd4i4VGyoKU3szxpIZyrKhR2DTbU5PD4nY=
+	t=1755521568; cv=none; b=Gf/xRDbnGNSiK8Nf8pIjNaykjo5qaCtClL30CBRpdVOrWk+EZBFqOO9frps1ktbo6lQ9tuoI5x3EK1JlQP/jY34PT7ETuVdLu5ZQ9xgPwdgq42+5F1eyOUrEkWq85hfkoPEGg/wvtPY6TWH1UIhDsR6rolVd9a4Of/3DnDUDMHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521564; c=relaxed/simple;
-	bh=WYS74mdY2S4vY4NhaAx/iOVWN7dmAd3h2BlUTAsY1l0=;
+	s=arc-20240116; t=1755521568; c=relaxed/simple;
+	bh=62qe0qcQcmYhPJtMTpGxC9eDsJ3B0rdi+k3VMZcaWwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3u29ipwDzbX545Ip2Qzpj51f2jMzP5tZWBB5DDrw2DlaRYOz834orZEXVDd+B+5Qc3I/fvRA4dn0p893mxig60b7X+9sbA9OeEvoqadUDynycD4SGYicd9ErbzjGzUHyX/fcaGW6sBCSnUc4/aKby1aPwyz+FzuBeQMMOQ/SyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Ehx4cyO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4PLsRIr9SXBRwHTX5wzwDdxYT2+evZDuvjTs6ZsrcxD1VT9snAjrhhSjbvYi+OsbGiuVle3uruZeNKr/L3FLPJ/UHHIiJFqPW82Ae3cJAjCNmrIMR6zYgPdeZYnltFcfltNbdAQ8ZExYnZl94+mAN1OcQ5+MLNtXTzcUYnYyRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pEPuZGs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Ehx4cyO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2689C4CEF1;
-	Mon, 18 Aug 2025 12:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pEPuZGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2767BC4CEF1;
+	Mon, 18 Aug 2025 12:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521564;
-	bh=WYS74mdY2S4vY4NhaAx/iOVWN7dmAd3h2BlUTAsY1l0=;
+	s=korg; t=1755521567;
+	bh=62qe0qcQcmYhPJtMTpGxC9eDsJ3B0rdi+k3VMZcaWwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Ehx4cyOX2Gdzh3AM/FUrTisPrFk/BvJoPIpHL4qzmDVFrUrWrkuAP5T2wZKQjuuJ
-	 BhyWFlifhRxo6q9HutujV8gvXBIdL1gXdFZkuEthf2K7ZeXYT28a1mBp2gyhOMc7Nm
-	 4jU7/S1mXaN4GgrWAFpRYkFYLNDRHGwYGqoat7LQ=
+	b=0pEPuZGs2knUVwwLr38Rjg6y6j1LdFn9s1lka1MEE5EzaqFW5u/cCr2a0TYZVBIdk
+	 HYR7KNTEfPGoE7Bkd+g9YEoNUwf5S3IfKjuoSy/IHJ55wTysefFDyTtsv5dO91Orrm
+	 FzPRzqk02X/68I3KEAz6rHzrImipBKl5NSuvm7uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Len Brown <len.brown@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/444] intel_idle: Allow loading ACPI tables for any family
-Date: Mon, 18 Aug 2025 14:41:25 +0200
-Message-ID: <20250818124451.155201030@linuxfoundation.org>
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Huang Ying <ying.huang@linux.alibaba.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 042/444] mm/memory-tier: fix abstract distance calculation overflow
+Date: Mon, 18 Aug 2025 14:41:08 +0200
+Message-ID: <20250818124450.514152513@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,41 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit e91a158b694d7f4bd937763dde79ed0afa472d8a ]
+commit cce35103135c7ffc7bebc32ebfc74fe1f2c3cb5d upstream.
 
-There is no reason to limit intel_idle's loading of ACPI tables to
-family 6.  Upcoming Intel processors are not in family 6.
+In mt_perf_to_adistance(), the calculation of abstract distance (adist)
+involves multiplying several int values including
+MEMTIER_ADISTANCE_DRAM.
 
-Below "Fixes" really means "applies cleanly until".
-That syntax commit didn't change the previous logic,
-but shows this patch applies back 5-years.
+*adist = MEMTIER_ADISTANCE_DRAM *
+		(perf->read_latency + perf->write_latency) /
+		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
+		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
+		(perf->read_bandwidth + perf->write_bandwidth);
 
-Fixes: 4a9f45a0533f ("intel_idle: Convert to new X86 CPU match macros")
-Signed-off-by: Len Brown <len.brown@intel.com>
-Link: https://patch.msgid.link/06101aa4fe784e5b0be1cb2c0bdd9afcf16bd9d4.1754681697.git.len.brown@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Since these values can be large, the multiplication may exceed the
+maximum value of an int (INT_MAX) and overflow (Our platform did),
+leading to an incorrect adist.
+
+User-visible impact:
+The memory tiering subsystem will misinterpret slow memory (like CXL)
+as faster than DRAM, causing inappropriate demotion of pages from
+CXL (slow memory) to DRAM (fast memory).
+
+For example, we will see the following demotion chains from the dmesg, where
+Node0,1 are DRAM, and Node2,3 are CXL node:
+ Demotion targets for Node 0: null
+ Demotion targets for Node 1: null
+ Demotion targets for Node 2: preferred: 0-1, fallback: 0-1
+ Demotion targets for Node 3: preferred: 0-1, fallback: 0-1
+
+Change MEMTIER_ADISTANCE_DRAM to be a long constant by writing it with
+the 'L' suffix.  This prevents the overflow because the multiplication
+will then be done in the long type which has a larger range.
+
+Link: https://lkml.kernel.org/r/20250611023439.2845785-1-lizhijian@fujitsu.com
+Link: https://lkml.kernel.org/r/20250610062751.2365436-1-lizhijian@fujitsu.com
+Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Huang Ying <ying.huang@linux.alibaba.com>
+Acked-by: Balbir Singh <balbirs@nvidia.com>
+Reviewed-by: Donet Tom <donettom@linux.ibm.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/idle/intel_idle.c | 2 +-
+ include/linux/memory-tiers.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
-index 524ed143f875..4506e1cc4b65 100644
---- a/drivers/idle/intel_idle.c
-+++ b/drivers/idle/intel_idle.c
-@@ -1608,7 +1608,7 @@ static const struct x86_cpu_id intel_idle_ids[] __initconst = {
- };
+--- a/include/linux/memory-tiers.h
++++ b/include/linux/memory-tiers.h
+@@ -18,7 +18,7 @@
+  * adistance value (slightly faster) than default DRAM adistance to be part of
+  * the same memory tier.
+  */
+-#define MEMTIER_ADISTANCE_DRAM	((4 * MEMTIER_CHUNK_SIZE) + (MEMTIER_CHUNK_SIZE >> 1))
++#define MEMTIER_ADISTANCE_DRAM	((4L * MEMTIER_CHUNK_SIZE) + (MEMTIER_CHUNK_SIZE >> 1))
  
- static const struct x86_cpu_id intel_mwait_ids[] __initconst = {
--	X86_MATCH_VENDOR_FAM_FEATURE(INTEL, 6, X86_FEATURE_MWAIT, NULL),
-+	X86_MATCH_VENDOR_FAM_FEATURE(INTEL, X86_FAMILY_ANY, X86_FEATURE_MWAIT, NULL),
- 	{}
- };
- 
--- 
-2.50.1
-
+ struct memory_tier;
+ struct memory_dev_type {
 
 
