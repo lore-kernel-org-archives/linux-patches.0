@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F2A335BA3;
-	Mon, 18 Aug 2025 13:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55B335BA3;
+	Mon, 18 Aug 2025 13:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524905; cv=none; b=PlubFnpGuWvmCQEtwXiuYIXeDrJNfx/xO+lZ6iGjhpn9r6resxtbynYlqD13jL8+R/tFrKnnsEQBG4jX62hCHi19I2gn8p8+wTPpA1q5g37gl7y8GQyJi/NO4iqs4N9wTL3CcNbA28BdUVyLQlwt7xpFlVVlSFv0XHg5PRGrBkU=
+	t=1755524909; cv=none; b=hHlixQHbfmlFvD135rpWtRMqN5I1lMFh9H1SQucERjhtI03VwqvyfQKy9wyiVy35UfR4W+h1Kb4VdEQcEdYbAEbz0bWnAO94VZKXJlAQX3x6DPrWQd0XayOhzJ7cepR5JaE/B0bLj3HXiwpLXFY7h7firbTdl+e7ZDjJkV07hAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524905; c=relaxed/simple;
-	bh=7l2YmgdZzMKz9Ikult+SzNwdm/OL2tUYjcL1SagTgkI=;
+	s=arc-20240116; t=1755524909; c=relaxed/simple;
+	bh=qzdtJziQ2GXhffLAzPKDDZcc5prK5BliasrvIT7zUPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bTngAH87pQkvLpl9bSWZXIEygJAEDSig/OmH2EvX3yHDka07z3OX0nxJnqTa8my4zWd5f3tsk6Rn0pBUd+BU4v8dZdz9/9GD514Lk/jkwzGdArGR0GcVNYhP93oM8mdOuhMNgwM8GFuiJEBAjrEW7WplSSx6iKrEFdpbj4Vcn5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpUnoLHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXOR4XBN3puEeCNPz9y0Wv3V3VP5v9zzv3gdijIGEiA2vmM6Ryl/DZaZ4GzrE2uZ3qbCoP7EfZlb3btDCXIGtAmQObCxJm0PWOxvmIKf0Hf6dLpxaSLRGv/xj2RNEi4sJ0mkwGc5QYqfa0YhxINqmJ6nKmKCki13lRKiRVKX0hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez8J/5tL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpUnoLHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4488BC4CEEB;
-	Mon, 18 Aug 2025 13:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez8J/5tL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74A8C4CEEB;
+	Mon, 18 Aug 2025 13:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524905;
-	bh=7l2YmgdZzMKz9Ikult+SzNwdm/OL2tUYjcL1SagTgkI=;
+	s=korg; t=1755524909;
+	bh=qzdtJziQ2GXhffLAzPKDDZcc5prK5BliasrvIT7zUPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpUnoLHPm6r/aR3W8AOAnkCpMAsMrBAky9aQRN1X/3NnqiqVy32R26xiiwj03H/sM
-	 Chn7w6U+XAQ6RlaKumeC5zZsodGaOM2oNuyXo9ivX8Y2Fq8lQYKII29TP8tnK2AMO/
-	 +f5sU5JMUQhPCDBKQq966JUiZYI5Bhuh6GLQunSo=
+	b=ez8J/5tLXzWNNucBEIpY5sy7Qrue7XuarvX0GSF2vq49q3qAyRxPo/3OMSTcV6YuB
+	 IzEcjolX+3sZipfO4pVJlc3B5WSDJOuN1fJFknTkDuYu4gW9GqrIBg0C03dhl4S8ov
+	 13d+fgXbTMJRty3BWjjmHpaHTDmRO2n5TbqacNf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 067/570] net: hibmcge: fix rtnl deadlock issue
-Date: Mon, 18 Aug 2025 14:40:54 +0200
-Message-ID: <20250818124508.394288263@linuxfoundation.org>
+Subject: [PATCH 6.16 068/570] net: hibmcge: fix the division by zero issue
+Date: Mon, 18 Aug 2025 14:40:55 +0200
+Message-ID: <20250818124508.432341812@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -54,118 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit c875503a9b9082928d7d3fc60b5400d16fbfae4e ]
+[ Upstream commit 7004b26f0b64331143eb0b312e77a357a11427ce ]
 
-Currently, the hibmcge netdev acquires the rtnl_lock in
-pci_error_handlers.reset_prepare() and releases it in
-pci_error_handlers.reset_done().
+When the network port is down, the queue is released, and ring->len is 0.
+In debugfs, hbg_get_queue_used_num() will be called,
+which may lead to a division by zero issue.
 
-However, in the PCI framework:
-pci_reset_bus - __pci_reset_slot - pci_slot_save_and_disable_locked -
- pci_dev_save_and_disable - err_handler->reset_prepare(dev);
+This patch adds a check, if ring->len is 0,
+hbg_get_queue_used_num() directly returns 0.
 
-In pci_slot_save_and_disable_locked():
-	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
-		if (!dev->slot || dev->slot!= slot)
-			continue;
-		pci_dev_save_and_disable(dev);
-		if (dev->subordinate)
-			pci_bus_save_and_disable_locked(dev->subordinate);
-	}
-
-This will iterate through all devices under the current bus and execute
-err_handler->reset_prepare(), causing two devices of the hibmcge driver
-to sequentially request the rtnl_lock, leading to a deadlock.
-
-Since the driver now executes netif_device_detach()
-before the reset process, it will not concurrently with
-other netdev APIs, so there is no need to hold the rtnl_lock now.
-
-Therefore, this patch removes the rtnl_lock during the reset process and
-adjusts the position of HBG_NIC_STATE_RESETTING to ensure
-that multiple resets are not executed concurrently.
-
-Fixes: 3f5a61f6d504f ("net: hibmcge: Add reset supported in this module")
+Fixes: 40735e7543f9 ("net: hibmcge: Implement .ndo_start_xmit function")
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c b/drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c
-index ff3295b60a69..dee1e8681157 100644
---- a/drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c
-+++ b/drivers/net/ethernet/hisilicon/hibmcge/hbg_err.c
-@@ -53,9 +53,11 @@ static int hbg_reset_prepare(struct hbg_priv *priv, enum hbg_reset_type type)
+diff --git a/drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.h b/drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.h
+index 2883a5899ae2..8b6110599e10 100644
+--- a/drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.h
++++ b/drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.h
+@@ -29,7 +29,12 @@ static inline bool hbg_fifo_is_full(struct hbg_priv *priv, enum hbg_dir dir)
+ 
+ static inline u32 hbg_get_queue_used_num(struct hbg_ring *ring)
  {
- 	int ret;
- 
--	ASSERT_RTNL();
-+	if (test_and_set_bit(HBG_NIC_STATE_RESETTING, &priv->state))
-+		return -EBUSY;
- 
- 	if (netif_running(priv->netdev)) {
-+		clear_bit(HBG_NIC_STATE_RESETTING, &priv->state);
- 		dev_warn(&priv->pdev->dev,
- 			 "failed to reset because port is up\n");
- 		return -EBUSY;
-@@ -64,7 +66,6 @@ static int hbg_reset_prepare(struct hbg_priv *priv, enum hbg_reset_type type)
- 	netif_device_detach(priv->netdev);
- 
- 	priv->reset_type = type;
--	set_bit(HBG_NIC_STATE_RESETTING, &priv->state);
- 	clear_bit(HBG_NIC_STATE_RESET_FAIL, &priv->state);
- 	ret = hbg_hw_event_notify(priv, HBG_HW_EVENT_RESET);
- 	if (ret) {
-@@ -83,28 +84,25 @@ static int hbg_reset_done(struct hbg_priv *priv, enum hbg_reset_type type)
- 	    type != priv->reset_type)
- 		return 0;
- 
--	ASSERT_RTNL();
--
--	clear_bit(HBG_NIC_STATE_RESETTING, &priv->state);
- 	ret = hbg_rebuild(priv);
- 	if (ret) {
- 		set_bit(HBG_NIC_STATE_RESET_FAIL, &priv->state);
-+		clear_bit(HBG_NIC_STATE_RESETTING, &priv->state);
- 		dev_err(&priv->pdev->dev, "failed to rebuild after reset\n");
- 		return ret;
- 	}
- 
- 	netif_device_attach(priv->netdev);
-+	clear_bit(HBG_NIC_STATE_RESETTING, &priv->state);
- 
- 	dev_info(&priv->pdev->dev, "reset done\n");
- 	return ret;
+-	return (ring->ntu + ring->len - ring->ntc) % ring->len;
++	u32 len = READ_ONCE(ring->len);
++
++	if (!len)
++		return 0;
++
++	return (READ_ONCE(ring->ntu) + len - READ_ONCE(ring->ntc)) % len;
  }
  
--/* must be protected by rtnl lock */
- int hbg_reset(struct hbg_priv *priv)
- {
- 	int ret;
- 
--	ASSERT_RTNL();
- 	ret = hbg_reset_prepare(priv, HBG_RESET_TYPE_FUNCTION);
- 	if (ret)
- 		return ret;
-@@ -169,7 +167,6 @@ static void hbg_pci_err_reset_prepare(struct pci_dev *pdev)
- 	struct net_device *netdev = pci_get_drvdata(pdev);
- 	struct hbg_priv *priv = netdev_priv(netdev);
- 
--	rtnl_lock();
- 	hbg_reset_prepare(priv, HBG_RESET_TYPE_FLR);
- }
- 
-@@ -179,7 +176,6 @@ static void hbg_pci_err_reset_done(struct pci_dev *pdev)
- 	struct hbg_priv *priv = netdev_priv(netdev);
- 
- 	hbg_reset_done(priv, HBG_RESET_TYPE_FLR);
--	rtnl_unlock();
- }
- 
- static const struct pci_error_handlers hbg_pci_err_handler = {
+ netdev_tx_t hbg_net_start_xmit(struct sk_buff *skb, struct net_device *netdev);
 -- 
 2.50.1
 
