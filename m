@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C8A320CDC;
-	Mon, 18 Aug 2025 12:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00198320CC1;
+	Mon, 18 Aug 2025 12:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521578; cv=none; b=RK5HjO+Vf0KbC37X/bFLFGLYF/36FjkXdSdrD6Cpa214CNCFf0/29zRqFZRiZCnSIuFVEowUBDHjQ2F1DYx1Am0l7mfMqRM9R1/liubRwWZ0gVbF04+dqQdLdbvVgJIbWnKTnHRk5fSQAJckm0PNDNuHFT/AoHaLohSsvMf/00g=
+	t=1755521581; cv=none; b=e1jVhtv/imq4a+ZVgszkH8H1WV057YG/nZqBnjG+o4dnklTnooCxNr4I41+HI4cRSQfL4shrgKEcO/JF8sJUhfjPs/xU4o7WlPQQBY3EkE86uRc2OhSzwcvZ6DCcm6ZzrpKqSPHaDtrm3WcUKFcD7rtmxpnAnyQ9GdccqSXS4vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521578; c=relaxed/simple;
-	bh=mmkhaYHooSYDTQVK0SUjell5/OCZePKI0dxuCS4BM7A=;
+	s=arc-20240116; t=1755521581; c=relaxed/simple;
+	bh=4+07oK+ByDtC4M1uEoKJaZIIrvRrld3Mk1l/fEdYlQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKXJyFdjHKZeGZ+ForJ3OUSXFjpcx114mZ4wVZHv25XE26qJwOG2FKOmaiPN/gZB/PaJl0ggQDnFEIXl9LEv+nfMoLJIKHal1AyclR+quLZC6sjXTzf6oHiHQU5jDImVN6izB3+vTR5dA5ZdTK67Yi7d2ZOMt4AELbosVg1+rMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzgDaSQu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DfQn7IEo1VjIKF3kkA24w7DlvbIKRfy3Ox80YfNhNBxtaHPznZ2I57e4PsS+7Lc2ERYMSlGf+ISIG4IQlJC7kWBOnh06wctjLYfbJZoj+utvBavjkvQpNmAoHCip+Yr5WHm9O7qxTEMgrgL17FGduoHu1zEHBdLj1rssMiL6H9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJusCMCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzgDaSQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3227EC4CEEB;
-	Mon, 18 Aug 2025 12:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJusCMCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6394FC4CEEB;
+	Mon, 18 Aug 2025 12:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521577;
-	bh=mmkhaYHooSYDTQVK0SUjell5/OCZePKI0dxuCS4BM7A=;
+	s=korg; t=1755521580;
+	bh=4+07oK+ByDtC4M1uEoKJaZIIrvRrld3Mk1l/fEdYlQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzgDaSQu2b7DpMuSAVYy67IS/2dsD0A4L7hTrbcoX7CyH7RKBtBCGgrSNu4OE/9OK
-	 40Gw/y7byPw2goz4USIJoFa1/fd9lYMOQfSKBeQ6hW6lNbPshXN/cSu7St3lout+F+
-	 qSGc4PG5NcCP8bYIAbDbrOGunefZwYNq4CftRybM=
+	b=vJusCMCYqAvbdwJj9DdwGGMogVWphCAjhLdUraTkRxMP7fgBhoW9XXvEcjzokUzeh
+	 pKKzA4mig6y/JWo7lyXovRkQhJr/MY2c2oGo+5Vz8pCuVVpVTHR3rGHj6xcUifiPJd
+	 kNjOekeO2XSx6dVfABXWz80nPI1Xtlh6vUZIhZWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+e62c9db591c30e174662@syzkaller.appspotmail.com,
+	syzbot+d199b52665b6c3069b94@syzkaller.appspotmail.com,
+	syzbot+be6b1fdfeae512726b4e@syzkaller.appspotmail.com,
+	Sven Stegemann <sven@stegemann.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/444] tls: handle data disappearing from under the TLS ULP
-Date: Mon, 18 Aug 2025 14:41:28 +0200
-Message-ID: <20250818124451.271497033@linuxfoundation.org>
+Subject: [PATCH 6.12 063/444] net: kcm: Fix race condition in kcm_unattach()
+Date: Mon, 18 Aug 2025 14:41:29 +0200
+Message-ID: <20250818124451.309676406@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,104 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Sven Stegemann <sven@stegemann.de>
 
-[ Upstream commit 6db015fc4b5d5f63a64a193f65d98da3a7fc811d ]
+[ Upstream commit 52565a935213cd6a8662ddb8efe5b4219343a25d ]
 
-TLS expects that it owns the receive queue of the TCP socket.
-This cannot be guaranteed in case the reader of the TCP socket
-entered before the TLS ULP was installed, or uses some non-standard
-read API (eg. zerocopy ones). Replace the WARN_ON() and a buggy
-early exit (which leaves anchor pointing to a freed skb) with real
-error handling. Wipe the parsing state and tell the reader to retry.
+syzbot found a race condition when kcm_unattach(psock)
+and kcm_release(kcm) are executed at the same time.
 
-We already reload the anchor every time we (re)acquire the socket lock,
-so the only condition we need to avoid is an out of bounds read
-(not having enough bytes in the socket for previously parsed record len).
+kcm_unattach() is missing a check of the flag
+kcm->tx_stopped before calling queue_work().
 
-If some data was read from under TLS but there's enough in the queue
-we'll reload and decrypt what is most likely not a valid TLS record.
-Leading to some undefined behavior from TLS perspective (corrupting
-a stream? missing an alert? missing an attack?) but no kernel crash
-should take place.
+If the kcm has a reserved psock, kcm_unattach() might get executed
+between cancel_work_sync() and unreserve_psock() in kcm_release(),
+requeuing kcm->tx_work right before kcm gets freed in kcm_done().
 
-Reported-by: William Liu <will@willsroot.io>
-Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
-Link: https://lore.kernel.org/tFjq_kf7sWIG3A7CrCg_egb8CVsT_gsmHAK0_wxDPJXfIzxFAMxqmLwp3MlU5EHiet0AwwJldaaFdgyHpeIUCS-3m3llsmRzp9xIOBR4lAI=@syst3mfailure.io
-Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250807232907.600366-1-kuba@kernel.org
+Remove kcm->tx_stopped and replace it by the less
+error-prone disable_work_sync().
+
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Reported-by: syzbot+e62c9db591c30e174662@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e62c9db591c30e174662
+Reported-by: syzbot+d199b52665b6c3069b94@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d199b52665b6c3069b94
+Reported-by: syzbot+be6b1fdfeae512726b4e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=be6b1fdfeae512726b4e
+Signed-off-by: Sven Stegemann <sven@stegemann.de>
+Link: https://patch.msgid.link/20250812191810.27777-1-sven@stegemann.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls.h      |  2 +-
- net/tls/tls_strp.c | 11 ++++++++---
- net/tls/tls_sw.c   |  3 ++-
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ include/net/kcm.h |  1 -
+ net/kcm/kcmsock.c | 10 ++--------
+ 2 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/net/tls/tls.h b/net/tls/tls.h
-index e5e47452308a..e1eaf12b3742 100644
---- a/net/tls/tls.h
-+++ b/net/tls/tls.h
-@@ -195,7 +195,7 @@ void tls_strp_msg_done(struct tls_strparser *strp);
- int tls_rx_msg_size(struct tls_strparser *strp, struct sk_buff *skb);
- void tls_rx_msg_ready(struct tls_strparser *strp);
+diff --git a/include/net/kcm.h b/include/net/kcm.h
+index 441e993be634..d9c35e71ecea 100644
+--- a/include/net/kcm.h
++++ b/include/net/kcm.h
+@@ -71,7 +71,6 @@ struct kcm_sock {
+ 	struct list_head wait_psock_list;
+ 	struct sk_buff *seq_skb;
+ 	struct mutex tx_mutex;
+-	u32 tx_stopped : 1;
  
--void tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh);
-+bool tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh);
- int tls_strp_msg_cow(struct tls_sw_context_rx *ctx);
- struct sk_buff *tls_strp_msg_detach(struct tls_sw_context_rx *ctx);
- int tls_strp_msg_hold(struct tls_strparser *strp, struct sk_buff_head *dst);
-diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
-index 095cf31bae0b..d71643b494a1 100644
---- a/net/tls/tls_strp.c
-+++ b/net/tls/tls_strp.c
-@@ -475,7 +475,7 @@ static void tls_strp_load_anchor_with_queue(struct tls_strparser *strp, int len)
- 	strp->stm.offset = offset;
- }
+ 	/* Don't use bit fields here, these are set under different locks */
+ 	bool tx_wait;
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index d4118c796290..1d37b26ea2ef 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -429,7 +429,7 @@ static void psock_write_space(struct sock *sk)
  
--void tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh)
-+bool tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh)
- {
- 	struct strp_msg *rxm;
- 	struct tls_msg *tlm;
-@@ -484,8 +484,11 @@ void tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh)
- 	DEBUG_NET_WARN_ON_ONCE(!strp->stm.full_len);
+ 	/* Check if the socket is reserved so someone is waiting for sending. */
+ 	kcm = psock->tx_kcm;
+-	if (kcm && !unlikely(kcm->tx_stopped))
++	if (kcm)
+ 		queue_work(kcm_wq, &kcm->tx_work);
  
- 	if (!strp->copy_mode && force_refresh) {
--		if (WARN_ON(tcp_inq(strp->sk) < strp->stm.full_len))
--			return;
-+		if (unlikely(tcp_inq(strp->sk) < strp->stm.full_len)) {
-+			WRITE_ONCE(strp->msg_ready, 0);
-+			memset(&strp->stm, 0, sizeof(strp->stm));
-+			return false;
-+		}
+ 	spin_unlock_bh(&mux->lock);
+@@ -1696,12 +1696,6 @@ static int kcm_release(struct socket *sock)
+ 	 */
+ 	__skb_queue_purge(&sk->sk_write_queue);
  
- 		tls_strp_load_anchor_with_queue(strp, strp->stm.full_len);
- 	}
-@@ -495,6 +498,8 @@ void tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh)
- 	rxm->offset	= strp->stm.offset;
- 	tlm = tls_msg(strp->anchor);
- 	tlm->control	= strp->mark;
-+
-+	return true;
- }
+-	/* Set tx_stopped. This is checked when psock is bound to a kcm and we
+-	 * get a writespace callback. This prevents further work being queued
+-	 * from the callback (unbinding the psock occurs after canceling work.
+-	 */
+-	kcm->tx_stopped = 1;
+-
+ 	release_sock(sk);
  
- /* Called with lock held on lower socket */
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 1d7caadd0cbc..6385329ef98d 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1380,7 +1380,8 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
- 			return sock_intr_errno(timeo);
- 	}
+ 	spin_lock_bh(&mux->lock);
+@@ -1717,7 +1711,7 @@ static int kcm_release(struct socket *sock)
+ 	/* Cancel work. After this point there should be no outside references
+ 	 * to the kcm socket.
+ 	 */
+-	cancel_work_sync(&kcm->tx_work);
++	disable_work_sync(&kcm->tx_work);
  
--	tls_strp_msg_load(&ctx->strp, released);
-+	if (unlikely(!tls_strp_msg_load(&ctx->strp, released)))
-+		return tls_rx_rec_wait(sk, psock, nonblock, false);
- 
- 	return 1;
- }
+ 	lock_sock(sk);
+ 	psock = kcm->tx_psock;
 -- 
 2.50.1
 
