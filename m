@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D8D3376A9;
-	Mon, 18 Aug 2025 14:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A2533A006;
+	Mon, 18 Aug 2025 14:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526341; cv=none; b=tHlVHhwckpA1EyJx9u1z0Uw21s6k4oKug8aVJa2lcX919DjK3cNpslRzd94WCgasULwyYRtyFCN8yLeb34YdeCsgvkXtTPoSzqEHI2eYBNqfK8zgwtJTl4B5+bxHRUMAz5/gbaOiSl3upoeoCFWr+lytK9c8lkGC3HWOaH4Hj20=
+	t=1755526344; cv=none; b=q/cybdcs64rlx+if1YgiJ9jEQA1I4AU51Mf4V/i+laE8oH7jGqREbOiU2NRJotFJBjVISYsyoBu/K4O0YskoLN516kVbxajfAfD8/TVTNysG+2fsE9+W1gWOv9kyiegQQ6pJUc82ygkKBW/GFZRULBEHS0Q34fBK8sj8JuwtAek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526341; c=relaxed/simple;
-	bh=Prd85aY9yw7N/wyA2AMhzIynte7Ch4NsN5u5IZBIWR0=;
+	s=arc-20240116; t=1755526344; c=relaxed/simple;
+	bh=wL6tq3OwmkJs1GCPJyqku1Vi8xW431JbpKm5yZufLHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LqiX6zk0a0GWz5fpBojfWKn3XRfdCSbtiIf2Jt8YpNGEuv3Z/ObX237bG5Uy1u3MV2yiln05I1HtvrxeR2OzUwryT6XlVfOetd0gFBiCXBjuKb/htdEzlXRGcQQzVC3W5Q5lLx1E69fvh7B7DjhCxcm7L5N8G+1k7Jstp+p0r3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOn5ibuC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHUrmVKhI+dwhIQbcawo2gu9r2pi97TL5JFQedMkRkTz3SDaMM+3zhahUd/JXm4k0T0mnd9qqqeMjLi2qRY48lfxFLL/MLNDaxwyGA5JWUotfMLLNMqGQICFf/ikNyRqLg0FUfhMj9Tzs/ocG+Ifj93TU/zjHdAq/YunOWz0Uxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKisG82Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOn5ibuC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36801C4CEEB;
-	Mon, 18 Aug 2025 14:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKisG82Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F739C4CEEB;
+	Mon, 18 Aug 2025 14:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526341;
-	bh=Prd85aY9yw7N/wyA2AMhzIynte7Ch4NsN5u5IZBIWR0=;
+	s=korg; t=1755526344;
+	bh=wL6tq3OwmkJs1GCPJyqku1Vi8xW431JbpKm5yZufLHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOn5ibuCUquWHQF9vlsUghpDem3Z8FGRJOrsK06UczanFpzZj+O8o6zegwrywbate
-	 hSZAHoBXPHxfIJRAFYsD5ujySj4tipuZZSha4TgiixguGLeaS87R8Sm17DtcACvLon
-	 lA/KCap6LWDu+4zhpru1MGzYiKMHry3CL8dchAVc=
+	b=LKisG82YGoZVPG2uxYa+BFMzBUJoCOC8PbYY2rYxQtMl1s1ueDgej5Xp9yxKNqb5c
+	 IyYNWShJ6zUrFqrBXsBtS8ksP7Ppr+JbN20PIL881SID0qj+PNbt0/Bvb/++Q4dT40
+	 +ow6AQDTlPmSAHS7C3/LbuajS437XK82zelXLz9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 528/570] btrfs: error on missing block group when unaccounting log tree extent buffers
-Date: Mon, 18 Aug 2025 14:48:35 +0200
-Message-ID: <20250818124526.205927704@linuxfoundation.org>
+Subject: [PATCH 6.16 529/570] btrfs: zoned: do not select metadata BG as finish target
+Date: Mon, 18 Aug 2025 14:48:36 +0200
+Message-ID: <20250818124526.244540547@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,78 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit fc5799986fbca957e2e3c0480027f249951b7bcf upstream.
+commit 3a931e9b39c7ff8066657042f5f00d3b7e6ad315 upstream.
 
-Currently we only log an error message if we can't find the block group
-for a log tree extent buffer when unaccounting it (while freeing a log
-tree). A missing block group means something is seriously wrong and we
-end up leaking space from the metadata space info. So return -ENOENT in
-case we don't find the block group.
+We call btrfs_zone_finish_one_bg() to zone finish one block group and make
+room to activate another block group. Currently, we can choose a metadata
+block group as a target. But, as we reserve an active metadata block group,
+we no longer want to select a metadata block group. So, skip it in the
+loop.
 
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+CC: stable@vger.kernel.org # 6.6+
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |   19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ fs/btrfs/zoned.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -2574,14 +2574,14 @@ static int replay_one_buffer(struct btrf
- /*
-  * Correctly adjust the reserved bytes occupied by a log tree extent buffer
-  */
--static void unaccount_log_buffer(struct btrfs_fs_info *fs_info, u64 start)
-+static int unaccount_log_buffer(struct btrfs_fs_info *fs_info, u64 start)
- {
- 	struct btrfs_block_group *cache;
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2651,7 +2651,7 @@ int btrfs_zone_finish_one_bg(struct btrf
  
- 	cache = btrfs_lookup_block_group(fs_info, start);
- 	if (!cache) {
- 		btrfs_err(fs_info, "unable to find block group for %llu", start);
--		return;
-+		return -ENOENT;
- 	}
- 
- 	spin_lock(&cache->space_info->lock);
-@@ -2592,27 +2592,22 @@ static void unaccount_log_buffer(struct
- 	spin_unlock(&cache->space_info->lock);
- 
- 	btrfs_put_block_group(cache);
-+
-+	return 0;
- }
- 
- static int clean_log_buffer(struct btrfs_trans_handle *trans,
- 			    struct extent_buffer *eb)
- {
--	int ret;
--
- 	btrfs_tree_lock(eb);
- 	btrfs_clear_buffer_dirty(trans, eb);
- 	wait_on_extent_buffer_writeback(eb);
- 	btrfs_tree_unlock(eb);
- 
--	if (trans) {
--		ret = btrfs_pin_reserved_extent(trans, eb);
--		if (ret)
--			return ret;
--	} else {
--		unaccount_log_buffer(eb->fs_info, eb->start);
--	}
-+	if (trans)
-+		return btrfs_pin_reserved_extent(trans, eb);
- 
--	return 0;
-+	return unaccount_log_buffer(eb->fs_info, eb->start);
- }
- 
- static noinline int walk_down_log_tree(struct btrfs_trans_handle *trans,
+ 		spin_lock(&block_group->lock);
+ 		if (block_group->reserved || block_group->alloc_offset == 0 ||
+-		    (block_group->flags & BTRFS_BLOCK_GROUP_SYSTEM) ||
++		    !(block_group->flags & BTRFS_BLOCK_GROUP_DATA) ||
+ 		    test_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &block_group->runtime_flags)) {
+ 			spin_unlock(&block_group->lock);
+ 			continue;
 
 
