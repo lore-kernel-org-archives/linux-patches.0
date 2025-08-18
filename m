@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D599322A1B;
-	Mon, 18 Aug 2025 13:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA5D32276C;
+	Mon, 18 Aug 2025 13:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523957; cv=none; b=VV65Gkj9Y1/dx63//nWInA8nOAft96GdlWfgqtoAdphN8EBPpqMyq+uF0kSD3LVPEm//3+eUMHvTW/tPmfIovRdkm70WW7sJOrqnFU2CwsV5uZs4hc5R6hPfxdYh7y/UysH8BLzlfheaxbbomqk5jow98v6SusoumUDfwhV8ypY=
+	t=1755523961; cv=none; b=AuAC+P64SW9LJcUZXnKHjAYScHoqDr2coub8TsgY2Z2KiI61OKniMoj8aUyOSIjm2mXGy8xyjhXiSwZxPntMMHD1zvRbl3cocGL3ArBBfmuK6kFR49SFFADMa7xQbQS9tuquOdY0xRzQbF8Y1oVOmqgvkAkiwUgs3o7h2hN4Cro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523957; c=relaxed/simple;
-	bh=Y6/B7tcRSrP6IsAXtqIIX1pgrY1n486hfIqRw8vAJwM=;
+	s=arc-20240116; t=1755523961; c=relaxed/simple;
+	bh=oXPQ/D/xD2+dx4EgzW19BaNXtRYDgMDL6ZeiLfG1KIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K2gBEyPrj34U6c/m4QmSwrmtRt30zWc4oG3v/pYC27p7crmFd4BE6v1OaVOcnq5RsF3slpthfxDMDb6FhQgY3JbwDgMzzyiImKfUru/EnV1FJig0stjnK4hRbbbFQZ4LGeCYLP4HjEWYZ9McPdeN0jnIzMXDo6copVGmL2sUE0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zm7woo+J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DIQL+LyBGel44KdMjY14TlWYXEyvrR8IpeP5qcOKR1pDEVsMh+69/dW+1oubOAKxYMvJFJk+viZFvN1JDAzKXuqV7bidtooM+ZQ1RW16j4H/bxUTxxemVPgRm/JAdwuG78konSX+mY5nUJg3C/nbi8FtwqSHc0R2lfeGLAdqUQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqIfA+Wy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zm7woo+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAE3C4CEEB;
-	Mon, 18 Aug 2025 13:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqIfA+Wy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEF7C4CEEB;
+	Mon, 18 Aug 2025 13:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523957;
-	bh=Y6/B7tcRSrP6IsAXtqIIX1pgrY1n486hfIqRw8vAJwM=;
+	s=korg; t=1755523960;
+	bh=oXPQ/D/xD2+dx4EgzW19BaNXtRYDgMDL6ZeiLfG1KIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zm7woo+JvnDJ+ihL9c9RtrJ2Zm2OM8qNCjgLXh7z9A6gFQns+rJvqzcq7kY7mvtn2
-	 yWDkCr5GeanYkxMceY4svn3YC3IG+MrvajAAIjlCeSOr/REDHMji89hQNT8QQkWXKy
-	 eox7db4JLcJusI037qk7IGqNjPI6+gncH7geBie0=
+	b=pqIfA+WyefVp5YP5PzyUe0m48WNe5aOITRUzDpihr3nv8/4ur3LDF11gp5Gnz2R42
+	 RMiQp7h7QA3Jxt4zOTXBvTVKWru0JMYX2w8jWC8fsDL+POjWK034ZJs9a9MnGQ7MEA
+	 uStJEGgYpTycYjDx4ZlwSIcxWF0Id8xSWsVSydlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	Breno Leitao <leitao@debian.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Petr Mladek <pmladek@suse.com>,
+	Song Liu <song@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 323/515] drm/ttm: Respect the shrinker core free target
-Date: Mon, 18 Aug 2025 14:45:09 +0200
-Message-ID: <20250818124510.867621249@linuxfoundation.org>
+Subject: [PATCH 6.15 293/515] arm64: stacktrace: Check kretprobe_find_ret_addr() return value
+Date: Mon, 18 Aug 2025 14:44:39 +0200
+Message-ID: <20250818124509.702446957@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -47,78 +52,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit eac21f8ebeb4f84d703cf41dc3f81d16fa9dc00a ]
+[ Upstream commit beecfd6a88a675e20987e70ec532ba734b230fa4 ]
 
-Currently the TTM shrinker aborts shrinking as soon as it frees pages from
-any of the page order pools and by doing so it can fail to respect the
-freeing target which was configured by the shrinker core.
+If kretprobe_find_ret_addr() fails to find the original return address,
+it returns 0. Check for this case so that a reliable stacktrace won't
+silently ignore it.
 
-We use the wording "can fail" because the number of freed pages will
-depend on the presence of pages in the pools and the order of the pools on
-the LRU list. For example if there are no free pages in the high order
-pools the shrinker core may require multiple passes over the TTM shrinker
-before it will free the default target of 128 pages (assuming there are
-free pages in the low order pools). This inefficiency can be compounded by
-the pool LRU where multiple further calls into the TTM shrinker are
-required to end up looking at the pool with pages.
-
-Improve this by never freeing less than the shrinker core has requested.
-
-At the same time we start reporting the number of scanned pages (freed in
-this case), which prevents the core shrinker from giving up on the TTM
-shrinker too soon and moving on.
-
-v2:
- * Simplify loop logic. (Christian)
- * Improve commit message.
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20250603112750.34997-2-tvrtko.ursulin@igalia.com
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Andrea della Porta <andrea.porta@suse.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Miroslav Benes <mbenes@suse.cz>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Song Liu <song@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-and-tested-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20250521111000.2237470-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/stacktrace.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
-index c2ea865be657..c060c90b89c0 100644
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -1132,7 +1132,6 @@ void ttm_pool_fini(struct ttm_pool *pool)
- }
- EXPORT_SYMBOL(ttm_pool_fini);
- 
--/* As long as pages are available make sure to release at least one */
- static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
- 					    struct shrink_control *sc)
- {
-@@ -1140,9 +1139,12 @@ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
- 
- 	do
- 		num_freed += ttm_pool_shrink();
--	while (!num_freed && atomic_long_read(&allocated_pages));
-+	while (num_freed < sc->nr_to_scan &&
-+	       atomic_long_read(&allocated_pages));
- 
--	return num_freed;
-+	sc->nr_scanned = num_freed;
-+
-+	return num_freed ?: SHRINK_STOP;
- }
- 
- /* Return the number of pages available or SHRINK_EMPTY if we have none */
+diff --git a/arch/arm64/kernel/stacktrace.c b/arch/arm64/kernel/stacktrace.c
+index 1d9d51d7627f..f6494c094214 100644
+--- a/arch/arm64/kernel/stacktrace.c
++++ b/arch/arm64/kernel/stacktrace.c
+@@ -152,6 +152,8 @@ kunwind_recover_return_address(struct kunwind_state *state)
+ 		orig_pc = kretprobe_find_ret_addr(state->task,
+ 						  (void *)state->common.fp,
+ 						  &state->kr_cur);
++		if (!orig_pc)
++			return -EINVAL;
+ 		state->common.pc = orig_pc;
+ 		state->flags.kretprobe = 1;
+ 	}
 -- 
 2.39.5
 
