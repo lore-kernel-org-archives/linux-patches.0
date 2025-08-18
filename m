@@ -1,39 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521FA3570C3;
-	Mon, 18 Aug 2025 14:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DEF33EAEC;
+	Mon, 18 Aug 2025 14:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526392; cv=none; b=r3pAH9DEfuIOLcCMk8m9tXKiu61qq2MDnjRO/vBSZT3o/QrEqmE5S8Q33uvbFfRf3kzv8V6nKs4LB7jytrO8NByrG7NDp+X2/cWBT9fg8e787qgVX2ODtAAIXfLc69Tj3WeDZYjAa/5QYAsU9hfflLu05VSSznsm9JLL5TQMzjQ=
+	t=1755526396; cv=none; b=RPI7Hx/r9PwUS7URlhYlwDurFEeCff7sXpwYZGy4k83Ch0GIn2fP9wu0W1nLztPjq62wVBecqE4T68s3WaF/Im9pv5h6Wu/22L+L2DtmhneJmZhqmWBSBMgWE+9ftbqZN7RlKX6iEb6HmTYmJj71OnUH63CbakUJIPUhBv95uUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526392; c=relaxed/simple;
-	bh=NfornXTN+sgLFkl4FiTjtMy5ZcrPOer0bOPFLGTgJgs=;
+	s=arc-20240116; t=1755526396; c=relaxed/simple;
+	bh=pSLJ5Y1k/qSXfn6ar36UqJY+h7pK8CAkAROZb9PUAPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3Ss4uHQPzIftyzo/LQZgDarFVXFeerEYMRR6q6devQrHPcHyinc/b+udcbEYcoFtxIVb0I3OKq/d6OQt7jUOURckis6J9Xfjdut19639XOfJNg2QheOQma++ZyN8F1EYq5SCAHAfpFOEAdP0kmoOZ3cbAEiKAqEzZDvGreAI0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIeCrnNC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F0kInral48hzjkwky6QIe5nSiMMAfvdsoXZBvPI882LiXvbppToTcgnWXL7ghjTMHFL/33foU+RMW9NhlfDyvGoVkld6T26ljdeBAeaYKl73UBlbOmdrTGlE0N/jXkj89l8Uw++5U0uizCxZX+9KwnMpFF3QcnkFGE7CFy+wv10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFGmlGo+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIeCrnNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B507AC4CEEB;
-	Mon, 18 Aug 2025 14:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFGmlGo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A20FC4CEEB;
+	Mon, 18 Aug 2025 14:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526392;
-	bh=NfornXTN+sgLFkl4FiTjtMy5ZcrPOer0bOPFLGTgJgs=;
+	s=korg; t=1755526395;
+	bh=pSLJ5Y1k/qSXfn6ar36UqJY+h7pK8CAkAROZb9PUAPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIeCrnNC0aX3eah4pXrc2FG3d3Oz91C1ijXeDRLXfcCnbvJ/8ctYKexCek/DwDIT3
-	 ffREkdWjaSELr12lkTKaPjvdiQ0g8wficSg12muBVktBq0IH7idWPoPna0dXGV5dDS
-	 He9D56ZUXWc44Iuz4YkwMSY02QY+hFVAMoXD3gdQ=
+	b=MFGmlGo+0YJ0cEsS5cseLGpzzaANSgt1TpN/ineTErWwo4mEDxI7w7KZO+YDPvQov
+	 F6hY0PLO9fk4qr08cUit8lvqKHhlATbHL3zv6sCaKX4rbxqmcfuNbHzWxUkDPjQgR9
+	 1PiTgEQ6C5jZUISJDu3ClxEt5eriM55JlPsMAm+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.16 542/570] mm, slab: restore NUMA policy support for large kmalloc
-Date: Mon, 18 Aug 2025 14:48:49 +0200
-Message-ID: <20250818124526.757169614@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Alistair Popple <apopple@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Mariano Pache <npache@redhat.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 543/570] mm/huge_memory: dont ignore queried cachemode in vmf_insert_pfn_pud()
+Date: Mon, 18 Aug 2025 14:48:50 +0200
+Message-ID: <20250818124526.794145681@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,42 +65,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: David Hildenbrand <david@redhat.com>
 
-commit e2d18cbf178775ad377ad88ee55e6e183c38d262 upstream.
+commit 09fefdca80aebd1023e827cb0ee174983d829d18 upstream.
 
-The slab allocator observes the task's NUMA policy in various places
-such as allocating slab pages. Large kmalloc() allocations used to do
-that too, until an unintended change by c4cab557521a ("mm/slab_common:
-cleanup kmalloc_large()") resulted in ignoring mempolicy and just
-preferring the local node. Restore the NUMA policy support.
+Patch series "mm/huge_memory: vmf_insert_folio_*() and
+vmf_insert_pfn_pud() fixes", v3.
 
-Fixes: c4cab557521a ("mm/slab_common: cleanup kmalloc_large()")
+While working on improving vm_normal_page() and friends, I stumbled over
+this issues: refcounted "normal" folios must not be marked using
+pmd_special() / pud_special().  Otherwise, we're effectively telling the
+system that these folios are no "normal", violating the rules we
+documented for vm_normal_page().
+
+Fortunately, there are not many pmd_special()/pud_special() users yet.  So
+far there doesn't seem to be serious damage.
+
+Tested using the ndctl tests ("ndctl:dax" suite).
+
+
+This patch (of 3):
+
+We set up the cache mode but ...  don't forward the updated pgprot to
+insert_pfn_pud().
+
+Only a problem on x86-64 PAT when mapping PFNs using PUDs that require a
+special cachemode.
+
+Fix it by using the proper pgprot where the cachemode was setup.
+
+It is unclear in which configurations we would get the cachemode wrong:
+through vfio seems possible.  Getting cachemodes wrong is usually ...
+bad.  As the fix is easy, let's backport it to stable.
+
+Identified by code inspection.
+
+Link: https://lkml.kernel.org/r/20250613092702.1943533-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20250613092702.1943533-2-david@redhat.com
+Fixes: 7b806d229ef1 ("mm: remove vmf_insert_pfn_xxx_prot() for huge page-table entries")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Tested-by: Dan Williams <dan.j.williams@intel.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Mariano Pache <npache@redhat.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
-Acked-by: Christoph Lameter (Ampere) <cl@gentwo.org>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ mm/huge_memory.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -4269,7 +4269,12 @@ static void *___kmalloc_large_node(size_
- 		flags = kmalloc_fix_flags(flags);
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1516,10 +1516,9 @@ static pud_t maybe_pud_mkwrite(pud_t pud
+ }
  
- 	flags |= __GFP_COMP;
--	folio = (struct folio *)alloc_pages_node_noprof(node, flags, order);
-+
-+	if (node == NUMA_NO_NODE)
-+		folio = (struct folio *)alloc_pages_noprof(flags, order);
-+	else
-+		folio = (struct folio *)__alloc_pages_noprof(flags, order, node, NULL);
-+
- 	if (folio) {
- 		ptr = folio_address(folio);
- 		lruvec_stat_mod_folio(folio, NR_SLAB_UNRECLAIMABLE_B,
+ static void insert_pfn_pud(struct vm_area_struct *vma, unsigned long addr,
+-		pud_t *pud, pfn_t pfn, bool write)
++		pud_t *pud, pfn_t pfn, pgprot_t prot, bool write)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
+-	pgprot_t prot = vma->vm_page_prot;
+ 	pud_t entry;
+ 
+ 	if (!pud_none(*pud)) {
+@@ -1581,7 +1580,7 @@ vm_fault_t vmf_insert_pfn_pud(struct vm_
+ 	pfnmap_setup_cachemode_pfn(pfn_t_to_pfn(pfn), &pgprot);
+ 
+ 	ptl = pud_lock(vma->vm_mm, vmf->pud);
+-	insert_pfn_pud(vma, addr, vmf->pud, pfn, write);
++	insert_pfn_pud(vma, addr, vmf->pud, pfn, pgprot, write);
+ 	spin_unlock(ptl);
+ 
+ 	return VM_FAULT_NOPAGE;
+@@ -1625,7 +1624,7 @@ vm_fault_t vmf_insert_folio_pud(struct v
+ 		add_mm_counter(mm, mm_counter_file(folio), HPAGE_PUD_NR);
+ 	}
+ 	insert_pfn_pud(vma, addr, vmf->pud, pfn_to_pfn_t(folio_pfn(folio)),
+-		write);
++		       vma->vm_page_prot, write);
+ 	spin_unlock(ptl);
+ 
+ 	return VM_FAULT_NOPAGE;
 
 
