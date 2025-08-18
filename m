@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B9F20126A;
-	Mon, 18 Aug 2025 12:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87AC21B199;
+	Mon, 18 Aug 2025 12:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521605; cv=none; b=P38ul2kl4X0PObU9d9Lrz6d0/igGJB8qc3hfFmYpMFQzECNm0eQhXG3FvyPE3xWiN9jj4pu4NoZmFjD1ge6gbETKVveW9RUbKhO/LkQaVU7G+oSfoZ0ZfjUxSGj8F0Iy2O0GCBpgqH6ADxqGoY4iSxAqpw5vr5OOi0KqVK36RYg=
+	t=1755521609; cv=none; b=bgh1p+mQj/3LDF6E6QtLFT+nnZmRh/tBEG4RUkJXcCy4/8bpLj0LgY71NL/oAx5TYBCUQx1NAvIA4rbKNVpdPGPyuLpvJpxc7dylznEZvVynJ9Q8CWPEoRnoprg8iPh+/LYsywwna4nWyX7fbFMsLzDX3Sggxg4pS1qP3CAvp2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521605; c=relaxed/simple;
-	bh=4ag9/39dFWU8GkiOlWASTAeMNygUPvBXL7NuEXQxR7s=;
+	s=arc-20240116; t=1755521609; c=relaxed/simple;
+	bh=xOTNNnu6YFeLZZB3/RJ4D25h6cR04Ez7GNUsIibyoTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hdbyusw3nTxuqMdWBEGdnw9ahi9LJz6v74zsD0NUNlzxrgDjmxXzzNgKENFKW3cmustxW9rqKZbp6S2an+s2HPheNxbISu8hkTfkuCxXkjNyjYlLLfuATRkKzppCSMLC9/9cH9OA2G9NG7tUAjdJDG6nwaYZ0F1KBOn90wn3ue8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQsitWqI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=orNl3SOvGAR2dcxJYn0HpjwcCfAzANB6HnZbJUtGYypHL7omRkTTA+LDTjeXe/mYIbhRJVQNN5K7MY3BJ6UVIhxUqut8bGXxkc3NoPjsbe4OtlY/l20GaBMQhmtZ3H8M2YuxV0lzGNaLTWPXs6ftEfdU1XSceTMchzQd6lKL7E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VT1VN8an; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQsitWqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD79AC4CEEB;
-	Mon, 18 Aug 2025 12:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VT1VN8an"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270BDC4CEEB;
+	Mon, 18 Aug 2025 12:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521605;
-	bh=4ag9/39dFWU8GkiOlWASTAeMNygUPvBXL7NuEXQxR7s=;
+	s=korg; t=1755521608;
+	bh=xOTNNnu6YFeLZZB3/RJ4D25h6cR04Ez7GNUsIibyoTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qQsitWqIzzmSUDsr0D8usEOQWi4JmCBqlGyU7y3KpF5gzPX0VLVT5wUACsZKP1T9e
-	 LodCbUNOoMKz4i/3gVrIQ1ouvq4bUWG4A6dlTc+nNuw+P3DYTWugLd0V5pBVr+d5w8
-	 GhbpcQAcBTk+U3unEM6dISCISyQ0K4iAs4res3kk=
+	b=VT1VN8ansYE5AqWD+CRGrZZSM4H/s58omwJe+OOnWZsXt4sk9BULnxBnzLd+HOdko
+	 TDgN2NrW/H0J9yBvgozB+moDkDy9/O7d4iObYd+JPPNkoAp4KvwjIyHATKXg0hRnu7
+	 zEkwoE9VmNj/0CYY3gUUfdAZvwppdjB3tHlm0qiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 043/444] smb: client: let send_done() cleanup before calling smbd_disconnect_rdma_connection()
-Date: Mon, 18 Aug 2025 14:41:09 +0200
-Message-ID: <20250818124450.554409951@linuxfoundation.org>
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 070/444] firmware: arm_ffa: Change initcall level of ffa_init() to rootfs_initcall
+Date: Mon, 18 Aug 2025 14:41:36 +0200
+Message-ID: <20250818124451.570561464@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -49,63 +47,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-commit 5349ae5e05fa37409fd48a1eb483b199c32c889b upstream.
+[ Upstream commit 0e0546eabcd6c19765a8dbf5b5db3723e7b0ea75 ]
 
-We should call ib_dma_unmap_single() and mempool_free() before calling
-smbd_disconnect_rdma_connection().
+The Linux IMA (Integrity Measurement Architecture) subsystem used for
+secure boot, file integrity, or remote attestation cannot be a loadable
+module for few reasons listed below:
 
-And smbd_disconnect_rdma_connection() needs to be the last function to
-call as all other state might already be gone after it returns.
+ o Boot-Time Integrity: IMA’s main role is to measure and appraise files
+ before they are used. This includes measuring critical system files during
+ early boot (e.g., init, init scripts, login binaries). If IMA were a
+ module, it would be loaded too late to cover those.
 
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ o TPM Dependency: IMA integrates tightly with the TPM to record
+ measurements into PCRs. The TPM must be initialized early (ideally before
+ init_ima()), which aligns with IMA being built-in.
+
+ o Security Model: IMA is part of a Trusted Computing Base (TCB). Making it
+ a module would weaken the security model, as a potentially compromised
+ system could delay or tamper with its initialization.
+
+IMA must be built-in to ensure it starts measuring from the earliest
+possible point in boot which inturn implies TPM must be initialised and
+ready to use before IMA.
+
+To enable integration of tpm_event_log with the IMA subsystem, the TPM
+drivers (tpm_crb and tpm_crb_ffa) also needs to be built-in. However with
+FF-A driver also being initialised at device initcall level, it can lead to
+an initialization order issue where:
+ - crb_acpi_driver_init() may run before tpm_crb_ffa_driver()_init and
+   ffa_init()
+ - As a result, probing the TPM device via CRB over FFA is deferred
+ - ima_init() (called as a late initcall) runs before deferred probe
+   completes, IMA fails to find the TPM and logs the below error:
+
+   |  ima: No TPM chip found, activating TPM-bypass!
+
+Eventually it fails to generate boot_aggregate with PCR values.
+
+Because of the above stated dependency, the ffa driver needs to initialised
+before tpm_crb_ffa module to ensure IMA finds the TPM successfully when
+present.
+
+[ jarkko: reformatted some of the paragraphs because they were going past
+  the 75 character boundary. ]
+
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -277,18 +277,20 @@ static void send_done(struct ib_cq *cq,
- 	log_rdma_send(INFO, "smbd_request 0x%p completed wc->status=%d\n",
- 		request, wc->status);
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 83dad9c2da06..9fdfccbc6479 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -1815,7 +1815,7 @@ static int __init ffa_init(void)
+ 	kfree(drv_info);
+ 	return ret;
+ }
+-module_init(ffa_init);
++rootfs_initcall(ffa_init);
  
--	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_SEND) {
--		log_rdma_send(ERR, "wc->status=%d wc->opcode=%d\n",
--			wc->status, wc->opcode);
--		smbd_disconnect_rdma_connection(request->info);
--	}
--
- 	for (i = 0; i < request->num_sge; i++)
- 		ib_dma_unmap_single(sc->ib.dev,
- 			request->sge[i].addr,
- 			request->sge[i].length,
- 			DMA_TO_DEVICE);
- 
-+	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_SEND) {
-+		log_rdma_send(ERR, "wc->status=%d wc->opcode=%d\n",
-+			wc->status, wc->opcode);
-+		mempool_free(request, info->request_mempool);
-+		smbd_disconnect_rdma_connection(info);
-+		return;
-+	}
-+
- 	if (atomic_dec_and_test(&request->info->send_pending))
- 		wake_up(&request->info->wait_send_pending);
- 
+ static void __exit ffa_exit(void)
+ {
+-- 
+2.39.5
+
 
 
