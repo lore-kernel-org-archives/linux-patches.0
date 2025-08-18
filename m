@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E7C31E0FE;
-	Mon, 18 Aug 2025 14:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28568320399;
+	Mon, 18 Aug 2025 14:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525852; cv=none; b=JyAf569WZnv5PGJj4QQ+b02zzqJ872YLs/Qf7wvYHHfu+rLcHNY0VWobjz/c7M/JDVrbQ/VnCB0sWgHI97rgEED4u/sRpoFh+vLFCSug3tvMlLMZPniTaFHTZfLwEwM0co+K6W6atEOq+gAUC5L3RgooFhO5JBzBzMsahj9cHUY=
+	t=1755525856; cv=none; b=q/rWV+LK9oN4FlQOSRl+tVVVb7DP4rdeIEPXgUezso1M60Mk4cnLo7pmNfKPKv/0Wh3mrX7a+6Z+SUUAGIA3J1X60Jka8y0vf9s4mcSyrKpdT12rfK7GnaeArL5rrSwDRwJSe7OP465f+CcIm2KGSjz9Sv2klh19tMrXbY27BB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525852; c=relaxed/simple;
-	bh=xXTmZA1mwAAT72wGJenz4MbHh2aBaUw0jklN2jDWSGs=;
+	s=arc-20240116; t=1755525856; c=relaxed/simple;
+	bh=NbyJV8dZbY2uHQVq4Bm1AUjhS5+DaUc4cQIOvEEg3Fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=naE6cScqil/AYHKVjMn/BYnqI89gT1N1DHNRcthnaxbaYEwBW4Y9sBtY2bisQ1ycjvjZcmglXmWLgpxdtTL2Hch6u5A1jL0x5vjBDIOCpbOh2w03XSKULNUsmhlTo+ujrUEJxzlidPZIyrcGWcFqjf1JpxyI8TG3zJVV+OimAC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DK3xbkgx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YVAbQ1OwZADpJW4fSvbex+kB9wR/WACZVYm44c0qCeZNui2Gv3e+d0p2mFzrExQhGFNxegl0HT6cWEzT77pZ1OuiWC+IFBG7TBLIIjTMZMFmDZxoRNPPxSgDx5Zd250k3Pbl71bumpDCfze6//Syvf65pHczRZe+2GKfg/cydJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ro+LIAr/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DK3xbkgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49B2C4CEEB;
-	Mon, 18 Aug 2025 14:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ro+LIAr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C41CC19421;
+	Mon, 18 Aug 2025 14:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525852;
-	bh=xXTmZA1mwAAT72wGJenz4MbHh2aBaUw0jklN2jDWSGs=;
+	s=korg; t=1755525856;
+	bh=NbyJV8dZbY2uHQVq4Bm1AUjhS5+DaUc4cQIOvEEg3Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DK3xbkgxdWGLiU/ZXBOelrir9CTduQa392ZjTqb0x4v/fwh61GTtHhwAz6m+7TrZV
-	 sIwoInua7RC+vavZW1KxpFhZreF5LOQoivPKEousw7vTiD//n/qdw7fj/lYL0jJ5gO
-	 JHJdDrQ/jnwGSd1BHybDk/B3eeB9PYSMkz1y5yXs=
+	b=Ro+LIAr/Nl1NJPPkGhpQnv4fSMzWRiVujokATs0Ue8yEnzo5vtza+92/JS3I+Niyu
+	 yrpjWSRbkVlqK+36uIL23H3VBLOgTwBg6aIOacbE/Vy+3xRRpo7+4AmlgFHe75OpFk
+	 Dho30WHIwdr6Ml47rk2woSXFnfAVoYrq1QnLJD2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 386/570] MIPS: lantiq: falcon: sysctrl: fix request memory check logic
-Date: Mon, 18 Aug 2025 14:46:13 +0200
-Message-ID: <20250818124520.715943434@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.16 387/570] media: iris: Add handling for corrupt and drop frames
+Date: Mon, 18 Aug 2025 14:46:14 +0200
+Message-ID: <20250818124520.751969194@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,72 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiji Yang <yangshiji66@outlook.com>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-[ Upstream commit 9c9a7ff9882fc6ba7d2f4050697e8bb80383e8dc ]
+[ Upstream commit b791dcfcba3a0c46fb3e2decab31d2340c5dc313 ]
 
-request_mem_region() will return NULL instead of error code
-when the memory request fails. Therefore, we should check if
-the return value is non-zero instead of less than zero. In
-this way, this patch also fixes the build warnings:
+Firmware attach DATACORRUPT/DROP buffer flags for the frames which
+needs to be dropped, handle it by setting VB2_BUF_STATE_ERROR for these
+buffers before calling buf_done.
 
-arch/mips/lantiq/falcon/sysctrl.c:214:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  214 |                                 res_status.name) < 0) ||
-      |                                                  ^
-arch/mips/lantiq/falcon/sysctrl.c:216:47: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  216 |                                 res_ebu.name) < 0) ||
-      |                                               ^
-arch/mips/lantiq/falcon/sysctrl.c:219:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  219 |                                 res_sys[0].name) < 0) ||
-      |                                                  ^
-arch/mips/lantiq/falcon/sysctrl.c:222:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  222 |                                 res_sys[1].name) < 0) ||
-      |                                                  ^
-arch/mips/lantiq/falcon/sysctrl.c:225:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  225 |                                 res_sys[2].name) < 0))
-      |
-
-Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # on sa8775p-ride
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/lantiq/falcon/sysctrl.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/media/platform/qcom/iris/iris_buffer.c        | 11 ++++++++---
+ .../media/platform/qcom/iris/iris_hfi_gen1_defines.h  |  2 ++
+ .../media/platform/qcom/iris/iris_hfi_gen1_response.c |  6 ++++++
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/lantiq/falcon/sysctrl.c b/arch/mips/lantiq/falcon/sysctrl.c
-index 1187729d8cbb..357543996ee6 100644
---- a/arch/mips/lantiq/falcon/sysctrl.c
-+++ b/arch/mips/lantiq/falcon/sysctrl.c
-@@ -214,19 +214,16 @@ void __init ltq_soc_init(void)
- 	of_node_put(np_syseth);
- 	of_node_put(np_sysgpe);
+diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
+index e5c5a564fcb8..7dd5730a867a 100644
+--- a/drivers/media/platform/qcom/iris/iris_buffer.c
++++ b/drivers/media/platform/qcom/iris/iris_buffer.c
+@@ -593,10 +593,13 @@ int iris_vb2_buffer_done(struct iris_inst *inst, struct iris_buffer *buf)
  
--	if ((request_mem_region(res_status.start, resource_size(&res_status),
--				res_status.name) < 0) ||
--		(request_mem_region(res_ebu.start, resource_size(&res_ebu),
--				res_ebu.name) < 0) ||
--		(request_mem_region(res_sys[0].start,
--				resource_size(&res_sys[0]),
--				res_sys[0].name) < 0) ||
--		(request_mem_region(res_sys[1].start,
--				resource_size(&res_sys[1]),
--				res_sys[1].name) < 0) ||
--		(request_mem_region(res_sys[2].start,
--				resource_size(&res_sys[2]),
--				res_sys[2].name) < 0))
-+	if ((!request_mem_region(res_status.start, resource_size(&res_status),
-+				 res_status.name)) ||
-+	    (!request_mem_region(res_ebu.start, resource_size(&res_ebu),
-+				 res_ebu.name)) ||
-+	    (!request_mem_region(res_sys[0].start, resource_size(&res_sys[0]),
-+				 res_sys[0].name)) ||
-+	    (!request_mem_region(res_sys[1].start, resource_size(&res_sys[1]),
-+				 res_sys[1].name)) ||
-+	    (!request_mem_region(res_sys[2].start, resource_size(&res_sys[2]),
-+				 res_sys[2].name)))
- 		pr_err("Failed to request core resources");
+ 	vb2 = &vbuf->vb2_buf;
  
- 	status_membase = ioremap(res_status.start,
+-	if (buf->flags & V4L2_BUF_FLAG_ERROR)
++	if (buf->flags & V4L2_BUF_FLAG_ERROR) {
+ 		state = VB2_BUF_STATE_ERROR;
+-	else
+-		state = VB2_BUF_STATE_DONE;
++		vb2_set_plane_payload(vb2, 0, 0);
++		vb2->timestamp = 0;
++		v4l2_m2m_buf_done(vbuf, state);
++		return 0;
++	}
+ 
+ 	vbuf->flags |= buf->flags;
+ 
+@@ -616,6 +619,8 @@ int iris_vb2_buffer_done(struct iris_inst *inst, struct iris_buffer *buf)
+ 			v4l2_m2m_mark_stopped(m2m_ctx);
+ 		}
+ 	}
++
++	state = VB2_BUF_STATE_DONE;
+ 	vb2->timestamp = buf->timestamp;
+ 	v4l2_m2m_buf_done(vbuf, state);
+ 
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+index 9f246816a286..93b5f838c290 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+@@ -117,6 +117,8 @@
+ #define HFI_FRAME_NOTCODED				0x7f002000
+ #define HFI_FRAME_YUV					0x7f004000
+ #define HFI_UNUSED_PICT					0x10000000
++#define HFI_BUFFERFLAG_DATACORRUPT			0x00000008
++#define HFI_BUFFERFLAG_DROP_FRAME			0x20000000
+ 
+ struct hfi_pkt_hdr {
+ 	u32 size;
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+index b72d503dd740..91d95eed68aa 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+@@ -481,6 +481,12 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
+ 	buf->attr |= BUF_ATTR_DEQUEUED;
+ 	buf->attr |= BUF_ATTR_BUFFER_DONE;
+ 
++	if (hfi_flags & HFI_BUFFERFLAG_DATACORRUPT)
++		flags |= V4L2_BUF_FLAG_ERROR;
++
++	if (hfi_flags & HFI_BUFFERFLAG_DROP_FRAME)
++		flags |= V4L2_BUF_FLAG_ERROR;
++
+ 	buf->flags |= flags;
+ 
+ 	iris_vb2_buffer_done(inst, buf);
 -- 
 2.39.5
 
