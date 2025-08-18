@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE19D31AF15;
-	Mon, 18 Aug 2025 13:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9863131AF15;
+	Mon, 18 Aug 2025 13:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523885; cv=none; b=Qjt6W9njefs0hF7s05b/Kj1CW7rl0TRfkX2XKPXouFB8gYbhz804ILUy3gtd20u4+YB6Uq+oKsPuEtwjz+n+cee+I2RAvk+OFeJApfnU+ZkIJIMQj39IpRDpy2K+MiL/HXK1F0f9QkFbXGjKb3nvVcOySqJVsB//hNeWdpPAIbg=
+	t=1755523888; cv=none; b=HQI2SWCYAx4fPZ+uf51iOmypwLDgGGxDCEuDYetc3DN69crl86GmHmg2HRQl+4wm+go7csU0ZI2siKILhkNZydWys/UL7nPARIV1PEqSolMit/qnzYhqzWyFt/qginp0isydmIeRyXGbKXWvNEVsm3PJucTeRZefK69+HSNI94M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523885; c=relaxed/simple;
-	bh=8t3vKmsws5XNoARxh1ERSGZDyysWvPoZTm7myGDgXQU=;
+	s=arc-20240116; t=1755523888; c=relaxed/simple;
+	bh=CCxUmdaizfa9kV827qYskSGsdCphnOTGyC8eS0EjjbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=axpKF6rgsPt9+Uhd0aiQl4WEh4rxXyYplBeHwLV+9guH/RbnOba8AtR2ysrf6DorgwQhoKnxQHMSsCiTqwoQkUvWYE3V7LqeFe/zmr/jJuzKoTEnssMVC5c8wAI3EioSJZYNCL/20f9z5gziGlR2czgjsnHoowEakWiZlNTX1+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/hpSU3d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IYvCguqhGse6AAhQ17a8IlwtNmxc7UzE8iLbl03g92esNwkcUfjYSc4LXeqAF6GCzwzzvkj8lxd0XICunq0Mq1Xw0MBx8IJtWYG45d/clbEWPGZsBC1lLd4wjOi7ENe022jAYXJnGU4c0mG5xOKDuwvPCzI4OW+Expjws2UtKBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1FR8xCf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/hpSU3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1772C4CEEB;
-	Mon, 18 Aug 2025 13:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1FR8xCf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A83C4CEEB;
+	Mon, 18 Aug 2025 13:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523885;
-	bh=8t3vKmsws5XNoARxh1ERSGZDyysWvPoZTm7myGDgXQU=;
+	s=korg; t=1755523888;
+	bh=CCxUmdaizfa9kV827qYskSGsdCphnOTGyC8eS0EjjbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/hpSU3dHwL3nKN+PHu95upr51+PxioOed4TYeBzDRzqez5dcD3hB+Agl/OSaIvs1
-	 Ppvyj9rGXcDcAhCN4z0VznoMjJKCfKcS879bGmJfUdnZY96xAg5skF42udm/uCu7AP
-	 K2alwIIdqwPQPskV8biAqQRj7q4oelRIgFVXpMZQ=
+	b=U1FR8xCfsLdF4p4NNBXZED4Pht+nxrH4eBL1vfkTxx7SpjD/MsUeHnbYaQmKNI2IH
+	 aglgiqye5bHPlbVcmbc22GkTbiNXCm2JIBjWVAoeQXs/y2OmzdNZxi/APuLzGsQEIz
+	 WdnljAl9jskWl5tb5VwDxnAMMcYzWhVkzs2l0EPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 303/515] net: dsa: b53: ensure BCM5325 PHYs are enabled
-Date: Mon, 18 Aug 2025 14:44:49 +0200
-Message-ID: <20250818124510.101966588@linuxfoundation.org>
+Subject: [PATCH 6.15 304/515] net: dsa: b53: fix b53_imp_vlan_setup for BCM5325
+Date: Mon, 18 Aug 2025 14:44:50 +0200
+Message-ID: <20250818124510.140703945@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -55,64 +55,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 966a83df36c6f27476ac3501771422e7852098bc ]
+[ Upstream commit c00df1018791185ea398f78af415a2a0aaa0c79c ]
 
-According to the datasheet, BCM5325 uses B53_PD_MODE_CTRL_25 register to
-disable clocking to individual PHYs.
-Only ports 1-4 can be enabled or disabled and the datasheet is explicit
-about not toggling BIT(0) since it disables the PLL power and the switch.
+CPU port should be B53_CPU_PORT instead of B53_CPU_PORT_25 for
+B53_PVLAN_PORT_MASK register.
 
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250614080000.1884236-15-noltari@gmail.com
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Link: https://patch.msgid.link/20250614080000.1884236-14-noltari@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 13 +++++++++++++
- drivers/net/dsa/b53/b53_regs.h   |  5 ++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/net/dsa/b53/b53_common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index dc2f4adac9bc..184946e8cee9 100644
+index 184946e8cee9..55e1844a5e9c 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -615,6 +615,19 @@ int b53_setup_port(struct dsa_switch *ds, int port)
- 	if (dsa_is_user_port(ds, port))
- 		b53_set_eap_mode(dev, port, EAP_MODE_SIMPLIFIED);
+@@ -529,6 +529,10 @@ void b53_imp_vlan_setup(struct dsa_switch *ds, int cpu_port)
+ 	unsigned int i;
+ 	u16 pvlan;
  
-+	if (is5325(dev) &&
-+	    in_range(port, 1, 4)) {
-+		u8 reg;
++	/* BCM5325 CPU port is at 8 */
++	if ((is5325(dev) || is5365(dev)) && cpu_port == B53_CPU_PORT_25)
++		cpu_port = B53_CPU_PORT;
 +
-+		b53_read8(dev, B53_CTRL_PAGE, B53_PD_MODE_CTRL_25, &reg);
-+		reg &= ~PD_MODE_POWER_DOWN_PORT(0);
-+		if (dsa_is_unused_port(ds, port))
-+			reg |= PD_MODE_POWER_DOWN_PORT(port);
-+		else
-+			reg &= ~PD_MODE_POWER_DOWN_PORT(port);
-+		b53_write8(dev, B53_CTRL_PAGE, B53_PD_MODE_CTRL_25, reg);
-+	}
-+
- 	return 0;
- }
- EXPORT_SYMBOL(b53_setup_port);
-diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index 1fbc5a204bc7..d31c8ad9a9b6 100644
---- a/drivers/net/dsa/b53/b53_regs.h
-+++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -101,8 +101,11 @@
- #define   PORT_OVERRIDE_SPEED_2000M	BIT(6) /* BCM5301X only, requires setting 1000M */
- #define   PORT_OVERRIDE_EN		BIT(7) /* Use the register contents */
- 
--/* Power-down mode control */
-+/* Power-down mode control (8 bit) */
- #define B53_PD_MODE_CTRL_25		0x0f
-+#define  PD_MODE_PORT_MASK		0x1f
-+/* Bit 0 also powers down the switch. */
-+#define  PD_MODE_POWER_DOWN_PORT(i)	BIT(i)
- 
- /* IP Multicast control (8 bit) */
- #define B53_IP_MULTICAST_CTRL		0x21
+ 	/* Enable the IMP port to be in the same VLAN as the other ports
+ 	 * on a per-port basis such that we only have Port i and IMP in
+ 	 * the same VLAN.
 -- 
 2.39.5
 
