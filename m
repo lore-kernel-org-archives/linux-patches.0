@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28628335BAA;
-	Mon, 18 Aug 2025 13:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DFF335BC8;
+	Mon, 18 Aug 2025 13:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523226; cv=none; b=VRDzQ42EZE6LDUUIjSNogqIz09fyC4LhyilBV2ocW6thNHzCtM5yKwhrIjyTD/72YetwDWbhDVW1hHbmD8F4FNTJJ8vfb+lfDX4wjThUVp81XtaIWRiotrcALMYYJZW9nO+1nSLFmAW7BpvZNQjlKru0uiKJIbtuJGkcljNBuMo=
+	t=1755523230; cv=none; b=pPAu6XxTuES+yiqVr9PqokOfKeXyf4qRmnho+ZGm/i58PV19Ni+FaM6/08bNqnrJBDVPA+WNpOnzP6QL36HQSBh3xfHtsFwo98r6/t4J5Yb/ykcFawp6L1j1udUuotZGteUhL7Cl/oGGiDBXBsb7tLlUgudTADpPX9zDscdVeVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523226; c=relaxed/simple;
-	bh=xfbET6pvnQ+cQdEyXyJ7XMxD8PFKKhha1y/InO/+G0c=;
+	s=arc-20240116; t=1755523230; c=relaxed/simple;
+	bh=E36Wx0jtMChjC58KMxEMss/XjhrKxDJ0in3GAMetehU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEUwlu5ImGFipnjuEIbViWxwflrmOamZ21yDAKSbCxz9Qo30KwMXT1bh26XoYFJ1LP+7LZ6/mfeiMlyPGDNxtIzU9NGZg9C+k+dZdIf5T4N4FCByt2G62rWKbZBDXRgXvh2hxpPno3tkv5sAi5TP7JbL1i0vE0sAbHcMEOd1Oqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdZSVRti; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jOSS7VOZiPZvhWUzrTQ3yIt+JOlMiV9cotUPB4XJJ1TsiRgg9007o1zsvt34+4WYLy4qwa8EZfvRhXHJtv4NlCq5pFcQTfp2EmbyuWu0ggpsfqFlB1ivJriHy7zrdK1qefbY2g6DpRedB8XqOsN/0+RHBw4DjIVDGKF6um2vcYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQzcX8c6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdZSVRti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09A2C4CEEB;
-	Mon, 18 Aug 2025 13:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQzcX8c6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C3EC4CEEB;
+	Mon, 18 Aug 2025 13:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523226;
-	bh=xfbET6pvnQ+cQdEyXyJ7XMxD8PFKKhha1y/InO/+G0c=;
+	s=korg; t=1755523230;
+	bh=E36Wx0jtMChjC58KMxEMss/XjhrKxDJ0in3GAMetehU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdZSVRti3gc58HBejD7Pr/Dlh3Ha48Jm5ATwsa0n5q0EFDiD6NnJ3heOvpRa0S51P
-	 GSRME5V9A9KbnZazpb9ajt1Y/nAPw0GDP9t4e/1RGOly3c4gcnCVr4tUfwoHckYqop
-	 Tja2UaTl0uQ9MIDwZSkxDZ9VupiQ52xYO7pIDACw=
+	b=sQzcX8c6VhxlhrqO4Me8GZr+aKQCxFN98zysN+J/WJu818s+Wq9RJxkO2MA+5Uxho
+	 e+GQhLO8/Ks+4f/IznvaXMve3mR1hVy/KJ9Kk/QRaS2jb3PYEKpoDlWwMBl+lmvQjb
+	 4qlRuKlzAlce006W+TVvR4+DmmQjmuUZgGKOCuPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Gao <wegao@suse.com>,
-	Jan Kara <jack@suse.cz>,
+	syzbot <syzbot+1107451c16b9eb9d29e6@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 108/515] ext2: Handle fiemap on empty files to prevent EINVAL
-Date: Mon, 18 Aug 2025 14:41:34 +0200
-Message-ID: <20250818124502.519368757@linuxfoundation.org>
+Subject: [PATCH 6.15 082/515] hfsplus: dont use BUG_ON() in hfsplus_create_attributes_file()
+Date: Mon, 18 Aug 2025 14:41:08 +0200
+Message-ID: <20250818124501.538348419@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,48 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Gao <wegao@suse.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit a099b09a3342a0b28ea330e405501b5b4d0424b4 ]
+[ Upstream commit c7c6363ca186747ebc2df10c8a1a51e66e0e32d9 ]
 
-Previously, ext2_fiemap would unconditionally apply "len = min_t(u64, len,
-i_size_read(inode));", When inode->i_size was 0 (for an empty file), this
-would reduce the requested len to 0. Passing len = 0 to iomap_fiemap could
-then result in an -EINVAL error, even for valid queries on empty files.
+When the volume header contains erroneous values that do not reflect
+the actual state of the filesystem, hfsplus_fill_super() assumes that
+the attributes file is not yet created, which later results in hitting
+BUG_ON() when hfsplus_create_attributes_file() is called. Replace this
+BUG_ON() with -EIO error with a message to suggest running fsck tool.
 
-Link: https://github.com/linux-test-project/ltp/issues/1246
-Signed-off-by: Wei Gao <wegao@suse.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250613152402.3432135-1-wegao@suse.com
+Reported-by: syzbot <syzbot+1107451c16b9eb9d29e6@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=1107451c16b9eb9d29e6
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/7b587d24-c8a1-4413-9b9a-00a33fbd849f@I-love.SAKURA.ne.jp
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/inode.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/hfsplus/xattr.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
-index 30f8201c155f..177b1f852b63 100644
---- a/fs/ext2/inode.c
-+++ b/fs/ext2/inode.c
-@@ -895,9 +895,19 @@ int ext2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
- 		u64 start, u64 len)
- {
- 	int ret;
-+	loff_t i_size;
+diff --git a/fs/hfsplus/xattr.c b/fs/hfsplus/xattr.c
+index 9a1a93e3888b..18dc3d254d21 100644
+--- a/fs/hfsplus/xattr.c
++++ b/fs/hfsplus/xattr.c
+@@ -172,7 +172,11 @@ static int hfsplus_create_attributes_file(struct super_block *sb)
+ 		return PTR_ERR(attr_file);
+ 	}
  
- 	inode_lock(inode);
--	len = min_t(u64, len, i_size_read(inode));
-+	i_size = i_size_read(inode);
-+	/*
-+	 * iomap_fiemap() returns EINVAL for 0 length. Make sure we don't trim
-+	 * length to 0 but still trim the range as much as possible since
-+	 * ext2_get_blocks() iterates unmapped space block by block which is
-+	 * slow.
-+	 */
-+	if (i_size == 0)
-+		i_size = 1;
-+	len = min_t(u64, len, i_size);
- 	ret = iomap_fiemap(inode, fieinfo, start, len, &ext2_iomap_ops);
- 	inode_unlock(inode);
+-	BUG_ON(i_size_read(attr_file) != 0);
++	if (i_size_read(attr_file) != 0) {
++		err = -EIO;
++		pr_err("detected inconsistent attributes file, running fsck.hfsplus is recommended.\n");
++		goto end_attr_file_creation;
++	}
+ 
+ 	hip = HFSPLUS_I(attr_file);
  
 -- 
 2.39.5
