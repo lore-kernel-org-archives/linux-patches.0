@@ -1,102 +1,60 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30C6256C6D
-	for <patches@lists.linux.dev>; Mon, 18 Aug 2025 16:08:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE0032038B;
+	Mon, 18 Aug 2025 16:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755533336; cv=none; b=qwX5yVOtB9wJuVvpZ5TXTvXAzH3TXFO6ZQT14l7Eup6dXqGiW+FESB3BtfdUttrxIJjrVqkzqUtC6KCoewY9fLHw/RGhGitLIvJFt+zzO4WXtGidDbqygBHbC1gq+nxTLa8BrQ88fqH7aocKQlAnkjDtaipZeiJZtZoRhA+leqA=
+	t=1755533370; cv=none; b=gIUQm0ydvVtOk63A4sb1pWOSsOIxuizhtDsBO8E0L9QypBTGbGgUlDnwFxl7MHy+q4C+U+L0XBcsBvu7KTynJgnu7YngoyMsTeg9UPEhAAoVxtIe614Sx2dsI8j8RBotpVq7yc/21lN4FbaVHb2fMfGLx3giLcmdpO0u7yUv4j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755533336; c=relaxed/simple;
-	bh=praVVRYQknEmW2PnOYAUW4g/6bcrHTZgh8UjIqOn6e4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kOXukLcRky0lJlcWCw4dYtef+CLXgf8iZGiv8IhKD/AUiTWGboFvDu9fu9PuMahTLj3SsIWjmza0g3YZIHDBbQoFRKjh1lIkCUdJe2U+TtsYqZhDe7F6zwYdAcTE2dEGJEvqrsk55AhWMnQON/FgLPnkaUJyvKfHqIEmn+9Gr2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JoxCO4uF; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JoxCO4uF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2A5C19424
-	for <patches@lists.linux.dev>; Mon, 18 Aug 2025 16:08:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755533336;
-	bh=praVVRYQknEmW2PnOYAUW4g/6bcrHTZgh8UjIqOn6e4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=JoxCO4uFGu7BGkAzNrwPeiok1VrtnD0fOKf66zu3gaNU8PiIlLYI1yWqXvCzPC4IT
-	 w/dJ8CJXWBqiU4AsLouwY6U0QasKGD2sNVPrR5WeQkIGyDNx5WZdBcWpQJ6ZbJHUYh
-	 2SdP610Lw2LyAigmoxvlOuEor4JFC+kygH96uDrjpfxuY1oIbas+l6Pi8fqAC3FwSm
-	 4/ODHGp3YsTF6AxM7iB6bWCSzpMA/4VSfwENCnfuE5bIvoGKm7/F14l1n+RG6ItpYs
-	 EFoImdonprr9kZTqtB04dJUDwIKR6TnWVmT3/YvKyprqjNPKIcPNu6qzyz93nYW3Pe
-	 mcYzWLhlL1g9Q==
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-30ccea6239bso3169102fac.2
-        for <patches@lists.linux.dev>; Mon, 18 Aug 2025 09:08:56 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWvw0NVfNjYJNS9IDamxne8mcZjtxQSjOo9eQ1ggJc10iCa89L0cZSVXOjSV0y+B2gDAlDw1hio@lists.linux.dev
-X-Gm-Message-State: AOJu0YybCwfTcd8OmyaTzFyF4Zm6SJ9hep5Vs5e+6Ea9zszKsZ3vDBh/
-	svpMoGEOpE211F8igJRgVVTbruPh4IR9A4M6JEc/SRu1UCeUzCyOrAoTUe8V/KD70/qd70nRyRT
-	xmjy8JyRGYNnvl/5rfg2AAY8d3ZpBQ68=
-X-Google-Smtp-Source: AGHT+IFkq5KncVYHEk/LN9k0et6idyAoVR2GJ7EVldfLfvV7MKWlr0LQMntLQzrYg4NzYalRknRoMllv2VqRTyG+JhQ=
-X-Received: by 2002:a05:6870:3d9a:b0:2d5:b7b7:2d6e with SMTP id
- 586e51a60fabf-310aafe4464mr7621787fac.38.1755533335571; Mon, 18 Aug 2025
- 09:08:55 -0700 (PDT)
+	s=arc-20240116; t=1755533370; c=relaxed/simple;
+	bh=fCax3K4FEx/eYbPWRwfmopiPlmpIcVYUXtKyVKOQxOg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mBDMlljZc/aj8X5aYKIbuxihvP6fDWwukcmQH/C659seZIYUC1/Cpr1j+w9CkzgoluXnuInOAfYUEDeqHdc8cKbCh+rjbJKhOmfH2MuuArj6QcBhRj481l5vZrl21R5mXnz/MrXzzXZHskNaySDV7LfuR0cpI9mQ9uACjWJ5I4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: 6.12.43-rc1 review
+Date: Mon, 18 Aug 2025 16:07:00 +0000
+Message-ID: <20250818160659.4494-2-bacs@librecast.net>
+X-Mailer: git-send-email 2.49.1
+In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
+References: <20250818124448.879659024@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250814161706.4489-1-tony.luck@intel.com> <230e2659-7838-2165-4490-3b3f89cb7838@huawei.com>
-In-Reply-To: <230e2659-7838-2165-4490-3b3f89cb7838@huawei.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 18 Aug 2025 18:08:38 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0g8+XsUsYa0vNeCMcjx1wmMf99PfbYfofSqtaOqDajaow@mail.gmail.com>
-X-Gm-Features: Ac12FXxUylNn3wz4tNeEKNr6XV_DMtzkj2Zt0mREl5vK_65erZjinrFq4jvlxXU
-Message-ID: <CAJZ5v0g8+XsUsYa0vNeCMcjx1wmMf99PfbYfofSqtaOqDajaow@mail.gmail.com>
-Subject: Re: [PATCH] ACPI: APEI: EINJ: Check if user asked for EINJV2 injection
-To: Hanjun Guo <guohanjun@huawei.com>, Tony Luck <tony.luck@intel.com>
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, Borislav Petkov <bp@alien8.de>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Shuai Xue <xueshuai@linux.alibaba.com>, 
-	Len Brown <lenb@kernel.org>, Zaid Alali <zaidal@os.amperecomputing.com>, 
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, "Lai, Yi1" <yi1.lai@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 18, 2025 at 5:58=E2=80=AFPM Hanjun Guo <guohanjun@huawei.com> w=
-rote:
->
-> On 2025/8/15 0:17, Tony Luck wrote:
-> > On an EINJV2 capable system, users may still use the old injection
-> > interface but einj_get_parameter_address() takes the EINJV2 path to map
-> > the parameter structure. This results in the address the user supplied
-> > being stored to the wrong location and the BIOS injecting based on an
-> > uninitialized field (0x0 in the reported case).
-> >
-> > Check the version of the request when mapping the EINJ parameter
-> > structure in BIOS reserved memory.
-> >
-> > Fixes: 691a0f0a557b ("ACPI: APEI: EINJ: Discover EINJv2 parameters")
-> > Reported-by: Lai, Yi1 <yi1.lai@intel.com>
-> > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > ---
-> >   drivers/acpi/apei/einj-core.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/acpi/apei/einj-core.c b/drivers/acpi/apei/einj-cor=
-e.c
-> > index bf8dc92a373a..99f1b841fba9 100644
-> > --- a/drivers/acpi/apei/einj-core.c
-> > +++ b/drivers/acpi/apei/einj-core.c
-> > @@ -315,7 +315,7 @@ static void __iomem *einj_get_parameter_address(voi=
-d)
-> >                       memcpy_fromio(&v5param, p, v5param_size);
-> >                       acpi5 =3D 1;
-> >                       check_vendor_extension(pa_v5, &v5param);
-> > -                     if (available_error_type & ACPI65_EINJV2_SUPP) {
-> > +                     if (is_v2 && available_error_type & ACPI65_EINJV2=
-_SUPP) {
-> >                               len =3D v5param.einjv2_struct.length;
-> >                               offset =3D offsetof(struct einjv2_extensi=
-on_struct, component_arr);
-> >                               max_nr_components =3D (len - offset) /
->
-> Reviewed-by: Hanjun Guo <gouhanjun@huawei.com>
+# Librecast Test Results
 
-Applied as 6.17-rc material, thanks!
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
+
+CPU/kernel: Linux auntie 6.12.43-rc1-gd65072433784 #42 SMP PREEMPT_DYNAMIC Mon Aug 18 15:58:39 -00 2025 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
