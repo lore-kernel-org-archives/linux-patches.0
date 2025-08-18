@@ -1,37 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D655330DD34;
-	Mon, 18 Aug 2025 13:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DED5321443;
+	Mon, 18 Aug 2025 13:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523046; cv=none; b=a3fyUjFQbe20XUg7UetOgMYtZHQGY/+Osi+s+l6VKbXvg00Db/rR/tCgxfnpjzw6t7b1CgGICdcy0/QA1W3TBRqKZ2XfeN2SXQPULI7PAy/fE1eZalCFN3mJaXcMZo9Nb4Tgrjt+NRko4glwUj0PJJmFSYHV7PY7WOBOZy0WSUo=
+	t=1755523050; cv=none; b=QN/5+C1+rRljWRd9tXxAUl6Hy7/nExyzN/YN6KCxsZvWT8eZeI6dqlyuNIyOv/njomMAaV6/x53HL/Spe2nVp3pOVEp30lnxs4limBtB5yhIHGGwVMKxekySCyOoCmqWx0Nnxu+srRJhjidOqVdKp48IrEsWyy9wh6dga2flcAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523046; c=relaxed/simple;
-	bh=xLI0gX5JJe53qYyPd6fZ7pCVtgk4APXXTTq4QNbVkJk=;
+	s=arc-20240116; t=1755523050; c=relaxed/simple;
+	bh=aT0h892pZlRAdcg0UFHniUZA67aCUJX6aR4Z99OVimo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FubR3lXNLmXQuwZvnLCXEKp0ZKcwHdwUdYhfRcHQAUMCAGuHnJ2W4eHCqq8iwTvFrJgl+WLc7rPZQol7sSPYaJ0mRx5PzXa5Xabw7Ch8Ngm0sLH5mgZjhaD2xzMCQ8spjafhWczsBiCZtBbt6qELjWSEDLXTV+DEMOLGgCSDSac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVfqh+So; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XlMYquEwNc8lr7m9EAfZzPin/evlAJuu97/8xHmx1sciZgeXgGPIIVYTb2RTHP4iAddinIiLvq9Bdi77k4hz3VTF/rV+b45gfWyy3MWS9qynrIJInIfrU4X/Do9bCf5+HGojdLgp8ZaKbhAVbhEOYc2uiT3OQZcjknBy0iCMaEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5iED7zR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVfqh+So"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4634EC4CEEB;
-	Mon, 18 Aug 2025 13:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5iED7zR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7BDC4CEEB;
+	Mon, 18 Aug 2025 13:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523046;
-	bh=xLI0gX5JJe53qYyPd6fZ7pCVtgk4APXXTTq4QNbVkJk=;
+	s=korg; t=1755523049;
+	bh=aT0h892pZlRAdcg0UFHniUZA67aCUJX6aR4Z99OVimo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVfqh+Soupis7vvQFJv8VmLOxbUfv8cUWSLDaDXWVDyVt5fX4dLoEmtSPk02ZO1qO
-	 3cnzGRjUmcMfSP61UuEqEp0Tf7M45ZyXNIGfEnG3p08TgDYunlC56XKSnaewkw4KWB
-	 JerrZPoo4YZQ2GFguVEIokbNJ9WKNZPcwLxqz55I=
+	b=U5iED7zRB7VZ1F6UmW9HcdMnXjDBVg6ndVqNxmt0sbdqDjlUIC5jTuqi68emWZN/h
+	 jHhESS+W0ztZ5Ib2g739WovPOX+klbf62rWFChDSds2McO8gl+vdKiQcG6QQAkjGYC
+	 I/bC0zAZ4j87IDJNv5lmQ8Y3hFoINj0fvHxTvMcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Brahmajit Das <brahmajit.xyz@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	David Rientjes <rientjes@google.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Hugh Dickins <hughd@google.com>,
+	Joern Engel <joern@logfs.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 055/515] habanalabs: fix UAF in export_dmabuf()
-Date: Mon, 18 Aug 2025 14:40:41 +0200
-Message-ID: <20250818124500.535773250@linuxfoundation.org>
+Subject: [PATCH 6.15 056/515] mm/smaps: fix race between smaps_hugetlb_range and migration
+Date: Mon, 18 Aug 2025 14:40:42 +0200
+Message-ID: <20250818124500.575184338@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,94 +67,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit 33927f3d0ecdcff06326d6e4edb6166aed42811c ]
+[ Upstream commit 45d19b4b6c2d422771c29b83462d84afcbb33f01 ]
 
-As soon as we'd inserted a file reference into descriptor table, another
-thread could close it.  That's fine for the case when all we are doing is
-returning that descriptor to userland (it's a race, but it's a userland
-race and there's nothing the kernel can do about it).  However, if we
-follow fd_install() with any kind of access to objects that would be
-destroyed on close (be it the struct file itself or anything destroyed
-by its ->release()), we have a UAF.
+smaps_hugetlb_range() handles the pte without holdling ptl, and may be
+concurrenct with migration, leaing to BUG_ON in pfn_swap_entry_to_page().
+The race is as follows.
 
-dma_buf_fd() is a combination of reserving a descriptor and fd_install().
-habanalabs export_dmabuf() calls it and then proceeds to access the
-objects destroyed on close.  In particular, it grabs an extra reference to
-another struct file that will be dropped as part of ->release() for ours;
-that "will be" is actually "might have already been".
+smaps_hugetlb_range              migrate_pages
+  huge_ptep_get
+                                   remove_migration_ptes
+				   folio_unlock
+  pfn_swap_entry_folio
+    BUG_ON
 
-Fix that by reserving descriptor before anything else and do fd_install()
-only when everything had been set up.  As a side benefit, we no longer
-have the failure exit with file already created, but reference to
-underlying file (as well as ->dmabuf_export_cnt, etc.) not grabbed yet;
-unlike dma_buf_fd(), fd_install() can't fail.
+To fix it, hold ptl lock in smaps_hugetlb_range().
 
-Fixes: db1a8dd916aa ("habanalabs: add support for dma-buf exporter")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Link: https://lkml.kernel.org/r/20250724090958.455887-1-tujinjiang@huawei.com
+Link: https://lkml.kernel.org/r/20250724090958.455887-2-tujinjiang@huawei.com
+Fixes: 25ee01a2fca0 ("mm: hugetlb: proc: add hugetlb-related fields to /proc/PID/smaps")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Brahmajit Das <brahmajit.xyz@gmail.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Joern Engel <joern@logfs.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/common/memory.c | 23 +++++++----------------
- 1 file changed, 7 insertions(+), 16 deletions(-)
+ fs/proc/task_mmu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/habanalabs/common/memory.c b/drivers/accel/habanalabs/common/memory.c
-index 601fdbe70179..61472a381904 100644
---- a/drivers/accel/habanalabs/common/memory.c
-+++ b/drivers/accel/habanalabs/common/memory.c
-@@ -1829,9 +1829,6 @@ static void hl_release_dmabuf(struct dma_buf *dmabuf)
- 	struct hl_dmabuf_priv *hl_dmabuf = dmabuf->priv;
- 	struct hl_ctx *ctx;
- 
--	if (!hl_dmabuf)
--		return;
--
- 	ctx = hl_dmabuf->ctx;
- 
- 	if (hl_dmabuf->memhash_hnode)
-@@ -1859,7 +1856,12 @@ static int export_dmabuf(struct hl_ctx *ctx,
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index e57e323817e7..3b8eaa7722c8 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -1020,10 +1020,13 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
  {
- 	DEFINE_DMA_BUF_EXPORT_INFO(exp_info);
- 	struct hl_device *hdev = ctx->hdev;
--	int rc, fd;
-+	CLASS(get_unused_fd, fd)(flags);
-+
-+	if (fd < 0) {
-+		dev_err(hdev->dev, "failed to get a file descriptor for a dma-buf, %d\n", fd);
-+		return fd;
-+	}
+ 	struct mem_size_stats *mss = walk->private;
+ 	struct vm_area_struct *vma = walk->vma;
+-	pte_t ptent = huge_ptep_get(walk->mm, addr, pte);
+ 	struct folio *folio = NULL;
+ 	bool present = false;
++	spinlock_t *ptl;
++	pte_t ptent;
  
- 	exp_info.ops = &habanalabs_dmabuf_ops;
- 	exp_info.size = total_size;
-@@ -1872,13 +1874,6 @@ static int export_dmabuf(struct hl_ctx *ctx,
- 		return PTR_ERR(hl_dmabuf->dmabuf);
++	ptl = huge_pte_lock(hstate_vma(vma), walk->mm, pte);
++	ptent = huge_ptep_get(walk->mm, addr, pte);
+ 	if (pte_present(ptent)) {
+ 		folio = page_folio(pte_page(ptent));
+ 		present = true;
+@@ -1042,6 +1045,7 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
+ 		else
+ 			mss->private_hugetlb += huge_page_size(hstate_vma(vma));
  	}
- 
--	fd = dma_buf_fd(hl_dmabuf->dmabuf, flags);
--	if (fd < 0) {
--		dev_err(hdev->dev, "failed to get a file descriptor for a dma-buf, %d\n", fd);
--		rc = fd;
--		goto err_dma_buf_put;
--	}
--
- 	hl_dmabuf->ctx = ctx;
- 	hl_ctx_get(hl_dmabuf->ctx);
- 	atomic_inc(&ctx->hdev->dmabuf_export_cnt);
-@@ -1890,13 +1885,9 @@ static int export_dmabuf(struct hl_ctx *ctx,
- 	get_file(ctx->hpriv->file_priv->filp);
- 
- 	*dmabuf_fd = fd;
-+	fd_install(take_fd(fd), hl_dmabuf->dmabuf->file);
- 
++	spin_unlock(ptl);
  	return 0;
--
--err_dma_buf_put:
--	hl_dmabuf->dmabuf->priv = NULL;
--	dma_buf_put(hl_dmabuf->dmabuf);
--	return rc;
  }
- 
- static int validate_export_params_common(struct hl_device *hdev, u64 addr, u64 size, u64 offset)
+ #else
 -- 
 2.50.1
 
