@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7446F2222A0;
-	Mon, 18 Aug 2025 13:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A517E271A6D;
+	Mon, 18 Aug 2025 13:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523820; cv=none; b=kVBAnvgFUUMUGlAcR/NZFVVAjXGu/mnFpX3naoBjnmykzUvZ5heuvK7NsRrfHYpKwK/ZKuTd5FpNIf9Hkzh7p8VXjJgBHT5riAx3PsC27xvKfBrb2yFMtoziaZIUFceCifEDkyx3XPmsgtgGvdF350TNTFFq4vKRE9Yap9ChMJQ=
+	t=1755523823; cv=none; b=KFtgu9SMSNBTCeJWBI/jllMgp5zsTMuzGSFuNVNeWKCvrqrLO3xA0FomuY/tJ8pa6LTA8z9M3vxeFNr4TwYOSXRJJ88tAuipx8WM2x04KNjgi0cM82hwrpb11mDBhVgmHPoJoOk46rMXNi6OvZ9q+B5ezTyQR4odmyT5DE+cq7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523820; c=relaxed/simple;
-	bh=63Qy0577ctdlcktXy6qu+XHIY/7ps69Tkwlm1Nri4fo=;
+	s=arc-20240116; t=1755523823; c=relaxed/simple;
+	bh=YRbXaiyrRE6Pq2wctI7WyxzKaz0xZitAAPsf9TBWLe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=upXaZZvr5Tv3//fq8oe+v1Sa3Ys0DlrysC46N+cMvYoTpw1Mps/Of5Qv0DhDdu0UcC5l82vGJGnkfcq2oOBL0CC/L8brqGZ6yrHfUXltNkN3e2PnhPqbht8a2G3HbTxAxEhQ1tkhDHku9HEUA3/70qsaXZvxiRxyDCJTTjEyTK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHO3ME/Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hoeXM51iEKihBHNWqQGRagxxX88pqkWCU6ocaRaawSgr1soLb27c+Sumys5pEH/g4QSACkOaTsNET4gQQeu3TAWnkJV0jyIx/3rOtZv4Q0xBlyRfB5ISmMvNGkyr1gW4D5pgfBCDrLvNTkvo/7Kcl0GUYVS0fX2F0WnMNQi+NqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4yjl+AT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHO3ME/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3E1C4CEEB;
-	Mon, 18 Aug 2025 13:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4yjl+AT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C85C4CEEB;
+	Mon, 18 Aug 2025 13:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523820;
-	bh=63Qy0577ctdlcktXy6qu+XHIY/7ps69Tkwlm1Nri4fo=;
+	s=korg; t=1755523823;
+	bh=YRbXaiyrRE6Pq2wctI7WyxzKaz0xZitAAPsf9TBWLe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHO3ME/YHZB4yncB9uUMc4A3K0hqdBr8BD8CeEU4z9i0ogpXsJYM++TzyOwAWUGgU
-	 hKeph607CN4aOpO9tCtqVy9bvImnmUMwFIIJo4uErNsaKzp6VQjfqxSEb9U+r5R5Pj
-	 zokYLC/q9jsmmpC5RJwngLK6mhzRTUW+MElErHCg=
+	b=f4yjl+ATqjqa9fruozTrm5qJ830kVbiTQW+rOaUW5ca7Wb11AKS5KsGd2t8wvqDWR
+	 Eas5iX6yENAuhWUtWaPG+YZIlUk6P93j0XtSoEidk6Pn9gPuI+g7p0wCvvPDOKW6om
+	 RqUmI6aw/BnyXVJ8x98TgTdmLKJzuoYoaLgeefrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 282/515] wifi: iwlwifi: fw: Fix possible memory leak in iwl_fw_dbg_collect
-Date: Mon, 18 Aug 2025 14:44:28 +0200
-Message-ID: <20250818124509.277842899@linuxfoundation.org>
+Subject: [PATCH 6.15 283/515] rcutorture: Fix rcutorture_one_extend_check() splat in RT kernels
+Date: Mon, 18 Aug 2025 14:44:29 +0200
+Message-ID: <20250818124509.314830070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,45 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-[ Upstream commit cc8d9cbf269dab363c768bfa9312265bc807fca5 ]
+[ Upstream commit 8d71351d88e478d3c4e945e3218e97ec677fd807 ]
 
-Ensure descriptor is freed on error to avoid memory leak.
+For built with CONFIG_PREEMPT_RT=y kernels, running rcutorture
+tests resulted in the following splat:
 
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250611222325.8158d15ec866.Ifa3e422c302397111f20a16da7509e6574bc19e3@changeid
+[   68.797425] rcutorture_one_extend_check during change: Current 0x1  To add 0x1  To remove 0x0  preempt_count() 0x0
+[   68.797533] WARNING: CPU: 2 PID: 512 at kernel/rcu/rcutorture.c:1993 rcutorture_one_extend_check+0x419/0x560 [rcutorture]
+[   68.797601] Call Trace:
+[   68.797602]  <TASK>
+[   68.797619]  ? lockdep_softirqs_off+0xa5/0x160
+[   68.797631]  rcutorture_one_extend+0x18e/0xcc0 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
+[   68.797646]  ? local_clock+0x19/0x40
+[   68.797659]  rcu_torture_one_read+0xf0/0x280 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
+[   68.797678]  ? __pfx_rcu_torture_one_read+0x10/0x10 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
+[   68.797804]  ? __pfx_rcu_torture_timer+0x10/0x10 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
+[   68.797815] rcu-torture: rcu_torture_reader task started
+[   68.797824] rcu-torture: Creating rcu_torture_reader task
+[   68.797824]  rcu_torture_reader+0x238/0x580 [rcutorture 2466dbd2ff34dbaa36049cb323a80c3306ac997c]
+[   68.797836]  ? kvm_sched_clock_read+0x15/0x30
+
+Disable BH does not change the SOFTIRQ corresponding bits in
+preempt_count() for RT kernels, this commit therefore use
+softirq_count() to check the if BH is disabled.
+
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/rcu/rcutorture.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index 03f639fbf9b6..3df15ff3e9d2 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -3006,6 +3006,7 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
- 	struct iwl_fw_dump_desc *desc;
- 	unsigned int delay = 0;
- 	bool monitor_only = false;
-+	int ret;
+diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
+index 4fa7772be183..a6202cbef9c5 100644
+--- a/kernel/rcu/rcutorture.c
++++ b/kernel/rcu/rcutorture.c
+@@ -458,7 +458,7 @@ rcu_read_delay(struct torture_random_state *rrsp, struct rt_read_seg *rtrsp)
+ 	    !(torture_random(rrsp) % (nrealreaders * 2000 * longdelay_ms))) {
+ 		started = cur_ops->get_gp_seq();
+ 		ts = rcu_trace_clock_local();
+-		if (preempt_count() & (SOFTIRQ_MASK | HARDIRQ_MASK))
++		if ((preempt_count() & HARDIRQ_MASK) || softirq_count())
+ 			longdelay_ms = 5; /* Avoid triggering BH limits. */
+ 		mdelay(longdelay_ms);
+ 		rtrsp->rt_delay_ms = longdelay_ms;
+@@ -1922,7 +1922,7 @@ static void rcutorture_one_extend_check(char *s, int curstate, int new, int old,
+ 		return;
  
- 	if (trigger) {
- 		u16 occurrences = le16_to_cpu(trigger->occurrences) - 1;
-@@ -3036,7 +3037,11 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
- 	desc->trig_desc.type = cpu_to_le32(trig);
- 	memcpy(desc->trig_desc.data, str, len);
+ 	WARN_ONCE((curstate & (RCUTORTURE_RDR_BH | RCUTORTURE_RDR_RBH)) &&
+-		  !(preempt_count() & SOFTIRQ_MASK), ROEC_ARGS);
++		  !softirq_count(), ROEC_ARGS);
+ 	WARN_ONCE((curstate & (RCUTORTURE_RDR_PREEMPT | RCUTORTURE_RDR_SCHED)) &&
+ 		  !(preempt_count() & PREEMPT_MASK), ROEC_ARGS);
+ 	WARN_ONCE(cur_ops->readlock_nesting &&
+@@ -1936,7 +1936,7 @@ static void rcutorture_one_extend_check(char *s, int curstate, int new, int old,
  
--	return iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
-+	ret = iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
-+	if (ret)
-+		kfree(desc);
+ 	WARN_ONCE(cur_ops->extendables &&
+ 		  !(curstate & (RCUTORTURE_RDR_BH | RCUTORTURE_RDR_RBH)) &&
+-		  (preempt_count() & SOFTIRQ_MASK), ROEC_ARGS);
++		  softirq_count(), ROEC_ARGS);
+ 
+ 	/*
+ 	 * non-preemptible RCU in a preemptible kernel uses preempt_disable()
+@@ -1957,6 +1957,9 @@ static void rcutorture_one_extend_check(char *s, int curstate, int new, int old,
+ 	if (!IS_ENABLED(CONFIG_PREEMPT_RCU))
+ 		mask |= RCUTORTURE_RDR_PREEMPT | RCUTORTURE_RDR_SCHED;
+ 
++	if (IS_ENABLED(CONFIG_PREEMPT_RT) && softirq_count())
++		mask |= RCUTORTURE_RDR_BH | RCUTORTURE_RDR_RBH;
 +
-+	return ret;
+ 	WARN_ONCE(cur_ops->readlock_nesting && !(curstate & mask) &&
+ 		  cur_ops->readlock_nesting() > 0, ROEC_ARGS);
  }
- IWL_EXPORT_SYMBOL(iwl_fw_dbg_collect);
- 
 -- 
 2.39.5
 
