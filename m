@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D501632A3FE;
-	Mon, 18 Aug 2025 13:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2569133471D;
+	Mon, 18 Aug 2025 13:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523566; cv=none; b=AR3VV1a5KiNcnv6k1E0xx4RUyZblDvehIVDjwd/Pe1MhRvL8Yzvdv9DzIMofcX3WBAMFEVjDiIJiDnvEMVRMVbzJO4B3rML4z4zyZY0agl0QfbAItnZP6Tja2HalFB9PbZwnFPjzDcrZU4U8MARZOys4EbEHhO+ot7LCQT7pFBY=
+	t=1755523570; cv=none; b=iwVjRXY8GpVN0uF+GdcSLvEoX6Ej+1dUeqjXqg1AsdGWts/DcrO8JwyAVNTdjJjSmf/DvYSLc2bZSJFJZAy90sfUxgtqsAEorzghDoFvEzvOdMJy0lV2BJ6TdOyNMWMlAGg4z57u4YVbnGRXIpvpIgF91HvovsgW919eTLUflyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523566; c=relaxed/simple;
-	bh=/z5V2LPXSXtQIvkTBKqFbxWTiHhlxvizs6JHc/iAITI=;
+	s=arc-20240116; t=1755523570; c=relaxed/simple;
+	bh=oK3qaaIITRlezXC9yLcWJxcRYKTqlWmHhldk8MOFFp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7QNCJRtXXFa68MeiirQ7xb7FAJHIl9PooXGLCo1/6ddEaOUxx/TcBQlpmfrm/kHK1Z3tnUA/IztX+vZtU/C/mnf+9xfb3zUx2ocryUGOeCEBvYB2fB8Li15fjnaAJhAu05sdafcQyu62uryCyXpj9Ize6o13TOe1inSuRu/2zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQBA52RW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B3+0wBQZSU6fI21ADi6dNVcYv360VD+7DBmKvI4KnloASr3Wj1/zBgnJf1gFWv908GgVM46btI14HlYLctkMJWarnMd/5SoDy7Bxlbr5a+8u1KZ5NaSKIAKyT/l12NEc/cxV/3AvMAHI0PCRs/lDfkzWQ9OPkGyYg5WA53Jp+oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnV15D9e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQBA52RW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDF5C4CEEB;
-	Mon, 18 Aug 2025 13:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnV15D9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89528C4CEEB;
+	Mon, 18 Aug 2025 13:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523566;
-	bh=/z5V2LPXSXtQIvkTBKqFbxWTiHhlxvizs6JHc/iAITI=;
+	s=korg; t=1755523570;
+	bh=oK3qaaIITRlezXC9yLcWJxcRYKTqlWmHhldk8MOFFp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQBA52RWgHB10Oq64zWmM58R9xmxTTxjw8JNBAcmtOTEWo/eT8zILxaDv3JYdV2B6
-	 byNr8WF4g0asjfI5R0QLRh6DzO8ScKVXnMvTg5vBnm6jpIKh7olIhIUak9uuxQf49g
-	 Pj42hQnY+C88LfUJWNt3ckTnJTIamCFYm0f/AqaI=
+	b=wnV15D9ewEEd611vCrbzMFGrimdBte3t1CVrmSHZVYNH4qjU7qTYTFC4xd0Nxwj7N
+	 V/z1RSFFuEGVBJ6mk6J0m0F2DkBv8fWEv8ii3jlh92ODD3VgiWP3ECF9tcx4WBXHK6
+	 MxPOa3VgS8k7lceZOz8pFZxNVqDbN5inLNT8FkBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Matteo Croce <teknoraver@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 210/515] idpf: preserve coalescing settings across resets
-Date: Mon, 18 Aug 2025 14:43:16 +0200
-Message-ID: <20250818124506.460872962@linuxfoundation.org>
+Subject: [PATCH 6.15 211/515] libbpf: Fix warning in calloc() usage
+Date: Mon, 18 Aug 2025 14:43:17 +0200
+Message-ID: <20250818124506.496004197@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -49,308 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Zaki <ahmed.zaki@intel.com>
+From: Matteo Croce <teknoraver@meta.com>
 
-[ Upstream commit e1e3fec3e34b4934a9d2c98e4ee00a4d87b19179 ]
+[ Upstream commit 0ee30d937c147fc14c4b49535181d437cd2fde7a ]
 
-The IRQ coalescing config currently reside only inside struct
-idpf_q_vector. However, all idpf_q_vector structs are de-allocated and
-re-allocated during resets. This leads to user-set coalesce configuration
-to be lost.
+When compiling libbpf with some compilers, this warning is triggered:
 
-Add new fields to struct idpf_vport_user_config_data to save the user
-settings and re-apply them after reset.
+libbpf.c: In function ‘bpf_object__gen_loader’:
+libbpf.c:9209:28: error: ‘calloc’ sizes specified with ‘sizeof’ in the earlier argument and not in the later argument [-Werror=calloc-transposed-args]
+ 9209 |         gen = calloc(sizeof(*gen), 1);
+      |                            ^
+libbpf.c:9209:28: note: earlier argument should specify number of elements, later size of each element
 
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fix this by inverting the calloc() arguments.
+
+Signed-off-by: Matteo Croce <teknoraver@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/20250717200337.49168-1-technoboy85@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf.h        | 19 ++++++++++
- .../net/ethernet/intel/idpf/idpf_ethtool.c    | 36 ++++++++++++++-----
- drivers/net/ethernet/intel/idpf/idpf_lib.c    | 18 +++++++++-
- drivers/net/ethernet/intel/idpf/idpf_main.c   |  1 +
- drivers/net/ethernet/intel/idpf/idpf_txrx.c   | 13 ++++---
- 5 files changed, 74 insertions(+), 13 deletions(-)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf.h b/drivers/net/ethernet/intel/idpf/idpf.h
-index 70dbf80f3bb7..a2b346d91879 100644
---- a/drivers/net/ethernet/intel/idpf/idpf.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf.h
-@@ -369,10 +369,28 @@ struct idpf_rss_data {
- 	u32 *cached_lut;
- };
- 
-+/**
-+ * struct idpf_q_coalesce - User defined coalescing configuration values for
-+ *			   a single queue.
-+ * @tx_intr_mode: Dynamic TX ITR or not
-+ * @rx_intr_mode: Dynamic RX ITR or not
-+ * @tx_coalesce_usecs: TX interrupt throttling rate
-+ * @rx_coalesce_usecs: RX interrupt throttling rate
-+ *
-+ * Used to restore user coalescing configuration after a reset.
-+ */
-+struct idpf_q_coalesce {
-+	u32 tx_intr_mode;
-+	u32 rx_intr_mode;
-+	u32 tx_coalesce_usecs;
-+	u32 rx_coalesce_usecs;
-+};
-+
- /**
-  * struct idpf_vport_user_config_data - User defined configuration values for
-  *					each vport.
-  * @rss_data: See struct idpf_rss_data
-+ * @q_coalesce: Array of per queue coalescing data
-  * @num_req_tx_qs: Number of user requested TX queues through ethtool
-  * @num_req_rx_qs: Number of user requested RX queues through ethtool
-  * @num_req_txq_desc: Number of user requested TX queue descriptors through
-@@ -386,6 +404,7 @@ struct idpf_rss_data {
-  */
- struct idpf_vport_user_config_data {
- 	struct idpf_rss_data rss_data;
-+	struct idpf_q_coalesce *q_coalesce;
- 	u16 num_req_tx_qs;
- 	u16 num_req_rx_qs;
- 	u32 num_req_txq_desc;
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
-index f72420cf6821..f0f0ced0d95f 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
-@@ -1089,12 +1089,14 @@ static int idpf_get_per_q_coalesce(struct net_device *netdev, u32 q_num,
- /**
-  * __idpf_set_q_coalesce - set ITR values for specific queue
-  * @ec: ethtool structure from user to update ITR settings
-+ * @q_coal: per queue coalesce settings
-  * @qv: queue vector for which itr values has to be set
-  * @is_rxq: is queue type rx
-  *
-  * Returns 0 on success, negative otherwise.
-  */
- static int __idpf_set_q_coalesce(const struct ethtool_coalesce *ec,
-+				 struct idpf_q_coalesce *q_coal,
- 				 struct idpf_q_vector *qv, bool is_rxq)
- {
- 	u32 use_adaptive_coalesce, coalesce_usecs;
-@@ -1138,20 +1140,25 @@ static int __idpf_set_q_coalesce(const struct ethtool_coalesce *ec,
- 
- 	if (is_rxq) {
- 		qv->rx_itr_value = coalesce_usecs;
-+		q_coal->rx_coalesce_usecs = coalesce_usecs;
- 		if (use_adaptive_coalesce) {
- 			qv->rx_intr_mode = IDPF_ITR_DYNAMIC;
-+			q_coal->rx_intr_mode = IDPF_ITR_DYNAMIC;
- 		} else {
- 			qv->rx_intr_mode = !IDPF_ITR_DYNAMIC;
--			idpf_vport_intr_write_itr(qv, qv->rx_itr_value,
--						  false);
-+			q_coal->rx_intr_mode = !IDPF_ITR_DYNAMIC;
-+			idpf_vport_intr_write_itr(qv, coalesce_usecs, false);
- 		}
- 	} else {
- 		qv->tx_itr_value = coalesce_usecs;
-+		q_coal->tx_coalesce_usecs = coalesce_usecs;
- 		if (use_adaptive_coalesce) {
- 			qv->tx_intr_mode = IDPF_ITR_DYNAMIC;
-+			q_coal->tx_intr_mode = IDPF_ITR_DYNAMIC;
- 		} else {
- 			qv->tx_intr_mode = !IDPF_ITR_DYNAMIC;
--			idpf_vport_intr_write_itr(qv, qv->tx_itr_value, true);
-+			q_coal->tx_intr_mode = !IDPF_ITR_DYNAMIC;
-+			idpf_vport_intr_write_itr(qv, coalesce_usecs, true);
- 		}
- 	}
- 
-@@ -1164,6 +1171,7 @@ static int __idpf_set_q_coalesce(const struct ethtool_coalesce *ec,
- /**
-  * idpf_set_q_coalesce - set ITR values for specific queue
-  * @vport: vport associated to the queue that need updating
-+ * @q_coal: per queue coalesce settings
-  * @ec: coalesce settings to program the device with
-  * @q_num: update ITR/INTRL (coalesce) settings for this queue number/index
-  * @is_rxq: is queue type rx
-@@ -1171,6 +1179,7 @@ static int __idpf_set_q_coalesce(const struct ethtool_coalesce *ec,
-  * Return 0 on success, and negative on failure
-  */
- static int idpf_set_q_coalesce(const struct idpf_vport *vport,
-+			       struct idpf_q_coalesce *q_coal,
- 			       const struct ethtool_coalesce *ec,
- 			       int q_num, bool is_rxq)
- {
-@@ -1179,7 +1188,7 @@ static int idpf_set_q_coalesce(const struct idpf_vport *vport,
- 	qv = is_rxq ? idpf_find_rxq_vec(vport, q_num) :
- 		      idpf_find_txq_vec(vport, q_num);
- 
--	if (qv && __idpf_set_q_coalesce(ec, qv, is_rxq))
-+	if (qv && __idpf_set_q_coalesce(ec, q_coal, qv, is_rxq))
- 		return -EINVAL;
- 
- 	return 0;
-@@ -1200,9 +1209,13 @@ static int idpf_set_coalesce(struct net_device *netdev,
- 			     struct netlink_ext_ack *extack)
- {
- 	struct idpf_netdev_priv *np = netdev_priv(netdev);
-+	struct idpf_vport_user_config_data *user_config;
-+	struct idpf_q_coalesce *q_coal;
- 	struct idpf_vport *vport;
- 	int i, err = 0;
- 
-+	user_config = &np->adapter->vport_config[np->vport_idx]->user_config;
-+
- 	idpf_vport_ctrl_lock(netdev);
- 	vport = idpf_netdev_to_vport(netdev);
- 
-@@ -1210,13 +1223,15 @@ static int idpf_set_coalesce(struct net_device *netdev,
- 		goto unlock_mutex;
- 
- 	for (i = 0; i < vport->num_txq; i++) {
--		err = idpf_set_q_coalesce(vport, ec, i, false);
-+		q_coal = &user_config->q_coalesce[i];
-+		err = idpf_set_q_coalesce(vport, q_coal, ec, i, false);
- 		if (err)
- 			goto unlock_mutex;
- 	}
- 
- 	for (i = 0; i < vport->num_rxq; i++) {
--		err = idpf_set_q_coalesce(vport, ec, i, true);
-+		q_coal = &user_config->q_coalesce[i];
-+		err = idpf_set_q_coalesce(vport, q_coal, ec, i, true);
- 		if (err)
- 			goto unlock_mutex;
- 	}
-@@ -1238,20 +1253,25 @@ static int idpf_set_coalesce(struct net_device *netdev,
- static int idpf_set_per_q_coalesce(struct net_device *netdev, u32 q_num,
- 				   struct ethtool_coalesce *ec)
- {
-+	struct idpf_netdev_priv *np = netdev_priv(netdev);
-+	struct idpf_vport_user_config_data *user_config;
-+	struct idpf_q_coalesce *q_coal;
- 	struct idpf_vport *vport;
- 	int err;
- 
- 	idpf_vport_ctrl_lock(netdev);
- 	vport = idpf_netdev_to_vport(netdev);
-+	user_config = &np->adapter->vport_config[np->vport_idx]->user_config;
-+	q_coal = &user_config->q_coalesce[q_num];
- 
--	err = idpf_set_q_coalesce(vport, ec, q_num, false);
-+	err = idpf_set_q_coalesce(vport, q_coal, ec, q_num, false);
- 	if (err) {
- 		idpf_vport_ctrl_unlock(netdev);
- 
- 		return err;
- 	}
- 
--	err = idpf_set_q_coalesce(vport, ec, q_num, true);
-+	err = idpf_set_q_coalesce(vport, q_coal, ec, q_num, true);
- 
- 	idpf_vport_ctrl_unlock(netdev);
- 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index fe96e2057366..72454fb34695 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -1094,8 +1094,10 @@ static struct idpf_vport *idpf_vport_alloc(struct idpf_adapter *adapter,
- 	if (!vport)
- 		return vport;
- 
-+	num_max_q = max(max_q->max_txq, max_q->max_rxq);
- 	if (!adapter->vport_config[idx]) {
- 		struct idpf_vport_config *vport_config;
-+		struct idpf_q_coalesce *q_coal;
- 
- 		vport_config = kzalloc(sizeof(*vport_config), GFP_KERNEL);
- 		if (!vport_config) {
-@@ -1104,6 +1106,21 @@ static struct idpf_vport *idpf_vport_alloc(struct idpf_adapter *adapter,
- 			return NULL;
- 		}
- 
-+		q_coal = kcalloc(num_max_q, sizeof(*q_coal), GFP_KERNEL);
-+		if (!q_coal) {
-+			kfree(vport_config);
-+			kfree(vport);
-+
-+			return NULL;
-+		}
-+		for (int i = 0; i < num_max_q; i++) {
-+			q_coal[i].tx_intr_mode = IDPF_ITR_DYNAMIC;
-+			q_coal[i].tx_coalesce_usecs = IDPF_ITR_TX_DEF;
-+			q_coal[i].rx_intr_mode = IDPF_ITR_DYNAMIC;
-+			q_coal[i].rx_coalesce_usecs = IDPF_ITR_RX_DEF;
-+		}
-+		vport_config->user_config.q_coalesce = q_coal;
-+
- 		adapter->vport_config[idx] = vport_config;
- 	}
- 
-@@ -1113,7 +1130,6 @@ static struct idpf_vport *idpf_vport_alloc(struct idpf_adapter *adapter,
- 	vport->default_vport = adapter->num_alloc_vports <
- 			       idpf_get_default_vports(adapter);
- 
--	num_max_q = max(max_q->max_txq, max_q->max_rxq);
- 	vport->q_vector_idxs = kcalloc(num_max_q, sizeof(u16), GFP_KERNEL);
- 	if (!vport->q_vector_idxs)
- 		goto free_vport;
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_main.c b/drivers/net/ethernet/intel/idpf/idpf_main.c
-index b35713036a54..8b3298e8e4f1 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_main.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_main.c
-@@ -62,6 +62,7 @@ static void idpf_remove(struct pci_dev *pdev)
- 	destroy_workqueue(adapter->vc_event_wq);
- 
- 	for (i = 0; i < adapter->max_vports; i++) {
-+		kfree(adapter->vport_config[i]->user_config.q_coalesce);
- 		kfree(adapter->vport_config[i]);
- 		adapter->vport_config[i] = NULL;
- 	}
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index aa16e4c1edbb..59fe0ca17eec 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -4194,9 +4194,13 @@ static void idpf_vport_intr_napi_add_all(struct idpf_vport *vport)
- int idpf_vport_intr_alloc(struct idpf_vport *vport)
- {
- 	u16 txqs_per_vector, rxqs_per_vector, bufqs_per_vector;
-+	struct idpf_vport_user_config_data *user_config;
- 	struct idpf_q_vector *q_vector;
-+	struct idpf_q_coalesce *q_coal;
- 	u32 complqs_per_vector, v_idx;
-+	u16 idx = vport->idx;
- 
-+	user_config = &vport->adapter->vport_config[idx]->user_config;
- 	vport->q_vectors = kcalloc(vport->num_q_vectors,
- 				   sizeof(struct idpf_q_vector), GFP_KERNEL);
- 	if (!vport->q_vectors)
-@@ -4214,14 +4218,15 @@ int idpf_vport_intr_alloc(struct idpf_vport *vport)
- 
- 	for (v_idx = 0; v_idx < vport->num_q_vectors; v_idx++) {
- 		q_vector = &vport->q_vectors[v_idx];
-+		q_coal = &user_config->q_coalesce[v_idx];
- 		q_vector->vport = vport;
- 
--		q_vector->tx_itr_value = IDPF_ITR_TX_DEF;
--		q_vector->tx_intr_mode = IDPF_ITR_DYNAMIC;
-+		q_vector->tx_itr_value = q_coal->tx_coalesce_usecs;
-+		q_vector->tx_intr_mode = q_coal->tx_intr_mode;
- 		q_vector->tx_itr_idx = VIRTCHNL2_ITR_IDX_1;
- 
--		q_vector->rx_itr_value = IDPF_ITR_RX_DEF;
--		q_vector->rx_intr_mode = IDPF_ITR_DYNAMIC;
-+		q_vector->rx_itr_value = q_coal->rx_coalesce_usecs;
-+		q_vector->rx_intr_mode = q_coal->rx_intr_mode;
- 		q_vector->rx_itr_idx = VIRTCHNL2_ITR_IDX_0;
- 
- 		q_vector->tx = kcalloc(txqs_per_vector, sizeof(*q_vector->tx),
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 7e532fbfd684..faa4ca04986c 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -9221,7 +9221,7 @@ int bpf_object__gen_loader(struct bpf_object *obj, struct gen_loader_opts *opts)
+ 		return libbpf_err(-EFAULT);
+ 	if (!OPTS_VALID(opts, gen_loader_opts))
+ 		return libbpf_err(-EINVAL);
+-	gen = calloc(sizeof(*gen), 1);
++	gen = calloc(1, sizeof(*gen));
+ 	if (!gen)
+ 		return libbpf_err(-ENOMEM);
+ 	gen->opts = opts;
 -- 
 2.39.5
 
