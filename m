@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69734216E23;
-	Mon, 18 Aug 2025 13:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0652206B8;
+	Mon, 18 Aug 2025 13:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524513; cv=none; b=O8/NcTI9Bbfk2kyTKnoHS0LmDi48UGi9F/mtL4YXlDARX+nxQ8TVqP1ta0ypIcpK0y2545LQ7Ci01Uw6ww2e/yfeUdtzJJI9wlpyikTfqDm2mgHOPb4XG9w1CTqLfnlnqQxaisDDPn0hB5yjXmx5+uimWeSdFnM90cGOyy5Ow/k=
+	t=1755524516; cv=none; b=AS6JkkjJuHiYdPprs2xA7dpjPbKBKU7e9VMY4mzkPPMysF4cv1JIhHiSnU43YHx4n8VpJdB9v8szL7gQRdnruyQfMwdbU4WD7k/+1sVK+e8HpTLDdX9OLzFpFyGvouOI9CpedTebTiCWQtrSNWqn6fX8rzhY3KyFrGOZoOkrqD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524513; c=relaxed/simple;
-	bh=ud5XcfglpyVHWTPOCJceIq8eyis/PT+YqCm5VJK9wzw=;
+	s=arc-20240116; t=1755524516; c=relaxed/simple;
+	bh=nSDOXL8ly0lsCRpCrUIAd+gAUdPyUVhnTxmzCMcCy6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pKt7j6nTC+Ah+4pDKamsvxd9WiCL9K71hiVpHDxgFWhqz2XR0DMuLHlmxxEG/6iEDzsj4slaZb6/aU2PWcwaPT3w9I/IuRoNVr/rvNWcPTpuegN4AdpICJs9/LQzfYIuWHloEZYeup+SESGs0Mq9Ibj+7q3TAC4fxCcSYujgcoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=biC81gz/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RsZpufN5Zr9/KGdvKy82Gey5rbvtmWRWAy/M13A6cfh6I7Bmn5igJAxtsu7uuYwxiFHtIMgzt3RJhDlY9AONrWUDYkE5CM1h7JE7PpVZrkhl/VW9bkvIQlwG0/6PebFNbs2NEtUreYC0L2W9VXW/OIpPSHIZ0JO/B1cSWHrVK1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/WtZcyi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="biC81gz/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7234FC4CEF1;
-	Mon, 18 Aug 2025 13:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/WtZcyi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BFAC113D0;
+	Mon, 18 Aug 2025 13:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524512;
-	bh=ud5XcfglpyVHWTPOCJceIq8eyis/PT+YqCm5VJK9wzw=;
+	s=korg; t=1755524516;
+	bh=nSDOXL8ly0lsCRpCrUIAd+gAUdPyUVhnTxmzCMcCy6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=biC81gz/yotnyfLcSk4bUEqYDLc52uu2u39thythuM892Bi4YpBBjREes6ZQ/NA0A
-	 WxP7jTjBDkqGDX31E+a2/SzYokHEwGDgaAP0uqxARsXfNEh5+Ktz4v1h2ddPldE0K5
-	 2lzsJZhvPj2NAjyBepGa1xSF09fqVBHjN1neal3o=
+	b=W/WtZcyiSQhZUvZj0mXV7/00Sx3d6rc/W5nQcNnUDeQ0CCUiPk2qDgbnvHzT43qxZ
+	 jsU2N4jPk5cAe+5qXEdBFwYFgGejYN0lWwfXtijV+j2tcRt2YkOqzoxiax27Raycpe
+	 uKhMSSNYZrux2HzxKtwdPltnS+7RReiBn8EkGKzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Sterba <dsterba@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>
-Subject: [PATCH 6.15 468/515] btrfs: fix ssd_spread overallocation
-Date: Mon, 18 Aug 2025 14:47:34 +0200
-Message-ID: <20250818124516.437589086@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 495/515] mm/kmemleak: avoid deadlock by moving pr_warn() outside kmemleak_lock
+Date: Mon, 18 Aug 2025 14:48:01 +0200
+Message-ID: <20250818124517.501575473@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,134 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Breno Leitao <leitao@debian.org>
 
-commit 807d9023e75fc20bfd6dd2ac0408ce4af53f1648 upstream.
+commit 47b0f6d8f0d2be4d311a49e13d2fd5f152f492b2 upstream.
 
-If the ssd_spread mount option is enabled, then we run the so called
-clustered allocator for data block groups. In practice, this results in
-creating a btrfs_free_cluster which caches a block_group and borrows its
-free extents for allocation.
+When netpoll is enabled, calling pr_warn_once() while holding
+kmemleak_lock in mem_pool_alloc() can cause a deadlock due to lock
+inversion with the netconsole subsystem.  This occurs because
+pr_warn_once() may trigger netpoll, which eventually leads to
+__alloc_skb() and back into kmemleak code, attempting to reacquire
+kmemleak_lock.
 
-Since the introduction of allocation size classes in 6.1, there has been
-a bug in the interaction between that feature and ssd_spread.
-find_free_extent() has a number of nested loops. The loop going over the
-allocation stages, stored in ffe_ctl->loop and managed by
-find_free_extent_update_loop(), the loop over the raid levels, and the
-loop over all the block_groups in a space_info. The size class feature
-relies on the block_group loop to ensure it gets a chance to see a
-block_group of a given size class.  However, the clustered allocator
-uses the cached cluster block_group and breaks that loop. Each call to
-do_allocation() will really just go back to the same cached block_group.
-Normally, this is OK, as the allocation either succeeds and we don't
-want to loop any more or it fails, and we clear the cluster and return
-its space to the block_group.
+This is the path for the deadlock.
 
-But with size classes, the allocation can succeed, then later fail,
-outside of do_allocation() due to size class mismatch. That latter
-failure is not properly handled due to the highly complex multi loop
-logic. The result is a painful loop where we continue to allocate the
-same num_bytes from the cluster in a tight loop until it fails and
-releases the cluster and lets us try a new block_group. But by then, we
-have skipped great swaths of the available block_groups and are likely
-to fail to allocate, looping the outer loop. In pathological cases like
-the reproducer below, the cached block_group is often the very last one,
-in which case we don't perform this tight bg loop but instead rip
-through the ffe stages to LOOP_CHUNK_ALLOC and allocate a chunk, which
-is now the last one, and we enter the tight inner loop until an
-allocation failure. Then allocation succeeds on the final block_group
-and if the next allocation is a size mismatch, the exact same thing
-happens again.
+mem_pool_alloc()
+  -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
+      -> pr_warn_once()
+          -> netconsole subsystem
+	     -> netpoll
+	         -> __alloc_skb
+		   -> __create_object
+		     -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
 
-Triggering this is as easy as mounting with -o ssd_spread and then
-running:
+Fix this by setting a flag and issuing the pr_warn_once() after
+kmemleak_lock is released.
 
-  mount -o ssd_spread $dev $mnt
-  dd if=/dev/zero of=$mnt/big bs=16M count=1 &>/dev/null
-  dd if=/dev/zero of=$mnt/med bs=4M count=1 &>/dev/null
-  sync
-
-if you do the two writes + sync in a loop, you can force btrfs to spin
-an excessive amount on semi-successful clustered allocations, before
-ultimately failing and advancing to the stage where we force a chunk
-allocation. This results in 2G of data allocated per iteration, despite
-only using ~20M of data. By using a small size classed extent, the inner
-loop takes longer and we can spin for longer.
-
-The simplest, shortest term fix to unbreak this is to make the clustered
-allocator size_class aware in the dumbest way, where it fails on size
-class mismatch. This may hinder the operation of the clustered
-allocator, but better hindered than completely broken and terribly
-overallocating.
-
-Further re-design improvements are also in the works.
-
-Fixes: 52bb7a2166af ("btrfs: introduce size class to block group allocator")
-CC: stable@vger.kernel.org # 6.1+
-Reported-by: David Sterba <dsterba@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://lkml.kernel.org/r/20250731-kmemleak_lock-v1-1-728fd470198f@debian.org
+Fixes: c5665868183f ("mm: kmemleak: use the memory pool for early allocations")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |   33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ mm/kmemleak.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -3625,6 +3625,21 @@ btrfs_release_block_group(struct btrfs_b
- 	btrfs_put_block_group(cache);
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -475,6 +475,7 @@ static struct kmemleak_object *mem_pool_
+ {
+ 	unsigned long flags;
+ 	struct kmemleak_object *object;
++	bool warn = false;
+ 
+ 	/* try the slab allocator first */
+ 	if (object_cache) {
+@@ -493,8 +494,10 @@ static struct kmemleak_object *mem_pool_
+ 	else if (mem_pool_free_count)
+ 		object = &mem_pool[--mem_pool_free_count];
+ 	else
+-		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
++		warn = true;
+ 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
++	if (warn)
++		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
+ 
+ 	return object;
  }
- 
-+static bool find_free_extent_check_size_class(const struct find_free_extent_ctl *ffe_ctl,
-+					      const struct btrfs_block_group *bg)
-+{
-+	if (ffe_ctl->policy == BTRFS_EXTENT_ALLOC_ZONED)
-+		return true;
-+	if (!btrfs_block_group_should_use_size_class(bg))
-+		return true;
-+	if (ffe_ctl->loop >= LOOP_WRONG_SIZE_CLASS)
-+		return true;
-+	if (ffe_ctl->loop >= LOOP_UNSET_SIZE_CLASS &&
-+	    bg->size_class == BTRFS_BG_SZ_NONE)
-+		return true;
-+	return ffe_ctl->size_class == bg->size_class;
-+}
-+
- /*
-  * Helper function for find_free_extent().
-  *
-@@ -3646,7 +3661,8 @@ static int find_free_extent_clustered(st
- 	if (!cluster_bg)
- 		goto refill_cluster;
- 	if (cluster_bg != bg && (cluster_bg->ro ||
--	    !block_group_bits(cluster_bg, ffe_ctl->flags)))
-+	    !block_group_bits(cluster_bg, ffe_ctl->flags) ||
-+	    !find_free_extent_check_size_class(ffe_ctl, cluster_bg)))
- 		goto release_cluster;
- 
- 	offset = btrfs_alloc_from_cluster(cluster_bg, last_ptr,
-@@ -4202,21 +4218,6 @@ static int find_free_extent_update_loop(
- 	return -ENOSPC;
- }
- 
--static bool find_free_extent_check_size_class(struct find_free_extent_ctl *ffe_ctl,
--					      struct btrfs_block_group *bg)
--{
--	if (ffe_ctl->policy == BTRFS_EXTENT_ALLOC_ZONED)
--		return true;
--	if (!btrfs_block_group_should_use_size_class(bg))
--		return true;
--	if (ffe_ctl->loop >= LOOP_WRONG_SIZE_CLASS)
--		return true;
--	if (ffe_ctl->loop >= LOOP_UNSET_SIZE_CLASS &&
--	    bg->size_class == BTRFS_BG_SZ_NONE)
--		return true;
--	return ffe_ctl->size_class == bg->size_class;
--}
--
- static int prepare_allocation_clustered(struct btrfs_fs_info *fs_info,
- 					struct find_free_extent_ctl *ffe_ctl,
- 					struct btrfs_space_info *space_info,
 
 
