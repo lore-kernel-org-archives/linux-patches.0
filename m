@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D315C322DB1;
-	Mon, 18 Aug 2025 13:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319DE227BB5;
+	Mon, 18 Aug 2025 13:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523372; cv=none; b=Q+njxEnGDv91MdLrQ+Npt7wnBBaNz5QweI2rOoYqeo/QlzY+9wajjblNsndReDc0bYdj1IZd4VaL6oqPf4XPoXeO+62GjAet1YmXrKGUpOOlB7ZPLGWUnkWFsoBxLBA3a7St6lUks7Vrdc66kZ7B/PDpaaXcCoNfOQZZz8gYv4A=
+	t=1755523376; cv=none; b=pGo3CjRA/0sxqlBOxdH+rk2Uktl/7ZRWP5FPUH9esLuCYGZ17SYmOqJWPkfRzL4chfi70hHtcLj26/MRSkAFEkDIA7Ou75UngZ4etNtJ/pzTMN3CgX0DFz4RwWn5WA8gybSdCexU9qJ6PZr1TfyMWJiMc60z1JbpDGYl7qggHgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523372; c=relaxed/simple;
-	bh=icrjVBDd31lG935Ru7C0vjzVWeWOHTXhxiZpwn3Iz7M=;
+	s=arc-20240116; t=1755523376; c=relaxed/simple;
+	bh=fbl6ErO+LWaf/t0ifKAXK++x9OwlawVGTlPjD+SITOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqWT409t3AaMp7ma3o7Rk+axLZACRYuk3CNIsGl0GJXp5hNox1NJDelgRiQVnAxNJ0OxnJPgKBPx4f+QPcq4IjSmSDZ1RiojfQoNuP2hQ3QLnmMgZNa4AOWDJvu+Jw4f+zXQlDmWhS8NSxgzPb8Ms4lfgWPd4kSeLxufO1kdoJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqVlzb95; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TleEmmuD+YZfKmq/sfFTU6M2rrL4WHC6jVpKsKaMVI5wkDI2P+0Wo/QKW6hg0CbOVhxN9RzsgYatM3nucqjHRLOgghZFaH0/5dHQ0caOl09x/eFsGgPKj6P2Xb7o+0AAAhfptoHNilIsVt6yRkvACXD+EnNDfQVJzzVOMvvZGkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6+EOsFt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqVlzb95"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38961C4CEEB;
-	Mon, 18 Aug 2025 13:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6+EOsFt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95687C4CEEB;
+	Mon, 18 Aug 2025 13:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523372;
-	bh=icrjVBDd31lG935Ru7C0vjzVWeWOHTXhxiZpwn3Iz7M=;
+	s=korg; t=1755523376;
+	bh=fbl6ErO+LWaf/t0ifKAXK++x9OwlawVGTlPjD+SITOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqVlzb953znfE2sERYIJMSuR5CeHKnC0jZZ+8ddwiZh7lSSYyfHJL8bKmRYIEystK
-	 n/rAJldFgvCGrf4gb0yYN2rPyH9mOLr9f2F5Z+fy+nT5GW+cZ8JLA1j49ROaelpFF1
-	 HxQPXzYbbiGOBU0X15eCVaQ2iEU9Ecb6J1INtoqs=
+	b=d6+EOsFtCXkRnva5a9ovGoZCXXpDErP8X6G7JNTq0zXUPVa7RATL3VzEXLjSx3MZY
+	 cMz9/LngERjvL3P8W9f8i7SfB/yK8YZn8cpN5cMVftuAdkI9tYh18hGPthRX8ST65o
+	 RoUOYaQdUu7xzEGEp7E54M/a20aaqopGxt7Dr1AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
+	Vivek Pernamitta <quic_vpernami@quicinc.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 118/515] bus: mhi: host: pci_generic: Add Telit FN990B40 modem support
-Date: Mon, 18 Aug 2025 14:41:44 +0200
-Message-ID: <20250818124502.889614797@linuxfoundation.org>
+Subject: [PATCH 6.15 119/515] bus: mhi: host: pci_generic: Disable runtime PM for QDU100
+Date: Mon, 18 Aug 2025 14:41:45 +0200
+Message-ID: <20250818124502.930100112@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,55 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Vivek Pernamitta <quic_vpernami@quicinc.com>
 
-[ Upstream commit 00559ba3ae740e7544b48fb509b2b97f56615892 ]
+[ Upstream commit 0494cf9793b7c250f63fdb2cb6b648473e9d4ae6 ]
 
-Add SDX72 based modem Telit FN990B40, reusing FN920C04 configuration.
+The QDU100 device does not support the MHI M3 state, necessitating the
+disabling of runtime PM for this device. It is essential to disable
+runtime PM if the device does not support M3 state.
 
-01:00.0 Unassigned class [ff00]: Qualcomm Device 0309
-        Subsystem: Device 1c5d:201a
-
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-[mani: added sdx72 in the comment to identify the chipset]
+Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+[mani: Fixed the kdoc comment for no_m3]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20250716091836.999364-1-dnlplm@gmail.com
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250425-vdev_next-20250411_pm_disable-v4-1-d4870a73ebf9@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/bus/mhi/host/pci_generic.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index cd274f4dae93..c8f82219006f 100644
+index c8f82219006f..e5af0beed050 100644
 --- a/drivers/bus/mhi/host/pci_generic.c
 +++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -818,6 +818,16 @@ static const struct mhi_pci_dev_info mhi_telit_fn920c04_info = {
- 	.edl_trigger = true,
+@@ -43,6 +43,7 @@
+  * @mru_default: default MRU size for MBIM network packets
+  * @sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
+  *		   of inband wake support (such as sdx24)
++ * @no_m3: M3 not supported
+  */
+ struct mhi_pci_dev_info {
+ 	const struct mhi_controller_config *config;
+@@ -54,6 +55,7 @@ struct mhi_pci_dev_info {
+ 	unsigned int dma_data_width;
+ 	unsigned int mru_default;
+ 	bool sideband_wake;
++	bool no_m3;
  };
  
-+static const struct mhi_pci_dev_info mhi_telit_fn990b40_info = {
-+	.name = "telit-fn990b40",
-+	.config = &modem_telit_fn920c04_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.sideband_wake = false,
-+	.mru_default = 32768,
-+	.edl_trigger = true,
-+};
-+
- static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
- 	.name = "netprisma-lcur57",
- 	.edl = "qcom/prog_firehose_sdx24.mbn",
-@@ -865,6 +875,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-+	/* Telit FN990B40 (sdx72) */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x201a),
-+		.driver_data = (kernel_ulong_t) &mhi_telit_fn990b40_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
- 	/* QDU100, x100-DU */
+ #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
+@@ -295,6 +297,7 @@ static const struct mhi_pci_dev_info mhi_qcom_qdu100_info = {
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
+ 	.sideband_wake = false,
++	.no_m3 = true,
+ };
+ 
+ static const struct mhi_channel_config mhi_qcom_sa8775p_channels[] = {
+@@ -1322,8 +1325,8 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	/* start health check */
+ 	mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
+ 
+-	/* Only allow runtime-suspend if PME capable (for wakeup) */
+-	if (pci_pme_capable(pdev, PCI_D3hot)) {
++	/* Allow runtime suspend only if both PME from D3Hot and M3 are supported */
++	if (pci_pme_capable(pdev, PCI_D3hot) && !(info->no_m3)) {
+ 		pm_runtime_set_autosuspend_delay(&pdev->dev, 2000);
+ 		pm_runtime_use_autosuspend(&pdev->dev);
+ 		pm_runtime_mark_last_busy(&pdev->dev);
 -- 
 2.39.5
 
