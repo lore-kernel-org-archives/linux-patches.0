@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A6033768F;
-	Mon, 18 Aug 2025 14:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708533376B0;
+	Mon, 18 Aug 2025 14:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525651; cv=none; b=NtEco5XCaAzE3QHLsjJXoAieORL+qexbFFCR3vQdE0WF35iDZebbB86kYC7+Yy8VK5LysQto0Ubv/COTY07f0h35fNFrc3ud35jcv4PKk/k53eKCd6EmyOf9m8obXzBdlhflSQYtU9jnDy587J/9JQ5Q5rIpuFRxngdU9WBOkLA=
+	t=1755525655; cv=none; b=cAs13zqL6Jk6jjEIhCOJcf1TL4EE4R6U9pkv/9uQ6oOYd787f3/KRTlB2TCKXTIsGu86A+4rdOO/VX3QjhIg/oZgg5vdqCG5mM9dZw1qdNS6aF3reJQv2a9Tr0BIwr1Sa8wMGBPBwqs9+HN7Lko4RV/fKW1RvidtJj80tbH7QD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525651; c=relaxed/simple;
-	bh=gCt9as5gVwfvrKvevpnb3pZqlqtB4DQsNawItUMM0hg=;
+	s=arc-20240116; t=1755525655; c=relaxed/simple;
+	bh=F8kGW9YsvxNVFVrC6fUuTE+sAsdEXYoxzs8E5R5Jpgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twxMN0ZxYxTqVhb6ZcwOEcVFqI4kqAGCFChj6FViDEsvLYvq37TfioeAj2KwVeXRI6B8FAIcn717C8tQLxIoG8eEUW7q3pXqZ0dEEA+2urjR8ZeaefQ8P85z7GD/Y7xcYMZY7GuRMY4pgdhL920bxs86Y4kb4m1psPOzGhZ94HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hi12ze5G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EAW0hMXd8EryYPhFPrGI1fMuu9oT7W1zN24Z4CP5zCVGlq/opXYXHvKB4Dk6f05X7KrpnA75HsRnoMYeQf2PS/Z6WGJuha2z15iyRlTP04IVcw/mjoeNfTJjcpYOJ0i3VLd/l2qoKldih/L9G0ut/zScTET2/lbMb6x0uygx+rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwAQli6H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hi12ze5G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23322C4CEEB;
-	Mon, 18 Aug 2025 14:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwAQli6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DDDC4CEF1;
+	Mon, 18 Aug 2025 14:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525651;
-	bh=gCt9as5gVwfvrKvevpnb3pZqlqtB4DQsNawItUMM0hg=;
+	s=korg; t=1755525655;
+	bh=F8kGW9YsvxNVFVrC6fUuTE+sAsdEXYoxzs8E5R5Jpgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hi12ze5GsEeqpl/OZskjM2XK913PZKfRzmlo4r1/Ki+F4Hv5aC+2QrMTAGdicbCl5
-	 sqoMvju1emDSuECjbww10HVjzaZ+ecT/EhZrWDd5hxkh3NRQR9VxuCyyM4pjEHjAZo
-	 Lm138yzHJdJNXo7X9wQNTuFGE5M98Ss+5/oFqVc0=
+	b=CwAQli6HrDmFJ6GqJaUDlqE8+5Uk7ULuNW3F1ntMbulPVCM5Pk+gGVV9FAmRqrWcr
+	 dLnKVkcBghaeUAigHnkVZbmrvt+AnPPrNIsG8EoEoDDVj98h2l9a4sI4eLGNS+a1GN
+	 I28z2BGcaXC/V61MyE3rZe6+poT1+8pF8f16pus8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ganglxie <ganglxie@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 326/570] drm/amdgpu: clear pa and mca record counter when resetting eeprom
-Date: Mon, 18 Aug 2025 14:45:13 +0200
-Message-ID: <20250818124518.414072797@linuxfoundation.org>
+Subject: [PATCH 6.16 327/570] net: vlan: Make is_vlan_dev() a stub when VLAN is not configured
+Date: Mon, 18 Aug 2025 14:45:14 +0200
+Message-ID: <20250818124518.454651108@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,34 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ganglxie <ganglxie@amd.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit d0cc8d2b7df1848f98f0fea8135ba706814b1d13 ]
+[ Upstream commit 2de1ba0887e5d3bf02d7c212f380039b34e10aa3 ]
 
-clear pa and mca record counter when resetting eeprom, so that
-ras_num_bad_pages can be calculated correctly
+Add a stub implementation of is_vlan_dev() that returns false when
+VLAN support is not compiled in (CONFIG_VLAN_8021Q=n).
 
-Signed-off-by: ganglxie <ganglxie@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This allows us to compile-out VLAN-dependent dead code when it is not
+needed.
+
+This also resolves the following compilation error when:
+* CONFIG_VLAN_8021Q=n
+* CONFIG_OBJTOOL=y
+* CONFIG_OBJTOOL_WERROR=y
+
+drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.o: error: objtool: parse_mirred.isra.0+0x370: mlx5e_tc_act_vlan_add_push_action() missing __noreturn in .c/.h or NORETURN() in noreturns.h
+
+The error occurs because objtool cannot determine that unreachable BUG()
+(which doesn't return) calls in VLAN code paths are actually dead code
+when VLAN support is disabled.
+
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://patch.msgid.link/20250616132626.1749331-2-gal@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/if_vlan.h | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-index 2c58e09e56f9..2ddedf476542 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-@@ -476,6 +476,8 @@ int amdgpu_ras_eeprom_reset_table(struct amdgpu_ras_eeprom_control *control)
+diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
+index 38456b42cdb5..618a973ff8ee 100644
+--- a/include/linux/if_vlan.h
++++ b/include/linux/if_vlan.h
+@@ -79,11 +79,6 @@ static inline struct vlan_ethhdr *skb_vlan_eth_hdr(const struct sk_buff *skb)
+ /* found in socket.c */
+ extern void vlan_ioctl_set(int (*hook)(struct net *, void __user *));
  
- 	control->ras_num_recs = 0;
- 	control->ras_num_bad_pages = 0;
-+	control->ras_num_mca_recs = 0;
-+	control->ras_num_pa_recs = 0;
- 	control->ras_fri = 0;
+-static inline bool is_vlan_dev(const struct net_device *dev)
+-{
+-        return dev->priv_flags & IFF_802_1Q_VLAN;
+-}
+-
+ #define skb_vlan_tag_present(__skb)	(!!(__skb)->vlan_all)
+ #define skb_vlan_tag_get(__skb)		((__skb)->vlan_tci)
+ #define skb_vlan_tag_get_id(__skb)	((__skb)->vlan_tci & VLAN_VID_MASK)
+@@ -200,6 +195,11 @@ struct vlan_dev_priv {
+ #endif
+ };
  
- 	amdgpu_dpm_send_hbm_bad_pages_num(adev, control->ras_num_bad_pages);
++static inline bool is_vlan_dev(const struct net_device *dev)
++{
++	return dev->priv_flags & IFF_802_1Q_VLAN;
++}
++
+ static inline struct vlan_dev_priv *vlan_dev_priv(const struct net_device *dev)
+ {
+ 	return netdev_priv(dev);
+@@ -237,6 +237,11 @@ extern void vlan_vids_del_by_dev(struct net_device *dev,
+ extern bool vlan_uses_dev(const struct net_device *dev);
+ 
+ #else
++static inline bool is_vlan_dev(const struct net_device *dev)
++{
++	return false;
++}
++
+ static inline struct net_device *
+ __vlan_find_dev_deep_rcu(struct net_device *real_dev,
+ 		     __be16 vlan_proto, u16 vlan_id)
 -- 
 2.39.5
 
