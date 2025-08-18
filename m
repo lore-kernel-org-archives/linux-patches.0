@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214B032253B;
-	Mon, 18 Aug 2025 14:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3228D2E228D;
+	Mon, 18 Aug 2025 14:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526303; cv=none; b=fymRtOg6bHRj+RXsOiVRymW1/1EHf6E2o+Spg+MsbFKCJ2a0K2eW1n9QC2qTRUZo9DNyrkaGpGlSHRFX0ddyh1zZtev4IyqPO+24Rf1JbcxwOxd40u9GeYf13RaZl0U1fhPyJN4C5+XDgQd9h+zI4N2kF1ALvyGetf36/0RK0mI=
+	t=1755526306; cv=none; b=Io6XU9U5e+xCXWIAPE83T6ADX9wVQFBB2MTabwl6yFqC1TQfJnVliIMjhNabwLl7Lngbqd1BD/IFz0qw8CB/YqyGLJWUPd4qVtCh61Jw00Hpc84a3Q/7pdPPDEw7esZcYUnJcgq6h7tCdGHw5V/kQdnwR3KWdLxyphx+AsS6Pyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526303; c=relaxed/simple;
-	bh=Oe5huPtc//1F25GPxDcZdu8XS3KQg7Y2LpXoEca92lE=;
+	s=arc-20240116; t=1755526306; c=relaxed/simple;
+	bh=dttK70k0Hck1Q/i9Qbc4J3V0TwItLXXnbnOC+O7Cdt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5VoPX96Aophwbt5W9ak5SdKcz41wztDYQYUi97Es6qplkF9cldh1vDYEwG9tsgJJQtNxeaIotCwswAIO66vHKZQny+DYdxqqGbGKIsuW+XX8ErMob9QvUv1g5togveh/cu8jO0hCVi61X8vWpL8GKiAkapzNB6J/1B3M3Or27E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TykwtZQg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xk1xe6+RJwlCjewuUtQz7ML2UPQ0DrQXEV1niC7j1QzHLcc7LjejKFhQu/lR9XPwY91s/8oT+H1NPdJFm2FydQxDBELNSKCuoJjwFVixapcvn0810PLZOsme4CRS158QIl/5eGupW1mR++9y23V8LDY5h4UcZY8SEq75MfMoTlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFVB6470; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TykwtZQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9844DC4CEEB;
-	Mon, 18 Aug 2025 14:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFVB6470"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E87C4CEEB;
+	Mon, 18 Aug 2025 14:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526303;
-	bh=Oe5huPtc//1F25GPxDcZdu8XS3KQg7Y2LpXoEca92lE=;
+	s=korg; t=1755526306;
+	bh=dttK70k0Hck1Q/i9Qbc4J3V0TwItLXXnbnOC+O7Cdt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TykwtZQg/n2j1V7+nG58ZYLuX/LHxZwz8rxeTRlv7I5pj5kLQWG8I7XW1ccmlrlWz
-	 oDGxym1SDfdNdCBdRG8H6eEbMtW4bNyB3nc/HVxCEwXgN+vEWBBqynZ0mFWhXxui8e
-	 qGKR9immK6eINevhjpFZyfBAKeM2dKP1IXdBeRHo=
+	b=fFVB6470o+nDJ94wUL6hKd0EAtYWpzzH9s2TXr74QEscxM5k5hRzffWrMkcsYW6qM
+	 R5N536fCp8K/N5lQ4mVrWJRmpCFC+qQXEn+Sp7o3w92xhgdAWncfmQCRCFw/GH8oIu
+	 0b1wdyatCnvEnBeYmPfYRbOw9I2s/FEXmgNyRzmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 514/570] btrfs: zoned: reserve data_reloc block group on mount
-Date: Mon, 18 Aug 2025 14:48:21 +0200
-Message-ID: <20250818124525.661333667@linuxfoundation.org>
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.16 484/570] x86/fpu: Fix NULL dereference in avx512_status()
+Date: Mon, 18 Aug 2025 14:47:51 +0200
+Message-ID: <20250818124524.528774935@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,137 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-commit 694ce5e143d67267ad26b04463e790a597500b00 upstream.
+commit 31cd31c9e17ece125aad27259501a2af69ccb020 upstream.
 
-Create a block group dedicated for data relocation on mount of a zoned
-filesystem.
+Problem
+-------
+With CONFIG_X86_DEBUG_FPU enabled, reading /proc/[kthread]/arch_status
+causes a warning and a NULL pointer dereference.
 
-If there is already more than one empty DATA block group on mount, this
-one is picked for the data relocation block group, instead of a newly
-created one.
+This is because the AVX-512 timestamp code uses x86_task_fpu() but
+doesn't check it for NULL. CONFIG_X86_DEBUG_FPU addles that function
+for kernel threads (PF_KTHREAD specifically), making it return NULL.
 
-This is done to ensure, there is always space for performing garbage
-collection and the filesystem is not hitting ENOSPC under heavy overwrite
-workloads.
+The point of the warning was to ensure that kernel threads only access
+task->fpu after going through kernel_fpu_begin()/_end(). Note: all
+kernel tasks exposed in /proc have a valid task->fpu.
 
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Solution
+--------
+One option is to silence the warning and check for NULL from
+x86_task_fpu(). However, that warning is fairly fresh and seems like a
+defense against misuse of the FPU state in kernel threads.
+
+Instead, stop outputting AVX-512_elapsed_ms for kernel threads
+altogether. The data was garbage anyway because avx512_timestamp is
+only updated for user threads, not kernel threads.
+
+If anyone ever wants to track kernel thread AVX-512 use, they can come
+back later and do it properly, separate from this bug fix.
+
+[ dhansen: mostly rewrite changelog ]
+
+Fixes: 22aafe3bcb67 ("x86/fpu: Remove init_task FPU state dependencies, add debugging warning for PF_KTHREAD tasks")
+Co-developed-by: Sohil Mehta <sohil.mehta@intel.com>
+Signed-off-by: Sohil Mehta <sohil.mehta@intel.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250811185044.2227268-1-sohil.mehta%40intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |    1 
- fs/btrfs/zoned.c   |   61 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- fs/btrfs/zoned.h   |    3 ++
- 3 files changed, 65 insertions(+)
+ arch/x86/kernel/fpu/xstate.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3561,6 +3561,7 @@ int __cold open_ctree(struct super_block
- 		goto fail_sysfs;
- 	}
- 
-+	btrfs_zoned_reserve_data_reloc_bg(fs_info);
- 	btrfs_free_zone_cache(fs_info);
- 
- 	btrfs_check_active_zone_reservation(fs_info);
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -17,6 +17,7 @@
- #include "fs.h"
- #include "accessors.h"
- #include "bio.h"
-+#include "transaction.h"
- 
- /* Maximum number of zones to report per blkdev_report_zones() call */
- #define BTRFS_REPORT_NR_ZONES   4096
-@@ -2501,6 +2502,66 @@ void btrfs_clear_data_reloc_bg(struct bt
- 	spin_unlock(&fs_info->relocation_bg_lock);
- }
- 
-+void btrfs_zoned_reserve_data_reloc_bg(struct btrfs_fs_info *fs_info)
-+{
-+	struct btrfs_space_info *data_sinfo = fs_info->data_sinfo;
-+	struct btrfs_space_info *space_info = data_sinfo->sub_group[0];
-+	struct btrfs_trans_handle *trans;
-+	struct btrfs_block_group *bg;
-+	struct list_head *bg_list;
-+	u64 alloc_flags;
-+	bool initial = false;
-+	bool did_chunk_alloc = false;
-+	int index;
-+	int ret;
-+
-+	if (!btrfs_is_zoned(fs_info))
-+		return;
-+
-+	if (fs_info->data_reloc_bg)
-+		return;
-+
-+	if (sb_rdonly(fs_info->sb))
-+		return;
-+
-+	ASSERT(space_info->subgroup_id == BTRFS_SUB_GROUP_DATA_RELOC);
-+	alloc_flags = btrfs_get_alloc_profile(fs_info, space_info->flags);
-+	index = btrfs_bg_flags_to_raid_index(alloc_flags);
-+
-+	bg_list = &data_sinfo->block_groups[index];
-+again:
-+	list_for_each_entry(bg, bg_list, list) {
-+		if (bg->used > 0)
-+			continue;
-+
-+		if (!initial) {
-+			initial = true;
-+			continue;
-+		}
-+
-+		fs_info->data_reloc_bg = bg->start;
-+		set_bit(BLOCK_GROUP_FLAG_ZONED_DATA_RELOC, &bg->runtime_flags);
-+		btrfs_zone_activate(bg);
-+
-+		return;
-+	}
-+
-+	if (did_chunk_alloc)
-+		return;
-+
-+	trans = btrfs_join_transaction(fs_info->tree_root);
-+	if (IS_ERR(trans))
-+		return;
-+
-+	ret = btrfs_chunk_alloc(trans, space_info, alloc_flags, CHUNK_ALLOC_FORCE);
-+	btrfs_end_transaction(trans);
-+	if (ret == 1) {
-+		did_chunk_alloc = true;
-+		bg_list = &space_info->block_groups[index];
-+		goto again;
-+	}
-+}
-+
- void btrfs_free_zone_cache(struct btrfs_fs_info *fs_info)
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -1855,19 +1855,20 @@ long fpu_xstate_prctl(int option, unsign
+ #ifdef CONFIG_PROC_PID_ARCH_STATUS
+ /*
+  * Report the amount of time elapsed in millisecond since last AVX512
+- * use in the task.
++ * use in the task. Report -1 if no AVX-512 usage.
+  */
+ static void avx512_status(struct seq_file *m, struct task_struct *task)
  {
- 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
---- a/fs/btrfs/zoned.h
-+++ b/fs/btrfs/zoned.h
-@@ -88,6 +88,7 @@ void btrfs_zone_finish_endio(struct btrf
- void btrfs_schedule_zone_finish_bg(struct btrfs_block_group *bg,
- 				   struct extent_buffer *eb);
- void btrfs_clear_data_reloc_bg(struct btrfs_block_group *bg);
-+void btrfs_zoned_reserve_data_reloc_bg(struct btrfs_fs_info *fs_info);
- void btrfs_free_zone_cache(struct btrfs_fs_info *fs_info);
- bool btrfs_zoned_should_reclaim(const struct btrfs_fs_info *fs_info);
- void btrfs_zoned_release_data_reloc_bg(struct btrfs_fs_info *fs_info, u64 logical,
-@@ -241,6 +242,8 @@ static inline void btrfs_schedule_zone_f
+-	unsigned long timestamp = READ_ONCE(x86_task_fpu(task)->avx512_timestamp);
+-	long delta;
++	unsigned long timestamp;
++	long delta = -1;
  
- static inline void btrfs_clear_data_reloc_bg(struct btrfs_block_group *bg) { }
- 
-+static inline void btrfs_zoned_reserve_data_reloc_bg(struct btrfs_fs_info *fs_info) { }
+-	if (!timestamp) {
+-		/*
+-		 * Report -1 if no AVX512 usage
+-		 */
+-		delta = -1;
+-	} else {
++	/* AVX-512 usage is not tracked for kernel threads. Don't report anything. */
++	if (task->flags & (PF_KTHREAD | PF_USER_WORKER))
++		return;
 +
- static inline void btrfs_free_zone_cache(struct btrfs_fs_info *fs_info) { }
- 
- static inline bool btrfs_zoned_should_reclaim(const struct btrfs_fs_info *fs_info)
++	timestamp = READ_ONCE(x86_task_fpu(task)->avx512_timestamp);
++
++	if (timestamp) {
+ 		delta = (long)(jiffies - timestamp);
+ 		/*
+ 		 * Cap to LONG_MAX if time difference > LONG_MAX
 
 
