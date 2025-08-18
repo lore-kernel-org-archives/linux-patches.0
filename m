@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6012B26F2A7;
-	Mon, 18 Aug 2025 12:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F78227B355;
+	Mon, 18 Aug 2025 12:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521508; cv=none; b=HvH2yUGvDj970kO85O849rRhW/5vlOo6lSkpVzYu9YGyQs6a18z7aFe1shxjq3Gk+yEm73ev0dr6sSsjNSlJWi2fVbXXHj/ogasxYk2tGw6RIANEnWZ5n7YGY9vlvswPl2ISgllIT3Lv+t7Uhl8E/58BR9qDPpXEP4FjoxD1DdI=
+	t=1755521512; cv=none; b=kpnPRXwYaWdy+CNZXdKkVQmGLHnhQ0k8Hqlq19Tw4mny3kXLMi16KOW5OGERFQ+dxwqtMq5vpK0xL75I1oEZLEBB6A+F3tWrN1ISKh8FKofj7zAKzdqvOEaEhTl2509lXvfarbiKAUT8ph+D4aMPNDc+HcwKbZUovsMxXd3z8kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521508; c=relaxed/simple;
-	bh=EcS991L5/QR/wySYFgfKha1KGaz52t/xMNvjJqNGKiE=;
+	s=arc-20240116; t=1755521512; c=relaxed/simple;
+	bh=r4pY5sJzbDikd7A2nUDdeJGkPpIZzDpvTN6qp8HdCFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ys9AElZ/dAKilXc3KCQsypq+V1o92yaKNKGl3aymaz8UOzB4BYDlFm4C/1+D6Np1ELoIyEg0ZG/XZFRxcAQ3OGw9TMFKoP10P6Z5Cbh+lCLY/Q6Y9bMNcr11r32+7eZ3qqIVR66lbBFN5zsppVM5OEvdaOestxGXCW7aiX15+lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNvl6s07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FWBT1WEDP/M6MHBBCZhnHDWTW7BH+wGjpGU526dhBVa4ZqU+RQIFIuAHTkcsEIV8HvP4HYADTrY5FxHD4V28hzAVW+77edMj23Q5UHIGgJEBivaE5SaljHGQItc01ApQFN96tsDOMxX0n3uPVdK3uoMo8zFmFNjklRNM9tvf8gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Frtdg1MW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNvl6s07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C543FC4CEEB;
-	Mon, 18 Aug 2025 12:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Frtdg1MW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C562C4CEEB;
+	Mon, 18 Aug 2025 12:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521508;
-	bh=EcS991L5/QR/wySYFgfKha1KGaz52t/xMNvjJqNGKiE=;
+	s=korg; t=1755521511;
+	bh=r4pY5sJzbDikd7A2nUDdeJGkPpIZzDpvTN6qp8HdCFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iNvl6s07SLm2oQE1yJR7GP7NsUPd5SRTDeJgv5kjxYxWM4kbleTsOFSju7FCaBSdL
-	 4u9TrBqlPmaJCgiJ6y/Tgl1aFZ24oOyUeVS3yw3pqk31lUS4KNxS0796TSXjwhDvW5
-	 ZMvvimKGXjgffZgG0wTvTOP4vx83lkH9eeOfBm/8=
+	b=Frtdg1MW0473QEwECBqrCUBdc6i+TkAURylnozQzXuRnv95Fdl/Fhct12qK0TCoc/
+	 0jrhtJ6x5ZkZE4y9HU9BtbR2mvO99853V6Cclht9wszvAEtEEwGtw7lSxHWbVM19V4
+	 gK1DQgZ1h2MtupC0hzxGhBdkM0KhladtwVw08JSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 007/444] smb: client: remove redundant lstrp update in negotiate protocol
-Date: Mon, 18 Aug 2025 14:40:33 +0200
-Message-ID: <20250818124449.180608635@linuxfoundation.org>
+	Harald Mommer <harald.mommer@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.12 008/444] gpio: virtio: Fix config space reading.
+Date: Mon, 18 Aug 2025 14:40:34 +0200
+Message-ID: <20250818124449.217330621@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,52 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+From: Harald Mommer <harald.mommer@oss.qualcomm.com>
 
-commit e19d8dd694d261ac26adb2a26121a37c107c81ad upstream.
+commit 4740e1e2f320061c2f0dbadc0dd3dfb58df986d5 upstream.
 
-Commit 34331d7beed7 ("smb: client: fix first command failure during
-re-negotiation") addressed a race condition by updating lstrp before
-entering negotiate state. However, this approach may have some unintended
-side effects.
+Quote from the virtio specification chapter 4.2.2.2:
 
-The lstrp field is documented as "when we got last response from this
-server", and updating it before actually receiving a server response
-could potentially affect other mechanisms that rely on this timestamp.
-For example, the SMB echo detection logic also uses lstrp as a reference
-point. In scenarios with frequent user operations during reconnect states,
-the repeated calls to cifs_negotiate_protocol() might continuously
-update lstrp, which could interfere with the echo detection timing.
+"For the device-specific configuration space, the driver MUST use 8 bit
+wide accesses for 8 bit wide fields, 16 bit wide and aligned accesses
+for 16 bit wide fields and 32 bit wide and aligned accesses for 32 and
+64 bit wide fields."
 
-Additionally, commit 266b5d02e14f ("smb: client: fix race condition in
-negotiate timeout by using more precise timing") introduced a dedicated
-neg_start field specifically for tracking negotiate start time. This
-provides a more precise solution for the original race condition while
-preserving the intended semantics of lstrp.
-
-Since the race condition is now properly handled by the neg_start
-mechanism, the lstrp update in cifs_negotiate_protocol() is no longer
-necessary and can be safely removed.
-
-Fixes: 266b5d02e14f ("smb: client: fix race condition in negotiate timeout by using more precise timing")
+Signed-off-by: Harald Mommer <harald.mommer@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 3a29355a22c0 ("gpio: Add virtio-gpio driver")
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://lore.kernel.org/r/20250724143718.5442-2-harald.mommer@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpio/gpio-virtio.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4001,7 +4001,6 @@ retry:
- 		return 0;
- 	}
+--- a/drivers/gpio/gpio-virtio.c
++++ b/drivers/gpio/gpio-virtio.c
+@@ -539,7 +539,6 @@ static const char **virtio_gpio_get_name
  
--	server->lstrp = jiffies;
- 	server->tcpStatus = CifsInNegotiate;
- 	server->neg_start = jiffies;
- 	spin_unlock(&server->srv_lock);
+ static int virtio_gpio_probe(struct virtio_device *vdev)
+ {
+-	struct virtio_gpio_config config;
+ 	struct device *dev = &vdev->dev;
+ 	struct virtio_gpio *vgpio;
+ 	u32 gpio_names_size;
+@@ -551,9 +550,11 @@ static int virtio_gpio_probe(struct virt
+ 		return -ENOMEM;
+ 
+ 	/* Read configuration */
+-	virtio_cread_bytes(vdev, 0, &config, sizeof(config));
+-	gpio_names_size = le32_to_cpu(config.gpio_names_size);
+-	ngpio = le16_to_cpu(config.ngpio);
++	gpio_names_size =
++		virtio_cread32(vdev, offsetof(struct virtio_gpio_config,
++					      gpio_names_size));
++	ngpio =  virtio_cread16(vdev, offsetof(struct virtio_gpio_config,
++					       ngpio));
+ 	if (!ngpio) {
+ 		dev_err(dev, "Number of GPIOs can't be zero\n");
+ 		return -EINVAL;
 
 
