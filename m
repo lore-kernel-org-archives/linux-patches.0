@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175AF2882DC;
-	Mon, 18 Aug 2025 13:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C1631E0F8;
+	Mon, 18 Aug 2025 13:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524166; cv=none; b=HK1uAvElKfL/CpJJfF2uwoy5M6MyK0f9scF1i+slb8LoV8d0c4neZnh1RwG1hIMCldvEpyIEFoH/rv/GRV3pjny+UaFFVm/0nH9mdjGvqSDhawvbixPd3vGMlYupYweZuDZ0mS2XpV9RGZQuwPlul37ThLyQ53cidTzEk7HnFsQ=
+	t=1755524169; cv=none; b=Yi4Ne4x6xvYyQZ1Ujs/D4oYTaZ+5QfuFUq+gxrlogH+MDzwyBLGbQrHY4rUoMJ1FKY8gjXGtXUjifwz3W6fJmKQyzHHHQSUOuwmxaFNxwDlS4cWFuGqxdGJaqAa8kRS+8xXv4mGXIiqBBlznASHtBOV+c+BANHydKUjBOm19XbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524166; c=relaxed/simple;
-	bh=O0MlNt/hO9cX41fGURkVHrJfrIn59EOzsj6inaUNNRA=;
+	s=arc-20240116; t=1755524169; c=relaxed/simple;
+	bh=IWUy97tXsIQ0PxhBhZqn58j50AxOUrHq3g09N+e+E8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FInBlWyXhaemkMM/abhM4PPruttW8CgDHRDSdv5kXacNMXzUU30KQ/LYHxwdDmncSV1PHjo4QOA5p3bRi77M7UNd8LB+2/sevxHj1JwPM5eidcNEDOxzt3/CtKyL10UYWRssJgDWJHmnGWHP/3CgiBQ3WJ9s/WHzKDGu/pLlQhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cNvt7Vg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQZDjS5CTkTHyyOm+XzG2PEMbbBQILDBTOiFU37ALB2wOMA9kiKXb1W5ur6thr9udj+CdtXGgI/g6BPZN59oFwAHJD74LXIvLkci2bKaVbtSBgn18cJTFTbhca53TNY/ZDhf6FTXWPAW+ob6z6IFlVMq59Wtd28A8dtEtTLdX9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnri0iFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cNvt7Vg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84151C4CEEB;
-	Mon, 18 Aug 2025 13:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnri0iFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8845C4CEEB;
+	Mon, 18 Aug 2025 13:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524165;
-	bh=O0MlNt/hO9cX41fGURkVHrJfrIn59EOzsj6inaUNNRA=;
+	s=korg; t=1755524169;
+	bh=IWUy97tXsIQ0PxhBhZqn58j50AxOUrHq3g09N+e+E8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0cNvt7Vgx6h3wwxXlE/dTb5Kqflgu2R22XRTh8hZWVwk01uEd4bey/+fKb63KXW/q
-	 9X63TP88xm7YB43cYXFKEs1FP1jTMuwkiz/7NiCAy/bwxsT8meDv4qppGV1wo/hhwz
-	 8toA3OGPFU2OaxuqOBJH+y6TFS6jbfvYPYXsXiwM=
+	b=vnri0iFms2iiY1kBchf8qaj4yDZAmSrkFL/3aKLK8D0wCtWNaYmnSHN03BR6H7hjJ
+	 G6NLpCylTOz3sqhhL8vX8DaRdt55fZfQ8p3MKTFcqrjZ+/JhGY6p5p2ZxBgbE4EanB
+	 2KXMtPzm8ZmtRUS+h54GaOF6o3EOKl3n4EH0SFm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 387/515] soundwire: amd: serialize amd manager resume sequence during pm_prepare
-Date: Mon, 18 Aug 2025 14:46:13 +0200
-Message-ID: <20250818124513.312040601@linuxfoundation.org>
+Subject: [PATCH 6.15 388/515] soundwire: amd: cancel pending slave status handling workqueue during remove sequence
+Date: Mon, 18 Aug 2025 14:46:14 +0200
+Message-ID: <20250818124513.356659304@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,41 +53,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 03837341790039d6f1cbf7a1ae7dfa2cb77ef0a4 ]
+[ Upstream commit f93b697ed98e3c85d1973ea170d4f4e7a6b2b45d ]
 
-During pm_prepare callback, pm_request_resume() delays SoundWire manager D0
-entry sequence. Synchronize runtime resume sequence for amd_manager
-instance prior to invoking child devices resume sequence for both the amd
-power modes(ClockStop Mode and Power off mode).
-Change the power_mode_mask check and use pm_runtime_resume() in
-amd_pm_prepare() callback.
+During remove sequence, cancel the pending slave status update workqueue.
 
 Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20250530054447.1645807-3-Vijendar.Mukunda@amd.com
+Link: https://lore.kernel.org/r/20250530054447.1645807-4-Vijendar.Mukunda@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/amd_manager.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/soundwire/amd_manager.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
-index 7a671a786197..3b335d6eaa94 100644
+index 3b335d6eaa94..7ed9c8c0b4c8 100644
 --- a/drivers/soundwire/amd_manager.c
 +++ b/drivers/soundwire/amd_manager.c
-@@ -1178,10 +1178,10 @@ static int __maybe_unused amd_pm_prepare(struct device *dev)
- 	 * device is not in runtime suspend state, observed that device alerts are missing
- 	 * without pm_prepare on AMD platforms in clockstop mode0.
- 	 */
--	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
--		ret = pm_request_resume(dev);
-+	if (amd_manager->power_mode_mask) {
-+		ret = pm_runtime_resume(dev);
- 		if (ret < 0) {
--			dev_err(bus->dev, "pm_request_resume failed: %d\n", ret);
-+			dev_err(bus->dev, "pm_runtime_resume failed: %d\n", ret);
- 			return 0;
- 		}
- 	}
+@@ -1074,6 +1074,7 @@ static void amd_sdw_manager_remove(struct platform_device *pdev)
+ 	int ret;
+ 
+ 	pm_runtime_disable(&pdev->dev);
++	cancel_work_sync(&amd_manager->amd_sdw_work);
+ 	amd_disable_sdw_interrupts(amd_manager);
+ 	sdw_bus_master_delete(&amd_manager->bus);
+ 	ret = amd_disable_sdw_manager(amd_manager);
 -- 
 2.39.5
 
