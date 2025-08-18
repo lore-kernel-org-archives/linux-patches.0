@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7569350843;
-	Mon, 18 Aug 2025 14:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4AD350847;
+	Mon, 18 Aug 2025 14:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525886; cv=none; b=hGujnwn8Xu2/esc/ybP1C2pGQFLGe5xT/t+2w1OzsCvQ1qykQ8X9yOAG1A6Msinu/m6NukaMV22tW9EbM+f33H/LV0xRBHqGDwtX9V5L/TKGmUXKAKm4DyYUJjNGZgQkH6st29xFfhp9FFgbyCUSdbHnX5Xao4LPLsBQocJZVKw=
+	t=1755525890; cv=none; b=l2ww+0zS2tMp6f8n6/cAGkQYrSRhivbqCjYENvXN6ORHy369x37YYcRXnkMNUWSIXikuTI2Y1tCGW+ixuXYsDzJJrh38eNI6P8SB8WQZfQpZ73crGHrZz6RINXJLVB4bF6npPxmSqUx+r0mTbDf5MjtAQRwhH4qtMwZtZ65kSTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525886; c=relaxed/simple;
-	bh=3IffocXoCHtzNLsGb3C5lVhJ11DZGuZIpXRygStxBN0=;
+	s=arc-20240116; t=1755525890; c=relaxed/simple;
+	bh=ZoS5l1hiu9Pa0EQ0bm5q1yEqFXl4v+VTh4p1htZj7OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKbhGDXBL7n8Lady/jvaeHJdJ328x8X4lrXwtBSB+qv0fHJ9DrFnpISqz8ABe4UyPQQDBxvfd7SwX4zVsr2Z2xZN5vCwXJsF+a2bsMKPNnaePqYVyPlu9ffN9zyYhmbovsdrQhokvd+c06DyvEGmnKGVTLNxgj3jqKpR9Hi1zhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGxmSFsU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRxxcxpsyzSowBjb6LxaQkLCyYKFQxyhSWVX48cxNv/yZge5gyJE/mcsUg7KfvxF0dMehwQ57yFYE47uMKHFsebXJJek/9QOKiHZ+VJB1trZ94gQ+ohNv0snfy0+Wn64QOKg4nN31CeNBctCAjMg52cadGC1q8ha2TnqeAK+AM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqcwbraR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGxmSFsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466E7C4CEEB;
-	Mon, 18 Aug 2025 14:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqcwbraR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3839C4CEEB;
+	Mon, 18 Aug 2025 14:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525886;
-	bh=3IffocXoCHtzNLsGb3C5lVhJ11DZGuZIpXRygStxBN0=;
+	s=korg; t=1755525890;
+	bh=ZoS5l1hiu9Pa0EQ0bm5q1yEqFXl4v+VTh4p1htZj7OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGxmSFsUgOvxYSImWTNsTcr0autVENp3YxHrVjfEXA7+0wEVtw2jpO0XZlvld1S/t
-	 tYBHeP+z+2Z7Lh0ZTNctdjM97ZHaAqH9LTjjNN9xBys5rcuqo0/pIm04Pt/Z2Qulpj
-	 jZIs45HgQnsJ5nLksYvdgusabbIwFhZ9rE6iU2zI=
+	b=yqcwbraRTuDndRxHcvtk1myv7TIQQuV16fHUWvGqRcULgsxkBuv6hnjGaiP+Bm4ff
+	 GVZJXBGwJ5haKQwjwZ2zK31QDmULOx9QBxxGTV3jVOvVJfR545qm7/5dcbPRgyuIfe
+	 dtxjlnUc4cMqMjaxTqzXqMozUTZgjBTACVeOB9k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Yury Norov [NVIDIA]" <yury.norov@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 395/570] RDMA: hfi1: fix possible divide-by-zero in find_hw_thread_mask()
-Date: Mon, 18 Aug 2025 14:46:22 +0200
-Message-ID: <20250818124521.072687264@linuxfoundation.org>
+Subject: [PATCH 6.16 396/570] RDMA/core: reduce stack using in nldev_stat_get_doit()
+Date: Mon, 18 Aug 2025 14:46:23 +0200
+Message-ID: <20250818124521.113020394@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,83 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yury Norov [NVIDIA] <yury.norov@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 59f7d2138591ef8f0e4e4ab5f1ab674e8181ad3a ]
+[ Upstream commit 43163f4c30f94d2103c948a247cdf2cda5068ca7 ]
 
-The function divides number of online CPUs by num_core_siblings, and
-later checks the divider by zero. This implies a possibility to get
-and divide-by-zero runtime error. Fix it by moving the check prior to
-division. This also helps to save one indentation level.
+In the s390 defconfig, gcc-10 and earlier end up inlining three functions
+into nldev_stat_get_doit(), and each of them uses some 600 bytes of stack.
 
-Signed-off-by: Yury Norov [NVIDIA] <yury.norov@gmail.com>
-Link: https://patch.msgid.link/20250604193947.11834-3-yury.norov@gmail.com
+The result is a function with an overly large stack frame and a warning:
+
+drivers/infiniband/core/nldev.c:2466:1: error: the frame size of 1720 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
+
+Mark the three functions noinline_for_stack to prevent this, ensuring
+that only one copy of the nlattr array is on the stack of each function.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250620113335.3776965-1-arnd@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/affinity.c | 44 +++++++++++++++------------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+ drivers/infiniband/core/nldev.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/affinity.c b/drivers/infiniband/hw/hfi1/affinity.c
-index 7ead8746b79b..f2c530ab85a5 100644
---- a/drivers/infiniband/hw/hfi1/affinity.c
-+++ b/drivers/infiniband/hw/hfi1/affinity.c
-@@ -964,31 +964,35 @@ static void find_hw_thread_mask(uint hw_thread_no, cpumask_var_t hw_thread_mask,
- 				struct hfi1_affinity_node_list *affinity)
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index be6b2ef0ede4..2220a2dfab24 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -1469,10 +1469,11 @@ static const struct nldev_fill_res_entry fill_entries[RDMA_RESTRACK_MAX] = {
+ 
+ };
+ 
+-static int res_get_common_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			       struct netlink_ext_ack *extack,
+-			       enum rdma_restrack_type res_type,
+-			       res_fill_func_t fill_func)
++static noinline_for_stack int
++res_get_common_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
++		    struct netlink_ext_ack *extack,
++		    enum rdma_restrack_type res_type,
++		    res_fill_func_t fill_func)
  {
- 	int possible, curr_cpu, i;
--	uint num_cores_per_socket = node_affinity.num_online_cpus /
-+	uint num_cores_per_socket;
-+
-+	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
-+
-+	if (affinity->num_core_siblings == 0)
-+		return;
-+
-+	num_cores_per_socket = node_affinity.num_online_cpus /
- 					affinity->num_core_siblings /
- 						node_affinity.num_online_nodes;
- 
--	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
--	if (affinity->num_core_siblings > 0) {
--		/* Removing other siblings not needed for now */
--		possible = cpumask_weight(hw_thread_mask);
--		curr_cpu = cpumask_first(hw_thread_mask);
--		for (i = 0;
--		     i < num_cores_per_socket * node_affinity.num_online_nodes;
--		     i++)
--			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
--
--		for (; i < possible; i++) {
--			cpumask_clear_cpu(curr_cpu, hw_thread_mask);
--			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
--		}
-+	/* Removing other siblings not needed for now */
-+	possible = cpumask_weight(hw_thread_mask);
-+	curr_cpu = cpumask_first(hw_thread_mask);
-+	for (i = 0;
-+	     i < num_cores_per_socket * node_affinity.num_online_nodes;
-+	     i++)
-+		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
- 
--		/* Identifying correct HW threads within physical cores */
--		cpumask_shift_left(hw_thread_mask, hw_thread_mask,
--				   num_cores_per_socket *
--				   node_affinity.num_online_nodes *
--				   hw_thread_no);
-+	for (; i < possible; i++) {
-+		cpumask_clear_cpu(curr_cpu, hw_thread_mask);
-+		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
- 	}
-+
-+	/* Identifying correct HW threads within physical cores */
-+	cpumask_shift_left(hw_thread_mask, hw_thread_mask,
-+			   num_cores_per_socket *
-+			   node_affinity.num_online_nodes *
-+			   hw_thread_no);
+ 	const struct nldev_fill_res_entry *fe = &fill_entries[res_type];
+ 	struct nlattr *tb[RDMA_NLDEV_ATTR_MAX];
+@@ -2263,10 +2264,10 @@ static int nldev_stat_del_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	return ret;
  }
  
- int hfi1_get_proc_affinity(int node)
+-static int stat_get_doit_default_counter(struct sk_buff *skb,
+-					 struct nlmsghdr *nlh,
+-					 struct netlink_ext_ack *extack,
+-					 struct nlattr *tb[])
++static noinline_for_stack int
++stat_get_doit_default_counter(struct sk_buff *skb, struct nlmsghdr *nlh,
++			      struct netlink_ext_ack *extack,
++			      struct nlattr *tb[])
+ {
+ 	struct rdma_hw_stats *stats;
+ 	struct nlattr *table_attr;
+@@ -2356,8 +2357,9 @@ static int stat_get_doit_default_counter(struct sk_buff *skb,
+ 	return ret;
+ }
+ 
+-static int stat_get_doit_qp(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			    struct netlink_ext_ack *extack, struct nlattr *tb[])
++static noinline_for_stack int
++stat_get_doit_qp(struct sk_buff *skb, struct nlmsghdr *nlh,
++		 struct netlink_ext_ack *extack, struct nlattr *tb[])
+ 
+ {
+ 	static enum rdma_nl_counter_mode mode;
 -- 
 2.39.5
 
