@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321D121FF5D;
-	Mon, 18 Aug 2025 13:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B90C21FF5D;
+	Mon, 18 Aug 2025 13:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524351; cv=none; b=P54SKTxQe1Ctx6QbRNjZ0KfYL9nCBqDKTS28SBeYPOAoOHJW4Y71yHBvsKT6z2pgX05VhxvYNqNuZbVSG2wSz+m2rToa+qAWWXvim0QrxRWEIl4fiAyluLYCSLd6TDM3Cpm50FS/DL+UDgEUtYCJpDwFa/owYG7PruyvgxRGSuY=
+	t=1755524354; cv=none; b=QY5D79n/2XGJeTIp+kt/W7pRdrZHmp+WFQKhwkFhtzQoS8dVRGSoJiOj9r12A3o7AzW6E/1uFUfVGmUJB0nLk1LM4XcgfJUxkZVF8L6Branbp12HW4NB8O2VRtbpXBOyTuaKyi5zNVsPKl4zsdlktvXRfgwFDNBt1OaHBwayszI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524351; c=relaxed/simple;
-	bh=A3b/u5sxWkWu+xDjqWwIyzM7F3U7oPAsf6B+zBaBwhI=;
+	s=arc-20240116; t=1755524354; c=relaxed/simple;
+	bh=wCM+W3PCx6jIoUtwzyQYHTU5UA3w+YzMoNPyk5KcRn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KM9h9y9kFL11eImv0j20eIaKfr9siTHrjaUL5KGJhCU6QQuB8rHevrpfQfWN/9RcnSaFJOqdAWRa9y9IuUpBMKblAnL8WSgAjPdVKkrsqzYL4gHZrvPlCNbAbCzgaazp6+z/AauOuzmTDbZexaLo4qlZ7TOh//lyvdul1Jm2oXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=To09DOpl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UUz9QNjg/lRFz5xaopPCfzLmUv7XmSZOhkJATOpO4B+qcXV4wnv2LORt6HsVlnC0+5PfRhtsL7vZHyLj/r2Gl7D3OL0181blWlJDlAq5ZEz5DmPqxu5/saSt2GFzXcalXf+j9VyEXXY+JHztdkgg9nEIJ4gCBM1v1Z5Aq7Z3zJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhID4EVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="To09DOpl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974BBC4CEEB;
-	Mon, 18 Aug 2025 13:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhID4EVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8B1C4CEF1;
+	Mon, 18 Aug 2025 13:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524351;
-	bh=A3b/u5sxWkWu+xDjqWwIyzM7F3U7oPAsf6B+zBaBwhI=;
+	s=korg; t=1755524354;
+	bh=wCM+W3PCx6jIoUtwzyQYHTU5UA3w+YzMoNPyk5KcRn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=To09DOpl9kXxOd/SkIn32Sb6bI506PFOiLFmOZyLWbOrjLc+MVaJXBZO1RT8gl+gX
-	 N5Bm+xFKZYEODlLiSg68l98mPGfzNue/XKyE4wC507UbtJmY5pqxj1yMMbbV5nk7lt
-	 22VvYcM+XrGuAos0M+V8JWh9HFFWBv3cHEVauTAk=
+	b=ZhID4EVsuHayqsoBldks2t/uqjjIDz7CruCx+9yfRlkgkRULpZRq/bLMFGV3CzbDm
+	 icQmDHqdzYaM4AfCJZhLQJ5QFl5SqEywO1qr6zTIwb5cmEuvdVnZswtUzxca0Mm/Yz
+	 DTiruqC8WMoeOhpOEv+8yWL/oUkfMi5AaoikCbLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.15 446/515] clk: qcom: dispcc-sm8750: Fix setting rate byte and pixel clocks
-Date: Mon, 18 Aug 2025 14:47:12 +0200
-Message-ID: <20250818124515.594693940@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 447/515] cifs: reset iface weights when we cannot find a candidate
+Date: Mon, 18 Aug 2025 14:47:13 +0200
+Message-ID: <20250818124515.632440947@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,84 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit 0acf9e65a47d1e489c8b24c45a64436e30bcccf4 upstream.
+commit 9d5eff7821f6d70f7d1b4d8a60680fba4de868a7 upstream.
 
-On SM8750 the setting rate of pixel and byte clocks, while the parent
-DSI PHY PLL, fails with:
+We now do a weighted selection of server interfaces when allocating
+new channels. The weights are decided based on the speed advertised.
+The fulfilled weight for an interface is a counter that is used to
+track the interface selection. It should be reset back to zero once
+all interfaces fulfilling their weight.
 
-  disp_cc_mdss_byte0_clk_src: rcg didn't update its configuration.
+In cifs_chan_update_iface, this reset logic was missing. As a result
+when the server interface list changes, the client may not be able
+to find a new candidate for other channels after all interfaces have
+been fulfilled.
 
-DSI PHY PLL has to be unprepared and its "PLL Power Down" bits in
-CMN_CTRL_0 asserted.
-
-Mark these clocks with CLK_OPS_PARENT_ENABLE to ensure the parent is
-enabled during rate changes.
-
-Cc: stable@vger.kernel.org
-Fixes: f1080d8dab0f ("clk: qcom: dispcc-sm8750: Add SM8750 Display clock controller")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250520090741.45820-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: a6d8fb54a515 ("cifs: distribute channels across interfaces based on speed")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/dispcc-sm8750.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/smb/client/sess.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8750.c b/drivers/clk/qcom/dispcc-sm8750.c
-index 877b40d50e6f..ca09da111a50 100644
---- a/drivers/clk/qcom/dispcc-sm8750.c
-+++ b/drivers/clk/qcom/dispcc-sm8750.c
-@@ -393,7 +393,7 @@ static struct clk_rcg2 disp_cc_mdss_byte0_clk_src = {
- 		.name = "disp_cc_mdss_byte0_clk_src",
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_byte2_ops,
- 	},
- };
-@@ -408,7 +408,7 @@ static struct clk_rcg2 disp_cc_mdss_byte1_clk_src = {
- 		.name = "disp_cc_mdss_byte1_clk_src",
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_byte2_ops,
- 	},
- };
-@@ -712,7 +712,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
- 		.name = "disp_cc_mdss_pclk0_clk_src",
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
-@@ -727,7 +727,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
- 		.name = "disp_cc_mdss_pclk1_clk_src",
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
-@@ -742,7 +742,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk2_clk_src = {
- 		.name = "disp_cc_mdss_pclk2_clk_src",
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
--- 
-2.50.1
-
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -332,6 +332,7 @@ cifs_chan_update_iface(struct cifs_ses *
+ 	struct cifs_server_iface *old_iface = NULL;
+ 	struct cifs_server_iface *last_iface = NULL;
+ 	struct sockaddr_storage ss;
++	int retry = 0;
+ 
+ 	spin_lock(&ses->chan_lock);
+ 	chan_index = cifs_ses_get_chan_index(ses, server);
+@@ -360,6 +361,7 @@ cifs_chan_update_iface(struct cifs_ses *
+ 		return;
+ 	}
+ 
++try_again:
+ 	last_iface = list_last_entry(&ses->iface_list, struct cifs_server_iface,
+ 				     iface_head);
+ 	iface_min_speed = last_iface->speed;
+@@ -397,6 +399,13 @@ cifs_chan_update_iface(struct cifs_ses *
+ 	}
+ 
+ 	if (list_entry_is_head(iface, &ses->iface_list, iface_head)) {
++		list_for_each_entry(iface, &ses->iface_list, iface_head)
++			iface->weight_fulfilled = 0;
++
++		/* see if it can be satisfied in second attempt */
++		if (!retry++)
++			goto try_again;
++
+ 		iface = NULL;
+ 		cifs_dbg(FYI, "unable to find a suitable iface\n");
+ 	}
 
 
