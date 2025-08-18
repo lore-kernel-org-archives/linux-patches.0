@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E0D19E82A;
-	Mon, 18 Aug 2025 13:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1BC225397;
+	Mon, 18 Aug 2025 13:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524806; cv=none; b=qdIdnBI5CREf+D+l8ZnWEtZt9wF+bEwS1XCjMYO3q4kjABmuzAeutDMRoh2MtchH6EdxZjuJFCwlfL/VrcHgDsLf9Hcc7Qppmykp3mZu+MeJcdbOoQnBtJwshO3kdxWq/7Z4w+uuzDQfhVuumB9xokKtHb3F/bvh1uvWM9r2cI4=
+	t=1755524810; cv=none; b=DEp8dXnQUj/m1l4ZRMGOfLJIBj0Ilb0K/z6bro5J9iscLd4w69+aarCgHzuKWLI8iQzo8uZt8Bbl5WTpGaIKZAYe7gs1/pib1hC2i/kJXM1frt6Q6NoTrpBB7kRDHtIEiHx9Nl0xkDJCoA1xxB35V3TlSxLoTCGW4oGnCWGlYtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524806; c=relaxed/simple;
-	bh=gpeEfauk4aerQn4rO2CnugNxHXxzhZnIqESgORBLcW4=;
+	s=arc-20240116; t=1755524810; c=relaxed/simple;
+	bh=GCaOvX7vSgoE3sBrAwW4/3+F31CP9eyNrwUWKpVaSns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkD+cvDIGdzwQ7rglbfSP+7/nSFTrMgMUhiEm0mpGc7wpq46OMPFwxMkimLBhlveTXXpkYC5dU5Ie+auSBZ6rYYN/MYTrskEV4MZ+uXIlybmTRYc1Ua5tFd8urX9woJeGUezuq5mVsjaYiI0Ex24CJaIHk0jHxYxBtWqHt8OmK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nb4xfHB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lAkwCQ+/7sbfbZE0KBhu7PFqkYO350g0cOS4EdK2B+h+Ph90AmX1q6eSvfk/d+bSiPuMPT9eNqc7kug0Am9CMCPjv/k973z7SeJW4S4Ulwmc6GhhFd5fsXfXwFWX21Yv1nxPPkqwbvfZWNGUW8Q9kKE7ZgELOeG/WNxni5mQNHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByTbuNjJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nb4xfHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B753AC4CEEB;
-	Mon, 18 Aug 2025 13:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByTbuNjJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E1AC4CEF1;
+	Mon, 18 Aug 2025 13:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524806;
-	bh=gpeEfauk4aerQn4rO2CnugNxHXxzhZnIqESgORBLcW4=;
+	s=korg; t=1755524809;
+	bh=GCaOvX7vSgoE3sBrAwW4/3+F31CP9eyNrwUWKpVaSns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2nb4xfHBDVJs/iWXxJyA89GGujtthmQM89tBHkKuUJ5IYF2JAdoBp6EOSCdmF36JM
-	 z7f+kHnVVGNqfN1VXc8zlizH7Y0Zayofz9fj0OfIPO8XD/UYydMDujooNxcpY6AGAk
-	 TmIwNam2DLKwK3iNw6oP+uBCYLB6kND03fVTiw+Y=
+	b=ByTbuNjJ9LlXgq/tyupiC2YbJkfLAMl2GvYThSuIyrW/WB3/66Jy8JLwkp6SSVLSp
+	 9x/lEHDvdaHCxsMGIxIUQpkSxI3ZD9r8tW7lm1elV7zE99Sc+O9xJjiZFPdJsqUgKv
+	 psKcjUkaTURSx1tjRuyrYA02W8ivlpylRZMsGE34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johan Hovold <johan@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 026/570] net: mtk_eth_soc: fix device leak at probe
-Date: Mon, 18 Aug 2025 14:40:13 +0200
-Message-ID: <20250818124506.822651591@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 062/570] xfrm: restore GSO for SW crypto
+Date: Mon, 18 Aug 2025 14:40:49 +0200
+Message-ID: <20250818124508.208178502@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,35 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit 3e13274ca8750823e8b68181bdf185d238febe0d upstream.
+[ Upstream commit 234d1eff5d4987024be9d40ac07b918a5ae8db1a ]
 
-The reference count to the WED devices has already been incremented when
-looking them up using of_find_device_by_node() so drop the bogus
-additional reference taken during probe.
+Commit 49431af6c4ef incorrectly assumes that the GSO path is only used
+by HW offload, but it's also useful for SW crypto.
 
-Fixes: 804775dfc288 ("net: ethernet: mtk_eth_soc: add support for Wireless Ethernet Dispatch (WED)")
-Cc: stable@vger.kernel.org	# 5.19
-Cc: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250725171213.880-5-johan@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch re-enables GSO for SW crypto. It's not an exact revert to
+preserve the other changes made to xfrm_dev_offload_ok afterwards, but
+it reverts all of its effects.
+
+Fixes: 49431af6c4ef ("xfrm: rely on XFRM offload")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_wed.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/xfrm/xfrm_device.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/mediatek/mtk_wed.c
-+++ b/drivers/net/ethernet/mediatek/mtk_wed.c
-@@ -2794,7 +2794,6 @@ void mtk_wed_add_hw(struct device_node *
- 	if (!pdev)
- 		goto err_of_node_put;
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index d2819baea414..1f88472aaac0 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -415,10 +415,12 @@ bool xfrm_dev_offload_ok(struct sk_buff *skb, struct xfrm_state *x)
+ 	struct net_device *dev = x->xso.dev;
+ 	bool check_tunnel_size;
  
--	get_device(&pdev->dev);
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0)
- 		goto err_put_device;
+-	if (x->xso.type == XFRM_DEV_OFFLOAD_UNSPECIFIED)
++	if (!x->type_offload ||
++	    (x->xso.type == XFRM_DEV_OFFLOAD_UNSPECIFIED && x->encap))
+ 		return false;
+ 
+-	if ((dev == xfrm_dst_path(dst)->dev) && !xdst->child->xfrm) {
++	if ((!dev || dev == xfrm_dst_path(dst)->dev) &&
++	    !xdst->child->xfrm) {
+ 		mtu = xfrm_state_mtu(x, xdst->child_mtu_cached);
+ 		if (skb->len <= mtu)
+ 			goto ok;
+@@ -430,6 +432,9 @@ bool xfrm_dev_offload_ok(struct sk_buff *skb, struct xfrm_state *x)
+ 	return false;
+ 
+ ok:
++	if (!dev)
++		return true;
++
+ 	check_tunnel_size = x->xso.type == XFRM_DEV_OFFLOAD_PACKET &&
+ 			    x->props.mode == XFRM_MODE_TUNNEL;
+ 	switch (x->props.family) {
+-- 
+2.50.1
+
 
 
