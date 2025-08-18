@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3C5335BD8;
-	Mon, 18 Aug 2025 13:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2622253F2;
+	Mon, 18 Aug 2025 13:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523276; cv=none; b=V+QrdsGdmnwLsoNC6wMa66ASABkRDEyt3fmuCfIz6JwwGf1p2t5kqlwTC68o5QMVtlXU0g6lzCev02rjIbkepIkGrcwQijDo/X3ir4qvN4Vv6V0gUmMugsk4WUDg8wpb95KfNbQFvYlWH+U6fBLXRapqpmqZlmWzCofv/9lZtkY=
+	t=1755523280; cv=none; b=OTux4TqHBfwt+AAUCOOsU0rZ5SXB6Kjq2Fbw7r9XxEIIPDJGwvMpnMYZ9AlLFLF8mq1iDbzScADbSsGVwIv4p3DGfBeHOt11FBX7arPSBhoAPTvvtmiDKlOy7Rf250T7+w6IuWmDtL6Rw8dfc8BkG8DGSSodXt6h01JA7auO6Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523276; c=relaxed/simple;
-	bh=4wy1XFwcZP71u7lBTP3+LwUIfdpoTm5jwSvloiImlgs=;
+	s=arc-20240116; t=1755523280; c=relaxed/simple;
+	bh=tJMcw8U90GzYlPEye22Uc+IbrZSvf4ytu6CGUDuYBH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+KlRzUhkw1uDX+0opcXFpfHawYvVTG+OOb69MqIPFIgUoe8Qn54/ssjLOggjPVTVrBj5ydGa6Q8sspZIvbpEEmVvOcseEvC1nO3z9UO8JSt3Am3sCULBZWQ/9dH9lPBwLs/KHwbFwxV15QH+WIkDq18RDQ4DFUaEzg6TA/3VYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUMRg8jR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ruiLxKbhCPcGklM0AmmWRorE2jSsbNbhgXg57e0uG3MQV+pmMHPokNm5OwsSCSANvcE6V6ZGLM/zhPPi6nznINKumpGDoTmBkmYGpoFpmoR+xYpc9gC+mBjYCDEk4oaqEkLeTK7i596+puH0fORZHF6mJG9sb2H9BQUsheTFcGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3mcMFDC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUMRg8jR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BF0C4CEEB;
-	Mon, 18 Aug 2025 13:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3mcMFDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4844EC4CEEB;
+	Mon, 18 Aug 2025 13:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523276;
-	bh=4wy1XFwcZP71u7lBTP3+LwUIfdpoTm5jwSvloiImlgs=;
+	s=korg; t=1755523280;
+	bh=tJMcw8U90GzYlPEye22Uc+IbrZSvf4ytu6CGUDuYBH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUMRg8jRFYcLHitANG98DJoCKDTzuw/pXXFQjiCTqVPMSGj7gX9ozi2ABFFgMo6Yh
-	 jWBBmEPq1PvLonmL9shLNKVmoC4Mhb3z9BAJqdpntluozOAHykjzyuwNg/6z08gfx6
-	 02+AyHQV9RntBWKTqQppZLlibIctCXSCKIQx1ZGQ=
+	b=r3mcMFDChj0BULSul6REo5BL16XH7m8H+y47ty9wvYLb8X1wuXnylcV4cZVnn3G4/
+	 yjWPLu1VS4+aa2Em076u1I5q6Ns+0dWUEn3tOgEfSlMyNWgq9yrvDzf4e7sP1qz2JB
+	 YjxdZ2XTWWK8VKUMIIfeInAMMdGIX3ys09Cd23Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Prashant Malani <pmalani@google.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 079/515] hfs: fix slab-out-of-bounds in hfs_bnode_read()
-Date: Mon, 18 Aug 2025 14:41:05 +0200
-Message-ID: <20250818124501.430208996@linuxfoundation.org>
+Subject: [PATCH 6.15 115/515] cpufreq: CPPC: Mark driver with NEED_UPDATE_LIMITS flag
+Date: Mon, 18 Aug 2025 14:41:41 +0200
+Message-ID: <20250818124502.780137208@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,164 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Prashant Malani <pmalani@google.com>
 
-[ Upstream commit a431930c9bac518bf99d6b1da526a7f37ddee8d8 ]
+[ Upstream commit 0a1416a49e63c320f6e6c1c8d07e1b58c0d4a3f3 ]
 
-This patch introduces is_bnode_offset_valid() method that checks
-the requested offset value. Also, it introduces
-check_and_correct_requested_length() method that checks and
-correct the requested length (if it is necessary). These methods
-are used in hfs_bnode_read(), hfs_bnode_write(), hfs_bnode_clear(),
-hfs_bnode_copy(), and hfs_bnode_move() with the goal to prevent
-the access out of allocated memory and triggering the crash.
+AMU counters on certain CPPC-based platforms tend to yield inaccurate
+delivered performance measurements on systems that are idle/mostly idle.
+This results in an inaccurate frequency being stored by cpufreq in its
+policy structure when the CPU is brought online. [1]
 
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20250703214912.244138-1-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Consequently, if the userspace governor tries to set the frequency to a
+new value, there is a possibility that it would be the erroneous value
+stored earlier. In such a scenario, cpufreq would assume that the
+requested frequency has already been set and return early, resulting in
+the correct/new frequency request never making it to the hardware.
+
+Since the operating frequency is liable to this sort of inconsistency,
+mark the CPPC driver with CPUFREQ_NEED_UPDATE_LIMITS so that it is always
+invoked when a target frequency update is requested.
+
+Link: https://lore.kernel.org/linux-pm/20250619000925.415528-3-pmalani@google.com/ [1]
+Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Prashant Malani <pmalani@google.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20250722055611.130574-2-pmalani@google.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/bnode.c | 92 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+ drivers/cpufreq/cppc_cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
-index cb823a8a6ba9..1dac5d9c055f 100644
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -15,6 +15,48 @@
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index cb93f00bafdb..156c1e516cc8 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -816,7 +816,7 @@ static struct freq_attr *cppc_cpufreq_attr[] = {
+ };
  
- #include "btree.h"
- 
-+static inline
-+bool is_bnode_offset_valid(struct hfs_bnode *node, int off)
-+{
-+	bool is_valid = off < node->tree->node_size;
-+
-+	if (!is_valid) {
-+		pr_err("requested invalid offset: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off);
-+	}
-+
-+	return is_valid;
-+}
-+
-+static inline
-+int check_and_correct_requested_length(struct hfs_bnode *node, int off, int len)
-+{
-+	unsigned int node_size;
-+
-+	if (!is_bnode_offset_valid(node, off))
-+		return 0;
-+
-+	node_size = node->tree->node_size;
-+
-+	if ((off + len) > node_size) {
-+		int new_len = (int)node_size - off;
-+
-+		pr_err("requested length has been corrected: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, "
-+		       "requested_len %d, corrected_len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len, new_len);
-+
-+		return new_len;
-+	}
-+
-+	return len;
-+}
-+
- void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
- {
- 	struct page *page;
-@@ -22,6 +64,20 @@ void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
- 	int bytes_read;
- 	int bytes_to_read;
- 
-+	if (!is_bnode_offset_valid(node, off))
-+		return;
-+
-+	if (len == 0) {
-+		pr_err("requested zero length: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len);
-+		return;
-+	}
-+
-+	len = check_and_correct_requested_length(node, off, len);
-+
- 	off += node->page_offset;
- 	pagenum = off >> PAGE_SHIFT;
- 	off &= ~PAGE_MASK; /* compute page offset for the first page */
-@@ -80,6 +136,20 @@ void hfs_bnode_write(struct hfs_bnode *node, void *buf, int off, int len)
- {
- 	struct page *page;
- 
-+	if (!is_bnode_offset_valid(node, off))
-+		return;
-+
-+	if (len == 0) {
-+		pr_err("requested zero length: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len);
-+		return;
-+	}
-+
-+	len = check_and_correct_requested_length(node, off, len);
-+
- 	off += node->page_offset;
- 	page = node->page[0];
- 
-@@ -104,6 +174,20 @@ void hfs_bnode_clear(struct hfs_bnode *node, int off, int len)
- {
- 	struct page *page;
- 
-+	if (!is_bnode_offset_valid(node, off))
-+		return;
-+
-+	if (len == 0) {
-+		pr_err("requested zero length: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len);
-+		return;
-+	}
-+
-+	len = check_and_correct_requested_length(node, off, len);
-+
- 	off += node->page_offset;
- 	page = node->page[0];
- 
-@@ -119,6 +203,10 @@ void hfs_bnode_copy(struct hfs_bnode *dst_node, int dst,
- 	hfs_dbg(BNODE_MOD, "copybytes: %u,%u,%u\n", dst, src, len);
- 	if (!len)
- 		return;
-+
-+	len = check_and_correct_requested_length(src_node, src, len);
-+	len = check_and_correct_requested_length(dst_node, dst, len);
-+
- 	src += src_node->page_offset;
- 	dst += dst_node->page_offset;
- 	src_page = src_node->page[0];
-@@ -136,6 +224,10 @@ void hfs_bnode_move(struct hfs_bnode *node, int dst, int src, int len)
- 	hfs_dbg(BNODE_MOD, "movebytes: %u,%u,%u\n", dst, src, len);
- 	if (!len)
- 		return;
-+
-+	len = check_and_correct_requested_length(node, src, len);
-+	len = check_and_correct_requested_length(node, dst, len);
-+
- 	src += node->page_offset;
- 	dst += node->page_offset;
- 	page = node->page[0];
+ static struct cpufreq_driver cppc_cpufreq_driver = {
+-	.flags = CPUFREQ_CONST_LOOPS,
++	.flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
+ 	.verify = cppc_verify_policy,
+ 	.target = cppc_cpufreq_set_target,
+ 	.get = cppc_cpufreq_get_rate,
 -- 
 2.39.5
 
