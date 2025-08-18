@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEAC320CD4;
-	Mon, 18 Aug 2025 13:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA1A31E11F;
+	Mon, 18 Aug 2025 13:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522873; cv=none; b=VvixhVoRs1XqXHJL1mAvqOj/Y2E4z1AWi46Xqkfa0UNGWSOgbp6aK4VtG9vGySbn50aF32B79LVcojK12Gctj7UTZuOKiiZIjht4eVmr04MB4boaQmIRXHmXh/h2YnLfd5znZ2nQtqXI97c6+K965fRB94YcafWzq8QmJagIQ+0=
+	t=1755522877; cv=none; b=k58nx7CYZQa/NiK86oo43P7qdDmiBy/MdKyEyrgPwOoBo68wufGflLUiQxkXn+cFRbpr6Cd3SdYI0W+KlsSfuUlQQqtK455oFUfQtCbTcvTiUllz4PqhXTQCIbsbBaskhscCuWp6Y/0n2xBDXHw8ZIT1on4x8XQH0F2QhIHXPiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522873; c=relaxed/simple;
-	bh=yNkNat653nSpSkrmPusKxp3CCqnsACxc0fMQe5z1h54=;
+	s=arc-20240116; t=1755522877; c=relaxed/simple;
+	bh=YLaWzliUs01LkrD8LTh9KwUnCjCNEEY5g7+PTPS2chY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZciEkCgJL+ov4urihSDkk/mJXX+CNXkt9yhTh1gpbF5XtFsMsLYFq65uqcMnmfQhrSAgO5BWP6/c6uqL0pZJDnNYhFp04Bjqyvdr1Y0SSLhsOoZ3UnNsGBnnjko+MXFAZTNf9OH3ioMMM8+9q1QwXRADSAjtH/f5ve/c47BROQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmYG6K3B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S9HnOI4TflsbQGgxQdzds+1WBYwBwVvkp5IzJ6LVSlI/lv+RsTi1s8rKq/EnJMLK60O3QcVddT816wvc/kG5Gzhkk2UJBbxlGEkXfldsWL1ZQP4IgKqNW1PgLI2yk5dqA1qjQL+5gN/KIaDRo1FNe9n5DZDL9iceqjM1u5kXNMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNV18p+F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmYG6K3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3BDC4CEF1;
-	Mon, 18 Aug 2025 13:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNV18p+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C385C4CEF1;
+	Mon, 18 Aug 2025 13:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522873;
-	bh=yNkNat653nSpSkrmPusKxp3CCqnsACxc0fMQe5z1h54=;
+	s=korg; t=1755522876;
+	bh=YLaWzliUs01LkrD8LTh9KwUnCjCNEEY5g7+PTPS2chY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmYG6K3BPZwOSMSPAlp/S/bGGHHQejZBTmePPlxBGYk/Zq5xVXqV0iMbVfNfrViXU
-	 G/uTsLY9qKTXW9n4LAX7FdV/YaPlA6KnsUbEXHJsShtfNGEhze6VYyG/0dEP8xQWh0
-	 1u4Y4FgxJ4MuWGFKnsx1ZYRKAdx1Bge4Pj3m8OMU=
+	b=KNV18p+FDi80fpgztTNKYwJvAgJQEKRS0ta+Qj1brLTdxfNng/rMwg4tNsGvVluco
+	 8+yzHGpnKQ82TgDD7rhWGFZeWZxzBIna3mxfHeear0iXMF48TFUYIj3IXuzhk2y0or
+	 AmbzdpZNk8vzpSCBQIZAQTW/vr2rE5QexpBhydYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hrushikesh Salunke <h-salunke@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 433/444] arm64: dts: ti: k3-j722s-evm: Fix USB2.0_MUX_SEL to select Type-C
-Date: Mon, 18 Aug 2025 14:47:39 +0200
-Message-ID: <20250818124505.192287798@linuxfoundation.org>
+Subject: [PATCH 6.12 434/444] arm64: dts: ti: k3-j722s-evm: Fix USB gpio-hog level for Type-C
+Date: Mon, 18 Aug 2025 14:47:40 +0200
+Message-ID: <20250818124505.236415514@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,29 +51,25 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hrushikesh Salunke <h-salunke@ti.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit bc8d9e6b5821c40ab5dd3a81e096cb114939de50 ]
+[ Upstream commit 65ba2a6e77e9e5c843a591055789050e77b5c65e ]
 
-J722S SOC has two usb controllers USB0 and USB1. USB0 is brought out on
-the EVM as a stacked USB connector which has one Type-A and one Type-C
-port. These Type-A and Type-C ports are connected to MUX so only
-one of them can be enabled at a time.
+According to the "GPIO Expander Map / Table" section of the J722S EVM
+Schematic within the Evaluation Module Design Files package [0], the
+GPIO Pin P05 located on the GPIO Expander 1 (I2C0/0x23) has to be pulled
+down to select the Type-C interface. Since commit under Fixes claims to
+enable the Type-C interface, update the property within "p05-hog" from
+"output-high" to "output-low", thereby switching from the Type-A
+interface to the Type-C interface.
 
-Commit under Fixes, tries to enable the USB0 instance of USB to
-interface with the Type-C port via the USB hub, by configuring the
-USB2.0_MUX_SEL to GPIO_ACTIVE_HIGH. But it is observed on J722S-EVM
-that Type-A port is enabled instead of Type-C port.
+[0]: https://www.ti.com/lit/zip/sprr495
 
-Fix this by setting USB2.0_MUX_SEL to GPIO_ACTIVE_LOW to enable Type-C
-port.
-
+Cc: stable@vger.kernel.org
 Fixes: 485705df5d5f ("arm64: dts: ti: k3-j722s: Enable PCIe and USB support on J722S-EVM")
-Signed-off-by: Hrushikesh Salunke <h-salunke@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20250116125726.2549489-1-h-salunke@ti.com
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://lore.kernel.org/r/20250623100657.4082031-1-s-vadapalli@ti.com
 Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Stable-dep-of: 65ba2a6e77e9 ("arm64: dts: ti: k3-j722s-evm: Fix USB gpio-hog level for Type-C")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -83,14 +78,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
 +++ b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
-@@ -495,7 +495,7 @@
- 		p05-hog {
+@@ -496,7 +496,7 @@
  			/* P05 - USB2.0_MUX_SEL */
  			gpio-hog;
--			gpios = <5 GPIO_ACTIVE_HIGH>;
-+			gpios = <5 GPIO_ACTIVE_LOW>;
- 			output-high;
+ 			gpios = <5 GPIO_ACTIVE_LOW>;
+-			output-high;
++			output-low;
  		};
  
+ 		p01_hog: p01-hog {
 
 
