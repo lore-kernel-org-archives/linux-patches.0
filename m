@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E83335BA3;
-	Mon, 18 Aug 2025 13:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C3C335BA3;
+	Mon, 18 Aug 2025 13:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525084; cv=none; b=Oyqa9Uw0XENAMJSlgPnJSgHsXs/YWQoiuLNuNEGve9RVBlqlP8kmnITJUnA0QS+9BgKmbTZBCvh2b38h90DWHR0rScgV7ZxdXyeMSLCSLqxXzpLjGbx7eM+IikHlcClh7Mwuw7XlWUjcFe5OQLbOAlJbfBcbzXudf9SbBk2AZe4=
+	t=1755525087; cv=none; b=XtSg9A9JnrepDWuhDU98E0+wB+SRMaaODEZknL8d6hUZRO84+IweAB252XZRaEJe+QVuV0Mqxk994ZUnSqp+Jpwkt27vpODFKFoUIPHAXCoxoUtXC8HuJsklKounyxSHpIfYcBpr0BOqV0ZD0RBAY+Ss3mRTH0uGCuNM3tr9zRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525084; c=relaxed/simple;
-	bh=zuC0Pxa3txATwH8lsekoMLMM1pUDqGLx1LHkMRBJkGM=;
+	s=arc-20240116; t=1755525087; c=relaxed/simple;
+	bh=JHCiqtYPKPvf93Z75QBJMSi/qCXtSNe3AFDOXgwkqEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jCjJ6feEaqcFESLFnVwINfSV7WAO2S7filGpQjY9a3QfpeIXablMx6fUUglOyH4eFTfUW/HJOU8vg0/1pfYqkgG8biNG+8yj19qdLO55sWJ9Oj7iU+8TH6UaiPcXUnPTnJPkRS6eA15A6ff4I7hFKHtTbIWWFHaaUNAoiHtLsg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYnJv9vz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AQu8aHOUVABvmhvg4pOudhh1QE9b35iLWWUEeIMHbFXToKQ5a+W8FIrxf3K7kL4clldXa/FGbng5qX04TW9APy472wtaPRqyX0Z+nCen8a67+eskCXqUTDFJBLctFwXAKHf8TEhGDUftMf0oce+wOcNg6jCPvPmI3DKCD+tuCGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xS2oCVvg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYnJv9vz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26485C4CEEB;
-	Mon, 18 Aug 2025 13:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xS2oCVvg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D1FC4CEEB;
+	Mon, 18 Aug 2025 13:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525084;
-	bh=zuC0Pxa3txATwH8lsekoMLMM1pUDqGLx1LHkMRBJkGM=;
+	s=korg; t=1755525087;
+	bh=JHCiqtYPKPvf93Z75QBJMSi/qCXtSNe3AFDOXgwkqEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYnJv9vzvtWqE20c2ywRWVD7yHkWXnKhq7QfkKHmqRuKyIxiIDWsiyZI6hdZ+S6LN
-	 2xCDTN658rbmnAH7wkkK9q8/I2AO/dwrdoL6oS1oFmCqD11fZWXENPaZvJWjB6RCmQ
-	 Wd7Ll0gk+6H0TmMplBsDCZ8cqnwrqkTsbviz1tHc=
+	b=xS2oCVvgQkmBZbTfHp8kT5o42wRsRK/npTGAe1IL/YfneqcgWm/KbL+7E+v5qu0u4
+	 xJRc+It5VutBdhBCRp/T6yf78sLmvapIMpsPlkIjn9VhBNjv+TFepdA6grD0myb9AO
+	 hSBpJM87jjZ5yNnP2AryU3vRgw7N2AjRqNZ5ns1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Willy Tarreau <w@1wt.eu>,
+	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 153/570] tools/nolibc: define time_t in terms of __kernel_old_time_t
-Date: Mon, 18 Aug 2025 14:42:20 +0200
-Message-ID: <20250818124511.707241967@linuxfoundation.org>
+Subject: [PATCH 6.16 154/570] iio: adc: ad_sigma_delta: dont overallocate scan buffer
+Date: Mon, 18 Aug 2025 14:42:21 +0200
+Message-ID: <20250818124511.747179880@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,49 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit d5094bcb5bfdfea2cf0de8aaf77cc65db56cbdb5 ]
+[ Upstream commit 5a2f15c5a8e017d0951e6dc62aa7b5b634f56881 ]
 
-Nolibc assumes that the kernel ABI is using a time values that are as
-large as a long integer. For most ABIs this holds true.
-But for x32 this is not correct, as it uses 32bit longs but 64bit times.
+Fix overallocating the size of the scan buffer by converting bits to
+bytes. The size is meant to be in bytes, so scanbits needs to be
+divided by 8.
 
-Also the 'struct stat' implementation of nolibc relies on timespec::tv_sec
-and time_t being the same type. While timespec::tv_sec comes from the
-kernel and is of type __kernel_old_time_t, time_t is defined within nolibc.
-
-Switch to the __kernel_old_time_t to always get the correct type.
-
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20250712-nolibc-x32-v1-1-6d81cb798710@weissschuh.net
-Acked-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250701-iio-adc-ad7173-add-spi-offload-support-v3-1-42abb83e3dac@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/std.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ad_sigma_delta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/std.h b/tools/include/nolibc/std.h
-index adda7333d12e..ba950f0e7338 100644
---- a/tools/include/nolibc/std.h
-+++ b/tools/include/nolibc/std.h
-@@ -16,6 +16,8 @@
- #include "stdint.h"
- #include "stddef.h"
+diff --git a/drivers/iio/adc/ad_sigma_delta.c b/drivers/iio/adc/ad_sigma_delta.c
+index 4c5f8d29a559..6b3ef7ef403e 100644
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -489,7 +489,7 @@ static int ad_sd_buffer_postenable(struct iio_dev *indio_dev)
+ 			return ret;
+ 	}
  
-+#include <linux/types.h>
-+
- /* those are commonly provided by sys/types.h */
- typedef unsigned int          dev_t;
- typedef unsigned long         ino_t;
-@@ -27,6 +29,6 @@ typedef unsigned long       nlink_t;
- typedef   signed long         off_t;
- typedef   signed long     blksize_t;
- typedef   signed long      blkcnt_t;
--typedef   signed long        time_t;
-+typedef __kernel_old_time_t  time_t;
- 
- #endif /* _NOLIBC_STD_H */
+-	samples_buf_size = ALIGN(slot * indio_dev->channels[0].scan_type.storagebits, 8);
++	samples_buf_size = ALIGN(slot * indio_dev->channels[0].scan_type.storagebits / 8, 8);
+ 	samples_buf_size += sizeof(int64_t);
+ 	samples_buf = devm_krealloc(&sigma_delta->spi->dev, sigma_delta->samples_buf,
+ 				    samples_buf_size, GFP_KERNEL);
 -- 
 2.39.5
 
