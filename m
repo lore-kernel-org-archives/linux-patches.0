@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68283335BAF;
-	Mon, 18 Aug 2025 13:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7654335BCA;
+	Mon, 18 Aug 2025 13:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525215; cv=none; b=Tbh/YklbSN6tBsfd6fpChyv2rHRP/Vkq1nfPRibJj92rjAmRhR7FBe5wYQwzK8XngjrAHRlg2+3VOQ2Hb2lrHCkF/tttlVyzvpUk7AAIiRNQEGnMSkP6In3qhR2T6dfxSJBtorlNzCnNXB0BH7f1RaVpE06ACa2if/WHmbYjrcA=
+	t=1755525218; cv=none; b=ZQ4SJKKtPlT+itdtFqR9wD3VtH1lvtR6G1akSa7q0C9KSNh7TJgmMN+sngC+F2mZOhLJL9iVZgRCxuLeaYbxkMr2zDhOuViR4rso7iHWBN5Ahpov3t8RqRqQmF3K6/ysk/K49xuge4bwVMJDB6hVheVtWPtjEfs/El0mKpKRJgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525215; c=relaxed/simple;
-	bh=sj6RwnaWB49B/YEtEW8HFGcqMPAU5EWSzsn6OjSLlCU=;
+	s=arc-20240116; t=1755525218; c=relaxed/simple;
+	bh=zA/r/6vbuQGSw1IzuAjlV/gpLkWLx6zCMFvcJ0+MnCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Co/q5XN2BMwTdA+8lJitl4NNdKkOOTJntZT8s8ruNOok9mLIhRhyV/Yp5MdnKRNakXnvMEyD6uGSlKyXOXil2woFRg/EKOn6qqLVmFcN3AH2HMn4n5cbEJv91ZcIZ9Fw2WibfztLulK39WttP63vaeC9zcRW5USMWOJQk6G0F00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sl3tZHVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FPGQ8bA786LgmZEz+AVkQOWk8DTwqu+AqS4oIRfQdfWlyrZGG4rqMKv4d7Xx2L2w7VOPCQ9GOeEaRyUW6xVn5VNoNo1jFU0nJ6lMNjuNaZm9lXhz4566JV+KiMgsOCWOIWr5Dfv6ZQYNEOG9I6o18urw0Mw5as1iwhaM7mfastY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CC3dWYPj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sl3tZHVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DD0C4CEEB;
-	Mon, 18 Aug 2025 13:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CC3dWYPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F8CC4CEEB;
+	Mon, 18 Aug 2025 13:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525215;
-	bh=sj6RwnaWB49B/YEtEW8HFGcqMPAU5EWSzsn6OjSLlCU=;
+	s=korg; t=1755525218;
+	bh=zA/r/6vbuQGSw1IzuAjlV/gpLkWLx6zCMFvcJ0+MnCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sl3tZHVd/2rfvFT56y50kT4pGnhWgq5nz0b5GV6WEohcX4tzjBaJWXcFyr4DdaRsb
-	 Pc2se0JrfolgHD8Gb2nEn8oFtboJLwz7g+PDFtIkJgDoYHdYoraIbNwGEN+XzPuEfB
-	 HdEfvH0WYSuNUszV1a41DqQWvvrcINZ3nZ/KMtk8=
+	b=CC3dWYPj5hR0Qmwj/F2uKVAQvDHU1hYVH4MlI6TF2HPZF6EFBEjyKMcD/+k9Lu6im
+	 EqyyEAFjFiv9KsJTcAC8nhBlIFiCEORAPzjqyYHyL06Q2f19nlWQO9x0SySRHpRCJq
+	 LGYc7vg+kXUbCo+SGLUlWuFEUmKB9gFP1UGXQid8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Sarthak Garg <quic_sartgarg@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 194/570] pm: cpupower: Fix the snapshot-order of tsc,mperf, clock in mperf_stop()
-Date: Mon, 18 Aug 2025 14:43:01 +0200
-Message-ID: <20250818124513.273927184@linuxfoundation.org>
+Subject: [PATCH 6.16 168/570] mmc: sdhci-msm: Ensure SD card power isnt ON when card removed
+Date: Mon, 18 Aug 2025 14:42:35 +0200
+Message-ID: <20250818124512.273366142@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,43 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Sarthak Garg <quic_sartgarg@quicinc.com>
 
-[ Upstream commit cda7ac8ce7de84cf32a3871ba5f318aa3b79381e ]
+[ Upstream commit db58532188ebf51d52b1d7693d9e94c76b926e9f ]
 
-In the function mperf_start(), mperf_monitor snapshots the time, tsc
-and finally the aperf,mperf MSRs. However, this order of snapshotting
-in is reversed in mperf_stop(). As a result, the C0 residency (which
-is computed as delta_mperf * 100 / delta_tsc) is under-reported on
-CPUs that is 100% busy.
+Many mobile phones feature multi-card tray designs, where the same
+tray is used for both SD and SIM cards. If the SD card is placed
+at the outermost location in the tray, the SIM card may come in
+contact with SD card power-supply while removing the tray, possibly
+resulting in SIM damage.
 
-Fix this by snapshotting time, tsc and then aperf,mperf in
-mperf_stop() in the same order as in mperf_start().
+To prevent that, make sure the SD card is really inserted by reading
+the Card Detect pin state. If it's not, turn off the power in
+sdhci_msm_check_power_status() and also set the BUS_FAIL power state
+on the controller as part of pwr_irq handling for BUS_ON request.
 
-Link: https://lore.kernel.org/r/20250612122355.19629-2-gautham.shenoy@amd.com
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250701100659.3310386-1-quic_sartgarg@quicinc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/utils/idle_monitor/mperf_monitor.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-msm.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index 73b6b10cbdd2..5ae02c3d5b64 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -240,9 +240,9 @@ static int mperf_stop(void)
- 	int cpu;
- 
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
--		mperf_measure_stats(cpu);
--		mperf_get_tsc(&tsc_at_measure_end[cpu]);
- 		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
-+		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+		mperf_measure_stats(cpu);
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 66c0d1ba2a33..bc6ca49652f8 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1564,6 +1564,7 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	struct mmc_host *mmc = host->mmc;
+ 	bool done = false;
+ 	u32 val = SWITCHABLE_SIGNALING_VOLTAGE;
+ 	const struct sdhci_msm_offset *msm_offset =
+@@ -1621,6 +1622,12 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
+ 				 "%s: pwr_irq for req: (%d) timed out\n",
+ 				 mmc_hostname(host->mmc), req_type);
+ 	}
++
++	if ((req_type & REQ_BUS_ON) && mmc->card && !mmc->ops->get_cd(mmc)) {
++		sdhci_writeb(host, 0, SDHCI_POWER_CONTROL);
++		host->pwr = 0;
++	}
++
+ 	pr_debug("%s: %s: request %d done\n", mmc_hostname(host->mmc),
+ 			__func__, req_type);
+ }
+@@ -1679,6 +1686,13 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 		udelay(10);
  	}
  
- 	return 0;
++	if ((irq_status & CORE_PWRCTL_BUS_ON) && mmc->card &&
++	    !mmc->ops->get_cd(mmc)) {
++		msm_host_writel(msm_host, CORE_PWRCTL_BUS_FAIL, host,
++				msm_offset->core_pwrctl_ctl);
++		return;
++	}
++
+ 	/* Handle BUS ON/OFF*/
+ 	if (irq_status & CORE_PWRCTL_BUS_ON) {
+ 		pwr_state = REQ_BUS_ON;
 -- 
 2.39.5
 
