@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A352B322547;
-	Mon, 18 Aug 2025 13:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092F932253D;
+	Mon, 18 Aug 2025 13:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525523; cv=none; b=aaxFvkW2xcVpoebE2oJzS9DaRaQnfd80fSm9ffSJooz3YYHyqcHJUVwBtDA0ZxbIBOse9IGRYw8QbcWPTwgvrmoiN2d8BKARQj/eXUvn4qsTwXFmnDMCD0BvYQOKT2Uzoi85KdQEb0r5Fkv+rojngUQvfDwufRJjtPyRZa5BEnM=
+	t=1755525527; cv=none; b=asikWc9XekU3bQbMjHnAliVNJKfph0/bqHy1hYcErX0b676tLCdtlmLjtPiLC9LQ37nZN6JvdPPx8ES8vyzd18GTaX5qDLLeadlfpf8l7O+7UZmmiKQHi/Wy1/rqjc7YbwkhSbHqjcylHQue+uhLXKNvp7RpNduWRjNOGqUEcuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525523; c=relaxed/simple;
-	bh=/Ip08QfkOD2/hradlHhlGtHBvZdK2+bzcJFSto5RGCI=;
+	s=arc-20240116; t=1755525527; c=relaxed/simple;
+	bh=/wFT6xAyV8JNvuK3815Qh/RGKhEhtxJ3pPHk+IBdLmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZSXv+02AHethpGnsxe/+Gg4rebFKDleewJDrlA7ou+D8eKDkLMjFW4BbAv3I1oxi7ZSn7V4q6XhNZuzITd3ua0stbXkWiQNWlidLVyOTN5kraIVQrlQEDCwRnF4GC+TuTbxQiIXJX0ockQPQIw2/ctuhyCoYWRnIh0iRVxzoSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+aYxmjM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MqGZPhKjdrCafTZ19Ms//FizMU2w1yl5kB9o4nHJq/5viLeLqZsZ0QnT2cj7SksvhOSAD5uHSz1KlTiSAsWS6ltvv7clGTAGsh6Z16ebdWm1T6iKsc5nyiN2RcuBdTqmjB9K9uAZx/pc/Ksakc/5Ry0ajwv7CCa1UXmYQBjpj98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjJLx/On; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+aYxmjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13110C4CEEB;
-	Mon, 18 Aug 2025 13:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjJLx/On"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF20C4CEEB;
+	Mon, 18 Aug 2025 13:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525523;
-	bh=/Ip08QfkOD2/hradlHhlGtHBvZdK2+bzcJFSto5RGCI=;
+	s=korg; t=1755525526;
+	bh=/wFT6xAyV8JNvuK3815Qh/RGKhEhtxJ3pPHk+IBdLmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+aYxmjMeV47wv/KV8raHRMxNsU+aaZcd0yC3G5h4/69uJSXwy4UgbFjfk2cEIFiw
-	 u/CQUYIrnnmALdHdJSr+8bz7dqZ+S/6WmJlLSfCifLUoDjqsm5RofFPoWCHa+Ri/gt
-	 fv+rOZymIrPPApqgAUC1OJpU9Y5ji5Ywn8GVkagM=
+	b=sjJLx/OnUm8aslzIGeNPEedT+DhK8iA+OUe7+k/A8yxQ+pUeseRzrnL37LAfqhhQV
+	 T3pNzE/L6K5jeHNw7mtipM2ondVkNMGUbpymnNEozJBGmkJlzfWjfDVYids9iNHNnk
+	 snbusUtEGTWwGyEuarUkJD1iSMCkxD/+C1cORILw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Antonino Maniscalco <antomani103@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 289/570] net: enetc: separate 64-bit counters from enetc_port_counters
-Date: Mon, 18 Aug 2025 14:44:36 +0200
-Message-ID: <20250818124516.976702926@linuxfoundation.org>
+Subject: [PATCH 6.16 272/570] drm/msm: use trylock for debugfs
+Date: Mon, 18 Aug 2025 14:44:19 +0200
+Message-ID: <20250818124516.333750253@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -54,94 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 9fe5f7145ad746e1b8e7522b8a955f642ff1b404 ]
+[ Upstream commit 0a1ff88ec5b60b41ba830c5bf08b6cd8f45ab411 ]
 
-Some counters in enetc_port_counters are 32-bit registers, and some are
-64-bit registers. But in the current driver, they are all read through
-enetc_port_rd(), which can only read a 32-bit value. Therefore, separate
-64-bit counters (enetc_pm_counters) from enetc_port_counters and use
-enetc_port_rd64() to read the 64-bit statistics.
+This resolves a potential deadlock vs msm_gem_vm_close().  Otherwise for
+_NO_SHARE buffers msm_gem_describe() could be trying to acquire the
+shared vm resv, while already holding priv->obj_lock.  But _vm_close()
+might drop the last reference to a GEM obj while already holding the vm
+resv, and msm_gem_free_object() needs to grab priv->obj_lock, a locking
+inversion.
 
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250627021108.3359642-3-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+OTOH this is only for debugfs and it isn't critical if we undercount by
+skipping a locked obj.  So just use trylock() and move along if we can't
+get the lock.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Tested-by: Antonino Maniscalco <antomani103@gmail.com>
+Reviewed-by: Antonino Maniscalco <antomani103@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/661525/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/enetc/enetc_ethtool.c  | 15 ++++++++++++++-
- drivers/net/ethernet/freescale/enetc/enetc_hw.h   |  1 +
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gem.c | 3 ++-
+ drivers/gpu/drm/msm/msm_gem.h | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-index d38cd36be4a6..c0773dfbfb18 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-@@ -142,7 +142,7 @@ static const struct {
- static const struct {
- 	int reg;
- 	char name[ETH_GSTRING_LEN] __nonstring;
--} enetc_port_counters[] = {
-+} enetc_pm_counters[] = {
- 	{ ENETC_PM_REOCT(0),	"MAC rx ethernet octets" },
- 	{ ENETC_PM_RALN(0),	"MAC rx alignment errors" },
- 	{ ENETC_PM_RXPF(0),	"MAC rx valid pause frames" },
-@@ -194,6 +194,12 @@ static const struct {
- 	{ ENETC_PM_TSCOL(0),	"MAC tx single collisions" },
- 	{ ENETC_PM_TLCOL(0),	"MAC tx late collisions" },
- 	{ ENETC_PM_TECOL(0),	"MAC tx excessive collisions" },
-+};
-+
-+static const struct {
-+	int reg;
-+	char name[ETH_GSTRING_LEN] __nonstring;
-+} enetc_port_counters[] = {
- 	{ ENETC_UFDMF,		"SI MAC nomatch u-cast discards" },
- 	{ ENETC_MFDMF,		"SI MAC nomatch m-cast discards" },
- 	{ ENETC_PBFDSIR,	"SI MAC nomatch b-cast discards" },
-@@ -240,6 +246,7 @@ static int enetc_get_sset_count(struct net_device *ndev, int sset)
- 		return len;
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 2995e80fec3b..ebd8a3603359 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -963,7 +963,8 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
+ 	uint64_t off = drm_vma_node_start(&obj->vma_node);
+ 	const char *madv;
  
- 	len += ARRAY_SIZE(enetc_port_counters);
-+	len += ARRAY_SIZE(enetc_pm_counters);
+-	msm_gem_lock(obj);
++	if (!msm_gem_trylock(obj))
++		return;
  
- 	return len;
- }
-@@ -266,6 +273,9 @@ static void enetc_get_strings(struct net_device *ndev, u32 stringset, u8 *data)
- 		for (i = 0; i < ARRAY_SIZE(enetc_port_counters); i++)
- 			ethtool_cpy(&data, enetc_port_counters[i].name);
- 
-+		for (i = 0; i < ARRAY_SIZE(enetc_pm_counters); i++)
-+			ethtool_cpy(&data, enetc_pm_counters[i].name);
-+
- 		break;
- 	}
- }
-@@ -302,6 +312,9 @@ static void enetc_get_ethtool_stats(struct net_device *ndev,
- 
- 	for (i = 0; i < ARRAY_SIZE(enetc_port_counters); i++)
- 		data[o++] = enetc_port_rd(hw, enetc_port_counters[i].reg);
-+
-+	for (i = 0; i < ARRAY_SIZE(enetc_pm_counters); i++)
-+		data[o++] = enetc_port_rd64(hw, enetc_pm_counters[i].reg);
+ 	stats->all.count++;
+ 	stats->all.size += obj->size;
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index ba5c4ff76292..ea001b0a6b64 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -188,6 +188,12 @@ msm_gem_lock(struct drm_gem_object *obj)
+ 	dma_resv_lock(obj->resv, NULL);
  }
  
- static void enetc_pause_stats(struct enetc_hw *hw, int mac,
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_hw.h b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-index 53e8d18c7a34..c84872ab6c8f 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-@@ -533,6 +533,7 @@ static inline u64 _enetc_rd_reg64_wa(void __iomem *reg)
- /* port register accessors - PF only */
- #define enetc_port_rd(hw, off)		enetc_rd_reg((hw)->port + (off))
- #define enetc_port_wr(hw, off, val)	enetc_wr_reg((hw)->port + (off), val)
-+#define enetc_port_rd64(hw, off)	_enetc_rd_reg64_wa((hw)->port + (off))
- #define enetc_port_rd_mdio(hw, off)	_enetc_rd_mdio_reg_wa((hw)->port + (off))
- #define enetc_port_wr_mdio(hw, off, val)	_enetc_wr_mdio_reg_wa(\
- 							(hw)->port + (off), val)
++static inline bool __must_check
++msm_gem_trylock(struct drm_gem_object *obj)
++{
++	return dma_resv_trylock(obj->resv);
++}
++
+ static inline int
+ msm_gem_lock_interruptible(struct drm_gem_object *obj)
+ {
 -- 
 2.39.5
 
