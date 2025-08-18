@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503F02E22B0;
-	Mon, 18 Aug 2025 14:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCEB3375AB;
+	Mon, 18 Aug 2025 14:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526293; cv=none; b=pBbOfYLmy522O1vjYLmDmJHRfqsCWAjeb7nlptUuVFxdVAHs5rcP09h3aB2kebMfIKfh8X3nprcuYM4SZab5HMol9cElo47lVL5XFlWGn23tNviD1CYuZhUomG5ME2iDJpiy90wo1AWdll7TfpYNtZcp7hjQOlZ66yOoytVq8JQ=
+	t=1755526297; cv=none; b=JHGochB6ry8kdjj3oILqI8C9lzUTwwkZm5i43aNsWMYJs0vNQO/kALsd5wSc81vrDHxJMMhemokpCCOHO4LQeWUQ8XwxZWBadt/MzhuJCIVrTNzNRYv+1lJyFLmD++9Uo7FR/YTpSNIJSfrsTN0aqKEmoVmk0pYd3LsesIdZObY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526293; c=relaxed/simple;
-	bh=xWbveJ6YuCRD9z8OGGCl7cMAj1UrvvRyP62547fJCrM=;
+	s=arc-20240116; t=1755526297; c=relaxed/simple;
+	bh=7NQVLw/wNZbmyX9kZCupsPwZJLv8iENYSXQG16mLdwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjqclnFRAv5WOYwVqToApXeEOCFywU88nJYBM2bz0RKTDMPMWskZJqnIM2PUvKV/AD6y8Ko+3vgxMfxj2Dk0QKwCyGZZimO1/eCoDjiTliD4fwNqLMYflYyYYuBIRxIDljIAJTaPVWIO3NHeWDHqEOTMIQfhSJdteiHaySp2dJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5PQVkqf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxttZd0F2/cyhaOLKAJ21A7aCpIDXlxLuSC0YJJx7A/A3uLdKU1VIg/gode86HdvVwfsiHjKGbVKaKMXHh1gTQHi3rQs1iqopmLvi4XjlRDgRThQfJmJMbnvUvgJpmAnUxXPPLIjW/Lu2Erqix+f0n887vdlXMU4dJGmpTH6MQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEPUkGld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5PQVkqf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF287C4CEEB;
-	Mon, 18 Aug 2025 14:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEPUkGld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9676C4CEEB;
+	Mon, 18 Aug 2025 14:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526293;
-	bh=xWbveJ6YuCRD9z8OGGCl7cMAj1UrvvRyP62547fJCrM=;
+	s=korg; t=1755526296;
+	bh=7NQVLw/wNZbmyX9kZCupsPwZJLv8iENYSXQG16mLdwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5PQVkqfGU0E6olQTA44/skE8R11+2wC1g238OisHYzEDl8COs+uvx0GlUSA4nzTw
-	 nPpE3Cu4qX4zbgRrjBrerP70XlyOABXSIBgoyfZiCGe+GvQjfYn7+urYDNSJjD1zWu
-	 K8EDOHtMDp9RexzQBKkpvy54U4Xzgwz3jGFggsqA=
+	b=pEPUkGldkX2RbYcgErezAbcwJWMeamxiWFEVtjEziI03L4emw1RUhRUB8pOWjIPrK
+	 tNpv8QHrHSQCWrxqe/iTG0FmcdlfQCyKfhV+bcwtZYB441PVKC1WSYa7gj84GwvuD3
+	 j7/x14qff0KYOsnJpOqQa82AIMC1nNXxSr7MsMbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 6.16 511/570] cdc-acm: fix race between initial clearing halt and open
-Date: Mon, 18 Aug 2025 14:48:18 +0200
-Message-ID: <20250818124525.542847923@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.16 512/570] btrfs: zoned: use filesystem size not disk size for reclaim decision
+Date: Mon, 18 Aug 2025 14:48:19 +0200
+Message-ID: <20250818124525.580371709@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,50 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit 64690a90cd7c6db16d3af8616be1f4bf8d492850 upstream.
+commit 55f7c65b2f69c7e4cb7aa7c1654a228ccf734fd8 upstream.
 
-On the devices that need their endpoints to get an
-initial clear_halt, this needs to be done before
-the devices can be opened. That means it needs to be
-before the devices are registered.
+When deciding if a zoned filesystem is reaching the threshold to reclaim
+data block groups, look at the size of the filesystem not to potentially
+total available size of all drives in the filesystem.
 
-Fixes: 15bf722e6f6c0 ("cdc-acm: Add support of ATOL FPrint fiscal printers")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250717141259.2345605-1-oneukum@suse.com
+Especially if a filesystem was created with mkfs' -b option, constraining
+it to only a portion of the block device, the numbers won't match and
+potentially garbage collection is kicking in too late.
+
+Fixes: 3687fcb0752a ("btrfs: zoned: make auto-reclaim less aggressive")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/btrfs/zoned.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -1520,6 +1520,12 @@ skip_countries:
- 			goto err_remove_files;
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2523,8 +2523,8 @@ bool btrfs_zoned_should_reclaim(const st
+ {
+ 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
+ 	struct btrfs_device *device;
++	u64 total = btrfs_super_total_bytes(fs_info->super_copy);
+ 	u64 used = 0;
+-	u64 total = 0;
+ 	u64 factor;
+ 
+ 	ASSERT(btrfs_is_zoned(fs_info));
+@@ -2537,7 +2537,6 @@ bool btrfs_zoned_should_reclaim(const st
+ 		if (!device->bdev)
+ 			continue;
+ 
+-		total += device->disk_total_bytes;
+ 		used += device->bytes_used;
  	}
- 
-+	if (quirks & CLEAR_HALT_CONDITIONS) {
-+		/* errors intentionally ignored */
-+		usb_clear_halt(usb_dev, acm->in);
-+		usb_clear_halt(usb_dev, acm->out);
-+	}
-+
- 	tty_dev = tty_port_register_device(&acm->port, acm_tty_driver, minor,
- 			&control_interface->dev);
- 	if (IS_ERR(tty_dev)) {
-@@ -1527,11 +1533,6 @@ skip_countries:
- 		goto err_release_data_interface;
- 	}
- 
--	if (quirks & CLEAR_HALT_CONDITIONS) {
--		usb_clear_halt(usb_dev, acm->in);
--		usb_clear_halt(usb_dev, acm->out);
--	}
--
- 	dev_info(&intf->dev, "ttyACM%d: USB ACM device\n", minor);
- 
- 	return 0;
+ 	mutex_unlock(&fs_devices->device_list_mutex);
 
 
