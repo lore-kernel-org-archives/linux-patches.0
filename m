@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABF6335BA3;
-	Mon, 18 Aug 2025 13:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FBB335BDD;
+	Mon, 18 Aug 2025 13:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525132; cv=none; b=HR7C5bANhDMiesNXXnesNvvolqxMIpSnzJHdsTJrYyMejBR4NyIWRcR5/ledpIJHgZy0bL339BvKa3LeFJ0azHIIqK+z6/YksL+GfXDy6MtK58oMaAg/HDbA5AoTa1nH+ns72zSlTyZIQ8z0AjNN3SBofuX+Xym3zUU3uDEMEPE=
+	t=1755525137; cv=none; b=mhkIfgcQ+uqA/zZ3FbzX3rQTHT+9NdBxIMUON21qJ/SF/xAbJXiXdddMRgJLginbX7SePHTfT6YJxLk3JbLhyKSqz7bZRb+/+au6LHYmR9NfiHPam7Lo2I+pgwSva0EmbrezOSi7sd2PwsWnqXX6KiW3VhBUDZWXuUmVKdU0Rn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525132; c=relaxed/simple;
-	bh=w7fLmqZjisLm4g5auzM9pt0G7c0i3JyFnz04z8Tjoc0=;
+	s=arc-20240116; t=1755525137; c=relaxed/simple;
+	bh=mNmrYshrmP/MUXVLkA+VsDviXwAajcDfQu1euoxEpQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B67SYGU35j0B017GMZA7A/gaXdCRLnJYX3VjfxCiEM3XoXPhoXMOquhUS/2SU/ETs1moYRq7iJcIANWNz+lHUld50EXOuVIYtuwLRrmmY45ZvzBWJVjMHxQ3KbsYo6su+YiA4KNVJoyPfID2Ivaw1b3+RpdVojfTsHOAJo9iPsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inJuWDin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dOvho9LrzbfmYfuyjxVixki8qkfaAB/Fv/LcNDQe+1gRZS04p/1I60JvqPNGIhFy1b1yF38xkyL9RSDLoPFkl1/2AV3CxS4d72artpKP0HkwdyT04raBJSG/jCtAiU8OWx6ktTmEbLFAG0/gWpe2bL+YsjwqoCd9Y0ldAKppsH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnMPD5BB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inJuWDin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C78C4CEEB;
-	Mon, 18 Aug 2025 13:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnMPD5BB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD69C4CEEB;
+	Mon, 18 Aug 2025 13:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525132;
-	bh=w7fLmqZjisLm4g5auzM9pt0G7c0i3JyFnz04z8Tjoc0=;
+	s=korg; t=1755525135;
+	bh=mNmrYshrmP/MUXVLkA+VsDviXwAajcDfQu1euoxEpQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inJuWDinKERGviTn/1Vsm2yDeBqwU2kw9Oyu7niw7uPYxFhsHg2fbqpYCUGjBbBEB
-	 KwuV/3hG59IQWQ+ZO3BrVbhIyAa0jjQkapmgPFnvG3DF1TOXE4NuiqUw3YaTPZHvVp
-	 0kClP6csx0ouGTxJsol6j8oM1/zPUWZ7YNuKhGAc=
+	b=SnMPD5BBvui1ZN3qbdhTDMsMbqUqzGU/WX/ZBWohURB+OGd5IQoUdvgtQZ3HSO1BU
+	 SMrTyhLy2UwiWF6oF3CrUDtAb6ry0Q9rmRtYEcnDsmheWhNILpvaMKFTWj/aiUffL4
+	 vkQFqn3P8NqA/8sO/TnA8FIloccgC4vxdDHt1dPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 136/570] firmware: qcom: scm: initialize tzmem before marking SCM as available
-Date: Mon, 18 Aug 2025 14:42:03 +0200
-Message-ID: <20250818124511.062113900@linuxfoundation.org>
+Subject: [PATCH 6.16 137/570] soc: qcom: rpmh-rsc: Add RSC version 4 support
+Date: Mon, 18 Aug 2025 14:42:04 +0200
+Message-ID: <20250818124511.100546347@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,98 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-[ Upstream commit 87be3e7a2d0030cda6314d2ec96b37991f636ccd ]
+[ Upstream commit 84684c57c9cd47b86c883a7170dd68222d97ef13 ]
 
-Now that qcom_scm_shm_bridge_enable() uses the struct device passed to
-it as argument to make the QCOM_SCM_MP_SHM_BRIDGE_ENABLE SCM call, we
-can move the TZMem initialization before the assignment of the __scm
-pointer in the SCM driver (which marks SCM as ready to users) thus
-fixing the potential race between consumer calls and the memory pool
-initialization.
+Register offsets for v3 and v4 versions are backward compatible. Assign v3
+offsets for v4 and all higher versions to avoid end up using v2 offsets.
 
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Closes: https://lore.kernel.org/all/20250120151000.13870-1-johan+linaro@kernel.org/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20250630-qcom-scm-race-v2-3-fa3851c98611@linaro.org
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250623-rsc_v4-v1-1-275b27bc5e3c@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 53 ++++++++++++++++----------------
- 1 file changed, 26 insertions(+), 27 deletions(-)
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index f63b716be5b0..4e510eb70c79 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -2250,7 +2250,32 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index cb82e887b51d..fdab2b1067db 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -1072,7 +1072,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
+ 	drv->ver.minor >>= MINOR_VER_SHIFT;
  
--	/* Paired with smp_load_acquire() in qcom_scm_is_available(). */
-+	ret = of_reserved_mem_device_init(scm->dev);
-+	if (ret && ret != -ENODEV)
-+		return dev_err_probe(scm->dev, ret,
-+				     "Failed to setup the reserved memory region for TZ mem\n");
-+
-+	ret = qcom_tzmem_enable(scm->dev);
-+	if (ret)
-+		return dev_err_probe(scm->dev, ret,
-+				     "Failed to enable the TrustZone memory allocator\n");
-+
-+	memset(&pool_config, 0, sizeof(pool_config));
-+	pool_config.initial_size = 0;
-+	pool_config.policy = QCOM_TZMEM_POLICY_ON_DEMAND;
-+	pool_config.max_size = SZ_256K;
-+
-+	scm->mempool = devm_qcom_tzmem_pool_new(scm->dev, &pool_config);
-+	if (IS_ERR(scm->mempool))
-+		return dev_err_probe(scm->dev, PTR_ERR(scm->mempool),
-+				     "Failed to create the SCM memory pool\n");
-+
-+	/*
-+	 * Paired with smp_load_acquire() in qcom_scm_is_available().
-+	 *
-+	 * This marks the SCM API as ready to accept user calls and can only
-+	 * be called after the TrustZone memory pool is initialized.
-+	 */
- 	smp_store_release(&__scm, scm);
- 
- 	irq = platform_get_irq_optional(pdev, 0);
-@@ -2283,32 +2308,6 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled") || !download_mode)
- 		qcom_scm_disable_sdi();
- 
--	ret = of_reserved_mem_device_init(__scm->dev);
--	if (ret && ret != -ENODEV) {
--		dev_err_probe(__scm->dev, ret,
--			      "Failed to setup the reserved memory region for TZ mem\n");
--		goto err;
--	}
--
--	ret = qcom_tzmem_enable(__scm->dev);
--	if (ret) {
--		dev_err_probe(__scm->dev, ret,
--			      "Failed to enable the TrustZone memory allocator\n");
--		goto err;
--	}
--
--	memset(&pool_config, 0, sizeof(pool_config));
--	pool_config.initial_size = 0;
--	pool_config.policy = QCOM_TZMEM_POLICY_ON_DEMAND;
--	pool_config.max_size = SZ_256K;
--
--	__scm->mempool = devm_qcom_tzmem_pool_new(__scm->dev, &pool_config);
--	if (IS_ERR(__scm->mempool)) {
--		ret = dev_err_probe(__scm->dev, PTR_ERR(__scm->mempool),
--				    "Failed to create the SCM memory pool\n");
--		goto err;
--	}
--
- 	/*
- 	 * Initialize the QSEECOM interface.
- 	 *
+-	if (drv->ver.major == 3)
++	if (drv->ver.major >= 3)
+ 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
+ 	else
+ 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
 -- 
 2.39.5
 
