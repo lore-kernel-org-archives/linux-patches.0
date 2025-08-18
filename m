@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F6431CA57;
-	Mon, 18 Aug 2025 13:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E5031A055;
+	Mon, 18 Aug 2025 13:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522424; cv=none; b=YCeF4KOqNOKHpPeRJVePkvHi2p5Ly7NGjNJs4cD+EQm/lOF4mOPd9CsdrIuveqMXpPL/2WjxqxOXTifhr9thOcfUbZ8UUFZtJQ3/QdJthA6Hl1mmfWWWYw2gra3ppApIsdISwodOQbVeuDPkO1NokIuZKkbTFNWcnWdUuD2imMU=
+	t=1755522427; cv=none; b=ahIku7utJOA3xdmeut7I8lH1zDbAmuSQbxMViV4AI2NE2W1p76oMNfBxVr/x0IA9JIUvWADnuwfw7kn595vulZY8mUwHBOj7cFVLLzaLjcuM4tbvhzXQKOlMkxakjI3T9ia9nKYNRQTOgvdE/r7vn2ogLbsm/q1S2Dj5cikgrTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522424; c=relaxed/simple;
-	bh=oUZgIIX/UEUmMztdsVUMp1tajVy4ISBeiTXPRAa0Ias=;
+	s=arc-20240116; t=1755522427; c=relaxed/simple;
+	bh=Wogd57kA/IvkSBSgAZIecLC/qxXJptnWPyQd+yVeqwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4VW8+pRzhlJTZciZL3LWp56xjgeVBpHFOG+mHxC3/fgbNmIS4UoziiOmxHuxqhl+25z0J9jhSLlbpaOmhT5lrDLpQ9IaWGwpGfaL6hEzpC+ukJatqLMK3GYERvDuX9Gga7OaoHfTEfuBl4lWD2tKJpoPspiDEJ3GCYaTLiyPVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fasTUX09; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cvi3xL4tMCYVhUzihuWETCEOlvgAnSjzP0TO8eYMNA1jg9L1SI6HehfAR2p7XsLtRQJFu8esOtPAZEGnyUHOL6ytSfjhZFt0JGr16t/BrR8kfoHiBryQTH4HhIwXH5T6b21vLzJ/Ix7vfy8iwwM0eC9tgd/Ds3Utxt1sRgmaG+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKGm1EzM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fasTUX09"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BB2C4CEEB;
-	Mon, 18 Aug 2025 13:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKGm1EzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D9FC4CEEB;
+	Mon, 18 Aug 2025 13:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522424;
-	bh=oUZgIIX/UEUmMztdsVUMp1tajVy4ISBeiTXPRAa0Ias=;
+	s=korg; t=1755522427;
+	bh=Wogd57kA/IvkSBSgAZIecLC/qxXJptnWPyQd+yVeqwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fasTUX099rKL0ik3iFFP8vLfxeDEmwNVahE3n5eX1EDdyUaqXIkutSVwJTPXk6IHr
-	 uRbILB/HYXPD7XoW9m+rdocZ8g5XdtDM2LoU483qLNAmZJtGvSN6WIMSQshKDgpQCZ
-	 wsxiMgQJ/hh7TxxMFUuCvLw2paXCVat/Q/MXkMag=
+	b=XKGm1EzMfx7U86/p5+a/RQbtqv2OaLy028YVHqxOPMvtpkpWIwgdZ7hzqVlpWZspx
+	 i3/G6/F1ZijSikl++wSXG9DNRfYj4qlBgBpsktf5wm6PYpYmv26r7mnJB4U8rBe40H
+	 ycgS0B/BI1+JDTjC8bcdsBi+su8bQMt5ktKYOZrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheick Traore <cheick.traore@foss.st.com>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/444] pinctrl: stm32: Manage irq affinity settings
-Date: Mon, 18 Aug 2025 14:45:38 +0200
-Message-ID: <20250818124500.646191279@linuxfoundation.org>
+Subject: [PATCH 6.12 313/444] media: tc358743: Check I2C succeeded during probe
+Date: Mon, 18 Aug 2025 14:45:39 +0200
+Message-ID: <20250818124500.682978722@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,37 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheick Traore <cheick.traore@foss.st.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 4c5cc2f65386e22166ce006efe515c667aa075e4 ]
+[ Upstream commit 303d81635e1d9c949b370215cc94526ed81f2e3d ]
 
-Trying to set the affinity of the interrupts associated to stm32
-pinctrl results in a write error.
+The probe for the TC358743 reads the CHIPID register from
+the device and compares it to the expected value of 0.
+If the I2C request fails then that also returns 0, so
+the driver loads thinking that the device is there.
 
-Fill struct irq_chip::irq_set_affinity to use the default helper
-function.
+Generally I2C communications are reliable so there is
+limited need to check the return value on every transfer,
+therefore only amend the one read during probe to check
+for I2C errors.
 
-Signed-off-by: Cheick Traore <cheick.traore@foss.st.com>
-Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Link: https://lore.kernel.org/20250610143042.295376-3-antonio.borneo@foss.st.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/tc358743.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 03f3f707d275..2659a854a514 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -407,6 +407,7 @@ static struct irq_chip stm32_gpio_irq_chip = {
- 	.irq_set_wake	= irq_chip_set_wake_parent,
- 	.irq_request_resources = stm32_gpio_irq_request_resources,
- 	.irq_release_resources = stm32_gpio_irq_release_resources,
-+	.irq_set_affinity = IS_ENABLED(CONFIG_SMP) ? irq_chip_set_affinity_parent : NULL,
- };
+diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
+index 344a670e732f..621855b3a715 100644
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -110,7 +110,7 @@ static inline struct tc358743_state *to_state(struct v4l2_subdev *sd)
  
- static int stm32_gpio_domain_translate(struct irq_domain *d,
+ /* --------------- I2C --------------- */
+ 
+-static void i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
++static int i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+ {
+ 	struct tc358743_state *state = to_state(sd);
+ 	struct i2c_client *client = state->i2c_client;
+@@ -136,6 +136,7 @@ static void i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+ 		v4l2_err(sd, "%s: reading register 0x%x from 0x%x failed: %d\n",
+ 				__func__, reg, client->addr, err);
+ 	}
++	return err != ARRAY_SIZE(msgs);
+ }
+ 
+ static void i2c_wr(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+@@ -192,15 +193,24 @@ static void i2c_wr(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+ 	}
+ }
+ 
+-static noinline u32 i2c_rdreg(struct v4l2_subdev *sd, u16 reg, u32 n)
++static noinline u32 i2c_rdreg_err(struct v4l2_subdev *sd, u16 reg, u32 n,
++				  int *err)
+ {
++	int error;
+ 	__le32 val = 0;
+ 
+-	i2c_rd(sd, reg, (u8 __force *)&val, n);
++	error = i2c_rd(sd, reg, (u8 __force *)&val, n);
++	if (err)
++		*err = error;
+ 
+ 	return le32_to_cpu(val);
+ }
+ 
++static inline u32 i2c_rdreg(struct v4l2_subdev *sd, u16 reg, u32 n)
++{
++	return i2c_rdreg_err(sd, reg, n, NULL);
++}
++
+ static noinline void i2c_wrreg(struct v4l2_subdev *sd, u16 reg, u32 val, u32 n)
+ {
+ 	__le32 raw = cpu_to_le32(val);
+@@ -229,6 +239,13 @@ static u16 i2c_rd16(struct v4l2_subdev *sd, u16 reg)
+ 	return i2c_rdreg(sd, reg, 2);
+ }
+ 
++static int i2c_rd16_err(struct v4l2_subdev *sd, u16 reg, u16 *value)
++{
++	int err;
++	*value = i2c_rdreg_err(sd, reg, 2, &err);
++	return err;
++}
++
+ static void i2c_wr16(struct v4l2_subdev *sd, u16 reg, u16 val)
+ {
+ 	i2c_wrreg(sd, reg, val, 2);
+@@ -2030,6 +2047,7 @@ static int tc358743_probe(struct i2c_client *client)
+ 	struct tc358743_platform_data *pdata = client->dev.platform_data;
+ 	struct v4l2_subdev *sd;
+ 	u16 irq_mask = MASK_HDMI_MSK | MASK_CSI_MSK;
++	u16 chipid;
+ 	int err;
+ 
+ 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_SMBUS_BYTE_DATA))
+@@ -2061,7 +2079,8 @@ static int tc358743_probe(struct i2c_client *client)
+ 	sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE | V4L2_SUBDEV_FL_HAS_EVENTS;
+ 
+ 	/* i2c access */
+-	if ((i2c_rd16(sd, CHIPID) & MASK_CHIPID) != 0) {
++	if (i2c_rd16_err(sd, CHIPID, &chipid) ||
++	    (chipid & MASK_CHIPID) != 0) {
+ 		v4l2_info(sd, "not a TC358743 on address 0x%x\n",
+ 			  client->addr << 1);
+ 		return -ENODEV;
 -- 
 2.39.5
 
