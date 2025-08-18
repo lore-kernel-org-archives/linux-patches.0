@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427E82C2340;
-	Mon, 18 Aug 2025 14:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671032C2340;
+	Mon, 18 Aug 2025 14:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526167; cv=none; b=nX2hlmUVSFaRau4nGdoog1Jlp7H31oDdl4FmYHrdRtruCyi+CI2VczszmU0MjfUC6rm1KZzhEFki3k9Ics2eJu1ZgztApzMOlLqq3OXHv/B3kGqkP9trBilBqeSctEkO7Cth+T7N07tgcu6a8np+62RoBQkeZNIntXV8/uVqx5c=
+	t=1755526170; cv=none; b=jpa1wRaPBrEFOwSWpxLXhKqda4dfCdNq07zW7FLzOAImmzfcf563holfPgG3lBt7+SoQl6YPbSUzkR/RCQQ2AUB3O0QxiKFtIl0E5hwyKwktoUEGrMFaR/iAJY01jzRcaNT07q7Aim02Cd2321QulCblpInvJpQAzc7QIgubOs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526167; c=relaxed/simple;
-	bh=hUZ36xEjuEBool6wGkZqYxu4In8ypDo1J9i1Nafz2ac=;
+	s=arc-20240116; t=1755526170; c=relaxed/simple;
+	bh=UqBH+/pjXY9kJh8/82fFDPBpwIw6dOMeMvrzpfekl+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E01kr8OeQu4M91FzihQK3W6Jr92cQquGyGZNyojCHGhcjMb2vqbSVhpjDKoXUn6csA3Rpde6jzDXEd8gVj67M+bOldNGhxnobaGb+CylULGPXpwpTXH/8v9KLMD4gam3nJP2eWG3V+jPNCBhTD2y4KDMFWntIVR5onhG4k4Kg9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tcl4KLhA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IC7LPXZPES7lPuM120YXQsniI9G1OLyNlbNmGgk+cOrT7VTGGho5HKFfBGvlzulh8dQ64p9fcJvHcH/LFZqhx7f6jye4nxQ93rOiNKUFCKXtZhQLTc8JIYIXaBczE+GlyNELzvXMwK2Yi5dDJjRPO1Pyw2vM4CRaVrctPqXhWqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYgc9PSL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tcl4KLhA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DE2C4CEEB;
-	Mon, 18 Aug 2025 14:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYgc9PSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2A6C4CEEB;
+	Mon, 18 Aug 2025 14:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526166;
-	bh=hUZ36xEjuEBool6wGkZqYxu4In8ypDo1J9i1Nafz2ac=;
+	s=korg; t=1755526170;
+	bh=UqBH+/pjXY9kJh8/82fFDPBpwIw6dOMeMvrzpfekl+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tcl4KLhACH4BzArst8dUjJHVWpb+tFcCD9igO9RXdRyCAsot/I2sJdflg8Ux0r27A
-	 mna3Z8708RUk0meVV/BbIK2FL2OqC7QzkRMh63QiWTqIJHsymgDhAgTDiMzSd6XiUd
-	 x2tfTkepzPfADQHNoTkLNqCNN7wRu6ywsHey6YYg=
+	b=AYgc9PSLhHHB05NxddGFsvMCDhGuFPjfGScQMuUr04MvmJFvcsy/naScvi4UwZmn/
+	 o9wwLAYB/OsZHiJaK4CqJVSggMEHA1Mkrrusg/yPy13IWL8mkHWfSnxJMYNCgU32MU
+	 iZPnCE7giXPqhbXfh46LJ/Yj225wyaVRjpm5PJP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janna Martl <janna.martl109@gmail.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Maciej Patelczyk <maciej.patelczyk@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 476/570] drm/i915/psr: Do not trigger Frame Change events from frontbuffer flush
-Date: Mon, 18 Aug 2025 14:47:43 +0200
-Message-ID: <20250818124524.223804187@linuxfoundation.org>
+Subject: [PATCH 6.16 477/570] drm/xe/migrate: prevent infinite recursion
+Date: Mon, 18 Aug 2025 14:47:44 +0200
+Message-ID: <20250818124524.261074264@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -47,88 +48,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-[ Upstream commit 184889dfe0568528fd6d14bba864dd57ed45bbf2 ]
+[ Upstream commit 9d7a1cbebbb691891671def57407ba2f8ee914e8 ]
 
-We want to get rid of triggering "Frame Change" events from
-frontbuffer flush calls. We are about to move using TRANS_PUSH
-register for this on LunarLake and onwards. Touching TRANS_PUSH
-register from fronbuffer flush would be problematic as it's written by
-DSB as well.
+If the buf + offset is not aligned to XE_CAHELINE_BYTES we fallback to
+using a bounce buffer. However the bounce buffer here is allocated on
+the stack, and the only alignment requirement here is that it's
+naturally aligned to u8, and not XE_CACHELINE_BYTES. If the bounce
+buffer is also misaligned we then recurse back into the function again,
+however the new bounce buffer might also not be aligned, and might never
+be until we eventually blow through the stack, as we keep recursing.
 
-Fix this by using intel_psr_exit when flush or invalidate is done on
-LunarLake and onwards. This is not possible on AlderLake and
-MeteorLake due to HW bug in PSR2 disable.
+Instead of using the stack use kmalloc, which should respect the
+power-of-two alignment request here. Fixes a kernel panic when
+triggering this path through eudebug.
 
-This patch is also fixing problems with cursor plane where cursor is
-disappearing or duplicate cursor is seen on the screen.
+v2 (Stuart):
+ - Add build bug check for power-of-two restriction
+ - s/EINVAL/ENOMEM/
 
-v2: Commit message updated
-
-Bspec: 68927, 68934, 66624
-Reported-by: Janna Martl <janna.martl109@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/5522
-Fixes: 411ad63877bb ("drm/i915/psr: Use SFF_CTL on invalidate/flush for LunarLake onwards")
-Tested-by: Janna Martl <janna.martl109@gmail.com>
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://lore.kernel.org/r/20250801062905.564453-1-jouni.hogander@intel.com
-(cherry picked from commit 46fb38cb20c0d185a6391ab524b23e0e0219c41f)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: 270172f64b11 ("drm/xe: Update xe_ttm_access_memory to use GPU for non-visible access")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Maciej Patelczyk <maciej.patelczyk@intel.com>
+Cc: Stuart Summers <stuart.summers@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://lore.kernel.org/r/20250731093807.207572-6-matthew.auld@intel.com
+(cherry picked from commit 38b34e928a08ba594c4bbf7118aa3aadacd62fff)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_migrate.c | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 430ad4ef7146..7da0ad854ed2 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -3250,7 +3250,9 @@ static void intel_psr_configure_full_frame_update(struct intel_dp *intel_dp)
- 
- static void _psr_invalidate_handle(struct intel_dp *intel_dp)
- {
--	if (intel_dp->psr.psr2_sel_fetch_enabled) {
-+	struct intel_display *display = to_intel_display(intel_dp);
+diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
+index 07a5161c7d5b..c0e2656a14d2 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -1820,15 +1820,19 @@ int xe_migrate_access_memory(struct xe_migrate *m, struct xe_bo *bo,
+ 	if (!IS_ALIGNED(len, XE_CACHELINE_BYTES) ||
+ 	    !IS_ALIGNED((unsigned long)buf + offset, XE_CACHELINE_BYTES)) {
+ 		int buf_offset = 0;
++		void *bounce;
++		int err;
 +
-+	if (DISPLAY_VER(display) < 20 && intel_dp->psr.psr2_sel_fetch_enabled) {
- 		if (!intel_dp->psr.psr2_sel_fetch_cff_enabled) {
- 			intel_dp->psr.psr2_sel_fetch_cff_enabled = true;
- 			intel_psr_configure_full_frame_update(intel_dp);
-@@ -3338,7 +3340,7 @@ static void _psr_flush_handle(struct intel_dp *intel_dp)
- 	struct intel_display *display = to_intel_display(intel_dp);
- 	struct drm_i915_private *dev_priv = to_i915(display->drm);
++		BUILD_BUG_ON(!is_power_of_2(XE_CACHELINE_BYTES));
++		bounce = kmalloc(XE_CACHELINE_BYTES, GFP_KERNEL);
++		if (!bounce)
++			return -ENOMEM;
  
--	if (intel_dp->psr.psr2_sel_fetch_enabled) {
-+	if (DISPLAY_VER(display) < 20 && intel_dp->psr.psr2_sel_fetch_enabled) {
- 		if (intel_dp->psr.psr2_sel_fetch_cff_enabled) {
- 			/* can we turn CFF off? */
- 			if (intel_dp->psr.busy_frontbuffer_bits == 0)
-@@ -3355,11 +3357,13 @@ static void _psr_flush_handle(struct intel_dp *intel_dp)
- 		 * existing SU configuration
+ 		/*
+ 		 * Less than ideal for large unaligned access but this should be
+ 		 * fairly rare, can fixup if this becomes common.
  		 */
- 		intel_psr_configure_full_frame_update(intel_dp);
--	}
+ 		do {
+-			u8 bounce[XE_CACHELINE_BYTES];
+-			void *ptr = (void *)bounce;
+-			int err;
+ 			int copy_bytes = min_t(int, bytes_left,
+ 					       XE_CACHELINE_BYTES -
+ 					       (offset & XE_CACHELINE_MASK));
+@@ -1837,22 +1841,22 @@ int xe_migrate_access_memory(struct xe_migrate *m, struct xe_bo *bo,
+ 			err = xe_migrate_access_memory(m, bo,
+ 						       offset &
+ 						       ~XE_CACHELINE_MASK,
+-						       (void *)ptr,
+-						       sizeof(bounce), 0);
++						       bounce,
++						       XE_CACHELINE_BYTES, 0);
+ 			if (err)
+-				return err;
++				break;
  
--	intel_psr_force_update(intel_dp);
-+		intel_psr_force_update(intel_dp);
-+	} else {
-+		intel_psr_exit(intel_dp);
-+	}
+ 			if (write) {
+-				memcpy(ptr + ptr_offset, buf + buf_offset, copy_bytes);
++				memcpy(bounce + ptr_offset, buf + buf_offset, copy_bytes);
  
--	if (!intel_dp->psr.psr2_sel_fetch_enabled && !intel_dp->psr.active &&
-+	if ((!intel_dp->psr.psr2_sel_fetch_enabled || DISPLAY_VER(display) >= 20) &&
- 	    !intel_dp->psr.busy_frontbuffer_bits)
- 		queue_work(dev_priv->unordered_wq, &intel_dp->psr.work);
- }
+ 				err = xe_migrate_access_memory(m, bo,
+ 							       offset & ~XE_CACHELINE_MASK,
+-							       (void *)ptr,
+-							       sizeof(bounce), write);
++							       bounce,
++							       XE_CACHELINE_BYTES, write);
+ 				if (err)
+-					return err;
++					break;
+ 			} else {
+-				memcpy(buf + buf_offset, ptr + ptr_offset,
++				memcpy(buf + buf_offset, bounce + ptr_offset,
+ 				       copy_bytes);
+ 			}
+ 
+@@ -1861,7 +1865,8 @@ int xe_migrate_access_memory(struct xe_migrate *m, struct xe_bo *bo,
+ 			offset += copy_bytes;
+ 		} while (bytes_left);
+ 
+-		return 0;
++		kfree(bounce);
++		return err;
+ 	}
+ 
+ 	dma_addr = xe_migrate_dma_map(xe, buf, len + page_offset, write);
 -- 
 2.50.1
 
