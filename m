@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D313922A7E0;
-	Mon, 18 Aug 2025 13:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354E7321448;
+	Mon, 18 Aug 2025 13:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523875; cv=none; b=AA5PWAG+IB6ZHXWjttaUMHB32CiRNaF/DfvDA6amx1SQVeH9Yw9jNherYPCnNmntJpVHe5KA4vlrYi7C9SItMswm/89Rd9ICVVY98Uj5qlo70eJVt+anga0SqBGnI9u//8gVKNgcPH/uXOEzwRJ2/KBU6IYWA/AlDb2AQb5DS7Q=
+	t=1755523879; cv=none; b=ZngwC7c7BL229RFquDd+fLTTnT677sATgUFAvxr7PZakYBkwgrXciYRdU3zvBk1VvnDEIlijEDLrJlvGfsWZjvHdH65uS9WDOSGm6F8ikwLVb/NdZ5sDxwIDQWUal/GnVPXnSaBgdIV9IDy5u3vU5ItVSi4TJlBvV0a3eOwGEK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523875; c=relaxed/simple;
-	bh=Xq4gue0Y2oPL+3JOkfK/P0pkgBKwQIYGCDfw/trTQWo=;
+	s=arc-20240116; t=1755523879; c=relaxed/simple;
+	bh=qeitXLSkXM0Gmsbwk2euZtGr69W/vfmRfRqNu3Zs4uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rqqjGKJxYXR9al1l7cjG+s1fHra1UrKGF3iJaPWoYxiANr+IXoerm0jDT03XpiGZ+9uo7lXaWtLv3DozGpl5/q5FAUGL3EdITb8z+5E/+QgpQ45pT0KP2MHAVqeIgQ9lVA8Zk0UfguBkJ7tPjirPSp+lOu7KfbnSx6tPH7+/m7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4gfUcc4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Np/m41pt8vC+6B5Z28spFkcHdNTOp42IUfZqMPwIdm5wK+DlmIn40LaM85t9tBNXhkiliagjfdKH9LDo+hsrreYGlIDHCs4HtDWMUZWPraYCGuPokE7WCLE2q2mpf65oxZ2cz0tfdUx5+DnbeV+fVIGy4GYvihM4Ax25kEyxl5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xx1jjE+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4gfUcc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC1AC4CEEB;
-	Mon, 18 Aug 2025 13:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xx1jjE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4922FC4CEEB;
+	Mon, 18 Aug 2025 13:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523875;
-	bh=Xq4gue0Y2oPL+3JOkfK/P0pkgBKwQIYGCDfw/trTQWo=;
+	s=korg; t=1755523878;
+	bh=qeitXLSkXM0Gmsbwk2euZtGr69W/vfmRfRqNu3Zs4uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4gfUcc4gTdCn8iCapBF6cfkToIkGyFeObru3zjOd4vg4Y8TbToMl+gkmFZCNk3R2
-	 aSHsJvdF3bqYVMXSB3qcIXdWD/JnwZGwjfTD6qJsQNOo3fT6hwwd9B8HaBgOXGl34K
-	 tvjDi3v1CQFS4JJIq6evv77Z/0ZZF/qMMs+A0mMA=
+	b=0xx1jjE+LE3aPzOm0zBFiHkBYNowqLVgN0VLGHn+X6YuNRtwl0oQIjv7kk6/YdU8d
+	 L1NGy9XK5S3CmPOmYoeEVVOZf6ztSRGiawiixx1YLr+RwaewbQ/ng9AKU45lCzhUSl
+	 iVptxog3giIaFNw2f+lgVW2jtJJYURklALOoncwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alex Lazar <alazar@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Gal Pressman <gal@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 300/515] net: vlan: Make is_vlan_dev() a stub when VLAN is not configured
-Date: Mon, 18 Aug 2025 14:44:46 +0200
-Message-ID: <20250818124509.978724144@linuxfoundation.org>
+Subject: [PATCH 6.15 301/515] net: vlan: Replace BUG() with WARN_ON_ONCE() in vlan_dev_* stubs
+Date: Mon, 18 Aug 2025 14:44:47 +0200
+Message-ID: <20250818124510.017330341@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,73 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 2de1ba0887e5d3bf02d7c212f380039b34e10aa3 ]
+[ Upstream commit 60a8b1a5d0824afda869f18dc0ecfe72f8dfda42 ]
 
-Add a stub implementation of is_vlan_dev() that returns false when
-VLAN support is not compiled in (CONFIG_VLAN_8021Q=n).
+When CONFIG_VLAN_8021Q=n, a set of stub helpers are used, three of these
+helpers use BUG() unconditionally.
 
-This allows us to compile-out VLAN-dependent dead code when it is not
-needed.
+This code should not be reached, as callers of these functions should
+always check for is_vlan_dev() first, but the usage of BUG() is not
+recommended, replace it with WARN_ON() instead.
 
-This also resolves the following compilation error when:
-* CONFIG_VLAN_8021Q=n
-* CONFIG_OBJTOOL=y
-* CONFIG_OBJTOOL_WERROR=y
-
-drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.o: error: objtool: parse_mirred.isra.0+0x370: mlx5e_tc_act_vlan_add_push_action() missing __noreturn in .c/.h or NORETURN() in noreturns.h
-
-The error occurs because objtool cannot determine that unreachable BUG()
-(which doesn't return) calls in VLAN code paths are actually dead code
-when VLAN support is disabled.
-
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20250616132626.1749331-2-gal@nvidia.com
+Link: https://patch.msgid.link/20250616132626.1749331-3-gal@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/if_vlan.h | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ include/linux/if_vlan.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
-index 38456b42cdb5..618a973ff8ee 100644
+index 618a973ff8ee..b9f699799cf6 100644
 --- a/include/linux/if_vlan.h
 +++ b/include/linux/if_vlan.h
-@@ -79,11 +79,6 @@ static inline struct vlan_ethhdr *skb_vlan_eth_hdr(const struct sk_buff *skb)
- /* found in socket.c */
- extern void vlan_ioctl_set(int (*hook)(struct net *, void __user *));
+@@ -259,19 +259,19 @@ vlan_for_each(struct net_device *dev,
  
--static inline bool is_vlan_dev(const struct net_device *dev)
--{
--        return dev->priv_flags & IFF_802_1Q_VLAN;
--}
--
- #define skb_vlan_tag_present(__skb)	(!!(__skb)->vlan_all)
- #define skb_vlan_tag_get(__skb)		((__skb)->vlan_tci)
- #define skb_vlan_tag_get_id(__skb)	((__skb)->vlan_tci & VLAN_VID_MASK)
-@@ -200,6 +195,11 @@ struct vlan_dev_priv {
- #endif
- };
- 
-+static inline bool is_vlan_dev(const struct net_device *dev)
-+{
-+	return dev->priv_flags & IFF_802_1Q_VLAN;
-+}
-+
- static inline struct vlan_dev_priv *vlan_dev_priv(const struct net_device *dev)
+ static inline struct net_device *vlan_dev_real_dev(const struct net_device *dev)
  {
- 	return netdev_priv(dev);
-@@ -237,6 +237,11 @@ extern void vlan_vids_del_by_dev(struct net_device *dev,
- extern bool vlan_uses_dev(const struct net_device *dev);
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return NULL;
+ }
  
- #else
-+static inline bool is_vlan_dev(const struct net_device *dev)
-+{
-+	return false;
-+}
-+
- static inline struct net_device *
- __vlan_find_dev_deep_rcu(struct net_device *real_dev,
- 		     __be16 vlan_proto, u16 vlan_id)
+ static inline u16 vlan_dev_vlan_id(const struct net_device *dev)
+ {
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return 0;
+ }
+ 
+ static inline __be16 vlan_dev_vlan_proto(const struct net_device *dev)
+ {
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
