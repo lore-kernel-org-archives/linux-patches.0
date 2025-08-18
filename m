@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F243218D1;
-	Mon, 18 Aug 2025 12:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5610C3218C2;
+	Mon, 18 Aug 2025 12:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521631; cv=none; b=mFe/WVZlzUsYWPOdeeV8Puams6UlhYiKaiTXRwDY4IW0EY6wR2syCNciQGmzK0MpQt8o9kQTAr8qLf2B4PIFNX/XuGvKIMJKzQM9flZeywgivQKdTKlYxZYDJs5Q2LPXHhY1zuvJ+G4uelUwp3mjJJh/b6PZgJecWDnZLaApziY=
+	t=1755521634; cv=none; b=ZON/EvaqoJnKLuFYJNCDeidpUcOe3jsKRAy9P9IXViaHE+m3BqVY9hYbe1kNSjO6K758Dece9REp/UyAuOLwgrmlHUECC3wEJX8RBxF5Y6h5/tkpx2LMR80G+SF8wXA4tb/mS06umWalxw9hDKtHIb+/vQWwOImEI4rKxhAkjNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521631; c=relaxed/simple;
-	bh=hUK5XGZZc+nOJmM+vEqh+KCW/0xTI3RCXBdEPpIuuzc=;
+	s=arc-20240116; t=1755521634; c=relaxed/simple;
+	bh=Q2NniQk7zzcFPoqy4hFwD55t30JKut1QCjViJ5dNcZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3zLzuoOHDZHV3Odp7J5kvzVKNHR3aN08CwGaAapZO3Cn9Rs1IYrO5/LZCMalTLL8gOTK4as9X2Oz3E0C8vXfuRbo3AuAYhI16oDJoi5ErnXEM1sujWLnT4f3FyFqec6fmq+mrN7/qlJU0y59gKBWrkYebJ6xjGQdMv9p3oS1W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dA5dCiR0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uSk/F4BZWL6LJywxMPa3ds3Zl4PpTKIOdP9uUqmNUUX0OB+0lthCE1EhXUvUV0TozJFE1v+Sf3jJRTPnN1x69EsqOWkdxzLiB8cT1DaK/vrYwc94MZdHjZkPx09dFNqauaV0wq6J8UFjJdJeHyQKqdvafiV33E6SlXrF0JiUy0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZJbigdW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dA5dCiR0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD98DC4CEEB;
-	Mon, 18 Aug 2025 12:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZJbigdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6784C4CEEB;
+	Mon, 18 Aug 2025 12:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521631;
-	bh=hUK5XGZZc+nOJmM+vEqh+KCW/0xTI3RCXBdEPpIuuzc=;
+	s=korg; t=1755521634;
+	bh=Q2NniQk7zzcFPoqy4hFwD55t30JKut1QCjViJ5dNcZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dA5dCiR04fj/TtNcaPNxXD9Xv9Fg3jksbYyrrJCeUsNdsFcZ6uCKaU2sZKqv8O8Vo
-	 1Xa+5wqAJttnpcBXdQZtI5blf/YHf8WYPov9435C3a3Hd+5sIr/fQuqyfc+IplPyWO
-	 nZE3aO4AwFlJRFpL6eN7a7zpYnhJ1pVef3jdf7G8=
+	b=KZJbigdWSvhl0KpUoBySgcm1Tjps6N+29YrZwyk4zJkfxKIms+70tdAB9SUDKzIkQ
+	 IFwrvqwynt9cLU22KivrEnG/huF/u3zo64hlbDI63E3NikA5lmxM1Lj1fTD0VBT/Jq
+	 NJPhaPQbjZDk3w9jwP/uexgIRl4k2jsnhsp8Wy+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 044/444] smb: client: dont wait for info->send_pending == 0 on error
-Date: Mon, 18 Aug 2025 14:41:10 +0200
-Message-ID: <20250818124450.590678467@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 045/444] KVM: x86: Convert vcpu_run()s immediate exit param into a generic bitmap
+Date: Mon, 18 Aug 2025 14:41:11 +0200
+Message-ID: <20250818124450.626683044@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -55,54 +50,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 8c48e1c7520321cc87ff651e96093e2f412785fb upstream.
+[ Upstream commit 2478b1b220c49d25cb1c3f061ec4f9b351d9a131 ]
 
-We already called ib_drain_qp() before and that makes sure
-send_done() was called with IB_WC_WR_FLUSH_ERR, but
-didn't called atomic_dec_and_test(&sc->send_io.pending.count)
+Convert kvm_x86_ops.vcpu_run()'s "force_immediate_exit" boolean parameter
+into an a generic bitmap so that similar "take action" information can be
+passed to vendor code without creating a pile of boolean parameters.
 
-So we may never reach the info->send_pending == 0 condition.
+This will allow dropping kvm_x86_ops.set_dr6() in favor of a new flag, and
+will also allow for adding similar functionality for re-loading debugctl
+in the active VMCS.
 
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: 5349ae5e05fa ("smb: client: let send_done() cleanup before calling smbd_disconnect_rdma_connection()")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Opportunistically massage the TDX WARN and comment to prepare for adding
+more run_flags, all of which are expected to be mutually exclusive with
+TDX, i.e. should be WARNed on.
+
+No functional change intended.
+
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250610232010.162191-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[sean: drop TDX changes]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/kvm_host.h |  6 +++++-
+ arch/x86/kvm/svm/svm.c          |  4 ++--
+ arch/x86/kvm/vmx/vmx.c          |  3 ++-
+ arch/x86/kvm/vmx/x86_ops.h      |  2 +-
+ arch/x86/kvm/x86.c              | 11 ++++++++---
+ 5 files changed, 18 insertions(+), 8 deletions(-)
 
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -1316,10 +1316,6 @@ void smbd_destroy(struct TCP_Server_Info
- 	log_rdma_event(INFO, "cancelling idle timer\n");
- 	cancel_delayed_work_sync(&info->idle_timer_work);
- 
--	log_rdma_event(INFO, "wait for all send posted to IB to finish\n");
--	wait_event(info->wait_send_pending,
--		atomic_read(&info->send_pending) == 0);
--
- 	/* It's not possible for upper layer to get to reassembly */
- 	log_rdma_event(INFO, "drain the reassembly queue\n");
- 	do {
-@@ -1965,7 +1961,11 @@ int smbd_send(struct TCP_Server_Info *se
- 	 */
- 
- 	wait_event(info->wait_send_pending,
--		atomic_read(&info->send_pending) == 0);
-+		atomic_read(&info->send_pending) == 0 ||
-+		sc->status != SMBDIRECT_SOCKET_CONNECTED);
-+
-+	if (sc->status != SMBDIRECT_SOCKET_CONNECTED && rc == 0)
-+		rc = -EAGAIN;
- 
- 	return rc;
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 0caa3293f6db..cccc8cbe72db 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1627,6 +1627,10 @@ static inline u16 kvm_lapic_irq_dest_mode(bool dest_mode_logical)
+ 	return dest_mode_logical ? APIC_DEST_LOGICAL : APIC_DEST_PHYSICAL;
  }
+ 
++enum kvm_x86_run_flags {
++	KVM_RUN_FORCE_IMMEDIATE_EXIT	= BIT(0),
++};
++
+ struct kvm_x86_ops {
+ 	const char *name;
+ 
+@@ -1706,7 +1710,7 @@ struct kvm_x86_ops {
+ 
+ 	int (*vcpu_pre_run)(struct kvm_vcpu *vcpu);
+ 	enum exit_fastpath_completion (*vcpu_run)(struct kvm_vcpu *vcpu,
+-						  bool force_immediate_exit);
++						  u64 run_flags);
+ 	int (*handle_exit)(struct kvm_vcpu *vcpu,
+ 		enum exit_fastpath_completion exit_fastpath);
+ 	int (*skip_emulated_instruction)(struct kvm_vcpu *vcpu);
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 1f42a71b15c0..7d1b871cfc02 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4226,9 +4226,9 @@ static noinstr void svm_vcpu_enter_exit(struct kvm_vcpu *vcpu, bool spec_ctrl_in
+ 	guest_state_exit_irqoff();
+ }
+ 
+-static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu,
+-					  bool force_immediate_exit)
++static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
+ {
++	bool force_immediate_exit = run_flags & KVM_RUN_FORCE_IMMEDIATE_EXIT;
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 	bool spec_ctrl_intercepted = msr_write_intercepted(vcpu, MSR_IA32_SPEC_CTRL);
+ 
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 9a4ebf3dfbfc..2a977cdfcd0c 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7353,8 +7353,9 @@ static noinstr void vmx_vcpu_enter_exit(struct kvm_vcpu *vcpu,
+ 	guest_state_exit_irqoff();
+ }
+ 
+-fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, bool force_immediate_exit)
++fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
+ {
++	bool force_immediate_exit = run_flags & KVM_RUN_FORCE_IMMEDIATE_EXIT;
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+ 	unsigned long cr3, cr4;
+ 
+diff --git a/arch/x86/kvm/vmx/x86_ops.h b/arch/x86/kvm/vmx/x86_ops.h
+index 4aba200f435d..5e4ce13ab305 100644
+--- a/arch/x86/kvm/vmx/x86_ops.h
++++ b/arch/x86/kvm/vmx/x86_ops.h
+@@ -21,7 +21,7 @@ void vmx_vm_destroy(struct kvm *kvm);
+ int vmx_vcpu_precreate(struct kvm *kvm);
+ int vmx_vcpu_create(struct kvm_vcpu *vcpu);
+ int vmx_vcpu_pre_run(struct kvm_vcpu *vcpu);
+-fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, bool force_immediate_exit);
++fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags);
+ void vmx_vcpu_free(struct kvm_vcpu *vcpu);
+ void vmx_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event);
+ void vmx_vcpu_load(struct kvm_vcpu *vcpu, int cpu);
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 213af0fda768..44ab46f2a2d2 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10711,6 +10711,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 		dm_request_for_irq_injection(vcpu) &&
+ 		kvm_cpu_accept_dm_intr(vcpu);
+ 	fastpath_t exit_fastpath;
++	u64 run_flags;
+ 
+ 	bool req_immediate_exit = false;
+ 
+@@ -10955,8 +10956,11 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 		goto cancel_injection;
+ 	}
+ 
+-	if (req_immediate_exit)
++	run_flags = 0;
++	if (req_immediate_exit) {
++		run_flags |= KVM_RUN_FORCE_IMMEDIATE_EXIT;
+ 		kvm_make_request(KVM_REQ_EVENT, vcpu);
++	}
+ 
+ 	fpregs_assert_state_consistent();
+ 	if (test_thread_flag(TIF_NEED_FPU_LOAD))
+@@ -10992,8 +10996,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 		WARN_ON_ONCE((kvm_vcpu_apicv_activated(vcpu) != kvm_vcpu_apicv_active(vcpu)) &&
+ 			     (kvm_get_apic_mode(vcpu) != LAPIC_MODE_DISABLED));
+ 
+-		exit_fastpath = kvm_x86_call(vcpu_run)(vcpu,
+-						       req_immediate_exit);
++		exit_fastpath = kvm_x86_call(vcpu_run)(vcpu, run_flags);
+ 		if (likely(exit_fastpath != EXIT_FASTPATH_REENTER_GUEST))
+ 			break;
+ 
+@@ -11005,6 +11008,8 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 			break;
+ 		}
+ 
++		run_flags = 0;
++
+ 		/* Note, VM-Exits that go down the "slow" path are accounted below. */
+ 		++vcpu->stat.exits;
+ 	}
+-- 
+2.50.1
+
 
 
