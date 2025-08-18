@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422E1335BA0;
-	Mon, 18 Aug 2025 13:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E55A335BDA;
+	Mon, 18 Aug 2025 13:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524475; cv=none; b=mDWcZrrrEI0HQDQVqOg3uShfCrdNtPFTP9/G3zj5nsPs/BkpjiScuiIAxY9um/c5aHREXqWNGZAqBg5rjH7F06nDlJKwZJVEBgIoHOl97EfikVY6tVvmeNKQlQ0P76vb8OWhVBgClhKLOG81oUo5CvZ/lWW6KB9533wsdu/qJxw=
+	t=1755524478; cv=none; b=mJhIh5uQkRw6Af8/imnFFAMfV+5cAh8inK1suNUhJe9iGNsqcGQUPsQ1WpodCrsC7ihQ+7dIjjcEuMGkdMLByKJFzK6fBsoo4K3zqa6VWdNFdb168AcYX/C6/6v+z7Wj/VW+e5ikRbNpceTiMSDIHVZebABJjbNVBDMTKh+tgKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524475; c=relaxed/simple;
-	bh=zh+WbuBsNHywc1w+1vQAWCABG5r+2Ccf7JbZ65KLW8w=;
+	s=arc-20240116; t=1755524478; c=relaxed/simple;
+	bh=S/1JmARk4ry9lv49C6U1/HDRgh/iXHc+RoS2pTYVuf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tMGASONEjXfa4aq/v0smlQmkWDvMSqSFJjcZqB37xYa9oQaItL1V3M883pak0IlOx3ilDeoaew9izq9OJDKbKXkqo7CqsPhiM4mBkVHHsRJKAsUkLqhpptBb8gsCI/Cb5hRrcZky8Fk+nCf4JxYay3R2u/xcd/w6hgwDNQJtWZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaWPbbf2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pvffJBB3na08Fpg5tVrrTE5dIth5ZvETwAr6jp83yurQ28Y4i/gA5xshgHiVxUNJt/7h8eN6XSyaKFvHomXoOrEmHC7yRaKVFN4Um3HFmYlEOI2t3xTixcF7kZuSJUiTgY7qjBvXAhMAb64gMVTthrZvHRY0TLQ3tRpyscHSyjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSG77IA2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaWPbbf2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4369CC4CEEB;
-	Mon, 18 Aug 2025 13:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSG77IA2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892B7C4CEEB;
+	Mon, 18 Aug 2025 13:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524474;
-	bh=zh+WbuBsNHywc1w+1vQAWCABG5r+2Ccf7JbZ65KLW8w=;
+	s=korg; t=1755524477;
+	bh=S/1JmARk4ry9lv49C6U1/HDRgh/iXHc+RoS2pTYVuf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AaWPbbf2YR+eoeHDOWmq0nk/AXBnNuSKHnopWHbw/01szjErtR/ciXun0Rqi5dd8J
-	 dI2CEtHQ74gjAOC5WHoOwEhTIf6npG+mghiQNZTZAibVfWldMwRbri5Q2mtZU2beZG
-	 49WYetePYAQOl5ADsmNtsFjKrqX5VvjiuL+5K6vw=
+	b=cSG77IA2FR1q8TPbRtgkfD+v4ptqg0vSd6dgIW/ZWWoVulJm4GXWm7iZYoXWRTlHM
+	 OuMqonWxRZc4kqwUmIR+WCKMscLbvjvdOYmIW9+cpCY7XhdaH6ffOJF4xjYitJM02h
+	 ZcbywRgA55DvkzmvK7m40Yr8On6eQuh37b0QjZlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sravan Kumar Gundu <sravankumarlpu@gmail.com>,
-	Helge Deller <deller@gmx.de>,
-	syzbot+c4b7aa0513823e2ea880@syzkaller.appspotmail.com
-Subject: [PATCH 6.15 484/515] fbdev: Fix vmalloc out-of-bounds write in fast_imageblit
-Date: Mon, 18 Aug 2025 14:47:50 +0200
-Message-ID: <20250818124517.058375336@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.15 467/515] btrfs: dont ignore inode missing when replaying log tree
+Date: Mon, 18 Aug 2025 14:47:33 +0200
+Message-ID: <20250818124516.398913241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,69 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sravan Kumar Gundu <sravankumarlpu@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit af0db3c1f898144846d4c172531a199bb3ca375d upstream.
+commit 7ebf381a69421a88265d3c49cd0f007ba7336c9d upstream.
 
-This issue triggers when a userspace program does an ioctl
-FBIOPUT_CON2FBMAP by passing console number and frame buffer number.
-Ideally this maps console to frame buffer and updates the screen if
-console is visible.
+During log replay, at add_inode_ref(), we return -ENOENT if our current
+inode isn't found on the subvolume tree or if a parent directory isn't
+found. The error comes from btrfs_iget_logging() <- btrfs_iget() <-
+btrfs_read_locked_inode().
 
-As part of mapping it has to do resize of console according to frame
-buffer info. if this resize fails and returns from vc_do_resize() and
-continues further. At this point console and new frame buffer are mapped
-and sets display vars. Despite failure still it continue to proceed
-updating the screen at later stages where vc_data is related to previous
-frame buffer and frame buffer info and display vars are mapped to new
-frame buffer and eventully leading to out-of-bounds write in
-fast_imageblit(). This bheviour is excepted only when fg_console is
-equal to requested console which is a visible console and updates screen
-with invalid struct references in fbcon_putcs().
+The single caller of add_inode_ref(), replay_one_buffer(), ignores an
+-ENOENT error because it expects that error to mean only that a parent
+directory wasn't found and that is ok.
 
-Reported-and-tested-by: syzbot+c4b7aa0513823e2ea880@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c4b7aa0513823e2ea880
-Signed-off-by: Sravan Kumar Gundu <sravankumarlpu@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Before commit 5f61b961599a ("btrfs: fix inode lookup error handling during
+log replay") we were converting any error when getting a parent directory
+to -ENOENT and any error when getting the current inode to -EIO, so our
+caller would fail log replay in case we can't find the current inode.
+After that commit however in case the current inode is not found we return
+-ENOENT to the caller and therefore it ignores the critical fact that the
+current inode was not found in the subvolume tree.
+
+Fix this by converting -ENOENT to 0 when we don't find a parent directory,
+returning -ENOENT when we don't find the current inode and making the
+caller, replay_one_buffer(), not ignore -ENOENT anymore.
+
+Fixes: 5f61b961599a ("btrfs: fix inode lookup error handling during log replay")
+CC: stable@vger.kernel.org # 6.16
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/btrfs/tree-log.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -825,7 +825,8 @@ static void con2fb_init_display(struct v
- 				   fg_vc->vc_rows);
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -1380,6 +1380,8 @@ static noinline int add_inode_ref(struct
+ 	dir = btrfs_iget_logging(parent_objectid, root);
+ 	if (IS_ERR(dir)) {
+ 		ret = PTR_ERR(dir);
++		if (ret == -ENOENT)
++			ret = 0;
+ 		dir = NULL;
+ 		goto out;
  	}
- 
--	update_screen(vc_cons[fg_console].d);
-+	if (fg_console != unit)
-+		update_screen(vc_cons[fg_console].d);
- }
- 
- /**
-@@ -1362,6 +1363,7 @@ static void fbcon_set_disp(struct fb_inf
- 	struct vc_data *svc;
- 	struct fbcon_ops *ops = info->fbcon_par;
- 	int rows, cols;
-+	unsigned long ret = 0;
- 
- 	p = &fb_display[unit];
- 
-@@ -1412,11 +1414,10 @@ static void fbcon_set_disp(struct fb_inf
- 	rows = FBCON_SWAP(ops->rotate, info->var.yres, info->var.xres);
- 	cols /= vc->vc_font.width;
- 	rows /= vc->vc_font.height;
--	vc_resize(vc, cols, rows);
-+	ret = vc_resize(vc, cols, rows);
- 
--	if (con_is_visible(vc)) {
-+	if (con_is_visible(vc) && !ret)
- 		update_screen(vc);
--	}
- }
- 
- static __inline__ void ywrap_up(struct vc_data *vc, int count)
+@@ -1404,6 +1406,15 @@ static noinline int add_inode_ref(struct
+ 				if (IS_ERR(dir)) {
+ 					ret = PTR_ERR(dir);
+ 					dir = NULL;
++					/*
++					 * A new parent dir may have not been
++					 * logged and not exist in the subvolume
++					 * tree, see the comment above before
++					 * the loop when getting the first
++					 * parent dir.
++					 */
++					if (ret == -ENOENT)
++						ret = 0;
+ 					goto out;
+ 				}
+ 			}
+@@ -2516,9 +2527,8 @@ static int replay_one_buffer(struct btrf
+ 			   key.type == BTRFS_INODE_EXTREF_KEY) {
+ 			ret = add_inode_ref(wc->trans, root, log, path,
+ 					    eb, i, &key);
+-			if (ret && ret != -ENOENT)
++			if (ret)
+ 				break;
+-			ret = 0;
+ 		} else if (key.type == BTRFS_EXTENT_DATA_KEY) {
+ 			ret = replay_one_extent(wc->trans, root, path,
+ 						eb, i, &key);
 
 
