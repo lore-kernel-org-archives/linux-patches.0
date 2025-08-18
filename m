@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8710234E19B;
-	Mon, 18 Aug 2025 14:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6C934E1B9;
+	Mon, 18 Aug 2025 14:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525814; cv=none; b=W8U02GrDvuryPMFaVD3LVLEZjTx6KJ1CPL4rubr/XvORhl+SVLksO9RhPzllhoAk2WfuaDWDSIiHDfmJP3fXbpYI8WPlehSEIqEIxlpdAUMRSyJB3G4RJwXX2n0n3/DTUM0FK16D/IZVPfLuKLQ0dqXQTpgU6BLcVgo4z0MrWxg=
+	t=1755525817; cv=none; b=Zap6O87ITlCw7ihMOMF6MZUfyUimmOuzF0je0fPt/VLaZfQ8MSWeM6enXdnfq1V2b2qnUi3vKB7qqFIRkEt/wqmzo0I3biDN/BiZy3otXheM8tQiRT/giT0jNHVeWIsS4HJXKTFb1vKmMavO4nB+CDtNSdkb1pHMSXMWaUSBdnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525814; c=relaxed/simple;
-	bh=9sueY2WCDO9s/Dhxlc2w5TiR8RXGEApG9irsF+al83Y=;
+	s=arc-20240116; t=1755525817; c=relaxed/simple;
+	bh=e56MxLzooYjlLaC8sISHTB8dPdz5Ai5lSMaP4Q/lVjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsNvW52zaMj5j8eHOs0v5kdKBXEpaT5XCFC3kfnUx3n9zKjvwAX7TRby/V0vgl/qiHAfRflapuEwDsJp1F6dgn9R16gVW7mhaPJvp1uUpUjDBqGG1B66r9WTN+RyUKhj/HaSHPiPnTSxwpvPOlcU4AAVSEssLG8fVPevCOrdUow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJdh32QK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FPUXs5zCQyqxMQVDt3l2CrBPzYC8koYeZhFe45AEtve6FoH33nZgYLE8Y6iRNOl+A2ff/+1LpgRXBwkpmsEeuMlixz9YI3wgtWZx7jpUIGXifb7MRt/soXoTwMSqcLmDpKwtNA9GAdhjp/US8ig+SxJdB3CqQpuc6dXkcPbTy08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=askemrNS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJdh32QK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE34C4CEEB;
-	Mon, 18 Aug 2025 14:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="askemrNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2ACBC4CEEB;
+	Mon, 18 Aug 2025 14:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525814;
-	bh=9sueY2WCDO9s/Dhxlc2w5TiR8RXGEApG9irsF+al83Y=;
+	s=korg; t=1755525817;
+	bh=e56MxLzooYjlLaC8sISHTB8dPdz5Ai5lSMaP4Q/lVjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJdh32QKNjLng7DQeZZ6YFfie28CmCevcfJw+Jo/t22tGTwrVW8vSoEL9CJOo1Hot
-	 LO/YG1gtJW3kM2TfBu/brnxh3+np52tx7yc2WxGzUTmqXd9qVa53KtjSUJiQfUX4QV
-	 B9fdcGue4Zqll5/ZZe/IymLlEb+NOB66ZSshcBA4=
+	b=askemrNSXY22ymvyIPRGX/Fov6w/xEbY65ngNa5al4DOzhoNslUGsCkFIElk3yGKL
+	 0lbBSjv+CKlkv3xXDnyrhlAXbPHVWcP62FAXbKjksUYOXWG8ubPzwdA0T7YQazZi/R
+	 PAAYL9iDVG9Sz1Klgf6SJkY4Rr7CyUVgmvQwtkiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florin Leotescu <florin.leotescu@nxp.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Emily Deng <Emily.Deng@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 373/570] hwmon: (emc2305) Set initial PWM minimum value during probe based on thermal state
-Date: Mon, 18 Aug 2025 14:46:00 +0200
-Message-ID: <20250818124520.219702972@linuxfoundation.org>
+Subject: [PATCH 6.16 343/570] drm/ttm: Should to return the evict error
+Date: Mon, 18 Aug 2025 14:45:30 +0200
+Message-ID: <20250818124519.075150941@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -45,59 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florin Leotescu <florin.leotescu@nxp.com>
+From: Emily Deng <Emily.Deng@amd.com>
 
-[ Upstream commit 0429415a084a15466e87d504e8c2a502488184a5 ]
+[ Upstream commit 4e16a9a00239db5d819197b9a00f70665951bf50 ]
 
-Prevent the PWM value from being set to minimum when thermal zone
-temperature exceeds any trip point during driver probe. Otherwise, the
-PWM fan speed will remains at minimum speed and not respond to
-temperature changes.
+For the evict fail case, the evict error should be returned.
 
-Signed-off-by: Florin Leotescu <florin.leotescu@nxp.com>
-Link: https://lore.kernel.org/r/20250603113125.3175103-5-florin.leotescu@oss.nxp.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+v2: Consider ENOENT case.
+
+v3: Abort directly when the eviction failed for some reason (except for -ENOENT)
+ and not wait for the move to finish
+
+Signed-off-by: Emily Deng <Emily.Deng@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250603091154.3472646-1-Emily.Deng@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/emc2305.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/ttm/ttm_resource.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
-index 234c54956a4b..1dbe3f26467d 100644
---- a/drivers/hwmon/emc2305.c
-+++ b/drivers/hwmon/emc2305.c
-@@ -299,6 +299,12 @@ static int emc2305_set_single_tz(struct device *dev, int idx)
- 		dev_err(dev, "Failed to register cooling device %s\n", emc2305_fan_name[idx]);
- 		return PTR_ERR(data->cdev_data[cdev_idx].cdev);
- 	}
+diff --git a/drivers/gpu/drm/ttm/ttm_resource.c b/drivers/gpu/drm/ttm/ttm_resource.c
+index 769b0ca9be47..006202fcd3c2 100644
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -557,6 +557,9 @@ int ttm_resource_manager_evict_all(struct ttm_device *bdev,
+ 		cond_resched();
+ 	} while (!ret);
+ 
++	if (ret && ret != -ENOENT)
++		return ret;
 +
-+	if (data->cdev_data[cdev_idx].cur_state > 0)
-+		/* Update pwm when temperature is above trips */
-+		pwm = EMC2305_PWM_STATE2DUTY(data->cdev_data[cdev_idx].cur_state,
-+					     data->max_state, EMC2305_FAN_MAX);
-+
- 	/* Set minimal PWM speed. */
- 	if (data->pwm_separate) {
- 		ret = emc2305_set_pwm(dev, pwm, cdev_idx);
-@@ -312,10 +318,10 @@ static int emc2305_set_single_tz(struct device *dev, int idx)
- 		}
- 	}
- 	data->cdev_data[cdev_idx].cur_state =
--		EMC2305_PWM_DUTY2STATE(data->pwm_min[cdev_idx], data->max_state,
-+		EMC2305_PWM_DUTY2STATE(pwm, data->max_state,
- 				       EMC2305_FAN_MAX);
- 	data->cdev_data[cdev_idx].last_hwmon_state =
--		EMC2305_PWM_DUTY2STATE(data->pwm_min[cdev_idx], data->max_state,
-+		EMC2305_PWM_DUTY2STATE(pwm, data->max_state,
- 				       EMC2305_FAN_MAX);
- 	return 0;
- }
+ 	spin_lock(&man->move_lock);
+ 	fence = dma_fence_get(man->move);
+ 	spin_unlock(&man->move_lock);
 -- 
 2.39.5
 
