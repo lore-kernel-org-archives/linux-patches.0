@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5A830E83F;
-	Mon, 18 Aug 2025 12:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E86D31E0ED;
+	Mon, 18 Aug 2025 12:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521525; cv=none; b=MV5Ma7iuXP/PoooGxiT7di6iLaarIM1RHYlUKmE9+Aa0PDKao+f2G1ytzItKh65WX0vsxZweiLnROKx2F81Mlz49CPF/JcXG8dO/uPnDMR4H0It/D0+PxEMN7i1AI19GU4He9brRvvLErLJDiP9b/2aA2mRqla0dG+nWIOUw3+Y=
+	t=1755521528; cv=none; b=uVEUeIh8qjZ3TKninLV/upn/OiigRBydRduNEyBCrG0pfUnyFV+JFYhgkQbTc0VcgHT6oIABGc32OByMsHbG4piB73uj+vtlA71QlJleT/1ILVBpga6E6B+ogP//CpPxBYF5lMuErgurFbo1EGQiCYIJRWMV38XTEIqsVqPSxho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521525; c=relaxed/simple;
-	bh=DU8c7CG3wtLBUUXJNKpbE6Pk95thXszCkSkdH2eWX6A=;
+	s=arc-20240116; t=1755521528; c=relaxed/simple;
+	bh=wWJwqylklMevDmtbMYDMzneU2dQs7hprHYhzXl6h+Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgCfn5yUBkxasazCNPP300STsP267ku6Hu/sW/mNVpbchB1R0gcjiUJ9Aq/0Uza3s6vFP1eS/xI+g5tvbU8YNvLhaji8AVQixTkOxkMy8iz7oQimf7MzjyCmrV/TsmMUtTJDsLQZ9yvtRG7UnyHhrEmV6BldzTQp9wibzC3QiWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLhbjqfQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K25vhEz2caYsAY2AvdoxDpFHiK28anonnJGmpIz6WKQ8j5czuHS78JHy066WsPt3tLyNuE8AnBAg5DPq4TaDFEPHPXvuG3APQCE8X7XdpxpSa8DMXbt7dex+HkgRxja023A4lR/dwWYo853AtG1+Y0e9+5BQCtLWs0xHh4iqHOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtbvTbuL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLhbjqfQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBAAC4CEEB;
-	Mon, 18 Aug 2025 12:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtbvTbuL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF588C4CEEB;
+	Mon, 18 Aug 2025 12:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521525;
-	bh=DU8c7CG3wtLBUUXJNKpbE6Pk95thXszCkSkdH2eWX6A=;
+	s=korg; t=1755521528;
+	bh=wWJwqylklMevDmtbMYDMzneU2dQs7hprHYhzXl6h+Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLhbjqfQMHw2iEeS5OXZxfeIYaneMcBggvs5EeilT+ZJbkgwJAY0zrtLWV14IdYvJ
-	 mhkYRopVEf0K5LcjgpBF0N0S/Q+WEmJSS2Nx6T+rAlUaW50M3Y8Tn9BOplgV8br4pN
-	 lWWE+roSTeHXHeRI2xSIDZpwUc8SXhxs8SIq9JhA=
+	b=MtbvTbuLi5ibOcHatRQ5mOiRed8fsx3UwhXjOlaKvCDMhA/RQ+tGXek0epxx9B23X
+	 ZEezMH4banNQ2iUQCdWLHF9tJe3QdkKf2PGXBQ8eOb35m0b8jFg/l9grrXijR7+X+t
+	 aePVFKtY80uJDC9ODnBXrmabVZod+/Ca5U4+8Aeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 012/444] leds: flash: leds-qcom-flash: Fix registry access after re-bind
-Date: Mon, 18 Aug 2025 14:40:38 +0200
-Message-ID: <20250818124449.364064264@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Youngjun Lee <yjjuny.lee@samsung.com>
+Subject: [PATCH 6.12 003/444] ALSA: usb-audio: Validate UAC3 cluster segment descriptors
+Date: Mon, 18 Aug 2025 14:40:29 +0200
+Message-ID: <20250818124449.013637433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,78 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit fab15f57360b1e6620a1d0d6b0fbee896e6c1f07 upstream.
+commit ecfd41166b72b67d3bdeb88d224ff445f6163869 upstream.
 
-Driver in probe() updates each of 'reg_field' with 'reg_base':
+UAC3 class segment descriptors need to be verified whether their sizes
+match with the declared lengths and whether they fit with the
+allocated buffer sizes, too.  Otherwise malicious firmware may lead to
+the unexpected OOB accesses.
 
-	for (i = 0; i < REG_MAX_COUNT; i++)
-		regs[i].reg += reg_base;
-
-'reg_field' array (under variable 'regs' above) is statically allocated,
-thus each re-bind would add another 'reg_base' leading to bogus
-register addresses.  Constify the local 'reg_field' array and duplicate
-it in probe to solve this.
-
-Fixes: 96a2e242a5dc ("leds: flash: Add driver to support flash LED module in QCOM PMICs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250529063335.8785-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 11785ef53228 ("ALSA: usb-audio: Initial Power Domain support")
+Reported-and-tested-by: Youngjun Lee <yjjuny.lee@samsung.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250814081245.8902-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/flash/leds-qcom-flash.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ sound/usb/stream.c |   25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
---- a/drivers/leds/flash/leds-qcom-flash.c
-+++ b/drivers/leds/flash/leds-qcom-flash.c
-@@ -117,7 +117,7 @@ enum {
- 	REG_MAX_COUNT,
- };
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -341,20 +341,28 @@ snd_pcm_chmap_elem *convert_chmap_v3(str
  
--static struct reg_field mvflash_3ch_regs[REG_MAX_COUNT] = {
-+static const struct reg_field mvflash_3ch_regs[REG_MAX_COUNT] = {
- 	REG_FIELD(0x08, 0, 7),			/* status1	*/
- 	REG_FIELD(0x09, 0, 7),                  /* status2	*/
- 	REG_FIELD(0x0a, 0, 7),                  /* status3	*/
-@@ -132,7 +132,7 @@ static struct reg_field mvflash_3ch_regs
- 	REG_FIELD(0x58, 0, 2),			/* therm_thrsh3 */
- };
+ 	len = le16_to_cpu(cluster->wLength);
+ 	c = 0;
+-	p += sizeof(struct uac3_cluster_header_descriptor);
++	p += sizeof(*cluster);
++	len -= sizeof(*cluster);
  
--static struct reg_field mvflash_4ch_regs[REG_MAX_COUNT] = {
-+static const struct reg_field mvflash_4ch_regs[REG_MAX_COUNT] = {
- 	REG_FIELD(0x06, 0, 7),			/* status1	*/
- 	REG_FIELD(0x07, 0, 6),			/* status2	*/
- 	REG_FIELD(0x09, 0, 7),			/* status3	*/
-@@ -855,11 +855,17 @@ static int qcom_flash_led_probe(struct p
- 	if (val == FLASH_SUBTYPE_3CH_PM8150_VAL || val == FLASH_SUBTYPE_3CH_PMI8998_VAL) {
- 		flash_data->hw_type = QCOM_MVFLASH_3CH;
- 		flash_data->max_channels = 3;
--		regs = mvflash_3ch_regs;
-+		regs = devm_kmemdup(dev, mvflash_3ch_regs, sizeof(mvflash_3ch_regs),
-+				    GFP_KERNEL);
-+		if (!regs)
-+			return -ENOMEM;
- 	} else if (val == FLASH_SUBTYPE_4CH_VAL) {
- 		flash_data->hw_type = QCOM_MVFLASH_4CH;
- 		flash_data->max_channels = 4;
--		regs = mvflash_4ch_regs;
-+		regs = devm_kmemdup(dev, mvflash_4ch_regs, sizeof(mvflash_4ch_regs),
-+				    GFP_KERNEL);
-+		if (!regs)
-+			return -ENOMEM;
+-	while (((p - (void *)cluster) < len) && (c < channels)) {
++	while (len > 0 && (c < channels)) {
+ 		struct uac3_cluster_segment_descriptor *cs_desc = p;
+ 		u16 cs_len;
+ 		u8 cs_type;
  
- 		rc = regmap_read(regmap, reg_base + FLASH_REVISION_REG, &val);
- 		if (rc < 0) {
-@@ -881,6 +887,7 @@ static int qcom_flash_led_probe(struct p
- 		dev_err(dev, "Failed to allocate regmap field, rc=%d\n", rc);
- 		return rc;
++		if (len < sizeof(*p))
++			break;
+ 		cs_len = le16_to_cpu(cs_desc->wLength);
++		if (len < cs_len)
++			break;
+ 		cs_type = cs_desc->bSegmentType;
+ 
+ 		if (cs_type == UAC3_CHANNEL_INFORMATION) {
+ 			struct uac3_cluster_information_segment_descriptor *is = p;
+ 			unsigned char map;
+ 
++			if (cs_len < sizeof(*is))
++				break;
++
+ 			/*
+ 			 * TODO: this conversion is not complete, update it
+ 			 * after adding UAC3 values to asound.h
+@@ -456,6 +464,7 @@ snd_pcm_chmap_elem *convert_chmap_v3(str
+ 			chmap->map[c++] = map;
+ 		}
+ 		p += cs_len;
++		len -= cs_len;
  	}
-+	devm_kfree(dev, regs); /* devm_regmap_field_bulk_alloc() makes copies */
  
- 	platform_set_drvdata(pdev, flash_data);
- 	mutex_init(&flash_data->lock);
+ 	if (channels < c)
+@@ -880,7 +889,7 @@ snd_usb_get_audioformat_uac3(struct snd_
+ 	u64 badd_formats = 0;
+ 	unsigned int num_channels;
+ 	struct audioformat *fp;
+-	u16 cluster_id, wLength;
++	u16 cluster_id, wLength, cluster_wLength;
+ 	int clock = 0;
+ 	int err;
+ 
+@@ -1008,6 +1017,16 @@ snd_usb_get_audioformat_uac3(struct snd_
+ 			iface_no, altno);
+ 		kfree(cluster);
+ 		return ERR_PTR(-EIO);
++	}
++
++	cluster_wLength = le16_to_cpu(cluster->wLength);
++	if (cluster_wLength < sizeof(*cluster) ||
++	    cluster_wLength > wLength) {
++		dev_err(&dev->dev,
++			"%u:%d : invalid Cluster Descriptor size\n",
++			iface_no, altno);
++		kfree(cluster);
++		return ERR_PTR(-EIO);
+ 	}
+ 
+ 	num_channels = cluster->bNrChannels;
 
 
