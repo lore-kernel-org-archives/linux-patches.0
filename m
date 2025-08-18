@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D652135CE;
-	Mon, 18 Aug 2025 13:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950532135CE;
+	Mon, 18 Aug 2025 13:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523015; cv=none; b=bNnb5tUrSD0aetjBGNmduF6itsSr4CHL5+nvsqKM3OjPUUiykwFC70v/qSRe1/Asm9QcxrjDmylG9pcEe55nQhyhAmGLtbBCYMygHIYFEI/qtTY4pXFU7tcLfhDmszO/X7lS0QfrjuGdz8CC1lWmerk9fmbXoXVdPvj8+dp9Blw=
+	t=1755523018; cv=none; b=aCChhX7tV12JlkeiaWmSSJ8uz1mTv5VBkVv6oi2eg3egJ+CDzLU6LMJo5/ZWE5kFn87chdP1Jj997pLBC6igwkbYeySLrp9mP7nWl7UNPKkeC39fbtNv3wXu/iQZizcGdaN6z4YLyUPCHODp5hy3L44taL6Y/IUn6y0JW5ZdxcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523015; c=relaxed/simple;
-	bh=dUK2pYVeWZCEQam6fXX0HuOmn302pfCCP3RGrwkw6Bk=;
+	s=arc-20240116; t=1755523018; c=relaxed/simple;
+	bh=uqCQt1DbC9WuYT97+xPodG46HP06+UfvqbxscJw1tu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZ2KCS8cDUw2MIrgDSvEpn9OjR03q4TMRlO9xl1wpzIFXELeD+K05WFyX+DY+ET+zmZ8A0kUXtQSJOannYU0vSyKlGN3nts1iggCft89baFoqDvfyLcuzzrY9E2hH4RRwm05Z4bn53bV90KNlVxxWul/UoOIKo/Bk3HzrRumEOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdfMNo13; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TMb6SRC9cPqPKSzy3JTTKZwTESKKPxvO9Ou/80TQ5ktgVBc/6/Lg8cmWKeBhPgDyLLRleOYxyze5U1pOveZ6F4hD09Le6G2aRCROYEtP0zB1vB3sAp46WecVwsdf5rdNc7owrQH/A0JpntXbgGumwdkzB1hj+fw1wzh25M3zQfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxcmMIch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdfMNo13"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CC0C4CEEB;
-	Mon, 18 Aug 2025 13:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxcmMIch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D40C4CEEB;
+	Mon, 18 Aug 2025 13:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523015;
-	bh=dUK2pYVeWZCEQam6fXX0HuOmn302pfCCP3RGrwkw6Bk=;
+	s=korg; t=1755523018;
+	bh=uqCQt1DbC9WuYT97+xPodG46HP06+UfvqbxscJw1tu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LdfMNo13E+2ytwdQQf1KJesfxXpN8qqn5RzDtC9i5v6wjhAMRgbdxc/bc5wTPMkFL
-	 bRPiubpHCxfbL/MiCqmcacj/XiSCY5MQ64gEbbLBO0TIAAHe7Czb+RzkLme7Rfimnn
-	 GPvGFMRIbvMLlOrCSYfBALbsFiWssksmwRLI6uEQ=
+	b=NxcmMIchW3yfrWWDirAQ/SZI0zHj36mLqjwNL/qX7KBO4PwQr4poHJIlnRop/PTFE
+	 F74IDn5FVf958WkWQVQDaMmsCcLm4Lhyz0rAMWlzDSVw+Ifnb8JsB2udAMghR8qyQD
+	 f6QMkZu9nOfYq79fTRrmRs5kaf6A+8VJhWqFoyjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.15 043/515] fscrypt: Dont use problematic non-inline crypto engines
-Date: Mon, 18 Aug 2025 14:40:29 +0200
-Message-ID: <20250818124500.088399387@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.15 044/515] fs: Prevent file descriptor table allocations exceeding INT_MAX
+Date: Mon, 18 Aug 2025 14:40:30 +0200
+Message-ID: <20250818124500.125000000@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -50,244 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Sasha Levin <sashal@kernel.org>
 
-commit b41c1d8d07906786c60893980d52688f31d114a6 upstream.
+commit 04a2c4b4511d186b0fce685da21085a5d4acd370 upstream.
 
-Make fscrypt no longer use Crypto API drivers for non-inline crypto
-engines, even when the Crypto API prioritizes them over CPU-based code
-(which unfortunately it often does).  These drivers tend to be really
-problematic, especially for fscrypt's workload.  This commit has no
-effect on inline crypto engines, which are different and do work well.
+When sysctl_nr_open is set to a very high value (for example, 1073741816
+as set by systemd), processes attempting to use file descriptors near
+the limit can trigger massive memory allocation attempts that exceed
+INT_MAX, resulting in a WARNING in mm/slub.c:
 
-Specifically, exclude drivers that have CRYPTO_ALG_KERN_DRIVER_ONLY or
-CRYPTO_ALG_ALLOCATES_MEMORY set.  (Later, CRYPTO_ALG_ASYNC should be
-excluded too.  That's omitted for now to keep this commit backportable,
-since until recently some CPU-based code had CRYPTO_ALG_ASYNC set.)
+  WARNING: CPU: 0 PID: 44 at mm/slub.c:5027 __kvmalloc_node_noprof+0x21a/0x288
 
-There are two major issues with these drivers: bugs and performance.
+This happens because kvmalloc_array() and kvmalloc() check if the
+requested size exceeds INT_MAX and emit a warning when the allocation is
+not flagged with __GFP_NOWARN.
 
-First, these drivers tend to be buggy.  They're fundamentally much more
-error-prone and harder to test than the CPU-based code.  They often
-don't get tested before kernel releases, and even if they do, the crypto
-self-tests don't properly test these drivers.  Released drivers have
-en/decrypted or hashed data incorrectly.  These bugs cause issues for
-fscrypt users who often didn't even want to use these drivers, e.g.:
+Specifically, when nr_open is set to 1073741816 (0x3ffffff8) and a
+process calls dup2(oldfd, 1073741880), the kernel attempts to allocate:
+- File descriptor array: 1073741880 * 8 bytes = 8,589,935,040 bytes
+- Multiple bitmaps: ~400MB
+- Total allocation size: > 8GB (exceeding INT_MAX = 2,147,483,647)
 
-- https://github.com/google/fscryptctl/issues/32
-- https://github.com/google/fscryptctl/issues/9
-- https://lore.kernel.org/r/PH0PR02MB731916ECDB6C613665863B6CFFAA2@PH0PR02MB7319.namprd02.prod.outlook.com
+Reproducer:
+1. Set /proc/sys/fs/nr_open to 1073741816:
+   # echo 1073741816 > /proc/sys/fs/nr_open
 
-These drivers have also similarly caused issues for dm-crypt users,
-including data corruption and deadlocks.  Since Linux v5.10, dm-crypt
-has disabled most of them by excluding CRYPTO_ALG_ALLOCATES_MEMORY.
+2. Run a program that uses a high file descriptor:
+   #include <unistd.h>
+   #include <sys/resource.h>
 
-Second, these drivers tend to be *much* slower than the CPU-based code.
-This may seem counterintuitive, but benchmarks clearly show it.  There's
-a *lot* of overhead associated with going to a hardware driver, off the
-CPU, and back again.  To prove this, I gathered as many systems with
-this type of crypto engine as I could, and I measured synchronous
-encryption of 4096-byte messages (which matches fscrypt's workload):
+   int main() {
+       struct rlimit rlim = {1073741824, 1073741824};
+       setrlimit(RLIMIT_NOFILE, &rlim);
+       dup2(2, 1073741880);  // Triggers the warning
+       return 0;
+   }
 
-Intel Emerald Rapids server:
-   AES-256-XTS:
-      xts-aes-vaes-avx512   16171 MB/s  [CPU-based, Vector AES]
-      qat_aes_xts             289 MB/s  [Offload, Intel QuickAssist]
+3. Observe WARNING in dmesg at mm/slub.c:5027
 
-Qualcomm SM8650 HDK:
-   AES-256-XTS:
-      xts-aes-ce             4301 MB/s  [CPU-based, ARMv8 Crypto Extensions]
-      xts-aes-qce              73 MB/s  [Offload, Qualcomm Crypto Engine]
+systemd commit a8b627a introduced automatic bumping of fs.nr_open to the
+maximum possible value. The rationale was that systems with memory
+control groups (memcg) no longer need separate file descriptor limits
+since memory is properly accounted. However, this change overlooked
+that:
 
-i.MX 8M Nano LPDDR4 EVK:
-   AES-256-XTS:
-      xts-aes-ce              647 MB/s   [CPU-based, ARMv8 Crypto Extensions]
-      xts(ecb-aes-caam)        20 MB/s   [Offload, CAAM]
-   AES-128-CBC-ESSIV:
-      essiv(cbc-aes-caam,sha256-lib) 23 MB/s   [Offload, CAAM]
+1. The kernel's allocation functions still enforce INT_MAX as a maximum
+   size regardless of memcg accounting
+2. Programs and tests that legitimately test file descriptor limits can
+   inadvertently trigger massive allocations
+3. The resulting allocations (>8GB) are impractical and will always fail
 
-STM32MP157F-DK2:
-   AES-256-XTS:
-      xts-aes-neonbs         13.2 MB/s   [CPU-based, ARM NEON]
-      xts(stm32-ecb-aes)     3.1 MB/s    [Offload, STM32 crypto engine]
-   AES-128-CBC-ESSIV:
-      essiv(cbc-aes-neonbs,sha256-lib)
-                             14.7 MB/s   [CPU-based, ARM NEON]
-      essiv(stm32-cbc-aes,sha256-lib)
-                             3.2 MB/s    [Offload, STM32 crypto engine]
-   Adiantum:
-      adiantum(xchacha12-arm,aes-arm,nhpoly1305-neon)
-                             52.8 MB/s   [CPU-based, ARM scalar + NEON]
+systemd's algorithm starts with INT_MAX and keeps halving the value
+until the kernel accepts it. On most systems, this results in nr_open
+being set to 1073741816 (0x3ffffff8), which is just under 1GB of file
+descriptors.
 
-So, there was no case in which the crypto engine was even *close* to
-being faster.  On the first three, which have AES instructions in the
-CPU, the CPU was 30 to 55 times faster (!).  Even on STM32MP157F-DK2
-which has a Cortex-A7 CPU that doesn't have AES instructions, AES was
-over 4 times faster on the CPU.  And Adiantum encryption, which is what
-actually should be used on CPUs like that, was over 17 times faster.
+While processes rarely use file descriptors near this limit in normal
+operation, certain selftests (like
+tools/testing/selftests/core/unshare_test.c) and programs that test file
+descriptor limits can trigger this issue.
 
-Other justifications that have been given for these non-inline crypto
-engines (almost always coming from the hardware vendors, not actual
-users) don't seem very plausible either:
+Fix this by adding a check in alloc_fdtable() to ensure the requested
+allocation size does not exceed INT_MAX. This causes the operation to
+fail with -EMFILE instead of triggering a kernel warning and avoids the
+impractical >8GB memory allocation request.
 
-  - The crypto engine throughput could be improved by processing
-    multiple requests concurrently.  Currently irrelevant to fscrypt,
-    since it doesn't do that.  This would also be complex, and unhelpful
-    in many cases.  2 of the 4 engines I tested even had only one queue.
-
-  - Some of the engines, e.g. STM32, support hardware keys.  Also
-    currently irrelevant to fscrypt, since it doesn't support these.
-    Interestingly, the STM32 driver itself doesn't support this either.
-
-  - Free up CPU for other tasks and/or reduce energy usage.  Not very
-    plausible considering the "short" message length, driver overhead,
-    and scheduling overhead.  There's just very little time for the CPU
-    to do something else like run another task or enter low-power state,
-    before the message finishes and it's time to process the next one.
-
-  - Some of these engines resist power analysis and electromagnetic
-    attacks, while the CPU-based crypto generally does not.  In theory,
-    this sounds great.  In practice, if this benefit requires the use of
-    an off-CPU offload that massively regresses performance and has a
-    low-quality, buggy driver, the price for this hardening (which is
-    not relevant to most fscrypt users, and tends to be incomplete) is
-    just too high.  Inline crypto engines are much more promising here,
-    as are on-CPU solutions like RISC-V High Assurance Cryptography.
-
-Fixes: b30ab0e03407 ("ext4 crypto: add ext4 encryption facilities")
+Fixes: 9cfe015aa424 ("get rid of NR_OPEN and introduce a sysctl_nr_open")
 Cc: stable@vger.kernel.org
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20250704070322.20692-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20250629074021.1038845-1-sashal@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/fscrypt.rst |   37 +++++++++++++---------------------
- fs/crypto/fscrypt_private.h           |   17 +++++++++++++++
- fs/crypto/hkdf.c                      |    2 -
- fs/crypto/keysetup.c                  |    3 +-
- fs/crypto/keysetup_v1.c               |    3 +-
- 5 files changed, 37 insertions(+), 25 deletions(-)
+ fs/file.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/Documentation/filesystems/fscrypt.rst
-+++ b/Documentation/filesystems/fscrypt.rst
-@@ -140,9 +140,8 @@ However, these ioctls have some limitati
-   were wiped.  To partially solve this, you can add init_on_free=1 to
-   your kernel command line.  However, this has a performance cost.
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -197,6 +197,21 @@ static struct fdtable *alloc_fdtable(uns
+ 			return ERR_PTR(-EMFILE);
+ 	}
  
--- Secret keys might still exist in CPU registers, in crypto
--  accelerator hardware (if used by the crypto API to implement any of
--  the algorithms), or in other places not explicitly considered here.
-+- Secret keys might still exist in CPU registers or in other places
-+  not explicitly considered here.
- 
- Limitations of v1 policies
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -377,9 +376,12 @@ the work is done by XChaCha12, which is
- acceleration is unavailable.  For more information about Adiantum, see
- `the Adiantum paper <https://eprint.iacr.org/2018/720.pdf>`_.
- 
--The (AES-128-CBC-ESSIV, AES-128-CBC-CTS) pair exists only to support
--systems whose only form of AES acceleration is an off-CPU crypto
--accelerator such as CAAM or CESA that does not support XTS.
-+The (AES-128-CBC-ESSIV, AES-128-CBC-CTS) pair was added to try to
-+provide a more efficient option for systems that lack AES instructions
-+in the CPU but do have a non-inline crypto engine such as CAAM or CESA
-+that supports AES-CBC (and not AES-XTS).  This is deprecated.  It has
-+been shown that just doing AES on the CPU is actually faster.
-+Moreover, Adiantum is faster still and is recommended on such systems.
- 
- The remaining mode pairs are the "national pride ciphers":
- 
-@@ -1285,22 +1287,13 @@ this by validating all top-level encrypt
- Inline encryption support
- =========================
- 
--By default, fscrypt uses the kernel crypto API for all cryptographic
--operations (other than HKDF, which fscrypt partially implements
--itself).  The kernel crypto API supports hardware crypto accelerators,
--but only ones that work in the traditional way where all inputs and
--outputs (e.g. plaintexts and ciphertexts) are in memory.  fscrypt can
--take advantage of such hardware, but the traditional acceleration
--model isn't particularly efficient and fscrypt hasn't been optimized
--for it.
--
--Instead, many newer systems (especially mobile SoCs) have *inline
--encryption hardware* that can encrypt/decrypt data while it is on its
--way to/from the storage device.  Linux supports inline encryption
--through a set of extensions to the block layer called *blk-crypto*.
--blk-crypto allows filesystems to attach encryption contexts to bios
--(I/O requests) to specify how the data will be encrypted or decrypted
--in-line.  For more information about blk-crypto, see
-+Many newer systems (especially mobile SoCs) have *inline encryption
-+hardware* that can encrypt/decrypt data while it is on its way to/from
-+the storage device.  Linux supports inline encryption through a set of
-+extensions to the block layer called *blk-crypto*.  blk-crypto allows
-+filesystems to attach encryption contexts to bios (I/O requests) to
-+specify how the data will be encrypted or decrypted in-line.  For more
-+information about blk-crypto, see
- :ref:`Documentation/block/inline-encryption.rst <inline_encryption>`.
- 
- On supported filesystems (currently ext4 and f2fs), fscrypt can use
---- a/fs/crypto/fscrypt_private.h
-+++ b/fs/crypto/fscrypt_private.h
-@@ -27,6 +27,23 @@
-  */
- #define FSCRYPT_MIN_KEY_SIZE	16
- 
-+/*
-+ * This mask is passed as the third argument to the crypto_alloc_*() functions
-+ * to prevent fscrypt from using the Crypto API drivers for non-inline crypto
-+ * engines.  Those drivers have been problematic for fscrypt.  fscrypt users
-+ * have reported hangs and even incorrect en/decryption with these drivers.
-+ * Since going to the driver, off CPU, and back again is really slow, such
-+ * drivers can be over 50 times slower than the CPU-based code for fscrypt's
-+ * workload.  Even on platforms that lack AES instructions on the CPU, using the
-+ * offloads has been shown to be slower, even staying with AES.  (Of course,
-+ * Adiantum is faster still, and is the recommended option on such platforms...)
-+ *
-+ * Note that fscrypt also supports inline crypto engines.  Those don't use the
-+ * Crypto API and work much better than the old-style (non-inline) engines.
-+ */
-+#define FSCRYPT_CRYPTOAPI_MASK \
-+	(CRYPTO_ALG_ALLOCATES_MEMORY | CRYPTO_ALG_KERN_DRIVER_ONLY)
++	/*
++	 * Check if the allocation size would exceed INT_MAX. kvmalloc_array()
++	 * and kvmalloc() will warn if the allocation size is greater than
++	 * INT_MAX, as filp_cachep objects are not __GFP_NOWARN.
++	 *
++	 * This can happen when sysctl_nr_open is set to a very high value and
++	 * a process tries to use a file descriptor near that limit. For example,
++	 * if sysctl_nr_open is set to 1073741816 (0x3ffffff8) - which is what
++	 * systemd typically sets it to - then trying to use a file descriptor
++	 * close to that value will require allocating a file descriptor table
++	 * that exceeds 8GB in size.
++	 */
++	if (unlikely(nr > INT_MAX / sizeof(struct file *)))
++		return ERR_PTR(-EMFILE);
 +
- #define FSCRYPT_CONTEXT_V1	1
- #define FSCRYPT_CONTEXT_V2	2
- 
---- a/fs/crypto/hkdf.c
-+++ b/fs/crypto/hkdf.c
-@@ -56,7 +56,7 @@ int fscrypt_init_hkdf(struct fscrypt_hkd
- 	u8 prk[HKDF_HASHLEN];
- 	int err;
- 
--	hmac_tfm = crypto_alloc_shash(HKDF_HMAC_ALG, 0, 0);
-+	hmac_tfm = crypto_alloc_shash(HKDF_HMAC_ALG, 0, FSCRYPT_CRYPTOAPI_MASK);
- 	if (IS_ERR(hmac_tfm)) {
- 		fscrypt_err(NULL, "Error allocating " HKDF_HMAC_ALG ": %ld",
- 			    PTR_ERR(hmac_tfm));
---- a/fs/crypto/keysetup.c
-+++ b/fs/crypto/keysetup.c
-@@ -103,7 +103,8 @@ fscrypt_allocate_skcipher(struct fscrypt
- 	struct crypto_skcipher *tfm;
- 	int err;
- 
--	tfm = crypto_alloc_skcipher(mode->cipher_str, 0, 0);
-+	tfm = crypto_alloc_skcipher(mode->cipher_str, 0,
-+				    FSCRYPT_CRYPTOAPI_MASK);
- 	if (IS_ERR(tfm)) {
- 		if (PTR_ERR(tfm) == -ENOENT) {
- 			fscrypt_warn(inode,
---- a/fs/crypto/keysetup_v1.c
-+++ b/fs/crypto/keysetup_v1.c
-@@ -52,7 +52,8 @@ static int derive_key_aes(const u8 *mast
- 	struct skcipher_request *req = NULL;
- 	DECLARE_CRYPTO_WAIT(wait);
- 	struct scatterlist src_sg, dst_sg;
--	struct crypto_skcipher *tfm = crypto_alloc_skcipher("ecb(aes)", 0, 0);
-+	struct crypto_skcipher *tfm =
-+		crypto_alloc_skcipher("ecb(aes)", 0, FSCRYPT_CRYPTOAPI_MASK);
- 
- 	if (IS_ERR(tfm)) {
- 		res = PTR_ERR(tfm);
+ 	fdt = kmalloc(sizeof(struct fdtable), GFP_KERNEL_ACCOUNT);
+ 	if (!fdt)
+ 		goto out;
 
 
