@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4541A258EC8;
-	Mon, 18 Aug 2025 12:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD6E258EC8;
+	Mon, 18 Aug 2025 12:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521913; cv=none; b=riT6RrStU4H/fE2dyWcIrtLe/edjxE+SfIiP5Q2gqo1yuO0QoyVxhDcuuFxxP9UPlhpabc5XJPXcL9S33WZmgjH2M+H/P5cvryRkWa9jnjFf2ts6J9YBm2HHceVMwXy2Gj+TK5tCZkhDGldyPE2/6Nn5InPjzNw9tHQvqIp5sGc=
+	t=1755521916; cv=none; b=Jl+dzLzP8HY59yk5nSEX4YCzH/XJOVDK1592+O/Z6PoXyyKFxoVTpplW0fiydL2NHIM/HG1oRWVdN8L2CL5VZpHo0anow3VFzzOcDiMCJzWWG52NxI6DJ13ONNcwCzJRQ9UaX2zNbiY4pLm0TOYuzTpuHUDiQafYpXnSdmEs9ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521913; c=relaxed/simple;
-	bh=XBW3cUeYdKs6IUZQTXgKkGG53PSxEHruYyIuVObbBKA=;
+	s=arc-20240116; t=1755521916; c=relaxed/simple;
+	bh=QO2g3DyUd2bDzpOROtJ/lnP/pE1+seiD/zuSCru0vQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhaKh/ReVgQChxydnpIZYpZuQI3EbQWf18YbFcZkCPhJGIS5BR/aj2CDfZ6cilJG6mnXeMxJizwa2z+YglXD2nrwZEvYJjj7X+NSjGiPrE+MoVd8HJQc9o1TmW2yJnC4/k+F5UxA+RZJqkCOpJybolhyAEEk7iwF4cMrrH4Mv4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6c827HF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X7CyIO5sSbyw+8i5FNrAGHnWKlHDa/5aEsuqipzitwIduy9ZsxW4zPaYSWFf7iiNaB+cOFP834eR410Nhci9X7y3J0KQTzbV1dGQgXQXDsd3MlEFjIOKuk5cHscCUGCKmmFaZ6QWL9ASXJ+yrZo1kYh8U2AXv5dmGL/ba6htvs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhubXloJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6c827HF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86BAC4CEEB;
-	Mon, 18 Aug 2025 12:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhubXloJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC97C4CEEB;
+	Mon, 18 Aug 2025 12:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521913;
-	bh=XBW3cUeYdKs6IUZQTXgKkGG53PSxEHruYyIuVObbBKA=;
+	s=korg; t=1755521916;
+	bh=QO2g3DyUd2bDzpOROtJ/lnP/pE1+seiD/zuSCru0vQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6c827HF1nrX79tQTLppDQtQc/kGGG6JiBiwcAT1JnqyaWRXYCHbiAnerQX5a8cJt
-	 IO7jpPL5wepPzug5H6Ms4yWZ2IxlpJhhb1lUi1s0fJtQ51dSMgInWh3NtvR7a8VU59
-	 V/uGIg27IIrBu+vfuNXXdnoBy1GZIrrE2t1XQ/Js=
+	b=uhubXloJQnSKdr7Fp5QWyrca7SWikw/Zi4jmTTwbsrS3k5ORHdNk1Dz4H87q+w1Ar
+	 UNoaYO3ZQQJgns80z5/5qP/RZ9uxC4hKfqI7CTEVyTt8/1M7OyNacJJAygi/JM9hi9
+	 GXVAhyqBgWitMkEszN1Kqxi9iVrlNsnZl/O0QCy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/444] ASoC: qcom: use drvdata instead of component to keep id
-Date: Mon, 18 Aug 2025 14:43:06 +0200
-Message-ID: <20250818124454.894133070@linuxfoundation.org>
+Subject: [PATCH 6.12 161/444] netfilter: nft_set_pipapo: prefer kvmalloc for scratch maps
+Date: Mon, 18 Aug 2025 14:43:07 +0200
+Message-ID: <20250818124454.929293717@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,139 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srini@kernel.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 8167f4f42572818fa8153be2b03e4c2120846603 ]
+[ Upstream commit 897eefee2eb73ec6c119a0ca357d7b4a3e92c5ef ]
 
-Qcom lpass is using component->id to keep DAI ID (A).
+The scratchmap size depends on the number of elements in the set.
+For huge sets, each scratch map can easily require very large
+allocations, e.g. for 100k entries each scratch map will require
+close to 64kbyte of memory.
 
-(S)	static int lpass_platform_pcmops_open(
-				sruct snd_soc_component *component,
-				struct snd_pcm_substream *substream)
-	{			                          ^^^^^^^^^(B0)
-		...
-(B1)		struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
-(B2)		struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-		...
-(B3)		unsigned int dai_id = cpu_dai->driver->id;
-
-(A)		component->id = dai_id;
-		...
-	}
-
-This driver can get dai_id from substream (B0 - B3).
-In this driver, below functions get dai_id from component->id (A).
-
-(X)	lpass_platform_pcmops_suspend()
-(Y)	lpass_platform_pcmops_resume()
-(Z)	lpass_platform_copy()
-
-Here, (Z) can get it from substream (B0 - B3), don't need to use
-component->id (A). On suspend/resume (X)(Y), dai_id can only be obtained
-from component->id (A), because there is no substream (B0) in function
-parameter.
-
-But, component->id (A) itself should not be used for such purpose.
-It is intilialized at snd_soc_component_initialize(), and parsed its ID
-(= component->id) from device name (a).
-
-	int snd_soc_component_initialize(...)
-	{
-		...
-		if (!component->name) {
-(a)			component->name = fmt_single_name(dev, &component->id);
-			...                                     ^^^^^^^^^^^^^
-		}
-		...
-	}
-
-Unfortunately, current code is broken to start with.
-
-There are many regmaps that the driver cares about, however its only
-managing one (either dp or i2s) in component suspend/resume path.
-
-I2S regmap is mandatory however other regmaps are setup based on flags
-like "hdmi_port_enable" and "codec_dma_enable".
-
-Correct thing for suspend/resume path to handle is by checking these
-flags, instead of using component->id.
-
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87a56ouuob.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/lpass-platform.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index addd2c4bdd3e..b6a33b1f4f7e 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -202,7 +202,6 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
- 	struct regmap *map;
- 	unsigned int dai_id = cpu_dai->driver->id;
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index c5855069bdab..9e4e25f2458f 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1219,7 +1219,7 @@ static void pipapo_free_scratch(const struct nft_pipapo_match *m, unsigned int c
  
--	component->id = dai_id;
- 	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
-@@ -1190,13 +1189,14 @@ static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
- {
- 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
- 	struct regmap *map;
--	unsigned int dai_id = component->id;
- 
--	if (dai_id == LPASS_DP_RX)
-+	if (drvdata->hdmi_port_enable) {
- 		map = drvdata->hdmiif_map;
--	else
--		map = drvdata->lpaif_map;
-+		regcache_cache_only(map, true);
-+		regcache_mark_dirty(map);
-+	}
- 
-+	map = drvdata->lpaif_map;
- 	regcache_cache_only(map, true);
- 	regcache_mark_dirty(map);
- 
-@@ -1207,14 +1207,19 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
- {
- 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
- 	struct regmap *map;
--	unsigned int dai_id = component->id;
-+	int ret;
- 
--	if (dai_id == LPASS_DP_RX)
-+	if (drvdata->hdmi_port_enable) {
- 		map = drvdata->hdmiif_map;
--	else
--		map = drvdata->lpaif_map;
-+		regcache_cache_only(map, false);
-+		ret = regcache_sync(map);
-+		if (ret)
-+			return ret;
-+	}
- 
-+	map = drvdata->lpaif_map;
- 	regcache_cache_only(map, false);
-+
- 	return regcache_sync(map);
+ 	mem = s;
+ 	mem -= s->align_off;
+-	kfree(mem);
++	kvfree(mem);
  }
  
-@@ -1224,7 +1229,9 @@ static int lpass_platform_copy(struct snd_soc_component *component,
- 			       unsigned long bytes)
- {
- 	struct snd_pcm_runtime *rt = substream->runtime;
--	unsigned int dai_id = component->id;
-+	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-+	unsigned int dai_id = cpu_dai->driver->id;
- 	int ret = 0;
- 
- 	void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
+ /**
+@@ -1240,10 +1240,9 @@ static int pipapo_realloc_scratch(struct nft_pipapo_match *clone,
+ 		void *scratch_aligned;
+ 		u32 align_off;
+ #endif
+-		scratch = kzalloc_node(struct_size(scratch, map,
+-						   bsize_max * 2) +
+-				       NFT_PIPAPO_ALIGN_HEADROOM,
+-				       GFP_KERNEL_ACCOUNT, cpu_to_node(i));
++		scratch = kvzalloc_node(struct_size(scratch, map, bsize_max * 2) +
++					NFT_PIPAPO_ALIGN_HEADROOM,
++					GFP_KERNEL_ACCOUNT, cpu_to_node(i));
+ 		if (!scratch) {
+ 			/* On failure, there's no need to undo previous
+ 			 * allocations: this means that some scratch maps have
 -- 
 2.39.5
 
