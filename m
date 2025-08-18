@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB3E230D0D;
-	Mon, 18 Aug 2025 13:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4953831CA55;
+	Mon, 18 Aug 2025 13:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522297; cv=none; b=orxLDvZ/1AHD2Aj6lGPn2H2AjmGqp4sphZl/rCj2R4PvVsb8OUtv2MSVU0zK4cFLW8jACxyqgc1DIWL98ozT0RVxD0p/AoHVgg3munPL+KVVxCDYszvMIPNXdDYN4e/WVINBIJvoSRDaU/YMY21ep4F2onnfq+UMJJTGowxkAak=
+	t=1755522301; cv=none; b=qgLKfEQRuwttTLDvVakLaju0CJi1KPAaCMXCr/r+UyMZh+tfh/Safvy3dJYkoSQ3GEEY4/FPx1eD4lRMcI85vcs6ZsWT6fexj9+eWM4wKgmayH1pQwUgyIuQ1mNiQjNA+Lf84BLac5Rl/BFXxw5kRiK1NU/cXxkYKMW7S2aocuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522297; c=relaxed/simple;
-	bh=uUl6W3T4mEJwSir4SirtHQ2v02Lm1DAhPu5OH65L+TE=;
+	s=arc-20240116; t=1755522301; c=relaxed/simple;
+	bh=uBJw7FC1EW8VolAbxdjCj/bhJ/Oy8c0WQv8XtqTcAWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0iLILsOo2FsGmuHVbwmHqZfqqTZ4BZtJuLssoCwVfxDV20BvvDw7/T3AOomKSrKMpP7uYd7NtkqaYGq3Jvklwky7Xw+CsCRx/puEeGPRNhlFHhXgbdp6dkk6hMBfhpc9pmN6uOmBf2JuCL4xn9hWl0bzmdHoFQAwTdKFNp+IZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5itGeW7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jz3LI5y9giXl744yK0/Q3dWseB+2ufgYSAi+OmNiiL0e4W94Gus2MZAgQ6trf04oSBcvjplYfS1OvXQHL8d9tlhjc5ZHWHbqEby7FWE/xXJOyA8BeThHs7FAmX3lP3ZC/lWmSr/JWrPLNKPq+nVLiaNyTc/Ej3vMttcy80Zjk+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4Oj3yYO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5itGeW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936C0C4CEEB;
-	Mon, 18 Aug 2025 13:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4Oj3yYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8902EC4CEEB;
+	Mon, 18 Aug 2025 13:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522297;
-	bh=uUl6W3T4mEJwSir4SirtHQ2v02Lm1DAhPu5OH65L+TE=;
+	s=korg; t=1755522301;
+	bh=uBJw7FC1EW8VolAbxdjCj/bhJ/Oy8c0WQv8XtqTcAWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A5itGeW7ZZzFWk0funn/iU7nI7PhJovKyB0ad6X4gkTCe4WONA1QCOalUfrMZafNF
-	 WCPo8pEFHkhde60+soQjW4/Tv3IftpgcgUAJKmiSUpeNewvVVQ2uzi0sPrfIsvGVGm
-	 YqNqMd0mu0y0ml0pOgBibjjZLJIrY7hS6M9+RU2M=
+	b=h4Oj3yYObpRg8MImTJiHvULqKLq+u1RPn/QnFVtoCL+qmeFj+QKDQBgiKAvoB7mvI
+	 WTEDKcm3R1nN+4U1cCmqS6HYzD6D0o5CNB9P56ZkfWLy6S2r+9xfGFJ3sGphzDLpeS
+	 DIt0YDaPzaeyZa7gJJATZMK8LAGeRrz9/vPqQYHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sun peng (Leo) Li" <sunpeng.li@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
 	Ivan Lipski <ivan.lipski@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 274/444] drm/amd/display: Avoid configuring PSR granularity if PSR-SU not supported
-Date: Mon, 18 Aug 2025 14:45:00 +0200
-Message-ID: <20250818124459.246294194@linuxfoundation.org>
+Subject: [PATCH 6.12 275/444] drm/amd/display: Disable dsc_power_gate for dcn314 by default
+Date: Mon, 18 Aug 2025 14:45:01 +0200
+Message-ID: <20250818124459.283668916@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -54,46 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Roman Li <Roman.Li@amd.com>
 
-[ Upstream commit a5ce8695d6d1b40d6960d2d298b579042c158f25 ]
+[ Upstream commit 02f3ec53177243d32ee8b6f8ba99136d7887ee3a ]
 
 [Why]
-If PSR-SU is disabled on the link, then configuring su_y granularity in
-mod_power_calc_psr_configs() can lead to assertions in
-psr_su_set_dsc_slice_height().
+"REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line"
+warnings seen after resuming from s2idle.
+DCN314 has issues with DSC power gating that cause REG_WAIT timeouts
+when attempting to power down DSC blocks.
 
 [How]
-Check the PSR version in amdgpu_dm_link_setup_psr() to determine whether
-or not to configure granularity.
+Disable dsc_power_gate for dcn314 by default.
 
-Reviewed-by: Sun peng (Leo) Li <sunpeng.li@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Roman Li <Roman.Li@amd.com>
 Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
-index e140b7a04d72..d63038ec4ec7 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
-@@ -127,8 +127,10 @@ bool amdgpu_dm_link_setup_psr(struct dc_stream_state *stream)
- 		psr_config.allow_multi_disp_optimizations =
- 			(amdgpu_dc_feature_mask & DC_PSR_ALLOW_MULTI_DISP_OPT);
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
+index 01d95108ce66..585c3e8a2194 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
+@@ -927,6 +927,7 @@ static const struct dc_debug_options debug_defaults_drv = {
+ 	.seamless_boot_odm_combine = true,
+ 	.enable_legacy_fast_update = true,
+ 	.using_dml2 = false,
++	.disable_dsc_power_gate = true,
+ };
  
--		if (!psr_su_set_dsc_slice_height(dc, link, stream, &psr_config))
--			return false;
-+		if (link->psr_settings.psr_version == DC_PSR_VERSION_SU_1) {
-+			if (!psr_su_set_dsc_slice_height(dc, link, stream, &psr_config))
-+				return false;
-+		}
- 
- 		ret = dc_link_setup_psr(link, stream, &psr_config, &psr_context);
- 
+ static const struct dc_panel_config panel_config_defaults = {
 -- 
 2.39.5
 
