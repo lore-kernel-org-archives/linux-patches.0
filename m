@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2FB321455;
-	Mon, 18 Aug 2025 14:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FD2271A6D;
+	Mon, 18 Aug 2025 14:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526014; cv=none; b=KP1HFKAiLfIwNW+jSGTc3OwX9sn0POm0H222d4gXs4rui9hu0TBn8QYIrJ/DHpBXTFKaEwrkI03hcL1/esk1o0mhJsdcsqNWAVFALADNF7ScKtuMVhUs2ZpFkiBx0NtuytHUvMIfJyULTcMdlU6HXnzPWM3jOwFNnsQWx2CyU+c=
+	t=1755526017; cv=none; b=uZTiSkGQdiwpR/sLx9Kauh9We3sWUptZVdF+2wf32CGAAuXoxRPTv0igbywtzmuNhnRt5THAhS3lbt5L1QvhBEg4s9PwWLADFXanaSVUk5o5yY/3TVFXV6NjJQ8fRnXZJ9rFyiVe4Rb9dsyQayXl+d3iS+BoZbotsQAgQhTlDnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526014; c=relaxed/simple;
-	bh=6EvpMMXv8cT36/K3SLAWjxHIonK77fzKjCXyif04w7c=;
+	s=arc-20240116; t=1755526017; c=relaxed/simple;
+	bh=Oc+YRWlrBPxYILG7Lgka80pTZS1q9T/hdyCu5bFGJdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yc8HmQo9UDDxjkDCkCToN/p7CA/oFp/tr8uNdWnfJvYqH08nUNqFgswNbdp/9JoxMZbdZdVK274thbbU9w1b3wxq8S5XRchqC62MgDk9ItFr6Smn6JMu3yURzhTTZfrurpe/WM8GAoPF/449UVYkUyeGtzuuM7jCJWS3MKZTiXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWDktlmR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lylltcdk4cKPsZVGNVNR/2SXELSuKBO8rAkFRwLx4rY1QzwmHauvRs25Nb1Hiz167fsSumN6Y/AKslICD2Ij+0a4i8LPZYyTt1PrDpI55MDGrIPz1w3taOdf9eC+JB5Av+gki/mEVvFXtdZN836SfQ/uFoblzkR77AKNvLJrpd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgGPumj5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWDktlmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D8EC4CEEB;
-	Mon, 18 Aug 2025 14:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgGPumj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A33C4CEEB;
+	Mon, 18 Aug 2025 14:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526014;
-	bh=6EvpMMXv8cT36/K3SLAWjxHIonK77fzKjCXyif04w7c=;
+	s=korg; t=1755526017;
+	bh=Oc+YRWlrBPxYILG7Lgka80pTZS1q9T/hdyCu5bFGJdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWDktlmRl4P6q4x1kB1OBYQhj5a+5H5JlD9jRQXmFgERVzbQz4ql1BwVomV3vmfHO
-	 CaMxC2PLtEVc59WHDlKbwX0OIcqvvfcR6BhlV8G6PUeXJFbW5U0+bu1DL5lAButGAI
-	 T0xF3oR1b0pvkPASmeNT6oCeqZoQMRwnCBpPziy0=
+	b=EgGPumj5/Tc/m1I/QdgPcGynOjAN3kesFWHqqH37d7HO26SJwCZB4XB61XqsMzQKs
+	 646rkKysggoqgsHfB6z9JdpB154hDE3tv2FXAW1k+MqeXgoGfJ1ibfmfD0ZjP0WW8s
+	 znOV2gw8n648bJ2J9jnh8cTH6VEmcoVzTfFvnxVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	"fangzhong.zhou" <myth5@myth5.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 433/570] apparmor: fix x_table_lookup when stacking is not the first entry
-Date: Mon, 18 Aug 2025 14:47:00 +0200
-Message-ID: <20250818124522.510741078@linuxfoundation.org>
+Subject: [PATCH 6.16 434/570] i2c: Force DLL0945 touchpad i2c freq to 100khz
+Date: Mon, 18 Aug 2025 14:47:01 +0200
+Message-ID: <20250818124522.548502914@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -50,142 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: fangzhong.zhou <myth5@myth5.com>
 
-[ Upstream commit a9eb185be84e998aa9a99c7760534ccc06216705 ]
+[ Upstream commit 0b7c9528facdb5a73ad78fea86d2e95a6c48dbc4 ]
 
-x_table_lookup currently does stacking during label_parse() if the
-target specifies a stack but its only caller ensures that it will
-never be used with stacking.
+This patch fixes an issue where the touchpad cursor movement becomes
+slow on the Dell Precision 5560. Force the touchpad freq to 100khz
+as a workaround.
 
-Refactor to slightly simplify the code in x_to_label(), this
-also fixes a long standing problem where x_to_labels check on stacking
-is only on the first element to the table option list, instead of
-the element that is found and used.
+Tested on Dell Precision 5560 with 6.14 to 6.14.6. Cursor movement
+is now smooth and responsive.
 
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: fangzhong.zhou <myth5@myth5.com>
+[wsa: kept sorting and removed unnecessary parts from commit msg]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/domain.c | 52 +++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 23 deletions(-)
+ drivers/i2c/i2c-core-acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
-index 5939bd9a9b9b..08ca9057f82b 100644
---- a/security/apparmor/domain.c
-+++ b/security/apparmor/domain.c
-@@ -508,6 +508,7 @@ static const char *next_name(int xtype, const char *name)
-  * @name: returns: name tested to find label (NOT NULL)
-  *
-  * Returns: refcounted label, or NULL on failure (MAYBE NULL)
-+ *          @name will always be set with the last name tried
-  */
- struct aa_label *x_table_lookup(struct aa_profile *profile, u32 xindex,
- 				const char **name)
-@@ -517,6 +518,7 @@ struct aa_label *x_table_lookup(struct aa_profile *profile, u32 xindex,
- 	struct aa_label *label = NULL;
- 	u32 xtype = xindex & AA_X_TYPE_MASK;
- 	int index = xindex & AA_X_INDEX_MASK;
-+	const char *next;
- 
- 	AA_BUG(!name);
- 
-@@ -524,25 +526,27 @@ struct aa_label *x_table_lookup(struct aa_profile *profile, u32 xindex,
- 	/* TODO: move lookup parsing to unpack time so this is a straight
- 	 *       index into the resultant label
+diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
+index d2499f302b50..f43067f6797e 100644
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -370,6 +370,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
+ 	 * the device works without issues on Windows at what is expected to be
+ 	 * a 400KHz frequency. The root cause of the issue is not known.
  	 */
--	for (*name = rules->file->trans.table[index]; !label && *name;
--	     *name = next_name(xtype, *name)) {
-+	for (next = rules->file->trans.table[index]; next;
-+	     next = next_name(xtype, next)) {
-+		const char *lookup = (*next == '&') ? next + 1 : next;
-+		*name = next;
- 		if (xindex & AA_X_CHILD) {
--			struct aa_profile *new_profile;
--			/* release by caller */
--			new_profile = aa_find_child(profile, *name);
--			if (new_profile)
--				label = &new_profile->label;
-+			/* TODO: switich to parse to get stack of child */
-+			struct aa_profile *new = aa_find_child(profile, lookup);
-+
-+			if (new)
-+				/* release by caller */
-+				return &new->label;
- 			continue;
- 		}
--		label = aa_label_parse(&profile->label, *name, GFP_KERNEL,
-+		label = aa_label_parse(&profile->label, lookup, GFP_KERNEL,
- 				       true, false);
--		if (IS_ERR(label))
--			label = NULL;
-+		if (!IS_ERR_OR_NULL(label))
-+			/* release by caller */
-+			return label;
- 	}
- 
--	/* released by caller */
--
--	return label;
-+	return NULL;
- }
- 
- /**
-@@ -567,9 +571,9 @@ static struct aa_label *x_to_label(struct aa_profile *profile,
- 	struct aa_ruleset *rules = list_first_entry(&profile->rules,
- 						    typeof(*rules), list);
- 	struct aa_label *new = NULL;
-+	struct aa_label *stack = NULL;
- 	struct aa_ns *ns = profile->ns;
- 	u32 xtype = xindex & AA_X_TYPE_MASK;
--	const char *stack = NULL;
- 
- 	switch (xtype) {
- 	case AA_X_NONE:
-@@ -578,13 +582,14 @@ static struct aa_label *x_to_label(struct aa_profile *profile,
- 		break;
- 	case AA_X_TABLE:
- 		/* TODO: fix when perm mapping done at unload */
--		stack = rules->file->trans.table[xindex & AA_X_INDEX_MASK];
--		if (*stack != '&') {
--			/* released by caller */
--			new = x_table_lookup(profile, xindex, lookupname);
--			stack = NULL;
-+		/* released by caller
-+		 * if null for both stack and direct want to try fallback
-+		 */
-+		new = x_table_lookup(profile, xindex, lookupname);
-+		if (!new || **lookupname != '&')
- 			break;
--		}
-+		stack = new;
-+		new = NULL;
- 		fallthrough;	/* to X_NAME */
- 	case AA_X_NAME:
- 		if (xindex & AA_X_CHILD)
-@@ -599,6 +604,7 @@ static struct aa_label *x_to_label(struct aa_profile *profile,
- 		break;
- 	}
- 
-+	/* fallback transition check */
- 	if (!new) {
- 		if (xindex & AA_X_INHERIT) {
- 			/* (p|c|n)ix - don't change profile but do
-@@ -617,12 +623,12 @@ static struct aa_label *x_to_label(struct aa_profile *profile,
- 		/* base the stack on post domain transition */
- 		struct aa_label *base = new;
- 
--		new = aa_label_parse(base, stack, GFP_KERNEL, true, false);
--		if (IS_ERR(new))
--			new = NULL;
-+		new = aa_label_merge(base, stack, GFP_KERNEL);
-+		/* null on error */
- 		aa_put_label(base);
- 	}
- 
-+	aa_put_label(stack);
- 	/* released by caller */
- 	return new;
- }
++	{ "DLL0945", 0 },
+ 	{ "ELAN06FA", 0 },
+ 	{}
+ };
 -- 
 2.39.5
 
