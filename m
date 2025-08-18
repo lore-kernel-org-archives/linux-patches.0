@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C0F335BB3;
-	Mon, 18 Aug 2025 13:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB84335BB3;
+	Mon, 18 Aug 2025 13:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523669; cv=none; b=dvBfayyEXfJOILwANw25kQIPwHVImaYJvJJslZEXQkxmSYapt9hhqzdmgvL0jz9Lhxw/Ugr/fzBtFTM15Bq6zgtmUxlwa7voaRQNgA+WAyOFIi8k8QRc94sIKTldjvCBVoOXDzJ0W58aEpjcA5Ofwd18JeqWFr99lHXvyLd2gYg=
+	t=1755523672; cv=none; b=p9Onbpw6iYbytKLaAG88kbYPVjtxa7SQS+p0KxW/d+quQIFzo4q44SY/XILgZgVyfyc2StToBGlrUeADIL1NgSfqZ52Jbdvxp56UKRr9ggGEheHTXmVI5sYR4+xEayOMqMhkvkKW57V++Zn2675Eq7T/A7t7r8vgbGC1uYaXih0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523669; c=relaxed/simple;
-	bh=4B1lTsiTmLxBrYvxs69u1QDStprWNUAPUPmMM0I5daA=;
+	s=arc-20240116; t=1755523672; c=relaxed/simple;
+	bh=kJ17f2Iw1Oiq3Gyck0sMxih5gMULBtGJzcBTJ16X2DI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qq4HTQEeEAG8DUqJjVCAxTdo+sjhJmL9oAl9u0PfO/zvyA9A3Qk1+D7g1he02JVgg/+WxM1BMwi+SJ3sVeihAIJF2+FRjTkgV7SV5ZXfQZhlcjfFVKw4mvUvrziVM6gvxosva0IOvZ63rHp9D292c8/4lfP2myb8tPQMr+Kh9vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KF3dIEt0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J4WD66GAZBw3nhjyMn176Su5PEKyilvx8VyfyDlBW2aafyTvt0kKLnY5yMkBC/MR0dP1z0Tn4uVOpfhTCWJIaGSWpumn9pqO0VEsXzWDA20B47qfdUsiePk+JVzL093jTK71EDP7RQ/FOUpCOCq+Wb0afgEV8yLOI2UdceyQBuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHtCNX2p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KF3dIEt0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0834C4CEEB;
-	Mon, 18 Aug 2025 13:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHtCNX2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28351C4CEEB;
+	Mon, 18 Aug 2025 13:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523669;
-	bh=4B1lTsiTmLxBrYvxs69u1QDStprWNUAPUPmMM0I5daA=;
+	s=korg; t=1755523672;
+	bh=kJ17f2Iw1Oiq3Gyck0sMxih5gMULBtGJzcBTJ16X2DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KF3dIEt0k5xaX/5IoFhCrHAvHWiFpa2gA8BK5X9CPI6+p3xEV/LF87ot6xX5ZKx6y
-	 41Nu+RYm6jyQNZn+gfE+BjNQzcpkmFigcwOrRcvFHk9UWC9TlEIA+Fy4yGAUs6M8hn
-	 EK07qmHPJwWIIXaTxSqnsZivY2fiZd7naXw5m6E0=
+	b=iHtCNX2pdNfcAt1wqc0t/mZdrNUyjgrsWnhrHVrK/LNtLtDXrEFFhYSwbAKW+Qvs/
+	 XlixLsw9UssBKOLlGccbY9knxdoM45icUm0yGbKdqrhlo8W1A6yQw2paUM78NSy9hw
+	 zRY4KiSA2NxOvfWJhqB3kicUcmCN8+26VSqjBvdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@fb.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Jan Hendrik Farr <kernel@jfarr.cc>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 242/515] sched/fair: Bump sd->max_newidle_lb_cost when newidle balance fails
-Date: Mon, 18 Aug 2025 14:43:48 +0200
-Message-ID: <20250818124507.702364864@linuxfoundation.org>
+Subject: [PATCH 6.15 243/515] wifi: mac80211: dont complete management TX on SAE commit
+Date: Mon, 18 Aug 2025 14:43:49 +0200
+Message-ID: <20250818124507.741257761@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,88 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@fb.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 155213a2aed42c85361bf4f5c817f5cb68951c3b ]
+[ Upstream commit 6b04716cdcac37bdbacde34def08bc6fdb5fc4e2 ]
 
-schbench (https://github.com/masoncl/schbench.git) is showing a
-regression from previous production kernels that bisected down to:
+When SAE commit is sent and received in response, there's no
+ordering for the SAE confirm messages. As such, don't call
+drivers to stop listening on the channel when the confirm
+message is still expected.
 
-sched/fair: Remove sysctl_sched_migration_cost condition (c5b0a7eefc)
+This fixes an issue if the local confirm is transmitted later
+than the AP's confirm, for iwlwifi (and possibly mt76) the
+AP's confirm would then get lost since the device isn't on
+the channel at the time the AP transmit the confirm.
 
-The schbench command line was:
+For iwlwifi at least, this also improves the overall timing
+of the authentication handshake (by about 15ms according to
+the report), likely since the session protection won't be
+aborted and rescheduled.
 
-schbench -L -m 4 -M auto -t 256 -n 0 -r 0 -s 0
+Note that even before this, mgd_complete_tx() wasn't always
+called for each call to mgd_prepare_tx() (e.g. in the case
+of WEP key shared authentication), and the current drivers
+that have the complete callback don't seem to mind. Document
+this as well though.
 
-This creates 4 message threads pinned to CPUs 0-3, and 256x4 worker
-threads spread across the rest of the CPUs.  Neither the worker threads
-or the message threads do any work, they just wake each other up and go
-back to sleep as soon as possible.
-
-The end result is the first 4 CPUs are pegged waking up those 1024
-workers, and the rest of the CPUs are constantly banging in and out of
-idle.  If I take a v6.9 Linus kernel and revert that one commit,
-performance goes from 3.4M RPS to 5.4M RPS.
-
-schedstat shows there are ~100x  more new idle balance operations, and
-profiling shows the worker threads are spending ~20% of their CPU time
-on new idle balance.  schedstats also shows that almost all of these new
-idle balance attemps are failing to find busy groups.
-
-The fix used here is to crank up the cost of the newidle balance whenever it
-fails.  Since we don't want sd->max_newidle_lb_cost to grow out of
-control, this also changes update_newidle_cost() to use
-sysctl_sched_migration_cost as the upper limit on max_newidle_lb_cost.
-
-Signed-off-by: Chris Mason <clm@fb.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lkml.kernel.org/r/20250626144017.1510594-2-clm@fb.com
+Reported-by: Jan Hendrik Farr <kernel@jfarr.cc>
+Closes: https://lore.kernel.org/all/aB30Ea2kRG24LINR@archlinux/
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250609213232.12691580e140.I3f1d3127acabcd58348a110ab11044213cf147d3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ include/net/mac80211.h | 2 ++
+ net/mac80211/mlme.c    | 9 ++++++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 138d9f4658d5..23264fe111e5 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -12170,8 +12170,14 @@ static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
- 		/*
- 		 * Track max cost of a domain to make sure to not delay the
- 		 * next wakeup on the CPU.
-+		 *
-+		 * sched_balance_newidle() bumps the cost whenever newidle
-+		 * balance fails, and we don't want things to grow out of
-+		 * control.  Use the sysctl_sched_migration_cost as the upper
-+		 * limit, plus a litle extra to avoid off by ones.
- 		 */
--		sd->max_newidle_lb_cost = cost;
-+		sd->max_newidle_lb_cost =
-+			min(cost, sysctl_sched_migration_cost + 200);
- 		sd->last_decay_max_lb_cost = jiffies;
- 	} else if (time_after(jiffies, sd->last_decay_max_lb_cost + HZ)) {
- 		/*
-@@ -12863,10 +12869,17 @@ static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index 5349df596157..829032258978 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -4296,6 +4296,8 @@ struct ieee80211_prep_tx_info {
+  * @mgd_complete_tx: Notify the driver that the response frame for a previously
+  *	transmitted frame announced with @mgd_prepare_tx was received, the data
+  *	is filled similarly to @mgd_prepare_tx though the duration is not used.
++ *	Note that this isn't always called for each mgd_prepare_tx() call, for
++ *	example for SAE the 'confirm' messages can be on the air in any order.
+  *
+  * @mgd_protect_tdls_discover: Protect a TDLS discovery session. After sending
+  *	a TDLS discovery-request, we expect a reply to arrive on the AP's
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index f4f13e170732..160821e42524 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -4754,6 +4754,7 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
+ 	struct ieee80211_prep_tx_info info = {
+ 		.subtype = IEEE80211_STYPE_AUTH,
+ 	};
++	bool sae_need_confirm = false;
  
- 			t1 = sched_clock_cpu(this_cpu);
- 			domain_cost = t1 - t0;
--			update_newidle_cost(sd, domain_cost);
--
- 			curr_cost += domain_cost;
- 			t0 = t1;
-+
-+			/*
-+			 * Failing newidle means it is not effective;
-+			 * bump the cost so we end up doing less of it.
-+			 */
-+			if (!pulled_task)
-+				domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
-+
-+			update_newidle_cost(sd, domain_cost);
+ 	lockdep_assert_wiphy(sdata->local->hw.wiphy);
+ 
+@@ -4799,6 +4800,8 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
+ 				jiffies + IEEE80211_AUTH_WAIT_SAE_RETRY;
+ 			ifmgd->auth_data->timeout_started = true;
+ 			run_again(sdata, ifmgd->auth_data->timeout);
++			if (auth_transaction == 1)
++				sae_need_confirm = true;
+ 			goto notify_driver;
  		}
  
- 		/*
+@@ -4841,6 +4844,9 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
+ 	     ifmgd->auth_data->expected_transaction == 2)) {
+ 		if (!ieee80211_mark_sta_auth(sdata))
+ 			return; /* ignore frame -- wait for timeout */
++	} else if (ifmgd->auth_data->algorithm == WLAN_AUTH_SAE &&
++		   auth_transaction == 1) {
++		sae_need_confirm = true;
+ 	} else if (ifmgd->auth_data->algorithm == WLAN_AUTH_SAE &&
+ 		   auth_transaction == 2) {
+ 		sdata_info(sdata, "SAE peer confirmed\n");
+@@ -4849,7 +4855,8 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
+ 
+ 	cfg80211_rx_mlme_mgmt(sdata->dev, (u8 *)mgmt, len);
+ notify_driver:
+-	drv_mgd_complete_tx(sdata->local, sdata, &info);
++	if (!sae_need_confirm)
++		drv_mgd_complete_tx(sdata->local, sdata, &info);
+ }
+ 
+ #define case_WLAN(type) \
 -- 
 2.39.5
 
