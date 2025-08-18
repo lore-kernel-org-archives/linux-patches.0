@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B7827B330;
-	Mon, 18 Aug 2025 12:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F243218D1;
+	Mon, 18 Aug 2025 12:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521623; cv=none; b=SFDf2I6CEuJg5IPw8YVicMaxwbgNAiev686+Rd6p+i89Pjx1I9EgUvwFVodt1H2O7mzo81SVS5gOBTo1QmguWhEmlV1dT7EGGrJnzfbGJTEw43C+a1mbqw+JvBCKL1WDvcVJ8iNs1aaUOQjg85N5cap0uBSmfRjgLintPwQtdGE=
+	t=1755521631; cv=none; b=mFe/WVZlzUsYWPOdeeV8Puams6UlhYiKaiTXRwDY4IW0EY6wR2syCNciQGmzK0MpQt8o9kQTAr8qLf2B4PIFNX/XuGvKIMJKzQM9flZeywgivQKdTKlYxZYDJs5Q2LPXHhY1zuvJ+G4uelUwp3mjJJh/b6PZgJecWDnZLaApziY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521623; c=relaxed/simple;
-	bh=1ABijm6baDJbTKOhp4Gid9mEwq2stuc0hCEzlyFkxCc=;
+	s=arc-20240116; t=1755521631; c=relaxed/simple;
+	bh=hUK5XGZZc+nOJmM+vEqh+KCW/0xTI3RCXBdEPpIuuzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSMj5Ze5DAsuZouNnUTsXV0+RfOpVKJbwjKZoxy/4TvMP8ADbNUKe6P6nTgyrlFSliRm5On/MsZr4oCqHpJXJLL1ZNElJln89El7m+1RZQHK+7cTATa4D61ULmPKC9pf1oJF71MU/sRjeA1zhui12FcXPUSLNWmJ0SvoZ0TAyQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVx91Y9h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j3zLzuoOHDZHV3Odp7J5kvzVKNHR3aN08CwGaAapZO3Cn9Rs1IYrO5/LZCMalTLL8gOTK4as9X2Oz3E0C8vXfuRbo3AuAYhI16oDJoi5ErnXEM1sujWLnT4f3FyFqec6fmq+mrN7/qlJU0y59gKBWrkYebJ6xjGQdMv9p3oS1W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dA5dCiR0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVx91Y9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0ACAC4CEEB;
-	Mon, 18 Aug 2025 12:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dA5dCiR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD98DC4CEEB;
+	Mon, 18 Aug 2025 12:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521622;
-	bh=1ABijm6baDJbTKOhp4Gid9mEwq2stuc0hCEzlyFkxCc=;
+	s=korg; t=1755521631;
+	bh=hUK5XGZZc+nOJmM+vEqh+KCW/0xTI3RCXBdEPpIuuzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVx91Y9h7QlhSQ4SgU1wAHmHlSwp5SzWdRlm5vv90oUPEkyMHV+JJviGqJI10Q5fj
-	 lDLoRyx7gGHbBFCpD9PUwdGF8dJsVdRk8z2tfKtWkRDretsSgsj7YuUgE63IdWNMiR
-	 TG7ziqtM+doMMOTwxpr7gvX5++OkSrBYbR+4DQSE=
+	b=dA5dCiR04fj/TtNcaPNxXD9Xv9Fg3jksbYyrrJCeUsNdsFcZ6uCKaU2sZKqv8O8Vo
+	 1Xa+5wqAJttnpcBXdQZtI5blf/YHf8WYPov9435C3a3Hd+5sIr/fQuqyfc+IplPyWO
+	 nZE3aO4AwFlJRFpL6eN7a7zpYnhJ1pVef3jdf7G8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/444] md/raid10: set chunk_sectors limit
-Date: Mon, 18 Aug 2025 14:41:40 +0200
-Message-ID: <20250818124451.730891328@linuxfoundation.org>
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 044/444] smb: client: dont wait for info->send_pending == 0 on error
+Date: Mon, 18 Aug 2025 14:41:10 +0200
+Message-ID: <20250818124450.590678467@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -54,38 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 7ef50c4c6a9c36fa3ea6f1681a80c0bf9a797345 ]
+commit 8c48e1c7520321cc87ff651e96093e2f412785fb upstream.
 
-Same as done for raid0, set chunk_sectors limit to appropriately set the
-atomic write size limit.
+We already called ib_drain_qp() before and that makes sure
+send_done() was called with IB_WC_WR_FLUSH_ERR, but
+didn't called atomic_dec_and_test(&sc->send_io.pending.count)
 
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20250711105258.3135198-5-john.g.garry@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So we may never reach the info->send_pending == 0 condition.
+
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: 5349ae5e05fa ("smb: client: let send_done() cleanup before calling smbd_disconnect_rdma_connection()")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/smbdirect.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 5cdc599fcad3..7515a98001ca 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3968,6 +3968,7 @@ static int raid10_set_queue_limits(struct mddev *mddev)
- 	md_init_stacking_limits(&lim);
- 	lim.max_write_zeroes_sectors = 0;
- 	lim.io_min = mddev->chunk_sectors << 9;
-+	lim.chunk_sectors = mddev->chunk_sectors;
- 	lim.io_opt = lim.io_min * raid10_nr_stripes(conf);
- 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
- 	if (err)
--- 
-2.39.5
-
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1316,10 +1316,6 @@ void smbd_destroy(struct TCP_Server_Info
+ 	log_rdma_event(INFO, "cancelling idle timer\n");
+ 	cancel_delayed_work_sync(&info->idle_timer_work);
+ 
+-	log_rdma_event(INFO, "wait for all send posted to IB to finish\n");
+-	wait_event(info->wait_send_pending,
+-		atomic_read(&info->send_pending) == 0);
+-
+ 	/* It's not possible for upper layer to get to reassembly */
+ 	log_rdma_event(INFO, "drain the reassembly queue\n");
+ 	do {
+@@ -1965,7 +1961,11 @@ int smbd_send(struct TCP_Server_Info *se
+ 	 */
+ 
+ 	wait_event(info->wait_send_pending,
+-		atomic_read(&info->send_pending) == 0);
++		atomic_read(&info->send_pending) == 0 ||
++		sc->status != SMBDIRECT_SOCKET_CONNECTED);
++
++	if (sc->status != SMBDIRECT_SOCKET_CONNECTED && rc == 0)
++		rc = -EAGAIN;
+ 
+ 	return rc;
+ }
 
 
