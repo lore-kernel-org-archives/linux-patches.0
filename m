@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1E6340D93;
-	Mon, 18 Aug 2025 14:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A836342C94;
+	Mon, 18 Aug 2025 14:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526355; cv=none; b=FLDOVktweSok6M8IKDOqS+KtBJmdUPmOWmrkx/1eRw1FLA0lsvu50S5kd8Jn1SwL1vvWVWBtch7BV0CrMLjvfkaCVkDOhuTJ54Bw+BnGKbCC3594cCg/OX3hF8bK8ony80XXLK1tyJCGfCUyRPvub8+ewjytXdxPkBsVO8i2crI=
+	t=1755526359; cv=none; b=aolkkmoEKj5xXL8dLVM332rj86VR9HO3xQfF2vSUUDRiwYlbWucuIMgOVgwrEET0cuPo9Xsi9JGEHh3pAg+x6gAeoy+Ez4V/kFzxR4Xf2PZ+1eImZ6Wx++Y47vvFHqT0w3T0TUqb52H1922pcCL5XAs2GphCndrrFjYnP/0HDYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526355; c=relaxed/simple;
-	bh=bDdhBf7J5ROKb2ciri6A8fXXldOGBqK/QoI19Ocwwww=;
+	s=arc-20240116; t=1755526359; c=relaxed/simple;
+	bh=6prqVYD421AV2O/jyLAlLC22S2JkaDM1KPMkZxTMavI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptzs2YO3XXSHl8upxWPGliW7gM5RI/q9IEYjUHoFXJypOGqg6M4bFcvJi1rrSKXHNoUNA/dQynteS311a4GttjzfJ/FlgP7HZtuw8yTX2GBhcLD+KL77PfX7DuVCru885kUBUZzdAPjhXxylO5hTLZ2yPk0ZBbx7ZWGcoxuOgb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbCNXlQv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T7al03BKH8jJyAXb2Q4osn8nzC9qNlPo/9uSMCaPA+302R5d66ASJd0WnZ3TcAdAtVOteIHaMk45fyYJxA0wSjNlvpGzMoR6iwqQMS4L+lLn3cT0zEbnmCTNOkGDl+0a6RCtkgQVuzf5rDpT7EjKrF3Pzprp5Valxg0WzWZrusM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlgA9vvx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbCNXlQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7122AC4CEF1;
-	Mon, 18 Aug 2025 14:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlgA9vvx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0924AC4CEEB;
+	Mon, 18 Aug 2025 14:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526354;
-	bh=bDdhBf7J5ROKb2ciri6A8fXXldOGBqK/QoI19Ocwwww=;
+	s=korg; t=1755526358;
+	bh=6prqVYD421AV2O/jyLAlLC22S2JkaDM1KPMkZxTMavI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbCNXlQv3PZcExLZ+ncuSJh/76df4m02xS20dNTlSc9O3O6icmiu3OWgGAI5sNjxZ
-	 ICLHMLRbjCQf395IzqAW8U5VvjKhhy1Slp6cz5wBHVfn8/flSxdSinxY1z6cumVokv
-	 V/J2OzXOyGr9oq34k5ffF9hYRvuTI0JaQFYnnKJ0=
+	b=rlgA9vvxbQkRpyRyX5FnDBD3bDQfvGpAzqRTH4BKtHOX6emHQALFJshCR8PjhQwwB
+	 tE4sjtZz3ZlhPGvr5yi392MYq1AbHEvTzrbbn78e11TZXNprGL+HOEhS2WGwn/H1UW
+	 N/f1rf9jEcZOmqke+AjOOjLBMqzpbTC8LfouWYwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 532/570] btrfs: do not allow relocation of partially dropped subvolumes
-Date: Mon, 18 Aug 2025 14:48:39 +0200
-Message-ID: <20250818124526.362444812@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.16 533/570] xfs: fix scrub trace with null pointer in quotacheck
+Date: Mon, 18 Aug 2025 14:48:40 +0200
+Message-ID: <20250818124526.410988462@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,124 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Andrey Albershteyn <aalbersh@redhat.com>
 
-commit 4289b494ac553e74e86fed1c66b2bf9530bc1082 upstream.
+commit 5d94b19f066480addfcdcb5efde66152ad5a7c0e upstream.
 
-[BUG]
-There is an internal report that balance triggered transaction abort,
-with the following call trace:
+The quotacheck doesn't initialize sc->ip.
 
-  item 85 key (594509824 169 0) itemoff 12599 itemsize 33
-          extent refs 1 gen 197740 flags 2
-          ref#0: tree block backref root 7
-  item 86 key (594558976 169 0) itemoff 12566 itemsize 33
-          extent refs 1 gen 197522 flags 2
-          ref#0: tree block backref root 7
- ...
- BTRFS error (device loop0): extent item not found for insert, bytenr 594526208 num_bytes 16384 parent 449921024 root_objectid 934 owner 1 offset 0
- BTRFS error (device loop0): failed to run delayed ref for logical 594526208 num_bytes 16384 type 182 action 1 ref_mod 1: -117
- ------------[ cut here ]------------
- BTRFS: Transaction aborted (error -117)
- WARNING: CPU: 1 PID: 6963 at ../fs/btrfs/extent-tree.c:2168 btrfs_run_delayed_refs+0xfa/0x110 [btrfs]
-
-And btrfs check doesn't report anything wrong related to the extent
-tree.
-
-[CAUSE]
-The cause is a little complex, firstly the extent tree indeed doesn't
-have the backref for 594526208.
-
-The extent tree only have the following two backrefs around that bytenr
-on-disk:
-
-        item 65 key (594509824 METADATA_ITEM 0) itemoff 13880 itemsize 33
-                refs 1 gen 197740 flags TREE_BLOCK
-                tree block skinny level 0
-                (176 0x7) tree block backref root CSUM_TREE
-        item 66 key (594558976 METADATA_ITEM 0) itemoff 13847 itemsize 33
-                refs 1 gen 197522 flags TREE_BLOCK
-                tree block skinny level 0
-                (176 0x7) tree block backref root CSUM_TREE
-
-But the such missing backref item is not an corruption on disk, as the
-offending delayed ref belongs to subvolume 934, and that subvolume is
-being dropped:
-
-        item 0 key (934 ROOT_ITEM 198229) itemoff 15844 itemsize 439
-                generation 198229 root_dirid 256 bytenr 10741039104 byte_limit 0 bytes_used 345571328
-                last_snapshot 198229 flags 0x1000000000001(RDONLY) refs 0
-                drop_progress key (206324 EXTENT_DATA 2711650304) drop_level 2
-                level 2 generation_v2 198229
-
-And that offending tree block 594526208 is inside the dropped range of
-that subvolume.  That explains why there is no backref item for that
-bytenr and why btrfs check is not reporting anything wrong.
-
-But this also shows another problem, as btrfs will do all the orphan
-subvolume cleanup at a read-write mount.
-
-So half-dropped subvolume should not exist after an RW mount, and
-balance itself is also exclusive to subvolume cleanup, meaning we
-shouldn't hit a subvolume half-dropped during relocation.
-
-The root cause is, there is no orphan item for this subvolume.
-In fact there are 5 subvolumes from around 2021 that have the same
-problem.
-
-It looks like the original report has some older kernels running, and
-caused those zombie subvolumes.
-
-Thankfully upstream commit 8d488a8c7ba2 ("btrfs: fix subvolume/snapshot
-deletion not triggered on mount") has long fixed the bug.
-
-[ENHANCEMENT]
-For repairing such old fs, btrfs-progs will be enhanced.
-
-Considering how delayed the problem will show up (at run delayed ref
-time) and at that time we have to abort transaction already, it is too
-late.
-
-Instead here we reject any half-dropped subvolume for reloc tree at the
-earliest time, preventing confusion and extra time wasted on debugging
-similar bugs.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 21d7500929c8a0 ("xfs: improve dquot iteration for scrub")
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/xfs/scrub/trace.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -594,6 +594,25 @@ static struct btrfs_root *create_reloc_r
- 	if (btrfs_root_id(root) == objectid) {
- 		u64 commit_root_gen;
- 
-+		/*
-+		 * Relocation will wait for cleaner thread, and any half-dropped
-+		 * subvolume will be fully cleaned up at mount time.
-+		 * So here we shouldn't hit a subvolume with non-zero drop_progress.
-+		 *
-+		 * If this isn't the case, error out since it can make us attempt to
-+		 * drop references for extents that were already dropped before.
-+		 */
-+		if (unlikely(btrfs_disk_key_objectid(&root->root_item.drop_progress))) {
-+			struct btrfs_key cpu_key;
-+
-+			btrfs_disk_key_to_cpu(&cpu_key, &root->root_item.drop_progress);
-+			btrfs_err(fs_info,
-+	"cannot relocate partially dropped subvolume %llu, drop progress key (%llu %u %llu)",
-+				  objectid, cpu_key.objectid, cpu_key.type, cpu_key.offset);
-+			ret = -EUCLEAN;
-+			goto fail;
-+		}
-+
- 		/* called by btrfs_init_reloc_root */
- 		ret = btrfs_copy_root(trans, root, root->commit_root, &eb,
- 				      BTRFS_TREE_RELOC_OBJECTID);
+--- a/fs/xfs/scrub/trace.h
++++ b/fs/xfs/scrub/trace.h
+@@ -479,7 +479,7 @@ DECLARE_EVENT_CLASS(xchk_dqiter_class,
+ 		__field(xfs_exntst_t, state)
+ 	),
+ 	TP_fast_assign(
+-		__entry->dev = cursor->sc->ip->i_mount->m_super->s_dev;
++		__entry->dev = cursor->sc->mp->m_super->s_dev;
+ 		__entry->dqtype = cursor->dqtype;
+ 		__entry->ino = cursor->quota_ip->i_ino;
+ 		__entry->cur_id = cursor->id;
 
 
