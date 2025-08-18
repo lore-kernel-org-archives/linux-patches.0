@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0B33218B8;
-	Mon, 18 Aug 2025 12:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C413321ABAA;
+	Mon, 18 Aug 2025 12:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521991; cv=none; b=UucuP/ywtPaWh51LXt+WwfJhn2mN391SVY1x3Uab4oEAPjv00wWk7KW4oWkZNUTUsCgBurcdaL3XTkft6CFWUI9mFkSqo1YKFrITuFzGmUfnjYC18HRDa3vfJn1czKLV9Xg2rnmUUF9eQLXMjHpC81UjToND8RrPeI9YevrYJUk=
+	t=1755521994; cv=none; b=ktvMfOEt7snrvrb7q7rrnFK1lh8zzdpj5MLVA46E8HfaOFtkZGwg+OoNbm+lYy1HB+ajxKPqvDz3Fvvi2j7FIpGbJA8f5eWopReRpUTK98tA0D4hDq8YnTV4J1dagvqNq+gOFJFsvbDupjfK5VJDshybbhyMIt0tYnc3PnCvY50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521991; c=relaxed/simple;
-	bh=E4Fzpmj5gGC5YKtoc0poLJnzNfYtP8Ibrxny5g3NYpg=;
+	s=arc-20240116; t=1755521994; c=relaxed/simple;
+	bh=HSPIJUW0ooJgOT69nhiq+/yD67ZJ/1Dh/ligV4A+z1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHEg5clc534jXoJi+95h1wKt9NkMCm3RZFjwEKgR6m9a7JSv1s5fbD4fHtTjeSJsY3fy9aHqmHgN0vvnKSO1Uv37tqgYqEuO4VVDQxZHEaWTBLt4ZueRi6Y0z9W46JakyUtZ/TcvleHW/50kwDH1r6yzT9/5Vd5lv19XRZKJfyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7n7keac; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E7hyZGxUUjGPTzVplIGbHQGnyOES51eFIcm4tRA3PTK+CYhh8Ey7uY5pIfbrv0Dnl32ujwmfqEJi7DvW9WPy9P5+JmxOZ0EXStkC4iv4D6PZtdWw6cS0ger2AgpO6m86nZvSrahU6sG/PdEe/Mc4Reg7yZqdlSdkdkauY6YkuKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5eyk43B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7n7keac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3969C4CEEB;
-	Mon, 18 Aug 2025 12:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5eyk43B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33011C4CEEB;
+	Mon, 18 Aug 2025 12:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521991;
-	bh=E4Fzpmj5gGC5YKtoc0poLJnzNfYtP8Ibrxny5g3NYpg=;
+	s=korg; t=1755521994;
+	bh=HSPIJUW0ooJgOT69nhiq+/yD67ZJ/1Dh/ligV4A+z1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w7n7keacejvabE6c/ZUXj2gpY14WGXN7DIJaj2jTOG4KQ9h+xOkSoAFghYBoQJs/+
-	 i+/3W5A393MERkcXndM5XqNfPbUAmPOHkvoL0xK8blZJK0WfDYXBCl7RglSvDfNR4E
-	 ak+FvISlJV5eXd8fWGRNzZAw1w/tXcdljSmJi+ww=
+	b=f5eyk43Buu7jBSxfyGvlF7PAUuGisKWZX61z4eqZUXxq2V5c4GVqG2zvQF0vpxNeG
+	 f29prwrU9L5BJY0UjrbFr3+BnCHhnSIoEZEwj9jsOVY5U0ly9GlvzBT9v7Y07kVj6y
+	 rJ53Xyi4YeWKSMWmFEqL03liK1vOHDtNBo091gAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 150/444] pm: cpupower: Fix the snapshot-order of tsc,mperf, clock in mperf_stop()
-Date: Mon, 18 Aug 2025 14:42:56 +0200
-Message-ID: <20250818124454.532675953@linuxfoundation.org>
+Subject: [PATCH 6.12 151/444] imx8m-blk-ctrl: set ISI panic write hurry level
+Date: Mon, 18 Aug 2025 14:42:57 +0200
+Message-ID: <20250818124454.569091428@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -45,49 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Krzysztof Hałasa <khalasa@piap.pl>
 
-[ Upstream commit cda7ac8ce7de84cf32a3871ba5f318aa3b79381e ]
+[ Upstream commit c01fba0b4869cada5403fffff416cd1675dba078 ]
 
-In the function mperf_start(), mperf_monitor snapshots the time, tsc
-and finally the aperf,mperf MSRs. However, this order of snapshotting
-in is reversed in mperf_stop(). As a result, the C0 residency (which
-is computed as delta_mperf * 100 / delta_tsc) is under-reported on
-CPUs that is 100% busy.
+Apparently, ISI needs cache settings similar to LCDIF.
+Otherwise we get artefacts in the image.
+Tested on i.MX8MP.
 
-Fix this by snapshotting time, tsc and then aperf,mperf in
-mperf_stop() in the same order as in mperf_start().
-
-Link: https://lore.kernel.org/r/20250612122355.19629-2-gautham.shenoy@amd.com
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
+Link: https://lore.kernel.org/r/m3ldr69lsw.fsf@t19.piap.pl
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/utils/idle_monitor/mperf_monitor.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pmdomain/imx/imx8m-blk-ctrl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index 08a399b0be28..6ab9139f16af 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -240,9 +240,9 @@ static int mperf_stop(void)
- 	int cpu;
+diff --git a/drivers/pmdomain/imx/imx8m-blk-ctrl.c b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+index ca942d7929c2..8b7b175f5896 100644
+--- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+@@ -665,6 +665,11 @@ static const struct imx8m_blk_ctrl_data imx8mn_disp_blk_ctl_dev_data = {
+ #define  LCDIF_1_RD_HURRY	GENMASK(15, 13)
+ #define  LCDIF_0_RD_HURRY	GENMASK(12, 10)
  
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
--		mperf_measure_stats(cpu);
--		mperf_get_tsc(&tsc_at_measure_end[cpu]);
- 		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
-+		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+		mperf_measure_stats(cpu);
++#define ISI_CACHE_CTRL		0x50
++#define  ISI_V_WR_HURRY		GENMASK(28, 26)
++#define  ISI_U_WR_HURRY		GENMASK(25, 23)
++#define  ISI_Y_WR_HURRY		GENMASK(22, 20)
++
+ static int imx8mp_media_power_notifier(struct notifier_block *nb,
+ 				unsigned long action, void *data)
+ {
+@@ -694,6 +699,11 @@ static int imx8mp_media_power_notifier(struct notifier_block *nb,
+ 		regmap_set_bits(bc->regmap, LCDIF_ARCACHE_CTRL,
+ 				FIELD_PREP(LCDIF_1_RD_HURRY, 7) |
+ 				FIELD_PREP(LCDIF_0_RD_HURRY, 7));
++		/* Same here for ISI */
++		regmap_set_bits(bc->regmap, ISI_CACHE_CTRL,
++				FIELD_PREP(ISI_V_WR_HURRY, 7) |
++				FIELD_PREP(ISI_U_WR_HURRY, 7) |
++				FIELD_PREP(ISI_Y_WR_HURRY, 7));
  	}
  
- 	return 0;
+ 	return NOTIFY_OK;
 -- 
 2.39.5
 
