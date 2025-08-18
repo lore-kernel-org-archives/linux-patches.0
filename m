@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7178F30C34E;
-	Mon, 18 Aug 2025 13:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A1730F7F8;
+	Mon, 18 Aug 2025 13:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522789; cv=none; b=ZNHDG2QLJGxwgWBitc7UBG5VBopOdmWdSR6qM4Qb5yzmefSdOZ05a6IbU+zz5S6UT8BGzhLNLOKB4QanL6aghToLKK9zkEAjWxsFJ5voGxRI7b8D+nmFp/GXxT2KAmR6zQdrc99u9MFKxj12eizyrat0Wc1zKYjg0GecCnI/pnI=
+	t=1755522792; cv=none; b=Nxz1+ZHCtb5Ao+8b1TPv6zdp62NhSXmXCjGSxi02SQW9mDkCknDjVY8/91oa0VPrZ0ZKdRLpM7qdBxdl6gz6jA3MvnLw+YMrRo56gtICyBEXfKh8E2gqwrR+h1yGqLBN71oWvod+ovhDDaKeNQn/m3Mz9o0H4Giqx0vFUAuFZzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522789; c=relaxed/simple;
-	bh=VO/6fU3H1QH7O3fQlkJDs2kLRyzBypbnywIX9Sn4pxU=;
+	s=arc-20240116; t=1755522792; c=relaxed/simple;
+	bh=dDGCxXdkGuLbrl6hDZ5OyZI+p2JIr3VCjU9ySIG9ii4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioPNz2lC6Q1TrK7Y79TqpmC8t18S8Nixz/0m5ar0VxekegsKwJwCbWLd5CDkev3vs7ZkyQXlrAq1xzUdCGBUzRaYnnLVuJZf2VkolYWBAcHXiHu6GLtQsJCAiLEBoGwRm87ApMUF3hDT9K6PIEpCQU3hxR4R9Jy0ZGnT9b/xZoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3n3gs4d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YCM0XOdutsIlU0hFPvnKQqjZBzLXPrLXqTDji4MCtBbZMw8bXwzDvlOljrEE7MMFZIvb/P8dLCI55Awj9SH6IrdvPkNMZAgqLl4KivvghbA8kdk/qLl5XSSU9ylJQVeRLqW10BchTGQPbmOmtnUNZjBRyTLjborzfJ0gHcwRNXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTtwQNQW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3n3gs4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C714C4CEEB;
-	Mon, 18 Aug 2025 13:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTtwQNQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C98C4CEEB;
+	Mon, 18 Aug 2025 13:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522788;
-	bh=VO/6fU3H1QH7O3fQlkJDs2kLRyzBypbnywIX9Sn4pxU=;
+	s=korg; t=1755522792;
+	bh=dDGCxXdkGuLbrl6hDZ5OyZI+p2JIr3VCjU9ySIG9ii4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3n3gs4dE3lCANFVZ3UCUvS1qhqFiS4B2/pOrX8S12YT8XuYuNr49s8p29NFEuZvA
-	 Qi/WvfXJ/VQt5WWH+kaVaimwge1VtAPMK+pl/3vmwAbcAzlpSVQ5dWHe47+croTwUF
-	 /YXCo0AqryiztrXhv7fk9qgXTaKuRu1L0pPt9PEo=
+	b=BTtwQNQWOqNVWimguVNhU3yLGpe8hLhDRm90OAe1pOi3xcU9aTlZ+PTLTXhNnHcGk
+	 +FvrGlPVLNFJd95ttrRN7+LUBypkb6fcrfhe4qavCPOu2od6/eij5gBUjLO1LC7zb1
+	 Csy/YHzrAfiRNdd1ahcMITNd4gWEZh/XOx0hTdPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	David Howells <dhowells@redhat.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.12 421/444] RDMA/siw: Fix the sendmsg byte count in siw_tcp_sendpages
-Date: Mon, 18 Aug 2025 14:47:27 +0200
-Message-ID: <20250818124504.725921347@linuxfoundation.org>
+	Aditya Garg <gargaditya08@live.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 422/444] HID: magicmouse: avoid setting up battery timer when not needed
+Date: Mon, 18 Aug 2025 14:47:28 +0200
+Message-ID: <20250818124504.767424309@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -53,95 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Aditya Garg <gargaditya08@live.com>
 
-commit c18646248fed07683d4cee8a8af933fc4fe83c0d upstream.
+commit 9bdc30e35cbc1aa78ccf01040354209f1e11ca22 upstream.
 
-Ever since commit c2ff29e99a76 ("siw: Inline do_tcp_sendpages()"),
-we have been doing this:
+Currently, the battery timer is set up for all devices using
+hid-magicmouse, irrespective of whether they actually need it or not.
 
-static int siw_tcp_sendpages(struct socket *s, struct page **page, int offset,
-                             size_t size)
-[...]
-        /* Calculate the number of bytes we need to push, for this page
-         * specifically */
-        size_t bytes = min_t(size_t, PAGE_SIZE - offset, size);
-        /* If we can't splice it, then copy it in, as normal */
-        if (!sendpage_ok(page[i]))
-                msg.msg_flags &= ~MSG_SPLICE_PAGES;
-        /* Set the bvec pointing to the page, with len $bytes */
-        bvec_set_page(&bvec, page[i], bytes, offset);
-        /* Set the iter to $size, aka the size of the whole sendpages (!!!) */
-        iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, size);
-try_page_again:
-        lock_sock(sk);
-        /* Sendmsg with $size size (!!!) */
-        rv = tcp_sendmsg_locked(sk, &msg, size);
+The current implementation requires the battery timer for Magic Mouse 2
+and Magic Trackpad 2 when connected via USB only. Add checks to ensure
+that the battery timer is only set up when they are connected via USB.
 
-This means we've been sending oversized iov_iters and tcp_sendmsg calls
-for a while. This has a been a benign bug because sendpage_ok() always
-returned true. With the recent slab allocator changes being slowly
-introduced into next (that disallow sendpage on large kmalloc
-allocations), we have recently hit out-of-bounds crashes, due to slight
-differences in iov_iter behavior between the MSG_SPLICE_PAGES and
-"regular" copy paths:
-
-(MSG_SPLICE_PAGES)
-skb_splice_from_iter
-  iov_iter_extract_pages
-    iov_iter_extract_bvec_pages
-      uses i->nr_segs to correctly stop in its tracks before OoB'ing everywhere
-  skb_splice_from_iter gets a "short" read
-
-(!MSG_SPLICE_PAGES)
-skb_copy_to_page_nocache copy=iov_iter_count
- [...]
-   copy_from_iter
-        /* this doesn't help */
-        if (unlikely(iter->count < len))
-                len = iter->count;
-          iterate_bvec
-            ... and we run off the bvecs
-
-Fix this by properly setting the iov_iter's byte count, plus sending the
-correct byte count to tcp_sendmsg_locked.
-
-Link: https://patch.msgid.link/r/20250729120348.495568-1-pfalcato@suse.de
+Fixes: 0b91b4e4dae6 ("HID: magicmouse: Report battery level over USB")
 Cc: stable@vger.kernel.org
-Fixes: c2ff29e99a76 ("siw: Inline do_tcp_sendpages()")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202507220801.50a7210-lkp@intel.com
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -334,18 +334,17 @@ static int siw_tcp_sendpages(struct sock
- 		if (!sendpage_ok(page[i]))
- 			msg.msg_flags &= ~MSG_SPLICE_PAGES;
- 		bvec_set_page(&bvec, page[i], bytes, offset);
--		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, size);
-+		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, bytes);
+---
+ drivers/hid/hid-magicmouse.c |   58 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 38 insertions(+), 20 deletions(-)
+
+--- a/drivers/hid/hid-magicmouse.c
++++ b/drivers/hid/hid-magicmouse.c
+@@ -775,16 +775,30 @@ static void magicmouse_enable_mt_work(st
+ 		hid_err(msc->hdev, "unable to request touch data (%d)\n", ret);
+ }
  
- try_page_again:
- 		lock_sock(sk);
--		rv = tcp_sendmsg_locked(sk, &msg, size);
-+		rv = tcp_sendmsg_locked(sk, &msg, bytes);
- 		release_sock(sk);
++static bool is_usb_magicmouse2(__u32 vendor, __u32 product)
++{
++	if (vendor != USB_VENDOR_ID_APPLE)
++		return false;
++	return product == USB_DEVICE_ID_APPLE_MAGICMOUSE2;
++}
++
++static bool is_usb_magictrackpad2(__u32 vendor, __u32 product)
++{
++	if (vendor != USB_VENDOR_ID_APPLE)
++		return false;
++	return product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
++	       product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC;
++}
++
+ static int magicmouse_fetch_battery(struct hid_device *hdev)
+ {
+ #ifdef CONFIG_HID_BATTERY_STRENGTH
+ 	struct hid_report_enum *report_enum;
+ 	struct hid_report *report;
  
- 		if (rv > 0) {
- 			size -= rv;
- 			sent += rv;
- 			if (rv != bytes) {
--				offset += rv;
- 				bytes -= rv;
- 				goto try_page_again;
- 			}
+-	if (!hdev->battery || hdev->vendor != USB_VENDOR_ID_APPLE ||
+-	    (hdev->product != USB_DEVICE_ID_APPLE_MAGICMOUSE2 &&
+-	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 &&
+-	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC))
++	if (!hdev->battery ||
++	    (!is_usb_magicmouse2(hdev->vendor, hdev->product) &&
++	     !is_usb_magictrackpad2(hdev->vendor, hdev->product)))
+ 		return -1;
+ 
+ 	report_enum = &hdev->report_enum[hdev->battery_report_type];
+@@ -846,16 +860,17 @@ static int magicmouse_probe(struct hid_d
+ 		return ret;
+ 	}
+ 
+-	timer_setup(&msc->battery_timer, magicmouse_battery_timer_tick, 0);
+-	mod_timer(&msc->battery_timer,
+-		  jiffies + msecs_to_jiffies(USB_BATTERY_TIMEOUT_MS));
+-	magicmouse_fetch_battery(hdev);
+-
+-	if (id->vendor == USB_VENDOR_ID_APPLE &&
+-	    (id->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
+-	     ((id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
+-	       id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
+-	      hdev->type != HID_TYPE_USBMOUSE)))
++	if (is_usb_magicmouse2(id->vendor, id->product) ||
++	    is_usb_magictrackpad2(id->vendor, id->product)) {
++		timer_setup(&msc->battery_timer, magicmouse_battery_timer_tick, 0);
++		mod_timer(&msc->battery_timer,
++			  jiffies + msecs_to_jiffies(USB_BATTERY_TIMEOUT_MS));
++		magicmouse_fetch_battery(hdev);
++	}
++
++	if (is_usb_magicmouse2(id->vendor, id->product) ||
++	    (is_usb_magictrackpad2(id->vendor, id->product) &&
++	     hdev->type != HID_TYPE_USBMOUSE))
+ 		return 0;
+ 
+ 	if (!msc->input) {
+@@ -911,7 +926,10 @@ static int magicmouse_probe(struct hid_d
+ 
+ 	return 0;
+ err_stop_hw:
+-	del_timer_sync(&msc->battery_timer);
++	if (is_usb_magicmouse2(id->vendor, id->product) ||
++	    is_usb_magictrackpad2(id->vendor, id->product))
++		del_timer_sync(&msc->battery_timer);
++
+ 	hid_hw_stop(hdev);
+ 	return ret;
+ }
+@@ -922,7 +940,9 @@ static void magicmouse_remove(struct hid
+ 
+ 	if (msc) {
+ 		cancel_delayed_work_sync(&msc->work);
+-		del_timer_sync(&msc->battery_timer);
++		if (is_usb_magicmouse2(hdev->vendor, hdev->product) ||
++		    is_usb_magictrackpad2(hdev->vendor, hdev->product))
++			del_timer_sync(&msc->battery_timer);
+ 	}
+ 
+ 	hid_hw_stop(hdev);
+@@ -939,10 +959,8 @@ static const __u8 *magicmouse_report_fix
+ 	 *   0x05, 0x01,       // Usage Page (Generic Desktop)        0
+ 	 *   0x09, 0x02,       // Usage (Mouse)                       2
+ 	 */
+-	if (hdev->vendor == USB_VENDOR_ID_APPLE &&
+-	    (hdev->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
+-	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 ||
+-	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC) &&
++	if ((is_usb_magicmouse2(hdev->vendor, hdev->product) ||
++	     is_usb_magictrackpad2(hdev->vendor, hdev->product)) &&
+ 	    *rsize == 83 && rdesc[46] == 0x84 && rdesc[58] == 0x85) {
+ 		hid_info(hdev,
+ 			 "fixing up magicmouse battery report descriptor\n");
 
 
