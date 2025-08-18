@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D399431B107;
-	Mon, 18 Aug 2025 13:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401243074AE;
+	Mon, 18 Aug 2025 13:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522253; cv=none; b=KxEprbK7tn3ziVqnLd8wtXLhBBMpboVnZEZUtfmVsIVBs4zvBRgfhhDPDAOxhNg0eOrcFHUun3ZL6CXZIQ6QNF+Mbu8SDdTW8ZPLJ0UG3qte532081s/xO1sWKPpFbBLU1o8U4+c/vsrDVGvkSi9vEoxY8O1JwoZ6OsEcEUfMEg=
+	t=1755522257; cv=none; b=rznwVPYW+QR0j6H4L1Gmd5XSw5rI7+i/KdUp2Iusl/maTb/VSSC4g1QJ314ZSW+BnnM3i2z41B49feqIePOqKgSQiW+yEJpaaMdh0Gjwhjk8Woa3AQiPqW+1+UIYtXRHkcxIUWgfQREEN6pEEMKG2F+B2dJlLK6WPDSyS7zYT/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522253; c=relaxed/simple;
-	bh=Hwb+6dlsG1KxbPGnRY/NYuADPzDeoqUxhYLXQRs74xA=;
+	s=arc-20240116; t=1755522257; c=relaxed/simple;
+	bh=W6phNebxqOv6Pp0d3mkEZh16lGMIrqadZ7R63KzgFG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAAsaQRpCGp7LSCeCsyOQZVhfW3VlfdaB2umGGFWPj89CpkDoQAF6k4CXPyDdBkaaMhJCvgn40DbMkTmT9/2QWyYAjC6/XmGM3Ylg3jgyC4EpKEDEmytThwk4jGzT3JrpiHL8aZCZnp1RqU/fJoHQqM8oz4CfYs2F+EX8T6igl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIVnM/rj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pD7c/4mXLaIzwlMTZjhrO40zxMkd3lYbT28eAJ+Ig1WmjpiVHtZpQGRqiHw5Xa7Anygii3bJKy2vEVhMjc42iXwAHNAIO4u4rpnz3FwDH1Vgz0pwHaTegLvsbLQztxgHJlXlCkiOveB9a5O3xEx1/2R5my6QkhfheKeBO1XoDt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvS3Rnzo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIVnM/rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471CFC113D0;
-	Mon, 18 Aug 2025 13:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvS3Rnzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A162CC4CEEB;
+	Mon, 18 Aug 2025 13:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522253;
-	bh=Hwb+6dlsG1KxbPGnRY/NYuADPzDeoqUxhYLXQRs74xA=;
+	s=korg; t=1755522257;
+	bh=W6phNebxqOv6Pp0d3mkEZh16lGMIrqadZ7R63KzgFG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wIVnM/rjlKnQYnzRMB3cDLTn1Rs686gtZrUZws8PSZGl1keXPHI36LNGZsx/boNUl
-	 W0nE4fN8mjphDrfFJwbOX2CZR3gTWsQ0lKGIIUcqq9WPNDEoNJYxCtYAkm1k3Dir2v
-	 yWirCT5fuki3KshAci/fYScZhgIztSkSqwNhHVMc=
+	b=RvS3Rnzolr/rCe9YjgfFAh5WipK45o2tyx9MPUfAbBtv6hHAuTqbgzxWUzmEAUfR2
+	 WCATTRA+t6w1kNF+K/UidbY4RP7JXG6cret577sOMbG9YGbm5/bEoJKyJlf2k4z0Ks
+	 cA1WvkOIet1nNmLYan0usOC2HKvuHAHqqTIXG9h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ihor Solodrai <isolodrai@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 254/444] ptp: Use ratelimite for freerun error message
-Date: Mon, 18 Aug 2025 14:44:40 +0200
-Message-ID: <20250818124458.344702661@linuxfoundation.org>
+Subject: [PATCH 6.12 263/444] bpf: Make reg_not_null() true for CONST_PTR_TO_MAP
+Date: Mon, 18 Aug 2025 14:44:49 +0200
+Message-ID: <20250818124458.686453061@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -52,37 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ihor Solodrai <isolodrai@meta.com>
 
-[ Upstream commit e9a7795e75b78b56997fb0070c18d6e1057b6462 ]
+[ Upstream commit 5534e58f2e9bd72b253d033ee0af6e68eb8ac96b ]
 
-Replace pr_err() with pr_err_ratelimited() in ptp_clock_settime() to
-prevent log flooding when the physical clock is free running, which
-happens on some of my hosts. This ensures error messages are
-rate-limited and improves kernel log readability.
+When reg->type is CONST_PTR_TO_MAP, it can not be null. However the
+verifier explores the branches under rX == 0 in check_cond_jmp_op()
+even if reg->type is CONST_PTR_TO_MAP, because it was not checked for
+in reg_not_null().
 
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250613-ptp-v1-1-ee44260ce9e2@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by adding CONST_PTR_TO_MAP to the set of types that are
+considered non nullable in reg_not_null().
+
+An old "unpriv: cmp map pointer with zero" selftest fails with this
+change, because now early out correctly triggers in
+check_cond_jmp_op(), making the verification to pass.
+
+In practice verifier may allow pointer to null comparison in unpriv,
+since in many cases the relevant branch and comparison op are removed
+as dead code. So change the expected test result to __success_unpriv.
+
+Signed-off-by: Ihor Solodrai <isolodrai@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250609183024.359974-2-isolodrai@meta.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_clock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c                               | 3 ++-
+ tools/testing/selftests/bpf/progs/verifier_unpriv.c | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index b892a7323084..642a540861d4 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -96,7 +96,7 @@ static int ptp_clock_settime(struct posix_clock *pc, const struct timespec64 *tp
- 	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index b880dea7d858..24ae8f33e5d7 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -400,7 +400,8 @@ static bool reg_not_null(const struct bpf_reg_state *reg)
+ 		type == PTR_TO_MAP_KEY ||
+ 		type == PTR_TO_SOCK_COMMON ||
+ 		(type == PTR_TO_BTF_ID && is_trusted_reg(reg)) ||
+-		type == PTR_TO_MEM;
++		type == PTR_TO_MEM ||
++		type == CONST_PTR_TO_MAP;
+ }
  
- 	if (ptp_clock_freerun(ptp)) {
--		pr_err("ptp: physical clock is free running\n");
-+		pr_err_ratelimited("ptp: physical clock is free running\n");
- 		return -EBUSY;
- 	}
+ static struct btf_record *reg_btf_record(const struct bpf_reg_state *reg)
+diff --git a/tools/testing/selftests/bpf/progs/verifier_unpriv.c b/tools/testing/selftests/bpf/progs/verifier_unpriv.c
+index 7ea535bfbacd..e4ef82a6ee38 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_unpriv.c
++++ b/tools/testing/selftests/bpf/progs/verifier_unpriv.c
+@@ -619,7 +619,7 @@ __naked void pass_pointer_to_tail_call(void)
  
+ SEC("socket")
+ __description("unpriv: cmp map pointer with zero")
+-__success __failure_unpriv __msg_unpriv("R1 pointer comparison")
++__success __success_unpriv
+ __retval(0)
+ __naked void cmp_map_pointer_with_zero(void)
+ {
 -- 
 2.39.5
 
