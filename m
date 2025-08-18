@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD20334721;
-	Mon, 18 Aug 2025 14:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6163375CD;
+	Mon, 18 Aug 2025 14:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526246; cv=none; b=dWwRDWE+JyVkwKjqcqZrcuK/8H6rtYjOaO4QGweyYawpS8GvvJx+qoMlu/O1wDDE8192mwFTlORysU7+1CICBdcnSO7WAlJClr/k7D0Oha6oEIZwhEKxxkMqJu+JJiUteP3UNhhymFEPF+Q4ffY28kDgqBtPRQucZAQb0MLGmo4=
+	t=1755526250; cv=none; b=L0t7xp8PqqMsSMrurtdHQg86IjuM5jc9lrTR4GcmOz96zG/B6MlOzi+TtE6nH94uuC3Ykzl1y+rTQrQoWRp1n3yMQ6iHq6Pj4OuiPbIwPA/fjHwzyS53ZJfOvKyP5LaTZ7YMwBh53qNpo7vflHfgMmWeQox/EcMRlFThJKbclPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526246; c=relaxed/simple;
-	bh=udOoNcx5xSZwkwjM4xqxR15Zzrs+5awSyU+BXF2f3Vo=;
+	s=arc-20240116; t=1755526250; c=relaxed/simple;
+	bh=IGucrGU/t6NpTWlW/nnAEGIO3z9tGbFaLiL9i21uvJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvpOoPtHVYfpi/TyGSgXgm4gdkYuCuYxU/B4HMchkAdG7AF5A+LVNl6DuRdi6YlWg3dM6RlibPfWR+4eCpq26pxx6/rA/t2wAgWndGUGTsUG8/gu3mfql76Heksj73FL91y4QGNh8s6/g0Q7uYRvqxNdW9VyckMq8kV05E0bH3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4osgvX6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hEnIhwhG2+ZLA2KZ8Fn57QqQn9sF25Ik+0A8GG1kO6EAQaaz//bFGSCrmkbhMMvN0qTwJ/yETxrJ37eF2TmY5AcrtQw9uoZy1A81oXSTf6ofSyo1tAsZDA0FNlsrtJxKKRje3ltnzZdAqq+I0idwevhAbDKeHMKE0Y5ooh3sfC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkvDdZmB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4osgvX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669DDC4CEEB;
-	Mon, 18 Aug 2025 14:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkvDdZmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94960C4CEEB;
+	Mon, 18 Aug 2025 14:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526246;
-	bh=udOoNcx5xSZwkwjM4xqxR15Zzrs+5awSyU+BXF2f3Vo=;
+	s=korg; t=1755526250;
+	bh=IGucrGU/t6NpTWlW/nnAEGIO3z9tGbFaLiL9i21uvJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4osgvX6cXKfvxk4Zq277D1d+KptVbOS6GhTIRP2BOVZSPqTGegnnYSdcJ/l0/1PJ
-	 lxurt1rsyBXuKdd9aiFTjKKIUTNwaF01pGiFWcMNoOtQqXLqjUhBzguO19QEyJvECb
-	 Kn5lcHNEpICy/E3zYGiYcE5YSAbCsFBBza7X4OGc=
+	b=VkvDdZmBGzsSqWx02l54aqRpK0mECKF8ZP8rDOuJqEKr/PqKykX3VMNjM/90p7OLN
+	 MC6WLo3cd/CGwh5bv7UFQyu+AU8MQ69+APxdkCYLcy5bYYXzrhSxa5698E4KX04wEf
+	 bIuGyp45Nos2zVuiMic9rRYTCXeJqSV7r+/peg1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Xiao <Jack.Xiao@amd.com>,
-	Likun Gao <Likun.Gao@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 482/570] drm/amdgpu: fix incorrect vm flags to map bo
-Date: Mon, 18 Aug 2025 14:47:49 +0200
-Message-ID: <20250818124524.452481295@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>
+Subject: [PATCH 6.16 500/570] iommufd: Report unmapped bytes in the error path of iopt_unmap_iova_range
+Date: Mon, 18 Aug 2025 14:48:07 +0200
+Message-ID: <20250818124525.123360734@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,40 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Xiao <Jack.Xiao@amd.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 040bc6d0e0e9c814c9c663f6f1544ebaff6824a8 ]
+commit b23e09f9997771b4b739c1c694fa832b5fa2de02 upstream.
 
-It should use vm flags instead of pte flags
-to specify bo vm attributes.
+There are callers that read the unmapped bytes even when rc != 0. Thus, do
+not forget to report it in the error path too.
 
-Fixes: 7946340fa389 ("drm/amdgpu: Move csa related code to separate file")
-Signed-off-by: Jack Xiao <Jack.Xiao@amd.com>
-Reviewed-by: Likun Gao <Likun.Gao@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b08425fa77ad2f305fe57a33dceb456be03b653f)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8d40205f6093 ("iommufd: Add kAPI toward external drivers for kernel access")
+Link: https://patch.msgid.link/r/e2b61303bbc008ba1a4e2d7c2a2894749b59fdac.1752126748.git.nicolinc@nvidia.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/io_pagetable.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-index 02138aa55793..dfb6cfd83760 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-@@ -88,8 +88,8 @@ int amdgpu_map_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 	}
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -743,8 +743,10 @@ again:
+ 			iommufd_access_notify_unmap(iopt, area_first, length);
+ 			/* Something is not responding to unmap requests. */
+ 			tries++;
+-			if (WARN_ON(tries > 100))
+-				return -EDEADLOCK;
++			if (WARN_ON(tries > 100)) {
++				rc = -EDEADLOCK;
++				goto out_unmapped;
++			}
+ 			goto again;
+ 		}
  
- 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
--			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
--			     AMDGPU_PTE_EXECUTABLE);
-+			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
-+			     AMDGPU_VM_PAGE_EXECUTABLE);
- 
- 	if (r) {
- 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
--- 
-2.50.1
-
+@@ -766,6 +768,7 @@ again:
+ out_unlock_iova:
+ 	up_write(&iopt->iova_rwsem);
+ 	up_read(&iopt->domains_rwsem);
++out_unmapped:
+ 	if (unmapped)
+ 		*unmapped = unmapped_bytes;
+ 	return rc;
 
 
