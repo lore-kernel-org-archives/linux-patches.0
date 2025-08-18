@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFF3335BCE;
-	Mon, 18 Aug 2025 13:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B496727F727;
+	Mon, 18 Aug 2025 13:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755525313; cv=none; b=FIgAhYi5bZu8tGt8JvCvVAJhjfronN69TPrvD7GZ2Yaz42NlzV1DODaitIOPSzhPgsSpqCOMOHFqq13BC2/0sbRGMxHIs323RUpPmTRqGh5ucnHDbTKMqpUmNFL/ADUkAgBqLSG8gYAzSbWp9PrzSDcZts36/dP9Yl6g8seY/sU=
+	t=1755525316; cv=none; b=EhPD5oa3gV7dkmhooNuNNe88f/x4UjvXiLKSnF+YPYw9lFJ+Ta3KhgOaeX1ivNNpuZ9irldXf2SeXXQximJSBVg1SlsnCBFL4etXshTLM4stGONHLCSqfm0CjT4F2a5XNPQ1sAABcjyWNIX0gqtj1MdEwqyCfK8AawNiSH/l16c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755525313; c=relaxed/simple;
-	bh=86Yr+vCipq3r/WOPRVCAlimY7IiLTwvpdMjZP1pb+nk=;
+	s=arc-20240116; t=1755525316; c=relaxed/simple;
+	bh=6A8lJ9otMe9GnI6ASETq5o3nD7adgYjZsRQjG3mVgGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4EcjE+50/JvECXMzHe9ranYI/Hxjlhpxsg8LYn6TeKdGsNtufulduYDFxPEU+tiG67QDYcKvuyWCdwXE9YylI0oMFaHqdIfdzd+1jXrZUV0P9fwPiVQdGw9sjjIeLigSPo76jz3TcAvBDYs4b40GO/GpZTzXPm7D0PbLR8I/J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4+N0FrG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WQ1e1lwAtEs8y+7gWu0+/bgwMue4vIos4CiLUo+4JHHhI547hWU28+j7cEYvW90M0eyVUypKtkluAcJRc9nfvkzWGZlmaQjEFRbNRpPDIeX+wSdeELfFk0uAvAB03aFViR+XfL3cG9ehi8gzVs0Jn9rM86YNvG37c00laiXqlMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yz+VdEVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4+N0FrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EE9C4CEEB;
-	Mon, 18 Aug 2025 13:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yz+VdEVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF4CC4CEF1;
+	Mon, 18 Aug 2025 13:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755525313;
-	bh=86Yr+vCipq3r/WOPRVCAlimY7IiLTwvpdMjZP1pb+nk=;
+	s=korg; t=1755525316;
+	bh=6A8lJ9otMe9GnI6ASETq5o3nD7adgYjZsRQjG3mVgGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4+N0FrGn5nIEFnpPB4EzeaLK4BO9vKJhbwBmDQmuFHHi24LOzbFfy8oOEZQyR59l
-	 wQIcjq63jd0tkXXogaBBt0W4T3cZZrud1p7/lNrUT7bkSdtq28/sRj4xsxHOYwrPQl
-	 kNWSgj1rpWY7LBBPjkgzOQy71bCR3p+GuAbhT2vg=
+	b=Yz+VdEVukpFAWp+7ebZHUkm9s+6NWCVp+147F0oBG5zlfB9fKz5T5HvsqpmU3Xbr8
+	 jB6OrqeO01sHTeRMyQuy9IhbIWXV++RsuQDUOhi5SD2HTO13Ijy+RxK9/Bnh9by774
+	 zYY5Nxdh2VLqPUyn6viyqag9j0vKtOG3kXFP3/Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 224/570] be2net: Use correct byte order and format string for TCP seq and ack_seq
-Date: Mon, 18 Aug 2025 14:43:31 +0200
-Message-ID: <20250818124514.439310570@linuxfoundation.org>
+Subject: [PATCH 6.16 225/570] libbpf: Verify that arena map exists when adding arena relocations
+Date: Mon, 18 Aug 2025 14:43:32 +0200
+Message-ID: <20250818124514.485041890@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -52,50 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 4701ee5044fb3992f1c910630a9673c2dc600ce5 ]
+[ Upstream commit 42be23e8f2dcb100cb9944b2b54b6bf41aff943d ]
 
-The TCP header fields seq and ack_seq are 32-bit values in network
-byte order as (__be32). these fields were earlier printed using
-ntohs(), which converts only 16-bit values and produces incorrect
-results for 32-bit fields. This patch is changeing the conversion
-to ntohl(), ensuring correct interpretation of these sequence numbers.
+Fuzzer reported a memory access error in bpf_program__record_reloc()
+that happens when:
+- ".addr_space.1" section exists
+- there is a relocation referencing this section
+- there are no arena maps defined in BTF.
 
-Notably, the format specifier is updated from %d to %u to reflect the
-unsigned nature of these fields.
+Sanity checks for maps existence are already present in
+bpf_program__record_reloc(), hence this commit adds another one.
 
-improves the accuracy of debug log messages for TCP sequence and
-acknowledgment numbers during TX timeouts.
+[1] https://github.com/libbpf/libbpf/actions/runs/16375110681/job/46272998064
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250717193552.3648791-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250718222059.281526-1-eddyz87@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/emulex/benet/be_main.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/lib/bpf/libbpf.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
-index 3d2e21592119..490af6659429 100644
---- a/drivers/net/ethernet/emulex/benet/be_main.c
-+++ b/drivers/net/ethernet/emulex/benet/be_main.c
-@@ -1465,10 +1465,10 @@ static void be_tx_timeout(struct net_device *netdev, unsigned int txqueue)
- 						 ntohs(tcphdr->source));
- 					dev_info(dev, "TCP dest port %d\n",
- 						 ntohs(tcphdr->dest));
--					dev_info(dev, "TCP sequence num %d\n",
--						 ntohs(tcphdr->seq));
--					dev_info(dev, "TCP ack_seq %d\n",
--						 ntohs(tcphdr->ack_seq));
-+					dev_info(dev, "TCP sequence num %u\n",
-+						 ntohl(tcphdr->seq));
-+					dev_info(dev, "TCP ack_seq %u\n",
-+						 ntohl(tcphdr->ack_seq));
- 				} else if (ip_hdr(skb)->protocol ==
- 					   IPPROTO_UDP) {
- 					udphdr = udp_hdr(skb);
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index d41ee26b9443..6401dd3bd35f 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -4582,6 +4582,11 @@ static int bpf_program__record_reloc(struct bpf_program *prog,
+ 
+ 	/* arena data relocation */
+ 	if (shdr_idx == obj->efile.arena_data_shndx) {
++		if (obj->arena_map_idx < 0) {
++			pr_warn("prog '%s': bad arena data relocation at insn %u, no arena maps defined\n",
++				prog->name, insn_idx);
++			return -LIBBPF_ERRNO__RELOC;
++		}
+ 		reloc_desc->type = RELO_DATA;
+ 		reloc_desc->insn_idx = insn_idx;
+ 		reloc_desc->map_idx = obj->arena_map_idx;
 -- 
 2.39.5
 
