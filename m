@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302DE31CA5B;
-	Mon, 18 Aug 2025 13:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1034E31CA59;
+	Mon, 18 Aug 2025 13:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522220; cv=none; b=JoWM8W0vHSH8E5pgHu5Gau0HJJT5J6aoYeTkCE/Wuzk8CboEdrcGbvhKg9oPATqn39YQoEBQWi72frQyX0Hi2RFfzFC7c6OlYhy5lZACVZs3Q7JsvzcY2DV2tf/JFfEUbDWsoKbjNw08g60StKA/hgcZYNVzZNpb/xaJpCqdKo0=
+	t=1755522223; cv=none; b=V5oDdhAXhFsJF/mr+8eRMn8I6Z/lBJ+W7jES1EjL4KVJ6dkhv7ldKjjpvDP3ZL2xkn4KY/gn6roZ9/GAKmhptz0YEnNWqgfF6SzTJbFGX6bcLQvPzRasgQmoyOYfF4ruhohi1WM4iCl9S4rHE0DayKayYqfPwd+rCSThJBDeGTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522220; c=relaxed/simple;
-	bh=N2HcmzkmbczfQNgHUweHntGUvyPs+McS0umDHdntPHk=;
+	s=arc-20240116; t=1755522223; c=relaxed/simple;
+	bh=yte+VQBQY+YSiJfEBj0JVCjR82MjkSFubYAJ8L+ORBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SdYO2XCOwMJGIOFFdegC7DKsZSbNGdIi+JBHLb7yzdNHlVum38+J/0QxVLuQvqXzO/ASOeWuDLertp2SGvWVve7Z6MtAuBxLUkBtPpoVlgrxWgbV6mTXK/TD3CymgHXTAn2Gip3C3UUd6Ej5uU0rb2+xBjgS8nppF7mNyQvEgEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ws0kecRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WVYIltO6ApowDDgGemZgSfmxzWOYiOvI0hAonrh7P1lycZwC/6VlylMh2Te5fkihvq9uaZitYNBArHD898UgA/x6SS14Sd2VnYtfvFg+cii13Wesyd+UvUT0Ug1IvDLIMuqotLkdLOlGEpQ4YQl3lo+ahB8ILfEipy0XcpGrPTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPjkUsFB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ws0kecRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E986C4CEF1;
-	Mon, 18 Aug 2025 13:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPjkUsFB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7238EC4CEEB;
+	Mon, 18 Aug 2025 13:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522219;
-	bh=N2HcmzkmbczfQNgHUweHntGUvyPs+McS0umDHdntPHk=;
+	s=korg; t=1755522222;
+	bh=yte+VQBQY+YSiJfEBj0JVCjR82MjkSFubYAJ8L+ORBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ws0kecRrgxAUz6w/qeIzNp0DXhHgy00HQ0YtY0n+VnJjltXvcLPUKQ/EnTiLVFmH5
-	 I8kXPsuO5zcGyQS8mak+26zpK/57r3uvMbFiRkeVLsz+2AK+TZqVJQrmm+oIYMhFBQ
-	 3N09WYS28UlKGQkVyqUgPB5egr7friGyg6oRPXDY=
+	b=RPjkUsFB+MTKZR5YztmQH82yEeDTY2yH5CbMVGC2volcSuq11fELsfM2/jeBxwxlc
+	 S5gryaN/cyQrWVzlyse7crmdV+0uXqi11flx44F4Fzr444ikpSmb13ZHp6mrpxLNzH
+	 OhvN0R3CaX5B0CgEHhGb3S+YiYWYLgrvPz/TB1R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 250/444] net: dsa: b53: prevent GMII_PORT_OVERRIDE_CTRL access on BCM5325
-Date: Mon, 18 Aug 2025 14:44:36 +0200
-Message-ID: <20250818124458.197395738@linuxfoundation.org>
+Subject: [PATCH 6.12 251/444] net: dsa: b53: prevent DIS_LEARNING access on BCM5325
+Date: Mon, 18 Aug 2025 14:44:37 +0200
+Message-ID: <20250818124458.234501981@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -55,81 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 37883bbc45a8555d6eca88d3a9730504d2dac86c ]
+[ Upstream commit 800728abd9f83bda4de62a30ce62a8b41c242020 ]
 
-BCM5325 doesn't implement GMII_PORT_OVERRIDE_CTRL register so we should
-avoid reading or writing it.
-PORT_OVERRIDE_RX_FLOW and PORT_OVERRIDE_TX_FLOW aren't defined on BCM5325
-and we should use PORT_OVERRIDE_LP_FLOW_25 instead.
+BCM5325 doesn't implement DIS_LEARNING register so we should avoid reading
+or writing it.
 
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Link: https://patch.msgid.link/20250614080000.1884236-12-noltari@gmail.com
+Link: https://patch.msgid.link/20250614080000.1884236-10-noltari@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 21 +++++++++++++++++----
- drivers/net/dsa/b53/b53_regs.h   |  1 +
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index fef265521e8a..0085adecaf2d 100644
+index 0085adecaf2d..1ee2e5e9a5b2 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1269,6 +1269,8 @@ static void b53_force_link(struct b53_device *dev, int port, int link)
- 	if (port == dev->imp_port) {
- 		off = B53_PORT_OVERRIDE_CTRL;
- 		val = PORT_OVERRIDE_EN;
-+	} else if (is5325(dev)) {
-+		return;
- 	} else {
- 		off = B53_GMII_PORT_OVERRIDE_CTRL(port);
- 		val = GMII_PO_EN;
-@@ -1293,6 +1295,8 @@ static void b53_force_port_config(struct b53_device *dev, int port,
- 	if (port == dev->imp_port) {
- 		off = B53_PORT_OVERRIDE_CTRL;
- 		val = PORT_OVERRIDE_EN;
-+	} else if (is5325(dev)) {
-+		return;
- 	} else {
- 		off = B53_GMII_PORT_OVERRIDE_CTRL(port);
- 		val = GMII_PO_EN;
-@@ -1323,10 +1327,19 @@ static void b53_force_port_config(struct b53_device *dev, int port,
- 		return;
- 	}
+@@ -581,6 +581,9 @@ static void b53_port_set_learning(struct b53_device *dev, int port,
+ {
+ 	u16 reg;
  
--	if (rx_pause)
--		reg |= PORT_OVERRIDE_RX_FLOW;
--	if (tx_pause)
--		reg |= PORT_OVERRIDE_TX_FLOW;
-+	if (rx_pause) {
-+		if (is5325(dev))
-+			reg |= PORT_OVERRIDE_LP_FLOW_25;
-+		else
-+			reg |= PORT_OVERRIDE_RX_FLOW;
-+	}
++	if (is5325(dev))
++		return;
 +
-+	if (tx_pause) {
-+		if (is5325(dev))
-+			reg |= PORT_OVERRIDE_LP_FLOW_25;
-+		else
-+			reg |= PORT_OVERRIDE_TX_FLOW;
-+	}
+ 	b53_read16(dev, B53_CTRL_PAGE, B53_DIS_LEARNING, &reg);
+ 	if (learning)
+ 		reg &= ~BIT(port);
+@@ -2197,7 +2200,13 @@ int b53_br_flags_pre(struct dsa_switch *ds, int port,
+ 		     struct switchdev_brport_flags flags,
+ 		     struct netlink_ext_ack *extack)
+ {
+-	if (flags.mask & ~(BR_FLOOD | BR_MCAST_FLOOD | BR_LEARNING))
++	struct b53_device *dev = ds->priv;
++	unsigned long mask = (BR_FLOOD | BR_MCAST_FLOOD);
++
++	if (!is5325(dev))
++		mask |= BR_LEARNING;
++
++	if (flags.mask & ~mask)
+ 		return -EINVAL;
  
- 	b53_write8(dev, B53_CTRL_PAGE, off, reg);
- }
-diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index d8900aa433e5..719c2ac94a4f 100644
---- a/drivers/net/dsa/b53/b53_regs.h
-+++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -95,6 +95,7 @@
- #define   PORT_OVERRIDE_SPEED_10M	(0 << PORT_OVERRIDE_SPEED_S)
- #define   PORT_OVERRIDE_SPEED_100M	(1 << PORT_OVERRIDE_SPEED_S)
- #define   PORT_OVERRIDE_SPEED_1000M	(2 << PORT_OVERRIDE_SPEED_S)
-+#define   PORT_OVERRIDE_LP_FLOW_25	BIT(3) /* BCM5325 only */
- #define   PORT_OVERRIDE_RV_MII_25	BIT(4) /* BCM5325 only */
- #define   PORT_OVERRIDE_RX_FLOW		BIT(4)
- #define   PORT_OVERRIDE_TX_FLOW		BIT(5)
+ 	return 0;
 -- 
 2.39.5
 
