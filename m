@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9C7321F4C;
-	Mon, 18 Aug 2025 13:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4056F321F58;
+	Mon, 18 Aug 2025 13:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523002; cv=none; b=e8VcL2yBzlBietKMCKyvWmBwUAJTd/NPLO008sP3SNdow+NpUCTJ02RrosW2QJ/5J0Lm1ksMDK4+xOopi0FLLt7LeGCdbKjvwXzufK8CTzpZ+a2an22uxGAiXcWzt8CpM26rMhwA1Zqs1LFlKP/qhTkmeuue0BNLglsP4kaRPPs=
+	t=1755523006; cv=none; b=E5d7fEO3PPryvH61xIJT7/QzM1M6vJYRdEXimfkE7gNrf/jQBc4W6kz+w8XBHFViXRrXCezwwblf2H8OSdVZQJEqX9mFDFq8b4v20Kvq7rt0j/qoqSIxJG1F60Ms7Q9lAlys3dP5DnmOtdR/0qWiApJykXjJ7bTLzffwu5107FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523002; c=relaxed/simple;
-	bh=LxBhDTf0sdMxIqlSD8VnQEmChA94TRxC7QiNlx4s4cQ=;
+	s=arc-20240116; t=1755523006; c=relaxed/simple;
+	bh=8P2yIMKdP8XionFQOJuE5YKVK+EsYKFNj2zmmA+QX44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GY4F56Vn3m45srlld9zgJw9ScgIx+k1FsHWbsyMXbKG5Txz/rIgAC6iAw0kkX6NR7jd+dVBGfZqO3/RBWiMOUe6oqPTMq3AVW9xS74raRce4T68IwhwKvVdGJ1sVAiEO6+nF0lWASVpo8HgmL/902GOmRe4GpXu9CWTXzu30hqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVPWlAWt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TjxQ5vvDeajI8NDctc8joC1FK1FodjTFuMksvGxe49q6YRupItGcGtED11oeCOlDvaSp1kITUaLR0nPqQ9fMP0sXZM9tASDpK6gZJbSapnE6T6OdmmzqU1/BSjsCzlvEwHD89/qv6YnQWHp3+4p2gYbKqzGAgIk0/wXUCnRbykw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCUEuEDR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVPWlAWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491DBC4CEEB;
-	Mon, 18 Aug 2025 13:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCUEuEDR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B697C4CEEB;
+	Mon, 18 Aug 2025 13:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523002;
-	bh=LxBhDTf0sdMxIqlSD8VnQEmChA94TRxC7QiNlx4s4cQ=;
+	s=korg; t=1755523006;
+	bh=8P2yIMKdP8XionFQOJuE5YKVK+EsYKFNj2zmmA+QX44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVPWlAWtC+tq+kY9pL4I8eyiF5AcKHZABNbVWtcSC4rL7r5Da7HCC4B8mC4qfnUT6
-	 CAgi5DWHjDfTzJNcuC8Jpt3HtvYicidaEHOk1xXANS9a3kK9V4k4CgQrDf3pCVdFMN
-	 I45W2hjQP2DhALTNS39aQSFeWxvhWi/xXZeS/8DQ=
+	b=lCUEuEDRyE6eQmufBu2d+mxmkKfpGK1k/wDOY2xVDFOFTQs4DdBeUiIVArjGd+AnH
+	 oVoyl6QZpOm7Yhk0Y8949oVbCxJRUha8FN+PVTB6kHwkKg0QzpblbNvYvK8yerXBMg
+	 2uXzHFuikvTiHqRMtk6V8aRCFepFpHU7YQV5wyNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.15 039/515] sunvdc: Balance device refcount in vdc_port_mpgroup_check
-Date: Mon, 18 Aug 2025 14:40:25 +0200
-Message-ID: <20250818124459.943674239@linuxfoundation.org>
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.15 040/515] clk: samsung: exynos850: fix a comment
+Date: Mon, 18 Aug 2025 14:40:26 +0200
+Message-ID: <20250818124459.979271625@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,45 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: André Draszik <andre.draszik@linaro.org>
 
-commit 63ce53724637e2e7ba51fe3a4f78351715049905 upstream.
+commit 320e7efce30e2613c2c7877acc46a8e71192cdcd upstream.
 
-Using device_find_child() to locate a probed virtual-device-port node
-causes a device refcount imbalance, as device_find_child() internally
-calls get_device() to increment the device’s reference count before
-returning its pointer. vdc_port_mpgroup_check() directly returns true
-upon finding a matching device without releasing the reference via
-put_device(). We should call put_device() to decrement refcount.
+The code below the updated comment is for CMU_CPUCL1, not CMU_CPUCL0.
 
-As comment of device_find_child() says, 'NOTE: you will need to drop
-the reference with put_device() after use'.
-
-Found by code review.
-
+Fixes: dedf87341ad6 ("clk: samsung: exynos850: Add CMU_CPUCL0 and CMU_CPUCL1")
 Cc: stable@vger.kernel.org
-Fixes: 3ee70591d6c4 ("sunvdc: prevent sunvdc panic when mpgroup disk added to guest domain")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20250719075856.3447953-1-make24@iscas.ac.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/20250603-samsung-clk-fixes-v1-3-49daf1ff4592@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/sunvdc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/samsung/clk-exynos850.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -957,8 +957,10 @@ static bool vdc_port_mpgroup_check(struc
- 	dev = device_find_child(vdev->dev.parent, &port_data,
- 				vdc_device_probed);
+--- a/drivers/clk/samsung/clk-exynos850.c
++++ b/drivers/clk/samsung/clk-exynos850.c
+@@ -1360,7 +1360,7 @@ static const unsigned long cpucl1_clk_re
+ 	CLK_CON_GAT_GATE_CLK_CPUCL1_CPU,
+ };
  
--	if (dev)
-+	if (dev) {
-+		put_device(dev);
- 		return true;
-+	}
- 
- 	return false;
- }
+-/* List of parent clocks for Muxes in CMU_CPUCL0 */
++/* List of parent clocks for Muxes in CMU_CPUCL1 */
+ PNAME(mout_pll_cpucl1_p)		 = { "oscclk", "fout_cpucl1_pll" };
+ PNAME(mout_cpucl1_switch_user_p)	 = { "oscclk", "dout_cpucl1_switch" };
+ PNAME(mout_cpucl1_dbg_user_p)		 = { "oscclk", "dout_cpucl1_dbg" };
 
 
