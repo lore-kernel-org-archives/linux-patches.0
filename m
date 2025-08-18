@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF65273D8C;
-	Mon, 18 Aug 2025 18:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A53D27467B;
+	Mon, 18 Aug 2025 18:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755543469; cv=none; b=dUUUCxSh47FNmNl4PsF+3dHSP8NMooyYgSUOpSH0bZZxFK49zP0tMO4N7NQlFW1v5W4kQovsNKZduuT3U5JuJBD1stgaqXXa2nziw+mvbd30OAu4b7S8omYHAgQCmTUTW8CKFMHtBvqiN6P8MqKx75CBH7GDpB3HONSMYiFwRz0=
+	t=1755543472; cv=none; b=AEcfLcmsX0lnxP+ZaARRvPqcgHEd2yQ3waM0/1km+pOQAwtwS90BlkaGU8Qjqqu1o4EfqLQ/cunMpNUMKmUnigT6RqMXIXVjsZGGdDxvh2EKwDbH9XbIYKG6+8pdIp9z2d2TalrG+k+bNe2axKyylf4gygGdVRRygJps4TGD204=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755543469; c=relaxed/simple;
-	bh=IDG166K1atPKY7m9tz5d771kcEokrOl3YOwP4VHZB2Y=;
+	s=arc-20240116; t=1755543472; c=relaxed/simple;
+	bh=nxE7BPv67vk6+O2NN512KZ/22Fu2rCuKLzKSJq7gvSM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NGg/jwgJ9QsU8S0etfYwUFv7hlDOC4xZ5nQiJQ8gltuFltNYgAh1TyeAoHWgprh5TXfXNkd8uoClX1pwBHYs4zdCFcb+48d/ZHGOX0885+UnUgBG2wJ27hTw2SlSQqGrSUGRuKNuPNnJuxU+3RJj0EyynKvlmXXfZtYO59wQJcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L4aYaJy9; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=EtYWA7is4wex4nLQ5ZniGoPtLVsRUim5CwRW/RUWAJPvnlJpdQ2Mw61FPOHvP70H+vZBQk7S6AEZRmoscUJTeUHqkzGecjdIHotXAUMQvW7vBtAxqVVG6donr5n56buoIvvI1ebGeEOb8p8GJpK20c42GnDfkOSWiZC3T1ijRUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sbugmBn5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L4aYaJy9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9E7C116D0;
-	Mon, 18 Aug 2025 18:57:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sbugmBn5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EA7C4CEF1;
+	Mon, 18 Aug 2025 18:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755543468;
-	bh=IDG166K1atPKY7m9tz5d771kcEokrOl3YOwP4VHZB2Y=;
+	s=k20201202; t=1755543471;
+	bh=nxE7BPv67vk6+O2NN512KZ/22Fu2rCuKLzKSJq7gvSM=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=L4aYaJy9cDV+/UnJTWcR0iNDVk6FjVvwluccsEI6E/0AJYmgjDFwRfgMc+VbRcpvm
-	 WOvciQIoqrceYsxzy9CmszhbH5UHp6owiaQcwu2Yuy3mkeDrqEWFMmPNHnSL4E9PHl
-	 zt1b2U7Wl8g5XDdwsMRXfW+jIFwUQPPcFPbk8AacQCgtZMOrraZKddy2ZfO4wPKfh5
-	 M7WHTMdW+8z3IsN4Iab7PMjPdSo745auY8G1j0icvM5R9JsjnsWN7ZEzHqIb4sTwuZ
-	 sECxWz8frYn829tcn8zD2B/MJk3S00OYO/qyMN/lpYjSDtQF/R1vOiNXa9g4KmFDf3
-	 sVN3ftsVlcAEw==
+	b=sbugmBn57cQ8lbdaiAd7Gnq66RWDWOqKkW5DIdjslI9YoYxtUjGmaX+o3UbKNnVfp
+	 3H59+D4rVbVntzcMomi0OTb1kyMSqTZqnaXCoT+EEqVURgwDZ7Le6w9rPk614A9cBE
+	 0s/7azogaZGyZkPHExvPlqwzrK3IGuQPUpYnl//JiQsNFEdFDNo7cxvNnOFk6pz2Jq
+	 Yu4S/0610rNjEUnXaGRaBCbdf00ID0/QHYN0V4Qx49F32ObzsUtfPWf45Mz5tsoDqd
+	 GmZAc8pnH1+5yhqI85cWTUSlQORL09qxaT0Bh41+Y84tj2dT9gk524+6NHKKZ1PuW1
+	 IvKf7NL8HUN5A==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 18 Aug 2025 11:57:17 -0700
-Subject: [PATCH 01/10] kbuild: Bump minimum version of LLVM for building
- the kernel to 15.0.0
+Date: Mon, 18 Aug 2025 11:57:18 -0700
+Subject: [PATCH 02/10] arch/Kconfig: Drop always true condition from
+ RANDOMIZE_KSTACK_OFFSET
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250818-bump-min-llvm-ver-15-v1-1-c8b1d0f955e0@kernel.org>
+Message-Id: <20250818-bump-min-llvm-ver-15-v1-2-c8b1d0f955e0@kernel.org>
 References: <20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org>
 In-Reply-To: <20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
@@ -46,77 +46,40 @@ Cc: Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
  Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
  Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
  linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org
+ Nathan Chancellor <nathan@kernel.org>, linux-hardening@vger.kernel.org
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2339; i=nathan@kernel.org;
- h=from:subject:message-id; bh=IDG166K1atPKY7m9tz5d771kcEokrOl3YOwP4VHZB2Y=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBmLyxcWvmb41ZlXxD75o5cc03Rmb/uzvLxTL3InZB3s2
- bLQIJK7o5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAExk0hyG/6XBnWXhyc2NuaZP
- fhRXJGUuPLR1xUyL6PMajTsdZ6dPdmZkuCZmz+GdFS8xw8HAyUnp36vil8HRVyrqK0QucOtvsOv
- kAQA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=891; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=nxE7BPv67vk6+O2NN512KZ/22Fu2rCuKLzKSJq7gvSM=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBmLyxfyvjymodS3fOtqrmtvYv1tZyowXq8yXmSW/NT50
+ up0FduWjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRxe0Mv1n39k/csUPrn8aS
+ 69sbPJibF686X5br/LNnwXn130JLbJoYGX5HbqvwvGWRpWb4S0Py/v2rkX5Nohr/lSSeHtqwkp2
+ 7hhsA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-s390 and x86 have required LLVM 15 since
-
-  30d17fac6aae ("scripts/min-tool-version.sh: raise minimum clang version to 15.0.0 for s390")
-  7861640aac52 ("x86/build: Raise the minimum LLVM version to 15.0.0")
-
-respectively but most other architectures allow LLVM 13.0.1 or newer. In
-accordance with the recent minimum supported version of GCC bump that
-happened in
-
-  118c40b7b503 ("kbuild: require gcc-8 and binutils-2.30")
-
-do the same for LLVM to 15.0.0.
-
-Of the supported releases of Arch Linux, Debian, Fedora, and OpenSUSE
-surveyed in evaluating this bump, this only leaves behind Debian
-Bookworm (14.0.6) and Ubuntu Jammy (14.0.0). Debian Trixie has 19.1.7
-and Ubuntu Noble has 18.1.3 (so there are viable upgrade paths) or users
-can use apt.llvm.org, which provides even newer packages for those
-distributions.
+Now that the minimum supported version of LLVM for building the kernel
+has been bumped to 15.0.0, the second depends line in
+RANDOMIZE_KSTACK_OFFSET is always true, so it can be removed.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Cc: linux-kbuild@vger.kernel.org
+Cc: linux-hardening@vger.kernel.org
 ---
- Documentation/process/changes.rst | 2 +-
- scripts/min-tool-version.sh       | 6 ++----
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ arch/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/process/changes.rst b/Documentation/process/changes.rst
-index bccfa19b45df..b38622b0d525 100644
---- a/Documentation/process/changes.rst
-+++ b/Documentation/process/changes.rst
-@@ -30,7 +30,7 @@ you probably needn't concern yourself with pcmciautils.
-         Program        Minimal version       Command to check the version
- ====================== ===============  ========================================
- GNU C                  8.1              gcc --version
--Clang/LLVM (optional)  13.0.1           clang --version
-+Clang/LLVM (optional)  15.0.0           clang --version
- Rust (optional)        1.78.0           rustc --version
- bindgen (optional)     0.65.1           bindgen --version
- GNU make               4.0              make --version
-diff --git a/scripts/min-tool-version.sh b/scripts/min-tool-version.sh
-index 0d223b4a9445..99b5575c1ef7 100755
---- a/scripts/min-tool-version.sh
-+++ b/scripts/min-tool-version.sh
-@@ -24,12 +24,10 @@ gcc)
- 	fi
- 	;;
- llvm)
--	if [ "$SRCARCH" = s390 -o "$SRCARCH" = x86 ]; then
--		echo 15.0.0
--	elif [ "$SRCARCH" = loongarch ]; then
-+	if [ "$SRCARCH" = loongarch ]; then
- 		echo 18.0.0
- 	else
--		echo 13.0.1
-+		echo 15.0.0
- 	fi
- 	;;
- rustc)
+diff --git a/arch/Kconfig b/arch/Kconfig
+index d1b4ffd6e085..4935c4c26f09 100644
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -1475,7 +1475,6 @@ config RANDOMIZE_KSTACK_OFFSET
+ 	bool "Support for randomizing kernel stack offset on syscall entry" if EXPERT
+ 	default y
+ 	depends on HAVE_ARCH_RANDOMIZE_KSTACK_OFFSET
+-	depends on INIT_STACK_NONE || !CC_IS_CLANG || CLANG_VERSION >= 140000
+ 	help
+ 	  The kernel stack offset can be randomized (after pt_regs) by
+ 	  roughly 5 bits of entropy, frustrating memory corruption
 
 -- 
 2.50.1
