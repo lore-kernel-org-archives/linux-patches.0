@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C91326D46;
-	Mon, 18 Aug 2025 13:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48267322551;
+	Mon, 18 Aug 2025 13:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523086; cv=none; b=QjXWpe3w2U6X16ZCOzWqowXk9ZUVwhNRa/onpkgyxWdtWgYFdSTmOUy3oBK7JuWeFnVsMGB9rIy2cB+08MS11qOpN58ESoDqOtVq3jbka4wXV5OXNOkQG/sDeqmiAQSb81e9OqX0B9OpOK/oB8gpnrHWs1LU/w7wtHO6ea3GqmE=
+	t=1755523090; cv=none; b=qv9ptK87X9V8kJ1+I/siEdirrxdVhnK9yajzE2ButpQ6MIjP0REAbLmRbZ41ouwzxRLqV87FG00S9HFi1+BIrd0X1DQVBnb35vm2Fkdkj3AS+EuzC4C8DcwvdswC3qHHFXcD3g49LiMbNFYs8jRImmjpOvyBPwCoFiuWA8TWW0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523086; c=relaxed/simple;
-	bh=OeVsqiK2wlIehRaqqakWdikQCnkeRxqkEZOrEWl85FI=;
+	s=arc-20240116; t=1755523090; c=relaxed/simple;
+	bh=Qdv0DNEac48T2egtxfxI4Lh0HUfcV/rPQpWm9YnAEoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ITMuobNV9JkwQFEFH55L9jAVDDojPOsayNuPYpV4cXg0724pS8ix1DUCyWI+sYsSsk3ctSi3pQJovgCiGKkD/hjnpe5p/zJB2kUPz8l8kJQ7q76gBvst7zkxDGnajoejJLodJjCxsObORj8DZa6GEIFFIn8VfvAQlPq6J1Be9T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RyjQauH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iVJvRZx6PclcyD1gYl6o+9KZZOlsxLwMiAehUvfhVY3SWwpm5/fvGK/DhOKJOawqMSGyi9KNbuQ/yJBNsY2ikIGqp6h5cGKQ7bNbrd+N4zCtXAI9rqtPSsZYjbOxQl7xqqp3SmjUbY4m3qoGiZ4/DaF8kzObUSb4mG4zXQJeXZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrWEaUA4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RyjQauH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46FCC4CEEB;
-	Mon, 18 Aug 2025 13:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrWEaUA4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F710C4CEEB;
+	Mon, 18 Aug 2025 13:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523086;
-	bh=OeVsqiK2wlIehRaqqakWdikQCnkeRxqkEZOrEWl85FI=;
+	s=korg; t=1755523089;
+	bh=Qdv0DNEac48T2egtxfxI4Lh0HUfcV/rPQpWm9YnAEoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0RyjQauHUhX/PCjlliNC8TfL4w9cXnVVijm8HwDEiaXh9yhMM1ftxxVUrgaXnMo/E
-	 bD/F9tMOQL8I65ae5qQxff2sUdXXOq6ySgYZv6qSUrzTj129HmuP1800UPWusCmFdA
-	 KI1GY4zi3Bh1VU6b2t2lDeHIt4nPHLfQEAweu8Ug=
+	b=XrWEaUA4GLdnKFr7QhgeQugG9zjgugZofwwjaZE+Fe2Uhk9J47H1nn5pkhi4Jhcd1
+	 SEBDd0y8Mtj19UKXGa9cpo+gLDPJYX9iO12xvaQ0S35UwImgm2Asc+dX9xCxrty5Ej
+	 axPtYRXMMxaT7cNFKcsTqjXa44jZTJidLxNDhmuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com,
-	syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+e67ea9c235b13b4f0020@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 066/515] sctp: linearize cloned gso packets in sctp_rcv
-Date: Mon, 18 Aug 2025 14:40:52 +0200
-Message-ID: <20250818124500.941943610@linuxfoundation.org>
+Subject: [PATCH 6.15 067/515] net: lapbether: ignore ops-locked netdevs
+Date: Mon, 18 Aug 2025 14:40:53 +0200
+Message-ID: <20250818124500.978007305@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -54,71 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit fd60d8a086191fe33c2d719732d2482052fa6805 ]
+[ Upstream commit 53898ebabe843bfa7baea9dae152797d5d0563c9 ]
 
-A cloned head skb still shares these frag skbs in fraglist with the
-original head skb. It's not safe to access these frag skbs.
+Syzkaller managed to trigger lock dependency in xsk_notify via
+register_netdevice. As discussed in [0], using register_netdevice
+in the notifiers is problematic so skip adding lapbeth for ops-locked
+devices.
 
-syzbot reported two use-of-uninitialized-memory bugs caused by this:
+       xsk_notifier+0xa4/0x280 net/xdp/xsk.c:1645
+       notifier_call_chain+0xbc/0x410 kernel/notifier.c:85
+       call_netdevice_notifiers_info+0xbe/0x140 net/core/dev.c:2230
+       call_netdevice_notifiers_extack net/core/dev.c:2268 [inline]
+       call_netdevice_notifiers net/core/dev.c:2282 [inline]
+       unregister_netdevice_many_notify+0xf9d/0x2700 net/core/dev.c:12077
+       unregister_netdevice_many net/core/dev.c:12140 [inline]
+       unregister_netdevice_queue+0x305/0x3f0 net/core/dev.c:11984
+       register_netdevice+0x18f1/0x2270 net/core/dev.c:11149
+       lapbeth_new_device drivers/net/wan/lapbether.c:420 [inline]
+       lapbeth_device_event+0x5b1/0xbe0 drivers/net/wan/lapbether.c:462
+       notifier_call_chain+0xbc/0x410 kernel/notifier.c:85
+       call_netdevice_notifiers_info+0xbe/0x140 net/core/dev.c:2230
+       call_netdevice_notifiers_extack net/core/dev.c:2268 [inline]
+       call_netdevice_notifiers net/core/dev.c:2282 [inline]
+       __dev_notify_flags+0x12c/0x2e0 net/core/dev.c:9497
+       netif_change_flags+0x108/0x160 net/core/dev.c:9526
+       dev_change_flags+0xba/0x250 net/core/dev_api.c:68
+       devinet_ioctl+0x11d5/0x1f50 net/ipv4/devinet.c:1200
+       inet_ioctl+0x3a7/0x3f0 net/ipv4/af_inet.c:1001
 
-  BUG: KMSAN: uninit-value in sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
-   sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
-   sctp_assoc_bh_rcv+0x1a7/0xc50 net/sctp/associola.c:998
-   sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
-   sctp_backlog_rcv+0x397/0xdb0 net/sctp/input.c:331
-   sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1122
-   __release_sock+0x1da/0x330 net/core/sock.c:3106
-   release_sock+0x6b/0x250 net/core/sock.c:3660
-   sctp_wait_for_connect+0x487/0x820 net/sctp/socket.c:9360
-   sctp_sendmsg_to_asoc+0x1ec1/0x1f00 net/sctp/socket.c:1885
-   sctp_sendmsg+0x32b9/0x4a80 net/sctp/socket.c:2031
-   inet_sendmsg+0x25a/0x280 net/ipv4/af_inet.c:851
-   sock_sendmsg_nosec net/socket.c:718 [inline]
-
-and
-
-  BUG: KMSAN: uninit-value in sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
-   sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
-   sctp_inq_push+0x2a3/0x350 net/sctp/inqueue.c:88
-   sctp_backlog_rcv+0x3c7/0xda0 net/sctp/input.c:331
-   sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
-   __release_sock+0x1d3/0x330 net/core/sock.c:3213
-   release_sock+0x6b/0x270 net/core/sock.c:3767
-   sctp_wait_for_connect+0x458/0x820 net/sctp/socket.c:9367
-   sctp_sendmsg_to_asoc+0x223a/0x2260 net/sctp/socket.c:1886
-   sctp_sendmsg+0x3910/0x49f0 net/sctp/socket.c:2032
-   inet_sendmsg+0x269/0x2a0 net/ipv4/af_inet.c:851
-   sock_sendmsg_nosec net/socket.c:712 [inline]
-
-This patch fixes it by linearizing cloned gso packets in sctp_rcv().
-
-Fixes: 90017accff61 ("sctp: Add GSO support")
-Reported-by: syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com
-Reported-by: syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/dd7dc337b99876d4132d0961f776913719f7d225.1754595611.git.lucien.xin@gmail.com
+0: https://lore.kernel.org/netdev/20250625140357.6203d0af@kernel.org/
+Fixes: 4c975fd70002 ("net: hold instance lock during NETDEV_REGISTER/UP")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+e67ea9c235b13b4f0020@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e67ea9c235b13b4f0020
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250806213726.1383379-1-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/input.c | 2 +-
+ drivers/net/wan/lapbether.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index 0c0d2757f6f8..6fcdcaeed40e 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -117,7 +117,7 @@ int sctp_rcv(struct sk_buff *skb)
- 	 * it's better to just linearize it otherwise crc computing
- 	 * takes longer.
- 	 */
--	if ((!is_gso && skb_linearize(skb)) ||
-+	if (((!is_gso || skb_cloned(skb)) && skb_linearize(skb)) ||
- 	    !pskb_may_pull(skb, sizeof(struct sctphdr)))
- 		goto discard_it;
+diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
+index 995a7207bdf8..f357a7ac70ac 100644
+--- a/drivers/net/wan/lapbether.c
++++ b/drivers/net/wan/lapbether.c
+@@ -81,7 +81,7 @@ static struct lapbethdev *lapbeth_get_x25_dev(struct net_device *dev)
  
+ static __inline__ int dev_is_ethdev(struct net_device *dev)
+ {
+-	return dev->type == ARPHRD_ETHER && strncmp(dev->name, "dummy", 5);
++	return dev->type == ARPHRD_ETHER && !netdev_need_ops_lock(dev);
+ }
+ 
+ /* ------------------------------------------------------------------------ */
 -- 
 2.50.1
 
