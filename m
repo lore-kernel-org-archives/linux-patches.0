@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F0B335BA1;
-	Mon, 18 Aug 2025 13:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F47335BA3;
+	Mon, 18 Aug 2025 13:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523990; cv=none; b=hj+p10hCselDAUfmq/EI5q2ltV0PkCpCnnNfoHkTcuPQnQRc+/R75Jdp0TA5s5diR6HsToJXmrNosPWZcE1K0zsmieEaJ9Zr4ReS85wqKxg8wcz/zd+1slA2IGTAQir3/MLCArH3CZ0zAoF/hnqUsqUNJbx7OdcyfRFUsxwdLfY=
+	t=1755523993; cv=none; b=kAhffTV/BHTpnvySsTNhPYcPxIB3slTbj9nR7t3yOHakO6Xw48xLwOeC5khs2Yx/W88UO5e5fQpaIkEveeAhwHFybmYlBn3RzlFL5SuGASMtskV7acIVwc3qsQv1YYUAtS644qkVdXtGJfAve+dLGnqTCTlMjTlFb8o0yVLgHMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523990; c=relaxed/simple;
-	bh=Gu4szEaJPjobXveju7pATTAe7zEpe1qiBfspOo/btjE=;
+	s=arc-20240116; t=1755523993; c=relaxed/simple;
+	bh=7VS534ik33nZd3E51QLILRFLf1n2v/NH0I8Pns+6sqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JXiXOh0boL3IBtxJ+tQY8U45FJL4XThBkj1V8CLdbc8fQBboGs3AYqXKZij/V7MmWZ+XUqRJocWuHaSOBze5iakobspdFPMFTIWmEjxaY/NnzSWkiefYVZRW4RKSxBiYuFPhZd/t3zTTIgqy055QkH2frJ6THdN+aGcz5nC7YYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzqVSp9W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DtnqW6O2oT/ZnFNOW45RU9stqGVAWaynDilLDK1Cf85uKim2aMTXXwlo8ssrzWt/wHN1XGnT+eN5DMvFODsqGo4Pu3hGjXEMjAUQ6ftI4nBiThhO68wtbRrnhbgN9atzuWgTwUUCp2wuGLphWBzOqLfgwxNF+yEIXQxaj2JxfkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PC79cFD7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzqVSp9W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A53BC4CEEB;
-	Mon, 18 Aug 2025 13:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PC79cFD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F338C4CEEB;
+	Mon, 18 Aug 2025 13:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523989;
-	bh=Gu4szEaJPjobXveju7pATTAe7zEpe1qiBfspOo/btjE=;
+	s=korg; t=1755523993;
+	bh=7VS534ik33nZd3E51QLILRFLf1n2v/NH0I8Pns+6sqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzqVSp9Wuw/lfh/jlQ3BMIDfYrOZ5KqzP8garp1Ghw0g6CXhMlA+GuZUrSfDxfmue
-	 e84uGgH4IY2W/Dxc74BWRp2Xj8FcDicNzRJl15g+ZnOLUwfJmZKfdRi3cCPcYuQEgo
-	 7B4Zzg9+c+Q8wjdKxJUPx14pFi7t1u7+gEPLhIt8=
+	b=PC79cFD7FrsAInph8Mufbbgg6yJCgOpt3Q71HC2ZYUS//JnCDiZQYbz8F3ilUMhrX
+	 p/gUQSn6+bphQTTOvVTAlyNW5qKYzJKA9ZvCelvFJtI4m5/IrwNup0EDHUvuL0+U7i
+	 yxF57P7m0WrZ/xWBsmkJ8jokn9HshVWvutXpye70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Song <songzhiqi1@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+544248a761451c0df72f@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 335/515] crypto: hisilicon/hpre - fix dma unmap sequence
-Date: Mon, 18 Aug 2025 14:45:21 +0200
-Message-ID: <20250818124511.324290844@linuxfoundation.org>
+Subject: [PATCH 6.15 336/515] ext4: do not BUG when INLINE_DATA_FL lacks system.data xattr
+Date: Mon, 18 Aug 2025 14:45:22 +0200
+Message-ID: <20250818124511.371625252@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,54 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiqi Song <songzhiqi1@huawei.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit 982fd1a74de63c388c060e4fa6f7fbd088d6d02e ]
+[ Upstream commit 099b847ccc6c1ad2f805d13cfbcc83f5b6d4bc42 ]
 
-Perform DMA unmapping operations before processing data.
-Otherwise, there may be unsynchronized data accessed by
-the CPU when the SWIOTLB is enabled.
+A syzbot fuzzed image triggered a BUG_ON in ext4_update_inline_data()
+when an inode had the INLINE_DATA_FL flag set but was missing the
+system.data extended attribute.
 
-Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Since this can happen due to a maiciouly fuzzed file system, we
+shouldn't BUG, but rather, report it as a corrupted file system.
+
+Add similar replacements of BUG_ON with EXT4_ERROR_INODE() ii
+ext4_create_inline_data() and ext4_inline_data_truncate().
+
+Reported-by: syzbot+544248a761451c0df72f@syzkaller.appspotmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_crypto.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ext4/inline.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index 61b5e1c5d019..1550c3818383 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -1491,11 +1491,13 @@ static void hpre_ecdh_cb(struct hpre_ctx *ctx, void *resp)
- 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
- 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
+diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+index f27d9da53fb7..372058706cce 100644
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -303,7 +303,11 @@ static int ext4_create_inline_data(handle_t *handle,
+ 	if (error)
+ 		goto out;
  
-+	/* Do unmap before data processing */
-+	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
-+
- 	p = sg_virt(areq->dst);
- 	memmove(p, p + ctx->key_sz - curve_sz, curve_sz);
- 	memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);
+-	BUG_ON(!is.s.not_found);
++	if (!is.s.not_found) {
++		EXT4_ERROR_INODE(inode, "unexpected inline data xattr");
++		error = -EFSCORRUPTED;
++		goto out;
++	}
  
--	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
- 	kpp_request_complete(areq, ret);
+ 	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
+ 	if (error) {
+@@ -354,7 +358,11 @@ static int ext4_update_inline_data(handle_t *handle, struct inode *inode,
+ 	if (error)
+ 		goto out;
  
- 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
-@@ -1808,9 +1810,11 @@ static void hpre_curve25519_cb(struct hpre_ctx *ctx, void *resp)
- 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
- 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
+-	BUG_ON(is.s.not_found);
++	if (is.s.not_found) {
++		EXT4_ERROR_INODE(inode, "missing inline data xattr");
++		error = -EFSCORRUPTED;
++		goto out;
++	}
  
-+	/* Do unmap before data processing */
-+	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
-+
- 	hpre_key_to_big_end(sg_virt(areq->dst), CURVE25519_KEY_SIZE);
+ 	len -= EXT4_MIN_INLINE_DATA_SIZE;
+ 	value = kzalloc(len, GFP_NOFS);
+@@ -1904,7 +1912,12 @@ int ext4_inline_data_truncate(struct inode *inode, int *has_inline)
+ 			if ((err = ext4_xattr_ibody_find(inode, &i, &is)) != 0)
+ 				goto out_error;
  
--	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
- 	kpp_request_complete(areq, ret);
+-			BUG_ON(is.s.not_found);
++			if (is.s.not_found) {
++				EXT4_ERROR_INODE(inode,
++						 "missing inline data xattr");
++				err = -EFSCORRUPTED;
++				goto out_error;
++			}
  
- 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
+ 			value_len = le32_to_cpu(is.s.here->e_value_size);
+ 			value = kmalloc(value_len, GFP_NOFS);
 -- 
 2.39.5
 
