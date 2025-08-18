@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275AB1E48A;
-	Mon, 18 Aug 2025 13:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D07C1E48A;
+	Mon, 18 Aug 2025 13:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524922; cv=none; b=Zl6n1+ccU326tmWgaE3LnN40KTvuwOew14FdLNCXw88DKhbkG1K99PzQMlesJfPt7GOatnJc2XewvtnFgUtxfBmGPNzeL+ktTj14v62fAA0z59YfjboWn1/ILXqFAkTKy9ZWs/lOEfKgUvmSLGD4Zp20h0UM+318z6f4nN6IfSQ=
+	t=1755524925; cv=none; b=Lb5ScQDurLcpqsFmHMQmbZ7XTwIhjYOGqf8lo2LzD9ulpezkpAO4Y756bkjx8+7kUEV0J+6UAgTilC1Xw04Sejptbnm+44YQa5gRBh8qvv4H2CtA+Qg4Z/FUvF4v4BbuUZYGCQswApnM18ms9WifEpH99Fry9+6IVcaM16BMgMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524922; c=relaxed/simple;
-	bh=3B6x166sKIbyy311ID1Pr0C1qh23liM8l/mfD/OXhb8=;
+	s=arc-20240116; t=1755524925; c=relaxed/simple;
+	bh=6eLygwi+eSDNGepirZf7ynWnXNCj770u6caBHR6o5rQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hqhoZnDZN8xtDyWUdwCwP7+PIBqxkcTnzfrjeuVoZvh25EBPUJElWPtJ57hG+L5Hkh6kGAYbfaEzSoiSTPLdSuhrVUllqeRExK+4fagTnNllQ3jahgYGfaMZP7YAzh16RXY1+G3HssPkmlYZoeoUrDNvZ1xpW4tQ7fo3nBj99so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oviv6fso; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DV2hZAUPRn2cRG6wMuSXYunA0VgIGJj6Kg7/FVjWHsqp+pCHu3CMvQ8DHeF/+CMlZomEECwa8/FyMOjaIvz4MLm4lRU5Ij7nqYagDGpdQk4l2Zeevpj8yv6T+6en7ZHru4vrwXS6mic+7cJjC1CjT66kKvtABryc+BKNythHyFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgxr2XI3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oviv6fso"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89812C4CEEB;
-	Mon, 18 Aug 2025 13:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgxr2XI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD66C4CEEB;
+	Mon, 18 Aug 2025 13:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524922;
-	bh=3B6x166sKIbyy311ID1Pr0C1qh23liM8l/mfD/OXhb8=;
+	s=korg; t=1755524925;
+	bh=6eLygwi+eSDNGepirZf7ynWnXNCj770u6caBHR6o5rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oviv6fso6uRJqsK4IhhHtjqsbxshNp1JIDEYtF9myT/7+OB63890SYxNPnr66zZsA
-	 y9tE+fHfhF0unwEE+tWBNRxpNyruiMA5grk+aJYvodRlDfWtRaqDhb7I8snHPpbkCY
-	 ZYP0NsoNm7U14Jp651Pz1Xi3g7ypgf5n1v6ZNZnA=
+	b=sgxr2XI3HwX45W8a4hgqOvUZkrOkN0dqHjbooqS0bEyhBHgb0tGa56IGcXDM1LXGb
+	 aqIwZGGKZVurau0JhcoMQwMU97+Eg3fF8pPxh4Mn6Q85Of20W/8IKyvb5FVLAFyYg/
+	 BRr0HQEYy1/g1/RwmDOrvU16N1ZCEMxcZSbfelQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 097/570] firmware: arm_ffa: Change initcall level of ffa_init() to rootfs_initcall
-Date: Mon, 18 Aug 2025 14:41:24 +0200
-Message-ID: <20250818124509.551870471@linuxfoundation.org>
+Subject: [PATCH 6.16 106/570] md: call del_gendisk in control path
+Date: Mon, 18 Aug 2025 14:41:33 +0200
+Message-ID: <20250818124509.890618243@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -47,82 +45,192 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Xiao Ni <xni@redhat.com>
 
-[ Upstream commit 0e0546eabcd6c19765a8dbf5b5db3723e7b0ea75 ]
+[ Upstream commit 9e59d609763f70a992a8f3808dabcce60f14eb5c ]
 
-The Linux IMA (Integrity Measurement Architecture) subsystem used for
-secure boot, file integrity, or remote attestation cannot be a loadable
-module for few reasons listed below:
+Now del_gendisk and put_disk are called asynchronously in workqueue work.
+The asynchronous way has a problem that the device node can still exist
+after mdadm --stop command returns in a short window. So udev rule can
+open this device node and create the struct mddev in kernel again. So put
+del_gendisk in control path and still leave put_disk in md_kobj_release
+to avoid uaf of gendisk.
 
- o Boot-Time Integrity: IMA’s main role is to measure and appraise files
- before they are used. This includes measuring critical system files during
- early boot (e.g., init, init scripts, login binaries). If IMA were a
- module, it would be loaded too late to cover those.
+Function del_gendisk can't be called with reconfig_mutex. If it's called
+with reconfig mutex, a deadlock can happen. del_gendisk waits all sysfs
+files access to finish and sysfs file access waits reconfig mutex. So
+put del_gendisk after releasing reconfig mutex.
 
- o TPM Dependency: IMA integrates tightly with the TPM to record
- measurements into PCRs. The TPM must be initialized early (ideally before
- init_ima()), which aligns with IMA being built-in.
+But there is still a window that sysfs can be accessed between mddev_unlock
+and del_gendisk. So some actions (add disk, change level, .e.g) can happen
+which lead unexpected results. MD_DELETED is used to resolve this problem.
+MD_DELETED is set before releasing reconfig mutex and it should be checked
+for these sysfs access which need reconfig mutex. For sysfs access which
+don't need reconfig mutex, del_gendisk will wait them to finish.
 
- o Security Model: IMA is part of a Trusted Computing Base (TCB). Making it
- a module would weaken the security model, as a potentially compromised
- system could delay or tamper with its initialization.
+But it doesn't need to do this in function mddev_lock_nointr. There are
+ten places that call it.
+* Five of them are in dm raid which we don't need to care. MD_DELETED is
+only used for md raid.
+* stop_sync_thread, md_do_sync and md_start_sync are related sync request,
+and it needs to wait sync thread to finish before stopping an array.
+* md_ioctl: md_open is called before md_ioctl, so ->openers is added. It
+will fail to stop the array. So it doesn't need to check MD_DELETED here
+* md_set_readonly:
+It needs to call mddev_set_closing_and_sync_blockdev when setting readonly
+or read_auto. So it will fail to stop the array too because MD_CLOSING is
+already set.
 
-IMA must be built-in to ensure it starts measuring from the earliest
-possible point in boot which inturn implies TPM must be initialised and
-ready to use before IMA.
-
-To enable integration of tpm_event_log with the IMA subsystem, the TPM
-drivers (tpm_crb and tpm_crb_ffa) also needs to be built-in. However with
-FF-A driver also being initialised at device initcall level, it can lead to
-an initialization order issue where:
- - crb_acpi_driver_init() may run before tpm_crb_ffa_driver()_init and
-   ffa_init()
- - As a result, probing the TPM device via CRB over FFA is deferred
- - ima_init() (called as a late initcall) runs before deferred probe
-   completes, IMA fails to find the TPM and logs the below error:
-
-   |  ima: No TPM chip found, activating TPM-bypass!
-
-Eventually it fails to generate boot_aggregate with PCR values.
-
-Because of the above stated dependency, the ffa driver needs to initialised
-before tpm_crb_ffa module to ensure IMA finds the TPM successfully when
-present.
-
-[ jarkko: reformatted some of the paragraphs because they were going past
-  the 75 character boundary. ]
-
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/linux-raid/20250611073108.25463-2-xni@redhat.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c | 33 +++++++++++++++++++++++----------
+ drivers/md/md.h | 26 ++++++++++++++++++++++++--
+ 2 files changed, 47 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 37eb2e6c2f9f..65bf1685350a 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -2059,7 +2059,7 @@ static int __init ffa_init(void)
- 	kfree(drv_info);
- 	return ret;
- }
--module_init(ffa_init);
-+rootfs_initcall(ffa_init);
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 10670c62b09e..c16c7feb6034 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -636,9 +636,6 @@ static void __mddev_put(struct mddev *mddev)
+ 	    mddev->ctime || mddev->hold_active)
+ 		return;
  
- static void __exit ffa_exit(void)
+-	/* Array is not configured at all, and not held active, so destroy it */
+-	set_bit(MD_DELETED, &mddev->flags);
+-
+ 	/*
+ 	 * Call queue_work inside the spinlock so that flush_workqueue() after
+ 	 * mddev_find will succeed in waiting for the work to be done.
+@@ -873,6 +870,16 @@ void mddev_unlock(struct mddev *mddev)
+ 		kobject_del(&rdev->kobj);
+ 		export_rdev(rdev, mddev);
+ 	}
++
++	/* Call del_gendisk after release reconfig_mutex to avoid
++	 * deadlock (e.g. call del_gendisk under the lock and an
++	 * access to sysfs files waits the lock)
++	 * And MD_DELETED is only used for md raid which is set in
++	 * do_md_stop. dm raid only uses md_stop to stop. So dm raid
++	 * doesn't need to check MD_DELETED when getting reconfig lock
++	 */
++	if (test_bit(MD_DELETED, &mddev->flags))
++		del_gendisk(mddev->gendisk);
+ }
+ EXPORT_SYMBOL_GPL(mddev_unlock);
+ 
+@@ -5774,19 +5781,30 @@ md_attr_store(struct kobject *kobj, struct attribute *attr,
+ 	struct md_sysfs_entry *entry = container_of(attr, struct md_sysfs_entry, attr);
+ 	struct mddev *mddev = container_of(kobj, struct mddev, kobj);
+ 	ssize_t rv;
++	struct kernfs_node *kn = NULL;
+ 
+ 	if (!entry->store)
+ 		return -EIO;
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EACCES;
++
++	if (entry->store == array_state_store && cmd_match(page, "clear"))
++		kn = sysfs_break_active_protection(kobj, attr);
++
+ 	spin_lock(&all_mddevs_lock);
+ 	if (!mddev_get(mddev)) {
+ 		spin_unlock(&all_mddevs_lock);
++		if (kn)
++			sysfs_unbreak_active_protection(kn);
+ 		return -EBUSY;
+ 	}
+ 	spin_unlock(&all_mddevs_lock);
+ 	rv = entry->store(mddev, page, length);
+ 	mddev_put(mddev);
++
++	if (kn)
++		sysfs_unbreak_active_protection(kn);
++
+ 	return rv;
+ }
+ 
+@@ -5794,12 +5812,6 @@ static void md_kobj_release(struct kobject *ko)
  {
+ 	struct mddev *mddev = container_of(ko, struct mddev, kobj);
+ 
+-	if (mddev->sysfs_state)
+-		sysfs_put(mddev->sysfs_state);
+-	if (mddev->sysfs_level)
+-		sysfs_put(mddev->sysfs_level);
+-
+-	del_gendisk(mddev->gendisk);
+ 	put_disk(mddev->gendisk);
+ }
+ 
+@@ -6646,8 +6658,9 @@ static int do_md_stop(struct mddev *mddev, int mode)
+ 		mddev->bitmap_info.offset = 0;
+ 
+ 		export_array(mddev);
+-
+ 		md_clean(mddev);
++		set_bit(MD_DELETED, &mddev->flags);
++
+ 		if (mddev->hold_active == UNTIL_STOP)
+ 			mddev->hold_active = 0;
+ 	}
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index d45a9e6ead80..67b365621507 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -700,11 +700,26 @@ static inline bool reshape_interrupted(struct mddev *mddev)
+ 
+ static inline int __must_check mddev_lock(struct mddev *mddev)
+ {
+-	return mutex_lock_interruptible(&mddev->reconfig_mutex);
++	int ret;
++
++	ret = mutex_lock_interruptible(&mddev->reconfig_mutex);
++
++	/* MD_DELETED is set in do_md_stop with reconfig_mutex.
++	 * So check it here.
++	 */
++	if (!ret && test_bit(MD_DELETED, &mddev->flags)) {
++		ret = -ENODEV;
++		mutex_unlock(&mddev->reconfig_mutex);
++	}
++
++	return ret;
+ }
+ 
+ /* Sometimes we need to take the lock in a situation where
+  * failure due to interrupts is not acceptable.
++ * It doesn't need to check MD_DELETED here, the owner which
++ * holds the lock here can't be stopped. And all paths can't
++ * call this function after do_md_stop.
+  */
+ static inline void mddev_lock_nointr(struct mddev *mddev)
+ {
+@@ -713,7 +728,14 @@ static inline void mddev_lock_nointr(struct mddev *mddev)
+ 
+ static inline int mddev_trylock(struct mddev *mddev)
+ {
+-	return mutex_trylock(&mddev->reconfig_mutex);
++	int ret;
++
++	ret = mutex_trylock(&mddev->reconfig_mutex);
++	if (!ret && test_bit(MD_DELETED, &mddev->flags)) {
++		ret = -ENODEV;
++		mutex_unlock(&mddev->reconfig_mutex);
++	}
++	return ret;
+ }
+ extern void mddev_unlock(struct mddev *mddev);
+ 
 -- 
 2.39.5
 
