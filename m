@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E2C22A7E0;
-	Mon, 18 Aug 2025 13:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4073426F2B4;
+	Mon, 18 Aug 2025 13:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523031; cv=none; b=KxEmwyTdvGzAzC/wb7wNXyVHMAHNy4wxF9+Ot1AosdQt9oG5O/UHzbDIW/iNnsU6QcUmaHnoMdZz+BhVrpAeT+zohYWFlyInQn8mWUsNWApGAIaPtYm7Z1w06vKxWJCqg3xCgmhQbtrjjCqOMgS/shcSAx5fmmQSHBAQ0tT/qcA=
+	t=1755523034; cv=none; b=XNB1hXY2Fw+wLOnx09VOBXUA8ED7jWKE+JzqBmm6jUCoZwPMmaQYS9PWEqtpZqT6nJ6+4LFbOQdDNwt9nA3zZthqlz3YvUvM0OjsbEtcUmjAuhMPROjn9LAzzY4Cjb9HOYuOib2Z45gjZPr2y2EkerOyqn+977LhKe5mpKJgCTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523031; c=relaxed/simple;
-	bh=wm2z4ma9IjJSy3w6e8KasFdR/zWrVcWcEA2AfkQ9ouE=;
+	s=arc-20240116; t=1755523034; c=relaxed/simple;
+	bh=FncI+V8Ioj/DkXCKFIZYmwQXTYU+W2VO4SAUwcVjzcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSGqR5iskaHlh6tEMzoAoGlcCNhSqMEvPffUUz4xQbIjwwIxbG58qNMokDCXk+PMOkG9udAzUjZLEcPi36bwDoEKPNPlNCWEPdTqDMqvhTXL/lk4ChU+9gqeCh12KNAGTKWPWqalkT9GCKdDrZgaBmmdGG0dInumF2HPNYQkA2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoU9T0wg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NCnipR+H/Qi42QdvBPrSyweRn/13DeE352DukeSD1LI+RgeuGQqRu7YknFHDMozQk+v2D3gselGKRmctPgk+QkDbsI6LJnrKjNNIGbuCsiBQjThdg488T3SYkhy+IPY1AJ/02dW3Yn1Z6MNIceUboyWkHHu46IFn5ThDDpmDAOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSDNSRKb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoU9T0wg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBA2C4CEEB;
-	Mon, 18 Aug 2025 13:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSDNSRKb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAA5C4CEEB;
+	Mon, 18 Aug 2025 13:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523030;
-	bh=wm2z4ma9IjJSy3w6e8KasFdR/zWrVcWcEA2AfkQ9ouE=;
+	s=korg; t=1755523034;
+	bh=FncI+V8Ioj/DkXCKFIZYmwQXTYU+W2VO4SAUwcVjzcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QoU9T0wg+kOVwC6rnu1MJLBfq48bFx3mnPOvoE/4vbxHh/HrbcUNCOkdj0m1nsI4n
-	 AY+l8SYJlHVZSCHF7jG4u/TGd93GQ7EkET5Z7Fvy9WlTu7dYAtn8h8a9/Q015kHbeL
-	 zCJMLjfgpemHycELD0Hw9eCkZIwzsX6eN8Pd8/tc=
+	b=fSDNSRKbR6um1iWPJs/m7Yvv7x9mHyEwL8BfAEV3Dc8sJfACl3IGnOghrE1d954pi
+	 lGYi6Sv90rTZ6vk2oP8d1149NcY/DX8S6oQPcH5Mn+j8svxADYux2ss44joXr6gqWB
+	 IGGAvECuqyAqhADjB78NsKG8XudYR/J5n5kXbI2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.15 016/515] gpio: mlxbf3: use platform_get_irq_optional()
-Date: Mon, 18 Aug 2025 14:40:02 +0200
-Message-ID: <20250818124458.937435428@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.15 017/515] leds: flash: leds-qcom-flash: Fix registry access after re-bind
+Date: Mon, 18 Aug 2025 14:40:03 +0200
+Message-ID: <20250818124458.975007000@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,38 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 810bd9066fb1871b8a9528f31f2fdbf2a8b73bf2 upstream.
+commit fab15f57360b1e6620a1d0d6b0fbee896e6c1f07 upstream.
 
-The gpio-mlxbf3 driver interfaces with two GPIO controllers,
-device instance 0 and 1. There is a single IRQ resource shared
-between the two controllers, and it is found in the ACPI table for
-device instance 0. The driver should not use platform_get_irq(),
-otherwise this error is logged when probing instance 1:
-    mlxbf3_gpio MLNXBF33:01: error -ENXIO: IRQ index 0 not found
+Driver in probe() updates each of 'reg_field' with 'reg_base':
 
+	for (i = 0; i < REG_MAX_COUNT; i++)
+		regs[i].reg += reg_base;
+
+'reg_field' array (under variable 'regs' above) is statically allocated,
+thus each re-bind would add another 'reg_base' leading to bogus
+register addresses.  Constify the local 'reg_field' array and duplicate
+it in probe to solve this.
+
+Fixes: 96a2e242a5dc ("leds: flash: Add driver to support flash LED module in QCOM PMICs")
 Cc: stable@vger.kernel.org
-Fixes: cd33f216d241 ("gpio: mlxbf3: Add gpio driver support")
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/ce70b98a201ce82b9df9aa80ac7a5eeaa2268e52.1754928650.git.davthompson@nvidia.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250529063335.8785-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mlxbf3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/leds/flash/leds-qcom-flash.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/gpio/gpio-mlxbf3.c
-+++ b/drivers/gpio/gpio-mlxbf3.c
-@@ -227,7 +227,7 @@ static int mlxbf3_gpio_probe(struct plat
- 	gc->owner = THIS_MODULE;
- 	gc->add_pin_ranges = mlxbf3_gpio_add_pin_ranges;
+--- a/drivers/leds/flash/leds-qcom-flash.c
++++ b/drivers/leds/flash/leds-qcom-flash.c
+@@ -117,7 +117,7 @@ enum {
+ 	REG_MAX_COUNT,
+ };
  
--	irq = platform_get_irq(pdev, 0);
-+	irq = platform_get_irq_optional(pdev, 0);
- 	if (irq >= 0) {
- 		girq = &gs->gc.irq;
- 		gpio_irq_chip_set_chip(girq, &gpio_mlxbf3_irqchip);
+-static struct reg_field mvflash_3ch_regs[REG_MAX_COUNT] = {
++static const struct reg_field mvflash_3ch_regs[REG_MAX_COUNT] = {
+ 	REG_FIELD(0x08, 0, 7),			/* status1	*/
+ 	REG_FIELD(0x09, 0, 7),                  /* status2	*/
+ 	REG_FIELD(0x0a, 0, 7),                  /* status3	*/
+@@ -132,7 +132,7 @@ static struct reg_field mvflash_3ch_regs
+ 	REG_FIELD(0x58, 0, 2),			/* therm_thrsh3 */
+ };
+ 
+-static struct reg_field mvflash_4ch_regs[REG_MAX_COUNT] = {
++static const struct reg_field mvflash_4ch_regs[REG_MAX_COUNT] = {
+ 	REG_FIELD(0x06, 0, 7),			/* status1	*/
+ 	REG_FIELD(0x07, 0, 6),			/* status2	*/
+ 	REG_FIELD(0x09, 0, 7),			/* status3	*/
+@@ -854,11 +854,17 @@ static int qcom_flash_led_probe(struct p
+ 	if (val == FLASH_SUBTYPE_3CH_PM8150_VAL || val == FLASH_SUBTYPE_3CH_PMI8998_VAL) {
+ 		flash_data->hw_type = QCOM_MVFLASH_3CH;
+ 		flash_data->max_channels = 3;
+-		regs = mvflash_3ch_regs;
++		regs = devm_kmemdup(dev, mvflash_3ch_regs, sizeof(mvflash_3ch_regs),
++				    GFP_KERNEL);
++		if (!regs)
++			return -ENOMEM;
+ 	} else if (val == FLASH_SUBTYPE_4CH_VAL) {
+ 		flash_data->hw_type = QCOM_MVFLASH_4CH;
+ 		flash_data->max_channels = 4;
+-		regs = mvflash_4ch_regs;
++		regs = devm_kmemdup(dev, mvflash_4ch_regs, sizeof(mvflash_4ch_regs),
++				    GFP_KERNEL);
++		if (!regs)
++			return -ENOMEM;
+ 
+ 		rc = regmap_read(regmap, reg_base + FLASH_REVISION_REG, &val);
+ 		if (rc < 0) {
+@@ -880,6 +886,7 @@ static int qcom_flash_led_probe(struct p
+ 		dev_err(dev, "Failed to allocate regmap field, rc=%d\n", rc);
+ 		return rc;
+ 	}
++	devm_kfree(dev, regs); /* devm_regmap_field_bulk_alloc() makes copies */
+ 
+ 	platform_set_drvdata(pdev, flash_data);
+ 	mutex_init(&flash_data->lock);
 
 
