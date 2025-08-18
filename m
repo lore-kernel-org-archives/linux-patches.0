@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC2821FF4B;
-	Mon, 18 Aug 2025 13:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8366322156C;
+	Mon, 18 Aug 2025 13:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522973; cv=none; b=pyUPNOeozqFHdKtWNS5cfZ4u0K3/DKuEU8oe+3jsrl1QSvUjlW43EICE6tVcrsKZT1Jq38vAFN83dhaxOY0o+uVYKue212jQ6GH8j6yVWqWDxEZwl3lqm4CMr5Vm9TV142Ko5ovd3Jb2aSEQn48PhJdqL0YqfUcLccswXlbwMn0=
+	t=1755522976; cv=none; b=gRPQAlcEdRsbzylgFymOU5mdk6XeCYeUtJq2f++kyXN3v7/OKHkmziTK6z2Xes3Bl1WAuwGeDKFLiu9YZRS8ShZ/aMlC6hjkyKIu96Q0ODPUl8lcONulB6woSUYEVTUPwN2Tkf8lfM6Po5++rzB3oh5DMIwNHovUCbO4LDG2gM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522973; c=relaxed/simple;
-	bh=CEWYjcqaaHr5F1tNBs+pXXT2WpyzT+qsDzgXThu+jCU=;
+	s=arc-20240116; t=1755522976; c=relaxed/simple;
+	bh=IJ54ATFTEe8KKHi6d5rvnqV4LNjnz1xcsBvkcIKiZB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/fwwrxoAj2gwN+9USOr1dvKG5GyE5xPcF3DsfVE/gjibZFso3uqHMfzF+zLzqjiNz5MgpfB1bHyPznkQOU83NckRRoQMJ4HpYclsc0iX//kgyyOmmnQenpfS4DAfrEcolEYyxh8mdEuLx4ZM4Fblu2qRTPOufwkmblqiONOpkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMNGmsDF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S0aiv5oR7pzlZAZn+jqr/6mh1Oqr9ZRibVohx4WJVWhgKMpIBd23imtexP9Q1PcoCCVIRqe52KZ1+U6JmxL+pOFdYRsEPZ8+sSPH8G0WanGiP2uNz21J5C5TNapznqPh2UpRZqBQiTels6UWxFD5nP8K18bmATSITeg7BcfEKeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/KbEWV+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMNGmsDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A261DC116B1;
-	Mon, 18 Aug 2025 13:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/KbEWV+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB45AC4CEEB;
+	Mon, 18 Aug 2025 13:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522973;
-	bh=CEWYjcqaaHr5F1tNBs+pXXT2WpyzT+qsDzgXThu+jCU=;
+	s=korg; t=1755522976;
+	bh=IJ54ATFTEe8KKHi6d5rvnqV4LNjnz1xcsBvkcIKiZB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMNGmsDF4QSVhvh+O74lEO3y+Ml9OTKCcmLhxiwqHzn1fCAL7SRNc5QQheHM4loap
-	 ayeUgUjbdhyfDPlxq+g0ztB/JB882z+7pPKMizgh7un7JBP9ywUedz3Rhcoo7yWrRs
-	 CQEaMecS18YQYEpUhqaV7l8rShMkvgV3DNm7NH0U=
+	b=f/KbEWV+gnK8HmgWzL4hmoVoQgahnflatqfpqVg56CuPwplqTPSo8W+Gn7woqYD2N
+	 ngbg+HnenITFq04nsD/shwlVbKxhWkcbX+CgOc2BIID+v6C32VT9edEuzYdrT2qfYH
+	 GcgWCgeRO7tDacNOMn2lD/wYed2tWAu2T/So7Ito=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petro Pavlov <petro.pavlov@vastdata.com>,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.15 031/515] NFSD: detect mismatch of file handle and delegation stateid in OPEN op
-Date: Mon, 18 Aug 2025 14:40:17 +0200
-Message-ID: <20250818124459.652685176@linuxfoundation.org>
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.15 032/515] NFS: Fix the setting of capabilities when automounting a new filesystem
+Date: Mon, 18 Aug 2025 14:40:18 +0200
+Message-ID: <20250818124459.689868339@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,54 +50,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 9c65001c57164033ad08b654c8b5ae35512ddf4a upstream.
+commit b01f21cacde9f2878492cf318fee61bf4ccad323 upstream.
 
-When the client sends an OPEN with claim type CLAIM_DELEG_CUR_FH or
-CLAIM_DELEGATION_CUR, the delegation stateid and the file handle
-must belong to the same file, otherwise return NFS4ERR_INVAL.
+Capabilities cannot be inherited when we cross into a new filesystem.
+They need to be reset to the minimal defaults, and then probed for
+again.
 
-Note that RFC8881, section 8.2.4, mandates the server to return
-NFS4ERR_BAD_STATEID if the selected table entry does not match the
-current filehandle. However returning NFS4ERR_BAD_STATEID in the
-OPEN causes the client to retry the operation and therefor get the
-client into a loop. To avoid this situation we return NFS4ERR_INVAL
-instead.
-
-Reported-by: Petro Pavlov <petro.pavlov@vastdata.com>
-Fixes: c44c5eeb2c02 ("[PATCH] nfsd4: add open state code for CLAIM_DELEGATE_CUR")
+Fixes: 54ceac451598 ("NFS: Share NFS superblocks per-protocol per-server per-FSID")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/nfs/client.c     |   44 ++++++++++++++++++++++++++++++++++++++++++--
+ fs/nfs/internal.h   |    2 +-
+ fs/nfs/nfs4client.c |   20 +-------------------
+ fs/nfs/nfs4proc.c   |    2 +-
+ 4 files changed, 45 insertions(+), 23 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6328,6 +6328,20 @@ nfsd4_process_open2(struct svc_rqst *rqs
- 		status = nfs4_check_deleg(cl, open, &dp);
- 		if (status)
- 			goto out;
-+		if (dp && nfsd4_is_deleg_cur(open) &&
-+				(dp->dl_stid.sc_file != fp)) {
-+			/*
-+			 * RFC8881 section 8.2.4 mandates the server to return
-+			 * NFS4ERR_BAD_STATEID if the selected table entry does
-+			 * not match the current filehandle. However returning
-+			 * NFS4ERR_BAD_STATEID in the OPEN can cause the client
-+			 * to repeatedly retry the operation with the same
-+			 * stateid, since the stateid itself is valid. To avoid
-+			 * this situation NFSD returns NFS4ERR_INVAL instead.
-+			 */
-+			status = nfserr_inval;
-+			goto out;
-+		}
- 		stp = nfsd4_find_and_lock_existing_open(fp, open);
- 	} else {
- 		open->op_file = NULL;
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -682,6 +682,44 @@ struct nfs_client *nfs_init_client(struc
+ }
+ EXPORT_SYMBOL_GPL(nfs_init_client);
+ 
++static void nfs4_server_set_init_caps(struct nfs_server *server)
++{
++#if IS_ENABLED(CONFIG_NFS_V4)
++	/* Set the basic capabilities */
++	server->caps = server->nfs_client->cl_mvops->init_caps;
++	if (server->flags & NFS_MOUNT_NORDIRPLUS)
++		server->caps &= ~NFS_CAP_READDIRPLUS;
++	if (server->nfs_client->cl_proto == XPRT_TRANSPORT_RDMA)
++		server->caps &= ~NFS_CAP_READ_PLUS;
++
++	/*
++	 * Don't use NFS uid/gid mapping if we're using AUTH_SYS or lower
++	 * authentication.
++	 */
++	if (nfs4_disable_idmapping &&
++	    server->client->cl_auth->au_flavor == RPC_AUTH_UNIX)
++		server->caps |= NFS_CAP_UIDGID_NOMAP;
++#endif
++}
++
++void nfs_server_set_init_caps(struct nfs_server *server)
++{
++	switch (server->nfs_client->rpc_ops->version) {
++	case 2:
++		server->caps = NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS;
++		break;
++	case 3:
++		server->caps = NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS;
++		if (!(server->flags & NFS_MOUNT_NORDIRPLUS))
++			server->caps |= NFS_CAP_READDIRPLUS;
++		break;
++	default:
++		nfs4_server_set_init_caps(server);
++		break;
++	}
++}
++EXPORT_SYMBOL_GPL(nfs_server_set_init_caps);
++
+ /*
+  * Create a version 2 or 3 client
+  */
+@@ -726,7 +764,6 @@ static int nfs_init_server(struct nfs_se
+ 	/* Initialise the client representation from the mount data */
+ 	server->flags = ctx->flags;
+ 	server->options = ctx->options;
+-	server->caps |= NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS;
+ 
+ 	switch (clp->rpc_ops->version) {
+ 	case 2:
+@@ -762,6 +799,8 @@ static int nfs_init_server(struct nfs_se
+ 	if (error < 0)
+ 		goto error;
+ 
++	nfs_server_set_init_caps(server);
++
+ 	/* Preserve the values of mount_server-related mount options */
+ 	if (ctx->mount_server.addrlen) {
+ 		memcpy(&server->mountd_address, &ctx->mount_server.address,
+@@ -936,7 +975,6 @@ void nfs_server_copy_userdata(struct nfs
+ 	target->acregmax = source->acregmax;
+ 	target->acdirmin = source->acdirmin;
+ 	target->acdirmax = source->acdirmax;
+-	target->caps = source->caps;
+ 	target->options = source->options;
+ 	target->auth_info = source->auth_info;
+ 	target->port = source->port;
+@@ -1170,6 +1208,8 @@ struct nfs_server *nfs_clone_server(stru
+ 	if (error < 0)
+ 		goto out_free_server;
+ 
++	nfs_server_set_init_caps(server);
++
+ 	/* probe the filesystem info for this server filesystem */
+ 	error = nfs_probe_server(server, fh);
+ 	if (error < 0)
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -232,7 +232,7 @@ extern struct nfs_client *
+ nfs4_find_client_sessionid(struct net *, const struct sockaddr *,
+ 				struct nfs4_sessionid *, u32);
+ extern struct nfs_server *nfs_create_server(struct fs_context *);
+-extern void nfs4_server_set_init_caps(struct nfs_server *);
++extern void nfs_server_set_init_caps(struct nfs_server *);
+ extern struct nfs_server *nfs4_create_server(struct fs_context *);
+ extern struct nfs_server *nfs4_create_referral_server(struct fs_context *);
+ extern int nfs4_update_server(struct nfs_server *server, const char *hostname,
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -1088,24 +1088,6 @@ static void nfs4_session_limit_xasize(st
+ #endif
+ }
+ 
+-void nfs4_server_set_init_caps(struct nfs_server *server)
+-{
+-	/* Set the basic capabilities */
+-	server->caps |= server->nfs_client->cl_mvops->init_caps;
+-	if (server->flags & NFS_MOUNT_NORDIRPLUS)
+-			server->caps &= ~NFS_CAP_READDIRPLUS;
+-	if (server->nfs_client->cl_proto == XPRT_TRANSPORT_RDMA)
+-		server->caps &= ~NFS_CAP_READ_PLUS;
+-
+-	/*
+-	 * Don't use NFS uid/gid mapping if we're using AUTH_SYS or lower
+-	 * authentication.
+-	 */
+-	if (nfs4_disable_idmapping &&
+-			server->client->cl_auth->au_flavor == RPC_AUTH_UNIX)
+-		server->caps |= NFS_CAP_UIDGID_NOMAP;
+-}
+-
+ static int nfs4_server_common_setup(struct nfs_server *server,
+ 		struct nfs_fh *mntfh, bool auth_probe)
+ {
+@@ -1120,7 +1102,7 @@ static int nfs4_server_common_setup(stru
+ 	if (error < 0)
+ 		goto out;
+ 
+-	nfs4_server_set_init_caps(server);
++	nfs_server_set_init_caps(server);
+ 
+ 	/* Probe the root fh to retrieve its FSID and filehandle */
+ 	error = nfs4_get_rootfh(server, mntfh, auth_probe);
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -4083,7 +4083,7 @@ int nfs4_server_capabilities(struct nfs_
+ 	};
+ 	int err;
+ 
+-	nfs4_server_set_init_caps(server);
++	nfs_server_set_init_caps(server);
+ 	do {
+ 		err = nfs4_handle_exception(server,
+ 				_nfs4_server_capabilities(server, fhandle),
 
 
