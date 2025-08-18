@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378B1320CBF;
-	Mon, 18 Aug 2025 13:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3275D78F4F;
+	Mon, 18 Aug 2025 13:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524018; cv=none; b=NpBFgTaxvYzlG+p99327g3K0Ps/3+k8jCXRK/zqHkhXAAm+6iE7k0F8C+8bfHgCGvhQkeA5KZ7UqtHk1tKw5c10EFrUBczr839OsRDJfWeWUiBICzntGdAp/jOWU8lrFuoExmmEW00c4+brPZHLCihuTNjwk+uGLNRGnVbSc0js=
+	t=1755524020; cv=none; b=dDNCNchrxWF23CfhprZl1MK+qRPjU2li0RR5eG8c1UydiISDhmdSCaq3Evg5KAM5vFKQMXmkC/mK4tFvxllKrvgFTqZy9fOnqj6SZroPSNdMx9Uw5hv0gxFgYCZ3bTXgTnblbqDfjgWgggPoGYhp3/MMkX7DRgpzdkoJgLNuDDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524018; c=relaxed/simple;
-	bh=lsifPL0fkAx6/X+sBkYzc6+aN03i2QGRlQ11s18ePIM=;
+	s=arc-20240116; t=1755524020; c=relaxed/simple;
+	bh=RKHyd3OMgBLe3HIkXs2dJ2J6JCBGKaFPPk7lEgpYH5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KuBb0AeoXL9kIjHWS6TWsZOVqXTdI6RkLfUhg/UZrj6VjVK8DKfoCo8Ig/VBLGzbXIzBikr0qLYgjq2aX9xJkdtKJgoaR7mrRJwZuZGkQz8u0WoPhq0MjLwtwThSKd/fscexNPejQJU4D7CG+C68eDpQ8b/BcDPquSWa4dY/y48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLsMdLoJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pybzmJx5be2irLK8ZR2xB5GxydgFuxAYTAu4vGRk2Cz2/tKFBG1WyPoDq9G3ARLg0HZ/GeWbiNQ5Rehcyr2RdmkjZQBRepH4N2CzbGWFS4WnQaxko6QkG8CL4eKHaOolU4yS833AOTnNA8umdHFuRWmQm/1d1Sw7xESCpHcrHqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obUw8WOD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLsMdLoJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B19BC4CEEB;
-	Mon, 18 Aug 2025 13:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obUw8WOD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4B1C4CEEB;
+	Mon, 18 Aug 2025 13:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524016;
-	bh=lsifPL0fkAx6/X+sBkYzc6+aN03i2QGRlQ11s18ePIM=;
+	s=korg; t=1755524020;
+	bh=RKHyd3OMgBLe3HIkXs2dJ2J6JCBGKaFPPk7lEgpYH5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OLsMdLoJCD+8JGs0GQybektIR+qewDFc1pQW8JQFjXvx4qbIjVN0A3QuVJQ6YoVVz
-	 CpcJI9xrga0TIt43HuOKFI4r3++/7aoMWuSDDQj26R6stGkZ1q+1vTkyPycb6gjPDU
-	 rZWEWCduiW+hebqESaCpdDw/qI63MxajrfbRotVo=
+	b=obUw8WOD327dgHt/31boF1hcbjjdKZgFXQbG3FcZU1EqGbtHgQXycX/kblH3roVs7
+	 hvxhB1SYwyMs+lOPZrz2r7L8ChOdMApYyqGn0fFo2YeQeo0otG9gr12Ee5SHvkAkLE
+	 bthAkQ0XJtPZZDqJ7bZ8WJYtZbNjUvUAD9oXigsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 343/515] fs/orangefs: use snprintf() instead of sprintf()
-Date: Mon, 18 Aug 2025 14:45:29 +0200
-Message-ID: <20250818124511.632295519@linuxfoundation.org>
+Subject: [PATCH 6.15 326/515] vsock/virtio: Resize receive buffers so that each SKB fits in a 4K page
+Date: Mon, 18 Aug 2025 14:45:12 +0200
+Message-ID: <20250818124510.985573855@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -51,45 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit cdfa1304657d6f23be8fd2bb0516380a3c89034e ]
+[ Upstream commit 03a92f036a04fed2b00d69f5f46f1a486e70dc5c ]
 
-sprintf() is discouraged for use with bounded destination buffers
-as it does not prevent buffer overflows when the formatted output
-exceeds the destination buffer size. snprintf() is a safer
-alternative as it limits the number of bytes written and ensures
-NUL-termination.
+When allocating receive buffers for the vsock virtio RX virtqueue, an
+SKB is allocated with a 4140 data payload (the 44-byte packet header +
+VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE). Even when factoring in the SKB
+overhead, the resulting 8KiB allocation thanks to the rounding in
+kmalloc_reserve() is wasteful (~3700 unusable bytes) and results in a
+higher-order page allocation on systems with 4KiB pages just for the
+sake of a few hundred bytes of packet data.
 
-Replace sprintf() with snprintf() for copying the debug string
-into a temporary buffer, using ORANGEFS_MAX_DEBUG_STRING_LEN as
-the maximum size to ensure safe formatting and prevent memory
-corruption in edge cases.
+Limit the vsock virtio RX buffers to 4KiB per SKB, resulting in much
+better memory utilisation and removing the need to allocate higher-order
+pages entirely.
 
-EDIT: After this patch sat on linux-next for a few days, Dan
-Carpenter saw it and suggested that I use scnprintf instead of
-snprintf. I made the change and retested.
-
-Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Message-Id: <20250717090116.11987-5-will@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/virtio_vsock.h     | 7 ++++++-
+ net/vmw_vsock/virtio_transport.c | 2 +-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index e8e3badbc2ec..1c375fb65018 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -396,7 +396,7 @@ static ssize_t orangefs_debug_read(struct file *file,
- 		goto out;
+diff --git a/include/linux/virtio_vsock.h b/include/linux/virtio_vsock.h
+index 36fb3edfa403..6c00687539cf 100644
+--- a/include/linux/virtio_vsock.h
++++ b/include/linux/virtio_vsock.h
+@@ -111,7 +111,12 @@ static inline size_t virtio_vsock_skb_len(struct sk_buff *skb)
+ 	return (size_t)(skb_end_pointer(skb) - skb->head);
+ }
  
- 	mutex_lock(&orangefs_debug_lock);
--	sprintf_ret = sprintf(buf, "%s", (char *)file->private_data);
-+	sprintf_ret = scnprintf(buf, ORANGEFS_MAX_DEBUG_STRING_LEN, "%s", (char *)file->private_data);
- 	mutex_unlock(&orangefs_debug_lock);
+-#define VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE	(1024 * 4)
++/* Dimension the RX SKB so that the entire thing fits exactly into
++ * a single 4KiB page. This avoids wasting memory due to alloc_skb()
++ * rounding up to the next page order and also means that we
++ * don't leave higher-order pages sitting around in the RX queue.
++ */
++#define VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE	SKB_WITH_OVERHEAD(1024 * 4)
+ #define VIRTIO_VSOCK_MAX_BUF_SIZE		0xFFFFFFFFUL
+ #define VIRTIO_VSOCK_MAX_PKT_BUF_SIZE		(1024 * 64)
  
- 	read_ret = simple_read_from_buffer(ubuf, count, ppos, buf, sprintf_ret);
+diff --git a/net/vmw_vsock/virtio_transport.c b/net/vmw_vsock/virtio_transport.c
+index f0e48e6911fc..f01f9e878106 100644
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -307,7 +307,7 @@ virtio_transport_cancel_pkt(struct vsock_sock *vsk)
+ 
+ static void virtio_vsock_rx_fill(struct virtio_vsock *vsock)
+ {
+-	int total_len = VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE + VIRTIO_VSOCK_SKB_HEADROOM;
++	int total_len = VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE;
+ 	struct scatterlist pkt, *p;
+ 	struct virtqueue *vq;
+ 	struct sk_buff *skb;
 -- 
 2.39.5
 
