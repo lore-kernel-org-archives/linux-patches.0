@@ -1,162 +1,112 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8411E8337
-	for <patches@lists.linux.dev>; Mon, 18 Aug 2025 05:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1CF31EF38F
+	for <patches@lists.linux.dev>; Mon, 18 Aug 2025 05:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755494258; cv=none; b=aFwYovFuNj6tlSbRFnZy/qnNlfGBR0bZ2LuDQiadzaaw4+Rh2AgliBi00iXT8MkCP9lB+Y5JSWWm6NWbzxisIRn33NN9+eUWF3idAySYMnbmQgB1zo/2nm6cHjjUbBZx93IMIAKH9kIOGkNu6NfvsXS12p1oevHNT461IT+fFqU=
+	t=1755494656; cv=none; b=f8UUTXS+qbKFDHYzYDzD+Gm8HCvcd9F8ZhldQh07Y3hakcEO5VWtos+pCLQ752IucwCAmLjVl5Jm25oyUQu6zDE84bnJgVRajifjT2RQ22zIfaOBKu6ozIN71V9bT+7pTo1UtNG6PdmBNBgSdmEcvfJf7hxWn8VqI+FA/TTT1j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755494258; c=relaxed/simple;
-	bh=Jfd2dTFyeKB2xDn34tvF4QC2QdcK0s/wj6YimXhuieo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pMJZtmQkWuF9S/7TIom7IAJ3DGh2o/YRU+fnWQnKSHt2zuu2GRbQo2srq/G88VBIOoUHgRcgUevcixUVVEDNZvd+fTD4FHXzkP2RztYrBwzlNJuxKK5/y+8UObBkPLbakfgrT0loFK6nBYjovDr98cKz6P0qkNKrHgrHhHKjQ/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyphar.com; spf=pass smtp.mailfrom=cyphar.com; dkim=pass (2048-bit key) header.d=cyphar.com header.i=@cyphar.com header.b=xeIEMq+J; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyphar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cyphar.com
+	s=arc-20240116; t=1755494656; c=relaxed/simple;
+	bh=8wiTb8fNRCyJIgqWCW1b/sRAjqR2MPIo8lU+lkseZwo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Wgbbkf65RF8RFMg+nwYyr1UFs266nWu4rjPlGPApDYsAFv/V7FUyfHvhw/1kLLTxz2EUC9tQWVkKEGMVcPkZ88ZA0gWzaN7tmbJ1S+EBjkLBPyezS5QUFMBLtuWQ5oyN8OUdvcKix4H8wK8KoFX2Yo1kThQQUY+AGjwEz+rh8ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=PXxm8rsX; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cyphar.com header.i=@cyphar.com header.b="xeIEMq+J"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4c51Dr2Jp2z9ss7;
-	Mon, 18 Aug 2025 07:17:32 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyphar.com; s=MBO0001;
-	t=1755494252;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=syTe/uAIV0t2r9xXhONHX6f7WtloSr6P6gMiq4MxqOE=;
-	b=xeIEMq+J1v3//TRDOFKVvHZOHOSXlvHahsW4EQSTkTDsD88ScDLolCYEp1fQPVw52wiAb7
-	CXB6e7u+3OELIG4E955g5VRTrxCidMVUbQkF7g3aRwIGwMLXsKyOMplcWP3kBZl5bgRSpG
-	ho+yueGVKMxEtIDIkKIr2fK/joKjRFTpJNNlbtcp5+xIhDLnQVEuO0FNzzQzZMbrykZ6kx
-	3m2NSoauOcWkCC8fboHzHNMFOacc7N68ap8G+AT5iHio74HqtU9sUXwrALwk6SU/YonCC7
-	EkKi82gr+zBkugBbIjOeBZlQNLUJJ90ZxnyOZUZxqVYodAz9ORy91kyOmWZywg==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of cyphar@cyphar.com designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=cyphar@cyphar.com
-Date: Mon, 18 Aug 2025 15:17:20 +1000
-From: Aleksa Sarai <cyphar@cyphar.com>
-To: Askar Safin <safinaskar@zohomail.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, Ian Kent <raven@themaw.net>, 
-	linux-fsdevel@vger.kernel.org, David Howells <dhowells@redhat.com>, 
-	autofs mailing list <autofs@vger.kernel.org>, patches@lists.linux.dev
-Subject: Re: [PATCH 4/4] vfs: fs/namei.c: if RESOLVE_NO_XDEV passed to
- openat2, don't *trigger* automounts
-Message-ID: <2025-08-18.1755493390-violent-felt-issues-dares-AIMnxT@cyphar.com>
-References: <20250817171513.259291-1-safinaskar@zohomail.com>
- <20250817171513.259291-5-safinaskar@zohomail.com>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="PXxm8rsX"
+Received: from [10.95.64.75] (unknown [167.220.238.11])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 4955A2054677;
+	Sun, 17 Aug 2025 22:24:12 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4955A2054677
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1755494653;
+	bh=w32BJLaKNHTQrrElu97ALQTnN3hLaYFd8VqACkOW/7c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=PXxm8rsXcylV2Dq1hm91H6anT1vqFiJM4T8mFAgoD0D2ty6CKE9vDNLiWXLgNuiVP
+	 aGKu66s6oJGc3TTFB+VYZS9PcMQx9UpVt1+P5zteza2qgoi2FGAKjegi85f/kZpJAp
+	 SAsUTHs/an7JrVn+NR4aFPAYc+itFaDk9WCNBNkA=
+Message-ID: <08158da3-82a0-4eb0-a805-87afe34e288a@linux.microsoft.com>
+Date: Mon, 18 Aug 2025 10:54:10 +0530
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jsoapanaxm6je7aj"
-Content-Disposition: inline
-In-Reply-To: <20250817171513.259291-5-safinaskar@zohomail.com>
-X-Rspamd-Queue-Id: 4c51Dr2Jp2z9ss7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 020/158] tools/hv: fcopy: Fix irregularities with
+ size of ring buffer
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Saurabh Sengar <ssengar@linux.microsoft.com>, Long Li
+ <longli@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Naman Jain <namjain@linux.microsoft.com>
+References: <20250722134340.596340262@linuxfoundation.org>
+ <20250722134341.490321531@linuxfoundation.org>
+ <d9be2bb3-5f84-4182-91e8-ec1a4abd8f5f@linux.microsoft.com>
+ <2025072316-mop-manhood-b63e@gregkh>
+Content-Language: en-US
+From: Naman Jain <namjain@linux.microsoft.com>
+In-Reply-To: <2025072316-mop-manhood-b63e@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---jsoapanaxm6je7aj
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 4/4] vfs: fs/namei.c: if RESOLVE_NO_XDEV passed to
- openat2, don't *trigger* automounts
-MIME-Version: 1.0
 
-On 2025-08-17, Askar Safin <safinaskar@zohomail.com> wrote:
-> openat2 had a bug: if we pass RESOLVE_NO_XDEV, then openat2
-> doesn't traverse through automounts, but may still trigger them.
-> (See the link for full bug report with reproducer.)
->=20
-> This commit fixes this bug.
->=20
-> Link: https://lore.kernel.org/linux-fsdevel/20250817075252.4137628-1-safi=
-naskar@zohomail.com/
-> Fixes: fddb5d430ad9fa91b49b1 ("open: introduce openat2(2) syscall")
-> Signed-off-by: Askar Safin <safinaskar@zohomail.com>
+On 7/23/2025 12:12 PM, Greg Kroah-Hartman wrote:
+> On Tue, Jul 22, 2025 at 08:29:07PM +0530, Naman Jain wrote:
+>>
+>>
+>> On 7/22/2025 7:13 PM, Greg Kroah-Hartman wrote:
+>>> 6.12-stable review patch.  If anyone has any objections, please let me know.
+>>>
+>>> ------------------
+>>>
+>>> From: Naman Jain <namjain@linux.microsoft.com>
+>>>
+>>> commit a4131a50d072b369bfed0b41e741c41fd8048641 upstream.
+>>>
+>>> Size of ring buffer, as defined in uio_hv_generic driver, is no longer
+>>> fixed to 16 KB. This creates a problem in fcopy, since this size was
+>>> hardcoded. With the change in place to make ring sysfs node actually
+>>> reflect the size of underlying ring buffer, it is safe to get the size
+>>> of ring sysfs file and use it for ring buffer size in fcopy daemon.
+>>> Fix the issue of disparity in ring buffer size, by making it dynamic
+>>> in fcopy uio daemon.
+>>>
+>>> Cc: stable@vger.kernel.org
+>>> Fixes: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
+>>> Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+>>> Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+>>> Reviewed-by: Long Li <longli@microsoft.com>
+>>> Link: https://lore.kernel.org/r/20250711060846.9168-1-namjain@linux.microsoft.com
+>>> Signed-off-by: Wei Liu <wei.liu@kernel.org>
+>>> Message-ID: <20250711060846.9168-1-namjain@linux.microsoft.com>
+>>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>> ---
+>>
+>>
+>> Hello Greg,
+>> Please don't pick this change yet. I have shared the reason in the other
+>> thread:
+>> "Re: Patch "tools/hv: fcopy: Fix irregularities with size of ring buffer"
+>> has been added to the 6.12-stable tree"
+> 
+> Ok, I have dropped this from the 6.12.y tree now.
+> 
+> thanks,
+> 
+> greg k-h
 
-Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
+Hello Greg,
+Can you please consider picking this change for next release of 6.12 
+kernel. The dependent change [1] is now part of 6.12 kernel, so we need 
+this change to fix fcopy in 6.12 kernel.
 
-> ---
->  fs/namei.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
->=20
-> diff --git a/fs/namei.c b/fs/namei.c
-> index 6f43f96f506d..55e2447699a4 100644
-> --- a/fs/namei.c
-> +++ b/fs/namei.c
-> @@ -1449,6 +1449,18 @@ static int follow_automount(struct path *path, int=
- *count, unsigned lookup_flags
->  	    dentry->d_inode)
->  		return -EISDIR;
-> =20
-> +	/* "if" above returned -EISDIR if we want to get automount point itself
-> +	 * as opposed to new mount. Getting automount point itself is, of cours=
-e,
-> +	 * totally okay even if we have LOOKUP_NO_XDEV.
-> +	 *
-> +	 * But if we got here, then we want to get
-> +	 * new mount. Let's deny this if LOOKUP_NO_XDEV is specified.
-> +	 * If we have LOOKUP_NO_XDEV, then we want to deny not only
-> +	 * traversing through automounts, but also triggering them
-> +	 */
+[1]: Drivers: hv: Make the sysfs node size for the ring buffer dynamic
 
-This comment really could be one sentence:
+Please let me know if you want me to send a patch for back-port separately.
 
-  /* No need to trigger automounts if mountpoint crossing is disabled. */
+Regards,
+Naman
 
-Or if you really want to mention -EISDIR, then:
-
-  /*
-   * No need to trigger automounts if mountpoint crossing is disabled.
-   * If the caller is trying to check the autmount point itself, -EISDIR
-   * above handles that case for us.
-   */
-
-> +	if (lookup_flags & LOOKUP_NO_XDEV)
-> +		return -EXDEV;
-> +
->  	if (count && (*count)++ >=3D MAXSYMLINKS)
->  		return -ELOOP;
-> =20
-> @@ -1472,6 +1484,10 @@ static int __traverse_mounts(struct path *path, un=
-signed flags, bool *jumped,
->  		/* Allow the filesystem to manage the transit without i_rwsem
->  		 * being held. */
->  		if (flags & DCACHE_MANAGE_TRANSIT) {
-> +			if (lookup_flags & LOOKUP_NO_XDEV) {
-> +				ret =3D -EXDEV;
-> +				break;
-> +			}
->  			ret =3D path->dentry->d_op->d_manage(path, false);
->  			flags =3D smp_load_acquire(&path->dentry->d_flags);
->  			if (ret < 0)
-> --=20
-> 2.47.2
->=20
-
---=20
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-https://www.cyphar.com/
-
---jsoapanaxm6je7aj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJEEABYKADkWIQS2TklVsp+j1GPyqQYol/rSt+lEbwUCaKK3YBsUgAAAAAAEAA5t
-YW51MiwyLjUrMS4xMSwyLDIACgkQKJf60rfpRG/zZwEA3uOoe6tqsP76hjwmV8US
-yYybxOB07UZ/EkSRCgRv5EABAKd138R9BsEp5wytLcgmgqcD88nt35SD9RDYoi6g
-i/UF
-=778d
------END PGP SIGNATURE-----
-
---jsoapanaxm6je7aj--
