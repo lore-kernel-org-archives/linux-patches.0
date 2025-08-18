@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A2F35A2AD;
-	Mon, 18 Aug 2025 14:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD8035A280;
+	Mon, 18 Aug 2025 14:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755526462; cv=none; b=ABzjRheZ6MO358vZpY6YqyV8WKw0rCl6671blTo3j+dsK2tSkHWalAdxkOwen347mC3kmI5LKe+v7LsSuhive1vSN/6tEvky1u0CoFNdA6RanUPLdnSjT6PlL9V/yvzlw1urWTyH1Yj6pQTaIQgstfK3OpYCHIWdttF5C3tFmFc=
+	t=1755526466; cv=none; b=StvcquGbaMQsnVFFQZtHIpUXY6RHdOgqxAUZDcnJgqkXNw6KdPGHlkO4b2R+kSdZlqf1cCKYP8iBUwJooW7DLD041s4rCWHYGy8JBwXKuoHm6UnXTbcyuQxI5sPyp3/v2nQN2klA2R0kU3c08F0j1jJ6YGR0nm9hVCN9XPd/MKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755526462; c=relaxed/simple;
-	bh=FrtqATlk/Uhc5Bgmd5wINCV1jh4TjpZ79hMf+FtaYvw=;
+	s=arc-20240116; t=1755526466; c=relaxed/simple;
+	bh=V/hVRA33cHfcLT57Ll2QFLnGo3OOktdIyJbeDP86Ki8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AQjpHm9jR+bSyFZCuEO4mtXI17zkUQ/F7duq+EnwNUWgd+bPJibva0TfH2a1wJbiQF0BgFfcJ0iNnQ8seQCYUCkhoJEfusV1gou6pPGr6zl0IfTse0cQxuEdAxjfFvAoUtYDPk7QDG65ontiXd1+aTlypafxHl2TotXWTAgWskc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ManPuIxt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TrHVeS00yO0aKSbdPFIGkGNssCaN8iL0b6zLJSzoxGOR5No6mqUOGY+YjUNehgbZkzNJkqad9mt+9sZBOs1Y8gF3ZLs17Nm7GTJpVkq45e+lAQKoV0qrfERQRZ3hGIR40HNEZQBfOnpw8Sh37BPU8Gy4ZylmezS7nUQs+MvuK1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFJVLaOt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ManPuIxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42409C4CEEB;
-	Mon, 18 Aug 2025 14:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFJVLaOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B1BC4CEEB;
+	Mon, 18 Aug 2025 14:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755526462;
-	bh=FrtqATlk/Uhc5Bgmd5wINCV1jh4TjpZ79hMf+FtaYvw=;
+	s=korg; t=1755526466;
+	bh=V/hVRA33cHfcLT57Ll2QFLnGo3OOktdIyJbeDP86Ki8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ManPuIxtnF1J1f1y1C1rlPwsG9+VDHugzPJMT7L4i7Ko6UJhFQIRmv+TzoyxtmErg
-	 oDJSdvqwDpQ6aWtvI/gfUBQivvv6WT95f1xPcAigLnQvjnDERNYsjRRQHvA0ZQ5TTE
-	 C7HtFmc59g0b68yQj1lS1WGXGSchpmnIrtDyw9r4=
+	b=mFJVLaOtT1+VlOLnbHhShwinyXKnaQorZcRxCzYtZt97vQpBLTGsmUjzx4U0dnXDr
+	 mGWCojZfbh7Oo40BgArZSzIJDv8bRUGj9yNhJqYRZazq1B9FYWHXh6BysZW1lqgJ86
+	 tbFOmIodDcBOpEK4Ff6kSspxuDUtsWnL177hvc2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.16 563/570] firmware: arm_scmi: Convert to SYSTEM_SLEEP_PM_OPS
-Date: Mon, 18 Aug 2025 14:49:10 +0200
-Message-ID: <20250818124527.566315771@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.16 564/570] drm/amd/display: Allow DCN301 to clear update flags
+Date: Mon, 18 Aug 2025 14:49:11 +0200
+Message-ID: <20250818124527.605045293@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -51,49 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ivan Lipski <ivan.lipski@amd.com>
 
-commit 62d6b81e8bd207ad44eff39d1a0fe17f0df510a5 upstream.
+commit 2d418e4fd9f1eca7dfce80de86dd702d36a06a25 upstream.
 
-The old SET_SYSTEM_SLEEP_PM_OPS() macro leads to a warning about an
-unused function:
+[Why & How]
+Not letting DCN301 to clear after surface/stream update results
+in artifacts when switching between active overlay planes. The issue
+is known and has been solved initially. See below:
+(https://gitlab.freedesktop.org/drm/amd/-/issues/3441)
 
-  |  drivers/firmware/arm_scmi/scmi_power_control.c:363:12: error:
-  | 	'scmi_system_power_resume' defined but not used [-Werror=unused-function]
-  |         static int scmi_system_power_resume(struct device *dev)
-
-The proper way to do this these days is to use SYSTEM_SLEEP_PM_OPS()
-and pm_sleep_ptr().
-
-Fixes: 9a0658d3991e ("firmware: arm_scmi: power_control: Ensure SCMI_SYSPOWER_IDLE is set early during resume")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Peng Fan <peng.fan@nxp.com>
-Message-Id: <20250709070107.1388512-1-arnd@kernel.org>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: f354556e29f4 ("drm/amd/display: limit clear_update_flags t dcn32 and above")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/scmi_power_control.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/firmware/arm_scmi/scmi_power_control.c
-+++ b/drivers/firmware/arm_scmi/scmi_power_control.c
-@@ -369,7 +369,7 @@ static int scmi_system_power_resume(stru
- }
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -5439,7 +5439,8 @@ bool dc_update_planes_and_stream(struct
+ 	else
+ 		ret = update_planes_and_stream_v2(dc, srf_updates,
+ 			surface_count, stream, stream_update);
+-	if (ret && dc->ctx->dce_version >= DCN_VERSION_3_2)
++	if (ret && (dc->ctx->dce_version >= DCN_VERSION_3_2 ||
++		dc->ctx->dce_version == DCN_VERSION_3_01))
+ 		clear_update_flags(srf_updates, surface_count, stream);
  
- static const struct dev_pm_ops scmi_system_power_pmops = {
--	SET_SYSTEM_SLEEP_PM_OPS(NULL, scmi_system_power_resume)
-+	SYSTEM_SLEEP_PM_OPS(NULL, scmi_system_power_resume)
- };
- 
- static const struct scmi_device_id scmi_id_table[] = {
-@@ -380,7 +380,7 @@ MODULE_DEVICE_TABLE(scmi, scmi_id_table)
- 
- static struct scmi_driver scmi_system_power_driver = {
- 	.driver	= {
--		.pm = &scmi_system_power_pmops,
-+		.pm = pm_sleep_ptr(&scmi_system_power_pmops),
- 	},
- 	.name = "scmi-system-power",
- 	.probe = scmi_syspower_probe,
+ 	return ret;
 
 
