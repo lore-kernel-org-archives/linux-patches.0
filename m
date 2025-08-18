@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0374D31AF3A;
-	Mon, 18 Aug 2025 13:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE07319847;
+	Mon, 18 Aug 2025 13:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523922; cv=none; b=GDic1Mer77DgMQToCokf4AyUHwiiDufVCdO2siywoXcNAMvGrmeZtpdRoU/5nsQW0sIsA1ck+IU4j/NLwlFlaTO937d0IdFpu6Y/jZK2ZgSVWqO4FnqItERFxMPCkxpQcpX7owbthBIiYSsBsUtwa144F123DvqBRTdtQFLqTng=
+	t=1755523925; cv=none; b=T40T0O9Lg2t6an6Jyx3hOSXBf2no9ZtbKjapvCWohLT8u/OLep5OKd8sy9YT0Ez3jYDs9R8LEYEZvHW46kXfsW9lsWhBf/WEVU8s627lbP1AtW9k4YjkrXtOt81WqPAh/yUEuYbFX9LZ9+8TGS/Wn9gqsZuddqEBztbSILoVqyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523922; c=relaxed/simple;
-	bh=6iGMaJa+WDt4I2+6UEwj8APzdEzwr7cG7tgn+pbHGhU=;
+	s=arc-20240116; t=1755523925; c=relaxed/simple;
+	bh=PkuibbLI/dYHH3dwK61hSlk1jT2pszkhQXJOgsDDjmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oaKzeGdppwL+eTb1TY5snLTa1CM4AzF7LIwzLO4FJYXUvDKeepV0hkS4Lufeuk8MoVEFuP/vVLRbEgOenBipb+aiS2/xrIMMJH8goUKcNtfb2k+NxBzBaqnqRLTAGUQuMWqwBTtGAiZvK/eISBON5RxNAdXM3Yoc0F51LYA0GMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgif7Amc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m7RBIQeuMqSHpUYGDtFrsvyonatG4YLaV78MkCX/SQ7g+RE4JiELftWcX/pZEa2l93dCpDXECzC6srW+0xzXsm/xcVTT79KC+GPnzs3ru4oTNmMy7HCuy6lqxiOeBldYksY79AouvJi+P27Ucuzm3syMIXlkM6+8x76tCcDrLes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMdd0BhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgif7Amc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326DDC4CEF1;
-	Mon, 18 Aug 2025 13:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMdd0BhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2ABC4CEEB;
+	Mon, 18 Aug 2025 13:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523921;
-	bh=6iGMaJa+WDt4I2+6UEwj8APzdEzwr7cG7tgn+pbHGhU=;
+	s=korg; t=1755523925;
+	bh=PkuibbLI/dYHH3dwK61hSlk1jT2pszkhQXJOgsDDjmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgif7AmcnRAWmVZiEmkPgjXGEyOV77uHIeDe/lbykoKcEm0hLdq1SaF7MYmTOgOgp
-	 ygiAakgIpsrCiu3T2gJtbeysXeFkahv+YMJP8wCJc8hqAzUSOTuullIpHBKnbpXsRK
-	 lEMhEM5AUzBphpP2eeof24r5DT5AizhgmAXVUyxg=
+	b=MMdd0BhAwH5/0VmW/ZC1FyWYtK3aq9P5YKJRUEhc6CnPB3CHwpJWNXIS1Gf6LbHLC
+	 YV/qNS8JGDgAU8aZ1pwIw8zCo/8/2O489CY4KkraSfNk9mrLEJpXh7tbklHV3qOdyj
+	 jl+sYkxVdTkizeRMolNxd1+m4YNMzJZ56kH1Juec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>,
+	Paul Fertser <fercerpav@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 313/515] drm/xe: Make dma-fences compliant with the safe access rules
-Date: Mon, 18 Aug 2025 14:44:59 +0200
-Message-ID: <20250818124510.484911894@linuxfoundation.org>
+Subject: [PATCH 6.15 314/515] net: ncsi: Fix buffer overflow in fetching version id
+Date: Mon, 18 Aug 2025 14:45:00 +0200
+Message-ID: <20250818124510.522687923@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -53,88 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
 
-[ Upstream commit 6bd90e700b4285e6a7541e00f969cab0d696adde ]
+[ Upstream commit 8e16170ae972c7fed132bc928914a2ffb94690fc ]
 
-Xe can free some of the data pointed to by the dma-fences it exports. Most
-notably the timeline name can get freed if userspace closes the associated
-submit queue. At the same time the fence could have been exported to a
-third party (for example a sync_fence fd) which will then cause an use-
-after-free on subsequent access.
+In NC-SI spec v1.2 section 8.4.44.2, the firmware name doesn't
+need to be null terminated while its size occupies the full size
+of the field. Fix the buffer overflow issue by adding one
+additional byte for null terminator.
 
-To make this safe we need to make the driver compliant with the newly
-documented dma-fence rules. Driver has to ensure a RCU grace period
-between signalling a fence and freeing any data pointed to by said fence.
-
-For the timeline name we simply make the queue be freed via kfree_rcu and
-for the shared lock associated with multiple queues we add a RCU grace
-period before freeing the per GT structure holding the lock.
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Acked-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20250610164226.10817-5-tvrtko.ursulin@igalia.com
+Signed-off-by: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
+Reviewed-by: Paul Fertser <fercerpav@gmail.com>
+Link: https://patch.msgid.link/20250610193338.1368-1-kalavakunta.hari.prasad@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_exec_queue_types.h | 2 ++
- drivers/gpu/drm/xe/xe_guc_submit.c           | 7 ++++++-
- drivers/gpu/drm/xe/xe_hw_fence.c             | 3 +++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ net/ncsi/internal.h | 2 +-
+ net/ncsi/ncsi-rsp.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h b/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
-index 4c39f01e4f52..a3f421e2adc0 100644
---- a/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
-+++ b/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
-@@ -20,6 +20,8 @@ struct xe_exec_queue;
- struct xe_guc_exec_queue {
- 	/** @q: Backpointer to parent xe_exec_queue */
- 	struct xe_exec_queue *q;
-+	/** @rcu: For safe freeing of exported dma fences */
-+	struct rcu_head rcu;
- 	/** @sched: GPU scheduler for this xe_exec_queue */
- 	struct xe_gpu_scheduler sched;
- 	/** @entity: Scheduler entity for this xe_exec_queue */
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 71ddd26ec30e..00ff6197e06f 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -1282,7 +1282,11 @@ static void __guc_exec_queue_fini_async(struct work_struct *w)
- 	xe_sched_entity_fini(&ge->entity);
- 	xe_sched_fini(&ge->sched);
- 
--	kfree(ge);
-+	/*
-+	 * RCU free due sched being exported via DRM scheduler fences
-+	 * (timeline name).
-+	 */
-+	kfree_rcu(ge, rcu);
- 	xe_exec_queue_fini(q);
- 	xe_pm_runtime_put(guc_to_xe(guc));
- }
-@@ -1465,6 +1469,7 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- 
- 	q->guc = ge;
- 	ge->q = q;
-+	init_rcu_head(&ge->rcu);
- 	init_waitqueue_head(&ge->suspend_wait);
- 
- 	for (i = 0; i < MAX_STATIC_MSG_TYPE; ++i)
-diff --git a/drivers/gpu/drm/xe/xe_hw_fence.c b/drivers/gpu/drm/xe/xe_hw_fence.c
-index 0b4f12be3692..6e2221b60688 100644
---- a/drivers/gpu/drm/xe/xe_hw_fence.c
-+++ b/drivers/gpu/drm/xe/xe_hw_fence.c
-@@ -100,6 +100,9 @@ void xe_hw_fence_irq_finish(struct xe_hw_fence_irq *irq)
- 		spin_unlock_irqrestore(&irq->lock, flags);
- 		dma_fence_end_signalling(tmp);
- 	}
-+
-+	/* Safe release of the irq->lock used in dma_fence_init. */
-+	synchronize_rcu();
- }
- 
- void xe_hw_fence_irq_run(struct xe_hw_fence_irq *irq)
+diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+index 2c260f33b55c..ad1f671ffc37 100644
+--- a/net/ncsi/internal.h
++++ b/net/ncsi/internal.h
+@@ -110,7 +110,7 @@ struct ncsi_channel_version {
+ 	u8   update;		/* NCSI version update */
+ 	char alpha1;		/* NCSI version alpha1 */
+ 	char alpha2;		/* NCSI version alpha2 */
+-	u8  fw_name[12];	/* Firmware name string                */
++	u8  fw_name[12 + 1];	/* Firmware name string                */
+ 	u32 fw_version;		/* Firmware version                   */
+ 	u16 pci_ids[4];		/* PCI identification                 */
+ 	u32 mf_id;		/* Manufacture ID                     */
+diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
+index 8668888c5a2f..d5ed80731e89 100644
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -775,6 +775,7 @@ static int ncsi_rsp_handler_gvi(struct ncsi_request *nr)
+ 	ncv->alpha1 = rsp->alpha1;
+ 	ncv->alpha2 = rsp->alpha2;
+ 	memcpy(ncv->fw_name, rsp->fw_name, 12);
++	ncv->fw_name[12] = '\0';
+ 	ncv->fw_version = ntohl(rsp->fw_version);
+ 	for (i = 0; i < ARRAY_SIZE(ncv->pci_ids); i++)
+ 		ncv->pci_ids[i] = ntohs(rsp->pci_ids[i]);
 -- 
 2.39.5
 
