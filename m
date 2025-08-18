@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED591318126;
-	Mon, 18 Aug 2025 13:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3473218C2;
+	Mon, 18 Aug 2025 13:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522599; cv=none; b=I+EXqtts1I0Ra5Bqwhx8YsMY58zlJZuSuC+Hccm3EK9zug9JrSNvyinUsdgjo1EIbYqgUmdD/1myE90VSMX3G7K4f/WO/20+KJFbvEgrNiQJps4UGFSShQEpFOf6paHZ+7J4eWRCdfVcf32VwRDRumQZKvcspWQDr/+44xcq95s=
+	t=1755522602; cv=none; b=gEOBlnZAdQDO2TYsDxZov+k6kBi4loZpc7SAzmkdaHZIQUlFVaDnPgsGNLZrflyp1yE7vpdOoXIwdrZ5WkvB7A7KXMV/sgn+CkhQK7fvQeMIOXxJhYGQXWxCBUdkR9ZLqCaIQNe8XzfWoZZpJ/jbR0rdBSxNwMalhDXjRDw4HQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522599; c=relaxed/simple;
-	bh=v7rLKxRfXL446stmEKcyOTrj965HoK+mRhf27+d1eI4=;
+	s=arc-20240116; t=1755522602; c=relaxed/simple;
+	bh=3vxscwt8MUZob2lmux8JLPRFMLlo7o+s6mF2sXfT07c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzjBNiGMOWAp+bLhiD3yGcvdJyk2y2S/v0i6PXegOg3+Xr0jxgd5W/7IPX0fftFc9pUcOrKr/6QT6/iOjix7/Ihw3Pk+oHduKIdzIn+eyjBJnpZP49HV7Q1l7Nq1Do8eictIdKNVc5q7Um+MmX3Cz7JQazEM5TBPdQFlIrgBrAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToMpBaB2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BEKOS3PGZiv68Q3UNG8qnq+qeYlFnKZTCVqZ/aJbeHAU86GfPZTLO905cDCJAcHKtrYmQpg3XJyy6oxcwnR9LGBEl9ugWKvCXzBkuKb2MuIhE0XXmN275Y3AnFUg46UKRvNVFYRuz8Svl8ip5N+sKt2jin5+w+HgwSwSqLTBrZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgeSXnmz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToMpBaB2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC11C4CEEB;
-	Mon, 18 Aug 2025 13:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgeSXnmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4A0C4CEEB;
+	Mon, 18 Aug 2025 13:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522598;
-	bh=v7rLKxRfXL446stmEKcyOTrj965HoK+mRhf27+d1eI4=;
+	s=korg; t=1755522602;
+	bh=3vxscwt8MUZob2lmux8JLPRFMLlo7o+s6mF2sXfT07c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToMpBaB2psmIskbH2S4OHVgkHTdtxdjWuOWcohTDqunUCeEjasLn58voWcernjYr/
-	 Vcr54LlGp2JIXAEd8XZczcEShmtiiAX1hJd1lrLDuye/FpfSMZglJvqkLSMsX20WvV
-	 VUHxholg3X2KuDrw+XpHJD/YKB4fR2FPv7/V+EiQ=
+	b=tgeSXnmzKTeGDGQ9d70tguF07Mep6gNnzCwR+u+jCUkzoOtbDXMZ18U3FoYcOYhY1
+	 hMg6DyOAnw9S2WfJ4g1o+KNGpBAh+ZXhPMPFI3eKyp/+GiRw127tx63vXKqTF1xF+u
+	 sgFnIN2MrZBLGk/kVo/vu+ArrbKhytny39oeZgQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Totev <gabriel.totev@zetier.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 331/444] apparmor: shift ouid when mediating hard links in userns
-Date: Mon, 18 Aug 2025 14:45:57 +0200
-Message-ID: <20250818124501.348388958@linuxfoundation.org>
+Subject: [PATCH 6.12 332/444] i3c: dont fail if GETHDRCAP is unsupported
+Date: Mon, 18 Aug 2025 14:45:58 +0200
+Message-ID: <20250818124501.384772001@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,53 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Totev <gabriel.totev@zetier.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit c5bf96d20fd787e4909b755de4705d52f3458836 ]
+[ Upstream commit 447270cdb41b1c8c3621bb14b93a6749f942556e ]
 
-When using AppArmor profiles inside an unprivileged container,
-the link operation observes an unshifted ouid.
-(tested with LXD and Incus)
+'I3C_BCR_HDR_CAP' is still spec v1.0 and has been renamed to 'advanced
+capabilities' in v1.1 onwards. The ST pressure sensor LPS22DF does not
+have HDR, but has the 'advanced cap' bit set. The core still wants to
+get additional information using the CCC 'GETHDRCAP' (or GETCAPS in v1.1
+onwards). Not all controllers support this CCC and will notify the upper
+layers about it. For instantiating the device, we can ignore this
+unsupported CCC as standard communication will work. Without this patch,
+the device will not be instantiated at all.
 
-For example, root inside container and uid 1000000 outside, with
-`owner /root/link l,` profile entry for ln:
-
-/root$ touch chain && ln chain link
-==> dmesg
-apparmor="DENIED" operation="link" class="file"
-namespace="root//lxd-feet_<var-snap-lxd-common-lxd>" profile="linkit"
-name="/root/link" pid=1655 comm="ln" requested_mask="l" denied_mask="l"
-fsuid=1000000 ouid=0 [<== should be 1000000] target="/root/chain"
-
-Fix by mapping inode uid of old_dentry in aa_path_link() rather than
-using it directly, similarly to how it's mapped in __file_path_perm()
-later in the file.
-
-Signed-off-by: Gabriel Totev <gabriel.totev@zetier.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250704204524.6124-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/file.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/i3c/master.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/file.c b/security/apparmor/file.c
-index d52a5b14dad4..62bc46e03758 100644
---- a/security/apparmor/file.c
-+++ b/security/apparmor/file.c
-@@ -423,9 +423,11 @@ int aa_path_link(const struct cred *subj_cred,
- {
- 	struct path link = { .mnt = new_dir->mnt, .dentry = new_dentry };
- 	struct path target = { .mnt = new_dir->mnt, .dentry = old_dentry };
-+	struct inode *inode = d_backing_inode(old_dentry);
-+	vfsuid_t vfsuid = i_uid_into_vfsuid(mnt_idmap(target.mnt), inode);
- 	struct path_cond cond = {
--		d_backing_inode(old_dentry)->i_uid,
--		d_backing_inode(old_dentry)->i_mode
-+		.uid = vfsuid_into_kuid(vfsuid),
-+		.mode = inode->i_mode,
- 	};
- 	char *buffer = NULL, *buffer2 = NULL;
- 	struct aa_profile *profile;
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index 7c1dc42b809b..9b7a34f9eca2 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1439,7 +1439,7 @@ static int i3c_master_retrieve_dev_info(struct i3c_dev_desc *dev)
+ 
+ 	if (dev->info.bcr & I3C_BCR_HDR_CAP) {
+ 		ret = i3c_master_gethdrcap_locked(master, &dev->info);
+-		if (ret)
++		if (ret && ret != -ENOTSUPP)
+ 			return ret;
+ 	}
+ 
 -- 
 2.39.5
 
