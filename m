@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3A02E717D;
-	Mon, 18 Aug 2025 13:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CC631CA62;
+	Mon, 18 Aug 2025 13:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755524841; cv=none; b=AB/WSRq7hDbSsKwxW0hyIfVXAHF932wk5y8gY4Oe64G/RV6PGpIepfTAvD2+7gM+MvZp7RL8yUSjeZewqB+W0y6F1wG8i6FYRG1mnCdh9VjjTLdy2yTsTCZO8Kal0U6pW42uCdBG+M1shCR4abEDezPk63kle4rQm++8Xd2lPUA=
+	t=1755524844; cv=none; b=AV45xiJg/m/3epnLwI5MOgYaVTaGPkx25QtafsfIm9m9FvnCD9k8q1fLsLrhLbltEAFC/0sYTA+A4RpFnx5b0ZBDyM4X7au8qil/vBcACXI6CP+iMx7jxFPFd97c2s0ZHar38VHZnsEh+SICqcvBnr30wsKpkiE/F7qO1wKxe/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755524841; c=relaxed/simple;
-	bh=fafiZWfeDY4pdpDKNsPFmEIXWZDLsPPht4/oP7zSl8c=;
+	s=arc-20240116; t=1755524844; c=relaxed/simple;
+	bh=8P5uRurJO2UYmjXDhsV/iPl2sgR9HfhT+7dFPx6107E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=riR5u/edmazayt0HogDCsf6yVeHziHnoYdlX4qp5vtf7NFQtNBEk2JMiv5VrW93Abv/12P+w2uR9+rf+a4jFCvbgLmEmB+VpyOlc1eGNSxXFkoLArjmBBgEHcPAsM/5s19VQe+VNxbRg50DJoaCKUTEd/j1a5dOYYmi67GY4ZAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUFyFbsS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JcgECIBLCh2POlOE7BoS2VDIRhMr7AcKcPdwRJBubh0kRoeifPFbABcReRaWddpNBTKy2r8oHbGrPGOX8kampyStMdP84hgNkzVRaHyU7Q92P/Ca7UQM9jGER+TrXYFpVilQg4AiHxLK6YFyhJ9MKaw3dRz+IsgoK6iPhtL+VMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFf5Lb18; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUFyFbsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895D1C4CEEB;
-	Mon, 18 Aug 2025 13:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFf5Lb18"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B514FC4CEEB;
+	Mon, 18 Aug 2025 13:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755524840;
-	bh=fafiZWfeDY4pdpDKNsPFmEIXWZDLsPPht4/oP7zSl8c=;
+	s=korg; t=1755524844;
+	bh=8P5uRurJO2UYmjXDhsV/iPl2sgR9HfhT+7dFPx6107E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CUFyFbsSxk1LF3o7Zj3nmyoK1sXmucecrom6kD4bh+A8V+n6+rOtwJ6IVjq9Adbgv
-	 G/LFcylifbnnyI97tkYkKatbAntCQT/UWuk8RPuOSf1bEpowHP9mUYWfKPHfjgZMwe
-	 Ld3M8m13bvZQoEt14c3ssCP/KOb0PqM5mBc9PNQM=
+	b=QFf5Lb18Rp6i1HIWssNPMQbZlVSZU/VUnFx0ZGDuIFzatmL88GDsU7ms03sJRWBbD
+	 jfOcBcwX1gzJwFdhENskGbYgRLdv5+Bjp3JXeqoZTBF47dHAiYDR9r8WfeXWVbuksE
+	 dfA66ahljllqhy8JKYzxCT0kOsDjuoyEAB05FbIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s=20Bence?= <csokas.bence@prolan.hu>,
-	Buday Csaba <buday.csaba@prolan.hu>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 080/570] net: mdiobus: release reset_gpio in mdiobus_unregister_device()
-Date: Mon, 18 Aug 2025 14:41:07 +0200
-Message-ID: <20250818124508.901503987@linuxfoundation.org>
+Subject: [PATCH 6.16 063/570] xfrm: bring back device check in validate_xmit_xfrm
+Date: Mon, 18 Aug 2025 14:40:50 +0200
+Message-ID: <20250818124508.244629654@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124505.781598737@linuxfoundation.org>
 References: <20250818124505.781598737@linuxfoundation.org>
@@ -47,64 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Buday Csaba <buday.csaba@prolan.hu>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 8ea25274ebaf2f6be8be374633b2ed8348ec0e70 ]
+[ Upstream commit 65f079a6c446a939eefe71e6d5957d5d6365fcf9 ]
 
-reset_gpio is claimed in mdiobus_register_device(), but it is not
-released in mdiobus_unregister_device(). It is instead only
-released when the whole MDIO bus is unregistered.
-When a device uses the reset_gpio property, it becomes impossible
-to unregister it and register it again, because the GPIO remains
-claimed.
-This patch resolves that issue.
+This is partial revert of commit d53dda291bbd993a29b84d358d282076e3d01506.
 
-Fixes: bafbdd527d56 ("phylib: Add device reset GPIO support") # see notes
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Cc: Csókás Bence <csokas.bence@prolan.hu>
-[ csokas.bence: Resolve rebase conflict and clarify msg ]
-Signed-off-by: Buday Csaba <buday.csaba@prolan.hu>
-Link: https://patch.msgid.link/20250807135449.254254-2-csokas.bence@prolan.hu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This change causes traffic using GSO with SW crypto running through a
+NIC capable of HW offload to no longer get segmented during
+validate_xmit_xfrm, and is unrelated to the bonding use case mentioned
+in the commit.
+
+Fixes: d53dda291bbd ("xfrm: Remove unneeded device check from validate_xmit_xfrm")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mdio_bus.c          | 1 +
- drivers/net/phy/mdio_bus_provider.c | 3 ---
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ net/xfrm/xfrm_device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index fda2e27c1810..cad6ed3aa10b 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -91,6 +91,7 @@ int mdiobus_unregister_device(struct mdio_device *mdiodev)
- 	if (mdiodev->bus->mdio_map[mdiodev->addr] != mdiodev)
- 		return -EINVAL;
- 
-+	gpiod_put(mdiodev->reset_gpio);
- 	reset_control_put(mdiodev->reset_ctrl);
- 
- 	mdiodev->bus->mdio_map[mdiodev->addr] = NULL;
-diff --git a/drivers/net/phy/mdio_bus_provider.c b/drivers/net/phy/mdio_bus_provider.c
-index 65850e36284d..5401170f14e5 100644
---- a/drivers/net/phy/mdio_bus_provider.c
-+++ b/drivers/net/phy/mdio_bus_provider.c
-@@ -444,9 +444,6 @@ void mdiobus_unregister(struct mii_bus *bus)
- 		if (!mdiodev)
- 			continue;
- 
--		if (mdiodev->reset_gpio)
--			gpiod_put(mdiodev->reset_gpio);
--
- 		mdiodev->device_remove(mdiodev);
- 		mdiodev->device_free(mdiodev);
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index 1f88472aaac0..c7a1f080d2de 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -155,7 +155,8 @@ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t featur
+ 		return skb;
  	}
+ 
+-	if (skb_is_gso(skb) && unlikely(xmit_xfrm_check_overflow(skb))) {
++	if (skb_is_gso(skb) && (unlikely(x->xso.dev != dev) ||
++				unlikely(xmit_xfrm_check_overflow(skb)))) {
+ 		struct sk_buff *segs;
+ 
+ 		/* Packet got rerouted, fixup features and segment it. */
 -- 
 2.50.1
 
