@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE85B31E0F5;
-	Mon, 18 Aug 2025 13:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717B931E0E4;
+	Mon, 18 Aug 2025 13:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522236; cv=none; b=hC6N59Wjbku94LlCPKsPxHhCerrkzRJl0SFeaX6vLPLXfjFW2SjFEaQ33+pm2SF4CkkyNSahuU/Tj98rUz3g1VqGMGXM5BXlFg4O9LAueChNv1CVcQenlwv9+u0jQbgaTw07I4cI4/L69+KN9LqC3tw/cMRIHIQA222tR+NAKJY=
+	t=1755522240; cv=none; b=FPHWEjjsMmXWZbf6M2/aXx+pNnZh0qCeiDCVLKigFW1r7lilo0EqzG5ZsQZhYA1AHRRAqOOsdeN6M0Oma3Y961qFbmsEc/0HvlfnmGehF5Qou5yIpF52bNmDpEF7CDrLgpOquvDyFIt31jjG7Bun4Gnghvlf/4iqHFQK2+xiOcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522236; c=relaxed/simple;
-	bh=oFOGNvnACJAbxc9AyAeLd5P1z9LceR1J/47chkldNkY=;
+	s=arc-20240116; t=1755522240; c=relaxed/simple;
+	bh=B3H0TggdmFV211LQOXRA2P4jk5SCPQ6tKZU/EmRN7Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GB0RHErwWLFEC2ens2OSmXBPK94UABYreHMGDtDoTFA4/2FV+AlQtzWjqy0W4UXBNffoKOqEkcgBmaqkipqAD6UCUtRZ/yRmGE/4H7QojfXTU2+X8klxEXE8eWIZfjGOzt4T+ERTv+9PC2ZfkZPV6f73IcMG3ZaawXFB5lsjyYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnL48oNs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lO4hjMqA77oBgF9IjU0Q6eHbdlsNwqyt3RQ9nxB+l0LuVdbJqfpRJ6qQM2OTAswFBmF8ZVskyKv9biEjsv+1ZeMgCNs9ReIoM+oCnqesHH3I98DKG2n9MiqEgZIFoh2abolfQwPobUPT6EZVRyDXabNMWVEcfobh9yQZid4BHVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9HuL+yU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnL48oNs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28816C4CEEB;
-	Mon, 18 Aug 2025 13:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9HuL+yU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BEAC4CEEB;
+	Mon, 18 Aug 2025 13:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755522236;
-	bh=oFOGNvnACJAbxc9AyAeLd5P1z9LceR1J/47chkldNkY=;
+	s=korg; t=1755522240;
+	bh=B3H0TggdmFV211LQOXRA2P4jk5SCPQ6tKZU/EmRN7Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnL48oNs4ECI21rD4uTBJ0GQXzzboGrjM0Xd6KLSVDj12dPsIxoh/NUeFl0zqxNi/
-	 enxVASKICuYva1DZ3zNcib9OLOJDUWcQHb2t9DxA/dsI9NahFLkDjmuy++IRF3q6YG
-	 gRe7XxM05XHP9BaCqZB3qy6nCkamBs3ynx1SEeT0=
+	b=n9HuL+yUJZar+eGetsNq2/YgfCaVgavW34mquoADiNOe4VyD3BsUpEPMcbN9ey314
+	 gxhciedm63wDYgrAk2z4dVP3xzyWRzs0NR9fiqHxy6ybIoTXAYJoBVUX76RVwSq1im
+	 2n8O1ScKra4FXciFpCb/kVhbFy6Rfr76hVgj9PNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RubenKelevra <rubenkelevra@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 223/444] net: ieee8021q: fix insufficient table-size assertion
-Date: Mon, 18 Aug 2025 14:44:09 +0200
-Message-ID: <20250818124457.208985479@linuxfoundation.org>
+Subject: [PATCH 6.12 224/444] net: fec: allow disable coalescing
+Date: Mon, 18 Aug 2025 14:44:10 +0200
+Message-ID: <20250818124457.245189494@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,99 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RubenKelevra <rubenkelevra@gmail.com>
+From: Jonas Rebmann <jre@pengutronix.de>
 
-[ Upstream commit 21deb2d966920f0d4dd098ca6c3a55efbc0b2f23 ]
+[ Upstream commit b7ad21258f9e9a7f58b19595d5ceed2cde3bed68 ]
 
-_Static_assert(ARRAY_SIZE(map) != IEEE8021Q_TT_MAX - 1) rejects only a
-length of 7 and allows any other mismatch. Replace it with a strict
-equality test via a helper macro so that every mapping table must have
-exactly IEEE8021Q_TT_MAX (8) entries.
+In the current implementation, IP coalescing is always enabled and
+cannot be disabled.
 
-Signed-off-by: RubenKelevra <rubenkelevra@gmail.com>
-Link: https://patch.msgid.link/20250626205907.1566384-1-rubenkelevra@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+As setting maximum frames to 0 or 1, or setting delay to zero implies
+immediate delivery of single packets/IRQs, disable coalescing in
+hardware in these cases.
+
+This also guarantees that coalescing is never enabled with ICFT or ICTT
+set to zero, a configuration that could lead to unpredictable behaviour
+according to i.MX8MP reference manual.
+
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250626-fec_deactivate_coalescing-v2-1-0b217f2e80da@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/ieee8021q_helpers.c | 44 +++++++++++-------------------------
- 1 file changed, 13 insertions(+), 31 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 34 +++++++++++------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/net/core/ieee8021q_helpers.c b/net/core/ieee8021q_helpers.c
-index 759a9b9f3f89..669b357b73b2 100644
---- a/net/core/ieee8021q_helpers.c
-+++ b/net/core/ieee8021q_helpers.c
-@@ -7,6 +7,11 @@
- #include <net/dscp.h>
- #include <net/ieee8021q.h>
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 479ced24096b..a1cc338cf20f 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3122,27 +3122,25 @@ static int fec_enet_us_to_itr_clock(struct net_device *ndev, int us)
+ static void fec_enet_itr_coal_set(struct net_device *ndev)
+ {
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
+-	int rx_itr, tx_itr;
++	u32 rx_itr = 0, tx_itr = 0;
++	int rx_ictt, tx_ictt;
  
-+/* verify that table covers all 8 traffic types */
-+#define TT_MAP_SIZE_OK(tbl)                                 \
-+	compiletime_assert(ARRAY_SIZE(tbl) == IEEE8021Q_TT_MAX, \
-+			   #tbl " size mismatch")
-+
- /* The following arrays map Traffic Types (TT) to traffic classes (TC) for
-  * different number of queues as shown in the example provided by
-  * IEEE 802.1Q-2022 in Annex I "I.3 Traffic type to traffic class mapping" and
-@@ -101,51 +106,28 @@ int ieee8021q_tt_to_tc(enum ieee8021q_traffic_type tt, unsigned int num_queues)
+-	/* Must be greater than zero to avoid unpredictable behavior */
+-	if (!fep->rx_time_itr || !fep->rx_pkts_itr ||
+-	    !fep->tx_time_itr || !fep->tx_pkts_itr)
+-		return;
+-
+-	/* Select enet system clock as Interrupt Coalescing
+-	 * timer Clock Source
+-	 */
+-	rx_itr = FEC_ITR_CLK_SEL;
+-	tx_itr = FEC_ITR_CLK_SEL;
++	rx_ictt = fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr);
++	tx_ictt = fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr);
  
- 	switch (num_queues) {
- 	case 8:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_8queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_8queue_tt_tc_map != max - 1");
-+		TT_MAP_SIZE_OK(ieee8021q_8queue_tt_tc_map);
- 		return ieee8021q_8queue_tt_tc_map[tt];
- 	case 7:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_7queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_7queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_7queue_tt_tc_map);
- 		return ieee8021q_7queue_tt_tc_map[tt];
- 	case 6:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_6queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_6queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_6queue_tt_tc_map);
- 		return ieee8021q_6queue_tt_tc_map[tt];
- 	case 5:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_5queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_5queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_5queue_tt_tc_map);
- 		return ieee8021q_5queue_tt_tc_map[tt];
- 	case 4:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_4queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_4queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_4queue_tt_tc_map);
- 		return ieee8021q_4queue_tt_tc_map[tt];
- 	case 3:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_3queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_3queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_3queue_tt_tc_map);
- 		return ieee8021q_3queue_tt_tc_map[tt];
- 	case 2:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_2queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_2queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_2queue_tt_tc_map);
- 		return ieee8021q_2queue_tt_tc_map[tt];
- 	case 1:
--		compiletime_assert(ARRAY_SIZE(ieee8021q_1queue_tt_tc_map) !=
--				   IEEE8021Q_TT_MAX - 1,
--				   "ieee8021q_1queue_tt_tc_map != max - 1");
--
-+		TT_MAP_SIZE_OK(ieee8021q_1queue_tt_tc_map);
- 		return ieee8021q_1queue_tt_tc_map[tt];
- 	}
+-	/* set ICFT and ICTT */
+-	rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
+-	rx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr));
+-	tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
+-	tx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr));
++	if (rx_ictt > 0 && fep->rx_pkts_itr > 1) {
++		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
++		rx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
++		rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
++		rx_itr |= FEC_ITR_ICTT(rx_ictt);
++	}
  
+-	rx_itr |= FEC_ITR_EN;
+-	tx_itr |= FEC_ITR_EN;
++	if (tx_ictt > 0 && fep->tx_pkts_itr > 1) {
++		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
++		tx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
++		tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
++		tx_itr |= FEC_ITR_ICTT(tx_ictt);
++	}
+ 
+ 	writel(tx_itr, fep->hwp + FEC_TXIC0);
+ 	writel(rx_itr, fep->hwp + FEC_RXIC0);
 -- 
 2.39.5
 
