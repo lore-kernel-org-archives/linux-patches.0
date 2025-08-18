@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61466220F38;
-	Mon, 18 Aug 2025 13:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35D3320CDB;
+	Mon, 18 Aug 2025 13:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755523103; cv=none; b=sPI8Lta+47Dm+uWu9/HA4/VGm5GKVqw9oTRGmLNhF+RAZLpklrWFgNzXDAMP/PzoOMC/w3yPagHXJuuGfq9jKJKmoob/qnOkdjZHz/Lg6lDq5aCp3lX2/lSZEJkuf3SDdaJ2oOkwD4qLTUHV+DSkVBipupwvmyWRGn5DVUfGuyY=
+	t=1755523106; cv=none; b=TuVwyIVy1zev3Zq/p/uq1n+nM2tvnWDCmrzcL497e//vRYqSMeQqWbJxHFA+Q6TCoICgqXBoZ7pj6sqViktv8MlnDCpOUz6/xR9ZEkoKKHX204Lx1mT/+PEw0tJsQgaWRWv71SMvV0IuLgeOyCuhCLVJ1dnVgv9/P+EBlnwHbRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755523103; c=relaxed/simple;
-	bh=PyNOPFAC7blmiTURzr9YOLa4snK8EgYIRiws/4BfMrw=;
+	s=arc-20240116; t=1755523106; c=relaxed/simple;
+	bh=r1N6/R4aS3qvKKmtkluduwUolH3SAGvsH9ACfc0/X9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5nn2gfSVVpof5NHexzYgdYHX+alRscKDVyonJC69142ko+fg7UChEcdJqmv/oOTWlTlT/m710o4GnpDHm/TN8jL+5VgDmjSwE3mnQvaj32taYL0JBismUJAYQvW/UCwqqURrdQwfvpVbh8PU0KqZk4eJ9VPV07K6CzfIaes+cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMcMiJJb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lO6CGiNNmpgzfMsyD+IT1dgXVmhfsxio6NtciFtioRJCOgR7/+kywLJAfG67nisKkpW8uXR5YSHkTYaoD7aVY8eRXNNyqobQgPSjor3Dqb4/3ebUzg9/hgNjE4yblgFijY06zV+GrelwOA6q7rEQLkIrSdzVNPxhOO8DOaADqbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvtMYV2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMcMiJJb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C647AC4CEEB;
-	Mon, 18 Aug 2025 13:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvtMYV2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107C3C4CEEB;
+	Mon, 18 Aug 2025 13:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755523103;
-	bh=PyNOPFAC7blmiTURzr9YOLa4snK8EgYIRiws/4BfMrw=;
+	s=korg; t=1755523106;
+	bh=r1N6/R4aS3qvKKmtkluduwUolH3SAGvsH9ACfc0/X9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMcMiJJbSRvkxwBbduQ6Iu7zVI1WpVAcwRMHc7RLAkyFrzeO62p8etsCsxEJixOJW
-	 u0Y2QiJV1pmNWSpk0JRaqZTFvKhOPLLdnAGnfTRXQkI46T1700cz5HmhqeH8UgqnD3
-	 RaMCaE8ncrtv6jcvUy6NN2RxbFiW8fZBAwiCH2f0=
+	b=cvtMYV2ckBHP4NsBUsCq+og8b2VarLIHvy3E4RO98nLAua5ypiYNa4qnjse8OAMfn
+	 I13nqL9Tx9YGm8Q+o8H7o3KpdrRZ2EBsjeqmgCEwba7mQlJYfsHVfUipAS7PAgoGLO
+	 qRRYa8FOxfPx6Fl+mPxT0hdBivmIfC2aqIizOtYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Yao Zi <ziyao@disroot.org>,
+	Drew Fustini <fustini@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 071/515] cpuidle: governors: menu: Avoid using invalid recent intervals data
-Date: Mon, 18 Aug 2025 14:40:57 +0200
-Message-ID: <20250818124501.123886939@linuxfoundation.org>
+Subject: [PATCH 6.15 072/515] net: stmmac: thead: Get and enable APB clock on initialization
+Date: Mon, 18 Aug 2025 14:40:58 +0200
+Message-ID: <20250818124501.161782129@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124458.334548733@linuxfoundation.org>
 References: <20250818124458.334548733@linuxfoundation.org>
@@ -52,89 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit fa3fa55de0d6177fdcaf6fc254f13cc8f33c3eed ]
+[ Upstream commit 4cc339ce482ba78589a2d5cbe1c84b735d263383 ]
 
-Marc has reported that commit 85975daeaa4d ("cpuidle: menu: Avoid
-discarding useful information") caused the number of wakeup interrupts
-to increase on an idle system [1], which was not expected to happen
-after merely allowing shallower idle states to be selected by the
-governor in some cases.
+It's necessary to adjust the MAC TX clock when the linkspeed changes,
+but it's noted such adjustment always fails on TH1520 SoC, and reading
+back from APB glue registers that control clock generation results in
+garbage, causing broken link.
 
-However, on the system in question, all of the idle states deeper than
-WFI are rejected by the driver due to a firmware issue [2].  This causes
-the governor to only consider the recent interval duriation data
-corresponding to attempts to enter WFI that are successful and the
-recent invervals table is filled with values lower than the scheduler
-tick period.  Consequently, the governor predicts an idle duration
-below the scheduler tick period length and avoids stopping the tick
-more often which leads to the observed symptom.
+With some testing, it's found a clock must be ungated for access to APB
+glue registers. Without any consumer, the clock is automatically
+disabled during late kernel startup. Let's get and enable it if it's
+described in devicetree.
 
-Address it by modifying the governor to update the recent intervals
-table also when entering the previously selected idle state fails, so
-it knows that the short idle intervals might have been the minority
-had the selected idle states been actually entered every time.
+For backward compatibility with older devicetrees, probing won't fail if
+the APB clock isn't found. In this case, we emit a warning since the
+link will break if the speed changes.
 
-Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
-Link: https://lore.kernel.org/linux-pm/86o6sv6n94.wl-maz@kernel.org/ [1]
-Link: https://lore.kernel.org/linux-pm/7ffcb716-9a1b-48c2-aaa4-469d0df7c792@arm.com/ [2]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/2793874.mvXUDI8C0e@rafael.j.wysocki
+Fixes: 33a1a01e3afa ("net: stmmac: Add glue layer for T-HEAD TH1520 SoC")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Tested-by: Drew Fustini <fustini@kernel.org>
+Reviewed-by: Drew Fustini <fustini@kernel.org>
+Link: https://patch.msgid.link/20250808093655.48074-4-ziyao@disroot.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index 39aa0aea61c6..711517bd43a1 100644
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -97,6 +97,14 @@ static inline int which_bucket(u64 duration_ns)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c
+index c72ee759aae5..f2946bea0bc2 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c
+@@ -211,6 +211,7 @@ static int thead_dwmac_probe(struct platform_device *pdev)
+ 	struct stmmac_resources stmmac_res;
+ 	struct plat_stmmacenet_data *plat;
+ 	struct thead_dwmac *dwmac;
++	struct clk *apb_clk;
+ 	void __iomem *apb;
+ 	int ret;
  
- static DEFINE_PER_CPU(struct menu_device, menu_devices);
+@@ -224,6 +225,19 @@ static int thead_dwmac_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(plat),
+ 				     "dt configuration failed\n");
  
-+static void menu_update_intervals(struct menu_device *data, unsigned int interval_us)
-+{
-+	/* Update the repeating-pattern data. */
-+	data->intervals[data->interval_ptr++] = interval_us;
-+	if (data->interval_ptr >= INTERVALS)
-+		data->interval_ptr = 0;
-+}
++	/*
++	 * The APB clock is essential for accessing glue registers. However,
++	 * old devicetrees don't describe it correctly. We continue to probe
++	 * and emit a warning if it isn't present.
++	 */
++	apb_clk = devm_clk_get_enabled(&pdev->dev, "apb");
++	if (PTR_ERR(apb_clk) == -ENOENT)
++		dev_warn(&pdev->dev,
++			 "cannot get apb clock, link may break after speed changes\n");
++	else if (IS_ERR(apb_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(apb_clk),
++				     "failed to get apb clock\n");
 +
- static void menu_update(struct cpuidle_driver *drv, struct cpuidle_device *dev);
- 
- /*
-@@ -222,6 +230,14 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 	if (data->needs_update) {
- 		menu_update(drv, dev);
- 		data->needs_update = 0;
-+	} else if (!dev->last_residency_ns) {
-+		/*
-+		 * This happens when the driver rejects the previously selected
-+		 * idle state and returns an error, so update the recent
-+		 * intervals table to prevent invalid information from being
-+		 * used going forward.
-+		 */
-+		menu_update_intervals(data, UINT_MAX);
- 	}
- 
- 	/* Find the shortest expected idle interval. */
-@@ -482,10 +498,7 @@ static void menu_update(struct cpuidle_driver *drv, struct cpuidle_device *dev)
- 
- 	data->correction_factor[data->bucket] = new_factor;
- 
--	/* update the repeating-pattern data */
--	data->intervals[data->interval_ptr++] = ktime_to_us(measured_ns);
--	if (data->interval_ptr >= INTERVALS)
--		data->interval_ptr = 0;
-+	menu_update_intervals(data, ktime_to_us(measured_ns));
- }
- 
- /**
+ 	dwmac = devm_kzalloc(&pdev->dev, sizeof(*dwmac), GFP_KERNEL);
+ 	if (!dwmac)
+ 		return -ENOMEM;
 -- 
 2.50.1
 
