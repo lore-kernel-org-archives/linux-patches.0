@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F78227B355;
-	Mon, 18 Aug 2025 12:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC31E26F2A7;
+	Mon, 18 Aug 2025 12:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755521512; cv=none; b=kpnPRXwYaWdy+CNZXdKkVQmGLHnhQ0k8Hqlq19Tw4mny3kXLMi16KOW5OGERFQ+dxwqtMq5vpK0xL75I1oEZLEBB6A+F3tWrN1ISKh8FKofj7zAKzdqvOEaEhTl2509lXvfarbiKAUT8ph+D4aMPNDc+HcwKbZUovsMxXd3z8kw=
+	t=1755521515; cv=none; b=IZwbAFMDc9E50XJ6NQi0HulDxhXTkguruvti5ALsjZq6Bugizl6GyrKkraN9Yc+8g6iuowDHYyuzgjqoIiVldY+Gr/dDQY/bwdvUSQrn/3ljkDeGz0eb3IhBlwL0EMwoIIiJ7O/BRbqLprzoXE5fCwAUzJyGzuLW8iuaZIMt4iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755521512; c=relaxed/simple;
-	bh=r4pY5sJzbDikd7A2nUDdeJGkPpIZzDpvTN6qp8HdCFM=;
+	s=arc-20240116; t=1755521515; c=relaxed/simple;
+	bh=xIFA2T+d370GFc9BpSRx/OUqysaQBM/ygF4wgizt9g8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FWBT1WEDP/M6MHBBCZhnHDWTW7BH+wGjpGU526dhBVa4ZqU+RQIFIuAHTkcsEIV8HvP4HYADTrY5FxHD4V28hzAVW+77edMj23Q5UHIGgJEBivaE5SaljHGQItc01ApQFN96tsDOMxX0n3uPVdK3uoMo8zFmFNjklRNM9tvf8gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Frtdg1MW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kkH4n39xHdxvakvuUsUxsXo8lNMyw0BI4i79T1nJ2fp5i9hGWS1Zsg30XnR2ecu8qjfJ44zmFnFmDr+ko3UJwtO5AuSFvmGe5jvTNpi2Fud4GTaPS7kHUYZ1wQTE1gBAGSN7HzOakiMNa484QYrfl9wa6RikklthCcqmMuBsZFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/5T+oaG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Frtdg1MW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C562C4CEEB;
-	Mon, 18 Aug 2025 12:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/5T+oaG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DE0C4CEEB;
+	Mon, 18 Aug 2025 12:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755521511;
-	bh=r4pY5sJzbDikd7A2nUDdeJGkPpIZzDpvTN6qp8HdCFM=;
+	s=korg; t=1755521515;
+	bh=xIFA2T+d370GFc9BpSRx/OUqysaQBM/ygF4wgizt9g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Frtdg1MW0473QEwECBqrCUBdc6i+TkAURylnozQzXuRnv95Fdl/Fhct12qK0TCoc/
-	 0jrhtJ6x5ZkZE4y9HU9BtbR2mvO99853V6Cclht9wszvAEtEEwGtw7lSxHWbVM19V4
-	 gK1DQgZ1h2MtupC0hzxGhBdkM0KhladtwVw08JSI=
+	b=m/5T+oaGOUOf6lH7/GDiCNBZhR9uOXFhnTDmWia1oy5zoH+qrZUP5LJsyr8mvF5MZ
+	 n/LTr8RUY68p8uGnrscZTvyd8inCl6eUUJiFH9N5mJGDZz4PjzJAU6XVQ8K6m/D+Qs
+	 A/t0bxpjHOsdgrsjRqkCV5g7EiOUyY+m57kk3gwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Mommer <harald.mommer@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	David Thompson <davthompson@nvidia.com>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.12 008/444] gpio: virtio: Fix config space reading.
-Date: Mon, 18 Aug 2025 14:40:34 +0200
-Message-ID: <20250818124449.217330621@linuxfoundation.org>
+Subject: [PATCH 6.12 009/444] gpio: mlxbf2: use platform_get_irq_optional()
+Date: Mon, 18 Aug 2025 14:40:35 +0200
+Message-ID: <20250818124449.254123716@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818124448.879659024@linuxfoundation.org>
 References: <20250818124448.879659024@linuxfoundation.org>
@@ -51,52 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Mommer <harald.mommer@oss.qualcomm.com>
+From: David Thompson <davthompson@nvidia.com>
 
-commit 4740e1e2f320061c2f0dbadc0dd3dfb58df986d5 upstream.
+commit 63c7bc53a35e785accdc2ceab8f72d94501931ab upstream.
 
-Quote from the virtio specification chapter 4.2.2.2:
+The gpio-mlxbf2 driver interfaces with four GPIO controllers,
+device instances 0-3. There are two IRQ resources shared between
+the four controllers, and they are found in the ACPI table for
+instances 0 and 3. The driver should not use platform_get_irq(),
+otherwise this error is logged when probing instances 1 and 2:
+  mlxbf2_gpio MLNXBF22:01: error -ENXIO: IRQ index 0 not found
 
-"For the device-specific configuration space, the driver MUST use 8 bit
-wide accesses for 8 bit wide fields, 16 bit wide and aligned accesses
-for 16 bit wide fields and 32 bit wide and aligned accesses for 32 and
-64 bit wide fields."
-
-Signed-off-by: Harald Mommer <harald.mommer@oss.qualcomm.com>
+Fixes: 2b725265cb08 ("gpio: mlxbf2: Introduce IRQ support")
 Cc: stable@vger.kernel.org
-Fixes: 3a29355a22c0 ("gpio: Add virtio-gpio driver")
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://lore.kernel.org/r/20250724143718.5442-2-harald.mommer@oss.qualcomm.com
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/r/20250728144619.29894-1-davthompson@nvidia.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-virtio.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-mlxbf2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-virtio.c
-+++ b/drivers/gpio/gpio-virtio.c
-@@ -539,7 +539,6 @@ static const char **virtio_gpio_get_name
+--- a/drivers/gpio/gpio-mlxbf2.c
++++ b/drivers/gpio/gpio-mlxbf2.c
+@@ -397,7 +397,7 @@ mlxbf2_gpio_probe(struct platform_device
+ 	gc->ngpio = npins;
+ 	gc->owner = THIS_MODULE;
  
- static int virtio_gpio_probe(struct virtio_device *vdev)
- {
--	struct virtio_gpio_config config;
- 	struct device *dev = &vdev->dev;
- 	struct virtio_gpio *vgpio;
- 	u32 gpio_names_size;
-@@ -551,9 +550,11 @@ static int virtio_gpio_probe(struct virt
- 		return -ENOMEM;
- 
- 	/* Read configuration */
--	virtio_cread_bytes(vdev, 0, &config, sizeof(config));
--	gpio_names_size = le32_to_cpu(config.gpio_names_size);
--	ngpio = le16_to_cpu(config.ngpio);
-+	gpio_names_size =
-+		virtio_cread32(vdev, offsetof(struct virtio_gpio_config,
-+					      gpio_names_size));
-+	ngpio =  virtio_cread16(vdev, offsetof(struct virtio_gpio_config,
-+					       ngpio));
- 	if (!ngpio) {
- 		dev_err(dev, "Number of GPIOs can't be zero\n");
- 		return -EINVAL;
+-	irq = platform_get_irq(pdev, 0);
++	irq = platform_get_irq_optional(pdev, 0);
+ 	if (irq >= 0) {
+ 		girq = &gs->gc.irq;
+ 		gpio_irq_chip_set_chip(girq, &mlxbf2_gpio_irq_chip);
 
 
