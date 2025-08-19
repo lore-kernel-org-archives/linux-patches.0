@@ -1,143 +1,135 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A318B322C61
-	for <patches@lists.linux.dev>; Tue, 19 Aug 2025 10:36:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715DA322DC5
+	for <patches@lists.linux.dev>; Tue, 19 Aug 2025 11:02:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755599777; cv=none; b=TMIpRMAhQrD55qJyes8oW44ftpaGpvBYx0Os6BQDl8rxMPDJIS6Q+8Kc51pAxQUFHBdU/nUs1kv64IbbI9leSBHh7+eQ5JaAtW9WYXWjx9mFbGn/PSg0aTj3OdNLHS47lxAQw3Rsbq0oGge+6cG6NMVq3lSOEcAkkYYubSPi7Qw=
+	t=1755601362; cv=none; b=R0sOWc7BcuinlQD+z0v6XKkwA2wUe3gzhU4LbJaVCUYuKk8cFfW5DOR1pC/czKfBQFv1iZhzp+d+eoqH9iUJVA5Hj152j0a5rEsaJqX5qPwOLxi2PEcihkrd3l92wsnRUxG/c+AuqzjyTRmEh0BfbTLSglktUx/IClSZylk99P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755599777; c=relaxed/simple;
-	bh=f0QsgYzieVeY78Rm9/QS4ztp2XaR7DWI6fggUzgPROg=;
+	s=arc-20240116; t=1755601362; c=relaxed/simple;
+	bh=QW+3Vl1wyeWqmGM44YIRS/8U4Otw7KMVLmpzWqAAJD4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WPBpTaCLRUZ1a/fC/Qt4FctT4a7Ulz3C8geoqLf8VG2UBA+4hI7FRZGZ2urODsviqsEnz/Tdyx98U4UxCCSnFyeTgwe+Zl8RRbO7RQfSQspFKt6zOgMcJwBUsCZKYl24AXXoOREKrEJb0kqDxv01R6C3SR1KtBxjYGgu9WPXcS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DGP6RWu6; arc=none smtp.client-ip=209.85.128.175
+	 To:Cc:Content-Type; b=R7VUAmHvYhC8f6cVwBftEX9f4SOsTO0rvBjapIBBWSWz77denf8TVqGceXg3upE2GSRdeWIZfv0U7jmUJRIUhCuCbO8KRkKqeZi24L02N2Cr8sHgiXEhE6pQKCaiyGaNy5Bh9anvk4THK0fSaI2tcBnBTwd1mRCERhOZqV/h2aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ElejmtJ7; arc=none smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DGP6RWu6"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-71d603a269cso41441087b3.1
-        for <patches@lists.linux.dev>; Tue, 19 Aug 2025 03:36:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ElejmtJ7"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b474a38b25cso1447863a12.0
+        for <patches@lists.linux.dev>; Tue, 19 Aug 2025 04:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1755599774; x=1756204574; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1755601358; x=1756206158; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2fN+Cw2GD8q7ciDJSfP7W+cnq2F/R7FubEkGbK5iPps=;
-        b=DGP6RWu69R8NMV+6omMmNUMvdTQ5yHnWqZslmZxTtLRs5I5VWR1uU46nMp6NRX0KI+
-         ZeZL2Ny8wQ/iUdUhH3ZfB6ZU/yntw/+31mIqzWA88JPzbtideJkPZm10LQwDKb8kj9cM
-         TJS5BqWLpWmj3RvBF94aDAkvSCsm2ZGqGHECPQjJS/sZS8yTLN3g7blcSNmYiHbjhwON
-         C3VLP7k7P8S2hs+ixblBSoUbzZ8rXGBOxAXS9bYUfIc2u9/V+Qdj/wUM7qA3kNCV7dlZ
-         i8/WghG+5k03ROZ8/pAWNx7jsBUf9YNKsSc2kJEemaYKZRcIsnipwL7hA1hPTO5ImfKw
-         L1DA==
+        bh=sE9Ynzec1RnRGjYxwL9GtFPPQqbiY+yne+LG1e9v81Q=;
+        b=ElejmtJ7JnjoX7MJylhRv7yVAg51CN1DazEYMPyEh4rN+HBTh7WUHDMW9pP5u3/+Zn
+         zfqNECPNE31NWLF2KrzeVEent80RBRscHMEWsU3ZfxnOo790SJ2G2mFZik7pXHfeRTuu
+         DYV7zFc6bZUFxgNu/dA3xRPJI3/lOfsJrEmdaSH5Y3DFGaM7t5J5pYhxbRIeF2NUbrRw
+         EMPwaWqnjp6eLSP/iUazOSLMUdbnFLahUifajcOQjfB+RTlFXgytVcXljqAN+S9x8lkt
+         VrR6fzLCfjwMkWA0MfvrH1zXG0Xaky02RCBt+Bh2LC+baLypQDv/Nu8/gK75ghLHrC/a
+         uSyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755599774; x=1756204574;
+        d=1e100.net; s=20230601; t=1755601358; x=1756206158;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2fN+Cw2GD8q7ciDJSfP7W+cnq2F/R7FubEkGbK5iPps=;
-        b=ksPzEoH8N/0k7jOa23l/Ibt97GYSqwJQ3qt/9uaEjNP8tnGXmYjXyb8i9ucMqK+t1B
-         1W5HdayzuwwCiuhh7exQ30LGeHC19hob/VM87rpswHoFwaBQA0mMhbdNj6HTmyWiCs+9
-         xyTYZ/hN5MOcNehyFzDWbS1OgURDJyJn/P8+p6iAVQauCvt8y2SNNTnvkrdCYgfMfNry
-         o0V61foKhGpxGbhmpr5LxxGM98z7WrtuCAHPRS3J8Py+07T5MZQS2YimU+tmUIFd/Zd9
-         XcAgbKRoSFcXyOtszpMwLJMS/JNFyoyiG5kjxGNKFOzyJFS+sMpzbbyxeqzvWUS9gmaL
-         inFA==
-X-Forwarded-Encrypted: i=1; AJvYcCUiPoI01Ist6lgh1w53NSjLyVIelr/AA6Dw5zVYZiCrHn/mx0uImS/aDDreFqGeXhvEDa7AJzjF@lists.linux.dev
-X-Gm-Message-State: AOJu0YzQV3PyOFBhi+FrM78urs+qoGNoBjrncUg4u0fpBXI/1dRzKg/0
-	Zq+A0N0g1Z8msxsNAJi7lXrG7G8ZCkk+oKWiIA4maYT6kEwI9bMt14kOHwn14ywXpy3Bz0E2LoW
-	gf3JnrXSVHsPDj2B+tfKrSkf8GiyRA9ZeiY4YwA/3
-X-Gm-Gg: ASbGncvnfpzkzW9Lum6M6bOtW03HDtUaLvxuMDfT2515nu4OyXWlFFAK8hPNjwhhWE4
-	XYxOOtzb/nfIbtDopejTOfaDN7UACgDhGvOIzvNISWmMAhDs1T5JqAaAftnkSTlY2x4CEqiXKyX
-	UJGiJOJvYNBg86AV64Ji6OffxosJEg1rU4JXk+6nGZa4ZctB8p33qGJov/NsrYtOqwJooLyb5k9
-	iE0/BbylPZGkMEQM4rPTBiYHX6Upl2p6OR8YqS2WLSYghpjshZwXYj2
-X-Google-Smtp-Source: AGHT+IEyQkk7FbmcgWE6e5Fltqxk8e2OmEel306FAGI6BUzZSbzI9juKCgBNuurFH75DIL/XFm7wd0hLUiRSVtYPoVQ=
-X-Received: by 2002:a05:690c:6c02:b0:71e:325e:5468 with SMTP id
- 00721157ae682-71f9d494f58mr24000397b3.5.1755599774272; Tue, 19 Aug 2025
- 03:36:14 -0700 (PDT)
+        bh=sE9Ynzec1RnRGjYxwL9GtFPPQqbiY+yne+LG1e9v81Q=;
+        b=H+cSVxvAz5MmrYePNQJnLE486kM0d9Lb1oJ/IIRqemR3kQm6n7I36ggbzO4PVjY6aM
+         D6wSxOO4Lu9MORRd6IeDyoW2Tj8JyBg12J1hzyuNMDG8f+UUDJeeb4My1BMT6Auy+8A7
+         Q1E0HS2z+yM/U9PbtW0OVTVJAcSWpTMPoSE/+p5FGFsvQcuUN9gLIBlGaRl2M8O4f7Nu
+         3Sfk3HdK9F3XnOJ1Gug2cSiUvLeOlp81u9aakHWtDJu9GQfPbf8vZRW2Gz7E39i3pdOT
+         OIM8PL0YDz0jxbosCKu9QlWmW8TKk2b5fA0MJQ5YiTEl8e/Obu9siH4/V8+H87kLqMg9
+         TQTw==
+X-Forwarded-Encrypted: i=1; AJvYcCVy760hzlfv32uckSumooWRoDJqpr83EuSQ0jp0vsIAw3wuovJrPvjHbMJvYgAt4A2PoAS1EupQ@lists.linux.dev
+X-Gm-Message-State: AOJu0YxFeseMPW7gq1fnyD6FZZmwPDXDCHoHW+SDd2NFnYV0Nl8Zsa/8
+	e6QB7FqXtMADaoweNnV6PL7uzq7LK6yRqHlm8OLXB/vtN1hyxxDAlVuI3VC9AS63Q06xLvTJ6y6
+	kDu7U1i6siaWsU1o3zIq8GZsQDLr0mnd57w/Yhzuj
+X-Gm-Gg: ASbGncuvWNY0u24kDw+JOOqEAc4z+JjBSaquGVLuNgbgUQn6SjWBCMBqizwJDBJ2xkY
+	6z9RVVApafGqwRl/u/u72CGYXH3STFvbcmCKDn1plpqjt7KKkfQumcJlOckqAAVp7IW+qTRLcAP
+	1kwzFTkFlDOqcXxSBCiD3Ie9us9oiepAGyE2duPYvQ4PM6o2YI+09tuyfyNFAEIXPEo5zxio8Qp
+	reCyKPqriksYO94SFWZelwJBbvrbwSOSJ7jQBAonimKVHSCJueo0ij3
+X-Google-Smtp-Source: AGHT+IFqyq2xNkxcn0+6woeZn1zX9V2Zv/t3YgCXofec8XIVMQnKyUVI7fT9ZOb2sYUD5zGqcBKM/HrzwRrnZFiQZFI=
+X-Received: by 2002:a17:902:e948:b0:240:6406:c471 with SMTP id
+ d9443c01a7336-245e02aa70cmr26553885ad.10.1755601358131; Tue, 19 Aug 2025
+ 04:02:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org> <20250818-bump-min-llvm-ver-15-v1-9-c8b1d0f955e0@kernel.org>
-In-Reply-To: <20250818-bump-min-llvm-ver-15-v1-9-c8b1d0f955e0@kernel.org>
+References: <20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org> <20250818-bump-min-llvm-ver-15-v1-10-c8b1d0f955e0@kernel.org>
+In-Reply-To: <20250818-bump-min-llvm-ver-15-v1-10-c8b1d0f955e0@kernel.org>
 From: Marco Elver <elver@google.com>
-Date: Tue, 19 Aug 2025 12:35:37 +0200
-X-Gm-Features: Ac12FXy_pMfFpBqlyslz5YoDfRSNwKDNUf2Ii-KoSTGsRrmWmRwz_9vxZQpt2K4
-Message-ID: <CANpmjNN243_NoHOEdHvs0zDTzX5w4hjWoeo9TnQbwgfPzOWJAA@mail.gmail.com>
-Subject: Re: [PATCH 09/10] objtool: Drop noinstr hack for KCSAN_WEAK_MEMORY
+Date: Tue, 19 Aug 2025 13:02:01 +0200
+X-Gm-Features: Ac12FXzKM7g4sH5lbxe25GgocsgKN-jxowhmEsNtouQcGNhuUxoPY2G_RdLPDgM
+Message-ID: <CANpmjNNwp=RRc4Tm7vrKkSzYqdJueeDSOkPRY1sCG-2W-yPVdA@mail.gmail.com>
+Subject: Re: [PATCH 10/10] KMSAN: Remove tautological checks
 To: Nathan Chancellor <nathan@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>, Arnd Bergmann <arnd@arndb.de>, 
 	Kees Cook <kees@kernel.org>, Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
 	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, linux-kernel@vger.kernel.org, 
 	llvm@lists.linux.dev, patches@lists.linux.dev, 
-	Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com
+	Alexander Potapenko <glider@google.com>, Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
 
 On Mon, 18 Aug 2025 at 20:58, Nathan Chancellor <nathan@kernel.org> wrote:
 >
 > Now that the minimum supported version of LLVM for building the kernel
-> has been bumped to 15.0.0, __no_kcsan will always ensure that the thread
-> sanitizer functions are not generated, so remove the check for tsan
-> functions in is_profiling_func() and the always true depends and
-> unnecessary select lines in KCSAN_WEAK_MEMORY.
+> has been bumped to 15.0.0, two KMSAN checks can be cleaned up.
+>
+> CONFIG_HAVE_KMSAN_COMPILER will always be true when using clang so
+> remove the cc-option test and use a simple check for CONFIG_CC_IS_CLANG.
+>
+> CONFIG_HAVE_KMSAN_PARAM_RETVAL will always be true so it can be removed
+> outright.
 >
 > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
 Acked-by: Marco Elver <elver@google.com>
 
-Good riddance.
-
 > ---
-> Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-> Cc: Peter Zijlstra <peterz@infradead.org>
+> Cc: Alexander Potapenko <glider@google.com>
 > Cc: Marco Elver <elver@google.com>
 > Cc: Dmitry Vyukov <dvyukov@google.com>
 > Cc: kasan-dev@googlegroups.com
 > ---
->  lib/Kconfig.kcsan     |  6 ------
->  tools/objtool/check.c | 10 ----------
->  2 files changed, 16 deletions(-)
+>  lib/Kconfig.kmsan | 11 +----------
+>  1 file changed, 1 insertion(+), 10 deletions(-)
 >
-> diff --git a/lib/Kconfig.kcsan b/lib/Kconfig.kcsan
-> index 609ddfc73de5..4ce4b0c0109c 100644
-> --- a/lib/Kconfig.kcsan
-> +++ b/lib/Kconfig.kcsan
-> @@ -185,12 +185,6 @@ config KCSAN_WEAK_MEMORY
->         bool "Enable weak memory modeling to detect missing memory barriers"
->         default y
->         depends on KCSAN_STRICT
-> -       # We can either let objtool nop __tsan_func_{entry,exit}() and builtin
-> -       # atomics instrumentation in .noinstr.text, or use a compiler that can
-> -       # implement __no_kcsan to really remove all instrumentation.
-> -       depends on !ARCH_WANTS_NO_INSTR || HAVE_NOINSTR_HACK || \
-> -                  CC_IS_GCC || CLANG_VERSION >= 140000
-> -       select OBJTOOL if HAVE_NOINSTR_HACK
->         help
->           Enable support for modeling a subset of weak memory, which allows
->           detecting a subset of data races due to missing memory barriers.
-> diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-> index d14f20ef1db1..efa4c060ff4e 100644
-> --- a/tools/objtool/check.c
-> +++ b/tools/objtool/check.c
-> @@ -2453,16 +2453,6 @@ static bool is_profiling_func(const char *name)
->         if (!strncmp(name, "__sanitizer_cov_", 16))
->                 return true;
+> diff --git a/lib/Kconfig.kmsan b/lib/Kconfig.kmsan
+> index 0541d7b079cc..7251b6b59e69 100644
+> --- a/lib/Kconfig.kmsan
+> +++ b/lib/Kconfig.kmsan
+> @@ -3,10 +3,7 @@ config HAVE_ARCH_KMSAN
+>         bool
 >
-> -       /*
-> -        * Some compilers currently do not remove __tsan_func_entry/exit nor
-> -        * __tsan_atomic_signal_fence (used for barrier instrumentation) with
-> -        * the __no_sanitize_thread attribute, remove them. Once the kernel's
-> -        * minimum Clang version is 14.0, this can be removed.
-> -        */
-> -       if (!strncmp(name, "__tsan_func_", 12) ||
-> -           !strcmp(name, "__tsan_atomic_signal_fence"))
-> -               return true;
+>  config HAVE_KMSAN_COMPILER
+> -       # Clang versions <14.0.0 also support -fsanitize=kernel-memory, but not
+> -       # all the features necessary to build the kernel with KMSAN.
+> -       depends on CC_IS_CLANG && CLANG_VERSION >= 140000
+> -       def_bool $(cc-option,-fsanitize=kernel-memory -mllvm -msan-disable-checks=1)
+> +       def_bool CC_IS_CLANG
+>
+>  config KMSAN
+>         bool "KMSAN: detector of uninitialized values use"
+> @@ -28,15 +25,9 @@ config KMSAN
+>
+>  if KMSAN
+>
+> -config HAVE_KMSAN_PARAM_RETVAL
+> -       # -fsanitize-memory-param-retval is supported only by Clang >= 14.
+> -       depends on HAVE_KMSAN_COMPILER
+> -       def_bool $(cc-option,-fsanitize=kernel-memory -fsanitize-memory-param-retval)
 > -
->         return false;
->  }
->
+>  config KMSAN_CHECK_PARAM_RETVAL
+>         bool "Check for uninitialized values passed to and returned from functions"
+>         default y
+> -       depends on HAVE_KMSAN_PARAM_RETVAL
+>         help
+>           If the compiler supports -fsanitize-memory-param-retval, KMSAN will
+>           eagerly check every function parameter passed by value and every
 >
 > --
 > 2.50.1
