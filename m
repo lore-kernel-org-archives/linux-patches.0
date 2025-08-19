@@ -1,122 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5C01F8EFF;
-	Tue, 19 Aug 2025 02:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456651DEFE0;
+	Tue, 19 Aug 2025 02:12:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755568872; cv=none; b=ug+XxVhUv2vG3mI4HmLXkZl9G2CWC5azEH8iy/EnoCFgnEYBti6SoVFw3R51fU7RAdDjvGRIPAeq7XqROsO872emZ7XI7XzAH0yklYlxVVfwIwd8eZvqvVOAXRcPJPdMbK8BWTRQFSS9kjq+Tt+H7N8mzEi8y2HaqsF0AMPn/3k=
+	t=1755569530; cv=none; b=WLG/mpeBKsDpfG6N0xDqI6a4H/DisYyNEY4RjBbSwbZxxRGdgXHQqKOB8EVJsIoxHKSr2uR3Ag5Xg9cwvI+zQTjxgGtHT9mf4eH4/A1Kf4NKbX9KUPnVgGaNlause2XkBmpmULkfqrJX9r+0OkzitK4Mv8F0U9CWGhYqeTiNOIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755568872; c=relaxed/simple;
-	bh=PUkNlXKrmXY1CLgusGbdGf67x2cphnPK0xcltNm/Pnw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bejg6/KpmleRtseH9+YKf15YpcXL7doQ188qoChLbeAt2DcaC7FLhXYf59NyxgPYzh6P6AooTx59HAKWJp59Jb4ni42VQxsP0RBIgFNDclonmZIwYVJ9gDkpd0YinRshUCmNAJOXlSPTjRx4EJNHnfUsRVc31VW1zwOJjw7+j14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V8gM6zTp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755569530; c=relaxed/simple;
+	bh=CtWl+kAaj28FCmgEJf0e3j5MDGUJeH2tJY2k2qK3kWg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y1dMgzsdrb+gJT5nWFBGl5q9eqDmkkdogp/8S3Z8lMAElXK2kv6X3mhccqy9lyIA2Y9WaVVsE85/SSYDG7/2HwzO8KW8Gujt+ZV1LXeq9psJuQr+jVc0+oMb9dfFIWUo/5AxtzRJ6DYlPJOW7woV6A2yXoQ4AMMIVBHQEuuDWT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IxW9xmaS; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V8gM6zTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8513EC4CEEB;
-	Tue, 19 Aug 2025 02:01:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755568870;
-	bh=PUkNlXKrmXY1CLgusGbdGf67x2cphnPK0xcltNm/Pnw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V8gM6zTpI4jGfutyv8uTMMwZ9+TjZKeLUvOgai/D4/vXbmo5eW34untPXahra9Lva
-	 61N/2Tni0GlkAenRGHPy16B8qZmez5XDY8jo+j25YrJAaPMDQCgI8q0GwFT7vW3Us2
-	 woOeg208mpKHhvzkOcBV8lYXW2aFqHGUg6eX7/OPePeWgim3tsazSCdxeFtud+EinT
-	 SELPM+R3nhc79KjMSj5ALnQlUOQUHLfqsyUfZnjQIAWMO0R0eIYdjrso4zvwzwSbg7
-	 BUDlwef1VRh/vl7zzCXivNOVz4ZGxCppETE2YndWki/Cb5Ft1cL3iULdG+4thSV+eO
-	 Fy3fgzx8fw3UA==
-Date: Mon, 18 Aug 2025 22:01:09 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Michael Walle <mwalle@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Lee Jones <lee@kernel.org>
-Subject: Re: [PATCH AUTOSEL 6.12 27/69] mfd: tps6594: Add TI TPS652G1 support
-Message-ID: <aKPa5TMzs-hAfEgE@laps>
-References: <20250804003119.3620476-1-sashal@kernel.org>
- <20250804003119.3620476-27-sashal@kernel.org>
- <DC5CEJ4YYRRB.3VTJAONRBJPVB@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IxW9xmaS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1755569530; x=1787105530;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=CtWl+kAaj28FCmgEJf0e3j5MDGUJeH2tJY2k2qK3kWg=;
+  b=IxW9xmaSePXg34ehqcLg4bmj4xvZmW2TAbbaxfsoqqocHJdRWc1vJzaP
+   ZendHHAjdY2BLv6H7ivWHDSwuXFTlG89D9371syIPY89795VgO8sO+v03
+   zcfSZxGrrWMs4bHgKzFEC4dHyCPomfLtyFIP/rZL54Qh+yACq2bMdPy0V
+   jIBMeu5C2VtSmIeZsOH30AAJDtGUGIGAyGlfL6o280Rq8YZHCmR6xARq7
+   uW2aYMnVBpKkFa5EE83eYs3hyEm9i1UZm8CeCeP6UZGP+XavaD7PRbxk9
+   89Ac5kz3h5rDdXhBRIS4Ym2yHCR57QNe3p4dmqWLzcvCpvtyXUbTeRk4a
+   Q==;
+X-CSE-ConnectionGUID: IVsfpQjPRkq2bSjNu4e+GA==
+X-CSE-MsgGUID: BT+dW3ZqTyeRoPEOza5ajQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11526"; a="61637218"
+X-IronPort-AV: E=Sophos;i="6.17,300,1747724400"; 
+   d="scan'208";a="61637218"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Aug 2025 19:12:09 -0700
+X-CSE-ConnectionGUID: BCj/97QQTnKrxK+MekdAiQ==
+X-CSE-MsgGUID: TE75bEPQTWKJ1Q+sONEmGA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,300,1747724400"; 
+   d="scan'208";a="171944207"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Aug 2025 19:12:03 -0700
+Message-ID: <ba8c8e60-5907-49d2-88ff-b9c6ab994d2f@linux.intel.com>
+Date: Tue, 19 Aug 2025 10:09:49 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <DC5CEJ4YYRRB.3VTJAONRBJPVB@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/5] iommu: Add iommu_get_domain_for_dev_locked()
+ helper
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, robin.murphy@arm.com,
+ joro@8bytes.org, bhelgaas@google.com, will@kernel.org,
+ robin.clark@oss.qualcomm.com, yong.wu@mediatek.com, matthias.bgg@gmail.com,
+ angelogioacchino.delregno@collabora.com, thierry.reding@gmail.com,
+ vdumpa@nvidia.com, jonathanh@nvidia.com, rafael@kernel.org, lenb@kernel.org,
+ kevin.tian@intel.com, yi.l.liu@intel.com,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+ linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
+ patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
+ helgaas@kernel.org, etzhao1900@gmail.com
+References: <cover.1754952762.git.nicolinc@nvidia.com>
+ <a69557026b7e2353bae67104bbe6a88f0682305e.1754952762.git.nicolinc@nvidia.com>
+ <aeb04f91-ffce-4092-8dbc-17d116cd7c7e@linux.intel.com>
+ <20250818144051.GP802098@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <20250818144051.GP802098@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Aug 18, 2025 at 08:34:03AM +0200, Michael Walle wrote:
->Hi Sasha,
->
->On Mon Aug 4, 2025 at 2:30 AM CEST, Sasha Levin wrote:
->> From: Michael Walle <mwalle@kernel.org>
->>
->> [ Upstream commit 626bb0a45584d544d84eab909795ccb355062bcc ]
->>
->> The TPS652G1 is a stripped down version of the TPS65224. From a software
->> point of view, it lacks any voltage monitoring, the watchdog, the ESM
->> and the ADC.
->>
->> Signed-off-by: Michael Walle <mwalle@kernel.org>
->> Link: https://lore.kernel.org/r/20250613114518.1772109-2-mwalle@kernel.org
->> Signed-off-by: Lee Jones <lee@kernel.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->>
->> LLM Generated explanations, may be completely bogus:
->>
->> **YES**
->>
->> This commit should be backported to stable kernel trees for the
->> following reasons:
->>
->> 1. **Hardware Enablement (Device ID Addition)**: This patch adds support
->>    for a new PMIC variant (TPS652G1) by adding its device ID and
->>    configuration. According to stable kernel rules, patches that "just
->>    add a device ID" are explicitly allowed for stable backporting.
->>
->> 2. **Self-Contained Changes**: The modifications are isolated to adding
->>    support for the new device without altering existing functionality:
->>    - Adds `TPS652G1` to the `enum pmic_id`
->>    - Adds TPS652G1-specific MFD cells configuration
->>    - Adds device-specific IRQ mappings (subset of TPS65224 IRQs)
->>    - Adds compatible strings "ti,tps652g1" to I2C and SPI device tables
->>    - Properly handles the stripped-down nature of TPS652G1 (no RTC, ADC,
->>      watchdog, ESM)
->>
->> 3. **Low Risk**: The changes follow the existing driver pattern and only
->>    add conditional paths for the new device:
->>   ```c
->>   if (tps->chip_id == TPS65224 || tps->chip_id == TPS652G1)
->>   ```
->>   This ensures existing device support remains unaffected.
->>
->> 4. **User Benefit**: Without this patch, users with TPS652G1 hardware
->>    cannot use their devices on stable kernels. This directly impacts
->>    hardware functionality for affected users.
->>
->> 5. **Proper Implementation**: The patch correctly handles the TPS652G1
->>    as a feature-reduced variant of TPS65224, sharing the same register
->>    layout and CRC handling while properly excluding unsupported
->>    features.
->>
->> The patch is relatively small, follows established driver patterns, and
->> enables essential hardware support without introducing architectural
->> changes or new features beyond device enablement.
->
->While this is correct, the MFD patch on it's own is rather useless,
->as the individual driver implementations are missing. See
->https://lore.kernel.org/all/20250703113153.2447110-1-mwalle@kernel.org/
->
->I don't care too much, I just want to point out, that just having
->this patch might be misleading regarding the support of this PMIC.
+On 8/18/25 22:40, Jason Gunthorpe wrote:
+> On Fri, Aug 15, 2025 at 01:28:02PM +0800, Baolu Lu wrote:
+> 
+>> Given that iommu_group->mutex is transparent to the iommu driver, how
+>> about
+> It is not actually transparent, alot of drivers are implicitly
+> assuming that the core single threads their struct device for alot of
+> the ops callbacks and we exposed the lockdep test to the drivers to
+> help the document this.
 
-Yeah, it doesn't make sense to keep it in. I'll drop it.
+Fair enough. It's the role of iommu_group_mutex_assert().
 
-Thanks!
-
-
--- 
 Thanks,
-Sasha
+baolu
