@@ -1,46 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7E832BF27;
-	Tue, 19 Aug 2025 11:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FDE326D47;
+	Tue, 19 Aug 2025 11:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755603332; cv=none; b=nBDADhYiv47f7nTMvXUXWL4deUVubAWDXCErOtUmqbkkUTKREaENgOch1+6FzKfX3Yq2Sf+sgmLRB8dN8q+obYpDDgDGir7kAQkNecCBTMhaviQCIFHfSSj+fc/17gVZwzZ0v+zXLmpuLzRauJn1SCgmvxpSduUQK8LxhpjyIHw=
+	t=1755604338; cv=none; b=RkvJ9wp1VeMX2M3P5bkFZMRktQ4lqgX4Q31QaaPsanNs09cG/oE48ou1Fq40cM9uGVI5HJD9Iv4sb+UP6cYHdKinUY9fc638LqYTf5Wk7bbeSCsKlm/1eesFBcAFU5N1XVrf2d3e2Asa02toyEU6od2Soxgm8lOsFmisF2YlbYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755603332; c=relaxed/simple;
-	bh=w2jIOR1lpkDHoLj88fhmQi3DcBG4GO0JGHddxQqGBjE=;
+	s=arc-20240116; t=1755604338; c=relaxed/simple;
+	bh=XxdaRud82ur5QTXiEHjEJ8/3jvy+FXSBXFtjMYxqu3s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tn64UqNE7qALNCnc5o7x8bfxIRdCT6J/fLur9MyYmzGViuD/QewyaOSuJePAuilBSGI89v9SFirERtWyAfjgxw3EuI6jT5AkNgGhcUUAfasBUon1lHHnleEFyPmywT1/H5dKGzlUXxirT5VTk0VXJrjL6jpjCqLxUCPbZxWRmFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qnHeHwfC; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=RdejgUhErD4gkOT2GyDvl1RsITUz8xo07ieevc+CXmf6p4n5Qq3IsMzbsMpY8RUf7mmJ6Ah5BIMxsz5WTI0IXLUe+Em21clWvT8jxqfQTSG1AVqQBVTYH4kE/tRaO8P7GY500Rc+O2AJsRgLxri6/bTO3wzWd5HBHJUFGIZ2mlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wL6Az2rA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qnHeHwfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E62C4CEF1;
-	Tue, 19 Aug 2025 11:35:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755603332;
-	bh=w2jIOR1lpkDHoLj88fhmQi3DcBG4GO0JGHddxQqGBjE=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wL6Az2rA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62878C4CEF1;
+	Tue, 19 Aug 2025 11:52:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1755604338;
+	bh=XxdaRud82ur5QTXiEHjEJ8/3jvy+FXSBXFtjMYxqu3s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qnHeHwfCL7dIpX00FXdlapFMe1o9fIymJbm0eNGknjVrOlwgmnUlBurcLv8B33XIO
-	 SA474yTpPk1jC15kb8Rf7hVjllhBiKYG0PjxPsRTFbb96m/2Sg4FhZ8FACEbVLj2l2
-	 +d4vPTt53k4hwNbpDqmauIJNOgmDuHhbtSRfi7LsdZ4LQpXeSqjdzNqr5pr+vFe1a3
-	 3xBM3JKtoOkHr4Ml3QYAkosEc/sx++Uj1r+2chdU1uUQA2gE5cChvNvHxC3XPCRRp7
-	 yVh+ukQ4XTwkU27RUY513SFainLW/1wnVxA2j5+Ig42urB4zXX4eOLfc2uJ4KCzRyv
-	 EYAmbxond/15A==
-Date: Tue, 19 Aug 2025 12:35:26 +0100
-From: Will Deacon <will@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 04/10] arm64: Remove tautological LLVM Kconfig conditions
-Message-ID: <aKRhfmLHzjgi-HiJ@willie-the-truck>
-References: <20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org>
- <20250818-bump-min-llvm-ver-15-v1-4-c8b1d0f955e0@kernel.org>
+	b=wL6Az2rA1znO6zJV/Rte0239ocExiMjxP+bdWmU2VEEW9mDOlnpjpEMdUL3oQqhPo
+	 fa9NEDoyxw80hUrbC/oZhVFkrA6rcd84gjTUA3QWCp2K5mZONrAud+hVOEMWxUPJ1y
+	 ZmXgQTDAVpiZ/pwsJiMpk5McgxN3CSbmeKQlLOxQ=
+Date: Tue, 19 Aug 2025 13:52:14 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	Ben Copeland <benjamin.copeland@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+	Linux ARM <linux-arm-kernel@lists.infradead.org>,
+	srinivas.kandagatla@oss.qualcomm.com
+Subject: Re: [PATCH 6.15 000/515] 6.15.11-rc1 review
+Message-ID: <2025081931-chump-uncurled-656b@gregkh>
+References: <20250818124458.334548733@linuxfoundation.org>
+ <CA+G9fYt5sknJ3jbebYZrqMRhbcLZKLCvTDHfg5feNnOpj-j9Wg@mail.gmail.com>
+ <CA+G9fYt6SAsPo6TvfgtnDWHPHO2q7xfppGbCaW0JxpL50zqWew@mail.gmail.com>
+ <CACMJSeu_DTVK=XtvaSD3Fj3aTXBJ5d-MpQMuysJYEFBNwznDqQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,23 +56,27 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250818-bump-min-llvm-ver-15-v1-4-c8b1d0f955e0@kernel.org>
+In-Reply-To: <CACMJSeu_DTVK=XtvaSD3Fj3aTXBJ5d-MpQMuysJYEFBNwznDqQ@mail.gmail.com>
 
-On Mon, Aug 18, 2025 at 11:57:20AM -0700, Nathan Chancellor wrote:
-> Now that the minimum supported version of LLVM for building the kernel
-> has been bumped to 15.0.0, two sets of always true conditions can be
-> safely removed in the arm64 Kconfig file.
+On Tue, Aug 19, 2025 at 01:30:46PM +0200, Bartosz Golaszewski wrote:
+> On Tue, 19 Aug 2025 at 12:02, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> >
+> > On Tue, 19 Aug 2025 at 00:18, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > >
+> > >
+> > > Boot regression: stable-rc 6.15.11-rc1 arm64 Qualcomm Dragonboard 410c
+> > > Unable to handle kernel NULL pointer dereference
+> > > qcom_scm_shm_bridge_enable
+> >
+> > I have reverted the following patch and the regression got fixed.
+> >
+> > firmware: qcom: scm: initialize tzmem before marking SCM as available
+> >     [ Upstream commit 87be3e7a2d0030cda6314d2ec96b37991f636ccd ]
+> >
 > 
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: linux-kernel@vger.kernel.org
-> ---
->  arch/arm64/Kconfig | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+> Hi! I'm on vacation, I will look into this next week. I expect there
+> to be a fix on top of this commit.
 
-Acked-by: Will Deacon <will@kernel.org>
+Ok, I'll go and drop this one from the queues now, thanks.
 
-Will
+greg k-h
