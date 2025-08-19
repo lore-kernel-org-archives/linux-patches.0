@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAD530BF6D;
-	Tue, 19 Aug 2025 17:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65673093B6;
+	Tue, 19 Aug 2025 17:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755624924; cv=none; b=VTAIE9HHOJ1OCtDi3TPWfrnxG8/ZuWPYI5yC1F3pQ3Gv2JtPpPrDlRheEbnFPVXxVxNNp+0LuFLOqzDojfrP5ec8TmaowlnzAJSDZDGr8aVJ6jENa5mp7yRbffRuWXfywlij+J+9+juoEgMfFsya8aoeWx4nTbZXbGFnO2CTjoE=
+	t=1755624925; cv=none; b=R2m4QB1EAC3ZE7P0Owz9c4k8cmsFgbKlg33IHxbEhsElhk5uwFSAphl28ghFAdSM3mRHN04LKKpuXsrYCwMmB+zTu38AyiiOqc93vq9nxX96+Xq0GjGO+01rcoDrvnHKHGPHT9yyg44dQJeJTtcnHbIvdE9Tltr9qBZYnF2qSao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755624924; c=relaxed/simple;
-	bh=jsLQCHtueYAZ8OTl8+Q6+FjmMkkAnADIelfnbDX2nJQ=;
+	s=arc-20240116; t=1755624925; c=relaxed/simple;
+	bh=8WmBZafSgbICkwV8fKCnBbgxO2LMYVZ2kbyop77JIzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uwLg+pRw/XfopRzpNmeOD+jiu8+/UY+wdaqN9kRmsAcU+omnX1fVDDEWKCO+2QmvagnS9/vkJmGe8tp9hmnTGnE1Ic28qXRNXrC3+jHI+KqP2FYqtiZ2+stjVegbZExIAkD+54VzsNcp5AMOPS+ShrQWW8c5NoKB83aa/HrEQz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tUZ/uScu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DFRrRpLILGlZmyXf8Is8InrZm+wDJAJztb/VZgXrAZuxRcWQ7JJtIxeWagnsT3f5OIyljpGwbIGr1t1LEjUy9gDKePpC6wKtwpPq5zOfAiU8LcvQmiWyeOOvk2cii+CUlPhTvJnK1Pqj6dwGG3dYr3OTOeAYFAvSApEiiD6/TbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VPKEo2jQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tUZ/uScu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F00DC116B1;
-	Tue, 19 Aug 2025 17:35:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VPKEo2jQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB251C116D0;
+	Tue, 19 Aug 2025 17:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755624924;
-	bh=jsLQCHtueYAZ8OTl8+Q6+FjmMkkAnADIelfnbDX2nJQ=;
+	s=k20201202; t=1755624925;
+	bh=8WmBZafSgbICkwV8fKCnBbgxO2LMYVZ2kbyop77JIzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tUZ/uScuz/7c7Aq8B2pFfC16sCV19Wsb3ZvG+MFmwIzpXdSnDvGysfMtfeunldTxc
-	 YZwAzlBv1UH3se5nTIZ43iIV4XTNTR+M7rKLjoTbSFwlUSEhx/4VcjKh9VGkjk1hhT
-	 z0EFXDZ3Mhj3vvf7NynwKWOV0V0/RCdZmL8m+w1alIRgvbovsf4j3cbve5dtIwWXPW
-	 vdahPiYimKL6L6w0wmTfL/ClWLg7KpNc+TzsMH2rLwgbbZKLyywoeSidxiVi48rHge
-	 DGpni74cOazyiRHcZdUKwAhp9cw3McuSchJD3D33rtui4gJI2ZHkjfMR9iybpShJsM
-	 eHb94VezAYC0A==
+	b=VPKEo2jQNsBsZ86PNrJefPpUWtHqE8Gjb3i68nZ9hzfOSyOvj+KOV6hHX+0D53nUi
+	 5GFXLl0Mgi9JbB9QGPely8UQ/MuzJn9SsScjmGxI1AkIrcQO/JwCClTff4nJRXQksN
+	 ju5EdOw6WODz0JItEQTy7gOr5w8pzQzv/w6GLQkG4ADqjuvzIr+XpPRYunm2nap9f8
+	 kebRVkHzPNuehDT3+F4/QbPoFjkFRPk+RlZfZMOE0N3u91XRFOVaYsTExIAbaq/xpj
+	 wN4N7L+7QKAag9prFy06dk+1Kv1+Xq9lxAXN0foiJXYaKXsdOjypSNCGclwgIWgReU
+	 crogjMOodki+g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Friendy Su <friendy.su@sony.com>,
-	Jacky Cao <jacky.cao@sony.com>,
-	Daniel Palmer <daniel.palmer@sony.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Hongbo Li <lihongbo22@huawei.com>,
+Cc: Damien Le Moal <dlemoal@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Johannes Thumshin <johannes.thumshirn@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	xiang@kernel.org,
-	chao@kernel.org,
-	linux-erofs@lists.ozlabs.org
-Subject: [PATCH AUTOSEL 6.16] erofs: Fallback to normal access if DAX is not supported on extra device
-Date: Tue, 19 Aug 2025 13:35:12 -0400
-Message-ID: <20250819173521.1079913-2-sashal@kernel.org>
+	James.Bottomley@HansenPartnership.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] scsi: core: sysfs: Correct sysfs attributes access rights
+Date: Tue, 19 Aug 2025 13:35:13 -0400
+Message-ID: <20250819173521.1079913-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250819173521.1079913-1-sashal@kernel.org>
 References: <20250819173521.1079913-1-sashal@kernel.org>
@@ -54,163 +51,111 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit c6993c4cb91803fceb82d6b5e0ec5e0aec2d0ad6 ]
+[ Upstream commit a2f54ff15c3bdc0132e20aae041607e2320dbd73 ]
 
-If using multiple devices, we should check if the extra device support
-DAX instead of checking the primary device when deciding if to use DAX
-to access a file.
+The SCSI sysfs attributes "supported_mode" and "active_mode" do not
+define a store method and thus cannot be modified.  Correct the
+DEVICE_ATTR() call for these two attributes to not include S_IWUSR to
+allow write access as they are read-only.
 
-If an extra device does not support DAX we should fallback to normal
-access otherwise the data on that device will be inaccessible.
-
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Friendy Su <friendy.su@sony.com>
-Reviewed-by: Jacky Cao <jacky.cao@sony.com>
-Reviewed-by: Daniel Palmer <daniel.palmer@sony.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Link: https://lore.kernel.org/r/20250804082030.3667257-2-Yuezhang.Mo@sony.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250728041700.76660-1-dlemoal@kernel.org
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Johannes Thumshin <johannes.thumshirn@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit, I can now provide a
-definitive assessment:
-
-## Backport Status: **YES**
+**Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-### 1. **Critical Bug Fix**
-The commit fixes a serious bug where files on extra devices become
-**completely inaccessible** when DAX is enabled. Looking at the code
-changes:
+## Bug Fix Nature
+The commit fixes a clear bug where sysfs attributes `supported_mode` and
+`active_mode` incorrectly have write permissions (S_IWUSR) despite
+having no store method defined (NULL is passed as the store parameter to
+DEVICE_ATTR). This is a longstanding bug dating back to 2007 when these
+attributes were first introduced in commit 5dc2b89e1242.
 
-- **Before the fix**: When `DAX_ALWAYS` was set, only the primary device
-  (`sbi->dif0.dax_dev`) was checked for DAX support
-- **After the fix**: Each extra device is checked individually, and if
-  any device doesn't support DAX, the system falls back to normal access
+## Security and Stability Implications
+1. **Misleading permissions**: The incorrect S_IWUSR permission suggests
+   these attributes are writable when they are not, which could confuse
+   userspace tools and administrators.
 
-This is evident in lines 176-179 of the patch where DAX support checking
-is moved into the `erofs_init_device()` function to check each device
-individually.
+2. **Potential crashes**: While the kernel's sysfs framework likely
+   handles the NULL store method gracefully, having write permissions on
+   read-only attributes is incorrect and could potentially lead to
+   issues if userspace attempts to write to these files.
 
-### 2. **Data Accessibility Issue**
-The commit message explicitly states: *"If an extra device does not
-support DAX we should fallback to normal access otherwise the data on
-that device will be inaccessible."* This is a critical functionality bug
-that prevents users from accessing their data.
+3. **Permission principle violation**: This violates the principle of
+   least privilege - files should only have the permissions they
+   actually support.
 
-### 3. **Small and Contained Fix**
-The patch is minimal with only 14 insertions and 10 deletions in a
-single file (`fs/erofs/super.c`). The changes are:
-- Moving DAX capability checking from mount time to per-device
-  initialization
-- Adding informational messages when DAX is disabled
-- No architectural changes or new features
+## Small and Contained Fix
+The fix is extremely minimal - it simply removes the S_IWUSR flag from
+two DEVICE_ATTR declarations. The changes are:
+- Line 268: `S_IRUGO | S_IWUSR` → `S_IRUGO` for supported_mode
+- Line 282: `S_IRUGO | S_IWUSR` → `S_IRUGO` for active_mode
 
-### 4. **Affects Existing Functionality Since v5.15**
-Looking at the git history:
-- DAX support was added in commit `06252e9ce05b` (August 2021, v5.15)
-- Multiple device support was added in commit `dfeab2e95a75` (October
-  2021, v5.16)
-- This bug has existed since these features could be used together
+## No Architectural Changes
+This is a straightforward permission correction with:
+- No functional changes to the SCSI subsystem
+- No changes to data structures or APIs
+- No new features added
+- Minimal risk of regression
 
-### 5. **No Risk of Regression**
-The fix only changes behavior when:
-- Multiple devices are configured
-- DAX_ALWAYS option is enabled
-- Some devices don't support DAX
+## Long-standing Issue
+This bug has existed since 2007 (commit 5dc2b89e1242), meaning it
+affects all stable kernels that include the SCSI host mode attributes.
+The fact that it went unnoticed for so long suggests it's not causing
+critical failures, but it's still incorrect behavior that should be
+fixed.
 
-In all other cases, the behavior remains unchanged. The fix gracefully
-degrades functionality rather than failing completely.
+## Stable Tree Criteria
+This meets the stable tree criteria as it:
+- Fixes an obvious bug (incorrect permissions)
+- Is a trivial fix (2 lines changed)
+- Has essentially zero risk of introducing regressions
+- Corrects a violation of kernel coding standards (attributes without
+  store methods should not have write permissions)
 
-### 6. **Clear Bug Reproduction Path**
-The bug occurs when:
-1. User mounts an EROFS filesystem with `dax=always` option
-2. The filesystem uses multiple devices
-3. The primary device supports DAX but extra devices don't
-4. Result: Files on extra devices become inaccessible
+The commit is an ideal candidate for stable backporting as it's a
+simple, safe correction of a longstanding permission bug in the SCSI
+sysfs interface.
 
-### 7. **Follows Stable Tree Rules**
-According to stable kernel rules, this commit qualifies because it:
-- Fixes a real bug that affects users (data inaccessibility)
-- Is already upstream with proper review (6 reviewers including
-  maintainer)
-- Has minimal changes confined to one subsystem
-- Contains no new features or risky architectural changes
+ drivers/scsi/scsi_sysfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-The commit should be backported to all stable kernels that have both DAX
-support (v5.15+) and multiple device support (v5.16+) in EROFS, making
-it applicable to v5.16 and later stable trees.
-
- fs/erofs/super.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
-
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index e1e9f06e8342..02f865c6ec7c 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -174,6 +174,11 @@ static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
- 		if (!erofs_is_fileio_mode(sbi)) {
- 			dif->dax_dev = fs_dax_get_by_bdev(file_bdev(file),
- 					&dif->dax_part_off, NULL, NULL);
-+			if (!dif->dax_dev && test_opt(&sbi->opt, DAX_ALWAYS)) {
-+				erofs_info(sb, "DAX unsupported by %s. Turning off DAX.",
-+					   dif->path);
-+				clear_opt(&sbi->opt, DAX_ALWAYS);
-+			}
- 		} else if (!S_ISREG(file_inode(file)->i_mode)) {
- 			fput(file);
- 			return -EINVAL;
-@@ -210,8 +215,13 @@ static int erofs_scan_devices(struct super_block *sb,
- 			  ondisk_extradevs, sbi->devs->extra_devices);
- 		return -EINVAL;
- 	}
--	if (!ondisk_extradevs)
-+	if (!ondisk_extradevs) {
-+		if (test_opt(&sbi->opt, DAX_ALWAYS) && !sbi->dif0.dax_dev) {
-+			erofs_info(sb, "DAX unsupported by block device. Turning off DAX.");
-+			clear_opt(&sbi->opt, DAX_ALWAYS);
-+		}
- 		return 0;
-+	}
+diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
+index d772258e29ad..e6464b998960 100644
+--- a/drivers/scsi/scsi_sysfs.c
++++ b/drivers/scsi/scsi_sysfs.c
+@@ -265,7 +265,7 @@ show_shost_supported_mode(struct device *dev, struct device_attribute *attr,
+ 	return show_shost_mode(supported_mode, buf);
+ }
  
- 	if (!sbi->devs->extra_devices && !erofs_is_fscache_mode(sb))
- 		sbi->devs->flatdev = true;
-@@ -330,7 +340,6 @@ static int erofs_read_superblock(struct super_block *sb)
- 	if (ret < 0)
- 		goto out;
+-static DEVICE_ATTR(supported_mode, S_IRUGO | S_IWUSR, show_shost_supported_mode, NULL);
++static DEVICE_ATTR(supported_mode, S_IRUGO, show_shost_supported_mode, NULL);
  
--	/* handle multiple devices */
- 	ret = erofs_scan_devices(sb, dsb);
+ static ssize_t
+ show_shost_active_mode(struct device *dev,
+@@ -279,7 +279,7 @@ show_shost_active_mode(struct device *dev,
+ 		return show_shost_mode(shost->active_mode, buf);
+ }
  
- 	if (erofs_sb_has_48bit(sbi))
-@@ -661,14 +670,9 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
- 			return invalfc(fc, "cannot use fsoffset in fscache mode");
- 	}
+-static DEVICE_ATTR(active_mode, S_IRUGO | S_IWUSR, show_shost_active_mode, NULL);
++static DEVICE_ATTR(active_mode, S_IRUGO, show_shost_active_mode, NULL);
  
--	if (test_opt(&sbi->opt, DAX_ALWAYS)) {
--		if (!sbi->dif0.dax_dev) {
--			errorfc(fc, "DAX unsupported by block device. Turning off DAX.");
--			clear_opt(&sbi->opt, DAX_ALWAYS);
--		} else if (sbi->blkszbits != PAGE_SHIFT) {
--			errorfc(fc, "unsupported blocksize for DAX");
--			clear_opt(&sbi->opt, DAX_ALWAYS);
--		}
-+	if (test_opt(&sbi->opt, DAX_ALWAYS) && sbi->blkszbits != PAGE_SHIFT) {
-+		erofs_info(sb, "unsupported blocksize for DAX");
-+		clear_opt(&sbi->opt, DAX_ALWAYS);
- 	}
- 
- 	sb->s_time_gran = 1;
+ static int check_reset_type(const char *str)
+ {
 -- 
 2.50.1
 
