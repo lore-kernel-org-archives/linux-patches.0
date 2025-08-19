@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65673093B6;
-	Tue, 19 Aug 2025 17:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA0730BF62;
+	Tue, 19 Aug 2025 17:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755624925; cv=none; b=R2m4QB1EAC3ZE7P0Owz9c4k8cmsFgbKlg33IHxbEhsElhk5uwFSAphl28ghFAdSM3mRHN04LKKpuXsrYCwMmB+zTu38AyiiOqc93vq9nxX96+Xq0GjGO+01rcoDrvnHKHGPHT9yyg44dQJeJTtcnHbIvdE9Tltr9qBZYnF2qSao=
+	t=1755624927; cv=none; b=bEZCKUr1bDarXr2qrgbhxbyz1/VpdWujE2O4Wl/hA8kuBilf8iEf45+t7ZG0BO8pxAfgjePaiZM8/sS2vyHZAgqb6+OkNdmu9RPnLukb2WdgFoUrtNLyLIxT/Onk2oXIytkfpl98gTRRJBE32gYe59M857tayezYChVlFlqoMLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755624925; c=relaxed/simple;
-	bh=8WmBZafSgbICkwV8fKCnBbgxO2LMYVZ2kbyop77JIzA=;
+	s=arc-20240116; t=1755624927; c=relaxed/simple;
+	bh=OIjUFkldfey3RlDuEv++agzGskvG+owAtlq4r57xWNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DFRrRpLILGlZmyXf8Is8InrZm+wDJAJztb/VZgXrAZuxRcWQ7JJtIxeWagnsT3f5OIyljpGwbIGr1t1LEjUy9gDKePpC6wKtwpPq5zOfAiU8LcvQmiWyeOOvk2cii+CUlPhTvJnK1Pqj6dwGG3dYr3OTOeAYFAvSApEiiD6/TbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VPKEo2jQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I9QzBhQuPwNXxOEHC5Xmz+gr8NCkLszliLHMfESFGyklXY8WPss8OO4qVH2D4aM5s7iIOJdXWUW3GAne/Q45MhTT2vzwqw1vDAQdX+ViiQ1h/lNRNpRr+Tz8F+fTO+uwVlP0qulxQbIfGzJlKg/BOs7HBZxLHK/lpiN9mZOLLCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EvyEz+c7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VPKEo2jQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB251C116D0;
-	Tue, 19 Aug 2025 17:35:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EvyEz+c7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A9EC4CEF4;
+	Tue, 19 Aug 2025 17:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755624925;
-	bh=8WmBZafSgbICkwV8fKCnBbgxO2LMYVZ2kbyop77JIzA=;
+	s=k20201202; t=1755624926;
+	bh=OIjUFkldfey3RlDuEv++agzGskvG+owAtlq4r57xWNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VPKEo2jQNsBsZ86PNrJefPpUWtHqE8Gjb3i68nZ9hzfOSyOvj+KOV6hHX+0D53nUi
-	 5GFXLl0Mgi9JbB9QGPely8UQ/MuzJn9SsScjmGxI1AkIrcQO/JwCClTff4nJRXQksN
-	 ju5EdOw6WODz0JItEQTy7gOr5w8pzQzv/w6GLQkG4ADqjuvzIr+XpPRYunm2nap9f8
-	 kebRVkHzPNuehDT3+F4/QbPoFjkFRPk+RlZfZMOE0N3u91XRFOVaYsTExIAbaq/xpj
-	 wN4N7L+7QKAag9prFy06dk+1Kv1+Xq9lxAXN0foiJXYaKXsdOjypSNCGclwgIWgReU
-	 crogjMOodki+g==
+	b=EvyEz+c7VKzdSv5RmGcWBzGeLSMrwItleD6X79DU4+Ts1vUCIEvqKfF70ufGuxXZk
+	 MSDk/KPNG1PIlIA2mBu+4eKYnPC4+VLtOL2YrqTuC/j8UBM8FR7Fkxa/pAAlqxxODR
+	 AOXOb/KB1w/5wrBnBPjSVDF9JOjDl1Yz71tANKSVg2vyQNoqCLW4p+A/9CipEIJBbl
+	 mzHbuoE65OLz0GQB0KZoZ6DKypqt4IjtnVuhCutDSfJdnkzypl5uiT9hqpvdujtUCP
+	 Zr9d6Eskr8cICLmqyvCt72uPC0c+A3zWrg2ZFr196imn4tkOFAMzyqaQcTghtXX4R/
+	 p0PcwhiMhnnjA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Johannes Thumshin <johannes.thumshirn@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Paulo Alcantara <pc@manguebit.org>,
+	Jay Shin <jaeshin@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	James.Bottomley@HansenPartnership.com,
-	linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.4] scsi: core: sysfs: Correct sysfs attributes access rights
-Date: Tue, 19 Aug 2025 13:35:13 -0400
-Message-ID: <20250819173521.1079913-3-sashal@kernel.org>
+	sfrench@samba.org,
+	samba-technical@lists.samba.org
+Subject: [PATCH AUTOSEL 6.16-6.1] smb: client: fix race with concurrent opens in unlink(2)
+Date: Tue, 19 Aug 2025 13:35:14 -0400
+Message-ID: <20250819173521.1079913-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250819173521.1079913-1-sashal@kernel.org>
 References: <20250819173521.1079913-1-sashal@kernel.org>
@@ -51,23 +53,32 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit a2f54ff15c3bdc0132e20aae041607e2320dbd73 ]
+[ Upstream commit 0af1561b2d60bab2a2b00720a5c7b292ecc549ec ]
 
-The SCSI sysfs attributes "supported_mode" and "active_mode" do not
-define a store method and thus cannot be modified.  Correct the
-DEVICE_ATTR() call for these two attributes to not include S_IWUSR to
-allow write access as they are read-only.
+According to some logs reported by customers, CIFS client might end up
+reporting unlinked files as existing in stat(2) due to concurrent
+opens racing with unlink(2).
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250728041700.76660-1-dlemoal@kernel.org
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Johannes Thumshin <johannes.thumshirn@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Besides sending the removal request to the server, the unlink process
+could involve closing any deferred close as well as marking all
+existing open handles as deleted to prevent them from deferring
+closes, which increases the race window for potential concurrent
+opens.
+
+Fix this by unhashing the dentry in cifs_unlink() to prevent any
+subsequent opens.  Any open attempts, while we're still unlinking,
+will block on parent's i_rwsem.
+
+Reported-by: Jay Shin <jaeshin@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: linux-cifs@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,87 +86,129 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Bug Fix Nature
-The commit fixes a clear bug where sysfs attributes `supported_mode` and
-`active_mode` incorrectly have write permissions (S_IWUSR) despite
-having no store method defined (NULL is passed as the store parameter to
-DEVICE_ATTR). This is a longstanding bug dating back to 2007 when these
-attributes were first introduced in commit 5dc2b89e1242.
+## Bug Fix Analysis
 
-## Security and Stability Implications
-1. **Misleading permissions**: The incorrect S_IWUSR permission suggests
-   these attributes are writable when they are not, which could confuse
-   userspace tools and administrators.
+This commit fixes a **real-world race condition** reported by customers
+where unlinked files incorrectly appear as existing in stat(2). The race
+occurs between:
+1. **unlink(2)** - which involves multiple steps including server
+   requests, closing deferred handles, and marking handles as deleted
+2. **Concurrent open()** operations that can slip through during the
+   extended unlink window
 
-2. **Potential crashes**: While the kernel's sysfs framework likely
-   handles the NULL store method gracefully, having write permissions on
-   read-only attributes is incorrect and could potentially lead to
-   issues if userspace attempts to write to these files.
+## Code Changes Analysis
 
-3. **Permission principle violation**: This violates the principle of
-   least privilege - files should only have the permissions they
-   actually support.
+The fix is **minimal and surgical**, adding only 14 lines of code:
 
-## Small and Contained Fix
-The fix is extremely minimal - it simply removes the S_IWUSR flag from
-two DEVICE_ATTR declarations. The changes are:
-- Line 268: `S_IRUGO | S_IWUSR` → `S_IRUGO` for supported_mode
-- Line 282: `S_IRUGO | S_IWUSR` → `S_IRUGO` for active_mode
+1. **Early dentry unhashing** (lines 1956-1962):
+  ```c
+  /* Unhash dentry in advance to prevent any concurrent opens */
+  spin_lock(&dentry->d_lock);
+  if (!d_unhashed(dentry)) {
+  __d_drop(dentry);
+  rehash = true;
+  }
+  spin_unlock(&dentry->d_lock);
+  ```
+  This prevents new opens from finding the dentry during unlink
+  processing.
 
-## No Architectural Changes
-This is a straightforward permission correction with:
-- No functional changes to the SCSI subsystem
-- No changes to data structures or APIs
-- No new features added
-- Minimal risk of regression
+2. **Conditional rehashing on error** (lines at end):
+  ```c
+  if (rehash)
+  d_rehash(dentry);
+  ```
+  This ensures the dentry is restored if unlink fails, maintaining
+  correct VFS semantics.
 
-## Long-standing Issue
-This bug has existed since 2007 (commit 5dc2b89e1242), meaning it
-affects all stable kernels that include the SCSI host mode attributes.
-The fact that it went unnoticed for so long suggests it's not causing
-critical failures, but it's still incorrect behavior that should be
-fixed.
+3. **Minor cleanup**: The d_drop() call is replaced with d_delete() for
+   positive dentries when ENOENT is returned.
 
-## Stable Tree Criteria
-This meets the stable tree criteria as it:
-- Fixes an obvious bug (incorrect permissions)
-- Is a trivial fix (2 lines changed)
-- Has essentially zero risk of introducing regressions
-- Corrects a violation of kernel coding standards (attributes without
-  store methods should not have write permissions)
+## Stable Tree Criteria Met
 
-The commit is an ideal candidate for stable backporting as it's a
-simple, safe correction of a longstanding permission bug in the SCSI
-sysfs interface.
+1. **Fixes a real bug**: Customer-reported race condition causing
+   incorrect filesystem behavior
+2. **Small and contained**: Only 14 lines added, changes confined to
+   single function
+3. **No architectural changes**: Uses existing VFS primitives
+   (d_drop/d_rehash)
+4. **Low regression risk**:
+   - Protected by proper locking (dentry->d_lock)
+   - Follows established VFS patterns
+   - Has proper error recovery path
+5. **Similar fix already accepted**: Commit d84291fc7453 shows the same
+   pattern was successfully applied to rename(2)
 
- drivers/scsi/scsi_sysfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+## Additional Context
 
-diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
-index d772258e29ad..e6464b998960 100644
---- a/drivers/scsi/scsi_sysfs.c
-+++ b/drivers/scsi/scsi_sysfs.c
-@@ -265,7 +265,7 @@ show_shost_supported_mode(struct device *dev, struct device_attribute *attr,
- 	return show_shost_mode(supported_mode, buf);
+- The fix follows standard VFS practices for preventing races during
+  filesystem operations
+- The pattern of unhashing dentries early is used elsewhere in the
+  kernel
+- The commit has been reviewed by David Howells, a respected VFS
+  maintainer
+- The issue affects data consistency from userspace perspective (stat
+  showing deleted files)
+
+This is a textbook example of a stable-worthy commit: it fixes a real
+bug with minimal, safe changes that don't introduce new features or
+architectural modifications.
+
+ fs/smb/client/inode.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 75be4b46bc6f..cf9060f0fc08 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -1943,15 +1943,24 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct tcon_link *tlink;
+ 	struct cifs_tcon *tcon;
++	__u32 dosattr = 0, origattr = 0;
+ 	struct TCP_Server_Info *server;
+ 	struct iattr *attrs = NULL;
+-	__u32 dosattr = 0, origattr = 0;
++	bool rehash = false;
+ 
+ 	cifs_dbg(FYI, "cifs_unlink, dir=0x%p, dentry=0x%p\n", dir, dentry);
+ 
+ 	if (unlikely(cifs_forced_shutdown(cifs_sb)))
+ 		return -EIO;
+ 
++	/* Unhash dentry in advance to prevent any concurrent opens */
++	spin_lock(&dentry->d_lock);
++	if (!d_unhashed(dentry)) {
++		__d_drop(dentry);
++		rehash = true;
++	}
++	spin_unlock(&dentry->d_lock);
++
+ 	tlink = cifs_sb_tlink(cifs_sb);
+ 	if (IS_ERR(tlink))
+ 		return PTR_ERR(tlink);
+@@ -2003,7 +2012,8 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 			cifs_drop_nlink(inode);
+ 		}
+ 	} else if (rc == -ENOENT) {
+-		d_drop(dentry);
++		if (simple_positive(dentry))
++			d_delete(dentry);
+ 	} else if (rc == -EBUSY) {
+ 		if (server->ops->rename_pending_delete) {
+ 			rc = server->ops->rename_pending_delete(full_path,
+@@ -2056,6 +2066,8 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 	kfree(attrs);
+ 	free_xid(xid);
+ 	cifs_put_tlink(tlink);
++	if (rehash)
++		d_rehash(dentry);
+ 	return rc;
  }
  
--static DEVICE_ATTR(supported_mode, S_IRUGO | S_IWUSR, show_shost_supported_mode, NULL);
-+static DEVICE_ATTR(supported_mode, S_IRUGO, show_shost_supported_mode, NULL);
- 
- static ssize_t
- show_shost_active_mode(struct device *dev,
-@@ -279,7 +279,7 @@ show_shost_active_mode(struct device *dev,
- 		return show_shost_mode(shost->active_mode, buf);
- }
- 
--static DEVICE_ATTR(active_mode, S_IRUGO | S_IWUSR, show_shost_active_mode, NULL);
-+static DEVICE_ATTR(active_mode, S_IRUGO, show_shost_active_mode, NULL);
- 
- static int check_reset_type(const char *str)
- {
 -- 
 2.50.1
 
