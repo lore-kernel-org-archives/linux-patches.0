@@ -1,53 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FDE326D47;
-	Tue, 19 Aug 2025 11:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C857C27A121;
+	Tue, 19 Aug 2025 12:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755604338; cv=none; b=RkvJ9wp1VeMX2M3P5bkFZMRktQ4lqgX4Q31QaaPsanNs09cG/oE48ou1Fq40cM9uGVI5HJD9Iv4sb+UP6cYHdKinUY9fc638LqYTf5Wk7bbeSCsKlm/1eesFBcAFU5N1XVrf2d3e2Asa02toyEU6od2Soxgm8lOsFmisF2YlbYA=
+	t=1755605679; cv=none; b=oVQ6J1G/3VVR92hDVI4PGRldRPAVPKIsATisZ8MqRI34tZHeSx17/bEtw/WPJomNPFh2dcRIL99ZIf4rFidrlG1g+YKxiGlaANO0qQZLR3A5xmS8yt88ZVrpdp8ID+H5N5fMd/MVO3IQDmKqEgeHjleLL0EAsT6uZpMhieVQxu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755604338; c=relaxed/simple;
-	bh=XxdaRud82ur5QTXiEHjEJ8/3jvy+FXSBXFtjMYxqu3s=;
+	s=arc-20240116; t=1755605679; c=relaxed/simple;
+	bh=Y8Jn4mldOerXZWNycyZAZ0gfc61rH7TinefRWSsa2R8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RdejgUhErD4gkOT2GyDvl1RsITUz8xo07ieevc+CXmf6p4n5Qq3IsMzbsMpY8RUf7mmJ6Ah5BIMxsz5WTI0IXLUe+Em21clWvT8jxqfQTSG1AVqQBVTYH4kE/tRaO8P7GY500Rc+O2AJsRgLxri6/bTO3wzWd5HBHJUFGIZ2mlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wL6Az2rA; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=BOCynIVgWnq1M5cONh+ZiycL20FrdSuwlEvJbJyDX27E+708X0vdsBeZRg5r4lc8l9K2/nJDcj3hciIAWNg/DBSzZ8OcU2IZkg9axDuLhRDbjXD2UtrCSgWYJVVdZD0+jBBNYHsiM+JVITQqT3bOLk7BQNKCUJKqbaV40A/uc0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/D4Exje; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wL6Az2rA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62878C4CEF1;
-	Tue, 19 Aug 2025 11:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/D4Exje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D562AC4CEF1;
+	Tue, 19 Aug 2025 12:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755604338;
-	bh=XxdaRud82ur5QTXiEHjEJ8/3jvy+FXSBXFtjMYxqu3s=;
+	s=korg; t=1755605679;
+	bh=Y8Jn4mldOerXZWNycyZAZ0gfc61rH7TinefRWSsa2R8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wL6Az2rA1znO6zJV/Rte0239ocExiMjxP+bdWmU2VEEW9mDOlnpjpEMdUL3oQqhPo
-	 fa9NEDoyxw80hUrbC/oZhVFkrA6rcd84gjTUA3QWCp2K5mZONrAud+hVOEMWxUPJ1y
-	 ZmXgQTDAVpiZ/pwsJiMpk5McgxN3CSbmeKQlLOxQ=
-Date: Tue, 19 Aug 2025 13:52:14 +0200
+	b=K/D4Exjez33bwpIzlVrCudsVqm6LZvYTDSs8OjXxZaJuvxjjw4hJNh0nsSeXTfM4L
+	 ENFy5jk3spLRo0cFQu8IbFveB38Vvw3Yow2W8fsHIbwsqe3ZTh/O3XLUPKyne96A2P
+	 Pi8LBZ5rHCgwXD45oL7KeRKqKTqXzSpOig4rqY5g=
+Date: Tue, 19 Aug 2025 14:14:36 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	Ben Copeland <benjamin.copeland@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-	Linux ARM <linux-arm-kernel@lists.infradead.org>,
-	srinivas.kandagatla@oss.qualcomm.com
-Subject: Re: [PATCH 6.15 000/515] 6.15.11-rc1 review
-Message-ID: <2025081931-chump-uncurled-656b@gregkh>
-References: <20250818124458.334548733@linuxfoundation.org>
- <CA+G9fYt5sknJ3jbebYZrqMRhbcLZKLCvTDHfg5feNnOpj-j9Wg@mail.gmail.com>
- <CA+G9fYt6SAsPo6TvfgtnDWHPHO2q7xfppGbCaW0JxpL50zqWew@mail.gmail.com>
- <CACMJSeu_DTVK=XtvaSD3Fj3aTXBJ5d-MpQMuysJYEFBNwznDqQ@mail.gmail.com>
+To: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 429/444] smb: client: fix netns refcount leak after
+ net_passive changes
+Message-ID: <2025081912-blooper-afraid-5b2c@gregkh>
+References: <20250818124448.879659024@linuxfoundation.org>
+ <20250818124505.034228404@linuxfoundation.org>
+ <df2f04b0-2caf-48a0-9817-a3cd07ae1bda@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,27 +45,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACMJSeu_DTVK=XtvaSD3Fj3aTXBJ5d-MpQMuysJYEFBNwznDqQ@mail.gmail.com>
+In-Reply-To: <df2f04b0-2caf-48a0-9817-a3cd07ae1bda@huaweicloud.com>
 
-On Tue, Aug 19, 2025 at 01:30:46PM +0200, Bartosz Golaszewski wrote:
-> On Tue, 19 Aug 2025 at 12:02, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> >
-> > On Tue, 19 Aug 2025 at 00:18, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > >
-> > >
-> > > Boot regression: stable-rc 6.15.11-rc1 arm64 Qualcomm Dragonboard 410c
-> > > Unable to handle kernel NULL pointer dereference
-> > > qcom_scm_shm_bridge_enable
-> >
-> > I have reverted the following patch and the regression got fixed.
-> >
-> > firmware: qcom: scm: initialize tzmem before marking SCM as available
-> >     [ Upstream commit 87be3e7a2d0030cda6314d2ec96b37991f636ccd ]
-> >
+On Tue, Aug 19, 2025 at 07:21:28PM +0800, Wang Zhaolong wrote:
 > 
-> Hi! I'm on vacation, I will look into this next week. I expect there
-> to be a fix on top of this commit.
+> > 
+> > Timeline of patches leading to this issue:
+> > - commit ef7134c7fc48 ("smb: client: Fix use-after-free of network
+> >    namespace.") in v6.12 fixed the original netns UAF by manually
+> >    managing socket refcounts
+> > - commit e9f2517a3e18 ("smb: client: fix TCP timers deadlock after
+> >    rmmod") in v6.13 attempted to use kernel sockets but introduced
+> >    TCP timer issues
+> > - commit 5c70eb5c593d ("net: better track kernel sockets lifetime")
+> >    in v6.14-rc5 introduced the net_passive mechanism with
+> >    sk_net_refcnt_upgrade() for proper socket conversion
+> > - commit 95d2b9f693ff ("Revert "smb: client: fix TCP timers deadlock
+> >    after rmmod"") in v6.15-rc3 reverted to manual refcount management
+> >    without adapting to the new net_passive changes
+> > 
+> 
+> 
+> Hi Greg,
+> 
+> This patch depends on the preceding patch 5c70eb5c593d ("net: better
+> track kernel sockets lifetime").
+> 
+> I have noticed that version 6.12.y has not imported this patch,
+> so I believe it should not be merged.
 
-Ok, I'll go and drop this one from the queues now, thanks.
+This is in the 6.12-rc release as well, so all should be good.
+
+thanks,
 
 greg k-h
