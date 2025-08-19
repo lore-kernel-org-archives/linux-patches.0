@@ -1,93 +1,102 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613CC326D66
-	for <patches@lists.linux.dev>; Tue, 19 Aug 2025 11:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6BF32A3E2
+	for <patches@lists.linux.dev>; Tue, 19 Aug 2025 11:30:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755602494; cv=none; b=AIgffVsV4+B0OZpNWZAqto3c078WpkTcHf9wa0qno93cDe4U2shzJUzifDHPpl9ioxYcMR/+kbSY/VP+N34wn4JymHMx0M/sSLU16+dbZwlwE7ML8FCyObXLMhYD/zNCk3y+VzvlErlZSJyiQhq4I5aby6jYZ54XVPZaIAHItnY=
+	t=1755603061; cv=none; b=WayDvSiVSXcDTHS6m5w6KFXMQL+UNgYcdbPCssOF3cArwbfU4QrJX+oFWIAfC2fx40t673VZTRdABd07wqmDGbawKZIJmrlDshoucuoeOko+U30s5L9m9byO4QDtzrQLkq4GFdwN+mbofPTQSNho1nXRYzeHEGqiht9fo3Of66o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755602494; c=relaxed/simple;
-	bh=f5QW2bzIdPyk4dqGBhuwk5Tg7mvinjzods+Lj1uhn6U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FllsnsyrbVwPAxXjEojdafpPDB4HQ4PJSIlvvA0teSzI2onvRSkZEDVI5IdulQ9O1U/rIm+ghpozDvJXTWmWcLgDOH/zXsF64FxB8MFIJMJFQuhJhnTdk2c6RQLFaLvr+2DfH6nE8wfnVgMWsd/XYkV5/FYcP0/WoUi5FB+kMEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.235])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4c5nGL3J8PzKHMhD
-	for <patches@lists.linux.dev>; Tue, 19 Aug 2025 19:21:30 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id D9D971A0CE4
-	for <patches@lists.linux.dev>; Tue, 19 Aug 2025 19:21:29 +0800 (CST)
-Received: from [10.174.178.209] (unknown [10.174.178.209])
-	by APP4 (Coremail) with SMTP id gCh0CgA3sxM4XqRo5FXVEA--.30606S3;
-	Tue, 19 Aug 2025 19:21:29 +0800 (CST)
-Message-ID: <df2f04b0-2caf-48a0-9817-a3cd07ae1bda@huaweicloud.com>
-Date: Tue, 19 Aug 2025 19:21:28 +0800
+	s=arc-20240116; t=1755603061; c=relaxed/simple;
+	bh=RS+DDBsenDMGRVRuo5OpJ0by6/pE8abc8eGvwv3Szfk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XAlUoC8gOMqOkQwwmg/u0mdMvFMNi5sAzyWYd/MK5vkxPWOBROwoWhsZI5CURKgp9ux/NlABav+HrNfj4r4qXSjzLfE43XjQNex0iAurUMLdiv0NL1k03cdxH5tIXh4N+V1TtFxGAtwJMSg0hHGKLIzLhGL1/hmdoqY2tm5TUNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=amTs0Onv; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="amTs0Onv"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-afcb78ead12so730338466b.1
+        for <patches@lists.linux.dev>; Tue, 19 Aug 2025 04:30:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755603057; x=1756207857; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MlZSqNXnF5cFT3EKTsD5C3uA+ixCm4MLZap6H11YwJU=;
+        b=amTs0OnvWhv8P48GcJnDMLHRxjohCfAx+cbUHHk03J37PUlw2bD0XWRnHRuFSyBou4
+         ruu8zxmKLUAXi+SfpQFisTpUj0fQSFm0e2URGBDitoveS5jLiV32xmKrSKz4wcBIM/Qa
+         fJ0vLvpjV7Xbs4muMTDJdVjBUb1f0rVNLL7iCceegcHNS5ChhEBiezbJnsvJezs1hc4o
+         DTT23hNHiFBLZRaVcYn6LWoa953EBwUV4GVHaDz899R4pDHQhnEB0XmjpQUlkpYg88cG
+         m/1I6pq3ssQEagfJojfDC4FbkUfp29Usv/6+3p1J7Y5ZwDFblPDksl+InFSap97539Cd
+         XwmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755603057; x=1756207857;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MlZSqNXnF5cFT3EKTsD5C3uA+ixCm4MLZap6H11YwJU=;
+        b=rdM3K1wjIVdC6nsY+Jis8YdtuXr1V+t0D9IvrrK5z1bzvb9fod6pdW6BQFdK8dE1jA
+         pFO0D0tJQn3ezkZ43yoULpCLqeYPZgmV+dQLpyS+cCldEWQvElQ2NRzZQJSRVD3zgvpI
+         YdqBX/AHtP1+aBx14dWjYG+8RxPvCc1LD2wqL+9KESaQP04I0ULY3TdHHHM0Uq9hWS5z
+         rnxoZw3SilEdvlDMNRzx0Qpiy0EKhmQjOrTtFt4g2xhT9V6tYSxNiRqCENDMN8Wey9e9
+         tt+tCc723+8gukWEDtYkrp6bqI/dQgx9xtD4T5p+3hszTu1ka4sJeuaMi7SPXPF26y+f
+         pRyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWcmA9ZwruRVwJC2dRP3RFzcBo6C6KixQV70ZWrKN2u3xkY9u3iUGC2JtA2yKYFVtmbbx2JiHcy@lists.linux.dev
+X-Gm-Message-State: AOJu0YxljrmBxxbo6amm3O+4aPRjen21pyRgybAKZ7Q7ie0Q3vktfSeG
+	0osvJuJpr215ji/HgbCV1sNde+6Eod2DAJy/OYnAUWaHmEVPftSTrvFLpIrAau2EMgoCnQDodRU
+	wTWBz4jFQnUWnfG/BesO9/dYZa/V1kWyW/OWYlorLEA==
+X-Gm-Gg: ASbGnctn7Ov5ZD4rWxvGCJaQIzcgR+HgwWIO5Kmf/tRrPATevsntWS+Qj6B4i6IsmY/
+	nNlKXYAG25ji7aGySMQnwI0c+olaCMPz1I6/2dukF0wBg27xrs9WjzzU6yKeTwSeImdo62GU0+u
+	OYm8zZb8dSepgCviZJ5wLkzPCC9MIICM9g8hC2BHSCPeokvLIb2URa8lFgVzgm36TTcBVmNUueD
+	2nE
+X-Google-Smtp-Source: AGHT+IFc1qeOeB8SEpfLr5OOLAFUUqEj6GU45bLARYtHghlfX/crq9PpWhn+VH6PLkjxDEuyGteYvZKpflusqa5M/Ig=
+X-Received: by 2002:a17:906:c115:b0:af9:57ae:dbb3 with SMTP id
+ a640c23a62f3a-afddcb81908mr192322866b.22.1755603057341; Tue, 19 Aug 2025
+ 04:30:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 429/444] smb: client: fix netns refcount leak after
- net_passive changes
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Kuniyuki Iwashima <kuniyu@google.com>,
- Enzo Matsumiya <ematsumiya@suse.de>, Steve French <stfrench@microsoft.com>,
- Sasha Levin <sashal@kernel.org>
-References: <20250818124448.879659024@linuxfoundation.org>
- <20250818124505.034228404@linuxfoundation.org>
-From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
-In-Reply-To: <20250818124505.034228404@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgA3sxM4XqRo5FXVEA--.30606S3
-X-Coremail-Antispam: 1UD129KBjvdXoWrur1kKFWkKFWDGr4fZr1DKFg_yoWDXFcEgr
-	Wvva1fWr4DXwsa9a17A343Zr47KFW0vasYvr1kGrWfKa4DZr4Yv3ZIgryYk3sxGFWSka47
-	Crnayr1vkrnxZjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbwkYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I6I8E6xAIw20E
-	Y4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwV
-	A0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x02
-	67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2
-	j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7x
-	kEbVWUJVW8JwACjcxG0xvEwIxGrwCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxG
-	rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
-	vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
-	x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
-	xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAF
-	wI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1veHDUUUUU==
-X-CM-SenderInfo: pzdqw6xkdrz0tqj6x35dzhxuhorxvhhfrp/
+References: <20250818124458.334548733@linuxfoundation.org> <CA+G9fYt5sknJ3jbebYZrqMRhbcLZKLCvTDHfg5feNnOpj-j9Wg@mail.gmail.com>
+ <CA+G9fYt6SAsPo6TvfgtnDWHPHO2q7xfppGbCaW0JxpL50zqWew@mail.gmail.com>
+In-Reply-To: <CA+G9fYt6SAsPo6TvfgtnDWHPHO2q7xfppGbCaW0JxpL50zqWew@mail.gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Tue, 19 Aug 2025 13:30:46 +0200
+X-Gm-Features: Ac12FXyaJepFNIeos9w4tdtDWEq_utvLUQ4wMo0fo8sqlMNsdeJO5hMNv6oFTrY
+Message-ID: <CACMJSeu_DTVK=XtvaSD3Fj3aTXBJ5d-MpQMuysJYEFBNwznDqQ@mail.gmail.com>
+Subject: Re: [PATCH 6.15 000/515] 6.15.11-rc1 review
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
+	Ben Copeland <benjamin.copeland@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	Linux ARM <linux-arm-kernel@lists.infradead.org>, srinivas.kandagatla@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
 
+On Tue, 19 Aug 2025 at 12:02, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+>
+> On Tue, 19 Aug 2025 at 00:18, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> >
+> >
+> > Boot regression: stable-rc 6.15.11-rc1 arm64 Qualcomm Dragonboard 410c
+> > Unable to handle kernel NULL pointer dereference
+> > qcom_scm_shm_bridge_enable
+>
+> I have reverted the following patch and the regression got fixed.
+>
+> firmware: qcom: scm: initialize tzmem before marking SCM as available
+>     [ Upstream commit 87be3e7a2d0030cda6314d2ec96b37991f636ccd ]
+>
 
-> 
-> Timeline of patches leading to this issue:
-> - commit ef7134c7fc48 ("smb: client: Fix use-after-free of network
->    namespace.") in v6.12 fixed the original netns UAF by manually
->    managing socket refcounts
-> - commit e9f2517a3e18 ("smb: client: fix TCP timers deadlock after
->    rmmod") in v6.13 attempted to use kernel sockets but introduced
->    TCP timer issues
-> - commit 5c70eb5c593d ("net: better track kernel sockets lifetime")
->    in v6.14-rc5 introduced the net_passive mechanism with
->    sk_net_refcnt_upgrade() for proper socket conversion
-> - commit 95d2b9f693ff ("Revert "smb: client: fix TCP timers deadlock
->    after rmmod"") in v6.15-rc3 reverted to manual refcount management
->    without adapting to the new net_passive changes
-> 
+Hi! I'm on vacation, I will look into this next week. I expect there
+to be a fix on top of this commit.
 
-
-Hi Greg,
-
-This patch depends on the preceding patch 5c70eb5c593d ("net: better
-track kernel sockets lifetime").
-
-I have noticed that version 6.12.y has not imported this patch,
-so I believe it should not be merged.
-
-Best regards,
-Wang Zhaolong
-
+Bart
