@@ -1,95 +1,107 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84142D24AA
-	for <patches@lists.linux.dev>; Wed, 20 Aug 2025 07:11:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E3E23AB9C;
+	Wed, 20 Aug 2025 07:23:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755673917; cv=none; b=FhiBo5EpN3tW1eN91njKysrkkmJ/Es4lOtY7GiRek2OGRe6is+OOIHhslPuAPNMkDsUcMujm2O4Uap/HPqqW+FtU/xD4LHbedL7/+DuYBd6NEx0YRk8kn6AFjWeQDRwVoKdSp2EU5twVdjJbDBOJQfb4DXYi8z74k7joibt1S0o=
+	t=1755674600; cv=none; b=Rzy+m6Bunr9jWOzMPzA9H6pflnxLv2tkZDqcKFttGVmUaB3YADhB3JqHbpaO1NNdqTk5SmFBCzI7flbfqOFpUzZeYmKHMMbbTlftGCtgWg7khXoI/jIVMkUqgHWIIyjfEzZT3VVkJcx7DC3IUCQzdo6e1Oi6sQc3vpYBWoA7feU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755673917; c=relaxed/simple;
-	bh=0My0nruW+wtQVHOpDq41hwdibx0GRaDbU/OUIU5WwkE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hBbH54OGxOQhmkequM1pwldFBNUscbS0G7TghBDUmVuk0gcP4pp/mDuIgX08nc9VLmv7KSmjknCVFMKpz/G0uaahjsMeituCXCFkxSYBuhftYMZAjWRvsN8R2SLzWLNvjc+ddGnXQq/J3nH37/Zzy8wSr/qTGUCB30A+Ha3ZNAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=Uj7RxlJ8; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="Uj7RxlJ8"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 6450510391E95;
-	Wed, 20 Aug 2025 09:11:44 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1755673911; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=QWK6fDo3fD5ZpwL3KEaiHhSHjSMwZsvwVvTIf4mXTrg=;
-	b=Uj7RxlJ8PBL5nl/xumb/vuyXx4TQIMmoXYBDODvake4VDdt1wI23NFsi1RePhzWGMKeyUV
-	CWO1q5iIuoxQID5edJ4pSd3IjZQkUjYTumhEORBwKZpITLBFQX/6LkKWh6eYmdCvtFz8i9
-	C/rKtPqhHrU4Fw0zCc6QWmp7dVG0ZM87AYcYYCa4ZcjRsPQPcKvUfTciry4zBnYNTwR3r2
-	OIgFAFRkF1vvA/Gq2Sek0lkHH8wyj3mCsd0UHbtj6WVkfl2KceWPahed3R7W7j03WfsnuU
-	5ZD/zu4WE1Be0Zeisw1JE9ld2Xh2yBIoGreU/pErLMoVQB4GrXfJ3un0nm9C0g==
-Date: Wed, 20 Aug 2025 09:11:42 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	achill@achill.org
-Subject: Re: [PATCH 6.12 000/438] 6.12.43-rc2 review
-Message-ID: <aKV1LlA1wbzXaSWq@duo.ucw.cz>
-References: <20250819122820.553053307@linuxfoundation.org>
+	s=arc-20240116; t=1755674600; c=relaxed/simple;
+	bh=lAJQKe2IUXmpnDMH2MLQn/N2R7Eh9rHNLAeuZxEA8YA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c7FYvPew/wPLHqqIojsvdt+c9PRVqahnADCmf//iY3vy5kYyK9IQPoWoqCCrUws1Qa2wiHMipQ9Y29sF1OD5YCtRam7L0A1HgohdSd0aLyWEcjo24JBcNdWGBgBxpkUX/TrstjsznecQHfAjYIqwYg4a4E2Skv8AAxJUcAt9V1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ghiti.fr; spf=pass smtp.mailfrom=ghiti.fr; arc=none smtp.client-ip=217.70.183.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ghiti.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ghiti.fr
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 1BD45442D0;
+	Wed, 20 Aug 2025 07:23:08 +0000 (UTC)
+Message-ID: <8078e385-e08e-40a5-b6df-31c0b5be8f43@ghiti.fr>
+Date: Wed, 20 Aug 2025 09:23:08 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="MW6hhxMXnlKkMv/8"
-Content-Disposition: inline
-In-Reply-To: <20250819122820.553053307@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/10] riscv: Remove version check for LTO_CLANG selects
+To: Nathan Chancellor <nathan@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev,
+ Palmer Dabbelt <palmer@dabbelt.com>, linux-riscv@lists.infradead.org
+References: <20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org>
+ <20250818-bump-min-llvm-ver-15-v1-7-c8b1d0f955e0@kernel.org>
+Content-Language: en-US
+From: Alexandre Ghiti <alex@ghiti.fr>
+In-Reply-To: <20250818-bump-min-llvm-ver-15-v1-7-c8b1d0f955e0@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheejjeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttddvjeenucfhrhhomheptehlvgigrghnughrvgcuifhhihhtihcuoegrlhgvgiesghhhihhtihdrfhhrqeenucggtffrrghtthgvrhhnpeejveeuuddtuedtffevkeevteelffelueeiveeitdevieejgeffteekkeevhedugfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhthhhusgdrtghomhdpsghoohhtlhhinhdrtghomhenucfkphepvdgrtdegmegtvggttdemuddvudgumehfvdefvdemjegufhekmegsfhegsgemgeeliegvmeduugegsgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtgeemtggvtgdtmeduvdduugemfhdvfedvmeejughfkeemsghfgegsmeegleeivgemudgugegspdhhvghloheplgfkrfggieemvdgrtdegmegtvggttdemuddvudgumehfvdefvdemjegufhekmegsfhegsgemgeeliegvmeduugegsggnpdhmrghilhhfrhhomheprghlvgigsehghhhithhirdhfrhdpnhgspghrtghpthhtohepuddvpdhrtghpthhtohepnhgrthhhrghnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegrkhhpmheslhhin
+ hhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghrnhgusegrrhhnuggsrdguvgdprhgtphhtthhopehkvggvsheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhhitghkrdguvghsrghulhhnihgvrhhsodhlkhhmlhesghhmrghilhdrtghomhdprhgtphhtthhopehmohhrsghosehgohhoghhlvgdrtghomhdprhgtphhtthhopehjuhhsthhinhhsthhithhtsehgohhoghhlvgdrtghomhdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Sasl: alex@ghiti.fr
+
+Hi Nathan,
+
+On 8/18/25 20:57, Nathan Chancellor wrote:
+> Now that the minimum supported version of LLVM for building the kernel
+> has been bumped to 15.0.0, there is no need to check the LLD version
+> before selecting ARCH_SUPPORTS_LTO_CLANG{,_THIN} because it will always
+> be true.
+>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Cc: Palmer Dabbelt <palmer@dabbelt.com>
+> Cc: Alexandre Ghiti <alex@ghiti.fr>
+> Cc: linux-riscv@lists.infradead.org
+>
+> Small note, this will conflict with
+> https://lore.kernel.org/20250710-riscv-restrict-lto-to-medany-v1-1-b1dac9871ecf@kernel.org/
+> but I think it is simple enough to deal with.
 
 
---MW6hhxMXnlKkMv/8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 6.12.43 release.
-> There are 438 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.12.y
-
-6.15, 6.16 seem to be okay, too.
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
+FYI, I'll send this patch for some 6.17-rcX.
 
 
---=20
-In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
-Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+> ---
+>   arch/riscv/Kconfig | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+> index a4b233a0659e..1d53bf02d0fa 100644
+> --- a/arch/riscv/Kconfig
+> +++ b/arch/riscv/Kconfig
+> @@ -64,9 +64,8 @@ config RISCV
+>   	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
+>   	select ARCH_SUPPORTS_HUGE_PFNMAP if TRANSPARENT_HUGEPAGE
+>   	select ARCH_SUPPORTS_HUGETLBFS if MMU
+> -	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
+> -	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
+> -	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
+> +	select ARCH_SUPPORTS_LTO_CLANG
+> +	select ARCH_SUPPORTS_LTO_CLANG_THIN
+>   	select ARCH_SUPPORTS_MSEAL_SYSTEM_MAPPINGS if 64BIT && MMU
+>   	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
+>   	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
+>
 
---MW6hhxMXnlKkMv/8
-Content-Type: application/pgp-signature; name="signature.asc"
+I found another bunch of LLD_VERSION check in this file that could be 
+removed:
 
------BEGIN PGP SIGNATURE-----
+https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L253
+https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L262
+https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L630
+https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L731
+https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L746
+https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L781
+https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L804
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaKV1LgAKCRAw5/Bqldv6
-8o7nAJ4xtK4HN6/iP1hiAOqmKPh5qFqaXgCgu5Wvk9riKfJdn2bxz9K5F1EIgjw=
-=3Cp9
------END PGP SIGNATURE-----
+Thanks,
 
---MW6hhxMXnlKkMv/8--
+Alex
+
