@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630BD17A316;
-	Wed, 20 Aug 2025 10:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102C72DEA7B;
+	Wed, 20 Aug 2025 11:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755687576; cv=none; b=Y6asbR2+tuleGNwsNBkzC2X4gtzBNWL/D8RJ1AWwm2sCPB9TsgiXRwuLRXq7zQ6YfYOhTE9Ozu4dF57E4t2P+Y6rhqmVSRsQahsWgO2EwJzuCTU9KJVDvja+AsE9s3z2dx+D3X7u6hulM9kxJJdCDfUHEixl5MvTPzAvdZ/nB9c=
+	t=1755688460; cv=none; b=RqBbTscC3Ae+feO9gzlfanD2i+wUbSYuJZiJP6kwo23kU9bEf/M+HTf5d+2sQAXL4TBvQL4HzV2aCNZa9XAgmivtivwg+Jhjr4xE4JxfN8Sa8cAQPFKaO4eWeAUaqjiWFJdhiCxt8MkMsBkmKUlD00oVnmFRhOkw+w85Ax2X15k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755687576; c=relaxed/simple;
-	bh=tZw5HdnGL+AX9rRZl5TKkeTD8OyKPOhtHy+iibKMXog=;
+	s=arc-20240116; t=1755688460; c=relaxed/simple;
+	bh=domlvknXf6H9GM1nbTdso2P9smF7bjT/RaPPqep1Kec=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ck5RibeEV53bVsf3Q12kfeaU9Wsw1iLgBLPoKaH+PEPTpHU5V74pXOuEcqERtJrs5YmMPs5VxA4cLxsGkiErTC0kNoneU4EZa9q2urIIHfMwrpLi7UlTO5RnoBadivJ+P+aB9wVNdAQe4Q+pnsiCcGxdw5QEjySUCG3VIOfSTKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YA0kSCep; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=gmvGXlBZ+04WOKxRCYEpXZhG4oK9ZOCN71F4vPe9hoZmP7q+Rk+d51GeL8RyBT/Agb3ylkiw/XE+/Yq3sg1LXJLPhRpIRy5+Y4p/TpjSre9+0Thx5YfsvLYE9ByOp+OFX+GTiD9DwxKgYHPCJsXTLrj5jw+FERraxSbi4Z33LIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5p4klIM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YA0kSCep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D623C4CEEB;
-	Wed, 20 Aug 2025 10:59:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755687576;
-	bh=tZw5HdnGL+AX9rRZl5TKkeTD8OyKPOhtHy+iibKMXog=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5p4klIM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF89C4CEEB;
+	Wed, 20 Aug 2025 11:14:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1755688457;
+	bh=domlvknXf6H9GM1nbTdso2P9smF7bjT/RaPPqep1Kec=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YA0kSCepV2jlZP9MerDpus3UQLGzHB71eAHohzRZX2Bin2VzNRTHQyqTbE+Rj52IR
-	 7tIrnrUrc2QIwtNBhAbHZnqzZgWMAeh598Uc71SBIa6rx5TGkIcm4s+SkYB7NHTswh
-	 9fuEtDqmr2An4io6hDHlpN0iEq2t8ov02GYtDXT9VrVmzlj+0J6JOunI9RJJuXXcOH
-	 QZEITU5tkHX7KwHOzQbkyaoppQ41Yrf45YCieb7wgUcASNSZA6GHuv0vLSYraILgh9
-	 Rhqkn/viLRzH9dL52Eq8aycjC9y+S6BFwQPNH6079o2FkDYmRwhwg6EjPUymlwutQx
-	 vBVjagVzamOWA==
-Date: Wed, 20 Aug 2025 11:59:29 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	b=f5p4klIMAiBQnJOeLsMGLEZncdsLEiCUuDFyugcBHdCgRs8ka7kRTm3b9lsLV5eS8
+	 RVxwVeigtUNh7cYVVpTIYP8L7KtiqPw/SEUX1sN7Y1qDVGCvgZAS9ujwkjNtCrSIMX
+	 bAkqZlEUxHUrEa8/xgY0hlehfvk3DRcC7k0jla0Q=
+Date: Wed, 20 Aug 2025 13:14:14 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
@@ -36,82 +33,67 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, hargar@microsoft.com, achill@achill.org
-Subject: Re: [PATCH 6.12 000/438] 6.12.43-rc2 review
-Message-ID: <96d99806-9c85-4135-b749-7e56259cd37c@sirena.org.uk>
-References: <20250819122820.553053307@linuxfoundation.org>
+Subject: Re: [PATCH 6.15 000/509] 6.15.11-rc2 review
+Message-ID: <2025082058-imprint-capital-e12c@gregkh>
+References: <20250819122834.836683687@linuxfoundation.org>
+ <bb8ebf36-fb7c-470c-89e7-e6607460c973@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sCXl3scuh2qsEQNd"
-Content-Disposition: inline
-In-Reply-To: <20250819122820.553053307@linuxfoundation.org>
-X-Cookie: What UNIVERSE is this, please??
-
-
---sCXl3scuh2qsEQNd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <bb8ebf36-fb7c-470c-89e7-e6607460c973@sirena.org.uk>
 
-On Tue, Aug 19, 2025 at 02:31:21PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.43 release.
-> There are 438 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Aug 20, 2025 at 11:57:57AM +0100, Mark Brown wrote:
+> On Tue, Aug 19, 2025 at 02:31:36PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.15.11 release.
+> > There are 509 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> 
+> I'm still seeing failures in the LTP epoll04 test which bisect to
+> "eventpoll: Fix semi-unbounded recursion":
+> 
+> # bad: [cf068471031d89c4d7ce04f477ba69a043736a58] Linux 6.15.11-rc2
+> # good: [cb1830ee48ef7b444b20dd66493b0719ababd2b1] Linux 6.15.10
+> git bisect start 'cf068471031d89c4d7ce04f477ba69a043736a58' 'cb1830ee48ef7b444b20dd66493b0719ababd2b1'
+> # test job: [cf068471031d89c4d7ce04f477ba69a043736a58] https://lava.sirena.org.uk/scheduler/job/1696008
+> # bad: [cf068471031d89c4d7ce04f477ba69a043736a58] Linux 6.15.11-rc2
+> git bisect bad cf068471031d89c4d7ce04f477ba69a043736a58
+> # test job: [ed147e6b0b6f77ab37b64cae52c324bb4d30ffd6] https://lava.sirena.org.uk/scheduler/job/1696635
+> # bad: [ed147e6b0b6f77ab37b64cae52c324bb4d30ffd6] wifi: mt76: mt7915: mcu: re-init MCU before loading FW patch
+> git bisect bad ed147e6b0b6f77ab37b64cae52c324bb4d30ffd6
+> # test job: [f228799b3622c5e7dee0ca367ede5c5116dd2749] https://lava.sirena.org.uk/scheduler/job/1697068
+> # bad: [f228799b3622c5e7dee0ca367ede5c5116dd2749] usb: typec: tcpm/tcpci_maxim: fix irq wake usage
+> git bisect bad f228799b3622c5e7dee0ca367ede5c5116dd2749
+> # test job: [379a9a450eccaea2781063475865a759609c42d7] https://lava.sirena.org.uk/scheduler/job/1697316
+> # bad: [379a9a450eccaea2781063475865a759609c42d7] net: ti: icssg-prueth: Fix emac link speed handling
+> git bisect bad 379a9a450eccaea2781063475865a759609c42d7
+> # test job: [22919356643e8d2fae162c80fd41d3a18b699ba1] https://lava.sirena.org.uk/scheduler/job/1697640
+> # good: [22919356643e8d2fae162c80fd41d3a18b699ba1] NFSD: detect mismatch of file handle and delegation stateid in OPEN op
+> git bisect good 22919356643e8d2fae162c80fd41d3a18b699ba1
+> # test job: [289acd66730cee0a50eadea70d09c796eb985fb3] https://lava.sirena.org.uk/scheduler/job/1697768
+> # bad: [289acd66730cee0a50eadea70d09c796eb985fb3] ACPI: processor: perflib: Fix initial _PPC limit application
+> git bisect bad 289acd66730cee0a50eadea70d09c796eb985fb3
+> # test job: [acda7f7119d35afceb774736a2dee8453745403e] https://lava.sirena.org.uk/scheduler/job/1697900
+> # good: [acda7f7119d35afceb774736a2dee8453745403e] sunvdc: Balance device refcount in vdc_port_mpgroup_check
+> git bisect good acda7f7119d35afceb774736a2dee8453745403e
+> # test job: [9a521a568272528a4bf9a9bed5a4ead00045c7e6] https://lava.sirena.org.uk/scheduler/job/1698135
+> # good: [9a521a568272528a4bf9a9bed5a4ead00045c7e6] fscrypt: Don't use problematic non-inline crypto engines
+> git bisect good 9a521a568272528a4bf9a9bed5a4ead00045c7e6
+> # test job: [3b03bb96f7485981aa3c59b26b4d3a1c700ba9f3] https://lava.sirena.org.uk/scheduler/job/1698312
+> # bad: [3b03bb96f7485981aa3c59b26b4d3a1c700ba9f3] eventpoll: Fix semi-unbounded recursion
+> git bisect bad 3b03bb96f7485981aa3c59b26b4d3a1c700ba9f3
+> # test job: [222c3853173605105bf3a4dda135a655ef894fc0] https://lava.sirena.org.uk/scheduler/job/1698459
+> # good: [222c3853173605105bf3a4dda135a655ef894fc0] fs: Prevent file descriptor table allocations exceeding INT_MAX
+> git bisect good 222c3853173605105bf3a4dda135a655ef894fc0
+> # first bad commit: [3b03bb96f7485981aa3c59b26b4d3a1c700ba9f3] eventpoll: Fix semi-unbounded recursion
 
-The epoll04 issues I reported against v6.15 also affect v6.12:
+I thought the LTP test was going to be fixed, what happened to that?
 
-# bad: [e80021fb2304b3e1f96e7b9a132e69d2c1d022f1] Linux 6.12.43-rc2
-# good: [880e4ff5d6c8dc6b660f163a0e9b68b898cc6310] Linux 6.12.42
-git bisect start 'e80021fb2304b3e1f96e7b9a132e69d2c1d022f1' '880e4ff5d6c8dc6b660f163a0e9b68b898cc6310'
-# test job: [e80021fb2304b3e1f96e7b9a132e69d2c1d022f1] https://lava.sirena.org.uk/scheduler/job/1695957
-# bad: [e80021fb2304b3e1f96e7b9a132e69d2c1d022f1] Linux 6.12.43-rc2
-git bisect bad e80021fb2304b3e1f96e7b9a132e69d2c1d022f1
-# test job: [7b7342b46b4c9396878626b27d99c64d193af3c3] https://lava.sirena.org.uk/scheduler/job/1696542
-# bad: [7b7342b46b4c9396878626b27d99c64d193af3c3] net: fec: allow disable coalescing
-git bisect bad 7b7342b46b4c9396878626b27d99c64d193af3c3
-# test job: [3957cc291310fe1ab1307d406f08e9740c72a9ad] https://lava.sirena.org.uk/scheduler/job/1697052
-# bad: [3957cc291310fe1ab1307d406f08e9740c72a9ad] ARM: rockchip: fix kernel hang during smp initialization
-git bisect bad 3957cc291310fe1ab1307d406f08e9740c72a9ad
-# test job: [da60fa79fb931923969e4bed25b970242786952a] https://lava.sirena.org.uk/scheduler/job/1697319
-# bad: [da60fa79fb931923969e4bed25b970242786952a] udp: also consider secpath when evaluating ipsec use for checksumming
-git bisect bad da60fa79fb931923969e4bed25b970242786952a
-# test job: [e6b8c045342197880804674d66a788b74b02af81] https://lava.sirena.org.uk/scheduler/job/1697685
-# good: [e6b8c045342197880804674d66a788b74b02af81] LoongArch: BPF: Fix jump offset calculation in tailcall
-git bisect good e6b8c045342197880804674d66a788b74b02af81
-# test job: [a0aa6636b95e0ea53340c41d109991dd09ee5aa5] https://lava.sirena.org.uk/scheduler/job/1697830
-# bad: [a0aa6636b95e0ea53340c41d109991dd09ee5aa5] ACPI: processor: perflib: Move problematic pr->performance check
-git bisect bad a0aa6636b95e0ea53340c41d109991dd09ee5aa5
-# test job: [7e040976e0ed9f2f13ad15e6a1712688b7814805] https://lava.sirena.org.uk/scheduler/job/1697981
-# good: [7e040976e0ed9f2f13ad15e6a1712688b7814805] clk: samsung: gs101: fix CLK_DOUT_CMU_G3D_BUSD
-git bisect good 7e040976e0ed9f2f13ad15e6a1712688b7814805
-# test job: [bc3509f3a78f85ff1f6f19dbe1be09f83a1eb044] https://lava.sirena.org.uk/scheduler/job/1698217
-# good: [bc3509f3a78f85ff1f6f19dbe1be09f83a1eb044] fs: Prevent file descriptor table allocations exceeding INT_MAX
-git bisect good bc3509f3a78f85ff1f6f19dbe1be09f83a1eb044
-# test job: [b8584ada9b249a433a9d2540f57e2dbd1b410cad] https://lava.sirena.org.uk/scheduler/job/1698383
-# bad: [b8584ada9b249a433a9d2540f57e2dbd1b410cad] Documentation: ACPI: Fix parent device references
-git bisect bad b8584ada9b249a433a9d2540f57e2dbd1b410cad
-# test job: [9b420327ca126036f93186abe0a4140b64e3213d] https://lava.sirena.org.uk/scheduler/job/1698512
-# bad: [9b420327ca126036f93186abe0a4140b64e3213d] eventpoll: Fix semi-unbounded recursion
-git bisect bad 9b420327ca126036f93186abe0a4140b64e3213d
-# first bad commit: [9b420327ca126036f93186abe0a4140b64e3213d] eventpoll: Fix semi-unbounded recursion
+thanks,
 
---sCXl3scuh2qsEQNd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmilqpAACgkQJNaLcl1U
-h9DLCAf/TKc1rkRh7t/Z+IPt/R3K/ZWf/0WwkD8Pd2UxQIv8stbTLc/1uYhqx6fC
-XWLzKCJpRqXfb/2XyfRRts6tzyE2ehu0DxzO+0c+2SX2t036dCFOHNcG9l0h8Xbb
-OYBwbQNAK3/cEXofEmNqQZsMl54dEW9w8ozolv2tkmcf9xRSesYxRCPMbx4Y8hql
-aJId9zI3coCkTxtM0FVLcgQGNBez4KZ2p0uCS3L58IMX5hmNr2PC+pAQ6S0iQWo2
-Z2YInZuB6yLsFeUcCCykPD0siRRMOm8p3811uzf+Qs4Ls+Rbex9GLEqLPP3F/tyZ
-4+l5OhhbBrQDNXZR5s35ryesBbivfg==
-=MON9
------END PGP SIGNATURE-----
-
---sCXl3scuh2qsEQNd--
+greg k-h
