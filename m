@@ -1,102 +1,145 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1BF31CA72;
-	Wed, 20 Aug 2025 16:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3053032275C;
+	Wed, 20 Aug 2025 16:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755706271; cv=none; b=lqJVy16j/M4ndx1UopZpIWngbkecc9R5YjTLXYp9Fh9oQ7cW7CRgQ2UMQCmVIUteQPn1+1PFkuyjIVoLRUpX9qomOhH0XWs30lQ6jhxc7GTv75cgCDDvIOwoiu7HdYERSxAgQV93xj1oiSP9U59D/f03hAyC//MrKJJTbZUyQ10=
+	t=1755706852; cv=none; b=PkzqrKIOOoP7/ZcdgILfgM878lfgv/klkqcCdFbDXtDYoAvXMYblANMZm0ZzTgiNG7ZgrwnwZyQSBAS+fgxy6mKHSKw5SDFeepkXSfP9uweNBun1Y8nPYXNgFVl568/UIw7wsWGe6vvET6WDSDxpoqDJa08mOZCGgpeg+P9nYbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755706271; c=relaxed/simple;
-	bh=kILSVk3z9gI+nFGfR1y5ThbvAl+I3YUQHPIyOglHZhk=;
+	s=arc-20240116; t=1755706852; c=relaxed/simple;
+	bh=KuHQlhLloiL8qIhruC+SjKavcvsQQojmdPAzwfSpvyw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uyUvmYG+2VtyVKNMK6quHRw1/8G+FnZCh8Z/dEZdIAU6TP9BQ6exQmtO8+LLWy/wj7A1L8ZUtBMo7E/qYIQDSkSOkxYRzDLtGUpVVrE4qnSWx6K0obcp9G5SS9w7l563X1ONNRHUcNnX3lekWr1QYofnYMCrHq4a7hNOkufXqeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7AiuSJH; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=OCwtv4wwb1JWARixOaqnSCFQ0/SMLZDuhkusfT1IfnJSOg/DJpotY83FbXZe8WWufuaB8+4PBXkWQwkcHHoVMOOu2M1fwz7Qlnoz4HS2V2eDOX5N7P252dY0NfY4t9Dn6Kyc4yCcM/m8RxVuW1ERXrC5TSTmEMvF0/I4fNn43iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fyIu/H5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7AiuSJH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAE9C4CEE7;
-	Wed, 20 Aug 2025 16:11:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fyIu/H5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970EBC4CEE7;
+	Wed, 20 Aug 2025 16:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755706269;
-	bh=kILSVk3z9gI+nFGfR1y5ThbvAl+I3YUQHPIyOglHZhk=;
+	s=k20201202; t=1755706852;
+	bh=KuHQlhLloiL8qIhruC+SjKavcvsQQojmdPAzwfSpvyw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=X7AiuSJHOQJiqlv8uD9FBGgeBFTKKvDcdvlq6x5IWBb0UlDJhj+vzIHW/5y2C3mn6
-	 EyOvm0QWPGDdv2EW8cRjyzcyD0YIaDSKiOoS/OZIECJflmbbpbAeo/6IVCY0xapsMn
-	 xU41tdoZvlQ2Q9Z99eMMr1zm74Lzh3miB8pgDLoWG070z2+enR8ycjy08wLrLSKtWD
-	 PJX2zlPNEpbf2O3ScCCW9wHsY78289YB9c1goxC9QoKdK5bRz+xkbOgKLNnKs3LRvN
-	 QqDp8MrA5hLfpCzIRhOWuoFtUa9uQHSZBwc0aU3WDoqI+4lNUBmWcDbmqZ5o4u68pc
-	 eel+KA9tJ81xQ==
-Date: Wed, 20 Aug 2025 09:11:04 -0700
+	b=fyIu/H5lPoivJ0GpsC1AJXOXeBc5ZNxmaljT7ateChUzqYChxTxsKShz8KfHRwQRf
+	 Pr1O+nyJWvhgbpQjH2eF1goyuLJef40u9aVHzS2I0PX9EyBYDQwJchu8Is1mXnDWTG
+	 Ze1D04DVSpcHYQwTCZQv47IfbSNErIL+i6Kw6Kio0bKA7+7mt1gi+OcVlv/7xMW7jl
+	 mRTGXyyeNtXidaXNOxCMPUep48ujVX1r6WsrFY6JKuGFGH3KdW3q+limHUd60x43IC
+	 ATn3GVRAIgLqmFnsgrh9FqLHw+se7fNGTYPFz/UsInmjDBqhthAopD5rhDG1LdFJlg
+	 ngrjppmPesKNw==
+Date: Wed, 20 Aug 2025 09:20:48 -0700
 From: Nathan Chancellor <nathan@kernel.org>
-To: Alexandre Ghiti <alex@ghiti.fr>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 07/10] riscv: Remove version check for LTO_CLANG selects
-Message-ID: <20250820161104.GA3805667@ax162>
-References: <20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org>
- <20250818-bump-min-llvm-ver-15-v1-7-c8b1d0f955e0@kernel.org>
- <8078e385-e08e-40a5-b6df-31c0b5be8f43@ghiti.fr>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>, linux-mmc@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] mmc: sdhci-cadence: Fix -Wuninitialized in
+ sdhci_cdns_tune_blkgap()
+Message-ID: <20250820162048.GC3805667@ax162>
+References: <20250819-mmc-sdhci-cadence-fix-uninit-hrs37_mode-v1-1-94aa2d0c438a@kernel.org>
+ <2560300.XAFRqVoOGU@benoit.monin>
+ <aKWmvWTtQ_QZYgEm@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <8078e385-e08e-40a5-b6df-31c0b5be8f43@ghiti.fr>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aKWmvWTtQ_QZYgEm@stanley.mountain>
 
-On Wed, Aug 20, 2025 at 09:23:08AM +0200, Alexandre Ghiti wrote:
-> Hi Nathan,
-> 
-> On 8/18/25 20:57, Nathan Chancellor wrote:
-> > Now that the minimum supported version of LLVM for building the kernel
-> > has been bumped to 15.0.0, there is no need to check the LLD version
-> > before selecting ARCH_SUPPORTS_LTO_CLANG{,_THIN} because it will always
-> > be true.
+On Wed, Aug 20, 2025 at 01:43:09PM +0300, Dan Carpenter wrote:
+> On Wed, Aug 20, 2025 at 10:07:35AM +0200, Benoît Monin wrote:
+> > > --- a/drivers/mmc/host/sdhci-cadence.c
+> > > +++ b/drivers/mmc/host/sdhci-cadence.c
+> > > @@ -288,13 +288,12 @@ static int sdhci_cdns_tune_blkgap(struct mmc_host *mmc)
+> > >  	void __iomem *hrs38_reg = priv->hrs_addr + SDHCI_CDNS_HRS38;
+> > >  	int ret;
+> > >  	u32 gap;
+> > > -	u32 hrs37_mode;
+> > >  
+> > >  	/* Currently only needed in HS200 mode */
+> > >  	if (host->timing != MMC_TIMING_MMC_HS200)
+> > >  		return 0;
+> > >  
+> > > -	writel(hrs37_mode, hrs37_reg);
+> > > +	writel(SDHCI_CDNS_HRS37_MODE_MMC_HS200, hrs37_reg);
+> > >  
+> > >  	for (gap = 0; gap <= SDHCI_CDNS_HRS38_BLKGAP_MAX; gap++) {
+> > >  		writel(gap, hrs38_reg);
+> > > 
+> > Thanks for the catch!
 > > 
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> > Cc: Palmer Dabbelt <palmer@dabbelt.com>
-> > Cc: Alexandre Ghiti <alex@ghiti.fr>
-> > Cc: linux-riscv@lists.infradead.org
+> > I don't get how gcc does not raise a warning here, only clang does. I
+> > did build with gcc-11 and gcc-15 and they don't complain about this
+> > uninitialized variable.
 > > 
-> > Small note, this will conflict with
-> > https://lore.kernel.org/20250710-riscv-restrict-lto-to-medany-v1-1-b1dac9871ecf@kernel.org/
-> > but I think it is simple enough to deal with.
 > 
-> FYI, I'll send this patch for some 6.17-rcX.
+> We disabled uninitialized variable checking on GCC.  It was too crazy
+> and especially if we want to use -Werror.
+> 
+> Smatch also detects this bug.
 
-Thanks, that would help.
+Technically, -Wuninitialized is on for GCC as well but as soon as there
+is control flow between the declaration of the variable and its usage,
+it gets changed into -Wmaybe-uninitialized :/
 
-> I found another bunch of LLD_VERSION check in this file that could be
-> removed:
+In file included from arch/arm64/include/asm/io.h:288,
+                 from include/linux/io.h:12,
+                 from include/linux/iopoll.h:14,
+                 from drivers/mmc/host/sdhci-cadence.c:9:
+In function 'writel',
+    inlined from 'sdhci_cdns_tune_blkgap' at drivers/mmc/host/sdhci-cadence.c:297:2,
+    inlined from 'sdhci_cdns_execute_tuning' at drivers/mmc/host/sdhci-cadence.c:352:9:
+include/asm-generic/io.h:276:9: error: 'hrs37_mode' may be used uninitialized [-Werror=maybe-uninitialized]
+  276 |         log_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/mmc/host/sdhci-cadence.c: In function 'sdhci_cdns_execute_tuning':
+drivers/mmc/host/sdhci-cadence.c:291:13: note: 'hrs37_mode' was declared here
+  291 |         u32 hrs37_mode;
+      |             ^~~~~~~~~~
 
-Huh, I am very surprised that I missed those :/ thanks a lot for
-catching that!
+vs
 
-> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L253
+diff --git a/drivers/mmc/host/sdhci-cadence.c b/drivers/mmc/host/sdhci-cadence.c
+index a2a4a5b0ab96..b968c0fb925d 100644
+--- a/drivers/mmc/host/sdhci-cadence.c
++++ b/drivers/mmc/host/sdhci-cadence.c
+@@ -290,12 +290,12 @@ static int sdhci_cdns_tune_blkgap(struct mmc_host *mmc)
+        u32 gap;
+        u32 hrs37_mode;
 
-I have added a patch removing CONFIG_RISCV_USE_LINKER_RELAXATION.
++       writel(hrs37_mode, hrs37_reg);
++
+        /* Currently only needed in HS200 mode */
+        if (host->timing != MMC_TIMING_MMC_HS200)
+                return 0;
 
-> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L262
+-       writel(hrs37_mode, hrs37_reg);
+-
+        for (gap = 0; gap <= SDHCI_CDNS_HRS38_BLKGAP_MAX; gap++) {
+                writel(gap, hrs38_reg);
+                ret = mmc_read_tuning(mmc, 512, 32);
 
-I don't think this one can be currently cleaned up since it won't always
-be either true or false.
+In file included from arch/arm64/include/asm/io.h:288,
+                 from include/linux/io.h:12,
+                 from include/linux/iopoll.h:14,
+                 from drivers/mmc/host/sdhci-cadence.c:9:
+drivers/mmc/host/sdhci-cadence.c: In function 'sdhci_cdns_tune_blkgap':
+include/asm-generic/io.h:273:16: error: 'hrs37_mode' is used uninitialized [-Werror=uninitialized]
+  273 | #define writel writel
+drivers/mmc/host/sdhci-cadence.c:293:9: note: in expansion of macro 'writel'
+  293 |         writel(hrs37_mode, hrs37_reg);
+      |         ^~~~~~
+drivers/mmc/host/sdhci-cadence.c:291:13: note: 'hrs37_mode' was declared here
+  291 |         u32 hrs37_mode;
+      |             ^~~~~~~~~~
 
-> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L630
-> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L731
-> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L746
-> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L781
-> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L804
-
-I have added a patch converting those version checks to just LD_IS_LLD.
+It would be nice if GCC could adopt clang's semantics of "uninitialized
+when used _here_" for -Wuninitalized versus the current scheme of
+converting it to a "may be used uninitialized" warning.
 
 Cheers,
 Nathan
