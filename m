@@ -1,82 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502E627C172;
-	Wed, 20 Aug 2025 14:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1BF31CA72;
+	Wed, 20 Aug 2025 16:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755701369; cv=none; b=SQKvF5r8ojZcPBySOequC4u35i28luHehTTmDyiMllNrJfu+8EPmMjj066Cla9q9Erd51dmDxYz+3MwYQhpjaHsT2ytC13sz8x4hP6FZEz58mOOGaur1u2dDb04S+MMS6kUYCJRnOBLSYaL6io7HIMlJm1atKDiSWQfb4f0Zd+0=
+	t=1755706271; cv=none; b=lqJVy16j/M4ndx1UopZpIWngbkecc9R5YjTLXYp9Fh9oQ7cW7CRgQ2UMQCmVIUteQPn1+1PFkuyjIVoLRUpX9qomOhH0XWs30lQ6jhxc7GTv75cgCDDvIOwoiu7HdYERSxAgQV93xj1oiSP9U59D/f03hAyC//MrKJJTbZUyQ10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755701369; c=relaxed/simple;
-	bh=s4nfPVcmRasmonPqk9vuBP3hp3Ub1+rC9rv5lAJPRXM=;
+	s=arc-20240116; t=1755706271; c=relaxed/simple;
+	bh=kILSVk3z9gI+nFGfR1y5ThbvAl+I3YUQHPIyOglHZhk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mhHJerSmUknFBig2rh9r9j7a8X3iCFCJLpGvRBadcX+Mf9BWTPwjnKKysBUq+j5lchMxLEd4F1F9WK1MssqVJsxUZFtCbmkGgzpjKvUnx9o6ubeFL6GtHYv5FonAA77Fn2e1cTf2/nEx7wHIScGepNk62l69fntWVhOJ9qd79rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MoQN5YoD; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=uyUvmYG+2VtyVKNMK6quHRw1/8G+FnZCh8Z/dEZdIAU6TP9BQ6exQmtO8+LLWy/wj7A1L8ZUtBMo7E/qYIQDSkSOkxYRzDLtGUpVVrE4qnSWx6K0obcp9G5SS9w7l563X1ONNRHUcNnX3lekWr1QYofnYMCrHq4a7hNOkufXqeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7AiuSJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MoQN5YoD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D18FC4CEE7;
-	Wed, 20 Aug 2025 14:49:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7AiuSJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAE9C4CEE7;
+	Wed, 20 Aug 2025 16:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755701368;
-	bh=s4nfPVcmRasmonPqk9vuBP3hp3Ub1+rC9rv5lAJPRXM=;
+	s=k20201202; t=1755706269;
+	bh=kILSVk3z9gI+nFGfR1y5ThbvAl+I3YUQHPIyOglHZhk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MoQN5YoD8J42r2+gTZqLn7ai82q7gmANDIemUe/34LL2njWkuR5jacQ3CAlPSEt1A
-	 dr6/3xbZFKpwPYx+zgBcY6i5VKPDC+Mzc02+5EoFJLquuLz2LR0MaojQV8f+sqZxK8
-	 IPWccKhmhamkgSB8rEsujgctaZNmnAcciJXM5kUbmNdTc5HqzFNuaICwKj9gEqzS0P
-	 sbhnb+CL96kKNGstQYqV9YccyUCAyh+g6mZQnfZtpC0mWTvEr5o7L5KRgbtZ3QEDj8
-	 52syNAyoAaGkpwFP18cD5V6xZK3q7PnWTYAQRI9HOUXEcPFYrgC8CuwHo65yrEp8uC
-	 baR31anYnSFTg==
-Date: Wed, 20 Aug 2025 15:49:22 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, achill@achill.org
-Subject: Re: [PATCH 6.12 000/438] 6.12.43-rc2 review
-Message-ID: <3ffb80be-0e86-44b6-a541-deeb80e0d31c@sirena.org.uk>
-References: <20250819122820.553053307@linuxfoundation.org>
+	b=X7AiuSJHOQJiqlv8uD9FBGgeBFTKKvDcdvlq6x5IWBb0UlDJhj+vzIHW/5y2C3mn6
+	 EyOvm0QWPGDdv2EW8cRjyzcyD0YIaDSKiOoS/OZIECJflmbbpbAeo/6IVCY0xapsMn
+	 xU41tdoZvlQ2Q9Z99eMMr1zm74Lzh3miB8pgDLoWG070z2+enR8ycjy08wLrLSKtWD
+	 PJX2zlPNEpbf2O3ScCCW9wHsY78289YB9c1goxC9QoKdK5bRz+xkbOgKLNnKs3LRvN
+	 QqDp8MrA5hLfpCzIRhOWuoFtUa9uQHSZBwc0aU3WDoqI+4lNUBmWcDbmqZ5o4u68pc
+	 eel+KA9tJ81xQ==
+Date: Wed, 20 Aug 2025 09:11:04 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 07/10] riscv: Remove version check for LTO_CLANG selects
+Message-ID: <20250820161104.GA3805667@ax162>
+References: <20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org>
+ <20250818-bump-min-llvm-ver-15-v1-7-c8b1d0f955e0@kernel.org>
+ <8078e385-e08e-40a5-b6df-31c0b5be8f43@ghiti.fr>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2rtn7fN3L1c4hhI/"
-Content-Disposition: inline
-In-Reply-To: <20250819122820.553053307@linuxfoundation.org>
-X-Cookie: Semper Fi, dude.
-
-
---2rtn7fN3L1c4hhI/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <8078e385-e08e-40a5-b6df-31c0b5be8f43@ghiti.fr>
 
-On Tue, Aug 19, 2025 at 02:31:21PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.43 release.
-> There are 438 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Aug 20, 2025 at 09:23:08AM +0200, Alexandre Ghiti wrote:
+> Hi Nathan,
+> 
+> On 8/18/25 20:57, Nathan Chancellor wrote:
+> > Now that the minimum supported version of LLVM for building the kernel
+> > has been bumped to 15.0.0, there is no need to check the LLD version
+> > before selecting ARCH_SUPPORTS_LTO_CLANG{,_THIN} because it will always
+> > be true.
+> > 
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> > Cc: Palmer Dabbelt <palmer@dabbelt.com>
+> > Cc: Alexandre Ghiti <alex@ghiti.fr>
+> > Cc: linux-riscv@lists.infradead.org
+> > 
+> > Small note, this will conflict with
+> > https://lore.kernel.org/20250710-riscv-restrict-lto-to-medany-v1-1-b1dac9871ecf@kernel.org/
+> > but I think it is simple enough to deal with.
+> 
+> FYI, I'll send this patch for some 6.17-rcX.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Thanks, that would help.
 
---2rtn7fN3L1c4hhI/
-Content-Type: application/pgp-signature; name="signature.asc"
+> I found another bunch of LLD_VERSION check in this file that could be
+> removed:
 
------BEGIN PGP SIGNATURE-----
+Huh, I am very surprised that I missed those :/ thanks a lot for
+catching that!
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmil4HEACgkQJNaLcl1U
-h9BtnQf/XoHCUiBo4ifsosMk4RimE0HL59Aga6ixSDwXwA1KEghWfP0cRkMlyfyD
-HpXvYbIVc7ZaVdWAYVjeExfPgMrwnOKUNYoSy51fsIjvn+xalXgKWD4fT/aBi8GB
-9yGjWLQxGJiUZDkAYYQw9+O2vnF83den2p9u8Y6YD+rqJf5dpdQwEqzNl0HWJbwe
-FjYbJN8VoU0J0Ibcs2Ci60z086MqDW5qz8tkTT1594lKmQY3+6JgSoqzrp1zXc2n
-1Asc00bsWBw2uQWpzA2C8+XOf9G5QmFKOyEu6a0lBpIUuN2rKfSb5AmC/DRlkTyP
-WSeky3F+lSjV4yEGH/ZVZMdRQWZceA==
-=hX9B
------END PGP SIGNATURE-----
+> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L253
 
---2rtn7fN3L1c4hhI/--
+I have added a patch removing CONFIG_RISCV_USE_LINKER_RELAXATION.
+
+> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L262
+
+I don't think this one can be currently cleaned up since it won't always
+be either true or false.
+
+> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L630
+> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L731
+> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L746
+> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L781
+> https://elixir.bootlin.com/linux/v6.17-rc2/source/arch/riscv/Kconfig#L804
+
+I have added a patch converting those version checks to just LD_IS_LLD.
+
+Cheers,
+Nathan
