@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFB22EA731;
-	Thu, 21 Aug 2025 21:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1A72EAD16;
+	Thu, 21 Aug 2025 21:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755810986; cv=none; b=WsBxgovuLC5r2jnwpQwVDo3VvRgn3iUhdcD2YIKkz0Xba7OIty7KFqGYeSN/ufVKqDbhy1KuyAGtanzSofs1BmanJj6cO5Bw7iUZ/u0DtBKWlt95OA2iHKaaU96oBJ2WskwvBDx1Cr36xPdfHwcT0AnXhqB3kqQ2SxgjR7vHTdI=
+	t=1755810988; cv=none; b=FdizWoHrnXRv+64MxsVwiK2NT0h1MbkUIIYvTt2xFw/PYeFI/m8dBLBanboRi2RZjcKd+2YxnEUPiS1d45GOlMOFPK4TrvVdG7u88yg9MOJZLBADteC0BwJ7aSPBLq86+ZNI33gN58q/TGJy/QYX2JZRlikrQO88X1wi1k3m468=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755810986; c=relaxed/simple;
-	bh=edt5ONquqT6iefl+nGEw5FvaJQsAKIBbDF2dxmXAwzw=;
+	s=arc-20240116; t=1755810988; c=relaxed/simple;
+	bh=/FaxCgWn3QZynXYwl6BT/KtUuhJScaSVbC/LfUVi4W0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RCOdRxCLIzupMMuOenw3EFzjqxC9uKHcbz9+pP5Ib8y8SPRk+uzwTithor29XnveXIE4NOYfIGXeMDQnqXtEr8ll/gkCQC1+N3Sw7kb4dJamGl7Sz4WXi3bkR+MfQp8HECQF3sZMIPN1SzklDedAMhpgYMcw8uI8jziNKIZIHqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PyZwQa5Q; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=d+cNOFvYApJB85gZ89tgYq5ywTfqegLNYH8Ek3p0EMIv4z0ViCa6bkR99r1ItMoXFxu6aCEUGy2ng4jCwWrgQXG60D655T2HkjLvItuTvQS8U3SklSb1PGfIshL113erCA3MKGhLQjzpcIf5wENFKhRd3apj3EC92u5ZctgmLBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gDZDpVuf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PyZwQa5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B8FC113D0;
-	Thu, 21 Aug 2025 21:16:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gDZDpVuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A358C4CEEB;
+	Thu, 21 Aug 2025 21:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755810985;
-	bh=edt5ONquqT6iefl+nGEw5FvaJQsAKIBbDF2dxmXAwzw=;
+	s=k20201202; t=1755810988;
+	bh=/FaxCgWn3QZynXYwl6BT/KtUuhJScaSVbC/LfUVi4W0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=PyZwQa5Q42gL7fCCWeh3RoRfiFAVlwSQniefUY1pvH7Y4HzM42nafXcIbWUrfgemW
-	 tiCtzl6n/Ljo4CSzguK19m5W/XWrxQL5X2iDTPnSOuZXXoQ6CiF9VeKCYEodhLs6d+
-	 9/5Wnp3dPZMBdqIQ6a70Idmsv+E4BRS4xA6I92H5qSAWcvwhIxmtb4p1lr4pZVBYf8
-	 pWtYUttnVycDxQdTexx5S9MQlX/NriKkzdbO7eJFVTFB3ea28Uxw7vxDSWujf1OUHC
-	 qVFn/z5C8b8k2ADar1zwSDMAdsAkeW+hiMDFpieco5HFjfFmq04++Q2VGf6rCd2Xkd
-	 ZChcLAkfGK6KA==
+	b=gDZDpVuffNi0v19lwBN+668IPRSI9pXSGKcj8YgR1I/mooCWzH1KcC3mLeymG6ipu
+	 MlUYE9GPfOHYZxJRF9xwT52Qh7+DlO7opTuWA6Y3XazZhG8KjdXu8+ugvNIwotnMyE
+	 GgVFrN5UgVgh8ulOfs8p1TXq5xopkxRm8EPOTys0CySKRQmxK7MGlPxlh2BBHLAG/4
+	 dXRQve0ubBmwwkPpaHDLCzPYYfjob0j8ECMcS/MsQtNCjbo02kO6UarYLITiD1vVmt
+	 SdsRXIcQn1ULK6tA6e7ZuxxqkZgnxldiJZQ18j1lxuYNko7LD6p3G3ki/FjKHYayf1
+	 5X1bM/NPMSrlQ==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 21 Aug 2025 14:15:48 -0700
-Subject: [PATCH v2 11/12] objtool: Drop noinstr hack for KCSAN_WEAK_MEMORY
+Date: Thu, 21 Aug 2025 14:15:49 -0700
+Subject: [PATCH v2 12/12] KMSAN: Remove tautological checks
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,7 +37,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250821-bump-min-llvm-ver-15-v2-11-635f3294e5f0@kernel.org>
+Message-Id: <20250821-bump-min-llvm-ver-15-v2-12-635f3294e5f0@kernel.org>
 References: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
 In-Reply-To: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
 To: linux-kernel@vger.kernel.org
@@ -45,74 +45,68 @@ Cc: Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
  Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
  Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
  llvm@lists.linux.dev, patches@lists.linux.dev, 
- Marco Elver <elver@google.com>, 
- "Peter Zijlstra (Intel)" <peterz@infraded.org>, 
- Nathan Chancellor <nathan@kernel.org>, kasan-dev@googlegroups.com
+ Marco Elver <elver@google.com>, Nathan Chancellor <nathan@kernel.org>, 
+ kasan-dev@googlegroups.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2230; i=nathan@kernel.org;
- h=from:subject:message-id; bh=edt5ONquqT6iefl+nGEw5FvaJQsAKIBbDF2dxmXAwzw=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBnLe1pKmUXsD9i/+j9z9ePwx9LqPVJZDz8/s5gtycyY9
- sm6dpp/RykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZiIkAUjw+U4rycb7d3Y15z+
- +b26TuOmiOx51kfLJoQZbY/yWKm2k5uR4a3eX4Hb6xrrQ3ZM/LHtqZeKibheU0i5ddmN/3mGz1U
- +cwMA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1830; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=/FaxCgWn3QZynXYwl6BT/KtUuhJScaSVbC/LfUVi4W0=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBnLe1pcPUNm9W6MDuLs/myrJcfNFJTLWv9E/6ZRWI+r5
+ 4pje5w7SlkYxLgYZMUUWaofqx43NJxzlvHGqUkwc1iZQIYwcHEKwER0OBj+157XEo/zEZQ9YZU8
+ z15PkJ858EdhvfS/qz6rSs+b7NykzfDfXe6x0fb3Xy5P/1MXV231eo2pntlbyVJlX8s71sbm1gb
+ sAA==
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
 Now that the minimum supported version of LLVM for building the kernel
-has been bumped to 15.0.0, __no_kcsan will always ensure that the thread
-sanitizer functions are not generated, so remove the check for tsan
-functions in is_profiling_func() and the always true depends and
-unnecessary select lines in KCSAN_WEAK_MEMORY.
+has been bumped to 15.0.0, two KMSAN checks can be cleaned up.
+
+CONFIG_HAVE_KMSAN_COMPILER will always be true when using clang so
+remove the cc-option test and use a simple check for CONFIG_CC_IS_CLANG.
+
+CONFIG_HAVE_KMSAN_PARAM_RETVAL will always be true so it can be removed
+outright.
 
 Acked-by: Marco Elver <elver@google.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infraded.org>
 Reviewed-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
 Cc: kasan-dev@googlegroups.com
 ---
- lib/Kconfig.kcsan     |  6 ------
- tools/objtool/check.c | 10 ----------
- 2 files changed, 16 deletions(-)
+ lib/Kconfig.kmsan | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/lib/Kconfig.kcsan b/lib/Kconfig.kcsan
-index 609ddfc73de5..4ce4b0c0109c 100644
---- a/lib/Kconfig.kcsan
-+++ b/lib/Kconfig.kcsan
-@@ -185,12 +185,6 @@ config KCSAN_WEAK_MEMORY
- 	bool "Enable weak memory modeling to detect missing memory barriers"
- 	default y
- 	depends on KCSAN_STRICT
--	# We can either let objtool nop __tsan_func_{entry,exit}() and builtin
--	# atomics instrumentation in .noinstr.text, or use a compiler that can
--	# implement __no_kcsan to really remove all instrumentation.
--	depends on !ARCH_WANTS_NO_INSTR || HAVE_NOINSTR_HACK || \
--		   CC_IS_GCC || CLANG_VERSION >= 140000
--	select OBJTOOL if HAVE_NOINSTR_HACK
- 	help
- 	  Enable support for modeling a subset of weak memory, which allows
- 	  detecting a subset of data races due to missing memory barriers.
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index d14f20ef1db1..efa4c060ff4e 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2453,16 +2453,6 @@ static bool is_profiling_func(const char *name)
- 	if (!strncmp(name, "__sanitizer_cov_", 16))
- 		return true;
+diff --git a/lib/Kconfig.kmsan b/lib/Kconfig.kmsan
+index 0541d7b079cc..7251b6b59e69 100644
+--- a/lib/Kconfig.kmsan
++++ b/lib/Kconfig.kmsan
+@@ -3,10 +3,7 @@ config HAVE_ARCH_KMSAN
+ 	bool
  
--	/*
--	 * Some compilers currently do not remove __tsan_func_entry/exit nor
--	 * __tsan_atomic_signal_fence (used for barrier instrumentation) with
--	 * the __no_sanitize_thread attribute, remove them. Once the kernel's
--	 * minimum Clang version is 14.0, this can be removed.
--	 */
--	if (!strncmp(name, "__tsan_func_", 12) ||
--	    !strcmp(name, "__tsan_atomic_signal_fence"))
--		return true;
+ config HAVE_KMSAN_COMPILER
+-	# Clang versions <14.0.0 also support -fsanitize=kernel-memory, but not
+-	# all the features necessary to build the kernel with KMSAN.
+-	depends on CC_IS_CLANG && CLANG_VERSION >= 140000
+-	def_bool $(cc-option,-fsanitize=kernel-memory -mllvm -msan-disable-checks=1)
++	def_bool CC_IS_CLANG
+ 
+ config KMSAN
+ 	bool "KMSAN: detector of uninitialized values use"
+@@ -28,15 +25,9 @@ config KMSAN
+ 
+ if KMSAN
+ 
+-config HAVE_KMSAN_PARAM_RETVAL
+-	# -fsanitize-memory-param-retval is supported only by Clang >= 14.
+-	depends on HAVE_KMSAN_COMPILER
+-	def_bool $(cc-option,-fsanitize=kernel-memory -fsanitize-memory-param-retval)
 -
- 	return false;
- }
- 
+ config KMSAN_CHECK_PARAM_RETVAL
+ 	bool "Check for uninitialized values passed to and returned from functions"
+ 	default y
+-	depends on HAVE_KMSAN_PARAM_RETVAL
+ 	help
+ 	  If the compiler supports -fsanitize-memory-param-retval, KMSAN will
+ 	  eagerly check every function parameter passed by value and every
 
 -- 
 2.50.1
