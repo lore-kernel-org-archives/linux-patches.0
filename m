@@ -1,33 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A60214807
-	for <patches@lists.linux.dev>; Thu, 21 Aug 2025 20:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F8A2877E0;
+	Thu, 21 Aug 2025 21:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755809559; cv=none; b=a64pD6uNcnS5looT9D4xkM8lXK973+taw4grrFEZ5/9QKF10wgt4wsfz4dVmyYVtzCaRyVnscqh0UNmH4OBWWcZ2JHkb2ittq68fTLfvNx7dZs1H24BwSs2VioNQFuEZ4H745cDYEgvc68F7Qg3amV/zS4I8CzniWFlVHH0bZtY=
+	t=1755810955; cv=none; b=nAg+BcYot4Kc5IFCLLUon+46mwrHLmrBGH8vxaf4UAgrZUWvYPf+9Z47NPlNvI4na2++oXx2lC7UyWpjk/zMEeEuCauS5WHAdMFE/UkpZUBSDC7BEo/nvynssYdMzb7ApYdYkF03eB1P4NzzoQakZ1lSTxYKh7i5CiLe0baVEyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755809559; c=relaxed/simple;
-	bh=ZXq0cWBSStXhb51kKFQC4dUe61b5u6QYn/AgF5xIQvc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=PcuFHimufJpeDiXDggztCNocb+GPf2nfAs12BC6banunXnurKsle0ZFtYxZi2rhSM3vkWwqxfudl+klmLL6kt86RXx0JWPWklzWoW7B7NVNMUqkoT2zIauDsqKVqiMZBgiOf/sY55P6vGLXWARc8LCrrWlmq/V5gMCOvAnqw4DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hYKGSRyo; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755810955; c=relaxed/simple;
+	bh=pOQAZPk+siIZkKBpkkHyydqf+iJWdipFSBVhf2HWXnk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fjqipuv3QvM0mXzW4qFfU8EBrZztAk8fS6HeEXNbtzhA55fkAL2jHyJOWQHBoASEJQip0KUNujo/B3lJsgz0B34w+O08oV74u6yOo5F+x241hpn5+qdjuBUUQ/6K3Uv/PlsZ8VweNoGgGPAnGjtI2PnqP0mL+/xIJHCZU7Ox07E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uQZ01Sr4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hYKGSRyo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6163C4CEEB;
-	Thu, 21 Aug 2025 20:52:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uQZ01Sr4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9A8C4CEEB;
+	Thu, 21 Aug 2025 21:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755809555;
-	bh=ZXq0cWBSStXhb51kKFQC4dUe61b5u6QYn/AgF5xIQvc=;
-	h=From:Date:Subject:To:Cc:From;
-	b=hYKGSRyo38KznToUG3pZaYfEu/90Vgbx8Am+nboT2XPHB6fpULYqfdku0F4hYJZh4
-	 Q1KgZitH5ykWBAgUUhNlb19mzG9TsGef9XczuzKVO8+o9NKyhnZTyGJFNuWyU4qHKS
-	 yhix1ZWQEg/+wGtB0DyrQlEWpnIF3whzkPDielcjXMUjt8+n+/vyZDp6SQrbFg3z8Y
-	 7QHs97uMDxAJ49VA5EGWW4LUfg/CI6hHq2lgPm6IKpzb0mbQBogO/SPYV4F4MY5ytc
-	 DD7M8X7/KcOiVXnkDJ9zyiHrYN/LsKX5YHUwHtLmhNXxMldkkZPg/56kxHIvPQ0228
-	 7wEIPenbNU+NA==
+	s=k20201202; t=1755810954;
+	bh=pOQAZPk+siIZkKBpkkHyydqf+iJWdipFSBVhf2HWXnk=;
+	h=From:Subject:Date:To:Cc:From;
+	b=uQZ01Sr4y5UBxZbhDZfvUDEeNvw7RqMPpecFt11yc7bsaW5ovYL0XUfzrWWsiNXzZ
+	 c8++tipPQjqwKYp0k0gDhrvljaAd7re4WVkFUF5WrFBqQqEIN8iR74Vee7BNt/CA+g
+	 /tG0RI1G9MmS/0WG3vAsp0ldl5sjGRh0EGxzNxVH1Tm0PYZoCyCQqG00dIozdKH/oE
+	 pE+AKTCsKwpp5uIo1NEGnmB8ycta84iEl1LU6UXiRm6kopTiphBIqE2wbsbInRJaJl
+	 x/kzDSN/k618a3jDJ0BA65cb43YnV0uqrkYoP768loOw8+WrPigrhNPUtuX3uXdZuq
+	 W/LW5Ik2tcyqg==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 21 Aug 2025 13:52:12 -0700
-Subject: [PATCH] drm/bridge: cdns-dsi: Select VIDEOMODE_HELPERS
+Subject: [PATCH v2 00/12] Bump minimum supported version of LLVM for
+ building the kernel to 15.0.0
+Date: Thu, 21 Aug 2025 14:15:37 -0700
+Message-Id: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,62 +38,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250821-cdns-videohelpers-v1-1-853e021908cf@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAPuGp2gC/x3MTQqAIBBA4avErBMa6Ue6SrQwnXIgVByIILp70
- vJbvPeAUGESmJsHCl0snGIFtg24YONBin016E4PndGonI+iLvaUAp2ZiqgJ0Wg7Yj9sDmqXC+1
- 8/89lfd8PGSK/JWMAAAA=
-X-Change-ID: 20250821-cdns-videohelpers-71182a6145bc
-To: Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Devarsh Thakkar <devarsht@ti.com>, 
- Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
- Aradhya Bhatia <aradhya.bhatia@linux.dev>
-Cc: dri-devel@lists.freedesktop.org, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAHqMp2gC/22NQQ6CMBBFr0Jm7ZhOzSi48h6GhcAAE6GQVhsN4
+ e5W3Lp8L/nvLxDEqwQ4Zwt4iRp0cgnsLoO6v7lOUJvEYI1lcyKD1XOccVSHwxBHjOKRGAu2B2p
+ JqiMzpOnspdXXlr2WiXsNj8m/t5dIX/sL5pT/D0ZCg3VeUWPaglnM5S7eybCffAfluq4fb81km
+ bkAAAA=
+X-Change-ID: 20250710-bump-min-llvm-ver-15-95231f1eb655
+To: linux-kernel@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>, 
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nicolas Schier <nsc@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+ linux-kbuild@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ Russell King <linux@armlinux.org.uk>, Ard Biesheuvel <ardb@kernel.org>, 
+ linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>, 
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org, 
+ Madhavan Srinivasan <maddy@linux.ibm.com>, 
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+ Christophe Leroy <christophe.leroy@csgroup.eu>, 
+ linuxppc-dev@lists.ozlabs.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alexandre Ghiti <alex@ghiti.fr>, linux-riscv@lists.infradead.org, 
+ Marco Elver <elver@google.com>, 
+ "Peter Zijlstra (Intel)" <peterz@infraded.org>, kasan-dev@googlegroups.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1202; i=nathan@kernel.org;
- h=from:subject:message-id; bh=ZXq0cWBSStXhb51kKFQC4dUe61b5u6QYn/AgF5xIQvc=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBnL2wUu/Ava5Wd5b7uH9R49VZHLAaf4Xh893hX9/mI8T
- 8e8D7vlO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEvnkzMvxbl1w0p8jm3vum
- e/XFvwP69KM2e3c8yOlRPxdZxdy9Zysjw7fjOeF/PbqNpHzt5JbMFrSvf3eQvyPBLfCveOiqJUZ
- +bAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3775; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=pOQAZPk+siIZkKBpkkHyydqf+iJWdipFSBVhf2HWXnk=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBnLexp5jt71uLBmLnPYsZJXWxZZ/jvpEC46Jadf9c7Uw
+ ETlF/9MO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEbpkw/I9487fgnDGfn0/r
+ 3M6FSqzXJdY9UrRtFZK/fJjFtn+JsiAjw7+LX1KSfVQYtyp9370iKU3tw4SvX9nUW67uL1go/I+
+ LnxkA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When no other driver selects CONFIG_VIDEOMODE_HELPERS but
-CONFIG_DRM_CDNS_DSI is enabled, there is a linker or modpost error:
+s390 and x86 have required LLVM 15 since
 
-  ERROR: modpost: "drm_display_mode_to_videomode" [drivers/gpu/drm/bridge/cadence/cdns-dsi.ko] undefined!
+  30d17fac6aae ("scripts/min-tool-version.sh: raise minimum clang version to 15.0.0 for s390")
+  7861640aac52 ("x86/build: Raise the minimum LLVM version to 15.0.0")
 
-Select VIDEOMODE_HELPERS to ensure that this helper function is
-available to the driver.
+respectively. This series bumps the rest of the kernel to 15.0.0 to
+match, which allows for a decent number of clean ups.
 
-Fixes: ce4bc5ca7c1d ("drm/bridge: cdns-dsi: Use video mode and clean up cdns_dsi_mode2cfg()")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On the distros front, we will only leave behind Debian Bookworm and
+Ubuntu Jammy. In both of those cases, builders / developers can either
+use the kernel.org toolchains or https://apt.llvm.org to get newer
+versions that will run on those distributions, if they cannot upgrade.
+
+  archlinux:latest              clang version 20.1.8
+  debian:oldoldstable-slim      Debian clang version 11.0.1-2
+  debian:oldstable-slim         Debian clang version 14.0.6
+  debian:stable-slim            Debian clang version 19.1.7 (3+b1)
+  debian:testing-slim           Debian clang version 19.1.7 (3+b1)
+  debian:unstable-slim          Debian clang version 19.1.7 (3+b2)
+  fedora:41                     clang version 19.1.7 (Fedora 19.1.7-4.fc41)
+  fedora:latest                 clang version 20.1.8 (Fedora 20.1.8-3.fc42)
+  fedora:rawhide                clang version 20.1.8 (Fedora 20.1.8-3.fc43)
+  opensuse/leap:latest          clang version 17.0.6
+  opensuse/tumbleweed:latest    clang version 20.1.8
+  ubuntu:focal                  clang version 10.0.0-4ubuntu1
+  ubuntu:jammy                  Ubuntu clang version 14.0.0-1ubuntu1.1
+  ubuntu:noble                  Ubuntu clang version 18.1.3 (1ubuntu1)
+  ubuntu:latest                 Ubuntu clang version 18.1.3 (1ubuntu1)
+  ubuntu:rolling                Ubuntu clang version 20.1.2 (0ubuntu1)
+  ubuntu:devel                  Ubuntu clang version 20.1.8 (0ubuntu1)
+
+I plan to carry this via the Kbuild tree with the appropriate acks.
+
 ---
- drivers/gpu/drm/bridge/cadence/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/gpu/drm/bridge/cadence/Kconfig b/drivers/gpu/drm/bridge/cadence/Kconfig
-index cced81633ddc..f1d8a8a151d8 100644
---- a/drivers/gpu/drm/bridge/cadence/Kconfig
-+++ b/drivers/gpu/drm/bridge/cadence/Kconfig
-@@ -6,6 +6,7 @@ config DRM_CDNS_DSI
- 	select DRM_PANEL_BRIDGE
- 	select GENERIC_PHY
- 	select GENERIC_PHY_MIPI_DPHY
-+	select VIDEOMODE_HELPERS
- 	depends on OF
- 	help
- 	  Support Cadence DPI to DSI bridge. This is an internal
+Changes in v2:
+- Add two new patches for RISC-V to clean up more LLD_VERSION checks
+  (Alex)
+- Pick up provided tags (thanks all!)
+- Link to v1: https://lore.kernel.org/r/20250818-bump-min-llvm-ver-15-v1-0-c8b1d0f955e0@kernel.org
 
 ---
-base-commit: 3f13bcc886fc034113cb75cb32b8d9db1216b846
-change-id: 20250821-cdns-videohelpers-71182a6145bc
+Nathan Chancellor (12):
+      kbuild: Bump minimum version of LLVM for building the kernel to 15.0.0
+      arch/Kconfig: Drop always true condition from RANDOMIZE_KSTACK_OFFSET
+      ARM: Clean up definition of ARM_HAS_GROUP_RELOCS
+      arm64: Remove tautological LLVM Kconfig conditions
+      mips: Unconditionally select ARCH_HAS_CURRENT_STACK_POINTER
+      powerpc: Drop unnecessary initializations in __copy_inst_from_kernel_nofault()
+      riscv: Remove version check for LTO_CLANG selects
+      riscv: Unconditionally use linker relaxation
+      riscv: Remove ld.lld version checks from many TOOLCHAIN_HAS configs
+      lib/Kconfig.debug: Drop CLANG_VERSION check from DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
+      objtool: Drop noinstr hack for KCSAN_WEAK_MEMORY
+      KMSAN: Remove tautological checks
+
+ Documentation/process/changes.rst |  2 +-
+ arch/Kconfig                      |  1 -
+ arch/arm/Kconfig                  | 11 ++++-------
+ arch/arm64/Kconfig                |  5 +----
+ arch/mips/Kconfig                 |  2 +-
+ arch/powerpc/include/asm/inst.h   |  4 ----
+ arch/riscv/Kconfig                | 21 +++++++--------------
+ arch/riscv/Makefile               |  9 +--------
+ lib/Kconfig.debug                 |  2 +-
+ lib/Kconfig.kcsan                 |  6 ------
+ lib/Kconfig.kmsan                 | 11 +----------
+ scripts/min-tool-version.sh       |  6 ++----
+ tools/objtool/check.c             | 10 ----------
+ 13 files changed, 19 insertions(+), 71 deletions(-)
+---
+base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+change-id: 20250710-bump-min-llvm-ver-15-95231f1eb655
 
 Best regards,
 --  
