@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFC72D7DE8;
-	Thu, 21 Aug 2025 21:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630A42D837C;
+	Thu, 21 Aug 2025 21:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755810966; cv=none; b=X2lna2+sZgePGpXFSMbRV0jYIZtsZlKaqUv8fposG46K0wqpyUj5vyBU+MfG8lweR5wDQTKJrprfptzmg5v4ZoOHtgijS5f5M2QFEWO5W9nDDEj4bjAeI/BwF7LO4BVZBEIome5slr9PPJm9EHu3P2fRTnu8s/WhZvv1uGCGfL4=
+	t=1755810968; cv=none; b=s6V2DiS7PClzexYzYU71oK6ICeZDIlZAzdDVj520LOhli4VgKx/I760z0yZiIfP0QuNb9nW/owJPAORNRmC/fWdw0tO9egMaj0yg32UHKncL0xhu7ljyW2BHldxnTf88rmvJ9k/KmcHPuJ4P+kY+PTccQvSHbL/GdRJxrDLw610=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755810966; c=relaxed/simple;
-	bh=k8t2LMzkHbTix/DiHIeNz0Pk9z8ZvuqlTYVV5CKGLxo=;
+	s=arc-20240116; t=1755810968; c=relaxed/simple;
+	bh=66yWNnzAMgeGutikhZxcg+vm/xcsjv8NO+92CQLqj+k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JA15D2ly8WHz0JPECKwT7aO54wvjrXKx7uKMdr+tsi7YaB+mcqM+hWF47/zpGGRRkLSnzNkHi+fZ8mLmKSrZS0jG10qJcgU6fTyTiBCsdZhwt/9O0UJWAPuvegxQtxg+q/mvTER2Ejy/jAQN8GTt4cnTu6rT9rMvkHc/8a7FAkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GD3v7Wtl; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=L80UoOX71IL0Ony/WMsIRjXpwuZC8GwMQsPgPTorTIK47qE7KGrGT9ycFSaMmby6cPSnLXbZ2gMYCVCVU0EIebJ1i4ZcYEnyR6poyaDO/7dmuyOGCz20wM7UOjArVeri+ttgyH9FARp1cynDJJOV0Ux5FuKeOTd+q1pfRjOjWH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cKYszfa7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GD3v7Wtl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCDAC113D0;
-	Thu, 21 Aug 2025 21:16:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cKYszfa7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C79C4CEF4;
+	Thu, 21 Aug 2025 21:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755810965;
-	bh=k8t2LMzkHbTix/DiHIeNz0Pk9z8ZvuqlTYVV5CKGLxo=;
+	s=k20201202; t=1755810968;
+	bh=66yWNnzAMgeGutikhZxcg+vm/xcsjv8NO+92CQLqj+k=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=GD3v7WtlG5xYR/Z3EK1MnOl2iyyRM1rMSx2wm9Ua0PX2kRPwtG8LJifnqf+9Hwd7B
-	 32ZCrQsemML2UayOB6DeS4YK8pe0XyMb89Te++sSe6Vog6m9tZjGoLxKAqo0E2CJFk
-	 xYVKu7iBHzizPxx8io2A2sYbqBUjuVQiLm0izajDr7WaMPF2dS9VsvxxuggrICGoJj
-	 bn8bX4seFrjEXTtlxAMNjOpOzDxq6OdxNQH+KI3j8C5uO6k/cVq6JOgi5iQer/XSrP
-	 F2RRD6H1JQxwgBTl4R+pJI5IMnIbqOAsg0SQeUzDAt9cVnUDsdoJXxcIIvQtiyWbRE
-	 n5dcfhppWLwzw==
+	b=cKYszfa7HOCM4dC8RjdGv7hpuvVFQ01VBOFV/Sbb+oBhSySTpc1tbuIWodOeDz4WT
+	 aJiMf7RBqTe/L/Y/TCcod78yhuJv2HZE16iiq7hsKIQBxENoYnyZJqAWFYA8UBrt4R
+	 Wjx5Q6YMzV5Tvzev7TzE/ToEsGozjnQcisFWmiZ6Zu+nvu+2ifN4Ka7qibNXDHuUoy
+	 wxRLCAnikKFGiSrE+bzshh1ElDZHmJChwGDZi726IhQtvEzjmjuABsrof0dTGf7GLA
+	 /7GwzeYV3WnivK1w32xmDRRZ6wNUhb9UB0qxYBiCewsT2Rs+ygtDK3x9cEfIhUj6uM
+	 0H/8V7/zF1ITg==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 21 Aug 2025 14:15:41 -0700
-Subject: [PATCH v2 04/12] arm64: Remove tautological LLVM Kconfig
- conditions
+Date: Thu, 21 Aug 2025 14:15:42 -0700
+Subject: [PATCH v2 05/12] mips: Unconditionally select
+ ARCH_HAS_CURRENT_STACK_POINTER
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250821-bump-min-llvm-ver-15-v2-4-635f3294e5f0@kernel.org>
+Message-Id: <20250821-bump-min-llvm-ver-15-v2-5-635f3294e5f0@kernel.org>
 References: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
 In-Reply-To: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
 To: linux-kernel@vger.kernel.org
@@ -46,54 +46,45 @@ Cc: Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
  Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
  Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
  llvm@lists.linux.dev, patches@lists.linux.dev, 
- Will Deacon <will@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
- linux-arm-kernel@lists.infradead.org
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
+ Nathan Chancellor <nathan@kernel.org>, linux-mips@vger.kernel.org
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1412; i=nathan@kernel.org;
- h=from:subject:message-id; bh=k8t2LMzkHbTix/DiHIeNz0Pk9z8ZvuqlTYVV5CKGLxo=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBnLe5rCEk5cW9wg6jDh4UvntsNHek/MaTbebxi/2m+5X
- 3ltuUFoRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjIE3dGhssZXDFm/YrseQVT
- Lpeqvv+hva78ke18lYRjTYU7ZaeWfWT4HxA96azS8XR/v3krUs34Wr7f+vrZO/2EVLPfhzU9dfY
- q/AA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1032; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=66yWNnzAMgeGutikhZxcg+vm/xcsjv8NO+92CQLqj+k=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBnLe5r2/+34JPGAh3GeQW72/mPFD5IOdzprXGOIe/t3S
+ mXh4QP3O0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEdJ4zMtxZvTrXS4P9fMrr
+ hdvD+T+vUGdP1nVLPnXyzQxL7o3X4y8z/OGrq7wU/ZLtzGkGA8Ebtidso/RTP69neZHA+4P54b/
+ 7jxkA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
 Now that the minimum supported version of LLVM for building the kernel
-has been bumped to 15.0.0, two sets of always true conditions can be
-safely removed in the arm64 Kconfig file.
+has been bumped to 15.0.0, the selection of
+ARCH_HAS_CURRENT_STACK_POINTER can be made unconditional since it is
+always true.
 
-Acked-by: Will Deacon <will@kernel.org>
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Reviewed-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-mips@vger.kernel.org
 ---
- arch/arm64/Kconfig | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/mips/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index e9bbfacc35a6..41c05562e9af 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -1492,8 +1492,6 @@ choice
- 
- config CPU_BIG_ENDIAN
- 	bool "Build big-endian kernel"
--	# https://github.com/llvm/llvm-project/commit/1379b150991f70a5782e9a143c2ba5308da1161c
--	depends on AS_IS_GNU || AS_VERSION >= 150000
- 	help
- 	  Say Y if you plan on running a kernel with a big-endian userspace.
- 
-@@ -2363,8 +2361,7 @@ config STACKPROTECTOR_PER_TASK
- 
- config UNWIND_PATCH_PAC_INTO_SCS
- 	bool "Enable shadow call stack dynamically using code patching"
--	# needs Clang with https://github.com/llvm/llvm-project/commit/de07cde67b5d205d58690be012106022aea6d2b3 incorporated
--	depends on CC_IS_CLANG && CLANG_VERSION >= 150000
-+	depends on CC_IS_CLANG
- 	depends on ARM64_PTR_AUTH_KERNEL && CC_HAS_BRANCH_PROT_PAC_RET
- 	depends on SHADOW_CALL_STACK
- 	select UNWIND_TABLES
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index caf508f6e9ec..bc7473505f4a 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -6,7 +6,7 @@ config MIPS
+ 	select ARCH_BINFMT_ELF_STATE if MIPS_FP_SUPPORT
+ 	select ARCH_HAS_CPU_CACHE_ALIASING
+ 	select ARCH_HAS_CPU_FINALIZE_INIT
+-	select ARCH_HAS_CURRENT_STACK_POINTER if !CC_IS_CLANG || CLANG_VERSION >= 140000
++	select ARCH_HAS_CURRENT_STACK_POINTER
+ 	select ARCH_HAS_DEBUG_VIRTUAL if !64BIT
+ 	select ARCH_HAS_DMA_OPS if MACH_JAZZ
+ 	select ARCH_HAS_FORTIFY_SOURCE
 
 -- 
 2.50.1
