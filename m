@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA531B4141;
-	Fri, 22 Aug 2025 12:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620161B4141;
+	Fri, 22 Aug 2025 12:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755866246; cv=none; b=BvV/7iZ6LrIwDi6eAkZh8nXgczRcS6AnxWSK/Z+hfUEqwuAgOWESZB2rwj1svLo2kpErTHW8u+c29hHP8tTtE5YEKH8RhJkIJ8q6b2dDqCM51+yMzYhBXEwggwGOFN2wRBcLg1pNFPafo3kzE/8OPQINOb2uC1fFxT5Fhk+EEf4=
+	t=1755866249; cv=none; b=B/vfEjEfAm0acGZ2B0aS7j6xLmVYeJ16a5a4r5P1uVKRdtbaDS95VloZRI0lT7Byfi5hTsJ5HA9qC3DhwPYrHnIKr0iTSDBirvaqXerFxVlFAHCL2s8yqeTxnaAMzTPogobC1M4sKmc/EN44C+iAFzviCBDQFl1NLlt0qfEE2z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755866246; c=relaxed/simple;
-	bh=I5lPdpGM3sx/awOxJitW2unPpBTT5p6+6VzDkw9yLoY=;
+	s=arc-20240116; t=1755866249; c=relaxed/simple;
+	bh=JCYw4chPzkfykbd5Lk+Pgt08lV8YUpKESk+pjw44gd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PNGv/MXkkotTQUe2JVuwngJPNVpJa+wJsUFUtJWZx58kXYjmPMfY29PdJ4rrUr4Dqp93N/3rVBLX1QgRV467iG5Jn/miR3B4JUmZQLSd3EEc+ayQHBS6JfJHvrRNk8h6tVFU8smCCpPclZnO6LXhA1w7u7L6UXKiIyaIPcWsa3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBrgBrk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YLX1sDj6Dcu5kUZCjhSufWPwqDAE4lRiC3FERA1eNzPD6rsHHoDfLS8uX4q1P+MiU7c7WELHTBcZTmSlkzsEwYkL6ll8OI28qVUqOi0jv5iZvRlF0GwgSAuLry6QspbO9WJ8GO0fUzhhLXzU0v4qmjPGUZVznqI3qTg6der+WHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zueI/eQN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBrgBrk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C44C113D0;
-	Fri, 22 Aug 2025 12:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zueI/eQN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7636EC4CEED;
+	Fri, 22 Aug 2025 12:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755866245;
-	bh=I5lPdpGM3sx/awOxJitW2unPpBTT5p6+6VzDkw9yLoY=;
+	s=korg; t=1755866248;
+	bh=JCYw4chPzkfykbd5Lk+Pgt08lV8YUpKESk+pjw44gd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBrgBrk2ThaAt8/lLEa+wpYszcIrZ+YwGzC3HBSglwSnvNDv8OwEm9Imo3DjFLW5n
-	 pGFh9blLItsiPXMNsc12SF6UWrGlTyA7YeQsRYqeQyyhkEjRj41cnhHDFMHg6WLGxI
-	 tJ8X+T18VBjDRh+Lyp+eWw90rJMJEGfn4CTnFzLw=
+	b=zueI/eQNci48ZzLNLJMFA40tP+RMNVNSpXt+UYE42Rr1zIvwAeQMxta4WS8ZXS6El
+	 DHpYe6s/2l1KTQbZw0hpqVq5o7mMVdUVIvNBrff2bA3MKxuLslWVUcrMajzJZga2ds
+	 zj179iNwQhrSVqJIfHWWBbP5teKrxVbbJGmNTtGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.16 3/9] ext4: fix stale data if it bail out of the extents mapping loop
-Date: Fri, 22 Aug 2025 14:37:03 +0200
-Message-ID: <20250822123516.911484923@linuxfoundation.org>
+Subject: [PATCH 6.16 4/9] ext4: refactor the block allocation process of ext4_page_mkwrite()
+Date: Fri, 22 Aug 2025 14:37:04 +0200
+Message-ID: <20250822123516.946374675@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250822123516.780248736@linuxfoundation.org>
 References: <20250822123516.780248736@linuxfoundation.org>
@@ -53,100 +53,151 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Yi <yi.zhang@huawei.com>
 
-commit ded2d726a3041fce8afd88005cbfe15cd4737702 upstream.
+commit 2bddafea3d0d85ee9ac3cf5ba9a4b2f2d2f50257 upstream.
 
-During the process of writing back folios, if
-mpage_map_and_submit_extent() exits the extent mapping loop due to an
-ENOSPC or ENOMEM error, it may result in stale data or filesystem
-inconsistency in environments where the block size is smaller than the
-folio size.
-
-When mapping a discontinuous folio in mpage_map_and_submit_extent(),
-some buffers may have already be mapped. If we exit the mapping loop
-prematurely, the folio data within the mapped range will not be written
-back, and the file's disk size will not be updated. Once the transaction
-that includes this range of extents is committed, this can lead to stale
-data or filesystem inconsistency.
-
-Fix this by submitting the current processing partially mapped folio.
+The block allocation process and error handling in ext4_page_mkwrite()
+is complex now. Refactor it by introducing a new helper function,
+ext4_block_page_mkwrite(). It will call ext4_block_write_begin() to
+allocate blocks instead of directly calling block_page_mkwrite().
+Preparing to implement retry logic in a subsequent patch to address
+situations where the reserved journal credits are insufficient.
+Additionally, this modification will help prevent potential deadlocks
+that may occur when waiting for folio writeback while holding the
+transaction handle.
 
 Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250707140814.542883-4-yi.zhang@huaweicloud.com
+Link: https://patch.msgid.link/20250707140814.542883-5-yi.zhang@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 50 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |   95 +++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 50 insertions(+), 45 deletions(-)
 
 --- a/fs/ext4/inode.c
 +++ b/fs/ext4/inode.c
-@@ -2363,6 +2363,47 @@ static int mpage_map_one_extent(handle_t
+@@ -6622,6 +6622,53 @@ static int ext4_bh_unmapped(handle_t *ha
+ 	return !buffer_mapped(bh);
  }
  
- /*
-+ * This is used to submit mapped buffers in a single folio that is not fully
-+ * mapped for various reasons, such as insufficient space or journal credits.
-+ */
-+static int mpage_submit_partial_folio(struct mpage_da_data *mpd)
++static int ext4_block_page_mkwrite(struct inode *inode, struct folio *folio,
++				   get_block_t get_block)
 +{
-+	struct inode *inode = mpd->inode;
-+	struct folio *folio;
-+	loff_t pos;
++	handle_t *handle;
++	loff_t size;
++	unsigned long len;
 +	int ret;
 +
-+	folio = filemap_get_folio(inode->i_mapping,
-+				  mpd->start_pos >> PAGE_SHIFT);
-+	if (IS_ERR(folio))
-+		return PTR_ERR(folio);
-+	/*
-+	 * The mapped position should be within the current processing folio
-+	 * but must not be the folio start position.
-+	 */
-+	pos = ((loff_t)mpd->map.m_lblk) << inode->i_blkbits;
-+	if (WARN_ON_ONCE((folio_pos(folio) == pos) ||
-+			 !folio_contains(folio, pos >> PAGE_SHIFT)))
-+		return -EINVAL;
++	handle = ext4_journal_start(inode, EXT4_HT_WRITE_PAGE,
++				    ext4_writepage_trans_blocks(inode));
++	if (IS_ERR(handle))
++		return PTR_ERR(handle);
 +
-+	ret = mpage_submit_folio(mpd, folio);
++	folio_lock(folio);
++	size = i_size_read(inode);
++	/* Page got truncated from under us? */
++	if (folio->mapping != inode->i_mapping || folio_pos(folio) > size) {
++		ret = -EFAULT;
++		goto out_error;
++	}
++
++	len = folio_size(folio);
++	if (folio_pos(folio) + len > size)
++		len = size - folio_pos(folio);
++
++	ret = ext4_block_write_begin(handle, folio, 0, len, get_block);
 +	if (ret)
-+		goto out;
-+	/*
-+	 * Update start_pos to prevent this folio from being released in
-+	 * mpage_release_unused_pages(), it will be reset to the aligned folio
-+	 * pos when this folio is written again in the next round. Additionally,
-+	 * do not update wbc->nr_to_write here, as it will be updated once the
-+	 * entire folio has finished processing.
-+	 */
-+	mpd->start_pos = pos;
-+out:
++		goto out_error;
++
++	if (!ext4_should_journal_data(inode)) {
++		block_commit_write(folio, 0, len);
++		folio_mark_dirty(folio);
++	} else {
++		ret = ext4_journal_folio_buffers(handle, folio, len);
++		if (ret)
++			goto out_error;
++	}
++	ext4_journal_stop(handle);
++	folio_wait_stable(folio);
++	return ret;
++
++out_error:
 +	folio_unlock(folio);
-+	folio_put(folio);
++	ext4_journal_stop(handle);
 +	return ret;
 +}
 +
-+/*
-  * mpage_map_and_submit_extent - map extent starting at mpd->lblk of length
-  *				 mpd->len and submit pages underlying it for IO
-  *
-@@ -2412,8 +2453,16 @@ static int mpage_map_and_submit_extent(h
- 			 */
- 			if ((err == -ENOMEM) ||
- 			    (err == -ENOSPC && ext4_count_free_clusters(sb))) {
--				if (progress)
-+				/*
-+				 * We may have already allocated extents for
-+				 * some bhs inside the folio, issue the
-+				 * corresponding data to prevent stale data.
-+				 */
-+				if (progress) {
-+					if (mpage_submit_partial_folio(mpd))
-+						goto invalidate_dirty_pages;
- 					goto update_disksize;
-+				}
- 				return err;
- 			}
- 			ext4_msg(sb, KERN_CRIT,
+ vm_fault_t ext4_page_mkwrite(struct vm_fault *vmf)
+ {
+ 	struct vm_area_struct *vma = vmf->vma;
+@@ -6633,8 +6680,7 @@ vm_fault_t ext4_page_mkwrite(struct vm_f
+ 	struct file *file = vma->vm_file;
+ 	struct inode *inode = file_inode(file);
+ 	struct address_space *mapping = inode->i_mapping;
+-	handle_t *handle;
+-	get_block_t *get_block;
++	get_block_t *get_block = ext4_get_block;
+ 	int retries = 0;
+ 
+ 	if (unlikely(IS_IMMUTABLE(inode)))
+@@ -6702,46 +6748,9 @@ vm_fault_t ext4_page_mkwrite(struct vm_f
+ 	/* OK, we need to fill the hole... */
+ 	if (ext4_should_dioread_nolock(inode))
+ 		get_block = ext4_get_block_unwritten;
+-	else
+-		get_block = ext4_get_block;
+ retry_alloc:
+-	handle = ext4_journal_start(inode, EXT4_HT_WRITE_PAGE,
+-				    ext4_writepage_trans_blocks(inode));
+-	if (IS_ERR(handle)) {
+-		ret = VM_FAULT_SIGBUS;
+-		goto out;
+-	}
+-	/*
+-	 * Data journalling can't use block_page_mkwrite() because it
+-	 * will set_buffer_dirty() before do_journal_get_write_access()
+-	 * thus might hit warning messages for dirty metadata buffers.
+-	 */
+-	if (!ext4_should_journal_data(inode)) {
+-		err = block_page_mkwrite(vma, vmf, get_block);
+-	} else {
+-		folio_lock(folio);
+-		size = i_size_read(inode);
+-		/* Page got truncated from under us? */
+-		if (folio->mapping != mapping || folio_pos(folio) > size) {
+-			ret = VM_FAULT_NOPAGE;
+-			goto out_error;
+-		}
+-
+-		len = folio_size(folio);
+-		if (folio_pos(folio) + len > size)
+-			len = size - folio_pos(folio);
+-
+-		err = ext4_block_write_begin(handle, folio, 0, len,
+-					     ext4_get_block);
+-		if (!err) {
+-			ret = VM_FAULT_SIGBUS;
+-			if (ext4_journal_folio_buffers(handle, folio, len))
+-				goto out_error;
+-		} else {
+-			folio_unlock(folio);
+-		}
+-	}
+-	ext4_journal_stop(handle);
++	/* Start journal and allocate blocks */
++	err = ext4_block_page_mkwrite(inode, folio, get_block);
+ 	if (err == -ENOSPC && ext4_should_retry_alloc(inode->i_sb, &retries))
+ 		goto retry_alloc;
+ out_ret:
+@@ -6750,8 +6759,4 @@ out:
+ 	filemap_invalidate_unlock_shared(mapping);
+ 	sb_end_pagefault(inode->i_sb);
+ 	return ret;
+-out_error:
+-	folio_unlock(folio);
+-	ext4_journal_stop(handle);
+-	goto out;
+ }
 
 
