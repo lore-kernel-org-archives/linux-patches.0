@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41951B4141;
-	Fri, 22 Aug 2025 12:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA531B4141;
+	Fri, 22 Aug 2025 12:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755866242; cv=none; b=NJITBw0hsOGEk+vXeDNjvPyQ6xXML3ePL5QwZENsZWEglY2/bEdG+WV0FOZ0h9Trwi6DzaMv8PblwMwsg36HQmJnAZLk3ZGmslFOU16fR1btV0bzieU76MIhNhAeKibJabJ5VP71lhesKNjG4cw6HUgCkmxCQ7VEwn4PHwrj58U=
+	t=1755866246; cv=none; b=BvV/7iZ6LrIwDi6eAkZh8nXgczRcS6AnxWSK/Z+hfUEqwuAgOWESZB2rwj1svLo2kpErTHW8u+c29hHP8tTtE5YEKH8RhJkIJ8q6b2dDqCM51+yMzYhBXEwggwGOFN2wRBcLg1pNFPafo3kzE/8OPQINOb2uC1fFxT5Fhk+EEf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755866242; c=relaxed/simple;
-	bh=elT8X7DYPgdZi3Sajd9EsCoSGB60VRYTMIRiIQ8KgF4=;
+	s=arc-20240116; t=1755866246; c=relaxed/simple;
+	bh=I5lPdpGM3sx/awOxJitW2unPpBTT5p6+6VzDkw9yLoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KzQMaF97kc8cGH/reL2nFYZPc+Z3Ur7iNiKhMbvFwo6PuPVlLJvidEiMsCdpAPMgYcrIY+lmCsZ9C3ksbRJX7/SNiXpNxUOjRiOdqazbx0CQudyJM9af77MpMuQHl6RaQVOLSNvp8ACehPp78fYPFImTK4tLlpxWxPHQmqnkEIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwplbCf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PNGv/MXkkotTQUe2JVuwngJPNVpJa+wJsUFUtJWZx58kXYjmPMfY29PdJ4rrUr4Dqp93N/3rVBLX1QgRV467iG5Jn/miR3B4JUmZQLSd3EEc+ayQHBS6JfJHvrRNk8h6tVFU8smCCpPclZnO6LXhA1w7u7L6UXKiIyaIPcWsa3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBrgBrk2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwplbCf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DC6C4CEED;
-	Fri, 22 Aug 2025 12:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBrgBrk2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C44C113D0;
+	Fri, 22 Aug 2025 12:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755866241;
-	bh=elT8X7DYPgdZi3Sajd9EsCoSGB60VRYTMIRiIQ8KgF4=;
+	s=korg; t=1755866245;
+	bh=I5lPdpGM3sx/awOxJitW2unPpBTT5p6+6VzDkw9yLoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwplbCf8B1kyrjJRTRdUVZDXlCwsNqJcWaQQabS5uu2Ll4sWe9+8fahiKAkg5tvPU
-	 dDAfF/n7kRUGnzSmVqIC+FlUOjO8xqs0OYR0HFYH29enDq7x78xDIK4ocSSv40T0iZ
-	 oCxQAZqYCoOh17ux2cPx/gPbveEnzplwqrV0EUkk=
+	b=KBrgBrk2ThaAt8/lLEa+wpYszcIrZ+YwGzC3HBSglwSnvNDv8OwEm9Imo3DjFLW5n
+	 pGFh9blLItsiPXMNsc12SF6UWrGlTyA7YeQsRYqeQyyhkEjRj41cnhHDFMHg6WLGxI
+	 tJ8X+T18VBjDRh+Lyp+eWw90rJMJEGfn4CTnFzLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.16 2/9] ext4: move the calculation of wbc->nr_to_write to mpage_folio_done()
-Date: Fri, 22 Aug 2025 14:37:02 +0200
-Message-ID: <20250822123516.876292565@linuxfoundation.org>
+Subject: [PATCH 6.16 3/9] ext4: fix stale data if it bail out of the extents mapping loop
+Date: Fri, 22 Aug 2025 14:37:03 +0200
+Message-ID: <20250822123516.911484923@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250822123516.780248736@linuxfoundation.org>
 References: <20250822123516.780248736@linuxfoundation.org>
@@ -54,41 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Yi <yi.zhang@huawei.com>
 
-commit f922c8c2461b022a2efd9914484901fb358a5b2a upstream.
+commit ded2d726a3041fce8afd88005cbfe15cd4737702 upstream.
 
-mpage_folio_done() should be a more appropriate place than
-mpage_submit_folio() for updating the wbc->nr_to_write after we have
-submitted a fully mapped folio. Preparing to make mpage_submit_folio()
-allows to submit partially mapped folio that is still under processing.
+During the process of writing back folios, if
+mpage_map_and_submit_extent() exits the extent mapping loop due to an
+ENOSPC or ENOMEM error, it may result in stale data or filesystem
+inconsistency in environments where the block size is smaller than the
+folio size.
 
+When mapping a discontinuous folio in mpage_map_and_submit_extent(),
+some buffers may have already be mapped. If we exit the mapping loop
+prematurely, the folio data within the mapped range will not be written
+back, and the file's disk size will not be updated. Once the transaction
+that includes this range of extents is committed, this can lead to stale
+data or filesystem inconsistency.
+
+Fix this by submitting the current processing partially mapped folio.
+
+Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20250707140814.542883-3-yi.zhang@huaweicloud.com
+Link: https://patch.msgid.link/20250707140814.542883-4-yi.zhang@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/ext4/inode.c |   51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 50 insertions(+), 1 deletion(-)
 
 --- a/fs/ext4/inode.c
 +++ b/fs/ext4/inode.c
-@@ -2027,6 +2027,7 @@ int ext4_da_get_block_prep(struct inode
- static void mpage_folio_done(struct mpage_da_data *mpd, struct folio *folio)
- {
- 	mpd->start_pos += folio_size(folio);
-+	mpd->wbc->nr_to_write -= folio_nr_pages(folio);
- 	folio_unlock(folio);
+@@ -2363,6 +2363,47 @@ static int mpage_map_one_extent(handle_t
  }
  
-@@ -2057,8 +2058,6 @@ static int mpage_submit_folio(struct mpa
- 	    !ext4_verity_in_progress(mpd->inode))
- 		len = size & (len - 1);
- 	err = ext4_bio_write_folio(&mpd->io_submit, folio, len);
--	if (!err)
--		mpd->wbc->nr_to_write -= folio_nr_pages(folio);
- 
- 	return err;
- }
+ /*
++ * This is used to submit mapped buffers in a single folio that is not fully
++ * mapped for various reasons, such as insufficient space or journal credits.
++ */
++static int mpage_submit_partial_folio(struct mpage_da_data *mpd)
++{
++	struct inode *inode = mpd->inode;
++	struct folio *folio;
++	loff_t pos;
++	int ret;
++
++	folio = filemap_get_folio(inode->i_mapping,
++				  mpd->start_pos >> PAGE_SHIFT);
++	if (IS_ERR(folio))
++		return PTR_ERR(folio);
++	/*
++	 * The mapped position should be within the current processing folio
++	 * but must not be the folio start position.
++	 */
++	pos = ((loff_t)mpd->map.m_lblk) << inode->i_blkbits;
++	if (WARN_ON_ONCE((folio_pos(folio) == pos) ||
++			 !folio_contains(folio, pos >> PAGE_SHIFT)))
++		return -EINVAL;
++
++	ret = mpage_submit_folio(mpd, folio);
++	if (ret)
++		goto out;
++	/*
++	 * Update start_pos to prevent this folio from being released in
++	 * mpage_release_unused_pages(), it will be reset to the aligned folio
++	 * pos when this folio is written again in the next round. Additionally,
++	 * do not update wbc->nr_to_write here, as it will be updated once the
++	 * entire folio has finished processing.
++	 */
++	mpd->start_pos = pos;
++out:
++	folio_unlock(folio);
++	folio_put(folio);
++	return ret;
++}
++
++/*
+  * mpage_map_and_submit_extent - map extent starting at mpd->lblk of length
+  *				 mpd->len and submit pages underlying it for IO
+  *
+@@ -2412,8 +2453,16 @@ static int mpage_map_and_submit_extent(h
+ 			 */
+ 			if ((err == -ENOMEM) ||
+ 			    (err == -ENOSPC && ext4_count_free_clusters(sb))) {
+-				if (progress)
++				/*
++				 * We may have already allocated extents for
++				 * some bhs inside the folio, issue the
++				 * corresponding data to prevent stale data.
++				 */
++				if (progress) {
++					if (mpage_submit_partial_folio(mpd))
++						goto invalidate_dirty_pages;
+ 					goto update_disksize;
++				}
+ 				return err;
+ 			}
+ 			ext4_msg(sb, KERN_CRIT,
 
 
