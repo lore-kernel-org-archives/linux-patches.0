@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AA51A01BF;
-	Fri, 22 Aug 2025 12:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135E085626;
+	Fri, 22 Aug 2025 12:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755866262; cv=none; b=OJXxyHomLqGIzKUFxZb/4hQBUEfenv9L4S05pVVsahvo/2nEKZiEGmGh64fSDrkCB9kLreHXhP0ESzVPOMI7SSvrX6W7QD0/JcsxCE3Uiu93/cu99uSiYRpn/K2nnYkCeGXX4qJxgyf7YTDMeNpWaHEzzq0Eg923kpv+ae/Fy5Q=
+	t=1755866265; cv=none; b=CMqOn7lWJuXyeDJGwUOIa4bO9EpJMDMbHVP6KDk4YxIF1nGDa3+NrrLvzV83nmbTrf8yAV5frJ4Bc5n8wUo+EcgUk/BR/8J5YKwSsw9nni9WvSEusahDk2A5z5/JPwcRekszUQ1BDQYwh05mY2ljJMmk7Hu7pKSKUkJqLHGdq1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755866262; c=relaxed/simple;
-	bh=nCsQVj/doiqtRsr20dwsi6rEaVYLuC4YiZCgTBdFNjI=;
+	s=arc-20240116; t=1755866265; c=relaxed/simple;
+	bh=1rDeCbSOahLaSxeD0glOp80VBxHAYT3FU4VxlHzLeJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0Mxtiy7I+jTv2+JH1VJh+5Q7eB0JGA2a8ABCNjGn58sKNHney2nu1TVARFuklNQMtP+aYClFkm8HF3cttkE+FkBx7tce1rwu9sSVfoF1aihtgMUctOfPEgRc5M63WOmxbiXDDFIRIbb4GjIIhI18q1PfGfe/JkVb8kzd03jREY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4mv3wvF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jbSDsZpj8eMgD3eCWmnoPWqFTkEFSjrJQx64CX40H7z7wxUckFySdKaG2Sy0AnqB0ThcdJGfzdRnFQi9P5ymRBTFPGr9Nzrx4znbTKHU9IWL5LCItUa2dEm3QEBlO3zVEzFal8uu/Upa1CvQyUDI3n5zxF5pET3GnoDr97O7A4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPfLgHyE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4mv3wvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4505CC113CF;
-	Fri, 22 Aug 2025 12:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPfLgHyE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305C9C4CEED;
+	Fri, 22 Aug 2025 12:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755866261;
-	bh=nCsQVj/doiqtRsr20dwsi6rEaVYLuC4YiZCgTBdFNjI=;
+	s=korg; t=1755866264;
+	bh=1rDeCbSOahLaSxeD0glOp80VBxHAYT3FU4VxlHzLeJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4mv3wvFgrKpKxRdPQezQbToNrlttHBsGVBBrQe6qpmShVGDmcdci8z4barf+l3bb
-	 01H1AR5jdVy8NehDCbovl3ObDKR3Z5x2LQdd2KXO/06xId6oPUk1Vm/Zr3cGCqb9TC
-	 InG6GXunQFskRggm18QCX7V03pqbCZfXVOOOSwH8=
+	b=bPfLgHyEkoIMVkwBQp2qF7bqpezQDYIzmKTRWz8qudZBPemM9bzJmwwMptRkADL6m
+	 7bwBqf62KpJNUdA8TmVrtHbYkAp27JtoRlbi1wv/OzidW8LrpoCAEUpkQ+xd3F8cTf
+	 CHgUjU3kuXcIVrY4vXfnWmkBY9fX5aQQkorlsdpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.16 8/9] ext4: reserved credits for one extent during the folio writeback
-Date: Fri, 22 Aug 2025 14:37:08 +0200
-Message-ID: <20250822123517.094089854@linuxfoundation.org>
+Subject: [PATCH 6.16 9/9] ext4: replace ext4_writepage_trans_blocks()
+Date: Fri, 22 Aug 2025 14:37:09 +0200
+Message-ID: <20250822123517.130341321@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250822123516.780248736@linuxfoundation.org>
 References: <20250822123516.780248736@linuxfoundation.org>
@@ -53,74 +53,200 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Yi <yi.zhang@huawei.com>
 
-commit bbbf150f3f85619569ac19dc6458cca7c492e715 upstream.
+commit 57661f28756c59510e31543520b5b8f5e591f384 upstream.
 
-After ext4 supports large folios, reserving journal credits for one
-maximum-ordered folio based on the worst case cenario during the
-writeback process can easily exceed the maximum transaction credits.
-Additionally, reserving journal credits for one page is also no
-longer appropriate.
-
-Currently, the folio writeback process can either extend the journal
-credits or initiate a new transaction if the currently reserved journal
-credits are insufficient. Therefore, it can be modified to reserve
-credits for only one extent at the outset. In most cases involving
-continuous mapping, these credits are generally adequate, and we may
-only need to perform some basic credit expansion. However, in extreme
-cases where the block size and folio size differ significantly, or when
-the folios are sufficiently discontinuous, it may be necessary to
-restart a new transaction and resubmit the folios.
+After ext4 supports large folios, the semantics of reserving credits in
+pages is no longer applicable. In most scenarios, reserving credits in
+extents is sufficient. Therefore, introduce ext4_chunk_trans_extent()
+to replace ext4_writepage_trans_blocks(). move_extent_per_page() is the
+only remaining location where we are still processing extents in pages.
 
 Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250707140814.542883-9-yi.zhang@huaweicloud.com
+Link: https://patch.msgid.link/20250707140814.542883-10-yi.zhang@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   25 ++++++++-----------------
- 1 file changed, 8 insertions(+), 17 deletions(-)
+ fs/ext4/ext4.h        |    2 +-
+ fs/ext4/extents.c     |    6 +++---
+ fs/ext4/inline.c      |    6 +++---
+ fs/ext4/inode.c       |   33 +++++++++++++++------------------
+ fs/ext4/move_extent.c |    3 ++-
+ fs/ext4/xattr.c       |    2 +-
+ 6 files changed, 25 insertions(+), 27 deletions(-)
 
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3064,9 +3064,9 @@ extern int ext4_punch_hole(struct file *
+ extern void ext4_set_inode_flags(struct inode *, bool init);
+ extern int ext4_alloc_da_blocks(struct inode *inode);
+ extern void ext4_set_aops(struct inode *inode);
+-extern int ext4_writepage_trans_blocks(struct inode *);
+ extern int ext4_normal_submit_inode_data_buffers(struct jbd2_inode *jinode);
+ extern int ext4_chunk_trans_blocks(struct inode *, int nrblocks);
++extern int ext4_chunk_trans_extent(struct inode *inode, int nrblocks);
+ extern int ext4_meta_trans_blocks(struct inode *inode, int lblocks,
+ 				  int pextents);
+ extern int ext4_zero_partial_blocks(handle_t *handle, struct inode *inode,
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5171,7 +5171,7 @@ ext4_ext_shift_path_extents(struct ext4_
+ 				credits = depth + 2;
+ 			}
+ 
+-			restart_credits = ext4_writepage_trans_blocks(inode);
++			restart_credits = ext4_chunk_trans_extent(inode, 0);
+ 			err = ext4_datasem_ensure_credits(handle, inode, credits,
+ 					restart_credits, 0);
+ 			if (err) {
+@@ -5431,7 +5431,7 @@ static int ext4_collapse_range(struct fi
+ 
+ 	truncate_pagecache(inode, start);
+ 
+-	credits = ext4_writepage_trans_blocks(inode);
++	credits = ext4_chunk_trans_extent(inode, 0);
+ 	handle = ext4_journal_start(inode, EXT4_HT_TRUNCATE, credits);
+ 	if (IS_ERR(handle))
+ 		return PTR_ERR(handle);
+@@ -5527,7 +5527,7 @@ static int ext4_insert_range(struct file
+ 
+ 	truncate_pagecache(inode, start);
+ 
+-	credits = ext4_writepage_trans_blocks(inode);
++	credits = ext4_chunk_trans_extent(inode, 0);
+ 	handle = ext4_journal_start(inode, EXT4_HT_TRUNCATE, credits);
+ 	if (IS_ERR(handle))
+ 		return PTR_ERR(handle);
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -570,7 +570,7 @@ static int ext4_convert_inline_data_to_e
+ 		return 0;
+ 	}
+ 
+-	needed_blocks = ext4_writepage_trans_blocks(inode);
++	needed_blocks = ext4_chunk_trans_extent(inode, 1);
+ 
+ 	ret = ext4_get_inode_loc(inode, &iloc);
+ 	if (ret)
+@@ -1874,7 +1874,7 @@ int ext4_inline_data_truncate(struct ino
+ 	};
+ 
+ 
+-	needed_blocks = ext4_writepage_trans_blocks(inode);
++	needed_blocks = ext4_chunk_trans_extent(inode, 1);
+ 	handle = ext4_journal_start(inode, EXT4_HT_INODE, needed_blocks);
+ 	if (IS_ERR(handle))
+ 		return PTR_ERR(handle);
+@@ -1994,7 +1994,7 @@ int ext4_convert_inline_data(struct inod
+ 			return 0;
+ 	}
+ 
+-	needed_blocks = ext4_writepage_trans_blocks(inode);
++	needed_blocks = ext4_chunk_trans_extent(inode, 1);
+ 
+ 	iloc.bh = NULL;
+ 	error = ext4_get_inode_loc(inode, &iloc);
 --- a/fs/ext4/inode.c
 +++ b/fs/ext4/inode.c
-@@ -2548,21 +2548,6 @@ update_disksize:
- 	return err;
+@@ -1296,7 +1296,8 @@ static int ext4_write_begin(struct file
+ 	 * Reserve one block more for addition to orphan list in case
+ 	 * we allocate blocks but write fails for some reason
+ 	 */
+-	needed_blocks = ext4_writepage_trans_blocks(inode) + 1;
++	needed_blocks = ext4_chunk_trans_extent(inode,
++			ext4_journal_blocks_per_folio(inode)) + 1;
+ 	index = pos >> PAGE_SHIFT;
+ 
+ 	if (ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) {
+@@ -4464,7 +4465,7 @@ int ext4_punch_hole(struct file *file, l
+ 		return ret;
+ 
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
+-		credits = ext4_writepage_trans_blocks(inode);
++		credits = ext4_chunk_trans_extent(inode, 2);
+ 	else
+ 		credits = ext4_blocks_for_truncate(inode);
+ 	handle = ext4_journal_start(inode, EXT4_HT_TRUNCATE, credits);
+@@ -4613,7 +4614,7 @@ int ext4_truncate(struct inode *inode)
+ 	}
+ 
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
+-		credits = ext4_writepage_trans_blocks(inode);
++		credits = ext4_chunk_trans_extent(inode, 1);
+ 	else
+ 		credits = ext4_blocks_for_truncate(inode);
+ 
+@@ -6256,25 +6257,19 @@ int ext4_meta_trans_blocks(struct inode
  }
  
--/*
-- * Calculate the total number of credits to reserve for one writepages
-- * iteration. This is called from ext4_writepages(). We map an extent of
-- * up to MAX_WRITEPAGES_EXTENT_LEN blocks and then we go on and finish mapping
-- * the last partial page. So in total we can map MAX_WRITEPAGES_EXTENT_LEN +
-- * bpp - 1 blocks in bpp different extents.
-- */
--static int ext4_da_writepages_trans_blocks(struct inode *inode)
--{
--	int bpp = ext4_journal_blocks_per_folio(inode);
--
--	return ext4_meta_trans_blocks(inode,
--				MAX_WRITEPAGES_EXTENT_LEN + bpp - 1, bpp);
--}
--
- static int ext4_journal_folio_buffers(handle_t *handle, struct folio *folio,
- 				     size_t len)
+ /*
+- * Calculate the total number of credits to reserve to fit
+- * the modification of a single pages into a single transaction,
+- * which may include multiple chunks of block allocations.
+- *
+- * This could be called via ext4_write_begin()
+- *
+- * We need to consider the worse case, when
+- * one new block per extent.
++ * Calculate the journal credits for modifying the number of blocks
++ * in a single extent within one transaction. 'nrblocks' is used only
++ * for non-extent inodes. For extent type inodes, 'nrblocks' can be
++ * zero if the exact number of blocks is unknown.
+  */
+-int ext4_writepage_trans_blocks(struct inode *inode)
++int ext4_chunk_trans_extent(struct inode *inode, int nrblocks)
  {
-@@ -2919,8 +2904,14 @@ retry:
- 		 * not supported by delalloc.
- 		 */
- 		BUG_ON(ext4_should_journal_data(inode));
--		needed_blocks = ext4_da_writepages_trans_blocks(inode);
+-	int bpp = ext4_journal_blocks_per_folio(inode);
+ 	int ret;
+ 
+-	ret = ext4_meta_trans_blocks(inode, bpp, bpp);
 -
-+		/*
-+		 * Calculate the number of credits needed to reserve for one
-+		 * extent of up to MAX_WRITEPAGES_EXTENT_LEN blocks. It will
-+		 * attempt to extend the transaction or start a new iteration
-+		 * if the reserved credits are insufficient.
-+		 */
-+		needed_blocks = ext4_chunk_trans_blocks(inode,
-+						MAX_WRITEPAGES_EXTENT_LEN);
- 		/* start a new transaction */
- 		handle = ext4_journal_start_with_reserve(inode,
- 				EXT4_HT_WRITE_PAGE, needed_blocks, rsv_blocks);
++	ret = ext4_meta_trans_blocks(inode, nrblocks, 1);
+ 	/* Account for data blocks for journalled mode */
+ 	if (ext4_should_journal_data(inode))
+-		ret += bpp;
++		ret += nrblocks;
+ 	return ret;
+ }
+ 
+@@ -6652,10 +6647,12 @@ static int ext4_block_page_mkwrite(struc
+ 	handle_t *handle;
+ 	loff_t size;
+ 	unsigned long len;
++	int credits;
+ 	int ret;
+ 
+-	handle = ext4_journal_start(inode, EXT4_HT_WRITE_PAGE,
+-				    ext4_writepage_trans_blocks(inode));
++	credits = ext4_chunk_trans_extent(inode,
++			ext4_journal_blocks_per_folio(inode));
++	handle = ext4_journal_start(inode, EXT4_HT_WRITE_PAGE, credits);
+ 	if (IS_ERR(handle))
+ 		return PTR_ERR(handle);
+ 
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -280,7 +280,8 @@ move_extent_per_page(struct file *o_filp
+ 	 */
+ again:
+ 	*err = 0;
+-	jblocks = ext4_writepage_trans_blocks(orig_inode) * 2;
++	jblocks = ext4_meta_trans_blocks(orig_inode, block_len_in_page,
++					 block_len_in_page) * 2;
+ 	handle = ext4_journal_start(orig_inode, EXT4_HT_MOVE_EXTENTS, jblocks);
+ 	if (IS_ERR(handle)) {
+ 		*err = PTR_ERR(handle);
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -962,7 +962,7 @@ int __ext4_xattr_set_credits(struct supe
+ 	 * so we need to reserve credits for this eventuality
+ 	 */
+ 	if (inode && ext4_has_inline_data(inode))
+-		credits += ext4_writepage_trans_blocks(inode) + 1;
++		credits += ext4_chunk_trans_extent(inode, 1) + 1;
+ 
+ 	/* We are done if ea_inode feature is not enabled. */
+ 	if (!ext4_has_feature_ea_inode(sb))
 
 
