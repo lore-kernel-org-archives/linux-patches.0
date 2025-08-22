@@ -1,120 +1,117 @@
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0072FB61A;
-	Fri, 22 Aug 2025 12:38:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D898719007D;
+	Fri, 22 Aug 2025 12:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755866299; cv=none; b=YkTcOp3R6iuq0F/K2gJRiSoX6ST/dDBbWpT5XpxLzm07aQ+G8FN98A0NZ7a5tUZnC0XWksJsS79xU+xNZzhepdqWQ/r7zj3ePirBnxgN+3FIwfYpZV0zYjAGT+NxLxyyR3LqU1cnv1yXVF0Ly8DKh+9t0IGj+hnSv/TkH1XQOyI=
+	t=1755866469; cv=none; b=kHdnu2SfOTdT0CbcxpuqZsUfk/jlDPBapSL3MqY3yRiQYYoYol+nRWCV/DpqpDD0QRLQdIAHkm03Oaoy+RoUkQYXOXG8Un3vzyZCOVS9JGSIK5HeWHb40YKmZfuncxRmLK7iur3EMs+WBM6GfkFGKapyFAkonHl8ZmOGFkfCcFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755866299; c=relaxed/simple;
-	bh=vTU6/21/tsv+e8WPOQeqgNrvSRjoFUgsFJUPIX7P6iE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JEU0XNqewd55JZ5Od9JJL6rU/3OT/nz+PEbNr9F4gTV0w00Cguw9ajBTVD4JNfdBZ/Pm1/5BqF1N9exmTWdpLy/Jtv/sH6m7zCpsBmdYuRauJyiHARCu47fLSTzCzHkDwh89qN012v4BqMIhj4ac2V+IZ2F61FA4q4x39GY0oBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ghiti.fr; spf=pass smtp.mailfrom=ghiti.fr; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ghiti.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ghiti.fr
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E13EB443CB;
-	Fri, 22 Aug 2025 12:38:11 +0000 (UTC)
-Message-ID: <30ebd580-80e7-456e-8628-9d0a08dced95@ghiti.fr>
-Date: Fri, 22 Aug 2025 14:38:08 +0200
+	s=arc-20240116; t=1755866469; c=relaxed/simple;
+	bh=/nP5nOeslRb8udPMkJJlnSbloy7uRJBAUq0VTBExCok=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bpWR96Sg7Jec+RIF0/m0JkoEFwggARP0fhPKPqYwnjE4cS68v1Ba+y1p1uJwBp9vcYeKhyT7BUcIgB7t+ZhdVqjZ74EClUqtRQRT9Zma22G0WcArr2wtibzFjoJ2/9DbKZNicjM/bWBm2MtpWgSzYkIiZgK2YDEXn3LXS0aVVFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwWpU4pg; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwWpU4pg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2720C4CEED;
+	Fri, 22 Aug 2025 12:41:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1755866468;
+	bh=/nP5nOeslRb8udPMkJJlnSbloy7uRJBAUq0VTBExCok=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jwWpU4pglCONCINeNN1LegyA9F+ogN37/JzXnEG2ULT/YLKMWxRc2phsXKwNnDOBw
+	 dSsZXqvAREhrYASPBvr1VH7eAYMtu72aM2+aQkS5ATxMNdqHlu78pL6CoC5+H2K/RF
+	 hYsBZCqhTjQF6REKTZ6xx3/OdfBb8QbLY2lOsNf8=
+Date: Fri, 22 Aug 2025 14:41:05 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Zhang Yi <yi.zhang@huaweicloud.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	linux-ext4 <linux-ext4@vger.kernel.org>,
+	linux-fsdevel@vger.kernel.org, Joseph Qi <jiangqi903@gmail.com>,
+	Jan Kara <jack@suse.cz>, Theodore Ts'o <tytso@mit.edu>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ben Copeland <benjamin.copeland@linaro.org>
+Subject: Re: [PATCH 6.16 000/564] 6.16.2-rc2 review
+Message-ID: <2025082200-straw-grunt-0009@gregkh>
+References: <20250819122844.483737955@linuxfoundation.org>
+ <CA+G9fYsjac=SLhzVCZqVHnHGADv1KmTAnTdfcrnhnhcLuko+SQ@mail.gmail.com>
+ <aKg41GMffk9t1p56@stanley.mountain>
+ <2025082242-skyward-mascot-f992@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/12] riscv: Remove ld.lld version checks from many
- TOOLCHAIN_HAS configs
-To: Nathan Chancellor <nathan@kernel.org>, linux-kernel@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
- Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
- llvm@lists.linux.dev, patches@lists.linux.dev,
- Palmer Dabbelt <palmer@dabbelt.com>, linux-riscv@lists.infradead.org
-References: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
- <20250821-bump-min-llvm-ver-15-v2-9-635f3294e5f0@kernel.org>
-Content-Language: en-US
-From: Alexandre Ghiti <alex@ghiti.fr>
-In-Reply-To: <20250821-bump-min-llvm-ver-15-v2-9-635f3294e5f0@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieefjeekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttddvjeenucfhrhhomheptehlvgigrghnughrvgcuifhhihhtihcuoegrlhgvgiesghhhihhtihdrfhhrqeenucggtffrrghtthgvrhhnpedthfelfeejgeehveegleejleelgfevhfekieffkeeujeetfedvvefhledvgeegieenucfkphepkedtrddvudegrddvuddurddvtddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepkedtrddvudegrddvuddurddvtddupdhhvghloheplgduledvrdduieekrdektddrudeffegnpdhmrghilhhfrhhomheprghlvgigsehghhhithhirdhfrhdpnhgspghrtghpthhtohepuddupdhrtghpthhtohepnhgrthhhrghnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrrhhnugesrghrnhgusgdruggvpdhrtghpthhtohepkhgvvghssehkvghrnhgvlhdrohhrghdprhgtphhtthhopehnihgtkhdruggvshgruhhlnhhivghrshdolhhkmhhlsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhorhgsohesghhoohhgl
- hgvrdgtohhmpdhrtghpthhtohepjhhushhtihhnshhtihhtthesghhoohhglhgvrdgtohhmpdhrtghpthhtoheplhhlvhhmsehlihhsthhsrdhlihhnuhigrdguvghv
-X-GND-Sasl: alex@ghiti.fr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2025082242-skyward-mascot-f992@gregkh>
 
-On 8/21/25 23:15, Nathan Chancellor wrote:
-> Now that the minimum supported version of LLVM for building the kernel
-> has been bumped to 15.0.0, several ld.lld version checks become
-> tautological, as they are always true. Replace them with a simple
-> CONFIG_LD_IS_LLD check.
->
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> Cc: Palmer Dabbelt <palmer@dabbelt.com>
-> Cc: Alexandre Ghiti <alex@ghiti.fr>
-> Cc: linux-riscv@lists.infradead.org
-> ---
->   arch/riscv/Kconfig | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-> index d482236e93f4..850ba4b4b534 100644
-> --- a/arch/riscv/Kconfig
-> +++ b/arch/riscv/Kconfig
-> @@ -620,7 +620,7 @@ config TOOLCHAIN_HAS_V
->   	default y
->   	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64imv)
->   	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32imv)
-> -	depends on LLD_VERSION >= 140000 || LD_VERSION >= 23800
-> +	depends on LD_IS_LLD || LD_VERSION >= 23800
->   	depends on AS_HAS_OPTION_ARCH
->   
->   config RISCV_ISA_V
-> @@ -721,7 +721,7 @@ config TOOLCHAIN_HAS_ZBB
->   	default y
->   	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64ima_zbb)
->   	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32ima_zbb)
-> -	depends on LLD_VERSION >= 150000 || LD_VERSION >= 23900
-> +	depends on LD_IS_LLD || LD_VERSION >= 23900
->   	depends on AS_HAS_OPTION_ARCH
->   
->   # This symbol indicates that the toolchain supports all v1.0 vector crypto
-> @@ -736,7 +736,7 @@ config TOOLCHAIN_HAS_ZBA
->   	default y
->   	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64ima_zba)
->   	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32ima_zba)
-> -	depends on LLD_VERSION >= 150000 || LD_VERSION >= 23900
-> +	depends on LD_IS_LLD || LD_VERSION >= 23900
->   	depends on AS_HAS_OPTION_ARCH
->   
->   config RISCV_ISA_ZBA
-> @@ -771,7 +771,7 @@ config TOOLCHAIN_HAS_ZBC
->   	default y
->   	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64ima_zbc)
->   	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32ima_zbc)
-> -	depends on LLD_VERSION >= 150000 || LD_VERSION >= 23900
-> +	depends on LD_IS_LLD || LD_VERSION >= 23900
->   	depends on AS_HAS_OPTION_ARCH
->   
->   config RISCV_ISA_ZBC
-> @@ -794,7 +794,7 @@ config TOOLCHAIN_HAS_ZBKB
->   	default y
->   	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64ima_zbkb)
->   	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32ima_zbkb)
-> -	depends on LLD_VERSION >= 150000 || LD_VERSION >= 23900
-> +	depends on LD_IS_LLD || LD_VERSION >= 23900
->   	depends on AS_HAS_OPTION_ARCH
->   
->   config RISCV_ISA_ZBKB
->
+On Fri, Aug 22, 2025 at 02:14:10PM +0200, Greg Kroah-Hartman wrote:
+> On Fri, Aug 22, 2025 at 12:31:00PM +0300, Dan Carpenter wrote:
+> > On Wed, Aug 20, 2025 at 08:06:01PM +0530, Naresh Kamboju wrote:
+> > > On Tue, 19 Aug 2025 at 18:02, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > This is the start of the stable review cycle for the 6.16.2 release.
+> > > > There are 564 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Thu, 21 Aug 2025 12:27:23 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > > > The whole patch series can be found in one patch at:
+> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.16.2-rc2.gz
+> > > > or in the git tree and branch at:
+> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.16.y
+> > > > and the diffstat can be found below.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > > 
+> > > As I have reported last week on 6.16.1-rc1 as regression is
+> > > still noticed on 6.16.2-rc2.
+> > > 
+> > > WARNING: CPU: 0 PID: 7012 at fs/jbd2/transaction.c:334 start_this_handle
+> > > 
+> > > Full test log:
+> > > ------------[ cut here ]------------
+> > > [  153.965287] WARNING: CPU: 0 PID: 7012 at fs/jbd2/transaction.c:334
+> > > start_this_handle+0x4df/0x500
+> > 
+> > The problem is that we only applied the last two patches in:
+> > https://lore.kernel.org/linux-ext4/20250707140814.542883-1-yi.zhang@huaweicloud.com/
+> > 
+> > Naresh is on vacation until Monday, but he tested the patchset on
+> > linux-next and it fixed the issues.  So we need to cherry-pick the
+> > following commits.
+> > 
+> > 1bfe6354e097 ext4: process folios writeback in bytes
+> > f922c8c2461b ext4: move the calculation of wbc->nr_to_write to mpage_folio_done()
+> > ded2d726a304 ext4: fix stale data if it bail out of the extents mapping loop
+> > 2bddafea3d0d ext4: refactor the block allocation process of ext4_page_mkwrite()
+> > e2c4c49dee64 ext4: restart handle if credits are insufficient during allocating blocks
+> > 6b132759b0fe ext4: enhance tracepoints during the folios writeback
+> > 95ad8ee45cdb ext4: correct the reserved credits for extent conversion
+> > bbbf150f3f85 ext4: reserved credits for one extent during the folio writeback
+> > 57661f28756c ext4: replace ext4_writepage_trans_blocks()
+> > 
+> > They all apply cleanly to 6.16.3-rc1.
+> 
+> Ugh.  Ok, let me go push out a -rc for JUST this issue now so that
+> people can test and I can get it released for those that are tripped up
+> by it.  Thanks for the information, much appreciated.
 
-Acked-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-
-Thanks for the v2!
-
-Alex
-
+Now pushed out.
