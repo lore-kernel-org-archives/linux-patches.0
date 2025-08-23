@@ -1,127 +1,233 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2E419F135;
-	Sat, 23 Aug 2025 05:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BD523BCFD
+	for <patches@lists.linux.dev>; Sat, 23 Aug 2025 08:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755926880; cv=none; b=hI/ydkjaPsYtcpg4kdEM2HTaHFUr4IXH2CjJk9cW1g1tVsxm3i7mQpoRXZQg/E786n0NfbL4xEKYSPwjPwqRA26Mu0SgKri7xICVfW1U2uwAh1eHxuNCRKWin0jfMU0xGd+sZD1wWij+7Bnp1KyZvfWB224u1lWuCUjNuLJ9XjM=
+	t=1755937982; cv=none; b=IZNAa/F1XvfDp6yh+g+uYuC0a+T1CwBJDyiXZFXljKeh9gRvPndoKBx7fhMfZl+wmVqinybxobQGU8s8+voKmCvcbSRoS5MiE05nA0X6/P5pfiBPDd0Eb3kKMhN+cR3Cp5+Yf7RhKTkWMbWjgV2OxG5xvcIr9u/z2JDQZz1sbN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755926880; c=relaxed/simple;
-	bh=+fImkWUgacin2LSzWHOkqtqjjNvlT3yYhpgVrHNgVg0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B5IaQ5j44J+qyvrHpzZqtRYJEusZJ4KQkn/GyVThelX502zDA4QL8gKBUahLJsq+Z0Mi6k3HrGDViM7I2qbrqDIWFXlUa1P4TshL9yRSRwGkZRJmlIRAkA11UO6S0S7U+GqIFqWWdRjeju/z/iJs5knjoMEusUDUAFIu3ZcJRKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IXn1jbMz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755937982; c=relaxed/simple;
+	bh=cC2R7dIC+jmKJ5KWCAUHe4UcJxwQJaOLa1CkUnwlYEg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u3Yi/rtY8fvGNIiUJ1GNCjPrxiZoAbER2c68leM5uuByL5wKaiIMWYhOTZ7N/y89ZZPUgZaqNEJgA5u0/stofHNoRvzYwV5teDNKGfxQHbvkjLjBavmnaA8dA5v+6tS0AwAH+1LTgCiTMU1tEZmLzi0eazztG000dVX11Thh5t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vhr31u9x; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IXn1jbMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537B8C4CEE7;
-	Sat, 23 Aug 2025 05:27:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755926879;
-	bh=+fImkWUgacin2LSzWHOkqtqjjNvlT3yYhpgVrHNgVg0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IXn1jbMzld+vE1HJyoRCdzBCg4GcYpRUPyzrcRFDcIj/m3PrJvLDvozXB0OOGlpet
-	 mM44oqPnN4Cq6hfsYkrbP9uXsmDTvuBGDOA/y8KDF6DXENZ7iSE6BD26MdXxc/XJaC
-	 5ti3q7tnFBULKx8eVnk1qq9DlDISNhak35x7x2OxFTSItOHfHBSCHvLG6B0YavZhus
-	 0/eknHbzJrNvQ+ZDJQBsWNPkxu8Lvz8HVTxPAwYEKmbPLbEsm8MbMaaDz6CljSbO9Q
-	 ng7r3+qm3M1j3Ti+5JTsZYFSdTL5/Mridb7+7f7+eHi6hDO79hY7MnoIOySQo9N6QE
-	 PGLuK+xi7B2Fw==
-Date: Fri, 22 Aug 2025 22:27:55 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Dongsheng Yang <dongsheng.yang@linux.dev>
-Cc: Zheng Gu <cengku@gmail.com>, Mikulas Patocka <mpatocka@redhat.com>,
-	dm-devel@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH] dm-pcache: Fix 64-bit division for 32-bit platforms in
- get_kset_id()
-Message-ID: <20250823052755.GB4056405@ax162>
-References: <20250821-dm-pcache-fix-32-bit-div-err-v1-1-cab5448f44e6@kernel.org>
- <2f5aa331-aa47-4e81-9bb3-65c771b39913@linux.dev>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vhr31u9x"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b49cfd967b9so125835a12.3
+        for <patches@lists.linux.dev>; Sat, 23 Aug 2025 01:33:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755937980; x=1756542780; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=upHWeEzdtTZrqoNSv+NWSJs+RM6eMBq+4oXrZP7WELw=;
+        b=Vhr31u9xeyhX43ULSSZ2Yl9Sy4322rh5vo0kEY5eK4dja6fDqZyJ+OzbY8HhyNHZKb
+         BHT/1hqGf42KvA1791a+2/5UawYnf4IaEYi69xm6ulIcEDBdaLrmVTBVJ+WrQIavM9T5
+         qpk4rh/YTN2KyWPLvIH9MDoDQpPjis+G+tavYlvqar2fAPHI3oy9e197lSC8lhoCWZec
+         K/HksmQ9gNGhF0F9gEtmNr62OLbwMz+jM3aPfn0gGToIZDGDizS1we1W6SYAuKcKi7PH
+         6RR7IPRABUmrTrQ3N12nR4HJVunUTC1cxMn9zgxIh+CaLVejfbQPlnLRmatM/oRLNU50
+         NpKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755937980; x=1756542780;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=upHWeEzdtTZrqoNSv+NWSJs+RM6eMBq+4oXrZP7WELw=;
+        b=BZ/6+XOvJ23rcHwMcno80J/0a8Xnl2wQzpy6VhcAxtTbIoKhwZEVHFjaCkk+MoBnk0
+         yhx5xYqnx0oqWN96mpIzaiC6XjM/qf+PxXaVqI5oQpfvPVSx70IrwoAS8B/Feqaj+3xs
+         H1kpo/NjkW6iQXF2IW0vf81J7mV7ixP8wP73cEa8o21Dci1ZcSneptECa7YAi1FtnSQb
+         Wvh9D0XG8b1Pkkek68sOFA/dJixYXRctorUrn0BQ38IXcWtMucDNX7fMOPaNEPNj7La+
+         MmwhuFGSSqRMGWk6aJPs0wSb/V0lMhRukec9KaHMDnVN1nSRz1NA3OL+U9EEimrysfTc
+         Nc0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXAuJW1j54X/CIkByZTy0LeMTtLOQiZRPrccMDrsbVRcJxaaO0I0mdi+RIeKOtMfWIQgPWe9U0A@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy47vM3So4q716LWCC9Eofz2ZsqSeyBpY3khp3bCjm9F7ihoXw8
+	UnewYtYQXdQrn0yA1iDCKbYZpENA4+lgpuQHux+qioFiU9aJSB74LbaNnfqjbsWpYlrBBtsQD/R
+	7y+pIErDlssoOQTYoF6XEscMiyufekfhqvlqiaDPL6Q==
+X-Gm-Gg: ASbGncsrAEuGfhxQQMxBCg+tuDnrfSsXcj/o9AUdYO3YEEyvY2H53JfPTMAEUYYKcbJ
+	3VATig6STx3f1pjZBK9DAtSIzuQEZdN2zOaG5FyH9KIf8lUUPb5f6lCl4iZfi4sfQuw21q/nSvM
+	iJAQCO2OmfwlZBimBmJWEwRNG3JrOfSo7t7pGS7qQVMwgCHGUbZYJgoNCWW36wOzOkeWfZVNo4K
+	kiMreka5pD8zPoUpdsWp5DlRho56u56YxCRzC2R
+X-Google-Smtp-Source: AGHT+IEQN4YSKtPymn606DVFVKKtzEvavaQRMuxmngqfsot0SA3jrZ9khNjbXYGtoFrClXENcn7IoJUJduyhb8F4KS8=
+X-Received: by 2002:a17:903:2a8b:b0:240:7753:3bec with SMTP id
+ d9443c01a7336-2462ef98a97mr61538175ad.51.1755937980301; Sat, 23 Aug 2025
+ 01:33:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2f5aa331-aa47-4e81-9bb3-65c771b39913@linux.dev>
+References: <20250822123516.780248736@linuxfoundation.org>
+In-Reply-To: <20250822123516.780248736@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Sat, 23 Aug 2025 14:02:48 +0530
+X-Gm-Features: Ac12FXydinZ-k0JFp2vC7EjM9psfTWKA5t0I3ZApJXylszGwy9_XUiFZWgGwYX8
+Message-ID: <CA+G9fYsNyR2RSUFEn=1v157mtJ3vrL=__vWidYfWrbaYHe6JoA@mail.gmail.com>
+Subject: Re: [PATCH 6.16 0/9] 6.16.3-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Dongsheng,
+On Fri, 22 Aug 2025 at 18:07, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.16.3 release.
+> There are 9 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 24 Aug 2025 12:35:08 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.16.3-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.16.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-On Fri, Aug 22, 2025 at 02:53:42PM +0800, Dongsheng Yang wrote:
-> 
-> 在 8/22/2025 4:09 AM, Nathan Chancellor 写道:
-> > When building for a 32-bit platform (such as ARCH=i386 allmodconfig),
-> > there is a modpost error:
-> > 
-> >    ERROR: modpost: "__umoddi3" [drivers/md/dm-pcache/dm-pcache.ko] undefined!
-> > 
-> > Hacking up the driver Makefile to allow building into the kernel shows
-> > that the division comes from get_kset_id(), which is inlined into
-> > cache_key_append() in cache_key.c.
-> > 
-> > Use the helper div_u64_rem() to avoid emitting a libcall on 32-bit targets.
-> > 
-> > Fixes: fd5cc4922bef ("dm-pcache: add persistent cache target in device-mapper")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> >   drivers/md/dm-pcache/cache.h | 4 +++-
-> >   1 file changed, 3 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/md/dm-pcache/cache.h b/drivers/md/dm-pcache/cache.h
-> > index b3b361cc406e..b10e721ab1b7 100644
-> > --- a/drivers/md/dm-pcache/cache.h
-> > +++ b/drivers/md/dm-pcache/cache.h
-> > @@ -373,7 +373,9 @@ static inline void *get_key_head_addr(struct pcache_cache *cache)
-> >   static inline u32 get_kset_id(struct pcache_cache *cache, u64 off)
-> >   {
-> > -	return (off >> PCACHE_CACHE_SUBTREE_SIZE_SHIFT) % cache->n_ksets;
-> > +	u32 rem;
-> > +	div_u64_rem(off >> PCACHE_CACHE_SUBTREE_SIZE_SHIFT, cache->n_ksets, &rem);
-> > +	return rem;
-> >   }
-> 
-> 
-> Hi Nathan,
-> 
-> Thanx for your fix. It looks good to me.
-> 
-> Just one nit about the variable name. I prefer kset_id to rem.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Thanks, seems entirely reasonable, thanks for sending the diff!
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> Mikulas, if this looks good to you, could you apply this change to dm-6.18?
-> 
-> diff --git a/drivers/md/dm-pcache/cache.h b/drivers/md/dm-pcache/cache.h
-> index b3b361cc406e..f005c9d9a7aa 100644
-> --- a/drivers/md/dm-pcache/cache.h
-> +++ b/drivers/md/dm-pcache/cache.h
-> @@ -373,7 +373,11 @@ static inline void *get_key_head_addr(struct
-> pcache_cache *cache)
-> 
->  static inline u32 get_kset_id(struct pcache_cache *cache, u64 off)
->  {
-> -       return (off >> PCACHE_CACHE_SUBTREE_SIZE_SHIFT) % cache->n_ksets;
-> +       u32 kset_id;
-> +
-> +       div_u64_rem(off >> PCACHE_CACHE_SUBTREE_SIZE_SHIFT, cache->n_ksets,
-> &kset_id);
-> +
-> +       return kset_id;
->  }
-> 
->  static inline struct pcache_cache_kset *get_kset(struct pcache_cache
-> *cache, u32 kset_id)
-> 
-> > re
-> >   static inline struct pcache_cache_kset *get_kset(struct pcache_cache *cache, u32 kset_id)
-> > 
-> > ---
-> > base-commit: fd5cc4922bef4b3c3cd0452f38dcfd066322e9a9
-> > change-id: 20250821-dm-pcache-fix-32-bit-div-err-4f0695e94784
-> > 
-> > Best regards,
-> > --
-> > Nathan Chancellor <nathan@kernel.org>
-> > 
+NOTE:
+The reported warning has been resolved in this review cycle.
+WARNING: fs/jbd2/transaction.c:334 at start_this_handle
+
+## Build
+* kernel: 6.16.3-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: 3fb8628191b4a7d912baf880840804056f3f44ad
+* git describe: v6.16.2-10-g3fb8628191b4
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.16.y/build/v6.16=
+.2-10-g3fb8628191b4
+
+## Test Regressions (compared to v6.16-1186-gb81166f7d590)
+
+## Metric Regressions (compared to v6.16-1186-gb81166f7d590)
+
+## Test Fixes (compared to v6.16-1186-gb81166f7d590)
+
+## Metric Fixes (compared to v6.16-1186-gb81166f7d590)
+
+## Test result summary
+total: 348595, pass: 321612, fail: 6867, skip: 20116, xfail: 0
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 139 total, 138 passed, 1 failed
+* arm64: 57 total, 56 passed, 1 failed
+* i386: 18 total, 18 passed, 0 failed
+* mips: 34 total, 27 passed, 7 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 40 total, 39 passed, 1 failed
+* riscv: 25 total, 24 passed, 1 failed
+* s390: 22 total, 22 passed, 0 failed
+* sh: 5 total, 5 passed, 0 failed
+* sparc: 4 total, 3 passed, 1 failed
+* x86_64: 49 total, 48 passed, 1 failed
+
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-rust
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* lava
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* modules
+* perf
+* rcutorture
+* rt-tests-cyclicdeadline
+* rt-tests-pi-stress
+* rt-tests-pmqtest
+* rt-tests-rt-migrate-test
+* rt-tests-signaltest
+
+--
+Linaro LKFT
+https://lkft.linaro.org
