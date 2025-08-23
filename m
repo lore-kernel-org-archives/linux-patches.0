@@ -1,108 +1,127 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500D22D47F5
-	for <patches@lists.linux.dev>; Fri, 22 Aug 2025 23:27:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2E419F135;
+	Sat, 23 Aug 2025 05:27:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755905279; cv=none; b=iWOXB9QKVpki/N2uykeBIyXlIcYH0pK3gM+xdehbmUS3zrbbU5i3rF4epH/Aw7UUxZREXAOCNF0KN/OBCBPx+x5yfCx3JPWDAJBAf2Pp1ujfMc84PaAUOdEiGhs5UMrBP3yYe1DTysEhRpkAT/UL0UvBBYPwdUXbmrDsGSH1BK4=
+	t=1755926880; cv=none; b=hI/ydkjaPsYtcpg4kdEM2HTaHFUr4IXH2CjJk9cW1g1tVsxm3i7mQpoRXZQg/E786n0NfbL4xEKYSPwjPwqRA26Mu0SgKri7xICVfW1U2uwAh1eHxuNCRKWin0jfMU0xGd+sZD1wWij+7Bnp1KyZvfWB224u1lWuCUjNuLJ9XjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755905279; c=relaxed/simple;
-	bh=Dtbshtfd59+ACburoBjaQs73/LoWpyMIikfBId5SyFA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VGW4mvs/gMJoepFwqUDaZgtgRqoW5+5FSkLH9JdpJbNxh2MCjwDdF6I5bEdiOMKGXcmHdjtukgDljsPSrpGZbSVNWMZP/npLqQjvZ0XXdzclLmjgOUfG4ghWiwvtq/VsuXkPNv2lopSpcpa9Uiecd81MoVV/MLLwqBn81DSNprQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=gxagZkdf; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1755926880; c=relaxed/simple;
+	bh=+fImkWUgacin2LSzWHOkqtqjjNvlT3yYhpgVrHNgVg0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B5IaQ5j44J+qyvrHpzZqtRYJEusZJ4KQkn/GyVThelX502zDA4QL8gKBUahLJsq+Z0Mi6k3HrGDViM7I2qbrqDIWFXlUa1P4TshL9yRSRwGkZRJmlIRAkA11UO6S0S7U+GqIFqWWdRjeju/z/iJs5knjoMEusUDUAFIu3ZcJRKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IXn1jbMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="gxagZkdf"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3c4e9efb88aso1383417f8f.2
-        for <patches@lists.linux.dev>; Fri, 22 Aug 2025 16:27:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1755905275; x=1756510075; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=k1gpNFvn5HCFRwIuldpjghpNbvpOxRC8cn9/8F0Qqgs=;
-        b=gxagZkdflVNgJ8VkymBKvFa6JlxJOdTojqEssUGdpjfzcJYKXDh62yJ5RYov7tLIlC
-         DTZJfke7h2r4EZiZPrDS9JZUKT0JSkJwlnFQoGa7kKFbGISjJz8UmK7ge+3ipemOXAO8
-         kJchPOu7PmL0K2AF/flpMjrLaLXA+IR5w8eUkyNYj6WtE4wuthgOPiQmYUL+st/fHCmE
-         PzDnj/A0r+DGdGX3Bhgd4U0eYS7igPrfG9c2NxPQ94FMhmNt0qLJ4dnC612lmrvv1M7N
-         WP+hkEQYgdRvNftZ6wEHzbPyO66DZzjaoQr0o9o6p7vVhtJ+RojRIbqvu4bWVw09nUp+
-         yQtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755905275; x=1756510075;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k1gpNFvn5HCFRwIuldpjghpNbvpOxRC8cn9/8F0Qqgs=;
-        b=ezr16FevUuvDjIASdxQbkqnxSf3hrRN3j8/innXXM6hQfZGffP5ciMySNjxTUPVpac
-         Fa53qzGxxU/ayXlAtPBI1vWQ2Kwpu9b4TYqW9FFt+GrlXEJ7cLayw+qXeyRGm/GMccio
-         sN9GPZG29al0nQUg81fr9fPoGdJr2fQfeILRTlW+YYWWxT+2SE4Recdd7nhYnM4BYKCE
-         NTN8vz86YaWXqHDihl0JlPPAraoDi917UV1vF9BeJCVvWo1PlNcjFkhyTu+B6b+3fUuM
-         r8ijjg842hYVnhsNV6JGXIulG+7DNIiQQKlPDWdyAgo+xmOmLzPVMTFgW9j6YTJUSnh+
-         PvCA==
-X-Gm-Message-State: AOJu0Yy3nIYi+r2n9eglFfnH+1CzvXLLkLCUAdZ7OMPL/dkEJZnJernr
-	saaq782aui8dYc8JQcAY+tYWJ5V8tYLJnfh5/BQhkBGRCjZFN5VZBAE=
-X-Gm-Gg: ASbGnctxCP4KftUjiOV8Z88by39XhmVUT0azUswYqTUCU3KbqUFmBRmp2ZLKM3kK4gn
-	7P18uHm65Pj3GQWARmHsMHEadLGiyxsU9SCos6cejYktCjgZM185PNPgETwSnrBrXLiuiqXqzJh
-	xeK6fFsUhktTXt0zn3QOAPqpghqb6/+sRNvaeXmOLEbfWqk/3BKqRaFD1+dDTx7hZetBodN48QX
-	0Ty89GG5638muvdQJoh/48DPsY/dponqy8619Ux9Dsx1874HpTKesvzem11yZHPhgL8z8yN0RjH
-	qTW7MhKLIpezXo21z0BeUY9C2AG4suW/ofIxAk8zkp1dPRLk1CcXebj/ybD+ucPUkuCGqaxmKVX
-	kKN04WcRgG+fU/os+xeQpKSBA1OtV0ljuxbtSkc8CH0HJQkODE1vliQE8WjDnAE5qU9z0V1nagk
-	vw06iBOtRP
-X-Google-Smtp-Source: AGHT+IForz6W8J+AT6PAiCEWl7L36/ArwT8KQw87Xw+3heLnbXHk0yiBNL84FscOsiQA1vM902L9tQ==
-X-Received: by 2002:a05:6000:4387:b0:3bb:bd05:7bef with SMTP id ffacd0b85a97d-3c5dbf69bfbmr3843292f8f.24.1755905275241;
-        Fri, 22 Aug 2025 16:27:55 -0700 (PDT)
-Received: from [192.168.1.3] (p5b057523.dip0.t-ipconnect.de. [91.5.117.35])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c711211cbcsm1171217f8f.31.2025.08.22.16.27.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Aug 2025 16:27:54 -0700 (PDT)
-Message-ID: <9f68aadd-b0dc-403e-90d8-eedc018267bd@googlemail.com>
-Date: Sat, 23 Aug 2025 01:27:53 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IXn1jbMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537B8C4CEE7;
+	Sat, 23 Aug 2025 05:27:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755926879;
+	bh=+fImkWUgacin2LSzWHOkqtqjjNvlT3yYhpgVrHNgVg0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IXn1jbMzld+vE1HJyoRCdzBCg4GcYpRUPyzrcRFDcIj/m3PrJvLDvozXB0OOGlpet
+	 mM44oqPnN4Cq6hfsYkrbP9uXsmDTvuBGDOA/y8KDF6DXENZ7iSE6BD26MdXxc/XJaC
+	 5ti3q7tnFBULKx8eVnk1qq9DlDISNhak35x7x2OxFTSItOHfHBSCHvLG6B0YavZhus
+	 0/eknHbzJrNvQ+ZDJQBsWNPkxu8Lvz8HVTxPAwYEKmbPLbEsm8MbMaaDz6CljSbO9Q
+	 ng7r3+qm3M1j3Ti+5JTsZYFSdTL5/Mridb7+7f7+eHi6hDO79hY7MnoIOySQo9N6QE
+	 PGLuK+xi7B2Fw==
+Date: Fri, 22 Aug 2025 22:27:55 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Dongsheng Yang <dongsheng.yang@linux.dev>
+Cc: Zheng Gu <cengku@gmail.com>, Mikulas Patocka <mpatocka@redhat.com>,
+	dm-devel@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] dm-pcache: Fix 64-bit division for 32-bit platforms in
+ get_kset_id()
+Message-ID: <20250823052755.GB4056405@ax162>
+References: <20250821-dm-pcache-fix-32-bit-div-err-v1-1-cab5448f44e6@kernel.org>
+ <2f5aa331-aa47-4e81-9bb3-65c771b39913@linux.dev>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.16 0/9] 6.16.3-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org
-References: <20250822123516.780248736@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250822123516.780248736@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <2f5aa331-aa47-4e81-9bb3-65c771b39913@linux.dev>
 
-Am 22.08.2025 um 14:37 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.16.3 release.
-> There are 9 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Dongsheng,
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+On Fri, Aug 22, 2025 at 02:53:42PM +0800, Dongsheng Yang wrote:
+> 
+> 在 8/22/2025 4:09 AM, Nathan Chancellor 写道:
+> > When building for a 32-bit platform (such as ARCH=i386 allmodconfig),
+> > there is a modpost error:
+> > 
+> >    ERROR: modpost: "__umoddi3" [drivers/md/dm-pcache/dm-pcache.ko] undefined!
+> > 
+> > Hacking up the driver Makefile to allow building into the kernel shows
+> > that the division comes from get_kset_id(), which is inlined into
+> > cache_key_append() in cache_key.c.
+> > 
+> > Use the helper div_u64_rem() to avoid emitting a libcall on 32-bit targets.
+> > 
+> > Fixes: fd5cc4922bef ("dm-pcache: add persistent cache target in device-mapper")
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >   drivers/md/dm-pcache/cache.h | 4 +++-
+> >   1 file changed, 3 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/md/dm-pcache/cache.h b/drivers/md/dm-pcache/cache.h
+> > index b3b361cc406e..b10e721ab1b7 100644
+> > --- a/drivers/md/dm-pcache/cache.h
+> > +++ b/drivers/md/dm-pcache/cache.h
+> > @@ -373,7 +373,9 @@ static inline void *get_key_head_addr(struct pcache_cache *cache)
+> >   static inline u32 get_kset_id(struct pcache_cache *cache, u64 off)
+> >   {
+> > -	return (off >> PCACHE_CACHE_SUBTREE_SIZE_SHIFT) % cache->n_ksets;
+> > +	u32 rem;
+> > +	div_u64_rem(off >> PCACHE_CACHE_SUBTREE_SIZE_SHIFT, cache->n_ksets, &rem);
+> > +	return rem;
+> >   }
+> 
+> 
+> Hi Nathan,
+> 
+> Thanx for your fix. It looks good to me.
+> 
+> Just one nit about the variable name. I prefer kset_id to rem.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Thanks, seems entirely reasonable, thanks for sending the diff!
 
-
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+> Mikulas, if this looks good to you, could you apply this change to dm-6.18?
+> 
+> diff --git a/drivers/md/dm-pcache/cache.h b/drivers/md/dm-pcache/cache.h
+> index b3b361cc406e..f005c9d9a7aa 100644
+> --- a/drivers/md/dm-pcache/cache.h
+> +++ b/drivers/md/dm-pcache/cache.h
+> @@ -373,7 +373,11 @@ static inline void *get_key_head_addr(struct
+> pcache_cache *cache)
+> 
+>  static inline u32 get_kset_id(struct pcache_cache *cache, u64 off)
+>  {
+> -       return (off >> PCACHE_CACHE_SUBTREE_SIZE_SHIFT) % cache->n_ksets;
+> +       u32 kset_id;
+> +
+> +       div_u64_rem(off >> PCACHE_CACHE_SUBTREE_SIZE_SHIFT, cache->n_ksets,
+> &kset_id);
+> +
+> +       return kset_id;
+>  }
+> 
+>  static inline struct pcache_cache_kset *get_kset(struct pcache_cache
+> *cache, u32 kset_id)
+> 
+> > re
+> >   static inline struct pcache_cache_kset *get_kset(struct pcache_cache *cache, u32 kset_id)
+> > 
+> > ---
+> > base-commit: fd5cc4922bef4b3c3cd0452f38dcfd066322e9a9
+> > change-id: 20250821-dm-pcache-fix-32-bit-div-err-4f0695e94784
+> > 
+> > Best regards,
+> > --
+> > Nathan Chancellor <nathan@kernel.org>
+> > 
