@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F0A156F4A;
-	Mon, 25 Aug 2025 12:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42455EEBD;
+	Mon, 25 Aug 2025 12:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124111; cv=none; b=PjzWpA51VZQulIOhVkB2UWZ2+CzItvZFCXJr8ihDeOMFKelmzDfG9V4Ai4tQ9T69gnzcwIP/eB1a/o4HPyOaF4wzEDU0DPqCx5ibyFAsQgbvb4XUO/RnWdIu0qSGQIY/c2OCZ4rr0BP2Hs6uOnfDyIrVCMJ2KBNJ795F7enqNQ8=
+	t=1756124112; cv=none; b=Qkfmgc5g59Jr0PJlLaJZyCAQ9pAkQbnwZM0Su6bzLckkoxOad0WBFFNi2a5+jOosCVgLF4EsB4budT3rXRLpVCgB8DmoXVEKj46JgEPX7NoACAiYl4Dg+N7KlZcFSnilDVuNjhToiR8m+gjLqgpATPyvDyIjWjNA7UybV0l102c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124111; c=relaxed/simple;
-	bh=f78D/J7C3Oakf8K2QE2jHj/9RHXW52Sq8WvNJTgGVcg=;
+	s=arc-20240116; t=1756124112; c=relaxed/simple;
+	bh=FOPhcItXJXoIRSdZWM9NGaXg4K4SbgkZNq831SpdPc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkGkqJr4kxyUVD6havqZ/bDT24I2Vn11F+5pCUEdeOnjG/JLcdGqlhsTduOn1dgxcb5CB0j2691Wo2GUPmFCKbMm0Q7khQStEpnt6BttMLUVOAoW+nwd8RfhJQk5YyBN9lIYRCiKzZ1vt7IBKgph1zY4jnlPZO+gaVKig/2KUeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eELkJKwv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p5m35bYZaGKdOv4L5S5ZCtb/Ha1kjBCGXgUage2wVda3gKfc84UxO7/QGEfZNz0lEDzkILWCliYD1sfAJI52CeNelsouiGBilqrTBGNei5+moau43K9McKSmmgCo2Eo+J+BBlgzsMgkixCgi9VzKRG7Wm77MAQcOPAcK6rtYrPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dUNmbzJK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eELkJKwv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1A4C116C6;
-	Mon, 25 Aug 2025 12:15:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dUNmbzJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E02C4CEED;
+	Mon, 25 Aug 2025 12:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124110;
-	bh=f78D/J7C3Oakf8K2QE2jHj/9RHXW52Sq8WvNJTgGVcg=;
+	s=k20201202; t=1756124111;
+	bh=FOPhcItXJXoIRSdZWM9NGaXg4K4SbgkZNq831SpdPc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eELkJKwvWgBfIiI/KV3nAFIrXNr97exvzIENn0ox0MAd8o+UqKKbDi1qK1cBfx0y1
-	 UY/TqhnzxhJF5z6bsXCk+ChPpDt7mGqs2Csoi1Ur0q+mW6D28Vycfm+5bUdyN3w6Um
-	 XWG9qNsixFtqwjawa1ujAEV1fRnNcKCITYtKa/MKDHrLPAY3D+JWP/EEfMRzvYwnm1
-	 9iUQ1/GUfw8mxr9AM+J3HgFr2YJsqTG0km7C+z2zaJOgCc4x/LSYESM7y5kUOEwrnK
-	 TX/Y0piQaPkgC0h8igm9hmdFbjn5md20nc4mt8FzDSZQ0s14jDlh4gZW+CcKBbtLyH
-	 pN2nBTk6caRgg==
+	b=dUNmbzJK1RlUoNQXnLSyRFMVgNINBmD/sqkMd8AkyeDSS7shu/SFCWTNRAichYYDI
+	 TF+zzwJDX++TYSm83HXJIDvE/nu6A4JymM8Nba+L2ikQbDcGFfkgRsQ6JJVmu8Elcu
+	 iVdQD0a8uNl9Xe1k1UPY1F25IFUqn7HKLP1j1CU4MEjAWyEjsKmcI/rH9Txw2xXm/U
+	 sRz1O0px6j+j0d1DuTBEULbnyCNqtKlIBwrTkEz291dAcIek5YEqvN6VK7pGsC66/Z
+	 M/BxOelJvBPuXGgh6qZGFiGjKMDS5e1PezpcYLOPX2retYR1C2T5pMGk2ojiNQ0ixQ
+	 XoxbKK7PA4wBw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Huacai Chen <chenhuacai@loongson.cn>,
-	Hanlu Li <lihanlu@loongson.cn>,
+Cc: Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	chenhuacai@kernel.org,
-	yangtiezhu@loongson.cn
-Subject: [PATCH AUTOSEL 6.16-6.6] LoongArch: Save LBT before FPU in setup_sigcontext()
-Date: Mon, 25 Aug 2025 08:14:52 -0400
-Message-ID: <20250825121505.2983941-3-sashal@kernel.org>
+	clm@fb.com,
+	josef@toxicpanda.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16] btrfs: clear block dirty if submit_one_sector() failed
+Date: Mon, 25 Aug 2025 08:14:53 -0400
+Message-ID: <20250825121505.2983941-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
 References: <20250825121505.2983941-1-sashal@kernel.org>
@@ -51,164 +53,170 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.3
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 112ca94f6c3b3e0b2002a240de43c487a33e0234 ]
+[ Upstream commit 4bcd3061e8154606af7f721cb75ca04ffe191a12 ]
 
-Now if preemption happens between protected_save_fpu_context() and
-protected_save_lbt_context(), FTOP context is lost. Because FTOP is
-saved by protected_save_lbt_context() but protected_save_fpu_context()
-disables TM before that. So save LBT before FPU in setup_sigcontext()
-to avoid this potential risk.
+[BUG]
+If submit_one_sector() failed, the block will be kept dirty, but with
+their corresponding range finished in the ordered extent.
 
-Signed-off-by: Hanlu Li <lihanlu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+This means if a writeback happens later again, we can hit the following
+problems:
+
+- ASSERT(block_start != EXTENT_MAP_HOLE) in submit_one_sector()
+  If the original extent map is a hole, then we can hit this case, as
+  the new ordered extent failed, we will drop the new extent map and
+  re-read one from the disk.
+
+- DEBUG_WARN() in btrfs_writepage_cow_fixup()
+  This is because we no longer have an ordered extent for those dirty
+  blocks. The original for them is already finished with error.
+
+[CAUSE]
+The function submit_one_sector() is not following the regular error
+handling of writeback.  The common practice is to clear the folio dirty,
+start and finish the writeback for the block.
+
+This is normally done by extent_clear_unlock_delalloc() with
+PAGE_START_WRITEBACK | PAGE_END_WRITEBACK flags during
+run_delalloc_range().
+
+So if we keep those failed blocks dirty, they will stay in the page
+cache and wait for the next writeback.
+
+And since the original ordered extent is already finished and removed,
+depending on the original extent map, we either hit the ASSERT() inside
+submit_one_sector(), or hit the DEBUG_WARN() in
+btrfs_writepage_cow_fixup().
+
+[FIX]
+Follow the regular error handling to clear the dirty flag for the block,
+start and finish writeback for that block instead.
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of this commit and the Linux kernel codebase, I can
-now provide a comprehensive assessment.
+Based on my analysis of the commit and the kernel repository context,
+here's my assessment:
 
 **Backport Status: YES**
 
-## Extensive Analysis
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-This commit fixes a **critical race condition** in the LoongArch signal
-handling code that can lead to **data loss** of processor state during
-signal context saving. Here's the detailed analysis:
+## Bug Fix Analysis
 
-### The Bug Being Fixed
+1. **Critical Bug Being Fixed**: The commit fixes a serious error
+   handling bug in btrfs writeback that can lead to two different
+   assertion failures:
+   - `ASSERT(block_start != EXTENT_MAP_HOLE)` in submit_one_sector()
+   - `DEBUG_WARN()` in btrfs_writepage_cow_fixup()
 
-1. **Context Loss Issue**: The commit addresses a race condition where
-   the FTOP (x87 FPU stack pointer) context can be lost during signal
-   handling. This happens when:
-   - A preemption occurs between `protected_save_fpu_context()` and
-     `protected_save_lbt_context()`
-   - The FPU context save operation disables TM (likely Transaction
-     Memory or a similar mechanism) before LBT context is saved
-   - Since FTOP is part of the LBT (Loongson Binary Translation)
-     extension context, it gets lost
+2. **Data Integrity Issue**: The bug causes dirty blocks to remain dirty
+   after a failed submission, but their corresponding ordered extent is
+   already finished with error. This creates an inconsistent state
+   where:
+   - Dirty blocks exist without proper ordered extent tracking
+   - Subsequent writeback attempts will fail with assertions/warnings
+   - The filesystem enters an undefined state that could affect data
+     integrity
 
-2. **Binary Translation Context**: LBT is a hardware extension used to
-   accelerate binary translation on LoongArch processors. According to
-   the original LBT support commit (bd3c5798484a), it includes:
-   - 4 scratch registers (scr0-scr3)
-   - x86/ARM eflags register
-   - x87 FPU stack pointer (FTOP)
+3. **Clear Root Cause**: The commit message clearly identifies the
+   problem - submit_one_sector() was not following standard writeback
+   error handling practices. The fix aligns the error handling with the
+   rest of the btrfs writeback code.
 
-### Code Changes Analysis
+## Code Change Analysis
 
-The fix is **minimal and surgical** - it simply reorders the save
-operations:
-
-**Before (buggy order):**
+The fix is minimal and contained:
 ```c
-// Save FPU contexts first (LASX/LSX/FPU)
-if (extctx->lasx.addr)
-    err |= protected_save_lasx_context(extctx);
-else if (extctx->lsx.addr)
-    err |= protected_save_lsx_context(extctx);
-else if (extctx->fpu.addr)
-    err |= protected_save_fpu_context(extctx);
-
-// Save LBT context last - PROBLEM: FTOP may be lost by now
-#ifdef CONFIG_CPU_HAS_LBT
-if (extctx->lbt.addr)
-    err |= protected_save_lbt_context(extctx);
-#endif
+if (IS_ERR(em)) {
++    /*
++     * When submission failed, we should still clear the folio dirty.
++     * Or the folio will be written back again but without any
++     * ordered extent.
++     */
++    btrfs_folio_clear_dirty(fs_info, folio, filepos, sectorsize);
++    btrfs_folio_set_writeback(fs_info, folio, filepos, sectorsize);
++    btrfs_folio_clear_writeback(fs_info, folio, filepos, sectorsize);
+    return PTR_ERR(em);
+}
 ```
 
-**After (fixed order):**
-```c
-// Save LBT context FIRST to preserve FTOP
-#ifdef CONFIG_CPU_HAS_LBT
-if (extctx->lbt.addr)
-    err |= protected_save_lbt_context(extctx);
-#endif
+The changes:
+- Add proper error handling to clear dirty flag
+- Set and clear writeback status to properly finish the failed writeback
+- Update comments to clarify the behavior
 
-// Then save FPU contexts (LASX/LSX/FPU)
-if (extctx->lasx.addr)
-    err |= protected_save_lasx_context(extctx);
-else if (extctx->lsx.addr)
-    err |= protected_save_lsx_context(extctx);
-else if (extctx->fpu.addr)
-    err |= protected_save_fpu_context(extctx);
-```
+## Stable Tree Criteria Met
 
-### Why This Should Be Backported
+1. **Fixes a real bug**: Yes - prevents assertion failures and potential
+   filesystem corruption
+2. **Small and contained**: Yes - only ~10 lines of actual code change
+   in one function
+3. **No new features**: Correct - purely bug fix
+4. **Low regression risk**: The change follows established patterns used
+   elsewhere in btrfs (extent_clear_unlock_delalloc)
+5. **Important enough**: Yes - prevents filesystem errors and potential
+   data integrity issues
 
-1. **Data Corruption Risk**: This bug can cause loss of processor state
-   during signal handling, which could lead to:
-   - Incorrect program execution after signal return
-   - Potential application crashes
-   - Data corruption in applications using binary translation features
+The fix is straightforward, follows existing btrfs patterns, and
+addresses a clear bug that could affect users running btrfs filesystems,
+especially under I/O error conditions. This makes it an excellent
+candidate for stable backporting.
 
-2. **Small, Contained Fix**: The change is:
-   - Only 10 lines (5 insertions, 5 deletions)
-   - Confined to a single function in signal handling
-   - Simply reorders existing operations without adding new logic
-   - Protected by `#ifdef CONFIG_CPU_HAS_LBT` so it only affects systems
-     with LBT support
+ fs/btrfs/extent_io.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-3. **No Architectural Changes**: This is purely a bug fix that:
-   - Doesn't introduce new features
-   - Doesn't change kernel APIs or ABIs
-   - Doesn't modify core subsystem behavior
-   - Only affects LoongArch architecture with LBT extension enabled
-
-4. **Clear Bug with Clear Fix**: The problem is well-defined (race
-   condition causing context loss) and the solution is straightforward
-   (reorder operations to save LBT before FPU).
-
-5. **Affects User-Space Reliability**: Signal handling is a fundamental
-   mechanism used by many applications. A bug here can affect system
-   stability and application reliability.
-
-### Risk Assessment
-
-The risk of regression is **very low** because:
-- The change only affects code paths when LBT is enabled
-  (`CONFIG_CPU_HAS_LBT`)
-- It's a simple reordering of independent save operations
-- The fix has been tested and merged into mainline
-- It doesn't change the fundamental logic, just the execution order
-
-This commit clearly meets the stable kernel criteria for backporting as
-it fixes an important bug with minimal risk of introducing new issues.
-
- arch/loongarch/kernel/signal.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/arch/loongarch/kernel/signal.c b/arch/loongarch/kernel/signal.c
-index 4740cb5b2388..c9f7ca778364 100644
---- a/arch/loongarch/kernel/signal.c
-+++ b/arch/loongarch/kernel/signal.c
-@@ -677,6 +677,11 @@ static int setup_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc,
- 	for (i = 1; i < 32; i++)
- 		err |= __put_user(regs->regs[i], &sc->sc_regs[i]);
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index 1dc931c4937f..2e127c109e5b 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1483,7 +1483,7 @@ static noinline_for_stack int writepage_delalloc(struct btrfs_inode *inode,
  
-+#ifdef CONFIG_CPU_HAS_LBT
-+	if (extctx->lbt.addr)
-+		err |= protected_save_lbt_context(extctx);
-+#endif
-+
- 	if (extctx->lasx.addr)
- 		err |= protected_save_lasx_context(extctx);
- 	else if (extctx->lsx.addr)
-@@ -684,11 +689,6 @@ static int setup_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc,
- 	else if (extctx->fpu.addr)
- 		err |= protected_save_fpu_context(extctx);
+ /*
+  * Return 0 if we have submitted or queued the sector for submission.
+- * Return <0 for critical errors.
++ * Return <0 for critical errors, and the sector will have its dirty flag cleared.
+  *
+  * Caller should make sure filepos < i_size and handle filepos >= i_size case.
+  */
+@@ -1506,8 +1506,17 @@ static int submit_one_sector(struct btrfs_inode *inode,
+ 	ASSERT(filepos < i_size);
  
--#ifdef CONFIG_CPU_HAS_LBT
--	if (extctx->lbt.addr)
--		err |= protected_save_lbt_context(extctx);
--#endif
--
- 	/* Set the "end" magic */
- 	info = (struct sctx_info *)extctx->end.addr;
- 	err |= __put_user(0, &info->magic);
+ 	em = btrfs_get_extent(inode, NULL, filepos, sectorsize);
+-	if (IS_ERR(em))
++	if (IS_ERR(em)) {
++		/*
++		 * When submission failed, we should still clear the folio dirty.
++		 * Or the folio will be written back again but without any
++		 * ordered extent.
++		 */
++		btrfs_folio_clear_dirty(fs_info, folio, filepos, sectorsize);
++		btrfs_folio_set_writeback(fs_info, folio, filepos, sectorsize);
++		btrfs_folio_clear_writeback(fs_info, folio, filepos, sectorsize);
+ 		return PTR_ERR(em);
++	}
+ 
+ 	extent_offset = filepos - em->start;
+ 	em_end = btrfs_extent_map_end(em);
+@@ -1637,8 +1646,8 @@ static noinline_for_stack int extent_writepage_io(struct btrfs_inode *inode,
+ 	 * Here we set writeback and clear for the range. If the full folio
+ 	 * is no longer dirty then we clear the PAGECACHE_TAG_DIRTY tag.
+ 	 *
+-	 * If we hit any error, the corresponding sector will still be dirty
+-	 * thus no need to clear PAGECACHE_TAG_DIRTY.
++	 * If we hit any error, the corresponding sector will have its dirty
++	 * flag cleared and writeback finished, thus no need to handle the error case.
+ 	 */
+ 	if (!submitted_io && !error) {
+ 		btrfs_folio_set_writeback(fs_info, folio, start, len);
 -- 
 2.50.1
 
