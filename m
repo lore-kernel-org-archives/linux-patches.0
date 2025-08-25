@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E27191F98;
-	Mon, 25 Aug 2025 12:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A541D5147;
+	Mon, 25 Aug 2025 12:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124120; cv=none; b=EWkVJJlKoA5pKVo47/fhSIqTcDg2n2DBY80yAQQSatJjxlS9oW1Jobn16Gs8XOu2LngVFn1gQImiiCjvPL58y1m7FIIeHUO9RKC6/4YgdOKVMDn7VO2abg4ZIPB8bdoO4BTQoMgL0cha1ceXwJQhqqPn1rGv5gET/kisJixi8Ys=
+	t=1756124122; cv=none; b=rVVcYYtKggG76/9EyiOfUHsZfy8oTwx+ZocJz3f1zvgdbLgSL0NPLMwADu3r6g7EbmIbflCjV8z7Gx1fdmcW6hBJKvEiGu8WuelxMYZljs0wnvkiIk69OTRARAhi7jPzZ6f4VPlqNDII69FKAZwPlZOPic6UolTjD6n53/cSmno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124120; c=relaxed/simple;
-	bh=1QGRsEo66IOLAl27ZYz4WbYkww2GeOt4TDdgKWpNGTA=;
+	s=arc-20240116; t=1756124122; c=relaxed/simple;
+	bh=oZ/HWGHWtR3AoWCQHYHY/dVpb+dhCodbBBNpfhT2rGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P/0kih/7HIVcDj1BJ44uKftRnikNPjwcOqaFJa5AyFm81FHkDvv/Zr0OmFWGtpBvRiAnave9yVO0hSRrslM2wEJkVNR7jYN8ffJ2H/Jbwwdk5gc1abtMcqLMdQuFrL+q58rDQJhppUFfkEzTzKsQEDdp9ClUtBKtm9SmbvXSgrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gJC5W7ZX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PvShQiahXX6csxCYdqwMFg6m7LRebh9cS9xBeI5c+/yikVuR5CINMzL5T+ezlRHz/6rw6t4qOavGCt55NvDmc3rkipzShlRtyVqm4zBzgz0DMNpmHKUaxdsbODbPCvOiSrCIg8Aej9L5EpanRohhgr7h4D44yIxw39nHMx6n+4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rFSpwygL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gJC5W7ZX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38128C113D0;
-	Mon, 25 Aug 2025 12:15:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rFSpwygL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58654C116C6;
+	Mon, 25 Aug 2025 12:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124120;
-	bh=1QGRsEo66IOLAl27ZYz4WbYkww2GeOt4TDdgKWpNGTA=;
+	s=k20201202; t=1756124121;
+	bh=oZ/HWGHWtR3AoWCQHYHY/dVpb+dhCodbBBNpfhT2rGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJC5W7ZXM/uDSwfhN+HhpVeD0fYyRFSY0003x06OBx30tqqFvf+Ypd/adjg+zmcmo
-	 KYCw6fHPDJPH46/Uzwdje8SvnH7C543mKonPwqz8NFB4kDV65ewZRYBftvJHtT7q6g
-	 zJ76FPvZGG307NVPW1/Qlo4tl7jj1/LTTkfM8isFK1RHUZrMjbbJumiqVpT6ZVyqpt
-	 lPKoWDFsSedCJcncBGKPTsXlxfxdSrWG4oF0WvUI3CNspkOSnf/WDEdUIDLCpFO5yq
-	 R9gVIT1fIYfZT4cyUEvcbDYULR2jxsxNVvmqCNi1Z3zbl2HVi5D21pVTNkY9+cTdwe
-	 M/QEOdiHyoYOg==
+	b=rFSpwygLSHOXEfX+DuV1w7Xc84AgXzhUOsTlCYN8OPEg+U7Fv3ndKZDxw1DEpbnhS
+	 c61j9PV7cbuYnN/cm3DpcozZ0h3EK/qHT79GRrVv7QvDyiKyBN1xY5Y8PfPsUwrJt7
+	 eGXK0Hsw0hQrHoVssGkiwQzQA6CjuMSOM7ANoPR8UeVWEXKklF3EHW1Hh7SvH+akHW
+	 ATiimshxv5Tc/CMBIPkP+DY+JpRYBuNds9rjZ6u1pIvjJkk+EvWD4pzh5iFP8GM/gC
+	 Y0+TFhpmiSFmGQlQ3E9MYIfJtxM2My1rGnT5dv6OxF9EO/I/oMc/0UHTrMO8+s2jpH
+	 Nx1KAL/BZuRqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yang Li <yang.li@amlogic.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	johan.hedberg@gmail.com,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.1] Bluetooth: hci_sync: Avoid adding default advertising on startup
-Date: Mon, 25 Aug 2025 08:14:58 -0400
-Message-ID: <20250825121505.2983941-9-sashal@kernel.org>
+Cc: Shinji Nomoto <fj5851bi@fujitsu.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.16-6.6] cpupower: Fix a bug where the -t option of the set subcommand was not working.
+Date: Mon, 25 Aug 2025 08:14:59 -0400
+Message-ID: <20250825121505.2983941-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
 References: <20250825121505.2983941-1-sashal@kernel.org>
@@ -51,36 +47,19 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.3
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Li <yang.li@amlogic.com>
+From: Shinji Nomoto <fj5851bi@fujitsu.com>
 
-[ Upstream commit de5d7d3f27ddd4046736f558a40e252ddda82013 ]
+[ Upstream commit b3eaf14f4c63fd6abc7b68c6d7a07c5680a6d8e5 ]
 
-list_empty(&hdev->adv_instances) is always true during startup,
-so an advertising instance is added by default.
+The set subcommand's -t option is documented as being available for boost
+configuration, but it was not actually functioning due to a bug
+in the option handling.
 
-Call trace:
-  dump_backtrace+0x94/0xec
-  show_stack+0x18/0x24
-  dump_stack_lvl+0x48/0x60
-  dump_stack+0x18/0x24
-  hci_setup_ext_adv_instance_sync+0x17c/0x328
-  hci_powered_update_adv_sync+0xb4/0x12c
-  hci_powered_update_sync+0x54/0x70
-  hci_power_on_sync+0xe4/0x278
-  hci_set_powered_sync+0x28/0x34
-  set_powered_sync+0x40/0x58
-  hci_cmd_sync_work+0x94/0x100
-  process_one_work+0x168/0x444
-  worker_thread+0x378/0x3f4
-  kthread+0x108/0x10c
-  ret_from_fork+0x10/0x20
-
-Link: https://github.com/bluez/bluez/issues/1442
-Signed-off-by: Yang Li <yang.li@amlogic.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lore.kernel.org/r/20250522061122.2149188-2-fj5851bi@fujitsu.com
+Signed-off-by: Shinji Nomoto <fj5851bi@fujitsu.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -88,90 +67,88 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit is a clear bug fix that should be backported to stable
+kernel trees. Here's my detailed analysis:
 
 ## Bug Analysis
 
-The commit fixes a **logic error** in `hci_powered_update_adv_sync()`
-that causes unnecessary default advertising instance creation during
-Bluetooth startup. The problematic code at line 3290 uses an OR
-condition:
+The commit fixes a critical bug where the `-t` option for the `cpupower
+set` subcommand was documented and accepted as a valid option (defined
+in `set_opts[]` structure), but was completely non-functional due to a
+missing character in the `getopt_long()` call.
 
+### Specific Code Changes
+
+The bug is in line 58-59 of the original code:
 ```c
-if (hci_dev_test_flag(hdev, HCI_ADVERTISING) ||
-    list_empty(&hdev->adv_instances))
+while ((ret = getopt_long(argc, argv, "b:e:m:",
+                          set_opts, NULL)) != -1) {
 ```
 
-This condition is **always true** during startup because
-`list_empty(&hdev->adv_instances)` returns true when the advertising
-instances list is initially empty. This causes the code block to execute
-unconditionally, creating a default advertising instance even when not
-needed.
-
-## The Fix
-
-The patch changes the OR (`||`) to AND (`&&`):
-
+The fix adds the missing `t:` to the argument string:
 ```c
-if (hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
-    list_empty(&hdev->adv_instances))
+while ((ret = getopt_long(argc, argv, "b:e:m:t:",
+                          set_opts, NULL)) != -1) {
 ```
 
-This ensures the default advertising setup only occurs when:
-1. The HCI_ADVERTISING flag is explicitly set, AND
-2. There are no advertising instances configured
+### Root Cause
+
+When the turbo-boost feature was added in commit `eb426fc6bdd6` (merged
+in v6.6-rc1), the developer:
+1. Added the option to the `set_opts[]` array correctly
+2. Added the case handler for 't' in the switch statement
+3. **BUT forgot to add "t:" to the getopt_long argument string**
+
+This means that while the option was defined and had handling code,
+`getopt_long()` would never recognize `-t` as a valid option, making the
+feature completely unusable.
 
 ## Why This Should Be Backported
 
-1. **Clear Bug Fix**: This is a straightforward logic error that causes
-   incorrect behavior during Bluetooth initialization. The stack trace
-   in the commit message shows this happens during normal startup flow
-   (`hci_power_on_sync` → `hci_powered_update_sync` →
-   `hci_powered_update_adv_sync`).
+1. **Clear Bug Fix**: This is an obvious bug where documented
+   functionality doesn't work at all. Users trying to use `cpupower set
+   -t` or `--turbo-boost` would get errors.
 
-2. **Small and Contained**: The fix is a single character change (|| to
-   &&) that only affects the conditional logic. No architectural changes
-   or new features are introduced.
+2. **Small and Contained**: The fix is a single-line change adding 2
+   characters ("t:") to a string. This is as minimal as fixes get.
 
-3. **Prevents Resource Waste**: The bug causes unnecessary advertising
-   instance creation on every Bluetooth startup, which wastes system
-   resources and may interfere with user-configured advertising
-   settings.
+3. **No Side Effects**: The change only enables already-implemented
+   functionality. It doesn't introduce new code paths or change existing
+   behavior.
 
-4. **Low Risk**: The change is minimal and only affects the specific
-   condition for creating default advertising. The same pattern
-   (checking both flags with AND) is already used in other parts of the
-   codebase (e.g., `reenable_adv_sync()` function).
+4. **User Impact**: The turbo-boost control feature is important for
+   power management, and users on stable kernels with v6.6+ would expect
+   this documented feature to work.
 
-5. **User-Visible Impact**: The issue has an associated BlueZ bug report
-   (#1442), indicating real users are affected by this problem.
+5. **Affects Stable Versions**: The bug was introduced in v6.6-rc1 and
+   affects all kernels from v6.6 onwards that include the turbo-boost
+   feature.
 
-6. **Long-Standing Issue**: The problematic code was introduced in
-   commit cf75ad8b41d2a (October 2021), meaning this bug has been
-   affecting users for an extended period across multiple kernel
-   versions.
+6. **Low Risk**: There's virtually no regression risk - the worst case
+   is the option continues not working, which is the current state.
 
-The fix follows stable kernel rules perfectly: it's a important bugfix
-with minimal code change and very low regression risk, making it an
-ideal candidate for stable backporting.
+This is exactly the type of fix that stable kernel rules recommend: a
+clear bug fix that restores documented functionality with minimal code
+change and no architectural modifications.
 
- net/bluetooth/hci_sync.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/power/cpupower/utils/cpupower-set.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 7938c004071c..795952d5f921 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3344,7 +3344,7 @@ static int hci_powered_update_adv_sync(struct hci_dev *hdev)
- 	 * advertising data. This also applies to the case
- 	 * where BR/EDR was toggled during the AUTO_OFF phase.
- 	 */
--	if (hci_dev_test_flag(hdev, HCI_ADVERTISING) ||
-+	if (hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
- 	    list_empty(&hdev->adv_instances)) {
- 		if (ext_adv_capable(hdev)) {
- 			err = hci_setup_ext_adv_instance_sync(hdev, 0x00);
+diff --git a/tools/power/cpupower/utils/cpupower-set.c b/tools/power/cpupower/utils/cpupower-set.c
+index 0677b58374ab..59ace394cf3e 100644
+--- a/tools/power/cpupower/utils/cpupower-set.c
++++ b/tools/power/cpupower/utils/cpupower-set.c
+@@ -62,8 +62,8 @@ int cmd_set(int argc, char **argv)
+ 
+ 	params.params = 0;
+ 	/* parameter parsing */
+-	while ((ret = getopt_long(argc, argv, "b:e:m:",
+-						set_opts, NULL)) != -1) {
++	while ((ret = getopt_long(argc, argv, "b:e:m:t:",
++				  set_opts, NULL)) != -1) {
+ 		switch (ret) {
+ 		case 'b':
+ 			if (params.perf_bias)
 -- 
 2.50.1
 
