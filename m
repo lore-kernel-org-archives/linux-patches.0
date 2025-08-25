@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9BD17736;
-	Mon, 25 Aug 2025 12:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF449478;
+	Mon, 25 Aug 2025 12:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124108; cv=none; b=Yvbt67gf1ZbHt0sWwdebs3uC0tH6r0O9ejkCXc1xBRygxFmEmSLQy6gJrLTvQPuigfpMNTTfE1Hidu8GEVRTIlGSjkTaZMinW5ilq0kHJ1yaqxO196Vdg5SIfGRCDoeVJN9JR8vAxvUwK1JubaRSG9JK381FOtu/th0rIPdleJ0=
+	t=1756124109; cv=none; b=odE2zcTN2YN/XuF5nnc4iMlsKdh0h5SnvSoV93sOsBXoXwCGaxZR/bg+Eo4MPO23KZd2zu8iHvP0lv61hbjOy2yA60ze3cVSuaM3dZzc71Wom3BZcksIPPBWzRvIEoeGdjdfEar/7f09f+ghJrazfIDffdYYEQlYmAHG4PSx4nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124108; c=relaxed/simple;
-	bh=JaKe4DqhYWnFPu/DwQ4MSDSvTTHr/XdiZsU9DSAm2Hw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jpk+vCWl2hMQF/2x7nzf29vqSXTrvB7LbvlM6JPuQ2hhL4eJ9g23iA0jk3/g40eudHNwgCKr+4P4yktHWPbGqK+2Pek/wsE0HN5UZ6ig89Uv4TH4/W/HPS6r1mWj2w0Z1w575uhU79yFJI3Gi42Mkcde2dIhv7Y4zHKR/X2eRX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hm2IOc17; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756124109; c=relaxed/simple;
+	bh=alL0tPmHLDm5NA77251sOI6jBFp6e0bCu3oKZ1m9NgA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nh9NtzHlyVHecNzmc9bnA7Xjcqi6l3qEIcv+hGajcHxwodCODLiDBJjZKQm1ZoKVgn3FD/LhsauwSYMKtOGdJmZhqTIjTCXkAwRD0K8gQp4xdoJFQqbEN+fvVwcdnfIIet01qtgkj2Dkb5D9dHUEXoThU9WmmRn6EbPjeQyKOhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s1pOUzQH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hm2IOc17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A056DC4CEED;
-	Mon, 25 Aug 2025 12:15:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s1pOUzQH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDADDC116B1;
+	Mon, 25 Aug 2025 12:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124107;
-	bh=JaKe4DqhYWnFPu/DwQ4MSDSvTTHr/XdiZsU9DSAm2Hw=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Hm2IOc17eHSwIPJVEgJD/wRlHlhGBOmkygBbDMH4JHv7X8A8mUtCQKfgphITjIgLw
-	 ao/laXmcKgi3VeQXhVhoO2lY7KKkolZIXoZV177jWQ8fARPHscH+VRs731Sd+E2eE9
-	 Lw0nddgddKU9+RyN8fp7if0L4tAGzxf9l/3TfgpuXbHHX2QEPI8saHLA6VuQ/GqSDK
-	 nSoBlcka6/ztzvEglzcPLxxs+3vl6HVIGFo8Co0RgXbP8pAqIR9sO95NfVxcmv0OlQ
-	 aHFTW3yrA7M+mF+p2CBc6telbxmf3wadH7uQzCjBXgdHlTyJXyhb4oSVDUXCvVaKVM
-	 G+Q9TdbX+0mrA==
+	s=k20201202; t=1756124108;
+	bh=alL0tPmHLDm5NA77251sOI6jBFp6e0bCu3oKZ1m9NgA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=s1pOUzQHV6wUhy1er26yz/7G7BNYQj9jWP1/WWRQnaJTnD2GqLh/uV1JYUZFEoBx4
+	 VMkjGOBmCuFcu7rC0vbugF7rlV7GNWYPK3b16CWfCKzVUNhhbuhG3uyGFTwUDVctEq
+	 oJxLmJ7zxtyVKQx0pWjdcx3k8TvyAbdKQiJFfNS0zP9sXj27MwM2Kg5OsBz+8h9h6U
+	 1XJ4JwIztW/efn9iDDL5tEjgw4B+cOoDzZ9WJzFgNd/qkiEYws/ExlG3Ps07H4qPtQ
+	 YZLZ/IBB8nivMn8O1NpwoFfgCWYBvQOr46njmuGWkJbFolbwYA1ZF9aBQKxEU4Su/p
+	 jv+FJpxuCSuIQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiufei Xue <jiufei.xue@samsung.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Lubomir Rintel <lkundrak@v3.sk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	viro@zeniv.linux.org.uk,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.15] fs: writeback: fix use-after-free in __mark_inode_dirty()
-Date: Mon, 25 Aug 2025 08:14:50 -0400
-Message-ID: <20250825121505.2983941-1-sashal@kernel.org>
+	oliver@neukum.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.1] cdc_ncm: Flag Intel OEM version of Fibocom L850-GL as WWAN
+Date: Mon, 25 Aug 2025 08:14:51 -0400
+Message-ID: <20250825121505.2983941-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
+References: <20250825121505.2983941-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,204 +49,103 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.3
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiufei Xue <jiufei.xue@samsung.com>
+From: Lubomir Rintel <lkundrak@v3.sk>
 
-[ Upstream commit d02d2c98d25793902f65803ab853b592c7a96b29 ]
+[ Upstream commit 4a73a36cb704813f588af13d9842d0ba5a185758 ]
 
-An use-after-free issue occurred when __mark_inode_dirty() get the
-bdi_writeback that was in the progress of switching.
+This lets NetworkManager/ModemManager know that this is a modem and
+needs to be connected first.
 
-CPU: 1 PID: 562 Comm: systemd-random- Not tainted 6.6.56-gb4403bd46a8e #1
-......
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __mark_inode_dirty+0x124/0x418
-lr : __mark_inode_dirty+0x118/0x418
-sp : ffffffc08c9dbbc0
-........
-Call trace:
- __mark_inode_dirty+0x124/0x418
- generic_update_time+0x4c/0x60
- file_modified+0xcc/0xd0
- ext4_buffered_write_iter+0x58/0x124
- ext4_file_write_iter+0x54/0x704
- vfs_write+0x1c0/0x308
- ksys_write+0x74/0x10c
- __arm64_sys_write+0x1c/0x28
- invoke_syscall+0x48/0x114
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x40/0xe4
- el0t_64_sync_handler+0x120/0x12c
- el0t_64_sync+0x194/0x198
-
-Root cause is:
-
-systemd-random-seed                         kworker
-----------------------------------------------------------------------
-___mark_inode_dirty                     inode_switch_wbs_work_fn
-
-  spin_lock(&inode->i_lock);
-  inode_attach_wb
-  locked_inode_to_wb_and_lock_list
-     get inode->i_wb
-     spin_unlock(&inode->i_lock);
-     spin_lock(&wb->list_lock)
-  spin_lock(&inode->i_lock)
-  inode_io_list_move_locked
-  spin_unlock(&wb->list_lock)
-  spin_unlock(&inode->i_lock)
-                                    spin_lock(&old_wb->list_lock)
-                                      inode_do_switch_wbs
-                                        spin_lock(&inode->i_lock)
-                                        inode->i_wb = new_wb
-                                        spin_unlock(&inode->i_lock)
-                                    spin_unlock(&old_wb->list_lock)
-                                    wb_put_many(old_wb, nr_switched)
-                                      cgwb_release
-                                      old wb released
-  wb_wakeup_delayed() accesses wb,
-  then trigger the use-after-free
-  issue
-
-Fix this race condition by holding inode spinlock until
-wb_wakeup_delayed() finished.
-
-Signed-off-by: Jiufei Xue <jiufei.xue@samsung.com>
-Link: https://lore.kernel.org/20250728100715.3863241-1-jiufei.xue@samsung.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
+Link: https://patch.msgid.link/20250814154214.250103-1-lkundrak@v3.sk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my thorough analysis of the commit and the kernel code, here's
-my assessment:
-
 **Backport Status: YES**
 
-## Extensive Explanation:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-This commit fixes a **critical use-after-free vulnerability** in the
-writeback subsystem that should definitely be backported to stable
-kernel trees. Here's why:
+## Analysis of the Commit:
 
-### 1. **Real Security Bug with Clear Impact**
-The commit fixes a genuine use-after-free vulnerability that occurs in
-`__mark_inode_dirty()`. The bug manifests as a kernel crash with a clear
-call trace showing memory corruption. This is not a theoretical issue -
-it has been observed in production (kernel 6.6.56).
+1. **Nature of the change**: This is a simple device ID addition that
+   adds USB vendor/device ID pair (0x8087:0x095a) for the Intel OEM
+   version of Fibocom L850-GL modem to the cdc_ncm driver's device
+   table.
 
-### 2. **Race Condition Details**
-The race condition occurs between two concurrent operations:
-- **Thread A** (`__mark_inode_dirty`): Gets a reference to
-  `inode->i_wb`, releases the inode lock, then calls
-  `wb_wakeup_delayed(wb)`
-- **Thread B** (`inode_switch_wbs_work_fn`): Switches the inode's
-  writeback context, releases the old wb via `wb_put_many()`, which can
-  trigger `cgwb_release` and free the wb structure
+2. **Bug fix vs feature**: This is a **hardware enablement fix** rather
+   than a new feature. Without this change, the Intel-branded Fibocom
+   L850-GL modem won't be properly recognized as a WWAN device, causing
+   NetworkManager/ModemManager to fail to handle it correctly. This
+   directly impacts users with this hardware.
 
-The vulnerability window exists because Thread A accesses the wb
-structure (`wb_wakeup_delayed(wb)`) after releasing the inode lock but
-before completing its operation, while Thread B can free that same wb
-structure in parallel.
+3. **Code impact**: The change is minimal - just 7 lines adding a new
+   entry to the `cdc_devs[]` USB device table:
+  ```c
+  /* Intel modem (label from OEM reads Fibocom L850-GL) */
+  { USB_DEVICE_AND_INTERFACE_INFO(0x8087, 0x095a,
+  USB_CLASS_COMM,
+  USB_CDC_SUBCLASS_NCM, USB_CDC_PROTO_NONE),
+  .driver_info = (unsigned long)&wwan_info,
+  },
+  ```
 
-### 3. **Minimal and Contained Fix**
-The fix is remarkably simple and surgical - it only reorders lock
-releases:
-```c
-- spin_unlock(&wb->list_lock);
-- spin_unlock(&inode->i_lock);
-- trace_writeback_dirty_inode_enqueue(inode);
--
-  if (wakeup_bdi && (wb->bdi->capabilities & BDI_CAP_WRITEBACK))
-      wb_wakeup_delayed(wb);
-+
-+ spin_unlock(&wb->list_lock);
-+ spin_unlock(&inode->i_lock);
-+ trace_writeback_dirty_inode_enqueue(inode);
-```
+4. **Risk assessment**:
+   - **Extremely low risk** - The change only adds a new device ID entry
+   - No existing functionality is modified
+   - Uses the existing `wwan_info` driver configuration (FLAG_WWAN flag)
+   - Follows the same pattern as other WWAN devices in the driver
+   - Cannot cause regressions for other hardware
 
-The fix ensures that `wb_wakeup_delayed()` is called while still holding
-the locks, preventing the wb from being freed during the operation. This
-is a classic lock ordering fix with minimal code change (just moving 3
-lines).
+5. **User impact**: Users with this specific hardware (Intel OEM version
+   with VID:PID 0x8087:0x095a) cannot use their modem properly without
+   this fix. The modem won't be recognized as a WWAN device, preventing
+   proper network management.
 
-### 4. **Critical Subsystem**
-The writeback subsystem is fundamental to filesystem operations - it
-handles dirty page writeback, inode management, and I/O scheduling. A
-use-after-free here can lead to:
-- System crashes/panics
-- Data corruption
-- Security vulnerabilities (potential for exploitation)
+6. **Stable tree criteria compliance**:
+   - ✓ Fixes a real bug (hardware not working properly)
+   - ✓ Minimal change (7 lines)
+   - ✓ No architectural changes
+   - ✓ Self-contained to specific hardware
+   - ✓ Clear and obvious correctness
 
-### 5. **Matches Stable Criteria**
-This fix perfectly aligns with stable kernel rules:
-- **Fixes a real bug**: Documented use-after-free with crash trace
-- **Already upstream**: Has been reviewed by Jan Kara (filesystem
-  maintainer) and merged by Christian Brauner
-- **Small change**: Only 6 lines moved, no new logic
-- **No new features**: Pure bug fix
-- **Low regression risk**: Simply extends existing lock protection
-  slightly
+7. **Historical context**: The git history shows numerous quirks and
+   fixes for the Fibocom L850-GL modem variants, indicating this is
+   well-known hardware that has required various fixes over time. This
+   particular Intel OEM variant (0x8087:0x095a) was simply missing from
+   the device table.
 
-### 6. **Similar Historical Fixes**
-The git history shows multiple similar use-after-free fixes in this
-subsystem have been backported:
-- `f87904c07551` - writeback: avoid use-after-free after removing device
-- `8e00c4e9dd85` - writeback: fix use-after-free in
-  finish_writeback_work()
-- `614a4e377314` - writeback, cgroup: fix premature wb_put()
+This is a textbook example of a stable-worthy commit: it enables
+specific hardware that should already be working, with zero risk to
+existing functionality.
 
-### 7. **CONFIG_CGROUP_WRITEBACK Dependency**
-While this bug primarily affects systems with `CONFIG_CGROUP_WRITEBACK`
-enabled (used for cgroup-aware writeback), this is a common
-configuration in modern distributions, especially those using cgroups v2
-for container workloads.
+ drivers/net/usb/cdc_ncm.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-### 8. **No Side Effects**
-The change has no functional side effects beyond fixing the race:
-- The trace event still fires at the same logical point
-- The wb_wakeup_delayed() still executes under the same conditions
-- Only the lock hold duration is slightly extended to cover the wb
-  access
-
-This is a textbook example of a commit that should be backported to
-stable kernels - it fixes a serious bug with minimal, well-understood
-changes in a critical subsystem.
-
- fs/fs-writeback.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index cc57367fb641..a07b8cf73ae2 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2608,10 +2608,6 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 			wakeup_bdi = inode_io_list_move_locked(inode, wb,
- 							       dirty_list);
+diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
+index ea0e5e276cd6..5d123df0a866 100644
+--- a/drivers/net/usb/cdc_ncm.c
++++ b/drivers/net/usb/cdc_ncm.c
+@@ -2087,6 +2087,13 @@ static const struct usb_device_id cdc_devs[] = {
+ 	  .driver_info = (unsigned long)&wwan_info,
+ 	},
  
--			spin_unlock(&wb->list_lock);
--			spin_unlock(&inode->i_lock);
--			trace_writeback_dirty_inode_enqueue(inode);
--
- 			/*
- 			 * If this is the first dirty inode for this bdi,
- 			 * we have to wake-up the corresponding bdi thread
-@@ -2621,6 +2617,11 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 			if (wakeup_bdi &&
- 			    (wb->bdi->capabilities & BDI_CAP_WRITEBACK))
- 				wb_wakeup_delayed(wb);
++	/* Intel modem (label from OEM reads Fibocom L850-GL) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x8087, 0x095a,
++		USB_CLASS_COMM,
++		USB_CDC_SUBCLASS_NCM, USB_CDC_PROTO_NONE),
++	  .driver_info = (unsigned long)&wwan_info,
++	},
 +
-+			spin_unlock(&wb->list_lock);
-+			spin_unlock(&inode->i_lock);
-+			trace_writeback_dirty_inode_enqueue(inode);
-+
- 			return;
- 		}
- 	}
+ 	/* DisplayLink docking stations */
+ 	{ .match_flags = USB_DEVICE_ID_MATCH_INT_INFO
+ 		| USB_DEVICE_ID_MATCH_VENDOR,
 -- 
 2.50.1
 
