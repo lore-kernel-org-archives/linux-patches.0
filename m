@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C964327780C;
-	Mon, 25 Aug 2025 12:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FB8405F7;
+	Mon, 25 Aug 2025 12:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124116; cv=none; b=FKzUi69nIre67QVH1e/5NkEKa4mdgsFLwvMttjY1hqQwGKm5MHMqLeaZnMgzl18QmD0mKTgtnlwClp1siRsNXSMCkardxgAA8Zp/JTGKPgjTOFk7kKDtirTwxUnCzimygPgtlMvU/rxNZG5lcQm0Fun9QdZ2829fMPk+MEh827A=
+	t=1756124119; cv=none; b=hdG0iPvm4o4RdpcUx34vA3h1jDAbwCdAMPau2TPOI0KsS8l7HkPzNZ9BnwiDDBHDLHlMmlwceX+e/Kht92lL9fINx+oC0/H8azvutPJ2x0BsXkeSkS8oZ9njheZtD8BdIOEP9GXkvuPihhgxJQqKbU8S+FNDU4enD5ItGEhveEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124116; c=relaxed/simple;
-	bh=U4QdAVzcoPl3yGc12zC0FvoLJYOhc0k6UX3CH+eLHNU=;
+	s=arc-20240116; t=1756124119; c=relaxed/simple;
+	bh=sNWPxgv+b1A4FaJWevhxqfNI+FaYtWmhebrqEcudSBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXpLxx3nUx58GSZUs+nalTcBe6ULBLg/9vi5trfYSOtdThQnMAUPqnn349alj5nQDgqyZMPkQPbDdwktlwrz4S6zFpfNnlfhoD4xhn6M11Bd/hHiO6fMuhjoeXs97dRG7OizTgky5te+XTBHg1yYq4H2WtwPbouTeHtrd/X0Mh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lBajd0R8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nAICCI/aBUSW+L271/W6rzQflhwsB/JEVylKUh2xFFv6ysKl1uKCfIaU7wHIqmt1oE1BN1wOpYJFmfr4zqWbPyKeUz+UV61XtAB0NNEtWB0CfkcCvsLNUzkypsY1WPaRHPwi7DTB7TAISWSbg0fHyqfNfmQkOlI72bbkVCxq1k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gFEY0m77; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lBajd0R8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCCAC4CEED;
-	Mon, 25 Aug 2025 12:15:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gFEY0m77"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F2CC4CEED;
+	Mon, 25 Aug 2025 12:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124116;
-	bh=U4QdAVzcoPl3yGc12zC0FvoLJYOhc0k6UX3CH+eLHNU=;
+	s=k20201202; t=1756124118;
+	bh=sNWPxgv+b1A4FaJWevhxqfNI+FaYtWmhebrqEcudSBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBajd0R8KkE3ylCqbZpPpjoqqP/748NCTfsLHuKYZZoHPwuh1bBqeqUypUijoE9Y1
-	 6iv2WLJFCA+Rfb3oMoOS7DCvE6l7Eo4SYG/xFi4zZb7nRoD8PHgurdKleTNFHJFxeW
-	 pLQT0R48p9tXSv7y42RCyHh8JD8a7dASazLameCuTssPxL1O08YNMc0uxJQ8RbSE6R
-	 Wa4RHcq4OgWR4lJADkH78j3uql1XDG2oQJBT6OkWUUdgN/pRO1jHTJC7gY6A2ukhYw
-	 BCBDJtAsfIpAS1H0vUjiPBkzmDmV0XC1hHRy5NJH8ZAfUzYn6EzyvnP1QK3pQ84KTL
-	 qhwjE36g7zAvA==
+	b=gFEY0m77Z8ZuBbZcwcj/5pNIgAmcvJ0xt9UXrZePCRYaCUqiY+grTb9xT+HP2k6tg
+	 VDw1TB3buWee/pcO6N0C2C1gCInE16wIJQWoxxFWfcn4v8GeBhcFGWcK7jcMJjUas7
+	 gj7tnc1WxyyJT4SEchr03wsYvJQ0OytUovL73VC9Y0ya7xdHb/UdjZCtKcGjV1UxTE
+	 YYJN4aJudG8j9bkA1UCnDdD6jxEA98yBwCx+UJ8oIoHt6mb0hAsaogS+pgDn3rzThf
+	 3L5D96nS1n83bz1Z34rSxU1YTRcr9N7MshzQ38wbdVrl749KCtGPZ0LZ08f+KjAl8E
+	 3ElI9SdGDW9Aw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	josef@toxicpanda.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.12] btrfs: zoned: skip ZONE FINISH of conventional zones
-Date: Mon, 25 Aug 2025 08:14:56 -0400
-Message-ID: <20250825121505.2983941-7-sashal@kernel.org>
+Cc: =?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.16-5.10] drm/amd/display: Don't warn when missing DCE encoder caps
+Date: Mon, 25 Aug 2025 08:14:57 -0400
+Message-ID: <20250825121505.2983941-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
 References: <20250825121505.2983941-1-sashal@kernel.org>
@@ -49,175 +46,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.3
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit f0ba0e7172a222ea6043b61ecd86723c46d7bcf2 ]
+[ Upstream commit 8246147f1fbaed522b8bcc02ca34e4260747dcfb ]
 
-Don't call ZONE FINISH for conventional zones as this will result in I/O
-errors. Instead check if the zone that needs finishing is a conventional
-zone and if yes skip it.
+On some GPUs the VBIOS just doesn't have encoder caps,
+or maybe not for every encoder.
 
-Also factor out the actual handling of finishing a single zone into a
-helper function, as do_zone_finish() is growing ever bigger and the
-indentations levels are getting higher.
+This isn't really a problem and it's handled well,
+so let's not litter the logs with it.
 
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 33e0227ee96e62d034781e91f215e32fd0b1d512)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of this commit, here is my determination:
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Extensive Explanation:
 
-## Bug Fix Analysis
+This commit is a good candidate for backporting to stable kernel trees
+for the following reasons:
 
-1. **Critical Bug Fix**: The commit fixes a concrete bug where calling
-   `REQ_OP_ZONE_FINISH` on conventional zones results in I/O errors.
-   This is a real runtime error that affects users of btrfs on zoned
-   storage devices that have conventional zones mixed with sequential
-   zones.
+### 1. **It fixes a user-visible issue (log spam)**
+The commit addresses warning messages that unnecessarily clutter system
+logs. The code shows that when `get_encoder_cap_info()` returns
+`BP_RESULT_NORECORD` (meaning the VBIOS doesn't have encoder
+capabilities for that specific encoder), it was incorrectly logging a
+warning. Looking at the code pattern across the AMD display driver,
+`BP_RESULT_NORECORD` is a normal, expected condition - not an error.
 
-2. **Small and Contained Change**: The fix is relatively small and well-
-   contained:
-   - Adds a new helper function `call_zone_finish()` that encapsulates
-     the zone finishing logic
-   - Most importantly, adds the critical check: `if
-     (btrfs_dev_is_sequential(device, physical))` before issuing the
-     `REQ_OP_ZONE_FINISH` operation
-   - The refactoring merely moves existing code into the helper function
-     without changing the logic
-
-3. **Clear Root Cause**: The bug occurs because the original code
-   unconditionally calls `blkdev_zone_mgmt()` with `REQ_OP_ZONE_FINISH`
-   on all zones, but this operation is invalid for conventional zones
-   (non-sequential zones). The fix properly checks if a zone is
-   sequential before attempting to finish it.
-
-4. **No New Features**: This commit doesn't introduce any new
-   functionality - it's purely a bug fix that prevents I/O errors.
-
-5. **Minimal Risk**: The change has minimal risk of regression:
-   - The check for sequential zones is straightforward
-   - The refactoring doesn't change the existing logic flow
-   - The fix has been reviewed by multiple developers familiar with the
-     zoned code
-
-6. **Affects Real Users**: This bug affects users running btrfs on SMR
-   (Shingled Magnetic Recording) drives or ZNS (Zoned Namespace) SSDs
-   that have a mix of conventional and sequential zones, which is a
-   common configuration.
-
-## Code Analysis
-
-The key fix in `call_zone_finish()` at line 2262:
+### 2. **The fix is minimal and contained**
+The change is extremely simple - it only modifies the condition check
+from:
 ```c
-if (btrfs_dev_is_sequential(device, physical)) {
-    // Only call zone finish for sequential zones
-    ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH, ...);
+if (BP_RESULT_OK == result) {
+    // handle success
+} else {
+    DC_LOG_WARNING(...); // Always warn on non-OK
+}
+```
+to:
+```c
+if (result == BP_RESULT_OK) {
+    // handle success
+} else if (result != BP_RESULT_NORECORD) {
+    DC_LOG_WARNING(...); // Only warn on actual errors
 }
 ```
 
-This prevents the invalid operation on conventional zones while
-maintaining the correct behavior for sequential zones. The subsequent
-operations (updating reserved_active_zones and clearing active zone) are
-still performed regardless of zone type, which is the correct behavior.
+### 3. **No functional changes or new features**
+The commit doesn't change any behavior - it only suppresses
+inappropriate warning messages. The driver already handles the missing
+encoder caps gracefully (as noted in the commit message: "This isn't
+really a problem and it's handled well").
 
-The commit follows stable kernel rules perfectly: it's a clear bug fix,
-has minimal changes, doesn't introduce new features, and addresses a
-real user-facing issue that causes I/O errors.
+### 4. **Low risk of regression**
+The change only affects logging behavior. It doesn't modify:
+- Any hardware initialization sequences
+- Any encoder capabilities detection logic
+- Any functional paths in the driver
+- Any data structures or APIs
 
- fs/btrfs/zoned.c | 55 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 20 deletions(-)
+### 5. **Pattern consistency across the codebase**
+My grep analysis shows that `BP_RESULT_NORECORD` is commonly handled
+without warnings in other parts of the AMD display driver. For example,
+in `dc_link.c`, it uses `ASSERT(bp_result == BP_RESULT_NORECORD)`
+showing it's an expected condition. Many other functions simply return
+`BP_RESULT_NORECORD` without logging warnings.
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 5439d8374716..950e72dc537c 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2246,6 +2246,40 @@ static void wait_eb_writebacks(struct btrfs_block_group *block_group)
- 	rcu_read_unlock();
- }
+### 6. **Applied to two identical code paths**
+The commit applies the same fix to both
+`dce110_link_encoder_construct()` and `dce60_link_encoder_construct()`
+functions, maintaining consistency and preventing the warning in both
+DCE 11.0 and DCE 6.0 hardware paths.
+
+### 7. **Already cherry-picked**
+The commit message shows "(cherry picked from commit 33e0227ee96e...)",
+indicating it was already deemed important enough to cherry-pick to
+another branch, suggesting its stability importance.
+
+### 8. **Quality of Life improvement for users**
+Reducing unnecessary log spam improves the user experience and makes it
+easier to identify real problems in system logs. This is especially
+important for users monitoring their systems for actual issues.
+
+The commit follows stable tree rules perfectly: it's a small, contained
+fix for a real issue (log spam) that affects users, with minimal risk of
+introducing regressions.
+
+ drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+index 4a9d07c31bc5..0c50fe266c8a 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+@@ -896,13 +896,13 @@ void dce110_link_encoder_construct(
+ 						enc110->base.id, &bp_cap_info);
  
-+static int call_zone_finish(struct btrfs_block_group *block_group,
-+			    struct btrfs_io_stripe *stripe)
-+{
-+	struct btrfs_device *device = stripe->dev;
-+	const u64 physical = stripe->physical;
-+	struct btrfs_zoned_device_info *zinfo = device->zone_info;
-+	int ret;
-+
-+	if (!device->bdev)
-+		return 0;
-+
-+	if (zinfo->max_active_zones == 0)
-+		return 0;
-+
-+	if (btrfs_dev_is_sequential(device, physical)) {
-+		unsigned int nofs_flags;
-+
-+		nofs_flags = memalloc_nofs_save();
-+		ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH,
-+				       physical >> SECTOR_SHIFT,
-+				       zinfo->zone_size >> SECTOR_SHIFT);
-+		memalloc_nofs_restore(nofs_flags);
-+
-+		if (ret)
-+			return ret;
-+	}
-+
-+	if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
-+		zinfo->reserved_active_zones++;
-+	btrfs_dev_clear_active_zone(device, physical);
-+
-+	return 0;
-+}
-+
- static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_written)
- {
- 	struct btrfs_fs_info *fs_info = block_group->fs_info;
-@@ -2330,31 +2364,12 @@ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_writ
- 	down_read(&dev_replace->rwsem);
- 	map = block_group->physical_map;
- 	for (i = 0; i < map->num_stripes; i++) {
--		struct btrfs_device *device = map->stripes[i].dev;
--		const u64 physical = map->stripes[i].physical;
--		struct btrfs_zoned_device_info *zinfo = device->zone_info;
--		unsigned int nofs_flags;
--
--		if (!device->bdev)
--			continue;
--
--		if (zinfo->max_active_zones == 0)
--			continue;
--
--		nofs_flags = memalloc_nofs_save();
--		ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH,
--				       physical >> SECTOR_SHIFT,
--				       zinfo->zone_size >> SECTOR_SHIFT);
--		memalloc_nofs_restore(nofs_flags);
+ 	/* Override features with DCE-specific values */
+-	if (BP_RESULT_OK == result) {
++	if (result == BP_RESULT_OK) {
+ 		enc110->base.features.flags.bits.IS_HBR2_CAPABLE =
+ 				bp_cap_info.DP_HBR2_EN;
+ 		enc110->base.features.flags.bits.IS_HBR3_CAPABLE =
+ 				bp_cap_info.DP_HBR3_EN;
+ 		enc110->base.features.flags.bits.HDMI_6GB_EN = bp_cap_info.HDMI_6GB_EN;
+-	} else {
++	} else if (result != BP_RESULT_NORECORD) {
+ 		DC_LOG_WARNING("%s: Failed to get encoder_cap_info from VBIOS with error code %d!\n",
+ 				__func__,
+ 				result);
+@@ -1798,13 +1798,13 @@ void dce60_link_encoder_construct(
+ 						enc110->base.id, &bp_cap_info);
  
-+		ret = call_zone_finish(block_group, &map->stripes[i]);
- 		if (ret) {
- 			up_read(&dev_replace->rwsem);
- 			return ret;
- 		}
--
--		if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
--			zinfo->reserved_active_zones++;
--		btrfs_dev_clear_active_zone(device, physical);
- 	}
- 	up_read(&dev_replace->rwsem);
- 
+ 	/* Override features with DCE-specific values */
+-	if (BP_RESULT_OK == result) {
++	if (result == BP_RESULT_OK) {
+ 		enc110->base.features.flags.bits.IS_HBR2_CAPABLE =
+ 				bp_cap_info.DP_HBR2_EN;
+ 		enc110->base.features.flags.bits.IS_HBR3_CAPABLE =
+ 				bp_cap_info.DP_HBR3_EN;
+ 		enc110->base.features.flags.bits.HDMI_6GB_EN = bp_cap_info.HDMI_6GB_EN;
+-	} else {
++	} else if (result != BP_RESULT_NORECORD) {
+ 		DC_LOG_WARNING("%s: Failed to get encoder_cap_info from VBIOS with error code %d!\n",
+ 				__func__,
+ 				result);
 -- 
 2.50.1
 
