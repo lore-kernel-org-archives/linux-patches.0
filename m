@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FA5393DCB;
-	Mon, 25 Aug 2025 14:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CD52FB612;
+	Mon, 25 Aug 2025 14:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756132306; cv=none; b=cAwQeCvv4gRi1GEKc/jaZocclc+6Sdsc5LGKJ8z3eN5Ya5cnRo48Gs4OXq7MrHU5zIVGavyGY8k6vL5K880GHE/753Xlt3CSOwa6/5bntu8+cNRzo1GGa7bHPI0mFqgiF3MnvhlPzB+mgRNVpC/rXdOO2NUk1fPwSy+kEwFyPpw=
+	t=1756132338; cv=none; b=H3VsLOiphIZytEgDa7GbF2uO1Vh4WQd1HwnW3jopU3TAl9OVepDGf7isg18iAmGKR39/xQ8lUEx6t3ozBfM4q9rTqg56o3qS19b9ZtgSAVhyiAaXN9kDEuN365JaIP40p3gIYvi65XtlFhvaRoO8OGOtKUElQc+X8yQdoaBb4FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756132306; c=relaxed/simple;
-	bh=9NI4GU1BAOwqa1sVUTZsj4DQO6EVHr2Y6HgJsrFNfSo=;
+	s=arc-20240116; t=1756132338; c=relaxed/simple;
+	bh=CejHFcCg/LceUsBinXTS0yUNDRyULV0yXMik1KYc3wI=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=H3HAwkAl5n53bxT/SEm+7PMqrLkzH5uVu02NWcKdCqSa+FwTYrdeGKHBbExnk4XJ4r/EPtFmqq/2O2N+mhKcooY0tJI9ZBBkTy9cPQvP994TpVncN9KnseVsKuuCaJKEXrUbJUCH+vTB3GKyiJ/dG+sWrW0QSFJnAsBsdJv/Ge4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LxVDzLGz; arc=none smtp.client-ip=10.30.226.201
+	 References:In-Reply-To; b=Gj5pFw5ivUo2seNKB5VeTQ3A6PmtzHqWokC4pdbp6JPkKNJmrJQxdQ/XBwI3LSp93R8euol6HA24XyJjf2WPyeSDhu9S1GvkSDS/xwsz4fi5gkj+ZIzsauyCKYS1li6/q7RXObudzWxfm9ll9U5kx5sjeBvNZVl7ZWj+WFHHykY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mi1ZBg76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LxVDzLGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4DFC4CEED;
-	Mon, 25 Aug 2025 14:31:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mi1ZBg76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AFEC4CEED;
+	Mon, 25 Aug 2025 14:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756132306;
-	bh=9NI4GU1BAOwqa1sVUTZsj4DQO6EVHr2Y6HgJsrFNfSo=;
+	s=k20201202; t=1756132337;
+	bh=CejHFcCg/LceUsBinXTS0yUNDRyULV0yXMik1KYc3wI=;
 	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=LxVDzLGzWvSKzQ7TbZlFBaxzBIkD0TTtWkG57wrT0mxO94XElAT3ktHg7SZPKqg5v
-	 owdTC9haicF42q6DOEYzUSQElWnExS2eSw0gA/rhdV7M0d5dQt6O3q601QiI4hAg5z
-	 6QJrpmF5Uao5F4bmno6L/m4Pg3vTeCXrm7n9GPK3dMniW6U5fFXijVv11W7+KEtuK/
-	 TH8qrsAPagmTNZVlziEDNi5dbnKKKi8LP16+LM3n91/QNnzoYw0hPClR9+qlD0efQN
-	 to6YYb/dPHXzDI0Gm43kKXAxNtfvHCs8aapQY3w8S1tCbnVmlQ85dxKqYfHfcv1cG7
-	 OVzTo6Fbk7LpQ==
+	b=Mi1ZBg76BnCpTIJKzcwRhlWqHfGjH8eO/CxJSUTZQgVuTvHx6vc4kmZn+p7yyC52d
+	 iaRBRnmceMHsJvk9QwxZA9rL5bsRuGpq9T3MClPIhynv0Y/nY52E4N4PcES3wKvIVg
+	 ErI9xuDteuK810aB6fODg8LCxtV44fBJ0FSHJmQ5O2K+jxvtAjd8yBTEw/TNkW7Q83
+	 o1+FxQcEJ13fHbZoD5nUna85KSy9C9RqVD2C90qaRHGc1JXNHlyXEbisv5shWGGcFR
+	 oU+GaVtxfcuTpahV9X48X6hh0OejyVbASPCKRuSDfRSgPVmCLwZlr9FwX+Gvwq3XWo
+	 xV5PUisYjMwGQ==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,43 +34,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 25 Aug 2025 16:31:41 +0200
-Message-Id: <DCBKY1SJY43S.UM6L2B8AQHOX@kernel.org>
-Subject: Re: [PATCH] rust: kernel: remove support for unused host `#[test]`s
-Cc: "Alex Gaynor" <alex.gaynor@gmail.com>, "Brendan Higgins"
- <brendan.higgins@linux.dev>, "David Gow" <davidgow@google.com>, "Masahiro
- Yamada" <masahiroy@kernel.org>, "Boqun Feng" <boqun.feng@gmail.com>, "Gary
- Guo" <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
+Date: Mon, 25 Aug 2025 16:32:12 +0200
+Message-Id: <DCBKYG65XMBV.1E287MARVTUP2@kernel.org>
+Subject: Re: [PATCH] rust: alloc: remove `allocator_test`
+Cc: "Alex Gaynor" <alex.gaynor@gmail.com>, "Lorenzo Stoakes"
+ <lorenzo.stoakes@oracle.com>, "Vlastimil Babka" <vbabka@suse.cz>, "Liam R .
+ Howlett" <Liam.Howlett@oracle.com>, "Uladzislau Rezki" <urezki@gmail.com>,
+ <rust-for-linux@vger.kernel.org>, "Boqun Feng" <boqun.feng@gmail.com>,
+ "Gary Guo" <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
  <bjorn3_gh@protonmail.com>, "Benno Lossin" <lossin@kernel.org>, "Andreas
  Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
- "Trevor Gross" <tmgross@umich.edu>, <rust-for-linux@vger.kernel.org>, "Rae
- Moar" <rmoar@google.com>, <linux-kselftest@vger.kernel.org>,
- <kunit-dev@googlegroups.com>, "Nathan Chancellor" <nathan@kernel.org>,
- "Nicolas Schier" <nicolas@fjasle.eu>, <linux-kbuild@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+ "Trevor Gross" <tmgross@umich.edu>, <linux-kernel@vger.kernel.org>,
+ <patches@lists.linux.dev>
 To: "Miguel Ojeda" <ojeda@kernel.org>
 From: "Danilo Krummrich" <dakr@kernel.org>
-References: <20250726180750.2735836-1-ojeda@kernel.org>
-In-Reply-To: <20250726180750.2735836-1-ojeda@kernel.org>
+References: <20250816211900.2731720-1-ojeda@kernel.org>
+In-Reply-To: <20250816211900.2731720-1-ojeda@kernel.org>
 
-On Sat Jul 26, 2025 at 8:07 PM CEST, Miguel Ojeda wrote:
-> Since commit 028df914e546 ("rust: str: convert `rusttest` tests into
-> KUnit"), we do not have anymore host `#[test]`s that run in the host.
+On Sat Aug 16, 2025 at 11:19 PM CEST, Miguel Ojeda wrote:
+> Given we do not have tests that rely on it anymore, remove
+> `allocator_test`, which simplifies the complexity of the build.
 >
-> Moreover, we do not plan to add any new ones -- tests should generally
-> run within KUnit, since there they are built the same way the kernel
-> does. While we may want to have some way to define tests that can also
-> be run outside the kernel, we still want to test within the kernel too
-> [1], and thus would likely use a custom syntax anyway to define them.
+> In particular, it avoids potential issues with `rusttest`, such as the
+> one fixed at [1], where a public function was added to `Kmalloc` and
+> used elsewhere, but it was not added to `Cmalloc`; or trivial issues
+> like a missing import [2] due to not many people testing that target.
 >
-> Thus simplify the `rusttest` target by removing support for host
-> `#[test]`s for the `kernel` crate.
+> The only downside is that we cannot use it in the `macros`' crate
+> examples anymore, but we did not feel a need for that so far, and anyway
+> we could support that by running those within the kernel too, which we
+> may do regardless.
 >
-> This still maintains the support for the `macros` crate, even though we
-> do not have any such tests there.
->
-> Link: https://lore.kernel.org/rust-for-linux/CABVgOS=3DAKHSfifp0S68K3jgNZ=
-AkALBr=3D7iFb=3DniryG5WDxjSrg@mail.gmail.com/ [1]
+> Link: https://lore.kernel.org/rust-for-linux/20250816204215.2719559-1-oje=
+da@kernel.org/ [1]
+> Link: https://lore.kernel.org/rust-for-linux/20250816210214.2729269-1-oje=
+da@kernel.org/ [2]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Applied to alloc-next, thanks!
