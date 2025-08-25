@@ -1,191 +1,119 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7885C14EC46;
-	Mon, 25 Aug 2025 12:15:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124123; cv=none; b=Xp/cJql2JzL0iTeZOYtWzId9XdUvsycdmx62VUnFK5rCTGR0tDPXg1G0iOpyuSTZVjRlsnlE2d/PzPTV2y3gei6flOYtoAt+0O2UTuMq8F6xb4u7nsSjKID1X4Zg5O2JBAsMz83OONSrNX3lQxWanZt8Yw0MJRAblaRv3eQU9FE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124123; c=relaxed/simple;
-	bh=FYacGFcvtziYaQU23dkF5qhnNiOq+YUOP4jCmJ/AMb8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HyZ5gGYZpjz6izGRdRSwOp+vk9Wqp5mrGD1h41ej59nNZQfUl4+H98ojveBB1oGSvxz+dtpUYm7XfJObwi1TBZuMxr54jUdkJvQZuB9+4oOq78emjxxH4fdNtSfmvihhOhyY6TzCcC7aHgCX9ywVzGZGpc+Pxip1yV+BzLlxlAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=un5ESlkH; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED911199230
+	for <patches@lists.linux.dev>; Mon, 25 Aug 2025 12:46:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756126001; cv=pass; b=GA1dkBfaeT706TWqhkUvCwnbIDc/KkRFYVmjx09TbMrK9ohWE3fvV1UR7scF3v02nYtlfmeTauW/HdikHU9dHRB3K7ySiP6Ix0UvW0B1SEqXQGoYA15QziLZAaJrML4tVVCzjSQNSS+M5cNph/PsHVlfg4DXAgnHTSgQhQkQxBc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756126001; c=relaxed/simple;
+	bh=t4SJMQNiQHEXtScoxR/9jP8egJ2wutxjzhGg9je9+eM=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=HiMQ6/Iptw3CC1sxjF3VL3on7L3fD/3FYjhSyX20oXK1Jf5R9/4Jv0OfQ3ua/ynsTGYrmgXQEI+STjvj7B51wO/XMWnB3IWcgzEFK/2WS3ms0mIO/h5YNLoSe2DbtCjHl4h2ay/1f+QrXv0SCbIFeOdyznehWiNOM0/R3xI6U4A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b=TG2WASjc; arc=pass smtp.client-ip=136.143.188.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="un5ESlkH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F4BC4CEED;
-	Mon, 25 Aug 2025 12:15:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124123;
-	bh=FYacGFcvtziYaQU23dkF5qhnNiOq+YUOP4jCmJ/AMb8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=un5ESlkHE/jiWQ4E7w+MIAM9BFrs7ubsGv3bHkx9mxVJvkwmG0FHmZOydp0W/iSt1
-	 ZyDJ/xT+9FwjUymkV61Vt8c2kUlYCso7GjA59LPhV8503jRYJuJqHe8t6J411TZMod
-	 slufIfhAYejxpbmfnTPe1aGvMMHd1ZFkT+5gbsMSVi1n9bSWAa0qhHPbJq+hGQ8Iph
-	 ZiUE7lVH1fpuOn0Vjk094HIuDQ/tkqyJcBkOsbsfxXUYuLpj80dboesibKEjCEt6ia
-	 QeoS5R5UqXl+AGXnjA/u/aNpS5kpp0tFJ3A44ppfZxZAUag3xJ/9zypter6lYfBsIz
-	 94/9r4/4Liofw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Piotr Zalewski <pZ010001011111@proton.me>,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>,
-	hjc@rock-chips.com,
-	dri-devel@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.16-6.12] drm/rockchip: vop2: make vp registers nonvolatile
-Date: Mon, 25 Aug 2025 08:15:00 -0400
-Message-ID: <20250825121505.2983941-11-sashal@kernel.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
-References: <20250825121505.2983941-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b="TG2WASjc"
+ARC-Seal: i=1; a=rsa-sha256; t=1756125995; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ZrrewGQgjwZA6Qou9bjvIQaX2PQIGylk4ufSSGHHfKakV/fdecGkn7PzxwFWDTl20OU9lSSqlA+WHuI80du1sBeAb6vaG0abmEbNEdE3MUop48WorBILjAkQ5pcPaaAw0QPXRSY8H0U3RtqKc7r4iaQuFZDcdhetJCLl2lEtTJQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1756125995; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=IPk+L6EBV8nWmPwAmrjzJLtYA2inMwHTW2qvWKCbgXM=; 
+	b=aOqwRKYTqPWhRk3fNc47W8ilxtTW06QoIn37xlAan9itN9aBYMBET1mPuacJ8fbt8WeAbMWVtTn61dgFZLW3bQ+uw073KPd4dKs6zThXNJmWFRPH2d7X8ZMKCqeP/Q3SD4lOAu90HP5xeEW096mmNZpA5/Sam5FF0pJ0rw2YNgk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohomail.com;
+	spf=pass  smtp.mailfrom=safinaskar@zohomail.com;
+	dmarc=pass header.from=<safinaskar@zohomail.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1756125995;
+	s=zm2022; d=zohomail.com; i=safinaskar@zohomail.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
+	bh=IPk+L6EBV8nWmPwAmrjzJLtYA2inMwHTW2qvWKCbgXM=;
+	b=TG2WASjc2ffzUsOPK4/ryC/rb9LPnmbRsDIVeE9YOZmnJEhFIJ8ezq5o5vUxnrEh
+	tYD7zcMnZxzDSIILHMdQBQxxNdA6VWWfQNvn6/Ma/jBFZ8mD4cmTyRxykNApMUAHBgs
+	1LMimgskQqO/YsxQ1PyFQ+JfwjWSC4jH6Qjr9YDA=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1756125994881517.902991373012; Mon, 25 Aug 2025 05:46:34 -0700 (PDT)
+Received: from  [212.73.77.104] by mail.zoho.com
+	with HTTP;Mon, 25 Aug 2025 05:46:34 -0700 (PDT)
+Date: Mon, 25 Aug 2025 16:46:34 +0400
+From: Askar Safin <safinaskar@zohomail.com>
+To: "Christian Brauner" <brauner@kernel.org>
+Cc: "Aleksa Sarai" <cyphar@cyphar.com>,
+	"Alexander Viro" <viro@zeniv.linux.org.uk>,
+	"Jan Kara" <jack@suse.cz>, "Ian Kent" <raven@themaw.net>,
+	"linux-fsdevel" <linux-fsdevel@vger.kernel.org>,
+	"David Howells" <dhowells@redhat.com>,
+	"autofs mailing list" <autofs@vger.kernel.org>,
+	"patches" <patches@lists.linux.dev>
+Message-ID: <198e1441f72.ff66ccf525195.4502015239657084211@zohomail.com>
+In-Reply-To: <20250819-direkt-unsympathisch-27ffa5cefb4e@brauner>
+References: <20250817171513.259291-1-safinaskar@zohomail.com>
+ <2025-08-18.1755494302-front-sloped-tweet-dancers-cO03JX@cyphar.com> <20250819-direkt-unsympathisch-27ffa5cefb4e@brauner>
+Subject: Re: [PATCH 0/4] vfs: if RESOLVE_NO_XDEV passed to openat2, don't
+ *trigger* automounts
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.16.3
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Feedback-ID: rr08011227a2f6f79cb2545c2537968e0d0000f31e6423071d731bb2a51d1c89884bfa8127823ef50d4d4164:zu080112278094aa1bffbbbda2c291471500007a343ddc053622f3cb96379bf22f3436ac54481e1d5793f4fd:rf0801122cd8fa8a6862df747cc226a87400009b69b8b6b34a7f556e06b28f92f46d18c273e96cf7c3030313fb3b9ab9c1:ZohoMail
 
-From: Piotr Zalewski <pZ010001011111@proton.me>
 
-[ Upstream commit a52dffaa46c2c5ff0b311c4dc1288581f7b9109e ]
+ ---- On Tue, 19 Aug 2025 12:21:33 +0400  Christian Brauner <brauner@kernel.org> wrote --- 
+ > On Mon, Aug 18, 2025 at 03:31:27PM +1000, Aleksa Sarai wrote:
+ > > I would merge the first three patches -- adding and removing code like
+ > Agreed.
 
-Make video port registers nonvolatile. As DSP_CTRL register is written
-to twice due to gamma LUT enable bit which is set outside of the main
-DSP_CTRL initialization within atomic_enable (for rk356x case it is also
-necessary to always disable gamma LUT before writing a new LUT) there is
-a chance that DSP_CTRL value read-out in gamma LUT init/update code is
-not the one which was written by the preceding DSP_CTRL initialization
-code within atomic_enable. This might result in misconfigured DSP_CTRL
-which leads to no visual output[1]. Since DSP_CTRL write takes effect
-after VSYNC[1] the issue is not always present. When tested on Pinetab2
-with kernel 6.14 it happenes only when DRM is compiled as a module[1].
-In order to confirm that it is a timing issue I inserted 18ms udelay
-before vop2_crtc_atomic_try_set_gamma in atomic enable and compiled DRM
-as module - this has also fixed the issue.
+May I still not merge these patches?
 
-[1] https://lore.kernel.org/linux-rockchip/562b38e5.a496.1975f09f983.Coremail.andyshrk@163.com/
+All they may (hypothetically) fail on their own.
 
-Reported-by: Diederik de Haas <didi.debian@cknow.org>
-Closes: https://lore.kernel.org/linux-rockchip/DAEVDSTMWI1E.J454VZN0R9MA@cknow.org/
-Suggested-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Piotr Zalewski <pZ010001011111@proton.me>
-Tested-by: Diederik de Haas <didi.debian@cknow.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250706083629.140332-2-pZ010001011111@proton.me
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
+If they do, then it will be valuable to know from bisection which of them failed.
 
-LLM Generated explanations, may be completely bogus:
+Let's discuss them one-by-one.
 
-Based on my analysis of the commit, let me provide my determination:
+The first patch moves checks from handle_mounts to traverse_mounts.
+But handle_mounts is not the only caller of traverse_mounts.
+traverse_mounts is also called by follow_down.
+I. e. theoretically follow_down-related code paths can lead to problems.
+I just checked all them, none of them set LOOKUP_NO_XDEV.
+So, they should not lead to problems. But in kernel we, of course, never
+can be sure. They should not lead to problems, but still can.
 
-**Backport Status: YES**
+The second patch removes LOOKUP_NO_XDEV check.
+This is okay, because if "jumped" is set and "LOOKUP_NO_XDEV" is set, then
+this means that we already set error, and thus ND_JUMPED should
+not be read, because it is not read in error path. But this is not obvious, and
+so Al asked me add comment (
+https://lore.kernel.org/linux-fsdevel/20250817180057.GA222315@ZenIV/
+), and, of course, I will add it in the second version in any case.
+So, ND_JUMPED should not be checked in error path, and thus this should
+not lead to problems. But still can.
 
-## Extensive Analysis:
+The third patch makes traverse_mounts fail
+immidiately after first mount-crossing
+(if LOOKUP_NO_XDEV is set). As opposed to very end.
+This should not lead to problems. But can.
 
-This commit is a strong candidate for backporting to stable kernel trees
-for the following reasons:
+So, again, any of these 3 patches can (hypothetically)
+lead to its own problems.
 
-### 1. **Bug Fix Nature**
-The commit fixes a real bug that causes **no visual output** on
-displays. This is a critical user-visible issue where the display driver
-fails to produce any image output. The commit message clearly describes
-this as fixing a situation where "misconfigured DSP_CTRL which leads to
-no visual output."
+So, for bisection reasons I want to keep them separate.
 
-### 2. **Race Condition Fix**
-The code changes address a race condition in register access patterns.
-The issue occurs because:
-- DSP_CTRL register is written twice during atomic_enable
-- The second write happens for gamma LUT configuration
-- Due to the register being volatile, read-modify-write operations can
-  read stale values
-- DSP_CTRL writes only take effect after VSYNC, creating a timing window
-  for the race
+So, may I keep them separate?
 
-### 3. **Small and Contained Change**
-The actual code change is minimal - just one line adding the VP register
-range to the nonvolatile list:
-```c
-+       regmap_reg_range(RK3568_VP0_CTRL_BASE, RK3588_VP3_CTRL_BASE +
-255),
-```
+(And I agree with all other complains in this thread, and will fix them in second version.)
 
-This makes the video port registers (0xc00-0xeff based on the offsets)
-use the regmap cache instead of reading back from hardware, preventing
-the race condition.
-
-### 4. **Hardware-Specific Fix**
-The fix is specific to Rockchip VOP2 hardware (RK3568/RK3588 SoCs) and
-doesn't affect other subsystems. It's confined to the DRM/Rockchip
-display driver.
-
-### 5. **Tested and Confirmed**
-The commit includes:
-- A "Reported-by" tag indicating a real user issue
-- A "Tested-by" tag confirming the fix works
-- Clear reproduction details (happens on Pinetab2 with kernel 6.14 when
-  DRM is compiled as module)
-
-### 6. **Low Risk of Regression**
-The change only affects how registers are cached in the regmap
-framework. It doesn't change any functional logic, algorithms, or
-introduce new features. The comment update accurately reflects that both
-window AND video port registers are now marked as non-volatile for cache
-coherency.
-
-### 7. **Follows Stable Rules**
-This fix aligns with stable kernel rules:
-- Fixes a real bug that users are hitting
-- Small change (essentially 1 line of functional code)
-- Already tested by reporter
-- Fix is obvious once the problem is understood
-- No new features or architectural changes
-
-### 8. **Critical Display Functionality**
-Display output is fundamental functionality. A bug that causes "no
-visual output" severely impacts usability of devices using these SoCs,
-making this a high-priority fix for stable trees.
-
-The commit properly documents the issue with external references and
-follows good practices for a bug fix that should be backported to stable
-kernels.
-
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 186f6452a7d3..b50927a824b4 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -2579,12 +2579,13 @@ static int vop2_win_init(struct vop2 *vop2)
- }
- 
- /*
-- * The window registers are only updated when config done is written.
-- * Until that they read back the old value. As we read-modify-write
-- * these registers mark them as non-volatile. This makes sure we read
-- * the new values from the regmap register cache.
-+ * The window and video port registers are only updated when config
-+ * done is written. Until that they read back the old value. As we
-+ * read-modify-write these registers mark them as non-volatile. This
-+ * makes sure we read the new values from the regmap register cache.
-  */
- static const struct regmap_range vop2_nonvolatile_range[] = {
-+	regmap_reg_range(RK3568_VP0_CTRL_BASE, RK3588_VP3_CTRL_BASE + 255),
- 	regmap_reg_range(0x1000, 0x23ff),
- };
- 
--- 
-2.50.1
+--
+Askar Safin
+https://types.pl/@safinaskar
 
