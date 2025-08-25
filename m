@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42455EEBD;
-	Mon, 25 Aug 2025 12:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C2226A09F;
+	Mon, 25 Aug 2025 12:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124112; cv=none; b=Qkfmgc5g59Jr0PJlLaJZyCAQ9pAkQbnwZM0Su6bzLckkoxOad0WBFFNi2a5+jOosCVgLF4EsB4budT3rXRLpVCgB8DmoXVEKj46JgEPX7NoACAiYl4Dg+N7KlZcFSnilDVuNjhToiR8m+gjLqgpATPyvDyIjWjNA7UybV0l102c=
+	t=1756124113; cv=none; b=PfRsm5ZTIMA+7Vmb0oEqI9T5bM1Jp+nqnY4JR1OY0dKQPA7Iknnhtyec+E9Co0QByTcMVTaE90AGUU7NHokbgfCIrjlh5yYLmnQXVqQmI4gxKj7u83shi0NSj3HG0aT6iWnVMQxSauqT9MNAQAZ6ILag22qH8u0SDmFkpHvpVUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124112; c=relaxed/simple;
-	bh=FOPhcItXJXoIRSdZWM9NGaXg4K4SbgkZNq831SpdPc8=;
+	s=arc-20240116; t=1756124113; c=relaxed/simple;
+	bh=I1v5FGDEpmLOz/xWeQas7bSx+T6EsGdIIPVu/1iJbCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5m35bYZaGKdOv4L5S5ZCtb/Ha1kjBCGXgUage2wVda3gKfc84UxO7/QGEfZNz0lEDzkILWCliYD1sfAJI52CeNelsouiGBilqrTBGNei5+moau43K9McKSmmgCo2Eo+J+BBlgzsMgkixCgi9VzKRG7Wm77MAQcOPAcK6rtYrPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dUNmbzJK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qmRtl9xyFHlm1kdtMwU4JQ2nbuULDUKA2WJ+KsmTXabgdlysMfycWLpi5zo92m+5sw04GkMxT1J3POesxhAoSrMWK/qtSWoCuY+uU4CZAKEQ2IW/MND/W7YMgrcMEQ0TjYT5H6eCi5ZpKY1QadPpHnpWge+8QVLJ5I/Sr/SPcUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ezCW5Q64; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dUNmbzJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E02C4CEED;
-	Mon, 25 Aug 2025 12:15:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ezCW5Q64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3B2C113D0;
+	Mon, 25 Aug 2025 12:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124111;
-	bh=FOPhcItXJXoIRSdZWM9NGaXg4K4SbgkZNq831SpdPc8=;
+	s=k20201202; t=1756124113;
+	bh=I1v5FGDEpmLOz/xWeQas7bSx+T6EsGdIIPVu/1iJbCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUNmbzJK1RlUoNQXnLSyRFMVgNINBmD/sqkMd8AkyeDSS7shu/SFCWTNRAichYYDI
-	 TF+zzwJDX++TYSm83HXJIDvE/nu6A4JymM8Nba+L2ikQbDcGFfkgRsQ6JJVmu8Elcu
-	 iVdQD0a8uNl9Xe1k1UPY1F25IFUqn7HKLP1j1CU4MEjAWyEjsKmcI/rH9Txw2xXm/U
-	 sRz1O0px6j+j0d1DuTBEULbnyCNqtKlIBwrTkEz291dAcIek5YEqvN6VK7pGsC66/Z
-	 M/BxOelJvBPuXGgh6qZGFiGjKMDS5e1PezpcYLOPX2retYR1C2T5pMGk2ojiNQ0ixQ
-	 XoxbKK7PA4wBw==
+	b=ezCW5Q64XPnJXg2gtCf84HVf7LpxgXhaZGgIu517KAbpSs84QrrK2QVb4bdm5OeFE
+	 39nHDdUJfA6Tt33sInXHTaKL2udF0by1E8r3UCLB7cY4Ypm9m9PsrWyM2VUwg3Woe6
+	 u8YQ1xFUzODa6JlwMg8z/1aQ6U9HNCu7MSiu9J8lM5gkviTwIkzEx+8UCR1EiRJIea
+	 0h4z0Ml/6JKrElMRxbr+Rf08bY9jv4BkhtkmtdAcsIVJRpBDmLV5BKzehKkHWrEHEu
+	 7/9LkcW7GZ4HHvL3FhTQy+6rVEfmZvemPVXOo+Opq7HXjSZXzCzAwHb2DJ1sORaF91
+	 /Z6QH3W+YynRA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	josef@toxicpanda.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16] btrfs: clear block dirty if submit_one_sector() failed
-Date: Mon, 25 Aug 2025 08:14:53 -0400
-Message-ID: <20250825121505.2983941-4-sashal@kernel.org>
+	Shyam-sundar.S-k@amd.com,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16] platform/x86/amd: pmc: Drop SMU F/W match for Cezanne
+Date: Mon, 25 Aug 2025 08:14:54 -0400
+Message-ID: <20250825121505.2983941-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
 References: <20250825121505.2983941-1-sashal@kernel.org>
@@ -48,175 +47,365 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.3
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 4bcd3061e8154606af7f721cb75ca04ffe191a12 ]
+[ Upstream commit 5b9e07551faa7bb2f26cb039cc6e8d00bc4d0831 ]
 
-[BUG]
-If submit_one_sector() failed, the block will be kept dirty, but with
-their corresponding range finished in the ordered extent.
+Chris reported that even on a BIOS that has a new enough SMU F/W
+version there is still a spurious IRQ1.  Although the solution was
+added to SMU F/W 64.66.0 it turns out there needs to be a matching
+SBIOS change to activate it.  Thus Linux shouldn't be avoiding the
+IRQ1 workaround on newer SMU F/W because there is no indication the
+BIOS change is in place.
 
-This means if a writeback happens later again, we can hit the following
-problems:
+Drop the match for 64.66.0+ and instead match all RN/CZN/BRC (they
+all share same SMU F/W). Adjust the quirk infrastructure to allow
+quirking the workaround on or off and also adjust existing quirks
+to match properly.
 
-- ASSERT(block_start != EXTENT_MAP_HOLE) in submit_one_sector()
-  If the original extent map is a hole, then we can hit this case, as
-  the new ordered extent failed, we will drop the new extent map and
-  re-read one from the disk.
+Unfortunately this may cause some systems that did have the SBIOS
+change in place to regress in keyboard wakeup but we don't have a
+way to know.  If a user reports a keyboard wakeup regression they can
+run with amd_pmc.disable_workarounds=1 to deactivate the workaround
+and share DMI data so that their system can be quirked not to use
+the workaround in the upstream kernel.
 
-- DEBUG_WARN() in btrfs_writepage_cow_fixup()
-  This is because we no longer have an ordered extent for those dirty
-  blocks. The original for them is already finished with error.
-
-[CAUSE]
-The function submit_one_sector() is not following the regular error
-handling of writeback.  The common practice is to clear the folio dirty,
-start and finish the writeback for the block.
-
-This is normally done by extent_clear_unlock_delalloc() with
-PAGE_START_WRITEBACK | PAGE_END_WRITEBACK flags during
-run_delalloc_range().
-
-So if we keep those failed blocks dirty, they will stay in the page
-cache and wait for the next writeback.
-
-And since the original ordered extent is already finished and removed,
-depending on the original extent map, we either hit the ASSERT() inside
-submit_one_sector(), or hit the DEBUG_WARN() in
-btrfs_writepage_cow_fixup().
-
-[FIX]
-Follow the regular error handling to clear the dirty flag for the block,
-start and finish writeback for that block instead.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4449
+Tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250724185156.1827592-1-superm1@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the kernel repository context,
-here's my assessment:
+Now I have a better understanding. Let me analyze the commit to
+determine if it should be backported:
 
 **Backport Status: YES**
+
+## Extensive Explanation:
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Bug Fix Analysis
+### 1. **Fixes a Real User-Impacting Bug**
+The commit addresses a spurious IRQ1 (keyboard interrupt) issue that
+causes unintended system wakeups from suspend. The commit message
+references a specific bug report
+(https://gitlab.freedesktop.org/drm/amd/-/issues/4449) where users are
+experiencing this problem. This directly impacts user experience with
+system suspend/resume functionality.
 
-1. **Critical Bug Being Fixed**: The commit fixes a serious error
-   handling bug in btrfs writeback that can lead to two different
-   assertion failures:
-   - `ASSERT(block_start != EXTENT_MAP_HOLE)` in submit_one_sector()
-   - `DEBUG_WARN()` in btrfs_writepage_cow_fixup()
+### 2. **Regression Fix for Previous Workaround**
+The code shows this is fixing an incomplete workaround that was
+previously implemented. The original workaround avoided applying the
+IRQ1 disable on SMU firmware version 64.66.0+, assuming the firmware fix
+was sufficient. However, the commit message reveals that:
+- The SMU firmware fix requires a matching SBIOS change to be activated
+- Linux has no way to detect if the SBIOS change is present
+- This means systems with newer SMU firmware but without the SBIOS
+  change still experience the spurious IRQ1 issue
 
-2. **Data Integrity Issue**: The bug causes dirty blocks to remain dirty
-   after a failed submission, but their corresponding ordered extent is
-   already finished with error. This creates an inconsistent state
-   where:
-   - Dirty blocks exist without proper ordered extent tracking
-   - Subsequent writeback attempts will fail with assertions/warnings
-   - The filesystem enters an undefined state that could affect data
-     integrity
+### 3. **Limited Scope and Low Risk**
+The changes are confined to the AMD PMC driver quirks handling:
+- Removes the SMU firmware version check from `amd_pmc_wa_irq1()`
+  function
+- Adjusts the quirk infrastructure to allow both s2idle bug and spurious
+  8042 fixes
+- Updates DMI matches to use the combined quirk where appropriate
+- The changes are self-contained within the platform-specific driver
 
-3. **Clear Root Cause**: The commit message clearly identifies the
-   problem - submit_one_sector() was not following standard writeback
-   error handling practices. The fix aligns the error handling with the
-   rest of the btrfs writeback code.
+### 4. **Hardware-Specific Fix**
+The fix targets specific AMD CPU models (Renoir/Cezanne/Barcelo -
+RN/CZN/BRC) that share the same SMU firmware. This hardware-specific
+nature means:
+- It won't affect other platforms
+- The risk is limited to AMD systems that already have the issue
+- The workaround provides a module parameter
+  (`amd_pmc.disable_workarounds=1`) for users who might experience
+  regressions
 
-## Code Change Analysis
+### 5. **Addresses Known Hardware/Firmware Limitation**
+The commit acknowledges a hardware/firmware limitation where:
+- A fix exists in SMU firmware 64.66.0+
+- But it requires SBIOS activation that Linux cannot detect
+- This is a defensive approach to ensure all affected systems get the
+  workaround
 
-The fix is minimal and contained:
+### 6. **Provides User Control**
+The commit message mentions that users who experience keyboard wakeup
+regression can use `amd_pmc.disable_workarounds=1` to disable the
+workaround and provide DMI data for future quirking. This gives users an
+escape hatch if needed.
+
+### 7. **Follows Stable Kernel Criteria**
+This commit meets the stable kernel backport criteria:
+- **Fixes a real bug**: Spurious IRQ1 wakeups affecting suspend/resume
+- **Already tested**: Has a "Tested-by" tag from the bug reporter
+- **Small and contained**: Changes are limited to the AMD PMC driver
+- **No new features**: Only adjusts existing workaround logic
+- **Clear impact**: Users experience unwanted system wakeups
+
+### Code Analysis Details:
+The key change in `drivers/platform/x86/amd/pmc/pmc.c` removes the SMU
+version check:
 ```c
-if (IS_ERR(em)) {
-+    /*
-+     * When submission failed, we should still clear the folio dirty.
-+     * Or the folio will be written back again but without any
-+     * ordered extent.
-+     */
-+    btrfs_folio_clear_dirty(fs_info, folio, filepos, sectorsize);
-+    btrfs_folio_set_writeback(fs_info, folio, filepos, sectorsize);
-+    btrfs_folio_clear_writeback(fs_info, folio, filepos, sectorsize);
-    return PTR_ERR(em);
-}
+- /* cezanne platform firmware has a fix in 64.66.0 */
+- if (pdev->cpu_id == AMD_CPU_ID_CZN) {
+- if (!pdev->major) {
+- rc = amd_pmc_get_smu_version(pdev);
+- if (rc)
+- return rc;
+- }
+- if (pdev->major > 64 || (pdev->major == 64 && pdev->minor > 65))
+- return 0;
+- }
 ```
 
-The changes:
-- Add proper error handling to clear dirty flag
-- Set and clear writeback status to properly finish the failed writeback
-- Update comments to clarify the behavior
+This ensures the workaround is always applied for affected CPUs,
+regardless of SMU firmware version.
 
-## Stable Tree Criteria Met
+The quirks restructuring in `pmc-quirks.c` creates a combined quirk
+(`quirk_s2idle_spurious_8042`) that applies both fixes where needed,
+showing careful consideration of the various affected systems.
 
-1. **Fixes a real bug**: Yes - prevents assertion failures and potential
-   filesystem corruption
-2. **Small and contained**: Yes - only ~10 lines of actual code change
-   in one function
-3. **No new features**: Correct - purely bug fix
-4. **Low regression risk**: The change follows established patterns used
-   elsewhere in btrfs (extent_clear_unlock_delalloc)
-5. **Important enough**: Yes - prevents filesystem errors and potential
-   data integrity issues
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 54 ++++++++++++++---------
+ drivers/platform/x86/amd/pmc/pmc.c        | 13 ------
+ 2 files changed, 34 insertions(+), 33 deletions(-)
 
-The fix is straightforward, follows existing btrfs patterns, and
-addresses a clear bug that could affect users running btrfs filesystems,
-especially under I/O error conditions. This makes it an excellent
-candidate for stable backporting.
-
- fs/btrfs/extent_io.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
-
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 1dc931c4937f..2e127c109e5b 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1483,7 +1483,7 @@ static noinline_for_stack int writepage_delalloc(struct btrfs_inode *inode,
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index ded4c84f5ed1..7ffc659b2794 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -28,10 +28,15 @@ static struct quirk_entry quirk_spurious_8042 = {
+ 	.spurious_8042 = true,
+ };
  
- /*
-  * Return 0 if we have submitted or queued the sector for submission.
-- * Return <0 for critical errors.
-+ * Return <0 for critical errors, and the sector will have its dirty flag cleared.
-  *
-  * Caller should make sure filepos < i_size and handle filepos >= i_size case.
-  */
-@@ -1506,8 +1506,17 @@ static int submit_one_sector(struct btrfs_inode *inode,
- 	ASSERT(filepos < i_size);
++static struct quirk_entry quirk_s2idle_spurious_8042 = {
++	.s2idle_bug_mmio = FCH_PM_BASE + FCH_PM_SCRATCH,
++	.spurious_8042 = true,
++};
++
+ static const struct dmi_system_id fwbug_list[] = {
+ 	{
+ 		.ident = "L14 Gen2 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20X5"),
+@@ -39,7 +44,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "T14s Gen2 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20XF"),
+@@ -47,7 +52,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "X13 Gen2 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20XH"),
+@@ -55,7 +60,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "T14 Gen2 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20XK"),
+@@ -63,7 +68,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "T14 Gen1 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20UD"),
+@@ -71,7 +76,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "T14 Gen1 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20UE"),
+@@ -79,7 +84,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "T14s Gen1 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20UH"),
+@@ -87,7 +92,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "T14s Gen1 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20UJ"),
+@@ -95,7 +100,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "P14s Gen1 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20Y1"),
+@@ -103,7 +108,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "P14s Gen2 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21A0"),
+@@ -111,7 +116,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "P14s Gen2 AMD",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21A1"),
+@@ -152,7 +157,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "IdeaPad 1 14AMN7",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82VF"),
+@@ -160,7 +165,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "IdeaPad 1 15AMN7",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82VG"),
+@@ -168,7 +173,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "IdeaPad 1 15AMN7",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82X5"),
+@@ -176,7 +181,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "IdeaPad Slim 3 14AMN8",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XN"),
+@@ -184,7 +189,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	},
+ 	{
+ 		.ident = "IdeaPad Slim 3 15AMN8",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
+@@ -193,7 +198,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
+ 	{
+ 		.ident = "Lenovo Yoga 6 13ALC6",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
+@@ -202,7 +207,7 @@ static const struct dmi_system_id fwbug_list[] = {
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
+ 	{
+ 		.ident = "HP Laptop 15s-eq2xxx",
+-		.driver_data = &quirk_s2idle_bug,
++		.driver_data = &quirk_s2idle_spurious_8042,
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "HP Laptop 15s-eq2xxx"),
+@@ -285,6 +290,16 @@ void amd_pmc_quirks_init(struct amd_pmc_dev *dev)
+ {
+ 	const struct dmi_system_id *dmi_id;
  
- 	em = btrfs_get_extent(inode, NULL, filepos, sectorsize);
--	if (IS_ERR(em))
-+	if (IS_ERR(em)) {
-+		/*
-+		 * When submission failed, we should still clear the folio dirty.
-+		 * Or the folio will be written back again but without any
-+		 * ordered extent.
-+		 */
-+		btrfs_folio_clear_dirty(fs_info, folio, filepos, sectorsize);
-+		btrfs_folio_set_writeback(fs_info, folio, filepos, sectorsize);
-+		btrfs_folio_clear_writeback(fs_info, folio, filepos, sectorsize);
- 		return PTR_ERR(em);
-+	}
++	/*
++	 * IRQ1 may cause an interrupt during resume even without a keyboard
++	 * press.
++	 *
++	 * Affects Renoir, Cezanne and Barcelo SoCs
++	 *
++	 * A solution is available in PMFW 64.66.0, but it must be activated by
++	 * SBIOS. If SBIOS is known to have the fix a quirk can be added for
++	 * a given system to avoid workaround.
++	 */
+ 	if (dev->cpu_id == AMD_CPU_ID_CZN)
+ 		dev->disable_8042_wakeup = true;
  
- 	extent_offset = filepos - em->start;
- 	em_end = btrfs_extent_map_end(em);
-@@ -1637,8 +1646,8 @@ static noinline_for_stack int extent_writepage_io(struct btrfs_inode *inode,
- 	 * Here we set writeback and clear for the range. If the full folio
- 	 * is no longer dirty then we clear the PAGECACHE_TAG_DIRTY tag.
- 	 *
--	 * If we hit any error, the corresponding sector will still be dirty
--	 * thus no need to clear PAGECACHE_TAG_DIRTY.
-+	 * If we hit any error, the corresponding sector will have its dirty
-+	 * flag cleared and writeback finished, thus no need to handle the error case.
- 	 */
- 	if (!submitted_io && !error) {
- 		btrfs_folio_set_writeback(fs_info, folio, start, len);
+@@ -295,6 +310,5 @@ void amd_pmc_quirks_init(struct amd_pmc_dev *dev)
+ 	if (dev->quirks->s2idle_bug_mmio)
+ 		pr_info("Using s2idle quirk to avoid %s platform firmware bug\n",
+ 			dmi_id->ident);
+-	if (dev->quirks->spurious_8042)
+-		dev->disable_8042_wakeup = true;
++	dev->disable_8042_wakeup = dev->quirks->spurious_8042;
+ }
+diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
+index 0b9b23eb7c2c..bd318fd02ccf 100644
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -530,19 +530,6 @@ static int amd_pmc_get_os_hint(struct amd_pmc_dev *dev)
+ static int amd_pmc_wa_irq1(struct amd_pmc_dev *pdev)
+ {
+ 	struct device *d;
+-	int rc;
+-
+-	/* cezanne platform firmware has a fix in 64.66.0 */
+-	if (pdev->cpu_id == AMD_CPU_ID_CZN) {
+-		if (!pdev->major) {
+-			rc = amd_pmc_get_smu_version(pdev);
+-			if (rc)
+-				return rc;
+-		}
+-
+-		if (pdev->major > 64 || (pdev->major == 64 && pdev->minor > 65))
+-			return 0;
+-	}
+ 
+ 	d = bus_find_device_by_name(&serio_bus, NULL, "serio0");
+ 	if (!d)
 -- 
 2.50.1
 
