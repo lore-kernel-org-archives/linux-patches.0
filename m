@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C2226A09F;
-	Mon, 25 Aug 2025 12:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77529276020;
+	Mon, 25 Aug 2025 12:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124113; cv=none; b=PfRsm5ZTIMA+7Vmb0oEqI9T5bM1Jp+nqnY4JR1OY0dKQPA7Iknnhtyec+E9Co0QByTcMVTaE90AGUU7NHokbgfCIrjlh5yYLmnQXVqQmI4gxKj7u83shi0NSj3HG0aT6iWnVMQxSauqT9MNAQAZ6ILag22qH8u0SDmFkpHvpVUU=
+	t=1756124115; cv=none; b=QdNzkFTmBVt06hu13W3lVsF2oBOlpYkSaikVhyOMv/kMkRtF7q2wMGAWjf3cvBYXgNHltEdmjh6PSqctmilABrW3OjbecdryZSYpwdthip1BjypPgiAacYXImOApMBNhm0XKycGO0q+vdy722ezUhq1fJ/ep7EVG3CqLOHY73Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124113; c=relaxed/simple;
-	bh=I1v5FGDEpmLOz/xWeQas7bSx+T6EsGdIIPVu/1iJbCQ=;
+	s=arc-20240116; t=1756124115; c=relaxed/simple;
+	bh=eRL5BpSGnT9fCcnX9NFUgspntWq7x1rnMVtoETm4x4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qmRtl9xyFHlm1kdtMwU4JQ2nbuULDUKA2WJ+KsmTXabgdlysMfycWLpi5zo92m+5sw04GkMxT1J3POesxhAoSrMWK/qtSWoCuY+uU4CZAKEQ2IW/MND/W7YMgrcMEQ0TjYT5H6eCi5ZpKY1QadPpHnpWge+8QVLJ5I/Sr/SPcUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ezCW5Q64; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHDciKX+gsWn/i2pjMrxFU2ahDJPEKPH1kdAJWc1BHynnYYJDcv64E7tUouUspX7px9Uri6kDyzzayAKgLKfmwuNExOE/LlIbhN3CNOYeMRuChlUvmUzurlD4NLRNOk7t8Cf89NLEU7uP4CNdaRbvSCMMALFbBR1xjqQZ+XOsDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KxlUufWb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ezCW5Q64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3B2C113D0;
-	Mon, 25 Aug 2025 12:15:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KxlUufWb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40861C4CEED;
+	Mon, 25 Aug 2025 12:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124113;
-	bh=I1v5FGDEpmLOz/xWeQas7bSx+T6EsGdIIPVu/1iJbCQ=;
+	s=k20201202; t=1756124115;
+	bh=eRL5BpSGnT9fCcnX9NFUgspntWq7x1rnMVtoETm4x4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezCW5Q64XPnJXg2gtCf84HVf7LpxgXhaZGgIu517KAbpSs84QrrK2QVb4bdm5OeFE
-	 39nHDdUJfA6Tt33sInXHTaKL2udF0by1E8r3UCLB7cY4Ypm9m9PsrWyM2VUwg3Woe6
-	 u8YQ1xFUzODa6JlwMg8z/1aQ6U9HNCu7MSiu9J8lM5gkviTwIkzEx+8UCR1EiRJIea
-	 0h4z0Ml/6JKrElMRxbr+Rf08bY9jv4BkhtkmtdAcsIVJRpBDmLV5BKzehKkHWrEHEu
-	 7/9LkcW7GZ4HHvL3FhTQy+6rVEfmZvemPVXOo+Opq7HXjSZXzCzAwHb2DJ1sORaF91
-	 /Z6QH3W+YynRA==
+	b=KxlUufWbV6irgoMYRDCxVXmmzmAn26IvL1BXHyf8OyZCEyQ9Oqkrpr6p0bC681Mjr
+	 ORNe/jZuxFk0fdw2n8TrvtAZGd7BsFLoV5eBEzUqIbW1ZIwMwAJ5aVGhGJoHjbO4rs
+	 poMMKkS/RRaXoL8jhDqYJ2bTDk1BcY67SjpedXfOi7DbzFcd1dUCXle7SBw3C9wUMq
+	 6h2Zt7dKguv0hQp+2+Urqff1bjMlLkXvqVJoMoBjQ02nwJ+QQlAmrDDhW+D11cHjFz
+	 hfKOVqXfK75PyiRHpyf/U6afVFNGS+udreJ7aE/pq829MRuevdfvn+hx9+PDeRMRce
+	 Ti2U01KDU4eoQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Chris Bainbridge <chris.bainbridge@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>,
-	Shyam-sundar.S-k@amd.com,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16] platform/x86/amd: pmc: Drop SMU F/W match for Cezanne
-Date: Mon, 25 Aug 2025 08:14:54 -0400
-Message-ID: <20250825121505.2983941-5-sashal@kernel.org>
+	tglx@linutronix.de,
+	peterz@infradead.org,
+	chenhuacai@kernel.org,
+	jiaxun.yang@flygoat.com,
+	kees@kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16] LoongArch: Add cpuhotplug hooks to fix high cpu usage of vCPU threads
+Date: Mon, 25 Aug 2025 08:14:55 -0400
+Message-ID: <20250825121505.2983941-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
 References: <20250825121505.2983941-1-sashal@kernel.org>
@@ -47,365 +50,170 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.3
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Xianglai Li <lixianglai@loongson.cn>
 
-[ Upstream commit 5b9e07551faa7bb2f26cb039cc6e8d00bc4d0831 ]
+[ Upstream commit 8ef7f3132e4005a103b382e71abea7ad01fbeb86 ]
 
-Chris reported that even on a BIOS that has a new enough SMU F/W
-version there is still a spurious IRQ1.  Although the solution was
-added to SMU F/W 64.66.0 it turns out there needs to be a matching
-SBIOS change to activate it.  Thus Linux shouldn't be avoiding the
-IRQ1 workaround on newer SMU F/W because there is no indication the
-BIOS change is in place.
+When the CPU is offline, the timer of LoongArch is not correctly closed.
+This is harmless for real machines, but resulting in an excessively high
+cpu usage rate of the offline vCPU thread in the virtual machines.
 
-Drop the match for 64.66.0+ and instead match all RN/CZN/BRC (they
-all share same SMU F/W). Adjust the quirk infrastructure to allow
-quirking the workaround on or off and also adjust existing quirks
-to match properly.
+To correctly close the timer, we have made the following modifications:
 
-Unfortunately this may cause some systems that did have the SBIOS
-change in place to regress in keyboard wakeup but we don't have a
-way to know.  If a user reports a keyboard wakeup regression they can
-run with amd_pmc.disable_workarounds=1 to deactivate the workaround
-and share DMI data so that their system can be quirked not to use
-the workaround in the upstream kernel.
+Register the cpu hotplug event (CPUHP_AP_LOONGARCH_ARCH_TIMER_STARTING)
+for LoongArch. This event's hooks will be called to close the timer when
+the CPU is offline.
 
-Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4449
-Tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250724185156.1827592-1-superm1@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Clear the timer interrupt when the timer is turned off. Since before the
+timer is turned off, there may be a timer interrupt that has already been
+in the pending state due to the interruption of the disabled, which also
+affects the halt state of the offline vCPU.
+
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a better understanding. Let me analyze the commit to
-determine if it should be backported:
+Based on my analysis of the commit and its context, here is my
+assessment:
 
 **Backport Status: YES**
-
-## Extensive Explanation:
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-### 1. **Fixes a Real User-Impacting Bug**
-The commit addresses a spurious IRQ1 (keyboard interrupt) issue that
-causes unintended system wakeups from suspend. The commit message
-references a specific bug report
-(https://gitlab.freedesktop.org/drm/amd/-/issues/4449) where users are
-experiencing this problem. This directly impacts user experience with
-system suspend/resume functionality.
+## Bug Fix for Real User Impact
 
-### 2. **Regression Fix for Previous Workaround**
-The code shows this is fixing an incomplete workaround that was
-previously implemented. The original workaround avoided applying the
-IRQ1 disable on SMU firmware version 64.66.0+, assuming the firmware fix
-was sufficient. However, the commit message reveals that:
-- The SMU firmware fix requires a matching SBIOS change to be activated
-- Linux has no way to detect if the SBIOS change is present
-- This means systems with newer SMU firmware but without the SBIOS
-  change still experience the spurious IRQ1 issue
+1. **Fixes a concrete bug affecting virtual machines**: The commit
+   addresses a problem where offline vCPUs consume excessive CPU
+   resources in virtual machines. This is a real performance bug that
+   affects users running LoongArch VMs.
 
-### 3. **Limited Scope and Low Risk**
-The changes are confined to the AMD PMC driver quirks handling:
-- Removes the SMU firmware version check from `amd_pmc_wa_irq1()`
-  function
-- Adjusts the quirk infrastructure to allow both s2idle bug and spurious
-  8042 fixes
-- Updates DMI matches to use the combined quirk where appropriate
-- The changes are self-contained within the platform-specific driver
+2. **Clear problem statement**: The commit message clearly describes the
+   issue - when a CPU is offlined, the LoongArch timer is not properly
+   disabled, leading to high CPU usage by offline vCPU threads in
+   virtual environments.
 
-### 4. **Hardware-Specific Fix**
-The fix targets specific AMD CPU models (Renoir/Cezanne/Barcelo -
-RN/CZN/BRC) that share the same SMU firmware. This hardware-specific
-nature means:
-- It won't affect other platforms
-- The risk is limited to AMD systems that already have the issue
-- The workaround provides a module parameter
-  (`amd_pmc.disable_workarounds=1`) for users who might experience
-  regressions
+## Small and Contained Change
 
-### 5. **Addresses Known Hardware/Firmware Limitation**
-The commit acknowledges a hardware/firmware limitation where:
-- A fix exists in SMU firmware 64.66.0+
-- But it requires SBIOS activation that Linux cannot detect
-- This is a defensive approach to ensure all affected systems get the
-  workaround
+The commit is relatively small and well-contained:
+- Adds ~20 lines of code for timer management hooks
+- Registers CPU hotplug callbacks using existing infrastructure
+  (CPUHP_AP_LOONGARCH_ARCH_TIMER_STARTING)
+- The changes are isolated to the LoongArch timer subsystem
 
-### 6. **Provides User Control**
-The commit message mentions that users who experience keyboard wakeup
-regression can use `amd_pmc.disable_workarounds=1` to disable the
-workaround and provide DMI data for future quirking. This gives users an
-escape hatch if needed.
+## Follows Established Patterns
 
-### 7. **Follows Stable Kernel Criteria**
-This commit meets the stable kernel backport criteria:
-- **Fixes a real bug**: Spurious IRQ1 wakeups affecting suspend/resume
-- **Already tested**: Has a "Tested-by" tag from the bug reporter
-- **Small and contained**: Changes are limited to the AMD PMC driver
-- **No new features**: Only adjusts existing workaround logic
-- **Clear impact**: Users experience unwanted system wakeups
+1. **Uses standard kernel infrastructure**: The fix properly uses the
+   cpuhotplug framework that other architectures already use (ARM, MIPS,
+   RISCV all have similar CPUHP_AP_*_TIMER_STARTING entries).
 
-### Code Analysis Details:
-The key change in `drivers/platform/x86/amd/pmc/pmc.c` removes the SMU
-version check:
-```c
-- /* cezanne platform firmware has a fix in 64.66.0 */
-- if (pdev->cpu_id == AMD_CPU_ID_CZN) {
-- if (!pdev->major) {
-- rc = amd_pmc_get_smu_version(pdev);
-- if (rc)
-- return rc;
-- }
-- if (pdev->major > 64 || (pdev->major == 64 && pdev->minor > 65))
-- return 0;
-- }
-```
+2. **Similar to previous fixes**: Commit 355170a7ecac ("LoongArch:
+   Implement constant timer shutdown interface") addressed a related
+   issue with timer shutdown, and this commit completes the proper timer
+   management during CPU hotplug.
 
-This ensures the workaround is always applied for affected CPUs,
-regardless of SMU firmware version.
+## Minimal Risk of Regression
 
-The quirks restructuring in `pmc-quirks.c` creates a combined quirk
-(`quirk_s2idle_spurious_8042`) that applies both fixes where needed,
-showing careful consideration of the various affected systems.
+1. **Architecture-specific**: Changes are confined to LoongArch
+   architecture code, with no impact on other architectures.
 
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 54 ++++++++++++++---------
- drivers/platform/x86/amd/pmc/pmc.c        | 13 ------
- 2 files changed, 34 insertions(+), 33 deletions(-)
+2. **Clear timer interrupt handling**: The fix properly clears pending
+   timer interrupts when disabling the timer, preventing interrupt
+   storms.
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index ded4c84f5ed1..7ffc659b2794 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -28,10 +28,15 @@ static struct quirk_entry quirk_spurious_8042 = {
- 	.spurious_8042 = true,
- };
- 
-+static struct quirk_entry quirk_s2idle_spurious_8042 = {
-+	.s2idle_bug_mmio = FCH_PM_BASE + FCH_PM_SCRATCH,
-+	.spurious_8042 = true,
-+};
-+
- static const struct dmi_system_id fwbug_list[] = {
- 	{
- 		.ident = "L14 Gen2 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20X5"),
-@@ -39,7 +44,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "T14s Gen2 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20XF"),
-@@ -47,7 +52,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "X13 Gen2 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20XH"),
-@@ -55,7 +60,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "T14 Gen2 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20XK"),
-@@ -63,7 +68,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "T14 Gen1 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20UD"),
-@@ -71,7 +76,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "T14 Gen1 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20UE"),
-@@ -79,7 +84,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "T14s Gen1 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20UH"),
-@@ -87,7 +92,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "T14s Gen1 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20UJ"),
-@@ -95,7 +100,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "P14s Gen1 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20Y1"),
-@@ -103,7 +108,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "P14s Gen2 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21A0"),
-@@ -111,7 +116,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "P14s Gen2 AMD",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21A1"),
-@@ -152,7 +157,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "IdeaPad 1 14AMN7",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82VF"),
-@@ -160,7 +165,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "IdeaPad 1 15AMN7",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82VG"),
-@@ -168,7 +173,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "IdeaPad 1 15AMN7",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82X5"),
-@@ -176,7 +181,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "IdeaPad Slim 3 14AMN8",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82XN"),
-@@ -184,7 +189,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	},
- 	{
- 		.ident = "IdeaPad Slim 3 15AMN8",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
-@@ -193,7 +198,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
- 	{
- 		.ident = "Lenovo Yoga 6 13ALC6",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
-@@ -202,7 +207,7 @@ static const struct dmi_system_id fwbug_list[] = {
- 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
- 	{
- 		.ident = "HP Laptop 15s-eq2xxx",
--		.driver_data = &quirk_s2idle_bug,
-+		.driver_data = &quirk_s2idle_spurious_8042,
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "HP Laptop 15s-eq2xxx"),
-@@ -285,6 +290,16 @@ void amd_pmc_quirks_init(struct amd_pmc_dev *dev)
- {
- 	const struct dmi_system_id *dmi_id;
- 
-+	/*
-+	 * IRQ1 may cause an interrupt during resume even without a keyboard
-+	 * press.
-+	 *
-+	 * Affects Renoir, Cezanne and Barcelo SoCs
-+	 *
-+	 * A solution is available in PMFW 64.66.0, but it must be activated by
-+	 * SBIOS. If SBIOS is known to have the fix a quirk can be added for
-+	 * a given system to avoid workaround.
-+	 */
- 	if (dev->cpu_id == AMD_CPU_ID_CZN)
- 		dev->disable_8042_wakeup = true;
- 
-@@ -295,6 +310,5 @@ void amd_pmc_quirks_init(struct amd_pmc_dev *dev)
- 	if (dev->quirks->s2idle_bug_mmio)
- 		pr_info("Using s2idle quirk to avoid %s platform firmware bug\n",
- 			dmi_id->ident);
--	if (dev->quirks->spurious_8042)
--		dev->disable_8042_wakeup = true;
-+	dev->disable_8042_wakeup = dev->quirks->spurious_8042;
+3. **Protected by proper locking**: Uses existing state_lock for
+   synchronization.
+
+## Virtual Machine Support is Important
+
+With increasing use of virtualization, proper vCPU management is
+critical for production environments. High CPU usage by offline vCPUs
+can significantly impact VM performance and host resource utilization.
+
+## Technical Correctness
+
+The implementation correctly:
+- Enables timer interrupts on CPU startup (`set_csr_ecfg(ECFGF_TIMER)`)
+- Shuts down the timer on CPU dying (`constant_set_state_shutdown()`)
+- Clears pending timer interrupts
+  (`write_csr_tintclear(CSR_TINTCLR_TI)`)
+
+This is a straightforward bug fix that addresses a clear performance
+issue in virtual machine environments without introducing new features
+or architectural changes, making it an ideal candidate for stable
+backport.
+
+ arch/loongarch/kernel/time.c | 22 ++++++++++++++++++++++
+ include/linux/cpuhotplug.h   |  1 +
+ 2 files changed, 23 insertions(+)
+
+diff --git a/arch/loongarch/kernel/time.c b/arch/loongarch/kernel/time.c
+index 367906b10f81..f3092f2de8b5 100644
+--- a/arch/loongarch/kernel/time.c
++++ b/arch/loongarch/kernel/time.c
+@@ -5,6 +5,7 @@
+  * Copyright (C) 2020-2022 Loongson Technology Corporation Limited
+  */
+ #include <linux/clockchips.h>
++#include <linux/cpuhotplug.h>
+ #include <linux/delay.h>
+ #include <linux/export.h>
+ #include <linux/init.h>
+@@ -102,6 +103,23 @@ static int constant_timer_next_event(unsigned long delta, struct clock_event_dev
+ 	return 0;
  }
-diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
-index 0b9b23eb7c2c..bd318fd02ccf 100644
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -530,19 +530,6 @@ static int amd_pmc_get_os_hint(struct amd_pmc_dev *dev)
- static int amd_pmc_wa_irq1(struct amd_pmc_dev *pdev)
- {
- 	struct device *d;
--	int rc;
--
--	/* cezanne platform firmware has a fix in 64.66.0 */
--	if (pdev->cpu_id == AMD_CPU_ID_CZN) {
--		if (!pdev->major) {
--			rc = amd_pmc_get_smu_version(pdev);
--			if (rc)
--				return rc;
--		}
--
--		if (pdev->major > 64 || (pdev->major == 64 && pdev->minor > 65))
--			return 0;
--	}
  
- 	d = bus_find_device_by_name(&serio_bus, NULL, "serio0");
- 	if (!d)
++static int arch_timer_starting(unsigned int cpu)
++{
++	set_csr_ecfg(ECFGF_TIMER);
++
++	return 0;
++}
++
++static int arch_timer_dying(unsigned int cpu)
++{
++	constant_set_state_shutdown(this_cpu_ptr(&constant_clockevent_device));
++
++	/* Clear Timer Interrupt */
++	write_csr_tintclear(CSR_TINTCLR_TI);
++
++	return 0;
++}
++
+ static unsigned long get_loops_per_jiffy(void)
+ {
+ 	unsigned long lpj = (unsigned long)const_clock_freq;
+@@ -172,6 +190,10 @@ int constant_clockevent_init(void)
+ 	lpj_fine = get_loops_per_jiffy();
+ 	pr_info("Constant clock event device register\n");
+ 
++	cpuhp_setup_state(CPUHP_AP_LOONGARCH_ARCH_TIMER_STARTING,
++			  "clockevents/loongarch/timer:starting",
++			  arch_timer_starting, arch_timer_dying);
++
+ 	return 0;
+ }
+ 
+diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
+index df366ee15456..e62064cb9e08 100644
+--- a/include/linux/cpuhotplug.h
++++ b/include/linux/cpuhotplug.h
+@@ -169,6 +169,7 @@ enum cpuhp_state {
+ 	CPUHP_AP_QCOM_TIMER_STARTING,
+ 	CPUHP_AP_TEGRA_TIMER_STARTING,
+ 	CPUHP_AP_ARMADA_TIMER_STARTING,
++	CPUHP_AP_LOONGARCH_ARCH_TIMER_STARTING,
+ 	CPUHP_AP_MIPS_GIC_TIMER_STARTING,
+ 	CPUHP_AP_ARC_TIMER_STARTING,
+ 	CPUHP_AP_REALTEK_TIMER_STARTING,
 -- 
 2.50.1
 
