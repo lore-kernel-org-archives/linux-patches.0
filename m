@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A541D5147;
-	Mon, 25 Aug 2025 12:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7885C14EC46;
+	Mon, 25 Aug 2025 12:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124122; cv=none; b=rVVcYYtKggG76/9EyiOfUHsZfy8oTwx+ZocJz3f1zvgdbLgSL0NPLMwADu3r6g7EbmIbflCjV8z7Gx1fdmcW6hBJKvEiGu8WuelxMYZljs0wnvkiIk69OTRARAhi7jPzZ6f4VPlqNDII69FKAZwPlZOPic6UolTjD6n53/cSmno=
+	t=1756124123; cv=none; b=Xp/cJql2JzL0iTeZOYtWzId9XdUvsycdmx62VUnFK5rCTGR0tDPXg1G0iOpyuSTZVjRlsnlE2d/PzPTV2y3gei6flOYtoAt+0O2UTuMq8F6xb4u7nsSjKID1X4Zg5O2JBAsMz83OONSrNX3lQxWanZt8Yw0MJRAblaRv3eQU9FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124122; c=relaxed/simple;
-	bh=oZ/HWGHWtR3AoWCQHYHY/dVpb+dhCodbBBNpfhT2rGs=;
+	s=arc-20240116; t=1756124123; c=relaxed/simple;
+	bh=FYacGFcvtziYaQU23dkF5qhnNiOq+YUOP4jCmJ/AMb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvShQiahXX6csxCYdqwMFg6m7LRebh9cS9xBeI5c+/yikVuR5CINMzL5T+ezlRHz/6rw6t4qOavGCt55NvDmc3rkipzShlRtyVqm4zBzgz0DMNpmHKUaxdsbODbPCvOiSrCIg8Aej9L5EpanRohhgr7h4D44yIxw39nHMx6n+4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rFSpwygL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HyZ5gGYZpjz6izGRdRSwOp+vk9Wqp5mrGD1h41ej59nNZQfUl4+H98ojveBB1oGSvxz+dtpUYm7XfJObwi1TBZuMxr54jUdkJvQZuB9+4oOq78emjxxH4fdNtSfmvihhOhyY6TzCcC7aHgCX9ywVzGZGpc+Pxip1yV+BzLlxlAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=un5ESlkH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rFSpwygL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58654C116C6;
-	Mon, 25 Aug 2025 12:15:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="un5ESlkH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F4BC4CEED;
+	Mon, 25 Aug 2025 12:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124121;
-	bh=oZ/HWGHWtR3AoWCQHYHY/dVpb+dhCodbBBNpfhT2rGs=;
+	s=k20201202; t=1756124123;
+	bh=FYacGFcvtziYaQU23dkF5qhnNiOq+YUOP4jCmJ/AMb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFSpwygLSHOXEfX+DuV1w7Xc84AgXzhUOsTlCYN8OPEg+U7Fv3ndKZDxw1DEpbnhS
-	 c61j9PV7cbuYnN/cm3DpcozZ0h3EK/qHT79GRrVv7QvDyiKyBN1xY5Y8PfPsUwrJt7
-	 eGXK0Hsw0hQrHoVssGkiwQzQA6CjuMSOM7ANoPR8UeVWEXKklF3EHW1Hh7SvH+akHW
-	 ATiimshxv5Tc/CMBIPkP+DY+JpRYBuNds9rjZ6u1pIvjJkk+EvWD4pzh5iFP8GM/gC
-	 Y0+TFhpmiSFmGQlQ3E9MYIfJtxM2My1rGnT5dv6OxF9EO/I/oMc/0UHTrMO8+s2jpH
-	 Nx1KAL/BZuRqQ==
+	b=un5ESlkHE/jiWQ4E7w+MIAM9BFrs7ubsGv3bHkx9mxVJvkwmG0FHmZOydp0W/iSt1
+	 ZyDJ/xT+9FwjUymkV61Vt8c2kUlYCso7GjA59LPhV8503jRYJuJqHe8t6J411TZMod
+	 slufIfhAYejxpbmfnTPe1aGvMMHd1ZFkT+5gbsMSVi1n9bSWAa0qhHPbJq+hGQ8Iph
+	 ZiUE7lVH1fpuOn0Vjk094HIuDQ/tkqyJcBkOsbsfxXUYuLpj80dboesibKEjCEt6ia
+	 QeoS5R5UqXl+AGXnjA/u/aNpS5kpp0tFJ3A44ppfZxZAUag3xJ/9zypter6lYfBsIz
+	 94/9r4/4Liofw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shinji Nomoto <fj5851bi@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.16-6.6] cpupower: Fix a bug where the -t option of the set subcommand was not working.
-Date: Mon, 25 Aug 2025 08:14:59 -0400
-Message-ID: <20250825121505.2983941-10-sashal@kernel.org>
+Cc: Piotr Zalewski <pZ010001011111@proton.me>,
+	Diederik de Haas <didi.debian@cknow.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>,
+	hjc@rock-chips.com,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.16-6.12] drm/rockchip: vop2: make vp registers nonvolatile
+Date: Mon, 25 Aug 2025 08:15:00 -0400
+Message-ID: <20250825121505.2983941-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
 References: <20250825121505.2983941-1-sashal@kernel.org>
@@ -49,106 +55,137 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.3
 Content-Transfer-Encoding: 8bit
 
-From: Shinji Nomoto <fj5851bi@fujitsu.com>
+From: Piotr Zalewski <pZ010001011111@proton.me>
 
-[ Upstream commit b3eaf14f4c63fd6abc7b68c6d7a07c5680a6d8e5 ]
+[ Upstream commit a52dffaa46c2c5ff0b311c4dc1288581f7b9109e ]
 
-The set subcommand's -t option is documented as being available for boost
-configuration, but it was not actually functioning due to a bug
-in the option handling.
+Make video port registers nonvolatile. As DSP_CTRL register is written
+to twice due to gamma LUT enable bit which is set outside of the main
+DSP_CTRL initialization within atomic_enable (for rk356x case it is also
+necessary to always disable gamma LUT before writing a new LUT) there is
+a chance that DSP_CTRL value read-out in gamma LUT init/update code is
+not the one which was written by the preceding DSP_CTRL initialization
+code within atomic_enable. This might result in misconfigured DSP_CTRL
+which leads to no visual output[1]. Since DSP_CTRL write takes effect
+after VSYNC[1] the issue is not always present. When tested on Pinetab2
+with kernel 6.14 it happenes only when DRM is compiled as a module[1].
+In order to confirm that it is a timing issue I inserted 18ms udelay
+before vop2_crtc_atomic_try_set_gamma in atomic enable and compiled DRM
+as module - this has also fixed the issue.
 
-Link: https://lore.kernel.org/r/20250522061122.2149188-2-fj5851bi@fujitsu.com
-Signed-off-by: Shinji Nomoto <fj5851bi@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+[1] https://lore.kernel.org/linux-rockchip/562b38e5.a496.1975f09f983.Coremail.andyshrk@163.com/
+
+Reported-by: Diederik de Haas <didi.debian@cknow.org>
+Closes: https://lore.kernel.org/linux-rockchip/DAEVDSTMWI1E.J454VZN0R9MA@cknow.org/
+Suggested-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Piotr Zalewski <pZ010001011111@proton.me>
+Tested-by: Diederik de Haas <didi.debian@cknow.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250706083629.140332-2-pZ010001011111@proton.me
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of the commit, let me provide my determination:
+
 **Backport Status: YES**
 
-This commit is a clear bug fix that should be backported to stable
-kernel trees. Here's my detailed analysis:
+## Extensive Analysis:
 
-## Bug Analysis
+This commit is a strong candidate for backporting to stable kernel trees
+for the following reasons:
 
-The commit fixes a critical bug where the `-t` option for the `cpupower
-set` subcommand was documented and accepted as a valid option (defined
-in `set_opts[]` structure), but was completely non-functional due to a
-missing character in the `getopt_long()` call.
+### 1. **Bug Fix Nature**
+The commit fixes a real bug that causes **no visual output** on
+displays. This is a critical user-visible issue where the display driver
+fails to produce any image output. The commit message clearly describes
+this as fixing a situation where "misconfigured DSP_CTRL which leads to
+no visual output."
 
-### Specific Code Changes
+### 2. **Race Condition Fix**
+The code changes address a race condition in register access patterns.
+The issue occurs because:
+- DSP_CTRL register is written twice during atomic_enable
+- The second write happens for gamma LUT configuration
+- Due to the register being volatile, read-modify-write operations can
+  read stale values
+- DSP_CTRL writes only take effect after VSYNC, creating a timing window
+  for the race
 
-The bug is in line 58-59 of the original code:
+### 3. **Small and Contained Change**
+The actual code change is minimal - just one line adding the VP register
+range to the nonvolatile list:
 ```c
-while ((ret = getopt_long(argc, argv, "b:e:m:",
-                          set_opts, NULL)) != -1) {
++       regmap_reg_range(RK3568_VP0_CTRL_BASE, RK3588_VP3_CTRL_BASE +
+255),
 ```
 
-The fix adds the missing `t:` to the argument string:
-```c
-while ((ret = getopt_long(argc, argv, "b:e:m:t:",
-                          set_opts, NULL)) != -1) {
-```
+This makes the video port registers (0xc00-0xeff based on the offsets)
+use the regmap cache instead of reading back from hardware, preventing
+the race condition.
 
-### Root Cause
+### 4. **Hardware-Specific Fix**
+The fix is specific to Rockchip VOP2 hardware (RK3568/RK3588 SoCs) and
+doesn't affect other subsystems. It's confined to the DRM/Rockchip
+display driver.
 
-When the turbo-boost feature was added in commit `eb426fc6bdd6` (merged
-in v6.6-rc1), the developer:
-1. Added the option to the `set_opts[]` array correctly
-2. Added the case handler for 't' in the switch statement
-3. **BUT forgot to add "t:" to the getopt_long argument string**
+### 5. **Tested and Confirmed**
+The commit includes:
+- A "Reported-by" tag indicating a real user issue
+- A "Tested-by" tag confirming the fix works
+- Clear reproduction details (happens on Pinetab2 with kernel 6.14 when
+  DRM is compiled as module)
 
-This means that while the option was defined and had handling code,
-`getopt_long()` would never recognize `-t` as a valid option, making the
-feature completely unusable.
+### 6. **Low Risk of Regression**
+The change only affects how registers are cached in the regmap
+framework. It doesn't change any functional logic, algorithms, or
+introduce new features. The comment update accurately reflects that both
+window AND video port registers are now marked as non-volatile for cache
+coherency.
 
-## Why This Should Be Backported
+### 7. **Follows Stable Rules**
+This fix aligns with stable kernel rules:
+- Fixes a real bug that users are hitting
+- Small change (essentially 1 line of functional code)
+- Already tested by reporter
+- Fix is obvious once the problem is understood
+- No new features or architectural changes
 
-1. **Clear Bug Fix**: This is an obvious bug where documented
-   functionality doesn't work at all. Users trying to use `cpupower set
-   -t` or `--turbo-boost` would get errors.
+### 8. **Critical Display Functionality**
+Display output is fundamental functionality. A bug that causes "no
+visual output" severely impacts usability of devices using these SoCs,
+making this a high-priority fix for stable trees.
 
-2. **Small and Contained**: The fix is a single-line change adding 2
-   characters ("t:") to a string. This is as minimal as fixes get.
+The commit properly documents the issue with external references and
+follows good practices for a bug fix that should be backported to stable
+kernels.
 
-3. **No Side Effects**: The change only enables already-implemented
-   functionality. It doesn't introduce new code paths or change existing
-   behavior.
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-4. **User Impact**: The turbo-boost control feature is important for
-   power management, and users on stable kernels with v6.6+ would expect
-   this documented feature to work.
-
-5. **Affects Stable Versions**: The bug was introduced in v6.6-rc1 and
-   affects all kernels from v6.6 onwards that include the turbo-boost
-   feature.
-
-6. **Low Risk**: There's virtually no regression risk - the worst case
-   is the option continues not working, which is the current state.
-
-This is exactly the type of fix that stable kernel rules recommend: a
-clear bug fix that restores documented functionality with minimal code
-change and no architectural modifications.
-
- tools/power/cpupower/utils/cpupower-set.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/tools/power/cpupower/utils/cpupower-set.c b/tools/power/cpupower/utils/cpupower-set.c
-index 0677b58374ab..59ace394cf3e 100644
---- a/tools/power/cpupower/utils/cpupower-set.c
-+++ b/tools/power/cpupower/utils/cpupower-set.c
-@@ -62,8 +62,8 @@ int cmd_set(int argc, char **argv)
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 186f6452a7d3..b50927a824b4 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2579,12 +2579,13 @@ static int vop2_win_init(struct vop2 *vop2)
+ }
  
- 	params.params = 0;
- 	/* parameter parsing */
--	while ((ret = getopt_long(argc, argv, "b:e:m:",
--						set_opts, NULL)) != -1) {
-+	while ((ret = getopt_long(argc, argv, "b:e:m:t:",
-+				  set_opts, NULL)) != -1) {
- 		switch (ret) {
- 		case 'b':
- 			if (params.perf_bias)
+ /*
+- * The window registers are only updated when config done is written.
+- * Until that they read back the old value. As we read-modify-write
+- * these registers mark them as non-volatile. This makes sure we read
+- * the new values from the regmap register cache.
++ * The window and video port registers are only updated when config
++ * done is written. Until that they read back the old value. As we
++ * read-modify-write these registers mark them as non-volatile. This
++ * makes sure we read the new values from the regmap register cache.
+  */
+ static const struct regmap_range vop2_nonvolatile_range[] = {
++	regmap_reg_range(RK3568_VP0_CTRL_BASE, RK3588_VP3_CTRL_BASE + 255),
+ 	regmap_reg_range(0x1000, 0x23ff),
+ };
+ 
 -- 
 2.50.1
 
