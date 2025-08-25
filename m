@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77529276020;
-	Mon, 25 Aug 2025 12:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C964327780C;
+	Mon, 25 Aug 2025 12:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756124115; cv=none; b=QdNzkFTmBVt06hu13W3lVsF2oBOlpYkSaikVhyOMv/kMkRtF7q2wMGAWjf3cvBYXgNHltEdmjh6PSqctmilABrW3OjbecdryZSYpwdthip1BjypPgiAacYXImOApMBNhm0XKycGO0q+vdy722ezUhq1fJ/ep7EVG3CqLOHY73Os=
+	t=1756124116; cv=none; b=FKzUi69nIre67QVH1e/5NkEKa4mdgsFLwvMttjY1hqQwGKm5MHMqLeaZnMgzl18QmD0mKTgtnlwClp1siRsNXSMCkardxgAA8Zp/JTGKPgjTOFk7kKDtirTwxUnCzimygPgtlMvU/rxNZG5lcQm0Fun9QdZ2829fMPk+MEh827A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756124115; c=relaxed/simple;
-	bh=eRL5BpSGnT9fCcnX9NFUgspntWq7x1rnMVtoETm4x4o=;
+	s=arc-20240116; t=1756124116; c=relaxed/simple;
+	bh=U4QdAVzcoPl3yGc12zC0FvoLJYOhc0k6UX3CH+eLHNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHDciKX+gsWn/i2pjMrxFU2ahDJPEKPH1kdAJWc1BHynnYYJDcv64E7tUouUspX7px9Uri6kDyzzayAKgLKfmwuNExOE/LlIbhN3CNOYeMRuChlUvmUzurlD4NLRNOk7t8Cf89NLEU7uP4CNdaRbvSCMMALFbBR1xjqQZ+XOsDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KxlUufWb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXpLxx3nUx58GSZUs+nalTcBe6ULBLg/9vi5trfYSOtdThQnMAUPqnn349alj5nQDgqyZMPkQPbDdwktlwrz4S6zFpfNnlfhoD4xhn6M11Bd/hHiO6fMuhjoeXs97dRG7OizTgky5te+XTBHg1yYq4H2WtwPbouTeHtrd/X0Mh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lBajd0R8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KxlUufWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40861C4CEED;
-	Mon, 25 Aug 2025 12:15:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lBajd0R8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCCAC4CEED;
+	Mon, 25 Aug 2025 12:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756124115;
-	bh=eRL5BpSGnT9fCcnX9NFUgspntWq7x1rnMVtoETm4x4o=;
+	s=k20201202; t=1756124116;
+	bh=U4QdAVzcoPl3yGc12zC0FvoLJYOhc0k6UX3CH+eLHNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxlUufWbV6irgoMYRDCxVXmmzmAn26IvL1BXHyf8OyZCEyQ9Oqkrpr6p0bC681Mjr
-	 ORNe/jZuxFk0fdw2n8TrvtAZGd7BsFLoV5eBEzUqIbW1ZIwMwAJ5aVGhGJoHjbO4rs
-	 poMMKkS/RRaXoL8jhDqYJ2bTDk1BcY67SjpedXfOi7DbzFcd1dUCXle7SBw3C9wUMq
-	 6h2Zt7dKguv0hQp+2+Urqff1bjMlLkXvqVJoMoBjQ02nwJ+QQlAmrDDhW+D11cHjFz
-	 hfKOVqXfK75PyiRHpyf/U6afVFNGS+udreJ7aE/pq829MRuevdfvn+hx9+PDeRMRce
-	 Ti2U01KDU4eoQ==
+	b=lBajd0R8KkE3ylCqbZpPpjoqqP/748NCTfsLHuKYZZoHPwuh1bBqeqUypUijoE9Y1
+	 6iv2WLJFCA+Rfb3oMoOS7DCvE6l7Eo4SYG/xFi4zZb7nRoD8PHgurdKleTNFHJFxeW
+	 pLQT0R48p9tXSv7y42RCyHh8JD8a7dASazLameCuTssPxL1O08YNMc0uxJQ8RbSE6R
+	 Wa4RHcq4OgWR4lJADkH78j3uql1XDG2oQJBT6OkWUUdgN/pRO1jHTJC7gY6A2ukhYw
+	 BCBDJtAsfIpAS1H0vUjiPBkzmDmV0XC1hHRy5NJH8ZAfUzYn6EzyvnP1QK3pQ84KTL
+	 qhwjE36g7zAvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xianglai Li <lixianglai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+Cc: Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@linutronix.de,
-	peterz@infradead.org,
-	chenhuacai@kernel.org,
-	jiaxun.yang@flygoat.com,
-	kees@kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16] LoongArch: Add cpuhotplug hooks to fix high cpu usage of vCPU threads
-Date: Mon, 25 Aug 2025 08:14:55 -0400
-Message-ID: <20250825121505.2983941-6-sashal@kernel.org>
+	clm@fb.com,
+	josef@toxicpanda.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.12] btrfs: zoned: skip ZONE FINISH of conventional zones
+Date: Mon, 25 Aug 2025 08:14:56 -0400
+Message-ID: <20250825121505.2983941-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250825121505.2983941-1-sashal@kernel.org>
 References: <20250825121505.2983941-1-sashal@kernel.org>
@@ -55,165 +54,170 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.3
 Content-Transfer-Encoding: 8bit
 
-From: Xianglai Li <lixianglai@loongson.cn>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 8ef7f3132e4005a103b382e71abea7ad01fbeb86 ]
+[ Upstream commit f0ba0e7172a222ea6043b61ecd86723c46d7bcf2 ]
 
-When the CPU is offline, the timer of LoongArch is not correctly closed.
-This is harmless for real machines, but resulting in an excessively high
-cpu usage rate of the offline vCPU thread in the virtual machines.
+Don't call ZONE FINISH for conventional zones as this will result in I/O
+errors. Instead check if the zone that needs finishing is a conventional
+zone and if yes skip it.
 
-To correctly close the timer, we have made the following modifications:
+Also factor out the actual handling of finishing a single zone into a
+helper function, as do_zone_finish() is growing ever bigger and the
+indentations levels are getting higher.
 
-Register the cpu hotplug event (CPUHP_AP_LOONGARCH_ARCH_TIMER_STARTING)
-for LoongArch. This event's hooks will be called to close the timer when
-the CPU is offline.
-
-Clear the timer interrupt when the timer is turned off. Since before the
-timer is turned off, there may be a timer interrupt that has already been
-in the pending state due to the interruption of the disabled, which also
-affects the halt state of the offline vCPU.
-
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
-
-Based on my analysis of the commit and its context, here is my
-assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Bug Fix for Real User Impact
+## Bug Fix Analysis
 
-1. **Fixes a concrete bug affecting virtual machines**: The commit
-   addresses a problem where offline vCPUs consume excessive CPU
-   resources in virtual machines. This is a real performance bug that
-   affects users running LoongArch VMs.
+1. **Critical Bug Fix**: The commit fixes a concrete bug where calling
+   `REQ_OP_ZONE_FINISH` on conventional zones results in I/O errors.
+   This is a real runtime error that affects users of btrfs on zoned
+   storage devices that have conventional zones mixed with sequential
+   zones.
 
-2. **Clear problem statement**: The commit message clearly describes the
-   issue - when a CPU is offlined, the LoongArch timer is not properly
-   disabled, leading to high CPU usage by offline vCPU threads in
-   virtual environments.
+2. **Small and Contained Change**: The fix is relatively small and well-
+   contained:
+   - Adds a new helper function `call_zone_finish()` that encapsulates
+     the zone finishing logic
+   - Most importantly, adds the critical check: `if
+     (btrfs_dev_is_sequential(device, physical))` before issuing the
+     `REQ_OP_ZONE_FINISH` operation
+   - The refactoring merely moves existing code into the helper function
+     without changing the logic
 
-## Small and Contained Change
+3. **Clear Root Cause**: The bug occurs because the original code
+   unconditionally calls `blkdev_zone_mgmt()` with `REQ_OP_ZONE_FINISH`
+   on all zones, but this operation is invalid for conventional zones
+   (non-sequential zones). The fix properly checks if a zone is
+   sequential before attempting to finish it.
 
-The commit is relatively small and well-contained:
-- Adds ~20 lines of code for timer management hooks
-- Registers CPU hotplug callbacks using existing infrastructure
-  (CPUHP_AP_LOONGARCH_ARCH_TIMER_STARTING)
-- The changes are isolated to the LoongArch timer subsystem
+4. **No New Features**: This commit doesn't introduce any new
+   functionality - it's purely a bug fix that prevents I/O errors.
 
-## Follows Established Patterns
+5. **Minimal Risk**: The change has minimal risk of regression:
+   - The check for sequential zones is straightforward
+   - The refactoring doesn't change the existing logic flow
+   - The fix has been reviewed by multiple developers familiar with the
+     zoned code
 
-1. **Uses standard kernel infrastructure**: The fix properly uses the
-   cpuhotplug framework that other architectures already use (ARM, MIPS,
-   RISCV all have similar CPUHP_AP_*_TIMER_STARTING entries).
+6. **Affects Real Users**: This bug affects users running btrfs on SMR
+   (Shingled Magnetic Recording) drives or ZNS (Zoned Namespace) SSDs
+   that have a mix of conventional and sequential zones, which is a
+   common configuration.
 
-2. **Similar to previous fixes**: Commit 355170a7ecac ("LoongArch:
-   Implement constant timer shutdown interface") addressed a related
-   issue with timer shutdown, and this commit completes the proper timer
-   management during CPU hotplug.
+## Code Analysis
 
-## Minimal Risk of Regression
+The key fix in `call_zone_finish()` at line 2262:
+```c
+if (btrfs_dev_is_sequential(device, physical)) {
+    // Only call zone finish for sequential zones
+    ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH, ...);
+}
+```
 
-1. **Architecture-specific**: Changes are confined to LoongArch
-   architecture code, with no impact on other architectures.
+This prevents the invalid operation on conventional zones while
+maintaining the correct behavior for sequential zones. The subsequent
+operations (updating reserved_active_zones and clearing active zone) are
+still performed regardless of zone type, which is the correct behavior.
 
-2. **Clear timer interrupt handling**: The fix properly clears pending
-   timer interrupts when disabling the timer, preventing interrupt
-   storms.
+The commit follows stable kernel rules perfectly: it's a clear bug fix,
+has minimal changes, doesn't introduce new features, and addresses a
+real user-facing issue that causes I/O errors.
 
-3. **Protected by proper locking**: Uses existing state_lock for
-   synchronization.
+ fs/btrfs/zoned.c | 55 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 20 deletions(-)
 
-## Virtual Machine Support is Important
-
-With increasing use of virtualization, proper vCPU management is
-critical for production environments. High CPU usage by offline vCPUs
-can significantly impact VM performance and host resource utilization.
-
-## Technical Correctness
-
-The implementation correctly:
-- Enables timer interrupts on CPU startup (`set_csr_ecfg(ECFGF_TIMER)`)
-- Shuts down the timer on CPU dying (`constant_set_state_shutdown()`)
-- Clears pending timer interrupts
-  (`write_csr_tintclear(CSR_TINTCLR_TI)`)
-
-This is a straightforward bug fix that addresses a clear performance
-issue in virtual machine environments without introducing new features
-or architectural changes, making it an ideal candidate for stable
-backport.
-
- arch/loongarch/kernel/time.c | 22 ++++++++++++++++++++++
- include/linux/cpuhotplug.h   |  1 +
- 2 files changed, 23 insertions(+)
-
-diff --git a/arch/loongarch/kernel/time.c b/arch/loongarch/kernel/time.c
-index 367906b10f81..f3092f2de8b5 100644
---- a/arch/loongarch/kernel/time.c
-+++ b/arch/loongarch/kernel/time.c
-@@ -5,6 +5,7 @@
-  * Copyright (C) 2020-2022 Loongson Technology Corporation Limited
-  */
- #include <linux/clockchips.h>
-+#include <linux/cpuhotplug.h>
- #include <linux/delay.h>
- #include <linux/export.h>
- #include <linux/init.h>
-@@ -102,6 +103,23 @@ static int constant_timer_next_event(unsigned long delta, struct clock_event_dev
- 	return 0;
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 5439d8374716..950e72dc537c 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2246,6 +2246,40 @@ static void wait_eb_writebacks(struct btrfs_block_group *block_group)
+ 	rcu_read_unlock();
  }
  
-+static int arch_timer_starting(unsigned int cpu)
++static int call_zone_finish(struct btrfs_block_group *block_group,
++			    struct btrfs_io_stripe *stripe)
 +{
-+	set_csr_ecfg(ECFGF_TIMER);
++	struct btrfs_device *device = stripe->dev;
++	const u64 physical = stripe->physical;
++	struct btrfs_zoned_device_info *zinfo = device->zone_info;
++	int ret;
++
++	if (!device->bdev)
++		return 0;
++
++	if (zinfo->max_active_zones == 0)
++		return 0;
++
++	if (btrfs_dev_is_sequential(device, physical)) {
++		unsigned int nofs_flags;
++
++		nofs_flags = memalloc_nofs_save();
++		ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH,
++				       physical >> SECTOR_SHIFT,
++				       zinfo->zone_size >> SECTOR_SHIFT);
++		memalloc_nofs_restore(nofs_flags);
++
++		if (ret)
++			return ret;
++	}
++
++	if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
++		zinfo->reserved_active_zones++;
++	btrfs_dev_clear_active_zone(device, physical);
 +
 +	return 0;
 +}
 +
-+static int arch_timer_dying(unsigned int cpu)
-+{
-+	constant_set_state_shutdown(this_cpu_ptr(&constant_clockevent_device));
-+
-+	/* Clear Timer Interrupt */
-+	write_csr_tintclear(CSR_TINTCLR_TI);
-+
-+	return 0;
-+}
-+
- static unsigned long get_loops_per_jiffy(void)
+ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_written)
  {
- 	unsigned long lpj = (unsigned long)const_clock_freq;
-@@ -172,6 +190,10 @@ int constant_clockevent_init(void)
- 	lpj_fine = get_loops_per_jiffy();
- 	pr_info("Constant clock event device register\n");
+ 	struct btrfs_fs_info *fs_info = block_group->fs_info;
+@@ -2330,31 +2364,12 @@ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_writ
+ 	down_read(&dev_replace->rwsem);
+ 	map = block_group->physical_map;
+ 	for (i = 0; i < map->num_stripes; i++) {
+-		struct btrfs_device *device = map->stripes[i].dev;
+-		const u64 physical = map->stripes[i].physical;
+-		struct btrfs_zoned_device_info *zinfo = device->zone_info;
+-		unsigned int nofs_flags;
+-
+-		if (!device->bdev)
+-			continue;
+-
+-		if (zinfo->max_active_zones == 0)
+-			continue;
+-
+-		nofs_flags = memalloc_nofs_save();
+-		ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH,
+-				       physical >> SECTOR_SHIFT,
+-				       zinfo->zone_size >> SECTOR_SHIFT);
+-		memalloc_nofs_restore(nofs_flags);
  
-+	cpuhp_setup_state(CPUHP_AP_LOONGARCH_ARCH_TIMER_STARTING,
-+			  "clockevents/loongarch/timer:starting",
-+			  arch_timer_starting, arch_timer_dying);
-+
- 	return 0;
- }
++		ret = call_zone_finish(block_group, &map->stripes[i]);
+ 		if (ret) {
+ 			up_read(&dev_replace->rwsem);
+ 			return ret;
+ 		}
+-
+-		if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
+-			zinfo->reserved_active_zones++;
+-		btrfs_dev_clear_active_zone(device, physical);
+ 	}
+ 	up_read(&dev_replace->rwsem);
  
-diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index df366ee15456..e62064cb9e08 100644
---- a/include/linux/cpuhotplug.h
-+++ b/include/linux/cpuhotplug.h
-@@ -169,6 +169,7 @@ enum cpuhp_state {
- 	CPUHP_AP_QCOM_TIMER_STARTING,
- 	CPUHP_AP_TEGRA_TIMER_STARTING,
- 	CPUHP_AP_ARMADA_TIMER_STARTING,
-+	CPUHP_AP_LOONGARCH_ARCH_TIMER_STARTING,
- 	CPUHP_AP_MIPS_GIC_TIMER_STARTING,
- 	CPUHP_AP_ARC_TIMER_STARTING,
- 	CPUHP_AP_REALTEK_TIMER_STARTING,
 -- 
 2.50.1
 
