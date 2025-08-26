@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C5D352093;
-	Tue, 26 Aug 2025 14:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71530352FF0;
+	Tue, 26 Aug 2025 14:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219224; cv=none; b=eDWs69Zv8GIfl8ktFmv2Zcds08/7snTkA1GLXn0U80pBgy8G7zjkPg9Ykk/INOtuhgdg3X4Vb3oyFhvVmD2sQ3wnS6yJMWljseYRU4AX/MSsxzXVCBkpHIZ1XS1NrH7nIKBoBrsHMKmaylP7dbM+xLv/+br//6bWYZ9NYePF5e4=
+	t=1756219227; cv=none; b=bHfvnNMnsgDJqaHSRkaTZJifXndlDk4I71anUHQADnZH9XiSQoaoaZa2kLpzic48kUkXSiaLwQe7YvTfXWekv74689uVN5HoZ9znDB7+MIwxiY/o6Kxb3aN13p4Q4p4Yu+FVGyTm4KNEcKt0D2bHeuIxnFhlQ90e1iFuLLyhLEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219224; c=relaxed/simple;
-	bh=Ph961NgjofRDxLZ9cyjKX1wehhL6VDPBeibGlPNlFtE=;
+	s=arc-20240116; t=1756219227; c=relaxed/simple;
+	bh=yBqlL3H4AHzzTUfGVkOHwYP6j74cfvlLgDI8uiJ3hCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDvDarW7vkYJ/6ls2GABk3mDcuT6WwgbvTkoe4Ej2PHqEz9EsXFVqdsrK0WHXSnAvRbycadNlI9/2QESP+6wkOQsFyuiAsMvOUxgGwI6aO2pQsM02Ehy3AuILPwpmnttMnERiEfzW6lrvLG1JWHDsmOyRkMlX5+Ru/Pm3faOZN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xk7SdV7d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJAQezkRGFQxOSM5RIe3s14nPMsW8EH2KY3VldC9gbNAkJA1qfusX7M5/zG8ZcP03Ud3okPvEzvKRccFwHly+z2hIajB5kJuKgAflV0+yZCm5tGDeK1ClXSS4fbaBYabkF6fd9dOaU6CSfEH+enU9al7JBrsmeJR75UHISiEjrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IuHxbTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xk7SdV7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D90EC113CF;
-	Tue, 26 Aug 2025 14:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IuHxbTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03590C4CEF1;
+	Tue, 26 Aug 2025 14:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219224;
-	bh=Ph961NgjofRDxLZ9cyjKX1wehhL6VDPBeibGlPNlFtE=;
+	s=korg; t=1756219227;
+	bh=yBqlL3H4AHzzTUfGVkOHwYP6j74cfvlLgDI8uiJ3hCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xk7SdV7ddsdXj3qnvb5LO2HWGscHgSClYnhhSTDNXjvfKcpHmUFbbbnYiP8L5bXjf
-	 Frh4prt2D4wQPo0hnDWPkxXmetaqbJNG1N7IHTf8OT2a5bSqXgpbkrAEuNpB4Rvx55
-	 /Y5afqF+X3TeJ2XEkkiB6ukgD4u+IsuA8khBfFmw=
+	b=0IuHxbTk+u2KinB5GGnj1+GCW1mmJPnOFF10mfEN4uoiB5GzZeno+580DNiVbbutu
+	 D5d5xj6TgM5BMb9bCyWPXgRzlXY3dWiAz7VmLNjNwnI8u5FD1eA+wVJIS1NocNb5pP
+	 DS/rSM5KPNyE5+BG9GTNqKUQ5RckZe3R54ni+n9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 301/403] jbd2: prevent softlockup in jbd2_log_do_checkpoint()
-Date: Tue, 26 Aug 2025 13:10:27 +0200
-Message-ID: <20250826110915.129411634@linuxfoundation.org>
+	Jon Hunter <jonathanh@nvidia.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 302/403] soc/tegra: pmc: Ensure power-domains are in a known state
+Date: Tue, 26 Aug 2025 13:10:28 +0200
+Message-ID: <20250826110915.156093736@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,73 +50,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit 9d98cf4632258720f18265a058e62fde120c0151 upstream.
+commit b6bcbce3359619d05bf387d4f5cc3af63668dbaa upstream.
 
-Both jbd2_log_do_checkpoint() and jbd2_journal_shrink_checkpoint_list()
-periodically release j_list_lock after processing a batch of buffers to
-avoid long hold times on the j_list_lock. However, since both functions
-contend for j_list_lock, the combined time spent waiting and processing
-can be significant.
+After commit 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on
+until late_initcall_sync") was applied, the Tegra210 Jetson TX1 board
+failed to boot. Looking into this issue, before this commit was applied,
+if any of the Tegra power-domains were in 'on' state when the kernel
+booted, they were being turned off by the genpd core before any driver
+had chance to request them. This was purely by luck and a consequence of
+the power-domains being turned off earlier during boot. After this
+commit was applied, any power-domains in the 'on' state are kept on for
+longer during boot and therefore, may never transitioned to the off
+state before they are requested/used. The hang on the Tegra210 Jetson
+TX1 is caused because devices in some power-domains are accessed without
+the power-domain being turned off and on, indicating that the
+power-domain is not in a completely on state.
 
-jbd2_journal_shrink_checkpoint_list() explicitly calls cond_resched() when
-need_resched() is true to avoid softlockups during prolonged operations.
-But jbd2_log_do_checkpoint() only exits its loop when need_resched() is
-true, relying on potentially sleeping functions like __flush_batch() or
-wait_on_buffer() to trigger rescheduling. If those functions do not sleep,
-the kernel may hit a softlockup.
+>From reviewing the Tegra PMC driver code, if a power-domain is in the
+'on' state there is no guarantee that all the necessary clocks
+associated with the power-domain are on and even if they are they would
+not have been requested via the clock framework and so could be turned
+off later. Some power-domains also have a 'clamping' register that needs
+to be configured as well. In short, if a power-domain is already 'on' it
+is difficult to know if it has been configured correctly. Given that the
+power-domains happened to be switched off during boot previously, to
+ensure that they are in a good known state on boot, fix this by
+switching off any power-domains that are on initially when registering
+the power-domains with the genpd framework.
 
-watchdog: BUG: soft lockup - CPU#3 stuck for 156s! [kworker/u129:2:373]
-CPU: 3 PID: 373 Comm: kworker/u129:2 Kdump: loaded Not tainted 6.6.0+ #10
-Hardware name: Huawei TaiShan 2280 /BC11SPCD, BIOS 1.27 06/13/2017
-Workqueue: writeback wb_workfn (flush-7:2)
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : native_queued_spin_lock_slowpath+0x358/0x418
-lr : jbd2_log_do_checkpoint+0x31c/0x438 [jbd2]
-Call trace:
- native_queued_spin_lock_slowpath+0x358/0x418
- jbd2_log_do_checkpoint+0x31c/0x438 [jbd2]
- __jbd2_log_wait_for_space+0xfc/0x2f8 [jbd2]
- add_transaction_credits+0x3bc/0x418 [jbd2]
- start_this_handle+0xf8/0x560 [jbd2]
- jbd2__journal_start+0x118/0x228 [jbd2]
- __ext4_journal_start_sb+0x110/0x188 [ext4]
- ext4_do_writepages+0x3dc/0x740 [ext4]
- ext4_writepages+0xa4/0x190 [ext4]
- do_writepages+0x94/0x228
- __writeback_single_inode+0x48/0x318
- writeback_sb_inodes+0x204/0x590
- __writeback_inodes_wb+0x54/0xf8
- wb_writeback+0x2cc/0x3d8
- wb_do_writeback+0x2e0/0x2f8
- wb_workfn+0x80/0x2a8
- process_one_work+0x178/0x3e8
- worker_thread+0x234/0x3b8
- kthread+0xf0/0x108
- ret_from_fork+0x10/0x20
+Note that commit 05cfb988a4d0 ("soc/tegra: pmc: Initialise resets
+associated with a power partition") updated the
+tegra_powergate_of_get_resets() function to pass the 'off' to ensure
+that the resets for the power-domain are in the correct state on boot.
+However, now that we may power off a domain on boot, if it is on, it is
+better to move this logic into the tegra_powergate_add() function so
+that there is a single place where we are handling the initial state of
+the power-domain.
 
-So explicitly call cond_resched() in jbd2_log_do_checkpoint() to avoid
-softlockup.
-
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20250812063752.912130-1-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: a38045121bf4 ("soc/tegra: pmc: Add generic PM domain support")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250731121832.213671-1-jonathanh@nvidia.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/checkpoint.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/tegra/pmc.c |   51 +++++++++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -321,6 +321,7 @@ restart:
- 		retry:
- 			if (batch_count)
- 				__flush_batch(journal, &batch_count);
-+			cond_resched();
- 			spin_lock(&journal->j_list_lock);
- 			goto restart;
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -950,7 +950,7 @@ err:
+ }
+ 
+ static int tegra_powergate_of_get_resets(struct tegra_powergate *pg,
+-					 struct device_node *np, bool off)
++					 struct device_node *np)
+ {
+ 	struct device *dev = pg->pmc->dev;
+ 	int err;
+@@ -965,22 +965,6 @@ static int tegra_powergate_of_get_resets
+ 	err = reset_control_acquire(pg->reset);
+ 	if (err < 0) {
+ 		pr_err("failed to acquire resets: %d\n", err);
+-		goto out;
+-	}
+-
+-	if (off) {
+-		err = reset_control_assert(pg->reset);
+-	} else {
+-		err = reset_control_deassert(pg->reset);
+-		if (err < 0)
+-			goto out;
+-
+-		reset_control_release(pg->reset);
+-	}
+-
+-out:
+-	if (err) {
+-		reset_control_release(pg->reset);
+ 		reset_control_put(pg->reset);
  	}
+ 
+@@ -1025,20 +1009,43 @@ static int tegra_powergate_add(struct te
+ 		goto set_available;
+ 	}
+ 
+-	err = tegra_powergate_of_get_resets(pg, np, off);
++	err = tegra_powergate_of_get_resets(pg, np);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to get resets for %pOFn: %d\n", np, err);
+ 		goto remove_clks;
+ 	}
+ 
+-	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
+-		if (off)
+-			WARN_ON(tegra_powergate_power_up(pg, true));
++	/*
++	 * If the power-domain is off, then ensure the resets are asserted.
++	 * If the power-domain is on, then power down to ensure that when is
++	 * it turned on the power-domain, clocks and resets are all in the
++	 * expected state.
++	 */
++	if (off) {
++		err = reset_control_assert(pg->reset);
++		if (err) {
++			pr_err("failed to assert resets: %d\n", err);
++			goto remove_resets;
++		}
++	} else {
++		err = tegra_powergate_power_down(pg);
++		if (err) {
++			dev_err(dev, "failed to turn off PM domain %s: %d\n",
++				pg->genpd.name, err);
++			goto remove_resets;
++		}
++	}
+ 
++	/*
++	 * If PM_GENERIC_DOMAINS is not enabled, power-on
++	 * the domain and skip the genpd registration.
++	 */
++	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
++		WARN_ON(tegra_powergate_power_up(pg, true));
+ 		goto remove_resets;
+ 	}
+ 
+-	err = pm_genpd_init(&pg->genpd, NULL, off);
++	err = pm_genpd_init(&pg->genpd, NULL, true);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to initialise PM domain %pOFn: %d\n", np,
+ 		       err);
 
 
