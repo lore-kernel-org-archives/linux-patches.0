@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8808D22128B;
-	Tue, 26 Aug 2025 14:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C1A2B9A7;
+	Tue, 26 Aug 2025 14:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217192; cv=none; b=ORIlZwf1t1zUTd3yXGKbky4SWtwFgaXHUDXSRdIsoeDeAGgDPZcLLDYlG4kodEPfeuXr90jG9v6sWUSNrXMATBZodUj2V1aE7C0hhUt6xmwFOjT8hxuE2ZrRBNtdDgJmmroRPxk2ITufguAqMG+JD+VuvlbPWX3mBGG02ZlLXBs=
+	t=1756217195; cv=none; b=p0r9eCLE7Je/0NxQk1govGZ9QpHqTAYc+vIUyaE3BPZktThPwAYuIwdYRleDqXTuXSOuH4Fm6ye8u5R/fx+JH9MQ3tNyblqj4FlmkFAFrr9kme3gZ6OxO0ugiz8Or1h9tjD9vAK+pOu3w+4zXCtDMKu70SZ5xV/uDyAl04YZmiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217192; c=relaxed/simple;
-	bh=ZaLREzbC7iZl2TMpIVVpVjkvoTG/RGvMQ1OF2ARt6a0=;
+	s=arc-20240116; t=1756217195; c=relaxed/simple;
+	bh=SfAV9CxseHC0+BDK1Rt6z4vSVhwp0/8JkcrEen6UpDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0BTAj4crJyZ0KW/PMBLArqIHai1DJ/2YQDVLY5lh+YkERCGi3GMSAcUXEtZtq8u9P5uLeTCltKPrjj71z6KDPFL3DpSJowQ4S+Zl2Ss8qxkWpFGuarqGBtQb+b9N8Y94HtoZqmfhT60J0icW1x5pUgAH/OIdkNarg5xhK3TUaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZQ1hiYw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=croWfXo2Is6pvC94zf0EFCeHPyUHgxuT15e8wEhMlsOkZjEUqRo427FZIflTr8iEBA96me9TvhEOVV23tgX8MBPveaKg3jFsOx6RvnFu9iGd/6bwhnJ2h5RgNANlarDtsXmx2WZ/X76iF9qTeEXgqN8yqWhdgkM2zuEb9gHvCi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vE5qNoq4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZQ1hiYw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B91DC4CEF1;
-	Tue, 26 Aug 2025 14:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vE5qNoq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A3CC4CEF1;
+	Tue, 26 Aug 2025 14:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217192;
-	bh=ZaLREzbC7iZl2TMpIVVpVjkvoTG/RGvMQ1OF2ARt6a0=;
+	s=korg; t=1756217195;
+	bh=SfAV9CxseHC0+BDK1Rt6z4vSVhwp0/8JkcrEen6UpDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZQ1hiYwU1VrxL8uWORklKqTVSLGCu6LZ2JDGPHI6rHMX3TGemwy+o3GRKkYSGUx7
-	 oP4NRVl/pGAn3pGxHdMfArRC81KD9eq3ifbopUJ5E+37FMO4V30NXEx/OcS3Ct4Oe7
-	 UN/wmp2mveXJ/EYSxCU+KVK8Y3mbTllErRGWLHGc=
+	b=vE5qNoq43XUfPzzH1PI0q1bajQDyscCJRKkesfG4PJvZgM+ng8dYWG7J1M0M79JOn
+	 jNk+h2zU1+GSKT1SWCBrldmQYRhQ0dqZdN9PL+z5JgUdkOANZgmM9+Jg9WQo4+TaEk
+	 EzudefS2pfPath49bJ+Wpkf6HS1gZPTfBAU4tkgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/523] usb: dwc3: qcom: Dont leave BCR asserted
-Date: Tue, 26 Aug 2025 13:04:20 +0200
-Message-ID: <20250826110925.833286139@linuxfoundation.org>
+	Arun Raghavan <arun@asymptotic.io>,
+	Pieterjan Camerlynck <p.camerlynck@televic.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 051/523] ASoC: fsl_sai: Force a software reset when starting in consumer mode
+Date: Tue, 26 Aug 2025 13:04:21 +0200
+Message-ID: <20250826110925.856793801@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,65 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+From: Arun Raghavan <arun@asymptotic.io>
 
-commit ef8abc0ba49ce717e6bc4124e88e59982671f3b5 upstream.
+commit dc78f7e59169d3f0e6c3c95d23dc8e55e95741e2 upstream.
 
-Leaving the USB BCR asserted prevents the associated GDSC to turn on. This
-blocks any subsequent attempts of probing the device, e.g. after a probe
-deferral, with the following showing in the log:
+On an imx8mm platform with an external clock provider, when running the
+receiver (arecord) and triggering an xrun with xrun_injection, we see a
+channel swap/offset. This happens sometimes when running only the
+receiver, but occurs reliably if a transmitter (aplay) is also
+concurrently running.
 
-[    1.332226] usb30_prim_gdsc status stuck at 'off'
+It seems that the SAI loses track of frame sync during the trigger stop
+-> trigger start cycle that occurs during an xrun. Doing just a FIFO
+reset in this case does not suffice, and only a software reset seems to
+get it back on track.
 
-Leave the BCR deasserted when exiting the driver to avoid this issue.
+This looks like the same h/w bug that is already handled for the
+producer case, so we now do the reset unconditionally on config disable.
 
-Cc: stable <stable@kernel.org>
-Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250709132900.3408752-1-krishna.kurapati@oss.qualcomm.com
-[ adapted to individual clock management API instead of bulk clock operations ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Arun Raghavan <arun@asymptotic.io>
+Reported-by: Pieterjan Camerlynck <p.camerlynck@televic.com>
+Fixes: 3e3f8bd56955 ("ASoC: fsl_sai: fix no frame clk in master mode")
+Cc: stable@vger.kernel.org
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://patch.msgid.link/20250626130858.163825-1-arun@arunraghavan.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/soc/fsl/fsl_sai.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -786,13 +786,13 @@ static int dwc3_qcom_probe(struct platfo
- 	ret = reset_control_deassert(qcom->resets);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to deassert resets, err=%d\n", ret);
--		goto reset_assert;
-+		return ret;
- 	}
- 
- 	ret = dwc3_qcom_clk_init(qcom, of_clk_get_parent_count(np));
- 	if (ret) {
- 		dev_err(dev, "failed to get clocks\n");
--		goto reset_assert;
-+		return ret;
- 	}
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-@@ -892,8 +892,6 @@ clk_disable:
- 		clk_disable_unprepare(qcom->clks[i]);
- 		clk_put(qcom->clks[i]);
- 	}
--reset_assert:
--	reset_control_assert(qcom->resets);
- 
- 	return ret;
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -572,13 +572,15 @@ static void fsl_sai_config_disable(struc
+ 	 * anymore. Add software reset to fix this issue.
+ 	 * This is a hardware bug, and will be fix in the
+ 	 * next sai version.
++	 *
++	 * In consumer mode, this can happen even after a
++	 * single open/close, especially if both tx and rx
++	 * are running concurrently.
+ 	 */
+-	if (!sai->is_slave_mode) {
+-		/* Software Reset */
+-		regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
+-		/* Clear SR bit to finish the reset */
+-		regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
+-	}
++	/* Software Reset */
++	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
++	/* Clear SR bit to finish the reset */
++	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
  }
-@@ -921,7 +919,6 @@ static int dwc3_qcom_remove(struct platf
- 	qcom->num_clocks = 0;
  
- 	dwc3_qcom_interconnect_exit(qcom);
--	reset_control_assert(qcom->resets);
- 
- 	pm_runtime_allow(dev);
- 	pm_runtime_disable(dev);
+ static int fsl_sai_trigger(struct snd_pcm_substream *substream, int cmd,
 
 
