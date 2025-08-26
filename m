@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332D026B747;
-	Tue, 26 Aug 2025 13:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B949D22DF99;
+	Tue, 26 Aug 2025 13:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215083; cv=none; b=oG0kceB3AFZ9FHvXUMpxcLwhq/mKd3A2t+PCnIaBFMb/d3gwWoWWFoxh8xkmSyFfzgJfUy8XzbmxxHH7EJsIryA5SCM+HMrDVq8ZwnreBYzlXpL2Iih4bPfMVBY7seAJlgJ7i6LERISO44JfYoPzBuPqTgn5qS/LOaTA+mfqjJ4=
+	t=1756215085; cv=none; b=m6IcRsudgvGjyt6p5NAHYqIH6JzCNVZtrR9T/D6t6xRzAPW3kZLMmy2F0GVf3QlCVA3yVdg+gvscyZdZAdQWj5EFTDLV5p5x/+dK3NX49Jgtniwh+pvadWJlliSb+h6fGokfyS0OTcJQUtkpa6wAkw0jMijXm+aoO3FLLmKDWTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215083; c=relaxed/simple;
-	bh=GsBtUDGesNT4otFRvxfnh8tcwQKVo4jLD68a6SRPQs4=;
+	s=arc-20240116; t=1756215085; c=relaxed/simple;
+	bh=VnYknSU8wxi34jynTxP55KrcO2+Yit9hgDO/6YPrIxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNnDEb2zUR32Fa8Ug1jfgcVSUXmOZXVUO+3DfAA5xNH72rWXEpwWtJFxec5o03W2HQC82BZQL5NfEhziCA5ROVDfn2HaTUjp60Q3XZLY/i2iiDPwauM9EksmcaoNXl9Xrxd3DIihEdTwr8MtwrTz6R8zXueaF567yPPhOcmq1Vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1EO+bf1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aub1bh5XB66R8EnHfa4VefXmAOCz8OHJTsN3IvEqJyktTBUyAEuibR8cxLO4T7usesRLRT4WaTlZ1dO1P4jRf5ahzPEuq1k+1L7y+aa4ovYWFzX9HKKmrdzqYofTqaZIEg+r0RHTZjtNXsgqEQkVQ409ZH7UAhl8otU26LS7K1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+xWXvtL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1EO+bf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BBDC4CEF1;
-	Tue, 26 Aug 2025 13:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+xWXvtL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B31AC4CEF1;
+	Tue, 26 Aug 2025 13:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215083;
-	bh=GsBtUDGesNT4otFRvxfnh8tcwQKVo4jLD68a6SRPQs4=;
+	s=korg; t=1756215085;
+	bh=VnYknSU8wxi34jynTxP55KrcO2+Yit9hgDO/6YPrIxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1EO+bf129vhDoWf/j0s1HHCHqDP4UUgmTFQV2tgY34+vvvNAi5mBcV2nAGzS+3sE
-	 OW8FjJQWVBIxf9CKJFy/xIt4xgVlAs+smiTo9p79cShSO2P9cZj5aMbrpCOMaKaZ3r
-	 QlKSmaAzmo5FymNGkLchy3GWW+/OHvfW+LGmQKrc=
+	b=z+xWXvtLTlBiThBunp9eLpCuVVZjgWO2y22UxsddTotVQb8KjeceJoUY3x+yKB7Ax
+	 l+LbbA/7sEW1P/Rl84vsrduvG3r+f0mvD+s/kBqbod1ynaaxbksdJn1B312WmDBagp
+	 QCF9o0c7y0Zx3s2NH2+A26FgHQeBBRskqhxupdoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Johan Hovold <johan@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 353/482] net: enetc: fix device and OF node leak at probe
-Date: Tue, 26 Aug 2025 13:10:06 +0200
-Message-ID: <20250826110939.555795554@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 380/482] KVM: x86: Take irqfds.lock when adding/deleting IRQ bypass producer
+Date: Tue, 26 Aug 2025 13:10:33 +0200
+Message-ID: <20250826110940.216394464@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,63 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 70458f8a6b44daf3ad39f0d9b6d1097c8a7780ed ]
+commit f1fb088d9cecde5c3066d8ff8846789667519b7d upstream.
 
-Make sure to drop the references to the IERB OF node and platform device
-taken by of_parse_phandle() and of_find_device_by_node() during probe.
+Take irqfds.lock when adding/deleting an IRQ bypass producer to ensure
+irqfd->producer isn't modified while kvm_irq_routing_update() is running.
+The only lock held when a producer is added/removed is irqbypass's mutex.
 
-Fixes: e7d48e5fbf30 ("net: enetc: add a mini driver for the Integrated Endpoint Register Block")
-Cc: stable@vger.kernel.org	# 5.13
-Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250725171213.880-3-johan@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 872768800652 ("KVM: x86: select IRQ_BYPASS_MANAGER")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250404193923.1413163-5-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[sean: account for lack of kvm_x86_call()]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_pf.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ arch/x86/kvm/x86.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-@@ -1207,6 +1207,7 @@ static int enetc_pf_register_with_ierb(s
- 	struct device_node *node = pdev->dev.of_node;
- 	struct platform_device *ierb_pdev;
- 	struct device_node *ierb_node;
-+	int ret;
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -13387,16 +13387,22 @@ int kvm_arch_irq_bypass_add_producer(str
+ {
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
++	struct kvm *kvm = irqfd->kvm;
+ 	int ret;
  
- 	/* Don't register with the IERB if the PF itself is disabled */
- 	if (!node || !of_device_is_available(node))
-@@ -1214,16 +1215,25 @@ static int enetc_pf_register_with_ierb(s
- 
- 	ierb_node = of_find_compatible_node(NULL, NULL,
- 					    "fsl,ls1028a-enetc-ierb");
--	if (!ierb_node || !of_device_is_available(ierb_node))
-+	if (!ierb_node)
- 		return -ENODEV;
- 
-+	if (!of_device_is_available(ierb_node)) {
-+		of_node_put(ierb_node);
-+		return -ENODEV;
-+	}
+-	irqfd->producer = prod;
+ 	kvm_arch_start_assignment(irqfd->kvm);
 +
- 	ierb_pdev = of_find_device_by_node(ierb_node);
- 	of_node_put(ierb_node);
- 
- 	if (!ierb_pdev)
- 		return -EPROBE_DEFER;
- 
--	return enetc_ierb_register_pf(ierb_pdev, pdev);
-+	ret = enetc_ierb_register_pf(ierb_pdev, pdev);
++	spin_lock_irq(&kvm->irqfds.lock);
++	irqfd->producer = prod;
 +
-+	put_device(&ierb_pdev->dev);
+ 	ret = static_call(kvm_x86_pi_update_irte)(irqfd->kvm,
+ 					 prod->irq, irqfd->gsi, 1);
+-
+ 	if (ret)
+ 		kvm_arch_end_assignment(irqfd->kvm);
+ 
++	spin_unlock_irq(&kvm->irqfds.lock);
 +
-+	return ret;
++
+ 	return ret;
  }
  
- static int enetc_pf_probe(struct pci_dev *pdev,
+@@ -13406,9 +13412,9 @@ void kvm_arch_irq_bypass_del_producer(st
+ 	int ret;
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
++	struct kvm *kvm = irqfd->kvm;
+ 
+ 	WARN_ON(irqfd->producer != prod);
+-	irqfd->producer = NULL;
+ 
+ 	/*
+ 	 * When producer of consumer is unregistered, we change back to
+@@ -13416,11 +13422,18 @@ void kvm_arch_irq_bypass_del_producer(st
+ 	 * when the irq is masked/disabled or the consumer side (KVM
+ 	 * int this case doesn't want to receive the interrupts.
+ 	*/
++	spin_lock_irq(&kvm->irqfds.lock);
++	irqfd->producer = NULL;
++
++
+ 	ret = static_call(kvm_x86_pi_update_irte)(irqfd->kvm, prod->irq, irqfd->gsi, 0);
+ 	if (ret)
+ 		printk(KERN_INFO "irq bypass consumer (token %p) unregistration"
+ 		       " fails: %d\n", irqfd->consumer.token, ret);
+ 
++	spin_unlock_irq(&kvm->irqfds.lock);
++
++
+ 	kvm_arch_end_assignment(irqfd->kvm);
+ }
+ 
 
 
