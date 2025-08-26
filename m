@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFA734AB0D;
-	Tue, 26 Aug 2025 14:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A721134AB0D;
+	Tue, 26 Aug 2025 14:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218289; cv=none; b=a6psMarZ3NHGHPdcRqlsBdqZTGN2oBgZOXibvEXO2WphBJV8kLBi18C9G78Nt+pGXBWB2iSlbwC4Je73BMyrOf31qmjito5AiIrCVhHvKMig4OQhFAt7562ovrmPDZtfA82OJr308wrei73eE05KEpZ+1IQ3wWLVLx3TuEq7RFI=
+	t=1756218291; cv=none; b=E+QatoE3j2nprGaiCa7OL55E/pIPItI+iXegGUldXl8+fPFwHPQEyc75aEpcxPD0b9ibRgN0r47NEPYAZMXERXclWcdP5XN/xaZDU3IqOcRXtU36uo8mjdyD2/9DDJB3wDB9cyZI8jDpaJx3wthZ33X7i2FqcxI7x6o1rLc6NAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218289; c=relaxed/simple;
-	bh=kPkV3vh8azYB0z3FLRFYfYfg22RhmsUPCS8izjyrnW0=;
+	s=arc-20240116; t=1756218291; c=relaxed/simple;
+	bh=qVULVW4R3vYnjxqrmzb8uBNjdaOzMDoQga9BrH3lCMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2tacqQ+AQ0jJWAwKrBHd+C4JN4c3/asg+n5TiiyhjI0HfXPzslzqDtUdtL10AS0gwJoOC1QQNGeFhbmUustq84YblXjPaV/+c+hEUswTEpLwUhuxRD1XEO2axF+WFIj+hJE6mvhMk6PtpipNcwCi8fFxPZ3v/45dypGgI7znMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WST0BP6U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XmFxkhpIEdauzcpociatWi5JuSr3Pppsfa61JE9M0ddoDPnCQDqaoOZOeOfLLYFvkAB0A14eyGPql21IUxit/TD0w/nyAwMMVBgnxT0FxcXgPsk0SQf4tnX+J+cYgWszRO9Z2HM/RatwYXbzeNMIhrrMhXVWeFBY0b6hMuPgHwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SScz1uwO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WST0BP6U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B836AC4CEF1;
-	Tue, 26 Aug 2025 14:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SScz1uwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB6DC4CEF1;
+	Tue, 26 Aug 2025 14:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218289;
-	bh=kPkV3vh8azYB0z3FLRFYfYfg22RhmsUPCS8izjyrnW0=;
+	s=korg; t=1756218291;
+	bh=qVULVW4R3vYnjxqrmzb8uBNjdaOzMDoQga9BrH3lCMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WST0BP6U9//KklPa0p1BMwe6HY3U10mJNRsyN31CssCfjsXPhxSUbnnttlcqEMCTl
-	 3eom0xSKYG5hrZxVXDhNIysC2+X5URilYev8Jy6HtCZURGcg2YCB8lpmWB73WiCDjX
-	 XopJbq9RTcyURtzBJ1BbUhnwqPKQyisRSjSIm5QU=
+	b=SScz1uwOcMJDj1OCgAcuptzWt2CPG8rgaOkf+wl+6U/iGqB6bMTk14QXsaPx5p9XN
+	 X4YOXsjCZgMmgUmCLvUp4uh/WhLhEX3M2YeeZihKjkAgAzr4JQq6IAYCNJkgSmL2gg
+	 4rEIdKHaigGR7yLC/dtBppph9fG3xhL6BMqTgVjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.10 438/523] ptp: Fix possible memory leak in ptp_clock_register()
-Date: Tue, 26 Aug 2025 13:10:48 +0200
-Message-ID: <20250826110935.258689354@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 465/523] iio: adc: ad_sigma_delta: change to buffer predisable
+Date: Tue, 26 Aug 2025 13:11:15 +0200
+Message-ID: <20250826110935.914681291@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -46,74 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 4225fea1cb28370086e17e82c0f69bec2779dca0 upstream.
+[ Upstream commit 66d4374d97f85516b5a22418c5e798aed2606dec ]
 
-I got memory leak as follows when doing fault injection test:
+Change the buffer disable callback from postdisable to predisable.
+This balances the existing posteanble callback. Using postdisable
+with posteanble can be problematic, for example, if update_scan_mode
+fails, it would call postdisable without ever having called posteanble,
+so the drivers using this would be in an unexpected state when
+postdisable was called.
 
-unreferenced object 0xffff88800906c618 (size 8):
-  comm "i2c-idt82p33931", pid 4421, jiffies 4294948083 (age 13.188s)
-  hex dump (first 8 bytes):
-    70 74 70 30 00 00 00 00                          ptp0....
-  backtrace:
-    [<00000000312ed458>] __kmalloc_track_caller+0x19f/0x3a0
-    [<0000000079f6e2ff>] kvasprintf+0xb5/0x150
-    [<0000000026aae54f>] kvasprintf_const+0x60/0x190
-    [<00000000f323a5f7>] kobject_set_name_vargs+0x56/0x150
-    [<000000004e35abdd>] dev_set_name+0xc0/0x100
-    [<00000000f20cfe25>] ptp_clock_register+0x9f4/0xd30 [ptp]
-    [<000000008bb9f0de>] idt82p33_probe.cold+0x8b6/0x1561 [ptp_idt82p33]
-
-When posix_clock_register() returns an error, the name allocated
-in dev_set_name() will be leaked, the put_device() should be used
-to give up the device reference, then the name will be freed in
-kobject_cleanup() and other memory will be freed in ptp_clock_release().
-
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Fixes: a33121e5487b ("ptp: fix the race between the release of ptp_clock and cdev")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[ Shivani: Modified to apply on 5.10.y, Removed kfree(ptp->vclock_index) in
-  the ptach, since vclock_index is introduced in later versions ]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Fixes: af3008485ea0 ("iio:adc: Add common code for ADI Sigma Delta devices")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250703-iio-adc-ad_sigma_delta-buffer-predisable-v1-1-f2ab85138f1f@baylibre.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ptp/ptp_clock.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad_sigma_delta.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -283,15 +283,20 @@ struct ptp_clock *ptp_clock_register(str
- 	/* Create a posix clock and link it to the device. */
- 	err = posix_clock_register(&ptp->clock, &ptp->dev);
- 	if (err) {
-+		if (ptp->pps_source)
-+			pps_unregister_source(ptp->pps_source);
-+
-+		if (ptp->kworker)
-+			kthread_destroy_worker(ptp->kworker);
-+
-+		put_device(&ptp->dev);
-+
- 		pr_err("failed to create posix clock\n");
--		goto no_clock;
-+		return ERR_PTR(err);
- 	}
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -371,7 +371,7 @@ err_unlock:
+ 	return ret;
+ }
  
- 	return ptp;
+-static int ad_sd_buffer_postdisable(struct iio_dev *indio_dev)
++static int ad_sd_buffer_predisable(struct iio_dev *indio_dev)
+ {
+ 	struct ad_sigma_delta *sigma_delta = iio_device_get_drvdata(indio_dev);
  
--no_clock:
--	if (ptp->pps_source)
--		pps_unregister_source(ptp->pps_source);
- no_pps:
- 	ptp_cleanup_pin_groups(ptp);
- no_pin_groups:
+@@ -432,7 +432,7 @@ static irqreturn_t ad_sd_trigger_handler
+ 
+ static const struct iio_buffer_setup_ops ad_sd_buffer_setup_ops = {
+ 	.postenable = &ad_sd_buffer_postenable,
+-	.postdisable = &ad_sd_buffer_postdisable,
++	.predisable = &ad_sd_buffer_predisable,
+ 	.validate_scan_mask = &iio_validate_scan_mask_onehot,
+ };
+ 
 
 
