@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E219B2BF001;
-	Tue, 26 Aug 2025 11:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52922BF006;
+	Tue, 26 Aug 2025 11:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756206762; cv=none; b=uFYuBPwztgHiXyTvZe0TASPeN6m7Glwxhm2BtkfV47DTTEGcVs4Qt+mVwHvYcMUxrC7xM0KHEB0mEcoQwsxUkcgY0/9G+K/Zi//EvAatP5Sa57lr3DUYFB9IyJrlE1gdzet0TlqGyODmW4BzpOicQfaWOfSQ/IhssOarX70iGtg=
+	t=1756206765; cv=none; b=TdzW2w6E64TaQ6HH9wS+BGgeCE7Hui06+imOfa6JkPMeGRlHrAHfQQr3T0VnyiZNd+OepDrShrhp6UJYbRNwLWetqwqfNq6/iBvHrIL3FDkSSBOb5SIo+LbX70K5J0uXC6cCuv2dU+vP335lyvbwFahpUxgX2Q1XUeTwDum+vZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756206762; c=relaxed/simple;
-	bh=T7kqRXAgWYd9VIX+AoSFCpI3oDwMsb9zx89HynamCgo=;
+	s=arc-20240116; t=1756206765; c=relaxed/simple;
+	bh=hPUHzstySJLn6nIji92TGjEpduNrqiXtAliNTmvteIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDB4y2KFg61ypCJ5SqfW3dVpwsNaoJvJ1IGw4xEN6pLVMvnUy/oH+hwXzTWgUF1FU/JhhYuYvInu13/L8XKYVZhowiSCqUKoKhgUo9n6TQaF2GP9bANdxhuUhCJUp9Kln68rvIWKObOvMfamE3uvr8zw1aQiCr7h3HgiGY2Ltbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtNE9mDe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LSQZVxny6rkM5cqqocWiuC1HzM1haxKzCixMY4txfLBdiWs0zP1YhKXXoR0uhC0jVEZXz/MuucCxoIR9JpH6b8pFD703A80G5Z+F8WsIXqsLnqa4AhpZgbPexmaOBx9f6kl5xR1na8jfRzDTeKyeZ9chDfDmviwZp2e4mdUB1M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyr6LiIW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtNE9mDe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C5CC116D0;
-	Tue, 26 Aug 2025 11:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyr6LiIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F92C4CEF1;
+	Tue, 26 Aug 2025 11:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756206761;
-	bh=T7kqRXAgWYd9VIX+AoSFCpI3oDwMsb9zx89HynamCgo=;
+	s=korg; t=1756206764;
+	bh=hPUHzstySJLn6nIji92TGjEpduNrqiXtAliNTmvteIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtNE9mDe+jdGuPr+di4HesEdN7yG2W4oumuhnH4VSUTF119FTJSt7hmXkersjLIhp
-	 XYjoA6sn+bamVWoo5F/6FK6OdH/PgzJYelJxzPxgusmEKpif0DoORPe5UzvPMd1Kkn
-	 3WJysuoN76x2nvoh05C12hY9+zRXMk9NBLVvbC38=
+	b=lyr6LiIWsgqL1mFwEsWi8HuzYVTCkPLPvuSwu/6JXsERJzusFsJF/pdpZpoDjjBoQ
+	 ZyYvObHXipiseirSqM7HANU1igF/rdhvzAjysVy8eYs+w5gAK3cSEyWXz8CgJHSNMy
+	 +AO9iobQMDn+SdsLW0UOxeEOao9BxLTGqR3ZxVvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wayne Chang <waynec@nvidia.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 001/523] phy: tegra: xusb: Fix unbalanced regulator disable in UTMI PHY mode
-Date: Tue, 26 Aug 2025 13:03:31 +0200
-Message-ID: <20250826110924.605853917@linuxfoundation.org>
+Subject: [PATCH 5.15 001/644] phy: tegra: xusb: Fix unbalanced regulator disable in UTMI PHY mode
+Date: Tue, 26 Aug 2025 13:01:32 +0200
+Message-ID: <20250826110946.549880015@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
-References: <20250826110924.562212281@linuxfoundation.org>
+In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
+References: <20250826110946.507083938@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,7 +47,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -89,7 +89,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/phy/tegra/xusb-tegra186.c
 +++ b/drivers/phy/tegra/xusb-tegra186.c
-@@ -328,13 +328,15 @@ static int tegra186_xusb_padctl_vbus_ove
+@@ -715,13 +715,15 @@ static int tegra186_xusb_padctl_vbus_ove
  }
  
  static int tegra186_xusb_padctl_id_override(struct tegra_xusb_padctl *padctl,
@@ -107,7 +107,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	if (status) {
  		if (value & VBUS_OVERRIDE) {
-@@ -345,14 +347,34 @@ static int tegra186_xusb_padctl_id_overr
+@@ -732,14 +734,34 @@ static int tegra186_xusb_padctl_id_overr
  			value = padctl_readl(padctl, USB2_VBUS_ID);
  		}
  
@@ -148,7 +148,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	return 0;
  }
-@@ -372,27 +394,20 @@ static int tegra186_utmi_phy_set_mode(st
+@@ -759,27 +781,20 @@ static int tegra186_utmi_phy_set_mode(st
  
  	if (mode == PHY_MODE_USB_OTG) {
  		if (submode == USB_ROLE_HOST) {
