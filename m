@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4582E225390;
-	Tue, 26 Aug 2025 14:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B62C2C0F9C;
+	Tue, 26 Aug 2025 14:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217322; cv=none; b=Mbz5A4YvpDegXVEol1jO8uFftitRg9gSP6k7BD+6Nd16nzVBsg++mCggqmdwaKxWjYlMga9iDeUX73Dn3hJtciMEhfg0XFQd1lNff3Wv93QoOZI3Nrc8Tjr0EuWczrkajmtb5BImjpsA2imYxnSyZLoX3DPB+x9o8wSGb0xLVQw=
+	t=1756217324; cv=none; b=AZhrZTlK+5zwSlAEiQtVRij1ash0NefjrtzvAGpxUfStEPYo2i65/xOg3RRT1xWDD83OE4EYzBjHjNK2v9FMW7olZ4GgwqL2PFkqSQLrhRRVj1U63WpFTEzS3CGPiAMHvLqpDtmJ2v1Kfx0phnGne4lsetjixEbPUbmnDVl0l1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217322; c=relaxed/simple;
-	bh=orfBFIIsTRTXkmei3kmnHL67VJZcOcNbPitD3W2haGY=;
+	s=arc-20240116; t=1756217324; c=relaxed/simple;
+	bh=PvxsK4xYXP5soo8yR70TRvHL2cc2h4zCZjKz4GgCqBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lq5ZlKrZQljx1sY6kLdqm3o5msvB8K06x42RHreCNIxbVPYWNYGc7ieDazejCQrgS6k/jgkOOD8YWsE31mLOITgd0WmOQ0rysrL90AVal4dM42jKuMIkssUfOGD6ELstQtnE8Asy5MgndHUiIXaqma1vQ8mKqZIm5TKavxZdOAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OERXdFS+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fToPXj3fdBhlEPL07M/6poh15Y86GyaGrcHEotnrb96A6FP+jh/Tqrf6zgFOiZBit2MCxK4ooEJQvXMuWbR4RJOoarztVYsleb1YFdTDke50+B4qUn158sHf5ym4aD8UuYhJcu6/I8iL5UGsJK6FseQqjN/mL2JaHuCgCXEhuGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0MyUPkF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OERXdFS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C953C4CEF1;
-	Tue, 26 Aug 2025 14:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0MyUPkF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16EFEC4CEF1;
+	Tue, 26 Aug 2025 14:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217321;
-	bh=orfBFIIsTRTXkmei3kmnHL67VJZcOcNbPitD3W2haGY=;
+	s=korg; t=1756217324;
+	bh=PvxsK4xYXP5soo8yR70TRvHL2cc2h4zCZjKz4GgCqBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OERXdFS+JQVxcNYz+NmfBRLsylKDRsYUyszpd0BTGsHGRt96FmmtaANiP4EoR+CA0
-	 XDx0OFwW5Qz3oT7JfZN60vtBtczkYYWHeIkbW2rYQhPTXpEulLThZpl9yq4JwshKQI
-	 7Lz/ppJyRLuX6U11iRCdXAIq6UHXiKxqv2Sx76Jk=
+	b=N0MyUPkFX8lI3rNFMhSdE4YMlJlvKb1x69DGM6HcLvHroyx5O9O4nxsVH0YWijzGZ
+	 C55d4qhfpd1aelxwe1ai9sEp1/0HXsIVXX+gHfcmsjbY16eOg/0gNj4qUfxkMlGQDz
+	 NiEQzE5DLb55AiagzJO1DW8IocWVC1k43wqm++Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Hostetler <thostet@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 068/523] gve: Fix stuck TX queue for DQ queue format
-Date: Tue, 26 Aug 2025 13:04:38 +0200
-Message-ID: <20250826110926.252230334@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 069/523] nilfs2: reject invalid file types when reading inodes
+Date: Tue, 26 Aug 2025 13:04:39 +0200
+Message-ID: <20250826110926.275664298@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,125 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praveen Kaligineedi <pkaligineedi@google.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit b03f15c0192b184078206760c839054ae6eb4eaa upstream.
+commit 4aead50caf67e01020c8be1945c3201e8a972a27 upstream.
 
-gve_tx_timeout was calculating missed completions in a way that is only
-relevant in the GQ queue format. Additionally, it was attempting to
-disable device interrupts, which is not needed in either GQ or DQ queue
-formats.
+To prevent inodes with invalid file types from tripping through the vfs
+and causing malfunctions or assertion failures, add a missing sanity check
+when reading an inode from a block device.  If the file type is not valid,
+treat it as a filesystem error.
 
-As a result, TX timeouts with the DQ queue format likely would have
-triggered early resets without kicking the queue at all.
-
-This patch drops the check for pending work altogether and always kicks
-the queue after validating the queue has not seen a TX timeout too
-recently.
-
-Cc: stable@vger.kernel.org
-Fixes: 87a7f321bb6a ("gve: Recover from queue stall due to missed IRQ")
-Co-developed-by: Tim Hostetler <thostet@google.com>
-Signed-off-by: Tim Hostetler <thostet@google.com>
-Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/20250717192024.1820931-1-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20250710134952.29862-1-konishi.ryusuke@gmail.com
+Fixes: 05fe58fdc10d ("nilfs2: inode operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c |   71 +++++++++++++++--------------
- 1 file changed, 39 insertions(+), 32 deletions(-)
+ fs/nilfs2/inode.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -944,49 +944,56 @@ static void gve_turnup(struct gve_priv *
- 	gve_set_napi_enabled(priv);
- }
- 
--static void gve_tx_timeout(struct net_device *dev, unsigned int txqueue)
-+static struct gve_notify_block *gve_get_tx_notify_block(struct gve_priv *priv,
-+							unsigned int txqueue)
- {
--	struct gve_notify_block *block;
--	struct gve_tx_ring *tx = NULL;
--	struct gve_priv *priv;
--	u32 last_nic_done;
--	u32 current_time;
- 	u32 ntfy_idx;
- 
--	netdev_info(dev, "Timeout on tx queue, %d", txqueue);
--	priv = netdev_priv(dev);
- 	if (txqueue > priv->tx_cfg.num_queues)
--		goto reset;
-+		return NULL;
- 
- 	ntfy_idx = gve_tx_idx_to_ntfy(priv, txqueue);
- 	if (ntfy_idx >= priv->num_ntfy_blks)
--		goto reset;
-+		return NULL;
-+
-+	return &priv->ntfy_blocks[ntfy_idx];
-+}
-+
-+static bool gve_tx_timeout_try_q_kick(struct gve_priv *priv,
-+				      unsigned int txqueue)
-+{
-+	struct gve_notify_block *block;
-+	u32 current_time;
- 
--	block = &priv->ntfy_blocks[ntfy_idx];
--	tx = block->tx;
-+	block = gve_get_tx_notify_block(priv, txqueue);
-+
-+	if (!block)
-+		return false;
- 
- 	current_time = jiffies_to_msecs(jiffies);
--	if (tx->last_kick_msec + MIN_TX_TIMEOUT_GAP > current_time)
--		goto reset;
-+	if (block->tx->last_kick_msec + MIN_TX_TIMEOUT_GAP > current_time)
-+		return false;
-+
-+	netdev_info(priv->dev, "Kicking queue %d", txqueue);
-+	napi_schedule(&block->napi);
-+	block->tx->last_kick_msec = current_time;
-+	return true;
-+}
-+
-+static void gve_tx_timeout(struct net_device *dev, unsigned int txqueue)
-+{
-+	struct gve_notify_block *block;
-+	struct gve_priv *priv;
-+
-+	netdev_info(dev, "Timeout on tx queue, %d", txqueue);
-+	priv = netdev_priv(dev);
-+
-+	if (!gve_tx_timeout_try_q_kick(priv, txqueue))
-+		gve_schedule_reset(priv);
- 
--	/* Check to see if there are missed completions, which will allow us to
--	 * kick the queue.
--	 */
--	last_nic_done = gve_tx_load_event_counter(priv, tx);
--	if (last_nic_done - tx->done) {
--		netdev_info(dev, "Kicking queue %d", txqueue);
--		iowrite32be(GVE_IRQ_MASK, gve_irq_doorbell(priv, block));
--		napi_schedule(&block->napi);
--		tx->last_kick_msec = current_time;
--		goto out;
--	} // Else reset.
--
--reset:
--	gve_schedule_reset(priv);
--
--out:
--	if (tx)
--		tx->queue_timeout++;
-+	block = gve_get_tx_notify_block(priv, txqueue);
-+	if (block)
-+		block->tx->queue_timeout++;
- 	priv->tx_timeo_cnt++;
- }
- 
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -517,11 +517,18 @@ static int __nilfs_read_inode(struct sup
+ 		inode->i_op = &nilfs_symlink_inode_operations;
+ 		inode_nohighmem(inode);
+ 		inode->i_mapping->a_ops = &nilfs_aops;
+-	} else {
++	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
++		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
+ 		inode->i_op = &nilfs_special_inode_operations;
+ 		init_special_inode(
+ 			inode, inode->i_mode,
+ 			huge_decode_dev(le64_to_cpu(raw_inode->i_device_code)));
++	} else {
++		nilfs_error(sb,
++			    "invalid file type bits in mode 0%o for inode %lu",
++			    inode->i_mode, ino);
++		err = -EIO;
++		goto failed_unmap;
+ 	}
+ 	nilfs_ifile_unmap_inode(root->ifile, ino, bh);
+ 	brelse(bh);
 
 
