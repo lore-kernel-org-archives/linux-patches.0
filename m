@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CC935083D;
-	Tue, 26 Aug 2025 14:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB8B35A280;
+	Tue, 26 Aug 2025 14:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217887; cv=none; b=WBKqv60R4TZm7aIscJhWIHN7jfeGnkpWkRwc8fepp1CVgEthS3++kZJT5b7BR8/Ad9i3/TZJ9qNDoPspDS1rviFKY8qVyPIkRRCVcJDNUizXpj9piFRh0NF4E+LABmNhtQsePenEMdIsWgx9LBlQsL5TFiJ8jl48bLv8GZQjSKA=
+	t=1756217890; cv=none; b=sp8+hcnsRmXzuECIK//YtgAk6p9Cfr5fAvsEd5llQwYFT9ybANU2jn2m7Kf8ffufUfZs36aM2yjJqVSJZ8ZEQKGgbaxURzbgVhrro3ROps1iQSsJ7d7NYEDcSgIaojCYbtGHdhZjvuyOggxG7EFwgvmwSiis3d2jtb/PTt/1A0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217887; c=relaxed/simple;
-	bh=xz2VJxeQtzwOwIHb1DB+BTsHuHcan+qEG0aHDgzTCSc=;
+	s=arc-20240116; t=1756217890; c=relaxed/simple;
+	bh=pRVfcIkK5yUtYoYwH7Ir2EsCn8VkdV4Wskib1cm+SUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XTnMZS9y7P+PIW5hFHfJdPV3bNx6AMhj5185tbZidrjQM/4Lbqe7SaCoWnW64WbnmssH5HsDdVlzTw+s4AJ/qs2bxWnDV+CslACVQltw3ItuX+93liZ/VT0cJXJIJ/NPWDukZpFGPQ/wOhZHSTn5Q06CwOkU64eb3ff8sgh3EsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxCkDju2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bm+9PD0zTTtsb9OYveFaslpS9zwZBa2muOT+rNZoEtbJjMEPrp4nRAPv1s3RMV+YPc4ncb+1M/4J55TgwbQum/cKB5FEaiaBLQ3QcwWoC9mLRXpWiHHBHHDPPraKRYM2nnHybZpcknjL13J2KWoIZjbLOivdCp120udvUY83b7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zg3jqT4S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxCkDju2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F3AC4CEF1;
-	Tue, 26 Aug 2025 14:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zg3jqT4S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13C6C4CEF1;
+	Tue, 26 Aug 2025 14:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217886;
-	bh=xz2VJxeQtzwOwIHb1DB+BTsHuHcan+qEG0aHDgzTCSc=;
+	s=korg; t=1756217889;
+	bh=pRVfcIkK5yUtYoYwH7Ir2EsCn8VkdV4Wskib1cm+SUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AxCkDju2MlNmKD7fzbW2BTgexy1CRFsgJYNKGX1rniOFYlvngTGjhURSFNDW+HSFl
-	 pDiS/MXv/xm+8WHeVl3qrnPFzK4B2GdATubBQpSZN6UX0OvzZw3h0qUuJYAUg8lh7o
-	 fey10GrYHDXW2BMbAzovUY8LLpVM8pH4mn8HuUVg=
+	b=Zg3jqT4SqDJNHENAT89mh4Pej1Addb3nVaUpGAj8m19fJr/2tlccxfGoZBpgtJ6Df
+	 E7hXjykgqbBT9hGEWtqYolb9CVvH11HfnPaixNSjyZ3yOWofyR36qW+jCNlFtJyztF
+	 NrTeJPOA4eC/NDgKnGOB3xnKpVA99WqYgGFgwGTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Guo <alexguo1023@gmail.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	chenchangcheng <chenchangcheng@kylinos.cn>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 313/523] media: dvb-frontends: w7090p: fix null-ptr-deref in w7090p_tuner_write_serpar and w7090p_tuner_read_serpar
-Date: Tue, 26 Aug 2025 13:08:43 +0200
-Message-ID: <20250826110932.182090029@linuxfoundation.org>
+Subject: [PATCH 5.10 314/523] media: uvcvideo: Fix bandwidth issue for Alcor camera
+Date: Tue, 26 Aug 2025 13:08:44 +0200
+Message-ID: <20250826110932.207818753@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,45 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Guo <alexguo1023@gmail.com>
+From: chenchangcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit ed0234c8458b3149f15e496b48a1c9874dd24a1b ]
+[ Upstream commit 9764401bf6f8a20eb11c2e78470f20fee91a9ea7 ]
 
-In w7090p_tuner_write_serpar, msg is controlled by user. When msg[0].buf is null and msg[0].len is zero, former checks on msg[0].buf would be passed. If accessing msg[0].buf[2] without sanity check, null pointer deref would happen. We add
-check on msg[0].len to prevent crash.
+Some broken device return wrong dwMaxPayloadTransferSize fields as
+follows:
 
-Similar commit: commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+[  218.632537] uvcvideo: Device requested 2752512 B/frame bandwidth.
+[  218.632598] uvcvideo: No fast enough alt setting for requested bandwidth.
 
-Signed-off-by: Alex Guo <alexguo1023@gmail.com>
-Link: https://lore.kernel.org/r/20250616013353.738790-1-alexguo1023@gmail.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+When dwMaxPayloadTransferSize is greater than maxpsize, it will prevent
+the camera from starting. So use the bandwidth of maxpsize.
+
+Signed-off-by: chenchangcheng <chenchangcheng@kylinos.cn>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250510061803.811433-1-ccc194101@163.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/dib7000p.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/usb/uvc/uvc_video.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
-index a4d060fb1bab..08b3ac8ff108 100644
---- a/drivers/media/dvb-frontends/dib7000p.c
-+++ b/drivers/media/dvb-frontends/dib7000p.c
-@@ -2198,6 +2198,8 @@ static int w7090p_tuner_write_serpar(struct i2c_adapter *i2c_adap, struct i2c_ms
- 	struct dib7000p_state *state = i2c_get_adapdata(i2c_adap);
- 	u8 n_overflow = 1;
- 	u16 i = 1000;
-+	if (msg[0].len < 3)
-+		return -EOPNOTSUPP;
- 	u16 serpar_num = msg[0].buf[0];
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index f6e97ff7a8e4..7385c6023f89 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -228,6 +228,15 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
  
- 	while (n_overflow == 1 && i) {
-@@ -2217,6 +2219,8 @@ static int w7090p_tuner_read_serpar(struct i2c_adapter *i2c_adap, struct i2c_msg
- 	struct dib7000p_state *state = i2c_get_adapdata(i2c_adap);
- 	u8 n_overflow = 1, n_empty = 1;
- 	u16 i = 1000;
-+	if (msg[0].len < 1 || msg[1].len < 2)
-+		return -EOPNOTSUPP;
- 	u16 serpar_num = msg[0].buf[0];
- 	u16 read_word;
+ 		ctrl->dwMaxPayloadTransferSize = bandwidth;
+ 	}
++
++	if (stream->intf->num_altsetting > 1 &&
++	    ctrl->dwMaxPayloadTransferSize > stream->maxpsize) {
++		dev_warn_ratelimited(&stream->intf->dev,
++				     "UVC non compliance: the max payload transmission size (%u) exceeds the size of the ep max packet (%u). Using the max size.\n",
++				     ctrl->dwMaxPayloadTransferSize,
++				     stream->maxpsize);
++		ctrl->dwMaxPayloadTransferSize = stream->maxpsize;
++	}
+ }
  
+ static size_t uvc_video_ctrl_size(struct uvc_streaming *stream)
 -- 
 2.39.5
 
