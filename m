@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6874134A33C;
-	Tue, 26 Aug 2025 13:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E9534A33C;
+	Tue, 26 Aug 2025 13:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216215; cv=none; b=SHo8DyTop+qOXsA+qV2lo2wxaSrO62Bik6Hcdcl63Uq0DtB6v+QHs10gklufewOA7BB4FdAO1RgakIqXW05vHpUMIionOvGv+rzPGa7aEBaNdVNLfcPrpPFx3RBUR0vZaCtxLKFfXaSWAo4BpydBO6zyBQ2m9tEVlC7Z1oQEyQQ=
+	t=1756216218; cv=none; b=nSDIybuJxwcKuu1lJaFvI37i/UMWIBjwG2YH4m+Xj6pj64S76qLpBpLzfoj7JpmkSAzOZvlyHVpUkjHVRFVu9lWwr2Uwv8JEZDqd00kOilCcHqTEk7xjoTXAO7ysxvP4ZD7EunzWghVsAZ+Oa3t5sKXxvDgkQxzMan9jdGZR4t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216215; c=relaxed/simple;
-	bh=0ewIVQW4q+NZ26MWbCFEjfxY40gQMUtwVXYdB3SoNqE=;
+	s=arc-20240116; t=1756216218; c=relaxed/simple;
+	bh=kHTG9QdfXLZYYwun/ILmerR/t+nCwV/YX3yUxdyzvjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BURwo15Gyc+YOdA4QREzSzfnheMF8ySGv6lleRDHPpSwRXpyjh87ROzFZCARvKJXLuFxtwqUetJpwpUVgj0tMQ1P3YDppu8J2rukVxd3Rb9Vazrp06vNJuzFqv0PbJ+0sXnc6JH4BPyYv9+ReZIH3k1V/BMEFFIOfdQfbOQ5UE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpyGDekh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3LjwiwgWNx+YJgqoDb99q5+KriIWlzo2UTdJeTy8InomqGvA19wz3fu0Pxi67YjMZyttJ4crmhgZZSqMOfvMHBknaWKQUctujItVe4pekQQJYmhM0pgKrfYecYQRxdzG5l8S49QRxz3SR4qXwkGTN3n/bcyV5ynEpw1yTzHiAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BajJfy/g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpyGDekh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FFDC113D0;
-	Tue, 26 Aug 2025 13:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BajJfy/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F89C4CEF1;
+	Tue, 26 Aug 2025 13:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216215;
-	bh=0ewIVQW4q+NZ26MWbCFEjfxY40gQMUtwVXYdB3SoNqE=;
+	s=korg; t=1756216218;
+	bh=kHTG9QdfXLZYYwun/ILmerR/t+nCwV/YX3yUxdyzvjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BpyGDekh+hGN5WnU3sGlOlSzOhvhIK/1ZlL7UQktUTCmxZAiF2caQIysJGq377lSB
-	 5nRQXv3ui+LXb6zWA1gnrER+fWj17Y8l13T1YnlOok4ucsVo6BT1BBSTAXBfrqyA4c
-	 /lylCA5Asjud9ggwVp614vTbpdDgB5Bce+ttseG0=
+	b=BajJfy/gBTTQtvVDs0NYDiTVdXqqPen91jzNF6CZOoUt7d7VCoOH4C+84yk77xf90
+	 c3IHJrOuy0aQry4xfNrtipmRrtchHyskt16WT72YYJhLECYQKptsYJhSfV7hnTd+C9
+	 Cna/SAMTJv2ehICGF8SP3pUp6eukFnQCViBvEwyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tomasz Michalec <tmichalec@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/644] ASoC: core: Check for rtd == NULL in snd_soc_remove_pcm_runtime()
-Date: Tue, 26 Aug 2025 13:06:57 +0200
-Message-ID: <20250826110954.465534327@linuxfoundation.org>
+Subject: [PATCH 5.15 327/644] usb: typec: intel_pmc_mux: Defer probe if SCU IPC isnt present
+Date: Tue, 26 Aug 2025 13:06:58 +0200
+Message-ID: <20250826110954.489107551@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -55,44 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Tomasz Michalec <tmichalec@google.com>
 
-[ Upstream commit 2d91cb261cac6d885954b8f5da28b5c176c18131 ]
+[ Upstream commit df9a825f330e76c72d1985bc9bdc4b8981e3d15f ]
 
-snd_soc_remove_pcm_runtime() might be called with rtd == NULL which will
-leads to null pointer dereference.
-This was reproduced with topology loading and marking a link as ignore
-due to missing hardware component on the system.
-On module removal the soc_tplg_remove_link() would call
-snd_soc_remove_pcm_runtime() with rtd == NULL since the link was ignored,
-no runtime was created.
+If pmc_usb_probe is called before SCU IPC is registered, pmc_usb_probe
+will fail.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20250619084222.559-3-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Return -EPROBE_DEFER when pmc_usb_probe doesn't get SCU IPC device, so
+the probe function can be called again after SCU IPC is initialized.
+
+Signed-off-by: Tomasz Michalec <tmichalec@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250610154058.1859812-1-tmichalec@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/mux/intel_pmc_mux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 1c4d8b96f77b..d28261ef1d4c 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -959,6 +959,9 @@ static int soc_dai_link_sanity_check(struct snd_soc_card *card,
- void snd_soc_remove_pcm_runtime(struct snd_soc_card *card,
- 				struct snd_soc_pcm_runtime *rtd)
- {
-+	if (!rtd)
-+		return;
-+
- 	lockdep_assert_held(&client_mutex);
+diff --git a/drivers/usb/typec/mux/intel_pmc_mux.c b/drivers/usb/typec/mux/intel_pmc_mux.c
+index a7313c2d9f0f..806ffeacdecb 100644
+--- a/drivers/usb/typec/mux/intel_pmc_mux.c
++++ b/drivers/usb/typec/mux/intel_pmc_mux.c
+@@ -650,7 +650,7 @@ static int pmc_usb_probe(struct platform_device *pdev)
  
- 	/* release machine specific resources */
+ 	pmc->ipc = devm_intel_scu_ipc_dev_get(&pdev->dev);
+ 	if (!pmc->ipc)
+-		return -ENODEV;
++		return -EPROBE_DEFER;
+ 
+ 	pmc->dev = &pdev->dev;
+ 
 -- 
 2.39.5
 
