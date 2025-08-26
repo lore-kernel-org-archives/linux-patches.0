@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DAD326D48;
-	Tue, 26 Aug 2025 11:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622CC296BDF;
+	Tue, 26 Aug 2025 11:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207360; cv=none; b=I1sqQAlOOhomUjVX6o2fr31eJiyy2taM7BEhIzmLb7E3bRZGh37eiAQWIy7JGWzmxLevSlRvZYN1BXYHAVs+SZ11aRZzOJnY+Wf8re5r76+BpYAw6UFJMR6BM5ULAuBWEV4kGPMPLL6FobRgNSD/SvsUbgjLt4nxiYRgxml+jak=
+	t=1756207363; cv=none; b=r0J4qqK9mvz0c5HVgh+HubqcKToYBPKmURn8yifRaFeYywcOVo5gYfb+X5DNWuGAQ1cnkvi+02PoAl7CwdRi6kyK+ygUQITJCr/4++XCnlhaf34oFqdO0VBQA1+TXCKqgkMo1Pk6rKFmRPdIlUS+Q6Qh9NIcVyPDAgishJrC+gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207360; c=relaxed/simple;
-	bh=FCkPZX70LUFB6kIT0J7AZ+m5nAf0xGH42LGtUDIkGc8=;
+	s=arc-20240116; t=1756207363; c=relaxed/simple;
+	bh=WVRIm7jKECDqrr+f+Mb0L2zuYX2YQGfjxM1EVPLL614=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNb5O0O48NvraSPwHGxJgf55GlRdf09qKGKSCAsuzRG0IpuVZjB56lPzVPuhTqJOgTZd0Zh2C7cJMQwSK6QD0zYAHpfYK8lZGTzB2FJSi8mUr8lq/AEGjVlRV4x6xeST2pNu23783M/lePGWz3a8AJHpzVJawd0sTHsu/1Wp5s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiT1Gsvv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QcHM8k+CcQK2IzRiT+vN6w8xFAxUqFvGBzqz23HHViasf5aD/98g2z4HTOaxgggADDClENYM9RB4oOC537ewmvaNpWAM4wSPn0RUfsJsRKWGHAlkEl4vKY4zdzy53kljiPKNS6JpTOaAC7Jav8lT+Z2eCEfNpo2Yw8RZ4ZGSrOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6mxGvvt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiT1Gsvv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2047C4CEF4;
-	Tue, 26 Aug 2025 11:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6mxGvvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767C6C4CEF1;
+	Tue, 26 Aug 2025 11:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207359;
-	bh=FCkPZX70LUFB6kIT0J7AZ+m5nAf0xGH42LGtUDIkGc8=;
+	s=korg; t=1756207361;
+	bh=WVRIm7jKECDqrr+f+Mb0L2zuYX2YQGfjxM1EVPLL614=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DiT1GsvvO50Julc/XfPKqjZkqV0Gxy3A6so/9L3WGJb6geUR41OJK1hAyp0IUNOMG
-	 r8xm7YcTMmMy35wktvNTxr6kQTC+7tUpEMlqR62UyZDd8cpGYsEvi4Ee3Yl4M+urLW
-	 DJ3w/xkW4r23uvVZCVA8nkjVClPgezYogvgHZHMs=
+	b=t6mxGvvtc2+pRQHYG8T85IC17avEdLcLWzW/NPjpQ/s87j85flrjpRw6fZ+OmiTqJ
+	 wfrB2eXTtTAsi0cAvYbGlNI974pz/SY58xgfNXOCA/35xyCAIljzr7/XHuvc+3IRs1
+	 7OsH9qHVXtNss8RAKaPicK+6WBFU4lLT5SqczClY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.16 121/457] parisc: Check region is readable by user in raw_copy_from_user()
-Date: Tue, 26 Aug 2025 13:06:45 +0200
-Message-ID: <20250826110940.363246701@linuxfoundation.org>
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.16 112/457] i2c: qcom-geni: fix I2C frequency table to achieve accurate bus rates
+Date: Tue, 26 Aug 2025 13:06:36 +0200
+Message-ID: <20250826110940.138895817@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -44,109 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John David Anglin <dave.anglin@bell.net>
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-commit 91428ca9320edbab1211851d82429d33b9cd73ef upstream.
+commit 85c34532849dae0fdcf880900ac9d7718a73fd1b upstream.
 
-Because of the way the _PAGE_READ is handled in the parisc PTE, an
-access interruption is not generated when the kernel reads from a
-region where the _PAGE_READ is zero. The current code was written
-assuming read access faults would also occur in the kernel.
+Update the I2C frequency table to match the recommended values
+specified in the I2C hardware programming guide. In the current IPQ5424
+configuration where 32MHz is the source clock, the I2C bus frequencies do
+not meet expectations—for instance, 363KHz is achieved instead of the
+expected 400KHz.
 
-This change adds user access checks to raw_copy_from_user().  The
-prober_user() define checks whether user code has read access to
-a virtual address. Note that page faults are not handled in the
-exception support for the probe instruction. For this reason, we
-precede the probe by a ldb access check.
-
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.12+
+Fixes: 506bb2ab0075 ("i2c: qcom-geni: Support systems with 32MHz serial engine clock")
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: <stable@vger.kernel.org> # v6.13+
+Reviewed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250513-i2c-bus-freq-v1-1-9a333ad5757f@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/special_insns.h |   28 ++++++++++++++++++++++++++++
- arch/parisc/lib/memcpy.c                |   19 ++++++++++++++++++-
- 2 files changed, 46 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-qcom-geni.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/parisc/include/asm/special_insns.h
-+++ b/arch/parisc/include/asm/special_insns.h
-@@ -32,6 +32,34 @@
- 	pa;						\
- })
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -155,9 +155,9 @@ static const struct geni_i2c_clk_fld gen
  
-+/**
-+ * prober_user() - Probe user read access
-+ * @sr:		Space regster.
-+ * @va:		Virtual address.
-+ *
-+ * Return: Non-zero if address is accessible.
-+ *
-+ * Due to the way _PAGE_READ is handled in TLB entries, we need
-+ * a special check to determine whether a user address is accessible.
-+ * The ldb instruction does the initial access check. If it is
-+ * successful, the probe instruction checks user access rights.
-+ */
-+#define prober_user(sr, va)	({			\
-+	unsigned long read_allowed;			\
-+	__asm__ __volatile__(				\
-+		"copy %%r0,%0\n"			\
-+		"8:\tldb 0(%%sr%1,%2),%%r0\n"		\
-+		"\tproberi (%%sr%1,%2),%3,%0\n"		\
-+		"9:\n"					\
-+		ASM_EXCEPTIONTABLE_ENTRY(8b, 9b,	\
-+				"or %%r0,%%r0,%%r0")	\
-+		: "=&r" (read_allowed)			\
-+		: "i" (sr), "r" (va), "i" (PRIV_USER)	\
-+		: "memory"				\
-+	);						\
-+	read_allowed;					\
-+})
-+
- #define CR_EIEM 15	/* External Interrupt Enable Mask */
- #define CR_CR16 16	/* CR16 Interval Timer */
- #define CR_EIRR 23	/* External Interrupt Request Register */
---- a/arch/parisc/lib/memcpy.c
-+++ b/arch/parisc/lib/memcpy.c
-@@ -12,6 +12,7 @@
- #include <linux/module.h>
- #include <linux/compiler.h>
- #include <linux/uaccess.h>
-+#include <linux/mm.h>
- 
- #define get_user_space()	mfsp(SR_USER)
- #define get_kernel_space()	SR_KERNEL
-@@ -32,9 +33,25 @@ EXPORT_SYMBOL(raw_copy_to_user);
- unsigned long raw_copy_from_user(void *dst, const void __user *src,
- 			       unsigned long len)
- {
-+	unsigned long start = (unsigned long) src;
-+	unsigned long end = start + len;
-+	unsigned long newlen = len;
-+
- 	mtsp(get_user_space(), SR_TEMP1);
- 	mtsp(get_kernel_space(), SR_TEMP2);
--	return pa_memcpy(dst, (void __force *)src, len);
-+
-+	/* Check region is user accessible */
-+	if (start)
-+	while (start < end) {
-+		if (!prober_user(SR_TEMP1, start)) {
-+			newlen = (start - (unsigned long) src);
-+			break;
-+		}
-+		start += PAGE_SIZE;
-+		/* align to page boundry which may have different permission */
-+		start = PAGE_ALIGN_DOWN(start);
-+	}
-+	return len - newlen + pa_memcpy(dst, (void __force *)src, newlen);
- }
- EXPORT_SYMBOL(raw_copy_from_user);
+ /* source_clock = 32 MHz */
+ static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
+-	{ I2C_MAX_STANDARD_MODE_FREQ, 8, 14, 18, 40 },
+-	{ I2C_MAX_FAST_MODE_FREQ, 4,  3, 11, 20 },
+-	{ I2C_MAX_FAST_MODE_PLUS_FREQ, 2, 3,  6, 15 },
++	{ I2C_MAX_STANDARD_MODE_FREQ, 8, 14, 18, 38 },
++	{ I2C_MAX_FAST_MODE_FREQ, 4,  3, 9, 19 },
++	{ I2C_MAX_FAST_MODE_PLUS_FREQ, 2, 3, 5, 15 },
+ 	{}
+ };
  
 
 
