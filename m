@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106EE299A94;
-	Tue, 26 Aug 2025 14:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9519E239E8B;
+	Tue, 26 Aug 2025 14:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218949; cv=none; b=l/qkSQoL46IBySjMkIZy5G2ElCd7nrZLETRrUmf4JtGkeCjrX7eW4CAkMCK27dgFqi1epI+wvQyHo0aM+rmmq6xIvcU+N1h+jNHaA7JfSu87t3QcvXG2RGpcVobPNp/CgQwyJZLIImZQWIULeqRd9qafGXU7vcBqCIf/gSGN5iY=
+	t=1756218951; cv=none; b=ripykCfL5CL9L4TVjn4IZvBwBoVqei41NX9QQAwW4jV2LKvLp99oHZd+FulAK8D3DxbyL4ocff3PpH9KlCBfPwFkyOopH/iQw9dGDKmcYXQ7taDh8kqHzelvJasQOAsauKL0e/3bnurKofbhqNCvXQJS6pR0O1fv3JMswVo4+LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218949; c=relaxed/simple;
-	bh=QnhewsbJ+9tuNQ07pZlakyStjI0nUb4OWAPXDlZF14g=;
+	s=arc-20240116; t=1756218951; c=relaxed/simple;
+	bh=AgQ0C0vnPcWnvuJgmYEZ9jw5t5eNFGjr1WxQ2JI2P/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QpDgIq7gzksBg4pDgB+H3mmM21w1l7DHDuhH1J6y8pYvEGmVWdcHLJ2+kWWGb/ZFZOm9IfEdi3BZKIoNtdjbGqu8Ar/hGXnSJpAVcVuxpFronyecIi7QXB3GTDfXN69deBTbLPnGNfgYuTcqIUCCus/xSbrcy4ZyMADlSCbMN90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agZRkiqy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rXWv9m24u4XTyStqK5zx9/7LSvwX3M/KY/nDpfFt4mkz0fWoThOBRrjarccLawBD643dD0OGHCKy8/iFDxcqIhi6QUgbzaWVNszMNNVEykq3sTuPFngvr4RgQQQ5V60ol2C49SPeuYBZx6YximihwBEV9hylCN4BJ3NFo/DGTN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVp8CSC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agZRkiqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E8EC4CEF1;
-	Tue, 26 Aug 2025 14:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVp8CSC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23679C4CEF1;
+	Tue, 26 Aug 2025 14:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218948;
-	bh=QnhewsbJ+9tuNQ07pZlakyStjI0nUb4OWAPXDlZF14g=;
+	s=korg; t=1756218951;
+	bh=AgQ0C0vnPcWnvuJgmYEZ9jw5t5eNFGjr1WxQ2JI2P/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agZRkiqyuTQIhKgwfrA4C4EgFNF3JRjDWFV8MpyWxr2VpHQqflPt09sFdKYmILzo5
-	 BNp/kjNnoMYfPb6rK+MkKziE8vxV1laoqsDLDHz0UYYF55MVKrYEbuGb9mfu8t0y9+
-	 9PSU3VpNImsrHBnpYgVleKWHhhVmU2oH1jxImaAo=
+	b=SVp8CSC8iT7ajOTarab5v1pZrCXH1GQpjgkhuWowPM7gfbyh92FAQJgu1eUHXbC3I
+	 h4XL6n8DZtoUrwDmX4SglXyo2kk47aDfz8j4lJCaK9r7R75Vq5S71h4s4UdWW42lLn
+	 sZfELVjV4TE07MPlMXBJqRoPR5qOcZ7W1c30m4LA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Ricky Wu <ricky_wu@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 196/403] ACPI: APEI: GHES: add TAINT_MACHINE_CHECK on GHES panic path
-Date: Tue, 26 Aug 2025 13:08:42 +0200
-Message-ID: <20250826110912.283253668@linuxfoundation.org>
+Subject: [PATCH 5.4 197/403] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
+Date: Tue, 26 Aug 2025 13:08:43 +0200
+Message-ID: <20250826110912.309063387@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,41 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 4734c8b46b901cff2feda8b82abc710b65dc31c1 ]
+[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
 
-When a GHES (Generic Hardware Error Source) triggers a panic, add the
-TAINT_MACHINE_CHECK taint flag to the kernel. This explicitly marks the
-kernel as tainted due to a machine check event, improving diagnostics
-and post-mortem analysis. The taint is set with LOCKDEP_STILL_OK to
-indicate lockdep remains valid.
+In the error path of sd_set_power_mode() we don't update host->power_mode,
+which could lead to an imbalance of the runtime PM usage count. Fix this by
+always updating host->power_mode.
 
-At large scale deployment, this helps to quickly determine panics that
-are coming due to hardware failures.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20250702-add_tain-v1-1-9187b10914b9@debian.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Ricky Wu <ricky_wu@realtek.com>
+Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 50bed5a70812..d02d7cbab387 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -709,6 +709,8 @@ static void __ghes_panic(struct ghes *ghes,
+diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
+index 3261560bede4..581bec5c4caf 100644
+--- a/drivers/mmc/host/rtsx_usb_sdmmc.c
++++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
+@@ -1038,9 +1038,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
+ 		err = sd_power_on(host);
+ 	}
  
- 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
+-	if (!err)
+-		host->power_mode = power_mode;
+-
++	host->power_mode = power_mode;
+ 	return err;
+ }
  
-+	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
-+
- 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
- 
- 	if (!panic_timeout)
 -- 
 2.39.5
 
