@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373EB239573;
-	Tue, 26 Aug 2025 11:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A3529D26A;
+	Tue, 26 Aug 2025 11:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207548; cv=none; b=WQHePsuKZF/N4w5hJZuD/gIe6IXODbCah1Dl6G8q0TDTWYtVRjz/xVKMKoXJV58NtMKdwhS0CqrlXFfBa8r62+mkR6sybsDnFxGBiGe0wseHOsKfPp/ZM3uYFpPLi2MF2OMhiu3QJfx+f0QwInJKDjlLXETrv9iAsxVSzeUU8V8=
+	t=1756207551; cv=none; b=BHbOySemCCwP7V8hjTxYO3gfy1qEtjSSO6CI5BVjYiLIBbOiXf5n7lIoNx/atv6Iss/li5dpIneWJ+ci66ovxg1BfxdlDl+nMawabYWGNJL1YsAODqt9rM2Zu3TVP2c4JCC+lXyOtPf4fj8uBf1xOKGtzm9QJBGkiVoNIjonv0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207548; c=relaxed/simple;
-	bh=O9Ecyd0R1BIT51sbZYt5Dz6EQfYXuZsuMUJlKu+BH+s=;
+	s=arc-20240116; t=1756207551; c=relaxed/simple;
+	bh=aumXUG9buTLTmTHZXXsDMeubGWn77lJiN6Nds7lTb8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NAYi01gndMx5SDUZzFlZqAPB7Ln2K02JPKAN/9bkJRaziiIAUSIQUtzArQB5uPnaMfKWHNEToWSnYvA+m2aDrFLehOUhlHk14U6httra5RYNUhVo6TXnZ6NZSVYbHNo7qjZzuMjbssV9q6cOj7nXAkwiD0n7UmANkH+BQAIP1XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuHOaOQ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T/VLE6TzQCRlF08gbfS0s8WXQ7fkGJ7fIlBmANuoWRFO1SoRncfUUcPoWSVIRpjz8BKrQpqWb7/AQsM+GU35K5kaUo7vbltQzT1EjDGpLnGQxzSf50e/iy+5aPw2mtd+4ve52CQyFLFeUwJ5V460hgeytMLYbqVokaQPDckP7SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlNhkSzV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuHOaOQ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0149C4CEF1;
-	Tue, 26 Aug 2025 11:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlNhkSzV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A78CC4CEF1;
+	Tue, 26 Aug 2025 11:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207548;
-	bh=O9Ecyd0R1BIT51sbZYt5Dz6EQfYXuZsuMUJlKu+BH+s=;
+	s=korg; t=1756207550;
+	bh=aumXUG9buTLTmTHZXXsDMeubGWn77lJiN6Nds7lTb8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HuHOaOQ/ZlW0hbfD8ectlClu2aY7U3X0ItA1TGolfuKjTKCzy11idk2cHjOQ81ZwR
-	 LPHdO2O801dAUaaoBabWU72By0oZkuYpmqOcnxlc4EgLUndzML4VimPCZbiWB7mciR
-	 fgy1Asm97slmkJfiy9k8+c/tFW4WS0e0BYRr+JLs=
+	b=mlNhkSzVbFo+orylDPk5JCNGrPVFPDET6426nIdJqT5zlq+AbQekecv53lOAsinCp
+	 7BsRBTi5DGIfMHuegZJ3FZKwVHsFeNm7YM5MT6ZgPvjik6tSsVvYMZzOXxSkllGOsr
+	 qul6ezxNH3Hv/YUBXCsklFL1lYdcUxXXZJoBHMHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	cen zhang <zzzccc427@gmail.com>,
+	Alan Huang <mmpgouride@gmail.com>,
 	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 225/457] xfs: fully decouple XFS_IBULK* flags from XFS_IWALK* flags
-Date: Tue, 26 Aug 2025 13:08:29 +0200
-Message-ID: <20250826110942.930256188@linuxfoundation.org>
+Subject: [PATCH 6.16 226/457] xfs: Remove unused label in xfs_dax_notify_dev_failure
+Date: Tue, 26 Aug 2025 13:08:30 +0200
+Message-ID: <20250826110942.955211569@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,54 +52,29 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Alan Huang <mmpgouride@gmail.com>
 
-[ Upstream commit d2845519b0723c5d5a0266cbf410495f9b8fd65c ]
+[ Upstream commit 8c10b04f9fc1760cb79068073686d8866e59d40f ]
 
-Fix up xfs_inumbers to now pass in the XFS_IBULK* flags into the flags
-argument to xfs_inobt_walk, which expects the XFS_IWALK* flags.
-
-Currently passing the wrong flags works for non-debug builds because
-the only XFS_IWALK* flag has the same encoding as the corresponding
-XFS_IBULK* flag, but in debug builds it can trigger an assert that no
-incorrect flag is passed.  Instead just extra the relevant flag.
-
-Fixes: 5b35d922c52798 ("xfs: Decouple XFS_IBULK flags from XFS_IWALK flags")
-Cc: <stable@vger.kernel.org> # v5.19
-Reported-by: cen zhang <zzzccc427@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Fixes: e967dc40d501 ("xfs: return the allocated transaction from xfs_trans_alloc_empty")
+Signed-off-by: Alan Huang <mmpgouride@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_itable.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_notify_failure.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/xfs/xfs_itable.c
-+++ b/fs/xfs/xfs_itable.c
-@@ -447,17 +447,21 @@ xfs_inumbers(
- 		.breq		= breq,
- 	};
- 	struct xfs_trans	*tp;
-+	unsigned int		iwalk_flags = 0;
- 	int			error = 0;
+--- a/fs/xfs/xfs_notify_failure.c
++++ b/fs/xfs/xfs_notify_failure.c
+@@ -350,7 +350,6 @@ xfs_dax_notify_dev_failure(
+ 			error = -EFSCORRUPTED;
+ 	}
  
- 	if (xfs_bulkstat_already_done(breq->mp, breq->startino))
- 		return 0;
- 
-+	if (breq->flags & XFS_IBULK_SAME_AG)
-+		iwalk_flags |= XFS_IWALK_SAME_AG;
-+
- 	/*
- 	 * Grab an empty transaction so that we can use its recursive buffer
- 	 * locking abilities to detect cycles in the inobt without deadlocking.
- 	 */
- 	tp = xfs_trans_alloc_empty(breq->mp);
--	error = xfs_inobt_walk(breq->mp, tp, breq->startino, breq->flags,
-+	error = xfs_inobt_walk(breq->mp, tp, breq->startino, iwalk_flags,
- 			xfs_inumbers_walk, breq->icount, &ic);
- 	xfs_trans_cancel(tp);
- 
+-out:
+ 	/* Thaw the fs if it has been frozen before. */
+ 	if (mf_flags & MF_MEM_PRE_REMOVE)
+ 		xfs_dax_notify_failure_thaw(mp, kernel_frozen);
 
 
