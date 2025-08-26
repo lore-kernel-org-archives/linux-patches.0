@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2562F0671;
-	Tue, 26 Aug 2025 13:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0840734320F;
+	Tue, 26 Aug 2025 13:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215998; cv=none; b=RisqPkRMtjDZX60p+5t2WGBPYzpMN8mqRBb9I+lF0/nQhfv4bUFh55o8ygt3LtDMfSFv9uPKjUMM0wMZMaphG/gLrJbBLMIkx3irHWfmpI1cb+41J1rbl782Lv8o9ikz9chficFI//4K+Zf9/IveHIIy6CcWVxZ4y8W3kD9Qk7s=
+	t=1756216001; cv=none; b=TA+MT7o5y+T4Dkx1vQgKXpsH9DO8RYCwRERCW0D3KeVcHSs1WKa+dplzOBreUymyE9e9bMTeEMwKK/2UKuqdQiS4G7fcjoIWC8hK9VqjBahkBW2mx+p1ym01LHd2YsC2m4TcYlJRZPSRxHIS8CFTHnFO9o8ZQ9V71m9ETyrdyCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215998; c=relaxed/simple;
-	bh=/sp1+kAdxVk576aATu0PNy9cNdpcIlDsTdJ9nDkhqeA=;
+	s=arc-20240116; t=1756216001; c=relaxed/simple;
+	bh=47xnqZlebzd1oD3/pJpCaXJ9JKDGBr5T/XMKYtuFs6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EaKf42tK/w3+du6TTtOZ5fWgg5ZvQUPeI0Xp1RAHzcxKQKvBZ+h8u7hFdJCHhI7+Ixanv0QaJHph+Dah40YsspQ1l05L8M8RUu2eMJdDKIFuBQtiLgmLgA7BvgYPaqERxylWFwZvWTy92/snVz++cCX+iSXpFcSjQTzu78cl+W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SQV0AHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KmPScN3PpKZaB8pUY3lCZuVHHU7rBeQNfR96aH1omxstroofEz63oSZeHerW/IsYA/E2dUcKesnZ2C785TA4/AH1GdevGbiHxZXUbzxguGX1A56zoDWpGnRdbbtH2MJnG9VZtbkIV7WDMj5aUmZBF3WTnZ8MxEGNKo+oealtea0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkapVUv1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SQV0AHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF10C4CEF1;
-	Tue, 26 Aug 2025 13:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkapVUv1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E74C116D0;
+	Tue, 26 Aug 2025 13:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215998;
-	bh=/sp1+kAdxVk576aATu0PNy9cNdpcIlDsTdJ9nDkhqeA=;
+	s=korg; t=1756216000;
+	bh=47xnqZlebzd1oD3/pJpCaXJ9JKDGBr5T/XMKYtuFs6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SQV0AHRb3/4mWrbAovevGBQftYlmKDXDpW1/WJe4QjrL1HXKd1HX5knuAW9/lOLs
-	 lXgyse7OERaIn3D5MEg/Ti7xS7/wk4sJMYWkdMPHJtlxf/RekqLuVOdbgc/zMknC0S
-	 M4S45heZ081eSpvOUkGF/nJWchW328WCz/+vO4ec=
+	b=mkapVUv1Sojl3ARQ3BlEyoMSqGA8uQW3glJAXImuBKlaWIh2XQKGnHlqanvB6hNCX
+	 MoyNdZ7gz7Jq4kKNoCMYbADoRMNDh1DjeHRBm/0h6vwhDFcqyBHQEn9diQeCwOEWiB
+	 h+dKBTS1rNjOhqUz1iYtsUyJNDje/9ALra+9TLBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 228/644] NFSv4.2: another fix for listxattr
-Date: Tue, 26 Aug 2025 13:05:19 +0200
-Message-ID: <20250826110952.066195598@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Subject: [PATCH 5.15 246/644] perf/core: Exit early on perf_mmap() fail
+Date: Tue, 26 Aug 2025 13:05:37 +0200
+Message-ID: <20250826110952.487730091@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,53 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 9acb237deff7667b0f6b10fe6b1b70c4429ea049 ]
+commit 07091aade394f690e7b655578140ef84d0e8d7b0 upstream.
 
-Currently, when the server supports NFS4.1 security labels then
-security.selinux label in included twice. Instead, only add it
-when the server doesn't possess security label support.
+When perf_mmap() fails to allocate a buffer, it still invokes the
+event_mapped() callback of the related event. On X86 this might increase
+the perf_rdpmc_allowed reference counter. But nothing undoes this as
+perf_mmap_close() is never called in this case, which causes another
+reference count leak.
 
-Fixes: 243fea134633 ("NFSv4.2: fix listxattr to return selinux security label")
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Link: https://lore.kernel.org/r/20250722205641.79394-1-okorniev@redhat.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Return early on failure to prevent that.
+
+Fixes: 1e0fb9ec679c ("perf/core: Add pmu callbacks to track event mapping and unmapping")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/events/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 9d4e4146efef..528e904f5475 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10528,7 +10528,7 @@ const struct nfs4_minor_version_ops *nfs_v4_minor_ops[] = {
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6600,6 +6600,9 @@ aux_unlock:
+ 		mutex_unlock(aux_mutex);
+ 	mutex_unlock(&event->mmap_mutex);
  
- static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
- {
--	ssize_t error, error2, error3, error4;
-+	ssize_t error, error2, error3, error4 = 0;
- 	size_t left = size;
- 
- 	error = generic_listxattr(dentry, list, left);
-@@ -10556,9 +10556,11 @@ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
- 		left -= error3;
- 	}
- 
--	error4 = security_inode_listsecurity(d_inode(dentry), list, left);
--	if (error4 < 0)
--		return error4;
-+	if (!nfs_server_capable(d_inode(dentry), NFS_CAP_SECURITY_LABEL)) {
-+		error4 = security_inode_listsecurity(d_inode(dentry), list, left);
-+		if (error4 < 0)
-+			return error4;
-+	}
- 
- 	error += error2 + error3 + error4;
- 	if (size && error > size)
--- 
-2.39.5
-
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Since pinned accounting is per vm we cannot allow fork() to copy our
+ 	 * vma.
 
 
