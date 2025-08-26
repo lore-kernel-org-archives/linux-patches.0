@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF2D15A8;
-	Tue, 26 Aug 2025 13:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9340211187;
+	Tue, 26 Aug 2025 13:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215465; cv=none; b=TIputuVoJAmorzxbv4JlFQq/1fv03W6D40+dplctlA1j5YEVC+0kP/BSM4vC7nU8tw1DOXkN8oyGMRxaxjFBhAuEFLIkcpOhq7b5IlWZyRWpZgaajsEB4nWyVwc7i2Crg25ZE71rG/oqPPbilicuCxWZ/+RNh/4/K0CY3D59QS0=
+	t=1756215467; cv=none; b=jfOrhAMFjbzb+n0DwMrmDyR8aNNXgiCzyJEEqIjtgPxV1AZ8a5Ar8qgMKpygF7t+3dGQ53hvuGxYL6vUGf2nNqazHLGWvP4sE9yQvj0NtvZq2m1BKITx1Al3VPtt2BdfVhvKvpoJiI5nMLQ8Wo0+A0FAu26m6MIRPdN+Xhz6JN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215465; c=relaxed/simple;
-	bh=W0EErQfIrxzR9hgAnf1GYP0Z86DZFOuJN5SJEE+fuyU=;
+	s=arc-20240116; t=1756215467; c=relaxed/simple;
+	bh=BiCCrrFxkRlc6ZrC0Rz5ZLHO5NXOxFsoLLROvZ/E1cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwYA5gJ0O5PObur36B0TritbwW/in6YSaeGw745FLb74fbBYtsV4sRziwFu/0z/g766Hr1Y15JnpDrlHhF1v2UTfuzRDMJnB40lF05M+F1YTNu/tB+AL5oWOmDxTvDVmbIaiwYVoUj/Xff3TVmIM/EN/5x/N9Atq334F9Pw6Drk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AL+J86Aw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOHiYIeax4abGV42uHmN+beOlxVCGmZCwZhaYv9qsmB2Ojejm5rgnp+a1hl/tk2iOjCJV+K7c1+voVS/SwapFAgY4bq6QBgkkxhWmYnA3pHuwDWUxl6Q3imAAclEzm4Ajtf2kxLWaBAVNptJymYQy6GKy8cdOzjbzqRoPzhOz+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcECkWS0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AL+J86Aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA6DC4CEF1;
-	Tue, 26 Aug 2025 13:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcECkWS0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AA6C113CF;
+	Tue, 26 Aug 2025 13:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215464;
-	bh=W0EErQfIrxzR9hgAnf1GYP0Z86DZFOuJN5SJEE+fuyU=;
+	s=korg; t=1756215467;
+	bh=BiCCrrFxkRlc6ZrC0Rz5ZLHO5NXOxFsoLLROvZ/E1cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AL+J86Awpw64WlYNFwB72VNOv1ofJdjFiwHnsbsvqajemx4gLws09X9TfHtflJn7d
-	 1pVAKIAxX3kBBfT42TGfwJMiSWeHVMR+NGzyb6ceZKLLbOZ+jfY5Nvk3ms40mrP45C
-	 yZBr4jcgX8C6Bdq2vEKskpEbM6v2MzWFRkuwZ1Qg=
+	b=XcECkWS08EYSseVKuk2/QoaR08gs8vv5RzYx+trw1gAyKBH1L/xjVs4De6uubvwvs
+	 1N1MFzWKP3LkjV9cW2BUhJO3YfgTBmT+5PVLRxakV3kvsU8zgcQ3sAz77iHMNMw4BY
+	 NmDO6ozTxS+zdIjs+evG+/5Ev5XFOCpAxqCRj4Rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Fabio Estevam <festevam@denx.de>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 026/644] iio: adc: max1363: Fix MAX1363_4X_CHANS/MAX1363_8X_CHANS[]
-Date: Tue, 26 Aug 2025 13:01:57 +0200
-Message-ID: <20250826110947.155915789@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 044/644] selftests: udpgro: report error when receive failed
+Date: Tue, 26 Aug 2025 13:02:15 +0200
+Message-ID: <20250826110947.599398843@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,93 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-commit 6d21f2c2dd843bceefd9455f2919f6bb526797f0 upstream.
+[ Upstream commit 7167395a4be7930ecac6a33b4e54d7e3dd9ee209 ]
 
-Since commit 2718f15403fb ("iio: sanity check available_scan_masks array"),
-booting a board populated with a MAX11601 results in a flood of warnings:
+Currently, we only check the latest senders's exit code. If the receiver
+report failed, it is not recoreded. Fix it by checking the exit code
+of all the involved processes.
 
-max1363 1-0064: available_scan_mask 8 subset of 0. Never used
-max1363 1-0064: available_scan_mask 9 subset of 0. Never used
-max1363 1-0064: available_scan_mask 10 subset of 0. Never used
-max1363 1-0064: available_scan_mask 11 subset of 0. Never used
-max1363 1-0064: available_scan_mask 12 subset of 0. Never used
-max1363 1-0064: available_scan_mask 13 subset of 0. Never used
-...
+Before:
+  bad GRO lookup       ok
+  multiple GRO socks   ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
 
-These warnings are caused by incorrect offsets used for differential
-channels in the MAX1363_4X_CHANS() and MAX1363_8X_CHANS() macros.
+ ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
 
-The max1363_mode_table[] defines the differential channel mappings as
-follows:
+ failed
+ $ echo $?
+ 0
 
-MAX1363_MODE_DIFF_SINGLE(0, 1, 1 << 12),
-MAX1363_MODE_DIFF_SINGLE(2, 3, 1 << 13),
-MAX1363_MODE_DIFF_SINGLE(4, 5, 1 << 14),
-MAX1363_MODE_DIFF_SINGLE(6, 7, 1 << 15),
-MAX1363_MODE_DIFF_SINGLE(8, 9, 1 << 16),
-MAX1363_MODE_DIFF_SINGLE(10, 11, 1 << 17),
-MAX1363_MODE_DIFF_SINGLE(1, 0, 1 << 18),
-MAX1363_MODE_DIFF_SINGLE(3, 2, 1 << 19),
-MAX1363_MODE_DIFF_SINGLE(5, 4, 1 << 20),
-MAX1363_MODE_DIFF_SINGLE(7, 6, 1 << 21),
-MAX1363_MODE_DIFF_SINGLE(9, 8, 1 << 22),
-MAX1363_MODE_DIFF_SINGLE(11, 10, 1 << 23),
+After:
+  bad GRO lookup       ok
+  multiple GRO socks   ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
 
-Update the macros to follow this same pattern, ensuring that the scan masks
-are valid and preventing the warnings.
+ ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
 
-Cc: stable@vger.kernel.org
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Acked-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://patch.msgid.link/20250516173900.677821-1-festevam@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ failed
+ $ echo $?
+ 1
+
+Fixes: 3327a9c46352 ("selftests: add functionals test for UDP GRO")
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 0e9418961f89 ("selftests: net: increase inter-packet timeout in udpgro.sh")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/max1363.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ tools/testing/selftests/net/udpgro.sh | 44 ++++++++++++++++-----------
+ 1 file changed, 27 insertions(+), 17 deletions(-)
 
---- a/drivers/iio/adc/max1363.c
-+++ b/drivers/iio/adc/max1363.c
-@@ -513,10 +513,10 @@ static const struct iio_event_spec max13
- 	MAX1363_CHAN_U(1, _s1, 1, bits, ev_spec, num_ev_spec),		\
- 	MAX1363_CHAN_U(2, _s2, 2, bits, ev_spec, num_ev_spec),		\
- 	MAX1363_CHAN_U(3, _s3, 3, bits, ev_spec, num_ev_spec),		\
--	MAX1363_CHAN_B(0, 1, d0m1, 4, bits, ev_spec, num_ev_spec),	\
--	MAX1363_CHAN_B(2, 3, d2m3, 5, bits, ev_spec, num_ev_spec),	\
--	MAX1363_CHAN_B(1, 0, d1m0, 6, bits, ev_spec, num_ev_spec),	\
--	MAX1363_CHAN_B(3, 2, d3m2, 7, bits, ev_spec, num_ev_spec),	\
-+	MAX1363_CHAN_B(0, 1, d0m1, 12, bits, ev_spec, num_ev_spec),	\
-+	MAX1363_CHAN_B(2, 3, d2m3, 13, bits, ev_spec, num_ev_spec),	\
-+	MAX1363_CHAN_B(1, 0, d1m0, 18, bits, ev_spec, num_ev_spec),	\
-+	MAX1363_CHAN_B(3, 2, d3m2, 19, bits, ev_spec, num_ev_spec),	\
- 	IIO_CHAN_SOFT_TIMESTAMP(8)					\
- 	}
+diff --git a/tools/testing/selftests/net/udpgro.sh b/tools/testing/selftests/net/udpgro.sh
+index 41d85eb745b7b..398f3bf969262 100755
+--- a/tools/testing/selftests/net/udpgro.sh
++++ b/tools/testing/selftests/net/udpgro.sh
+@@ -44,17 +44,19 @@ run_one() {
+ 	local -r all="$@"
+ 	local -r tx_args=${all%rx*}
+ 	local -r rx_args=${all#*rx}
++	local ret=0
  
-@@ -611,14 +611,14 @@ static const enum max1363_modes max11608
- 	MAX1363_CHAN_U(5, _s5, 5, bits, NULL, 0),	\
- 	MAX1363_CHAN_U(6, _s6, 6, bits, NULL, 0),	\
- 	MAX1363_CHAN_U(7, _s7, 7, bits, NULL, 0),	\
--	MAX1363_CHAN_B(0, 1, d0m1, 8, bits, NULL, 0),	\
--	MAX1363_CHAN_B(2, 3, d2m3, 9, bits, NULL, 0),	\
--	MAX1363_CHAN_B(4, 5, d4m5, 10, bits, NULL, 0),	\
--	MAX1363_CHAN_B(6, 7, d6m7, 11, bits, NULL, 0),	\
--	MAX1363_CHAN_B(1, 0, d1m0, 12, bits, NULL, 0),	\
--	MAX1363_CHAN_B(3, 2, d3m2, 13, bits, NULL, 0),	\
--	MAX1363_CHAN_B(5, 4, d5m4, 14, bits, NULL, 0),	\
--	MAX1363_CHAN_B(7, 6, d7m6, 15, bits, NULL, 0),	\
-+	MAX1363_CHAN_B(0, 1, d0m1, 12, bits, NULL, 0),	\
-+	MAX1363_CHAN_B(2, 3, d2m3, 13, bits, NULL, 0),	\
-+	MAX1363_CHAN_B(4, 5, d4m5, 14, bits, NULL, 0),	\
-+	MAX1363_CHAN_B(6, 7, d6m7, 15, bits, NULL, 0),	\
-+	MAX1363_CHAN_B(1, 0, d1m0, 18, bits, NULL, 0),	\
-+	MAX1363_CHAN_B(3, 2, d3m2, 19, bits, NULL, 0),	\
-+	MAX1363_CHAN_B(5, 4, d5m4, 20, bits, NULL, 0),	\
-+	MAX1363_CHAN_B(7, 6, d7m6, 21, bits, NULL, 0),	\
- 	IIO_CHAN_SOFT_TIMESTAMP(16)			\
+ 	cfg_veth
+ 
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} && \
+-		echo "ok" || \
+-		echo "failed" &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} &
++	local PID1=$!
+ 
+ 	wait_local_port_listen ${PEER_NS} 8000 udp
+ 	./udpgso_bench_tx ${tx_args}
+-	ret=$?
+-	wait $(jobs -p)
++	check_err $?
++	wait ${PID1}
++	check_err $?
++	[ "$ret" -eq 0 ] && echo "ok" || echo "failed"
+ 	return $ret
  }
- static const struct iio_chan_spec max11602_channels[] = MAX1363_8X_CHANS(8);
+ 
+@@ -71,6 +73,7 @@ run_one_nat() {
+ 	local -r all="$@"
+ 	local -r tx_args=${all%rx*}
+ 	local -r rx_args=${all#*rx}
++	local ret=0
+ 
+ 	if [[ ${tx_args} = *-4* ]]; then
+ 		ipt_cmd=iptables
+@@ -91,16 +94,17 @@ run_one_nat() {
+ 	# ... so that GRO will match the UDP_GRO enabled socket, but packets
+ 	# will land on the 'plain' one
+ 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -G ${family} -b ${addr1} -n 0 &
+-	pid=$!
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${family} -b ${addr2%/*} ${rx_args} && \
+-		echo "ok" || \
+-		echo "failed"&
++	local PID1=$!
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${family} -b ${addr2%/*} ${rx_args} &
++	local PID2=$!
+ 
+ 	wait_local_port_listen "${PEER_NS}" 8000 udp
+ 	./udpgso_bench_tx ${tx_args}
+-	ret=$?
+-	kill -INT $pid
+-	wait $(jobs -p)
++	check_err $?
++	kill -INT ${PID1}
++	wait ${PID2}
++	check_err $?
++	[ "$ret" -eq 0 ] && echo "ok" || echo "failed"
+ 	return $ret
+ }
+ 
+@@ -109,20 +113,26 @@ run_one_2sock() {
+ 	local -r all="$@"
+ 	local -r tx_args=${all%rx*}
+ 	local -r rx_args=${all#*rx}
++	local ret=0
+ 
+ 	cfg_veth
+ 
+ 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} -p 12345 &
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 10 ${rx_args} && \
+-		echo "ok" || \
+-		echo "failed" &
++	local PID1=$!
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 10 ${rx_args} &
++	local PID2=$!
+ 
+ 	wait_local_port_listen "${PEER_NS}" 12345 udp
+ 	./udpgso_bench_tx ${tx_args} -p 12345
++	check_err $?
+ 	wait_local_port_listen "${PEER_NS}" 8000 udp
+ 	./udpgso_bench_tx ${tx_args}
+-	ret=$?
+-	wait $(jobs -p)
++	check_err $?
++	wait ${PID1}
++	check_err $?
++	wait ${PID2}
++	check_err $?
++	[ "$ret" -eq 0 ] && echo "ok" || echo "failed"
+ 	return $ret
+ }
+ 
+-- 
+2.39.5
+
 
 
