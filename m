@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65BA321F53;
-	Tue, 26 Aug 2025 11:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519D3322754;
+	Tue, 26 Aug 2025 11:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207219; cv=none; b=h4/IEx0HY1KKNKa402VStj97P72LZXNoxIs0WLHyq3jsrSHcdFHtdpbYZPFnzlBT2gqqCdlwpd02NNpF9QGj0ucMYOJ5Gm2nSygIW9aK1zAbRob0wYfYBtim77sHwa6WROvpjRndhuJQbcHxoh4LG1/egX3yH81YIq2tGDhQwHA=
+	t=1756207221; cv=none; b=ZqVTcw+hlhdul/kAF9XbLVRpdzIGsu9Z+tHrgy+C1v+GnomoheBbUgsudLERYD2C+WozWW1F+L0sKKZJWPC7+QEHjwwJbocpEQwwCT5sisaoO8JPT0jIKUv3NJlDq/2LWaFnnDvJJUtnWMYivI6/q3G/vh3P0jSHLddXL1M4I+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207219; c=relaxed/simple;
-	bh=Ii8292jv9XiyK5YH1oMO3L5Ps/6ZqnZoV/k7b+LOxW4=;
+	s=arc-20240116; t=1756207221; c=relaxed/simple;
+	bh=P8u1w9aEgoRfCGagmp8ZK/RMTdcusCfIESvJOugv+Z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OU1IZzdXRUdX5mR+jpoghiTHBCwaI+5F3OBtviD83efAdDXS9FqqBkSJAkT9Brk8o5H+YeRATG2hOqAbanri/oWKdrQpq7zQxZDF1AyLvCWVrbuzf3ptzsI86HutibDjfi1qSBJEc048zfmJYOaPAg1TyKO6xPGJVvZ5v9hlItw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vr4prnu0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bnwN5YvNMu3xmyK+oCP8OH0ygLAuiJCFeFe+QWJtEvBiZIEP1JqpDpr6EtR487TlYQbv+j4JRaUAJ6G1Mwha2ys5vT81eWdB24hd0hkcU7woDejg00EdXQAH3PCagDLuNiRzFNq+2e1+R8Y8kYdjxyXp4VdFKKAgwbIJOQaiZLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=husSf+oM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vr4prnu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B231C4CEF1;
-	Tue, 26 Aug 2025 11:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="husSf+oM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02D1C4CEF1;
+	Tue, 26 Aug 2025 11:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207218;
-	bh=Ii8292jv9XiyK5YH1oMO3L5Ps/6ZqnZoV/k7b+LOxW4=;
+	s=korg; t=1756207221;
+	bh=P8u1w9aEgoRfCGagmp8ZK/RMTdcusCfIESvJOugv+Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vr4prnu0uy2eBlyjAXBWMrW4FUrSHdoeiRIln0OLoOKY7A8Nll3ThH/7HSgUB1ip8
-	 WHDADO8cToZTmLO5cqMpRyiZwpITP+Q/+UTX67S4bD93Y9k874wUOHALwWELz+nV4m
-	 QWto08ZCyoe05Awno2etZh+2dE1woXtP400M2R5s=
+	b=husSf+oMQjt6n+TQAUSESlp3dZmYf3zB0tmrbg0bvgpZ8rGA+AnjCu9Xqn7IwKLHq
+	 GlHxLwyJo357RO8Rt5cbx872+uweUxFSHjnn5MnAzvJrnkVBRGuNhslbLlCGWS/GHB
+	 jTqPOJvkgrZidzR8wLPEpue6vc3au9nwLI6o4bIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.16 097/457] PCI/portdrv: Use is_pciehp instead of is_hotplug_bridge
-Date: Tue, 26 Aug 2025 13:06:21 +0200
-Message-ID: <20250826110939.773865325@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH 6.16 080/457] wifi: brcmsmac: Remove const from tbl_ptr parameter in wlc_lcnphy_common_read_table()
+Date: Tue, 26 Aug 2025 13:06:04 +0200
+Message-ID: <20250826110939.353474197@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,41 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 1d60796a62f327cd9e0a6a0865ded7656d2c67f9 upstream.
+commit 81284e86bf8849f8e98e8ead3ff5811926b2107f upstream.
 
-The PCIe port driver erroneously creates a subdevice for hotplug on ACPI
-slots which are handled by the ACPI hotplug driver.
+A new warning in clang [1] complains that diq_start in
+wlc_lcnphy_tx_iqlo_cal() is passed uninitialized as a const pointer to
+wlc_lcnphy_common_read_table():
 
-Avoid by checking the is_pciehp flag instead of is_hotplug_bridge when
-deciding whether to create a subdevice.  The latter encompasses ACPI slots
-whereas the former doesn't.
+  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c:2728:13: error: variable 'diq_start' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+   2728 |                                                      &diq_start, 1, 16, 69);
+        |                                                       ^~~~~~~~~
 
-The superfluous subdevice has no real negative impact, it occupies memory
-and interrupt resources but otherwise just sits there waiting for
-interrupts from the slot that are never signaled.
+The table pointer passed to wlc_lcnphy_common_read_table() should not be
+considered constant, as wlc_phy_read_table() is ultimately going to
+update it. Remove the const qualifier from the tbl_ptr to clear up the
+warning.
 
-Fixes: f8415222837b ("PCI: Use cached copy of PCI_EXP_SLTCAP_HPC bit")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org # v4.7+
-Link: https://patch.msgid.link/40d5a5fe8d40595d505949c620a067fa110ee85e.1752390102.git.lukas@wunner.de
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2108
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>>
+Link: https://patch.msgid.link/20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/portdrv.c |    2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/pcie/portdrv.c
-+++ b/drivers/pci/pcie/portdrv.c
-@@ -220,7 +220,7 @@ static int get_port_device_capability(st
- 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
- 	int services = 0;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -919,7 +919,7 @@ void wlc_lcnphy_read_table(struct brcms_
  
--	if (dev->is_hotplug_bridge &&
-+	if (dev->is_pciehp &&
- 	    (pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT ||
- 	     pci_pcie_type(dev) == PCI_EXP_TYPE_DOWNSTREAM) &&
- 	    (pcie_ports_native || host->native_pcie_hotplug)) {
+ static void
+ wlc_lcnphy_common_read_table(struct brcms_phy *pi, u32 tbl_id,
+-			     const u16 *tbl_ptr, u32 tbl_len,
++			     u16 *tbl_ptr, u32 tbl_len,
+ 			     u32 tbl_width, u32 tbl_offset)
+ {
+ 	struct phytbl_info tab;
 
 
