@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301053570B0;
-	Tue, 26 Aug 2025 14:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786EC352090;
+	Tue, 26 Aug 2025 14:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219027; cv=none; b=UmR6ghSSYeyC79ImJJTmX6opzsGYwVYtHqzfpPg7V+88uPJYsFSXupbc0MBiAkKTZ4aVCVlf83ahzy+3upNuZOP4cPaPbmida+yKwcDaS6ODGwOgqZ8LIWvj+rNmN7t/W+FTrIBgBh/KwL4E2M/4VXmbvE42EjnyNIlaw2oz9fI=
+	t=1756219029; cv=none; b=YTEvPO5G+NGohx3N9g43r7DpRQfSHNpY+skcY7UZGSdBdXjKPeagipQnYbLJeDVxeS/E94tkPumA9Y77Ma+ON/aKMIVvBNBOgZtrNeWQWFjZAV1Vleph9P75oUL2ayx08284wVYgR6P7I7OwzNoaKG9LuwJN851ahvr5Kn1/Ofs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219027; c=relaxed/simple;
-	bh=QC2zZuDuUaVWS/62hnhlN5ROYWtEA4kND+6XoC16maA=;
+	s=arc-20240116; t=1756219029; c=relaxed/simple;
+	bh=q5xxLu0F/GFLy2pUx3e2VG6iBI5M3437jTRF1WICNKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aCOWw+x6QCmJp1X7GKNv2H5SI9pcusQicffdX32ryfaO3hnrvxPvtMHYtGTpbbZpQD/D7NsxYqLjX548heGDMNQm5p21LRu8zJf57Rd6t6iPwjEoDYJaJAP0D876vbPAC17K0JJSYUwk5sYh2XZ5eZ1iaosff9C4U3deLcNMbxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsWQchTG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Amoy7YhF5qr9ftBe6tlf8ujXJgGBLfopXTTA55nGNYixxxpGP4cSypChdAOyMF4+Wpq6vfcWRVeQnWAwsgq17jcsUnl34s73fdnkXouqtqRL+yOhuj9Ogs/UeMA3m/2zBTULf9DX1Us5kS+061bn7W80UVzA9OjfM/aoELMI34g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qinqnGbF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsWQchTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD52C4CEF1;
-	Tue, 26 Aug 2025 14:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qinqnGbF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087E2C4CEF1;
+	Tue, 26 Aug 2025 14:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219026;
-	bh=QC2zZuDuUaVWS/62hnhlN5ROYWtEA4kND+6XoC16maA=;
+	s=korg; t=1756219029;
+	bh=q5xxLu0F/GFLy2pUx3e2VG6iBI5M3437jTRF1WICNKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsWQchTGTvcz4dRfbE/R3Yq0YPdYqjaO1oDECCBK5Nl5Ezv7iXUdwlOAk2A+WcMZL
-	 CEF1gXEL8VxPjPEc6uFrGykneBtuwU+FDPVb7vH5keMjTlOKQ6r5r4jGQ1wI3E7+Bs
-	 MZqzj7XwyLlabu7IJLPJBY1hioP4wmi9tlxqnjcU=
+	b=qinqnGbFMHzm0R5iEbzJvF8hTHnNnN4yhwyQQo1sQ43Xo0En3dvWNYVcQOjGFGjCb
+	 CxudzscdnNe9rB0SaefMMP4+05pA6JhmbS3TP1sxTwAoB2iBF0LgJKrednsM+pZInO
+	 AjS0bxTk9GHqp0lLhmFbBau4cQsQIyo9l8vhXytI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 217/403] s390/stp: Remove udelay from stp_sync_clock()
-Date: Tue, 26 Aug 2025 13:09:03 +0200
-Message-ID: <20250826110912.833225600@linuxfoundation.org>
+Subject: [PATCH 5.4 226/403] net: dsa: b53: fix b53_imp_vlan_setup for BCM5325
+Date: Tue, 26 Aug 2025 13:09:12 +0200
+Message-ID: <20250826110913.073779740@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -46,48 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit b367017cdac21781a74eff4e208d3d38e1f38d3f ]
+[ Upstream commit c00df1018791185ea398f78af415a2a0aaa0c79c ]
 
-When an stp sync check is handled on a system with multiple
-cpus each cpu gets a machine check but only the first one
-actually handles the sync operation. All other CPUs spin
-waiting for the first one to finish with a short udelay().
-But udelay can't be used here as the first CPU modifies tod_clock_base
-before performing the sync op. During this timeframe
-get_tod_clock_monotonic() might return a non-monotonic time.
+CPU port should be B53_CPU_PORT instead of B53_CPU_PORT_25 for
+B53_PVLAN_PORT_MASK register.
 
-The time spent waiting should be very short and udelay is a busy loop
-anyways, therefore simply remove the udelay.
-
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Link: https://patch.msgid.link/20250614080000.1884236-14-noltari@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/time.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/b53/b53_common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/s390/kernel/time.c b/arch/s390/kernel/time.c
-index 11c32b228f51..0e1925104fcf 100644
---- a/arch/s390/kernel/time.c
-+++ b/arch/s390/kernel/time.c
-@@ -642,7 +642,7 @@ static int stp_sync_clock(void *data)
- 		atomic_dec(&sync->cpus);
- 		/* Wait for in_sync to be set. */
- 		while (READ_ONCE(sync->in_sync) == 0)
--			__udelay(1);
-+			;
- 	}
- 	if (sync->in_sync != 1)
- 		/* Didn't work. Clear per-cpu in sync bit again. */
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index d41c9006a028..1816a5b56d51 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -502,6 +502,10 @@ void b53_imp_vlan_setup(struct dsa_switch *ds, int cpu_port)
+ 	unsigned int i;
+ 	u16 pvlan;
+ 
++	/* BCM5325 CPU port is at 8 */
++	if ((is5325(dev) || is5365(dev)) && cpu_port == B53_CPU_PORT_25)
++		cpu_port = B53_CPU_PORT;
++
+ 	/* Enable the IMP port to be in the same VLAN as the other ports
+ 	 * on a per-port basis such that we only have Port i and IMP in
+ 	 * the same VLAN.
 -- 
 2.39.5
 
