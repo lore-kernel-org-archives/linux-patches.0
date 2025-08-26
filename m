@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD8033EB1D;
-	Tue, 26 Aug 2025 11:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CB32D0C61;
+	Tue, 26 Aug 2025 11:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207807; cv=none; b=YoDOr2TjF5IbNaRP8ZRmNkbvYs+lkH3iZAFpd9sku5ZG4l+tWqKCcXMYV7BKww6UW9IEL6MtLpFrI/jBJV23nH1RXlvPAu4j1vRXGMiL0rxvtdXNejXtH5ukfZMshE92Jr479zCOqnk+W/bVUlYMy585G0zSqiuxSfpoyCL+KjI=
+	t=1756207810; cv=none; b=Jk8aHMrmx52Xgol8PwqijVNu1RFa8/mxgiKma0g0L44vlexW+2V87FSZ3oOsVeDzegU2ZmWqOZTnHC7mvsaDcz86CuM5oMP4aCNZTiQZQagKRW1KLQ3Zi+MuyEDLGM5Y5G38DDgZONswqxF5jzqpYsdNFhrzNSq6r5N4ssQoUE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207807; c=relaxed/simple;
-	bh=xAb8dyxvbjvhsnI/NnFKlic1kbLrVryN6EdkBnfYkR0=;
+	s=arc-20240116; t=1756207810; c=relaxed/simple;
+	bh=jXzg6q4gy0YKGuDKmCGer9ey2ZYKrwyGCZzjxn1bmaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rpcBvq1e9m0D+wFNtOuTNr7eCLfNWocEOR9IsOLWhfP/D5XkkeZet+DHFzyQn4954WIqvUvhnO7oiZ++67b0hQ/AHrURL25BRvlfaH9Sfri6XaKIIJxkg2UN6lA/tMkyIawC3nH3LC8tyHSl5u63rDvx41whd4/gojGGDKhGT2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtjXR+J0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=beDAP/5jaF1GyK6ZsENNtrwnyCB/8nErw3AQLRtE9xbpvnEf7INmApLzgOhG9q6pWJ9GOh5v1AotGvxXyoccm+BfetrMjSCXyRTF002XP0g7VoKGzN9VwLZRPsN1BtMGo/YBokADMg2p4Iu6ax47k2/de+x5qQDqSS62bFPhkDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAXpb6nx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtjXR+J0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B58C4CEF1;
-	Tue, 26 Aug 2025 11:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAXpb6nx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9359C4CEF1;
+	Tue, 26 Aug 2025 11:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207807;
-	bh=xAb8dyxvbjvhsnI/NnFKlic1kbLrVryN6EdkBnfYkR0=;
+	s=korg; t=1756207810;
+	bh=jXzg6q4gy0YKGuDKmCGer9ey2ZYKrwyGCZzjxn1bmaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtjXR+J03pOa7e+9Wm8PaELOr4DJfWqo5IxFVEE21dnATPVnpcy1USK1ps/UbiPY2
-	 bpqhoS2bVnUQSOSueKOLe5Msj66FpPFUzGfOuGbrK8SekvPDLLrK81AaDynLt+oeTe
-	 3fm8L1DGa3+N7V+GRmNQiXU7R/N/y4j2Nu2FfOUw=
+	b=jAXpb6nx4j/pkrYUzxeHK7mO0JRyN2Nl5OREG27C3k8j7gp7h/fA1sBh7rZjCYMuR
+	 hqXs+dQYKUFMGEE6AnIwG39/dj4swnJyfN5M7ZiAoZaD8d4+4OtTkMOJXCHTz639Ae
+	 FIJDjcwPKezLNL5kweK1asMURvgaDFccX1xWZUHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.16 325/457] usb: dwc3: pci: add support for the Intel Wildcat Lake
-Date: Tue, 26 Aug 2025 13:10:09 +0200
-Message-ID: <20250826110945.380651964@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 326/457] tracing: Remove unneeded goto out logic
+Date: Tue, 26 Aug 2025 13:10:10 +0200
+Message-ID: <20250826110945.403130175@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,38 +54,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 86f390ba59cd8d5755bafe2b163c3e6b89d6bbd9 upstream.
+[ Upstream commit c89504a703fb779052213add0e8ed642f4a4f1c8 ]
 
-This patch adds the necessary PCI ID for Intel Wildcat Lake
-devices.
+Several places in the trace.c file there's a goto out where the out is
+simply a return. There's no reason to jump to the out label if it's not
+doing any more logic but simply returning from the function.
 
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250812131101.2930199-1-heikki.krogerus@linux.intel.com
+Replace the goto outs with a return and remove the out labels.
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/20250801203857.538726745@kernel.org
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 6a909ea83f22 ("tracing: Limit access to parser->buffer when trace_get_user failed")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace.c |   38 +++++++++++++++-----------------------
+ 1 file changed, 15 insertions(+), 23 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-pci.c
-+++ b/drivers/usb/dwc3/dwc3-pci.c
-@@ -41,6 +41,7 @@
- #define PCI_DEVICE_ID_INTEL_TGPLP		0xa0ee
- #define PCI_DEVICE_ID_INTEL_TGPH		0x43ee
- #define PCI_DEVICE_ID_INTEL_JSP			0x4dee
-+#define PCI_DEVICE_ID_INTEL_WCL			0x4d7e
- #define PCI_DEVICE_ID_INTEL_ADL			0x460e
- #define PCI_DEVICE_ID_INTEL_ADL_PCH		0x51ee
- #define PCI_DEVICE_ID_INTEL_ADLN		0x465e
-@@ -431,6 +432,7 @@ static const struct pci_device_id dwc3_p
- 	{ PCI_DEVICE_DATA(INTEL, TGPLP, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, TGPH, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, JSP, &dwc3_pci_intel_swnode) },
-+	{ PCI_DEVICE_DATA(INTEL, WCL, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, ADL, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, ADL_PCH, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, ADLN, &dwc3_pci_intel_swnode) },
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1846,7 +1846,7 @@ int trace_get_user(struct trace_parser *
+ 
+ 	ret = get_user(ch, ubuf++);
+ 	if (ret)
+-		goto out;
++		return ret;
+ 
+ 	read++;
+ 	cnt--;
+@@ -1860,7 +1860,7 @@ int trace_get_user(struct trace_parser *
+ 		while (cnt && isspace(ch)) {
+ 			ret = get_user(ch, ubuf++);
+ 			if (ret)
+-				goto out;
++				return ret;
+ 			read++;
+ 			cnt--;
+ 		}
+@@ -1870,8 +1870,7 @@ int trace_get_user(struct trace_parser *
+ 		/* only spaces were written */
+ 		if (isspace(ch) || !ch) {
+ 			*ppos += read;
+-			ret = read;
+-			goto out;
++			return read;
+ 		}
+ 	}
+ 
+@@ -1879,13 +1878,12 @@ int trace_get_user(struct trace_parser *
+ 	while (cnt && !isspace(ch) && ch) {
+ 		if (parser->idx < parser->size - 1)
+ 			parser->buffer[parser->idx++] = ch;
+-		else {
+-			ret = -EINVAL;
+-			goto out;
+-		}
++		else
++			return -EINVAL;
++
+ 		ret = get_user(ch, ubuf++);
+ 		if (ret)
+-			goto out;
++			return ret;
+ 		read++;
+ 		cnt--;
+ 	}
+@@ -1900,15 +1898,11 @@ int trace_get_user(struct trace_parser *
+ 		/* Make sure the parsed string always terminates with '\0'. */
+ 		parser->buffer[parser->idx] = 0;
+ 	} else {
+-		ret = -EINVAL;
+-		goto out;
++		return -EINVAL;
+ 	}
+ 
+ 	*ppos += read;
+-	ret = read;
+-
+-out:
+-	return ret;
++	return read;
+ }
+ 
+ /* TODO add a seq_buf_to_buffer() */
+@@ -2410,10 +2404,10 @@ int __init register_tracer(struct tracer
+ 	mutex_unlock(&trace_types_lock);
+ 
+ 	if (ret || !default_bootup_tracer)
+-		goto out_unlock;
++		return ret;
+ 
+ 	if (strncmp(default_bootup_tracer, type->name, MAX_TRACER_SIZE))
+-		goto out_unlock;
++		return 0;
+ 
+ 	printk(KERN_INFO "Starting tracer '%s'\n", type->name);
+ 	/* Do we want this tracer to start on bootup? */
+@@ -2425,8 +2419,7 @@ int __init register_tracer(struct tracer
+ 	/* disable other selftests, since this will break it. */
+ 	disable_tracing_selftest("running a tracer");
+ 
+- out_unlock:
+-	return ret;
++	return 0;
+ }
+ 
+ static void tracing_reset_cpu(struct array_buffer *buf, int cpu)
+@@ -8954,12 +8947,12 @@ ftrace_trace_snapshot_callback(struct tr
+  out_reg:
+ 	ret = tracing_arm_snapshot(tr);
+ 	if (ret < 0)
+-		goto out;
++		return ret;
+ 
+ 	ret = register_ftrace_function_probe(glob, tr, ops, count);
+ 	if (ret < 0)
+ 		tracing_disarm_snapshot(tr);
+- out:
++
+ 	return ret < 0 ? ret : 0;
+ }
+ 
+@@ -11057,7 +11050,7 @@ __init static int tracer_alloc_buffers(v
+ 	BUILD_BUG_ON(TRACE_ITER_LAST_BIT > TRACE_FLAGS_MAX_SIZE);
+ 
+ 	if (!alloc_cpumask_var(&tracing_buffer_mask, GFP_KERNEL))
+-		goto out;
++		return -ENOMEM;
+ 
+ 	if (!alloc_cpumask_var(&global_trace.tracing_cpumask, GFP_KERNEL))
+ 		goto out_free_buffer_mask;
+@@ -11175,7 +11168,6 @@ out_free_cpumask:
+ 	free_cpumask_var(global_trace.tracing_cpumask);
+ out_free_buffer_mask:
+ 	free_cpumask_var(tracing_buffer_mask);
+-out:
+ 	return ret;
+ }
+ 
 
 
