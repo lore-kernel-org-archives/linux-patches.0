@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39C6350831;
-	Tue, 26 Aug 2025 14:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6807350831;
+	Tue, 26 Aug 2025 14:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217611; cv=none; b=jzavssGfFKI70ngsLL+58jjRAMoaIwl08lgpWtoGaovhyyXcwCes83YSQ8Pu7SxIbiyX4C56fEjABuYYqkzaQ4NMweSX+gqLEuuxBpekRe41AO/5u7ARCXB2v+LOAdtiDd1h7gJQEYOxF/GFnNE3Uif6+iKttnvnm7o0cHMmwUg=
+	t=1756217614; cv=none; b=AAI2DmYK1GQo/iN7YqfIabgsZXjSS47b51+f44LlaTKtaJN3/JoJC48A8hR8oXaF8+isD9euSy7Tv80NAjiauFm+gbieSzivd8FofeJBZSgpSxdfz3iwPp96ujLeLj7DMU9yJgngSbKepYYtOxJ+yiWcJEKm+XYxOYnm0j4on+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217611; c=relaxed/simple;
-	bh=u4jfQ6x1qBa6MLkZM1WjAEd2lBGc+aJ6Wp5Ap5SIb0I=;
+	s=arc-20240116; t=1756217614; c=relaxed/simple;
+	bh=anh/CgUYDXoM52dDVI7VP9cB2h3kUzsUNqS9zEjsj8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F6TGO/DA2aKuI8b5+TsMpGfNtBo+eQrzZ+OuFuQPD4jGwrFB4ktjIjXT+aOnERFZl8HXctM9lrYLBj8OVKWO4FGpM2n4V6nV6OPAgPrYPR76Kcdei38B8sEJZv2jyHO8nMoVhbG+eXrrM3IUIDFveykhSMZXmwzeoQ4q+2qePCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onaclEX1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qUYqCT0SIK1/t2mq//Oy1v2hGe8/W2txtEl1ty8Bc03xIJmbJuQjsTw+JCdiDYioSttNBfHjItP/XhlGP4FstRcuKSRw2EzjlqFgw4AX8u50RNoXcdf8ENhXCYZEK2Wld45o9upBrk2guLJpUk8z30rFaRi3wA3F/D5+GH/mRoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvQo9i5I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onaclEX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C0EC4CEF1;
-	Tue, 26 Aug 2025 14:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvQo9i5I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7619C4CEF1;
+	Tue, 26 Aug 2025 14:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217611;
-	bh=u4jfQ6x1qBa6MLkZM1WjAEd2lBGc+aJ6Wp5Ap5SIb0I=;
+	s=korg; t=1756217614;
+	bh=anh/CgUYDXoM52dDVI7VP9cB2h3kUzsUNqS9zEjsj8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=onaclEX1rj6xE6lRasNjOoLtWi/pJzxDFKlm+9rqh6lUSeerGgQeuEAKnIIkk3fJh
-	 8KLYqRUdy2wEw0njqfl5gE7/WP4ouh/ELsPQzsFAZOu3O46yYyLksfeq9AhPho67Cs
-	 G8CZ88OBlmLRwFRE4H5lnWIBVjlMFxNqcgrxwV7o=
+	b=zvQo9i5Ir6Y3CbmmUNEXfiFRT2wjYXmA3H6YDf958+8vfbxDd1P3dK14Jy73OSuAP
+	 v2mX7YZEGRIdG+7uInGWT7QZcAnwerMtb0ygbfNO5XW0AA/7jX30fRWn+r0ldtL2HK
+	 LTQxM056glttCr2TWKBipQ3Cs2jNbZkqb3fFHUmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 201/523] fs: Prevent file descriptor table allocations exceeding INT_MAX
-Date: Tue, 26 Aug 2025 13:06:51 +0200
-Message-ID: <20250826110929.406125386@linuxfoundation.org>
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 210/523] hfs: fix slab-out-of-bounds in hfs_bnode_read()
+Date: Tue, 26 Aug 2025 13:07:00 +0200
+Message-ID: <20250826110929.623741477@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,104 +50,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-commit 04a2c4b4511d186b0fce685da21085a5d4acd370 upstream.
+[ Upstream commit a431930c9bac518bf99d6b1da526a7f37ddee8d8 ]
 
-When sysctl_nr_open is set to a very high value (for example, 1073741816
-as set by systemd), processes attempting to use file descriptors near
-the limit can trigger massive memory allocation attempts that exceed
-INT_MAX, resulting in a WARNING in mm/slub.c:
+This patch introduces is_bnode_offset_valid() method that checks
+the requested offset value. Also, it introduces
+check_and_correct_requested_length() method that checks and
+correct the requested length (if it is necessary). These methods
+are used in hfs_bnode_read(), hfs_bnode_write(), hfs_bnode_clear(),
+hfs_bnode_copy(), and hfs_bnode_move() with the goal to prevent
+the access out of allocated memory and triggering the crash.
 
-  WARNING: CPU: 0 PID: 44 at mm/slub.c:5027 __kvmalloc_node_noprof+0x21a/0x288
-
-This happens because kvmalloc_array() and kvmalloc() check if the
-requested size exceeds INT_MAX and emit a warning when the allocation is
-not flagged with __GFP_NOWARN.
-
-Specifically, when nr_open is set to 1073741816 (0x3ffffff8) and a
-process calls dup2(oldfd, 1073741880), the kernel attempts to allocate:
-- File descriptor array: 1073741880 * 8 bytes = 8,589,935,040 bytes
-- Multiple bitmaps: ~400MB
-- Total allocation size: > 8GB (exceeding INT_MAX = 2,147,483,647)
-
-Reproducer:
-1. Set /proc/sys/fs/nr_open to 1073741816:
-   # echo 1073741816 > /proc/sys/fs/nr_open
-
-2. Run a program that uses a high file descriptor:
-   #include <unistd.h>
-   #include <sys/resource.h>
-
-   int main() {
-       struct rlimit rlim = {1073741824, 1073741824};
-       setrlimit(RLIMIT_NOFILE, &rlim);
-       dup2(2, 1073741880);  // Triggers the warning
-       return 0;
-   }
-
-3. Observe WARNING in dmesg at mm/slub.c:5027
-
-systemd commit a8b627a introduced automatic bumping of fs.nr_open to the
-maximum possible value. The rationale was that systems with memory
-control groups (memcg) no longer need separate file descriptor limits
-since memory is properly accounted. However, this change overlooked
-that:
-
-1. The kernel's allocation functions still enforce INT_MAX as a maximum
-   size regardless of memcg accounting
-2. Programs and tests that legitimately test file descriptor limits can
-   inadvertently trigger massive allocations
-3. The resulting allocations (>8GB) are impractical and will always fail
-
-systemd's algorithm starts with INT_MAX and keeps halving the value
-until the kernel accepts it. On most systems, this results in nr_open
-being set to 1073741816 (0x3ffffff8), which is just under 1GB of file
-descriptors.
-
-While processes rarely use file descriptors near this limit in normal
-operation, certain selftests (like
-tools/testing/selftests/core/unshare_test.c) and programs that test file
-descriptor limits can trigger this issue.
-
-Fix this by adding a check in alloc_fdtable() to ensure the requested
-allocation size does not exceed INT_MAX. This causes the operation to
-fail with -EMFILE instead of triggering a kernel warning and avoids the
-impractical >8GB memory allocation request.
-
-Fixes: 9cfe015aa424 ("get rid of NR_OPEN and introduce a sysctl_nr_open")
-Cc: stable@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250703214912.244138-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/20250629074021.1038845-1-sashal@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/hfs/bnode.c | 92 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -126,6 +126,21 @@ static struct fdtable * alloc_fdtable(un
- 	if (unlikely(nr > sysctl_nr_open))
- 		nr = ((sysctl_nr_open - 1) | (BITS_PER_LONG - 1)) + 1;
+diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
+index 2251286cd83f..2039cb6d5f66 100644
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -15,6 +15,48 @@
  
-+	/*
-+	 * Check if the allocation size would exceed INT_MAX. kvmalloc_array()
-+	 * and kvmalloc() will warn if the allocation size is greater than
-+	 * INT_MAX, as filp_cachep objects are not __GFP_NOWARN.
-+	 *
-+	 * This can happen when sysctl_nr_open is set to a very high value and
-+	 * a process tries to use a file descriptor near that limit. For example,
-+	 * if sysctl_nr_open is set to 1073741816 (0x3ffffff8) - which is what
-+	 * systemd typically sets it to - then trying to use a file descriptor
-+	 * close to that value will require allocating a file descriptor table
-+	 * that exceeds 8GB in size.
-+	 */
-+	if (unlikely(nr > INT_MAX / sizeof(struct file *)))
-+		return ERR_PTR(-EMFILE);
+ #include "btree.h"
+ 
++static inline
++bool is_bnode_offset_valid(struct hfs_bnode *node, int off)
++{
++	bool is_valid = off < node->tree->node_size;
 +
- 	fdt = kmalloc(sizeof(struct fdtable), GFP_KERNEL_ACCOUNT);
- 	if (!fdt)
- 		goto out;
++	if (!is_valid) {
++		pr_err("requested invalid offset: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off);
++	}
++
++	return is_valid;
++}
++
++static inline
++int check_and_correct_requested_length(struct hfs_bnode *node, int off, int len)
++{
++	unsigned int node_size;
++
++	if (!is_bnode_offset_valid(node, off))
++		return 0;
++
++	node_size = node->tree->node_size;
++
++	if ((off + len) > node_size) {
++		int new_len = (int)node_size - off;
++
++		pr_err("requested length has been corrected: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d, "
++		       "requested_len %d, corrected_len %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off, len, new_len);
++
++		return new_len;
++	}
++
++	return len;
++}
++
+ void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
+ {
+ 	struct page *page;
+@@ -23,6 +65,20 @@ void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
+ 	int bytes_to_read;
+ 	void *vaddr;
+ 
++	if (!is_bnode_offset_valid(node, off))
++		return;
++
++	if (len == 0) {
++		pr_err("requested zero length: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d, len %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off, len);
++		return;
++	}
++
++	len = check_and_correct_requested_length(node, off, len);
++
+ 	off += node->page_offset;
+ 	pagenum = off >> PAGE_SHIFT;
+ 	off &= ~PAGE_MASK; /* compute page offset for the first page */
+@@ -83,6 +139,20 @@ void hfs_bnode_write(struct hfs_bnode *node, void *buf, int off, int len)
+ {
+ 	struct page *page;
+ 
++	if (!is_bnode_offset_valid(node, off))
++		return;
++
++	if (len == 0) {
++		pr_err("requested zero length: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d, len %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off, len);
++		return;
++	}
++
++	len = check_and_correct_requested_length(node, off, len);
++
+ 	off += node->page_offset;
+ 	page = node->page[0];
+ 
+@@ -108,6 +178,20 @@ void hfs_bnode_clear(struct hfs_bnode *node, int off, int len)
+ {
+ 	struct page *page;
+ 
++	if (!is_bnode_offset_valid(node, off))
++		return;
++
++	if (len == 0) {
++		pr_err("requested zero length: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d, len %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off, len);
++		return;
++	}
++
++	len = check_and_correct_requested_length(node, off, len);
++
+ 	off += node->page_offset;
+ 	page = node->page[0];
+ 
+@@ -124,6 +208,10 @@ void hfs_bnode_copy(struct hfs_bnode *dst_node, int dst,
+ 	hfs_dbg(BNODE_MOD, "copybytes: %u,%u,%u\n", dst, src, len);
+ 	if (!len)
+ 		return;
++
++	len = check_and_correct_requested_length(src_node, src, len);
++	len = check_and_correct_requested_length(dst_node, dst, len);
++
+ 	src += src_node->page_offset;
+ 	dst += dst_node->page_offset;
+ 	src_page = src_node->page[0];
+@@ -143,6 +231,10 @@ void hfs_bnode_move(struct hfs_bnode *node, int dst, int src, int len)
+ 	hfs_dbg(BNODE_MOD, "movebytes: %u,%u,%u\n", dst, src, len);
+ 	if (!len)
+ 		return;
++
++	len = check_and_correct_requested_length(node, src, len);
++	len = check_and_correct_requested_length(node, dst, len);
++
+ 	src += node->page_offset;
+ 	dst += node->page_offset;
+ 	page = node->page[0];
+-- 
+2.39.5
+
 
 
