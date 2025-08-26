@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACC621A420;
-	Tue, 26 Aug 2025 13:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20AB2139C9;
+	Tue, 26 Aug 2025 13:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215446; cv=none; b=hU6WWY/rX+sEYyihxQN8UEjWdwivjlbBZQdtCIaBruhszw6cbWbsd5jVm/ukDB3HXadw9v5ZtqKlHMy9jeg2nlAaWClJ4kFpG30HV/+iMzDtigmNzrfWVtFlHAMqTlFykFecA+4KRrk5kxYTsfoF2Pqi/7/I3Ji8b/UIlHOcduY=
+	t=1756215449; cv=none; b=Ll83+1OIXXhP6g01E5uVJQoYPw6ekdlP9xJz2c7QnYN9cMN8Rs0plUGHSifSsG5/d6eIcnAdBsy2GYdbgld6bTDBachl6GEcIZ7EfyQxySDSayx081JAbUjlFxYXRNTviZ9t/rw10oJxMIFQZKLGSdXPkiHKFGtktQ5gsCIqS6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215446; c=relaxed/simple;
-	bh=oSu8S8hUkNmtkLzzy0bdOfg4KLUb94ddke7Eiqgrpt0=;
+	s=arc-20240116; t=1756215449; c=relaxed/simple;
+	bh=N5NQa/2TB5/tN6EjdJISBf5oSjWxBcYT9lM/RSCkzZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M10m5YryQrktkibJRiCE1xbGiGsNCU05R5dXwWgEfdWtz5wQBh3172cSlHr67XxG/vx+h/qUcQpNT3TNUt7uv9F6x4AmrlXx68RL6RbGnYsEbTdGSw0H2wy7rtaMFDXUh/ekdDa2N00rGeCCIxWQoF8x/JRGFfOmbA1HHKN9nqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwjP+aXO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m4ziSA4YeUKJG+QJ3NDeYrWoB1pgx3IGl1pbnWXEC1zq8KyIpHKOMytgbMjGn0iUH+RqfMAoAu1f4YCJ5rktu5HdUCLeQxiUvqklHCaYSTOvKy8VsbT/3VWQZ3hwxEM9h/VCPPr3ueEG9q6YV8DkQ4mlaHBPNBG9FTkoHjC8Szw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2TBt1qZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwjP+aXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2CEC4CEF1;
-	Tue, 26 Aug 2025 13:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2TBt1qZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85344C4CEF1;
+	Tue, 26 Aug 2025 13:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215446;
-	bh=oSu8S8hUkNmtkLzzy0bdOfg4KLUb94ddke7Eiqgrpt0=;
+	s=korg; t=1756215448;
+	bh=N5NQa/2TB5/tN6EjdJISBf5oSjWxBcYT9lM/RSCkzZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwjP+aXOPDwXCSVZ0jt+uR0MoYPpR93TPY/2970aqjfgF/VnZwdj/KN4hpK5CigYh
-	 dD1fzbB7SPkCxN6us7vitlag8m+8TvfGU3LHL/Z7xnHfpmAzJEIB4d1jcjFSbXKARy
-	 7hb9SFl5zYjvGd056wc7HKlZmE+d8EPn8t/fcPow=
+	b=a2TBt1qZ2ZBiMHbQYIb8kWUOmIqloqFo83XB0fAw2OrIaxczrLD3U9aCxXZVIxn2V
+	 crZ34FpjyUwlj6hOOgxt9eIerZKUgSzG0DbgjOspaAdSnQAlTdfUmqHLQM6SSPR8vY
+	 WprTfmqWDX3J5fSN7mnKrD9xlX5cUo0vN2gDaTcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e2c932aec5c8a6e1d31c@syzkaller.appspotmail.com,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/644] bpf: Reject %p% format string in bprintf-like helpers
-Date: Tue, 26 Aug 2025 13:02:08 +0200
-Message-ID: <20250826110947.431357368@linuxfoundation.org>
+Subject: [PATCH 5.15 038/644] net: emaclite: Fix missing pointer increment in aligned_read()
+Date: Tue, 26 Aug 2025 13:02:09 +0200
+Message-ID: <20250826110947.455476297@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,66 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit f8242745871f81a3ac37f9f51853d12854fd0b58 ]
+[ Upstream commit 7727ec1523d7973defa1dff8f9c0aad288d04008 ]
 
-static const char fmt[] = "%p%";
-    bpf_trace_printk(fmt, sizeof(fmt));
+Add missing post-increment operators for byte pointers in the
+loop that copies remaining bytes in xemaclite_aligned_read().
+Without the increment, the same byte was written repeatedly
+to the destination.
+This update aligns with xemaclite_aligned_write()
 
-The above BPF program isn't rejected and causes a kernel warning at
-runtime:
-
-    Please remove unsupported %\x00 in format string
-    WARNING: CPU: 1 PID: 7244 at lib/vsprintf.c:2680 format_decode+0x49c/0x5d0
-
-This happens because bpf_bprintf_prepare skips over the second %,
-detected as punctuation, while processing %p. This patch fixes it by
-not skipping over punctuation. %\x00 is then processed in the next
-iteration and rejected.
-
-Reported-by: syzbot+e2c932aec5c8a6e1d31c@syzkaller.appspotmail.com
-Fixes: 48cac3f4a96d ("bpf: Implement formatted output helpers with bstr_printf")
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/a0e06cc479faec9e802ae51ba5d66420523251ee.1751395489.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: bb81b2ddfa19 ("net: add Xilinx emac lite device driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250710173849.2381003-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_emaclite.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index d3feaf6d68eba..b40ca025d9a44 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -832,6 +832,13 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
- 		if (fmt[i] == 'p') {
- 			sizeof_cur_arg = sizeof(long);
+diff --git a/drivers/net/ethernet/xilinx/xilinx_emaclite.c b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
+index 84e459358b055..81135fa5bd08b 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_emaclite.c
++++ b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
+@@ -294,7 +294,7 @@ static void xemaclite_aligned_read(u32 *src_ptr, u8 *dest_ptr,
  
-+			if (fmt[i + 1] == 0 || isspace(fmt[i + 1]) ||
-+			    ispunct(fmt[i + 1])) {
-+				if (tmp_buf)
-+					cur_arg = raw_args[num_spec];
-+				goto nocopy_fmt;
-+			}
-+
- 			if ((fmt[i + 1] == 'k' || fmt[i + 1] == 'u') &&
- 			    fmt[i + 2] == 's') {
- 				fmt_ptype = fmt[i + 1];
-@@ -839,11 +846,9 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
- 				goto fmt_str;
- 			}
+ 		/* Read the remaining data */
+ 		for (; length > 0; length--)
+-			*to_u8_ptr = *from_u8_ptr;
++			*to_u8_ptr++ = *from_u8_ptr++;
+ 	}
+ }
  
--			if (fmt[i + 1] == 0 || isspace(fmt[i + 1]) ||
--			    ispunct(fmt[i + 1]) || fmt[i + 1] == 'K' ||
-+			if (fmt[i + 1] == 'K' ||
- 			    fmt[i + 1] == 'x' || fmt[i + 1] == 's' ||
- 			    fmt[i + 1] == 'S') {
--				/* just kernel pointers */
- 				if (tmp_buf)
- 					cur_arg = raw_args[num_spec];
- 				i++;
 -- 
 2.39.5
 
