@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3C5352FDA;
-	Tue, 26 Aug 2025 13:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9AC352095;
+	Tue, 26 Aug 2025 13:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216740; cv=none; b=MureYTvfQAXatgDWvQTYzDJ2kcAZNE+s8xTw9gcetb+G74tzC/clXn5TEf/S+7/EADXrf/rri8ctt6PqHmbg5EKRq4wPuWNO9Se5zUadTkyM/VQmYG75u1cvkbzoK2i3EJBEpGhqWVVjr4okd+fpLK1K/u4tHOShE/sjnTV8qRQ=
+	t=1756216742; cv=none; b=CP2kYdqGqBCCANiq3q4zNmfG5DVbY0S31tX0xwpszgzb2q5W3vxcoGXEX7L7hHZt962pftPTvM4v1JJlxnkUxrG2ATwjNGOP9ebk0cSQbSSsi87U4HqUWJqLwScYTMhWYruhNcxdif0or3tIgNMKjyQulG9fZaASj0StNOhbpnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216740; c=relaxed/simple;
-	bh=Ug3iAEl6GWF3A7iRDDSDMpiu7W+uUSZ73/IaVND/IqI=;
+	s=arc-20240116; t=1756216742; c=relaxed/simple;
+	bh=2+6A7VOqx49AaB7bzP76kAJ4Cj40Q1v9LpH6ynDWUDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/XJ6oV/5W7Xm9b3JMh+CsA+ZD0doyP2SxgWUooa7CZK+SW07sBGEiUUw8PvY6PlOUWuzAqC8toq+AGe5vrQevRQsXIDIGfWs5XLQru0RerTMQUrLRmX4Q4N8FMfsjd+tdllxvoWqJoO/Dj/2bvENV1ZLBV8YT0NTlgvFd0gVuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMkOn56l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pkmHDVNL7LYv9A6fN4jvfwG02C21mvBrLWkoQEmXe+Hrl7t8Y8I8sq3cnQyKCf1tYRFG2J+t/wVJS8zVdn7+3HlF1PMTg2g6lsjJzXF7oLnxVtutobDP7Tyu2pmQyfvVyCBC6gn3PzvJ6rMWLHsJOYxNJwFtFfFAmQpiLt7R5oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCFA7Umb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMkOn56l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCE0C4CEF1;
-	Tue, 26 Aug 2025 13:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCFA7Umb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D18AC113D0;
+	Tue, 26 Aug 2025 13:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216739;
-	bh=Ug3iAEl6GWF3A7iRDDSDMpiu7W+uUSZ73/IaVND/IqI=;
+	s=korg; t=1756216742;
+	bh=2+6A7VOqx49AaB7bzP76kAJ4Cj40Q1v9LpH6ynDWUDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMkOn56lhcCNvmGONZpIunqAb6hSALyzBcMAdE5bdr5OQgqMsu5QYbTCNyk2rdpIN
-	 CYUOXYM5dhnnyXGNXyNhKh7gJC7t8yEjiqLbRggzYSyzPscI6zyYa06SdjNG4pwLy8
-	 8bQ1EvV4nQQ0eUwX/KzOSmbLTOMpiuTnFfJ68Mvo=
+	b=NCFA7UmbT6YcSqjpfIUNu9IXMuYBUw+FoYpl/mDa1eEO6pFdPhXekabkCjsbaPjiS
+	 g/rV8I67Bia1PQCSkqsC5uL939o9Sxp2ekkdN5TxAQvtCZpUwT/O1f5jJRXqVjCVT7
+	 tj2ZFCTnfG0IsPTSjBmdVOqqV/p8zclwIUtSg+fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Laurent Bigonville <bigon@bigon.be>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 525/644] usb: typec: fusb302: cache PD RX state
-Date: Tue, 26 Aug 2025 13:10:16 +0200
-Message-ID: <20250826110959.519507270@linuxfoundation.org>
+Subject: [PATCH 5.15 526/644] PCI/ACPI: Fix runtime PM ref imbalance on Hot-Plug Capable ports
+Date: Tue, 26 Aug 2025 13:10:17 +0200
+Message-ID: <20250826110959.543958468@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,95 +54,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 1e61f6ab08786d66a11cfc51e13d6f08a6b06c56 ]
+[ Upstream commit 6cff20ce3b92ffbf2fc5eb9e5a030b3672aa414a ]
 
-This patch fixes a race condition communication error, which ends up in
-PD hard resets when losing the race. Some systems, like the Radxa ROCK
-5B are powered through USB-C without any backup power source and use a
-FUSB302 chip to do the PD negotiation. This means it is quite important
-to avoid hard resets, since that effectively kills the system's
-power-supply.
+pci_bridge_d3_possible() is called from both pcie_portdrv_probe() and
+pcie_portdrv_remove() to determine whether runtime power management shall
+be enabled (on probe) or disabled (on remove) on a PCIe port.
 
-I've found the following race condition while debugging unplanned power
-loss during booting the board every now and then:
+The underlying assumption is that pci_bridge_d3_possible() always returns
+the same value, else a runtime PM reference imbalance would occur.  That
+assumption is not given if the PCIe port is inaccessible on remove due to
+hot-unplug:  pci_bridge_d3_possible() calls pciehp_is_native(), which
+accesses Config Space to determine whether the port is Hot-Plug Capable.
+An inaccessible port returns "all ones", which is converted to "all
+zeroes" by pcie_capability_read_dword().  Hence the port no longer seems
+Hot-Plug Capable on remove even though it was on probe.
 
-1. lots of TCPM/FUSB302/PD initialization stuff
-2. TCPM ends up in SNK_WAIT_CAPABILITIES (tcpm_set_pd_rx is enabled here)
-3. the remote PD source does not send anything, so TCPM does a SOFT RESET
-4. TCPM ends up in SNK_WAIT_CAPABILITIES for the second time
-   (tcpm_set_pd_rx is enabled again, even though it is still on)
+The resulting runtime PM ref imbalance causes warning messages such as:
 
-At this point I've seen broken CRC good messages being send by the
-FUSB302 with a logic analyzer sniffing the CC lines. Also it looks like
-messages are being lost and things generally going haywire with one of
-the two sides doing a hard reset once a broken CRC good message was send
-to the bus.
+  pcieport 0000:02:04.0: Runtime PM usage count underflow!
 
-I think the system is running into a race condition, that the FIFOs are
-being cleared and/or the automatic good CRC message generation flag is
-being updated while a message is already arriving.
+Avoid the Config Space access (and thus the runtime PM ref imbalance) by
+caching the Hot-Plug Capable bit in struct pci_dev.
 
-Let's avoid this by caching the PD RX enabled state, as we have already
-processed anything in the FIFOs and are in a good state. As a side
-effect that this also optimizes I2C bus usage :)
+The struct already contains an "is_hotplug_bridge" flag, which however is
+not only set on Hot-Plug Capable PCIe ports, but also Conventional PCI
+Hot-Plug bridges and ACPI slots.  The flag identifies bridges which are
+allocated additional MMIO and bus number resources to allow for hierarchy
+expansion.
 
-As far as I can tell the problem theoretically also exists when TCPM
-enters SNK_WAIT_CAPABILITIES the first time, but I believe this is less
-critical for the following reason:
+The kernel is somewhat sloppily using "is_hotplug_bridge" in a number of
+places to identify Hot-Plug Capable PCIe ports, even though the flag
+encompasses other devices.  Subsequent commits replace these occurrences
+with the new flag to clearly delineate Hot-Plug Capable PCIe ports from
+other kinds of hotplug bridges.
 
-On devices like the ROCK 5B, which are powered through a TCPM backed
-USB-C port, the bootloader must have done some prior PD communication
-(initial communication must happen within 5 seconds after plugging the
-USB-C plug). This means the first time the kernel TCPM state machine
-reaches SNK_WAIT_CAPABILITIES, the remote side is not sending messages
-actively. On other devices a hard reset simply adds some extra delay and
-things should be good afterwards.
+Document the existing "is_hotplug_bridge" and the new "is_pciehp" flag
+and document the (non-obvious) requirement that pci_bridge_d3_possible()
+always returns the same value across the entire lifetime of a bridge,
+including its hot-removal.
 
-Fixes: c034a43e72dda ("staging: typec: Fairchild FUSB302 Type-c chip driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250704-fusb302-race-condition-fix-v1-1-239012c0e27a@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ replaced str_on_off(on) with ternary operator ]
+Fixes: 5352a44a561d ("PCI: pciehp: Make pciehp_is_native() stricter")
+Reported-by: Laurent Bigonville <bigon@bigon.be>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220216
+Reported-by: Mario Limonciello <mario.limonciello@amd.com>
+Closes: https://lore.kernel.org/r/20250609020223.269407-3-superm1@kernel.org/
+Link: https://lore.kernel.org/all/20250620025535.3425049-3-superm1@kernel.org/T/#u
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Cc: stable@vger.kernel.org # v4.18+
+Link: https://patch.msgid.link/fe5dcc3b2e62ee1df7905d746bde161eb1b3291c.1752390101.git.lukas@wunner.de
+[ changed "recent enough PCIe ports" comment to "some PCIe ports" ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/fusb302.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pci/pci-acpi.c |    4 +---
+ drivers/pci/pci.c      |    8 ++++++--
+ drivers/pci/probe.c    |    2 +-
+ include/linux/pci.h    |   10 +++++++++-
+ 4 files changed, 17 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/typec/tcpm/fusb302.c
-+++ b/drivers/usb/typec/tcpm/fusb302.c
-@@ -103,6 +103,7 @@ struct fusb302_chip {
- 	bool vconn_on;
- 	bool vbus_on;
- 	bool charge_on;
-+	bool pd_rx_on;
- 	bool vbus_present;
- 	enum typec_cc_polarity cc_polarity;
- 	enum typec_cc_status cc1;
-@@ -841,6 +842,11 @@ static int tcpm_set_pd_rx(struct tcpc_de
- 	int ret = 0;
+--- a/drivers/pci/pci-acpi.c
++++ b/drivers/pci/pci-acpi.c
+@@ -792,13 +792,11 @@ int pci_acpi_program_hp_params(struct pc
+ bool pciehp_is_native(struct pci_dev *bridge)
+ {
+ 	const struct pci_host_bridge *host;
+-	u32 slot_cap;
  
- 	mutex_lock(&chip->lock);
-+	if (chip->pd_rx_on == on) {
-+		fusb302_log(chip, "pd is already %s", on ? "on" : "off");
-+		goto done;
-+	}
-+
- 	ret = fusb302_pd_rx_flush(chip);
- 	if (ret < 0) {
- 		fusb302_log(chip, "cannot flush pd rx buffer, ret=%d", ret);
-@@ -863,6 +869,8 @@ static int tcpm_set_pd_rx(struct tcpc_de
- 			    on ? "on" : "off", ret);
- 		goto done;
- 	}
-+
-+	chip->pd_rx_on = on;
- 	fusb302_log(chip, "pd := %s", on ? "on" : "off");
- done:
- 	mutex_unlock(&chip->lock);
+ 	if (!IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE))
+ 		return false;
+ 
+-	pcie_capability_read_dword(bridge, PCI_EXP_SLTCAP, &slot_cap);
+-	if (!(slot_cap & PCI_EXP_SLTCAP_HPC))
++	if (!bridge->is_pciehp)
+ 		return false;
+ 
+ 	if (pcie_ports_native)
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -2921,8 +2921,12 @@ static const struct dmi_system_id bridge
+  * pci_bridge_d3_possible - Is it possible to put the bridge into D3
+  * @bridge: Bridge to check
+  *
+- * This function checks if it is possible to move the bridge to D3.
+- * Currently we only allow D3 for recent enough PCIe ports and Thunderbolt.
++ * Currently we only allow D3 for some PCIe ports and for Thunderbolt.
++ *
++ * Return: Whether it is possible to move the bridge to D3.
++ *
++ * The return value is guaranteed to be constant across the entire lifetime
++ * of the bridge, including its hot-removal.
+  */
+ bool pci_bridge_d3_possible(struct pci_dev *bridge)
+ {
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1590,7 +1590,7 @@ void set_pcie_hotplug_bridge(struct pci_
+ 
+ 	pcie_capability_read_dword(pdev, PCI_EXP_SLTCAP, &reg32);
+ 	if (reg32 & PCI_EXP_SLTCAP_HPC)
+-		pdev->is_hotplug_bridge = 1;
++		pdev->is_hotplug_bridge = pdev->is_pciehp = 1;
+ }
+ 
+ static void set_pcie_thunderbolt(struct pci_dev *dev)
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -317,7 +317,14 @@ struct pci_sriov;
+ struct pci_p2pdma;
+ struct rcec_ea;
+ 
+-/* The pci_dev structure describes PCI devices */
++/* struct pci_dev - describes a PCI device
++ *
++ * @is_hotplug_bridge:	Hotplug bridge of any kind (e.g. PCIe Hot-Plug Capable,
++ *			Conventional PCI Hot-Plug, ACPI slot).
++ *			Such bridges are allocated additional MMIO and bus
++ *			number resources to allow for hierarchy expansion.
++ * @is_pciehp:		PCIe Hot-Plug Capable bridge.
++ */
+ struct pci_dev {
+ 	struct list_head bus_list;	/* Node in per-bus list */
+ 	struct pci_bus	*bus;		/* Bus this device is on */
+@@ -440,6 +447,7 @@ struct pci_dev {
+ 	unsigned int	is_physfn:1;
+ 	unsigned int	is_virtfn:1;
+ 	unsigned int	is_hotplug_bridge:1;
++	unsigned int	is_pciehp:1;
+ 	unsigned int	shpc_managed:1;		/* SHPC owned by shpchp */
+ 	unsigned int	is_thunderbolt:1;	/* Thunderbolt controller */
+ 	/*
 
 
