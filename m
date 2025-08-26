@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8B4356913;
-	Tue, 26 Aug 2025 14:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD0B34DCF6;
+	Tue, 26 Aug 2025 14:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216922; cv=none; b=WbPmw21JHHPSagmHFJTzyIQwsTqnXU3S5vC1tu29Rd36xARqt6bgy7oVp2vHjmINevdONZV2u9Gd5nl4E8cSKfYaVPxXLVE/DuJ6ftGzaLLDB2TUPo7NxWJN4l1Yvl9xZg9VxgxpZ6Jxp5pzwlaOPxwYcr7FlHHOAmsNmQ5o7wk=
+	t=1756216925; cv=none; b=JVw2NsNwInLP3YM+FJ5UpwHQbUfoYXu4RtHGiSX8xxyyROjiZPN6LCh7HvHZdkstMFM9JHn7no5jE+uJR6P07e6GlcqSDSnOo1+LqwnHoy+xVGE6jZZAdr8Z6FpA+zNaPfEyDXc77dkwwTvion433tA53daPkb+yKJhisqWiBHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216922; c=relaxed/simple;
-	bh=xoSHTfNzMBP8Plchqk8PWmXzRjCy64SbxpU9T3KzJv0=;
+	s=arc-20240116; t=1756216925; c=relaxed/simple;
+	bh=JL2zx+LdVArgj2aBcKbpxBauXC/vkkPUtagm9b6dnbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXF2UxLh2Gm4hFXz0ZRTw+1cPBGa7YxzEmusv81MFxzjw7E2ZbA4iQgI1y2vOzlADqGVIhligY9Xj10vsnxdtMYdUA+dyytcf4jaYUCDZxg/BIWC+JZXmsiwlRpPD9V/Ec6vacEni+1wmm/wuc1HXBbwGD6CgTzb69rr2hOGyzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGq8Igb+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N1ZOD65NZ9R5R5yXFmvafL0WblQgxkYqIVKih6TO1vg4ZO4ckEezFJxZslSLyalYvn1WaU+H9j5pT9lqF/kkwXU+/LYekvu+UYCEmh45Ra0EekZpnF1FcWh/UMYYdHTtpttbQa8WOifUah63O9doEr56Bde9VlgQPTMM1RFLEhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9wk9Tay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGq8Igb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADA1C4CEF1;
-	Tue, 26 Aug 2025 14:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9wk9Tay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA8AC4CEF1;
+	Tue, 26 Aug 2025 14:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216922;
-	bh=xoSHTfNzMBP8Plchqk8PWmXzRjCy64SbxpU9T3KzJv0=;
+	s=korg; t=1756216924;
+	bh=JL2zx+LdVArgj2aBcKbpxBauXC/vkkPUtagm9b6dnbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGq8Igb+/uPRYTE2ci9Lzok4DqH5aP/v9axHCBz/WOrK+hqFVXycPfZxCefMgB8/L
-	 aOMZ9A6sBHH7CzPPKpkxIT/bdkBNFyymR/LlXgtcwiqnUDcQUBRfcxTcKRXVYjwFMl
-	 VVY1xVKMU+Py/72jOMQRc2d2AmND2v3BkMYD1tS4=
+	b=n9wk9TaycE/fcAzecaWGsZ9kwMJmAE8YVEIXoqHKqu8FsjP1q/TtL2ujTd3ZrE72t
+	 E7Q5LAXsgD2RVB2rKdvHA3IflIJoWRtj16Sooikjv4VH+XwUNSZCChayGcNyUwGLwH
+	 kr88vGfRwzLLc9Gen+Ws6lnlc2lhe2Ps7E6ud5T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 593/644] mptcp: disable add_addr retransmission when timeout is 0
-Date: Tue, 26 Aug 2025 13:11:24 +0200
-Message-ID: <20250826111001.234336662@linuxfoundation.org>
+Subject: [PATCH 5.15 594/644] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
+Date: Tue, 26 Aug 2025 13:11:25 +0200
+Message-ID: <20250826111001.258970214@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -46,99 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit f5ce0714623cffd00bf2a83e890d09c609b7f50a ]
+[ Upstream commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f ]
 
-When add_addr_timeout was set to 0, this caused the ADD_ADDR to be
-retransmitted immediately, which looks like a buggy behaviour. Instead,
-interpret 0 as "no retransmissions needed".
+Reading DPCD registers has side-effects in general. In particular
+accessing registers outside of the link training register range
+(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
+forbidden by the DP v2.1 Standard, see
 
-The documentation is updated to explicitly state that setting the timeout
-to 0 disables retransmission.
+3.6.5.1 DPTX AUX Transaction Handling Mandates
+3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
 
-Fixes: 93f323b9cccc ("mptcp: add a new sysctl add_addr_timeout")
-Cc: stable@vger.kernel.org
-Suggested-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-5-521fe9957892@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ pm.c => pm_netlink.c , drop mptcp_pm_alloc_anno_list hunk ]
+Based on my tests, accessing the DPCD_REV register during the link
+training of an UHBR TBT DP tunnel sink leads to link training failures.
+
+Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
+DPCD register access quirk.
+
+Cc: <stable@vger.kernel.org>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
+[ call to drm_dp_dpcd_access() instead of drm_dp_dpcd_probe() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/mptcp-sysctl.rst |    2 ++
- net/mptcp/pm_netlink.c                    |   13 ++++++++++---
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_dp_helper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/networking/mptcp-sysctl.rst
-+++ b/Documentation/networking/mptcp-sysctl.rst
-@@ -20,6 +20,8 @@ add_addr_timeout - INTEGER (seconds)
- 	resent to an MPTCP peer that has not acknowledged a previous
- 	ADD_ADDR message.
- 
-+	Do not retransmit if set to 0.
-+
- 	The default value matches TCP_RTO_MAX. This is a per-namespace
- 	sysctl.
- 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -316,6 +316,7 @@ static void mptcp_pm_add_timer(struct ti
- 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
- 	struct mptcp_sock *msk = entry->sock;
- 	struct sock *sk = (struct sock *)msk;
-+	unsigned int timeout;
- 
- 	pr_debug("msk=%p\n", msk);
- 
-@@ -333,6 +334,10 @@ static void mptcp_pm_add_timer(struct ti
- 		goto out;
- 	}
- 
-+	timeout = mptcp_get_add_addr_timeout(sock_net(sk));
-+	if (!timeout)
-+		goto out;
-+
- 	spin_lock_bh(&msk->pm.lock);
- 
- 	if (!mptcp_pm_should_add_signal_addr(msk)) {
-@@ -344,7 +349,7 @@ static void mptcp_pm_add_timer(struct ti
- 
- 	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
- 		sk_reset_timer(sk, timer,
--			       jiffies + mptcp_get_add_addr_timeout(sock_net(sk)));
-+			       jiffies + timeout);
- 
- 	spin_unlock_bh(&msk->pm.lock);
- 
-@@ -386,6 +391,7 @@ static bool mptcp_pm_alloc_anno_list(str
- 	struct mptcp_pm_add_entry *add_entry = NULL;
- 	struct sock *sk = (struct sock *)msk;
- 	struct net *net = sock_net(sk);
-+	unsigned int timeout;
- 
- 	lockdep_assert_held(&msk->pm.lock);
- 
-@@ -403,8 +409,9 @@ static bool mptcp_pm_alloc_anno_list(str
- 	add_entry->retrans_times = 0;
- 
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
--	sk_reset_timer(sk, &add_entry->add_timer,
--		       jiffies + mptcp_get_add_addr_timeout(net));
-+	timeout = mptcp_get_add_addr_timeout(net);
-+	if (timeout)
-+		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
- 
- 	return true;
- }
+--- a/drivers/gpu/drm/drm_dp_helper.c
++++ b/drivers/gpu/drm/drm_dp_helper.c
+@@ -336,7 +336,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
+ 	 * monitor doesn't power down exactly after the throw away read.
+ 	 */
+ 	if (!aux->is_remote) {
+-		ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, DP_DPCD_REV,
++		ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, DP_LANE0_1_STATUS,
+ 					 buffer, 1);
+ 		if (ret != 1)
+ 			goto out;
 
 
