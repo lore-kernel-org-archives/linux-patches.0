@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DF81ADFFE;
-	Tue, 26 Aug 2025 13:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED351A239A;
+	Tue, 26 Aug 2025 13:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214817; cv=none; b=ocXvwagMpuLVQOw3GiPgCnhsEGtgqxNWajY/7jUyY173HVOa+DxMaXvS08YwhMb5wkjqlxia4sAKFTEX2g7yuOr473JzSt8rr6Xgkx7Fb7euQb474c/MWMytHl7LE8JkHIsu0xC1DLnewE0vg0U9ltAQkfK5X5UzeGWPUEmGq20=
+	t=1756214819; cv=none; b=EhovGxZuPMOuX6fu/3wGN/QoC/CuDei/YtXlavSjLQTmcm9BcHhLjHjlykcCUcM4qAn2K2IyJbYi3L5sDJNzK9qkt0If1tEyG46fQxx0XrBguZ4Hhxv6ag8F5wR+hc566QeZmhXuv/LfQ8AxOYnZJpQptXwwfBvWId9pgN6FyX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214817; c=relaxed/simple;
-	bh=RllgTZIXbPPoBTtDOfwDthP3XrhHtj3c1OlKniJe+ik=;
+	s=arc-20240116; t=1756214819; c=relaxed/simple;
+	bh=3Jm4DBqDuGHu77dt2yfCUQMiYN6KlVmI/Hl81BvTuqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pNA38wjyLWrwwSmKc7wKuj+LTmMpDR8o8pCvfnPL06L4HcBtpCkCJ4Hb5d9Xvraatab3gG2eXpuBT8xczuMCtSfZGpiD3+Iq2oSWUVWeGD8x20vOzK1KeE7xGMelqfEp62yAhrhqRDOw4twx6M1PxaHJkULi8WVzPiGFj2+hTAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enBTwOP0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HNLEpmUApsr2au2ia6U4poYQ+yqo35SCy0onXYAK9wN69T5GbL0hDFI0Adba0yrvM9H4IoS/EfwLywpBE5iSnq6IGPyPW3gyNQJrgbbsZrFOhMw6YlVbFom3nhgJfah+V7UveWvNX4IrDbzXJInr1zl9evqBm168/AdLmFomQU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mje144OG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enBTwOP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAC2C4CEF1;
-	Tue, 26 Aug 2025 13:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mje144OG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A154C4CEF1;
+	Tue, 26 Aug 2025 13:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214816;
-	bh=RllgTZIXbPPoBTtDOfwDthP3XrhHtj3c1OlKniJe+ik=;
+	s=korg; t=1756214819;
+	bh=3Jm4DBqDuGHu77dt2yfCUQMiYN6KlVmI/Hl81BvTuqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enBTwOP0Mk5cDnNV/CHeJV6BG2Lt2umKGEtUrRxjP4khAeJ7c2BfFhJln+fpNVmW8
-	 voJ+cEEfVwXAgeSMBEfthL4ZQt7qCgABv3EOTLMNTCznONpvnZjGDZBC5FtvTAocxx
-	 nm5HvjCcSNqZWUNodGy0vqSxf2TKVdp8XLUjCGxg=
+	b=Mje144OGiE+TcIPqHCwb2NUILezULWpIJ6X9gLTsD/aZkgfiNdhSj8cc/yh9MPnWy
+	 4Jo+hsZX+29TiXuetBYwZxMX2wQ2vDRb2AZ85s17CJlgaty7P6YjTR0Jc+pxP4pei9
+	 rN4DsOMhVztdEadW7ItOrusZ7w1rb50ucTdyEAbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 279/482] ksmbd: extend the connection limiting mechanism to support IPv6
-Date: Tue, 26 Aug 2025 13:08:52 +0200
-Message-ID: <20250826110937.674671975@linuxfoundation.org>
+	Andreas Dilger <adilger@whamcloud.com>,
+	Li Dongyang <dongyangli@ddn.com>,
+	Alex Zhuravlev <bzzz@whamcloud.com>,
+	Oleg Drokin <green@whamcloud.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 280/482] ext4: check fast symlink for ea_inode correctly
+Date: Tue, 26 Aug 2025 13:08:53 +0200
+Message-ID: <20250826110937.698669954@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,93 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Andreas Dilger <adilger@dilger.ca>
 
-commit c0d41112f1a5828c194b59cca953114bc3776ef2 upstream.
+commit b4cc4a4077268522e3d0d34de4b2dc144e2330fa upstream.
 
-Update the connection tracking logic to handle both IPv4 and IPv6
-address families.
+The check for a fast symlink in the presence of only an
+external xattr inode is incorrect.  If a fast symlink does
+not have an xattr block (i_file_acl == 0), but does have
+an external xattr inode that increases inode i_blocks, then
+the check for a fast symlink will incorrectly fail and
+__ext4_iget()->ext4_ind_check_inode() will report the inode
+is corrupt when it "validates" i_data[] on the next read:
+
+    # ln -s foo /mnt/tmp/bar
+    # setfattr -h -n trusted.test \
+               -v "$(yes | head -n 4000)" /mnt/tmp/bar
+    # umount /mnt/tmp
+    # mount /mnt/tmp
+    # ls -l /mnt/tmp
+    ls: cannot access '/mnt/tmp/bar': Structure needs cleaning
+    total 4
+     ? l?????????? ? ?    ?        ?            ? bar
+    # dmesg | tail -1
+    EXT4-fs error (device dm-8): __ext4_iget:5098:
+        inode #24578: block 7303014: comm ls: invalid block
+
+(note that "block 7303014" = 0x6f6f66 = "foo" in LE order).
+
+ext4_inode_is_fast_symlink() should check the superblock
+EXT4_FEATURE_INCOMPAT_EA_INODE feature flag, not the inode
+EXT4_EA_INODE_FL, since the latter is only set on the xattr
+inode itself, and not on the inode that uses this xattr.
 
 Cc: stable@vger.kernel.org
-Fixes: e6bb91939740 ("ksmbd: limit repeated connections from clients with the same IP")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: fc82228a5e38 ("ext4: support fast symlinks from ext3 file systems")
+Signed-off-by: Andreas Dilger <adilger@whamcloud.com>
+Reviewed-by: Li Dongyang <dongyangli@ddn.com>
+Reviewed-by: Alex Zhuravlev <bzzz@whamcloud.com>
+Reviewed-by: Oleg Drokin <green@whamcloud.com>
+Reviewed-on: https://review.whamcloud.com/59879
+Lustre-bug-id: https://jira.whamcloud.com/browse/LU-19121
+Link: https://patch.msgid.link/20250717063709.757077-1-adilger@dilger.ca
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.h    |    7 ++++++-
- fs/smb/server/transport_tcp.c |   26 +++++++++++++++++++++++---
- 2 files changed, 29 insertions(+), 4 deletions(-)
+ fs/ext4/inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -45,7 +45,12 @@ struct ksmbd_conn {
- 	struct mutex			srv_mutex;
- 	int				status;
- 	unsigned int			cli_cap;
--	__be32				inet_addr;
-+	union {
-+		__be32			inet_addr;
-+#if IS_ENABLED(CONFIG_IPV6)
-+		u8			inet6_addr[16];
-+#endif
-+	};
- 	char				*request_buf;
- 	struct ksmbd_transport		*transport;
- 	struct nls_table		*local_nls;
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -87,7 +87,14 @@ static struct tcp_transport *alloc_trans
- 		return NULL;
- 	}
- 
-+#if IS_ENABLED(CONFIG_IPV6)
-+	if (client_sk->sk->sk_family == AF_INET6)
-+		memcpy(&conn->inet6_addr, &client_sk->sk->sk_v6_daddr, 16);
-+	else
-+		conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
-+#else
- 	conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
-+#endif
- 	conn->transport = KSMBD_TRANS(t);
- 	KSMBD_TRANS(t)->conn = conn;
- 	KSMBD_TRANS(t)->ops = &ksmbd_tcp_transport_ops;
-@@ -227,7 +234,6 @@ static int ksmbd_kthread_fn(void *p)
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -146,7 +146,7 @@ static int ext4_meta_trans_blocks(struct
+  */
+ int ext4_inode_is_fast_symlink(struct inode *inode)
  {
- 	struct socket *client_sk = NULL;
- 	struct interface *iface = (struct interface *)p;
--	struct inet_sock *csk_inet;
- 	struct ksmbd_conn *conn;
- 	int ret;
+-	if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
++	if (!ext4_has_feature_ea_inode(inode->i_sb)) {
+ 		int ea_blocks = EXT4_I(inode)->i_file_acl ?
+ 				EXT4_CLUSTER_SIZE(inode->i_sb) >> 9 : 0;
  
-@@ -250,13 +256,27 @@ static int ksmbd_kthread_fn(void *p)
- 		/*
- 		 * Limits repeated connections from clients with the same IP.
- 		 */
--		csk_inet = inet_sk(client_sk->sk);
- 		down_read(&conn_list_lock);
- 		list_for_each_entry(conn, &conn_list, conns_list)
--			if (csk_inet->inet_daddr == conn->inet_addr) {
-+#if IS_ENABLED(CONFIG_IPV6)
-+			if (client_sk->sk->sk_family == AF_INET6) {
-+				if (memcmp(&client_sk->sk->sk_v6_daddr,
-+					   &conn->inet6_addr, 16) == 0) {
-+					ret = -EAGAIN;
-+					break;
-+				}
-+			} else if (inet_sk(client_sk->sk)->inet_daddr ==
-+				 conn->inet_addr) {
- 				ret = -EAGAIN;
- 				break;
- 			}
-+#else
-+			if (inet_sk(client_sk->sk)->inet_daddr ==
-+			    conn->inet_addr) {
-+				ret = -EAGAIN;
-+				break;
-+			}
-+#endif
- 		up_read(&conn_list_lock);
- 		if (ret == -EAGAIN)
- 			continue;
 
 
