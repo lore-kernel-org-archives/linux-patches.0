@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E031DE8BE;
-	Tue, 26 Aug 2025 14:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B7235208F;
+	Tue, 26 Aug 2025 14:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216865; cv=none; b=skIEYJTexSbh1H1NS2RLWQcn+c+e9g2jLBurSmpuft8zBDEVbI832BsTxvknWiF7A13aU4BZuZrkVv9ONizkFDqZO9xPRipWMgS6/H4uxD3x4EQzGajuA2BaeOlaFCIdk2sFEGKHsxwEwS1d2LC+7rt3vkErtj4W+nLnoND/Nzw=
+	t=1756216867; cv=none; b=UaV6yxgqXGVnU/YQCnWPHMr8l3ahIcbO4a6gTd0YeAGPWSUuYePe6OdNF2cupASI2wMtcwPDVa5goqMAu2fCLyM8yr/BtyjIzu70Gj6EU4ySdibr73ySGnCyFZRnqnJrLjinj0x9B4pYWSI3DW2sEVJatvk0GYr890Pkb9Ws5UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216865; c=relaxed/simple;
-	bh=UxN8ETDZMknVOfCWssRjmkRvLBGojHQ8EVbbtitdO7k=;
+	s=arc-20240116; t=1756216867; c=relaxed/simple;
+	bh=yLqbX1N3pqZ7XvEVo2QrEz3SjtT1htAnujGBP7yfqoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGkXilNQG8cMDDB63BV98ajfYvbPKKU7PmGh/aP50GyZuM+p9lpZ8zVAvM8Ayth00Kd9dtShrysHvsBorPJIGWXNkaeMf4XhsqQjOJT1nhZHJkry//1yhqJTIBLxYhcLul9I46OznBggpd58dBOjQnT+t7HhykIDZg8l3JG0vXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaJSuH5E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cRFyarCw5FfRfDLPOHpRflwsot/zRbycL7uSCGx0zlP7shRKVHHgZcKIT5mbup8YH4Fe/vFpxFh0t/ik0V62D87Erqv3X3CxmvNLwi/Q+5me/QQVluaUTcqKy93JoqNZcXnRh7uxqwNJ0KCxNflrIcdLsDdNFfMAzuNyJHHS+NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggoCWI7h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaJSuH5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A760C4CEF1;
-	Tue, 26 Aug 2025 14:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggoCWI7h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF88C4CEF1;
+	Tue, 26 Aug 2025 14:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216864;
-	bh=UxN8ETDZMknVOfCWssRjmkRvLBGojHQ8EVbbtitdO7k=;
+	s=korg; t=1756216867;
+	bh=yLqbX1N3pqZ7XvEVo2QrEz3SjtT1htAnujGBP7yfqoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UaJSuH5EimDBDNMXOAFm92R2Z+hAA/k2gdtJqnWXel6a8PN8bRip7FabI/AH5+go2
-	 Ms3Ev55CnQlAOAUug+BxpUmbxMiiBKiN5Cgc7XkbUKrbNpZb6IlRkD6MPW+EtS+MmS
-	 /LjDuKvncKMkGzrxtU8sAwdr/juoVsNmnT+rNm2U=
+	b=ggoCWI7hdevSgN3+cCPkXA30zo5Yz0R3DXCxVg6Bj+sUu/BBP1najFnfGTCBP0Ucw
+	 IMBed9jjjgRTlSoUa98fBtEK33XmpltnmmIGkvZMPNxFnA+TlNj7qB+74lhrytP4eU
+	 0Watv/HkRkb9Q8KQIWbBSh6fT5Q4l0x6VgbQInsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 540/644] platform/chrome: cros_ec: Unregister notifier in cros_ec_unregister()
-Date: Tue, 26 Aug 2025 13:10:31 +0200
-Message-ID: <20250826110959.897687764@linuxfoundation.org>
+Subject: [PATCH 5.15 541/644] net/sched: sch_ets: properly init all active DRR list handles
+Date: Tue, 26 Aug 2025 13:10:32 +0200
+Message-ID: <20250826110959.925020285@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,37 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit e2374953461947eee49f69b3e3204ff080ef31b1 ]
+[ Upstream commit 454d3e1ae057a1e09a15905b06b860f60d6c14d0 ]
 
-The blocking notifier is registered in cros_ec_register(); however, it
-isn't unregistered in cros_ec_unregister().
+leaf classes of ETS qdiscs are served in strict priority or deficit round
+robin (DRR), depending on the value of 'nstrict'. Since this value can be
+changed while traffic is running, we need to be sure that the active list
+of DRR classes can be updated at any time, so:
 
-Fix it.
+1) call INIT_LIST_HEAD(&alist) on all leaf classes in .init(), before the
+   first packet hits any of them.
+2) ensure that 'alist' is not overwritten with zeros when a leaf class is
+   no more strict priority nor DRR (i.e. array elements beyond 'nbands').
 
-Fixes: 42cd0ab476e2 ("platform/chrome: cros_ec: Query EC protocol version if EC transitions between RO/RW")
-Cc: stable@vger.kernel.org
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://lore.kernel.org/r/20250722120513.234031-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/netdev/YS%2FoZ+f0Nr8eQkzH@dcaratti.users.ipa.redhat.com
+Suggested-by: Cong Wang <cong.wang@bytedance.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 87c6efc5ce9c ("net/sched: ets: use old 'nbands' while purging unused classes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/sch_ets.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/chrome/cros_ec.c
-+++ b/drivers/platform/chrome/cros_ec.c
-@@ -313,6 +313,9 @@ EXPORT_SYMBOL(cros_ec_register);
-  */
- void cros_ec_unregister(struct cros_ec_device *ec_dev)
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -666,7 +666,6 @@ static int ets_qdisc_change(struct Qdisc
+ 
+ 	q->nbands = nbands;
+ 	for (i = nstrict; i < q->nstrict; i++) {
+-		INIT_LIST_HEAD(&q->classes[i].alist);
+ 		if (q->classes[i].qdisc->q.qlen) {
+ 			list_add_tail(&q->classes[i].alist, &q->active);
+ 			q->classes[i].deficit = quanta[i];
+@@ -694,7 +693,11 @@ static int ets_qdisc_change(struct Qdisc
+ 	ets_offload_change(sch);
+ 	for (i = q->nbands; i < oldbands; i++) {
+ 		qdisc_put(q->classes[i].qdisc);
+-		memset(&q->classes[i], 0, sizeof(q->classes[i]));
++		q->classes[i].qdisc = NULL;
++		q->classes[i].quantum = 0;
++		q->classes[i].deficit = 0;
++		memset(&q->classes[i].bstats, 0, sizeof(q->classes[i].bstats));
++		memset(&q->classes[i].qstats, 0, sizeof(q->classes[i].qstats));
+ 	}
+ 	return 0;
+ }
+@@ -703,7 +706,7 @@ static int ets_qdisc_init(struct Qdisc *
+ 			  struct netlink_ext_ack *extack)
  {
-+	if (ec_dev->mkbp_event_supported)
-+		blocking_notifier_chain_unregister(&ec_dev->event_notifier,
-+						   &ec_dev->notifier_ready);
- 	platform_device_unregister(ec_dev->pd);
- 	platform_device_unregister(ec_dev->ec);
- 	mutex_destroy(&ec_dev->lock);
+ 	struct ets_sched *q = qdisc_priv(sch);
+-	int err;
++	int err, i;
+ 
+ 	if (!opt)
+ 		return -EINVAL;
+@@ -713,6 +716,9 @@ static int ets_qdisc_init(struct Qdisc *
+ 		return err;
+ 
+ 	INIT_LIST_HEAD(&q->active);
++	for (i = 0; i < TCQ_ETS_MAX_BANDS; i++)
++		INIT_LIST_HEAD(&q->classes[i].alist);
++
+ 	return ets_qdisc_change(sch, opt, extack);
+ }
+ 
 
 
