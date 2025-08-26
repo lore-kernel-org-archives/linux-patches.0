@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D584634DCCC;
-	Tue, 26 Aug 2025 13:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E424D2F657F;
+	Tue, 26 Aug 2025 13:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214397; cv=none; b=bgCR4WLFuQg3WDmjgKIAtIeEguSsOEuLTCTNwgGfC1C778g5McZ5bm4b2BIY0+34j32XJWBUgK1rITtoKNk76dtZbqj0TPzs7pfzwxvLyqYw3F3IFcGEQvdt5Ce7lNKf7xVqfTPXedNeI72J+rYmgFXbj8ki+Rfh3wevRqxUDPo=
+	t=1756214401; cv=none; b=aVzPfkidhpK/JNaFlMqfYsNvUbEYonq4eUV5Dq5kJCJzZNGqcuIh0GohxFgSxMAEUU74UpZe0J/y/Meid0F2ZcqXEmOG1ttkvsa/A8XqwQ+tlcUX5woBe8pNjV+L4F1+Zxm3/tHm0chjQt8wmpJjg7+b4FcPy478Y36NUfO8c8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214397; c=relaxed/simple;
-	bh=U8GOPHrS9rWVmM9qF9lfJOt7x+C3J+AtK8sXwNa3nFs=;
+	s=arc-20240116; t=1756214401; c=relaxed/simple;
+	bh=45MrPxZnhN4kbmbemx49qSik1NxMgv5roXVGbC14LvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pkYTOFUyhnLMs0MCiiWcmFriKwp0pvqHBeQedKNRtHtdSFpPZT8T6by0Erx8i8BI2rQUY2Pj4UaQrULJJDFkVj9WdnKlVDfDjV7PAIwPLvWkw2UoWW+O4aAbCdmF4hajEzCcSujIR8U6oz/SIoTOu9Ib7cw3qGhUKfuFQ8oSYgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3sLZJDn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DyksAzSD34kx5A5dHg6DGtxEi9+PcB4jSJVC7XV3VlkcecvLSi2bITEM6sVwrEejj48mqZ931OUVOVso04nc91SN7EQg3MxQ4stU5XkX7oI/5YhheTy0/HaZlRTfcULhiVWWY+KAlII1kKfWMYAm2/+Tq1nlJBXYtvrkzBuswSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xL4DYgK8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3sLZJDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B34C113D0;
-	Tue, 26 Aug 2025 13:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xL4DYgK8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22A5C113D0;
+	Tue, 26 Aug 2025 13:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214397;
-	bh=U8GOPHrS9rWVmM9qF9lfJOt7x+C3J+AtK8sXwNa3nFs=;
+	s=korg; t=1756214400;
+	bh=45MrPxZnhN4kbmbemx49qSik1NxMgv5roXVGbC14LvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3sLZJDnNqv+BzP6iI3KhIAZp5oIy5FoxSvw8jy6yO1fv+IOVeQiZdOoMXnJkdan0
-	 zC71QDLDgTNAEyZwJcjqz59uymR4J1DuFKm5YfPaH+7ZMq/+N5t10i8vEX9SmqTfXJ
-	 cIIT0XcKm0NP0tzfeSs9QbXRRA7sXPFRrcwwngH4=
+	b=xL4DYgK80ej8ZbS3LElTe/1EpPZ0kkKQLfMbCFbdb0Z3Yi7WUIPw0blOqajAXxMBM
+	 rNnEVCiUG7fO/pVDuFgKPeHjknHZwysrJ34HhoHXpfEn5uymr2NBWvrejqDMOV1ECy
+	 dt+BL4Xr+WI5Mkjkp3ycJVo91sr1cOUDJcg2F8M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/482] arm64: Mark kernel as tainted on SAE and SError panic
-Date: Tue, 26 Aug 2025 13:06:16 +0200
-Message-ID: <20250826110933.861496586@linuxfoundation.org>
+Subject: [PATCH 6.1 124/482] rcu: Protect ->defer_qs_iw_pending from data race
+Date: Tue, 26 Aug 2025 13:06:17 +0200
+Message-ID: <20250826110933.886347878@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,53 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit d7ce7e3a84642aadf7c4787f7ec4f58eb163d129 ]
+[ Upstream commit 90c09d57caeca94e6f3f87c49e96a91edd40cbfd ]
 
-Set TAINT_MACHINE_CHECK when SError or Synchronous External Abort (SEA)
-interrupts trigger a panic to flag potential hardware faults. This
-tainting mechanism aids in debugging and enables correlation of
-hardware-related crashes in large-scale deployments.
+On kernels built with CONFIG_IRQ_WORK=y, when rcu_read_unlock() is
+invoked within an interrupts-disabled region of code [1], it will invoke
+rcu_read_unlock_special(), which uses an irq-work handler to force the
+system to notice when the RCU read-side critical section actually ends.
+That end won't happen until interrupts are enabled at the soonest.
 
-This change aligns with similar patches[1] that mark machine check
-events when the system crashes due to hardware errors.
+In some kernels, such as those booted with rcutree.use_softirq=y, the
+irq-work handler is used unconditionally.
 
-Link: https://lore.kernel.org/all/20250702-add_tain-v1-1-9187b10914b9@debian.org/ [1]
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250716-vmcore_hw_error-v2-1-f187f7d62aba@debian.org
-Signed-off-by: Will Deacon <will@kernel.org>
+The per-CPU rcu_data structure's ->defer_qs_iw_pending field is
+updated by the irq-work handler and is both read and updated by
+rcu_read_unlock_special().  This resulted in the following KCSAN splat:
+
+------------------------------------------------------------------------
+
+BUG: KCSAN: data-race in rcu_preempt_deferred_qs_handler / rcu_read_unlock_special
+
+read to 0xffff96b95f42d8d8 of 1 bytes by task 90 on cpu 8:
+ rcu_read_unlock_special+0x175/0x260
+ __rcu_read_unlock+0x92/0xa0
+ rt_spin_unlock+0x9b/0xc0
+ __local_bh_enable+0x10d/0x170
+ __local_bh_enable_ip+0xfb/0x150
+ rcu_do_batch+0x595/0xc40
+ rcu_cpu_kthread+0x4e9/0x830
+ smpboot_thread_fn+0x24d/0x3b0
+ kthread+0x3bd/0x410
+ ret_from_fork+0x35/0x40
+ ret_from_fork_asm+0x1a/0x30
+
+write to 0xffff96b95f42d8d8 of 1 bytes by task 88 on cpu 8:
+ rcu_preempt_deferred_qs_handler+0x1e/0x30
+ irq_work_single+0xaf/0x160
+ run_irq_workd+0x91/0xc0
+ smpboot_thread_fn+0x24d/0x3b0
+ kthread+0x3bd/0x410
+ ret_from_fork+0x35/0x40
+ ret_from_fork_asm+0x1a/0x30
+
+no locks held by irq_work/8/88.
+irq event stamp: 200272
+hardirqs last  enabled at (200272): [<ffffffffb0f56121>] finish_task_switch+0x131/0x320
+hardirqs last disabled at (200271): [<ffffffffb25c7859>] __schedule+0x129/0xd70
+softirqs last  enabled at (0): [<ffffffffb0ee093f>] copy_process+0x4df/0x1cc0
+softirqs last disabled at (0): [<0000000000000000>] 0x0
+
+------------------------------------------------------------------------
+
+The problem is that irq-work handlers run with interrupts enabled, which
+means that rcu_preempt_deferred_qs_handler() could be interrupted,
+and that interrupt handler might contain an RCU read-side critical
+section, which might invoke rcu_read_unlock_special().  In the strict
+KCSAN mode of operation used by RCU, this constitutes a data race on
+the ->defer_qs_iw_pending field.
+
+This commit therefore disables interrupts across the portion of the
+rcu_preempt_deferred_qs_handler() that updates the ->defer_qs_iw_pending
+field.  This suffices because this handler is not a fast path.
+
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/traps.c | 1 +
- arch/arm64/mm/fault.c     | 1 +
- 2 files changed, 2 insertions(+)
+ kernel/rcu/tree_plugin.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/kernel/traps.c b/arch/arm64/kernel/traps.c
-index 23d281ed7621..09489e92ff94 100644
---- a/arch/arm64/kernel/traps.c
-+++ b/arch/arm64/kernel/traps.c
-@@ -911,6 +911,7 @@ void panic_bad_stack(struct pt_regs *regs, unsigned long esr, unsigned long far)
- 
- void __noreturn arm64_serror_panic(struct pt_regs *regs, unsigned long esr)
+diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
+index 3929ef8148c1..6fc1ff14bfdf 100644
+--- a/kernel/rcu/tree_plugin.h
++++ b/kernel/rcu/tree_plugin.h
+@@ -612,10 +612,13 @@ notrace void rcu_preempt_deferred_qs(struct task_struct *t)
+  */
+ static void rcu_preempt_deferred_qs_handler(struct irq_work *iwp)
  {
-+	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
- 	console_verbose();
++	unsigned long flags;
+ 	struct rcu_data *rdp;
  
- 	pr_crit("SError Interrupt on CPU%d, code 0x%016lx -- %s\n",
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index 6b6b8a82f294..0776c98ad27f 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -710,6 +710,7 @@ static int do_sea(unsigned long far, unsigned long esr, struct pt_regs *regs)
- 		 */
- 		siaddr  = untagged_addr(far);
- 	}
-+	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
- 	arm64_notify_die(inf->name, regs, inf->sig, inf->code, siaddr, esr);
+ 	rdp = container_of(iwp, struct rcu_data, defer_qs_iw);
++	local_irq_save(flags);
+ 	rdp->defer_qs_iw_pending = false;
++	local_irq_restore(flags);
+ }
  
- 	return 0;
+ /*
 -- 
 2.39.5
 
