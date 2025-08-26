@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7276C25DB0A;
-	Tue, 26 Aug 2025 14:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA330352094;
+	Tue, 26 Aug 2025 14:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218339; cv=none; b=r1j7wY9LGIW4lrbFujdHu3wUc6cOnYZHhw64BkskYK3Karcgh5FwCx+lyo7Ri/fmcADuQtsMlYJZr8y/76WqLKbYkLJlY7sLcafvxjJgZFefjqCmrPo8ywIioNRyyRll7bMK66Cxd3xJ0bFsPbhPd3MNL5bDFKPzf+koVid2ITE=
+	t=1756218342; cv=none; b=I6riUhGdjthEFywJ9SPSCxIRoldTsmekiQ8zbXPTrDvWyEf4juQjWpwDnTa0So32jwfXujxea+tew3iJkxRr3E9ESVHznkhbWWf6zQLs53MwbvVPl7VYrk+4K+FqGVExtGprOzSSnj6xNLUc/jSCDlNFy56EPIR1mLJgNAgcETI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218339; c=relaxed/simple;
-	bh=BhLD4rryrNe2cajUSGamNNZLKSxmkL/j5CMZzC9Cf1U=;
+	s=arc-20240116; t=1756218342; c=relaxed/simple;
+	bh=nwpVbHk/S0xs63emuI/90EKL3cXkEUkxFxq3A75/MC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXIBDpyg8McheBnUM8cTvZ4XD+QJjTGCuY6UWG52+op7xA8k48LRrImwSuP6iv8U4aJ3ynZzhGBCpm+aX5CNLkIcgZRJhI7XTjhbwYas8Q0q0FMNZjlwIAHn7MpOof35JPUww7HnfjDtQ3Va+yrmSxcNj6j0PJ9HCPeJgAI7yDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmGKqTmJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSgugdAkAcej5hv9T53wOdDUDUluqS3IUxqV0vfrBolCFk+BfoPaLHcxGP87VwrhGzwjLZJl0mdM9fc4UKJc9kgCWatQTTdGH12qP6k8xMSNO9D4BbEdd8yYPdDHrGvwhCNM/JtUaJOj5dBeYX0X+YHBgz8J3Z3SQ1SUavLVnjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EekyAxQ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmGKqTmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938E7C4CEF1;
-	Tue, 26 Aug 2025 14:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EekyAxQ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE99EC4CEF1;
+	Tue, 26 Aug 2025 14:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218335;
-	bh=BhLD4rryrNe2cajUSGamNNZLKSxmkL/j5CMZzC9Cf1U=;
+	s=korg; t=1756218341;
+	bh=nwpVbHk/S0xs63emuI/90EKL3cXkEUkxFxq3A75/MC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmGKqTmJ6YiTagmI5bf9MDsOZ1ck9cFaF8kfAWomkpi9fKwBP6RnCNUmtOIfHfIwi
-	 y5DT5b1jwxp9DkEtHPb58rQdiv51sPxX++k8x8iyokHq3L8606oWkyEkDohAQgk3iP
-	 G8hoiZhVudpnz3Y0Q1mp5y/i5fX/0JvnNFqm7vm4=
+	b=EekyAxQ4lUzmJ7pT72au5RkdKYX5ivfmJlrVg6bDwuWUThkNGFym109nPIjC2k3td
+	 8+IY6jXKfxS492AuOlw/ffryN8LguRyQaghgRCw1I4lS49ffYv9v8rTkZvqic3VAPG
+	 Fx27hLK71Qi8M2GERoQC6jOE9jdHq37VvlhFVfdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 484/523] media: venus: dont de-reference NULL pointers at IRQ time
-Date: Tue, 26 Aug 2025 13:11:34 +0200
-Message-ID: <20250826110936.386593321@linuxfoundation.org>
+Subject: [PATCH 5.10 486/523] media: venus: Add support for SSR trigger using fault injection
+Date: Tue, 26 Aug 2025 13:11:36 +0200
+Message-ID: <20250826110936.434713312@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,75 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-[ Upstream commit 686ee9b6253f9b6d7f1151e73114698940cc0894 ]
+[ Upstream commit 748b080f21678f2988b0da2d2b396a6f928d9b2c ]
 
-Smatch is warning that:
-	drivers/media/platform/qcom/venus/hfi_venus.c:1100 venus_isr() warn: variable dereferenced before check 'hdev' (see line 1097)
+Here we introduce a new fault injection for SSR trigger.
 
-The logic basically does:
-	hdev = to_hfi_priv(core);
+To trigger the SSR:
+ echo 100 >  /sys/kernel/debug/venus/fail_ssr/probability
+ echo 1 >  /sys/kernel/debug/venus/fail_ssr/times
 
-with is translated to:
-	hdev = core->priv;
-
-If the IRQ code can receive a NULL pointer for hdev, there's
-a bug there, as it will first try to de-reference the pointer,
-and then check if it is null.
-
-After looking at the code, it seems that this indeed can happen:
-Basically, the venus IRQ thread is started with:
-	devm_request_threaded_irq()
-So, it will only be freed after the driver unbinds.
-
-In order to prevent the IRQ code to work with freed data,
-the logic at venus_hfi_destroy() sets core->priv to NULL,
-which would make the IRQ code to ignore any pending IRQs.
-
-There is, however a race condition, as core->priv is set
-to NULL only after being freed. So, we need also to move the
-core->priv = NULL to happen earlier.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: 640803003cd9 ("media: venus: hfi: explicitly release IRQ during teardown")
+Co-developed-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Stable-dep-of: 3200144a2fa4 ("media: venus: protect against spurious interrupts during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/venus/core.c  |   15 ++++++++++++++-
+ drivers/media/platform/qcom/venus/dbgfs.c |    9 +++++++++
+ drivers/media/platform/qcom/venus/dbgfs.h |   13 +++++++++++++
+ 3 files changed, 36 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1071,12 +1071,15 @@ static irqreturn_t venus_isr(struct venu
- {
- 	struct venus_hfi_device *hdev = to_hfi_priv(core);
- 	u32 status;
--	void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
--	void __iomem *wrapper_base = hdev->core->wrapper_base;
-+	void __iomem *cpu_cs_base;
-+	void __iomem *wrapper_base;
- 
- 	if (!hdev)
- 		return IRQ_NONE;
- 
-+	cpu_cs_base = hdev->core->cpu_cs_base;
-+	wrapper_base = hdev->core->wrapper_base;
-+
- 	status = readl(wrapper_base + WRAPPER_INTR_STATUS);
- 
- 	if (status & WRAPPER_INTR_STATUS_A2H_MASK ||
-@@ -1613,10 +1616,10 @@ void venus_hfi_destroy(struct venus_core
- {
- 	struct venus_hfi_device *hdev = to_hfi_priv(core);
- 
-+	core->priv = NULL;
- 	venus_interface_queues_release(hdev);
- 	mutex_destroy(&hdev->lock);
- 	kfree(hdev);
--	core->priv = NULL;
- 	core->ops = NULL;
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -220,6 +220,19 @@ static void venus_assign_register_offset
+ 	core->wrapper_base = core->base + WRAPPER_BASE;
  }
+ 
++static irqreturn_t venus_isr_thread(int irq, void *dev_id)
++{
++	struct venus_core *core = dev_id;
++	irqreturn_t ret;
++
++	ret = hfi_isr_thread(irq, dev_id);
++
++	if (ret == IRQ_HANDLED && venus_fault_inject_ssr())
++		hfi_core_trigger_ssr(core, HFI_TEST_SSR_SW_ERR_FATAL);
++
++	return ret;
++}
++
+ static int venus_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -276,7 +289,7 @@ static int venus_probe(struct platform_d
+ 	mutex_init(&core->lock);
+ 	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
+ 
+-	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, hfi_isr_thread,
++	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
+ 					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+ 					"venus", core);
+ 	if (ret)
+--- a/drivers/media/platform/qcom/venus/dbgfs.c
++++ b/drivers/media/platform/qcom/venus/dbgfs.c
+@@ -4,13 +4,22 @@
+  */
+ 
+ #include <linux/debugfs.h>
++#include <linux/fault-inject.h>
+ 
+ #include "core.h"
+ 
++#ifdef CONFIG_FAULT_INJECTION
++DECLARE_FAULT_ATTR(venus_ssr_attr);
++#endif
++
+ void venus_dbgfs_init(struct venus_core *core)
+ {
+ 	core->root = debugfs_create_dir("venus", NULL);
+ 	debugfs_create_x32("fw_level", 0644, core->root, &venus_fw_debug);
++
++#ifdef CONFIG_FAULT_INJECTION
++	fault_create_debugfs_attr("fail_ssr", core->root, &venus_ssr_attr);
++#endif
+ }
+ 
+ void venus_dbgfs_deinit(struct venus_core *core)
+--- a/drivers/media/platform/qcom/venus/dbgfs.h
++++ b/drivers/media/platform/qcom/venus/dbgfs.h
+@@ -4,8 +4,21 @@
+ #ifndef __VENUS_DBGFS_H__
+ #define __VENUS_DBGFS_H__
+ 
++#include <linux/fault-inject.h>
++
+ struct venus_core;
+ 
++#ifdef CONFIG_FAULT_INJECTION
++extern struct fault_attr venus_ssr_attr;
++static inline bool venus_fault_inject_ssr(void)
++{
++	return should_fail(&venus_ssr_attr, 1);
++}
++#else
++static inline bool venus_fault_inject_ssr(void) { return false; }
++#endif
++
++
+ void venus_dbgfs_init(struct venus_core *core);
+ void venus_dbgfs_deinit(struct venus_core *core);
  
 
 
