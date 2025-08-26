@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283DF352FED;
-	Tue, 26 Aug 2025 14:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D99353359;
+	Tue, 26 Aug 2025 14:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217024; cv=none; b=WAX6QwWm07gYdaSkow7Ywd5ScMb219GMfsZUazU4MvSvcNjFOC5vYJqQuaPPLQt2/Nubws6HQRC640N/3tzVD80HWr6ioruwQob+zvu7/2Gp62KfiwFVlL982vcrO8py29qCHVUQ05OlGvgDEwOpQicZDGfVbzEWV7uD98Rxrzs=
+	t=1756217026; cv=none; b=ofkT5pMDoAasIgbGHLpN5WLK6FGhAg6msehNd+hWNK2n4ZV1D48NEZ9DWt72/RXxkux0HQb0Zyk1yRwVBlpSe7gauF2/xMG0tZDOkZfFhgNivBKxERCW6XHdLp66kHaL9JD88FB+ZrM0FdEr7TQ8I0s2Eqts3UyGfG6YXSUEpXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217024; c=relaxed/simple;
-	bh=feb/ZQa+C2fAeWyNxo2LHzMDlvtDR9e1iO+53JBuYs0=;
+	s=arc-20240116; t=1756217026; c=relaxed/simple;
+	bh=fFFJTyT1RPJjV03veMhSHKHU6w/aNkZxZR2AxhiY1eU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OINe0e4GT1e03gzjl6b9Y3Yed8aNr0XWQe5uTm/niDBu65L+o+ydlOOAjpWmQgqcSgPBd9kWhZweCFDjjrWTAup7JH9Ll/WS6ARV8MX47bjVSLfMXCnEhbEPUpt3uncXorZtudZX82yYqzg/sXOJ1YS6gaO1EF90+imb3SqVhM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjhvewgX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=czywYOI7MLbtgSILFoHG3vbFJbqmUj8K8TCB+wFIwvQ7+ywNC/lXrUPpg8N1LvOys3ozsbP4bfUkSeoJAmi7TMaBuvUMGDhdsovgYRzBiyUd9GO+deRAQCGvBG45KK97a7sZpLOkm8ifo7/7p9BE/6jG0Rz7/8cqzG7ebZUbKHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOlhqArK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjhvewgX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB69AC4CEF1;
-	Tue, 26 Aug 2025 14:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOlhqArK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BBAC4CEF1;
+	Tue, 26 Aug 2025 14:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217024;
-	bh=feb/ZQa+C2fAeWyNxo2LHzMDlvtDR9e1iO+53JBuYs0=;
+	s=korg; t=1756217026;
+	bh=fFFJTyT1RPJjV03veMhSHKHU6w/aNkZxZR2AxhiY1eU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjhvewgXo+rqVYa3ZnNd0+xR4+DVOqgXfIV3+chCargp6guUhjdIRuhwb0GrY58Cv
-	 hjST4R7XuB9shXY3C2XeGq865zHKYrbLQBbp3/aTCx7WWgWOYSjxNcgLuFvN71lDTw
-	 xVLyfkU7c8YyA0AuAMnH5cUA72+bx9xhrm/yg0kg=
+	b=rOlhqArKOkmp8b2J9+S3wv3rOmYW2/VER7Uma6AQmBfz9dv25ifsmVQum0TQ90nOH
+	 UiBdpWfOGyfJJqXHO7sU70C81fQTUkMCqfFDenyNA/0r33DNERD+BOdlp6kGu52C6u
+	 E5+J6iz2aTDqORT3Un71G4weGNDbrzgjMeLSmSVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minhong He <heminhong@kylinos.cn>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 630/644] ipv6: sr: validate HMAC algorithm ID in seg6_hmac_info_add
-Date: Tue, 26 Aug 2025 13:12:01 +0200
-Message-ID: <20250826111002.168953103@linuxfoundation.org>
+Subject: [PATCH 5.15 604/644] iio: adc: ad_sigma_delta: change to buffer predisable
+Date: Tue, 26 Aug 2025 13:11:35 +0200
+Message-ID: <20250826111001.516811903@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -46,48 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Minhong He <heminhong@kylinos.cn>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 84967deee9d9870b15bc4c3acb50f1d401807902 ]
+[ Upstream commit 66d4374d97f85516b5a22418c5e798aed2606dec ]
 
-The seg6_genl_sethmac() directly uses the algorithm ID provided by the
-userspace without verifying whether it is an HMAC algorithm supported
-by the system.
-If an unsupported HMAC algorithm ID is configured, packets using SRv6 HMAC
-will be dropped during encapsulation or decapsulation.
+Change the buffer disable callback from postdisable to predisable.
+This balances the existing posteanble callback. Using postdisable
+with posteanble can be problematic, for example, if update_scan_mode
+fails, it would call postdisable without ever having called posteanble,
+so the drivers using this would be in an unexpected state when
+postdisable was called.
 
-Fixes: 4f4853dc1c9c ("ipv6: sr: implement API to control SR HMAC structure")
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250815063845.85426-1-heminhong@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: af3008485ea0 ("iio:adc: Add common code for ADI Sigma Delta devices")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250703-iio-adc-ad_sigma_delta-buffer-predisable-v1-1-f2ab85138f1f@baylibre.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_hmac.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/adc/ad_sigma_delta.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
-index 58203c41d652..7e3a85769932 100644
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -294,6 +294,9 @@ int seg6_hmac_info_add(struct net *net, u32 key, struct seg6_hmac_info *hinfo)
- 	struct seg6_pernet_data *sdata = seg6_pernet(net);
- 	int err;
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -371,7 +371,7 @@ err_unlock:
+ 	return ret;
+ }
  
-+	if (!__hmac_get_algo(hinfo->alg_id))
-+		return -EINVAL;
-+
- 	err = rhashtable_lookup_insert_fast(&sdata->hmac_infos, &hinfo->node,
- 					    rht_params);
+-static int ad_sd_buffer_postdisable(struct iio_dev *indio_dev)
++static int ad_sd_buffer_predisable(struct iio_dev *indio_dev)
+ {
+ 	struct ad_sigma_delta *sigma_delta = iio_device_get_drvdata(indio_dev);
  
--- 
-2.50.1
-
+@@ -432,7 +432,7 @@ static irqreturn_t ad_sd_trigger_handler
+ 
+ static const struct iio_buffer_setup_ops ad_sd_buffer_setup_ops = {
+ 	.postenable = &ad_sd_buffer_postenable,
+-	.postdisable = &ad_sd_buffer_postdisable,
++	.predisable = &ad_sd_buffer_predisable,
+ 	.validate_scan_mask = &iio_validate_scan_mask_onehot,
+ };
+ 
 
 
