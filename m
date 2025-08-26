@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5805317332C;
-	Tue, 26 Aug 2025 11:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F016117332C;
+	Tue, 26 Aug 2025 11:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207443; cv=none; b=ppGz3LL6iqRWt6KjJ5kRrYpGVc0O7VCqVEDMSIJkhTcztBLDoi+yzJs3uk60xccb8xMrrIECBBPnNoK/gFEuUrMuSW1xS64eWv42ubiV1mGHFt75vZkpTbT5mlcw7OFekmxdVxIZZIjlEnTrnmRQ23HQckb67kC/lIBz14/np7k=
+	t=1756207446; cv=none; b=nXfULno82huAOscrIB+Km2mi3/wjd5flh+Ax6RgF3uPLW0y4OOpRA7e1Tn8qNsXjrsVEwrREAkSUQanEnp5ovmVludSJ9BCspmfiffgAcDZW+NLNAkEfsVQ3k2lzTUSM69+RgVtI4cxKE+G2Qqw8TjQEu+b8W+dbWWk8jdU2KJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207443; c=relaxed/simple;
-	bh=ebRAafDNC6ZFUmsaZK/yiIMn5DSEyqbDJtN/Q7HjNkw=;
+	s=arc-20240116; t=1756207446; c=relaxed/simple;
+	bh=76OoYE1XfQHGy0RBfP+YTDZmU8MBHbzxk++E4NQleE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnDDmHx1EJJwHSHLyUe03pTNeAFmL69jrBvLpwQrA0FCsW0HoASTBlDuDu7PwKxFsGrgXFWeS5tYKeO+YuzX44zDBQRUG5Ev1dmD7eM4YoepaET43PrQxiYbVmI7Fg8csnuKKwsLQSesgWukxQk84fF5w57oFhojW9QZeF5g+Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+uIIbAc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sq+Cm55XuMkIZxwY0zwEbbFWByly0ewK6l5z7AdQc2vzg7cZ1teSfE1FEqFNCu2muT6WDh7SmQA0nQhaKkzJgxNsqzG9LaR0O2vX7CizfN0tqIi1rC1jOXuD1p2c0yRX4+c8LP70Vfq+W2hgrDYB19atZhAkjC4/mXxaE2StO8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOA0eNgl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+uIIbAc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC704C4CEF4;
-	Tue, 26 Aug 2025 11:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOA0eNgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E121C4CEF4;
+	Tue, 26 Aug 2025 11:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207443;
-	bh=ebRAafDNC6ZFUmsaZK/yiIMn5DSEyqbDJtN/Q7HjNkw=;
+	s=korg; t=1756207445;
+	bh=76OoYE1XfQHGy0RBfP+YTDZmU8MBHbzxk++E4NQleE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+uIIbAcRQDolOU1TaiKWAipGmkp2WgeETyYrtlPT1ddpIU9LJvJnUAucoPAeweFV
-	 aERr8vHGolR8yhEU9vsLTBNyWgRix76/Yif8ZsmyP4ZYc7XDKfqrkt34VKuHnYQf0r
-	 9BBpeF/SNfcbpKgklAshAV4kiKM+GATpYC3CqD+4=
+	b=yOA0eNglYDdqrLOyeecSbM7BVjKqvHkSfmqUAGmBUExfSsWkNPWqKhxKhmWEQU18L
+	 cCt6F7cyjbRsDz05CXGf4oTIcuYb4a3eWnWrCTJmjSv8lOxNaA18LPgTVAy2vRXppL
+	 0ZSJm2sx8fkBJtpn1VIMPmhL9zfrfVUPz944bF74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
 	Dikshita Agarwal <quic_dikshita@quicinc.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>
-Subject: [PATCH 6.16 152/457] media: iris: Avoid updating frame size to firmware during reconfig
-Date: Tue, 26 Aug 2025 13:07:16 +0200
-Message-ID: <20250826110941.129011120@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.16 153/457] media: iris: Drop port check for session property response
+Date: Tue, 26 Aug 2025 13:07:17 +0200
+Message-ID: <20250826110941.154187907@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -56,20 +55,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-commit caf2055487694b6cb52f2ecb161c6c5de660dd72 upstream.
+commit f3516f856d1f11d9dff7d72491d474a2bae1cf8e upstream.
 
-During reconfig, the firmware sends the resolution aligned to 8 bytes.
-If the driver sends the same resolution back to the firmware the resolution
-will be aligned to 16 bytes not 8.
+Currently, port check enforces that session property response must
+arrive only on the BITSTREAM port. However, firmware can send some
+responses on other port as well.
 
-The alignment mismatch would then subsequently cause the firmware to
-send another redundant sequence change event.
-
-Fix this by not setting the resolution property during reconfig.
+Remove the strict port validation to correctly handle session property
+responses from the firmware.
 
 Cc: stable@vger.kernel.org
 Fixes: 3a19d7b9e08b ("media: iris: implement set properties to firmware during streamon")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
@@ -80,55 +77,25 @@ Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c |   15 ++++++++-------
- drivers/media/platform/qcom/iris/iris_state.c            |    2 +-
- drivers/media/platform/qcom/iris/iris_state.h            |    1 +
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-@@ -546,14 +546,15 @@ static int iris_hfi_gen1_set_resolution(
- 	struct hfi_framesize fs;
- 	int ret;
- 
--	fs.buffer_type = HFI_BUFFER_INPUT;
--	fs.width = inst->fmt_src->fmt.pix_mp.width;
--	fs.height = inst->fmt_src->fmt.pix_mp.height;
--
--	ret = hfi_gen1_set_property(inst, ptype, &fs, sizeof(fs));
--	if (ret)
--		return ret;
-+	if (!iris_drc_pending(inst)) {
-+		fs.buffer_type = HFI_BUFFER_INPUT;
-+		fs.width = inst->fmt_src->fmt.pix_mp.width;
-+		fs.height = inst->fmt_src->fmt.pix_mp.height;
- 
-+		ret = hfi_gen1_set_property(inst, ptype, &fs, sizeof(fs));
-+		if (ret)
-+			return ret;
-+	}
- 	fs.buffer_type = HFI_BUFFER_OUTPUT2;
- 	fs.width = inst->fmt_dst->fmt.pix_mp.width;
- 	fs.height = inst->fmt_dst->fmt.pix_mp.height;
---- a/drivers/media/platform/qcom/iris/iris_state.c
-+++ b/drivers/media/platform/qcom/iris/iris_state.c
-@@ -245,7 +245,7 @@ int iris_inst_sub_state_change_pause(str
- 	return iris_inst_change_sub_state(inst, 0, set_sub_state);
- }
- 
--static inline bool iris_drc_pending(struct iris_inst *inst)
-+bool iris_drc_pending(struct iris_inst *inst)
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+index b75a01641d5d..d1a2a497a7b2 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+@@ -636,9 +636,6 @@ static int iris_hfi_gen2_handle_session_property(struct iris_inst *inst,
  {
- 	return inst->sub_state & IRIS_INST_SUB_DRC &&
- 		inst->sub_state & IRIS_INST_SUB_DRC_LAST;
---- a/drivers/media/platform/qcom/iris/iris_state.h
-+++ b/drivers/media/platform/qcom/iris/iris_state.h
-@@ -140,5 +140,6 @@ int iris_inst_sub_state_change_drain_las
- int iris_inst_sub_state_change_drc_last(struct iris_inst *inst);
- int iris_inst_sub_state_change_pause(struct iris_inst *inst, u32 plane);
- bool iris_allow_cmd(struct iris_inst *inst, u32 cmd);
-+bool iris_drc_pending(struct iris_inst *inst);
+ 	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
  
- #endif
+-	if (pkt->port != HFI_PORT_BITSTREAM)
+-		return 0;
+-
+ 	if (pkt->flags & HFI_FW_FLAGS_INFORMATION)
+ 		return 0;
+ 
+-- 
+2.50.1
+
 
 
