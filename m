@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E9434A333;
-	Tue, 26 Aug 2025 13:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B311258A;
+	Tue, 26 Aug 2025 13:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216434; cv=none; b=HzGnl5W73kRTtgXI7VoJOT2sg0+HamO9iqXl2DXg1nPHvH5NdBSg2K54ERIMv26+XZ4C9hZGO+fqDGwbZ5KqZAx+mGgJh6F4H4gqExlp17cBBO3S6DFn77XP+6bJ8L8NGiABzX2QWd0+ZPXP/A8azgsTQlpPneBhnxDQCFdenvE=
+	t=1756216437; cv=none; b=MacQ9F2bbL2k94UcMhwpAFDdCdbyb9bovv2bRKtqYJTz56JtMqi1hTy017x4SnHGthviNAO++hrHSZj6CmsTNLbtqB1//7lPU9t/VwWw5wK05+0N/Prc/yy1WoqpkLi4oruWMQgQHKTB+JRLjTdEnmyFh/cLwfQirv9k3CNJGBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216434; c=relaxed/simple;
-	bh=N8vLU7TZ1woUYh6TbHNYG/ZVhSezFwUNvaTMrz/R7fo=;
+	s=arc-20240116; t=1756216437; c=relaxed/simple;
+	bh=Y/9VjIpaAvV6bQmgdgmyYDdtffqIAizN+RPnj1kE4mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iK6xjEqvLeWTUjl3ghmOP5w3XKouwe8vgahWU99Q7p27sDu7IZsZ2Yiff3SVPKtqFE9g56sOjY2pSah3eBzU+JQ+tvKwR0KVVxfXBQNZxaORWn/+7kb9XwWrleAHoMsw+AjFdH+LCs712UcLES2ezcwnGb0wHbYzy2Tke8DrnAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyWWIPKm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fd9wk2hdTFic/qxjMPquFNnjBYcUCQzjMPi3YnM7qt29cWVgrSOc4itHAe0MdsrvaEklBngqG/ZWs/zw9v97g3sWJPuQl1PYlAEelZnwvQcSmcUYWrUo0UJlZIeM2LqiE1Wop6AE3o7mlX+iWUxW2+P8keUqzJL9n8XVTgbsFg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmJD3Bt1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyWWIPKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2B5C4CEF1;
-	Tue, 26 Aug 2025 13:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmJD3Bt1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2E1C4CEF1;
+	Tue, 26 Aug 2025 13:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216434;
-	bh=N8vLU7TZ1woUYh6TbHNYG/ZVhSezFwUNvaTMrz/R7fo=;
+	s=korg; t=1756216437;
+	bh=Y/9VjIpaAvV6bQmgdgmyYDdtffqIAizN+RPnj1kE4mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GyWWIPKmey7z8st5yux9IBCMa5ClUhxMZ27QVkqkr3dEModnfbiy7zVvpLweTTsmH
-	 EM0elGtM4HcjgtILOugWH0RpGY3eg7wg1eLJ/4i9uUCV7yOHmmnZGEdmDqp3YPnP2g
-	 fxYU2P8OqiIVD2gyNN1WLoMV9sevy9wHSKNTzpSQ=
+	b=UmJD3Bt1qMcF5mEo2tD/h+67KN36xyFhYiDAPxTZWM1zmEvweqsD18LtMwSCbdgCA
+	 kbhlYCO19EKzMfsd+TYgNyhMMwXeIFZ66U5K9XO+V+sOTy6uQB18TPtT4OXmRUJFm0
+	 aPpfdrF+/rJJdriu8mVA/zUz6VJ/4e7i+aQQjxVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srujana Challa <schalla@marvell.com>,
-	Bharat Bhushan <bbhushan2@marvell.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+630f6d40b3ccabc8e96e@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 411/644] crypto: octeontx2 - add timeout for load_fvc completion poll
-Date: Tue, 26 Aug 2025 13:08:22 +0200
-Message-ID: <20250826110956.640779618@linuxfoundation.org>
+Subject: [PATCH 5.15 394/644] jfs: Regular file corruption check
+Date: Tue, 26 Aug 2025 13:08:05 +0200
+Message-ID: <20250826110956.212674820@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,63 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bharat Bhushan <bbhushan2@marvell.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 2157e50f65d2030f07ea27ef7ac4cfba772e98ac ]
+[ Upstream commit 2d04df8116426b6c7b9f8b9b371250f666a2a2fb ]
 
-Adds timeout to exit from possible infinite loop, which polls
-on CPT instruction(load_fvc) completion.
+The reproducer builds a corrupted file on disk with a negative i_size value.
+Add a check when opening this file to avoid subsequent operation failures.
 
-Signed-off-by: Srujana Challa <schalla@marvell.com>
-Signed-off-by: Bharat Bhushan <bbhushan2@marvell.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: syzbot+630f6d40b3ccabc8e96e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=630f6d40b3ccabc8e96e
+Tested-by: syzbot+630f6d40b3ccabc8e96e@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/marvell/octeontx2/otx2_cptpf_ucode.c  | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/jfs/file.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c b/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-index 7c1b92aaab39..6bee19394857 100644
---- a/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-+++ b/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-@@ -1419,6 +1419,7 @@ int otx2_cpt_discover_eng_capabilities(struct otx2_cptpf_dev *cptpf)
- 	dma_addr_t rptr_baddr;
- 	struct pci_dev *pdev;
- 	u32 len, compl_rlen;
-+	int timeout = 10000;
- 	int ret, etype;
- 	void *rptr;
+diff --git a/fs/jfs/file.c b/fs/jfs/file.c
+index 1d732fd223d4..5c28883eee4e 100644
+--- a/fs/jfs/file.c
++++ b/fs/jfs/file.c
+@@ -44,6 +44,9 @@ static int jfs_open(struct inode *inode, struct file *file)
+ {
+ 	int rc;
  
-@@ -1483,16 +1484,27 @@ int otx2_cpt_discover_eng_capabilities(struct otx2_cptpf_dev *cptpf)
- 							 etype);
- 		otx2_cpt_fill_inst(&inst, &iq_cmd, rptr_baddr);
- 		lfs->ops->send_cmd(&inst, 1, &cptpf->lfs.lf[0]);
-+		timeout = 10000;
++	if (S_ISREG(inode->i_mode) && inode->i_size < 0)
++		return -EIO;
++
+ 	if ((rc = dquot_file_open(inode, file)))
+ 		return rc;
  
- 		while (lfs->ops->cpt_get_compcode(result) ==
--						OTX2_CPT_COMPLETION_CODE_INIT)
-+						OTX2_CPT_COMPLETION_CODE_INIT) {
- 			cpu_relax();
-+			udelay(1);
-+			timeout--;
-+			if (!timeout) {
-+				ret = -ENODEV;
-+				cptpf->is_eng_caps_discovered = false;
-+				dev_warn(&pdev->dev, "Timeout on CPT load_fvc completion poll\n");
-+				goto error_no_response;
-+			}
-+		}
- 
- 		cptpf->eng_caps[etype].u = be64_to_cpup(rptr);
- 	}
--	dma_unmap_single(&pdev->dev, rptr_baddr, len, DMA_BIDIRECTIONAL);
- 	cptpf->is_eng_caps_discovered = true;
- 
-+error_no_response:
-+	dma_unmap_single(&pdev->dev, rptr_baddr, len, DMA_BIDIRECTIONAL);
- free_result:
- 	kfree(result);
- lf_cleanup:
 -- 
 2.39.5
 
