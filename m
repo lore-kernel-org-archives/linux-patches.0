@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA3C2AE7F;
-	Tue, 26 Aug 2025 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6866E352074;
+	Tue, 26 Aug 2025 14:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218119; cv=none; b=nk2zLGl58kYDSpRapKjC0wiT/41gobXV8syhmWsd95Tb/AbcFbTIbFgz0AJn+EWcL/FXjMVCo2Een3rxSPpovFqgzvVTbungQ4/Ksx8N3u9CfzczoaIulZ7RFTQ4j6EgtQjSWNGNaU+VIPbscklZ43On7oaDLmCUkYdQWPe/fZI=
+	t=1756218122; cv=none; b=O6Ptqco6qBUgB6pKKE++rvsrMbH2vmYLyV9JPKZ7grXlKjti8no1CMSpx1DZiOkN/1JhAf0lx4d0C+7+Tvq5ay7H4is/tSIOu7yZ4J5FOaeIVWoH2bTfguoTbym0NBkfJLPLTLsI3BE9WZ6egVg+J2YKvmMZ0kCPbnP96O0EDOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218119; c=relaxed/simple;
-	bh=IQifRH4exKKgPcN/xqLTEwxKeE1yPFNyubLLLDKSm40=;
+	s=arc-20240116; t=1756218122; c=relaxed/simple;
+	bh=UMBWrOvMfi4K8Tyk3dsjAbBwtYKQny4NPYDGxdsWpGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lL9mlY1aVurq6bWWJwy+/ewDHQoUMa9m3r5m6xm33HxQfNO5J6d3ZeTruEGrgnMqHZeNI8pIj7UQOgak7dS1SrvUs0Kka1Qww0g7TrniqLJi/HB59VUCRfJD8cN9oggNkj60LRiIhmZhziTs4n12pjW2zurOYwceZEohgcGMrTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1miksv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LykZvOxrxt0Z2gDKkiddey7GMcK7rZcfGuqrxdL0h3GuWBX2MmLrEM+0PK5HXcaYWP7UfNpssyVJL2RuxHoiqSbQj5WNBWF6wZMRupXviODI+2TyXNBsoZP9+Qu+2j1KG4CE6k/LyBXcUg4eFPrmhj7G8Wu4RSvf40R0oO9Eoe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOI5SZkc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1miksv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53604C116B1;
-	Tue, 26 Aug 2025 14:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOI5SZkc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3D1C16AAE;
+	Tue, 26 Aug 2025 14:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218119;
-	bh=IQifRH4exKKgPcN/xqLTEwxKeE1yPFNyubLLLDKSm40=;
+	s=korg; t=1756218122;
+	bh=UMBWrOvMfi4K8Tyk3dsjAbBwtYKQny4NPYDGxdsWpGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q1miksv9VdD1/xsenCQ6sH4TluChhR+JUUpVrJfPAfG7Abk92h1XCbanIV+D7DW2B
-	 2r8RdPB5TP1UX3vXPSYT87gRrVvUI0sio+fSPTmq2xq0lIdTZ6dvxAhRycmnXU5int
-	 PElqkXD06i5ydPlmJcoFXs5WE53kgcjna4OLK9uw=
+	b=VOI5SZkck4fkAyqhyLxifhC/UveWMi2+JGQVYP9Fs5G3Qaz9ZYAdoTKNh+dYnTcZx
+	 HCY/nmg15vokN7pOOiS6U53SKFT8FhQzSaK3ePB98tP2IYSTU1uXFPdr4jkKdHs1nz
+	 nvOp331f6GSQWWb5jwR6kf1DR72qG2SdSDp53Qp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>
-Subject: [PATCH 5.10 399/523] drm/amd/display: Fill display clock and vblank time in dce110_fill_display_configs
-Date: Tue, 26 Aug 2025 13:10:09 +0200
-Message-ID: <20250826110934.302606723@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 400/523] selftests: mptcp: connect: also cover alt modes
+Date: Tue, 26 Aug 2025 13:10:10 +0200
+Message-ID: <20250826110934.326834212@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -46,82 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 7d07140d37f792f01cfdb8ca9a6a792ab1d29126 upstream.
+commit 37848a456fc38c191aedfe41f662cc24db8c23d9 upstream.
 
-Also needed by DCE 6.
-This way the code that gathers this info can be shared between
-different DCE versions and doesn't have to be repeated.
+The "mmap" and "sendfile" alternate modes for mptcp_connect.sh/.c are
+available from the beginning, but only tested when mptcp_connect.sh is
+manually launched with "-m mmap" or "-m sendfile", not via the
+kselftests helpers.
 
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8107432dff37db26fcb641b6cebeae8981cd73a0)
+The MPTCP CI was manually running "mptcp_connect.sh -m mmap", but not
+"-m sendfile". Plus other CIs, especially the ones validating the stable
+releases, were not validating these alternate modes.
+
+To make sure these modes are validated by these CIs, add two new test
+programs executing mptcp_connect.sh with the alternate modes.
+
+Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
 Cc: stable@vger.kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250715-net-mptcp-sft-connect-alt-v2-1-8230ddd82454@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Drop userspace_pm.sh from TEST_PROGS ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ Drop mptcp_sockopt.sh from TEST_PROGS, and drop "sendfile" which is
+  not supported in this version. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce100/dce_clk_mgr.c    |    2 --
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c |   10 +++-------
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c   |    2 --
- 3 files changed, 3 insertions(+), 11 deletions(-)
+ tools/testing/selftests/net/mptcp/Makefile              |    3 ++-
+ tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh |    5 +++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+ create mode 100755 tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce100/dce_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce100/dce_clk_mgr.c
-@@ -384,8 +384,6 @@ static void dce_pplib_apply_display_requ
- {
- 	struct dm_pp_display_configuration *pp_display_cfg = &context->pp_display_cfg;
+--- a/tools/testing/selftests/net/mptcp/Makefile
++++ b/tools/testing/selftests/net/mptcp/Makefile
+@@ -5,7 +5,8 @@ KSFT_KHDR_INSTALL := 1
  
--	pp_display_cfg->avail_mclk_switch_time_us = dce110_get_min_vblank_time_us(context);
--
- 	dce110_fill_display_configs(context, pp_display_cfg);
+ CFLAGS =  -Wall -Wl,--no-as-needed -O2 -g  -I$(top_srcdir)/usr/include
  
- 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-@@ -124,6 +124,9 @@ void dce110_fill_display_configs(
- 	int j;
- 	int num_cfgs = 0;
+-TEST_PROGS := mptcp_connect.sh pm_netlink.sh mptcp_join.sh diag.sh \
++TEST_PROGS := mptcp_connect.sh mptcp_connect_mmap.sh \
++	      pm_netlink.sh mptcp_join.sh diag.sh \
+ 	      simult_flows.sh
  
-+	pp_display_cfg->avail_mclk_switch_time_us = dce110_get_min_vblank_time_us(context);
-+	pp_display_cfg->disp_clk_khz = dc->clk_mgr->clks.dispclk_khz;
-+	pp_display_cfg->avail_mclk_switch_time_in_disp_active_us = 0;
- 	pp_display_cfg->crtc_index = dc->res_pool->res_cap->num_timing_generator;
- 
- 	for (j = 0; j < context->stream_count; j++) {
-@@ -242,13 +245,6 @@ void dce11_pplib_apply_display_requireme
- 	pp_display_cfg->min_engine_clock_deep_sleep_khz
- 			= context->bw_ctx.bw.dce.sclk_deep_sleep_khz;
- 
--	pp_display_cfg->avail_mclk_switch_time_us =
--						dce110_get_min_vblank_time_us(context);
--	/* TODO: dce11.2*/
--	pp_display_cfg->avail_mclk_switch_time_in_disp_active_us = 0;
--
--	pp_display_cfg->disp_clk_khz = dc->clk_mgr->clks.dispclk_khz;
--
- 	dce110_fill_display_configs(context, pp_display_cfg);
- 
- 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-@@ -100,8 +100,6 @@ static void dce60_pplib_apply_display_re
- {
- 	struct dm_pp_display_configuration *pp_display_cfg = &context->pp_display_cfg;
- 
--	pp_display_cfg->avail_mclk_switch_time_us = dce110_get_min_vblank_time_us(context);
--
- 	dce110_fill_display_configs(context, pp_display_cfg);
- 
- 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
+ TEST_GEN_FILES = mptcp_connect pm_nl_ctl
+--- /dev/null
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh
+@@ -0,0 +1,5 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++
++MPTCP_LIB_KSFT_TEST="$(basename "${0}" .sh)" \
++	"$(dirname "${0}")/mptcp_connect.sh" -m mmap "${@}"
 
 
