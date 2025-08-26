@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8D7393DD1;
-	Tue, 26 Aug 2025 11:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B11305E08;
+	Tue, 26 Aug 2025 11:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208699; cv=none; b=YnGq93TvmbMV+4+0G1Sxiis/YYYTnx2CbcA78dWNRLYiT68kMZ/YGmDASPOW3z8H+p5Lg3FAAh6kIeCA7jJqkfZNEeUwqqFF9jPCOha/xnAr8TdEIlyylKlOfdXt3+aDG+nAAfuD/sfUC+inNOMZV6n0T95FKrRlj5s56wXORiY=
+	t=1756208702; cv=none; b=U2cL1CvCfcPjsJ+2DU7hH2dXskiPOnSXsCnghxEssghMadeRuG7jfoF5Hj7m+0cutOeFxZuEWMhFyGIw7IkYEAtaucsb/Nhu8VX1Qk08X5Q28i4/P0023SX5emKaTb+pL+Rq7DNeo2muvwwJXJBWu/fCM0o4r6fk/YNrFpkjgHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208699; c=relaxed/simple;
-	bh=gP3GJgvwMM1tyQNcKNqmElsYgz+kLiaSyt4JXc2RA74=;
+	s=arc-20240116; t=1756208702; c=relaxed/simple;
+	bh=PjbjFpE8FfzE3Y5MyxKCPeVUzZA60QpFKC1TJRFRr4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vAHZvj5OThQzBHD30EcVNkzIRjRH0bbWLA2Fv/eiO9JTjVc6vwaK6ER0dqIRnzIINRPISGW1UsumkhSz2NM/v4jBU/Run2gUG8OvWXlZt0mNVY1U2eCCjbQlMCRfiolnYgDInZUS4J0KoWYh6SkLX3ctRlVoLjr/QZph5lwX3xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvJd1v9f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OQo8komg6SyoAkhS+Rat2wTVAwQXyWxlt09b8O/LSpeB+uhKAqGHhdb5Wu/vVTQpAE6PmZxRQbL6BTAy4/bcMNTH96dQiJhQrOClKGgG9WKwrlpfag3zwebON2GcySJ7NJdKrMizGTO370p7qITAstB8kggF9usypwy0fBKfMlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmkt95/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvJd1v9f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E706AC4CEF1;
-	Tue, 26 Aug 2025 11:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmkt95/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1F8C4CEF4;
+	Tue, 26 Aug 2025 11:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208699;
-	bh=gP3GJgvwMM1tyQNcKNqmElsYgz+kLiaSyt4JXc2RA74=;
+	s=korg; t=1756208702;
+	bh=PjbjFpE8FfzE3Y5MyxKCPeVUzZA60QpFKC1TJRFRr4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvJd1v9fi1WCYV48O2Osz8Shy7zzpjJH65mDN0WC+hVLo//3N9xsTCVMrUZH5KFbR
-	 jDw1R5RPwF8tOfoPVtrbnX5eBiu+7o1L7hMdP0T6mgXstf9PVo+9bNwrQxsyU3NJ+x
-	 EK8Pug4Gl6mjj1TzoB5JA1DhciD0G0qSDEdKUUnI=
+	b=lmkt95/vENrqcWarXI5xWzCQWadDKfyVQ/VtZmWk7CxKSu06MU6UNfaBQY6zYhXuz
+	 Wkkc30Fu2TJDA5BLpqzQOCEagA5n8SAabdpWOgAgvYI/o+JQHkkP4Kya2NXeg7jK5f
+	 cCBsZHxFPMj9GEeXzGRKssqkTNNIqC3fu8QA93iQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Scott GUO <scottzhguo@tencent.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 171/322] squashfs: fix memory leak in squashfs_fill_super
-Date: Tue, 26 Aug 2025 13:09:46 +0200
-Message-ID: <20250826110920.075331258@linuxfoundation.org>
+	Judith Mendez <jm@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 205/322] arm64: dts: ti: k3-am62*: Move eMMC pinmux to top level board file
+Date: Tue, 26 Aug 2025 13:10:20 +0200
+Message-ID: <20250826110920.931391189@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,60 +51,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Judith Mendez <jm@ti.com>
 
-commit b64700d41bdc4e9f82f1346c15a3678ebb91a89c upstream.
+[ Upstream commit a0b8da04153eb61cc2eaeeea5cc404e91e557f6b ]
 
-If sb_min_blocksize returns 0, squashfs_fill_super exits without freeing
-allocated memory (sb->s_fs_info).
+This moves pinmux child nodes for sdhci0 node from k3-am62x-sk-common
+to each top level board file. This is needed since we require internal
+pullups for AM62x SK and not for AM62 LP SK since it has external
+pullups on DATA 1-7.
 
-Fix this by moving the call to sb_min_blocksize to before memory is
-allocated.
+Internal pulls are required for AM62 SK as per JESD84 spec
+recommendation to prevent unconnected lines floating.
 
-Link: https://lkml.kernel.org/r/20250811223740.110392-1-phillip@squashfs.org.uk
-Fixes: 734aa85390ea ("Squashfs: check return result of sb_min_blocksize")
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reported-by: Scott GUO <scottzhguo@tencent.com>
-Closes: https://lore.kernel.org/all/20250811061921.3807353-1-scott_gzh@163.com
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d19a66ae488a ("arm64: dts: ti: k3-am625-sk: Enable on board peripherals")
+Cc: stable@vger.kernel.org
+Signed-off-by: Judith Mendez <jm@ti.com>
+Link: https://lore.kernel.org/r/20250707190830.3951619-1-jm@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/super.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts       |   24 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/ti/k3-am625-sk.dts         |   24 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi |   24 ------------------------
+ 3 files changed, 48 insertions(+), 24 deletions(-)
 
---- a/fs/squashfs/super.c
-+++ b/fs/squashfs/super.c
-@@ -187,10 +187,15 @@ static int squashfs_fill_super(struct su
- 	unsigned short flags;
- 	unsigned int fragments;
- 	u64 lookup_table_start, xattr_id_table_start, next_table;
--	int err;
-+	int err, devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
+--- a/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
+@@ -74,6 +74,22 @@
+ };
  
- 	TRACE("Entered squashfs_fill_superblock\n");
- 
-+	if (!devblksize) {
-+		errorf(fc, "squashfs: unable to set blocksize\n");
-+		return -EINVAL;
-+	}
+ &main_pmx0 {
++	main_mmc0_pins_default: main-mmc0-default-pins {
++		bootph-all;
++		pinctrl-single,pins = <
++			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (V3) MMC0_CMD */
++			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (Y1) MMC0_CLK */
++			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (V2) MMC0_DAT0 */
++			AM62X_IOPAD(0x210, PIN_INPUT, 0) /* (V1) MMC0_DAT1 */
++			AM62X_IOPAD(0x20c, PIN_INPUT, 0) /* (W2) MMC0_DAT2 */
++			AM62X_IOPAD(0x208, PIN_INPUT, 0) /* (W1) MMC0_DAT3 */
++			AM62X_IOPAD(0x204, PIN_INPUT, 0) /* (Y2) MMC0_DAT4 */
++			AM62X_IOPAD(0x200, PIN_INPUT, 0) /* (W3) MMC0_DAT5 */
++			AM62X_IOPAD(0x1fc, PIN_INPUT, 0) /* (W4) MMC0_DAT6 */
++			AM62X_IOPAD(0x1f8, PIN_INPUT, 0) /* (V4) MMC0_DAT7 */
++		>;
++	};
 +
- 	sb->s_fs_info = kzalloc(sizeof(*msblk), GFP_KERNEL);
- 	if (sb->s_fs_info == NULL) {
- 		ERROR("Failed to allocate squashfs_sb_info\n");
-@@ -201,12 +206,7 @@ static int squashfs_fill_super(struct su
+ 	vddshv_sdio_pins_default: vddshv-sdio-default-pins {
+ 		pinctrl-single,pins = <
+ 			AM62X_IOPAD(0x07c, PIN_OUTPUT, 7) /* (M19) GPMC0_CLK.GPIO0_31 */
+@@ -144,6 +160,14 @@
+ 	};
+ };
  
- 	msblk->panic_on_errors = (opts->errors == Opt_errors_panic);
++&sdhci0 {
++	bootph-all;
++	non-removable;
++	pinctrl-names = "default";
++	pinctrl-0 = <&main_mmc0_pins_default>;
++	status = "okay";
++};
++
+ &sdhci1 {
+ 	vmmc-supply = <&vdd_mmc1>;
+ 	vqmmc-supply = <&vddshv_sdio>;
+--- a/arch/arm64/boot/dts/ti/k3-am625-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
+@@ -106,6 +106,22 @@
+ };
  
--	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
--	if (!msblk->devblksize) {
--		errorf(fc, "squashfs: unable to set blocksize\n");
--		return -EINVAL;
--	}
+ &main_pmx0 {
++	main_mmc0_pins_default: main-mmc0-default-pins {
++		bootph-all;
++		pinctrl-single,pins = <
++			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (Y3) MMC0_CMD */
++			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
++			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
++			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
++			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
++			AM62X_IOPAD(0x208, PIN_INPUT_PULLUP, 0) /* (Y4) MMC0_DAT3 */
++			AM62X_IOPAD(0x204, PIN_INPUT_PULLUP, 0) /* (AB2) MMC0_DAT4 */
++			AM62X_IOPAD(0x200, PIN_INPUT_PULLUP, 0) /* (AC1) MMC0_DAT5 */
++			AM62X_IOPAD(0x1fc, PIN_INPUT_PULLUP, 0) /* (AD2) MMC0_DAT6 */
++			AM62X_IOPAD(0x1f8, PIN_INPUT_PULLUP, 0) /* (AC2) MMC0_DAT7 */
++		>;
++	};
++
+ 	main_rgmii2_pins_default: main-rgmii2-default-pins {
+ 		bootph-all;
+ 		pinctrl-single,pins = <
+@@ -195,6 +211,14 @@
+ 	};
+ };
+ 
++&sdhci0 {
++	bootph-all;
++	non-removable;
++	pinctrl-names = "default";
++	pinctrl-0 = <&main_mmc0_pins_default>;
++	status = "okay";
++};
++
+ &sdhci1 {
+ 	vmmc-supply = <&vdd_mmc1>;
+ 	vqmmc-supply = <&vdd_sd_dv>;
+--- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+@@ -182,22 +182,6 @@
+ 		>;
+ 	};
+ 
+-	main_mmc0_pins_default: main-mmc0-default-pins {
+-		bootph-all;
+-		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (Y3/V3) MMC0_CMD */
+-			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1/Y1) MMC0_CLK */
+-			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2/V2) MMC0_DAT0 */
+-			AM62X_IOPAD(0x210, PIN_INPUT, 0) /* (AA1/V1) MMC0_DAT1 */
+-			AM62X_IOPAD(0x20c, PIN_INPUT, 0) /* (AA3/W2) MMC0_DAT2 */
+-			AM62X_IOPAD(0x208, PIN_INPUT, 0) /* (Y4/W1) MMC0_DAT3 */
+-			AM62X_IOPAD(0x204, PIN_INPUT, 0) /* (AB2/Y2) MMC0_DAT4 */
+-			AM62X_IOPAD(0x200, PIN_INPUT, 0) /* (AC1/W3) MMC0_DAT5 */
+-			AM62X_IOPAD(0x1fc, PIN_INPUT, 0) /* (AD2/W4) MMC0_DAT6 */
+-			AM62X_IOPAD(0x1f8, PIN_INPUT, 0) /* (AC2/V4) MMC0_DAT7 */
+-		>;
+-	};
 -
-+	msblk->devblksize = devblksize;
- 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
+ 	main_mmc1_pins_default: main-mmc1-default-pins {
+ 		bootph-all;
+ 		pinctrl-single,pins = <
+@@ -413,14 +397,6 @@
+ 	clock-frequency = <400000>;
+ };
  
- 	mutex_init(&msblk->meta_index_mutex);
+-&sdhci0 {
+-	bootph-all;
+-	status = "okay";
+-	non-removable;
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&main_mmc0_pins_default>;
+-};
+-
+ &sdhci1 {
+ 	/* SD/MMC */
+ 	bootph-all;
 
 
