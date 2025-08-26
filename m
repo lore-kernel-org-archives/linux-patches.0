@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E1D352FC9;
-	Tue, 26 Aug 2025 13:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72321352081;
+	Tue, 26 Aug 2025 13:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216721; cv=none; b=bFR0IsuJgMmThNiEJbgR/6WNEwi0iu4to55VhP4vvjk0Uz0enNhSAZ5c4kTiW2XudoQIlAT6PI6x6mY+OX5BhKGhefK5iduLUIOPIu+sgRSiJ/QVYz+vjOD8DEX6x0NZAE0dIxs6K5x21DRg5e+qKG6GW4sL5v67Yo/yPeS1cUY=
+	t=1756216724; cv=none; b=JZhpleUG8BN9uj18yO/iT4h+I4O03n1d6vsfnQuJ2GvpNdMFsqin1K66xQVsBVz4GFzdP3+7zLKRYpSl1o0C3qjkAlNIDf3th79ZvQvKWExcfgMch2dUcKl0cuK9dfYn6KhjmqwaY8xgaJ1YFEj1aOBXwU1x8UO9pF+Ww5uIGLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216721; c=relaxed/simple;
-	bh=u5LxUSyjxFNX/6KC4tT1eiGgIxEA2KSkMASjHnD9MGU=;
+	s=arc-20240116; t=1756216724; c=relaxed/simple;
+	bh=yaLxVBfFj+GbO1OJ7pqf4g+j/GpdhFFn+PYBQqqqn04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gn40kAsxi81udS8JLSnAzMYh5uxR0+UqJvNSZV8VpQhKJZQBhLht/x8I+B3emaWup99wRM7xJ3cIzhpmZ51a/ABHcdLW4go6VF4QlJoiU3zXlrZ2uQbQfbwT6JiYRKsUvUdbcuozQ16OTN6IY+YjN2/AIRC2wRi+blqCQYiBDaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOqF8QJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUSlu0epf5JMYkdVsKmQFtZZINXzTWSsK0x3Mf+w6whSGmfgspEIGcoyh7abkQnQvqYjiiSSKf+iUJqBZyv24ByjKttRbXoHv8L55+SugmX+i+rrtXk3SNroZsK4R+q8V9yv/pGyhkbJk6kuoHEX0ebY4sy5jNS0Ya+pTQTqHnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8V0G/C3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOqF8QJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3382C4CEF1;
-	Tue, 26 Aug 2025 13:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8V0G/C3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F25DC4CEF1;
+	Tue, 26 Aug 2025 13:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216721;
-	bh=u5LxUSyjxFNX/6KC4tT1eiGgIxEA2KSkMASjHnD9MGU=;
+	s=korg; t=1756216724;
+	bh=yaLxVBfFj+GbO1OJ7pqf4g+j/GpdhFFn+PYBQqqqn04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DOqF8QJTL/+S0UV71LH+je2V2htV755bmpUuVwLMFMmQxID2jSmMH//kobZXePm18
-	 XXaaKgyuKUPTwfu+It4zcLl/dN11DU2wH3A6we1yPbDvjS6rNscLff8IKUwbl8ioUo
-	 ppNDA07W2rROuXsVYkJ7dfx4hmQGoUiAFNG+5qpI=
+	b=V8V0G/C3s7ubeyOvV8EiwR6TQufmajq1vGzztZaR80yPGdMpQVdXbh80ccpPzs6b+
+	 0rlvDmZIvFYoiyNSiaNIhpEF+/SAWM0eHvWH1K/VaiYhxD874gR+/wHoCb8B0/eTc/
+	 I+dOx7ubtw8jkMYQe9DG/7U6x+vcFuekT8n7jY5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 519/644] usb: hub: Dont try to recover devices lost during warm reset.
-Date: Tue, 26 Aug 2025 13:10:10 +0200
-Message-ID: <20250826110959.367846261@linuxfoundation.org>
+	Thomas Dreibholz <dreibh@simula.no>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 502/644] mptcp: pm: kernel: flush: do not reset ADD_ADDR limit
+Date: Tue, 26 Aug 2025 13:09:53 +0200
+Message-ID: <20250826110958.937117030@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -46,95 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 2521106fc732b0b75fd3555c689b1ed1d29d273c ]
+commit 68fc0f4b0d25692940cdc85c68e366cae63e1757 upstream.
 
-Hub driver warm-resets ports in SS.Inactive or Compliance mode to
-recover a possible connected device. The port reset code correctly
-detects if a connection is lost during reset, but hub driver
-port_event() fails to take this into account in some cases.
-port_event() ends up using stale values and assumes there is a
-connected device, and will try all means to recover it, including
-power-cycling the port.
+A flush of the MPTCP endpoints should not affect the MPTCP limits. In
+other words, 'ip mptcp endpoint flush' should not change 'ip mptcp
+limits'.
 
-Details:
-This case was triggered when xHC host was suspended with DbC (Debug
-Capability) enabled and connected. DbC turns one xHC port into a simple
-usb debug device, allowing debugging a system with an A-to-A USB debug
-cable.
+But it was the case: the MPTCP_PM_ATTR_RCV_ADD_ADDRS (add_addr_accepted)
+limit was reset by accident. Removing the reset of this counter during a
+flush fixes this issue.
 
-xhci DbC code disables DbC when xHC is system suspended to D3, and
-enables it back during resume.
-We essentially end up with two hosts connected to each other during
-suspend, and, for a short while during resume, until DbC is enabled back.
-The suspended xHC host notices some activity on the roothub port, but
-can't train the link due to being suspended, so xHC hardware sets a CAS
-(Cold Attach Status) flag for this port to inform xhci host driver that
-the port needs to be warm reset once xHC resumes.
-
-CAS is xHCI specific, and not part of USB specification, so xhci driver
-tells usb core that the port has a connection and link is in compliance
-mode. Recovery from complinace mode is similar to CAS recovery.
-
-xhci CAS driver support that fakes a compliance mode connection was added
-in commit 8bea2bd37df0 ("usb: Add support for root hub port status CAS")
-
-Once xHCI resumes and DbC is enabled back, all activity on the xHC
-roothub host side port disappears. The hub driver will anyway think
-port has a connection and link is in compliance mode, and hub driver
-will try to recover it.
-
-The port power-cycle during recovery seems to cause issues to the active
-DbC connection.
-
-Fix this by clearing connect_change flag if hub_port_reset() returns
--ENOTCONN, thus avoiding the whole unnecessary port recovery and
-initialization attempt.
-
+Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
 Cc: stable@vger.kernel.org
-Fixes: 8bea2bd37df0 ("usb: Add support for root hub port status CAS")
-Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250623133947.3144608-1-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Thomas Dreibholz <dreibh@simula.no>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/579
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-2-521fe9957892@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/mptcp/pm_netlink.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -5684,6 +5684,7 @@ static void port_event(struct usb_hub *h
- 	struct usb_device *hdev = hub->hdev;
- 	u16 portstatus, portchange;
- 	int i = 0;
-+	int err;
- 
- 	connect_change = test_bit(port1, hub->change_bits);
- 	clear_bit(port1, hub->event_bits);
-@@ -5776,8 +5777,11 @@ static void port_event(struct usb_hub *h
- 		} else if (!udev || !(portstatus & USB_PORT_STAT_CONNECTION)
- 				|| udev->state == USB_STATE_NOTATTACHED) {
- 			dev_dbg(&port_dev->dev, "do warm reset, port only\n");
--			if (hub_port_reset(hub, port1, NULL,
--					HUB_BH_RESET_TIME, true) < 0)
-+			err = hub_port_reset(hub, port1, NULL,
-+					     HUB_BH_RESET_TIME, true);
-+			if (!udev && err == -ENOTCONN)
-+				connect_change = 0;
-+			else if (err < 0)
- 				hub_port_disable(hub, port1, 1);
- 		} else {
- 			dev_dbg(&port_dev->dev, "do warm reset, full device\n");
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1582,7 +1582,6 @@ static void __flush_addrs(struct list_he
+ static void __reset_counters(struct pm_nl_pernet *pernet)
+ {
+ 	WRITE_ONCE(pernet->add_addr_signal_max, 0);
+-	WRITE_ONCE(pernet->add_addr_accept_max, 0);
+ 	WRITE_ONCE(pernet->local_addr_max, 0);
+ 	pernet->addrs = 0;
+ }
 
 
