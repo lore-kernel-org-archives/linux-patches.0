@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970031FECAB;
-	Tue, 26 Aug 2025 11:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0167929BDAC;
+	Tue, 26 Aug 2025 11:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208723; cv=none; b=OWa8HLAhkxdBOa7/NJBI9NjvA5AQZcaJVe6ndQ6fgstSIyS+xkGEc3/DZESz321GHvQavydCdbhEryNN6ORpbeaoPCVfc76+kC0qv0TAQhbJJgbaN4aG3ck6mCZmqSSJwbPj0kxP7p6rPRq21vulaTtLzRYXCDOu9sf68QytNdY=
+	t=1756208726; cv=none; b=WLeSLC5sGBvw9q2mVoXHINbJWxlfc0iUT89IDbcHOgDkizn31hzWh7SJo5r062+vHz7wK4OOCOF5KwDx4Q5vLEogH3Sq+PCv9zoL+N4F8OX9Hf3B6ML56v3LH3IwF0VtYouHwZ++XrhOqxySxbwcGIQT7+NKJ1eMGbzKMsmVAOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208723; c=relaxed/simple;
-	bh=lM3Zo9BoIh5rC5d7sTjPl3cFiNbA/adaeGkb1Rw3LVY=;
+	s=arc-20240116; t=1756208726; c=relaxed/simple;
+	bh=HdwTyxcTnyQdYMrkltnFm7kmodadxvLKtk1yCpTDhEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u56WBJSPbjeLRqqDUboA/yhiDSVxpfkYCf3DnerC8dmMLJj3UyQaSnZucD5g03Ib64YfjeQTgoxm61bMVBuFhaHKd8k1fZEjofegzvIihVzf1o/Vr+L3pI+veqzb0g/q5EgtTq5ger6FYPDNNG0Z6jiA/ha9TOsXJtWeIqPjE7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKDpE8dl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHE6iBwe0hpPr3tahQdZVHk2JJyXzFwIX4Ax8SNt8Y1CDNfDn7rLnqPOmfbGP+A2GfhbJfc+GUxHbQYCCkp6LbPc4ts2mMe8h9BemtBg01usNqC8kg2XHLbfERk/4HLIrfDIKscDajbs+F2oSfRfLwqpK+THgXui1G6sGYPRDqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6KQhLDj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKDpE8dl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D338C4CEF4;
-	Tue, 26 Aug 2025 11:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6KQhLDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4E5C4CEF1;
+	Tue, 26 Aug 2025 11:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208723;
-	bh=lM3Zo9BoIh5rC5d7sTjPl3cFiNbA/adaeGkb1Rw3LVY=;
+	s=korg; t=1756208725;
+	bh=HdwTyxcTnyQdYMrkltnFm7kmodadxvLKtk1yCpTDhEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rKDpE8dlRTBmJj2nuDRPYB671aKnx8wOh5wbvxEyAxs9XTA5IihgEsvDBBpVNZji2
-	 y2gIqYtG4AdhO6FvJr0Zkzhh6krJqy00vDKtzS+w+QfRLApUZ0e3vmnSExGeUOjV6W
-	 XNb9AGvKs/RCeJS6MeCQv7d2/5cEDnHePa5QiFZQ=
+	b=k6KQhLDj90waOdtMYOX1w6fI9QpwuCwFPYYjLbh/Vo6DAMULPADKusAN22OApQprr
+	 Ju0a4+KDjQh418iAt/JJBuyZSulrELdMF7vpwcpkPh7dieRbePRIfQcKvWqnKSpi/H
+	 XwX29DyyVblMWqUX44fv1UroUPvii/26MjfML9Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Li <limiao@kylinos.cn>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.12 221/322] usb: quirks: Add DELAY_INIT quick for another SanDisk 3.2Gen1 Flash Drive
-Date: Tue, 26 Aug 2025 13:10:36 +0200
-Message-ID: <20250826110921.347201512@linuxfoundation.org>
+Subject: [PATCH 6.12 222/322] comedi: Make insn_rw_emulate_bits() do insn->n samples
+Date: Tue, 26 Aug 2025 13:10:37 +0200
+Message-ID: <20250826110921.372955990@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -50,31 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Li <limiao@kylinos.cn>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit e664036cf36480414936cd91f4cfa2179a3d8367 upstream.
+commit 7afba9221f70d4cbce0f417c558879cba0eb5e66 upstream.
 
-Another SanDisk 3.2Gen1 Flash Drive also need DELAY_INIT quick,
-or it will randomly work incorrectly on Huawei hisi platforms
-when doing reboot test.
+The `insn_rw_emulate_bits()` function is used as a default handler for
+`INSN_READ` instructions for subdevices that have a handler for
+`INSN_BITS` but not for `INSN_READ`.  Similarly, it is used as a default
+handler for `INSN_WRITE` instructions for subdevices that have a handler
+for `INSN_BITS` but not for `INSN_WRITE`. It works by emulating the
+`INSN_READ` or `INSN_WRITE` instruction handling with a constructed
+`INSN_BITS` instruction.  However, `INSN_READ` and `INSN_WRITE`
+instructions are supposed to be able read or write multiple samples,
+indicated by the `insn->n` value, but `insn_rw_emulate_bits()` currently
+only handles a single sample.  For `INSN_READ`, the comedi core will
+copy `insn->n` samples back to user-space.  (That triggered KASAN
+kernel-infoleak errors when `insn->n` was greater than 1, but that is
+being fixed more generally elsewhere in the comedi core.)
 
-Signed-off-by: Miao Li <limiao@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250801082728.469406-1-limiao870622@163.com
+Make `insn_rw_emulate_bits()` either handle `insn->n` samples, or return
+an error, to conform to the general expectation for `INSN_READ` and
+`INSN_WRITE` handlers.
+
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Cc: stable <stable@kernel.org> # 5.13+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250725141034.87297-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/comedi/drivers.c |   25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -371,6 +371,7 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x0781, 0x5591), .driver_info = USB_QUIRK_NO_LPM },
+--- a/drivers/comedi/drivers.c
++++ b/drivers/comedi/drivers.c
+@@ -620,11 +620,9 @@ static int insn_rw_emulate_bits(struct c
+ 	unsigned int chan = CR_CHAN(insn->chanspec);
+ 	unsigned int base_chan = (chan < 32) ? 0 : chan;
+ 	unsigned int _data[2];
++	unsigned int i;
+ 	int ret;
  
- 	/* SanDisk Corp. SanDisk 3.2Gen1 */
-+	{ USB_DEVICE(0x0781, 0x5596), .driver_info = USB_QUIRK_DELAY_INIT },
- 	{ USB_DEVICE(0x0781, 0x55a3), .driver_info = USB_QUIRK_DELAY_INIT },
+-	if (insn->n == 0)
+-		return 0;
+-
+ 	memset(_data, 0, sizeof(_data));
+ 	memset(&_insn, 0, sizeof(_insn));
+ 	_insn.insn = INSN_BITS;
+@@ -635,18 +633,21 @@ static int insn_rw_emulate_bits(struct c
+ 	if (insn->insn == INSN_WRITE) {
+ 		if (!(s->subdev_flags & SDF_WRITABLE))
+ 			return -EINVAL;
+-		_data[0] = 1U << (chan - base_chan);		     /* mask */
+-		_data[1] = data[0] ? (1U << (chan - base_chan)) : 0; /* bits */
++		_data[0] = 1U << (chan - base_chan);		/* mask */
+ 	}
++	for (i = 0; i < insn->n; i++) {
++		if (insn->insn == INSN_WRITE)
++			_data[1] = data[i] ? _data[0] : 0;	/* bits */
++
++		ret = s->insn_bits(dev, s, &_insn, _data);
++		if (ret < 0)
++			return ret;
  
- 	/* SanDisk Extreme 55AE */
+-	ret = s->insn_bits(dev, s, &_insn, _data);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (insn->insn == INSN_READ)
+-		data[0] = (_data[1] >> (chan - base_chan)) & 1;
++		if (insn->insn == INSN_READ)
++			data[i] = (_data[1] >> (chan - base_chan)) & 1;
++	}
+ 
+-	return 1;
++	return insn->n;
+ }
+ 
+ static int __comedi_device_postconfig_async(struct comedi_device *dev,
 
 
