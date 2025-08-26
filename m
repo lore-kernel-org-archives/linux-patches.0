@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70D6352FFF;
-	Tue, 26 Aug 2025 14:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDF635CEB9;
+	Tue, 26 Aug 2025 14:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219245; cv=none; b=eS+YnGLK17kMvypaPHhVhYJsqeE0UBHFlVAIczh+4VDVrBDIVUyL5U7RUtaY6Wsc+s+6IjhHcGB0fJjyFGIQ9SNPrMUHlF2gXTZWy0glMbARJrIjU/da56iEzNuEZljjR1Z00WyQ8kttheM08gozq//GzphfIJU6UVoW9fzz3OM=
+	t=1756219248; cv=none; b=Ex8hzRC/pnOtR6//8mrgIVpJ7Rb1aYv2bt6QWhFFwseyvOb5DitW3TdH+INwq7+wU0eP3zXsAd1XY33FgTehadoXiH8u0VsSobsPsrQxf2x3M9dE/zLnh2wZ3T+I9NseSNjYJ5o15m1uVN0Q6ZwBbqUmAOMEwkRMD2r9nUMx/rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219245; c=relaxed/simple;
-	bh=MaFayi0eLwJNH6Sf6GDDo6L1kF3u9UbgRv9MN2JLuU4=;
+	s=arc-20240116; t=1756219248; c=relaxed/simple;
+	bh=AUkjyWrCuzcmpZ/6aUAxNfbTvyj1w+dOrVdcbpYei0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2FCWAgWB+UJaJIk1cz8NBmTnCX3MZY1qbOxtqE1gJb9VSVNRb/GPwSfmHEh/YUygx6sDCgLMbB0JbvcOzw/3Ua3QV4CC6pbq103hzdQwQ7woVgruBzUF27QSK7xJ1+OL48kdv+QjC6YpQPT1xlw0YJX9dhY4tc0TmHSD+kZxFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAaaOoc6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxjO6Pqhzz3fz+LJloB0RP15pyl0cakHGFOn7hoyj5HX2a5+SVCUZxRl3ZzyWi8hCRmuvQEai320bO/jv5gBDobfL9EOvlJu5SRh/JonqAhKXT/4JF3zsIbX0nAyNCwXSGZoLeBm/68G0N+GIXEXoK3RcfUs2fKakZ9i4vEBq54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yv08jTk0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAaaOoc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0892BC4CEF1;
-	Tue, 26 Aug 2025 14:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yv08jTk0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D15C4CEF1;
+	Tue, 26 Aug 2025 14:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219245;
-	bh=MaFayi0eLwJNH6Sf6GDDo6L1kF3u9UbgRv9MN2JLuU4=;
+	s=korg; t=1756219248;
+	bh=AUkjyWrCuzcmpZ/6aUAxNfbTvyj1w+dOrVdcbpYei0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAaaOoc6c/CbC4KkEHRmWRdoyCMS7Sd/ZzcNMY5SIDASEM1epXkQoyiPnRjtWaIdE
-	 CEPAso+LA6OEjoEhS7iSz8EFlfuWDmO6St0gTxA13v4RPk2FVYYsDDEurK0QsNs3Ln
-	 QaWyk6kRyDZ08ugz1d2UnXvtG4YYQtxCq+GRaXV0=
+	b=Yv08jTk0aXdOE4ZJ+b4PpxgwQf8jo7LKRmICnL4LtKtlYKtDIuD/s+Zf501659F2V
+	 F4Q3UdHZQ50mY8C1Uolb1Fw8eX8PMkLfB2iH5sXIOXS/gIUsZGrlKVhUJEccDnFlmG
+	 Mvh/IrI1mswCCPQCvGMzWrn6zpKmizqNdmskVPNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 308/403] memstick: Fix deadlock by moving removing flag earlier
-Date: Tue, 26 Aug 2025 13:10:34 +0200
-Message-ID: <20250826110915.322264013@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Scott GUO <scottzhguo@tencent.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 309/403] squashfs: fix memory leak in squashfs_fill_super
+Date: Tue, 26 Aug 2025 13:10:35 +0200
+Message-ID: <20250826110915.349104423@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,80 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit 99d7ab8db9d8230b243f5ed20ba0229e54cc0dfa upstream.
+commit b64700d41bdc4e9f82f1346c15a3678ebb91a89c upstream.
 
-The existing memstick core patch: commit 62c59a8786e6 ("memstick: Skip
-allocating card when removing host") sets host->removing in
-memstick_remove_host(),but still exists a critical time window where
-memstick_check can run after host->eject is set but before removing is set.
+If sb_min_blocksize returns 0, squashfs_fill_super exits without freeing
+allocated memory (sb->s_fs_info).
 
-In the rtsx_usb_ms driver, the problematic sequence is:
+Fix this by moving the call to sb_min_blocksize to before memory is
+allocated.
 
-rtsx_usb_ms_drv_remove:          memstick_check:
-  host->eject = true
-  cancel_work_sync(handle_req)     if(!host->removing)
-  ...                              memstick_alloc_card()
-                                     memstick_set_rw_addr()
-                                       memstick_new_req()
-                                         rtsx_usb_ms_request()
-                                           if(!host->eject)
-                                           skip schedule_work
-                                       wait_for_completion()
-  memstick_remove_host:                [blocks indefinitely]
-    host->removing = true
-    flush_workqueue()
-    [block]
-
-1. rtsx_usb_ms_drv_remove sets host->eject = true
-2. cancel_work_sync(&host->handle_req) runs
-3. memstick_check work may be executed here <-- danger window
-4. memstick_remove_host sets removing = 1
-
-During this window (step 3), memstick_check calls memstick_alloc_card,
-which may indefinitely waiting for mrq_complete completion that will
-never occur because rtsx_usb_ms_request sees eject=true and skips
-scheduling work, memstick_set_rw_addr waits forever for completion.
-
-This causes a deadlock when memstick_remove_host tries to flush_workqueue,
-waiting for memstick_check to complete, while memstick_check is blocked
-waiting for mrq_complete completion.
-
-Fix this by setting removing=true at the start of rtsx_usb_ms_drv_remove,
-before any work cancellation. This ensures memstick_check will see the
-removing flag immediately and exit early, avoiding the deadlock.
-
-Fixes: 62c59a8786e6 ("memstick: Skip allocating card when removing host")
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250804013604.1311218-1-lijiayi@kylinos.cn
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lkml.kernel.org/r/20250811223740.110392-1-phillip@squashfs.org.uk
+Fixes: 734aa85390ea ("Squashfs: check return result of sb_min_blocksize")
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: Scott GUO <scottzhguo@tencent.com>
+Closes: https://lore.kernel.org/all/20250811061921.3807353-1-scott_gzh@163.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/core/memstick.c    |    1 -
- drivers/memstick/host/rtsx_usb_ms.c |    1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ fs/squashfs/super.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/memstick/core/memstick.c
-+++ b/drivers/memstick/core/memstick.c
-@@ -550,7 +550,6 @@ EXPORT_SYMBOL(memstick_add_host);
-  */
- void memstick_remove_host(struct memstick_host *host)
- {
--	host->removing = 1;
- 	flush_workqueue(workqueue);
- 	mutex_lock(&host->lock);
- 	if (host->card)
---- a/drivers/memstick/host/rtsx_usb_ms.c
-+++ b/drivers/memstick/host/rtsx_usb_ms.c
-@@ -812,6 +812,7 @@ static int rtsx_usb_ms_drv_remove(struct
- 	int err;
+--- a/fs/squashfs/super.c
++++ b/fs/squashfs/super.c
+@@ -74,10 +74,15 @@ static int squashfs_fill_super(struct su
+ 	unsigned short flags;
+ 	unsigned int fragments;
+ 	u64 lookup_table_start, xattr_id_table_start, next_table;
+-	int err;
++	int err, devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
  
- 	host->eject = true;
-+	msh->removing = true;
- 	cancel_work_sync(&host->handle_req);
- 	cancel_delayed_work_sync(&host->poll_card);
+ 	TRACE("Entered squashfs_fill_superblock\n");
  
++	if (!devblksize) {
++		errorf(fc, "squashfs: unable to set blocksize\n");
++		return -EINVAL;
++	}
++
+ 	sb->s_fs_info = kzalloc(sizeof(*msblk), GFP_KERNEL);
+ 	if (sb->s_fs_info == NULL) {
+ 		ERROR("Failed to allocate squashfs_sb_info\n");
+@@ -85,12 +90,7 @@ static int squashfs_fill_super(struct su
+ 	}
+ 	msblk = sb->s_fs_info;
+ 
+-	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
+-	if (!msblk->devblksize) {
+-		errorf(fc, "squashfs: unable to set blocksize\n");
+-		return -EINVAL;
+-	}
+-
++	msblk->devblksize = devblksize;
+ 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
+ 
+ 	mutex_init(&msblk->meta_index_mutex);
 
 
