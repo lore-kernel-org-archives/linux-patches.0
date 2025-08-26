@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A0D2253F3;
-	Tue, 26 Aug 2025 13:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24D51D47B4;
+	Tue, 26 Aug 2025 13:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213420; cv=none; b=CxZIUdZqo4+hH1CfYpZ/aFiKGPxAJluWFh4Hwr7/pd8O35OrVFJVfXnoiVigEflibJ0jO7L1a93xwnQxhWjI+aSqUrp8ZNiToVjb1sY87moq+Itx1RGE6w8eVOGPyCfE3Py82+fRFcrsqvoCkCwrajoAf6NfU6XGnCzVtXM/Xxo=
+	t=1756213424; cv=none; b=bjY40pxAlQVLvnUtYeyWUborxiuuN6E7kpnR/vlKO5Q3KzdTM8l8OH5+KqnZD0ZGQunm5b8ekNByFxk4EMfhZzjQWvzG/8sYNH9Xpu8kKyNGh69IsbrZrQLGjhZTONMLSJguTs+5XIPhNJDunmsV38zN40K80yFiezfLCm8OHgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213420; c=relaxed/simple;
-	bh=IecXPk6HNNS9LqQbaVyye8jyznXEJtrBFlagQsCA9d4=;
+	s=arc-20240116; t=1756213424; c=relaxed/simple;
+	bh=IIyAdOgumXDoBNYRx7Rbk11z3gHacO2FvJyQ8pbVD68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkN1J5O5fXgqDrAojQlTBVwMKVJQjDgkaTz1kK/2ihqyLQv2D2rTOgW5hoRgGc7kuZvzDwUpfAP2nZCh8iL5yoGQ8bHwgBaCy55y0NuUuAxKNAxEuwMorGgtgmG4wsUsTUvrBJy55znJ5Si0n0G9HksK6wAcpN/8itgth8fREdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uC8xIImc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=endylX+oLGo9BEyAg8qPSaMM9ngdWaoRoVZNB/wu7GoTx9x6P5C6fYJngTn4V1YL3Fz6ioisumxuDpE7Mg+y932i88jMl6Lm+r39czv0qldm63dpRkU5ukk9nujQnWsn8Xu1LnAVk3uKC50Pmnj1bn9JgdyM8a7YWANAX//JbvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEUip+Zd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uC8xIImc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FF4C4CEF1;
-	Tue, 26 Aug 2025 13:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEUip+Zd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2232AC4CEF4;
+	Tue, 26 Aug 2025 13:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213419;
-	bh=IecXPk6HNNS9LqQbaVyye8jyznXEJtrBFlagQsCA9d4=;
+	s=korg; t=1756213422;
+	bh=IIyAdOgumXDoBNYRx7Rbk11z3gHacO2FvJyQ8pbVD68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uC8xIImc6rspXTIJNUT82RtpIJS8CvMIJ+uvESR4cftGm6CI2f7QxTea2Zmkbb309
-	 n/6J6Bxq+XttLuME3D2bearOqEEyKxSut3PnkvAJUAk1dveQA51T9XWcCHq3gq0/wy
-	 r+GP4q0k982YZnLRNyxR3cyzZqeitkD5OBtWCUe0=
+	b=UEUip+Zdox/meWXax+E1MaMJikicsqvlTIvBkgmtCMLOhWm9jcnks8AYJoGtyKCbO
+	 WBOM2hdSJZJwkTFDCzmaTtlZBge+JIy6a/DomtX+Fnz6FnKyBvWJuhG6uN4lKObBEo
+	 LUDfc5Wt0JNHShugOn6VIKcTqb2eu90vnFXOSrXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 290/587] pNFS: Fix disk addr range check in block/scsi layout
-Date: Tue, 26 Aug 2025 13:07:19 +0200
-Message-ID: <20250826111000.305517953@linuxfoundation.org>
+	Roger Quadros <rogerq@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 335/587] usb: musb: omap2430: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:08:04 +0200
+Message-ID: <20250826111001.440911956@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,41 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 7db6e66663681abda54f81d5916db3a3b8b1a13d ]
+commit 1473e9e7679bd4f5a62d1abccae894fb86de280f upstream.
 
-At the end of the isect translation, disc_addr represents the physical
-disk offset. Thus, end calculated from disk_addr is also a physical disk
-offset. Therefore, range checking should be done using map->disk_offset,
-not map->start.
+Make sure to drop the reference to the control device taken by
+of_find_device_by_node() during probe when the driver is unbound.
 
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250702133226.212537-1-sergeybashirov@gmail.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8934d3e4d0e7 ("usb: musb: omap2430: Don't use omap_get_control_dev()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-5-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/blocklayout/blocklayout.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/musb/omap2430.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
-index 6be13e0ec170..e498aade8c47 100644
---- a/fs/nfs/blocklayout/blocklayout.c
-+++ b/fs/nfs/blocklayout/blocklayout.c
-@@ -149,8 +149,8 @@ do_add_page_to_bio(struct bio *bio, int npg, enum req_op op, sector_t isect,
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -400,7 +400,7 @@ static int omap2430_probe(struct platfor
+ 	ret = platform_device_add_resources(musb, pdev->resource, pdev->num_resources);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add resources\n");
+-		goto err2;
++		goto err_put_control_otghs;
+ 	}
  
- 	/* limit length to what the device mapping allows */
- 	end = disk_addr + *len;
--	if (end >= map->start + map->len)
--		*len = map->start + map->len - disk_addr;
-+	if (end >= map->disk_offset + map->len)
-+		*len = map->disk_offset + map->len - disk_addr;
+ 	if (populate_irqs) {
+@@ -413,7 +413,7 @@ static int omap2430_probe(struct platfor
+ 		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 		if (!res) {
+ 			ret = -EINVAL;
+-			goto err2;
++			goto err_put_control_otghs;
+ 		}
  
- retry:
- 	if (!bio) {
--- 
-2.39.5
-
+ 		musb_res[i].start = res->start;
+@@ -441,14 +441,14 @@ static int omap2430_probe(struct platfor
+ 		ret = platform_device_add_resources(musb, musb_res, i);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "failed to add IRQ resources\n");
+-			goto err2;
++			goto err_put_control_otghs;
+ 		}
+ 	}
+ 
+ 	ret = platform_device_add_data(musb, pdata, sizeof(*pdata));
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add platform_data\n");
+-		goto err2;
++		goto err_put_control_otghs;
+ 	}
+ 
+ 	pm_runtime_enable(glue->dev);
+@@ -463,7 +463,9 @@ static int omap2430_probe(struct platfor
+ 
+ err3:
+ 	pm_runtime_disable(glue->dev);
+-
++err_put_control_otghs:
++	if (!IS_ERR(glue->control_otghs))
++		put_device(glue->control_otghs);
+ err2:
+ 	platform_device_put(musb);
+ 
+@@ -477,6 +479,8 @@ static void omap2430_remove(struct platf
+ 
+ 	platform_device_unregister(glue->musb);
+ 	pm_runtime_disable(glue->dev);
++	if (!IS_ERR(glue->control_otghs))
++		put_device(glue->control_otghs);
+ }
+ 
+ #ifdef CONFIG_PM
 
 
