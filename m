@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213CA23F439;
-	Tue, 26 Aug 2025 13:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D27E1DE4CD;
+	Tue, 26 Aug 2025 13:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214854; cv=none; b=Vr3+LihAQKsQa5Q8MdoRS8F+FXUZsoMJsRBfIS/Wb95c8JOonvR/J6bh1t2z+E9FjZySBXC8P3ptx0yAobLzmYEMrKQN/x8gMv7XEgerX7s9EqDIeLQP3rzJwVhAMVIxTgTKJOiH5cCj1+Xiw1ydE6k0oyjII3ApiWgpBFzjvmY=
+	t=1756214858; cv=none; b=YV2QhRk+DmRhzAA6IwQzAmgkEwb3EvAw5zGvzyd6Zde0yLIpAJyd2PnBAEdxV5OmXwDedmuCa9w5tZLcJNTO4FawLhzwYQQM6TGIGF1mCbnOOO3qJjp1zMMmTAVUCKchidAcBfVJRRpmCxz4GJ+G5voJxhkYzBw4UGQiHr8sNck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214854; c=relaxed/simple;
-	bh=6BY4rau6xF24liU3SO0M+iI2lHsEYBIWZI3ZDVvRp/0=;
+	s=arc-20240116; t=1756214858; c=relaxed/simple;
+	bh=p2X4cz5LoKc0B3izdho7Ha2feprDpnZqll76EKgo2nA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gojAkI+z7sfVso3AhBXGXUVWg7WktZalv+0Sr+/sSRmoeC3NLf6mMhMKfG/3R22cNqoUOnxLcjKrhbOi8cv2SYM/3F9qxGDaHujAEaJjRMnAjsyzZs/LG9Z15AnEiJvpJlmE27Ht+mbXI56d6jnFvOQ7tDWFI2q+HNg0EFWotvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aaNW1sB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhJIMoq944K72G9zT9I1zl9g9NwkcFdijrXr8+fTXMH7ZYrO+ZeCjuOena2G4wEXvHtyyIb3JULLK8nehXl19KlR5fnsJSBhuJ0wmsCEHr+m3r0s7BMK1KedEkIHa8g8ohLr2MClAhE9qAPKl6jpt3lVvWCjSTrrfEFp1v0JAX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8Z7TS12; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aaNW1sB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACC1C4CEF1;
-	Tue, 26 Aug 2025 13:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8Z7TS12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7F2C113CF;
+	Tue, 26 Aug 2025 13:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214854;
-	bh=6BY4rau6xF24liU3SO0M+iI2lHsEYBIWZI3ZDVvRp/0=;
+	s=korg; t=1756214856;
+	bh=p2X4cz5LoKc0B3izdho7Ha2feprDpnZqll76EKgo2nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1aaNW1sBSq5F7nL5iTAdnOdPauHwu0087Xf3T6QuwqGzPM1Ra58yPN/LzjFqMY3+Q
-	 N26KzQozCFxNruK72ivCWupivc2Kn+3tthcN6DDDDUt1aVG5l0Z10R0JkI3/4rh0Ge
-	 VYwFJ9eIbkjnW7aLTA2Tro2D8fFCIQ86E9//ExlE=
+	b=R8Z7TS12WqUyGUgWEtXVkPMtmpmUyQoFYYLpMToPD7qCj1u1Zp6mjp40uXhkI8Ijz
+	 OhWrj6t3WnDVmxxJbzcErfLoyU+cizGs6CNgu0OG74mU40BiufXJvdygaNF/U3qmyC
+	 I8zbXli8hvXjaqv0wrlUZ3Sb1Jb2owitsiLYGS0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>
-Subject: [PATCH 6.1 295/482] wifi: brcmsmac: Remove const from tbl_ptr parameter in wlc_lcnphy_common_read_table()
-Date: Tue, 26 Aug 2025 13:09:08 +0200
-Message-ID: <20250826110938.080607973@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.1 296/482] wifi: ath11k: fix dest ring-buffer corruption
+Date: Tue, 26 Aug 2025 13:09:09 +0200
+Message-ID: <20250826110938.106464138@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,46 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 81284e86bf8849f8e98e8ead3ff5811926b2107f upstream.
+commit 8c1ba5091fa9a2d1478da63173b16a701bdf86bb upstream.
 
-A new warning in clang [1] complains that diq_start in
-wlc_lcnphy_tx_iqlo_cal() is passed uninitialized as a const pointer to
-wlc_lcnphy_common_read_table():
+Add the missing memory barrier to make sure that destination ring
+descriptors are read after the head pointers to avoid using stale data
+on weakly ordered architectures like aarch64.
 
-  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c:2728:13: error: variable 'diq_start' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
-   2728 |                                                      &diq_start, 1, 16, 69);
-        |                                                       ^~~~~~~~~
+The barrier is added to the ath11k_hal_srng_access_begin() helper for
+symmetry with follow-on fixes for source ring buffer corruption which
+will add barriers to ath11k_hal_srng_access_end().
 
-The table pointer passed to wlc_lcnphy_common_read_table() should not be
-considered constant, as wlc_phy_read_table() is ultimately going to
-update it. Remove the const qualifier from the tbl_ptr to clear up the
-warning.
+Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2108
-Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>>
-Link: https://patch.msgid.link/20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Cc: stable@vger.kernel.org	# 5.6
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250604143457.26032-2-johan+linaro@kernel.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/ce.c    |    3 ---
+ drivers/net/wireless/ath/ath11k/dp_rx.c |    3 ---
+ drivers/net/wireless/ath/ath11k/hal.c   |   12 +++++++++++-
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-@@ -919,7 +919,7 @@ void wlc_lcnphy_read_table(struct brcms_
+--- a/drivers/net/wireless/ath/ath11k/ce.c
++++ b/drivers/net/wireless/ath/ath11k/ce.c
+@@ -393,9 +393,6 @@ static int ath11k_ce_completed_recv_next
+ 		goto err;
+ 	}
  
- static void
- wlc_lcnphy_common_read_table(struct brcms_phy *pi, u32 tbl_id,
--			     const u16 *tbl_ptr, u32 tbl_len,
-+			     u16 *tbl_ptr, u32 tbl_len,
- 			     u32 tbl_width, u32 tbl_offset)
+-	/* Make sure descriptor is read after the head pointer. */
+-	dma_rmb();
+-
+ 	*nbytes = ath11k_hal_ce_dst_status_get_length(desc);
+ 
+ 	*skb = pipe->dest_ring->skb[sw_index];
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -2661,9 +2661,6 @@ int ath11k_dp_process_rx(struct ath11k_b
+ try_again:
+ 	ath11k_hal_srng_access_begin(ab, srng);
+ 
+-	/* Make sure descriptor is read after the head pointer. */
+-	dma_rmb();
+-
+ 	while (likely(desc =
+ 	      (struct hal_reo_dest_ring *)ath11k_hal_srng_dst_get_next_entry(ab,
+ 									     srng))) {
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -796,13 +796,23 @@ u32 *ath11k_hal_srng_src_peek(struct ath
+ 
+ void ath11k_hal_srng_access_begin(struct ath11k_base *ab, struct hal_srng *srng)
  {
- 	struct phytbl_info tab;
++	u32 hp;
++
+ 	lockdep_assert_held(&srng->lock);
+ 
+ 	if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
+ 		srng->u.src_ring.cached_tp =
+ 			*(volatile u32 *)srng->u.src_ring.tp_addr;
+ 	} else {
+-		srng->u.dst_ring.cached_hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
++		hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
++
++		if (hp != srng->u.dst_ring.cached_hp) {
++			srng->u.dst_ring.cached_hp = hp;
++			/* Make sure descriptor is read after the head
++			 * pointer.
++			 */
++			dma_rmb();
++		}
+ 
+ 		/* Try to prefetch the next descriptor in the ring */
+ 		if (srng->flags & HAL_SRNG_FLAGS_CACHED)
 
 
