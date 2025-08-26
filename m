@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20322350825;
-	Tue, 26 Aug 2025 14:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E52F352FF3;
+	Tue, 26 Aug 2025 14:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219076; cv=none; b=V+yRls4N+VbtvSuQpaA/KP5HPM8dDd4c1ipk64fNR85QhpP2Ln9LzrlZWJakPRLdGdhpXRvEKIYg5L4eoLFr28X4VBukt02oreJNQ3j7yywenC7gJOjcTwVQBmuziv1Sz4vdp3sKrQU9CTfAjX1QyCz8UTl2O9eUQXJKBFburZg=
+	t=1756219079; cv=none; b=k+uehQ1CpD1z86KpPQaDv6PNW4QLwlNkfYxQ40nkHzHd3phJrXM7FbVfdlhw2djli1vhVin2tzSSfkQnLyuxIChnYkhZf0EvK0S7rjLgI3pHbPBEm71ZfjZF2xiNBHpgGPfiZHKRtwZ30DbC4tK95CfS2vgW/Rp9CqU0xHeUyNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219076; c=relaxed/simple;
-	bh=XPh2Llq2R22Tt3xsDbp2zwdZQVvhqETN8xzBhG813us=;
+	s=arc-20240116; t=1756219079; c=relaxed/simple;
+	bh=6QaZesHp6vqHrTqvrkCcw02EyWl4XSZh9Blo6qDDW5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QrT6sCuxCFI6Gf4LgOXUNZXTHlul+UPTNSIwRdN3bvizSGvMKosE9NDkrQm6PI38A2zdd7IaFO4iF47oljaHGJPnZSNfP0lNOk9qczZdXHZnZJn2SgynkbM5L3nuX9ZUJpf7POAPBLHE0X73jGLI6ikYUQXvCog83rJoH/QABtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6auGTcM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RfjknLSILtgcMpo+Hh2BXxI6DRLtQh7v68oIlSj/65Se45cXrBtHM6Kx4KZ+Wjikwap45ONu5V8ZTVx2RkAgy6hxuRWjqHK11txHETIzc9I+AppIX57QesQz2xMqSr9h43XSJUKY1nAvIXF88q8ra5mvVq9fduIgANAlwz3qHCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbDPn9WS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6auGTcM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CCBC113CF;
-	Tue, 26 Aug 2025 14:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbDPn9WS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44DE3C4CEF1;
+	Tue, 26 Aug 2025 14:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219076;
-	bh=XPh2Llq2R22Tt3xsDbp2zwdZQVvhqETN8xzBhG813us=;
+	s=korg; t=1756219078;
+	bh=6QaZesHp6vqHrTqvrkCcw02EyWl4XSZh9Blo6qDDW5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6auGTcMVR+h+kUvcI26fJNoupwCViP0NqGiuxGTdcDPo3cSSlxDMOJl8vqlGqHRf
-	 W1f13hK5ThA8+enFy4+bGLZ7xWsbuTLtkM3nxhNyvOtHBLmfHD5BNwE3D2RfaiIeM/
-	 tSyQqF9podb/Ach3DmT1FLVz3F1+mhreweXBxrt0=
+	b=CbDPn9WSh6ebdk9g8XBVcFV5TpK/laz1XIlDfIksflTx/fxyWMNPp+vkukrSJx48I
+	 V285nJooIJUfdiFyf8YLBHRgQTccg0+YaFri+E5gyEOnvXCQ02i4kXn73tOyubR8Bj
+	 wau2XVcXiFGFN08W68GTGX3XzAzx2MbXj8hUlKLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Yury Norov [NVIDIA]" <yury.norov@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 243/403] RDMA: hfi1: fix possible divide-by-zero in find_hw_thread_mask()
-Date: Tue, 26 Aug 2025 13:09:29 +0200
-Message-ID: <20250826110913.541317554@linuxfoundation.org>
+Subject: [PATCH 5.4 244/403] scsi: lpfc: Check for hdwq null ptr when cleaning up lpfc_vport structure
+Date: Tue, 26 Aug 2025 13:09:30 +0200
+Message-ID: <20250826110913.569846590@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,83 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yury Norov [NVIDIA] <yury.norov@gmail.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 59f7d2138591ef8f0e4e4ab5f1ab674e8181ad3a ]
+[ Upstream commit 6698796282e828733cde3329c887b4ae9e5545e9 ]
 
-The function divides number of online CPUs by num_core_siblings, and
-later checks the divider by zero. This implies a possibility to get
-and divide-by-zero runtime error. Fix it by moving the check prior to
-division. This also helps to save one indentation level.
+If a call to lpfc_sli4_read_rev() from lpfc_sli4_hba_setup() fails, the
+resultant cleanup routine lpfc_sli4_vport_delete_fcp_xri_aborted() may
+occur before sli4_hba.hdwqs are allocated.  This may result in a null
+pointer dereference when attempting to take the abts_io_buf_list_lock for
+the first hardware queue.  Fix by adding a null ptr check on
+phba->sli4_hba.hdwq and early return because this situation means there
+must have been an error during port initialization.
 
-Signed-off-by: Yury Norov [NVIDIA] <yury.norov@gmail.com>
-Link: https://patch.msgid.link/20250604193947.11834-3-yury.norov@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20250618192138.124116-4-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/affinity.c | 44 +++++++++++++++------------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+ drivers/scsi/lpfc/lpfc_scsi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/affinity.c b/drivers/infiniband/hw/hfi1/affinity.c
-index 832b878fa67e..6933fbea2b46 100644
---- a/drivers/infiniband/hw/hfi1/affinity.c
-+++ b/drivers/infiniband/hw/hfi1/affinity.c
-@@ -1009,31 +1009,35 @@ static void find_hw_thread_mask(uint hw_thread_no, cpumask_var_t hw_thread_mask,
- 				struct hfi1_affinity_node_list *affinity)
- {
- 	int possible, curr_cpu, i;
--	uint num_cores_per_socket = node_affinity.num_online_cpus /
-+	uint num_cores_per_socket;
-+
-+	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
-+
-+	if (affinity->num_core_siblings == 0)
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index f238e0f41f07..1d58895b3943 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -469,6 +469,10 @@ lpfc_sli4_vport_delete_fcp_xri_aborted(struct lpfc_vport *vport)
+ 	if (!(vport->cfg_enable_fc4_type & LPFC_ENABLE_FCP))
+ 		return;
+ 
++	/* may be called before queues established if hba_setup fails */
++	if (!phba->sli4_hba.hdwq)
 +		return;
 +
-+	num_cores_per_socket = node_affinity.num_online_cpus /
- 					affinity->num_core_siblings /
- 						node_affinity.num_online_nodes;
- 
--	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
--	if (affinity->num_core_siblings > 0) {
--		/* Removing other siblings not needed for now */
--		possible = cpumask_weight(hw_thread_mask);
--		curr_cpu = cpumask_first(hw_thread_mask);
--		for (i = 0;
--		     i < num_cores_per_socket * node_affinity.num_online_nodes;
--		     i++)
--			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
--
--		for (; i < possible; i++) {
--			cpumask_clear_cpu(curr_cpu, hw_thread_mask);
--			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
--		}
-+	/* Removing other siblings not needed for now */
-+	possible = cpumask_weight(hw_thread_mask);
-+	curr_cpu = cpumask_first(hw_thread_mask);
-+	for (i = 0;
-+	     i < num_cores_per_socket * node_affinity.num_online_nodes;
-+	     i++)
-+		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
- 
--		/* Identifying correct HW threads within physical cores */
--		cpumask_shift_left(hw_thread_mask, hw_thread_mask,
--				   num_cores_per_socket *
--				   node_affinity.num_online_nodes *
--				   hw_thread_no);
-+	for (; i < possible; i++) {
-+		cpumask_clear_cpu(curr_cpu, hw_thread_mask);
-+		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
- 	}
-+
-+	/* Identifying correct HW threads within physical cores */
-+	cpumask_shift_left(hw_thread_mask, hw_thread_mask,
-+			   num_cores_per_socket *
-+			   node_affinity.num_online_nodes *
-+			   hw_thread_no);
- }
- 
- int hfi1_get_proc_affinity(int node)
+ 	spin_lock_irqsave(&phba->hbalock, iflag);
+ 	for (idx = 0; idx < phba->cfg_hdw_queue; idx++) {
+ 		qp = &phba->sli4_hba.hdwq[idx];
 -- 
 2.39.5
 
