@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920083376BD;
-	Tue, 26 Aug 2025 11:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39799283FDF;
+	Tue, 26 Aug 2025 11:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208607; cv=none; b=D18Kccr4gZAHuI5Wxf9KfuZbWZ69noqbazEqZ7DY0cAwXBgijTuMF222gnS/ZjhkBoqtO9LsWZWI/ghNjnn+7lH9amekVqEgVqfWRdU33ZXzvm4VMMBYtUBUOcbGF/0hhUoYwBIxHeo5Iv+qh8UVluN7fdvd/H2sb2Y6o9DJNx0=
+	t=1756208610; cv=none; b=F8QJYd/9ds12ComQ/EZZYzXeseA4rNk7pPak8POZxTIiZM40U96jGf+apEp2Z5/w3iYExKNMrdteoKyKY9jzp6NjajpT9tEI+meZJBHAC6cnMO3kC0IFDfh6sLLL1txV+7TvaItI/346nEV1HohIauv03mV0OW/tqP2r69LWiVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208607; c=relaxed/simple;
-	bh=IDagQxjLjxJBgYuLxwG50tnm5PG7iWHZHtG4GCoiD10=;
+	s=arc-20240116; t=1756208610; c=relaxed/simple;
+	bh=AJa/63EnNvZeKtMUmM5hl5SgJQTiW7LNH9GgBOLCihU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmFVBxNgLnJO+1LSty4VdhY/Bp4VDnbGQm3SSPXJkGmjR9sKm4bz7bOsqewnzwdq5adgQYwbYuz8kzUUb2TNAcR/rX6Jdj4EtuHof2ZWiGIIlGaqZknJA0f8VDBMP1DtqJ7JYYYCYqPH94RYBGGrI2f4s8Hrt4OHDqOzKB3YEHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFUj4XqJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MGAUtXBxDrk7Gzw+2cG2wTAqlf7RrAApX7/nRAWk1UfbinMKUbHZFz1PW/Ol+1tHIBSyMiyOgIyK6i9RtufNLM80BbVPa2IIfhUeCu5O86SEvSUW+c8ApLgx2VoJWw7r0ofpc/ubGOFnvENtuOVasnvO/jxtnaeEWUw8Dwzb93k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PedGTlI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFUj4XqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCCEC116B1;
-	Tue, 26 Aug 2025 11:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PedGTlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5774C4CEF1;
+	Tue, 26 Aug 2025 11:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208607;
-	bh=IDagQxjLjxJBgYuLxwG50tnm5PG7iWHZHtG4GCoiD10=;
+	s=korg; t=1756208610;
+	bh=AJa/63EnNvZeKtMUmM5hl5SgJQTiW7LNH9GgBOLCihU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qFUj4XqJTUsifZiAJilGewfP2V8TONZNDP87GEVHm9Xya5w8i4S+/aF0uXjCuSVXz
-	 lEyWA81UQvnoex8oNOMbziv0VvUs2QenfTzqwhAjPxU1jYEHb1b59I6xO4XaMSky0x
-	 dgNXfkum11lN9gMIVCqVzcvGSwtT/Ct4pBmcV9nQ=
+	b=0PedGTlIQhzN54fUxqpQ4lAyF2xU7GUSKdXxCjzJYoC5TmrBhUO/qCtZNer4tCgB/
+	 eKxfTmgr9ma8C2qDeGOkRuAmGFxg4yIwxXEdnF4rDudflcGReSjLE8UHwxn+ucbD26
+	 W1T7cQx1W+bNuR8o3r1ryumR9gVcJlh3uLJ1yl0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
+	Daniel Vacek <neelx@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 145/322] btrfs: always abort transaction on failure to add block group to free space tree
-Date: Tue, 26 Aug 2025 13:09:20 +0200
-Message-ID: <20250826110919.385535750@linuxfoundation.org>
+Subject: [PATCH 6.12 146/322] btrfs: abort transaction on unexpected eb generation at btrfs_copy_root()
+Date: Tue, 26 Aug 2025 13:09:21 +0200
+Message-ID: <20250826110919.410230324@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -54,73 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 1f06c942aa709d397cf6bed577a0d10a61509667 ]
+[ Upstream commit 33e8f24b52d2796b8cfb28c19a1a7dd6476323a8 ]
 
-Only one of the callers of __add_block_group_free_space() aborts the
-transaction if the call fails, while the others don't do it and it's
-either never done up the call chain or much higher in the call chain.
+If we find an unexpected generation for the extent buffer we are cloning
+at btrfs_copy_root(), we just WARN_ON() and don't error out and abort the
+transaction, meaning we allow to persist metadata with an unexpected
+generation. Instead of warning only, abort the transaction and return
+-EUCLEAN.
 
-So make sure we abort the transaction at __add_block_group_free_space()
-if it fails, which brings a couple benefits:
-
-1) If some call chain never aborts the transaction, we avoid having some
-   metadata inconsistency because BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE is
-   cleared when we enter __add_block_group_free_space() and therefore
-   __add_block_group_free_space() is never called again to add the block
-   group items to the free space tree, since the function is only called
-   when that flag is set in a block group;
-
-2) If the call chain already aborts the transaction, then we get a better
-   trace that points to the exact step from __add_block_group_free_space()
-   which failed, which is better for analysis.
-
-So abort the transaction at __add_block_group_free_space() if any of its
-steps fails.
-
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Boris Burkov <boris@bur.io>
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Daniel Vacek <neelx@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/free-space-tree.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/btrfs/ctree.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -1379,12 +1379,17 @@ static int __add_block_group_free_space(
- 	clear_bit(BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE, &block_group->runtime_flags);
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -350,7 +350,14 @@ int btrfs_copy_root(struct btrfs_trans_h
  
- 	ret = add_new_free_space_info(trans, block_group, path);
--	if (ret)
-+	if (ret) {
+ 	write_extent_buffer_fsid(cow, fs_info->fs_devices->metadata_uuid);
+ 
+-	WARN_ON(btrfs_header_generation(buf) > trans->transid);
++	if (unlikely(btrfs_header_generation(buf) > trans->transid)) {
++		btrfs_tree_unlock(cow);
++		free_extent_buffer(cow);
++		ret = -EUCLEAN;
 +		btrfs_abort_transaction(trans, ret);
- 		return ret;
++		return ret;
 +	}
- 
--	return __add_to_free_space_tree(trans, block_group, path,
--					block_group->start,
--					block_group->length);
-+	ret = __add_to_free_space_tree(trans, block_group, path,
-+				       block_group->start, block_group->length);
-+	if (ret)
-+		btrfs_abort_transaction(trans, ret);
 +
-+	return 0;
- }
- 
- int add_block_group_free_space(struct btrfs_trans_handle *trans,
-@@ -1409,9 +1414,6 @@ int add_block_group_free_space(struct bt
- 	}
- 
- 	ret = __add_block_group_free_space(trans, block_group, path);
--	if (ret)
--		btrfs_abort_transaction(trans, ret);
--
- out:
- 	btrfs_free_path(path);
- 	mutex_unlock(&block_group->free_space_lock);
+ 	if (new_root_objectid == BTRFS_TREE_RELOC_OBJECTID)
+ 		ret = btrfs_inc_ref(trans, root, cow, 1);
+ 	else
 
 
