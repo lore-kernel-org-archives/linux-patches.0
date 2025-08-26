@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092AF1B85F8;
-	Tue, 26 Aug 2025 13:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD7633A010;
+	Tue, 26 Aug 2025 13:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214628; cv=none; b=Gw2wrDvPavC+WHL5JdRd8mmljQL+Gtub58Iq+qA3qQWXgS5Jg4+nd90mfZXK2KXZ1Pf1uKt9f9GYrBaAj+EhKmWHkpRfHxoKnobE9CUnqQ8Qe9EdGly9rqs9E66c8l3MvkC+qCyRAIKYhqmm9rSrN6rRoVe7KfHY2h9zB0UH4V4=
+	t=1756214630; cv=none; b=SShAyQucohcCreYWAh2ofixGa3ZKxaIcLr8NDxverWQcXGRClCTEmK+tA/HbhinV7lCM05EE1D/mKg3J3mC+ydpoZ0PgS5d4KNbFEQlKCbW72wSt2C+DjTbU2V9zbJ8T88A05DJMIVA0JYlrUJ5TGfnlikhukC8YXSdB3cHnSRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214628; c=relaxed/simple;
-	bh=NsRb8ve5fchPgXhwFTbSculXloNtdiNWYIp7fEBQ3kQ=;
+	s=arc-20240116; t=1756214630; c=relaxed/simple;
+	bh=4+LGFgKZTx53Y2ILqDHy17rvq8oWdlIs/t2sNDQn0KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFXBGILHcoleXJ3HqO0HvPwngx4m71pHiqPaKR7uIC2USa6FTbu5sNNCMAp2OjmWjVquq47I7kWlf7ZRpVW9tP1fl4cuZrmevalJt5U00sW2V+1z+M02+pXKIhkDv832pmfml5W+3bvz6eWpIWJpJlWzdcjyAHYTeS4y3+lPeao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kay3Pax6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m/zwR3/7iCA23flTAhLqOAj8ys6qzCBxbb2xRWrfN/CAyzm36kM4yQv9Nw40prLNwoDoJGaMtMF4RmzHeEXdynvcO46eXNpQjBje7uso537fPmGrQpDuCVb/+EnqTZdrwIHLA9zv4e+rxiVX8tyApyoeRmKWA+9D1ZSUTTMNuVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2TgX9hw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kay3Pax6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEAEC4CEF1;
-	Tue, 26 Aug 2025 13:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2TgX9hw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E046C4CEF1;
+	Tue, 26 Aug 2025 13:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214627;
-	bh=NsRb8ve5fchPgXhwFTbSculXloNtdiNWYIp7fEBQ3kQ=;
+	s=korg; t=1756214630;
+	bh=4+LGFgKZTx53Y2ILqDHy17rvq8oWdlIs/t2sNDQn0KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kay3Pax6tAP0gVwSkH7rjqjbYXJxXUI3nnuaEH4AXcz+UxsdViweEMVgETug//esl
-	 0LZOO3qY64UsK7SOG4OTE/Cn/T2WXXKqxwoWcXPNIaKSjO8mgOMbd5dmyivFWfZa/P
-	 2HjXYeaZbH2LLKiolNQhmWWW3K+HaXj5oHvqf/Ks=
+	b=f2TgX9hwCuVONZH/oLVLKG3vNm0Hrg5nV/CzRGuhiBwOaCPUMwLUKNToBWe1Lv2IZ
+	 bP2AztVIdByt9Xo0ul/Z0ja5/hxTIfWOgORRJXECtaqm7qiW4tdvVOLaF8ExY43/M0
+	 sJtyiBKes9upm775p7hEwFud6YAELj4H7D+nrzLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/482] module: Prevent silent truncation of module name in delete_module(2)
-Date: Tue, 26 Aug 2025 13:07:42 +0200
-Message-ID: <20250826110935.944985976@linuxfoundation.org>
+Subject: [PATCH 6.1 183/482] MIPS: vpe-mt: add missing prototypes for vpe_{alloc,start,stop,free}
+Date: Tue, 26 Aug 2025 13:07:16 +0200
+Message-ID: <20250826110935.327000708@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,55 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit a6323bd4e611567913e23df5b58f2d4e4da06789 ]
+[ Upstream commit 844615dd0f2d95c018ec66b943e08af22b62aff3 ]
 
-Passing a module name longer than MODULE_NAME_LEN to the delete_module
-syscall results in its silent truncation. This really isn't much of
-a problem in practice, but it could theoretically lead to the removal of an
-incorrect module. It is more sensible to return ENAMETOOLONG or ENOENT in
-such a case.
+These functions are exported but their prototypes are not defined.
+This patch adds the missing function prototypes to fix the following
+compilation warnings:
 
-Update the syscall to return ENOENT, as documented in the delete_module(2)
-man page to mean "No module by that name exists." This is appropriate
-because a module with a name longer than MODULE_NAME_LEN cannot be loaded
-in the first place.
+arch/mips/kernel/vpe-mt.c:180:7: error: no previous prototype for 'vpe_alloc' [-Werror=missing-prototypes]
+  180 | void *vpe_alloc(void)
+      |       ^~~~~~~~~
+arch/mips/kernel/vpe-mt.c:198:5: error: no previous prototype for 'vpe_start' [-Werror=missing-prototypes]
+  198 | int vpe_start(void *vpe, unsigned long start)
+      |     ^~~~~~~~~
+arch/mips/kernel/vpe-mt.c:208:5: error: no previous prototype for 'vpe_stop' [-Werror=missing-prototypes]
+  208 | int vpe_stop(void *vpe)
+      |     ^~~~~~~~
+arch/mips/kernel/vpe-mt.c:229:5: error: no previous prototype for 'vpe_free' [-Werror=missing-prototypes]
+  229 | int vpe_free(void *vpe)
+      |     ^~~~~~~~
 
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Link: https://lore.kernel.org/r/20250630143535.267745-2-petr.pavlu@suse.com
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/mips/include/asm/vpe.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 554aba47ab68..3269f6c46814 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -699,14 +699,16 @@ SYSCALL_DEFINE2(delete_module, const char __user *, name_user,
- 	struct module *mod;
- 	char name[MODULE_NAME_LEN];
- 	char buf[MODULE_FLAGS_BUF_SIZE];
--	int ret, forced = 0;
-+	int ret, len, forced = 0;
+diff --git a/arch/mips/include/asm/vpe.h b/arch/mips/include/asm/vpe.h
+index baa949a744cb..babbe8742b81 100644
+--- a/arch/mips/include/asm/vpe.h
++++ b/arch/mips/include/asm/vpe.h
+@@ -124,4 +124,12 @@ void cleanup_tc(struct tc *tc);
  
- 	if (!capable(CAP_SYS_MODULE) || modules_disabled)
- 		return -EPERM;
- 
--	if (strncpy_from_user(name, name_user, MODULE_NAME_LEN-1) < 0)
--		return -EFAULT;
--	name[MODULE_NAME_LEN-1] = '\0';
-+	len = strncpy_from_user(name, name_user, MODULE_NAME_LEN);
-+	if (len == 0 || len == MODULE_NAME_LEN)
-+		return -ENOENT;
-+	if (len < 0)
-+		return len;
- 
- 	audit_log_kern_module(name);
- 
+ int __init vpe_module_init(void);
+ void __exit vpe_module_exit(void);
++
++#ifdef CONFIG_MIPS_VPE_LOADER_MT
++void *vpe_alloc(void);
++int vpe_start(void *vpe, unsigned long start);
++int vpe_stop(void *vpe);
++int vpe_free(void *vpe);
++#endif /* CONFIG_MIPS_VPE_LOADER_MT */
++
+ #endif /* _ASM_VPE_H */
 -- 
 2.39.5
 
