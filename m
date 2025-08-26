@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17422B2DA;
-	Tue, 26 Aug 2025 13:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9EF187554;
+	Tue, 26 Aug 2025 13:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214925; cv=none; b=dPerZKrbG2XQggutLYntbbbeacCMpJZ2kPLUaXdrwD/J1EmfL3rGHsr/fqUJvNc8g7GqXPXGT4gs7Z8eKhaf+Sn04JZAsmi36OvYnXPeRpfoGJpMzJY8SrmlDHxXzPfTE7517C+zzcK+WSDJsMuqFaCRykhFJidYXRdVPNtYmM8=
+	t=1756214927; cv=none; b=kV9KIO/+R/XsM8DbBZedZI0A3GIlVXdvemRcmjD2W1SXEOsxDUjLRlNvBaA1GLKR1mjUBkLQWPvncsDfLt2WFn1kOhPHmiOsytArnr7qWbG7m1hRJ0kswySSm/dAHzSWYHDM+mtCec7Zj+YKqB4H8F7/eMIdkZL5m8V4pon8Zgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214925; c=relaxed/simple;
-	bh=8qJUt9KzKYPDMOqFms0NDBpO+7NVhy0AfoUu9AhzZ7A=;
+	s=arc-20240116; t=1756214927; c=relaxed/simple;
+	bh=MZ72u6VLq3vDVYJxIaHaqhVliyUUokDiteLJnl+21lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQXhgYREQY++8IvIc1r0wEXWNta6yh9VuvfNeKypZaXzwx+VmznfJpjI0N7+sw7+T09ncqXZrzYub9z1Fq0qGmfox5sy+TAQX1S9NDT8UzH+pP0NoU8FfLisrEUJZ9Hf81aIr5CDgvJDgM2iq1ITztpwDjrhK7Wu76Is8rLdQOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWbHe52F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F/qwvpfYYmOwzsJznJhGDyl2fqaYGc7BEV1u4aDBO2fx/+M1xckCHu9LqLirBphkmsko1xQvJPtycyjyJsjWpYqvklBiW0GXJ84/roWlsE8ll/VVWzhzZKzyuBYadaVVXjanaKobqyxs7hpnMVHIHscwcqsPuaa6oKyc8PtBgnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQx5geoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWbHe52F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCD0C4CEF1;
-	Tue, 26 Aug 2025 13:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQx5geoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF401C4CEF1;
+	Tue, 26 Aug 2025 13:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214924;
-	bh=8qJUt9KzKYPDMOqFms0NDBpO+7NVhy0AfoUu9AhzZ7A=;
+	s=korg; t=1756214927;
+	bh=MZ72u6VLq3vDVYJxIaHaqhVliyUUokDiteLJnl+21lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RWbHe52FjEuqrjjnU+UMBtW0DV+pS2UqxGQHm7Pb5gGkb7k3Ery54eY57XclBRUe+
-	 kjDl8OWMLDT8Gal4sBxUa/cdLGnwz8R/WZNv8hSNHqIC4VqU076uHX0sd4yKK3tRuK
-	 9shsyPcnkdSLKx2mS9vU5tKyTfNEvmoDLSvCSTZ8=
+	b=AQx5geoD+5iT1IkQCGYOofNCouRWSijcAXqZ9X+OvFmdgPR8O76tJop43e/5lO/fN
+	 E2ASNfbbBCCbZ5DcrqdNcTzMlC6whjSP+ZrsEv4IX4wh1Zm7wb2k+DBQkyhlZxkS3Q
+	 qkLeEUj3DceIaIVwf6ZKvbwta1hruokfvsifnFPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Archana Patni <archana.patni@intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 290/482] scsi: ufs: ufs-pci: Fix hibernate state transition for Intel MTL-like host controllers
-Date: Tue, 26 Aug 2025 13:09:03 +0200
-Message-ID: <20250826110937.955400190@linuxfoundation.org>
+Subject: [PATCH 6.1 291/482] scsi: ufs: ufs-pci: Fix default runtime and system PM levels
+Date: Tue, 26 Aug 2025 13:09:04 +0200
+Message-ID: <20250826110937.979774507@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,72 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Archana Patni <archana.patni@intel.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 4428ddea832cfdb63e476eb2e5c8feb5d36057fe upstream.
+commit 6de7435e6b81fe52c0ab4c7e181f6b5decd18eb1 upstream.
 
-UFSHCD core disables the UIC completion interrupt when issuing UIC
-hibernation commands, and re-enables it afterwards if it was enabled to
-start with, refer ufshcd_uic_pwr_ctrl(). For Intel MTL-like host
-controllers, accessing the register to re-enable the interrupt disrupts
-the state transition.
+Intel MTL-like host controllers support auto-hibernate.  Using
+auto-hibernate with manual (driver initiated) hibernate produces more
+complex operation.  For example, the host controller will have to exit
+auto-hibernate simply to allow the driver to enter hibernate state
+manually.  That is not recommended.
 
-Use hibern8_notify variant operation to disable the interrupt during the
-entire hibernation, thereby preventing the disruption.
+The default rpm_lvl and spm_lvl is 3, which includes manual hibernate.
+
+Change the default values to 2, which does not.
+
+Note, to be simpler to backport to stable kernels, utilize the UFS PCI
+driver's ->late_init() call back.  Recent commits have made it possible
+to set up a controller-specific default in the regular ->init() call
+back, but not all stable kernels have those changes.
 
 Fixes: 4049f7acef3e ("scsi: ufs: ufs-pci: Add support for Intel MTL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Archana Patni <archana.patni@intel.com>
-Link: https://lore.kernel.org/r/20250723165856.145750-2-adrian.hunter@intel.com
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250723165856.145750-3-adrian.hunter@intel.com
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufshcd-pci.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/ufs/host/ufshcd-pci.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 --- a/drivers/ufs/host/ufshcd-pci.c
 +++ b/drivers/ufs/host/ufshcd-pci.c
-@@ -213,6 +213,32 @@ out:
- 	return ret;
+@@ -465,10 +465,23 @@ static int ufs_intel_adl_init(struct ufs
+ 	return ufs_intel_common_init(hba);
  }
  
-+static void ufs_intel_ctrl_uic_compl(struct ufs_hba *hba, bool enable)
++static void ufs_intel_mtl_late_init(struct ufs_hba *hba)
 +{
-+	u32 set = ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
-+
-+	if (enable)
-+		set |= UIC_COMMAND_COMPL;
-+	else
-+		set &= ~UIC_COMMAND_COMPL;
-+	ufshcd_writel(hba, set, REG_INTERRUPT_ENABLE);
++	hba->rpm_lvl = UFS_PM_LVL_2;
++	hba->spm_lvl = UFS_PM_LVL_2;
 +}
 +
-+static void ufs_intel_mtl_h8_notify(struct ufs_hba *hba,
-+				    enum uic_cmd_dme cmd,
-+				    enum ufs_notify_change_status status)
-+{
-+	/*
-+	 * Disable UIC COMPL INTR to prevent access to UFSHCI after
-+	 * checking HCS.UPMCRS
-+	 */
-+	if (status == PRE_CHANGE && cmd == UIC_CMD_DME_HIBER_ENTER)
-+		ufs_intel_ctrl_uic_compl(hba, false);
+ static int ufs_intel_mtl_init(struct ufs_hba *hba)
+ {
++	struct ufs_host *ufs_host;
++	int err;
 +
-+	if (status == POST_CHANGE && cmd == UIC_CMD_DME_HIBER_EXIT)
-+		ufs_intel_ctrl_uic_compl(hba, true);
-+}
-+
- #define INTEL_ACTIVELTR		0x804
- #define INTEL_IDLELTR		0x808
+ 	hba->caps |= UFSHCD_CAP_CRYPTO | UFSHCD_CAP_WB_EN;
+-	return ufs_intel_common_init(hba);
++	err = ufs_intel_common_init(hba);
++	/* Get variant after it is set in ufs_intel_common_init() */
++	ufs_host = ufshcd_get_variant(hba);
++	ufs_host->late_init = ufs_intel_mtl_late_init;
++	return err;
+ }
  
-@@ -487,6 +513,7 @@ static struct ufs_hba_variant_ops ufs_in
- 	.init			= ufs_intel_mtl_init,
- 	.exit			= ufs_intel_common_exit,
- 	.hce_enable_notify	= ufs_intel_hce_enable_notify,
-+	.hibern8_notify		= ufs_intel_mtl_h8_notify,
- 	.link_startup_notify	= ufs_intel_link_startup_notify,
- 	.resume			= ufs_intel_resume,
- 	.device_reset		= ufs_intel_device_reset,
+ static struct ufs_hba_variant_ops ufs_intel_cnl_hba_vops = {
 
 
