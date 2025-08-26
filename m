@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF933431FE;
-	Tue, 26 Aug 2025 13:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242CE1F55F8;
+	Tue, 26 Aug 2025 13:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216648; cv=none; b=hoDS+L9a+QIqQ7DgUAxniCuQzsxCXnNaFfbBGwQxvk2H9B496yRf4ma7eMnaM5u88QAUUF9z0jw1koVXBDE4ze/s5CyBbK1Mq03eqRMBqHC1+VaLYOFMsC3wBcUrfsSkfWw9eYHuOIKCjlfvBudJb2dDeZFhSSIayf8+IARZ0SU=
+	t=1756216651; cv=none; b=bpo7R9xuTdVDqiDGJkVEnDAWDFNJd6189j2kqPxHQx5nGt3Dpt2HJj8XHP9rOu1g6lKrx+OjksJmYZgRXKuYRSCMaappM5CQ99yMVlPRBtxw9jUJA6uYq1C25KEH7cm+NfGq/Fzw/thjejSmjVSqH/XOrV9SjhjkiXpfmd51lVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216648; c=relaxed/simple;
-	bh=K0wbHUL/VIIOOZw8nTaIZtrjPPknmWCEEhxZ8AibgfY=;
+	s=arc-20240116; t=1756216651; c=relaxed/simple;
+	bh=VL6k1nYWJcSnRCIw+1so85AEX5ujnQ1wdVtciOUkXUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njqE0MIAEuEezuDIizCW52RN4xtaNiWSNMZ4c1RKVEnOrtqMgOk5ByYtXJTMgUC4BDZ5OFEoyx5NAHr+5qqRwiLHOMj6szow6MYluVM5kHuORxd9GWydlDDmyzTprKKNPW5X8K2r6WZAffu0N4e6aWM8mJ8GZXAPj3TJVCANWMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxPa29Bb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=au/H+XbiWgzWD1hmS4EC2Uaz/udmxAhBBkiXG+CefOf5C0Lz+gwDyTcubjwnQTNQtIkkg/fo+NWv3hIC3NX1hV/rreaoAVEfAwN8pqjEDQVcdZtGVyfNncYzhu0lMwAtyGdGEPzFGVXCbYXIf+jcd1LeH35GASbJ9WTXgDTnp8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MM5IYjAN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxPa29Bb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EBBC4CEF1;
-	Tue, 26 Aug 2025 13:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MM5IYjAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E1EC4CEF1;
+	Tue, 26 Aug 2025 13:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216648;
-	bh=K0wbHUL/VIIOOZw8nTaIZtrjPPknmWCEEhxZ8AibgfY=;
+	s=korg; t=1756216650;
+	bh=VL6k1nYWJcSnRCIw+1so85AEX5ujnQ1wdVtciOUkXUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxPa29Bbl6iZZUF2TE3O2VXl0Q7tRMkdhtTY6IEF+KWtdxVaeTucl5SwVNR8cXTIR
-	 Y7Wd6HpuXnhpCmbEvXTWSS/AzQWd6BA8nNhI6LX8YL7jd608U5KdT5xJFzxu97fOtP
-	 H2rMr2MQgRTgoYu/O0ZbB0ZIgyIc9X7t15wWYmfA=
+	b=MM5IYjANjRds+leDoaRvkNCR38fiI7s4Vxm1tW8qnKG2pcGMnnUvNU6acE9hMzEWT
+	 SS35ThYhHHeZTBRwr1b09Gga+OmsF6tsBQ+JHPBIDmGkUI7duc6TUuiAG1vjnkQIoQ
+	 MjgjHlYDXvZyRkiYaz7o8iGsq2A4xdUZIz0M/vZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ludwig Disterhof <ludwig@disterhof.eu>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 490/644] media: usbtv: Lock resolution while streaming
-Date: Tue, 26 Aug 2025 13:09:41 +0200
-Message-ID: <20250826110958.635596035@linuxfoundation.org>
+Subject: [PATCH 5.15 491/644] media: rainshadow-cec: fix TOCTOU race condition in rain_interrupt()
+Date: Tue, 26 Aug 2025 13:09:42 +0200
+Message-ID: <20250826110958.660009341@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,39 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ludwig Disterhof <ludwig@disterhof.eu>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit 7e40e0bb778907b2441bff68d73c3eb6b6cd319f upstream.
+commit 7af160aea26c7dc9e6734d19306128cce156ec40 upstream.
 
-When an program is streaming (ffplay) and another program (qv4l2)
-changes the TV standard from NTSC to PAL, the kernel crashes due to trying
-to copy to unmapped memory.
+In the interrupt handler rain_interrupt(), the buffer full check on
+rain->buf_len is performed before acquiring rain->buf_lock. This
+creates a Time-of-Check to Time-of-Use (TOCTOU) race condition, as
+rain->buf_len is concurrently accessed and modified in the work
+handler rain_irq_work_handler() under the same lock.
 
-Changing from NTSC to PAL increases the resolution in the usbtv struct,
-but the video plane buffer isn't adjusted, so it overflows.
+Multiple interrupt invocations can race, with each reading buf_len
+before it becomes full and then proceeding. This can lead to both
+interrupts attempting to write to the buffer, incrementing buf_len
+beyond its capacity (DATA_SIZE) and causing a buffer overflow.
 
-Fixes: 0e0fe3958fdd13d ("[media] usbtv: Add support for PAL video source")
+Fix this bug by moving the spin_lock() to before the buffer full
+check. This ensures that the check and the subsequent buffer modification
+are performed atomically, preventing the race condition. An corresponding
+spin_unlock() is added to the overflow path to correctly release the
+lock.
+
+This possible bug was found by an experimental static analysis tool
+developed by our team.
+
+Fixes: 0f314f6c2e77 ("[media] rainshadow-cec: new RainShadow Tech HDMI CEC driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ludwig Disterhof <ludwig@disterhof.eu>
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[hverkuil: call vb2_is_busy instead of vb2_is_streaming]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/usbtv/usbtv-video.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/cec/usb/rainshadow/rainshadow-cec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/usbtv/usbtv-video.c
-+++ b/drivers/media/usb/usbtv/usbtv-video.c
-@@ -73,6 +73,10 @@ static int usbtv_configure_for_norm(stru
- 	}
+--- a/drivers/media/cec/usb/rainshadow/rainshadow-cec.c
++++ b/drivers/media/cec/usb/rainshadow/rainshadow-cec.c
+@@ -171,11 +171,12 @@ static irqreturn_t rain_interrupt(struct
+ {
+ 	struct rain *rain = serio_get_drvdata(serio);
  
- 	if (params) {
-+		if (vb2_is_busy(&usbtv->vb2q) &&
-+		    (usbtv->width != params->cap_width ||
-+		     usbtv->height != params->cap_height))
-+			return -EBUSY;
- 		usbtv->width = params->cap_width;
- 		usbtv->height = params->cap_height;
- 		usbtv->n_chunks = usbtv->width * usbtv->height
++	spin_lock(&rain->buf_lock);
+ 	if (rain->buf_len == DATA_SIZE) {
++		spin_unlock(&rain->buf_lock);
+ 		dev_warn_once(rain->dev, "buffer overflow\n");
+ 		return IRQ_HANDLED;
+ 	}
+-	spin_lock(&rain->buf_lock);
+ 	rain->buf_len++;
+ 	rain->buf[rain->buf_wr_idx] = data;
+ 	rain->buf_wr_idx = (rain->buf_wr_idx + 1) & 0xff;
 
 
