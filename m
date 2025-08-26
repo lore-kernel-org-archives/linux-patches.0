@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3CB230BDF;
-	Tue, 26 Aug 2025 13:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B161230BDF;
+	Tue, 26 Aug 2025 13:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215726; cv=none; b=UHQP7rAfDpoADei5PlMgfxngp8bfI2K7qSQbpd/Cz7ucjbVZsGkVzVHZzQZC4MhwMVsAZDKIZQxQixCDjkOAk/+g8gqKpwn55lZySSPoK/bPiPesVHlwYiCFHQc/A65i1irLTHL6N/6cC3tBs1/ooE8bbAN+rTBZGnfmaozL8Uo=
+	t=1756215728; cv=none; b=K5S4I3Ti4M+PPl+y5khsh4+hvX4eH/bLniO+ekrCp4joedKOGWitq+ugTBzbSeKD1wL25GXaw5edyYB1pvZq+QiS6m/19OX1dAg1o+kp3HGQaCQAZ67xvdJ2Zu63NJ/cHO5/cln2RVThxG8ny2B5OPITzuFQsV/FdDvA8+x6rf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215726; c=relaxed/simple;
-	bh=63QhIJ7CIp3VkpmvTJv74YZ8FNlgacvbXB3KhA11Fb8=;
+	s=arc-20240116; t=1756215728; c=relaxed/simple;
+	bh=aRFvik0zIkH8BG+3USPEhjVFZBI+CXa5B6n1ku53y6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ha3zSOdzBXxUdLR01Rv3XyVaVawhmMyV8TFYHmYt2+Z8bTmgzrZrKqR46aT0gyswnFuK9i3QjpjU5aaG+haS/rx62mN8zDrfMXRpN9WamrIy+dP1/iNjae36gOLLWF2ytSGJ86cqVCyYsnVNge2nkM9ZPuHh9uFMnIlIW4pC69o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpyOCrsB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sfN7tznBGkofRBr34w5hxeZDAUSwjt/04/7TX3Hk52kfkr0xztSBWY7zJzhPabRK+EEPcT89tnfwc6Jd7D9QdBWAMbDfoLXKateuNWQuogwW46leVYPAI8R4JTTJ/Ml6kBAkvfTRFjadbFpIbryUuslpK0SGw3dp1ZgHle83F1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OB9+MXFk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpyOCrsB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B98C4CEF1;
-	Tue, 26 Aug 2025 13:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OB9+MXFk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA84C4CEF1;
+	Tue, 26 Aug 2025 13:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215725;
-	bh=63QhIJ7CIp3VkpmvTJv74YZ8FNlgacvbXB3KhA11Fb8=;
+	s=korg; t=1756215728;
+	bh=aRFvik0zIkH8BG+3USPEhjVFZBI+CXa5B6n1ku53y6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZpyOCrsBcAYmnFN4sNEIjOio7GqpgbsV3NykdVs++b23Y/kQBuYWHYF8LuFTcAs/W
-	 uQtRgaSwNk7fOMy/oz1zqur6cisFaUrLgzhuxzXnAef7phVGKNfqX1QyQYvvbNzbhg
-	 Jf+jXgEQ8lL005tRfT1fsX0rWuH5no49w8npa49I=
+	b=OB9+MXFkmOPbDY0Qq3qQ7FS9lJueV3+4pSVIre3DjP5aXDArbhhgnqi+vxjtplkN6
+	 9VTNKSk7fX6isRjBlSpDwiChYYu6zHWUuHskYrAMeOjmKcNoYdShd7yGdP+H5SkepW
+	 yYD4X5yzgzxEbnHC4pHZvmBwQlMx8ZhT1c+J9bJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	"xin.guo" <guoxin0309@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 143/644] wifi: ath11k: clear initialized flag for deinit-ed srng lists
-Date: Tue, 26 Aug 2025 13:03:54 +0200
-Message-ID: <20250826110950.035601530@linuxfoundation.org>
+Subject: [PATCH 5.15 144/644] tcp: fix tcp_ofo_queue() to avoid including too much DUP SACK range
+Date: Tue, 26 Aug 2025 13:03:55 +0200
+Message-ID: <20250826110950.059484306@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,95 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: xin.guo <guoxin0309@gmail.com>
 
-[ Upstream commit a5b46aa7cf5f05c213316a018e49a8e086efd98e ]
+[ Upstream commit a041f70e573e185d5d5fdbba53f0db2fbe7257ad ]
 
-In a number of cases we see kernel panics on resume due
-to ath11k kernel page fault, which happens under the
-following circumstances:
+If the new coming segment covers more than one skbs in the ofo queue,
+and which seq is equal to rcv_nxt, then the sequence range
+that is duplicated will be sent as DUP SACK, the detail as below,
+in step6, the {501,2001} range is clearly including too much
+DUP SACK range, in violation of RFC 2883 rules.
 
-1) First ath11k_hal_dump_srng_stats() call
+1. client > server: Flags [.], seq 501:1001, ack 1325288529, win 20000, length 500
+2. server > client: Flags [.], ack 1, [nop,nop,sack 1 {501:1001}], length 0
+3. client > server: Flags [.], seq 1501:2001, ack 1325288529, win 20000, length 500
+4. server > client: Flags [.], ack 1, [nop,nop,sack 2 {1501:2001} {501:1001}], length 0
+5. client > server: Flags [.], seq 1:2001, ack 1325288529, win 20000, length 2000
+6. server > client: Flags [.], ack 2001, [nop,nop,sack 1 {501:2001}], length 0
 
- Last interrupt received for each group:
- ath11k_pci 0000:01:00.0: group_id 0 22511ms before
- ath11k_pci 0000:01:00.0: group_id 1 14440788ms before
- [..]
- ath11k_pci 0000:01:00.0: failed to receive control response completion, polling..
- ath11k_pci 0000:01:00.0: Service connect timeout
- ath11k_pci 0000:01:00.0: failed to connect to HTT: -110
- ath11k_pci 0000:01:00.0: failed to start core: -110
- ath11k_pci 0000:01:00.0: firmware crashed: MHI_CB_EE_RDDM
- ath11k_pci 0000:01:00.0: already resetting count 2
- ath11k_pci 0000:01:00.0: failed to wait wlan mode request (mode 4): -110
- ath11k_pci 0000:01:00.0: qmi failed to send wlan mode off: -110
- ath11k_pci 0000:01:00.0: failed to reconfigure driver on crash recovery
- [..]
+After this fix, the final ACK is as below:
 
-2) At this point reconfiguration fails (we have 2 resets) and
-  ath11k_core_reconfigure_on_crash() calls ath11k_hal_srng_deinit()
-  which destroys srng lists.  However, it does not reset per-list
-  ->initialized flag.
+6. server > client: Flags [.], ack 2001, options [nop,nop,sack 1 {501:1001}], length 0
 
-3) Second ath11k_hal_dump_srng_stats() call sees stale ->initialized
-  flag and attempts to dump srng stats:
+[edumazet] added a new packetdrill test in the following patch.
 
- Last interrupt received for each group:
- ath11k_pci 0000:01:00.0: group_id 0 66785ms before
- ath11k_pci 0000:01:00.0: group_id 1 14485062ms before
- ath11k_pci 0000:01:00.0: group_id 2 14485062ms before
- ath11k_pci 0000:01:00.0: group_id 3 14485062ms before
- ath11k_pci 0000:01:00.0: group_id 4 14780845ms before
- ath11k_pci 0000:01:00.0: group_id 5 14780845ms before
- ath11k_pci 0000:01:00.0: group_id 6 14485062ms before
- ath11k_pci 0000:01:00.0: group_id 7 66814ms before
- ath11k_pci 0000:01:00.0: group_id 8 68997ms before
- ath11k_pci 0000:01:00.0: group_id 9 67588ms before
- ath11k_pci 0000:01:00.0: group_id 10 69511ms before
- BUG: unable to handle page fault for address: ffffa007404eb010
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 100000067 P4D 100000067 PUD 10022d067 PMD 100b01067 PTE 0
- Oops: 0000 [#1] PREEMPT SMP NOPTI
- RIP: 0010:ath11k_hal_dump_srng_stats+0x2b4/0x3b0 [ath11k]
- Call Trace:
- <TASK>
- ? __die_body+0xae/0xb0
- ? page_fault_oops+0x381/0x3e0
- ? exc_page_fault+0x69/0xa0
- ? asm_exc_page_fault+0x22/0x30
- ? ath11k_hal_dump_srng_stats+0x2b4/0x3b0 [ath11k (HASH:6cea 4)]
- ath11k_qmi_driver_event_work+0xbd/0x1050 [ath11k (HASH:6cea 4)]
- worker_thread+0x389/0x930
- kthread+0x149/0x170
-
-Clear per-list ->initialized flag in ath11k_hal_srng_deinit().
-
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Fixes: 5118935b1bc2 ("ath11k: dump SRNG stats during FW assert")
-Link: https://patch.msgid.link/20250612084551.702803-1-senozhatsky@chromium.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: xin.guo <guoxin0309@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250626123420.1933835-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/hal.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/tcp_input.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/hal.c b/drivers/net/wireless/ath/ath11k/hal.c
-index 5dbf5596c9e8..ee68f67d8ab8 100644
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -1286,6 +1286,10 @@ EXPORT_SYMBOL(ath11k_hal_srng_init);
- void ath11k_hal_srng_deinit(struct ath11k_base *ab)
- {
- 	struct ath11k_hal *hal = &ab->hal;
-+	int i;
-+
-+	for (i = 0; i < HAL_SRNG_RING_ID_MAX; i++)
-+		ab->hal.srng_list[i].initialized = 0;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 10f39b2762a7..fea019cc92d3 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4826,8 +4826,9 @@ static void tcp_ofo_queue(struct sock *sk)
  
- 	ath11k_hal_unregister_srng_key(ab);
- 	ath11k_hal_free_cont_rdp(ab);
+ 		if (before(TCP_SKB_CB(skb)->seq, dsack_high)) {
+ 			__u32 dsack = dsack_high;
++
+ 			if (before(TCP_SKB_CB(skb)->end_seq, dsack_high))
+-				dsack_high = TCP_SKB_CB(skb)->end_seq;
++				dsack = TCP_SKB_CB(skb)->end_seq;
+ 			tcp_dsack_extend(sk, TCP_SKB_CB(skb)->seq, dsack);
+ 		}
+ 		p = rb_next(p);
 -- 
 2.39.5
 
