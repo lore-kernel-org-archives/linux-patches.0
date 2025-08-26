@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2E92BD00C;
-	Tue, 26 Aug 2025 11:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373EB239573;
+	Tue, 26 Aug 2025 11:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207545; cv=none; b=e6Xt5856l0ErfPSgDMGao+uGfIw7hJQlKScgouIC3OwYFw7Yo2nQ0+uv9EP8hJOpPdmUYK4Av7gR+arViKujrluj/O+BHueDXn1WA/eMVzoV7hJvlbyRE4BYTedwZUrVpp0t+LAwFHatSMVDRfzuKIrgscmkZzn3QmJuZna2xDc=
+	t=1756207548; cv=none; b=WQHePsuKZF/N4w5hJZuD/gIe6IXODbCah1Dl6G8q0TDTWYtVRjz/xVKMKoXJV58NtMKdwhS0CqrlXFfBa8r62+mkR6sybsDnFxGBiGe0wseHOsKfPp/ZM3uYFpPLi2MF2OMhiu3QJfx+f0QwInJKDjlLXETrv9iAsxVSzeUU8V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207545; c=relaxed/simple;
-	bh=yiEir1uWVmCQh9+A0tC3KDsFy/LmLRCeVSzZaGfGUMk=;
+	s=arc-20240116; t=1756207548; c=relaxed/simple;
+	bh=O9Ecyd0R1BIT51sbZYt5Dz6EQfYXuZsuMUJlKu+BH+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jU3Fsghe6JA4d0i0251Nc/uhP7RLNXynyyRJJD63/YPV1Eailv5eXxUnhb/ngh6dgF+86cmtkeH7E0STaYeeb6kd25HXZ0T8YIqutO5wYelXiQXEnMMNxkwm3080Sdi+GDy4+KzrksZsONUa0CCoMSmjcZHH7VUZvB/F7BxBh/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enTTXqQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAYi01gndMx5SDUZzFlZqAPB7Ln2K02JPKAN/9bkJRaziiIAUSIQUtzArQB5uPnaMfKWHNEToWSnYvA+m2aDrFLehOUhlHk14U6httra5RYNUhVo6TXnZ6NZSVYbHNo7qjZzuMjbssV9q6cOj7nXAkwiD0n7UmANkH+BQAIP1XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuHOaOQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enTTXqQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B18AC4CEF1;
-	Tue, 26 Aug 2025 11:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuHOaOQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0149C4CEF1;
+	Tue, 26 Aug 2025 11:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207545;
-	bh=yiEir1uWVmCQh9+A0tC3KDsFy/LmLRCeVSzZaGfGUMk=;
+	s=korg; t=1756207548;
+	bh=O9Ecyd0R1BIT51sbZYt5Dz6EQfYXuZsuMUJlKu+BH+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enTTXqQ1E7nmn0NuERmDubKEatqDNS0QDqCeiYXgJ3USe5pAPuCuQdmyJboI9mynp
-	 /1LHEMmzBum0JXKSwZGNaJdQMA1pZsrxV7FkGUarYPsRJPsKj+hDOko8onjhtaEJ8o
-	 MkqfymWnS9HSAEMGYb0R4pjTMzzqWrUOg7XbKSp4=
+	b=HuHOaOQ/ZlW0hbfD8ectlClu2aY7U3X0ItA1TGolfuKjTKCzy11idk2cHjOQ81ZwR
+	 LPHdO2O801dAUaaoBabWU72By0oZkuYpmqOcnxlc4EgLUndzML4VimPCZbiWB7mciR
+	 fgy1Asm97slmkJfiy9k8+c/tFW4WS0e0BYRr+JLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	cen zhang <zzzccc427@gmail.com>,
 	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 224/457] xfs: improve the comments in xfs_select_zone_nowait
-Date: Tue, 26 Aug 2025 13:08:28 +0200
-Message-ID: <20250826110942.903608912@linuxfoundation.org>
+Subject: [PATCH 6.16 225/457] xfs: fully decouple XFS_IBULK* flags from XFS_IWALK* flags
+Date: Tue, 26 Aug 2025 13:08:29 +0200
+Message-ID: <20250826110942.930256188@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -54,47 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 60e02f956d77af31b85ed4e73abf85d5f12d0a98 ]
+[ Upstream commit d2845519b0723c5d5a0266cbf410495f9b8fd65c ]
 
-The top of the function comment is outdated, and the parts still correct
-duplicate information in comment inside the function.  Remove the top of
-the function comment and instead improve a comment inside the function.
+Fix up xfs_inumbers to now pass in the XFS_IBULK* flags into the flags
+argument to xfs_inobt_walk, which expects the XFS_IWALK* flags.
 
+Currently passing the wrong flags works for non-debug builds because
+the only XFS_IWALK* flag has the same encoding as the corresponding
+XFS_IBULK* flag, but in debug builds it can trigger an assert that no
+incorrect flag is passed.  Instead just extra the relevant flag.
+
+Fixes: 5b35d922c52798 ("xfs: Decouple XFS_IBULK flags from XFS_IWALK flags")
+Cc: <stable@vger.kernel.org> # v5.19
+Reported-by: cen zhang <zzzccc427@gmail.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Stable-dep-of: d2845519b072 ("xfs: fully decouple XFS_IBULK* flags from XFS_IWALK* flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_zone_alloc.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ fs/xfs/xfs_itable.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_zone_alloc.c
-+++ b/fs/xfs/xfs_zone_alloc.c
-@@ -654,13 +654,6 @@ static inline bool xfs_zoned_pack_tight(
- 		!(ip->i_diflags & XFS_DIFLAG_APPEND);
- }
+--- a/fs/xfs/xfs_itable.c
++++ b/fs/xfs/xfs_itable.c
+@@ -447,17 +447,21 @@ xfs_inumbers(
+ 		.breq		= breq,
+ 	};
+ 	struct xfs_trans	*tp;
++	unsigned int		iwalk_flags = 0;
+ 	int			error = 0;
  
--/*
-- * Pick a new zone for writes.
-- *
-- * If we aren't using up our budget of open zones just open a new one from the
-- * freelist.  Else try to find one that matches the expected data lifetime.  If
-- * we don't find one that is good pick any zone that is available.
-- */
- static struct xfs_open_zone *
- xfs_select_zone_nowait(
- 	struct xfs_mount	*mp,
-@@ -688,7 +681,8 @@ xfs_select_zone_nowait(
- 		goto out_unlock;
+ 	if (xfs_bulkstat_already_done(breq->mp, breq->startino))
+ 		return 0;
  
++	if (breq->flags & XFS_IBULK_SAME_AG)
++		iwalk_flags |= XFS_IWALK_SAME_AG;
++
  	/*
--	 * See if we can open a new zone and use that.
-+	 * See if we can open a new zone and use that so that data for different
-+	 * files is mixed as little as possible.
+ 	 * Grab an empty transaction so that we can use its recursive buffer
+ 	 * locking abilities to detect cycles in the inobt without deadlocking.
  	 */
- 	oz = xfs_try_open_zone(mp, write_hint);
- 	if (oz)
+ 	tp = xfs_trans_alloc_empty(breq->mp);
+-	error = xfs_inobt_walk(breq->mp, tp, breq->startino, breq->flags,
++	error = xfs_inobt_walk(breq->mp, tp, breq->startino, iwalk_flags,
+ 			xfs_inumbers_walk, breq->icount, &ic);
+ 	xfs_trans_cancel(tp);
+ 
 
 
