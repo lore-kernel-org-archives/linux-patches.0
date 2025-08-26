@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503B235208D;
-	Tue, 26 Aug 2025 13:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4203352FFE;
+	Tue, 26 Aug 2025 13:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216606; cv=none; b=QsbpGZmsG/1DfedSTFSD2ow7vIcmav/3+yYrupbKFe5nZ2NNS28Z0S3oefxVK5mcB8of2TsmBzo3LZwzhZyeJDqm2QV4QCLS1jKmZXuixkflz0VsPvFArMlYtzodXhqTh0tiaP7hA+ZcJFMcUlsQZWuNTesIosi125yOKLTAGiM=
+	t=1756216609; cv=none; b=VkIlkjh1lj9RFIazl+QW9V36vzdxyzl78OpB7HyIiiGhRRBtATkrH5tEH9YWyZipH+qRICp7UTaGEZqu+yYe5G77KS8HqnajMcOPxKEWXmUlB3uubOQeZ9nkJIDyIv5HkWEjAo3EL6/GiuC/CZNvOtkTqc5/8+vAhOnSitFluzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216606; c=relaxed/simple;
-	bh=9Q5iH8VzX2q+ISFCXxQN/lCHq0otVs/PbLayw1NdYJA=;
+	s=arc-20240116; t=1756216609; c=relaxed/simple;
+	bh=Pwn7QalGwXgy82kICuMdI353EzukxSlrQOwIt71su2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWdwnqQ8+O3YMDCC+ocexn7fulpS8TJEkO/5RBjZcEW13/Ad3L+Z3oVusxCkazAC/0NmOQxClUeaFKDLWygp+xP4rgqjm+iOrNPElfKhh3j/BxoFvUE3RSpb4JX41eaT463xU663YbfHgbgMqF4Z+Nm2Uup9jbvHpjk99QtYnwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaNoPkce; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgA0shvZKwJXu0hrP8HfFx7ttg4cRBiiFTtXOq69sDxUnHEsoD742exPIUaioMr27KSN8tDjt4fE9gUPFJQR/ghLg3q8gHEPNnH2543CuM1JaLZ8pKmgdlxW2MwgdP/YnpPZ+JdWEOeraNN9rZh4Xa2EiDN9X0ITGAMvEzaq+MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXlN/fX8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaNoPkce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D74C113D0;
-	Tue, 26 Aug 2025 13:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXlN/fX8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7CBC113CF;
+	Tue, 26 Aug 2025 13:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216606;
-	bh=9Q5iH8VzX2q+ISFCXxQN/lCHq0otVs/PbLayw1NdYJA=;
+	s=korg; t=1756216608;
+	bh=Pwn7QalGwXgy82kICuMdI353EzukxSlrQOwIt71su2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yaNoPkceudNSedJFpl5dSdApRdsB2ej3fxeFFDMHkVf+ZKiq2o7hDaW9UriHwhqIB
-	 L1uf/EnQCJy/sgbtc8ooMjlVB2X3eQu0R2YozWmD0r0rhO4n9y3/GGlko6AEYQjCuu
-	 jw9bO2J+qbkmyuIMbQLUBWCFW+PrjTJmpnYjl2N0=
+	b=OXlN/fX8ZEzgHS83tkdGUGq6JA5Ekh/idkJJLJVnyxEtJlM5o9rSlR9i0j3ZLNW9O
+	 pnnEQn+9nYBsB60wK+hceF2vkrdQetwZUrVWT6gxSjaGj0BSXnPRxwWCL4/evsTnlD
+	 VCOO2qZ7eJYP/rTy/drkoYEOKuXwbhLpJSf13MRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Dilger <adilger@whamcloud.com>,
-	Li Dongyang <dongyangli@ddn.com>,
-	Alex Zhuravlev <bzzz@whamcloud.com>,
-	Oleg Drokin <green@whamcloud.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 467/644] ext4: check fast symlink for ea_inode correctly
-Date: Tue, 26 Aug 2025 13:09:18 +0200
-Message-ID: <20250826110958.053810398@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH 5.15 476/644] wifi: brcmsmac: Remove const from tbl_ptr parameter in wlc_lcnphy_common_read_table()
+Date: Tue, 26 Aug 2025 13:09:27 +0200
+Message-ID: <20250826110958.279014905@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,63 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Dilger <adilger@dilger.ca>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit b4cc4a4077268522e3d0d34de4b2dc144e2330fa upstream.
+commit 81284e86bf8849f8e98e8ead3ff5811926b2107f upstream.
 
-The check for a fast symlink in the presence of only an
-external xattr inode is incorrect.  If a fast symlink does
-not have an xattr block (i_file_acl == 0), but does have
-an external xattr inode that increases inode i_blocks, then
-the check for a fast symlink will incorrectly fail and
-__ext4_iget()->ext4_ind_check_inode() will report the inode
-is corrupt when it "validates" i_data[] on the next read:
+A new warning in clang [1] complains that diq_start in
+wlc_lcnphy_tx_iqlo_cal() is passed uninitialized as a const pointer to
+wlc_lcnphy_common_read_table():
 
-    # ln -s foo /mnt/tmp/bar
-    # setfattr -h -n trusted.test \
-               -v "$(yes | head -n 4000)" /mnt/tmp/bar
-    # umount /mnt/tmp
-    # mount /mnt/tmp
-    # ls -l /mnt/tmp
-    ls: cannot access '/mnt/tmp/bar': Structure needs cleaning
-    total 4
-     ? l?????????? ? ?    ?        ?            ? bar
-    # dmesg | tail -1
-    EXT4-fs error (device dm-8): __ext4_iget:5098:
-        inode #24578: block 7303014: comm ls: invalid block
+  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c:2728:13: error: variable 'diq_start' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+   2728 |                                                      &diq_start, 1, 16, 69);
+        |                                                       ^~~~~~~~~
 
-(note that "block 7303014" = 0x6f6f66 = "foo" in LE order).
-
-ext4_inode_is_fast_symlink() should check the superblock
-EXT4_FEATURE_INCOMPAT_EA_INODE feature flag, not the inode
-EXT4_EA_INODE_FL, since the latter is only set on the xattr
-inode itself, and not on the inode that uses this xattr.
+The table pointer passed to wlc_lcnphy_common_read_table() should not be
+considered constant, as wlc_phy_read_table() is ultimately going to
+update it. Remove the const qualifier from the tbl_ptr to clear up the
+warning.
 
 Cc: stable@vger.kernel.org
-Fixes: fc82228a5e38 ("ext4: support fast symlinks from ext3 file systems")
-Signed-off-by: Andreas Dilger <adilger@whamcloud.com>
-Reviewed-by: Li Dongyang <dongyangli@ddn.com>
-Reviewed-by: Alex Zhuravlev <bzzz@whamcloud.com>
-Reviewed-by: Oleg Drokin <green@whamcloud.com>
-Reviewed-on: https://review.whamcloud.com/59879
-Lustre-bug-id: https://jira.whamcloud.com/browse/LU-19121
-Link: https://patch.msgid.link/20250717063709.757077-1-adilger@dilger.ca
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2108
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>>
+Link: https://patch.msgid.link/20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -148,7 +148,7 @@ static int ext4_meta_trans_blocks(struct
-  */
- int ext4_inode_is_fast_symlink(struct inode *inode)
- {
--	if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
-+	if (!ext4_has_feature_ea_inode(inode->i_sb)) {
- 		int ea_blocks = EXT4_I(inode)->i_file_acl ?
- 				EXT4_CLUSTER_SIZE(inode->i_sb) >> 9 : 0;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -919,7 +919,7 @@ void wlc_lcnphy_read_table(struct brcms_
  
+ static void
+ wlc_lcnphy_common_read_table(struct brcms_phy *pi, u32 tbl_id,
+-			     const u16 *tbl_ptr, u32 tbl_len,
++			     u16 *tbl_ptr, u32 tbl_len,
+ 			     u32 tbl_width, u32 tbl_offset)
+ {
+ 	struct phytbl_info tab;
 
 
