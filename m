@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDA734DCCA;
-	Tue, 26 Aug 2025 13:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41F4350D6A;
+	Tue, 26 Aug 2025 13:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216208; cv=none; b=PyBLpGSpBWF0VEHhXNF2H7gOoKJTgMLifgwqRpynE1BCJ7IWgOf6kU4K4unVPbnDWp4iXE/1OJ4OpCT6REyaMemE6g3nPe8jHTUSn0f95VDcOlnVzIDw4HhTahCMHH3RB+n+DGo6KRk4F5Yeg00+Zq5Ap9I7X77qo8ybeanucnU=
+	t=1756216211; cv=none; b=WoddkJ2N00Uf1lFHU0uuUBoDXI2w1N8h6Ji3EhXKF46rVugZl+0obir+tH8AhZnxktkp0Agqk35NITyRDlE4BOGNrWOpaqrVNqR3LORzRX5yLYwBmB4FbH7wUCUvP9R4HG5FTCOtzE2u6cu1r68Cfv5iRmosG9QYnXNErRNGtNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216208; c=relaxed/simple;
-	bh=2S7naFVF1FduKJGVR2TMM0oryEX0nKQpHNxX8/TvAEU=;
+	s=arc-20240116; t=1756216211; c=relaxed/simple;
+	bh=vIpg0DE05DnDv0ZSeHHPNxMDUPQtJuUo7F5DCIFVINM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPcm5ePhyKySUVJiTHLLZLQjKF0eudXu43WNYoD+dk7/KKCsJMn9h52WTdZ+xd/FQTXxrRQe3sxYwktnP5W28QqtzRghWKHaOafJ8PNpaAf+Qm/5e8g8ds2fcILjapZaax1zZfhLU6Yg+42TDPheP5y0/EEBteKnLCWrllJRi4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlkPRokj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sXy2XN2prINz8rJU/a/AMFT6Wbjsa6C+NoRojm7AnoLuKP/3XKeeXl3BBRPA6m63X4dhvFksZr+E48aTFAMtxh/lF6kVh5aI4MkbnDZgSWGEEg0NH4yA+cWT8VwwZ3vgkdI5Vzv0Btyp3t6mgFdNZxwo0J6YH+BF9fW8cB88HG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMIE7e46; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlkPRokj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10156C4CEF1;
-	Tue, 26 Aug 2025 13:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMIE7e46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EADBC113CF;
+	Tue, 26 Aug 2025 13:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216208;
-	bh=2S7naFVF1FduKJGVR2TMM0oryEX0nKQpHNxX8/TvAEU=;
+	s=korg; t=1756216211;
+	bh=vIpg0DE05DnDv0ZSeHHPNxMDUPQtJuUo7F5DCIFVINM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlkPRokjXiES/1CGJ42MHm9+IfrJe38uwbfzzfIKg7WtD5w8F6fB+o9QJMae5iQuV
-	 tPWPiqIj2ixAQvKMG+lSRRMFd8+oZvAZqGCaNoled7vevRpuO3wUWrf2vT0qbqfuhP
-	 EgX+sUzichTqSqVI0aIQHg0KApSuu+YrQDUEY/KE=
+	b=bMIE7e46NE1I+0ZPYEmEvqQwwaEvH5s/RTy+IyRqELxnBWsTHUk0wQETImYxaSTKW
+	 L+39wIGlpUUweQ9iYel2H4I+uQ5aJW+O/TY3/F0Tls0UgUCCMi2uJUwHOzYl/V6dnq
+	 Q4nUJ3I4Jb+zkfYIz6IgScSOutoHPvAyixIuq9Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 325/644] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
-Date: Tue, 26 Aug 2025 13:06:56 +0200
-Message-ID: <20250826110954.440527775@linuxfoundation.org>
+Subject: [PATCH 5.15 299/644] usb: xhci: Avoid showing warnings for dying controller
+Date: Tue, 26 Aug 2025 13:06:30 +0200
+Message-ID: <20250826110953.795842933@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,35 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
+[ Upstream commit 65fc0fc137b5da3ee1f4ca4f61050fcb203d7582 ]
 
-code mistakenly used a hardcoded index (codec[1]) instead of
-iterating, over the codec array using the loop variable i.
-Use codec[i] instead of codec[1] to match the loop iteration.
+When a USB4 dock is unplugged from a system it won't respond to ring
+events. The PCI core handles the surprise removal event and notifies
+all PCI drivers. The XHCI PCI driver sets a flag that the device is
+being removed, and when the device stops responding a flag is also
+added to indicate it's dying.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+When that flag is set don't bother to show warnings about a missing
+controller.
+
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250717073107.488599-3-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/intel8x0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
-index ae285c0a629c..f3df6fe2b7f1 100644
---- a/sound/pci/intel8x0.c
-+++ b/sound/pci/intel8x0.c
-@@ -2252,7 +2252,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
- 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
- 			for (i = 1; i < 4; i++) {
- 				if (pcm->r[0].codec[i]) {
--					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
-+					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
- 					break;
- 				}
- 			}
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index e9ebb6c7954f..2d8ca3356ff3 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -118,7 +118,8 @@ int xhci_halt(struct xhci_hcd *xhci)
+ 	ret = xhci_handshake(&xhci->op_regs->status,
+ 			STS_HALT, STS_HALT, XHCI_MAX_HALT_USEC);
+ 	if (ret) {
+-		xhci_warn(xhci, "Host halt failed, %d\n", ret);
++		if (!(xhci->xhc_state & XHCI_STATE_DYING))
++			xhci_warn(xhci, "Host halt failed, %d\n", ret);
+ 		return ret;
+ 	}
+ 	xhci->xhc_state |= XHCI_STATE_HALTED;
+@@ -175,7 +176,8 @@ int xhci_reset(struct xhci_hcd *xhci, u64 timeout_us)
+ 	state = readl(&xhci->op_regs->status);
+ 
+ 	if (state == ~(u32)0) {
+-		xhci_warn(xhci, "Host not accessible, reset failed.\n");
++		if (!(xhci->xhc_state & XHCI_STATE_DYING))
++			xhci_warn(xhci, "Host not accessible, reset failed.\n");
+ 		return -ENODEV;
+ 	}
+ 
 -- 
 2.39.5
 
