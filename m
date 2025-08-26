@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED93A221DA5;
-	Tue, 26 Aug 2025 13:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939BE1E502;
+	Tue, 26 Aug 2025 13:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213204; cv=none; b=ErbdWO0GmdaxRmvBxsBmoC7ZnuT6+GO8U6xLnBzqRsehanXqVzi+AQavPpKt0Y/HPcvudJbHHJA9ivTcQnKlXZIwn8z9vSydJfYCFH5SM067CJrR4fZzxLQ54LOus7c4Yod2+U760I3C9slULPSIx02OrbafpnQTGcmEF6oqpzo=
+	t=1756213206; cv=none; b=uM9EqS30AMk9yVy1NcSB4yD5ehyqPTEREVO8syozUBVjI5Y3/icAuIp4l1PnSEouuVwBfrzd8xrEeZI6YE7wBXs9TT39uQD+id5q79Bm3Kl++tTg40mitS5aFfd1p+xzi9g5KICq4XxJdWj25dS7GVmB08AdC07HYRgxS0Zhsi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213204; c=relaxed/simple;
-	bh=Y1xTduzIJX35Rdno7Yk8mzGvtjqXC05UXGz8sRcaTtA=;
+	s=arc-20240116; t=1756213206; c=relaxed/simple;
+	bh=YksV+xeXTLsLhy3nXBnnwoDidHTVKN6DmFM52IsBgRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8JFSJljuSVePpNPlHxG+H/0GueHCxHwRydd/FVCfnxoCb5J7e5yD+bH54iU2E02wOFHlWsGGUnHVFBNPHfLKqsoe4yvCv67jbZH47C2bri1x816YYr/3XrsfYtecC1dZn/h7u27yeA4f5s4dldWdehDL6IH8bACXqL1GKdx1Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8Bf1Tep; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YbB8Y6kBZdn08MbSAvsSFbA/bsMHT7rSqj3QEKwbn8j4C0pqh+btkf42gmVmtk7Mt5/dTTKze6lppthduUH51AJSwVUt/F7uH3JjMvGrbxVBzNxtYGg6UX2KVALVGmlpewFsSIY3gbnUVvpfJamZdWoaX3sbUT2Dz9GrviwB/mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6tThIEU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8Bf1Tep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD66C113CF;
-	Tue, 26 Aug 2025 13:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6tThIEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DCFC4CEF1;
+	Tue, 26 Aug 2025 13:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213203;
-	bh=Y1xTduzIJX35Rdno7Yk8mzGvtjqXC05UXGz8sRcaTtA=;
+	s=korg; t=1756213206;
+	bh=YksV+xeXTLsLhy3nXBnnwoDidHTVKN6DmFM52IsBgRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v8Bf1Tepn8r206TnCtOVROHhXXNsO7IBkAuaYgZQYJwP4DP2HzH1z9qJbs06HS8iF
-	 H3JiDxUPDfTgXbfgb3/U7jJBzDIBiUKdv8n+efQvEzCJKbvaH6KtoseKXi9L2yBMp2
-	 7r0vElNJOvfm91i57PMN7d3DimEPnxWC1YoGPvpY=
+	b=n6tThIEUDKfP+lGQlQ9QKPg5XH6GU1S1uT7TZH34T3VOicMYIpqaRrni340+8cQNb
+	 RrNTfZupKSgzCiF+ETJAGXYuAITirSt/nnteEWrUxUbvbuePJZzvbtB1eo5tVgz6YK
+	 1axaBZJ7z+tx7EbkI7LgMinPKJoxK7M68wYjk3jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 228/587] fs/orangefs: use snprintf() instead of sprintf()
-Date: Tue, 26 Aug 2025 13:06:17 +0200
-Message-ID: <20250826110958.734123154@linuxfoundation.org>
+Subject: [PATCH 6.6 229/587] watchdog: dw_wdt: Fix default timeout
+Date: Tue, 26 Aug 2025 13:06:18 +0200
+Message-ID: <20250826110958.759794628@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,45 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit cdfa1304657d6f23be8fd2bb0516380a3c89034e ]
+[ Upstream commit ac3dbb91e0167d017f44701dd51c1efe30d0c256 ]
 
-sprintf() is discouraged for use with bounded destination buffers
-as it does not prevent buffer overflows when the formatted output
-exceeds the destination buffer size. snprintf() is a safer
-alternative as it limits the number of bytes written and ensures
-NUL-termination.
+The Synopsys Watchdog driver sets the default timeout to 30 seconds,
+but on some devices this is not a valid timeout. E.g. on RK3588 the
+actual timeout being used is 44 seconds instead.
 
-Replace sprintf() with snprintf() for copying the debug string
-into a temporary buffer, using ORANGEFS_MAX_DEBUG_STRING_LEN as
-the maximum size to ensure safe formatting and prevent memory
-corruption in edge cases.
+Once the watchdog is started the value is updated accordingly, but
+it would be better to expose a sensible timeout to userspace without
+the need to first start the watchdog.
 
-EDIT: After this patch sat on linux-next for a few days, Dan
-Carpenter saw it and suggested that I use scnprintf instead of
-snprintf. I made the change and retested.
-
-Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20250717-dw-wdt-fix-initial-timeout-v1-1-86dc864d48dd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/dw_wdt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index b57140ebfad0..cd4bfd92ebd6 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -354,7 +354,7 @@ static ssize_t orangefs_debug_read(struct file *file,
- 		goto out;
+diff --git a/drivers/watchdog/dw_wdt.c b/drivers/watchdog/dw_wdt.c
+index 84dca3695f86..e5e6d7f15918 100644
+--- a/drivers/watchdog/dw_wdt.c
++++ b/drivers/watchdog/dw_wdt.c
+@@ -644,6 +644,8 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+ 	} else {
+ 		wdd->timeout = DW_WDT_DEFAULT_SECONDS;
+ 		watchdog_init_timeout(wdd, 0, dev);
++		/* Limit timeout value to hardware constraints. */
++		dw_wdt_set_timeout(wdd, wdd->timeout);
+ 	}
  
- 	mutex_lock(&orangefs_debug_lock);
--	sprintf_ret = sprintf(buf, "%s", (char *)file->private_data);
-+	sprintf_ret = scnprintf(buf, ORANGEFS_MAX_DEBUG_STRING_LEN, "%s", (char *)file->private_data);
- 	mutex_unlock(&orangefs_debug_lock);
- 
- 	read_ret = simple_read_from_buffer(ubuf, count, ppos, buf, sprintf_ret);
+ 	platform_set_drvdata(pdev, dw_wdt);
 -- 
 2.39.5
 
