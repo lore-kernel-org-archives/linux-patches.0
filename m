@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C1A2B9A7;
-	Tue, 26 Aug 2025 14:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C67221D3F2;
+	Tue, 26 Aug 2025 14:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217195; cv=none; b=p0r9eCLE7Je/0NxQk1govGZ9QpHqTAYc+vIUyaE3BPZktThPwAYuIwdYRleDqXTuXSOuH4Fm6ye8u5R/fx+JH9MQ3tNyblqj4FlmkFAFrr9kme3gZ6OxO0ugiz8Or1h9tjD9vAK+pOu3w+4zXCtDMKu70SZ5xV/uDyAl04YZmiA=
+	t=1756217200; cv=none; b=CUZu1bNw/9ZATiY0GpHKbGBs/JihrfbKsRaXdHc54lDAD1lNFWHILUd7DLOs2Iuo/jAeUZbwO6qgZz26sCOzm0QtvfWbJi9EvPbwsyosdoIMwEfQVEzlAQVdIxQIoniUJUBSOaLsEbHxOTEcuVfuc+MuiqHnIRnLDE2WaYw9YJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217195; c=relaxed/simple;
-	bh=SfAV9CxseHC0+BDK1Rt6z4vSVhwp0/8JkcrEen6UpDE=;
+	s=arc-20240116; t=1756217200; c=relaxed/simple;
+	bh=D82G4aV9diF+wH428zQNlfpXg0MqS1aF5yFDZlH+8BA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=croWfXo2Is6pvC94zf0EFCeHPyUHgxuT15e8wEhMlsOkZjEUqRo427FZIflTr8iEBA96me9TvhEOVV23tgX8MBPveaKg3jFsOx6RvnFu9iGd/6bwhnJ2h5RgNANlarDtsXmx2WZ/X76iF9qTeEXgqN8yqWhdgkM2zuEb9gHvCi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vE5qNoq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JazisVT/9ljmrqp7DLzodjCy3/r6hgF6CkTk8vztDlIBn6+CCbim73vKldsXrdJFNZkO59eM3eeFlsCjSGWBGjrWJk7gLTV96UlzaapeMEdAg/8QaEZIvWRCnyZzugB58I4aklaNyovECw+Ttf3F/4nCsxR6SRx4VPSFnTEJr60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vN/WHlXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vE5qNoq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A3CC4CEF1;
-	Tue, 26 Aug 2025 14:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN/WHlXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C96C4CEF1;
+	Tue, 26 Aug 2025 14:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217195;
-	bh=SfAV9CxseHC0+BDK1Rt6z4vSVhwp0/8JkcrEen6UpDE=;
+	s=korg; t=1756217197;
+	bh=D82G4aV9diF+wH428zQNlfpXg0MqS1aF5yFDZlH+8BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vE5qNoq43XUfPzzH1PI0q1bajQDyscCJRKkesfG4PJvZgM+ng8dYWG7J1M0M79JOn
-	 jNk+h2zU1+GSKT1SWCBrldmQYRhQ0dqZdN9PL+z5JgUdkOANZgmM9+Jg9WQo4+TaEk
-	 EzudefS2pfPath49bJ+Wpkf6HS1gZPTfBAU4tkgA=
+	b=vN/WHlXejPFMFiuConSYK1E/q5hUSgBqOn6OkTUzkMFazd+Lg8ci7nFC+qk2pX8sJ
+	 I9uwGm0r4I/NkjYhFpbLOsW9POnzPcIJH9q6xon9A1GtOVcFMCpdrEYyrH22xWQ3ay
+	 53FiPgU+a7F2b6c2fywiEKk0JRP7x1H/DF0cDUog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Raghavan <arun@asymptotic.io>,
-	Pieterjan Camerlynck <p.camerlynck@televic.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 051/523] ASoC: fsl_sai: Force a software reset when starting in consumer mode
-Date: Tue, 26 Aug 2025 13:04:21 +0200
-Message-ID: <20250826110925.856793801@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 052/523] mm/vmalloc: leave lazy MMU mode on PTE mapping error
+Date: Tue, 26 Aug 2025 13:04:22 +0200
+Message-ID: <20250826110925.879663643@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,59 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arun Raghavan <arun@asymptotic.io>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-commit dc78f7e59169d3f0e6c3c95d23dc8e55e95741e2 upstream.
+commit fea18c686320a53fce7ad62a87a3e1d10ad02f31 upstream.
 
-On an imx8mm platform with an external clock provider, when running the
-receiver (arecord) and triggering an xrun with xrun_injection, we see a
-channel swap/offset. This happens sometimes when running only the
-receiver, but occurs reliably if a transmitter (aplay) is also
-concurrently running.
+vmap_pages_pte_range() enters the lazy MMU mode, but fails to leave it in
+case an error is encountered.
 
-It seems that the SAI loses track of frame sync during the trigger stop
--> trigger start cycle that occurs during an xrun. Doing just a FIFO
-reset in this case does not suffice, and only a software reset seems to
-get it back on track.
-
-This looks like the same h/w bug that is already handled for the
-producer case, so we now do the reset unconditionally on config disable.
-
-Signed-off-by: Arun Raghavan <arun@asymptotic.io>
-Reported-by: Pieterjan Camerlynck <p.camerlynck@televic.com>
-Fixes: 3e3f8bd56955 ("ASoC: fsl_sai: fix no frame clk in master mode")
-Cc: stable@vger.kernel.org
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://patch.msgid.link/20250626130858.163825-1-arun@arunraghavan.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20250623075721.2817094-1-agordeev@linux.ibm.com
+Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202506132017.T1l1l6ME-lkp@intel.com/
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_sai.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ mm/vmalloc.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -572,13 +572,15 @@ static void fsl_sai_config_disable(struc
- 	 * anymore. Add software reset to fix this issue.
- 	 * This is a hardware bug, and will be fix in the
- 	 * next sai version.
-+	 *
-+	 * In consumer mode, this can happen even after a
-+	 * single open/close, especially if both tx and rx
-+	 * are running concurrently.
- 	 */
--	if (!sai->is_slave_mode) {
--		/* Software Reset */
--		regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
--		/* Clear SR bit to finish the reset */
--		regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
--	}
-+	/* Software Reset */
-+	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
-+	/* Clear SR bit to finish the reset */
-+	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -193,6 +193,7 @@ static int vmap_pte_range(pmd_t *pmd, un
+ 		unsigned long end, pgprot_t prot, struct page **pages, int *nr,
+ 		pgtbl_mod_mask *mask)
+ {
++	int err = 0;
+ 	pte_t *pte;
+ 
+ 	/*
+@@ -206,15 +207,20 @@ static int vmap_pte_range(pmd_t *pmd, un
+ 	do {
+ 		struct page *page = pages[*nr];
+ 
+-		if (WARN_ON(!pte_none(*pte)))
+-			return -EBUSY;
+-		if (WARN_ON(!page))
+-			return -ENOMEM;
++		if (WARN_ON(!pte_none(*pte))) {
++			err = -EBUSY;
++			break;
++		}
++		if (WARN_ON(!page)) {
++			err = -ENOMEM;
++			break;
++		}
+ 		set_pte_at(&init_mm, addr, pte, mk_pte(page, prot));
+ 		(*nr)++;
+ 	} while (pte++, addr += PAGE_SIZE, addr != end);
+ 	*mask |= PGTBL_PTE_MODIFIED;
+-	return 0;
++
++	return err;
  }
  
- static int fsl_sai_trigger(struct snd_pcm_substream *substream, int cmd,
+ static int vmap_pmd_range(pud_t *pud, unsigned long addr,
 
 
