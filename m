@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350AF299959;
-	Tue, 26 Aug 2025 11:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0E032144F;
+	Tue, 26 Aug 2025 11:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207786; cv=none; b=Q1mKqYps9/Jdg/SmJge9n/k0Yx50lvCoQig87NA0K5tFpLAQwb1ODwDUJw62Eim+mMd7+jqgDH7bqvVgIUuJDcGpVD1PYjWTBINxNv1WoRpl8kiEY6sjEgu0tDCC761GoVwDKGs4zCM1B0CBfAjWMvA5nftwuGhvqDUCWi36ZmY=
+	t=1756207788; cv=none; b=EmlLxgUXimwtstdZOKpIsU7cPf3yNmISdaJlsLsbYQFp8H4rbZqw8iTt8y0w+UulaqFoEgoQlxCC5qw9iJ3o6fxRf4l2XGSO/5RfbeQSodRsRl4+9tffMIwtQ1dGTrjQkYC6utq0cptKHn+3r1A6i/lF5jmzoj+/H5izM4vDKtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207786; c=relaxed/simple;
-	bh=dzfpCfMGrbPtxMdJvhwOUHcmAAcLfV/RpT3kwgVMVpM=;
+	s=arc-20240116; t=1756207788; c=relaxed/simple;
+	bh=NN/VGsWHWzTntBi+JJIAofKbczPXARncCuGSJaN6Slo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nb1PIutku4bQlXnJmqwa+i8qrKgwbaXJpbrfKPHFxIrmRKu4J14nbPZ6Iv5Y5UnA773EI0abwWj0yPp65dtSMNitXwgo3O9vezpfBKc/7BSVGHYqFkY7WOFLBi6y0C21+gmlDkVKtziJLMR/ii1bZvwrDJuF7j6kfGJQJ4fi81Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fO2Eh0Aq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pI+YZ2csE34SW45KZgrX0iU2PINTmIlt3kQGlFQeYdNV8Pu5lk9qb9rtMaM9ToyrwWKzPuPzI+5NNVh4/IXN9wuv9cIvHDpSgan2ZteNtOEVOXGyuOOR11s1NbhC38eoD+hzLJDf/J8oNBpfdrM0nzhoC5iQveV2gW1uL7OarCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJeKvZXu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO2Eh0Aq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91541C4CEF1;
-	Tue, 26 Aug 2025 11:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJeKvZXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AD4C4CEF1;
+	Tue, 26 Aug 2025 11:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207786;
-	bh=dzfpCfMGrbPtxMdJvhwOUHcmAAcLfV/RpT3kwgVMVpM=;
+	s=korg; t=1756207788;
+	bh=NN/VGsWHWzTntBi+JJIAofKbczPXARncCuGSJaN6Slo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fO2Eh0Aq3NoOso5mJuKHQqDE1VfeqJKWoJNQd/pRg2b4/DqE6UcnsflcBPylXa+Jq
-	 +Od8ecO+oI9AJM+YDcTOnX1eqF8czLRpYsDRp6CvV2V2G3ShJZIfAD4I8gou317Ng4
-	 EdRsu3UuU+CYsb4GJ9SIpz7PZodaccpYGDXjy49M=
+	b=oJeKvZXudxXB9VaV+rGDP+oMcQgur/RbuNM3FenuUNAZW94QjeJLD0GTsXzBRPEqS
+	 4/z4YtjNIp6R7pFqGgjY8goqWYHRkx1IYgZEndAExtfjs6OLAt8B8hl6pP4WSe4Fzl
+	 SskhHv108yaAqTe4fmwzXAN1NT9URdVONooM0w5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Ye Bin <yebin10@huawei.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 286/457] smb: server: split ksmbd_rdma_stop_listening() out of ksmbd_rdma_destroy()
-Date: Tue, 26 Aug 2025 13:09:30 +0200
-Message-ID: <20250826110944.448736385@linuxfoundation.org>
+Subject: [PATCH 6.16 287/457] fs/buffer: fix use-after-free when call bh_read() helper
+Date: Tue, 26 Aug 2025 13:09:31 +0200
+Message-ID: <20250826110944.475494690@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -56,90 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit bac7b996d42e458a94578f4227795a0d4deef6fa ]
+[ Upstream commit 7375f22495e7cd1c5b3b5af9dcc4f6dffe34ce49 ]
 
-We can't call destroy_workqueue(smb_direct_wq); before stop_sessions()!
+There's issue as follows:
+BUG: KASAN: stack-out-of-bounds in end_buffer_read_sync+0xe3/0x110
+Read of size 8 at addr ffffc9000168f7f8 by task swapper/3/0
+CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted 6.16.0-862.14.0.6.x86_64
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x55/0x70
+ print_address_description.constprop.0+0x2c/0x390
+ print_report+0xb4/0x270
+ kasan_report+0xb8/0xf0
+ end_buffer_read_sync+0xe3/0x110
+ end_bio_bh_io_sync+0x56/0x80
+ blk_update_request+0x30a/0x720
+ scsi_end_request+0x51/0x2b0
+ scsi_io_completion+0xe3/0x480
+ ? scsi_device_unbusy+0x11e/0x160
+ blk_complete_reqs+0x7b/0x90
+ handle_softirqs+0xef/0x370
+ irq_exit_rcu+0xa5/0xd0
+ sysvec_apic_timer_interrupt+0x6e/0x90
+ </IRQ>
 
-Otherwise already existing connections try to use smb_direct_wq as
-a NULL pointer.
+ Above issue happens when do ntfs3 filesystem mount, issue may happens
+ as follows:
+           mount                            IRQ
+ntfs_fill_super
+  read_cache_page
+    do_read_cache_folio
+      filemap_read_folio
+        mpage_read_folio
+	 do_mpage_readpage
+	  ntfs_get_block_vbo
+	   bh_read
+	     submit_bh
+	     wait_on_buffer(bh);
+	                            blk_complete_reqs
+				     scsi_io_completion
+				      scsi_end_request
+				       blk_update_request
+				        end_bio_bh_io_sync
+					 end_buffer_read_sync
+					  __end_buffer_read_notouch
+					   unlock_buffer
 
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+            wait_on_buffer(bh);--> return will return to caller
+
+					  put_bh
+					    --> trigger stack-out-of-bounds
+In the mpage_read_folio() function, the stack variable 'map_bh' is
+passed to ntfs_get_block_vbo(). Once unlock_buffer() unlocks and
+wait_on_buffer() returns to continue processing, the stack variable
+is likely to be reclaimed. Consequently, during the end_buffer_read_sync()
+process, calling put_bh() may result in stack overrun.
+
+If the bh is not allocated on the stack, it belongs to a folio.  Freeing
+a buffer head which belongs to a folio is done by drop_buffers() which
+will fail to free buffers which are still locked.  So it is safe to call
+put_bh() before __end_buffer_read_notouch().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Link: https://lore.kernel.org/20250811141830.343774-1-yebin@huaweicloud.com
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c     | 3 ++-
- fs/smb/server/transport_rdma.c | 5 ++++-
- fs/smb/server/transport_rdma.h | 4 +++-
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ fs/buffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 3f04a2977ba8..67c4f73398df 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -504,7 +504,8 @@ void ksmbd_conn_transport_destroy(void)
+diff --git a/fs/buffer.c b/fs/buffer.c
+index 8cf4a1dc481e..eb6d85edc37a 100644
+--- a/fs/buffer.c
++++ b/fs/buffer.c
+@@ -157,8 +157,8 @@ static void __end_buffer_read_notouch(struct buffer_head *bh, int uptodate)
+  */
+ void end_buffer_read_sync(struct buffer_head *bh, int uptodate)
  {
- 	mutex_lock(&init_lock);
- 	ksmbd_tcp_destroy();
--	ksmbd_rdma_destroy();
-+	ksmbd_rdma_stop_listening();
- 	stop_sessions();
-+	ksmbd_rdma_destroy();
- 	mutex_unlock(&init_lock);
+-	__end_buffer_read_notouch(bh, uptodate);
+ 	put_bh(bh);
++	__end_buffer_read_notouch(bh, uptodate);
  }
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 8d366db5f605..5466aa8c39b1 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -2194,7 +2194,7 @@ int ksmbd_rdma_init(void)
- 	return 0;
- }
+ EXPORT_SYMBOL(end_buffer_read_sync);
  
--void ksmbd_rdma_destroy(void)
-+void ksmbd_rdma_stop_listening(void)
- {
- 	if (!smb_direct_listener.cm_id)
- 		return;
-@@ -2203,7 +2203,10 @@ void ksmbd_rdma_destroy(void)
- 	rdma_destroy_id(smb_direct_listener.cm_id);
- 
- 	smb_direct_listener.cm_id = NULL;
-+}
- 
-+void ksmbd_rdma_destroy(void)
-+{
- 	if (smb_direct_wq) {
- 		destroy_workqueue(smb_direct_wq);
- 		smb_direct_wq = NULL;
-diff --git a/fs/smb/server/transport_rdma.h b/fs/smb/server/transport_rdma.h
-index 77aee4e5c9dc..a2291b77488a 100644
---- a/fs/smb/server/transport_rdma.h
-+++ b/fs/smb/server/transport_rdma.h
-@@ -54,13 +54,15 @@ struct smb_direct_data_transfer {
- 
- #ifdef CONFIG_SMB_SERVER_SMBDIRECT
- int ksmbd_rdma_init(void);
-+void ksmbd_rdma_stop_listening(void);
- void ksmbd_rdma_destroy(void);
- bool ksmbd_rdma_capable_netdev(struct net_device *netdev);
- void init_smbd_max_io_size(unsigned int sz);
- unsigned int get_smbd_max_read_write_size(void);
- #else
- static inline int ksmbd_rdma_init(void) { return 0; }
--static inline int ksmbd_rdma_destroy(void) { return 0; }
-+static inline void ksmbd_rdma_stop_listening(void) { }
-+static inline void ksmbd_rdma_destroy(void) { }
- static inline bool ksmbd_rdma_capable_netdev(struct net_device *netdev) { return false; }
- static inline void init_smbd_max_io_size(unsigned int sz) { }
- static inline unsigned int get_smbd_max_read_write_size(void) { return 0; }
 -- 
 2.50.1
 
