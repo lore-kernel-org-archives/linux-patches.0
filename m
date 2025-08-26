@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24ED322370D;
-	Tue, 26 Aug 2025 14:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6648A239E8B;
+	Tue, 26 Aug 2025 14:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218958; cv=none; b=TbGEVff1X/gA0dU+fLCB55Xy0tCcD7Qio7YGXSeUD3DfgqBbeYDYc32cnc+vr7wIjj/u380sAZBead3piQkvcBvgBkmLU2yDdN2iWdvFXVQuY/AKVoGoTGLXCW1UBD7KdNFBGG0dHsv1RJeEoSYci1tE6Tm/1ZWBjt00t6LeN9s=
+	t=1756218959; cv=none; b=QDy06ZfcLE1IRfK34B5t3tmohQ/PZlqT8wI+E/LdZrLQgmOHtbi46L3yMW8VJSDyLqVfD9IFVxt7F1C6QUQkc9tX3d1wAsReMTZ6bGpBeUbryq2v6P7QiO/xtXasO8enVzo+TyhlGhL9rUSlBAxESzL2xUKa02HyooG7H90x12s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218958; c=relaxed/simple;
-	bh=7+oIhm1ozrT1/86FnJXB1Y2qINFE98AdMWFHACcL4EM=;
+	s=arc-20240116; t=1756218959; c=relaxed/simple;
+	bh=rwdzyoO4af8Ik92bbCYHnK7Ymv8QXsTGpDddLQ+lbNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5BMgihFAMSSpmZkLxU2vwO2KF6Gf4TkzWK2cLXkE1ieKj75yT8ehpeHtmgaiWeVakqN3TmtdKgKqfofbIf3OfO1xRwxVCJGJRGXLU1KfPSuTypZF1NX4vwYzqG6tnzg0iglcsJHI4Acgkz/IK49UbhlhaqDOkHGiUKb02ZbwPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K49WWWLS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jKwcY7xOY8gpbOPYDIGpQGdQJ8UIBIOBc/KwZ+uN8ojNlrrCGK4UCTclWeSm3Ad/u2AeNsNlSYGfqsxL9YihEeWHxya6dhtaUabLg9ocpX4oS2Rt1W8ZSwt17GxLExetIKT+tpuRJc9zRwARWcVElgyXMLQxr1jn7jjDVXHmQTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjIC9xzD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K49WWWLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57685C4CEF1;
-	Tue, 26 Aug 2025 14:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjIC9xzD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA01C4CEF1;
+	Tue, 26 Aug 2025 14:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218956;
-	bh=7+oIhm1ozrT1/86FnJXB1Y2qINFE98AdMWFHACcL4EM=;
+	s=korg; t=1756218959;
+	bh=rwdzyoO4af8Ik92bbCYHnK7Ymv8QXsTGpDddLQ+lbNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K49WWWLS4sr/K0VGjyCaoYKQqKXanH9V3oqPilO3/EnsJpu6obZNC4WgQRdwYjc3w
-	 h6P8Tx4mCaMcjYSTUirR/Gg75Yx1rrOHGr+l7qVMeqtAJbUWXwp+ekz/mEP6Eh6yWN
-	 B5KL+4ryyN76vf62KEldUfOLa5eq7euVLQU+bZlQ=
+	b=YjIC9xzDP6tc0d5CR2aJdm4pN+48boVgAsgcinEsrNdo28gl0eC+uu9tjlonCHTY6
+	 2nHvRGV5vrXsg68cFhnvUF9XOW2N8usI2l6xoDrgL2PT1oP5X0U9spPrPxVcBy7u6F
+	 o7CQYb54y/kRbthpKWcM07/sd0I+Cc4BFF2TguOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Oliver Neukum <oneukum@suse.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 199/403] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
-Date: Tue, 26 Aug 2025 13:08:45 +0200
-Message-ID: <20250826110912.362120722@linuxfoundation.org>
+Subject: [PATCH 5.4 200/403] usb: core: usb_submit_urb: downgrade type check
+Date: Tue, 26 Aug 2025 13:08:46 +0200
+Message-ID: <20250826110912.386832946@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,35 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
+[ Upstream commit 503bbde34cc3dd2acd231f277ba70c3f9ed22e59 ]
 
-code mistakenly used a hardcoded index (codec[1]) instead of
-iterating, over the codec array using the loop variable i.
-Use codec[i] instead of codec[1] to match the loop iteration.
+Checking for the endpoint type is no reason for a WARN, as that can
+cause a reboot. A driver not checking the endpoint type must not cause a
+reboot, as there is just no point in this.  We cannot prevent a device
+from doing something incorrect as a reaction to a transfer. Hence
+warning for a mere assumption being wrong is not sensible.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250612122149.2559724-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/intel8x0.c | 2 +-
+ drivers/usb/core/urb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
-index 5150e8d38975..87a23a4660e8 100644
---- a/sound/pci/intel8x0.c
-+++ b/sound/pci/intel8x0.c
-@@ -2285,7 +2285,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
- 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
- 			for (i = 1; i < 4; i++) {
- 				if (pcm->r[0].codec[i]) {
--					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
-+					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
- 					break;
- 				}
- 			}
+diff --git a/drivers/usb/core/urb.c b/drivers/usb/core/urb.c
+index 850d0fffe1c6..e60f4ef06e3d 100644
+--- a/drivers/usb/core/urb.c
++++ b/drivers/usb/core/urb.c
+@@ -490,7 +490,7 @@ int usb_submit_urb(struct urb *urb, gfp_t mem_flags)
+ 
+ 	/* Check that the pipe's type matches the endpoint's type */
+ 	if (usb_pipe_type_check(urb->dev, urb->pipe))
+-		dev_WARN(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
++		dev_warn_once(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
+ 			usb_pipetype(urb->pipe), pipetypes[xfertype]);
+ 
+ 	/* Check against a simple/standard policy */
 -- 
 2.39.5
 
