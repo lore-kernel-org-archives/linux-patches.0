@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FD02135B8;
-	Tue, 26 Aug 2025 11:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53E3321438;
+	Tue, 26 Aug 2025 11:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208226; cv=none; b=PI/Zk9ympeUSdNXTxLxuEJbChje2fsMlT6tL71Yd73hj9C4BfqdV8hSAnAAvBLPi4vvVE/mONJ7WbqQNtB8ni3/+z5H9WCnWo0owBVpDGGabwpP2/Q2w5w/5EksgW7dD9j4CHo5e7Aw6VYl7IPyNnfJ2PaiVfeyYcQT8TlLjrqA=
+	t=1756208228; cv=none; b=kri0nahfgNamlEos2I4xutqpvUxgJCWAvjReAOnwdYisXowYUHfI2acro4Uf4EQ6CB1XpjXfxpOoIOqv2nNQXQ8zPSsh8GBNZ2Z+Uid5cuqEyCkkbIiky7VCeZhPAYXj+nc97lJBZ0Qe9nxzV5bFfIXT1B7+8xR1B6l4kXZgHlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208226; c=relaxed/simple;
-	bh=OT3spIFvaH9UrkxrY9x5taAQTKs5gWvVvdIPkatvuCU=;
+	s=arc-20240116; t=1756208228; c=relaxed/simple;
+	bh=uQH+4sXSxW3kUkQx1xRY833sCLnBGpBoG+5gZDR7VBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bsCju9xlYH/DJqyYCbNDAd9QWED+dqFVI6XVCCUyWyvyPoPb/Destrjki9Kl89RC7KhwznjvlZpHZdYwKarbm1gRZ09WKu4WvLqD0UX/bWaHUxR4nl/mnXl41k0N8xUBbcqra1UNjPF1oQuqfsaTHmzrEIDasODfRRdolhje/rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKwmvRCX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pGewDd+Sbv1gQTUfTXa3LhgTeQ8SxhgXMcCZVoOQ/5ijRVMyEEgP9XucQ+k/5Rpo2bM3WMahxybMP5yMf14ezN6GJ69KgncoLmE8Ly70YRDiBkgyJ30fb7Y5Xher6SPupgpoi5DWYJmPJOEhSEp99z9xfzE7tJsbjd+PDNUGuqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5oy/cro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKwmvRCX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B733AC4CEF1;
-	Tue, 26 Aug 2025 11:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5oy/cro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603CFC4CEF1;
+	Tue, 26 Aug 2025 11:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208226;
-	bh=OT3spIFvaH9UrkxrY9x5taAQTKs5gWvVvdIPkatvuCU=;
+	s=korg; t=1756208228;
+	bh=uQH+4sXSxW3kUkQx1xRY833sCLnBGpBoG+5gZDR7VBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKwmvRCXurWQAHxndjh/9DpRxghPVXBGBXFkwCExveJMTuf86GArISL8PaXgZ5tI7
-	 amOF81mp0o1mSjNr7d5TesCOt2k3QUPZGz3neAMRilmsYxXLSJNubD/Z5u7YuW9G4a
-	 JmZ+o680c9VBzSnELJ5tiB/2mXvOpsrbGAusaRkA=
+	b=f5oy/crot5kiymtC20LkexKB4k9Ceg5VnThGNvsJECzhDmWt+25aRu5ckyquDxOvo
+	 xCFuC+7iuMbVTQwYiWmEb6atExSZLIu7hlnONlR/IV1Z4WxUldl1T9KTq3u73Fmlpm
+	 zLFstATd8Eidv0cJi0XPQMApHfrjiVjSYVoOeJyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Dilger <adilger@whamcloud.com>,
-	Li Dongyang <dongyangli@ddn.com>,
-	Alex Zhuravlev <bzzz@whamcloud.com>,
-	Oleg Drokin <green@whamcloud.com>,
+	stable@kernel.org,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.12 029/322] ext4: check fast symlink for ea_inode correctly
-Date: Tue, 26 Aug 2025 13:07:24 +0200
-Message-ID: <20250826110916.042262871@linuxfoundation.org>
+Subject: [PATCH 6.12 030/322] ext4: fix fsmap end of range reporting with bigalloc
+Date: Tue, 26 Aug 2025 13:07:25 +0200
+Message-ID: <20250826110916.069085458@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,63 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Dilger <adilger@dilger.ca>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-commit b4cc4a4077268522e3d0d34de4b2dc144e2330fa upstream.
+commit bae76c035bf0852844151e68098c9b7cd63ef238 upstream.
 
-The check for a fast symlink in the presence of only an
-external xattr inode is incorrect.  If a fast symlink does
-not have an xattr block (i_file_acl == 0), but does have
-an external xattr inode that increases inode i_blocks, then
-the check for a fast symlink will incorrectly fail and
-__ext4_iget()->ext4_ind_check_inode() will report the inode
-is corrupt when it "validates" i_data[] on the next read:
+With bigalloc enabled, the logic to report last extent has a bug since
+we try to use cluster units instead of block units. This can cause an
+issue where extra incorrect entries might be returned back to the
+user. This was flagged by generic/365 with 64k bs and -O bigalloc.
 
-    # ln -s foo /mnt/tmp/bar
-    # setfattr -h -n trusted.test \
-               -v "$(yes | head -n 4000)" /mnt/tmp/bar
-    # umount /mnt/tmp
-    # mount /mnt/tmp
-    # ls -l /mnt/tmp
-    ls: cannot access '/mnt/tmp/bar': Structure needs cleaning
-    total 4
-     ? l?????????? ? ?    ?        ?            ? bar
-    # dmesg | tail -1
-    EXT4-fs error (device dm-8): __ext4_iget:5098:
-        inode #24578: block 7303014: comm ls: invalid block
+** Details of issue **
 
-(note that "block 7303014" = 0x6f6f66 = "foo" in LE order).
+The issue was noticed on 5G 64k blocksize FS with -O bigalloc which has
+only 1 bg.
 
-ext4_inode_is_fast_symlink() should check the superblock
-EXT4_FEATURE_INCOMPAT_EA_INODE feature flag, not the inode
-EXT4_EA_INODE_FL, since the latter is only set on the xattr
-inode itself, and not on the inode that uses this xattr.
+$ xfs_io -c "fsmap -d" /mnt/scratch
 
-Cc: stable@vger.kernel.org
-Fixes: fc82228a5e38 ("ext4: support fast symlinks from ext3 file systems")
-Signed-off-by: Andreas Dilger <adilger@whamcloud.com>
-Reviewed-by: Li Dongyang <dongyangli@ddn.com>
-Reviewed-by: Alex Zhuravlev <bzzz@whamcloud.com>
-Reviewed-by: Oleg Drokin <green@whamcloud.com>
-Reviewed-on: https://review.whamcloud.com/59879
-Lustre-bug-id: https://jira.whamcloud.com/browse/LU-19121
-Link: https://patch.msgid.link/20250717063709.757077-1-adilger@dilger.ca
+  0: 253:48 [0..127]: static fs metadata 128   /* sb */
+  1: 253:48 [128..255]: special 102:1 128   /* gdt */
+  3: 253:48 [256..383]: special 102:3 128   /* block bitmap */
+  4: 253:48 [384..2303]: unknown 1920       /* flex bg empty space */
+  5: 253:48 [2304..2431]: special 102:4 128   /* inode bitmap */
+  6: 253:48 [2432..4351]: unknown 1920      /* flex bg empty space */
+  7: 253:48 [4352..6911]: inodes 2560
+  8: 253:48 [6912..538623]: unknown 531712
+  9: 253:48 [538624..10485759]: free space 9947136
+
+The issue can be seen with:
+
+$ xfs_io -c "fsmap -d 0 3" /mnt/scratch
+
+  0: 253:48 [0..127]: static fs metadata 128
+  1: 253:48 [384..2047]: unknown 1664
+
+Only the first entry was expected to be returned but we get 2. This is
+because:
+
+ext4_getfsmap_datadev()
+  first_cluster, last_cluster = 0
+  ...
+  info->gfi_last = true;
+  ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1, 0, info);
+    fsb = C2B(1) = 16
+    fslen = 0
+    ...
+    /* Merge in any relevant extents from the meta_list */
+    list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
+      ...
+      // since fsb = 16, considers all metadata which starts before 16 blockno
+      iter 1: error = ext4_getfsmap_helper(sb, info, p);  // p = sb (0,1), nop
+        info->gfi_next_fsblk = 1
+      iter 2: error = ext4_getfsmap_helper(sb, info, p);  // p = gdt (1,2), nop
+        info->gfi_next_fsblk = 2
+      iter 3: error = ext4_getfsmap_helper(sb, info, p);  // p = blk bitmap (2,3), nop
+        info->gfi_next_fsblk = 3
+      iter 4: error = ext4_getfsmap_helper(sb, info, p);  // p = ino bitmap (18,19)
+        if (rec_blk > info->gfi_next_fsblk) { // (18 > 3)
+          // emits an extra entry ** BUG **
+        }
+    }
+
+Fix this by directly calling ext4_getfsmap_datadev() with a dummy
+record that has fmr_physical set to (end_fsb + 1) instead of
+last_cluster + 1. By using the block instead of cluster we get the
+correct behavior.
+
+Replacing ext4_getfsmap_datadev_helper() with ext4_getfsmap_helper()
+is okay since the gfi_lastfree and metadata checks in
+ext4_getfsmap_datadev_helper() are anyways redundant when we only want
+to emit the last allocated block of the range, as we have already
+taken care of emitting metadata and any last free blocks.
+
+Cc: stable@kernel.org
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Fixes: 4a622e4d477b ("ext4: fix FS_IOC_GETFSMAP handling")
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/e7472c8535c9c5ec10f425f495366864ea12c9da.1754377641.git.ojaswin@linux.ibm.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/fsmap.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -151,7 +151,7 @@ static int ext4_meta_trans_blocks(struct
-  */
- int ext4_inode_is_fast_symlink(struct inode *inode)
- {
--	if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
-+	if (!ext4_has_feature_ea_inode(inode->i_sb)) {
- 		int ea_blocks = EXT4_I(inode)->i_file_acl ?
- 				EXT4_CLUSTER_SIZE(inode->i_sb) >> 9 : 0;
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -526,6 +526,7 @@ static int ext4_getfsmap_datadev(struct
+ 	ext4_group_t end_ag;
+ 	ext4_grpblk_t first_cluster;
+ 	ext4_grpblk_t last_cluster;
++	struct ext4_fsmap irec;
+ 	int error = 0;
+ 
+ 	bofs = le32_to_cpu(sbi->s_es->s_first_data_block);
+@@ -609,10 +610,18 @@ static int ext4_getfsmap_datadev(struct
+ 			goto err;
+ 	}
+ 
+-	/* Report any gaps at the end of the bg */
++	/*
++	 * The dummy record below will cause ext4_getfsmap_helper() to report
++	 * any allocated blocks at the end of the range.
++	 */
++	irec.fmr_device = 0;
++	irec.fmr_physical = end_fsb + 1;
++	irec.fmr_length = 0;
++	irec.fmr_owner = EXT4_FMR_OWN_FREE;
++	irec.fmr_flags = 0;
++
+ 	info->gfi_last = true;
+-	error = ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1,
+-					     0, info);
++	error = ext4_getfsmap_helper(sb, info, &irec);
+ 	if (error)
+ 		goto err;
  
 
 
