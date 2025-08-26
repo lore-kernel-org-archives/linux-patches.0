@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B5F343D63;
-	Tue, 26 Aug 2025 14:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14F1343D63;
+	Tue, 26 Aug 2025 14:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218369; cv=none; b=qOMZIcWP4Cna4h+o+gOhMfC7niM4ZCxysZdJgVB6sYHnUXAVgGq3g6nibFAe5vyAKIn1AMCYF3fTJ9y7hFz71a57nkorcNKABEsFY9BfhOf49Zys6NGJ4bJVF6kDuSoJKlI79QoONuhM8q2Fkp8LSlCeUz3aYk1ReR/cgob+5iU=
+	t=1756218371; cv=none; b=UUlSH0aZrHsBqnzRjOgf3NkaoUJmYmQqoMEKEhwKVR0Rs/jeXWDDt0ixUnoBmslHrGfNmfpuWCszNSaGjrRsuUqwOi3yclbTaJSBRYqYcZ1m5eMRzRtjNVFGxAzzgMutIqZ9/MVdPg+uH8IoSBoVsmI28cNSjHHgDDV8vXTJ3ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218369; c=relaxed/simple;
-	bh=nK7wLgqeNYcQU//KwoFO6pVYaQ6yK94qU16JtX+Q7vU=;
+	s=arc-20240116; t=1756218371; c=relaxed/simple;
+	bh=T1Vt421JVg5JQBGWel1dqi4KMnNrJZ4Xj/rl6hDAaDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUMjd3z0ObnSxx0xwNjdcQm0PdcMs0ynpjey5ZyFg7lDol8rf81pSb+KkffPURqj9a13IgqvEOyr9z7QloVZGdnio3+8D5j1JpyNclkH2/CeCQ6Nvylvc3L9zZVeSUG9jamfLQkE20Y8ExWU40L9htq27GJnCB3bRIiXZYoMPYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bBp5qfB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMqAPHOk+vbgvwTDWftdynU50SBa9YTFSRcDBdG+CnJtCI23hdWS1eYiag070xa7imZHR8MGMeaq+gn28CQx2GVTF/HF+o5hPDny7wvL4tnJU2JouOTyq1zvu2QVpv8tdqN87nIsa4vLkPtz+pyymxecoHEGb+33acJcljd6EWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kp52/eHS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bBp5qfB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86847C4CEF1;
-	Tue, 26 Aug 2025 14:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kp52/eHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D4CC4CEF1;
+	Tue, 26 Aug 2025 14:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218368;
-	bh=nK7wLgqeNYcQU//KwoFO6pVYaQ6yK94qU16JtX+Q7vU=;
+	s=korg; t=1756218371;
+	bh=T1Vt421JVg5JQBGWel1dqi4KMnNrJZ4Xj/rl6hDAaDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bBp5qfB9C2a6Na/fiqsy7h5nVKwNfcrczS9GB4BB9BJnpbnQtPg0NZ2/vgTyI2Iz
-	 kqL0IMBaStm21ZCWP0xXiXWV0u7B2T+nAXvijRSnX8GVCQK2SBU1s3D/cDd3pXeG2b
-	 XM6hpfh/B7uKt+Q69+wXQN5xJawSpmLY6fOiPH/0=
+	b=kp52/eHSsIl8itXo1+tgZ2UyP3iNaxveAHH7V6IrnBG8GjDfOg84W3W/f1yTzmwc1
+	 4P6xoL43cEfZKDqHKoFiFXEPTDRRmMmC+vZ3uvg1jogOz2qLCYXFOp2gTFN8t1IqsV
+	 yNKCU0AfGxdt6/laub64qvGo+kD1DhmG4Ib2QQIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Mike Snitzer <snitzer@redhat.com>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.10 495/523] dm rq: dont queue request to blk-mq during DM suspend
-Date: Tue, 26 Aug 2025 13:11:45 +0200
-Message-ID: <20250826110936.652958645@linuxfoundation.org>
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>
+Subject: [PATCH 5.10 496/523] usb: dwc3: Remove DWC3 locking during gadget suspend/resume
+Date: Tue, 26 Aug 2025 13:11:46 +0200
+Message-ID: <20250826110936.676705120@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,45 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-commit b4459b11e84092658fa195a2587aff3b9637f0e7 upstream.
+commit 5265397f94424eaea596026fd34dc7acf474dcec upstream.
 
-DM uses blk-mq's quiesce/unquiesce to stop/start device mapper queue.
+Remove the need for making dwc3_gadget_suspend() and dwc3_gadget_resume()
+to be called in a spinlock, as dwc3_gadget_run_stop() could potentially
+take some time to complete.
 
-But blk-mq's unquiesce may come from outside events, such as elevator
-switch, updating nr_requests or others, and request may come during
-suspend, so simply ask for blk-mq to requeue it.
-
-Fixes one kernel panic issue when running updating nr_requests and
-dm-mpath suspend/resume stress test.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@redhat.com>
-[Shivani: Modified to apply on 5.10.y]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Link: https://lore.kernel.org/r/20220901193625.8727-3-quic_wcheng@quicinc.com
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-rq.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/dwc3/core.c   |    4 ----
+ drivers/usb/dwc3/gadget.c |    5 +++++
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-rq.c
-+++ b/drivers/md/dm-rq.c
-@@ -490,6 +490,14 @@ static blk_status_t dm_mq_queue_rq(struc
- 	struct mapped_device *md = tio->md;
- 	struct dm_target *ti = md->immutable_target;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1742,9 +1742,7 @@ static int dwc3_suspend_common(struct dw
+ 	case DWC3_GCTL_PRTCAP_DEVICE:
+ 		if (pm_runtime_suspended(dwc->dev))
+ 			break;
+-		spin_lock_irqsave(&dwc->lock, flags);
+ 		dwc3_gadget_suspend(dwc);
+-		spin_unlock_irqrestore(&dwc->lock, flags);
+ 		synchronize_irq(dwc->irq_gadget);
+ 		dwc3_core_exit(dwc);
+ 		break;
+@@ -1805,9 +1803,7 @@ static int dwc3_resume_common(struct dwc
+ 			return ret;
  
-+	/*
-+	 * blk-mq's unquiesce may come from outside events, such as
-+	 * elevator switch, updating nr_requests or others, and request may
-+	 * come during suspend, so simply ask for blk-mq to requeue it.
-+	 */
-+	if (unlikely(test_bit(DMF_BLOCK_IO_FOR_SUSPEND, &md->flags)))
-+		return BLK_STS_RESOURCE;
+ 		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_DEVICE);
+-		spin_lock_irqsave(&dwc->lock, flags);
+ 		dwc3_gadget_resume(dwc);
+-		spin_unlock_irqrestore(&dwc->lock, flags);
+ 		break;
+ 	case DWC3_GCTL_PRTCAP_HOST:
+ 		if (!PMSG_IS_AUTO(msg)) {
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4115,12 +4115,17 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
+ 
+ int dwc3_gadget_suspend(struct dwc3 *dwc)
+ {
++	unsigned long flags;
 +
- 	if (unlikely(!ti)) {
- 		int srcu_idx;
- 		struct dm_table *map;
+ 	if (!dwc->gadget_driver)
+ 		return 0;
+ 
+ 	dwc3_gadget_run_stop(dwc, false, false);
++
++	spin_lock_irqsave(&dwc->lock, flags);
+ 	dwc3_disconnect_gadget(dwc);
+ 	__dwc3_gadget_stop(dwc);
++	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+ 	return 0;
+ }
 
 
