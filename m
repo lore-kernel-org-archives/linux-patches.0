@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F017A35AAA0;
-	Tue, 26 Aug 2025 14:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3E3356914;
+	Tue, 26 Aug 2025 14:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219313; cv=none; b=NiYR4VoW1sbKg5hdoFI9fBPITKKmp8ZjP91m4gOX3+1nmcLl2Edt4vxHJqRulpoKFoBkJWElGuPO/Fz9H6WQZQC1n0hg9TwSriY8MIL7m/ZpU+aeTmzZya1oX5RKIlPT8zk+KenCHG7KPNVnOCxE8PXSHEdTnwGhFG6pTdNVzTo=
+	t=1756219315; cv=none; b=d3hY0h2e1oKPn18ai2dy7Aci82jtbsukPqaUeH/gPcce2GlNlZB1XViwd//uzAW8dIejy3HoNLeJivrDEAUVtEscBWZQDgxBdqhtuJtN+qJ3aGlhFlaqhOOD8yctUsK0LQBZT3sbzRrcezzxqOSccLFxtKceEpTkJFnHiYed1dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219313; c=relaxed/simple;
-	bh=/UsGdghGl0EmtRmxYCc7MR8DiV5dYQhY+xPXGTsv5uE=;
+	s=arc-20240116; t=1756219315; c=relaxed/simple;
+	bh=tXTEkZyA2puH4rkb173snbN6cIYDRwNnM4EBjfC8O9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Df3/6/xwFe8/bMC6eQ6y3B/Mbr/NTYI6tVL+M3zctd1ovbdBA+33mJq5FsJ4XrOc5O7gMfBTCJ3OkItCuSAkmKLyVnQDZUI6LvO38MCVMR2Eiwe4qRcR5jFTXHeLVjrqBXnrfmveGkzmT8vYmbSYIZLdiZHwWXuYkzsj0i9OhnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n07wrqRv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KItkwXSYlQZGOm3RdtiTZc8NOHVqPAG/EfQkx2SG6ywWWVvttPq8k9Ka/rAREShtjeKg1wEhGAENeD8SyAfRoBnsc50uuCLHRFRadk0xDnLbpE1Fty+CblIibnAbHnh62LUp9o+wH1Xvy9czlqPf/oytub9rhexgtg/0purDbSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I35nAnEF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n07wrqRv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BC1C4CEF1;
-	Tue, 26 Aug 2025 14:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I35nAnEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 009EDC4CEF1;
+	Tue, 26 Aug 2025 14:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219312;
-	bh=/UsGdghGl0EmtRmxYCc7MR8DiV5dYQhY+xPXGTsv5uE=;
+	s=korg; t=1756219315;
+	bh=tXTEkZyA2puH4rkb173snbN6cIYDRwNnM4EBjfC8O9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n07wrqRvhkRiUUYKJt5wZ245ip3OVmGAOcs9+t/59K7EvxsG2+WtlaFwHu9JkEtlc
-	 j1MAIbUZ/inq9gDr6cDaVzCAc4uDgAJyVv/4lA7o+hhmA+FNE6RUk8FLRNqGoSzduI
-	 uXZ6odgduRc/PYPL0Gk4qr+tdBX86v61y/LlTlEI=
+	b=I35nAnEFYW+yi00Tb39z44puXIHwEj+p25WtQNZKQ1Iyj/DOg7Wxg9l1u9Cbad/zH
+	 qWDPh4AyFWALLMe65zf8vLDgQWoFZEqE9Z050XbCApwJf+qLHn8YfOv57Clk1SJJil
+	 k/in/ZnKg/ttwYVaf/CrzXTmIpiu6+FwrIufrr4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armando Budianto <sprite@gnuweeb.org>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Ammar Faizi <ammarfaizi2@gnuweeb.org>
-Subject: [PATCH 5.4 334/403] net: usbnet: Fix the wrong netif_carrier_on() call
-Date: Tue, 26 Aug 2025 13:11:00 +0200
-Message-ID: <20250826110916.069220652@linuxfoundation.org>
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 5.4 335/403] ice: Fix a null pointer dereference in ice_copy_and_init_pkg()
+Date: Tue, 26 Aug 2025 13:11:01 +0200
+Message-ID: <20250826110916.101172800@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,57 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 8466d393700f9ccef68134d3349f4e0a087679b9 upstream.
+[ Upstream commit 4ff12d82dac119b4b99b5a78b5af3bf2474c0a36 ]
 
-The commit referenced in the Fixes tag causes usbnet to malfunction
-(identified via git bisect). Post-commit, my external RJ45 LAN cable
-fails to connect. Linus also reported the same issue after pulling that
-commit.
+Add check for the return value of devm_kmemdup()
+to prevent potential null pointer dereference.
 
-The code has a logic error: netif_carrier_on() is only called when the
-link is already on. Fix this by moving the netif_carrier_on() call
-outside the if-statement entirely. This ensures it is always called
-when EVENT_LINK_CARRIER_ON is set and properly clears it regardless
-of the link state.
-
+Fixes: c76488109616 ("ice: Implement Dynamic Device Personalization (DDP) download")
 Cc: stable@vger.kernel.org
-Cc: Armando Budianto <sprite@gnuweeb.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/all/CAHk-=wjqL4uF0MG_c8+xHX1Vv8==sPYQrtzbdA3kzi96284nuQ@mail.gmail.com
-Closes: https://lore.kernel.org/netdev/CAHk-=wjKh8X4PT_mU1kD4GQrbjivMfPn-_hXa6han_BTDcXddw@mail.gmail.com
-Closes: https://lore.kernel.org/netdev/0752dee6-43d6-4e1f-81d2-4248142cccd2@gnuweeb.org
-Fixes: 0d9cfc9b8cb1 ("net: usbnet: Avoid potential RCU stall on LINK_CHANGE event")
-Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+[ applied the patch to ice_flex_pipe.c instead of ice_ddp.c ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_flex_pipe.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1097,6 +1097,9 @@ static void __handle_link_change(struct
- 	if (!test_bit(EVENT_DEV_OPEN, &dev->flags))
- 		return;
+--- a/drivers/net/ethernet/intel/ice/ice_flex_pipe.c
++++ b/drivers/net/ethernet/intel/ice/ice_flex_pipe.c
+@@ -753,6 +753,8 @@ enum ice_status ice_copy_and_init_pkg(st
+ 		return ICE_ERR_PARAM;
  
-+	if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
-+		netif_carrier_on(dev->net);
-+
- 	if (!netif_carrier_ok(dev->net)) {
- 		/* kill URBs for reading packets to save bus bandwidth */
- 		unlink_urbs(dev, &dev->rxq);
-@@ -1106,9 +1109,6 @@ static void __handle_link_change(struct
- 		 * tx queue is stopped by netcore after link becomes off
- 		 */
- 	} else {
--		if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
--			netif_carrier_on(dev->net);
--
- 		/* submitting URBs for reading packets */
- 		tasklet_schedule(&dev->bh);
- 	}
+ 	buf_copy = devm_kmemdup(ice_hw_to_dev(hw), buf, len, GFP_KERNEL);
++	if (!buf_copy)
++		return ICE_ERR_NO_MEMORY;
+ 
+ 	status = ice_init_pkg(hw, buf_copy, len);
+ 	if (status) {
 
 
