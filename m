@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24984308F03;
-	Tue, 26 Aug 2025 13:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6A03277A4;
+	Tue, 26 Aug 2025 13:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214019; cv=none; b=hqbHdg7cnE4stRbKgWD6dJbEjHPCApTIxQ1KFn6qwfC/WKMv26l8QdgjpiEfhBBj+9/ZpWNIttjJqBS3JrIcj+0/NvLMBkN4tOpQ2G6NOEnIn4Y6hkh3RyI8WB7cNGc9xdNsxBMTIm0PhnujjNtxq+pyjZ2I8ideJkENm/+8qac=
+	t=1756214021; cv=none; b=F0CAsk/eN/Y/YCM2RK7TVoWICl+l96R/+TWmrWnXK9HZ7nOXWpNy28pdmmvZxRtVcEQDgY5XrHhnkK1W9j1N9eCYqXVybAVfRuYEWt9uDnno7VTi2aqn2UNSDZWTCntl+rM2IouOn/h6/fRdFHLH99gFqEOXVt18jgoK3usvtEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214019; c=relaxed/simple;
-	bh=J5+11ova6e1cQv+jK+gQc1vyVhb0ymFNisywv00nUv8=;
+	s=arc-20240116; t=1756214021; c=relaxed/simple;
+	bh=8jxOeEEoLIZNaJKwQXF0PuQ6CEmYAwppSBmrS7U7PY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgGTcEXGNiTwmvY+hzhjUeOG1464gIUsWo84v85qZM2koRBa5jHSkp3gtNYJ3eCmcYZ+9kINt9CFrUKmAg5a05ZOQH3rxBhcT0OMACfJJqcgxW4yPiiqzzNbF0+EidqfllH0V2IXUCb6bUp24lfQov/R07S9w0dyapdKy15eXR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ai0CMJNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CjOKYQ+sNw2BKT0IRgCV7jO9/9bwlZ+4CUfzyzEkQigQR+06rmcdHq4Cpw40zrX1scU0HPKTJnEk15jh+Iwj4sUP3dxVyUm+4ZZxHefMkzop2OLdEOCeTuqhVo1kMy8NFNvzqKKc0yu67Zzaa54fhzR7IOxqflaPnwa4LZfy+2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+/UadA+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ai0CMJNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FDBC4CEF1;
-	Tue, 26 Aug 2025 13:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+/UadA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECB4C4CEF1;
+	Tue, 26 Aug 2025 13:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214018;
-	bh=J5+11ova6e1cQv+jK+gQc1vyVhb0ymFNisywv00nUv8=;
+	s=korg; t=1756214021;
+	bh=8jxOeEEoLIZNaJKwQXF0PuQ6CEmYAwppSBmrS7U7PY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ai0CMJNohfrHZy8rtbcC3q514o76+1TG+dSY0QmLlac98dIhnSat6/8O8G654DskN
-	 Cb+xXDdvq3AGBvMGjsF9NO3REfSOhFe280WH7YqZYd9F7tiGLHws3Z0ilbckfVpAfM
-	 Rgpumd6Jv7tv0DO2svTVuZfp4KjbLJSGtwOytdxU=
+	b=q+/UadA+5T6qGuJzJ+c6OcOgBB6QguVgvUZjLQHCDUNkaBT0SUapobGIveluXK7Rb
+	 IACcQ5zOWEqSVq17dW5Mr43GBynfgbNTIbAJ0LMiXl8OTfmezVuwD8if0i7Ep2Mzvr
+	 RdjcHRR3whLIBIgWF+pO1ag2ePXryhqm4ToMqXhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minhong He <heminhong@kylinos.cn>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qingfang Deng <dqfext@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 566/587] ipv6: sr: validate HMAC algorithm ID in seg6_hmac_info_add
-Date: Tue, 26 Aug 2025 13:11:55 +0200
-Message-ID: <20250826111007.427604566@linuxfoundation.org>
+Subject: [PATCH 6.6 567/587] net: ethernet: mtk_ppe: add RCU lock around dev_fill_forward_path
+Date: Tue, 26 Aug 2025 13:11:56 +0200
+Message-ID: <20250826111007.455929016@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,39 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minhong He <heminhong@kylinos.cn>
+From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 84967deee9d9870b15bc4c3acb50f1d401807902 ]
+[ Upstream commit 62c30c544359aa18b8fb2734166467a07d435c2d ]
 
-The seg6_genl_sethmac() directly uses the algorithm ID provided by the
-userspace without verifying whether it is an HMAC algorithm supported
-by the system.
-If an unsupported HMAC algorithm ID is configured, packets using SRv6 HMAC
-will be dropped during encapsulation or decapsulation.
+Ensure ndo_fill_forward_path() is called with RCU lock held.
 
-Fixes: 4f4853dc1c9c ("ipv6: sr: implement API to control SR HMAC structure")
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250815063845.85426-1-heminhong@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2830e314778d ("net: ethernet: mtk-ppe: fix traffic offload with bridged wlan")
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Link: https://patch.msgid.link/20250814012559.3705-1-dqfext@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_hmac.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_ppe_offload.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
-index 22a5006ad34a..6e15a65faecc 100644
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -294,6 +294,9 @@ int seg6_hmac_info_add(struct net *net, u32 key, struct seg6_hmac_info *hinfo)
- 	struct seg6_pernet_data *sdata = seg6_pernet(net);
- 	int err;
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
+index 889fd26843e6..11e16c9e4e92 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
+@@ -101,7 +101,9 @@ mtk_flow_get_wdma_info(struct net_device *dev, const u8 *addr, struct mtk_wdma_i
+ 	if (!IS_ENABLED(CONFIG_NET_MEDIATEK_SOC_WED))
+ 		return -1;
  
-+	if (!__hmac_get_algo(hinfo->alg_id))
-+		return -EINVAL;
-+
- 	err = rhashtable_lookup_insert_fast(&sdata->hmac_infos, &hinfo->node,
- 					    rht_params);
++	rcu_read_lock();
+ 	err = dev_fill_forward_path(dev, addr, &stack);
++	rcu_read_unlock();
+ 	if (err)
+ 		return err;
  
 -- 
 2.50.1
