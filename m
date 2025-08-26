@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AAD3314DF;
-	Tue, 26 Aug 2025 11:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79E217332C;
+	Tue, 26 Aug 2025 11:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208197; cv=none; b=Al+lS1TGyaMgGkOZKnCYKUjueEcVPQF+ro67CvwTei6kCR8xu7OCQQ8snhiouZKjSJR4y1dKEzFyCwDu3Y8O8f/yfVsBOnOxeueweYKq9dQDU0f4OE1p2JC7SzLqakt5hesMC7N3ZsN6rlrUjn6MLo4S2g1nnUP6ImVuBSx7dew=
+	t=1756208200; cv=none; b=VtmwYvl9Ll+v+p/K+jipqNdUQ3euANKDrHbYVzdPEJlUb2T5HU6ht0MMtBsQCIZEFcCMexzKTzP6CIU3ENP6JNbO4SQA1THxDoravhNN9ndVH/mlYsesxiWgyG7cv3arFxiNKOKAtOjNlmtH5a2rX2HgtYCqCPkLAp0PuQUyQ40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208197; c=relaxed/simple;
-	bh=OUoK7VZfn3Yu5leZZOPHtqBuZJ+uWjfAMGjCsildkL0=;
+	s=arc-20240116; t=1756208200; c=relaxed/simple;
+	bh=LwlNlmV7Bflzyj2REHasSyiDRh5Ya6k+UPuQI0iw3Ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZjnto4wOeTpARhlrvEvUYq+41VL/Usm+59YmiMVxFS++BADDSaFR5lFtyNwKDv+ZVGBlG/YdUMrCA3NzmGFXopldrdpE0dXztMfVuIPoZFDF+ricdH0bvIAax9TMCAR96IHldzetj5vCMS3NeAA4+zOpSKGbmcDkt2jZwJin7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tFTU0Wr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jdn09M6mmrMhpVudNQSeV1YJEZhxAyz5WvcyIQ3vnjFZdJl/lCHW4X1n6A9nAJzbbcnIXO3ptGMDfqv+D80WIvATBAGQXU5MmqT4d96UgTZCcScUdeL1rIFHhI4lLfrksYe7ZiF0XGbfYV5RRYhPR0bf12yjqokc9nYlP5x8/9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1V/9ugba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tFTU0Wr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A94C4CEF1;
-	Tue, 26 Aug 2025 11:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1V/9ugba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13835C4CEF1;
+	Tue, 26 Aug 2025 11:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208197;
-	bh=OUoK7VZfn3Yu5leZZOPHtqBuZJ+uWjfAMGjCsildkL0=;
+	s=korg; t=1756208200;
+	bh=LwlNlmV7Bflzyj2REHasSyiDRh5Ya6k+UPuQI0iw3Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1tFTU0WrvfGsM1qCCLCSCWCIVgUE+vPzLBce/gHAu3rnhsIt3vuRc4DLP++kcrRhZ
-	 Npr/neyplbKUFndQMkQiPQvyZ9pF4kh/GvGr41O+UWgmFrVPyu9d5Fpx+ceW2JHuR6
-	 0RMZJX5qIYuXDBZZzhlfomQSbnDc6Adse/o+fdOc=
+	b=1V/9ugbaiznJzfkarMRTld2X8bRGNitXQ1qszXgZn2dyHTo0dI9rg0EnZTCuFNAPX
+	 xJ4yOZBauZW3x62kbo7FIedWnAdulWIUvv4d0b+I9pNfWY2RJwkWMC/iCmxVgUNztl
+	 Lx2LKQcq711Yd9yyaVUqK150nA62hxy6ttv7P1qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 019/322] crypto: qat - lower priority for skcipher and aead algorithms
-Date: Tue, 26 Aug 2025 13:07:14 +0200
-Message-ID: <20250826110915.733514485@linuxfoundation.org>
+	John Ernberg <john.ernberg@actia.se>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	stable@kernel.org
+Subject: [PATCH 6.12 020/322] crypto: caam - Prevent crash on suspend with iMX8QM / iMX8ULP
+Date: Tue, 26 Aug 2025 13:07:15 +0200
+Message-ID: <20250826110915.764127203@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,81 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: John Ernberg <john.ernberg@actia.se>
 
-commit 8024774190a5ef2af2c5846f60a50b23e0980a32 upstream.
+commit 5ffc47feddcf8eb4d8ac7b42111a02c8e8146512 upstream.
 
-Most kernel applications utilizing the crypto API operate synchronously
-and on small buffer sizes, therefore do not benefit from QAT acceleration.
+Since the CAAM on these SoCs is managed by another ARM core, called the
+SECO (Security Controller) on iMX8QM and Secure Enclave on iMX8ULP, which
+also reserves access to register page 0 suspend operations cannot touch
+this page.
 
-Reduce the priority of QAT implementations for both skcipher and aead
-algorithms, allowing more suitable alternatives to be selected by default.
+This is similar to when running OPTEE, where OPTEE will reserve page 0.
 
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Link: https://lore.kernel.org/all/20250613012357.GA3603104@google.com/
-Cc: stable@vger.kernel.org
-Acked-by: Eric Biggers <ebiggers@kernel.org>
+Track this situation using a new state variable no_page0, reflecting if
+page 0 is reserved elsewhere, either by other management cores in SoC or
+by OPTEE.
+
+Replace the optee_en check in suspend/resume with the new check.
+
+optee_en cannot go away as it's needed elsewhere to gate OPTEE specific
+situations.
+
+Fixes the following splat at suspend:
+
+    Internal error: synchronous external abort: 0000000096000010 [#1] SMP
+    Hardware name: Freescale i.MX8QXP ACU6C (DT)
+    pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+    pc : readl+0x0/0x18
+    lr : rd_reg32+0x18/0x3c
+    sp : ffffffc08192ba20
+    x29: ffffffc08192ba20 x28: ffffff8025190000 x27: 0000000000000000
+    x26: ffffffc0808ae808 x25: ffffffc080922338 x24: ffffff8020e89090
+    x23: 0000000000000000 x22: ffffffc080922000 x21: ffffff8020e89010
+    x20: ffffffc080387ef8 x19: ffffff8020e89010 x18: 000000005d8000d5
+    x17: 0000000030f35963 x16: 000000008f785f3f x15: 000000003b8ef57c
+    x14: 00000000c418aef8 x13: 00000000f5fea526 x12: 0000000000000001
+    x11: 0000000000000002 x10: 0000000000000001 x9 : 0000000000000000
+    x8 : ffffff8025190870 x7 : ffffff8021726880 x6 : 0000000000000002
+    x5 : ffffff80217268f0 x4 : ffffff8021726880 x3 : ffffffc081200000
+    x2 : 0000000000000001 x1 : ffffff8020e89010 x0 : ffffffc081200004
+    Call trace:
+     readl+0x0/0x18
+     caam_ctrl_suspend+0x30/0xdc
+     dpm_run_callback.constprop.0+0x24/0x5c
+     device_suspend+0x170/0x2e8
+     dpm_suspend+0xa0/0x104
+     dpm_suspend_start+0x48/0x50
+     suspend_devices_and_enter+0x7c/0x45c
+     pm_suspend+0x148/0x160
+     state_store+0xb4/0xf8
+     kobj_attr_store+0x14/0x24
+     sysfs_kf_write+0x38/0x48
+     kernfs_fop_write_iter+0xb4/0x178
+     vfs_write+0x118/0x178
+     ksys_write+0x6c/0xd0
+     __arm64_sys_write+0x14/0x1c
+     invoke_syscall.constprop.0+0x64/0xb0
+     do_el0_svc+0x90/0xb0
+     el0_svc+0x18/0x44
+     el0t_64_sync_handler+0x88/0x124
+     el0t_64_sync+0x150/0x154
+    Code: 88dffc21 88dffc21 5ac00800 d65f03c0 (b9400000)
+
+Fixes: d2835701d93c ("crypto: caam - i.MX8ULP donot have CAAM page0 access")
+Cc: stable@kernel.org # v6.10+
+Signed-off-by: John Ernberg <john.ernberg@actia.se>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_algs.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/crypto/caam/ctrl.c   |    5 +++--
+ drivers/crypto/caam/intern.h |    1 +
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
-@@ -1277,7 +1277,7 @@ static struct aead_alg qat_aeads[] = { {
- 	.base = {
- 		.cra_name = "authenc(hmac(sha1),cbc(aes))",
- 		.cra_driver_name = "qat_aes_cbc_hmac_sha1",
--		.cra_priority = 4001,
-+		.cra_priority = 100,
- 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 		.cra_blocksize = AES_BLOCK_SIZE,
- 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
-@@ -1294,7 +1294,7 @@ static struct aead_alg qat_aeads[] = { {
- 	.base = {
- 		.cra_name = "authenc(hmac(sha256),cbc(aes))",
- 		.cra_driver_name = "qat_aes_cbc_hmac_sha256",
--		.cra_priority = 4001,
-+		.cra_priority = 100,
- 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 		.cra_blocksize = AES_BLOCK_SIZE,
- 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
-@@ -1311,7 +1311,7 @@ static struct aead_alg qat_aeads[] = { {
- 	.base = {
- 		.cra_name = "authenc(hmac(sha512),cbc(aes))",
- 		.cra_driver_name = "qat_aes_cbc_hmac_sha512",
--		.cra_priority = 4001,
-+		.cra_priority = 100,
- 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 		.cra_blocksize = AES_BLOCK_SIZE,
- 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
-@@ -1329,7 +1329,7 @@ static struct aead_alg qat_aeads[] = { {
- static struct skcipher_alg qat_skciphers[] = { {
- 	.base.cra_name = "cbc(aes)",
- 	.base.cra_driver_name = "qat_aes_cbc",
--	.base.cra_priority = 4001,
-+	.base.cra_priority = 100,
- 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 	.base.cra_blocksize = AES_BLOCK_SIZE,
- 	.base.cra_ctxsize = sizeof(struct qat_alg_skcipher_ctx),
-@@ -1347,7 +1347,7 @@ static struct skcipher_alg qat_skciphers
- }, {
- 	.base.cra_name = "ctr(aes)",
- 	.base.cra_driver_name = "qat_aes_ctr",
--	.base.cra_priority = 4001,
-+	.base.cra_priority = 100,
- 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 	.base.cra_blocksize = 1,
- 	.base.cra_ctxsize = sizeof(struct qat_alg_skcipher_ctx),
-@@ -1365,7 +1365,7 @@ static struct skcipher_alg qat_skciphers
- }, {
- 	.base.cra_name = "xts(aes)",
- 	.base.cra_driver_name = "qat_aes_xts",
--	.base.cra_priority = 4001,
-+	.base.cra_priority = 100,
- 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK |
- 			  CRYPTO_ALG_ALLOCATES_MEMORY,
- 	.base.cra_blocksize = AES_BLOCK_SIZE,
+--- a/drivers/crypto/caam/ctrl.c
++++ b/drivers/crypto/caam/ctrl.c
+@@ -830,7 +830,7 @@ static int caam_ctrl_suspend(struct devi
+ {
+ 	const struct caam_drv_private *ctrlpriv = dev_get_drvdata(dev);
+ 
+-	if (ctrlpriv->caam_off_during_pm && !ctrlpriv->optee_en)
++	if (ctrlpriv->caam_off_during_pm && !ctrlpriv->no_page0)
+ 		caam_state_save(dev);
+ 
+ 	return 0;
+@@ -841,7 +841,7 @@ static int caam_ctrl_resume(struct devic
+ 	struct caam_drv_private *ctrlpriv = dev_get_drvdata(dev);
+ 	int ret = 0;
+ 
+-	if (ctrlpriv->caam_off_during_pm && !ctrlpriv->optee_en) {
++	if (ctrlpriv->caam_off_during_pm && !ctrlpriv->no_page0) {
+ 		caam_state_restore(dev);
+ 
+ 		/* HW and rng will be reset so deinstantiation can be removed */
+@@ -907,6 +907,7 @@ static int caam_probe(struct platform_de
+ 
+ 		imx_soc_data = imx_soc_match->data;
+ 		reg_access = reg_access && imx_soc_data->page0_access;
++		ctrlpriv->no_page0 = !reg_access;
+ 		/*
+ 		 * CAAM clocks cannot be controlled from kernel.
+ 		 */
+--- a/drivers/crypto/caam/intern.h
++++ b/drivers/crypto/caam/intern.h
+@@ -115,6 +115,7 @@ struct caam_drv_private {
+ 	u8 blob_present;	/* Nonzero if BLOB support present in device */
+ 	u8 mc_en;		/* Nonzero if MC f/w is active */
+ 	u8 optee_en;		/* Nonzero if OP-TEE f/w is active */
++	u8 no_page0;		/* Nonzero if register page 0 is not controlled by Linux */
+ 	bool pr_support;        /* RNG prediction resistance available */
+ 	int secvio_irq;		/* Security violation interrupt number */
+ 	int virt_en;		/* Virtualization enabled in CAAM */
 
 
