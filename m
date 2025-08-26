@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC30818F2FC;
-	Tue, 26 Aug 2025 13:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AD82BE058;
+	Tue, 26 Aug 2025 13:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213835; cv=none; b=WSXlDnAlNxcQEpQHwsx+nO6/fi11ry6P+ozhGwfTipe/uX/Su+wk22NaJJgdDNxhmK8SZ2s6ZUOBk4ZUTRUQrCLWM5ypiL7hk3BamYqhZzXRxYodgtmfELfvmD9w2M3HA2pOmAyaURwec8orC4KIlSzphUkFBsvS5nUXjfxgr58=
+	t=1756213838; cv=none; b=XVRE9tORXmUL0KjmO6ZMIjPaqZqFewx0z0m5pyGLxvnNHcr9FQHu25Ff/mktSl1v73X+ZDpdHiGE6bk21ua5Xb4vZ5bjAfuy7hNw/2F+uYQcQywogbybXaNulnrOEdKmKJJXoLxd89aDqfaNa6TvJ2e0foLGm3D5UlReIrU/Z6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213835; c=relaxed/simple;
-	bh=B7W6S0rGWps1OnZRyPkc4sV8YkMyh1mz259kOyPRJ+Y=;
+	s=arc-20240116; t=1756213838; c=relaxed/simple;
+	bh=K3MDCjlXgfZPidhoHyXBCg4NTaMb68tXIIMYIHo4EWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e0apbf8u7bPcGd2hhOs6Lmt5hTxy7THroj/MZNfsdJKGWwyptDV3/wyGolnj4KpkF1CDUOjSBTDWkKTgUZ2eXRhXS8tJnPuu2cf3xYRhUACquFn8roXbsXMln7rVBvEJbF8kXilYpMS0h2BsKkZ11UDhmM3QuSlI8tew710MfSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZM8ucpdD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EV4ewUlWB/uX7hf8cXYxPI/37Mc0i0XYhL40UhX/j8bo8230K7rcn4+mVkI3rXPyoeX8RSVaXMf3ns/qQQQc2m3IRR2GVuynvyOhtOpgi5wUzYB/NMMmx6xXUkpEQoya2Zox12/eVtnFJsMH1E+UrlR0YwA4Tp24HT5JOEt/TVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sYW8N1C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZM8ucpdD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E348C4CEF1;
-	Tue, 26 Aug 2025 13:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sYW8N1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA7FC4CEF1;
+	Tue, 26 Aug 2025 13:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213835;
-	bh=B7W6S0rGWps1OnZRyPkc4sV8YkMyh1mz259kOyPRJ+Y=;
+	s=korg; t=1756213838;
+	bh=K3MDCjlXgfZPidhoHyXBCg4NTaMb68tXIIMYIHo4EWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZM8ucpdDd66G0RLUsYH8kOJKwOH7O9f1kuO+gaxSFXpEiEiDcUXjD5i6CUcmEVEYo
-	 cDmWaZbjGwWHFpkqJpQki2gyIq+J7c6LDD6Sfmg4BAUwkNqhVNvj5mblSSvQ92RItk
-	 fW/oS6NDT9lB7/H20p2QH55YzYRq2c6yEqdWj3GE=
+	b=1sYW8N1CV9yFV2aX3vzXsKGz1RXpFvJCWVl7WyA5eq8Q50gDnxedPeKVxhetFgRjU
+	 P9GvN1QFx3fUl59QSJ89zawyUEX+FJnO7V2ao4r6LsP4iVGkX1g26RaB4z8pGfvHDO
+	 yMV8JQuKd08LyCofeNKFQnybdhk0gLFuN8i0w0ZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 497/587] scsi: ufs: exynos: Fix programming of HCI_UTRL_NEXUS_TYPE
-Date: Tue, 26 Aug 2025 13:10:46 +0200
-Message-ID: <20250826111005.627345671@linuxfoundation.org>
+Subject: [PATCH 6.6 498/587] scsi: mpi3mr: Drop unnecessary volatile from __iomem pointers
+Date: Tue, 26 Aug 2025 13:10:47 +0200
+Message-ID: <20250826111005.652743241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -47,62 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 01aad16c2257ab8ff33b152b972c9f2e1af47912 ]
+[ Upstream commit 6853885b21cb1d7157cc14c9d30cc17141565bae ]
 
-On Google gs101, the number of UTP transfer request slots (nutrs) is 32,
-and in this case the driver ends up programming the UTRL_NEXUS_TYPE
-incorrectly as 0.
+The volatile qualifier is redundant for __iomem pointers.
 
-This is because the left hand side of the shift is 1, which is of type
-int, i.e. 31 bits wide. Shifting by more than that width results in
-undefined behaviour.
+Cleaned up usage in mpi3mr_writeq() and sysif_regs pointer as per
+Upstream compliance.
 
-Fix this by switching to the BIT() macro, which applies correct type
-casting as required. This ensures the correct value is written to
-UTRL_NEXUS_TYPE (0xffffffff on gs101), and it also fixes a UBSAN shift
-warning:
-
-    UBSAN: shift-out-of-bounds in drivers/ufs/host/ufs-exynos.c:1113:21
-    shift exponent 32 is too large for 32-bit type 'int'
-
-For consistency, apply the same change to the nutmrs / UTMRL_NEXUS_TYPE
-write.
-
-Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
-Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250707-ufs-exynos-shift-v1-1-1418e161ae40@linaro.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20250627194539.48851-3-ranjan.kumar@broadcom.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-[ Adapted context ]
+Stable-dep-of: c91e140c82eb ("scsi: mpi3mr: Serialize admin queue BAR writes on 32-bit systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufs-exynos.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr.h    |    2 +-
+ drivers/scsi/mpi3mr/mpi3mr_fw.c |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -1028,8 +1028,8 @@ static int exynos_ufs_post_link(struct u
- 	hci_writel(ufs, 0xa, HCI_DATA_REORDER);
- 	hci_writel(ufs, PRDT_SET_SIZE(12), HCI_TXPRDT_ENTRY_SIZE);
- 	hci_writel(ufs, PRDT_SET_SIZE(12), HCI_RXPRDT_ENTRY_SIZE);
--	hci_writel(ufs, (1 << hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
--	hci_writel(ufs, (1 << hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
-+	hci_writel(ufs, BIT(hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
-+	hci_writel(ufs, BIT(hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
- 	hci_writel(ufs, 0xf, HCI_AXIDMA_RWDATA_BURST_LEN);
+--- a/drivers/scsi/mpi3mr/mpi3mr.h
++++ b/drivers/scsi/mpi3mr/mpi3mr.h
+@@ -1055,7 +1055,7 @@ struct mpi3mr_ioc {
+ 	char name[MPI3MR_NAME_LENGTH];
+ 	char driver_name[MPI3MR_NAME_LENGTH];
  
- 	if (ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB)
+-	volatile struct mpi3_sysif_registers __iomem *sysif_regs;
++	struct mpi3_sysif_registers __iomem *sysif_regs;
+ 	resource_size_t sysif_regs_phys;
+ 	int bars;
+ 	u64 dma_mask;
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -23,12 +23,12 @@ module_param(poll_queues, int, 0444);
+ MODULE_PARM_DESC(poll_queues, "Number of queues for io_uring poll mode. (Range 1 - 126)");
+ 
+ #if defined(writeq) && defined(CONFIG_64BIT)
+-static inline void mpi3mr_writeq(__u64 b, volatile void __iomem *addr)
++static inline void mpi3mr_writeq(__u64 b, void __iomem *addr)
+ {
+ 	writeq(b, addr);
+ }
+ #else
+-static inline void mpi3mr_writeq(__u64 b, volatile void __iomem *addr)
++static inline void mpi3mr_writeq(__u64 b, void __iomem *addr)
+ {
+ 	__u64 data_out = b;
+ 
 
 
