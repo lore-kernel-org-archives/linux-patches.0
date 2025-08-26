@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB48C34AAE3;
-	Tue, 26 Aug 2025 13:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AB2260586;
+	Tue, 26 Aug 2025 13:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216419; cv=none; b=qeqdIAQEvw9XgiqGE/nz/F7eZQ8oe8vByoDOyK/inm7qHC3tM/wLRVnWqd44lspUmL0rbKG/hM/AlyG/B3MvbKd1feHjSSKwsLgJrjWQrxdcbCqkEnKsiEhOKf3rv2o4F3WRkaOIep2wOT+4xCinegZNM3bkHJIhkVf6M2VOwAU=
+	t=1756216420; cv=none; b=OsL3jzg8AUKOmviIEKWJhiCsHyYyXuPaGBYGFiCdy+wRPypQNUQG/A/ojqjy371T+PN9W/GMRBI50M0Bop1deAFfFPeJsIcQdDCuTB3fwma3eB0Ic2a4neAlmyqO/b/srOn++3WGrkAwFxL8FnBTpg8Ny1O7YGmV6q6RXpFv7bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216419; c=relaxed/simple;
-	bh=nVM9JhtzgzaZylCKA1Uecs31U5DH0WCoPICjqxN5iqM=;
+	s=arc-20240116; t=1756216420; c=relaxed/simple;
+	bh=TjlFEHn+F1EZbqlZ7xb5VmHTdx+8eQYMwAXjAl3oFWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOsa3rA7BXn13W03FWV9+JKy/U95ZTdWcsGLnachMpAYk7Gah8eRgEnWrt4JgUNofdrMKq5MWxuDkUy98uZeBpB0g3O5fFM7PvMToQfX0J6xcbTC9d7VlEmrL8N8F+1QGoJ5l+Bwo375BKdwh+Jr7kkTadzvYuKnV/pQFzctVdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xu809kle; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gnChrsdZSLrhMhhi5HENmcdOtLaPlKnPk523kPr8unBpiDMcb4yKM+k+JWTeJqwf469srFovp4PoCWXhYDb53eCCyXYdUackSbTakyNscebmE1xa2Z+VniqfhmmmkfVjiivdQESrwp4vn1ad8VG3m2bt/E4z0E0rG0JGHmQSL0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZ2ik6AX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xu809kle"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650E9C113CF;
-	Tue, 26 Aug 2025 13:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZ2ik6AX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24AD9C4CEF1;
+	Tue, 26 Aug 2025 13:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216418;
-	bh=nVM9JhtzgzaZylCKA1Uecs31U5DH0WCoPICjqxN5iqM=;
+	s=korg; t=1756216415;
+	bh=TjlFEHn+F1EZbqlZ7xb5VmHTdx+8eQYMwAXjAl3oFWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xu809kleV8p4lzVFcYLRAt20tGV+1allth4ealKhORi8GP3HKDFMHh9lKn9Otk31b
-	 5j5rqHmf7JDfoj93s+oh8G3B8oetKccNppBeE+GeNAFX3uyvxsq5WShNraNta+5KIt
-	 MLKFAvRwCxhV9muDs041EYcQpeKdy+b6urNqQwN0=
+	b=fZ2ik6AXQhPe++3Ucby+BzYSyywUtdQcMy5Y3Ym3Ani4lJIwHZDS5wUNoXnWnWYpD
+	 0RDZCC4BAAAVKLVIGNJ9mvRXc11Am+nxN5upE62Op4HTQ0670GICVlhZO5AJ//IOpL
+	 hhNiJrwKeUtoU5+OYiL549OvjRVkIoKs8M2cPryY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 405/644] media: tc358743: Return an appropriate colorspace from tc358743_set_fmt
-Date: Tue, 26 Aug 2025 13:08:16 +0200
-Message-ID: <20250826110956.487866628@linuxfoundation.org>
+Subject: [PATCH 5.15 404/644] media: tc358743: Check I2C succeeded during probe
+Date: Tue, 26 Aug 2025 13:08:15 +0200
+Message-ID: <20250826110956.463035035@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,108 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 377cc006a364dfdab2f3f221cfad63a9265200b8 ]
+[ Upstream commit 303d81635e1d9c949b370215cc94526ed81f2e3d ]
 
-When calling tc358743_set_fmt, the code was calling tc358743_get_fmt
-to choose a valid format. However that sets the colorspace
-based on information read back from the chip, not the colour
-format requested.
+The probe for the TC358743 reads the CHIPID register from
+the device and compares it to the expected value of 0.
+If the I2C request fails then that also returns 0, so
+the driver loads thinking that the device is there.
 
-The result was that if you called try or set format for UYVY
-when the current format was RGB3 then you would get told SRGB,
-and try RGB3 when current was UYVY and you would get told
-SMPTE170M.
-
-The value programmed in the VI_REP register for the colorspace
-is always set by this driver, therefore there is no need to read
-back the value, and never set to REC709.
-Return the colorspace based on the format set/tried instead.
+Generally I2C communications are reliable so there is
+limited need to check the return value on every transfer,
+therefore only amend the one read during probe to check
+for I2C errors.
 
 Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tc358743.c | 44 ++++++++++++++----------------------
- 1 file changed, 17 insertions(+), 27 deletions(-)
+ drivers/media/i2c/tc358743.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
-index fe53823ba6f7..a389e2d58d3d 100644
+index 87feada1f602..fe53823ba6f7 100644
 --- a/drivers/media/i2c/tc358743.c
 +++ b/drivers/media/i2c/tc358743.c
-@@ -1686,12 +1686,23 @@ static int tc358743_enum_mbus_code(struct v4l2_subdev *sd,
- 	return 0;
- }
+@@ -110,7 +110,7 @@ static inline struct tc358743_state *to_state(struct v4l2_subdev *sd)
  
-+static u32 tc358743_g_colorspace(u32 code)
-+{
-+	switch (code) {
-+	case MEDIA_BUS_FMT_RGB888_1X24:
-+		return V4L2_COLORSPACE_SRGB;
-+	case MEDIA_BUS_FMT_UYVY8_1X16:
-+		return V4L2_COLORSPACE_SMPTE170M;
-+	default:
-+		return 0;
-+	}
-+}
-+
- static int tc358743_get_fmt(struct v4l2_subdev *sd,
- 		struct v4l2_subdev_state *sd_state,
- 		struct v4l2_subdev_format *format)
+ /* --------------- I2C --------------- */
+ 
+-static void i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
++static int i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
  {
  	struct tc358743_state *state = to_state(sd);
--	u8 vi_rep = i2c_rd8(sd, VI_REP);
- 
- 	if (format->pad != 0)
- 		return -EINVAL;
-@@ -1701,23 +1712,7 @@ static int tc358743_get_fmt(struct v4l2_subdev *sd,
- 	format->format.height = state->timings.bt.height;
- 	format->format.field = V4L2_FIELD_NONE;
- 
--	switch (vi_rep & MASK_VOUT_COLOR_SEL) {
--	case MASK_VOUT_COLOR_RGB_FULL:
--	case MASK_VOUT_COLOR_RGB_LIMITED:
--		format->format.colorspace = V4L2_COLORSPACE_SRGB;
--		break;
--	case MASK_VOUT_COLOR_601_YCBCR_LIMITED:
--	case MASK_VOUT_COLOR_601_YCBCR_FULL:
--		format->format.colorspace = V4L2_COLORSPACE_SMPTE170M;
--		break;
--	case MASK_VOUT_COLOR_709_YCBCR_FULL:
--	case MASK_VOUT_COLOR_709_YCBCR_LIMITED:
--		format->format.colorspace = V4L2_COLORSPACE_REC709;
--		break;
--	default:
--		format->format.colorspace = 0;
--		break;
--	}
-+	format->format.colorspace = tc358743_g_colorspace(format->format.code);
- 
- 	return 0;
+ 	struct i2c_client *client = state->i2c_client;
+@@ -136,6 +136,7 @@ static void i2c_rd(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+ 		v4l2_err(sd, "%s: reading register 0x%x from 0x%x failed\n",
+ 				__func__, reg, client->addr);
+ 	}
++	return err != ARRAY_SIZE(msgs);
  }
-@@ -1731,19 +1726,14 @@ static int tc358743_set_fmt(struct v4l2_subdev *sd,
- 	u32 code = format->format.code; /* is overwritten by get_fmt */
- 	int ret = tc358743_get_fmt(sd, sd_state, format);
  
--	format->format.code = code;
-+	if (code == MEDIA_BUS_FMT_RGB888_1X24 ||
-+	    code == MEDIA_BUS_FMT_UYVY8_1X16)
-+		format->format.code = code;
-+	format->format.colorspace = tc358743_g_colorspace(format->format.code);
+ static void i2c_wr(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+@@ -192,15 +193,24 @@ static void i2c_wr(struct v4l2_subdev *sd, u16 reg, u8 *values, u32 n)
+ 	}
+ }
  
- 	if (ret)
- 		return ret;
+-static noinline u32 i2c_rdreg(struct v4l2_subdev *sd, u16 reg, u32 n)
++static noinline u32 i2c_rdreg_err(struct v4l2_subdev *sd, u16 reg, u32 n,
++				  int *err)
+ {
++	int error;
+ 	__le32 val = 0;
  
--	switch (code) {
--	case MEDIA_BUS_FMT_RGB888_1X24:
--	case MEDIA_BUS_FMT_UYVY8_1X16:
--		break;
--	default:
--		return -EINVAL;
--	}
--
- 	if (format->which == V4L2_SUBDEV_FORMAT_TRY)
- 		return 0;
+-	i2c_rd(sd, reg, (u8 __force *)&val, n);
++	error = i2c_rd(sd, reg, (u8 __force *)&val, n);
++	if (err)
++		*err = error;
  
+ 	return le32_to_cpu(val);
+ }
+ 
++static inline u32 i2c_rdreg(struct v4l2_subdev *sd, u16 reg, u32 n)
++{
++	return i2c_rdreg_err(sd, reg, n, NULL);
++}
++
+ static noinline void i2c_wrreg(struct v4l2_subdev *sd, u16 reg, u32 val, u32 n)
+ {
+ 	__le32 raw = cpu_to_le32(val);
+@@ -229,6 +239,13 @@ static u16 i2c_rd16(struct v4l2_subdev *sd, u16 reg)
+ 	return i2c_rdreg(sd, reg, 2);
+ }
+ 
++static int i2c_rd16_err(struct v4l2_subdev *sd, u16 reg, u16 *value)
++{
++	int err;
++	*value = i2c_rdreg_err(sd, reg, 2, &err);
++	return err;
++}
++
+ static void i2c_wr16(struct v4l2_subdev *sd, u16 reg, u16 val)
+ {
+ 	i2c_wrreg(sd, reg, val, 2);
+@@ -2042,6 +2059,7 @@ static int tc358743_probe(struct i2c_client *client)
+ 	struct tc358743_platform_data *pdata = client->dev.platform_data;
+ 	struct v4l2_subdev *sd;
+ 	u16 irq_mask = MASK_HDMI_MSK | MASK_CSI_MSK;
++	u16 chipid;
+ 	int err;
+ 
+ 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_SMBUS_BYTE_DATA))
+@@ -2073,7 +2091,8 @@ static int tc358743_probe(struct i2c_client *client)
+ 	sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE | V4L2_SUBDEV_FL_HAS_EVENTS;
+ 
+ 	/* i2c access */
+-	if ((i2c_rd16(sd, CHIPID) & MASK_CHIPID) != 0) {
++	if (i2c_rd16_err(sd, CHIPID, &chipid) ||
++	    (chipid & MASK_CHIPID) != 0) {
+ 		v4l2_info(sd, "not a TC358743 on address 0x%x\n",
+ 			  client->addr << 1);
+ 		return -ENODEV;
 -- 
 2.39.5
 
