@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5475510E0;
-	Tue, 26 Aug 2025 14:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50B525DB0A;
+	Tue, 26 Aug 2025 14:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218201; cv=none; b=VQ+if90rKWDd049LGILaCS3gFRnyS5rYu49OuhUvCsh5G++8j0cztzBpAB1wQP871WO2Y1u3wO9GQ5IP2nEENoI+V/bbi7x++XA4YzhGEtfUDJc1QJCYBWIYDbVXLxPQew+NdWWURfXS4YqJn7DHTbkZnAx0K75rWmVxeagn0WE=
+	t=1756218203; cv=none; b=RsybSb0dlTw/sSAASfbPpFJRnNjOlKm/kCi2JAFBem5q/Wr0UL18AZUTQ4HDAuQ9yWfR2umzJXyVBeHIHgFCyMAgsrglKjr282YlTfyD51mOhZ110L5TvZ0kkOSAeCGcAYbnXHwf2m+ER3PuflXArjrxtY+SnZh66ymsGdEPDLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218201; c=relaxed/simple;
-	bh=XjiNVeXq+CNH4Mjw8Atk3RQjxTBQTNDNXuTq09ccxkc=;
+	s=arc-20240116; t=1756218203; c=relaxed/simple;
+	bh=qoeD5YRW++onCQbc8RLl+g8U4V+g1OCHVuFqL+6SFPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QsYcU5M1zdTEleQenAwX7VlraXiFlrBsp7Y9dmEvLVZrGW98+EsSgAl7X0UM77hTTnEqsf9vlgWx7Q/hY3HxVQA7B0AjcLPakfyedCCUdHM3MxG6QTWdHqovwqbFG/OBmNfjmfF9ys5QZy0ds9HxWkeGykjb8sVSeCJT1nJ6hRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFc5+n81; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bpnDKWjxpUblz8fSAGWXeIwUcHRS2djuQDv26AYkJdZmIxJrqXgkFcQ8csRQp3X/x6YHz90GiMySwmkzqUcWVN49KyCez4CYJ8SXbWPs/zY3tVy95cgZ+RPMtQ9b7+gr6pqLqlHMuWzhXURrN64h86db/d2sYDiJ8Afo4VKEwhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfpP9eD2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFc5+n81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF46C4CEF1;
-	Tue, 26 Aug 2025 14:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfpP9eD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C66C4CEF1;
+	Tue, 26 Aug 2025 14:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218201;
-	bh=XjiNVeXq+CNH4Mjw8Atk3RQjxTBQTNDNXuTq09ccxkc=;
+	s=korg; t=1756218203;
+	bh=qoeD5YRW++onCQbc8RLl+g8U4V+g1OCHVuFqL+6SFPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFc5+n818Hb/ygBBWl2oa5D890Sl+KwNZ8YmBPwN2XsJWn+4qEinqo7CYCJ+tikBU
-	 6hsLgn8yvK2Q2bFh/xIn9WZIOzHVJRS3ahA+qR8KE5fD724fBGkIFP1YnM30TT3yme
-	 5PjeE+jA5R4uYAj67l6Udm+pJ7kJoasOrDto41LI=
+	b=UfpP9eD2SBMWeheYeHgveRfAJwsMcB3YK4BcmRX75h6FO1L9GTNvpG4o61k/Y3V/n
+	 IV+iNDYMcq8/5BZjjnb78c0LbkH0oPijk9s4Abygk1qc5bIrgiVqcesHYtJeFAsKBI
+	 wFgSlOZEqRqqeTpiRQbtvhdzSpeeZdidIY/3Oobg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 431/523] usb: typec: fusb302: cache PD RX state
-Date: Tue, 26 Aug 2025 13:10:41 +0200
-Message-ID: <20250826110935.087262723@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 405/523] ftrace: Also allocate and copy hash for reading of filter files
+Date: Tue, 26 Aug 2025 13:10:15 +0200
+Message-ID: <20250826110934.451043911@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,95 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 1e61f6ab08786d66a11cfc51e13d6f08a6b06c56 ]
+commit bfb336cf97df7b37b2b2edec0f69773e06d11955 upstream.
 
-This patch fixes a race condition communication error, which ends up in
-PD hard resets when losing the race. Some systems, like the Radxa ROCK
-5B are powered through USB-C without any backup power source and use a
-FUSB302 chip to do the PD negotiation. This means it is quite important
-to avoid hard resets, since that effectively kills the system's
-power-supply.
+Currently the reader of set_ftrace_filter and set_ftrace_notrace just adds
+the pointer to the global tracer hash to its iterator. Unlike the writer
+that allocates a copy of the hash, the reader keeps the pointer to the
+filter hashes. This is problematic because this pointer is static across
+function calls that release the locks that can update the global tracer
+hashes. This can cause UAF and similar bugs.
 
-I've found the following race condition while debugging unplanned power
-loss during booting the board every now and then:
+Allocate and copy the hash for reading the filter files like it is done
+for the writers. This not only fixes UAF bugs, but also makes the code a
+bit simpler as it doesn't have to differentiate when to free the
+iterator's hash between writers and readers.
 
-1. lots of TCPM/FUSB302/PD initialization stuff
-2. TCPM ends up in SNK_WAIT_CAPABILITIES (tcpm_set_pd_rx is enabled here)
-3. the remote PD source does not send anything, so TCPM does a SOFT RESET
-4. TCPM ends up in SNK_WAIT_CAPABILITIES for the second time
-   (tcpm_set_pd_rx is enabled again, even though it is still on)
-
-At this point I've seen broken CRC good messages being send by the
-FUSB302 with a logic analyzer sniffing the CC lines. Also it looks like
-messages are being lost and things generally going haywire with one of
-the two sides doing a hard reset once a broken CRC good message was send
-to the bus.
-
-I think the system is running into a race condition, that the FIFOs are
-being cleared and/or the automatic good CRC message generation flag is
-being updated while a message is already arriving.
-
-Let's avoid this by caching the PD RX enabled state, as we have already
-processed anything in the FIFOs and are in a good state. As a side
-effect that this also optimizes I2C bus usage :)
-
-As far as I can tell the problem theoretically also exists when TCPM
-enters SNK_WAIT_CAPABILITIES the first time, but I believe this is less
-critical for the following reason:
-
-On devices like the ROCK 5B, which are powered through a TCPM backed
-USB-C port, the bootloader must have done some prior PD communication
-(initial communication must happen within 5 seconds after plugging the
-USB-C plug). This means the first time the kernel TCPM state machine
-reaches SNK_WAIT_CAPABILITIES, the remote side is not sending messages
-actively. On other devices a hard reset simply adds some extra delay and
-things should be good afterwards.
-
-Fixes: c034a43e72dda ("staging: typec: Fairchild FUSB302 Type-c chip driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250704-fusb302-race-condition-fix-v1-1-239012c0e27a@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ replaced str_on_off(on) with ternary operator ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/20250822183606.12962cc3@batman.local.home
+Fixes: c20489dad156 ("ftrace: Assign iter->hash to filter or notrace hashes on seq read")
+Closes: https://lore.kernel.org/all/20250813023044.2121943-1-wutengda@huaweicloud.com/
+Closes: https://lore.kernel.org/all/20250822192437.GA458494@ax162/
+Reported-by: Tengda Wu <wutengda@huaweicloud.com>
+Tested-by: Tengda Wu <wutengda@huaweicloud.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/fusb302.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/trace/ftrace.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/typec/tcpm/fusb302.c
-+++ b/drivers/usb/typec/tcpm/fusb302.c
-@@ -103,6 +103,7 @@ struct fusb302_chip {
- 	bool vconn_on;
- 	bool vbus_on;
- 	bool charge_on;
-+	bool pd_rx_on;
- 	bool vbus_present;
- 	enum typec_cc_polarity cc_polarity;
- 	enum typec_cc_status cc1;
-@@ -841,6 +842,11 @@ static int tcpm_set_pd_rx(struct tcpc_de
- 	int ret = 0;
- 
- 	mutex_lock(&chip->lock);
-+	if (chip->pd_rx_on == on) {
-+		fusb302_log(chip, "pd is already %s", on ? "on" : "off");
-+		goto done;
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -3829,13 +3829,17 @@ ftrace_regex_open(struct ftrace_ops *ops
+ 	        } else {
+ 			iter->hash = alloc_and_copy_ftrace_hash(size_bits, hash);
+ 		}
++	} else {
++		if (hash)
++			iter->hash = alloc_and_copy_ftrace_hash(hash->size_bits, hash);
++		else
++			iter->hash = EMPTY_HASH;
 +	}
-+
- 	ret = fusb302_pd_rx_flush(chip);
- 	if (ret < 0) {
- 		fusb302_log(chip, "cannot flush pd rx buffer, ret=%d", ret);
-@@ -863,6 +869,8 @@ static int tcpm_set_pd_rx(struct tcpc_de
- 			    on ? "on" : "off", ret);
- 		goto done;
+ 
+-		if (!iter->hash) {
+-			trace_parser_put(&iter->parser);
+-			goto out_unlock;
+-		}
+-	} else
+-		iter->hash = hash;
++	if (!iter->hash) {
++		trace_parser_put(&iter->parser);
++		goto out_unlock;
++	}
+ 
+ 	ret = 0;
+ 
+@@ -5707,9 +5711,6 @@ int ftrace_regex_release(struct inode *i
+ 		ret = ftrace_hash_move_and_update_ops(iter->ops, orig_hash,
+ 						      iter->hash, filter_hash);
+ 		mutex_unlock(&ftrace_lock);
+-	} else {
+-		/* For read only, the hash is the ops hash */
+-		iter->hash = NULL;
  	}
-+
-+	chip->pd_rx_on = on;
- 	fusb302_log(chip, "pd := %s", on ? "on" : "off");
- done:
- 	mutex_unlock(&chip->lock);
+ 
+ 	mutex_unlock(&iter->ops->func_hash->regex_lock);
 
 
