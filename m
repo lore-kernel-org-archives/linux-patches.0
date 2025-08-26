@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D60E8462;
-	Tue, 26 Aug 2025 12:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB11A7260F;
+	Tue, 26 Aug 2025 12:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212839; cv=none; b=jyh+5ffiU8BnmOJ70bsD6xBEZWwmGjinxK1RIpBs54KKBR3NhTYBf8Cf2DADWcixC76UMh6E0GC1vNowFOrvM1DbHr/wg6D07hzPfO/fyxy/zHfzj/uUiqc9X3YdraBFY77FmbnyyZrc6W4fv81CEvYA2X39U58KYY3t8XIjQqo=
+	t=1756212842; cv=none; b=t7NbtkpZxW7w2i9TcqyBQuJcnRXKCBn70H0RfTkOokrINu7HF4whWXwADYVTRbeMAGkpGQMTUKygV8BsDoRB9DW9wZLqzGmzGPg6mXyhPpqxFJlA9Wbrjwq1iD90A+u7xfmkCDK33sqB45PL1wqg+cPJd3v5KD3LfDPlBccJch4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212839; c=relaxed/simple;
-	bh=5/UbnmvEo8+EsKwY6YaSVMeAHehSBFU/3aTWySaz4ts=;
+	s=arc-20240116; t=1756212842; c=relaxed/simple;
+	bh=GK34UdY/iArNBjSSNrM0LyHbmT5dnDeucLrq8yGI+Ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J4n8GR4gGG8EsGYdhcFyrSTB87Q7jS+qtPQp56GdTyYKxW62nknI7winolZlYjVuMjUX4JfcFFzSXi0Li0dPRMDddHCq5I7e2t0X4Zq/HVxmjdEQ6GLbhgMBZazpJ7QSEC8PnTKk4N64xVnmfLMIe3hL7869u7EAfOqrVgFoKyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uP7i3Gqw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fNMlCZTA0r2ApJ6jZtx3LAFBmH09ge0zjflf/jiRpbAPUSQ9Zzl7ePeOppLK+aBbNo0VmNVLO0A+0Gm23e7UJ+HXetaWxqF4EUchqTACQf+5uNQWT8zGBjYq4fZqwSMotph3QQXRREhT7mkZToRxOrhG7Ph4aR3rRTEXiEmZbAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aztzSpqA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uP7i3Gqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C308C4CEF1;
-	Tue, 26 Aug 2025 12:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aztzSpqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D98C4CEF1;
+	Tue, 26 Aug 2025 12:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212838;
-	bh=5/UbnmvEo8+EsKwY6YaSVMeAHehSBFU/3aTWySaz4ts=;
+	s=korg; t=1756212841;
+	bh=GK34UdY/iArNBjSSNrM0LyHbmT5dnDeucLrq8yGI+Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uP7i3GqwR7//gdzPXOHfLM4ePE7vk+mE4B2IqTPMGeiGe4J0Ng/Hp4WiDKmQH0MDx
-	 2pyoPHGs77R0Asxl010PlCuIXOzcuvc7lotG3DgsHfGxDWfD5OCQ3PmjW9VfejEykJ
-	 Equ3PsAOb23s5x5okudVL/cvaRE/xlbpgVk8FV98=
+	b=aztzSpqAFF5YOxollKx7ad2RdVLvpebZ9NHaX6zAmc8wp0rwtS9elaosDH2JatkBr
+	 s0FP4GDYr+xsYhq1AqgdMKaRL8qr8MO1XGIgPTdY88MtNu1EuehbJG7dnv8pRVDGdF
+	 pcGpjTYmHtyL3XsBUS5Wi1KcBBjnGfqlyUBgOxfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Zhang <joakim.zhang@cixtech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/587] ALSA: hda: Handle the jack polling always via a work
-Date: Tue, 26 Aug 2025 13:04:29 +0200
-Message-ID: <20250826110956.015017752@linuxfoundation.org>
+Subject: [PATCH 6.6 091/587] soc: qcom: rpmh-rsc: Add RSC version 4 support
+Date: Tue, 26 Aug 2025 13:04:00 +0200
+Message-ID: <20250826110955.250590548@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,127 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-[ Upstream commit 5f7e54b23e4d253eff3b10b12d6fa92d28d7dddc ]
+[ Upstream commit 84684c57c9cd47b86c883a7170dd68222d97ef13 ]
 
-We used to call directly hda_jackpoll_work() from a couple of places
-for updating the jack and notify to user-space, but this makes rather
-the code flow fragile.  Namely, because of those direct calls,
-hda_jackpoll_work() uses snd_hda_power_up_pm() and *_down_pm() calls
-instead of the standard snd_hda_power_up() and *_down() calls.  The
-latter pair assures the runtime PM resume sync, so it can avoid the
-race against the PM callbacks gracefully, while the former pair may
-continue if called concurrently, hence it may race (by design).
+Register offsets for v3 and v4 versions are backward compatible. Assign v3
+offsets for v4 and all higher versions to avoid end up using v2 offsets.
 
-In this patch, we change the call pattern of hda_jackpoll_work(); now
-all callers are replaced with the standard snd_hda_jack_report_sync()
-and the additional schedule_delayed_work().
-
-Since hda_jackpoll_work() is called only from the associated work,
-it's always outside the PM code path, and we can safely use
-snd_hda_power_up() and *_down() there instead.  This allows us to
-remove the racy check of power-state in hda_jackpoll_work(), as well
-as the tricky cancel_delayed_work() and rescheduling at
-hda_codec_runtime_suspend().
-
-Reported-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Closes: https://lore.kernel.org/20250619020844.2974160-1-joakim.zhang@cixtech.com
-Tested-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250623131437.10670-4-tiwai@suse.de
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250623-rsc_v4-v1-1-275b27bc5e3c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_codec.c | 41 +++++++++++++--------------------------
- 1 file changed, 14 insertions(+), 27 deletions(-)
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index aa6dc00985b5..2d4b7527b840 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -641,24 +641,16 @@ static void hda_jackpoll_work(struct work_struct *work)
- 	struct hda_codec *codec =
- 		container_of(work, struct hda_codec, jackpoll_work.work);
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index dfc2d4e38fa9..163a58eb02e0 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -1075,7 +1075,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
+ 	drv->ver.minor >>= MINOR_VER_SHIFT;
  
--	/* for non-polling trigger: we need nothing if already powered on */
--	if (!codec->jackpoll_interval && snd_hdac_is_power_on(&codec->core))
-+	if (!codec->jackpoll_interval)
- 		return;
- 
- 	/* the power-up/down sequence triggers the runtime resume */
--	snd_hda_power_up_pm(codec);
-+	snd_hda_power_up(codec);
- 	/* update jacks manually if polling is required, too */
--	if (codec->jackpoll_interval) {
--		snd_hda_jack_set_dirty_all(codec);
--		snd_hda_jack_poll_all(codec);
--	}
--	snd_hda_power_down_pm(codec);
--
--	if (!codec->jackpoll_interval)
--		return;
--
--	schedule_delayed_work(&codec->jackpoll_work,
--			      codec->jackpoll_interval);
-+	snd_hda_jack_set_dirty_all(codec);
-+	snd_hda_jack_poll_all(codec);
-+	schedule_delayed_work(&codec->jackpoll_work, codec->jackpoll_interval);
-+	snd_hda_power_down(codec);
- }
- 
- /* release all pincfg lists */
-@@ -2920,12 +2912,12 @@ static void hda_call_codec_resume(struct hda_codec *codec)
- 		snd_hda_regmap_sync(codec);
- 	}
- 
--	if (codec->jackpoll_interval)
--		hda_jackpoll_work(&codec->jackpoll_work.work);
--	else
--		snd_hda_jack_report_sync(codec);
-+	snd_hda_jack_report_sync(codec);
- 	codec->core.dev.power.power_state = PMSG_ON;
- 	snd_hdac_leave_pm(&codec->core);
-+	if (codec->jackpoll_interval)
-+		schedule_delayed_work(&codec->jackpoll_work,
-+				      codec->jackpoll_interval);
- }
- 
- static int hda_codec_runtime_suspend(struct device *dev)
-@@ -2937,8 +2929,6 @@ static int hda_codec_runtime_suspend(struct device *dev)
- 	if (!codec->card)
- 		return 0;
- 
--	cancel_delayed_work_sync(&codec->jackpoll_work);
--
- 	state = hda_call_codec_suspend(codec);
- 	if (codec->link_down_at_suspend ||
- 	    (codec_has_clkstop(codec) && codec_has_epss(codec) &&
-@@ -2946,10 +2936,6 @@ static int hda_codec_runtime_suspend(struct device *dev)
- 		snd_hdac_codec_link_down(&codec->core);
- 	snd_hda_codec_display_power(codec, false);
- 
--	if (codec->bus->jackpoll_in_suspend &&
--		(dev->power.power_state.event != PM_EVENT_SUSPEND))
--		schedule_delayed_work(&codec->jackpoll_work,
--					codec->jackpoll_interval);
- 	return 0;
- }
- 
-@@ -3118,10 +3104,11 @@ int snd_hda_codec_build_controls(struct hda_codec *codec)
- 	if (err < 0)
- 		return err;
- 
-+	snd_hda_jack_report_sync(codec); /* call at the last init point */
- 	if (codec->jackpoll_interval)
--		hda_jackpoll_work(&codec->jackpoll_work.work);
--	else
--		snd_hda_jack_report_sync(codec); /* call at the last init point */
-+		schedule_delayed_work(&codec->jackpoll_work,
-+				      codec->jackpoll_interval);
-+
- 	sync_power_up_states(codec);
- 	return 0;
- }
+-	if (drv->ver.major == 3)
++	if (drv->ver.major >= 3)
+ 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
+ 	else
+ 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
 -- 
 2.39.5
 
