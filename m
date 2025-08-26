@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA1727707;
-	Tue, 26 Aug 2025 13:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D959221704;
+	Tue, 26 Aug 2025 13:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214042; cv=none; b=o9deSuseenzc4/NB0OuBkIpJgs/psZx14XO5jNTMRTIoQTd3RxN7Ov/z9UgQ/a5qYZHr2NRQVEHamy7nDxBc6rN52HDAAY5o2lsdOr46HuvkSO8Z/VSQO1IBVkKb+ursX/HKqaWgFlw24bWPEYUIVs5tlUyrdPHL+RT7z16y3Ks=
+	t=1756214045; cv=none; b=RsY1Y7VCybRLie5cq5Lw/EvVwan6GE7ISuLxn29szwEfoRIO2f5yjPEahHaS19OTL5TPUEm8Dpq1oCXssDxY/JZBBmuZERyp3zOPax4bFTYMeTZs07sBBHSUFRIeOISbgLvdjO9mrOapyT3SMm4/r0zkf+sNmrL+Yry76VNKBX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214042; c=relaxed/simple;
-	bh=s8swVv3WIBSg39D4bNzBU/mDr6GvxI2PfvplPtitx1I=;
+	s=arc-20240116; t=1756214045; c=relaxed/simple;
+	bh=cNjzw58PlW7KpuxXvV+z9TkNyYIjoCBnDXG4SNdv7Ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGfn628FhmsEb4xp0O6YymjK47PoYS5zLqU0xzZ55rKIwtIhLAZlCVpSKPITpiER+vUPxG1kuvFtVWCztXb+6wc/6RMhXNZkyqDrN2xTXO6xzMmKyXi6R7YiQ4rr0XeTp9sJMXpHKjXICV3+aZpxOFnIQX48YDPRmkTH3gkmFv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dlTL3yc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8lg9mmfNiNlAIbSGwk/ZT28m2wSOYE5bq2ISH8lQqIy+TWZA17c13Z33Ul/LSGPGhjBywzo7lZi/uflVS4VDk77FYOlUUGtYzVJTIZY4EDQFWOxJxbBxDh2SlUJeFcJ92XoJK9tzyNsPNNuol6xYu3Bxx5/GGwupd8Rf+sciFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hExoXJCy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dlTL3yc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3778C4CEF1;
-	Tue, 26 Aug 2025 13:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hExoXJCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFE9C4CEF1;
+	Tue, 26 Aug 2025 13:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214042;
-	bh=s8swVv3WIBSg39D4bNzBU/mDr6GvxI2PfvplPtitx1I=;
+	s=korg; t=1756214045;
+	bh=cNjzw58PlW7KpuxXvV+z9TkNyYIjoCBnDXG4SNdv7Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dlTL3yc8dn89dnC2PSPJeQB14YZHs8aTn9C75Pe5iwKMC9kZXYEev/v7OpkqnPTr
-	 cAT473hdJZ8dApxRvuElREdspzPYS3p6NwPri+5AD0IY92V7VBeWtX2Vo7iv4lD7vC
-	 aRunZeyyOhBV/e3syCcBP03ft/dgbD0qaaMJ6Mdg=
+	b=hExoXJCyGm4SRLvJMOCjLA+3gGn9BYAf4TgKg0HYKHgt0Li1erKTVmikl6YtLowKi
+	 1qqcyq2PSCdZYNRizqaovcEjVGx5t9wxmIz4pO2pyw8x3F+JQEIbuMwQHfPk8VNoCc
+	 JC+zb0bVXC9VnQt7BX+beCcnGXduCJ7NtSzMOliQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Mark Brown <broonie@kernel.org>,
+	ValdikSS <iam@valdikss.org.ru>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 548/587] spi: spi-fsl-lpspi: Clamp too high speed_hz
-Date: Tue, 26 Aug 2025 13:11:37 +0200
-Message-ID: <20250826111006.960062862@linuxfoundation.org>
+Subject: [PATCH 6.6 575/587] igc: fix disabling L1.2 PCI-E link substate on I226 on init
+Date: Tue, 26 Aug 2025 13:12:04 +0200
+Message-ID: <20250826111007.662785292@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,48 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: ValdikSS <iam@valdikss.org.ru>
 
-[ Upstream commit af357a6a3b7d685e7aa621c6fb1d4ed6c349ec9e ]
+[ Upstream commit 1468c1f97cf32418e34dbb40b784ed9333b9e123 ]
 
-Currently the driver is not able to handle the case that a SPI device
-specifies a higher spi-max-frequency than half of per-clk:
+Device ID comparison in igc_is_device_id_i226 is performed before
+the ID is set, resulting in always failing check on init.
 
-    per-clk should be at least two times of transfer speed
+Before the patch:
+* L1.2 is not disabled on init
+* L1.2 is properly disabled after suspend-resume cycle
 
-Fix this by clamping to the max possible value and use the minimum SCK
-period of 2 cycles.
+With the patch:
+* L1.2 is properly disabled both on init and after suspend-resume
 
-Fixes: 77736a98b859 ("spi: lpspi: add the error info of transfer speed setting")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20250807100742.9917-1-wahrenst@gmx.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+How to test:
+Connect to the 1G link with 300+ mbit/s Internet speed, and run
+the download speed test, such as:
+
+    curl -o /dev/null http://speedtest.selectel.ru/1GB
+
+Without L1.2 disabled, the speed would be no more than ~200 mbit/s.
+With L1.2 disabled, the speed would reach 1 gbit/s.
+Note: it's required that the latency between your host and the remote
+be around 3-5 ms, the test inside LAN (<1 ms latency) won't trigger the
+issue.
+
+Link: https://lore.kernel.org/intel-wired-lan/15248b4f-3271-42dd-8e35-02bfc92b25e1@intel.com
+Fixes: 0325143b59c6 ("igc: disable L1.2 PCI-E link substate to avoid performance issue")
+Signed-off-by: ValdikSS <iam@valdikss.org.ru>
+Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20250819222000.3504873-6-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 9e2541dee56e..fa899ab2014c 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -330,13 +330,11 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- 	}
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 11543db4c47f..3e1408e1c1fc 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -6772,6 +6772,13 @@ static int igc_probe(struct pci_dev *pdev,
+ 	adapter->port_num = hw->bus.func;
+ 	adapter->msg_enable = netif_msg_init(debug, DEFAULT_MSG_ENABLE);
  
- 	if (config.speed_hz > perclk_rate / 2) {
--		dev_err(fsl_lpspi->dev,
--		      "per-clk should be at least two times of transfer speed");
--		return -EINVAL;
-+		div = 2;
-+	} else {
-+		div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
- 	}
++	/* PCI config space info */
++	hw->vendor_id = pdev->vendor;
++	hw->device_id = pdev->device;
++	hw->revision_id = pdev->revision;
++	hw->subsystem_vendor_id = pdev->subsystem_vendor;
++	hw->subsystem_device_id = pdev->subsystem_device;
++
+ 	/* Disable ASPM L1.2 on I226 devices to avoid packet loss */
+ 	if (igc_is_device_id_i226(hw))
+ 		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
+@@ -6797,13 +6804,6 @@ static int igc_probe(struct pci_dev *pdev,
+ 	netdev->mem_start = pci_resource_start(pdev, 0);
+ 	netdev->mem_end = pci_resource_end(pdev, 0);
  
--	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
+-	/* PCI config space info */
+-	hw->vendor_id = pdev->vendor;
+-	hw->device_id = pdev->device;
+-	hw->revision_id = pdev->revision;
+-	hw->subsystem_vendor_id = pdev->subsystem_vendor;
+-	hw->subsystem_device_id = pdev->subsystem_device;
 -
- 	for (prescale = 0; prescale <= prescale_max; prescale++) {
- 		scldiv = div / (1 << prescale) - 2;
- 		if (scldiv >= 0 && scldiv < 256) {
+ 	/* Copy the default MAC and PHY function pointers */
+ 	memcpy(&hw->mac.ops, ei->mac_ops, sizeof(hw->mac.ops));
+ 	memcpy(&hw->phy.ops, ei->phy_ops, sizeof(hw->phy.ops));
 -- 
 2.50.1
 
