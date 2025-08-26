@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E894E26FA57;
-	Tue, 26 Aug 2025 13:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7650A1A23A4;
+	Tue, 26 Aug 2025 13:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214182; cv=none; b=d24VNoo+U8U4wh25h/f5x14Nba/6hCxiKwZfZ8KUrMZJmeJFBkP51jOCu99o0HckSE00CTW1+KnjS5iUfVuhmqG9jiSgp+bwopGiCJMPJnfdG9zFSx0qAOA587yiAKuo33QJRXwre/dWex4ov3Aq8YvmYJgH0NXv9TMxYbnuRfA=
+	t=1756214184; cv=none; b=ACf6x39ML9fWWqfsI+4hrp/yq1k3d7ErdiuFpGNdO5cMY/9igZl6F4i9E66TnOJUw1NNU63eyh8N/0NpV8DkeYw5B6IvfxZe2Bt5eJUum732CA9LH1PvmjkuMRPZSDevV3kMNCpWEftG6BDq8Dp+kA2lv5AvFSi3KMXF0hiesCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214182; c=relaxed/simple;
-	bh=iSk+50PWu2S3Lv/FmOqjjFQutls6rmg6azn83Ayq1JE=;
+	s=arc-20240116; t=1756214184; c=relaxed/simple;
+	bh=4ihjZ61q7+regvTlhexXDBEdmBllIvoT2ZJ4LkTOFyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tjYiGdO53dTmvk5U3w+IcFkZ5NCRAR0F9ueZ3Wp2Z2eDhpYCGCu88rcvZf92P3b3OAhKetjnzDBfhI9o/CVZIDNqbqrARlHVpaIuUyPN0Ov4f6cvyEAk4Tqkq8CUNuopE4qNFDOm+DnqdRc6E1O4lLDnV82pXBNab7Qf7JcUr3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwUQ45Jx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CPmghGI5VLhGCOYSsn2oV0dPqVcR0nN3O0VBHzOHeRXZCO213CCdRtN5PfPPAMIYPycVogzcoSJs2YBfJSngXz33jJMsi2rLewOgoxhfOUs2oDaa/Kj7muSBmE7EKG+29NcGQahbe3JvonCXHlr2T8X11IiT2vwnE28YtfseCWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pW7I78qG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwUQ45Jx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79118C4CEF1;
-	Tue, 26 Aug 2025 13:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pW7I78qG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08871C113CF;
+	Tue, 26 Aug 2025 13:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214181;
-	bh=iSk+50PWu2S3Lv/FmOqjjFQutls6rmg6azn83Ayq1JE=;
+	s=korg; t=1756214184;
+	bh=4ihjZ61q7+regvTlhexXDBEdmBllIvoT2ZJ4LkTOFyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwUQ45JxuVTwLT7ZpZmF1PMutrR97HgEuZksqhAr5rjaJAPCdZghMHAiu9LPlSXuC
-	 pElIWFiWxjFIQl1Mtegfbg0q/N0kepjyLduqOu7L1BGtGgWThbzijaMlUOXTdGMrZI
-	 ADzdLjTERWwh4gdGNTwS6qUz4ePjeZxCmdvQmJhk=
+	b=pW7I78qGaoLpdKg/qpZ6e82gdXdRTjNM8Pmh8hmnHRw4M8Ac0SewMRSEyw93EnJ7n
+	 4xr+i6M+HIiueT9fZ2ZIW1nCnNBLGvzdyXWvvn3ZonkAm6jpicYExR+Oi5cyO0zScF
+	 cOjxLvAZYaSBeu8Jv+ojY7tau2T55qhgtUv7nD1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/482] KVM: x86: Convert vcpu_run()s immediate exit param into a generic bitmap
-Date: Tue, 26 Aug 2025 13:04:53 +0200
-Message-ID: <20250826110931.801609290@linuxfoundation.org>
+Subject: [PATCH 6.1 041/482] KVM: x86: Drop kvm_x86_ops.set_dr6() in favor of a new KVM_RUN flag
+Date: Tue, 26 Aug 2025 13:04:54 +0200
+Message-ID: <20250826110931.826688892@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,132 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 2478b1b220c49d25cb1c3f061ec4f9b351d9a131 ]
+[ Upstream commit 80c64c7afea1da6a93ebe88d3d29d8a60377ef80 ]
 
-Convert kvm_x86_ops.vcpu_run()'s "force_immediate_exit" boolean parameter
-into an a generic bitmap so that similar "take action" information can be
-passed to vendor code without creating a pile of boolean parameters.
+Instruct vendor code to load the guest's DR6 into hardware via a new
+KVM_RUN flag, and remove kvm_x86_ops.set_dr6(), whose sole purpose was to
+load vcpu->arch.dr6 into hardware when DR6 can be read/written directly
+by the guest.
 
-This will allow dropping kvm_x86_ops.set_dr6() in favor of a new flag, and
-will also allow for adding similar functionality for re-loading debugctl
-in the active VMCS.
-
-Opportunistically massage the TDX WARN and comment to prepare for adding
-more run_flags, all of which are expected to be mutually exclusive with
-TDX, i.e. should be WARNed on.
-
-No functional change intended.
+Note, TDX already WARNs on any run_flag being set, i.e. will yell if KVM
+thinks DR6 needs to be reloaded.  TDX vCPUs force KVM_DEBUGREG_AUTO_SWITCH
+and never clear the flag, i.e. should never observe KVM_RUN_LOAD_GUEST_DR6.
 
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250610232010.162191-3-seanjc@google.com
+Link: https://lore.kernel.org/r/20250610232010.162191-4-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-[sean: drop TDX crud, account for lack of kvm_x86_call()]
+[sean: account for lack of vmx/main.c]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm_host.h |  6 +++++-
- arch/x86/kvm/svm/svm.c          |  4 ++--
- arch/x86/kvm/vmx/vmx.c          |  3 ++-
- arch/x86/kvm/x86.c              | 10 ++++++++--
- 4 files changed, 17 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/kvm-x86-ops.h |  1 -
+ arch/x86/include/asm/kvm_host.h    |  2 +-
+ arch/x86/kvm/svm/svm.c             | 10 ++++++----
+ arch/x86/kvm/vmx/vmx.c             | 10 +++-------
+ arch/x86/kvm/x86.c                 |  2 +-
+ 5 files changed, 11 insertions(+), 14 deletions(-)
 
+diff --git a/arch/x86/include/asm/kvm-x86-ops.h b/arch/x86/include/asm/kvm-x86-ops.h
+index 0e5ae3b0c867..c068565fe954 100644
+--- a/arch/x86/include/asm/kvm-x86-ops.h
++++ b/arch/x86/include/asm/kvm-x86-ops.h
+@@ -47,7 +47,6 @@ KVM_X86_OP(set_idt)
+ KVM_X86_OP(get_gdt)
+ KVM_X86_OP(set_gdt)
+ KVM_X86_OP(sync_dirty_debug_regs)
+-KVM_X86_OP(set_dr6)
+ KVM_X86_OP(set_dr7)
+ KVM_X86_OP(cache_reg)
+ KVM_X86_OP(get_rflags)
 diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index 86f3bd6601e7..1383f5e5238a 100644
+index 1383f5e5238a..c8fc4f2acf69 100644
 --- a/arch/x86/include/asm/kvm_host.h
 +++ b/arch/x86/include/asm/kvm_host.h
-@@ -1456,6 +1456,10 @@ static inline u16 kvm_lapic_irq_dest_mode(bool dest_mode_logical)
- 	return dest_mode_logical ? APIC_DEST_LOGICAL : APIC_DEST_PHYSICAL;
- }
+@@ -1458,6 +1458,7 @@ static inline u16 kvm_lapic_irq_dest_mode(bool dest_mode_logical)
  
-+enum kvm_x86_run_flags {
-+	KVM_RUN_FORCE_IMMEDIATE_EXIT	= BIT(0),
-+};
-+
+ enum kvm_x86_run_flags {
+ 	KVM_RUN_FORCE_IMMEDIATE_EXIT	= BIT(0),
++	KVM_RUN_LOAD_GUEST_DR6		= BIT(1),
+ };
+ 
  struct kvm_x86_ops {
- 	const char *name;
- 
-@@ -1529,7 +1533,7 @@ struct kvm_x86_ops {
- 
- 	int (*vcpu_pre_run)(struct kvm_vcpu *vcpu);
- 	enum exit_fastpath_completion (*vcpu_run)(struct kvm_vcpu *vcpu,
--						  bool force_immediate_exit);
-+						  u64 run_flags);
- 	int (*handle_exit)(struct kvm_vcpu *vcpu,
- 		enum exit_fastpath_completion exit_fastpath);
- 	int (*skip_emulated_instruction)(struct kvm_vcpu *vcpu);
+@@ -1504,7 +1505,6 @@ struct kvm_x86_ops {
+ 	void (*get_gdt)(struct kvm_vcpu *vcpu, struct desc_ptr *dt);
+ 	void (*set_gdt)(struct kvm_vcpu *vcpu, struct desc_ptr *dt);
+ 	void (*sync_dirty_debug_regs)(struct kvm_vcpu *vcpu);
+-	void (*set_dr6)(struct kvm_vcpu *vcpu, unsigned long value);
+ 	void (*set_dr7)(struct kvm_vcpu *vcpu, unsigned long value);
+ 	void (*cache_reg)(struct kvm_vcpu *vcpu, enum kvm_reg reg);
+ 	unsigned long (*get_rflags)(struct kvm_vcpu *vcpu);
 diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 12de50db401f..dc8a1b72d8ec 100644
+index dc8a1b72d8ec..5a6bd9d5cceb 100644
 --- a/arch/x86/kvm/svm/svm.c
 +++ b/arch/x86/kvm/svm/svm.c
-@@ -4008,9 +4008,9 @@ static noinstr void svm_vcpu_enter_exit(struct kvm_vcpu *vcpu, bool spec_ctrl_in
- 	guest_state_exit_irqoff();
- }
+@@ -4052,10 +4052,13 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
+ 	svm_hv_update_vp_id(svm->vmcb, vcpu);
  
--static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu,
--					  bool force_immediate_exit)
-+static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
- {
-+	bool force_immediate_exit = run_flags & KVM_RUN_FORCE_IMMEDIATE_EXIT;
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 	bool spec_ctrl_intercepted = msr_write_intercepted(vcpu, MSR_IA32_SPEC_CTRL);
+ 	/*
+-	 * Run with all-zero DR6 unless needed, so that we can get the exact cause
+-	 * of a #DB.
++	 * Run with all-zero DR6 unless the guest can write DR6 freely, so that
++	 * KVM can get the exact cause of a #DB.  Note, loading guest DR6 from
++	 * KVM's snapshot is only necessary when DR accesses won't exit.
+ 	 */
+-	if (likely(!(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT)))
++	if (unlikely(run_flags & KVM_RUN_LOAD_GUEST_DR6))
++		svm_set_dr6(vcpu, vcpu->arch.dr6);
++	else if (likely(!(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT)))
+ 		svm_set_dr6(vcpu, DR6_ACTIVE_LOW);
  
+ 	clgi();
+@@ -4822,7 +4825,6 @@ static struct kvm_x86_ops svm_x86_ops __initdata = {
+ 	.set_idt = svm_set_idt,
+ 	.get_gdt = svm_get_gdt,
+ 	.set_gdt = svm_set_gdt,
+-	.set_dr6 = svm_set_dr6,
+ 	.set_dr7 = svm_set_dr7,
+ 	.sync_dirty_debug_regs = svm_sync_dirty_debug_regs,
+ 	.cache_reg = svm_cache_reg,
 diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 179747d04edc..382f42200688 100644
+index 382f42200688..60d1ff3fca45 100644
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -7204,8 +7204,9 @@ static noinstr void vmx_vcpu_enter_exit(struct kvm_vcpu *vcpu,
- 	guest_state_exit_irqoff();
+@@ -5530,12 +5530,6 @@ static void vmx_sync_dirty_debug_regs(struct kvm_vcpu *vcpu)
+ 	set_debugreg(DR6_RESERVED, 6);
  }
  
--static fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, bool force_immediate_exit)
-+static fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
+-static void vmx_set_dr6(struct kvm_vcpu *vcpu, unsigned long val)
+-{
+-	lockdep_assert_irqs_disabled();
+-	set_debugreg(vcpu->arch.dr6, 6);
+-}
+-
+ static void vmx_set_dr7(struct kvm_vcpu *vcpu, unsigned long val)
  {
-+	bool force_immediate_exit = run_flags & KVM_RUN_FORCE_IMMEDIATE_EXIT;
- 	struct vcpu_vmx *vmx = to_vmx(vcpu);
- 	unsigned long cr3, cr4;
+ 	vmcs_writel(GUEST_DR7, val);
+@@ -7251,6 +7245,9 @@ static fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
+ 		vmcs_writel(GUEST_RIP, vcpu->arch.regs[VCPU_REGS_RIP]);
+ 	vcpu->arch.regs_dirty = 0;
  
++	if (run_flags & KVM_RUN_LOAD_GUEST_DR6)
++		set_debugreg(vcpu->arch.dr6, 6);
++
+ 	/*
+ 	 * Refresh vmcs.HOST_CR3 if necessary.  This must be done immediately
+ 	 * prior to VM-Enter, as the kernel may load a new ASID (PCID) any time
+@@ -8208,7 +8205,6 @@ static struct kvm_x86_ops vmx_x86_ops __initdata = {
+ 	.set_idt = vmx_set_idt,
+ 	.get_gdt = vmx_get_gdt,
+ 	.set_gdt = vmx_set_gdt,
+-	.set_dr6 = vmx_set_dr6,
+ 	.set_dr7 = vmx_set_dr7,
+ 	.sync_dirty_debug_regs = vmx_sync_dirty_debug_regs,
+ 	.cache_reg = vmx_cache_reg,
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 400a6e9fb0be..83e5e823cbae 100644
+index 83e5e823cbae..9d66830d594c 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -10591,6 +10591,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
- 		dm_request_for_irq_injection(vcpu) &&
- 		kvm_cpu_accept_dm_intr(vcpu);
- 	fastpath_t exit_fastpath;
-+	u64 run_flags;
- 
- 	bool req_immediate_exit = false;
- 
-@@ -10811,8 +10812,11 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
- 		goto cancel_injection;
- 	}
- 
--	if (req_immediate_exit)
-+	run_flags = 0;
-+	if (req_immediate_exit) {
-+		run_flags |= KVM_RUN_FORCE_IMMEDIATE_EXIT;
- 		kvm_make_request(KVM_REQ_EVENT, vcpu);
-+	}
- 
- 	fpregs_assert_state_consistent();
- 	if (test_thread_flag(TIF_NEED_FPU_LOAD))
-@@ -10848,7 +10852,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
- 		WARN_ON_ONCE((kvm_vcpu_apicv_activated(vcpu) != kvm_vcpu_apicv_active(vcpu)) &&
- 			     (kvm_get_apic_mode(vcpu) != LAPIC_MODE_DISABLED));
- 
--		exit_fastpath = static_call(kvm_x86_vcpu_run)(vcpu, req_immediate_exit);
-+		exit_fastpath = static_call(kvm_x86_vcpu_run)(vcpu, run_flags);
- 		if (likely(exit_fastpath != EXIT_FASTPATH_REENTER_GUEST))
- 			break;
- 
-@@ -10860,6 +10864,8 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
- 			break;
- 		}
- 
-+		run_flags = 0;
-+
- 		/* Note, VM-Exits that go down the "slow" path are accounted below. */
- 		++vcpu->stat.exits;
+@@ -10833,7 +10833,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 		set_debugreg(vcpu->arch.eff_db[3], 3);
+ 		/* When KVM_DEBUGREG_WONT_EXIT, dr6 is accessible in guest. */
+ 		if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
+-			static_call(kvm_x86_set_dr6)(vcpu, vcpu->arch.dr6);
++			run_flags |= KVM_RUN_LOAD_GUEST_DR6;
+ 	} else if (unlikely(hw_breakpoint_active())) {
+ 		set_debugreg(0, 7);
  	}
 -- 
 2.50.1
