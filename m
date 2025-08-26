@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1871494D9;
-	Tue, 26 Aug 2025 13:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C88B148850;
+	Tue, 26 Aug 2025 13:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213351; cv=none; b=HAuI6ZqFWDEvD7hVxptWmEkRolzk6wHmXGOn3glGK7cD+HdBjeuc2YmbQaCrWuAH4V2xhM8I6pjlD4T7hyun9tdXRgsvn+E/FmKn0G/vCpRZQZ7izeef0+OoZ9TB+QOIrt/7cNQ7l/1nMfGOHWpQcDGd+pdA2sIsJc75M6eAG0g=
+	t=1756213354; cv=none; b=Cveqs/nnnz0pBC2/E5azU93Vrjd++yed1sA5S9o4No2f0uGVlvzkD9HrSpLbgRF6YdI4a9ZKlu/LHzJPmH8Wu4SuVWbX6fdvso717WlRrPfLg1ibGbWZcP+TAB6jpwmFzY+67mmbSI/zSlvSxfk+fA8452aBgWFFMwIU3bR2FJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213351; c=relaxed/simple;
-	bh=+IRQTblmy+447o+psgOEfSZl5v3tKa7XzoUPxATL738=;
+	s=arc-20240116; t=1756213354; c=relaxed/simple;
+	bh=kLKF/mFrruoRzW9Gfv/YqpjBbxwoXd6EJrGXra8Y0bQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYlzw0rM6kNsfh2gh0TA65Ygf+6G9F9pahdRB3D0/bvva5B6yPFqMd+rrvzudNoDeBzBYS0IeP8A0CsONn6K0UyBR4m677arTRII8wK8OXHS1OeGgfIta202EPHUOLr1AvPzfcZwNdBzz9mjy3xrCZP0zyIrB6l8NMYRprn6Gek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIQtYRth; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5BBkJR3EEO967RfluEs3xcoJm/taGHSN0FIvisD+eviBge77WZZh38QYLR3d2yuJ3isLW3IC1njk7crT6T9JqBclVF8pJ931wKUgsjPsKjiR0mXx4EI7Ha431BoqWkX31BOpw4HwiXwXSKv0e0tShBZO49PFlEgLb/KEIy/Dhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0x9gXVMD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIQtYRth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5974AC4CEF1;
-	Tue, 26 Aug 2025 13:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0x9gXVMD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E38C4CEF1;
+	Tue, 26 Aug 2025 13:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213351;
-	bh=+IRQTblmy+447o+psgOEfSZl5v3tKa7XzoUPxATL738=;
+	s=korg; t=1756213354;
+	bh=kLKF/mFrruoRzW9Gfv/YqpjBbxwoXd6EJrGXra8Y0bQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIQtYRthbbL63pKIvWLYq2za5WkmWp8Cvq+yjQXePXH/d2PyjxNkufCuAkCIH1S9N
-	 JqL2b9GB4G8VQmllJtJatMWCn0Kv4lYG/sM5dZGOhROl1N6euurO7Ds2dH3qxi4LcI
-	 K8Y8e6Dum1tpQntABce5R7sfCJKj1kUqhaFzVswc=
+	b=0x9gXVMDNjGBNy0ZRMD/ssrNayCEx8vSI+Fewnc0Fipn053dh0nWTWFni31Dg9tjT
+	 xjomNECmifpJeRA4MxUuZiZje9ym7bjvrKPWfhxQRUFfgD09quy7bxxBE4OGXIV1nh
+	 pTSsk7LRTFZs8FdbF/c5RqAT+F3yhE7khMXR9VB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 315/587] btrfs: do not allow relocation of partially dropped subvolumes
-Date: Tue, 26 Aug 2025 13:07:44 +0200
-Message-ID: <20250826111000.930421321@linuxfoundation.org>
+	Sravan Kumar Gundu <sravankumarlpu@gmail.com>,
+	Helge Deller <deller@gmx.de>,
+	syzbot+c4b7aa0513823e2ea880@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 316/587] fbdev: Fix vmalloc out-of-bounds write in fast_imageblit
+Date: Tue, 26 Aug 2025 13:07:45 +0200
+Message-ID: <20250826111000.956073840@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,124 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Sravan Kumar Gundu <sravankumarlpu@gmail.com>
 
-commit 4289b494ac553e74e86fed1c66b2bf9530bc1082 upstream.
+commit af0db3c1f898144846d4c172531a199bb3ca375d upstream.
 
-[BUG]
-There is an internal report that balance triggered transaction abort,
-with the following call trace:
+This issue triggers when a userspace program does an ioctl
+FBIOPUT_CON2FBMAP by passing console number and frame buffer number.
+Ideally this maps console to frame buffer and updates the screen if
+console is visible.
 
-  item 85 key (594509824 169 0) itemoff 12599 itemsize 33
-          extent refs 1 gen 197740 flags 2
-          ref#0: tree block backref root 7
-  item 86 key (594558976 169 0) itemoff 12566 itemsize 33
-          extent refs 1 gen 197522 flags 2
-          ref#0: tree block backref root 7
- ...
- BTRFS error (device loop0): extent item not found for insert, bytenr 594526208 num_bytes 16384 parent 449921024 root_objectid 934 owner 1 offset 0
- BTRFS error (device loop0): failed to run delayed ref for logical 594526208 num_bytes 16384 type 182 action 1 ref_mod 1: -117
- ------------[ cut here ]------------
- BTRFS: Transaction aborted (error -117)
- WARNING: CPU: 1 PID: 6963 at ../fs/btrfs/extent-tree.c:2168 btrfs_run_delayed_refs+0xfa/0x110 [btrfs]
+As part of mapping it has to do resize of console according to frame
+buffer info. if this resize fails and returns from vc_do_resize() and
+continues further. At this point console and new frame buffer are mapped
+and sets display vars. Despite failure still it continue to proceed
+updating the screen at later stages where vc_data is related to previous
+frame buffer and frame buffer info and display vars are mapped to new
+frame buffer and eventully leading to out-of-bounds write in
+fast_imageblit(). This bheviour is excepted only when fg_console is
+equal to requested console which is a visible console and updates screen
+with invalid struct references in fbcon_putcs().
 
-And btrfs check doesn't report anything wrong related to the extent
-tree.
-
-[CAUSE]
-The cause is a little complex, firstly the extent tree indeed doesn't
-have the backref for 594526208.
-
-The extent tree only have the following two backrefs around that bytenr
-on-disk:
-
-        item 65 key (594509824 METADATA_ITEM 0) itemoff 13880 itemsize 33
-                refs 1 gen 197740 flags TREE_BLOCK
-                tree block skinny level 0
-                (176 0x7) tree block backref root CSUM_TREE
-        item 66 key (594558976 METADATA_ITEM 0) itemoff 13847 itemsize 33
-                refs 1 gen 197522 flags TREE_BLOCK
-                tree block skinny level 0
-                (176 0x7) tree block backref root CSUM_TREE
-
-But the such missing backref item is not an corruption on disk, as the
-offending delayed ref belongs to subvolume 934, and that subvolume is
-being dropped:
-
-        item 0 key (934 ROOT_ITEM 198229) itemoff 15844 itemsize 439
-                generation 198229 root_dirid 256 bytenr 10741039104 byte_limit 0 bytes_used 345571328
-                last_snapshot 198229 flags 0x1000000000001(RDONLY) refs 0
-                drop_progress key (206324 EXTENT_DATA 2711650304) drop_level 2
-                level 2 generation_v2 198229
-
-And that offending tree block 594526208 is inside the dropped range of
-that subvolume.  That explains why there is no backref item for that
-bytenr and why btrfs check is not reporting anything wrong.
-
-But this also shows another problem, as btrfs will do all the orphan
-subvolume cleanup at a read-write mount.
-
-So half-dropped subvolume should not exist after an RW mount, and
-balance itself is also exclusive to subvolume cleanup, meaning we
-shouldn't hit a subvolume half-dropped during relocation.
-
-The root cause is, there is no orphan item for this subvolume.
-In fact there are 5 subvolumes from around 2021 that have the same
-problem.
-
-It looks like the original report has some older kernels running, and
-caused those zombie subvolumes.
-
-Thankfully upstream commit 8d488a8c7ba2 ("btrfs: fix subvolume/snapshot
-deletion not triggered on mount") has long fixed the bug.
-
-[ENHANCEMENT]
-For repairing such old fs, btrfs-progs will be enhanced.
-
-Considering how delayed the problem will show up (at run delayed ref
-time) and at that time we have to abort transaction already, it is too
-late.
-
-Instead here we reject any half-dropped subvolume for reloc tree at the
-earliest time, preventing confusion and extra time wasted on debugging
-similar bugs.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-and-tested-by: syzbot+c4b7aa0513823e2ea880@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c4b7aa0513823e2ea880
+Signed-off-by: Sravan Kumar Gundu <sravankumarlpu@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/video/fbdev/core/fbcon.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -693,6 +693,25 @@ static struct btrfs_root *create_reloc_r
- 	if (root->root_key.objectid == objectid) {
- 		u64 commit_root_gen;
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -808,7 +808,8 @@ static void con2fb_init_display(struct v
+ 				   fg_vc->vc_rows);
+ 	}
  
-+		/*
-+		 * Relocation will wait for cleaner thread, and any half-dropped
-+		 * subvolume will be fully cleaned up at mount time.
-+		 * So here we shouldn't hit a subvolume with non-zero drop_progress.
-+		 *
-+		 * If this isn't the case, error out since it can make us attempt to
-+		 * drop references for extents that were already dropped before.
-+		 */
-+		if (unlikely(btrfs_disk_key_objectid(&root->root_item.drop_progress))) {
-+			struct btrfs_key cpu_key;
-+
-+			btrfs_disk_key_to_cpu(&cpu_key, &root->root_item.drop_progress);
-+			btrfs_err(fs_info,
-+	"cannot relocate partially dropped subvolume %llu, drop progress key (%llu %u %llu)",
-+				  objectid, cpu_key.objectid, cpu_key.type, cpu_key.offset);
-+			ret = -EUCLEAN;
-+			goto fail;
-+		}
-+
- 		/* called by btrfs_init_reloc_root */
- 		ret = btrfs_copy_root(trans, root, root->commit_root, &eb,
- 				      BTRFS_TREE_RELOC_OBJECTID);
+-	update_screen(vc_cons[fg_console].d);
++	if (fg_console != unit)
++		update_screen(vc_cons[fg_console].d);
+ }
+ 
+ /**
+@@ -1353,6 +1354,7 @@ static void fbcon_set_disp(struct fb_inf
+ 	struct vc_data *svc;
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 	int rows, cols;
++	unsigned long ret = 0;
+ 
+ 	p = &fb_display[unit];
+ 
+@@ -1403,11 +1405,10 @@ static void fbcon_set_disp(struct fb_inf
+ 	rows = FBCON_SWAP(ops->rotate, info->var.yres, info->var.xres);
+ 	cols /= vc->vc_font.width;
+ 	rows /= vc->vc_font.height;
+-	vc_resize(vc, cols, rows);
++	ret = vc_resize(vc, cols, rows);
+ 
+-	if (con_is_visible(vc)) {
++	if (con_is_visible(vc) && !ret)
+ 		update_screen(vc);
+-	}
+ }
+ 
+ static __inline__ void ywrap_up(struct vc_data *vc, int count)
 
 
