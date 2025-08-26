@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE0F2AD04;
-	Tue, 26 Aug 2025 13:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF11312803;
+	Tue, 26 Aug 2025 13:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215242; cv=none; b=jZiOatHQpzp+VXxSTnJgO0Y4is3dLjC6ZxthzmqjIe+1XNWf4sy8Yc5ij0HBkrOEJcbhfGuVz0xIVviBwb+zl354oy0PH9PuT2tDnigciLPPCvRSg7+YF+hBA2/olsLYNcJsgnUPOyE+rINhuWhVHGy/mri+7jhuTj4lVPoAW4s=
+	t=1756215244; cv=none; b=cpv0nMgMxz9CCBrzjvkN4XZzMaFzS8yneMvGTSmH6NEAzY7HR9Z8mBk+V7+swSafRJorS1/glMki+maMSK4/yifRV4bLGaYj3XIxyZ12mCHQOE6TwbupCX8I503uJEV3VZBbAL20V7LFpZHw70NOY9+EcLgnLMH3F5Q07hZFzaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215242; c=relaxed/simple;
-	bh=k6tg3G4gqbCke98isBJmR5YAC8NCQGxWjUCEdUaR2o4=;
+	s=arc-20240116; t=1756215244; c=relaxed/simple;
+	bh=OFtOf+GYLqm4WuxI5F9XGaZ6mtkNLDz9th/3P66nQwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZz5zk9254weqPID56etup11zBPV3/otouAvbTF7RnFZGOzOdo9vn45CIWlugpZyMEQjUwiaoshDyKSOn3Jz0Kf3L2p/PatcccVJpgw/a0T9WDckmlqvfZAhO43X9UQEUJ55oyRP2dFMODkKfm3HhvGVwIRi9LuLVAX3c7HRHrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaTpDOHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r5cmnzDx/c/KbOcpWlgqAx3Z5azCH+Tu0DkC2nHJo4/kuxP1NdiiH1lI/Cu0W6h5JmUVzAJIg1kWsPjUcD84p0gcG01qpL6Xj6TU0Ns8hjd98+TjY7X7bBH1hy0dE+i30LDw0rY3vyyDVhG25isLvs6BPliUYEQLr1pOGYbGxi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+imhIqp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaTpDOHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AACEC4CEF1;
-	Tue, 26 Aug 2025 13:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+imhIqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B0AC4CEF1;
+	Tue, 26 Aug 2025 13:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215241;
-	bh=k6tg3G4gqbCke98isBJmR5YAC8NCQGxWjUCEdUaR2o4=;
+	s=korg; t=1756215244;
+	bh=OFtOf+GYLqm4WuxI5F9XGaZ6mtkNLDz9th/3P66nQwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EaTpDOHt/Riee+Fy9w0JU7EdFAL4dNHfSfsGaleeo+Pc7FRn9nJ6Y2pr8upQP58ab
-	 /HowDPEJTP9R0Cw1dzQekRvw+z6vWgaGq42zUWkT+3S4Xg09i0Gtq+C4sVxQT4jM01
-	 UjGOGXg89rwmZf3Bapwg+SyWmeF8dqjTmhLTvxJw=
+	b=i+imhIqp8apaRMLLT/yjWaDBIngC8TA2c9K1FjJOJAnqoqDmX2lVTe4tM9IvgK/Mg
+	 kPu7G7CKhxJZZ8ALOJyvEF9xkDb5Ow8V9voffc4cTG3lC2+YqVbgiMhPNFr2VaklDW
+	 oFg90o+e2J84UhtB3j9EZmpEkklOmjpa9jI6RvyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 440/482] mm/memory-failure: fix infinite UCE for VM_PFNMAP pfn
-Date: Tue, 26 Aug 2025 13:11:33 +0200
-Message-ID: <20250826110941.701462757@linuxfoundation.org>
+Subject: [PATCH 6.1 441/482] drm/amd/display: Dont overclock DCE 6 by 15%
+Date: Tue, 26 Aug 2025 13:11:34 +0200
+Message-ID: <20250826110941.726091443@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,70 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 2e6053fea379806269c4f7f5e36b523c9c0fb35c ]
+[ Upstream commit cb7b7ae53b557d168b4af5cd8549f3eff920bfb5 ]
 
-When memory_failure() is called for a already hwpoisoned pfn,
-kill_accessing_process() will be called to kill current task.  However, if
-the vma of the accessing vaddr is VM_PFNMAP, walk_page_range() will skip
-the vma in walk_page_test() and return 0.
+The extra 15% clock was added as a workaround for a Polaris issue
+which uses DCE 11, and should not have been used on DCE 6 which
+is already hardcoded to the highest possible display clock.
+Unfortunately, the extra 15% was mistakenly copied and kept
+even on code paths which don't affect Polaris.
 
-Before commit aaf99ac2ceb7 ("mm/hwpoison: do not send SIGBUS to processes
-with recovered clean pages"), kill_accessing_process() will return EFAULT.
-For x86, the current task will be killed in kill_me_maybe().
+This commit fixes that and also adds a check to make sure
+not to exceed the maximum DCE 6 display clock.
 
-However, after this commit, kill_accessing_process() simplies return 0,
-that means UCE is handled properly, but it doesn't actually.  In such
-case, the user task will trigger UCE infinitely.
-
-To fix it, add .test_walk callback for hwpoison_walk_ops to scan all vmas.
-
-Link: https://lkml.kernel.org/r/20250815073209.1984582-1-tujinjiang@huawei.com
-Fixes: aaf99ac2ceb7 ("mm/hwpoison: do not send SIGBUS to processes with recovered clean pages")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Reviewed-by: Jane Chu <jane.chu@oracle.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shuai Xue <xueshuai@linux.alibaba.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Adjust context ]
+Fixes: 8cd61c313d8b ("drm/amd/display: Raise dispclk value for Polaris")
+Fixes: dc88b4a684d2 ("drm/amd/display: make clk mgr soc specific")
+Fixes: 3ecb3b794e2c ("drm/amd/display: dc/clk_mgr: add support for SI parts (v2)")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 427980c1cbd22bb256b9385f5ce73c0937562408)
+Cc: stable@vger.kernel.org
+[ `MIN` => `min` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -731,9 +731,17 @@ static int hwpoison_hugetlb_range(pte_t
- #define hwpoison_hugetlb_range	NULL
- #endif
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
+@@ -112,11 +112,9 @@ static void dce60_update_clocks(struct c
+ {
+ 	struct clk_mgr_internal *clk_mgr_dce = TO_CLK_MGR_INTERNAL(clk_mgr_base);
+ 	struct dm_pp_power_level_change_request level_change_req;
+-	int patched_disp_clk = context->bw_ctx.bw.dce.dispclk_khz;
+-
+-	/*TODO: W/A for dal3 linux, investigate why this works */
+-	if (!clk_mgr_dce->dfs_bypass_active)
+-		patched_disp_clk = patched_disp_clk * 115 / 100;
++	const int max_disp_clk =
++		clk_mgr_dce->max_clks_by_state[DM_PP_CLOCKS_STATE_PERFORMANCE].display_clk_khz;
++	int patched_disp_clk = min(max_disp_clk, context->bw_ctx.bw.dce.dispclk_khz);
  
-+static int hwpoison_test_walk(unsigned long start, unsigned long end,
-+			     struct mm_walk *walk)
-+{
-+	/* We also want to consider pages mapped into VM_PFNMAP. */
-+	return 0;
-+}
-+
- static const struct mm_walk_ops hwp_walk_ops = {
- 	.pmd_entry = hwpoison_pte_range,
- 	.hugetlb_entry = hwpoison_hugetlb_range,
-+	.test_walk = hwpoison_test_walk,
- };
- 
- /*
+ 	level_change_req.power_level = dce_get_required_clocks_state(clk_mgr_base, context);
+ 	/* get max clock state from PPLIB */
 
 
