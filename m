@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB9C3376BD;
-	Tue, 26 Aug 2025 14:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343C51E0E08;
+	Tue, 26 Aug 2025 14:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219435; cv=none; b=TpvhbxenWASbZ4f2ZZYKU2in+QPkvG/bytd0wcc+0hJW4+/xNySge6zRdzrNfwybkoyOGPA9lsSkqtAnIVm2106r0MDo8S+DGsGOnMh+Rxo5MEcgUaa9Sd1IoeXx+lfG323SlfE7sHe+ZUz2rzpEulw5SP0n5NY7GptQA4fYZMM=
+	t=1756219438; cv=none; b=Z1eBN6WFlAjXGv4N/Vht53n5Z5/lYaCmv7tO7l1FIzNYEEcmCQPoQ6yYUqXi5PoIIjaYsr5D2qs0t3TSFN4CpCRQCICm1IagiDN9vNZsH+VfgPiNQvpyKCYyeINMXN/7+n8lscb5+/qqDlx2KHLofqhunyfq7cKgbFtGvDdhwsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219435; c=relaxed/simple;
-	bh=9Ushf+NgKBvN0uNP6ljNqtv8uixSpOnVPMajbY67JhE=;
+	s=arc-20240116; t=1756219438; c=relaxed/simple;
+	bh=rCz+R9IGMxL7U12zytfmuzv2Qad+IJx6jXFSm0tCyU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAunHAkigyqRhJlMMjkh7aeAjLsACdH4P4xb+VQlUwMP27WgWATq3FiZn7CqQMP62S/jYfnB5OO2x5BdHPW8V4kT3z+a4SUl5AceUIaRNfT+bDtZsOHl9Kglp/6aJh/KeXkrRDxnkN9wx4YOXwheVWzBM4eKzqBsgvTd+ot+a+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrzC2RsT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sHKNTlr6FV6sDAWCFLSUH/V8JKnbG6rmC4yZgeJX2aZXCzXftzttyJdOAT16XrCHfdB+NHZgO4WhFEwm/ThZYrHS+DR4a+qJJq1FbPY+nUOMqSlaO1IJFAIoND7XLEWQw2KdiY3Pk+oNqMSXqOOyKW3AVisFSDq7+URTCVtQLJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I82tiPGq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrzC2RsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C52C4CEF1;
-	Tue, 26 Aug 2025 14:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I82tiPGq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773F9C4CEF1;
+	Tue, 26 Aug 2025 14:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219435;
-	bh=9Ushf+NgKBvN0uNP6ljNqtv8uixSpOnVPMajbY67JhE=;
+	s=korg; t=1756219437;
+	bh=rCz+R9IGMxL7U12zytfmuzv2Qad+IJx6jXFSm0tCyU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrzC2RsT7qypRXN6fpWWFUJjW53BxBZbnIQBk7OqPGVsHLCYb6YlbgzqVLJQD/DYM
-	 JkhiaonVK/QPBggaZSbqXpM76V+qOC0jdLIbJpAo+FPQLoR607s6G4xuuPh6MOiuwd
-	 wZePXn2ShfgPF+Crxncq+6mvmd5owUwlpVQ+C4PA=
+	b=I82tiPGqynJ6n3juzkhkWXy0x9QSo8fOHdcv4WbzHxF5jb10Ci6AelSaIZDBI4UPm
+	 h/BPNlrshKS1oT8ovT5nWXGBxV4B5WfbppW2UnvHrjPymZcuJ+f4opcXrqgvkZ1s1W
+	 uKOOYblQP7Q0icgjrn5ezRx4MVjepMynuiE10qYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Andy Lutomirski <luto@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>
-Subject: [PATCH 5.4 380/403] mm: update memfd seal write check to include F_SEAL_WRITE
-Date: Tue, 26 Aug 2025 13:11:46 +0200
-Message-ID: <20250826110917.515769429@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 354/403] usb: typec: fusb302: cache PD RX state
+Date: Tue, 26 Aug 2025 13:11:20 +0200
+Message-ID: <20250826110916.655047756@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -59,101 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lstoakes@gmail.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 28464bbb2ddc199433383994bcb9600c8034afa1 ]
+[ Upstream commit 1e61f6ab08786d66a11cfc51e13d6f08a6b06c56 ]
 
-The seal_check_future_write() function is called by shmem_mmap() or
-hugetlbfs_file_mmap() to disallow any future writable mappings of an memfd
-sealed this way.
+This patch fixes a race condition communication error, which ends up in
+PD hard resets when losing the race. Some systems, like the Radxa ROCK
+5B are powered through USB-C without any backup power source and use a
+FUSB302 chip to do the PD negotiation. This means it is quite important
+to avoid hard resets, since that effectively kills the system's
+power-supply.
 
-The F_SEAL_WRITE flag is not checked here, as that is handled via the
-mapping->i_mmap_writable mechanism and so any attempt at a mapping would
-fail before this could be run.
+I've found the following race condition while debugging unplanned power
+loss during booting the board every now and then:
 
-However we intend to change this, meaning this check can be performed for
-F_SEAL_WRITE mappings also.
+1. lots of TCPM/FUSB302/PD initialization stuff
+2. TCPM ends up in SNK_WAIT_CAPABILITIES (tcpm_set_pd_rx is enabled here)
+3. the remote PD source does not send anything, so TCPM does a SOFT RESET
+4. TCPM ends up in SNK_WAIT_CAPABILITIES for the second time
+   (tcpm_set_pd_rx is enabled again, even though it is still on)
 
-The logic here is equally applicable to both flags, so update this
-function to accommodate both and rename it accordingly.
+At this point I've seen broken CRC good messages being send by the
+FUSB302 with a logic analyzer sniffing the CC lines. Also it looks like
+messages are being lost and things generally going haywire with one of
+the two sides doing a hard reset once a broken CRC good message was send
+to the bus.
 
-Link: https://lkml.kernel.org/r/913628168ce6cce77df7d13a63970bae06a526e0.1697116581.git.lstoakes@gmail.com
-Signed-off-by: Lorenzo Stoakes <lstoakes@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+I think the system is running into a race condition, that the FIFOs are
+being cleared and/or the automatic good CRC message generation flag is
+being updated while a message is already arriving.
+
+Let's avoid this by caching the PD RX enabled state, as we have already
+processed anything in the FIFOs and are in a good state. As a side
+effect that this also optimizes I2C bus usage :)
+
+As far as I can tell the problem theoretically also exists when TCPM
+enters SNK_WAIT_CAPABILITIES the first time, but I believe this is less
+critical for the following reason:
+
+On devices like the ROCK 5B, which are powered through a TCPM backed
+USB-C port, the bootloader must have done some prior PD communication
+(initial communication must happen within 5 seconds after plugging the
+USB-C plug). This means the first time the kernel TCPM state machine
+reaches SNK_WAIT_CAPABILITIES, the remote side is not sending messages
+actively. On other devices a hard reset simply adds some extra delay and
+things should be good afterwards.
+
+Fixes: c034a43e72dda ("staging: typec: Fairchild FUSB302 Type-c chip driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250704-fusb302-race-condition-fix-v1-1-239012c0e27a@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ replaced str_on_off(on) with ternary operator ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hugetlbfs/inode.c |    2 +-
- include/linux/mm.h   |   15 ++++++++-------
- mm/shmem.c           |    2 +-
- 3 files changed, 10 insertions(+), 9 deletions(-)
+ drivers/usb/typec/tcpm/fusb302.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -152,7 +152,7 @@ static int hugetlbfs_file_mmap(struct fi
- 	vma->vm_flags |= VM_HUGETLB | VM_DONTEXPAND;
- 	vma->vm_ops = &hugetlb_vm_ops;
+--- a/drivers/usb/typec/tcpm/fusb302.c
++++ b/drivers/usb/typec/tcpm/fusb302.c
+@@ -104,6 +104,7 @@ struct fusb302_chip {
+ 	bool vconn_on;
+ 	bool vbus_on;
+ 	bool charge_on;
++	bool pd_rx_on;
+ 	bool vbus_present;
+ 	enum typec_cc_polarity cc_polarity;
+ 	enum typec_cc_status cc1;
+@@ -841,6 +842,11 @@ static int tcpm_set_pd_rx(struct tcpc_de
+ 	int ret = 0;
  
--	ret = seal_check_future_write(info->seals, vma);
-+	ret = seal_check_write(info->seals, vma);
- 	if (ret)
- 		return ret;
- 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -2946,25 +2946,26 @@ static inline int pages_identical(struct
- }
- 
- /**
-- * seal_check_future_write - Check for F_SEAL_FUTURE_WRITE flag and handle it
-+ * seal_check_write - Check for F_SEAL_WRITE or F_SEAL_FUTURE_WRITE flags and
-+ *                    handle them.
-  * @seals: the seals to check
-  * @vma: the vma to operate on
-  *
-- * Check whether F_SEAL_FUTURE_WRITE is set; if so, do proper check/handling on
-- * the vma flags.  Return 0 if check pass, or <0 for errors.
-+ * Check whether F_SEAL_WRITE or F_SEAL_FUTURE_WRITE are set; if so, do proper
-+ * check/handling on the vma flags.  Return 0 if check pass, or <0 for errors.
-  */
--static inline int seal_check_future_write(int seals, struct vm_area_struct *vma)
-+static inline int seal_check_write(int seals, struct vm_area_struct *vma)
- {
--	if (seals & F_SEAL_FUTURE_WRITE) {
-+	if (seals & (F_SEAL_WRITE | F_SEAL_FUTURE_WRITE)) {
- 		/*
- 		 * New PROT_WRITE and MAP_SHARED mmaps are not allowed when
--		 * "future write" seal active.
-+		 * write seals are active.
- 		 */
- 		if ((vma->vm_flags & VM_SHARED) && (vma->vm_flags & VM_WRITE))
- 			return -EPERM;
- 
- 		/*
--		 * Since an F_SEAL_FUTURE_WRITE sealed memfd can be mapped as
-+		 * Since an F_SEAL_[FUTURE_]WRITE sealed memfd can be mapped as
- 		 * MAP_SHARED and read-only, take care to not allow mprotect to
- 		 * revert protections on such mappings. Do this only for shared
- 		 * mappings. For private mappings, don't need to mask
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -2215,7 +2215,7 @@ static int shmem_mmap(struct file *file,
- 	struct shmem_inode_info *info = SHMEM_I(file_inode(file));
- 	int ret;
- 
--	ret = seal_check_future_write(info->seals, vma);
-+	ret = seal_check_write(info->seals, vma);
- 	if (ret)
- 		return ret;
- 
+ 	mutex_lock(&chip->lock);
++	if (chip->pd_rx_on == on) {
++		fusb302_log(chip, "pd is already %s", on ? "on" : "off");
++		goto done;
++	}
++
+ 	ret = fusb302_pd_rx_flush(chip);
+ 	if (ret < 0) {
+ 		fusb302_log(chip, "cannot flush pd rx buffer, ret=%d", ret);
+@@ -863,6 +869,8 @@ static int tcpm_set_pd_rx(struct tcpc_de
+ 			    on ? "on" : "off", ret);
+ 		goto done;
+ 	}
++
++	chip->pd_rx_on = on;
+ 	fusb302_log(chip, "pd := %s", on ? "on" : "off");
+ done:
+ 	mutex_unlock(&chip->lock);
 
 
