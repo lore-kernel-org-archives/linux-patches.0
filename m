@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40AA1E51E1;
-	Tue, 26 Aug 2025 12:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E1A1B0420;
+	Tue, 26 Aug 2025 12:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213046; cv=none; b=o7fE3kXDB9gpFsvqmjpF/3mzwTOlBd0iZaFcp/WvGg14enywHWclUYw/SLA7nVQZ8fu6HbZPazHvdm2Jcxd+G7lCn5QPsZD4LYadxpNf9qgThGIU/OKdagicobX8X2ceqsnh5K+RG6w8dAD+BwjejWcfK2k73bx8cYnpy/+6n+U=
+	t=1756213049; cv=none; b=PtLFo/Tfv6TjpBPlUCOeElT9GQyY+FSp2R0bOiDcQKbF53fSAunNTBgDXkSlSYdikr9ESSJKh8SPBKlsfWPAr3HLTZsRTZ+ohsZC8s6OE1SrwibArRVzEKVDTuwgIF7OoUM7u7sroKewYI2eo+q8wiw7pPHjwoSS3mVlT4aWvZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213046; c=relaxed/simple;
-	bh=K54trnWXGHfjojaFppYY3lMIrKMccwxDkRMf5Y4ty+w=;
+	s=arc-20240116; t=1756213049; c=relaxed/simple;
+	bh=d37uhLAV0UTZFtwPqlxOuK7mUeutG3/CO/HJI6oR+vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYAbSgoSad9lRuPC+/81lfqEPX5GibWFV8o8QoJB5SF6KTLMoqjdxHHRPZ5houtGbBvSQDYEBvv5rcVR/KrYrz7OmVUWZVDyaeqUNxPhP5DXLMFf0RT3QU4xYVvHRYwRvXHbYxWJhkGdPySw5P3FXl5EQevG9b4Pxazs8EWUnUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnuOzQJ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mNRqSHr2nZ7dcP0Fbjg7keYxyWqtbs7AATCOACwL+Z1JKLbJm9+S3IJojmpOlh+SL58nXYk9OCzFRYfHEYHlaSrAOO9Gnl0OoIyA9IhafJwPgidASD9+ys5XURJY1rhISkGmhca1GgBaJ8Mrw4XNz8V1qeklSE8EzyZ23kScTKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJR9pG+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnuOzQJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E77C4CEF1;
-	Tue, 26 Aug 2025 12:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJR9pG+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092C4C113CF;
+	Tue, 26 Aug 2025 12:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213045;
-	bh=K54trnWXGHfjojaFppYY3lMIrKMccwxDkRMf5Y4ty+w=;
+	s=korg; t=1756213048;
+	bh=d37uhLAV0UTZFtwPqlxOuK7mUeutG3/CO/HJI6oR+vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BnuOzQJ8+WxG5fEoH6J8uTgC3Or2QABPBr5h4ZFIa7q36VNcMuXTrNz9oGX/abzfB
-	 ZvWyGqnMbF5eHKDSrJBhGCjBEo2uHPt44uTg11VnMYGZvVjQqkMKsZh7g5/iFD1nGO
-	 raXvZ8h70icRgZb/JKPXG8wfb0VxYj7Gnw8weGh0=
+	b=kJR9pG+ZtG6V66vGA8hlQUE9z9C4qidjOLcX0ePb8k/wpSGromPOoyYZkdGvebvjT
+	 qsL19rfaLo+P6Yb5Smx6Xb88lzKnfR6LPuwRX31MZpydBnTDtW9tc8eI3E7lmuR8t6
+	 3xOpmYUUO1E8nPgNQeukLBBURNPDJD/LpKbZ62Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <qmo@kernel.org>,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 201/587] bpftool: Fix JSON writer resource leak in version command
-Date: Tue, 26 Aug 2025 13:05:50 +0200
-Message-ID: <20250826110958.052999051@linuxfoundation.org>
+Subject: [PATCH 6.6 202/587] ptp: Use ratelimite for freerun error message
+Date: Tue, 26 Aug 2025 13:05:51 +0200
+Message-ID: <20250826110958.078229174@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 85cd83fed8267cde0dd1cea719808aad95ae4de7 ]
+[ Upstream commit e9a7795e75b78b56997fb0070c18d6e1057b6462 ]
 
-When using `bpftool --version -j/-p`, the JSON writer object
-created in do_version() was not properly destroyed after use.
-This caused a memory leak each time the version command was
-executed with JSON output.
+Replace pr_err() with pr_err_ratelimited() in ptp_clock_settime() to
+prevent log flooding when the physical clock is free running, which
+happens on some of my hosts. This ensures error messages are
+rate-limited and improves kernel log readability.
 
-Fix: 004b45c0e51a (tools: bpftool: provide JSON output for all possible commands)
-
-Suggested-by: Quentin Monnet <qmo@kernel.org>
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20250617132442.9998-1-chenyuan_fl@163.com
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250613-ptp-v1-1-ee44260ce9e2@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/ptp/ptp_clock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/main.c b/tools/bpf/bpftool/main.c
-index 08d0ac543c67..a0536528dfde 100644
---- a/tools/bpf/bpftool/main.c
-+++ b/tools/bpf/bpftool/main.c
-@@ -534,9 +534,9 @@ int main(int argc, char **argv)
- 		usage();
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index b7fc260ed43b..0682bb340221 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -79,7 +79,7 @@ static int ptp_clock_settime(struct posix_clock *pc, const struct timespec64 *tp
+ 	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
  
- 	if (version_requested)
--		return do_version(argc, argv);
--
--	ret = cmd_select(commands, argc, argv, do_help);
-+		ret = do_version(argc, argv);
-+	else
-+		ret = cmd_select(commands, argc, argv, do_help);
+ 	if (ptp_clock_freerun(ptp)) {
+-		pr_err("ptp: physical clock is free running\n");
++		pr_err_ratelimited("ptp: physical clock is free running\n");
+ 		return -EBUSY;
+ 	}
  
- 	if (json_output)
- 		jsonw_destroy(&json_wtr);
 -- 
 2.39.5
 
