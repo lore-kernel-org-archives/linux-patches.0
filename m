@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC75B2BEFF0;
-	Tue, 26 Aug 2025 11:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440DA20330;
+	Tue, 26 Aug 2025 11:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208954; cv=none; b=iaY9fB9Y4OGr+czcPS+WWSjHJI0/3aJy+jDA3TatDRj5R0G/gTNAio8mKBLu65Q3ewD7YbdSs+Eebzf0kzC6PCJk/UtFVWH/OWP6x/FM6c4JwR7CGsUgIVhArseAC8/e5LwvxyLhbipBVmvFX8rytrbCawYKN8QSd0293wOSTP0=
+	t=1756208956; cv=none; b=OIh2dfXVERSy9FAk4QcAPwTbD0RjnIc3iaBPb+7Hfud5cvD/b2Zzc82J1LiKsPcaAgy5Aehc6Rmjrh/uT7g1hPjXgn9t+Es2QiiKXsDHLPWdlb1l1GlAXNi1V8VVGQkfHk13wSFJPhROD00OgG5LhOc1WRkybnHuXRtdShgtg88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208954; c=relaxed/simple;
-	bh=C+ZzB/RAtO/UvUeCYhLOfTZNqL9FjrERBejrbyvFfhQ=;
+	s=arc-20240116; t=1756208956; c=relaxed/simple;
+	bh=7zejeRPR4+JewCdIXCLkunPlenSAFgaQOWLGOVGM0gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIJ09NkfCs+L2ZOj/oRK+aGBKA6M35KLmTzKud01GMFuVngGDRJUjvoWSuoC1vlOLvwS4OBJ+vI3GFHJGJaA9K4Mz93sugsEiKKVcaGuEH/iPo/yy0GVbKAL92PlI5usIB0Rflgmn3W69lNBj/htSJyDE3IFp/Tzk4Vrpn+xEpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJKQjQXt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ocUyH+QwyUOFXV+jJVBd9d7U8M75fjpLmrwFlV8E0YJnICyyNRTUkJfcewEqJcZAp9RZMn8IxeJYoe5rDAj2qJEO5nOp+1oO64rwcoqz+3eirX7gJlwYZOM346ku75WqM0rU9/lAg5sgwbGISWt4xg+rvgkGHWDtwWd1lotQN3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSwvnrsI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJKQjQXt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673DCC4CEF1;
-	Tue, 26 Aug 2025 11:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSwvnrsI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D222CC4CEF1;
+	Tue, 26 Aug 2025 11:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208953;
-	bh=C+ZzB/RAtO/UvUeCYhLOfTZNqL9FjrERBejrbyvFfhQ=;
+	s=korg; t=1756208956;
+	bh=7zejeRPR4+JewCdIXCLkunPlenSAFgaQOWLGOVGM0gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oJKQjQXt+OeyqS23vZYHmFq8B1E0NYOUepiyNIF+JwojdcynjmxaBuO5Qy+Fmu3i6
-	 R1Zv6gNFTzMipNK08/XRrP9jw0gyPkQ9qXBmASsjxvUSsDRKG3ld+RuXay1d706gJc
-	 9lr8VhnekbMyyrne7BefPFrnGDaO7QM4Di973QIU=
+	b=cSwvnrsItLK0ZYudtbru7hV4HUbeCIXDSxVPhjboyhSTCs2yXaXxSaoF/3DVpZ8Sg
+	 M2p4+O/WEkGG7ByQ1aFDy1uWwKFur194dM/0vek+xQqoUj8SDd5chgqMj1uvteflw1
+	 suD4FOSczjUtto55+/PoXFZApBpjhRdd68mY/ygg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jiande Lu <jiande.lu@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 277/322] Bluetooth: hci_sync: Fix scan state after PA Sync has been established
-Date: Tue, 26 Aug 2025 13:11:32 +0200
-Message-ID: <20250826110922.764325792@linuxfoundation.org>
+Subject: [PATCH 6.12 278/322] Bluetooth: btmtk: Fix wait_on_bit_timeout interruption during shutdown
+Date: Tue, 26 Aug 2025 13:11:33 +0200
+Message-ID: <20250826110922.788618751@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -50,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jiande Lu <jiande.lu@mediatek.com>
 
-[ Upstream commit ca88be1a2725a42f8dbad579181611d9dcca8e88 ]
+[ Upstream commit 099799fa9b76c5c02b49e07005a85117a25b01ea ]
 
-Passive scanning is used to program the address of the peer to be
-synchronized, so once HCI_EV_LE_PA_SYNC_ESTABLISHED is received it
-needs to be updated after clearing HCI_PA_SYNC then call
-hci_update_passive_scan_sync to return it to its original state.
+During the shutdown process, an interrupt occurs that
+prematurely terminates the wait for the expected event.
+This change replaces TASK_INTERRUPTIBLE with
+TASK_UNINTERRUPTIBLE in the wait_on_bit_timeout call to ensure
+the shutdown process completes as intended without being
+interrupted by signals.
 
-Fixes: 6d0417e4e1cf ("Bluetooth: hci_conn: Fix not setting conn_timeout for Broadcast Receiver")
+Fixes: d019930b0049 ("Bluetooth: btmtk: move btusb_mtk_hci_wmt_sync to btmtk.c")
+Signed-off-by: Jiande Lu <jiande.lu@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btmtk.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index bbd809414b2f..c7fd657c86ff 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6960,8 +6960,6 @@ static void create_pa_complete(struct hci_dev *hdev, void *data, int err)
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 05de2e6f563d..07979d47eb76 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -642,12 +642,7 @@ static int btmtk_usb_hci_wmt_sync(struct hci_dev *hdev,
+ 	 * WMT command.
+ 	 */
+ 	err = wait_on_bit_timeout(&data->flags, BTMTK_TX_WAIT_VND_EVT,
+-				  TASK_INTERRUPTIBLE, HCI_INIT_TIMEOUT);
+-	if (err == -EINTR) {
+-		bt_dev_err(hdev, "Execution of wmt command interrupted");
+-		clear_bit(BTMTK_TX_WAIT_VND_EVT, &data->flags);
+-		goto err_free_wc;
+-	}
++				  TASK_UNINTERRUPTIBLE, HCI_INIT_TIMEOUT);
  
- 	hci_dev_lock(hdev);
- 
--	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
--
- 	if (!hci_conn_valid(hdev, conn))
- 		clear_bit(HCI_CONN_CREATE_PA_SYNC, &conn->flags);
- 
-@@ -7055,6 +7053,11 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
- 		__hci_cmd_sync_status(hdev, HCI_OP_LE_PA_CREATE_SYNC_CANCEL,
- 				      0, NULL, HCI_CMD_TIMEOUT);
- 
-+	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
-+
-+	/* Update passive scan since HCI_PA_SYNC flag has been cleared */
-+	hci_update_passive_scan_sync(hdev);
-+
- 	return err;
- }
- 
+ 	if (err) {
+ 		bt_dev_err(hdev, "Execution of wmt command timed out");
 -- 
 2.50.1
 
