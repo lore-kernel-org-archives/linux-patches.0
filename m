@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DE93376A5;
-	Tue, 26 Aug 2025 13:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D50F2D0621;
+	Tue, 26 Aug 2025 13:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215826; cv=none; b=Z7QCru/CfJNZCzh1z3lmAcehdnF7ywpsxe2mpjms7QR3OI+QTw/cnlnLaRlCn0A43uGv+R8uYYIuSNFPVa28F92YYbemlp534bI7LvEQLDvL3Xonwkz1uCQBcLxcRVtzVBC5xoxwU+u+oNj2VZUyES++yXU6p9gvzUToDELQrag=
+	t=1756215829; cv=none; b=oDwk0q1piHaRoo8o/P/zwtFOwfvxnMQYnlnYGZSy9dR5VxS8lIw4Zkhhek/Vy28WpQlHxz2G8qcA0uA+NyokOkaXTrNL9EFfHeT+IlOdmcB8nngTHwdfBp6rJi7VAHIxUtnY0/h77hGXzI7FACt+z+rK+Fa+oa+15inCSvrrjwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215826; c=relaxed/simple;
-	bh=YYfi4v8LWtoQUWd+6QAr0jPk6vwUOV5Xv4mTFM3TZik=;
+	s=arc-20240116; t=1756215829; c=relaxed/simple;
+	bh=L3NX2TuBDmpxVAbAa/kqAtuL1H6GkpGcQMom/NKJaoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gZB0H4zD40h1GVKG67nMUcCD35EoqAadPoWrkz/T7cB09JbAeQp75q6+hx6eHflCzSV1v4aoMQK2p9MbVpue9Xso7SKinMFZEyP6YtCucVuF0MzBFYDnBX64gbeIVcfKPwGN5AXXfv8wYhaWWDK/7GrR9tuoDKty6qMPzgOwPTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoHASfFH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cESiGjnobNw4HdCI6OIPNanVpc4BA7c5AL96JNm7Aq9kKQRCrPpoHYXUviZSyHiieNOFFZXz+g6WQ7LuLKniUiaMjFpNd9FgKlK3NZuZ3A9XlHDDtw7XZlAmlf+5+Iy1OcJUjbcZWKOyCtnHGLnOhTfWJ4vhYT8b4CHO1IwBzFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/bVNPZe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoHASfFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAE7C4CEF1;
-	Tue, 26 Aug 2025 13:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/bVNPZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C6DC4CEF1;
+	Tue, 26 Aug 2025 13:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215826;
-	bh=YYfi4v8LWtoQUWd+6QAr0jPk6vwUOV5Xv4mTFM3TZik=;
+	s=korg; t=1756215828;
+	bh=L3NX2TuBDmpxVAbAa/kqAtuL1H6GkpGcQMom/NKJaoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WoHASfFH8pAWttoVJHyrzY90c9Pmzz7TmMSLj2887rl7DWGLV2fLKGF9RYO5U2jx7
-	 WBY+2WFuZXEOwXCaLiDkF1Icb6egQLZ6bRw43StsA/ZvyhDVtrpWhBznLix1BV0HFO
-	 +PhMgOCSiZft/53jtPjfwvQJS1nRjAwkywr/W4JU=
+	b=i/bVNPZe0clb4jz9aRvndVdqADvRxgg8VOIF7fJ+kX1lJJCbRWPNBKYdSJbwM/y+R
+	 uG0gO1ECFS23FvFP0qkrGC8wha/5XQeC8n0Y8q9dVAlXnnqB/O8ottkc4x6s/7NQ6x
+	 rV+HWtQiStoCHPg46OxKvwCC7oc5FKIAtp8dEN1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Song Chen <chensong_2000@189.cn>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Aishwarya TCV <aishwarya.tcv@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 180/644] kernel: trace: preemptirq_delay_test: use offstack cpu mask
-Date: Tue, 26 Aug 2025 13:04:31 +0200
-Message-ID: <20250826110950.929258621@linuxfoundation.org>
+Subject: [PATCH 5.15 181/644] perf tests bp_account: Fix leaked file descriptor
+Date: Tue, 26 Aug 2025 13:04:32 +0200
+Message-ID: <20250826110950.952590550@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -48,69 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit adc353c0bfb243ebfd29b6222fa3bf149169a6de ]
+[ Upstream commit 4a6cdecaa1497f1fbbd1d5307a225b6ca5a62a90 ]
 
-A CPU mask on the stack is broken for large values of CONFIG_NR_CPUS:
+Since the commit e9846f5ead26 ("perf test: In forked mode add check that
+fds aren't leaked"), the test "Breakpoint accounting" reports the error:
 
-kernel/trace/preemptirq_delay_test.c: In function ‘preemptirq_delay_run’:
-kernel/trace/preemptirq_delay_test.c:143:1: error: the frame size of 8512 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]
+  # perf test -vvv "Breakpoint accounting"
+  20: Breakpoint accounting:
+  --- start ---
+  test child forked, pid 373
+  failed opening event 0
+  failed opening event 0
+  watchpoints count 4, breakpoints count 6, has_ioctl 1, share 0
+  wp 0 created
+  wp 1 created
+  wp 2 created
+  wp 3 created
+  wp 0 modified to bp
+  wp max created
+  ---- end(0) ----
+  Leak of file descriptor 7 that opened: 'anon_inode:[perf_event]'
 
-Fall back to dynamic allocation here.
+A watchpoint's file descriptor was not properly released. This patch
+fixes the leak.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Song Chen <chensong_2000@189.cn>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250620111215.3365305-1-arnd@kernel.org
-Fixes: 4b9091e1c194 ("kernel: trace: preemptirq_delay_test: add cpu affinity")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 032db28e5fa3 ("perf tests: Add breakpoint accounting/modify test")
+Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250711-perf_fix_breakpoint_accounting-v1-1-b314393023f9@arm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/preemptirq_delay_test.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ tools/perf/tests/bp_account.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/preemptirq_delay_test.c b/kernel/trace/preemptirq_delay_test.c
-index cb0871fbdb07..8af92dbe98f0 100644
---- a/kernel/trace/preemptirq_delay_test.c
-+++ b/kernel/trace/preemptirq_delay_test.c
-@@ -119,12 +119,15 @@ static int preemptirq_delay_run(void *data)
- {
- 	int i;
- 	int s = MIN(burst_size, NR_TEST_FUNCS);
--	struct cpumask cpu_mask;
-+	cpumask_var_t cpu_mask;
-+
-+	if (!alloc_cpumask_var(&cpu_mask, GFP_KERNEL))
-+		return -ENOMEM;
- 
- 	if (cpu_affinity > -1) {
--		cpumask_clear(&cpu_mask);
--		cpumask_set_cpu(cpu_affinity, &cpu_mask);
--		if (set_cpus_allowed_ptr(current, &cpu_mask))
-+		cpumask_clear(cpu_mask);
-+		cpumask_set_cpu(cpu_affinity, cpu_mask);
-+		if (set_cpus_allowed_ptr(current, cpu_mask))
- 			pr_err("cpu_affinity:%d, failed\n", cpu_affinity);
+diff --git a/tools/perf/tests/bp_account.c b/tools/perf/tests/bp_account.c
+index 489b50604cf2..ac39f4947fd8 100644
+--- a/tools/perf/tests/bp_account.c
++++ b/tools/perf/tests/bp_account.c
+@@ -89,6 +89,7 @@ static int bp_accounting(int wp_cnt, int share)
+ 		fd_wp = wp_event((void *)&the_var, &attr_new);
+ 		TEST_ASSERT_VAL("failed to create max wp\n", fd_wp != -1);
+ 		pr_debug("wp max created\n");
++		close(fd_wp);
  	}
  
-@@ -141,6 +144,8 @@ static int preemptirq_delay_run(void *data)
- 
- 	__set_current_state(TASK_RUNNING);
- 
-+	free_cpumask_var(cpu_mask);
-+
- 	return 0;
- }
- 
+ 	for (i = 0; i < wp_cnt; i++)
 -- 
 2.39.5
 
