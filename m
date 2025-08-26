@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E996733CEBC;
-	Tue, 26 Aug 2025 11:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD8033EB1D;
+	Tue, 26 Aug 2025 11:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207805; cv=none; b=abEdT7Fmz26iJvuMdU1YttJh1Ma0fXApyhrF57hTpT5yFvi3qu2ZLM/amkaolGLCNjJc65+zFMXiIH/ITTzuCO+MpI0LsmXK3K2/U0vndTa4u0u7bM3Qs2bfq6OWNpRcSN/qTbXeNUQCrIG/XURRozWibvaVcJKpZlbKaOvv6WM=
+	t=1756207807; cv=none; b=YoDOr2TjF5IbNaRP8ZRmNkbvYs+lkH3iZAFpd9sku5ZG4l+tWqKCcXMYV7BKww6UW9IEL6MtLpFrI/jBJV23nH1RXlvPAu4j1vRXGMiL0rxvtdXNejXtH5ukfZMshE92Jr479zCOqnk+W/bVUlYMy585G0zSqiuxSfpoyCL+KjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207805; c=relaxed/simple;
-	bh=DvEJ1akUJz1PriYSy7vJH3Gci05CyOvV1EGWtEeHiqE=;
+	s=arc-20240116; t=1756207807; c=relaxed/simple;
+	bh=xAb8dyxvbjvhsnI/NnFKlic1kbLrVryN6EdkBnfYkR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVbAB34Ir5rHn5yOe0kuI5cPHoZOHJwqoCe/Ucv1e2PYcJ1MbtKaQx1xmUzsiocUNy82CBBcgUC+SOmNvMZmhCKXopvPnF61bMNVixCH9/LADTVXKPHBLmTyFp1xP7va5iiu5nk+IrDmPqFA/hJo6bpgkNSP4n6DIvyfw11sOe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkpTJXue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rpcBvq1e9m0D+wFNtOuTNr7eCLfNWocEOR9IsOLWhfP/D5XkkeZet+DHFzyQn4954WIqvUvhnO7oiZ++67b0hQ/AHrURL25BRvlfaH9Sfri6XaKIIJxkg2UN6lA/tMkyIawC3nH3LC8tyHSl5u63rDvx41whd4/gojGGDKhGT2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtjXR+J0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkpTJXue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79CC5C4CEF1;
-	Tue, 26 Aug 2025 11:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtjXR+J0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B58C4CEF1;
+	Tue, 26 Aug 2025 11:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207804;
-	bh=DvEJ1akUJz1PriYSy7vJH3Gci05CyOvV1EGWtEeHiqE=;
+	s=korg; t=1756207807;
+	bh=xAb8dyxvbjvhsnI/NnFKlic1kbLrVryN6EdkBnfYkR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkpTJXueILMzcU0Ekn102+8lCJplhwFhfzUsbx6ogKLgYFiMHW+gYK3abF61buzWl
-	 LAnBIMMHhDT7X6kI0YUmKSIsWK7PqjS9+DP+44ZtO95yIXNkG6Vpa2gDYAul7p9t2h
-	 k8twv+fSHYUDoAneOSa+7U71V0Lgy9koV+a827dE=
+	b=OtjXR+J03pOa7e+9Wm8PaELOr4DJfWqo5IxFVEE21dnATPVnpcy1USK1ps/UbiPY2
+	 bpqhoS2bVnUQSOSueKOLe5Msj66FpPFUzGfOuGbrK8SekvPDLLrK81AaDynLt+oeTe
+	 3fm8L1DGa3+N7V+GRmNQiXU7R/N/y4j2Nu2FfOUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Akash M <akash.m5@samsung.com>,
-	Selvarasu Ganesan <selvarasu.g@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 6.16 324/457] usb: dwc3: Remove WARN_ON for device endpoint command timeouts
-Date: Tue, 26 Aug 2025 13:10:08 +0200
-Message-ID: <20250826110945.357641341@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.16 325/457] usb: dwc3: pci: add support for the Intel Wildcat Lake
+Date: Tue, 26 Aug 2025 13:10:09 +0200
+Message-ID: <20250826110945.380651964@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,133 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvarasu Ganesan <selvarasu.g@samsung.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 45eae113dccaf8e502090ecf5b3d9e9b805add6f upstream.
+commit 86f390ba59cd8d5755bafe2b163c3e6b89d6bbd9 upstream.
 
-This commit addresses a rarely observed endpoint command timeout
-which causes kernel panic due to warn when 'panic_on_warn' is enabled
-and unnecessary call trace prints when 'panic_on_warn' is disabled.
-It is seen during fast software-controlled connect/disconnect testcases.
-The following is one such endpoint command timeout that we observed:
+This patch adds the necessary PCI ID for Intel Wildcat Lake
+devices.
 
-1. Connect
-   =======
-->dwc3_thread_interrupt
- ->dwc3_ep0_interrupt
-  ->configfs_composite_setup
-   ->composite_setup
-    ->usb_ep_queue
-     ->dwc3_gadget_ep0_queue
-      ->__dwc3_gadget_ep0_queue
-       ->__dwc3_ep0_do_control_data
-        ->dwc3_send_gadget_ep_cmd
-
-2. Disconnect
-   ==========
-->dwc3_thread_interrupt
- ->dwc3_gadget_disconnect_interrupt
-  ->dwc3_ep0_reset_state
-   ->dwc3_ep0_end_control_data
-    ->dwc3_send_gadget_ep_cmd
-
-In the issue scenario, in Exynos platforms, we observed that control
-transfers for the previous connect have not yet been completed and end
-transfer command sent as a part of the disconnect sequence and
-processing of USB_ENDPOINT_HALT feature request from the host timeout.
-This maybe an expected scenario since the controller is processing EP
-commands sent as a part of the previous connect. It maybe better to
-remove WARN_ON in all places where device endpoint commands are sent to
-avoid unnecessary kernel panic due to warn.
-
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Cc: stable <stable@kernel.org>
-Co-developed-by: Akash M <akash.m5@samsung.com>
-Signed-off-by: Akash M <akash.m5@samsung.com>
-Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20250808125315.1607-1-selvarasu.g@samsung.com
+Link: https://lore.kernel.org/r/20250812131101.2930199-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/ep0.c    |   20 ++++++++++++++++----
- drivers/usb/dwc3/gadget.c |   10 ++++++++--
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ drivers/usb/dwc3/dwc3-pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -288,7 +288,9 @@ void dwc3_ep0_out_start(struct dwc3 *dwc
- 	dwc3_ep0_prepare_one_trb(dep, dwc->ep0_trb_addr, 8,
- 			DWC3_TRBCTL_CONTROL_SETUP, false);
- 	ret = dwc3_ep0_start_trans(dep);
--	WARN_ON(ret < 0);
-+	if (ret < 0)
-+		dev_err(dwc->dev, "ep0 out start transfer failed: %d\n", ret);
-+
- 	for (i = 2; i < DWC3_ENDPOINTS_NUM; i++) {
- 		struct dwc3_ep *dwc3_ep;
- 
-@@ -1061,7 +1063,9 @@ static void __dwc3_ep0_do_control_data(s
- 		ret = dwc3_ep0_start_trans(dep);
- 	}
- 
--	WARN_ON(ret < 0);
-+	if (ret < 0)
-+		dev_err(dwc->dev,
-+			"ep0 data phase start transfer failed: %d\n", ret);
- }
- 
- static int dwc3_ep0_start_control_status(struct dwc3_ep *dep)
-@@ -1078,7 +1082,12 @@ static int dwc3_ep0_start_control_status
- 
- static void __dwc3_ep0_do_control_status(struct dwc3 *dwc, struct dwc3_ep *dep)
- {
--	WARN_ON(dwc3_ep0_start_control_status(dep));
-+	int	ret;
-+
-+	ret = dwc3_ep0_start_control_status(dep);
-+	if (ret)
-+		dev_err(dwc->dev,
-+			"ep0 status phase start transfer failed: %d\n", ret);
- }
- 
- static void dwc3_ep0_do_control_status(struct dwc3 *dwc,
-@@ -1121,7 +1130,10 @@ void dwc3_ep0_end_control_data(struct dw
- 	cmd |= DWC3_DEPCMD_PARAM(dep->resource_index);
- 	memset(&params, 0, sizeof(params));
- 	ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
--	WARN_ON_ONCE(ret);
-+	if (ret)
-+		dev_err_ratelimited(dwc->dev,
-+			"ep0 data phase end transfer failed: %d\n", ret);
-+
- 	dep->resource_index = 0;
- }
- 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1774,7 +1774,11 @@ static int __dwc3_stop_active_transfer(s
- 		dep->flags |= DWC3_EP_DELAY_STOP;
- 		return 0;
- 	}
--	WARN_ON_ONCE(ret);
-+
-+	if (ret)
-+		dev_err_ratelimited(dep->dwc->dev,
-+				"end transfer failed: %d\n", ret);
-+
- 	dep->resource_index = 0;
- 
- 	if (!interrupt)
-@@ -4050,7 +4054,9 @@ static void dwc3_clear_stall_all_ep(stru
- 		dep->flags &= ~DWC3_EP_STALL;
- 
- 		ret = dwc3_send_clear_stall_ep_cmd(dep);
--		WARN_ON_ONCE(ret);
-+		if (ret)
-+			dev_err_ratelimited(dwc->dev,
-+				"failed to clear STALL on %s\n", dep->name);
- 	}
- }
- 
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -41,6 +41,7 @@
+ #define PCI_DEVICE_ID_INTEL_TGPLP		0xa0ee
+ #define PCI_DEVICE_ID_INTEL_TGPH		0x43ee
+ #define PCI_DEVICE_ID_INTEL_JSP			0x4dee
++#define PCI_DEVICE_ID_INTEL_WCL			0x4d7e
+ #define PCI_DEVICE_ID_INTEL_ADL			0x460e
+ #define PCI_DEVICE_ID_INTEL_ADL_PCH		0x51ee
+ #define PCI_DEVICE_ID_INTEL_ADLN		0x465e
+@@ -431,6 +432,7 @@ static const struct pci_device_id dwc3_p
+ 	{ PCI_DEVICE_DATA(INTEL, TGPLP, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, TGPH, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, JSP, &dwc3_pci_intel_swnode) },
++	{ PCI_DEVICE_DATA(INTEL, WCL, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, ADL, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, ADL_PCH, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, ADLN, &dwc3_pci_intel_swnode) },
 
 
