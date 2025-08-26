@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6407D3469EE;
-	Tue, 26 Aug 2025 11:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC9729C339;
+	Tue, 26 Aug 2025 11:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207880; cv=none; b=XYPqOL49hHujKEWcaw5EswT9ItIJH2leSP9GaAvRXKy+cBbtWDfUmcxHjCapKmYS6vIdK7torYZfDGdFWs9s7u2rynAFp95gT1veuILTophLPtHnIBoXtD1CG/WejQhDzPpX3KIA8xGAhaTBdiqNCK+AJCG2DFJlgN4DtUmg3Nw=
+	t=1756207882; cv=none; b=g0/b+u9ik0v8lDJgtX3O/TSWdyYMDW3m6p12Q2TDLUypr7iQ1diupvwRB6yXZvPotMVH8nLyAaZWYJ173CYP5HAmhP4XXbhHKCs8vKHOYvkCZOKX2Zj7XPsscCt2GyJWfnU4dkQJZZ+jhitJkBDCUxpryLA09WJC404iQqN+ALI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207880; c=relaxed/simple;
-	bh=FktMn8yBIRbOzavJpqvZgdkB0C52lW2XgNVjkHSYk5I=;
+	s=arc-20240116; t=1756207882; c=relaxed/simple;
+	bh=rGnBXiq4mjhfPQxYKyG6JkNfkuqtRqacBTbA8R5Ptlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7YDZB/h7xiRsdkiK7QKG7mixoxltUZWojDYZDdfqLRFs0VI64QlDfPlBsqM/dhIKOD6UKUZeTvG/dZ6XLeMjVr7VJNaGJsVBPuGmuxyzk8CmbDckvgTQTto0RFHHfTSW+JLDFsXVDEhE6MAPukXzWwCSFc8Y68zXpJ7cDQM5kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwrHnlsR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jV34HM2xI8HQRP8oU/l9YWPORVrPmkZf+L78lOf52Akc5WKuXxJLOmcMdwD3lghrYuHMnIwBc8ZoAoWb5Q4MDwCEBxihKbGUQUyWQCibzcwVngHgOHBl4kFIOWVxDmK7MwKeMunt/OTXLB3Z+JKmNHSpqNR1EwXaTh6A7o/BBJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjmQQfgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwrHnlsR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9137C4CEF1;
-	Tue, 26 Aug 2025 11:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjmQQfgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6654BC4CEF1;
+	Tue, 26 Aug 2025 11:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207880;
-	bh=FktMn8yBIRbOzavJpqvZgdkB0C52lW2XgNVjkHSYk5I=;
+	s=korg; t=1756207882;
+	bh=rGnBXiq4mjhfPQxYKyG6JkNfkuqtRqacBTbA8R5Ptlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwrHnlsRzSk0wdGN9sJsRfwt6DuMNTE6ysXSV2wVEnC3876SFJqppjvt0gbM6vUrh
-	 S7j7IrWveLjmLOMRWzCduPABLpA8tP2/pNDETJ5+S6QqQN9MsRXhNAAd62u8a5rziG
-	 DwOgH8MYQ3IeNdl7SZ7LhDAMIRY7ezQq2B7dZknQ=
+	b=KjmQQfgvUDz31YN/zpApRiz5rh1xWwtPsIqsVdOQ+HRiiNYBObvL/Gw0HpAQSRVPR
+	 vZbqbiGEdTVEYsz9WruWzLLiYZaOaW9NuH6PMa7SSt+Wzc34OpEtOFYifWo/xPBs6s
+	 IFizPf1Ow+nimbEYoWhLORNrFykNw3cyRSqRFbmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Neronin <niklas.neronin@linux.intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.16 322/457] usb: xhci: fix host not responding after suspend and resume
-Date: Tue, 26 Aug 2025 13:10:06 +0200
-Message-ID: <20250826110945.310016167@linuxfoundation.org>
+	syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com,
+	syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com,
+	Arnaud Lecomte <contact@arnaud-lcm.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.16 313/457] comedi: Fix use of uninitialized memory in do_insn_ioctl() and do_insnlist_ioctl()
+Date: Tue, 26 Aug 2025 13:09:57 +0200
+Message-ID: <20250826110945.095928764@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,57 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Neronin <niklas.neronin@linux.intel.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit ff9a09b3e09c7b794b56f2f5858f5ce42ba46cb3 upstream.
+commit 3cd212e895ca2d58963fdc6422502b10dd3966bb upstream.
 
-Partially revert commit e1db856bd288 ("usb: xhci: remove '0' write to
-write-1-to-clear register") because the patch cleared the Interrupt Pending
-bit during interrupt enabling and disabling. The Interrupt Pending bit
-should only be cleared when the driver has handled the interrupt.
+syzbot reports a KMSAN kernel-infoleak in `do_insn_ioctl()`.  A kernel
+buffer is allocated to hold `insn->n` samples (each of which is an
+`unsigned int`).  For some instruction types, `insn->n` samples are
+copied back to user-space, unless an error code is being returned.  The
+problem is that not all the instruction handlers that need to return
+data to userspace fill in the whole `insn->n` samples, so that there is
+an information leak.  There is a similar syzbot report for
+`do_insnlist_ioctl()`, although it does not have a reproducer for it at
+the time of writing.
 
-Ideally, all interrupts should be handled before disabling the interrupt;
-consequently, no interrupt should be pending when enabling the interrupt.
-For this reason, keep the debug message informing if an interrupt is still
-pending when an interrupt is disabled.
+One culprit is `insn_rw_emulate_bits()` which is used as the handler for
+`INSN_READ` or `INSN_WRITE` instructions for subdevices that do not have
+a specific handler for that instruction, but do have an `INSN_BITS`
+handler.  For `INSN_READ` it only fills in at most 1 sample, so if
+`insn->n` is greater than 1, the remaining `insn->n - 1` samples copied
+to userspace will be uninitialized kernel data.
 
-Because the Interrupt Pending bit is write-1-to-clear, writing '0' to it
-ensures that the state does not change.
+Another culprit is `vm80xx_ai_insn_read()` in the "vm80xx" driver.  It
+never returns an error, even if it fails to fill the buffer.
 
-Link: https://lore.kernel.org/linux-usb/20250818231103.672ec7ed@foxbook
-Fixes: e1db856bd288 ("usb: xhci: remove '0' write to write-1-to-clear register")
-Closes: https://bbs.archlinux.org/viewtopic.php?id=307641
-cc: stable@vger.kernel.org # 6.16+
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250819125844.2042452-3-mathias.nyman@linux.intel.com
+Fix it in `do_insn_ioctl()` and `do_insnlist_ioctl()` by making sure
+that uninitialized parts of the allocated buffer are zeroed before
+handling each instruction.
+
+Thanks to Arnaud Lecomte for their fix to `do_insn_ioctl()`.  That fix
+replaced the call to `kmalloc_array()` with `kcalloc()`, but it is not
+always necessary to clear the whole buffer.
+
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Reported-by: syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a5e45f768aab5892da5d
+Reported-by: syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fb4362a104d45ab09cf9
+Cc: stable <stable@kernel.org> # 5.13+
+Cc: Arnaud Lecomte <contact@arnaud-lcm.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250725125324.80276-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/comedi/comedi_fops.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 0e03691f03bf..742c23826e17 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -309,6 +309,7 @@ int xhci_enable_interrupter(struct xhci_interrupter *ir)
- 		return -EINVAL;
- 
- 	iman = readl(&ir->ir_set->iman);
-+	iman &= ~IMAN_IP;
- 	iman |= IMAN_IE;
- 	writel(iman, &ir->ir_set->iman);
- 
-@@ -325,6 +326,7 @@ int xhci_disable_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir)
- 		return -EINVAL;
- 
- 	iman = readl(&ir->ir_set->iman);
-+	iman &= ~IMAN_IP;
- 	iman &= ~IMAN_IE;
- 	writel(iman, &ir->ir_set->iman);
- 
--- 
-2.50.1
-
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -1587,6 +1587,9 @@ static int do_insnlist_ioctl(struct come
+ 				memset(&data[n], 0, (MIN_SAMPLES - n) *
+ 						    sizeof(unsigned int));
+ 			}
++		} else {
++			memset(data, 0, max_t(unsigned int, n, MIN_SAMPLES) *
++					sizeof(unsigned int));
+ 		}
+ 		ret = parse_insn(dev, insns + i, data, file);
+ 		if (ret < 0)
+@@ -1670,6 +1673,8 @@ static int do_insn_ioctl(struct comedi_d
+ 			memset(&data[insn->n], 0,
+ 			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
+ 		}
++	} else {
++		memset(data, 0, n_data * sizeof(unsigned int));
+ 	}
+ 	ret = parse_insn(dev, insn, data, file);
+ 	if (ret < 0)
 
 
