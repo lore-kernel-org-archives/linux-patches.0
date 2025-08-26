@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42BC29D292;
-	Tue, 26 Aug 2025 11:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DB317332C;
+	Tue, 26 Aug 2025 11:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208427; cv=none; b=a+1tA+0Pb/x5YpRsnUhtf5jJoW7v6LJB8NMziCtEmOLmD1knO16DpplOs3NDCX56gfFYKm2i20WLcqvsT50ZtTbgJoNVyEvWGvBW7HEW51Sj6ujlPH17Wh2UtnfNMpWvwsWolyUkGtSuW0L5ZFK0IDU/X9VExMg7OBMXLBhyM3s=
+	t=1756208430; cv=none; b=QhxiQWya31WI2MvdRCRkcq+ZhOEys6qzj8Zt3rlZTKb1tnx7WcIWWuG25GQrL4nE6KoaFILKtaAIha+lnDeVrMLpZsQVieIrmV8mHNrK9dKvwFWoJbnbWhRYsJ4t+uRIAVXZbo3fA2VLcVHUozTuMcgbGJPDzLpAmmc2mW0drMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208427; c=relaxed/simple;
-	bh=mt57IDL936qb85nFr10b/C94eIMFNXDoNiQ38owuLyA=;
+	s=arc-20240116; t=1756208430; c=relaxed/simple;
+	bh=KfMzINjpr75HnO+R8AtsD8/11Krp55b98VmIl6VJ2do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TroIJdjM9Vor278lU/+bK0uBnq9ny4cFuwVPzZ1ZB0xHrl3POS23TXqSBSPB0658TT2i5aTn4xhnqs2tnlodgwOCVTG4Tq4ixVL8GqJvh07Am9iR1Mpcfk5pRZ+NFqKUBsYvyRCmmrSmyLAoAOPQjTRW845H9COdOb98wX0t9EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xpf3xC62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rqZEEZbLjrS4QeZZh0z0q1YCFpLIR+PbGskI7CIhRC6vNi/jDY1Oh8yZ7lF6gjW5CRYflxWRFsHuAcJjNaKOnuXIg9qUTQVAHUDaijDr7tw70l4bjUuYvLjSHJS9ina2Nkvub4+Fz/nSCBLlMSvSv3BjeAbaNBk1HFCu/qagPMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSgdY9p9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xpf3xC62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC54C4CEF1;
-	Tue, 26 Aug 2025 11:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSgdY9p9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A26C4CEF1;
+	Tue, 26 Aug 2025 11:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208427;
-	bh=mt57IDL936qb85nFr10b/C94eIMFNXDoNiQ38owuLyA=;
+	s=korg; t=1756208430;
+	bh=KfMzINjpr75HnO+R8AtsD8/11Krp55b98VmIl6VJ2do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xpf3xC62ulkkPkCN+dtAdLgqT+rSObxEEXwMDuvmg02Y6bww6A/K2VDg74dQ8QPCs
-	 hDl0O1PLSh3+mBYD8H4I7myd/cQrZdH4w35rQal5toQtyB8tCEX7wkvEen7m9TFfAO
-	 NoS/1ElxqsAmI54LICQRPbb0irc9mcy5NRN0YLaQ=
+	b=MSgdY9p9MmRz/idzUDu3L2EtXcG0HHzj0FPlXOzt7ONXyXvvRSnSZ2F9QLUNQVCrK
+	 Hb2RqB8Wn5GtMrINXxsL5A62/Fm8QcxEh7B82rXzxbDJHzgQUvcg74RhxIcXCmap/f
+	 MfKa6NsPA1XDltwtxPgQkdayQp5hrDNI+uVKxpGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 076/322] PCI: endpoint: Fix configfs group removal on driver teardown
-Date: Tue, 26 Aug 2025 13:08:11 +0200
-Message-ID: <20250826110917.482013908@linuxfoundation.org>
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.12 077/322] PCI: imx6: Add IMX8MM_EP and IMX8MP_EP fixed 256-byte BAR 4 in epc_features
+Date: Tue, 26 Aug 2025 13:08:12 +0200
+Message-ID: <20250826110917.508754450@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,53 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-commit 910bdb8197f9322790c738bb32feaa11dba26909 upstream.
+commit 399444a87acdea5d21c218bc8e9b621fea1cd218 upstream.
 
-An endpoint driver configfs attributes group is added to the
-epf_group list of struct pci_epf_driver by pci_epf_add_cfs() but an
-added group is not removed from this list when the attribute group is
-unregistered with pci_ep_cfs_remove_epf_group().
+For IMX8MM_EP and IMX8MP_EP, add fixed 256-byte BAR 4 and reserved BAR 5
+in imx8m_pcie_epc_features.
 
-Add the missing list_del() call in pci_ep_cfs_remove_epf_group()
-to correctly remove the attribute group from the driver list.
-
-With this change, once the loop over all attribute groups in
-pci_epf_remove_cfs() completes, the driver epf_group list should be
-empty. Add a WARN_ON() to make sure of that.
-
-Fixes: ef1433f717a2 ("PCI: endpoint: Create configfs entry for each pci_epf_device_id table entry")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 75c2f26da03f ("PCI: imx6: Add i.MX PCIe EP mode support")
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+[bhelgaas: add details in subject]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250624114544.342159-3-dlemoal@kernel.org
+Link: https://patch.msgid.link/20250708091003.2582846-3-hongxing.zhu@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-ep-cfs.c   |    1 +
- drivers/pci/endpoint/pci-epf-core.c |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/pci/controller/dwc/pci-imx6.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/pci/endpoint/pci-ep-cfs.c
-+++ b/drivers/pci/endpoint/pci-ep-cfs.c
-@@ -691,6 +691,7 @@ void pci_ep_cfs_remove_epf_group(struct
- 	if (IS_ERR_OR_NULL(group))
- 		return;
- 
-+	list_del(&group->group_entry);
- 	configfs_unregister_default_group(group);
- }
- EXPORT_SYMBOL(pci_ep_cfs_remove_epf_group);
---- a/drivers/pci/endpoint/pci-epf-core.c
-+++ b/drivers/pci/endpoint/pci-epf-core.c
-@@ -334,6 +334,7 @@ static void pci_epf_remove_cfs(struct pc
- 	mutex_lock(&pci_epf_mutex);
- 	list_for_each_entry_safe(group, tmp, &driver->epf_group, group_entry)
- 		pci_ep_cfs_remove_epf_group(group);
-+	WARN_ON(!list_empty(&driver->epf_group));
- 	mutex_unlock(&pci_epf_mutex);
- }
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -1097,6 +1097,8 @@ static const struct pci_epc_features imx
+ 	.msix_capable = false,
+ 	.bar[BAR_1] = { .type = BAR_RESERVED, },
+ 	.bar[BAR_3] = { .type = BAR_RESERVED, },
++	.bar[BAR_4] = { .type = BAR_FIXED, .fixed_size = SZ_256, },
++	.bar[BAR_5] = { .type = BAR_RESERVED, },
+ 	.align = SZ_64K,
+ };
  
 
 
