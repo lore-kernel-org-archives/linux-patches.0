@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED52F1E520C;
-	Tue, 26 Aug 2025 13:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2467A22DFB8;
+	Tue, 26 Aug 2025 13:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215692; cv=none; b=ltFnkJlJ7jMn74u6WobjWCsETjxt4iv8yRORLhmW26wrENhHfi2lUQssYqDQG+Asoblzg4P2RpNCwn7hlzxaWj8kLQL+xatqpi95cI8bY5pVXZiXOnROnHC1eOA4ASyS8pIrUYrqP1iBXJIa+58urMkkaHPntNmAlWV1/P5p4yQ=
+	t=1756215697; cv=none; b=Z7bgOBCvS1Tt7+Lrzc4kZr55K7U0JKx7AuigEpV3WW/rg4OZ0iXRacHh6gsHoIzeIm147XFzq2kOECukzvHlqUGWKwYTf9H7v3XM78WzAeUk1WlMEN+dcnsMM5xGuw0cuFcGtWfB3oTFIXO8OBf1UVzEO1kE1prpkz+nq1Wops8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215692; c=relaxed/simple;
-	bh=/bbH/MT6u2HBmYbpzDYco70cHbzNYnKP8dhS7cZTWUs=;
+	s=arc-20240116; t=1756215697; c=relaxed/simple;
+	bh=ir6kh2e2sfl7wCq6g5fNd1dKMEgv5lu9gNYNcb2n5jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Enjcg6u4a+M+P9s4sjtaQc4I49RJh9KHCDjmHDZtcmVM8QsplpiHRVkvk23/EHSxiumj7ELxDD9y8WF36BOqM7B+/TdOuvUpcrpKOVas7E9Ptch3FTFgUheHcp9p90jLotiQIgp+NroYEelDDAY2bUtUDfM9gK3jxsJ31NoMK74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRW8JbG0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SzkuZAHctJeAI5Wms2fHaeI9rHQ8wic8bcq4kyc6oECC7iQXCh6uPIrcSlDbAvLimgimNGiYnWclpu1ZZhqjqLaLIkhQsM18DjrAjDM0vO6MhRmQSECIR3C1wS3px4KumdaarP6bisL1RwlTXhQaA5KUMc8v1B04m1VWz63lq/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJ8YHoG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRW8JbG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8233BC116D0;
-	Tue, 26 Aug 2025 13:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ8YHoG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED03C116B1;
+	Tue, 26 Aug 2025 13:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215691;
-	bh=/bbH/MT6u2HBmYbpzDYco70cHbzNYnKP8dhS7cZTWUs=;
+	s=korg; t=1756215694;
+	bh=ir6kh2e2sfl7wCq6g5fNd1dKMEgv5lu9gNYNcb2n5jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jRW8JbG0IQo2juUvCuv3TwSeXwW+ZNAfZMNoKjhGTRYuh6Niy0h/mWZ8FZ9oPkPa9
-	 yrNqnykEyvchm4URPk9D+ydYrr4QYx5UWDoGI1/AXCcK5uj3WumBnNKCEAANPPsNRU
-	 dYADspG/sKOthcsg4Sbkckp3REghrrPiqEhba6Mg=
+	b=gJ8YHoG1UYo/MNuM9fxB7Jkk/Va+eY2wNkj3BwOpcIACuvVPkOgL/QuqxAGBzla9P
+	 3eurd1KpQm3lpzRUP1yDg+DPX5XndQYU0EZizUr4zpT8Yx19+ZzLpu+ISuqwNqTleH
+	 i++9RRrGhm6PHZzx11cTOVdcE3wOvtbCPfaeI9l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
+	Harry Yoo <harry.yoo@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Minchan Kim <minchan@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 098/644] nilfs2: reject invalid file types when reading inodes
-Date: Tue, 26 Aug 2025 13:03:09 +0200
-Message-ID: <20250826110948.938657604@linuxfoundation.org>
+Subject: [PATCH 5.15 099/644] mm/zsmalloc: do not pass __GFP_MOVABLE if CONFIG_COMPACTION=n
+Date: Tue, 26 Aug 2025 13:03:10 +0200
+Message-ID: <20250826110948.962685161@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,48 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-commit 4aead50caf67e01020c8be1945c3201e8a972a27 upstream.
+commit 694d6b99923eb05a8fd188be44e26077d19f0e21 upstream.
 
-To prevent inodes with invalid file types from tripping through the vfs
-and causing malfunctions or assertion failures, add a missing sanity check
-when reading an inode from a block device.  If the file type is not valid,
-treat it as a filesystem error.
+Commit 48b4800a1c6a ("zsmalloc: page migration support") added support for
+migrating zsmalloc pages using the movable_operations migration framework.
+However, the commit did not take into account that zsmalloc supports
+migration only when CONFIG_COMPACTION is enabled.  Tracing shows that
+zsmalloc was still passing the __GFP_MOVABLE flag even when compaction is
+not supported.
 
-Link: https://lkml.kernel.org/r/20250710134952.29862-1-konishi.ryusuke@gmail.com
-Fixes: 05fe58fdc10d ("nilfs2: inode operations")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+This can result in unmovable pages being allocated from movable page
+blocks (even without stealing page blocks), ZONE_MOVABLE and CMA area.
+
+Possible user visible effects:
+- Some ZONE_MOVABLE memory can be not actually movable
+- CMA allocation can fail because of this
+- Increased memory fragmentation due to ignoring the page mobility
+  grouping feature
+I'm not really sure who uses kernels without compaction support, though :(
+
+
+To fix this, clear the __GFP_MOVABLE flag when
+!IS_ENABLED(CONFIG_COMPACTION).
+
+Link: https://lkml.kernel.org/r/20250704103053.6913-1-harry.yoo@oracle.com
+Fixes: 48b4800a1c6a ("zsmalloc: page migration support")
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Minchan Kim <minchan@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ mm/zsmalloc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -517,11 +517,18 @@ static int __nilfs_read_inode(struct sup
- 		inode->i_op = &nilfs_symlink_inode_operations;
- 		inode_nohighmem(inode);
- 		inode->i_mapping->a_ops = &nilfs_aops;
--	} else {
-+	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
-+		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
- 		inode->i_op = &nilfs_special_inode_operations;
- 		init_special_inode(
- 			inode, inode->i_mode,
- 			huge_decode_dev(le64_to_cpu(raw_inode->i_device_code)));
-+	} else {
-+		nilfs_error(sb,
-+			    "invalid file type bits in mode 0%o for inode %lu",
-+			    inode->i_mode, ino);
-+		err = -EIO;
-+		goto failed_unmap;
- 	}
- 	nilfs_ifile_unmap_inode(root->ifile, ino, bh);
- 	brelse(bh);
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -1064,6 +1064,9 @@ static struct zspage *alloc_zspage(struc
+ 	if (!zspage)
+ 		return NULL;
+ 
++	if (!IS_ENABLED(CONFIG_COMPACTION))
++		gfp &= ~__GFP_MOVABLE;
++
+ 	zspage->magic = ZSPAGE_MAGIC;
+ 	migrate_lock_init(zspage);
+ 
 
 
