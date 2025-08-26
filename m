@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B4A405F7;
-	Tue, 26 Aug 2025 14:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C0C35A28A;
+	Tue, 26 Aug 2025 14:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218726; cv=none; b=kf1y0NHszes5FFP3NBHwhZjAxjoZTyO3zERK2mSH4woHjKjUupY1Qv70iLunjwQ7sByXOhGuOkEDlihuv3OR0LbtFuzDUBmZ8HqSWOYIxV7PgnUSvcqyftL+kG7DvLBsYDNZDrjLESReSjGB2gbbu2ZIAIuIpnSgnObTWtcT61M=
+	t=1756218728; cv=none; b=fLHaNdbVtT2NG3S0shTVXu+bK/RITZ4Jci76hvRhc8BF+8hwuHcD96FYwdPHCePS4PmQFA+6y8c53bS2ITdPNCdFobjGYnqVxxVeI2KODmXg+LOIHFE4iRFbc0ix+sBWO6n21xwb6zU+AXzLuEiDci/6G7EsV59MsaoaqME6xqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218726; c=relaxed/simple;
-	bh=fN+GpC/g211AkIg1D2eds4Rxgc+Ti/RgtQyIco7bdS8=;
+	s=arc-20240116; t=1756218728; c=relaxed/simple;
+	bh=R+y+uewviSNgkgIUDs24gt6Tk98aDQqLeAQEK+IsNKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7206wEeFysV1+8Cc9lefYrzAdKTkxIulABzxXbOZeQz1SMFpYbPsTmY/IAukLtnV/i7XFYS7CovffecsWR+U7W0AhefP1tn7lDpglqqy7gIoQzCXn5dGFg/icIFQJNnm5mtbEN03JAtJ3nd/J9Z5pRahANAA6XIfDfPcWR/fYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJFwPx30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UufXwBhLEVwqGrsUie4rdRDJ5oIFuu4wh7gP+rgo2RSaW34JRfI0WnF7Ww/kR6vtCnD5iM/PDQSQqJ+DsypT2tQsRpN6Dxoq6pz3eBagpQJBtIfOf4yHJ8JIdY2lExTl7bAcNChfsSidnSisE5rTY0bUeiYeArtBU++BGgNDcJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PC303Ybj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJFwPx30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C9CC113D0;
-	Tue, 26 Aug 2025 14:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PC303Ybj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134F6C4CEF1;
+	Tue, 26 Aug 2025 14:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218725;
-	bh=fN+GpC/g211AkIg1D2eds4Rxgc+Ti/RgtQyIco7bdS8=;
+	s=korg; t=1756218728;
+	bh=R+y+uewviSNgkgIUDs24gt6Tk98aDQqLeAQEK+IsNKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJFwPx30oIuk6kdyZ4J//O6QK8azpJ3f4MwqBibotHsXHUp9iSFoStCMcEan71FLR
-	 uaD/tZdQzUq1wFu/OmlzAu6tswkDv4HWGT5u3Yf6QZgUq4pqPU0pmc0r584ILj6YyP
-	 HOGgOwSbb/qFs0Qtas97/gKlrGkOxmZaKZqWxxMk=
+	b=PC303YbjIhhElNoYA8sZwYf9XoZ5Ubwx8hPkl/Q1wOOes8g+e3ri+KwlRb2fqlPej
+	 nsuTkxVO+HEMJ3Q4loaRNKEZspkL4tZ6fgGsykyfrVK8YvU4X1qo71mshwQbjUnWxW
+	 YUebOJ7uZ75yMFQyZC2EsrSWqnT6ofbOMVFZvDpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 109/403] power: supply: max14577: Handle NULL pdata when CONFIG_OF is not set
-Date: Tue, 26 Aug 2025 13:07:15 +0200
-Message-ID: <20250826110909.696588660@linuxfoundation.org>
+Subject: [PATCH 5.4 083/403] staging: nvec: Fix incorrect null termination of battery manufacturer
+Date: Tue, 26 Aug 2025 13:06:49 +0200
+Message-ID: <20250826110908.951298969@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,49 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 2937f5d2e24eefef8cb126244caec7fe3307f724 ]
+[ Upstream commit a8934352ba01081c51d2df428e9d540aae0e88b5 ]
 
-When the kernel is not configured  CONFIG_OF, the max14577_charger_dt_init
-function returns NULL. Fix the max14577_charger_probe functionby returning
--ENODATA instead of potentially passing a NULL pointer to PTR_ERR.
+The battery manufacturer string was incorrectly null terminated using
+bat_model instead of bat_manu. This could result in an unintended
+write to the wrong field and potentially incorrect behavior.
 
-This fixes the below smatch warning:
-max14577_charger_probe() warn: passing zero to 'PTR_ERR'
+fixe the issue by correctly null terminating the bat_manu string.
 
-Fixes: e30110e9c96f ("charger: max14577: Configure battery-dependent settings from DTS and sysfs")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250519061601.8755-1-hanchunchao@inspur.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 32890b983086 ("Staging: initial version of the nvec driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250719080755.3954373-1-alok.a.tiwari@oracle.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max14577_charger.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/nvec/nvec_power.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/max14577_charger.c b/drivers/power/supply/max14577_charger.c
-index 8a59feac6468..90b97736ac2a 100644
---- a/drivers/power/supply/max14577_charger.c
-+++ b/drivers/power/supply/max14577_charger.c
-@@ -501,7 +501,7 @@ static struct max14577_charger_platform_data *max14577_charger_dt_init(
- static struct max14577_charger_platform_data *max14577_charger_dt_init(
- 		struct platform_device *pdev)
- {
--	return NULL;
-+	return ERR_PTR(-ENODATA);
- }
- #endif /* CONFIG_OF */
- 
-@@ -572,7 +572,7 @@ static int max14577_charger_probe(struct platform_device *pdev)
- 	chg->max14577 = max14577;
- 
- 	chg->pdata = max14577_charger_dt_init(pdev);
--	if (IS_ERR_OR_NULL(chg->pdata))
-+	if (IS_ERR(chg->pdata))
- 		return PTR_ERR(chg->pdata);
- 
- 	ret = max14577_charger_reg_init(chg);
+diff --git a/drivers/staging/nvec/nvec_power.c b/drivers/staging/nvec/nvec_power.c
+index 0e861c4bfcbf..590b801c5992 100644
+--- a/drivers/staging/nvec/nvec_power.c
++++ b/drivers/staging/nvec/nvec_power.c
+@@ -194,7 +194,7 @@ static int nvec_power_bat_notifier(struct notifier_block *nb,
+ 		break;
+ 	case MANUFACTURER:
+ 		memcpy(power->bat_manu, &res->plc, res->length - 2);
+-		power->bat_model[res->length - 2] = '\0';
++		power->bat_manu[res->length - 2] = '\0';
+ 		break;
+ 	case MODEL:
+ 		memcpy(power->bat_model, &res->plc, res->length - 2);
 -- 
 2.39.5
 
