@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1358341AA1;
-	Tue, 26 Aug 2025 14:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27583341AA1;
+	Tue, 26 Aug 2025 14:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218599; cv=none; b=TY24X4XhNZQz4Vw4D083D7WopC78CSqd/ZqjaEjQISbJJF3X8FeAJVzcUoTydl3SCNai6803t9F0afvz3jb9ZdY/LphmvcwiUSGsXYquPrt8wudK7SlJvcoCeT8hASqvZm7iQtazrnIrLMqS9oxxloKefEWGhvcDJalFLbIhNyc=
+	t=1756218602; cv=none; b=s1HCP6/n28VjKhU7nbmgb+xOwV0wGDG+IdIG62MVQoyrr9y+AgUX4Wo/VVQcCR7qMKiXl2KReJksdp6D/4pREmP0/uHriWaTAVrPg1cQKcXnZcEoe8ZLxrzCYndawB11sCLFtLO/tZbqgt0Zw2siQXOt0cXxSBTJK4lW1cZ9KYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218599; c=relaxed/simple;
-	bh=M0O2iPzb+9vnjt2b6olFQuUt5tqHo/g/wNDUHZXAWwc=;
+	s=arc-20240116; t=1756218602; c=relaxed/simple;
+	bh=VmwON/ubGKqSd/ZgU/Ex8O8da8yxzYBv4Amr61JM1wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxiSWIk+C/0FTe81FBHpyqtDcaS0WRacc4xJ5tsYSr8SZKw9vqV4g1pAHdgCiRM2u3vhoEavca8VTc2YgS0ErrJBXJEbhTBW5gENUdO1ErPiwt+S3QZfLp0Uw6sfUe8CTDsFepNUF2f2ok6Sv6RCvPJQC8Lextih3qnX/YNfKXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWIC+/al; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WZlCtpZMeCtpGqq1lAs671MDfvnYez8xenztxQVuD/Q7h+CsF4USKXHK6JSgjgA/cXZ/1b3pxKZg73KH65xwzX/6TTucOiHWZnyOwD9hVfzQF+YPt/tjDtFzXeXzBRPgImw19FnKTgIbDYHvNuNqvACGmG3+Fc4U74Q18rrKMhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQe9lQk6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWIC+/al"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B93BC4CEF1;
-	Tue, 26 Aug 2025 14:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQe9lQk6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09329C4CEF1;
+	Tue, 26 Aug 2025 14:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218598;
-	bh=M0O2iPzb+9vnjt2b6olFQuUt5tqHo/g/wNDUHZXAWwc=;
+	s=korg; t=1756218602;
+	bh=VmwON/ubGKqSd/ZgU/Ex8O8da8yxzYBv4Amr61JM1wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWIC+/alUG0951oNG60o+peNQKPMDNeFn5YqUcLIQ7SU1ATq4wt+7se8OU+b3y69F
-	 TkOl1BTsIcI0GNOyWioBXNIa/6X8KHGbvykEFSY5RA45omGRQeSlUBZx5MCQbeAVMZ
-	 MdUIU3g/GEfWJKmz8qpnFesT4zikql4BHSyH9UyM=
+	b=UQe9lQk6IKy/w1u8fiuc+zuKwl+gukDcvyZ2231w44WxNhqLsU/rA7DuAA6Ds/iIp
+	 hc26L40wyAv8Tstvtyxr3mWti41LbHKbLxUN+RUez+5Hnwz/C12dsJQrUt9qWp2AJ2
+	 VcoUDNivV7FBMZprgVTfVltBVBb7DuFhodkiLtFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 062/403] nilfs2: reject invalid file types when reading inodes
-Date: Tue, 26 Aug 2025 13:06:28 +0200
-Message-ID: <20250826110907.579495215@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 063/403] comedi: comedi_test: Fix possible deletion of uninitialized timers
+Date: Tue, 26 Aug 2025 13:06:29 +0200
+Message-ID: <20250826110907.786510019@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,48 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 4aead50caf67e01020c8be1945c3201e8a972a27 upstream.
+commit 1b98304c09a0192598d0767f1eb8c83d7e793091 upstream.
 
-To prevent inodes with invalid file types from tripping through the vfs
-and causing malfunctions or assertion failures, add a missing sanity check
-when reading an inode from a block device.  If the file type is not valid,
-treat it as a filesystem error.
+In `waveform_common_attach()`, the two timers `&devpriv->ai_timer` and
+`&devpriv->ao_timer` are initialized after the allocation of the device
+private data by `comedi_alloc_devpriv()` and the subdevices by
+`comedi_alloc_subdevices()`.  The function may return with an error
+between those function calls.  In that case, `waveform_detach()` will be
+called by the Comedi core to clean up.  The check that
+`waveform_detach()` uses to decide whether to delete the timers is
+incorrect.  It only checks that the device private data was allocated,
+but that does not guarantee that the timers were initialized.  It also
+needs to check that the subdevices were allocated.  Fix it.
 
-Link: https://lkml.kernel.org/r/20250710134952.29862-1-konishi.ryusuke@gmail.com
-Fixes: 05fe58fdc10d ("nilfs2: inode operations")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 73e0e4dfed4c ("staging: comedi: comedi_test: fix timer lock-up")
+Cc: stable@vger.kernel.org # 6.15+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250708130627.21743-1-abbotti@mev.co.uk
+[ file location from drivers/comedi to drivers/staging/comedi and timer_delete_sync() to del_timer_sync(). ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/staging/comedi/drivers/comedi_test.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -525,11 +525,18 @@ static int __nilfs_read_inode(struct sup
- 		inode->i_op = &nilfs_symlink_inode_operations;
- 		inode_nohighmem(inode);
- 		inode->i_mapping->a_ops = &nilfs_aops;
--	} else {
-+	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
-+		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
- 		inode->i_op = &nilfs_special_inode_operations;
- 		init_special_inode(
- 			inode, inode->i_mode,
- 			huge_decode_dev(le64_to_cpu(raw_inode->i_device_code)));
-+	} else {
-+		nilfs_error(sb,
-+			    "invalid file type bits in mode 0%o for inode %lu",
-+			    inode->i_mode, ino);
-+		err = -EIO;
-+		goto failed_unmap;
+--- a/drivers/staging/comedi/drivers/comedi_test.c
++++ b/drivers/staging/comedi/drivers/comedi_test.c
+@@ -790,7 +790,7 @@ static void waveform_detach(struct comed
+ {
+ 	struct waveform_private *devpriv = dev->private;
+ 
+-	if (devpriv) {
++	if (devpriv && dev->n_subdevices) {
+ 		del_timer_sync(&devpriv->ai_timer);
+ 		del_timer_sync(&devpriv->ao_timer);
  	}
- 	nilfs_ifile_unmap_inode(root->ifile, ino, bh);
- 	brelse(bh);
 
 
