@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7451DF985;
-	Tue, 26 Aug 2025 14:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE64352078;
+	Tue, 26 Aug 2025 14:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217248; cv=none; b=e23XGyDxb0mIsY0a5iP2qElnfQX5EUHhFs/eUsTp+cKl+2dfz6Q49KHo0nd9xy3nc9e2DDjDbDVYyKuS/S7b92n1Npo0qqeIEfSNcEmw3RIrXrJlKG3zLZHuiZ49ydsxStO8JIzExhluVh7iJemPCb1Du3OlOM/Jotjpyw6ohFA=
+	t=1756217250; cv=none; b=VLeYwniT9NqZGB9YJM85+VxXmU61SfecZ5edlbDXeezYn677YKk+2Rjtr4ifQABpT84Q3D17uwsebOR7HWC4aV2bCPVx7cRBOW2M1qkWGM4VVzUVW1yOqdx8Vq7grhipZmrERFb5GYjaxRblFgp8u561qHjpsJfYYhtqstqAlM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217248; c=relaxed/simple;
-	bh=4ij4clBkrML2URglrU+rXNaycp7YvX5Yie02zK87inA=;
+	s=arc-20240116; t=1756217250; c=relaxed/simple;
+	bh=VSK6K8/53q29rLYcmf0WpUDAxF7bg43PtyqwFGadCYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tiSyaQC5ycu44VimHXYWZnvUYwki9DrgqyDeC2lcu32keCSvb2NuHgSE+y6vCmwoh6A96PC8rbhbRTtyZVsy2lnmiF9ArPcfrVh/eHwniid5RoQdTkbWS2XjvbUJaxqtesvwfNxuxZFFGNQ0OGNM/3+nzV8/QqvTaalGj+yS0DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTepAsn5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YQXBsnFufAcPfvFBsSgjAqkvDTrkS5R+UB2ImKX5wDUGN0SA47EuRPBbgEVwqGJoLM60KmqZso+C5qCPw5fL27lzd+gFqaDrgEul0396OZ50KbybesI5vwQctaMmWD9Ej4RO5hO2DTnyYfZ1uaQuANS0ZrE1HXFagJsW0wgQq7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/1Ij69K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTepAsn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EFAC4CEF1;
-	Tue, 26 Aug 2025 14:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/1Ij69K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C791EC4CEF1;
+	Tue, 26 Aug 2025 14:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217247;
-	bh=4ij4clBkrML2URglrU+rXNaycp7YvX5Yie02zK87inA=;
+	s=korg; t=1756217250;
+	bh=VSK6K8/53q29rLYcmf0WpUDAxF7bg43PtyqwFGadCYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sTepAsn5XaDBZADRyM4CmxN4ARszCDYqHkT+OcrcHl4CeiDOO/dNCdx5bpigAh1CM
-	 7u6desrYe+4qxOTqM7A93x15GkaFcUVyRQishSpK1qUPHOKoijKGjpakyZJJxRxW5b
-	 itbjCXYnPkd9z/Z0f733TYjFe/FxUHiozNpnyRPY=
+	b=f/1Ij69KIp3T+UfcIY1rYC1UAPCIFSmmFw+Jyo+xePimnmGm/+wwF2+AIfAxKPG1w
+	 76kl0InlWpsrZypLUeeuClPPHvYlBfQeCPZJPpDi1SyWUc4aH1PLCvyCxAqnr4RqMO
+	 V0a8KjxMlS6BoLiM9R+HNnYVUI3uqEcnY3UWflQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.10 030/523] comedi: das6402: Fix bit shift out of bounds
-Date: Tue, 26 Aug 2025 13:04:00 +0200
-Message-ID: <20250826110925.342583345@linuxfoundation.org>
+	Dawid Rezler <dawidrezler.patches@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 065/523] ALSA: hda/realtek - Add mute LED support for HP Pavilion 15-eg0xxx
+Date: Tue, 26 Aug 2025 13:04:35 +0200
+Message-ID: <20250826110926.182911031@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -49,42 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Dawid Rezler <dawidrezler.patches@gmail.com>
 
-commit 70f2b28b5243df557f51c054c20058ae207baaac upstream.
+commit 9744ede7099e8a69c04aa23fbea44c15bc390c04 upstream.
 
-When checking for a supported IRQ number, the following test is used:
+The mute LED on the HP Pavilion Laptop 15-eg0xxx,
+which uses the ALC287 codec, didn't work.
+This patch fixes the issue by enabling the ALC287_FIXUP_HP_GPIO_LED quirk.
 
-	/* IRQs 2,3,5,6,7, 10,11,15 are valid for "enhanced" mode */
-	if ((1 << it->options[1]) & 0x8cec) {
+Tested on a physical device, the LED now works as intended.
 
-However, `it->options[i]` is an unchecked `int` value from userspace, so
-the shift amount could be negative or out of bounds.  Fix the test by
-requiring `it->options[1]` to be within bounds before proceeding with
-the original test.  Valid `it->options[1]` values that select the IRQ
-will be in the range [1,15]. The value 0 explicitly disables the use of
-interrupts.
-
-Fixes: 79e5e6addbb1 ("staging: comedi: das6402: rewrite broken driver")
-Cc: stable@vger.kernel.org # 5.13+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707135737.77448-1-abbotti@mev.co.uk
+Signed-off-by: Dawid Rezler <dawidrezler.patches@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250720154907.80815-2-dawidrezler.patches@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/drivers/das6402.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/staging/comedi/drivers/das6402.c
-+++ b/drivers/staging/comedi/drivers/das6402.c
-@@ -569,7 +569,8 @@ static int das6402_attach(struct comedi_
- 	das6402_reset(dev);
- 
- 	/* IRQs 2,3,5,6,7, 10,11,15 are valid for "enhanced" mode */
--	if ((1 << it->options[1]) & 0x8cec) {
-+	if (it->options[1] > 0 && it->options[1] < 16 &&
-+	    (1 << it->options[1]) & 0x8cec) {
- 		ret = request_irq(it->options[1], das6402_interrupt, 0,
- 				  dev->board_name, dev);
- 		if (ret == 0) {
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9287,6 +9287,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 
 
