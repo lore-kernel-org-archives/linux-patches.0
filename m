@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F36E3376A5;
-	Tue, 26 Aug 2025 11:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8581F18DF9D;
+	Tue, 26 Aug 2025 11:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208760; cv=none; b=crQ0pCJYq5SeIY1ootZl0eB9kAR1ABxb3ubZ8GgedlvBMHYtWzkOrNWj7prhNghNvFzzj58ZlOHIh3vldr7B7FKVFpJvXFvQSof5eiBWaIqkuxLn66fGP2NCVrJ1QhtbMBxAITHOzzHwWUDWkObRuGVDEopEI7LIuyrQK2ZXR6w=
+	t=1756208762; cv=none; b=LnkMSuKwSHEgmYFuS4YXHsZscNNE81boekaAHsv4uNvpirKdhqZ7o4ipz4j4dXpjw1D9i9ASzw3QMrpk+KdVBtKiD2JSqfajrFjuGELa510X76w84csaL7CE0dHHIOo2c0se0CuvBvNBouMjdWkLgFeJDKJiB/CczO4EVDlHHX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208760; c=relaxed/simple;
-	bh=RLmBTacHE0AlAbmJCXlydTfDNZYNg5Up76cYsx+StR4=;
+	s=arc-20240116; t=1756208762; c=relaxed/simple;
+	bh=FDKOzIDI+2lewYaszsqGBG/33dw5ucsgjWjqrak8Mok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W89b+dpJLl0x2/uQQ0ICrxk39gmXxlh6rp3GkB7+NG4jqU67A5tHfNSt8WztuN1g09jI/hG1h80aYL/x/h18PFgbQuLvssLStnLrBgdngwBl8W+zDKt7/y4VLDkkKG2hCDb8yr9KH6chhCa9j+oEbmTXvoXMU6GSqEY2DQMrj5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQNMDvdp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TyhPxQsKMCmwRq+/w+ol1Bkt0bj2m3DAHcbYlcc7OeVQ2nOiyHvTHBsQh8+YLJf5nwSpGBfcyYAoXGV+PAG5MONExhNsZDSWVy/fpKMgInKslPWwGLHXp4asQvcPblvUNuLcRJPPCfRaY52GuQTgl1KaW9Zo4C9BmBe131semsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYqj9/Cv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQNMDvdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C95C4CEF1;
-	Tue, 26 Aug 2025 11:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYqj9/Cv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D088C4CEF1;
+	Tue, 26 Aug 2025 11:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208760;
-	bh=RLmBTacHE0AlAbmJCXlydTfDNZYNg5Up76cYsx+StR4=;
+	s=korg; t=1756208762;
+	bh=FDKOzIDI+2lewYaszsqGBG/33dw5ucsgjWjqrak8Mok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQNMDvdpw6RoI0d0wVekMWee0Z6Zfy4pc8768gr0SO25417j2lmLIZkeWlnEdlFbD
-	 H+o4y+tqz2y6IavHhcv/u8/0wqXbU/hj7NyUXWEHEJRuEf59lMV5GzfJLkv8bI+NkH
-	 CHUFxrUoYdnvWQuGE4LofpCa+FY3olxH5x1mw+pw=
+	b=yYqj9/CvnV1loYEL3b1+ynUMrzRxsMRbXfTZLYpHQwBfFXGH0rBmm9AK+05WsncNb
+	 cqt+dYvy6jVdh4aSKXTb7aza47oVYE/DAVba/o6CzMBdIo6C9zi4N9MSGVeyhx9x6Y
+	 USnW5bLEt5BQnB9BvmK3Gc8AAGPRarSXEL5wskFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 207/322] smb: server: split ksmbd_rdma_stop_listening() out of ksmbd_rdma_destroy()
-Date: Tue, 26 Aug 2025 13:10:22 +0200
-Message-ID: <20250826110920.981709114@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Akash M <akash.m5@samsung.com>,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 6.12 234/322] usb: dwc3: Remove WARN_ON for device endpoint command timeouts
+Date: Tue, 26 Aug 2025 13:10:49 +0200
+Message-ID: <20250826110921.680503871@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -56,92 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-[ Upstream commit bac7b996d42e458a94578f4227795a0d4deef6fa ]
+commit 45eae113dccaf8e502090ecf5b3d9e9b805add6f upstream.
 
-We can't call destroy_workqueue(smb_direct_wq); before stop_sessions()!
+This commit addresses a rarely observed endpoint command timeout
+which causes kernel panic due to warn when 'panic_on_warn' is enabled
+and unnecessary call trace prints when 'panic_on_warn' is disabled.
+It is seen during fast software-controlled connect/disconnect testcases.
+The following is one such endpoint command timeout that we observed:
 
-Otherwise already existing connections try to use smb_direct_wq as
-a NULL pointer.
+1. Connect
+   =======
+->dwc3_thread_interrupt
+ ->dwc3_ep0_interrupt
+  ->configfs_composite_setup
+   ->composite_setup
+    ->usb_ep_queue
+     ->dwc3_gadget_ep0_queue
+      ->__dwc3_gadget_ep0_queue
+       ->__dwc3_ep0_do_control_data
+        ->dwc3_send_gadget_ep_cmd
 
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+2. Disconnect
+   ==========
+->dwc3_thread_interrupt
+ ->dwc3_gadget_disconnect_interrupt
+  ->dwc3_ep0_reset_state
+   ->dwc3_ep0_end_control_data
+    ->dwc3_send_gadget_ep_cmd
+
+In the issue scenario, in Exynos platforms, we observed that control
+transfers for the previous connect have not yet been completed and end
+transfer command sent as a part of the disconnect sequence and
+processing of USB_ENDPOINT_HALT feature request from the host timeout.
+This maybe an expected scenario since the controller is processing EP
+commands sent as a part of the previous connect. It maybe better to
+remove WARN_ON in all places where device endpoint commands are sent to
+avoid unnecessary kernel panic due to warn.
+
+Cc: stable <stable@kernel.org>
+Co-developed-by: Akash M <akash.m5@samsung.com>
+Signed-off-by: Akash M <akash.m5@samsung.com>
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20250808125315.1607-1-selvarasu.g@samsung.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c     | 3 ++-
- fs/smb/server/transport_rdma.c | 5 ++++-
- fs/smb/server/transport_rdma.h | 4 +++-
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/ep0.c    |   20 ++++++++++++++++----
+ drivers/usb/dwc3/gadget.c |   10 ++++++++--
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 9eb3e6010aa6..1c37d1e9aef3 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -503,7 +503,8 @@ void ksmbd_conn_transport_destroy(void)
- {
- 	mutex_lock(&init_lock);
- 	ksmbd_tcp_destroy();
--	ksmbd_rdma_destroy();
-+	ksmbd_rdma_stop_listening();
- 	stop_sessions();
-+	ksmbd_rdma_destroy();
- 	mutex_unlock(&init_lock);
+--- a/drivers/usb/dwc3/ep0.c
++++ b/drivers/usb/dwc3/ep0.c
+@@ -288,7 +288,9 @@ void dwc3_ep0_out_start(struct dwc3 *dwc
+ 	dwc3_ep0_prepare_one_trb(dep, dwc->ep0_trb_addr, 8,
+ 			DWC3_TRBCTL_CONTROL_SETUP, false);
+ 	ret = dwc3_ep0_start_trans(dep);
+-	WARN_ON(ret < 0);
++	if (ret < 0)
++		dev_err(dwc->dev, "ep0 out start transfer failed: %d\n", ret);
++
+ 	for (i = 2; i < DWC3_ENDPOINTS_NUM; i++) {
+ 		struct dwc3_ep *dwc3_ep;
+ 
+@@ -1061,7 +1063,9 @@ static void __dwc3_ep0_do_control_data(s
+ 		ret = dwc3_ep0_start_trans(dep);
+ 	}
+ 
+-	WARN_ON(ret < 0);
++	if (ret < 0)
++		dev_err(dwc->dev,
++			"ep0 data phase start transfer failed: %d\n", ret);
  }
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 805c20f619b0..67c989e5ddaa 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -2193,7 +2193,7 @@ int ksmbd_rdma_init(void)
- 	return 0;
+ 
+ static int dwc3_ep0_start_control_status(struct dwc3_ep *dep)
+@@ -1078,7 +1082,12 @@ static int dwc3_ep0_start_control_status
+ 
+ static void __dwc3_ep0_do_control_status(struct dwc3 *dwc, struct dwc3_ep *dep)
+ {
+-	WARN_ON(dwc3_ep0_start_control_status(dep));
++	int	ret;
++
++	ret = dwc3_ep0_start_control_status(dep);
++	if (ret)
++		dev_err(dwc->dev,
++			"ep0 status phase start transfer failed: %d\n", ret);
  }
  
--void ksmbd_rdma_destroy(void)
-+void ksmbd_rdma_stop_listening(void)
- {
- 	if (!smb_direct_listener.cm_id)
- 		return;
-@@ -2202,7 +2202,10 @@ void ksmbd_rdma_destroy(void)
- 	rdma_destroy_id(smb_direct_listener.cm_id);
+ static void dwc3_ep0_do_control_status(struct dwc3 *dwc,
+@@ -1121,7 +1130,10 @@ void dwc3_ep0_end_control_data(struct dw
+ 	cmd |= DWC3_DEPCMD_PARAM(dep->resource_index);
+ 	memset(&params, 0, sizeof(params));
+ 	ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
+-	WARN_ON_ONCE(ret);
++	if (ret)
++		dev_err_ratelimited(dwc->dev,
++			"ep0 data phase end transfer failed: %d\n", ret);
++
+ 	dep->resource_index = 0;
+ }
  
- 	smb_direct_listener.cm_id = NULL;
-+}
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1763,7 +1763,11 @@ static int __dwc3_stop_active_transfer(s
+ 		dep->flags |= DWC3_EP_DELAY_STOP;
+ 		return 0;
+ 	}
+-	WARN_ON_ONCE(ret);
++
++	if (ret)
++		dev_err_ratelimited(dep->dwc->dev,
++				"end transfer failed: %d\n", ret);
++
+ 	dep->resource_index = 0;
  
-+void ksmbd_rdma_destroy(void)
-+{
- 	if (smb_direct_wq) {
- 		destroy_workqueue(smb_direct_wq);
- 		smb_direct_wq = NULL;
-diff --git a/fs/smb/server/transport_rdma.h b/fs/smb/server/transport_rdma.h
-index 77aee4e5c9dc..a2291b77488a 100644
---- a/fs/smb/server/transport_rdma.h
-+++ b/fs/smb/server/transport_rdma.h
-@@ -54,13 +54,15 @@ struct smb_direct_data_transfer {
+ 	if (!interrupt)
+@@ -4017,7 +4021,9 @@ static void dwc3_clear_stall_all_ep(stru
+ 		dep->flags &= ~DWC3_EP_STALL;
  
- #ifdef CONFIG_SMB_SERVER_SMBDIRECT
- int ksmbd_rdma_init(void);
-+void ksmbd_rdma_stop_listening(void);
- void ksmbd_rdma_destroy(void);
- bool ksmbd_rdma_capable_netdev(struct net_device *netdev);
- void init_smbd_max_io_size(unsigned int sz);
- unsigned int get_smbd_max_read_write_size(void);
- #else
- static inline int ksmbd_rdma_init(void) { return 0; }
--static inline int ksmbd_rdma_destroy(void) { return 0; }
-+static inline void ksmbd_rdma_stop_listening(void) { }
-+static inline void ksmbd_rdma_destroy(void) { }
- static inline bool ksmbd_rdma_capable_netdev(struct net_device *netdev) { return false; }
- static inline void init_smbd_max_io_size(unsigned int sz) { }
- static inline unsigned int get_smbd_max_read_write_size(void) { return 0; }
--- 
-2.50.1
-
+ 		ret = dwc3_send_clear_stall_ep_cmd(dep);
+-		WARN_ON_ONCE(ret);
++		if (ret)
++			dev_err_ratelimited(dwc->dev,
++				"failed to clear STALL on %s\n", dep->name);
+ 	}
+ }
+ 
 
 
