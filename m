@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DB530BF64;
-	Tue, 26 Aug 2025 11:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074092BEC34;
+	Tue, 26 Aug 2025 11:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207558; cv=none; b=cB0aa7b9jlDjCHPLDWt9B1AhP2+i0dH+lRf+KPTPeELEYXENNc0l3DznYQw5rNH+mTBGtvN0qTd8kLTA9F9TruDpEgSdb3ZjVCINTga0Y37i2VmRBWOJYEmkGcq3m7xzEFub0BQp6cfl+0HQxplr+60KSBxTMphr4+oQMCVBE18=
+	t=1756207561; cv=none; b=YBBu1VBryoOUMNQ3OBHjlMMGL3BMamVx/k9B3JljlX7WxNwo2xCK4EoLV3oxLDW5jSl4S9RXOqc053UP/Ny+uJg5c+1iqxaMp5OhxV6EdyOrFVimOkAKCMQBqoE2e9mvmJWf+TX/N6S6BUxzY6NJRC1mPqq5sdL2ncch1mv/4CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207558; c=relaxed/simple;
-	bh=+UbxadlMm3M2skAAoZkU7SfemTjDdrNhL8J3/P8WQyw=;
+	s=arc-20240116; t=1756207561; c=relaxed/simple;
+	bh=wb2X+FomgvSFke2B+XeoU0IveTJ/ScB/8sq0flCb8Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/kzwncssiZZPYCzBUSlIh7cHpvQCB51Ig2afS3gSxPomHCcWLUbbgsTZxIZDbeLlXlBXv+649oG35y4/pqnzAJFPn7b83MULhSHHTjYzWL9h7URRlGdEsqY7ITnOEXaJTpMBSESt/ADFiqXHRxVXR+zNQunKttFQQQwcVC6zPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1tpAKqU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MII5BRd/BV0wtJhnjvl1jK5GZ1WXEyxbi6wbt33j28bZ7M3P1rDlw0O/MGWhjRHb+99UWjDWrtWebZPkwJ8LJOfpnPeCWnmAY13nsdQvmPh6uKh8nw63AlFnkbKowTfKzVye4SM+xFvlMeIhEkDPKMXVfHv59LyGTtVDUf7JxKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCX8914j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1tpAKqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B179C113CF;
-	Tue, 26 Aug 2025 11:25:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCX8914j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B52C113CF;
+	Tue, 26 Aug 2025 11:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207558;
-	bh=+UbxadlMm3M2skAAoZkU7SfemTjDdrNhL8J3/P8WQyw=;
+	s=korg; t=1756207560;
+	bh=wb2X+FomgvSFke2B+XeoU0IveTJ/ScB/8sq0flCb8Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1tpAKqUor+o2Rhd8xDkpV9G6fWEYfWJCd25uo/1XWZ0MdPhOisf5R3dUiX7xig1H
-	 fi/L25dmNZ9vayz+ENfsjoJpMZD/F//vCAg1gI6PKTgoVXncDcHujNQlkCnD+EVLCS
-	 QQU23jRTxbZ8L4frqK8oKLz8imOhh5n+AhQbLeko=
+	b=WCX8914j3Jf/2dwZkUnk++Tips2HMkVRIoaWjcPKTS8ME8zkkpGkLPZIVqZBPlpZI
+	 M9cRI9vpj5Ogr4MD4h3+oWSBKZ5MFNyD8iE3smsYouZvSceo5yxT4/auY1EuyIwm45
+	 FvvYYiJrSyXaEgXzmshNNHo8Eri7e1AL2rl0HLWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.16 229/457] crypto: acomp - Fix CFI failure due to type punning
-Date: Tue, 26 Aug 2025 13:08:33 +0200
-Message-ID: <20250826110943.032923009@linuxfoundation.org>
+	Tomasz Jeznach <tjeznach@rivosinc.com>,
+	XianLiang Huang <huangxianliang@lanxincomputing.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.16 230/457] iommu/riscv: prevent NULL deref in iova_to_phys
+Date: Tue, 26 Aug 2025 13:08:34 +0200
+Message-ID: <20250826110943.057186910@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,60 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: XianLiang Huang <huangxianliang@lanxincomputing.com>
 
-commit 962ddc5a7a4b04c007bba0f3e7298cda13c62efd upstream.
+commit 99d4d1a070870aa08163af8ce0522992b7f35d8c upstream.
 
-To avoid a crash when control flow integrity is enabled, make the
-workspace ("stream") free function use a consistent type, and call it
-through a function pointer that has that same type.
+The riscv_iommu_pte_fetch() function returns either NULL for
+unmapped/never-mapped iova, or a valid leaf pte pointer that
+requires no further validation.
 
-Fixes: 42d9f6c77479 ("crypto: acomp - Move scomp stream allocation code into acomp")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[Giovanni: Backport to 6.16.y. Removed logic in crypto/zstd.c as commit
-f5ad93ffb541 ("crypto: zstd - convert to acomp") is not going to be
-backported to stable.]
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+riscv_iommu_iova_to_phys() failed to handle NULL returns.
+Prevent null pointer dereference in
+riscv_iommu_iova_to_phys(), and remove the pte validation.
+
+Fixes: 488ffbf18171 ("iommu/riscv: Paging domain support")
+Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
+Signed-off-by: XianLiang Huang <huangxianliang@lanxincomputing.com>
+Link: https://lore.kernel.org/r/20250820072248.312-1-huangxianliang@lanxincomputing.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/deflate.c                    |    7 ++++++-
- include/crypto/internal/acompress.h |    5 +----
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ drivers/iommu/riscv/iommu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/crypto/deflate.c
-+++ b/crypto/deflate.c
-@@ -48,9 +48,14 @@ static void *deflate_alloc_stream(void)
- 	return ctx;
- }
+--- a/drivers/iommu/riscv/iommu.c
++++ b/drivers/iommu/riscv/iommu.c
+@@ -1283,7 +1283,7 @@ static phys_addr_t riscv_iommu_iova_to_p
+ 	unsigned long *ptr;
  
-+static void deflate_free_stream(void *ctx)
-+{
-+	kvfree(ctx);
-+}
-+
- static struct crypto_acomp_streams deflate_streams = {
- 	.alloc_ctx = deflate_alloc_stream,
--	.cfree_ctx = kvfree,
-+	.free_ctx = deflate_free_stream,
- };
+ 	ptr = riscv_iommu_pte_fetch(domain, iova, &pte_size);
+-	if (_io_pte_none(*ptr) || !_io_pte_present(*ptr))
++	if (!ptr)
+ 		return 0;
  
- static int deflate_compress_one(struct acomp_req *req,
---- a/include/crypto/internal/acompress.h
-+++ b/include/crypto/internal/acompress.h
-@@ -63,10 +63,7 @@ struct crypto_acomp_stream {
- struct crypto_acomp_streams {
- 	/* These must come first because of struct scomp_alg. */
- 	void *(*alloc_ctx)(void);
--	union {
--		void (*free_ctx)(void *);
--		void (*cfree_ctx)(const void *);
--	};
-+	void (*free_ctx)(void *);
- 
- 	struct crypto_acomp_stream __percpu *streams;
- 	struct work_struct stream_work;
+ 	return pfn_to_phys(__page_val_to_pfn(*ptr)) | (iova & (pte_size - 1));
 
 
