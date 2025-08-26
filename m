@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD3A22DFA7;
-	Tue, 26 Aug 2025 13:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F0512CDA5;
+	Tue, 26 Aug 2025 13:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213480; cv=none; b=U0UIzkt5skEnooWHFW9645SIpdbQkHB0PlDQEVk7O+pv1z4o8lvj1M6lERP9b9n5gVUzttEz75qCCuNif5fro6dep9gJLvAcG3PnoFlEqlXqS+CBJI513eFVJwi9DVAT3adjldHDknVQI7LcLIRQXoZeBVnFTStASkfoVDhmjgw=
+	t=1756213482; cv=none; b=UgJSfct9H2YbsaCWUM3uF1I7MDohZupnngjlnlEpY3ke0IlAoMq4dOasVgvt7bCTN/PgqVThOUrPBO1O3HyGnw/LboIaYRbMrz+DCXO3QYGAqe54FOE5Gab97fUYsAZZ9Cj/wzkT/rD/mlwixg4h/Uy1o2ZPm3T6UTBZlVxilwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213480; c=relaxed/simple;
-	bh=SLSePjydcoqDdZOCGUAvYvIhmdMbInpKA7pt8HBOteA=;
+	s=arc-20240116; t=1756213482; c=relaxed/simple;
+	bh=5r8O9drpLpjlnMcHwqpQ/ZgVYWdI6Bv9XqyVYcA3jHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lP1jCV1Y6YDSMbaC11Y2CAVeSXC5fP5A+hQ+tnk8JOtbtYmq2iZZqbPeFE4C0NH459ODCOq1fZw3jEsd3m3H6ndDN6EwN9+WGSA8ndrDMGn0ntL/hTWu8b5hQKYHqAfUu1DRYq5ExsJh8X/D20oCyaMl5LAt7zaUWUlqDmmhT8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7hHi+iJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j+FNnLvqxV3ZE+RTYzKSGjD8bwliA0819H91bttLqSifas7vBdGdAxdbppiccbfSHdxm5K+CAtKZ8SRTGAjMJ0agIgcZmhDNLTsLKuCkpETN8AvM4hF/sy4w+4h+SVglXqjuDGAUtuTYt2C60EPeyVo38MYaEB2Wl8qwKcGB+5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ydif7BlF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7hHi+iJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51DDC4CEF1;
-	Tue, 26 Aug 2025 13:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ydif7BlF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B12FC4CEF1;
+	Tue, 26 Aug 2025 13:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213480;
-	bh=SLSePjydcoqDdZOCGUAvYvIhmdMbInpKA7pt8HBOteA=;
+	s=korg; t=1756213482;
+	bh=5r8O9drpLpjlnMcHwqpQ/ZgVYWdI6Bv9XqyVYcA3jHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7hHi+iJW/Sa9zgk5ycfg+T4nWfLpPUvGaMUjyMpAl6SltDNSCGX4KN5cZrv5YZ9D
-	 YjR2yX0l7cx7fQ5PF7BBvp2pA8c9oT8zxjSSMIxz75ctj/6pnIkfB8fPT6XMuVd+Hw
-	 lbePfXVCRmsfC/tJD0PKs5jlc9T+LlEd2+J6LvJQ=
+	b=Ydif7BlFvd3rt0ZzeBwgw9jNAm2nssLG/EacE4SKuammGkq27v+llnSfB8DqWmuR/
+	 TMLUwUrES2A4I4tOXzOzbW7Vs7JdPr8xrZOV/zTlH7RpN27tNemmewDk2rt+cyBJ5g
+	 DjwY6MSQc+C1SxGBYb+315yY+ECZHWyiTYq84Kco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 363/587] scsi: ufs: ufs-pci: Fix default runtime and system PM levels
-Date: Tue, 26 Aug 2025 13:08:32 +0200
-Message-ID: <20250826111002.144545136@linuxfoundation.org>
+	Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH 6.6 337/587] bus: mhi: host: Fix endianness of BHI vector table
+Date: Tue, 26 Aug 2025 13:08:06 +0200
+Message-ID: <20250826111001.490962984@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,62 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Alexander Wilhelm <alexander.wilhelm@westermo.com>
 
-commit 6de7435e6b81fe52c0ab4c7e181f6b5decd18eb1 upstream.
+commit f471578e8b1a90623674433a01a8845110bc76ce upstream.
 
-Intel MTL-like host controllers support auto-hibernate.  Using
-auto-hibernate with manual (driver initiated) hibernate produces more
-complex operation.  For example, the host controller will have to exit
-auto-hibernate simply to allow the driver to enter hibernate state
-manually.  That is not recommended.
+On big endian platform like PowerPC, the MHI bus (which is little endian)
+does not start properly. The following example shows the error messages by
+using QCN9274 WLAN device with ath12k driver:
 
-The default rpm_lvl and spm_lvl is 3, which includes manual hibernate.
+    ath12k_pci 0001:01:00.0: BAR 0: assigned [mem 0xc00000000-0xc001fffff 64bit]
+    ath12k_pci 0001:01:00.0: MSI vectors: 1
+    ath12k_pci 0001:01:00.0: Hardware name: qcn9274 hw2.0
+    ath12k_pci 0001:01:00.0: failed to set mhi state: POWER_ON(2)
+    ath12k_pci 0001:01:00.0: failed to start mhi: -110
+    ath12k_pci 0001:01:00.0: failed to power up :-110
+    ath12k_pci 0001:01:00.0: failed to create soc core: -110
+    ath12k_pci 0001:01:00.0: failed to init core: -110
+    ath12k_pci: probe of 0001:01:00.0 failed with error -110
 
-Change the default values to 2, which does not.
+The issue seems to be with the incorrect DMA address/size used for
+transferring the firmware image over BHI. So fix it by converting the DMA
+address and size of the BHI vector table to little endian format before
+sending them to the device.
 
-Note, to be simpler to backport to stable kernels, utilize the UFS PCI
-driver's ->late_init() call back.  Recent commits have made it possible
-to set up a controller-specific default in the regular ->init() call
-back, but not all stable kernels have those changes.
-
-Fixes: 4049f7acef3e ("scsi: ufs: ufs-pci: Add support for Intel MTL")
+Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
+Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+[mani: added stable tag and reworded commit message]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250723165856.145750-3-adrian.hunter@intel.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://patch.msgid.link/20250519145837.958153-1-alexander.wilhelm@westermo.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufshcd-pci.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/host/boot.c     |    8 ++++----
+ drivers/bus/mhi/host/internal.h |    4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/ufs/host/ufshcd-pci.c
-+++ b/drivers/ufs/host/ufshcd-pci.c
-@@ -465,10 +465,23 @@ static int ufs_intel_adl_init(struct ufs
- 	return ufs_intel_common_init(hba);
- }
+--- a/drivers/bus/mhi/host/boot.c
++++ b/drivers/bus/mhi/host/boot.c
+@@ -31,8 +31,8 @@ int mhi_rddm_prepare(struct mhi_controll
+ 	int ret;
  
-+static void ufs_intel_mtl_late_init(struct ufs_hba *hba)
-+{
-+	hba->rpm_lvl = UFS_PM_LVL_2;
-+	hba->spm_lvl = UFS_PM_LVL_2;
-+}
-+
- static int ufs_intel_mtl_init(struct ufs_hba *hba)
- {
-+	struct ufs_host *ufs_host;
-+	int err;
-+
- 	hba->caps |= UFSHCD_CAP_CRYPTO | UFSHCD_CAP_WB_EN;
--	return ufs_intel_common_init(hba);
-+	err = ufs_intel_common_init(hba);
-+	/* Get variant after it is set in ufs_intel_common_init() */
-+	ufs_host = ufshcd_get_variant(hba);
-+	ufs_host->late_init = ufs_intel_mtl_late_init;
-+	return err;
- }
+ 	for (i = 0; i < img_info->entries - 1; i++, mhi_buf++, bhi_vec++) {
+-		bhi_vec->dma_addr = mhi_buf->dma_addr;
+-		bhi_vec->size = mhi_buf->len;
++		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
++		bhi_vec->size = cpu_to_le64(mhi_buf->len);
+ 	}
  
- static struct ufs_hba_variant_ops ufs_intel_cnl_hba_vops = {
+ 	dev_dbg(dev, "BHIe programming for RDDM\n");
+@@ -375,8 +375,8 @@ static void mhi_firmware_copy(struct mhi
+ 	while (remainder) {
+ 		to_cpy = min(remainder, mhi_buf->len);
+ 		memcpy(mhi_buf->buf, buf, to_cpy);
+-		bhi_vec->dma_addr = mhi_buf->dma_addr;
+-		bhi_vec->size = to_cpy;
++		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
++		bhi_vec->size = cpu_to_le64(to_cpy);
+ 
+ 		buf += to_cpy;
+ 		remainder -= to_cpy;
+--- a/drivers/bus/mhi/host/internal.h
++++ b/drivers/bus/mhi/host/internal.h
+@@ -31,8 +31,8 @@ struct mhi_ctxt {
+ };
+ 
+ struct bhi_vec_entry {
+-	u64 dma_addr;
+-	u64 size;
++	__le64 dma_addr;
++	__le64 size;
+ };
+ 
+ enum mhi_ch_state_type {
 
 
