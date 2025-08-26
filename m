@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B276E30AAD8;
-	Tue, 26 Aug 2025 13:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07463341650;
+	Tue, 26 Aug 2025 13:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215098; cv=none; b=r4RR4VeAfAQec+DV6O6U+rYJcJcM3/nuHzcVJXpqbdorJhBgqGWhRkcsELeFcKLZOu5EQg8TQ+ZXvNiYeha8+QU9aMgKZGuEtT5OVx2ayGzM0ImluYspVPBDgBfmlRyuduIfRxP++oWZ7iJsFbFKtSJpmMHI3CIp2XmnhC+VQKk=
+	t=1756215099; cv=none; b=OcwhV/8SJr5XSAha6o5HxRXe/dUx4qQZIOrS0ET9nXZTfuDq8lCogPYiclJFyzLg7iao2Attf85EKm7RIErdCm2lDyuh+pXq1IrvI2KULdK8t1NiLjzLw0GUqoOYFpc19hXjC8EDuf9kUIHsHfV/PUUzBjPpr9vu3dmBhVtlOpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215098; c=relaxed/simple;
-	bh=0gkdsYPfGYclXAlNfIRapktOZGcLqQeSD/0MT6A2e/U=;
+	s=arc-20240116; t=1756215099; c=relaxed/simple;
+	bh=9v9clRWBc46xBEqsjv1TRhCzlHEJsMvbkAl0fLiPQsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cu+2QKXAxlqmImiZ3owns4TVoxfJgYygQZvBoWW9UVFobhfqPXZIZCeeNWtbm3J4vzs9FrLp6Qob7ySnQJBI23TeFjBc3nLPSenBkxlBOInECcGQNnCWbhoNBCM7ruJQE2na3MdVtsjBobSflQnjkg03fq0Dipi9ch4VK3m50g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juzO2ZNO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kljF1jlrIqeg3cBswASA8m1QQwWd3tTNXrO6a5763h/kIF0cx/DbtOeZxSp/YlEBv5i5+Ox+6Hk9kIJlfIK9qrVKk5AMp3l1ZDYM/Ib2BIX8oP9+iBGp39YjZd2dJ45ra6aKkuB6GS48yNFe1vdRsV599WCeBksjXvEd0xBxKT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trZv2vjx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juzO2ZNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15FFC4CEF1;
-	Tue, 26 Aug 2025 13:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trZv2vjx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C866C113D0;
+	Tue, 26 Aug 2025 13:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215096;
-	bh=0gkdsYPfGYclXAlNfIRapktOZGcLqQeSD/0MT6A2e/U=;
+	s=korg; t=1756215098;
+	bh=9v9clRWBc46xBEqsjv1TRhCzlHEJsMvbkAl0fLiPQsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juzO2ZNO4QbIg859/Q7bEsxantckiPHxpyzAJO04jol/C5lo1tpj86FeQZlxVEUWO
-	 qn3NagX14M9/tJthb4bFwII2yRbL4n8fFkPU81fR53WcgM52bxD0sd7TPbotQXHq/7
-	 aJFikFSGgqxVDT1GaLoGEPGvVYSYJJKK8eubz9P8=
+	b=trZv2vjxe8Vsh+6hCd6aC1C2grvf0mKnc1F0pa3m0UvXB+3OMoyeVRYU5lxH1awGl
+	 pi9mg901n189d9IRaImilq+02lKpzfTP08PRNG9ZCGl8Blp1jsqqpmroFrT6UyOJOS
+	 nc2xF/wxZM/zKvG6DnM0McMSrGJLQha5AHVlCIQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 355/482] block: reject invalid operation in submit_bio_noacct
-Date: Tue, 26 Aug 2025 13:10:08 +0200
-Message-ID: <20250826110939.604598711@linuxfoundation.org>
+Subject: [PATCH 6.1 356/482] block: Make REQ_OP_ZONE_FINISH a write operation
+Date: Tue, 26 Aug 2025 13:10:09 +0200
+Message-ID: <20250826110939.629395774@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,102 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 1c042f8d4bc342b7985b1de3d76836f1a1083b65 ]
+[ Upstream commit 3f66ccbaaef3a0c5bd844eab04e3207b4061c546 ]
 
-submit_bio_noacct allows completely invalid operations, or operations
-that are not supported in the bio path.  Extent the existing switch
-statement to rejcect all invalid types.
+REQ_OP_ZONE_FINISH is defined as "12", which makes
+op_is_write(REQ_OP_ZONE_FINISH) return false, despite the fact that a
+zone finish operation is an operation that modifies a zone (transition
+it to full) and so should be considered as a write operation (albeit
+one that does not transfer any data to the device).
 
-Move the code point for REQ_OP_ZONE_APPEND so that it's not right in the
-middle of the zone management operations and the switch statement can
-follow the numerical order of the operations.
+Fix this by redefining REQ_OP_ZONE_FINISH to be an odd number (13), and
+redefine REQ_OP_ZONE_RESET and REQ_OP_ZONE_RESET_ALL using sequential
+odd numbers from that new value.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20231221070538.1112446-1-hch@lst.de
+Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250625093327.548866-2-dlemoal@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 3f66ccbaaef3 ("block: Make REQ_OP_ZONE_FINISH a write operation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-core.c          |   26 +++++++++++++++++++++-----
- include/linux/blk_types.h |    8 ++++----
- 2 files changed, 25 insertions(+), 9 deletions(-)
+ include/linux/blk_types.h |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -755,6 +755,15 @@ void submit_bio_noacct(struct bio *bio)
- 		bio_clear_polled(bio);
- 
- 	switch (bio_op(bio)) {
-+	case REQ_OP_READ:
-+	case REQ_OP_WRITE:
-+		break;
-+	case REQ_OP_FLUSH:
-+		/*
-+		 * REQ_OP_FLUSH can't be submitted through bios, it is only
-+		 * synthetized in struct request by the flush state machine.
-+		 */
-+		goto not_supported;
- 	case REQ_OP_DISCARD:
- 		if (!bdev_max_discard_sectors(bdev))
- 			goto not_supported;
-@@ -768,6 +777,10 @@ void submit_bio_noacct(struct bio *bio)
- 		if (status != BLK_STS_OK)
- 			goto end_io;
- 		break;
-+	case REQ_OP_WRITE_ZEROES:
-+		if (!q->limits.max_write_zeroes_sectors)
-+			goto not_supported;
-+		break;
- 	case REQ_OP_ZONE_RESET:
- 	case REQ_OP_ZONE_OPEN:
- 	case REQ_OP_ZONE_CLOSE:
-@@ -779,12 +792,15 @@ void submit_bio_noacct(struct bio *bio)
- 		if (!bdev_is_zoned(bio->bi_bdev) || !blk_queue_zone_resetall(q))
- 			goto not_supported;
- 		break;
--	case REQ_OP_WRITE_ZEROES:
--		if (!q->limits.max_write_zeroes_sectors)
--			goto not_supported;
--		break;
-+	case REQ_OP_DRV_IN:
-+	case REQ_OP_DRV_OUT:
-+		/*
-+		 * Driver private operations are only used with passthrough
-+		 * requests.
-+		 */
-+		fallthrough;
- 	default:
--		break;
-+		goto not_supported;
- 	}
- 
- 	if (blk_throtl_bio(bio))
 --- a/include/linux/blk_types.h
 +++ b/include/linux/blk_types.h
-@@ -366,6 +366,8 @@ enum req_op {
- 	REQ_OP_DISCARD		= (__force blk_opf_t)3,
- 	/* securely erase sectors */
- 	REQ_OP_SECURE_ERASE	= (__force blk_opf_t)5,
-+	/* write data at the current zone write pointer */
-+	REQ_OP_ZONE_APPEND	= (__force blk_opf_t)7,
- 	/* write the zero filled sector many times */
- 	REQ_OP_WRITE_ZEROES	= (__force blk_opf_t)9,
- 	/* Open a zone */
-@@ -374,12 +376,10 @@ enum req_op {
+@@ -375,11 +375,11 @@ enum req_op {
+ 	/* Close a zone */
  	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)11,
  	/* Transition a zone to full */
- 	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)12,
--	/* write data at the current zone write pointer */
--	REQ_OP_ZONE_APPEND	= (__force blk_opf_t)13,
+-	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)12,
++	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)13,
  	/* reset a zone write pointer */
--	REQ_OP_ZONE_RESET	= (__force blk_opf_t)15,
-+	REQ_OP_ZONE_RESET	= (__force blk_opf_t)13,
+-	REQ_OP_ZONE_RESET	= (__force blk_opf_t)13,
++	REQ_OP_ZONE_RESET	= (__force blk_opf_t)15,
  	/* reset all the zone present on the device */
--	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)17,
-+	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)15,
+-	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)15,
++	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)17,
  
  	/* Driver private requests */
  	REQ_OP_DRV_IN		= (__force blk_opf_t)34,
