@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C073C1FECAB;
-	Tue, 26 Aug 2025 11:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA9F393DD1;
+	Tue, 26 Aug 2025 11:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208500; cv=none; b=fOzMCUm22Bs7bNO+HyQtFU69ksKFlgUx2keOqSb+C//2eQPjdNwfe2Bzt9hCVynYJZkli7RqpTHPiI6tlcCKzCz6hWXaC7XvUqeGMHKfAwBHF+cqSV1wMRYgobldIW9oYSJbipHOVOYuUmdGlOfxI59bFVnHpiDsZKn2EX56QrQ=
+	t=1756208503; cv=none; b=TQTx6uJyB6gyNGDQRSOsRAqYz99jYvUWQXSbgg/a5mp91zdtNWZjLuFvT8VlGTu2MiagPWo5Vg9NJJhB74RyIhkowjUTr0VxnbQh9sRU+N1LBhhMo8LwTdzbg2vAP9ao+LbXGFGSCIlZLQjtY+BV0Wnr+mkMBa3Cii3/xGFPl38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208500; c=relaxed/simple;
-	bh=i8CIqQp+P7jcr2rTynEZTtINULnONQQIJXxPJlbKbag=;
+	s=arc-20240116; t=1756208503; c=relaxed/simple;
+	bh=t0tp/LKbCYAyi/pr8ppxKL1Hej57cOU3oCbZqawdCSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sy0HxnVjH/kjcxQGbKf50Ad2mqvUuhDLUszcWujct66ViD48hMJfH0NqY+tUqui4XoGk4h8ilFWPalfrY/cEmABw1RBzMDkqGTXVlG3iNMkty6H2EXI80Wo2so0QlGzRwAtRMPgaRTcHvH/f62lBojQiIs/uc9nJCj6lPqeIw3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNvhyl8m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hg+VB5B9+iho78RD9chmB8DZmhLdXp3n8M5SRi5guTN0VYJl8XNW7Aj5KDqACJN0DtG0lSmEudrU8CkaiNF7+9QXt217AwpCzoT4yvlhrKie2qxIJLpXOkTXTV4Q5Nxf3LrFxjPUljrUNsSBf0bp+MU+t/K+9ExIkOubojvSPBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eS5BoY8Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNvhyl8m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5116CC4CEF1;
-	Tue, 26 Aug 2025 11:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eS5BoY8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE875C4CEF1;
+	Tue, 26 Aug 2025 11:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208500;
-	bh=i8CIqQp+P7jcr2rTynEZTtINULnONQQIJXxPJlbKbag=;
+	s=korg; t=1756208503;
+	bh=t0tp/LKbCYAyi/pr8ppxKL1Hej57cOU3oCbZqawdCSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fNvhyl8mNWsCJSuMTxtGabL0LQ0UxDzDB1n4QbcKOIqIAwYTQWDn9+ng+RIvVaE87
-	 VOW4QqdzfDykdZIX6YIA17tO4yQi2OK3ZZ/e/OJFv136TvqgfvHwErrGieUpL6sGJQ
-	 hGE5NcB+aQyjUjpJD0ka3AT0y4Hz/0e4K8Lpu4JA=
+	b=eS5BoY8ZCkt/7TCL45+Ob2ctcTkUiBL9XMOgYcEF3jJo9PohJ+KR1AMg5YtzQVXEz
+	 +NGWQVTnuf9DWcwAy6vHrk3AIHAblaaLewam5nYuNl6+CGBHqjQHYZhZGCkL3OitnM
+	 XDCLJJc96CZB8h4L1up+suX10sQFd9hmmoN5505g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Govindarajulu, Hariganesh" <hariganesh.govindarajulu@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 134/322] ACPI: pfr_update: Fix the driver update version check
-Date: Tue, 26 Aug 2025 13:09:09 +0200
-Message-ID: <20250826110919.109308438@linuxfoundation.org>
+	Christoph Paasch <cpaasch@openai.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 135/322] mptcp: drop skb if MPTCP skb extension allocation fails
+Date: Tue, 26 Aug 2025 13:09:10 +0200
+Message-ID: <20250826110919.136148599@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,49 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yu <yu.c.chen@intel.com>
+From: Christoph Paasch <cpaasch@openai.com>
 
-commit 8151320c747efb22d30b035af989fed0d502176e upstream.
+commit ccab044697980c6c01ab51f43f48f13b8a3e5c33 upstream.
 
-The security-version-number check should be used rather
-than the runtime version check for driver updates.
+When skb_ext_add(skb, SKB_EXT_MPTCP) fails in mptcp_incoming_options(),
+we used to return true, letting the segment proceed through the TCP
+receive path without a DSS mapping. Such segments can leave inconsistent
+mapping state and trigger a mid-stream fallback to TCP, which in testing
+collapsed (by artificially forcing failures in skb_ext_add) throughput
+to zero.
 
-Otherwise, the firmware update would fail when the update binary had
-a lower runtime version number than the current one.
+Return false instead so the TCP input path drops the skb (see
+tcp_data_queue() and step-7 processing). This is the safer choice
+under memory pressure: it preserves MPTCP correctness and provides
+backpressure to the sender.
 
-Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
-Cc: 5.17+ <stable@vger.kernel.org> # 5.17+
-Reported-by: "Govindarajulu, Hariganesh" <hariganesh.govindarajulu@intel.com>
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
-Link: https://patch.msgid.link/20250722143233.3970607-1-yu.c.chen@intel.com
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Control packets remain unaffected: ACK updates and DATA_FIN handling
+happen before attempting the extension allocation, and tcp_reset()
+continues to ignore the return value.
+
+With this change, MPTCP continues to work at high throughput if we
+artificially inject failures into skb_ext_add.
+
+Fixes: 6787b7e350d3 ("mptcp: avoid processing packet if a subflow reset")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christoph Paasch <cpaasch@openai.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-1-521fe9957892@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/pfr_update.c  |    2 +-
- include/uapi/linux/pfrut.h |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ net/mptcp/options.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -310,7 +310,7 @@ static bool applicable_image(const void
- 	if (type == PFRU_CODE_INJECT_TYPE)
- 		return payload_hdr->rt_ver >= cap->code_rt_version;
- 
--	return payload_hdr->rt_ver >= cap->drv_rt_version;
-+	return payload_hdr->svn_ver >= cap->drv_svn;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -1118,7 +1118,9 @@ static bool add_addr_hmac_valid(struct m
+ 	return hmac == mp_opt->ahmac;
  }
  
- static void print_update_debug_info(struct pfru_updated_result *result,
---- a/include/uapi/linux/pfrut.h
-+++ b/include/uapi/linux/pfrut.h
-@@ -89,6 +89,7 @@ struct pfru_payload_hdr {
- 	__u32 hw_ver;
- 	__u32 rt_ver;
- 	__u8 platform_id[16];
-+	__u32 svn_ver;
- };
+-/* Return false if a subflow has been reset, else return true */
++/* Return false in case of error (or subflow has been reset),
++ * else return true.
++ */
+ bool mptcp_incoming_options(struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
+@@ -1222,7 +1224,7 @@ bool mptcp_incoming_options(struct sock
  
- enum pfru_dsm_status {
+ 	mpext = skb_ext_add(skb, SKB_EXT_MPTCP);
+ 	if (!mpext)
+-		return true;
++		return false;
+ 
+ 	memset(mpext, 0, sizeof(*mpext));
+ 
 
 
