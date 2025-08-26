@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F1A345726;
-	Tue, 26 Aug 2025 14:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C61A352060;
+	Tue, 26 Aug 2025 14:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218902; cv=none; b=IeP+nIDb1vpl/BTY1Q4JJuzduX+RXn+XFF9XWZ+T3OTXUMW6t8SSO5dNRl8p3ONKmoyuhB+Y2+WD+Q01fOias72KGm7JaotFwQL5hF3NsY0Wl5kehtM+GhH6IPxsnpEqdmkmLm7RyLDDJUExUg6DFzxPngCRLKSADQ1ndbJgNHQ=
+	t=1756218905; cv=none; b=tReXi4lZXTkbSL6q4glAHXr/PGywFsD879FLOVMJXGscwZ6AGv0V4eS7O1vN7QfrHK/PZJIg1ZtulagPXv28wFoDOYHX6HtDwM0sEneFHTLWBlbV+p4pGo9AQlbaBfACi3djtef+DY6FndY0P4tnOHNU7NnnSY/wMIvPgxfZsY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218902; c=relaxed/simple;
-	bh=RWcR3ug6eJ4wVmUA/QQNXmWy9BvBd23zi/4MxOsgM7s=;
+	s=arc-20240116; t=1756218905; c=relaxed/simple;
+	bh=Wy4VdjflSxxJvdE7cnx6PNcosV1qz0W2u08db/Xqk3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YGvGf/1phXvTLNqo4EOrh/Au7NVaQto0H5ZuR+xqNZ+sBf2guC8qhhdATBTVh2X4iNSBkJ7OukE2KLW4JgYpdKXOqciOk3u8BAByzIYol07PzlKWFdbtgkRmzCnvm5jASUyOCIiw7g+jdMnZOY/HcYm/0MW8FpZSoNRAJzIuQHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGdT6q1X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kTaHr3zRS15yEeG6bMbf+KEuDuVnOBbzwidOqpEET/7WWlb92lJAnk6z4sVXp9Jaos0U4vBl1Ps5mVijSz8KQLhKJK9oju8ca4Re9brG0LvISS0JT7DiPD6siBZJMDNZGu/xfXsj1MXah+gcsS76gJbsEUeBF5jRY7qIsdkOEiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1l18RKX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGdT6q1X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A02C4CEF1;
-	Tue, 26 Aug 2025 14:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1l18RKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3ACC4CEF1;
+	Tue, 26 Aug 2025 14:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218902;
-	bh=RWcR3ug6eJ4wVmUA/QQNXmWy9BvBd23zi/4MxOsgM7s=;
+	s=korg; t=1756218905;
+	bh=Wy4VdjflSxxJvdE7cnx6PNcosV1qz0W2u08db/Xqk3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGdT6q1XjpqXAMGwO1KrttYS07WQrYMfxw214S/IfpqmLONxsdOAZT45Np7nh9O/+
-	 RJ9rPmVqk6JRZql3wu7OmLXIWt5kGgQ2sQvqEeNFmQPR/Aw+ibHI9bJT+qa1dIr68h
-	 cm2Cu5BmJbrGsL7AGkqjujNvlQHGjMjCRYe5PlZA=
+	b=d1l18RKX2jUDxT0Ll12w+MDvj9ZSUN+G1860FHjAm4bp9T2+wsEpoXKN7agTg8mUl
+	 dOW7WF74lFOvJz3ZW3sH06HhZNqHVZT5uzWpzFUakuV/9SiM6Zhl1PwZCCmSKekx77
+	 SNTtmL3yElQfNV1SActsK8YK+UmL2+q7qSBgDUK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarah Newman <srn@prgmr.com>,
-	Lars Ellenberg <lars@linbit.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 177/403] drbd: add missing kref_get in handle_write_conflicts
-Date: Tue, 26 Aug 2025 13:08:23 +0200
-Message-ID: <20250826110911.776108244@linuxfoundation.org>
+	Quang Le <quanglex97@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 151/403] net/packet: fix a race in packet_set_ring() and packet_notifier()
+Date: Tue, 26 Aug 2025 13:07:57 +0200
+Message-ID: <20250826110911.047635612@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -47,69 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sarah Newman <srn@prgmr.com>
+From: Quang Le <quanglex97@gmail.com>
 
-[ Upstream commit 00c9c9628b49e368d140cfa61d7df9b8922ec2a8 ]
+commit 01d3c8417b9c1b884a8a981a3b886da556512f36 upstream.
 
-With `two-primaries` enabled, DRBD tries to detect "concurrent" writes
-and handle write conflicts, so that even if you write to the same sector
-simultaneously on both nodes, they end up with the identical data once
-the writes are completed.
+When packet_set_ring() releases po->bind_lock, another thread can
+run packet_notifier() and process an NETDEV_UP event.
 
-In handling "superseeded" writes, we forgot a kref_get,
-resulting in a premature drbd_destroy_device and use after free,
-and further to kernel crashes with symptoms.
+This race and the fix are both similar to that of commit 15fe076edea7
+("net/packet: fix a race in packet_bind() and packet_notifier()").
 
-Relevance: No one should use DRBD as a random data generator, and apparently
-all users of "two-primaries" handle concurrent writes correctly on layer up.
-That is cluster file systems use some distributed lock manager,
-and live migration in virtualization environments stops writes on one node
-before starting writes on the other node.
+There too the packet_notifier NETDEV_UP event managed to run while a
+po->bind_lock critical section had to be temporarily released. And
+the fix was similarly to temporarily set po->num to zero to keep
+the socket unhooked until the lock is retaken.
 
-Which means that other than for "test cases",
-this code path is never taken in real life.
+The po->bind_lock in packet_set_ring and packet_notifier precede the
+introduction of git history.
 
-FYI, in DRBD 9, things are handled differently nowadays.  We still detect
-"write conflicts", but no longer try to be smart about them.
-We decided to disconnect hard instead: upper layers must not submit concurrent
-writes. If they do, that's their fault.
-
-Signed-off-by: Sarah Newman <srn@prgmr.com>
-Signed-off-by: Lars Ellenberg <lars@linbit.com>
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Link: https://lore.kernel.org/r/20250627095728.800688-1-christoph.boehmwalder@linbit.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quang Le <quanglex97@gmail.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250801175423.2970334-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/drbd/drbd_receiver.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/packet/af_packet.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
-index d94f41a0abbe..d75050b0d1b3 100644
---- a/drivers/block/drbd/drbd_receiver.c
-+++ b/drivers/block/drbd/drbd_receiver.c
-@@ -2531,7 +2531,11 @@ static int handle_write_conflicts(struct drbd_device *device,
- 			peer_req->w.cb = superseded ? e_send_superseded :
- 						   e_send_retry_write;
- 			list_add_tail(&peer_req->w.list, &device->done_ee);
--			queue_work(connection->ack_sender, &peer_req->peer_device->send_acks_work);
-+			/* put is in drbd_send_acks_wf() */
-+			kref_get(&device->kref);
-+			if (!queue_work(connection->ack_sender,
-+					&peer_req->peer_device->send_acks_work))
-+				kref_put(&device->kref, drbd_destroy_device);
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -4504,10 +4504,10 @@ static int packet_set_ring(struct sock *
+ 	spin_lock(&po->bind_lock);
+ 	was_running = po->running;
+ 	num = po->num;
+-	if (was_running) {
+-		WRITE_ONCE(po->num, 0);
++	WRITE_ONCE(po->num, 0);
++	if (was_running)
+ 		__unregister_prot_hook(sk, false);
+-	}
++
+ 	spin_unlock(&po->bind_lock);
  
- 			err = -ENOENT;
- 			goto out;
--- 
-2.39.5
-
+ 	synchronize_net();
+@@ -4539,10 +4539,10 @@ static int packet_set_ring(struct sock *
+ 	mutex_unlock(&po->pg_vec_lock);
+ 
+ 	spin_lock(&po->bind_lock);
+-	if (was_running) {
+-		WRITE_ONCE(po->num, num);
++	WRITE_ONCE(po->num, num);
++	if (was_running)
+ 		register_prot_hook(sk);
+-	}
++
+ 	spin_unlock(&po->bind_lock);
+ 	if (pg_vec && (po->tp_version > TPACKET_V2)) {
+ 		/* Because we don't support block-based V3 on tx-ring */
 
 
