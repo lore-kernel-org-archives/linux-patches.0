@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384BF299A94;
-	Tue, 26 Aug 2025 14:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95E02AE68;
+	Tue, 26 Aug 2025 14:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217669; cv=none; b=dsw/4UyllP7+qHexGRDjmb/ObLi45ZgqZW5LYCyQUnp5EAXLlAAUTxfHjGAfFvRjIo2RPgEYgR4g4xatydXELocdOd8y3WUTduCAq+WrJaVz8pHBQdL7v4gPkU4OrpX9npfRqbTetM0lYnSwp0uh89BAoq2qzkOihNGV8hlVsIk=
+	t=1756217671; cv=none; b=KVzsK/+ZSTUCojf2FltqfyfVu8Hx4z2Dza3Wqp2K/Ft8IgN0as0u/kX5yRBXBvm9g1fluejNzOL+icoobJ7NG1ilCwIXquyQxaSguKJ9lMEfs/0NAhySRh5jFfHgfEGkbVtEzuBQrVGpjsUTDy46WAq2dkLOAT+iYRmxrnT+iBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217669; c=relaxed/simple;
-	bh=xBf2r3cZqZLQTw0+l1s0COfgz2tLDngl/7FsCdVj0vI=;
+	s=arc-20240116; t=1756217671; c=relaxed/simple;
+	bh=1/pW0s9acS90zlLQGjZiqV2yPoQ0LTZTYbyXrkb7cNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFkXGvVpiOMCV/OsT4FCQwsAnOUbg44FFElBvwDWN9RI4fx/wej0BAcqM1AwtITTu+S7++uF2Ms+g3gMmU5O5EZ716+rXnbOhAKBYd7uGGs11qQmOjiHPsZzG1hrp8OM6vjGwPghPRqfYs8TNZ+2utbIVNAger85qX+0TgsSA5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRnGdg13; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aauqlNWnja+mX4R4xHGejo4v/E+UJGOKJUJmnVAP04mGMk8YZ2mw203v/qHrpYGRg6dqylr18xZo8kcl9+UsTAcuypxl+YZFai2aV3v5IyfZmG91uGBcMGVCBG12KMwHkPA/2h/dbDONmIcvUyRZ0vbpcbDLayhK62Sbd0dd+0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7q4U9Br; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRnGdg13"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF848C113CF;
-	Tue, 26 Aug 2025 14:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7q4U9Br"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFDEC4CEF1;
+	Tue, 26 Aug 2025 14:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217669;
-	bh=xBf2r3cZqZLQTw0+l1s0COfgz2tLDngl/7FsCdVj0vI=;
+	s=korg; t=1756217671;
+	bh=1/pW0s9acS90zlLQGjZiqV2yPoQ0LTZTYbyXrkb7cNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LRnGdg13klg5SozK53OEwv5dgmfAI+6aGGH6fDBx5Tdi2PdLgpWIAY8FfDVNwGsMe
-	 3OfFjIZ/3KMxNn4/NVHFWf3CA7zDm7InXXJMAie6sIhPlRwKQTvtCbQ2f2zpG0SY9D
-	 QWwyJXgmIvWCmX5AIv1bi9it5v+QV47J1lraNuBc=
+	b=J7q4U9BrEA9NC/GjRmZX8L1Oh/v/XDEQAzyE+go1o8dCeeIsANDDlDMcvYKZ5Ba+p
+	 Y1aHHDPciW5uJT16iClf7/9vUObTjX/NugAnmeuGgFJwV6XFX+42XTFKI1V57I1IlW
+	 9Jkji2qZ75LlpzBQ2lgL1ua1aljG88CsNFJ5SBEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 203/523] ACPI: processor: perflib: Fix initial _PPC limit application
-Date: Tue, 26 Aug 2025 13:06:53 +0200
-Message-ID: <20250826110929.453637438@linuxfoundation.org>
+	Alexander Kochetkov <al.kochet@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 230/523] ARM: rockchip: fix kernel hang during smp initialization
+Date: Tue, 26 Aug 2025 13:07:20 +0200
+Message-ID: <20250826110930.127367955@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,80 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: Alexander Kochetkov <al.kochet@gmail.com>
 
-commit d33bd88ac0ebb49e7f7c8f29a8c7ee9eae85d765 upstream.
+[ Upstream commit 7cdb433bb44cdc87dc5260cdf15bf03cc1cd1814 ]
 
-If the BIOS sets a _PPC frequency limit upfront, it will fail to take
-effect due to a call ordering issue.  Namely, freq_qos_update_request()
-is called before freq_qos_add_request() for the given request causing
-the constraint update to be ignored.  The call sequence in question is
-as follows:
+In order to bring up secondary CPUs main CPU write trampoline
+code to SRAM. The trampoline code is written while secondary
+CPUs are powered on (at least that true for RK3188 CPU).
+Sometimes that leads to kernel hang. Probably because secondary
+CPU execute trampoline code while kernel doesn't expect.
 
-cpufreq_policy_online()
-  acpi_cpufreq_cpu_init()
-    acpi_processor_register_performance()
-      acpi_processor_get_performance_info()
-        acpi_processor_get_platform_limit()
-         freq_qos_update_request(&perflib_req) <- inactive QoS request
-  blocking_notifier_call_chain(&cpufreq_policy_notifier_list,
-                               CPUFREQ_CREATE_POLICY)
-    acpi_processor_notifier()
-      acpi_processor_ppc_init()
-        freq_qos_add_request(&perflib_req) <- QoS request activation
+The patch moves SRAM initialization step to the point where all
+secondary CPUs are powered down.
 
-Address this by adding an acpi_processor_get_platform_limit() call
-to acpi_processor_ppc_init(), after the perflib_req activation via
-freq_qos_add_request(), which causes the initial _PPC limit to be
-picked up as appropriate.  However, also ensure that the _PPC limit
-will not be picked up in the cases when the cpufreq driver does not
-call acpi_processor_register_performance() by adding a pr->performance
-check to the related_cpus loop in acpi_processor_ppc_init().
+That fixes rarely hangs on RK3188:
+[    0.091568] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+[    0.091996] rockchip_smp_prepare_cpus: ncores 4
 
-Fixes: d15ce412737a ("ACPI: cpufreq: Switch to QoS requests instead of cpufreq notifier")
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
-Link: https://patch.msgid.link/20250721032606.3459369-1-lijiayi@kylinos.cn
-[ rjw: Consolidate pr-related checks in acpi_processor_ppc_init() ]
-[ rjw: Subject and changelog adjustments ]
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 2d8b39a62a5d ACPI: processor: Avoid NULL pointer dereferences at init time
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 3000ce3c52f8 cpufreq: Use per-policy frequency QoS
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: a1bb46c36ce3 ACPI: processor: Add QoS requests for all CPUs
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
+Link: https://lore.kernel.org/r/20250703140453.1273027-1-al.kochet@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_perflib.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/arm/mach-rockchip/platsmp.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/acpi/processor_perflib.c
-+++ b/drivers/acpi/processor_perflib.c
-@@ -176,11 +176,14 @@ void acpi_processor_ppc_init(struct cpuf
- {
- 	unsigned int cpu;
- 
-+	if (ignore_ppc == 1)
-+		return;
-+
- 	for_each_cpu(cpu, policy->related_cpus) {
- 		struct acpi_processor *pr = per_cpu(processors, cpu);
- 		int ret;
- 
--		if (!pr)
-+		if (!pr || !pr->performance)
- 			continue;
- 
- 		/*
-@@ -196,6 +199,11 @@ void acpi_processor_ppc_init(struct cpuf
- 		if (ret < 0)
- 			pr_err("Failed to add freq constraint for CPU%d (%d)\n",
- 			       cpu, ret);
-+
-+		ret = acpi_processor_get_platform_limit(pr);
-+		if (ret)
-+			pr_err("Failed to update freq constraint for CPU%d (%d)\n",
-+			       cpu, ret);
+diff --git a/arch/arm/mach-rockchip/platsmp.c b/arch/arm/mach-rockchip/platsmp.c
+index d60856898d97..17aee4701e81 100644
+--- a/arch/arm/mach-rockchip/platsmp.c
++++ b/arch/arm/mach-rockchip/platsmp.c
+@@ -279,11 +279,6 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
  	}
+ 
+ 	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
+-		if (rockchip_smp_prepare_sram(node)) {
+-			of_node_put(node);
+-			return;
+-		}
+-
+ 		/* enable the SCU power domain */
+ 		pmu_set_power_domain(PMU_PWRDN_SCU, true);
+ 
+@@ -316,11 +311,19 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
+ 		asm ("mrc p15, 1, %0, c9, c0, 2\n" : "=r" (l2ctlr));
+ 		ncores = ((l2ctlr >> 24) & 0x3) + 1;
+ 	}
+-	of_node_put(node);
+ 
+ 	/* Make sure that all cores except the first are really off */
+ 	for (i = 1; i < ncores; i++)
+ 		pmu_set_power_domain(0 + i, false);
++
++	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
++		if (rockchip_smp_prepare_sram(node)) {
++			of_node_put(node);
++			return;
++		}
++	}
++
++	of_node_put(node);
  }
  
+ static void __init rk3036_smp_prepare_cpus(unsigned int max_cpus)
+-- 
+2.39.5
+
 
 
