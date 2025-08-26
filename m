@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5C3341ABD;
-	Tue, 26 Aug 2025 14:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECCF3570C3;
+	Tue, 26 Aug 2025 14:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217540; cv=none; b=Ltp2kxzq8akFEBcVs6iKemLxjtm16qxEznXcmkh4jMtzr4FJk3/8XjgPyiB+esaDzAIu4VOt7BqwSV+roIXdGQQrncIRSIUdBKNo9KcJEyBPGYxHDBW4I/0pQj89RqI6X8MiUhGHPAkC60XdkH6Ev0MjfNMV3iHadJbSNq2SVBA=
+	t=1756217543; cv=none; b=eYapIUQuuHelGeFOB2xNaKAG0TV0e7UMoAaikpIZVDpX8XUk7ufWrf+FY9Cfj1zwMawx/vVnbvEIH0zjtXqybQ8uAsFlONFDXZnuuL5pfXXg5Q08Kg3zDWc7NpYhPo5vmDAAWhnUewLeHZ1UB3+qm2IN2KoYeOgTaM5+Gt2S4As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217540; c=relaxed/simple;
-	bh=meHM0PVcuoRsfEPi+9//YEiW24jDMKu+40jGdTePRfo=;
+	s=arc-20240116; t=1756217543; c=relaxed/simple;
+	bh=Zz22X1dCoNMir2G1018J6kgmm72/SFJ4HWd9H0pMNDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fb55bZ0PV45OkmX9cTcQnBVLL+CsGgyjVLmzDkDGJd2pJ09WTc1k9CdnRlU0EbfsbS2q3uS1xADBxEOKo8u2hhkDKAOQxeO7inCad+0t63SzqDXeFtVEyTV27uj+QROCknQX4H3lu0OFUCX3//GrEYZVvSd7Gzv8i0U0W/oo3/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/yanCvp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bJjDV9QHFVCXVIBuX9amhWa5QR2wrM4hrGWrA0FvWNxKcpwCTlslFtg09v72MD3bhusXQEgbeOhJYg0ngQrg6OVVhDvJ6Cr/R+NmJsvA+8xNGA311Z3ncU+eDMOVF/lLHZN77Crx4EOEiovIkMgPA5PSkemHMl20ndFHkhL95j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6B+uq66; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/yanCvp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E198BC4CEF1;
-	Tue, 26 Aug 2025 14:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6B+uq66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85350C4CEF1;
+	Tue, 26 Aug 2025 14:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217540;
-	bh=meHM0PVcuoRsfEPi+9//YEiW24jDMKu+40jGdTePRfo=;
+	s=korg; t=1756217542;
+	bh=Zz22X1dCoNMir2G1018J6kgmm72/SFJ4HWd9H0pMNDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/yanCvpB5ukcLTFK0wo3zP1jMGymshL3OCx00ym2dRa7F5f4omOEZUbrP/OgazPs
-	 XBozwsoBed6u4gFyub2upqoWG+E7pi+aiHRdI8EPmKAEUMnPv/TZNFE9Ri9j1l3lsQ
-	 sn41Dl2JwzGGGzmLm9UKTzAlzxwAwOR9U1AI8wIY=
+	b=z6B+uq66Nupet0FuqO2Sy8P9+Wn7dS22wqCGnGb5Qcc2NSohKvpgMJoL2Zb0kAdg8
+	 kjnax2GqpiNqTD7GkA2eAvoneGyPJAcB5BzkvQovbdHj5aPjVjzKR0HmtvTbm9s59U
+	 QZEiLC+sACAZtfMDKsaug7KqU/s5pxzvYMAIBU8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+27d7cfbc93457e472e00@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 182/523] pptp: fix pptp_xmit() error path
-Date: Tue, 26 Aug 2025 13:06:32 +0200
-Message-ID: <20250826110928.944623905@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Subject: [PATCH 5.10 183/523] perf/core: Dont leak AUX buffer refcount on allocation failure
+Date: Tue, 26 Aug 2025 13:06:33 +0200
+Message-ID: <20250826110928.968930080@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,84 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit ae633388cae349886f1a3cfb27aa092854b24c1b ]
+commit 5468c0fbccbb9d156522c50832244a8b722374fb upstream.
 
-I accidentally added a bug in pptp_xmit() that syzbot caught for us.
+Failure of the AUX buffer allocation leaks the reference count.
 
-Only call ip_rt_put() if a route has been allocated.
+Set the reference count to 1 only when the allocation succeeds.
 
-BUG: unable to handle page fault for address: ffffffffffffffdb
-PGD df3b067 P4D df3b067 PUD df3d067 PMD 0
-Oops: Oops: 0002 [#1] SMP KASAN PTI
-CPU: 1 UID: 0 PID: 6346 Comm: syz.0.336 Not tainted 6.16.0-next-20250804-syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:arch_atomic_add_return arch/x86/include/asm/atomic.h:85 [inline]
-RIP: 0010:raw_atomic_sub_return_release include/linux/atomic/atomic-arch-fallback.h:846 [inline]
-RIP: 0010:atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:327 [inline]
-RIP: 0010:__rcuref_put include/linux/rcuref.h:109 [inline]
-RIP: 0010:rcuref_put+0x172/0x210 include/linux/rcuref.h:173
-Call Trace:
- <TASK>
- dst_release+0x24/0x1b0 net/core/dst.c:167
- ip_rt_put include/net/route.h:285 [inline]
- pptp_xmit+0x14b/0x1a90 drivers/net/ppp/pptp.c:267
- __ppp_channel_push+0xf2/0x1c0 drivers/net/ppp/ppp_generic.c:2166
- ppp_channel_push+0x123/0x660 drivers/net/ppp/ppp_generic.c:2198
- ppp_write+0x2b0/0x400 drivers/net/ppp/ppp_generic.c:544
- vfs_write+0x27b/0xb30 fs/read_write.c:684
- ksys_write+0x145/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: de9c4861fb42 ("pptp: ensure minimal skb length in pptp_xmit()")
-Reported-by: syzbot+27d7cfbc93457e472e00@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/689095a5.050a0220.1fc43d.0009.GAE@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250807142146.2877060-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 45bfb2e50471 ("perf/core: Add AUX area to ring buffer for raw data streams")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ppp/pptp.c | 7 ++++---
+ kernel/events/core.c |    7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
-index 1b306562f916..3c1e7155e2bf 100644
---- a/drivers/net/ppp/pptp.c
-+++ b/drivers/net/ppp/pptp.c
-@@ -159,17 +159,17 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 	int len;
- 	unsigned char *data;
- 	__u32 seq_recv;
--	struct rtable *rt = NULL;
-+	struct rtable *rt;
- 	struct net_device *tdev;
- 	struct iphdr  *iph;
- 	int    max_headroom;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6290,9 +6290,7 @@ static int perf_mmap(struct file *file,
+ 			goto unlock;
+ 		}
  
- 	if (sk_pppox(po)->sk_state & PPPOX_DEAD)
--		goto tx_error;
-+		goto tx_drop;
+-		atomic_set(&rb->aux_mmap_count, 1);
+ 		user_extra = nr_pages;
+-
+ 		goto accounting;
+ 	}
  
- 	rt = pptp_route_output(po, &fl4);
- 	if (IS_ERR(rt))
--		goto tx_error;
-+		goto tx_drop;
+@@ -6394,8 +6392,10 @@ accounting:
+ 	} else {
+ 		ret = rb_alloc_aux(rb, event, vma->vm_pgoff, nr_pages,
+ 				   event->attr.aux_watermark, flags);
+-		if (!ret)
++		if (!ret) {
++			atomic_set(&rb->aux_mmap_count, 1);
+ 			rb->aux_mmap_locked = extra;
++		}
+ 	}
  
- 	tdev = rt->dst.dev;
+ unlock:
+@@ -6405,6 +6405,7 @@ unlock:
  
-@@ -265,6 +265,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 
- tx_error:
- 	ip_rt_put(rt);
-+tx_drop:
- 	kfree_skb(skb);
- 	return 1;
- }
--- 
-2.39.5
-
+ 		atomic_inc(&event->mmap_count);
+ 	} else if (rb) {
++		/* AUX allocation failed */
+ 		atomic_dec(&rb->mmap_count);
+ 	}
+ aux_unlock:
 
 
