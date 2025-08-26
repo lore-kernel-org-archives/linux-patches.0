@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2194220330;
-	Tue, 26 Aug 2025 11:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E34320330;
+	Tue, 26 Aug 2025 11:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208142; cv=none; b=ON3UdrRbpdFTFItFeb6k9JuiM4yg1WkkrDy+1dIYLmJXLVj0jv6tb9dBj94fB7ibrf9hVRhTxC6ayJi2s5Q4FfkjhYhNqSNwBmAdU8AHRk4OWKgZlwUk6x0Pwis9d+9039HS1mpJy+IG7guleLveZ80xpxodpFDrFFivFxxD4vQ=
+	t=1756208144; cv=none; b=R9SeDaLjKrftu9cqO1CpwnAl7AqHTjtfEJrbn/BwT8ccjx22UBXe6B6QWYGP762B3f0T8dBgoeTak4L8jK2RdOYdK9jHHiZFRIpByFczXMhrw3XqNRgbgP0vbXukwOwXZ4g9REkSsK8DNE4b0850z1iHX9dj4Rb6F6ff6UGyGfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208142; c=relaxed/simple;
-	bh=qPfJc0VW5pS6mS6mBiHlWCxqnRiBlF5lm0+BznhuHII=;
+	s=arc-20240116; t=1756208144; c=relaxed/simple;
+	bh=wnFd3va8o1lOkU4Mz7/rQyJ7/1A8Mn9key71JuqBsIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNk5eQ/4KVkMbb1Q8X/KhxTIFJmB+jFaVxuA9XBiLtdj0tUFLdFwYe2OEOhl6sJONH9K0OpibutEZ5/vPra8Ph7+IFvnbIWEKAnfA8hn4FP/0UcpNgwMIci7GJl66+mY7JDNcUB8zs9uMF1djOkj4et/kW7oF2lVK0YBQCn6blA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4nd+VRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Va302UVlw3MZfaXaDU0YiA3VLETpTRjc2FwCPQQUNWchXzOcABAlnWy9jO8dkpTepsdUD5kOQi4eSQrLOTA4KyrMQ5W+C0OreRc7js9CIRVmuKXmXq1x8fOC/+VAaRUlMjx9xKClvCsZ3/WDzqjY+yapXdbMZ9AtTrDqx2/qW94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usnk5XgP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4nd+VRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4591C4CEF1;
-	Tue, 26 Aug 2025 11:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usnk5XgP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354C6C4CEF1;
+	Tue, 26 Aug 2025 11:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208142;
-	bh=qPfJc0VW5pS6mS6mBiHlWCxqnRiBlF5lm0+BznhuHII=;
+	s=korg; t=1756208144;
+	bh=wnFd3va8o1lOkU4Mz7/rQyJ7/1A8Mn9key71JuqBsIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4nd+VRmlUQAi4VgKk3qXmZKveM1B/pUA3Z+ilRj/LNxgS/vN3qDtm+B8yaSw3Lxb
-	 bM/s7VNK40dIM0wodLJBUqXaQLwI7/ZbRHKGBbEeDn39I7qxXoiBmrN3XgyQOCEpzS
-	 nikP4ZVgFQ87wSxcDBK7iqszbCWyDRef4Zz7essM=
+	b=usnk5XgP/yB42zo2AzQdaRv2cCEOgkjaIrHqDcFvzZnEtmfbHEfUxDIa+YE4C3DuT
+	 ihTDpNp/t49qN58F9qI+cXKFw31awR6AFqOqnEUgXho5yZPaqV3W5GxiFCefumnp9f
+	 tpvQKjk99fD/RwQbfH5dDNLFptY7kOkBJdgtVOEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	WANG Rui <wangrui@loongson.cn>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Yao Zi <ziyao@disroot.org>,
+	Drew Fustini <fustini@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 423/457] LoongArch: Pass annotate-tablejump option if LTO is enabled
-Date: Tue, 26 Aug 2025 13:11:47 +0200
-Message-ID: <20250826110947.745812566@linuxfoundation.org>
+Subject: [PATCH 6.16 414/457] net: stmmac: thead: Enable TX clock before MAC initialization
+Date: Tue, 26 Aug 2025 13:11:38 +0200
+Message-ID: <20250826110947.526191615@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,62 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit 5dfea6644d201bfeffaa7e0d79d62309856613b7 ]
+[ Upstream commit 6d6714bf0c4e8eb2274081b4b023dfa01581c123 ]
 
-When compiling with LLVM and CONFIG_LTO_CLANG is set, there exist many
-objtool warnings "sibling call from callable instruction with modified
-stack frame".
+The clk_tx_i clock must be supplied to the MAC for successful
+initialization. On TH1520 SoC, the clock is provided by an internal
+divider configured through GMAC_PLLCLK_DIV register when using RGMII
+interface. However, currently we don't setup the divider before
+initialization of the MAC, resulting in DMA reset failures if the
+bootloader/firmware doesn't enable the divider,
 
-For this special case, the related object file shows that there is no
-generated relocation section '.rela.discard.tablejump_annotate' for the
-table jump instruction jirl, thus objtool can not know that what is the
-actual destination address.
+[    7.839601] thead-dwmac ffe7060000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
+[    7.938338] thead-dwmac ffe7060000.ethernet eth0: PHY [stmmac-0:02] driver [RTL8211F Gigabit Ethernet] (irq=POLL)
+[    8.160746] thead-dwmac ffe7060000.ethernet eth0: Failed to reset the dma
+[    8.170118] thead-dwmac ffe7060000.ethernet eth0: stmmac_hw_setup: DMA engine initialization failed
+[    8.179384] thead-dwmac ffe7060000.ethernet eth0: __stmmac_open: Hw setup failed
 
-It needs to do something on the LLVM side to make sure that there is the
-relocation section '.rela.discard.tablejump_annotate' if LTO is enabled,
-but in order to maintain compatibility for the current LLVM compiler,
-this can be done in the kernel Makefile for now. Ensure it is aware of
-linker with LTO, '--loongarch-annotate-tablejump' needs to be passed via
-'-mllvm' to ld.lld.
+Let's simply write GMAC_PLLCLK_DIV_EN to GMAC_PLLCLK_DIV to enable the
+divider before MAC initialization. Note that for reconfiguring the
+divisor, the divider must be disabled first and re-enabled later to make
+sure the new divisor take effect.
 
-Note that it should also pass the compiler option -mannotate-tablejump
-rather than only pass '-mllvm --loongarch-annotate-tablejump' to ld.lld
-if LTO is enabled, otherwise there are no jump info for some table jump
-instructions.
+The exact clock rate doesn't affect MAC's initialization according to my
+test. It's set to the speed required by RGMII when the linkspeed is
+1Gbps and could be reclocked later after link is up if necessary.
 
-Fixes: e20ab7d454ee ("LoongArch: Enable jump table for objtool")
-Closes: https://lore.kernel.org/loongarch/20250731175655.GA1455142@ax162/
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Co-developed-by: WANG Rui <wangrui@loongson.cn>
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 33a1a01e3afa ("net: stmmac: Add glue layer for T-HEAD TH1520 SoC")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Reviewed-by: Drew Fustini <fustini@kernel.org>
+Link: https://patch.msgid.link/20250815104803.55294-1-ziyao@disroot.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/Makefile b/arch/loongarch/Makefile
-index b0703a4e02a2..a3a9759414f4 100644
---- a/arch/loongarch/Makefile
-+++ b/arch/loongarch/Makefile
-@@ -102,7 +102,13 @@ KBUILD_CFLAGS			+= $(call cc-option,-mthin-add-sub) $(call cc-option,-Wa$(comma)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c
+index f2946bea0bc2..6c6c49e4b66f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c
+@@ -152,7 +152,7 @@ static int thead_set_clk_tx_rate(void *bsp_priv, struct clk *clk_tx_i,
+ static int thead_dwmac_enable_clk(struct plat_stmmacenet_data *plat)
+ {
+ 	struct thead_dwmac *dwmac = plat->bsp_priv;
+-	u32 reg;
++	u32 reg, div;
  
- ifdef CONFIG_OBJTOOL
- ifdef CONFIG_CC_HAS_ANNOTATE_TABLEJUMP
-+# The annotate-tablejump option can not be passed to LLVM backend when LTO is enabled.
-+# Ensure it is aware of linker with LTO, '--loongarch-annotate-tablejump' also needs to
-+# be passed via '-mllvm' to ld.lld.
- KBUILD_CFLAGS			+= -mannotate-tablejump
-+ifdef CONFIG_LTO_CLANG
-+KBUILD_LDFLAGS			+= -mllvm --loongarch-annotate-tablejump
-+endif
- else
- KBUILD_CFLAGS			+= -fno-jump-tables # keep compatibility with older compilers
- endif
+ 	switch (plat->mac_interface) {
+ 	case PHY_INTERFACE_MODE_MII:
+@@ -164,6 +164,13 @@ static int thead_dwmac_enable_clk(struct plat_stmmacenet_data *plat)
+ 	case PHY_INTERFACE_MODE_RGMII_RXID:
+ 	case PHY_INTERFACE_MODE_RGMII_TXID:
+ 		/* use pll */
++		div = clk_get_rate(plat->stmmac_clk) / rgmii_clock(SPEED_1000);
++		reg = FIELD_PREP(GMAC_PLLCLK_DIV_EN, 1) |
++		      FIELD_PREP(GMAC_PLLCLK_DIV_NUM, div);
++
++		writel(0, dwmac->apb_base + GMAC_PLLCLK_DIV);
++		writel(reg, dwmac->apb_base + GMAC_PLLCLK_DIV);
++
+ 		writel(GMAC_GTXCLK_SEL_PLL, dwmac->apb_base + GMAC_GTXCLK_SEL);
+ 		reg = GMAC_TX_CLK_EN | GMAC_TX_CLK_N_EN | GMAC_TX_CLK_OUT_EN |
+ 		      GMAC_RX_CLK_EN | GMAC_RX_CLK_N_EN;
 -- 
 2.50.1
 
