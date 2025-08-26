@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C9622DFA7;
-	Tue, 26 Aug 2025 13:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D140A1F55F8;
+	Tue, 26 Aug 2025 13:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216656; cv=none; b=S1e+Vl+TU+S/qgONxHLlwIeYM3om9XixfvaRt2QjPKZdHQQxhXGOZ5xhxv1vCTeg74XmYEd4FNj6YxJgpcqsmaHpTWrzUsRPB5tNf14+GY7pvdi1rouUY3eIuQXkALFKWpiGg/Ep4D8bRRpxcq6ohydGLuubKbjjLoY/zVKHlTw=
+	t=1756216658; cv=none; b=DtGAVULBFDcsenDePXnSegajiqjwXN2Cb+gzF4THnQ0cwKG3RGPqamP/MzupCAPFbvlszRozIAZJXhPkjaob3zWtGQ1whNQH8IJJyOWfZjRgX8OWa5QZEVsF61i1Nym5p1tR56eS1sHAlXta9GG4cSI0izh1fCX4qN/6XXnWzWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216656; c=relaxed/simple;
-	bh=iOtAc/oVwPBnT5I7WpNN/AivqaSunLBeEalY1uGEu9Y=;
+	s=arc-20240116; t=1756216658; c=relaxed/simple;
+	bh=2FcuAR/i1qZ8V+jCVl9dl13XVptVCJ1ptIVo3/HgPAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bl5Y5CchqLjnna3zhAZVLnA6LbOZdTWwgspQ7XUCMbaym9Q6LvCm61cbgO2ShNCPjwhfASvCe3zhcyctVCU+ClQcHdwcfW3KNVcnjq90/+ixPTWfHk0ek7K0AisiEMcMLRsruVE1jpfYXsftySDejDoqtsze6fT/44iRGbBe+KU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1NkXuvw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WJFBlGwDF00sTPTLQyXju98xuSJ9KcwDRTOX0xjZrmJGB2A/eItZH/vji35ADhG7sY5ZDKGyKk1FIaOyTh8zBJjvNVzKkK5H0UpSFRKSBtUPOECzeQzcVZ0W+2Gcd1Ik+i/NEcsjOdpeXqQAtut/j0mkkRZfcEamOMXRcF7Fs84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEe4usIO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1NkXuvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C13C4CEF1;
-	Tue, 26 Aug 2025 13:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEe4usIO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660A8C4CEF1;
+	Tue, 26 Aug 2025 13:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216656;
-	bh=iOtAc/oVwPBnT5I7WpNN/AivqaSunLBeEalY1uGEu9Y=;
+	s=korg; t=1756216658;
+	bh=2FcuAR/i1qZ8V+jCVl9dl13XVptVCJ1ptIVo3/HgPAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1NkXuvwDdK/SEPkpb3+XU+kC5VQ8OfHaIlbp6hSe6q7FKBXTt2ifub7mJmScmnXi
-	 4DSL7MfJNUwH8XJ4Pl+/c271G5jNcREvQC+1R59Hf7WpQN/tJpj4XAli3EUinhjB4r
-	 S5/5M4KPD4dCI+8QTMekJd9w09PnDZO5Q8m1pP8E=
+	b=NEe4usIOzM4f6eH/Prm8OqUHFGqq/gxvD+PQtxe2vyGU14wD6OCTYOicGSSK30ipq
+	 DZWX/59rNentSlGqa676T+tLJ4MtO8BvipXYlLP1gqOvvhNqj8qVnncjVLujAUiY/J
+	 XQXKHMjyFWkPSkIZF/l+2HzLx0ECS1RLg6W7jI08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vedang Nagar <quic_vnagar@quicinc.com>,
+	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
 	Dikshita Agarwal <quic_dikshita@quicinc.com>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 493/644] media: venus: Add a check for packet size after reading from shared memory
-Date: Tue, 26 Aug 2025 13:09:44 +0200
-Message-ID: <20250826110958.710549477@linuxfoundation.org>
+Subject: [PATCH 5.15 494/644] media: venus: hfi: explicitly release IRQ during teardown
+Date: Tue, 26 Aug 2025 13:09:45 +0200
+Message-ID: <20250826110958.735174833@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,47 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vedang Nagar <quic_vnagar@quicinc.com>
+From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
 
-commit 49befc830daa743e051a65468c05c2ff9e8580e6 upstream.
+commit 640803003cd903cea73dc6a86bf6963e238e2b3f upstream.
 
-Add a check to ensure that the packet size does not exceed the number of
-available words after reading the packet header from shared memory. This
-ensures that the size provided by the firmware is safe to process and
-prevent potential out-of-bounds memory access.
+Ensure the IRQ is disabled - and all pending handlers completed - before
+dismantling the interrupt routing and clearing related pointers.
+
+This prevents any possibility of the interrupt triggering after the
+handler context has been invalidated.
 
 Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
-Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Dikshita Agarwal <quic_dikshita@quicinc.com> # RB5
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/platform/qcom/venus/hfi_venus.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/media/platform/qcom/venus/hfi_venus.c
 +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -239,6 +239,7 @@ static int venus_write_queue(struct venu
- static int venus_read_queue(struct venus_hfi_device *hdev,
- 			    struct iface_queue *queue, void *pkt, u32 *tx_req)
- {
-+	struct hfi_pkt_hdr *pkt_hdr = NULL;
- 	struct hfi_queue_header *qhdr;
- 	u32 dwords, new_rd_idx;
- 	u32 rd_idx, wr_idx, type, qsize;
-@@ -304,6 +305,9 @@ static int venus_read_queue(struct venus
- 			memcpy(pkt, rd_ptr, len);
- 			memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
- 		}
-+		pkt_hdr = (struct hfi_pkt_hdr *)(pkt);
-+		if ((pkt_hdr->size >> 2) != dwords)
-+			return -EINVAL;
- 	} else {
- 		/* bad packet received, dropping */
- 		new_rd_idx = qhdr->write_idx;
+@@ -1679,6 +1679,7 @@ void venus_hfi_destroy(struct venus_core
+ 	venus_interface_queues_release(hdev);
+ 	mutex_destroy(&hdev->lock);
+ 	kfree(hdev);
++	disable_irq(core->irq);
+ 	core->ops = NULL;
+ }
+ 
 
 
