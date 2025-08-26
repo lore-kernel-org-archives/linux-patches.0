@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42D6350842;
-	Tue, 26 Aug 2025 14:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606E81662E7;
+	Tue, 26 Aug 2025 14:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217735; cv=none; b=EoNhcvqli3TdPsGrD65MnMjeNHzeN3cmdqYrC8fCr6bp56E2fiBpbqHOvgcMUM11sx31zSGLoxDgKiJ3M7UO8/VuFpl41q/Y7XVbt2RlY2IEM49ychh6SpbFCoVo6XWFVsA8djPHz1NkVKvHz3CUNiZh37FZfICrkQFLYbU+Hwc=
+	t=1756217738; cv=none; b=aJaYUM+E8+BHMrjzeoVQ1956R73ws4KqhK8Cjeqx6CNLwgjJ00btBrS48zzC8SYwWCLFZTE/4uCU+pXjylZMSohU4tWH2h8Su1LLwumFZDExvVEfbuctESZU6thw+XMDqbZvcZmBSll8hfz8QHRC76cWZE7I93bFKam+qh26Oxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217735; c=relaxed/simple;
-	bh=4wikwL6w+2c7bVgn7Mx0EnqaishQiGoJi9ebR8Ylyx4=;
+	s=arc-20240116; t=1756217738; c=relaxed/simple;
+	bh=ndH+JmSoxE6rk6uiLDZMdSSVmtvaBnv695NzwKZZYAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FS/sI+n1x26gIKlXbriDwRGmfbxi8BUVLrPg3pnzp5vIJFacwrEWXQBQ6Qabs4MxI5pbUh+zQtSSR4Tf7KfIVdqD7vMB9k1ZaW1xJWilCYvt1Uf5s5/iwZePkp60j4NvdE2JKgFuO2FAnKczV6GgKloJq+8Fv1JWMxHE/XaXxMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsjCyP9c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mtTY2pK/9N8VqK7ocYih4wXxDhTPNDkL5d6pOexkfads3qu8zoLpmbH+R1Zgu486THpKo9HxqsSu+mfvc71C9MyfFiOiWHmLs51UUVB6qxPN4yP0ZwWcPJAFzPUYCqaijXixnvl4l9rSLKUNPxoMt3CcoR7JM/MJWgpw6h1F03M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgIF4U7V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsjCyP9c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55848C113CF;
-	Tue, 26 Aug 2025 14:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgIF4U7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8EE7C4CEF1;
+	Tue, 26 Aug 2025 14:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217735;
-	bh=4wikwL6w+2c7bVgn7Mx0EnqaishQiGoJi9ebR8Ylyx4=;
+	s=korg; t=1756217738;
+	bh=ndH+JmSoxE6rk6uiLDZMdSSVmtvaBnv695NzwKZZYAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsjCyP9cXYCoY/pv1qto5mcMiB0R6QsC6bg6nyYjLIxIHlZTRk8TZRHo8uSd28l/a
-	 wZ/fMSg1yRqKUkH1iD728lYbMgCehrKHzhXRprUKNi9MEofs8YV+GQy7UozeegKnOk
-	 js5WZJrAYP5j4KabfWOux9WBaz3eq6093JWyMVCE=
+	b=wgIF4U7VW6b7zrQdZun4R3mQWuRdXJo6NaUJDwuv7tsyffjz0WdIHngeGLbPqb0U/
+	 CmN9sI/SwCvwW4CSk/IAx69P+o9zyLUYQMnmtO5HK4P4QBsF0AgOkutDC84db4Cgtm
+	 va34Ibha5f6biR/ZzLdDhhD4zWsVp83I/9AVfmyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jonathan Santos <Jonathan.Santos@analog.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 255/523] ALSA: usb-audio: Avoid precedence issues in mixer_quirks macros
-Date: Tue, 26 Aug 2025 13:07:45 +0200
-Message-ID: <20250826110930.719730251@linuxfoundation.org>
+Subject: [PATCH 5.10 256/523] iio: adc: ad7768-1: Ensure SYNC_IN pulse minimum timing requirement
+Date: Tue, 26 Aug 2025 13:07:46 +0200
+Message-ID: <20250826110930.742531185@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -45,65 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Jonathan Santos <Jonathan.Santos@analog.com>
 
-[ Upstream commit fd3ab72e42e9871a9902b945a2bf8bb87b49c718 ]
+[ Upstream commit 7e54d932873d91a55d1b89b7389876d78aeeab32 ]
 
-Fix all macro related issues identified by checkpatch.pl:
+The SYNC_IN pulse width must be at least 1.5 x Tmclk, corresponding to
+~2.5 µs at the lowest supported MCLK frequency. Add a 3 µs delay to
+ensure reliable synchronization timing even for the worst-case scenario.
 
-  CHECK: Macro argument 'x' may be better as '(x)' to avoid precedence issues
-
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-3-1a821463b632@collabora.com
+Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/d3ee92a533cd1207cf5c5cc4d7bdbb5c6c267f68.1749063024.git.Jonathan.Santos@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/iio/adc/ad7768-1.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index eee5a3ce9471..c0948922562b 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -1991,15 +1991,15 @@ static int dell_dock_mixer_init(struct usb_mixer_interface *mixer)
- #define SND_RME_CLK_FREQMUL_SHIFT		18
- #define SND_RME_CLK_FREQMUL_MASK		0x7
- #define SND_RME_CLK_SYSTEM(x) \
--	((x >> SND_RME_CLK_SYSTEM_SHIFT) & SND_RME_CLK_SYSTEM_MASK)
-+	(((x) >> SND_RME_CLK_SYSTEM_SHIFT) & SND_RME_CLK_SYSTEM_MASK)
- #define SND_RME_CLK_AES(x) \
--	((x >> SND_RME_CLK_AES_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
-+	(((x) >> SND_RME_CLK_AES_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
- #define SND_RME_CLK_SPDIF(x) \
--	((x >> SND_RME_CLK_SPDIF_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
-+	(((x) >> SND_RME_CLK_SPDIF_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
- #define SND_RME_CLK_SYNC(x) \
--	((x >> SND_RME_CLK_SYNC_SHIFT) & SND_RME_CLK_SYNC_MASK)
-+	(((x) >> SND_RME_CLK_SYNC_SHIFT) & SND_RME_CLK_SYNC_MASK)
- #define SND_RME_CLK_FREQMUL(x) \
--	((x >> SND_RME_CLK_FREQMUL_SHIFT) & SND_RME_CLK_FREQMUL_MASK)
-+	(((x) >> SND_RME_CLK_FREQMUL_SHIFT) & SND_RME_CLK_FREQMUL_MASK)
- #define SND_RME_CLK_AES_LOCK			0x1
- #define SND_RME_CLK_AES_SYNC			0x4
- #define SND_RME_CLK_SPDIF_LOCK			0x2
-@@ -2008,9 +2008,9 @@ static int dell_dock_mixer_init(struct usb_mixer_interface *mixer)
- #define SND_RME_SPDIF_FORMAT_SHIFT		5
- #define SND_RME_BINARY_MASK			0x1
- #define SND_RME_SPDIF_IF(x) \
--	((x >> SND_RME_SPDIF_IF_SHIFT) & SND_RME_BINARY_MASK)
-+	(((x) >> SND_RME_SPDIF_IF_SHIFT) & SND_RME_BINARY_MASK)
- #define SND_RME_SPDIF_FORMAT(x) \
--	((x >> SND_RME_SPDIF_FORMAT_SHIFT) & SND_RME_BINARY_MASK)
-+	(((x) >> SND_RME_SPDIF_FORMAT_SHIFT) & SND_RME_BINARY_MASK)
+diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
+index 9580a7f7f73d..883399ad80e0 100644
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -202,6 +202,24 @@ static int ad7768_spi_reg_write(struct ad7768_state *st,
+ 	return spi_write(st->spi, st->data.d8, 2);
+ }
  
- static const u32 snd_rme_rate_table[] = {
- 	32000, 44100, 48000, 50000,
++static int ad7768_send_sync_pulse(struct ad7768_state *st)
++{
++	/*
++	 * The datasheet specifies a minimum SYNC_IN pulse width of 1.5 × Tmclk,
++	 * where Tmclk is the MCLK period. The supported MCLK frequencies range
++	 * from 0.6 MHz to 17 MHz, which corresponds to a minimum SYNC_IN pulse
++	 * width of approximately 2.5 µs in the worst-case scenario (0.6 MHz).
++	 *
++	 * Add a delay to ensure the pulse width is always sufficient to
++	 * trigger synchronization.
++	 */
++	gpiod_set_value_cansleep(st->gpio_sync_in, 1);
++	fsleep(3);
++	gpiod_set_value_cansleep(st->gpio_sync_in, 0);
++
++	return 0;
++}
++
+ static int ad7768_set_mode(struct ad7768_state *st,
+ 			   enum ad7768_conv_mode mode)
+ {
+@@ -287,10 +305,7 @@ static int ad7768_set_dig_fil(struct ad7768_state *st,
+ 		return ret;
+ 
+ 	/* A sync-in pulse is required every time the filter dec rate changes */
+-	gpiod_set_value(st->gpio_sync_in, 1);
+-	gpiod_set_value(st->gpio_sync_in, 0);
+-
+-	return 0;
++	return ad7768_send_sync_pulse(st);
+ }
+ 
+ static int ad7768_set_freq(struct ad7768_state *st,
 -- 
 2.39.5
 
