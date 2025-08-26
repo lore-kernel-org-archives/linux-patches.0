@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFF21DE8BE;
-	Tue, 26 Aug 2025 14:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13B51DE8BE;
+	Tue, 26 Aug 2025 14:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216969; cv=none; b=AK9hlipOlvptTWrS78O3OXwtEZy+B9FCOZA32KgU/AD2ssXAkwxG+PTamcdF4cDKbWd0m1ChToUpi6vS04YcA++l5CpplF9NBkHmaMFY2KUZlgFz6B9H+0G0/RbEXPk7BOyU/NYhnyoz+PZ9KmmGwi4inpbysygcoyft12Kxs4s=
+	t=1756216971; cv=none; b=W0/ItuhPS/tk0C21d1AJK0+vHH7nWAcQsdrtrgyAip26pn8gEAS5F/Yeszq56Zb4D2Euvqc8P2pf0HHDNU/d+eIfCSB6SVlGJ5NqJzd3IS6Qz+IXhoX3KaVJNauD8wzoC0jqrBctlGRTPDYhm9XN0pjs+CTrvXLhoob4vLnyj24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216969; c=relaxed/simple;
-	bh=nx18LAo5tVWIJlCYOzwsxVUvvouIxOy37ioRGZvPBSg=;
+	s=arc-20240116; t=1756216971; c=relaxed/simple;
+	bh=fmpHPYIMEkLbalhS0o3iCzgmng37xVYPDQ8bCLGJfdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n5T1aEdnN6oL16GEsAvkapk1qcKCrL8RVryctpW8atS9g7pPxdpDLiv2eVq6PqMU/mROgqk5ID1Jq5pYKTRqmdXOdAyvjIZ+kRVveY89FwTBikYf7l9uALxWwNr2IUhfVWQcPCx0Rh+1ZTfzhZ6zpbv7QpD51AYIQgM08wD/EZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCpv/+iM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOlhIrK4hFJT9rKuoR+MeyVFI80tGUipZr15OkVIjMn2c5p7HUDArhEunPykoDWgaQWRcn427Uzzhwu6nN8JEHtV/jv1IGlP4dvdeRaANhW7ZkfRtd4GKylixddraF9rM3iIdKi5eTug7+0YhZhaYnE3AY1oJXlcEpxkHmcuz9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8W6mVGf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCpv/+iM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF205C4CEF1;
-	Tue, 26 Aug 2025 14:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8W6mVGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6241DC4CEF1;
+	Tue, 26 Aug 2025 14:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216969;
-	bh=nx18LAo5tVWIJlCYOzwsxVUvvouIxOy37ioRGZvPBSg=;
+	s=korg; t=1756216971;
+	bh=fmpHPYIMEkLbalhS0o3iCzgmng37xVYPDQ8bCLGJfdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCpv/+iMKukHaUsquCatVBht6XiHYiLZuOY1++09QYPh3iPSZsOI1Yqw2xHz+JMRB
-	 ysa8tUmwgb2OM7saPMQOgcZu3ScdPAlSY6sbOVxyL/v6ImJbNbeHqBSil8z33ZOWxX
-	 brGi1A/zgNLqug+7xqbwtHbUy7iI7r/jC2spmNws=
+	b=B8W6mVGfdZyiQhjDopRq11IZEAkKhw3u1HXk678OFowthREKmKShmbQPFRFMLAfXr
+	 tgQVj6BtO9+iTMuxRsw/w9ZH7ZrlXiI2RiBd93/WebSKSv6sUTF5TCSbjpiHxwKDxa
+	 8IiS677V/2Rna67TuqVukW22s2gXLF454cEhJjdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 602/644] wifi: ath11k: fix dest ring-buffer corruption when ring is full
-Date: Tue, 26 Aug 2025 13:11:33 +0200
-Message-ID: <20250826111001.466560949@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 611/644] selftests: mptcp: pm: check flush doesnt reset limits
+Date: Tue, 26 Aug 2025 13:11:42 +0200
+Message-ID: <20250826111001.694206056@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,62 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit aa6956150f820e6a6deba44be325ddfcb5b10f88 ]
+commit 452690be7de2f91cc0de68cb9e95252875b33503 upstream.
 
-Add the missing memory barriers to make sure that destination ring
-descriptors are read before updating the tail pointer (and passing
-ownership to the device) to avoid memory corruption on weakly ordered
-architectures like aarch64 when the ring is full.
+This modification is linked to the parent commit where the received
+ADD_ADDR limit was accidentally reset when the endpoints were flushed.
 
-Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+To validate that, the test is now flushing endpoints after having set
+new limits, and before checking them.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org      # 5.6
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250604143457.26032-6-johan+linaro@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
+
+Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-3-521fe9957892@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in pm_netlink.sh, because some refactoring have been done
+  later on: commit 3188309c8ceb ("selftests: mptcp: netlink:
+  add 'limits' helpers") and commit c99d57d0007a ("selftests: mptcp: use
+  pm_nl endpoint ops") are not in this version. The same operation can
+  still be done at the same place, without using the new helper. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/hal.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -789,7 +789,6 @@ void ath11k_hal_srng_access_end(struct a
- {
- 	lockdep_assert_held(&srng->lock);
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -131,6 +131,7 @@ ip netns exec $ns1 ./pm_nl_ctl limits 1
+ check "ip netns exec $ns1 ./pm_nl_ctl limits" "$default_limits" "subflows above hard limit"
  
--	/* TODO: See if we need a write memory barrier here */
- 	if (srng->flags & HAL_SRNG_FLAGS_LMAC_RING) {
- 		/* For LMAC rings, ring pointer updates are done through FW and
- 		 * hence written to a shared memory location that is read by FW
-@@ -804,7 +803,11 @@ void ath11k_hal_srng_access_end(struct a
- 			WRITE_ONCE(*srng->u.src_ring.hp_addr, srng->u.src_ring.hp);
- 		} else {
- 			srng->u.dst_ring.last_hp = *srng->u.dst_ring.hp_addr;
--			*srng->u.dst_ring.tp_addr = srng->u.dst_ring.tp;
-+			/* Make sure descriptor is read before updating the
-+			 * tail pointer.
-+			 */
-+			dma_mb();
-+			WRITE_ONCE(*srng->u.dst_ring.tp_addr, srng->u.dst_ring.tp);
- 		}
- 	} else {
- 		if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
-@@ -820,6 +823,10 @@ void ath11k_hal_srng_access_end(struct a
- 					   srng->u.src_ring.hp);
- 		} else {
- 			srng->u.dst_ring.last_hp = *srng->u.dst_ring.hp_addr;
-+			/* Make sure descriptor is read before updating the
-+			 * tail pointer.
-+			 */
-+			mb();
- 			ath11k_hif_write32(ab,
- 					   (unsigned long)srng->u.dst_ring.tp_addr -
- 					   (unsigned long)ab->mem,
+ ip netns exec $ns1 ./pm_nl_ctl limits 8 8
++ip netns exec $ns1 ./pm_nl_ctl flush
+ check "ip netns exec $ns1 ./pm_nl_ctl limits" "accept 8
+ subflows 8" "set limits"
+ 
 
 
