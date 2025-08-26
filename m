@@ -1,47 +1,47 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2084.outbound.protection.outlook.com [40.107.223.84])
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2054.outbound.protection.outlook.com [40.107.96.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AB82E7645;
-	Tue, 26 Aug 2025 17:26:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E792E7BD4;
+	Tue, 26 Aug 2025 17:26:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756229212; cv=fail; b=hVI6WLhpQolXgGxn2Fjzkrci6KTkagENUeiolpBx4LwBNGnMdks+sMwCJG3sUDV+3mi+BwfHk2vLkS6/04vnXZ14+opTJ8jVgMKt27slvRDX/CW59Y4FBhN4xoDYtyzd2VjXxBa1rPoR8DCNbs7mKvulExr+JBMijbegprZkLeM=
+	t=1756229214; cv=fail; b=GfDBI1in8wY9HxQkynEdvgyar7VpIqbtvG7mO86Dy/W8PVmXtY+Sa6taFmxDf8Rl2c1PqCiBdLc5XwLlfmzve47/9pVmk8nQvPip0A/oJ4KZ6JSmCRihJH0FTZxgnutEcvBtj0/HtJM0JNr2X7FOlSoWnno/nG5MUqbp2MP13HA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756229212; c=relaxed/simple;
-	bh=9hIUVxXe8QBHVBq6J3E1WvOuBzpPsAZ96wNZgv/9gc4=;
+	s=arc-20240116; t=1756229214; c=relaxed/simple;
+	bh=HX3kSzlYXzesxCw6+7r/sO1Z3Fz6iC/gtkxRPzfKnkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ou0dTgsDK4NCE8gRsFXmsftB3MtoAd0ug0sDmSImi6CFquLuBcYI2gz9ov+2MEin0ssC2RpmSFWS9IqWYS2kzNtGXNwgjF6MUL9Abvsg6YO4iuo8DkcPoO43499Z9CkJ9/3S56QkogAH8frXnuW0cqCTPLMsRZT40cKthtakW/Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=I2pSuX69; arc=fail smtp.client-ip=40.107.223.84
+	 Content-Type:MIME-Version; b=O2fRyxi+yW2T/+OfKn9qX5hRNPKxYTl/7Zmf83qDNe3rW+ySKDcLlnSOFh61WkzGrDihYUWDOYoZJ1pLqF2S3N1Lyhn1ctf6C6zallb2CPDm1eviLlfX/eYaM+0+HFIk72htT0wAtKG/cbPpOsq58FKFc1OxcFXF5KkW8E6/fWg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=W3PnpZc6; arc=fail smtp.client-ip=40.107.96.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="I2pSuX69"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="W3PnpZc6"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Oy3KrHtU7XMgjfxMAe31+Sqi4Zj9M3x8PFy6P82tz3MUb8b/eoViT1b9Ax1nngx09z56z2sjgUn7CwhWEwfythPrczD13K7dUT6kHzEpJvkqTHIA2ARB3gyRY8JvBS3E9qLBtQxjWXB4PKPIVascY64RxOwic637YHlbqx4YkhWcxB5Z7LIk8Tf8wPtKCiz4uywpbLvxXBp0yVOvya8KFsPStiKzvlNtAhqD6U4EJLTB3l4LVKfE36UwCIViUk2xHH8nneyERBiWf1zECHcMju0e9RjV6NJfZixQWVD9Q70QiYn+zlPAvpGMfE6Z44zGTKPP0Ze5Wx1+MYx7iiUs4Q==
+ b=dsAfxxDygRxe0sdqkj882hOqD+uMQrwJFAUx4rIU2+jLaEaMVZTL4rteQmINCuUagibZkN463Q4a3FjzXEbVeIbuu7QVhARm4jgsBAB8TPwUDOWFfBGPWO/WxCCulEFLVbGoODwwB7QZpS3aB2AH3Cbt81r1St0t6iDboQ5KcJGBhdeOWfYxHVPsiaEEcps+NLAVi6V36V+FcN78FbS1dCM/s100pdUAm8PvigRa+jsCGS1VPYHTBmhGRL7sP3dG53LCvmp+E5LtLcK6NEj1y4VWeEnhnnow0hK2yMsIQxb4VagMbeV7gLD/lmsOqiPv1xrWLUODHh8ZCz7p3Ql1vQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lHnhcoI8h9gs88BHPscJIhAJn2exxsh0Dfb+iNZ09BM=;
- b=QpAKf1HOlE/jk/w7YLOjdWvW5jGguXzJsAxG1cyAufUFQH+NVFtDe4NIGDUY/A5XmxwTPhR9VL3TgMTi1VojdA0vw1RpbogI3MFqM8KQTjhgMvieqevXioD3nMi4QT4mxOsKruXnKrmbkTj1k7AI2/ArFHlN68K1evc2X9QoIxW+miqZNhhHo1pQvRWkMCa5ZHL4DeEnZEs8oCJC42v0GYrgO0WpFcihm2mAVI7WEywo9cGDIAzY2z9SM4AJxM3YerRQ2a+NPeG4SGwkcNzx+YMp3Ut0/5rG7QS3qPL53r8cxWEF8S+6ucVP3Cw9XQC6T2+Op2Ka5KIh8QDMYNXqOw==
+ bh=AyH3kJVMeCf+C8zaBSX1ShjuJa8oGlsddsRqLwLap/Q=;
+ b=Lkqwmp4WQftQvTp4YWLSbJyYn3eoZ5nR+FIvHIzTJTS4aTa8lCYAErR2UADamYDzqTQroRBziqoF+Vjq2t9NO7SOR8OqoUbZbjqSPsoKHeedJn+XIzoh4hMQl+QX4y+7nm89ffrNILfCU1p6xoBSSd/Dk1NNZtRbKTLIuzVaAUHeE1QxIh2y1cpDrZuZFdKeivFhL9E5DNW6xnmrJ6cMDCUNM4NxgruflGBKnYyIkquJvtLueKObkqgV1En7y3jxFw892R312U0hTKrQgD/Z66ndNUqSiverkE9iMq+vKExscjWwxkLn2ymMJkT7GIiOxt3qMJ/iXehmq+kyc5pakA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lHnhcoI8h9gs88BHPscJIhAJn2exxsh0Dfb+iNZ09BM=;
- b=I2pSuX6996KahWeqgAVPAwEob5jfW5OLU83OQ7gfZSaMJfZxuY5XqXbEYA7p5AduAUluvfdSucWLAyCkfTr4QDb9UYbz4s/vNoVlmtqql0UecrRGVNe73BzCWNfChnAA9NBZHrmqQYihkHqYLUA+FOgMYD2TeD3n+HYZsdvnB6awgDrr+dwFEb7DmyHpVsEuPO292TlntpZlM8+hU8XsfZbkVlSsY3DyIlby0NwD7lbqDe+NTKtWY3Q1wq4lKzDFxyc47npVyCuSRp6Dw20LG7xyO9uQU+angefDSA8HKhuVqRiNuR4iOvwMKFgyJ96fRCyNEauLZN75vipuowIG0Q==
+ bh=AyH3kJVMeCf+C8zaBSX1ShjuJa8oGlsddsRqLwLap/Q=;
+ b=W3PnpZc6DOaWXikz3q7G16pEFnZZH7lmf9d72DDl2o9KFhqn15ogl6+xUwU+6GBr/7KRz3dHs26j/YAC23zJuh2KupPKrRVOyvzBhFQribjshJWQ5JkccvLXBKPWzmy4PGCpG3eif9bGFBosnUjKJdPoRPk8/tFYcNiyu6ujT9JuY4mSsmU5qtVIZiV2qX2z0/JEM6/QWtK0CeRdC6E+byyLpfxbt2n74m36p3eJAWxMDz0qlsoA4SOHHUncvbC8BsiR0S1Vu/bf7wcqEG6uKbpBpKQyWrx8deORKaaL6EZFlRMvGMnQ8FvinR+MYGsUpvK7qilOXgjvrXIXQjNKkw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from SA1PR12MB8641.namprd12.prod.outlook.com (2603:10b6:806:388::18)
  by MN2PR12MB4222.namprd12.prod.outlook.com (2603:10b6:208:19a::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.20; Tue, 26 Aug
- 2025 17:26:42 +0000
+ 2025 17:26:43 +0000
 Received: from SA1PR12MB8641.namprd12.prod.outlook.com
  ([fe80::9a57:92fa:9455:5bc0]) by SA1PR12MB8641.namprd12.prod.outlook.com
  ([fe80::9a57:92fa:9455:5bc0%4]) with mapi id 15.20.9052.019; Tue, 26 Aug 2025
- 17:26:42 +0000
+ 17:26:43 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Lu Baolu <baolu.lu@linux.intel.com>,
 	David Woodhouse <dwmw2@infradead.org>,
@@ -53,15 +53,15 @@ Cc: Kevin Tian <kevin.tian@intel.com>,
 	patches@lists.linux.dev,
 	Tina Zhang <tina.zhang@intel.com>,
 	Wei Wang <wei.w.wang@intel.com>
-Subject: [PATCH v2 01/10] iommu/pages: Add support for a incoherent IOMMU page walker
-Date: Tue, 26 Aug 2025 14:26:24 -0300
-Message-ID: <1-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+Subject: [PATCH v2 04/10] iommupt: Flush the CPU cache after any writes to the page table
+Date: Tue, 26 Aug 2025 14:26:27 -0300
+Message-ID: <4-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
 In-Reply-To: <0-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BYAPR02CA0025.namprd02.prod.outlook.com
- (2603:10b6:a02:ee::38) To SA1PR12MB8641.namprd12.prod.outlook.com
+X-ClientProxiedBy: BYAPR02CA0003.namprd02.prod.outlook.com
+ (2603:10b6:a02:ee::16) To SA1PR12MB8641.namprd12.prod.outlook.com
  (2603:10b6:806:388::18)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -71,321 +71,220 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SA1PR12MB8641:EE_|MN2PR12MB4222:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5e0a4608-f844-412e-c3f0-08dde4c5b874
+X-MS-Office365-Filtering-Correlation-Id: 81912fa4-d7ec-4933-2d7b-08dde4c5b9a4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?dM5Umm5Pxr5DyAkz/vcE2IojymKFC9P0YyhH4lSm8Vd+apE4ZnQ4Fba2blnP?=
- =?us-ascii?Q?P1zLqH8AENev2YGR446n6hjTduO70kc8zTVZ0B6GnESzUScjQNbJwmpq5TeA?=
- =?us-ascii?Q?5fgD+4eW37elHBUXeYrtzgWgwdf7mgz4wAnobF9FKfd3GhsP+s2iBoFR8uEz?=
- =?us-ascii?Q?cghYgAdEOycs0fDARPQI3HN7AORlmp4Y3s+Dn7DWSXDoXkvRlgBg4l/oPWOD?=
- =?us-ascii?Q?6D4aoF0rCoQVHTj9iW8RU2T8MbkhDp9iGQa434q8kGxQenMNuGmLc1OkNnhP?=
- =?us-ascii?Q?I1fA7kEE4IeN89x37x1s6RytWiP5M6lZAWDZUzzRsr/VAqSUBk+J6ZuUl3P/?=
- =?us-ascii?Q?etlxxwPCd8RZ/RhUbUoasiuww8BQqvL69pNoymxKr8MJmm3gPl+cUyMe1Yac?=
- =?us-ascii?Q?Y9qv8tTc57OG2K4nK8ly/u7svBZX5pG1p/7BcWGJGZHX6W5vhLPKhPcH1DlB?=
- =?us-ascii?Q?ej6PQ41EaLHrmyPUoMVvwOJcW5B6geiKPqxTjhp9xbNjGILZudwGsUl2/Fwt?=
- =?us-ascii?Q?OSSopqTXITHZcYjIC/9QzBJJtXl89fq80BiwRt038g/NC7wq+7D4YTSe+zJp?=
- =?us-ascii?Q?XJr4r7+IBim2Bc3bF08/biYo+YqbejLFEx3MkLR1xXBCGqhX0vZchvb7HqQi?=
- =?us-ascii?Q?b1I4Nrn/81vPiiXnk/lbZybbZKnpP+HlRw0AIpqkOqUGNs74e1/nTeLufggg?=
- =?us-ascii?Q?7c5Nu90wjvdio4Ug+GOpdrsA6uq2szd9/ONt2NzU/wVVjTK6EtEi4GM1xyyU?=
- =?us-ascii?Q?SGalQ2hMwmuxgpCe1Prmjsp5ZHJ0iBv6K8dofbpCQ5HQHh+HEwFGuhZLtiXG?=
- =?us-ascii?Q?Ek/GrfrHUnHFemdfkzc5iG+aBO4kzbc3wADYoQLkvgW3Nw3uO/7Gy+Od4vrW?=
- =?us-ascii?Q?m/+Xg80WQe1L4MsWEIZGQfNEWRpSay7vT2TF78HQtx10YulJTfpThJlksvV0?=
- =?us-ascii?Q?sCB3OfeD/nXwZKvThXoDFv+ysbLhsWZlB5FcwqhzARhBGhEoBcOgezHAkGSt?=
- =?us-ascii?Q?x2wJz59DEXYZfMeUNV5DYmJHqcVxbfYahXVstyES6GGUROYmQHTh3uN3GSjp?=
- =?us-ascii?Q?5HWw1wQEdWiF2qTQ/tAprARBaQuDHofvczAIh8J3KjrUbn05qlLVh9QNTk/u?=
- =?us-ascii?Q?uOLVAWdJdJ5WTCeNINVHacy3jgOShDTO9Jp7IzCPWU1WNprRp1W3rPMACly+?=
- =?us-ascii?Q?/LQsB7zTD7WG4UBln7xoMrh70Wih9i3MJkVU6OenbiOzteSGaUB0WYDx1gZD?=
- =?us-ascii?Q?DJ/+aIgJJSikizpBMmlkDvu+t4uxmtxdyEdrTgKNZ3AuGlfCJvnIRiFQypdS?=
- =?us-ascii?Q?I63qMDs6KmpCBO9CXUwZPmdJ/fFJIRndZTK9TKtOBbYUiHszLWnK/uiScdf1?=
- =?us-ascii?Q?+wh4VUXKBagk2VRspJ7ZBClsSLWZjkhTBdzgb11UP0NpvAn4UG5FT7mx5sB4?=
- =?us-ascii?Q?0mojUvuQn2I=3D?=
+	=?us-ascii?Q?AVa3AyzlEyyyRXncz0Grb/Q7UeipYsjt+8KuJRx3GmSDjDTwYueiZkVRxL8F?=
+ =?us-ascii?Q?UOI4TWQhuqXKHQQwajU8RP5ngO8IXmqidnJ6dQ/j1+ERlo7LMZCGgS4P/dnn?=
+ =?us-ascii?Q?AcIB8vz4alu1eGT62I0xFks1Y3qpN0doAe/YCVCHWj9vbU+lH9eWo9KEOklO?=
+ =?us-ascii?Q?wARycVywT04I75WDMgNl9sOpb41I6BJlKyK343zMBToanD/7OFimAoHAE+v2?=
+ =?us-ascii?Q?vaYwFI/fbKnWDjqhm19RGIawwmsa1aIISsfx3OZRzwK3W/22gpimKWnHM6Jn?=
+ =?us-ascii?Q?6E1EhO5u/yYbFt0ULjB5lgRaqzFU9WSpbAcVg8+UGpcw2HMYuMswSnzoJ2BF?=
+ =?us-ascii?Q?nZGQXawdz345r6yHLcAYMO0AGxCepITiOMIUm2TIwm3NNSdJzhWLftqJ7sTp?=
+ =?us-ascii?Q?HIw7FVeEyFwwylwAj4OlFn3IhB3y+lnEk/x5LgmIYNAszlD90NDxSzq++6aq?=
+ =?us-ascii?Q?6Cp7XIQLL8XxCVaT/pMNvjiVu2fb1MYW1hFN4BW3Piiibjd84kR66FVtUljn?=
+ =?us-ascii?Q?KZy+UNQczuHBHmxhX8tr+cO1Ox0actOW7KDOA7j6jlo4N7wSePMzqrJ3lbm4?=
+ =?us-ascii?Q?L0HC2szjjoGP+XSPSTxqGAB8KIBnc1TfhCjQdyGer8FNKoyxOZ7YBXS0OAaI?=
+ =?us-ascii?Q?H8VTZDV5f84XSTVos+6H4+D/Ku7F+F/OTmTRla+gfSUZn89Hd1Es+seA0Jpp?=
+ =?us-ascii?Q?h5wjopaoBGSfZxOr/0lzUjey2hnrYi7XY9+KB7D7kWszQFpZZ6wMHSyFwkPg?=
+ =?us-ascii?Q?vMV+aGb/51AgWKVMBcOZd8HKeWigUAiqE4fkAYX/Z4py/GIZvKcXEDpzCDk9?=
+ =?us-ascii?Q?Kbk84QlFlkhSPU9mGpYIP12Knt1PwFtCQXzzZF7gfr1AeTQAHLCS+VqScuK5?=
+ =?us-ascii?Q?k/VXwlsCdgz142KBU2mf8DjKPHikbhKSv2tCNoATD7PXza1yB0rWweQ26WYY?=
+ =?us-ascii?Q?dX11fHRFX6uXqmLCnDI45QlJKlVTgpe378g3YsTxneQUOcBxWgDFxQ3+43uJ?=
+ =?us-ascii?Q?2FlMEw8G4UDZeCYqwQ0mWuFveENiu/kPQTDXYvZiy76Ii+NqfeJj6gzKBxck?=
+ =?us-ascii?Q?C3Laz+dl/gL62LPf+UCdFiEZy37tKIowxK//87SXkdGrm3BDJ85rrYXpJ0p8?=
+ =?us-ascii?Q?z8TqCIPRCTI3mAgo8h2j8F3Chwk1NLyTFvclLsCRRU8KhnBP7E1elwRASeNz?=
+ =?us-ascii?Q?Td4e8IVsnFrgOitFTXZ3UK7l4n5R10jiWfux5pY9QEyVE6MBE4Eyn8TiivM/?=
+ =?us-ascii?Q?8xKVaoo8PqnwBrBiYfxShc5kks1eYB0M3xPc8NF0nUO0OooB0INngZ0UYEnj?=
+ =?us-ascii?Q?6hQMZiKXFY8/FaBImQa+w/Uz2QEsgzY4ye2G1HsrSdV3z/WNbCDAbcXYGz6H?=
+ =?us-ascii?Q?P9ikRbJmCjHY70n8heqt2lF/xoam0AV4fuhoAFEGqrV9s2tEjw=3D=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR12MB8641.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?KWVlgJPqU3ixj2uPjAIUcR9ayn2zNCM+CnruFE6q+63S9pcOz86oiZgceE3G?=
- =?us-ascii?Q?b4VTseleGHBe9szb1Lq/khEPimoCi95LYm7anh3cDBimKaOA+497RDi1UuKk?=
- =?us-ascii?Q?r/pB11RqH40lADTxPDnNJ5M9ag0/cLc+gHj6vFcc3veh/bMUBSq0a5DAtinb?=
- =?us-ascii?Q?tG0eEh+O4l+hstbjdvI+akU3Cp3yN3fDiYfC4rnUB9RLwv6lxgmmx5TpcDMa?=
- =?us-ascii?Q?rCYYvzfm9KqKJExCAVQvycgwTfoIx7giduYBim6odQKowD7BbkfQ2o9D8RuP?=
- =?us-ascii?Q?aTRxDVL05WyqFwd0kCJJuh5T03DoUB8QHOWXasjWm+8YKH6LRaz/ubUuEq1t?=
- =?us-ascii?Q?cWit9kmgCWIrHSISuzRaUfNyMzm1EDCw9VMQChmEfz8w3jsw8dUhO9O1GefJ?=
- =?us-ascii?Q?I7AW9qqTytXSaC8exSwLjGgFIBaLk+3e8LcWb0MB8I7CStjYP0+OWU7C0nhy?=
- =?us-ascii?Q?l74AB6xzBUJl3apOr06flNfZtwf8mQh8kRKsF8l5PiDF8fRtiFH+/NvPZ40l?=
- =?us-ascii?Q?jiqudRZteAF9uNYSY8IuD/QzmsrSn0dirvmpmN4chW17PdMlaEu1O7kUqTKg?=
- =?us-ascii?Q?6v0ZQYLh334K6RHmXQof8UNXDFKDDkQESCoezzRTs2NfK7UJ4vNJGMyjEldr?=
- =?us-ascii?Q?ZN7OFceqGsQ2xDD2CcXH8utcBbVhMiPRtkJMJDh6pj3vc5uRrqdhQG4tJKpA?=
- =?us-ascii?Q?JqlPBBs5HYZZaaJHPjccJBwEnPLt9aaWAOkBoLrFF6jyqmmztIL5wUgEgApE?=
- =?us-ascii?Q?56eMmdbbK/tNW2S33WQHOaWxWX4ZziP56as3PjXL9E8YQqgr6BBwWmbn4I4K?=
- =?us-ascii?Q?wEjNlIq1SDPgFL+Wp21pshhwdxQ8A/AxKvnJZcXemo+yXXpVh3DXqv6KFqPK?=
- =?us-ascii?Q?6j0srZCrsgu08RM0bxaARRSvHwCgsvrCv4hS9po5+HcvUXG7yW/Qd0xEnS+B?=
- =?us-ascii?Q?bLbx+64j4Debs8OO4obrqYzkMcUq3BulU+d9FmfzUDKiTC7dTc53Ig4pG/hG?=
- =?us-ascii?Q?y+GA8i/q2v32XGQc2ls7iA58g+VEqtQoyrysgRoQhBzlHZ1h5a5P2ZToMEOi?=
- =?us-ascii?Q?fZGrr8xiybp18IQqxbPVEPMo7ZO5in4bx+/qDlSiPktcVa7VNTpLaAr07HJc?=
- =?us-ascii?Q?WGGPvEvzVz2qHBzU1LCqte/6OAQ2q9rQ4ZgOR/sBJskVHmrAklRSLdwzRmvW?=
- =?us-ascii?Q?LVclIV3fVAfMvKOVktuxRm14njqFK9vQWCIfh4jqwE9OWDpOS75S3/cbEac8?=
- =?us-ascii?Q?qPKaq9NrcCgWxjkSHSTLxkybN5aPwamxW2XfD+oeNIERRg2cextYn0Vxlh3F?=
- =?us-ascii?Q?84O/GtTof+OLPqJZL7Iac01QhNzmjYB6UwYP8GvhdDLAaF8WoXYjfEkxp57c?=
- =?us-ascii?Q?ILR/zqdumeG4w9LVdszYuFivlG4M+tIr/nZrtDGeU5dnWBCJr2of/mrA21zO?=
- =?us-ascii?Q?30nw7yECg7yHpHJyG6zAYh95hKmovdAQmiWozCoAe48AOc1JwHzIohGqUmJ4?=
- =?us-ascii?Q?Fxc+m+vPZfjcF8W3An9TJ7yB7qaHQglKpDZxgalqwi9o98RNqPK65s2w6fUi?=
- =?us-ascii?Q?g5mHAn1qeWkH2qGKfj522vh1iYsTEUbcojFzFPGR?=
+	=?us-ascii?Q?z+KTNYC7ug2RhhBQiGFfTlQHCLSWOOxpsCu+KhaN+hqX0gUkbGkMfxKLUDzp?=
+ =?us-ascii?Q?hco2ZeLvtrHuaLIpJdGyAWbUORHmc6P+nzzQSeHkWIMt8VmVvXKL4El5iCU9?=
+ =?us-ascii?Q?x5yd+iYgQosm/OzJzLEkHGBBXiuV500R7+2fSkJMRhY50rDhRG697s7OgI2j?=
+ =?us-ascii?Q?Cmy81XXboXnJw9RaJIZAwc0bViIbo1rILjYYKpkNTw2EyRL9uIsy3lEWunMR?=
+ =?us-ascii?Q?Bx2Pgi5kER7ARvKyg4zfUHIuMTH6sX+pY1dHyOdFGbI4SKXBFttbL4kCbwA5?=
+ =?us-ascii?Q?8+3pjjraurwj+fi5jS+J2cs4wws3zDN3DlThkbV/8UF6PEJFFTFvEuw0Ws0X?=
+ =?us-ascii?Q?Y8uy33HIq6KQHa8YCNaN4uzyQ6nsgjXVciOMW4GUGrlIPj9OTSpnJqiigeHT?=
+ =?us-ascii?Q?wf4U9giCXvIW8BbOOez+igSS/1wi3geGV184QBmRIMAIdzTt91pZYn0FXJDi?=
+ =?us-ascii?Q?oSaTJOWWGRLBadJWly+lB34u9ZR0R4a4yyR66KRW9z7iOgf/SEIFGfN60Tb6?=
+ =?us-ascii?Q?IuvKKoePmiceScG93LPfeSjqz1lTTxKSLZ207wkrRidj5i85gsvbR9AMk2H8?=
+ =?us-ascii?Q?RLPPqokKNtDDcDW0bbBqniWAClflqUFOzpj3J3629TwbmT4QBduOOfxwikzi?=
+ =?us-ascii?Q?DU1HZu7P8Yqqr9ToJ4rsFRxo1FE0X4cPpM0Sgx2c1Ua1rqvL9ks1J6MQi5fy?=
+ =?us-ascii?Q?Uk4PsI/CnEqWwXIsKQS/aXAjvyJgja5+2AaxhepCE+xDm9RSfYlzmfovspDA?=
+ =?us-ascii?Q?BrPM1nMdHjf/aKMC5bNfbQDUhQxl3xHxdXD0URG8qdwm0X1beDEFjj29WeZw?=
+ =?us-ascii?Q?I3joFcvuLBZxR74ttHnK6656CSDEUiOezbBZsytcwUSncUjOMSxFyTgE+kw6?=
+ =?us-ascii?Q?tHN6imTXD8+f6neJLhkwIvigVkKGREbFKUQUuGxADYmbqI/VT+gs4blblvRQ?=
+ =?us-ascii?Q?+6s8O4VdtS/4JGbml+F9PqJKmJMhwCLBg7Z2Fbi8KSoxNsPQMGupqavN64PG?=
+ =?us-ascii?Q?HCDHb3HEqdbLeOHhIzNlaM32Q7zCA1Cg2y2yu4laauQQ5ePVI0UOf7JMCBp2?=
+ =?us-ascii?Q?n446fPzk0UiAxSMzqVI9H16SddAhvFJ3jckkTNYSAATCiT9HdEGnp6eYBW8C?=
+ =?us-ascii?Q?eNh20slBg08ZpdRd8+QCK3fguSZ0Bff7j5ZqQpyA90SBXYtNrcl1XJBZouba?=
+ =?us-ascii?Q?WZGqk7XUwZJbnCupEqqd8nkX45+ekS41WVxsi5HcPUSgeiDoVHoehc/2SQc7?=
+ =?us-ascii?Q?vfJS537esFfLHeotThFfITmm9m40GHurO70A7DSgVCTKHfmgscozHa1zISN4?=
+ =?us-ascii?Q?AXoWNGBOSDgRwoKt9TokxY6M+l3lm7AEpoLVT1odXfmxWpykVnNk8Bl1AcoZ?=
+ =?us-ascii?Q?faqjF98C3jn6KmX+BsD89vlDPk/gs846P9TYTi7+pGy7dZgRFAEQoGiEMUv6?=
+ =?us-ascii?Q?uA1nO5Sbir1dCBt1R+dfpKjisjy5T66KABNzszYjpawdGUcjJ2tMG0vz1cfL?=
+ =?us-ascii?Q?/pq4ymDkDWPKFEL9T2c0COX2rHbBsYXAoJc7FlRJah+9TvJGo+/+GtmrfZ+A?=
+ =?us-ascii?Q?nZdM5vCmS1Ii2+s/FYBpXXQrFu9nywde20YH8ODH?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5e0a4608-f844-412e-c3f0-08dde4c5b874
+X-MS-Exchange-CrossTenant-Network-Message-Id: 81912fa4-d7ec-4933-2d7b-08dde4c5b9a4
 X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB8641.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2025 17:26:41.8753
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2025 17:26:43.5346
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PQwP1xCAuwuNtkeg/F0nOgYPhwaiQbkt6yiZSiyv7FPFPfKrWAy9PbMWovuTwYOW
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8FqnV8+Fi7wrWoVeWpi3jqDgCkvs0u1lBKBt9030hdLsb0F+S+sctHTku2cCvdxE
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4222
 
-Some IOMMU HW cannot snoop the CPU cache when it walks the IO page tables.
-The CPU is required to flush the cache to make changes visible to the HW.
+Flush the CPU cache for the page table memory after each set of writes to
+the page table. The iommu should have visibility to the updated entries as
+soon as the map/unmap/etc operations return, like normal coherent hardware
+does.
 
-Provide some helpers from iommu-pages to manage this. The helpers combine
-both the ARM and x86 (used in Intel VT-D) versions of the cache flushing
-under a single API.
+The caches also have to be flushed before any gather can be submitted to
+the driver.
 
-The ARM version uses the DMA API to access the cache flush on the
-assumption that the iommu is using a direct mapping and is already marked
-incoherent. The helpers will do the DMA API calls to set things up and
-keep track of DMA mapped folios using a bit in the ioptdesc so that
-unmapping on error paths is cleaner.
-
-The Intel version just calls the arch cache flush call directly and has no
-need to cleanup prior to destruction.
+Implement the same solution to the race as io-pgtable-arm by using a
+software PTE bit to track if a table entry has been flushed or not. If
+another thread is still flushing then another concurrent map operation
+could return without IOMMU visibility to a required table entry. The SW
+bit will tell the second thread to also flush the cache.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/iommu-pages.c | 117 ++++++++++++++++++++++++++++++++++++
- drivers/iommu/iommu-pages.h |  45 +++++++++++++-
- 2 files changed, 160 insertions(+), 2 deletions(-)
+ drivers/iommu/generic_pt/iommu_pt.h | 56 ++++++++++++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/iommu-pages.c b/drivers/iommu/iommu-pages.c
-index 238c09e5166b4d..5dc8cdf71e2ade 100644
---- a/drivers/iommu/iommu-pages.c
-+++ b/drivers/iommu/iommu-pages.c
-@@ -4,6 +4,7 @@
-  * Pasha Tatashin <pasha.tatashin@soleen.com>
-  */
- #include "iommu-pages.h"
-+#include <linux/dma-mapping.h>
- #include <linux/gfp.h>
- #include <linux/mm.h>
+diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+index 4789fe5361cb3a..c04c6750d0e250 100644
+--- a/drivers/iommu/generic_pt/iommu_pt.h
++++ b/drivers/iommu/generic_pt/iommu_pt.h
+@@ -17,6 +17,29 @@
+ #include <linux/cleanup.h>
+ #include <linux/dma-mapping.h>
  
-@@ -22,6 +23,11 @@ IOPTDESC_MATCH(memcg_data, memcg_data);
- #undef IOPTDESC_MATCH
- static_assert(sizeof(struct ioptdesc) <= sizeof(struct page));
- 
-+static inline size_t ioptdesc_mem_size(struct ioptdesc *desc)
++enum {
++	SW_BIT_CACHE_FLUSH_DONE = 0,
++};
++
++static void flush_writes_range(const struct pt_state *pts,
++			       unsigned int start_index, unsigned int end_index)
 +{
-+	return 1UL << (folio_order(ioptdesc_folio(desc)) + PAGE_SHIFT);
++	if (pts_feature(pts, PT_FEAT_DMA_INCOHERENT))
++		iommu_pages_flush_incoherent(
++			iommu_from_common(pts->range->common)->iommu_device,
++			pts->table, start_index * PT_ITEM_WORD_SIZE,
++			(end_index - start_index) * PT_ITEM_WORD_SIZE);
 +}
 +
- /**
-  * iommu_alloc_pages_node_sz - Allocate a zeroed page of a given size from
-  *                             specific NUMA node
-@@ -36,6 +42,7 @@ static_assert(sizeof(struct ioptdesc) <= sizeof(struct page));
-  */
- void *iommu_alloc_pages_node_sz(int nid, gfp_t gfp, size_t size)
- {
-+	struct ioptdesc *iopt;
- 	unsigned long pgcnt;
- 	struct folio *folio;
- 	unsigned int order;
-@@ -60,6 +67,9 @@ void *iommu_alloc_pages_node_sz(int nid, gfp_t gfp, size_t size)
- 	if (unlikely(!folio))
- 		return NULL;
- 
-+	iopt = folio_ioptdesc(folio);
-+	iopt->incoherent = false;
-+
- 	/*
- 	 * All page allocations that should be reported to as "iommu-pagetables"
- 	 * to userspace must use one of the functions below. This includes
-@@ -82,6 +92,9 @@ static void __iommu_free_desc(struct ioptdesc *iopt)
- 	struct folio *folio = ioptdesc_folio(iopt);
- 	const unsigned long pgcnt = 1UL << folio_order(folio);
- 
-+	if (IOMMU_PAGES_USE_DMA_API)
-+		WARN_ON_ONCE(iopt->incoherent);
-+
- 	mod_node_page_state(folio_pgdat(folio), NR_IOMMU_PAGES, -pgcnt);
- 	lruvec_stat_mod_folio(folio, NR_SECONDARY_PAGETABLE, -pgcnt);
- 	folio_put(folio);
-@@ -117,3 +130,107 @@ void iommu_put_pages_list(struct iommu_pages_list *list)
- 		__iommu_free_desc(iopt);
- }
- EXPORT_SYMBOL_GPL(iommu_put_pages_list);
-+
-+/**
-+ * iommu_pages_start_incoherent - Setup the page for cache incoherent operation
-+ * @virt: The page to setup
-+ * @dma_dev: The iommu device
-+ *
-+ * For incoherent memory this will use the DMA API to manage the cache flushing
-+ * on some arches. This is a lot of complexity compared to just calling
-+ * arch_sync_dma_for_device(), but it is what the existing ARM iommu drivers
-+ * have been doing. The DMA API requires keeping track of the DMA map and
-+ * freeing it when required. This keeps track of the dma map inside the ioptdesc
-+ * so that error paths are simple for the caller.
-+ */
-+int iommu_pages_start_incoherent(void *virt, struct device *dma_dev)
++static void flush_writes_item(const struct pt_state *pts)
 +{
-+	struct ioptdesc *iopt = virt_to_ioptdesc(virt);
-+	dma_addr_t dma;
++	if (pts_feature(pts, PT_FEAT_DMA_INCOHERENT))
++		iommu_pages_flush_incoherent(
++			iommu_from_common(pts->range->common)->iommu_device,
++			pts->table, pts->index * PT_ITEM_WORD_SIZE,
++			PT_ITEM_WORD_SIZE);
++}
 +
-+	if (WARN_ON(iopt->incoherent))
-+		return -EINVAL;
-+
-+	if (!IOMMU_PAGES_USE_DMA_API) {
-+		iommu_pages_flush_incoherent(dma_dev, virt, 0,
-+					     ioptdesc_mem_size(iopt));
-+	} else {
-+		dma = dma_map_single(dma_dev, virt, ioptdesc_mem_size(iopt),
-+				     DMA_TO_DEVICE);
-+		if (dma_mapping_error(dma_dev, dma))
-+			return -EINVAL;
-+
+ static void gather_range_pages(struct iommu_iotlb_gather *iotlb_gather,
+ 			       struct pt_iommu *iommu_table, pt_vaddr_t iova,
+ 			       pt_vaddr_t len,
+@@ -195,6 +218,10 @@ static void record_dirty(struct pt_state *pts,
+ 				dirty_len);
+ 
+ 	if (!(dirty->flags & IOMMU_DIRTY_NO_CLEAR)) {
 +		/*
-+		 * The DMA API is not allowed to do anything other than DMA
-+		 * direct. It would be nice to also check
-+		 * dev_is_dma_coherent(dma_dev));
++		 * No write log required because DMA incoherence and atomic
++		 * dirty tracking bits can't work together
 +		 */
-+		if (WARN_ON(dma != virt_to_phys(virt))) {
-+			dma_unmap_single(dma_dev, dma, ioptdesc_mem_size(iopt),
-+					 DMA_TO_DEVICE);
-+			return -EOPNOTSUPP;
-+		}
-+	}
-+
-+	iopt->incoherent = 1;
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(iommu_pages_start_incoherent);
-+
-+/**
-+ * iommu_pages_start_incoherent_list
-+ * @list: The list of pages to setup
-+ * @dma_dev: The iommu device
-+ *
-+ * Perform iommu_pages_start_incoherent() across all of list.
-+ *
-+ * If this fails the caller must call iommu_pages_stop_incoherent_list().
-+ */
-+int iommu_pages_start_incoherent_list(struct iommu_pages_list *list,
-+				      struct device *dma_dev)
-+{
-+	struct ioptdesc *cur;
-+	int ret;
-+
-+	list_for_each_entry(cur, &list->pages, iopt_freelist_elm) {
-+		if (WARN_ON(cur->incoherent))
-+			continue;
-+
-+		ret = iommu_pages_start_incoherent(
-+			folio_address(ioptdesc_folio(cur)), dma_dev);
-+		if (ret)
-+			return ret;
-+	}
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(iommu_pages_start_incoherent_list);
-+
-+/**
-+ * iommu_pages_stop_incoherent_list
-+ * @list: The list of pages to release
-+ * @dma_dev: The iommu device
-+ *
-+ * Revert iommu_pages_start_incoherent() across all of the list. Pages that did
-+ * not call or succeed iommu_pages_start_incoherent() will be ignored.
-+ */
-+#if IOMMU_PAGES_USE_DMA_API
-+void iommu_pages_stop_incoherent_list(struct iommu_pages_list *list,
-+				      struct device *dma_dev)
-+{
-+	struct ioptdesc *cur;
-+
-+	if (IS_ENABLED(CONFIG_X86))
-+		return;
-+
-+	list_for_each_entry(cur, &list->pages, iopt_freelist_elm) {
-+		struct folio *folio = ioptdesc_folio(cur);
-+
-+		if (!cur->incoherent)
-+			continue;
-+		dma_unmap_single(dma_dev, virt_to_phys(folio_address(folio)),
-+				 ioptdesc_mem_size(cur), DMA_TO_DEVICE);
-+		cur->incoherent = 0;
-+	}
-+}
-+EXPORT_SYMBOL_GPL(iommu_pages_stop_incoherent_list);
-+#endif
-diff --git a/drivers/iommu/iommu-pages.h b/drivers/iommu/iommu-pages.h
-index b3af2813ed0ced..1c0904a90ef252 100644
---- a/drivers/iommu/iommu-pages.h
-+++ b/drivers/iommu/iommu-pages.h
-@@ -21,7 +21,10 @@ struct ioptdesc {
+ 		pt_entry_set_write_clean(pts);
+ 		iommu_iotlb_gather_add_range(dirty->dirty->gather,
+ 					     pts->range->va, dirty_len);
+@@ -402,6 +429,11 @@ static inline int pt_iommu_new_table(struct pt_state *pts,
+ 		return -EAGAIN;
+ 	}
  
- 	struct list_head iopt_freelist_elm;
- 	unsigned long __page_mapping;
--	pgoff_t __index;
-+	union {
-+		u8 incoherent;
-+		pgoff_t __index;
-+	};
- 	void *_private;
++	if (pts_feature(pts, PT_FEAT_DMA_INCOHERENT)) {
++		flush_writes_item(pts);
++		pt_set_sw_bit_release(pts, SW_BIT_CACHE_FLUSH_DONE);
++	}
++
+ 	if (IS_ENABLED(CONFIG_DEBUG_GENERIC_PT)) {
+ 		/*
+ 		 * The underlying table can't store the physical table address.
+@@ -461,6 +493,7 @@ static int clear_contig(const struct pt_state *start_pts,
+ 			 * the gather
+ 			 */
+ 			pt_clear_entry(&pts, ilog2(1));
++			flush_writes_item(&pts);
  
- 	unsigned int __page_type;
-@@ -98,4 +101,42 @@ static inline void *iommu_alloc_pages_sz(gfp_t gfp, size_t size)
- 	return iommu_alloc_pages_node_sz(NUMA_NO_NODE, gfp, size);
+ 			iommu_pages_list_add(&collect.free_list,
+ 					     pt_table_ptr(&pts));
+@@ -515,6 +548,8 @@ static int __map_range_leaf(struct pt_range *range, void *arg,
+ 		pts.index += step;
+ 	} while (pts.index < pts.end_index);
+ 
++	flush_writes_range(&pts, start_index, pts.index);
++
+ 	map->oa = oa;
+ 	return ret;
+ }
+@@ -549,6 +584,21 @@ static int __map_range(struct pt_range *range, void *arg, unsigned int level,
+ 			}
+ 		} else {
+ 			pts.table_lower = pt_table_ptr(&pts);
++			/*
++			 * Racing with a shared pt_iommu_new_table()? The other
++			 * thread is still flushing the cache, so we have to
++			 * also flush it to ensure that when our thread's map
++			 * completes all the table items leading to our mapping
++			 * are visible.
++			 *
++			 * This requires the pt_set_bit_release() to be a
++			 * release of the cache flush so that this can acquire
++			 * visibility at the iommu.
++			 */
++			if (pts_feature(&pts, PT_FEAT_DMA_INCOHERENT) &&
++			    !pt_test_sw_bit_acquire(&pts,
++						    SW_BIT_CACHE_FLUSH_DONE))
++				flush_writes_item(&pts);
+ 		}
+ 
+ 		/*
+@@ -585,6 +635,7 @@ static __always_inline int __do_map_single_page(struct pt_range *range,
+ 			return -EADDRINUSE;
+ 		pt_install_leaf_entry(&pts, map->oa, PAGE_SHIFT,
+ 				      &map->attrs);
++		/* No flush, not used when incoherent */
+ 		map->oa += PAGE_SIZE;
+ 		return 0;
+ 	}
+@@ -811,7 +862,8 @@ int DOMAIN_NS(map_pages)(struct iommu_domain *domain, unsigned long iova,
+ 	PT_WARN_ON(map.leaf_level > range.top_level);
+ 
+ 	do {
+-		if (single_page) {
++		if (single_page &&
++		    !pt_feature(common, PT_FEAT_DMA_INCOHERENT)) {
+ 			ret = pt_walk_range(&range, __map_single_page, &map);
+ 			if (ret != -EAGAIN)
+ 				break;
+@@ -922,6 +974,8 @@ static __maybe_unused int __unmap_range(struct pt_range *range, void *arg,
+ 	} while (true);
+ 
+ 	unmap->unmapped += log2_mul(num_oas, pt_table_item_lg2sz(&pts));
++	flush_writes_range(&pts, start_index, pts.index);
++
+ 	return ret;
  }
  
--#endif	/* __IOMMU_PAGES_H */
-+int iommu_pages_start_incoherent(void *virt, struct device *dma_dev);
-+int iommu_pages_start_incoherent_list(struct iommu_pages_list *list,
-+				      struct device *dma_dev);
-+
-+#ifdef CONFIG_X86
-+#define IOMMU_PAGES_USE_DMA_API 0
-+#include <linux/cacheflush.h>
-+
-+static inline void iommu_pages_flush_incoherent(struct device *dma_dev,
-+						void *virt, size_t offset,
-+						size_t len)
-+{
-+	clflush_cache_range(virt + offset, len);
-+}
-+static inline void
-+iommu_pages_stop_incoherent_list(struct iommu_pages_list *list,
-+				 struct device *dma_dev)
-+{
-+	/*
-+	 * For performance leave the incoherent flag alone which turns this into
-+	 * a NOP. For X86 the rest of the stop/free flow ignores the flag.
-+	 */
-+}
-+#else
-+#define IOMMU_PAGES_USE_DMA_API 1
-+#include <linux/dma-mapping.h>
-+
-+static inline void iommu_pages_flush_incoherent(struct device *dma_dev,
-+						void *virt, size_t offset,
-+						size_t len)
-+{
-+	dma_sync_single_for_device(dma_dev, (uintptr_t)virt + offset, len,
-+				   DMA_TO_DEVICE);
-+}
-+void iommu_pages_stop_incoherent_list(struct iommu_pages_list *list,
-+				      struct device *dma_dev);
-+#endif
-+
-+#endif /* __IOMMU_PAGES_H */
 -- 
 2.43.0
 
