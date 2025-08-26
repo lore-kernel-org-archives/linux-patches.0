@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC3717332C;
-	Tue, 26 Aug 2025 11:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A2917332C;
+	Tue, 26 Aug 2025 11:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208423; cv=none; b=EKFFcMzuyCXrP7xa85lLAGOyLwL8OHVZnZUHXr+LC7bNUOJGiRgem9xK0euHt9IV5tgn4Co1nHcr2xcz3BPUGK6eQlHy1j8TEpopUBwhwG6V9ivpwSpHggcTPYK7177V2roAPUL55nYITX0PRfedYAsZ36SuFszW7Ha1/UF25CY=
+	t=1756208425; cv=none; b=cZL14eWDXQ4oLdLex2ObXTalJKcmv4bZt/ddjVEMX/9AmV2hgFAiQbGMHPzu5MiJ97N0wyEHURljV+oLBQOYh1qNH/FbgGxKQDOHBmwzhAjnyPi6p43Dv+Dp7Jf0y2uteY0ugRSZWyfz5161bpr/tJMb0kxlEhPkXxTF0fsM/C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208423; c=relaxed/simple;
-	bh=gOCSFR5IJWn8n//MNdb7ZCDXmlJHfzGJPW0LTBLJ/m0=;
+	s=arc-20240116; t=1756208425; c=relaxed/simple;
+	bh=LV3xA1arGqXTtGZ990gfKgzyaDCE3p+501u6E9AofN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQ7uAkAmyoDqzcol0cvAp8BXXkxfGDwsDZxHSpNhJuDIaS8BiOK8YlnL8efwGjoYANYE2rdHdhaP3qDiK+P6riA4muj0+LET/O0jBM2Bwe+alJv7kzZiwgfa7rj7BAjpjgZH8yu78nSxKZvf6tkyB41rMRkLyRsf7l7WQmqrXho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPAPA747; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E/j/FH0U6sm5Y1ZujKdENgbEzXVfC/DI1OtP4sc76PJv6BzK4Yt5qQ9upWQXyJbw1XVZQKwBGZNzde4UuuDzEdUUjtFiwsJb8RFL5wb570lrybM5F6+5jeycBmQzBJkLkt75GPRc357kfmqSmVG7EUftlB9JqziBCwDxL7nKQB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alFRmeR8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPAPA747"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C47C4CEF1;
-	Tue, 26 Aug 2025 11:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alFRmeR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12456C4CEF1;
+	Tue, 26 Aug 2025 11:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208422;
-	bh=gOCSFR5IJWn8n//MNdb7ZCDXmlJHfzGJPW0LTBLJ/m0=;
+	s=korg; t=1756208425;
+	bh=LV3xA1arGqXTtGZ990gfKgzyaDCE3p+501u6E9AofN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aPAPA747iKVIOFF+QU3RgJujKY2cAmoyWXGgb7HDCuBJPnK5fjKqLxeNLI/nmlWBX
-	 Y/F5IYAXVi8AVhoc89mKPp63YZBVAKTFshyhSTukQTAoDqLc/Ip21xCSZOiA+jmSV4
-	 E/4P9vRSG73q5jY8pYtA6r1OTKqwvaOZYfG75GCQ=
+	b=alFRmeR8b+ZlD3y7/AugiFZvLarHnE0nwOoKI29m4kQHDndDQrvJxuXM437PiF4Ui
+	 Jt2EQ3T0OaZSrQYFpkI6KNjb36h5cuctWgmkGg2phzqVlVwnAxvpIbT/WuA3Bf13Qs
+	 SD76nU4Hm5/USWJHDxDFoc8+Qm58XuE0WRKw2z+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.12 074/322] PCI/portdrv: Use is_pciehp instead of is_hotplug_bridge
-Date: Tue, 26 Aug 2025 13:08:09 +0200
-Message-ID: <20250826110917.420541457@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.12 075/322] PCI: endpoint: Fix configfs group list head handling
+Date: Tue, 26 Aug 2025 13:08:10 +0200
+Message-ID: <20250826110917.455173096@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -50,41 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 1d60796a62f327cd9e0a6a0865ded7656d2c67f9 upstream.
+commit d79123d79a8154b4318529b7b2ff7e15806f480b upstream.
 
-The PCIe port driver erroneously creates a subdevice for hotplug on ACPI
-slots which are handled by the ACPI hotplug driver.
+Doing a list_del() on the epf_group field of struct pci_epf_driver in
+pci_epf_remove_cfs() is not correct as this field is a list head, not
+a list entry. This list_del() call triggers a KASAN warning when an
+endpoint function driver which has a configfs attribute group is torn
+down:
 
-Avoid by checking the is_pciehp flag instead of is_hotplug_bridge when
-deciding whether to create a subdevice.  The latter encompasses ACPI slots
-whereas the former doesn't.
+==================================================================
+BUG: KASAN: slab-use-after-free in pci_epf_remove_cfs+0x17c/0x198
+Write of size 8 at addr ffff00010f4a0d80 by task rmmod/319
 
-The superfluous subdevice has no real negative impact, it occupies memory
-and interrupt resources but otherwise just sits there waiting for
-interrupts from the slot that are never signaled.
+CPU: 3 UID: 0 PID: 319 Comm: rmmod Not tainted 6.16.0-rc2 #1 NONE
+Hardware name: Radxa ROCK 5B (DT)
+Call trace:
+show_stack+0x2c/0x84 (C)
+dump_stack_lvl+0x70/0x98
+print_report+0x17c/0x538
+kasan_report+0xb8/0x190
+__asan_report_store8_noabort+0x20/0x2c
+pci_epf_remove_cfs+0x17c/0x198
+pci_epf_unregister_driver+0x18/0x30
+nvmet_pci_epf_cleanup_module+0x24/0x30 [nvmet_pci_epf]
+__arm64_sys_delete_module+0x264/0x424
+invoke_syscall+0x70/0x260
+el0_svc_common.constprop.0+0xac/0x230
+do_el0_svc+0x40/0x58
+el0_svc+0x48/0xdc
+el0t_64_sync_handler+0x10c/0x138
+el0t_64_sync+0x198/0x19c
+...
 
-Fixes: f8415222837b ("PCI: Use cached copy of PCI_EXP_SLTCAP_HPC bit")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org # v4.7+
-Link: https://patch.msgid.link/40d5a5fe8d40595d505949c620a067fa110ee85e.1752390102.git.lukas@wunner.de
+Remove this incorrect list_del() call from pci_epf_remove_cfs().
+
+Fixes: ef1433f717a2 ("PCI: endpoint: Create configfs entry for each pci_epf_device_id table entry")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250624114544.342159-2-dlemoal@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/portdrv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/endpoint/pci-epf-core.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/pci/pcie/portdrv.c
-+++ b/drivers/pci/pcie/portdrv.c
-@@ -220,7 +220,7 @@ static int get_port_device_capability(st
- 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
- 	int services = 0;
+--- a/drivers/pci/endpoint/pci-epf-core.c
++++ b/drivers/pci/endpoint/pci-epf-core.c
+@@ -334,7 +334,6 @@ static void pci_epf_remove_cfs(struct pc
+ 	mutex_lock(&pci_epf_mutex);
+ 	list_for_each_entry_safe(group, tmp, &driver->epf_group, group_entry)
+ 		pci_ep_cfs_remove_epf_group(group);
+-	list_del(&driver->epf_group);
+ 	mutex_unlock(&pci_epf_mutex);
+ }
  
--	if (dev->is_hotplug_bridge &&
-+	if (dev->is_pciehp &&
- 	    (pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT ||
- 	     pci_pcie_type(dev) == PCI_EXP_TYPE_DOWNSTREAM) &&
- 	    (pcie_ports_native || host->native_pcie_hotplug)) {
 
 
