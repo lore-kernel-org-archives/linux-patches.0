@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346ED341AD4;
-	Tue, 26 Aug 2025 14:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2850350851;
+	Tue, 26 Aug 2025 14:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219149; cv=none; b=EX3AiSjW07Yww28Y+LQ2FSO3uzbQjgBwy1daGcqvsiT5zn4ChbX/yOM9UeABiUfzplVdk3KhpIw2atsE4Dto+Eqn5H9FNYp+s3zvTGnGpLtvDr72EJNv6yIooqNGTfBhyFEJd0FkpnKE0RtrpgB8XPk9io77hnYjGlOFmW4N5Zg=
+	t=1756219151; cv=none; b=tFwb+nEfvhfYNWTv+5A0mM/jtjaDqet8IWGXmTEfqQSC5I4f3I2gc/mjGNjip0W6phxWgqQcp2DPJstlj10qhLjYNH677roVhIhDgfRNnOUmvKKVpYvGX3ffHjS7UleyrQ4PNIu+FJuAwMAdhV/bJ70VnYRNjw57IBE74nR5uGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219149; c=relaxed/simple;
-	bh=ZFIJlc4FGUtwnrVzwju5MOv8tupfvn4WBkyCa8OqWLs=;
+	s=arc-20240116; t=1756219151; c=relaxed/simple;
+	bh=BwuEV/LUHjhNKK3UJTNbGAF/6HQ6CsrJ5VHtQSMb2Tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ks3fR4+XlqVDSc2DB3RasZ2PubVgMO6fyxteqi3m4wtSmexIwgulZVQ1COMrLmTqBa2I1L+F9dKTKo1Jj3v6NnKbK4nLXNiSfzge7SDd7arxircxuMGJw2+OGLEnnZb4DuANS43ImbWkrUngkgxMugLxbeCllJkfvWkj3aXkcEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aB3XEPMk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AgqfDZoAiEh+YC0N490bulKT0jdMq0joT7wHPStN8K5n2TLuWG/hK8L4x2JTv3BC+SUEUE/tQoBVv2PueMLRiL1Bb3g13VXnyjV243MgO63i8BqVSLezh8Z+Wbs8O6cClnAXFzx7N8PmJJ81nWtJnCuq6YllW244AFdefLHyvgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Kp2DujO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aB3XEPMk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5CFC4CEF1;
-	Tue, 26 Aug 2025 14:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Kp2DujO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56478C4CEF1;
+	Tue, 26 Aug 2025 14:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219149;
-	bh=ZFIJlc4FGUtwnrVzwju5MOv8tupfvn4WBkyCa8OqWLs=;
+	s=korg; t=1756219151;
+	bh=BwuEV/LUHjhNKK3UJTNbGAF/6HQ6CsrJ5VHtQSMb2Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aB3XEPMknk2hmDpG78MA4v5AYPYgmBSbJOMu6jvA59Y9JVe4nJCs9IpRrFXwhnRYh
-	 7IagwCZfZZSEENqejZbby0XvYtKNc4/e/csQBEavYTkNYEfQvEqVzboZZGyOJmFbxd
-	 veiTJM8g5nWiaBvknYet8BZhEGkT+wOym5G/BacQ=
+	b=2Kp2DujOmVRY5+ndBVAeWW1PQ/YdYBU/t2qRXI5Yq525S7O4blBB7j8uS1DTahgnf
+	 lMtHGJ35LMO5Sf1e7qJSpYRa1sdeZEnlptlL4vu+8DZ36pSqGHoRLe3Ca3hK8oHPrr
+	 PF00/JgVmg8ltumx57wxVomdz7Kj9h9NywloNFXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 271/403] rtc: ds1307: remove clear of oscillator stop flag (OSF) in probe
-Date: Tue, 26 Aug 2025 13:09:57 +0200
-Message-ID: <20250826110914.291868157@linuxfoundation.org>
+Subject: [PATCH 5.4 272/403] scsi: lpfc: Remove redundant assignment to avoid memory leak
+Date: Tue, 26 Aug 2025 13:09:58 +0200
+Message-ID: <20250826110914.317869789@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,52 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 48458654659c9c2e149c211d86637f1592470da5 ]
+[ Upstream commit eea6cafb5890db488fce1c69d05464214616d800 ]
 
-In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-kernel time as long as rtc_read_time() succeeds. In some power loss
-situations, our supercapacitor-backed DS1342 RTC comes up with either an
-unpredictable future time or the default 01/01/00 from the datasheet.
-The oscillator stop flag (OSF) is set in these scenarios due to the
-power loss and can be used to determine the validity of the RTC data.
+Remove the redundant assignment if kzalloc() succeeds to avoid memory
+leak.
 
-Some chip types in the ds1307 driver already have OSF handling to
-determine whether .read_time provides valid RTC data or returns -EINVAL.
-
-This change removes the clear of the OSF in .probe as the OSF needs to
-be preserved to expand the OSF handling to the ds1341 chip type (note
-that DS1341 and DS1342 share a datasheet).
-
-Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/1749665656-30108-2-git-send-email-meaganlloyd@linux.microsoft.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: bd2cdd5e400f ("scsi: lpfc: NVME Initiator: Add debugfs support")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Link: https://lore.kernel.org/r/20250801185202.42631-1-jiashengjiangcool@gmail.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/scsi/lpfc/lpfc_debugfs.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index b371d1e48942..ff9785ff36e7 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -1686,10 +1686,8 @@ static int ds1307_probe(struct i2c_client *client,
- 		regmap_write(ds1307->regmap, DS1337_REG_CONTROL,
- 			     regs[0]);
- 
--		/* oscillator fault?  clear flag, and warn */
-+		/* oscillator fault? warn */
- 		if (regs[1] & DS1337_BIT_OSF) {
--			regmap_write(ds1307->regmap, DS1337_REG_STATUS,
--				     regs[1] & ~DS1337_BIT_OSF);
- 			dev_warn(ds1307->dev, "SET TIME!\n");
- 		}
- 		break;
+diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
+index 291fccf02d45..f75431a948f3 100644
+--- a/drivers/scsi/lpfc/lpfc_debugfs.c
++++ b/drivers/scsi/lpfc/lpfc_debugfs.c
+@@ -5886,7 +5886,6 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 			}
+ 			phba->nvmeio_trc_on = 1;
+ 			phba->nvmeio_trc_output_idx = 0;
+-			phba->nvmeio_trc = NULL;
+ 		} else {
+ nvmeio_off:
+ 			phba->nvmeio_trc_size = 0;
 -- 
-2.39.5
+2.50.1
 
 
 
