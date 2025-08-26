@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B4A34F463;
-	Tue, 26 Aug 2025 11:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205D534F48D;
+	Tue, 26 Aug 2025 11:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207711; cv=none; b=XF2DafLuVBdsj6oPzpik5A7xbGVOwPdB3zwNKu2pGVUFXJr/Jmb++e+FG5CqOo7NRTU+7TLYp3id5Ji1rk0sQfaP1dODArPnoQSEMAi8OmTyk1toUsfovM/+dPJnhiZmoU/sn5iFFq2VfGar1fEX31xeRuBeIxSjRM1Lqc52t/o=
+	t=1756207714; cv=none; b=lbQkXrrhrSjLBOBwHiUci2ZN8N10v9/ASCU4ylTljp+YbCmYOrVHY9twGPfyQWnY9EyzJFYBpNaPfM6Inv52ijTR+8mxW9rFFCmUXHd5ysnXcii8Du8KmfjeK2zEZRJdFNAtP04GXnnvJ+LP986RtpRthoLlyzZyN9yEJGEoGck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207711; c=relaxed/simple;
-	bh=BabndgU++ah8ifY/Rwpbp31OtBe9raq8COAGmOBVLEQ=;
+	s=arc-20240116; t=1756207714; c=relaxed/simple;
+	bh=5SmGE928FRcuP9HL727USO6YtGGY6nvxL2+y7NZTEHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hvzsc/aYynGxfQW6qLfJfIYR3cm/+9fwEaEhGjtxmwyfbaRqOEmiMN1mxkJ8jArlREUZLqHJ1OWEF+9vHjerOYPJgeM6QXReYpbGrPeq3pNUIXHVida5nAUfhCuji9Df++743WnFXEhW6JCMY7o3r9Ba5SyDOksjQaoADuhIguw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03n+dkTy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kCYD0sKDbvoXYgLo2zO0WWa6ENqqQrHpO5o0Pmap+KSUplSk09HMo2nDZH1qwQn8mwc1YqlHaKtOqOVq4nLkdCrtuR4nA+KORBAtRIgVH5w3TSU+wjDmlWQeKsAsdxzI4saTqnW4HeBiFPjrR9UQw2AEcxxp74kTh8dD89u3PY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ89FjsS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03n+dkTy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F153BC4CEF1;
-	Tue, 26 Aug 2025 11:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ89FjsS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02ABC4CEF1;
+	Tue, 26 Aug 2025 11:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207711;
-	bh=BabndgU++ah8ifY/Rwpbp31OtBe9raq8COAGmOBVLEQ=;
+	s=korg; t=1756207714;
+	bh=5SmGE928FRcuP9HL727USO6YtGGY6nvxL2+y7NZTEHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03n+dkTyRXuw29LcOIUvB6B+RF2AOo+n+uqQmepNvKJESIpAbT/1K0UiSm0fLGmDV
-	 svmNY/r/dc11/RvdQYbpzWvYdIwMopN9bivmWJDifIrx3k/URMqEb+8zQFfw6P5Old
-	 61UNoYbqSFARVtdIoAcGU5/1cXNEu26VQ6RJysa8=
+	b=aJ89FjsSMQfq/XzqdGQl5rJh3LjC9XQAiP1ig+poyHnvNXxEOisTAHPe1J12yLKAQ
+	 afvszdhsnLKuZz87CK7yChyw2M/fUv1ZTJDqIwGSxIsTUM+yT43YNJu5Hpwym8dFaj
+	 hVwHEYT5n6rJlJD9d5oMtBdtXrk87Y1BHKsdvntc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Eric Sandeen <sandeen@redhat.com>,
-	Charalampos Mitrodimas <charmitro@posteo.net>
-Subject: [PATCH 6.16 281/457] debugfs: fix mount options not being applied
-Date: Tue, 26 Aug 2025 13:09:25 +0200
-Message-ID: <20250826110944.324005009@linuxfoundation.org>
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Sven Peter <sven@svenpeter.dev>,
+	Tomasz Jeznach <tjeznach@rivosinc.com>
+Subject: [PATCH 6.16 290/457] iommu: Remove ops.pgsize_bitmap from drivers that dont use it
+Date: Tue, 26 Aug 2025 13:09:34 +0200
+Message-ID: <20250826110944.551000681@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,79 +56,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit ba6cc29351b1fa0cb9adce91b88b9f3c3cbe9c46 upstream.
+[ Upstream commit 8901812485de1356e3757958af40fe0d3a48e986 ]
 
-Mount options (uid, gid, mode) are silently ignored when debugfs is
-mounted. This is a regression introduced during the conversion to the
-new mount API.
+These drivers all set the domain->pgsize_bitmap in their
+domain_alloc_paging() functions, so the ops value is never used. Delete
+it.
 
-When the mount API conversion was done, the parsed options were never
-applied to the superblock when it was reused. As a result, the mount
-options were ignored when debugfs was mounted.
-
-Fix this by following the same pattern as the tracefs fix in commit
-e4d32142d1de ("tracing: Fix tracefs mount options"). Call
-debugfs_reconfigure() in debugfs_get_tree() to apply the mount options
-to the superblock after it has been created or reused.
-
-As an example, with the bug the "mode" mount option is ignored:
-
-  $ mount -o mode=0666 -t debugfs debugfs /tmp/debugfs_test
-  $ mount | grep debugfs_test
-  debugfs on /tmp/debugfs_test type debugfs (rw,relatime)
-  $ ls -ld /tmp/debugfs_test
-  drwx------ 25 root root 0 Aug  4 14:16 /tmp/debugfs_test
-
-With the fix applied, it works as expected:
-
-  $ mount -o mode=0666 -t debugfs debugfs /tmp/debugfs_test
-  $ mount | grep debugfs_test
-  debugfs on /tmp/debugfs_test type debugfs (rw,relatime,mode=666)
-  $ ls -ld /tmp/debugfs_test
-  drw-rw-rw- 37 root root 0 Aug  2 17:28 /tmp/debugfs_test
-
-Fixes: a20971c18752 ("vfs: Convert debugfs to use the new mount API")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220406
-Cc: stable <stable@kernel.org>
-Reviewed-by: Eric Sandeen <sandeen@redhat.com>
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Link: https://lore.kernel.org/r/20250816-debugfs-mount-opts-v3-1-d271dad57b5b@posteo.net
+Reviewed-by: Sven Peter <sven@svenpeter.dev> # for Apple DART
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com> # for RISC-V
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/3-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Stable-dep-of: 72b6f7cd89ce ("iommu/virtio: Make instance lookup robust")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/debugfs/inode.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/iommu/apple-dart.c       |    1 -
+ drivers/iommu/intel/iommu.c      |    1 -
+ drivers/iommu/iommufd/selftest.c |    1 -
+ drivers/iommu/riscv/iommu.c      |    1 -
+ drivers/iommu/virtio-iommu.c     |    6 ++----
+ 5 files changed, 2 insertions(+), 8 deletions(-)
 
---- a/fs/debugfs/inode.c
-+++ b/fs/debugfs/inode.c
-@@ -183,6 +183,9 @@ static int debugfs_reconfigure(struct fs
- 	struct debugfs_fs_info *sb_opts = sb->s_fs_info;
- 	struct debugfs_fs_info *new_opts = fc->s_fs_info;
- 
-+	if (!new_opts)
-+		return 0;
-+
- 	sync_filesystem(sb);
- 
- 	/* structure copy of new mount options to sb */
-@@ -282,10 +285,16 @@ static int debugfs_fill_super(struct sup
- 
- static int debugfs_get_tree(struct fs_context *fc)
- {
-+	int err;
-+
- 	if (!(debugfs_allow & DEBUGFS_ALLOW_API))
- 		return -EPERM;
- 
--	return get_tree_single(fc, debugfs_fill_super);
-+	err = get_tree_single(fc, debugfs_fill_super);
-+	if (err)
-+		return err;
-+
-+	return debugfs_reconfigure(fc);
+--- a/drivers/iommu/apple-dart.c
++++ b/drivers/iommu/apple-dart.c
+@@ -991,7 +991,6 @@ static const struct iommu_ops apple_dart
+ 	.of_xlate = apple_dart_of_xlate,
+ 	.def_domain_type = apple_dart_def_domain_type,
+ 	.get_resv_regions = apple_dart_get_resv_regions,
+-	.pgsize_bitmap = -1UL, /* Restricted during dart probe */
+ 	.owner = THIS_MODULE,
+ 	.default_domain_ops = &(const struct iommu_domain_ops) {
+ 		.attach_dev	= apple_dart_attach_dev_paging,
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -4390,7 +4390,6 @@ const struct iommu_ops intel_iommu_ops =
+ 	.device_group		= intel_iommu_device_group,
+ 	.is_attach_deferred	= intel_iommu_is_attach_deferred,
+ 	.def_domain_type	= device_def_domain_type,
+-	.pgsize_bitmap		= SZ_4K,
+ 	.page_response		= intel_iommu_page_response,
+ 	.default_domain_ops = &(const struct iommu_domain_ops) {
+ 		.attach_dev		= intel_iommu_attach_device,
+--- a/drivers/iommu/iommufd/selftest.c
++++ b/drivers/iommu/iommufd/selftest.c
+@@ -801,7 +801,6 @@ static const struct iommu_ops mock_ops =
+ 	.default_domain = &mock_blocking_domain,
+ 	.blocked_domain = &mock_blocking_domain,
+ 	.owner = THIS_MODULE,
+-	.pgsize_bitmap = MOCK_IO_PAGE_SIZE,
+ 	.hw_info = mock_domain_hw_info,
+ 	.domain_alloc_paging_flags = mock_domain_alloc_paging_flags,
+ 	.domain_alloc_nested = mock_domain_alloc_nested,
+--- a/drivers/iommu/riscv/iommu.c
++++ b/drivers/iommu/riscv/iommu.c
+@@ -1533,7 +1533,6 @@ static void riscv_iommu_release_device(s
  }
  
- static void debugfs_free_fc(struct fs_context *fc)
+ static const struct iommu_ops riscv_iommu_ops = {
+-	.pgsize_bitmap = SZ_4K,
+ 	.of_xlate = riscv_iommu_of_xlate,
+ 	.identity_domain = &riscv_iommu_identity_domain,
+ 	.blocked_domain = &riscv_iommu_blocking_domain,
+--- a/drivers/iommu/virtio-iommu.c
++++ b/drivers/iommu/virtio-iommu.c
+@@ -998,7 +998,7 @@ static void viommu_get_resv_regions(stru
+ 	iommu_dma_get_resv_regions(dev, head);
+ }
+ 
+-static struct iommu_ops viommu_ops;
++static const struct iommu_ops viommu_ops;
+ static struct virtio_driver virtio_iommu_drv;
+ 
+ static int viommu_match_node(struct device *dev, const void *data)
+@@ -1086,7 +1086,7 @@ static bool viommu_capable(struct device
+ 	}
+ }
+ 
+-static struct iommu_ops viommu_ops = {
++static const struct iommu_ops viommu_ops = {
+ 	.capable		= viommu_capable,
+ 	.domain_alloc_identity	= viommu_domain_alloc_identity,
+ 	.domain_alloc_paging	= viommu_domain_alloc_paging,
+@@ -1217,8 +1217,6 @@ static int viommu_probe(struct virtio_de
+ 		viommu->first_domain++;
+ 	}
+ 
+-	viommu_ops.pgsize_bitmap = viommu->pgsize_bitmap;
+-
+ 	virtio_device_ready(vdev);
+ 
+ 	/* Populate the event queue with buffers */
 
 
