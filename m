@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E176C22128B;
-	Tue, 26 Aug 2025 13:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C413B374C4;
+	Tue, 26 Aug 2025 13:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216779; cv=none; b=bQD7vqDTVj9yOIYGlXkuGyZkqU9EPSWw3Va3q9CBnIIgsNDxUE7APsIo/Z2jr4pGZvKGAUXysDqmK6ICrHtDFqKR8QphuhpyoPIomVwRaqnV6UIf2DiKb9FJ0kJoHIUwhddHgranStxGJMVkpHpsU6OKpuP5W9dD5oqRfsqCLlc=
+	t=1756216782; cv=none; b=DAq2J693YtLojun5vOnPFPWZR41Aa8thg0THjM6lb6awRd7TCnDU1TefBVMy40ORjcMHKAt4yAFrhJNqHleefJCPl4zSlz31rO5FGhowHGmMBVqSbcX89CUsUvyu7xg+LrDngPuAmyqXB/GCd8/17LTq5V7sE/nVDkx2SovQKN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216779; c=relaxed/simple;
-	bh=90SrEAJGTNZGkRrlUBN1Xbca6tI2O4rl8p2dnBNK0/4=;
+	s=arc-20240116; t=1756216782; c=relaxed/simple;
+	bh=OgtA1QAgMVdkQPmikWZnsKmE0PiPWSgegcAeDf/A0p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8dNHBn2u0CEbemOg+mGGxpmfTeiZ6uq/P3glANMWeVTkCWAVuevdg9SjXX1CJtUwW+CWhVb9QeiJcc1U6gsGe98dGBJ2QhF5UC2zKRvruLyVD+mE4VBwpJWq57Nxf3FMbJvonPweh8pGblnGEf9N3vmEV2D43eEJhWo6UsmCC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmxjLD+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O89LzIgJIk/uMHaQS2Ko6InMSnaDgfDmpIQUzgpD9bHEJvOkbJh7Zt48PnNc67os4a/Pmg6yccdBrp+AYEH7hmsuInFyqwiYNxQPxvJ1GGa8NNMC3Rmay2OMkKWbDiGkOOm9OQxIaYGZG+rfPZOi57SECCkCT2RrAcX6v/f7QW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eunR7jUm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmxjLD+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74074C4CEF1;
-	Tue, 26 Aug 2025 13:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eunR7jUm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D57C113CF;
+	Tue, 26 Aug 2025 13:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216778;
-	bh=90SrEAJGTNZGkRrlUBN1Xbca6tI2O4rl8p2dnBNK0/4=;
+	s=korg; t=1756216781;
+	bh=OgtA1QAgMVdkQPmikWZnsKmE0PiPWSgegcAeDf/A0p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmxjLD+EhYs6/qCNKzSkMx6PNmFAPD5+81gyT3o2sC5D+/DQQHNiSfJxzrYgU3Neo
-	 g0opJpjHOpFJ2U4j5Ed52xjvMeGnZ0+BiZFLhgHRcRKK5gMorquHe/wOmrdJdTYZas
-	 BtnMFPd/xwFLXNLdIEOzsB0Tpo67VHJ0zdjlyBS0=
+	b=eunR7jUmBjE2ECIgYpCE7x/ZH/ts3xB61n3i73jUAXZ7XfwM6bT/JhWJ01UOaKUPb
+	 RWQpt0EAW9X/+mKqScI0jCOTlho7E5LwYc9VwdmLImyLJZ8F9hRrEC5X8n6ZaPAI7X
+	 T4Rl21w7/EWACA5aujgzxAeev2yB8Vx9UaHdSaxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 500/644] ipv6: sr: Fix MAC comparison to be constant-time
-Date: Tue, 26 Aug 2025 13:09:51 +0200
-Message-ID: <20250826110958.885884651@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Niklas Cassel <cassel@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 534/644] ata: Fix SATA_MOBILE_LPM_POLICY description in Kconfig
+Date: Tue, 26 Aug 2025 13:10:25 +0200
+Message-ID: <20250826110959.746204649@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,42 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit a458b2902115b26a25d67393b12ddd57d1216aaa upstream.
+[ Upstream commit ed62a62a18bc144f73eadf866ae46842e8f6606e ]
 
-To prevent timing attacks, MACs need to be compared in constant time.
-Use the appropriate helper function for this.
+Improve the description of the possible default SATA link power
+management policies and add the missing description for policy 5.
+No functional changes.
 
-Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
+Fixes: a5ec5a7bfd1f ("ata: ahci: Support state with min power but Partial low power state")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20250818202724.15713-1-ebiggers@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+[ Adjust context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_hmac.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ata/Kconfig |   33 +++++++++++++++++++++++++--------
+ 1 file changed, 25 insertions(+), 8 deletions(-)
 
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -35,6 +35,7 @@
- #include <net/xfrm.h>
+--- a/drivers/ata/Kconfig
++++ b/drivers/ata/Kconfig
+@@ -117,22 +117,39 @@ config SATA_AHCI
  
- #include <crypto/hash.h>
-+#include <crypto/algapi.h>
- #include <net/seg6.h>
- #include <net/genetlink.h>
- #include <net/seg6_hmac.h>
-@@ -269,7 +270,7 @@ bool seg6_hmac_validate_skb(struct sk_bu
- 	if (seg6_hmac_compute(hinfo, srh, &ipv6_hdr(skb)->saddr, hmac_output))
- 		return false;
+ config SATA_MOBILE_LPM_POLICY
+ 	int "Default SATA Link Power Management policy for mobile chipsets"
+-	range 0 4
++	range 0 5
+ 	default 0
+ 	depends on SATA_AHCI
+ 	help
+ 	  Select the Default SATA Link Power Management (LPM) policy to use
+ 	  for mobile / laptop variants of chipsets / "South Bridges".
  
--	if (memcmp(hmac_output, tlv->hmac, SEG6_HMAC_FIELD_LEN) != 0)
-+	if (crypto_memneq(hmac_output, tlv->hmac, SEG6_HMAC_FIELD_LEN))
- 		return false;
+-	  The value set has the following meanings:
++	  Each policy combines power saving states and features:
++	   - Partial: The Phy logic is powered but is in a reduced power
++                      state. The exit latency from this state is no longer than
++                      10us).
++	   - Slumber: The Phy logic is powered but is in an even lower power
++                      state. The exit latency from this state is potentially
++		      longer, but no longer than 10ms.
++	   - DevSleep: The Phy logic may be powered down. The exit latency from
++	               this state is no longer than 20 ms, unless otherwise
++		       specified by DETO in the device Identify Device Data log.
++	   - HIPM: Host Initiated Power Management (host automatically
++		   transitions to partial and slumber).
++	   - DIPM: Device Initiated Power Management (device automatically
++		   transitions to partial and slumber).
++
++	  The possible values for the default SATA link power management
++	  policies are:
+ 		0 => Keep firmware settings
+-		1 => Maximum performance
+-		2 => Medium power
+-		3 => Medium power with Device Initiated PM enabled
+-		4 => Minimum power
++		1 => No power savings (maximum performance)
++		2 => HIPM (Partial)
++		3 => HIPM (Partial) and DIPM (Partial and Slumber)
++		4 => HIPM (Partial and DevSleep) and DIPM (Partial and Slumber)
++		5 => HIPM (Slumber and DevSleep) and DIPM (Partial and Slumber)
  
- 	return true;
+-	  Note "Minimum power" is known to cause issues, including disk
+-	  corruption, with some disks and should not be used.
++	  Excluding the value 0, higher values represent policies with higher
++	  power savings.
+ 
+ config SATA_AHCI_PLATFORM
+ 	tristate "Platform AHCI SATA support"
 
 
