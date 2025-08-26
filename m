@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090F52FDC5C;
-	Tue, 26 Aug 2025 14:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE87350D4F;
+	Tue, 26 Aug 2025 14:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218021; cv=none; b=l7Ixwea/IrjWrRsD/CZo2JqszFCA6xoNTYU4lSgxFIjwczwSPCaYdEFlvTBEmpiC8aAtw+UR4HPPSEVwnbBOmbmcgOVSL4UhQ8nOZCSXCJ+R+rEJXYgSL+1UhneQcWw5qIJ+sbTB8qMwV5LZNb/7S6n5FjMx3faQrqeu1yE47h8=
+	t=1756218023; cv=none; b=Bi5gUFKIQMXgDn7KWTCUVGpzWWmsvMijXdWl68egAuC9q1jEiTnQ2eOS8GuZdMiUdKAEPBx79LXKoljCiqmXn1DYkbo2iKxJ9TZbXESgX+NCF1OkGbdfVnijcSHARYjCKmsyrpOS8K7jZ/OI3B/ofFm6NC4IFwpIAMN66f6yf2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218021; c=relaxed/simple;
-	bh=aRHoPkLuIux3zLwh04/17rxVWr3E/XOHuZ3242kXus8=;
+	s=arc-20240116; t=1756218023; c=relaxed/simple;
+	bh=2pBV91OsSskO4r7RMmUwZZcvj4LjC/BEtL7Ek4gmWNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m97qh88llV3Vekdpqq9tC3bnLNuy/f18hVMJykbhukdYO8k9Hkxcufxz+a+xId1k0Lpj3k3Jb3hCB7YIZo4ebmOYJAsiFS3DTayohy9tBfgesXZBfm+N9KZ0PwOPYFkpxpBd8IJkhkWPrkNWhiQXHqkpn12WXSjaoKvFBXYtNTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNvKIjXE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kIhld97ZIv6Uq94TuDdaIIPrI3oBYDOVfFhfZ0xD7Bxw55Am785J9/v5L+u0usrJt6El/SP4Q+0OLNwTfzWdltqrTXE4XnrMU+9RR0cBXJzZkwT/0LFhEFlIf+RS1ekVIEWEXvKSD3H07UTRbkGVqbUUTm2p2j4tsyPc+Tfh+zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WuDgDDz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNvKIjXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39774C4CEF1;
-	Tue, 26 Aug 2025 14:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WuDgDDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05EEC4CEF1;
+	Tue, 26 Aug 2025 14:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218020;
-	bh=aRHoPkLuIux3zLwh04/17rxVWr3E/XOHuZ3242kXus8=;
+	s=korg; t=1756218023;
+	bh=2pBV91OsSskO4r7RMmUwZZcvj4LjC/BEtL7Ek4gmWNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fNvKIjXECr6/0e0v7+NiYHFpxHn+xniL/H8Wg1HKQNVfPbMInYnsgVOBDHzSUOIGt
-	 5v1PmGg1AZ9M5GRyv58VVIPoTkn1EfkFRtq+AQUHGDbZJzAyFeR3uPQCrmccBKqNHc
-	 AoNGc2mzAunFFbvmJONS4LmpK5xmJ91XhxFjDSEs=
+	b=2WuDgDDzx4T5xRcOVv7ygg9h74hqd7CaWvwbFQ5EYJEwyWH6VaFTG8j34IMmk4VD1
+	 gQeIqFKquGEwrO/fMY7oH8Publx3K+6acATVZbWJlgfYt88r4Ff6OTGpG+Wr+P99fv
+	 GBKfP4LeXNKQ88XCFWemXqm/W2CaQMsgzmZ0HuZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Dilger <adilger@whamcloud.com>,
-	Li Dongyang <dongyangli@ddn.com>,
-	Alex Zhuravlev <bzzz@whamcloud.com>,
-	Oleg Drokin <green@whamcloud.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 363/523] ext4: check fast symlink for ea_inode correctly
-Date: Tue, 26 Aug 2025 13:09:33 +0200
-Message-ID: <20250826110933.423733008@linuxfoundation.org>
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 337/523] scsi: lpfc: Remove redundant assignment to avoid memory leak
+Date: Tue, 26 Aug 2025 13:09:07 +0200
+Message-ID: <20250826110932.784774793@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,63 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Dilger <adilger@dilger.ca>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-commit b4cc4a4077268522e3d0d34de4b2dc144e2330fa upstream.
+[ Upstream commit eea6cafb5890db488fce1c69d05464214616d800 ]
 
-The check for a fast symlink in the presence of only an
-external xattr inode is incorrect.  If a fast symlink does
-not have an xattr block (i_file_acl == 0), but does have
-an external xattr inode that increases inode i_blocks, then
-the check for a fast symlink will incorrectly fail and
-__ext4_iget()->ext4_ind_check_inode() will report the inode
-is corrupt when it "validates" i_data[] on the next read:
+Remove the redundant assignment if kzalloc() succeeds to avoid memory
+leak.
 
-    # ln -s foo /mnt/tmp/bar
-    # setfattr -h -n trusted.test \
-               -v "$(yes | head -n 4000)" /mnt/tmp/bar
-    # umount /mnt/tmp
-    # mount /mnt/tmp
-    # ls -l /mnt/tmp
-    ls: cannot access '/mnt/tmp/bar': Structure needs cleaning
-    total 4
-     ? l?????????? ? ?    ?        ?            ? bar
-    # dmesg | tail -1
-    EXT4-fs error (device dm-8): __ext4_iget:5098:
-        inode #24578: block 7303014: comm ls: invalid block
-
-(note that "block 7303014" = 0x6f6f66 = "foo" in LE order).
-
-ext4_inode_is_fast_symlink() should check the superblock
-EXT4_FEATURE_INCOMPAT_EA_INODE feature flag, not the inode
-EXT4_EA_INODE_FL, since the latter is only set on the xattr
-inode itself, and not on the inode that uses this xattr.
-
-Cc: stable@vger.kernel.org
-Fixes: fc82228a5e38 ("ext4: support fast symlinks from ext3 file systems")
-Signed-off-by: Andreas Dilger <adilger@whamcloud.com>
-Reviewed-by: Li Dongyang <dongyangli@ddn.com>
-Reviewed-by: Alex Zhuravlev <bzzz@whamcloud.com>
-Reviewed-by: Oleg Drokin <green@whamcloud.com>
-Reviewed-on: https://review.whamcloud.com/59879
-Lustre-bug-id: https://jira.whamcloud.com/browse/LU-19121
-Link: https://patch.msgid.link/20250717063709.757077-1-adilger@dilger.ca
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bd2cdd5e400f ("scsi: lpfc: NVME Initiator: Add debugfs support")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Link: https://lore.kernel.org/r/20250801185202.42631-1-jiashengjiangcool@gmail.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_debugfs.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -148,7 +148,7 @@ static int ext4_meta_trans_blocks(struct
-  */
- int ext4_inode_is_fast_symlink(struct inode *inode)
- {
--	if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
-+	if (!ext4_has_feature_ea_inode(inode->i_sb)) {
- 		int ea_blocks = EXT4_I(inode)->i_file_acl ?
- 				EXT4_CLUSTER_SIZE(inode->i_sb) >> 9 : 0;
- 
+diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
+index f91eee01ce95..c3e77db18945 100644
+--- a/drivers/scsi/lpfc/lpfc_debugfs.c
++++ b/drivers/scsi/lpfc/lpfc_debugfs.c
+@@ -6104,7 +6104,6 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
+ 			}
+ 			phba->nvmeio_trc_on = 1;
+ 			phba->nvmeio_trc_output_idx = 0;
+-			phba->nvmeio_trc = NULL;
+ 		} else {
+ nvmeio_off:
+ 			phba->nvmeio_trc_size = 0;
+-- 
+2.50.1
+
 
 
