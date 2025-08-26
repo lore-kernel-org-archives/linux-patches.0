@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFF620DD51;
-	Tue, 26 Aug 2025 14:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9527B3570A9;
+	Tue, 26 Aug 2025 14:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219001; cv=none; b=ruRu9aQh0B6Dnxk58FKOH+wL+NOhMzDtIhCjduuItfoDGt87mXLbS1RrkNhHzFVQQT+W0wbgKMx/161onimybrPbrzQ7esxwZXZNiD1veXipB1dyc4KUYt3IycC7P5eLxarVB4iM6jWGbeIEjQNZTsRgxLYvOdCXdJmpkOsoI/o=
+	t=1756219003; cv=none; b=O7LrSihx8OMTt435GWq8fJtDm+thvShur5T/eOz01/5VHfi24qq0PkqXTjXikbvNbv1twzYiJyCUAuNSeh01Es61i209AVnb9qJW+AFdXO9Yv32gLeclFJNptrH3HfzNPrMoNKqCbeU695Du3UU4/SFSaiUCF7F8YLanUY1iOAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219001; c=relaxed/simple;
-	bh=LP4vPknJyOKLlt/b1nH8s0W0BLPFl6pGWK4SVT/INz0=;
+	s=arc-20240116; t=1756219003; c=relaxed/simple;
+	bh=a8zTM5ZzBOSAf2q885aqj6sspZ7M/Lw9eY6ahkjX1jE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dozY3r0SEVkklEbruVK57HSBCMb+bugAI+F3fdT66rcYtYa6WghH3+4DsQ10kwny5doVDCbU+AYgjlCLA6t6zuE2nq4AZHDTlxpLN+HoYOmD5ndccAOsiFznI0R4GVL3I/LQW6IPflmTuMdoPQwbjcCMZt5r5Mvexq7nbO9Es/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iybEHxAe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FdRbXMLYzHWJ7p2ORn6O140NqH4GyQBM2VwBZSedAY09XG1XZ6NutKRv0eTPL3EsSaZQqPKYR3o06GMf5/8E86qjHSDMoDuVQ7EE7E1fuaVNKzEZ2SBPN/6QjM28TxolbWqLgvjQoXgAZWfcEsoWT4h+y4QBFq6S0ZZVm7w3XLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj+FMx71; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iybEHxAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1ADC4CEF1;
-	Tue, 26 Aug 2025 14:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj+FMx71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B6EC4CEF1;
+	Tue, 26 Aug 2025 14:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219000;
-	bh=LP4vPknJyOKLlt/b1nH8s0W0BLPFl6pGWK4SVT/INz0=;
+	s=korg; t=1756219003;
+	bh=a8zTM5ZzBOSAf2q885aqj6sspZ7M/Lw9eY6ahkjX1jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iybEHxAeSYsQ5RNJ79WIN7reEqmZrFX/anuMWUc1bXFJivxCWxqfEC0s2ICk4JerW
-	 wyTu0MSkPm2zE1oG36njvRN1k41W+sZVHcgn0zhuj+XcAJsQJlB08PmZPYwgRwIYs4
-	 C9NNUsqM7TptcWBRsg4m+m0ic/5KCObRtLHFAT28=
+	b=rj+FMx71/PjooTc1OOxXTJ6zsXSCRw8Mmt3+sKK4iKEM5bxRZM1LdOSYcW9fn4+Vq
+	 sXJTZGirjLXSfjs13/LtDfURGGTIIvcvc6BJ/uvhAMhyfzpboA5WIY2fnsrYgBCErk
+	 KEnQ4Lmt8JKAhPb5nlieL/xBENt6twU5W3QxtSGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Oscar Maes <oscmaes92@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 213/403] wifi: cfg80211: Fix interface type validation
-Date: Tue, 26 Aug 2025 13:08:59 +0200
-Message-ID: <20250826110912.723390281@linuxfoundation.org>
+Subject: [PATCH 5.4 214/403] net: ipv4: fix incorrect MTU in broadcast routes
+Date: Tue, 26 Aug 2025 13:09:00 +0200
+Message-ID: <20250826110912.752449203@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -46,40 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Oscar Maes <oscmaes92@gmail.com>
 
-[ Upstream commit 14450be2332a49445106403492a367412b8c23f4 ]
+[ Upstream commit 9e30ecf23b1b8f091f7d08b27968dea83aae7908 ]
 
-Fix a condition that verified valid values of interface types.
+Currently, __mkroute_output overrules the MTU value configured for
+broadcast routes.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250709233537.7ad199ca5939.I0ac1ff74798bf59a87a57f2e18f2153c308b119b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This buggy behaviour can be reproduced with:
+
+ip link set dev eth1 mtu 9000
+ip route del broadcast 192.168.0.255 dev eth1 proto kernel scope link src 192.168.0.2
+ip route add broadcast 192.168.0.255 dev eth1 proto kernel scope link src 192.168.0.2 mtu 1500
+
+The maximum packet size should be 1500, but it is actually 8000:
+
+ping -b 192.168.0.255 -s 8000
+
+Fix __mkroute_output to allow MTU values to be configured for
+for broadcast routes (to support a mixed-MTU local-area-network).
+
+Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
+Link: https://patch.msgid.link/20250710142714.12986-1-oscmaes92@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/route.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 2dfa3331604e..3a550544dd9f 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -433,7 +433,7 @@ ieee80211_get_sband_iftype_data(const struct ieee80211_supported_band *sband,
- {
- 	int i;
- 
--	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
-+	if (WARN_ON(iftype >= NUM_NL80211_IFTYPES))
- 		return NULL;
- 
- 	if (iftype == NL80211_IFTYPE_AP_VLAN)
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index d173234503f9..80612f73ff53 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -2378,7 +2378,6 @@ static struct rtable *__mkroute_output(const struct fib_result *res,
+ 	do_cache = true;
+ 	if (type == RTN_BROADCAST) {
+ 		flags |= RTCF_BROADCAST | RTCF_LOCAL;
+-		fi = NULL;
+ 	} else if (type == RTN_MULTICAST) {
+ 		flags |= RTCF_MULTICAST | RTCF_LOCAL;
+ 		if (!ip_check_mc_rcu(in_dev, fl4->daddr, fl4->saddr,
 -- 
 2.39.5
 
