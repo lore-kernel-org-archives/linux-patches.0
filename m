@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C15338F32;
-	Tue, 26 Aug 2025 13:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364C11E5718;
+	Tue, 26 Aug 2025 13:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214150; cv=none; b=E3rf4zesjFoABHF+Q4q8nlNOH4SsS/AqAQYQg9oXV5TR10KcOZzihKksme1yJL5JCpeKRzflBq48CfriEZUeWIhfRC882ymtABh2I+9XPc97nX8g46TMKApEUcM5A5qRvmh8UaSIt10SjGq0C+dXcjrHjlPFwMEmtbUdBltKOJE=
+	t=1756214153; cv=none; b=jdKVrL+B3eQjcXwQsF3TPvb2JRtcP6IHgB03qMrdq3ghK+RSnyxU0Nx75tGDZkTaO8k8fY1b6mqEgTrg2M3zxAKinuV2aGywu80yaVfft53Rsg3Lpwm1prtkIss7EXxBB9eCtkJf7UOB1noUm9srALhxwDOsY9JzEQz+XlfooVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214150; c=relaxed/simple;
-	bh=S/cqH8oPXa/2kYAXTpiP05rQ7Uhdwqmr9WE0okhNU2g=;
+	s=arc-20240116; t=1756214153; c=relaxed/simple;
+	bh=+/X7hfUCeWAyQ9aUe1OOltxiyT363oCG+2Gd7e8sSnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zf+/dN+3exIAp5VBOmo5hAFbUQNZnh1OW4Rmqn8JueE6/JutPiYoxGTPst5sHBobHZl6RcTLWtZdjN7t5wlphcr567af9ATklyAJIAxqn5toZncpAeO5ppWcnX0NdfVOVovPYBcGVXUpVzA4DXWbuyw0K4BS/JttBJJiQb+BBDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guUoI/QQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G3F/x+UiJKFDJU7hXjeQtYTTaVw+GzszmhP57aSI0pr4LUtiX2ZeMYZvnX6pWzMHOs9Mt5X2CYdsbaIJWohULBXy1u3b5kcIvTrZRWvkDDDbmd2xlT4bqw/r6Ir5pBFNyT46yK+BCxSxj61Lk6Q5CqMOVidUY9otmw/Z7VlXSeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBjrVPtk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guUoI/QQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF967C4CEF1;
-	Tue, 26 Aug 2025 13:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBjrVPtk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607ECC4CEF1;
+	Tue, 26 Aug 2025 13:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214150;
-	bh=S/cqH8oPXa/2kYAXTpiP05rQ7Uhdwqmr9WE0okhNU2g=;
+	s=korg; t=1756214152;
+	bh=+/X7hfUCeWAyQ9aUe1OOltxiyT363oCG+2Gd7e8sSnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guUoI/QQEJxilKKH1iMO03D/y5JAEzKnDaKCWiFVwtgR8w/7mXOIXfCuUsl0q1oVY
-	 N/AvYRtvDRPKCrVp6+Q5V/SQuI6Zs9Syu7Kbq/u1xL3epNEVoRbhRx7a8rMbfh8NDo
-	 QeL0cP7rv0JPjt8Z4hDGyd++0QIRRrwTYBQu3m5g=
+	b=pBjrVPtkTZWmgfXm6tM7LC1cCXhNCODjgQipaH9jOH/IGCqPs5zybqD+wNY0jlAQc
+	 8qjGxGKikBiuXZOnze1kvLXZ8dDLppbsTPYiWqxXETluD4yXF5DkBPB1oSIRlNXTw6
+	 p45PW7qlphOp4yO9rHHBtmnTsRjr1AYvqG7FW31I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangbo Lu <yangbo.lu@nxp.com>,
-	Johan Hovold <johan@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 012/482] net: gianfar: fix device leak when querying time stamp info
-Date: Tue, 26 Aug 2025 13:04:25 +0200
-Message-ID: <20250826110931.086706203@linuxfoundation.org>
+	=?UTF-8?q?Markku=20Ahvenj=C3=A4rvi?= <mankku@gmail.com>,
+	Janne Karhunen <janne.karhunen@gmail.com>,
+	Chao Gao <chao.gao@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 030/482] KVM: nVMX: Defer SVI update to vmcs01 on EOI when L2 is active w/o VID
+Date: Tue, 26 Aug 2025 13:04:43 +0200
+Message-ID: <20250826110931.548810119@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -46,47 +47,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Chao Gao <chao.gao@intel.com>
 
-commit da717540acd34e5056e3fa35791d50f6b3303f55 upstream.
+[ Upstream commit 04bc93cf49d16d01753b95ddb5d4f230b809a991 ]
 
-Make sure to drop the reference to the ptp device taken by
-of_find_device_by_node() when querying the time stamping capabilities.
+If KVM emulates an EOI for L1's virtual APIC while L2 is active, defer
+updating GUEST_INTERUPT_STATUS.SVI, i.e. the VMCS's cache of the highest
+in-service IRQ, until L1 is active, as vmcs01, not vmcs02, needs to track
+vISR.  The missed SVI update for vmcs01 can result in L1 interrupts being
+incorrectly blocked, e.g. if there is a pending interrupt with lower
+priority than the interrupt that was EOI'd.
 
-Note that holding a reference to the ptp device does not prevent its
-driver data from going away.
+This bug only affects use cases where L1's vAPIC is effectively passed
+through to L2, e.g. in a pKVM scenario where L2 is L1's depriveleged host,
+as KVM will only emulate an EOI for L1's vAPIC if Virtual Interrupt
+Delivery (VID) is disabled in vmc12, and L1 isn't intercepting L2 accesses
+to its (virtual) APIC page (or if x2APIC is enabled, the EOI MSR).
 
-Fixes: 7349a74ea75c ("net: ethernet: gianfar_ethtool: get phc index through drvdata")
-Cc: stable@vger.kernel.org	# 4.18
-Cc: Yangbo Lu <yangbo.lu@nxp.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250725171213.880-4-johan@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+WARN() if KVM updates L1's ISR while L2 is active with VID enabled, as an
+EOI from L2 is supposed to affect L2's vAPIC, but still defer the update,
+to try to keep L1 alive.  Specifically, KVM forwards all APICv-related
+VM-Exits to L1 via nested_vmx_l1_wants_exit():
+
+	case EXIT_REASON_APIC_ACCESS:
+	case EXIT_REASON_APIC_WRITE:
+	case EXIT_REASON_EOI_INDUCED:
+		/*
+		 * The controls for "virtualize APIC accesses," "APIC-
+		 * register virtualization," and "virtual-interrupt
+		 * delivery" only come from vmcs12.
+		 */
+		return true;
+
+Fixes: c7c9c56ca26f ("x86, apicv: add virtual interrupt delivery support")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/kvm/20230312180048.1778187-1-jason.cj.chen@intel.com
+Reported-by: Markku Ahvenjärvi <mankku@gmail.com>
+Closes: https://lore.kernel.org/all/20240920080012.74405-1-mankku@gmail.com
+Cc: Janne Karhunen <janne.karhunen@gmail.com>
+Signed-off-by: Chao Gao <chao.gao@intel.com>
+[sean: drop request, handle in VMX, write changelog]
+Tested-by: Chao Gao <chao.gao@intel.com>
+Link: https://lore.kernel.org/r/20241128000010.4051275-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[sean: resolve minor syntactic conflict in lapic.h, account for lack of
+       kvm_x86_call(), drop sanity check due to lack of wants_to_run]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/gianfar_ethtool.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kvm/lapic.c      | 11 +++++++++++
+ arch/x86/kvm/lapic.h      |  1 +
+ arch/x86/kvm/vmx/nested.c |  5 +++++
+ arch/x86/kvm/vmx/vmx.c    | 16 ++++++++++++++++
+ arch/x86/kvm/vmx/vmx.h    |  1 +
+ 5 files changed, 34 insertions(+)
 
---- a/drivers/net/ethernet/freescale/gianfar_ethtool.c
-+++ b/drivers/net/ethernet/freescale/gianfar_ethtool.c
-@@ -1466,8 +1466,10 @@ static int gfar_get_ts_info(struct net_d
- 	if (ptp_node) {
- 		ptp_dev = of_find_device_by_node(ptp_node);
- 		of_node_put(ptp_node);
--		if (ptp_dev)
-+		if (ptp_dev) {
- 			ptp = platform_get_drvdata(ptp_dev);
-+			put_device(&ptp_dev->dev);
-+		}
+diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
+index 3d65d6a023c9..9aae76b74417 100644
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -640,6 +640,17 @@ static inline void apic_clear_isr(int vec, struct kvm_lapic *apic)
+ 	}
+ }
+ 
++void kvm_apic_update_hwapic_isr(struct kvm_vcpu *vcpu)
++{
++	struct kvm_lapic *apic = vcpu->arch.apic;
++
++	if (WARN_ON_ONCE(!lapic_in_kernel(vcpu)) || !apic->apicv_active)
++		return;
++
++	static_call(kvm_x86_hwapic_isr_update)(vcpu, apic_find_highest_isr(apic));
++}
++EXPORT_SYMBOL_GPL(kvm_apic_update_hwapic_isr);
++
+ int kvm_lapic_find_highest_irr(struct kvm_vcpu *vcpu)
+ {
+ 	/* This may race with setting of irr in __apic_accept_irq() and
+diff --git a/arch/x86/kvm/lapic.h b/arch/x86/kvm/lapic.h
+index a5ac4a5a5179..e5d2dc58fcf8 100644
+--- a/arch/x86/kvm/lapic.h
++++ b/arch/x86/kvm/lapic.h
+@@ -122,6 +122,7 @@ int kvm_set_apic_base(struct kvm_vcpu *vcpu, struct msr_data *msr_info);
+ int kvm_apic_get_state(struct kvm_vcpu *vcpu, struct kvm_lapic_state *s);
+ int kvm_apic_set_state(struct kvm_vcpu *vcpu, struct kvm_lapic_state *s);
+ enum lapic_mode kvm_get_apic_mode(struct kvm_vcpu *vcpu);
++void kvm_apic_update_hwapic_isr(struct kvm_vcpu *vcpu);
+ int kvm_lapic_find_highest_irr(struct kvm_vcpu *vcpu);
+ 
+ u64 kvm_get_lapic_tscdeadline_msr(struct kvm_vcpu *vcpu);
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index 8052f8b7d8e1..d55f7edc0860 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -4839,6 +4839,11 @@ void nested_vmx_vmexit(struct kvm_vcpu *vcpu, u32 vm_exit_reason,
+ 		kvm_make_request(KVM_REQ_APICV_UPDATE, vcpu);
  	}
  
- 	if (ptp)
++	if (vmx->nested.update_vmcs01_hwapic_isr) {
++		vmx->nested.update_vmcs01_hwapic_isr = false;
++		kvm_apic_update_hwapic_isr(vcpu);
++	}
++
+ 	if ((vm_exit_reason != -1) &&
+ 	    (enable_shadow_vmcs || evmptr_is_valid(vmx->nested.hv_evmcs_vmptr)))
+ 		vmx->nested.need_vmcs12_to_shadow_sync = true;
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 721ba6ddb121..7b87fbc69b21 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6713,6 +6713,22 @@ static void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
+ 	u16 status;
+ 	u8 old;
+ 
++	/*
++	 * If L2 is active, defer the SVI update until vmcs01 is loaded, as SVI
++	 * is only relevant for if and only if Virtual Interrupt Delivery is
++	 * enabled in vmcs12, and if VID is enabled then L2 EOIs affect L2's
++	 * vAPIC, not L1's vAPIC.  KVM must update vmcs01 on the next nested
++	 * VM-Exit, otherwise L1 with run with a stale SVI.
++	 */
++	if (is_guest_mode(vcpu)) {
++		/*
++		 * KVM is supposed to forward intercepted L2 EOIs to L1 if VID
++		 * is enabled in vmcs12; as above, the EOIs affect L2's vAPIC.
++		 */
++		to_vmx(vcpu)->nested.update_vmcs01_hwapic_isr = true;
++		return;
++	}
++
+ 	if (max_isr == -1)
+ 		max_isr = 0;
+ 
+diff --git a/arch/x86/kvm/vmx/vmx.h b/arch/x86/kvm/vmx/vmx.h
+index 9e0bb98b116d..8b4b149bd9c1 100644
+--- a/arch/x86/kvm/vmx/vmx.h
++++ b/arch/x86/kvm/vmx/vmx.h
+@@ -189,6 +189,7 @@ struct nested_vmx {
+ 	bool reload_vmcs01_apic_access_page;
+ 	bool update_vmcs01_cpu_dirty_logging;
+ 	bool update_vmcs01_apicv_status;
++	bool update_vmcs01_hwapic_isr;
+ 
+ 	/*
+ 	 * Enlightened VMCS has been enabled. It does not mean that L1 has to
+-- 
+2.50.1
+
 
 
