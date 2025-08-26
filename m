@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7D124A066;
-	Tue, 26 Aug 2025 13:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AC528314A;
+	Tue, 26 Aug 2025 13:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215752; cv=none; b=rZKg3/PMOtvEneBhiUOAlHMDBv99sGp4LHhYQjAgJmXXVF4F0WncOs4xFqnWA7nXoxT4VTC/mPylhrmYU5eTdOKkFy3oXYnBlXuYwXCaR59LHTS6a7cs9M5SxHb4eYHRobPm5NerJqRMuG0B+Ae6HQCgRDFOn5nevmXLt9NT3JE=
+	t=1756215755; cv=none; b=mYYb3xEdlKcgpdUSnJktAEk541tk+O6y2kumH9uC9fgZvDGSAGk5ZJagSYmdAslLLwBhb3nmRNidpKeDrrqA9vpMRLc5zd1V9YIVpcXYCNp23edRZL3ZUMmVuBcijWs7Kn3Bi4cRU0yzx3FoE73fzDdHfOSuRGQyzKWH6e5GMks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215752; c=relaxed/simple;
-	bh=KNdjJSuTET4AJwH6f2ZEFqIqVEkIP5HyP/t2PzoDWhg=;
+	s=arc-20240116; t=1756215755; c=relaxed/simple;
+	bh=fvQYAQoj1hGAxEcbKf6J6XQGRsW0XHDBvPY/wL2HwGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZn5SaqToUwAJLxNNhGH8rxp2uWWobiZtlaK3ZAOqjeT08jTyLuKRt4wAyK6c2B+BW72PXKTOgLmc8c5EQv87KqaJFxTMeMJ1orY2dLv2b16uSVljHjzYNIXmdUVfG3/Ruesr5s7LQT5/VJf+BACpzaLq7WRE53xa9v/u/HagdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHPLtlCp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uo5vYYYSXZj+Z4BFS+DPm3dZKmfjNSvT/Y0Q1WJW9SNg4PmLg4xbz97tn+GKtgy6phZib1B3lFN9gdGSlowY+smKolHdAcO3aSSfnptJC7iijbhqhpT1jrJRONZMpC2rq4TsywLo0F+py7jVueB5r/qEs7pl/2skWNnX0tFfG2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHfdAmSB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHPLtlCp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E371C4CEF1;
-	Tue, 26 Aug 2025 13:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHfdAmSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A608AC4CEF1;
+	Tue, 26 Aug 2025 13:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215752;
-	bh=KNdjJSuTET4AJwH6f2ZEFqIqVEkIP5HyP/t2PzoDWhg=;
+	s=korg; t=1756215755;
+	bh=fvQYAQoj1hGAxEcbKf6J6XQGRsW0XHDBvPY/wL2HwGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHPLtlCpsf/p2ETmENvojgwYcd5Z1dkp7su5XUj4MSTOqh6jeYGf+3fv/f0tWGU/5
-	 AKV8GMixA/27xFDeVad1ijZ/u+bPo3iT9STTJ1SVV0HnHONu8/R7oaPqsyJihUn9Fd
-	 g89yVZWjTZq6eURwAvY2U1KO5K3eGW23I34ViuWc=
+	b=gHfdAmSBu7yaOPjPxIX2y8yxFvAm13FJ/ogTaaaHVG5xo8tavcCYyz5W1ZupSNUDI
+	 J7isBMRe3dBE7UZE7dcbUTYF9glO+En+6oZ6DCIjA4hMAqqc3mCYLLw/sAaUIkZobh
+	 1dOEswWMhEa6pOjG8Mpi9fvZT8RxQVVt4dB5rmwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Abinash Singh <abinashsinghlalotra@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 152/644] net_sched: act_ctinfo: use atomic64_t for three counters
-Date: Tue, 26 Aug 2025 13:04:03 +0200
-Message-ID: <20250826110950.252220660@linuxfoundation.org>
+Subject: [PATCH 5.15 153/644] xen/gntdev: remove struct gntdev_copy_batch from stack
+Date: Tue, 26 Aug 2025 13:04:04 +0200
+Message-ID: <20250826110950.275789044@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,104 +52,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit d300335b4e18672913dd792ff9f49e6cccf41d26 ]
+[ Upstream commit 70045cf6593cbf0740956ea9b7b4269142c6ee38 ]
 
-Commit 21c167aa0ba9 ("net/sched: act_ctinfo: use percpu stats")
-missed that stats_dscp_set, stats_dscp_error and stats_cpmark_set
-might be written (and read) locklessly.
+When compiling the kernel with LLVM, the following warning was issued:
 
-Use atomic64_t for these three fields, I doubt act_ctinfo is used
-heavily on big SMP hosts anyway.
+  drivers/xen/gntdev.c:991: warning: stack frame size (1160) exceeds
+  limit (1024) in function 'gntdev_ioctl'
 
-Fixes: 24ec483cec98 ("net: sched: Introduce act_ctinfo action")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://patch.msgid.link/20250709090204.797558-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The main reason is struct gntdev_copy_batch which is located on the
+stack and has a size of nearly 1kb.
+
+For performance reasons it shouldn't by just dynamically allocated
+instead, so allocate a new instance when needed and instead of freeing
+it put it into a list of free structs anchored in struct gntdev_priv.
+
+Fixes: a4cdb556cae0 ("xen/gntdev: add ioctl for grant copy")
+Reported-by: Abinash Singh <abinashsinghlalotra@gmail.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250703073259.17356-1-jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tc_act/tc_ctinfo.h |  6 +++---
- net/sched/act_ctinfo.c         | 19 +++++++++++--------
- 2 files changed, 14 insertions(+), 11 deletions(-)
+ drivers/xen/gntdev-common.h |  4 +++
+ drivers/xen/gntdev.c        | 71 ++++++++++++++++++++++++++-----------
+ 2 files changed, 54 insertions(+), 21 deletions(-)
 
-diff --git a/include/net/tc_act/tc_ctinfo.h b/include/net/tc_act/tc_ctinfo.h
-index f071c1d70a25..a04bcac7adf4 100644
---- a/include/net/tc_act/tc_ctinfo.h
-+++ b/include/net/tc_act/tc_ctinfo.h
-@@ -18,9 +18,9 @@ struct tcf_ctinfo_params {
- struct tcf_ctinfo {
- 	struct tc_action common;
- 	struct tcf_ctinfo_params __rcu *params;
--	u64 stats_dscp_set;
--	u64 stats_dscp_error;
--	u64 stats_cpmark_set;
-+	atomic64_t stats_dscp_set;
-+	atomic64_t stats_dscp_error;
-+	atomic64_t stats_cpmark_set;
- };
+diff --git a/drivers/xen/gntdev-common.h b/drivers/xen/gntdev-common.h
+index 9c286b2a1900..ac8ce3179ba2 100644
+--- a/drivers/xen/gntdev-common.h
++++ b/drivers/xen/gntdev-common.h
+@@ -26,6 +26,10 @@ struct gntdev_priv {
+ 	/* lock protects maps and freeable_maps. */
+ 	struct mutex lock;
  
- enum {
-diff --git a/net/sched/act_ctinfo.c b/net/sched/act_ctinfo.c
-index 56e0a5eb6494..ddacd4fa442c 100644
---- a/net/sched/act_ctinfo.c
-+++ b/net/sched/act_ctinfo.c
-@@ -44,9 +44,9 @@ static void tcf_ctinfo_dscp_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				ipv4_change_dsfield(ip_hdr(skb),
- 						    INET_ECN_MASK,
- 						    newdscp);
--				ca->stats_dscp_set++;
-+				atomic64_inc(&ca->stats_dscp_set);
- 			} else {
--				ca->stats_dscp_error++;
-+				atomic64_inc(&ca->stats_dscp_error);
- 			}
- 		}
- 		break;
-@@ -57,9 +57,9 @@ static void tcf_ctinfo_dscp_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				ipv6_change_dsfield(ipv6_hdr(skb),
- 						    INET_ECN_MASK,
- 						    newdscp);
--				ca->stats_dscp_set++;
-+				atomic64_inc(&ca->stats_dscp_set);
- 			} else {
--				ca->stats_dscp_error++;
-+				atomic64_inc(&ca->stats_dscp_error);
- 			}
- 		}
- 		break;
-@@ -72,7 +72,7 @@ static void tcf_ctinfo_cpmark_set(struct nf_conn *ct, struct tcf_ctinfo *ca,
- 				  struct tcf_ctinfo_params *cp,
- 				  struct sk_buff *skb)
++	/* Free instances of struct gntdev_copy_batch. */
++	struct gntdev_copy_batch *batch;
++	struct mutex batch_lock;
++
+ #ifdef CONFIG_XEN_GRANT_DMA_ALLOC
+ 	/* Device for which DMA memory is allocated. */
+ 	struct device *dma_dev;
+diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
+index 4d9a3050de6a..de8a36502aa2 100644
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -56,6 +56,18 @@ MODULE_AUTHOR("Derek G. Murray <Derek.Murray@cl.cam.ac.uk>, "
+ 	      "Gerd Hoffmann <kraxel@redhat.com>");
+ MODULE_DESCRIPTION("User-space granted page access driver");
+ 
++#define GNTDEV_COPY_BATCH 16
++
++struct gntdev_copy_batch {
++	struct gnttab_copy ops[GNTDEV_COPY_BATCH];
++	struct page *pages[GNTDEV_COPY_BATCH];
++	s16 __user *status[GNTDEV_COPY_BATCH];
++	unsigned int nr_ops;
++	unsigned int nr_pages;
++	bool writeable;
++	struct gntdev_copy_batch *next;
++};
++
+ static unsigned int limit = 64*1024;
+ module_param(limit, uint, 0644);
+ MODULE_PARM_DESC(limit,
+@@ -584,6 +596,8 @@ static int gntdev_open(struct inode *inode, struct file *flip)
+ 	INIT_LIST_HEAD(&priv->maps);
+ 	mutex_init(&priv->lock);
+ 
++	mutex_init(&priv->batch_lock);
++
+ #ifdef CONFIG_XEN_GNTDEV_DMABUF
+ 	priv->dmabuf_priv = gntdev_dmabuf_init(flip);
+ 	if (IS_ERR(priv->dmabuf_priv)) {
+@@ -608,6 +622,7 @@ static int gntdev_release(struct inode *inode, struct file *flip)
  {
--	ca->stats_cpmark_set++;
-+	atomic64_inc(&ca->stats_cpmark_set);
- 	skb->mark = READ_ONCE(ct->mark) & cp->cpmarkmask;
+ 	struct gntdev_priv *priv = flip->private_data;
+ 	struct gntdev_grant_map *map;
++	struct gntdev_copy_batch *batch;
+ 
+ 	pr_debug("priv %p\n", priv);
+ 
+@@ -620,6 +635,14 @@ static int gntdev_release(struct inode *inode, struct file *flip)
+ 	}
+ 	mutex_unlock(&priv->lock);
+ 
++	mutex_lock(&priv->batch_lock);
++	while (priv->batch) {
++		batch = priv->batch;
++		priv->batch = batch->next;
++		kfree(batch);
++	}
++	mutex_unlock(&priv->batch_lock);
++
+ #ifdef CONFIG_XEN_GNTDEV_DMABUF
+ 	gntdev_dmabuf_fini(priv->dmabuf_priv);
+ #endif
+@@ -785,17 +808,6 @@ static long gntdev_ioctl_notify(struct gntdev_priv *priv, void __user *u)
+ 	return rc;
  }
  
-@@ -322,15 +322,18 @@ static int tcf_ctinfo_dump(struct sk_buff *skb, struct tc_action *a,
+-#define GNTDEV_COPY_BATCH 16
+-
+-struct gntdev_copy_batch {
+-	struct gnttab_copy ops[GNTDEV_COPY_BATCH];
+-	struct page *pages[GNTDEV_COPY_BATCH];
+-	s16 __user *status[GNTDEV_COPY_BATCH];
+-	unsigned int nr_ops;
+-	unsigned int nr_pages;
+-	bool writeable;
+-};
+-
+ static int gntdev_get_page(struct gntdev_copy_batch *batch, void __user *virt,
+ 				unsigned long *gfn)
+ {
+@@ -953,36 +965,53 @@ static int gntdev_grant_copy_seg(struct gntdev_copy_batch *batch,
+ static long gntdev_ioctl_grant_copy(struct gntdev_priv *priv, void __user *u)
+ {
+ 	struct ioctl_gntdev_grant_copy copy;
+-	struct gntdev_copy_batch batch;
++	struct gntdev_copy_batch *batch;
+ 	unsigned int i;
+ 	int ret = 0;
+ 
+ 	if (copy_from_user(&copy, u, sizeof(copy)))
+ 		return -EFAULT;
+ 
+-	batch.nr_ops = 0;
+-	batch.nr_pages = 0;
++	mutex_lock(&priv->batch_lock);
++	if (!priv->batch) {
++		batch = kmalloc(sizeof(*batch), GFP_KERNEL);
++	} else {
++		batch = priv->batch;
++		priv->batch = batch->next;
++	}
++	mutex_unlock(&priv->batch_lock);
++	if (!batch)
++		return -ENOMEM;
++
++	batch->nr_ops = 0;
++	batch->nr_pages = 0;
+ 
+ 	for (i = 0; i < copy.count; i++) {
+ 		struct gntdev_grant_copy_segment seg;
+ 
+ 		if (copy_from_user(&seg, &copy.segments[i], sizeof(seg))) {
+ 			ret = -EFAULT;
++			gntdev_put_pages(batch);
+ 			goto out;
+ 		}
+ 
+-		ret = gntdev_grant_copy_seg(&batch, &seg, &copy.segments[i].status);
+-		if (ret < 0)
++		ret = gntdev_grant_copy_seg(batch, &seg, &copy.segments[i].status);
++		if (ret < 0) {
++			gntdev_put_pages(batch);
+ 			goto out;
++		}
+ 
+ 		cond_resched();
  	}
+-	if (batch.nr_ops)
+-		ret = gntdev_copy(&batch);
+-	return ret;
++	if (batch->nr_ops)
++		ret = gntdev_copy(batch);
++
++ out:
++	mutex_lock(&priv->batch_lock);
++	batch->next = priv->batch;
++	priv->batch = batch;
++	mutex_unlock(&priv->batch_lock);
  
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_DSCP_SET,
--			      ci->stats_dscp_set, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_dscp_set),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
+-  out:
+-	gntdev_put_pages(&batch);
+ 	return ret;
+ }
  
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_DSCP_ERROR,
--			      ci->stats_dscp_error, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_dscp_error),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
- 
- 	if (nla_put_u64_64bit(skb, TCA_CTINFO_STATS_CPMARK_SET,
--			      ci->stats_cpmark_set, TCA_CTINFO_PAD))
-+			      atomic64_read(&ci->stats_cpmark_set),
-+			      TCA_CTINFO_PAD))
- 		goto nla_put_failure;
- 
- 	spin_unlock_bh(&ci->tcf_lock);
 -- 
 2.39.5
 
