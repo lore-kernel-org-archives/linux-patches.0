@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406E928314A;
-	Tue, 26 Aug 2025 13:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79E834DCDC;
+	Tue, 26 Aug 2025 13:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214229; cv=none; b=Tn9toiDV1C0eeW0ixtWDyEOYLnHw8q7lsZHRQli6luc28KtMKp/mauRPk4gqBLQAZrySoP4VAj7Hm8e8fD9k1lZ1UnfWDoLTKW/So2XONMH0Vl11b9aQv98KuO7h2TAPZIiGgz3poLaYHy/VRFj/26/LHOtICg2hfEfYpQuJBKg=
+	t=1756214232; cv=none; b=TTgtrx0U6TQHX5hk8y2MGIPix/ko8PID1ECXXU/nMDk+52FOUDDCoyPfs+QoFJKwFJNWLBy9IZVwlQQR8BALmL3ffdFafqPMIHGNfhHJM1p7hSHsvNeUqR84M3ETC2b1hOvJNmUPHjJE94c/9HhQhOyO64i5nckX8g8jKQcgrx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214229; c=relaxed/simple;
-	bh=xV57gHm7GEvDKeP3iWYn0JgTtjzKT693Mny0c7UgXA4=;
+	s=arc-20240116; t=1756214232; c=relaxed/simple;
+	bh=w/qRUNkAykkJf8ow3OanLJqT1Tp1hHqXXIXwQV7U6qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jz5dDdPXj3SXFpyvG0Cfm1rz7QOo/gqMgjhyqgJAwZ+RWN/nV/oF0efV29ElUZibW/aKT0Waq1AL2Ox7vDOQqVSNZRPzTFarPHSkYT5CpKHhUvK2fhzOHlm/M3ZtbzIXPIHOtFNpy5zbDzPNjn3ULfKOytp0Z2tTIdWTGC81yXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcLUzTQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lZLdqHhuPqgF/Kao5L+LfyOAJVJw0S2az3yiqzoqpTyGqNqdDjafz6kgMRJTzlE/lnrz0LO+vw3ApzmcVodTfM/1mtq+RcrahSDcDCDE0FzphQc1DLm0SqRxCj3QdJWiFmVldIZc868Ks1ydO2a5uk2vzDtU7aFOIYrVvr8P/oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reeiUtXG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcLUzTQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D6AC4CEF1;
-	Tue, 26 Aug 2025 13:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reeiUtXG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B95C4CEF1;
+	Tue, 26 Aug 2025 13:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214229;
-	bh=xV57gHm7GEvDKeP3iWYn0JgTtjzKT693Mny0c7UgXA4=;
+	s=korg; t=1756214231;
+	bh=w/qRUNkAykkJf8ow3OanLJqT1Tp1hHqXXIXwQV7U6qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pcLUzTQWsGu8mEMfAA9yuspHe7gk0un/bCSYYnLyqFmzVdTEaUlfUsJKIH5eFDkUO
-	 WTBBpO2q92+ruCFT47gLR9Xm4QD2cmqDcbq4/9TOlYRyy9Hjqj5zXOS4bIw0eS9jff
-	 W7L0H6tXT8k3G3W8LhEwWCQPaVlWkZX/2tYrGj4I=
+	b=reeiUtXGauLqagLoU7s4DUFoalgTq5tJL25FhDHBBO7f95jKknJt05aZjGdxTYPLu
+	 QoIQe+dh90YXb3VOsSE4+WCJ6geLzjHg+rP/SqKVRtURlI0lIa86RqJ2Awy9AIBdTx
+	 S68lGmbyIpq4GrIsWbFmMQzdqhRAQXj0c1hvCXzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+598057afa0f49e62bd23@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
+	Rong Zhang <ulin0208@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/482] fs/ntfs3: Add sanity check for file name
-Date: Tue, 26 Aug 2025 13:05:13 +0200
-Message-ID: <20250826110932.305084468@linuxfoundation.org>
+Subject: [PATCH 6.1 061/482] fs/ntfs3: correctly create symlink for relative path
+Date: Tue, 26 Aug 2025 13:05:14 +0200
+Message-ID: <20250826110932.330239823@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,35 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Rong Zhang <ulin0208@gmail.com>
 
-[ Upstream commit e841ecb139339602bc1853f5f09daa5d1ea920a2 ]
+[ Upstream commit b1e9d89408f402858c00103f9831b25ffa0994d3 ]
 
-The length of the file name should be smaller than the directory entry size.
+After applying this patch, could correctly create symlink:
 
-Reported-by: syzbot+598057afa0f49e62bd23@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=598057afa0f49e62bd23
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+ln -s "relative/path/to/file" symlink
+
+Signed-off-by: Rong Zhang <ulin0208@gmail.com>
+[almaz.alexandrovich@paragon-software.com: added cpu_to_le32 macro to
+rs->Flags assignment]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/inode.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index a4ab0164d150..c49e64ebbd0a 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -304,6 +304,9 @@ static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
- 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
- 		return true;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 5baf6a2b3d48..844113c3175c 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1114,10 +1114,10 @@ int inode_write_data(struct inode *inode, const void *data, size_t bytes)
+  * Number of bytes for REPARSE_DATA_BUFFER(IO_REPARSE_TAG_SYMLINK)
+  * for unicode string of @uni_len length.
+  */
+-static inline u32 ntfs_reparse_bytes(u32 uni_len)
++static inline u32 ntfs_reparse_bytes(u32 uni_len, bool is_absolute)
+ {
+ 	/* Header + unicode string + decorated unicode string. */
+-	return sizeof(short) * (2 * uni_len + 4) +
++	return sizeof(short) * (2 * uni_len + (is_absolute ? 4 : 0)) +
+ 	       offsetof(struct REPARSE_DATA_BUFFER,
+ 			SymbolicLinkReparseBuffer.PathBuffer);
+ }
+@@ -1130,8 +1130,11 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 	struct REPARSE_DATA_BUFFER *rp;
+ 	__le16 *rp_name;
+ 	typeof(rp->SymbolicLinkReparseBuffer) *rs;
++	bool is_absolute;
  
-+	if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
-+		return true;
+-	rp = kzalloc(ntfs_reparse_bytes(2 * size + 2), GFP_NOFS);
++	is_absolute = (strlen(symname) > 1 && symname[1] == ':');
 +
- 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
- 				     PATH_MAX);
- 	if (name_len <= 0) {
++	rp = kzalloc(ntfs_reparse_bytes(2 * size + 2, is_absolute), GFP_NOFS);
+ 	if (!rp)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -1146,7 +1149,7 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 		goto out;
+ 
+ 	/* err = the length of unicode name of symlink. */
+-	*nsize = ntfs_reparse_bytes(err);
++	*nsize = ntfs_reparse_bytes(err, is_absolute);
+ 
+ 	if (*nsize > sbi->reparse.max_size) {
+ 		err = -EFBIG;
+@@ -1166,7 +1169,7 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 
+ 	/* PrintName + SubstituteName. */
+ 	rs->SubstituteNameOffset = cpu_to_le16(sizeof(short) * err);
+-	rs->SubstituteNameLength = cpu_to_le16(sizeof(short) * err + 8);
++	rs->SubstituteNameLength = cpu_to_le16(sizeof(short) * err + (is_absolute ? 8 : 0));
+ 	rs->PrintNameLength = rs->SubstituteNameOffset;
+ 
+ 	/*
+@@ -1174,16 +1177,18 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 	 * parse this path.
+ 	 * 0-absolute path 1- relative path (SYMLINK_FLAG_RELATIVE).
+ 	 */
+-	rs->Flags = 0;
++	rs->Flags = cpu_to_le32(is_absolute ? 0 : SYMLINK_FLAG_RELATIVE);
+ 
+-	memmove(rp_name + err + 4, rp_name, sizeof(short) * err);
++	memmove(rp_name + err + (is_absolute ? 4 : 0), rp_name, sizeof(short) * err);
+ 
+-	/* Decorate SubstituteName. */
+-	rp_name += err;
+-	rp_name[0] = cpu_to_le16('\\');
+-	rp_name[1] = cpu_to_le16('?');
+-	rp_name[2] = cpu_to_le16('?');
+-	rp_name[3] = cpu_to_le16('\\');
++	if (is_absolute) {
++		/* Decorate SubstituteName. */
++		rp_name += err;
++		rp_name[0] = cpu_to_le16('\\');
++		rp_name[1] = cpu_to_le16('?');
++		rp_name[2] = cpu_to_le16('?');
++		rp_name[3] = cpu_to_le16('\\');
++	}
+ 
+ 	return rp;
+ out:
 -- 
 2.39.5
 
