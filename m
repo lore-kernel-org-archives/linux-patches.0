@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF858462;
-	Tue, 26 Aug 2025 13:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AB918DB0D;
+	Tue, 26 Aug 2025 13:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213314; cv=none; b=ZWfOIwCVU5vSMKezNHvfelKQs246mCswTvy9hsgs/VP5gf/SkDaVyEdHKGg9m7WqAxmX/XcZqkoOSr/KG2lER0q96r5sakgTtYlzNi+79tF7qO71n1GmJ6Cw6j2itvg6rvlW/c9NA/RtvCEiuSxPbZ9DiG+9gj8dNbAdQLIeWw8=
+	t=1756213317; cv=none; b=DcFJGKLYTx5czgj0xAg+QlZCYrOLSgVheu4hCbAs3Q1R/2Ga7nF6aVW8v8Iz1yWhbceYB8plVgJM3ptl2ph0yv6eif0/2XoHq2nXrQ8HMsEv9Yh8kMVJ64smtfb7t+pGYDY3kvZeOFTfwAgLzdJjW074Dw13ejB1xq+N8BDF8JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213314; c=relaxed/simple;
-	bh=FLiRaPlRMMME2TVvN9RH+5RT51qyevcvCcjuqf3ZbLk=;
+	s=arc-20240116; t=1756213317; c=relaxed/simple;
+	bh=GCdWiomQ+vbw4toiZcsEMjecAzW5siMUTN0JzfEo6HE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9F6liq8XOIedq2FtBQqH0mNf8zb4RCsT6CFdO8BnOywZjafZHBjE7MXoDYh7dNtsRuTvjr8J+2nrDhfoSze6TxAdBiTZDprjkVT8zRswwhffi8s1GAcASbXzPxw4r18nHSA1y9j9TMPV/7peXWtVdD1zWBQk8aHcZj/lnY5sq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeaSI9Ai; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hitOSQo0rEtpcuaL6Ab1M7YHAAOsiDlkJ0ps1pISKMZ9MXflT79Lblf/PuogoRaMa58FjulmQQWlN/oBBGhNoBZ91sS3qwjw/wcEdk9kGHCyRny3UPgCKqnNSVDEFu8HpLSDx9I1njq3bfHa46SGQlndL2hp28iD8HFZDrMVoCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OfQau1bk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeaSI9Ai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50977C4CEF1;
-	Tue, 26 Aug 2025 13:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OfQau1bk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BE3C4CEF1;
+	Tue, 26 Aug 2025 13:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213314;
-	bh=FLiRaPlRMMME2TVvN9RH+5RT51qyevcvCcjuqf3ZbLk=;
+	s=korg; t=1756213317;
+	bh=GCdWiomQ+vbw4toiZcsEMjecAzW5siMUTN0JzfEo6HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eeaSI9AiSK1Ul+jFsG9iw/rpASKhUWjWwvGzQ5VS0dxquGeqaxDhdqjVDkz/SSlcR
-	 cr0yp1dCBx6x8dkCfcz/xIlvdwr0b00d6265WsFvrXmcxIUzeGtpiDcCkRDiQRH0+3
-	 8mEzSOZgbVhdIcPr9lL6Kdjh6FeI5wVnbJEmN6YE=
+	b=OfQau1bkXRzzo4eCd2rO/bkk7+LtS4PBGyToVXUuN1UGfrURA65NTq2TPygScmXG7
+	 hIzPTX9TH6dcQCfqMY/kEsYKzRi4sUYP2XbhKUruwZas36E1o4ujFxTH7gSULgzpl2
+	 XIzbNyzpfZXBKI4cslEmQ0YNIL0HdOJENDUJDxGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.6 302/587] ext4: fix largest free orders lists corruption on mb_optimize_scan switch
-Date: Tue, 26 Aug 2025 13:07:31 +0200
-Message-ID: <20250826111000.606830623@linuxfoundation.org>
+	Xinyu Liu <katieeliu@tencent.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 303/587] usb: core: config: Prevent OOB read in SS endpoint companion parsing
+Date: Tue, 26 Aug 2025 13:07:32 +0200
+Message-ID: <20250826111000.631748029@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,92 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Xinyu Liu <katieeliu@tencent.com>
 
-commit 7d345aa1fac4c2ec9584fbd6f389f2c2368671d5 upstream.
+commit cf16f408364efd8a68f39011a3b073c83a03612d upstream.
 
-The grp->bb_largest_free_order is updated regardless of whether
-mb_optimize_scan is enabled. This can lead to inconsistencies between
-grp->bb_largest_free_order and the actual s_mb_largest_free_orders list
-index when mb_optimize_scan is repeatedly enabled and disabled via remount.
+usb_parse_ss_endpoint_companion() checks descriptor type before length,
+enabling a potentially odd read outside of the buffer size.
 
-For example, if mb_optimize_scan is initially enabled, largest free
-order is 3, and the group is in s_mb_largest_free_orders[3]. Then,
-mb_optimize_scan is disabled via remount, block allocations occur,
-updating largest free order to 2. Finally, mb_optimize_scan is re-enabled
-via remount, more block allocations update largest free order to 1.
+Fix this up by checking the size first before looking at any of the
+fields in the descriptor.
 
-At this point, the group would be removed from s_mb_largest_free_orders[3]
-under the protection of s_mb_largest_free_orders_locks[2]. This lock
-mismatch can lead to list corruption.
-
-To fix this, whenever grp->bb_largest_free_order changes, we now always
-attempt to remove the group from its old order list. However, we only
-insert the group into the new order list if `mb_optimize_scan` is enabled.
-This approach helps prevent lock inconsistencies and ensures the data in
-the order lists remains reliable.
-
-Fixes: 196e402adf2e ("ext4: improve cr 0 / cr 1 group scanning")
-CC: stable@vger.kernel.org
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250714130327.1830534-12-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Xinyu Liu <katieeliu@tencent.com>
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   33 ++++++++++++++-------------------
- 1 file changed, 14 insertions(+), 19 deletions(-)
+ drivers/usb/core/config.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -1150,33 +1150,28 @@ static void
- mb_set_largest_free_order(struct super_block *sb, struct ext4_group_info *grp)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
--	int i;
-+	int new, old = grp->bb_largest_free_order;
+--- a/drivers/usb/core/config.c
++++ b/drivers/usb/core/config.c
+@@ -81,8 +81,14 @@ static void usb_parse_ss_endpoint_compan
+ 	 */
+ 	desc = (struct usb_ss_ep_comp_descriptor *) buffer;
  
--	for (i = MB_NUM_ORDERS(sb) - 1; i >= 0; i--)
--		if (grp->bb_counters[i] > 0)
-+	for (new = MB_NUM_ORDERS(sb) - 1; new >= 0; new--)
-+		if (grp->bb_counters[new] > 0)
- 			break;
+-	if (desc->bDescriptorType != USB_DT_SS_ENDPOINT_COMP ||
+-			size < USB_DT_SS_EP_COMP_SIZE) {
++	if (size < USB_DT_SS_EP_COMP_SIZE) {
++		dev_notice(ddev,
++			   "invalid SuperSpeed endpoint companion descriptor "
++			   "of length %d, skipping\n", size);
++		return;
++	}
 +
- 	/* No need to move between order lists? */
--	if (!test_opt2(sb, MB_OPTIMIZE_SCAN) ||
--	    i == grp->bb_largest_free_order) {
--		grp->bb_largest_free_order = i;
-+	if (new == old)
- 		return;
--	}
- 
--	if (grp->bb_largest_free_order >= 0) {
--		write_lock(&sbi->s_mb_largest_free_orders_locks[
--					      grp->bb_largest_free_order]);
-+	if (old >= 0 && !list_empty(&grp->bb_largest_free_order_node)) {
-+		write_lock(&sbi->s_mb_largest_free_orders_locks[old]);
- 		list_del_init(&grp->bb_largest_free_order_node);
--		write_unlock(&sbi->s_mb_largest_free_orders_locks[
--					      grp->bb_largest_free_order]);
-+		write_unlock(&sbi->s_mb_largest_free_orders_locks[old]);
- 	}
--	grp->bb_largest_free_order = i;
--	if (grp->bb_largest_free_order >= 0 && grp->bb_free) {
--		write_lock(&sbi->s_mb_largest_free_orders_locks[
--					      grp->bb_largest_free_order]);
-+
-+	grp->bb_largest_free_order = new;
-+	if (test_opt2(sb, MB_OPTIMIZE_SCAN) && new >= 0 && grp->bb_free) {
-+		write_lock(&sbi->s_mb_largest_free_orders_locks[new]);
- 		list_add_tail(&grp->bb_largest_free_order_node,
--		      &sbi->s_mb_largest_free_orders[grp->bb_largest_free_order]);
--		write_unlock(&sbi->s_mb_largest_free_orders_locks[
--					      grp->bb_largest_free_order]);
-+			      &sbi->s_mb_largest_free_orders[new]);
-+		write_unlock(&sbi->s_mb_largest_free_orders_locks[new]);
- 	}
- }
- 
++	if (desc->bDescriptorType != USB_DT_SS_ENDPOINT_COMP) {
+ 		dev_notice(ddev, "No SuperSpeed endpoint companion for config %d "
+ 				" interface %d altsetting %d ep %d: "
+ 				"using minimum values\n",
 
 
