@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4F2352096;
-	Tue, 26 Aug 2025 14:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517E9342CA7;
+	Tue, 26 Aug 2025 14:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217923; cv=none; b=jvgB/rj0sTs9mr5nkyO0VnnGkyJttWHV6E4NBPwSOMjC/EP2ATpxeFFoshBU1CvuD/YYLT9P65ka6vndOxPzmzHDRACzxIcgzetHP9BHkcPlxePiQroywgrfigF/tMewj0Y5hJ/peRc9uYSjQaYojMuKC4U315hlQoLONNPZnWY=
+	t=1756217926; cv=none; b=LDV+qMryPxI3zv5W1lCFnIs10ntPExPNAlyLJpyAQuZHbaeloapS3BQIawNfi0xPLNu8uee2OcnUUFm0wR8B1yrgy47OoLwl9nyJWzPZaaz/FEeJSH1WOqQr1E3D/HqSSULsOw/PbzL6JGhYbM2Wc9aAmj/coBqnPMImqt20bkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217923; c=relaxed/simple;
-	bh=N8WgroJj001A72DU0bgbTMM0nuXy9FTP97sEWERgD0c=;
+	s=arc-20240116; t=1756217926; c=relaxed/simple;
+	bh=vIrujHXVp5W9rGd4L0IeJv+yM7ttyH6ZX0B3+DIqud0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBi20d7AbqtpGNcvjYaWJw7HXLhbiH+EE7Pq9ydIg020aGu7Hmt7n5Ajp2T3nruMorel0pCWl3sfM89M65XCH1TF6x0fAHGVzA7P5IKfBmZuIB0+M6YfY8ev9sco2OOgsp3MeqG7zGvJIvK/yBYa0SinXaAqPI/pJfNCtdHyqDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhttThyr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OVa55ON9qtaR0BXqpQZmPdWmx1LAoZyMkL9D6PN9i+esV9ql96V0VDnTMz9nsi0bmsag5FMWZ9cxS+I0CEGKJixyvwf+ozl2VTpEwIokPnS92LkcP94BZ55yqP29Lazr//ZLLIyFXSjhbhiHXPz6F507hSdnaOSp9ggMLE9+3Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhpsjG1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhttThyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAF2C4CEF1;
-	Tue, 26 Aug 2025 14:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhpsjG1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA94EC4CEF1;
+	Tue, 26 Aug 2025 14:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217923;
-	bh=N8WgroJj001A72DU0bgbTMM0nuXy9FTP97sEWERgD0c=;
+	s=korg; t=1756217926;
+	bh=vIrujHXVp5W9rGd4L0IeJv+yM7ttyH6ZX0B3+DIqud0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KhttThyrTmWy+Ue2Dy5akJQfluK0bfK8Vz93lSg1/F5N3WnW5z63B0uJk5zmJht/k
-	 byUYzltvYUtujjP/03V4qAvGq3/SkmuJxTdjt7Vq8OnhzYU9ttQEXDFyAe45fgayfq
-	 +S9HgrMoWhIaVV0nWp4VjohX+Msa5Q2rygl56lco=
+	b=qhpsjG1ijHXazC7jquNJpzy2i49YA0jhhJjucJlQ7Udj0Uz9JKF6twkJKXJhMaPLk
+	 L21zXXNBENZZVx6d7nA7CqSLGAQEjkVnGHKqoEuc4ymqQl5K6GBm7VWLEWtoSIdk6A
+	 zyJm2497vn53636wo419cP4SMFMEBYP8EBMg1S+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 326/523] kconfig: gconf: avoid hardcoding model2 in on_treeview2_cursor_changed()
-Date: Tue, 26 Aug 2025 13:08:56 +0200
-Message-ID: <20250826110932.515368320@linuxfoundation.org>
+Subject: [PATCH 5.10 327/523] kconfig: gconf: fix potential memory leak in renderer_edited()
+Date: Tue, 26 Aug 2025 13:08:57 +0200
+Message-ID: <20250826110932.541788425@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,40 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit cae9cdbcd9af044810bcceeb43a87accca47c71d ]
+[ Upstream commit f72ed4c6a375e52a3f4b75615e4a89d29d8acea7 ]
 
-The on_treeview2_cursor_changed() handler is connected to both the left
-and right tree views, but it hardcodes model2 (the GtkTreeModel of the
-right tree view). This is incorrect. Get the associated model from the
-view.
+If gtk_tree_model_get_iter() fails, gtk_tree_path_free() is not called.
 
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/gconf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ scripts/kconfig/gconf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/kconfig/gconf.c b/scripts/kconfig/gconf.c
-index 409799912731..50c1340cf636 100644
+index 50c1340cf636..e092bb686f45 100644
 --- a/scripts/kconfig/gconf.c
 +++ b/scripts/kconfig/gconf.c
-@@ -981,13 +981,14 @@ on_treeview2_key_press_event(GtkWidget * widget,
- void
- on_treeview2_cursor_changed(GtkTreeView * treeview, gpointer user_data)
- {
-+	GtkTreeModel *model = gtk_tree_view_get_model(treeview);
- 	GtkTreeSelection *selection;
- 	GtkTreeIter iter;
- 	struct menu *menu;
+@@ -787,7 +787,7 @@ static void renderer_edited(GtkCellRendererText * cell,
+ 	struct symbol *sym;
  
- 	selection = gtk_tree_view_get_selection(treeview);
--	if (gtk_tree_selection_get_selected(selection, &model2, &iter)) {
--		gtk_tree_model_get(model2, &iter, COL_MENU, &menu, -1);
-+	if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
-+		gtk_tree_model_get(model, &iter, COL_MENU, &menu, -1);
- 		text_insert_help(menu);
- 	}
+ 	if (!gtk_tree_model_get_iter(model2, &iter, path))
+-		return;
++		goto free;
+ 
+ 	gtk_tree_model_get(model2, &iter, COL_MENU, &menu, -1);
+ 	sym = menu->sym;
+@@ -799,6 +799,7 @@ static void renderer_edited(GtkCellRendererText * cell,
+ 
+ 	update_tree(&rootmenu, NULL);
+ 
++free:
+ 	gtk_tree_path_free(path);
  }
+ 
 -- 
 2.39.5
 
