@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51357230BDF;
-	Tue, 26 Aug 2025 13:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216A213FD86;
+	Tue, 26 Aug 2025 13:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215496; cv=none; b=q0vYPYBPJ51vRjgKJRE2O1o/Hu78zQLaY8AyRtr/XXl014wYtUltCkljbi+QWLKJANYu5kGufEoGhtNV1Nq6cSc6RcbPqkxYl9Fi+gKnci8XJolDmYbnN5gzLWCtcbU4YZL7P3Jjx3uLYIk2uL3yP4ID7K97FxrVBW0KhevtRTg=
+	t=1756215499; cv=none; b=q/yuDEWzXRZH+Pmo3tUHku0oBuIwiEWuVZFbm4qGRhtNVxESYbzg16oBWlM5cw9TgoLgWFjfO5K7TnsPAK54eYcTNR9AL0fG+ADN3tjeIaCFWysCY32LpFMeIBppL6dEErbvCIHJVpyp7q2kRjDVRhut3ebPxoBMYWS0mLBE6Qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215496; c=relaxed/simple;
-	bh=6TypEpWYeU9Y1OzFTcvSg0CLfWt6YKpSZh3qVEWUZoQ=;
+	s=arc-20240116; t=1756215499; c=relaxed/simple;
+	bh=+OjK8/Vu4HfBx9M5RW9EMgmeJEzMe/YWvsDn9vi33s8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKp8Sf3YhF5pFqfK5C3FOELHBfzwPCGpGaYIxz/varYfDTxNjIPokYL2T/I1pfoiCwDN5Md6THyf/mLL6l+IdZXzIM8+SI1xUlIeM+YH0tLhmSC0M/lQeA8JpJXgXx2k1o/pPimZ5IaEPSl4KTHEbYcr3Ia92UZMnXaNimE4Cik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOk7TMwX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K08U8EVkAMMzyoLm61mDp3pMWWKxCFgcwCwGkNDwhwtvnaBcUJdJ6bHeS9k/l7ObpXDI8wzGBK52971nEeZo4ZOBCam6LGN5r74Gw0U8MdTk9ZGzQwz0DVDdMtanE123sLgxQ0MsQqhG4ZZdPUnVJFVezPcaPwY7dvlHQ0F7Gls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8hVQyV8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOk7TMwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6364C113CF;
-	Tue, 26 Aug 2025 13:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8hVQyV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FF9C4CEF1;
+	Tue, 26 Aug 2025 13:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215496;
-	bh=6TypEpWYeU9Y1OzFTcvSg0CLfWt6YKpSZh3qVEWUZoQ=;
+	s=korg; t=1756215499;
+	bh=+OjK8/Vu4HfBx9M5RW9EMgmeJEzMe/YWvsDn9vi33s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOk7TMwXL3jxrvETD7HO23vuxgLDDYPZzqM1/H6oM14CAz4+8BdvudBPlOdNgyQy6
-	 QgLzfVX8S48C1rutSaFuAVMxEgkryaUUNFcSgMrsEmErApfniD8TacWmYLZ1RqYXh7
-	 7RgeS15RcjSCkCvnDMMMHvvFDea5blsrnxO144Dw=
+	b=s8hVQyV8omhmB929rWc1lrsId8ijVz4ywgRZVU0METm0otdlmSgpeAg8YcDrAp2So
+	 JheoJNHsRbWRiJh09seQH1rcOrIw+9i/9lL9DVT8Ln020hnAXV71fHmJtHu4avai4e
+	 YM6QyIpZhokIGnHhyXz8CX/vX3cnvAbZy90Dj+PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/644] ipv6: mcast: Delay put pmc->idev in mld_del_delrec()
-Date: Tue, 26 Aug 2025 13:02:25 +0200
-Message-ID: <20250826110947.840490940@linuxfoundation.org>
+Subject: [PATCH 5.15 055/644] Bluetooth: L2CAP: Fix attempting to adjust outgoing MTU
+Date: Tue, 26 Aug 2025 13:02:26 +0200
+Message-ID: <20250826110947.866148064@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -45,42 +44,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit ae3264a25a4635531264728859dbe9c659fad554 ]
+[ Upstream commit d24e4a7fedae121d33fb32ad785b87046527eedb ]
 
-pmc->idev is still used in ip6_mc_clear_src(), so as mld_clear_delrec()
-does, the reference should be put after ip6_mc_clear_src() return.
+Configuration request only configure the incoming direction of the peer
+initiating the request, so using the MTU is the other direction shall
+not be used, that said the spec allows the peer responding to adjust:
 
-Fixes: 63ed8de4be81 ("mld: add mc_lock for protecting per-interface mld data")
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Link: https://patch.msgid.link/20250714141957.3301871-1-yuehaibing@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Bluetooth Core 6.1, Vol 3, Part A, Section 4.5
+
+ 'Each configuration parameter value (if any is present) in an
+ L2CAP_CONFIGURATION_RSP packet reflects an ‘adjustment’ to a
+ configuration parameter value that has been sent (or, in case of
+ default values, implied) in the corresponding
+ L2CAP_CONFIGURATION_REQ packet.'
+
+That said adjusting the MTU in the response shall be limited to ERTM
+channels only as for older modes the remote stack may not be able to
+detect the adjustment causing it to silently drop packets.
+
+Link: https://github.com/bluez/bluez/issues/1422
+Link: https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/149
+Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/4793
+Fixes: 042bb9603c44 ("Bluetooth: L2CAP: Fix L2CAP MTU negotiation")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 1d038a0840994..574a30d7f930d 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -803,8 +803,8 @@ static void mld_del_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
- 		} else {
- 			im->mca_crcount = idev->mc_qrv;
- 		}
--		in6_dev_put(pmc->idev);
- 		ip6_mc_clear_src(pmc);
-+		in6_dev_put(pmc->idev);
- 		kfree_rcu(pmc, rcu);
- 	}
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 089fca4f78124..1af639f1dd8d1 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3687,12 +3687,28 @@ static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data
+ 		/* Configure output options and let the other side know
+ 		 * which ones we don't like. */
+ 
+-		/* If MTU is not provided in configure request, use the most recently
+-		 * explicitly or implicitly accepted value for the other direction,
+-		 * or the default value.
++		/* If MTU is not provided in configure request, try adjusting it
++		 * to the current output MTU if it has been set
++		 *
++		 * Bluetooth Core 6.1, Vol 3, Part A, Section 4.5
++		 *
++		 * Each configuration parameter value (if any is present) in an
++		 * L2CAP_CONFIGURATION_RSP packet reflects an ‘adjustment’ to a
++		 * configuration parameter value that has been sent (or, in case
++		 * of default values, implied) in the corresponding
++		 * L2CAP_CONFIGURATION_REQ packet.
+ 		 */
+-		if (mtu == 0)
+-			mtu = chan->imtu ? chan->imtu : L2CAP_DEFAULT_MTU;
++		if (!mtu) {
++			/* Only adjust for ERTM channels as for older modes the
++			 * remote stack may not be able to detect that the
++			 * adjustment causing it to silently drop packets.
++			 */
++			if (chan->mode == L2CAP_MODE_ERTM &&
++			    chan->omtu && chan->omtu != L2CAP_DEFAULT_MTU)
++				mtu = chan->omtu;
++			else
++				mtu = L2CAP_DEFAULT_MTU;
++		}
+ 
+ 		if (mtu < L2CAP_DEFAULT_MIN_MTU)
+ 			result = L2CAP_CONF_UNACCEPT;
 -- 
 2.39.5
 
