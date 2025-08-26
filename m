@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343C611713;
-	Tue, 26 Aug 2025 14:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E41405F7;
+	Tue, 26 Aug 2025 14:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218718; cv=none; b=gpoBHMRqd11wcDKRjYYvelL6ApcTPI+BTnUQ0QsUTJ9L18OM/D2m5fdfwInhrZXe+Fyuf8KqisBZ96FVWwb+GjkUDVho33XUWj+iOOm5Lx4SpISbMs51Nu/IyW+taCXzECKRbvALeQMg/s/zdXqPhPVOJOtxsqdTFjxGeZfgHKo=
+	t=1756218720; cv=none; b=LfSQMQTBWVc8tCe6J+KqLjocHUzvx5/GI2SYqOT/kZANkNn9tnqjR57cW9jyKlzY/wP4DQkBkUBrtBsqlI41pDOyz4bDjol2rRs8vySqpplxdxvXogeUMUhMnfHQg2+eHZ5Lir6KPmsIG19tQZXsBCH9tP27qqdHl8H1yFGJS6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218718; c=relaxed/simple;
-	bh=7BrzEVCSCg4+evHEIVxRaiQgFiVcP311OFo+qCHVQZc=;
+	s=arc-20240116; t=1756218720; c=relaxed/simple;
+	bh=gN+a1ya02CHna6gNJTRo8iCiycI5BJ+/aizhcyBzoHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOm3+pdVbZ0mLq5ZabYRmQIZfXedE+z4CaRCcxW6aiRkmJhm59xrfp/olfgPOS9OqV924n7LaitZTw5E3gDe9UF4onJyaexw95CmJ9uYN0kkPwtItw3ioNTRA+XByXRGnMEjxQuRkdFOIaTxL9q+vdB9mBpuw8RfOV8hqBcD6rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18LBvPOn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b5in/DOgH+IoDg2Jw42r8p8YDtmM9Lykb69/L9SCX97+lwB1NhGIk5IajZNkSxoHt4VBjhl9gb+oVBw1C4hzAwK1X3tBK2PgnopRuYgMmPhYfJT0595Ya8B8uwVT5Smmpg3kE3HErC0lk5+V3/ibNnb+i6sj/0hvr/Eme1Bfy/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMvW2kyU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18LBvPOn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD2BC4CEF1;
-	Tue, 26 Aug 2025 14:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMvW2kyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA3BC4CEF1;
+	Tue, 26 Aug 2025 14:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218718;
-	bh=7BrzEVCSCg4+evHEIVxRaiQgFiVcP311OFo+qCHVQZc=;
+	s=korg; t=1756218720;
+	bh=gN+a1ya02CHna6gNJTRo8iCiycI5BJ+/aizhcyBzoHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=18LBvPOnlUd5UYsI0Em0y95TCe5qiUKidb3FvopX73ftx7VYB9Z3zi4+6UU5SxUJE
-	 Z5+3/IfQK/62hBJxLPOTsBx2654eGn0KzIlAB+WPs8kO5wPMIHnvaAI2hS5r9ws6hz
-	 WzaIx6mxiRGB7TJHXoOAuyYfTVKEqWraHprgdozI=
+	b=TMvW2kyUjF7cPNxQ/3sXmsGbv1pNHM2i555DEQkT0IgQ643ePTl8VbYHHkJFTO5ev
+	 EgZJXf8hKhTbs36vorfei6jCmPFg4NUCs26tybD+g65IryFwmu7OsBU24ruj8YkwxW
+	 sWxlhQMvrYFX372Lf1ZHB0aljBkGFZoRH/JdRiFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ivan Stepchenko <sid@itb.spb.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 106/403] crypto: marvell/cesa - Fix engine load inaccuracy
-Date: Tue, 26 Aug 2025 13:07:12 +0200
-Message-ID: <20250826110909.610388803@linuxfoundation.org>
+Subject: [PATCH 5.4 107/403] mtd: fix possible integer overflow in erase_xfer()
+Date: Tue, 26 Aug 2025 13:07:13 +0200
+Message-ID: <20250826110909.641822453@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,73 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Ivan Stepchenko <sid@itb.spb.ru>
 
-[ Upstream commit 442134ab30e75b7229c4bfc1ac5641d245cffe27 ]
+[ Upstream commit 9358bdb9f9f54d94ceafc650deffefd737d19fdd ]
 
-If an error occurs during queueing the engine load will never be
-decremented.  Fix this by moving the engine load adjustment into
-the cleanup function.
+The expression '1 << EraseUnitSize' is evaluated in int, which causes
+a negative result when shifting by 31 - the upper bound of the valid
+range [10, 31], enforced by scan_header(). This leads to incorrect
+extension when storing the result in 'erase->len' (uint64_t), producing
+a large unexpected value.
 
-Fixes: bf8f91e71192 ("crypto: marvell - Add load balancing between engines")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/cipher.c | 4 +++-
- drivers/crypto/marvell/hash.c   | 5 +++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/mtd/ftl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/marvell/cipher.c b/drivers/crypto/marvell/cipher.c
-index f92f86c94bff..d48034a9e0da 100644
---- a/drivers/crypto/marvell/cipher.c
-+++ b/drivers/crypto/marvell/cipher.c
-@@ -73,9 +73,12 @@ mv_cesa_skcipher_dma_cleanup(struct skcipher_request *req)
- static inline void mv_cesa_skcipher_cleanup(struct skcipher_request *req)
- {
- 	struct mv_cesa_skcipher_req *creq = skcipher_request_ctx(req);
-+	struct mv_cesa_engine *engine = creq->base.engine;
+diff --git a/drivers/mtd/ftl.c b/drivers/mtd/ftl.c
+index 2578f27914ef..ffe89209cf4b 100644
+--- a/drivers/mtd/ftl.c
++++ b/drivers/mtd/ftl.c
+@@ -344,7 +344,7 @@ static int erase_xfer(partition_t *part,
+             return -ENOMEM;
  
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
- 		mv_cesa_skcipher_dma_cleanup(req);
-+
-+	atomic_sub(req->cryptlen, &engine->load);
- }
+     erase->addr = xfer->Offset;
+-    erase->len = 1 << part->header.EraseUnitSize;
++    erase->len = 1ULL << part->header.EraseUnitSize;
  
- static void mv_cesa_skcipher_std_step(struct skcipher_request *req)
-@@ -202,7 +205,6 @@ mv_cesa_skcipher_complete(struct crypto_async_request *req)
- 	struct mv_cesa_engine *engine = creq->base.engine;
- 	unsigned int ivsize;
- 
--	atomic_sub(skreq->cryptlen, &engine->load);
- 	ivsize = crypto_skcipher_ivsize(crypto_skcipher_reqtfm(skreq));
- 
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ) {
-diff --git a/drivers/crypto/marvell/hash.c b/drivers/crypto/marvell/hash.c
-index de1599bca3b7..01dd597b6a2a 100644
---- a/drivers/crypto/marvell/hash.c
-+++ b/drivers/crypto/marvell/hash.c
-@@ -107,9 +107,12 @@ static inline void mv_cesa_ahash_dma_cleanup(struct ahash_request *req)
- static inline void mv_cesa_ahash_cleanup(struct ahash_request *req)
- {
- 	struct mv_cesa_ahash_req *creq = ahash_request_ctx(req);
-+	struct mv_cesa_engine *engine = creq->base.engine;
- 
- 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
- 		mv_cesa_ahash_dma_cleanup(req);
-+
-+	atomic_sub(req->nbytes, &engine->load);
- }
- 
- static void mv_cesa_ahash_last_cleanup(struct ahash_request *req)
-@@ -363,8 +366,6 @@ static void mv_cesa_ahash_complete(struct crypto_async_request *req)
- 			}
- 		}
- 	}
--
--	atomic_sub(ahashreq->nbytes, &engine->load);
- }
- 
- static void mv_cesa_ahash_prepare(struct crypto_async_request *req,
+     ret = mtd_erase(part->mbd.mtd, erase);
+     if (!ret) {
 -- 
 2.39.5
 
