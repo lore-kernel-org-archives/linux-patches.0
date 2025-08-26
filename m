@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0311662E7;
-	Tue, 26 Aug 2025 14:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B70734DCF1;
+	Tue, 26 Aug 2025 14:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217559; cv=none; b=XMs5W4/KQcgcef/iT6OLUYY7XX0AUAxcpXpHJWO+I8HP9aThopqBcauSgzPKh9R2Qa5dyWwSh6wbHGFNr3li9mtHMFsxlPbuYOhgY9L/mn6szlpXeAMFfveFJtOloeN4MsRBlQGE9OPkycPYr03liGmiw1vY4Wctwqu8awa1wNo=
+	t=1756217562; cv=none; b=cUleFPL9cYgqmPvQCHubqdagi5YHOz/5/Va/zkTGUOTAhQqExZCmmPpSn/HslCK3Z8DZc8CdwK+KKLxzezFRi5Xs0qtrPjju1RIVmvuj9I49+A0NrA0n6Y8kb42JTwlZDINdO8IdigzzS7CUMP9OHvsITAIENk8kJ+0TJdXhZYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217559; c=relaxed/simple;
-	bh=lSviLzpGWb+hZpl+J+DUaN14qrv4TpOib5D+rDGMR8E=;
+	s=arc-20240116; t=1756217562; c=relaxed/simple;
+	bh=kGcpItgG24Z6ByXQTb5XT0wtXJrB43Io78woCXu3fzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=px3v5HsAZgQYGOnUsL7zoilSXYfVp0sEPZ4crEi6qvHD9C1KO0MWHNdYIsKYQd6sWBsNWge7Ph/Xou7hwpmHOQN4bkmyYpDdddV+rgRcQNw6kEnS9MCaI1GIsijWoojEUoA/TIguwpJ1xeAg2BgnmhPWX/nAC9R0sfRHSj8SNeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXI6hApR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EcRl0lMEOf6N/Yu8RkjMK1Pm3uyjweolzAei+wF9FRxwz9OnNenMRWpLd0z2rPXyLCxVpiWqAX7n/BHE/x/gk2NJkVaFQhlZCg8+HWZKlabvM4/d3tV1RCQP7HXKPTJUSJbt7XNIxDRi1e3izpr1fDie9UVZPR7CX/ypr0eLqTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1ni+sQz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXI6hApR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA7DC4CEF1;
-	Tue, 26 Aug 2025 14:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1ni+sQz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9DBC4CEF1;
+	Tue, 26 Aug 2025 14:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217559;
-	bh=lSviLzpGWb+hZpl+J+DUaN14qrv4TpOib5D+rDGMR8E=;
+	s=korg; t=1756217562;
+	bh=kGcpItgG24Z6ByXQTb5XT0wtXJrB43Io78woCXu3fzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXI6hApR5j9At/M/rdNR8WSCtgXMlKCCV+Fr/xwmMoBr190jJC3VZc5HPS8egehQv
-	 bPdrSJBk1K7x/9S2VE/t2zGjcJt6Uz867YMzOhDOmOZYVV0Y/UzHXrhRa9D8HTIBJA
-	 H3gIiXMy1IsL4t8vwhQhsFzqiRXWnkL0OOyTUHbY=
+	b=N1ni+sQz86DbJs91cP8LKQFI3By1VrdOS/7dxVP0kMgEMxMt+vvNAx/AElH+lCGa5
+	 r3r15Lw/P3znBWzPTTWFhrgjAiXJzmiMsgWTgGjeRQMwzgSSBt8TH4t/kCoeUeWzKR
+	 hSMUoewbI9qr5TynOWHSi1kNikTirsf+7OpQYNTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 188/523] USB: serial: option: add Foxconn T99W709
-Date: Tue, 26 Aug 2025 13:06:38 +0200
-Message-ID: <20250826110929.089425442@linuxfoundation.org>
+	stable@kernel.org,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.10 189/523] MIPS: mm: tlb-r4k: Uniquify TLB entries on init
+Date: Tue, 26 Aug 2025 13:06:39 +0200
+Message-ID: <20250826110929.112486856@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,51 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit ad1244e1ce18f8c1a5ebad8074bfcf10eacb0311 upstream.
+commit 35ad7e181541aa5757f9f316768d3e64403ec843 upstream.
 
-T99W709 is designed based on MTK T300(5G redcap) chip. There are
-7 serial ports to be enumerated: AP_LOG, GNSS, AP_META, AT,
-MD_META, NPT, DBG. RSVD(5) for ADB port.
+Hardware or bootloader will initialize TLB entries to any value, which
+may collide with kernel's UNIQUE_ENTRYHI value. On MIPS microAptiv/M5150
+family of cores this will trigger machine check exception and cause boot
+failure. On M5150 simulation this could happen 7 times out of 1000 boots.
 
-test evidence as below:
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e15f Rev=00.01
-S:  Manufacturer=MediaTek Inc.
-S:  Product=USB DATA CARD
-S:  SerialNumber=355511220000399
-C:  #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-I:  If#=0x6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-I:  If#=0x9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+Replace local_flush_tlb_all() with r4k_tlb_uniquify() which probes each
+TLB ENTRIHI unique value for collisions before it's written, and in case
+of collision try a different ASID.
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/mips/mm/tlb-r4k.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
- 	  .driver_info = RSVD(5) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
-+	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -498,6 +498,60 @@ static int __init set_ntlb(char *str)
+ 
+ __setup("ntlb=", set_ntlb);
+ 
++/* Initialise all TLB entries with unique values */
++static void r4k_tlb_uniquify(void)
++{
++	int entry = num_wired_entries();
++
++	htw_stop();
++	write_c0_entrylo0(0);
++	write_c0_entrylo1(0);
++
++	while (entry < current_cpu_data.tlbsize) {
++		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
++		unsigned long asid = 0;
++		int idx;
++
++		/* Skip wired MMID to make ginvt_mmid work */
++		if (cpu_has_mmid)
++			asid = MMID_KERNEL_WIRED + 1;
++
++		/* Check for match before using UNIQUE_ENTRYHI */
++		do {
++			if (cpu_has_mmid) {
++				write_c0_memorymapid(asid);
++				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
++			} else {
++				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
++			}
++			mtc0_tlbw_hazard();
++			tlb_probe();
++			tlb_probe_hazard();
++			idx = read_c0_index();
++			/* No match or match is on current entry */
++			if (idx < 0 || idx == entry)
++				break;
++			/*
++			 * If we hit a match, we need to try again with
++			 * a different ASID.
++			 */
++			asid++;
++		} while (asid < asid_mask);
++
++		if (idx >= 0 && idx != entry)
++			panic("Unable to uniquify TLB entry %d", idx);
++
++		write_c0_index(entry);
++		mtc0_tlbw_hazard();
++		tlb_write_indexed();
++		entry++;
++	}
++
++	tlbw_use_hazard();
++	htw_start();
++	flush_micro_tlb();
++}
++
+ /*
+  * Configure TLB (for init or after a CPU has been powered off).
+  */
+@@ -537,7 +591,7 @@ static void r4k_tlb_configure(void)
+ 	temp_tlb_entry = current_cpu_data.tlbsize - 1;
+ 
+ 	/* From this point on the ARC firmware is dead.	 */
+-	local_flush_tlb_all();
++	r4k_tlb_uniquify();
+ 
+ 	/* Did I tell you that ARC SUCKS?  */
+ }
 
 
