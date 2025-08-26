@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406B434DCC0;
-	Tue, 26 Aug 2025 14:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5215350831;
+	Tue, 26 Aug 2025 14:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217224; cv=none; b=jEdlZANYr/wD6/+iXD5tAiq+wvX86rPQSXH6xcJls25ucQpEDAXimha//uzaeAm+5Udh64S4YTvZodrrrShz5L2devfmqBXq3vqxoitZgnqwEdc4X7mdfj0SYqPo67RTBCgGiVYOIhhOpseNwi6/qU9/Q+SIvEBtROpJY5lbbDM=
+	t=1756217227; cv=none; b=cdjhXwPpH6DGX6FpExEWeipc2z0Q13uPEHDMWLWQ/ENYOeC3r3Z2pQhOaGAF5O4SftB7ZKP4Y1jKV7/3n7MNLH+x4WU2ivYQ84RaWUwLR4wNr4LzxACSSl2AGT+zmUCONXtoPFi+VYtmulb7GNos6sB+eKjZMGef2Mw44qlWzzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217224; c=relaxed/simple;
-	bh=v4OaJ3SU7uHGU/6LP9FJQRX6xhzVKikmMoAg2q2GrVg=;
+	s=arc-20240116; t=1756217227; c=relaxed/simple;
+	bh=t4ZrwyCUhxbxoaZCNw9QoYxqsTtmNGSSzsP7VN0QRKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+M1gi++tFBmSTg32njtFl3Q6uPUiqeZUJu/PY9V9HQBSgYE6etlOx7Ga/qrUmZ42m9AQ7WlTdhP0HwOc4HqQ9odzpq1mYRQ7lFhoVCJOKHb3U7xPSJC/WmRlEdj2cliZLl+aXJC0SolHpjfX2blv1rm1wnD4tW/jiAKKYM5yQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXJ+FhzB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKGr/ibmCxROm8OlvVSHlreuuKMVn7WXRSql8F8cj6r8Qj5awQ5fySDjNNFXsMWuTKGMyLYhaZlE1AkJXum5SmTj9wvxQFBJMA3/3Ylq4XX+TwGHzE1PUJWwY1AGHQa0iNeM/fy53fFopY4vFlurAl6oZJ8LAhhDVA27VW3jNNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3NPV+SD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXJ+FhzB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841BDC113CF;
-	Tue, 26 Aug 2025 14:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3NPV+SD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73613C4CEF1;
+	Tue, 26 Aug 2025 14:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217224;
-	bh=v4OaJ3SU7uHGU/6LP9FJQRX6xhzVKikmMoAg2q2GrVg=;
+	s=korg; t=1756217226;
+	bh=t4ZrwyCUhxbxoaZCNw9QoYxqsTtmNGSSzsP7VN0QRKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXJ+FhzBcIVI2xJMhvS8+9drRiPBePTMD18GgR+8b7e1I6Ylr0gL6eSgWfIeiHpjp
-	 eXqN1g31KE5+oCtxfJ7fmCSmS9xywS0wGtIqh4yP6hrScy7jBm11s1kgligT2mD8KX
-	 MW4o7mKkTPMGfMpDnWHgjAJu9YbFvXHj8fQl/WiI=
+	b=g3NPV+SDNBEU67t/869hL1kk/CsBqK8Qo6qiMvYFxF3lvnSIb5hmVjRV+LQJGgXDq
+	 EpGucyHxYblABG0+waIlOuARXgS+JcO5+X6+J6GdmSMnz21S4YGIIrbl3rAdoHvbCo
+	 MrEaCEsGDHEZREj1tJtXtSOjVIOFf6IpA3Kru6pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Xiang Mei <xmei5@asu.edu>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Huazhong Tan <tanhuazhong@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/523] net/sched: sch_qfq: Avoid triggering might_sleep in atomic context in qfq_delete_class
-Date: Tue, 26 Aug 2025 13:04:31 +0200
-Message-ID: <20250826110926.090601659@linuxfoundation.org>
+Subject: [PATCH 5.10 062/523] net: hns3: refine the struct hane3_tc_info
+Date: Tue, 26 Aug 2025 13:04:32 +0200
+Message-ID: <20250826110926.112743912@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,71 +52,439 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit cf074eca0065bc5142e6004ae236bb35a2687fdf ]
+[ Upstream commit 35244430d62422e96b4c9c9b4c00c0ebece91d73 ]
 
-might_sleep could be trigger in the atomic context in qfq_delete_class.
+Currently, there are multiple members related to tc information
+in struct hnae3_knic_private_info. Merge them into a new struct
+hnae3_tc_info.
 
-qfq_destroy_class was moved into atomic context locked
-by sch_tree_lock to avoid a race condition bug on
-qfq_aggregate. However, might_sleep could be triggered by
-qfq_destroy_class, which introduced sleeping in atomic context (path:
-qfq_destroy_class->qdisc_put->__qdisc_destroy->lockdep_unregister_key
-->might_sleep).
-
-Considering the race is on the qfq_aggregate objects, keeping
-qfq_rm_from_agg in the lock but moving the left part out can solve
-this issue.
-
-Fixes: 5e28d5a3f774 ("net/sched: sch_qfq: Fix race condition on qfq_aggregate")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/4a04e0cc-a64b-44e7-9213-2880ed641d77@sabinyo.mountain
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20250717230128.159766-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Huazhong Tan <tanhuazhong@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: b3e75c0bcc53 ("net: hns3: fixed vf get max channels bug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_qfq.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hnae3.h   | 17 +++----
+ .../ethernet/hisilicon/hns3/hns3_debugfs.c    |  3 +-
+ .../net/ethernet/hisilicon/hns3/hns3_enet.c   | 33 ++++++-------
+ .../hisilicon/hns3/hns3pf/hclge_debugfs.c     |  2 +-
+ .../hisilicon/hns3/hns3pf/hclge_main.c        |  4 +-
+ .../hisilicon/hns3/hns3pf/hclge_mbx.c         |  2 +-
+ .../ethernet/hisilicon/hns3/hns3pf/hclge_tm.c | 49 +++++++++----------
+ .../hisilicon/hns3/hns3vf/hclgevf_main.c      | 21 ++++----
+ 8 files changed, 64 insertions(+), 67 deletions(-)
 
-diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
-index e412340f639d2..d8e01cca576e7 100644
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -538,9 +538,6 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.h b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
+index 25b6b4f780f1d..b0b5324e7f990 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hnae3.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
+@@ -656,15 +656,16 @@ struct hnae3_ae_algo {
+ #define HNAE3_INT_NAME_LEN        32
+ #define HNAE3_ITR_COUNTDOWN_START 100
  
- static void qfq_destroy_class(struct Qdisc *sch, struct qfq_class *cl)
- {
--	struct qfq_sched *q = qdisc_priv(sch);
--
--	qfq_rm_from_agg(q, cl);
- 	gen_kill_estimator(&cl->rate_est);
- 	qdisc_put(cl->qdisc);
- 	kfree(cl);
-@@ -558,10 +555,11 @@ static int qfq_delete_class(struct Qdisc *sch, unsigned long arg)
++#define HNAE3_MAX_TC		8
++#define HNAE3_MAX_USER_PRIO	8
+ struct hnae3_tc_info {
+-	u16	tqp_offset;	/* TQP offset from base TQP */
+-	u16	tqp_count;	/* Total TQPs */
+-	u8	tc;		/* TC index */
+-	bool	enable;		/* If this TC is enable or not */
++	u8 prio_tc[HNAE3_MAX_USER_PRIO]; /* TC indexed by prio */
++	u16 tqp_count[HNAE3_MAX_TC];
++	u16 tqp_offset[HNAE3_MAX_TC];
++	unsigned long tc_en; /* bitmap of TC enabled */
++	u8 num_tc; /* Total number of enabled TCs */
+ };
  
- 	qdisc_purge_queue(cl->qdisc);
- 	qdisc_class_hash_remove(&q->clhash, &cl->common);
--	qfq_destroy_class(sch, cl);
-+	qfq_rm_from_agg(q, cl);
+-#define HNAE3_MAX_TC		8
+-#define HNAE3_MAX_USER_PRIO	8
+ struct hnae3_knic_private_info {
+ 	struct net_device *netdev; /* Set by KNIC client when init instance */
+ 	u16 rss_size;		   /* Allocated RSS queues */
+@@ -673,9 +674,7 @@ struct hnae3_knic_private_info {
+ 	u16 num_tx_desc;
+ 	u16 num_rx_desc;
  
- 	sch_tree_unlock(sch);
+-	u8 num_tc;		   /* Total number of enabled TCs */
+-	u8 prio_tc[HNAE3_MAX_USER_PRIO];  /* TC indexed by prio */
+-	struct hnae3_tc_info tc_info[HNAE3_MAX_TC]; /* Idx of array is HW TC */
++	struct hnae3_tc_info tc_info;
  
-+	qfq_destroy_class(sch, cl);
- 	return 0;
+ 	u16 num_tqps;		  /* total number of TQPs in this handle */
+ 	struct hnae3_queue **tqp;  /* array base of all TQPs in this instance */
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+index dc9a85745e62b..d299787eae29a 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+@@ -347,7 +347,8 @@ static void hns3_dbg_dev_specs(struct hnae3_handle *h)
+ 	dev_info(priv->dev, "RX buffer length: %u\n", kinfo->rx_buf_len);
+ 	dev_info(priv->dev, "Desc num per TX queue: %u\n", kinfo->num_tx_desc);
+ 	dev_info(priv->dev, "Desc num per RX queue: %u\n", kinfo->num_rx_desc);
+-	dev_info(priv->dev, "Total number of enabled TCs: %u\n", kinfo->num_tc);
++	dev_info(priv->dev, "Total number of enabled TCs: %u\n",
++		 kinfo->tc_info.num_tc);
+ 	dev_info(priv->dev, "MAX INT QL: %u\n", dev_specs->int_ql_max);
  }
  
-@@ -1509,6 +1507,7 @@ static void qfq_destroy_qdisc(struct Qdisc *sch)
- 	for (i = 0; i < q->clhash.hashsize; i++) {
- 		hlist_for_each_entry_safe(cl, next, &q->clhash.hash[i],
- 					  common.hnode) {
-+			qfq_rm_from_agg(q, cl);
- 			qfq_destroy_class(sch, cl);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 110baa9949a0c..727b18cd6c4a9 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -273,13 +273,14 @@ static int hns3_nic_set_real_num_queue(struct net_device *netdev)
+ {
+ 	struct hnae3_handle *h = hns3_get_handle(netdev);
+ 	struct hnae3_knic_private_info *kinfo = &h->kinfo;
+-	unsigned int queue_size = kinfo->rss_size * kinfo->num_tc;
++	struct hnae3_tc_info *tc_info = &kinfo->tc_info;
++	unsigned int queue_size = kinfo->rss_size * tc_info->num_tc;
+ 	int i, ret;
+ 
+-	if (kinfo->num_tc <= 1) {
++	if (tc_info->num_tc <= 1) {
+ 		netdev_reset_tc(netdev);
+ 	} else {
+-		ret = netdev_set_num_tc(netdev, kinfo->num_tc);
++		ret = netdev_set_num_tc(netdev, tc_info->num_tc);
+ 		if (ret) {
+ 			netdev_err(netdev,
+ 				   "netdev_set_num_tc fail, ret=%d!\n", ret);
+@@ -287,13 +288,11 @@ static int hns3_nic_set_real_num_queue(struct net_device *netdev)
+ 		}
+ 
+ 		for (i = 0; i < HNAE3_MAX_TC; i++) {
+-			if (!kinfo->tc_info[i].enable)
++			if (!test_bit(i, &tc_info->tc_en))
+ 				continue;
+ 
+-			netdev_set_tc_queue(netdev,
+-					    kinfo->tc_info[i].tc,
+-					    kinfo->tc_info[i].tqp_count,
+-					    kinfo->tc_info[i].tqp_offset);
++			netdev_set_tc_queue(netdev, i, tc_info->tqp_count[i],
++					    tc_info->tqp_offset[i]);
  		}
  	}
+ 
+@@ -319,7 +318,7 @@ static u16 hns3_get_max_available_channels(struct hnae3_handle *h)
+ 	u16 alloc_tqps, max_rss_size, rss_size;
+ 
+ 	h->ae_algo->ops->get_tqps_and_rss_info(h, &alloc_tqps, &max_rss_size);
+-	rss_size = alloc_tqps / h->kinfo.num_tc;
++	rss_size = alloc_tqps / h->kinfo.tc_info.num_tc;
+ 
+ 	return min_t(u16, rss_size, max_rss_size);
+ }
+@@ -463,7 +462,7 @@ static int hns3_nic_net_open(struct net_device *netdev)
+ 
+ 	kinfo = &h->kinfo;
+ 	for (i = 0; i < HNAE3_MAX_USER_PRIO; i++)
+-		netdev_set_prio_tc_map(netdev, i, kinfo->prio_tc[i]);
++		netdev_set_prio_tc_map(netdev, i, kinfo->tc_info.prio_tc[i]);
+ 
+ 	if (h->ae_algo->ops->set_timer_task)
+ 		h->ae_algo->ops->set_timer_task(priv->ae_handle, true);
+@@ -3914,21 +3913,20 @@ static void hns3_init_ring_hw(struct hns3_enet_ring *ring)
+ static void hns3_init_tx_ring_tc(struct hns3_nic_priv *priv)
+ {
+ 	struct hnae3_knic_private_info *kinfo = &priv->ae_handle->kinfo;
++	struct hnae3_tc_info *tc_info = &kinfo->tc_info;
+ 	int i;
+ 
+ 	for (i = 0; i < HNAE3_MAX_TC; i++) {
+-		struct hnae3_tc_info *tc_info = &kinfo->tc_info[i];
+ 		int j;
+ 
+-		if (!tc_info->enable)
++		if (!test_bit(i, &tc_info->tc_en))
+ 			continue;
+ 
+-		for (j = 0; j < tc_info->tqp_count; j++) {
++		for (j = 0; j < tc_info->tqp_count[i]; j++) {
+ 			struct hnae3_queue *q;
+ 
+-			q = priv->ring[tc_info->tqp_offset + j].tqp;
+-			hns3_write_dev(q, HNS3_RING_TX_RING_TC_REG,
+-				       tc_info->tc);
++			q = priv->ring[tc_info->tqp_offset[i] + j].tqp;
++			hns3_write_dev(q, HNS3_RING_TX_RING_TC_REG, i);
+ 		}
+ 	}
+ }
+@@ -4056,7 +4054,8 @@ static void hns3_info_show(struct hns3_nic_priv *priv)
+ 	dev_info(priv->dev, "RX buffer length: %u\n", kinfo->rx_buf_len);
+ 	dev_info(priv->dev, "Desc num per TX queue: %u\n", kinfo->num_tx_desc);
+ 	dev_info(priv->dev, "Desc num per RX queue: %u\n", kinfo->num_rx_desc);
+-	dev_info(priv->dev, "Total number of enabled TCs: %u\n", kinfo->num_tc);
++	dev_info(priv->dev, "Total number of enabled TCs: %u\n",
++		 kinfo->tc_info.num_tc);
+ 	dev_info(priv->dev, "Max mtu size: %u\n", priv->netdev->max_mtu);
+ }
+ 
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+index 16df050e72cfc..9688b394634f1 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+@@ -1418,7 +1418,7 @@ static void hclge_dbg_dump_qs_shaper_all(struct hclge_dev *hdev)
+ 
+ 		dev_info(&hdev->pdev->dev, "qs cfg of vport%d:\n", vport_id);
+ 
+-		for (i = 0; i < kinfo->num_tc; i++) {
++		for (i = 0; i < kinfo->tc_info.num_tc; i++) {
+ 			u16 qsid = vport->qs_offset + i;
+ 
+ 			hclge_dbg_dump_qs_shaper_single(hdev, qsid);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index ec918f2981ec2..aa987cad7cadf 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -10682,7 +10682,7 @@ static u32 hclge_get_max_channels(struct hnae3_handle *handle)
+ 	struct hclge_dev *hdev = vport->back;
+ 
+ 	return min_t(u32, hdev->rss_size_max,
+-		     vport->alloc_tqps / kinfo->num_tc);
++		     vport->alloc_tqps / kinfo->tc_info.num_tc);
+ }
+ 
+ static void hclge_get_channels(struct hnae3_handle *handle,
+@@ -10769,7 +10769,7 @@ static int hclge_set_channels(struct hnae3_handle *handle, u32 new_tqps_num,
+ 		dev_info(&hdev->pdev->dev,
+ 			 "Channels changed, rss_size from %u to %u, tqps from %u to %u",
+ 			 cur_rss_size, kinfo->rss_size,
+-			 cur_tqps, kinfo->rss_size * kinfo->num_tc);
++			 cur_tqps, kinfo->rss_size * kinfo->tc_info.num_tc);
+ 
+ 	return ret;
+ }
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+index 9969714d1133d..cdfa04bc45988 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+@@ -423,7 +423,7 @@ static void hclge_get_vf_tcinfo(struct hclge_vport *vport,
+ 	struct hnae3_knic_private_info *kinfo = &vport->nic.kinfo;
+ 	unsigned int i;
+ 
+-	for (i = 0; i < kinfo->num_tc; i++)
++	for (i = 0; i < kinfo->tc_info.num_tc; i++)
+ 		resp_msg->data[0] |= BIT(i);
+ 
+ 	resp_msg->len = sizeof(u8);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
+index 8c5c5562c0a73..df42458d909b3 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
+@@ -535,7 +535,7 @@ int hclge_tm_qs_shaper_cfg(struct hclge_vport *vport, int max_tx_rate)
+ 						 HCLGE_SHAPER_BS_U_DEF,
+ 						 HCLGE_SHAPER_BS_S_DEF);
+ 
+-	for (i = 0; i < kinfo->num_tc; i++) {
++	for (i = 0; i < kinfo->tc_info.num_tc; i++) {
+ 		hclge_cmd_setup_basic_desc(&desc, HCLGE_OPC_QCN_SHAPPING_CFG,
+ 					   false);
+ 
+@@ -566,13 +566,13 @@ static void hclge_tm_vport_tc_info_update(struct hclge_vport *vport)
+ 	/* TC configuration is shared by PF/VF in one port, only allow
+ 	 * one tc for VF for simplicity. VF's vport_id is non zero.
+ 	 */
+-	kinfo->num_tc = vport->vport_id ? 1 :
++	kinfo->tc_info.num_tc = vport->vport_id ? 1 :
+ 			min_t(u16, vport->alloc_tqps, hdev->tm_info.num_tc);
+ 	vport->qs_offset = (vport->vport_id ? HNAE3_MAX_TC : 0) +
+ 				(vport->vport_id ? (vport->vport_id - 1) : 0);
+ 
+ 	max_rss_size = min_t(u16, hdev->rss_size_max,
+-			     vport->alloc_tqps / kinfo->num_tc);
++			     vport->alloc_tqps / kinfo->tc_info.num_tc);
+ 
+ 	/* Set to user value, no larger than max_rss_size. */
+ 	if (kinfo->req_rss_size != kinfo->rss_size && kinfo->req_rss_size &&
+@@ -589,34 +589,32 @@ static void hclge_tm_vport_tc_info_update(struct hclge_vport *vport)
+ 		if (!kinfo->req_rss_size)
+ 			max_rss_size = min_t(u16, max_rss_size,
+ 					     (hdev->num_nic_msi - 1) /
+-					     kinfo->num_tc);
++					     kinfo->tc_info.num_tc);
+ 
+ 		/* Set to the maximum specification value (max_rss_size). */
+ 		kinfo->rss_size = max_rss_size;
+ 	}
+ 
+-	kinfo->num_tqps = kinfo->num_tc * kinfo->rss_size;
++	kinfo->num_tqps = kinfo->tc_info.num_tc * kinfo->rss_size;
+ 	vport->dwrr = 100;  /* 100 percent as init */
+ 	vport->alloc_rss_size = kinfo->rss_size;
+ 	vport->bw_limit = hdev->tm_info.pg_info[0].bw_limit;
+ 
+ 	for (i = 0; i < HNAE3_MAX_TC; i++) {
+-		if (hdev->hw_tc_map & BIT(i) && i < kinfo->num_tc) {
+-			kinfo->tc_info[i].enable = true;
+-			kinfo->tc_info[i].tqp_offset = i * kinfo->rss_size;
+-			kinfo->tc_info[i].tqp_count = kinfo->rss_size;
+-			kinfo->tc_info[i].tc = i;
++		if (hdev->hw_tc_map & BIT(i) && i < kinfo->tc_info.num_tc) {
++			set_bit(i, &kinfo->tc_info.tc_en);
++			kinfo->tc_info.tqp_offset[i] = i * kinfo->rss_size;
++			kinfo->tc_info.tqp_count[i] = kinfo->rss_size;
+ 		} else {
+ 			/* Set to default queue if TC is disable */
+-			kinfo->tc_info[i].enable = false;
+-			kinfo->tc_info[i].tqp_offset = 0;
+-			kinfo->tc_info[i].tqp_count = 1;
+-			kinfo->tc_info[i].tc = 0;
++			clear_bit(i, &kinfo->tc_info.tc_en);
++			kinfo->tc_info.tqp_offset[i] = 0;
++			kinfo->tc_info.tqp_count[i] = 1;
+ 		}
+ 	}
+ 
+-	memcpy(kinfo->prio_tc, hdev->tm_info.prio_tc,
+-	       sizeof_field(struct hnae3_knic_private_info, prio_tc));
++	memcpy(kinfo->tc_info.prio_tc, hdev->tm_info.prio_tc,
++	       sizeof_field(struct hnae3_tc_info, prio_tc));
+ }
+ 
+ static void hclge_tm_vport_info_update(struct hclge_dev *hdev)
+@@ -815,15 +813,14 @@ static int hclge_vport_q_to_qs_map(struct hclge_dev *hdev,
+ 				   struct hclge_vport *vport)
+ {
+ 	struct hnae3_knic_private_info *kinfo = &vport->nic.kinfo;
++	struct hnae3_tc_info *tc_info = &kinfo->tc_info;
+ 	struct hnae3_queue **tqp = kinfo->tqp;
+-	struct hnae3_tc_info *v_tc_info;
+ 	u32 i, j;
+ 	int ret;
+ 
+-	for (i = 0; i < kinfo->num_tc; i++) {
+-		v_tc_info = &kinfo->tc_info[i];
+-		for (j = 0; j < v_tc_info->tqp_count; j++) {
+-			struct hnae3_queue *q = tqp[v_tc_info->tqp_offset + j];
++	for (i = 0; i < tc_info->num_tc; i++) {
++		for (j = 0; j < tc_info->tqp_count[i]; j++) {
++			struct hnae3_queue *q = tqp[tc_info->tqp_offset[i] + j];
+ 
+ 			ret = hclge_tm_q_to_qs_map_cfg(hdev,
+ 						       hclge_get_queue_id(q),
+@@ -848,7 +845,7 @@ static int hclge_tm_pri_q_qs_cfg(struct hclge_dev *hdev)
+ 			struct hnae3_knic_private_info *kinfo =
+ 				&vport[k].nic.kinfo;
+ 
+-			for (i = 0; i < kinfo->num_tc; i++) {
++			for (i = 0; i < kinfo->tc_info.num_tc; i++) {
+ 				ret = hclge_tm_qs_to_pri_map_cfg(
+ 					hdev, vport[k].qs_offset + i, i);
+ 				if (ret)
+@@ -959,7 +956,7 @@ static int hclge_tm_pri_vnet_base_shaper_qs_cfg(struct hclge_vport *vport)
+ 	u32 i;
+ 	int ret;
+ 
+-	for (i = 0; i < kinfo->num_tc; i++) {
++	for (i = 0; i < kinfo->tc_info.num_tc; i++) {
+ 		ret = hclge_shaper_para_calc(hdev->tm_info.tc_info[i].bw_limit,
+ 					     HCLGE_SHAPER_LVL_QSET,
+ 					     &ir_para, max_tm_rate);
+@@ -1074,7 +1071,7 @@ static int hclge_tm_pri_vnet_base_dwrr_pri_cfg(struct hclge_vport *vport)
+ 		return ret;
+ 
+ 	/* Qset dwrr */
+-	for (i = 0; i < kinfo->num_tc; i++) {
++	for (i = 0; i < kinfo->tc_info.num_tc; i++) {
+ 		ret = hclge_tm_qs_weight_cfg(
+ 			hdev, vport->qs_offset + i,
+ 			hdev->tm_info.pg_info[0].tc_dwrr[i]);
+@@ -1205,7 +1202,7 @@ static int hclge_tm_schd_mode_vnet_base_cfg(struct hclge_vport *vport)
+ 	if (ret)
+ 		return ret;
+ 
+-	for (i = 0; i < kinfo->num_tc; i++) {
++	for (i = 0; i < kinfo->tc_info.num_tc; i++) {
+ 		u8 sch_mode = hdev->tm_info.tc_info[i].tc_sch_mode;
+ 
+ 		ret = hclge_tm_qs_schd_mode_cfg(hdev, vport->qs_offset + i,
+@@ -1428,7 +1425,7 @@ void hclge_tm_prio_tc_info_update(struct hclge_dev *hdev, u8 *prio_tc)
+ 
+ 		for (k = 0;  k < hdev->num_alloc_vport; k++) {
+ 			kinfo = &vport[k].nic.kinfo;
+-			kinfo->prio_tc[i] = prio_tc[i];
++			kinfo->tc_info.prio_tc[i] = prio_tc[i];
+ 		}
+ 	}
+ }
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index aa026eb5cf588..cf03c2ab7b2eb 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -418,19 +418,20 @@ static int hclgevf_knic_setup(struct hclgevf_dev *hdev)
+ 	struct hnae3_knic_private_info *kinfo;
+ 	u16 new_tqps = hdev->num_tqps;
+ 	unsigned int i;
++	u8 num_tc = 0;
+ 
+ 	kinfo = &nic->kinfo;
+-	kinfo->num_tc = 0;
+ 	kinfo->num_tx_desc = hdev->num_tx_desc;
+ 	kinfo->num_rx_desc = hdev->num_rx_desc;
+ 	kinfo->rx_buf_len = hdev->rx_buf_len;
+ 	for (i = 0; i < HCLGEVF_MAX_TC_NUM; i++)
+ 		if (hdev->hw_tc_map & BIT(i))
+-			kinfo->num_tc++;
++			num_tc++;
+ 
+-	kinfo->rss_size
+-		= min_t(u16, hdev->rss_size_max, new_tqps / kinfo->num_tc);
+-	new_tqps = kinfo->rss_size * kinfo->num_tc;
++	num_tc = num_tc ? num_tc : 1;
++	kinfo->tc_info.num_tc = num_tc;
++	kinfo->rss_size = min_t(u16, hdev->rss_size_max, new_tqps / num_tc);
++	new_tqps = kinfo->rss_size * num_tc;
+ 	kinfo->num_tqps = min(new_tqps, hdev->num_tqps);
+ 
+ 	kinfo->tqp = devm_kcalloc(&hdev->pdev->dev, kinfo->num_tqps,
+@@ -448,7 +449,7 @@ static int hclgevf_knic_setup(struct hclgevf_dev *hdev)
+ 	 * and rss size with the actual vector numbers
+ 	 */
+ 	kinfo->num_tqps = min_t(u16, hdev->num_nic_msix - 1, kinfo->num_tqps);
+-	kinfo->rss_size = min_t(u16, kinfo->num_tqps / kinfo->num_tc,
++	kinfo->rss_size = min_t(u16, kinfo->num_tqps / num_tc,
+ 				kinfo->rss_size);
+ 
+ 	return 0;
+@@ -3349,7 +3350,7 @@ static u32 hclgevf_get_max_channels(struct hclgevf_dev *hdev)
+ 	struct hnae3_knic_private_info *kinfo = &nic->kinfo;
+ 
+ 	return min_t(u32, hdev->rss_size_max,
+-		     hdev->num_tqps / kinfo->num_tc);
++		     hdev->num_tqps / kinfo->tc_info.num_tc);
+ }
+ 
+ /**
+@@ -3392,7 +3393,7 @@ static void hclgevf_update_rss_size(struct hnae3_handle *handle,
+ 	kinfo->req_rss_size = new_tqps_num;
+ 
+ 	max_rss_size = min_t(u16, hdev->rss_size_max,
+-			     hdev->num_tqps / kinfo->num_tc);
++			     hdev->num_tqps / kinfo->tc_info.num_tc);
+ 
+ 	/* Use the user's configuration when it is not larger than
+ 	 * max_rss_size, otherwise, use the maximum specification value.
+@@ -3404,7 +3405,7 @@ static void hclgevf_update_rss_size(struct hnae3_handle *handle,
+ 		 (!kinfo->req_rss_size && kinfo->rss_size < max_rss_size))
+ 		kinfo->rss_size = max_rss_size;
+ 
+-	kinfo->num_tqps = kinfo->num_tc * kinfo->rss_size;
++	kinfo->num_tqps = kinfo->tc_info.num_tc * kinfo->rss_size;
+ }
+ 
+ static int hclgevf_set_channels(struct hnae3_handle *handle, u32 new_tqps_num,
+@@ -3450,7 +3451,7 @@ static int hclgevf_set_channels(struct hnae3_handle *handle, u32 new_tqps_num,
+ 		dev_info(&hdev->pdev->dev,
+ 			 "Channels changed, rss_size from %u to %u, tqps from %u to %u",
+ 			 cur_rss_size, kinfo->rss_size,
+-			 cur_tqps, kinfo->rss_size * kinfo->num_tc);
++			 cur_tqps, kinfo->rss_size * kinfo->tc_info.num_tc);
+ 
+ 	return ret;
+ }
 -- 
 2.39.5
 
