@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E5C299959;
-	Tue, 26 Aug 2025 11:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0242321D00E;
+	Tue, 26 Aug 2025 11:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207370; cv=none; b=ibQpBE+ny3Q0IStmPa3xWOAAjqJGcdDn6AqPvbiu/ZAiXLY2IJ3VjzROHHC3E32QaGVvnwSRRnkkkq8CKvxP+DI06wZXgJMXY25iacd7wWdliw1BGCihNFrw5MrqlfmuL5Q70/1dToFrjlbmLDIdmfNM95TDs4gVPKDfvXd8LGo=
+	t=1756207372; cv=none; b=DEASzFds4+kSbfbcGl6LjX1DhgKOBf9OVOWAxjl/0l6A2d5TtqeTi/UHlap9bVMgvMvaxOLukSjAheGnDSt+lUANlkKmhwHxGFa7M9iY4eZx6cUKgCioW+Z/zrrSYgGdPGhflyq/bs0bK/Kq8D78ApOpVh/JcHkPaI4VNg2fHxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207370; c=relaxed/simple;
-	bh=VfCk3fIJwtZluGK+PIuy/SHAxklW0YdHFh969RAydDI=;
+	s=arc-20240116; t=1756207372; c=relaxed/simple;
+	bh=No7uQammdHQrXl18y69rNG4PX3NNftbYB7dw2mWtNOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/8kHuWfHRC5QcGanL6lfoUuSgRhCOPHVipqSu8d6+HSTJY4z/OvAEj0ZeJ/Oe9fUCJJHqnn17yltCVmi27W0DMAlyHPeVFv8+xRx03+708i485xIk8wXM6RKiiKCRZEiJMh++cSJJc5+GDh71mTZqTLY5Roc2oIO/rCCFRETvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTuenE1e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u2iBW25Bm0fM02PRcGimcPZc9NyPM9ActZbynMsg5CIZQBLky0+qhWDANKI+SOhFo2Ghz3ftoN23Mvwn4iSvUxDf56WttUwMOtswg514mq4nZh5AXPn1qA0nSb0FeC7026K9GxlBAtgP7r6kPGCqrjw2OdsJi9h4742vMQY/eXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSyQg+zS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTuenE1e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A64C4CEF1;
-	Tue, 26 Aug 2025 11:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSyQg+zS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E13AC4CEF1;
+	Tue, 26 Aug 2025 11:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207369;
-	bh=VfCk3fIJwtZluGK+PIuy/SHAxklW0YdHFh969RAydDI=;
+	s=korg; t=1756207371;
+	bh=No7uQammdHQrXl18y69rNG4PX3NNftbYB7dw2mWtNOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTuenE1eboHEPzSQpHAdvIqSvlgvISj3OUKem4Lq/o7HXzoCzmeQwRsSpxjoGGAQF
-	 iL9lcDKITs5noMsBr2au3u7IyqGURE44rfDYFwJKoKUT2K6bpXzhdbmQYip8Zp0BnE
-	 e8SU43eRa6lZhAhryfCyMmPSG/jN+mx+rrIlixxc=
+	b=jSyQg+zSPgrbYSU62ZBNsyX691nzKFgEDBHSTkht5qLFWZkm2SfTFeb3op1xMc9Pj
+	 dIqUT2DQaWd3U/6FcHmU08c9m0laoggC6ScYWA4m8/trpDm7O/GQRYosVLML1PBZu1
+	 /5XX0mrtTlPBDToRFb5v/Putn2AdzpajFGlMu7r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Vikash Garodia <quic_vgarodia@quicinc.com>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Dikshita Agarwal <quic_dikshita@quicinc.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.16 156/457] media: iris: Fix NULL pointer dereference
-Date: Tue, 26 Aug 2025 13:07:20 +0200
-Message-ID: <20250826110941.230106322@linuxfoundation.org>
+Subject: [PATCH 6.16 157/457] media: iris: Fix typo in depth variable
+Date: Tue, 26 Aug 2025 13:07:21 +0200
+Message-ID: <20250826110941.254162892@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -57,19 +56,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-commit 0f837559ccdd275c5a059e6ac4d5034b03409f1d upstream.
+commit 58edc8a68de7af45a4c815636595daa530f02c13 upstream.
 
-A warning reported by smatch indicated a possible null pointer
-dereference where one of the arguments to API
-"iris_hfi_gen2_handle_system_error" could sometimes be null.
-
-To fix this, add a check to validate that the argument passed is not
-null before accessing its members.
+Correct a typo from "dpeth" to "depth".
 
 Cc: stable@vger.kernel.org
-Fixes: fb583a214337 ("media: iris: introduce host firmware interface with necessary hooks")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-media/634cc9b8-f099-4b54-8556-d879fb2b5169@stanley.mountain/
+Fixes: 3a19d7b9e08b ("media: iris: implement set properties to firmware during streamon")
 Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
@@ -82,23 +74,31 @@ Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-index d1a2a497a7b2..4488540d1d41 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-@@ -265,7 +265,8 @@ static int iris_hfi_gen2_handle_system_error(struct iris_core *core,
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+index a908b41e2868..802fa62c26eb 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+@@ -178,7 +178,7 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst)
+ 						  sizeof(u64));
+ }
+ 
+-static int iris_hfi_gen2_set_bit_dpeth(struct iris_inst *inst)
++static int iris_hfi_gen2_set_bit_depth(struct iris_inst *inst)
  {
- 	struct iris_inst *instance;
- 
--	dev_err(core->dev, "received system error of type %#x\n", pkt->type);
-+	if (pkt)
-+		dev_err(core->dev, "received system error of type %#x\n", pkt->type);
- 
- 	core->state = IRIS_CORE_ERROR;
- 
+ 	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
+ 	u32 port = iris_hfi_gen2_get_port(V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+@@ -378,7 +378,7 @@ static int iris_hfi_gen2_session_set_config_params(struct iris_inst *inst, u32 p
+ 		{HFI_PROP_BITSTREAM_RESOLUTION,       iris_hfi_gen2_set_bitstream_resolution   },
+ 		{HFI_PROP_CROP_OFFSETS,               iris_hfi_gen2_set_crop_offsets           },
+ 		{HFI_PROP_CODED_FRAMES,               iris_hfi_gen2_set_coded_frames           },
+-		{HFI_PROP_LUMA_CHROMA_BIT_DEPTH,      iris_hfi_gen2_set_bit_dpeth              },
++		{HFI_PROP_LUMA_CHROMA_BIT_DEPTH,      iris_hfi_gen2_set_bit_depth              },
+ 		{HFI_PROP_BUFFER_FW_MIN_OUTPUT_COUNT, iris_hfi_gen2_set_min_output_count       },
+ 		{HFI_PROP_PIC_ORDER_CNT_TYPE,         iris_hfi_gen2_set_picture_order_count    },
+ 		{HFI_PROP_SIGNAL_COLOR_INFO,          iris_hfi_gen2_set_colorspace             },
 -- 
 2.50.1
 
