@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC284230BF8;
-	Tue, 26 Aug 2025 13:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FE7228C9D;
+	Tue, 26 Aug 2025 13:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213459; cv=none; b=jTQ8FnfBLsE1MdZME1q7i+aPED5/yiWWJNu6dKbEBvbPfIv41EzquQOwKqr2QvLu8FmVSyU6zZ5v3CGN72cFZgXXceXGqdEXoMa/7XAgbahPzEvhmZEIBCwTXPIDEFhAF0yVTkxSiuQgrd1mCZ6aWgwrkYcjsjQJiuH9X39B9eI=
+	t=1756213462; cv=none; b=NbIQuLJci4r67ohrkZI059kUKsAmPn+ZVSj67M5PyKv+Kw7J04H10oRFsyU+iGphF+z1SSNEvQBktmyk9B0cbnv/lQhj/hRgAMGo3sdcB3W/W5y5opvZqcAALZG+z04gha0b0sjbTZ3D6PRlvBK6XzP/mL7Twx6ttOJk6zwyGeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213459; c=relaxed/simple;
-	bh=PF+sJVv5DSo8klTV+5dFFxWm/aSsnAZMixcGRio5/k4=;
+	s=arc-20240116; t=1756213462; c=relaxed/simple;
+	bh=6XCM0+mn+HS/v1h94Lka7prg7LkItFW59lXGcNQJVnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4EwpNjMaD0a6FF1z6rbchiN8VBRqgINIY+nv8vmyPJLpE7gwFNQo/s7KNd7CUDOPtGH1RLe7ZD2qk8EMxyn3m0hqEwkhyEiRrU7mmoGfy/RLmscbEQxOOYXbfn6IJb6rXJ/gfGYzk3OFcXYYrgJH9ENXK0nW12FC4VoHyLqibo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3yep2LH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ib4Ij5o170WLhVyPf1p5YnDEtbfqjwn7/EPFRi4QxSs5M5Z8KOJlu+5o5fsLZJGKQMVwd6+L59jHaHbZMbsdYIDLFeWs/QCa8yfqZV/kYchw+6p5Gz5Hz4+4zYQDGa1GA+YqeijSxikS4sEzzcxPwhnvjwkpG4jE2zyu4CN7bK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcKUEoFw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3yep2LH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC3BC4CEF1;
-	Tue, 26 Aug 2025 13:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcKUEoFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A27EC4CEF1;
+	Tue, 26 Aug 2025 13:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213458;
-	bh=PF+sJVv5DSo8klTV+5dFFxWm/aSsnAZMixcGRio5/k4=;
+	s=korg; t=1756213461;
+	bh=6XCM0+mn+HS/v1h94Lka7prg7LkItFW59lXGcNQJVnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D3yep2LHIYCLbhg/gWCuOmPEAdFOkoMOdxH/RpJTVFaF4kWc1QWpj3EftE6MR4kRc
-	 mcNOnDVRkzTfRCi85p1h6iwuSFiCQe+hqVMe5hFQqjS8ZuWzwrzYf3lkBh2jhPTVW0
-	 vz3+92WHwMtLFabPiIwMdnpE+XQ0uAEbAqVBKBF4=
+	b=AcKUEoFwTTY2+v/3ZWM6YiFN6YIZvb0HMhcBgUI7kcM0MlVBTsuQjlWhupveNxKFK
+	 EM7vrxtonQIMbDWmxAG5w9+WHHrBAAK0+fCp6sn+CmyNrC+PbgfLbuRgQ4gjT9jtSn
+	 HH9NsREqgFBAbneZHm37Fc10IJ0eooKuKvaV5Uqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Hong Guan <hguan@ti.com>,
+	Bryan Brattlof <bb@ti.com>,
 	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.6 355/587] arm64: dts: ti: k3-pinctrl: Enable Schmitt Trigger by default
-Date: Tue, 26 Aug 2025 13:08:24 +0200
-Message-ID: <20250826111001.944247225@linuxfoundation.org>
+Subject: [PATCH 6.6 356/587] arm64: dts: ti: k3-am62a7-sk: fix pinmux for main_uart1
+Date: Tue, 26 Aug 2025 13:08:25 +0200
+Message-ID: <20250826111001.968811166@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,67 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Hong Guan <hguan@ti.com>
 
-commit 5b272127884bded21576a6ddceca13725a351c63 upstream.
+commit 8e44ac61abaae56fc6eb537a04ed78b458c5b984 upstream.
 
-Switch Schmitt Trigger functions for PIN_INPUT* macros by default. This is
-HW PoR configuration, the slew rate requirements without ST enabled are
-pretty tough for these devices. We've noticed spurious GPIO interrupts even
-with noise-free edges but not meeting slew rate requirements (3.3E+6 V/s
-for 3.3v LVCMOS).
+main_uart1 reserved for TIFS firmware traces is routed to the
+onboard FT4232 via a FET switch which is connected to pin A21 and
+B21 of the SoC and not E17 and C17. Fix it.
 
-It's not obvious why one might want to disable the PoR-enabled ST on any
-pin. Just enable it by default. As it's not possible to provide OR-able
-macros to disable the ST, shall anyone require it, provide a set of
-new macros with _NOST suffix.
-
-Fixes: fe49f2d776f7 ("arm64: dts: ti: Use local header for pinctrl register values")
+Fixes: cf39ff15cc01a ("arm64: dts: ti: k3-am62a7-sk: Describe main_uart1 and wkup_uart")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20250701105437.3539924-1-alexander.sverdlin@siemens.com
-[vigneshr@ti.com: Add Fixes tag]
+Signed-off-by: Hong Guan <hguan@ti.com>
+[bb@ti.com: expanded commit message]
+Signed-off-by: Bryan Brattlof <bb@ti.com>
+Link: https://lore.kernel.org/r/20250707-uart-fixes-v1-1-8164147218b0@ti.com
 Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-pinctrl.h |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62a7-sk.dts |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-pinctrl.h
-+++ b/arch/arm64/boot/dts/ti/k3-pinctrl.h
-@@ -8,11 +8,16 @@
- #ifndef DTS_ARM64_TI_K3_PINCTRL_H
- #define DTS_ARM64_TI_K3_PINCTRL_H
+--- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+@@ -144,8 +144,8 @@
  
-+#define ST_EN_SHIFT		(14)
- #define PULLUDEN_SHIFT		(16)
- #define PULLTYPESEL_SHIFT	(17)
- #define RXACTIVE_SHIFT		(18)
- #define DEBOUNCE_SHIFT		(11)
- 
-+/* Schmitt trigger configuration */
-+#define ST_DISABLE		(0 << ST_EN_SHIFT)
-+#define ST_ENABLE		(1 << ST_EN_SHIFT)
-+
- #define PULL_DISABLE		(1 << PULLUDEN_SHIFT)
- #define PULL_ENABLE		(0 << PULLUDEN_SHIFT)
- 
-@@ -26,9 +31,13 @@
- #define PIN_OUTPUT		(INPUT_DISABLE | PULL_DISABLE)
- #define PIN_OUTPUT_PULLUP	(INPUT_DISABLE | PULL_UP)
- #define PIN_OUTPUT_PULLDOWN	(INPUT_DISABLE | PULL_DOWN)
--#define PIN_INPUT		(INPUT_EN | PULL_DISABLE)
--#define PIN_INPUT_PULLUP	(INPUT_EN | PULL_UP)
--#define PIN_INPUT_PULLDOWN	(INPUT_EN | PULL_DOWN)
-+#define PIN_INPUT		(INPUT_EN | ST_ENABLE | PULL_DISABLE)
-+#define PIN_INPUT_PULLUP	(INPUT_EN | ST_ENABLE | PULL_UP)
-+#define PIN_INPUT_PULLDOWN	(INPUT_EN | ST_ENABLE | PULL_DOWN)
-+/* Input configurations with Schmitt Trigger disabled */
-+#define PIN_INPUT_NOST		(INPUT_EN | PULL_DISABLE)
-+#define PIN_INPUT_PULLUP_NOST	(INPUT_EN | PULL_UP)
-+#define PIN_INPUT_PULLDOWN_NOST	(INPUT_EN | PULL_DOWN)
- 
- #define PIN_DEBOUNCE_DISABLE	(0 << DEBOUNCE_SHIFT)
- #define PIN_DEBOUNCE_CONF1	(1 << DEBOUNCE_SHIFT)
+ 	main_uart1_pins_default: main-uart1-default-pins {
+ 		pinctrl-single,pins = <
+-			AM62AX_IOPAD(0x01e8, PIN_INPUT, 1) /* (C17) I2C1_SCL.UART1_RXD */
+-			AM62AX_IOPAD(0x01ec, PIN_OUTPUT, 1) /* (E17) I2C1_SDA.UART1_TXD */
++			AM62AX_IOPAD(0x01ac, PIN_INPUT, 2) /* (B21) MCASP0_AFSR.UART1_RXD */
++			AM62AX_IOPAD(0x01b0, PIN_OUTPUT, 2) /* (A21) MCASP0_ACLKR.UART1_TXD */
+ 			AM62AX_IOPAD(0x0194, PIN_INPUT, 2) /* (C19) MCASP0_AXR3.UART1_CTSn */
+ 			AM62AX_IOPAD(0x0198, PIN_OUTPUT, 2) /* (B19) MCASP0_AXR2.UART1_RTSn */
+ 		>;
 
 
