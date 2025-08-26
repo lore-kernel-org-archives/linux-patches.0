@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92B11ACEDA;
-	Tue, 26 Aug 2025 13:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7891FFBF0;
+	Tue, 26 Aug 2025 13:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213625; cv=none; b=fgl4RR2PvyC8les5zomI5f7rOylU4EcVxIEhe++vHi58mZ0d4k6BPhYFduHLO5tFufG7f6sp4uHlqRly0Zul/EWu6o8eumQ4OMkmQjArY7iR98YDpRalw/rQmHS3ShmVdFAgRQrHOEp2EE8+3sM2KoRfywAEDT2kc8E5Yzx+2VM=
+	t=1756213628; cv=none; b=Ako9a7LLEkGb6P6y+eldPLSJ4U98cl3edBWqAKbKpa2rIrVmY6X2DfIB2O8gMrxpNksiRwSh8ExCd0M75MxcXzJXOCb/Y2fhCjKnOsnvIItlO14raQ1duzzPviGxn2Zt8QJnG7LMViYHKQCtKu7r5pIA7t2gfagATi2BI5Vos3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213625; c=relaxed/simple;
-	bh=I+XxFpSPfLtFIU5PQmR1tVRQHWOs4VECWrqx93QvEeM=;
+	s=arc-20240116; t=1756213628; c=relaxed/simple;
+	bh=td6JmsAdU37t+dui/Vq8yn6Sfdy0pFpfm/qc1G3zyDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9pgo7QXomyfQg3Uo2nzE7MJ6c9OpzmyPs4FLZfCm9KiKpUVMrF1foZdPTtf2Zyp7fuNPlnH/KWAwCj7FWkMpmxRMBA18TErmK7gQIJdrqf4dkhcNHUy1U6bUz7VyRv/NQnf5CcBwWp2GzD3KahYQ15Gp92KFMhDThIPYVypSNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgdCvqWp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gQSK3N7G+I0h99H+sTxicNSUPOb98n89ITSChcobpUiNDNW9/o8Xoh8W9dpFACOI1xh2Rej0K8KOQ1RwEsIslw/fzQzPZHkO1mMfCR64U75iKMkRbTJR0kTw3s99Oze6DJsvM1+r7nxY71dm6h1h1X6ULJm+mJWY9zLkAPDgLzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPDXAB+H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgdCvqWp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4232CC4CEF1;
-	Tue, 26 Aug 2025 13:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPDXAB+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DCAC4CEF1;
+	Tue, 26 Aug 2025 13:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213625;
-	bh=I+XxFpSPfLtFIU5PQmR1tVRQHWOs4VECWrqx93QvEeM=;
+	s=korg; t=1756213628;
+	bh=td6JmsAdU37t+dui/Vq8yn6Sfdy0pFpfm/qc1G3zyDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgdCvqWpVPN3SPCphChkdOxCjx5Hd8WACfJnf7iIUzgj8g92p2ce/hPmzbwqqBOPr
-	 gamRODGkNOpg40M6R1omYD3p8tId5FCjxh6alKHD+/CTOJbFrxdek1KjyW9lJ8hkXg
-	 iqiUl3v37JcJnFsjz4v44mf4+haf/uwXH7mjblbY=
+	b=JPDXAB+HrPPlTloZoKYiBLbMxoyaSIOQOqYuca0GvdMCZ3dhWwqW8PucyYajWTIjD
+	 rCYiwBTFjHbB5RVUHL8xaaqGUguuIP0YaqCq79HBfXXZQLZcYgYgbiMVMvxQ3y3u07
+	 6ZVNnAj910Wtw9DZlk2sUjMXvsKdrMUPrBCrTt28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 411/587] media: qcom: camss: cleanup media device allocated resource on error path
-Date: Tue, 26 Aug 2025 13:09:20 +0200
-Message-ID: <20250826111003.386980451@linuxfoundation.org>
+	Amber Lin <Amber.Lin@amd.com>,
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 420/587] drm/amdkfd: Destroy KFD debugfs after destroy KFD wq
+Date: Tue, 26 Aug 2025 13:09:29 +0200
+Message-ID: <20250826111003.622861475@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,46 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Amber Lin <Amber.Lin@amd.com>
 
-commit 69080ec3d0daba8a894025476c98ab16b5a505a4 upstream.
+commit 2e58401a24e7b2d4ec619104e1a76590c1284a4c upstream.
 
-A call to media_device_init() requires media_device_cleanup() counterpart
-to complete cleanup and release any allocated resources.
+Since KFD proc content was moved to kernel debugfs, we can't destroy KFD
+debugfs before kfd_process_destroy_wq. Move kfd_process_destroy_wq prior
+to kfd_debugfs_fini to fix a kernel NULL pointer problem. It happens
+when /sys/kernel/debug/kfd was already destroyed in kfd_debugfs_fini but
+kfd_process_destroy_wq calls kfd_debugfs_remove_process. This line
+    debugfs_remove_recursive(entry->proc_dentry);
+tries to remove /sys/kernel/debug/kfd/proc/<pid> while
+/sys/kernel/debug/kfd is already gone. It hangs the kernel by kernel
+NULL pointer.
 
-This has been done in the driver .remove() right from the beginning, but
-error paths on .probe() shall also be fixed.
-
-Fixes: a1d7c116fcf7 ("media: camms: Add core files")
+Signed-off-by: Amber Lin <Amber.Lin@amd.com>
+Reviewed-by: Eric Huang <jinhuieric.huang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0333052d90683d88531558dcfdbf2525cc37c233)
 Cc: stable@vger.kernel.org
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_module.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1660,7 +1660,7 @@ static int camss_probe(struct platform_d
- 	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
--		goto err_genpd_cleanup;
-+		goto err_media_device_cleanup;
- 	}
- 
- 	v4l2_async_nf_init(&camss->notifier, &camss->v4l2_dev);
-@@ -1711,6 +1711,8 @@ err_v4l2_device_unregister:
- 	v4l2_device_unregister(&camss->v4l2_dev);
- 	v4l2_async_nf_cleanup(&camss->notifier);
- 	pm_runtime_disable(dev);
-+err_media_device_cleanup:
-+	media_device_cleanup(&camss->media_dev);
- err_genpd_cleanup:
- 	camss_genpd_cleanup(camss);
- 
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_module.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
+@@ -78,8 +78,8 @@ err_ioctl:
+ static void kfd_exit(void)
+ {
+ 	kfd_cleanup_processes();
+-	kfd_debugfs_fini();
+ 	kfd_process_destroy_wq();
++	kfd_debugfs_fini();
+ 	kfd_procfs_shutdown();
+ 	kfd_topology_shutdown();
+ 	kfd_chardev_exit();
 
 
