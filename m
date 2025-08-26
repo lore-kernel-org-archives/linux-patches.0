@@ -1,58 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48E01F4C90;
-	Tue, 26 Aug 2025 14:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46D435AACE;
+	Tue, 26 Aug 2025 14:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218422; cv=none; b=bql04SMgIKjEDN0MEJL7FYy6d6AEB2c1pv5WnY/GWsXU6GYUStnvRwkthDt/CKgHaUJSpPmWwkFDUDVVE4V/0TBv74z1tMtAfY+WbdQHcEEJ5FqGNlYsn1rn0Y+FgWugs7mVbveqieqmIbH++28nYP/27mgWWETAsW41lTEMK5w=
+	t=1756218423; cv=none; b=ht4tJySyjad6xLBtBM7YPw1jGZElBAepaEhydu7aW64cRfj5TS0XXZ12E/hbdrBzCSMFCuzPWPxfrhNCXdgtXWdHC/0fItpwip/9ZGuKwvn+ZgpbKh1CMOkogBalelHM380RUpxY0LbqQWe5IKUk4QUB9IOVZvOQbEIyETPUc1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218422; c=relaxed/simple;
-	bh=2257YKTf0hZvEhw7QERhgoMA7jBQDNI1+ysTVeZGj28=;
+	s=arc-20240116; t=1756218423; c=relaxed/simple;
+	bh=FJiZea/ybZUSRrUE59aCZjM0XQvjlu2t06aRolvi21c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnjfmG/VZPUO5IxRMBJ3CPtkk00qKsxQ2SGHXnAhavCpBm6y3a9o+Ks7ype2NOa/fa1j7BkEpRdt/5tV7Ics9F3OIKzWG0M87IS63WjD5Q3pg1OczhFBKxAHhJxvv9BxQWny/YotLTMxgxLls/CsmqFm7lpNP/9ZOAAKP94Wdwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WxsltBcK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LDnF4ZH/E6dvClFqj9NkfWqJpbSAEX3b4TwPjBHDNkkdX+zZkWjclj568R99KC6ZXHCnfqILCXwAkfNqLbgrNXBev60YckM0GvtqnVmRIveSezDye1ZTQ4i4c671L7wzFNAUJLdMLgBwILXyGAijMoKLsn6t2VWcOPwCR4V8T1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3zCFO+t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WxsltBcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF1BC113CF;
-	Tue, 26 Aug 2025 14:26:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756218422;
-	bh=2257YKTf0hZvEhw7QERhgoMA7jBQDNI1+ysTVeZGj28=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3zCFO+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653FBC4CEF1;
+	Tue, 26 Aug 2025 14:27:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1756218423;
+	bh=FJiZea/ybZUSRrUE59aCZjM0XQvjlu2t06aRolvi21c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WxsltBcK+j3ManeQX/b5w0YjB1wnGJo1pxCeKtl8MfhBQVYOBjAohBdswxN/cAB5k
-	 xmCwzMIFd388jxAYnHJdDfkHU34Dw3/JE/LATSVknhKspcVackSL1XXRS9wGvKXX9H
-	 myvPgnLh3VrkW1A6JHTaOCAiqwlbr3xgJKMb5ZHwppxvuzsrvSBuAx+AT8mpWVbsXK
-	 NvthND3Q99lp6W0Du7iEUYUwe642+dCclmhXJEP9PAdVgaO7w9Zs1ZI13TqQZpub2D
-	 9R4GE7ml7JZEWAIm4Az4o5qRQ7uTpwKrt+GRo2M70lPYv9a6vOecrWRVEBsyvisYCI
-	 DK71kf1m1hh4Q==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
+	b=E3zCFO+t5stlNXwSxeVrTMDPgcyiadwfEbTXpQPWNnB5/Fn89sCcLHnYyjRZGjyLM
+	 j6epKBkhdDOta1l4FkFUu1jQqDRO2NGFAGDu/BpkvaH+bI+gyzSA0cCR9uvjXWefDf
+	 YT7wEGp8DpBWZAkbNhwLKvER5yHJgbKiYescTAow=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.1 000/482] 6.1.149-rc1 review
-Date: Tue, 26 Aug 2025 16:26:49 +0200
-Message-ID: <20250826142649.711126-1-ojeda@kernel.org>
-In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
-References: <20250826110930.769259449@linuxfoundation.org>
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 517/523] net/sched: Remove unnecessary WARNING condition for empty child qdisc in htb_activate
+Date: Tue, 26 Aug 2025 13:12:07 +0200
+Message-ID: <20250826110937.191475243@linuxfoundation.org>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
+References: <20250826110924.562212281@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,21 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 26 Aug 2025 13:04:13 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.149 release.
-> There are 482 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 28 Aug 2025 11:08:22 +0000.
-> Anything received after that time might be too late.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Boot-tested under QEMU for Rust x86_64:
+------------------
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+From: William Liu <will@willsroot.io>
 
-Thanks!
+[ Upstream commit 2c2192e5f9c7c2892fe2363244d1387f62710d83 ]
 
-Cheers,
-Miguel
+The WARN_ON trigger based on !cl->leaf.q->q.qlen is unnecessary in
+htb_activate. htb_dequeue_tree already accounts for that scenario.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: William Liu <will@willsroot.io>
+Reviewed-by: Savino Dicanosa <savy@syst3mfailure.io>
+Link: https://patch.msgid.link/20250819033632.579854-1-will@willsroot.io
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/sched/sch_htb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index 94e0a8c68d59..b301efa41c1c 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -558,7 +558,7 @@ htb_change_class_mode(struct htb_sched *q, struct htb_class *cl, s64 *diff)
+  */
+ static inline void htb_activate(struct htb_sched *q, struct htb_class *cl)
+ {
+-	WARN_ON(cl->level || !cl->leaf.q || !cl->leaf.q->q.qlen);
++	WARN_ON(cl->level || !cl->leaf.q);
+ 
+ 	if (!cl->prio_activity) {
+ 		cl->prio_activity = 1 << cl->prio;
+-- 
+2.50.1
+
+
+
