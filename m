@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404C42F84F;
-	Tue, 26 Aug 2025 13:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D7F221290;
+	Tue, 26 Aug 2025 13:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215575; cv=none; b=TjbDICWsD+AsadK8NxcrbLYKQNtvAUfIM+K6WNPIaGYgHdmW11tpJaGVNplu/Q3JT42WldpZ7zyYOA15hU7GOkcQBTGRn7Bc0jgWzncavgCUT85ywS0/SQ2PMsD2NRY5KK2lsNrt7ABxGUKBgG7ydpblLYJQJTNiMpmGZyglU74=
+	t=1756215578; cv=none; b=pDXxstpMXFnpfmgVzgMxUNZowO2P99dIecCoxvlQOLf17NUSDWMc5PbS3+rum5RG5aUlZ0MTkVx5sHuylag5Tl9bv0l7O4e93ylptN5Q1bsSt2yDK0KvtKs6BEszkReM1nScTRqV3dMh5lb6rFO2NEYAzpSoDJnJvVKu+jkJ2YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215575; c=relaxed/simple;
-	bh=qOY0oSYiD8AbEdjz59iBqzdBdc2Qh4JNLH8+pFuel30=;
+	s=arc-20240116; t=1756215578; c=relaxed/simple;
+	bh=6ceVsoXvQA6aOTZgAzE6HV9DYJh/ZHRyLjcCQk8fowc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLojOXc/3DS7N+VDRQ3qDy28HfXR/ijNTvueL1BJq8ru42EarK4fDUK9jmxctEdjwx1ecveB5disVwgYdGcPsWbLV8b3kaQaSGTA6L737pw+7uvXC0q/Or/KI0lA35Bo4Aam7LaGbuvJ9ZDzxYHBhmMKS8DVsJA02V+V03Kcsz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZOiyIGr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7JKl7UxB8jnJSTn7gi0PYxFnIB943EaDtd8UNSu+kpPO5q212ZWSYTJQ4ZI7KcaT+1PHGlzjIQdzaCO93/2ZWTBBe0tBb4B74sFBcyFAsRCc4zc5cBQ6zQB8RL1egy4n1vMJsHM8DxrM+XpdcgGtaFX2mbkQx7cHAhEELC16Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsCntY3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZOiyIGr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F20CC4CEF1;
-	Tue, 26 Aug 2025 13:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsCntY3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 095AEC4CEF1;
+	Tue, 26 Aug 2025 13:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215574;
-	bh=qOY0oSYiD8AbEdjz59iBqzdBdc2Qh4JNLH8+pFuel30=;
+	s=korg; t=1756215577;
+	bh=6ceVsoXvQA6aOTZgAzE6HV9DYJh/ZHRyLjcCQk8fowc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZOiyIGrW3w8I9D+jDBr087IUhSg5uzPrnoRlO59LWf6JYC1afYjpfApcSc6SUya6
-	 kWKs4dCnWq50SzuUaygyG6tx0gGrziEW8Nenrue0w+NxQHwwKuqGND8tceYKyz0h12
-	 78mKnhFc7lp7Z/Z79dBzOZkakPSrateFDp1BWPsc=
+	b=bsCntY3fis2gTJARD3r35vEpgQ5r8HQnSQ4UihGjRAD2uim+9DkDE7999hbpRs1vO
+	 ImAQE7QnR74jk6Tn89SG9o9c65AerLH1+4pxOIbbApJzYFlQkXuQPbVjEjmI9cADmg
+	 BHMUSpk4ye+QQjvpT2ho1NvnbgmNPAgy3Zrm21Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
+	Yonglong Liu <liuyonglong@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/644] net: hns3: fix concurrent setting vlan filter issue
-Date: Tue, 26 Aug 2025 13:02:56 +0200
-Message-ID: <20250826110948.605511487@linuxfoundation.org>
+Subject: [PATCH 5.15 086/644] net: hns3: disable interrupt when ptp init failed
+Date: Tue, 26 Aug 2025 13:02:57 +0200
+Message-ID: <20250826110948.628571984@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,102 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 4555f8f8b6aa46940f55feb6a07704c2935b6d6e ]
+[ Upstream commit cde304655f25d94a996c45b0f9956e7dcc2bc4c0 ]
 
-The vport->req_vlan_fltr_en may be changed concurrently by function
-hclge_sync_vlan_fltr_state() called in periodic work task and
-function hclge_enable_vport_vlan_filter() called by user configuration.
-It may cause the user configuration inoperative. Fixes it by protect
-the vport->req_vlan_fltr by vport_lock.
+When ptp init failed, we'd better disable the interrupt and clear the
+flag, to avoid early report interrupt at next probe.
 
-Fixes: 2ba306627f59 ("net: hns3: add support for modify VLAN filter state")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Fixes: 0bf5eb788512 ("net: hns3: add support for PTP")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250722125423.1270673-2-shaojijie@huawei.com
+Link: https://patch.msgid.link/20250722125423.1270673-3-shaojijie@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 36 +++++++++++--------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index a0284a9d90e89..d228e37f8b3d9 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -9709,33 +9709,36 @@ static bool hclge_need_enable_vport_vlan_filter(struct hclge_vport *vport)
- 	return false;
- }
- 
--int hclge_enable_vport_vlan_filter(struct hclge_vport *vport, bool request_en)
-+static int __hclge_enable_vport_vlan_filter(struct hclge_vport *vport,
-+					    bool request_en)
- {
--	struct hclge_dev *hdev = vport->back;
- 	bool need_en;
- 	int ret;
- 
--	mutex_lock(&hdev->vport_lock);
--
--	vport->req_vlan_fltr_en = request_en;
--
- 	need_en = hclge_need_enable_vport_vlan_filter(vport);
--	if (need_en == vport->cur_vlan_fltr_en) {
--		mutex_unlock(&hdev->vport_lock);
-+	if (need_en == vport->cur_vlan_fltr_en)
- 		return 0;
--	}
- 
- 	ret = hclge_set_vport_vlan_filter(vport, need_en);
--	if (ret) {
--		mutex_unlock(&hdev->vport_lock);
-+	if (ret)
- 		return ret;
--	}
- 
- 	vport->cur_vlan_fltr_en = need_en;
- 
-+	return 0;
-+}
-+
-+int hclge_enable_vport_vlan_filter(struct hclge_vport *vport, bool request_en)
-+{
-+	struct hclge_dev *hdev = vport->back;
-+	int ret;
-+
-+	mutex_lock(&hdev->vport_lock);
-+	vport->req_vlan_fltr_en = request_en;
-+	ret = __hclge_enable_vport_vlan_filter(vport, request_en);
- 	mutex_unlock(&hdev->vport_lock);
- 
--	return 0;
-+	return ret;
- }
- 
- static int hclge_enable_vlan_filter(struct hnae3_handle *handle, bool enable)
-@@ -10743,16 +10746,19 @@ static void hclge_sync_vlan_fltr_state(struct hclge_dev *hdev)
- 					&vport->state))
- 			continue;
- 
--		ret = hclge_enable_vport_vlan_filter(vport,
--						     vport->req_vlan_fltr_en);
-+		mutex_lock(&hdev->vport_lock);
-+		ret = __hclge_enable_vport_vlan_filter(vport,
-+						       vport->req_vlan_fltr_en);
- 		if (ret) {
- 			dev_err(&hdev->pdev->dev,
- 				"failed to sync vlan filter state for vport%u, ret = %d\n",
- 				vport->vport_id, ret);
- 			set_bit(HCLGE_VPORT_STATE_VLAN_FLTR_CHANGE,
- 				&vport->state);
-+			mutex_unlock(&hdev->vport_lock);
- 			return;
- 		}
-+		mutex_unlock(&hdev->vport_lock);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+index b7cf9fbf97183..6d7aeac600128 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+@@ -509,14 +509,14 @@ int hclge_ptp_init(struct hclge_dev *hdev)
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to init freq, ret = %d\n", ret);
+-		goto out;
++		goto out_clear_int;
  	}
- }
+ 
+ 	ret = hclge_ptp_set_ts_mode(hdev, &hdev->ptp->ts_cfg);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to init ts mode, ret = %d\n", ret);
+-		goto out;
++		goto out_clear_int;
+ 	}
+ 
+ 	ktime_get_real_ts64(&ts);
+@@ -524,7 +524,7 @@ int hclge_ptp_init(struct hclge_dev *hdev)
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to init ts time, ret = %d\n", ret);
+-		goto out;
++		goto out_clear_int;
+ 	}
+ 
+ 	set_bit(HCLGE_STATE_PTP_EN, &hdev->state);
+@@ -532,6 +532,9 @@ int hclge_ptp_init(struct hclge_dev *hdev)
+ 
+ 	return 0;
+ 
++out_clear_int:
++	clear_bit(HCLGE_PTP_FLAG_EN, &hdev->ptp->flags);
++	hclge_ptp_int_en(hdev, false);
+ out:
+ 	hclge_ptp_destroy_clock(hdev);
  
 -- 
 2.39.5
