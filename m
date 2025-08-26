@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68EC33EB1D;
-	Tue, 26 Aug 2025 11:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B29633EB19;
+	Tue, 26 Aug 2025 11:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208002; cv=none; b=sbuY6YJw6q/6ypjEmpBJhD1K3628mAeKuY5vp0bqr8s1TdWjvpAt8031ZCrXWpVD5P1DhsNqUK89H2AW21cMR75fqCBBug5cW0fnj42LX27MD3PJcOMkCxeBJ0KasnX/po6ChaM0hlsaMgKICCNS0LLJZgXvDXeAnOwY4A/HQ2w=
+	t=1756208005; cv=none; b=tqnko+AgkAzeALEOz/53Q+3URNMVd/Zx1SaSE09YihdkOhF1YfYVS60uZxhY+DOMJ8MUrpdmVzy0ZZkONRAfqXOXIjMXNMoimegj595eS3IHpsam9Yj8PD3Z6cHpnlY85/pXSEptOUy98KCsfPsHjbDJROJMyMf6ZhMhPCJTbDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208002; c=relaxed/simple;
-	bh=9mNnpEqprpM9JRP4SBEnSEB68385xm1ualEqVfzzk2k=;
+	s=arc-20240116; t=1756208005; c=relaxed/simple;
+	bh=MmG36sSpSs0f6IfpGh9SLU4MUDDhMDOZZHYtuSMO1o4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IhbjDtDeCImnv3P0ZCiq4xGdp1oqguPBWfT3mJ7yA1CWB8dGWVWcWbhup1P5Rr3RkKGlshnwVXOSWUWwid0PZVuOOtCB5KCwmXh7LsGoB92CSB8hbiR04q1GSn5AIBedAWBZ42e92Orgg2WGSMTz7Lyaq9CdwLYpaLAKwnKbvsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rw8xlHwr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SJljSkCxKTTZSj5tS58O2QTEEbO12KJsfJaxmnRTsHg8g1W2zxoEgFO7gn/HUEp09zgZV0qGPc+MFGrFHsgp7LNOYVEtH8u/NJvejklyijAGgIypW0kwjPtARw4p4s2BqeFhRd11UQOba9xKNnsojRiKbp+woG3Qh5hiAYR6tX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPKGzoAC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rw8xlHwr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F91C116B1;
-	Tue, 26 Aug 2025 11:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPKGzoAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F42C4CEF4;
+	Tue, 26 Aug 2025 11:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208002;
-	bh=9mNnpEqprpM9JRP4SBEnSEB68385xm1ualEqVfzzk2k=;
+	s=korg; t=1756208005;
+	bh=MmG36sSpSs0f6IfpGh9SLU4MUDDhMDOZZHYtuSMO1o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rw8xlHwrEOzwIUi0drltnaWnOlaaJn2v9+tI2/tVxUjyiXblMIjA/K9BrcZpNP++I
-	 gZabs3HZD1ry0CwS1Da5YnrhN+z0ZedLCtSFeXVDyHGr1PeSBu8xYxd/hMuMQofgXQ
-	 YAoCMHw+/YC5iu7nl3TYdaqvzAU49cQ9f313fnLg=
+	b=yPKGzoACoh59iBs/hRd4jK2G6lnsF4v0KgAv3Fn3L8Z7TrtJDTieAh1JYJXtTSVHx
+	 N0Ecjm1KMPK0F8psK2ImEFs/HEURCy1QKtOjnVnAkKY82tdg64a3U7QCJenjGILokz
+	 DvviU4Xk08D6pjW9+pMX7DG4lPdB2MciH8BSRsOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 400/457] bnxt_en: Fix lockdep warning during rmmod
-Date: Tue, 26 Aug 2025 13:11:24 +0200
-Message-ID: <20250826110947.179868746@linuxfoundation.org>
+Subject: [PATCH 6.16 401/457] scsi: ufs: core: Fix IRQ lock inversion for the SCSI host lock
+Date: Tue, 26 Aug 2025 13:11:25 +0200
+Message-ID: <20250826110947.203923774@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -47,73 +48,303 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 4611d88a37cfc18cbabc6978aaf7325d1ae3f53a ]
+[ Upstream commit eabcac808ca3ee9878223d4b49b750979029016b ]
 
-The commit under the Fixes tag added a netdev_assert_locked() in
-bnxt_free_ntp_fltrs().  The lock should be held during normal run-time
-but the assert will be triggered (see below) during bnxt_remove_one()
-which should not need the lock.  The netdev is already unregistered by
-then.  Fix it by calling netdev_assert_locked_or_invisible() which will
-not assert if the netdev is unregistered.
+Commit 3c7ac40d7322 ("scsi: ufs: core: Delegate the interrupt service
+routine to a threaded IRQ handler") introduced an IRQ lock inversion
+issue. Fix this lock inversion by changing the spin_lock_irq() calls into
+spin_lock_irqsave() calls in code that can be called either from
+interrupt context or from thread context. This patch fixes the following
+lockdep complaint:
 
-WARNING: CPU: 5 PID: 2241 at ./include/net/netdev_lock.h:17 bnxt_free_ntp_fltrs+0xf8/0x100 [bnxt_en]
-Modules linked in: rpcrdma rdma_cm iw_cm ib_cm configfs ib_core bnxt_en(-) bridge stp llc x86_pkg_temp_thermal xfs tg3 [last unloaded: bnxt_re]
-CPU: 5 UID: 0 PID: 2241 Comm: rmmod Tainted: G S      W           6.16.0 #2 PREEMPT(voluntary)
-Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
-Hardware name: Dell Inc. PowerEdge R730/072T6D, BIOS 2.4.3 01/17/2017
-RIP: 0010:bnxt_free_ntp_fltrs+0xf8/0x100 [bnxt_en]
-Code: 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc 48 8b 47 60 be ff ff ff ff 48 8d b8 28 0c 00 00 e8 d0 cf 41 c3 85 c0 0f 85 2e ff ff ff <0f> 0b e9 27 ff ff ff 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
-RSP: 0018:ffffa92082387da0 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff9e5b593d8000 RCX: 0000000000000001
-RDX: 0000000000000001 RSI: ffffffff83dc9a70 RDI: ffffffff83e1a1cf
-RBP: ffff9e5b593d8c80 R08: 0000000000000000 R09: ffffffff8373a2b3
-R10: 000000008100009f R11: 0000000000000001 R12: 0000000000000001
-R13: ffffffffc01c4478 R14: dead000000000122 R15: dead000000000100
-FS:  00007f3a8a52c740(0000) GS:ffff9e631ad1c000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055bb289419c8 CR3: 000000011274e001 CR4: 00000000003706f0
-Call Trace:
- <TASK>
- bnxt_remove_one+0x57/0x180 [bnxt_en]
- pci_device_remove+0x39/0xc0
- device_release_driver_internal+0xa5/0x130
- driver_detach+0x42/0x90
- bus_remove_driver+0x61/0xc0
- pci_unregister_driver+0x38/0x90
- bnxt_exit+0xc/0x7d0 [bnxt_en]
+WARNING: possible irq lock inversion dependency detected
+6.12.30-android16-5-maybe-dirty-4k #1 Tainted: G        W  OE
+--------------------------------------------------------
+kworker/u28:0/12 just changed the state of lock:
+ffffff881e29dd60 (&hba->clk_gating.lock){-...}-{2:2}, at: ufshcd_release_scsi_cmd+0x60/0x110
+but this lock took another, HARDIRQ-unsafe lock in the past:
+ (shost->host_lock){+.+.}-{2:2}
 
-Fixes: 004b5008016a ("eth: bnxt: remove most dependencies on RTNL")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250816183850.4125033-1-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+and interrupts could create inverse lock ordering between them.
+
+other info that might help us debug this:
+ Possible interrupt unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(shost->host_lock);
+                               local_irq_disable();
+                               lock(&hba->clk_gating.lock);
+                               lock(shost->host_lock);
+  <Interrupt>
+    lock(&hba->clk_gating.lock);
+
+ *** DEADLOCK ***
+
+4 locks held by kworker/u28:0/12:
+ #0: ffffff8800ac6158 ((wq_completion)async){+.+.}-{0:0}, at: process_one_work+0x1bc/0x65c
+ #1: ffffffc085c93d70 ((work_completion)(&entry->work)){+.+.}-{0:0}, at: process_one_work+0x1e4/0x65c
+ #2: ffffff881e29c0e0 (&shost->scan_mutex){+.+.}-{3:3}, at: __scsi_add_device+0x74/0x120
+ #3: ffffff881960ea00 (&hwq->cq_lock){-...}-{2:2}, at: ufshcd_mcq_poll_cqe_lock+0x28/0x104
+
+the shortest dependencies between 2nd lock and 1st lock:
+ -> (shost->host_lock){+.+.}-{2:2} {
+    HARDIRQ-ON-W at:
+                      lock_acquire+0x134/0x2b4
+                      _raw_spin_lock+0x48/0x64
+                      ufshcd_sl_intr+0x4c/0xa08
+                      ufshcd_threaded_intr+0x70/0x12c
+                      irq_thread_fn+0x48/0xa8
+                      irq_thread+0x130/0x1ec
+                      kthread+0x110/0x134
+                      ret_from_fork+0x10/0x20
+    SOFTIRQ-ON-W at:
+                      lock_acquire+0x134/0x2b4
+                      _raw_spin_lock+0x48/0x64
+                      ufshcd_sl_intr+0x4c/0xa08
+                      ufshcd_threaded_intr+0x70/0x12c
+                      irq_thread_fn+0x48/0xa8
+                      irq_thread+0x130/0x1ec
+                      kthread+0x110/0x134
+                      ret_from_fork+0x10/0x20
+    INITIAL USE at:
+                     lock_acquire+0x134/0x2b4
+                     _raw_spin_lock+0x48/0x64
+                     ufshcd_sl_intr+0x4c/0xa08
+                     ufshcd_threaded_intr+0x70/0x12c
+                     irq_thread_fn+0x48/0xa8
+                     irq_thread+0x130/0x1ec
+                     kthread+0x110/0x134
+                     ret_from_fork+0x10/0x20
+  }
+  ... key      at: [<ffffffc085ba1a98>] scsi_host_alloc.__key+0x0/0x10
+  ... acquired at:
+   _raw_spin_lock_irqsave+0x5c/0x80
+   __ufshcd_release+0x78/0x118
+   ufshcd_send_uic_cmd+0xe4/0x118
+   ufshcd_dme_set_attr+0x88/0x1c8
+   ufs_google_phy_initialization+0x68/0x418 [ufs]
+   ufs_google_link_startup_notify+0x78/0x27c [ufs]
+   ufshcd_link_startup+0x84/0x720
+   ufshcd_init+0xf3c/0x1330
+   ufshcd_pltfrm_init+0x728/0x7d8
+   ufs_google_probe+0x30/0x84 [ufs]
+   platform_probe+0xa0/0xe0
+   really_probe+0x114/0x454
+   __driver_probe_device+0xa4/0x160
+   driver_probe_device+0x44/0x23c
+   __driver_attach_async_helper+0x60/0xd4
+   async_run_entry_fn+0x4c/0x17c
+   process_one_work+0x26c/0x65c
+   worker_thread+0x33c/0x498
+   kthread+0x110/0x134
+   ret_from_fork+0x10/0x20
+
+-> (&hba->clk_gating.lock){-...}-{2:2} {
+   IN-HARDIRQ-W at:
+                    lock_acquire+0x134/0x2b4
+                    _raw_spin_lock_irqsave+0x5c/0x80
+                    ufshcd_release_scsi_cmd+0x60/0x110
+                    ufshcd_compl_one_cqe+0x2c0/0x3f4
+                    ufshcd_mcq_poll_cqe_lock+0xb0/0x104
+                    ufs_google_mcq_intr+0x80/0xa0 [ufs]
+                    __handle_irq_event_percpu+0x104/0x32c
+                    handle_irq_event+0x40/0x9c
+                    handle_fasteoi_irq+0x170/0x2e8
+                    generic_handle_domain_irq+0x58/0x80
+                    gic_handle_irq+0x48/0x104
+                    call_on_irq_stack+0x3c/0x50
+                    do_interrupt_handler+0x7c/0xd8
+                    el1_interrupt+0x34/0x58
+                    el1h_64_irq_handler+0x18/0x24
+                    el1h_64_irq+0x68/0x6c
+                    _raw_spin_unlock_irqrestore+0x3c/0x6c
+                    debug_object_assert_init+0x16c/0x21c
+                    __mod_timer+0x4c/0x48c
+                    schedule_timeout+0xd4/0x16c
+                    io_schedule_timeout+0x48/0x70
+                    do_wait_for_common+0x100/0x194
+                    wait_for_completion_io_timeout+0x48/0x6c
+                    blk_execute_rq+0x124/0x17c
+                    scsi_execute_cmd+0x18c/0x3f8
+                    scsi_probe_and_add_lun+0x204/0xd74
+                    __scsi_add_device+0xbc/0x120
+                    ufshcd_async_scan+0x80/0x3c0
+                    async_run_entry_fn+0x4c/0x17c
+                    process_one_work+0x26c/0x65c
+                    worker_thread+0x33c/0x498
+                    kthread+0x110/0x134
+                    ret_from_fork+0x10/0x20
+   INITIAL USE at:
+                   lock_acquire+0x134/0x2b4
+                   _raw_spin_lock_irqsave+0x5c/0x80
+                   ufshcd_hold+0x34/0x14c
+                   ufshcd_send_uic_cmd+0x28/0x118
+                   ufshcd_dme_set_attr+0x88/0x1c8
+                   ufs_google_phy_initialization+0x68/0x418 [ufs]
+                   ufs_google_link_startup_notify+0x78/0x27c [ufs]
+                   ufshcd_link_startup+0x84/0x720
+                   ufshcd_init+0xf3c/0x1330
+                   ufshcd_pltfrm_init+0x728/0x7d8
+                   ufs_google_probe+0x30/0x84 [ufs]
+                   platform_probe+0xa0/0xe0
+                   really_probe+0x114/0x454
+                   __driver_probe_device+0xa4/0x160
+                   driver_probe_device+0x44/0x23c
+                   __driver_attach_async_helper+0x60/0xd4
+                   async_run_entry_fn+0x4c/0x17c
+                   process_one_work+0x26c/0x65c
+                   worker_thread+0x33c/0x498
+                   kthread+0x110/0x134
+                   ret_from_fork+0x10/0x20
+ }
+ ... key      at: [<ffffffc085ba6fe8>] ufshcd_init.__key+0x0/0x10
+ ... acquired at:
+   mark_lock+0x1c4/0x224
+   __lock_acquire+0x438/0x2e1c
+   lock_acquire+0x134/0x2b4
+   _raw_spin_lock_irqsave+0x5c/0x80
+   ufshcd_release_scsi_cmd+0x60/0x110
+   ufshcd_compl_one_cqe+0x2c0/0x3f4
+   ufshcd_mcq_poll_cqe_lock+0xb0/0x104
+   ufs_google_mcq_intr+0x80/0xa0 [ufs]
+   __handle_irq_event_percpu+0x104/0x32c
+   handle_irq_event+0x40/0x9c
+   handle_fasteoi_irq+0x170/0x2e8
+   generic_handle_domain_irq+0x58/0x80
+   gic_handle_irq+0x48/0x104
+   call_on_irq_stack+0x3c/0x50
+   do_interrupt_handler+0x7c/0xd8
+   el1_interrupt+0x34/0x58
+   el1h_64_irq_handler+0x18/0x24
+   el1h_64_irq+0x68/0x6c
+   _raw_spin_unlock_irqrestore+0x3c/0x6c
+   debug_object_assert_init+0x16c/0x21c
+   __mod_timer+0x4c/0x48c
+   schedule_timeout+0xd4/0x16c
+   io_schedule_timeout+0x48/0x70
+   do_wait_for_common+0x100/0x194
+   wait_for_completion_io_timeout+0x48/0x6c
+   blk_execute_rq+0x124/0x17c
+   scsi_execute_cmd+0x18c/0x3f8
+   scsi_probe_and_add_lun+0x204/0xd74
+   __scsi_add_device+0xbc/0x120
+   ufshcd_async_scan+0x80/0x3c0
+   async_run_entry_fn+0x4c/0x17c
+   process_one_work+0x26c/0x65c
+   worker_thread+0x33c/0x498
+   kthread+0x110/0x134
+   ret_from_fork+0x10/0x20
+
+stack backtrace:
+CPU: 6 UID: 0 PID: 12 Comm: kworker/u28:0 Tainted: G        W  OE      6.12.30-android16-5-maybe-dirty-4k #1 ccd4020fe444bdf629efc3b86df6be920b8df7d0
+Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: Spacecraft board based on MALIBU (DT)
+Workqueue: async async_run_entry_fn
+Call trace:
+ dump_backtrace+0xfc/0x17c
+ show_stack+0x18/0x28
+ dump_stack_lvl+0x40/0xa0
+ dump_stack+0x18/0x24
+ print_irq_inversion_bug+0x2fc/0x304
+ mark_lock_irq+0x388/0x4fc
+ mark_lock+0x1c4/0x224
+ __lock_acquire+0x438/0x2e1c
+ lock_acquire+0x134/0x2b4
+ _raw_spin_lock_irqsave+0x5c/0x80
+ ufshcd_release_scsi_cmd+0x60/0x110
+ ufshcd_compl_one_cqe+0x2c0/0x3f4
+ ufshcd_mcq_poll_cqe_lock+0xb0/0x104
+ ufs_google_mcq_intr+0x80/0xa0 [ufs dd6f385554e109da094ab91d5f7be18625a2222a]
+ __handle_irq_event_percpu+0x104/0x32c
+ handle_irq_event+0x40/0x9c
+ handle_fasteoi_irq+0x170/0x2e8
+ generic_handle_domain_irq+0x58/0x80
+ gic_handle_irq+0x48/0x104
+ call_on_irq_stack+0x3c/0x50
+ do_interrupt_handler+0x7c/0xd8
+ el1_interrupt+0x34/0x58
+ el1h_64_irq_handler+0x18/0x24
+ el1h_64_irq+0x68/0x6c
+ _raw_spin_unlock_irqrestore+0x3c/0x6c
+ debug_object_assert_init+0x16c/0x21c
+ __mod_timer+0x4c/0x48c
+ schedule_timeout+0xd4/0x16c
+ io_schedule_timeout+0x48/0x70
+ do_wait_for_common+0x100/0x194
+ wait_for_completion_io_timeout+0x48/0x6c
+ blk_execute_rq+0x124/0x17c
+ scsi_execute_cmd+0x18c/0x3f8
+ scsi_probe_and_add_lun+0x204/0xd74
+ __scsi_add_device+0xbc/0x120
+ ufshcd_async_scan+0x80/0x3c0
+ async_run_entry_fn+0x4c/0x17c
+ process_one_work+0x26c/0x65c
+ worker_thread+0x33c/0x498
+ kthread+0x110/0x134
+ ret_from_fork+0x10/0x20
+
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: André Draszik <andre.draszik@linaro.org>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Fixes: 3c7ac40d7322 ("scsi: ufs: core: Delegate the interrupt service routine to a threaded IRQ handler")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20250815155842.472867-2-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 25681c2343fb..ec8752c298e6 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -5325,7 +5325,7 @@ static void bnxt_free_ntp_fltrs(struct bnxt *bp, bool all)
- {
- 	int i;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 3cc566e8bd1d..f2eeb82ffa9b 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5531,7 +5531,7 @@ static irqreturn_t ufshcd_uic_cmd_compl(struct ufs_hba *hba, u32 intr_status)
+ 	irqreturn_t retval = IRQ_NONE;
+ 	struct uic_command *cmd;
  
--	netdev_assert_locked(bp->dev);
-+	netdev_assert_locked_or_invisible(bp->dev);
+-	spin_lock(hba->host->host_lock);
++	guard(spinlock_irqsave)(hba->host->host_lock);
+ 	cmd = hba->active_uic_cmd;
+ 	if (WARN_ON_ONCE(!cmd))
+ 		goto unlock;
+@@ -5558,8 +5558,6 @@ static irqreturn_t ufshcd_uic_cmd_compl(struct ufs_hba *hba, u32 intr_status)
+ 		ufshcd_add_uic_command_trace(hba, cmd, UFS_CMD_COMP);
  
- 	/* Under netdev instance lock and all our NAPIs have been disabled.
- 	 * It's safe to delete the hash table.
+ unlock:
+-	spin_unlock(hba->host->host_lock);
+-
+ 	return retval;
+ }
+ 
+@@ -6892,7 +6890,7 @@ static irqreturn_t ufshcd_check_errors(struct ufs_hba *hba, u32 intr_status)
+ 	bool queue_eh_work = false;
+ 	irqreturn_t retval = IRQ_NONE;
+ 
+-	spin_lock(hba->host->host_lock);
++	guard(spinlock_irqsave)(hba->host->host_lock);
+ 	hba->errors |= UFSHCD_ERROR_MASK & intr_status;
+ 
+ 	if (hba->errors & INT_FATAL_ERRORS) {
+@@ -6951,7 +6949,7 @@ static irqreturn_t ufshcd_check_errors(struct ufs_hba *hba, u32 intr_status)
+ 	 */
+ 	hba->errors = 0;
+ 	hba->uic_error = 0;
+-	spin_unlock(hba->host->host_lock);
++
+ 	return retval;
+ }
+ 
 -- 
 2.50.1
 
