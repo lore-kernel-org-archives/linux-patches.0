@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E357E27A455;
-	Tue, 26 Aug 2025 13:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7609233EAF9;
+	Tue, 26 Aug 2025 13:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215004; cv=none; b=d+sfB+UcZH86VQaNvMPbNUghzUiGfyuvkjsfWjaN5ZbmdLrG5mRSf1yPVrqEAbGVoqQhGR3G/OeZVJalwCz2h4A9YfCc3pNaJTfaXNvdydAY6ZMJj3q+4cZmpI9uSA3EV11nmi8E/xiHCqMAs2Nj8h9fMzMtD7M4gimnHekWOYs=
+	t=1756215006; cv=none; b=bKhePP9N7wVPZjOmDwSHi+5ZwlESWfHgIcylUNyxz1NDquoIam3J7MjBGeoeXwoYvpI1EMhAK49+kl+oyFqbIcJWun56rj627wBwvPxjey/GAQbClatbSGqtiECTss/7nn5RczJKAD57wPSzm73ovzW/WTgfyYAnzFlHpphfTGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215004; c=relaxed/simple;
-	bh=xdelo/lVKSV/CI8/eiCOt0xjNrHV9wH5pI2/BZKgaS8=;
+	s=arc-20240116; t=1756215006; c=relaxed/simple;
+	bh=dLjjpO2J6B+TH/4QIlpNE3VAOxWSE1D+baM1g4UL4pY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hf3ym+p0964K29r5TvHoqNgF7yVZynkjB4Io19DhqnpgOkO1Dj8YGyboWwWcJtprhHSeMscbWzKsXuUcltYL6jxqbHVrPmRAzEazBF1tPN0YoFe/Zeee8VyEUHu6qDEOZ0qXpyW3MZM4rGENvm4MqfmxrlbopIRVdikc8LbREsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQ60TcbJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RdATDPB5AbM1xaAMrNUAXnYxowKCjkCCcrlA8uRFTLolwzYat/FLNcGeSpi7WIeFhNAmAvd6iDs9MItJnPS3cYlY5kdGUULL/JDynm062j3Uk3ONO8ieaGyu6T1UTjNz/L9q9Yr3a7q0lhKWgbt6A6bFCY+Fki2OqaMDmn5BwEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZCOKH1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQ60TcbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5142CC4CEF1;
-	Tue, 26 Aug 2025 13:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZCOKH1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03267C4CEF1;
+	Tue, 26 Aug 2025 13:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215003;
-	bh=xdelo/lVKSV/CI8/eiCOt0xjNrHV9wH5pI2/BZKgaS8=;
+	s=korg; t=1756215006;
+	bh=dLjjpO2J6B+TH/4QIlpNE3VAOxWSE1D+baM1g4UL4pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQ60TcbJKovxBD8c5iel4C/il992GqhtkV6csiZOoIodlF3wDzjjoHMMO0aoH9Swk
-	 mHV88J+Qn3Q+lcBTsdaMiNbI1dmUpM832b9ur7ERNejey4BwVnUsFiC76QBnk3Ic/A
-	 uTDgPjutn539SUtfZBd9/OcoDVEALNSjU4x/ohH0=
+	b=jZCOKH1V3q+H+Ao8bG9TWjmpiry4w9JehuIZBcNeRaAuZIQspVzFHx82loHzZFVQs
+	 xqUpC4Y0qWRhZXwfZuyaSPL+LiTj3AG0Bz53yakcpl5zN/JhHKHe2LG3bxzpGuK3n+
+	 yCb8ue8X327RtwgiF5HdF+RuiGoBQOJx1Pc040Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 349/482] btrfs: fix qgroup reservation leak on failure to allocate ordered extent
-Date: Tue, 26 Aug 2025 13:10:02 +0200
-Message-ID: <20250826110939.455285465@linuxfoundation.org>
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 320/482] media: hi556: correct the test pattern configuration
+Date: Tue, 26 Aug 2025 13:09:33 +0200
+Message-ID: <20250826110938.713135919@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,61 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Bingbu Cao <bingbu.cao@intel.com>
 
-[ Upstream commit 1f2889f5594a2bc4c6a52634c4a51b93e785def5 ]
+commit 020f602b068c9ce18d5056d02c8302199377d98d upstream.
 
-If we fail to allocate an ordered extent for a COW write we end up leaking
-a qgroup data reservation since we called btrfs_qgroup_release_data() but
-we didn't call btrfs_qgroup_free_refroot() (which would happen when
-running the respective data delayed ref created by ordered extent
-completion or when finishing the ordered extent in case an error happened).
+Hynix hi556 support 8 test pattern modes:
+hi556_test_pattern_menu[] = {
+{
+	"Disabled",
+	"Solid Colour",
+	"100% Colour Bars",
+	"Fade To Grey Colour Bars",
+	"PN9",
+	"Gradient Horizontal",
+	"Gradient Vertical",
+	"Check Board",
+	"Slant Pattern",
+}
 
-So make sure we call btrfs_qgroup_free_refroot() if we fail to allocate an
-ordered extent for a COW write.
+The test pattern is set by a 8-bit register according to the
+specification.
++--------+-------------------------------+
+| BIT[0] |  Solid color                  |
++--------+-------------------------------+
+| BIT[1] |  Color bar                    |
++--------+-------------------------------+
+| BIT[2] |  Fade to grey color bar       |
++--------+-------------------------------+
+| BIT[3] |  PN9                          |
++--------+-------------------------------+
+| BIT[4] |  Gradient horizontal          |
++--------+-------------------------------+
+| BIT[5] |  Gradient vertical            |
++--------+-------------------------------+
+| BIT[6] |  Check board                  |
++--------+-------------------------------+
+| BIT[7] |  Slant pattern                |
++--------+-------------------------------+
+Based on function above, current test pattern programming is wrong.
+This patch fixes it by 'BIT(pattern - 1)'. If pattern is 0, driver
+will disable the test pattern generation and set the pattern to 0.
 
-Fixes: 7dbeaad0af7d ("btrfs: change timing for qgroup reserved space for ordered extents to fix reserved space leak")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ adjust to code movements ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e62138403a84 ("media: hi556: Add support for Hi-556 sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ordered-data.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/i2c/hi556.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/fs/btrfs/ordered-data.c
-+++ b/fs/btrfs/ordered-data.c
-@@ -173,9 +173,10 @@ int btrfs_add_ordered_extent(struct btrf
- 	struct btrfs_ordered_extent *entry;
+--- a/drivers/media/i2c/hi556.c
++++ b/drivers/media/i2c/hi556.c
+@@ -605,21 +605,23 @@ static int hi556_test_pattern(struct hi5
  	int ret;
- 	u64 qgroup_rsv = 0;
-+	const bool is_nocow = (flags &
-+	       ((1U << BTRFS_ORDERED_NOCOW) | (1U << BTRFS_ORDERED_PREALLOC)));
+ 	u32 val;
  
--	if (flags &
--	    ((1 << BTRFS_ORDERED_NOCOW) | (1 << BTRFS_ORDERED_PREALLOC))) {
-+	if (is_nocow) {
- 		/* For nocow write, we can release the qgroup rsv right now */
- 		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes, &qgroup_rsv);
- 		if (ret < 0)
-@@ -191,8 +192,13 @@ int btrfs_add_ordered_extent(struct btrf
- 			return ret;
- 	}
- 	entry = kmem_cache_zalloc(btrfs_ordered_extent_cache, GFP_NOFS);
--	if (!entry)
-+	if (!entry) {
-+		if (!is_nocow)
-+			btrfs_qgroup_free_refroot(inode->root->fs_info,
-+						  btrfs_root_id(inode->root),
-+						  qgroup_rsv, BTRFS_QGROUP_RSV_DATA);
- 		return -ENOMEM;
-+	}
+-	if (pattern) {
+-		ret = hi556_read_reg(hi556, HI556_REG_ISP,
+-				     HI556_REG_VALUE_08BIT, &val);
+-		if (ret)
+-			return ret;
+-
+-		ret = hi556_write_reg(hi556, HI556_REG_ISP,
+-				      HI556_REG_VALUE_08BIT,
+-				      val | HI556_REG_ISP_TPG_EN);
+-		if (ret)
+-			return ret;
+-	}
++	ret = hi556_read_reg(hi556, HI556_REG_ISP,
++			     HI556_REG_VALUE_08BIT, &val);
++	if (ret)
++		return ret;
++
++	val = pattern ? (val | HI556_REG_ISP_TPG_EN) :
++		(val & ~HI556_REG_ISP_TPG_EN);
++
++	ret = hi556_write_reg(hi556, HI556_REG_ISP,
++			      HI556_REG_VALUE_08BIT, val);
++	if (ret)
++		return ret;
++
++	val = pattern ? BIT(pattern - 1) : 0;
  
- 	entry->file_offset = file_offset;
- 	entry->num_bytes = num_bytes;
+ 	return hi556_write_reg(hi556, HI556_REG_TEST_PATTERN,
+-			       HI556_REG_VALUE_08BIT, pattern);
++			       HI556_REG_VALUE_08BIT, val);
+ }
+ 
+ static int hi556_set_ctrl(struct v4l2_ctrl *ctrl)
 
 
