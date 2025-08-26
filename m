@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11B6338F51;
-	Tue, 26 Aug 2025 11:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69466340DA7;
+	Tue, 26 Aug 2025 11:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207072; cv=none; b=n+tc8UTRs4580etLfdPxh/cBgm3VIa1Rke1JjIMWv4+WZ19gwDhpMbxm6Zfpf6bzKr7FykLL2oS5YX/s5eMBCgvw4388AYGQD/pyfOqVqpGJTp7TcmeTz2ZheYc3sGU0ymQuKkxePhZQ3T9fo3VJ1TU6cAWCEQVUihUh0OSoyqE=
+	t=1756207075; cv=none; b=jgp4KTO2wCDzueHtEskIWFDvT/VonDHsl0NEGfGKyBoOUVsQhobYaC8ViDJIALanqPVUbhIfc+RI4ho1WJn8mKHM95Fz0KJV5gTtpRe3fO6hgk4YaZ6ES/BUj9gUXJkGGTol2nUNbZ3B9/LuNp9RsbfOwQJS2bh6GcMFNAyKkhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207072; c=relaxed/simple;
-	bh=wBcak2O8EDa+56oC2kSjJj1irIgimLjiNZsTo9Wgbv8=;
+	s=arc-20240116; t=1756207075; c=relaxed/simple;
+	bh=afrC9Wuga2JXZSBU1X3hvj5L5lZzXzRLuFxCPImkx+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TS49+fRF5FS1ZdUnF+poce+G6eJ60U/2ClZCql9GEE3dQ0tcihU/kpAGFHBvIUBpFhy/eXwInJ6Lpr3s7V2JpngRuOzQN03/Qz8qFNaC+qkUc4hfqh/FRvqC9Z4cFOSgDSigWqNU3m3ZybesoEfiJ+tpeDyPeN5jbvgu2jtNsI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRhhOoBv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eg+C+pQoIMxsPE9cXCWlHy1VOSI6MgN0G5Wmkp0iXQjv0ZNGGMURq9TXWcMh44FQy+d2YTJz68Ugh1CuqW5rASw3k5z9V89Y6HVGSu9zPieR1PAe46vZfZPfJetv88Z1prh0RFKPd0j/+zyZOnEJsTQK6Zuchl/6ABziWzWtHMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwOQ+oNT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRhhOoBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBFCC4CEF4;
-	Tue, 26 Aug 2025 11:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwOQ+oNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1DCC116B1;
+	Tue, 26 Aug 2025 11:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207072;
-	bh=wBcak2O8EDa+56oC2kSjJj1irIgimLjiNZsTo9Wgbv8=;
+	s=korg; t=1756207075;
+	bh=afrC9Wuga2JXZSBU1X3hvj5L5lZzXzRLuFxCPImkx+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRhhOoBvt0UcazrqCseNKkx5uhV3/pASwNLpzBIHM5ZUFuB2IdoZTIw6vP7JA4dsw
-	 Id6tnKEKPYvpnSmVWGXesZjbwR3DMSUGlCGRV/4j4Ntp128xLjuC6BaeqC1LK4T7aG
-	 BUdepNJPiR7ThpE9a4PDA22oslXzVfXzO/VtIPTs=
+	b=VwOQ+oNTxgWqi9dh+2vqb1pvi8yqy8eBcwROdPaM8vWH7ZpPvis6Ne1B9VTppGVn+
+	 KCY5fOGFVbKwaAiHz6ZqMuzjE/7fkfU/aHZkGIKw1n8M2PmN6/xYftl8AftWK32qJl
+	 xVzDj9u479hRagF59DwqqrunO5SLgnV3nkygTDTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.16 040/457] ext4: fix reserved gdt blocks handling in fsmap
-Date: Tue, 26 Aug 2025 13:05:24 +0200
-Message-ID: <20250826110938.337762530@linuxfoundation.org>
+	Li Jun <jun.li@nxp.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.16 014/457] usb: dwc3: imx8mp: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:04:58 +0200
+Message-ID: <20250826110937.674887010@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,53 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 3ffbdd1f1165f1b2d6a94d1b1aabef57120deaf7 upstream.
+commit 086a0e516f7b3844e6328a5c69e2708b66b0ce18 upstream.
 
-In some cases like small FSes with no meta_bg and where the resize
-doesn't need extra gdt blocks as it can fit in the current one,
-s_reserved_gdt_blocks is set as 0, which causes fsmap to emit a 0
-length entry, which is incorrect.
+Make sure to drop the reference to the dwc3 device taken by
+of_find_device_by_node() on probe errors and on driver unbind.
 
-  $ mkfs.ext4 -b 65536 -O bigalloc /dev/sda 5G
-  $ mount /dev/sda /mnt/scratch
-  $ xfs_io -c "fsmap -d" /mnt/scartch
-
-        0: 253:48 [0..127]: static fs metadata 128
-        1: 253:48 [128..255]: special 102:1 128
-        2: 253:48 [256..255]: special 102:2 0     <---- 0 len entry
-        3: 253:48 [256..383]: special 102:3 128
-
-Fix this by adding a check for this case.
-
-Cc: stable@kernel.org
-Fixes: 0c9ec4beecac ("ext4: support GETFSMAP ioctls")
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://patch.msgid.link/08781b796453a5770112aa96ad14c864fbf31935.1754377641.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
+Cc: stable@vger.kernel.org	# 5.12
+Cc: Li Jun <jun.li@nxp.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fsmap.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/dwc3/dwc3-imx8mp.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/fsmap.c
-+++ b/fs/ext4/fsmap.c
-@@ -393,6 +393,14 @@ static unsigned int ext4_getfsmap_find_s
- 	/* Reserved GDT blocks */
- 	if (!ext4_has_feature_meta_bg(sb) || metagroup < first_meta_bg) {
- 		len = le16_to_cpu(sbi->s_es->s_reserved_gdt_blocks);
+--- a/drivers/usb/dwc3/dwc3-imx8mp.c
++++ b/drivers/usb/dwc3/dwc3-imx8mp.c
+@@ -244,7 +244,7 @@ static int dwc3_imx8mp_probe(struct plat
+ 					IRQF_ONESHOT, dev_name(dev), dwc3_imx);
+ 	if (err) {
+ 		dev_err(dev, "failed to request IRQ #%d --> %d\n", irq, err);
+-		goto depopulate;
++		goto put_dwc3;
+ 	}
+ 
+ 	device_set_wakeup_capable(dev, true);
+@@ -252,6 +252,8 @@ static int dwc3_imx8mp_probe(struct plat
+ 
+ 	return 0;
+ 
++put_dwc3:
++	put_device(&dwc3_imx->dwc3->dev);
+ depopulate:
+ 	of_platform_depopulate(dev);
+ remove_swnode:
+@@ -265,8 +267,11 @@ disable_rpm:
+ 
+ static void dwc3_imx8mp_remove(struct platform_device *pdev)
+ {
++	struct dwc3_imx8mp *dwc3_imx = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
+ 
++	put_device(&dwc3_imx->dwc3->dev);
 +
-+		/*
-+		 * mkfs.ext4 can set s_reserved_gdt_blocks as 0 in some cases,
-+		 * check for that.
-+		 */
-+		if (!len)
-+			return 0;
-+
- 		error = ext4_getfsmap_fill(meta_list, fsb, len,
- 					   EXT4_FMR_OWN_RESV_GDT);
- 		if (error)
+ 	pm_runtime_get_sync(dev);
+ 	of_platform_depopulate(dev);
+ 	device_remove_software_node(dev);
 
 
