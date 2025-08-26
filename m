@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6451034DCF1;
-	Tue, 26 Aug 2025 13:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A471E519;
+	Tue, 26 Aug 2025 13:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216048; cv=none; b=Mjlz8DJku0uHsyKPjpKprjpybC/mZ07dD+LkkwmVTD6EVVMKs+FDRs+uWJvKg/ZxvVtTFsaJXsrBwOMmo5l4Lvj5k72ZWuV/MsQKdIgbl1tW42KSICTx0gVc/haFLuQLBDNo3KK94NDOZDMbZiNFVN/TiiJTIOY5u8MJY6mMYeU=
+	t=1756216051; cv=none; b=A7wawnopgvW2dU4nevTnE2lPukbizxt+/WG3/gF0qyWWiCVbRcw7CDyr7V6gFRwAgSI49ajCtfosEUjZ9do7ZP5d1Eufrl3FnxOeSCcgIX7By8MOFP02kLMr8vw8jJO02YdKo6tTYIMPeRVZJrFrq4utqkh8cRC+RlOLzCqdNow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216048; c=relaxed/simple;
-	bh=QDc7WqoudhjklEfe7ij/oIX2mJAi2Zr/lZujcCHjXmo=;
+	s=arc-20240116; t=1756216051; c=relaxed/simple;
+	bh=QO8gqZJ4dXtDubtf2bbHlsnclnRDwx16zUbtob4UfJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xq6OahizY3d1sSBLy2g0jxsdIKYAoml/chwksTWQWjaB0l6KCn/zLMTp3347Qe5AQ541zM0AfsfjQ++2aQR8VOtLAtwV1SR65qHjS8A/zYEK7i+365AGTjl6vpwjSXX/bnBYwdbbK+YbuiBQC95EpojGaKIoWnz4p5LvRz4CklY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSWsyyK5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OF8Yn+x4kTVTQNDBkhgvPD0+BLWEt5YZ2sYfiE2knjYsddQdI3TF7NkTIXT4KkFufbiQTYjGHq0DPh+1R5le4803bZh6wdhrtWi77F5EP/pPRVXJ9BzGB3Ta65/KpfqQnwFFXLdtcXXdPwTZOiTPXfxtYijcVje/v6iE03WlQpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcaNyE0d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSWsyyK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D61CC4CEF1;
-	Tue, 26 Aug 2025 13:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcaNyE0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36359C4CEF1;
+	Tue, 26 Aug 2025 13:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216047;
-	bh=QDc7WqoudhjklEfe7ij/oIX2mJAi2Zr/lZujcCHjXmo=;
+	s=korg; t=1756216050;
+	bh=QO8gqZJ4dXtDubtf2bbHlsnclnRDwx16zUbtob4UfJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSWsyyK5YYOOt9g66HgsK+eboPK3oWBbvjchfDuDhr739J4zBp2FGfN7aVwVbztOc
-	 Pwppr8/V4E5YewSJkA9vm6vQTBc3KGLQkLFFkfQ0LUDjuhLw94Z+dYYfHw/vFE137G
-	 9Mn05nX4cw5lDA1vQJq9l3F8mRDnu4TLqr9mT1fA=
+	b=YcaNyE0d9isgvMVpVlKjfdPPLLaLVasOpwm55Chiqu4Gm2Po2BOsbxHwOfKgJxz7V
+	 USmM5zCIdpUT9VIKTOYp7mSXC2G3x4Pun0J+vwWraUX6RkrcG+vMez7V7XjVtWFuBV
+	 lYUgWR/4XZzdJaqeF6XdvLaXVsZC+d09vsQuWcvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 232/644] phy: mscc: Fix parsing of unicast frames
-Date: Tue, 26 Aug 2025 13:05:23 +0200
-Message-ID: <20250826110952.160760213@linuxfoundation.org>
+Subject: [PATCH 5.15 233/644] pptp: ensure minimal skb length in pptp_xmit()
+Date: Tue, 26 Aug 2025 13:05:24 +0200
+Message-ID: <20250826110952.184485903@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,51 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6fb5ff63b35b7e849cc8510957f25753f87f63d2 ]
+[ Upstream commit de9c4861fb42f0cd72da844c3c34f692d5895b7b ]
 
-According to the 1588 standard, it is possible to use both unicast and
-multicast frames to send the PTP information. It was noticed that if the
-frames were unicast they were not processed by the analyzer meaning that
-they were not timestamped. Therefore fix this to match also these
-unicast frames.
+Commit aabc6596ffb3 ("net: ppp: Add bound checking for skb data
+on ppp_sync_txmung") fixed ppp_sync_txmunge()
 
-Fixes: ab2bf9339357 ("net: phy: mscc: 1588 block initialization")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250726140307.3039694-1-horatiu.vultur@microchip.com
+We need a similar fix in pptp_xmit(), otherwise we might
+read uninit data as reported by syzbot.
+
+BUG: KMSAN: uninit-value in pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
+  pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
+  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2290 [inline]
+  ppp_input+0x1d6/0xe60 drivers/net/ppp/ppp_generic.c:2314
+  pppoe_rcv_core+0x1e8/0x760 drivers/net/ppp/pppoe.c:379
+  sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
+  __release_sock+0x1d3/0x330 net/core/sock.c:3213
+  release_sock+0x6b/0x270 net/core/sock.c:3767
+  pppoe_sendmsg+0x15d/0xcb0 drivers/net/ppp/pppoe.c:904
+  sock_sendmsg_nosec net/socket.c:712 [inline]
+  __sock_sendmsg+0x330/0x3d0 net/socket.c:727
+  ____sys_sendmsg+0x893/0xd80 net/socket.c:2566
+  ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
+  __sys_sendmmsg+0x2d9/0x7c0 net/socket.c:2709
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68887d86.a00a0220.b12ec.00cd.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Link: https://patch.msgid.link/20250729080207.1863408-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mscc/mscc_ptp.c | 1 +
- drivers/net/phy/mscc/mscc_ptp.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/ppp/pptp.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
-index 7a3a8cce02d3..92f59c964409 100644
---- a/drivers/net/phy/mscc/mscc_ptp.c
-+++ b/drivers/net/phy/mscc/mscc_ptp.c
-@@ -897,6 +897,7 @@ static int vsc85xx_eth1_conf(struct phy_device *phydev, enum ts_blk blk,
- 				     get_unaligned_be32(ptp_multicast));
- 	} else {
- 		val |= ANA_ETH1_FLOW_ADDR_MATCH2_ANY_MULTICAST;
-+		val |= ANA_ETH1_FLOW_ADDR_MATCH2_ANY_UNICAST;
- 		vsc85xx_ts_write_csr(phydev, blk,
- 				     MSCC_ANA_ETH1_FLOW_ADDR_MATCH2(0), val);
- 		vsc85xx_ts_write_csr(phydev, blk,
-diff --git a/drivers/net/phy/mscc/mscc_ptp.h b/drivers/net/phy/mscc/mscc_ptp.h
-index da3465360e90..ae9ad925bfa8 100644
---- a/drivers/net/phy/mscc/mscc_ptp.h
-+++ b/drivers/net/phy/mscc/mscc_ptp.h
-@@ -98,6 +98,7 @@
- #define MSCC_ANA_ETH1_FLOW_ADDR_MATCH2(x) (MSCC_ANA_ETH1_FLOW_ENA(x) + 3)
- #define ANA_ETH1_FLOW_ADDR_MATCH2_MASK_MASK	GENMASK(22, 20)
- #define ANA_ETH1_FLOW_ADDR_MATCH2_ANY_MULTICAST	0x400000
-+#define ANA_ETH1_FLOW_ADDR_MATCH2_ANY_UNICAST	0x200000
- #define ANA_ETH1_FLOW_ADDR_MATCH2_FULL_ADDR	0x100000
- #define ANA_ETH1_FLOW_ADDR_MATCH2_SRC_DEST_MASK	GENMASK(17, 16)
- #define ANA_ETH1_FLOW_ADDR_MATCH2_SRC_DEST	0x020000
+diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
+index 32183f24e63f..951dac268adb 100644
+--- a/drivers/net/ppp/pptp.c
++++ b/drivers/net/ppp/pptp.c
+@@ -159,9 +159,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ 	int len;
+ 	unsigned char *data;
+ 	__u32 seq_recv;
+-
+-
+-	struct rtable *rt;
++	struct rtable *rt = NULL;
+ 	struct net_device *tdev;
+ 	struct iphdr  *iph;
+ 	int    max_headroom;
+@@ -179,16 +177,20 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ 
+ 	if (skb_headroom(skb) < max_headroom || skb_cloned(skb) || skb_shared(skb)) {
+ 		struct sk_buff *new_skb = skb_realloc_headroom(skb, max_headroom);
+-		if (!new_skb) {
+-			ip_rt_put(rt);
++
++		if (!new_skb)
+ 			goto tx_error;
+-		}
++
+ 		if (skb->sk)
+ 			skb_set_owner_w(new_skb, skb->sk);
+ 		consume_skb(skb);
+ 		skb = new_skb;
+ 	}
+ 
++	/* Ensure we can safely access protocol field and LCP code */
++	if (!pskb_may_pull(skb, 3))
++		goto tx_error;
++
+ 	data = skb->data;
+ 	islcp = ((data[0] << 8) + data[1]) == PPP_LCP && 1 <= data[2] && data[2] <= 7;
+ 
+@@ -262,6 +264,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ 	return 1;
+ 
+ tx_error:
++	ip_rt_put(rt);
+ 	kfree_skb(skb);
+ 	return 1;
+ }
 -- 
 2.39.5
 
