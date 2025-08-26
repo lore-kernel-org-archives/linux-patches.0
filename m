@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A942734F490;
-	Tue, 26 Aug 2025 14:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DD23568E8;
+	Tue, 26 Aug 2025 14:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217653; cv=none; b=LbTWv2a0ly9GM3Yxa+IAZbzH8wQbMqI/gxKKrr85B6iQi/SakeACtjJQGfwYV6vKZ9kw4HY8YDMprGZLbafUypCWYT6lGMYPLVVAoSY+5npXJIl7vj+d7U7v384bKbTKPrvkoa5qrEJS9I5mTJW+iwCHegz+mCZW0SvijM863jg=
+	t=1756217656; cv=none; b=hNKTDf8d7ottmlHIrcbVwKbG8CiZES6UNUCEXjbwhZU08GicdcF2gv/sR5RNSKjX7XJSaqQFnTB9NJYDDAADvErssC7H4TpFONHBtWNwXOIGc+RuGjQb7SJPnUcJGOupS5QhRJLHvLGf6YmgvvpwvtvuXany70f1XbKS4P+wPjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217653; c=relaxed/simple;
-	bh=muxJVE1aPru3lWv471NDnoApyLVT1RrJ63fSzeeDK+8=;
+	s=arc-20240116; t=1756217656; c=relaxed/simple;
+	bh=816Sulas25PwN509S3mkFEsvuZa6oq6fv0wk2DjBSLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+Lne2x0DjEbHM2F4udKuo/6lDS0qAY6a3yc2mln/Y23Pv329geKIR54LbIvhg3E5XQJLKXF8TICmQR5TmpQ6J5t31fS1tcNt39JWP3NtszbRSkM8rVb1tOE2w5l0vMTEW8rmYc+TIGlWortoUMu2jXh0K51UOfCpiCfl4p7sGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWWb6R91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sm6ovipn2/t634R2cHyX+LcgkP3NkCAC+qwcu1nL5GblaRWVCldgDqex4G9ri+Jq0fXWIznUbCejLTBNp/5tDu/WAu3hOdEI2lJF2xFIioLlIxmwc1MbhHKSvaVts77j3AYgGNJ/gQd1IAbuCBucKeYlCE+lZtvbKk65IHEFClU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1w+aGhRU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWWb6R91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A08EC4CEF1;
-	Tue, 26 Aug 2025 14:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1w+aGhRU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FD0C4CEF1;
+	Tue, 26 Aug 2025 14:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217653;
-	bh=muxJVE1aPru3lWv471NDnoApyLVT1RrJ63fSzeeDK+8=;
+	s=korg; t=1756217656;
+	bh=816Sulas25PwN509S3mkFEsvuZa6oq6fv0wk2DjBSLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XWWb6R91BLi6W9K6Xucxzc9LnxJwNtruRVWk9MFocI0OCU+PmgQDxb6j4N/PI44QW
-	 k3QsVBtxIzQZHq9XPpA4N8RxxwSKdT9jVcTG7FfoIkSJ4rf5OCbJmEn4JEXTWdrzZv
-	 vyc36qgiYwXApspfVTo/+jPyt8106oHC/W+Lh4Fc=
+	b=1w+aGhRUCE/Y0pYAeIlTk9Bu7nWLKLaZg802uSM4/X1FezJLYsNLBMTmGipkayDkp
+	 OobmRAqzAo+TDC8n/q+VVjBlYPM7lZepzRQbwoPd/ih9nS70GL3t34kUEQktv8lYpq
+	 cEfoBG0PxBmaXSvIXMDaUJGwJhM5J4j6JI7glFWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Jameson Thies <jthies@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 224/523] usb: typec: ucsi: psy: Set current max to 100mA for BC 1.2 and Default
-Date: Tue, 26 Aug 2025 13:07:14 +0200
-Message-ID: <20250826110929.986952138@linuxfoundation.org>
+Subject: [PATCH 5.10 225/523] usb: xhci: Avoid showing warnings for dying controller
+Date: Tue, 26 Aug 2025 13:07:15 +0200
+Message-ID: <20250826110930.010079496@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,65 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benson Leung <bleung@chromium.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit af833e7f7db3cf4c82f063668e1b52297a30ec18 ]
+[ Upstream commit 65fc0fc137b5da3ee1f4ca4f61050fcb203d7582 ]
 
-ucsi_psy_get_current_max would return 0mA as the maximum current if
-UCSI detected a BC or a Default USB Power sporce.
+When a USB4 dock is unplugged from a system it won't respond to ring
+events. The PCI core handles the surprise removal event and notifies
+all PCI drivers. The XHCI PCI driver sets a flag that the device is
+being removed, and when the device stops responding a flag is also
+added to indicate it's dying.
 
-The comment in this function is true that we can't tell the difference
-between DCP/CDP or SDP chargers, but we can guarantee that at least 1-unit
-of USB 1.1/2.0 power is available, which is 100mA, which is a better
-fallback value than 0, which causes some userspaces, including the ChromeOS
-power manager, to regard this as a power source that is not providing
-any power.
+When that flag is set don't bother to show warnings about a missing
+controller.
 
-In reality, 100mA is guaranteed from all sources in these classes.
-
-Signed-off-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20250717200805.3710473-1-bleung@chromium.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250717073107.488599-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/psy.c  | 2 +-
- drivers/usb/typec/ucsi/ucsi.h | 7 ++++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/usb/host/xhci.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/psy.c b/drivers/usb/typec/ucsi/psy.c
-index 571a51e16234..ba5f797156dc 100644
---- a/drivers/usb/typec/ucsi/psy.c
-+++ b/drivers/usb/typec/ucsi/psy.c
-@@ -142,7 +142,7 @@ static int ucsi_psy_get_current_max(struct ucsi_connector *con,
- 	case UCSI_CONSTAT_PWR_OPMODE_DEFAULT:
- 	/* UCSI can't tell b/w DCP/CDP or USB2/3x1/3x2 SDP chargers */
- 	default:
--		val->intval = 0;
-+		val->intval = UCSI_TYPEC_DEFAULT_CURRENT * 1000;
- 		break;
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 908445cff24f..235824d1822a 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -118,7 +118,8 @@ int xhci_halt(struct xhci_hcd *xhci)
+ 	ret = xhci_handshake(&xhci->op_regs->status,
+ 			STS_HALT, STS_HALT, XHCI_MAX_HALT_USEC);
+ 	if (ret) {
+-		xhci_warn(xhci, "Host halt failed, %d\n", ret);
++		if (!(xhci->xhc_state & XHCI_STATE_DYING))
++			xhci_warn(xhci, "Host halt failed, %d\n", ret);
+ 		return ret;
  	}
- 	return 0;
-diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-index f75b1e2c05fe..ed8fcd7ecf21 100644
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -305,9 +305,10 @@ struct ucsi {
- #define UCSI_MAX_SVID		5
- #define UCSI_MAX_ALTMODES	(UCSI_MAX_SVID * 6)
+ 	xhci->xhc_state |= XHCI_STATE_HALTED;
+@@ -175,7 +176,8 @@ int xhci_reset(struct xhci_hcd *xhci, u64 timeout_us)
+ 	state = readl(&xhci->op_regs->status);
  
--#define UCSI_TYPEC_VSAFE5V	5000
--#define UCSI_TYPEC_1_5_CURRENT	1500
--#define UCSI_TYPEC_3_0_CURRENT	3000
-+#define UCSI_TYPEC_VSAFE5V		5000
-+#define UCSI_TYPEC_DEFAULT_CURRENT	 100
-+#define UCSI_TYPEC_1_5_CURRENT		1500
-+#define UCSI_TYPEC_3_0_CURRENT		3000
+ 	if (state == ~(u32)0) {
+-		xhci_warn(xhci, "Host not accessible, reset failed.\n");
++		if (!(xhci->xhc_state & XHCI_STATE_DYING))
++			xhci_warn(xhci, "Host not accessible, reset failed.\n");
+ 		return -ENODEV;
+ 	}
  
- struct ucsi_connector {
- 	int num;
 -- 
 2.39.5
 
