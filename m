@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A365200112;
-	Tue, 26 Aug 2025 13:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29431FBCB5;
+	Tue, 26 Aug 2025 13:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215362; cv=none; b=rvwO83B+rMdM2QQu5XpdwPVvjQTejLVtPr+/0d4uJVacVxTnpZv6ISXazaTs3YLQXpC3P2o/dtYQfWTOlP4m65JtME0uAigG23RW7WI8bTIEPnDXVHKoKdjpamttkRTNJU6o/4twJLYn9qjMiJlK1UqOOH4w4oVOzFRZIQnqoZQ=
+	t=1756215364; cv=none; b=Gg9W9EisxWq99+GJiPIJ5kt0xKuuX16d7DpfFc2GcRv6CgJtYEvItvzHnqBuc6EwyWWf86vz7IjxC8OUwK4jO0y9kChbLhLf4W8BLoiAQ4tegevkOCudpl7EBuhEDIFdyxsbhEvK2KhS5omNl0XrzoDjvkHirs3jz6287yKRMEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215362; c=relaxed/simple;
-	bh=BKOK7dNJ+lf86P0cCuZPLTeWSBBDpV+cz8SHw0u/QQQ=;
+	s=arc-20240116; t=1756215364; c=relaxed/simple;
+	bh=BnJpyGK4pwVFH1oq5ZeQZbQBTjbcWKnRhufbeYsw/tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5O4EKntESudALEQBsqDJAeY9bPTbMicZZYA9OGxrFJAZIg57eU04nQGffbvxWFKOH64N7VgIUlZ9EcnjxkuJTRD8w23MRKww3jSbBbaTzkSHpDIEdRIqe6u20byuVQ3vCqg6nuIwM9cxXiBo4TJikYsvK1YMTGGYxoukX7ni1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEYWGZl2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XUjPVDopDgupPPMYg6e0A2HEVdNnDC8uzvwQYjNyMiI2OA4H1j4b4DXl7ltnjlxcawwQ+422f2VTiHTYawiF7CVLflw/T4TxdGvIoynTSMX3U9SVq8OSkLlDhrjJyyxTU13bzjL5eaieAcxw7JvTbohVHxwIsUykVjBxXYNrimc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxAVliK9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEYWGZl2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF5DC4CEF1;
-	Tue, 26 Aug 2025 13:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxAVliK9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DBAC4CEF1;
+	Tue, 26 Aug 2025 13:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215361;
-	bh=BKOK7dNJ+lf86P0cCuZPLTeWSBBDpV+cz8SHw0u/QQQ=;
+	s=korg; t=1756215364;
+	bh=BnJpyGK4pwVFH1oq5ZeQZbQBTjbcWKnRhufbeYsw/tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OEYWGZl2b3r9+1Z3qJTvIncRG9nRl6z1LCSrRMlRQewDUnVn/PcO4xPm+iyt3EE77
-	 7zKRDHI4UbJYIJrhnuNZE7cQIOSfDXT9uDfOcNE4NJih4DI+pUONxRZR5ZA/+8A3GU
-	 uPU5lumytJOWfM6pzI6bJmoD4ym/JHqHEKJGf1NE=
+	b=vxAVliK9b/jP/WUaQ33PL7FhIj+kYXuIuzIvVf9Bw4pbvZIKWczPb7PQ2pH7W05Z2
+	 QsdsBQicSTAN/H11EfxO7qgDmBjQve/f0ZLIm74ROdwy4uuVhEVa7qnJd1e+pTcIs6
+	 9elLsnjZ18afPHAhjLWnL/COSW9t3+Eq35GjdfXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Boshi Yu <boshiyu@linux.alibaba.com>,
+	Anantha Prabhu <anantha.prabhu@broadcom.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 455/482] RDMA/erdma: Fix ignored return value of init_kernel_qp
-Date: Tue, 26 Aug 2025 13:11:48 +0200
-Message-ID: <20250826110942.068510854@linuxfoundation.org>
+Subject: [PATCH 6.1 456/482] RDMA/bnxt_re: Fix to initialize the PBL array
+Date: Tue, 26 Aug 2025 13:11:49 +0200
+Message-ID: <20250826110942.091887244@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,38 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boshi Yu <boshiyu@linux.alibaba.com>
+From: Anantha Prabhu <anantha.prabhu@broadcom.com>
 
-[ Upstream commit d5c74713f0117d07f91eb48b10bc2ad44e23c9b9 ]
+[ Upstream commit 806b9f494f62791ee6d68f515a8056c615a0e7b2 ]
 
-The init_kernel_qp interface may fail. Check its return value and free
-related resources properly when it does.
+memset the PBL page pointer and page map arrays before
+populating the SGL addresses of the HWQ.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Reviewed-by: Cheng Xu <chengyou@linux.alibaba.com>
-Signed-off-by: Boshi Yu <boshiyu@linux.alibaba.com>
-Link: https://patch.msgid.link/20250725055410.67520-3-boshiyu@linux.alibaba.com
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Signed-off-by: Anantha Prabhu <anantha.prabhu@broadcom.com>
+Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Link: https://patch.msgid.link/20250805101000.233310-5-kalesh-anakkur.purayil@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_verbs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 2edf0d882c6a..cc2b20c8b050 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -727,7 +727,9 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 		if (ret)
- 			goto err_out_cmd;
- 	} else {
--		init_kernel_qp(dev, qp, attrs);
-+		ret = init_kernel_qp(dev, qp, attrs);
-+		if (ret)
-+			goto err_out_xa;
- 	}
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 203350c6e00f..4962d68bf217 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -121,6 +121,7 @@ static int __alloc_pbl(struct bnxt_qplib_res *res,
+ 	pbl->pg_arr = vmalloc(pages * sizeof(void *));
+ 	if (!pbl->pg_arr)
+ 		return -ENOMEM;
++	memset(pbl->pg_arr, 0, pages * sizeof(void *));
  
- 	qp->attrs.max_send_sge = attrs->cap.max_send_sge;
+ 	pbl->pg_map_arr = vmalloc(pages * sizeof(dma_addr_t));
+ 	if (!pbl->pg_map_arr) {
+@@ -128,6 +129,7 @@ static int __alloc_pbl(struct bnxt_qplib_res *res,
+ 		pbl->pg_arr = NULL;
+ 		return -ENOMEM;
+ 	}
++	memset(pbl->pg_map_arr, 0, pages * sizeof(dma_addr_t));
+ 	pbl->pg_count = 0;
+ 	pbl->pg_size = sginfo->pgsize;
+ 
 -- 
 2.50.1
 
