@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4658C3469F3;
-	Tue, 26 Aug 2025 11:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F403234A304;
+	Tue, 26 Aug 2025 11:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207885; cv=none; b=mItdTAafrW8fDKeH45oi4mkNGl7sW+CJcV4f6Ry3LdcE425k1AW7kSJluxXNM6PLj5JC05BFhoJwoCRpYU8oVD6H3sfbksP12yh14vB0qKgkfy9cy7LCQsqdBNa6saOht9JHFLUhdYaUSHtJwSf6Vs9JwksWmYwF6pIjC7Ba4Ko=
+	t=1756207889; cv=none; b=h0OqmDgoA82+0/6nF2JWMbmjQ3/RGp99r3fxwFnfFY7mz8ygoGxmlcTqsc0Kayvcuv/pHXAIdKvTTIwcQRVNyy18LkRiX2A3Dom7jn+GjoLeEihiduoFXQE99ZgkTg3wIBORfBh1zlmZdUav+nYjSj9XykIBFIIjN32WGcmeGQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207885; c=relaxed/simple;
-	bh=e6tjujKkaLliXI0EF+hyjNCf7VbmrMcvq13WYXLVe+I=;
+	s=arc-20240116; t=1756207889; c=relaxed/simple;
+	bh=EXWZd/cZOLGCx0aDA8sFaXnosopQDgzTPrsDy2empKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTbvhNB8vlV+XNbHxLWZRjZ9CMhNAQJuqspCupmrfEW9g/qjIpwosM5cDCmixku620Vg4PcdKsCXZMtwpxT5kMe16VjD9IgeBJ4knt8bHjnCr4GBIZik91cEsJdAca2T0tZjhwudCaS8+un5oOjKnBqRpTHDbXN5iWQr4UarI6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/caArKQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqEwl3djBOud4ihZighKr/p7kBq4z+ztxq786y4kifzOgVpuFWZj7tkR5OHojV+B5Hup1s5bgZF4NUxuiNCzdysSPltluxjKOLT18NiL5pN/zy8iGBIz4z2EqAuLCHOoPoGgEGMM+moWlv04a0+jlMc3pvWiCkrO5hb2mgYPjIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm2/3hmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/caArKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5764C4CEF1;
-	Tue, 26 Aug 2025 11:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm2/3hmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369ABC4CEF1;
+	Tue, 26 Aug 2025 11:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207885;
-	bh=e6tjujKkaLliXI0EF+hyjNCf7VbmrMcvq13WYXLVe+I=;
+	s=korg; t=1756207887;
+	bh=EXWZd/cZOLGCx0aDA8sFaXnosopQDgzTPrsDy2empKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/caArKQQL6dhQsyaJ4y/e4pu5pZ3NbOLXfNQq7B8T+UhMITjQQ6wdoFRDA1rQHrh
-	 RqrIGhl/RKWqhk5tQpN3hpIbU2cjIwgHOna2b+U+Ol+kz2hhssHuUzuEBl6+asCfwp
-	 mara/KkyOAnc8TVxKffVXveJgd84CZgsFE/AKios=
+	b=Qm2/3hmpyo4rFpH+0KBfqmZ376eBp58n/eKvdgN0pUc2RlLWK4MwpiyYN5StDPnBi
+	 ANSPn8r4v/qCIu6yXY6Eke2hfkD2FCQsGJekYxRZN7U37LUP1kpJtc4MgKBDI98knT
+	 oy8hHX1KkQCf/RArL0UQqVwq17z2L67/Z7APkjm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Andrei Lalaev <andrey.lalaev@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 347/457] cgroup/cpuset: Fix a partition error with CPU hotplug
-Date: Tue, 26 Aug 2025 13:10:31 +0200
-Message-ID: <20250826110945.903270429@linuxfoundation.org>
+Subject: [PATCH 6.16 356/457] drm/panic: Add a u64 divide by 10 for arm32
+Date: Tue, 26 Aug 2025 13:10:40 +0200
+Message-ID: <20250826110946.115434093@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,58 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-[ Upstream commit 150e298ae0ccbecff2357a72fbabd80f8849ea6e ]
+[ Upstream commit 9af8f2b469c0438620832f3729a3c5c03853b56b ]
 
-It was found during testing that an invalid leaf partition with an
-empty effective exclusive CPU list can become a valid empty partition
-with no CPU afer an offline/online operation of an unrelated CPU. An
-empty partition root is allowed in the special case that it has no
-task in its cgroup and has distributed out all its CPUs to its child
-partitions. That is certainly not the case here.
+On 32bits ARM, u64 divided by a constant is not optimized to a
+multiply by inverse by the compiler [1].
+So do the multiply by inverse explicitly for this architecture.
 
-The problem is in the cpumask_subsets() test in the hotplug case
-(update with no new mask) of update_parent_effective_cpumask() as it
-also returns true if the effective exclusive CPU list is empty. Fix that
-by addding the cpumask_empty() test to root out this exception case.
-Also add the cpumask_empty() test in cpuset_hotplug_update_tasks()
-to avoid calling update_parent_effective_cpumask() for this special case.
-
-Fixes: 0c7f293efc87 ("cgroup/cpuset: Add cpuset.cpus.exclusive.effective for v2")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Link: https://github.com/llvm/llvm-project/issues/37280 [1]
+Reported-by: Andrei Lalaev <andrey.lalaev@gmail.com>
+Closes: https://lore.kernel.org/dri-devel/c0a2771c-f3f5-4d4c-aa82-d673b3c5cb46@gmail.com/
+Fixes: 675008f196ca ("drm/panic: Use a decimal fifo to avoid u64 by u64 divide")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_panic_qr.rs | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 77396bab071a..f9d7799c5c94 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1843,7 +1843,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 			if (is_partition_valid(cs))
- 				adding = cpumask_and(tmp->addmask,
- 						xcpus, parent->effective_xcpus);
--		} else if (is_partition_invalid(cs) &&
-+		} else if (is_partition_invalid(cs) && !cpumask_empty(xcpus) &&
- 			   cpumask_subset(xcpus, parent->effective_xcpus)) {
- 			struct cgroup_subsys_state *css;
- 			struct cpuset *child;
-@@ -3870,9 +3870,10 @@ static void cpuset_hotplug_update_tasks(struct cpuset *cs, struct tmpmasks *tmp)
- 		partcmd = partcmd_invalidate;
- 	/*
- 	 * On the other hand, an invalid partition root may be transitioned
--	 * back to a regular one.
-+	 * back to a regular one with a non-empty effective xcpus.
- 	 */
--	else if (is_partition_valid(parent) && is_partition_invalid(cs))
-+	else if (is_partition_valid(parent) && is_partition_invalid(cs) &&
-+		 !cpumask_empty(cs->effective_xcpus))
- 		partcmd = partcmd_update;
+diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
+index 18492daae4b3..b9cc64458437 100644
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -381,6 +381,26 @@ struct DecFifo {
+     len: usize,
+ }
  
- 	if (partcmd >= 0) {
++// On arm32 architecture, dividing an `u64` by a constant will generate a call
++// to `__aeabi_uldivmod` which is not present in the kernel.
++// So use the multiply by inverse method for this architecture.
++fn div10(val: u64) -> u64 {
++    if cfg!(target_arch = "arm") {
++        let val_h = val >> 32;
++        let val_l = val & 0xFFFFFFFF;
++        let b_h: u64 = 0x66666666;
++        let b_l: u64 = 0x66666667;
++
++        let tmp1 = val_h * b_l + ((val_l * b_l) >> 32);
++        let tmp2 = val_l * b_h + (tmp1 & 0xffffffff);
++        let tmp3 = val_h * b_h + (tmp1 >> 32) + (tmp2 >> 32);
++
++        tmp3 >> 2
++    } else {
++        val / 10
++    }
++}
++
+ impl DecFifo {
+     fn push(&mut self, data: u64, len: usize) {
+         let mut chunk = data;
+@@ -389,7 +409,7 @@ impl DecFifo {
+         }
+         for i in 0..len {
+             self.decimals[i] = (chunk % 10) as u8;
+-            chunk /= 10;
++            chunk = div10(chunk);
+         }
+         self.len += len;
+     }
 -- 
 2.50.1
 
