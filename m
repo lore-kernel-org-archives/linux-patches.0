@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D9D2BEC34;
-	Tue, 26 Aug 2025 11:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2152BEC34;
+	Tue, 26 Aug 2025 11:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208179; cv=none; b=MnowbuvsVJ01T1z0cPJui6NAUxW1YMN4iIJ6BzwhezfPjGRds3LqX2Q2ZU8GiM0qygmY2Dg4YF91BXc+KA2L1OST1Mo9idM7P5y75MZJEPrhAaU2SXpoQv7BTGOFL3oEDG4ON6uGk+RB5X44d65retfJKv5RDJl9V8e5X1vm2hQ=
+	t=1756208181; cv=none; b=CuxynZwpQ2Lr4HG9EzmEGP6EpM3OzN6gm/BQFIsDASrtB0Ej2N/U0BQzxo1tEgNXXwdaWeYBH1VNyoKsyA322owT2MBqO65SiwOhTTSpLMOz+DT3ZJ8Yy0nVhPeOnysOmoDxJuUYt2sypmFhNBwurvUU3qWs5U2A2ol0xTGdKZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208179; c=relaxed/simple;
-	bh=KHR+mUHy2di2bVh/izGch6c7PWhgLDEevpTdzd/98yo=;
+	s=arc-20240116; t=1756208181; c=relaxed/simple;
+	bh=cbvH9394EeSeNJ8GAlyPrHHsB8M86vjvveRmIU6TidI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OAwa1CKYriKmDpk/hc7AVcDl1nxg1hz6ehWN676uA+JEYdbnYTCNkCfPlcjnNzoA5cdrWjVRf2+Xb0g+wVTSvm6e7TtoEhvlsov81o9lNhCCujsfYToQ0hS9NL+x+zkHjz59gJaESJ1s7mstcHP9jiUW0i9ECqmAPc1OKLfUrqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9/XmEj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQ/z+QToSoy41sKDkgbNIFrfvFe3TxczUEo7kv9sWaYSV+nHSVwLE+Ya8Z9tbxfg3d9R8Bu56T0GOWN/T0kPFFQ+dErjrKN1irnkQ77Kz5aoZ5Q/G+nGuv7S8RXrrREdeQCnYbst+Q/WRCmmcFnpKsOm/4T6aXWcZdUJ0Ylj85U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W3ogkN8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9/XmEj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE56C4CEF1;
-	Tue, 26 Aug 2025 11:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W3ogkN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22994C4CEF1;
+	Tue, 26 Aug 2025 11:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208178;
-	bh=KHR+mUHy2di2bVh/izGch6c7PWhgLDEevpTdzd/98yo=;
+	s=korg; t=1756208181;
+	bh=cbvH9394EeSeNJ8GAlyPrHHsB8M86vjvveRmIU6TidI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9/XmEj9sjLJrfEWw5nS0B1KxNs3GyfQCtXdUH8ZeC62fDmk2dZtgMpbAz+LXPMUv
-	 SeKk/VZNBpO4dxyIm0tPXsymjdqZ1BpeHz5WXCsWRQzsdVtx8bbK/DZJPWsS2NcAcM
-	 Yj1VLPz2DUYVEE6aifwNvrgwZZZMYJmxFd074/d4=
+	b=0W3ogkN8GPCxtBKBSAxr1fm8m5JH77OvM+dT3zXSreipE2HdamizPrvZBSVCfYIDg
+	 OE84ahdJJVzYiLzmv6WOdtqq8lw4dfEBqzdjWc67cAzwftyD3JJcoH3JnB7rHiSDXp
+	 4MzqrP/JFuZdaPizwreq7UYMdVSUvGIyRzMxbAA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan@kernel.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Subject: [PATCH 6.12 012/322] usb: dwc3: meson-g12a: fix device leaks at unbind
-Date: Tue, 26 Aug 2025 13:07:07 +0200
-Message-ID: <20250826110915.537898126@linuxfoundation.org>
+	Li Jun <jun.li@nxp.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 013/322] usb: dwc3: imx8mp: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:07:08 +0200
+Message-ID: <20250826110915.563942257@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,33 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 93b400f4951404d040197943a25d6fef9f8ccabb upstream.
+commit 086a0e516f7b3844e6328a5c69e2708b66b0ce18 upstream.
 
-Make sure to drop the references taken to the child devices by
-of_find_device_by_node() during probe on driver unbind.
+Make sure to drop the reference to the dwc3 device taken by
+of_find_device_by_node() on probe errors and on driver unbind.
 
-Fixes: c99993376f72 ("usb: dwc3: Add Amlogic G12A DWC3 glue")
-Cc: stable@vger.kernel.org	# 5.2
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
+Cc: stable@vger.kernel.org	# 5.12
+Cc: Li Jun <jun.li@nxp.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20250724091910.21092-3-johan@kernel.org
+Link: https://lore.kernel.org/r/20250724091910.21092-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-meson-g12a.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/dwc3/dwc3-imx8mp.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-meson-g12a.c
-+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
-@@ -837,6 +837,9 @@ static void dwc3_meson_g12a_remove(struc
+--- a/drivers/usb/dwc3/dwc3-imx8mp.c
++++ b/drivers/usb/dwc3/dwc3-imx8mp.c
+@@ -244,7 +244,7 @@ static int dwc3_imx8mp_probe(struct plat
+ 					IRQF_ONESHOT, dev_name(dev), dwc3_imx);
+ 	if (err) {
+ 		dev_err(dev, "failed to request IRQ #%d --> %d\n", irq, err);
+-		goto depopulate;
++		goto put_dwc3;
+ 	}
  
- 	usb_role_switch_unregister(priv->role_switch);
+ 	device_set_wakeup_capable(dev, true);
+@@ -252,6 +252,8 @@ static int dwc3_imx8mp_probe(struct plat
  
-+	put_device(priv->switch_desc.udc);
-+	put_device(priv->switch_desc.usb2_port);
-+
+ 	return 0;
+ 
++put_dwc3:
++	put_device(&dwc3_imx->dwc3->dev);
+ depopulate:
  	of_platform_depopulate(dev);
+ remove_swnode:
+@@ -265,8 +267,11 @@ disable_rpm:
  
- 	for (i = 0 ; i < PHY_COUNT ; ++i) {
+ static void dwc3_imx8mp_remove(struct platform_device *pdev)
+ {
++	struct dwc3_imx8mp *dwc3_imx = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
+ 
++	put_device(&dwc3_imx->dwc3->dev);
++
+ 	pm_runtime_get_sync(dev);
+ 	of_platform_depopulate(dev);
+ 	device_remove_software_node(dev);
 
 
