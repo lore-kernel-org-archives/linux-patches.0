@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F06E29D28A;
-	Tue, 26 Aug 2025 13:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC19F13FD86;
+	Tue, 26 Aug 2025 13:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215207; cv=none; b=GoW8tCz8VrvdEN3GJVKse+r/V+cHq312vlLIdf6QlcQRMlAQ8iLZtqbs2rLZjI4rofIo03VyzSRrtNg2yS3P3nGLNACgkNZUdQiVXA/sWuR7BQo7Ysf0djLRRJwh1k/Ce7udBxTiz3Zi7iWvsBCKMhedq8SnM3YqtvfUENt7ybA=
+	t=1756215209; cv=none; b=nA1C7421hM0mAzkBbqmVeUozNu1y8ICrQu7oS42P5k3VKwDVGLgVJx0M34zda4ebzdRAyHIQ14l7WzMllAb2MEf5jWAY9tsDExRpD79QLZznugsHDUISJUnhYV4VxFK/FOWHZZHB8EHZW8XCxocNWkoa/dLh4LjW6iLC40h/mw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215207; c=relaxed/simple;
-	bh=ZKIr/DPQ2+ULLsx/anAaxVldeOVup0kq9aRkbQ6BsWY=;
+	s=arc-20240116; t=1756215209; c=relaxed/simple;
+	bh=86tfJjZhYC/fEzSane9odI+7AoSciyZAtFH8an11eTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zzgr3+sqs4VmjE76tM6qp2/gG/aFpTQ4qQ9xdcMFBfklRuMTKF6S1hZE//Hw3SjhBQcxqC8vRaaGA7MEssLl1quk4QOVfYJWes0oRUp7Uxz4u7k4lIxr+NA+HAIIpPC3tTvqKMyvoU+RczhJ+X4c2GHy5x6hHA1bjvTHTQt90oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgfkq+MU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwoinHPuJ1b2xxWYk5+rDlIY89FMXMFqaGuNRSeJ9KOhJxMKjJie7Y8c5wqXY+g3uHPutW0AshwSNm59InLyODYb2Pbi5v0LeuN/0Dff6sVntvSXon14L0A9EehOLu+M5FpXtAeYMaCpDnn/Bxla+506ti3gTRDeGMuIqkEZLvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJeZtfwW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgfkq+MU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47E9C4CEF1;
-	Tue, 26 Aug 2025 13:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJeZtfwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4D3C4CEF1;
+	Tue, 26 Aug 2025 13:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215207;
-	bh=ZKIr/DPQ2+ULLsx/anAaxVldeOVup0kq9aRkbQ6BsWY=;
+	s=korg; t=1756215209;
+	bh=86tfJjZhYC/fEzSane9odI+7AoSciyZAtFH8an11eTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pgfkq+MU9WmA1SNuLzqzlheefXmH3lI9ge0Y2VYVKZt8/ore4N9UgGSTBuSIT0Csf
-	 rZg+661EZzRgw6qJSUcqLofn/W0zNuT7KNOK4/Ijcmlx/Rdj8HRXWhc+Hn1nsVwEUp
-	 kvk5KXvPV4ue80NMV6xMkoRCV8b3RJJONB/xQFbY=
+	b=tJeZtfwWbZ60kcspp4KNaoApKz9aTrwB+mC3oB4u7pDQy7WQr/IO4k057RQXtUyK6
+	 z11Fc7tCjrFVy1vFdqBuPPopjXZfxfUn4FyppzipI2DHaAZ2DU+f74hJyniBVuOijX
+	 8/V4yBnWRg5VqBEDzmQESYPH0fN/dDVUj+K/EJPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 428/482] scsi: mpi3mr: Serialize admin queue BAR writes on 32-bit systems
-Date: Tue, 26 Aug 2025 13:11:21 +0200
-Message-ID: <20250826110941.403274262@linuxfoundation.org>
+Subject: [PATCH 6.1 429/482] PCI: rockchip: Use standard PCIe definitions
+Date: Tue, 26 Aug 2025 13:11:22 +0200
+Message-ID: <20250826110941.428726859@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,101 +52,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Geraldo Nascimento <geraldogabriel@gmail.com>
 
-[ Upstream commit c91e140c82eb58724c435f623702e51cc7896646 ]
+[ Upstream commit cbbfe9f683f0f9b6a1da2eaa53b995a4b5961086 ]
 
-On 32-bit systems, 64-bit BAR writes to admin queue registers are
-performed as two 32-bit writes. Without locking, this can cause partial
-writes when accessed concurrently.
+Current code uses custom-defined register offsets and bitfields for the
+standard PCIe registers. This creates duplication as the PCI header already
+defines them. So, switch to using the standard PCIe definitions and drop
+the custom ones.
 
-Updated per-queue spinlocks is used to serialize these writes and prevent
-race conditions.
-
-Fixes: 824a156633df ("scsi: mpi3mr: Base driver code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20250627194539.48851-4-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+[mani: commit message rewording]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: include bitfield.h]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/e81700ef4b49f584bc8834bfb07b6d8995fc1f42.1751322015.git.geraldogabriel@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr.h    |    4 ++++
- drivers/scsi/mpi3mr/mpi3mr_fw.c |   15 +++++++++++----
- drivers/scsi/mpi3mr/mpi3mr_os.c |    2 ++
- 3 files changed, 17 insertions(+), 4 deletions(-)
+ drivers/pci/controller/pcie-rockchip-host.c |   45 ++++++++++++++--------------
+ drivers/pci/controller/pcie-rockchip.h      |   11 ------
+ 2 files changed, 24 insertions(+), 32 deletions(-)
 
---- a/drivers/scsi/mpi3mr/mpi3mr.h
-+++ b/drivers/scsi/mpi3mr/mpi3mr.h
-@@ -1005,6 +1005,8 @@ struct scmd_priv {
-  * @logdata_buf: Circular buffer to store log data entries
-  * @logdata_buf_idx: Index of entry in buffer to store
-  * @logdata_entry_sz: log data entry size
-+ * @adm_req_q_bar_writeq_lock: Admin request queue lock
-+ * @adm_reply_q_bar_writeq_lock: Admin reply queue lock
-  * @pend_large_data_sz: Counter to track pending large data
-  * @io_throttle_data_length: I/O size to track in 512b blocks
-  * @io_throttle_high: I/O size to start throttle in 512b blocks
-@@ -1186,6 +1188,8 @@ struct mpi3mr_ioc {
- 	u8 *logdata_buf;
- 	u16 logdata_buf_idx;
- 	u16 logdata_entry_sz;
-+	spinlock_t adm_req_q_bar_writeq_lock;
-+	spinlock_t adm_reply_q_bar_writeq_lock;
+--- a/drivers/pci/controller/pcie-rockchip-host.c
++++ b/drivers/pci/controller/pcie-rockchip-host.c
+@@ -11,6 +11,7 @@
+  * ARM PCI Host generic driver.
+  */
  
- 	atomic_t pend_large_data_sz;
- 	u32 io_throttle_data_length;
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -23,17 +23,22 @@ module_param(poll_queues, int, 0444);
- MODULE_PARM_DESC(poll_queues, "Number of queues for io_uring poll mode. (Range 1 - 126)");
- 
- #if defined(writeq) && defined(CONFIG_64BIT)
--static inline void mpi3mr_writeq(__u64 b, void __iomem *addr)
-+static inline void mpi3mr_writeq(__u64 b, void __iomem *addr,
-+	spinlock_t *write_queue_lock)
++#include <linux/bitfield.h>
+ #include <linux/bitrev.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+@@ -43,18 +44,18 @@ static void rockchip_pcie_enable_bw_int(
  {
- 	writeq(b, addr);
+ 	u32 status;
+ 
+-	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
++	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+ 	status |= (PCI_EXP_LNKCTL_LBMIE | PCI_EXP_LNKCTL_LABIE);
+-	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
++	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
  }
- #else
--static inline void mpi3mr_writeq(__u64 b, void __iomem *addr)
-+static inline void mpi3mr_writeq(__u64 b, void __iomem *addr,
-+	spinlock_t *write_queue_lock)
+ 
+ static void rockchip_pcie_clr_bw_int(struct rockchip_pcie *rockchip)
  {
- 	__u64 data_out = b;
-+	unsigned long flags;
+ 	u32 status;
  
-+	spin_lock_irqsave(write_queue_lock, flags);
- 	writel((u32)(data_out), addr);
- 	writel((u32)(data_out >> 32), (addr + 4));
-+	spin_unlock_irqrestore(write_queue_lock, flags);
+-	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
++	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+ 	status |= (PCI_EXP_LNKSTA_LBMS | PCI_EXP_LNKSTA_LABS) << 16;
+-	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
++	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
  }
- #endif
  
-@@ -2662,9 +2667,11 @@ static int mpi3mr_setup_admin_qpair(stru
- 	    (mrioc->num_admin_req);
- 	writel(num_admin_entries, &mrioc->sysif_regs->admin_queue_num_entries);
- 	mpi3mr_writeq(mrioc->admin_req_dma,
--	    &mrioc->sysif_regs->admin_request_queue_address);
-+		&mrioc->sysif_regs->admin_request_queue_address,
-+		&mrioc->adm_req_q_bar_writeq_lock);
- 	mpi3mr_writeq(mrioc->admin_reply_dma,
--	    &mrioc->sysif_regs->admin_reply_queue_address);
-+		&mrioc->sysif_regs->admin_reply_queue_address,
-+		&mrioc->adm_reply_q_bar_writeq_lock);
- 	writel(mrioc->admin_req_pi, &mrioc->sysif_regs->admin_request_queue_pi);
- 	writel(mrioc->admin_reply_ci, &mrioc->sysif_regs->admin_reply_queue_ci);
- 	return retval;
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -4966,6 +4966,8 @@ mpi3mr_probe(struct pci_dev *pdev, const
- 	spin_lock_init(&mrioc->tgtdev_lock);
- 	spin_lock_init(&mrioc->watchdog_lock);
- 	spin_lock_init(&mrioc->chain_buf_lock);
-+	spin_lock_init(&mrioc->adm_req_q_bar_writeq_lock);
-+	spin_lock_init(&mrioc->adm_reply_q_bar_writeq_lock);
- 	spin_lock_init(&mrioc->sas_node_lock);
+ static void rockchip_pcie_update_txcredit_mui(struct rockchip_pcie *rockchip)
+@@ -272,7 +273,7 @@ static void rockchip_pcie_set_power_limi
+ 	scale = 3; /* 0.001x */
+ 	curr = curr / 1000; /* convert to mA */
+ 	power = (curr * 3300) / 1000; /* milliwatt */
+-	while (power > PCIE_RC_CONFIG_DCR_CSPL_LIMIT) {
++	while (power > FIELD_MAX(PCI_EXP_DEVCAP_PWR_VAL)) {
+ 		if (!scale) {
+ 			dev_warn(rockchip->dev, "invalid power supply\n");
+ 			return;
+@@ -281,10 +282,10 @@ static void rockchip_pcie_set_power_limi
+ 		power = power / 10;
+ 	}
  
- 	INIT_LIST_HEAD(&mrioc->fwevt_list);
+-	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_DCR);
+-	status |= (power << PCIE_RC_CONFIG_DCR_CSPL_SHIFT) |
+-		  (scale << PCIE_RC_CONFIG_DCR_CPLS_SHIFT);
+-	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_DCR);
++	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_DEVCAP);
++	status |= FIELD_PREP(PCI_EXP_DEVCAP_PWR_VAL, power);
++	status |= FIELD_PREP(PCI_EXP_DEVCAP_PWR_SCL, scale);
++	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_DEVCAP);
+ }
+ 
+ /**
+@@ -312,14 +313,14 @@ static int rockchip_pcie_host_init_port(
+ 	rockchip_pcie_set_power_limit(rockchip);
+ 
+ 	/* Set RC's clock architecture as common clock */
+-	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
++	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+ 	status |= PCI_EXP_LNKSTA_SLC << 16;
+-	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
++	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+ 
+ 	/* Set RC's RCB to 128 */
+-	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
++	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+ 	status |= PCI_EXP_LNKCTL_RCB;
+-	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
++	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+ 
+ 	/* Enable Gen1 training */
+ 	rockchip_pcie_write(rockchip, PCIE_CLIENT_LINK_TRAIN_ENABLE,
+@@ -341,9 +342,9 @@ static int rockchip_pcie_host_init_port(
+ 		 * Enable retrain for gen2. This should be configured only after
+ 		 * gen1 finished.
+ 		 */
+-		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
++		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+ 		status |= PCI_EXP_LNKCTL_RL;
+-		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
++		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+ 
+ 		err = readl_poll_timeout(rockchip->apb_base + PCIE_CORE_CTRL,
+ 					 status, PCIE_LINK_IS_GEN2(status), 20,
+@@ -380,15 +381,15 @@ static int rockchip_pcie_host_init_port(
+ 
+ 	/* Clear L0s from RC's link cap */
+ 	if (of_property_read_bool(dev->of_node, "aspm-no-l0s")) {
+-		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LINK_CAP);
+-		status &= ~PCIE_RC_CONFIG_LINK_CAP_L0S;
+-		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LINK_CAP);
++		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCAP);
++		status &= ~PCI_EXP_LNKCAP_ASPM_L0S;
++		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCAP);
+ 	}
+ 
+-	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_DCSR);
+-	status &= ~PCIE_RC_CONFIG_DCSR_MPS_MASK;
+-	status |= PCIE_RC_CONFIG_DCSR_MPS_256;
+-	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_DCSR);
++	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_DEVCTL);
++	status &= ~PCI_EXP_DEVCTL_PAYLOAD;
++	status |= PCI_EXP_DEVCTL_PAYLOAD_256B;
++	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_DEVCTL);
+ 
+ 	return 0;
+ err_power_off_phy:
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -144,16 +144,7 @@
+ #define PCIE_EP_CONFIG_BASE		0xa00000
+ #define PCIE_EP_CONFIG_DID_VID		(PCIE_EP_CONFIG_BASE + 0x00)
+ #define PCIE_RC_CONFIG_RID_CCR		(PCIE_RC_CONFIG_BASE + 0x08)
+-#define PCIE_RC_CONFIG_DCR		(PCIE_RC_CONFIG_BASE + 0xc4)
+-#define   PCIE_RC_CONFIG_DCR_CSPL_SHIFT		18
+-#define   PCIE_RC_CONFIG_DCR_CSPL_LIMIT		0xff
+-#define   PCIE_RC_CONFIG_DCR_CPLS_SHIFT		26
+-#define PCIE_RC_CONFIG_DCSR		(PCIE_RC_CONFIG_BASE + 0xc8)
+-#define   PCIE_RC_CONFIG_DCSR_MPS_MASK		GENMASK(7, 5)
+-#define   PCIE_RC_CONFIG_DCSR_MPS_256		(0x1 << 5)
+-#define PCIE_RC_CONFIG_LINK_CAP		(PCIE_RC_CONFIG_BASE + 0xcc)
+-#define   PCIE_RC_CONFIG_LINK_CAP_L0S		BIT(10)
+-#define PCIE_RC_CONFIG_LCS		(PCIE_RC_CONFIG_BASE + 0xd0)
++#define PCIE_RC_CONFIG_CR		(PCIE_RC_CONFIG_BASE + 0xc0)
+ #define PCIE_RC_CONFIG_L1_SUBSTATE_CTRL2 (PCIE_RC_CONFIG_BASE + 0x90c)
+ #define PCIE_RC_CONFIG_THP_CAP		(PCIE_RC_CONFIG_BASE + 0x274)
+ #define   PCIE_RC_CONFIG_THP_CAP_NEXT_MASK	GENMASK(31, 20)
 
 
