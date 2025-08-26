@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBECA345747;
-	Tue, 26 Aug 2025 13:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7473D34A336;
+	Tue, 26 Aug 2025 13:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214556; cv=none; b=Bb2Ew4aH/+DI/Jp2K+u1RtxinjH+3QC38FHcuo03u0DdgoGQRoNL48GXDJT1qNI5kWCJT6RWtsKVFZ4AUKygFiJ+tEHJcysQg9WdaoMiNZVEYgcretC+UVGTSL7LuZhCrawlyLQ8trbWaoEHRbIofLJjQ8WX0SrHqvwSSNiwQXA=
+	t=1756214559; cv=none; b=j6TSFP6NvMw0A7BQcqug/wMGzbds4RkxY2xnI7wO0tQtLymvSFyqC40d6zUfR8PXCh0iZLIYrlDFk06P7mPwHZjSZiHqejmbkQ+QeUUL4W2+oFx377VXhgkqflFKoRbKvVqAdP5KxSoFpPUGML+UiMtOTOvu45y2HuvJeL3wSkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214556; c=relaxed/simple;
-	bh=kKKssaRU1oX+7061Zumosg3lIO3JPpjTqtK+B7MsMW0=;
+	s=arc-20240116; t=1756214559; c=relaxed/simple;
+	bh=txjcL6GgXemDNY2BAURbtxqFBDW7vpuWgN/+Ua8PjTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=niDtlY5H0RRyGsuxD6na7jyQpgOzL1tOYJAOyAbEJaMzMQ8pemjWaVRPN97uFApCnSvEq6WvLvyevA8RLYnt1bs43agGliKdEitNMq5Bpyrz1Z/qUWBi1PGwyn6rxpFQOFsf7j+5IJLmjkcmmIPYzt4JlWjch+jQw1xwyivDZHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5G/hpbB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJuSETA1eznRKGdddRpM/2lAZUmmuiEWbEWMznIibuXqicNGVJPkgjZ3q6B/5a4H+NXeg4NzSZpTKbgjxdBapyEiWAh8WBrI9bfbZKQk5Wpxs62n4G1FW2MDOKNeeD4ilVotyf0dQ6SnK0g4pvsyO+fddgRadASuunR9EwptFbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9iJ0e5v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5G/hpbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E22BC113D0;
-	Tue, 26 Aug 2025 13:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9iJ0e5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069C3C4CEF1;
+	Tue, 26 Aug 2025 13:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214556;
-	bh=kKKssaRU1oX+7061Zumosg3lIO3JPpjTqtK+B7MsMW0=;
+	s=korg; t=1756214559;
+	bh=txjcL6GgXemDNY2BAURbtxqFBDW7vpuWgN/+Ua8PjTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i5G/hpbB7fJ4gZeYi52ZBCgaz2wG5H97eLZtLDnGPOzZ1KR99HRXikctW74v1dgaC
-	 aUAjzkmJ3XESbeA5yFqZcfgqpOjpg53k12BMWgVUf3z8M1DDCZZpbicBB+p3J4a+Rj
-	 7rj3HSUPlPAAJyc9TuQVuqn7HGg5/kGjCGy8J8Pk=
+	b=R9iJ0e5v7mnvZw5i2W3fIyaYq6ZFrIceHz7nGE1KQxq7m4Qc8xrF0GmGPIGuobBNP
+	 dcbgkNKU3aRjYRXcknPdgTHz9dDywYHjq7LSMyhcQFUK6/PYTeYqjJug0dUu+msud0
+	 91u5y91rdXmjtNvWM/2JQRQVDhNNbgNVIGIBDm64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexei Safin <a.safin@rosa.ru>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/482] wifi: iwlegacy: Check rate_idx range after addition
-Date: Tue, 26 Aug 2025 13:06:45 +0200
-Message-ID: <20250826110934.571409597@linuxfoundation.org>
+Subject: [PATCH 6.1 153/482] neighbour: add support for NUD_PERMANENT proxy entries
+Date: Tue, 26 Aug 2025 13:06:46 +0200
+Message-ID: <20250826110934.594921049@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,41 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 0de19d5ae0b2c5b18b88c5c7f0442f707a207409 ]
+[ Upstream commit c7d78566bbd30544a0618a6ffbc97bc0ddac7035 ]
 
-Limit rate_idx to IL_LAST_OFDM_RATE for 5GHz band for thinkable case
-the index is incorrect.
+As discussesd before in [0] proxy entries (which are more configuration
+than runtime data) should stay when the link (carrier) goes does down.
+This is what happens for regular neighbour entries.
 
-Reported-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reported-by: Alexei Safin <a.safin@rosa.ru>
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20250525144524.GA172583@wp.pl
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+So lets fix this by:
+  - storing in proxy entries the fact that it was added as NUD_PERMANENT
+  - not removing NUD_PERMANENT proxy entries when the carrier goes down
+    (same as how it's done in neigh_flush_dev() for regular neigh entries)
+
+[0]: https://lore.kernel.org/netdev/c584ef7e-6897-01f3-5b80-12b53f7b4bf4@kernel.org/
+
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250617141334.3724863-1-nico.escande@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlegacy/4965-mac.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/net/neighbour.h |  1 +
+ net/core/neighbour.c    | 12 +++++++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlegacy/4965-mac.c b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-index 78dee8ccfebf..1c22a29d20d6 100644
---- a/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-@@ -1575,8 +1575,11 @@ il4965_tx_cmd_build_rate(struct il_priv *il,
- 	    || rate_idx > RATE_COUNT_LEGACY)
- 		rate_idx = rate_lowest_index(&il->bands[info->band], sta);
- 	/* For 5 GHZ band, remap mac80211 rate indices into driver indices */
--	if (info->band == NL80211_BAND_5GHZ)
-+	if (info->band == NL80211_BAND_5GHZ) {
- 		rate_idx += IL_FIRST_OFDM_RATE;
-+		if (rate_idx > IL_LAST_OFDM_RATE)
-+			rate_idx = IL_LAST_OFDM_RATE;
-+	}
- 	/* Get PLCP rate for tx_cmd->rate_n_flags */
- 	rate_plcp = il_rates[rate_idx].plcp;
- 	/* Zero out flags for this packet */
+diff --git a/include/net/neighbour.h b/include/net/neighbour.h
+index ccc4a0f8b4ad..93aecfaa7628 100644
+--- a/include/net/neighbour.h
++++ b/include/net/neighbour.h
+@@ -180,6 +180,7 @@ struct pneigh_entry {
+ 	netdevice_tracker	dev_tracker;
+ 	u32			flags;
+ 	u8			protocol;
++	bool			permanent;
+ 	u32			key[];
+ };
+ 
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index bcc3950638b9..92dc1f1788de 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -55,7 +55,8 @@ static void __neigh_notify(struct neighbour *n, int type, int flags,
+ 			   u32 pid);
+ static void neigh_update_notify(struct neighbour *neigh, u32 nlmsg_pid);
+ static int pneigh_ifdown_and_unlock(struct neigh_table *tbl,
+-				    struct net_device *dev);
++				    struct net_device *dev,
++				    bool skip_perm);
+ 
+ #ifdef CONFIG_PROC_FS
+ static const struct seq_operations neigh_stat_seq_ops;
+@@ -444,7 +445,7 @@ static int __neigh_ifdown(struct neigh_table *tbl, struct net_device *dev,
+ {
+ 	write_lock_bh(&tbl->lock);
+ 	neigh_flush_dev(tbl, dev, skip_perm);
+-	pneigh_ifdown_and_unlock(tbl, dev);
++	pneigh_ifdown_and_unlock(tbl, dev, skip_perm);
+ 	pneigh_queue_purge(&tbl->proxy_queue, dev ? dev_net(dev) : NULL,
+ 			   tbl->family);
+ 	if (skb_queue_empty_lockless(&tbl->proxy_queue))
+@@ -845,7 +846,8 @@ int pneigh_delete(struct neigh_table *tbl, struct net *net, const void *pkey,
+ }
+ 
+ static int pneigh_ifdown_and_unlock(struct neigh_table *tbl,
+-				    struct net_device *dev)
++				    struct net_device *dev,
++				    bool skip_perm)
+ {
+ 	struct pneigh_entry *n, **np, *freelist = NULL;
+ 	u32 h;
+@@ -853,12 +855,15 @@ static int pneigh_ifdown_and_unlock(struct neigh_table *tbl,
+ 	for (h = 0; h <= PNEIGH_HASHMASK; h++) {
+ 		np = &tbl->phash_buckets[h];
+ 		while ((n = *np) != NULL) {
++			if (skip_perm && n->permanent)
++				goto skip;
+ 			if (!dev || n->dev == dev) {
+ 				*np = n->next;
+ 				n->next = freelist;
+ 				freelist = n;
+ 				continue;
+ 			}
++skip:
+ 			np = &n->next;
+ 		}
+ 	}
+@@ -2023,6 +2028,7 @@ static int neigh_add(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		pn = pneigh_lookup(tbl, net, dst, dev, 1);
+ 		if (pn) {
+ 			pn->flags = ndm_flags;
++			pn->permanent = !!(ndm->ndm_state & NUD_PERMANENT);
+ 			if (protocol)
+ 				pn->protocol = protocol;
+ 			err = 0;
 -- 
 2.39.5
 
