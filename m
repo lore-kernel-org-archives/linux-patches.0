@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AE418A6C4;
-	Tue, 26 Aug 2025 13:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7191A5B8D;
+	Tue, 26 Aug 2025 13:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214646; cv=none; b=XLljIUmT+MK18iK9LGEUA05gish5ekuEDwGT1oTRcnDXKx5nsO/9hVn4aYDurTHYTiO++2U6kny6rhimSZE70tPxDiLf1m9mDaq1Q+ACZNWfZawiZWwpcSlI7LUEufduwWvwyTGW8Pd83d+nnYU05U08cJUK08TaWDnobdm8sFA=
+	t=1756214649; cv=none; b=ZzCMrDupOzeLYxmMT5edAC8YFPErhpQam8LoBB3Gg1gWGpYF6sLqiMfFM5MPA/sOPDuTRTBjS/0plLJeZ3AUYJ/Spv9QiOietVgMAlsOiHYkI/ibgQC7Wj2l1byLQC4bQaGN1Ci9LjEvGSTjpHYMr1IBHXjoyIpZcgPwffQ9oUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214646; c=relaxed/simple;
-	bh=KD2z3VgZBT6+wEPMcvL5yHEGq+UICdEeq7NVDsAG+GM=;
+	s=arc-20240116; t=1756214649; c=relaxed/simple;
+	bh=MOkiTnO/KW8vvSMaHLgcYO2YNJ1s1b9riFa1XLm1sWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=loYeHZGsSg/4hueMjL2PPnbO973DPaBSWQlouAUENa/IJhqTiBtXW8E0mSsViFwWBK8oxiDDRyE2XVITX6UH35SZqNJ+yeL9wjGZcKW1MhpCV9lILMGppnRTLr1f6/xTUJYOnxvFXbr16VsQtF9WH2xu6UrBr7s/glWHVii/epg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7NnqhZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gjv0koFBlSh5+cqIb5AjuSM/ANjS4yP8c8JzgGbiCMdATCOZ3nWrgsGhzLEwgUMDlE4M2//ni5wIYaDx249NGe/G5W0+mqpNsTjsldClNynFen0CAUdTFvtlx/baw8o5Zyx3/p5cYP4O6lehncUTyw/17DSjt9F7hTyHs4KC++s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnfmkHJW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7NnqhZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171EFC4CEF1;
-	Tue, 26 Aug 2025 13:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnfmkHJW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B345CC4CEF1;
+	Tue, 26 Aug 2025 13:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214646;
-	bh=KD2z3VgZBT6+wEPMcvL5yHEGq+UICdEeq7NVDsAG+GM=;
+	s=korg; t=1756214649;
+	bh=MOkiTnO/KW8vvSMaHLgcYO2YNJ1s1b9riFa1XLm1sWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7NnqhZL7XtHDSSvS+6pXoK75lTOGwcPoiXIj2evgzdR0Yo4OvHZ8mzziuwm8uVnj
-	 gG89E6T3fv1JJfFI0dFsGBSbR0K4Y1wwbngsgiPjVBdftzdqrsUqweY/rhYoVAljze
-	 B86itIL0N8TibLCyGttWS4GZKgCrgY2Mv8cMXnwA=
+	b=ZnfmkHJWBmOpKlKN1UStilbXEmzdoMtSlk+0LaS+8KV1cZqHvrZeWeqLLKoeXuwmF
+	 6OsEmXjjTLrPPJdwzGoL/41uLw51zckgdaKCsZFN+A+R+GYV5bogSIFZdYka1JDsLT
+	 j1DnUzMhtvrHnN7rYadkjgYa9muq17cGHQeqbev8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jackysliu <1972843537@qq.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+6e516bb515d93230bc7b@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 185/482] scsi: bfa: Double-free fix
-Date: Tue, 26 Aug 2025 13:07:18 +0200
-Message-ID: <20250826110935.377003290@linuxfoundation.org>
+Subject: [PATCH 6.1 186/482] jfs: truncate good inode pages when hard link is 0
+Date: Tue, 26 Aug 2025 13:07:19 +0200
+Message-ID: <20250826110935.401385371@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,40 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: jackysliu <1972843537@qq.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit add4c4850363d7c1b72e8fce9ccb21fdd2cf5dc9 ]
+[ Upstream commit 2d91b3765cd05016335cd5df5e5c6a29708ec058 ]
 
-When the bfad_im_probe() function fails during initialization, the memory
-pointed to by bfad->im is freed without setting bfad->im to NULL.
+The fileset value of the inode copy from the disk by the reproducer is
+AGGR_RESERVED_I. When executing evict, its hard link number is 0, so its
+inode pages are not truncated. This causes the bugon to be triggered when
+executing clear_inode() because nrpages is greater than 0.
 
-Subsequently, during driver uninstallation, when the state machine enters
-the bfad_sm_stopping state and calls the bfad_im_probe_undo() function,
-it attempts to free the memory pointed to by bfad->im again, thereby
-triggering a double-free vulnerability.
-
-Set bfad->im to NULL if probing fails.
-
-Signed-off-by: jackysliu <1972843537@qq.com>
-Link: https://lore.kernel.org/r/tencent_3BB950D6D2D470976F55FC879206DE0B9A09@qq.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+6e516bb515d93230bc7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6e516bb515d93230bc7b
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/bfa/bfad_im.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/jfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/bfa/bfad_im.c b/drivers/scsi/bfa/bfad_im.c
-index c335f7a188d2..8f2bd0a6a08c 100644
---- a/drivers/scsi/bfa/bfad_im.c
-+++ b/drivers/scsi/bfa/bfad_im.c
-@@ -706,6 +706,7 @@ bfad_im_probe(struct bfad_s *bfad)
+diff --git a/fs/jfs/inode.c b/fs/jfs/inode.c
+index d1ec920aa030..d41891bb617a 100644
+--- a/fs/jfs/inode.c
++++ b/fs/jfs/inode.c
+@@ -145,9 +145,9 @@ void jfs_evict_inode(struct inode *inode)
+ 	if (!inode->i_nlink && !is_bad_inode(inode)) {
+ 		dquot_initialize(inode);
  
- 	if (bfad_thread_workq(bfad) != BFA_STATUS_OK) {
- 		kfree(im);
-+		bfad->im = NULL;
- 		return BFA_STATUS_FAILED;
- 	}
++		truncate_inode_pages_final(&inode->i_data);
+ 		if (JFS_IP(inode)->fileset == FILESYSTEM_I) {
+ 			struct inode *ipimap = JFS_SBI(inode->i_sb)->ipimap;
+-			truncate_inode_pages_final(&inode->i_data);
  
+ 			if (test_cflag(COMMIT_Freewmap, inode))
+ 				jfs_free_zero_link(inode);
 -- 
 2.39.5
 
