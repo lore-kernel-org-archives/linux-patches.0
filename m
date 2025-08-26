@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF07341672;
-	Tue, 26 Aug 2025 13:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19075341AA1;
+	Tue, 26 Aug 2025 13:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214865; cv=none; b=Ah5AHLXYnSlrMNhEI1J7hZBurfziJvVGJpeA/z/AyMbRi2K1pZxOiUBUApvctNm/otegtbVcO10v9m7GqSWlbdsNmzuxwGX8VM1wvh9Or2R+7o7moN8QVBjVVUZrXFxmult6nDbAYtYqcTkAk6sHY8LEXOyAezpt9uuoaJfwAPM=
+	t=1756214868; cv=none; b=LN3/6houypd3CQtBUtqSm8vQZTweE5VQ6+oGbi+0qB0eF9w+eKxWWhWKI5l1GGm1qmJx5bJDOKnhHwrrTKOPohTL5B39evJ2tNwZ7EUtF1TCKs7+m13S+koo9/KSN/RGQnnanVQPFX9yDzBh8BC5QsemXinV55KrML5actJoBr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214865; c=relaxed/simple;
-	bh=R7kcCqr0jZHk4O7rlCl8SShBCnTWIFDJrlzXFxkqU7c=;
+	s=arc-20240116; t=1756214868; c=relaxed/simple;
+	bh=EfOpTvZzDdObl7QBQDX5NjHSfRc3fXkgg6jv2J2bn9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ppzbHDtO2VNf4+FsUTTJoIfbTBt9DHt9tb+c+fz/7ky3voU5ZDV8fU63QlpU2M6Z8Ngk6gezyPn72CInQRW9H8F1tx2gSRCk+wQ3MsRssw+SQkk39jXu1XEWziWaJdJyWwjXkfhkSeWnyLi8m8ESTFnyP7IJlSfqLpiRVbvXrA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQ12brMp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r5UrjMcZ3TMFmoShk1vLYIIECMV/oKsR/WTNNB0mupUYgpsdc1ZRa7/1IoiQcp2ZkKUtT1pttvH1wj5ijazIuXQBg8IvVbDtC1LMbVTL8lAajvV6kwYm6Y0HiVYzgmM5pDKVYqF+Cnic9Qafgv67jhTX+qSIp+EvoVWD7odGVbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byHZCgjK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQ12brMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E25C4CEF1;
-	Tue, 26 Aug 2025 13:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byHZCgjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19625C4CEF1;
+	Tue, 26 Aug 2025 13:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214864;
-	bh=R7kcCqr0jZHk4O7rlCl8SShBCnTWIFDJrlzXFxkqU7c=;
+	s=korg; t=1756214867;
+	bh=EfOpTvZzDdObl7QBQDX5NjHSfRc3fXkgg6jv2J2bn9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQ12brMpCDqoGWNn8UTOlp09sdTZLuQDXVIWiwmCiPpIDZbSfqiDJ97uZ8c3PJLfb
-	 glu/muL/FYyran/8Ym2sgmPIubtpWRkI12Cftai3uvZThx3vjSJsbIkthtOtb4V/W0
-	 /tEsKVIMbEo/Gzy7asxcdDB1Haw571WKyeiRhquM=
+	b=byHZCgjKZAsBoiuozrH7lmzo6jFxIBL40qIRNbFEB0nhKzMUXxglJ3loQDeno70iq
+	 7Lvl5nDK2QvZ+laX6wCFfCuVXgo25h/UWJVfqHjnfv2jGyovtLRoS2uMVWf+vm+bKl
+	 KbEjmi8vyDbwL2KddtsEksCIAhms/lss7jLXpXus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.1 299/482] pwm: imx-tpm: Reset counter if CMOD is 0
-Date: Tue, 26 Aug 2025 13:09:12 +0200
-Message-ID: <20250826110938.185044228@linuxfoundation.org>
+Subject: [PATCH 6.1 300/482] pwm: mediatek: Handle hardware enable and clock enable separately
+Date: Tue, 26 Aug 2025 13:09:13 +0200
+Message-ID: <20250826110938.211143772@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,55 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 65c6f742ab14ab1a2679fba72b82dcc0289d96f1 upstream.
+commit 704d918341c378c5f9505dfdf32d315e256d3846 upstream.
 
-As per the i.MX93 TRM, section 67.3.2.1 "MOD register update", the value
-of the TPM counter does NOT get updated when writing MOD.MOD unless
-SC.CMOD != 0. Therefore, with the current code, assuming the following
-sequence:
+Stop handling the clocks in pwm_mediatek_enable() and
+pwm_mediatek_disable(). This is a preparing change for the next commit
+that requires that clocks and the enable bit are handled separately.
 
-	1) pwm_disable()
-	2) pwm_apply_might_sleep() /* period is changed here */
-	3) pwm_enable()
+Also move these two functions a bit further up in the source file to
+make them usable in pwm_mediatek_config(), which is needed in the next
+commit, too.
 
-and assuming only one channel is active, if CNT.COUNT is higher than the
-MOD.MOD value written during the pwm_apply_might_sleep() call then, when
-re-enabling the PWM during pwm_enable(), the counter will end up resetting
-after UINT32_MAX - CNT.COUNT + MOD.MOD cycles instead of MOD.MOD cycles as
-normally expected.
-
-Fix this problem by forcing a reset of the TPM counter before MOD.MOD is
-written.
-
-Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/55c94fe2917ece152ee1e998f4675642a7716f13.1753717973.git.u.kleine-koenig@baylibre.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
-Link: https://lore.kernel.org/r/20250728194144.22884-1-laurentiumihalcea111@gmail.com
 Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-imx-tpm.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/pwm/pwm-mediatek.c |   60 +++++++++++++++++++++------------------------
+ 1 file changed, 28 insertions(+), 32 deletions(-)
 
---- a/drivers/pwm/pwm-imx-tpm.c
-+++ b/drivers/pwm/pwm-imx-tpm.c
-@@ -205,6 +205,15 @@ static int pwm_imx_tpm_apply_hw(struct p
- 		writel(val, tpm->base + PWM_IMX_TPM_SC);
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -114,6 +114,26 @@ static inline void pwm_mediatek_writel(s
+ 	writel(value, chip->regs + pwm_mediatek_reg_offset[num] + offset);
+ }
  
- 		/*
-+		 * if the counter is disabled (CMOD == 0), programming the new
-+		 * period length (MOD) will not reset the counter (CNT). If
-+		 * CNT.COUNT happens to be bigger than the new MOD value then
-+		 * the counter will end up being reset way too late. Therefore,
-+		 * manually reset it to 0.
-+		 */
-+		if (!cmod)
-+			writel(0x0, tpm->base + PWM_IMX_TPM_CNT);
-+		/*
- 		 * set period count:
- 		 * if the PWM is disabled (CMOD[1:0] = 2b00), then MOD register
- 		 * is updated when MOD register is written.
++static void pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
++{
++	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
++	u32 value;
++
++	value = readl(pc->regs);
++	value |= BIT(pwm->hwpwm);
++	writel(value, pc->regs);
++}
++
++static void pwm_mediatek_disable(struct pwm_chip *chip, struct pwm_device *pwm)
++{
++	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
++	u32 value;
++
++	value = readl(pc->regs);
++	value &= ~BIT(pwm->hwpwm);
++	writel(value, pc->regs);
++}
++
+ static int pwm_mediatek_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 			       int duty_ns, int period_ns)
+ {
+@@ -176,35 +196,6 @@ out:
+ 	return ret;
+ }
+ 
+-static int pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+-{
+-	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
+-	u32 value;
+-	int ret;
+-
+-	ret = pwm_mediatek_clk_enable(chip, pwm);
+-	if (ret < 0)
+-		return ret;
+-
+-	value = readl(pc->regs);
+-	value |= BIT(pwm->hwpwm);
+-	writel(value, pc->regs);
+-
+-	return 0;
+-}
+-
+-static void pwm_mediatek_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+-{
+-	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
+-	u32 value;
+-
+-	value = readl(pc->regs);
+-	value &= ~BIT(pwm->hwpwm);
+-	writel(value, pc->regs);
+-
+-	pwm_mediatek_clk_disable(chip, pwm);
+-}
+-
+ static int pwm_mediatek_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 			      const struct pwm_state *state)
+ {
+@@ -214,8 +205,10 @@ static int pwm_mediatek_apply(struct pwm
+ 		return -EINVAL;
+ 
+ 	if (!state->enabled) {
+-		if (pwm->state.enabled)
++		if (pwm->state.enabled) {
+ 			pwm_mediatek_disable(chip, pwm);
++			pwm_mediatek_clk_disable(chip, pwm);
++		}
+ 
+ 		return 0;
+ 	}
+@@ -224,8 +217,11 @@ static int pwm_mediatek_apply(struct pwm
+ 	if (err)
+ 		return err;
+ 
+-	if (!pwm->state.enabled)
+-		err = pwm_mediatek_enable(chip, pwm);
++	if (!pwm->state.enabled) {
++		err = pwm_mediatek_clk_enable(chip, pwm);
++		if (!err)
++			pwm_mediatek_enable(chip, pwm);
++	}
+ 
+ 	return err;
+ }
 
 
