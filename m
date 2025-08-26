@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826F5352082;
-	Tue, 26 Aug 2025 13:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4FD350845;
+	Tue, 26 Aug 2025 13:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216163; cv=none; b=FxvEO+aSiQUXbApC0z1Iiy3iGrqvSgmKSkBDjeDcm0j28R+OQAbMAzsLOYvi4WO4CsZqtzOsFcqkLVr/HZ6wZHzyzIn/ZBLL5Yvnp26j/kBUGPMyTCAHlAxLZY++dDEQbnPgbe1yHxaEd1HPgXATFtclWPaEaI0Nz1VhE02OnyY=
+	t=1756216166; cv=none; b=eM201HoksGaBlG6IirGBjh3ipZz5zeP2mLTN1O8UAdM8gd6gA+R9GUR+K80MZTixXuVSYGjA1O9ddYLsGWGJTiysXH+v+6LN/jM1jW0+fj0r9HMNyxAOThDSis81ctTXVC2Vf+rcASfOdi/ns6a5MWyXX8ps+29/h+5jl0A6f30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216163; c=relaxed/simple;
-	bh=V5VfKzjLxQXnXxx8x0ViMNBUM4kB4MeMAmF3MMvoiHE=;
+	s=arc-20240116; t=1756216166; c=relaxed/simple;
+	bh=jjGHPavrJwnvc16l0z01zzM827+TbDt3fpfkxJOhJx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UtjKWFsHxWPpSp3fg/AzJ/6G5a2+US12i6aeXHQOcW3/S5mvEe1XoWkwVCTk7f0RuVuBthy4SCFhdCTvRlPkb/qxVxIMJ+zE4nMCHji56KnNlH492srke0e6hAiBGR/7Yb8SFClGckwscwrW7uLHiDmKZp9Wor+0wOvfH/xkuAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeOqXHjw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KL3VrxOfL440p7Iie+3fY5+AHmULWsmUffeOtoD+odhir2vtQuTg/xfxmie7UhSU9dAgxGqk7H8gqwNv87ACWr3lX/Sf+86mGKvAGc2wnWyT926YCvon5Y5bZz560OlyYY0j0ibB6b1gHnXGSXI9Nyx00N+T5TKgvTUpPAR/B5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsVkJjq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeOqXHjw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9A2C113D0;
-	Tue, 26 Aug 2025 13:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsVkJjq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66512C4CEF1;
+	Tue, 26 Aug 2025 13:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216163;
-	bh=V5VfKzjLxQXnXxx8x0ViMNBUM4kB4MeMAmF3MMvoiHE=;
+	s=korg; t=1756216165;
+	bh=jjGHPavrJwnvc16l0z01zzM827+TbDt3fpfkxJOhJx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeOqXHjwG42QlTgLA0IjGKek4DLrqXmbRCYy/vKNDYSH8kA2kwRT9KCv3hTjTqtGG
-	 vxhmOVtFP0NlnKzjs4neRUcC8ZpHHFGdAG/5BWBosU/BIoYuc6AhKzyRlx+FiBwusd
-	 OKRYJ5I01EP5u0DFApig3slmepp3Fw9Q/wE9Gsxg=
+	b=YsVkJjq3F7QL6t45zMJlY+ejt6f2/Yd3S12HpmHIT5n/z5lhzjz1LuvZHwkbBZCv6
+	 MhcAwYyqlpJchvI3tE2DWWoGhq3O48pwE4eqohrKaw7S441ACsxfjXE/w2uJwc3NsJ
+	 Nskicx/bAWlXZYHyil59V+3DDEO0hXuiK1IV//0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Willy Tarreau <w@1wt.eu>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 309/644] tools/nolibc: define time_t in terms of __kernel_old_time_t
-Date: Tue, 26 Aug 2025 13:06:40 +0200
-Message-ID: <20250826110954.042071013@linuxfoundation.org>
+Subject: [PATCH 5.15 310/644] gpio: tps65912: check the return value of regmap_update_bits()
+Date: Tue, 26 Aug 2025 13:06:41 +0200
+Message-ID: <20250826110954.066117648@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -45,56 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit d5094bcb5bfdfea2cf0de8aaf77cc65db56cbdb5 ]
+[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
 
-Nolibc assumes that the kernel ABI is using a time values that are as
-large as a long integer. For most ABIs this holds true.
-But for x32 this is not correct, as it uses 32bit longs but 64bit times.
+regmap_update_bits() can fail, check its return value like we do
+elsewhere in the driver.
 
-Also the 'struct stat' implementation of nolibc relies on timespec::tv_sec
-and time_t being the same type. While timespec::tv_sec comes from the
-kernel and is of type __kernel_old_time_t, time_t is defined within nolibc.
-
-Switch to the __kernel_old_time_t to always get the correct type.
-
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20250712-nolibc-x32-v1-1-6d81cb798710@weissschuh.net
-Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/std.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-tps65912.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tools/include/nolibc/std.h b/tools/include/nolibc/std.h
-index 1747ae125392..a0ea830e1ba1 100644
---- a/tools/include/nolibc/std.h
-+++ b/tools/include/nolibc/std.h
-@@ -33,6 +33,8 @@ typedef unsigned long     uintptr_t;
- typedef   signed long      intptr_t;
- typedef   signed long     ptrdiff_t;
+diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
+index fab771cb6a87..bac757c191c2 100644
+--- a/drivers/gpio/gpio-tps65912.c
++++ b/drivers/gpio/gpio-tps65912.c
+@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
+ 					  unsigned offset, int value)
+ {
+ 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
++	int ret;
  
-+#include <linux/types.h>
-+
- /* those are commonly provided by sys/types.h */
- typedef unsigned int          dev_t;
- typedef unsigned long         ino_t;
-@@ -44,6 +46,6 @@ typedef unsigned long       nlink_t;
- typedef   signed long         off_t;
- typedef   signed long     blksize_t;
- typedef   signed long      blkcnt_t;
--typedef   signed long        time_t;
-+typedef __kernel_old_time_t  time_t;
+ 	/* Set the initial value */
+-	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+-			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
++				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	if (ret)
++		return ret;
  
- #endif /* _NOLIBC_STD_H */
+ 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+ 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
 -- 
 2.39.5
 
