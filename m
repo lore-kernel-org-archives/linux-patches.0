@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190901AB52D;
-	Tue, 26 Aug 2025 13:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2183405F7;
+	Tue, 26 Aug 2025 13:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213862; cv=none; b=V+WubK9ryoG+AskMx1N8SHdqY0bt+kddGxw8+13brevjwzyPaBTPw8r7J+CVD5DF4I77L20QLaYU1eGtikb+Ro97u7CqUXR5PiC+Bki2W2WhqrJqQA4V6sNG/YYpbgdENInqVEl4cAk0qodSU+E6QEKiwGYxiPX88+IjEJFDnkA=
+	t=1756213864; cv=none; b=QntrzIgrAAAN1BcbggGnEBt9ex2QfnmF8ALnM2AvcoQ8B5oMEy9Ii/1DFf3d/dScrubdXWU3y8TWAKLGyAIys9w54fdK2J6O8y7WdfmvixzwqEnr+t9mtSnjLe9iupMFzWgv9Dg04pglHh8cKFnYmvFtxhNDYTfgmxMGlYBIiOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213862; c=relaxed/simple;
-	bh=oUE6b4SuRP2WmIUSpyJ3ojy1mPa8ayyoLz1vMXm0+Q8=;
+	s=arc-20240116; t=1756213864; c=relaxed/simple;
+	bh=vyr7mK5n0/a3U4KktwWAZ/U9rbRjInZx9BzMOqa5Nos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pM6OKrH2ke+17Avf2THNfPOdiIkyF0EvVyKEZr5pn6K/KV4iXk2EJJRaInhdNt/QXtld4FrenKh++CFiQ3tu0jUf9B4rIQEMHu/Ld2RvYi/Z07oJzAJ27XsZbgFReKfAIRWngIVjm15zZEv13oMNw6fHinyNsemGIEQrbkF3fV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLtk1tbC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lUtztOZfo06F0w8HGGGES5oRCMnCOXRwq+l7mWgQp10d+NCnXpqp92tlAqfwGOjOMVyn5Al60GzjrpwuOClOz+w5TIjyrlv5WeOCBF8tPgJ+as5rwnbX4sSBXkPQdEVQkMLXQFLvHGEvlFfI+CXXOElh/8ad9Ok8EypCP/C92HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2udl2uPV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLtk1tbC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E108C4CEF1;
-	Tue, 26 Aug 2025 13:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2udl2uPV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F87C4CEF1;
+	Tue, 26 Aug 2025 13:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213862;
-	bh=oUE6b4SuRP2WmIUSpyJ3ojy1mPa8ayyoLz1vMXm0+Q8=;
+	s=korg; t=1756213864;
+	bh=vyr7mK5n0/a3U4KktwWAZ/U9rbRjInZx9BzMOqa5Nos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLtk1tbCPLwi11PgJ5QW0DKe4l1wAE+4PVxYwBjunYt7PngjpQF9kDhb4SOpY5JI0
-	 U+9UI9rGu+qng9/Pn17bKUKajQ/kWCMpHRvWIxfCnUTo5v3nUEeaKcafvHCF0CP0Mj
-	 iQcHN4n65nQo+ZsVdw5Qx24kQf+PRhZ3UO4skEE4=
+	b=2udl2uPVX/UeNlsJehz0MPHIwsNU3+y+MUI2pMmmsGbEzLikip8d8bp1VeMSR5hjD
+	 uXhSIdnorUUQcLcBR32TX03FU5sXR8+c8KWIzTBFwCcpZ2HSIkuamqUxZ/g/pF4ZNJ
+	 RJLSeyWadRmqbJTjezv/AzEQapJSjg/GaoqzpVZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 480/587] memstick: Fix deadlock by moving removing flag earlier
-Date: Tue, 26 Aug 2025 13:10:29 +0200
-Message-ID: <20250826111005.183090433@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 507/587] selftests: mptcp: pm: check flush doesnt reset limits
+Date: Tue, 26 Aug 2025 13:10:56 +0200
+Message-ID: <20250826111005.885239750@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,80 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 99d7ab8db9d8230b243f5ed20ba0229e54cc0dfa upstream.
+commit 452690be7de2f91cc0de68cb9e95252875b33503 upstream.
 
-The existing memstick core patch: commit 62c59a8786e6 ("memstick: Skip
-allocating card when removing host") sets host->removing in
-memstick_remove_host(),but still exists a critical time window where
-memstick_check can run after host->eject is set but before removing is set.
+This modification is linked to the parent commit where the received
+ADD_ADDR limit was accidentally reset when the endpoints were flushed.
 
-In the rtsx_usb_ms driver, the problematic sequence is:
+To validate that, the test is now flushing endpoints after having set
+new limits, and before checking them.
 
-rtsx_usb_ms_drv_remove:          memstick_check:
-  host->eject = true
-  cancel_work_sync(handle_req)     if(!host->removing)
-  ...                              memstick_alloc_card()
-                                     memstick_set_rw_addr()
-                                       memstick_new_req()
-                                         rtsx_usb_ms_request()
-                                           if(!host->eject)
-                                           skip schedule_work
-                                       wait_for_completion()
-  memstick_remove_host:                [blocks indefinitely]
-    host->removing = true
-    flush_workqueue()
-    [block]
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
 
-1. rtsx_usb_ms_drv_remove sets host->eject = true
-2. cancel_work_sync(&host->handle_req) runs
-3. memstick_check work may be executed here <-- danger window
-4. memstick_remove_host sets removing = 1
-
-During this window (step 3), memstick_check calls memstick_alloc_card,
-which may indefinitely waiting for mrq_complete completion that will
-never occur because rtsx_usb_ms_request sees eject=true and skips
-scheduling work, memstick_set_rw_addr waits forever for completion.
-
-This causes a deadlock when memstick_remove_host tries to flush_workqueue,
-waiting for memstick_check to complete, while memstick_check is blocked
-waiting for mrq_complete completion.
-
-Fix this by setting removing=true at the start of rtsx_usb_ms_drv_remove,
-before any work cancellation. This ensures memstick_check will see the
-removing flag immediately and exit early, avoiding the deadlock.
-
-Fixes: 62c59a8786e6 ("memstick: Skip allocating card when removing host")
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
+Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250804013604.1311218-1-lijiayi@kylinos.cn
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-3-521fe9957892@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in pm_netlink.sh, because some refactoring have been done
+  later on: commit 3188309c8ceb ("selftests: mptcp: netlink:
+  add 'limits' helpers") and commit c99d57d0007a ("selftests: mptcp: use
+  pm_nl endpoint ops") are not in this version. The same operation can
+  still be done at the same place, without using the new helper. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/core/memstick.c    |    1 -
- drivers/memstick/host/rtsx_usb_ms.c |    1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/memstick/core/memstick.c
-+++ b/drivers/memstick/core/memstick.c
-@@ -548,7 +548,6 @@ EXPORT_SYMBOL(memstick_add_host);
-  */
- void memstick_remove_host(struct memstick_host *host)
- {
--	host->removing = 1;
- 	flush_workqueue(workqueue);
- 	mutex_lock(&host->lock);
- 	if (host->card)
---- a/drivers/memstick/host/rtsx_usb_ms.c
-+++ b/drivers/memstick/host/rtsx_usb_ms.c
-@@ -812,6 +812,7 @@ static int rtsx_usb_ms_drv_remove(struct
- 	int err;
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -134,6 +134,7 @@ ip netns exec $ns1 ./pm_nl_ctl limits 1
+ check "ip netns exec $ns1 ./pm_nl_ctl limits" "$default_limits" "subflows above hard limit"
  
- 	host->eject = true;
-+	msh->removing = true;
- 	cancel_work_sync(&host->handle_req);
- 	cancel_delayed_work_sync(&host->poll_card);
+ ip netns exec $ns1 ./pm_nl_ctl limits 8 8
++ip netns exec $ns1 ./pm_nl_ctl flush
+ check "ip netns exec $ns1 ./pm_nl_ctl limits" "accept 8
+ subflows 8" "set limits"
  
 
 
