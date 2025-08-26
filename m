@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68DB393DC5;
-	Tue, 26 Aug 2025 13:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9053090E0;
+	Tue, 26 Aug 2025 13:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213443; cv=none; b=E6T4bp+QXQR6XDlbyS34BBTRM7rPN1Pw1v/v9QcBXSN9QYZ3zqqo+trC3/9NyDnjQqBT/6m9B+OAQn4md8IdeoMWkQ3WKCOEM6ohzpMkrqWHB16DKesd6fk6Xf17k52N6p7clcFS6mTG4S5qBXIXO7s0UdcIOqxLAIU5LZ9XJZE=
+	t=1756213446; cv=none; b=lwuw+zK/kjN3ZWLn7l8PguM+lKAzcTZvyyEKgxZroCAzdxqa3sW3fpYNSjQDeTLA0M2CKf3rHPE+V+eZIDf7bY98laZNZQHGrkmbo4XBbdFJGc5HST1PvL2MFSQxZ8pa6sDJlBb6HFK5txDXnToD4clCQWe+DzgJGWvd3ehjzUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213443; c=relaxed/simple;
-	bh=wAoFMYC5C1iIPKfCyslEycsRaU9Ps0sQfZZTHKqLWAs=;
+	s=arc-20240116; t=1756213446; c=relaxed/simple;
+	bh=ri4xp+351xR2M9JJj3QdDyqK/myoqFelbnDrImvJJdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qws8E+I1h1kpEe7UW3xVosDoukZJedG5ZxInNjSh3a6gFsOOedTwPYKD32xW/fMcU1gndxgSnYY2QTvf+WHLydQRud0kIjJ7LRxOtMBfrMXH3IgZCkjK0kuzyvY2s2nO8ctwzPmoA9I/FOUhOuLmSKS5p47+DZxLijKy1TOBABQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsMf3bqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTcq9MiyK6mc23F+8ShlaDqOnXisKxNZjVV75Rs/b6R/AS2GQpDGsR+ZXGKFErNYSeIm5jLUmYk2FsaxtonkgdQI6TUsofZu5Xk0lr1H2EQG6+hffaMHtrZUqhAKbHN2lzgtsAaLuz183C6XvAkW8OLSBR9Hnckk4Jou17yz+EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omKkJt9w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsMf3bqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6985CC4CEF1;
-	Tue, 26 Aug 2025 13:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omKkJt9w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC4DC4CEF1;
+	Tue, 26 Aug 2025 13:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213443;
-	bh=wAoFMYC5C1iIPKfCyslEycsRaU9Ps0sQfZZTHKqLWAs=;
+	s=korg; t=1756213446;
+	bh=ri4xp+351xR2M9JJj3QdDyqK/myoqFelbnDrImvJJdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XsMf3bqolWqPklfOrVzntwRCU0X5X1tuQtR4/o7l8zm2G6cD+EYykzt++scHKrW6/
-	 n46/ChNLoz8Ya8wm4iZUoV/nTvh2jIf7FpW6/8cNnVmpgV9QvFUfF153mSffHS0k/2
-	 ETgH0yONcJ/h0dxAuxMCxTxztD7KjGrrEM4gguVQ=
+	b=omKkJt9wRiS6ebtvMA0oIebEiNbSBT3URxYXv+gns0zdAEa4n5wvwwx69Kc/BPcuB
+	 +aiDHxn6KHVVt3Q8bJssqlwQOI/QiftP9UOjFy9k3DoVMnj1Kw3SBIQYRWfVWmuont
+	 e875cPmT2qGmSDwyb28WWQqNox2DZvrnLVjL2HTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Liao Yuanhong <liaoyuanhong@vivo.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.6 351/587] ext4: dont try to clear the orphan_present feature block device is r/o
-Date: Tue, 26 Aug 2025 13:08:20 +0200
-Message-ID: <20250826111001.844540603@linuxfoundation.org>
+Subject: [PATCH 6.6 352/587] ext4: use kmalloc_array() for array space allocation
+Date: Tue, 26 Aug 2025 13:08:21 +0200
+Message-ID: <20250826111001.868911289@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,48 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Liao Yuanhong <liaoyuanhong@vivo.com>
 
-commit c5e104a91e7b6fa12c1dc2d8bf84abb7ef9b89ad upstream.
+commit 76dba1fe277f6befd6ef650e1946f626c547387a upstream.
 
-When the file system is frozen in preparation for taking an LVM
-snapshot, the journal is checkpointed and if the orphan_file feature
-is enabled, and the orphan file is empty, we clear the orphan_present
-feature flag.  But if there are pending inodes that need to be removed
-the orphan_present feature flag can't be cleared.
-
-The problem comes if the block device is read-only.  In that case, we
-can't process the orphan inode list, so it is skipped in
-ext4_orphan_cleanup().  But then in ext4_mark_recovery_complete(),
-this results in the ext4 error "Orphan file not empty on read-only fs"
-firing and the file system mount is aborted.
-
-Fix this by clearing the needs_recovery flag in the block device is
-read-only.  We do this after the call to ext4_load_and_init-journal()
-since there are some error checks need to be done in case the journal
-needs to be replayed and the block device is read-only, or if the
-block device containing the externa journal is read-only, etc.
+Replace kmalloc(size * sizeof) with kmalloc_array() for safer memory
+allocation and overflow prevention.
 
 Cc: stable@kernel.org
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1108271
-Cc: stable@vger.kernel.org
-Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
+Signed-off-by: Liao Yuanhong <liaoyuanhong@vivo.com>
+Link: https://patch.msgid.link/20250811125816.570142-1-liaoyuanhong@vivo.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/orphan.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5398,6 +5398,8 @@ static int __ext4_fill_super(struct fs_c
- 		err = ext4_load_and_init_journal(sb, es, ctx);
- 		if (err)
- 			goto failed_mount3a;
-+		if (bdev_read_only(sb->s_bdev))
-+		    needs_recovery = 0;
- 	} else if (test_opt(sb, NOLOAD) && !sb_rdonly(sb) &&
- 		   ext4_has_feature_journal_needs_recovery(sb)) {
- 		ext4_msg(sb, KERN_ERR, "required journal recovery "
+--- a/fs/ext4/orphan.c
++++ b/fs/ext4/orphan.c
+@@ -590,8 +590,9 @@ int ext4_init_orphan_info(struct super_b
+ 	}
+ 	oi->of_blocks = inode->i_size >> sb->s_blocksize_bits;
+ 	oi->of_csum_seed = EXT4_I(inode)->i_csum_seed;
+-	oi->of_binfo = kmalloc(oi->of_blocks*sizeof(struct ext4_orphan_block),
+-			       GFP_KERNEL);
++	oi->of_binfo = kmalloc_array(oi->of_blocks,
++				     sizeof(struct ext4_orphan_block),
++				     GFP_KERNEL);
+ 	if (!oi->of_binfo) {
+ 		ret = -ENOMEM;
+ 		goto out_put;
 
 
