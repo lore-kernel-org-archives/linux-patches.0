@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEA923D7FA;
-	Tue, 26 Aug 2025 11:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8432C199935;
+	Tue, 26 Aug 2025 11:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208535; cv=none; b=q6GNZvsooyVqwDbBXhRCZFtVfStOOOZkQDWp2xGvO2jtB7Rpw9PJda7L55ZESTpAto3Tk4Fd7+PgV+c06cOEoYc32NKrFi0gIcyZLQElFhJMw0zIkkahSCrzaxo2l21yClFGPqb7vULDc5dPKtR7kOY7k+w4GMoJZBycTCAXNbE=
+	t=1756208537; cv=none; b=k2fknIr22U/kzQt1y/0p3I23fdji4/dMunxHI9pmHtrzYjK9VS+MLp/sr0V3FU6DKw4WKVxxlxM0AVWJlFfBGrWAks+0r/W+O9YVpbS3t0vPjJM+SkWXrI9oN8+ostwbgrcLX7Oc2t/UWb7vtsVLwVhxpODAV93N20BmtK8cqjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208535; c=relaxed/simple;
-	bh=jSqW7/60qVkNya74Us+95Y/AdgHp5UdtWi1pYAzl20c=;
+	s=arc-20240116; t=1756208537; c=relaxed/simple;
+	bh=EahNsT5bkGtZaOLa3qz1REDHhF+oYUsg1qYggMnXoVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ju6owWS4fjamlQcWzdXn/lWg3Bye7GiSBnTSGXSiTICx8NQ0tTkllPUnCLzsvYPhoFo5cT/ZXFSH6Z9nBFDddrFDmewQDdKJOhPHB1m6Wrm0nVzz+RyRtQTq13gEmEoXQXPSKD+5xmquyKGxHB10duQ0BNT8vKCZTnldtg7rqP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEIn62l3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WfOZs2XEjhZQXNKCJ7/RHMMBTz4T+/d3jD2+MEaBuxSkkdnsqh1euEk9eun11AzIkexbP4Fhti6zaUY3ipGWx4gCB2m0gWYhj0V2L8KZvhMtbwEkTRuCVPXrjgrK/f/rz72LEAGGIGMqvOPHhQsu1NZwpCFzQBpCn/xeM9TpQsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/A35Zmu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEIn62l3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71960C4CEF1;
-	Tue, 26 Aug 2025 11:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/A35Zmu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14461C4CEF1;
+	Tue, 26 Aug 2025 11:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208534;
-	bh=jSqW7/60qVkNya74Us+95Y/AdgHp5UdtWi1pYAzl20c=;
+	s=korg; t=1756208537;
+	bh=EahNsT5bkGtZaOLa3qz1REDHhF+oYUsg1qYggMnXoVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEIn62l3Z3dPX1CYix/mO+JkjnWUTRYFAKCP3lOF1jJplLB1E+klYga0s6+7IsBN/
-	 qPCTCZkR6HNHiolwDn8OFwVgVn6CRLNyIypaqcCI7PZvZ+xaWTuDNqdyhs5cioa5DY
-	 uqLMl1sGwdQCb/WxiJYW5frKe3DMgG4fyjh/oX88=
+	b=K/A35ZmucaHx80K6L3303Ds/aN1FyY6+JaCtUSrF+ZBNjEzwIaCH2uTwPKSlpkjJn
+	 Pr0qMRXFiS6d0sWzDnr5SlmwCWTvp4/+CESeK1JQrsqCfj0zH6TU/+Ofb/VSakLeB/
+	 NrjOw/VSptGA++Sw1kpEMlw8MUtruD7njcMzLPGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	cen zhang <zzzccc427@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/322] btrfs: zoned: requeue to unused block group list if zone finish failed
-Date: Tue, 26 Aug 2025 13:09:24 +0200
-Message-ID: <20250826110919.488107052@linuxfoundation.org>
+Subject: [PATCH 6.12 150/322] xfs: fully decouple XFS_IBULK* flags from XFS_IWALK* flags
+Date: Tue, 26 Aug 2025 13:09:25 +0200
+Message-ID: <20250826110919.513730874@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,40 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 62be7afcc13b2727bdc6a4c91aefed6b452e6ecc ]
+[ Upstream commit d2845519b0723c5d5a0266cbf410495f9b8fd65c ]
 
-btrfs_zone_finish() can fail for several reason. If it is -EAGAIN, we need
-to try it again later. So, put the block group to the retry list properly.
+Fix up xfs_inumbers to now pass in the XFS_IBULK* flags into the flags
+argument to xfs_inobt_walk, which expects the XFS_IWALK* flags.
 
-Failing to do so will keep the removable block group intact until remount
-and can causes unnecessary ENOSPC.
+Currently passing the wrong flags works for non-debug builds because
+the only XFS_IWALK* flag has the same encoding as the corresponding
+XFS_IBULK* flag, but in debug builds it can trigger an assert that no
+incorrect flag is passed.  Instead just extra the relevant flag.
 
-Fixes: 74e91b12b115 ("btrfs: zoned: zone finish unused block group")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 5b35d922c52798 ("xfs: Decouple XFS_IBULK flags from XFS_IWALK flags")
+Cc: <stable@vger.kernel.org> # v5.19
+Reported-by: cen zhang <zzzccc427@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_itable.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1646,8 +1646,10 @@ void btrfs_delete_unused_bgs(struct btrf
- 		ret = btrfs_zone_finish(block_group);
- 		if (ret < 0) {
- 			btrfs_dec_block_group_ro(block_group);
--			if (ret == -EAGAIN)
-+			if (ret == -EAGAIN) {
-+				btrfs_link_bg_list(block_group, &retry_list);
- 				ret = 0;
-+			}
- 			goto next;
- 		}
+--- a/fs/xfs/xfs_itable.c
++++ b/fs/xfs/xfs_itable.c
+@@ -430,11 +430,15 @@ xfs_inumbers(
+ 		.breq		= breq,
+ 	};
+ 	struct xfs_trans	*tp;
++	unsigned int		iwalk_flags = 0;
+ 	int			error = 0;
  
+ 	if (xfs_bulkstat_already_done(breq->mp, breq->startino))
+ 		return 0;
+ 
++	if (breq->flags & XFS_IBULK_SAME_AG)
++		iwalk_flags |= XFS_IWALK_SAME_AG;
++
+ 	/*
+ 	 * Grab an empty transaction so that we can use its recursive buffer
+ 	 * locking abilities to detect cycles in the inobt without deadlocking.
+@@ -443,7 +447,7 @@ xfs_inumbers(
+ 	if (error)
+ 		goto out;
+ 
+-	error = xfs_inobt_walk(breq->mp, tp, breq->startino, breq->flags,
++	error = xfs_inobt_walk(breq->mp, tp, breq->startino, iwalk_flags,
+ 			xfs_inumbers_walk, breq->icount, &ic);
+ 	xfs_trans_cancel(tp);
+ out:
 
 
