@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C147E302769;
-	Tue, 26 Aug 2025 13:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D7B23FC41;
+	Tue, 26 Aug 2025 13:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214294; cv=none; b=O+dJ1NZER7dMTctmsn9t2Miim4eiqHfMVgzeD7ctSsXVjYheLpH4pyNjXm89HrLITu7rLDjkTSdzGrKpr/Y74v2ptHE+9hlXpRn3KiFbJVHbrEHeIJ2tfTKYsCJxoYIvZlHXB3f9p/+G8UnTMOOm0GFt2fhby8Cjflp0W84P55A=
+	t=1756214297; cv=none; b=ZjcvGMKGpLNj3ape3n6iQPPe4v/JxPBKa+qgam6x8oSYsUmtwqDyNTAhoyPUigRt6IBqnghEaecOtwtBsOp71NC9AJ8iRP7GHNAUt3wGZcfpgAh3C1PpxuBKFzbqAYRUKAS2z8kaN3ERIF86tjECqN/4GJzDssPHhBOPZYm8jgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214294; c=relaxed/simple;
-	bh=EdsUNSyRkb6Ytd4/hBSiA12+VNNkxPZkZCFA/XPqO5s=;
+	s=arc-20240116; t=1756214297; c=relaxed/simple;
+	bh=f8P+cyVPnC2ImrXEehcyugOIwfNedGvoQaaO5KLyajo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1y8nc2XX6PVhW5CMIF7hA84Z5nU0kG1IqRnMGqWntwCsJ5/hs8zd4hXq2Q9Kg0wZ2icLvanJ8xfmlddGLRRdYTwFb83eV15fk0oVcPXA5bbE+pE+LDOM0yqqFIhwfbXqcupHGg6MjwWDSo34vwY2MDMDFZjnXSErd18z4hyfEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpJOPn9d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0BIz8an4ZR+m9nezVvETPGiCCyf2MhCNlXGSlgyGyI/OgI3A39/VKcEKXyA4oe73iF9A9YZYQ45PSJFQQ/1CbqVQApM99anUs3YbUG2i3UQViEabmNeHiU4hjQgHUjKViEv2hMH+KZIK0b64wV+G7GX/FXjKv2T7ipTv7os0GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEAw+LXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpJOPn9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5223AC4CEF1;
-	Tue, 26 Aug 2025 13:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEAw+LXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0021DC4CEF1;
+	Tue, 26 Aug 2025 13:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214294;
-	bh=EdsUNSyRkb6Ytd4/hBSiA12+VNNkxPZkZCFA/XPqO5s=;
+	s=korg; t=1756214297;
+	bh=f8P+cyVPnC2ImrXEehcyugOIwfNedGvoQaaO5KLyajo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rpJOPn9dHIb07RleLXNNUjedirRLkrhhn48QogMy7xxxPdcZtG7pORragz4xzRXni
-	 wwGoY9d3cNNAbVQapm6Qp17rpyRl6SYw6Hpmoj9f5JckGNDtGRJyVz/aCBuPm7ZF3z
-	 +3FHZRcm9noxoKHynsfXix6SlM+r7KS33tSO4DXE=
+	b=JEAw+LXM0Msb8wyymeI1wDaq9DbPMkf2qikQbC+rUGKVbqODRZC1lpivi6PIkTO4t
+	 V8qls3aTKtPzCQZIZuLvzK6rpojpomMSJsH/ZbWa/nOTwlNdrYql4IrplHRtxHXiDx
+	 +wxn9jQYX2fLRjHyE8ez5iklmFKenIFeAEp99IB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/482] arm64: Handle KCOV __init vs inline mismatches
-Date: Tue, 26 Aug 2025 13:05:06 +0200
-Message-ID: <20250826110932.132214338@linuxfoundation.org>
+Subject: [PATCH 6.1 054/482] smb/server: avoid deadlock when linking with ReplaceIfExists
+Date: Tue, 26 Aug 2025 13:05:07 +0200
+Message-ID: <20250826110932.158070922@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,49 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 65c430906efffee9bd7551d474f01a6b1197df90 ]
+[ Upstream commit d5fc1400a34b4ea5e8f2ce296ea12bf8c8421694 ]
 
-GCC appears to have kind of fragile inlining heuristics, in the
-sense that it can change whether or not it inlines something based on
-optimizations. It looks like the kcov instrumentation being added (or in
-this case, removed) from a function changes the optimization results,
-and some functions marked "inline" are _not_ inlined. In that case,
-we end up with __init code calling a function not marked __init, and we
-get the build warnings I'm trying to eliminate in the coming patch that
-adds __no_sanitize_coverage to __init functions:
+If smb2_create_link() is called with ReplaceIfExists set and the name
+does exist then a deadlock will happen.
 
-WARNING: modpost: vmlinux: section mismatch in reference: acpi_get_enable_method+0x1c (section: .text.unlikely) -> acpi_psci_present (section: .init.text)
+ksmbd_vfs_kern_path_locked() will return with success and the parent
+directory will be locked.  ksmbd_vfs_remove_file() will then remove the
+file.  ksmbd_vfs_link() will then be called while the parent is still
+locked.  It will try to lock the same parent and will deadlock.
 
-This problem is somewhat fragile (though using either __always_inline
-or __init will deterministically solve it), but we've tripped over
-this before with GCC and the solution has usually been to just use
-__always_inline and move on.
+This patch moves the ksmbd_vfs_kern_path_unlock() call to *before*
+ksmbd_vfs_link() and then simplifies the code, removing the file_present
+flag variable.
 
-For arm64 this requires forcing one ACPI function to be inlined with
-__always_inline.
-
-Link: https://lore.kernel.org/r/20250724055029.3623499-1-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/acpi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index 702587fda70c..8cbbd08cc8c5 100644
---- a/arch/arm64/include/asm/acpi.h
-+++ b/arch/arm64/include/asm/acpi.h
-@@ -128,7 +128,7 @@ acpi_set_mailbox_entry(int cpu, struct acpi_madt_generic_interrupt *processor)
- {}
- #endif
- 
--static inline const char *acpi_get_enable_method(int cpu)
-+static __always_inline const char *acpi_get_enable_method(int cpu)
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 3e2cd22fb2bd..7943b2ee2a76 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5648,7 +5648,6 @@ static int smb2_create_link(struct ksmbd_work *work,
  {
- 	if (acpi_psci_present())
- 		return "psci";
+ 	char *link_name = NULL, *target_name = NULL, *pathname = NULL;
+ 	struct path path, parent_path;
+-	bool file_present = false;
+ 	int rc;
+ 
+ 	if (buf_len < (u64)sizeof(struct smb2_file_link_info) +
+@@ -5681,11 +5680,8 @@ static int smb2_create_link(struct ksmbd_work *work,
+ 	if (rc) {
+ 		if (rc != -ENOENT)
+ 			goto out;
+-	} else
+-		file_present = true;
+-
+-	if (file_info->ReplaceIfExists) {
+-		if (file_present) {
++	} else {
++		if (file_info->ReplaceIfExists) {
+ 			rc = ksmbd_vfs_remove_file(work, &path);
+ 			if (rc) {
+ 				rc = -EINVAL;
+@@ -5693,21 +5689,17 @@ static int smb2_create_link(struct ksmbd_work *work,
+ 					    link_name);
+ 				goto out;
+ 			}
+-		}
+-	} else {
+-		if (file_present) {
++		} else {
+ 			rc = -EEXIST;
+ 			ksmbd_debug(SMB, "link already exists\n");
+ 			goto out;
+ 		}
++		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
+ 	}
+-
+ 	rc = ksmbd_vfs_link(work, target_name, link_name);
+ 	if (rc)
+ 		rc = -EINVAL;
+ out:
+-	if (file_present)
+-		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
+ 
+ 	if (!IS_ERR(link_name))
+ 		kfree(link_name);
 -- 
 2.39.5
 
