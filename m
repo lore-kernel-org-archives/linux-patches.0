@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565C52BE65E;
-	Tue, 26 Aug 2025 11:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89301A256B;
+	Tue, 26 Aug 2025 11:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208527; cv=none; b=koDC3Csxpf8n6IMRvVQEbuiWMOA/uwdDoY6NVW6o09NP8KkAXwGB6P+hhDEMG3C7+GwpHtoZmbCOE6nSGbE/6F20oRKxDWOSjsT77id/doclK7KaUjBoOdvJ76vF5EeVOhT3oQYQeYZvwY6StDn7sx5A/8H3Kmmgcrp675EqWCk=
+	t=1756208529; cv=none; b=Ib7Y4arO5/0ubgULsFGsZo7MHDYti252SqoMNSVLWerOxps91kgKbgitg7ymo0iatvgHWRq54rQLb/Q3jE+j86Oi5YFV1lg8jBkFW1zwQzVpuHTKO8i7XpYidyTBiBGpb1R8oHaYNvMXyXomJchrsC1xhIUuQncb6KvUKbt5/JY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208527; c=relaxed/simple;
-	bh=hpniVx54CHP9il3csDHENb6UUaFApuIYD1saRQ9tA2U=;
+	s=arc-20240116; t=1756208529; c=relaxed/simple;
+	bh=mF77cpGWMaXcsm2rlZGvEtWJ46c+xqzcLdN0n1PkGRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXk8OKF8I7iEr8fTmvk6jiOQXWoF7qYF/6gkZ4tg9UOaQlgSHeqds1ROJUtk3AG3FHIUvGLCjJFQd2e3CC8m6NvPK9VzNB9Hhyp1B4iCRCq3XafODfrA/ADCST/ZHZHHhLKyy2Iet8I3UzDNFYzl7kyJli9zluGJIa0pdFS7Vfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgMXXbzJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGPm0LfaGu2q9cYK/F3AC8x9qOOwmOWq7LFSfptQYNfAKCFTUF18fSzlnarFENVD36XNt4V1b6KmnPd4HDFtbyr4Nxd9QlpZ51UA8rfCuwHltXz4hyq5fc+uoDhdqq95HnF5v8omzKE52lf6W1HBNnVZeM1h08wXq9MRz6bSwVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4ucS3+T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgMXXbzJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47F2C4CEF4;
-	Tue, 26 Aug 2025 11:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4ucS3+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423EEC16AAE;
+	Tue, 26 Aug 2025 11:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208527;
-	bh=hpniVx54CHP9il3csDHENb6UUaFApuIYD1saRQ9tA2U=;
+	s=korg; t=1756208529;
+	bh=mF77cpGWMaXcsm2rlZGvEtWJ46c+xqzcLdN0n1PkGRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgMXXbzJdq3VAC1XE6JRJkLtNeF4QKuMmpXF/Cyh7vVYBZxWCH1uuEkbfmjkod++P
-	 Q5YsG3eIqEupMYlKtCfbAjGYJwU1AwYvLnPZfqi3nNLO2xp69ov6+aF1y0cRoNAiss
-	 saW8or5wYXWkag2asmT5b423ECnZ/VTMlxeveqqk=
+	b=G4ucS3+Ts6Oq0LLUDiaFAr0MLRDFPt/5Ak5f6RoCt68K8uTohNg2zormVt+ypqlK7
+	 GNOE7jcHSB5H19uRHQ+yXjEQL5PexT8cZR+jmp9MWTvqj02Wpt2MAka9lTbA0hGDvW
+	 Gg/3tcLaFqqpsj+PqV3Y21n1iSWG18G8ZPGcZW+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Honggyu Kim <honggyu.kim@sk.com>,
-	Hyeongtak Ji <hyeongtak.ji@sk.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 138/322] mm/damon/ops-common: ignore migration request to invalid nodes
-Date: Tue, 26 Aug 2025 13:09:13 +0200
-Message-ID: <20250826110919.211534130@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 147/322] btrfs: explicitly ref count block_group on new_bgs list
+Date: Tue, 26 Aug 2025 13:09:22 +0200
+Message-ID: <20250826110919.438496207@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,63 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Boris Burkov <boris@bur.io>
 
-commit 7e6c3130690a01076efdf45aa02ba5d5c16849a0 upstream.
+[ Upstream commit 7cbce3cb4c5cfffd8b08f148e2136afc1ec1ba94 ]
 
-damon_migrate_pages() tries migration even if the target node is invalid.
-If users mistakenly make such invalid requests via
-DAMOS_MIGRATE_{HOT,COLD} action, the below kernel BUG can happen.
+All other users of the bg_list list_head increment the refcount when
+adding to a list and decrement it when deleting from the list. Just for
+the sake of uniformity and to try to avoid refcounting bugs, do it for
+this list as well.
 
-    [ 7831.883495] BUG: unable to handle page fault for address: 0000000000001f48
-    [ 7831.884160] #PF: supervisor read access in kernel mode
-    [ 7831.884681] #PF: error_code(0x0000) - not-present page
-    [ 7831.885203] PGD 0 P4D 0
-    [ 7831.885468] Oops: Oops: 0000 [#1] SMP PTI
-    [ 7831.885852] CPU: 31 UID: 0 PID: 94202 Comm: kdamond.0 Not tainted 6.16.0-rc5-mm-new-damon+ #93 PREEMPT(voluntary)
-    [ 7831.886913] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-4.el9 04/01/2014
-    [ 7831.887777] RIP: 0010:__alloc_frozen_pages_noprof (include/linux/mmzone.h:1724 include/linux/mmzone.h:1750 mm/page_alloc.c:4936 mm/page_alloc.c:5137)
-    [...]
-    [ 7831.895953] Call Trace:
-    [ 7831.896195]  <TASK>
-    [ 7831.896397] __folio_alloc_noprof (mm/page_alloc.c:5183 mm/page_alloc.c:5192)
-    [ 7831.896787] migrate_pages_batch (mm/migrate.c:1189 mm/migrate.c:1851)
-    [ 7831.897228] ? __pfx_alloc_migration_target (mm/migrate.c:2137)
-    [ 7831.897735] migrate_pages (mm/migrate.c:2078)
-    [ 7831.898141] ? __pfx_alloc_migration_target (mm/migrate.c:2137)
-    [ 7831.898664] damon_migrate_folio_list (mm/damon/ops-common.c:321 mm/damon/ops-common.c:354)
-    [ 7831.899140] damon_migrate_pages (mm/damon/ops-common.c:405)
-    [...]
+This does not fix any known ref-counting bug, as the reference belongs
+to a single task (trans_handle is not shared and this represents
+trans_handle->new_bgs linkage) and will not lose its original refcount
+while that thread is running. And BLOCK_GROUP_FLAG_NEW protects against
+ref-counting errors "moving" the block group to the unused list without
+taking a ref.
 
-Add a target node validity check in damon_migrate_pages().  The validity
-check is stolen from that of do_pages_move(), which is being used for the
-move_pages() system call.
+With that said, I still believe it is simpler to just hold the extra ref
+count for this list user as well.
 
-Link: https://lkml.kernel.org/r/20250720185822.1451-1-sj@kernel.org
-Fixes: b51820ebea65 ("mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion")	[6.11.x]
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Honggyu Kim <honggyu.kim@sk.com>
-Cc: Hyeongtak Ji <hyeongtak.ji@sk.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 62be7afcc13b ("btrfs: zoned: requeue to unused block group list if zone finish failed")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/paddr.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/block-group.c |    2 ++
+ fs/btrfs/transaction.c |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -431,6 +431,10 @@ static unsigned long damon_pa_migrate_pa
- 	if (list_empty(folio_list))
- 		return nr_migrated;
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -2807,6 +2807,7 @@ next:
+ 		spin_lock(&fs_info->unused_bgs_lock);
+ 		list_del_init(&block_group->bg_list);
+ 		clear_bit(BLOCK_GROUP_FLAG_NEW, &block_group->runtime_flags);
++		btrfs_put_block_group(block_group);
+ 		spin_unlock(&fs_info->unused_bgs_lock);
  
-+	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
-+			!node_state(target_nid, N_MEMORY))
-+		return nr_migrated;
-+
- 	noreclaim_flag = memalloc_noreclaim_save();
+ 		/*
+@@ -2945,6 +2946,7 @@ struct btrfs_block_group *btrfs_make_blo
+ 	}
+ #endif
  
- 	nid = folio_nid(lru_to_folio(folio_list));
++	btrfs_get_block_group(cache);
+ 	list_add_tail(&cache->bg_list, &trans->new_bgs);
+ 	btrfs_inc_delayed_refs_rsv_bg_inserts(fs_info);
+ 
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -2113,6 +2113,7 @@ static void btrfs_cleanup_pending_block_
+ 		*/
+ 	       spin_lock(&fs_info->unused_bgs_lock);
+                list_del_init(&block_group->bg_list);
++	       btrfs_put_block_group(block_group);
+ 	       spin_unlock(&fs_info->unused_bgs_lock);
+        }
+ }
 
 
