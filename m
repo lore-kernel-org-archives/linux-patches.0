@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EA32FDC44;
-	Tue, 26 Aug 2025 14:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71418286881;
+	Tue, 26 Aug 2025 14:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217550; cv=none; b=lt3APYKujlDqvaBezA8CqDrLVYVs/oKsP0lXjDj9322yy5F6MbXiGLFp2rDSG2nvCJuxcWvo20vPDzDe7rmRLBoatCMBT6NsTtTY+GmtRQbr+C0+zHac178t8rUj0SrueSIl7kHzy2u+sZlj9R25KnN01ii1Z/zX0KYWLfnY+j4=
+	t=1756217553; cv=none; b=sRhoU+RjTuzH4vOU1h0JA3/zrrJNBIcmrbJq9ofXGE3YMe0BhD7DmCYpkTmnCzOfNBSpX7TLy1MLD1G4LwfyLR6P+3Vo2mdABzZOk9QQZ13lVe9RsTFe9ilv44yIbsIWLyTltdf9ApEB9PKPCmBIL1lJYq6qBeCpaXx4BoYL9r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217550; c=relaxed/simple;
-	bh=0sQXgMgp+4Vge6GiZUjTKhO45i24WC4DozKO3prBi0E=;
+	s=arc-20240116; t=1756217553; c=relaxed/simple;
+	bh=FWhZlrgXGoHPFLvx8ThJ05/LHYAscgoP3sztOeTYLEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geJQihNog9mrupxfuBPqfNHKf+YFoc1Zq47tU9Cz2mlG0IE4iJNTcgm2J+DPQT6rT/52dkFkrj8gk6/4/YNPbAyOCY9ASXPZW+LVN+FhtRG7uB8tgFELB4f3y3Pr4k/sMF4H+mfrlwmtlEp728HcpNNwHdytZBj7mX9bwGcxHck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L68LazrW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WxacvLbVr1BO/J4uAGdGeNb1RoFAABfyrzzRYMhVPnAVjtmdi2pfa5EHN+KR9KA31SYwAmRBPabKOKY8QsyXzunBRvK9d46xYK3m+AaQFXNt8T7d257OZlRN8ivqqHI8HxgiM6G1LV941luMevmwpUmjxZekcpRJucEElRw+NWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0BHEw6q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L68LazrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADABC4CEF1;
-	Tue, 26 Aug 2025 14:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0BHEw6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2785C19421;
+	Tue, 26 Aug 2025 14:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217550;
-	bh=0sQXgMgp+4Vge6GiZUjTKhO45i24WC4DozKO3prBi0E=;
+	s=korg; t=1756217553;
+	bh=FWhZlrgXGoHPFLvx8ThJ05/LHYAscgoP3sztOeTYLEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L68LazrWkk+fcAiG76Gvv1jWd2B5EuVChgeL02PwT++Z9yWC0W6PE1DuMrc7F8DAG
-	 kE/z4oaey8kR55rF4eWgU+d8vaKGSCuZr+qhFAZTES4xXtCpIwuo9nJjKzKQ9NsiFI
-	 exLNyhcn630DtgTteN57TRNL6r1E5grkeN4nmSuQ=
+	b=F0BHEw6qEE8hTJdLOKzQ0yGrTAsygvMnB8jmU9ndC2UbwNVKZG1cAcVHLb/AH6Uqi
+	 AUP7BruWaXpX7XiajpoQ1CuF7LIN/w89Bp3Jkd6QoKx3sYWOAMcYLbZGvtrythdQ++
+	 8UTW24Kk/pZmm8WTLV6wwXjECCRFPce69pQ3NiO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 168/523] pNFS/flexfiles: dont attempt pnfs on fatal DS errors
-Date: Tue, 26 Aug 2025 13:06:18 +0200
-Message-ID: <20250826110928.612854620@linuxfoundation.org>
+	Quang Le <quanglex97@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 186/523] net/packet: fix a race in packet_set_ring() and packet_notifier()
+Date: Tue, 26 Aug 2025 13:06:36 +0200
+Message-ID: <20250826110929.041444478@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,176 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+From: Quang Le <quanglex97@gmail.com>
 
-[ Upstream commit f06bedfa62d57f7b67d44aacd6badad2e13a803f ]
+commit 01d3c8417b9c1b884a8a981a3b886da556512f36 upstream.
 
-When an applications get killed (SIGTERM/SIGINT) while pNFS client performs a connection
-to DS, client ends in an infinite loop of connect-disconnect. This
-source of the issue, it that flexfilelayoutdev#nfs4_ff_layout_prepare_ds gets an error
-on nfs4_pnfs_ds_connect with status ERESTARTSYS, which is set by rpc_signal_task, but
-the error is treated as transient, thus retried.
+When packet_set_ring() releases po->bind_lock, another thread can
+run packet_notifier() and process an NETDEV_UP event.
 
-The issue is reproducible with Ctrl+C the following script(there should be ~1000 files in
-a directory, client should must not have any connections to DSes):
+This race and the fix are both similar to that of commit 15fe076edea7
+("net/packet: fix a race in packet_bind() and packet_notifier()").
 
-```
-echo 3 > /proc/sys/vm/drop_caches
+There too the packet_notifier NETDEV_UP event managed to run while a
+po->bind_lock critical section had to be temporarily released. And
+the fix was similarly to temporarily set po->num to zero to keep
+the socket unhooked until the lock is retaken.
 
-for i in *
-do
-   head -1 $i
-done
-```
+The po->bind_lock in packet_set_ring and packet_notifier precede the
+introduction of git history.
 
-The change aims to propagate the nfs4_ff_layout_prepare_ds error state
-to the caller that can decide whatever this is a retryable error or not.
-
-Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Link: https://lore.kernel.org/r/20250627071751.189663-1-tigran.mkrtchyan@desy.de
-Fixes: 260f32adb88d ("pNFS/flexfiles: Check the result of nfs4_pnfs_ds_connect")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quang Le <quanglex97@gmail.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250801175423.2970334-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c    | 26 ++++++++++++++---------
- fs/nfs/flexfilelayout/flexfilelayoutdev.c |  6 +++---
- 2 files changed, 19 insertions(+), 13 deletions(-)
+ net/packet/af_packet.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index a053dd05057f..57150b27c0fd 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -739,14 +739,14 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
- {
- 	struct nfs4_ff_layout_segment *fls = FF_LAYOUT_LSEG(lseg);
- 	struct nfs4_ff_layout_mirror *mirror;
--	struct nfs4_pnfs_ds *ds;
-+	struct nfs4_pnfs_ds *ds = ERR_PTR(-EAGAIN);
- 	u32 idx;
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -4514,10 +4514,10 @@ static int packet_set_ring(struct sock *
+ 	spin_lock(&po->bind_lock);
+ 	was_running = po->running;
+ 	num = po->num;
+-	if (was_running) {
+-		WRITE_ONCE(po->num, 0);
++	WRITE_ONCE(po->num, 0);
++	if (was_running)
+ 		__unregister_prot_hook(sk, false);
+-	}
++
+ 	spin_unlock(&po->bind_lock);
  
- 	/* mirrors are initially sorted by efficiency */
- 	for (idx = start_idx; idx < fls->mirror_array_cnt; idx++) {
- 		mirror = FF_LAYOUT_COMP(lseg, idx);
- 		ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
--		if (!ds)
-+		if (IS_ERR(ds))
- 			continue;
+ 	synchronize_net();
+@@ -4549,10 +4549,10 @@ static int packet_set_ring(struct sock *
+ 	mutex_unlock(&po->pg_vec_lock);
  
- 		if (check_device &&
-@@ -754,10 +754,10 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
- 			continue;
- 
- 		*best_idx = idx;
--		return ds;
-+		break;
- 	}
- 
--	return NULL;
-+	return ds;
- }
- 
- static struct nfs4_pnfs_ds *
-@@ -933,7 +933,7 @@ ff_layout_pg_init_write(struct nfs_pageio_descriptor *pgio,
- 	for (i = 0; i < pgio->pg_mirror_count; i++) {
- 		mirror = FF_LAYOUT_COMP(pgio->pg_lseg, i);
- 		ds = nfs4_ff_layout_prepare_ds(pgio->pg_lseg, mirror, true);
--		if (!ds) {
-+		if (IS_ERR(ds)) {
- 			if (!ff_layout_no_fallback_to_mds(pgio->pg_lseg))
- 				goto out_mds;
- 			pnfs_generic_pg_cleanup(pgio);
-@@ -1820,6 +1820,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
- 	u32 idx = hdr->pgio_mirror_idx;
- 	int vers;
- 	struct nfs_fh *fh;
-+	bool ds_fatal_error = false;
- 
- 	dprintk("--> %s ino %lu pgbase %u req %zu@%llu\n",
- 		__func__, hdr->inode->i_ino,
-@@ -1827,8 +1828,10 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
- 
- 	mirror = FF_LAYOUT_COMP(lseg, idx);
- 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
--	if (!ds)
-+	if (IS_ERR(ds)) {
-+		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
- 		goto out_failed;
-+	}
- 
- 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
- 						   hdr->inode);
-@@ -1869,7 +1872,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
- 	return PNFS_ATTEMPTED;
- 
- out_failed:
--	if (ff_layout_avoid_mds_available_ds(lseg))
-+	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
- 		return PNFS_TRY_AGAIN;
- 	trace_pnfs_mds_fallback_read_pagelist(hdr->inode,
- 			hdr->args.offset, hdr->args.count,
-@@ -1890,11 +1893,14 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
- 	int vers;
- 	struct nfs_fh *fh;
- 	u32 idx = hdr->pgio_mirror_idx;
-+	bool ds_fatal_error = false;
- 
- 	mirror = FF_LAYOUT_COMP(lseg, idx);
- 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, true);
--	if (!ds)
-+	if (IS_ERR(ds)) {
-+		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
- 		goto out_failed;
-+	}
- 
- 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
- 						   hdr->inode);
-@@ -1937,7 +1943,7 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
- 	return PNFS_ATTEMPTED;
- 
- out_failed:
--	if (ff_layout_avoid_mds_available_ds(lseg))
-+	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
- 		return PNFS_TRY_AGAIN;
- 	trace_pnfs_mds_fallback_write_pagelist(hdr->inode,
- 			hdr->args.offset, hdr->args.count,
-@@ -1979,7 +1985,7 @@ static int ff_layout_initiate_commit(struct nfs_commit_data *data, int how)
- 	idx = calc_ds_index_from_commit(lseg, data->ds_commit_index);
- 	mirror = FF_LAYOUT_COMP(lseg, idx);
- 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, true);
--	if (!ds)
-+	if (IS_ERR(ds))
- 		goto out_err;
- 
- 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
-diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-index 4b0cdddce6eb..11777d33a85e 100644
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -368,11 +368,11 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
- 			  struct nfs4_ff_layout_mirror *mirror,
- 			  bool fail_return)
- {
--	struct nfs4_pnfs_ds *ds = NULL;
-+	struct nfs4_pnfs_ds *ds;
- 	struct inode *ino = lseg->pls_layout->plh_inode;
- 	struct nfs_server *s = NFS_SERVER(ino);
- 	unsigned int max_payload;
--	int status;
-+	int status = -EAGAIN;
- 
- 	if (!ff_layout_init_mirror_ds(lseg->pls_layout, mirror))
- 		goto noconnect;
-@@ -410,7 +410,7 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
- 	ff_layout_send_layouterror(lseg);
- 	if (fail_return || !ff_layout_has_available_ds(lseg))
- 		pnfs_error_mark_layout_for_return(ino, lseg);
--	ds = NULL;
-+	ds = ERR_PTR(status);
- out:
- 	return ds;
- }
--- 
-2.39.5
-
+ 	spin_lock(&po->bind_lock);
+-	if (was_running) {
+-		WRITE_ONCE(po->num, num);
++	WRITE_ONCE(po->num, num);
++	if (was_running)
+ 		register_prot_hook(sk);
+-	}
++
+ 	spin_unlock(&po->bind_lock);
+ 	if (pg_vec && (po->tp_version > TPACKET_V2)) {
+ 		/* Because we don't support block-based V3 on tx-ring */
 
 
