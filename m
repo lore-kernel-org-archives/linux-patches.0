@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB3B1A256B;
-	Tue, 26 Aug 2025 11:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78012227599;
+	Tue, 26 Aug 2025 11:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207473; cv=none; b=XVx87Mfgcp57/vcTW/knUrgQwSlh4glfgunXVueK/daKSrirISE/zmjytHQaKkBd3Y4gKRkqjBnoSY1VRiwyD1breoI4+INIxRHlGQ9I4OKRSkuOps8F2Hkb8Vncsb/j/XiaiAdmE7+lYRVXgdj/dKDV9JgHQYsH4qRxzXog6KU=
+	t=1756207476; cv=none; b=EiZAJVCDJP19KZw48wOsYxqppC7rDD1YXuzOTp4UKYP3rGUpdAZF1F6CUwLJ06NkG8H/eUp6ns012+bddcsh6TMwa3EpSRcSnLcpE7X/mjq8Ya9qENfluYeP2gulUG+qSaUqbU14xSzq5VaQyikTB09ECmiDj0JXxnhDL7n8k+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207473; c=relaxed/simple;
-	bh=qNy/Kl/DtA7e8Dh7wozSGcOVJX994g8ITC4IJgS4qDc=;
+	s=arc-20240116; t=1756207476; c=relaxed/simple;
+	bh=v0DnfDRZpkYvicNmJjp2uyfkRpsSEos6BjT3X/c35q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JB9FCQlgQD+9vxZDvDKvNd4/ohxukBS1LEVSp0G1JkxXjbNcurpETqc5NYoEvDVIDWguwZTuX00fPH+uTx+AqHAWXGIQbMOWbLiPeiIu8WZikQsAmwjD8dhe6vlxOVh/pms0geCeaXGbXJIMgMn33xFgv+8Kb+8BDKhs7sTVREg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nrw2rNIH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N1LXehkO2A/LwaHlZXWoY40JbwpTPv/v3G0cgt8Sb5wzuxmZz4sxDG8MdSNgJoutIfcgbb1AgQ5Hv7vyWjp52U95gLpz2DbFdfexwOfBoO7AjtbYNBClzotjOoBYpb61reKIjzfNGjXNIju7CS0bQo6wZzKj9u2dcbeuHjIYwvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1FnLBta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nrw2rNIH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F38FC113CF;
-	Tue, 26 Aug 2025 11:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1FnLBta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A6CC4CEF1;
+	Tue, 26 Aug 2025 11:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207473;
-	bh=qNy/Kl/DtA7e8Dh7wozSGcOVJX994g8ITC4IJgS4qDc=;
+	s=korg; t=1756207476;
+	bh=v0DnfDRZpkYvicNmJjp2uyfkRpsSEos6BjT3X/c35q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nrw2rNIHIpSv5dnbnHFUOUwmk7cGCzpzKh59DxFVY38h0KUNFoIDjDhESBEjgMlxf
-	 2Y9PmjMV30lHclDWrzkXQ9g8FQqrKAJk3nvXuLfoMtUdVV43K0gnaeS+thuqrQ3ifq
-	 hWCi7trcIob7Hc7iUUJ1OGiLwdgRAvg4Xy3KD/Vw=
+	b=M1FnLBtaXuPL9Eownw0uy9e9t12F8AyBRtFPPVJhojMeuhAoGjJYDWel1MsWDNXJZ
+	 /FeFfFtajjG1JRlPV4hF0DTZ4r2j3C514cxaDbCmVau4/jh1iqwxUuJHUg7xvBkIlZ
+	 r64VHVUprtm1z/QY8xkH3z6vgdVBfHG0i8HqpToY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.16 196/457] LoongArch: KVM: Add address alignment check in pch_pic register access
-Date: Tue, 26 Aug 2025 13:08:00 +0200
-Message-ID: <20250826110942.211122654@linuxfoundation.org>
+	stable@kernel.org,
+	syzbot+a81f2759d022496b40ab@syzkaller.appspotmail.com,
+	Jakub Acs <acsjakub@amazon.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.16 197/457] net, hsr: reject HSR frame if skb cant hold tag
+Date: Tue, 26 Aug 2025 13:08:01 +0200
+Message-ID: <20250826110942.235941068@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -44,54 +47,193 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Jakub Acs <acsjakub@amazon.de>
 
-commit 538c06e3964a8e94b645686cc58ccc4a06fa6330 upstream.
+commit 7af76e9d18a9fd6f8611b3313c86c190f9b6a5a7 upstream.
 
-With pch_pic device, its register is based on MMIO address space,
-different access size 1/2/4/8 is supported. And base address should
-be naturally aligned with its access size, here add alignment check
-in its register access emulation function.
+Receiving HSR frame with insufficient space to hold HSR tag in the skb
+can result in a crash (kernel BUG):
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+[   45.390915] skbuff: skb_under_panic: text:ffffffff86f32cac len:26 put:14 head:ffff888042418000 data:ffff888042417ff4 tail:0xe end:0x180 dev:bridge_slave_1
+[   45.392559] ------------[ cut here ]------------
+[   45.392912] kernel BUG at net/core/skbuff.c:211!
+[   45.393276] Oops: invalid opcode: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
+[   45.393809] CPU: 1 UID: 0 PID: 2496 Comm: reproducer Not tainted 6.15.0 #12 PREEMPT(undef)
+[   45.394433] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[   45.395273] RIP: 0010:skb_panic+0x15b/0x1d0
+
+<snip registers, remove unreliable trace>
+
+[   45.402911] Call Trace:
+[   45.403105]  <IRQ>
+[   45.404470]  skb_push+0xcd/0xf0
+[   45.404726]  br_dev_queue_push_xmit+0x7c/0x6c0
+[   45.406513]  br_forward_finish+0x128/0x260
+[   45.408483]  __br_forward+0x42d/0x590
+[   45.409464]  maybe_deliver+0x2eb/0x420
+[   45.409763]  br_flood+0x174/0x4a0
+[   45.410030]  br_handle_frame_finish+0xc7c/0x1bc0
+[   45.411618]  br_handle_frame+0xac3/0x1230
+[   45.413674]  __netif_receive_skb_core.constprop.0+0x808/0x3df0
+[   45.422966]  __netif_receive_skb_one_core+0xb4/0x1f0
+[   45.424478]  __netif_receive_skb+0x22/0x170
+[   45.424806]  process_backlog+0x242/0x6d0
+[   45.425116]  __napi_poll+0xbb/0x630
+[   45.425394]  net_rx_action+0x4d1/0xcc0
+[   45.427613]  handle_softirqs+0x1a4/0x580
+[   45.427926]  do_softirq+0x74/0x90
+[   45.428196]  </IRQ>
+
+This issue was found by syzkaller.
+
+The panic happens in br_dev_queue_push_xmit() once it receives a
+corrupted skb with ETH header already pushed in linear data. When it
+attempts the skb_push() call, there's not enough headroom and
+skb_push() panics.
+
+The corrupted skb is put on the queue by HSR layer, which makes a
+sequence of unintended transformations when it receives a specific
+corrupted HSR frame (with incomplete TAG).
+
+Fix it by dropping and consuming frames that are not long enough to
+contain both ethernet and hsr headers.
+
+Alternative fix would be to check for enough headroom before skb_push()
+in br_dev_queue_push_xmit().
+
+In the reproducer, this is injected via AF_PACKET, but I don't easily
+see why it couldn't be sent over the wire from adjacent network.
+
+Further Details:
+
+In the reproducer, the following network interface chain is set up:
+
+┌────────────────┐   ┌────────────────┐
+│ veth0_to_hsr   ├───┤  hsr_slave0    ┼───┐
+└────────────────┘   └────────────────┘   │
+                                          │ ┌──────┐
+                                          ├─┤ hsr0 ├───┐
+                                          │ └──────┘   │
+┌────────────────┐   ┌────────────────┐   │            │┌────────┐
+│ veth1_to_hsr   ┼───┤  hsr_slave1    ├───┘            └┤        │
+└────────────────┘   └────────────────┘                ┌┼ bridge │
+                                                       ││        │
+                                                       │└────────┘
+                                                       │
+                                        ┌───────┐      │
+                                        │  ...  ├──────┘
+                                        └───────┘
+
+To trigger the events leading up to crash, reproducer sends a corrupted
+HSR frame with incomplete TAG, via AF_PACKET socket on 'veth0_to_hsr'.
+
+The first HSR-layer function to process this frame is
+hsr_handle_frame(). It and then checks if the
+protocol is ETH_P_PRP or ETH_P_HSR. If it is, it calls
+skb_set_network_header(skb, ETH_HLEN + HSR_HLEN), without checking that
+the skb is long enough. For the crashing frame it is not, and hence the
+skb->network_header and skb->mac_len fields are set incorrectly,
+pointing after the end of the linear buffer.
+
+I will call this a BUG#1 and it is what is addressed by this patch. In
+the crashing scenario before the fix, the skb continues to go down the
+hsr path as follows.
+
+hsr_handle_frame() then calls this sequence
+hsr_forward_skb()
+  fill_frame_info()
+    hsr->proto_ops->fill_frame_info()
+      hsr_fill_frame_info()
+
+hsr_fill_frame_info() contains a check that intends to check whether the
+skb actually contains the HSR header. But the check relies on the
+skb->mac_len field which was erroneously setup due to BUG#1, so the
+check passes and the execution continues  back in the hsr_forward_skb():
+
+hsr_forward_skb()
+  hsr_forward_do()
+    hsr->proto_ops->get_untagged_frame()
+      hsr_get_untagged_frame()
+        create_stripped_skb_hsr()
+
+In create_stripped_skb_hsr(), a copy of the skb is created and is
+further corrupted by operation that attempts to strip the HSR tag in a
+call to __pskb_copy().
+
+The skb enters create_stripped_skb_hsr() with ethernet header pushed in
+linear buffer. The skb_pull(skb_in, HSR_HLEN) thus pulls 6 bytes of
+ethernet header into the headroom, creating skb_in with a headroom of
+size 8. The subsequent __pskb_copy() then creates an skb with headroom
+of just 2 and skb->len of just 12, this is how it looks after the copy:
+
+gdb) p skb->len
+$10 = 12
+(gdb) p skb->data
+$11 = (unsigned char *) 0xffff888041e45382 "\252\252\252\252\252!\210\373",
+(gdb) p skb->head
+$12 = (unsigned char *) 0xffff888041e45380 ""
+
+It seems create_stripped_skb_hsr() assumes that ETH header is pulled
+in the headroom when it's entered, because it just pulls HSR header on
+top. But that is not the case in our code-path and we end up with the
+corrupted skb instead. I will call this BUG#2
+
+*I got confused here because it seems that under no conditions can
+create_stripped_skb_hsr() work well, the assumption it makes is not true
+during the processing of hsr frames - since the skb_push() in
+hsr_handle_frame to skb_pull in hsr_deliver_master(). I wonder whether I
+missed something here.*
+
+Next, the execution arrives in hsr_deliver_master(). It calls
+skb_pull(ETH_HLEN), which just returns NULL - the SKB does not have
+enough space for the pull (as it only has 12 bytes in total at this
+point).
+
+*The skb_pull() here further suggests that ethernet header is meant
+to be pushed through the whole hsr processing and
+create_stripped_skb_hsr() should pull it before doing the HSR header
+pull.*
+
+hsr_deliver_master() then puts the corrupted skb on the queue, it is
+then picked up from there by bridge frame handling layer and finally
+lands in br_dev_queue_push_xmit where it panics.
+
+Cc: stable@kernel.org
+Fixes: 48b491a5cc74 ("net: hsr: fix mac_len checks")
+Reported-by: syzbot+a81f2759d022496b40ab@syzkaller.appspotmail.com
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250819082842.94378-1-acsjakub@amazon.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/pch_pic.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/hsr/hsr_slave.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/kvm/intc/pch_pic.c
-+++ b/arch/loongarch/kvm/intc/pch_pic.c
-@@ -195,6 +195,11 @@ static int kvm_pch_pic_read(struct kvm_v
- 		return -EINVAL;
- 	}
- 
-+	if (addr & (len - 1)) {
-+		kvm_err("%s: pch pic not aligned addr %llx len %d\n", __func__, addr, len);
-+		return -EINVAL;
-+	}
+--- a/net/hsr/hsr_slave.c
++++ b/net/hsr/hsr_slave.c
+@@ -63,8 +63,14 @@ static rx_handler_result_t hsr_handle_fr
+ 	skb_push(skb, ETH_HLEN);
+ 	skb_reset_mac_header(skb);
+ 	if ((!hsr->prot_version && protocol == htons(ETH_P_PRP)) ||
+-	    protocol == htons(ETH_P_HSR))
++	    protocol == htons(ETH_P_HSR)) {
++		if (!pskb_may_pull(skb, ETH_HLEN + HSR_HLEN)) {
++			kfree_skb(skb);
++			goto finish_consume;
++		}
 +
- 	/* statistics of pch pic reading */
- 	vcpu->kvm->stat.pch_pic_read_exits++;
- 	ret = loongarch_pch_pic_read(s, addr, len, val);
-@@ -302,6 +307,11 @@ static int kvm_pch_pic_write(struct kvm_
- 		return -EINVAL;
- 	}
- 
-+	if (addr & (len - 1)) {
-+		kvm_err("%s: pch pic not aligned addr %llx len %d\n", __func__, addr, len);
-+		return -EINVAL;
+ 		skb_set_network_header(skb, ETH_HLEN + HSR_HLEN);
 +	}
-+
- 	/* statistics of pch pic writing */
- 	vcpu->kvm->stat.pch_pic_write_exits++;
- 	ret = loongarch_pch_pic_write(s, addr, len, val);
+ 	skb_reset_mac_len(skb);
+ 
+ 	/* Only the frames received over the interlink port will assign a
 
 
