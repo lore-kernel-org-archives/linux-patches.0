@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF2335E4CE;
-	Tue, 26 Aug 2025 14:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EA635FC37;
+	Tue, 26 Aug 2025 14:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219334; cv=none; b=d+H3U0UrlAEOn54eVAJcPt3px6xuS5ng9CmoozEuZ47A86v+UCjyLc1xFipJA4NOZcH4v5M7JbFJ7Xsxmd0kIxMC4neko8rU9Dn591BTybD//QIOjQ445f2CedutcVMzA4URuHQ6eKuVWZDlrLxtBp4yeBElp65sKOKjgnGJXyI=
+	t=1756219336; cv=none; b=ExhTiUz/gcg+9QGTtEs0unTFYqsi5zFWBs08EFL0Cm5Kbjh0JnFhYyCRrpcoPma8m5YpEBaVldFlRtOve6fyGg4E6daZBHjKkXrqeotwbgGfzfOCaIoceLWgqcoEcy7TODW3RxwswioLLP9WpP0ulxUSPHVxnvTbcHlnqzdU1Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219334; c=relaxed/simple;
-	bh=t/H+P/jlFO6/1yK+LmmXQYDB4K9ipTVvyV9XEt/0I0I=;
+	s=arc-20240116; t=1756219336; c=relaxed/simple;
+	bh=zKfcTO7AjAUYuXrUOLa1/5laxfGAH/5Nzc4emi9iUXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bi9+Nb6XD754UXEmcq0Kz0MBUcwplFcFbRHvtn6Lq1jIApCWRZi3Qx4uMbTeN448xjcJMb8PiYPXSOQrLHN0KWkgYtG4ecH4EIBtxvxYof6KM3Pox/f48rp7hrtzIUT8ALBtoNA9/lLjdNHMaWL6uIzChLrnrty98uae2GG29JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzEyd103; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CrwTcSxc3YE98NY+X0nW5vR1LN1cGjx3VquZZRDmb5g0XbJudjvgv4lZSzT/8nSmkVWjmCGblxg+JwYbYxR53zctIsyFJauTZvnD9Ow17eFj1e207PxQUEkzdqhyDUYI3SVBMjNDElG1R/90KpZL8J/LY2oS/qmbL175Oz2RXG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14Ii0cFZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzEyd103"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9D8C4CEF1;
-	Tue, 26 Aug 2025 14:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14Ii0cFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EB4C4CEF1;
+	Tue, 26 Aug 2025 14:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219333;
-	bh=t/H+P/jlFO6/1yK+LmmXQYDB4K9ipTVvyV9XEt/0I0I=;
+	s=korg; t=1756219336;
+	bh=zKfcTO7AjAUYuXrUOLa1/5laxfGAH/5Nzc4emi9iUXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DzEyd1030d59Do1pLlQ3ocwayLID66jLb9N+NeyeAZ7JsuoSfsLAS5z+TQUPo2Z3O
-	 11H9sShhOEjhnmgjn1JT6wcmCcL2B8rnyLuOLNXN6G+gOidUZebSeCmnBnIuESsbDr
-	 Fmvp4kUtWW90u4GMMvvPUcWhPZw+n4v4DgrPtMf4=
+	b=14Ii0cFZEtvl5gIkrQr7aKS76vnV6W3aL92WmYXymU3gzljdWkifS2m5MiDKiQV75
+	 r0CWSgWuIzQU8L9bnLinBlTn86oXC+bPJTmHSn2on7khNMUo8zlGeqzztc1Tu/fOoK
+	 MQ/SZEyVrMsSJoVVwdpEB9LdMLk9h09hkCophljw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Mark Pearson <markpearson@lenovo.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 341/403] x86/mce/amd: Add default names for MCA banks and blocks
-Date: Tue, 26 Aug 2025 13:11:07 +0200
-Message-ID: <20250826110916.278570524@linuxfoundation.org>
+Subject: [PATCH 5.4 342/403] usb: hub: avoid warm port reset during USB3 disconnect
+Date: Tue, 26 Aug 2025 13:11:08 +0200
+Message-ID: <20250826110916.310932263@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,59 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit d66e1e90b16055d2f0ee76e5384e3f119c3c2773 ]
+[ Upstream commit f59f93cd1d720809466c7fd5aa16a236156c672b ]
 
-Ensure that sysfs init doesn't fail for new/unrecognized bank types or if
-a bank has additional blocks available.
+During disconnect USB-3 ports often go via SS.Inactive link error state
+before the missing terminations are noticed, and link finally goes to
+RxDetect state
 
-Most MCA banks have a single thresholding block, so the block takes the same
-name as the bank.
+Avoid immediately warm-resetting ports in SS.Inactive state.
+Let ports settle for a while and re-read the link status a few times 20ms
+apart to see if the ports transitions out of SS.Inactive.
 
-Unified Memory Controllers (UMCs) are a special case where there are two
-blocks and each has a unique name.
+According to USB 3.x spec 7.5.2, a port in SS.Inactive should
+automatically check for missing far-end receiver termination every
+12 ms (SSInactiveQuietTimeout)
 
-However, the microarchitecture allows for five blocks. Any new MCA bank types
-with more than one block will be missing names for the extra blocks. The MCE
-sysfs will fail to initialize in this case.
+The futile multiple warm reset retries of a disconnected device takes
+a lot of time, also the resetting of a removed devices has caused cases
+where the reset bit got stuck for a long time on xHCI roothub.
+This lead to issues in detecting new devices connected to the same port
+shortly after.
 
-Fixes: 87a6d4091bd7 ("x86/mce/AMD: Update sysfs bank names for SMCA systems")
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-3-236dd74f645f@amd.com
+Tested-by: Mark Pearson <markpearson@lenovo.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20211210111653.1378381-1-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 2521106fc732 ("usb: hub: Don't try to recover devices lost during warm reset.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/amd.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/usb/core/hub.c |   26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -1180,13 +1180,20 @@ static const char *get_name(unsigned int
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2788,6 +2788,8 @@ static unsigned hub_is_wusb(struct usb_h
+ #define SET_CONFIG_TRIES	(2 * (use_both_schemes + 1))
+ #define USE_NEW_SCHEME(i, scheme)	((i) / 2 == (int)(scheme))
+ 
++#define DETECT_DISCONNECT_TRIES 5
++
+ #define HUB_ROOT_RESET_TIME	60	/* times are in msec */
+ #define HUB_SHORT_RESET_TIME	10
+ #define HUB_BH_RESET_TIME	50
+@@ -5422,6 +5424,7 @@ static void port_event(struct usb_hub *h
+ 	struct usb_device *udev = port_dev->child;
+ 	struct usb_device *hdev = hub->hdev;
+ 	u16 portstatus, portchange;
++	int i = 0;
+ 
+ 	connect_change = test_bit(port1, hub->change_bits);
+ 	clear_bit(port1, hub->event_bits);
+@@ -5498,17 +5501,27 @@ static void port_event(struct usb_hub *h
+ 		connect_change = 1;
+ 
+ 	/*
+-	 * Warm reset a USB3 protocol port if it's in
+-	 * SS.Inactive state.
+-	 */
+-	if (hub_port_warm_reset_required(hub, port1, portstatus)) {
+-		dev_dbg(&port_dev->dev, "do warm reset\n");
+-		if (!udev || !(portstatus & USB_PORT_STAT_CONNECTION)
++	 * Avoid trying to recover a USB3 SS.Inactive port with a warm reset if
++	 * the device was disconnected. A 12ms disconnect detect timer in
++	 * SS.Inactive state transitions the port to RxDetect automatically.
++	 * SS.Inactive link error state is common during device disconnect.
++	 */
++	while (hub_port_warm_reset_required(hub, port1, portstatus)) {
++		if ((i++ < DETECT_DISCONNECT_TRIES) && udev) {
++			u16 unused;
++
++			msleep(20);
++			hub_port_status(hub, port1, &portstatus, &unused);
++			dev_dbg(&port_dev->dev, "Wait for inactive link disconnect detect\n");
++			continue;
++		} else if (!udev || !(portstatus & USB_PORT_STAT_CONNECTION)
+ 				|| udev->state == USB_STATE_NOTATTACHED) {
++			dev_dbg(&port_dev->dev, "do warm reset, port only\n");
+ 			if (hub_port_reset(hub, port1, NULL,
+ 					HUB_BH_RESET_TIME, true) < 0)
+ 				hub_port_disable(hub, port1, 1);
+ 		} else {
++			dev_dbg(&port_dev->dev, "do warm reset, full device\n");
+ 			usb_unlock_port(port_dev);
+ 			usb_lock_device(udev);
+ 			usb_reset_device(udev);
+@@ -5516,6 +5529,7 @@ static void port_event(struct usb_hub *h
+ 			usb_lock_port(port_dev);
+ 			connect_change = 0;
+ 		}
++		break;
  	}
  
- 	bank_type = smca_get_bank_type(bank);
--	if (bank_type >= N_SMCA_BANK_TYPES)
--		return NULL;
- 
- 	if (b && bank_type == SMCA_UMC) {
- 		if (b->block < ARRAY_SIZE(smca_umc_block_names))
- 			return smca_umc_block_names[b->block];
--		return NULL;
-+	}
-+
-+	if (b && b->block) {
-+		snprintf(buf_mcatype, MAX_MCATYPE_NAME_LEN, "th_block_%u", b->block);
-+		return buf_mcatype;
-+	}
-+
-+	if (bank_type >= N_SMCA_BANK_TYPES) {
-+		snprintf(buf_mcatype, MAX_MCATYPE_NAME_LEN, "th_bank_%u", bank);
-+		return buf_mcatype;
- 	}
- 
- 	if (smca_banks[bank].hwid->count == 1)
+ 	if (connect_change)
 
 
