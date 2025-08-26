@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D8F749C;
-	Tue, 26 Aug 2025 11:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5321C286D57;
+	Tue, 26 Aug 2025 11:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208871; cv=none; b=UE2CbaZqX1yws7ZEag9jctZ4/HAiEYgekLuB86IPK9HIVjH4Z5QMHYVsw2WBkf4j9slaHMzPmlR/X2Sp613+s9NXkVlw9QylMjs+KmGwQVZWsqG2UuYAt9kEjuv9IzpFPnDrerprRFRUFA0tyM/YfDJEHa3LPb2t/Wpy67tNxyQ=
+	t=1756208874; cv=none; b=qcgXIw1iG971yWH2JScHzpaqVSSEVbladMVG8hCViF3cUFOXXqfdjqoQ5l/VMUlsj88d+6taJTofbsU83oOyw27myJaUTQH5SsYiC+ZNjY/SGfmrs0K5qmMVOLGJ45PbrhZbgFOO2FNd6qnX089t7TA6RmvlCMMLjQSPvPdrNok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208871; c=relaxed/simple;
-	bh=j9g3X6WbQTZEhQwMPqk0l9Zg3rbKPbK59cLrBDdMVkY=;
+	s=arc-20240116; t=1756208874; c=relaxed/simple;
+	bh=hqGTZMlTN9PmVkfD9dOuLp027En1Zv8jf/cKI6plkS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kt1Mh+89uUzwpiuuIYqrsxc8Yvxp0II06kPNDPwyn7qkk7DZIj2mC6ZOMGd1p92I1Pob7lwtOKlVrM7QMwBWxAjj1PJIXmHmwVxGvaJ19qtntUjlK9YukTrK40F6rjW9pUr0cR54bjiF1iq4XumsC40eYWEKrMgrSykk3JrhheU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qe/Tfetx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S4NEy0HMZivMajju47Ugw9aUpU6qy7c7X9VQwgu1e12Bk7tifZ9elaF1juNBgmq6V2iYk7w1SDOGV89SDL4AaVftqhqg4sGWAl7USCClUnOAunrrkT2OkqSA0WikDPITtewPlZan9mMs6JR75ud2x48JGW1uOTzr3Nny5YiMyP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Shs08DBZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qe/Tfetx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2773EC4CEF1;
-	Tue, 26 Aug 2025 11:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Shs08DBZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F42C4CEF1;
+	Tue, 26 Aug 2025 11:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208871;
-	bh=j9g3X6WbQTZEhQwMPqk0l9Zg3rbKPbK59cLrBDdMVkY=;
+	s=korg; t=1756208874;
+	bh=hqGTZMlTN9PmVkfD9dOuLp027En1Zv8jf/cKI6plkS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qe/TfetxDSu5xt9j4PecWXRlFyYKSIQnuNYtR6kIXLoLJr2HeOfRpV/2PHIorue+X
-	 1pzm0iWXIqPyK1XLu382aLRbdC8y9cY3036YhxIrPpXmDu2jGcpnyFMMcwUDJ7ERLZ
-	 bA0/IDBjlCVDwagYYrLfA65kTNbYmGSNskjjBWvw=
+	b=Shs08DBZb5sa11ys5CXZ095gGfS8RwEB/TqVkALhxrSBG/RoFYCP9t7GpK78ycKG6
+	 gJ6zC0BIUurMpl2f/H5DZfIKDA9XoCYZZvetSqJeGo16FzSc3M7ZEmS2w3yDw51un4
+	 HJs4/spBxtBLirTmK+deTCbcg//jCD/jG95Vlih8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Billy Jheng Bing-Jhong <billy@starlabs.sg>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 246/322] tls: fix handling of zero-length records on the rx_list
-Date: Tue, 26 Aug 2025 13:11:01 +0200
-Message-ID: <20250826110921.995588423@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 247/322] iio: imu: inv_icm42600: switch timestamp type from int64_t __aligned(8) to aligned_s64
+Date: Tue, 26 Aug 2025 13:11:02 +0200
+Message-ID: <20250826110922.021831561@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,65 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-commit 62708b9452f8eb77513115b17c4f8d1a22ebf843 upstream.
+[ Upstream commit 27e6ddf291b1c05bfcc3534e8212ed6c46447c60 ]
 
-Each recvmsg() call must process either
- - only contiguous DATA records (any number of them)
- - one non-DATA record
+The vast majority of IIO drivers use aligned_s64 for the type of the
+timestamp field.  It is not a bug to use int64_t and until this series
+iio_push_to_buffers_with_timestamp() took and int64_t timestamp, it
+is inconsistent.  This change is to remove that inconsistency and
+ensure there is one obvious choice for future drivers.
 
-If the next record has different type than what has already been
-processed we break out of the main processing loop. If the record
-has already been decrypted (which may be the case for TLS 1.3 where
-we don't know type until decryption) we queue the pending record
-to the rx_list. Next recvmsg() will pick it up from there.
-
-Queuing the skb to rx_list after zero-copy decrypt is not possible,
-since in that case we decrypted directly to the user space buffer,
-and we don't have an skb to queue (darg.skb points to the ciphertext
-skb for access to metadata like length).
-
-Only data records are allowed zero-copy, and we break the processing
-loop after each non-data record. So we should never zero-copy and
-then find out that the record type has changed. The corner case
-we missed is when the initial record comes from rx_list, and it's
-zero length.
-
-Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Reported-by: Billy Jheng Bing-Jhong <billy@starlabs.sg>
-Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20250820021952.143068-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20241215182912.481706-19-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: dfdc31e7ccf3 ("iio: imu: inv_icm42600: change invalid data error to -EBUSY")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    2 +-
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1774,6 +1774,9 @@ int decrypt_skb(struct sock *sk, struct
- 	return tls_decrypt_sg(sk, NULL, sgout, &darg);
- }
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -178,7 +178,7 @@ static const struct iio_chan_spec inv_ic
+ struct inv_icm42600_accel_buffer {
+ 	struct inv_icm42600_fifo_sensor_data accel;
+ 	int16_t temp;
+-	int64_t timestamp __aligned(8);
++	aligned_s64 timestamp;
+ };
  
-+/* All records returned from a recvmsg() call must have the same type.
-+ * 0 is not a valid content type. Use it as "no type reported, yet".
-+ */
- static int tls_record_content_type(struct msghdr *msg, struct tls_msg *tlm,
- 				   u8 *control)
- {
-@@ -2017,8 +2020,10 @@ int tls_sw_recvmsg(struct sock *sk,
- 	if (err < 0)
- 		goto end;
+ #define INV_ICM42600_SCAN_MASK_ACCEL_3AXIS				\
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -78,7 +78,7 @@ static const struct iio_chan_spec inv_ic
+ struct inv_icm42600_gyro_buffer {
+ 	struct inv_icm42600_fifo_sensor_data gyro;
+ 	int16_t temp;
+-	int64_t timestamp __aligned(8);
++	aligned_s64 timestamp;
+ };
  
-+	/* process_rx_list() will set @control if it processed any records */
- 	copied = err;
--	if (len <= copied || (copied && control != TLS_RECORD_TYPE_DATA) || rx_more)
-+	if (len <= copied || rx_more ||
-+	    (control && control != TLS_RECORD_TYPE_DATA))
- 		goto end;
- 
- 	target = sock_rcvlowat(sk, flags & MSG_WAITALL, len);
+ #define INV_ICM42600_SCAN_MASK_GYRO_3AXIS				\
 
 
