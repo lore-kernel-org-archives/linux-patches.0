@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F801EB5D6;
-	Tue, 26 Aug 2025 12:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A611DEFF5;
+	Tue, 26 Aug 2025 12:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212886; cv=none; b=PjHpTtO/e8m/LPQBEQeOnssFUrHvPy0r0MS7ytfEH029tTXtBMCEnzz4OTWsAiOpZ/yhT84c/Q38+ErM3/d6mWBDgG2oqpEi00qW+vLF1ZZA+XeD0qIUy8Cs5is+kYaj/Y2nIyd4xQFWWxEHv5o2hMwwHpx6+O/ict8/bXEVTHY=
+	t=1756212888; cv=none; b=MRMlDyxigt4qEw5UfQ/Yg10an1l++WO8earWMRqorIatkLI9fgKKdz3aUuYGRD4hzV0wzJOik69wJbMSC09pAFYKvy31uYwpwhLbPmJc4D8va8gE6IQ/F6SrX91g5K8+yPVZ2aTMm3Sl1MSHf53RmepIz1OSeOOXjBLo7ABLscw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212886; c=relaxed/simple;
-	bh=x0pm+AlQQoFfLzmdcmUOKFoauDlgyELzSODPp6EVCQw=;
+	s=arc-20240116; t=1756212888; c=relaxed/simple;
+	bh=MLPyWGYQ9rK6L9APhorlIR5ktaVnVTZM2joOH4VuMyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpkNv3XmbulXkDGYtTYtaHRMInTKU2wQ4cYikzxT42MnqkQzHiljiLziXRp3bYeL2r5MhR7nCWFcDhiBa3a01AamgaAZWVexpmtTiIrqtyPb0MQwh4BuU4h3yNa1D8KfrzgnTEnThSOfq2iPA5y8odZwMaf5f43yjTPrNiQFlXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGYfMatp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J59SEdCGBryAU4QCti5JVbeG0HOAN6v3SwQImrwkcckOpyLp3cSoPaoDGSPZNaOn0u2XJBgClCmXeztZNXiCtqDk/go577f69T266QESozSKwOjxBS4Ntw/IFaCxws0kVT2J1Me+UIrheANyBCtK9Zs5bzUzUbfror4nuir8hDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GScnjvFU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGYfMatp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D832C4CEF1;
-	Tue, 26 Aug 2025 12:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GScnjvFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE57C4CEF1;
+	Tue, 26 Aug 2025 12:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212885;
-	bh=x0pm+AlQQoFfLzmdcmUOKFoauDlgyELzSODPp6EVCQw=;
+	s=korg; t=1756212888;
+	bh=MLPyWGYQ9rK6L9APhorlIR5ktaVnVTZM2joOH4VuMyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGYfMatpoH2XQorqZikfE0PP3fqOAVtTel6cLdUibgzzu2nncHKPG1DWxHkITotwv
-	 yYDh7mw4FuXFtwIJHnOa8CMMIjmktbsgQsUHLAnv5mWwoR9FXbt0xOw3pvfZn8PdLY
-	 YWPvoRMMsSr/Nz/Ysfz9+oLZ7bGfg0YefkR+PyTk=
+	b=GScnjvFUYfTYCuvT5Oy+qLaNMmYXQ695sLTrDykysTtKGsipOweH+Mx/jU5VFj3au
+	 11fYpnjRR+Z90N+CtlM1GxTy+sufQYju+H/oNhAWC4s4fAG8Q9xh+0OyuV9jXy9Zoy
+	 HrEkApAF88B8KZG0mtxaU3w1MKsYHqGx1snmhnUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/587] Bluetooth: hci_sock: Reset cookie to zero in hci_sock_free_cookie()
-Date: Tue, 26 Aug 2025 13:04:49 +0200
-Message-ID: <20250826110956.513824881@linuxfoundation.org>
+Subject: [PATCH 6.6 123/587] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
+Date: Tue, 26 Aug 2025 13:04:32 +0200
+Message-ID: <20250826110956.086092584@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,40 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 4d7936e8a5b1fa803f4a631d2da4a80fa4f0f37f ]
+[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
 
-Reset cookie value to 0 instead of 0xffffffff in hci_sock_free_cookie()
-since:
-0         :  means cookie has not been assigned yet
-0xffffffff:  means cookie assignment failure
+We currently log parse failures for ELD data and some disconnection events
+as errors without rate limiting. These log messages can be triggered very
+frequently in some situations, especially ELD parsing when there is nothing
+connected to a HDMI port which will generate:
 
-Also fix generating cookie failure with usage shown below:
-hci_sock_gen_cookie(sk)   // generate cookie
-hci_sock_free_cookie(sk)  // free cookie
-hci_sock_gen_cookie(sk)   // Can't generate cookie any more
+hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
 
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+While there's doubtless work that could be done on reducing the number of
+connection notification callbacks it's possible these may be legitimately
+generated by poor quality physical connections so let's use rate limiting
+to mitigate the log spam for the parse errors and lower the severity for
+disconnect logging to debug level.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
-index 69c2ba1e843e..d2613bd3e6db 100644
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -118,7 +118,7 @@ static void hci_sock_free_cookie(struct sock *sk)
- 	int id = hci_pi(sk)->cookie;
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 8b6b76029694..0ddfb0cb376f 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -1230,7 +1230,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 						>> DRM_ELD_VER_SHIFT;
  
- 	if (id) {
--		hci_pi(sk)->cookie = 0xffffffff;
-+		hci_pi(sk)->cookie = 0;
- 		ida_free(&sock_cookie_ida, id);
+ 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
+-		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: Unknown ELD version %d\n", ver);
+ 		return -EINVAL;
  	}
- }
+ 
+@@ -1238,7 +1239,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
+ 
+ 	if (mnl > ELD_MAX_MNL) {
+-		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: MNL Invalid %d\n", mnl);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1297,8 +1299,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
+ 
+ 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
+ 
+-		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
+-						__func__, pin->nid, port->id);
++		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
++			__func__, pin->nid, port->id);
+ 
+ 		/*
+ 		 * PCMs are not registered during device probe, so don't
 -- 
 2.39.5
 
