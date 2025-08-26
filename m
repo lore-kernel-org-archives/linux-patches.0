@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C62350852;
-	Tue, 26 Aug 2025 13:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497B534A315;
+	Tue, 26 Aug 2025 13:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216632; cv=none; b=L1FnDeZAQGKAHlt3C4kIB0J1eaVUt3CxkyRS/0pvQp/SJI23w12UhjCm9METC0cp8lQENgpVJlNlWBA9uUT9JBO0+E3qPCdzXgELhi7ZZcT9fYHymHNvTa+SSV1yo1fAFaEE/TtK70pqcQrILx7qPEaujtqJG+Yd4LZdbAYWaJs=
+	t=1756216635; cv=none; b=bqvMaYvLI4jfSIgOZ7Aev9FpHPE1yTwMH1TjsTvR72eal+hPj9/uCpADIdo6ptarf7ege9uNVVKDl+4hjtHDwi8DSQm/VOB3PS9Z053UWIcLqQJZmHUmfcSNGo1x58EP508FmWydQmGRKnx0/nW7+Pt1tv113Ki5hGKj9ix+sr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216632; c=relaxed/simple;
-	bh=/KVzAV7whAXguTejE3XqoI8A356w3L1JU7bgSl8m034=;
+	s=arc-20240116; t=1756216635; c=relaxed/simple;
+	bh=ODNx0Q/OY2RIe7WOZYYGJP1MExq8daKcxA8zObLeNEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kVTv6SOLbLFeIUq5gIPSpMyOXWFepdKSgczY3EjHDjWGiwmY/ums4LOxyNh8Gt7fyAW4JziA+OThY9Ni39DUSog2CqzBN2xteNt28vrk6yyhjiNNU7+etBQmS4fCZTs9L/lrArb2nFvOJuaG4HSCLtzpACM4Xhjjt8AnMRevtqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2bH71s+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e0LsZsgE9nXEWVqhoIL8R1cRaXTRu3PIJSml/YeKo4tLgDPEabtihFjW6AdJq6PzsCkJUUHHx/pOCyETatY/ptdM/QL/+/tnZQ+6D4hWyoxfs9TU7Df/c5oL9BVyeXxr3n28DUyR9hjw79Apa0tSV/3FAWKfdasVbfdhqF5EbQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrXpsbNl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2bH71s+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E669C4CEF1;
-	Tue, 26 Aug 2025 13:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrXpsbNl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B3EC4CEF1;
+	Tue, 26 Aug 2025 13:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216632;
-	bh=/KVzAV7whAXguTejE3XqoI8A356w3L1JU7bgSl8m034=;
+	s=korg; t=1756216635;
+	bh=ODNx0Q/OY2RIe7WOZYYGJP1MExq8daKcxA8zObLeNEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y2bH71s+eAQWOXDRPrVwfXxZsqFERJ8FIK3gglnRRpst0KyWE1pVi6KoygH/B99I8
-	 pUuekPrgayVuR3DYTTQbAe7rl/ur1IZsl4FKJMcf42TDdzLXtsnecI1r2DYpvcSyCL
-	 XfHGDdUJ2zn8DIDSsLLpbSz/mAQ2nhoCaK5o4bkQ=
+	b=BrXpsbNlE/zLikNid/09bT+YnQg79bTnwf5qa1N861g35WPuhsqDzQKbc5rcSPeIT
+	 mfgiBooP2/p503aPMRYosL6w6I9BBaoGmEX4PFPDCEodOSyXwGPpKRzywN8J0+42ja
+	 1+ypwDfujuwh+I5Ng7cMMBKp6U9ED/EMMmmKYSFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 485/644] soc/tegra: pmc: Ensure power-domains are in a known state
-Date: Tue, 26 Aug 2025 13:09:36 +0200
-Message-ID: <20250826110958.507313225@linuxfoundation.org>
+	stable@kernel.org,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 468/644] ext4: fix fsmap end of range reporting with bigalloc
+Date: Tue, 26 Aug 2025 13:09:19 +0200
+Message-ID: <20250826110958.077651066@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,137 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-commit b6bcbce3359619d05bf387d4f5cc3af63668dbaa upstream.
+commit bae76c035bf0852844151e68098c9b7cd63ef238 upstream.
 
-After commit 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on
-until late_initcall_sync") was applied, the Tegra210 Jetson TX1 board
-failed to boot. Looking into this issue, before this commit was applied,
-if any of the Tegra power-domains were in 'on' state when the kernel
-booted, they were being turned off by the genpd core before any driver
-had chance to request them. This was purely by luck and a consequence of
-the power-domains being turned off earlier during boot. After this
-commit was applied, any power-domains in the 'on' state are kept on for
-longer during boot and therefore, may never transitioned to the off
-state before they are requested/used. The hang on the Tegra210 Jetson
-TX1 is caused because devices in some power-domains are accessed without
-the power-domain being turned off and on, indicating that the
-power-domain is not in a completely on state.
+With bigalloc enabled, the logic to report last extent has a bug since
+we try to use cluster units instead of block units. This can cause an
+issue where extra incorrect entries might be returned back to the
+user. This was flagged by generic/365 with 64k bs and -O bigalloc.
 
->From reviewing the Tegra PMC driver code, if a power-domain is in the
-'on' state there is no guarantee that all the necessary clocks
-associated with the power-domain are on and even if they are they would
-not have been requested via the clock framework and so could be turned
-off later. Some power-domains also have a 'clamping' register that needs
-to be configured as well. In short, if a power-domain is already 'on' it
-is difficult to know if it has been configured correctly. Given that the
-power-domains happened to be switched off during boot previously, to
-ensure that they are in a good known state on boot, fix this by
-switching off any power-domains that are on initially when registering
-the power-domains with the genpd framework.
+** Details of issue **
 
-Note that commit 05cfb988a4d0 ("soc/tegra: pmc: Initialise resets
-associated with a power partition") updated the
-tegra_powergate_of_get_resets() function to pass the 'off' to ensure
-that the resets for the power-domain are in the correct state on boot.
-However, now that we may power off a domain on boot, if it is on, it is
-better to move this logic into the tegra_powergate_add() function so
-that there is a single place where we are handling the initial state of
-the power-domain.
+The issue was noticed on 5G 64k blocksize FS with -O bigalloc which has
+only 1 bg.
 
-Fixes: a38045121bf4 ("soc/tegra: pmc: Add generic PM domain support")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250731121832.213671-1-jonathanh@nvidia.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+$ xfs_io -c "fsmap -d" /mnt/scratch
+
+  0: 253:48 [0..127]: static fs metadata 128   /* sb */
+  1: 253:48 [128..255]: special 102:1 128   /* gdt */
+  3: 253:48 [256..383]: special 102:3 128   /* block bitmap */
+  4: 253:48 [384..2303]: unknown 1920       /* flex bg empty space */
+  5: 253:48 [2304..2431]: special 102:4 128   /* inode bitmap */
+  6: 253:48 [2432..4351]: unknown 1920      /* flex bg empty space */
+  7: 253:48 [4352..6911]: inodes 2560
+  8: 253:48 [6912..538623]: unknown 531712
+  9: 253:48 [538624..10485759]: free space 9947136
+
+The issue can be seen with:
+
+$ xfs_io -c "fsmap -d 0 3" /mnt/scratch
+
+  0: 253:48 [0..127]: static fs metadata 128
+  1: 253:48 [384..2047]: unknown 1664
+
+Only the first entry was expected to be returned but we get 2. This is
+because:
+
+ext4_getfsmap_datadev()
+  first_cluster, last_cluster = 0
+  ...
+  info->gfi_last = true;
+  ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1, 0, info);
+    fsb = C2B(1) = 16
+    fslen = 0
+    ...
+    /* Merge in any relevant extents from the meta_list */
+    list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
+      ...
+      // since fsb = 16, considers all metadata which starts before 16 blockno
+      iter 1: error = ext4_getfsmap_helper(sb, info, p);  // p = sb (0,1), nop
+        info->gfi_next_fsblk = 1
+      iter 2: error = ext4_getfsmap_helper(sb, info, p);  // p = gdt (1,2), nop
+        info->gfi_next_fsblk = 2
+      iter 3: error = ext4_getfsmap_helper(sb, info, p);  // p = blk bitmap (2,3), nop
+        info->gfi_next_fsblk = 3
+      iter 4: error = ext4_getfsmap_helper(sb, info, p);  // p = ino bitmap (18,19)
+        if (rec_blk > info->gfi_next_fsblk) { // (18 > 3)
+          // emits an extra entry ** BUG **
+        }
+    }
+
+Fix this by directly calling ext4_getfsmap_datadev() with a dummy
+record that has fmr_physical set to (end_fsb + 1) instead of
+last_cluster + 1. By using the block instead of cluster we get the
+correct behavior.
+
+Replacing ext4_getfsmap_datadev_helper() with ext4_getfsmap_helper()
+is okay since the gfi_lastfree and metadata checks in
+ext4_getfsmap_datadev_helper() are anyways redundant when we only want
+to emit the last allocated block of the range, as we have already
+taken care of emitting metadata and any last free blocks.
+
+Cc: stable@kernel.org
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Fixes: 4a622e4d477b ("ext4: fix FS_IOC_GETFSMAP handling")
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/e7472c8535c9c5ec10f425f495366864ea12c9da.1754377641.git.ojaswin@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/tegra/pmc.c |   51 +++++++++++++++++++++++++++---------------------
- 1 file changed, 29 insertions(+), 22 deletions(-)
+ fs/ext4/fsmap.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/soc/tegra/pmc.c
-+++ b/drivers/soc/tegra/pmc.c
-@@ -1174,7 +1174,7 @@ err:
- }
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -526,6 +526,7 @@ static int ext4_getfsmap_datadev(struct
+ 	ext4_group_t end_ag;
+ 	ext4_grpblk_t first_cluster;
+ 	ext4_grpblk_t last_cluster;
++	struct ext4_fsmap irec;
+ 	int error = 0;
  
- static int tegra_powergate_of_get_resets(struct tegra_powergate *pg,
--					 struct device_node *np, bool off)
-+					 struct device_node *np)
- {
- 	struct device *dev = pg->pmc->dev;
- 	int err;
-@@ -1189,22 +1189,6 @@ static int tegra_powergate_of_get_resets
- 	err = reset_control_acquire(pg->reset);
- 	if (err < 0) {
- 		pr_err("failed to acquire resets: %d\n", err);
--		goto out;
--	}
--
--	if (off) {
--		err = reset_control_assert(pg->reset);
--	} else {
--		err = reset_control_deassert(pg->reset);
--		if (err < 0)
--			goto out;
--
--		reset_control_release(pg->reset);
--	}
--
--out:
--	if (err) {
--		reset_control_release(pg->reset);
- 		reset_control_put(pg->reset);
+ 	bofs = le32_to_cpu(sbi->s_es->s_first_data_block);
+@@ -609,10 +610,18 @@ static int ext4_getfsmap_datadev(struct
+ 			goto err;
  	}
  
-@@ -1249,20 +1233,43 @@ static int tegra_powergate_add(struct te
- 		goto set_available;
- 	}
- 
--	err = tegra_powergate_of_get_resets(pg, np, off);
-+	err = tegra_powergate_of_get_resets(pg, np);
- 	if (err < 0) {
- 		dev_err(dev, "failed to get resets for %pOFn: %d\n", np, err);
- 		goto remove_clks;
- 	}
- 
--	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
--		if (off)
--			WARN_ON(tegra_powergate_power_up(pg, true));
+-	/* Report any gaps at the end of the bg */
 +	/*
-+	 * If the power-domain is off, then ensure the resets are asserted.
-+	 * If the power-domain is on, then power down to ensure that when is
-+	 * it turned on the power-domain, clocks and resets are all in the
-+	 * expected state.
++	 * The dummy record below will cause ext4_getfsmap_helper() to report
++	 * any allocated blocks at the end of the range.
 +	 */
-+	if (off) {
-+		err = reset_control_assert(pg->reset);
-+		if (err) {
-+			pr_err("failed to assert resets: %d\n", err);
-+			goto remove_resets;
-+		}
-+	} else {
-+		err = tegra_powergate_power_down(pg);
-+		if (err) {
-+			dev_err(dev, "failed to turn off PM domain %s: %d\n",
-+				pg->genpd.name, err);
-+			goto remove_resets;
-+		}
-+	}
++	irec.fmr_device = 0;
++	irec.fmr_physical = end_fsb + 1;
++	irec.fmr_length = 0;
++	irec.fmr_owner = EXT4_FMR_OWN_FREE;
++	irec.fmr_flags = 0;
++
+ 	info->gfi_last = true;
+-	error = ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1,
+-					     0, info);
++	error = ext4_getfsmap_helper(sb, info, &irec);
+ 	if (error)
+ 		goto err;
  
-+	/*
-+	 * If PM_GENERIC_DOMAINS is not enabled, power-on
-+	 * the domain and skip the genpd registration.
-+	 */
-+	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
-+		WARN_ON(tegra_powergate_power_up(pg, true));
- 		goto remove_resets;
- 	}
- 
--	err = pm_genpd_init(&pg->genpd, NULL, off);
-+	err = pm_genpd_init(&pg->genpd, NULL, true);
- 	if (err < 0) {
- 		dev_err(dev, "failed to initialise PM domain %pOFn: %d\n", np,
- 		       err);
 
 
