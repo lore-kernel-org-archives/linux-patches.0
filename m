@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FD922DFA7;
-	Tue, 26 Aug 2025 13:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C9622DFA7;
+	Tue, 26 Aug 2025 13:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216653; cv=none; b=O3dMvLxA1eG/Xw8WjpQgdaJ2x25CV3nt+OC77sFedQDD9CogD+9QsI+QQXZR0hV6XQxz8J3dZETeNrH/KRLK6A7YD1DvRFI7A1nuWWx5u0YKaDkmj4jGe+ZlZBt2SP8e8LTSuff79m7DLJXHkmM9F8ZTWvddkhIM/He/gAasV5k=
+	t=1756216656; cv=none; b=S1e+Vl+TU+S/qgONxHLlwIeYM3om9XixfvaRt2QjPKZdHQQxhXGOZ5xhxv1vCTeg74XmYEd4FNj6YxJgpcqsmaHpTWrzUsRPB5tNf14+GY7pvdi1rouUY3eIuQXkALFKWpiGg/Ep4D8bRRpxcq6ohydGLuubKbjjLoY/zVKHlTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216653; c=relaxed/simple;
-	bh=0S44TwZTgEhYG18pIRrZXmrSRDyrsC7YTd+aT/ZVrMI=;
+	s=arc-20240116; t=1756216656; c=relaxed/simple;
+	bh=iOtAc/oVwPBnT5I7WpNN/AivqaSunLBeEalY1uGEu9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0wgOX08zjK9rS6KpwELu9MIW01B6qIU/fFMOWy2yPUPbsCAuDD0G41+DJ/QYmD3GNDct9m90owo+956ITljm0GMMhRPr0ZhgVuwYC/xYw4I01pn7hwMkOZMzUwrGxMtwlgRPWjwhk9+mbmP57aSapT86/V4Nb6loXXsyrjLgBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MLxi5wT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bl5Y5CchqLjnna3zhAZVLnA6LbOZdTWwgspQ7XUCMbaym9Q6LvCm61cbgO2ShNCPjwhfASvCe3zhcyctVCU+ClQcHdwcfW3KNVcnjq90/+ixPTWfHk0ek7K0AisiEMcMLRsruVE1jpfYXsftySDejDoqtsze6fT/44iRGbBe+KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1NkXuvw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MLxi5wT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D4DC4CEF1;
-	Tue, 26 Aug 2025 13:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1NkXuvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C13C4CEF1;
+	Tue, 26 Aug 2025 13:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216653;
-	bh=0S44TwZTgEhYG18pIRrZXmrSRDyrsC7YTd+aT/ZVrMI=;
+	s=korg; t=1756216656;
+	bh=iOtAc/oVwPBnT5I7WpNN/AivqaSunLBeEalY1uGEu9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1MLxi5wTBbuxyilTEtjekLunQ1D7LhJzauH6l5N3Og+/yOMGDSujOszlJ/DF8UKHR
-	 11hvBYUhFFOkWi/R9N0KjNITi78hDRdKyCaSQNzDJj+wqpIVDjEqSbrqIFVfmRAa/Y
-	 JXuIempAMsFraYiiVNjjwH43XiHit20s3IkuzNNs=
+	b=n1NkXuvwDdK/SEPkpb3+XU+kC5VQ8OfHaIlbp6hSe6q7FKBXTt2ifub7mJmScmnXi
+	 4DSL7MfJNUwH8XJ4Pl+/c271G5jNcREvQC+1R59Hf7WpQN/tJpj4XAli3EUinhjB4r
+	 S5/5M4KPD4dCI+8QTMekJd9w09PnDZO5Q8m1pP8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Vedang Nagar <quic_vnagar@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 492/644] media: ov2659: Fix memory leaks in ov2659_probe()
-Date: Tue, 26 Aug 2025 13:09:43 +0200
-Message-ID: <20250826110958.684793545@linuxfoundation.org>
+Subject: [PATCH 5.15 493/644] media: venus: Add a check for packet size after reading from shared memory
+Date: Tue, 26 Aug 2025 13:09:44 +0200
+Message-ID: <20250826110958.710549477@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,42 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Vedang Nagar <quic_vnagar@quicinc.com>
 
-commit 76142b137b968d47b35cdd8d1dc924677d319c8b upstream.
+commit 49befc830daa743e051a65468c05c2ff9e8580e6 upstream.
 
-ov2659_probe() doesn't properly free control handler resources in failure
-paths, causing memory leaks. Add v4l2_ctrl_handler_free() to prevent these
-memory leaks and reorder the ctrl_handler assignment for better code flow.
+Add a check to ensure that the packet size does not exceed the number of
+available words after reading the packet header from shared memory. This
+ensures that the size provided by the firmware is safe to process and
+prevent potential out-of-bounds memory access.
 
-Fixes: c4c0283ab3cd ("[media] media: i2c: add support for omnivision's ov2659 sensor")
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov2659.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/i2c/ov2659.c
-+++ b/drivers/media/i2c/ov2659.c
-@@ -1479,14 +1479,15 @@ static int ov2659_probe(struct i2c_clien
- 				     V4L2_CID_TEST_PATTERN,
- 				     ARRAY_SIZE(ov2659_test_pattern_menu) - 1,
- 				     0, 0, ov2659_test_pattern_menu);
--	ov2659->sd.ctrl_handler = &ov2659->ctrls;
- 
- 	if (ov2659->ctrls.error) {
- 		dev_err(&client->dev, "%s: control initialization error %d\n",
- 			__func__, ov2659->ctrls.error);
-+		v4l2_ctrl_handler_free(&ov2659->ctrls);
- 		return  ov2659->ctrls.error;
- 	}
- 
-+	ov2659->sd.ctrl_handler = &ov2659->ctrls;
- 	sd = &ov2659->sd;
- 	client->flags |= I2C_CLIENT_SCCB;
- #ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -239,6 +239,7 @@ static int venus_write_queue(struct venu
+ static int venus_read_queue(struct venus_hfi_device *hdev,
+ 			    struct iface_queue *queue, void *pkt, u32 *tx_req)
+ {
++	struct hfi_pkt_hdr *pkt_hdr = NULL;
+ 	struct hfi_queue_header *qhdr;
+ 	u32 dwords, new_rd_idx;
+ 	u32 rd_idx, wr_idx, type, qsize;
+@@ -304,6 +305,9 @@ static int venus_read_queue(struct venus
+ 			memcpy(pkt, rd_ptr, len);
+ 			memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
+ 		}
++		pkt_hdr = (struct hfi_pkt_hdr *)(pkt);
++		if ((pkt_hdr->size >> 2) != dwords)
++			return -EINVAL;
+ 	} else {
+ 		/* bad packet received, dropping */
+ 		new_rd_idx = qhdr->write_idx;
 
 
