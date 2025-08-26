@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFCF481CD;
-	Tue, 26 Aug 2025 14:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1E2481CD;
+	Tue, 26 Aug 2025 14:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218349; cv=none; b=WZ0Mzp91oEGFWzl82ije9IV46tUMnIcjsadMKOirnEJJCYxzs3VXixQwehchCx+nk1vNZSodUxQeTyOv4MwP3oo61UzES259ONVHtUg7EC3xqbt8bws1fzTCbEPG+pIdNWEvljkU/DxYdNDt66bFjqjuLY8WolKeSggNAa97T/c=
+	t=1756218351; cv=none; b=ON4XpLltDdpbkQg97jfdHrCE1xcG0idWO94u6ghnI/1AsTGMlpo0+ecSQmkQppbNTKlpUhp5MwsDFjK2qIrheCZIvDfU9QD9YvDiKecvy+hAhJQqSnIo0tdIx193Mojyv2wC02FuBIJJaGsQmnJi3DINs+B8ChEXYKBD1gcdQmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218349; c=relaxed/simple;
-	bh=5MYBS6lERCYax/NMaAge1cLyO1L8NHgu/9tsCp8ApfA=;
+	s=arc-20240116; t=1756218351; c=relaxed/simple;
+	bh=46KiQmCnR02Fb7DKusQn4FBBelMP6i0pcOtF6HmxKyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gd83KFYdkgCX4qDRTdtD+InUqh7KcAFC2+ys+GR6ZXGkqV7G0Rpwkt0q9QWBtc8gI+k/SSAH/Gf3zbiYq2GQQhqF6X5D+KmTOntPmbcX3TP+Qn+fO9ssnKDe394XViKkte46SUxKihXbVvJvAVDA1taifg+xmSUWQbvmPWyPQek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CD/wX3UL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nEawl9LSTc2XqlwcyG7V0DHpC1+Mz+5accusXzSM4TRPpS2+wECF+oHsyVSCTqqJW6lcxD5gtb3YzwYvhR4WfwuPZcONJvmfpG91UMWHZqJwcFStyHt4tKxHne1erY71st4B+aK/Mt/Hjqio3qb861FRxz/z+vQ9a04inYQM6BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uo3bSlF7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CD/wX3UL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950D0C4CEF1;
-	Tue, 26 Aug 2025 14:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uo3bSlF7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32385C4CEF1;
+	Tue, 26 Aug 2025 14:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218348;
-	bh=5MYBS6lERCYax/NMaAge1cLyO1L8NHgu/9tsCp8ApfA=;
+	s=korg; t=1756218351;
+	bh=46KiQmCnR02Fb7DKusQn4FBBelMP6i0pcOtF6HmxKyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CD/wX3ULNHNSVGu3Y7Yk6ArUQtvq2Y1t6qcPtSYQDGY4o0FvLOBt4xFCn96y5oqzF
-	 gGlxnSCFNfbJ82+wjRcJgggJjUXMKixzK7qzfYa9Dl/qYBpQXBOX7jxC1Jj02DgDTO
-	 +X1N2Yon910nhiQ8sec1pFls4teNG2xqCSyKw09Q=
+	b=uo3bSlF71syKhfPiSlwWOqDgNyktW7orvfOeldXt1kfcSyMRA3o+K+yl4iQBDcrcj
+	 WMz/khXT8SBg2k9pT+NBGNAcDTS+Z0QmukJi/ngL8L/GoQuHlPp1k52EFAJS8G4Ajf
+	 Et2vu2nKtsSpSSXPEC/60/Lhp8a4kBDIApNbnQrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Qu Wenruo <wqu@suse.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 471/523] ext4: fix hole length calculation overflow in non-extent inodes
-Date: Tue, 26 Aug 2025 13:11:21 +0200
-Message-ID: <20250826110936.061242942@linuxfoundation.org>
+Subject: [PATCH 5.10 489/523] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
+Date: Tue, 26 Aug 2025 13:11:39 +0200
+Message-ID: <20250826110936.507069438@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -47,87 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit 02c7f7219ac0e2277b3379a3a0e9841ef464b6d4 ]
+[ Upstream commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f ]
 
-In a filesystem with a block size larger than 4KB, the hole length
-calculation for a non-extent inode in ext4_ind_map_blocks() can easily
-exceed INT_MAX. Then it could return a zero length hole and trigger the
-following waring and infinite in the iomap infrastructure.
+Reading DPCD registers has side-effects in general. In particular
+accessing registers outside of the link training register range
+(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
+forbidden by the DP v2.1 Standard, see
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 3 PID: 434101 at fs/iomap/iter.c:34 iomap_iter_done+0x148/0x190
-  CPU: 3 UID: 0 PID: 434101 Comm: fsstress Not tainted 6.16.0-rc7+ #128 PREEMPT(voluntary)
-  Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
-  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : iomap_iter_done+0x148/0x190
-  lr : iomap_iter+0x174/0x230
-  sp : ffff8000880af740
-  x29: ffff8000880af740 x28: ffff0000db8e6840 x27: 0000000000000000
-  x26: 0000000000000000 x25: ffff8000880af830 x24: 0000004000000000
-  x23: 0000000000000002 x22: 000001bfdbfa8000 x21: ffffa6a41c002e48
-  x20: 0000000000000001 x19: ffff8000880af808 x18: 0000000000000000
-  x17: 0000000000000000 x16: ffffa6a495ee6cd0 x15: 0000000000000000
-  x14: 00000000000003d4 x13: 00000000fa83b2da x12: 0000b236fc95f18c
-  x11: ffffa6a4978b9c08 x10: 0000000000001da0 x9 : ffffa6a41c1a2a44
-  x8 : ffff8000880af5c8 x7 : 0000000001000000 x6 : 0000000000000000
-  x5 : 0000000000000004 x4 : 000001bfdbfa8000 x3 : 0000000000000000
-  x2 : 0000000000000000 x1 : 0000004004030000 x0 : 0000000000000000
-  Call trace:
-   iomap_iter_done+0x148/0x190 (P)
-   iomap_iter+0x174/0x230
-   iomap_fiemap+0x154/0x1d8
-   ext4_fiemap+0x110/0x140 [ext4]
-   do_vfs_ioctl+0x4b8/0xbc0
-   __arm64_sys_ioctl+0x8c/0x120
-   invoke_syscall+0x6c/0x100
-   el0_svc_common.constprop.0+0x48/0xf0
-   do_el0_svc+0x24/0x38
-   el0_svc+0x38/0x120
-   el0t_64_sync_handler+0x10c/0x138
-   el0t_64_sync+0x198/0x1a0
-  ---[ end trace 0000000000000000 ]---
+3.6.5.1 DPTX AUX Transaction Handling Mandates
+3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
 
-Cc: stable@kernel.org
-Fixes: facab4d9711e ("ext4: return hole from ext4_map_blocks()")
-Reported-by: Qu Wenruo <wqu@suse.com>
-Closes: https://lore.kernel.org/linux-ext4/9b650a52-9672-4604-a765-bb6be55d1e4a@gmx.com/
-Tested-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250811064532.1788289-1-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Based on my tests, accessing the DPCD_REV register during the link
+training of an UHBR TBT DP tunnel sink leads to link training failures.
+
+Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
+DPCD register access quirk.
+
+Cc: <stable@vger.kernel.org>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
+[ call to drm_dp_dpcd_access() instead of drm_dp_dpcd_probe() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/indirect.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_dp_helper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/indirect.c
-+++ b/fs/ext4/indirect.c
-@@ -537,7 +537,7 @@ int ext4_ind_map_blocks(handle_t *handle
- 	int indirect_blks;
- 	int blocks_to_boundary = 0;
- 	int depth;
--	int count = 0;
-+	u64 count = 0;
- 	ext4_fsblk_t first_block = 0;
- 
- 	trace_ext4_ind_map_blocks_enter(inode, map->m_lblk, map->m_len, flags);
-@@ -586,7 +586,7 @@ int ext4_ind_map_blocks(handle_t *handle
- 		count++;
- 		/* Fill in size of a hole we found */
- 		map->m_pblk = 0;
--		map->m_len = min_t(unsigned int, map->m_len, count);
-+		map->m_len = umin(map->m_len, count);
- 		goto cleanup;
- 	}
- 
+--- a/drivers/gpu/drm/drm_dp_helper.c
++++ b/drivers/gpu/drm/drm_dp_helper.c
+@@ -299,7 +299,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
+ 	 * monitor doesn't power down exactly after the throw away read.
+ 	 */
+ 	if (!aux->is_remote) {
+-		ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, DP_DPCD_REV,
++		ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, DP_LANE0_1_STATUS,
+ 					 buffer, 1);
+ 		if (ret != 1)
+ 			goto out;
 
 
