@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A4035209B;
-	Tue, 26 Aug 2025 13:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19927352062;
+	Tue, 26 Aug 2025 13:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216242; cv=none; b=bUpg2L1z8CFEyuYU/Wpv53O9ffOm58aV5qkOmUX+RfA+uukQgBg0Dl42z0tW/bbxDt7YoTwfLGXZB3nDmc7zsU+kw7pwD0wGm3FNis7JsDfWTk2QSB3GfqmMCdrGXi+0thHXD4rJNPzKKp2trnCwxUSDA46RuAo9WSDjGpEC7A4=
+	t=1756216245; cv=none; b=lCV5g4IdgMJujJmYhTMPQd518/tC9UgNKPtp+LthS24f//9DjTys0Tp/ZQOGcegFUHXiO9fevRrUmifwILnVHvtNNVj4o5Vead/FUMS6Sr4MAoyzgmphn95ZUvy4TZDQzbNAFbCkrWVIP8kodHGm+YQVLOh3PllcApd/0By+FWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216242; c=relaxed/simple;
-	bh=UH6vlYuOU1DF7XTwvs8SXjrgQb8cR8MMf52iNYncTBQ=;
+	s=arc-20240116; t=1756216245; c=relaxed/simple;
+	bh=y0MhgSIMfh5o0To8W9ZvDhAW2s/fgO8hkzAtWTz2k8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWyYJLV1Slq3M41GuwjVuSJqQBmkBKVxhRnFbckei4bVpDmvBO2VHcZl3oxm0ZaxfBo4iC/7jjLAFN1BtmDCsoMHc4PrdqC/N9Xc3o8aICjiGxerV6nusao43jNgXgHSvvEyIP5YAUOtqV5d2X403jwMmCn84wwnf3cAZ3gEjco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAdfMNzE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DvnV3oEjopBhW0++cpt/VB7NeoZmr1N+PaYmervPYkwIF4z6KAVmHQI68w1Gwg5Ga+1hzN9B4cy+rnYGChg299CgRt2bM6zwFpQK0ajDC4w1+NX69D8Frf29ZMFv7C+VVTQHGWJMgklLWJgwwbB8VOY/nmjNI3M7rRbuYr2PlgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHMTUeCX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAdfMNzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB38C113CF;
-	Tue, 26 Aug 2025 13:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHMTUeCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C01AC4CEF1;
+	Tue, 26 Aug 2025 13:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216242;
-	bh=UH6vlYuOU1DF7XTwvs8SXjrgQb8cR8MMf52iNYncTBQ=;
+	s=korg; t=1756216245;
+	bh=y0MhgSIMfh5o0To8W9ZvDhAW2s/fgO8hkzAtWTz2k8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAdfMNzEnzTSOwqKBf8le8J1QA2PdanRHnHTNOs4KD9GnuxpMG7Z8bCaBNT1ANPqk
-	 nuTp/a74kqq++Ry4mFDSCkPlTBnNHEz803Xc8phAtfj8I80WShxt8kx7/6OoVVej6Y
-	 48t5ADtvUyVTvTVvm9UdF/DAdZg72PlBIXkDZRSU=
+	b=aHMTUeCXThZGKvFvxqZQeEk2Im3LJhM8q9rSyh0XNUy8UIryXG1LqvvxoA8mztgyv
+	 InedwC6Nn1O4C0XRt3+MzkR1TqRdyv0YFqTfPQWdU70RgS3OKRpXSVvDZgOXD+pY5J
+	 VMgIUPGe7a379pJ9w9DyG1KRQLtxQ/gOtc/gGSw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Chen <shawn2000100@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Xinxin Wan <xinxin.wan@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 300/644] usb: xhci: Set avg_trb_len = 8 for EP0 during Address Device Command
-Date: Tue, 26 Aug 2025 13:06:31 +0200
-Message-ID: <20250826110953.819870892@linuxfoundation.org>
+Subject: [PATCH 5.15 336/644] ASoC: codecs: rt5640: Retry DEVICE_ID verification
+Date: Tue, 26 Aug 2025 13:07:07 +0200
+Message-ID: <20250826110954.713777011@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -45,65 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jay Chen <shawn2000100@gmail.com>
+From: Xinxin Wan <xinxin.wan@intel.com>
 
-[ Upstream commit f72b9aa821a2bfe4b6dfec4be19f264d0673b008 ]
+[ Upstream commit 19f971057b2d7b99c80530ec1052b45de236a8da ]
 
-There is a subtle contradiction between sections of the xHCI 1.2 spec
-regarding the initialization of Input Endpoint Context fields. Section
-4.8.2 ("Endpoint Context Initialization") states that all fields should
-be initialized to 0. However, Section 6.2.3 ("Endpoint Context", p.453)
-specifies that the Average TRB Length (avg_trb_len) field shall be
-greater than 0, and explicitly notes (p.454): "Software shall set
-Average TRB Length to '8' for control endpoints."
+To be more resilient to codec-detection failures when the hardware
+powers on slowly, add retry mechanism to the device verification check.
+Similar pattern is found throughout a number of Realtek codecs. Our
+tests show that 60ms delay is sufficient to address readiness issues on
+rt5640 chip.
 
-Strictly setting all fields to 0 during initialization conflicts with
-the specific recommendation for control endpoints. In practice, setting
-avg_trb_len = 0 is not meaningful for the hardware/firmware, as the
-value is used for bandwidth calculation.
-
-Motivation: Our company is developing a custom Virtual xHC hardware
-platform that strictly follows the xHCI spec and its recommendations.
-During validation, we observed that enumeration fails and a parameter
-error (TRB Completion Code = 5) is reported if avg_trb_len for EP0 is
-not set to 8 as recommended by Section 6.2.3. This demonstrates the
-importance of assigning a meaningful, non-zero value to avg_trb_len,
-even in virtualized or emulated environments.
-
-This patch explicitly sets avg_trb_len to 8 for EP0 in
-xhci_setup_addressable_virt_dev(), as recommended in Section 6.2.3, to
-prevent potential issues with xHCI host controllers that enforce the
-spec strictly.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220033
-Signed-off-by: Jay Chen <shawn2000100@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250717073107.488599-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Xinxin Wan <xinxin.wan@intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530142120.2944095-3-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/rt5640.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 149128b89100..43cbaadf933d 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -1209,6 +1209,8 @@ int xhci_setup_addressable_virt_dev(struct xhci_hcd *xhci, struct usb_device *ud
- 	ep0_ctx->deq = cpu_to_le64(dev->eps[0].ring->first_seg->dma |
- 				   dev->eps[0].ring->cycle_state);
+diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
+index cd1db5caabad..9998bdb954ba 100644
+--- a/sound/soc/codecs/rt5640.c
++++ b/sound/soc/codecs/rt5640.c
+@@ -2837,6 +2837,11 @@ static int rt5640_i2c_probe(struct i2c_client *i2c,
+ 	}
  
-+	ep0_ctx->tx_info = cpu_to_le32(EP_AVG_TRB_LENGTH(8));
+ 	regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
++	if (val != RT5640_DEVICE_ID) {
++		usleep_range(60000, 100000);
++		regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
++	}
 +
- 	trace_xhci_setup_addressable_virt_device(dev);
- 
- 	/* Steps 7 and 8 were done in xhci_alloc_virt_device() */
+ 	if (val != RT5640_DEVICE_ID) {
+ 		dev_err(&i2c->dev,
+ 			"Device with ID register %#x is not rt5640/39\n", val);
 -- 
 2.39.5
 
