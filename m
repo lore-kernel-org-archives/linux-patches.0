@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C61A352060;
-	Tue, 26 Aug 2025 14:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E5D340D95;
+	Tue, 26 Aug 2025 14:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218905; cv=none; b=tReXi4lZXTkbSL6q4glAHXr/PGywFsD879FLOVMJXGscwZ6AGv0V4eS7O1vN7QfrHK/PZJIg1ZtulagPXv28wFoDOYHX6HtDwM0sEneFHTLWBlbV+p4pGo9AQlbaBfACi3djtef+DY6FndY0P4tnOHNU7NnnSY/wMIvPgxfZsY4=
+	t=1756218908; cv=none; b=snTlnPGZ45Fo6iMjQkCtt2YmpZhQDnHoDI0DSRZkxeDa3dJhS4jXfI7xS4xBXEwZyVJdIUvz2G1tatIhVUjC5oPS7I5fxGy5x/Cr8Jxy9aqZi1egt9kQqkgOWab19mvBfOPFOip5ROf0uYGEbThvhYxMRW/0ssI3bFurrV1TyKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218905; c=relaxed/simple;
-	bh=Wy4VdjflSxxJvdE7cnx6PNcosV1qz0W2u08db/Xqk3c=;
+	s=arc-20240116; t=1756218908; c=relaxed/simple;
+	bh=7nrLO239b7yQggz7/BNaPJlu3RiVlQalD9cuNA9mYPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kTaHr3zRS15yEeG6bMbf+KEuDuVnOBbzwidOqpEET/7WWlb92lJAnk6z4sVXp9Jaos0U4vBl1Ps5mVijSz8KQLhKJK9oju8ca4Re9brG0LvISS0JT7DiPD6siBZJMDNZGu/xfXsj1MXah+gcsS76gJbsEUeBF5jRY7qIsdkOEiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1l18RKX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vDkNCtL33dBG/dPGhUYIqotcQBjPN2q9WQgEmC0tVqbRoq6onYY0oCLCICEHg1XsSAnX4JyDOMiSe+8l8f3UhEeY85BHJQdqQwHw9LmyVePIXfVEGgzDTihj99xkPSB3vi6/mofTOo7FmCd+7AAaZgDzna5++EVGmhKeEyT8+us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGmgTsLc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1l18RKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3ACC4CEF1;
-	Tue, 26 Aug 2025 14:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGmgTsLc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B738C4CEF1;
+	Tue, 26 Aug 2025 14:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218905;
-	bh=Wy4VdjflSxxJvdE7cnx6PNcosV1qz0W2u08db/Xqk3c=;
+	s=korg; t=1756218907;
+	bh=7nrLO239b7yQggz7/BNaPJlu3RiVlQalD9cuNA9mYPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1l18RKX2jUDxT0Ll12w+MDvj9ZSUN+G1860FHjAm4bp9T2+wsEpoXKN7agTg8mUl
-	 dOW7WF74lFOvJz3ZW3sH06HhZNqHVZT5uzWpzFUakuV/9SiM6Zhl1PwZCCmSKekx77
-	 SNTtmL3yElQfNV1SActsK8YK+UmL2+q7qSBgDUK0=
+	b=TGmgTsLcDorYBF85INVPLn58rj7KnNmJ56GLqm9TQOdi76Kt383nhDfx2POpeeMwy
+	 Y5DwpEz2wGKrYGLpqjejMJ8b/DcxEFUkkNVIMXGGBj1DIY1fXe8XWysFYgbLmlA28y
+	 oyPjy5Znp/Q73I420TClYq8QTiurrypGnRsVPmNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quang Le <quanglex97@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 151/403] net/packet: fix a race in packet_set_ring() and packet_notifier()
-Date: Tue, 26 Aug 2025 13:07:57 +0200
-Message-ID: <20250826110911.047635612@linuxfoundation.org>
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 178/403] hfs: fix not erasing deleted b-tree node issue
+Date: Tue, 26 Aug 2025 13:08:24 +0200
+Message-ID: <20250826110911.801994347@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,64 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quang Le <quanglex97@gmail.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-commit 01d3c8417b9c1b884a8a981a3b886da556512f36 upstream.
+[ Upstream commit d3ed6d6981f4756f145766753c872482bc3b28d3 ]
 
-When packet_set_ring() releases po->bind_lock, another thread can
-run packet_notifier() and process an NETDEV_UP event.
+The generic/001 test of xfstests suite fails and corrupts
+the HFS volume:
 
-This race and the fix are both similar to that of commit 15fe076edea7
-("net/packet: fix a race in packet_bind() and packet_notifier()").
+sudo ./check generic/001
+FSTYP         -- hfs
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2>
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-There too the packet_notifier NETDEV_UP event managed to run while a
-po->bind_lock critical section had to be temporarily released. And
-the fix was similarly to temporarily set po->num to zero to keep
-the socket unhooked until the lock is retaken.
+generic/001 32s ... _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
+(see /home/slavad/XFSTESTS-2/xfstests-dev/results//generic/001.full for details)
 
-The po->bind_lock in packet_set_ring and packet_notifier precede the
-introduction of git history.
+Ran: generic/001
+Failures: generic/001
+Failed 1 of 1 tests
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Quang Le <quanglex97@gmail.com>
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250801175423.2970334-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+fsck.hfs -d -n ./test-image.bin
+** ./test-image.bin (NO WRITE)
+	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+   Executing fsck_hfs (version 540.1-Linux).
+** Checking HFS volume.
+   The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+   Unused node is not erased (node = 2)
+   Unused node is not erased (node = 4)
+<skipped>
+   Unused node is not erased (node = 253)
+   Unused node is not erased (node = 254)
+   Unused node is not erased (node = 255)
+   Unused node is not erased (node = 256)
+** Checking catalog hierarchy.
+** Checking volume bitmap.
+** Checking volume information.
+   Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
+                  CBTStat = 0x0004 CatStat = 0x00000000
+** The volume untitled was found corrupt and needs to be repaired.
+	volume type is HFS
+	primary MDB is at block 2 0x02
+	alternate MDB is at block 20971518 0x13ffffe
+	primary VHB is at block 0 0x00
+	alternate VHB is at block 0 0x00
+	sector size = 512 0x200
+	VolumeObject flags = 0x19
+	total sectors for volume = 20971520 0x1400000
+	total sectors for embedded volume = 0 0x00
+
+This patch adds logic of clearing the deleted b-tree node.
+
+sudo ./check generic/001
+FSTYP         -- hfs
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/001 9s ...  32s
+Ran: generic/001
+Passed all 1 tests
+
+fsck.hfs -d -n ./test-image.bin
+** ./test-image.bin (NO WRITE)
+	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+   Executing fsck_hfs (version 540.1-Linux).
+** Checking HFS volume.
+   The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking catalog hierarchy.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume untitled appears to be OK.
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20250430001211.1912533-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/hfs/bnode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4504,10 +4504,10 @@ static int packet_set_ring(struct sock *
- 	spin_lock(&po->bind_lock);
- 	was_running = po->running;
- 	num = po->num;
--	if (was_running) {
--		WRITE_ONCE(po->num, 0);
-+	WRITE_ONCE(po->num, 0);
-+	if (was_running)
- 		__unregister_prot_hook(sk, false);
--	}
-+
- 	spin_unlock(&po->bind_lock);
- 
- 	synchronize_net();
-@@ -4539,10 +4539,10 @@ static int packet_set_ring(struct sock *
- 	mutex_unlock(&po->pg_vec_lock);
- 
- 	spin_lock(&po->bind_lock);
--	if (was_running) {
--		WRITE_ONCE(po->num, num);
-+	WRITE_ONCE(po->num, num);
-+	if (was_running)
- 		register_prot_hook(sk);
--	}
-+
- 	spin_unlock(&po->bind_lock);
- 	if (pg_vec && (po->tp_version > TPACKET_V2)) {
- 		/* Because we don't support block-based V3 on tx-ring */
+diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
+index 2039cb6d5f66..219e3b8fd6a8 100644
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -586,6 +586,7 @@ void hfs_bnode_put(struct hfs_bnode *node)
+ 		if (test_bit(HFS_BNODE_DELETED, &node->flags)) {
+ 			hfs_bnode_unhash(node);
+ 			spin_unlock(&tree->hash_lock);
++			hfs_bnode_clear(node, 0, tree->node_size);
+ 			hfs_bmap_free(node);
+ 			hfs_bnode_free(node);
+ 			return;
+-- 
+2.39.5
+
 
 
