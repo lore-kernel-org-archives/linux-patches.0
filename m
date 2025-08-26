@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C9F227EA8;
-	Tue, 26 Aug 2025 13:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A87A227EA8;
+	Tue, 26 Aug 2025 13:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215666; cv=none; b=cw1WBaXZBe+AqN+00MA6tSfIyVpDUQkY9P/K0537dt+EGJ/HekxWc+KChglcYECFE3wN8cS2/Y2XYRvzR5xlG35rMPJ9fB2NuAVWBjuA5+nIdoFmVUWvnoYlu6115CW3Z3Pibly6pcY9OE2OPkpt+3vGT6MYn0qYXXHtDihNXxs=
+	t=1756215668; cv=none; b=Iz0QXNo5/0knJOqQlsFEyjCludtDNLa/tw4v5VLbWeOB998CwpvuPGfraVR1I0vqs3tFQQNxHZyQHjdtsUNYghNAQAOn0O0If2qkKTd7hqRt5EMkKCZfQ7jUvfUjkrrHvzgWC03ILsBcRhJaKLKWlBJ8L52q3yh7+wrDNHeqO4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215666; c=relaxed/simple;
-	bh=RJJefDYsdH7Pyole5s74GXQVB40KKl2OTW0TNI3HFKo=;
+	s=arc-20240116; t=1756215668; c=relaxed/simple;
+	bh=+LPwhuexWKWggCosXfhE2BPYO5pOA2SJsSWtqAaU8qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CtmW+GAgHwSRaFDeEVfmSaswQsrl/5sbFNJP1FhBYKutT4C1J/7MZCIFS9yCqLdWIk/3aP28XbelerbbVap/Q4kFn6UZmUhYDZJtb3F7XgIhbS7fiM5vzLKXUvLXjGoL1hIQYGDgKJIcyBL72O5iMDLB62YJHpvcS6C3oRn/4mI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTE1s2am; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSU/EYByjH/XurcU4nEW82NHxKEAmbZrOgoOvJapLUeVBwjIBNOhFI58ZNqj3Cbt7X5Yn1y7pZ+/DLJAsSodO/xnqhJNtw6qIkIKEuLsGDHr6b1dz1SPA21tfyAu4w1lvrJ9NZcCphmobTTfofzVlER1R4lF8jpUutkpGOCS/xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUFh41cr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTE1s2am"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A069C4CEF1;
-	Tue, 26 Aug 2025 13:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUFh41cr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E230C113CF;
+	Tue, 26 Aug 2025 13:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215665;
-	bh=RJJefDYsdH7Pyole5s74GXQVB40KKl2OTW0TNI3HFKo=;
+	s=korg; t=1756215668;
+	bh=+LPwhuexWKWggCosXfhE2BPYO5pOA2SJsSWtqAaU8qM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTE1s2am9os0FBDrgcV18HTguIfHQcOEvI0fukothJP6VPtmb24Rx3DDxQrbHYF8s
-	 3ALQ9dJB8R2JKX2zqd0V0rWWi7z600MnnTzQw1ps72OMAnxuK+aqwh5r3SO42qnFAM
-	 hxHYU+F+xK2mwr24cdF440bOZcvwxKW/zbY3R9wI=
+	b=aUFh41crpHSbgXzUVI1eoShwJUXgcx075YYEI+sc7yvEYaEzXt+xZPPhXpFmtEJ1N
+	 qdJuSnON9IGgNmZEEnHs+vPkVAv6KABBowSvZKxVvctluuQyTNCP4+d//Tvr0uKtb1
+	 Ncemk+KHyBYnPVs3ICsgMlemaW+810beofv1dmLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	syzbot+9b9124ae9b12d5af5d95@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/644] staging: fbtft: fix potential memory leak in fbtft_framebuffer_alloc()
-Date: Tue, 26 Aug 2025 13:03:30 +0200
-Message-ID: <20250826110949.470682164@linuxfoundation.org>
+Subject: [PATCH 5.15 120/644] vmci: Prevent the dispatching of uninitialized payloads
+Date: Tue, 26 Aug 2025 13:03:31 +0200
+Message-ID: <20250826110949.494043929@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,36 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit eb2cb7dab60f9be0b435ac4a674255429a36d72c ]
+[ Upstream commit bfb4cf9fb97e4063f0aa62e9e398025fb6625031 ]
 
-In the error paths after fb_info structure is successfully allocated,
-the memory allocated in fb_deferred_io_init() for info->pagerefs is not
-freed. Fix that by adding the cleanup function on the error path.
+The reproducer executes the host's unlocked_ioctl call in two different
+tasks. When init_context fails, the struct vmci_event_ctx is not fully
+initialized when executing vmci_datagram_dispatch() to send events to all
+vm contexts. This affects the datagram taken from the datagram queue of
+its context by another task, because the datagram payload is not initialized
+according to the size payload_size, which causes the kernel data to leak
+to the user space.
 
-Fixes: c296d5f9957c ("staging: fbtft: core support")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20250626172412.18355-1-abdun.nihaal@gmail.com
+Before dispatching the datagram, and before setting the payload content,
+explicitly set the payload content to 0 to avoid data leakage caused by
+incomplete payload initialization.
+
+Fixes: 28d6692cd8fb ("VMCI: context implementation.")
+Reported-by: syzbot+9b9124ae9b12d5af5d95@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9b9124ae9b12d5af5d95
+Tested-by: syzbot+9b9124ae9b12d5af5d95@syzkaller.appspotmail.com
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Link: https://lore.kernel.org/r/20250627055214.2967129-1-lizhi.xu@windriver.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fbtft-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/vmw_vmci/vmci_context.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
-index 810ed1fca10b..54620ae6919b 100644
---- a/drivers/staging/fbtft/fbtft-core.c
-+++ b/drivers/staging/fbtft/fbtft-core.c
-@@ -747,6 +747,7 @@ struct fb_info *fbtft_framebuffer_alloc(struct fbtft_display *display,
- 	return info;
+diff --git a/drivers/misc/vmw_vmci/vmci_context.c b/drivers/misc/vmw_vmci/vmci_context.c
+index c0b5e339d5a1..a8df60b9301c 100644
+--- a/drivers/misc/vmw_vmci/vmci_context.c
++++ b/drivers/misc/vmw_vmci/vmci_context.c
+@@ -251,6 +251,8 @@ static int ctx_fire_notification(u32 context_id, u32 priv_flags)
+ 		ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
+ 						  VMCI_CONTEXT_RESOURCE_ID);
+ 		ev.msg.hdr.payload_size = sizeof(ev) - sizeof(ev.msg.hdr);
++		memset((char*)&ev.msg.hdr + sizeof(ev.msg.hdr), 0,
++			ev.msg.hdr.payload_size);
+ 		ev.msg.event_data.event = VMCI_EVENT_CTX_REMOVED;
+ 		ev.payload.context_id = context_id;
  
- release_framebuf:
-+	fb_deferred_io_cleanup(info);
- 	framebuffer_release(info);
- 
- alloc_fail:
 -- 
 2.39.5
 
