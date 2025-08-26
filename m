@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B6D352081;
-	Tue, 26 Aug 2025 14:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50238352081;
+	Tue, 26 Aug 2025 14:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218886; cv=none; b=FnjiNxxxtL5FsmYaVZ/+FviKqHh/iTOf47PW9RMx5383jUIPYe1S1pxmqbPO6WwObu6+MMLaFetCDMZ3e5T06x0TQb31e5IjJHfZW2zBTcHDDu5EvMN3z+PcQE7BFLn9vuGB93LcDwXMrGEVYBaSOgRFwhAwvyWe/CH7s+sx0BA=
+	t=1756218887; cv=none; b=f7VqdIOsDUT6gUzOSdAx47y776Al+1/m7YSmiK2ragrhWWQMM6ps4/FZV6q9cKpPMcRUPaMe0Pm1vX64VlZ90w5Yd0edLHCAFMe2g3Equ1jP4s+nMgNqjsuovCFD8TCI6g1af8y65c1Au8nRRsdu2aQ/OIuYCI9sxiOOiY2WSbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218886; c=relaxed/simple;
-	bh=MKs9wAoj/1+TXkl25NOt+OpbZFDCegVNkEmeGkC+pOI=;
+	s=arc-20240116; t=1756218887; c=relaxed/simple;
+	bh=KpnQVM4ky+QjourwraK/giuB1MgtQyKGyAYMFTIxj8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKgGnoAwFTWfJchonhLhyI+St6U6ah1TaK35cV4CSmTxPbpVzArLwI4iyuMDHqmofyLiTtLXPb6JkhtxWqvPV5xLP/DB4IKPVHbmcJ0RD8xafR9PVfZK6OtmNYYne6nRsLYU0oQKJGM5xhZOg9EIWQjVUbw2lLKBkpO8CfUzm5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAAdPe24; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CZF6Vaiqw0snqdeQHFib5nRppvNAEcRF1NuWIkqc2XWDc2BqYvH5KMGOPHkAsmn+B5CajJH55CBAbK6GWkkM4PZ2kK1DGUFCHfc9l+mws+R+H+d0/zMkPnykArl7bbi3TUcyS1+8hUe4w6wjBjW9vgTor7FwTLjrinB0ktNCRs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKsmckBl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAAdPe24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DF0C4CEF1;
-	Tue, 26 Aug 2025 14:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKsmckBl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D672EC4CEF1;
+	Tue, 26 Aug 2025 14:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218884;
-	bh=MKs9wAoj/1+TXkl25NOt+OpbZFDCegVNkEmeGkC+pOI=;
+	s=korg; t=1756218887;
+	bh=KpnQVM4ky+QjourwraK/giuB1MgtQyKGyAYMFTIxj8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAAdPe24n7zNHEWa84FgnoVaju/qveXIJmoI5Eh6TUH3JbFBMdV4LEuxe76HvKAPe
-	 f3MF1zO29uh8B7hxV8d0zZkGic9VZ/Jglj75/wWT+9zjC/cwhTN2sCQZfnM/Tv2JyP
-	 gfi2qtJ3dJdDR+kCNoVXxP8jlhWVVkgDeBWNSp/A=
+	b=TKsmckBl7BrhkG29IGm3l9PeSD7TCfuQytg8jvLU1+JnWq1t8DkTl84FTXs08gyAy
+	 HxzqEKHfSDysMF7nlr7qGERjGpfcJCh9C5bTCi+nICeydcdeeKycCSgCmm6WSXYRq6
+	 fhU8t+NE6PZK3gi3YcOIA1tS1GScuOR9SxXuFzSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com,
-	syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 170/403] sctp: linearize cloned gso packets in sctp_rcv
-Date: Tue, 26 Aug 2025 13:08:16 +0200
-Message-ID: <20250826110911.590725880@linuxfoundation.org>
+Subject: [PATCH 5.4 171/403] hfs: fix slab-out-of-bounds in hfs_bnode_read()
+Date: Tue, 26 Aug 2025 13:08:17 +0200
+Message-ID: <20250826110911.618383345@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -54,73 +50,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit fd60d8a086191fe33c2d719732d2482052fa6805 ]
+[ Upstream commit a431930c9bac518bf99d6b1da526a7f37ddee8d8 ]
 
-A cloned head skb still shares these frag skbs in fraglist with the
-original head skb. It's not safe to access these frag skbs.
+This patch introduces is_bnode_offset_valid() method that checks
+the requested offset value. Also, it introduces
+check_and_correct_requested_length() method that checks and
+correct the requested length (if it is necessary). These methods
+are used in hfs_bnode_read(), hfs_bnode_write(), hfs_bnode_clear(),
+hfs_bnode_copy(), and hfs_bnode_move() with the goal to prevent
+the access out of allocated memory and triggering the crash.
 
-syzbot reported two use-of-uninitialized-memory bugs caused by this:
-
-  BUG: KMSAN: uninit-value in sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
-   sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
-   sctp_assoc_bh_rcv+0x1a7/0xc50 net/sctp/associola.c:998
-   sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
-   sctp_backlog_rcv+0x397/0xdb0 net/sctp/input.c:331
-   sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1122
-   __release_sock+0x1da/0x330 net/core/sock.c:3106
-   release_sock+0x6b/0x250 net/core/sock.c:3660
-   sctp_wait_for_connect+0x487/0x820 net/sctp/socket.c:9360
-   sctp_sendmsg_to_asoc+0x1ec1/0x1f00 net/sctp/socket.c:1885
-   sctp_sendmsg+0x32b9/0x4a80 net/sctp/socket.c:2031
-   inet_sendmsg+0x25a/0x280 net/ipv4/af_inet.c:851
-   sock_sendmsg_nosec net/socket.c:718 [inline]
-
-and
-
-  BUG: KMSAN: uninit-value in sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
-   sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
-   sctp_inq_push+0x2a3/0x350 net/sctp/inqueue.c:88
-   sctp_backlog_rcv+0x3c7/0xda0 net/sctp/input.c:331
-   sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
-   __release_sock+0x1d3/0x330 net/core/sock.c:3213
-   release_sock+0x6b/0x270 net/core/sock.c:3767
-   sctp_wait_for_connect+0x458/0x820 net/sctp/socket.c:9367
-   sctp_sendmsg_to_asoc+0x223a/0x2260 net/sctp/socket.c:1886
-   sctp_sendmsg+0x3910/0x49f0 net/sctp/socket.c:2032
-   inet_sendmsg+0x269/0x2a0 net/ipv4/af_inet.c:851
-   sock_sendmsg_nosec net/socket.c:712 [inline]
-
-This patch fixes it by linearizing cloned gso packets in sctp_rcv().
-
-Fixes: 90017accff61 ("sctp: Add GSO support")
-Reported-by: syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com
-Reported-by: syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/dd7dc337b99876d4132d0961f776913719f7d225.1754595611.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250703214912.244138-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfs/bnode.c | 92 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
 
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index b1d3e342ac83..9013257cf3df 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -114,7 +114,7 @@ int sctp_rcv(struct sk_buff *skb)
- 	 * it's better to just linearize it otherwise crc computing
- 	 * takes longer.
- 	 */
--	if ((!is_gso && skb_linearize(skb)) ||
-+	if (((!is_gso || skb_cloned(skb)) && skb_linearize(skb)) ||
- 	    !pskb_may_pull(skb, sizeof(struct sctphdr)))
- 		goto discard_it;
+diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
+index 2251286cd83f..2039cb6d5f66 100644
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -15,6 +15,48 @@
  
+ #include "btree.h"
+ 
++static inline
++bool is_bnode_offset_valid(struct hfs_bnode *node, int off)
++{
++	bool is_valid = off < node->tree->node_size;
++
++	if (!is_valid) {
++		pr_err("requested invalid offset: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off);
++	}
++
++	return is_valid;
++}
++
++static inline
++int check_and_correct_requested_length(struct hfs_bnode *node, int off, int len)
++{
++	unsigned int node_size;
++
++	if (!is_bnode_offset_valid(node, off))
++		return 0;
++
++	node_size = node->tree->node_size;
++
++	if ((off + len) > node_size) {
++		int new_len = (int)node_size - off;
++
++		pr_err("requested length has been corrected: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d, "
++		       "requested_len %d, corrected_len %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off, len, new_len);
++
++		return new_len;
++	}
++
++	return len;
++}
++
+ void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
+ {
+ 	struct page *page;
+@@ -23,6 +65,20 @@ void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
+ 	int bytes_to_read;
+ 	void *vaddr;
+ 
++	if (!is_bnode_offset_valid(node, off))
++		return;
++
++	if (len == 0) {
++		pr_err("requested zero length: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d, len %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off, len);
++		return;
++	}
++
++	len = check_and_correct_requested_length(node, off, len);
++
+ 	off += node->page_offset;
+ 	pagenum = off >> PAGE_SHIFT;
+ 	off &= ~PAGE_MASK; /* compute page offset for the first page */
+@@ -83,6 +139,20 @@ void hfs_bnode_write(struct hfs_bnode *node, void *buf, int off, int len)
+ {
+ 	struct page *page;
+ 
++	if (!is_bnode_offset_valid(node, off))
++		return;
++
++	if (len == 0) {
++		pr_err("requested zero length: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d, len %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off, len);
++		return;
++	}
++
++	len = check_and_correct_requested_length(node, off, len);
++
+ 	off += node->page_offset;
+ 	page = node->page[0];
+ 
+@@ -108,6 +178,20 @@ void hfs_bnode_clear(struct hfs_bnode *node, int off, int len)
+ {
+ 	struct page *page;
+ 
++	if (!is_bnode_offset_valid(node, off))
++		return;
++
++	if (len == 0) {
++		pr_err("requested zero length: "
++		       "NODE: id %u, type %#x, height %u, "
++		       "node_size %u, offset %d, len %d\n",
++		       node->this, node->type, node->height,
++		       node->tree->node_size, off, len);
++		return;
++	}
++
++	len = check_and_correct_requested_length(node, off, len);
++
+ 	off += node->page_offset;
+ 	page = node->page[0];
+ 
+@@ -124,6 +208,10 @@ void hfs_bnode_copy(struct hfs_bnode *dst_node, int dst,
+ 	hfs_dbg(BNODE_MOD, "copybytes: %u,%u,%u\n", dst, src, len);
+ 	if (!len)
+ 		return;
++
++	len = check_and_correct_requested_length(src_node, src, len);
++	len = check_and_correct_requested_length(dst_node, dst, len);
++
+ 	src += src_node->page_offset;
+ 	dst += dst_node->page_offset;
+ 	src_page = src_node->page[0];
+@@ -143,6 +231,10 @@ void hfs_bnode_move(struct hfs_bnode *node, int dst, int src, int len)
+ 	hfs_dbg(BNODE_MOD, "movebytes: %u,%u,%u\n", dst, src, len);
+ 	if (!len)
+ 		return;
++
++	len = check_and_correct_requested_length(node, src, len);
++	len = check_and_correct_requested_length(node, dst, len);
++
+ 	src += node->page_offset;
+ 	dst += node->page_offset;
+ 	page = node->page[0];
 -- 
-2.50.1
+2.39.5
 
 
 
