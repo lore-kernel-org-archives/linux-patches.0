@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C832BEC45;
-	Tue, 26 Aug 2025 13:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3C82BEC45;
+	Tue, 26 Aug 2025 13:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216528; cv=none; b=V8OIe3GHEbtnZdAXdFRtpMDIkj/4ibmLnxuvJWDho3xgKF7fLvZbAmQZc0cf6C9SgiMb59Mx02pPJez6y7e+kLz7w7b7YqTmfipbXLQ94RtFSANDclqzy8SC3lG7fOn3YBfzwu1IRRFchRiRXO2UssT9wGXs3+Xbx8gErK8MiR0=
+	t=1756216530; cv=none; b=C0U0WZ/BJa0aKKeAmBtghrkPguBi9Gq/OHzpwMT7y2iV2avxWwQVl2BIyb0HzjdF/u1OH84eGjCAwE8sluaaj9frKsokV7OutmGDuz4W7xbtYPt0/UxNw9wYcrSD95XBft9HZcPyETo463usmsqtao9bOwVXGfv25laNAbnQpFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216528; c=relaxed/simple;
-	bh=7N44qMJNPxQ6yqMJuQQz3GUhStlDKjyCjNcO0Ddui84=;
+	s=arc-20240116; t=1756216530; c=relaxed/simple;
+	bh=rS+fr9WjJ2KCfaTPzdRPLAoqkqNafROlW6FU0E/o+4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2prNkGoTW/7DU6FM9tBqMwAoDNlp7dbVRq1LOFUKwK6pYSElj9Vpb4bqnb1IMyjlRA9eaxyf0eqkkTVr703QY17xlyv5Hobu8gw1k3lI6rfh+K6lfgMJj1mRS+W5ycvCcmD1DN+Rq1rnfWJvcUj0qxDmK7VRFBXrWuCkCGITrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaRNRZHx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kJN5MiMORXnfsM4krgRu/3ZozOQphJ+znHSXvcS49wvHCY56CwEBMTuK2Zd4yAnnqZN3eZwpYzoD21/FWoUpbG0yF4XBOa0cQs/uTu/37Qg8z9vkUKBc4pG5KslxRyxvYPybfG89JdTqz2k/DBk3qnPZ/ssQKCfr8+k3UJDyOEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYpBIRtd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaRNRZHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A32C4CEF1;
-	Tue, 26 Aug 2025 13:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYpBIRtd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7CAC4CEF1;
+	Tue, 26 Aug 2025 13:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216527;
-	bh=7N44qMJNPxQ6yqMJuQQz3GUhStlDKjyCjNcO0Ddui84=;
+	s=korg; t=1756216530;
+	bh=rS+fr9WjJ2KCfaTPzdRPLAoqkqNafROlW6FU0E/o+4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gaRNRZHxWKyp0z/Nt+WNLX+P/wVv1BiD/MCP1Vij414M4JPW5E3MKA7APCeRGQvWo
-	 dFDDw8xIwF6L1IfRarz1VrcJePnm00erQQkJepd738sjX1zEkZihaIFvuZoXSRAe5p
-	 w5LqRkRtYCmhMY+DDVYgNojBUbfAQQOsgqg+Lm+k=
+	b=QYpBIRtdMe4KVIH29KgKOYQhPGAx9nClWLPV3uukueWFAff2SUfZHYGFOrvPAESEf
+	 duikjS6TfE4lgGMzZGLjiVDaBd22eOkFBj9feA7b6fRQndoO2ZwOwcRD6vsFsgjms9
+	 FU6dFcjnMDSXd94d4FKvCQc1hvlcJEBgG4qU5b6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 5.15 445/644] thunderbolt: Fix copy+paste error in match_service_id()
-Date: Tue, 26 Aug 2025 13:08:56 +0200
-Message-ID: <20250826110957.495558668@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.15 446/644] cdc-acm: fix race between initial clearing halt and open
+Date: Tue, 26 Aug 2025 13:08:57 +0200
+Message-ID: <20250826110957.519811441@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,32 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 5cc1f66cb23cccc704e3def27ad31ed479e934a5 upstream.
+commit 64690a90cd7c6db16d3af8616be1f4bf8d492850 upstream.
 
-The second instance of TBSVC_MATCH_PROTOCOL_VERSION seems to have been
-intended to be TBSVC_MATCH_PROTOCOL_REVISION.
+On the devices that need their endpoints to get an
+initial clear_halt, this needs to be done before
+the devices can be opened. That means it needs to be
+before the devices are registered.
 
-Fixes: d1ff70241a27 ("thunderbolt: Add support for XDomain discovery protocol")
+Fixes: 15bf722e6f6c0 ("cdc-acm: Add support of ATOL FPrint fiscal printers")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://lore.kernel.org/r/20250721050136.30004-1-ebiggers@kernel.org
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250717141259.2345605-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/domain.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/cdc-acm.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/thunderbolt/domain.c
-+++ b/drivers/thunderbolt/domain.c
-@@ -38,7 +38,7 @@ static bool match_service_id(const struc
- 			return false;
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1500,6 +1500,12 @@ skip_countries:
+ 			goto err_remove_files;
  	}
  
--	if (id->match_flags & TBSVC_MATCH_PROTOCOL_VERSION) {
-+	if (id->match_flags & TBSVC_MATCH_PROTOCOL_REVISION) {
- 		if (id->protocol_revision != svc->prtcrevs)
- 			return false;
++	if (quirks & CLEAR_HALT_CONDITIONS) {
++		/* errors intentionally ignored */
++		usb_clear_halt(usb_dev, acm->in);
++		usb_clear_halt(usb_dev, acm->out);
++	}
++
+ 	tty_dev = tty_port_register_device(&acm->port, acm_tty_driver, minor,
+ 			&control_interface->dev);
+ 	if (IS_ERR(tty_dev)) {
+@@ -1507,11 +1513,6 @@ skip_countries:
+ 		goto err_release_data_interface;
  	}
+ 
+-	if (quirks & CLEAR_HALT_CONDITIONS) {
+-		usb_clear_halt(usb_dev, acm->in);
+-		usb_clear_halt(usb_dev, acm->out);
+-	}
+-
+ 	dev_info(&intf->dev, "ttyACM%d: USB ACM device\n", minor);
+ 
+ 	return 0;
 
 
