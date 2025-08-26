@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1E6296BDF;
-	Tue, 26 Aug 2025 11:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A142E2FF67A;
+	Tue, 26 Aug 2025 11:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207118; cv=none; b=Q9EZrcHtQ3SkAr16N/C9euirY9eA+jwqrQ2ijDlvdJN5MLzQGaHReCw3krSTLFkrshCRXRKZWgiu5MLysqqmiplPSXdc+gTRLhfJBDKPDMX4EPuq9t0zOvsnhe/A9X71sU9k7h+wHmSEpG4m68rGNIj4HRqb6PMmaiOTSa+P4Uw=
+	t=1756207121; cv=none; b=epE88wsjQBcFZGid6jCHi2BeeuaX0wqNQp+sPJ0OM0fg2bvWBUwGDz4+MwPlRuw8T9iEGQ/3aw4ew3VwJuspJBOhEOcTtevVaKp0RGvy8H7C7hAM00QocIfnxXwYyHe/nCeLvsPowhtu9C5oE0wojTUyV89o+6AdeIeUIjHaHEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207118; c=relaxed/simple;
-	bh=1n0tiqhxo+Tj3EWnA1lP144UfK+PvaeaqaOPK5G3IvI=;
+	s=arc-20240116; t=1756207121; c=relaxed/simple;
+	bh=DUEKxbJX+9BHvct5zwpvJoYYOMaM5lOOSZqRphaqQX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJQzEGfPem4NsOOwTI1GNYtiRcMzn3jGpl5s7/TrRaXxG7MbftEayod+/pi0NybUjKvz1/oFfv5kcj5eFyFUrKdVNO7dZME9DepR56j+HVkqkYesFaHIj3DBr4VkSy2hjFx8INkji24H6g4PPg68RtdaBzNlpVK5C9o7OJFeNzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12hnPREe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NovuA5q0scwTChhJx9q1Iefk80orWA5cMfZgDXyMHXRitW7teVZFxdIlzREqH/bDPqedYHM+um+DDrywBcl5hn4dO6PaGhNdixxrJ/ttD238io/5JOtXnO0FIGmqNTw1RcS/kvHguwNE7m077G49TqEDBMDxA9nNDn6HNDHZbZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGdBqO8Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12hnPREe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF25C4CEF1;
-	Tue, 26 Aug 2025 11:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGdBqO8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6CFC4CEF1;
+	Tue, 26 Aug 2025 11:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207118;
-	bh=1n0tiqhxo+Tj3EWnA1lP144UfK+PvaeaqaOPK5G3IvI=;
+	s=korg; t=1756207121;
+	bh=DUEKxbJX+9BHvct5zwpvJoYYOMaM5lOOSZqRphaqQX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12hnPREeszGb3l42iVvqKISr3J0MkE6QC7WSiWd3hvaXxAa55ZGHfEZamoduAfutg
-	 cOpIePMJGIZhT9EjPz0j3HWV0gazPwndmHaSSzvEjnPs1rXkPk1VUSudOA1la9m1PV
-	 25nu3cF0AxDyhzd+1FRvDTcynrTeSFiUUsoq1axU=
+	b=aGdBqO8ZOoiqA0TE7FLx0RaQWbjT4mnXzsQgNJ0iOpFibSrm0ysZYCr8hmDhDEsd4
+	 sqWlMrZKk7o2muUksxBklXZ5837c8g5goIwfx82QXKMLlKE9O/u9TadMfbni/8FYEe
+	 AXrRwOrk3J+eU67iyQ2i3YdFPfE747Y7BXxyyg5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.16 058/457] arm64: dts: exynos7870-on7xelte: reduce memory ranges to base amount
-Date: Tue, 26 Aug 2025 13:05:42 +0200
-Message-ID: <20250826110938.791085383@linuxfoundation.org>
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 6.16 059/457] arm64: dts: ti: k3-am62-verdin: Enable pull-ups on I2C buses
+Date: Tue, 26 Aug 2025 13:05:43 +0200
+Message-ID: <20250826110938.815407241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,44 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
 
-commit 2bdfa35a7bb6e3a319e7a290baa44720bc96e5e4 upstream.
+commit bdf4252f736cc1d2a8e3e633c70fe6c728f0756e upstream.
 
-The device is available in multiple variants with differing RAM
-capacities. The memory range defined in the 0x80000000 bank exceeds the
-address range of the memory controller, which eventually leads to ARM
-SError crashes. Reduce the bank size to a value which is available to
-all devices.
+Enable internal bias pull-ups on the SoC-side I2C buses that do not have
+external pull resistors populated on the SoM. This ensures proper
+default line levels.
 
-The bootloader must be responsible for identifying the RAM capacity and
-editing the memory node accordingly.
-
-Fixes: d6f3a7f91fdb ("arm64: dts: exynos: add initial devicetree support for exynos7870")
-Cc: stable@vger.kernel.org # v6.16
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Link: https://lore.kernel.org/r/20250626-exynos7870-dts-fixes-v1-2-349987874d9a@disroot.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: stable@vger.kernel.org
+Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
+Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20250528110741.262336-1-ghidoliemanuele@gmail.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dts b/arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dts
-index eb97dcc41542..b1d9eff5a827 100644
---- a/arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dts
-+++ b/arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dts
-@@ -78,7 +78,7 @@
- 	memory@40000000 {
- 		device_type = "memory";
- 		reg = <0x0 0x40000000 0x3e400000>,
--		      <0x0 0x80000000 0xbe400000>;
-+		      <0x0 0x80000000 0x80000000>;
+--- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+@@ -507,16 +507,16 @@
+ 	/* Verdin I2C_2_DSI */
+ 	pinctrl_i2c2: main-i2c2-default-pins {
+ 		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x00b0, PIN_INPUT, 1) /* (K22) GPMC0_CSn2.I2C2_SCL */ /* SODIMM 55 */
+-			AM62X_IOPAD(0x00b4, PIN_INPUT, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */ /* SODIMM 53 */
++			AM62X_IOPAD(0x00b0, PIN_INPUT_PULLUP, 1) /* (K22) GPMC0_CSn2.I2C2_SCL */ /* SODIMM 55 */
++			AM62X_IOPAD(0x00b4, PIN_INPUT_PULLUP, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */ /* SODIMM 53 */
+ 		>;
  	};
  
- 	pwrseq_mmc1: pwrseq-mmc1 {
--- 
-2.50.1
-
+ 	/* Verdin I2C_4_CSI */
+ 	pinctrl_i2c3: main-i2c3-default-pins {
+ 		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x01d0, PIN_INPUT, 2) /* (A15) UART0_CTSn.I2C3_SCL */ /* SODIMM 95 */
+-			AM62X_IOPAD(0x01d4, PIN_INPUT, 2) /* (B15) UART0_RTSn.I2C3_SDA */ /* SODIMM 93 */
++			AM62X_IOPAD(0x01d0, PIN_INPUT_PULLUP, 2) /* (A15) UART0_CTSn.I2C3_SCL */ /* SODIMM 95 */
++			AM62X_IOPAD(0x01d4, PIN_INPUT_PULLUP, 2) /* (B15) UART0_RTSn.I2C3_SDA */ /* SODIMM 93 */
+ 		>;
+ 	};
+ 
+@@ -786,8 +786,8 @@
+ 	/* Verdin I2C_3_HDMI */
+ 	pinctrl_mcu_i2c0: mcu-i2c0-default-pins {
+ 		pinctrl-single,pins = <
+-			AM62X_MCU_IOPAD(0x0044, PIN_INPUT, 0) /*  (A8) MCU_I2C0_SCL */ /* SODIMM 59 */
+-			AM62X_MCU_IOPAD(0x0048, PIN_INPUT, 0) /* (D10) MCU_I2C0_SDA */ /* SODIMM 57 */
++			AM62X_MCU_IOPAD(0x0044, PIN_INPUT_PULLUP, 0) /*  (A8) MCU_I2C0_SCL */ /* SODIMM 59 */
++			AM62X_MCU_IOPAD(0x0048, PIN_INPUT_PULLUP, 0) /* (D10) MCU_I2C0_SDA */ /* SODIMM 57 */
+ 		>;
+ 	};
+ 
 
 
