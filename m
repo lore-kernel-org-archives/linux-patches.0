@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C23A350D70;
-	Tue, 26 Aug 2025 13:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAE634320F;
+	Tue, 26 Aug 2025 13:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216019; cv=none; b=JXIyfpfO2K/TAYlheqXKsX+Zsp2LS+PtlW+TpxSS/zM0uGmY/jfB3zA5iET2jBh6aXmspwCVTnfRrlrikdnw6wxLJdI0QOGYN01PTXQeP4EF5VPMvI1ZrMyw6vcrdDirPqgXsvvDv2kjdI4mLynIejhc3/A0E7B2kw2tTyMjsoQ=
+	t=1756216022; cv=none; b=ibE3rFcLYBqA/hA2R3mIMQ0UxGYrLQLThSVPxkOMT7HsUkDy4M4H6aukNjUoNnp834ZrxLnvNm8oUrPcFl1IXQHTNHR57yqD8lfihILk8loQSZ/LcCuxk7paSrhzGxfjs30NcpvkPJPKAWa+jEZ1vlwjq3W5FTtgtFa3VsCQyT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216019; c=relaxed/simple;
-	bh=jcHpWAHVFf4BDUokns77d4aUMcM4S1oW/0Ro6zbGeb0=;
+	s=arc-20240116; t=1756216022; c=relaxed/simple;
+	bh=37GQUSa3p46T7jCpvH8alaenZiQYZY6RxEba4dcHigE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAYB50GVwrBoy5NFgEm43g0c0CU25SkTRBI0qPF1VDm2ID7y+13jOKz1kZ9C6wTG6nN+E9X93dx7P4McDfFMFyqFzYRR6CTIlhqJaHF0IJWssfqbAN7mD5L8yJ6kTNvDnQ+zkpYxSe+atSplOgdGcAxye7qOftSUjYc0OBj1yqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnXbGAfS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VdwuFH0COaSVqOGFKXoOFFEWK18lVaHaaJqdbysYpzDhuIjKJKzXObjca+DhPsvNVRHbn9Bl7nNfZIMQCsrLXh3TJbB7HCUa+bUjtG5606HP+pkGwzcpjQ2UzQbU2JGoXZxrMbr02QlPyDv9Z0iiY//fjb94S8POVvMt3zH69Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmGu2WIB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnXbGAfS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D287CC4AF09;
-	Tue, 26 Aug 2025 13:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmGu2WIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751FBC4CEF1;
+	Tue, 26 Aug 2025 13:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216019;
-	bh=jcHpWAHVFf4BDUokns77d4aUMcM4S1oW/0Ro6zbGeb0=;
+	s=korg; t=1756216021;
+	bh=37GQUSa3p46T7jCpvH8alaenZiQYZY6RxEba4dcHigE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnXbGAfStFk0SD7c33+nzO7qBsizILlHlfi8HGWf+X/CYlXyHiMkLZ2LWKKUJOq3f
-	 WIc4xiGR8XKEOkPPSKLlTE6+J9To7AMixj7+w1HU6LjbB/20op2XG9z4JCur+/muUO
-	 VX1VWc0masePOWVwqmaNp1ndYvrFq5bcFfFHzTgo=
+	b=JmGu2WIB3V5YtBFwdwjiJtRakb0OYDNPfoEKPWBZt00VTDFTUDnlwXHgBMqYRpqHa
+	 LVs8d4lThovWlcaMWAWzxnRv4H+0HkMWkGvnKMPP9TpTv6Y4eSxLaVUKcpcA9AC5O1
+	 YljNn3YA5IXvrQVw5Rt/bAHqyCRgLtbyYJL9a1VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armando Budianto <sprite@gnuweeb.org>,
-	Simon Horman <horms@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Ammar Faizi <ammarfaizi2@gnuweeb.org>
-Subject: [PATCH 5.15 253/644] net: usbnet: Fix the wrong netif_carrier_on() call
-Date: Tue, 26 Aug 2025 13:05:44 +0200
-Message-ID: <20250826110952.653619105@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 254/644] ALSA: intel_hdmi: Fix off-by-one error in __hdmi_lpe_audio_probe()
+Date: Tue, 26 Aug 2025 13:05:45 +0200
+Message-ID: <20250826110952.677746601@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,57 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 8466d393700f9ccef68134d3349f4e0a087679b9 upstream.
+commit 8cbe564974248ee980562be02f2b1912769562c7 upstream.
 
-The commit referenced in the Fixes tag causes usbnet to malfunction
-(identified via git bisect). Post-commit, my external RJ45 LAN cable
-fails to connect. Linus also reported the same issue after pulling that
-commit.
+In __hdmi_lpe_audio_probe(), strscpy() is incorrectly called with the
+length of the source string (excluding the NUL terminator) rather than
+the size of the destination buffer. This results in one character less
+being copied from 'card->shortname' to 'pcm->name'.
 
-The code has a logic error: netif_carrier_on() is only called when the
-link is already on. Fix this by moving the netif_carrier_on() call
-outside the if-statement entirely. This ensures it is always called
-when EVENT_LINK_CARRIER_ON is set and properly clears it regardless
-of the link state.
+Use the destination buffer size instead to ensure the card name is
+copied correctly.
 
 Cc: stable@vger.kernel.org
-Cc: Armando Budianto <sprite@gnuweeb.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/all/CAHk-=wjqL4uF0MG_c8+xHX1Vv8==sPYQrtzbdA3kzi96284nuQ@mail.gmail.com
-Closes: https://lore.kernel.org/netdev/CAHk-=wjKh8X4PT_mU1kD4GQrbjivMfPn-_hXa6han_BTDcXddw@mail.gmail.com
-Closes: https://lore.kernel.org/netdev/0752dee6-43d6-4e1f-81d2-4248142cccd2@gnuweeb.org
-Fixes: 0d9cfc9b8cb1 ("net: usbnet: Avoid potential RCU stall on LINK_CHANGE event")
-Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 75b1a8f9d62e ("ALSA: Convert strlcpy to strscpy when return value is unused")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20250805234156.60294-1-thorsten.blum@linux.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/x86/intel_hdmi_audio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1118,6 +1118,9 @@ static void __handle_link_change(struct
- 	if (!test_bit(EVENT_DEV_OPEN, &dev->flags))
- 		return;
+--- a/sound/x86/intel_hdmi_audio.c
++++ b/sound/x86/intel_hdmi_audio.c
+@@ -1769,7 +1769,7 @@ static int __hdmi_lpe_audio_probe(struct
+ 		/* setup private data which can be retrieved when required */
+ 		pcm->private_data = ctx;
+ 		pcm->info_flags = 0;
+-		strscpy(pcm->name, card->shortname, strlen(card->shortname));
++		strscpy(pcm->name, card->shortname, sizeof(pcm->name));
+ 		/* setup the ops for playback */
+ 		snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &had_pcm_ops);
  
-+	if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
-+		netif_carrier_on(dev->net);
-+
- 	if (!netif_carrier_ok(dev->net)) {
- 		/* kill URBs for reading packets to save bus bandwidth */
- 		unlink_urbs(dev, &dev->rxq);
-@@ -1127,9 +1130,6 @@ static void __handle_link_change(struct
- 		 * tx queue is stopped by netcore after link becomes off
- 		 */
- 	} else {
--		if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
--			netif_carrier_on(dev->net);
--
- 		/* submitting URBs for reading packets */
- 		tasklet_schedule(&dev->bh);
- 	}
 
 
