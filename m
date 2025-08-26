@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34111F560B;
-	Tue, 26 Aug 2025 11:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7EC2135B8;
+	Tue, 26 Aug 2025 11:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208063; cv=none; b=ZFxChH4ke6H8PbUVfNJ07f9ClO1ifu0RAoqrm2DLY0I/OryStw64/1k+uyEy6YDtWeX7tKKo2x6gtcvaESphWyjlQfOjFObQbKaPnXkux+p+SFkBEolfh0ElDnWKh51o45sClgaiUMrGoUIXf7LG921I7M+iKd7l5ZCyaqTin4Y=
+	t=1756208066; cv=none; b=k7jP+CC/nRaz7qIpP1pW5Y4CQTObB4go2Nvc1cAxLRtr4bO0ImeWovSaoV7sTHF3lVZ1jH5RrC6Tb059nFYfZXqpMHUkLKdeUr6SfpBVmC3gVUiABg+U2723iCxXfIYmO2WBHtSUjxA4uTa2DpO9BG06vqH5C7EVN9mtVZgJ2/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208063; c=relaxed/simple;
-	bh=4jaPy8N1tohOVSOCwD+dohrIYf+sHv82UE3wuJsJMSg=;
+	s=arc-20240116; t=1756208066; c=relaxed/simple;
+	bh=ew8qiPND3OGJSZm747P3UoiN7ujlrAYIUug0HExOmS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5hGnlk5AFpRFCprdmKopnlDbDJGnnUYlhGUzNCznJSk4rRATbkrspp0CK3ErRYBAVgBl+j08z4MlAYKR7b6vpayVKibeedVgiCer9PeetkqNeGFXisUvDcO2tzJlO5UEl2fe9wYDcIuMk8sR1omkvYaYFZpn2FrLOADMfTznt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5zPZX/5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ky3y+BvyBsdoKPzBIBBPaLSgYCB7v68K9ItPFG2vpOs8J2+Ijx1FYP5Os5m2aLR8M2BSYFTT7Iiv4Tz6p9gvZJzr5quFcDZRexBupBqDp1aMmBUKQIampTOlq1knO14nThhnnl/XD5MDtbfvZV6Qv2686KNWcg46rN/XybRqpjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0Lfk+63; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5zPZX/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4527BC4CEF1;
-	Tue, 26 Aug 2025 11:34:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0Lfk+63"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7B1C4CEF1;
+	Tue, 26 Aug 2025 11:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208063;
-	bh=4jaPy8N1tohOVSOCwD+dohrIYf+sHv82UE3wuJsJMSg=;
+	s=korg; t=1756208066;
+	bh=ew8qiPND3OGJSZm747P3UoiN7ujlrAYIUug0HExOmS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d5zPZX/5hjNB1lM2cQesgJlEep6U//YlKB+Oagv31vvPtmvqaEqtM5m9noRMEV782
-	 WMbP6zTgfiYe51o/xy2MGtbGid9PALrXtKwgK5amrXm9Hk0RkGWxvXlltan1uBbrys
-	 K/t/+mz7zeCwxHTDBfvbTiwVIMtwfsb+4FGKCa7A=
+	b=d0Lfk+632RGJuiB0NtvXxOPFwKENo0qNc6mEKh5xxtBdtGnTvxAQsK0TYWgznfQpz
+	 ai6COmAUnWeWFSgOsbL6+KoQBV1kk7BGt6n6T2nibgGeOoZfXogVBNQX3T3Pl/L2+N
+	 JYWr54c38/WYkpye/FCY7JAufe6o2L2ZydHZLHGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanglong Wang <wangkanglong@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 424/457] LoongArch: Optimize module load time by optimizing PLT/GOT counting
-Date: Tue, 26 Aug 2025 13:11:48 +0200
-Message-ID: <20250826110947.769406077@linuxfoundation.org>
+Subject: [PATCH 6.16 425/457] ASoC: cs35l56: Update Firmware Addresses for CS35L63 for production silicon
+Date: Tue, 26 Aug 2025 13:11:49 +0200
+Message-ID: <20250826110947.793272841@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,160 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kanglong Wang <wangkanglong@loongson.cn>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit 63dbd8fb2af3a89466538599a9acb2d11ef65c06 ]
+[ Upstream commit f135fb24ef29335b94921077588cae445bc7f099 ]
 
-When enabling CONFIG_KASAN, CONFIG_PREEMPT_VOLUNTARY_BUILD and
-CONFIG_PREEMPT_VOLUNTARY at the same time, there will be soft deadlock,
-the relevant logs are as follows:
+Production silicon for CS36L63 has some small differences compared to
+pre-production silicon. Update firmware addresses, which are different.
 
-rcu: INFO: rcu_sched self-detected stall on CPU
-...
-Call Trace:
-[<900000000024f9e4>] show_stack+0x5c/0x180
-[<90000000002482f4>] dump_stack_lvl+0x94/0xbc
-[<9000000000224544>] rcu_dump_cpu_stacks+0x1fc/0x280
-[<900000000037ac80>] rcu_sched_clock_irq+0x720/0xf88
-[<9000000000396c34>] update_process_times+0xb4/0x150
-[<90000000003b2474>] tick_nohz_handler+0xf4/0x250
-[<9000000000397e28>] __hrtimer_run_queues+0x1d0/0x428
-[<9000000000399b2c>] hrtimer_interrupt+0x214/0x538
-[<9000000000253634>] constant_timer_interrupt+0x64/0x80
-[<9000000000349938>] __handle_irq_event_percpu+0x78/0x1a0
-[<9000000000349a78>] handle_irq_event_percpu+0x18/0x88
-[<9000000000354c00>] handle_percpu_irq+0x90/0xf0
-[<9000000000348c74>] handle_irq_desc+0x94/0xb8
-[<9000000001012b28>] handle_cpu_irq+0x68/0xa0
-[<9000000001def8c0>] handle_loongarch_irq+0x30/0x48
-[<9000000001def958>] do_vint+0x80/0xd0
-[<9000000000268a0c>] kasan_mem_to_shadow.part.0+0x2c/0x2a0
-[<90000000006344f4>] __asan_load8+0x4c/0x120
-[<900000000025c0d0>] module_frob_arch_sections+0x5c8/0x6b8
-[<90000000003895f0>] load_module+0x9e0/0x2958
-[<900000000038b770>] __do_sys_init_module+0x208/0x2d0
-[<9000000001df0c34>] do_syscall+0x94/0x190
-[<900000000024d6fc>] handle_syscall+0xbc/0x158
+No product was ever released with pre-production silicon so there is no
+need for the driver to include support for it.
 
-After analysis, this is because the slow speed of loading the amdgpu
-module leads to the long time occupation of the cpu and then the soft
-deadlock.
+Fixes: 978858791ced ("ASoC: cs35l56: Add initial support for CS35L63 for I2C and SoundWire")
 
-When loading a module, module_frob_arch_sections() tries to figure out
-the number of PLTs/GOTs that will be needed to handle all the RELAs. It
-will call the count_max_entries() to find in an out-of-order date which
-counting algorithm has O(n^2) complexity.
-
-To make it faster, we sort the relocation list by info and addend. That
-way, to check for a duplicate relocation, it just needs to compare with
-the previous entry. This reduces the complexity of the algorithm to O(n
- log n), as done in commit d4e0340919fb ("arm64/module: Optimize module
-load time by optimizing PLT counting"). This gives sinificant reduction
-in module load time for modules with large number of relocations.
-
-After applying this patch, the soft deadlock problem has been solved,
-and the kernel starts normally without "Call Trace".
-
-Using the default configuration to test some modules, the results are as
-follows:
-
-Module              Size
-ip_tables           36K
-fat                 143K
-radeon              2.5MB
-amdgpu              16MB
-
-Without this patch:
-Module              Module load time (ms)	Count(PLTs/GOTs)
-ip_tables           18				59/6
-fat                 0				162/14
-radeon              54				1221/84
-amdgpu              1411			4525/1098
-
-With this patch:
-Module              Module load time (ms)	Count(PLTs/GOTs)
-ip_tables           18				59/6
-fat                 0				162/14
-radeon              22				1221/84
-amdgpu              45				4525/1098
-
-Fixes: fcdfe9d22bed ("LoongArch: Add ELF and module support")
-Signed-off-by: Kanglong Wang <wangkanglong@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250820142209.127575-2-sbinding@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/module-sections.c | 36 ++++++++++++-------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ include/sound/cs35l56.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/kernel/module-sections.c b/arch/loongarch/kernel/module-sections.c
-index e2f30ff9afde..a43ba7f9f987 100644
---- a/arch/loongarch/kernel/module-sections.c
-+++ b/arch/loongarch/kernel/module-sections.c
-@@ -8,6 +8,7 @@
- #include <linux/module.h>
- #include <linux/moduleloader.h>
- #include <linux/ftrace.h>
-+#include <linux/sort.h>
+diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
+index e17c4cadd04d..f44aabde805e 100644
+--- a/include/sound/cs35l56.h
++++ b/include/sound/cs35l56.h
+@@ -107,8 +107,8 @@
+ #define CS35L56_DSP1_PMEM_5114				0x3804FE8
  
- Elf_Addr module_emit_got_entry(struct module *mod, Elf_Shdr *sechdrs, Elf_Addr val)
- {
-@@ -61,39 +62,38 @@ Elf_Addr module_emit_plt_entry(struct module *mod, Elf_Shdr *sechdrs, Elf_Addr v
- 	return (Elf_Addr)&plt[nr];
- }
- 
--static int is_rela_equal(const Elf_Rela *x, const Elf_Rela *y)
--{
--	return x->r_info == y->r_info && x->r_addend == y->r_addend;
--}
-+#define cmp_3way(a, b)  ((a) < (b) ? -1 : (a) > (b))
- 
--static bool duplicate_rela(const Elf_Rela *rela, int idx)
-+static int compare_rela(const void *x, const void *y)
- {
--	int i;
-+	int ret;
-+	const Elf_Rela *rela_x = x, *rela_y = y;
- 
--	for (i = 0; i < idx; i++) {
--		if (is_rela_equal(&rela[i], &rela[idx]))
--			return true;
--	}
-+	ret = cmp_3way(rela_x->r_info, rela_y->r_info);
-+	if (ret == 0)
-+		ret = cmp_3way(rela_x->r_addend, rela_y->r_addend);
- 
--	return false;
-+	return ret;
- }
- 
- static void count_max_entries(Elf_Rela *relas, int num,
- 			      unsigned int *plts, unsigned int *gots)
- {
--	unsigned int i, type;
-+	unsigned int i;
-+
-+	sort(relas, num, sizeof(Elf_Rela), compare_rela, NULL);
- 
- 	for (i = 0; i < num; i++) {
--		type = ELF_R_TYPE(relas[i].r_info);
--		switch (type) {
-+		if (i && !compare_rela(&relas[i-1], &relas[i]))
-+			continue;
-+
-+		switch (ELF_R_TYPE(relas[i].r_info)) {
- 		case R_LARCH_SOP_PUSH_PLT_PCREL:
- 		case R_LARCH_B26:
--			if (!duplicate_rela(relas, i))
--				(*plts)++;
-+			(*plts)++;
- 			break;
- 		case R_LARCH_GOT_PC_HI20:
--			if (!duplicate_rela(relas, i))
--				(*gots)++;
-+			(*gots)++;
- 			break;
- 		default:
- 			break; /* Do nothing. */
+ #define CS35L63_DSP1_FW_VER				CS35L56_DSP1_FW_VER
+-#define CS35L63_DSP1_HALO_STATE				0x280396C
+-#define CS35L63_DSP1_PM_CUR_STATE			0x28042C8
++#define CS35L63_DSP1_HALO_STATE				0x2803C04
++#define CS35L63_DSP1_PM_CUR_STATE			0x2804518
+ #define CS35L63_PROTECTION_STATUS			0x340009C
+ #define CS35L63_TRANSDUCER_ACTUAL_PS			0x34000F4
+ #define CS35L63_MAIN_RENDER_USER_MUTE			0x3400020
 -- 
 2.50.1
 
