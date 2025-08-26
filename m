@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC2D29BDB8;
-	Tue, 26 Aug 2025 11:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C781FECAB;
+	Tue, 26 Aug 2025 11:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208729; cv=none; b=mthY2jAzMi9jnsVHPwOGozrWvOIAnWx6A37Lj24F1OukAwZB2rHY4ENdW3z+7Mrhda4KLTLc6+i9KO9e+klZyaKLNkh5DGiFUnEQZjg0wxD79sOHi8r0jzUJ52jDMsD2VGmDRd8yhR9tqn6fwIk6g2fR8cASnzmlucFBQIu2m9Q=
+	t=1756208731; cv=none; b=Wlq3wHm8s4XUKfiGUP3IUTdVUc6R1f+NJ+Pu7Cfrwo7390LiNj789rcZPEjYi0l/QAS7qK5yaNS/KfP5IXk/HAUScYpnSbg1OhPBGlnnB6yeJcnLfZIJyLCNM928NGtAo3RGh7H0WHrf0r/vV6FxvmzxeKLQDQGi3RUzSOK8ebE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208729; c=relaxed/simple;
-	bh=NPUmFmSg2E5X61Zm3dN/yrHcuIfoJZL66XHpMJ9fLA4=;
+	s=arc-20240116; t=1756208731; c=relaxed/simple;
+	bh=8K6OLmgV7c79MFjySWlJmFXq8eiob1lzVO942DvXM+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1eLrYipP3r3VMuvjIRU6e5PAK6JL99DmnjiSAGMA26KjHkLaN879KLBBX/RZOcPPnadH8OC2/EQjfSfJVE0h0kCJfDKO8ZA1xLfsqJnHMmyeIMXPdC7brFpF4pAWxzpeXQ7i6/BYRTRroVY4rmHZAyzE7CK3b3n7fGkz2L55ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/t/bLyY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gPSoCJlz+3dPVuv/MZZtsrHdF6SWmjPwJZ5kqYJiALFE3qqgbJsC4UkvyXkypl4mUw5JdY0pjJVa9MgxDkL7l9ZvhvT3AWfPuRS4TvsIBroYExE8p4wAw60wFuGEtOc+uOylnQ0mp3CC4nOAASO/LQMZM1tA50Y+f6UnIqW28x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1fA/BW1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/t/bLyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB52C4CEF1;
-	Tue, 26 Aug 2025 11:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1fA/BW1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F122C4CEF4;
+	Tue, 26 Aug 2025 11:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208728;
-	bh=NPUmFmSg2E5X61Zm3dN/yrHcuIfoJZL66XHpMJ9fLA4=;
+	s=korg; t=1756208730;
+	bh=8K6OLmgV7c79MFjySWlJmFXq8eiob1lzVO942DvXM+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/t/bLyYU4+d/Dn4YF4Ly4Eowr1bapkhKHZbNcSM2/IC7iJAPMT6I2Yh9E69x53UV
-	 4fYh0xVAfdqgyWNfSmwSiqI/BsdsyqJXgePjaYu1xFlzI3USrW2+LQsSblafDxpwvg
-	 cGUWidMCJpYDbT+48oVIMf0wwz1WeE2+j8pWUXQ8=
+	b=t1fA/BW1Emjl95PzQylvR0mbizFeoF4N+UIZNuWPZ/30OvaQE5uR/QQB8FK46smPt
+	 339rNvI5Jspetc/U0g6jmAa63hu4OZ+xZlNIaGsdz05Gm/SKQ6VtjwDrQHLpopID2p
+	 P7oGuvqQ0Fjk6WNtMz5IdEaMi3X7Dxu20fOA/s0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5cd373521edd68bebcb3@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 223/322] comedi: pcl726: Prevent invalid irq number
-Date: Tue, 26 Aug 2025 13:10:38 +0200
-Message-ID: <20250826110921.398440080@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Eric Sandeen <sandeen@redhat.com>,
+	Charalampos Mitrodimas <charmitro@posteo.net>
+Subject: [PATCH 6.12 206/322] debugfs: fix mount options not being applied
+Date: Tue, 26 Aug 2025 13:10:21 +0200
+Message-ID: <20250826110920.956513117@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,50 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-commit 96cb948408b3adb69df7e451ba7da9d21f814d00 upstream.
+commit ba6cc29351b1fa0cb9adce91b88b9f3c3cbe9c46 upstream.
 
-The reproducer passed in an irq number(0x80008000) that was too large,
-which triggered the oob.
+Mount options (uid, gid, mode) are silently ignored when debugfs is
+mounted. This is a regression introduced during the conversion to the
+new mount API.
 
-Added an interrupt number check to prevent users from passing in an irq
-number that was too large.
+When the mount API conversion was done, the parsed options were never
+applied to the superblock when it was reused. As a result, the mount
+options were ignored when debugfs was mounted.
 
-If `it->options[1]` is 31, then `1 << it->options[1]` is still invalid
-because it shifts a 1-bit into the sign bit (which is UB in C).
-Possible solutions include reducing the upper bound on the
-`it->options[1]` value to 30 or lower, or using `1U << it->options[1]`.
+Fix this by following the same pattern as the tracefs fix in commit
+e4d32142d1de ("tracing: Fix tracefs mount options"). Call
+debugfs_reconfigure() in debugfs_get_tree() to apply the mount options
+to the superblock after it has been created or reused.
 
-The old code would just not attempt to request the IRQ if the
-`options[1]` value were invalid.  And it would still configure the
-device without interrupts even if the call to `request_irq` returned an
-error.  So it would be better to combine this test with the test below.
+As an example, with the bug the "mode" mount option is ignored:
 
-Fixes: fff46207245c ("staging: comedi: pcl726: enable the interrupt support code")
-Cc: stable <stable@kernel.org> # 5.13+
-Reported-by: syzbot+5cd373521edd68bebcb3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5cd373521edd68bebcb3
-Tested-by: syzbot+5cd373521edd68bebcb3@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/tencent_3C66983CC1369E962436264A50759176BF09@qq.com
+  $ mount -o mode=0666 -t debugfs debugfs /tmp/debugfs_test
+  $ mount | grep debugfs_test
+  debugfs on /tmp/debugfs_test type debugfs (rw,relatime)
+  $ ls -ld /tmp/debugfs_test
+  drwx------ 25 root root 0 Aug  4 14:16 /tmp/debugfs_test
+
+With the fix applied, it works as expected:
+
+  $ mount -o mode=0666 -t debugfs debugfs /tmp/debugfs_test
+  $ mount | grep debugfs_test
+  debugfs on /tmp/debugfs_test type debugfs (rw,relatime,mode=666)
+  $ ls -ld /tmp/debugfs_test
+  drw-rw-rw- 37 root root 0 Aug  2 17:28 /tmp/debugfs_test
+
+Fixes: a20971c18752 ("vfs: Convert debugfs to use the new mount API")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220406
+Cc: stable <stable@kernel.org>
+Reviewed-by: Eric Sandeen <sandeen@redhat.com>
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Link: https://lore.kernel.org/r/20250816-debugfs-mount-opts-v3-1-d271dad57b5b@posteo.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/pcl726.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/debugfs/inode.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/pcl726.c
-+++ b/drivers/comedi/drivers/pcl726.c
-@@ -328,7 +328,8 @@ static int pcl726_attach(struct comedi_d
- 	 * Hook up the external trigger source interrupt only if the
- 	 * user config option is valid and the board supports interrupts.
- 	 */
--	if (it->options[1] && (board->irq_mask & (1 << it->options[1]))) {
-+	if (it->options[1] > 0 && it->options[1] < 16 &&
-+	    (board->irq_mask & (1U << it->options[1]))) {
- 		ret = request_irq(it->options[1], pcl726_interrupt, 0,
- 				  dev->board_name, dev);
- 		if (ret == 0) {
+--- a/fs/debugfs/inode.c
++++ b/fs/debugfs/inode.c
+@@ -183,6 +183,9 @@ static int debugfs_reconfigure(struct fs
+ 	struct debugfs_fs_info *sb_opts = sb->s_fs_info;
+ 	struct debugfs_fs_info *new_opts = fc->s_fs_info;
+ 
++	if (!new_opts)
++		return 0;
++
+ 	sync_filesystem(sb);
+ 
+ 	/* structure copy of new mount options to sb */
+@@ -269,10 +272,16 @@ static int debugfs_fill_super(struct sup
+ 
+ static int debugfs_get_tree(struct fs_context *fc)
+ {
++	int err;
++
+ 	if (!(debugfs_allow & DEBUGFS_ALLOW_API))
+ 		return -EPERM;
+ 
+-	return get_tree_single(fc, debugfs_fill_super);
++	err = get_tree_single(fc, debugfs_fill_super);
++	if (err)
++		return err;
++
++	return debugfs_reconfigure(fc);
+ }
+ 
+ static void debugfs_free_fc(struct fs_context *fc)
 
 
