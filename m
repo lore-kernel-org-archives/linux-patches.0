@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B65621D3F2;
-	Tue, 26 Aug 2025 14:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E69F3570B6;
+	Tue, 26 Aug 2025 14:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217385; cv=none; b=sYtSlE7g8Tocoyda9OLd47PbR15Uu9a8vt9+Wfmmi0WxfqzN2zPw7dsucaRZbrUXPJwNtkB4lR/n9KRiz56sRzfNVCI8ngtTDrNf1gv3d2UG1rwFp6mZy2FMdDK2XncXYOT3OK5nLPet/LztliZLgtc+sZMI1zkEQmprg0zO+UU=
+	t=1756217388; cv=none; b=TKHJnPPfnKejbVQ/IbBDwLuFNLp+0Uv+svMIQKMwcgayCjNgkV+T982zM65lBcp1xeVeMEHpSEe6ede8db5TsxO6x1MsF63ugmK38SmUVyMrESKF4hQLZ0qWMre6GMvzipdXMqUmjoZ8FW7VcSZabEAPCGPgBU4BE86/46o3erA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217385; c=relaxed/simple;
-	bh=ODWWMA8sZCLZXEH/rE+EZ2CBuWxunC349OKk4vldwLA=;
+	s=arc-20240116; t=1756217388; c=relaxed/simple;
+	bh=oSQcdlRV4MHgoHuZD0UNB9PTUdbDLex9Y+7NCToiuH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N78hyf0LrEexk6gucimqm6Lg5tfv7LqOSO9BsBfdNW8lb6mPIhA+JC+V5AZLWu4EriZj3QhxavVTu8fc6ucnJpVb3tRKed6KnJo3to+xR2cgZ9hAiV9cU5N0iL5dx/Or4M8cSOgrPGDbsmJKhk3CLbfkh0iHN4kjSRqPVpK+a14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyZGZWxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gFEBMbkbsrR3KUqR6EicmiXzVYq9dke7POJjHy4ZDcbMzpRqERgHg5I8R8Cn2wfs7NA1OlHNYu+qlfjScH0ugvRrPkOm2l/8Vp6Xzf99WYq1iSo8EuwSaCNrZ4y71L+VbwBF9+1zK3uU90JkrflP7YY/LVwanRIl49AY4AcGqwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0t2+jq2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyZGZWxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B4DC4CEF1;
-	Tue, 26 Aug 2025 14:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0t2+jq2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B3FC116B1;
+	Tue, 26 Aug 2025 14:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217385;
-	bh=ODWWMA8sZCLZXEH/rE+EZ2CBuWxunC349OKk4vldwLA=;
+	s=korg; t=1756217388;
+	bh=oSQcdlRV4MHgoHuZD0UNB9PTUdbDLex9Y+7NCToiuH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JyZGZWxGbt3ZXbjiotuI2CKXzrrGbHaBk5oA2eQoGE4bzLALujLEk9ilJ94dC3Uh3
-	 /8p5/6hGCqbS0QuQGsUv+dYHm0QCd+gNzKFlQceKAyZ/obhxDDLgLmR9eGWPrsea67
-	 gtTsYOEKM7toztE2OmQF03IoV0tHulFnw/UoFGvU=
+	b=i0t2+jq2bSjUr0mygu7dvVAXiEfPBtzcpJsY3jy7TZuHt7THridud0yxjEwSzOuPu
+	 m11uhtr2jNW2CWaxDVLzMqKtz20S5HaoolkLgcXQFFeeo4SvgRhROKb+bhW+qlImTb
+	 i6/OjVjZbTzRMTNB/5VPK/l/wiYZ/VYXOl3pS66g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	David Lechner <david@lechnology.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Charles Han <hanchunchao@inspur.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 123/523] clk: davinci: Add NULL check in davinci_lpsc_clk_register()
-Date: Tue, 26 Aug 2025 13:05:33 +0200
-Message-ID: <20250826110927.548755369@linuxfoundation.org>
+Subject: [PATCH 5.10 124/523] power: supply: max14577: Handle NULL pdata when CONFIG_OF is not set
+Date: Tue, 26 Aug 2025 13:05:34 +0200
+Message-ID: <20250826110927.572542929@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,43 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 13de464f445d42738fe18c9a28bab056ba3a290a ]
+[ Upstream commit 2937f5d2e24eefef8cb126244caec7fe3307f724 ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-davinci_lpsc_clk_register() does not check for this case, which results
-in a NULL pointer dereference.
+When the kernel is not configured  CONFIG_OF, the max14577_charger_dt_init
+function returns NULL. Fix the max14577_charger_probe functionby returning
+-ENODATA instead of potentially passing a NULL pointer to PTR_ERR.
 
-Add NULL check after devm_kasprintf() to prevent this issue and ensuring
-no resources are left allocated.
+This fixes the below smatch warning:
+max14577_charger_probe() warn: passing zero to 'PTR_ERR'
 
-Fixes: c6ed4d734bc7 ("clk: davinci: New driver for davinci PSC clocks")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://lore.kernel.org/r/20250401131341.26800-1-bsdhenrymartin@gmail.com
-Reviewed-by: David Lechner <david@lechnology.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: e30110e9c96f ("charger: max14577: Configure battery-dependent settings from DTS and sysfs")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250519061601.8755-1-hanchunchao@inspur.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/davinci/psc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/power/supply/max14577_charger.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/davinci/psc.c b/drivers/clk/davinci/psc.c
-index 7387e7f6276e..4e1abfc1e564 100644
---- a/drivers/clk/davinci/psc.c
-+++ b/drivers/clk/davinci/psc.c
-@@ -278,6 +278,11 @@ davinci_lpsc_clk_register(struct device *dev, const char *name,
+diff --git a/drivers/power/supply/max14577_charger.c b/drivers/power/supply/max14577_charger.c
+index dcedae18d7be..5436e2818ec1 100644
+--- a/drivers/power/supply/max14577_charger.c
++++ b/drivers/power/supply/max14577_charger.c
+@@ -501,7 +501,7 @@ static struct max14577_charger_platform_data *max14577_charger_dt_init(
+ static struct max14577_charger_platform_data *max14577_charger_dt_init(
+ 		struct platform_device *pdev)
+ {
+-	return NULL;
++	return ERR_PTR(-ENODATA);
+ }
+ #endif /* CONFIG_OF */
  
- 	lpsc->pm_domain.name = devm_kasprintf(dev, GFP_KERNEL, "%s: %s",
- 					      best_dev_name(dev), name);
-+	if (!lpsc->pm_domain.name) {
-+		clk_hw_unregister(&lpsc->hw);
-+		kfree(lpsc);
-+		return ERR_PTR(-ENOMEM);
-+	}
- 	lpsc->pm_domain.attach_dev = davinci_psc_genpd_attach_dev;
- 	lpsc->pm_domain.detach_dev = davinci_psc_genpd_detach_dev;
- 	lpsc->pm_domain.flags = GENPD_FLAG_PM_CLK;
+@@ -572,7 +572,7 @@ static int max14577_charger_probe(struct platform_device *pdev)
+ 	chg->max14577 = max14577;
+ 
+ 	chg->pdata = max14577_charger_dt_init(pdev);
+-	if (IS_ERR_OR_NULL(chg->pdata))
++	if (IS_ERR(chg->pdata))
+ 		return PTR_ERR(chg->pdata);
+ 
+ 	ret = max14577_charger_reg_init(chg);
 -- 
 2.39.5
 
