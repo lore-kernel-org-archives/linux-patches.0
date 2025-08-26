@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E174633A01A;
-	Tue, 26 Aug 2025 11:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935A531DDBC;
+	Tue, 26 Aug 2025 11:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207678; cv=none; b=YVldki9c1/8g/GqFhUjHeC4mreJ7ZvCd+kOGkk/5HfBeddqNDK1cCJ5RJMSAE/UoyNNtX2gvPwiciTTQVgG9oLMLz+oS62PYHYLgBkz/7uBuMSEBkohmz9c33rDROxsiOVIvnYHFRcvGWjZo09II2i7QfIc8n+xZZN9vUeopXyg=
+	t=1756207680; cv=none; b=nc52NnpGRuVzc/jhgsqT/CymJDoaDk0+QpXgyS+yXQ1S4crhidms6IpCGJUdJ/n4oxrmY5aav5+s+uH002AjlDWivJ0ktRKpfdiBjfl3TIZ4uLqnHYqFgD0A8/VFwHGctAMTM6XTNnCalht8e4EhAqN/HV3h50a7gELIfZCohMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207678; c=relaxed/simple;
-	bh=3RdG4Wq3NqfBRXUZW4Qz76Mr7gmQAcOGWIYR31Rn73A=;
+	s=arc-20240116; t=1756207680; c=relaxed/simple;
+	bh=LsrQ+mOvbU1yy7BprcpHUO8iQ5QhvdOfn9uAZIXMyWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GpinJddOn0wQHIQpKPVUWxX9qw38L91pD6HfZsepqsUXQvPXEgYRd8bwRP2MsK7pyszLpyhh0UB7w1jC296MlM9dNIprA3vcL1IpKdlk3EwFnlSZ/E0UlyOMyzp/61mQbuD3k+ZgXqyY3RpedqQzZoALO0nI6yYv6WRicPIoyX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQTMqpVK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IE0GhuTxNd8/Q+NErNGqlqjNjWjJDVkmpQ8A0zglyW/QcdNhPfhmZ3ayu65ZIRZ4gQ4ocS72gfik3rM94wrkkWTHLkMCzCNN76M+ZNdOkJIK3elwKjXdnkz52EFNRk7VihKREk0VqOX5mTydsb1poItbtwxlB7YDfdkG4DU45s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daxrgVM8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQTMqpVK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755B3C4CEF1;
-	Tue, 26 Aug 2025 11:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daxrgVM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB087C4CEF1;
+	Tue, 26 Aug 2025 11:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207677;
-	bh=3RdG4Wq3NqfBRXUZW4Qz76Mr7gmQAcOGWIYR31Rn73A=;
+	s=korg; t=1756207680;
+	bh=LsrQ+mOvbU1yy7BprcpHUO8iQ5QhvdOfn9uAZIXMyWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQTMqpVKIkfBKsO7h0MRdmD72gcC54VKTObU/0F+7j/W4YXFTNIrXOMPGSsEMp78w
-	 i+9sMR2Nq/yDF3QinLDR5ZTQd1JQfD0nldnFZO+91IGJT+8qQC0o5OmyY/mVffMQtp
-	 s5SL6yij7q8e21Xte9c23mmDCTHtVMu5duESlqLw=
+	b=daxrgVM8GDX2rA4ZKBeRh6owxakPOMfczgnvGUNKIDN9st0NFbMXpcqo+VFH9deaN
+	 BT8qi00SgFXYcXMM7x9Vslfb9gpqwUn5qqzqqJzOinxdjC3hEpVtcUFXuqKvlpT39Y
+	 REskNgVFT8aLB9fvcsViKgxOe5xP7G4dxSGIT3uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 275/457] PCI: rockchip: Use standard PCIe definitions
-Date: Tue, 26 Aug 2025 13:09:19 +0200
-Message-ID: <20250826110944.176890732@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	syzbot+4d9a13f0797c46a29e42@syzkaller.appspotmail.com,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 249/457] mm/mremap: fix WARN with uffd that has remap events disabled
+Date: Tue, 26 Aug 2025 13:08:53 +0200
+Message-ID: <20250826110943.519621346@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,176 +57,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit cbbfe9f683f0f9b6a1da2eaa53b995a4b5961086 ]
+commit 772e5b4a5e8360743645b9a466842d16092c4f94 upstream.
 
-Current code uses custom-defined register offsets and bitfields for the
-standard PCIe registers. This creates duplication as the PCI header already
-defines them. So, switch to using the standard PCIe definitions and drop
-the custom ones.
+Registering userfaultd on a VMA that spans at least one PMD and then
+mremap()'ing that VMA can trigger a WARN when recovering from a failed
+page table move due to a page table allocation error.
 
-Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-[mani: commit message rewording]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: include bitfield.h]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/e81700ef4b49f584bc8834bfb07b6d8995fc1f42.1751322015.git.geraldogabriel@gmail.com
-Stable-dep-of: 114b06ee108c ("PCI: rockchip: Set Target Link Speed to 5.0 GT/s before retraining")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The code ends up doing the right thing (recurse, avoiding moving actual
+page tables), but triggering that WARN is unpleasant:
+
+WARNING: CPU: 2 PID: 6133 at mm/mremap.c:357 move_normal_pmd mm/mremap.c:357 [inline]
+WARNING: CPU: 2 PID: 6133 at mm/mremap.c:357 move_pgt_entry mm/mremap.c:595 [inline]
+WARNING: CPU: 2 PID: 6133 at mm/mremap.c:357 move_page_tables+0x3832/0x44a0 mm/mremap.c:852
+Modules linked in:
+CPU: 2 UID: 0 PID: 6133 Comm: syz.0.19 Not tainted 6.17.0-rc1-syzkaller-00004-g53e760d89498 #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:move_normal_pmd mm/mremap.c:357 [inline]
+RIP: 0010:move_pgt_entry mm/mremap.c:595 [inline]
+RIP: 0010:move_page_tables+0x3832/0x44a0 mm/mremap.c:852
+Code: ...
+RSP: 0018:ffffc900037a76d8 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000032930007 RCX: ffffffff820c6645
+RDX: ffff88802e56a440 RSI: ffffffff820c7201 RDI: 0000000000000007
+RBP: ffff888037728fc0 R08: 0000000000000007 R09: 0000000000000000
+R10: 0000000032930007 R11: 0000000000000000 R12: 0000000000000000
+R13: ffffc900037a79a8 R14: 0000000000000001 R15: dffffc0000000000
+FS:  000055556316a500(0000) GS:ffff8880d68bc000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b30863fff CR3: 0000000050171000 CR4: 0000000000352ef0
+Call Trace:
+ <TASK>
+ copy_vma_and_data+0x468/0x790 mm/mremap.c:1215
+ move_vma+0x548/0x1780 mm/mremap.c:1282
+ mremap_to+0x1b7/0x450 mm/mremap.c:1406
+ do_mremap+0xfad/0x1f80 mm/mremap.c:1921
+ __do_sys_mremap+0x119/0x170 mm/mremap.c:1977
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f00d0b8ebe9
+Code: ...
+RSP: 002b:00007ffe5ea5ee98 EFLAGS: 00000246 ORIG_RAX: 0000000000000019
+RAX: ffffffffffffffda RBX: 00007f00d0db5fa0 RCX: 00007f00d0b8ebe9
+RDX: 0000000000400000 RSI: 0000000000c00000 RDI: 0000200000000000
+RBP: 00007ffe5ea5eef0 R08: 0000200000c00000 R09: 0000000000000000
+R10: 0000000000000003 R11: 0000000000000246 R12: 0000000000000002
+R13: 00007f00d0db5fa0 R14: 00007f00d0db5fa0 R15: 0000000000000005
+ </TASK>
+
+The underlying issue is that we recurse during the original page table
+move, but not during the recovery move.
+
+Fix it by checking for both VMAs and performing the check before the
+pmd_none() sanity check.
+
+Add a new helper where we perform+document that check for the PMD and PUD
+level.
+
+Thanks to Harry for bisecting.
+
+Link: https://lkml.kernel.org/r/20250818175358.1184757-1-david@redhat.com
+Fixes: 0cef0bb836e3 ("mm: clear uffd-wp PTE/PMD state on mremap()")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: syzbot+4d9a13f0797c46a29e42@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/689bb893.050a0220.7f033.013a.GAE@google.com
+Tested-by: Harry Yoo <harry.yoo@oracle.com>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c   |    4 +-
- drivers/pci/controller/pcie-rockchip-host.c |   45 ++++++++++++++--------------
- drivers/pci/controller/pcie-rockchip.h      |   12 -------
- 3 files changed, 26 insertions(+), 35 deletions(-)
+ mm/mremap.c |   41 +++++++++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -518,9 +518,9 @@ static void rockchip_pcie_ep_retrain_lin
- {
- 	u32 status;
- 
--	status = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_LCS);
-+	status = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_BASE + PCI_EXP_LNKCTL);
- 	status |= PCI_EXP_LNKCTL_RL;
--	rockchip_pcie_write(rockchip, status, PCIE_EP_CONFIG_LCS);
-+	rockchip_pcie_write(rockchip, status, PCIE_EP_CONFIG_BASE + PCI_EXP_LNKCTL);
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -294,6 +294,25 @@ static inline bool arch_supports_page_ta
  }
+ #endif
  
- static bool rockchip_pcie_ep_link_up(struct rockchip_pcie *rockchip)
---- a/drivers/pci/controller/pcie-rockchip-host.c
-+++ b/drivers/pci/controller/pcie-rockchip-host.c
-@@ -11,6 +11,7 @@
-  * ARM PCI Host generic driver.
-  */
++static inline bool uffd_supports_page_table_move(struct pagetable_move_control *pmc)
++{
++	/*
++	 * If we are moving a VMA that has uffd-wp registered but with
++	 * remap events disabled (new VMA will not be registered with uffd), we
++	 * need to ensure that the uffd-wp state is cleared from all pgtables.
++	 * This means recursing into lower page tables in move_page_tables().
++	 *
++	 * We might get called with VMAs reversed when recovering from a
++	 * failed page table move. In that case, the
++	 * "old"-but-actually-"originally new" VMA during recovery will not have
++	 * a uffd context. Recursing into lower page tables during the original
++	 * move but not during the recovery move will cause trouble, because we
++	 * run into already-existing page tables. So check both VMAs.
++	 */
++	return !vma_has_uffd_without_event_remap(pmc->old) &&
++	       !vma_has_uffd_without_event_remap(pmc->new);
++}
++
+ #ifdef CONFIG_HAVE_MOVE_PMD
+ static bool move_normal_pmd(struct pagetable_move_control *pmc,
+ 			pmd_t *old_pmd, pmd_t *new_pmd)
+@@ -306,6 +325,8 @@ static bool move_normal_pmd(struct paget
  
-+#include <linux/bitfield.h>
- #include <linux/bitrev.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
-@@ -40,18 +41,18 @@ static void rockchip_pcie_enable_bw_int(
- {
- 	u32 status;
+ 	if (!arch_supports_page_table_move())
+ 		return false;
++	if (!uffd_supports_page_table_move(pmc))
++		return false;
+ 	/*
+ 	 * The destination pmd shouldn't be established, free_pgtables()
+ 	 * should have released it.
+@@ -332,15 +353,6 @@ static bool move_normal_pmd(struct paget
+ 	if (WARN_ON_ONCE(!pmd_none(*new_pmd)))
+ 		return false;
  
--	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
-+	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- 	status |= (PCI_EXP_LNKCTL_LBMIE | PCI_EXP_LNKCTL_LABIE);
--	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
-+	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- }
+-	/* If this pmd belongs to a uffd vma with remap events disabled, we need
+-	 * to ensure that the uffd-wp state is cleared from all pgtables. This
+-	 * means recursing into lower page tables in move_page_tables(), and we
+-	 * can reuse the existing code if we simply treat the entry as "not
+-	 * moved".
+-	 */
+-	if (vma_has_uffd_without_event_remap(vma))
+-		return false;
+-
+ 	/*
+ 	 * We don't have to worry about the ordering of src and dst
+ 	 * ptlocks because exclusive mmap_lock prevents deadlock.
+@@ -389,6 +401,8 @@ static bool move_normal_pud(struct paget
  
- static void rockchip_pcie_clr_bw_int(struct rockchip_pcie *rockchip)
- {
- 	u32 status;
+ 	if (!arch_supports_page_table_move())
+ 		return false;
++	if (!uffd_supports_page_table_move(pmc))
++		return false;
+ 	/*
+ 	 * The destination pud shouldn't be established, free_pgtables()
+ 	 * should have released it.
+@@ -396,15 +410,6 @@ static bool move_normal_pud(struct paget
+ 	if (WARN_ON_ONCE(!pud_none(*new_pud)))
+ 		return false;
  
--	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
-+	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- 	status |= (PCI_EXP_LNKSTA_LBMS | PCI_EXP_LNKSTA_LABS) << 16;
--	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
-+	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- }
- 
- static void rockchip_pcie_update_txcredit_mui(struct rockchip_pcie *rockchip)
-@@ -269,7 +270,7 @@ static void rockchip_pcie_set_power_limi
- 	scale = 3; /* 0.001x */
- 	curr = curr / 1000; /* convert to mA */
- 	power = (curr * 3300) / 1000; /* milliwatt */
--	while (power > PCIE_RC_CONFIG_DCR_CSPL_LIMIT) {
-+	while (power > FIELD_MAX(PCI_EXP_DEVCAP_PWR_VAL)) {
- 		if (!scale) {
- 			dev_warn(rockchip->dev, "invalid power supply\n");
- 			return;
-@@ -278,10 +279,10 @@ static void rockchip_pcie_set_power_limi
- 		power = power / 10;
- 	}
- 
--	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_DCR);
--	status |= (power << PCIE_RC_CONFIG_DCR_CSPL_SHIFT) |
--		  (scale << PCIE_RC_CONFIG_DCR_CPLS_SHIFT);
--	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_DCR);
-+	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_DEVCAP);
-+	status |= FIELD_PREP(PCI_EXP_DEVCAP_PWR_VAL, power);
-+	status |= FIELD_PREP(PCI_EXP_DEVCAP_PWR_SCL, scale);
-+	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_DEVCAP);
- }
- 
- /**
-@@ -309,14 +310,14 @@ static int rockchip_pcie_host_init_port(
- 	rockchip_pcie_set_power_limit(rockchip);
- 
- 	/* Set RC's clock architecture as common clock */
--	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
-+	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- 	status |= PCI_EXP_LNKSTA_SLC << 16;
--	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
-+	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- 
- 	/* Set RC's RCB to 128 */
--	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
-+	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- 	status |= PCI_EXP_LNKCTL_RCB;
--	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
-+	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- 
- 	/* Enable Gen1 training */
- 	rockchip_pcie_write(rockchip, PCIE_CLIENT_LINK_TRAIN_ENABLE,
-@@ -341,9 +342,9 @@ static int rockchip_pcie_host_init_port(
- 		 * Enable retrain for gen2. This should be configured only after
- 		 * gen1 finished.
- 		 */
--		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
-+		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- 		status |= PCI_EXP_LNKCTL_RL;
--		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
-+		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
- 
- 		err = readl_poll_timeout(rockchip->apb_base + PCIE_CORE_CTRL,
- 					 status, PCIE_LINK_IS_GEN2(status), 20,
-@@ -380,15 +381,15 @@ static int rockchip_pcie_host_init_port(
- 
- 	/* Clear L0s from RC's link cap */
- 	if (of_property_read_bool(dev->of_node, "aspm-no-l0s")) {
--		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LINK_CAP);
--		status &= ~PCIE_RC_CONFIG_LINK_CAP_L0S;
--		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LINK_CAP);
-+		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCAP);
-+		status &= ~PCI_EXP_LNKCAP_ASPM_L0S;
-+		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCAP);
- 	}
- 
--	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_DCSR);
--	status &= ~PCIE_RC_CONFIG_DCSR_MPS_MASK;
--	status |= PCIE_RC_CONFIG_DCSR_MPS_256;
--	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_DCSR);
-+	status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_DEVCTL);
-+	status &= ~PCI_EXP_DEVCTL_PAYLOAD;
-+	status |= PCI_EXP_DEVCTL_PAYLOAD_256B;
-+	rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_DEVCTL);
- 
- 	return 0;
- err_power_off_phy:
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -155,17 +155,7 @@
- #define PCIE_EP_CONFIG_DID_VID		(PCIE_EP_CONFIG_BASE + 0x00)
- #define PCIE_EP_CONFIG_LCS		(PCIE_EP_CONFIG_BASE + 0xd0)
- #define PCIE_RC_CONFIG_RID_CCR		(PCIE_RC_CONFIG_BASE + 0x08)
--#define PCIE_RC_CONFIG_DCR		(PCIE_RC_CONFIG_BASE + 0xc4)
--#define   PCIE_RC_CONFIG_DCR_CSPL_SHIFT		18
--#define   PCIE_RC_CONFIG_DCR_CSPL_LIMIT		0xff
--#define   PCIE_RC_CONFIG_DCR_CPLS_SHIFT		26
--#define PCIE_RC_CONFIG_DCSR		(PCIE_RC_CONFIG_BASE + 0xc8)
--#define   PCIE_RC_CONFIG_DCSR_MPS_MASK		GENMASK(7, 5)
--#define   PCIE_RC_CONFIG_DCSR_MPS_256		(0x1 << 5)
--#define PCIE_RC_CONFIG_LINK_CAP		(PCIE_RC_CONFIG_BASE + 0xcc)
--#define   PCIE_RC_CONFIG_LINK_CAP_L0S		BIT(10)
--#define PCIE_RC_CONFIG_LCS		(PCIE_RC_CONFIG_BASE + 0xd0)
--#define PCIE_EP_CONFIG_LCS		(PCIE_EP_CONFIG_BASE + 0xd0)
-+#define PCIE_RC_CONFIG_CR		(PCIE_RC_CONFIG_BASE + 0xc0)
- #define PCIE_RC_CONFIG_L1_SUBSTATE_CTRL2 (PCIE_RC_CONFIG_BASE + 0x90c)
- #define PCIE_RC_CONFIG_THP_CAP		(PCIE_RC_CONFIG_BASE + 0x274)
- #define   PCIE_RC_CONFIG_THP_CAP_NEXT_MASK	GENMASK(31, 20)
+-	/* If this pud belongs to a uffd vma with remap events disabled, we need
+-	 * to ensure that the uffd-wp state is cleared from all pgtables. This
+-	 * means recursing into lower page tables in move_page_tables(), and we
+-	 * can reuse the existing code if we simply treat the entry as "not
+-	 * moved".
+-	 */
+-	if (vma_has_uffd_without_event_remap(vma))
+-		return false;
+-
+ 	/*
+ 	 * We don't have to worry about the ordering of src and dst
+ 	 * ptlocks because exclusive mmap_lock prevents deadlock.
 
 
