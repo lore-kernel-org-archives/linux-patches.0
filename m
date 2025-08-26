@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E611C6BE;
-	Tue, 26 Aug 2025 12:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5092338DEC;
+	Tue, 26 Aug 2025 12:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212811; cv=none; b=BXOuInFZZLcQX1Py1h9FTiQb80voGJGN5XD6Imv+eaF//RupwGcpCKwY85XCrgQ6wHkMvX5OZniUI9W1/8CkSYI505brBmpmDWLaygRC652ktXmqpFV1bTeHsnlmRiazCx4uqtvvWS1yewNfyL2h4upfk2GMfahaUDHfOA6n3rA=
+	t=1756212814; cv=none; b=gq18qESzbD8SJcHKxOHtaBc7br5XvSRdYuxiaTY3sI8WOK6ZxI/pwPIiBlHVWmTi/oZ/i46V96KQNGx9sf5MhjOc/B6MPtg5eoZ5kh/0Hmr75ppn5UPukWfbkfEmf7a+/XFOfVpakrcVhJtttHW/2deqEXP8B4C3a0OHrdXsQTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212811; c=relaxed/simple;
-	bh=B7ftmo4zNYz3dBVO1xkwFNWcBWMR7srhh1qcd5SRmxU=;
+	s=arc-20240116; t=1756212814; c=relaxed/simple;
+	bh=09t4o7puzMB1m7xAmZ8aSMn1lMHXEBLR/y8J1zmM4/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWDRQAtJLedU1lG9wp2sIBKHg/OdW0P+bMfU+3zB4jsMkiflS8c2SKfqTMBxwS8XdaOZoRZV3D4RRoLXN0C1NXoWG+jWTLVWy3USARIuhyU0YuQNfS86GQAxI6ALy2URi0X1rBlgqmvxenGsUrfMH34xs23AsVBFQeonRzbTz0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siU0t+Mb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLucjn2cgEK2OyMVQXLAOcf0iJfbNpfUM5wDGPd+8D631bS5zYhRC9UC19hkjRj79KuWLQOYete6D42nyGadSO3/Fd0ay0KF62tmvWo0A56bz1QCydjESu8aoF01hbljsYzeLZApfnNObAuolFPHqWuXWKLXGgafafxYUpsvrhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JA/8d2X0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siU0t+Mb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CCAC4CEF1;
-	Tue, 26 Aug 2025 12:53:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JA/8d2X0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD16C4CEF1;
+	Tue, 26 Aug 2025 12:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212811;
-	bh=B7ftmo4zNYz3dBVO1xkwFNWcBWMR7srhh1qcd5SRmxU=;
+	s=korg; t=1756212814;
+	bh=09t4o7puzMB1m7xAmZ8aSMn1lMHXEBLR/y8J1zmM4/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=siU0t+MbV/jXRAWAJhZt41qdn3Kobmlmvs+HAHQxWKQSHBWxuPN3gK3SUB6GP9aWw
-	 FmHYENO2mf/Ae+AdTezZ1jWdpoqafbhXIeRNA8jBqZip/MPcyMMO7ux4gkMwYG7Wxz
-	 0He37dbuHhKF8q2xVEtNSdPJAqOhZ8/YjQM9ooco=
+	b=JA/8d2X021wNbu+HjtWZFQkL46/TSSaCk/Hk1d9g5CP8R8b2TQ5T2o6dIqbXGaOfb
+	 2CqA8bXaZjUaLjS8xq3dn9nEu+oM70quxUZl9PllQ0siUGp2UrAeCdKLs6xQ2cuEoC
+	 u8B25PhqdAqwNwlbSMiDwhBsvjyotwP3ed4Qzq7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tuhaowen <tuhaowen@uniontech.com>,
+	Sebastian Ott <sebott@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 111/587] PM: sleep: console: Fix the black screen issue
-Date: Tue, 26 Aug 2025 13:04:20 +0200
-Message-ID: <20250826110955.764249763@linuxfoundation.org>
+Subject: [PATCH 6.6 112/587] ACPI: processor: fix acpi_object initialization
+Date: Tue, 26 Aug 2025 13:04:21 +0200
+Message-ID: <20250826110955.789906268@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,75 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: tuhaowen <tuhaowen@uniontech.com>
+From: Sebastian Ott <sebott@redhat.com>
 
-[ Upstream commit 4266e8fa56d3d982bf451d382a410b9db432015c ]
+[ Upstream commit 13edf7539211d8f7d0068ce3ed143005f1da3547 ]
 
-When the computer enters sleep status without a monitor
-connected, the system switches the console to the virtual
-terminal tty63(SUSPEND_CONSOLE).
+Initialization of the local acpi_object in acpi_processor_get_info()
+only sets the first 4 bytes to zero and is thus incomplete. This is
+indicated by messages like:
+	acpi ACPI0007:be: Invalid PBLK length [166288104]
 
-If a monitor is subsequently connected before waking up,
-the system skips the required VT restoration process
-during wake-up, leaving the console on tty63 instead of
-switching back to tty1.
+Fix this by initializing all 16 bytes of the processor member of that
+union.
 
-To fix this issue, a global flag vt_switch_done is introduced
-to record whether the system has successfully switched to
-the suspend console via vt_move_to_console() during suspend.
-
-If the switch was completed, vt_switch_done is set to 1.
-Later during resume, this flag is checked to ensure that
-the original console is restored properly by calling
-vt_move_to_console(orig_fgconsole, 0).
-
-This prevents scenarios where the resume logic skips console
-restoration due to incorrect detection of the console state,
-especially when a monitor is reconnected before waking up.
-
-Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
-Link: https://patch.msgid.link/20250611032345.29962-1-tuhaowen@uniontech.com
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Link: https://patch.msgid.link/20250703124215.12522-1-sebott@redhat.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/console.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/acpi/acpi_processor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/power/console.c b/kernel/power/console.c
-index fcdf0e14a47d..19c48aa5355d 100644
---- a/kernel/power/console.c
-+++ b/kernel/power/console.c
-@@ -16,6 +16,7 @@
- #define SUSPEND_CONSOLE	(MAX_NR_CONSOLES-1)
+diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
+index 7053f1b9fc1d..c0f9cf9768ea 100644
+--- a/drivers/acpi/acpi_processor.c
++++ b/drivers/acpi/acpi_processor.c
+@@ -250,7 +250,7 @@ static inline int acpi_processor_hotadd_init(struct acpi_processor *pr)
  
- static int orig_fgconsole, orig_kmsg;
-+static bool vt_switch_done;
- 
- static DEFINE_MUTEX(vt_switch_mutex);
- 
-@@ -136,17 +137,21 @@ void pm_prepare_console(void)
- 	if (orig_fgconsole < 0)
- 		return;
- 
-+	vt_switch_done = true;
-+
- 	orig_kmsg = vt_kmsg_redirect(SUSPEND_CONSOLE);
- 	return;
- }
- 
- void pm_restore_console(void)
+ static int acpi_processor_get_info(struct acpi_device *device)
  {
--	if (!pm_vt_switch())
-+	if (!pm_vt_switch() && !vt_switch_done)
- 		return;
- 
- 	if (orig_fgconsole >= 0) {
- 		vt_move_to_console(orig_fgconsole, 0);
- 		vt_kmsg_redirect(orig_kmsg);
- 	}
-+
-+	vt_switch_done = false;
- }
+-	union acpi_object object = { 0 };
++	union acpi_object object = { .processor = { 0 } };
+ 	struct acpi_buffer buffer = { sizeof(union acpi_object), &object };
+ 	struct acpi_processor *pr = acpi_driver_data(device);
+ 	int device_declaration = 0;
 -- 
 2.39.5
 
