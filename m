@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE79B350D7F;
-	Tue, 26 Aug 2025 14:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C7234DCF6;
+	Tue, 26 Aug 2025 14:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217180; cv=none; b=GuKgTf9j572gc6YP+LET3otmmxQb5d24pjBCwOOOS3AZM48wnXH6KRC6wSG4TgF+rGijYEdDyiJ5PEiX72rmeZdWiG76tZ4PjDNvQfFW/itiuVv1T26h+KSfedxZTaZU7sY3WHf69OtKMupdPr8ooxPBANgq2vkYNDD2KVSWk8g=
+	t=1756217182; cv=none; b=tmPQWHD3OQkwks124fijCvpw4OPBpNyJir6Y4ZR68pJ5iaQELjF8NmXpN2L+sq0UHBa/TA7Wld7d1XVih1ktnpSPpxDtn1H/kdSjCRqkECjU984nLarAkbpxCT/uV6mQ35mP86OLv/KBwZqG1Fzgd3NDXaMTp9A8uc2BpeQTt2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217180; c=relaxed/simple;
-	bh=iifIuFtT9kMegx4BXHmbrPVuPdetsM5xxpFY0vroWHY=;
+	s=arc-20240116; t=1756217182; c=relaxed/simple;
+	bh=E7d4TYsJtjOVwWZ0fwraHbL1HQXnv01Aa7F0V1fauYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5YZthXhwZPbN336MrnjNyxxpJxp1w6jTUzYovM9T73wOvqlNs1XJtWSyIuOMYkVitGM26pWwnF97UyehdO8PKANakTKCEBQgILH4QrUo0W53wZjAtui71v+8Jt5Ho9VlusyLTRbC7QdUn9f88luaaIHgd4+uhphWotS02wcYG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nuxvi6b4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ulnr3IxYmxDkXQJvyNCfgZhJ5fglKDdWkn4akBtGgPIgo3USP++wwFyi4e/i9A1gBHd0Oo0u+lobwqvUiVrMp35Ti7nV3CE+o/rngJ5WJY/JX5OYMIANowcEwWqdUHoVgExmgqYv+h+3OI2otQQKOr6/2thbyf84OErhV/jJkH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKrwBkZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nuxvi6b4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DFFC113CF;
-	Tue, 26 Aug 2025 14:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKrwBkZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94240C116B1;
+	Tue, 26 Aug 2025 14:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217179;
-	bh=iifIuFtT9kMegx4BXHmbrPVuPdetsM5xxpFY0vroWHY=;
+	s=korg; t=1756217181;
+	bh=E7d4TYsJtjOVwWZ0fwraHbL1HQXnv01Aa7F0V1fauYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nuxvi6b4DMW2jXrEDOx3FMiAFH6HSgRoi4MuSoa4do6/kgxgelIgl4UpDZ3FUJXfe
-	 JaYg8cJbZgpQQzuyeSERQAjnLXuVPUhWc5cE68VdJ4yLMJZ5CjjMXA0mV87iIF0DZl
-	 Vkh6ZA+DPPNT+RUjetHDGaNsmD93YEPF7+x00gp0=
+	b=DKrwBkZVelksliCuxKWskuA6XggOG6xOTb1e1aRox4JquJYnS/fh+xPRID70Ek9T6
+	 tId+Lb6Lh4BpM/RuZHuwJGslDqCQgNB+cV1zxtJSg6FtY7Y1mJqSBDQt7JIlb/I74P
+	 YmPCoTmF8DapvdK1TOk0lS9l6JXX/fhH0wiXjRgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.10 046/523] usb: hub: Fix flushing and scheduling of delayed work that tunes runtime pm
-Date: Tue, 26 Aug 2025 13:04:16 +0200
-Message-ID: <20250826110925.738390572@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH 5.10 047/523] usb: hub: Fix flushing of delayed work used for post resume purposes
+Date: Tue, 26 Aug 2025 13:04:17 +0200
+Message-ID: <20250826110925.762227784@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,61 +54,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit a49e1e2e785fb3621f2d748581881b23a364998a upstream.
+commit 9bd9c8026341f75f25c53104eb7e656e357ca1a2 upstream.
 
-Delayed work to prevent USB3 hubs from runtime-suspending immediately
-after resume was added in commit 8f5b7e2bec1c ("usb: hub: fix detection
-of high tier USB3 devices behind suspended hubs").
+Delayed work that prevents USB3 hubs from runtime-suspending too early
+needed to be flushed in hub_quiesce() to resolve issues detected on
+QC SC8280XP CRD board during suspend resume testing.
 
-This delayed work needs be flushed if system suspends, or hub needs to
-be quiesced for other reasons right after resume. Not flushing it
-triggered issues on QC SC8280XP CRD board during suspend/resume testing.
+This flushing did however trigger new issues on Raspberry Pi 3B+, which
+doesn't have USB3 ports, and doesn't queue any post resume delayed work.
 
-Fix it by flushing the delayed resume work in hub_quiesce()
+The flushed 'hub->init_work' item is used for several purposes, and
+is originally initialized with a 'NULL' work function. The work function
+is also changed on the fly, which may contribute to the issue.
 
-The delayed work item that allow hub runtime suspend is also scheduled
-just before calling autopm get. Alan pointed out there is a small risk
-that work is run before autopm get, which would call autopm put before
-get, and mess up the runtime pm usage order.
-Swap the order of work sheduling and calling autopm get to solve this.
+Solve this by creating a dedicated delayed work item for post resume work,
+and flush that delayed work in hub_quiesce()
 
 Cc: stable <stable@kernel.org>
-Fixes: 8f5b7e2bec1c ("usb: hub: fix detection of high tier USB3 devices behind suspended hubs")
-Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Closes: https://lore.kernel.org/linux-usb/acaaa928-832c-48ca-b0ea-d202d5cd3d6c@oss.qualcomm.com
-Reported-by: Alan Stern <stern@rowland.harvard.edu>
-Closes: https://lore.kernel.org/linux-usb/c73fbead-66d7-497a-8fa1-75ea4761090a@rowland.harvard.edu
+Fixes: a49e1e2e785f ("usb: hub: Fix flushing and scheduling of delayed work that tunes runtime pm")
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/linux-usb/aF5rNp1l0LWITnEB@finisterre.sirena.org.uk
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250626130102.3639861-2-mathias.nyman@linux.intel.com
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # SC8280XP CRD
+Tested-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250627164348.3982628-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/core/hub.c |   21 ++++++++-------------
+ drivers/usb/core/hub.h |    1 +
+ 2 files changed, 9 insertions(+), 13 deletions(-)
 
 --- a/drivers/usb/core/hub.c
 +++ b/drivers/usb/core/hub.c
-@@ -1316,11 +1316,12 @@ static void hub_activate(struct usb_hub
+@@ -1031,12 +1031,11 @@ int usb_remove_device(struct usb_device
  
- 	if (type == HUB_RESUME && hub_is_superspeed(hub->hdev)) {
- 		/* give usb3 downstream links training time after hub resume */
-+		usb_autopm_get_interface_no_resume(
-+			to_usb_interface(hub->intfdev));
-+
- 		INIT_DELAYED_WORK(&hub->init_work, hub_post_resume);
- 		queue_delayed_work(system_power_efficient_wq, &hub->init_work,
- 				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
--		usb_autopm_get_interface_no_resume(
--			to_usb_interface(hub->intfdev));
- 		return;
+ enum hub_activation_type {
+ 	HUB_INIT, HUB_INIT2, HUB_INIT3,		/* INITs must come first */
+-	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME, HUB_POST_RESUME,
++	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME,
+ };
+ 
+ static void hub_init_func2(struct work_struct *ws);
+ static void hub_init_func3(struct work_struct *ws);
+-static void hub_post_resume(struct work_struct *ws);
+ 
+ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
+ {
+@@ -1060,12 +1059,6 @@ static void hub_activate(struct usb_hub
+ 		goto init3;
  	}
  
-@@ -1374,6 +1375,7 @@ static void hub_quiesce(struct usb_hub *
+-	if (type == HUB_POST_RESUME) {
+-		usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
+-		hub_put(hub);
+-		return;
+-	}
+-
+ 	hub_get(hub);
+ 
+ 	/* The superspeed hub except for root hub has to use Hub Depth
+@@ -1319,8 +1312,8 @@ static void hub_activate(struct usb_hub
+ 		usb_autopm_get_interface_no_resume(
+ 			to_usb_interface(hub->intfdev));
+ 
+-		INIT_DELAYED_WORK(&hub->init_work, hub_post_resume);
+-		queue_delayed_work(system_power_efficient_wq, &hub->init_work,
++		queue_delayed_work(system_power_efficient_wq,
++				   &hub->post_resume_work,
+ 				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
+ 		return;
+ 	}
+@@ -1345,9 +1338,10 @@ static void hub_init_func3(struct work_s
+ 
+ static void hub_post_resume(struct work_struct *ws)
+ {
+-	struct usb_hub *hub = container_of(ws, struct usb_hub, init_work.work);
++	struct usb_hub *hub = container_of(ws, struct usb_hub, post_resume_work.work);
+ 
+-	hub_activate(hub, HUB_POST_RESUME);
++	usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
++	hub_put(hub);
+ }
+ 
+ enum hub_quiescing_type {
+@@ -1375,7 +1369,7 @@ static void hub_quiesce(struct usb_hub *
  
  	/* Stop hub_wq and related activity */
  	del_timer_sync(&hub->irq_urb_retry);
-+	flush_delayed_work(&hub->init_work);
+-	flush_delayed_work(&hub->init_work);
++	flush_delayed_work(&hub->post_resume_work);
  	usb_kill_urb(hub->urb);
  	if (hub->has_indicators)
  		cancel_delayed_work_sync(&hub->leds);
+@@ -1932,6 +1926,7 @@ static int hub_probe(struct usb_interfac
+ 	hub->hdev = hdev;
+ 	INIT_DELAYED_WORK(&hub->leds, led_work);
+ 	INIT_DELAYED_WORK(&hub->init_work, NULL);
++	INIT_DELAYED_WORK(&hub->post_resume_work, hub_post_resume);
+ 	INIT_WORK(&hub->events, hub_event);
+ 	spin_lock_init(&hub->irq_urb_lock);
+ 	timer_setup(&hub->irq_urb_retry, hub_retry_irq_urb, 0);
+--- a/drivers/usb/core/hub.h
++++ b/drivers/usb/core/hub.h
+@@ -69,6 +69,7 @@ struct usb_hub {
+ 	u8			indicator[USB_MAXCHILDREN];
+ 	struct delayed_work	leds;
+ 	struct delayed_work	init_work;
++	struct delayed_work	post_resume_work;
+ 	struct work_struct      events;
+ 	spinlock_t		irq_urb_lock;
+ 	struct timer_list	irq_urb_retry;
 
 
