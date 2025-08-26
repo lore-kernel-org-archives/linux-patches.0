@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC351350851;
-	Tue, 26 Aug 2025 13:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1AD350D54;
+	Tue, 26 Aug 2025 13:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216182; cv=none; b=bRrpikLCN1FFnNj5tvlXtjmnNGbz1E9c6CBQDLJ7+WXAAS/yo2ME2Q8AE8oLNf5kMBwzc0LvMHDEyATg0hhdhUqkoAjyiqO+C2OFIzebRJqaWj8/Y7PytIdbNuv15Wy+yBmhZ8+EKov0Nbj6/r3AJlWwIGcDlE0PjRxoZPR8pEk=
+	t=1756216184; cv=none; b=W31Sx3C+yH8WFZSKkOmksiAMBX3DRBjX6SRt6PVKs0/o40z1OdKLQx95bi6Mvj6aJ9DrqbbWoIssokwnGxAQS+CG2Pi0/3QTmWTgbkP7U6W89+R7xwwT3e9C4SKKaVfhWJdqCywgYHgtrerQnnUDeASpV21qd0x/UpdICWYBd9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216182; c=relaxed/simple;
-	bh=AfSpPJcze1wVrEYR5aiImJrjxBGXuqLJg504DFcnRu8=;
+	s=arc-20240116; t=1756216184; c=relaxed/simple;
+	bh=amtt516RVWu/g6B1nQQrvvNSDr1e20aeTsUWgwUywsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KeSYU1sKCpGXT9lZt1pYyI0MeS2gypq2Q8pNuGacThEqDzSpxiEKYb0u82Q5XGGgXPeCS1lY9x2Mb03NRdjqE3JmGRZ66g+Y4IwmwjPbvq/hblnsFBJRn/vtvOBT1Rc7Zp3JPBdNWgkSpzMmJrjj2ULOLwJsS9OqEJovICBQcW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJjXODyc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SCAGGib+j2hKTA8E9iRRGjPtrr10kgb1/0NlWVDeD6b+cAcFhO8SCPF5Q0a7zJVdqPmb6evWaTml1954DWOqMGqdljf5k0m7HhF/MtGYWCv5C3MQkjjUqjwTyLJ+N8epDSkYnt4NEPZuHR8z2F08ZQvv1qQHCkvJkMRj2rkLfhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyXhVnc1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJjXODyc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDF3C4CEF1;
-	Tue, 26 Aug 2025 13:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyXhVnc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E27AC4CEF1;
+	Tue, 26 Aug 2025 13:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216181;
-	bh=AfSpPJcze1wVrEYR5aiImJrjxBGXuqLJg504DFcnRu8=;
+	s=korg; t=1756216184;
+	bh=amtt516RVWu/g6B1nQQrvvNSDr1e20aeTsUWgwUywsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJjXODycuPgAttq+2DKhsT7F13pb701SXDXs+D/Ca0BWm5BPgfCZ9Kxd8G/X0C9NE
-	 ozJ4aSyumAF9mRUzHMGKXE3CBglYqLRsbiGGt6ChbS/gNQutCkOL+7Pmdg5Bgp5U+L
-	 ST97QWFJ0iUa7s5XWGa/TMpkjOZnt0aEPTP8mqK4=
+	b=eyXhVnc1YpSLKVHYEvZaTryU0lDsCRT5Jz736fAg8Lkz5Dh7ET9n+oHhfb/odjQO4
+	 CnAy1Cql00K3WOAO8wDBj1f45eDJGiWrwFozzfRJPtp02bT034PA1YgvKLm0l5Uxa/
+	 z5F9YXDPQyFHyiGtpptQaDVDIOCiNtJQjubK4rL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Jameson Thies <jthies@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	tuhaowen <tuhaowen@uniontech.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 298/644] usb: typec: ucsi: psy: Set current max to 100mA for BC 1.2 and Default
-Date: Tue, 26 Aug 2025 13:06:29 +0200
-Message-ID: <20250826110953.769887135@linuxfoundation.org>
+Subject: [PATCH 5.15 316/644] PM: sleep: console: Fix the black screen issue
+Date: Tue, 26 Aug 2025 13:06:47 +0200
+Message-ID: <20250826110954.217001847@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,65 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benson Leung <bleung@chromium.org>
+From: tuhaowen <tuhaowen@uniontech.com>
 
-[ Upstream commit af833e7f7db3cf4c82f063668e1b52297a30ec18 ]
+[ Upstream commit 4266e8fa56d3d982bf451d382a410b9db432015c ]
 
-ucsi_psy_get_current_max would return 0mA as the maximum current if
-UCSI detected a BC or a Default USB Power sporce.
+When the computer enters sleep status without a monitor
+connected, the system switches the console to the virtual
+terminal tty63(SUSPEND_CONSOLE).
 
-The comment in this function is true that we can't tell the difference
-between DCP/CDP or SDP chargers, but we can guarantee that at least 1-unit
-of USB 1.1/2.0 power is available, which is 100mA, which is a better
-fallback value than 0, which causes some userspaces, including the ChromeOS
-power manager, to regard this as a power source that is not providing
-any power.
+If a monitor is subsequently connected before waking up,
+the system skips the required VT restoration process
+during wake-up, leaving the console on tty63 instead of
+switching back to tty1.
 
-In reality, 100mA is guaranteed from all sources in these classes.
+To fix this issue, a global flag vt_switch_done is introduced
+to record whether the system has successfully switched to
+the suspend console via vt_move_to_console() during suspend.
 
-Signed-off-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20250717200805.3710473-1-bleung@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If the switch was completed, vt_switch_done is set to 1.
+Later during resume, this flag is checked to ensure that
+the original console is restored properly by calling
+vt_move_to_console(orig_fgconsole, 0).
+
+This prevents scenarios where the resume logic skips console
+restoration due to incorrect detection of the console state,
+especially when a monitor is reconnected before waking up.
+
+Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
+Link: https://patch.msgid.link/20250611032345.29962-1-tuhaowen@uniontech.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/psy.c  | 2 +-
- drivers/usb/typec/ucsi/ucsi.h | 7 ++++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ kernel/power/console.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/psy.c b/drivers/usb/typec/ucsi/psy.c
-index 56bf56517f75..b7d16ad38c44 100644
---- a/drivers/usb/typec/ucsi/psy.c
-+++ b/drivers/usb/typec/ucsi/psy.c
-@@ -142,7 +142,7 @@ static int ucsi_psy_get_current_max(struct ucsi_connector *con,
- 	case UCSI_CONSTAT_PWR_OPMODE_DEFAULT:
- 	/* UCSI can't tell b/w DCP/CDP or USB2/3x1/3x2 SDP chargers */
- 	default:
--		val->intval = 0;
-+		val->intval = UCSI_TYPEC_DEFAULT_CURRENT * 1000;
- 		break;
+diff --git a/kernel/power/console.c b/kernel/power/console.c
+index fcdf0e14a47d..19c48aa5355d 100644
+--- a/kernel/power/console.c
++++ b/kernel/power/console.c
+@@ -16,6 +16,7 @@
+ #define SUSPEND_CONSOLE	(MAX_NR_CONSOLES-1)
+ 
+ static int orig_fgconsole, orig_kmsg;
++static bool vt_switch_done;
+ 
+ static DEFINE_MUTEX(vt_switch_mutex);
+ 
+@@ -136,17 +137,21 @@ void pm_prepare_console(void)
+ 	if (orig_fgconsole < 0)
+ 		return;
+ 
++	vt_switch_done = true;
++
+ 	orig_kmsg = vt_kmsg_redirect(SUSPEND_CONSOLE);
+ 	return;
+ }
+ 
+ void pm_restore_console(void)
+ {
+-	if (!pm_vt_switch())
++	if (!pm_vt_switch() && !vt_switch_done)
+ 		return;
+ 
+ 	if (orig_fgconsole >= 0) {
+ 		vt_move_to_console(orig_fgconsole, 0);
+ 		vt_kmsg_redirect(orig_kmsg);
  	}
- 	return 0;
-diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-index 87b1a54d68e8..44c788b4a8b3 100644
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -309,9 +309,10 @@ struct ucsi {
- #define UCSI_MAX_SVID		5
- #define UCSI_MAX_ALTMODES	(UCSI_MAX_SVID * 6)
- 
--#define UCSI_TYPEC_VSAFE5V	5000
--#define UCSI_TYPEC_1_5_CURRENT	1500
--#define UCSI_TYPEC_3_0_CURRENT	3000
-+#define UCSI_TYPEC_VSAFE5V		5000
-+#define UCSI_TYPEC_DEFAULT_CURRENT	 100
-+#define UCSI_TYPEC_1_5_CURRENT		1500
-+#define UCSI_TYPEC_3_0_CURRENT		3000
- 
- struct ucsi_connector {
- 	int num;
++
++	vt_switch_done = false;
+ }
 -- 
 2.39.5
 
