@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728A393DD1;
-	Tue, 26 Aug 2025 11:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C6D20C001;
+	Tue, 26 Aug 2025 11:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208376; cv=none; b=BtbJ8ivDcyj/5NoxUnmJ9Nuc1lDqePJ/DBAs3aEgLpuCgtl7vfkJ7EVxr52JZcvlDmFL+E4TK2vwNX2nXPGEwKx6zukvy9XAJMYKsLR9yMhNxlUb1mAFO9t72NFBqEajf+ocNfxZ4I2eF8PscTXNgb8r7RzkICu6WywKzLnH0i4=
+	t=1756208379; cv=none; b=qhxlUkoV3CN27+05iXZlw6LlSRMsoAPAY3EEsjamAdRlPIT8xjy82xhxdnzsCVKKe/DmYKeiEaO0LsOzY8DwolCPxoJ+0HlFVVEQX2MN/MGTtyfrm4ZW2jPS3sqWeOCBj3PEPThhqjGRY9QzPoIpTtPLGQ0f2rDdK2fbPqBmr48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208376; c=relaxed/simple;
-	bh=Ya1SeCYQleYG5ew/puP/5ArUbR6eXqtHG4PmMAjY6ZM=;
+	s=arc-20240116; t=1756208379; c=relaxed/simple;
+	bh=hXmK7BjMEGkdV5WjEA8QsyVT4LcgFz6clwBS6S3GYqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXzIhiZWrdyZ+vQyQkUiu6lgeDaxehhy7JDs6tGJPmXNo3cccIYg/PR5JOIDJB/6QydoIXgyGV8SmGGjU8M+Areh2W/4RpssVerZzpdw9E7ii9/p3s6FvuFwyo3OHVVQ4dlEhzDCEZjkmu5QZq82BTs6fbSz5HgbjqvrvWd83Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gG9q7qsv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jOvgafWHHwTxs8/PdpKXrVNX7nuyMGr7XymEAWtEXd0tT+aH1W0gWpKcj+XLHXT/KQ1vK43AG393/0JA5kwuUbAqSroJOd9v9axoQa7bTgOAQni0OspSvdhknTweX/xpKFsSUHfsI5JXWcFqAAqQk97gWO9Y0XIEz4bR/GsEjuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJcxN12I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gG9q7qsv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66487C4CEF1;
-	Tue, 26 Aug 2025 11:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJcxN12I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0D8C4CEF1;
+	Tue, 26 Aug 2025 11:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208376;
-	bh=Ya1SeCYQleYG5ew/puP/5ArUbR6eXqtHG4PmMAjY6ZM=;
+	s=korg; t=1756208379;
+	bh=hXmK7BjMEGkdV5WjEA8QsyVT4LcgFz6clwBS6S3GYqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gG9q7qsveoYNFTfKxO82CKrmoBL2+djv1ThK0f3Pp1HfigsSx81hLjN1pHZnjEro/
-	 1SzyDInOfM8LLA3VIjQ3KePA6x1GrsQAqV6TywUadumwThAODMz9yTsxaj4CV807Rq
-	 y4fXMGx5yu2XvUXG0zmv8OhALxDmTs12cbQNC5MI=
+	b=ZJcxN12IOvn72sr4j7ttjsiJQHprHoaspdGL7HxS0pO+fwSRkaTNTYpcC99QykcIS
+	 6FQrhH9udbHmHuPQeqrE04jHo9fKjVze1xFCmYYTRiypFCxSbxdQVXtpKG3iIX4GiT
+	 6kykgYhePE6r77boSpcl0YXKpfVxP7GE6SozmCQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 088/322] soc/tegra: pmc: Ensure power-domains are in a known state
-Date: Tue, 26 Aug 2025 13:08:23 +0200
-Message-ID: <20250826110917.828536284@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 089/322] parisc: Check region is readable by user in raw_copy_from_user()
+Date: Tue, 26 Aug 2025 13:08:24 +0200
+Message-ID: <20250826110917.858670201@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -50,137 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: John David Anglin <dave.anglin@bell.net>
 
-commit b6bcbce3359619d05bf387d4f5cc3af63668dbaa upstream.
+commit 91428ca9320edbab1211851d82429d33b9cd73ef upstream.
 
-After commit 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on
-until late_initcall_sync") was applied, the Tegra210 Jetson TX1 board
-failed to boot. Looking into this issue, before this commit was applied,
-if any of the Tegra power-domains were in 'on' state when the kernel
-booted, they were being turned off by the genpd core before any driver
-had chance to request them. This was purely by luck and a consequence of
-the power-domains being turned off earlier during boot. After this
-commit was applied, any power-domains in the 'on' state are kept on for
-longer during boot and therefore, may never transitioned to the off
-state before they are requested/used. The hang on the Tegra210 Jetson
-TX1 is caused because devices in some power-domains are accessed without
-the power-domain being turned off and on, indicating that the
-power-domain is not in a completely on state.
+Because of the way the _PAGE_READ is handled in the parisc PTE, an
+access interruption is not generated when the kernel reads from a
+region where the _PAGE_READ is zero. The current code was written
+assuming read access faults would also occur in the kernel.
 
->From reviewing the Tegra PMC driver code, if a power-domain is in the
-'on' state there is no guarantee that all the necessary clocks
-associated with the power-domain are on and even if they are they would
-not have been requested via the clock framework and so could be turned
-off later. Some power-domains also have a 'clamping' register that needs
-to be configured as well. In short, if a power-domain is already 'on' it
-is difficult to know if it has been configured correctly. Given that the
-power-domains happened to be switched off during boot previously, to
-ensure that they are in a good known state on boot, fix this by
-switching off any power-domains that are on initially when registering
-the power-domains with the genpd framework.
+This change adds user access checks to raw_copy_from_user().  The
+prober_user() define checks whether user code has read access to
+a virtual address. Note that page faults are not handled in the
+exception support for the probe instruction. For this reason, we
+precede the probe by a ldb access check.
 
-Note that commit 05cfb988a4d0 ("soc/tegra: pmc: Initialise resets
-associated with a power partition") updated the
-tegra_powergate_of_get_resets() function to pass the 'off' to ensure
-that the resets for the power-domain are in the correct state on boot.
-However, now that we may power off a domain on boot, if it is on, it is
-better to move this logic into the tegra_powergate_add() function so
-that there is a single place where we are handling the initial state of
-the power-domain.
-
-Fixes: a38045121bf4 ("soc/tegra: pmc: Add generic PM domain support")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250731121832.213671-1-jonathanh@nvidia.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # v5.12+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/tegra/pmc.c |   51 +++++++++++++++++++++++++++---------------------
- 1 file changed, 29 insertions(+), 22 deletions(-)
+ arch/parisc/include/asm/special_insns.h |   28 ++++++++++++++++++++++++++++
+ arch/parisc/lib/memcpy.c                |   19 ++++++++++++++++++-
+ 2 files changed, 46 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/tegra/pmc.c
-+++ b/drivers/soc/tegra/pmc.c
-@@ -1233,7 +1233,7 @@ err:
- }
+--- a/arch/parisc/include/asm/special_insns.h
++++ b/arch/parisc/include/asm/special_insns.h
+@@ -32,6 +32,34 @@
+ 	pa;						\
+ })
  
- static int tegra_powergate_of_get_resets(struct tegra_powergate *pg,
--					 struct device_node *np, bool off)
-+					 struct device_node *np)
++/**
++ * prober_user() - Probe user read access
++ * @sr:		Space regster.
++ * @va:		Virtual address.
++ *
++ * Return: Non-zero if address is accessible.
++ *
++ * Due to the way _PAGE_READ is handled in TLB entries, we need
++ * a special check to determine whether a user address is accessible.
++ * The ldb instruction does the initial access check. If it is
++ * successful, the probe instruction checks user access rights.
++ */
++#define prober_user(sr, va)	({			\
++	unsigned long read_allowed;			\
++	__asm__ __volatile__(				\
++		"copy %%r0,%0\n"			\
++		"8:\tldb 0(%%sr%1,%2),%%r0\n"		\
++		"\tproberi (%%sr%1,%2),%3,%0\n"		\
++		"9:\n"					\
++		ASM_EXCEPTIONTABLE_ENTRY(8b, 9b,	\
++				"or %%r0,%%r0,%%r0")	\
++		: "=&r" (read_allowed)			\
++		: "i" (sr), "r" (va), "i" (PRIV_USER)	\
++		: "memory"				\
++	);						\
++	read_allowed;					\
++})
++
+ #define CR_EIEM 15	/* External Interrupt Enable Mask */
+ #define CR_CR16 16	/* CR16 Interval Timer */
+ #define CR_EIRR 23	/* External Interrupt Request Register */
+--- a/arch/parisc/lib/memcpy.c
++++ b/arch/parisc/lib/memcpy.c
+@@ -12,6 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/compiler.h>
+ #include <linux/uaccess.h>
++#include <linux/mm.h>
+ 
+ #define get_user_space()	mfsp(SR_USER)
+ #define get_kernel_space()	SR_KERNEL
+@@ -32,9 +33,25 @@ EXPORT_SYMBOL(raw_copy_to_user);
+ unsigned long raw_copy_from_user(void *dst, const void __user *src,
+ 			       unsigned long len)
  {
- 	struct device *dev = pg->pmc->dev;
- 	int err;
-@@ -1248,22 +1248,6 @@ static int tegra_powergate_of_get_resets
- 	err = reset_control_acquire(pg->reset);
- 	if (err < 0) {
- 		pr_err("failed to acquire resets: %d\n", err);
--		goto out;
--	}
--
--	if (off) {
--		err = reset_control_assert(pg->reset);
--	} else {
--		err = reset_control_deassert(pg->reset);
--		if (err < 0)
--			goto out;
--
--		reset_control_release(pg->reset);
--	}
--
--out:
--	if (err) {
--		reset_control_release(pg->reset);
- 		reset_control_put(pg->reset);
- 	}
- 
-@@ -1308,20 +1292,43 @@ static int tegra_powergate_add(struct te
- 		goto set_available;
- 	}
- 
--	err = tegra_powergate_of_get_resets(pg, np, off);
-+	err = tegra_powergate_of_get_resets(pg, np);
- 	if (err < 0) {
- 		dev_err(dev, "failed to get resets for %pOFn: %d\n", np, err);
- 		goto remove_clks;
- 	}
- 
--	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
--		if (off)
--			WARN_ON(tegra_powergate_power_up(pg, true));
-+	/*
-+	 * If the power-domain is off, then ensure the resets are asserted.
-+	 * If the power-domain is on, then power down to ensure that when is
-+	 * it turned on the power-domain, clocks and resets are all in the
-+	 * expected state.
-+	 */
-+	if (off) {
-+		err = reset_control_assert(pg->reset);
-+		if (err) {
-+			pr_err("failed to assert resets: %d\n", err);
-+			goto remove_resets;
++	unsigned long start = (unsigned long) src;
++	unsigned long end = start + len;
++	unsigned long newlen = len;
++
+ 	mtsp(get_user_space(), SR_TEMP1);
+ 	mtsp(get_kernel_space(), SR_TEMP2);
+-	return pa_memcpy(dst, (void __force *)src, len);
++
++	/* Check region is user accessible */
++	if (start)
++	while (start < end) {
++		if (!prober_user(SR_TEMP1, start)) {
++			newlen = (start - (unsigned long) src);
++			break;
 +		}
-+	} else {
-+		err = tegra_powergate_power_down(pg);
-+		if (err) {
-+			dev_err(dev, "failed to turn off PM domain %s: %d\n",
-+				pg->genpd.name, err);
-+			goto remove_resets;
-+		}
++		start += PAGE_SIZE;
++		/* align to page boundry which may have different permission */
++		start = PAGE_ALIGN_DOWN(start);
 +	}
++	return len - newlen + pa_memcpy(dst, (void __force *)src, newlen);
+ }
+ EXPORT_SYMBOL(raw_copy_from_user);
  
-+	/*
-+	 * If PM_GENERIC_DOMAINS is not enabled, power-on
-+	 * the domain and skip the genpd registration.
-+	 */
-+	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
-+		WARN_ON(tegra_powergate_power_up(pg, true));
- 		goto remove_resets;
- 	}
- 
--	err = pm_genpd_init(&pg->genpd, NULL, off);
-+	err = pm_genpd_init(&pg->genpd, NULL, true);
- 	if (err < 0) {
- 		dev_err(dev, "failed to initialise PM domain %pOFn: %d\n", np,
- 		       err);
 
 
