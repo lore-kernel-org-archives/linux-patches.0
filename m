@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31F8749C;
-	Tue, 26 Aug 2025 11:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B5C749C;
+	Tue, 26 Aug 2025 11:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208846; cv=none; b=H0fjyG+OYUnShXjRzG6MHaTyjiWlweSBfkP666Ha65drILX+oBYL7NnSkfyrZqPbvbeeVUAtIh3dhantbZVW4DFx6ihUg8aiEfrFAlZ4yt+kELGPMS7VjUVrFefY+URzJtuUAiBPjipjaoYrR1o8ZOFxyhuPub9mz/0kpgk2AQM=
+	t=1756208848; cv=none; b=Rk0ZyinKrnKLCOPJGa9A+ZtwNssK132+W5l3gZGYO83S6txDeJFRUW5d9xnon42GEjXJdCY45eztZRdjvkv5GQ/tUtgSPq6kluThgl4FnyMB4lavmyZSrkQraIZlt0C0vPDfkSIXMowxSOaYoFQuKVkVuMoFkFNVWEa/RwRIwzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208846; c=relaxed/simple;
-	bh=RFMHr6fhGHK9ErDNtHSE1SggSZfCsk6nuyc8sjR/GCs=;
+	s=arc-20240116; t=1756208848; c=relaxed/simple;
+	bh=paf52OH2Daim0qSPq2P1rMvitksbgrYdiENoYU929yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0NQtlhelLfcOhPGWi7APYzLM7BzqMkNPuDLnlEktP5e4v5wHBEeCng8BzkqU/SIOsq5oEGkagZqnPWF9foZ1dieaRdwDWrBQHwk9yjKrOF7tOY0qhbBHq/7aRT1eNRNEckkGiObdQaqm8YfuQ1diCrgbCEOhPOc7XW7U/TEwd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M53xr4Zp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jVsszOjPeQhCZQf6wIv/sSQMnCWVYNJGzHb1LZiBqzwKjHIlJZgRhFf9X4r6gEuANAuPkZRVp85p+rXYHxl5yB8jn3zxt2vB4YKody40kNVcRe68SHIJwxFu2Nt4pVI00onNNeg8lp8uiqYsBq/bIq6GVx+3EIZQKCq/btuzh6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCziu2El; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M53xr4Zp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FBFC4CEF1;
-	Tue, 26 Aug 2025 11:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCziu2El"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E64C4CEF1;
+	Tue, 26 Aug 2025 11:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208845;
-	bh=RFMHr6fhGHK9ErDNtHSE1SggSZfCsk6nuyc8sjR/GCs=;
+	s=korg; t=1756208848;
+	bh=paf52OH2Daim0qSPq2P1rMvitksbgrYdiENoYU929yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M53xr4ZpASyq5qU4cfvIQCb5qWfWnU6nYjq11RKZsqrPA6wBpN7N7JA3lDXq9toTl
-	 4QOe/Eo/asOZgJNsjgx8IgyoNRDp0+2GkvkzPqtnTkaAW59zIGh50NPtCYHB9/JqJX
-	 xiWHYGJppQ1JWS73jYjOs9vmBsq7cgv2pQDbLa9g=
+	b=WCziu2ElJf51Jf2xCLzCB2a9raVPca5lCZSRWJ1W3HfdKFNLOSPt/zfqHvJIdMqUu
+	 2aI8oQ3QPs5W+Cskf228iM8bOrYTjOdPv5dk2KISb7V2lH3Cfcxj+VBpUi3dUu07j3
+	 SGliXBWSblKLOhyG/6qKsweZXtUmwXCOxQh8ZwRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Charlton Lin <charlton.lin@intel.com>,
+	Khaled Almahallawy <khaled.almahallawy@intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 267/322] RDMA/bnxt_re: Fix to do SRQ armena by default
-Date: Tue, 26 Aug 2025 13:11:22 +0200
-Message-ID: <20250826110922.524293522@linuxfoundation.org>
+Subject: [PATCH 6.12 241/322] drm/i915/icl+/tc: Convert AUX powered WARN to a debug message
+Date: Tue, 26 Aug 2025 13:10:56 +0200
+Message-ID: <20250826110921.869262713@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,44 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit 6296f9a5293ada28558f2867ac54c487e1e2b9f2 ]
+[ Upstream commit d7fa5754e83cd36c4327eb2d806064e598a72ff6 ]
 
-Whenever SRQ is created, make sure SRQ arm enable is always
-set. Driver is always ready to receive SRQ ASYNC event.
+The BIOS can leave the AUX power well enabled on an output, even if this
+isn't required (on platforms where the AUX power is only needed for an
+AUX access). This was observed at least on PTL. To avoid the WARN which
+would be triggered by this during the HW readout, convert the WARN to a
+debug message.
 
-Additional note -
-There is no need to do srq arm enable conditionally.
-See bnxt_qplib_armen_db in bnxt_qplib_create_cq().
-
-Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Link: https://patch.msgid.link/20250805101000.233310-2-kalesh-anakkur.purayil@broadcom.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Cc: stable@vger.kernel.org # v6.8+
+Reported-by: Charlton Lin <charlton.lin@intel.com>
+Tested-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250811080152.906216-6-imre.deak@intel.com
+(cherry picked from commit 6cb52cba474b2bec1a3018d3dbf75292059a29a1)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+[ display->drm API => i915->drm ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_tc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 7436ce551579..3170a3e2df24 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -704,8 +704,7 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
- 	srq->dbinfo.db = srq->dpi->dbr;
- 	srq->dbinfo.max_slot = 1;
- 	srq->dbinfo.priv_db = res->dpi_tbl.priv_db;
--	if (srq->threshold)
--		bnxt_qplib_armen_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ_ARMENA);
-+	bnxt_qplib_armen_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ_ARMENA);
- 	srq->arm_req = false;
+--- a/drivers/gpu/drm/i915/display/intel_tc.c
++++ b/drivers/gpu/drm/i915/display/intel_tc.c
+@@ -1416,7 +1416,8 @@ static void intel_tc_port_reset_mode(str
  
- 	return 0;
--- 
-2.50.1
-
+ 		aux_domain = intel_aux_power_domain(dig_port);
+ 		aux_powered = intel_display_power_is_enabled(i915, aux_domain);
+-		drm_WARN_ON(&i915->drm, aux_powered);
++		drm_dbg_kms(&i915->drm, "Port %s: AUX powered %d\n",
++			    tc->port_name, aux_powered);
+ 	}
+ 
+ 	tc_phy_disconnect(tc);
 
 
