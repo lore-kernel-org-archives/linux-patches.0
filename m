@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C211E3451AA;
-	Tue, 26 Aug 2025 11:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6407D3469EE;
+	Tue, 26 Aug 2025 11:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207877; cv=none; b=bY6FVgHdcz/Mtd7AWxdxt3rGFcuRUzDeO6VDzdS/a+hLReK7i5Z8srAZvf2CY8ijlAyVeVVOoL9kWt/KDGiBnm/xXah+8lzbh+jsszfaTEGvqLjcKUMunqtXpDQekNxh2hFs9/ha372IQFyer1H7AxdAswjM8hsQx+Jnx8D6t68=
+	t=1756207880; cv=none; b=XYPqOL49hHujKEWcaw5EswT9ItIJH2leSP9GaAvRXKy+cBbtWDfUmcxHjCapKmYS6vIdK7torYZfDGdFWs9s7u2rynAFp95gT1veuILTophLPtHnIBoXtD1CG/WejQhDzPpX3KIA8xGAhaTBdiqNCK+AJCG2DFJlgN4DtUmg3Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207877; c=relaxed/simple;
-	bh=4yQABro4W03LMSm6Zu57ODiyH2EqW0byNLdZ/eq5Ggo=;
+	s=arc-20240116; t=1756207880; c=relaxed/simple;
+	bh=FktMn8yBIRbOzavJpqvZgdkB0C52lW2XgNVjkHSYk5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEkG7pipJugAigmGGWRe1TjxxoJH5oivLmy34Dwi346lQZ0nNBIR2AZRadTN81Cl1NLPRf2oXihr36r4A98C5YYEdoD90+/JsSXA/flEMZZTC2+FVOn36UAH/rd3PF0vULc7x+nF1B280TqxPAL9JzODQ+hJXOVBM+a40KL8BpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMZdzwt8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t7YDZB/h7xiRsdkiK7QKG7mixoxltUZWojDYZDdfqLRFs0VI64QlDfPlBsqM/dhIKOD6UKUZeTvG/dZ6XLeMjVr7VJNaGJsVBPuGmuxyzk8CmbDckvgTQTto0RFHHfTSW+JLDFsXVDEhE6MAPukXzWwCSFc8Y68zXpJ7cDQM5kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwrHnlsR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMZdzwt8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52671C4CEF1;
-	Tue, 26 Aug 2025 11:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwrHnlsR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9137C4CEF1;
+	Tue, 26 Aug 2025 11:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207877;
-	bh=4yQABro4W03LMSm6Zu57ODiyH2EqW0byNLdZ/eq5Ggo=;
+	s=korg; t=1756207880;
+	bh=FktMn8yBIRbOzavJpqvZgdkB0C52lW2XgNVjkHSYk5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMZdzwt8HwpByRE8jwVWl/Um8pmWD6wQPnNLrKPBu5E0VaI4KaF6CSinvIaTK79cJ
-	 qkAOBQjpG4Xmltr34/gUr0+aRw04fIFRFrkO0fuYuji7fsiLSA3LLfJV7iX3cBCGGE
-	 72NAdPb14lwO8HQ0WL9BZ/s9BYhzrDsX2C+jeMSk=
+	b=rwrHnlsRzSk0wdGN9sJsRfwt6DuMNTE6ysXSV2wVEnC3876SFJqppjvt0gbM6vUrh
+	 S7j7IrWveLjmLOMRWzCduPABLpA8tP2/pNDETJ5+S6QqQN9MsRXhNAAd62u8a5rziG
+	 DwOgH8MYQ3IeNdl7SZ7LhDAMIRY7ezQq2B7dZknQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weitao Wang <WeitaoWang-oc@zhaoxin.com>,
+	Niklas Neronin <niklas.neronin@linux.intel.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.16 321/457] usb: xhci: Fix slot_id resource race conflict
-Date: Tue, 26 Aug 2025 13:10:05 +0200
-Message-ID: <20250826110945.285239972@linuxfoundation.org>
+Subject: [PATCH 6.16 322/457] usb: xhci: fix host not responding after suspend and resume
+Date: Tue, 26 Aug 2025 13:10:06 +0200
+Message-ID: <20250826110945.310016167@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,221 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-commit 2eb03376151bb8585caa23ed2673583107bb5193 upstream.
+commit ff9a09b3e09c7b794b56f2f5858f5ce42ba46cb3 upstream.
 
-xHC controller may immediately reuse a slot_id after it's disabled,
-giving it to a new enumerating device before the xhci driver freed
-all resources related to the disabled device.
+Partially revert commit e1db856bd288 ("usb: xhci: remove '0' write to
+write-1-to-clear register") because the patch cleared the Interrupt Pending
+bit during interrupt enabling and disabling. The Interrupt Pending bit
+should only be cleared when the driver has handled the interrupt.
 
-In such a scenario, device-A with slot_id equal to 1 is disconnecting
-while device-B is enumerating, device-B will fail to enumerate in the
-follow sequence.
+Ideally, all interrupts should be handled before disabling the interrupt;
+consequently, no interrupt should be pending when enabling the interrupt.
+For this reason, keep the debug message informing if an interrupt is still
+pending when an interrupt is disabled.
 
-1.[device-A] send disable slot command
-2.[device-B] send enable slot command
-3.[device-A] disable slot command completed and wakeup waiting thread
-4.[device-B] enable slot command completed with slot_id equal to 1 and
-	     wakeup waiting thread
-5.[device-B] driver checks that slot_id is still in use (by device-A) in
-	     xhci_alloc_virt_device, and fail to enumerate due to this
-	     conflict
-6.[device-A] xhci->devs[slot_id] set to NULL in xhci_free_virt_device
+Because the Interrupt Pending bit is write-1-to-clear, writing '0' to it
+ensures that the state does not change.
 
-To fix driver's slot_id resources conflict, clear xhci->devs[slot_id] and
-xhci->dcbba->dev_context_ptrs[slot_id] pointers in the interrupt context
-when disable slot command completes successfully. Simultaneously, adjust
-function xhci_free_virt_device to accurately handle device release.
-
-[minor smatch warning and commit message fix -Mathias]
-
-Cc: stable@vger.kernel.org
-Fixes: 7faac1953ed1 ("xhci: avoid race between disable slot command and host runtime suspend")
-Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+Link: https://lore.kernel.org/linux-usb/20250818231103.672ec7ed@foxbook
+Fixes: e1db856bd288 ("usb: xhci: remove '0' write to write-1-to-clear register")
+Closes: https://bbs.archlinux.org/viewtopic.php?id=307641
+cc: stable@vger.kernel.org # 6.16+
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250819125844.2042452-2-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20250819125844.2042452-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-hub.c  |    3 +--
- drivers/usb/host/xhci-mem.c  |   22 +++++++++++-----------
- drivers/usb/host/xhci-ring.c |    9 +++++++--
- drivers/usb/host/xhci.c      |   21 ++++++++++++++-------
- drivers/usb/host/xhci.h      |    3 ++-
- 5 files changed, 35 insertions(+), 23 deletions(-)
+ drivers/usb/host/xhci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/host/xhci-hub.c
-+++ b/drivers/usb/host/xhci-hub.c
-@@ -704,8 +704,7 @@ static int xhci_enter_test_mode(struct x
- 		if (!xhci->devs[i])
- 			continue;
- 
--		retval = xhci_disable_slot(xhci, i);
--		xhci_free_virt_device(xhci, i);
-+		retval = xhci_disable_and_free_slot(xhci, i);
- 		if (retval)
- 			xhci_err(xhci, "Failed to disable slot %d, %d. Enter test mode anyway\n",
- 				 i, retval);
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -865,21 +865,20 @@ free_tts:
-  * will be manipulated by the configure endpoint, allocate device, or update
-  * hub functions while this function is removing the TT entries from the list.
-  */
--void xhci_free_virt_device(struct xhci_hcd *xhci, int slot_id)
-+void xhci_free_virt_device(struct xhci_hcd *xhci, struct xhci_virt_device *dev,
-+		int slot_id)
- {
--	struct xhci_virt_device *dev;
- 	int i;
- 	int old_active_eps = 0;
- 
- 	/* Slot ID 0 is reserved */
--	if (slot_id == 0 || !xhci->devs[slot_id])
-+	if (slot_id == 0 || !dev)
- 		return;
- 
--	dev = xhci->devs[slot_id];
--
--	xhci->dcbaa->dev_context_ptrs[slot_id] = 0;
--	if (!dev)
--		return;
-+	/* If device ctx array still points to _this_ device, clear it */
-+	if (dev->out_ctx &&
-+	    xhci->dcbaa->dev_context_ptrs[slot_id] == cpu_to_le64(dev->out_ctx->dma))
-+		xhci->dcbaa->dev_context_ptrs[slot_id] = 0;
- 
- 	trace_xhci_free_virt_device(dev);
- 
-@@ -920,8 +919,9 @@ void xhci_free_virt_device(struct xhci_h
- 		dev->udev->slot_id = 0;
- 	if (dev->rhub_port && dev->rhub_port->slot_id == slot_id)
- 		dev->rhub_port->slot_id = 0;
--	kfree(xhci->devs[slot_id]);
--	xhci->devs[slot_id] = NULL;
-+	if (xhci->devs[slot_id] == dev)
-+		xhci->devs[slot_id] = NULL;
-+	kfree(dev);
- }
- 
- /*
-@@ -962,7 +962,7 @@ static void xhci_free_virt_devices_depth
- out:
- 	/* we are now at a leaf device */
- 	xhci_debugfs_remove_slot(xhci, slot_id);
--	xhci_free_virt_device(xhci, slot_id);
-+	xhci_free_virt_device(xhci, vdev, slot_id);
- }
- 
- int xhci_alloc_virt_device(struct xhci_hcd *xhci, int slot_id,
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1592,7 +1592,8 @@ static void xhci_handle_cmd_enable_slot(
- 		command->slot_id = 0;
- }
- 
--static void xhci_handle_cmd_disable_slot(struct xhci_hcd *xhci, int slot_id)
-+static void xhci_handle_cmd_disable_slot(struct xhci_hcd *xhci, int slot_id,
-+					u32 cmd_comp_code)
- {
- 	struct xhci_virt_device *virt_dev;
- 	struct xhci_slot_ctx *slot_ctx;
-@@ -1607,6 +1608,10 @@ static void xhci_handle_cmd_disable_slot
- 	if (xhci->quirks & XHCI_EP_LIMIT_QUIRK)
- 		/* Delete default control endpoint resources */
- 		xhci_free_device_endpoint_resources(xhci, virt_dev, true);
-+	if (cmd_comp_code == COMP_SUCCESS) {
-+		xhci->dcbaa->dev_context_ptrs[slot_id] = 0;
-+		xhci->devs[slot_id] = NULL;
-+	}
- }
- 
- static void xhci_handle_cmd_config_ep(struct xhci_hcd *xhci, int slot_id)
-@@ -1856,7 +1861,7 @@ static void handle_cmd_completion(struct
- 		xhci_handle_cmd_enable_slot(slot_id, cmd, cmd_comp_code);
- 		break;
- 	case TRB_DISABLE_SLOT:
--		xhci_handle_cmd_disable_slot(xhci, slot_id);
-+		xhci_handle_cmd_disable_slot(xhci, slot_id, cmd_comp_code);
- 		break;
- 	case TRB_CONFIG_EP:
- 		if (!cmd->completion)
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 0e03691f03bf..742c23826e17 100644
 --- a/drivers/usb/host/xhci.c
 +++ b/drivers/usb/host/xhci.c
-@@ -3932,8 +3932,7 @@ static int xhci_discover_or_reset_device
- 		 * Obtaining a new device slot to inform the xHCI host that
- 		 * the USB device has been reset.
- 		 */
--		ret = xhci_disable_slot(xhci, udev->slot_id);
--		xhci_free_virt_device(xhci, udev->slot_id);
-+		ret = xhci_disable_and_free_slot(xhci, udev->slot_id);
- 		if (!ret) {
- 			ret = xhci_alloc_dev(hcd, udev);
- 			if (ret == 1)
-@@ -4090,7 +4089,7 @@ static void xhci_free_dev(struct usb_hcd
- 	xhci_disable_slot(xhci, udev->slot_id);
+@@ -309,6 +309,7 @@ int xhci_enable_interrupter(struct xhci_interrupter *ir)
+ 		return -EINVAL;
  
- 	spin_lock_irqsave(&xhci->lock, flags);
--	xhci_free_virt_device(xhci, udev->slot_id);
-+	xhci_free_virt_device(xhci, virt_dev, udev->slot_id);
- 	spin_unlock_irqrestore(&xhci->lock, flags);
+ 	iman = readl(&ir->ir_set->iman);
++	iman &= ~IMAN_IP;
+ 	iman |= IMAN_IE;
+ 	writel(iman, &ir->ir_set->iman);
  
- }
-@@ -4139,6 +4138,16 @@ int xhci_disable_slot(struct xhci_hcd *x
- 	return 0;
- }
+@@ -325,6 +326,7 @@ int xhci_disable_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir)
+ 		return -EINVAL;
  
-+int xhci_disable_and_free_slot(struct xhci_hcd *xhci, u32 slot_id)
-+{
-+	struct xhci_virt_device *vdev = xhci->devs[slot_id];
-+	int ret;
-+
-+	ret = xhci_disable_slot(xhci, slot_id);
-+	xhci_free_virt_device(xhci, vdev, slot_id);
-+	return ret;
-+}
-+
- /*
-  * Checks if we have enough host controller resources for the default control
-  * endpoint.
-@@ -4245,8 +4254,7 @@ int xhci_alloc_dev(struct usb_hcd *hcd,
- 	return 1;
+ 	iman = readl(&ir->ir_set->iman);
++	iman &= ~IMAN_IP;
+ 	iman &= ~IMAN_IE;
+ 	writel(iman, &ir->ir_set->iman);
  
- disable_slot:
--	xhci_disable_slot(xhci, udev->slot_id);
--	xhci_free_virt_device(xhci, udev->slot_id);
-+	xhci_disable_and_free_slot(xhci, udev->slot_id);
- 
- 	return 0;
- }
-@@ -4382,8 +4390,7 @@ static int xhci_setup_device(struct usb_
- 		dev_warn(&udev->dev, "Device not responding to setup %s.\n", act);
- 
- 		mutex_unlock(&xhci->mutex);
--		ret = xhci_disable_slot(xhci, udev->slot_id);
--		xhci_free_virt_device(xhci, udev->slot_id);
-+		ret = xhci_disable_and_free_slot(xhci, udev->slot_id);
- 		if (!ret) {
- 			if (xhci_alloc_dev(hcd, udev) == 1)
- 				xhci_setup_addressable_virt_dev(xhci, udev);
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1791,7 +1791,7 @@ void xhci_dbg_trace(struct xhci_hcd *xhc
- /* xHCI memory management */
- void xhci_mem_cleanup(struct xhci_hcd *xhci);
- int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags);
--void xhci_free_virt_device(struct xhci_hcd *xhci, int slot_id);
-+void xhci_free_virt_device(struct xhci_hcd *xhci, struct xhci_virt_device *dev, int slot_id);
- int xhci_alloc_virt_device(struct xhci_hcd *xhci, int slot_id, struct usb_device *udev, gfp_t flags);
- int xhci_setup_addressable_virt_dev(struct xhci_hcd *xhci, struct usb_device *udev);
- void xhci_copy_ep0_dequeue_into_input_ctx(struct xhci_hcd *xhci,
-@@ -1888,6 +1888,7 @@ void xhci_reset_bandwidth(struct usb_hcd
- int xhci_update_hub_device(struct usb_hcd *hcd, struct usb_device *hdev,
- 			   struct usb_tt *tt, gfp_t mem_flags);
- int xhci_disable_slot(struct xhci_hcd *xhci, u32 slot_id);
-+int xhci_disable_and_free_slot(struct xhci_hcd *xhci, u32 slot_id);
- int xhci_ext_cap_init(struct xhci_hcd *xhci);
- 
- int xhci_suspend(struct xhci_hcd *xhci, bool do_wakeup);
+-- 
+2.50.1
+
 
 
