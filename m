@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADD7321459;
-	Tue, 26 Aug 2025 11:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DE12BEFF0;
+	Tue, 26 Aug 2025 11:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207211; cv=none; b=fmXFiV7H4ouuz3kmTehLEIUbbm5o3zz7r6v+t/REn7PawIxkesbZhs47GbtnWMx5EwRgtENRVD4rENuEpslWYSGPHzv2bsC2eBoZUw+9rlbU8bai8FDjj+XCKdyC/ddlvzTXDcLPlvgJiI49sB1zI6pZeRNV69JuctmCWD08Dos=
+	t=1756207214; cv=none; b=WBAI2x24c0JQYwqER7JutrI7USQmYr4Q8iYg/4Lk1VQtSmZH2tOLeOXqHz8levrAEGdyS3fWrGiRJgpYBecsdv1Zhg5uKoYp9Wz+zXHH7rYt9ezaDRZiTi7Dji8mkuEzPum9z16UwtRrVD6NElsObFtyVBFFOL0zRQ38MWWUxRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207211; c=relaxed/simple;
-	bh=H0VKSfbs/N2PQdPsVE0OmRMob9ft5ggO8PUx+wnoiVY=;
+	s=arc-20240116; t=1756207214; c=relaxed/simple;
+	bh=mSw3gSa1AzCnPnC3h/qhZvjbN+rLJ8a1MkX/9GIRTwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gw4sPiuf1an8HW46b5qJApct0RMQaqFE7X5Vqv9eEerBtpjMPXWk098PDFn3OiDrEZBTOaphCtBv+b22UdnHoqVdX7OuhoJQtrjsMR8Yslu7l6e5MhOBZC8Cg1h5pn4xTBgqsP0qenDPhEfACMb9G89uVZUmR5LNmIMPeiCgcJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySa5ycc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQWODqAQEhFYPPSnxK8z45qMSEoqcf68FD5KwhMz14ghZirz5M030iyWiOYmNf4mvN+Tdj8i5VO2kgXl16g9t7E8/p91oTWsgHL2r5DcboPX8W9n5LFXHsMFemyuXqGI1u7yD2ghp6m23VGJMi30UN6B9lbxHNzXRoR7m0W5SX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkpWnqGJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySa5ycc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0503AC4CEF1;
-	Tue, 26 Aug 2025 11:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkpWnqGJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0ECC4CEF1;
+	Tue, 26 Aug 2025 11:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207211;
-	bh=H0VKSfbs/N2PQdPsVE0OmRMob9ft5ggO8PUx+wnoiVY=;
+	s=korg; t=1756207214;
+	bh=mSw3gSa1AzCnPnC3h/qhZvjbN+rLJ8a1MkX/9GIRTwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySa5ycc319+D9GDNPknAj17tjQqlWZ+qCGaI5CpfceBATqesSat/KPcK3FLIVu65Z
-	 rVbWRCI2FdW0M5qXdf1/+RPRCEkvaaJ5ChnilxO6ujD9Tyq9EUHnZ841+bURdReWg1
-	 bGXoKuwag051GeynrkLxqCCno+pQZT2Cn858qpi0=
+	b=qkpWnqGJnFdxw41qsLlnF1EHBTgtKqpq0f9S0YlkRwyLwnb/W5nGH3zmLjtP/LKtn
+	 qUPYskzT+eOpQEn0V6hpAnCYBAoSe4GX94PKmhN0lls9uRv6tWqy90WbPiWvlr/VAP
+	 mec5yZ6U74zOfh1AfjgnYZ3AX5ABOnELypC8xICA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.16 094/457] mtd: rawnand: renesas: Add missing check after DMA map
-Date: Tue, 26 Aug 2025 13:06:18 +0200
-Message-ID: <20250826110939.701271599@linuxfoundation.org>
+	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.16 095/457] mfd: mt6397: Do not use generic name for keypad sub-devices
+Date: Tue, 26 Aug 2025 13:06:19 +0200
+Message-ID: <20250826110939.725782152@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,42 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 79e441ee47949376e3bc20f085cf017b70523d0f upstream.
+commit 92ab1e41569416c639643cd75eea2379190a65f2 upstream.
 
-The DMA map functions can fail and should be tested for errors.
+Do not use "mtk-pmic-keys" when creating sub-device for the keypad to
+make sure the keypad driver will only bind to the sub-device if it has
+support for the variant/has matching compatible.
 
-Fixes: d8701fe890ec ("mtd: rawnand: renesas: Add new NAND controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 6e31bb8d3a63 ("mfd: mt6397: Add initial support for MT6328")
+Fixes: de58cee8c6b8 ("mfd: mt6397-core: Add MT6357 PMIC support")
+Fixes: 4a901e305011 ("mfd: mt6397-core: Add resources for PMIC keys for MT6359")
+Reported-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Tested-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com> # on
+Link: https://lore.kernel.org/r/r4k3pgd3ew3ypne7ernxuzwgniiyvzosbce4cfajbcu7equblt@yato35tjb3lw
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/renesas-nand-controller.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mfd/mt6397-core.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/mtd/nand/raw/renesas-nand-controller.c
-+++ b/drivers/mtd/nand/raw/renesas-nand-controller.c
-@@ -426,6 +426,9 @@ static int rnandc_read_page_hw_ecc(struc
- 	/* Configure DMA */
- 	dma_addr = dma_map_single(rnandc->dev, rnandc->buf, mtd->writesize,
- 				  DMA_FROM_DEVICE);
-+	if (dma_mapping_error(rnandc->dev, dma_addr))
-+		return -ENOMEM;
-+
- 	writel(dma_addr, rnandc->regs + DMA_ADDR_LOW_REG);
- 	writel(mtd->writesize, rnandc->regs + DMA_CNT_REG);
- 	writel(DMA_TLVL_MAX, rnandc->regs + DMA_TLVL_REG);
-@@ -606,6 +609,9 @@ static int rnandc_write_page_hw_ecc(stru
- 	/* Configure DMA */
- 	dma_addr = dma_map_single(rnandc->dev, (void *)rnandc->buf, mtd->writesize,
- 				  DMA_TO_DEVICE);
-+	if (dma_mapping_error(rnandc->dev, dma_addr))
-+		return -ENOMEM;
-+
- 	writel(dma_addr, rnandc->regs + DMA_ADDR_LOW_REG);
- 	writel(mtd->writesize, rnandc->regs + DMA_CNT_REG);
- 	writel(DMA_TLVL_MAX, rnandc->regs + DMA_TLVL_REG);
+--- a/drivers/mfd/mt6397-core.c
++++ b/drivers/mfd/mt6397-core.c
+@@ -136,7 +136,7 @@ static const struct mfd_cell mt6323_devs
+ 		.name = "mt6323-led",
+ 		.of_compatible = "mediatek,mt6323-led"
+ 	}, {
+-		.name = "mtk-pmic-keys",
++		.name = "mt6323-keys",
+ 		.num_resources = ARRAY_SIZE(mt6323_keys_resources),
+ 		.resources = mt6323_keys_resources,
+ 		.of_compatible = "mediatek,mt6323-keys"
+@@ -153,7 +153,7 @@ static const struct mfd_cell mt6328_devs
+ 		.name = "mt6328-regulator",
+ 		.of_compatible = "mediatek,mt6328-regulator"
+ 	}, {
+-		.name = "mtk-pmic-keys",
++		.name = "mt6328-keys",
+ 		.num_resources = ARRAY_SIZE(mt6328_keys_resources),
+ 		.resources = mt6328_keys_resources,
+ 		.of_compatible = "mediatek,mt6328-keys"
+@@ -175,7 +175,7 @@ static const struct mfd_cell mt6357_devs
+ 		.name = "mt6357-sound",
+ 		.of_compatible = "mediatek,mt6357-sound"
+ 	}, {
+-		.name = "mtk-pmic-keys",
++		.name = "mt6357-keys",
+ 		.num_resources = ARRAY_SIZE(mt6357_keys_resources),
+ 		.resources = mt6357_keys_resources,
+ 		.of_compatible = "mediatek,mt6357-keys"
+@@ -196,7 +196,7 @@ static const struct mfd_cell mt6331_mt63
+ 		.name = "mt6332-regulator",
+ 		.of_compatible = "mediatek,mt6332-regulator"
+ 	}, {
+-		.name = "mtk-pmic-keys",
++		.name = "mt6331-keys",
+ 		.num_resources = ARRAY_SIZE(mt6331_keys_resources),
+ 		.resources = mt6331_keys_resources,
+ 		.of_compatible = "mediatek,mt6331-keys"
+@@ -240,7 +240,7 @@ static const struct mfd_cell mt6359_devs
+ 	},
+ 	{ .name = "mt6359-sound", },
+ 	{
+-		.name = "mtk-pmic-keys",
++		.name = "mt6359-keys",
+ 		.num_resources = ARRAY_SIZE(mt6359_keys_resources),
+ 		.resources = mt6359_keys_resources,
+ 		.of_compatible = "mediatek,mt6359-keys"
+@@ -272,7 +272,7 @@ static const struct mfd_cell mt6397_devs
+ 		.name = "mt6397-pinctrl",
+ 		.of_compatible = "mediatek,mt6397-pinctrl",
+ 	}, {
+-		.name = "mtk-pmic-keys",
++		.name = "mt6397-keys",
+ 		.num_resources = ARRAY_SIZE(mt6397_keys_resources),
+ 		.resources = mt6397_keys_resources,
+ 		.of_compatible = "mediatek,mt6397-keys"
 
 
