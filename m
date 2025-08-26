@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8116352FF2;
-	Tue, 26 Aug 2025 14:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854D935CEA5;
+	Tue, 26 Aug 2025 14:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219053; cv=none; b=WRGv8sKCqPVhe/F2MtNUyxzMgUWomoQwCuc+uvdQH7KuQ66ZcRGaBo0vJ7ByGdtuMMnI6dWl0Mls42TiDITQY8rXVROvqFjgRgCuiWkr+B5xxRbFrI85QLSVeDVkWWgYBQEdBdz0/GjeHUKsD3zy7i9u5XL8AZuyrkWNV8/petk=
+	t=1756219055; cv=none; b=CrstlvaxfyGgWGCQTCVwojKvvCl2F67KVDjT/DiY8Aa8Yd70iMjqfxFKH5fKMEPvOewXDy5+8UAD+ysPGXC2m1aRdeR+kjqiYI+69nOZ+pqg1PvH5ZOm5MU8Scs98vCnRCaz1JEtAoSWCugdayKnae96DozPQz0ggp6w448ySHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219053; c=relaxed/simple;
-	bh=QJKpUPyt97u/gLOv76JAdgP9BELmb22NBJRsMaPGNcw=;
+	s=arc-20240116; t=1756219055; c=relaxed/simple;
+	bh=Q2pYgo+qZp9khSk9yPlTksS4kza6pDaEo7OhmQJebj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qChB+EuIhVoRpu6gQziqOxNjl+yARlaiVCExUYhmtc8oCEMOF68PDWv6TF+pcVqkXpvBt+wnjM7cvWY8j5+U1d+FGDiNP0Umng4gRGlM+KE8GDjlDocEXeJSP3lbiXeAGApUg5L9Im+Bo3VlkDg2icR/RWLZ23lWLiGY7RNUpjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P82hU8Ht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XgJqhaZ0a5Du49yiV5UzdfLSadVXxK/8VMCIhkeHx1NYKK2Itidzm7VCKF6vC4lQcSBX/CYSKUUOMB3eFTmKsCcTuvT1/DutqfMvrlsNySjNRsSV/WP0DUTDmAxuERguR2FLkzwceD/c6oHI1uQM5clXDrBE9UQX1sn49hbkhs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Db4OtjY+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P82hU8Ht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769EAC4CEF1;
-	Tue, 26 Aug 2025 14:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Db4OtjY+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1698BC4CEF1;
+	Tue, 26 Aug 2025 14:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219052;
-	bh=QJKpUPyt97u/gLOv76JAdgP9BELmb22NBJRsMaPGNcw=;
+	s=korg; t=1756219055;
+	bh=Q2pYgo+qZp9khSk9yPlTksS4kza6pDaEo7OhmQJebj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P82hU8Ht0QfFZf19/YRxrBAgLn4EfHLMXwgjdUGaB7dagjuaaGym4+KBEKcfGVnWr
-	 4wdgfA7EkGbYv5yHKJORguFm64WpVHFO0U8aCfE1E3wLBh/ld73VFbNUptYDdnXxPd
-	 ZLUmbhLWag5YZhrCl6xDMmRfGiTWYCWTb3igX8jA=
+	b=Db4OtjY+f//GYggI/t7RiwutHCcqprlqfewZtgb92tQ+7Hfx1nHHW+GqUpJAlhgNn
+	 gNAR+Il9WQYOxWITyqHhlD8Ous1ab8ExX45dvYGAsOfIBasJpIvqmXwHGmAwviGwJg
+	 Qafusu1mZqH/JRLL5lc6aSfFxjmX3v5jAV6fq7CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 235/403] fs/orangefs: use snprintf() instead of sprintf()
-Date: Tue, 26 Aug 2025 13:09:21 +0200
-Message-ID: <20250826110913.324394362@linuxfoundation.org>
+Subject: [PATCH 5.4 218/403] (powerpc/512) Fix possible `dma_unmap_single()` on uninitialized pointer
+Date: Tue, 26 Aug 2025 13:09:04 +0200
+Message-ID: <20250826110912.860164524@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,45 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit cdfa1304657d6f23be8fd2bb0516380a3c89034e ]
+[ Upstream commit 760b9b4f6de9a33ca56a05f950cabe82138d25bd ]
 
-sprintf() is discouraged for use with bounded destination buffers
-as it does not prevent buffer overflows when the formatted output
-exceeds the destination buffer size. snprintf() is a safer
-alternative as it limits the number of bytes written and ensures
-NUL-termination.
+If the device configuration fails (if `dma_dev->device_config()`),
+`sg_dma_address(&sg)` is not initialized and the jump to `err_dma_prep`
+leads to calling `dma_unmap_single()` on `sg_dma_address(&sg)`.
 
-Replace sprintf() with snprintf() for copying the debug string
-into a temporary buffer, using ORANGEFS_MAX_DEBUG_STRING_LEN as
-the maximum size to ensure safe formatting and prevent memory
-corruption in edge cases.
-
-EDIT: After this patch sat on linux-next for a few days, Dan
-Carpenter saw it and suggested that I use scnprintf instead of
-snprintf. I made the change and retested.
-
-Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250610142918.169540-2-fourier.thomas@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/512x/mpc512x_lpbfifo.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index b57140ebfad0..cd4bfd92ebd6 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -354,7 +354,7 @@ static ssize_t orangefs_debug_read(struct file *file,
- 		goto out;
+diff --git a/arch/powerpc/platforms/512x/mpc512x_lpbfifo.c b/arch/powerpc/platforms/512x/mpc512x_lpbfifo.c
+index 13631f35cd14..12fb94968f3c 100644
+--- a/arch/powerpc/platforms/512x/mpc512x_lpbfifo.c
++++ b/arch/powerpc/platforms/512x/mpc512x_lpbfifo.c
+@@ -240,10 +240,8 @@ static int mpc512x_lpbfifo_kick(void)
+ 	dma_conf.src_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
  
- 	mutex_lock(&orangefs_debug_lock);
--	sprintf_ret = sprintf(buf, "%s", (char *)file->private_data);
-+	sprintf_ret = scnprintf(buf, ORANGEFS_MAX_DEBUG_STRING_LEN, "%s", (char *)file->private_data);
- 	mutex_unlock(&orangefs_debug_lock);
+ 	/* Make DMA channel work with LPB FIFO data register */
+-	if (dma_dev->device_config(lpbfifo.chan, &dma_conf)) {
+-		ret = -EINVAL;
+-		goto err_dma_prep;
+-	}
++	if (dma_dev->device_config(lpbfifo.chan, &dma_conf))
++		return -EINVAL;
  
- 	read_ret = simple_read_from_buffer(ubuf, count, ppos, buf, sprintf_ret);
+ 	sg_init_table(&sg, 1);
+ 
 -- 
 2.39.5
 
