@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E514018DF9D;
-	Tue, 26 Aug 2025 11:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C4618DF9D;
+	Tue, 26 Aug 2025 11:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208129; cv=none; b=AchDn36fTf3FKp8ZX2BegukCiDWCoi9Oq+Qp1zFwKo9pUIpjMYE8UVl2O8zIPpRvlFibhObVMOZwhhkcR2Gaxk0xPldMWJgIcPgkArXFaZl4UdOckW9siBwmjUGMpvPZC60iL2D1lhHciob4tIcmagstGGMoKHvv49wAEYQcobs=
+	t=1756208131; cv=none; b=bJFxwNsfk/OsKHPt79bmbJbkC9TXRFG1v7z4DVS54ZKXsmYi44mbxXpkXqNI7LGRpS6LspK3zRhmQ/u3L51f5PA+khEbQenoE+RGMtUZ2Wnw8wbtdKaPIC5XiHnHXHJ+dKiAPsL3AEUS9DmH+02ktTE382RpqM0JFmhYkTMJ7W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208129; c=relaxed/simple;
-	bh=nCKCqbQi7CRA5+zGANzmbc+UoQf8zY3z700bL0ec8us=;
+	s=arc-20240116; t=1756208131; c=relaxed/simple;
+	bh=POTNIC4sTAFeMYYWm8vHzvCynT4jzix+yRoJ9x4IuiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+U4a8EbRz8ur65+jgu9eYhHaWFuQa9Yyj/GrWfLzUnL3ohVggoRStHVb5p7GQ9CmZLFlRgnNJnFeevDck1hI4bmLG6NwtxPChi/w0qa268frjPsALcfjvrcZQKf7wui3OP1uXvHm1zMS06Hd1D0eCzTQefwQtntLYdW07x/S8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rw8q5CX0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6HSUFvNj30EZ6Si/m9D4kZu+Rj2FXhWTlQXilqwal4SU6k4TYVN0GOVM/s/145p1FJNvmxjvSZSYN8E+rSF1uCbD7LvGPAiTqKfnnbO7J4Y+pGE4baDvXM5hLyO7FmgnsTCLyly1+t8TZ17pg5rLFwOb26t1Po5gVkNJOWAoIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bw7aakSN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rw8q5CX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75691C116B1;
-	Tue, 26 Aug 2025 11:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bw7aakSN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A6EC4CEF1;
+	Tue, 26 Aug 2025 11:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208128;
-	bh=nCKCqbQi7CRA5+zGANzmbc+UoQf8zY3z700bL0ec8us=;
+	s=korg; t=1756208131;
+	bh=POTNIC4sTAFeMYYWm8vHzvCynT4jzix+yRoJ9x4IuiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rw8q5CX0cNqdsjeTNbXvmZI9KTmC8xyXHclcI2KOuKXRSwF5+2WotK/ZbT7+xjAnJ
-	 iDyBhk16dXBQZTfShVIyc6L+56MfqKeBgb34t25JeT1URVMfy5KwBWDDpzFzd1Ud5N
-	 dJDGFm0HusR5wLMsewRFy9MyngGilfWbrLiNdUeA=
+	b=Bw7aakSNXWOLYnCGIPZaGnRp6tM3WkR6vaYckteANYIrDVUjoVrCSy4ZaBFs6gKS7
+	 mme6s3cHI3SlGUOAJoXX1pzIvxZ77LYbVpG5FR3lvghxaSTSeRXGf6Hnpz8WPMlX5R
+	 CHADQxLfhyge8qc0gzI7eDiboEVQhbj4kwICehKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Vesker <valex@nvidia.com>,
+	Vlad Dogaru <vdogaru@nvidia.com>,
 	Yevgeny Kliteynik <kliteyn@nvidia.com>,
 	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 418/457] net/mlx5: HWS, Fix table creation UID
-Date: Tue, 26 Aug 2025 13:11:42 +0200
-Message-ID: <20250826110947.623737375@linuxfoundation.org>
+Subject: [PATCH 6.16 419/457] net/mlx5: CT: Use the correct counter offset
+Date: Tue, 26 Aug 2025 13:11:43 +0200
+Message-ID: <20250826110947.649189413@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,181 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Vesker <valex@nvidia.com>
+From: Vlad Dogaru <vdogaru@nvidia.com>
 
-[ Upstream commit 8a51507320ebddaab32610199774f69cd7d53e78 ]
+[ Upstream commit d2d6f950cb43be6845a41cac5956cb2a10e657e5 ]
 
-During table creation, caller passes a UID using ft_attr. The UID
-value was ignored, which leads to problems when the caller sets the
-UID to a non-zero value, such as SHARED_RESOURCE_UID (0xffff) - the
-internal FT objects will be created with UID=0.
+Specifying the counter action is not enough, as it is used by multiple
+counters that were allocated in a bulk. By omitting the offset, rules
+will be associated with a different counter from the same bulk.
+Subsequently, the CT subsystem checks the correct counter, assumes that
+no traffic has triggered the rule, and ages out the rule. The end result
+is intermittent offloading of long lived connections, as rules are aged
+out then promptly re-added.
 
-Fixes: 0869701cba3d ("net/mlx5: HWS, added FW commands handling")
-Signed-off-by: Alex Vesker <valex@nvidia.com>
+Fix this by specifying the correct offset along with the counter rule.
+
+Fixes: 34eea5b12a10 ("net/mlx5e: CT: Add initial support for Hardware Steering")
+Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
 Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
 Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250817202323.308604-7-mbloch@nvidia.com
+Link: https://patch.msgid.link/20250817202323.308604-8-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/steering/hws/cmd.c  |  1 +
- .../ethernet/mellanox/mlx5/core/steering/hws/cmd.h  |  1 +
- .../mellanox/mlx5/core/steering/hws/fs_hws.c        |  1 +
- .../mellanox/mlx5/core/steering/hws/matcher.c       |  5 ++++-
- .../mellanox/mlx5/core/steering/hws/mlx5hws.h       |  1 +
- .../mellanox/mlx5/core/steering/hws/table.c         | 13 ++++++++++---
- .../mellanox/mlx5/core/steering/hws/table.h         |  3 ++-
- 7 files changed, 20 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc/ct_fs_hmfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.c
-index 9c83753e4592..0bdcab2e5cf3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.c
-@@ -55,6 +55,7 @@ int mlx5hws_cmd_flow_table_create(struct mlx5_core_dev *mdev,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/ct_fs_hmfs.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/ct_fs_hmfs.c
+index a4263137fef5..01d522b02947 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/ct_fs_hmfs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/ct_fs_hmfs.c
+@@ -173,6 +173,8 @@ static void mlx5_ct_fs_hmfs_fill_rule_actions(struct mlx5_ct_fs_hmfs *fs_hmfs,
  
- 	MLX5_SET(create_flow_table_in, in, opcode, MLX5_CMD_OP_CREATE_FLOW_TABLE);
- 	MLX5_SET(create_flow_table_in, in, table_type, ft_attr->type);
-+	MLX5_SET(create_flow_table_in, in, uid, ft_attr->uid);
- 
- 	ft_ctx = MLX5_ADDR_OF(create_flow_table_in, in, flow_table_context);
- 	MLX5_SET(flow_table_context, ft_ctx, level, ft_attr->level);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.h
-index fa6bff210266..122ccc671628 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.h
-@@ -36,6 +36,7 @@ struct mlx5hws_cmd_set_fte_attr {
- struct mlx5hws_cmd_ft_create_attr {
- 	u8 type;
- 	u8 level;
-+	u16 uid;
- 	bool rtc_valid;
- 	bool decap_en;
- 	bool reformat_en;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-index bf4643d0ce17..47e3947e7b51 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-@@ -267,6 +267,7 @@ static int mlx5_cmd_hws_create_flow_table(struct mlx5_flow_root_namespace *ns,
- 
- 	tbl_attr.type = MLX5HWS_TABLE_TYPE_FDB;
- 	tbl_attr.level = ft_attr->level;
-+	tbl_attr.uid = ft_attr->uid;
- 	tbl = mlx5hws_table_create(ctx, &tbl_attr);
- 	if (!tbl) {
- 		mlx5_core_err(ns->dev, "Failed creating hws flow_table\n");
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
-index ce28ee1c0e41..6000f2c641e0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
-@@ -85,6 +85,7 @@ static int hws_matcher_create_end_ft_isolated(struct mlx5hws_matcher *matcher)
- 
- 	ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev,
- 					      tbl,
-+					      0,
- 					      &matcher->end_ft_id);
- 	if (ret) {
- 		mlx5hws_err(tbl->ctx, "Isolated matcher: failed to create end flow table\n");
-@@ -112,7 +113,9 @@ static int hws_matcher_create_end_ft(struct mlx5hws_matcher *matcher)
- 	if (mlx5hws_matcher_is_isolated(matcher))
- 		ret = hws_matcher_create_end_ft_isolated(matcher);
- 	else
--		ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev, tbl,
-+		ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev,
-+						      tbl,
-+						      0,
- 						      &matcher->end_ft_id);
- 
- 	if (ret) {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
-index d8ac6c196211..a2fe2f9e832d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
-@@ -75,6 +75,7 @@ struct mlx5hws_context_attr {
- struct mlx5hws_table_attr {
- 	enum mlx5hws_table_type type;
- 	u32 level;
-+	u16 uid;
- };
- 
- enum mlx5hws_matcher_flow_src {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
-index 568f691733f3..6113383ae47b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
-@@ -9,6 +9,7 @@ u32 mlx5hws_table_get_id(struct mlx5hws_table *tbl)
- }
- 
- static void hws_table_init_next_ft_attr(struct mlx5hws_table *tbl,
-+					u16 uid,
- 					struct mlx5hws_cmd_ft_create_attr *ft_attr)
- {
- 	ft_attr->type = tbl->fw_ft_type;
-@@ -16,7 +17,9 @@ static void hws_table_init_next_ft_attr(struct mlx5hws_table *tbl,
- 		ft_attr->level = tbl->ctx->caps->fdb_ft.max_level - 1;
- 	else
- 		ft_attr->level = tbl->ctx->caps->nic_ft.max_level - 1;
-+
- 	ft_attr->rtc_valid = true;
-+	ft_attr->uid = uid;
- }
- 
- static void hws_table_set_cap_attr(struct mlx5hws_table *tbl,
-@@ -119,12 +122,12 @@ static int hws_table_connect_to_default_miss_tbl(struct mlx5hws_table *tbl, u32
- 
- int mlx5hws_table_create_default_ft(struct mlx5_core_dev *mdev,
- 				    struct mlx5hws_table *tbl,
--				    u32 *ft_id)
-+				    u16 uid, u32 *ft_id)
- {
- 	struct mlx5hws_cmd_ft_create_attr ft_attr = {0};
- 	int ret;
- 
--	hws_table_init_next_ft_attr(tbl, &ft_attr);
-+	hws_table_init_next_ft_attr(tbl, uid, &ft_attr);
- 	hws_table_set_cap_attr(tbl, &ft_attr);
- 
- 	ret = mlx5hws_cmd_flow_table_create(mdev, &ft_attr, ft_id);
-@@ -189,7 +192,10 @@ static int hws_table_init(struct mlx5hws_table *tbl)
- 	}
- 
- 	mutex_lock(&ctx->ctrl_lock);
--	ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev, tbl, &tbl->ft_id);
-+	ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev,
-+					      tbl,
-+					      tbl->uid,
-+					      &tbl->ft_id);
- 	if (ret) {
- 		mlx5hws_err(tbl->ctx, "Failed to create flow table object\n");
- 		mutex_unlock(&ctx->ctrl_lock);
-@@ -239,6 +245,7 @@ struct mlx5hws_table *mlx5hws_table_create(struct mlx5hws_context *ctx,
- 	tbl->ctx = ctx;
- 	tbl->type = attr->type;
- 	tbl->level = attr->level;
-+	tbl->uid = attr->uid;
- 
- 	ret = hws_table_init(tbl);
- 	if (ret) {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.h
-index 0400cce0c317..1246f9bd8422 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.h
-@@ -18,6 +18,7 @@ struct mlx5hws_table {
- 	enum mlx5hws_table_type type;
- 	u32 fw_ft_type;
- 	u32 level;
-+	u16 uid;
- 	struct list_head matchers_list;
- 	struct list_head tbl_list_node;
- 	struct mlx5hws_default_miss default_miss;
-@@ -47,7 +48,7 @@ u32 mlx5hws_table_get_res_fw_ft_type(enum mlx5hws_table_type tbl_type,
- 
- int mlx5hws_table_create_default_ft(struct mlx5_core_dev *mdev,
- 				    struct mlx5hws_table *tbl,
--				    u32 *ft_id);
-+				    u16 uid, u32 *ft_id);
- 
- void mlx5hws_table_destroy_default_ft(struct mlx5hws_table *tbl,
- 				      u32 ft_id);
+ 	memset(rule_actions, 0, NUM_CT_HMFS_RULES * sizeof(*rule_actions));
+ 	rule_actions[0].action = mlx5_fc_get_hws_action(fs_hmfs->ctx, attr->counter);
++	rule_actions[0].counter.offset =
++		attr->counter->id - attr->counter->bulk->base_id;
+ 	/* Modify header is special, it may require extra arguments outside the action itself. */
+ 	if (mh_action->mh_data) {
+ 		rule_actions[1].modify_header.offset = mh_action->mh_data->offset;
 -- 
 2.50.1
 
