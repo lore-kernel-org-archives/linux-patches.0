@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5AC341651;
-	Tue, 26 Aug 2025 14:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B2C1DE8BE;
+	Tue, 26 Aug 2025 14:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217234; cv=none; b=Im+OxdvbW46AkXxemBIo7aBr0xasVGbQe17C9czBwFqyzCq+OXld64jyVZWhVPJeXIlikxy+yurZB9QMU/F1oqKnaa56fTBMIh2r2OmywDmwR8VZ/UIjDmYSYpBdYoQk7rcCEdsvNvDHQuDFzLwmYwznxhp15wC5z3bYrlGfHw4=
+	t=1756217237; cv=none; b=GTKA+uf2FTQDn4T7ApxduSdR8LAcIZRN8v5eMKWUVIkQ1XrbO+o7eKaXH6prjYd5iKRp9PNLZHfcE+xP1w17MM8eoCGnno+4pIqoOkMXxjRtNzipzDjWz9HwPnZKm3GIyZYXy9nwpHnu4xe4k14ezMv8ZGBW+FesvvBkJneTeqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217234; c=relaxed/simple;
-	bh=eoPLuSfPTQH2EdprkDWpTiphsH23Gp0M4mYH1Vjjexo=;
+	s=arc-20240116; t=1756217237; c=relaxed/simple;
+	bh=gMG6wDpwCzTQsE2OlyikgYlk379j8JQUEFDfdNRRVYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXRUrIGmZC86WUSTurlJmdyZo00AXr2+ogXAgbZq4aVhprMjQ6HUR5NK7g+QV5sifNeoLYAO6F3Q3lQ1yLdz3yInMbQKNsnZaeJqz1Wqcusn8Jt8aqZ3eBSMm1V+A/7SPbIbYFfP9zVNG8YiOKEtTs5+KIcYZlmjW55qjfgn+4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBmp17+Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aaznkLlaJWzud/m8ueJSqq8QWV4IX1SC8dMvD780kFp6+s6vf29WwIiznTjunILSEu0we0NPNcZIIN5FVuSl20suDYW/0ZpikAY8EVxYiKXAmwziRmn2PgGB1mEbp7+zyaLZJtttDzlCLBew7Cs3i+zB5zV0MZIzNCeoP/IzdzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWPe5PEt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBmp17+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BEBC4CEF1;
-	Tue, 26 Aug 2025 14:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWPe5PEt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB77EC4CEF1;
+	Tue, 26 Aug 2025 14:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217234;
-	bh=eoPLuSfPTQH2EdprkDWpTiphsH23Gp0M4mYH1Vjjexo=;
+	s=korg; t=1756217237;
+	bh=gMG6wDpwCzTQsE2OlyikgYlk379j8JQUEFDfdNRRVYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBmp17+Z0Ke8KjylvwWeFe0PjgD6wIO+MoKnArzjaFVClCS/9nWJVzPfaY/1hytLx
-	 BEx69SjySnMcaZqArIL61R+QIhWjJhAhb3cTvoZv5Ef+m2HXECm2TyhZBcLwRCOBVD
-	 1AfkVxsfEjpWn7gq86AwAI+UfcCZWxX7cgr9HHuc=
+	b=oWPe5PEtTtomtNG84Hv2/YkvHBNY0U2BjSBJfR3xJ3zML5JxP4TwIcmipvQHFiyTN
+	 Gv3FKvK1UlxCeCL41AMdfslgHEZV9Ym62/U0cb8k3ZCU1kMYnymkaZQvSp5slQ3ozL
+	 txFba5GC6ee5ZuxNNIccfq4d+qESQQhaHKTLr1yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 035/523] net/sched: sch_qfq: Fix race condition on qfq_aggregate
-Date: Tue, 26 Aug 2025 13:04:05 +0200
-Message-ID: <20250826110925.466617960@linuxfoundation.org>
+Subject: [PATCH 5.10 036/523] rpl: Fix use-after-free in rpl_do_srh_inline().
+Date: Tue, 26 Aug 2025 13:04:06 +0200
+Message-ID: <20250826110925.490418914@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,113 +52,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 5e28d5a3f774f118896aec17a3a20a9c5c9dfc64 ]
+[ Upstream commit b640daa2822a39ff76e70200cb2b7b892b896dce ]
 
-A race condition can occur when 'agg' is modified in qfq_change_agg
-(called during qfq_enqueue) while other threads access it
-concurrently. For example, qfq_dump_class may trigger a NULL
-dereference, and qfq_delete_class may cause a use-after-free.
+Running lwt_dst_cache_ref_loop.sh in selftest with KASAN triggers
+the splat below [0].
 
-This patch addresses the issue by:
+rpl_do_srh_inline() fetches ipv6_hdr(skb) and accesses it after
+skb_cow_head(), which is illegal as the header could be freed then.
 
-1. Moved qfq_destroy_class into the critical section.
+Let's fix it by making oldhdr to a local struct instead of a pointer.
 
-2. Added sch_tree_lock protection to qfq_dump_class and
-qfq_dump_class_stats.
+[0]:
+[root@fedora net]# ./lwt_dst_cache_ref_loop.sh
+...
+TEST: rpl (input)
+[   57.631529] ==================================================================
+BUG: KASAN: slab-use-after-free in rpl_do_srh_inline.isra.0 (net/ipv6/rpl_iptunnel.c:174)
+Read of size 40 at addr ffff888122bf96d8 by task ping6/1543
 
-Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+CPU: 50 UID: 0 PID: 1543 Comm: ping6 Not tainted 6.16.0-rc5-01302-gfadd1e6231b1 #23 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+ <IRQ>
+ dump_stack_lvl (lib/dump_stack.c:122)
+ print_report (mm/kasan/report.c:409 mm/kasan/report.c:521)
+ kasan_report (mm/kasan/report.c:221 mm/kasan/report.c:636)
+ kasan_check_range (mm/kasan/generic.c:175 (discriminator 1) mm/kasan/generic.c:189 (discriminator 1))
+ __asan_memmove (mm/kasan/shadow.c:94 (discriminator 2))
+ rpl_do_srh_inline.isra.0 (net/ipv6/rpl_iptunnel.c:174)
+ rpl_input (net/ipv6/rpl_iptunnel.c:201 net/ipv6/rpl_iptunnel.c:282)
+ lwtunnel_input (net/core/lwtunnel.c:459)
+ ipv6_rcv (./include/net/dst.h:471 (discriminator 1) ./include/net/dst.h:469 (discriminator 1) net/ipv6/ip6_input.c:79 (discriminator 1) ./include/linux/netfilter.h:317 (discriminator 1) ./include/linux/netfilter.h:311 (discriminator 1) net/ipv6/ip6_input.c:311 (discriminator 1))
+ __netif_receive_skb_one_core (net/core/dev.c:5967)
+ process_backlog (./include/linux/rcupdate.h:869 net/core/dev.c:6440)
+ __napi_poll.constprop.0 (net/core/dev.c:7452)
+ net_rx_action (net/core/dev.c:7518 net/core/dev.c:7643)
+ handle_softirqs (kernel/softirq.c:579)
+ do_softirq (kernel/softirq.c:480 (discriminator 20))
+ </IRQ>
+ <TASK>
+ __local_bh_enable_ip (kernel/softirq.c:407)
+ __dev_queue_xmit (net/core/dev.c:4740)
+ ip6_finish_output2 (./include/linux/netdevice.h:3358 ./include/net/neighbour.h:526 ./include/net/neighbour.h:540 net/ipv6/ip6_output.c:141)
+ ip6_finish_output (net/ipv6/ip6_output.c:215 net/ipv6/ip6_output.c:226)
+ ip6_output (./include/linux/netfilter.h:306 net/ipv6/ip6_output.c:248)
+ ip6_send_skb (net/ipv6/ip6_output.c:1983)
+ rawv6_sendmsg (net/ipv6/raw.c:588 net/ipv6/raw.c:918)
+ __sys_sendto (net/socket.c:714 (discriminator 1) net/socket.c:729 (discriminator 1) net/socket.c:2228 (discriminator 1))
+ __x64_sys_sendto (net/socket.c:2231)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+RIP: 0033:0x7f68cffb2a06
+Code: 5d e8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 75 19 83 e2 39 83 fa 08 75 11 e8 26 ff ff ff 66 0f 1f 44 00 00 48 8b 45 10 0f 05 <48> 8b 5d f8 c9 c3 0f 1f 40 00 f3 0f 1e fa 55 48 89 e5 48 83 ec 08
+RSP: 002b:00007ffefb7c53d0 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 0000564cd69f10a0 RCX: 00007f68cffb2a06
+RDX: 0000000000000040 RSI: 0000564cd69f10a4 RDI: 0000000000000003
+RBP: 00007ffefb7c53f0 R08: 0000564cd6a032ac R09: 000000000000001c
+R10: 0000000000000000 R11: 0000000000000202 R12: 0000564cd69f10a4
+R13: 0000000000000040 R14: 00007ffefb7c66e0 R15: 0000564cd69f10a0
+ </TASK>
+
+Allocated by task 1543:
+ kasan_save_stack (mm/kasan/common.c:48)
+ kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
+ __kasan_slab_alloc (mm/kasan/common.c:319 mm/kasan/common.c:345)
+ kmem_cache_alloc_node_noprof (./include/linux/kasan.h:250 mm/slub.c:4148 mm/slub.c:4197 mm/slub.c:4249)
+ kmalloc_reserve (net/core/skbuff.c:581 (discriminator 88))
+ __alloc_skb (net/core/skbuff.c:669)
+ __ip6_append_data (net/ipv6/ip6_output.c:1672 (discriminator 1))
+ ip6_append_data (net/ipv6/ip6_output.c:1859)
+ rawv6_sendmsg (net/ipv6/raw.c:911)
+ __sys_sendto (net/socket.c:714 (discriminator 1) net/socket.c:729 (discriminator 1) net/socket.c:2228 (discriminator 1))
+ __x64_sys_sendto (net/socket.c:2231)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Freed by task 1543:
+ kasan_save_stack (mm/kasan/common.c:48)
+ kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
+ kasan_save_free_info (mm/kasan/generic.c:579 (discriminator 1))
+ __kasan_slab_free (mm/kasan/common.c:271)
+ kmem_cache_free (mm/slub.c:4643 (discriminator 3) mm/slub.c:4745 (discriminator 3))
+ pskb_expand_head (net/core/skbuff.c:2274)
+ rpl_do_srh_inline.isra.0 (net/ipv6/rpl_iptunnel.c:158 (discriminator 1))
+ rpl_input (net/ipv6/rpl_iptunnel.c:201 net/ipv6/rpl_iptunnel.c:282)
+ lwtunnel_input (net/core/lwtunnel.c:459)
+ ipv6_rcv (./include/net/dst.h:471 (discriminator 1) ./include/net/dst.h:469 (discriminator 1) net/ipv6/ip6_input.c:79 (discriminator 1) ./include/linux/netfilter.h:317 (discriminator 1) ./include/linux/netfilter.h:311 (discriminator 1) net/ipv6/ip6_input.c:311 (discriminator 1))
+ __netif_receive_skb_one_core (net/core/dev.c:5967)
+ process_backlog (./include/linux/rcupdate.h:869 net/core/dev.c:6440)
+ __napi_poll.constprop.0 (net/core/dev.c:7452)
+ net_rx_action (net/core/dev.c:7518 net/core/dev.c:7643)
+ handle_softirqs (kernel/softirq.c:579)
+ do_softirq (kernel/softirq.c:480 (discriminator 20))
+ __local_bh_enable_ip (kernel/softirq.c:407)
+ __dev_queue_xmit (net/core/dev.c:4740)
+ ip6_finish_output2 (./include/linux/netdevice.h:3358 ./include/net/neighbour.h:526 ./include/net/neighbour.h:540 net/ipv6/ip6_output.c:141)
+ ip6_finish_output (net/ipv6/ip6_output.c:215 net/ipv6/ip6_output.c:226)
+ ip6_output (./include/linux/netfilter.h:306 net/ipv6/ip6_output.c:248)
+ ip6_send_skb (net/ipv6/ip6_output.c:1983)
+ rawv6_sendmsg (net/ipv6/raw.c:588 net/ipv6/raw.c:918)
+ __sys_sendto (net/socket.c:714 (discriminator 1) net/socket.c:729 (discriminator 1) net/socket.c:2228 (discriminator 1))
+ __x64_sys_sendto (net/socket.c:2231)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+The buggy address belongs to the object at ffff888122bf96c0
+ which belongs to the cache skbuff_small_head of size 704
+The buggy address is located 24 bytes inside of
+ freed 704-byte region [ffff888122bf96c0, ffff888122bf9980)
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x122bf8
+head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x200000000000040(head|node=0|zone=2)
+page_type: f5(slab)
+raw: 0200000000000040 ffff888101fc0a00 ffffea000464dc00 0000000000000002
+raw: 0000000000000000 0000000080270027 00000000f5000000 0000000000000000
+head: 0200000000000040 ffff888101fc0a00 ffffea000464dc00 0000000000000002
+head: 0000000000000000 0000000080270027 00000000f5000000 0000000000000000
+head: 0200000000000003 ffffea00048afe01 00000000ffffffff 00000000ffffffff
+head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888122bf9580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888122bf9600: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+>ffff888122bf9680: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+                                                    ^
+ ffff888122bf9700: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888122bf9780: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+Fixes: a7a29f9c361f8 ("net: ipv6: add rpl sr tunnel")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_qfq.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ net/ipv6/rpl_iptunnel.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
-index 1ee15db5fcc8c..e412340f639d2 100644
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -414,7 +414,7 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 	bool existing = false;
- 	struct nlattr *tb[TCA_QFQ_MAX + 1];
- 	struct qfq_aggregate *new_agg = NULL;
--	u32 weight, lmax, inv_w;
-+	u32 weight, lmax, inv_w, old_weight, old_lmax;
- 	int err;
- 	int delta_w;
- 
-@@ -448,12 +448,16 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 	inv_w = ONE_FP / weight;
- 	weight = ONE_FP / inv_w;
- 
--	if (cl != NULL &&
--	    lmax == cl->agg->lmax &&
--	    weight == cl->agg->class_weight)
--		return 0; /* nothing to change */
-+	if (cl != NULL) {
-+		sch_tree_lock(sch);
-+		old_weight = cl->agg->class_weight;
-+		old_lmax   = cl->agg->lmax;
-+		sch_tree_unlock(sch);
-+		if (lmax == old_lmax && weight == old_weight)
-+			return 0; /* nothing to change */
-+	}
- 
--	delta_w = weight - (cl ? cl->agg->class_weight : 0);
-+	delta_w = weight - (cl ? old_weight : 0);
- 
- 	if (q->wsum + delta_w > QFQ_MAX_WSUM) {
- 		pr_notice("qfq: total weight out of range (%d + %u)\n",
-@@ -554,10 +558,10 @@ static int qfq_delete_class(struct Qdisc *sch, unsigned long arg)
- 
- 	qdisc_purge_queue(cl->qdisc);
- 	qdisc_class_hash_remove(&q->clhash, &cl->common);
-+	qfq_destroy_class(sch, cl);
- 
- 	sch_tree_unlock(sch);
- 
--	qfq_destroy_class(sch, cl);
- 	return 0;
- }
- 
-@@ -624,6 +628,7 @@ static int qfq_dump_class(struct Qdisc *sch, unsigned long arg,
+diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
+index 5d47948c03642..b849d2a13f87c 100644
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -129,13 +129,13 @@ static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
+ 			     struct dst_entry *cache_dst)
  {
- 	struct qfq_class *cl = (struct qfq_class *)arg;
- 	struct nlattr *nest;
-+	u32 class_weight, lmax;
+ 	struct ipv6_rpl_sr_hdr *isrh, *csrh;
+-	const struct ipv6hdr *oldhdr;
++	struct ipv6hdr oldhdr;
+ 	struct ipv6hdr *hdr;
+ 	unsigned char *buf;
+ 	size_t hdrlen;
+ 	int err;
  
- 	tcm->tcm_parent	= TC_H_ROOT;
- 	tcm->tcm_handle	= cl->common.classid;
-@@ -632,8 +637,13 @@ static int qfq_dump_class(struct Qdisc *sch, unsigned long arg,
- 	nest = nla_nest_start_noflag(skb, TCA_OPTIONS);
- 	if (nest == NULL)
- 		goto nla_put_failure;
--	if (nla_put_u32(skb, TCA_QFQ_WEIGHT, cl->agg->class_weight) ||
--	    nla_put_u32(skb, TCA_QFQ_LMAX, cl->agg->lmax))
-+
-+	sch_tree_lock(sch);
-+	class_weight	= cl->agg->class_weight;
-+	lmax		= cl->agg->lmax;
-+	sch_tree_unlock(sch);
-+	if (nla_put_u32(skb, TCA_QFQ_WEIGHT, class_weight) ||
-+	    nla_put_u32(skb, TCA_QFQ_LMAX, lmax))
- 		goto nla_put_failure;
- 	return nla_nest_end(skb, nest);
+-	oldhdr = ipv6_hdr(skb);
++	memcpy(&oldhdr, ipv6_hdr(skb), sizeof(oldhdr));
  
-@@ -650,8 +660,10 @@ static int qfq_dump_class_stats(struct Qdisc *sch, unsigned long arg,
+ 	buf = kcalloc(struct_size(srh, segments.addr, srh->segments_left), 2, GFP_ATOMIC);
+ 	if (!buf)
+@@ -147,7 +147,7 @@ static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
+ 	memcpy(isrh, srh, sizeof(*isrh));
+ 	memcpy(isrh->rpl_segaddr, &srh->rpl_segaddr[1],
+ 	       (srh->segments_left - 1) * 16);
+-	isrh->rpl_segaddr[srh->segments_left - 1] = oldhdr->daddr;
++	isrh->rpl_segaddr[srh->segments_left - 1] = oldhdr.daddr;
  
- 	memset(&xstats, 0, sizeof(xstats));
+ 	ipv6_rpl_srh_compress(csrh, isrh, &srh->rpl_segaddr[0],
+ 			      isrh->segments_left - 1);
+@@ -169,7 +169,7 @@ static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
+ 	skb_mac_header_rebuild(skb);
  
-+	sch_tree_lock(sch);
- 	xstats.weight = cl->agg->class_weight;
- 	xstats.lmax = cl->agg->lmax;
-+	sch_tree_unlock(sch);
+ 	hdr = ipv6_hdr(skb);
+-	memmove(hdr, oldhdr, sizeof(*hdr));
++	memmove(hdr, &oldhdr, sizeof(*hdr));
+ 	isrh = (void *)hdr + sizeof(*hdr);
+ 	memcpy(isrh, csrh, hdrlen);
  
- 	if (gnet_stats_copy_basic(qdisc_root_sleeping_running(sch),
- 				  d, NULL, &cl->bstats) < 0 ||
 -- 
 2.39.5
 
