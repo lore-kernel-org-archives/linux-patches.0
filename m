@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3CD2820B1;
-	Tue, 26 Aug 2025 11:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBBD341653;
+	Tue, 26 Aug 2025 11:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208010; cv=none; b=hZnVRnF7t4MQxoGFNbGUV61IOmJHoBS0HYR2TLV8apLKCEhyG+usWmQWCiQjebf07bCtXEGWOjKBfKEzivUgP3AXeUY2GCkAtjDIOe1QquOxgKkY85VB2BHDiI9I7mJLReh3q2eWtkx5sJOg6Cd3s0D9s1aofLOOZ+LKxK+5Iwk=
+	t=1756208013; cv=none; b=BMllb2KdpN2KC79mo8Fe+iikSHLy0bK1TuOVzXDgBH6DDxWBluf9pwAaeM7DCEaDAUpPYwF0ge4KFroC75IQLm5ANwbr0Epq83PH643/gwPEMy6+kKQvVIqljbo8NsRrDOBXzfKH9lnbj9faypleuJSC86wyvp8dCYqDX9Fy260=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208010; c=relaxed/simple;
-	bh=ucijE42LmTzi4DP3J37CCRZw0TtT4AVX9Ai6MsZXfvk=;
+	s=arc-20240116; t=1756208013; c=relaxed/simple;
+	bh=uJC0/8nm8gECnu5VgCRXG1dLn7sg6ZQdt5M0OYabdns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQpuA6HYvAGjZaGHclg12uhUCmHfZMs1lNu8jL2yPK+jYcxq4C4QMpEDo5wG9pcYLUewSCzLsiBz3yoGz2hDl6K1oWS8Xqb0OHAzudigky8WeIAPT+MX06XWVg0LiEytUKizC+l1k69J026XkawrF3re0SMeVj88d+JZ5Fhfuq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciCWcbD0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TBkd2lWa5ozB4peyM3FAdIVJjZeUOmf41o2JuE7nKEW9C86VCnr5hsSd94MA4VkdqHT7nltyQwBWTyJ0ByO1e+eKYr0SUw8tHXQnflBUJX4mFK8SEB1FubfLM5Rp0gRIQA0gzWwYd7jqse4j7GsqCsiLuFEm1d+GuR7ISPCJrbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXJqZt5J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciCWcbD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161B2C4CEF1;
-	Tue, 26 Aug 2025 11:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXJqZt5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6BDC4CEF1;
+	Tue, 26 Aug 2025 11:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208010;
-	bh=ucijE42LmTzi4DP3J37CCRZw0TtT4AVX9Ai6MsZXfvk=;
+	s=korg; t=1756208013;
+	bh=uJC0/8nm8gECnu5VgCRXG1dLn7sg6ZQdt5M0OYabdns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciCWcbD0F9BsUdoHK7WbbTGd6xuey4jobFYBHNlkeiZD6vlghNZVEuNvuD1xMEfBE
-	 Pb1yk0SLVk2eoYwGaajzs8vFX4ccoAtEYLODVVbnhzdqWEY/E1svQ/hZAq6WGG4kQr
-	 Rk9Pdvm3VCQH8nTpPy5LAQcd2aWjowoFQpaYsumE=
+	b=jXJqZt5JTx+YfxSSkhpP8BZMXwJzu5EuyHlgheckncq40ShWAJu07xyL8t3fntdUE
+	 43SbPNP7hWxeAIfkASUjmL4A2DUVCDUTJeMho0mvHBf77aFV84/4T8kIWmJ3I7y3XP
+	 7a4JFawylkn0CqXH2/Nv7abpkgOlt11461doUCTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	James Bottomley <James.Bottomley@HansenPartnership.com>,
 	Nitin Rawat <quic_nitirawa@quicinc.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 403/457] scsi: ufs: ufs-qcom: Update esi_vec_mask for HW major version >= 6
-Date: Tue, 26 Aug 2025 13:11:27 +0200
-Message-ID: <20250826110947.255096646@linuxfoundation.org>
+Subject: [PATCH 6.16 404/457] scsi: ufs: ufs-qcom: Fix ESI null pointer dereference
+Date: Tue, 26 Aug 2025 13:11:28 +0200
+Message-ID: <20250826110947.278931100@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,41 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
 
-[ Upstream commit 7a9d5195a7f5871a4ad4e55fc567a2b3bee49a59 ]
+[ Upstream commit 6300d5c5438724c0876828da2f6e2c1a661871fc ]
 
-The MCQ feature and ESI are supported by all Qualcomm UFS controller
-versions 6 and above.
+ESI/MSI is a performance optimization feature that provides dedicated
+interrupts per MCQ hardware queue. This is optional feature and UFS MCQ
+should work with and without ESI feature.
 
-Therefore, update the ESI vector mask in the UFS_MEM_CFG3 register for
-platforms with major version number of 6 or higher.
+Commit e46a28cea29a ("scsi: ufs: qcom: Remove the MSI descriptor abuse")
+brings a regression in ESI (Enhanced System Interrupt) configuration that
+causes a null pointer dereference when Platform MSI allocation fails.
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+The issue occurs in when platform_device_msi_init_and_alloc_irqs() in
+ufs_qcom_config_esi() fails (returns -EINVAL) but the current code uses
+__free() macro for automatic cleanup free MSI resources that were never
+successfully allocated.
+
+Unable to handle kernel NULL pointer dereference at virtual
+address 0000000000000008
+
+  Call trace:
+  mutex_lock+0xc/0x54 (P)
+  platform_device_msi_free_irqs_all+0x1c/0x40
+  ufs_qcom_config_esi+0x1d0/0x220 [ufs_qcom]
+  ufshcd_config_mcq+0x28/0x104
+  ufshcd_init+0xa3c/0xf40
+  ufshcd_pltfrm_init+0x504/0x7d4
+  ufs_qcom_probe+0x20/0x58 [ufs_qcom]
+
+Fix by restructuring the ESI configuration to try MSI allocation first,
+before any other resource allocation and instead use explicit cleanup
+instead of __free() macro to avoid cleanup of unallocated resources.
+
+Tested on SM8750 platform with MCQ enabled, both with and without
+Platform ESI support.
+
+Fixes: e46a28cea29a ("scsi: ufs: qcom: Remove the MSI descriptor abuse")
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: James Bottomley <James.Bottomley@HansenPartnership.com>
 Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Link: https://lore.kernel.org/r/20250714075336.2133-2-quic_nitirawa@quicinc.com
+Link: https://lore.kernel.org/r/20250811073330.20230-1-quic_nitirawa@quicinc.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 6300d5c54387 ("scsi: ufs: ufs-qcom: Fix ESI null pointer dereference")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 39 ++++++++++++++-----------------------
+ 1 file changed, 15 insertions(+), 24 deletions(-)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 18a978452001..53301a2c27be 100644
+index 53301a2c27be..2e4edc192e8e 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -2109,8 +2109,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+@@ -2053,17 +2053,6 @@ static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
  
- 	retain_and_null_ptr(qi);
+-static void ufs_qcom_irq_free(struct ufs_qcom_irq *uqi)
+-{
+-	for (struct ufs_qcom_irq *q = uqi; q->irq; q++)
+-		devm_free_irq(q->hba->dev, q->irq, q->hba);
+-
+-	platform_device_msi_free_irqs_all(uqi->hba->dev);
+-	devm_kfree(uqi->hba->dev, uqi);
+-}
+-
+-DEFINE_FREE(ufs_qcom_irq, struct ufs_qcom_irq *, if (_T) ufs_qcom_irq_free(_T))
+-
+ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+@@ -2078,18 +2067,18 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+ 	 */
+ 	nr_irqs = hba->nr_hw_queues - hba->nr_queues[HCTX_TYPE_POLL];
  
--	if (host->hw_ver.major == 6 && host->hw_ver.minor == 0 &&
--	    host->hw_ver.step == 0) {
-+	if (host->hw_ver.major >= 6) {
+-	struct ufs_qcom_irq *qi __free(ufs_qcom_irq) =
+-		devm_kcalloc(hba->dev, nr_irqs, sizeof(*qi), GFP_KERNEL);
+-	if (!qi)
+-		return -ENOMEM;
+-	/* Preset so __free() has a pointer to hba in all error paths */
+-	qi[0].hba = hba;
+-
+ 	ret = platform_device_msi_init_and_alloc_irqs(hba->dev, nr_irqs,
+ 						      ufs_qcom_write_msi_msg);
+ 	if (ret) {
+-		dev_err(hba->dev, "Failed to request Platform MSI %d\n", ret);
+-		return ret;
++		dev_warn(hba->dev, "Platform MSI not supported or failed, continuing without ESI\n");
++		return ret; /* Continue without ESI */
++	}
++
++	struct ufs_qcom_irq *qi = devm_kcalloc(hba->dev, nr_irqs, sizeof(*qi), GFP_KERNEL);
++
++	if (!qi) {
++		platform_device_msi_free_irqs_all(hba->dev);
++		return -ENOMEM;
+ 	}
+ 
+ 	for (int idx = 0; idx < nr_irqs; idx++) {
+@@ -2100,15 +2089,17 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+ 		ret = devm_request_irq(hba->dev, qi[idx].irq, ufs_qcom_mcq_esi_handler,
+ 				       IRQF_SHARED, "qcom-mcq-esi", qi + idx);
+ 		if (ret) {
+-			dev_err(hba->dev, "%s: Fail to request IRQ for %d, err = %d\n",
++			dev_err(hba->dev, "%s: Failed to request IRQ for %d, err = %d\n",
+ 				__func__, qi[idx].irq, ret);
+-			qi[idx].irq = 0;
++			/* Free previously allocated IRQs */
++			for (int j = 0; j < idx; j++)
++				devm_free_irq(hba->dev, qi[j].irq, qi + j);
++			platform_device_msi_free_irqs_all(hba->dev);
++			devm_kfree(hba->dev, qi);
+ 			return ret;
+ 		}
+ 	}
+ 
+-	retain_and_null_ptr(qi);
+-
+ 	if (host->hw_ver.major >= 6) {
  		ufshcd_rmwl(hba, ESI_VEC_MASK, FIELD_PREP(ESI_VEC_MASK, MAX_ESI_VEC - 1),
  			    REG_UFS_CFG3);
- 	}
 -- 
 2.50.1
 
