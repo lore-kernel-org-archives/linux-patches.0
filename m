@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEBB352066;
-	Tue, 26 Aug 2025 14:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7551335207C;
+	Tue, 26 Aug 2025 14:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218053; cv=none; b=BVHNI4Flv2VRrfdySiiJhOBqtTE0IqI+RE/19xUa3Xt0dkeLLfRQIinv9j3HcN8qfg8D3qakpeQlOAOXlGgYfSICG+xVPY1VTxnhwA6X0RWx46iyua0hvnyAUGoR0IT4MoUuVoEpMM9kEm6GwgisuwcynyyU14Ne/JFylh9QwZs=
+	t=1756218056; cv=none; b=Bsu0U0PHfWSiXpXa3UKYLbwrms8tigDg1Zrsj+L1y1lX7TvUQ8m2aq1H4pdPuY5VB48iY75Qw8yybVte+Zy1uIgOMygGyTM7IQG3I2nUWgyC02Guh6THHXNUenT1FD0JZ/oMkD0DORt36qJDbAcr+n98GwvdlloPRq5K8uXQDKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218053; c=relaxed/simple;
-	bh=9gXjk+YYhT4tHWuRg9h7kAjdKUdy1zUvQd5CHnYYkKo=;
+	s=arc-20240116; t=1756218056; c=relaxed/simple;
+	bh=X6YqMUn871OxclPXbC5riGTFMyPe7TFaK7eaJRBLFXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TxhextBY9x1kI3GjVGjjgWFhEqk6elkCr+chs2GtL3/wEFYlz1r4MLujWE7FrCSxBXKgOyg7+/MfxCgb/v4/cnwCssoph0R0hKgbvtCiQQ/j9M1kiBygg0TQazA2eZ/L5svJGL1q1ThLYQ4e2KubadaYySipWEj4QopcZQsxwGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vw4C670v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DNa+pXqfcFFOzVHaDBt2ijfKitdW/vhZxkr25tc+bKa2YtDU4/wdNlrwsY5S/o4ltuVvG2dvBsiqObN7CKmHSajh7Y+CkxH4fx+NNbe5q90NLrXhdG2tiS+u/8weGZPsTImoUBYwbZa1VKUgn+Q20n+5HijLy5jwnV2DXybprNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsJ4ZGup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vw4C670v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F0FC4CEF1;
-	Tue, 26 Aug 2025 14:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsJ4ZGup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C2BC4CEF1;
+	Tue, 26 Aug 2025 14:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218052;
-	bh=9gXjk+YYhT4tHWuRg9h7kAjdKUdy1zUvQd5CHnYYkKo=;
+	s=korg; t=1756218056;
+	bh=X6YqMUn871OxclPXbC5riGTFMyPe7TFaK7eaJRBLFXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vw4C670v3ZO++4FzYyODC0fZe2Fw7nHQObue9LIh4Cz4m4vstWGsuzQ4JRRNZEzNd
-	 6w5VWZ29ykFFnpHd/JifTm4BayNFjeI+DYniK4bQMpmxYG71OlA0DrhkJrTxucB4Ls
-	 K29m8+VWroGGec+Gv1IMBiKrTeITOz60WCeyYjDA=
+	b=HsJ4ZGupZ3eJfWrFMr5EqdXx6cGvTwjOmS2sJ/RmEQMW51F2S10eB2uim8mKxcHLP
+	 mHEQomE8GBqdt0qhB3oN1o62VnhI8oPn0JvBr4MKtaQ+5Hdx6FlxizSGnQqkrnscvc
+	 8meyre4j8InVHQATthx9IV1/euCWxXIoG0VOXx44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Evtushenko <koevtushenko@yandex.com>,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 334/523] pNFS: Handle RPC size limit for layoutcommits
-Date: Tue, 26 Aug 2025 13:09:04 +0200
-Message-ID: <20250826110932.714389028@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 5.10 369/523] wifi: ath11k: fix source ring-buffer corruption
+Date: Tue, 26 Aug 2025 13:09:39 +0200
+Message-ID: <20250826110933.568985743@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,67 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit d897d81671bc4615c80f4f3bd5e6b218f59df50c ]
+commit 6efa0df54022c6c9fd4d294b87622c7fcdc418c8 upstream.
 
-When there are too many block extents for a layoutcommit, they may not
-all fit into the maximum-sized RPC. This patch allows the generic pnfs
-code to properly handle -ENOSPC returned by the block/scsi layout driver
-and trigger additional layoutcommits if necessary.
+Add the missing memory barrier to make sure that LMAC source ring
+descriptors are written before updating the head pointer to avoid
+passing stale data to the firmware on weakly ordered architectures like
+aarch64.
 
-Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250630183537.196479-5-sergeybashirov@gmail.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that non-LMAC rings use MMIO write accessors which have the
+required write memory barrier.
+
+Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Cc: stable@vger.kernel.org      # 5.6
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250604143457.26032-5-johan+linaro@kernel.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath11k/hal.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 758689877d85..e14cf7140bab 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -3219,6 +3219,7 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
- 	struct nfs_inode *nfsi = NFS_I(inode);
- 	loff_t end_pos;
- 	int status;
-+	bool mark_as_dirty = false;
- 
- 	if (!pnfs_layoutcommit_outstanding(inode))
- 		return 0;
-@@ -3270,19 +3271,23 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
- 	if (ld->prepare_layoutcommit) {
- 		status = ld->prepare_layoutcommit(&data->args);
- 		if (status) {
--			put_cred(data->cred);
-+			if (status != -ENOSPC)
-+				put_cred(data->cred);
- 			spin_lock(&inode->i_lock);
- 			set_bit(NFS_INO_LAYOUTCOMMIT, &nfsi->flags);
- 			if (end_pos > nfsi->layout->plh_lwb)
- 				nfsi->layout->plh_lwb = end_pos;
--			goto out_unlock;
-+			if (status != -ENOSPC)
-+				goto out_unlock;
-+			spin_unlock(&inode->i_lock);
-+			mark_as_dirty = true;
- 		}
- 	}
- 
- 
- 	status = nfs4_proc_layoutcommit(data, sync);
- out:
--	if (status)
-+	if (status || mark_as_dirty)
- 		mark_inode_dirty_sync(inode);
- 	dprintk("<-- %s status %d\n", __func__, status);
- 	return status;
--- 
-2.39.5
-
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -841,7 +841,11 @@ void ath11k_hal_srng_access_end(struct a
+ 		if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
+ 			srng->u.src_ring.last_tp =
+ 				*(volatile u32 *)srng->u.src_ring.tp_addr;
+-			*srng->u.src_ring.hp_addr = srng->u.src_ring.hp;
++			/* Make sure descriptor is written before updating the
++			 * head pointer.
++			 */
++			dma_wmb();
++			WRITE_ONCE(*srng->u.src_ring.hp_addr, srng->u.src_ring.hp);
+ 		} else {
+ 			srng->u.dst_ring.last_hp = *srng->u.dst_ring.hp_addr;
+ 			*srng->u.dst_ring.tp_addr = srng->u.dst_ring.tp;
+@@ -850,6 +854,10 @@ void ath11k_hal_srng_access_end(struct a
+ 		if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
+ 			srng->u.src_ring.last_tp =
+ 				*(volatile u32 *)srng->u.src_ring.tp_addr;
++			/* Assume implementation use an MMIO write accessor
++			 * which has the required wmb() so that the descriptor
++			 * is written before the updating the head pointer.
++			 */
+ 			ath11k_hif_write32(ab,
+ 					   (unsigned long)srng->u.src_ring.hp_addr -
+ 					   (unsigned long)ab->mem,
 
 
