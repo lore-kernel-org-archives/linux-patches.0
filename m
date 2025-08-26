@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1DE352078;
-	Tue, 26 Aug 2025 13:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD00286881;
+	Tue, 26 Aug 2025 13:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216339; cv=none; b=Rr4lMp8tN1O8dlXzFEKSkhEDhjs5EJXruYdqFc2TTBE8VbfLp00Q8LWVmO1DBOrTM5BLTWbOdEtHOeOJUTLRviDcUx+5K768w/k6LRtzUHyxWmd1Vq15OZR5EglQsAIFLIIPKGG8ex42oEEO989Kuka55TQbNHEYkpvxVvbKKuE=
+	t=1756216342; cv=none; b=KnEq1dGc2GgPvjsQLCv02NnRSa+wPOFCsl/i4H/0eLDLuXrFHdgakB4IXCyDSQQvGyW1fx1xjRVxNjSCHKEdoCqkDMFeOTzanXxhRFJIykH0XIQX8BLXy9sEXh6SJeFrfeni9JfQ1WOkeS5WXDmrtA4CDeIeF4aSbNg89tX0Jq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216339; c=relaxed/simple;
-	bh=jnhu0gEJwY6pZLeT03JQiRG6gTkvi7gDWbowNcait8A=;
+	s=arc-20240116; t=1756216342; c=relaxed/simple;
+	bh=dj89qMR9X5ZRmcq/feecMTv4m7czOFHQaNshVJ0rXU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U/5zArZndFwN9ZStUxPeWcwrT/c49gjftSt6lPE5jZtEuMNyKQTcCNZziYqgJ4GNVVYi/CAQ6Gn2XSfeVSWKlPCGji5fKUrQckFYN80fEsF1JKZN86tAQ/QIl5Gs3+NjbJsUAxYtF7oQcLuG30iX23OLMpKEJwAMjfHWc78gXhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHcThzxa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvzxtoVUDr3i6Vuy0tMuSKUDm2Z9t6jOmMCEgkuedEZVSrtCKt9YI1EwWeymL8Ei5Ie121WS3gbkFbZepywXBf/GuAZzdmlLEdQ8XJUqqJtz7kyH0Fai0+sXQ9B5R21CZUIKwA6sVHdqac1XDNUqblYFp2E0e3y7cSqxC9FT07w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYHeyb5y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHcThzxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1F9C4CEF1;
-	Tue, 26 Aug 2025 13:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYHeyb5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DCFC4CEF1;
+	Tue, 26 Aug 2025 13:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216339;
-	bh=jnhu0gEJwY6pZLeT03JQiRG6gTkvi7gDWbowNcait8A=;
+	s=korg; t=1756216342;
+	bh=dj89qMR9X5ZRmcq/feecMTv4m7czOFHQaNshVJ0rXU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nHcThzxa0Blh2x6ZQeoOfKvA+7VJJMTkpINRh6z6S4jKw9S4RJ9U4ZIgzp6DBDL3r
-	 ozB7xuiwwC/+E/G+OrIdbCOcE6DM2d+jd4uePRDLv5ZcgqpZPz/2IrLp6A/RE8EOFQ
-	 sZpBWktf8MOF91v+EbviFYOZPHU/dyPLA94H4bak=
+	b=mYHeyb5yDznPJ7H14pjMNGFhT3wDSAh11NB8ga/eKohDD7b+rezbNROUD5/oba/sg
+	 RJ1+rjRO8KjWDhBlSeR30xEx79Or7qjSK2dM6LOVv2bU/l+NW6rOhk310/heJttXUk
+	 1F1MlCYyLe8FXPTxk0APPtCpSXjHqe4AH33srRrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 374/644] net: dsa: b53: prevent DIS_LEARNING access on BCM5325
-Date: Tue, 26 Aug 2025 13:07:45 +0200
-Message-ID: <20250826110955.686937984@linuxfoundation.org>
+Subject: [PATCH 5.15 348/644] wifi: cfg80211: Fix interface type validation
+Date: Tue, 26 Aug 2025 13:07:19 +0200
+Message-ID: <20250826110955.019719844@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -46,58 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 800728abd9f83bda4de62a30ce62a8b41c242020 ]
+[ Upstream commit 14450be2332a49445106403492a367412b8c23f4 ]
 
-BCM5325 doesn't implement DIS_LEARNING register so we should avoid reading
-or writing it.
+Fix a condition that verified valid values of interface types.
 
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Link: https://patch.msgid.link/20250614080000.1884236-10-noltari@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709233537.7ad199ca5939.I0ac1ff74798bf59a87a57f2e18f2153c308b119b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ include/net/cfg80211.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 2def9ed34beb..ef6191d753e8 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -561,6 +561,9 @@ static void b53_port_set_learning(struct b53_device *dev, int port,
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 963a810ed70d..66a75723f559 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -507,7 +507,7 @@ ieee80211_get_sband_iftype_data(const struct ieee80211_supported_band *sband,
  {
- 	u16 reg;
+ 	int i;
  
-+	if (is5325(dev))
-+		return;
-+
- 	b53_read16(dev, B53_CTRL_PAGE, B53_DIS_LEARNING, &reg);
- 	if (learning)
- 		reg &= ~BIT(port);
-@@ -2034,7 +2037,13 @@ int b53_br_flags_pre(struct dsa_switch *ds, int port,
- 		     struct switchdev_brport_flags flags,
- 		     struct netlink_ext_ack *extack)
- {
--	if (flags.mask & ~(BR_FLOOD | BR_MCAST_FLOOD | BR_LEARNING))
-+	struct b53_device *dev = ds->priv;
-+	unsigned long mask = (BR_FLOOD | BR_MCAST_FLOOD);
-+
-+	if (!is5325(dev))
-+		mask |= BR_LEARNING;
-+
-+	if (flags.mask & ~mask)
- 		return -EINVAL;
+-	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
++	if (WARN_ON(iftype >= NUM_NL80211_IFTYPES))
+ 		return NULL;
  
- 	return 0;
+ 	if (iftype == NL80211_IFTYPE_AP_VLAN)
 -- 
 2.39.5
 
