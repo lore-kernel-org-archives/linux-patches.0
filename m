@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5136635209B;
-	Tue, 26 Aug 2025 14:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDB635209B;
+	Tue, 26 Aug 2025 14:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218679; cv=none; b=UxM4XszO1TO/uAI1yK6MzLiDiJqroSXZ5YmLIFT6B/LseWdtx8XAD75L1yZB2rqx04vb1Nm9HcrsMoSVGE6ddHJtFXyT9c4AbOLVdc4Kfu9nIVM6HTCBzzWArwvfCUU2SyDOXwO5KJUndE6eR53K910yimA5mt3I+oiCObcDFaA=
+	t=1756218682; cv=none; b=qwAcga2q3/txLOvAxcOwhS5NgImw2PM0Z8i45mYji5/Rl6erj+un0t3bDkSryudE9atULS+tfyAHeurZ/Buo5HWIxSD4nyKnToQaIhXZgAKHxpTeW0VWWjs2FL5XJ0E82JQ+KZOw3sAukzgahkC8+1mOfy9Tg/3hzaHXkxIwnLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218679; c=relaxed/simple;
-	bh=kyTjIkcEIt3nrxbBT33t5eviiC79XzHwWsnm/JVWTWU=;
+	s=arc-20240116; t=1756218682; c=relaxed/simple;
+	bh=BMxZkYlxfJ4+P0xeSBfiaVVPLjPsZh7T4hHIZ6ZCUkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gK0QclG0yY0oYe9rv1TN1t+FSrr++YSMDFaYgKct08zgyG4phaNVBjd+tt8UV1IhGQOgkl46xChu3HvcFNpb7CTDZWbXHWQ0PrQU17u1drlfCqJ78dc64vFvcicL36WlvDKb4UtQZAzcdrLJ71biemxy2YfDCcAXQZTVysPBv2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJ1GCTrG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9fyzHx0rEli/xBKkBmAAja/WYYCDo3NyWMlcN5veYYTH6D0Cm4sRb9S7PPLrwtY5w5RH0piZD57wHHe1B1yPasgZtusv0zF5TGwBOlsz5R6UmgO4COWNvKJTbs1QPeLl7celComjY8Txa9ecoHaUqEZYRznU3l2UCTNMrkxpg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ts0kMrC2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJ1GCTrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D547CC113CF;
-	Tue, 26 Aug 2025 14:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ts0kMrC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4B2C4CEF1;
+	Tue, 26 Aug 2025 14:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218679;
-	bh=kyTjIkcEIt3nrxbBT33t5eviiC79XzHwWsnm/JVWTWU=;
+	s=korg; t=1756218681;
+	bh=BMxZkYlxfJ4+P0xeSBfiaVVPLjPsZh7T4hHIZ6ZCUkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJ1GCTrG8F0O9Q03QEye8ne23xRk/vJW8YfHFhRE5KCcTGHu7AOgTP756KVE1YARn
-	 a3xB/Z6c6YwoPBzF0zJIp0eFNWr95CEt94fR0si8hKI4QqeTacSG0RBmQE4Q5DONLr
-	 YI7z5NcD1BMNoamM/yVyboU4JU0/eSEOHxmBv4e0=
+	b=Ts0kMrC2z6X9S9fYyaQ8p/Zul+JdQSHgKixLzVNY1xun0iEmwQYIFvCpAeqxV8U09
+	 h5RoiRkvutsHW1h2xA2FS3K1XbfTGi+1DPmwG6HpX9wmZNvsorOK8VDxt+DMZUspSm
+	 sj01zdMdAWAdQM8ZvoLj74fIJNoA4WksQKwMgzAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
 	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/403] drm/amd/pm/powerplay/hwmgr/smu_helper: fix order of mask and value
-Date: Tue, 26 Aug 2025 13:06:58 +0200
-Message-ID: <20250826110909.210742937@linuxfoundation.org>
+Subject: [PATCH 5.4 093/403] netfilter: nf_tables: adjust lockdep assertions handling
+Date: Tue, 26 Aug 2025 13:06:59 +0200
+Message-ID: <20250826110909.238496854@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,40 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit a54e4639c4ef37a0241bac7d2a77f2e6ffb57099 ]
+[ Upstream commit 8df1b40de76979bb8e975201d07b71103d5de820 ]
 
-There is a small typo in phm_wait_on_indirect_register().
-
-Swap mask and value arguments provided to phm_wait_on_register() so that
-they satisfy the function signature and actual usage scheme.
+It's needed to check the return value of lockdep_commit_lock_is_held(),
+otherwise there's no point in this assertion as it doesn't print any
+debug information on itself.
 
 Found by Linux Verification Center (linuxtesting.org) with Svace static
 analysis tool.
 
-In practice this doesn't fix any issues because the only place this
-function is used uses the same value for the value and mask.
-
-Fixes: 3bace3591493 ("drm/amd/powerplay: add hardware manager sub-component")
+Fixes: b04df3da1b5c ("netfilter: nf_tables: do not defer rule destruction via call_rcu")
+Reported-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
 Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/powerplay/hwmgr/smu_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/powerplay/hwmgr/smu_helper.c b/drivers/gpu/drm/amd/powerplay/hwmgr/smu_helper.c
-index d09690fca452..8a1ad9305a21 100644
---- a/drivers/gpu/drm/amd/powerplay/hwmgr/smu_helper.c
-+++ b/drivers/gpu/drm/amd/powerplay/hwmgr/smu_helper.c
-@@ -148,7 +148,7 @@ int phm_wait_on_indirect_register(struct pp_hwmgr *hwmgr,
- 	}
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 9e20fb759cb8..54c43f1cceac 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2823,7 +2823,7 @@ static void nf_tables_rule_destroy(const struct nft_ctx *ctx,
+ static void nf_tables_rule_release(const struct nft_ctx *ctx,
+ 				   struct nft_rule *rule)
+ {
+-	lockdep_commit_lock_is_held(ctx->net);
++	WARN_ON_ONCE(!lockdep_commit_lock_is_held(ctx->net));
  
- 	cgs_write_register(hwmgr->device, indirect_port, index);
--	return phm_wait_on_register(hwmgr, indirect_port + 1, mask, value);
-+	return phm_wait_on_register(hwmgr, indirect_port + 1, value, mask);
- }
+ 	nft_rule_expr_deactivate(ctx, rule, NFT_TRANS_RELEASE);
+ 	nf_tables_rule_destroy(ctx, rule);
+@@ -4173,7 +4173,7 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 			      struct nft_set_binding *binding,
+ 			      enum nft_trans_phase phase)
+ {
+-	lockdep_commit_lock_is_held(ctx->net);
++	WARN_ON_ONCE(!lockdep_commit_lock_is_held(ctx->net));
  
- int phm_wait_for_register_unequal(struct pp_hwmgr *hwmgr,
+ 	switch (phase) {
+ 	case NFT_TRANS_PREPARE_ERROR:
 -- 
 2.39.5
 
