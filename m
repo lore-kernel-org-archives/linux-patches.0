@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E69352094;
-	Tue, 26 Aug 2025 14:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E53635CEC2;
+	Tue, 26 Aug 2025 14:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218671; cv=none; b=IHJCnWjejU6oICq2Jhpeh7th6RW0AM7iVXL1CEZ8NJt3GUstzL3z1EY5GSfqhtvANdDtxnvnTKR9Q0V/fl6hAt1MB4Ve04T8ZSvhnzgwIuSPe0XR5KdnpQV/7zG/OOezFEZEVGVA4NNE+DxPMse4yGpnsoJergvEL8txzZlX2z8=
+	t=1756218674; cv=none; b=bS5waE8YhKrG78qY/MjkIoJ6Pa1iKDwNH3WYxMb1CH1SGXrAtYI9S4xxofTVtRwj67F/5/29XhVQyCTCUlupmOZMQXaceDpN+hy/002/kGizCyn8eEth9MLclREgvipYSxHVhJoZ/gs6cYQ0A5UO2flwhRKEBTW/Pfcb4qiHVw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218671; c=relaxed/simple;
-	bh=gE7FHaqPolG6trhc9uEPsvSQ20vEUTThbLfcEAAXih0=;
+	s=arc-20240116; t=1756218674; c=relaxed/simple;
+	bh=AtTRzIkkBF/Ilx4dVM4SHKBHVdx0P7qO6tXWPvIyeeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TayhxXi+tAt0m3JevetSPVlMb2kJH0tWzoDP00rOOLdUOlRNUn4zCqhasAQFWi6eE/PbVeli5EMN9tbySzfP7AL0yWGVbaD+IGiZgvBVOX2Kt7rTFpN0eZARwx8yFnWN18AN27P6OK9XQu5ctfcv5ei+S/jtIBHIC56z5qYExMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAUPzATU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oXGSNDwMDt/7eLnd8/s2aOUUEFUf866JswM1SNhMphY0woeIBVptm00DacZdFXI05nljicNnz0VgaGioqvK+Xb9brJdNFE5WdWX7vr7mFIjqo8mgaRbbSnNWD49iO0tv7tas0z94xzKo7K47ORdXNk6KqsisCM/ZvHgMRfcqi9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL9viy3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAUPzATU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFD2C4CEF1;
-	Tue, 26 Aug 2025 14:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL9viy3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8431C4CEF1;
+	Tue, 26 Aug 2025 14:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218671;
-	bh=gE7FHaqPolG6trhc9uEPsvSQ20vEUTThbLfcEAAXih0=;
+	s=korg; t=1756218674;
+	bh=AtTRzIkkBF/Ilx4dVM4SHKBHVdx0P7qO6tXWPvIyeeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hAUPzATUQ6gMsFRRvqka/SU4KI/A4cOx0/Q1qaiqDs1b8LkySmrC3DSsD/cbpjbO1
-	 FX4qpusdAvWW7aaOGcxt7PquyZZ7pBXOLMC5pYNV8osEneJYQU1rko75K6Lajl3U70
-	 5EJKhfY7x4o1mpM7ff52JHnzdWQMkptNmWRijc0Q=
+	b=tL9viy3XydN+8p5bi3DGoqZN2qSbmtxXaVZUYwV7gE/TbRv2gRPPEuPQOXvuAk58g
+	 Baq80SErSnytLtd0sdwqccFuZSyB7UqJRGSsLl9OX04oJVslEHHMxIbBT59ANaBUGU
+	 yQn+goAOMS3TcohgKDy64i49KJeNG5kBvaBX7GfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"xin.guo" <guoxin0309@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 081/403] cpufreq: Init policy->rwsem before it may be possibly used
-Date: Tue, 26 Aug 2025 13:06:47 +0200
-Message-ID: <20250826110908.745780207@linuxfoundation.org>
+Subject: [PATCH 5.4 090/403] tcp: fix tcp_ofo_queue() to avoid including too much DUP SACK range
+Date: Tue, 26 Aug 2025 13:06:56 +0200
+Message-ID: <20250826110909.152950677@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,47 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: xin.guo <guoxin0309@gmail.com>
 
-[ Upstream commit d1378d1d7edb3a4c4935a44fe834ae135be03564 ]
+[ Upstream commit a041f70e573e185d5d5fdbba53f0db2fbe7257ad ]
 
-In cpufreq_policy_put_kobj(), policy->rwsem is used. But in
-cpufreq_policy_alloc(), if freq_qos_add_notifier() returns an error, error
-path via err_kobj_remove or err_min_qos_notifier will be reached and
-cpufreq_policy_put_kobj() will be called before policy->rwsem is
-initialized. Thus, the calling of init_rwsem() should be moved to where
-before these two error paths can be reached.
+If the new coming segment covers more than one skbs in the ofo queue,
+and which seq is equal to rcv_nxt, then the sequence range
+that is duplicated will be sent as DUP SACK, the detail as below,
+in step6, the {501,2001} range is clearly including too much
+DUP SACK range, in violation of RFC 2883 rules.
 
-Fixes: 67d874c3b2c6 ("cpufreq: Register notifiers with the PM QoS framework")
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/20250709104145.2348017-3-zhenglifeng1@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+1. client > server: Flags [.], seq 501:1001, ack 1325288529, win 20000, length 500
+2. server > client: Flags [.], ack 1, [nop,nop,sack 1 {501:1001}], length 0
+3. client > server: Flags [.], seq 1501:2001, ack 1325288529, win 20000, length 500
+4. server > client: Flags [.], ack 1, [nop,nop,sack 2 {1501:2001} {501:1001}], length 0
+5. client > server: Flags [.], seq 1:2001, ack 1325288529, win 20000, length 2000
+6. server > client: Flags [.], ack 2001, [nop,nop,sack 1 {501:2001}], length 0
+
+After this fix, the final ACK is as below:
+
+6. server > client: Flags [.], ack 2001, options [nop,nop,sack 1 {501:1001}], length 0
+
+[edumazet] added a new packetdrill test in the following patch.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: xin.guo <guoxin0309@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250626123420.1933835-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 3 ++-
+ net/ipv4/tcp_input.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 2a2fea6743aa..00f12d23077c 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1220,6 +1220,8 @@ static struct cpufreq_policy *cpufreq_policy_alloc(unsigned int cpu)
- 		goto err_free_real_cpus;
- 	}
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 6b3bb8a59035..9d65e684e626 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4588,8 +4588,9 @@ static void tcp_ofo_queue(struct sock *sk)
  
-+	init_rwsem(&policy->rwsem);
+ 		if (before(TCP_SKB_CB(skb)->seq, dsack_high)) {
+ 			__u32 dsack = dsack_high;
 +
- 	freq_constraints_init(&policy->constraints);
- 
- 	policy->nb_min.notifier_call = cpufreq_notifier_min;
-@@ -1242,7 +1244,6 @@ static struct cpufreq_policy *cpufreq_policy_alloc(unsigned int cpu)
- 	}
- 
- 	INIT_LIST_HEAD(&policy->policy_list);
--	init_rwsem(&policy->rwsem);
- 	spin_lock_init(&policy->transition_lock);
- 	init_waitqueue_head(&policy->transition_wait);
- 	INIT_WORK(&policy->update, handle_update);
+ 			if (before(TCP_SKB_CB(skb)->end_seq, dsack_high))
+-				dsack_high = TCP_SKB_CB(skb)->end_seq;
++				dsack = TCP_SKB_CB(skb)->end_seq;
+ 			tcp_dsack_extend(sk, TCP_SKB_CB(skb)->seq, dsack);
+ 		}
+ 		p = rb_next(p);
 -- 
 2.39.5
 
