@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50AC92248A5;
-	Tue, 26 Aug 2025 11:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7501A256B;
+	Tue, 26 Aug 2025 11:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207257; cv=none; b=XKDIjj0mhWTwqEVUlbYLKPQuxH6/U+h12PdzPnaNdBm5v0hfT9pLgkd4DhDbF59DD/ohqMTu1zfHTslrg2ZvNmDBEZIruyaLmTOD/nFlsj8uP6jLetzIXsmmfj3GQUnkW1Ngrja4cpelXlpDu84u4bSh1fxnvkeEOJWipxMrAjk=
+	t=1756207260; cv=none; b=hiTK5hdwcaZd6Prnc8ncPmuCJd4RMLStL6DM3ykFsqsWS1HrGE21C/VsW3kpqXgisqZ4sWKrQOwwKU7B0YQa1aZKSJAv4YW+zXVFsHaID9siPyfg5hhM2WNreiaMgkuWhoCb1+sZnqTUmYafOxV5blVRNXKn3Pnm6RahdbcpZwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207257; c=relaxed/simple;
-	bh=g7hDztYRr4I/8SrnsyjsP3aAUBIA5GRra0VdNyg38jQ=;
+	s=arc-20240116; t=1756207260; c=relaxed/simple;
+	bh=Yengc2kCNMp9kKw3jr6632BSvIqV9f97hvaWax8NTEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YpH4lFK8enzonSmgv4vDkj1nq7l7aj/zTLnvIkXsrEoBHpTLxRQJe9IW2g1y2PxBaLfXV60+EqF7M7eWD4So7DGSR5ySRYnruJ0Io8jpG52gfinznESrjBof3iQOMcLQtF4izi8CCOOvC5f2RAuUjqRta4DJn5aLzS1NJS/Q8Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXRm1f8B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvRii25aoaWSuU8H7MBzjfe0nYYKTWUuoLM7Mls1slBqsBE27O69Zs1zfzt3CMw5bLB2A0OhIRp4Sa5ekuOuvJp/T9+JU04v5vENcMzZK9HhjZFWILpL4puWWUBHI+PfvmOuL4vQM5M00WvWx0Ka+nhaUBzDpLhe3qpTR3IWJ2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBUGgGDe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXRm1f8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56BAC4CEF1;
-	Tue, 26 Aug 2025 11:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBUGgGDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C41CC4CEF1;
+	Tue, 26 Aug 2025 11:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207257;
-	bh=g7hDztYRr4I/8SrnsyjsP3aAUBIA5GRra0VdNyg38jQ=;
+	s=korg; t=1756207259;
+	bh=Yengc2kCNMp9kKw3jr6632BSvIqV9f97hvaWax8NTEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXRm1f8BQVuTuFKct6zdebKxf3mgAB0WOHF+P8rfoQPOuHOI07HgcSy/0z7aF6fds
-	 ezZKwLTqLBaSt5j5Ppee8Df//mX8Oc54wqbiYaUbw06QAB2548WDXGlct/jPfiUuFo
-	 hlOeRNg4cK7m6UB75qGAH0p+Azzf5eRguDGoveZU=
+	b=ZBUGgGDeSd65dI3iZz/lketygQhARPeGmHwt5S+BvJX/6yKMhDeI+mjkfRIDVVV8V
+	 HVHGX6glWfJDsHvCOMEQg8DampLQsadpRtIBgoq8SnDqIQap/EeNbHjREyGTDM8Xqq
+	 rxSfCIBiLr2ioaAPK1IxBJzxxBhafAlceQ0qvzoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao@bytedance.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.16 110/457] block: restore default wbt enablement
-Date: Tue, 26 Aug 2025 13:06:34 +0200
-Message-ID: <20250826110940.089643504@linuxfoundation.org>
+	stable@kernel.org,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.16 111/457] f2fs: fix to avoid out-of-boundary access in dnode page
+Date: Tue, 26 Aug 2025 13:06:35 +0200
+Message-ID: <20250826110940.114722027@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,61 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao2870@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 8f5845e0743bf3512b71b3cb8afe06c192d6acc4 upstream.
+commit 77de19b6867f2740cdcb6c9c7e50d522b47847a4 upstream.
 
-The commit 245618f8e45f ("block: protect wbt_lat_usec using
-q->elevator_lock") protected wbt_enable_default() with
-q->elevator_lock; however, it also placed wbt_enable_default()
-before blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);, resulting
-in wbt failing to be enabled.
+As Jiaming Zhang reported:
 
-Moreover, the protection of wbt_enable_default() by q->elevator_lock
-was removed in commit 78c271344b6f ("block: move wbt_enable_default()
-out of queue freezing from sched ->exit()"), so we can directly fix
-this issue by placing wbt_enable_default() after
-blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);.
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x1c1/0x2a0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0x17e/0x800 mm/kasan/report.c:480
+ kasan_report+0x147/0x180 mm/kasan/report.c:593
+ data_blkaddr fs/f2fs/f2fs.h:3053 [inline]
+ f2fs_data_blkaddr fs/f2fs/f2fs.h:3058 [inline]
+ f2fs_get_dnode_of_data+0x1a09/0x1c40 fs/f2fs/node.c:855
+ f2fs_reserve_block+0x53/0x310 fs/f2fs/data.c:1195
+ prepare_write_begin fs/f2fs/data.c:3395 [inline]
+ f2fs_write_begin+0xf39/0x2190 fs/f2fs/data.c:3594
+ generic_perform_write+0x2c7/0x910 mm/filemap.c:4112
+ f2fs_buffered_write_iter fs/f2fs/file.c:4988 [inline]
+ f2fs_file_write_iter+0x1ec8/0x2410 fs/f2fs/file.c:5216
+ new_sync_write fs/read_write.c:593 [inline]
+ vfs_write+0x546/0xa90 fs/read_write.c:686
+ ksys_write+0x149/0x250 fs/read_write.c:738
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xf3/0x3d0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Additionally, this issue also causes the inability to read the
-wbt_lat_usec file, and the scenario is as follows:
+The root cause is in the corrupted image, there is a dnode has the same
+node id w/ its inode, so during f2fs_get_dnode_of_data(), it tries to
+access block address in dnode at offset 934, however it parses the dnode
+as inode node, so that get_dnode_addr() returns 360, then it tries to
+access page address from 360 + 934 * 4 = 4096 w/ 4 bytes.
 
-root@q:/sys/block/sda/queue# cat wbt_lat_usec
-cat: wbt_lat_usec: Invalid argument
+To fix this issue, let's add sanity check for node id of all direct nodes
+during f2fs_get_dnode_of_data().
 
-root@q:/data00/sjc/linux# ls /sys/kernel/debug/block/sda/rqos
-cannot access '/sys/kernel/debug/block/sda/rqos': No such file or directory
-
-root@q:/data00/sjc/linux# find /sys -name wbt
-/sys/kernel/debug/tracing/events/wbt
-
-After testing with this patch, wbt can be enabled normally.
-
-Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Cc: stable@vger.kernel.org
-Fixes: 245618f8e45f ("block: protect wbt_lat_usec using q->elevator_lock")
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250812154257.57540-1-sunjunchao@bytedance.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@kernel.org
+Reported-by: Jiaming Zhang <r772577952@gmail.com>
+Closes: https://groups.google.com/g/syzkaller/c/-ZnaaOOfO3M
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-sysfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/node.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -876,9 +876,9 @@ int blk_register_queue(struct gendisk *d
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -816,6 +816,16 @@ int f2fs_get_dnode_of_data(struct dnode_
+ 	for (i = 1; i <= level; i++) {
+ 		bool done = false;
  
- 	if (queue_is_mq(q))
- 		elevator_set_default(q);
--	wbt_enable_default(disk);
- 
- 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
-+	wbt_enable_default(disk);
- 
- 	/* Now everything is ready and send out KOBJ_ADD uevent */
- 	kobject_uevent(&disk->queue_kobj, KOBJ_ADD);
++		if (nids[i] && nids[i] == dn->inode->i_ino) {
++			err = -EFSCORRUPTED;
++			f2fs_err_ratelimited(sbi,
++				"inode mapping table is corrupted, run fsck to fix it, "
++				"ino:%lu, nid:%u, level:%d, offset:%d",
++				dn->inode->i_ino, nids[i], level, offset[level]);
++			set_sbi_flag(sbi, SBI_NEED_FSCK);
++			goto release_pages;
++		}
++
+ 		if (!nids[i] && mode == ALLOC_NODE) {
+ 			/* alloc new node */
+ 			if (!f2fs_alloc_nid(sbi, &(nids[i]))) {
 
 
