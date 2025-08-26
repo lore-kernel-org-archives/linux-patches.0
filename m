@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7530D30AAC2;
-	Tue, 26 Aug 2025 11:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028A920B7EE;
+	Tue, 26 Aug 2025 11:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207295; cv=none; b=r6i7Ja9dUUcAw23oyr+EO34W5I4zjeSZB13csgsc9mINfzCa6TbIV/1LIfUgsqO+0gYj1sMK/sfChCvr9u/okWjbscV+BP9p2vUWyopecaFbkYkkaCjQth0aP48Cy9J2nooUpmvPm5I12k3PSn6EBIoYvhFTXSB9VlUC+B+izZY=
+	t=1756207298; cv=none; b=GyXe+9tpORqx/PDcPk6UFjyD9LqtZEy53iPwKXZYUvEE2D2C6tomy75Z3kFN2Slx50RwK0lABtKJW1ejApYNTOQYFkwlNeOmC1TEUXVTmAn8AthxkTZtyOG4Wbl+hj3VN5y38xwz+M52ZgZDh+9jr11OTz4DFL1qdv9uBMG63ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207295; c=relaxed/simple;
-	bh=nqktC/uQ/oC80ebpkUgtpktI1nwVlCaAGBr1hMIN8Ok=;
+	s=arc-20240116; t=1756207298; c=relaxed/simple;
+	bh=futG8wvKRf7kSJ9HKysUS11sYxwixOB1e6Sg1Sz/ohg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDh11F/ZrWEnxsNYshQrR8kBZ2AWYTQFcMmhy5UiV2aZCl6cmcLWTuvlZIG9cahuXOnNVgoSmrOkwbzTITAGj4TDVDzW+fhj/AGRTIxU6RS2f/aBWjeWdYXX0SQWYJJm7ckpHKHKRGm6SujMHkK7ndFfRf9r06wfh58A8sE4N7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqSkE0w9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a3bMDCDbvgv/x8dpz+UXrqJdlyvB5TA42ngtRZf8stn1w+gvfmG1gKHmspfKoJS92l+ZvizUcs+JuZM+J7b/gKe8I6Qvxgr/0uU2ZAzmt5IkeaaF5cNcWXI+u6aGZS0LD/vtS66pgDjINqMe1JCQmzfWx2DIMbn8cCv++9aZPEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNEIRYIA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqSkE0w9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE616C4CEF1;
-	Tue, 26 Aug 2025 11:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNEIRYIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A4FC4CEF1;
+	Tue, 26 Aug 2025 11:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207295;
-	bh=nqktC/uQ/oC80ebpkUgtpktI1nwVlCaAGBr1hMIN8Ok=;
+	s=korg; t=1756207297;
+	bh=futG8wvKRf7kSJ9HKysUS11sYxwixOB1e6Sg1Sz/ohg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqSkE0w9h7oibWYvNbz04nNxog6SaaJJuc/biqwwJFaCWnyGZqP7Yfcg8dDetbkZm
-	 7DH+cKBB58JDPI8vEvzsoqFuWo7nW5KVDqqbFPOI5j1WnFinwHpYrQTuF3mWz5X56i
-	 k2OC+RPCuE4Ss2Ma064W2kWFoXK6pcbvMI+9JF+o=
+	b=SNEIRYIAgfxF7RRgJpLSrQXLPErM7v7U5MJGRM/Sppk2qlAxZa27GduIGkvauJ5Zj
+	 85sE2Xrhex5rRTqOyKu6rWqPWx16RQYi00XdB36hgtQspz4dSlky6skR0hBdkZ0HFK
+	 Jw7K1GndS2DlqKksE9JiK1WJMpCfUZuJJmQO0SMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	John David Anglin <dave.anglin@bell.net>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.16 127/457] parisc: Revise gateway LWS calls to probe user read access
-Date: Tue, 26 Aug 2025 13:06:51 +0200
-Message-ID: <20250826110940.513266458@linuxfoundation.org>
+Subject: [PATCH 6.16 128/457] parisc: Try to fixup kernel exception in bad_area_nosemaphore path of do_page_fault()
+Date: Tue, 26 Aug 2025 13:06:52 +0200
+Message-ID: <20250826110940.537129474@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,106 +52,28 @@ Content-Transfer-Encoding: 8bit
 
 From: John David Anglin <dave.anglin@bell.net>
 
-commit f6334f4ae9a4e962ba74b026e1d965dfdf8cbef8 upstream.
-
-We use load and stbys,e instructions to trigger memory reference
-interruptions without writing to memory. Because of the way read
-access support is implemented, read access interruptions are only
-triggered at privilege levels 2 and 3. The kernel and gateway
-page execute at privilege level 0, so this code never triggers
-a read access interruption. Thus, it is currently possible for
-user code to execute a LWS compare and swap operation at an
-address that is read protected at privilege level 3 (PRIV_USER).
-
-Fix this by probing read access rights at privilege level 3 and
-branching to lws_fault if access isn't allowed.
+commit f92a5e36b0c45cd12ac0d1bc44680c0dfae34543 upstream.
 
 Signed-off-by: John David Anglin <dave.anglin@bell.net>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: stable@vger.kernel.org # v5.12+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/syscall.S |   30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ arch/parisc/mm/fault.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/parisc/kernel/syscall.S
-+++ b/arch/parisc/kernel/syscall.S
-@@ -613,6 +613,9 @@ lws_compare_and_swap32:
- lws_compare_and_swap:
- 	/* Trigger memory reference interruptions without writing to memory */
- 1:	ldw	0(%r26), %r28
-+	proberi	(%r26), PRIV_USER, %r28
-+	comb,=,n	%r28, %r0, lws_fault /* backwards, likely not taken */
-+	nop
- 2:	stbys,e	%r0, 0(%r26)
+--- a/arch/parisc/mm/fault.c
++++ b/arch/parisc/mm/fault.c
+@@ -363,6 +363,10 @@ bad_area:
+ 	mmap_read_unlock(mm);
  
- 	/* Calculate 8-bit hash index from virtual address */
-@@ -767,6 +770,9 @@ cas2_lock_start:
- 	copy	%r26, %r28
- 	depi_safe	0, 31, 2, %r28
- 10:	ldw	0(%r28), %r1
-+	proberi	(%r28), PRIV_USER, %r1
-+	comb,=,n	%r1, %r0, lws_fault /* backwards, likely not taken */
-+	nop
- 11:	stbys,e	%r0, 0(%r28)
+ bad_area_nosemaphore:
++	if (!user_mode(regs) && fixup_exception(regs)) {
++		return;
++	}
++
+ 	if (user_mode(regs)) {
+ 		int signo, si_code;
  
- 	/* Calculate 8-bit hash index from virtual address */
-@@ -951,41 +957,47 @@ atomic_xchg_begin:
- 
- 	/* 8-bit exchange */
- 1:	ldb	0(%r24), %r20
-+	proberi	(%r24), PRIV_USER, %r20
-+	comb,=,n	%r20, %r0, lws_fault /* backwards, likely not taken */
-+	nop
- 	copy	%r23, %r20
- 	depi_safe	0, 31, 2, %r20
- 	b	atomic_xchg_start
- 2:	stbys,e	%r0, 0(%r20)
--	nop
--	nop
--	nop
- 
- 	/* 16-bit exchange */
- 3:	ldh	0(%r24), %r20
-+	proberi	(%r24), PRIV_USER, %r20
-+	comb,=,n	%r20, %r0, lws_fault /* backwards, likely not taken */
-+	nop
- 	copy	%r23, %r20
- 	depi_safe	0, 31, 2, %r20
- 	b	atomic_xchg_start
- 4:	stbys,e	%r0, 0(%r20)
--	nop
--	nop
--	nop
- 
- 	/* 32-bit exchange */
- 5:	ldw	0(%r24), %r20
-+	proberi	(%r24), PRIV_USER, %r20
-+	comb,=,n	%r20, %r0, lws_fault /* backwards, likely not taken */
-+	nop
- 	b	atomic_xchg_start
- 6:	stbys,e	%r0, 0(%r23)
- 	nop
- 	nop
--	nop
--	nop
--	nop
- 
- 	/* 64-bit exchange */
- #ifdef CONFIG_64BIT
- 7:	ldd	0(%r24), %r20
-+	proberi	(%r24), PRIV_USER, %r20
-+	comb,=,n	%r20, %r0, lws_fault /* backwards, likely not taken */
-+	nop
- 8:	stdby,e	%r0, 0(%r23)
- #else
- 7:	ldw	0(%r24), %r20
- 8:	ldw	4(%r24), %r20
-+	proberi	(%r24), PRIV_USER, %r20
-+	comb,=,n	%r20, %r0, lws_fault /* backwards, likely not taken */
-+	nop
- 	copy	%r23, %r20
- 	depi_safe	0, 31, 2, %r20
- 9:	stbys,e	%r0, 0(%r20)
 
 
