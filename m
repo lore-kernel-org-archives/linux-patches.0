@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904AA1F4C90;
-	Tue, 26 Aug 2025 14:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EE72FDC5C;
+	Tue, 26 Aug 2025 14:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217013; cv=none; b=gJD5kdTRboVNgV0VpO3SW46xVxHuez66BgmFEAdLFqDSNF3xzFEyjsAz4w32xzE8xzc7IbelUIPAWNEl9sqFX+Jj1OWxy2aoiaQmd4qJHek0S4ooF7XaHBaHDryUB8GwSTZ68Y4s862asf/FIuiBxgVw1v4sJSXcI63i04OCabo=
+	t=1756217016; cv=none; b=Zargy+bRJoAX0PBbEgNDC/S6h97uKrdRaU1q3H8ZLmdFfBzaFfsMlaMjYjxyJs+nlle79B4YKEGyoZ/x6LYD2Of555TPKr0l/viKVhblwZSBlYtQugR0Ql+h1bvFhmekwpJvjg59VvEUyHC0eQJTqJdR37Da6qI3jf/OGHQQze0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217013; c=relaxed/simple;
-	bh=D5vpd7UdrrAjJ48N51rsjIKX1Hx1+vRwebC4EVBcajg=;
+	s=arc-20240116; t=1756217016; c=relaxed/simple;
+	bh=vt2C1eB2aGzyyc7xo1yGtqI+vCxc3crNrEXKM/J45I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWwDs1dltQ4ThyP2ioORhe+h/jd3yfIRLI6J10lYMV7ZL7ePsAl2/WS6rggWkN6XbSP+jKTL6OWt0X++bImvIjy66q6Gov4ECFQFrD3Zta+E/CccDJBPalF8BBQBXBK9V4YY/MuAVWE/wWCk/KI80VJdxWYBFHC1iMw2UA3TZb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uc9Ekhs4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b9x7ZrXVjpuFtoNL+KFMNkq3MEvTaU+HPNDMawYCDjvxKfpVk7a8+wA0U9s+uQYO1ydLUEyFZCg83tvVZfYeCaLMlNUdVNEswpFmW4DJ7NKdEBFO16YDxUDQp47azf2IsJPqVtqtE0l/kA2OX1SKMwAlzsM7Uxam2fxc7PUFUlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HS1qUC7b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uc9Ekhs4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3BEC4CEF1;
-	Tue, 26 Aug 2025 14:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HS1qUC7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6046C4CEF1;
+	Tue, 26 Aug 2025 14:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217013;
-	bh=D5vpd7UdrrAjJ48N51rsjIKX1Hx1+vRwebC4EVBcajg=;
+	s=korg; t=1756217016;
+	bh=vt2C1eB2aGzyyc7xo1yGtqI+vCxc3crNrEXKM/J45I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uc9Ekhs4i8LgI3um8tvQHVBZ9NGScKLEk6qss5SWvg29QHp6771dxNqZIHOfrbCgW
-	 Mbd2VXEJmQ68aKh3pcdQQS2SpFcs9T+6pr4JAKrssdyywLQuksAMISVtYiBKXXFuJb
-	 2SgvA2N4BVJWxk3izmYbq2CMcPvGJxjJDypyZlBU=
+	b=HS1qUC7bEE4hwaM/C2ELqszMFyKTeeNK2FvpzA4UzEbmcQkhujz4I7ByutnhDLZ7O
+	 ZZWnHRxeFro9yc1eGHYIS5ZDhYcDoJCVewRKCDjwVA9JvIfBU4vtQebatFN6TsqWr3
+	 jHcgrIFiGYs21+rtLEokJTWXZIGNb3iOkhOxujRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zoey Mertes <zoey@cloudflare.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Baihan Li <libaihan@huawei.com>,
+	Yongbang Shi <shiyongbang@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 626/644] mlxsw: spectrum: Forward packets with an IPv4 link-local source IP
-Date: Tue, 26 Aug 2025 13:11:57 +0200
-Message-ID: <20250826111002.069413254@linuxfoundation.org>
+Subject: [PATCH 5.15 627/644] drm/hisilicon/hibmc: fix the hibmc loaded failed bug
+Date: Tue, 26 Aug 2025 13:11:58 +0200
+Message-ID: <20250826111002.094737325@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,55 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Baihan Li <libaihan@huawei.com>
 
-[ Upstream commit f604d3aaf64ff0d90cc875295474d3abf4155629 ]
+[ Upstream commit 93a08f856fcc5aaeeecad01f71bef3088588216a ]
 
-By default, the device does not forward IPv4 packets with a link-local
-source IP (i.e., 169.254.0.0/16). This behavior does not align with the
-kernel which does forward them.
+When hibmc loaded failed, the driver use hibmc_unload to free the
+resource, but the mutexes in mode.config are not init, which will
+access an NULL pointer. Just change goto statement to return, because
+hibnc_hw_init() doesn't need to free anything.
 
-Fix by instructing the device to forward such packets instead of
-dropping them.
-
-Fixes: ca360db4b825 ("mlxsw: spectrum: Disable DIP_LINK_LOCAL check in hardware pipeline")
-Reported-by: Zoey Mertes <zoey@cloudflare.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/6721e6b2c96feb80269e72ce8d0b426e2f32d99c.1755174341.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b3df5e65cc03 ("drm/hibmc: Drop drm_vblank_cleanup")
+Signed-off-by: Baihan Li <libaihan@huawei.com>
+Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250813094238.3722345-5-shiyongbang@huawei.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum.c | 2 ++
- drivers/net/ethernet/mellanox/mlxsw/trap.h     | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-index 35908a8c640a..85353042a790 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-@@ -2269,6 +2269,8 @@ static const struct mlxsw_listener mlxsw_sp_listener[] = {
- 			     ROUTER_EXP, false),
- 	MLXSW_SP_RXL_NO_MARK(DISCARD_ING_ROUTER_DIP_LINK_LOCAL, FORWARD,
- 			     ROUTER_EXP, false),
-+	MLXSW_SP_RXL_NO_MARK(DISCARD_ING_ROUTER_SIP_LINK_LOCAL, FORWARD,
-+			     ROUTER_EXP, false),
- 	/* Multicast Router Traps */
- 	MLXSW_SP_RXL_MARK(ACL1, TRAP_TO_CPU, MULTICAST, false),
- 	MLXSW_SP_RXL_L3_MARK(ACL2, TRAP_TO_CPU, MULTICAST, false),
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/trap.h b/drivers/net/ethernet/mellanox/mlxsw/trap.h
-index 9e070ab3ed76..eabaca6c240a 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/trap.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/trap.h
-@@ -93,6 +93,7 @@ enum {
- 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_IPV4_SIP_BC = 0x16A,
- 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_IPV4_DIP_LOCAL_NET = 0x16B,
- 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_DIP_LINK_LOCAL = 0x16C,
-+	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_SIP_LINK_LOCAL = 0x16D,
- 	MLXSW_TRAP_ID_DISCARD_ROUTER_IRIF_EN = 0x178,
- 	MLXSW_TRAP_ID_DISCARD_ROUTER_ERIF_EN = 0x179,
- 	MLXSW_TRAP_ID_DISCARD_ROUTER_LPM4 = 0x17B,
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+index 610fc8e135f9..7d0edecfc495 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+@@ -268,12 +268,12 @@ static int hibmc_load(struct drm_device *dev)
+ 
+ 	ret = hibmc_hw_init(priv);
+ 	if (ret)
+-		goto err;
++		return ret;
+ 
+ 	ret = drmm_vram_helper_init(dev, pci_resource_start(pdev, 0), priv->fb_size);
+ 	if (ret) {
+ 		drm_err(dev, "Error initializing VRAM MM; %d\n", ret);
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	ret = hibmc_kms_init(priv);
 -- 
 2.50.1
 
