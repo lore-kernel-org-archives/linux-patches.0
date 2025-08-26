@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD26239573;
-	Tue, 26 Aug 2025 11:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93938239573;
+	Tue, 26 Aug 2025 11:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207533; cv=none; b=fc/qRO9s4c/8ZtjrNduqBcEHgWE+71gesPhM+2F6Xj8uGDdY4N0YH5o+siiWxrKagItN2+Dnf5AGoaTZROKh+Pav77y57o49NX7BoHyCF/1k+vuohN0VEc5pbGV+xo4ji98Qj2lf/SuzyW/gNd0mnfw024za3DLD25ZmT7qx194=
+	t=1756207535; cv=none; b=C1MwgrBh+pJ9WlV5Y2tJxWgxcb4gt2VCPpT210sCLH8okFlZQr4uHirbGhvMaZ+9aVA4ISCZCX+YrOUXBzHdMQIhzVVVF+WXuUkUqEkLn4QCxuWKooaLnaVyp/jJ46979TZ/Vg+Gy9MLrNuZefIMTJ7uAj7CjLzo75PW53YarwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207533; c=relaxed/simple;
-	bh=Z+W1ohMcMSdOasWW9zxZjWV5BCSzxEuAnZsySRVNq9k=;
+	s=arc-20240116; t=1756207535; c=relaxed/simple;
+	bh=Nte42+I1cZEhUSdrfaUzXTqegPyLyt6BIiAje8oIrbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bL0itJnlCCAJdhxDA0+bVz+fGG40Ae8vv9Rc7DohHJYf56xXmXg/3e3+e+usyQ/VZu+hrEBakHTTqRiyjUbvDLQ8dddvjhUlvHTlAv3wyeA4G3Bx83lZ+/AJeaM5e360FC5GRbnLKNPUSGRE4wKSAQH/WET6TyAPcPXsAsl3xhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFeRJHtG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTh3BVczhgxKsaDTjNqpqBUE0a7mA7xSL6Q80pbLhKG56hHelR80oujOp5d7LfB/9/VOiDvDGFFkk0r9KoStOyDc7YZCKTux0uNTZ0KEZGApP27QvXmgxv8KI5qd290ls8RTQn32H2MfQHbFF+y1A5fC01n0YOlE3MFKf2+WkC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BL6YX9/t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFeRJHtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ABFC4CEF1;
-	Tue, 26 Aug 2025 11:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BL6YX9/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D081C4CEF1;
+	Tue, 26 Aug 2025 11:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207533;
-	bh=Z+W1ohMcMSdOasWW9zxZjWV5BCSzxEuAnZsySRVNq9k=;
+	s=korg; t=1756207535;
+	bh=Nte42+I1cZEhUSdrfaUzXTqegPyLyt6BIiAje8oIrbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFeRJHtG4pOi0dXsuqI3kRJpxZiKJUmRjJ1mPyY2XmcZcjMexkyBVItdXThl85GaG
-	 ZeyP9iRdg5R/Nt/bGsCwm7Clgn/P0JdO0tiKmUqlzAQXl1U/b8wIbGKMRqJUXESad6
-	 GbLMEn2HIf1t4tED9ZahETDJ71G4ULOyXZZqmTow=
+	b=BL6YX9/tKGyRgpUUt3XFevUtZMmtgp3eRztxNhkHBWruKgN3Z46aB+7n5FfJmkYPp
+	 9bSVxxjbFRiZeLvrFrQjvpUUbkcaWSyuD/n35zN7kQH4KoM8kxZcAsQ/Dc06hHQvTX
+	 RiozrNunxjSh9zsCHoxqIL+vC8j/HiY1GVpi4A6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xaver Hugl <xaver.hugl@kde.org>,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Harry Wentland <harry.wentland@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Siyang Liu <Security@tencent.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.16 187/457] drm/amd/display: Add primary plane to commits for correct VRR handling
-Date: Tue, 26 Aug 2025 13:07:51 +0200
-Message-ID: <20250826110941.991312690@linuxfoundation.org>
+Subject: [PATCH 6.16 188/457] drm/amd/display: fix a Null pointer dereference vulnerability
+Date: Tue, 26 Aug 2025 13:07:52 +0200
+Message-ID: <20250826110942.015562424@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -46,57 +48,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michel Dänzer <mdaenzer@redhat.com>
+From: Siyang Liu <Security@tencent.com>
 
-commit 3477c1b0972dc1c8a46f78e8fb1fa6966095b5ec upstream.
+commit 1bcf63a44381691d6192872801f830ce3250e367 upstream.
 
-amdgpu_dm_commit_planes calls update_freesync_state_on_stream only for
-the primary plane. If a commit affects a CRTC but not its primary plane,
-it would previously not trigger a refresh cycle or affect LFC, violating
-current UAPI semantics.
+[Why]
+A null pointer dereference vulnerability exists in the AMD display driver's
+(DC module) cleanup function dc_destruct().
+When display control context (dc->ctx) construction fails
+(due to memory allocation failure), this pointer remains NULL.
+During subsequent error handling when dc_destruct() is called,
+there's no NULL check before dereferencing the perf_trace member
+(dc->ctx->perf_trace), causing a kernel null pointer dereference crash.
 
-Fixes e.g. atomic commits affecting only the cursor plane being limited
-to the minimum refresh rate.
+[How]
+Check if dc->ctx is non-NULL before dereferencing.
 
-Don't do this for the legacy cursor ioctls though, it would break the
-UAPI semantics for those.
-
-Suggested-by: Xaver Hugl <xaver.hugl@kde.org>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3034
-Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Link: https://lore.kernel.org/r/tencent_54FF4252EDFB6533090A491A25EEF3EDBF06@qq.com
+Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+(Updated commit text and removed unnecessary error message)
+Signed-off-by: Siyang Liu <Security@tencent.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit cc7bfba95966251b254cb970c21627124da3b7f4)
+(cherry picked from commit 9dd8e2ba268c636c240a918e0a31e6feaee19404)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -661,6 +661,15 @@ static int amdgpu_dm_crtc_helper_atomic_
- 		return -EINVAL;
- 	}
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -938,17 +938,18 @@ static void dc_destruct(struct dc *dc)
+ 	if (dc->link_srv)
+ 		link_destroy_link_service(&dc->link_srv);
  
-+	if (!state->legacy_cursor_update && amdgpu_dm_crtc_vrr_active(dm_crtc_state)) {
-+		struct drm_plane_state *primary_state;
-+
-+		/* Pull in primary plane for correct VRR handling */
-+		primary_state = drm_atomic_get_plane_state(state, crtc->primary);
-+		if (IS_ERR(primary_state))
-+			return PTR_ERR(primary_state);
+-	if (dc->ctx->gpio_service)
+-		dal_gpio_service_destroy(&dc->ctx->gpio_service);
++	if (dc->ctx) {
++		if (dc->ctx->gpio_service)
++			dal_gpio_service_destroy(&dc->ctx->gpio_service);
+ 
+-	if (dc->ctx->created_bios)
+-		dal_bios_parser_destroy(&dc->ctx->dc_bios);
++		if (dc->ctx->created_bios)
++			dal_bios_parser_destroy(&dc->ctx->dc_bios);
++		kfree(dc->ctx->logger);
++		dc_perf_trace_destroy(&dc->ctx->perf_trace);
+ 
+-	kfree(dc->ctx->logger);
+-	dc_perf_trace_destroy(&dc->ctx->perf_trace);
+-
+-	kfree(dc->ctx);
+-	dc->ctx = NULL;
++		kfree(dc->ctx);
++		dc->ctx = NULL;
 +	}
-+
- 	/* In some use cases, like reset, no stream is attached */
- 	if (!dm_crtc_state->stream)
- 		return 0;
+ 
+ 	kfree(dc->bw_vbios);
+ 	dc->bw_vbios = NULL;
 
 
