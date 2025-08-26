@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1893C30F55C;
-	Tue, 26 Aug 2025 11:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AC63376BD;
+	Tue, 26 Aug 2025 11:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207748; cv=none; b=ZiBx1K6SU1Tv5tDrWD8sETZf9JMaJtD+wpuYTsNTBuegbonCGIFJbmC4uSm7VnFvBe9rUmjfDEfnH1ZKY1S33jn9U13Uqn27ctFgZvk6WEelmNsZ0Yqob+G1yPEJJEpOJ+DTkiISzxkJzQ5Qmwr4ER4tyN+nethV7zbPxwsb4Os=
+	t=1756207750; cv=none; b=rPS6NIE738MJAa9lYMsE6ND/N69CnJmGI6NZ4Gya8wOJ2sCr8J1bHTSwxWhy/tG4UMZowXtGRqqOTG8XInhCaaTE5nqyPxjG5uw8foCoU1M/MVliBQ44ziysXcw+PI5xyEYhufLdt5LI7BAqN1KUB5wekaOIogT++3jjzH2XP4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207748; c=relaxed/simple;
-	bh=3Y4tSHO90pFpJ04qAMElXA++ObEcTvhyfGblepnp30c=;
+	s=arc-20240116; t=1756207750; c=relaxed/simple;
+	bh=4Cf7UGTJdl9qvLzcBRBy8I6ta7jLtfIiB3DDRFbLF/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRndIK+knrrnI8m+woPolEn5gZ349fVAjuYEvHVokkx2sPcLzcsxbIvVVBpCYZlNe2spjLnygP2YwUnNGBs+sv3AgZDPJwJHX389qzn8fNTErbQCE8DPLSGUF0S8EX8T0C0k+pEFFqNEokNH3hVy027sNUVQJnCxQESz8kBACD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCUcNFPg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fY9F3f5P49g/MeVwPWjrgO5jkK3/ZEdiAyiVvzrVTl+GYaj9SJHTr2rbYhKlHz7yuyGpVZwAHsWlo/nGo0EcfZ2CaWkI6e6RhcNs8+4bOqHQBTGcr7YBvrnJfUwUTmeDeQtBteOQVNYjBl4STCc9RyuZ4pzxrH0xmho9OIlrlg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2VAJZBC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCUcNFPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C101C4CEF1;
-	Tue, 26 Aug 2025 11:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2VAJZBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BA6C4CEF1;
+	Tue, 26 Aug 2025 11:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207748;
-	bh=3Y4tSHO90pFpJ04qAMElXA++ObEcTvhyfGblepnp30c=;
+	s=korg; t=1756207750;
+	bh=4Cf7UGTJdl9qvLzcBRBy8I6ta7jLtfIiB3DDRFbLF/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UCUcNFPg3htRfnaNAbkRC3OvQkHuJUVuy6uaWGuQSXjzKjeL+M/nk8ae+Z15ad8yQ
-	 y7Cq3ECH9VBYNDLDVpr8Nxx65SpPRm5eO0ZhuH/gfGTlinVAgFwYzTb5TUNd6kCab9
-	 nRsv15UDN3DXp8Pf/uPnBir5rB12sMB/j9Zen3uA=
+	b=c2VAJZBCZcUtxIxA4xbv+eazr5l32vlY98OOjxUEQbK2FmAbfB4V+CAc6QHg3TURo
+	 zb6CkYC75GGsWpRpZc+P8mj+rBJiOaXQ82ZWZO+h3XD0Ql/RpcngJSwmwWX/HNAQNj
+	 5Ww77HRMGmO9XayynoZBzTAOFGQJMMxP7PbkNIq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.16 301/457] iio: pressure: bmp280: Use IS_ERR() in bmp280_common_probe()
-Date: Tue, 26 Aug 2025 13:09:45 +0200
-Message-ID: <20250826110944.811497046@linuxfoundation.org>
+Subject: [PATCH 6.16 302/457] iio: adc: rzg2l_adc: Set driver data before enabling runtime PM
+Date: Tue, 26 Aug 2025 13:09:46 +0200
+Message-ID: <20250826110944.837287059@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,43 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 43c0f6456f801181a80b73d95def0e0fd134e1cc upstream.
+commit c69e13965f26b8058f538ea8bdbd2d7718cf1fbe upstream.
 
-`devm_gpiod_get_optional()` may return non-NULL error pointer on failure.
-Check its return value using `IS_ERR()` and propagate the error if
-necessary.
+When stress-testing the system by repeatedly unbinding and binding the ADC
+device in a loop, and the ADC is a supplier for another device (e.g., a
+thermal hardware block that reads temperature through the ADC), it may
+happen that the ADC device is runtime-resumed immediately after runtime PM
+is enabled, triggered by its consumer. At this point, since drvdata is not
+yet set and the driver's runtime PM callbacks rely on it, a crash can
+occur. To avoid this, set drvdata just after it was allocated.
 
-Fixes: df6e71256c84 ("iio: pressure: bmp280: Explicitly mark GPIO optional")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250818092740.545379-2-salah.triki@gmail.com
+Fixes: 89ee8174e8c8 ("iio: adc: rzg2l_adc: Simplify the runtime PM code")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20250810123328.800104-3-claudiu.beznea.uj@bp.renesas.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/bmp280-core.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/iio/adc/rzg2l_adc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/pressure/bmp280-core.c
-+++ b/drivers/iio/pressure/bmp280-core.c
-@@ -3216,11 +3216,12 @@ int bmp280_common_probe(struct device *d
+--- a/drivers/iio/adc/rzg2l_adc.c
++++ b/drivers/iio/adc/rzg2l_adc.c
+@@ -428,6 +428,8 @@ static int rzg2l_adc_probe(struct platfo
+ 	if (!indio_dev)
+ 		return -ENOMEM;
  
- 	/* Bring chip out of reset if there is an assigned GPIO line */
- 	gpiod = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
-+	if (IS_ERR(gpiod))
-+		return dev_err_probe(dev, PTR_ERR(gpiod), "failed to get reset GPIO\n");
++	platform_set_drvdata(pdev, indio_dev);
 +
- 	/* Deassert the signal */
--	if (gpiod) {
--		dev_info(dev, "release reset\n");
--		gpiod_set_value(gpiod, 0);
--	}
-+	dev_info(dev, "release reset\n");
-+	gpiod_set_value(gpiod, 0);
+ 	adc = iio_priv(indio_dev);
  
- 	data->regmap = regmap;
+ 	adc->hw_params = device_get_match_data(dev);
+@@ -460,8 +462,6 @@ static int rzg2l_adc_probe(struct platfo
+ 	if (ret)
+ 		return ret;
  
+-	platform_set_drvdata(pdev, indio_dev);
+-
+ 	ret = rzg2l_adc_hw_init(dev, adc);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret,
 
 
