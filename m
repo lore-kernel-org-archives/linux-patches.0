@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA31E20DD51;
-	Tue, 26 Aug 2025 14:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847CE2AD32;
+	Tue, 26 Aug 2025 14:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218764; cv=none; b=NXkDn4BJ12KpY3AYp63sw+sYkRGChPNUMclOjPT2gyBQHJnQQfi29AvYlA8zc2ZqS7GsuHFxxonRynayKjsOmXV9AWVJlY7UdgdsDvq8eTSoRgs8pCyQzQj/JAsm2Tuaz5/OjKig7m/j7sZ2ZHvo9m6gv3iiO6yH0QlVfERr174=
+	t=1756218767; cv=none; b=cimfJcazocEISuKoxvUni1CcijBMedgk/5y3VE4Sv407vcPwoLZDxY7FmwnGdUIeTyliPLqTvouz7KupAysd8GTGebfkMG6pxXVX+jmMJAtUdRG0gZuKOPi6oNG+/nRfBIBz87HW5Y+cdKZgHSpjKQWm79qVX4Fn6EZJdiAI/h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218764; c=relaxed/simple;
-	bh=rdrhy5eoI7fNBm/NMR1dK/g1TVOFmRt2WKYa7HHLF68=;
+	s=arc-20240116; t=1756218767; c=relaxed/simple;
+	bh=izCwNyT877laCACwvlYbZ7W2E3rw/nER3vNRdx8tw3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9F3hY7HDVpOKYww4abfYDMTFMCCsXhX+zm2fujDBlljV6Qtm6x9iLrkY3MYX3u+eLF1HdqCVB2VlADMnTtOYOT5ye3RrVJQTjOi5ZGDVph+R67jVeI1ER49IzDEaAUgugq20hUM/ZDOuIl6s5uKfZEd2WYPA1LQ6A7naOtzVWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NhxPzIL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shHuRztMRCKzXEojQ5ReFydAQDxXm0rbV0mqk8WngpjLP3IyFUwY5KYintxBZVEgEYdrUBpQsyMf6rJQYpcHHzsKyaXb0WAJhJyzNrGiHGx702lwJoHv54xfXfZrr16mAVj4eKDimzdCgQc8Z6W00iLJP8alTdxI/hSFcltZgi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNltVAN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NhxPzIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECDDC4CEF1;
-	Tue, 26 Aug 2025 14:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNltVAN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C92C4CEF1;
+	Tue, 26 Aug 2025 14:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218764;
-	bh=rdrhy5eoI7fNBm/NMR1dK/g1TVOFmRt2WKYa7HHLF68=;
+	s=korg; t=1756218767;
+	bh=izCwNyT877laCACwvlYbZ7W2E3rw/nER3vNRdx8tw3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NhxPzILJm1Wq9KCrNByVPJBu365WnIsQ6TgeNHohVifjkMOWFFC9YgZyCzL/nobX
-	 fQzZLpGmZgJ+Hd2rFbOyICWl2nhAL3hUEHUe/xBbgt0elwX+N33m/18R2Fa+0rrGoo
-	 W9RZXj4hQg5LTYxeTsy7CBQRXNTRDBnIG9dAg1gU=
+	b=MNltVAN+K75Lj61ktnKjpPkkkYouR1KGba4gFhq1HGG8Vl03ctaXORzYIOxrgoQaN
+	 GRAZvDB1ywRXnI1muwIU5K53whrINcM3gMQ+qh4TpoeunBAQJMewvoBD0345D+llaW
+	 PCQAP1D4dDehDUUuylOxZcCqZU3vPTDe+hpaKmhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Zheng Yu <zheng.yu@northwestern.edu>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 125/403] fbdev: imxfb: Check fb_add_videomode to prevent null-ptr-deref
-Date: Tue, 26 Aug 2025 13:07:31 +0200
-Message-ID: <20250826110910.191649924@linuxfoundation.org>
+Subject: [PATCH 5.4 126/403] jfs: fix metapage reference count leak in dbAllocCtl
+Date: Tue, 26 Aug 2025 13:07:32 +0200
+Message-ID: <20250826110910.220955841@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,44 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Zheng Yu <zheng.yu@northwestern.edu>
 
-[ Upstream commit da11e6a30e0bb8e911288bdc443b3dc8f6a7cac7 ]
+[ Upstream commit 856db37592021e9155384094e331e2d4589f28b1 ]
 
-fb_add_videomode() can fail with -ENOMEM when its internal kmalloc() cannot
-allocate a struct fb_modelist.  If that happens, the modelist stays empty but
-the driver continues to register.  Add a check for its return value to prevent
-poteintial null-ptr-deref, which is similar to the commit 17186f1f90d3 ("fbdev:
-Fix do_register_framebuffer to prevent null-ptr-deref in fb_videomode_to_var").
+In dbAllocCtl(), read_metapage() increases the reference count of the
+metapage. However, when dp->tree.budmin < 0, the function returns -EIO
+without calling release_metapage() to decrease the reference count,
+leading to a memory leak.
 
-Fixes: 1b6c79361ba5 ("video: imxfb: Add DT support")
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Add release_metapage(mp) before the error return to properly manage
+the metapage reference count and prevent the leak.
+
+Fixes: a5f5e4698f8abbb25fe4959814093fb5bfa1aa9d ("jfs: fix shift-out-of-bounds in dbSplit")
+
+Signed-off-by: Zheng Yu <zheng.yu@northwestern.edu>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/imxfb.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/jfs/jfs_dmap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/imxfb.c b/drivers/video/fbdev/imxfb.c
-index dbc8808b093a..8dac15bf2b0c 100644
---- a/drivers/video/fbdev/imxfb.c
-+++ b/drivers/video/fbdev/imxfb.c
-@@ -992,8 +992,13 @@ static int imxfb_probe(struct platform_device *pdev)
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 8cffb5dd98cf..15f885d2fa3d 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -1875,8 +1875,10 @@ dbAllocCtl(struct bmap * bmp, s64 nblocks, int l2nb, s64 blkno, s64 * results)
+ 			return -EIO;
+ 		dp = (struct dmap *) mp->data;
  
- 
- 	INIT_LIST_HEAD(&info->modelist);
--	for (i = 0; i < fbi->num_modes; i++)
--		fb_add_videomode(&fbi->mode[i].mode, &info->modelist);
-+	for (i = 0; i < fbi->num_modes; i++) {
-+		ret = fb_add_videomode(&fbi->mode[i].mode, &info->modelist);
-+		if (ret) {
-+			dev_err(&pdev->dev, "Failed to add videomode\n");
-+			goto failed_cmap;
+-		if (dp->tree.budmin < 0)
++		if (dp->tree.budmin < 0) {
++			release_metapage(mp);
+ 			return -EIO;
 +		}
-+	}
  
- 	/*
- 	 * This makes sure that our colour bitfield
+ 		/* try to allocate the blocks.
+ 		 */
 -- 
 2.39.5
 
