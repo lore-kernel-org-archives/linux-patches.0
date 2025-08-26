@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34A5284678;
-	Tue, 26 Aug 2025 13:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D6334A325;
+	Tue, 26 Aug 2025 13:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214007; cv=none; b=rcY6eMneh1+XXbHf7LRPtjCJH9FUgezmo3MIJJ+QhmaIGkjXQFqqOVVXoqZ7BXAE7dRlblnGhLdYt5yiSeKZGgWYbUWJa1U3NblzqPPFHbA8Kw1PfIvKf8ZdQeBYo1UUhbJE6IL/39bk6GJuvE8Hok2HrL6EeOyI61iGn+nFLLE=
+	t=1756214010; cv=none; b=iwqbGtirHzE4y9dg9UaiggLiivtI4XBEPAljHJQEiaSFn3AfCGq7KJib6A9S0wuyKrKhTMNxYjvPcMEAi6YBnawf4y5F9c9nUWX5AKSeEY7Tw+bySkueZ+Z4S7A0K11GE/Bvsi1DC56lkJeQno83xh8gz6jt60PopVA8Bv8h1sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214007; c=relaxed/simple;
-	bh=lDHwiCOYCZzMV1wDVsY8CUf4uxdvQqtQVf5Uvm8VDJY=;
+	s=arc-20240116; t=1756214010; c=relaxed/simple;
+	bh=csRwhfgL3wrzcGUbKEC6NLJqn5fbOUB/OMsXiHsQuZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wsn5tv+4BKs4CBIK/BGLLtbcD6NntsW6UjSrI1rqn7x6QzbR53R8+suWwbiwOw3eA0NKmhD6cGRXPbdvRaZyBqRBW/Lp+0CUJV8WyRkXBUFrny4/tfbkRJYqtKtar4+Ch83z+Nns31ozkegGwzm9cIHpHkD2mngXPO4zvaw83jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1k05KEAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=usiOBIxLPo8dOPzd08H6unpEQC0XDPlW3WmIqCzAOP+dlZBX6swqUEDaJWjZ6T6fGO2kTyP8TL3VVK0QigvI7ElzZYbU0jnom/d+AtJ0qePhMcxCKJRc8pTQWlGpgA22B5qgJkU3FYZ3Eoe+0MBkddEA+YnzF9s48MCixM0/fGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vh7lpsex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1k05KEAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207FFC4CEF1;
-	Tue, 26 Aug 2025 13:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vh7lpsex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D618DC4CEF4;
+	Tue, 26 Aug 2025 13:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214007;
-	bh=lDHwiCOYCZzMV1wDVsY8CUf4uxdvQqtQVf5Uvm8VDJY=;
+	s=korg; t=1756214010;
+	bh=csRwhfgL3wrzcGUbKEC6NLJqn5fbOUB/OMsXiHsQuZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1k05KEAvYJswxkrGVe77Mz5N/FOaXXMoX3XsYE90TNkdvxV+raipp1b4pyYXygrH9
-	 DavKKJK99EmLSzju2NKktUcbYK+m+occcK9DLNOtkS/HFimJVF9xUTEk5wA0KhYq53
-	 4B7/XP/DLaX/+CG45F6LKM7SHQcHj7bFxwwIS764=
+	b=Vh7lpsextrrIeycTD5DpFu1p3AyTMi02Z21DDYdxS7e7qxtIfpX91W28eR9O6sg0v
+	 elpTl0gFnKM5SzjAGRt3lWX3Xqo51jxrdkIpDK8naqoA5jhUiZHlQjeW8xBekcKNau
+	 CpK0uSFaB3mTPSDnJMSmhBa+MRHuUFOHZkxYb1SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 563/587] ALSA: usb-audio: Fix size validation in convert_chmap_v3()
-Date: Tue, 26 Aug 2025 13:11:52 +0200
-Message-ID: <20250826111007.348135817@linuxfoundation.org>
+Subject: [PATCH 6.6 564/587] drm/amd/display: Add null pointer check in mod_hdcp_hdcp1_create_session()
+Date: Tue, 26 Aug 2025 13:11:53 +0200
+Message-ID: <20250826111007.375537450@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,35 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 89f0addeee3cb2dc49837599330ed9c4612f05b0 ]
+[ Upstream commit 7a2ca2ea64b1b63c8baa94a8f5deb70b2248d119 ]
 
-The "p" pointer is void so sizeof(*p) is 1.  The intent was to check
-sizeof(*cs_desc), which is 3, instead.
+The function mod_hdcp_hdcp1_create_session() calls the function
+get_first_active_display(), but does not check its return value.
+The return value is a null pointer if the display list is empty.
+This will lead to a null pointer dereference.
 
-Fixes: ecfd41166b72 ("ALSA: usb-audio: Validate UAC3 cluster segment descriptors")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aKL5kftC1qGt6lpv@stanley.mountain
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add a null pointer check for get_first_active_display() and return
+MOD_HDCP_STATUS_DISPLAY_NOT_FOUND if the function return null.
+
+This is similar to the commit c3e9826a2202
+("drm/amd/display: Add null pointer check for get_first_active_display()").
+
+Fixes: 2deade5ede56 ("drm/amd/display: Remove hdcp display state with mst fix")
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5e43eb3cd731649c4f8b9134f857be62a416c893)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/stream.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/usb/stream.c b/sound/usb/stream.c
-index f5a6e990d07a..12a5e053ec54 100644
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -349,7 +349,7 @@ snd_pcm_chmap_elem *convert_chmap_v3(struct uac3_cluster_header_descriptor
- 		u16 cs_len;
- 		u8 cs_type;
+diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
+index 7f8f127e7722..ab6964ca1c2b 100644
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
+@@ -260,6 +260,9 @@ enum mod_hdcp_status mod_hdcp_hdcp1_create_session(struct mod_hdcp *hdcp)
+ 		return MOD_HDCP_STATUS_FAILURE;
+ 	}
  
--		if (len < sizeof(*p))
-+		if (len < sizeof(*cs_desc))
- 			break;
- 		cs_len = le16_to_cpu(cs_desc->wLength);
- 		if (len < cs_len)
++	if (!display)
++		return MOD_HDCP_STATUS_DISPLAY_NOT_FOUND;
++
+ 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
+ 
+ 	mutex_lock(&psp->hdcp_context.mutex);
 -- 
 2.50.1
 
