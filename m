@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882E2319867;
-	Tue, 26 Aug 2025 13:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853D229D291;
+	Tue, 26 Aug 2025 13:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215873; cv=none; b=gJQnYyWeQg9PMhE/kZKHdurCU15sDqRg0JkmpbiEcL4wpewyqfGZiW2gZrycfAeNAJOs+GRGwDsG0sGy9yi32Wc4ktlNNBONuqanK0WP2UL1U8M3OirVXkb1JwcdzfW39muzE/YB3SATDDs3ghUeEB4h/L65NLGOQBcUW6Fseyo=
+	t=1756215876; cv=none; b=AJgHXELsCv+xNdDjMZBcBC2IR62mtYvEHST7xrNvLdA/3uYnMsOZ+FsuK5lA7n78vvwXD1/DiRV+cHj5/XQUhRuFFyTivxTKsnjW6mGwE6fmYZBcqttHrGrO7TzqYY3PJNL35GtB6sQFDsM5fkmqtCon2nGNwdMLYYCgDQtvLiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215873; c=relaxed/simple;
-	bh=TqMSUsIfUZZsLrtk9sgxVnh9hGnHPwB2QCbpYLWAbwQ=;
+	s=arc-20240116; t=1756215876; c=relaxed/simple;
+	bh=wIu1A+KeBCKM/12UgldH4b2nOOfACVINeUI/vYvmSj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ge0NBNfUIZhWQZ6VDyNu4B0jlh53RF0ImX8faKH9UnBDINY0KFHrZXg6GLD255czxHymJSZBYwjYP/ArZLNYdUHOm6CKtbix8w/lSve8Yz0a2LlAQDm5l8IDibVU14HjgyUka1bRBnF52hZN0Jivese5Uu5uo7icv66STIQoXjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCsqknj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYi15ycjugLzqZOPGRScqE0K6ZPOBLceSLkbNEBzCrRint6Cns+ZMeiFVxOCfqXPr5fQKBdpFTBZ0Gy98ygCeLepBlj6rVTafWHg05Bpc094mJuwM3EkTZXu0+/HmA7AZNpmpBb+tEu/v0WUAKjIkTNvNcz5E5l7YCjruKSZegA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FI1Fh0ei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCsqknj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1879CC4CEF1;
-	Tue, 26 Aug 2025 13:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FI1Fh0ei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20F2C4CEF1;
+	Tue, 26 Aug 2025 13:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215873;
-	bh=TqMSUsIfUZZsLrtk9sgxVnh9hGnHPwB2QCbpYLWAbwQ=;
+	s=korg; t=1756215876;
+	bh=wIu1A+KeBCKM/12UgldH4b2nOOfACVINeUI/vYvmSj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCsqknj7/UpoBuPDJxPFJb0UY9rBo5l7JlUq7ZnsE3PsqXNHAKXkVZmeytZVktjDm
-	 xRAr7cJSqK8OIAsC+R7PtzjKMnsv8qvRL3kdQKJd5tcPCjf7N4SU3GwyAVXG4myuDO
-	 OP1m6XVVGO6RWomkCifCbjs5qix0kzMlIxk7aZh0=
+	b=FI1Fh0eiS6agrsQBPjpQ4xZH4s7Ji7GzdHuKlKGibO+6Q46p4OVfvgTPi2v0YJUDc
+	 0IJzYS7+WxFMCcidWRo0enco9YYtiyD0FtO2D09cv2md0HgR4fwhU2uix+Ml2vVv6i
+	 hc+VnXDeGwi5vdoK30TEIzoiDim0RUG5Fa033b7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/644] mtd: fix possible integer overflow in erase_xfer()
-Date: Tue, 26 Aug 2025 13:04:18 +0200
-Message-ID: <20250826110950.619081012@linuxfoundation.org>
+Subject: [PATCH 5.15 158/644] Reapply "wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()"
+Date: Tue, 26 Aug 2025 13:04:09 +0200
+Message-ID: <20250826110950.391754632@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,39 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 9358bdb9f9f54d94ceafc650deffefd737d19fdd ]
+[ Upstream commit 754fe848b3b297fc85ec24cd959bad22b6df8cb8 ]
 
-The expression '1 << EraseUnitSize' is evaluated in int, which causes
-a negative result when shifting by 31 - the upper bound of the valid
-range [10, 31], enforced by scan_header(). This leads to incorrect
-extension when storing the result in 'erase->len' (uint64_t), producing
-a large unexpected value.
+This reverts commit 0937cb5f345c ("Revert "wifi: mac80211: Update
+skb's control block key in ieee80211_tx_dequeue()"").
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+This commit broke TX with 802.11 encapsulation HW offloading, now that
+this is fixed, reapply it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://patch.msgid.link/66b8fc39fb0194fa06c9ca7eeb6ffe0118dcb3ec.1752765971.git.repk@triplefau.lt
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ftl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/tx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/ftl.c b/drivers/mtd/ftl.c
-index f655d2905270..243d7faa128a 100644
---- a/drivers/mtd/ftl.c
-+++ b/drivers/mtd/ftl.c
-@@ -344,7 +344,7 @@ static int erase_xfer(partition_t *part,
-             return -ENOMEM;
- 
-     erase->addr = xfer->Offset;
--    erase->len = 1 << part->header.EraseUnitSize;
-+    erase->len = 1ULL << part->header.EraseUnitSize;
- 
-     ret = mtd_erase(part->mbd.mtd, erase);
-     if (!ret) {
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 4ab891c8416d..a5be5fe5c6b4 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3711,6 +3711,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 	 * The key can be removed while the packet was queued, so need to call
+ 	 * this here to get the current key.
+ 	 */
++	info->control.hw_key = NULL;
+ 	r = ieee80211_tx_h_select_key(&tx);
+ 	if (r != TX_CONTINUE) {
+ 		ieee80211_free_txskb(&local->hw, skb);
 -- 
 2.39.5
 
