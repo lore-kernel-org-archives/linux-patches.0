@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63331DEFF5;
-	Tue, 26 Aug 2025 12:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA5214883F;
+	Tue, 26 Aug 2025 12:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212943; cv=none; b=rkOw/28TNLnQHh0oByNNDTwyeVe+Z+cekEbkU4gzE3OecBwQ2YTHnrYfmRN+nZMfVfffdlMPYIoPYvIk3mLhB9Vp43qDW+tdepapXj0k5Zvzc3uWHuO3EI3nHAkqXsDZ24YY5+kuAePK8m8JHsM1qQMOkj1QaWiZcOMql5+NcWI=
+	t=1756212946; cv=none; b=FsAw+SRr2EP31iuv3/yU+qjUyDI3pn9H1q9Qp1awPpFVoKdLGthxDs6XlchfBAGB4AoakvM/f1897CBJqANRZm80lh4D+bJ2rkMpSNdf7krtevJ/X37TJzmyKFCjZsAmiERK5/pObr+2S8bHYr4R1A9EeJZQfSrqlCN3JhM3cDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212943; c=relaxed/simple;
-	bh=idQoVXWA0UMvPX/HudZ9YPkIRnOauooC8a1hGaWdbB8=;
+	s=arc-20240116; t=1756212946; c=relaxed/simple;
+	bh=ZivF05qv0kSCQUL9ptJeUfJhQKBYkfqn0BTUfGpJLkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y1PAgS4PrEAZx3/kgBj+K8SnVguc4LyO2Zyz276gVCxJR1vnXVbRel67CjUwVZxJUDtYFWb73BG8602rGyHslI/Ds7AYfhUbhE2JiSXuTMci7XPAjyh0n2no27oOs5shDh5j+WtbuZ7E/j2fbi7lIVboV3homPsTJwKbe3AR/bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erlMjw0L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tBCL9jqQt2hOMkxROh+KOc9KmJsHBnmvjk4fARfytSTURzFePFRdpV+tppKF1r0x1ahSFCFaEdT4Cj7Ki5RKXGdFDlTqZKnfl1XH/GuYYpqNv8AXMqdIN2ChwAbfVGfeRTChtZFXGHLqglBgAmOLIPjCZNdlllIM2m6lBZuGKtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERNcY5wu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erlMjw0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58012C4CEF1;
-	Tue, 26 Aug 2025 12:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERNcY5wu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1959C4CEF1;
+	Tue, 26 Aug 2025 12:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212943;
-	bh=idQoVXWA0UMvPX/HudZ9YPkIRnOauooC8a1hGaWdbB8=;
+	s=korg; t=1756212946;
+	bh=ZivF05qv0kSCQUL9ptJeUfJhQKBYkfqn0BTUfGpJLkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=erlMjw0LZvauDQEtY92QeLIlpnfMQ4FSRhyDfowJO9adR/IPmvvgiUVOn+layOasX
-	 I6eS4o8WLnSoIJUdXnDVP3ROm0OnFTbvTc19udngs33C6zkNPyGzNjJ+W06r3rfSQc
-	 JJwyhRH3S2TGwY6mUnWnE1J2MdiYUXXEMQ9KHSfo=
+	b=ERNcY5wuj3ddae7qcPBf6W8GJN6ud16j8LXeDC3RNsKmRBOUt3yb603coMjyQbLYP
+	 atWWL+zpefysRaZQIEjbHOymsBcBbfBEhwIzh+gE4RSKKRy9VCXYwve88XnZFxL+ku
+	 vWI2cq2fyGcxPEop+PfFXYWcaY/RQcVaZSvrbMzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Zhang <joakim.zhang@cixtech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/587] ALSA: hda: Disable jack polling at shutdown
-Date: Tue, 26 Aug 2025 13:04:30 +0200
-Message-ID: <20250826110956.039029972@linuxfoundation.org>
+Subject: [PATCH 6.6 155/587] wifi: cfg80211: Fix interface type validation
+Date: Tue, 26 Aug 2025 13:05:04 +0200
+Message-ID: <20250826110956.890862201@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,41 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 1adcbdf54f76e1004bdf71df4eb1888c26e7ad06 ]
+[ Upstream commit 14450be2332a49445106403492a367412b8c23f4 ]
 
-Although the jack polling is canceled at shutdown in
-snd_hda_codec_shutdown(), it might be still re-triggered when the work
-is being processed at cancel_delayed_work_sync() call.  This may
-result in the unexpected hardware access that should have been already
-disabled.
+Fix a condition that verified valid values of interface types.
 
-For assuring to stop the jack polling, clear codec->jackpoll_interval
-at shutdown.
-
-Reported-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Closes: https://lore.kernel.org/20250619020844.2974160-4-joakim.zhang@cixtech.com
-Tested-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250623131437.10670-2-tiwai@suse.de
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709233537.7ad199ca5939.I0ac1ff74798bf59a87a57f2e18f2153c308b119b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_codec.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/cfg80211.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index 2d4b7527b840..80c3084189b0 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -3038,6 +3038,7 @@ void snd_hda_codec_shutdown(struct hda_codec *codec)
- 	if (!codec->core.registered)
- 		return;
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 2fb3151ea7c9..5b3a63c377d6 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -559,7 +559,7 @@ ieee80211_get_sband_iftype_data(const struct ieee80211_supported_band *sband,
+ {
+ 	int i;
  
-+	codec->jackpoll_interval = 0; /* don't poll any longer */
- 	cancel_delayed_work_sync(&codec->jackpoll_work);
- 	list_for_each_entry(cpcm, &codec->pcm_list_head, list)
- 		snd_pcm_suspend_all(cpcm->pcm);
+-	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
++	if (WARN_ON(iftype >= NUM_NL80211_IFTYPES))
+ 		return NULL;
+ 
+ 	if (iftype == NL80211_IFTYPE_AP_VLAN)
 -- 
 2.39.5
 
