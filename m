@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC14234A310;
-	Tue, 26 Aug 2025 13:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B58228C9D;
+	Tue, 26 Aug 2025 13:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215189; cv=none; b=UW9oD1Gb2anYgNq/XRaC5Nj42enWEDaDK0Pm+8UQnHlORiB7wqEH8p9zBhM05ttkeXLWCEbBBmRDjB21nF7jP23QV2zziLlWNnyWDGAVaHU/ebJ8p7MTqI/Wf8Azx8LR8dd10I+MaIlJA0u8DGUBdevZdC8/5e8bzuXa/0VM+ok=
+	t=1756215191; cv=none; b=kGSoT+YqVtNB+eLvV8QAJFJEU88NWx2qnG91oy6hsGKlvJamPRQWV8yGhe0w9TrratlfSxsi9yKZbRLe7thLqesvBp1klrlsvF0eDw8od+mKyN1Vzx8pU2wr8F6W5Nn8hlbWbW5f1tCinOu5V5WH66upbG6liOGmNjMNsHZfKsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215189; c=relaxed/simple;
-	bh=VzQjxg1iCSQMGUOemscLHQXB8/XwDXrxkF3ndHjXVb4=;
+	s=arc-20240116; t=1756215191; c=relaxed/simple;
+	bh=UebivGrFeHpwxQBtZXbGmdRdzbOZmfW+1Y15h2AURd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcvTg5fmYTsMNm/WCXATDVYpWAnfZd1PABUmvu2FP+ZdnWqcdQeKS3oV7P2UCqxmghPx4IwGeRtn6EbvJv3O8vjmLu0otypInX6nPZoiNEc3VI8lofAe+FnXwj8aabmS4K+SOrIwfJMzVfNUYmmhkqOn62F7/6DHbtYtvnEyMqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qq6oelki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L0cMfWnFdRi/7VTFmo29+4ABiVSUEpQ25T2nuqO2CWbP+x79TK14nslQpjIrqel6Uat/4FtNUkgicng5+nb6uuVgvbbeKJzR+UnFlNkRl1i2rftyo/P0Cnf3ZA2tz2Gjr42FH4gHp06cIqvK9pKzkvaI6DvaBjYicajf65be+1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnNCvK01; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qq6oelki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244A9C4CEF1;
-	Tue, 26 Aug 2025 13:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnNCvK01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD399C4CEF1;
+	Tue, 26 Aug 2025 13:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215188;
-	bh=VzQjxg1iCSQMGUOemscLHQXB8/XwDXrxkF3ndHjXVb4=;
+	s=korg; t=1756215191;
+	bh=UebivGrFeHpwxQBtZXbGmdRdzbOZmfW+1Y15h2AURd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qq6oelkiurnl5f2GOY8OUc2JHJEu+xFkqu2jmmnqFeb6mhkt6/r5xvM648Iimrq3Q
-	 /Rj6KaZQw1ax8cBzaQ8HppMfwMYZrHXVmAoCy/AR+92WuYxVFEEkdPWEQ6XUhf8wS0
-	 QCBpYtNbLpI3XAQcvk96ag8dmGMlq/y31iIvSlmA=
+	b=MnNCvK01UPzlfNhdZtyN1pqMHaWqPMAFBt3TrleuT3Qzn5gU3eDFz1lFjiS1YPIGW
+	 amNe3/puhf5cc2bFN4iDfKzZ9ouUXLAxgMDIP4dbaFEwpgKJHmTpGVapw0z61hDkKF
+	 gauvNayJkXrhAO7/up6YMf64DyGGfcGlBWMUbUb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kai Huang <kai.huang@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 390/482] x86/reboot: Harden virtualization hooks for emergency reboot
-Date: Tue, 26 Aug 2025 13:10:43 +0200
-Message-ID: <20250826110940.463498815@linuxfoundation.org>
+Subject: [PATCH 6.1 391/482] x86/reboot: KVM: Handle VMXOFF in KVMs reboot callback
+Date: Tue, 26 Aug 2025 13:10:44 +0200
+Message-ID: <20250826110940.488300898@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,106 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 5e408396c60cd0f0b53a43713016b6d6af8d69e0 ]
+[ Upstream commit 119b5cb4ffd0166f3e98e9ee042f5046f7744f28 ]
 
-Provide dedicated helpers to (un)register virt hooks used during an
-emergency crash/reboot, and WARN if there is an attempt to overwrite
-the registered callback, or an attempt to do an unpaired unregister.
-
-Opportunsitically use rcu_assign_pointer() instead of RCU_INIT_POINTER(),
-mainly so that the set/unset paths are more symmetrical, but also because
-any performance gains from using RCU_INIT_POINTER() are meaningless for
-this code.
+Use KVM VMX's reboot/crash callback to do VMXOFF in an emergency instead
+of manually and blindly doing VMXOFF.  There's no need to attempt VMXOFF
+if a hypervisor, i.e. KVM, isn't loaded/active, i.e. if the CPU can't
+possibly be post-VMXON.
 
 Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://lore.kernel.org/r/20230721201859.2307736-3-seanjc@google.com
+Link: https://lore.kernel.org/r/20230721201859.2307736-4-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Stable-dep-of: a0ee1d5faff1 ("KVM: VMX: Flush shadow VMCS on emergency reboot")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/reboot.h |    5 +++--
- arch/x86/kernel/reboot.c      |   30 ++++++++++++++++++++++++------
- arch/x86/kvm/vmx/vmx.c        |    6 ++----
- 3 files changed, 29 insertions(+), 12 deletions(-)
+ arch/x86/include/asm/virtext.h |   10 ----------
+ arch/x86/kernel/reboot.c       |   29 +++++++++--------------------
+ arch/x86/kvm/vmx/vmx.c         |    8 +++++---
+ 3 files changed, 14 insertions(+), 33 deletions(-)
 
---- a/arch/x86/include/asm/reboot.h
-+++ b/arch/x86/include/asm/reboot.h
-@@ -25,8 +25,9 @@ void __noreturn machine_real_restart(uns
- #define MRR_BIOS	0
- #define MRR_APM		1
+--- a/arch/x86/include/asm/virtext.h
++++ b/arch/x86/include/asm/virtext.h
+@@ -70,16 +70,6 @@ static inline void __cpu_emergency_vmxof
+ 		cpu_vmxoff();
+ }
  
--typedef void crash_vmclear_fn(void);
--extern crash_vmclear_fn __rcu *crash_vmclear_loaded_vmcss;
-+typedef void (cpu_emergency_virt_cb)(void);
-+void cpu_emergency_register_virt_callback(cpu_emergency_virt_cb *callback);
-+void cpu_emergency_unregister_virt_callback(cpu_emergency_virt_cb *callback);
- void cpu_emergency_disable_virtualization(void);
+-/** Disable VMX if it is supported and enabled on the current CPU
+- */
+-static inline void cpu_emergency_vmxoff(void)
+-{
+-	if (cpu_has_vmx())
+-		__cpu_emergency_vmxoff();
+-}
+-
+-
+-
  
- typedef void (*nmi_shootdown_cb)(int, struct pt_regs*);
+ /*
+  * SVM functions:
 --- a/arch/x86/kernel/reboot.c
 +++ b/arch/x86/kernel/reboot.c
-@@ -794,17 +794,35 @@ void machine_crash_shutdown(struct pt_re
-  *
-  * protected by rcu.
+@@ -787,13 +787,7 @@ void machine_crash_shutdown(struct pt_re
+ }
+ #endif
+ 
+-/*
+- * This is used to VMCLEAR all VMCSs loaded on the
+- * processor. And when loading kvm_intel module, the
+- * callback function pointer will be assigned.
+- *
+- * protected by rcu.
+- */
++/* RCU-protected callback to disable virtualization prior to reboot. */
+ static cpu_emergency_virt_cb __rcu *cpu_emergency_virt_callback;
+ 
+ void cpu_emergency_register_virt_callback(cpu_emergency_virt_cb *callback)
+@@ -815,17 +809,6 @@ void cpu_emergency_unregister_virt_callb
+ }
+ EXPORT_SYMBOL_GPL(cpu_emergency_unregister_virt_callback);
+ 
+-static inline void cpu_crash_vmclear_loaded_vmcss(void)
+-{
+-	cpu_emergency_virt_cb *callback;
+-
+-	rcu_read_lock();
+-	callback = rcu_dereference(cpu_emergency_virt_callback);
+-	if (callback)
+-		callback();
+-	rcu_read_unlock();
+-}
+-
+ /* This is the CPU performing the emergency shutdown work. */
+ int crashing_cpu = -1;
+ 
+@@ -836,9 +819,15 @@ int crashing_cpu = -1;
   */
--crash_vmclear_fn __rcu *crash_vmclear_loaded_vmcss;
--EXPORT_SYMBOL_GPL(crash_vmclear_loaded_vmcss);
-+static cpu_emergency_virt_cb __rcu *cpu_emergency_virt_callback;
-+
-+void cpu_emergency_register_virt_callback(cpu_emergency_virt_cb *callback)
-+{
-+	if (WARN_ON_ONCE(rcu_access_pointer(cpu_emergency_virt_callback)))
-+		return;
-+
-+	rcu_assign_pointer(cpu_emergency_virt_callback, callback);
-+}
-+EXPORT_SYMBOL_GPL(cpu_emergency_register_virt_callback);
-+
-+void cpu_emergency_unregister_virt_callback(cpu_emergency_virt_cb *callback)
-+{
-+	if (WARN_ON_ONCE(rcu_access_pointer(cpu_emergency_virt_callback) != callback))
-+		return;
-+
-+	rcu_assign_pointer(cpu_emergency_virt_callback, NULL);
-+	synchronize_rcu();
-+}
-+EXPORT_SYMBOL_GPL(cpu_emergency_unregister_virt_callback);
- 
- static inline void cpu_crash_vmclear_loaded_vmcss(void)
+ void cpu_emergency_disable_virtualization(void)
  {
--	crash_vmclear_fn *do_vmclear_operation = NULL;
+-	cpu_crash_vmclear_loaded_vmcss();
 +	cpu_emergency_virt_cb *callback;
- 
- 	rcu_read_lock();
--	do_vmclear_operation = rcu_dereference(crash_vmclear_loaded_vmcss);
--	if (do_vmclear_operation)
--		do_vmclear_operation();
++
++	rcu_read_lock();
 +	callback = rcu_dereference(cpu_emergency_virt_callback);
 +	if (callback)
 +		callback();
- 	rcu_read_unlock();
++	rcu_read_unlock();
+ 
+-	cpu_emergency_vmxoff();
++	/* KVM_AMD doesn't yet utilize the common callback. */
+ 	cpu_emergency_svm_disable();
  }
  
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -8602,8 +8602,7 @@ static void __vmx_exit(void)
+@@ -707,7 +707,7 @@ static int vmx_set_guest_uret_msr(struct
+ 	return ret;
+ }
+ 
+-static void crash_vmclear_local_loaded_vmcss(void)
++static void vmx_emergency_disable(void)
+ {
+ 	int cpu = raw_smp_processor_id();
+ 	struct loaded_vmcs *v;
+@@ -715,6 +715,8 @@ static void crash_vmclear_local_loaded_v
+ 	list_for_each_entry(v, &per_cpu(loaded_vmcss_on_cpu, cpu),
+ 			    loaded_vmcss_on_cpu_link)
+ 		vmcs_clear(v->vmcs);
++
++	__cpu_emergency_vmxoff();
+ }
+ 
+ static void __loaded_vmcs_clear(void *arg)
+@@ -8602,7 +8604,7 @@ static void __vmx_exit(void)
  {
  	allow_smaller_maxphyaddr = false;
  
--	RCU_INIT_POINTER(crash_vmclear_loaded_vmcss, NULL);
--	synchronize_rcu();
-+	cpu_emergency_unregister_virt_callback(crash_vmclear_local_loaded_vmcss);
+-	cpu_emergency_unregister_virt_callback(crash_vmclear_local_loaded_vmcss);
++	cpu_emergency_unregister_virt_callback(vmx_emergency_disable);
  
  	vmx_cleanup_l1d_flush();
  }
-@@ -8677,8 +8676,7 @@ static int __init vmx_init(void)
+@@ -8676,7 +8678,7 @@ static int __init vmx_init(void)
  		pi_init_cpu(cpu);
  	}
  
--	rcu_assign_pointer(crash_vmclear_loaded_vmcss,
--			   crash_vmclear_local_loaded_vmcss);
-+	cpu_emergency_register_virt_callback(crash_vmclear_local_loaded_vmcss);
+-	cpu_emergency_register_virt_callback(crash_vmclear_local_loaded_vmcss);
++	cpu_emergency_register_virt_callback(vmx_emergency_disable);
  
  	vmx_check_vmcs12_offsets();
  
