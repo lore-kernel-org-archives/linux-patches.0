@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B46260582;
-	Tue, 26 Aug 2025 13:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACC621A420;
+	Tue, 26 Aug 2025 13:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215443; cv=none; b=AMGYcyFSq5QAfWJmDETwvht28ycRoCjW6xcUwJGqX4E3F1U55kmMy7iU7SM/I1XYz23pAHNaMnizJRsN+DqRX/lI5OfRjJhRif3SLN5WYo5vv63kWmsoCetsd7hUHOfaKTHzXUz7VeNpqv++zPqoWBOSw6Kwj7yi/Fp5ftnIB5E=
+	t=1756215446; cv=none; b=hU6WWY/rX+sEYyihxQN8UEjWdwivjlbBZQdtCIaBruhszw6cbWbsd5jVm/ukDB3HXadw9v5ZtqKlHMy9jeg2nlAaWClJ4kFpG30HV/+iMzDtigmNzrfWVtFlHAMqTlFykFecA+4KRrk5kxYTsfoF2Pqi/7/I3Ji8b/UIlHOcduY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215443; c=relaxed/simple;
-	bh=XSFXDlyN4ENA0q4Rb/Ui+kKFasHL0pL9kh0ONGCayFg=;
+	s=arc-20240116; t=1756215446; c=relaxed/simple;
+	bh=oSu8S8hUkNmtkLzzy0bdOfg4KLUb94ddke7Eiqgrpt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kca38pJLyMds7IV/Rb41yMuiQgXkaS06pEDV0RZ+uLhNBiVxgNM0a0SH4jKDq02vT2LruLi1C0cc+0u060fs86B++EdiSC1R4k/i1JLqptVCnkHWy8xXXrH3t4fBRAPfxkIMs/y9RFv58ur3jgvGE8lkL+jn27e0E8qLtRvqnhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKJIyBQT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M10m5YryQrktkibJRiCE1xbGiGsNCU05R5dXwWgEfdWtz5wQBh3172cSlHr67XxG/vx+h/qUcQpNT3TNUt7uv9F6x4AmrlXx68RL6RbGnYsEbTdGSw0H2wy7rtaMFDXUh/ekdDa2N00rGeCCIxWQoF8x/JRGFfOmbA1HHKN9nqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwjP+aXO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKJIyBQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C1EC4CEF1;
-	Tue, 26 Aug 2025 13:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwjP+aXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2CEC4CEF1;
+	Tue, 26 Aug 2025 13:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215443;
-	bh=XSFXDlyN4ENA0q4Rb/Ui+kKFasHL0pL9kh0ONGCayFg=;
+	s=korg; t=1756215446;
+	bh=oSu8S8hUkNmtkLzzy0bdOfg4KLUb94ddke7Eiqgrpt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKJIyBQTYG1Q7IhWNk9wLBBTw8SNnEyzcEQ1F+C4MoRZgMOUyYrQFvCvRPJPpj5Tb
-	 YGJqEfUm9RYb8zvGZBDsUqSf84CDzuw6F/OSJAHgRatmo+F8xjtobGAso4qznz1q1C
-	 LxyY+P8ZDqIbn+Dx1KKTUu17vrrxVa45djhD6kZ0=
+	b=MwjP+aXOPDwXCSVZ0jt+uR0MoYPpR93TPY/2970aqjfgF/VnZwdj/KN4hpK5CigYh
+	 dD1fzbB7SPkCxN6us7vitlag8m+8TvfGU3LHL/Z7xnHfpmAzJEIB4d1jcjFSbXKARy
+	 7hb9SFl5zYjvGd056wc7HKlZmE+d8EPn8t/fcPow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.15 036/644] comedi: Fix initialization of data for instructions that write to subdevice
-Date: Tue, 26 Aug 2025 13:02:07 +0200
-Message-ID: <20250826110947.405394509@linuxfoundation.org>
+	syzbot+e2c932aec5c8a6e1d31c@syzkaller.appspotmail.com,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 037/644] bpf: Reject %p% format string in bprintf-like helpers
+Date: Tue, 26 Aug 2025 13:02:08 +0200
+Message-ID: <20250826110947.431357368@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -49,77 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit 46d8c744136ce2454aa4c35c138cc06817f92b8e upstream.
+[ Upstream commit f8242745871f81a3ac37f9f51853d12854fd0b58 ]
 
-Some Comedi subdevice instruction handlers are known to access
-instruction data elements beyond the first `insn->n` elements in some
-cases.  The `do_insn_ioctl()` and `do_insnlist_ioctl()` functions
-allocate at least `MIN_SAMPLES` (16) data elements to deal with this,
-but they do not initialize all of that.  For Comedi instruction codes
-that write to the subdevice, the first `insn->n` data elements are
-copied from user-space, but the remaining elements are left
-uninitialized.  That could be a problem if the subdevice instruction
-handler reads the uninitialized data.  Ensure that the first
-`MIN_SAMPLES` elements are initialized before calling these instruction
-handlers, filling the uncopied elements with 0.  For
-`do_insnlist_ioctl()`, the same data buffer elements are used for
-handling a list of instructions, so ensure the first `MIN_SAMPLES`
-elements are initialized for each instruction that writes to the
-subdevice.
+static const char fmt[] = "%p%";
+    bpf_trace_printk(fmt, sizeof(fmt));
 
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Cc: stable@vger.kernel.org # 5.13+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707161439.88385-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The above BPF program isn't rejected and causes a kernel warning at
+runtime:
+
+    Please remove unsupported %\x00 in format string
+    WARNING: CPU: 1 PID: 7244 at lib/vsprintf.c:2680 format_decode+0x49c/0x5d0
+
+This happens because bpf_bprintf_prepare skips over the second %,
+detected as punctuation, while processing %p. This patch fixes it by
+not skipping over punctuation. %\x00 is then processed in the next
+iteration and rejected.
+
+Reported-by: syzbot+e2c932aec5c8a6e1d31c@syzkaller.appspotmail.com
+Fixes: 48cac3f4a96d ("bpf: Implement formatted output helpers with bstr_printf")
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/a0e06cc479faec9e802ae51ba5d66420523251ee.1751395489.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/comedi_fops.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ kernel/bpf/helpers.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -1551,21 +1551,27 @@ static int do_insnlist_ioctl(struct come
- 	}
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index d3feaf6d68eba..b40ca025d9a44 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -832,6 +832,13 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
+ 		if (fmt[i] == 'p') {
+ 			sizeof_cur_arg = sizeof(long);
  
- 	for (i = 0; i < n_insns; ++i) {
-+		unsigned int n = insns[i].n;
-+
- 		if (insns[i].insn & INSN_MASK_WRITE) {
- 			if (copy_from_user(data, insns[i].data,
--					   insns[i].n * sizeof(unsigned int))) {
-+					   n * sizeof(unsigned int))) {
- 				dev_dbg(dev->class_dev,
- 					"copy_from_user failed\n");
- 				ret = -EFAULT;
- 				goto error;
- 			}
-+			if (n < MIN_SAMPLES) {
-+				memset(&data[n], 0, (MIN_SAMPLES - n) *
-+						    sizeof(unsigned int));
++			if (fmt[i + 1] == 0 || isspace(fmt[i + 1]) ||
++			    ispunct(fmt[i + 1])) {
++				if (tmp_buf)
++					cur_arg = raw_args[num_spec];
++				goto nocopy_fmt;
 +			}
- 		}
- 		ret = parse_insn(dev, insns + i, data, file);
- 		if (ret < 0)
- 			goto error;
- 		if (insns[i].insn & INSN_MASK_READ) {
- 			if (copy_to_user(insns[i].data, data,
--					 insns[i].n * sizeof(unsigned int))) {
-+					 n * sizeof(unsigned int))) {
- 				dev_dbg(dev->class_dev,
- 					"copy_to_user failed\n");
- 				ret = -EFAULT;
-@@ -1638,6 +1644,10 @@ static int do_insn_ioctl(struct comedi_d
- 			ret = -EFAULT;
- 			goto error;
- 		}
-+		if (insn->n < MIN_SAMPLES) {
-+			memset(&data[insn->n], 0,
-+			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
-+		}
- 	}
- 	ret = parse_insn(dev, insn, data, file);
- 	if (ret < 0)
++
+ 			if ((fmt[i + 1] == 'k' || fmt[i + 1] == 'u') &&
+ 			    fmt[i + 2] == 's') {
+ 				fmt_ptype = fmt[i + 1];
+@@ -839,11 +846,9 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
+ 				goto fmt_str;
+ 			}
+ 
+-			if (fmt[i + 1] == 0 || isspace(fmt[i + 1]) ||
+-			    ispunct(fmt[i + 1]) || fmt[i + 1] == 'K' ||
++			if (fmt[i + 1] == 'K' ||
+ 			    fmt[i + 1] == 'x' || fmt[i + 1] == 's' ||
+ 			    fmt[i + 1] == 'S') {
+-				/* just kernel pointers */
+ 				if (tmp_buf)
+ 					cur_arg = raw_args[num_spec];
+ 				i++;
+-- 
+2.39.5
+
 
 
