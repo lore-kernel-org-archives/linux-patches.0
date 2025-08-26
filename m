@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AC63376BD;
-	Tue, 26 Aug 2025 11:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961693375D9;
+	Tue, 26 Aug 2025 11:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207750; cv=none; b=rPS6NIE738MJAa9lYMsE6ND/N69CnJmGI6NZ4Gya8wOJ2sCr8J1bHTSwxWhy/tG4UMZowXtGRqqOTG8XInhCaaTE5nqyPxjG5uw8foCoU1M/MVliBQ44ziysXcw+PI5xyEYhufLdt5LI7BAqN1KUB5wekaOIogT++3jjzH2XP4o=
+	t=1756207753; cv=none; b=qyRgO8mo5xmzWZUHxznRUfUkuAxJB85JWE3gPVrA/Q/w9PMV+ek2F8uGYCj9Os6zSoZatkOR2dA6kUncJ8dsEPvrIkVLNKVJg6RLpp02chxN3Mngsu9tUyAEPz7bk/p3DtsOQoKf8cmW4dGOdOjNqCy7ghAUbO8Gmr4409/qYjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207750; c=relaxed/simple;
-	bh=4Cf7UGTJdl9qvLzcBRBy8I6ta7jLtfIiB3DDRFbLF/c=;
+	s=arc-20240116; t=1756207753; c=relaxed/simple;
+	bh=8wkEq0amkOD9Bix6ko+SYiMVzNTx20ikrNPeU1JibGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fY9F3f5P49g/MeVwPWjrgO5jkK3/ZEdiAyiVvzrVTl+GYaj9SJHTr2rbYhKlHz7yuyGpVZwAHsWlo/nGo0EcfZ2CaWkI6e6RhcNs8+4bOqHQBTGcr7YBvrnJfUwUTmeDeQtBteOQVNYjBl4STCc9RyuZ4pzxrH0xmho9OIlrlg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2VAJZBC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VH9x1n3J1PXv6mlqN15xma8j+reX5cmu18M12hjpHWgxLi1pQHg+Cr//ufyAKjFdEhrtDQlxe96aAu0OrZySR4frzCMU4K0mNrpCQ95k31QS+4xWKuOS74mLBkWQww8+srwM5115Yg+wzlP4GYAR+pjLrbyHQi2aHtUl6Jzc/sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vy47P+oy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2VAJZBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BA6C4CEF1;
-	Tue, 26 Aug 2025 11:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vy47P+oy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAFBC4CEF1;
+	Tue, 26 Aug 2025 11:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207750;
-	bh=4Cf7UGTJdl9qvLzcBRBy8I6ta7jLtfIiB3DDRFbLF/c=;
+	s=korg; t=1756207753;
+	bh=8wkEq0amkOD9Bix6ko+SYiMVzNTx20ikrNPeU1JibGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2VAJZBCZcUtxIxA4xbv+eazr5l32vlY98OOjxUEQbK2FmAbfB4V+CAc6QHg3TURo
-	 zb6CkYC75GGsWpRpZc+P8mj+rBJiOaXQ82ZWZO+h3XD0Ql/RpcngJSwmwWX/HNAQNj
-	 5Ww77HRMGmO9XayynoZBzTAOFGQJMMxP7PbkNIq0=
+	b=vy47P+oyXut8xvphuS75ZqqoMUiMfdSa/GNZHJb8Mblp8VrLAK6ltjvRnX8hjevlL
+	 4t3dR9l97bdvxtx/2ucOFeFs/2eu5Ds/jkYC3Om0yDDJISDCIjCP3qby8U4zKAUCel
+	 0zajMcBxaIP6kCOI7dFYIUOC95ZSh6Ep500ejnL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	kernel test robot <lkp@intel.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.16 302/457] iio: adc: rzg2l_adc: Set driver data before enabling runtime PM
-Date: Tue, 26 Aug 2025 13:09:46 +0200
-Message-ID: <20250826110944.837287059@linuxfoundation.org>
+Subject: [PATCH 6.16 303/457] iio: adc: bd79124: Add GPIOLIB dependency
+Date: Tue, 26 Aug 2025 13:09:47 +0200
+Message-ID: <20250826110944.860462481@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,47 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit c69e13965f26b8058f538ea8bdbd2d7718cf1fbe upstream.
+commit 8a6ededaad2d2dcaac8e545bffee1073dca9db95 upstream.
 
-When stress-testing the system by repeatedly unbinding and binding the ADC
-device in a loop, and the ADC is a supplier for another device (e.g., a
-thermal hardware block that reads temperature through the ADC), it may
-happen that the ADC device is runtime-resumed immediately after runtime PM
-is enabled, triggered by its consumer. At this point, since drvdata is not
-yet set and the driver's runtime PM callbacks rely on it, a crash can
-occur. To avoid this, set drvdata just after it was allocated.
+The bd79124 has ADC inputs which can be muxed to be GPIOs. The driver
+supports this by registering a GPIO-chip for channels which aren't used
+as ADC.
 
-Fixes: 89ee8174e8c8 ("iio: adc: rzg2l_adc: Simplify the runtime PM code")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://patch.msgid.link/20250810123328.800104-3-claudiu.beznea.uj@bp.renesas.com
+The Kconfig entry does not handle the dependency to GPIOLIB, which
+causes errors:
+
+ERROR: modpost: "devm_gpiochip_add_data_with_key" [drivers/iio/adc/rohm-bd79124.ko] undefined!
+ERROR: modpost: "gpiochip_get_data" [drivers/iio/adc/rohm-bd79124.ko] undefined!
+
+at linking phase if GPIOLIB is not configured to be used.
+
+Fix this by adding dependency to the GPIOLIB.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202508131533.5sSkq80B-lkp@intel.com/
+Fixes: 3f57a3b9ab74 ("iio: adc: Support ROHM BD79124 ADC")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://patch.msgid.link/6837249bddf358924e67566293944506206d2d62.1755076369.git.mazziesaccount@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/rzg2l_adc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/rzg2l_adc.c
-+++ b/drivers/iio/adc/rzg2l_adc.c
-@@ -428,6 +428,8 @@ static int rzg2l_adc_probe(struct platfo
- 	if (!indio_dev)
- 		return -ENOMEM;
+--- a/drivers/iio/adc/Kconfig
++++ b/drivers/iio/adc/Kconfig
+@@ -1257,7 +1257,7 @@ config RN5T618_ADC
  
-+	platform_set_drvdata(pdev, indio_dev);
-+
- 	adc = iio_priv(indio_dev);
- 
- 	adc->hw_params = device_get_match_data(dev);
-@@ -460,8 +462,6 @@ static int rzg2l_adc_probe(struct platfo
- 	if (ret)
- 		return ret;
- 
--	platform_set_drvdata(pdev, indio_dev);
--
- 	ret = rzg2l_adc_hw_init(dev, adc);
- 	if (ret)
- 		return dev_err_probe(&pdev->dev, ret,
+ config ROHM_BD79124
+ 	tristate "Rohm BD79124 ADC driver"
+-	depends on I2C
++	depends on I2C && GPIOLIB
+ 	select REGMAP_I2C
+ 	select IIO_ADC_HELPER
+ 	help
 
 
