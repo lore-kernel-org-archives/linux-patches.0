@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592CD33768D;
-	Tue, 26 Aug 2025 11:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3741D34164F;
+	Tue, 26 Aug 2025 11:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208152; cv=none; b=BUnOmjVH4GwBusyAA0gQevAwpbgSFMpY75+vxmbSm0kXB8Zi/j9S4VnhP5hpah3HBojUhlPvk/vQMWfHOrZT+VqECQt+sdKtupT5MFUY9k4mEfuEqgGkQr4br2PsMwG9EjGpod5eUEeBS9MkBlVbw5GxH4WkQhT/mtNG5wdZW0w=
+	t=1756208155; cv=none; b=DRnAwewDH8Q4niCavRF4stac/e/aZa00QBBGztUo/OraV5cfE0J1GZEyH6tJSAfTOBZf8vvZIOuriiARpRTSyPh7y8qzbw/C0qkeCW4nk03k7NnwAjouZDmw45BK7hXxwvzFwMntnEiPFIfKwJs3J+oZlG/hLFqyUHt7LNIGTQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208152; c=relaxed/simple;
-	bh=GFeD4+KORpGa4iRSr6hbJ1IzqdyrgdU/a6tG3rYTCRk=;
+	s=arc-20240116; t=1756208155; c=relaxed/simple;
+	bh=1UbWemT8sQUeMnNuGx7bCxMfwxM2xObP735a62p+kKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qW0CzGZrRghUdc8M0VCWO+Oc5r6BESEhYSbTkBlJxAthjhpitX5Ndeo3p5zLEYfRC0Zx3MzaHUrfzuedo4cACb5nSDL9spqzom6kEU4I86mqX201dXWrQdWHx4j2x1da9Xv+YV9ZTVl8bZtDhw2rU82t6WXMH5nR9AA1Uisn/kQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ly5ytDr1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eu0Bjy9Ibm+jEMI3MgYWpv3RXOd4umwQFruDYylBD0xCY4HGwXIub9P21q1w6VzedzXh0gdSTGN23BTZ5mSIJ7a1+Q4hL9WjnYFR0G1R9xr+1a5y63aK6aB0/HujT7m1F5qVX16C+3+w62HFNpmt5UQ4U2MhqS9e6fFvnwp+ZAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufhA4fhW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ly5ytDr1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C50C4CEF1;
-	Tue, 26 Aug 2025 11:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufhA4fhW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFC8C4CEF4;
+	Tue, 26 Aug 2025 11:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208152;
-	bh=GFeD4+KORpGa4iRSr6hbJ1IzqdyrgdU/a6tG3rYTCRk=;
+	s=korg; t=1756208155;
+	bh=1UbWemT8sQUeMnNuGx7bCxMfwxM2xObP735a62p+kKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ly5ytDr1WNwBH1Gk2eJa4pTZgafA2LJqApWrUzqBhJroY4e0zTsSQSDCqVDcgNI4h
-	 zaANb47EszoWLEYDdKDB4GxzXayTEqsnNe+jsHLDUdxstKYjxBl1YmNdh2KSr8Hnpc
-	 /oXtIuGAcuysaO7m99wzWdnWW7RwARfxZ15PZN1Y=
+	b=ufhA4fhWcjQGzrKuuigExvfz4Y8mA/EM+aWagMNRUqoRUUPj70lcKBdaSOJ/B74uN
+	 +M+JMJsLxQxzgbXnwCHklpRz9crZIS5s6Auwj1l7D1vw78XqBFRtV6ll5zl62zveVt
+	 g62pIR8nm1/YTZbJRE6eE1ad+aRHTVFP8pWr3ADI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oren Sidi <osidi@nvidia.com>,
-	Alex Lazar <alazar@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 449/457] net/mlx5: Add IFC bits and enums for buf_ownership
-Date: Tue, 26 Aug 2025 13:12:13 +0200
-Message-ID: <20250826110948.384121274@linuxfoundation.org>
+Subject: [PATCH 6.16 450/457] net/mlx5e: Query FW for buffer ownership
+Date: Tue, 26 Aug 2025 13:12:14 +0200
+Message-ID: <20250826110948.407216667@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,57 +54,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oren Sidi <osidi@nvidia.com>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit 6f09ee0b583cad4f2b6a82842c26235bee3d5c2e ]
+[ Upstream commit 451d2849ea66659040b59ae3cb7e50cc97404733 ]
 
-Extend structure layouts and defines buf_ownership.
-buf_ownership indicates whether the buffer is managed by SW or FW.
+The SW currently saves local buffer ownership when setting
+the buffer.
+This means that the SW assumes it has ownership of the buffer
+after the command is set.
 
-Signed-off-by: Oren Sidi <osidi@nvidia.com>
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1752734895-257735-3-git-send-email-tariqt@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 451d2849ea66 ("net/mlx5e: Query FW for buffer ownership")
+If setting the buffer fails and we remain in FW ownership,
+the local buffer ownership state incorrectly remains as SW-owned.
+This leads to incorrect behavior in subsequent PFC commands,
+causing failures.
+
+Instead of saving local buffer ownership in SW,
+query the FW for buffer ownership when setting the buffer.
+This ensures that the buffer ownership state is accurately
+reflected, avoiding the issues caused by incorrect ownership
+states.
+
+Fixes: ecdf2dadee8e ("net/mlx5e: Receive buffer support for DCBX")
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250820133209.389065-8-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mlx5/mlx5_ifc.h | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ .../ethernet/mellanox/mlx5/core/en/dcbnl.h    |  1 -
+ .../ethernet/mellanox/mlx5/core/en_dcbnl.c    | 12 ++++++++---
+ .../ethernet/mellanox/mlx5/core/mlx5_core.h   |  2 ++
+ .../net/ethernet/mellanox/mlx5/core/port.c    | 20 +++++++++++++++++++
+ 4 files changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
-index 2c09df4ee574..83288df7bb45 100644
---- a/include/linux/mlx5/mlx5_ifc.h
-+++ b/include/linux/mlx5/mlx5_ifc.h
-@@ -10460,8 +10460,16 @@ struct mlx5_ifc_pifr_reg_bits {
- 	u8         port_filter_update_en[8][0x20];
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/dcbnl.h b/drivers/net/ethernet/mellanox/mlx5/core/en/dcbnl.h
+index b59aee75de94..2c98a5299df3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/dcbnl.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/dcbnl.h
+@@ -26,7 +26,6 @@ struct mlx5e_dcbx {
+ 	u8                         cap;
  
-+enum {
-+	MLX5_BUF_OWNERSHIP_UNKNOWN	= 0x0,
-+	MLX5_BUF_OWNERSHIP_FW_OWNED	= 0x1,
-+	MLX5_BUF_OWNERSHIP_SW_OWNED	= 0x2,
-+};
+ 	/* Buffer configuration */
+-	bool                       manual_buffer;
+ 	u32                        cable_len;
+ 	u32                        xoff;
+ 	u16                        port_buff_cell_sz;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 5fe016e477b3..d166c0d5189e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -362,6 +362,7 @@ static int mlx5e_dcbnl_ieee_getpfc(struct net_device *dev,
+ static int mlx5e_dcbnl_ieee_setpfc(struct net_device *dev,
+ 				   struct ieee_pfc *pfc)
+ {
++	u8 buffer_ownership = MLX5_BUF_OWNERSHIP_UNKNOWN;
+ 	struct mlx5e_priv *priv = netdev_priv(dev);
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	u32 old_cable_len = priv->dcbx.cable_len;
+@@ -389,7 +390,14 @@ static int mlx5e_dcbnl_ieee_setpfc(struct net_device *dev,
+ 
+ 	if (MLX5_BUFFER_SUPPORTED(mdev)) {
+ 		pfc_new.pfc_en = (changed & MLX5E_PORT_BUFFER_PFC) ? pfc->pfc_en : curr_pfc_en;
+-		if (priv->dcbx.manual_buffer)
++		ret = mlx5_query_port_buffer_ownership(mdev,
++						       &buffer_ownership);
++		if (ret)
++			netdev_err(dev,
++				   "%s, Failed to get buffer ownership: %d\n",
++				   __func__, ret);
 +
- struct mlx5_ifc_pfcc_reg_bits {
--	u8         reserved_at_0[0x8];
-+	u8         reserved_at_0[0x4];
-+	u8	   buf_ownership[0x2];
-+	u8	   reserved_at_6[0x2];
- 	u8         local_port[0x8];
- 	u8         reserved_at_10[0xb];
- 	u8         ppan_mask_n[0x1];
-@@ -10597,7 +10605,9 @@ struct mlx5_ifc_pcam_enhanced_features_bits {
- 	u8         fec_200G_per_lane_in_pplm[0x1];
- 	u8         reserved_at_1e[0x2a];
- 	u8         fec_100G_per_lane_in_pplm[0x1];
--	u8         reserved_at_49[0x1f];
-+	u8         reserved_at_49[0xa];
-+	u8	   buffer_ownership[0x1];
-+	u8	   resereved_at_54[0x14];
- 	u8         fec_50G_per_lane_in_pplm[0x1];
- 	u8         reserved_at_69[0x4];
- 	u8         rx_icrc_encapsulated_counter[0x1];
++		if (buffer_ownership == MLX5_BUF_OWNERSHIP_SW_OWNED)
+ 			ret = mlx5e_port_manual_buffer_config(priv, changed,
+ 							      dev->mtu, &pfc_new,
+ 							      NULL, NULL);
+@@ -982,7 +990,6 @@ static int mlx5e_dcbnl_setbuffer(struct net_device *dev,
+ 	if (!changed)
+ 		return 0;
+ 
+-	priv->dcbx.manual_buffer = true;
+ 	err = mlx5e_port_manual_buffer_config(priv, changed, dev->mtu, NULL,
+ 					      buffer_size, prio2buffer);
+ 	return err;
+@@ -1252,7 +1259,6 @@ void mlx5e_dcbnl_initialize(struct mlx5e_priv *priv)
+ 		priv->dcbx.cap |= DCB_CAP_DCBX_HOST;
+ 
+ 	priv->dcbx.port_buff_cell_sz = mlx5e_query_port_buffers_cell_size(priv);
+-	priv->dcbx.manual_buffer = false;
+ 	priv->dcbx.cable_len = MLX5E_DEFAULT_CABLE_LEN;
+ 
+ 	mlx5e_ets_init(priv);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index 2e02bdea8361..c2f6d205ddb1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -358,6 +358,8 @@ int mlx5_query_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *out);
+ int mlx5_set_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *in);
+ int mlx5_set_trust_state(struct mlx5_core_dev *mdev, u8 trust_state);
+ int mlx5_query_trust_state(struct mlx5_core_dev *mdev, u8 *trust_state);
++int mlx5_query_port_buffer_ownership(struct mlx5_core_dev *mdev,
++				     u8 *buffer_ownership);
+ int mlx5_set_dscp2prio(struct mlx5_core_dev *mdev, u8 dscp, u8 prio);
+ int mlx5_query_dscp2prio(struct mlx5_core_dev *mdev, u8 *dscp2prio);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+index 549f1066d2a5..2d7adf7444ba 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+@@ -968,6 +968,26 @@ int mlx5_query_trust_state(struct mlx5_core_dev *mdev, u8 *trust_state)
+ 	return err;
+ }
+ 
++int mlx5_query_port_buffer_ownership(struct mlx5_core_dev *mdev,
++				     u8 *buffer_ownership)
++{
++	u32 out[MLX5_ST_SZ_DW(pfcc_reg)] = {};
++	int err;
++
++	if (!MLX5_CAP_PCAM_FEATURE(mdev, buffer_ownership)) {
++		*buffer_ownership = MLX5_BUF_OWNERSHIP_UNKNOWN;
++		return 0;
++	}
++
++	err = mlx5_query_pfcc_reg(mdev, out, sizeof(out));
++	if (err)
++		return err;
++
++	*buffer_ownership = MLX5_GET(pfcc_reg, out, buf_ownership);
++
++	return 0;
++}
++
+ int mlx5_set_dscp2prio(struct mlx5_core_dev *mdev, u8 dscp, u8 prio)
+ {
+ 	int sz = MLX5_ST_SZ_BYTES(qpdpm_reg);
 -- 
 2.50.1
 
