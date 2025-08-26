@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4D72FD7C8;
-	Tue, 26 Aug 2025 11:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEB4321F30;
+	Tue, 26 Aug 2025 11:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207828; cv=none; b=W9n2AS+PzLQXEgJGpQtTLzPlwv50Pa1mYkXA1Jl/kmzSslF+ptOcMOlt+x7mcqdXvkDDpxaxVm/TRJiMxjGnGWjfuC0I/A9RJx8pyKMYFFGKUgUIFqNliS4EYvhSHsG9m1bkgqTwNkNOJVxwCt4+jViSj4z1hlWCYgGd7rEn/GY=
+	t=1756207830; cv=none; b=Wsxh7b6vZ9pRvGBnzF6Ly5hI6YADsVZ+1SRQvi76XnQb4GdnU8UqaWbo1Ii6I7fT6JntE9sUn62vpXW4kO1OMSnjPYni9BMAebdSZFOgG8iWd0f15eSlqVfP1xHDBuTJX4lhe6D7qFAe++/w6G4K4HBtZPPSTMwaNLfBSgAG7rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207828; c=relaxed/simple;
-	bh=Yv2b1FUc87f1hyOE0QeMRU/G71UizWsJa/JiMcBYAs0=;
+	s=arc-20240116; t=1756207830; c=relaxed/simple;
+	bh=whFOSnS7CpLAfSw9fcyHwKsej0FrfFGpbhC/Fy1ACn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WxmJylo9CwZ+VZ2gzeOOm0DaYWOyIPY5K8OkBVCNP+n2hSwKHqr43dVf9XRSKvrccaghhAcm8nExx6t4J8Gh74qTwLuMWLWIXNStjwKNOsksaj/g4HvSGXs0okaoJYsB1AimOk1XlSnhKW/YLr3ZaVHf+qJR4PDUfd5D+TpZZYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCG8jK8A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gzAiZmAevc7mwH4LdoKAbjdc+LrLcoKrRaOiu/km3jwZ4xcF9wWs6MDufNfNnJqzBI4y2g4Kq3K676Pgqy5wnCaZIGqGyQ+tdIWqNFsIW1Jv/FAR8shnUkSEX503B2p5tceNPrp05LhG59OoHOl29kvSHjQWKsjMnMh5fto7xxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MW5cyQjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCG8jK8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF89C4CEF1;
-	Tue, 26 Aug 2025 11:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MW5cyQjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C55C4CEF1;
+	Tue, 26 Aug 2025 11:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207828;
-	bh=Yv2b1FUc87f1hyOE0QeMRU/G71UizWsJa/JiMcBYAs0=;
+	s=korg; t=1756207830;
+	bh=whFOSnS7CpLAfSw9fcyHwKsej0FrfFGpbhC/Fy1ACn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iCG8jK8AxQJl5a2sGGYgMx1XYPfHGDTo4s3bzoE71EVdw/Ms4u2WgUHs6zqdN81bL
-	 zrSvA7AfH0PoFSCZ1OpTVjU8mT68yZ/+d8/bk8lt/ZY2f+tJ3e9u8Gnw6xKFRlK3ef
-	 fTbr/6cDF9IFxHr3vw4ihQv0hKlRMio4jYaFH4I8=
+	b=MW5cyQjW65QoNAJw7wKfttgUnjPyId/GU7uiJM4H9COvNUksg+hkX83FqOT4rPUED
+	 rDyplh52YffJ/FppyqNJzeUTxTZOj+XFEwe2V5Lxv/DAoyISqxqbphm/u1KCWyq+mz
+	 bKsaJ6Bh2arlPxT4rcDPGRti77hYhJhTd32H+R+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>
-Subject: [PATCH 6.16 315/457] usb: renesas-xhci: Fix External ROM access timeouts
-Date: Tue, 26 Aug 2025 13:09:59 +0200
-Message-ID: <20250826110945.143865084@linuxfoundation.org>
+	Alex Guo <alexguo1023@gmail.com>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sven Eckelmann <sven@narfation.org>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.16 333/457] i2c: rtl9300: Fix out-of-bounds bug in rtl9300_i2c_smbus_xfer
+Date: Tue, 26 Aug 2025 13:10:17 +0200
+Message-ID: <20250826110945.567282136@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -44,76 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Alex Guo <alexguo1023@gmail.com>
 
-commit f9420f4757752f056144896024d5ea89e5a611f1 upstream.
+commit 57f312b955938fc4663f430cb57a71f2414f601b upstream.
 
-Increase the External ROM access timeouts to prevent failures during
-programming of External SPI EEPROM chips. The current timeouts are
-too short for some SPI EEPROMs used with uPD720201 controllers.
+The data->block[0] variable comes from user. Without proper check,
+the variable may be very large to cause an out-of-bounds bug.
 
-The current timeout for Chip Erase in renesas_rom_erase() is 100 ms ,
-the current timeout for Sector Erase issued by the controller before
-Page Program in renesas_fw_download_image() is also 100 ms. Neither
-timeout is sufficient for e.g. the Macronix MX25L5121E or MX25V5126F.
+Fix this bug by checking the value of data->block[0] first.
 
-MX25L5121E reference manual [1] page 35 section "ERASE AND PROGRAMMING
-PERFORMANCE" and page 23 section "Table 8. AC CHARACTERISTICS (Temperature
-= 0°C to 70°C for Commercial grade, VCC = 2.7V ~ 3.6V)" row "tCE" indicate
-that the maximum time required for Chip Erase opcode to complete is 2 s,
-and for Sector Erase it is 300 ms .
+1. commit 39244cc75482 ("i2c: ismt: Fix an out-of-bounds bug in
+   ismt_access()")
+2. commit 92fbb6d1296f ("i2c: xgene-slimpro: Fix out-of-bounds bug in
+   xgene_slimpro_i2c_xfer()")
 
-MX25V5126F reference manual [2] page 47 section "13. ERASE AND PROGRAMMING
-PERFORMANCE (2.3V - 3.6V)" and page 42 section "Table 8. AC CHARACTERISTICS
-(Temperature = -40°C to 85°C for Industrial grade, VCC = 2.3V - 3.6V)" row
-"tCE" indicate that the maximum time required for Chip Erase opcode to
-complete is 3.2 s, and for Sector Erase it is 400 ms .
-
-Update the timeouts such, that Chip Erase timeout is set to 5 seconds,
-and Sector Erase timeout is set to 500 ms. Such lengthy timeouts ought
-to be sufficient for majority of SPI EEPROM chips.
-
-[1] https://www.macronix.com/Lists/Datasheet/Attachments/8634/MX25L5121E,%203V,%20512Kb,%20v1.3.pdf
-[2] https://www.macronix.com/Lists/Datasheet/Attachments/8750/MX25V5126F,%202.5V,%20512Kb,%20v1.1.pdf
-
-Fixes: 2478be82de44 ("usb: renesas-xhci: Add ROM loader for uPD720201")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://lore.kernel.org/r/20250802225526.25431-1-marek.vasut+renesas@mailbox.org
+Fixes: c366be720235 ("i2c: Add driver for the RTL9300 I2C controller")
+Signed-off-by: Alex Guo <alexguo1023@gmail.com>
+Cc: <stable@vger.kernel.org> # v6.13+
+Reviewed-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Tested-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250810-i2c-rtl9300-multi-byte-v5-1-cd9dca0db722@narfation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci-renesas.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-rtl9300.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/host/xhci-pci-renesas.c
-+++ b/drivers/usb/host/xhci-pci-renesas.c
-@@ -47,8 +47,9 @@
- #define RENESAS_ROM_ERASE_MAGIC				0x5A65726F
- #define RENESAS_ROM_WRITE_MAGIC				0x53524F4D
- 
--#define RENESAS_RETRY	10000
--#define RENESAS_DELAY	10
-+#define RENESAS_RETRY			50000	/* 50000 * RENESAS_DELAY ~= 500ms */
-+#define RENESAS_CHIP_ERASE_RETRY	500000	/* 500000 * RENESAS_DELAY ~= 5s */
-+#define RENESAS_DELAY			10
- 
- #define RENESAS_FW_NAME	"renesas_usb_fw.mem"
- 
-@@ -407,7 +408,7 @@ static void renesas_rom_erase(struct pci
- 	/* sleep a bit while ROM is erased */
- 	msleep(20);
- 
--	for (i = 0; i < RENESAS_RETRY; i++) {
-+	for (i = 0; i < RENESAS_CHIP_ERASE_RETRY; i++) {
- 		retval = pci_read_config_byte(pdev, RENESAS_ROM_STATUS,
- 					      &status);
- 		status &= RENESAS_ROM_STATUS_ERASE;
+--- a/drivers/i2c/busses/i2c-rtl9300.c
++++ b/drivers/i2c/busses/i2c-rtl9300.c
+@@ -281,6 +281,10 @@ static int rtl9300_i2c_smbus_xfer(struct
+ 		ret = rtl9300_i2c_reg_addr_set(i2c, command, 1);
+ 		if (ret)
+ 			goto out_unlock;
++		if (data->block[0] < 1 || data->block[0] > I2C_SMBUS_BLOCK_MAX) {
++			ret = -EINVAL;
++			goto out_unlock;
++		}
+ 		ret = rtl9300_i2c_config_xfer(i2c, chan, addr, data->block[0]);
+ 		if (ret)
+ 			goto out_unlock;
 
 
