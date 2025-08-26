@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE38260586;
-	Tue, 26 Aug 2025 14:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51668352FF0;
+	Tue, 26 Aug 2025 14:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217782; cv=none; b=hGA2KU9ZPmlBlcpa0keUVSn2CyUeJt1S062VsymuyZUgWe9EXgukslRXUUA9gYzY14vH1VFSZwNmCmgo0CriBDhHLU1vbISUzktG2xRlWj8O7DUZvI9QrZZJhgtPUmjBX55UEc9S+rT7oOHSLv1ufLrULqUyjFujIQ0vjvEkz5o=
+	t=1756217785; cv=none; b=glBlJAlIOpFs0f6QKP/Gwz1hqls/CBvsc7eKEKXrBxGm2ACJ15+YBXvg+P+6UcM0Lns+zfvHQT0xnoi2FvmeiAWnwHUNtPUEPLk6rDcCTvDqHnxHPEDy5lYiDuPGIb56aGxYiPWUM33gi+Hy8/h849E7ZuAfWHbp4h9CCxmY77c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217782; c=relaxed/simple;
-	bh=eYPTEK/Jtn3KHuMcmc3RaKoDNxUBFCb4FC2U3NNhCV4=;
+	s=arc-20240116; t=1756217785; c=relaxed/simple;
+	bh=R49vnZEU+IGwaxg6G9CDgZIrFFfYl0WJXjm+d86axMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCIGW1Up0xbMj4S496AChO2vOaOoBsyfwii+mNyzy0GMXTd2w3HBkolg88R/EPqoiTZukNsid1eMnF7MhKCpykv+dJGDWANHNy8NwIHSvr3lRPCHEylImdOnXUvIjSAFsjQll8tGKvZrhkZkVsD9zXrVslLfqkMBXN4SBNCNS7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mly/Tolh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9UywKd/nNPB04rhteyxXaZc4lkRNaWJzz3yhrE/OlseRYryqfvYtMeMtj/BO2zz3/A/r8eLtCc6g8jeoIKulyGbmJsXI1RgC1kVY8Y/4gBs4ybzslMV0xqa4kZYRKq7a0+l9lJTb6NT/bxhqx8tMAPnQ3ZGiXWGZRiD+TU/Loc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIdDytpf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mly/Tolh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05768C4CEF1;
-	Tue, 26 Aug 2025 14:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIdDytpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D508EC4CEF1;
+	Tue, 26 Aug 2025 14:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217782;
-	bh=eYPTEK/Jtn3KHuMcmc3RaKoDNxUBFCb4FC2U3NNhCV4=;
+	s=korg; t=1756217785;
+	bh=R49vnZEU+IGwaxg6G9CDgZIrFFfYl0WJXjm+d86axMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mly/Tolhjv+5dUg+4F10AGXqDOH7jjtpSVtJ6RkEiInv8yq9aRDfrP0MDd+1595wa
-	 7370LONhrv4VO2zcwbF2eysHfpbnSJn7pMIBamHs9LLhgi0XOAQdpN8AJUo0N21gWq
-	 D4r25Ch+xEp7QJxrc/1RQoELK1bkeh8T/VYB8UXU=
+	b=LIdDytpfP62Lbrb2sgHK3JUi6hwsAILFjLgiLK2wV8VHtXJJapfDF84MxbY8zih9D
+	 rORI+clCetEjkcrJBTnWOwZYhCVeOVCAGDwRUF+ArAa2GFUp5ikD23tnKbKjW34Nj3
+	 v/QsuefzdKZ3QxjfH9bwCgDG6W4pPKAGoUUHV5p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 242/523] reset: brcmstb: Enable reset drivers for ARCH_BCM2835
-Date: Tue, 26 Aug 2025 13:07:32 +0200
-Message-ID: <20250826110930.410779204@linuxfoundation.org>
+Subject: [PATCH 5.10 233/523] gpio: tps65912: check the return value of regmap_update_bits()
+Date: Tue, 26 Aug 2025 13:07:23 +0200
+Message-ID: <20250826110930.198125187@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,57 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Robinson <pbrobinson@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 1d99f92f71b6b4b2eee776562c991428490f71ef ]
+[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
 
-The BRCMSTB and BRCMSTB_RESCAL reset drivers are also
-used in the BCM2712, AKA the RPi5. The RPi platforms
-have typically used the ARCH_BCM2835, and the PCIe
-support for this SoC can use this config which depends
-on these drivers so enable building them when just that
-arch option is enabled to ensure the platform works as
-expected.
+regmap_update_bits() can fail, check its return value like we do
+elsewhere in the driver.
 
-Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20250630175301.846082-1-pbrobinson@gmail.com
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/reset/Kconfig | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-tps65912.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-index 147543ad303f..315324dcdac4 100644
---- a/drivers/reset/Kconfig
-+++ b/drivers/reset/Kconfig
-@@ -43,8 +43,8 @@ config RESET_BERLIN
+diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
+index 510d9ed9fd2a..a8a2ad13e09e 100644
+--- a/drivers/gpio/gpio-tps65912.c
++++ b/drivers/gpio/gpio-tps65912.c
+@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
+ 					  unsigned offset, int value)
+ {
+ 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
++	int ret;
  
- config RESET_BRCMSTB
- 	tristate "Broadcom STB reset controller"
--	depends on ARCH_BRCMSTB || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
-+	default ARCH_BRCMSTB || ARCH_BCM2835
- 	help
- 	  This enables the reset controller driver for Broadcom STB SoCs using
- 	  a SUN_TOP_CTRL_SW_INIT style controller.
-@@ -52,11 +52,11 @@ config RESET_BRCMSTB
- config RESET_BRCMSTB_RESCAL
- 	bool "Broadcom STB RESCAL reset controller"
- 	depends on HAS_IOMEM
--	depends on ARCH_BRCMSTB || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
-+	default ARCH_BRCMSTB || ARCH_BCM2835
- 	help
- 	  This enables the RESCAL reset controller for SATA, PCIe0, or PCIe1 on
--	  BCM7216.
-+	  BCM7216 or the BCM2712.
+ 	/* Set the initial value */
+-	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+-			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
++				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	if (ret)
++		return ret;
  
- config RESET_HSDK
- 	bool "Synopsys HSDK Reset Driver"
+ 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+ 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
 -- 
 2.39.5
 
