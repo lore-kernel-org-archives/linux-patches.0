@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF24352093;
-	Tue, 26 Aug 2025 14:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6FB35209C;
+	Tue, 26 Aug 2025 14:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219209; cv=none; b=RF8Zac01AEgEkp+5DGUWfyQKSqwqyCtxklbieDJI5Bs/zVnvdT9POXA+eXx5yDmEyFZSH1fWQBpEBXxBcnSurPoKNWM+sjhiBRagYht/n9G0PlYbZ9i6q9gVadzcTtLKPgmx1BFkGvkP9WvkpkzqNl+1C7NvCiCVZbTEX900CgM=
+	t=1756219212; cv=none; b=TvUumz85j8WuOyfV+fOMlHFKop3gFczkZIdTxPMbVecS9oiXnxD5Ve23YENWncN3ZcEZEwbTaIkw/aCU5Oj1PQynC05j9T1gWejV7O92TEX8UzGScQzXH/RhZdOaGsGJgqpl5skjBmvA6vscdMJUJb2mtXvrklzL0lQ+eCRxHxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219209; c=relaxed/simple;
-	bh=jB0CQP2g9rej0iHB/geKuu6oGN2riMC0LJNGML0tySc=;
+	s=arc-20240116; t=1756219212; c=relaxed/simple;
+	bh=8guIjQLgTDbZ9zamICsTy6+musu1n1tBDhQ9FOMGEO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elhGJtTkr2dDgWUPb1+jmyi7S7rbVJrU+fjqtZfSAzrBsnoTz/SpkBX/09AkdfVkrTuqVCcf1UcWVTvCGuUR2rDJ1TXnau0RJ5e+k2N2LiWKNbYikOYEYc1jcZKEwWasWmCeH9GlHciCBnBeR2xw60unbJJcXV7WTuzg7UgPtl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPTTrKL7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IzB/cWuzMHho8Oazzz8IGHSoggQo221p8tOgN38mzsFzgiF81KMx2OW/huprf1DkM7JjJ1cE2xwgKU9VjAwqM4Ez640QelnQxC1FnQvo6td4ePnwcYRzmdwPxF1g2KR6X9lO7r8IvvP99yHJQiqOaRJGg+rrzGrhCYkMg2AE0Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZoA7egE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPTTrKL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15039C4CEF1;
-	Tue, 26 Aug 2025 14:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZoA7egE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBCEC2BC87;
+	Tue, 26 Aug 2025 14:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219209;
-	bh=jB0CQP2g9rej0iHB/geKuu6oGN2riMC0LJNGML0tySc=;
+	s=korg; t=1756219212;
+	bh=8guIjQLgTDbZ9zamICsTy6+musu1n1tBDhQ9FOMGEO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aPTTrKL7qE6itRFWtIWLCXjuWArd4SQcF1jF39msIcz23678t9Mv8fcTQq7h8+wO4
-	 Ejz7HunVUvnn+VcBOUYRygRPlgqHTmzU1vyHxtuhoprMDGi0g7DuG5q4RTsWwwcqzr
-	 SIbxsu1MLzZHSEhF00RvLlljrU+UjMa6bRXpROn4=
+	b=GZoA7egE57y1zJHDgItCaVxh6ph7rvq2EoB72yHtiM7nM1Gu9a010odBulBRnEvcz
+	 YjhsKC2UslizowXsR9KdGq3BuxoKxVuEtawNELZYnzYOKBpevfM0ciFQMHhBz93SlN
+	 I9yVbZ4FnqRsIQanVNMI5cSVwu+Kf2j/XkmU5KFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 5.4 295/403] zynq_fpga: use sgtable-based scatterlist wrappers
-Date: Tue, 26 Aug 2025 13:10:21 +0200
-Message-ID: <20250826110914.958050732@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH 5.4 296/403] wifi: brcmsmac: Remove const from tbl_ptr parameter in wlc_lcnphy_common_read_table()
+Date: Tue, 26 Aug 2025 13:10:22 +0200
+Message-ID: <20250826110914.984557794@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,46 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 37e00703228ab44d0aacc32a97809a4f6f58df1b upstream.
+commit 81284e86bf8849f8e98e8ead3ff5811926b2107f upstream.
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of statterlists related calls. dma_unmap_sg() function
-has to be called with the number of elements originally passed to the
-dma_map_sg() function, not the one returned in sgtable's nents.
+A new warning in clang [1] complains that diq_start in
+wlc_lcnphy_tx_iqlo_cal() is passed uninitialized as a const pointer to
+wlc_lcnphy_common_read_table():
 
-CC: stable@vger.kernel.org
-Fixes: 425902f5c8e3 ("fpga zynq: Use the scatterlist interface")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20250616120932.1090614-1-m.szyprowski@samsung.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c:2728:13: error: variable 'diq_start' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+   2728 |                                                      &diq_start, 1, 16, 69);
+        |                                                       ^~~~~~~~~
+
+The table pointer passed to wlc_lcnphy_common_read_table() should not be
+considered constant, as wlc_phy_read_table() is ultimately going to
+update it. Remove the const qualifier from the tbl_ptr to clear up the
+warning.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2108
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>>
+Link: https://patch.msgid.link/20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/zynq-fpga.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/fpga/zynq-fpga.c
-+++ b/drivers/fpga/zynq-fpga.c
-@@ -406,7 +406,7 @@ static int zynq_fpga_ops_write(struct fp
- 	}
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -974,7 +974,7 @@ void wlc_lcnphy_read_table(struct brcms_
  
- 	priv->dma_nelms =
--	    dma_map_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
-+	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
- 	if (priv->dma_nelms == 0) {
- 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
- 		return -ENOMEM;
-@@ -478,7 +478,7 @@ out_clk:
- 	clk_disable(priv->clk);
- 
- out_free:
--	dma_unmap_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
-+	dma_unmap_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
- 	return err;
- }
- 
+ static void
+ wlc_lcnphy_common_read_table(struct brcms_phy *pi, u32 tbl_id,
+-			     const u16 *tbl_ptr, u32 tbl_len,
++			     u16 *tbl_ptr, u32 tbl_len,
+ 			     u32 tbl_width, u32 tbl_offset)
+ {
+ 	struct phytbl_info tab;
 
 
