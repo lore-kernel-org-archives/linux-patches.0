@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F22341AA1;
-	Tue, 26 Aug 2025 14:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFA734AB0D;
+	Tue, 26 Aug 2025 14:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218286; cv=none; b=f5XGqab+QFBraRJZJIuTEM3AwZEe4MWb408m8izGre9MUUdkpR0eH3CwTChn/UdVHt7lgJXZuVKI24G4N1cBFiBSLnETdvhcdYwe1rKHAuY0WXTnAD+MIT+kZmsH3vboNta5v9bPQod//5YtYuWVH9/0pVxG/233cu4+txbd6d0=
+	t=1756218289; cv=none; b=a6psMarZ3NHGHPdcRqlsBdqZTGN2oBgZOXibvEXO2WphBJV8kLBi18C9G78Nt+pGXBWB2iSlbwC4Je73BMyrOf31qmjito5AiIrCVhHvKMig4OQhFAt7562ovrmPDZtfA82OJr308wrei73eE05KEpZ+1IQ3wWLVLx3TuEq7RFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218286; c=relaxed/simple;
-	bh=ygYvH+ixK7d5pHIMs1JwqpPlt/5uqHdfzZ3a3P9kxWE=;
+	s=arc-20240116; t=1756218289; c=relaxed/simple;
+	bh=kPkV3vh8azYB0z3FLRFYfYfg22RhmsUPCS8izjyrnW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sPbaoqss/lSehUtf5kGVdunK+gilcPB/hNf4hsbIG1plrOLM2TDBQTTssQ640eOFpML1At8wUY0CeCDO+FlX+7yAetwrLkOvV8yE/yEUW7z96Fk8iJJJ1bMBUrr85hRdkPhhEcLyFuQQfRiARhHskiBU3YD4x5Fsrmtx+OS57cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gES7wj5D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V2tacqQ+AQ0jJWAwKrBHd+C4JN4c3/asg+n5TiiyhjI0HfXPzslzqDtUdtL10AS0gwJoOC1QQNGeFhbmUustq84YblXjPaV/+c+hEUswTEpLwUhuxRD1XEO2axF+WFIj+hJE6mvhMk6PtpipNcwCi8fFxPZ3v/45dypGgI7znMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WST0BP6U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gES7wj5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34507C4CEF1;
-	Tue, 26 Aug 2025 14:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WST0BP6U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B836AC4CEF1;
+	Tue, 26 Aug 2025 14:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218286;
-	bh=ygYvH+ixK7d5pHIMs1JwqpPlt/5uqHdfzZ3a3P9kxWE=;
+	s=korg; t=1756218289;
+	bh=kPkV3vh8azYB0z3FLRFYfYfg22RhmsUPCS8izjyrnW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gES7wj5DuTfn+TFxkIs598BiNmyuNZGWmRCcWVHRqrFeZ89B6PPlAJWG4TFw6PZ98
-	 aKKHWkLZsGJ2/s8j8kdYwEckBTCG2byGOodIlXVXKv3bdsnRXmhRvEU4qDxmyz8sSd
-	 286WHnd4e6e66VhecOHyAuXRkj7a7zCcIrfiNhvg=
+	b=WST0BP6U9//KklPa0p1BMwe6HY3U10mJNRsyN31CssCfjsXPhxSUbnnttlcqEMCTl
+	 3eom0xSKYG5hrZxVXDhNIysC2+X5URilYev8Jy6HtCZURGcg2YCB8lpmWB73WiCDjX
+	 XopJbq9RTcyURtzBJ1BbUhnwqPKQyisRSjSIm5QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 464/523] scsi: ufs: exynos: Fix programming of HCI_UTRL_NEXUS_TYPE
-Date: Tue, 26 Aug 2025 13:11:14 +0200
-Message-ID: <20250826110935.890760758@linuxfoundation.org>
+	Hulk Robot <hulkci@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 5.10 438/523] ptp: Fix possible memory leak in ptp_clock_register()
+Date: Tue, 26 Aug 2025 13:10:48 +0200
+Message-ID: <20250826110935.258689354@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -47,62 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 01aad16c2257ab8ff33b152b972c9f2e1af47912 ]
+commit 4225fea1cb28370086e17e82c0f69bec2779dca0 upstream.
 
-On Google gs101, the number of UTP transfer request slots (nutrs) is 32,
-and in this case the driver ends up programming the UTRL_NEXUS_TYPE
-incorrectly as 0.
+I got memory leak as follows when doing fault injection test:
 
-This is because the left hand side of the shift is 1, which is of type
-int, i.e. 31 bits wide. Shifting by more than that width results in
-undefined behaviour.
+unreferenced object 0xffff88800906c618 (size 8):
+  comm "i2c-idt82p33931", pid 4421, jiffies 4294948083 (age 13.188s)
+  hex dump (first 8 bytes):
+    70 74 70 30 00 00 00 00                          ptp0....
+  backtrace:
+    [<00000000312ed458>] __kmalloc_track_caller+0x19f/0x3a0
+    [<0000000079f6e2ff>] kvasprintf+0xb5/0x150
+    [<0000000026aae54f>] kvasprintf_const+0x60/0x190
+    [<00000000f323a5f7>] kobject_set_name_vargs+0x56/0x150
+    [<000000004e35abdd>] dev_set_name+0xc0/0x100
+    [<00000000f20cfe25>] ptp_clock_register+0x9f4/0xd30 [ptp]
+    [<000000008bb9f0de>] idt82p33_probe.cold+0x8b6/0x1561 [ptp_idt82p33]
 
-Fix this by switching to the BIT() macro, which applies correct type
-casting as required. This ensures the correct value is written to
-UTRL_NEXUS_TYPE (0xffffffff on gs101), and it also fixes a UBSAN shift
-warning:
+When posix_clock_register() returns an error, the name allocated
+in dev_set_name() will be leaked, the put_device() should be used
+to give up the device reference, then the name will be freed in
+kobject_cleanup() and other memory will be freed in ptp_clock_release().
 
-    UBSAN: shift-out-of-bounds in drivers/ufs/host/ufs-exynos.c:1113:21
-    shift exponent 32 is too large for 32-bit type 'int'
-
-For consistency, apply the same change to the nutmrs / UTMRL_NEXUS_TYPE
-write.
-
-Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
-Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250707-ufs-exynos-shift-v1-1-1418e161ae40@linaro.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-[ Adjusted path from drivers/ufs/host to drivers/scsi/ufs ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Fixes: a33121e5487b ("ptp: fix the race between the release of ptp_clock and cdev")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ Shivani: Modified to apply on 5.10.y, Removed kfree(ptp->vclock_index) in
+  the ptach, since vclock_index is introduced in later versions ]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ufs/ufs-exynos.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ptp/ptp_clock.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/ufs/ufs-exynos.c
-+++ b/drivers/scsi/ufs/ufs-exynos.c
-@@ -850,8 +850,8 @@ static int exynos_ufs_post_link(struct u
- 	hci_writel(ufs, 0xa, HCI_DATA_REORDER);
- 	hci_writel(ufs, PRDT_SET_SIZE(12), HCI_TXPRDT_ENTRY_SIZE);
- 	hci_writel(ufs, PRDT_SET_SIZE(12), HCI_RXPRDT_ENTRY_SIZE);
--	hci_writel(ufs, (1 << hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
--	hci_writel(ufs, (1 << hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
-+	hci_writel(ufs, BIT(hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
-+	hci_writel(ufs, BIT(hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
- 	hci_writel(ufs, 0xf, HCI_AXIDMA_RWDATA_BURST_LEN);
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -283,15 +283,20 @@ struct ptp_clock *ptp_clock_register(str
+ 	/* Create a posix clock and link it to the device. */
+ 	err = posix_clock_register(&ptp->clock, &ptp->dev);
+ 	if (err) {
++		if (ptp->pps_source)
++			pps_unregister_source(ptp->pps_source);
++
++		if (ptp->kworker)
++			kthread_destroy_worker(ptp->kworker);
++
++		put_device(&ptp->dev);
++
+ 		pr_err("failed to create posix clock\n");
+-		goto no_clock;
++		return ERR_PTR(err);
+ 	}
  
- 	if (ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB)
+ 	return ptp;
+ 
+-no_clock:
+-	if (ptp->pps_source)
+-		pps_unregister_source(ptp->pps_source);
+ no_pps:
+ 	ptp_cleanup_pin_groups(ptp);
+ no_pin_groups:
 
 
