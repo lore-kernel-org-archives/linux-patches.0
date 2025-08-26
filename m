@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD558770FE;
-	Tue, 26 Aug 2025 12:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFF81E521E;
+	Tue, 26 Aug 2025 12:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212832; cv=none; b=my9oe2+bYULohmlxebXJNV6NSAlW5gMv63WWmKjnzQbY+m241lNJDtfUqpxT8WuMNRrUuKGFCRgYdA2dpNwj6bN+vN6GdGbeD3+vaEIohxF/Q3U3YTVKSDa/50D357Q34+PtvH9AB7Y8zsc/lqex7nQ0MB5UWilN9VR1PNWirZ8=
+	t=1756212835; cv=none; b=acGeaV+CNY2WlzT3smC53ROClL4F14Q7uobHGal1jlo0NTDY4ON+y4kxw6xm+RaHmo5ZoPFNR7axdMPhMZFzd0Y9LngkVQUj2XYPQY9YWOGb9bXk/4NamK+ijwDEG8IPEWdzgAFjmLMB/wwMoqTHGDkel/xAYt1VsYuMIErqtRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212832; c=relaxed/simple;
-	bh=vSQnlyJ/fH3c/YAWOagU3YUr+X2uFhu9pK5D4XQd67w=;
+	s=arc-20240116; t=1756212835; c=relaxed/simple;
+	bh=rfmjw3Cvn3Ojq1mjp6u3jQAgqiBh/YbVpAubO8SfD4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlbTWu+yX1zsavDniLmxa4ly9ElOcfFhErGKi34I0ynWKgCW2q0IKMPx4tK15A/xEDaPzZ0xOocRZt4EzxD3EI876jtfB4KWVk6qonbmICMEf7Ez3gh842USQcZH5iND8tHnu0/TV+UaSKaPjJFfrATrE/7YvFZCouoeWOCVpWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAIcaRlL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KPyfsLAHLYlNr6vv2sYBlcemGBfnIiF1JzE1Kc00qMCEv3pIFSgTdtzBY74eE6R25OtAtwd3V2OhOIs3rY0nNpblN5ExHojFJr0gKdzpvv//PHxIK8um3JvUOtZtuk/EQRCPM3fnQse6Ufct16xf45psypgJLMEhcJUkBMDsovg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZqZCmBA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAIcaRlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF57CC4CEF1;
-	Tue, 26 Aug 2025 12:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZqZCmBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D36C4CEF1;
+	Tue, 26 Aug 2025 12:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212832;
-	bh=vSQnlyJ/fH3c/YAWOagU3YUr+X2uFhu9pK5D4XQd67w=;
+	s=korg; t=1756212834;
+	bh=rfmjw3Cvn3Ojq1mjp6u3jQAgqiBh/YbVpAubO8SfD4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAIcaRlLFoFs56uuUBe6grATi9o9ZKY1Y+BurJw72IuMqQ2H87SWYHVpGRpoOqosJ
-	 fGadS6kxa/mQgV/c1F5hTKXTWNeTY7sX8NJm+nq4lx15baRWzfiFfmiEbf/J/LVSfu
-	 49L6omUWIjEc4bppv3fjf1EbnMpN3x19NdqnZObE=
+	b=DZqZCmBA1UuVP5JXyX3O6sjRIRF1HkVypRfIgq4uhq3VLSqsQaabI3+USAZN+IzaV
+	 NGb8001gDZOSc8hf84hqG6r8UJteM+9rSSKZOdtQMrzQi7tkqSOsWIJm1tnA4faHQp
+	 E7t6hSfm1hUMQ6+44QepvP2JwUn+cuZJMUFmpGsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Ricky Wu <ricky_wu@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 118/587] mei: bus: Check for still connected devices in mei_cl_bus_dev_release()
-Date: Tue, 26 Aug 2025 13:04:27 +0200
-Message-ID: <20250826110955.967047072@linuxfoundation.org>
+Subject: [PATCH 6.6 119/587] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
+Date: Tue, 26 Aug 2025 13:04:28 +0200
+Message-ID: <20250826110955.990330862@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,50 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 35e8a426b16adbecae7a4e0e3c00fc8d0273db53 ]
+[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
 
-mei_cl_bus_dev_release() also frees the mei-client (struct mei_cl)
-belonging to the device being released.
+In the error path of sd_set_power_mode() we don't update host->power_mode,
+which could lead to an imbalance of the runtime PM usage count. Fix this by
+always updating host->power_mode.
 
-If there are bugs like the just fixed bug in the ACE/CSI2 mei drivers,
-the mei-client being freed might still be part of the mei_device's
-file_list and iterating over this list after the freeing will then trigger
-a use-afer-free bug.
-
-Add a check to mei_cl_bus_dev_release() to make sure that the to-be-freed
-mei-client is not on the mei_device's file_list.
-
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://lore.kernel.org/r/20250623085052.12347-11-hansg@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Ricky Wu <ricky_wu@realtek.com>
+Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/bus.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/misc/mei/bus.c b/drivers/misc/mei/bus.c
-index 2e65ce6bdec7..b94cf7393fad 100644
---- a/drivers/misc/mei/bus.c
-+++ b/drivers/misc/mei/bus.c
-@@ -1269,10 +1269,16 @@ static void mei_dev_bus_put(struct mei_device *bus)
- static void mei_cl_bus_dev_release(struct device *dev)
- {
- 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
-+	struct mei_device *mdev = cldev->cl->dev;
-+	struct mei_cl *cl;
+diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
+index ded9b6849e35..90ea92bbdb2c 100644
+--- a/drivers/mmc/host/rtsx_usb_sdmmc.c
++++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
+@@ -1032,9 +1032,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
+ 		err = sd_power_on(host);
+ 	}
  
- 	mei_cl_flush_queues(cldev->cl, NULL);
- 	mei_me_cl_put(cldev->me_cl);
- 	mei_dev_bus_put(cldev->bus);
-+
-+	list_for_each_entry(cl, &mdev->file_list, link)
-+		WARN_ON(cl == cldev->cl);
-+
- 	kfree(cldev->cl);
- 	kfree(cldev);
+-	if (!err)
+-		host->power_mode = power_mode;
+-
++	host->power_mode = power_mode;
+ 	return err;
  }
+ 
 -- 
 2.39.5
 
