@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A2C1FBCB5;
-	Tue, 26 Aug 2025 13:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D24C13FD86;
+	Tue, 26 Aug 2025 13:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215050; cv=none; b=rfCV95Kw7ns49LeFbZuQcWznGmfgmw9nIvpXPlsDSWdbaqfdgemoyxU7PZfC1QnJ/hDWYCeDSBSAVLC6Y89ozYH2HyCOWsMwb8EH2vIfKl7Oxq/jAbdjEXp5jU0wU0bAsWrPhwO0H9u4O62DLOja6enMsyV+GKLiu6cRACO54vA=
+	t=1756215053; cv=none; b=SQ763PHUEvcwh9z4dypVINu1HoKtZ3HIjod+vzGc1jmFjXOUTi+qQmwdSSw9znsBLpQORhbEHaGGCcXr7fy/JLdTLxq5ezhIVo3M1Brez5y45DbRAQwzvmkSz7WSHV1GIKbyRYzT6TqcWBcKeApEQn00gfeWVGiLTIuaWPnSWn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215050; c=relaxed/simple;
-	bh=8DmDjkmxwXi7Mc+ucl/71i7B/AFBC74HsRmWIBRu5e4=;
+	s=arc-20240116; t=1756215053; c=relaxed/simple;
+	bh=vxdhskyKPdWJ2kg+tLL9P+KLri335E43zE8fD48vhrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cU5LtHCYloK8YO30dT0NcPUlSYyclq6qNjTh+UJxu4Ho5jGXFihKeqaa/rhiXsbOdJuVaGY/jjhVc2KZGumAAzcD5eUz3ESEqSMlIgEzysbb40p3y5QByFXEie3pv/as4K02Nff6PRW9D2ymXjK8d7nukjt8cUC8C0fmknGf+/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fJCsiJM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=InVE5wggQNfx6rccxN7JqTStd0eEsUlzQmjrGRGaAB2QO62tV8wzGRc2+2jFiwPqMEqL741Avth7EFnbGxDg/k73Ke9Ldo+ZGXGnkDnPIa7rjqJhsZV3+yLJ9UObP4oCtKyXJCDzaHZB5LR90qSladsqzUBxRSnvOnS6nRLLHxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MErkinx/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fJCsiJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A140C4CEF1;
-	Tue, 26 Aug 2025 13:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MErkinx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D89C4CEF1;
+	Tue, 26 Aug 2025 13:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215050;
-	bh=8DmDjkmxwXi7Mc+ucl/71i7B/AFBC74HsRmWIBRu5e4=;
+	s=korg; t=1756215053;
+	bh=vxdhskyKPdWJ2kg+tLL9P+KLri335E43zE8fD48vhrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fJCsiJMiKDvBcFkk0qxlLugfXMT9LtqXmMcaQrFHbV9yFUDTjwSBEjJzlNug/CF6
-	 on5h0vi1LANq2k2G9P8DTKyE5OUv0FMSfecgoWo2gQAyMR/Rh/YmrJH4Z/dT86gD/c
-	 GvGOMD5XzJUqzvUP4o+3j1bYA0PpPu+VfFjMGgKc=
+	b=MErkinx/SR8ORtJCQMBrBluaOWGQnuNB8RAIVUAhgQQp4Bs4a/G8nNZPRVtSoGp5o
+	 aKg5GyJD2sYvk4rBI4qX25iRxpnxhOwu+8f+qxzvjrYzEU+k5uKBAsC6fxYJkCJo9C
+	 bAzQEMB8KAcmnL0mFtVZcFBPeZddM+pZLQehQJrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	"Lin.Cao" <lincao12@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Philipp Stanner <phasta@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 369/482] usb: musb: omap2430: Convert to platform remove callback returning void
-Date: Tue, 26 Aug 2025 13:10:22 +0200
-Message-ID: <20250826110939.950567802@linuxfoundation.org>
+Subject: [PATCH 6.1 352/482] drm/sched: Remove optimization that causes hang when killing dependent jobs
+Date: Tue, 26 Aug 2025 13:10:05 +0200
+Message-ID: <20250826110939.532159265@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,57 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: "Lin.Cao" <lincao12@amd.com>
 
-[ Upstream commit cb020bf52253327fe382e10bcae02a4f1da33c04 ]
+[ Upstream commit 15f77764e90a713ee3916ca424757688e4f565b9 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+When application A submits jobs and application B submits a job with a
+dependency on A's fence, the normal flow wakes up the scheduler after
+processing each job. However, the optimization in
+drm_sched_entity_add_dependency_cb() uses a callback that only clears
+dependencies without waking up the scheduler.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+When application A is killed before its jobs can run, the callback gets
+triggered but only clears the dependency without waking up the scheduler,
+causing the scheduler to enter sleep state and application B to hang.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230405141009.3400693-8-u.kleine-koenig@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 1473e9e7679b ("usb: musb: omap2430: fix device leak at unbind")
+Remove the optimization by deleting drm_sched_entity_clear_dep() and its
+usage, ensuring the scheduler is always woken up when dependencies are
+cleared.
+
+Fixes: 777dbd458c89 ("drm/amdgpu: drop a dummy wakeup scheduler")
+Cc: stable@vger.kernel.org # v4.6+
+Signed-off-by: Lin.Cao <lincao12@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://lore.kernel.org/r/20250717084453.921097-1-lincao12@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/omap2430.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |   21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
---- a/drivers/usb/musb/omap2430.c
-+++ b/drivers/usb/musb/omap2430.c
-@@ -471,14 +471,12 @@ err0:
- 	return ret;
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -327,17 +327,6 @@ void drm_sched_entity_destroy(struct drm
  }
+ EXPORT_SYMBOL(drm_sched_entity_destroy);
  
--static int omap2430_remove(struct platform_device *pdev)
-+static void omap2430_remove(struct platform_device *pdev)
- {
- 	struct omap2430_glue *glue = platform_get_drvdata(pdev);
- 
- 	platform_device_unregister(glue->musb);
- 	pm_runtime_disable(glue->dev);
+-/* drm_sched_entity_clear_dep - callback to clear the entities dependency */
+-static void drm_sched_entity_clear_dep(struct dma_fence *f,
+-				       struct dma_fence_cb *cb)
+-{
+-	struct drm_sched_entity *entity =
+-		container_of(cb, struct drm_sched_entity, cb);
 -
--	return 0;
+-	entity->dependency = NULL;
+-	dma_fence_put(f);
+-}
+-
+ /*
+  * drm_sched_entity_clear_dep - callback to clear the entities dependency and
+  * wake up scheduler
+@@ -348,7 +337,8 @@ static void drm_sched_entity_wakeup(stru
+ 	struct drm_sched_entity *entity =
+ 		container_of(cb, struct drm_sched_entity, cb);
+ 
+-	drm_sched_entity_clear_dep(f, cb);
++	entity->dependency = NULL;
++	dma_fence_put(f);
+ 	drm_sched_wakeup(entity->rq->sched);
  }
  
- #ifdef CONFIG_PM
-@@ -610,7 +608,7 @@ MODULE_DEVICE_TABLE(of, omap2430_id_tabl
+@@ -401,13 +391,6 @@ static bool drm_sched_entity_add_depende
+ 		fence = dma_fence_get(&s_fence->scheduled);
+ 		dma_fence_put(entity->dependency);
+ 		entity->dependency = fence;
+-		if (!dma_fence_add_callback(fence, &entity->cb,
+-					    drm_sched_entity_clear_dep))
+-			return true;
+-
+-		/* Ignore it when it is already scheduled */
+-		dma_fence_put(fence);
+-		return false;
+ 	}
  
- static struct platform_driver omap2430_driver = {
- 	.probe		= omap2430_probe,
--	.remove		= omap2430_remove,
-+	.remove_new	= omap2430_remove,
- 	.driver		= {
- 		.name	= "musb-omap2430",
- 		.pm	= DEV_PM_OPS,
+ 	if (!dma_fence_add_callback(entity->dependency, &entity->cb,
 
 
