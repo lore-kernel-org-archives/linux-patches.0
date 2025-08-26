@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46012264A3;
-	Tue, 26 Aug 2025 11:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B4D318146;
+	Tue, 26 Aug 2025 11:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207351; cv=none; b=CoG9S4jWz3Tsz2mt3gXiO0TZQJOXJP+wEIA1dZlXG8dw4oJ/enBm5kl46+0/fDnYOlyWMYfShvO4t3fYqtzRAJlFB5gLw+ZxIoNYJ6IKdHGhhYv9cZXeN+nptS+dnClrZBqdd4RUq3lpeHQSad/MQIgCRL6NuBnRA5yOeNl0h0Y=
+	t=1756207354; cv=none; b=XuonFycZsBRHBC9GJil8FVq2xhs2ANaxXx+9VAu8KyFXq40g33We8PW9lE2exrF5+43846Ea/xTNf1uQApxyl5NsWXZ5KkjjZ2TP/Ki+k+QA/h6ft4BYAZCWegH7yJdl+aBmn7v/xYpcTXBnvQF68iL6gDqC8JLFQYW+S8XVBA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207351; c=relaxed/simple;
-	bh=1dI8eJoX9bMq3N2uBWHEJu1Ic4Uiuo4Rt7nGfoU4SeQ=;
+	s=arc-20240116; t=1756207354; c=relaxed/simple;
+	bh=wE/GsqGrTsNH2STFZNGiwor1PXVfFWj302nPfpmg3sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJhdYaCX9u6CGX4iWcQIZi6O6x4+OyB1jIC61PP5496EpB4H7gA5qJxOal0mB4Cm/J2S61q74LSKX/RJTHDT7ljK8EMCPXDQZPv3LKSSk93PdDHZryyVyz0PcW1at9sTX3+BgyL4tMVwnBlZy/Wgd2n9QKw50bP8mXBVIaM4tLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXWG+2Ur; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aEJAo5DlhNvL6P/R5+777ePyhbZ9QfKDx9f23kz9euBYvWX07/cG5fENhjG0Bz+sb7P7iv0MvGkEnvNj8mvhtY5utuDGXqNc8kYHKx9O+cSH+MgWZjquGXO32kl27N5ZuR73ZK5+XqsDJVwzfMB18Idog0MjkWbORH5BqthM9SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5laHqTK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXWG+2Ur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392BEC4CEF1;
-	Tue, 26 Aug 2025 11:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5laHqTK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBE1C4CEF1;
+	Tue, 26 Aug 2025 11:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207351;
-	bh=1dI8eJoX9bMq3N2uBWHEJu1Ic4Uiuo4Rt7nGfoU4SeQ=;
+	s=korg; t=1756207354;
+	bh=wE/GsqGrTsNH2STFZNGiwor1PXVfFWj302nPfpmg3sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXWG+2Ur83Kcjle3OC95GEPSbm8TAH84Oda8l/6Z4EeL4SVoPmhERIcemn6W+/CWE
-	 X+2ZO7DhLUqy70oag2/c+7Z1MfA80aWVuTNV9rUFAqUiurj5m8ngG8WoiV8oZzPAUF
-	 7A+rXsDaZxl9ZyqBEtZgOCi5sV9VibJ0uL+tLGr0=
+	b=f5laHqTKdpdVtbaEV8EwmQuV7BCXtY+wTcLcRyW8JvKr5VWA0lqH7Ig09dMuRbAtN
+	 85lP2IbLhe4mGQhdLRaAi95RZ6cOcvKJ58PN+66KjJVpm4YcaLVg9ml+T2iyMfjEeR
+	 D2cCfb8cX5b5wS/y2ZeXX6fX5iwhl75Lcms1o/Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.16 118/457] open_tree_attr: do not allow id-mapping changes without OPEN_TREE_CLONE
-Date: Tue, 26 Aug 2025 13:06:42 +0200
-Message-ID: <20250826110940.290389338@linuxfoundation.org>
+	Jialin Wang <wjl.linux@gmail.com>,
+	Penglei Jiang <superman.xpt@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 119/457] proc: proc_maps_open allow proc_mem_open to return NULL
+Date: Tue, 26 Aug 2025 13:06:43 +0200
+Message-ID: <20250826110940.317125610@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,47 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Jialin Wang <wjl.linux@gmail.com>
 
-commit 9308366f062129d52e0ee3f7a019f7dd41db33df upstream.
+commit c0e1b774f68bdbea1618e356e30672c7f1e32509 upstream.
 
-As described in commit 7a54947e727b ('Merge patch series "fs: allow
-changing idmappings"'), open_tree_attr(2) was necessary in order to
-allow for a detached mount to be created and have its idmappings changed
-without the risk of any racing threads operating on it. For this reason,
-mount_setattr(2) still does not allow for id-mappings to be changed.
+The commit 65c66047259f ("proc: fix the issue of proc_mem_open returning
+NULL") caused proc_maps_open() to return -ESRCH when proc_mem_open()
+returns NULL.  This breaks legitimate /proc/<pid>/maps access for kernel
+threads since kernel threads have NULL mm_struct.
 
-However, there was a bug in commit 2462651ffa76 ("fs: allow changing
-idmappings") which allowed users to bypass this restriction by calling
-open_tree_attr(2) *without* OPEN_TREE_CLONE.
+The regression causes perf to fail and exit when profiling a kernel
+thread:
 
-can_idmap_mount() prevented this bug from allowing an attached
-mountpoint's id-mapping from being modified (thanks to an is_anon_ns()
-check), but this still allows for detached (but visible) mounts to have
-their be id-mapping changed. This risks the same UAF and locking issues
-as described in the merge commit, and was likely unintentional.
+  # perf record -v -g -p $(pgrep kswapd0)
+  ...
+  couldn't open /proc/65/task/65/maps
 
-Fixes: 2462651ffa76 ("fs: allow changing idmappings")
-Cc: stable@vger.kernel.org # v6.15+
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Link: https://lore.kernel.org/20250808-open_tree_attr-bugfix-idmap-v1-1-0ec7bc05646c@cyphar.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This patch partially reverts the commit to fix it.
+
+Link: https://lkml.kernel.org/r/20250807165455.73656-1-wjl.linux@gmail.com
+Fixes: 65c66047259f ("proc: fix the issue of proc_mem_open returning NULL")
+Signed-off-by: Jialin Wang <wjl.linux@gmail.com>
+Cc: Penglei Jiang <superman.xpt@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/proc/task_mmu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -5302,7 +5302,8 @@ SYSCALL_DEFINE5(open_tree_attr, int, dfd
- 		int ret;
- 		struct mount_kattr kattr = {};
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -212,8 +212,8 @@ static int proc_maps_open(struct inode *
  
--		kattr.kflags = MOUNT_KATTR_IDMAP_REPLACE;
-+		if (flags & OPEN_TREE_CLONE)
-+			kattr.kflags = MOUNT_KATTR_IDMAP_REPLACE;
- 		if (flags & AT_RECURSIVE)
- 			kattr.kflags |= MOUNT_KATTR_RECURSE;
+ 	priv->inode = inode;
+ 	priv->mm = proc_mem_open(inode, PTRACE_MODE_READ);
+-	if (IS_ERR_OR_NULL(priv->mm)) {
+-		int err = priv->mm ? PTR_ERR(priv->mm) : -ESRCH;
++	if (IS_ERR(priv->mm)) {
++		int err = PTR_ERR(priv->mm);
  
+ 		seq_release_private(inode, file);
+ 		return err;
 
 
