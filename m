@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A97296BDF;
-	Tue, 26 Aug 2025 14:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A821E0E08;
+	Tue, 26 Aug 2025 14:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219253; cv=none; b=MUCUozdDO+R+cUzdLsl63gicLwJg9ndfEWQXSG1eH3kukKknJhHYodafPVi8BWTCVsSdboDB+f72FlrQd+xXN7rzlxo9gw8ij0ye/HNg54aGUUL1Ay4suEUvf5UDiSHNe/0rJokozeuFI+7hWjATiMcSfhduNz7pckblxlpddMU=
+	t=1756219256; cv=none; b=D9Y91ckFHPJyY1xth1Nl9mqeZiqBq4MGODU9DskYrhTqzrSJ5spoluCNFWHO21gQt7T+BF169jFwL7LqllHO/Byr7qSMW1VQD8cG2O/buuY/3zkSIJRUT3FvblOxMOxzkKCDinRaezUX/YenGvZesYpH86FbN1DQQLmm4HBDrcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219253; c=relaxed/simple;
-	bh=9PbTSgEYl4UW1EpvGq/727Cd2qAIrVnoLGHwe4fsaGo=;
+	s=arc-20240116; t=1756219256; c=relaxed/simple;
+	bh=xjTeQd17avjDyN+VnypBo0FwcPKio0MZq8HELqs52HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=We8IvaAEABL6jFh5aAgcsob4/YFMHcdHtwzyBq+pyQbW7CXQjJRtAH/DQ5zvWU1LLqf+4yb7g2C+rvAuE6fomTyL6A73xRqg/BUpE0pMbo8jBlLd6LOOfPuDve/2N9vwaOqkb9VD6yt3+vWJ7q6yb8XHRRaxqfTOxPrgAsWF/xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+na9AJI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eb+5lQfu1A9b40/CMRfyucOOLmUz/cozcuEQM7P9WA3BzCMHjTlm0pSpckAZuYInS470L1fzoX/p35p0Ats2NR0deGrs9reS7N1w69ysgiJgnz/queqiBCORgUypSRKnQXyXYDDvcJRG2KeZP4GxZ0iWZXTBnrCb/xKUduNID4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzvA0mP8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+na9AJI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB947C4CEF1;
-	Tue, 26 Aug 2025 14:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzvA0mP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B0DC4CEF1;
+	Tue, 26 Aug 2025 14:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219253;
-	bh=9PbTSgEYl4UW1EpvGq/727Cd2qAIrVnoLGHwe4fsaGo=;
+	s=korg; t=1756219255;
+	bh=xjTeQd17avjDyN+VnypBo0FwcPKio0MZq8HELqs52HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+na9AJIUhKBXYDcuKKpre1kLz/eXk0Ao1EfduWEXL+bCIFle4IOGQ9YZ4tybX1XY
-	 oJwr/18u4dGJd0liJxk0TdVz8IDkfq3omQlmMVdL3mwRxr0S3i+eBQoLRNleLohH+1
-	 4wy43+UDQGSo0FlWuQnpqb5xH+5kSLHBhEk1DGcw=
+	b=EzvA0mP8s7zGHnQgR/oHP/utNj/WjTrXOH2E/BAxIcW5IIWyCIcPFxphI7yGeG6Hg
+	 7OdBXd5NxNxVSjU83jEyY7ymgob6IkMPgDbpRxYTOI8mio/DymZ+ztOEWWi8uWY9Zh
+	 xZmDy+KvK6l79+5DNelH+SblbqTwRtP/OMpim8iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>
-Subject: [PATCH 5.4 311/403] drm/amd/display: Find first CRTC and its line time in dce110_fill_display_configs
-Date: Tue, 26 Aug 2025 13:10:37 +0200
-Message-ID: <20250826110915.407480246@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 312/403] fs/buffer: fix use-after-free when call bh_read() helper
+Date: Tue, 26 Aug 2025 13:10:38 +0200
+Message-ID: <20250826110915.437209772@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -46,88 +46,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 669f73a26f6112eedbadac53a2f2707ac6d0b9c8 upstream.
+[ Upstream commit 7375f22495e7cd1c5b3b5af9dcc4f6dffe34ce49 ]
 
-dce110_fill_display_configs is shared between DCE 6-11, and
-finding the first CRTC and its line time is relevant to DCE 6 too.
-Move the code to find it from DCE 11 specific code.
+There's issue as follows:
+BUG: KASAN: stack-out-of-bounds in end_buffer_read_sync+0xe3/0x110
+Read of size 8 at addr ffffc9000168f7f8 by task swapper/3/0
+CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted 6.16.0-862.14.0.6.x86_64
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x55/0x70
+ print_address_description.constprop.0+0x2c/0x390
+ print_report+0xb4/0x270
+ kasan_report+0xb8/0xf0
+ end_buffer_read_sync+0xe3/0x110
+ end_bio_bh_io_sync+0x56/0x80
+ blk_update_request+0x30a/0x720
+ scsi_end_request+0x51/0x2b0
+ scsi_io_completion+0xe3/0x480
+ ? scsi_device_unbusy+0x11e/0x160
+ blk_complete_reqs+0x7b/0x90
+ handle_softirqs+0xef/0x370
+ irq_exit_rcu+0xa5/0xd0
+ sysvec_apic_timer_interrupt+0x6e/0x90
+ </IRQ>
 
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4ab09785f8d5d03df052827af073d5c508ff5f63)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ Above issue happens when do ntfs3 filesystem mount, issue may happens
+ as follows:
+           mount                            IRQ
+ntfs_fill_super
+  read_cache_page
+    do_read_cache_folio
+      filemap_read_folio
+        mpage_read_folio
+	 do_mpage_readpage
+	  ntfs_get_block_vbo
+	   bh_read
+	     submit_bh
+	     wait_on_buffer(bh);
+	                            blk_complete_reqs
+				     scsi_io_completion
+				      scsi_end_request
+				       blk_update_request
+				        end_bio_bh_io_sync
+					 end_buffer_read_sync
+					  __end_buffer_read_notouch
+					   unlock_buffer
+
+            wait_on_buffer(bh);--> return will return to caller
+
+					  put_bh
+					    --> trigger stack-out-of-bounds
+In the mpage_read_folio() function, the stack variable 'map_bh' is
+passed to ntfs_get_block_vbo(). Once unlock_buffer() unlocks and
+wait_on_buffer() returns to continue processing, the stack variable
+is likely to be reclaimed. Consequently, during the end_buffer_read_sync()
+process, calling put_bh() may result in stack overrun.
+
+If the bh is not allocated on the stack, it belongs to a folio.  Freeing
+a buffer head which belongs to a folio is done by drop_buffers() which
+will fail to free buffers which are still locked.  So it is safe to call
+put_bh() before __end_buffer_read_notouch().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Link: https://lore.kernel.org/20250811141830.343774-1-yebin@huaweicloud.com
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c |   30 ++++++----
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ fs/buffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-@@ -120,9 +120,12 @@ void dce110_fill_display_configs(
- 	const struct dc_state *context,
- 	struct dm_pp_display_configuration *pp_display_cfg)
+diff --git a/fs/buffer.c b/fs/buffer.c
+index 4ec88d08d04e..e0da5e56e499 100644
+--- a/fs/buffer.c
++++ b/fs/buffer.c
+@@ -161,8 +161,8 @@ static void __end_buffer_read_notouch(struct buffer_head *bh, int uptodate)
+  */
+ void end_buffer_read_sync(struct buffer_head *bh, int uptodate)
  {
-+	struct dc *dc = context->clk_mgr->ctx->dc;
- 	int j;
- 	int num_cfgs = 0;
- 
-+	pp_display_cfg->crtc_index = dc->res_pool->res_cap->num_timing_generator;
-+
- 	for (j = 0; j < context->stream_count; j++) {
- 		int k;
- 
-@@ -164,6 +167,23 @@ void dce110_fill_display_configs(
- 		cfg->v_refresh /= stream->timing.h_total;
- 		cfg->v_refresh = (cfg->v_refresh + stream->timing.v_total / 2)
- 							/ stream->timing.v_total;
-+
-+		/* Find first CRTC index and calculate its line time.
-+		 * This is necessary for DPM on SI GPUs.
-+		 */
-+		if (cfg->pipe_idx < pp_display_cfg->crtc_index) {
-+			const struct dc_crtc_timing *timing =
-+				&context->streams[0]->timing;
-+
-+			pp_display_cfg->crtc_index = cfg->pipe_idx;
-+			pp_display_cfg->line_time_in_us =
-+				timing->h_total * 10000 / timing->pix_clk_100hz;
-+		}
-+	}
-+
-+	if (!num_cfgs) {
-+		pp_display_cfg->crtc_index = 0;
-+		pp_display_cfg->line_time_in_us = 0;
- 	}
- 
- 	pp_display_cfg->display_count = num_cfgs;
-@@ -231,16 +251,6 @@ void dce11_pplib_apply_display_requireme
- 
- 	dce110_fill_display_configs(context, pp_display_cfg);
- 
--	/* TODO: is this still applicable?*/
--	if (pp_display_cfg->display_count == 1) {
--		const struct dc_crtc_timing *timing =
--			&context->streams[0]->timing;
--
--		pp_display_cfg->crtc_index =
--			pp_display_cfg->disp_configs[0].pipe_idx;
--		pp_display_cfg->line_time_in_us = timing->h_total * 10000 / timing->pix_clk_100hz;
--	}
--
- 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
- 		dm_pp_apply_display_requirements(dc->ctx, pp_display_cfg);
+-	__end_buffer_read_notouch(bh, uptodate);
+ 	put_bh(bh);
++	__end_buffer_read_notouch(bh, uptodate);
  }
+ EXPORT_SYMBOL(end_buffer_read_sync);
+ 
+-- 
+2.50.1
+
 
 
