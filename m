@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F49F2367D9;
-	Tue, 26 Aug 2025 14:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DB1338F51;
+	Tue, 26 Aug 2025 14:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219175; cv=none; b=E/tJTUnRVKln2EcdeNvF3gKohsBBmI+EPqBqW+5oR9yeaxllXyBHedXrUuSeXUXcKoHsQzO0XyF70ojNoGkspMdGM1yGdBrWWyTrXGRZEt2//FnP09dtS+yhiJxCmIYv3HFxxBjILLoHvE2IvoXGAN+CH8gcaXw4McWMD7rCzXk=
+	t=1756219177; cv=none; b=M6kHuYfEGXEB0gMNss6I9x6NgPsA6k9GOSVUljIAARXTta09dgYZRx9t1XuRJnDKKPY8oxeHAGj9MbuDYAaEAhwBvarP3lLugOUKS+d6P6gweS6TwspfT5asw61ITioMpIDNry4r7LiNvOgBc4BhxGwmOffyN1Zuw8CqDfH1Tdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219175; c=relaxed/simple;
-	bh=c6qfqw6q6ATNj7aUMW1VNF3kQm6gOgu6bKwbY6QqxsI=;
+	s=arc-20240116; t=1756219177; c=relaxed/simple;
+	bh=0e6dNxri774Li+pmpGMg0HxMZFBE3LNJv5i1JnOehpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H0oZglL3LU7ePwIEjhIPchL26U8eFP81u0dtCKaSAhQmSohj94K68Q1unURJ5hdopPlX91bhdPDLGvV5n8bID72ezZOldpPr/3pLUFfSvDX8UAg638c82m2D3utK/9l9+Tx9HrOYpVkx2tH/IWTlYdx409qg+GGJGhWyUd/NqjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKAvZsl7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LI0IvkPBEELyJtNd18LCpJP7ifF5Wrf8y222094rCx9tbzptvzVMKfcwDuNsArAXK3NoCSsEZYsOk0cQIKDMF3eStdzLIuK5D0Ugw09j25g2jo9WkRZ+MCT2Ap6DkvitPiqXqY6VD+QQ1N8AjsUUXQCR1SoSewkvuD6wIf0ovoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtBBJT40; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKAvZsl7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C696EC113CF;
-	Tue, 26 Aug 2025 14:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtBBJT40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64386C4CEF1;
+	Tue, 26 Aug 2025 14:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219175;
-	bh=c6qfqw6q6ATNj7aUMW1VNF3kQm6gOgu6bKwbY6QqxsI=;
+	s=korg; t=1756219177;
+	bh=0e6dNxri774Li+pmpGMg0HxMZFBE3LNJv5i1JnOehpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKAvZsl7qMECKFZDReh9BEscckI83k8smCLgj2E4i61c70Ei7rZjjkmEpQDKfDrJ0
-	 a7WEeN1uSy+6hRoDc5JViPsWQBeNmoSiozAvwhRESMljRsNR2LBetUFLmURqM3ICHv
-	 cXuBdspBNahvhGvjd7fkNcnk/lUahLu5RwbOGt1k=
+	b=CtBBJT40mwGU9b9gxjpAYzdSJO4RnigMQjqXXv3us4dRD8KlFfqpTgflvEFvyfykX
+	 Yo8TN4sNNFfVuWaMdenekvVI/HmB9WQq0DSl6VcEvJgvoN/XyU/I7fn/E0bL6bD1hD
+	 4tie77o/JCXs5cenmrTDkfsQm/jEgWc3ckhWNIuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngjun Lee <yjjuny.lee@samsung.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <hansg@kernel.org>,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.4 280/403] media: uvcvideo: Fix 1-byte out-of-bounds read in uvc_parse_format()
-Date: Tue, 26 Aug 2025 13:10:06 +0200
-Message-ID: <20250826110914.541597757@linuxfoundation.org>
+Subject: [PATCH 5.4 281/403] media: uvcvideo: Do not mark valid metadata as invalid
+Date: Tue, 26 Aug 2025 13:10:07 +0200
+Message-ID: <20250826110914.568962503@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,43 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngjun Lee <yjjuny.lee@samsung.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 782b6a718651eda3478b1824b37a8b3185d2740c upstream.
+commit bda2859bff0b9596a19648f3740c697ce4c71496 upstream.
 
-The buffer length check before calling uvc_parse_format() only ensured
-that the buffer has at least 3 bytes (buflen > 2), buf the function
-accesses buffer[3], requiring at least 4 bytes.
+Currently, the driver performs a length check of the metadata buffer
+before the actual metadata size is known and before the metadata is
+decided to be copied. This results in valid metadata buffers being
+incorrectly marked as invalid.
 
-This can lead to an out-of-bounds read if the buffer has exactly 3 bytes.
+Move the length check to occur after the metadata size is determined and
+is decided to be copied.
 
-Fix it by checking that the buffer has at least 4 bytes in
-uvc_parse_format().
-
-Signed-off-by: Youngjun Lee <yjjuny.lee@samsung.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20250610124107.37360-1-yjjuny.lee@samsung.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 088ead255245 ("media: uvcvideo: Add a metadata device node")
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20250707-uvc-meta-v8-1-ed17f8b1218b@chromium.org
+Signed-off-by: Hans de Goede <hansg@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/usb/uvc/uvc_video.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -452,6 +452,9 @@ static int uvc_parse_format(struct uvc_d
- 	unsigned int i, n;
- 	u8 ftype;
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1309,12 +1309,6 @@ static void uvc_video_decode_meta(struct
+ 	if (!meta_buf || length == 2)
+ 		return;
  
-+	if (buflen < 4)
-+		return -EINVAL;
+-	if (meta_buf->length - meta_buf->bytesused <
+-	    length + sizeof(meta->ns) + sizeof(meta->sof)) {
+-		meta_buf->error = 1;
+-		return;
+-	}
+-
+ 	has_pts = mem[1] & UVC_STREAM_PTS;
+ 	has_scr = mem[1] & UVC_STREAM_SCR;
+ 
+@@ -1335,6 +1329,12 @@ static void uvc_video_decode_meta(struct
+ 				  !memcmp(scr, stream->clock.last_scr, 6)))
+ 		return;
+ 
++	if (meta_buf->length - meta_buf->bytesused <
++	    length + sizeof(meta->ns) + sizeof(meta->sof)) {
++		meta_buf->error = 1;
++		return;
++	}
 +
- 	format->type = buffer[2];
- 	format->index = buffer[3];
- 
+ 	meta = (struct uvc_meta_buf *)((u8 *)meta_buf->mem + meta_buf->bytesused);
+ 	local_irq_save(flags);
+ 	time = uvc_video_get_time();
 
 
