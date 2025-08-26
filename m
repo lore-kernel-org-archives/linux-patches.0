@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFA42BE058;
-	Tue, 26 Aug 2025 13:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C11514B950;
+	Tue, 26 Aug 2025 13:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214722; cv=none; b=i2qnUv8JKtRySWNePvgYpzrn0WYI70y+frplxp5JGwX8bEw4s+k1/E3n2OgAgRZ8zB74FvJ7koXJC7kKRbJtHUQFXV+1x0nLPlpaFXmgm2AhP4ZIB4sOIMuWH4kcCPrbyN+pCVV2iXLkprXeTm1YaVjRmpvd6bN03TsWB6IxRH0=
+	t=1756214725; cv=none; b=IQ6XO5Maz3oKnKupXLShlo0B3XPipl0LdRDd8wdh5JOfjpczjj3hJVtm+hcI3ykNsFqJ3Ils07UH27rY7DVLZFEPAq3HbzdJIcyJd9uVEAhb+ODfG4zN1Jz9VjfVXxILHl7QUTc7jfdCOX19QDF+B4STXsbW7TwzgcV8kVYNoGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214722; c=relaxed/simple;
-	bh=v6PRzoqXYUgWsJkr8aNIIB/CIm617VCTsVftjch/LVA=;
+	s=arc-20240116; t=1756214725; c=relaxed/simple;
+	bh=oM1ZPQQHnnYVJHD76O1xLNt3Wr/00rG8GSbbO/tnefc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hY5xh07ULUqDVOV6jvmICJuJpii/rf/NzPbsSmjbh10dZjrCoN4tr3oo5ZGfoII7ehrjmsX40fJYJqZ2xcpexJ4Ba+89LaQUCyYH+Ee0PKmJE6YwhApeTDmlUmKy3LPM6ElO//CTimaIkfbcsVtKUwg2G1zU/DTgH3I57AgW/94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjBzQShN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=saUp4QllHiSZgFUYBLHFJZMeEbY6JchMHDUQkZ66RExcynCixG226st4fDW5CgJM5dH3s0V4OWR5IEU0fEI9N9amgu+jy4b5WH2NVnn8UrUJM3rIEu3xeuohmL3tyiFipw/3kZllaJ2LVbbA623NZMEjoY9dkMDG+RKz79dHQs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yqk1IZiv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjBzQShN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE33C4CEF1;
-	Tue, 26 Aug 2025 13:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yqk1IZiv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88015C4CEF1;
+	Tue, 26 Aug 2025 13:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214722;
-	bh=v6PRzoqXYUgWsJkr8aNIIB/CIm617VCTsVftjch/LVA=;
+	s=korg; t=1756214724;
+	bh=oM1ZPQQHnnYVJHD76O1xLNt3Wr/00rG8GSbbO/tnefc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjBzQShN/ptb9qdY2qRW958M7nlKYy0fP54+Z+LF36bzngf0ysBGYI1cMNuH6RhqU
-	 edru5/c5QvWISz5fBE38IYzA2S3CP6RcCIC3dQr8UMvsHmAwQ4z46J14zqDswVA6Kt
-	 X5icdKwZKtbAA0ggHEh0G3pneF6tCfJynUqi4mpU=
+	b=Yqk1IZivLVOi2cZw9SDRNCGEyFAoTmWAFmYHWlAkmuyrcGuKuxCbP2fy21kFhDIdk
+	 r5z1VKQFRNQq1BlGxRHP9CSpAqJhHqQIBzyJY72o43mhPAnHn8pNi9sxd3L36G/mZk
+	 kzRGmdKFSjrUuquT+N9Y14xljTvHJw/n+8LWwwFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"fangzhong.zhou" <myth5@myth5.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 217/482] i2c: Force DLL0945 touchpad i2c freq to 100khz
-Date: Tue, 26 Aug 2025 13:07:50 +0200
-Message-ID: <20250826110936.136113540@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 244/482] ext4: fix zombie groups in average fragment size lists
+Date: Tue, 26 Aug 2025 13:08:17 +0200
+Message-ID: <20250826110936.797924245@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,39 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: fangzhong.zhou <myth5@myth5.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 0b7c9528facdb5a73ad78fea86d2e95a6c48dbc4 ]
+commit 1c320d8e92925bb7615f83a7b6e3f402a5c2ca63 upstream.
 
-This patch fixes an issue where the touchpad cursor movement becomes
-slow on the Dell Precision 5560. Force the touchpad freq to 100khz
-as a workaround.
+Groups with no free blocks shouldn't be in any average fragment size list.
+However, when all blocks in a group are allocated(i.e., bb_fragments or
+bb_free is 0), we currently skip updating the average fragment size, which
+means the group isn't removed from its previous s_mb_avg_fragment_size[old]
+list.
 
-Tested on Dell Precision 5560 with 6.14 to 6.14.6. Cursor movement
-is now smooth and responsive.
+This created "zombie" groups that were always skipped during traversal as
+they couldn't satisfy any block allocation requests, negatively impacting
+traversal efficiency.
 
-Signed-off-by: fangzhong.zhou <myth5@myth5.com>
-[wsa: kept sorting and removed unnecessary parts from commit msg]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Therefore, when a group becomes completely full, bb_avg_fragment_size_order
+is now set to -1. If the old order was not -1, a removal operation is
+performed; if the new order is not -1, an insertion is performed.
+
+Fixes: 196e402adf2e ("ext4: improve cr 0 / cr 1 group scanning")
+CC: stable@vger.kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250714130327.1830534-11-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/mballoc.c |   34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index d2499f302b50..f43067f6797e 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -370,6 +370,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
- 	 * the device works without issues on Windows at what is expected to be
- 	 * a 400KHz frequency. The root cause of the issue is not known.
- 	 */
-+	{ "DLL0945", 0 },
- 	{ "ELAN06FA", 0 },
- 	{}
- };
--- 
-2.39.5
-
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -829,30 +829,30 @@ static void
+ mb_update_avg_fragment_size(struct super_block *sb, struct ext4_group_info *grp)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+-	int new_order;
++	int new, old;
+ 
+-	if (!test_opt2(sb, MB_OPTIMIZE_SCAN) || grp->bb_fragments == 0)
++	if (!test_opt2(sb, MB_OPTIMIZE_SCAN))
+ 		return;
+ 
+-	new_order = mb_avg_fragment_size_order(sb,
+-					grp->bb_free / grp->bb_fragments);
+-	if (new_order == grp->bb_avg_fragment_size_order)
++	old = grp->bb_avg_fragment_size_order;
++	new = grp->bb_fragments == 0 ? -1 :
++	      mb_avg_fragment_size_order(sb, grp->bb_free / grp->bb_fragments);
++	if (new == old)
+ 		return;
+ 
+-	if (grp->bb_avg_fragment_size_order != -1) {
+-		write_lock(&sbi->s_mb_avg_fragment_size_locks[
+-					grp->bb_avg_fragment_size_order]);
++	if (old >= 0) {
++		write_lock(&sbi->s_mb_avg_fragment_size_locks[old]);
+ 		list_del(&grp->bb_avg_fragment_size_node);
+-		write_unlock(&sbi->s_mb_avg_fragment_size_locks[
+-					grp->bb_avg_fragment_size_order]);
++		write_unlock(&sbi->s_mb_avg_fragment_size_locks[old]);
++	}
++
++	grp->bb_avg_fragment_size_order = new;
++	if (new >= 0) {
++		write_lock(&sbi->s_mb_avg_fragment_size_locks[new]);
++		list_add_tail(&grp->bb_avg_fragment_size_node,
++				&sbi->s_mb_avg_fragment_size[new]);
++		write_unlock(&sbi->s_mb_avg_fragment_size_locks[new]);
+ 	}
+-	grp->bb_avg_fragment_size_order = new_order;
+-	write_lock(&sbi->s_mb_avg_fragment_size_locks[
+-					grp->bb_avg_fragment_size_order]);
+-	list_add_tail(&grp->bb_avg_fragment_size_node,
+-		&sbi->s_mb_avg_fragment_size[grp->bb_avg_fragment_size_order]);
+-	write_unlock(&sbi->s_mb_avg_fragment_size_locks[
+-					grp->bb_avg_fragment_size_order]);
+ }
+ 
+ /*
 
 
