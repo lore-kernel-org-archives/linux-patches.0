@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E795D343218;
-	Tue, 26 Aug 2025 14:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46107350D54;
+	Tue, 26 Aug 2025 14:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218492; cv=none; b=tGerw64bX2FUcmoq/tiQSJaKCymCBnsaAKP6QOtonqLN6O83vwdV25RC90fPe7glYi8bjSzR/OCENCpJP2uHVM/mEAy0mB2W1ISHayUJeSHkh25h/Z184V1ik088QfKRRel0iTjnvN6ng7J4Sa3ZTL7cptc8EkM/9NJnXau0TSQ=
+	t=1756218494; cv=none; b=Ni87TlhGZ3SqTaLSqlgbXoeY11iBiIdsHX4dfjffZWcAp3nHuj3bi4zUaADVGBzHvKqiYZMRY4Bim4DxOYDUyEoHkc0P5gJcmVMQP8w21OEDBgTHs/cGCozTMXCZWhKAWSU1R3TTrwQNb1WpzRklpAm0PV8sHP/SDKrq6UFkQQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218492; c=relaxed/simple;
-	bh=S/DvRY8MYjtNY3tp0yqr1sbIhaPmBl7+5IBsVhhQcWw=;
+	s=arc-20240116; t=1756218494; c=relaxed/simple;
+	bh=9yrhtf/BIFkwr+Cx54P+VEqoBVuujBpOF10zCEcYvVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7VEjh79FfUKEqMZaT9ofIqHfmQtKNsZ5HfSUKz+bpGP7G7QcNn5UScvGL9rMfGj4DVmIqc80huNysX6/ILOtedsyPxsw2OSoXGwTvQH7oiDTSu5lACzw8nabdMw1SNfP/ZtzZFETM1LBiJ+wxNN48RaxPs+0wm7SonwLTq+798=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLlshr03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lw6p3FAKLDAvAKMlPy7kJAiuckzEwlx8ONm5Sy+DL7TE8+2T/TCBbtuudLHd52p94f8qcA8rg5ytVmcExeKtKQ/+FquMryj15YP8hslMY1KTVd8O/f8Avj3Om2FufO0FLXPYdtBZg37lLSasvBv6/1zdI6lEoatkrKqnXPI+oKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iS7707GE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLlshr03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACD0C4CEF1;
-	Tue, 26 Aug 2025 14:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iS7707GE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAA7C4CEF1;
+	Tue, 26 Aug 2025 14:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218491;
-	bh=S/DvRY8MYjtNY3tp0yqr1sbIhaPmBl7+5IBsVhhQcWw=;
+	s=korg; t=1756218494;
+	bh=9yrhtf/BIFkwr+Cx54P+VEqoBVuujBpOF10zCEcYvVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLlshr03ljJhkZSv4r/Z58w2yhwqDB0EjYLp4UphyrwU0QDONbb7Ym4AD/abJgebd
-	 6zpdR7WgnrIgfG837KifNhyFpkEk+9FG4BkpshzeD33yr+BdDUBOhlVWeqQ4uhDx9c
-	 fQXJt+eVl/xDx4n+oFWEz3queAoAFz6W45Xn12do=
+	b=iS7707GE9LvNPKtSIJEw7O8xcDDRcUxD28iJXrlIKzwwRW1i8giACqGnSWG0V+bxd
+	 vo2v6Vqvibinzg6lIeNg+FIDRc9RO2O//B2eohNSJjysNS16pJ9mi9XLx+oisDsbXC
+	 81ZCRw+OY4521ZB6u09Lvq7bctersH4VJy2XO93g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	LongJun Tang <tanglongjun@kylinos.cn>,
-	Yun Lu <luyun@kylinos.cn>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 013/403] af_packet: fix soft lockup issue caused by tpacket_snd()
-Date: Tue, 26 Aug 2025 13:05:39 +0200
-Message-ID: <20250826110906.119044738@linuxfoundation.org>
+	Jonathan Cameron <jic23@kernel.org>,
+	Fabio Estevam <festevam@denx.de>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 022/403] iio: adc: max1363: Fix MAX1363_4X_CHANS/MAX1363_8X_CHANS[]
+Date: Tue, 26 Aug 2025 13:05:48 +0200
+Message-ID: <20250826110906.381171705@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,103 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Fabio Estevam <festevam@denx.de>
 
-commit 55f0bfc0370539213202f4ce1a07615327ac4713 upstream.
+commit 6d21f2c2dd843bceefd9455f2919f6bb526797f0 upstream.
 
-When MSG_DONTWAIT is not set, the tpacket_snd operation will wait for
-pending_refcnt to decrement to zero before returning. The pending_refcnt
-is decremented by 1 when the skb->destructor function is called,
-indicating that the skb has been successfully sent and needs to be
-destroyed.
+Since commit 2718f15403fb ("iio: sanity check available_scan_masks array"),
+booting a board populated with a MAX11601 results in a flood of warnings:
 
-If an error occurs during this process, the tpacket_snd() function will
-exit and return error, but pending_refcnt may not yet have decremented to
-zero. Assuming the next send operation is executed immediately, but there
-are no available frames to be sent in tx_ring (i.e., packet_current_frame
-returns NULL), and skb is also NULL, the function will not execute
-wait_for_completion_interruptible_timeout() to yield the CPU. Instead, it
-will enter a do-while loop, waiting for pending_refcnt to be zero. Even
-if the previous skb has completed transmission, the skb->destructor
-function can only be invoked in the ksoftirqd thread (assuming NAPI
-threading is enabled). When both the ksoftirqd thread and the tpacket_snd
-operation happen to run on the same CPU, and the CPU trapped in the
-do-while loop without yielding, the ksoftirqd thread will not get
-scheduled to run. As a result, pending_refcnt will never be reduced to
-zero, and the do-while loop cannot exit, eventually leading to a CPU soft
-lockup issue.
+max1363 1-0064: available_scan_mask 8 subset of 0. Never used
+max1363 1-0064: available_scan_mask 9 subset of 0. Never used
+max1363 1-0064: available_scan_mask 10 subset of 0. Never used
+max1363 1-0064: available_scan_mask 11 subset of 0. Never used
+max1363 1-0064: available_scan_mask 12 subset of 0. Never used
+max1363 1-0064: available_scan_mask 13 subset of 0. Never used
+...
 
-In fact, skb is true for all but the first iterations of that loop, and
-as long as pending_refcnt is not zero, even if incremented by a previous
-call, wait_for_completion_interruptible_timeout() should be executed to
-yield the CPU, allowing the ksoftirqd thread to be scheduled. Therefore,
-the execution condition of this function should be modified to check if
-pending_refcnt is not zero, instead of check skb.
+These warnings are caused by incorrect offsets used for differential
+channels in the MAX1363_4X_CHANS() and MAX1363_8X_CHANS() macros.
 
--	if (need_wait && skb) {
-+	if (need_wait && packet_read_pending(&po->tx_ring)) {
+The max1363_mode_table[] defines the differential channel mappings as
+follows:
 
-As a result, the judgment conditions are duplicated with the end code of
-the while loop, and packet_read_pending() is a very expensive function.
-Actually, this loop can only exit when ph is NULL, so the loop condition
-can be changed to while (1), and in the "ph = NULL" branch, if the
-subsequent condition of if is not met,  the loop can break directly. Now,
-the loop logic remains the same as origin but is clearer and more obvious.
+MAX1363_MODE_DIFF_SINGLE(0, 1, 1 << 12),
+MAX1363_MODE_DIFF_SINGLE(2, 3, 1 << 13),
+MAX1363_MODE_DIFF_SINGLE(4, 5, 1 << 14),
+MAX1363_MODE_DIFF_SINGLE(6, 7, 1 << 15),
+MAX1363_MODE_DIFF_SINGLE(8, 9, 1 << 16),
+MAX1363_MODE_DIFF_SINGLE(10, 11, 1 << 17),
+MAX1363_MODE_DIFF_SINGLE(1, 0, 1 << 18),
+MAX1363_MODE_DIFF_SINGLE(3, 2, 1 << 19),
+MAX1363_MODE_DIFF_SINGLE(5, 4, 1 << 20),
+MAX1363_MODE_DIFF_SINGLE(7, 6, 1 << 21),
+MAX1363_MODE_DIFF_SINGLE(9, 8, 1 << 22),
+MAX1363_MODE_DIFF_SINGLE(11, 10, 1 << 23),
 
-Fixes: 89ed5b519004 ("af_packet: Block execution of tasks waiting for transmit to complete in AF_PACKET")
-Cc: stable@kernel.org
-Suggested-by: LongJun Tang <tanglongjun@kylinos.cn>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Update the macros to follow this same pattern, ensuring that the scan masks
+are valid and preventing the warnings.
+
+Cc: stable@vger.kernel.org
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Acked-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://patch.msgid.link/20250516173900.677821-1-festevam@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/iio/adc/max1363.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2774,15 +2774,21 @@ static int tpacket_snd(struct packet_soc
- 		ph = packet_current_frame(po, &po->tx_ring,
- 					  TP_STATUS_SEND_REQUEST);
- 		if (unlikely(ph == NULL)) {
--			if (need_wait && skb) {
-+			/* Note: packet_read_pending() might be slow if we
-+			 * have to call it as it's per_cpu variable, but in
-+			 * fast-path we don't have to call it, only when ph
-+			 * is NULL, we need to check the pending_refcnt.
-+			 */
-+			if (need_wait && packet_read_pending(&po->tx_ring)) {
- 				timeo = wait_for_completion_interruptible_timeout(&po->skb_completion, timeo);
- 				if (timeo <= 0) {
- 					err = !timeo ? -ETIMEDOUT : -ERESTARTSYS;
- 					goto out_put;
- 				}
--			}
--			/* check for additional frames */
--			continue;
-+				/* check for additional frames */
-+				continue;
-+			} else
-+				break;
- 		}
+--- a/drivers/iio/adc/max1363.c
++++ b/drivers/iio/adc/max1363.c
+@@ -505,10 +505,10 @@ static const struct iio_event_spec max13
+ 	MAX1363_CHAN_U(1, _s1, 1, bits, ev_spec, num_ev_spec),		\
+ 	MAX1363_CHAN_U(2, _s2, 2, bits, ev_spec, num_ev_spec),		\
+ 	MAX1363_CHAN_U(3, _s3, 3, bits, ev_spec, num_ev_spec),		\
+-	MAX1363_CHAN_B(0, 1, d0m1, 4, bits, ev_spec, num_ev_spec),	\
+-	MAX1363_CHAN_B(2, 3, d2m3, 5, bits, ev_spec, num_ev_spec),	\
+-	MAX1363_CHAN_B(1, 0, d1m0, 6, bits, ev_spec, num_ev_spec),	\
+-	MAX1363_CHAN_B(3, 2, d3m2, 7, bits, ev_spec, num_ev_spec),	\
++	MAX1363_CHAN_B(0, 1, d0m1, 12, bits, ev_spec, num_ev_spec),	\
++	MAX1363_CHAN_B(2, 3, d2m3, 13, bits, ev_spec, num_ev_spec),	\
++	MAX1363_CHAN_B(1, 0, d1m0, 18, bits, ev_spec, num_ev_spec),	\
++	MAX1363_CHAN_B(3, 2, d3m2, 19, bits, ev_spec, num_ev_spec),	\
+ 	IIO_CHAN_SOFT_TIMESTAMP(8)					\
+ 	}
  
- 		skb = NULL;
-@@ -2872,14 +2878,7 @@ tpacket_error:
- 		}
- 		packet_increment_head(&po->tx_ring);
- 		len_sum += tp_len;
--	} while (likely((ph != NULL) ||
--		/* Note: packet_read_pending() might be slow if we have
--		 * to call it as it's per_cpu variable, but in fast-path
--		 * we already short-circuit the loop with the first
--		 * condition, and luckily don't have to go that path
--		 * anyway.
--		 */
--		 (need_wait && packet_read_pending(&po->tx_ring))));
-+	} while (1);
- 
- 	err = len_sum;
- 	goto out_put;
+@@ -603,14 +603,14 @@ static const enum max1363_modes max11608
+ 	MAX1363_CHAN_U(5, _s5, 5, bits, NULL, 0),	\
+ 	MAX1363_CHAN_U(6, _s6, 6, bits, NULL, 0),	\
+ 	MAX1363_CHAN_U(7, _s7, 7, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(0, 1, d0m1, 8, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(2, 3, d2m3, 9, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(4, 5, d4m5, 10, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(6, 7, d6m7, 11, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(1, 0, d1m0, 12, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(3, 2, d3m2, 13, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(5, 4, d5m4, 14, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(7, 6, d7m6, 15, bits, NULL, 0),	\
++	MAX1363_CHAN_B(0, 1, d0m1, 12, bits, NULL, 0),	\
++	MAX1363_CHAN_B(2, 3, d2m3, 13, bits, NULL, 0),	\
++	MAX1363_CHAN_B(4, 5, d4m5, 14, bits, NULL, 0),	\
++	MAX1363_CHAN_B(6, 7, d6m7, 15, bits, NULL, 0),	\
++	MAX1363_CHAN_B(1, 0, d1m0, 18, bits, NULL, 0),	\
++	MAX1363_CHAN_B(3, 2, d3m2, 19, bits, NULL, 0),	\
++	MAX1363_CHAN_B(5, 4, d5m4, 20, bits, NULL, 0),	\
++	MAX1363_CHAN_B(7, 6, d7m6, 21, bits, NULL, 0),	\
+ 	IIO_CHAN_SOFT_TIMESTAMP(16)			\
+ }
+ static const struct iio_chan_spec max11602_channels[] = MAX1363_8X_CHANS(8);
 
 
