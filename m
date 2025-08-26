@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669F717332C;
-	Tue, 26 Aug 2025 11:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B7F2E88B7;
+	Tue, 26 Aug 2025 11:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207448; cv=none; b=LP5HX3/80SXPKhkitiHQHJR1GlmDcDUoXs8XE2lJszC8wrUyztvbDHqYDrEtUzL7+0AuT+tWtowZr5gT95a8PXCZ8qGahGIm4AhuseTO3SEAO9fpoSeIZFMS8kWQTrpDZvTnHjMubWKmLV7Gui7f2/YCNJOfLCDXSCBfigTnUpA=
+	t=1756207450; cv=none; b=lNn3avWLyJ2OMybniL6AHyZGt+Es8xXzd5bCmpWJeddDlIYUc2Wp5FqvvxsO01OZ7khcCNiumwuZNyre4T9gT4rPvLsbvfKUP+w9UfteO0p/BFKXe90xuX/3ktil3nEM8u4RidrwwU8RDyoDJbBYAtMUC7U2ySLlY+orZfgv3vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207448; c=relaxed/simple;
-	bh=y5ZdgUEiOeZ2+JrOyHp1Bnvbuj9Avk+n4S3qyrRyj7U=;
+	s=arc-20240116; t=1756207450; c=relaxed/simple;
+	bh=LuPLeNvPt8ryPd8m6I8/N/uJFTV1OBFnhv7TZdB6Ga4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mTMVrPgX0e/MAO4Q4VS3fAG2ODVV8/5EAiqpoGFOX76eeXYM+eaL+LAa23EQymdNBHf0REGjihtJFoXoxOSij0cfrwoK+XcvuubS79w29jJrERfoWohd1QnXld04VMH1qaJptcWu/ueCdu9BPyrOVDldQrJ1+1ByvA7K0MCq0gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wg7dJJRj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DvofVKdEX8qD1VY4aUBG5ij0iGb0HzDxVtpceXhf1CGasVhz/RdaaTfixO9N5yXohtYbB0sRg5OcenZPdrRV5jqUEqBuScyjOe02BsSDx2gk9CEoTiLeFmhAnVF2B05nR5DIGYl84NzDUR8tjcyMjND74t0yfSyQp+RadsV0J/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bkmdq8Kj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wg7dJJRj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A95C4CEF1;
-	Tue, 26 Aug 2025 11:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bkmdq8Kj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C78C4CEF1;
+	Tue, 26 Aug 2025 11:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207448;
-	bh=y5ZdgUEiOeZ2+JrOyHp1Bnvbuj9Avk+n4S3qyrRyj7U=;
+	s=korg; t=1756207450;
+	bh=LuPLeNvPt8ryPd8m6I8/N/uJFTV1OBFnhv7TZdB6Ga4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wg7dJJRj9MpWBfL3wXYndyb+NVAsmk+7dD3AMiNvr+goznaLAEA/Kk2t3v15SDQmz
-	 cX846TQ7Yjd6V0RaRKvctyNwH6qlgJwuMrSQ/ohADvtPrbj5Ye3qjHnD93M19G6o3M
-	 kNSDH+1+oy139OkPgpUCZY6aRZKIsfas9y448hYY=
+	b=Bkmdq8KjDxQkBch21ctiB4KMlMrvbROaTdBzJUsuFHDFDqVgp8f9a4+VpsivaS2h3
+	 asdUkD2MMdFWxcZ1fsbAkQfAx3+tRXR3EEgcMhpy5kyRMkUp8SeacvGLTtALicobAW
+	 JyyanHQWVrHvHeVNMF3bYisSlabWdAO2e5m4sCns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.16 154/457] media: iris: Fix buffer preparation failure during resolution change
-Date: Tue, 26 Aug 2025 13:07:18 +0200
-Message-ID: <20250826110941.180596795@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.16 145/457] media: qcom: camss: Remove extraneous -supply postfix on supply names
+Date: Tue, 26 Aug 2025 13:07:09 +0200
+Message-ID: <20250826110940.956693590@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,60 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 91c6d55b477e1b66578c268214e915dff9f5ea57 upstream.
+commit c26e8dcd9d4e86d788c5bf7a5dd0ea70a95ab067 upstream.
 
-When the resolution changes, the driver internally updates the width and
-height, but the client continue to queue buffers with the older
-resolution until the last flag is received. This results in a mismatch
-when the buffers are prepared, causing failure due to outdated size.
+The -supply postfix is wrong but wasn't noticed on the CRD devices or
+indeed the Dell devices, however on Lenovo devices the error comes up.
 
-Introduce a check to prevent size validation during buffer preparation
-if a resolution reconfiguration is in progress, to handle this.
-
+Fixes: 1830cf0f56c3 ("media: qcom: camss: Add x1e80100 specific support")
 Cc: stable@vger.kernel.org
-Fixes: 17f2a485ca67 ("media: iris: implement vb2 ops for buf_queue and firmware response")
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # on sa8775p-ride
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+[bod: reworded commit log per Konrad's feedback]
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_vb2.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/media/platform/qcom/camss/camss.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
-index cdf11feb590b..b3bde10eb6d2 100644
---- a/drivers/media/platform/qcom/iris/iris_vb2.c
-+++ b/drivers/media/platform/qcom/iris/iris_vb2.c
-@@ -259,13 +259,14 @@ int iris_vb2_buf_prepare(struct vb2_buffer *vb)
- 			return -EINVAL;
- 	}
- 
--	if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
--	    vb2_plane_size(vb, 0) < iris_get_buffer_size(inst, BUF_OUTPUT))
--		return -EINVAL;
--	if (vb->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE &&
--	    vb2_plane_size(vb, 0) < iris_get_buffer_size(inst, BUF_INPUT))
--		return -EINVAL;
--
-+	if (!(inst->sub_state & IRIS_INST_SUB_DRC)) {
-+		if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
-+		    vb2_plane_size(vb, 0) < iris_get_buffer_size(inst, BUF_OUTPUT))
-+			return -EINVAL;
-+		if (vb->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE &&
-+		    vb2_plane_size(vb, 0) < iris_get_buffer_size(inst, BUF_INPUT))
-+			return -EINVAL;
-+	}
- 	return 0;
- }
- 
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index e1d64c8f42ae..e08e70b93824 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -2486,8 +2486,8 @@ static const struct resources_icc icc_res_sm8550[] = {
+ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	/* CSIPHY0 */
+ 	{
+-		.regulators = { "vdd-csiphy-0p8-supply",
+-				"vdd-csiphy-1p2-supply" },
++		.regulators = { "vdd-csiphy-0p8",
++				"vdd-csiphy-1p2" },
+ 		.clock = { "csiphy0", "csiphy0_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2501,8 +2501,8 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	},
+ 	/* CSIPHY1 */
+ 	{
+-		.regulators = { "vdd-csiphy-0p8-supply",
+-				"vdd-csiphy-1p2-supply" },
++		.regulators = { "vdd-csiphy-0p8",
++				"vdd-csiphy-1p2" },
+ 		.clock = { "csiphy1", "csiphy1_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2516,8 +2516,8 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	},
+ 	/* CSIPHY2 */
+ 	{
+-		.regulators = { "vdd-csiphy-0p8-supply",
+-				"vdd-csiphy-1p2-supply" },
++		.regulators = { "vdd-csiphy-0p8",
++				"vdd-csiphy-1p2" },
+ 		.clock = { "csiphy2", "csiphy2_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2531,8 +2531,8 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	},
+ 	/* CSIPHY4 */
+ 	{
+-		.regulators = { "vdd-csiphy-0p8-supply",
+-				"vdd-csiphy-1p2-supply" },
++		.regulators = { "vdd-csiphy-0p8",
++				"vdd-csiphy-1p2" },
+ 		.clock = { "csiphy4", "csiphy4_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
 -- 
 2.50.1
 
