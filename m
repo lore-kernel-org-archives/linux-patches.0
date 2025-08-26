@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FED0FBF0;
-	Tue, 26 Aug 2025 13:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0768B8462;
+	Tue, 26 Aug 2025 13:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213333; cv=none; b=E64vR25w+TAs9beFY14iLgwwVwGVHolyicGUM7oV2sSM/HxmffWMWK8Ea8WzW52ArPwrFPi8Gpy96Tov6CDeejnRvdlpt53cPDr7tdbPXhTGDNzNF6aeIqC6rJZyRv9PaAVbsO+zfRX25XwbyTPY7OiAA4LuttcXWN/q/p5CbRI=
+	t=1756213336; cv=none; b=nXfL2vQ0LYngvlSa8IdCHRYhJfu+mzrrUvsGLgfsJpZxQfEv6z4FrXca892uPtgLI+toJV+OKAykEaEEWkmcYQreFC4w7DZjdMCbBLyGEqE/tRazjgH+bcykVNAdU9nKH2aBf5EkEgpn0HTE+9BD/F4YAm0y3cEyJPddNEsAuhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213333; c=relaxed/simple;
-	bh=gXGK+TpaPHnwBD7xPyoN2yJpydheS0Mu4gPFRwV2JLw=;
+	s=arc-20240116; t=1756213336; c=relaxed/simple;
+	bh=Gt9J5eN+rrORbDiiwcA0H3iCyq/0tVYkcnFVAy7lPlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOp1N7NGviGN8uM74pAVszHEK5wiqgfg/pNbgloW+5uym89R/2XRsVv/ejzfSVgMTNAb64EcS2C8toRf5sOZCQaYX8dBXFgOfq6hRY44odncC1awV5Dj7InsXknjP6rMD9Sq0f+RLvMp/Th1jw4vPzKF6Ryrpcl+Tl8AxjhEE1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgGwIlOU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fBVrfgIRqp3gDpC0yvY3Py8SPrubK2iVRi3x2Z8Ty3AScd+nG586fJN52Dl+JBhY3mJadFTnRLQC9QTTXhDTLtn1EfVYG+fhPLJcrwTtjHc0Tr8yPhzSrZk21OCEvv6pDX8mxOCTnM4MK467G4gUu6wXRTLeq0jQN4zW0WLXCtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrF+xNSb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgGwIlOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5EDAC4CEF1;
-	Tue, 26 Aug 2025 13:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrF+xNSb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85191C4CEF1;
+	Tue, 26 Aug 2025 13:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213333;
-	bh=gXGK+TpaPHnwBD7xPyoN2yJpydheS0Mu4gPFRwV2JLw=;
+	s=korg; t=1756213335;
+	bh=Gt9J5eN+rrORbDiiwcA0H3iCyq/0tVYkcnFVAy7lPlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgGwIlOUSBUHDJib4M2qwL+yQYWvfE5r1k028tbkPaihfRg2vqE9WgLVC6t4EHL36
-	 X6lMa9CJAGoOSkMKYsPgKegcIlcwCTj+oALUgZ33e+E5hbNetB/a7qvsmkYxByk3H9
-	 KWZeNFBrvyk+OfcGPhppF5/MKwGYoJ4ZaIUiyh+A=
+	b=RrF+xNSbDve7hahbBwh9gM9hivrlPwsntvaLzCpgOOXBioiZ5OE7yZnmdMQL1G93k
+	 AEHt+Pz5D/64CC5OXOYmPktmNOJxUyLmwnolnDGQFhDjXmtc4euGRZ4/+27Z6ntNrx
+	 7XztL/zE7BqYiRaeMf6c78ngqy0unOxu7hRBd0YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 309/587] btrfs: zoned: use filesystem size not disk size for reclaim decision
-Date: Tue, 26 Aug 2025 13:07:38 +0200
-Message-ID: <20250826111000.780053243@linuxfoundation.org>
+	Konstantin Evtushenko <koevtushenko@yandex.com>,
+	Sergey Bashirov <sergeybashirov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 292/587] pNFS: Fix uninited ptr deref in block/scsi layout
+Date: Tue, 26 Aug 2025 13:07:21 +0200
+Message-ID: <20250826111000.354587133@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,48 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Sergey Bashirov <sergeybashirov@gmail.com>
 
-commit 55f7c65b2f69c7e4cb7aa7c1654a228ccf734fd8 upstream.
+[ Upstream commit 9768797c219326699778fba9cd3b607b2f1e7950 ]
 
-When deciding if a zoned filesystem is reaching the threshold to reclaim
-data block groups, look at the size of the filesystem not to potentially
-total available size of all drives in the filesystem.
+The error occurs on the third attempt to encode extents. When function
+ext_tree_prepare_commit() reallocates a larger buffer to retry encoding
+extents, the "layoutupdate_pages" page array is initialized only after the
+retry loop. But ext_tree_free_commitdata() is called on every iteration
+and tries to put pages in the array, thus dereferencing uninitialized
+pointers.
 
-Especially if a filesystem was created with mkfs' -b option, constraining
-it to only a portion of the block device, the numbers won't match and
-potentially garbage collection is kicking in too late.
+An additional problem is that there is no limit on the maximum possible
+buffer_size. When there are too many extents, the client may create a
+layoutcommit that is larger than the maximum possible RPC size accepted
+by the server.
 
-Fixes: 3687fcb0752a ("btrfs: zoned: make auto-reclaim less aggressive")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+During testing, we observed two typical scenarios. First, one memory page
+for extents is enough when we work with small files, append data to the
+end of the file, or preallocate extents before writing. But when we fill
+a new large file without preallocating, the number of extents can be huge,
+and counting the number of written extents in ext_tree_encode_commit()
+does not help much. Since this number increases even more between
+unlocking and locking of ext_tree, the reallocated buffer may not be
+large enough again and again.
+
+Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250630183537.196479-2-sergeybashirov@gmail.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/nfs/blocklayout/extent_tree.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2350,8 +2350,8 @@ bool btrfs_zoned_should_reclaim(struct b
+diff --git a/fs/nfs/blocklayout/extent_tree.c b/fs/nfs/blocklayout/extent_tree.c
+index 8f7cff7a4293..0add0f329816 100644
+--- a/fs/nfs/blocklayout/extent_tree.c
++++ b/fs/nfs/blocklayout/extent_tree.c
+@@ -552,6 +552,15 @@ static int ext_tree_encode_commit(struct pnfs_block_layout *bl, __be32 *p,
+ 	return ret;
+ }
+ 
++/**
++ * ext_tree_prepare_commit - encode extents that need to be committed
++ * @arg: layout commit data
++ *
++ * Return values:
++ *   %0: Success, all required extents are encoded
++ *   %-ENOSPC: Some extents are encoded, but not all, due to RPC size limit
++ *   %-ENOMEM: Out of memory, extents not encoded
++ */
+ int
+ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
  {
- 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
- 	struct btrfs_device *device;
-+	u64 total = btrfs_super_total_bytes(fs_info->super_copy);
- 	u64 used = 0;
--	u64 total = 0;
- 	u64 factor;
+@@ -568,12 +577,12 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 	start_p = page_address(arg->layoutupdate_page);
+ 	arg->layoutupdate_pages = &arg->layoutupdate_page;
  
- 	ASSERT(btrfs_is_zoned(fs_info));
-@@ -2364,7 +2364,6 @@ bool btrfs_zoned_should_reclaim(struct b
- 		if (!device->bdev)
- 			continue;
+-retry:
+-	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size, &count, &arg->lastbytewritten);
++	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
++			&count, &arg->lastbytewritten);
+ 	if (unlikely(ret)) {
+ 		ext_tree_free_commitdata(arg, buffer_size);
  
--		total += device->disk_total_bytes;
- 		used += device->bytes_used;
+-		buffer_size = ext_tree_layoutupdate_size(bl, count);
++		buffer_size = NFS_SERVER(arg->inode)->wsize;
+ 		count = 0;
+ 
+ 		arg->layoutupdate_pages =
+@@ -588,7 +597,8 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 			return -ENOMEM;
+ 		}
+ 
+-		goto retry;
++		ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
++				&count, &arg->lastbytewritten);
  	}
- 	mutex_unlock(&fs_devices->device_list_mutex);
+ 
+ 	*start_p = cpu_to_be32(count);
+@@ -608,7 +618,7 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 	}
+ 
+ 	dprintk("%s found %zu ranges\n", __func__, count);
+-	return 0;
++	return ret;
+ }
+ 
+ void
+-- 
+2.39.5
+
 
 
