@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6250221FC3;
-	Tue, 26 Aug 2025 11:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D277221FC3;
+	Tue, 26 Aug 2025 11:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207729; cv=none; b=JE2AcSvqScQktV8ZWABh/ZQNouvYdHrdB6t9K0kT2OPb1GB8n+vIVxEbhJFsijKjksZFSQcl2RwHsFvnxMFKSLpV/Wt6ybHq/hQwGVpQOPpbDfp3t9MCXp+MMDdRCK6NUOm51sheihynt6FvmN8aJ0eWAXVVCXLPkYgVcoTfD5I=
+	t=1756207732; cv=none; b=X//ROV7Y79AL1/bKk9L+70avj1htdSCzweTLCK9gLb5V1BzVbzJ1tuYz/AGw8Rlf5hQhnsIM8SHGTAMKOiHy25HfjIXeimrGL8nmyRuPIyH7zpDJxATjc0SW/eyVDwCMNBo8FMHQZkZGjh5x6giijGduHSv2Ob2AcYUhYBjwH8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207729; c=relaxed/simple;
-	bh=Re6TdDaNA0KmN05WMcIcLPsHClB3qKVlWmI77Wzp/FQ=;
+	s=arc-20240116; t=1756207732; c=relaxed/simple;
+	bh=ne4GpHa9o/aqFxwP+UIxUfqDzOBB53gKaaGcfK6uP5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKVe2suv64lRYPBV7Pu5LRcLRar54IPNtZfCkMscVcPx01ikCF2wF3Uar2MGuLUmYKVLjMViMJU2RlMpS6t3qc7jVJvtZpx5YciY3kzIJKS9dCjfLGoVwvhV//SuWSyLiceXE+JJvLi/kLnDlch16u71KfngJVmzddxmIxH6d0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKxM30nA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uqMItFoVQKxT13QnZ9rfhgyEZmhgLe3+1VH74iLoAOTHwnvdS+a40/tXb7suJ5QMmagbE0puOaJR1Ray7A5VCd4ir7XZpyjlEOZJwBy80MQj+EqU48jGiVGkualHupmgsJarfIWepPiJaPQySLQhoI9Wx2csas2HckF/SrweH/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKt5pajH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKxM30nA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02989C4CEF1;
-	Tue, 26 Aug 2025 11:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKt5pajH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFACBC4CEF1;
+	Tue, 26 Aug 2025 11:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207729;
-	bh=Re6TdDaNA0KmN05WMcIcLPsHClB3qKVlWmI77Wzp/FQ=;
+	s=korg; t=1756207732;
+	bh=ne4GpHa9o/aqFxwP+UIxUfqDzOBB53gKaaGcfK6uP5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKxM30nALBHPZrxmQpfSIdurwsf67R+EFKgRTGzVtFwt/WlCQQ9SU/BLkYStRaWrC
-	 VWZ+Rro6nDizt8gp4mTcaIOqZ6m/naR8yLxXXMOqf1plvVjWyA5noIss6Pz0zjXvmd
-	 ERo2RK0vKgOApzPsZrWnFF3K4U2KP3PAR2xVZLSI=
+	b=LKt5pajH8IeQhgRRsMp1S4hXa68iUPsOVV4UZyiRwuMlS3US82SsMVuG9Xtz257fd
+	 70kACkZEbXt2ZKQjOnu0em8ZSA317Dau/rWr/9k6Vg67nuED8njUp5Oz5cMJRrNHBe
+	 ICvEgekVKAdqGmzXPNy00G01ignpb5EsDWKOggWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andy@kernel.org>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.16 295/457] iio: adc: ad7380: fix missing max_conversion_rate_hz on adaq4381-4
-Date: Tue, 26 Aug 2025 13:09:39 +0200
-Message-ID: <20250826110944.671482830@linuxfoundation.org>
+Subject: [PATCH 6.16 296/457] iio: accel: sca3300: fix uninitialized iio scan data
+Date: Tue, 26 Aug 2025 13:09:40 +0200
+Message-ID: <20250826110944.694735478@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,36 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: David Lechner <dlechner@baylibre.com>
 
-commit b04e4551893fb8a06106a175ed7055d41a9279c4 upstream.
+commit 4e5b705cc6147f0b9173c6219079f41416bdd3c0 upstream.
 
-Add max_conversion_rate_hz to the chip info for "adaq4381-4". Without
-this, the driver fails to probe because it tries to set the initial
-sample rate to 0 Hz, which is not valid.
+Fix potential leak of uninitialized stack data to userspace by ensuring
+that the `channels` array is zeroed before use.
 
-Fixes: bbeaec81a03e ("iio: ad7380: add support for SPI offload")
+Fixes: edeb67fbbf4b ("iio: accel: sca3300: use IIO_DECLARE_BUFFER_WITH_TS")
 Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20250811-iio-adc-ad7380-fix-missing-max_conversion_rate_hs-on-ad4381-4-v1-1-ffb728d7a71c@baylibre.com
+Link: https://patch.msgid.link/20250723-iio-accel-sca3300-fix-uninitialized-iio-scan-data-v1-1-12dbfb3307b7@baylibre.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7380.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/accel/sca3300.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/ad7380.c b/drivers/iio/adc/ad7380.c
-index 6f7034b6c266..fa251dc1aae6 100644
---- a/drivers/iio/adc/ad7380.c
-+++ b/drivers/iio/adc/ad7380.c
-@@ -873,6 +873,7 @@ static const struct ad7380_chip_info adaq4381_4_chip_info = {
- 	.has_hardware_gain = true,
- 	.available_scan_masks = ad7380_4_channel_scan_masks,
- 	.timing_specs = &ad7380_4_timing,
-+	.max_conversion_rate_hz = 4 * MEGA,
- };
+--- a/drivers/iio/accel/sca3300.c
++++ b/drivers/iio/accel/sca3300.c
+@@ -479,7 +479,7 @@ static irqreturn_t sca3300_trigger_handl
+ 	struct iio_dev *indio_dev = pf->indio_dev;
+ 	struct sca3300_data *data = iio_priv(indio_dev);
+ 	int bit, ret, val, i = 0;
+-	IIO_DECLARE_BUFFER_WITH_TS(s16, channels, SCA3300_SCAN_MAX);
++	IIO_DECLARE_BUFFER_WITH_TS(s16, channels, SCA3300_SCAN_MAX) = { };
  
- static const struct spi_offload_config ad7380_offload_config = {
--- 
-2.50.1
-
+ 	iio_for_each_active_channel(indio_dev, bit) {
+ 		ret = sca3300_read_reg(data, indio_dev->channels[bit].address, &val);
 
 
