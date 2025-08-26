@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220CF26AEC;
-	Tue, 26 Aug 2025 11:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAEF341678;
+	Tue, 26 Aug 2025 11:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208026; cv=none; b=utf7suWGhQMKLeIni9K6rpu5Q3qZ9ebF9cQTw+ClPZEWyKrGqT1Z2Y3LjMjDQyBG7Fla6/aoF06NnghtTe6XOZs2tRqKy6Y+7IEu1g7FqGiGJfAhdQDZTjH7+O4bavL6wZ+x/OPNvR+fyMd8+iMgwK7k4k+Tb/pgUwL2DyiD4zE=
+	t=1756208029; cv=none; b=EEhhElzen/0fT7E/zjPoP5/980y0oxyEId92ndOxR/7PlXMBYhxoJXSq0iFZsZCSRvwmCkaaFe2uVJmPDVhZUJs7qCOwTXXm/t0G7nxOVBQ1rfBMzzkd1RosEoplr7BFeEqcCHkNfV3JDJDBqIFbFBwtT/bMv8kgtpVJMZ3R4GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208026; c=relaxed/simple;
-	bh=FgiwsldzhmF0a/r3t70MfVU1hLYHQtcfQUebCfd3rkw=;
+	s=arc-20240116; t=1756208029; c=relaxed/simple;
+	bh=Zs8ji/CKNJDtUxeWQ+nINJFucux5SfzVMAYxy/sq4HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hI61eoQHBfLGNvo81rRk0unWFiX0aRnn2ti4r4NEqFpF8lOtxIhgMkPj6GjvhSx8BgoJyojGVjPts+sF66KNMe+WHVpKFvN1GY8dI9WdBnlvUOfHv+MQNgK0w5j9heZYmXikd2A0qztSrPY/YO3DeJmBl20YNcTkHu1x++0yLj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3i9SEu9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kwNR32ianVyG16zJSHSRAu8UpjCRWTOTvdZEcRnqOaXoF8Jno3Yv2Wvfe/6f5Yzgf8r6EE8WaM3JEZQxk6X2B2io6o4E822oJiThh/VAOctw8l/JRkaYTedF67MNU3T2IWr5xjhRBlu+x8q1QxI+e7w3tybMnyfb+mKA1q+9j18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFynWSVw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3i9SEu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3DCC4CEF1;
-	Tue, 26 Aug 2025 11:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFynWSVw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72172C4CEF1;
+	Tue, 26 Aug 2025 11:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208025;
-	bh=FgiwsldzhmF0a/r3t70MfVU1hLYHQtcfQUebCfd3rkw=;
+	s=korg; t=1756208028;
+	bh=Zs8ji/CKNJDtUxeWQ+nINJFucux5SfzVMAYxy/sq4HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3i9SEu9bPonnsoVRDizuVKJIY1LUF3lRqX+S3RigTf2aDHTMKpPFXjSovNzsOn2i
-	 qY4wk20KuSFRT8iCza3/rxF9w5kd3b3wED64xj6tg3IJfu/OEdvWtyiWPPaJRrSwDe
-	 DrgMwNou/9TOCZtUVvBYeHZgv/hHpE5zKjuVCobo=
+	b=dFynWSVwr+KCVIH50JE/0yftn6RMxaoYJMRRfn1BIhLnKc/iMD6J+e/LrbWMfAazV
+	 HRHG9EBCr05XMdRNtGkIdsgA4ON+YJrzrq0hNJn2YzJ270XMukv1lAkJKfK+5WpEUs
+	 M8/kFxRplzQwlXbGRdjT2m6TtSCouiNlfAfkUX8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Christian Schrefl <chrisi.schrefl@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 409/457] regulator: tps65219: regulator: tps65219: Fix error codes in probe()
-Date: Tue, 26 Aug 2025 13:11:33 +0200
-Message-ID: <20250826110947.403347737@linuxfoundation.org>
+Subject: [PATCH 6.16 383/457] drm: nova-drm: fix 32-bit arm build
+Date: Tue, 26 Aug 2025 13:11:07 +0200
+Message-ID: <20250826110946.763089207@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,56 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 11cd7a5c21db020b8001aedcae27bd3fa9e1e901 ]
+[ Upstream commit db2e7bcee11cd57f95fef3c6cbb562d0577eb84a ]
 
-There is a copy and paste error and we accidentally use "PTR_ERR(rdev)"
-instead of "error".  The "rdev" pointer is valid at this point.
+In 32-bit arm, the build fails with:
 
-Also there is no need to print the error code in the error message
-because dev_err_probe() already prints that.  So clean up the error
-message a bit.
+    error[E0308]: mismatched types
+      --> drivers/gpu/drm/nova/file.rs:42:28
+       |
+    42 |         getparam.set_value(value);
+       |                  --------- ^^^^^ expected `u64`, found `u32`
+       |                  |
+       |                  arguments to this method are incorrect
+       |
+    note: method defined here
+      --> drivers/gpu/drm/nova/uapi.rs:29:12
+       |
+    29 |     pub fn set_value(&self, v: u64) {
+       |            ^^^^^^^^^        ------
+    help: you can convert a `u32` to a `u64`
+       |
+    42 |         getparam.set_value(value.into());
+       |                                 +++++++
 
-Fixes: 38c9f98db20a ("regulator: tps65219: Add support for TPS65215 Regulator IRQs")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aKRGmVdbvT1HBvm8@stanley.mountain
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The reason is that `Getparam::set_value` takes a `u64` (from the UAPI),
+but `pci::Device::resource_len()` returns a `resource_size_t`, which is a
+`phys_addr_t`, which may be 32- or 64-bit.
+
+Thus add an `into()` call to support the 32-bit case, while allowing the
+Clippy lint that complains in the 64-bit case where the type is the same.
+
+Fixes: cdeaeb9dd762 ("drm: nova-drm: add initial driver skeleton")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Christian Schrefl <chrisi.schrefl@gmail.com>
+Link: https://lore.kernel.org/r/20250724165441.2105632-1-ojeda@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/tps65219-regulator.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/nova/file.rs | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/tps65219-regulator.c b/drivers/regulator/tps65219-regulator.c
-index 5e67fdc88f49..d77ca486879f 100644
---- a/drivers/regulator/tps65219-regulator.c
-+++ b/drivers/regulator/tps65219-regulator.c
-@@ -454,9 +454,9 @@ static int tps65219_regulator_probe(struct platform_device *pdev)
- 						  irq_type->irq_name,
- 						  irq_data);
- 		if (error)
--			return dev_err_probe(tps->dev, PTR_ERR(rdev),
--					     "Failed to request %s IRQ %d: %d\n",
--					     irq_type->irq_name, irq, error);
-+			return dev_err_probe(tps->dev, error,
-+					     "Failed to request %s IRQ %d\n",
-+					     irq_type->irq_name, irq);
- 	}
+diff --git a/drivers/gpu/drm/nova/file.rs b/drivers/gpu/drm/nova/file.rs
+index 7e59a34b830d..4fe62cf98a23 100644
+--- a/drivers/gpu/drm/nova/file.rs
++++ b/drivers/gpu/drm/nova/file.rs
+@@ -39,7 +39,8 @@ impl File {
+             _ => return Err(EINVAL),
+         };
  
- 	for (i = 0; i < pmic->dev_irq_size; ++i) {
-@@ -477,9 +477,9 @@ static int tps65219_regulator_probe(struct platform_device *pdev)
- 						  irq_type->irq_name,
- 						  irq_data);
- 		if (error)
--			return dev_err_probe(tps->dev, PTR_ERR(rdev),
--					     "Failed to request %s IRQ %d: %d\n",
--					     irq_type->irq_name, irq, error);
-+			return dev_err_probe(tps->dev, error,
-+					     "Failed to request %s IRQ %d\n",
-+					     irq_type->irq_name, irq);
- 	}
+-        getparam.set_value(value);
++        #[allow(clippy::useless_conversion)]
++        getparam.set_value(value.into());
  
- 	return 0;
+         Ok(0)
+     }
 -- 
 2.50.1
 
