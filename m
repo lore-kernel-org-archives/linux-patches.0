@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B261F4717;
-	Tue, 26 Aug 2025 12:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2EF1A5BBC;
+	Tue, 26 Aug 2025 12:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212975; cv=none; b=hdJMnrYhn73Gfzvq1iBpCLidMh342O/T/6+UbouUbfr98RngAvSZuzIeOSU6BK3bKyZ3sl2sy5qKBeUu6GmVna8gE0HK3FUU6gL0OWp+MI8alWggX9pmLr16SHze67qivNh0hYjOGZ2BIa0t/4sRjrcJ9LHtHMhKuqoxLJy6MUA=
+	t=1756212977; cv=none; b=hSJZ5DCfXBXn+ZGrR2ZSlhSug3SttDZjwdXWS0Ket9njEtMdZ6/mxY+og70MSdgf4SvaggGa93llnmoszZHS965vzebdyYNYmgxW1Z5En3sAQ/+VVncf+SHC7MjKWeZekgeWAuaAKqqsaOTnJMgFwF/xKLg78YwRqxjCuEb8xUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212975; c=relaxed/simple;
-	bh=EXdzbBHG7bpiOHj+TL7QZvM/8+d4/yfqvfUYWXMempc=;
+	s=arc-20240116; t=1756212977; c=relaxed/simple;
+	bh=lHB1lFlX1kAcHjRlbruiLgMdSy1b8OlSWL7H7EBxMk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lLuQda8ExbdgacCX+1NRUAkFxuqTfd0W6NHzuEnNx+eojx02kws+AwfYCxrNEC6By1rG9fCGpwJ+k+PFgERJW0YRWTeMSTMe+69ZSxqviuD/XaHIKl8HwLnWV/fX7ueJhM8m1Nb+WqYyKzlcjem5TK4MMpi67kD9OosFtg+FeBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oItyWgd8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Np9K8HUMDSfSXEnhdlywORCejeqtxx1D1qQktNQ69r3vImAoOEoRo6KzfchOeluDggESxTpM7cF+dEg6FY1x+lzgP/UsOuROFrbeag1HXHrYOyzW/ahmw8AZGieBwOr1C2B/KJ6rpdMPmoTHoOb+D0uyudTnsgegYKlO8mku6Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDB/VV3C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oItyWgd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C68AC4CEF1;
-	Tue, 26 Aug 2025 12:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDB/VV3C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DA2C4CEF1;
+	Tue, 26 Aug 2025 12:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212974;
-	bh=EXdzbBHG7bpiOHj+TL7QZvM/8+d4/yfqvfUYWXMempc=;
+	s=korg; t=1756212977;
+	bh=lHB1lFlX1kAcHjRlbruiLgMdSy1b8OlSWL7H7EBxMk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oItyWgd8iOGypwd8kzIHvVDQBsJw+NV8QvI9mvzvjTXGpThaBeNHZIfl/1N08hfT0
-	 xOJQqlAsqezhX8NBsvcCTorLSbY4KG0u7O/p7QakLq6vAXjGfR7/0JoMZ0+hmDBKJ/
-	 z9krRDYV+egwQIMI0yNzJQh9vIbOijt6cW9ey97E=
+	b=kDB/VV3CMn9YNDvizgp9lb7SSlkaCSBnBZx5d8k9sgAvR1TL79+51jI8z7NddQlj6
+	 HaQ8mHZbk9SFvrn/lrVRK1VYSrgyWRJK7pMDEM3DSzyUadRN/pgvjy7BiIc3PMw2QA
+	 ptGtTGE3dgtYh7TxqK5QtRGyy2Zvf1KYmnP/aqHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oscar Maes <oscmaes92@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	zhangjianrong <zhangjianrong5@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/587] net: ipv4: fix incorrect MTU in broadcast routes
-Date: Tue, 26 Aug 2025 13:05:05 +0200
-Message-ID: <20250826110956.917972522@linuxfoundation.org>
+Subject: [PATCH 6.6 174/587] net: thunderbolt: Enable end-to-end flow control also in transmit
+Date: Tue, 26 Aug 2025 13:05:23 +0200
+Message-ID: <20250826110957.370343031@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -45,53 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oscar Maes <oscmaes92@gmail.com>
+From: zhangjianrong <zhangjianrong5@huawei.com>
 
-[ Upstream commit 9e30ecf23b1b8f091f7d08b27968dea83aae7908 ]
+[ Upstream commit a8065af3346ebd7c76ebc113451fb3ba94cf7769 ]
 
-Currently, __mkroute_output overrules the MTU value configured for
-broadcast routes.
+According to USB4 specification, if E2E flow control is disabled for
+the Transmit Descriptor Ring, the Host Interface Adapter Layer shall
+not require any credits to be available before transmitting a Tunneled
+Packet from this Transmit Descriptor Ring, so e2e flow control should
+be enabled in both directions.
 
-This buggy behaviour can be reproduced with:
-
-ip link set dev eth1 mtu 9000
-ip route del broadcast 192.168.0.255 dev eth1 proto kernel scope link src 192.168.0.2
-ip route add broadcast 192.168.0.255 dev eth1 proto kernel scope link src 192.168.0.2 mtu 1500
-
-The maximum packet size should be 1500, but it is actually 8000:
-
-ping -b 192.168.0.255 -s 8000
-
-Fix __mkroute_output to allow MTU values to be configured for
-for broadcast routes (to support a mixed-MTU local-area-network).
-
-Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
-Link: https://patch.msgid.link/20250710142714.12986-1-oscmaes92@gmail.com
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/20250624153805.GC2824380@black.fi.intel.com
+Signed-off-by: zhangjianrong <zhangjianrong5@huawei.com>
+Link: https://patch.msgid.link/20250628093813.647005-1-zhangjianrong5@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/thunderbolt/main.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 6ee77f7f9114..8672ebbace98 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2560,7 +2560,6 @@ static struct rtable *__mkroute_output(const struct fib_result *res,
- 	do_cache = true;
- 	if (type == RTN_BROADCAST) {
- 		flags |= RTCF_BROADCAST | RTCF_LOCAL;
--		fi = NULL;
- 	} else if (type == RTN_MULTICAST) {
- 		flags |= RTCF_MULTICAST | RTCF_LOCAL;
- 		if (!ip_check_mc_rcu(in_dev, fl4->daddr, fl4->saddr,
+diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
+index 0a53ec293d04..643cf67840b5 100644
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -924,8 +924,12 @@ static int tbnet_open(struct net_device *dev)
+ 
+ 	netif_carrier_off(dev);
+ 
+-	ring = tb_ring_alloc_tx(xd->tb->nhi, -1, TBNET_RING_SIZE,
+-				RING_FLAG_FRAME);
++	flags = RING_FLAG_FRAME;
++	/* Only enable full E2E if the other end supports it too */
++	if (tbnet_e2e && net->svc->prtcstns & TBNET_E2E)
++		flags |= RING_FLAG_E2E;
++
++	ring = tb_ring_alloc_tx(xd->tb->nhi, -1, TBNET_RING_SIZE, flags);
+ 	if (!ring) {
+ 		netdev_err(dev, "failed to allocate Tx ring\n");
+ 		return -ENOMEM;
+@@ -944,11 +948,6 @@ static int tbnet_open(struct net_device *dev)
+ 	sof_mask = BIT(TBIP_PDF_FRAME_START);
+ 	eof_mask = BIT(TBIP_PDF_FRAME_END);
+ 
+-	flags = RING_FLAG_FRAME;
+-	/* Only enable full E2E if the other end supports it too */
+-	if (tbnet_e2e && net->svc->prtcstns & TBNET_E2E)
+-		flags |= RING_FLAG_E2E;
+-
+ 	ring = tb_ring_alloc_rx(xd->tb->nhi, -1, TBNET_RING_SIZE, flags,
+ 				net->tx_ring.ring->hop, sof_mask,
+ 				eof_mask, tbnet_start_poll, net);
 -- 
 2.39.5
 
