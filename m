@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E41C34DCD4;
-	Tue, 26 Aug 2025 13:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C610E34DCE5;
+	Tue, 26 Aug 2025 13:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216316; cv=none; b=r4jX291PCmmPV0i/wpP2mxY45RY+ds6cf65h301w1M1Ew8keThwVjPM0pyy/iWrKHFMPbdvDsSN179ohaCcOBag07Wwz/Tv1/Ee2cvhHyRzTRg1Kz57yHYtAwB1HDvoIAjMgwbb2HJisU/gpriGCd3JrhTmuABu6+ts7UKB5FYA=
+	t=1756216318; cv=none; b=VKTTPnZIz1zGzJjKJDKcf8mOrIBrLmcVBt/xtAZHdYUANM/Dh6H2aoxGXnNkKDRD6xoYLg+ptURcRZdTi0kDi23xEZDZP/pEBo9OdTIT3Hzmcbm9UkvXkNtnT1olb2iytGXdXfnq2NZILxEir8AfQZh6XsDHG044gH2HJ18Gy4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216316; c=relaxed/simple;
-	bh=LZ6qn3vuk76ZdLBwel7cFDqfnEZWWP8BqwoxZcURafs=;
+	s=arc-20240116; t=1756216318; c=relaxed/simple;
+	bh=y58n61OEhNSqcxLidItxHKWChuNugN4UOZzEK8uoPck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJOi0q3JLMxtc54MnA2j5x4S0YtdKj3dQBPrqKAX5tnsSFfQBy31ckElGsqGJ4vjjj16DzH2HOqerbhNOivpO8kiETwXGhdfR0GlCdX+9WRVqon6YqiEIXtWQ/nrE4YGWoZu+6GqWtw7+DajQzXaLrNzv7AFdRQGwXMzdsWp8CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNjXMjZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lrCntjm5hX6GZTfES4y2x2xErZD6mxcjg56WsNqNtKCjuI6KDUjaaEoapLBk7TO1V7KyhErjGw+LiZW25NUbIAYKsY1ZKXkhj6I/Dv6ejZBCls9YwYBddq1AXG3z6k4LUWpMt3ksrF+6MsTNuxAmhAVk0Ej1rOqmCdQ25XPUbYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06GOHzMb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNjXMjZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E9BC19421;
-	Tue, 26 Aug 2025 13:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06GOHzMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D58EC4CEF1;
+	Tue, 26 Aug 2025 13:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216315;
-	bh=LZ6qn3vuk76ZdLBwel7cFDqfnEZWWP8BqwoxZcURafs=;
+	s=korg; t=1756216318;
+	bh=y58n61OEhNSqcxLidItxHKWChuNugN4UOZzEK8uoPck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNjXMjZGWrYqYdmuSTq99z9yexEzrp/McBdNDknq10gZTlYJ8RYwxNkypJRKfsmaA
-	 UUEXs8PDlGNFC4mPKug9HHsBCfICbEjT4+kjq8ipHoYPgisNZ+R5qk30eZxG6iyq//
-	 3kRxNkx8RbmI4Bz0II8/sE68PFctSPxX2pVvSFoQ=
+	b=06GOHzMb3uyTPO8CMnrl1JZdroQZQt5T4yhvhBiW2lAfWM0VWQFrCdaqM8CsaEtAT
+	 67H4mIRna8KeDIfKmTFXT7RcB4zYGDX3QQomTzEEMQuIr1ZoaNFkQKWk/GsC8H5rZX
+	 wwkh9RtgrGR2pvk3zA6v/XFDB1CFMLXz/2Avbd00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	ap420073@gmail.com,
+	Mina Almasry <almasrymina@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 365/644] wifi: rtlwifi: fix possible skb memory leak in `_rtl_pci_rx_interrupt()`.
-Date: Tue, 26 Aug 2025 13:07:36 +0200
-Message-ID: <20250826110955.459602694@linuxfoundation.org>
+Subject: [PATCH 5.15 366/644] netmem: fix skb_frag_address_safe with unreadable skbs
+Date: Tue, 26 Aug 2025 13:07:37 +0200
+Message-ID: <20250826110955.484225754@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,55 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Mina Almasry <almasrymina@google.com>
 
-[ Upstream commit 44c0e191004f0e3aa1bdee3be248be14dbe5b020 ]
+[ Upstream commit 4672aec56d2e8edabcb74c3e2320301d106a377e ]
 
-The function `_rtl_pci_init_one_rxdesc()` can fail even when the new
-`skb` is passed because of a DMA mapping error.  If it fails, the `skb`
-is not saved in the rx ringbuffer and thus lost.
+skb_frag_address_safe() needs a check that the
+skb_frag_page exists check similar to skb_frag_address().
 
-Compile tested only
+Cc: ap420073@gmail.com
 
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250616105631.444309-4-fourier.thomas@gmail.com
+Signed-off-by: Mina Almasry <almasrymina@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250619175239.3039329-1-almasrymina@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ include/linux/skbuff.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index f024533d34a9..bccb959d8210 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -803,13 +803,19 @@ static void _rtl_pci_rx_interrupt(struct ieee80211_hw *hw)
- 		skb = new_skb;
- no_new:
- 		if (rtlpriv->use_new_trx_flow) {
--			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
--						 rxring_idx,
--						 rtlpci->rx_ring[rxring_idx].idx);
-+			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
-+						      rxring_idx,
-+						      rtlpci->rx_ring[rxring_idx].idx)) {
-+				if (new_skb)
-+					dev_kfree_skb_any(skb);
-+			}
- 		} else {
--			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
--						 rxring_idx,
--						 rtlpci->rx_ring[rxring_idx].idx);
-+			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
-+						      rxring_idx,
-+						      rtlpci->rx_ring[rxring_idx].idx)) {
-+				if (new_skb)
-+					dev_kfree_skb_any(skb);
-+			}
- 			if (rtlpci->rx_ring[rxring_idx].idx ==
- 			    rtlpci->rxringcount - 1)
- 				rtlpriv->cfg->ops->set_desc(hw, (u8 *)pdesc,
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 9155d0d7f706..a8d6e976507e 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -3287,7 +3287,13 @@ static inline void *skb_frag_address(const skb_frag_t *frag)
+  */
+ static inline void *skb_frag_address_safe(const skb_frag_t *frag)
+ {
+-	void *ptr = page_address(skb_frag_page(frag));
++	struct page *page = skb_frag_page(frag);
++	void *ptr;
++
++	if (!page)
++		return NULL;
++
++	ptr = page_address(page);
+ 	if (unlikely(!ptr))
+ 		return NULL;
+ 
 -- 
 2.39.5
 
