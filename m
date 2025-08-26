@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BA635CEAE;
-	Tue, 26 Aug 2025 14:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE5335E4FF;
+	Tue, 26 Aug 2025 14:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219021; cv=none; b=fogbeMmJwXK7sDKETev7OP8SD7wz4zMPD8RPSb53vrn31TeZ7Yns75gbR5DltI0w412WUuwqBK+ufWpN5nsouJamOa7jOEgcx5b+hZeGaHA3O4sC23ytGjdhlD2p3+4Hl1Q2uV4sDrtxgWk4XqdgKUY2OOSChJ+k+FZYoqXCVWE=
+	t=1756219024; cv=none; b=o6O0MN8uiruaMKIkI1SWXB72p+uYUIRmC28nvFL3U67CEW/J9msUsHNhoHdXKpQMllocX8fpMhSgIR52H+4iFlT67EoAiCCLJn9NQOzAnWPTdNMPx8Ax5pYZjAaVBDCEyVemK3czOiEVAmvcPOL38utSL/SKWskDcZ+Vmcgje0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219021; c=relaxed/simple;
-	bh=oK36NFpHeyxaunZQXEsG4sGoUHw+NWB5E7mowQ8a1HM=;
+	s=arc-20240116; t=1756219024; c=relaxed/simple;
+	bh=NkT0GFEIVhaPGqxi6ft7Cqv/DMibMmnJ/xEI9doLq3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/96U1eaqTMSQR/9s3+SjRd47TTX+VZlaKpm/dMNRUnkvJAcxWTGx7wWEm91Ez5Bn4gKHB9gYHJyYrNWedQdW0SEoy31gTeiGO3llneU6OA3B7raIFYZpbkEE+l61NsWF1wSwyzEL5nY6PUMfo3NTSibiJe4Lr5786X6UNz9XkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eskpNStI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uuDOLALzetM62Jy7zoDUGGlz7p5uJzlZ3rk5IrWVfw33TZYfoQBtq0LvuuUhGG+NcNODo/8PD1+ahp8UQfzoSFgugPjumeOUFTgIB27Z+c8YYLRykOjjVVx31vC27AjQd6OfXwAshs7JFaLOMI1NWojuW5m9Zss3ZIET9maCnTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcviJe4y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eskpNStI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A32C4CEF1;
-	Tue, 26 Aug 2025 14:37:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcviJe4y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64B2C4CEF1;
+	Tue, 26 Aug 2025 14:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219021;
-	bh=oK36NFpHeyxaunZQXEsG4sGoUHw+NWB5E7mowQ8a1HM=;
+	s=korg; t=1756219024;
+	bh=NkT0GFEIVhaPGqxi6ft7Cqv/DMibMmnJ/xEI9doLq3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eskpNStIQ1l6x0a2gzxR0pGMsEn9QmI6gF1Rx/ILnVjkfULeSoRsqSFRmK9SqWZXA
-	 OPa7vQfT1uucVresAYnbE+39bJ7luIx8GCdKjqtyySFKgilkEmjKP2Wgl5Him49ymC
-	 6CU3ZeQzEd0KETGsrDK0o6Ji7dWLDEFsIdL0P5bE=
+	b=hcviJe4ych0o6Kb5KOXusuK2AON4ujOAtwfXj0zE5ZC+0EwVUvj6XF+TtEvJocbgZ
+	 yYKJ0nlBbJ+dnfoCngK0bBCNVaXVvfRncXxtrBVd9qPXHsxZMncrH+aNzwf7ZzYuOO
+	 EtgEUiU798xcRRsDq4o+P6owcat1bU/TxuIU2x00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Cynthia Huang <cynthia@andestech.com>,
+	Ben Zong-You Xie <ben717@andestech.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 191/403] selftests: tracing: Use mutex_unlock for testing glob filter
-Date: Tue, 26 Aug 2025 13:08:37 +0200
-Message-ID: <20250826110912.149805031@linuxfoundation.org>
+Subject: [PATCH 5.4 182/403] selftests/futex: Define SYS_futex on 32-bit architectures with 64-bit time_t
+Date: Tue, 26 Aug 2025 13:08:28 +0200
+Message-ID: <20250826110911.909664721@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,39 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Cynthia Huang <cynthia@andestech.com>
 
-[ Upstream commit a089bb2822a49b0c5777a8936f82c1f8629231fb ]
+[ Upstream commit 04850819c65c8242072818655d4341e70ae998b5 ]
 
-Since commit c5b6ababd21a ("locking/mutex: implement
-mutex_trylock_nested") makes mutex_trylock() as an inlined
-function if CONFIG_DEBUG_LOCK_ALLOC=y, we can not use
-mutex_trylock() for testing the glob filter of ftrace.
+The kernel does not provide sys_futex() on 32-bit architectures that do not
+support 32-bit time representations, such as riscv32.
 
-Use mutex_unlock instead.
+As a result, glibc cannot define SYS_futex, causing compilation failures in
+tests that rely on this syscall. Define SYS_futex as SYS_futex_time64 in
+such cases to ensure successful compilation and compatibility.
 
-Link: https://lore.kernel.org/r/175151680309.2149615.9795104805153538717.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Cynthia Huang <cynthia@andestech.com>
+Signed-off-by: Ben Zong-You Xie <ben717@andestech.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/all/20250710103630.3156130-1-ben717@andestech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc  | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/futex/include/futextest.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-index f4e92afab14b..9a7b7c62cbd9 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-@@ -33,7 +33,7 @@ ftrace_filter_check 'schedule*' '^schedule.*$'
- ftrace_filter_check '*pin*lock' '.*pin.*lock$'
+diff --git a/tools/testing/selftests/futex/include/futextest.h b/tools/testing/selftests/futex/include/futextest.h
+index ddbcfc9b7bac..7a5fd1d5355e 100644
+--- a/tools/testing/selftests/futex/include/futextest.h
++++ b/tools/testing/selftests/futex/include/futextest.h
+@@ -47,6 +47,17 @@ typedef volatile u_int32_t futex_t;
+ 					 FUTEX_PRIVATE_FLAG)
+ #endif
  
- # filter by start*mid*
--ftrace_filter_check 'mutex*try*' '^mutex.*try.*'
-+ftrace_filter_check 'mutex*unl*' '^mutex.*unl.*'
- 
- # Advanced full-glob matching feature is recently supported.
- # Skip the tests if we are sure the kernel does not support it.
++/*
++ * SYS_futex is expected from system C library, in glibc some 32-bit
++ * architectures (e.g. RV32) are using 64-bit time_t, therefore it doesn't have
++ * SYS_futex defined but just SYS_futex_time64. Define SYS_futex as
++ * SYS_futex_time64 in this situation to ensure the compilation and the
++ * compatibility.
++ */
++#if !defined(SYS_futex) && defined(SYS_futex_time64)
++#define SYS_futex SYS_futex_time64
++#endif
++
+ /**
+  * futex() - SYS_futex syscall wrapper
+  * @uaddr:	address of first futex
 -- 
 2.39.5
 
