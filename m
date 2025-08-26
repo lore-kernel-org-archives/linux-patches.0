@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1072BE653;
-	Tue, 26 Aug 2025 13:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A978184540;
+	Tue, 26 Aug 2025 13:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213843; cv=none; b=NrkYqU24ET9iZeI7YYSvZm9+hdjG2ZRUGR0gyQt+xxTq9v2M98O7mgYaXobLu8x2Z32E2RohF2HjtAwCdLiDYn8Ie4WTuCUjoAOZ4L8h8NyEy04zCy+vMTT3a6XBSmxlwrrkolyXNzPx2i3a5NWmpSjWpxUUmcjYqQ6LLY/Etc8=
+	t=1756213846; cv=none; b=GV4ZrKklbxpd1ZAolV/CQl/QJjSzfrm7MLbjicwRHB18pLLeJ4RBy9Cx8bdG+gLjXxuh9QsxanisqIl3iXXuvC7wg+uKwhAC8brc4O71oIIHrQKZv7Dxs12dvOYZSCQCG9teJThmhG+g6LaY4EbT72hlgPfCUg2s8uL3//QPCAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213843; c=relaxed/simple;
-	bh=nMDxYSXWBQeTGwuy+M6iqO9TWR0Fian2tG8pQ7X5h4E=;
+	s=arc-20240116; t=1756213846; c=relaxed/simple;
+	bh=i+7Goe3w9kAOQJOIQnfUPSjfjTslwBjlk6/KU20RnCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H8SU4hvD2mcp2L1FmgVHR+hoHFOflVHlXWUEIvoKi12+J0rrvBkfAyODBYsnQhXpz4r/sviLr8m2TOufLhpuGtREWUaAHWnzbkEml10SBfx47sL2X+HRaFY0M+k3ssKig2HTl0GerW9aEG7w3pGtyKX827iS5R9s/SRAYxEwggI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmcmoB1q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/86p9UY+Fn8iyB7VeK7oKBBM/3yIuWmo0jhGosYyJZIK9B89P5eLqcO4Zpi3/Ph3dLVw+OCXhSBw6YWe8jYvR3xYa782+YLLLqmIi/eOddI+efJJ/ukL1K0EfgtbGhr5QTwGbDI30+icwQTUwJEtfxMHOHehBDIQfEmU4Fbgy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVXuGg76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmcmoB1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E632C4CEF1;
-	Tue, 26 Aug 2025 13:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVXuGg76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3176C4CEF1;
+	Tue, 26 Aug 2025 13:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213843;
-	bh=nMDxYSXWBQeTGwuy+M6iqO9TWR0Fian2tG8pQ7X5h4E=;
+	s=korg; t=1756213846;
+	bh=i+7Goe3w9kAOQJOIQnfUPSjfjTslwBjlk6/KU20RnCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmcmoB1qddLC188WFtWE5OAGZvrIPzj9YekYLZ7hIiZWQd/66NNdy9bHLcrLeh4bG
-	 wgXVbmOVmO9SDakCnEPNDfpg5x52RsaqcnKmsYD9pQkUCr9Qhps0YrxyL6TdY2+wYu
-	 ZNasHv9fr8AEPl/6VkezuU7CW2q7npktz+lSKaiY=
+	b=KVXuGg76gNRfXsFrPGBNfG7wKTmOwjJCxjqPlTSbnIhJ67PMH/CZX/8JUiCPR4K3P
+	 pj3bi9dNm9NuRcTgdSUCcQgmiZeCIZchobk9BcReAy0/8E0bqxnSVUP7xD+IE/VUwE
+	 lgE0ZlQPKMOiXPlZSJje1cjiZ756fxXOCBLDdqFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Judith Mendez <jm@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 500/587] ext4: preserve SB_I_VERSION on remount
-Date: Tue, 26 Aug 2025 13:10:49 +0200
-Message-ID: <20250826111005.704059042@linuxfoundation.org>
+Subject: [PATCH 6.6 501/587] arm64: dts: ti: k3-am62-main: Remove eMMC High Speed DDR support
+Date: Tue, 26 Aug 2025 13:10:50 +0200
+Message-ID: <20250826111005.731037618@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,57 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit f2326fd14a224e4cccbab89e14c52279ff79b7ec ]
+[ Upstream commit 265f70af805f33a0dfc90f50cc0f116f702c3811 ]
 
-IMA testing revealed that after an ext4 remount, file accesses triggered
-full measurements even without modifications, instead of skipping as
-expected when i_version is unchanged.
+For eMMC, High Speed DDR mode is not supported [0], so remove
+mmc-ddr-1_8v flag which adds the capability.
 
-Debugging showed `SB_I_VERSION` was cleared in reconfigure_super() during
-remount due to commit 1ff20307393e ("ext4: unconditionally enable the
-i_version counter") removing the fix from commit 960e0ab63b2e ("ext4: fix
-i_version handling on remount").
+[0] https://www.ti.com/lit/gpn/am625
 
-To rectify this, `SB_I_VERSION` is always set for `fc->sb_flags` in
-ext4_init_fs_context(), instead of `sb->s_flags` in __ext4_fill_super(),
-ensuring it persists across all mounts.
-
-Cc: stable@kernel.org
-Fixes: 1ff20307393e ("ext4: unconditionally enable the i_version counter")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250703073903.6952-2-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-[ Adjust context ]
+Fixes: c37c58fdeb8a ("arm64: dts: ti: k3-am62: Add more peripheral nodes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Judith Mendez <jm@ti.com>
+Link: https://lore.kernel.org/r/20250707191250.3953990-1-jm@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+[ adapted context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-main.dtsi |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2028,6 +2028,9 @@ int ext4_init_fs_context(struct fs_conte
- 	fc->fs_private = ctx;
- 	fc->ops = &ext4_context_ops;
- 
-+	/* i_version is always enabled now */
-+	fc->sb_flags |= SB_I_VERSION;
-+
- 	return 0;
- }
- 
-@@ -5305,9 +5308,6 @@ static int __ext4_fill_super(struct fs_c
- 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
- 		(test_opt(sb, POSIX_ACL) ? SB_POSIXACL : 0);
- 
--	/* i_version is always enabled now */
--	sb->s_flags |= SB_I_VERSION;
--
- 	err = ext4_check_feature_compatibility(sb, es, silent);
- 	if (err)
- 		goto failed_mount;
+--- a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
+@@ -531,7 +531,6 @@
+ 		clock-names = "clk_ahb", "clk_xin";
+ 		assigned-clocks = <&k3_clks 57 6>;
+ 		assigned-clock-parents = <&k3_clks 57 8>;
+-		mmc-ddr-1_8v;
+ 		mmc-hs200-1_8v;
+ 		ti,trm-icp = <0x2>;
+ 		bus-width = <8>;
 
 
