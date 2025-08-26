@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A628F31CA7C;
-	Tue, 26 Aug 2025 11:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45577284B5B;
+	Tue, 26 Aug 2025 11:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207649; cv=none; b=PbZJTQzOFCz4O0pC33ichtb4i4LEtsDEPqvcrDu1/PcGwq6OsyXZRdB7q36+XAq+KONf6UKVmKxA4NfS5wDyFU1NGVMy57taumLyIVTzYRe5qOLlKe/e68e0s4erpGmidn/PIBnhsPf4qpT/Ogc5tswpeSorBZXTX+ItSzEQmMQ=
+	t=1756207652; cv=none; b=fwY7Cxa326PvE4mxSY8RYrU8vxgW8jaQaNYueXCN/AjvauGDOU7HRKmoauzrVx2YfYctMN7DoRK/QfX3KQrl/Gql79fDPSqUQwoPAPGCD7i+lsRIESQYCe33wuGwcwG3a4cuOieFAiC8gawYQ1LHoWtXKcyS+FUARSaJt4DfoZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207649; c=relaxed/simple;
-	bh=jhgGaXDbbYCYMJq7D2/Sb5yXyWx6NQD7Ugnx89NNzTo=;
+	s=arc-20240116; t=1756207652; c=relaxed/simple;
+	bh=xBIZhFRlQdgjUw+xGyKWDWqw5lyXjgrPvpm8upSRdKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PIgvF7VYDTtMDBbPAJPKDjjDPPCWD5LBpeb+rLz5RkKY+IT27rgQQVAmrNP8YiyNena1zH36ZBdMpi9RTZRRddtq1wnl0IMMuDbpQomIACAYdsKvKHJZo6LSy2DKNNw7PHCh+bWaFDS+/IrpegTP4It355KLoXVF6lhNYrhzvhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpVO4AU0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNwbpuFTrtEHfOa3YSzK8uBdvr0QEr0Ji8vg+atc27D47hCTdNxEPuTWLUEts1wv7nmTrweiir9YHr7qMHGCnLNSsNkM1FE2osN4T7HigVuwcuzVwrghW7E0GsNNdIwaIan4zCIJNV62a0jxNVjUj7Zy8xt4ZBNK24ZSmZbXn3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZtamngX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpVO4AU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE6FC4CEF4;
-	Tue, 26 Aug 2025 11:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZtamngX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1455C4CEF1;
+	Tue, 26 Aug 2025 11:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207649;
-	bh=jhgGaXDbbYCYMJq7D2/Sb5yXyWx6NQD7Ugnx89NNzTo=;
+	s=korg; t=1756207652;
+	bh=xBIZhFRlQdgjUw+xGyKWDWqw5lyXjgrPvpm8upSRdKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpVO4AU0L7Of9J3lp18w/slxQxcECQuh+l+ddxo3HrNv4J4oLhLqWKHbBV8TRcRBZ
-	 TSBKAO617C4VetGkoOFKSAySNA6lTpJVzXkNjxMoqW5kUObTWw+HRRNUxfrJkSAS7T
-	 B7mfY3SxKnmV6XvzGJFJFYLUk0WVY3L3lCRju3EE=
+	b=OZtamngXFMxUvrMhvZtCioCXvzuUeGzJM6NDyJtq3AHhLvIwZnZE/nZ1V1ftfcq4I
+	 CKjgwfiniXAy/r3ZW7o9MfhbonYFbnjLvzxb3xkIvTW1AzI4g7fwrzwZqY77/vfS3m
+	 wEg2NkJ8B6KvFoHfzwhy/mxKlaGfkyadfsnC0WRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlton Lin <charlton.lin@intel.com>,
-	Khaled Almahallawy <khaled.almahallawy@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 6.16 265/457] drm/i915/icl+/tc: Convert AUX powered WARN to a debug message
-Date: Tue, 26 Aug 2025 13:09:09 +0200
-Message-ID: <20250826110943.926884389@linuxfoundation.org>
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 248/457] mm/memory-failure: fix infinite UCE for VM_PFNMAP pfn
+Date: Tue, 26 Aug 2025 13:08:52 +0200
+Message-ID: <20250826110943.496812744@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,45 +58,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-commit d7fa5754e83cd36c4327eb2d806064e598a72ff6 upstream.
+commit 2e6053fea379806269c4f7f5e36b523c9c0fb35c upstream.
 
-The BIOS can leave the AUX power well enabled on an output, even if this
-isn't required (on platforms where the AUX power is only needed for an
-AUX access). This was observed at least on PTL. To avoid the WARN which
-would be triggered by this during the HW readout, convert the WARN to a
-debug message.
+When memory_failure() is called for a already hwpoisoned pfn,
+kill_accessing_process() will be called to kill current task.  However, if
+the vma of the accessing vaddr is VM_PFNMAP, walk_page_range() will skip
+the vma in walk_page_test() and return 0.
 
-Cc: stable@vger.kernel.org # v6.8+
-Reported-by: Charlton Lin <charlton.lin@intel.com>
-Tested-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://lore.kernel.org/r/20250811080152.906216-6-imre.deak@intel.com
-(cherry picked from commit 6cb52cba474b2bec1a3018d3dbf75292059a29a1)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Before commit aaf99ac2ceb7 ("mm/hwpoison: do not send SIGBUS to processes
+with recovered clean pages"), kill_accessing_process() will return EFAULT.
+For x86, the current task will be killed in kill_me_maybe().
+
+However, after this commit, kill_accessing_process() simplies return 0,
+that means UCE is handled properly, but it doesn't actually.  In such
+case, the user task will trigger UCE infinitely.
+
+To fix it, add .test_walk callback for hwpoison_walk_ops to scan all vmas.
+
+Link: https://lkml.kernel.org/r/20250815073209.1984582-1-tujinjiang@huawei.com
+Fixes: aaf99ac2ceb7 ("mm/hwpoison: do not send SIGBUS to processes with recovered clean pages")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Jane Chu <jane.chu@oracle.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Shuai Xue <xueshuai@linux.alibaba.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_tc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/memory-failure.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_tc.c
-+++ b/drivers/gpu/drm/i915/display/intel_tc.c
-@@ -1497,11 +1497,11 @@ static void intel_tc_port_reset_mode(str
- 	intel_display_power_flush_work(display);
- 	if (!intel_tc_cold_requires_aux_pw(dig_port)) {
- 		enum intel_display_power_domain aux_domain;
--		bool aux_powered;
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -847,9 +847,17 @@ static int hwpoison_hugetlb_range(pte_t
+ #define hwpoison_hugetlb_range	NULL
+ #endif
  
- 		aux_domain = intel_aux_power_domain(dig_port);
--		aux_powered = intel_display_power_is_enabled(display, aux_domain);
--		drm_WARN_ON(display->drm, aux_powered);
-+		if (intel_display_power_is_enabled(display, aux_domain))
-+			drm_dbg_kms(display->drm, "Port %s: AUX unexpectedly powered\n",
-+				    tc->port_name);
- 	}
++static int hwpoison_test_walk(unsigned long start, unsigned long end,
++			     struct mm_walk *walk)
++{
++	/* We also want to consider pages mapped into VM_PFNMAP. */
++	return 0;
++}
++
+ static const struct mm_walk_ops hwpoison_walk_ops = {
+ 	.pmd_entry = hwpoison_pte_range,
+ 	.hugetlb_entry = hwpoison_hugetlb_range,
++	.test_walk = hwpoison_test_walk,
+ 	.walk_lock = PGWALK_RDLOCK,
+ };
  
- 	tc_phy_disconnect(tc);
 
 
