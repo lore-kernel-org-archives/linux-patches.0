@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A3C267386;
-	Tue, 26 Aug 2025 11:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD54929D273;
+	Tue, 26 Aug 2025 11:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207898; cv=none; b=pnDIWljWdOJK7Kao92btCBf4iI4F5ImYsESkcsw2Xk6dU0vitkRJYd6SlNhgI+MWqJxsO4gFDWs3rCn+JNCy1ZRcjKtkHnCbkzEWQUYZXHd2R3uW/tzF9xP+GckFzZ9AZGKxPqB+vCtj3T/jonVVeeXVU9IQCPLlH/F8PbpQnvY=
+	t=1756207899; cv=none; b=ueyGfNZwyLde2J7IXjB6oYhVG9UKeqFJVETj7G5LZ1z3Lo6kvvLUosYe/7Fj++9oneE9nxovJagRNHgcg5vTzNR9CFODTucNlI73j/0k6WxPFR4hbhS5Qx6qYJf9rAiGi2ad2j+RHtPGmnlXnk16NJHV7yR/LqOXgmOrk1DBLJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207898; c=relaxed/simple;
-	bh=XVIMPjdD8jr81rdaEhtIHKDOE783h5+vcMhgYaE6Jro=;
+	s=arc-20240116; t=1756207899; c=relaxed/simple;
+	bh=L5pUcxsgRor/y763SSILTIiZv/bVZnhgBPiYczDI+lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LS9JGfaLxDYLv1c9rQCizrkf20x8HRbQ6kjdlXW94k8tvy7raFmQStyept5hxnhvqgpRPTW+fAJK1dkkLkA9/XrnOdFfcyUHZl0WMrvb38RKSc71oMf5TX5LS49Yz1O+MI3xN5A6/ZilH74BNztEo50GvpEAkZI0CJc0zUAZxl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IET2KPtZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dRRTAqzR38kfcP0i7CAPZCp+kBrfrIJRJ+vsjNWuLQvSlq7BZG+10ilSGLxw7d2cCBxMRi2zpTiE1cHzK/MrvNVGAVuUBAF9UDUR7nOJ6pKwiLpMnt42lT14N/9QX/eS6ehtGZBDEYZ1Nl3t4RrsZVt/m7sX270kZn61MpzQp+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U87dwWWV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IET2KPtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA07C4CEF4;
-	Tue, 26 Aug 2025 11:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U87dwWWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2181EC4CEF1;
+	Tue, 26 Aug 2025 11:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207897;
-	bh=XVIMPjdD8jr81rdaEhtIHKDOE783h5+vcMhgYaE6Jro=;
+	s=korg; t=1756207895;
+	bh=L5pUcxsgRor/y763SSILTIiZv/bVZnhgBPiYczDI+lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IET2KPtZljWbV/eYFVll/Ykz3DNzZvnQtToPn2g1OCV2QqvlTRjd4IuCeDfNAEg8z
-	 bQR4a9dC0PbPPnjjLmA9DgM/hYOVzLuLTsWB255Rn+BOr4nKV3snAZncHm5JG3RqYf
-	 fUBsV+hNxQ5D6LS5dIqyE5teGkkwIslQEzz9kPRw=
+	b=U87dwWWVjwTAHvGGvhxaQAw2uJkoNMIN+DQC2Tpt7O2YDVqRL6uvfPU4zbCTCx5Zx
+	 JhpVNf39s8vvY07S3jZMpSqYW/mjhHzt9aYG8wn+wtAlp9DLaDytRUoixZrd1LxwAW
+	 bSlsw0/A6IdOZBn7mw9rD/3d4duJetuvrz0CxOB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wenglianfa <wenglianfa@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Boshi Yu <boshiyu@linux.alibaba.com>,
 	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 360/457] RDMA/hns: Fix querying wrong SCC context for DIP algorithm
-Date: Tue, 26 Aug 2025 13:10:44 +0200
-Message-ID: <20250826110946.209422878@linuxfoundation.org>
+Subject: [PATCH 6.16 359/457] RDMA/erdma: Fix unset QPN of GSI QP
+Date: Tue, 26 Aug 2025 13:10:43 +0200
+Message-ID: <20250826110946.185775977@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,76 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wenglianfa <wenglianfa@huawei.com>
+From: Boshi Yu <boshiyu@linux.alibaba.com>
 
-[ Upstream commit 085a1b42e52750769a3fa29d4da6c05ab56f18f8 ]
+[ Upstream commit d4ac86b47563c7895dae28658abd1879d266b2b4 ]
 
-When using DIP algorithm, all QPs establishing connections with
-the same destination IP share the same SCC, which is indexed by
-dip_idx, but dip_idx isn't necessarily equal to qpn. Therefore,
-dip_idx should be used to query SCC context instead of qpn.
+The QPN of the GSI QP was not set, which may cause issues.
+Set the QPN to 1 when creating the GSI QP.
 
-Fixes: 124a9fbe43aa ("RDMA/hns: Append SCC context to the raw dump of QPC")
-Signed-off-by: wenglianfa <wenglianfa@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250726075345.846957-1-huangjunxian6@hisilicon.com
+Fixes: 999a0a2e9b87 ("RDMA/erdma: Support UD QPs and UD WRs")
+Reviewed-by: Cheng Xu <chengyou@linux.alibaba.com>
+Signed-off-by: Boshi Yu <boshiyu@linux.alibaba.com>
+Link: https://patch.msgid.link/20250725055410.67520-4-boshiyu@linux.alibaba.com
 Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c    | 4 ++--
- drivers/infiniband/hw/hns/hns_roce_restrack.c | 9 ++++++++-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index b30dce00f240..256757f0ff65 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5514,7 +5514,7 @@ static int hns_roce_v2_query_srqc(struct hns_roce_dev *hr_dev, u32 srqn,
- 	return ret;
- }
- 
--static int hns_roce_v2_query_sccc(struct hns_roce_dev *hr_dev, u32 qpn,
-+static int hns_roce_v2_query_sccc(struct hns_roce_dev *hr_dev, u32 sccn,
- 				  void *buffer)
- {
- 	struct hns_roce_v2_scc_context *context;
-@@ -5526,7 +5526,7 @@ static int hns_roce_v2_query_sccc(struct hns_roce_dev *hr_dev, u32 qpn,
- 		return PTR_ERR(mailbox);
- 
- 	ret = hns_roce_cmd_mbox(hr_dev, 0, mailbox->dma, HNS_ROCE_CMD_QUERY_SCCC,
--				qpn);
-+				sccn);
- 	if (ret)
- 		goto out;
- 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_restrack.c b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-index f637b73b946e..230187dda6a0 100644
---- a/drivers/infiniband/hw/hns/hns_roce_restrack.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-@@ -100,6 +100,7 @@ int hns_roce_fill_res_qp_entry_raw(struct sk_buff *msg, struct ib_qp *ib_qp)
- 		struct hns_roce_v2_qp_context qpc;
- 		struct hns_roce_v2_scc_context sccc;
- 	} context = {};
-+	u32 sccn = hr_qp->qpn;
- 	int ret;
- 
- 	if (!hr_dev->hw->query_qpc)
-@@ -116,7 +117,13 @@ int hns_roce_fill_res_qp_entry_raw(struct sk_buff *msg, struct ib_qp *ib_qp)
- 	    !hr_dev->hw->query_sccc)
- 		goto out;
- 
--	ret = hr_dev->hw->query_sccc(hr_dev, hr_qp->qpn, &context.sccc);
-+	if (hr_qp->cong_type == CONG_TYPE_DIP) {
-+		if (!hr_qp->dip)
-+			goto out;
-+		sccn = hr_qp->dip->dip_idx;
-+	}
-+
-+	ret = hr_dev->hw->query_sccc(hr_dev, sccn, &context.sccc);
- 	if (ret)
- 		ibdev_warn_ratelimited(&hr_dev->ib_dev,
- 				       "failed to query SCCC, ret = %d.\n",
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index c1b2b8c3cdcc..8d7596abb822 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -994,6 +994,8 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		old_entry = xa_store(&dev->qp_xa, 1, qp, GFP_KERNEL);
+ 		if (xa_is_err(old_entry))
+ 			ret = xa_err(old_entry);
++		else
++			qp->ibqp.qp_num = 1;
+ 	} else {
+ 		ret = xa_alloc_cyclic(&dev->qp_xa, &qp->ibqp.qp_num, qp,
+ 				      XA_LIMIT(1, dev->attrs.max_qp - 1),
 -- 
 2.50.1
 
