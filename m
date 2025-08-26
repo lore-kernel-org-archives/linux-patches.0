@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2ED18A6C4;
-	Tue, 26 Aug 2025 13:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB1A223DF6;
+	Tue, 26 Aug 2025 13:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214654; cv=none; b=KxRsEjWg7EiRrQIQmbAHFKVmlY7vHXcxf3tzkILav5nmnyg5Q5E7LaPGmy4cEVbCfXUf9s1MkUb+sXy6S/xHQSzKcr9eyyG5TK/4d6KFLYyLTPyhoCfoOyzxNPZ05VzJu4O4xDnaulA5v4BAnCtJPeUcyohgxBUv2wSaNTDQexY=
+	t=1756214657; cv=none; b=ueB+NFKJL9k6qBmzJ15U8yc9qhNCyLCB08QQiWgiQcZdEdtxe3EldIOE8TvXJAm6pI4dN67zvobUdl1oHjJOROT5KqdXqbYC8EmMUXfqlmXbccL4yVBxFb1ZvUKhGTT3/bD5K9YmKdu9Sra7RIAkL/MAmu82q5EYaxrUtrkGaGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214654; c=relaxed/simple;
-	bh=Do+FZolT192o6duMrs03mzknZYkUD7FCZUuj470wM/w=;
+	s=arc-20240116; t=1756214657; c=relaxed/simple;
+	bh=0h6zTmlUM218uF25sfPUUm2m5uhRQ02H+OrKYduI6IA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ra8bDFH62tPJtO9isgyWzlTh3DeXRNHHq4pGxpnKnp/qKq7Ee39gCLcabCGuE0aBX6UajiaHQoc6jE0wIfJ0Gmr4hCbY5uxZ3yGcRWBUWndqH3k3iqqqjKDS3xMaaRTc10mc26K/AIVtMgIifWQZzGdc8nbB2cHNUHgwKSQs/W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOFIqG68; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kUn6kJn3Tl2qOH6nJllblaDdyoQ3dAkMrC7JnMoXdF5RREGdkbh5Af9YHKOa9VXNOqOijEUCcPxd56rbwnE8UPGGXNlMAt4GLZC80LJRYC2hu2HhHZ3vuEngEpbn3u27QbjAN4fHTcrc98Ph0xlLJAiaiWBApRgytPx7Lbzch6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fl5gIYgH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOFIqG68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE44C4CEF1;
-	Tue, 26 Aug 2025 13:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fl5gIYgH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2600C4CEF1;
+	Tue, 26 Aug 2025 13:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214654;
-	bh=Do+FZolT192o6duMrs03mzknZYkUD7FCZUuj470wM/w=;
+	s=korg; t=1756214657;
+	bh=0h6zTmlUM218uF25sfPUUm2m5uhRQ02H+OrKYduI6IA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MOFIqG68+z4ivLwWMJpQVxEW/x/Dp8fdoZsvF6SqsOFwXgbhU4jpeKLQdIYRi5wGS
-	 WwnBj6cQ+/NuovJDoxu5ms1tSWoHScwDCW8ty4r/G5H3wr2Ycq+ixI7I6/JAXXOtRB
-	 VBkmvM+md2T6e/ObewY9nzYoQ6TeLmc3LERn8PzU=
+	b=fl5gIYgHraoKHkJkt+44N3IhhuEl7TG9Lomj5cUlYXRgQOPKZ1ggxmD2N307vCslm
+	 5U/IvbBO75+kVIUht4savgV9qucq+5DDUp7cyFYbyGkMP3LPal6B1LOc1xaS26+/Xf
+	 FLGBXQlf/KcLPfkiXJ/t2qE4d+5eDHK5WsLls1LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	David Gow <davidgow@google.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/482] jfs: upper bound check of tree index in dbAllocAG
-Date: Tue, 26 Aug 2025 13:07:21 +0200
-Message-ID: <20250826110935.450017614@linuxfoundation.org>
+Subject: [PATCH 6.1 189/482] MIPS: Dont crash in stack_top() for tasks without ABI or vDSO
+Date: Tue, 26 Aug 2025 13:07:22 +0200
+Message-ID: <20250826110935.474923039@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -46,48 +47,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit c214006856ff52a8ff17ed8da52d50601d54f9ce ]
+[ Upstream commit e9f4a6b3421e936c3ee9d74710243897d74dbaa2 ]
 
-When computing the tree index in dbAllocAG, we never check if we are
-out of bounds realative to the size of the stree.
-This could happen in a scenario where the filesystem metadata are
-corrupted.
+Not all tasks have an ABI associated or vDSO mapped,
+for example kthreads never do.
+If such a task ever ends up calling stack_top(), it will derefence the
+NULL ABI pointer and crash.
 
-Reported-by: syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cffd18309153948f3c3e
-Tested-by: syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+This can for example happen when using kunit:
+
+    mips_stack_top+0x28/0xc0
+    arch_pick_mmap_layout+0x190/0x220
+    kunit_vm_mmap_init+0xf8/0x138
+    __kunit_add_resource+0x40/0xa8
+    kunit_vm_mmap+0x88/0xd8
+    usercopy_test_init+0xb8/0x240
+    kunit_try_run_case+0x5c/0x1a8
+    kunit_generic_run_threadfn_adapter+0x28/0x50
+    kthread+0x118/0x240
+    ret_from_kernel_thread+0x14/0x1c
+
+Only dereference the ABI point if it is set.
+
+The GIC page is also included as it is specific to the vDSO.
+Also move the randomization adjustment into the same conditional.
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: David Gow <davidgow@google.com>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/mips/kernel/process.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index c761291f59ac..277f3175477f 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -1389,6 +1389,12 @@ dbAllocAG(struct bmap * bmp, int agno, s64 nblocks, int l2nb, s64 * results)
- 	    (1 << (L2LPERCTL - (bmp->db_agheight << 1))) / bmp->db_agwidth;
- 	ti = bmp->db_agstart + bmp->db_agwidth * (agno & (agperlev - 1));
+diff --git a/arch/mips/kernel/process.c b/arch/mips/kernel/process.c
+index 17d80e2f2e4c..86deab01c578 100644
+--- a/arch/mips/kernel/process.c
++++ b/arch/mips/kernel/process.c
+@@ -690,18 +690,20 @@ unsigned long mips_stack_top(void)
+ 	}
  
-+	if (ti < 0 || ti >= le32_to_cpu(dcp->nleafs)) {
-+		jfs_error(bmp->db_ipbmap->i_sb, "Corrupt dmapctl page\n");
-+		release_metapage(mp);
-+		return -EIO;
-+	}
+ 	/* Space for the VDSO, data page & GIC user page */
+-	top -= PAGE_ALIGN(current->thread.abi->vdso->size);
+-	top -= PAGE_SIZE;
+-	top -= mips_gic_present() ? PAGE_SIZE : 0;
++	if (current->thread.abi) {
++		top -= PAGE_ALIGN(current->thread.abi->vdso->size);
++		top -= PAGE_SIZE;
++		top -= mips_gic_present() ? PAGE_SIZE : 0;
 +
- 	/* dmap control page trees fan-out by 4 and a single allocation
- 	 * group may be described by 1 or 2 subtrees within the ag level
- 	 * dmap control page, depending upon the ag size. examine the ag's
++		/* Space to randomize the VDSO base */
++		if (current->flags & PF_RANDOMIZE)
++			top -= VDSO_RANDOMIZE_SIZE;
++	}
+ 
+ 	/* Space for cache colour alignment */
+ 	if (cpu_has_dc_aliases)
+ 		top -= shm_align_mask + 1;
+ 
+-	/* Space to randomize the VDSO base */
+-	if (current->flags & PF_RANDOMIZE)
+-		top -= VDSO_RANDOMIZE_SIZE;
+-
+ 	return top;
+ }
+ 
 -- 
 2.39.5
 
