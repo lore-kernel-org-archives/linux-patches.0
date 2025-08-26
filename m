@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E96434DCCE;
-	Tue, 26 Aug 2025 14:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB16F34AAE3;
+	Tue, 26 Aug 2025 14:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217567; cv=none; b=HZWaNXGc6dtwu+SMsnzl+LHpgWeNI7ATksGANfd4WYZjdpB7w8jyYSvF9hE/i2DgoruGSjddG8ISJbWOFoJa4x9iJ3A1Si5QdZ6U4Vs1hgtS95hyrvE/DN0zTwVv7cWx7Q8KeB+XngTi+ZALHd9A57s2WaMTo9AKAhH49ieb16s=
+	t=1756217570; cv=none; b=Dj7Ui3Ez/u/Vz09PkKUqtMvj17xvpUmNW3aYD4wNcv/niSJReSHb94RMKYYDmYspftGhs/rOAmufi0jmNQaAcS/scKbk/Dn3bmsqQkjyE88QTJyaSt0WRhlH9taJxs7AuOJolBanmuGvLQWnFyeXu4cGwYWXlJGN85R4TN/44EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217567; c=relaxed/simple;
-	bh=0ZwH3iIzIPnP5LbV+8xHq+q7vpt9XY/sKJwvxrvnZxY=;
+	s=arc-20240116; t=1756217570; c=relaxed/simple;
+	bh=2/smWpJTC7oaqyO8nDnlOw/gaY2yLur7Hs+EcMTYV7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jnq3gAPF7lXQehpicFAs/OnlWihN4GhaL4Pk0wFG/5+2RQrDWX4rkpZo6FofQ3Are0F2fzk6EbCzxtnI62F1FjnmZi/KP/cqSZZFqsBdOO8glVWG8AsShASUbWzWJY3O2VrsoskqNmfMa6PjU7xP3WLkbEvuEqynWTtYgyfhncE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1wfAjto; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SsvMj0W84qjh/+EdBIBzlbX6sS5KX36GDCgW9vP9TnkM6WCStAfnSTZlvR9q3g1BDGRCXsOsxWDEev7EK90osc+i9Jk/F0egGrhp0VoF7UUbCOWP1hbFGDWmCW64sN+y/X6i245gQYzV9xeClTi9jeXkkhYNo0ukxIOkDcK6Qhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4VeknCB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1wfAjto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E333FC113D0;
-	Tue, 26 Aug 2025 14:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4VeknCB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B90DC113D0;
+	Tue, 26 Aug 2025 14:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217567;
-	bh=0ZwH3iIzIPnP5LbV+8xHq+q7vpt9XY/sKJwvxrvnZxY=;
+	s=korg; t=1756217569;
+	bh=2/smWpJTC7oaqyO8nDnlOw/gaY2yLur7Hs+EcMTYV7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1wfAjtoaIJe8ckOh0WjLsvAy5kqrfK1BfSb43wRAenEhUbwPapJRQXlDVVmIss3t
-	 O3eGv6s7VY2+K0jKSh1zs4J8WV883+QkXbBPEddouOeb9N2tCYQq7NAPcguNJtoTdl
-	 TuIRxk6nk7R95bTut2cLOinUbIHsw3Hxt3tVjMdM=
+	b=I4VeknCBEMbBb6C9KPcBhHASBxIhTw6qrrdtR4h+pOxl8fJOsHgYnOvCTKvfgJR07
+	 GFtVK18RXoXY60WnxcWFdPhjTIRepZFfr7EBdSlmbk9mKbrkpTjfP+biUm5OcY4JRj
+	 i9GkNWLx6dBQMnKlctpIsArIZ5OUUgDjpVirJLi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tao Xue <xuetao09@huawei.com>
-Subject: [PATCH 5.10 191/523] usb: gadget : fix use-after-free in composite_dev_cleanup()
-Date: Tue, 26 Aug 2025 13:06:41 +0200
-Message-ID: <20250826110929.161728252@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 192/523] io_uring: dont use int for ABI
+Date: Tue, 26 Aug 2025 13:06:42 +0200
+Message-ID: <20250826110929.185846695@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,51 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Xue <xuetao09@huawei.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 151c0aa896c47a4459e07fee7d4843f44c1bb18e upstream.
+commit cf73d9970ea4f8cace5d8f02d2565a2723003112 upstream.
 
-1. In func configfs_composite_bind() -> composite_os_desc_req_prepare():
-if kmalloc fails, the pointer cdev->os_desc_req will be freed but not
-set to NULL. Then it will return a failure to the upper-level function.
-2. in func configfs_composite_bind() -> composite_dev_cleanup():
-it will checks whether cdev->os_desc_req is NULL. If it is not NULL, it
-will attempt to use it.This will lead to a use-after-free issue.
+__kernel_rwf_t is defined as int, the actual size of which is
+implementation defined. It won't go well if some compiler / archs
+ever defines it as i64, so replace it with __u32, hoping that
+there is no one using i16 for it.
 
-BUG: KASAN: use-after-free in composite_dev_cleanup+0xf4/0x2c0
-Read of size 8 at addr 0000004827837a00 by task init/1
-
-CPU: 10 PID: 1 Comm: init Tainted: G           O      5.10.97-oh #1
- kasan_report+0x188/0x1cc
- __asan_load8+0xb4/0xbc
- composite_dev_cleanup+0xf4/0x2c0
- configfs_composite_bind+0x210/0x7ac
- udc_bind_to_driver+0xb4/0x1ec
- usb_gadget_probe_driver+0xec/0x21c
- gadget_dev_desc_UDC_store+0x264/0x27c
-
-Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Tao Xue <xuetao09@huawei.com>
-Link: https://lore.kernel.org/r/20250721093908.14967-1-xuetao09@huawei.com
+Cc: stable@vger.kernel.org
+Fixes: 2b188cc1bb857 ("Add io_uring IO interface")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/47c666c4ee1df2018863af3a2028af18feef11ed.1751412511.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/uapi/linux/io_uring.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -2241,6 +2241,11 @@ int composite_os_desc_req_prepare(struct
- 	if (!cdev->os_desc_req->buf) {
- 		ret = -ENOMEM;
- 		usb_ep_free_request(ep0, cdev->os_desc_req);
-+		/*
-+		 * Set os_desc_req to NULL so that composite_dev_cleanup()
-+		 * will not try to free it again.
-+		 */
-+		cdev->os_desc_req = NULL;
- 		goto end;
- 	}
- 	cdev->os_desc_req->context = cdev;
+--- a/include/uapi/linux/io_uring.h
++++ b/include/uapi/linux/io_uring.h
+@@ -29,7 +29,7 @@ struct io_uring_sqe {
+ 	};
+ 	__u32	len;		/* buffer size or number of iovecs */
+ 	union {
+-		__kernel_rwf_t	rw_flags;
++		__u32		rw_flags;
+ 		__u32		fsync_flags;
+ 		__u16		poll_events;	/* compatibility */
+ 		__u32		poll32_events;	/* word-reversed for BE */
 
 
