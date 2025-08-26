@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABC83568E9;
-	Tue, 26 Aug 2025 14:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D31D35A2B8;
+	Tue, 26 Aug 2025 14:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219479; cv=none; b=RSLADK2ALGYIbVQc5XnVqRgkse1joyXPfS7USX+Z+yA9iOYaHLwCYiUrx/GB0qlyoWlDbnT7LMcdNYTSuQIW4ovJIkXHLs6vRGgVqh2NWrjY7lbEK5RC5KI5n7TnftiEIDetOT+4ff2xzKxncuGOfmGMO4URig75EEBAcBNfjco=
+	t=1756219482; cv=none; b=gQIld7BGZJ+IF6Y7hw/4cUcQqS357zsNDvNyiismmQ5dkNlIpqbcLkF8EnTdQ1JnFmssQwsZJS0ApKs2SOP7Pu/IpHiigOL2Q59J9KGDfFdan8K8AGDfhgARB0/JCif+6wZ+3bxWSNajAU4vpJM+Xw4fmpsd3cNfFg591NC5IyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219479; c=relaxed/simple;
-	bh=hIA3kKWdgt80ARli/iPU3+rceDU8XcjLuIenevXwVFM=;
+	s=arc-20240116; t=1756219482; c=relaxed/simple;
+	bh=OJXu+y0TBNggLZEeCrDXR+1hOijy8rZfpklAur0PP98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEFNaRclCW5CY9f+mi7kSRjpaiJzrveh4fuPSeZh1a/84vxaxbiKpnPTsI+nl2IVWMPpcswN9s/m7hMmTlZUAV2fqmFlQ34rQ453Q0l+/iPUGbBgFgnzjAm95kHfYx12WqdNuI5yJIy/Sn86O+I6tSk67Lu86si7EhOeCavhXvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY5+f8Gu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G1glrjTeJ213bzd19oTWC2dVt7PmUKtKURELTbE59xJNNrjUoiQYMmWSzI4or0KbP3c8THXSZoEkLtHoZwSKEvxxy8fc3xRVZuAuvPj2UuELMXSb5dFvvSwhBmC6L1usw7L+LGmEV8S1rsUhTpAnA6UC/JS5EWQdonlri6asZdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcYrGhxF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY5+f8Gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E85BC4CEF1;
-	Tue, 26 Aug 2025 14:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcYrGhxF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6764FC4CEF1;
+	Tue, 26 Aug 2025 14:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219479;
-	bh=hIA3kKWdgt80ARli/iPU3+rceDU8XcjLuIenevXwVFM=;
+	s=korg; t=1756219481;
+	bh=OJXu+y0TBNggLZEeCrDXR+1hOijy8rZfpklAur0PP98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iY5+f8GuM908hCd3KKOricwCKjxbTr/P/N5OPH7KnNjV6ZyOJwSrEjYJbtJTsBHsk
-	 r6UzeNkixgy8v5fzDUSy/F8TZ6hZkyPFh3EQubpuevqqJBiQYSACNNLHtShuUOlcY6
-	 +s65zmGBKOt90EH+wJas99/XbZqbmlgyuLoGSLUY=
+	b=TcYrGhxFCXPvS/u4hgDBJiAIRu3RLWBOEFkeit4eR9itM0tKKP1Sp7y1pKcARlfX0
+	 aVph34xiWzt6lD/SpiSoisrUyF1dQjBXeU8m9ACSt0jkjh2ThZtooO3PtZQGPanFpX
+	 GRag0KQOBzr+URTkzE9hvWis4hrKiyTfKMa2Xy0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Priya Singh <priyax.singh@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 398/403] ixgbe: xsk: resolve the negative overflow of budget in ixgbe_xmit_zc
-Date: Tue, 26 Aug 2025 13:12:04 +0200
-Message-ID: <20250826110918.028610897@linuxfoundation.org>
+Subject: [PATCH 5.4 399/403] net/sched: Make cake_enqueue return NET_XMIT_CN when past buffer_limit
+Date: Tue, 26 Aug 2025 13:12:05 +0200
+Message-ID: <20250826110918.057037683@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,78 +48,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: William Liu <will@willsroot.io>
 
-[ Upstream commit 4d4d9ef9dfee877d494e5418f68a1016ef08cad6 ]
+[ Upstream commit 15de71d06a400f7fdc15bf377a2552b0ec437cf5 ]
 
-Resolve the budget negative overflow which leads to returning true in
-ixgbe_xmit_zc even when the budget of descs are thoroughly consumed.
+The following setup can trigger a WARNING in htb_activate due to
+the condition: !cl->leaf.q->q.qlen
 
-Before this patch, when the budget is decreased to zero and finishes
-sending the last allowed desc in ixgbe_xmit_zc, it will always turn back
-and enter into the while() statement to see if it should keep processing
-packets, but in the meantime it unexpectedly decreases the value again to
-'unsigned int (0--)', namely, UINT_MAX. Finally, the ixgbe_xmit_zc returns
-true, showing 'we complete cleaning the budget'. That also means
-'clean_complete = true' in ixgbe_poll.
+tc qdisc del dev lo root
+tc qdisc add dev lo root handle 1: htb default 1
+tc class add dev lo parent 1: classid 1:1 \
+       htb rate 64bit
+tc qdisc add dev lo parent 1:1 handle f: \
+       cake memlimit 1b
+ping -I lo -f -c1 -s64 -W0.001 127.0.0.1
 
-The true theory behind this is if that budget number of descs are consumed,
-it implies that we might have more descs to be done. So we should return
-false in ixgbe_xmit_zc to tell napi poll to find another chance to start
-polling to handle the rest of descs. On the contrary, returning true here
-means job done and we know we finish all the possible descs this time and
-we don't intend to start a new napi poll.
+This is because the low memlimit leads to a low buffer_limit, which
+causes packet dropping. However, cake_enqueue still returns
+NET_XMIT_SUCCESS, causing htb_enqueue to call htb_activate with an
+empty child qdisc. We should return NET_XMIT_CN when packets are
+dropped from the same tin and flow.
 
-It is apparently against our expectations. Please also see how
-ixgbe_clean_tx_irq() handles the problem: it uses do..while() statement
-to make sure the budget can be decreased to zero at most and the negative
-overflow never happens.
+I do not believe return value of NET_XMIT_CN is necessary for packet
+drops in the case of ack filtering, as that is meant to optimize
+performance, not to signal congestion.
 
-The patch adds 'likely' because we rarely would not hit the loop condition
-since the standard budget is 256.
-
-Fixes: 8221c5eba8c1 ("ixgbe: add AF_XDP zero-copy Tx support")
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Priya Singh <priyax.singh@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20250819222000.3504873-4-anthony.l.nguyen@intel.com
+Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
+Signed-off-by: William Liu <will@willsroot.io>
+Reviewed-by: Savino Dicanosa <savy@syst3mfailure.io>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20250819033601.579821-1-will@willsroot.io
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/sch_cake.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-index 921a2ddb497e..c68eb5dddf5b 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-@@ -582,7 +582,7 @@ static bool ixgbe_xmit_zc(struct ixgbe_ring *xdp_ring, unsigned int budget)
- 	dma_addr_t dma;
- 	u32 cmd_type;
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index fc96ec46e6f6..738691b5697b 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1725,7 +1725,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	ktime_t now = ktime_get();
+ 	struct cake_tin_data *b;
+ 	struct cake_flow *flow;
+-	u32 idx;
++	u32 idx, tin;
  
--	while (budget-- > 0) {
-+	while (likely(budget)) {
- 		if (unlikely(!ixgbe_desc_unused(xdp_ring))) {
- 			work_done = false;
- 			break;
-@@ -619,6 +619,8 @@ static bool ixgbe_xmit_zc(struct ixgbe_ring *xdp_ring, unsigned int budget)
- 		xdp_ring->next_to_use++;
- 		if (xdp_ring->next_to_use == xdp_ring->count)
- 			xdp_ring->next_to_use = 0;
-+
-+		budget--;
+ 	/* choose flow to insert into */
+ 	idx = cake_classify(sch, &b, skb, q->flow_mode, &ret);
+@@ -1735,6 +1735,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		__qdisc_drop(skb, to_free);
+ 		return ret;
  	}
++	tin = (u32)(b - q->tins);
+ 	idx--;
+ 	flow = &b->flows[idx];
  
- 	if (tx_desc) {
+@@ -1904,13 +1905,22 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		q->buffer_max_used = q->buffer_used;
+ 
+ 	if (q->buffer_used > q->buffer_limit) {
++		bool same_flow = false;
+ 		u32 dropped = 0;
++		u32 drop_id;
+ 
+ 		while (q->buffer_used > q->buffer_limit) {
+ 			dropped++;
+-			cake_drop(sch, to_free);
++			drop_id = cake_drop(sch, to_free);
++
++			if ((drop_id >> 16) == tin &&
++			    (drop_id & 0xFFFF) == idx)
++				same_flow = true;
+ 		}
+ 		b->drop_overlimit += dropped;
++
++		if (same_flow)
++			return NET_XMIT_CN;
+ 	}
+ 	return NET_XMIT_SUCCESS;
+ }
 -- 
 2.50.1
 
