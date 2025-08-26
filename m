@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5199A246790;
-	Tue, 26 Aug 2025 12:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1BC1EB9F2;
+	Tue, 26 Aug 2025 12:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212959; cv=none; b=bkQrQO6pY7iaI/W+p2HczjEoK6Y5FxGJPTdCtGvBQTq3Oe346884asGTuJeIpqtT3fs9WqPnGTb32NL7sdWdFvtPdBOXbv7b1mG/CIe58RBfzgcGo+YEyMO/7gYqzqKfBmgeYf76m1/y4Woj0aYP9rHqXHhS50MjC9wl3/x3kng=
+	t=1756212962; cv=none; b=jdSWf8IOV4/h6d8sTFz+Y7kvbu3sSMYurcGxo2GrR5dt9lZLcIR6UFCFZdq4q1r6qtEPKHwTPTjeY7L+NQY+NS4ujoZFmNDUmuiPboZ4Hgy5Hb6JeCI8HERQaLyvgZk9rUIr9zCzNGKvQqfr7kZlGTnLiwamlVIIsNaaWL/44EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212959; c=relaxed/simple;
-	bh=b8gYumdyEqvnYvcB5SkCz5KNjzsbqBBZuUxeS56LyTk=;
+	s=arc-20240116; t=1756212962; c=relaxed/simple;
+	bh=+EVIEPoVrZaeEgbCoXtp5AzCI8ZyLy4HDVqxEOlFePw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWY84KrBsWI3bTHee08rvC8tRzTRbDyR572d+x0oZxayFVEG0oQBCHdNDlmxjPRU3ibNqgN8dXJ3bGyEkloLcdXWfLZSpNccvN2NI/0aD9t/BflG9ZdaJIJwONp6jcfanUbvfvK379zSOdTKvo5V1S+5JgFUNh6tYFbopmFTgZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qX8kxKFQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1YfXXVahyUpvF6ysyxuK9fpPBfB6+Py4qHG9sLnxAQVFHfjiD7kRdzAtTOJbBMRW65D8HJPvwLJgyPByBU9c2jSv+GotuZRVE5WjMtU3ERHt5grDoi2hAp44dRLsXTVx31OozHMvHzmB2XEccoCIRBd7mpX9dggbQfvob/YgBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOzJxCY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qX8kxKFQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF82AC116B1;
-	Tue, 26 Aug 2025 12:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOzJxCY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B35DC4CEF1;
+	Tue, 26 Aug 2025 12:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212959;
-	bh=b8gYumdyEqvnYvcB5SkCz5KNjzsbqBBZuUxeS56LyTk=;
+	s=korg; t=1756212961;
+	bh=+EVIEPoVrZaeEgbCoXtp5AzCI8ZyLy4HDVqxEOlFePw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qX8kxKFQTXhWyF3EMLAq8+Zzxowinx8XRzpKJSrl2gwFzFtPeOKWxOdUd+lAZipQi
-	 +PHJbNgKBXHmI3rogUqm6w2IG/ah10QMPjL0+T4pzAifkO2K3iZlPRas6cOvWkGhpZ
-	 pAPleaGCYtNMmvVWDfQWu4Q9YIDa6Q5EAVNUiJzk=
+	b=JOzJxCY9N+WD7QzUkVZyTE90u91LmN24GwrAKVO8o2Z+QfypkX40JDhujZO319N/8
+	 xrz5kbvrsOjMdIexyMXqENB9C9+rFzO/Nz320vnfsjSGNyBgMakFwjowvb0sXG5ZWx
+	 b1+s8KSGNzZKguRiwrUSwUyqUr8tBmxoYu4U+aUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Chandrakanthan <quic_haric@quicinc.com>,
-	Sarika Sharma <quic_sarishar@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Antonino Maniscalco <antomani103@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 168/587] wifi: mac80211: fix rx link assignment for non-MLO stations
-Date: Tue, 26 Aug 2025 13:05:17 +0200
-Message-ID: <20250826110957.219280011@linuxfoundation.org>
+Subject: [PATCH 6.6 169/587] drm/msm: use trylock for debugfs
+Date: Tue, 26 Aug 2025 13:05:18 +0200
+Message-ID: <20250826110957.245400560@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,55 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Chandrakanthan <quic_haric@quicinc.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit cc2b722132893164bcb3cee4f08ed056e126eb6c ]
+[ Upstream commit 0a1ff88ec5b60b41ba830c5bf08b6cd8f45ab411 ]
 
-Currently, ieee80211_rx_data_set_sta() does not correctly handle the
-case where the interface supports multiple links (MLO), but the station
-does not (non-MLO). This can lead to incorrect link assignment or
-unexpected warnings when accessing link information.
+This resolves a potential deadlock vs msm_gem_vm_close().  Otherwise for
+_NO_SHARE buffers msm_gem_describe() could be trying to acquire the
+shared vm resv, while already holding priv->obj_lock.  But _vm_close()
+might drop the last reference to a GEM obj while already holding the vm
+resv, and msm_gem_free_object() needs to grab priv->obj_lock, a locking
+inversion.
 
-Hence, add a fix to check if the station lacks valid link support and
-use its default link ID for rx->link assignment. If the station
-unexpectedly has valid links, fall back to the default link.
+OTOH this is only for debugfs and it isn't critical if we undercount by
+skipping a locked obj.  So just use trylock() and move along if we can't
+get the lock.
 
-This ensures correct link association and prevents potential issues
-in mixed MLO/non-MLO environments.
-
-Signed-off-by: Hari Chandrakanthan <quic_haric@quicinc.com>
-Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
-Link: https://patch.msgid.link/20250630084119.3583593-1-quic_sarishar@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Tested-by: Antonino Maniscalco <antomani103@gmail.com>
+Reviewed-by: Antonino Maniscalco <antomani103@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/661525/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.c | 3 ++-
+ drivers/gpu/drm/msm/msm_gem.h | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 58665b6ae635..210337ef23cf 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4221,10 +4221,16 @@ static bool ieee80211_rx_data_set_sta(struct ieee80211_rx_data *rx,
- 		rx->link_sta = NULL;
- 	}
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 1113e6b2ec8e..aaf7c338eb96 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -928,7 +928,8 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
+ 	uint64_t off = drm_vma_node_start(&obj->vma_node);
+ 	const char *madv;
  
--	if (link_id < 0)
--		rx->link = &rx->sdata->deflink;
--	else if (!ieee80211_rx_data_set_link(rx, link_id))
-+	if (link_id < 0) {
-+		if (ieee80211_vif_is_mld(&rx->sdata->vif) &&
-+		    sta && !sta->sta.valid_links)
-+			rx->link =
-+				rcu_dereference(rx->sdata->link[sta->deflink.link_id]);
-+		else
-+			rx->link = &rx->sdata->deflink;
-+	} else if (!ieee80211_rx_data_set_link(rx, link_id)) {
- 		return false;
-+	}
+-	msm_gem_lock(obj);
++	if (!msm_gem_trylock(obj))
++		return;
  
- 	return true;
+ 	stats->all.count++;
+ 	stats->all.size += obj->size;
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index 8ddef5443140..631a9aa129bd 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -183,6 +183,12 @@ msm_gem_lock(struct drm_gem_object *obj)
+ 	dma_resv_lock(obj->resv, NULL);
  }
+ 
++static inline bool __must_check
++msm_gem_trylock(struct drm_gem_object *obj)
++{
++	return dma_resv_trylock(obj->resv);
++}
++
+ static inline int
+ msm_gem_lock_interruptible(struct drm_gem_object *obj)
+ {
 -- 
 2.39.5
 
