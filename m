@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23FF29D29B;
-	Tue, 26 Aug 2025 11:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC28D29BDAC;
+	Tue, 26 Aug 2025 11:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208964; cv=none; b=i9HWd9w+9eG4xKGh0oxzz6fgF4CExNM3qopd3UZqzhDU+IhTzBxlSCI3YCGY8w9I7FOdR1DVjdzVN9OU+eaOAtw+j04sw931qB7mpkdPEyT0ekOyXcFsWYsH9gAWnLtR8UEqbWs4zdf1jxV/WfgH62chdUtwbwVia2aQ5V3ouZk=
+	t=1756208966; cv=none; b=fnrYSA5L9ZC3Z6OmgtLVmkr15vK7Rrr3LjTm8d4oa4zA3hg5zSiTqO1jw1ZuvjqG5+Ptxazu1byZG6j3mEhLvOGnIB+QUQ7PhTVC3CSJVIVDArrq+HY1DesB6H3miiY5NywuURQYePm8W3WeB7IwaQaQf8u+YFxbcn1lOmU0i6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208964; c=relaxed/simple;
-	bh=BbO5BAu8P0i/btuABEEThguCfOKrdsw6qP3wIjemXb8=;
+	s=arc-20240116; t=1756208966; c=relaxed/simple;
+	bh=/UcG3K5rMWGBMgZ724C2q1sVf4UEYIDG8XhN69UNP8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2b/VLtr+7Gy4AxOpG6Y0SEr1Y3M8p3MvIppYpCJiLgEnrY2hb1Ze581YwxLnI+5hxm2WzrS0UqZQc6ke3LuKbvnhIWYsYRRlSZv1V4EsFmkNCBavogtkPES1rTPeUDfWXl595wzG8bwwfNmeDtUv24M2SnpfiyCktS47qdCbtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmlIX7VJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jnxycNjEIanxkrGm2GAiFWewpKQaLXtZQ9Bb7pneHqUEDbP/wOfWO7q5KYDbgfNJmV6YmgEWJBsS2A3Cw4Rgt6EpxvSZax7xdx+SjUkSSz6jRFjzGLCaaaYO8P6Y9zx6KtRTNkB7gj9JNIdixTqiEG8ZYotSB155mVO8h75O8vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzoMU3c5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmlIX7VJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D599C4CEF1;
-	Tue, 26 Aug 2025 11:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzoMU3c5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224EEC4CEF1;
+	Tue, 26 Aug 2025 11:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208963;
-	bh=BbO5BAu8P0i/btuABEEThguCfOKrdsw6qP3wIjemXb8=;
+	s=korg; t=1756208966;
+	bh=/UcG3K5rMWGBMgZ724C2q1sVf4UEYIDG8XhN69UNP8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AmlIX7VJgUZVNx9GUcOU0gs75Qf+IVsVYLfb9+HgHiTLc3D/nBrjJQl1RZVoI58P2
-	 Nb+RphaSnE9XbUxgxSIYdYckjZGkPgBuuY0FkDrBpTINmtfT5QYy8iYHRLkjYLmRNd
-	 h0J0ta8EHg6UWzbyehSJnpwDjp2OMZqKiwqcGlxo=
+	b=XzoMU3c5ufC7XDnlSiSkQ+CsDkHGwZtS1XlAUWBQY9vPzq76+KPxjCIBliWcJzDkS
+	 0w08NVLdxKcSorvkSuIMpJx39odkEiXx8qrXldfXSISroyMLImqo7dqEupxXT9QDDf
+	 XhxSREjpXNrxlpGtEmxcScP2blPuaK+5LhSzmu4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 281/322] Bluetooth: hci_conn: do return error from hci_enhanced_setup_sync()
-Date: Tue, 26 Aug 2025 13:11:36 +0200
-Message-ID: <20250826110922.861619417@linuxfoundation.org>
+Subject: [PATCH 6.12 272/322] net: xilinx: axienet: Fix RX skb ring management in DMAengine mode
+Date: Tue, 26 Aug 2025 13:11:27 +0200
+Message-ID: <20250826110922.643603163@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,41 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Suraj Gupta <suraj.gupta2@amd.com>
 
-[ Upstream commit 0eaf7c7e85da7495c0e03a99375707fc954f5e7b ]
+[ Upstream commit fd980bf6e9cdae885105685259421164f843ca55 ]
 
-The commit e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to
-hci_sync") missed to update the *return* statement under the *case* of
-BT_CODEC_TRANSPARENT in hci_enhanced_setup_sync(), which led to returning
-success (0) instead of the negative error code (-EINVAL).  However, the
-result of hci_enhanced_setup_sync() seems to be ignored anyway, since NULL
-gets passed to hci_cmd_sync_queue() as the last argument in that case and
-the only function interested in that result is specified by that argument.
+Submit multiple descriptors in axienet_rx_cb() to fill Rx skb ring. This
+ensures the ring "catches up" on previously missed allocations.
 
-Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Increment Rx skb ring head pointer after BD is successfully allocated.
+Previously, head pointer was incremented before verifying if descriptor is
+successfully allocated and has valid entries, which could lead to ring
+state inconsistency if descriptor setup failed.
+
+These changes improve reliability by maintaining adequate descriptor
+availability and ensuring proper ring buffer state management.
+
+Fixes: 6a91b846af85 ("net: axienet: Introduce dmaengine support")
+Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
+Link: https://patch.msgid.link/20250813135559.1555652-1-suraj.gupta2@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index c6c1232db4e2..dad902047414 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -338,7 +338,8 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
- 	case BT_CODEC_TRANSPARENT:
- 		if (!find_next_esco_param(conn, esco_param_msbc,
- 					  ARRAY_SIZE(esco_param_msbc)))
--			return false;
-+			return -EINVAL;
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 2d47b35443af..1775e060d39d 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -1119,6 +1119,7 @@ static void axienet_dma_rx_cb(void *data, const struct dmaengine_result *result)
+ 	struct axienet_local *lp = data;
+ 	struct sk_buff *skb;
+ 	u32 *app_metadata;
++	int i;
+ 
+ 	skbuf_dma = axienet_get_rx_desc(lp, lp->rx_ring_tail++);
+ 	skb = skbuf_dma->skb;
+@@ -1137,7 +1138,10 @@ static void axienet_dma_rx_cb(void *data, const struct dmaengine_result *result)
+ 	u64_stats_add(&lp->rx_packets, 1);
+ 	u64_stats_add(&lp->rx_bytes, rx_len);
+ 	u64_stats_update_end(&lp->rx_stat_sync);
+-	axienet_rx_submit_desc(lp->ndev);
 +
- 		param = &esco_param_msbc[conn->attempt - 1];
- 		cp.tx_coding_format.id = 0x03;
- 		cp.rx_coding_format.id = 0x03;
++	for (i = 0; i < CIRC_SPACE(lp->rx_ring_head, lp->rx_ring_tail,
++				   RX_BUF_NUM_DEFAULT); i++)
++		axienet_rx_submit_desc(lp->ndev);
+ 	dma_async_issue_pending(lp->rx_chan);
+ }
+ 
+@@ -1394,7 +1398,6 @@ static void axienet_rx_submit_desc(struct net_device *ndev)
+ 	if (!skbuf_dma)
+ 		return;
+ 
+-	lp->rx_ring_head++;
+ 	skb = netdev_alloc_skb(ndev, lp->max_frm_size);
+ 	if (!skb)
+ 		return;
+@@ -1419,6 +1422,7 @@ static void axienet_rx_submit_desc(struct net_device *ndev)
+ 	skbuf_dma->desc = dma_rx_desc;
+ 	dma_rx_desc->callback_param = lp;
+ 	dma_rx_desc->callback_result = axienet_dma_rx_cb;
++	lp->rx_ring_head++;
+ 	dmaengine_submit(dma_rx_desc);
+ 
+ 	return;
 -- 
 2.50.1
 
