@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E40B35334D;
-	Tue, 26 Aug 2025 14:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536F6350D7B;
+	Tue, 26 Aug 2025 14:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218520; cv=none; b=E6J67B9j5+eebEP8JYurMjpMoxkVH5Ww9wg8raRHNmMcgUr8Av1StT8Y6Z0J+gFo0dNkKD+C6fv8rMNH5snLrECUoxzVEanEXBEtokgr3nctP3dg60NoduOfMddEPTjtys5Tkd9A2gjeWpcc4HZf9zShzdMph4NuY8NWNlWyI0M=
+	t=1756218524; cv=none; b=rFsLT/ytRqZzRxyIFyMW0be3zWVJAdCDBrM6YKP2GmJFtD9mexO83u8h1A9mbBXiBsRkaPjnIJ98ZQQrUBheXNX8mz2Nu7+JE224b37v9f6linrWrDMCV7oygX0GLi1bMiurCMHBc2X2003puHUSOEnP6BXBl5bCxovjTPxpIug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218520; c=relaxed/simple;
-	bh=EDFXYmz1n0CNZK3Ld2lyQldaxl56Zp05yzN0+7mBz24=;
+	s=arc-20240116; t=1756218524; c=relaxed/simple;
+	bh=g3U+DKNokvO0aULl4qewBZiuNiENhCozaD+VLnhrzBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQJNCo7a+2LOzzC/crqqrckPPlAclqAMo435CkQB3CEtxbSgvGDLmRwyhbqm/pXHw6ChMcnfO+JGtlJKUKEnkU3XW4iU5UP1JGFLuuDEFcWJmKLNpmAaHNXgWn1a85xjIg7rOThbx7exItf6fU90wMjBY0stkp/+pfFCD4FwJEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWKsvplj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zz12kWmrcufquajkR0dyhBe2cY7XI8ZjLkd0EPNkyDg6u0IkZt7xyYbuhGFuKiWc+GxHHflYzLP9h6FHUgjWvgq9D03O8jY+Tfwb74jHh/863KjEydLMfq/4tSeGk1M7XsNB/JAdt0IWNjiO0GBHxDYKSLf8r87Uow5QKd03+vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOWoIygr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWKsvplj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118A6C4CEF1;
-	Tue, 26 Aug 2025 14:28:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOWoIygr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D64DC4CEF1;
+	Tue, 26 Aug 2025 14:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218520;
-	bh=EDFXYmz1n0CNZK3Ld2lyQldaxl56Zp05yzN0+7mBz24=;
+	s=korg; t=1756218522;
+	bh=g3U+DKNokvO0aULl4qewBZiuNiENhCozaD+VLnhrzBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWKsvpljx8qKDAvE71ZYOveh/yj8SdyFFiUbiS9Sdiqq2Pn1OYs2RAUWIfG3D0PJr
-	 JNcKPgrb9lwBXl1ribKYYK3loPn+tSIZTHVWpdBy/57UPiaq2NWvfLrWpUfDrV/M4l
-	 9jZwRBPsEJuYtXZcIbLcMQAPjXCcqhUWE9kT7KYw=
+	b=KOWoIygrfxgYeV0aWk+B1e7BDVM8QstmFn7D5Le770CuQjz6oqBBZ9y2t6ApDGt8X
+	 FQgtT2j2B/o/61CRthAQ5Lcl3r8lerkRoxB8ODtIGXGnJFn4AMBdMmoaZLUqnpSMkv
+	 Z5P1+4QE+9qeQo4jHdmhcKEEGX2Rx9IkJzvmLNfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.4 014/403] dmaengine: nbpfaxi: Fix memory corruption in probe()
-Date: Tue, 26 Aug 2025 13:05:40 +0200
-Message-ID: <20250826110906.157031585@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 032/403] net/sched: sch_qfq: Fix race condition on qfq_aggregate
+Date: Tue, 26 Aug 2025 13:05:58 +0200
+Message-ID: <20250826110906.701306665@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,77 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 188c6ba1dd925849c5d94885c8bbdeb0b3dcf510 upstream.
+[ Upstream commit 5e28d5a3f774f118896aec17a3a20a9c5c9dfc64 ]
 
-The nbpf->chan[] array is allocated earlier in the nbpf_probe() function
-and it has "num_channels" elements.  These three loops iterate one
-element farther than they should and corrupt memory.
+A race condition can occur when 'agg' is modified in qfq_change_agg
+(called during qfq_enqueue) while other threads access it
+concurrently. For example, qfq_dump_class may trigger a NULL
+dereference, and qfq_delete_class may cause a use-after-free.
 
-The changes to the second loop are more involved.  In this case, we're
-copying data from the irqbuf[] array into the nbpf->chan[] array.  If
-the data in irqbuf[i] is the error IRQ then we skip it, so the iterators
-are not in sync.  I added a check to ensure that we don't go beyond the
-end of the irqbuf[] array.  I'm pretty sure this can't happen, but it
-seemed harmless to add a check.
+This patch addresses the issue by:
 
-On the other hand, after the loop has ended there is a check to ensure
-that the "chan" iterator is where we expect it to be.  In the original
-code we went one element beyond the end of the array so the iterator
-wasn't in the correct place and it would always return -EINVAL.  However,
-now it will always be in the correct place.  I deleted the check since
-we know the result.
+1. Moved qfq_destroy_class into the critical section.
 
-Cc: stable@vger.kernel.org
-Fixes: b45b262cefd5 ("dmaengine: add a driver for AMBA AXI NBPF DMAC IP cores")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/b13c5225-7eff-448c-badc-a2c98e9bcaca@sabinyo.mountain
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+2. Added sch_tree_lock protection to qfq_dump_class and
+qfq_dump_class_stats.
+
+Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/nbpfaxi.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/sched/sch_qfq.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
---- a/drivers/dma/nbpfaxi.c
-+++ b/drivers/dma/nbpfaxi.c
-@@ -1349,7 +1349,7 @@ static int nbpf_probe(struct platform_de
- 	if (irqs == 1) {
- 		eirq = irqbuf[0];
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index c466d255f7865..2a4331a084949 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -408,7 +408,7 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	bool existing = false;
+ 	struct nlattr *tb[TCA_QFQ_MAX + 1];
+ 	struct qfq_aggregate *new_agg = NULL;
+-	u32 weight, lmax, inv_w;
++	u32 weight, lmax, inv_w, old_weight, old_lmax;
+ 	int err;
+ 	int delta_w;
  
--		for (i = 0; i <= num_channels; i++)
-+		for (i = 0; i < num_channels; i++)
- 			nbpf->chan[i].irq = irqbuf[0];
- 	} else {
- 		eirq = platform_get_irq_byname(pdev, "error");
-@@ -1359,16 +1359,15 @@ static int nbpf_probe(struct platform_de
- 		if (irqs == num_channels + 1) {
- 			struct nbpf_channel *chan;
+@@ -444,12 +444,16 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	inv_w = ONE_FP / weight;
+ 	weight = ONE_FP / inv_w;
  
--			for (i = 0, chan = nbpf->chan; i <= num_channels;
-+			for (i = 0, chan = nbpf->chan; i < num_channels;
- 			     i++, chan++) {
- 				/* Skip the error IRQ */
- 				if (irqbuf[i] == eirq)
- 					i++;
-+				if (i >= ARRAY_SIZE(irqbuf))
-+					return -EINVAL;
- 				chan->irq = irqbuf[i];
- 			}
--
--			if (chan != nbpf->chan + num_channels)
--				return -EINVAL;
- 		} else {
- 			/* 2 IRQs and more than one channel */
- 			if (irqbuf[0] == eirq)
-@@ -1376,7 +1375,7 @@ static int nbpf_probe(struct platform_de
- 			else
- 				irq = irqbuf[0];
+-	if (cl != NULL &&
+-	    lmax == cl->agg->lmax &&
+-	    weight == cl->agg->class_weight)
+-		return 0; /* nothing to change */
++	if (cl != NULL) {
++		sch_tree_lock(sch);
++		old_weight = cl->agg->class_weight;
++		old_lmax   = cl->agg->lmax;
++		sch_tree_unlock(sch);
++		if (lmax == old_lmax && weight == old_weight)
++			return 0; /* nothing to change */
++	}
  
--			for (i = 0; i <= num_channels; i++)
-+			for (i = 0; i < num_channels; i++)
- 				nbpf->chan[i].irq = irq;
- 		}
- 	}
+-	delta_w = weight - (cl ? cl->agg->class_weight : 0);
++	delta_w = weight - (cl ? old_weight : 0);
+ 
+ 	if (q->wsum + delta_w > QFQ_MAX_WSUM) {
+ 		pr_notice("qfq: total weight out of range (%d + %u)\n",
+@@ -550,10 +554,10 @@ static int qfq_delete_class(struct Qdisc *sch, unsigned long arg)
+ 
+ 	qdisc_purge_queue(cl->qdisc);
+ 	qdisc_class_hash_remove(&q->clhash, &cl->common);
++	qfq_destroy_class(sch, cl);
+ 
+ 	sch_tree_unlock(sch);
+ 
+-	qfq_destroy_class(sch, cl);
+ 	return 0;
+ }
+ 
+@@ -620,6 +624,7 @@ static int qfq_dump_class(struct Qdisc *sch, unsigned long arg,
+ {
+ 	struct qfq_class *cl = (struct qfq_class *)arg;
+ 	struct nlattr *nest;
++	u32 class_weight, lmax;
+ 
+ 	tcm->tcm_parent	= TC_H_ROOT;
+ 	tcm->tcm_handle	= cl->common.classid;
+@@ -628,8 +633,13 @@ static int qfq_dump_class(struct Qdisc *sch, unsigned long arg,
+ 	nest = nla_nest_start_noflag(skb, TCA_OPTIONS);
+ 	if (nest == NULL)
+ 		goto nla_put_failure;
+-	if (nla_put_u32(skb, TCA_QFQ_WEIGHT, cl->agg->class_weight) ||
+-	    nla_put_u32(skb, TCA_QFQ_LMAX, cl->agg->lmax))
++
++	sch_tree_lock(sch);
++	class_weight	= cl->agg->class_weight;
++	lmax		= cl->agg->lmax;
++	sch_tree_unlock(sch);
++	if (nla_put_u32(skb, TCA_QFQ_WEIGHT, class_weight) ||
++	    nla_put_u32(skb, TCA_QFQ_LMAX, lmax))
+ 		goto nla_put_failure;
+ 	return nla_nest_end(skb, nest);
+ 
+@@ -646,8 +656,10 @@ static int qfq_dump_class_stats(struct Qdisc *sch, unsigned long arg,
+ 
+ 	memset(&xstats, 0, sizeof(xstats));
+ 
++	sch_tree_lock(sch);
+ 	xstats.weight = cl->agg->class_weight;
+ 	xstats.lmax = cl->agg->lmax;
++	sch_tree_unlock(sch);
+ 
+ 	if (gnet_stats_copy_basic(qdisc_root_sleeping_running(sch),
+ 				  d, NULL, &cl->bstats) < 0 ||
+-- 
+2.39.5
+
 
 
