@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2029F2264B8;
-	Tue, 26 Aug 2025 13:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4F02E6106;
+	Tue, 26 Aug 2025 13:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215776; cv=none; b=tIzKVmmNTMIUzY2F7z95nfu3Sd5+sBGzkOLGmgCYuVqD81tu1SldQdZKw+8qiWAUNowLATadE/oOszZmTQrKCUrA01/SVDgAvtG4tFuX+hg2U4yl68MOYZtUtTU5cfFSxKc2WIj+C3q5FeH1I1iAmFXKG5cZxWnbUWaRQm7SWKs=
+	t=1756215779; cv=none; b=CZT48Y5Yg5vYJPNpUsy2e+Ak721Qlllx2FzelTwOguEs1ZCyd1g+z+bRyAPu08Hs+eXXvLLRzWyvbRMMfuz5C38kb5bgfHonqaHggMokKe3Zkd8WpcK6hajKsRwKxTGDCBoLy9VX+FaQuhqqu2UQZrOKnh9AfLbnDsoakdIdu5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215776; c=relaxed/simple;
-	bh=GiMEsQlRsA6qIR7VKcL60N9yejI5q0Z+8C35zbReGzA=;
+	s=arc-20240116; t=1756215779; c=relaxed/simple;
+	bh=q3aD0/ScnHhsmsbNy1z9F3CyV9HUD9C/v8b6txAfP3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDmi2py0kRZMNfZ7CqR/eGuf08M8lZLEud+ZyxKsPPpI4n7PEwZXEvr/++tJZUvgRBSW7d9XDoTEQs1kZdMvC1ToOHbVaHkYo/0ghf4PGqjiobNGx9L+4gXc8TffwUghCCNdD/1banGc8XZe01SjCkKRCSE2W/dHbeqXb4tqorM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsdwsE4G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pYeCGWxSUcfPPihNcYi7ar/groeQ710e5UAILjS1iVWzrkx7oLXWon0fjCV5KYKB4kH6T55QLVr1ytom+0yuPnTdQNHDO+372x9dXj6JYaMb9wLJAyP76udU+R6+qWfQZiz3/3Bp7kC1bNVsxu0GylzWk5jmV2pIWl5iRcKQ6QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qh3dcHp6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsdwsE4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A320EC4CEF1;
-	Tue, 26 Aug 2025 13:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qh3dcHp6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEC9C113CF;
+	Tue, 26 Aug 2025 13:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215776;
-	bh=GiMEsQlRsA6qIR7VKcL60N9yejI5q0Z+8C35zbReGzA=;
+	s=korg; t=1756215778;
+	bh=q3aD0/ScnHhsmsbNy1z9F3CyV9HUD9C/v8b6txAfP3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dsdwsE4GoGYy6D4BPUY187SXfaY+wy1ClkXxzQVfntF31mZhHwiILAtv0QUcSv7wE
-	 Ec+d000GQeWwFbsCu6v2OjmCF6uRquyZfrLK2Bh3ZMwDD40ZUG/fHiqox6vvqHnIvr
-	 ITu319C1rXhUB3pq+enh0oIW0WEqks8n4/G5Wcqo=
+	b=qh3dcHp61j7IEhODEnGNCTL5jZCgGJJi0JJxudty4hebOFJ0+K72g48eSaF0Qx7wF
+	 ZXlDK02xN+EmJ/YNwyndw0Xt8mYyQyjBxOQgCvGY9h+t1B+Mb7Hi/CBMfzmSr6rs69
+	 Ai0sTlfoYU61ymIydPjjB6JhW2WIq4aDOgwAKOII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Brahmajit Das <listout@listout.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/644] cpufreq: Init policy->rwsem before it may be possibly used
-Date: Tue, 26 Aug 2025 13:03:42 +0200
-Message-ID: <20250826110949.754700871@linuxfoundation.org>
+Subject: [PATCH 5.15 132/644] samples: mei: Fix building on musl libc
+Date: Tue, 26 Aug 2025 13:03:43 +0200
+Message-ID: <20250826110949.778522672@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,47 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit d1378d1d7edb3a4c4935a44fe834ae135be03564 ]
+[ Upstream commit 239df3e4b4752524e7c0fb3417c218d8063654b4 ]
 
-In cpufreq_policy_put_kobj(), policy->rwsem is used. But in
-cpufreq_policy_alloc(), if freq_qos_add_notifier() returns an error, error
-path via err_kobj_remove or err_min_qos_notifier will be reached and
-cpufreq_policy_put_kobj() will be called before policy->rwsem is
-initialized. Thus, the calling of init_rwsem() should be moved to where
-before these two error paths can be reached.
+The header bits/wordsize.h is glibc specific and on building on musl
+with allyesconfig results in
 
-Fixes: 67d874c3b2c6 ("cpufreq: Register notifiers with the PM QoS framework")
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/20250709104145.2348017-3-zhenglifeng1@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+samples/mei/mei-amt-version.c:77:10: fatal error: bits/wordsize.h: No such file or directory
+   77 | #include <bits/wordsize.h>
+      |          ^~~~~~~~~~~~~~~~~
+
+mei-amt-version.c build file without bits/wordsize.h on musl and glibc.
+
+However on musl we get the follwing error without sys/time.h
+
+samples/mei/mei-amt-version.c: In function 'mei_recv_msg':
+samples/mei/mei-amt-version.c:159:24: error: storage size of 'tv' isn't known
+  159 |         struct timeval tv;
+      |                        ^~
+samples/mei/mei-amt-version.c:160:9: error: unknown type name 'fd_set'
+  160 |         fd_set set;
+      |         ^~~~~~
+samples/mei/mei-amt-version.c:168:9: error: implicit declaration of function 'FD_ZERO' [-Wimplicit-function-declaration]
+  168 |         FD_ZERO(&set);
+      |         ^~~~~~~
+samples/mei/mei-amt-version.c:169:9: error: implicit declaration of function 'FD_SET'; did you mean 'L_SET'? [-Wimplicit-function-declaration]
+  169 |         FD_SET(me->fd, &set);
+      |         ^~~~~~
+      |         L_SET
+samples/mei/mei-amt-version.c:170:14: error: implicit declaration of function 'select' [-Wimplicit-function-declaration]
+  170 |         rc = select(me->fd + 1, &set, NULL, NULL, &tv);
+      |              ^~~~~~
+samples/mei/mei-amt-version.c:171:23: error: implicit declaration of function 'FD_ISSET' [-Wimplicit-function-declaration]
+  171 |         if (rc > 0 && FD_ISSET(me->fd, &set)) {
+      |                       ^~~~~~~~
+samples/mei/mei-amt-version.c:159:24: warning: unused variable 'tv' [-Wunused-variable]
+  159 |         struct timeval tv;
+      |                        ^~
+
+Hence the the file has been included.
+
+Fixes: c52827cc4ddf ("staging/mei: add mei user space example")
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Link: https://lore.kernel.org/r/20250702135955.24955-1-listout@listout.xyz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ samples/mei/mei-amt-version.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 7d7158fa70c5..33c080e08623 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1228,6 +1228,8 @@ static struct cpufreq_policy *cpufreq_policy_alloc(unsigned int cpu)
- 		goto err_free_real_cpus;
- 	}
+diff --git a/samples/mei/mei-amt-version.c b/samples/mei/mei-amt-version.c
+index 867debd3b912..1d7254bcb44c 100644
+--- a/samples/mei/mei-amt-version.c
++++ b/samples/mei/mei-amt-version.c
+@@ -69,11 +69,11 @@
+ #include <string.h>
+ #include <fcntl.h>
+ #include <sys/ioctl.h>
++#include <sys/time.h>
+ #include <unistd.h>
+ #include <errno.h>
+ #include <stdint.h>
+ #include <stdbool.h>
+-#include <bits/wordsize.h>
+ #include <linux/mei.h>
  
-+	init_rwsem(&policy->rwsem);
-+
- 	freq_constraints_init(&policy->constraints);
- 
- 	policy->nb_min.notifier_call = cpufreq_notifier_min;
-@@ -1250,7 +1252,6 @@ static struct cpufreq_policy *cpufreq_policy_alloc(unsigned int cpu)
- 	}
- 
- 	INIT_LIST_HEAD(&policy->policy_list);
--	init_rwsem(&policy->rwsem);
- 	spin_lock_init(&policy->transition_lock);
- 	init_waitqueue_head(&policy->transition_wait);
- 	INIT_WORK(&policy->update, handle_update);
+ /*****************************************************************************
 -- 
 2.39.5
 
