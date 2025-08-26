@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9D213790B;
-	Tue, 26 Aug 2025 12:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3636413790B;
+	Tue, 26 Aug 2025 12:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212617; cv=none; b=KGUUvtUNHcQKAuywzlI29mjX15btOCmjDCcafV2Y/HNU9I6YluPE/IwSAMjX5WP1yH1q9AdkvR2Ni5FaidY6soa2ymGX2KbIZJ0s0fzGRFdURMDgO8t40LI8l+BuhGzcEAhLnpUV143tuUzQGneivwpfkTERW9Vtq84g7BcCc0M=
+	t=1756212620; cv=none; b=rXl3RygdqeGKeUzfaifYut+JVp0N07XOK7wws85rlr7ls6az3tft+5Sb8pu3yhFFxZvxvtyE5JVvV/wv9fRSyu+rRfoLnyxFPI0X1mf/a0R2LcNE+AmQ2Yxwk4XkrTf6T3z4kwQcCbi8IDjN6GugyCa/6jtheH8CsDwhhgEgngY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212617; c=relaxed/simple;
-	bh=uRQm+XmKDeIyNChn1yR1CJ0+51xeqdan4zg4tPZe5KA=;
+	s=arc-20240116; t=1756212620; c=relaxed/simple;
+	bh=C0C/BJxm22XinrYHknFo94Y+n5k7XPIYJiBq+D7W1yM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DfNB3lsSFtlWMvwybAxea82aaPXMhR83eV077fos164jY0gDxtwYNY1Lw9oqdtgB64pcr38Cc4C4ZZgftJGFSV6pSXXjDJGy9eOudUkDnR4jVRwTHKhReokX+xPY1DctrJT9XiT6hHGfbMihgHXH/3Oa+5I7BC8nHPtZjmscDI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoCFXKvg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zm/w1LTnQDyjgFDF5yUl1MY9OwZi5JOjr1FfInnwhiKLAsq6SKbAj+lItdA2YEQuoihiGIS+m7V/rWDyocxjxvUHrm1jyfElHdJNcHS+Zz819ygxGYUmVu/OkA1OW8MnCJRMIuO8rIW4lxptgz5vvftnmLYw7NBfqTIpLc1x6oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSJ18Nfv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoCFXKvg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F04FC4CEF1;
-	Tue, 26 Aug 2025 12:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSJ18Nfv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE94C4CEF4;
+	Tue, 26 Aug 2025 12:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212617;
-	bh=uRQm+XmKDeIyNChn1yR1CJ0+51xeqdan4zg4tPZe5KA=;
+	s=korg; t=1756212620;
+	bh=C0C/BJxm22XinrYHknFo94Y+n5k7XPIYJiBq+D7W1yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoCFXKvgEBQkhz/PUPFG7ybSWjBSmyweQjqsvl/wSybCUuLq9z06SLvvnqGr9JQhg
-	 53qv13TDtPquyGhTc+g+VlYDXcbGh643bdpzcIgR879yXXrHtJc6DPnpe8cIGBZZTp
-	 tzTVhEwvZCr1dYun7yHH4m6+mCIL5xbLRa1D1YYY=
+	b=qSJ18NfvM1gRu414oDbjSy8EVHjeedvE6vqTakKPmiJ6agFXcw0KWCd2UozmiD2TM
+	 GJIEtwPzaKZDZw4ljlu5CfFVRsTaYvl8n/n61lRqmwWveWUa5SXrg2nwimKYmiOrLa
+	 DQZgZ7rIxclfHqDAUENu2OiOK1HKVfmvOyUif7/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Markku=20Ahvenj=C3=A4rvi?= <mankku@gmail.com>,
-	Janne Karhunen <janne.karhunen@gmail.com>,
-	Chao Gao <chao.gao@intel.com>,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/587] KVM: nVMX: Defer SVI update to vmcs01 on EOI when L2 is active w/o VID
-Date: Tue, 26 Aug 2025 13:03:07 +0200
-Message-ID: <20250826110953.917850376@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>
+Subject: [PATCH 6.6 039/587] KVM: x86: Snapshot the hosts DEBUGCTL in common x86
+Date: Tue, 26 Aug 2025 13:03:08 +0200
+Message-ID: <20250826110953.943352559@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -47,157 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Gao <chao.gao@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 04bc93cf49d16d01753b95ddb5d4f230b809a991 ]
+[ Upstream commit fb71c795935652fa20eaf9517ca9547f5af99a76 ]
 
-If KVM emulates an EOI for L1's virtual APIC while L2 is active, defer
-updating GUEST_INTERUPT_STATUS.SVI, i.e. the VMCS's cache of the highest
-in-service IRQ, until L1 is active, as vmcs01, not vmcs02, needs to track
-vISR.  The missed SVI update for vmcs01 can result in L1 interrupts being
-incorrectly blocked, e.g. if there is a pending interrupt with lower
-priority than the interrupt that was EOI'd.
+Move KVM's snapshot of DEBUGCTL to kvm_vcpu_arch and take the snapshot in
+common x86, so that SVM can also use the snapshot.
 
-This bug only affects use cases where L1's vAPIC is effectively passed
-through to L2, e.g. in a pKVM scenario where L2 is L1's depriveleged host,
-as KVM will only emulate an EOI for L1's vAPIC if Virtual Interrupt
-Delivery (VID) is disabled in vmc12, and L1 isn't intercepting L2 accesses
-to its (virtual) APIC page (or if x2APIC is enabled, the EOI MSR).
+Opportunistically change the field to a u64.  While bits 63:32 are reserved
+on AMD, not mentioned at all in Intel's SDM, and managed as an "unsigned
+long" by the kernel, DEBUGCTL is an MSR and therefore a 64-bit value.
 
-WARN() if KVM updates L1's ISR while L2 is active with VID enabled, as an
-EOI from L2 is supposed to affect L2's vAPIC, but still defer the update,
-to try to keep L1 alive.  Specifically, KVM forwards all APICv-related
-VM-Exits to L1 via nested_vmx_l1_wants_exit():
-
-	case EXIT_REASON_APIC_ACCESS:
-	case EXIT_REASON_APIC_WRITE:
-	case EXIT_REASON_EOI_INDUCED:
-		/*
-		 * The controls for "virtualize APIC accesses," "APIC-
-		 * register virtualization," and "virtual-interrupt
-		 * delivery" only come from vmcs12.
-		 */
-		return true;
-
-Fixes: c7c9c56ca26f ("x86, apicv: add virtual interrupt delivery support")
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/kvm/20230312180048.1778187-1-jason.cj.chen@intel.com
-Reported-by: Markku Ahvenjärvi <mankku@gmail.com>
-Closes: https://lore.kernel.org/all/20240920080012.74405-1-mankku@gmail.com
-Cc: Janne Karhunen <janne.karhunen@gmail.com>
-Signed-off-by: Chao Gao <chao.gao@intel.com>
-[sean: drop request, handle in VMX, write changelog]
-Tested-by: Chao Gao <chao.gao@intel.com>
-Link: https://lore.kernel.org/r/20241128000010.4051275-3-seanjc@google.com
+Reviewed-and-tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20250227222411.3490595-4-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-[sean: resolve minor syntactic conflict in lapic.h, account for lack of
-       kvm_x86_call(), drop sanity check due to lack of wants_to_run]
+[sean: resolve minor syntatic conflict in vmx_vcpu_load()]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/lapic.c      | 11 +++++++++++
- arch/x86/kvm/lapic.h      |  1 +
- arch/x86/kvm/vmx/nested.c |  5 +++++
- arch/x86/kvm/vmx/vmx.c    | 16 ++++++++++++++++
- arch/x86/kvm/vmx/vmx.h    |  1 +
- 5 files changed, 34 insertions(+)
+ arch/x86/include/asm/kvm_host.h | 1 +
+ arch/x86/kvm/vmx/vmx.c          | 8 ++------
+ arch/x86/kvm/vmx/vmx.h          | 2 --
+ arch/x86/kvm/x86.c              | 1 +
+ 4 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
-index cbf85a1ffb74..ba1c2a7f74f7 100644
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -803,6 +803,17 @@ static inline void apic_clear_isr(int vec, struct kvm_lapic *apic)
- 	}
- }
- 
-+void kvm_apic_update_hwapic_isr(struct kvm_vcpu *vcpu)
-+{
-+	struct kvm_lapic *apic = vcpu->arch.apic;
-+
-+	if (WARN_ON_ONCE(!lapic_in_kernel(vcpu)) || !apic->apicv_active)
-+		return;
-+
-+	static_call(kvm_x86_hwapic_isr_update)(vcpu, apic_find_highest_isr(apic));
-+}
-+EXPORT_SYMBOL_GPL(kvm_apic_update_hwapic_isr);
-+
- int kvm_lapic_find_highest_irr(struct kvm_vcpu *vcpu)
- {
- 	/* This may race with setting of irr in __apic_accept_irq() and
-diff --git a/arch/x86/kvm/lapic.h b/arch/x86/kvm/lapic.h
-index 0a0ea4b5dd8c..0dd069b8d6d1 100644
---- a/arch/x86/kvm/lapic.h
-+++ b/arch/x86/kvm/lapic.h
-@@ -124,6 +124,7 @@ int kvm_set_apic_base(struct kvm_vcpu *vcpu, struct msr_data *msr_info);
- int kvm_apic_get_state(struct kvm_vcpu *vcpu, struct kvm_lapic_state *s);
- int kvm_apic_set_state(struct kvm_vcpu *vcpu, struct kvm_lapic_state *s);
- enum lapic_mode kvm_get_apic_mode(struct kvm_vcpu *vcpu);
-+void kvm_apic_update_hwapic_isr(struct kvm_vcpu *vcpu);
- int kvm_lapic_find_highest_irr(struct kvm_vcpu *vcpu);
- 
- u64 kvm_get_lapic_tscdeadline_msr(struct kvm_vcpu *vcpu);
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index d3e346a574f1..fdf7503491f9 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -4900,6 +4900,11 @@ void nested_vmx_vmexit(struct kvm_vcpu *vcpu, u32 vm_exit_reason,
- 		kvm_make_request(KVM_REQ_APICV_UPDATE, vcpu);
- 	}
- 
-+	if (vmx->nested.update_vmcs01_hwapic_isr) {
-+		vmx->nested.update_vmcs01_hwapic_isr = false;
-+		kvm_apic_update_hwapic_isr(vcpu);
-+	}
-+
- 	if ((vm_exit_reason != -1) &&
- 	    (enable_shadow_vmcs || evmptr_is_valid(vmx->nested.hv_evmcs_vmptr)))
- 		vmx->nested.need_vmcs12_to_shadow_sync = true;
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 5fc89d255550..b5210505abfa 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -733,6 +733,7 @@ struct kvm_vcpu_arch {
+ 	u32 pkru;
+ 	u32 hflags;
+ 	u64 efer;
++	u64 host_debugctl;
+ 	u64 apic_base;
+ 	struct kvm_lapic *apic;    /* kernel irqchip context */
+ 	bool load_eoi_exitmap_pending;
 diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index cde01eb1f5e3..4563e7a9a851 100644
+index 4563e7a9a851..9ba4baf2a9e9 100644
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6839,6 +6839,22 @@ static void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
- 	u16 status;
- 	u8 old;
+@@ -1499,13 +1499,9 @@ void vmx_vcpu_load_vmcs(struct kvm_vcpu *vcpu, int cpu,
+  */
+ static void vmx_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+ {
+-	struct vcpu_vmx *vmx = to_vmx(vcpu);
+-
+ 	vmx_vcpu_load_vmcs(vcpu, cpu, NULL);
  
-+	/*
-+	 * If L2 is active, defer the SVI update until vmcs01 is loaded, as SVI
-+	 * is only relevant for if and only if Virtual Interrupt Delivery is
-+	 * enabled in vmcs12, and if VID is enabled then L2 EOIs affect L2's
-+	 * vAPIC, not L1's vAPIC.  KVM must update vmcs01 on the next nested
-+	 * VM-Exit, otherwise L1 with run with a stale SVI.
-+	 */
-+	if (is_guest_mode(vcpu)) {
-+		/*
-+		 * KVM is supposed to forward intercepted L2 EOIs to L1 if VID
-+		 * is enabled in vmcs12; as above, the EOIs affect L2's vAPIC.
-+		 */
-+		to_vmx(vcpu)->nested.update_vmcs01_hwapic_isr = true;
-+		return;
-+	}
-+
- 	if (max_isr == -1)
- 		max_isr = 0;
+ 	vmx_vcpu_pi_load(vcpu, cpu);
+-
+-	vmx->host_debugctlmsr = get_debugctlmsr();
+ }
  
+ static void vmx_vcpu_put(struct kvm_vcpu *vcpu)
+@@ -7414,8 +7410,8 @@ static fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu)
+ 	}
+ 
+ 	/* MSR_IA32_DEBUGCTLMSR is zeroed on vmexit. Restore it if needed */
+-	if (vmx->host_debugctlmsr)
+-		update_debugctlmsr(vmx->host_debugctlmsr);
++	if (vcpu->arch.host_debugctl)
++		update_debugctlmsr(vcpu->arch.host_debugctl);
+ 
+ #ifndef CONFIG_X86_64
+ 	/*
 diff --git a/arch/x86/kvm/vmx/vmx.h b/arch/x86/kvm/vmx/vmx.h
-index 6be1627d888e..88c5b7ebf9d3 100644
+index 88c5b7ebf9d3..fb36bde2dd87 100644
 --- a/arch/x86/kvm/vmx/vmx.h
 +++ b/arch/x86/kvm/vmx/vmx.h
-@@ -177,6 +177,7 @@ struct nested_vmx {
- 	bool reload_vmcs01_apic_access_page;
- 	bool update_vmcs01_cpu_dirty_logging;
- 	bool update_vmcs01_apicv_status;
-+	bool update_vmcs01_hwapic_isr;
+@@ -340,8 +340,6 @@ struct vcpu_vmx {
+ 	/* apic deadline value in host tsc */
+ 	u64 hv_deadline_tsc;
  
+-	unsigned long host_debugctlmsr;
+-
  	/*
- 	 * Enlightened VMCS has been enabled. It does not mean that L1 has to
+ 	 * Only bits masked by msr_ia32_feature_control_valid_bits can be set in
+ 	 * msr_ia32_feature_control. FEAT_CTL_LOCKED is always included
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 55185670e0e5..7aff0fe469c3 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -4823,6 +4823,7 @@ void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+ 
+ 	/* Save host pkru register if supported */
+ 	vcpu->arch.host_pkru = read_pkru();
++	vcpu->arch.host_debugctl = get_debugctlmsr();
+ 
+ 	/* Apply any externally detected TSC adjustments (due to suspend) */
+ 	if (unlikely(vcpu->arch.tsc_offset_adjustment)) {
 -- 
 2.50.1
 
