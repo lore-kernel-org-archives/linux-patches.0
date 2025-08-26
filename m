@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813D430BF54;
-	Tue, 26 Aug 2025 11:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7006A312803;
+	Tue, 26 Aug 2025 11:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207142; cv=none; b=VLT30VqV6V1v2DFRGpswYrwzdEc0wwh8OLy9CuqNeWcKV61Qrn3n8G8EwbBMv/Ij+wYfEJqkWcz6Ypt/wMeyP9HCGbfI8nKEDrJW7dWmXOfUoQE1szUPTWoFHpntLb7Q2QK7gBTaMoG94vIRwhUd63GeMgN/4wOxP3wqA9/R/Jk=
+	t=1756207145; cv=none; b=ukgjaWXZYMm1bf3lI0XqZAdKT/x6owTL9lm1ein08dd5V6UwUK7f9z8+2Xdnit2Imr5k2YqIpLoN0/oroIjV8po4VXyHUblLbWy3HS3S1Nnv54IGgxDUYBiHLBRRhPwc2imQgd7RRQg6BP9AtE9QJZS/qBQscZXmLcukEXc6mqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207142; c=relaxed/simple;
-	bh=QCCUZTsgJbBmNM2OSWeVF/bitHk8pfLXb+ORtw84fFo=;
+	s=arc-20240116; t=1756207145; c=relaxed/simple;
+	bh=HXydgQXvtUaRjnox1Iw/nD5W3HaIBLxiuCfXYJsTy9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C73gqSqp/Dmjfn3+uLsRclheBfLlArYbTB/Znu5wUk9vhDHSvrrIwYd0Ecknb4vdNiE3gs8OR/z3m5jAEOXeqIYBZiCYPkVUdbjqje6rqxzJx3M9E04RiNNFMdryMG8FCpxZUY8f7vz/V8bT1Q9r0NLzM36VQmlB+Y1HO1PmdoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhFd6PZs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B2Ak80hZPaIeplQScFqf71ZZl07QJk7/Kq1K88GwgtPovRQMAHsDnkLgQkZZQufY2iilZfrE9veaKZFcYIyK8r+VZEGatYahGDFiAhY73QbaG6aEXlpooAW6n3Q48Ev1ZkTPmtNt6ALQSX8QlcfLjJWPzUbiFD6V8c3e41nBryk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJCFgYHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhFd6PZs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28C0C4CEF1;
-	Tue, 26 Aug 2025 11:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJCFgYHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CEEC113CF;
+	Tue, 26 Aug 2025 11:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207142;
-	bh=QCCUZTsgJbBmNM2OSWeVF/bitHk8pfLXb+ORtw84fFo=;
+	s=korg; t=1756207144;
+	bh=HXydgQXvtUaRjnox1Iw/nD5W3HaIBLxiuCfXYJsTy9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dhFd6PZsiV7VPo4NRgW9wNsQX0I90U17dn5/ED9W2UJ6A0VHXfDTrTxZbWME0lfSz
-	 bhfyY56GrtUKEZHRVdMwHkrzYeJKaJM/8IHSd41tokdrnzYhbQGZAvVaNRvcH+O4hM
-	 SwxI+jPGOi5wNN8JuenSFdzdFEXc1YIm5BT9iMzk=
+	b=bJCFgYHJGe2HPcWXi+SG5fI/XH0aGyiPxzd6z3Suw825SkB8w++Cm4EWGK/SWYBkC
+	 B7Wy6s4I5JEq1HnZdby8OSbqpkTxEgplMPrAxzFnXtJVkYpWSM2ayAO70wpGKoCun/
+	 GZIQij+02h+CGyNkXGxtaRTnnlPSIko8VAw9288I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.16 066/457] scsi: ufs: exynos: Fix programming of HCI_UTRL_NEXUS_TYPE
-Date: Tue, 26 Aug 2025 13:05:50 +0200
-Message-ID: <20250826110938.995406660@linuxfoundation.org>
+Subject: [PATCH 6.16 067/457] scsi: mpi3mr: Fix race between config read submit and interrupt completion
+Date: Tue, 26 Aug 2025 13:05:51 +0200
+Message-ID: <20250826110939.021160032@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -46,60 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-commit 01aad16c2257ab8ff33b152b972c9f2e1af47912 upstream.
+commit e6327c4acf925bb6d6d387d76fc3bd94471e10d8 upstream.
 
-On Google gs101, the number of UTP transfer request slots (nutrs) is 32,
-and in this case the driver ends up programming the UTRL_NEXUS_TYPE
-incorrectly as 0.
+The "is_waiting" flag was updated after calling complete(), which could
+lead to a race where the waiting thread wakes up before the flag is
+cleared. This may cause a missed wakeup or stale state check.
 
-This is because the left hand side of the shift is 1, which is of type
-int, i.e. 31 bits wide. Shifting by more than that width results in
-undefined behaviour.
+Reorder the operations to update "is_waiting" before signaling completion
+to ensure consistent state.
 
-Fix this by switching to the BIT() macro, which applies correct type
-casting as required. This ensures the correct value is written to
-UTRL_NEXUS_TYPE (0xffffffff on gs101), and it also fixes a UBSAN shift
-warning:
-
-    UBSAN: shift-out-of-bounds in drivers/ufs/host/ufs-exynos.c:1113:21
-    shift exponent 32 is too large for 32-bit type 'int'
-
-For consistency, apply the same change to the nutmrs / UTMRL_NEXUS_TYPE
-write.
-
-Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
+Fixes: 824a156633df ("scsi: mpi3mr: Base driver code")
 Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250707-ufs-exynos-shift-v1-1-1418e161ae40@linaro.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Co-developed-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20250627194539.48851-2-ranjan.kumar@broadcom.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufs-exynos.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -1110,8 +1110,8 @@ static int exynos_ufs_post_link(struct u
- 	hci_writel(ufs, val, HCI_TXPRDT_ENTRY_SIZE);
- 
- 	hci_writel(ufs, ilog2(DATA_UNIT_SIZE), HCI_RXPRDT_ENTRY_SIZE);
--	hci_writel(ufs, (1 << hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
--	hci_writel(ufs, (1 << hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
-+	hci_writel(ufs, BIT(hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
-+	hci_writel(ufs, BIT(hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
- 	hci_writel(ufs, 0xf, HCI_AXIDMA_RWDATA_BURST_LEN);
- 
- 	if (ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB)
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -428,8 +428,8 @@ static void mpi3mr_process_admin_reply_d
+ 				       MPI3MR_SENSE_BUF_SZ);
+ 			}
+ 			if (cmdptr->is_waiting) {
+-				complete(&cmdptr->done);
+ 				cmdptr->is_waiting = 0;
++				complete(&cmdptr->done);
+ 			} else if (cmdptr->callback)
+ 				cmdptr->callback(mrioc, cmdptr);
+ 		}
 
 
