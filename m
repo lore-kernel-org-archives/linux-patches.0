@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C572714883F;
-	Tue, 26 Aug 2025 13:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7F2227BA4;
+	Tue, 26 Aug 2025 13:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213668; cv=none; b=OY+dzH/PRx/h1OqJCuWFCk5cCpt0iS6YpZciW3Y1erUNTZ3jz9Xy4ARQOMxS9QN5sKRGrV9ZmM8XbL67l8wtyCH+YUkAgEG+sJPOHQjsOOWRjDxFBtrX4LUY2cPNXzLlVf0RFz6T7OuybOTmU1YVoviZqVqmUP9euG3NCiG6wSc=
+	t=1756213671; cv=none; b=PvvTYea5gaS24S1U45PYCvyX7VYMCGiu1H2fgvVn+dp8LZy6nknhXbUBG6nsEMVqcrosW3bFAHiy+w/tVqy/AtAj+xoyBLztQM8/9FCJvpU2i/jJezQ9d4mRY69hmWfsk5g77qOrFE3cHrUxli3a5Gpq77M4sdndBumkbRr14Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213668; c=relaxed/simple;
-	bh=yfEy48TgHOhcrNGtD1wV3ElgMN5PzQ8DJcBOCeRa7cc=;
+	s=arc-20240116; t=1756213671; c=relaxed/simple;
+	bh=4HGq9lU3UQuXCbZn01coiEFT7hPO5Q/q6rHvGRXob9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oShmgVAgTiguuesqsz3N2J4SQ7V7WRMJmgpBNqa9pBwA2DAvOACv1XaBshS/2BOu8qshVJ7LTBoK8kgonS/YidgcTSh3ebBXKlovghi4ahb0m0bgm7u0QrVa6Kc7IK/vmZLwZGUIeiSHSEgNjCh+7U2ejF2oWCHipyJureqbP0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tga/kUax; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EIz6J5H67Givkru5RzE+f1KVzacKIMy6U1a8Hjn9CvR0OvoB6eZXMyXptRapc6u5BLmS/vbLWNfejRsApZhBY2Wn2Rm+1x0WqSPAwlYjiYoOKrTM0s2DV0G2MFfeMNnFVC0/TfCHZXOcIazYFvbQnZN24n7jbKwFWEfTxkvHSxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oiDdvPEN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tga/kUax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F9BC4CEF1;
-	Tue, 26 Aug 2025 13:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oiDdvPEN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4965EC113CF;
+	Tue, 26 Aug 2025 13:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213668;
-	bh=yfEy48TgHOhcrNGtD1wV3ElgMN5PzQ8DJcBOCeRa7cc=;
+	s=korg; t=1756213670;
+	bh=4HGq9lU3UQuXCbZn01coiEFT7hPO5Q/q6rHvGRXob9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tga/kUax+wqbXE3adza3Gfn1ras5EvUY9G4S4jvZEzKwDvuhEfreQ+nvgCJdWmqCK
-	 A7jt5Oxq6gNfs4ItF2B2vBsWc6T4icFxUVgArgxONGpC3so3c1Ox4uAthYEb6eR/Wd
-	 2Ty77AhhUmvyySUeIVAlqvaLV3hxjXflWFMnwvtU=
+	b=oiDdvPENB5YUj3blOKpQWq+Yx15p1oCu5zy1xNti5pz2ut8sDHzNNzthd0wx8+5Zp
+	 sStCIEGJ+6r75mhkvUOWu6j3LnTWtj0w0WCgJg4MP7n0M20mZoaL8hUvdQ3k7Qp452
+	 xBMH670n3xyGn/3c04a7W3Xchjs4veFVc8gf3euU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
-	Steve French <stfrench@microsoft.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 434/587] smb: client: fix netns refcount leak after net_passive changes
-Date: Tue, 26 Aug 2025 13:09:43 +0200
-Message-ID: <20250826111003.990530563@linuxfoundation.org>
+Subject: [PATCH 6.6 435/587] net_sched: sch_ets: implement lockless ets_dump()
+Date: Tue, 26 Aug 2025 13:09:44 +0200
+Message-ID: <20250826111004.015649679@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,125 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 59b33fab4ca4d7dacc03367082777627e05d0323 ]
+[ Upstream commit c5f1dde7f731e7bf2e7c169ca42cb4989fc2f8b9 ]
 
-After commit 5c70eb5c593d ("net: better track kernel sockets lifetime"),
-kernel sockets now use net_passive reference counting. However, commit
-95d2b9f693ff ("Revert "smb: client: fix TCP timers deadlock after rmmod"")
-restored the manual socket refcount manipulation without adapting to this
-new mechanism, causing a memory leak.
+Instead of relying on RTNL, ets_dump() can use READ_ONCE()
+annotations, paired with WRITE_ONCE() ones in ets_change().
 
-The issue can be reproduced by[1]:
-1. Creating a network namespace
-2. Mounting and Unmounting CIFS within the namespace
-3. Deleting the namespace
-
-Some memory leaks may appear after a period of time following step 3.
-
-unreferenced object 0xffff9951419f6b00 (size 256):
-  comm "ip", pid 447, jiffies 4294692389 (age 14.730s)
-  hex dump (first 32 bytes):
-    1b 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 80 77 c2 44 51 99 ff ff  .........w.DQ...
-  backtrace:
-    __kmem_cache_alloc_node+0x30e/0x3d0
-    __kmalloc+0x52/0x120
-    net_alloc_generic+0x1d/0x30
-    copy_net_ns+0x86/0x200
-    create_new_namespaces+0x117/0x300
-    unshare_nsproxy_namespaces+0x60/0xa0
-    ksys_unshare+0x148/0x360
-    __x64_sys_unshare+0x12/0x20
-    do_syscall_64+0x59/0x110
-    entry_SYSCALL_64_after_hwframe+0x78/0xe2
-...
-unreferenced object 0xffff9951442e7500 (size 32):
-  comm "mount.cifs", pid 475, jiffies 4294693782 (age 13.343s)
-  hex dump (first 32 bytes):
-    40 c5 38 46 51 99 ff ff 18 01 96 42 51 99 ff ff  @.8FQ......BQ...
-    01 00 00 00 6f 00 c5 07 6f 00 d8 07 00 00 00 00  ....o...o.......
-  backtrace:
-    __kmem_cache_alloc_node+0x30e/0x3d0
-    kmalloc_trace+0x2a/0x90
-    ref_tracker_alloc+0x8e/0x1d0
-    sk_alloc+0x18c/0x1c0
-    inet_create+0xf1/0x370
-    __sock_create+0xd7/0x1e0
-    generic_ip_connect+0x1d4/0x5a0 [cifs]
-    cifs_get_tcp_session+0x5d0/0x8a0 [cifs]
-    cifs_mount_get_session+0x47/0x1b0 [cifs]
-    dfs_mount_share+0xfa/0xa10 [cifs]
-    cifs_mount+0x68/0x2b0 [cifs]
-    cifs_smb3_do_mount+0x10b/0x760 [cifs]
-    smb3_get_tree+0x112/0x2e0 [cifs]
-    vfs_get_tree+0x29/0xf0
-    path_mount+0x2d4/0xa00
-    __se_sys_mount+0x165/0x1d0
-
-Root cause:
-When creating kernel sockets, sk_alloc() calls net_passive_inc() for
-sockets with sk_net_refcnt=0. The CIFS code manually converts kernel
-sockets to user sockets by setting sk_net_refcnt=1, but doesn't call
-the corresponding net_passive_dec(). This creates an imbalance in the
-net_passive counter, which prevents the network namespace from being
-destroyed when its last user reference is dropped. As a result, the
-entire namespace and all its associated resources remain allocated.
-
-Timeline of patches leading to this issue:
-- commit ef7134c7fc48 ("smb: client: Fix use-after-free of network
-  namespace.") in v6.12 fixed the original netns UAF by manually
-  managing socket refcounts
-- commit e9f2517a3e18 ("smb: client: fix TCP timers deadlock after
-  rmmod") in v6.13 attempted to use kernel sockets but introduced
-  TCP timer issues
-- commit 5c70eb5c593d ("net: better track kernel sockets lifetime")
-  in v6.14-rc5 introduced the net_passive mechanism with
-  sk_net_refcnt_upgrade() for proper socket conversion
-- commit 95d2b9f693ff ("Revert "smb: client: fix TCP timers deadlock
-  after rmmod"") in v6.15-rc3 reverted to manual refcount management
-  without adapting to the new net_passive changes
-
-Fix this by using sk_net_refcnt_upgrade() which properly handles the
-net_passive counter when converting kernel sockets to user sockets.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220343 [1]
-Fixes: 95d2b9f693ff ("Revert "smb: client: fix TCP timers deadlock after rmmod"")
-Cc: stable@vger.kernel.org
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 87c6efc5ce9c ("net/sched: ets: use old 'nbands' while purging unused classes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ net/sched/sch_ets.c |   25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -3162,18 +3162,15 @@ generic_ip_connect(struct TCP_Server_Inf
- 		struct net *net = cifs_net_ns(server);
- 		struct sock *sk;
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -651,7 +651,7 @@ static int ets_qdisc_change(struct Qdisc
  
--		rc = __sock_create(net, sfamily, SOCK_STREAM,
--				   IPPROTO_TCP, &server->ssocket, 1);
-+		rc = sock_create_kern(net, sfamily, SOCK_STREAM,
-+				      IPPROTO_TCP, &server->ssocket);
- 		if (rc < 0) {
- 			cifs_server_dbg(VFS, "Error %d creating socket\n", rc);
- 			return rc;
+ 	sch_tree_lock(sch);
+ 
+-	q->nbands = nbands;
++	WRITE_ONCE(q->nbands, nbands);
+ 	for (i = nstrict; i < q->nstrict; i++) {
+ 		if (q->classes[i].qdisc->q.qlen) {
+ 			list_add_tail(&q->classes[i].alist, &q->active);
+@@ -663,11 +663,11 @@ static int ets_qdisc_change(struct Qdisc
+ 			list_del_init(&q->classes[i].alist);
+ 		qdisc_purge_queue(q->classes[i].qdisc);
+ 	}
+-	q->nstrict = nstrict;
++	WRITE_ONCE(q->nstrict, nstrict);
+ 	memcpy(q->prio2band, priomap, sizeof(priomap));
+ 
+ 	for (i = 0; i < q->nbands; i++)
+-		q->classes[i].quantum = quanta[i];
++		WRITE_ONCE(q->classes[i].quantum, quanta[i]);
+ 
+ 	for (i = oldbands; i < q->nbands; i++) {
+ 		q->classes[i].qdisc = queues[i];
+@@ -681,7 +681,7 @@ static int ets_qdisc_change(struct Qdisc
+ 	for (i = q->nbands; i < oldbands; i++) {
+ 		qdisc_put(q->classes[i].qdisc);
+ 		q->classes[i].qdisc = NULL;
+-		q->classes[i].quantum = 0;
++		WRITE_ONCE(q->classes[i].quantum, 0);
+ 		q->classes[i].deficit = 0;
+ 		gnet_stats_basic_sync_init(&q->classes[i].bstats);
+ 		memset(&q->classes[i].qstats, 0, sizeof(q->classes[i].qstats));
+@@ -738,6 +738,7 @@ static int ets_qdisc_dump(struct Qdisc *
+ 	struct ets_sched *q = qdisc_priv(sch);
+ 	struct nlattr *opts;
+ 	struct nlattr *nest;
++	u8 nbands, nstrict;
+ 	int band;
+ 	int prio;
+ 	int err;
+@@ -750,21 +751,22 @@ static int ets_qdisc_dump(struct Qdisc *
+ 	if (!opts)
+ 		goto nla_err;
+ 
+-	if (nla_put_u8(skb, TCA_ETS_NBANDS, q->nbands))
++	nbands = READ_ONCE(q->nbands);
++	if (nla_put_u8(skb, TCA_ETS_NBANDS, nbands))
+ 		goto nla_err;
+ 
+-	if (q->nstrict &&
+-	    nla_put_u8(skb, TCA_ETS_NSTRICT, q->nstrict))
++	nstrict = READ_ONCE(q->nstrict);
++	if (nstrict && nla_put_u8(skb, TCA_ETS_NSTRICT, nstrict))
+ 		goto nla_err;
+ 
+-	if (q->nbands > q->nstrict) {
++	if (nbands > nstrict) {
+ 		nest = nla_nest_start(skb, TCA_ETS_QUANTA);
+ 		if (!nest)
+ 			goto nla_err;
+ 
+-		for (band = q->nstrict; band < q->nbands; band++) {
++		for (band = nstrict; band < nbands; band++) {
+ 			if (nla_put_u32(skb, TCA_ETS_QUANTA_BAND,
+-					q->classes[band].quantum))
++					READ_ONCE(q->classes[band].quantum)))
+ 				goto nla_err;
  		}
  
- 		sk = server->ssocket->sk;
--		__netns_tracker_free(net, &sk->ns_tracker, false);
--		sk->sk_net_refcnt = 1;
--		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
--		sock_inuse_add(net, 1);
-+		sk_net_refcnt_upgrade(sk);
+@@ -776,7 +778,8 @@ static int ets_qdisc_dump(struct Qdisc *
+ 		goto nla_err;
  
- 		/* BB other socket options to set KEEPALIVE, NODELAY? */
- 		cifs_dbg(FYI, "Socket created\n");
+ 	for (prio = 0; prio <= TC_PRIO_MAX; prio++) {
+-		if (nla_put_u8(skb, TCA_ETS_PRIOMAP_BAND, q->prio2band[prio]))
++		if (nla_put_u8(skb, TCA_ETS_PRIOMAP_BAND,
++			       READ_ONCE(q->prio2band[prio])))
+ 			goto nla_err;
+ 	}
+ 
 
 
