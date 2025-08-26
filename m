@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA363350831;
-	Tue, 26 Aug 2025 14:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA972BEC45;
+	Tue, 26 Aug 2025 14:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216877; cv=none; b=bjk5agyIQCF2pSsK4AR4ZRok95kKxybYmLVZxZVPQM4TePkGq988pwHvI/j+7cCvd35xRgJvIgcaIfl5mPHNzovu8ztlzvk1hhyCohZvpUHA4LvKUahUwDq9zRD7iLfmuiLADxrOjwbNZ3QS4QcyjiRRUIc72SFE6QXpLL9w5ao=
+	t=1756216880; cv=none; b=Qmap5DRtPzC+oKPSZQ7pnSQbCXKuNR6/UOrLU6jPZ5JoR+qdd7X1uLRfwTAJfTZicAEaLWzFe24hIg9odRx6dVviUVmh40abNKjS25KN5rprVPrrqxiDGRj1KA1JvHE1OBAT7ntaNzO/+YyOJQmoljdCul4FzSZJ5MVToSCej7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216877; c=relaxed/simple;
-	bh=XM0uPhLcOIhEKOa1qfDgoV10hPTPEmV19dn/rfZPjbM=;
+	s=arc-20240116; t=1756216880; c=relaxed/simple;
+	bh=/DcYSMq6YL6MHnJaNMAQBPvxRag3WKza2HOZqJiS6r0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IbqehSbSbvHRWXoY6C47hk/q/HCCmhtSRWF4mGzCLjVL7x9gqs1QIm7bf2y6nhLH4QhkpBHpIosfjkKD3kQZU61L+D686gQRs9Fk1t6ogasHEWTwyeAFn68oRQ4RpyUAtP91UO0519Q8lT+Mo/BRpfBadTOIV1ilLQ/C3qR8HWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYgMO65S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VE1F/VQv4dga5ygUwRuJkZ93H7dPzUrUV4epQm/cGf5a5x2djP4xp2tPJmJhTP6r6BguhmZ5TuPRJx+R+Ep7NdeflY+3CcdN2IMvkgRjAcaRHqJefTKYMpd4fPwEq1SgxnZc8cXqoH1BoaYrZkd25PqLPpxg3U0uScFURpgcD8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHFkKvpJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYgMO65S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC38C4CEF1;
-	Tue, 26 Aug 2025 14:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHFkKvpJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F263FC4CEF1;
+	Tue, 26 Aug 2025 14:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216877;
-	bh=XM0uPhLcOIhEKOa1qfDgoV10hPTPEmV19dn/rfZPjbM=;
+	s=korg; t=1756216880;
+	bh=/DcYSMq6YL6MHnJaNMAQBPvxRag3WKza2HOZqJiS6r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYgMO65SBhhpYBe2ErTNXXbCY1wx440pNb1SIT4uHhZEX3PW/vy0XSo0Za0RwHAt7
-	 xkwD8fk8e2Ygbit1XffDaPbh+HQM4jlZ5i54pXbLYcd1Ueb+UY5ClFPaLjMSGBQulC
-	 n6hy6OvsRqpVfb/sIlCLjGnzNV2Xz1vy6CUsaUsc=
+	b=qHFkKvpJAQCAvE3gfA4y62AlQgmbLhUiIC/UWU+srzpFEBDWEYXFEsbbmParXkHGC
+	 vsAwk3Oc67JdRCWXUMf4JFr4N/UBn8U6iyY68ez/Au8Rh9nTPzh4I49og5mYulcnia
+	 mN9ylSsngzvLaqSF/5F1gYF2LwfmdebcwEErFjlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 577/644] ftrace: Also allocate and copy hash for reading of filter files
-Date: Tue, 26 Aug 2025 13:11:08 +0200
-Message-ID: <20250826111000.828752778@linuxfoundation.org>
+	Salah Triki <salah.triki@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 578/644] iio: pressure: bmp280: Use IS_ERR() in bmp280_common_probe()
+Date: Tue, 26 Aug 2025 13:11:09 +0200
+Message-ID: <20250826111000.854874971@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -54,75 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit bfb336cf97df7b37b2b2edec0f69773e06d11955 upstream.
+commit 43c0f6456f801181a80b73d95def0e0fd134e1cc upstream.
 
-Currently the reader of set_ftrace_filter and set_ftrace_notrace just adds
-the pointer to the global tracer hash to its iterator. Unlike the writer
-that allocates a copy of the hash, the reader keeps the pointer to the
-filter hashes. This is problematic because this pointer is static across
-function calls that release the locks that can update the global tracer
-hashes. This can cause UAF and similar bugs.
+`devm_gpiod_get_optional()` may return non-NULL error pointer on failure.
+Check its return value using `IS_ERR()` and propagate the error if
+necessary.
 
-Allocate and copy the hash for reading the filter files like it is done
-for the writers. This not only fixes UAF bugs, but also makes the code a
-bit simpler as it doesn't have to differentiate when to free the
-iterator's hash between writers and readers.
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/20250822183606.12962cc3@batman.local.home
-Fixes: c20489dad156 ("ftrace: Assign iter->hash to filter or notrace hashes on seq read")
-Closes: https://lore.kernel.org/all/20250813023044.2121943-1-wutengda@huaweicloud.com/
-Closes: https://lore.kernel.org/all/20250822192437.GA458494@ax162/
-Reported-by: Tengda Wu <wutengda@huaweicloud.com>
-Tested-by: Tengda Wu <wutengda@huaweicloud.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: df6e71256c84 ("iio: pressure: bmp280: Explicitly mark GPIO optional")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250818092740.545379-2-salah.triki@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/iio/pressure/bmp280-core.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -3825,13 +3825,17 @@ ftrace_regex_open(struct ftrace_ops *ops
- 	        } else {
- 			iter->hash = alloc_and_copy_ftrace_hash(size_bits, hash);
- 		}
-+	} else {
-+		if (hash)
-+			iter->hash = alloc_and_copy_ftrace_hash(hash->size_bits, hash);
-+		else
-+			iter->hash = EMPTY_HASH;
-+	}
+--- a/drivers/iio/pressure/bmp280-core.c
++++ b/drivers/iio/pressure/bmp280-core.c
+@@ -1064,11 +1064,12 @@ int bmp280_common_probe(struct device *d
  
--		if (!iter->hash) {
--			trace_parser_put(&iter->parser);
--			goto out_unlock;
--		}
--	} else
--		iter->hash = hash;
-+	if (!iter->hash) {
-+		trace_parser_put(&iter->parser);
-+		goto out_unlock;
-+	}
+ 	/* Bring chip out of reset if there is an assigned GPIO line */
+ 	gpiod = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
++	if (IS_ERR(gpiod))
++		return dev_err_probe(dev, PTR_ERR(gpiod), "failed to get reset GPIO\n");
++
+ 	/* Deassert the signal */
+-	if (gpiod) {
+-		dev_info(dev, "release reset\n");
+-		gpiod_set_value(gpiod, 0);
+-	}
++	dev_info(dev, "release reset\n");
++	gpiod_set_value(gpiod, 0);
  
- 	ret = 0;
- 
-@@ -5700,9 +5704,6 @@ int ftrace_regex_release(struct inode *i
- 		ftrace_hash_move_and_update_ops(iter->ops, orig_hash,
- 						      iter->hash, filter_hash);
- 		mutex_unlock(&ftrace_lock);
--	} else {
--		/* For read only, the hash is the ops hash */
--		iter->hash = NULL;
- 	}
- 
- 	mutex_unlock(&iter->ops->func_hash->regex_lock);
+ 	data->regmap = regmap;
+ 	ret = regmap_read(regmap, BMP280_REG_ID, &chip_id);
 
 
