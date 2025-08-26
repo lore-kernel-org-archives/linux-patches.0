@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CCE3568E7;
-	Tue, 26 Aug 2025 14:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D4B353359;
+	Tue, 26 Aug 2025 14:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217034; cv=none; b=u5hIHyx8rib06CYqoKqx2HdWPLo1noXTOqU31FeawX+BP3B71B1kf88/8BHbt/mgO3eOPngozev3wNFyAC/yAg0S1kWt8c/ZxO5HosOiTaK1W4d+P9nZ/fpEip1sMmtKG8FJWiUDx4sziRucjmhfS/cgMnr7D+ML7u29yoEb7+0=
+	t=1756217037; cv=none; b=ksok1US0IwBEXUu1j8jmmJK90lINJCk9EG5V+KEt57AVarxgB9o225F8t2krMHdbPMHgT1acMmRI+7v78FtsMcC4ToJZNewU65PYuU4ENMrm+3pDbzHmzs9cs/ZLdt+SFYperPQjQ6w3pJiovbRd9bcdrUM+r9Hd61n/hdcBLGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217034; c=relaxed/simple;
-	bh=K82djbxXimfVBHLQQCFDpnENfQF1GDRYvT82JhEq/qk=;
+	s=arc-20240116; t=1756217037; c=relaxed/simple;
+	bh=jWj6NGNrpUDhpeeQvuVVBumwGUJzHVHMmWy04MtJ5fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8Jj0vQjEQ9CaF6iNN9V4sPBECN26LgKxmyKNfdw9Y4TbnnQbOOunt85X6J35xN4di3s9uWau294p4tWM6aY01qqtebcbf2h2EQ9jTJiQz6oJDhl4YarfFBL3KS1nTGSjxa1UMiZ4eCfvPT/InRt7eO81QQMLlmJr5R65hiJN7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WpZmy1zu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Xh8Ab8At3Ll5R/H3ndMwOD0DYv1zLvm04JN7oPu+DBQ92FRVn2dWQrujOHA2BGqj1wGJ7W4bJu6vZtGb+5PIUAr6eBu1w0TUMyUG+rB5saAlyPWOmhSu3/fYf9qPcxBunhTO798QoEA4gB4xV9nhdznoOyd9MblFvmh65RFfvKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtBwxEpS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpZmy1zu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271B5C4CEF1;
-	Tue, 26 Aug 2025 14:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtBwxEpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D19C4CEF1;
+	Tue, 26 Aug 2025 14:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217034;
-	bh=K82djbxXimfVBHLQQCFDpnENfQF1GDRYvT82JhEq/qk=;
+	s=korg; t=1756217037;
+	bh=jWj6NGNrpUDhpeeQvuVVBumwGUJzHVHMmWy04MtJ5fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WpZmy1zu31U8DLWwh6Fs8HXfxWZ/imi4Jl64C7I1Cg6+9/0ywNnSeptyTlA5c3GhF
-	 xB3uDdSk2ngZ8ttd/lOZTs/PnX7xynrdsUO4KxLGMd3sAG/3+iDM4pPyvPRbfWU5Mr
-	 cgyZHKpBIVa/eqaye6YBVvDoXW2UZPkyjMiB8ykM=
+	b=RtBwxEpSDDA/xdpZUlkn3YPSjUjTmYfeVCgiPxQ2e/ylwNGzg4m3/VWZA+V81Qolq
+	 uXgMpFreojd0hJiSk3/PLVk/DgcDDKPs1hiFmPV4jwu3V+WLIKUyQSTUy03deOlRSh
+	 8L7Ber9m529YKKOdtCrOab1mxFwOXwoSaXrgIN/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 633/644] phy: mscc: Fix timestamping for vsc8584
-Date: Tue, 26 Aug 2025 13:12:04 +0200
-Message-ID: <20250826111002.246085711@linuxfoundation.org>
+Subject: [PATCH 5.15 605/644] scsi: ufs: exynos: Fix programming of HCI_UTRL_NEXUS_TYPE
+Date: Tue, 26 Aug 2025 13:11:36 +0200
+Message-ID: <20250826111001.542174898@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -47,222 +47,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit bc1a59cff9f797bfbf8f3104507584d89e9ecf2e ]
+[ Upstream commit 01aad16c2257ab8ff33b152b972c9f2e1af47912 ]
 
-There was a problem when we received frames and the frames were
-timestamped. The driver is configured to store the nanosecond part of
-the timestmap in the ptp reserved bits and it would take the second part
-by reading the LTC. The problem is that when reading the LTC we are in
-atomic context and to read the second part will go over mdio bus which
-might sleep, so we get an error.
-The fix consists in actually put all the frames in a queue and start the
-aux work and in that work to read the LTC and then calculate the full
-received time.
+On Google gs101, the number of UTP transfer request slots (nutrs) is 32,
+and in this case the driver ends up programming the UTRL_NEXUS_TYPE
+incorrectly as 0.
 
-Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250818081029.1300780-1-horatiu.vultur@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is because the left hand side of the shift is 1, which is of type
+int, i.e. 31 bits wide. Shifting by more than that width results in
+undefined behaviour.
+
+Fix this by switching to the BIT() macro, which applies correct type
+casting as required. This ensures the correct value is written to
+UTRL_NEXUS_TYPE (0xffffffff on gs101), and it also fixes a UBSAN shift
+warning:
+
+    UBSAN: shift-out-of-bounds in drivers/ufs/host/ufs-exynos.c:1113:21
+    shift exponent 32 is too large for 32-bit type 'int'
+
+For consistency, apply the same change to the nutmrs / UTMRL_NEXUS_TYPE
+write.
+
+Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
+Cc: stable@vger.kernel.org
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/20250707-ufs-exynos-shift-v1-1-1418e161ae40@linaro.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[ Adjusted path from drivers/ufs/host to drivers/scsi/ufs ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/mscc/mscc.h      | 12 ++++++++
- drivers/net/phy/mscc/mscc_main.c | 12 ++++++++
- drivers/net/phy/mscc/mscc_ptp.c  | 49 ++++++++++++++++++++++++--------
- 3 files changed, 61 insertions(+), 12 deletions(-)
+ drivers/scsi/ufs/ufs-exynos.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
-index 055e4ca5b3b5..878298304430 100644
---- a/drivers/net/phy/mscc/mscc.h
-+++ b/drivers/net/phy/mscc/mscc.h
-@@ -360,6 +360,13 @@ struct vsc85xx_hw_stat {
- 	u16 mask;
- };
+--- a/drivers/scsi/ufs/ufs-exynos.c
++++ b/drivers/scsi/ufs/ufs-exynos.c
+@@ -837,8 +837,8 @@ static int exynos_ufs_post_link(struct u
+ 	hci_writel(ufs, 0xa, HCI_DATA_REORDER);
+ 	hci_writel(ufs, PRDT_SET_SIZE(12), HCI_TXPRDT_ENTRY_SIZE);
+ 	hci_writel(ufs, PRDT_SET_SIZE(12), HCI_RXPRDT_ENTRY_SIZE);
+-	hci_writel(ufs, (1 << hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
+-	hci_writel(ufs, (1 << hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
++	hci_writel(ufs, BIT(hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
++	hci_writel(ufs, BIT(hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
+ 	hci_writel(ufs, 0xf, HCI_AXIDMA_RWDATA_BURST_LEN);
  
-+struct vsc8531_skb_cb {
-+	u32 ns;
-+};
-+
-+#define VSC8531_SKB_CB(skb) \
-+	((struct vsc8531_skb_cb *)((skb)->cb))
-+
- struct vsc8531_private {
- 	int rate_magic;
- 	u16 supp_led_modes;
-@@ -408,6 +415,11 @@ struct vsc8531_private {
- 	 */
- 	struct mutex ts_lock;
- 	struct mutex phc_lock;
-+
-+	/* list of skbs that were received and need timestamp information but it
-+	 * didn't received it yet
-+	 */
-+	struct sk_buff_head rx_skbs_list;
- };
- 
- /* Shared structure between the PHYs of the same package.
-diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
-index b349c359089e..03aa85ec60df 100644
---- a/drivers/net/phy/mscc/mscc_main.c
-+++ b/drivers/net/phy/mscc/mscc_main.c
-@@ -2324,6 +2324,13 @@ static int vsc85xx_probe(struct phy_device *phydev)
- 	return vsc85xx_dt_led_modes_get(phydev, default_mode);
- }
- 
-+static void vsc85xx_remove(struct phy_device *phydev)
-+{
-+	struct vsc8531_private *priv = phydev->priv;
-+
-+	skb_queue_purge(&priv->rx_skbs_list);
-+}
-+
- /* Microsemi VSC85xx PHYs */
- static struct phy_driver vsc85xx_driver[] = {
- {
-@@ -2554,6 +2561,7 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.config_intr    = &vsc85xx_config_intr,
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
-+	.remove		= &vsc85xx_remove,
- 	.probe		= &vsc8574_probe,
- 	.set_wol	= &vsc85xx_wol_set,
- 	.get_wol	= &vsc85xx_wol_get,
-@@ -2579,6 +2587,7 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.config_intr    = &vsc85xx_config_intr,
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
-+	.remove		= &vsc85xx_remove,
- 	.probe		= &vsc8574_probe,
- 	.set_wol	= &vsc85xx_wol_set,
- 	.get_wol	= &vsc85xx_wol_get,
-@@ -2604,6 +2613,7 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.config_intr    = &vsc85xx_config_intr,
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
-+	.remove		= &vsc85xx_remove,
- 	.probe		= &vsc8584_probe,
- 	.get_tunable	= &vsc85xx_get_tunable,
- 	.set_tunable	= &vsc85xx_set_tunable,
-@@ -2627,6 +2637,7 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.config_intr    = &vsc85xx_config_intr,
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
-+	.remove		= &vsc85xx_remove,
- 	.probe		= &vsc8584_probe,
- 	.get_tunable	= &vsc85xx_get_tunable,
- 	.set_tunable	= &vsc85xx_set_tunable,
-@@ -2650,6 +2661,7 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.config_intr    = &vsc85xx_config_intr,
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
-+	.remove		= &vsc85xx_remove,
- 	.probe		= &vsc8584_probe,
- 	.get_tunable	= &vsc85xx_get_tunable,
- 	.set_tunable	= &vsc85xx_set_tunable,
-diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
-index cf61990ccd37..f77bfbee5f20 100644
---- a/drivers/net/phy/mscc/mscc_ptp.c
-+++ b/drivers/net/phy/mscc/mscc_ptp.c
-@@ -1190,9 +1190,7 @@ static bool vsc85xx_rxtstamp(struct mii_timestamper *mii_ts,
- {
- 	struct vsc8531_private *vsc8531 =
- 		container_of(mii_ts, struct vsc8531_private, mii_ts);
--	struct skb_shared_hwtstamps *shhwtstamps = NULL;
- 	struct vsc85xx_ptphdr *ptphdr;
--	struct timespec64 ts;
- 	unsigned long ns;
- 
- 	if (!vsc8531->ptp->configured)
-@@ -1202,27 +1200,52 @@ static bool vsc85xx_rxtstamp(struct mii_timestamper *mii_ts,
- 	    type == PTP_CLASS_NONE)
- 		return false;
- 
--	vsc85xx_gettime(&vsc8531->ptp->caps, &ts);
--
- 	ptphdr = get_ptp_header_rx(skb, vsc8531->ptp->rx_filter);
- 	if (!ptphdr)
- 		return false;
- 
--	shhwtstamps = skb_hwtstamps(skb);
--	memset(shhwtstamps, 0, sizeof(struct skb_shared_hwtstamps));
--
- 	ns = ntohl(ptphdr->rsrvd2);
- 
--	/* nsec is in reserved field */
--	if (ts.tv_nsec < ns)
--		ts.tv_sec--;
-+	VSC8531_SKB_CB(skb)->ns = ns;
-+	skb_queue_tail(&vsc8531->rx_skbs_list, skb);
- 
--	shhwtstamps->hwtstamp = ktime_set(ts.tv_sec, ns);
--	netif_rx(skb);
-+	ptp_schedule_worker(vsc8531->ptp->ptp_clock, 0);
- 
- 	return true;
- }
- 
-+static long vsc85xx_do_aux_work(struct ptp_clock_info *info)
-+{
-+	struct vsc85xx_ptp *ptp = container_of(info, struct vsc85xx_ptp, caps);
-+	struct skb_shared_hwtstamps *shhwtstamps = NULL;
-+	struct phy_device *phydev = ptp->phydev;
-+	struct vsc8531_private *priv = phydev->priv;
-+	struct sk_buff_head received;
-+	struct sk_buff *rx_skb;
-+	struct timespec64 ts;
-+	unsigned long flags;
-+
-+	__skb_queue_head_init(&received);
-+	spin_lock_irqsave(&priv->rx_skbs_list.lock, flags);
-+	skb_queue_splice_tail_init(&priv->rx_skbs_list, &received);
-+	spin_unlock_irqrestore(&priv->rx_skbs_list.lock, flags);
-+
-+	vsc85xx_gettime(info, &ts);
-+	while ((rx_skb = __skb_dequeue(&received)) != NULL) {
-+		shhwtstamps = skb_hwtstamps(rx_skb);
-+		memset(shhwtstamps, 0, sizeof(struct skb_shared_hwtstamps));
-+
-+		if (ts.tv_nsec < VSC8531_SKB_CB(rx_skb)->ns)
-+			ts.tv_sec--;
-+
-+		shhwtstamps->hwtstamp = ktime_set(ts.tv_sec,
-+						  VSC8531_SKB_CB(rx_skb)->ns);
-+		netif_rx(rx_skb);
-+	}
-+
-+	return -1;
-+}
-+
- static const struct ptp_clock_info vsc85xx_clk_caps = {
- 	.owner		= THIS_MODULE,
- 	.name		= "VSC85xx timer",
-@@ -1236,6 +1259,7 @@ static const struct ptp_clock_info vsc85xx_clk_caps = {
- 	.adjfine	= &vsc85xx_adjfine,
- 	.gettime64	= &vsc85xx_gettime,
- 	.settime64	= &vsc85xx_settime,
-+	.do_aux_work	= &vsc85xx_do_aux_work,
- };
- 
- static struct vsc8531_private *vsc8584_base_priv(struct phy_device *phydev)
-@@ -1563,6 +1587,7 @@ int vsc8584_ptp_probe(struct phy_device *phydev)
- 
- 	mutex_init(&vsc8531->phc_lock);
- 	mutex_init(&vsc8531->ts_lock);
-+	skb_queue_head_init(&vsc8531->rx_skbs_list);
- 
- 	/* Retrieve the shared load/save GPIO. Request it as non exclusive as
- 	 * the same GPIO can be requested by all the PHYs of the same package.
--- 
-2.50.1
-
+ 	if (ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB)
 
 
