@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B161230BDF;
-	Tue, 26 Aug 2025 13:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2C6239E8B;
+	Tue, 26 Aug 2025 13:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215728; cv=none; b=K5S4I3Ti4M+PPl+y5khsh4+hvX4eH/bLniO+ekrCp4joedKOGWitq+ugTBzbSeKD1wL25GXaw5edyYB1pvZq+QiS6m/19OX1dAg1o+kp3HGQaCQAZ67xvdJ2Zu63NJ/cHO5/cln2RVThxG8ny2B5OPITzuFQsV/FdDvA8+x6rf8=
+	t=1756215731; cv=none; b=FWersWuo9hTaNn/5YbIiPS4KYfLjfS9oFQ8ffJXuZ780rnIn2dlPtdLX0wv6T4KX1WVPjGxvYPnaz6WRZmuaF330zAMcUgl+jQSbLGmXGoMFexLdSLJViWrF6oZvS5JTHRq597t6i/Wl9B+5PO0NLxNUWaDY4Em2n5HTOz0+VqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215728; c=relaxed/simple;
-	bh=aRFvik0zIkH8BG+3USPEhjVFZBI+CXa5B6n1ku53y6I=;
+	s=arc-20240116; t=1756215731; c=relaxed/simple;
+	bh=J4a12ptnIE2LlaQ73H6xcKtsmT94d7/6x7muTYrC6D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfN7tznBGkofRBr34w5hxeZDAUSwjt/04/7TX3Hk52kfkr0xztSBWY7zJzhPabRK+EEPcT89tnfwc6Jd7D9QdBWAMbDfoLXKateuNWQuogwW46leVYPAI8R4JTTJ/Ml6kBAkvfTRFjadbFpIbryUuslpK0SGw3dp1ZgHle83F1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OB9+MXFk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KirR0IRUqeUS0eEIv/8H4Wh+cYl8E+EiziOjMsTJYituI/6VzEmEt7PZmmp8MRbICz6bZ6gV9Aj2D6QNg2qEwRXFQj2i5MnGUuWAPdIwLUuiwkfCtr9pj1g5Rdk/GJq3Ma/+gk+DE26EyFFlDQLoshSxRfuGOeEOQJ4XAEs4rqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zy656NOp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OB9+MXFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA84C4CEF1;
-	Tue, 26 Aug 2025 13:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zy656NOp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2829C116B1;
+	Tue, 26 Aug 2025 13:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215728;
-	bh=aRFvik0zIkH8BG+3USPEhjVFZBI+CXa5B6n1ku53y6I=;
+	s=korg; t=1756215731;
+	bh=J4a12ptnIE2LlaQ73H6xcKtsmT94d7/6x7muTYrC6D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OB9+MXFkmOPbDY0Qq3qQ7FS9lJueV3+4pSVIre3DjP5aXDArbhhgnqi+vxjtplkN6
-	 9VTNKSk7fX6isRjBlSpDwiChYYu6zHWUuHskYrAMeOjmKcNoYdShd7yGdP+H5SkepW
-	 yYD4X5yzgzxEbnHC4pHZvmBwQlMx8ZhT1c+J9bJM=
+	b=Zy656NOpBe7jGPaAC4h7FdKVwbueSPpjnU4dWPL1605o9QnM0c3yGUPdp+DXdB24m
+	 GxJoAx8CkPa13K+r8vUcN14h6VmiQ6KMsyb8s3ePDoIi5s/7OD3x4PCiebf7/PON/Y
+	 7TjU+XbD8ZJuR+g9xJ2M4JcaJjDYz0DAtmu5b/Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"xin.guo" <guoxin0309@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/644] tcp: fix tcp_ofo_queue() to avoid including too much DUP SACK range
-Date: Tue, 26 Aug 2025 13:03:55 +0200
-Message-ID: <20250826110950.059484306@linuxfoundation.org>
+Subject: [PATCH 5.15 127/644] arm64: dts: imx8mn-beacon: Fix HS400 USDHC clock speed
+Date: Tue, 26 Aug 2025 13:03:38 +0200
+Message-ID: <20250826110949.661013550@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xin.guo <guoxin0309@gmail.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit a041f70e573e185d5d5fdbba53f0db2fbe7257ad ]
+[ Upstream commit e16ad6c79906bba5e2ac499492b6a5b29ab19d6c ]
 
-If the new coming segment covers more than one skbs in the ofo queue,
-and which seq is equal to rcv_nxt, then the sequence range
-that is duplicated will be sent as DUP SACK, the detail as below,
-in step6, the {501,2001} range is clearly including too much
-DUP SACK range, in violation of RFC 2883 rules.
+The reference manual for the i.MX8MN states the clock rate in
+MMC mode is 1/2 of the input clock, therefore to properly run
+at HS400 rates, the input clock must be 400MHz to operate at
+200MHz.  Currently the clock is set to 200MHz which is half the
+rate it should be, so the throughput is half of what it should be
+for HS400 operation.
 
-1. client > server: Flags [.], seq 501:1001, ack 1325288529, win 20000, length 500
-2. server > client: Flags [.], ack 1, [nop,nop,sack 1 {501:1001}], length 0
-3. client > server: Flags [.], seq 1501:2001, ack 1325288529, win 20000, length 500
-4. server > client: Flags [.], ack 1, [nop,nop,sack 2 {1501:2001} {501:1001}], length 0
-5. client > server: Flags [.], seq 1:2001, ack 1325288529, win 20000, length 2000
-6. server > client: Flags [.], ack 2001, [nop,nop,sack 1 {501:2001}], length 0
-
-After this fix, the final ACK is as below:
-
-6. server > client: Flags [.], ack 2001, options [nop,nop,sack 1 {501:1001}], length 0
-
-[edumazet] added a new packetdrill test in the following patch.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: xin.guo <guoxin0309@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250626123420.1933835-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 36ca3c8ccb53 ("arm64: dts: imx: Add Beacon i.MX8M Nano development kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 10f39b2762a7..fea019cc92d3 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4826,8 +4826,9 @@ static void tcp_ofo_queue(struct sock *sk)
- 
- 		if (before(TCP_SKB_CB(skb)->seq, dsack_high)) {
- 			__u32 dsack = dsack_high;
-+
- 			if (before(TCP_SKB_CB(skb)->end_seq, dsack_high))
--				dsack_high = TCP_SKB_CB(skb)->end_seq;
-+				dsack = TCP_SKB_CB(skb)->end_seq;
- 			tcp_dsack_extend(sk, TCP_SKB_CB(skb)->seq, dsack);
- 		}
- 		p = rb_next(p);
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+index 4c339b06c87e..d197319e3b58 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+@@ -296,6 +296,8 @@ &usdhc3 {
+ 	pinctrl-0 = <&pinctrl_usdhc3>;
+ 	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
+ 	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
++	assigned-clocks = <&clk IMX8MN_CLK_USDHC3>;
++	assigned-clock-rates = <400000000>;
+ 	bus-width = <8>;
+ 	non-removable;
+ 	status = "okay";
 -- 
 2.39.5
 
