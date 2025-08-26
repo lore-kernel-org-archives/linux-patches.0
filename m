@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8F42F9C23;
-	Tue, 26 Aug 2025 11:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2285393DD1;
+	Tue, 26 Aug 2025 11:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208694; cv=none; b=aCBC8JEIOHXOu9B5uVg4p65RqJdBR0uqZ3qrDWM7flvZ5VVsgxeOYSBj0V7wnLv0+O5aLuMichu0vKLjf3C+1DBbg8oAHwfKQGayms+TSSU52ApuCdB92M5YNIOfCeqOorhjILOLb1F93diSg1NNKB8YV1csnjhjJMSki3csdgQ=
+	t=1756208697; cv=none; b=n54mFQqv+WaGMIXwzdMt2FDDVhaIbFzbBmGEg9X5PyuejVdcxrSxiMFwx3YgrK81N7nZ/VJoTd7Y216oGA6N5ciMEWSl936G14DjyW7M3WTX33+qNah1tdxyGiUxEHN9ke1hvj3f49vIjpE4E6xYYB6cAQ98umgs+N6tEswaJIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208694; c=relaxed/simple;
-	bh=WByepcIbCPruavbIkKL485Za4jYesReSp79qirv6rKE=;
+	s=arc-20240116; t=1756208697; c=relaxed/simple;
+	bh=Fx5P26p2+ZLxg6A2PpmPuQqJbkCnJV5rhCWwnE3+00w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AtVzOwCjs/8C/jjYl5YSSDis3q1Y6bGzjGhNAmr/oVMnUG/qzg5Wr7vGcTM+9qGI/mqfwbGhzwG/WIPTg0H19IZb322U9ZcvsiKrk9nrMSptLjST43UsvSoI3RqvmVXp9T/dlPy90LUIF2wwPXfoPVxk1ZmNygNoG658N8za+FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLhZo+OC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sFhm7WUzT2o1MoUTTM8owIDTMQD84SMKL0fAneOhi60Hcru92RoEk7QjQaaL/5WcDBI/1GnD7wVinVd62n5zrVDy2MTbCSJpoV40Cus/W1EiS6RnfVAkIk2x6tA+v/7DIgaJJNpqOtgdXfWzQLWap4GsOj7nMRNCnWzJmundMvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rw6bhi8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLhZo+OC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C521BC4CEF1;
-	Tue, 26 Aug 2025 11:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rw6bhi8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E89C4CEF1;
+	Tue, 26 Aug 2025 11:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208694;
-	bh=WByepcIbCPruavbIkKL485Za4jYesReSp79qirv6rKE=;
+	s=korg; t=1756208696;
+	bh=Fx5P26p2+ZLxg6A2PpmPuQqJbkCnJV5rhCWwnE3+00w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLhZo+OC41+bL6Cs6GaBUocGehHuScBwCuevT8VYp02zWWwuN6r6lOqKFUJBOw5R2
-	 nRe+VWcAzLdilUs764DukFz3jyXoVdBTBzCepVsRjiBO35NH9pgamjbLKoeKSzvHL7
-	 YdBM/JPb6M+32cavWgeEnput6C7UUkhiKQY1uryo=
+	b=Rw6bhi8ga1qpG+RAMMnx0WyPdjVJ1jbgAJ/W8y0Ojtyj/k9iSs7s/8SlaScsfT7TF
+	 kKzbEGscmImVhq+Bh7ZRStMWQOY5NZ89AlNq0BLh2yltBM0Ki2PUQKgKZmvBnRNnlm
+	 l6Kcg4JLwVbLbo4FwuRDmxSTKa3MdsqF9Tz2Hm/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Lukas Wunner <lukas@wunner.de>,
-	Tomer Tayar <ttayar@habana.ai>
-Subject: [PATCH 6.12 179/322] accel/habanalabs/gaudi2: Use kvfree() for memory allocated with kvcalloc()
-Date: Tue, 26 Aug 2025 13:09:54 +0200
-Message-ID: <20250826110920.282858201@linuxfoundation.org>
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 180/322] drm/amdgpu/swm14: Update power limit logic
+Date: Tue, 26 Aug 2025 13:09:55 +0200
+Message-ID: <20250826110920.309253665@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,44 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@toblux.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit a44458dfd5bc0c79c6739c3f4c658361d3a5126b upstream.
+commit 79e25cd06e85105c75701ef1773c6c64bb304091 upstream.
 
-Use kvfree() to fix the following Coccinelle/coccicheck warning reported
-by kfree_mismatch.cocci:
+Take into account the limits from the vbios.  Ported
+from the SMU13 code.
 
-  WARNING kvmalloc is used to allocate this memory at line 10398
-
-Fixes: f728c17fc97a ("accel/habanalabs/gaudi2: move HMMU page tables to device memory")
-Reported-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Closes: https://patch.msgid.link/20250808085530.233737-1-rongqianfeng@vivo.com
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-[lukas: acknowledge Qianfeng, adjust Thorsten's domain, add Fixes tag]
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Tomer Tayar <ttayar@habana.ai>
-Cc: stable@vger.kernel.org  # v6.9+
-Link: https://patch.msgid.link/20240820231028.136126-1-thorsten.blum@toblux.com
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4352
+Reviewed-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 203cc7f1dd86f2c8de5c3c6182f19adac7c9c206)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/habanalabs/gaudi2/gaudi2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c |   30 +++++++++++++++----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2.c b/drivers/accel/habanalabs/gaudi2/gaudi2.c
-index a38b88baadf2..5722e4128d3c 100644
---- a/drivers/accel/habanalabs/gaudi2/gaudi2.c
-+++ b/drivers/accel/habanalabs/gaudi2/gaudi2.c
-@@ -10437,7 +10437,7 @@ static int gaudi2_memset_device_memory(struct hl_device *hdev, u64 addr, u64 siz
- 				(u64 *)(lin_dma_pkts_arr), DEBUGFS_WRITE64);
- 	WREG32(sob_addr, 0);
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -1668,9 +1668,11 @@ static int smu_v14_0_2_get_power_limit(s
+ 				       uint32_t *min_power_limit)
+ {
+ 	struct smu_table_context *table_context = &smu->smu_table;
++	struct smu_14_0_2_powerplay_table *powerplay_table =
++		table_context->power_play_table;
+ 	PPTable_t *pptable = table_context->driver_pptable;
+ 	CustomSkuTable_t *skutable = &pptable->CustomSkuTable;
+-	uint32_t power_limit;
++	uint32_t power_limit, od_percent_upper = 0, od_percent_lower = 0;
+ 	uint32_t msg_limit = pptable->SkuTable.MsgLimits.Power[PPT_THROTTLER_PPT0][POWER_SOURCE_AC];
  
--	kfree(lin_dma_pkts_arr);
-+	kvfree(lin_dma_pkts_arr);
+ 	if (smu_v14_0_get_current_power_limit(smu, &power_limit))
+@@ -1683,11 +1685,29 @@ static int smu_v14_0_2_get_power_limit(s
+ 	if (default_power_limit)
+ 		*default_power_limit = power_limit;
  
- 	return rc;
+-	if (max_power_limit)
+-		*max_power_limit = msg_limit;
++	if (powerplay_table) {
++		if (smu->od_enabled &&
++		    smu_v14_0_2_is_od_feature_supported(smu, PP_OD_FEATURE_PPT_BIT)) {
++			od_percent_upper = pptable->SkuTable.OverDriveLimitsBasicMax.Ppt;
++			od_percent_lower = pptable->SkuTable.OverDriveLimitsBasicMin.Ppt;
++		} else if (smu_v14_0_2_is_od_feature_supported(smu, PP_OD_FEATURE_PPT_BIT)) {
++			od_percent_upper = 0;
++			od_percent_lower = pptable->SkuTable.OverDriveLimitsBasicMin.Ppt;
++		}
++	}
+ 
+-	if (min_power_limit)
+-		*min_power_limit = 0;
++	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
++					od_percent_upper, od_percent_lower, power_limit);
++
++	if (max_power_limit) {
++		*max_power_limit = msg_limit * (100 + od_percent_upper);
++		*max_power_limit /= 100;
++	}
++
++	if (min_power_limit) {
++		*min_power_limit = power_limit * (100 + od_percent_lower);
++		*min_power_limit /= 100;
++	}
+ 
+ 	return 0;
  }
--- 
-2.50.1
-
 
 
