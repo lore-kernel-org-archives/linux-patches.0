@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8737D246333;
-	Tue, 26 Aug 2025 13:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6227D1FBE9B;
+	Tue, 26 Aug 2025 13:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213525; cv=none; b=TCiQbOCheEtY7yXw/HzK0u60d2JxXVEHivqhP0+v/VKpengowf/PrjuuTOSCPU2CRSXhqUpCiG2c4Akipp1mrsmdCd0kcjqO4+dcXaQv524QCNRnX5n+iTN+bmecXZqjaEf6lahh8T5RxO5szVjXOYPSMKR27t94663eh8NPEwg=
+	t=1756213528; cv=none; b=QY4HpKzWyzHCxSIP+mqzakewbSiLKioOsndUiP80WIxXiu7hrk+AuVdICthmT35MoD0W/IV44MX3jeCcgO2MQm0N6RgZTAXGtHvslPDT67q/pd3MpMQRnADEngdUM3f3irblItKHM630tMH3LhvQxPNxf+68mcH7KtH2ae0UJvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213525; c=relaxed/simple;
-	bh=IIYbwUyRrluSIsDnICo2Up4wF7Pgl3US9sOQZajsTHY=;
+	s=arc-20240116; t=1756213528; c=relaxed/simple;
+	bh=9DbaGQLtdH8k1LTm/UVPrZigHYaeu5m1tcG5J0NfVmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JV0p8nDVeIBhY+kECGgGuhoOBAjEXsckqLhujg/8PjfuPXqpnoab05c5nCoKrrAjn5pwt24lluP33VFhuJEvlYgtNarxfJThQetrG2RLU6r1bltFHDcgEJJD+x4PmR20Ya8wt4QeqJekkC6U1a+6G6ljAJbJLqkchthtQdyeDuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6yO2YVB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZUSsG1e3oaF4HilMsxmJ8nnxw+k+1jlfztyUUM2oi6EYoJ9trMry54Eyk7Z8F6+qXUmmUD+SM42fQK88RfgfhPU/kRcAlg9nhjZBW/tHJwJ9vDADzyVfCtic1/TG4JAkxVyN1aq9KyvIBJVnyU2TQftQx+Zf50dSUJ2GNYsLD5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIBnkNAJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6yO2YVB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E69C4CEF1;
-	Tue, 26 Aug 2025 13:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIBnkNAJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A38C4CEF1;
+	Tue, 26 Aug 2025 13:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213525;
-	bh=IIYbwUyRrluSIsDnICo2Up4wF7Pgl3US9sOQZajsTHY=;
+	s=korg; t=1756213528;
+	bh=9DbaGQLtdH8k1LTm/UVPrZigHYaeu5m1tcG5J0NfVmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6yO2YVB1XRggT1nSMk8XXTlop76JlqDtproZ/Kh5IDvdo8bB98CWud3YGi5iDQ1P
-	 cKgAfZbSgioYp0avk1/ppl6FJq0XnRKDO39li9UpC+8Zw+z0+XI1s4ZNR+x8Ni+0Xy
-	 eq9YRfrFvBQLCLrOLQB8tiEXMk7E8pQM71KyQ4Fc=
+	b=JIBnkNAJ3ttqa2bmrIsJAzQm3NsvFNAyk5Opinc3G0aQxz1Kc0U1XZehLCeRrJh7v
+	 wwAWTzOjfjOFbArrZsRDyJz5/+dEq7cQ3VTsPKJ0/l1ui/BfJRhMlrBCGUQKVXPqxZ
+	 4vRAGKtqzvCxeBRM0UmmRUyWS2IrG8kw80diMpxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 343/587] crypto: qat - flush misc workqueue during device shutdown
-Date: Tue, 26 Aug 2025 13:08:12 +0200
-Message-ID: <20250826111001.640801116@linuxfoundation.org>
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 334/587] usb: gadget: udc: renesas_usb3: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:08:03 +0200
+Message-ID: <20250826111001.413769553@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,83 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 3d4df408ba9bad2b205c7fb8afc1836a6a4ca88a upstream.
+commit 868837b0a94c6b1b1fdbc04d3ba218ca83432393 upstream.
 
-Repeated loading and unloading of a device specific QAT driver, for
-example qat_4xxx, in a tight loop can lead to a crash due to a
-use-after-free scenario. This occurs when a power management (PM)
-interrupt triggers just before the device-specific driver (e.g.,
-qat_4xxx.ko) is unloaded, while the core driver (intel_qat.ko) remains
-loaded.
+Make sure to drop the reference to the companion device taken during
+probe when the driver is unbound.
 
-Since the driver uses a shared workqueue (`qat_misc_wq`) across all
-devices and owned by intel_qat.ko, a deferred routine from the
-device-specific driver may still be pending in the queue. If this
-routine executes after the driver is unloaded, it can dereference freed
-memory, resulting in a page fault and kernel crash like the following:
-
-    BUG: unable to handle page fault for address: ffa000002e50a01c
-    #PF: supervisor read access in kernel mode
-    RIP: 0010:pm_bh_handler+0x1d2/0x250 [intel_qat]
-    Call Trace:
-      pm_bh_handler+0x1d2/0x250 [intel_qat]
-      process_one_work+0x171/0x340
-      worker_thread+0x277/0x3a0
-      kthread+0xf0/0x120
-      ret_from_fork+0x2d/0x50
-
-To prevent this, flush the misc workqueue during device shutdown to
-ensure that all pending work items are completed before the driver is
-unloaded.
-
-Note: This approach may slightly increase shutdown latency if the
-workqueue contains jobs from other devices, but it ensures correctness
-and stability.
-
-Fixes: e5745f34113b ("crypto: qat - enable power management for QAT GEN4")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_common_drv.h |    1 +
- drivers/crypto/intel/qat/qat_common/adf_init.c       |    1 +
- drivers/crypto/intel/qat/qat_common/adf_isr.c        |    5 +++++
- 3 files changed, 7 insertions(+)
+ drivers/usb/gadget/udc/renesas_usb3.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-@@ -193,6 +193,7 @@ void adf_exit_misc_wq(void);
- bool adf_misc_wq_queue_work(struct work_struct *work);
- bool adf_misc_wq_queue_delayed_work(struct delayed_work *work,
- 				    unsigned long delay);
-+void adf_misc_wq_flush(void);
- #if defined(CONFIG_PCI_IOV)
- int adf_sriov_configure(struct pci_dev *pdev, int numvfs);
- void adf_disable_sriov(struct adf_accel_dev *accel_dev);
---- a/drivers/crypto/intel/qat/qat_common/adf_init.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
-@@ -381,6 +381,7 @@ static void adf_dev_shutdown(struct adf_
- 		hw_data->exit_admin_comms(accel_dev);
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -2658,6 +2658,7 @@ static void renesas_usb3_remove(struct p
+ 	struct renesas_usb3 *usb3 = platform_get_drvdata(pdev);
  
- 	adf_cleanup_etr_data(accel_dev);
-+	adf_misc_wq_flush();
- 	adf_dev_restore(accel_dev);
- }
+ 	debugfs_remove_recursive(usb3->dentry);
++	put_device(usb3->host_dev);
+ 	device_remove_file(&pdev->dev, &dev_attr_role);
  
---- a/drivers/crypto/intel/qat/qat_common/adf_isr.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_isr.c
-@@ -386,3 +386,8 @@ bool adf_misc_wq_queue_delayed_work(stru
- {
- 	return queue_delayed_work(adf_misc_wq, work, delay);
- }
-+
-+void adf_misc_wq_flush(void)
-+{
-+	flush_workqueue(adf_misc_wq);
-+}
+ 	cancel_work_sync(&usb3->role_work);
 
 
