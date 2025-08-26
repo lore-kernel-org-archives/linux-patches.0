@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08F2334379;
-	Tue, 26 Aug 2025 13:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706A4393DCA;
+	Tue, 26 Aug 2025 13:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214404; cv=none; b=PUc45DZmY0Y4xtnBfH7ELhqSiLyqMV0jIW/3r2Uf8AA/nok+P/P2gF9Dr4KNa97VqyVHHp6CVXSp2hZVtVOKJStTva7jThp18mHTWi5v47vuRnAsZ+mnaMKJjmM+DAsy6VzOCWbovEe5+4l2JpaqCoNb02HRsBXG/xCqC8F0mMc=
+	t=1756214406; cv=none; b=hdDuIrfFZmhvzEon+uxl7QJaS4Z3z63AmKYlPnverXJko1UMa/3jfo4AuQxWuv8gtb/2aXqS68jXJm3ML8HV8GP2b0ZehFSLqjtkzWSawDFBJANPLVRGEIzglUtAA2FEIzxrMGCxIaPaExPZvg2jybouD8i0S0h6bnGYcw8kd5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214404; c=relaxed/simple;
-	bh=w5sqj+qaKfpes6c443ffesGQJtxcz9/sRM1YBVcJ4rY=;
+	s=arc-20240116; t=1756214406; c=relaxed/simple;
+	bh=C5Wt+A7P046nxzpYgvqY+Bokox2q18Z8nK6zUiIm0mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6h1fHkS9DStWNvol9lcS/fLFUe/5tPW5yj6P1fs0scHu2L/XLdEMip9mOrHx75cJwMah6ldMOGLPO4+TbvWWYK7xrNk0XtMiCWb5A2YPCuvs+TqNyp7alNTQoHXvHSzQJJJF35sqJ1/tXAtpAxAFK1/Axsgqx7iAI8pIqal68A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5DFlp7n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mks+3gsKkj26fkDtjuuDS7wAtlFqyN3Qem7HmThwT5JLCyuHixJ+CDyPDPmVTkuryqIks/UF7OHAeam9oSHIaISdRScZQBCb+FBhidu6aITVGjj3mVYA79+ww0kiAsQRh8Ar0VpKrFOMBrtjUxeYLl+f34HN2J2eqfsdUjypQ8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+v8psD/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5DFlp7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1737EC4CEF1;
-	Tue, 26 Aug 2025 13:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+v8psD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D25EC4CEF1;
+	Tue, 26 Aug 2025 13:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214403;
-	bh=w5sqj+qaKfpes6c443ffesGQJtxcz9/sRM1YBVcJ4rY=;
+	s=korg; t=1756214406;
+	bh=C5Wt+A7P046nxzpYgvqY+Bokox2q18Z8nK6zUiIm0mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5DFlp7ng6EPsvEc4nkpkfvcHzGsSFry8tVxYsH/J6ya99yN1ScdcIax55VpjNk2M
-	 JckG+G2QU8Jgrc4mFJysLzK2GpNz3r8ibw/+CJOLVZ1kw4lnssyeuqKTrcNmedxezZ
-	 RBZKafDxfZWunN86lvRaOsDBoYGbgQ+4Cud3xTbA=
+	b=v+v8psD/AS/4s/upVYDV8lE0zd+GpPfBjkmyyOUGmX09dUOG/lECbklQbFUbgdPFb
+	 3XswH/GA6QI/mpbG9Z4N2nLcRZe3wU6gYpUBdRgAqUBki9EZ9RbrQn8XwJctSiuehB
+	 n8GFr59Gp0U88dOq+6/NDUoOEPPvpS7umSdCoFGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Johnston <matt@codeconstruct.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/482] net: mctp: Prevent duplicate binds
-Date: Tue, 26 Aug 2025 13:06:18 +0200
-Message-ID: <20250826110933.910624180@linuxfoundation.org>
+Subject: [PATCH 6.1 126/482] wifi: cfg80211: Fix interface type validation
+Date: Tue, 26 Aug 2025 13:06:19 +0200
+Message-ID: <20250826110933.933948359@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,77 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 3954502377ec05a1b37e2dc9bef0bacd4bbd71b2 ]
+[ Upstream commit 14450be2332a49445106403492a367412b8c23f4 ]
 
-Disallow bind() calls that have the same arguments as existing bound
-sockets.  Previously multiple sockets could bind() to the same
-type/local address, with an arbitrary socket receiving matched messages.
+Fix a condition that verified valid values of interface types.
 
-This is only a partial fix, a future commit will define precedence order
-for MCTP_ADDR_ANY versus specific EID bind(), which are allowed to exist
-together.
-
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://patch.msgid.link/20250710-mctp-bind-v4-2-8ec2f6460c56@codeconstruct.com.au
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709233537.7ad199ca5939.I0ac1ff74798bf59a87a57f2e18f2153c308b119b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/af_mctp.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ include/net/cfg80211.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
-index 6a963eac1cc2..0f49b41570f5 100644
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -73,7 +73,6 @@ static int mctp_bind(struct socket *sock, struct sockaddr *addr, int addrlen)
- 
- 	lock_sock(sk);
- 
--	/* TODO: allow rebind */
- 	if (sk_hashed(sk)) {
- 		rc = -EADDRINUSE;
- 		goto out_release;
-@@ -550,15 +549,36 @@ static void mctp_sk_close(struct sock *sk, long timeout)
- static int mctp_sk_hash(struct sock *sk)
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 2a0fc4a64af1..e35bc5c35732 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -559,7 +559,7 @@ ieee80211_get_sband_iftype_data(const struct ieee80211_supported_band *sband,
  {
- 	struct net *net = sock_net(sk);
-+	struct sock *existing;
-+	struct mctp_sock *msk;
-+	int rc;
-+
-+	msk = container_of(sk, struct mctp_sock, sk);
+ 	int i;
  
- 	/* Bind lookup runs under RCU, remain live during that. */
- 	sock_set_flag(sk, SOCK_RCU_FREE);
+-	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
++	if (WARN_ON(iftype >= NUM_NL80211_IFTYPES))
+ 		return NULL;
  
- 	mutex_lock(&net->mctp.bind_lock);
-+
-+	/* Prevent duplicate binds. */
-+	sk_for_each(existing, &net->mctp.binds) {
-+		struct mctp_sock *mex =
-+			container_of(existing, struct mctp_sock, sk);
-+
-+		if (mex->bind_type == msk->bind_type &&
-+		    mex->bind_addr == msk->bind_addr &&
-+		    mex->bind_net == msk->bind_net) {
-+			rc = -EADDRINUSE;
-+			goto out;
-+		}
-+	}
-+
- 	sk_add_node_rcu(sk, &net->mctp.binds);
--	mutex_unlock(&net->mctp.bind_lock);
-+	rc = 0;
- 
--	return 0;
-+out:
-+	mutex_unlock(&net->mctp.bind_lock);
-+	return rc;
- }
- 
- static void mctp_sk_unhash(struct sock *sk)
+ 	if (iftype == NL80211_IFTYPE_AP_VLAN)
 -- 
 2.39.5
 
