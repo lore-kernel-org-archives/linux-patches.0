@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2911F2BE058;
-	Tue, 26 Aug 2025 13:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B952D28314A;
+	Tue, 26 Aug 2025 13:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214361; cv=none; b=uXsLIPYALJqUhs4KuC20OoxZNsfT7HHhO/k3cDzWl1O0BNSx0w+q/fTS2nYPpnYe1s6FFk3KqZx8/dHJ3l+K8lfQ67wCGzJZlvIsN1whDSNMqxm7n5sDC2EziSTKQ/gzf7/GmeDeZUo9hjFn+Z6CRywyvfGV/g5rJoeJXfO4BHs=
+	t=1756214363; cv=none; b=le80yjd5YBIW2hqGaHBLtF5LeAw+WrUQWBIvsqvOMKE0DEmNFPZSQ/nR17pfPte0NQpqLGsxEEKXukrB98g3oTDvmsnDKdltEjT2FlK0ouLho4fuZjQ5Ppv2Tfu43rKr0x89tJw7JovKiXpucCG23c4SXJyyMMfYbbjrmUVf8F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214361; c=relaxed/simple;
-	bh=w3/dzM9tKMhtXkCE/J6z9MsZrJ+QQvjMc24FVxqzKns=;
+	s=arc-20240116; t=1756214363; c=relaxed/simple;
+	bh=uG+5e9sPHDNceqE5pebDwkla6c6QQJlwStiiLTuw5/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EtQFjF+VjhCQHJfnRzf0Rgq0UeZQz9igea84ksUAp3TmtQDlKZT71jALXc2Lpy0N9VqEyiZDFoRB3BoKWoezrOLi7TpthZ+YYj5qn+DOokS3RVYpNBwMaoAdYckQTU0Erznc8cQcpOJNBO1xsSnMrWYeEOkCdTejquIhvlRexxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khgP1SFC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r5Z+KbqJTiPghf11X129ahFzuriuAFimMa+0cDibFVCiFqqiZ1736ESec0PC1VxCOOLZ7hHVYhvkjbS3FaKpmHAbCvCwMT9DGZ+68MfC3K/ieoI4KrMNL9EV5cPfP2F/zj3tIMY6c6ojUzwwD7rI6MsIcEdDlYBkVYeTo3NEjcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stGWUiBj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khgP1SFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C4BC4CEF1;
-	Tue, 26 Aug 2025 13:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stGWUiBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486ADC4CEF1;
+	Tue, 26 Aug 2025 13:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214360;
-	bh=w3/dzM9tKMhtXkCE/J6z9MsZrJ+QQvjMc24FVxqzKns=;
+	s=korg; t=1756214363;
+	bh=uG+5e9sPHDNceqE5pebDwkla6c6QQJlwStiiLTuw5/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khgP1SFCPsTMzL559dtRjqOONd7MXQ3d22Z5LIJT21zbFBoJbc45wR/3W+EaX8XRZ
-	 i41Y8n5yQj+HR7L/WQ5UiQrxzCzacqCqWujiTkxghGanvE3yj2GaAQgHq9l9b/Ds00
-	 oJ6JxZCXQc2davN51OHOTof6mWga6oyINoe8hp14=
+	b=stGWUiBj2R+gj/0mec5JU+sotvjsoB8f8VFVIQ7HyiQOPPknJZDnzRLf1dSVRgeZU
+	 WbjKG9IWSlhr4HTmwQHHGXs33PtVdOTeZFKf5sANG+B4tvuBQF9PX5tniXTKzrM9Eo
+	 axaSgfpYIaCt4SIoM2j8wYKZacVMIT5EOaRFnNkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/482] gpio: tps65912: check the return value of regmap_update_bits()
-Date: Tue, 26 Aug 2025 13:05:35 +0200
-Message-ID: <20250826110932.857469904@linuxfoundation.org>
+Subject: [PATCH 6.1 109/482] ALSA: pcm: Rewrite recalculate_boundary() to avoid costly loop
+Date: Tue, 26 Aug 2025 13:06:02 +0200
+Message-ID: <20250826110933.520594444@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,40 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
+[ Upstream commit 92f59aeb13252265c20e7aef1379a8080c57e0a2 ]
 
-regmap_update_bits() can fail, check its return value like we do
-elsewhere in the driver.
+At the time being recalculate_boundary() is implemented with a
+loop which shows up as costly in a perf profile, as depicted by
+the annotate below:
 
-Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+    0.00 :   c057e934:       3d 40 7f ff     lis     r10,32767
+    0.03 :   c057e938:       61 4a ff ff     ori     r10,r10,65535
+    0.21 :   c057e93c:       7d 49 50 50     subf    r10,r9,r10
+    5.39 :   c057e940:       7d 3c 4b 78     mr      r28,r9
+    2.11 :   c057e944:       55 29 08 3c     slwi    r9,r9,1
+    3.04 :   c057e948:       7c 09 50 40     cmplw   r9,r10
+    2.47 :   c057e94c:       40 81 ff f4     ble     c057e940 <snd_pcm_ioctl+0xee0>
+
+Total: 13.2% on that simple loop.
+
+But what the loop does is to multiply the boundary by 2 until it is
+over the wanted border. This can be avoided by using fls() to get the
+boundary value order and shift it by the appropriate number of bits at
+once.
+
+This change provides the following profile:
+
+    0.04 :   c057f6e8:       3d 20 7f ff     lis     r9,32767
+    0.02 :   c057f6ec:       61 29 ff ff     ori     r9,r9,65535
+    0.34 :   c057f6f0:       7d 5a 48 50     subf    r10,r26,r9
+    0.23 :   c057f6f4:       7c 1a 50 40     cmplw   r26,r10
+    0.02 :   c057f6f8:       41 81 00 20     bgt     c057f718 <snd_pcm_ioctl+0xf08>
+    0.26 :   c057f6fc:       7f 47 00 34     cntlzw  r7,r26
+    0.09 :   c057f700:       7d 48 00 34     cntlzw  r8,r10
+    0.22 :   c057f704:       7d 08 38 50     subf    r8,r8,r7
+    0.04 :   c057f708:       7f 5a 40 30     slw     r26,r26,r8
+    0.35 :   c057f70c:       7c 0a d0 40     cmplw   r10,r26
+    0.13 :   c057f710:       40 80 05 f8     bge     c057fd08 <snd_pcm_ioctl+0x14f8>
+    0.00 :   c057f714:       57 5a f8 7e     srwi    r26,r26,1
+
+Total: 1.7% with that loopless alternative.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://patch.msgid.link/4836e2cde653eebaf2709ebe30eec736bb8c67fd.1749202237.git.christophe.leroy@csgroup.eu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tps65912.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/core/pcm_native.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
-index fab771cb6a87..bac757c191c2 100644
---- a/drivers/gpio/gpio-tps65912.c
-+++ b/drivers/gpio/gpio-tps65912.c
-@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
- 					  unsigned offset, int value)
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index bf752b188b05..900525df53f0 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -24,6 +24,7 @@
+ #include <sound/minors.h>
+ #include <linux/uio.h>
+ #include <linux/delay.h>
++#include <linux/bitops.h>
+ 
+ #include "pcm_local.h"
+ 
+@@ -3123,13 +3124,23 @@ struct snd_pcm_sync_ptr32 {
+ static snd_pcm_uframes_t recalculate_boundary(struct snd_pcm_runtime *runtime)
  {
- 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
-+	int ret;
+ 	snd_pcm_uframes_t boundary;
++	snd_pcm_uframes_t border;
++	int order;
  
- 	/* Set the initial value */
--	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
--			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
-+	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
-+				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
-+	if (ret)
-+		return ret;
+ 	if (! runtime->buffer_size)
+ 		return 0;
+-	boundary = runtime->buffer_size;
+-	while (boundary * 2 <= 0x7fffffffUL - runtime->buffer_size)
+-		boundary *= 2;
+-	return boundary;
++
++	border = 0x7fffffffUL - runtime->buffer_size;
++	if (runtime->buffer_size > border)
++		return runtime->buffer_size;
++
++	order = __fls(border) - __fls(runtime->buffer_size);
++	boundary = runtime->buffer_size << order;
++
++	if (boundary <= border)
++		return boundary;
++	else
++		return boundary / 2;
+ }
  
- 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
- 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
+ static int snd_pcm_ioctl_sync_ptr_compat(struct snd_pcm_substream *substream,
 -- 
 2.39.5
 
