@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BE91DE8BE;
-	Tue, 26 Aug 2025 14:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAB0225390;
+	Tue, 26 Aug 2025 14:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216985; cv=none; b=r38Fuf4qU9zgdZtp8dJ1YyjEFzLc0B+looeRPMQflaldV45iT14rXedM1AIILZ6f+Z9gFoXdY+w6Z/jql+pumePBPR+Nq1OEII3uyPxw9nhBZfr7lwdSn1LojAhgCx9u3Q906zZJ89Tbb3bvYGhotp1TQDYUnkrNkw0qKyUMW78=
+	t=1756216987; cv=none; b=pv2y8nTPpQkNq+p2hJcfdMZ2HC9Vd0HLPJ9Tx9+uQ0Xk0FuP0frIF96UAGL1+fH2TuwGjGEqwUV3+6CB+sVSEeU1hwvgE4LjBC8jW2iH6zLbCKy4LgYXqz4YHXKpsQs4aVpofFs/AFnkXPQdhW8QOWTJGsN15in3h715Nrvw658=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216985; c=relaxed/simple;
-	bh=ltClwYqob/mJG/jGeVfaaeotP7lNcbazHfmTmEqzUdY=;
+	s=arc-20240116; t=1756216987; c=relaxed/simple;
+	bh=dzg+QoJDBBTvZep2bZxf3eBw+QdzvPLzGRiBuXSTYJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUP45oahszz3CwEATN9s1xSaL/mdlfD4tLG0tUKCyiDeHmJmZuhrG22T6WmCt7ILlX8H1RHp1OOBy9hUO+Z/f8oHGN4ckKfLKmuT2Be7tsrEiyDpM/63zpiybvXtdUYrbosI/jS/25D7FRnRo+oVSelL5wfVaqJd5nSldF8bD8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxD+7VLS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fbLpFJKQh+/dptsveS57vRQPlz9cj+ZYyLZOxVfova+SaFBLk+NxeMBmJbLWTJGxapXjiZlcY51GpkQhNbPFTtDTYCKMTTXyuV/bLaXhb1+xCIBrl38BU1oR1kWWqOSlrCmLIKbmvIVdslnQSkox4Rn/Mo2XJInazs7w1Y85pdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DtKgO4To; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxD+7VLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A768CC4CEF1;
-	Tue, 26 Aug 2025 14:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtKgO4To"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317ECC4CEF1;
+	Tue, 26 Aug 2025 14:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216985;
-	bh=ltClwYqob/mJG/jGeVfaaeotP7lNcbazHfmTmEqzUdY=;
+	s=korg; t=1756216987;
+	bh=dzg+QoJDBBTvZep2bZxf3eBw+QdzvPLzGRiBuXSTYJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RxD+7VLSCDnvshwm6zEX7bAYIrQbDMtJoFk/ZuAmD2OOKtQMrgizJIU/4WJ85Lw7Y
-	 8Y9z4wwZRncDJXFenRvnRcHjy7u694O84czWJKYAyCLLwlk7OG1mlSQ21uB5BK2DRN
-	 8V4CyRXYWFu/i0m6jSgpzcIBzY24nOJaWA7eF9BQ=
+	b=DtKgO4TofDTb/7yC562GLg/O2yCyGSz0jh6iLCe8EtsXdSCAClsmVhzNg7EhDb3lj
+	 15z6/cBQdecAE2iTz8WLJMc/3ZALUjAdJNUvRuXkeuZquXBBxS8a0uObzwKTUGfO7X
+	 k7UhXBDspbqGsPrQMSiGuLLgc3ZDqzPVqYiO9K7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 616/644] tracing: Limit access to parser->buffer when trace_get_user failed
-Date: Tue, 26 Aug 2025 13:11:47 +0200
-Message-ID: <20250826111001.817158468@linuxfoundation.org>
+Subject: [PATCH 5.15 617/644] iio: light: as73211: Ensure buffer holes are zeroed
+Date: Tue, 26 Aug 2025 13:11:48 +0200
+Message-ID: <20250826111001.843552123@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,139 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 6a909ea83f226803ea0e718f6e88613df9234d58 ]
+[ Upstream commit 433b99e922943efdfd62b9a8e3ad1604838181f2 ]
 
-When the length of the string written to set_ftrace_filter exceeds
-FTRACE_BUFF_MAX, the following KASAN alarm will be triggered:
+Given that the buffer is copied to a kfifo that ultimately user space
+can read, ensure we zero it.
 
-BUG: KASAN: slab-out-of-bounds in strsep+0x18c/0x1b0
-Read of size 1 at addr ffff0000d00bd5ba by task ash/165
-
-CPU: 1 UID: 0 PID: 165 Comm: ash Not tainted 6.16.0-g6bcdbd62bd56-dirty
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- show_stack+0x34/0x50 (C)
- dump_stack_lvl+0xa0/0x158
- print_address_description.constprop.0+0x88/0x398
- print_report+0xb0/0x280
- kasan_report+0xa4/0xf0
- __asan_report_load1_noabort+0x20/0x30
- strsep+0x18c/0x1b0
- ftrace_process_regex.isra.0+0x100/0x2d8
- ftrace_regex_release+0x484/0x618
- __fput+0x364/0xa58
- ____fput+0x28/0x40
- task_work_run+0x154/0x278
- do_notify_resume+0x1f0/0x220
- el0_svc+0xec/0xf0
- el0t_64_sync_handler+0xa0/0xe8
- el0t_64_sync+0x1ac/0x1b0
-
-The reason is that trace_get_user will fail when processing a string
-longer than FTRACE_BUFF_MAX, but not set the end of parser->buffer to 0.
-Then an OOB access will be triggered in ftrace_regex_release->
-ftrace_process_regex->strsep->strpbrk. We can solve this problem by
-limiting access to parser->buffer when trace_get_user failed.
-
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250813040232.1344527-1-pulehui@huaweicloud.com
-Fixes: 8c9af478c06b ("ftrace: Handle commands when closing set_ftrace_filter file")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 403e5586b52e ("iio: light: as73211: New driver")
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://patch.msgid.link/20250802164436.515988-2-jic23@kernel.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   18 ++++++++++++------
- kernel/trace/trace.h |    8 +++++++-
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ drivers/iio/light/as73211.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -1605,7 +1605,7 @@ int trace_get_user(struct trace_parser *
+--- a/drivers/iio/light/as73211.c
++++ b/drivers/iio/light/as73211.c
+@@ -573,7 +573,7 @@ static irqreturn_t as73211_trigger_handl
+ 	struct {
+ 		__le16 chan[4];
+ 		s64 ts __aligned(8);
+-	} scan;
++	} scan = { };
+ 	int data_result, ret;
  
- 	ret = get_user(ch, ubuf++);
- 	if (ret)
--		return ret;
-+		goto fail;
- 
- 	read++;
- 	cnt--;
-@@ -1619,7 +1619,7 @@ int trace_get_user(struct trace_parser *
- 		while (cnt && isspace(ch)) {
- 			ret = get_user(ch, ubuf++);
- 			if (ret)
--				return ret;
-+				goto fail;
- 			read++;
- 			cnt--;
- 		}
-@@ -1637,12 +1637,14 @@ int trace_get_user(struct trace_parser *
- 	while (cnt && !isspace(ch) && ch) {
- 		if (parser->idx < parser->size - 1)
- 			parser->buffer[parser->idx++] = ch;
--		else
--			return -EINVAL;
-+		else {
-+			ret = -EINVAL;
-+			goto fail;
-+		}
- 
- 		ret = get_user(ch, ubuf++);
- 		if (ret)
--			return ret;
-+			goto fail;
- 		read++;
- 		cnt--;
- 	}
-@@ -1657,11 +1659,15 @@ int trace_get_user(struct trace_parser *
- 		/* Make sure the parsed string always terminates with '\0'. */
- 		parser->buffer[parser->idx] = 0;
- 	} else {
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto fail;
- 	}
- 
- 	*ppos += read;
- 	return read;
-+fail:
-+	trace_parser_fail(parser);
-+	return ret;
- }
- 
- /* TODO add a seq_buf_to_buffer() */
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1132,6 +1132,7 @@ bool ftrace_event_is_function(struct tra
-  */
- struct trace_parser {
- 	bool		cont;
-+	bool		fail;
- 	char		*buffer;
- 	unsigned	idx;
- 	unsigned	size;
-@@ -1139,7 +1140,7 @@ struct trace_parser {
- 
- static inline bool trace_parser_loaded(struct trace_parser *parser)
- {
--	return (parser->idx != 0);
-+	return !parser->fail && parser->idx != 0;
- }
- 
- static inline bool trace_parser_cont(struct trace_parser *parser)
-@@ -1153,6 +1154,11 @@ static inline void trace_parser_clear(st
- 	parser->idx = 0;
- }
- 
-+static inline void trace_parser_fail(struct trace_parser *parser)
-+{
-+	parser->fail = true;
-+}
-+
- extern int trace_parser_get_init(struct trace_parser *parser, int size);
- extern void trace_parser_put(struct trace_parser *parser);
- extern int trace_get_user(struct trace_parser *parser, const char __user *ubuf,
+ 	mutex_lock(&data->mutex);
 
 
