@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B8A350D6A;
-	Tue, 26 Aug 2025 14:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C22352FDF;
+	Tue, 26 Aug 2025 14:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217801; cv=none; b=iLcVU5zsQg5WXnoS3Pbko8irgDWvGyktjGciuC0i9+WX1uHILf3FxRcb2WfCs/xVVb2qLGelr/Bbqbh+TXu6XEjmGOSoANX/INO68QfR/8B3h3l0x6SEvTjn/3wgOX+wwXO4fdKRg4ZpxbFQKq8Joz2f/O9IboQ6tJGkO/kW0Vs=
+	t=1756217803; cv=none; b=iwGlt5Ovnh213BaTMgdWuMVe7xqYfOQIUwlpIGCkDY/lFmP9XsSkigFy8yv5fp6nVR4XsiSLSACGqfenNsW11JVetg6sJ7VtThSBgZrSsW6/WQyIMdndO7xmx6AcoHowrtPJv2f4Nc1yyAXlHo8YaW57yzkGm64G0qWGTu8ghMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217801; c=relaxed/simple;
-	bh=13NA/SCX+kJD1FqlT/sl3u27lCoPCw5FEr2gSJGnyl0=;
+	s=arc-20240116; t=1756217803; c=relaxed/simple;
+	bh=aKXPoLXFkmCVvOKdW0rUmlrFnQ0F3QEQWD/Jdtk0oa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xyi4s8BkuesiRY5KBmGW+3eV2NZR9rUC3ESCopg369XY0OEG8P6MZa5ZviMrVFdGqTaPd6Km40dGHgzbYSF3ZQ5Xo9kjqki0USqbTDNpsoKM6w4II/OXRCsIy3dWi8sbPYU1zm09C4q46CxIUvZwWWRANuOb/s/Y7h2k8vnYtEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaNSo3xy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SUKSGIX800TiUFJtX76rlXeuXFeqeD3gXP/pTdJy3RL3O89QZvIgGrvv0uqvZKThuGxkm5ubtGW2PvttK+1j4yoY3jH1rjq3Y8gk5e4t8GxJAVhDZc6JRxPh0rfup6qrDUF1SDSwIQct0U1tWYE2A+MBSCdtBnVB1fIBnzolRfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qS016TDD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaNSo3xy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A69C4CEF1;
-	Tue, 26 Aug 2025 14:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qS016TDD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE15C4CEF1;
+	Tue, 26 Aug 2025 14:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217800;
-	bh=13NA/SCX+kJD1FqlT/sl3u27lCoPCw5FEr2gSJGnyl0=;
+	s=korg; t=1756217803;
+	bh=aKXPoLXFkmCVvOKdW0rUmlrFnQ0F3QEQWD/Jdtk0oa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaNSo3xy2YIxvd/BJvKNG6gjmH6YW+2cJjhF4emnwuyconDDgP5+AZvuNsQGnHzEG
-	 x9GuJfXvXIvouOM1xaapG+to05SXwT8q1oLZcJGxAda3AXOaXgwR5Pfvd1bQ1aZ7tV
-	 ND36/xw3cSh4X9yUDYA0bQHuOLFlmieMa5tLI9p8=
+	b=qS016TDDsuTFCLGWPuNlNRrVg0bkZ8/1q7YhBSGbBsShvTfnjgyVDRVLlQiq1QyUJ
+	 Iq+JwkO+cVYf5z4LhT0AA7uZzERK5fN6avV9tbhGUSbUOxaFpb0yg51HjDuuYGfzec
+	 aboiz1syX7W6fHRVOfh+a4+Hb/QasA/aO054XXzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Lazar <alazar@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 280/523] net: vlan: Replace BUG() with WARN_ON_ONCE() in vlan_dev_* stubs
-Date: Tue, 26 Aug 2025 13:08:10 +0200
-Message-ID: <20250826110931.342010577@linuxfoundation.org>
+Subject: [PATCH 5.10 281/523] gve: Return error for unknown admin queue command
+Date: Tue, 26 Aug 2025 13:08:11 +0200
+Message-ID: <20250826110931.368269989@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,54 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 60a8b1a5d0824afda869f18dc0ecfe72f8dfda42 ]
+[ Upstream commit b11344f63fdd9e8c5121148a6965b41079071dd2 ]
 
-When CONFIG_VLAN_8021Q=n, a set of stub helpers are used, three of these
-helpers use BUG() unconditionally.
+In gve_adminq_issue_cmd(), return -EINVAL instead of 0 when an unknown
+admin queue command opcode is encountered.
 
-This code should not be reached, as callers of these functions should
-always check for is_vlan_dev() first, but the usage of BUG() is not
-recommended, replace it with WARN_ON() instead.
+This prevents the function from silently succeeding on invalid input
+and prevents undefined behavior by ensuring the function fails gracefully
+when an unrecognized opcode is provided.
 
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20250616132626.1749331-3-gal@nvidia.com
+These changes improve error handling.
+
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250616054504.1644770-2-alok.a.tiwari@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/if_vlan.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/google/gve/gve_adminq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
-index 64cfe7cd292c..3728e3978f83 100644
---- a/include/linux/if_vlan.h
-+++ b/include/linux/if_vlan.h
-@@ -248,19 +248,19 @@ vlan_for_each(struct net_device *dev,
+diff --git a/drivers/net/ethernet/google/gve/gve_adminq.c b/drivers/net/ethernet/google/gve/gve_adminq.c
+index 67f2b9a61463..f02b3f01a557 100644
+--- a/drivers/net/ethernet/google/gve/gve_adminq.c
++++ b/drivers/net/ethernet/google/gve/gve_adminq.c
+@@ -246,6 +246,7 @@ static int gve_adminq_issue_cmd(struct gve_priv *priv,
+ 		break;
+ 	default:
+ 		dev_err(&priv->pdev->dev, "unknown AQ command opcode %d\n", opcode);
++		return -EINVAL;
+ 	}
  
- static inline struct net_device *vlan_dev_real_dev(const struct net_device *dev)
- {
--	BUG();
-+	WARN_ON_ONCE(1);
- 	return NULL;
- }
- 
- static inline u16 vlan_dev_vlan_id(const struct net_device *dev)
- {
--	BUG();
-+	WARN_ON_ONCE(1);
  	return 0;
- }
- 
- static inline __be16 vlan_dev_vlan_proto(const struct net_device *dev)
- {
--	BUG();
-+	WARN_ON_ONCE(1);
- 	return 0;
- }
- 
 -- 
 2.39.5
 
