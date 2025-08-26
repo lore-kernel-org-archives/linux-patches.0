@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205D534F48D;
-	Tue, 26 Aug 2025 11:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EEA338F2B;
+	Tue, 26 Aug 2025 11:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207714; cv=none; b=lbQkXrrhrSjLBOBwHiUci2ZN8N10v9/ASCU4ylTljp+YbCmYOrVHY9twGPfyQWnY9EyzJFYBpNaPfM6Inv52ijTR+8mxW9rFFCmUXHd5ysnXcii8Du8KmfjeK2zEZRJdFNAtP04GXnnvJ+LP986RtpRthoLlyzZyN9yEJGEoGck=
+	t=1756207718; cv=none; b=iRzUrAm63YZ0KEL6pPQDW3bflnUItbEBsy9YdIybLYgeVpcoTis+3PmjdafuAFa32Yte0N1Lbimsjk5GzIH95FCkAqjDjUiS6vXE9oT12zJ6wPK/D4ofKxpbl/TlBtklKXiA3TzpOR0nG5mxkd7CPR+/v1T2VEuTfROwRy67m7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207714; c=relaxed/simple;
-	bh=5SmGE928FRcuP9HL727USO6YtGGY6nvxL2+y7NZTEHE=;
+	s=arc-20240116; t=1756207718; c=relaxed/simple;
+	bh=JhONq3QSevt60GhPQcgdYd1POPxzEOeflbLzGot74LQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kCYD0sKDbvoXYgLo2zO0WWa6ENqqQrHpO5o0Pmap+KSUplSk09HMo2nDZH1qwQn8mwc1YqlHaKtOqOVq4nLkdCrtuR4nA+KORBAtRIgVH5w3TSU+wjDmlWQeKsAsdxzI4saTqnW4HeBiFPjrR9UQw2AEcxxp74kTh8dD89u3PY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ89FjsS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HjAt3JtBrPeA0tvG+MDcm2vOHG2LQViLicqq+OcfVeCWyyOEz139qdNo+vef84Hokcp47icJVnPV/b5QSG0dKAzwi8xnlwf43dAev7sX+1CMJs+SCnWTsiQWLgXuFXKR4E7jxDt6ZLcE4ynzIFtmcQx/jIE0Zo8ZdSF8OGbO8Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5K/Kmis; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ89FjsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02ABC4CEF1;
-	Tue, 26 Aug 2025 11:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5K/Kmis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CCAC4CEF1;
+	Tue, 26 Aug 2025 11:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207714;
-	bh=5SmGE928FRcuP9HL727USO6YtGGY6nvxL2+y7NZTEHE=;
+	s=korg; t=1756207716;
+	bh=JhONq3QSevt60GhPQcgdYd1POPxzEOeflbLzGot74LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJ89FjsSMQfq/XzqdGQl5rJh3LjC9XQAiP1ig+poyHnvNXxEOisTAHPe1J12yLKAQ
-	 afvszdhsnLKuZz87CK7yChyw2M/fUv1ZTJDqIwGSxIsTUM+yT43YNJu5Hpwym8dFaj
-	 hVwHEYT5n6rJlJD9d5oMtBdtXrk87Y1BHKsdvntc=
+	b=k5K/Kmisq6j1D6nFE7rYuS3T7IjOuYAnuzOKS8G3z+QMikROZ6HtcWbl6jwke8gVf
+	 wexU6PfiGk/F9Xjto1PTGewQI/U/v+KCpGycJ+QONhn9tVgUAqV5dI+GKBEW28QNCY
+	 Mktlc0PvdUNyzujd/UVcp+dHNvK/YDF0gqYDM6iQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Eric Auger <eric.auger@redhat.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sven Peter <sven@svenpeter.dev>,
-	Tomasz Jeznach <tjeznach@rivosinc.com>
-Subject: [PATCH 6.16 290/457] iommu: Remove ops.pgsize_bitmap from drivers that dont use it
-Date: Tue, 26 Aug 2025 13:09:34 +0200
-Message-ID: <20250826110944.551000681@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 291/457] iommu/virtio: Make instance lookup robust
+Date: Tue, 26 Aug 2025 13:09:35 +0200
+Message-ID: <20250826110944.574925253@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -56,101 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 8901812485de1356e3757958af40fe0d3a48e986 ]
+[ Upstream commit 72b6f7cd89cea8251979b65528d302f9c0ed37bf ]
 
-These drivers all set the domain->pgsize_bitmap in their
-domain_alloc_paging() functions, so the ops value is never used. Delete
-it.
+Much like arm-smmu in commit 7d835134d4e1 ("iommu/arm-smmu: Make
+instance lookup robust"), virtio-iommu appears to have the same issue
+where iommu_device_register() makes the IOMMU instance visible to other
+API callers (including itself) straight away, but internally the
+instance isn't ready to recognise itself for viommu_probe_device() to
+work correctly until after viommu_probe() has returned. This matters a
+lot more now that bus_iommu_probe() has the DT/VIOT knowledge to probe
+client devices the way that was always intended. Tweak the lookup and
+initialisation in much the same way as for arm-smmu, to ensure that what
+we register is functional and ready to go.
 
-Reviewed-by: Sven Peter <sven@svenpeter.dev> # for Apple DART
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com> # for RISC-V
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/3-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com
+Cc: stable@vger.kernel.org
+Fixes: bcb81ac6ae3c ("iommu: Get DT/ACPI parsing into the proper probe path")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/308911aaa1f5be32a3a709996c7bd6cf71d30f33.1755190036.git.robin.murphy@arm.com
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Stable-dep-of: 72b6f7cd89ce ("iommu/virtio: Make instance lookup robust")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/apple-dart.c       |    1 -
- drivers/iommu/intel/iommu.c      |    1 -
- drivers/iommu/iommufd/selftest.c |    1 -
- drivers/iommu/riscv/iommu.c      |    1 -
- drivers/iommu/virtio-iommu.c     |    6 ++----
- 5 files changed, 2 insertions(+), 8 deletions(-)
+ drivers/iommu/virtio-iommu.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/iommu/apple-dart.c
-+++ b/drivers/iommu/apple-dart.c
-@@ -991,7 +991,6 @@ static const struct iommu_ops apple_dart
- 	.of_xlate = apple_dart_of_xlate,
- 	.def_domain_type = apple_dart_def_domain_type,
- 	.get_resv_regions = apple_dart_get_resv_regions,
--	.pgsize_bitmap = -1UL, /* Restricted during dart probe */
- 	.owner = THIS_MODULE,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
- 		.attach_dev	= apple_dart_attach_dev_paging,
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4390,7 +4390,6 @@ const struct iommu_ops intel_iommu_ops =
- 	.device_group		= intel_iommu_device_group,
- 	.is_attach_deferred	= intel_iommu_is_attach_deferred,
- 	.def_domain_type	= device_def_domain_type,
--	.pgsize_bitmap		= SZ_4K,
- 	.page_response		= intel_iommu_page_response,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
- 		.attach_dev		= intel_iommu_attach_device,
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -801,7 +801,6 @@ static const struct iommu_ops mock_ops =
- 	.default_domain = &mock_blocking_domain,
- 	.blocked_domain = &mock_blocking_domain,
- 	.owner = THIS_MODULE,
--	.pgsize_bitmap = MOCK_IO_PAGE_SIZE,
- 	.hw_info = mock_domain_hw_info,
- 	.domain_alloc_paging_flags = mock_domain_alloc_paging_flags,
- 	.domain_alloc_nested = mock_domain_alloc_nested,
---- a/drivers/iommu/riscv/iommu.c
-+++ b/drivers/iommu/riscv/iommu.c
-@@ -1533,7 +1533,6 @@ static void riscv_iommu_release_device(s
- }
- 
- static const struct iommu_ops riscv_iommu_ops = {
--	.pgsize_bitmap = SZ_4K,
- 	.of_xlate = riscv_iommu_of_xlate,
- 	.identity_domain = &riscv_iommu_identity_domain,
- 	.blocked_domain = &riscv_iommu_blocking_domain,
 --- a/drivers/iommu/virtio-iommu.c
 +++ b/drivers/iommu/virtio-iommu.c
-@@ -998,7 +998,7 @@ static void viommu_get_resv_regions(stru
+@@ -998,8 +998,7 @@ static void viommu_get_resv_regions(stru
  	iommu_dma_get_resv_regions(dev, head);
  }
  
--static struct iommu_ops viommu_ops;
-+static const struct iommu_ops viommu_ops;
- static struct virtio_driver virtio_iommu_drv;
+-static const struct iommu_ops viommu_ops;
+-static struct virtio_driver virtio_iommu_drv;
++static const struct bus_type *virtio_bus_type;
  
  static int viommu_match_node(struct device *dev, const void *data)
-@@ -1086,7 +1086,7 @@ static bool viommu_capable(struct device
- 	}
- }
+ {
+@@ -1008,8 +1007,9 @@ static int viommu_match_node(struct devi
  
--static struct iommu_ops viommu_ops = {
-+static const struct iommu_ops viommu_ops = {
- 	.capable		= viommu_capable,
- 	.domain_alloc_identity	= viommu_domain_alloc_identity,
- 	.domain_alloc_paging	= viommu_domain_alloc_paging,
-@@ -1217,8 +1217,6 @@ static int viommu_probe(struct virtio_de
- 		viommu->first_domain++;
- 	}
+ static struct viommu_dev *viommu_get_by_fwnode(struct fwnode_handle *fwnode)
+ {
+-	struct device *dev = driver_find_device(&virtio_iommu_drv.driver, NULL,
+-						fwnode, viommu_match_node);
++	struct device *dev = bus_find_device(virtio_bus_type, NULL, fwnode,
++					     viommu_match_node);
++
+ 	put_device(dev);
  
--	viommu_ops.pgsize_bitmap = viommu->pgsize_bitmap;
+ 	return dev ? dev_to_virtio(dev)->priv : NULL;
+@@ -1160,6 +1160,9 @@ static int viommu_probe(struct virtio_de
+ 	if (!viommu)
+ 		return -ENOMEM;
+ 
++	/* Borrow this for easy lookups later */
++	virtio_bus_type = dev->bus;
++
+ 	spin_lock_init(&viommu->request_lock);
+ 	ida_init(&viommu->domain_ids);
+ 	viommu->dev = dev;
+@@ -1229,10 +1232,10 @@ static int viommu_probe(struct virtio_de
+ 	if (ret)
+ 		goto err_free_vqs;
+ 
+-	iommu_device_register(&viommu->iommu, &viommu_ops, parent_dev);
 -
- 	virtio_device_ready(vdev);
+ 	vdev->priv = viommu;
  
- 	/* Populate the event queue with buffers */
++	iommu_device_register(&viommu->iommu, &viommu_ops, parent_dev);
++
+ 	dev_info(dev, "input address: %u bits\n",
+ 		 order_base_2(viommu->geometry.aperture_end));
+ 	dev_info(dev, "page mask: %#llx\n", viommu->pgsize_bitmap);
 
 
