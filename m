@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6BE196C7C;
-	Tue, 26 Aug 2025 13:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183D115624D;
+	Tue, 26 Aug 2025 13:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213925; cv=none; b=rtf19ZCLtUkq3m/6/Mb+OCgb/Vgje8xjyYVEjbFhbwokEFeFwGE9T778O7NPP2yDbzzf5zjvzdZjot6AkphVTHEBSafMLcUyql4f68Va7wNQrKOhlDpHl4KXmuLn9Y/N/cUuwTs7MWtJw9QAYBheq4C2uFvGUfqF4KLHgm0dcnU=
+	t=1756213928; cv=none; b=P1cB6ixqNaiKBj8efiGPxtZCA/AvFbw9WbVGSq9TqIIK4W8OACLWqndAojH+OtOIU5DH2+GX6MIw+Agbez++wpOTTHvkL9V0hrbZm2DyBYq0w6qVxsF7RHqWy3nkhu+58XX0cvVIiwfyzqL+TRtkCsmLiAGTOUdoaMtVQa7/eHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213925; c=relaxed/simple;
-	bh=KCkaAEgHlAXruyMpoBn7wMgmWjFwS1oMNBUZ8weRgi4=;
+	s=arc-20240116; t=1756213928; c=relaxed/simple;
+	bh=Z/i0B2UIaQQnN3alfS/cgcwi7azn4IPofkydlDWVWLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mIpJzbjc2KOEXxZwxpm/wpTnHWIv2chd8THNqqZeLYgsjR5jQvDNx7repm7+dKA8vEShDacUfGcJdMt1yBf3fMc92a78JHgB0MPPjM/QHX+ycvJvSmFfOquN/h73rToeWpgDh6HvZGL68GBGb+DKkfcXvkutS90XwzGW14QVq98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=budjTElo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZxECtMLXZakRjdGNhIErmLoVFDcX1yaV/i4GJOUsFd80GfHtIIiUVogvO9hfWYMpR77uZMr6pSMEahjpfdQXyItQOqz5E4ZTd4jC6BftUgIANghliDv/g03KsLU/jCeXCZ+NhjM8G8skL+XkXuEYZ83S2s9Dy2W98dhonr0In9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZWYh0pL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="budjTElo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1808C4CEF1;
-	Tue, 26 Aug 2025 13:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZWYh0pL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537DAC116D0;
+	Tue, 26 Aug 2025 13:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213925;
-	bh=KCkaAEgHlAXruyMpoBn7wMgmWjFwS1oMNBUZ8weRgi4=;
+	s=korg; t=1756213927;
+	bh=Z/i0B2UIaQQnN3alfS/cgcwi7azn4IPofkydlDWVWLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=budjTEloK4RmxShn72t69sJQJBmw5q49p7e2O2JHyN85chNhNpzdEp5eIp1LJxn0B
-	 UbMnt7joL1aa8FSb7GZh7zyClj0NQd6KYU4rfna4kT8pA/9oucGwiPvGiro6LiTuE0
-	 RLJ0sKZnfMRJuB46YHqRbHINeABPQXeDmaXVJCKs=
+	b=rZWYh0pLHHJ6ArJkGwajd64h38FnLVOjX6y7MOArhCKDHKU6Wl0/GPfGgjXBnQ3LI
+	 zpO77pWNZy27fvLKFwaFWpd7Ht8XpGoASsq9HeEjGorBEVEogYvIpNQ4bVJHklrPX5
+	 UlkT/JD8U8S3JO6ZJTSsiSEiS12iwQowUsH2NWQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=F3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 531/587] drm/amd/display: Dont overclock DCE 6 by 15%
-Date: Tue, 26 Aug 2025 13:11:20 +0200
-Message-ID: <20250826111006.511397269@linuxfoundation.org>
+Subject: [PATCH 6.6 532/587] compiler: remove __ADDRESSABLE_ASM{_STR,}() again
+Date: Tue, 26 Aug 2025 13:11:21 +0200
+Message-ID: <20250826111006.538916673@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -47,59 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit cb7b7ae53b557d168b4af5cd8549f3eff920bfb5 ]
+[ Upstream commit 8ea815399c3fcce1889bd951fec25b5b9a3979c1 ]
 
-The extra 15% clock was added as a workaround for a Polaris issue
-which uses DCE 11, and should not have been used on DCE 6 which
-is already hardcoded to the highest possible display clock.
-Unfortunately, the extra 15% was mistakenly copied and kept
-even on code paths which don't affect Polaris.
+__ADDRESSABLE_ASM_STR() is where the necessary stringification happens.
+As long as "sym" doesn't contain any odd characters, no quoting is
+required for its use with .quad / .long. In fact the quotation gets in
+the way with gas 2.25; it's only from 2.26 onwards that quoted symbols
+are half-way properly supported.
 
-This commit fixes that and also adds a check to make sure
-not to exceed the maximum DCE 6 display clock.
+However, assembly being different from C anyway, drop
+__ADDRESSABLE_ASM_STR() and its helper macro altogether. A simple
+.global directive will suffice to get the symbol "declared", i.e. into
+the symbol table. While there also stop open-coding STATIC_CALL_TRAMP()
+and STATIC_CALL_KEY().
 
-Fixes: 8cd61c313d8b ("drm/amd/display: Raise dispclk value for Polaris")
-Fixes: dc88b4a684d2 ("drm/amd/display: make clk mgr soc specific")
-Fixes: 3ecb3b794e2c ("drm/amd/display: dc/clk_mgr: add support for SI parts (v2)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 427980c1cbd22bb256b9385f5ce73c0937562408)
+Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Cc: stable@vger.kernel.org
-[ `MIN` => `min` ]
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <609d2c74-de13-4fae-ab1a-1ec44afb948d@suse.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/xen/hypercall.h |    5 +++--
+ include/linux/compiler.h             |    8 --------
+ 2 files changed, 3 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-@@ -112,11 +112,9 @@ static void dce60_update_clocks(struct c
- {
- 	struct clk_mgr_internal *clk_mgr_dce = TO_CLK_MGR_INTERNAL(clk_mgr_base);
- 	struct dm_pp_power_level_change_request level_change_req;
--	int patched_disp_clk = context->bw_ctx.bw.dce.dispclk_khz;
--
--	/*TODO: W/A for dal3 linux, investigate why this works */
--	if (!clk_mgr_dce->dfs_bypass_active)
--		patched_disp_clk = patched_disp_clk * 115 / 100;
-+	const int max_disp_clk =
-+		clk_mgr_dce->max_clks_by_state[DM_PP_CLOCKS_STATE_PERFORMANCE].display_clk_khz;
-+	int patched_disp_clk = min(max_disp_clk, context->bw_ctx.bw.dce.dispclk_khz);
+--- a/arch/x86/include/asm/xen/hypercall.h
++++ b/arch/x86/include/asm/xen/hypercall.h
+@@ -94,12 +94,13 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ #ifdef MODULE
+ #define __ADDRESSABLE_xen_hypercall
+ #else
+-#define __ADDRESSABLE_xen_hypercall __ADDRESSABLE_ASM_STR(__SCK__xen_hypercall)
++#define __ADDRESSABLE_xen_hypercall \
++	__stringify(.global STATIC_CALL_KEY(xen_hypercall);)
+ #endif
  
- 	level_change_req.power_level = dce_get_required_clocks_state(clk_mgr_base, context);
- 	/* get max clock state from PPLIB */
+ #define __HYPERCALL					\
+ 	__ADDRESSABLE_xen_hypercall			\
+-	"call __SCT__xen_hypercall"
++	__stringify(call STATIC_CALL_TRAMP(xen_hypercall))
+ 
+ #define __HYPERCALL_ENTRY(x)	"a" (x)
+ 
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -234,14 +234,6 @@ static inline void *offset_to_ptr(const
+ #define __ADDRESSABLE(sym) \
+ 	___ADDRESSABLE(sym, __section(".discard.addressable"))
+ 
+-#define __ADDRESSABLE_ASM(sym)						\
+-	.pushsection .discard.addressable,"aw";				\
+-	.align ARCH_SEL(8,4);						\
+-	ARCH_SEL(.quad, .long) __stringify(sym);			\
+-	.popsection;
+-
+-#define __ADDRESSABLE_ASM_STR(sym) __stringify(__ADDRESSABLE_ASM(sym))
+-
+ /* &a[0] degrades to a pointer: a different type from an array */
+ #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
+ 
 
 
