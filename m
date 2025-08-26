@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BB88635D;
-	Tue, 26 Aug 2025 13:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B00313957E;
+	Tue, 26 Aug 2025 13:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213293; cv=none; b=FkadznwBx8onfLE7durpPnhpTLPSRoLnWA78XNotyFlduFcz6KVIKrjHVHCKsAcjPXKsiFN0tnIT3G+8zYYUFg6r4PxdIC9hHhwZ3scHHoaYEFUTNE/F16XoQOePdBp21ABL5N8qd7AIk2m2aqQ8/cR61T5C1G4DoAdXkWoSBf8=
+	t=1756213296; cv=none; b=Pz4OkRaMaohn3qQp+pKuw+HdzRRkpEHr4xLTxnX5WFvFeeJ5D4duAWw6SvIchlGIycQWOKGQP9qKc6S0xD1OzCgnbSQjDIb9MW3wi4Lr9z/LeaeYssp4AK4f5mpYis3tCUSWgvxOMzDbrYaSoH38L7muYkWmnOWbIz7wDbuXhMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213293; c=relaxed/simple;
-	bh=yUqZFWEzeqbCuqAkh7ZrBg08+KmMV2li5NrP6qxpSHk=;
+	s=arc-20240116; t=1756213296; c=relaxed/simple;
+	bh=DrGnrV64+SavhqH5CCm+Y71foendf0SsJ7NvzztpZR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lamfbjTkzfn/rza1x5Gp7ua34oH0QjZogap3cEIb1LxxgtlT1ph7tYQcGffEdz/dgi7LsXpKVOIOiMvdMgIUW6X7S7obTi4CgZcYJeK+VbqUxeEIM06bv7MVorScg0mgiLXD5u8qE9igCuW68zcvmZoVHkwRWENgr1BgTFHBMzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19pnd62e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiTADM4zAssJo+j3TEsfasILXs/lUwrTzT+nBm5KstEu3ZKEv6+kU6/ZH5m3MNTZcVCblW5ssmSPc2vmpzMQ8E3JWAMbodpWilH9QJXJ5aVl/lAmD8ZRXMAM5G0PfJKE4dz5aL2oah045xOlLReC8hLKGx6xleIFU8Y46P+a3lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6yXmXVE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19pnd62e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42948C4CEF1;
-	Tue, 26 Aug 2025 13:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6yXmXVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC965C4CEF1;
+	Tue, 26 Aug 2025 13:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213293;
-	bh=yUqZFWEzeqbCuqAkh7ZrBg08+KmMV2li5NrP6qxpSHk=;
+	s=korg; t=1756213296;
+	bh=DrGnrV64+SavhqH5CCm+Y71foendf0SsJ7NvzztpZR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19pnd62e84d18MynuhJjkqvkRjZBdgMDI345fCl9yZbSOjgDXBCTQ9MbrzzZdafKS
-	 PB8ruOyvefNqIxBtOW4WTGwxQZ8pe+MEZ1iGGtG85P19OJAcNVATlrXZkFkN/qBX06
-	 iYs+qPisIokLH2HQ9i/2ZyVBsSbKqVUgBWOcBCFk=
+	b=T6yXmXVEtZbgl9c8uBO0rrdzEBeW+6Ez73g56R9ZkdsZ2k9GjhBt+5QTOqih/x1qz
+	 3Z+MBXVU5LZvPlXpKrzzrynxiHKL9eaSKeKtr6BA6uEP1prsFa219RhrJeJ+NHafS2
+	 66FIvZhI5YRk3vwjnHHCSFfjcvgoGYJG4Bqq2oCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Purva Yeshi <purvayeshi550@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 261/587] md: dm-zoned-target: Initialize return variable r to avoid uninitialized use
-Date: Tue, 26 Aug 2025 13:06:50 +0200
-Message-ID: <20250826110959.569142946@linuxfoundation.org>
+Subject: [PATCH 6.6 262/587] module: Prevent silent truncation of module name in delete_module(2)
+Date: Tue, 26 Aug 2025 13:06:51 +0200
+Message-ID: <20250826110959.594923225@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,42 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Purva Yeshi <purvayeshi550@gmail.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit 487767bff572d46f7c37ad846c4078f6d6c9cc55 ]
+[ Upstream commit a6323bd4e611567913e23df5b58f2d4e4da06789 ]
 
-Fix Smatch-detected error:
-drivers/md/dm-zoned-target.c:1073 dmz_iterate_devices()
-error: uninitialized symbol 'r'.
+Passing a module name longer than MODULE_NAME_LEN to the delete_module
+syscall results in its silent truncation. This really isn't much of
+a problem in practice, but it could theoretically lead to the removal of an
+incorrect module. It is more sensible to return ENAMETOOLONG or ENOENT in
+such a case.
 
-Smatch detects a possible use of the uninitialized variable 'r' in
-dmz_iterate_devices() because if dmz->nr_ddevs is zero, the loop is
-skipped and 'r' is returned without being set, leading to undefined
-behavior.
+Update the syscall to return ENOENT, as documented in the delete_module(2)
+man page to mean "No module by that name exists." This is appropriate
+because a module with a name longer than MODULE_NAME_LEN cannot be loaded
+in the first place.
 
-Initialize 'r' to 0 before the loop. This ensures that if there are no
-devices to iterate over, the function still returns a defined value.
-
-Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Link: https://lore.kernel.org/r/20250630143535.267745-2-petr.pavlu@suse.com
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-zoned-target.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/module/main.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/dm-zoned-target.c b/drivers/md/dm-zoned-target.c
-index b487f7acc860..36e55a5bcb0d 100644
---- a/drivers/md/dm-zoned-target.c
-+++ b/drivers/md/dm-zoned-target.c
-@@ -1062,7 +1062,7 @@ static int dmz_iterate_devices(struct dm_target *ti,
- 	struct dmz_target *dmz = ti->private;
- 	unsigned int zone_nr_sectors = dmz_zone_nr_sectors(dmz->metadata);
- 	sector_t capacity;
--	int i, r;
-+	int i, r = 0;
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 9711ad14825b..627680e568fc 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -701,14 +701,16 @@ SYSCALL_DEFINE2(delete_module, const char __user *, name_user,
+ 	struct module *mod;
+ 	char name[MODULE_NAME_LEN];
+ 	char buf[MODULE_FLAGS_BUF_SIZE];
+-	int ret, forced = 0;
++	int ret, len, forced = 0;
  
- 	for (i = 0; i < dmz->nr_ddevs; i++) {
- 		capacity = dmz->dev[i].capacity & ~(zone_nr_sectors - 1);
+ 	if (!capable(CAP_SYS_MODULE) || modules_disabled)
+ 		return -EPERM;
+ 
+-	if (strncpy_from_user(name, name_user, MODULE_NAME_LEN-1) < 0)
+-		return -EFAULT;
+-	name[MODULE_NAME_LEN-1] = '\0';
++	len = strncpy_from_user(name, name_user, MODULE_NAME_LEN);
++	if (len == 0 || len == MODULE_NAME_LEN)
++		return -ENOENT;
++	if (len < 0)
++		return len;
+ 
+ 	audit_log_kern_module(name);
+ 
 -- 
 2.39.5
 
