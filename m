@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDD7356906;
-	Tue, 26 Aug 2025 14:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98E4350855;
+	Tue, 26 Aug 2025 14:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218799; cv=none; b=qnl3b1EKXA1EeCXn7/pyXOcU8V8ywIqWnk5DJRVEwF/UcmVtaHuOHrM3bkmuIEfdXfWl/v4FEfSiK2/ByvI/gl5AVhWsvDbKbe2j4QFQ6E8eKkRx6WbD8pfoJPK/zM00kS/z2f7pQeEYM3Lu5JXbkpWpJ0SIWZw/zcO5fTz7Cew=
+	t=1756218801; cv=none; b=WK8BLCb4BSCjdk8LeBcKHTVF6+xRm+bNnXUdJlWHb75jBx62l2y5/mM9wAhPZWxBcyBn/sCZkUoC9MgnjGdMFd3sA/JPmNHojY3Mb79KSSZYOiCjnF9TkAraK3HFGMXVCCwVCVHfkDDG5x2WaKc4tSUIyM7NBmWaaLoQko9ys4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218799; c=relaxed/simple;
-	bh=MHhwIwJAua7hUNt0qSMGhvtxpoOhXOmksC9keLX1KsI=;
+	s=arc-20240116; t=1756218801; c=relaxed/simple;
+	bh=fkNDV/k+a3Hy1fHlrwAD6LWSwBwKnqI/lWe/kqJAMBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocaxsC5JPSVc8BY4pI1rJ5RcBs4z7ShX73iYxlscSbqfUTKxNOkWk0NCz7KSFK1l59TDhSZnRCpVQURI4IyBbJrulwbXGoKYxg9ycvVc/T3edcLXTYcFVaxbUdeKmj2VG//Kw9OLG5bbz6vQiY98Ei5DW8lD8IK4ST+uPbF/DhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LUCk11R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pHhUeyGJ/dqG6lsgIWd5QnVw4ua3ny111lZmb7ElZ3VKoBn8e9Ou0tuDN6IhJizCXvIh5dobNUPlG62SGsCfRoy8xCKePsGlUI7BV+aMkz48o3ZVd+uLnCO51ziVo+VV77Ysb2NNegx5oVG9KSh8so+ik50A8KKX30U4R+Rr4Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mpcx6zsi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LUCk11R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B507FC4CEF1;
-	Tue, 26 Aug 2025 14:33:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mpcx6zsi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DBAC4CEF1;
+	Tue, 26 Aug 2025 14:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218799;
-	bh=MHhwIwJAua7hUNt0qSMGhvtxpoOhXOmksC9keLX1KsI=;
+	s=korg; t=1756218801;
+	bh=fkNDV/k+a3Hy1fHlrwAD6LWSwBwKnqI/lWe/kqJAMBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0LUCk11RJgSTLryNPcKfF4mS2MQArOSDkHHoi5Qeow+NvHwY6JcfkKAqSJNZuphMH
-	 bQNlZCr7HcGl/34MckOZh0mnWjooNI8PAzlJTfZwuucQwm6hjfiuPqv4W6ImtNfCvD
-	 U6xhEREnfpbGdOsPseTQzcY37ukR0ERL+nCEbk9k=
+	b=Mpcx6zsinzypz+YMaXKDwHjW21/9DkRkftmEw/EJcNbw+aZYxhY++S/G2tpPVx9SO
+	 EMjnAuIRVM97irHynMqN7A4ZYzUs7qj5iHyyxS1NTf/ZxAFOf728U0ZPl9/K4WLBGH
+	 FSZ07BM+qDRkN/CoxSgmT8x7e4fa+QqD/S6EmEXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Peter Chen <peter.chen@nxp.com>,
+	Alastair DSilva <alastair@d-silva.org>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 137/403] usb: chipidea: udc: fix sleeping function called from invalid context
-Date: Tue, 26 Aug 2025 13:07:43 +0200
-Message-ID: <20250826110910.531345934@linuxfoundation.org>
+Subject: [PATCH 5.4 138/403] pci/hotplug/pnv-php: Improve error msg on power state change failure
+Date: Tue, 26 Aug 2025 13:07:44 +0200
+Message-ID: <20250826110910.561331780@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,89 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Chen <peter.chen@nxp.com>
+From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-[ Upstream commit 7368760d1bcdabf515c41a502568b489de3da683 ]
+[ Upstream commit 323c2a26ff43500a96799250330fab68903d776f ]
 
-The code calls pm_runtime_get_sync with irq disabled, it causes below
-warning:
+When changing the slot state, if opal hits an error and tells as such
+in the asynchronous reply, the warning "Wrong msg" is logged, which is
+rather confusing. Instead we can reuse the better message which is
+already used when we couldn't submit the asynchronous opal request
+initially.
 
-BUG: sleeping function called from invalid context at
-wer/runtime.c:1075
-in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid:
-er/u8:1
-CPU: 1 PID: 37 Comm: kworker/u8:1 Not tainted
-20200304-00181-gbebfd2a5be98 #1588
-Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
-Workqueue: ci_otg ci_otg_work
-[<c010e8bd>] (unwind_backtrace) from [<c010a315>]
-1/0x14)
-[<c010a315>] (show_stack) from [<c0987d29>]
-5/0x94)
-[<c0987d29>] (dump_stack) from [<c013e77f>]
-+0xeb/0x118)
-[<c013e77f>] (___might_sleep) from [<c052fa1d>]
-esume+0x75/0x78)
-[<c052fa1d>] (__pm_runtime_resume) from [<c0627a33>]
-0x23/0x74)
-[<c0627a33>] (ci_udc_pullup) from [<c062fb93>]
-nect+0x2b/0xcc)
-[<c062fb93>] (usb_gadget_connect) from [<c062769d>]
-_connect+0x59/0x104)
-[<c062769d>] (ci_hdrc_gadget_connect) from [<c062778b>]
-ssion+0x43/0x48)
-[<c062778b>] (ci_udc_vbus_session) from [<c062f997>]
-s_connect+0x17/0x9c)
-[<c062f997>] (usb_gadget_vbus_connect) from [<c062634d>]
-bd/0x128)
-[<c062634d>] (ci_otg_work) from [<c0134719>]
-rk+0x149/0x404)
-[<c0134719>] (process_one_work) from [<c0134acb>]
-0xf7/0x3bc)
-[<c0134acb>] (worker_thread) from [<c0139433>]
-x118)
-[<c0139433>] (kthread) from [<c01010bd>]
-(ret_from_fork+0x11/0x34)
-
-Tested-by: Dmitry Osipenko <digetx@gmail.com>
-Cc: <stable@vger.kernel.org> #v5.5
-Fixes: 72dc8df7920f ("usb: chipidea: udc: protect usb interrupt enable")
-Reported-by: Dmitry Osipenko <digetx@gmail.com>
-Signed-off-by: Peter Chen <peter.chen@nxp.com>
-Link: https://lore.kernel.org/r/20200316031034.17847-2-peter.chen@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Alastair D'Silva <alastair@d-silva.org>
+Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
+Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20191121134918.7155-8-fbarrat@linux.ibm.com
+Stable-dep-of: 466861909255 ("PCI: pnv_php: Clean up allocated IRQs on unplug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/udc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/hotplug/pnv_php.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
-index 19a9a4b83346..d483a957804b 100644
---- a/drivers/usb/chipidea/udc.c
-+++ b/drivers/usb/chipidea/udc.c
-@@ -1539,18 +1539,19 @@ static const struct usb_ep_ops usb_ep_ops = {
- static void ci_hdrc_gadget_connect(struct usb_gadget *_gadget, int is_active)
- {
- 	struct ci_hdrc *ci = container_of(_gadget, struct ci_hdrc, gadget);
--	unsigned long flags;
- 
- 	if (is_active) {
- 		pm_runtime_get_sync(&_gadget->dev);
- 		hw_device_reset(ci);
--		spin_lock_irqsave(&ci->lock, flags);
-+		spin_lock_irq(&ci->lock);
- 		if (ci->driver) {
- 			hw_device_state(ci, ci->ep0out->qh.dma);
- 			usb_gadget_set_state(_gadget, USB_STATE_POWERED);
-+			spin_unlock_irq(&ci->lock);
- 			usb_udc_vbus_handler(_gadget, true);
-+		} else {
-+			spin_unlock_irq(&ci->lock);
+diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
+index 382494261830..8223fe0b751f 100644
+--- a/drivers/pci/hotplug/pnv_php.c
++++ b/drivers/pci/hotplug/pnv_php.c
+@@ -341,18 +341,19 @@ int pnv_php_set_slot_power_state(struct hotplug_slot *slot,
+ 	ret = pnv_pci_set_power_state(php_slot->id, state, &msg);
+ 	if (ret > 0) {
+ 		if (be64_to_cpu(msg.params[1]) != php_slot->dn->phandle	||
+-		    be64_to_cpu(msg.params[2]) != state			||
+-		    be64_to_cpu(msg.params[3]) != OPAL_SUCCESS) {
++		    be64_to_cpu(msg.params[2]) != state) {
+ 			pci_warn(php_slot->pdev, "Wrong msg (%lld, %lld, %lld)\n",
+ 				 be64_to_cpu(msg.params[1]),
+ 				 be64_to_cpu(msg.params[2]),
+ 				 be64_to_cpu(msg.params[3]));
+ 			return -ENOMSG;
  		}
--		spin_unlock_irqrestore(&ci->lock, flags);
- 	} else {
- 		usb_udc_vbus_handler(_gadget, false);
- 		if (ci->driver)
++		if (be64_to_cpu(msg.params[3]) != OPAL_SUCCESS) {
++			ret = -ENODEV;
++			goto error;
++		}
+ 	} else if (ret < 0) {
+-		pci_warn(php_slot->pdev, "Error %d powering %s\n",
+-			 ret, (state == OPAL_PCI_SLOT_POWER_ON) ? "on" : "off");
+-		return ret;
++		goto error;
+ 	}
+ 
+ 	if (state == OPAL_PCI_SLOT_POWER_OFF || state == OPAL_PCI_SLOT_OFFLINE)
+@@ -361,6 +362,11 @@ int pnv_php_set_slot_power_state(struct hotplug_slot *slot,
+ 		ret = pnv_php_add_devtree(php_slot);
+ 
+ 	return ret;
++
++error:
++	pci_warn(php_slot->pdev, "Error %d powering %s\n",
++		 ret, (state == OPAL_PCI_SLOT_POWER_ON) ? "on" : "off");
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(pnv_php_set_slot_power_state);
+ 
 -- 
 2.39.5
 
