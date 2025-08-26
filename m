@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2ACB1FECAB;
-	Tue, 26 Aug 2025 11:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7391FECAB;
+	Tue, 26 Aug 2025 11:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208315; cv=none; b=Ao8yDSE5uBmLa+z53jZC0l+h4xVgYDmLM/Qvrs/WD1VWTCmAUH+/bMtCTooUIestUQ/2ux1ZR+9iIZqZdJGXvfdjOrdlB2+raxCLKPhcEZEzMYTuAFPARj0wWew9uxQ3Yq3hdFE8zkq4oqtZfwOX/SgQEVyx35B2l8s9h9OKeNo=
+	t=1756208317; cv=none; b=qrRbAwiMrssrZRCCaef1Ip5/k1HcmMdfF2Pg7F+Zz0CGiP4c1axjhUGVoTtHEFBDrgtcGh1zqYBXy2Gi0065iLF4HfwNGJ7CMwvpBdbKw72bRNFcstAc42cnNewzPunrGeFzBr5wx4S7vJwyIuryexLWhPQEY7j7TmTmbDrh2WY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208315; c=relaxed/simple;
-	bh=l6PFUXcMVzyX0FOkMbiYNo90rdtTJnTGE+Eq0ckmOp4=;
+	s=arc-20240116; t=1756208317; c=relaxed/simple;
+	bh=IfmfE0HeYANYQht3G8N6RPLN6rX2aYW2NZfnvvUFNZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMwhCfix0L4RuKMJKksWS6NC56PrOIs7sQJJcrrrsE2WWmJ9UPW9bmf5DIR/eQzprUr3P8uCnRxnbRQgY5VvPfhrtvJC80gI0j2NBKsAPNGs57K3mnL9mgYwv9sIaUHgSnFWyNhUOYWfuy5WabGHCOcY4GTBCgsp1oKog8jhBWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMbL0hzO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F6w15eJCh1esfWVj7jVSWYUyS2oyxO9ZCRWkxmKyvRgGHuP1xVP6utYKVv0u88BoXUZnPS3smIycaSHowS2wQGLfwah3zHIHU2cw71kX+EtEjPTBr6h1uauk7eBk4EPovdu+AEkGVn02qxoWOBwi0Z9LXieOtTyKb/dUwNXFpcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWAoqx1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMbL0hzO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AACC4CEF1;
-	Tue, 26 Aug 2025 11:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWAoqx1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A48C4CEF1;
+	Tue, 26 Aug 2025 11:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208315;
-	bh=l6PFUXcMVzyX0FOkMbiYNo90rdtTJnTGE+Eq0ckmOp4=;
+	s=korg; t=1756208317;
+	bh=IfmfE0HeYANYQht3G8N6RPLN6rX2aYW2NZfnvvUFNZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMbL0hzOIKx4Re1McFzSAXoc6SRD8nY14iOOIyZ7dNu5IY7dFf4ETT3/Qvgqudil1
-	 6Mr42v71QlgFeqmrCyBs9INQRc3tjwxgEhRJNkCs+1VP4xqWX2M9ul5mGHOkWj28oZ
-	 6r4ko3e8o63x5M3q532J/e/lDoJCiykOdCF4B6r0=
+	b=kWAoqx1UNWUD8aWSwP4hDG/MrRvhqSclJlrpHLjBtigb4oJ9Bs45N/HntE63RrvfY
+	 MCatOjNHFZv7XLofc7GnGbPiwgpiUP65SsFZbUsizkkFR9iGklvyjih31gSP6+akSp
+	 qwbzv7hHJZYnkGzkHUhE+WBY7O/rZ+TMUGbJfqMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.12 064/322] wifi: ath11k: fix dest ring-buffer corruption when ring is full
-Date: Tue, 26 Aug 2025 13:07:59 +0200
-Message-ID: <20250826110917.138419411@linuxfoundation.org>
+	Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.12 065/322] pwm: imx-tpm: Reset counter if CMOD is 0
+Date: Tue, 26 Aug 2025 13:08:00 +0200
+Message-ID: <20250826110917.167063785@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -45,67 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
 
-commit aa6956150f820e6a6deba44be325ddfcb5b10f88 upstream.
+commit 65c6f742ab14ab1a2679fba72b82dcc0289d96f1 upstream.
 
-Add the missing memory barriers to make sure that destination ring
-descriptors are read before updating the tail pointer (and passing
-ownership to the device) to avoid memory corruption on weakly ordered
-architectures like aarch64 when the ring is full.
+As per the i.MX93 TRM, section 67.3.2.1 "MOD register update", the value
+of the TPM counter does NOT get updated when writing MOD.MOD unless
+SC.CMOD != 0. Therefore, with the current code, assuming the following
+sequence:
 
-Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+	1) pwm_disable()
+	2) pwm_apply_might_sleep() /* period is changed here */
+	3) pwm_enable()
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org      # 5.6
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250604143457.26032-6-johan+linaro@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+and assuming only one channel is active, if CNT.COUNT is higher than the
+MOD.MOD value written during the pwm_apply_might_sleep() call then, when
+re-enabling the PWM during pwm_enable(), the counter will end up resetting
+after UINT32_MAX - CNT.COUNT + MOD.MOD cycles instead of MOD.MOD cycles as
+normally expected.
+
+Fix this problem by forcing a reset of the TPM counter before MOD.MOD is
+written.
+
+Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
+Link: https://lore.kernel.org/r/20250728194144.22884-1-laurentiumihalcea111@gmail.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/hal.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-imx-tpm.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -854,7 +854,6 @@ void ath11k_hal_srng_access_end(struct a
- {
- 	lockdep_assert_held(&srng->lock);
+--- a/drivers/pwm/pwm-imx-tpm.c
++++ b/drivers/pwm/pwm-imx-tpm.c
+@@ -205,6 +205,15 @@ static int pwm_imx_tpm_apply_hw(struct p
+ 		writel(val, tpm->base + PWM_IMX_TPM_SC);
  
--	/* TODO: See if we need a write memory barrier here */
- 	if (srng->flags & HAL_SRNG_FLAGS_LMAC_RING) {
- 		/* For LMAC rings, ring pointer updates are done through FW and
- 		 * hence written to a shared memory location that is read by FW
-@@ -869,7 +868,11 @@ void ath11k_hal_srng_access_end(struct a
- 			WRITE_ONCE(*srng->u.src_ring.hp_addr, srng->u.src_ring.hp);
- 		} else {
- 			srng->u.dst_ring.last_hp = *srng->u.dst_ring.hp_addr;
--			*srng->u.dst_ring.tp_addr = srng->u.dst_ring.tp;
-+			/* Make sure descriptor is read before updating the
-+			 * tail pointer.
-+			 */
-+			dma_mb();
-+			WRITE_ONCE(*srng->u.dst_ring.tp_addr, srng->u.dst_ring.tp);
- 		}
- 	} else {
- 		if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
-@@ -885,6 +888,10 @@ void ath11k_hal_srng_access_end(struct a
- 					   srng->u.src_ring.hp);
- 		} else {
- 			srng->u.dst_ring.last_hp = *srng->u.dst_ring.hp_addr;
-+			/* Make sure descriptor is read before updating the
-+			 * tail pointer.
-+			 */
-+			mb();
- 			ath11k_hif_write32(ab,
- 					   (unsigned long)srng->u.dst_ring.tp_addr -
- 					   (unsigned long)ab->mem,
+ 		/*
++		 * if the counter is disabled (CMOD == 0), programming the new
++		 * period length (MOD) will not reset the counter (CNT). If
++		 * CNT.COUNT happens to be bigger than the new MOD value then
++		 * the counter will end up being reset way too late. Therefore,
++		 * manually reset it to 0.
++		 */
++		if (!cmod)
++			writel(0x0, tpm->base + PWM_IMX_TPM_CNT);
++		/*
+ 		 * set period count:
+ 		 * if the PWM is disabled (CMOD[1:0] = 2b00), then MOD register
+ 		 * is updated when MOD register is written.
 
 
