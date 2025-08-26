@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9EF187554;
-	Tue, 26 Aug 2025 13:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F182220F079;
+	Tue, 26 Aug 2025 13:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214927; cv=none; b=kV9KIO/+R/XsM8DbBZedZI0A3GIlVXdvemRcmjD2W1SXEOsxDUjLRlNvBaA1GLKR1mjUBkLQWPvncsDfLt2WFn1kOhPHmiOsytArnr7qWbG7m1hRJ0kswySSm/dAHzSWYHDM+mtCec7Zj+YKqB4H8F7/eMIdkZL5m8V4pon8Zgg=
+	t=1756214930; cv=none; b=lue1dK+LDNb/srUk3ETVYv+jnKyFiYkEVKuPioy81rf/bzmNlNp3MeacQobFQxdSOFuTrQaWKViXExy6ylFTYHe3lVH5UnfRuNXC6PCB4D5ZYJYrABac6+X4KgS+SDJWJ736K+k+Oc91fVZH7knD69diEihVMaWsBBV6ixPhVQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214927; c=relaxed/simple;
-	bh=MZ72u6VLq3vDVYJxIaHaqhVliyUUokDiteLJnl+21lo=;
+	s=arc-20240116; t=1756214930; c=relaxed/simple;
+	bh=PyYPY7Wp816cY4H7k1qX1Xz8ATSvxeCZGh0MOu2UVrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/qwvpfYYmOwzsJznJhGDyl2fqaYGc7BEV1u4aDBO2fx/+M1xckCHu9LqLirBphkmsko1xQvJPtycyjyJsjWpYqvklBiW0GXJ84/roWlsE8ll/VVWzhzZKzyuBYadaVVXjanaKobqyxs7hpnMVHIHscwcqsPuaa6oKyc8PtBgnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQx5geoD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pkcg1cjXEWAGE+lY1e+eObghaYGuEregIx60Wl1T+gypwk5vzeNiya2RhbZfhQCPKd/nr1Vi+Dqqkv7sbVuzQ2+I5ES/x9j2E4JA2JiG4tig/6IrlirfzvGuwQJ3Ot9/sCyKCpXzYXkCZ8Lbikv4aAeRpbsr/7ymjRSQUcAaAiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hY9RbUzc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQx5geoD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF401C4CEF1;
-	Tue, 26 Aug 2025 13:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hY9RbUzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F02C4CEF1;
+	Tue, 26 Aug 2025 13:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214927;
-	bh=MZ72u6VLq3vDVYJxIaHaqhVliyUUokDiteLJnl+21lo=;
+	s=korg; t=1756214929;
+	bh=PyYPY7Wp816cY4H7k1qX1Xz8ATSvxeCZGh0MOu2UVrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQx5geoD+5iT1IkQCGYOofNCouRWSijcAXqZ9X+OvFmdgPR8O76tJop43e/5lO/fN
-	 E2ASNfbbBCCbZ5DcrqdNcTzMlC6whjSP+ZrsEv4IX4wh1Zm7wb2k+DBQkyhlZxkS3Q
-	 qkLeEUj3DceIaIVwf6ZKvbwta1hruokfvsifnFPk=
+	b=hY9RbUzcc5G14VJX0JVNAVAULIUJ2LA3ycHh7pJZw/8NOFm40oNN5xvWr1RJmDbAb
+	 Fv9loNXiZxSY6+0kjZokMwZFE2OW4WP5aDUjDsQbbqYZ8xZK7NoPLkbCS09PdlCLBo
+	 15RtEuD8pjKxtoCO+X5iuYuECl4zq0v9ecipfb24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 291/482] scsi: ufs: ufs-pci: Fix default runtime and system PM levels
-Date: Tue, 26 Aug 2025 13:09:04 +0200
-Message-ID: <20250826110937.979774507@linuxfoundation.org>
+	stable@kernel.org,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 282/482] ext4: fix reserved gdt blocks handling in fsmap
+Date: Tue, 26 Aug 2025 13:08:55 +0200
+Message-ID: <20250826110937.750556933@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,62 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-commit 6de7435e6b81fe52c0ab4c7e181f6b5decd18eb1 upstream.
+commit 3ffbdd1f1165f1b2d6a94d1b1aabef57120deaf7 upstream.
 
-Intel MTL-like host controllers support auto-hibernate.  Using
-auto-hibernate with manual (driver initiated) hibernate produces more
-complex operation.  For example, the host controller will have to exit
-auto-hibernate simply to allow the driver to enter hibernate state
-manually.  That is not recommended.
+In some cases like small FSes with no meta_bg and where the resize
+doesn't need extra gdt blocks as it can fit in the current one,
+s_reserved_gdt_blocks is set as 0, which causes fsmap to emit a 0
+length entry, which is incorrect.
 
-The default rpm_lvl and spm_lvl is 3, which includes manual hibernate.
+  $ mkfs.ext4 -b 65536 -O bigalloc /dev/sda 5G
+  $ mount /dev/sda /mnt/scratch
+  $ xfs_io -c "fsmap -d" /mnt/scartch
 
-Change the default values to 2, which does not.
+        0: 253:48 [0..127]: static fs metadata 128
+        1: 253:48 [128..255]: special 102:1 128
+        2: 253:48 [256..255]: special 102:2 0     <---- 0 len entry
+        3: 253:48 [256..383]: special 102:3 128
 
-Note, to be simpler to backport to stable kernels, utilize the UFS PCI
-driver's ->late_init() call back.  Recent commits have made it possible
-to set up a controller-specific default in the regular ->init() call
-back, but not all stable kernels have those changes.
+Fix this by adding a check for this case.
 
-Fixes: 4049f7acef3e ("scsi: ufs: ufs-pci: Add support for Intel MTL")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250723165856.145750-3-adrian.hunter@intel.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@kernel.org
+Fixes: 0c9ec4beecac ("ext4: support GETFSMAP ioctls")
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/08781b796453a5770112aa96ad14c864fbf31935.1754377641.git.ojaswin@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufshcd-pci.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ fs/ext4/fsmap.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/ufs/host/ufshcd-pci.c
-+++ b/drivers/ufs/host/ufshcd-pci.c
-@@ -465,10 +465,23 @@ static int ufs_intel_adl_init(struct ufs
- 	return ufs_intel_common_init(hba);
- }
- 
-+static void ufs_intel_mtl_late_init(struct ufs_hba *hba)
-+{
-+	hba->rpm_lvl = UFS_PM_LVL_2;
-+	hba->spm_lvl = UFS_PM_LVL_2;
-+}
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -393,6 +393,14 @@ static unsigned int ext4_getfsmap_find_s
+ 	/* Reserved GDT blocks */
+ 	if (!ext4_has_feature_meta_bg(sb) || metagroup < first_meta_bg) {
+ 		len = le16_to_cpu(sbi->s_es->s_reserved_gdt_blocks);
 +
- static int ufs_intel_mtl_init(struct ufs_hba *hba)
- {
-+	struct ufs_host *ufs_host;
-+	int err;
++		/*
++		 * mkfs.ext4 can set s_reserved_gdt_blocks as 0 in some cases,
++		 * check for that.
++		 */
++		if (!len)
++			return 0;
 +
- 	hba->caps |= UFSHCD_CAP_CRYPTO | UFSHCD_CAP_WB_EN;
--	return ufs_intel_common_init(hba);
-+	err = ufs_intel_common_init(hba);
-+	/* Get variant after it is set in ufs_intel_common_init() */
-+	ufs_host = ufshcd_get_variant(hba);
-+	ufs_host->late_init = ufs_intel_mtl_late_init;
-+	return err;
- }
- 
- static struct ufs_hba_variant_ops ufs_intel_cnl_hba_vops = {
+ 		error = ext4_getfsmap_fill(meta_list, fsb, len,
+ 					   EXT4_FMR_OWN_RESV_GDT);
+ 		if (error)
 
 
