@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0CD2FDC5C;
-	Tue, 26 Aug 2025 13:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16772FDC5C;
+	Tue, 26 Aug 2025 13:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215842; cv=none; b=aItp/rvR5VwmH3XUinkDHxJIudDi9zTzj2lwFUtg5vVWorY4rIcibHzff6CqtquA4Dy65vY8YyCtoZJ5NIO0m8176gdAZ0nI8ixCU1wcsxkpt4eBhpKwpcAeSjCMMkxSB/Nr8T/5IJMW7ugdccZp4R0AWd38Ut4M4b44K0LFYc0=
+	t=1756215845; cv=none; b=EVFCJJiY5FpexMkbOwtqPndShVmn/tYaSXNPap2RpgeQ4mdAzaftI7LYJKgIamv8C2e436TATFNr0tkzs0qCpa4frmHzeMfWegNNMw1zLVGtewRhjU+uPvjWzghfM8CCCySG8TIEA/6iWpVX6pUMATPEy9f1OYzkhLMMhY35xPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215842; c=relaxed/simple;
-	bh=Ut6u+hGDHqIJ5eMznf8wVnJGWUaonHy6+C63LWxnTNk=;
+	s=arc-20240116; t=1756215845; c=relaxed/simple;
+	bh=N75kTO/57jUPD7suIaVEv7E2XAIEjwfwlAduqjavVvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDseD3DNjNkGMAB5yAjM2dlKbWoSKDe1X+C2CAzMXdQTl8mZ9P9Mwn8a2dAIporBx2oQzLvoWm7ctyKqCa71IoIwDFRYDaMfFXrDjbnP7woCJ0SNYK71sHPRBxltYTziI66YfSgB3VSSk0JUYt0o9QiN/8a6u9Kpnr38edGoajA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvsDTYPO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CvDabpXofLDCQEbqcgC7JuBWDDJUTYjdVj3eKcMWTAtJA2erLbBxLOzr2DjUtDbV1TyV/sXFRnWR5YYimqVfYmnwK5req+mTN+avHlCfrtxX5dTlc0Aytizo0XKl8ZClFBJdCEBjhGEb8DSjcUm2m/rAhTmjqS3izfdWnGCw7bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USiMs1jh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvsDTYPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B664C4CEF1;
-	Tue, 26 Aug 2025 13:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USiMs1jh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454D4C4CEF1;
+	Tue, 26 Aug 2025 13:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215841;
-	bh=Ut6u+hGDHqIJ5eMznf8wVnJGWUaonHy6+C63LWxnTNk=;
+	s=korg; t=1756215844;
+	bh=N75kTO/57jUPD7suIaVEv7E2XAIEjwfwlAduqjavVvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvsDTYPOEdXoHBIzqsBzPAo27K4ugSG6OoXs0R9m91uthakHMh/U0NA37+fWsMd6/
-	 8m5ZLZui/sx2X3dffq8c781PGQ3p/7eg2/Vea6KIw0wz3XR63oBhW1c2cxNxoN7Q8x
-	 WpcsBvieHLGBnDaMyL6OFL9EZNPmfu+uALqsBLH0=
+	b=USiMs1jhQM1usJ8+Czq+54GMPiRsbIOG7Oq71gTLjrHWql7yZvg0R/bMLWOWoPW82
+	 ntyKdHhIfLD3DkgtXxwUwVyyZhUwDroH4U0JepkJz0SwwVehPYEwrThwkeriArnW1O
+	 /mgkchYKJH4f72TRsgeJYvlcREIuxYPoRK1kmv4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 186/644] watchdog: ziirave_wdt: check record length in ziirave_firm_verify()
-Date: Tue, 26 Aug 2025 13:04:37 +0200
-Message-ID: <20250826110951.069335535@linuxfoundation.org>
+Subject: [PATCH 5.15 187/644] hwrng: mtk - handle devm_pm_runtime_enable errors
+Date: Tue, 26 Aug 2025 13:04:38 +0200
+Message-ID: <20250826110951.095161067@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,39 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-[ Upstream commit 8b61d8ca751bc15875b50e0ff6ac3ba0cf95a529 ]
+[ Upstream commit 522a242a18adc5c63a24836715dbeec4dc3faee1 ]
 
-The "rec->len" value comes from the firmware.  We generally do
-trust firmware, but it's always better to double check.  If
-the length value is too large it would lead to memory corruption
-when we set "data[i] = ret;"
+Although unlikely, devm_pm_runtime_enable() call might fail, so handle
+the return value.
 
-Fixes: 217209db0204 ("watchdog: ziirave_wdt: Add support to upload the firmware.")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/3b58b453f0faa8b968c90523f52c11908b56c346.1748463049.git.dan.carpenter@linaro.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 78cb66caa6ab ("hwrng: mtk - Use devm_pm_runtime_enable")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/ziirave_wdt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/char/hw_random/mtk-rng.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/ziirave_wdt.c b/drivers/watchdog/ziirave_wdt.c
-index c5a9b820d43a..48c68c66e530 100644
---- a/drivers/watchdog/ziirave_wdt.c
-+++ b/drivers/watchdog/ziirave_wdt.c
-@@ -302,6 +302,9 @@ static int ziirave_firm_verify(struct watchdog_device *wdd,
- 		const u16 len = be16_to_cpu(rec->len);
- 		const u32 addr = be32_to_cpu(rec->addr);
+diff --git a/drivers/char/hw_random/mtk-rng.c b/drivers/char/hw_random/mtk-rng.c
+index 3e00506543b6..72269d0f2a4e 100644
+--- a/drivers/char/hw_random/mtk-rng.c
++++ b/drivers/char/hw_random/mtk-rng.c
+@@ -142,7 +142,9 @@ static int mtk_rng_probe(struct platform_device *pdev)
+ 	dev_set_drvdata(&pdev->dev, priv);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+-	devm_pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
  
-+		if (len > sizeof(data))
-+			return -EINVAL;
-+
- 		if (ziirave_firm_addr_readonly(addr))
- 			continue;
+ 	dev_info(&pdev->dev, "registered RNG driver\n");
  
 -- 
 2.39.5
