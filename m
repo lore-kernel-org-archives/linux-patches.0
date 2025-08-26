@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4FC8635C;
-	Tue, 26 Aug 2025 11:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01222BD5BC;
+	Tue, 26 Aug 2025 11:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756209008; cv=none; b=EpXVEqckreVp4eTfjVy+bPJz78m+dKija1H75UEehH6fcwzEYLlub/1VkR1L+XiQvQgq43dBwmAiXR+GGPfd3tPbAsFdtd1rR87E0eiVWbQgfm5X/SWweRhQVQIygsavXI2LvEYzCbeIsI5hxOioW23VEWNPONOMuhwGNmkAV/E=
+	t=1756209010; cv=none; b=g4jMGTYUi2fDHsZwFThZLRcFr4SaMYtSkW1wz/6oHS2DZWEvczXdIBAFBvIzJIOOle0ffY1eptuAulJWA0sX0i7+HLjYl/QytKfvWycGuT0lmrJvtm2Zr+O0dIf4Vg9t6ITURhp6tLoCRSwipzP8BWeEMts5tGoodijSbstbEfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756209008; c=relaxed/simple;
-	bh=TU9OKUFSEgToJboc98V/0Q7VSvPGjY6HyV3SyNZbESU=;
+	s=arc-20240116; t=1756209010; c=relaxed/simple;
+	bh=3BXjM9o5zfr38dbvZQHoeT29KW5t8NNhgUKaxwjXSHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNTWYFwO0wNwL5+OWrEh4eUJUtEXaDVlsKOyELqPdNvzlEwQ4y+SJrCNhTwE3X9BIt9nA2C+z3TjkMoWWwcKkOc4ho6F/BPQVUJJ34ltB/7M1pleSYemzPLn7zqfQgxmcdVljGmrO7r/1AL1+dLAC7BtcC39v6HwQwMPyVlgbqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLw2ApOX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sSUCxoiSaqpP+AJSjFbAqtt0aWYkoQXE7RfjKuqZ3FPzdqn8cTdQkt/vpbL/0evJeQ+Qq4Gl6ZmY8vktFjngDdEVnCgBUvDJzd4exe2Asei/yqOmFH5jIm+b9mOz7lIbB7Nc2KoBwBSDZg0rP6rUS03yyip+Y2RyHMbtXuiYYuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TABr+T9R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLw2ApOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ABEC4CEF1;
-	Tue, 26 Aug 2025 11:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TABr+T9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD80BC4CEF1;
+	Tue, 26 Aug 2025 11:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756209007;
-	bh=TU9OKUFSEgToJboc98V/0Q7VSvPGjY6HyV3SyNZbESU=;
+	s=korg; t=1756209010;
+	bh=3BXjM9o5zfr38dbvZQHoeT29KW5t8NNhgUKaxwjXSHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLw2ApOXW5vkhvE4Gitr97hL42q8dknxWNbux8GpIfV0YUhCOcRs1ldZZs8Y/ZX+f
-	 xw6hpi3NmmwBmD4BkhLFmgMvDxDm7oxpERE3XmUVeuSHCXBN42vDfykO7fBvQ5sCLq
-	 qaUMygrYj7F3DHrZ/2xDKfaNSkdnv8jjQnwOXcyM=
+	b=TABr+T9Rt8wYV/ZdjltPWLHDy7C3QrIJEeWDW/9VgRhwrdhlcMHjcq7AFT1VMDPFO
+	 DkbzWcf5NEUmbL4H+16JTN0qJulF1+Fu/nJOykKqH2zze+3F08WALq76/mmX2Wmo+r
+	 mdb2RgUZgsz44EDUEq/4di5vottaaW3PxLlybpLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oren Sidi <osidi@nvidia.com>,
-	Alex Lazar <alazar@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Tristram Ha <tristram.ha@microchip.com>,
+	=?UTF-8?q?=C5=81ukasz=20Majewski?= <lukma@nabladev.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 315/322] net/mlx5: Add IFC bits and enums for buf_ownership
-Date: Tue, 26 Aug 2025 13:12:10 +0200
-Message-ID: <20250826110923.667704908@linuxfoundation.org>
+Subject: [PATCH 6.12 306/322] net: dsa: microchip: Fix KSZ9477 HSR port setup issue
+Date: Tue, 26 Aug 2025 13:12:01 +0200
+Message-ID: <20250826110923.445955096@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -47,63 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oren Sidi <osidi@nvidia.com>
+From: Tristram Ha <tristram.ha@microchip.com>
 
-[ Upstream commit 6f09ee0b583cad4f2b6a82842c26235bee3d5c2e ]
+[ Upstream commit e318cd6714592fb762fcab59c5684a442243a12f ]
 
-Extend structure layouts and defines buf_ownership.
-buf_ownership indicates whether the buffer is managed by SW or FW.
+ksz9477_hsr_join() is called once to setup the HSR port membership, but
+the port can be enabled later, or disabled and enabled back and the port
+membership is not set correctly inside ksz_update_port_member().  The
+added code always use the correct HSR port membership for HSR port that
+is enabled.
 
-Signed-off-by: Oren Sidi <osidi@nvidia.com>
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1752734895-257735-3-git-send-email-tariqt@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 451d2849ea66 ("net/mlx5e: Query FW for buffer ownership")
+Fixes: 2d61298fdd7b ("net: dsa: microchip: Enable HSR offloading for KSZ9477")
+Reported-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
+Reviewed-by: Łukasz Majewski <lukma@nabladev.com>
+Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Link: https://patch.msgid.link/20250819010457.563286-1-Tristram.Ha@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mlx5/mlx5_ifc.h | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
-index 512e25c416ae..2b1a816e4d59 100644
---- a/include/linux/mlx5/mlx5_ifc.h
-+++ b/include/linux/mlx5/mlx5_ifc.h
-@@ -10358,8 +10358,16 @@ struct mlx5_ifc_pifr_reg_bits {
- 	u8         port_filter_update_en[8][0x20];
- };
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index bf26cd0abf6d..0a34fd6887fc 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -2208,6 +2208,12 @@ static void ksz_update_port_member(struct ksz_device *dev, int port)
+ 		dev->dev_ops->cfg_port_member(dev, i, val | cpu_port);
+ 	}
  
-+enum {
-+	MLX5_BUF_OWNERSHIP_UNKNOWN	= 0x0,
-+	MLX5_BUF_OWNERSHIP_FW_OWNED	= 0x1,
-+	MLX5_BUF_OWNERSHIP_SW_OWNED	= 0x2,
-+};
-+
- struct mlx5_ifc_pfcc_reg_bits {
--	u8         reserved_at_0[0x8];
-+	u8         reserved_at_0[0x4];
-+	u8	   buf_ownership[0x2];
-+	u8	   reserved_at_6[0x2];
- 	u8         local_port[0x8];
- 	u8         reserved_at_10[0xb];
- 	u8         ppan_mask_n[0x1];
-@@ -10491,7 +10499,9 @@ struct mlx5_ifc_mtutc_reg_bits {
- struct mlx5_ifc_pcam_enhanced_features_bits {
- 	u8         reserved_at_0[0x48];
- 	u8         fec_100G_per_lane_in_pplm[0x1];
--	u8         reserved_at_49[0x1f];
-+	u8         reserved_at_49[0xa];
-+	u8	   buffer_ownership[0x1];
-+	u8	   resereved_at_54[0x14];
- 	u8         fec_50G_per_lane_in_pplm[0x1];
- 	u8         reserved_at_69[0x4];
- 	u8         rx_icrc_encapsulated_counter[0x1];
++	/* HSR ports are setup once so need to use the assigned membership
++	 * when the port is enabled.
++	 */
++	if (!port_member && p->stp_state == BR_STATE_FORWARDING &&
++	    (dev->hsr_ports & BIT(port)))
++		port_member = dev->hsr_ports;
+ 	dev->dev_ops->cfg_port_member(dev, port, port_member | cpu_port);
+ }
+ 
 -- 
 2.50.1
 
