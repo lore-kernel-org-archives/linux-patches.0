@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B82271475;
-	Tue, 26 Aug 2025 13:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04EC1AB52D;
+	Tue, 26 Aug 2025 13:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213891; cv=none; b=J2bEsooFIBIu1xe20MXJmz32JUaMJPjcgShGktONAhFbRSVg6Tj96eqeTSZ0vw3kzf3PBCneodR6r54qxy2wA5iH/iv2CQL9E6y2DxP7tVjSxBUUtRUfkdeKf160nmULqa4BvO4q3UIkzOBT87VRn5jA99/t1fmPzaB7Ftvz/Uk=
+	t=1756213894; cv=none; b=W6LC8W1/Ox44mP5Rdorn4jB/pvkSzol+yZwtJmyh+Tqx3jI0Evj0Hs5eSFEou3Jtnl+l9/NWbspQXUH/3m9uemV7iYwgeVwlIXTc6Xnp9jvp1Rzj8Px1WjCS8+sDAcgf/EZ2Ozd03kEhfRE1yZDcflsuU54rJ5vg6iEximQL5dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213891; c=relaxed/simple;
-	bh=TZxrheu/LczvGeV11FF9nraBP1owuLr9OdxArvGwprM=;
+	s=arc-20240116; t=1756213894; c=relaxed/simple;
+	bh=xO3YDGVPIf+yJYr01GvWC3IbfGAkqoqCBU5Y2clxGtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDJ0yAx0njv93wr2Uk3jzrJtCxC3x3DCjYkNdEPC4dqChTky53XGCVRUY3VhUTIz5wzbI0gw+nDYVklenmGtDPDWflRzGk52kVlT9Pm/tLaIYWDfIzox4BKR6GrrlJQ9Vh9SwxMuG52MRojn7J7B0FeLXYMUJBcO/zYgFUFdz+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZhJDzp9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=seJJbRKn5Gm2BRZbeo1Am52HBG5HRw6NlhoWQ3upRN1s1CI5KsiwJQ4Fva90EKMNxQFUPJSihJGKujGsxPK2wTq0/R0CtKauC/bhsm2bl+HWmf3PYinGAcKhorYOtxuL82XtZus8M7+HI/yBWCb5/7EWhpeBGvNQaCUiKYtdMhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2pmQaHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZhJDzp9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8255CC4CEF4;
-	Tue, 26 Aug 2025 13:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2pmQaHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E373C4CEF1;
+	Tue, 26 Aug 2025 13:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213890;
-	bh=TZxrheu/LczvGeV11FF9nraBP1owuLr9OdxArvGwprM=;
+	s=korg; t=1756213893;
+	bh=xO3YDGVPIf+yJYr01GvWC3IbfGAkqoqCBU5Y2clxGtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZhJDzp9tmoI8E0YjOjo5wq9RrrmR3dMZYC+Vjcm6QVuwWyn50OdteMHLTx+5zISI
-	 Aqrbb2aGUBX5snqBjK+buEEV3iPWU7L6ZvAi2sUWlVKb4QYT5kknPDKJWDCLHc7+0u
-	 blUcSmA91aeRQWulDwxHXVnnudaJMabNQOjindT4=
+	b=n2pmQaHPC/39ftDXiXKp8EzdxE4BRm7NJpHgBnQsj6iBa+LP6AfBfZJgzA1Mmgb6G
+	 RaKQUQyvtvf8xNqBPE+aMYpZTOAOyAxebr1umXQwKzqnvVUlqc3AGzMLm1qNdch1sF
+	 U5cw1m+zDHPSE06BV0i7tBDGcwgLNLzVbAzIwpT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Paul Barker <paul.barker.ct@bp.renesas.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 6.6 477/587] topology: Set capacity_freq_ref in all cases
-Date: Tue, 26 Aug 2025 13:10:26 +0200
-Message-ID: <20250826111005.103546555@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 512/587] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
+Date: Tue, 26 Aug 2025 13:11:01 +0200
+Message-ID: <20250826111006.020728602@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -49,72 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 98323e9d70172f1b46d1cadb20d6c54abf62870d upstream.
+[ Upstream commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f ]
 
-If "capacity-dmips-mhz" is not set, raw_capacity is null and we skip the
-normalization step which includes setting per_cpu capacity_freq_ref.
-Always register the notifier but skip the capacity normalization if
-raw_capacity is null.
+Reading DPCD registers has side-effects in general. In particular
+accessing registers outside of the link training register range
+(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
+forbidden by the DP v2.1 Standard, see
 
-Fixes: 9942cb22ea45 ("sched/topology: Add a new arch_scale_freq_ref() method")
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Acked-by: Sudeep Holla <sudeep.holla@arm.com>
-Tested-by: Pierre Gondois <pierre.gondois@arm.com>
-Tested-by: Mark Brown <broonie@kernel.org>
-Tested-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Link: https://lore.kernel.org/r/20240117190545.596057-1-vincent.guittot@linaro.org
-Stable-dep-of: e37617c8e53a ("sched/fair: Fix frequency selection for non-invariant case")
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+3.6.5.1 DPTX AUX Transaction Handling Mandates
+3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
+
+Based on my tests, accessing the DPCD_REV register during the link
+training of an UHBR TBT DP tunnel sink leads to link training failures.
+
+Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
+DPCD register access quirk.
+
+Cc: <stable@vger.kernel.org>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/arch_topology.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/display/drm_dp_helper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/arch_topology.c
-+++ b/drivers/base/arch_topology.c
-@@ -417,9 +417,6 @@ init_cpu_capacity_callback(struct notifi
- 	struct cpufreq_policy *policy = data;
- 	int cpu;
- 
--	if (!raw_capacity)
--		return 0;
--
- 	if (val != CPUFREQ_CREATE_POLICY)
- 		return 0;
- 
-@@ -436,9 +433,11 @@ init_cpu_capacity_callback(struct notifi
- 	}
- 
- 	if (cpumask_empty(cpus_to_visit)) {
--		topology_normalize_cpu_scale();
--		schedule_work(&update_topology_flags_work);
--		free_raw_capacity();
-+		if (raw_capacity) {
-+			topology_normalize_cpu_scale();
-+			schedule_work(&update_topology_flags_work);
-+			free_raw_capacity();
-+		}
- 		pr_debug("cpu_capacity: parsing done\n");
- 		schedule_work(&parsing_done_work);
- 	}
-@@ -458,7 +457,7 @@ static int __init register_cpufreq_notif
- 	 * On ACPI-based systems skip registering cpufreq notifier as cpufreq
- 	 * information is not needed for cpu capacity initialization.
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -663,7 +663,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
+ 	 * monitor doesn't power down exactly after the throw away read.
  	 */
--	if (!acpi_disabled || !raw_capacity)
-+	if (!acpi_disabled)
- 		return -EINVAL;
- 
- 	if (!alloc_cpumask_var(&cpus_to_visit, GFP_KERNEL))
+ 	if (!aux->is_remote) {
+-		ret = drm_dp_dpcd_probe(aux, DP_DPCD_REV);
++		ret = drm_dp_dpcd_probe(aux, DP_LANE0_1_STATUS);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
 
 
