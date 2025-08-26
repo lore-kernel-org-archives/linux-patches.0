@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1269319866;
-	Tue, 26 Aug 2025 11:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382452BE643;
+	Tue, 26 Aug 2025 11:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207734; cv=none; b=PthkvLo2Mk1EQD+Sj2mQHAsZcRJWpleByo5gnq/T4TjIPuYHmKeGIURjhqjtl7UzayITSf7TJgTKxGSY7w1ezAYTyXJfyyCg5IyBI65lkcg1DpzdlD2/Ka3LEDkDHaco2UCbMr19DBKsByT9qj7pHmWkZeHjfuIO2eDOCmiuwEQ=
+	t=1756207737; cv=none; b=DytqL9ILLUj33kgAQ25cF82a4pLdN6ZEt5qTdf0fksidNGz2XdjLzz/LaQZ07X8deIRa1yaPJbw+whxn61E6Dl+sR60ywb363uxFuWt1D1pRQYN3pvokQwF4vFayc6YBCN2WvTx7TuSktqI6UpS4AyUkkorj1PQK+69yxAwcYiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207734; c=relaxed/simple;
-	bh=1exOucgY1EIRq9pEePlxOKtR9c5cTtlSiq9bptPTDVQ=;
+	s=arc-20240116; t=1756207737; c=relaxed/simple;
+	bh=dvdrqdMp+bfRkL5042dt6oKMSpEqNJQJlOx0olH6JJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQoVi9ZIMypPUQVWTxRJFKyek7M67F3ZkLfrMR/LlI8qFG0hCY0hbNkci6mLGNuSqUuyYwwR/gBckwyYtzuwzobRVoRxXLp8AwIwuOIcEfvSDzE20EL5ui7X5bXPxJ9EQUPScOwnCd+5XPOP4dD60mncQxYm3eE/Nr4plZL0PhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLHtXlZV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S6k9zBlpWMh2LTtnSJEr7FN8gLc4kg3V9wXcVNC5Q2lDB0aSxHdAagttnJOd+OpoychuMRYD2MvtVn3iQy8etVm4H/dzR6WkgRHwbEG+Qyf06dRTXSa6p1784Tadr2wvtMD5dI/PEye/sa38N2vdj8wKQWtVh6x00pQ84ySNINs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmmEqsWX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLHtXlZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C365C4CEF1;
-	Tue, 26 Aug 2025 11:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmmEqsWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1D7C4CEF1;
+	Tue, 26 Aug 2025 11:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207734;
-	bh=1exOucgY1EIRq9pEePlxOKtR9c5cTtlSiq9bptPTDVQ=;
+	s=korg; t=1756207737;
+	bh=dvdrqdMp+bfRkL5042dt6oKMSpEqNJQJlOx0olH6JJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLHtXlZVAHnNRfM8CJ/vzoj88azKBDJXqFu5QeUUiXlgLnMzV8lEh/E2U7kkAsbAz
-	 rFqRbEqqKXYi9/hKfeH36gcjd6QISSWYZo3YvGvuRtKgXXDNoyRzARY7uSUWiz0kYX
-	 ebCJsHRnfBzApzrvdtxjzL37997h0zN8YMrge0O0=
+	b=tmmEqsWXE4vHzJw8oZsE/569KoPGoGl9wNujm9+n4grZLI/XXEhaFg/plSFu55RGk
+	 Zc1f5cK57x5RRZ2KhUe5lxIL13Pk4z4FJhbdyLh3Nfi1SodUJeVksqlBJq7bh1igoQ
+	 cfzp3ED+C5LrL4jhkLHUh3wARqLfaHExUH7dvEEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.16 297/457] ftrace: Also allocate and copy hash for reading of filter files
-Date: Tue, 26 Aug 2025 13:09:41 +0200
-Message-ID: <20250826110944.719317758@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.16 298/457] iio: temperature: maxim_thermocouple: use DMA-safe buffer for spi_read()
+Date: Tue, 26 Aug 2025 13:09:42 +0200
+Message-ID: <20250826110944.742784139@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -48,81 +46,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: David Lechner <dlechner@baylibre.com>
 
-commit bfb336cf97df7b37b2b2edec0f69773e06d11955 upstream.
+commit ae5bc07ec9f73a41734270ef3f800c5c8a7e0ad3 upstream.
 
-Currently the reader of set_ftrace_filter and set_ftrace_notrace just adds
-the pointer to the global tracer hash to its iterator. Unlike the writer
-that allocates a copy of the hash, the reader keeps the pointer to the
-filter hashes. This is problematic because this pointer is static across
-function calls that release the locks that can update the global tracer
-hashes. This can cause UAF and similar bugs.
+Replace using stack-allocated buffers with a DMA-safe buffer for use
+with spi_read(). This allows the driver to be safely used with
+DMA-enabled SPI controllers.
 
-Allocate and copy the hash for reading the filter files like it is done
-for the writers. This not only fixes UAF bugs, but also makes the code a
-bit simpler as it doesn't have to differentiate when to free the
-iterator's hash between writers and readers.
+The buffer array is also converted to a struct with a union to make the
+usage of the memory in the buffer more clear and ensure proper alignment.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/20250822183606.12962cc3@batman.local.home
-Fixes: c20489dad156 ("ftrace: Assign iter->hash to filter or notrace hashes on seq read")
-Closes: https://lore.kernel.org/all/20250813023044.2121943-1-wutengda@huaweicloud.com/
-Closes: https://lore.kernel.org/all/20250822192437.GA458494@ax162/
-Reported-by: Tengda Wu <wutengda@huaweicloud.com>
-Tested-by: Tengda Wu <wutengda@huaweicloud.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 1f25ca11d84a ("iio: temperature: add support for Maxim thermocouple chips")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250721-iio-use-more-iio_declare_buffer_with_ts-3-v2-1-0c68d41ccf6c@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/iio/temperature/maxim_thermocouple.c |   26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -4665,13 +4665,17 @@ ftrace_regex_open(struct ftrace_ops *ops
- 	        } else {
- 			iter->hash = alloc_and_copy_ftrace_hash(size_bits, hash);
- 		}
-+	} else {
-+		if (hash)
-+			iter->hash = alloc_and_copy_ftrace_hash(hash->size_bits, hash);
-+		else
-+			iter->hash = EMPTY_HASH;
-+	}
+--- a/drivers/iio/temperature/maxim_thermocouple.c
++++ b/drivers/iio/temperature/maxim_thermocouple.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/err.h>
+ #include <linux/spi/spi.h>
++#include <linux/types.h>
+ #include <linux/iio/iio.h>
+ #include <linux/iio/sysfs.h>
+ #include <linux/iio/trigger.h>
+@@ -121,8 +122,15 @@ struct maxim_thermocouple_data {
+ 	struct spi_device *spi;
+ 	const struct maxim_thermocouple_chip *chip;
+ 	char tc_type;
+-
+-	u8 buffer[16] __aligned(IIO_DMA_MINALIGN);
++	/* Buffer for reading up to 2 hardware channels. */
++	struct {
++		union {
++			__be16 raw16;
++			__be32 raw32;
++			__be16 raw[2];
++		};
++		aligned_s64 timestamp;
++	} buffer __aligned(IIO_DMA_MINALIGN);
+ };
  
--		if (!iter->hash) {
--			trace_parser_put(&iter->parser);
--			goto out_unlock;
--		}
--	} else
--		iter->hash = hash;
-+	if (!iter->hash) {
-+		trace_parser_put(&iter->parser);
-+		goto out_unlock;
-+	}
+ static int maxim_thermocouple_read(struct maxim_thermocouple_data *data,
+@@ -130,18 +138,16 @@ static int maxim_thermocouple_read(struc
+ {
+ 	unsigned int storage_bytes = data->chip->read_size;
+ 	unsigned int shift = chan->scan_type.shift + (chan->address * 8);
+-	__be16 buf16;
+-	__be32 buf32;
+ 	int ret;
  
- 	ret = 0;
+ 	switch (storage_bytes) {
+ 	case 2:
+-		ret = spi_read(data->spi, (void *)&buf16, storage_bytes);
+-		*val = be16_to_cpu(buf16);
++		ret = spi_read(data->spi, &data->buffer.raw16, storage_bytes);
++		*val = be16_to_cpu(data->buffer.raw16);
+ 		break;
+ 	case 4:
+-		ret = spi_read(data->spi, (void *)&buf32, storage_bytes);
+-		*val = be32_to_cpu(buf32);
++		ret = spi_read(data->spi, &data->buffer.raw32, storage_bytes);
++		*val = be32_to_cpu(data->buffer.raw32);
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
+@@ -166,9 +172,9 @@ static irqreturn_t maxim_thermocouple_tr
+ 	struct maxim_thermocouple_data *data = iio_priv(indio_dev);
+ 	int ret;
  
-@@ -6547,9 +6551,6 @@ int ftrace_regex_release(struct inode *i
- 		ftrace_hash_move_and_update_ops(iter->ops, orig_hash,
- 						      iter->hash, filter_hash);
- 		mutex_unlock(&ftrace_lock);
--	} else {
--		/* For read only, the hash is the ops hash */
--		iter->hash = NULL;
+-	ret = spi_read(data->spi, data->buffer, data->chip->read_size);
++	ret = spi_read(data->spi, data->buffer.raw, data->chip->read_size);
+ 	if (!ret) {
+-		iio_push_to_buffers_with_ts(indio_dev, data->buffer,
++		iio_push_to_buffers_with_ts(indio_dev, &data->buffer,
+ 					    sizeof(data->buffer),
+ 					    iio_get_time_ns(indio_dev));
  	}
- 
- 	mutex_unlock(&iter->ops->func_hash->regex_lock);
 
 
