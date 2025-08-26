@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6469B2139C9;
-	Tue, 26 Aug 2025 13:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF64622DFB8;
+	Tue, 26 Aug 2025 13:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215676; cv=none; b=XpbN8cAPmx0j1jgGvA4qQk1U1J8EbY/TfsF2RYs0ipCrXVSsxTeQ3mnDmxEn42QDsXbGpqMADqyRQKOwtSAfa+hhT5uOets/tAvaNt8oJA1KHpjOK6HC3KmJ9d01O/2vN0L2PAFr4DgL+SyWippaB/cmwBRY8X+UBk6GttcMRTM=
+	t=1756215679; cv=none; b=bsHhdUM1nZpI+qNLEQF3kfp1x0qSlCcG0VAGn3FQC1tq9B4X5xVvz1GEbuilsgFgjgkcSTbgrs6Y9doRQlwBfOu7vLoB98ylbDr+aNJHlt8Jtv0DPyJ2AYoEBK+eSUwROxmF+MCGkqd5+RNpDcJAYtK1DWLf9zmHx5I3o4v1kuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215676; c=relaxed/simple;
-	bh=/kf5xct5pyw/s188KBVOE4KDlxWeHtk8AB8Q952iUws=;
+	s=arc-20240116; t=1756215679; c=relaxed/simple;
+	bh=FP6LXRbGZ8kGX8bwCh3TqqwzKQoHw0Vr2D9K/giElvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfpqyrJy4D6NbUNRUIZI+PpG96oSqN7n+Yzsgbg3xDNeMpxyQw+ue4WRQLJZWKB+7Q8P1jw2VY9Wr94L9wCo7PlTSWb8AFTE/CaewSfyb71wI4z4FclYV8QWigr7Gwh260rwx6t8OtGmbNSCrHvenBS8mcdldzCVyJle69fG5q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqD12r7A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XK5zzvgKa2roKZdeCjYZCDzhHu4Zyt8xAZzy1GaZ9S9MHwTEx+0ksikH2IowpcPcHdP84e0gErdZmT8oCttm3KPLmy53AFNu8KZdslhnZGdEjDW6mzdSZ1p1D4qLstg0OgeOVL3j7CrY5B3/Z2u7OwOQlcn+1sJdddImzxoBFns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHKjWl1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqD12r7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E165AC4CEF1;
-	Tue, 26 Aug 2025 13:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHKjWl1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79183C4CEF1;
+	Tue, 26 Aug 2025 13:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215676;
-	bh=/kf5xct5pyw/s188KBVOE4KDlxWeHtk8AB8Q952iUws=;
+	s=korg; t=1756215678;
+	bh=FP6LXRbGZ8kGX8bwCh3TqqwzKQoHw0Vr2D9K/giElvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqD12r7Awof51eWptYC29W3p5vw1LOqtVTcPiOTKFu1SK1OSiomxfJBUBu7mwZ1xI
-	 m0HSrRAgNk//jcxpJT9HKqqzxzYZRT4CuNlCnIKCCz6y5FYbF/JT1Rm52jq5xwtC34
-	 TqPLmZbIbuUsrp/HPukMRUaTisSWtIG/ZlGKhoD8=
+	b=KHKjWl1AlOWlXA172JmOjzx9lijPbPCahJCSwDOn5ZkKs7RcDrnnJIkM4TnbXbTKO
+	 BM55sPI61B+1h4KawPwtp/L4ggkiodaUcyQZaVH+0KpVkMPuzv75A7G+g3Re/GDT1j
+	 4Mz7RCNPE9Jz766DOZd3LT8Ihwx5gxpP8mvdQFBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Lizhi Xu <lizhi.xu@windriver.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/644] Revert "vmci: Prevent the dispatching of uninitialized payloads"
-Date: Tue, 26 Aug 2025 13:03:33 +0200
-Message-ID: <20250826110949.542233978@linuxfoundation.org>
+Subject: [PATCH 5.15 123/644] usb: early: xhci-dbc: Fix early_ioremap leak
+Date: Tue, 26 Aug 2025 13:03:34 +0200
+Message-ID: <20250826110949.565955470@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,53 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit 8f5d9bed6122b8d96508436e5ad2498bb797eb6b ]
+[ Upstream commit 2b7eec2ec3015f52fc74cf45d0408925e984ecd1 ]
 
-This reverts commit bfb4cf9fb97e4063f0aa62e9e398025fb6625031.
+Using the kernel param earlyprintk=xdbc,keep without proper hardware
+setup leads to this:
 
-While the code "looks" correct, the compiler has no way to know that
-doing "fun" pointer math like this really isn't a write off the end of
-the structure as there is no hint anywhere that the structure has data
-at the end of it.
+	[ ] xhci_dbc:early_xdbc_parse_parameter: dbgp_num: 0
+	...
+	[ ] xhci_dbc:early_xdbc_setup_hardware: failed to setup the connection to host
+	...
+	[ ] calling  kmemleak_late_init+0x0/0xa0 @ 1
+	[ ] kmemleak: Kernel memory leak detector initialized (mem pool available: 14919)
+	[ ] kmemleak: Automatic memory scanning thread started
+	[ ] initcall kmemleak_late_init+0x0/0xa0 returned 0 after 417 usecs
+	[ ] calling  check_early_ioremap_leak+0x0/0x70 @ 1
+	[ ] ------------[ cut here ]------------
+	[ ] Debug warning: early ioremap leak of 1 areas detected.
+	    please boot with early_ioremap_debug and report the dmesg.
+	[ ] WARNING: CPU: 11 PID: 1 at mm/early_ioremap.c:90 check_early_ioremap_leak+0x4e/0x70
 
-This causes the following build warning:
+When early_xdbc_setup_hardware() fails, make sure to call
+early_iounmap() since xdbc_init() won't handle it.
 
-In function 'fortify_memset_chk',
-    inlined from 'ctx_fire_notification.isra' at drivers/misc/vmw_vmci/vmci_context.c:254:3:
-include/linux/fortify-string.h:480:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  480 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-So revert it for now and it can come back in the future in a "sane" way
-that either correctly makes the structure know that there is trailing
-data, OR just the payload structure is properly referenced and zeroed
-out.
-
-Fixes: bfb4cf9fb97e ("vmci: Prevent the dispatching of uninitialized payloads")
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Lizhi Xu <lizhi.xu@windriver.com>
-Link: https://lore.kernel.org/r/20250703171021.0aee1482@canb.auug.org.au
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Fixes: aeb9dd1de98c ("usb/early: Add driver for xhci debug capability")
+Link: https://lore.kernel.org/r/20250627-xdbc-v1-1-43cc8c317b1b@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_context.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/early/xhci-dbc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/misc/vmw_vmci/vmci_context.c b/drivers/misc/vmw_vmci/vmci_context.c
-index a8df60b9301c..c0b5e339d5a1 100644
---- a/drivers/misc/vmw_vmci/vmci_context.c
-+++ b/drivers/misc/vmw_vmci/vmci_context.c
-@@ -251,8 +251,6 @@ static int ctx_fire_notification(u32 context_id, u32 priv_flags)
- 		ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 						  VMCI_CONTEXT_RESOURCE_ID);
- 		ev.msg.hdr.payload_size = sizeof(ev) - sizeof(ev.msg.hdr);
--		memset((char*)&ev.msg.hdr + sizeof(ev.msg.hdr), 0,
--			ev.msg.hdr.payload_size);
- 		ev.msg.event_data.event = VMCI_EVENT_CTX_REMOVED;
- 		ev.payload.context_id = context_id;
+diff --git a/drivers/usb/early/xhci-dbc.c b/drivers/usb/early/xhci-dbc.c
+index b0c4071f0b16..8963d2b8d8f7 100644
+--- a/drivers/usb/early/xhci-dbc.c
++++ b/drivers/usb/early/xhci-dbc.c
+@@ -679,6 +679,10 @@ int __init early_xdbc_setup_hardware(void)
  
+ 		xdbc.table_base = NULL;
+ 		xdbc.out_buf = NULL;
++
++		early_iounmap(xdbc.xhci_base, xdbc.xhci_length);
++		xdbc.xhci_base = NULL;
++		xdbc.xhci_length = 0;
+ 	}
+ 
+ 	return ret;
 -- 
 2.39.5
 
