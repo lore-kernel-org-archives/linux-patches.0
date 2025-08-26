@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50B525DB0A;
-	Tue, 26 Aug 2025 14:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A99325DB0A;
+	Tue, 26 Aug 2025 14:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218203; cv=none; b=RsybSb0dlTw/sSAASfbPpFJRnNjOlKm/kCi2JAFBem5q/Wr0UL18AZUTQ4HDAuQ9yWfR2umzJXyVBeHIHgFCyMAgsrglKjr282YlTfyD51mOhZ110L5TvZ0kkOSAeCGcAYbnXHwf2m+ER3PuflXArjrxtY+SnZh66ymsGdEPDLU=
+	t=1756218206; cv=none; b=NLQkAbr2/OItaHOSkakxJ4ppfAEYSiJ5XxesTWS1GMWlDtHctvBNppoiJ/FeT6MOH8uM2uRyzMCLfVvNKb4o87tkvMR4xJ7Ft1fLg4ArzPmaLsU4UFhk2ADS4neZQC29CmMbfHoORwOd8eRwV+Cg3RwMvma7gQzMaP4Dws3clec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218203; c=relaxed/simple;
-	bh=qoeD5YRW++onCQbc8RLl+g8U4V+g1OCHVuFqL+6SFPA=;
+	s=arc-20240116; t=1756218206; c=relaxed/simple;
+	bh=q/mPBZPv4XhC/aD3DphjTP/tX8uiIqyRrOsB6lv1+AQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bpnDKWjxpUblz8fSAGWXeIwUcHRS2djuQDv26AYkJdZmIxJrqXgkFcQ8csRQp3X/x6YHz90GiMySwmkzqUcWVN49KyCez4CYJ8SXbWPs/zY3tVy95cgZ+RPMtQ9b7+gr6pqLqlHMuWzhXURrN64h86db/d2sYDiJ8Afo4VKEwhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfpP9eD2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XQ0TTgCRrQNLyk0HyK1uNq+pLuCwk7EJm8b51+WfZdrsnUNv+M5JH9T+rDUH6tx3ohity4Kp7GKiwhLk4/fEBWWledIsIdFNAoJP18+xlHa2KmtjDPWZzD/1HUP0qK/26sN+0KWpwi0wHOhHNVhXCCQWEyK/jEqcVvedB8AGrPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPzhREI8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfpP9eD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C66C4CEF1;
-	Tue, 26 Aug 2025 14:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPzhREI8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1908C4CEF1;
+	Tue, 26 Aug 2025 14:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218203;
-	bh=qoeD5YRW++onCQbc8RLl+g8U4V+g1OCHVuFqL+6SFPA=;
+	s=korg; t=1756218206;
+	bh=q/mPBZPv4XhC/aD3DphjTP/tX8uiIqyRrOsB6lv1+AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfpP9eD2SBMWeheYeHgveRfAJwsMcB3YK4BcmRX75h6FO1L9GTNvpG4o61k/Y3V/n
-	 IV+iNDYMcq8/5BZjjnb78c0LbkH0oPijk9s4Abygk1qc5bIrgiVqcesHYtJeFAsKBI
-	 wFgSlOZEqRqqeTpiRQbtvhdzSpeeZdidIY/3Oobg=
+	b=UPzhREI8s8ZmwB4nZORORoAslZ/d4YmnY8BuQWrW5kJmvgkODcdMA53LeV2VhNG0R
+	 J31R8gMEQCmkwPuqa3nWlc48sufPZkPFKt0TVjPp1f8eVQMAtNawwkBg7qvi0W4WjD
+	 yJoUzX20tfXHMogABF3DOFwV7AGalVdMLiOn9FtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 405/523] ftrace: Also allocate and copy hash for reading of filter files
-Date: Tue, 26 Aug 2025 13:10:15 +0200
-Message-ID: <20250826110934.451043911@linuxfoundation.org>
+	Laurent Bigonville <bigon@bigon.be>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 432/523] PCI/ACPI: Fix runtime PM ref imbalance on Hot-Plug Capable ports
+Date: Tue, 26 Aug 2025 13:10:42 +0200
+Message-ID: <20250826110935.112074032@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,75 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit bfb336cf97df7b37b2b2edec0f69773e06d11955 upstream.
+[ Upstream commit 6cff20ce3b92ffbf2fc5eb9e5a030b3672aa414a ]
 
-Currently the reader of set_ftrace_filter and set_ftrace_notrace just adds
-the pointer to the global tracer hash to its iterator. Unlike the writer
-that allocates a copy of the hash, the reader keeps the pointer to the
-filter hashes. This is problematic because this pointer is static across
-function calls that release the locks that can update the global tracer
-hashes. This can cause UAF and similar bugs.
+pci_bridge_d3_possible() is called from both pcie_portdrv_probe() and
+pcie_portdrv_remove() to determine whether runtime power management shall
+be enabled (on probe) or disabled (on remove) on a PCIe port.
 
-Allocate and copy the hash for reading the filter files like it is done
-for the writers. This not only fixes UAF bugs, but also makes the code a
-bit simpler as it doesn't have to differentiate when to free the
-iterator's hash between writers and readers.
+The underlying assumption is that pci_bridge_d3_possible() always returns
+the same value, else a runtime PM reference imbalance would occur.  That
+assumption is not given if the PCIe port is inaccessible on remove due to
+hot-unplug:  pci_bridge_d3_possible() calls pciehp_is_native(), which
+accesses Config Space to determine whether the port is Hot-Plug Capable.
+An inaccessible port returns "all ones", which is converted to "all
+zeroes" by pcie_capability_read_dword().  Hence the port no longer seems
+Hot-Plug Capable on remove even though it was on probe.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/20250822183606.12962cc3@batman.local.home
-Fixes: c20489dad156 ("ftrace: Assign iter->hash to filter or notrace hashes on seq read")
-Closes: https://lore.kernel.org/all/20250813023044.2121943-1-wutengda@huaweicloud.com/
-Closes: https://lore.kernel.org/all/20250822192437.GA458494@ax162/
-Reported-by: Tengda Wu <wutengda@huaweicloud.com>
-Tested-by: Tengda Wu <wutengda@huaweicloud.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+The resulting runtime PM ref imbalance causes warning messages such as:
+
+  pcieport 0000:02:04.0: Runtime PM usage count underflow!
+
+Avoid the Config Space access (and thus the runtime PM ref imbalance) by
+caching the Hot-Plug Capable bit in struct pci_dev.
+
+The struct already contains an "is_hotplug_bridge" flag, which however is
+not only set on Hot-Plug Capable PCIe ports, but also Conventional PCI
+Hot-Plug bridges and ACPI slots.  The flag identifies bridges which are
+allocated additional MMIO and bus number resources to allow for hierarchy
+expansion.
+
+The kernel is somewhat sloppily using "is_hotplug_bridge" in a number of
+places to identify Hot-Plug Capable PCIe ports, even though the flag
+encompasses other devices.  Subsequent commits replace these occurrences
+with the new flag to clearly delineate Hot-Plug Capable PCIe ports from
+other kinds of hotplug bridges.
+
+Document the existing "is_hotplug_bridge" and the new "is_pciehp" flag
+and document the (non-obvious) requirement that pci_bridge_d3_possible()
+always returns the same value across the entire lifetime of a bridge,
+including its hot-removal.
+
+Fixes: 5352a44a561d ("PCI: pciehp: Make pciehp_is_native() stricter")
+Reported-by: Laurent Bigonville <bigon@bigon.be>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220216
+Reported-by: Mario Limonciello <mario.limonciello@amd.com>
+Closes: https://lore.kernel.org/r/20250609020223.269407-3-superm1@kernel.org/
+Link: https://lore.kernel.org/all/20250620025535.3425049-3-superm1@kernel.org/T/#u
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Cc: stable@vger.kernel.org # v4.18+
+Link: https://patch.msgid.link/fe5dcc3b2e62ee1df7905d746bde161eb1b3291c.1752390101.git.lukas@wunner.de
+[ Adjust surrounding documentation changes ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/pci/pci-acpi.c |    4 +---
+ drivers/pci/pci.c      |    8 ++++++--
+ drivers/pci/probe.c    |    2 +-
+ include/linux/pci.h    |    1 +
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -3829,13 +3829,17 @@ ftrace_regex_open(struct ftrace_ops *ops
- 	        } else {
- 			iter->hash = alloc_and_copy_ftrace_hash(size_bits, hash);
- 		}
-+	} else {
-+		if (hash)
-+			iter->hash = alloc_and_copy_ftrace_hash(hash->size_bits, hash);
-+		else
-+			iter->hash = EMPTY_HASH;
-+	}
+--- a/drivers/pci/pci-acpi.c
++++ b/drivers/pci/pci-acpi.c
+@@ -791,13 +791,11 @@ int pci_acpi_program_hp_params(struct pc
+ bool pciehp_is_native(struct pci_dev *bridge)
+ {
+ 	const struct pci_host_bridge *host;
+-	u32 slot_cap;
  
--		if (!iter->hash) {
--			trace_parser_put(&iter->parser);
--			goto out_unlock;
--		}
--	} else
--		iter->hash = hash;
-+	if (!iter->hash) {
-+		trace_parser_put(&iter->parser);
-+		goto out_unlock;
-+	}
+ 	if (!IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE))
+ 		return false;
  
- 	ret = 0;
+-	pcie_capability_read_dword(bridge, PCI_EXP_SLTCAP, &slot_cap);
+-	if (!(slot_cap & PCI_EXP_SLTCAP_HPC))
++	if (!bridge->is_pciehp)
+ 		return false;
  
-@@ -5707,9 +5711,6 @@ int ftrace_regex_release(struct inode *i
- 		ret = ftrace_hash_move_and_update_ops(iter->ops, orig_hash,
- 						      iter->hash, filter_hash);
- 		mutex_unlock(&ftrace_lock);
--	} else {
--		/* For read only, the hash is the ops hash */
--		iter->hash = NULL;
- 	}
+ 	if (pcie_ports_native)
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -2860,8 +2860,12 @@ static const struct dmi_system_id bridge
+  * pci_bridge_d3_possible - Is it possible to put the bridge into D3
+  * @bridge: Bridge to check
+  *
+- * This function checks if it is possible to move the bridge to D3.
+- * Currently we only allow D3 for recent enough PCIe ports and Thunderbolt.
++ * Currently we only allow D3 for some PCIe ports and for Thunderbolt.
++ *
++ * Return: Whether it is possible to move the bridge to D3.
++ *
++ * The return value is guaranteed to be constant across the entire lifetime
++ * of the bridge, including its hot-removal.
+  */
+ bool pci_bridge_d3_possible(struct pci_dev *bridge)
+ {
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1582,7 +1582,7 @@ void set_pcie_hotplug_bridge(struct pci_
  
- 	mutex_unlock(&iter->ops->func_hash->regex_lock);
+ 	pcie_capability_read_dword(pdev, PCI_EXP_SLTCAP, &reg32);
+ 	if (reg32 & PCI_EXP_SLTCAP_HPC)
+-		pdev->is_hotplug_bridge = 1;
++		pdev->is_hotplug_bridge = pdev->is_pciehp = 1;
+ }
+ 
+ static void set_pcie_thunderbolt(struct pci_dev *dev)
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -439,6 +439,7 @@ struct pci_dev {
+ 	unsigned int	is_virtfn:1;
+ 	unsigned int	reset_fn:1;
+ 	unsigned int	is_hotplug_bridge:1;
++	unsigned int	is_pciehp:1;
+ 	unsigned int	shpc_managed:1;		/* SHPC owned by shpchp */
+ 	unsigned int	is_thunderbolt:1;	/* Thunderbolt controller */
+ 	/*
 
 
