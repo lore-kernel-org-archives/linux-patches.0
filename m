@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B17428314A;
-	Tue, 26 Aug 2025 13:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2911F2BE058;
+	Tue, 26 Aug 2025 13:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214358; cv=none; b=dqR6Y8r3KeQlmSzvQiAE204oA9tqNBsyeU2E3jbLP+MGENac+lbAEiCe7DHjQLKSd08EEwTI91yHYBXhuCixlh0vf3EKMTYQr9DIjMHbBY40qVU7qhJbLiexrgStDS40I+dQ/2a9bCgV5ucjFCN9tBFfpjrC6xRDJRGGoACFrYo=
+	t=1756214361; cv=none; b=uXsLIPYALJqUhs4KuC20OoxZNsfT7HHhO/k3cDzWl1O0BNSx0w+q/fTS2nYPpnYe1s6FFk3KqZx8/dHJ3l+K8lfQ67wCGzJZlvIsN1whDSNMqxm7n5sDC2EziSTKQ/gzf7/GmeDeZUo9hjFn+Z6CRywyvfGV/g5rJoeJXfO4BHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214358; c=relaxed/simple;
-	bh=BkwxaZUxO3Xf7K1Y/5Bd+XkHQSyROV7XdHKbsmTP+vM=;
+	s=arc-20240116; t=1756214361; c=relaxed/simple;
+	bh=w3/dzM9tKMhtXkCE/J6z9MsZrJ+QQvjMc24FVxqzKns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+3plYaOXK6dwD1oEwTLjzgdxjrBo9o4hHhnNaXl43DWzu/2KiLPR0moq4RVSrIANnHvH2v0eh7uX9t2ZInUbezwmsQgrthmwEb4nWVKIl52rLkFoB69cpxwNXdx+XhkGX5stkL8nOJA9RXUaLUkuUS2OyPAmvK1x7vnhqkSc24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mk2VFozl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EtQFjF+VjhCQHJfnRzf0Rgq0UeZQz9igea84ksUAp3TmtQDlKZT71jALXc2Lpy0N9VqEyiZDFoRB3BoKWoezrOLi7TpthZ+YYj5qn+DOokS3RVYpNBwMaoAdYckQTU0Erznc8cQcpOJNBO1xsSnMrWYeEOkCdTejquIhvlRexxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khgP1SFC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mk2VFozl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE9AC4CEF1;
-	Tue, 26 Aug 2025 13:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khgP1SFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C4BC4CEF1;
+	Tue, 26 Aug 2025 13:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214358;
-	bh=BkwxaZUxO3Xf7K1Y/5Bd+XkHQSyROV7XdHKbsmTP+vM=;
+	s=korg; t=1756214360;
+	bh=w3/dzM9tKMhtXkCE/J6z9MsZrJ+QQvjMc24FVxqzKns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mk2VFozlUXKuP7hYn9FWExmIvn9YunBcnxYp+OTGGs7BG1U5VeMxYvTak1g4Y3ko0
-	 U1NkPG57WoK1NMNIrgXoVhB5ig7NraFzGMvkNKOW8r9cYVMPsN+Z8LLdZGIw0fXbCA
-	 Q/smyXi6vOAE4cJItvcSiKLRSN8viDwFzbvgEj6M=
+	b=khgP1SFCPsTMzL559dtRjqOONd7MXQ3d22Z5LIJT21zbFBoJbc45wR/3W+EaX8XRZ
+	 i41Y8n5yQj+HR7L/WQ5UiQrxzCzacqCqWujiTkxghGanvE3yj2GaAQgHq9l9b/Ds00
+	 oJ6JxZCXQc2davN51OHOTof6mWga6oyINoe8hp14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Lucy Thrun <lucy.thrun@digital-rabbithole.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/482] ALSA: hda/ca0132: Fix buffer overflow in add_tuning_control
-Date: Tue, 26 Aug 2025 13:06:01 +0200
-Message-ID: <20250826110933.494924981@linuxfoundation.org>
+Subject: [PATCH 6.1 082/482] gpio: tps65912: check the return value of regmap_update_bits()
+Date: Tue, 26 Aug 2025 13:05:35 +0200
+Message-ID: <20250826110932.857469904@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,39 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit a409c60111e6bb98fcabab2aeaa069daa9434ca0 ]
+[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
 
-The 'sprintf' call in 'add_tuning_control' may exceed the 44-byte
-buffer if either string argument is too long. This triggers a compiler
-warning.
-Replaced 'sprintf' with 'snprintf' to limit string lengths to prevent
-overflow.
+regmap_update_bits() can fail, check its return value like we do
+elsewhere in the driver.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506100642.95jpuMY1-lkp@intel.com/
-Signed-off-by: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
-Link: https://patch.msgid.link/20250610175012.918-3-lucy.thrun@digital-rabbithole.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-tps65912.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index d825fcce05ee..45b267c02a98 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -4399,7 +4399,7 @@ static int add_tuning_control(struct hda_codec *codec,
- 	}
- 	knew.private_value =
- 		HDA_COMPOSE_AMP_VAL(nid, 1, 0, type);
--	sprintf(namestr, "%s %s Volume", name, dirstr[dir]);
-+	snprintf(namestr, sizeof(namestr), "%s %s Volume", name, dirstr[dir]);
- 	return snd_hda_ctl_add(codec, nid, snd_ctl_new1(&knew, codec));
- }
+diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
+index fab771cb6a87..bac757c191c2 100644
+--- a/drivers/gpio/gpio-tps65912.c
++++ b/drivers/gpio/gpio-tps65912.c
+@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
+ 					  unsigned offset, int value)
+ {
+ 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
++	int ret;
  
+ 	/* Set the initial value */
+-	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+-			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
++				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	if (ret)
++		return ret;
+ 
+ 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+ 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
 -- 
 2.39.5
 
