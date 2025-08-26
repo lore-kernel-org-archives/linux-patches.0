@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2782135B8;
-	Tue, 26 Aug 2025 14:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF7C2135B8;
+	Tue, 26 Aug 2025 14:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218693; cv=none; b=Ol4mD+Lo1GGelnEpNa0Ax3uyLxxyoX+87et9sPihO4NWgMjDC8eAVKDlN2of/IoWxQBvCIWN6ktlBTtoxIq1Myd0fAgxjWl2Fu2DTHTVz2+otPy0waUebPnF4NzxLh4Pah13tFAZCXeRD+Iw9aKegSC4hCQ0AXlcIQR6fQghEoI=
+	t=1756218694; cv=none; b=CMPjQS7Uusd94lDlnJeH8ATKJHzhTd9RfGdZKWtMa5TaRf/4FQjEtnAG5ZQBr9XZFxybFq2n+E7JJAV91ewzJfB6Co/FCjhC22WWYBUcNiKWh1FjfjekBTyuaTIz/FmsFtvbFUeHMsLMjNKvApqT/3nxIg3VUmMcoeDzurUzs94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218693; c=relaxed/simple;
-	bh=slB1aR+Eu4KpfkD7jxIpAxKYivSSn4hnOecyYi+WY+8=;
+	s=arc-20240116; t=1756218694; c=relaxed/simple;
+	bh=pFGHkjGbVWF30TV3A8KNkXMisIM6Cy9wqO4vT+H0Mps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/7I8pVwOUvOvgW7hYOLSFGfTjdF6B9fxFPWxOSpKoLDr4+kIu93c++XxuANlOchEphQKRqnulcBkeZCDZo+c+mYuc12HIiKFr37pPBThvcTy7yZYUqsFj9gMLsvY4kXVI213k8JBu1Tf2rzu3U9+MzkxhmlbwihfWhScS7X2ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5S/+msQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ROali9AVSzZEF6WH9bbrtEXF0ZVpi4ONKlfynAl0whdMi+02/E6PhiG06C9UcvtbwEGI2UiVnwZQbmr3HSe1fZOityd8AxcCJGeK1dI4pP3TKp2tf0ahA5OnHlVpDB6yfETWBiw2vQdPnYmpMoRHFSoYBzE1JA5L3KbkF4nDmzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrhRwiIL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5S/+msQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54B7C4CEF1;
-	Tue, 26 Aug 2025 14:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrhRwiIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B52C4CEF1;
+	Tue, 26 Aug 2025 14:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218692;
-	bh=slB1aR+Eu4KpfkD7jxIpAxKYivSSn4hnOecyYi+WY+8=;
+	s=korg; t=1756218694;
+	bh=pFGHkjGbVWF30TV3A8KNkXMisIM6Cy9wqO4vT+H0Mps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5S/+msQ1BzG3r6U/m7nJaRsF0y6+GXXtqUaqGmvoXon/AstACo+0Do5pcNDZ3QsZ
-	 m3iP7+nF1kpEJb0i055Zn/W7tRNSLDan1EnPtoqd16SRro6poN01tcBhVFr0VoUToY
-	 pBh2H7cCxesuig5LsE863CPH5wotHF9tuDtgK/1s=
+	b=yrhRwiILC3KgDcGvL8vuPBCW0WxNl8cqG3V+gTBD3NnUY7XLuGBKQKV7j2Hb/Ba+C
+	 TVSdfcVLfP0Kte5L/c7VRr5WXvSeXnPZXY2G8uh7vXijvK+3EejnHMIHSlgywBR6Zu
+	 nLoY2KPHgrbtc4st3IGCD3WkKzDd4tiX7yCq36xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	Remi Pommarel <repk@triplefau.lt>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 097/403] mwl8k: Add missing check after DMA map
-Date: Tue, 26 Aug 2025 13:07:03 +0200
-Message-ID: <20250826110909.352058930@linuxfoundation.org>
+Subject: [PATCH 5.4 098/403] Reapply "wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()"
+Date: Tue, 26 Aug 2025 13:07:04 +0200
+Message-ID: <20250826110909.381604948@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,37 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 50459501b9a212dbe7a673727589ee105a8a9954 ]
+[ Upstream commit 754fe848b3b297fc85ec24cd959bad22b6df8cb8 ]
 
-The DMA map functions can fail and should be tested for errors.
-If the mapping fails, unmap and return an error.
+This reverts commit 0937cb5f345c ("Revert "wifi: mac80211: Update
+skb's control block key in ieee80211_tx_dequeue()"").
 
-Fixes: 788838ebe8a4 ("mwl8k: use pci_unmap_addr{,set}() to keep track of unmap addresses on rx")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20250709111339.25360-2-fourier.thomas@gmail.com
+This commit broke TX with 802.11 encapsulation HW offloading, now that
+this is fixed, reapply it.
+
+Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://patch.msgid.link/66b8fc39fb0194fa06c9ca7eeb6ffe0118dcb3ec.1752765971.git.repk@triplefau.lt
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwl8k.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/mac80211/tx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/marvell/mwl8k.c b/drivers/net/wireless/marvell/mwl8k.c
-index abd5c8670bc4..a0c15af1b167 100644
---- a/drivers/net/wireless/marvell/mwl8k.c
-+++ b/drivers/net/wireless/marvell/mwl8k.c
-@@ -1220,6 +1220,10 @@ static int rxq_refill(struct ieee80211_hw *hw, int index, int limit)
- 
- 		addr = pci_map_single(priv->pdev, skb->data,
- 				      MWL8K_RX_MAXSZ, DMA_FROM_DEVICE);
-+		if (dma_mapping_error(&priv->pdev->dev, addr)) {
-+			kfree_skb(skb);
-+			break;
-+		}
- 
- 		rxq->rxd_count++;
- 		rx = rxq->tail++;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 461cff7b94ad..f8d72f3e4def 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3661,6 +3661,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 	 * The key can be removed while the packet was queued, so need to call
+ 	 * this here to get the current key.
+ 	 */
++	info->control.hw_key = NULL;
+ 	r = ieee80211_tx_h_select_key(&tx);
+ 	if (r != TX_CONTINUE) {
+ 		ieee80211_free_txskb(&local->hw, skb);
 -- 
 2.39.5
 
