@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32449343D63;
-	Tue, 26 Aug 2025 11:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D768B343219;
+	Tue, 26 Aug 2025 11:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207854; cv=none; b=IRPd7DPkG+wn5G7L3sVK/m6+eGPZFjbWG0Hiygu8a2Ir/I9XjAxmmhYQlA81uLkiWgMjD8wZHdMz9lkRXRN+6aZUBTHZuI6C4BSLG4PAQ0cQxym2YONnTZtltaEvC7IpHlRwvoV5IhzrjSlU/dpTbSNTyJOSoykT+A/18dkVYHM=
+	t=1756207856; cv=none; b=e5+iKTukaik1fF5bCAOTuFaUyyG86MkOcb9izIxLKb+oFbeSfNXHy43+MqONOvaXCft4Wz/utLLHrsV23C7TcMqr6EchVdjVr1ap8QIMsJzTXQIFc/HWGl7TGQAy7HwiN/oq6KG949CqHgYIQmyEn47mgYCDVotNrCiSpjzpvpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207854; c=relaxed/simple;
-	bh=ZSUYJ8aENkf92YnKTO0Bcj/GuBUOsyuQiw1hZv7UCK8=;
+	s=arc-20240116; t=1756207856; c=relaxed/simple;
+	bh=QcIfy/Jld1ucKH/If/CyA+b6+BQ2D51OhycvwQRX5vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E8uouQDNo/px9ZmqE8+aU1K7J5SOEMLDSVhpApalgQ7W/Qia4mjbPq+9VPDUpMhYQCby1hH0+rnFQ/VThQxW507/reB+m7rZYVb/NUJlT6kZRHyjoMzwEmsxcck3axRRtot2VQSEsNlT5w5mbhRLZw1HxgQR8gBop52LGyzRVUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGsDDn20; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PXpKm10dsxeStd2lt5yn46nIlMVxq6VaYqcuU45HEPLyKVVk8Icn6xt4yuI5rUmAnI7kml5J1S0vXknKH0jtxTNvtlMoI/F63P/HCJPcEVft16vg71OSxSXrG/S4bagsf0+O8Xw2FDVYCQZTZ42pCkhUmQAOdBDZYtzymTqbMiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqKCPjV1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGsDDn20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2E4C4CEF1;
-	Tue, 26 Aug 2025 11:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqKCPjV1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9FAC4CEF1;
+	Tue, 26 Aug 2025 11:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207854;
-	bh=ZSUYJ8aENkf92YnKTO0Bcj/GuBUOsyuQiw1hZv7UCK8=;
+	s=korg; t=1756207856;
+	bh=QcIfy/Jld1ucKH/If/CyA+b6+BQ2D51OhycvwQRX5vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGsDDn20qrzn+awb4kuzvskTtfJ+In1rzsfRO7luP9UpcY2NhSdmHtes9gF/tg/5q
-	 1vm+Yh5gSg1lL28pHDpRWExXZ6KW0T5NVmCgeTHu+ycfASdR2Xg+F9+sJaCJIaK+2b
-	 fClLunJzBR2kjtd4ATIK+j1a/l8yQYrVSmZ81z54=
+	b=bqKCPjV1B30VaXrNh1hru8j5SYASF8kblbX+n1Qyt0M75BvW7yZr04R5JllBJbcKp
+	 +OVc1/OxWIKGpTEwxzjryhljr/QZsCGZlqdDxmQe+dw/xktaRbWNp2SMRoVc5zNLO6
+	 ToJ5dH39dCBi7rhu0u9jxBUvL7vwy8tNwn5lxX4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 342/457] spi: spi-qpic-snand: use correct CW_PER_PAGE value for OOB write
-Date: Tue, 26 Aug 2025 13:10:26 +0200
-Message-ID: <20250826110945.785036039@linuxfoundation.org>
+	Mael GUERIN <mael.guerin@murena.io>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.16 316/457] USB: storage: Add unusual-devs entry for Novatek NTK96550-based camera
+Date: Tue, 26 Aug 2025 13:10:00 +0200
+Message-ID: <20250826110945.167221096@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -45,72 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Mael GUERIN <mael.guerin@murena.io>
 
-[ Upstream commit 6bc829220b33da8522572cc50fdf5067c51d3bf3 ]
+commit 6ca8af3c8fb584f3424a827f554ff74f898c27cd upstream.
 
-The qcom_spi_program_oob() function uses only the last codeword to write
-the OOB data into the flash, but it sets the CW_PER_PAGE field in the
-CFG0 register as it would use all codewords.
+Add the US_FL_BULK_IGNORE_TAG quirk for Novatek NTK96550-based camera
+to fix USB resets after sending SCSI vendor commands due to CBW and
+CSW tags difference, leading to undesired slowness while communicating
+with the device.
 
-It seems that this confuses the hardware somehow, and any access to the
-flash fails with a timeout error after the function is called. The problem
-can be easily reproduced with the following commands:
+Please find below the copy of /sys/kernel/debug/usb/devices with my
+device plugged in (listed as TechSys USB mass storage here, the
+underlying chipset being the Novatek NTK96550-based camera):
 
-    # dd if=/dev/zero bs=2176 count=1 > /tmp/test.bin
-    1+0 records in
-    1+0 records out
-    # flash_erase /dev/mtd4 0 0
-    Erasing 128 Kibyte @ 0 -- 100 % complete
-    # nandwrite -O /dev/mtd4 /tmp/test.bin
-    Writing data to block 0 at offset 0x0
-    # nanddump -o /dev/mtd4 >/dev/null
-    ECC failed: 0
-    ECC corrected: 0
-    Number of bad blocks: 0
-    Number of bbt blocks: 0
-    Block size 131072, page size 2048, OOB size 128
-    Dumping data starting at 0x00000000 and ending at 0x00020000...
-    [   33.197605] qcom_snand 79b0000.spi: failure to read oob
-    libmtd: error!: MEMREADOOB64 ioctl failed for mtd4, offset 0 (eraseblock 0)
-            error 110 (Operation timed out)
-    [   35.277582] qcom_snand 79b0000.spi: failure in submitting cmd descriptor
-    libmtd: error!: cannot read 2048 bytes from mtd4 (eraseblock 0, offset 2048)
-            error 110 (Operation timed out)
-    nanddump: error!: mtd_read
+T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=0603 ProdID=8611 Rev= 0.01
+S:  Manufacturer=TechSys
+S:  Product=USB Mass Storage
+S:  SerialNumber=966110000000100
+C:* #Ifs= 1 Cfg#= 1 Atr=c0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=usb-storage
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Change the code to use the correct CW_PER_PAGE value to avoid this.
-
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://patch.msgid.link/20250801-qpic-snand-oob-cwpp-fix-v1-1-f5a41b86af2e@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Mael GUERIN <mael.guerin@murena.io>
+Cc: stable <stable@kernel.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250806164406.43450-1-mael.guerin@murena.io
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-qpic-snand.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/unusual_devs.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 3b757e3d00c0..722ab60d616f 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -1185,7 +1185,7 @@ static int qcom_spi_program_oob(struct qcom_nand_controller *snandc,
- 	u32 cfg0, cfg1, ecc_bch_cfg, ecc_buf_cfg;
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -934,6 +934,13 @@ UNUSUAL_DEV(  0x05e3, 0x0723, 0x9451, 0x
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_SANE_SENSE ),
  
- 	cfg0 = (ecc_cfg->cfg0 & ~CW_PER_PAGE_MASK) |
--	       FIELD_PREP(CW_PER_PAGE_MASK, num_cw - 1);
-+	       FIELD_PREP(CW_PER_PAGE_MASK, 0);
- 	cfg1 = ecc_cfg->cfg1;
- 	ecc_bch_cfg = ecc_cfg->ecc_bch_cfg;
- 	ecc_buf_cfg = ecc_cfg->ecc_buf_cfg;
--- 
-2.50.1
-
++/* Added by Maël GUERIN <mael.guerin@murena.io> */
++UNUSUAL_DEV(  0x0603, 0x8611, 0x0000, 0xffff,
++		"Novatek",
++		"NTK96550-based camera",
++		USB_SC_SCSI, USB_PR_BULK, NULL,
++		US_FL_BULK_IGNORE_TAG ),
++
+ /*
+  * Reported by Hanno Boeck <hanno@gmx.de>
+  * Taken from the Lycoris Kernel
 
 
