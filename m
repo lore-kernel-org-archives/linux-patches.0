@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8981F790F;
-	Tue, 26 Aug 2025 14:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C282AE68;
+	Tue, 26 Aug 2025 14:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217963; cv=none; b=UccJeJdx44sb3AP6jTdmolGJfVz7oiOVOgoVqDqOlfNGXFan7vaEl3hedzgm9LG7WbTNkPvUl8OtXCrHbUapFh7zzrHdvrOgcMAIoZu967bX6iTHrjyiY2Z5ZaugGvFrwqRw+hZZzY5DktLLkVRfdtrkTujVA2LwTz9xwSjyC3o=
+	t=1756217965; cv=none; b=fFPnnO01R2TCfzB5aw7WfpvCyE4dUYpYvrl8Bv3fHdIOQNwgV5pRs3PVUl13pT7WdaqLP8NKuKDB/AkdxkR45VKrDV5MWezfCzrP65HU+RFzbUZyf/mIrrCNbSwtsAnGDETVc7ffKKTRkNAgRwUYZJxH1Lprq5STLmZ+mzVyFc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217963; c=relaxed/simple;
-	bh=hkCJWuDow/y0+mVn9r4TIexTPeU+6OFZmPBFXntYUCQ=;
+	s=arc-20240116; t=1756217965; c=relaxed/simple;
+	bh=LeKiiYKxx5kzHmlNm0iD69q/4Tl5vb9U7R7H4B1H3w4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zt0KBDrrvIpkOomGvvdhKST3husE21lmfzRTTMs/+oPMi9OMDusFwCiu4PyHvEzKCVwwW54ZAUMwjUsHo2WqxPFBFkpIQd9TccPy0p0tzoRvNgVMpJgROeqbNiylqEBjpFpd3bDf1R9x8s7bqxPY5ty2guF8O38BXZqvhMRQ1CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoNNLJ9t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tWfOL6yvnWQZ0af+nmKN+bGbn7Vy21Wye14IwopC/c3kJQt1Csf8DczAgDd+jatjeYc48LZITbdJTeJgqeYEnR5aD3mq4KKx+Sms6gkjppM7NRAd2OCKl4TzyR8zhzLmB5Iic9ttFOY1SSVTK9pNwTZ8MBoayNysOyAlvWERDBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEnCjdf+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoNNLJ9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82485C113CF;
-	Tue, 26 Aug 2025 14:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEnCjdf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A8DC4CEF1;
+	Tue, 26 Aug 2025 14:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217962;
-	bh=hkCJWuDow/y0+mVn9r4TIexTPeU+6OFZmPBFXntYUCQ=;
+	s=korg; t=1756217965;
+	bh=LeKiiYKxx5kzHmlNm0iD69q/4Tl5vb9U7R7H4B1H3w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GoNNLJ9tsrSwnTBHU3Uc+b35vmi/mGqwEtcwG8kpiM7+iLlj4Aoj+cN1zkiMTW+xs
-	 FNE7RYPskHKEMbKkF7nc8T8vjed1WmPr97x1bnJn11RXtIqxPN/xM3GYHzlU/CyD3/
-	 QHBjqQPWcaE+0l/X7y9ncova5c3KVBi2/xVkD/W8=
+	b=tEnCjdf+OMAOAin1zxEYT4XGp7Kna+/4p7auoBRBLesYinMUtfWjVpXgzYeIR09fb
+	 nyrOEAfhP7adqkott6GYDFeSadK31ilE/HythGED0wVaiOGvLfC4lUrYuYS1rNazjv
+	 ZwdwYefwt/eJ05Oaawba2m4dLAKHram1358XX0+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Konstantin Evtushenko <koevtushenko@yandex.com>,
+	Sergey Bashirov <sergeybashirov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 300/523] jfs: upper bound check of tree index in dbAllocAG
-Date: Tue, 26 Aug 2025 13:08:30 +0200
-Message-ID: <20250826110931.852600229@linuxfoundation.org>
+Subject: [PATCH 5.10 335/523] pNFS: Fix uninited ptr deref in block/scsi layout
+Date: Tue, 26 Aug 2025 13:09:05 +0200
+Message-ID: <20250826110932.737936497@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,42 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Sergey Bashirov <sergeybashirov@gmail.com>
 
-[ Upstream commit c214006856ff52a8ff17ed8da52d50601d54f9ce ]
+[ Upstream commit 9768797c219326699778fba9cd3b607b2f1e7950 ]
 
-When computing the tree index in dbAllocAG, we never check if we are
-out of bounds realative to the size of the stree.
-This could happen in a scenario where the filesystem metadata are
-corrupted.
+The error occurs on the third attempt to encode extents. When function
+ext_tree_prepare_commit() reallocates a larger buffer to retry encoding
+extents, the "layoutupdate_pages" page array is initialized only after the
+retry loop. But ext_tree_free_commitdata() is called on every iteration
+and tries to put pages in the array, thus dereferencing uninitialized
+pointers.
 
-Reported-by: syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cffd18309153948f3c3e
-Tested-by: syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+An additional problem is that there is no limit on the maximum possible
+buffer_size. When there are too many extents, the client may create a
+layoutcommit that is larger than the maximum possible RPC size accepted
+by the server.
+
+During testing, we observed two typical scenarios. First, one memory page
+for extents is enough when we work with small files, append data to the
+end of the file, or preallocate extents before writing. But when we fill
+a new large file without preallocating, the number of extents can be huge,
+and counting the number of written extents in ext_tree_encode_commit()
+does not help much. Since this number increases even more between
+unlocking and locking of ext_tree, the reallocated buffer may not be
+large enough again and again.
+
+Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250630183537.196479-2-sergeybashirov@gmail.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/nfs/blocklayout/extent_tree.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 234b7cc4acfa..f34025cc9b05 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -1457,6 +1457,12 @@ dbAllocAG(struct bmap * bmp, int agno, s64 nblocks, int l2nb, s64 * results)
- 	    (1 << (L2LPERCTL - (bmp->db_agheight << 1))) / bmp->db_agwidth;
- 	ti = bmp->db_agstart + bmp->db_agwidth * (agno & (agperlev - 1));
+diff --git a/fs/nfs/blocklayout/extent_tree.c b/fs/nfs/blocklayout/extent_tree.c
+index 8f7cff7a4293..0add0f329816 100644
+--- a/fs/nfs/blocklayout/extent_tree.c
++++ b/fs/nfs/blocklayout/extent_tree.c
+@@ -552,6 +552,15 @@ static int ext_tree_encode_commit(struct pnfs_block_layout *bl, __be32 *p,
+ 	return ret;
+ }
  
-+	if (ti < 0 || ti >= le32_to_cpu(dcp->nleafs)) {
-+		jfs_error(bmp->db_ipbmap->i_sb, "Corrupt dmapctl page\n");
-+		release_metapage(mp);
-+		return -EIO;
-+	}
-+
- 	/* dmap control page trees fan-out by 4 and a single allocation
- 	 * group may be described by 1 or 2 subtrees within the ag level
- 	 * dmap control page, depending upon the ag size. examine the ag's
++/**
++ * ext_tree_prepare_commit - encode extents that need to be committed
++ * @arg: layout commit data
++ *
++ * Return values:
++ *   %0: Success, all required extents are encoded
++ *   %-ENOSPC: Some extents are encoded, but not all, due to RPC size limit
++ *   %-ENOMEM: Out of memory, extents not encoded
++ */
+ int
+ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ {
+@@ -568,12 +577,12 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 	start_p = page_address(arg->layoutupdate_page);
+ 	arg->layoutupdate_pages = &arg->layoutupdate_page;
+ 
+-retry:
+-	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size, &count, &arg->lastbytewritten);
++	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
++			&count, &arg->lastbytewritten);
+ 	if (unlikely(ret)) {
+ 		ext_tree_free_commitdata(arg, buffer_size);
+ 
+-		buffer_size = ext_tree_layoutupdate_size(bl, count);
++		buffer_size = NFS_SERVER(arg->inode)->wsize;
+ 		count = 0;
+ 
+ 		arg->layoutupdate_pages =
+@@ -588,7 +597,8 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 			return -ENOMEM;
+ 		}
+ 
+-		goto retry;
++		ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
++				&count, &arg->lastbytewritten);
+ 	}
+ 
+ 	*start_p = cpu_to_be32(count);
+@@ -608,7 +618,7 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 	}
+ 
+ 	dprintk("%s found %zu ranges\n", __func__, count);
+-	return 0;
++	return ret;
+ }
+ 
+ void
 -- 
 2.39.5
 
