@@ -1,36 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF662248A5;
-	Tue, 26 Aug 2025 11:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BE92BF3E2;
+	Tue, 26 Aug 2025 11:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207563; cv=none; b=YfUtlncdAn3ocdeF8Cz0Zmk0F98tvQvQ/NQpzl9dSpbHK5JPvreDG5ja9wvh0k136qTiDk3DrCQ2e3+yaem7Ub4yFYvw8cKHjrNbla/TBCCvI2p4IPPSUgRcZ13BoQ0j+Mtbf/dZjh7SezIhK71wAW1qhOyHJdEibS6ypQUKgWY=
+	t=1756207566; cv=none; b=qYsXWE49ouC22cEGXIfPYXyK1a/xMwUaQNXmNhXNP5V2Qxzckf+iZMcuSkbLidhWK4jn6YB4CEwJaplYu2N1ptZrWaaKs/IFiRexvzoKdYe+Wi83L9/T9SWV6gEUgcw0ADsgZE4LZSD8zGQBofs1fOyPoHUFue2wIwfKz3LILdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207563; c=relaxed/simple;
-	bh=LhEBcpz4vBEt/u80N10X/12Gq3zgfMX+IiQWmwk0Dbw=;
+	s=arc-20240116; t=1756207566; c=relaxed/simple;
+	bh=4b3FkIYgmB4wDnklzmm79XiMdXRWIKbc1915vplQWHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQX2G4zVVrkfP/mOyStk/PkUpOtyY0HkVEqVMMlWG80A3BUh2Q2nz7pFBtV1Xx6nEQSRAWbrjwx27lj8DonEvqOgHh0Mm/rbJXJMkY3H3aXcgpQ8gArDGeUyYDtTJdtFgr1UEsqejvrg6qPkZGU1Ob/7qAz7E+NhWk6nyub/VOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTJ479Wg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=besRYu/Mh9fsqphIkNbc2cjxxwrVKdTTNQefhcdfLfWwS2qSXbAJ73P8vCRhzZrrat1+1YmeX/rCTZZe1sKaO/oiS+XXNzgns3ewH0vU5XCGzzJM/0nPh8TBgUHYLAFoSPAfjkF5sQeAReTZFvh/7txnNDT+2HbtZxDiPlxEpbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xurVA0sq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTJ479Wg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BDDC4CEF1;
-	Tue, 26 Aug 2025 11:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xurVA0sq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D802C4CEF1;
+	Tue, 26 Aug 2025 11:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207563;
-	bh=LhEBcpz4vBEt/u80N10X/12Gq3zgfMX+IiQWmwk0Dbw=;
+	s=korg; t=1756207565;
+	bh=4b3FkIYgmB4wDnklzmm79XiMdXRWIKbc1915vplQWHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTJ479Wg/6xEY+Gkopov7QqUQ9kBi8bPGHkuIIyswb4caCgXaj++zFyFBX4SUbFV7
-	 4SSS7X+Zr+pJmxPxE+bOiWk0PhG/3cEBDByCWgy7Iyb9/jUIJkLjt1QS5mD9fjXhOp
-	 u+KzglTfBzPxu+fggjBMIeY5n5Cg+9dzS8tnOwVs=
+	b=xurVA0sqwHxJYCkLDAKIC2Pug1vxuRVHUHI5nF9CeI0Lw0Y+WjiKdnVyPOMg3PZiH
+	 CoCjz8XBjZv0MBHJCG3JBWNSYLobssg2ompFpeemZDQJ0RiXH8QuU2ijif8LTA0SiW
+	 Mns6CI9Elg5BBJfJUYg405r+CV56/Ou6+MVWJ05o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.16 231/457] io_uring/futex: ensure io_futex_wait() cleans up properly on failure
-Date: Tue, 26 Aug 2025 13:08:35 +0200
-Message-ID: <20250826110943.083192979@linuxfoundation.org>
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Maximilian Bosch <maximilian@mbosch.me>,
+	Ryan Lahfa <ryan@lahfa.xyz>,
+	Christian Theune <ct@flyingcircus.io>,
+	Arnout Engelen <arnout@bzzt.net>,
+	David Howells <dhowells@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 232/457] iov_iter: iterate_folioq: fix handling of offset >= folio size
+Date: Tue, 26 Aug 2025 13:08:36 +0200
+Message-ID: <20250826110943.106915181@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -49,48 +58,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-commit 508c1314b342b78591f51c4b5dadee31a88335df upstream.
+commit 808471ddb0fa785559c3e7aee59be20a13b46ef5 upstream.
 
-The io_futex_data is allocated upfront and assigned to the io_kiocb
-async_data field, but the request isn't marked with REQ_F_ASYNC_DATA
-at that point. Those two should always go together, as the flag tells
-io_uring whether the field is valid or not.
+It's apparently possible to get an iov advanced all the way up to the end
+of the current page we're looking at, e.g.
 
-Additionally, on failure cleanup, the futex handler frees the data but
-does not clear ->async_data. Clear the data and the flag in the error
-path as well.
+(gdb) p *iter
+$24 = {iter_type = 4 '\004', nofault = false, data_source = false, iov_offset = 4096, {__ubuf_iovec = {
+      iov_base = 0xffff88800f5bc000, iov_len = 655}, {{__iov = 0xffff88800f5bc000, kvec = 0xffff88800f5bc000,
+        bvec = 0xffff88800f5bc000, folioq = 0xffff88800f5bc000, xarray = 0xffff88800f5bc000,
+        ubuf = 0xffff88800f5bc000}, count = 655}}, {nr_segs = 2, folioq_slot = 2 '\002', xarray_start = 2}}
 
-Thanks to Trend Micro Zero Day Initiative and particularly ReDress for
-reporting this.
+Where iov_offset is 4k with 4k-sized folios
 
-Cc: stable@vger.kernel.org
-Fixes: 194bb58c6090 ("io_uring: add support for futex wake and wait")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This should have been fine because we're only in the 2nd slot and there's
+another one after this, but iterate_folioq should not try to map a folio
+that skips the whole size, and more importantly part here does not end up
+zero (because 'PAGE_SIZE - skip % PAGE_SIZE' ends up PAGE_SIZE and not
+zero..), so skip forward to the "advance to next folio" code
+
+Link: https://lkml.kernel.org/r/20250813-iot_iter_folio-v3-0-a0ffad2b665a@codewreck.org
+Link: https://lkml.kernel.org/r/20250813-iot_iter_folio-v3-1-a0ffad2b665a@codewreck.org
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: db0aa2e9566f ("mm: Define struct folio_queue and ITER_FOLIOQ to handle a sequence of folios")
+Reported-by: Maximilian Bosch <maximilian@mbosch.me>
+Reported-by: Ryan Lahfa <ryan@lahfa.xyz>
+Reported-by: Christian Theune <ct@flyingcircus.io>
+Reported-by: Arnout Engelen <arnout@bzzt.net>
+Link: https://lkml.kernel.org/r/D4LHHUNLG79Y.12PI0X6BEHRHW@mbosch.me/
+Acked-by: David Howells <dhowells@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>	[6.12+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/futex.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/iov_iter.h |   20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/io_uring/futex.c
-+++ b/io_uring/futex.c
-@@ -288,6 +288,7 @@ int io_futex_wait(struct io_kiocb *req,
- 		goto done_unlock;
- 	}
+--- a/include/linux/iov_iter.h
++++ b/include/linux/iov_iter.h
+@@ -160,7 +160,7 @@ size_t iterate_folioq(struct iov_iter *i
  
-+	req->flags |= REQ_F_ASYNC_DATA;
- 	req->async_data = ifd;
- 	ifd->q = futex_q_init;
- 	ifd->q.bitset = iof->futex_mask;
-@@ -309,6 +310,8 @@ done:
- 	if (ret < 0)
- 		req_set_fail(req);
- 	io_req_set_res(req, ret, 0);
-+	req->async_data = NULL;
-+	req->flags &= ~REQ_F_ASYNC_DATA;
- 	kfree(ifd);
- 	return IOU_COMPLETE;
- }
+ 	do {
+ 		struct folio *folio = folioq_folio(folioq, slot);
+-		size_t part, remain, consumed;
++		size_t part, remain = 0, consumed;
+ 		size_t fsize;
+ 		void *base;
+ 
+@@ -168,14 +168,16 @@ size_t iterate_folioq(struct iov_iter *i
+ 			break;
+ 
+ 		fsize = folioq_folio_size(folioq, slot);
+-		base = kmap_local_folio(folio, skip);
+-		part = umin(len, PAGE_SIZE - skip % PAGE_SIZE);
+-		remain = step(base, progress, part, priv, priv2);
+-		kunmap_local(base);
+-		consumed = part - remain;
+-		len -= consumed;
+-		progress += consumed;
+-		skip += consumed;
++		if (skip < fsize) {
++			base = kmap_local_folio(folio, skip);
++			part = umin(len, PAGE_SIZE - skip % PAGE_SIZE);
++			remain = step(base, progress, part, priv, priv2);
++			kunmap_local(base);
++			consumed = part - remain;
++			len -= consumed;
++			progress += consumed;
++			skip += consumed;
++		}
+ 		if (skip >= fsize) {
+ 			skip = 0;
+ 			slot++;
 
 
