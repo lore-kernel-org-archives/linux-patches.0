@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D418854654;
-	Tue, 26 Aug 2025 13:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7713124A066;
+	Tue, 26 Aug 2025 13:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213723; cv=none; b=hURNsldpLrsH25u3JiEEQcmQFXzoCYXcNylLR7iTaPskykIpB6KAm85y5EhvO7A5Vws0ymTwjUDc3p7/yDqMwcmxfL8XT+Kr1FxxZ4iG/Isu3V13E/qWgCg2fKiiSkoHAraYr3hwDPnBIEAunsnpmOa3wKOLwNuu/Pxtczm+UCM=
+	t=1756213726; cv=none; b=pXUz47UfRbzYx7HDsOT8y2amfrEz9zEK4EhJlxQyRMcdxJJTXSsOfJ4IhHOUzD39K5fCIOIAPh3/hpgi4/PfVk+EJ3m85jQZmWUOfTSWjK3SDgpSycSbIqoW1ZmWnhgvKnMJbvKlg48zk/Iph8aeR0zvjQGtWp9cZbmmyUtK4iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213723; c=relaxed/simple;
-	bh=C1LoKWqCIwJwwb1734QQSspGraFP3V9lKyJh62Wmw0A=;
+	s=arc-20240116; t=1756213726; c=relaxed/simple;
+	bh=PvvlqgNRZjRueoTIsDjePHJX0H/0j6bvCKV4gKZBJ7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSRNEx49t9R3C6KVBCH1IP0D2JHlF9X3+twB3Pfg3G+YHJdwcho7wtx/tfLa8tOP5cQJ27xJcQphRwYf6Hch4riyKX3we2gi04J0yolIyLXk/2cFwXUQxCGCLYsJ4U/clokezbtVYf15IYgS5uMn+xGTY7duGxAjOVx8Ol5LtSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJWeYf/6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SCtCuXYQJEc9rkJn+OdorS+3xsMA3UWc3a5ShbmNt1wb2YMg6SxbhDcvx0n0j4+5zOS46F8Gs2XR5oWDi+0WqBQLUG6uv3+9210nZxTU80YkrnrsFwsmQr37CMwOSm/uL4nFyuQ90kCb9du151s/rbQCoRIbVL3Up1aeAa7EA0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeF1uFbL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJWeYf/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C643C4CEF1;
-	Tue, 26 Aug 2025 13:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeF1uFbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09888C4CEF1;
+	Tue, 26 Aug 2025 13:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213723;
-	bh=C1LoKWqCIwJwwb1734QQSspGraFP3V9lKyJh62Wmw0A=;
+	s=korg; t=1756213726;
+	bh=PvvlqgNRZjRueoTIsDjePHJX0H/0j6bvCKV4gKZBJ7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJWeYf/6qZFSe5s9WvOjX9DY8wPhjDBG9KI4LAa1OAUNsivxFQlKCKAE3ud/m4Wpj
-	 qYHx/dvppDnyc/6R7xx/ZwS8E5Eux/J7JWtlsT5iA+i+8hyqldaGQIq2HvoduxfsBz
-	 ItFkExrQT0dh3JBqs4P0dWdU/KMM74QTknFHGqXQ=
+	b=zeF1uFbLpuvY6CDnGVsEEu0QyVFj1Q3XhMnCbj92YqRIWaXK01xvRgFKvw+j9vLXF
+	 EE61JL+H2AryD3fEV2Uxj6onkXEOMIQhr1BKWS53ipbLu0tEsDqxNCw7WIPRv0wjmQ
+	 tPtTKGFqSN3C9eCsA2lEeMTFkA+n8v+HKsnfZQb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 456/587] btrfs: send: add and use helper to rename current inode when processing refs
-Date: Tue, 26 Aug 2025 13:10:05 +0200
-Message-ID: <20250826111004.567606393@linuxfoundation.org>
+Subject: [PATCH 6.6 457/587] btrfs: send: keep the current inodes path cached
+Date: Tue, 26 Aug 2025 13:10:06 +0200
+Message-ID: <20250826111004.594138128@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,12 +53,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ec666c84deba56f714505b53556a97565f72db86 ]
+[ Upstream commit fc746acb7aa9aeaa2cb5dcba449323319ba5c8eb ]
 
-Extract the logic to rename the current inode at process_recorded_refs()
-into a helper function and use it, therefore removing duplicated logic
-and making it easier for an upcoming patch by avoiding yet more duplicated
-logic.
+Whenever we need to send a command for the current inode, like sending
+writes, xattr updates, truncates, utimes, etc, we compute the inode's
+path each time, which implies doing some memory allocations and traversing
+the inode hierarchy to extract the name of the inode and each ancestor
+directory, and that implies doing lookups in the subvolume tree amongst
+other operations.
+
+Most of the time, by far, the current inode's path doesn't change while
+we are processing it (like if we need to issue 100 write commands, the
+path remains the same and it's pointless to compute it 100 times).
+
+To avoid this keep the current inode's path cached in the send context
+and invalidate it or update it whenever it's needed (after unlinks or
+renames).
+
+A performance test, and its results, is mentioned in the next patch in
+the series (subject: "btrfs: send: avoid path allocation for the current
+inode when issuing commands").
 
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
@@ -67,57 +81,155 @@ Stable-dep-of: 005b0a0c24e1 ("btrfs: send: use fallocate for hole punching with 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |   23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ fs/btrfs/send.c |   53 ++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 48 insertions(+), 5 deletions(-)
 
 --- a/fs/btrfs/send.c
 +++ b/fs/btrfs/send.c
-@@ -4166,6 +4166,19 @@ out:
+@@ -179,6 +179,7 @@ struct send_ctx {
+ 	u64 cur_inode_rdev;
+ 	u64 cur_inode_last_extent;
+ 	u64 cur_inode_next_write_offset;
++	struct fs_path cur_inode_path;
+ 	bool cur_inode_new;
+ 	bool cur_inode_new_gen;
+ 	bool cur_inode_deleted;
+@@ -436,6 +437,14 @@ static void fs_path_reset(struct fs_path
+ 	}
+ }
+ 
++static void init_path(struct fs_path *p)
++{
++	p->reversed = 0;
++	p->buf = p->inline_buf;
++	p->buf_len = FS_PATH_INLINE_SIZE;
++	fs_path_reset(p);
++}
++
+ static struct fs_path *fs_path_alloc(void)
+ {
+ 	struct fs_path *p;
+@@ -443,10 +452,7 @@ static struct fs_path *fs_path_alloc(voi
+ 	p = kmalloc(sizeof(*p), GFP_KERNEL);
+ 	if (!p)
+ 		return NULL;
+-	p->reversed = 0;
+-	p->buf = p->inline_buf;
+-	p->buf_len = FS_PATH_INLINE_SIZE;
+-	fs_path_reset(p);
++	init_path(p);
+ 	return p;
+ }
+ 
+@@ -624,6 +630,14 @@ static void fs_path_unreverse(struct fs_
+ 	p->reversed = 0;
+ }
+ 
++static inline bool is_current_inode_path(const struct send_ctx *sctx,
++					 const struct fs_path *path)
++{
++	const struct fs_path *cur = &sctx->cur_inode_path;
++
++	return (strncmp(path->start, cur->start, fs_path_len(cur)) == 0);
++}
++
+ static struct btrfs_path *alloc_path_for_send(void)
+ {
+ 	struct btrfs_path *path;
+@@ -2450,6 +2464,14 @@ static int get_cur_path(struct send_ctx
+ 	u64 parent_inode = 0;
+ 	u64 parent_gen = 0;
+ 	int stop = 0;
++	const bool is_cur_inode = (ino == sctx->cur_ino && gen == sctx->cur_inode_gen);
++
++	if (is_cur_inode && fs_path_len(&sctx->cur_inode_path) > 0) {
++		if (dest != &sctx->cur_inode_path)
++			return fs_path_copy(dest, &sctx->cur_inode_path);
++
++		return 0;
++	}
+ 
+ 	name = fs_path_alloc();
+ 	if (!name) {
+@@ -2501,8 +2523,12 @@ static int get_cur_path(struct send_ctx
+ 
+ out:
+ 	fs_path_free(name);
+-	if (!ret)
++	if (!ret) {
+ 		fs_path_unreverse(dest);
++		if (is_cur_inode && dest != &sctx->cur_inode_path)
++			ret = fs_path_copy(&sctx->cur_inode_path, dest);
++	}
++
  	return ret;
  }
  
-+static int rename_current_inode(struct send_ctx *sctx,
-+				struct fs_path *current_path,
-+				struct fs_path *new_path)
-+{
-+	int ret;
+@@ -3113,6 +3139,11 @@ static int orphanize_inode(struct send_c
+ 		goto out;
+ 
+ 	ret = send_rename(sctx, path, orphan);
++	if (ret < 0)
++		goto out;
 +
-+	ret = send_rename(sctx, current_path, new_path);
++	if (ino == sctx->cur_ino && gen == sctx->cur_inode_gen)
++		ret = fs_path_copy(&sctx->cur_inode_path, orphan);
+ 
+ out:
+ 	fs_path_free(orphan);
+@@ -4176,6 +4207,10 @@ static int rename_current_inode(struct s
+ 	if (ret < 0)
+ 		return ret;
+ 
++	ret = fs_path_copy(&sctx->cur_inode_path, new_path);
 +	if (ret < 0)
 +		return ret;
 +
-+	return fs_path_copy(current_path, new_path);
-+}
-+
- /*
-  * This does all the move/link/unlink/rmdir magic.
-  */
-@@ -4451,13 +4464,10 @@ static int process_recorded_refs(struct
- 		 * it depending on the inode mode.
- 		 */
- 		if (is_orphan && can_rename) {
--			ret = send_rename(sctx, valid_path, cur->full_path);
-+			ret = rename_current_inode(sctx, valid_path, cur->full_path);
- 			if (ret < 0)
- 				goto out;
- 			is_orphan = false;
--			ret = fs_path_copy(valid_path, cur->full_path);
--			if (ret < 0)
--				goto out;
- 		} else if (can_rename) {
- 			if (S_ISDIR(sctx->cur_inode_mode)) {
- 				/*
-@@ -4465,10 +4475,7 @@ static int process_recorded_refs(struct
- 				 * dirs, we always have one new and one deleted
- 				 * ref. The deleted ref is ignored later.
- 				 */
--				ret = send_rename(sctx, valid_path,
--						  cur->full_path);
--				if (!ret)
--					ret = fs_path_copy(valid_path,
-+				ret = rename_current_inode(sctx, valid_path,
- 							   cur->full_path);
+ 	return fs_path_copy(current_path, new_path);
+ }
+ 
+@@ -4369,6 +4404,7 @@ static int process_recorded_refs(struct
+ 				if (ret > 0) {
+ 					orphanized_ancestor = true;
+ 					fs_path_reset(valid_path);
++					fs_path_reset(&sctx->cur_inode_path);
+ 					ret = get_cur_path(sctx, sctx->cur_ino,
+ 							   sctx->cur_inode_gen,
+ 							   valid_path);
+@@ -4568,6 +4604,8 @@ static int process_recorded_refs(struct
+ 				ret = send_unlink(sctx, cur->full_path);
  				if (ret < 0)
  					goto out;
++				if (is_current_inode_path(sctx, cur->full_path))
++					fs_path_reset(&sctx->cur_inode_path);
+ 			}
+ 			ret = dup_ref(cur, &check_dirs);
+ 			if (ret < 0)
+@@ -6900,6 +6938,7 @@ static int changed_inode(struct send_ctx
+ 	sctx->cur_inode_last_extent = (u64)-1;
+ 	sctx->cur_inode_next_write_offset = 0;
+ 	sctx->ignore_cur_inode = false;
++	fs_path_reset(&sctx->cur_inode_path);
+ 
+ 	/*
+ 	 * Set send_progress to current inode. This will tell all get_cur_xxx
+@@ -8190,6 +8229,7 @@ long btrfs_ioctl_send(struct inode *inod
+ 		goto out;
+ 	}
+ 
++	init_path(&sctx->cur_inode_path);
+ 	INIT_LIST_HEAD(&sctx->new_refs);
+ 	INIT_LIST_HEAD(&sctx->deleted_refs);
+ 
+@@ -8475,6 +8515,9 @@ out:
+ 		btrfs_lru_cache_clear(&sctx->dir_created_cache);
+ 		btrfs_lru_cache_clear(&sctx->dir_utimes_cache);
+ 
++		if (sctx->cur_inode_path.buf != sctx->cur_inode_path.inline_buf)
++			kfree(sctx->cur_inode_path.buf);
++
+ 		kfree(sctx);
+ 	}
+ 
 
 
