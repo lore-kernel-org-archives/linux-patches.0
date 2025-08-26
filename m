@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD78A18F2FC;
-	Tue, 26 Aug 2025 13:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0041A256B;
+	Tue, 26 Aug 2025 13:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213588; cv=none; b=nSdBBHN0AvlcP9Zy12PpCYS7upEkGlk1MmVFM88KcsVNHzDsGN++x8KexNTRSdTNuQbwOt5iayZNI4wNSxu3NL7oGpHenOZfsVRkkuZ0TaB9XH5ZZHIFr3KQz0NSlLO2Gcbbo0Xo+wjIgGkEi+Tdr1bnfb7KgudcArTe+q6zMD0=
+	t=1756213591; cv=none; b=Q28ARl82SmM71L4s9LDqhLxx6dpkVN3ztIIsyVdP7D5znXDTel9R4HtB0QiYix9JcgnWjNW6a2S6dUvfX1PUI9HRxFtQ7DV5i3sr9eedkbgoNH/V6SQCT6NwCUnglVQu9hxqZhuyjw4g9WwEnTigc3XgO2xUp/4T6cShtRoXoRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213588; c=relaxed/simple;
-	bh=1h9EuLP6nj8sLwfkWxBeQ6vwXrfThpuL35+wGOiTArU=;
+	s=arc-20240116; t=1756213591; c=relaxed/simple;
+	bh=1CXZftik6do+QGThXB5/jUDMU5JODFSemJfp8JiXXXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n8QQHXdaBj1M4LpHvozfHmTgSaDHn5iGX6tnx95XPvMS51tVCfYLY/VPvexz2Y4Q3/g7kpaplym9DBTSBXPMPHyV+2r0nYxbaTb80ANt5sGr4UoLD7mVYXin/h8aP3hvJN0/QU0GQ195Jhzb7UqakPAdtAngq+K/VQ7+gTirnS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzSpR2Ng; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OSlB9UB0SCXyB5nxxXq3SG7mb9FM//esCPKOysh7/kvpQBXMQiOGz2EQQcu2Tc/NMpWVgsL74U7Q1A7xiKBIecmJepzvpIJqLq0AyU58j+Hw2FE+0ZH/ET8K5JUH1In5GqG6ZESWqpmLrBt7B+n4CpQz2uwLeiKd5X5eKNPE7kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x70qxfeU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzSpR2Ng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F97AC4CEF1;
-	Tue, 26 Aug 2025 13:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x70qxfeU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B02C4CEF1;
+	Tue, 26 Aug 2025 13:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213588;
-	bh=1h9EuLP6nj8sLwfkWxBeQ6vwXrfThpuL35+wGOiTArU=;
+	s=korg; t=1756213591;
+	bh=1CXZftik6do+QGThXB5/jUDMU5JODFSemJfp8JiXXXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzSpR2NgkGYf9HkKCisAjh5tdguOENIOFjX8aqhj4MHgDBrcBY3QFr+nbcEeN3Yzf
-	 3jPJ7iqV10B3EW5ty9zZ6FEhrz4soxY80csfZGGhKNH4CFjSO3ytqBOObVkYajbJzv
-	 t8Q4L60s9UhIDQov+FJzQ3dc8GDqgxi5QrxlBixs=
+	b=x70qxfeUOK0gUar9j8MSiSn5KeaZm/KHvbaQbOm651zodsVStS49lspo+0bw/85ff
+	 6DWOrNNHzKDDPIzqJekfz8VprDbDabZgqKEWLaPHjWWx3dsYikwtnJpxD/yktulb8H
+	 cKt89q0bRdDrEY3x2BQ+9rG6/vogX4zZ1qm4Z2S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.6 377/587] pwm: mediatek: Handle hardware enable and clock enable separately
-Date: Tue, 26 Aug 2025 13:08:46 +0200
-Message-ID: <20250826111002.496534880@linuxfoundation.org>
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.6 404/587] media: vivid: fix wrong pixel_array control size
+Date: Tue, 26 Aug 2025 13:09:13 +0200
+Message-ID: <20250826111003.207900661@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -45,125 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Hans Verkuil <hverkuil@xs4all.nl>
 
-commit 704d918341c378c5f9505dfdf32d315e256d3846 upstream.
+commit 3e43442d4994c9e1e202c98129a87e330f7faaed upstream.
 
-Stop handling the clocks in pwm_mediatek_enable() and
-pwm_mediatek_disable(). This is a preparing change for the next commit
-that requires that clocks and the enable bit are handled separately.
+The pixel_array control size was calculated incorrectly:
+the dimensions were swapped (dims[0] should be the height), and the
+values should be the width or height divided by PIXEL_ARRAY_DIV
+and rounded up. So don't use roundup, but use DIV_ROUND_UP instead.
 
-Also move these two functions a bit further up in the source file to
-make them usable in pwm_mediatek_config(), which is needed in the next
-commit, too.
+This bug is harmless in the sense that nothing will break, except that
+it consumes way too much memory for this control.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/55c94fe2917ece152ee1e998f4675642a7716f13.1753717973.git.u.kleine-koenig@baylibre.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 6bc7643d1b9c ("media: vivid: add pixel_array test control")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-mediatek.c |   60 +++++++++++++++++++++------------------------
- 1 file changed, 28 insertions(+), 32 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-ctrls.c   |    3 ++-
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c |    4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/pwm/pwm-mediatek.c
-+++ b/drivers/pwm/pwm-mediatek.c
-@@ -118,6 +118,26 @@ static inline void pwm_mediatek_writel(s
- 	writel(value, chip->regs + chip->soc->reg_offset[num] + offset);
+--- a/drivers/media/test-drivers/vivid/vivid-ctrls.c
++++ b/drivers/media/test-drivers/vivid/vivid-ctrls.c
+@@ -240,7 +240,8 @@ static const struct v4l2_ctrl_config viv
+ 	.min = 0x00,
+ 	.max = 0xff,
+ 	.step = 1,
+-	.dims = { 640 / PIXEL_ARRAY_DIV, 360 / PIXEL_ARRAY_DIV },
++	.dims = { DIV_ROUND_UP(360, PIXEL_ARRAY_DIV),
++		  DIV_ROUND_UP(640, PIXEL_ARRAY_DIV) },
+ };
+ 
+ static const struct v4l2_ctrl_config vivid_ctrl_s32_array = {
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -460,8 +460,8 @@ void vivid_update_format_cap(struct vivi
+ 	if (keep_controls)
+ 		return;
+ 
+-	dims[0] = roundup(dev->src_rect.width, PIXEL_ARRAY_DIV);
+-	dims[1] = roundup(dev->src_rect.height, PIXEL_ARRAY_DIV);
++	dims[0] = DIV_ROUND_UP(dev->src_rect.height, PIXEL_ARRAY_DIV);
++	dims[1] = DIV_ROUND_UP(dev->src_rect.width, PIXEL_ARRAY_DIV);
+ 	v4l2_ctrl_modify_dimensions(dev->pixel_array, dims);
  }
  
-+static void pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
-+{
-+	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
-+	u32 value;
-+
-+	value = readl(pc->regs);
-+	value |= BIT(pwm->hwpwm);
-+	writel(value, pc->regs);
-+}
-+
-+static void pwm_mediatek_disable(struct pwm_chip *chip, struct pwm_device *pwm)
-+{
-+	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
-+	u32 value;
-+
-+	value = readl(pc->regs);
-+	value &= ~BIT(pwm->hwpwm);
-+	writel(value, pc->regs);
-+}
-+
- static int pwm_mediatek_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 			       int duty_ns, int period_ns)
- {
-@@ -180,35 +200,6 @@ out:
- 	return ret;
- }
- 
--static int pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
--{
--	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
--	u32 value;
--	int ret;
--
--	ret = pwm_mediatek_clk_enable(chip, pwm);
--	if (ret < 0)
--		return ret;
--
--	value = readl(pc->regs);
--	value |= BIT(pwm->hwpwm);
--	writel(value, pc->regs);
--
--	return 0;
--}
--
--static void pwm_mediatek_disable(struct pwm_chip *chip, struct pwm_device *pwm)
--{
--	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
--	u32 value;
--
--	value = readl(pc->regs);
--	value &= ~BIT(pwm->hwpwm);
--	writel(value, pc->regs);
--
--	pwm_mediatek_clk_disable(chip, pwm);
--}
--
- static int pwm_mediatek_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 			      const struct pwm_state *state)
- {
-@@ -218,8 +209,10 @@ static int pwm_mediatek_apply(struct pwm
- 		return -EINVAL;
- 
- 	if (!state->enabled) {
--		if (pwm->state.enabled)
-+		if (pwm->state.enabled) {
- 			pwm_mediatek_disable(chip, pwm);
-+			pwm_mediatek_clk_disable(chip, pwm);
-+		}
- 
- 		return 0;
- 	}
-@@ -228,8 +221,11 @@ static int pwm_mediatek_apply(struct pwm
- 	if (err)
- 		return err;
- 
--	if (!pwm->state.enabled)
--		err = pwm_mediatek_enable(chip, pwm);
-+	if (!pwm->state.enabled) {
-+		err = pwm_mediatek_clk_enable(chip, pwm);
-+		if (!err)
-+			pwm_mediatek_enable(chip, pwm);
-+	}
- 
- 	return err;
- }
 
 
