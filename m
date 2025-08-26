@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DC734A317;
-	Tue, 26 Aug 2025 13:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEB1322A1E;
+	Tue, 26 Aug 2025 13:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214128; cv=none; b=aI9XT3n4F5LooQlv3bbWoTWGZ+u2fviD7x9Dd2Kz0X6/khO1JviZmKwcuO/3dBV2OtAzQmHKgvJ0DSlisl6YS4tvb37z5uoz29RBVpHWAG4lbDZNAbHci2maooHGta4ixP4DsWnd/Ltf0Ll2a6c4fla1dYGTJXNvdipuHXXGff4=
+	t=1756214131; cv=none; b=rhBBeWumCqcQP0cXp4FzJEwSEF4V3ADbwQwwmLTStkFMhRtKep0UdHNUUVqkzJj2V597cQPF/kEYI15PaDutAT9/VbRFQMo8VkILuzcBSWaBSwbp1v4s/pUjFZOi3UrtNiuF5+5dIK03wE96LNS5vT3YcAdsULQQVk/caluFHwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214128; c=relaxed/simple;
-	bh=2GY4RciBrbLlwfcZeg0Cs3AN6tATKi20lbCm1fM5PlU=;
+	s=arc-20240116; t=1756214131; c=relaxed/simple;
+	bh=PpzTq7VJb84hc75FVdCviG4AbC5b5kRdf1TgeqJHfek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bti1GjCA8nZ4T/8Lx45NSjr5yBjIUTMqqhp8QbayiKlNs43aHl1EAK0X4GdTzE1UGFl7e51k6ic2clomFBT2Pld0pyzb9npVAUcQwSBWZ2sBKa4ASckX+3pORrv57MIVxCpvTK94WIByM7HYuwQcCT1Hd2iX+MJZCmPw6S8o+p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KB0+u+Cr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eKFWqbABFR7hpKnRYd3rj37LISGW49rQZnn0qUpBka5BU4CUqjnrcDq7qrcDElrTh351v1LGe7oBx8Su8EoXfi7enn5Aj85aFXk5TX/zxDtZlmj6WV6xPQl5LfmY88JFvlHF1ZjDjeKrsgbxotTytFkFlhrZmM1Vj4f4CD/z2uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPtUQMyy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KB0+u+Cr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541ECC113CF;
-	Tue, 26 Aug 2025 13:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPtUQMyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CFCC4CEF1;
+	Tue, 26 Aug 2025 13:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214128;
-	bh=2GY4RciBrbLlwfcZeg0Cs3AN6tATKi20lbCm1fM5PlU=;
+	s=korg; t=1756214131;
+	bh=PpzTq7VJb84hc75FVdCviG4AbC5b5kRdf1TgeqJHfek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KB0+u+Cr7iA1xICOaae5/w5/wPp+UzYGuMIFHv7WoR+b7o51uZBCM1BAjF9HUASFM
-	 9putvKs/lsDh2mxQAvISlOuIn1OcwWyE9djghO9UiXTw309ip9qTF0vFMEoFBaU/4a
-	 RLy82mkujTEiSuNgrAIR9Zx9NIJYRPhOX2H0GzlM=
+	b=QPtUQMyymnSJG0i8vY9MnOLLmwxahZJl/DBWBdji8DsQpmltl+29ySTrofchf4jXH
+	 1iub9Y0ikjT2Bxv4UkSy/qncJS8EWPapYJB2J0iVj4dJZcMtOHdp5yYhvjhbbjx4Gj
+	 /aAVhl9uZMc6RJPV2eZF2/9l1jRvJv6u6uQm5hz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
+	Jann Horn <jannh@google.com>,
 	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 022/482] fs: Prevent file descriptor table allocations exceeding INT_MAX
-Date: Tue, 26 Aug 2025 13:04:35 +0200
-Message-ID: <20250826110931.340111223@linuxfoundation.org>
+Subject: [PATCH 6.1 023/482] eventpoll: Fix semi-unbounded recursion
+Date: Tue, 26 Aug 2025 13:04:36 +0200
+Message-ID: <20250826110931.365441126@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,104 +50,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Jann Horn <jannh@google.com>
 
-commit 04a2c4b4511d186b0fce685da21085a5d4acd370 upstream.
+commit f2e467a48287c868818085aa35389a224d226732 upstream.
 
-When sysctl_nr_open is set to a very high value (for example, 1073741816
-as set by systemd), processes attempting to use file descriptors near
-the limit can trigger massive memory allocation attempts that exceed
-INT_MAX, resulting in a WARNING in mm/slub.c:
+Ensure that epoll instances can never form a graph deeper than
+EP_MAX_NESTS+1 links.
 
-  WARNING: CPU: 0 PID: 44 at mm/slub.c:5027 __kvmalloc_node_noprof+0x21a/0x288
+Currently, ep_loop_check_proc() ensures that the graph is loop-free and
+does some recursion depth checks, but those recursion depth checks don't
+limit the depth of the resulting tree for two reasons:
 
-This happens because kvmalloc_array() and kvmalloc() check if the
-requested size exceeds INT_MAX and emit a warning when the allocation is
-not flagged with __GFP_NOWARN.
+ - They don't look upwards in the tree.
+ - If there are multiple downwards paths of different lengths, only one of
+   the paths is actually considered for the depth check since commit
+   28d82dc1c4ed ("epoll: limit paths").
 
-Specifically, when nr_open is set to 1073741816 (0x3ffffff8) and a
-process calls dup2(oldfd, 1073741880), the kernel attempts to allocate:
-- File descriptor array: 1073741880 * 8 bytes = 8,589,935,040 bytes
-- Multiple bitmaps: ~400MB
-- Total allocation size: > 8GB (exceeding INT_MAX = 2,147,483,647)
+Essentially, the current recursion depth check in ep_loop_check_proc() just
+serves to prevent it from recursing too deeply while checking for loops.
 
-Reproducer:
-1. Set /proc/sys/fs/nr_open to 1073741816:
-   # echo 1073741816 > /proc/sys/fs/nr_open
+A more thorough check is done in reverse_path_check() after the new graph
+edge has already been created; this checks, among other things, that no
+paths going upwards from any non-epoll file with a length of more than 5
+edges exist. However, this check does not apply to non-epoll files.
 
-2. Run a program that uses a high file descriptor:
-   #include <unistd.h>
-   #include <sys/resource.h>
+As a result, it is possible to recurse to a depth of at least roughly 500,
+tested on v6.15. (I am unsure if deeper recursion is possible; and this may
+have changed with commit 8c44dac8add7 ("eventpoll: Fix priority inversion
+problem").)
 
-   int main() {
-       struct rlimit rlim = {1073741824, 1073741824};
-       setrlimit(RLIMIT_NOFILE, &rlim);
-       dup2(2, 1073741880);  // Triggers the warning
-       return 0;
-   }
+To fix it:
 
-3. Observe WARNING in dmesg at mm/slub.c:5027
+1. In ep_loop_check_proc(), note the subtree depth of each visited node,
+and use subtree depths for the total depth calculation even when a subtree
+has already been visited.
+2. Add ep_get_upwards_depth_proc() for similarly determining the maximum
+depth of an upwards walk.
+3. In ep_loop_check(), use these values to limit the total path length
+between epoll nodes to EP_MAX_NESTS edges.
 
-systemd commit a8b627a introduced automatic bumping of fs.nr_open to the
-maximum possible value. The rationale was that systems with memory
-control groups (memcg) no longer need separate file descriptor limits
-since memory is properly accounted. However, this change overlooked
-that:
-
-1. The kernel's allocation functions still enforce INT_MAX as a maximum
-   size regardless of memcg accounting
-2. Programs and tests that legitimately test file descriptor limits can
-   inadvertently trigger massive allocations
-3. The resulting allocations (>8GB) are impractical and will always fail
-
-systemd's algorithm starts with INT_MAX and keeps halving the value
-until the kernel accepts it. On most systems, this results in nr_open
-being set to 1073741816 (0x3ffffff8), which is just under 1GB of file
-descriptors.
-
-While processes rarely use file descriptors near this limit in normal
-operation, certain selftests (like
-tools/testing/selftests/core/unshare_test.c) and programs that test file
-descriptor limits can trigger this issue.
-
-Fix this by adding a check in alloc_fdtable() to ensure the requested
-allocation size does not exceed INT_MAX. This causes the operation to
-fail with -EMFILE instead of triggering a kernel warning and avoids the
-impractical >8GB memory allocation request.
-
-Fixes: 9cfe015aa424 ("get rid of NR_OPEN and introduce a sysctl_nr_open")
+Fixes: 22bacca48a17 ("epoll: prevent creating circular epoll structures")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/20250629074021.1038845-1-sashal@kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/20250711-epoll-recursion-fix-v1-1-fb2457c33292@google.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/eventpoll.c |   60 +++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 46 insertions(+), 14 deletions(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -126,6 +126,21 @@ static struct fdtable * alloc_fdtable(un
- 	if (unlikely(nr > sysctl_nr_open))
- 		nr = ((sysctl_nr_open - 1) | (BITS_PER_LONG - 1)) + 1;
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -216,6 +216,7 @@ struct eventpoll {
+ 	/* used to optimize loop detection check */
+ 	u64 gen;
+ 	struct hlist_head refs;
++	u8 loop_check_depth;
  
-+	/*
-+	 * Check if the allocation size would exceed INT_MAX. kvmalloc_array()
-+	 * and kvmalloc() will warn if the allocation size is greater than
-+	 * INT_MAX, as filp_cachep objects are not __GFP_NOWARN.
-+	 *
-+	 * This can happen when sysctl_nr_open is set to a very high value and
-+	 * a process tries to use a file descriptor near that limit. For example,
-+	 * if sysctl_nr_open is set to 1073741816 (0x3ffffff8) - which is what
-+	 * systemd typically sets it to - then trying to use a file descriptor
-+	 * close to that value will require allocating a file descriptor table
-+	 * that exceeds 8GB in size.
-+	 */
-+	if (unlikely(nr > INT_MAX / sizeof(struct file *)))
-+		return ERR_PTR(-EMFILE);
+ #ifdef CONFIG_NET_RX_BUSY_POLL
+ 	/* used to track busy poll napi_id */
+@@ -1951,23 +1952,24 @@ static int ep_poll(struct eventpoll *ep,
+ }
+ 
+ /**
+- * ep_loop_check_proc - verify that adding an epoll file inside another
+- *                      epoll structure does not violate the constraints, in
+- *                      terms of closed loops, or too deep chains (which can
+- *                      result in excessive stack usage).
++ * ep_loop_check_proc - verify that adding an epoll file @ep inside another
++ *                      epoll file does not create closed loops, and
++ *                      determine the depth of the subtree starting at @ep
+  *
+  * @ep: the &struct eventpoll to be currently checked.
+  * @depth: Current depth of the path being checked.
+  *
+- * Return: %zero if adding the epoll @file inside current epoll
+- *          structure @ep does not violate the constraints, or %-1 otherwise.
++ * Return: depth of the subtree, or INT_MAX if we found a loop or went too deep.
+  */
+ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
+ {
+-	int error = 0;
++	int result = 0;
+ 	struct rb_node *rbp;
+ 	struct epitem *epi;
+ 
++	if (ep->gen == loop_check_gen)
++		return ep->loop_check_depth;
 +
- 	fdt = kmalloc(sizeof(struct fdtable), GFP_KERNEL_ACCOUNT);
- 	if (!fdt)
- 		goto out;
+ 	mutex_lock_nested(&ep->mtx, depth + 1);
+ 	ep->gen = loop_check_gen;
+ 	for (rbp = rb_first_cached(&ep->rbr); rbp; rbp = rb_next(rbp)) {
+@@ -1975,13 +1977,11 @@ static int ep_loop_check_proc(struct eve
+ 		if (unlikely(is_file_epoll(epi->ffd.file))) {
+ 			struct eventpoll *ep_tovisit;
+ 			ep_tovisit = epi->ffd.file->private_data;
+-			if (ep_tovisit->gen == loop_check_gen)
+-				continue;
+ 			if (ep_tovisit == inserting_into || depth > EP_MAX_NESTS)
+-				error = -1;
++				result = INT_MAX;
+ 			else
+-				error = ep_loop_check_proc(ep_tovisit, depth + 1);
+-			if (error != 0)
++				result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1);
++			if (result > EP_MAX_NESTS)
+ 				break;
+ 		} else {
+ 			/*
+@@ -1995,9 +1995,27 @@ static int ep_loop_check_proc(struct eve
+ 			list_file(epi->ffd.file);
+ 		}
+ 	}
++	ep->loop_check_depth = result;
+ 	mutex_unlock(&ep->mtx);
+ 
+-	return error;
++	return result;
++}
++
++/**
++ * ep_get_upwards_depth_proc - determine depth of @ep when traversed upwards
++ */
++static int ep_get_upwards_depth_proc(struct eventpoll *ep, int depth)
++{
++	int result = 0;
++	struct epitem *epi;
++
++	if (ep->gen == loop_check_gen)
++		return ep->loop_check_depth;
++	hlist_for_each_entry_rcu(epi, &ep->refs, fllink)
++		result = max(result, ep_get_upwards_depth_proc(epi->ep, depth + 1) + 1);
++	ep->gen = loop_check_gen;
++	ep->loop_check_depth = result;
++	return result;
+ }
+ 
+ /**
+@@ -2013,8 +2031,22 @@ static int ep_loop_check_proc(struct eve
+  */
+ static int ep_loop_check(struct eventpoll *ep, struct eventpoll *to)
+ {
++	int depth, upwards_depth;
++
+ 	inserting_into = ep;
+-	return ep_loop_check_proc(to, 0);
++	/*
++	 * Check how deep down we can get from @to, and whether it is possible
++	 * to loop up to @ep.
++	 */
++	depth = ep_loop_check_proc(to, 0);
++	if (depth > EP_MAX_NESTS)
++		return -1;
++	/* Check how far up we can go from @ep. */
++	rcu_read_lock();
++	upwards_depth = ep_get_upwards_depth_proc(ep, 0);
++	rcu_read_unlock();
++
++	return (depth+1+upwards_depth > EP_MAX_NESTS) ? -1 : 0;
+ }
+ 
+ static void clear_tfile_check_list(void)
 
 
