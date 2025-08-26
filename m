@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D89A35337D;
-	Tue, 26 Aug 2025 14:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C82D35337D;
+	Tue, 26 Aug 2025 14:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217648; cv=none; b=IAs7pIq+rOG0CaaOQ4+Qyvrj3jcjhRqVVA6MJ+zAYj/Tq/s1PQW4tLqPL3jlRhMDz2Gv23D5Sp8rbcMufwQKVnu3Jirqvwxcak37lN96leFpMrxy3cRnSimj8GmQ6Sr6dLc/MzU602sH6uids31XKKd9af1j4tby076fLGvhAJg=
+	t=1756217651; cv=none; b=hMAGxHiVA499kmCtqGq+ZgIHLMEmnnfKk62JA37XLX/5TTAOv80hdATs3rlIOMqRGZ1WWVe5m1ukYQLDotdkP3QrJFR9HcN/GzoEcR8UdVwdglCLP80qprVSSNyBwsXE66TukyAuf1W3IuXsTanQgkFYxthdMRS31zqfdTvMLA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217648; c=relaxed/simple;
-	bh=sT4puVGDDGHnoXb6j7l9sc86RWkid7cWRTcjY6ep2FY=;
+	s=arc-20240116; t=1756217651; c=relaxed/simple;
+	bh=jH6NCTB8SbmlKrqthmgF/XNajfVSS4ukyLIE6ZXBZp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJvtcDS8WRRR1BeUgsfon69JKaNXLwjzKh4+mU696Tx+b1d8Nu50Aden3P4cm3rYlHilO/amQyjpN4Gw/Ck66kUC9tNPytiiawoJm9DFseL2Pyl2blZPMt4QrIdalPHbT205VzmC2ND1bSbbzTirBxPEb2WNwDZUgh8x1BPyfGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkXxTyrU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+90sycu03m6hmS23jqNyl4/hu+nrQ4nLcQsDQ20HrhWefM+3Bp9GMLD4SsaKwEuyD9HWi5K4eIGz4mx8S+WUjr5MQB/L4mYyRDx8VS4RtgdrhFQYrXRo4hkeNM/VqXPeyHLAg+0TgTAYrXSjnf/KCLVl7NoG4bM1tyvJ3EAmo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTNbMoia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkXxTyrU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001B9C4CEF1;
-	Tue, 26 Aug 2025 14:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTNbMoia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC7CC4CEF1;
+	Tue, 26 Aug 2025 14:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217648;
-	bh=sT4puVGDDGHnoXb6j7l9sc86RWkid7cWRTcjY6ep2FY=;
+	s=korg; t=1756217651;
+	bh=jH6NCTB8SbmlKrqthmgF/XNajfVSS4ukyLIE6ZXBZp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkXxTyrUAjsIwA+FF7KAYDavyPK43wo+fMSM+D78Llzwr5J6PO24ZTD0K58lW7uNH
-	 QrxWHMBKTVi0bLTEFfgXH5jWBHogxXxX2flwcG7pNOodxXCOAA/x8ooFGgxyvNDc8I
-	 0ut01R/WPnSEyTipLnMXDj2ZgdDrjkKOWXR1pGqA=
+	b=qTNbMoiannNnP2VL6t22BoFSBwG1g/f57jS5vIKvRw8iIuFkaWNPxw9UODDgnQBnH
+	 217ec+s2XOcrEElas7N0E88toTW528KKm876k84ZiuAn6WhJBoHW9283/HrWpbJXyf
+	 MQNxnIgr0ZWALNtpBD2+/754FIbDKFxbvAB+FRKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Prashant Malani <pmalani@google.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Cynthia Huang <cynthia@andestech.com>,
+	Ben Zong-You Xie <ben717@andestech.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 222/523] cpufreq: CPPC: Mark driver with NEED_UPDATE_LIMITS flag
-Date: Tue, 26 Aug 2025 13:07:12 +0200
-Message-ID: <20250826110929.935376299@linuxfoundation.org>
+Subject: [PATCH 5.10 223/523] selftests/futex: Define SYS_futex on 32-bit architectures with 64-bit time_t
+Date: Tue, 26 Aug 2025 13:07:13 +0200
+Message-ID: <20250826110929.961641101@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,49 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashant Malani <pmalani@google.com>
+From: Cynthia Huang <cynthia@andestech.com>
 
-[ Upstream commit 0a1416a49e63c320f6e6c1c8d07e1b58c0d4a3f3 ]
+[ Upstream commit 04850819c65c8242072818655d4341e70ae998b5 ]
 
-AMU counters on certain CPPC-based platforms tend to yield inaccurate
-delivered performance measurements on systems that are idle/mostly idle.
-This results in an inaccurate frequency being stored by cpufreq in its
-policy structure when the CPU is brought online. [1]
+The kernel does not provide sys_futex() on 32-bit architectures that do not
+support 32-bit time representations, such as riscv32.
 
-Consequently, if the userspace governor tries to set the frequency to a
-new value, there is a possibility that it would be the erroneous value
-stored earlier. In such a scenario, cpufreq would assume that the
-requested frequency has already been set and return early, resulting in
-the correct/new frequency request never making it to the hardware.
+As a result, glibc cannot define SYS_futex, causing compilation failures in
+tests that rely on this syscall. Define SYS_futex as SYS_futex_time64 in
+such cases to ensure successful compilation and compatibility.
 
-Since the operating frequency is liable to this sort of inconsistency,
-mark the CPPC driver with CPUFREQ_NEED_UPDATE_LIMITS so that it is always
-invoked when a target frequency update is requested.
-
-Link: https://lore.kernel.org/linux-pm/20250619000925.415528-3-pmalani@google.com/ [1]
-Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Prashant Malani <pmalani@google.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20250722055611.130574-2-pmalani@google.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Cynthia Huang <cynthia@andestech.com>
+Signed-off-by: Ben Zong-You Xie <ben717@andestech.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/all/20250710103630.3156130-1-ben717@andestech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/futex/include/futextest.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index f29e8d0553a8..17e712651090 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -396,7 +396,7 @@ static int cppc_cpufreq_set_boost(struct cpufreq_policy *policy, int state)
- }
+diff --git a/tools/testing/selftests/futex/include/futextest.h b/tools/testing/selftests/futex/include/futextest.h
+index ddbcfc9b7bac..7a5fd1d5355e 100644
+--- a/tools/testing/selftests/futex/include/futextest.h
++++ b/tools/testing/selftests/futex/include/futextest.h
+@@ -47,6 +47,17 @@ typedef volatile u_int32_t futex_t;
+ 					 FUTEX_PRIVATE_FLAG)
+ #endif
  
- static struct cpufreq_driver cppc_cpufreq_driver = {
--	.flags = CPUFREQ_CONST_LOOPS,
-+	.flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
- 	.verify = cppc_verify_policy,
- 	.target = cppc_cpufreq_set_target,
- 	.get = cppc_cpufreq_get_rate,
++/*
++ * SYS_futex is expected from system C library, in glibc some 32-bit
++ * architectures (e.g. RV32) are using 64-bit time_t, therefore it doesn't have
++ * SYS_futex defined but just SYS_futex_time64. Define SYS_futex as
++ * SYS_futex_time64 in this situation to ensure the compilation and the
++ * compatibility.
++ */
++#if !defined(SYS_futex) && defined(SYS_futex_time64)
++#define SYS_futex SYS_futex_time64
++#endif
++
+ /**
+  * futex() - SYS_futex syscall wrapper
+  * @uaddr:	address of first futex
 -- 
 2.39.5
 
