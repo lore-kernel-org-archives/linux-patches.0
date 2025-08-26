@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E746321424;
-	Tue, 26 Aug 2025 11:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3124321459;
+	Tue, 26 Aug 2025 11:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208705; cv=none; b=Lbw83zm2fXQrh53X7duuw9uTP1eu5myLOks8aeATUIBz6U5GSX7/PMxEVFmB9k6NBN6q59FN2DTCiIcy1g9kIAH5020mjlmjZ2G+/OFAy3Id57aLEBK1N4DkmW1XtCHfk8HEuIqoefYRMu9PR75TQ21v/ofnHlD2riBmkPuiIgA=
+	t=1756208707; cv=none; b=q2cq+eyxi4EgFnwbyfIpXoGoB5BrwmbdPTpI9NPC7M/IJ8fe3YAfym7x/I9QRLClkjg0q8BfTQPXpG5Oqu8UFsSwWcWxbMN5fCY22BUtHzyaTap9A0c46xLEiMr2VLrwBcYMW6HdYxNhL/sklME6aR1XS/OfrZuN+JRFZZHtjwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208705; c=relaxed/simple;
-	bh=4YQENb/os56DcxuxsebwF+W6czW9EqpkXj5/tRDT6Xo=;
+	s=arc-20240116; t=1756208707; c=relaxed/simple;
+	bh=eonc+YTQcAvmFph/X10/P4V3qM8083B8oU+bRDgOurE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQKLE4+6oNZ5bafWRlZQpJeDLS+bms99dKwHeATB8b6Izoa3bmnJjXtIqJd0QMxaoVqCHgzuxWFRUD8DgQWvrAdR0vRehnF5ub1R/f2VLOj7Q3a/5KDyDVwyVyzBLXc6XtJPKarktmqohcW3WseuybcXgFnbFPwpvTQ9dUymk4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGACr1FL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISIu11Ts6Dn+qp3DWd/KXDKlbtx3nPNxQqv01GEcXc17Wvt8l3GIDV0kRns/VRvL6s8RNGNcWDAyb7/F9VrPCSh81xxN9Ee+r3eeq4y8sH167+B3W4vaU4TM1oneNzYtdV30eT3Xz1bncPlQlObIcmmrHY7agxV3TfObcvRlP2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWf+2uKW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGACr1FL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94174C4CEF1;
-	Tue, 26 Aug 2025 11:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWf+2uKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426E9C4CEF1;
+	Tue, 26 Aug 2025 11:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208704;
-	bh=4YQENb/os56DcxuxsebwF+W6czW9EqpkXj5/tRDT6Xo=;
+	s=korg; t=1756208707;
+	bh=eonc+YTQcAvmFph/X10/P4V3qM8083B8oU+bRDgOurE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGACr1FLBeTUXvTUrvHfu4GfCDQzuoqFtF/R53wDianMBhCvzTTTAPgkBMJCdhVaG
-	 Uc+ZH2ejx8Z6/fl1Riq0yx5J82UgPDvufPYcLTtyd7ueJgtPWKqilc7JDW9u9vr83y
-	 z6xxzo9so7+5mY9YXXUOzHvYHlY55j4M4JyZuRp8=
+	b=VWf+2uKWcjySTDk6QMByYvThYQk4GsjMxiMMJU8jxgFdf5bqjFnYPPDGQx2u6o/0D
+	 nriIFXycQUEzPoR1g/Jmu1ZqxBjVN4P2py/XN2JCKqTvw9WVyStda6K72ZX16yBz2+
+	 6Ak1nZvn0bFgVAHYgetnvTKEyL8EA+lu5IVzq3RI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Pisa <pisa@fel.cvut.cz>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 6.12 214/322] fpga: zynq_fpga: Fix the wrong usage of dma_map_sgtable()
-Date: Tue, 26 Aug 2025 13:10:29 +0200
-Message-ID: <20250826110921.163253411@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 215/322] ftrace: Also allocate and copy hash for reading of filter files
+Date: Tue, 26 Aug 2025 13:10:30 +0200
+Message-ID: <20250826110921.187994313@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,44 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yilun <yilun.xu@linux.intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 1ca61060de92a4320d73adfe5dc8d335653907ac upstream.
+commit bfb336cf97df7b37b2b2edec0f69773e06d11955 upstream.
 
-dma_map_sgtable() returns only 0 or the error code. Read sgt->nents to
-get the number of mapped segments.
+Currently the reader of set_ftrace_filter and set_ftrace_notrace just adds
+the pointer to the global tracer hash to its iterator. Unlike the writer
+that allocates a copy of the hash, the reader keeps the pointer to the
+filter hashes. This is problematic because this pointer is static across
+function calls that release the locks that can update the global tracer
+hashes. This can cause UAF and similar bugs.
 
-Fixes: 37e00703228a ("zynq_fpga: use sgtable-based scatterlist wrappers")
-Reported-by: Pavel Pisa <pisa@fel.cvut.cz>
-Closes: https://lore.kernel.org/linux-fpga/202508041548.22955.pisa@fel.cvut.cz/
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-Link: https://lore.kernel.org/r/20250806070605.1920909-2-yilun.xu@linux.intel.com
+Allocate and copy the hash for reading the filter files like it is done
+for the writers. This not only fixes UAF bugs, but also makes the code a
+bit simpler as it doesn't have to differentiate when to free the
+iterator's hash between writers and readers.
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/20250822183606.12962cc3@batman.local.home
+Fixes: c20489dad156 ("ftrace: Assign iter->hash to filter or notrace hashes on seq read")
+Closes: https://lore.kernel.org/all/20250813023044.2121943-1-wutengda@huaweicloud.com/
+Closes: https://lore.kernel.org/all/20250822192437.GA458494@ax162/
+Reported-by: Tengda Wu <wutengda@huaweicloud.com>
+Tested-by: Tengda Wu <wutengda@huaweicloud.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/zynq-fpga.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/ftrace.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/fpga/zynq-fpga.c
-+++ b/drivers/fpga/zynq-fpga.c
-@@ -405,12 +405,12 @@ static int zynq_fpga_ops_write(struct fp
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -4569,13 +4569,17 @@ ftrace_regex_open(struct ftrace_ops *ops
+ 	        } else {
+ 			iter->hash = alloc_and_copy_ftrace_hash(size_bits, hash);
  		}
++	} else {
++		if (hash)
++			iter->hash = alloc_and_copy_ftrace_hash(hash->size_bits, hash);
++		else
++			iter->hash = EMPTY_HASH;
++	}
+ 
+-		if (!iter->hash) {
+-			trace_parser_put(&iter->parser);
+-			goto out_unlock;
+-		}
+-	} else
+-		iter->hash = hash;
++	if (!iter->hash) {
++		trace_parser_put(&iter->parser);
++		goto out_unlock;
++	}
+ 
+ 	ret = 0;
+ 
+@@ -6445,9 +6449,6 @@ int ftrace_regex_release(struct inode *i
+ 		ftrace_hash_move_and_update_ops(iter->ops, orig_hash,
+ 						      iter->hash, filter_hash);
+ 		mutex_unlock(&ftrace_lock);
+-	} else {
+-		/* For read only, the hash is the ops hash */
+-		iter->hash = NULL;
  	}
  
--	priv->dma_nelms =
--	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
--	if (priv->dma_nelms == 0) {
-+	err = dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
-+	if (err) {
- 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
--		return -ENOMEM;
-+		return err;
- 	}
-+	priv->dma_nelms = sgt->nents;
- 
- 	/* enable clock */
- 	err = clk_enable(priv->clk);
+ 	mutex_unlock(&iter->ops->func_hash->regex_lock);
 
 
