@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BB52BAF7;
-	Tue, 26 Aug 2025 13:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D5D2BAF7;
+	Tue, 26 Aug 2025 13:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213288; cv=none; b=MsTj68K1kbVvAMQNBX/PgRo0L/oUalL7TvviO4Aj++hSfKVO1uGUhRPrRWsP4ewkVMJT4z8Bb/iPLpSyl3PRH+WLIQaQjmVxOnuwnLfHLpJMYV7tl8tcJIRkOjQMqd+aK18PQH+wdDkKo9gtVEQq5KhFylozisbj11F2ue6yhpk=
+	t=1756213291; cv=none; b=AkUZLah6QD6bx+1XoUzn6htCvZbQSeJItWsdbChGLc9p60cbIklq1du8opGNUXxzRLZM1g161z/jWeUAu6ELivRFAJP465A6CuaysAQy51jCItOE1+L0744oJzx0utIabh3dVqdVyXGqaBQaVK+2J1LonJOaJWqz18t8Tgnrmlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213288; c=relaxed/simple;
-	bh=l5nf+ucW5/RLkV0O+aXyQT7Ken14cqEwekeDvGDF7nY=;
+	s=arc-20240116; t=1756213291; c=relaxed/simple;
+	bh=5q3G0RF249prBdmEkskNy5gB6Mp7kNWPVgKIGGRKbYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ljZvB9Cj5a+I3j+L2grLRSr0iYsXYz5LstmERlQVK7Lnasb7pQxxaHLUqQRGsKe1yjFSfIFQwhlDCiPxPw8ZO/UBuGsVr0oixpDwync5qGYpUCCHpCLx8CdmL1PTF0YMxXq98dpKxGS5fkeTtor6cEkg1v7ORXVPGCZjRl7kTjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvOWbTbf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/Oz9lVzOxGgwgCYx8du9tA6gwYznp1Bov4I7l1et9zMOiU5KuegkOmXjjgvQUavK2EgdN3PHlVy4hvuhk3/DX270dCFToK3lOexII0Eu7exyTjlaU7wbLVyV7xcy9+TDTLr7PEFEckbJFxoxPDc1hCP7QsknGvT6NFsvo5M+fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtarOxwn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvOWbTbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA00C4CEF1;
-	Tue, 26 Aug 2025 13:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtarOxwn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98762C4CEF1;
+	Tue, 26 Aug 2025 13:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213288;
-	bh=l5nf+ucW5/RLkV0O+aXyQT7Ken14cqEwekeDvGDF7nY=;
+	s=korg; t=1756213291;
+	bh=5q3G0RF249prBdmEkskNy5gB6Mp7kNWPVgKIGGRKbYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvOWbTbfkdBaRYrZCAJxy0ksB8QPSYJM9FIeSokQifaVqtmtYq8DqZ3d43OidF7U+
-	 d2TBd2Rl+bA2lt8bGsPshTMJDnJ72CHaePDXk7fsqAnsHZeyt1GOiYaSznNNB9cSrI
-	 oTphG26AZshqoY2lQ6s9HCzgmBZyQWr46qf9yQRc=
+	b=CtarOxwnCju/twedKgtT0EjxBRmKHN0UNI2y0FIZLtrXgz0Vb449aL7Z8qoTdoyDM
+	 LSUQ+uH7tuJ7cdScd93zI5vQ4xkXxsIUwwWt/XpZ1TsmrDMk5T1oNlt3d52vkUyrJr
+	 q9zP32gyPwS54W3kcdSu5G0O+MQ0EjXlKWjPOJkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 259/587] soundwire: amd: serialize amd manager resume sequence during pm_prepare
-Date: Tue, 26 Aug 2025 13:06:48 +0200
-Message-ID: <20250826110959.520110726@linuxfoundation.org>
+Subject: [PATCH 6.6 260/587] soundwire: Move handle_nested_irq outside of sdw_dev_lock
+Date: Tue, 26 Aug 2025 13:06:49 +0200
+Message-ID: <20250826110959.544413945@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,43 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 03837341790039d6f1cbf7a1ae7dfa2cb77ef0a4 ]
+[ Upstream commit ccb7bb13c00bcc3178d270da052635c56148bc16 ]
 
-During pm_prepare callback, pm_request_resume() delays SoundWire manager D0
-entry sequence. Synchronize runtime resume sequence for amd_manager
-instance prior to invoking child devices resume sequence for both the amd
-power modes(ClockStop Mode and Power off mode).
-Change the power_mode_mask check and use pm_runtime_resume() in
-amd_pm_prepare() callback.
+The sdw_dev_lock protects the SoundWire driver callbacks against
+the probed flag, which is used to skip the callbacks if the
+driver gets removed. For more information see commit bd29c00edd0a
+("soundwire: revisit driver bind/unbind and callbacks").
 
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20250530054447.1645807-3-Vijendar.Mukunda@amd.com
+However, this lock is a frequent source of mutex inversions.
+Many audio operations eventually hit the hardware resulting in a
+SoundWire callback, this means that typically the driver has the
+locking order ALSA/ASoC locks -> sdw_dev_lock. Conversely, the IRQ
+comes in directly from the SoundWire hardware, but then will often
+want to access ALSA/ASoC, such as updating something in DAPM or
+an ALSA control. This gives the other lock order sdw_dev_lock ->
+ALSA/ASoC locks.
+
+When the IRQ handling was initially added to SoundWire this was
+through a callback mechanism. As such it required being covered by
+the lock because the callbacks are part of the sdw_driver structure
+and are thus present regardless of if the driver is currently
+probed.
+
+Since then a newer mechanism using the IRQ framework has been
+added, which is currently covered by the same lock but this isn't
+actually required. Handlers for the IRQ framework are registered in
+probe and should by released during remove, thus the IRQ framework
+will have already unbound the IRQ before the slave driver is
+removed. Avoid the aforementioned mutex inversion by moving the
+handle_nested_irq call outside of the sdw_dev_lock.
+
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20250609143041.495049-3-ckeepax@opensource.cirrus.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/amd_manager.c | 6 +++---
+ drivers/soundwire/bus.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
-index b89f8067e6cd..3d8937245c18 100644
---- a/drivers/soundwire/amd_manager.c
-+++ b/drivers/soundwire/amd_manager.c
-@@ -1104,10 +1104,10 @@ static int __maybe_unused amd_pm_prepare(struct device *dev)
- 	 * device is not in runtime suspend state, observed that device alerts are missing
- 	 * without pm_prepare on AMD platforms in clockstop mode0.
- 	 */
--	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
--		ret = pm_request_resume(dev);
-+	if (amd_manager->power_mode_mask) {
-+		ret = pm_runtime_resume(dev);
- 		if (ret < 0) {
--			dev_err(bus->dev, "pm_request_resume failed: %d\n", ret);
-+			dev_err(bus->dev, "pm_runtime_resume failed: %d\n", ret);
- 			return 0;
- 		}
- 	}
+diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
+index 767942f19adb..e7397fd8e9ad 100644
+--- a/drivers/soundwire/bus.c
++++ b/drivers/soundwire/bus.c
+@@ -1730,15 +1730,15 @@ static int sdw_handle_slave_alerts(struct sdw_slave *slave)
+ 
+ 		/* Update the Slave driver */
+ 		if (slave_notify) {
++			if (slave->prop.use_domain_irq && slave->irq)
++				handle_nested_irq(slave->irq);
++
+ 			mutex_lock(&slave->sdw_dev_lock);
+ 
+ 			if (slave->probed) {
+ 				struct device *dev = &slave->dev;
+ 				struct sdw_driver *drv = drv_to_sdw_driver(dev->driver);
+ 
+-				if (slave->prop.use_domain_irq && slave->irq)
+-					handle_nested_irq(slave->irq);
+-
+ 				if (drv->ops && drv->ops->interrupt_callback) {
+ 					slave_intr.sdca_cascade = sdca_cascade;
+ 					slave_intr.control_port = clear;
 -- 
 2.39.5
 
