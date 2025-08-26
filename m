@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE78F749C;
-	Tue, 26 Aug 2025 11:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584E1200112;
+	Tue, 26 Aug 2025 11:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208913; cv=none; b=QtEoLb/tTJHPsauDk0l6ZZrT5XMu8MdNRSXhwenmaTUl0oYU08GuIMG8ICF/UDyD+EmA4w9oFxEPQdOpPGYdvP+0oIkkA6phEL3ui3ARUvMMcYABLTnbX+1oGdPrszS2rNiLY+S2tOnizrtL0/ELc4kTpADsZ8ppcdMigDD552M=
+	t=1756208916; cv=none; b=dKYXoBzDWwmuYmxfCqBzUIs5FlWCDJQC0Lk3DWuLIRekHiEnNO3o3doozhQKMnV9vuXYTXGcixJwKsHJhusfofa+4PNZhpWBYmmg2FWBTEAZlmMVFiW54tzY5mz2MGRVmv/dnPARsyBodYoKr7o6dWQgrlhGpCMhI/i9RZiIKnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208913; c=relaxed/simple;
-	bh=6JViOKmsc8WE5Pr2d0H+FLYBaWTY559ICuMtJDOdOyA=;
+	s=arc-20240116; t=1756208916; c=relaxed/simple;
+	bh=5qY0+5o/00NDpuuXLV/zw6kd0bDl8wMLruIK9FDe+sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBkmZNLyzmIJF9MlkSO2MQg+kisfvvaBhdeEPZmUsskJ6K+dRRlWk/UUyLUIEo1jBwB4G4k9zEsiJkuDjPcExD+ZVjoCi5Qbt7bNdeyXdFqFiHE80M+4Y3QxCDgJG2b+Y+LsENqme6uev7XPzi8hHdMvOtAsZgejyIWWUIwd4bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgzONqF9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J7gX5ouN0UYrQBiNulh0PZ0GbYEls0COURIgsvKz9FPvmIG2zi6xJIRJsiNCtCfBiXOy0b9jRdDyncICbdUVW50Gq3MXj4iomvTJMfpyshKqmoNk4yzidEZAuBufda9Mqy5h21cyfgpw4ck75jBeFJZP2oz0jyjwjIAPKXbb0jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MUmFs7sH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgzONqF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337C9C4CEF1;
-	Tue, 26 Aug 2025 11:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MUmFs7sH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA147C4CEF1;
+	Tue, 26 Aug 2025 11:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208913;
-	bh=6JViOKmsc8WE5Pr2d0H+FLYBaWTY559ICuMtJDOdOyA=;
+	s=korg; t=1756208916;
+	bh=5qY0+5o/00NDpuuXLV/zw6kd0bDl8wMLruIK9FDe+sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgzONqF9RmQdZEqIk4KE1gjHS94gmfWDiP7dHcPvaYIkJFUgzOaVrwgXtutedoGbA
-	 kTjbzDxpkvBELBamUarHU2Bp3CyfMuWE9rzeabcVxl3SpVT3H8W3iI1AarGk8+VT3T
-	 +EG0BqOYcN38nk+/Pq/cZKX2usPpNeV+D0oePwIo=
+	b=MUmFs7sH1jFrOjplrZx5kiaTDV1GLDsfxdv2KvK+R/3PqQeg/88fjEKxJCFSKYbzQ
+	 6W4l86p4jNgY/E0hVUFu6TOGLJLD4lPJd3DoQ8ZJ0FFUAl/eHnEeg5LB/ptuAgDf9/
+	 0lPTkBcBrfRuE4re3LzCR0lBZ7B/xa64uBPBbX6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <dqfext@gmail.com>,
+	MD Danish Anwar <danishanwar@ti.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 293/322] ppp: fix race conditions in ppp_fill_forward_path
-Date: Tue, 26 Aug 2025 13:11:48 +0200
-Message-ID: <20250826110923.140482261@linuxfoundation.org>
+Subject: [PATCH 6.12 294/322] net: ti: icssg-prueth: Fix HSR and switch offload Enablement during firwmare reload.
+Date: Tue, 26 Aug 2025 13:11:49 +0200
+Message-ID: <20250826110923.163373874@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,97 +51,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: MD Danish Anwar <danishanwar@ti.com>
 
-[ Upstream commit 0417adf367a0af11adf7ace849af4638cfb573f7 ]
+[ Upstream commit 01792bc3e5bdafa171dd83c7073f00e7de93a653 ]
 
-ppp_fill_forward_path() has two race conditions:
+To enable HSR / Switch offload, certain configurations are needed.
+Currently they are done inside icssg_change_mode(). This function only
+gets called if we move from one mode to another without bringing the
+links up / down.
 
-1. The ppp->channels list can change between list_empty() and
-   list_first_entry(), as ppp_lock() is not held. If the only channel
-   is deleted in ppp_disconnect_channel(), list_first_entry() may
-   access an empty head or a freed entry, and trigger a panic.
+Once in HSR / Switch mode, if we bring the links down and bring it back
+up again. The callback sequence is,
 
-2. pch->chan can be NULL. When ppp_unregister_channel() is called,
-   pch->chan is set to NULL before pch is removed from ppp->channels.
+- emac_ndo_stop()
+	Firmwares are stopped
+- emac_ndo_open()
+	Firmwares are loaded
 
-Fix these by using a lockless RCU approach:
-- Use list_first_or_null_rcu() to safely test and access the first list
-  entry.
-- Convert list modifications on ppp->channels to their RCU variants and
-  add synchronize_net() after removal.
-- Check for a NULL pch->chan before dereferencing it.
+In this path icssg_change_mode() doesn't get called and as a result the
+configurations needed for HSR / Switch is not done.
 
-Fixes: f6efc675c9dd ("net: ppp: resolve forwarding path for bridge pppoe devices")
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Link: https://patch.msgid.link/20250814012559.3705-2-dqfext@gmail.com
+To fix this, put all these configurations in a separate function
+icssg_enable_fw_offload() and call this from both icssg_change_mode()
+and emac_ndo_open()
+
+Fixes: 56375086d093 ("net: ti: icssg-prueth: Enable HSR Tx duplication, Tx Tag and Rx Tag offload")
+Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
+Link: https://patch.msgid.link/20250814105106.1491871-1-danishanwar@ti.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/ti/icssg/icssg_prueth.c | 72 +++++++++++---------
+ 1 file changed, 41 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 1420c4efa48e..0553b0b356b3 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -33,6 +33,7 @@
- #include <linux/ppp_channel.h>
- #include <linux/ppp-comp.h>
- #include <linux/skbuff.h>
-+#include <linux/rculist.h>
- #include <linux/rtnetlink.h>
- #include <linux/if_arp.h>
- #include <linux/ip.h>
-@@ -1613,11 +1614,14 @@ static int ppp_fill_forward_path(struct net_device_path_ctx *ctx,
- 	if (ppp->flags & SC_MULTILINK)
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+index ddbc4624ae88..055c5765bd86 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+@@ -240,6 +240,44 @@ static void prueth_emac_stop(struct prueth *prueth)
+ 	}
+ }
  
--	if (list_empty(&ppp->channels))
-+	pch = list_first_or_null_rcu(&ppp->channels, struct channel, clist);
-+	if (!pch)
-+		return -ENODEV;
++static void icssg_enable_fw_offload(struct prueth *prueth)
++{
++	struct prueth_emac *emac;
++	int mac;
 +
-+	chan = READ_ONCE(pch->chan);
-+	if (!chan)
- 		return -ENODEV;
++	for (mac = PRUETH_MAC0; mac < PRUETH_NUM_MACS; mac++) {
++		emac = prueth->emac[mac];
++		if (prueth->is_hsr_offload_mode) {
++			if (emac->ndev->features & NETIF_F_HW_HSR_TAG_RM)
++				icssg_set_port_state(emac, ICSSG_EMAC_HSR_RX_OFFLOAD_ENABLE);
++			else
++				icssg_set_port_state(emac, ICSSG_EMAC_HSR_RX_OFFLOAD_DISABLE);
++		}
++
++		if (prueth->is_switch_mode || prueth->is_hsr_offload_mode) {
++			if (netif_running(emac->ndev)) {
++				icssg_fdb_add_del(emac, eth_stp_addr, prueth->default_vlan,
++						  ICSSG_FDB_ENTRY_P0_MEMBERSHIP |
++						  ICSSG_FDB_ENTRY_P1_MEMBERSHIP |
++						  ICSSG_FDB_ENTRY_P2_MEMBERSHIP |
++						  ICSSG_FDB_ENTRY_BLOCK,
++						  true);
++				icssg_vtbl_modify(emac, emac->port_vlan | DEFAULT_VID,
++						  BIT(emac->port_id) | DEFAULT_PORT_MASK,
++						  BIT(emac->port_id) | DEFAULT_UNTAG_MASK,
++						  true);
++				if (prueth->is_hsr_offload_mode)
++					icssg_vtbl_modify(emac, DEFAULT_VID,
++							  DEFAULT_PORT_MASK,
++							  DEFAULT_UNTAG_MASK, true);
++				icssg_set_pvid(prueth, emac->port_vlan, emac->port_id);
++				if (prueth->is_switch_mode)
++					icssg_set_port_state(emac, ICSSG_EMAC_PORT_VLAN_AWARE_ENABLE);
++			}
++		}
++	}
++}
++
+ static int prueth_emac_common_start(struct prueth *prueth)
+ {
+ 	struct prueth_emac *emac;
+@@ -690,6 +728,7 @@ static int emac_ndo_open(struct net_device *ndev)
+ 		ret = prueth_emac_common_start(prueth);
+ 		if (ret)
+ 			goto free_rx_irq;
++		icssg_enable_fw_offload(prueth);
+ 	}
  
--	pch = list_first_entry(&ppp->channels, struct channel, clist);
--	chan = pch->chan;
- 	if (!chan->ops->fill_forward_path)
- 		return -EOPNOTSUPP;
+ 	flow_cfg = emac->dram.va + ICSSG_CONFIG_OFFSET + PSI_L_REGULAR_FLOW_ID_BASE_OFFSET;
+@@ -1146,8 +1185,7 @@ static int prueth_emac_restart(struct prueth *prueth)
  
-@@ -3000,7 +3004,7 @@ ppp_unregister_channel(struct ppp_channel *chan)
- 	 */
- 	down_write(&pch->chan_sem);
- 	spin_lock_bh(&pch->downl);
--	pch->chan = NULL;
-+	WRITE_ONCE(pch->chan, NULL);
- 	spin_unlock_bh(&pch->downl);
- 	up_write(&pch->chan_sem);
- 	ppp_disconnect_channel(pch);
-@@ -3506,7 +3510,7 @@ ppp_connect_channel(struct channel *pch, int unit)
- 	hdrlen = pch->file.hdrlen + 2;	/* for protocol bytes */
- 	if (hdrlen > ppp->dev->hard_header_len)
- 		ppp->dev->hard_header_len = hdrlen;
--	list_add_tail(&pch->clist, &ppp->channels);
-+	list_add_tail_rcu(&pch->clist, &ppp->channels);
- 	++ppp->n_channels;
- 	pch->ppp = ppp;
- 	refcount_inc(&ppp->file.refcnt);
-@@ -3536,10 +3540,11 @@ ppp_disconnect_channel(struct channel *pch)
- 	if (ppp) {
- 		/* remove it from the ppp unit's list */
- 		ppp_lock(ppp);
--		list_del(&pch->clist);
-+		list_del_rcu(&pch->clist);
- 		if (--ppp->n_channels == 0)
- 			wake_up_interruptible(&ppp->file.rwait);
- 		ppp_unlock(ppp);
-+		synchronize_net();
- 		if (refcount_dec_and_test(&ppp->file.refcnt))
- 			ppp_destroy_interface(ppp);
- 		err = 0;
+ static void icssg_change_mode(struct prueth *prueth)
+ {
+-	struct prueth_emac *emac;
+-	int mac, ret;
++	int ret;
+ 
+ 	ret = prueth_emac_restart(prueth);
+ 	if (ret) {
+@@ -1155,35 +1193,7 @@ static void icssg_change_mode(struct prueth *prueth)
+ 		return;
+ 	}
+ 
+-	for (mac = PRUETH_MAC0; mac < PRUETH_NUM_MACS; mac++) {
+-		emac = prueth->emac[mac];
+-		if (prueth->is_hsr_offload_mode) {
+-			if (emac->ndev->features & NETIF_F_HW_HSR_TAG_RM)
+-				icssg_set_port_state(emac, ICSSG_EMAC_HSR_RX_OFFLOAD_ENABLE);
+-			else
+-				icssg_set_port_state(emac, ICSSG_EMAC_HSR_RX_OFFLOAD_DISABLE);
+-		}
+-
+-		if (netif_running(emac->ndev)) {
+-			icssg_fdb_add_del(emac, eth_stp_addr, prueth->default_vlan,
+-					  ICSSG_FDB_ENTRY_P0_MEMBERSHIP |
+-					  ICSSG_FDB_ENTRY_P1_MEMBERSHIP |
+-					  ICSSG_FDB_ENTRY_P2_MEMBERSHIP |
+-					  ICSSG_FDB_ENTRY_BLOCK,
+-					  true);
+-			icssg_vtbl_modify(emac, emac->port_vlan | DEFAULT_VID,
+-					  BIT(emac->port_id) | DEFAULT_PORT_MASK,
+-					  BIT(emac->port_id) | DEFAULT_UNTAG_MASK,
+-					  true);
+-			if (prueth->is_hsr_offload_mode)
+-				icssg_vtbl_modify(emac, DEFAULT_VID,
+-						  DEFAULT_PORT_MASK,
+-						  DEFAULT_UNTAG_MASK, true);
+-			icssg_set_pvid(prueth, emac->port_vlan, emac->port_id);
+-			if (prueth->is_switch_mode)
+-				icssg_set_port_state(emac, ICSSG_EMAC_PORT_VLAN_AWARE_ENABLE);
+-		}
+-	}
++	icssg_enable_fw_offload(prueth);
+ }
+ 
+ static int prueth_netdevice_port_link(struct net_device *ndev,
 -- 
 2.50.1
 
