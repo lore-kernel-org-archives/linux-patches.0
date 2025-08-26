@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE5335E4FF;
-	Tue, 26 Aug 2025 14:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301053570B0;
+	Tue, 26 Aug 2025 14:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219024; cv=none; b=o6O0MN8uiruaMKIkI1SWXB72p+uYUIRmC28nvFL3U67CEW/J9msUsHNhoHdXKpQMllocX8fpMhSgIR52H+4iFlT67EoAiCCLJn9NQOzAnWPTdNMPx8Ax5pYZjAaVBDCEyVemK3czOiEVAmvcPOL38utSL/SKWskDcZ+Vmcgje0M=
+	t=1756219027; cv=none; b=UmR6ghSSYeyC79ImJJTmX6opzsGYwVYtHqzfpPg7V+88uPJYsFSXupbc0MBiAkKTZ4aVCVlf83ahzy+3upNuZOP4cPaPbmida+yKwcDaS6ODGwOgqZ8LIWvj+rNmN7t/W+FTrIBgBh/KwL4E2M/4VXmbvE42EjnyNIlaw2oz9fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219024; c=relaxed/simple;
-	bh=NkT0GFEIVhaPGqxi6ft7Cqv/DMibMmnJ/xEI9doLq3I=;
+	s=arc-20240116; t=1756219027; c=relaxed/simple;
+	bh=QC2zZuDuUaVWS/62hnhlN5ROYWtEA4kND+6XoC16maA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uuDOLALzetM62Jy7zoDUGGlz7p5uJzlZ3rk5IrWVfw33TZYfoQBtq0LvuuUhGG+NcNODo/8PD1+ahp8UQfzoSFgugPjumeOUFTgIB27Z+c8YYLRykOjjVVx31vC27AjQd6OfXwAshs7JFaLOMI1NWojuW5m9Zss3ZIET9maCnTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcviJe4y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCOWw+x6QCmJp1X7GKNv2H5SI9pcusQicffdX32ryfaO3hnrvxPvtMHYtGTpbbZpQD/D7NsxYqLjX548heGDMNQm5p21LRu8zJf57Rd6t6iPwjEoDYJaJAP0D876vbPAC17K0JJSYUwk5sYh2XZ5eZ1iaosff9C4U3deLcNMbxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsWQchTG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcviJe4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64B2C4CEF1;
-	Tue, 26 Aug 2025 14:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsWQchTG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD52C4CEF1;
+	Tue, 26 Aug 2025 14:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219024;
-	bh=NkT0GFEIVhaPGqxi6ft7Cqv/DMibMmnJ/xEI9doLq3I=;
+	s=korg; t=1756219026;
+	bh=QC2zZuDuUaVWS/62hnhlN5ROYWtEA4kND+6XoC16maA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcviJe4ych0o6Kb5KOXusuK2AON4ujOAtwfXj0zE5ZC+0EwVUvj6XF+TtEvJocbgZ
-	 yYKJ0nlBbJ+dnfoCngK0bBCNVaXVvfRncXxtrBVd9qPXHsxZMncrH+aNzwf7ZzYuOO
-	 EtgEUiU798xcRRsDq4o+P6owcat1bU/TxuIU2x00=
+	b=NsWQchTGTvcz4dRfbE/R3Yq0YPdYqjaO1oDECCBK5Nl5Ezv7iXUdwlOAk2A+WcMZL
+	 CEF1gXEL8VxPjPEc6uFrGykneBtuwU+FDPVb7vH5keMjTlOKQ6r5r4jGQ1wI3E7+Bs
+	 MZqzj7XwyLlabu7IJLPJBY1hioP4wmi9tlxqnjcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cynthia Huang <cynthia@andestech.com>,
-	Ben Zong-You Xie <ben717@andestech.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 182/403] selftests/futex: Define SYS_futex on 32-bit architectures with 64-bit time_t
-Date: Tue, 26 Aug 2025 13:08:28 +0200
-Message-ID: <20250826110911.909664721@linuxfoundation.org>
+Subject: [PATCH 5.4 217/403] s390/stp: Remove udelay from stp_sync_clock()
+Date: Tue, 26 Aug 2025 13:09:03 +0200
+Message-ID: <20250826110912.833225600@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,49 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cynthia Huang <cynthia@andestech.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 04850819c65c8242072818655d4341e70ae998b5 ]
+[ Upstream commit b367017cdac21781a74eff4e208d3d38e1f38d3f ]
 
-The kernel does not provide sys_futex() on 32-bit architectures that do not
-support 32-bit time representations, such as riscv32.
+When an stp sync check is handled on a system with multiple
+cpus each cpu gets a machine check but only the first one
+actually handles the sync operation. All other CPUs spin
+waiting for the first one to finish with a short udelay().
+But udelay can't be used here as the first CPU modifies tod_clock_base
+before performing the sync op. During this timeframe
+get_tod_clock_monotonic() might return a non-monotonic time.
 
-As a result, glibc cannot define SYS_futex, causing compilation failures in
-tests that rely on this syscall. Define SYS_futex as SYS_futex_time64 in
-such cases to ensure successful compilation and compatibility.
+The time spent waiting should be very short and udelay is a busy loop
+anyways, therefore simply remove the udelay.
 
-Signed-off-by: Cynthia Huang <cynthia@andestech.com>
-Signed-off-by: Ben Zong-You Xie <ben717@andestech.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/all/20250710103630.3156130-1-ben717@andestech.com
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/futex/include/futextest.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/s390/kernel/time.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/futex/include/futextest.h b/tools/testing/selftests/futex/include/futextest.h
-index ddbcfc9b7bac..7a5fd1d5355e 100644
---- a/tools/testing/selftests/futex/include/futextest.h
-+++ b/tools/testing/selftests/futex/include/futextest.h
-@@ -47,6 +47,17 @@ typedef volatile u_int32_t futex_t;
- 					 FUTEX_PRIVATE_FLAG)
- #endif
- 
-+/*
-+ * SYS_futex is expected from system C library, in glibc some 32-bit
-+ * architectures (e.g. RV32) are using 64-bit time_t, therefore it doesn't have
-+ * SYS_futex defined but just SYS_futex_time64. Define SYS_futex as
-+ * SYS_futex_time64 in this situation to ensure the compilation and the
-+ * compatibility.
-+ */
-+#if !defined(SYS_futex) && defined(SYS_futex_time64)
-+#define SYS_futex SYS_futex_time64
-+#endif
-+
- /**
-  * futex() - SYS_futex syscall wrapper
-  * @uaddr:	address of first futex
+diff --git a/arch/s390/kernel/time.c b/arch/s390/kernel/time.c
+index 11c32b228f51..0e1925104fcf 100644
+--- a/arch/s390/kernel/time.c
++++ b/arch/s390/kernel/time.c
+@@ -642,7 +642,7 @@ static int stp_sync_clock(void *data)
+ 		atomic_dec(&sync->cpus);
+ 		/* Wait for in_sync to be set. */
+ 		while (READ_ONCE(sync->in_sync) == 0)
+-			__udelay(1);
++			;
+ 	}
+ 	if (sync->in_sync != 1)
+ 		/* Didn't work. Clear per-cpu in sync bit again. */
 -- 
 2.39.5
 
