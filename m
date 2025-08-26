@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6272139C9;
-	Tue, 26 Aug 2025 13:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742F21A5B8D;
+	Tue, 26 Aug 2025 13:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214408; cv=none; b=TxgSioGOPZJOOQyQLCk58y1uQc97Fm2wJocstSCmCwCEF21+z8HHxv0wHFwZdeS+njZRYO71Gm/vMMvC0m/PtEWv4vSAaqvAE1Y9JHGklQuKoAdDwyypcRfeloVklsm0rzEGKbMPSAgpSIJhBMPmzf+MaMkL4YWZKz8uG2mJPTo=
+	t=1756214411; cv=none; b=d4aP9QfxaaezA1c8umNMBk//tbVAWQ56u80jclB7V9/fpHJMd3FbU2OICd9AKoUp0DpMLckh4UEZh7+iN0lAIlCXvg7U0CFTR2tEeGHPaTF2EZgGHZOBWVubHInUKB/clcmPFRcQAhIG5MeIRkHfdCdpIUXz1SDXV65/8YplFtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214408; c=relaxed/simple;
-	bh=F9jv9v5ibQFszP1jdD9tME/9BkqH82VFVo8/90vorPI=;
+	s=arc-20240116; t=1756214411; c=relaxed/simple;
+	bh=5/+EGFRkxau38QTlJCpJxYSrJMAoNl8GJZFtb+JfVPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pxYgOSj7Wqld/HB5atiuAn/4BAAJVnb48eZuG0gQjRCsoJ68fYKdHJZkWZUsaIbaT1xtAxxjE8LdRTLFVllu3WhybSmhTHvYWvFZd/sny8JiSMjZmp7VJ/Qf6ilvcBkg0NTBlLoki6Zv/+ktQMgdMNeSPi/4kU9aY1f3PQXaF70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZMESrAW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VVbN/X7fvMxdS071jQ3znPdcewcpDqfMNVbtRj7E86GEziNX05E673p/MSyBrIcJVnHhVQdMZUphJ99ToKSKl1Zx8gStXooub6oP3oNi9GufQgUnUQxS/3XWLXvojPnorztOXqnYOO75mf0HbusDf4diQxULLu6OhyJAESZ+oUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/sc3A9j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZMESrAW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBA8C4CEF1;
-	Tue, 26 Aug 2025 13:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/sc3A9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC75EC4CEF1;
+	Tue, 26 Aug 2025 13:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214408;
-	bh=F9jv9v5ibQFszP1jdD9tME/9BkqH82VFVo8/90vorPI=;
+	s=korg; t=1756214411;
+	bh=5/+EGFRkxau38QTlJCpJxYSrJMAoNl8GJZFtb+JfVPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZMESrAWQDNsf0u7pfJJ0Qc/bFnauHAsyEdihc2L0bBlJcSdtZyhyGKRqDLuNOhco
-	 f3w/Ptg/Nr6dx7SnVcgQvs3iQqzoJsOiT6ig+KC82mTWpIPIXkuXeYTFqGiWfVp0pj
-	 /OrghY3EY94PjSAiox2WsMcXRwH+qp5Qoer4k0eY=
+	b=P/sc3A9j4viTM1bZ/2R+ozCOJRfIH1+E+pqsNrLEd/Ws8prg8edtisPl5HM4OWxjO
+	 av62z5bOH09OW4kOgpE8A3ZCXshXILkOc084NquUjvFqOLuQOb2dDemKlXhQQT4JNU
+	 LVUevHNikUGYdwU38L8aAMaE4TJH0uKb7+qvszKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oscar Maes <oscmaes92@gmail.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 127/482] net: ipv4: fix incorrect MTU in broadcast routes
-Date: Tue, 26 Aug 2025 13:06:20 +0200
-Message-ID: <20250826110933.960246505@linuxfoundation.org>
+Subject: [PATCH 6.1 128/482] net: thunderx: Fix format-truncation warning in bgx_acpi_match_id()
+Date: Tue, 26 Aug 2025 13:06:21 +0200
+Message-ID: <20250826110933.984203124@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,46 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Maes <oscmaes92@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 9e30ecf23b1b8f091f7d08b27968dea83aae7908 ]
+[ Upstream commit 53d20606c40678d425cc03f0978c614dca51f25e ]
 
-Currently, __mkroute_output overrules the MTU value configured for
-broadcast routes.
+The buffer bgx_sel used in snprintf() was too small to safely hold
+the formatted string "BGX%d" for all valid bgx_id values. This caused
+a -Wformat-truncation warning with `Werror` enabled during build.
 
-This buggy behaviour can be reproduced with:
+Increase the buffer size from 5 to 7 and use `sizeof(bgx_sel)` in
+snprintf() to ensure safety and suppress the warning.
 
-ip link set dev eth1 mtu 9000
-ip route del broadcast 192.168.0.255 dev eth1 proto kernel scope link src 192.168.0.2
-ip route add broadcast 192.168.0.255 dev eth1 proto kernel scope link src 192.168.0.2 mtu 1500
+Build warning:
+  CC      drivers/net/ethernet/cavium/thunder/thunder_bgx.o
+  drivers/net/ethernet/cavium/thunder/thunder_bgx.c: In function
+‘bgx_acpi_match_id’:
+  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:27: error: ‘%d’
+directive output may be truncated writing between 1 and 3 bytes into a
+region of size 2 [-Werror=format-truncation=]
+    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
+                             ^~
+  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:23: note:
+directive argument in the range [0, 255]
+    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
+                         ^~~~~~~
+  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:2: note:
+‘snprintf’ output between 5 and 7 bytes into a destination of size 5
+    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
 
-The maximum packet size should be 1500, but it is actually 8000:
+compiler warning due to insufficient snprintf buffer size.
 
-ping -b 192.168.0.255 -s 8000
-
-Fix __mkroute_output to allow MTU values to be configured for
-for broadcast routes (to support a mixed-MTU local-area-network).
-
-Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
-Link: https://patch.msgid.link/20250710142714.12986-1-oscmaes92@gmail.com
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250711140532.2463602-1-alok.a.tiwari@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/cavium/thunder/thunder_bgx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 870108101017..c57a1cee98e2 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2562,7 +2562,6 @@ static struct rtable *__mkroute_output(const struct fib_result *res,
- 	do_cache = true;
- 	if (type == RTN_BROADCAST) {
- 		flags |= RTCF_BROADCAST | RTCF_LOCAL;
--		fi = NULL;
- 	} else if (type == RTN_MULTICAST) {
- 		flags |= RTCF_MULTICAST | RTCF_LOCAL;
- 		if (!ip_check_mc_rcu(in_dev, fl4->daddr, fl4->saddr,
+diff --git a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+index 7eb2ddbe9bad..8c955eefc7e4 100644
+--- a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
++++ b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+@@ -1428,9 +1428,9 @@ static acpi_status bgx_acpi_match_id(acpi_handle handle, u32 lvl,
+ {
+ 	struct acpi_buffer string = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	struct bgx *bgx = context;
+-	char bgx_sel[5];
++	char bgx_sel[7];
+ 
+-	snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
++	snprintf(bgx_sel, sizeof(bgx_sel), "BGX%d", bgx->bgx_id);
+ 	if (ACPI_FAILURE(acpi_get_name(handle, ACPI_SINGLE_NAME, &string))) {
+ 		pr_warn("Invalid link device\n");
+ 		return AE_OK;
 -- 
 2.39.5
 
