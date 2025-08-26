@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A166306D3F;
-	Tue, 26 Aug 2025 14:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5FC306D3F;
+	Tue, 26 Aug 2025 14:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217469; cv=none; b=VY8G/xWmaJYMgGiKCFNwaoz7LwZMTqYnb8okGLAzi6E8FMmRPBApPjNW77VPVaS99cxMA7uCFoRnRbKWOpB1iHPu0fbp/SHjTpIHwfsCxjlUGq8K9ggOAAHWmUli81ghXb6BQ1Wv+zi0ClwAcERVnLm7gXjUq0I4ks7rh4qwlFs=
+	t=1756217471; cv=none; b=EbhUaRi/UmV8WhMjNRDTooXDJFoWeYqGd0T4ZRD2VTPrEahI+J4PQqzvKjAJqMyZlsV/OMWREJ4+aIr+LVQO8zZXduB93D0NTjkNWhjh5avAyxnk+fEc+WPcRDf0JxqMKbx95r+IgvUX4ZH7xIfdTDzziP36CgvTqGimeaH+4M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217469; c=relaxed/simple;
-	bh=06Kowqjy4EAkCJxmUxiDfSEzclUQwiHwPFUclxZ3uN0=;
+	s=arc-20240116; t=1756217471; c=relaxed/simple;
+	bh=59pRy7NAx5xHwFddHvc9g/Rdq8MDaQ1HmCfbHATA21I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keDyICNJVTdsYzxPC9fNduViyDXWqMGAqKlmQlokQJTDE28ytb7nqS7So0BxnD5Lyk2GoKIkkOTnyNDZeZkoa5cEePzBNSKNhAmzopZDEdq0mq0X1E4KVtGGjCzfOcnsJcjP/w0oUw8LexNbgoe+5Roo2bIiUA1sa9qTsCcuzjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwbHEhom; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CG8Q4yBLU0EVhsMy/WLUJyribs5cfIMtrRMeljB+Nkq34J6fmXBcm8VIhM8Omsnn+mYEHjI4wY1kir45n1v6gKY6lQiNQJlBqr0p0DaFrVq7K1C4KossxERYR2rPNje4vmwPHV1mJ++i1wymOIlVLWI0WTcq2IKU3THcgWJD58k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KT+AQTjn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwbHEhom"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88494C4CEF1;
-	Tue, 26 Aug 2025 14:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KT+AQTjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33168C113D0;
+	Tue, 26 Aug 2025 14:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217468;
-	bh=06Kowqjy4EAkCJxmUxiDfSEzclUQwiHwPFUclxZ3uN0=;
+	s=korg; t=1756217471;
+	bh=59pRy7NAx5xHwFddHvc9g/Rdq8MDaQ1HmCfbHATA21I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IwbHEhomdpu4U0GzuTsPUGFMt81GPgbe/V6lKeNY8PIql9uC3wX3ceDcdhMymwEyt
-	 kLIFrEQjR31Zs5LAU+WsjnWtUBSSJIYfYss0zE/ZUQVuKG71OMUQ2arZKSwMb+RRhg
-	 Kic/ynfGQySSbgRH721T2G3/GErmYX16OblemjBY=
+	b=KT+AQTjn8UgYEkSx3WUqFNY3XsYmvoGl/jNH3JLG5WnPrjx0VHRc4bRLJKcoZxbEi
+	 eRtfRXd9DpgPsFtrxmwOtkGEJvjI8JfgnC98rkCeI1qnEv0lAz5qmkPlrWN54aL49Z
+	 KGhF5Frw2hDddIsgzg+pXiO/luZWGq73pKw2X2fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 154/523] rtc: rv3028: fix incorrect maximum clock rate handling
-Date: Tue, 26 Aug 2025 13:06:04 +0200
-Message-ID: <20250826110928.278038682@linuxfoundation.org>
+Subject: [PATCH 5.10 155/523] f2fs: doc: fix wrong quota mount option description
+Date: Tue, 26 Aug 2025 13:06:05 +0200
+Message-ID: <20250826110928.300767249@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit b574acb3cf7591d2513a9f29f8c2021ad55fb881 ]
+[ Upstream commit 81b6ecca2f15922e8d653dc037df5871e754be6e ]
 
-When rv3028_clkout_round_rate() is called with a requested rate higher
-than the highest supported rate, it currently returns 0, which disables
-the clock. According to the clk API, round_rate() should instead return
-the highest supported rate. Update the function to return the maximum
-supported rate in this case.
+We should use "{usr,grp,prj}jquota=" to disable journaled quota,
+rather than using off{usr,grp,prj}jquota.
 
-Fixes: f583c341a515f ("rtc: rv3028: add clkout support")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-6-33140bb2278e@redhat.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 4b2414d04e99 ("f2fs: support journalled quota")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-rv3028.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/filesystems/f2fs.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rtc/rtc-rv3028.c b/drivers/rtc/rtc-rv3028.c
-index fa226f0fe67d..56fa66b6cadf 100644
---- a/drivers/rtc/rtc-rv3028.c
-+++ b/drivers/rtc/rtc-rv3028.c
-@@ -672,7 +672,7 @@ static long rv3028_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
- 		if (clkout_rates[i] <= rate)
- 			return clkout_rates[i];
- 
--	return 0;
-+	return clkout_rates[0];
- }
- 
- static int rv3028_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
+diff --git a/Documentation/filesystems/f2fs.rst b/Documentation/filesystems/f2fs.rst
+index de2bacc418fe..483573166ac9 100644
+--- a/Documentation/filesystems/f2fs.rst
++++ b/Documentation/filesystems/f2fs.rst
+@@ -203,9 +203,9 @@ usrjquota=<file>	 Appoint specified file and type during mount, so that quota
+ grpjquota=<file>	 information can be properly updated during recovery flow,
+ prjjquota=<file>	 <quota file>: must be in root directory;
+ jqfmt=<quota type>	 <quota type>: [vfsold,vfsv0,vfsv1].
+-offusrjquota		 Turn off user journalled quota.
+-offgrpjquota		 Turn off group journalled quota.
+-offprjjquota		 Turn off project journalled quota.
++usrjquota=		 Turn off user journalled quota.
++grpjquota=		 Turn off group journalled quota.
++prjjquota=		 Turn off project journalled quota.
+ quota			 Enable plain user disk quota accounting.
+ noquota			 Disable all plain disk quota option.
+ whint_mode=%s		 Control which write hints are passed down to block
 -- 
 2.39.5
 
