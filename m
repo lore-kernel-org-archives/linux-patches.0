@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F1B21ADA7;
-	Tue, 26 Aug 2025 11:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A5420C001;
+	Tue, 26 Aug 2025 11:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207617; cv=none; b=oQf/vnmDQQe8pbSIxd8m8epAocZaAsPQledO8r1kGNmqqWQ/8Yna/mwJd9jdQma/MiNoGDaL2ivLLEF8JgA9gwVtHAfnqGFbg1z1Pd3BS2tzq/C4sv3oI7GbAI3FGKA8BEe6rsuj+VihSBOftNuN+VxXsJVS9vCvv6dRPh2lVOE=
+	t=1756207619; cv=none; b=T0gwgUb6p3sBAx+SVEp9PhiBMFQiqq9UMisdgfF1qkgRHlHB72qBEdKTuowRj1+WpKk1r0jBHKlAanXFFlf0tmpZrAR6UsJEmW3JG9N/Z2Ih3X/1yGJv8Y5iyMunxCQO4xOG8MA/mLyhHE1dp0+iTGBjnAW7hpF1BsT1pynQpaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207617; c=relaxed/simple;
-	bh=Jl5OgkZGpvswtVL3nATAUfKPL86mxVFlVjQJB9OeXlQ=;
+	s=arc-20240116; t=1756207619; c=relaxed/simple;
+	bh=PMtdQoemG12pHtl2vBLEf5TOwzHoSGlbKFB2PQ6OQyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EMKAe+S5uM5W5LWeoIr6F85GNThUtEoq1t0I1oG7+324rjom4r3NJD6uaPjh+luuGnCIwx2GJBSwCaG7NPkYcI2G/dGShLjaUPLnbEfM8tSI3kiqRR1ndPyrxIIGJCb94lXcdcx3+2V5NCzndyCzMD1wcda1r0WV5syLpDOZ3Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6OOCcBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4Cg7jkcq+D8si6lVsNvT788NeIxyWObmT6qKDV9KQVTZWzmZ1wgeBCpa1xb8IScc9DVhcc61PjbXvwomvfR/4eYV+tAdWwXIoX0mXeZTrRhrrsxUCEjC/FWG4yEeEgBimHCSyT2Anrvsa4pKkBko4TztCnZJB6v+JTZ/8mwn/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/5k37Nu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6OOCcBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA22EC4CEF1;
-	Tue, 26 Aug 2025 11:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/5k37Nu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5327BC4CEF1;
+	Tue, 26 Aug 2025 11:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207617;
-	bh=Jl5OgkZGpvswtVL3nATAUfKPL86mxVFlVjQJB9OeXlQ=;
+	s=korg; t=1756207619;
+	bh=PMtdQoemG12pHtl2vBLEf5TOwzHoSGlbKFB2PQ6OQyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U6OOCcBUlvN//Rq53f/k8eHcJUlE7j4XeF5qoNL1lf5CGH97ziaOFH7lbzTm4yZvP
-	 o86hhXI4bSrLxWYaalnF0iOJiQG2tWmajnpHwplYq7ilDuH3Ja4oMk7dhw+ymJwB9R
-	 6ANeVwXcWrCoZrwr7d+0A0WPkPBdTd4ziITP1+jg=
+	b=S/5k37NuFMmMtVVXZP0Sy8AA129EM4g4o+JcTT32jwVx4/PREB2Bgd4CDG6kRCTnD
+	 nSTrOVuYIjYuFJ4gw7BOni7JglNKecfUSFwVMGwfqrnHl/HptlW2Ruc1khMMHefFuT
+	 wYZ5cX/rD3XtYjxTrvJhnOm+kmwG65JUxZd2hPSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 221/457] btrfs: subpage: keep TOWRITE tag until folio is cleaned
-Date: Tue, 26 Aug 2025 13:08:25 +0200
-Message-ID: <20250826110942.827191318@linuxfoundation.org>
+Subject: [PATCH 6.16 222/457] xfs: decouple xfs_trans_alloc_empty from xfs_trans_alloc
+Date: Tue, 26 Aug 2025 13:08:26 +0200
+Message-ID: <20250826110942.853865634@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -47,133 +46,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit b1511360c8ac882b0c52caa263620538e8d73220 ]
+[ Upstream commit 83a80e95e797a2a6d14bf7983e5e6eecf8f5facb ]
 
-btrfs_subpage_set_writeback() calls folio_start_writeback() the first time
-a folio is written back, and it also clears the PAGECACHE_TAG_TOWRITE tag
-even if there are still dirty blocks in the folio. This can break ordering
-guarantees, such as those required by btrfs_wait_ordered_extents().
+xfs_trans_alloc_empty only shares the very basic transaction structure
+allocation and initialization with xfs_trans_alloc.
 
-That ordering breakage leads to a real failure. For example, running
-generic/464 on a zoned setup will hit the following ASSERT. This happens
-because the broken ordering fails to flush existing dirty pages before the
-file size is truncated.
+Split out a new __xfs_trans_alloc helper for that and otherwise decouple
+xfs_trans_alloc_empty from xfs_trans_alloc.
 
-  assertion failed: !list_empty(&ordered->list) :: 0, in fs/btrfs/zoned.c:1899
-  ------------[ cut here ]------------
-  kernel BUG at fs/btrfs/zoned.c:1899!
-  Oops: invalid opcode: 0000 [#1] SMP NOPTI
-  CPU: 2 UID: 0 PID: 1906169 Comm: kworker/u130:2 Kdump: loaded Not tainted 6.16.0-rc6-BTRFS-ZNS+ #554 PREEMPT(voluntary)
-  Hardware name: Supermicro Super Server/H12SSL-NT, BIOS 2.0 02/22/2021
-  Workqueue: btrfs-endio-write btrfs_work_helper [btrfs]
-  RIP: 0010:btrfs_finish_ordered_zoned.cold+0x50/0x52 [btrfs]
-  RSP: 0018:ffffc9002efdbd60 EFLAGS: 00010246
-  RAX: 000000000000004c RBX: ffff88811923c4e0 RCX: 0000000000000000
-  RDX: 0000000000000000 RSI: ffffffff827e38b1 RDI: 00000000ffffffff
-  RBP: ffff88810005d000 R08: 00000000ffffdfff R09: ffffffff831051c8
-  R10: ffffffff83055220 R11: 0000000000000000 R12: ffff8881c2458c00
-  R13: ffff88811923c540 R14: ffff88811923c5e8 R15: ffff8881c1bd9680
-  FS:  0000000000000000(0000) GS:ffff88a04acd0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f907c7a918c CR3: 0000000004024000 CR4: 0000000000350ef0
-  Call Trace:
-   <TASK>
-   ? srso_return_thunk+0x5/0x5f
-   btrfs_finish_ordered_io+0x4a/0x60 [btrfs]
-   btrfs_work_helper+0xf9/0x490 [btrfs]
-   process_one_work+0x204/0x590
-   ? srso_return_thunk+0x5/0x5f
-   worker_thread+0x1d6/0x3d0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0x118/0x230
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x205/0x260
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
-
-Consider process A calling writepages() with WB_SYNC_NONE. In zoned mode or
-for compressed writes, it locks several folios for delalloc and starts
-writing them out. Let's call the last locked folio folio X. Suppose the
-write range only partially covers folio X, leaving some pages dirty.
-Process A calls btrfs_subpage_set_writeback() when building a bio. This
-function call clears the TOWRITE tag of folio X, whose size = 8K and
-the block size = 4K. It is following state.
-
-   0     4K    8K
-   |/////|/////|  (flag: DIRTY, tag: DIRTY)
-   <-----> Process A will write this range.
-
-Now suppose process B concurrently calls writepages() with WB_SYNC_ALL. It
-calls tag_pages_for_writeback() to tag dirty folios with
-PAGECACHE_TAG_TOWRITE. Since folio X is still dirty, it gets tagged. Then,
-B collects tagged folios using filemap_get_folios_tag() and must wait for
-folio X to be written before returning from writepages().
-
-   0     4K    8K
-   |/////|/////|  (flag: DIRTY, tag: DIRTY|TOWRITE)
-
-However, between tagging and collecting, process A may call
-btrfs_subpage_set_writeback() and clear folio X's TOWRITE tag.
-   0     4K    8K
-   |     |/////|  (flag: DIRTY|WRITEBACK, tag: DIRTY)
-
-As a result, process B won't see folio X in its batch, and returns without
-waiting for it. This breaks the WB_SYNC_ALL ordering requirement.
-
-Fix this by using btrfs_subpage_set_writeback_keepwrite(), which retains
-the TOWRITE tag. We now manually clear the tag only after the folio becomes
-clean, via the xas operation.
-
-Fixes: 3470da3b7d87 ("btrfs: subpage: introduce helpers for writeback status")
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: d2845519b072 ("xfs: fully decouple XFS_IBULK* flags from XFS_IWALK* flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/subpage.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_trans.c |   52 ++++++++++++++++++++++++++++------------------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
---- a/fs/btrfs/subpage.c
-+++ b/fs/btrfs/subpage.c
-@@ -448,8 +448,25 @@ void btrfs_subpage_set_writeback(const s
- 
- 	spin_lock_irqsave(&bfs->lock, flags);
- 	bitmap_set(bfs->bitmaps, start_bit, len >> fs_info->sectorsize_bits);
-+
-+	/*
-+	 * Don't clear the TOWRITE tag when starting writeback on a still-dirty
-+	 * folio. Doing so can cause WB_SYNC_ALL writepages() to overlook it,
-+	 * assume writeback is complete, and exit too early — violating sync
-+	 * ordering guarantees.
-+	 */
- 	if (!folio_test_writeback(folio))
--		folio_start_writeback(folio);
-+		__folio_start_writeback(folio, true);
-+	if (!folio_test_dirty(folio)) {
-+		struct address_space *mapping = folio_mapping(folio);
-+		XA_STATE(xas, &mapping->i_pages, folio->index);
-+		unsigned long flags;
-+
-+		xas_lock_irqsave(&xas, flags);
-+		xas_load(&xas);
-+		xas_clear_mark(&xas, PAGECACHE_TAG_TOWRITE);
-+		xas_unlock_irqrestore(&xas, flags);
-+	}
- 	spin_unlock_irqrestore(&bfs->lock, flags);
+--- a/fs/xfs/xfs_trans.c
++++ b/fs/xfs/xfs_trans.c
+@@ -241,6 +241,28 @@ undo_blocks:
+ 	return error;
  }
  
++static struct xfs_trans *
++__xfs_trans_alloc(
++	struct xfs_mount	*mp,
++	uint			flags)
++{
++	struct xfs_trans	*tp;
++
++	ASSERT(!(flags & XFS_TRANS_RES_FDBLKS) || xfs_has_lazysbcount(mp));
++
++	tp = kmem_cache_zalloc(xfs_trans_cache, GFP_KERNEL | __GFP_NOFAIL);
++	if (!(flags & XFS_TRANS_NO_WRITECOUNT))
++		sb_start_intwrite(mp->m_super);
++	xfs_trans_set_context(tp);
++	tp->t_flags = flags;
++	tp->t_mountp = mp;
++	INIT_LIST_HEAD(&tp->t_items);
++	INIT_LIST_HEAD(&tp->t_busy);
++	INIT_LIST_HEAD(&tp->t_dfops);
++	tp->t_highest_agno = NULLAGNUMBER;
++	return tp;
++}
++
+ int
+ xfs_trans_alloc(
+ 	struct xfs_mount	*mp,
+@@ -254,33 +276,16 @@ xfs_trans_alloc(
+ 	bool			want_retry = true;
+ 	int			error;
+ 
++	ASSERT(resp->tr_logres > 0);
++
+ 	/*
+ 	 * Allocate the handle before we do our freeze accounting and setting up
+ 	 * GFP_NOFS allocation context so that we avoid lockdep false positives
+ 	 * by doing GFP_KERNEL allocations inside sb_start_intwrite().
+ 	 */
+ retry:
+-	tp = kmem_cache_zalloc(xfs_trans_cache, GFP_KERNEL | __GFP_NOFAIL);
+-	if (!(flags & XFS_TRANS_NO_WRITECOUNT))
+-		sb_start_intwrite(mp->m_super);
+-	xfs_trans_set_context(tp);
+-
+-	/*
+-	 * Zero-reservation ("empty") transactions can't modify anything, so
+-	 * they're allowed to run while we're frozen.
+-	 */
+-	WARN_ON(resp->tr_logres > 0 &&
+-		mp->m_super->s_writers.frozen == SB_FREEZE_COMPLETE);
+-	ASSERT(!(flags & XFS_TRANS_RES_FDBLKS) ||
+-	       xfs_has_lazysbcount(mp));
+-
+-	tp->t_flags = flags;
+-	tp->t_mountp = mp;
+-	INIT_LIST_HEAD(&tp->t_items);
+-	INIT_LIST_HEAD(&tp->t_busy);
+-	INIT_LIST_HEAD(&tp->t_dfops);
+-	tp->t_highest_agno = NULLAGNUMBER;
+-
++	WARN_ON(mp->m_super->s_writers.frozen == SB_FREEZE_COMPLETE);
++	tp = __xfs_trans_alloc(mp, flags);
+ 	error = xfs_trans_reserve(tp, resp, blocks, rtextents);
+ 	if (error == -ENOSPC && want_retry) {
+ 		xfs_trans_cancel(tp);
+@@ -329,9 +334,8 @@ xfs_trans_alloc_empty(
+ 	struct xfs_mount		*mp,
+ 	struct xfs_trans		**tpp)
+ {
+-	struct xfs_trans_res		resv = {0};
+-
+-	return xfs_trans_alloc(mp, &resv, 0, 0, XFS_TRANS_NO_WRITECOUNT, tpp);
++	*tpp = __xfs_trans_alloc(mp, XFS_TRANS_NO_WRITECOUNT);
++	return 0;
+ }
+ 
+ /*
 
 
