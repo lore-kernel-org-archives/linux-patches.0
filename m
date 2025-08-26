@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE84523FC41;
-	Tue, 26 Aug 2025 13:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A32F23FC41;
+	Tue, 26 Aug 2025 13:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214564; cv=none; b=DXp4SL//rpo45On8iKUmEeXEfrKHdfOv5NmB3ucaW7OLlYvTTkEa21WNRYNihi809zk+ykjbwGqdqGGw9TbsYu00CVKEqZ5QtOPtHexL9mcHDy9nxuxPIF9o4VwUUr0ITINg9jUmt/Gd69vinU+aXlpruJzcBYQ7yWOx+I3UpHQ=
+	t=1756214567; cv=none; b=nKsWpjhzkW8RDXDncKQ3xui37tZSBaf4EQxUWEK4gThWQkFbmSYUUYU5aPjAZJBhz4USX0ixEty67Q+TdTv//XO2EvLTaI/iCoDiHRDLOmJInK3dKLjgBzR450RcQnOgGKEVoLYMSz34h6GPRktM6jKZUqKZ8uxnLatOjjrP4fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214564; c=relaxed/simple;
-	bh=x4Dr+7pGJ7c8giGaG//OZQMwtLiMgXT212npDpmicVw=;
+	s=arc-20240116; t=1756214567; c=relaxed/simple;
+	bh=cgNWnGYeNOsvMpzayROKu1PR43kTSzq7MvX0k5+tDzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGVUktD8uJITiT9JzSsStNn/+jbcV3zbERnB+/ATMExnrXSlCCD8NuOSoNizgPdfLff3PnkSPtynGd1hxWbQ4AGsFnm06SEEYTL9hXy6YAGejzrATev1L68YaGLpaTFBh2zza/tEyU4qI6Y/rfJ+HLEXvkaOeonnshWY7FqpZ4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvSo10a/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UVei4QwU30py99ZMXISeDJAYsr3iQMXUf+uunXkJ1vVU1ABmtnRaxUvWnJeAbYCSOUq5fSgjV5eRFAPT2TL77PA7Z7OfWPQcO6TS/ct4oHIo0XjCxbzqrYUo2i3Zio9AxUDeIbzHjCTDaIcGL9E8a4QOv+jUprhm4iVDjfOszhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIFoKV55; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvSo10a/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDD6C4CEF1;
-	Tue, 26 Aug 2025 13:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIFoKV55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8DAC4CEF1;
+	Tue, 26 Aug 2025 13:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214564;
-	bh=x4Dr+7pGJ7c8giGaG//OZQMwtLiMgXT212npDpmicVw=;
+	s=korg; t=1756214567;
+	bh=cgNWnGYeNOsvMpzayROKu1PR43kTSzq7MvX0k5+tDzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvSo10a/iSf+hKAm5X6X7JlF6gq8QFrJqU3YSgu1W/5XklSnZBuJFyeipi3JP1aA9
-	 eez9Nh5pqR3rzfTCG6hNCZ++wxon1btT1hfOHZnO8zWL9IN44rpIT3wL2vPIXGi5VL
-	 zai5N9YNSm/4V3vJcT+pvT2UmoJ/aLt6lV5n/Dnk=
+	b=XIFoKV55PdtT2u/InYRSJEOwdM3EWlmxClvwFHcZHc9v3Nn9os6R6sIdJmrETWkcn
+	 xk9YJ0RbTHyGk4rg2XMTHl9qkuYzmY/Szj0JEXlw6RQ4xdao0Iv1Rf72oaoo77es7Y
+	 eIn9YsMXC5wjjoJjoPVx79rqkNNRPEEutk04A/D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
-	Vicki Pfau <vi@endrift.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Lazar <alazar@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/482] drm/amd: Allow printing VanGogh OD SCLK levels without setting dpm to manual
-Date: Tue, 26 Aug 2025 13:06:48 +0200
-Message-ID: <20250826110934.643769619@linuxfoundation.org>
+Subject: [PATCH 6.1 156/482] net: vlan: Replace BUG() with WARN_ON_ONCE() in vlan_dev_* stubs
+Date: Tue, 26 Aug 2025 13:06:49 +0200
+Message-ID: <20250826110934.667627222@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,85 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 2d1ec1e955414e8e8358178011c35afca1a1c0b1 ]
+[ Upstream commit 60a8b1a5d0824afda869f18dc0ecfe72f8dfda42 ]
 
-Several other ASICs allow printing OD SCLK levels without setting DPM
-control to manual.  When OD is disabled it will show the range the
-hardware supports. When OD is enabled it will show what values have
-been programmed. Adjust VanGogh to work the same.
+When CONFIG_VLAN_8021Q=n, a set of stub helpers are used, three of these
+helpers use BUG() unconditionally.
 
-Cc: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
-Reported-by: Vicki Pfau <vi@endrift.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20250609031227.479079-1-superm1@kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This code should not be reached, as callers of these functions should
+always check for is_vlan_dev() first, but the usage of BUG() is not
+recommended, replace it with WARN_ON() instead.
+
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://patch.msgid.link/20250616132626.1749331-3-gal@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c  | 37 ++++++++-----------
- 1 file changed, 15 insertions(+), 22 deletions(-)
+ include/linux/if_vlan.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-index c9c0aa6376e3..e2fa0ee0dc92 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-@@ -681,7 +681,6 @@ static int vangogh_print_clk_levels(struct smu_context *smu,
- {
- 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
- 	SmuMetrics_t metrics;
--	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
- 	int i, idx, size = 0, ret = 0;
- 	uint32_t cur_value = 0, value = 0, count = 0;
- 	bool cur_value_match_level = false;
-@@ -697,31 +696,25 @@ static int vangogh_print_clk_levels(struct smu_context *smu,
+diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
+index 9f7dbbb34094..f4eb8dd7308a 100644
+--- a/include/linux/if_vlan.h
++++ b/include/linux/if_vlan.h
+@@ -253,19 +253,19 @@ vlan_for_each(struct net_device *dev,
  
- 	switch (clk_type) {
- 	case SMU_OD_SCLK:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "%s:\n", "OD_SCLK");
--			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
--			(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
--			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
--			(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "%s:\n", "OD_SCLK");
-+		size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
-+		(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
-+		size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
-+		(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
- 		break;
- 	case SMU_OD_CCLK:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "CCLK_RANGE in Core%d:\n",  smu->cpu_core_id_select);
--			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
--			(smu->cpu_actual_soft_min_freq > 0) ? smu->cpu_actual_soft_min_freq : smu->cpu_default_soft_min_freq);
--			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
--			(smu->cpu_actual_soft_max_freq > 0) ? smu->cpu_actual_soft_max_freq : smu->cpu_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "CCLK_RANGE in Core%d:\n",  smu->cpu_core_id_select);
-+		size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
-+		(smu->cpu_actual_soft_min_freq > 0) ? smu->cpu_actual_soft_min_freq : smu->cpu_default_soft_min_freq);
-+		size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
-+		(smu->cpu_actual_soft_max_freq > 0) ? smu->cpu_actual_soft_max_freq : smu->cpu_default_soft_max_freq);
- 		break;
- 	case SMU_OD_RANGE:
--		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
--			size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
--			size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
--				smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
--			size += sysfs_emit_at(buf, size, "CCLK: %7uMhz %10uMhz\n",
--				smu->cpu_default_soft_min_freq, smu->cpu_default_soft_max_freq);
--		}
-+		size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
-+		size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
-+			smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
-+		size += sysfs_emit_at(buf, size, "CCLK: %7uMhz %10uMhz\n",
-+			smu->cpu_default_soft_min_freq, smu->cpu_default_soft_max_freq);
- 		break;
- 	case SMU_SOCCLK:
- 		/* the level 3 ~ 6 of socclk use the same frequency for vangogh */
+ static inline struct net_device *vlan_dev_real_dev(const struct net_device *dev)
+ {
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return NULL;
+ }
+ 
+ static inline u16 vlan_dev_vlan_id(const struct net_device *dev)
+ {
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return 0;
+ }
+ 
+ static inline __be16 vlan_dev_vlan_proto(const struct net_device *dev)
+ {
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
