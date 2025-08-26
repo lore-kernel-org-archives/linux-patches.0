@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51BB2135B8;
-	Tue, 26 Aug 2025 11:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32449343D63;
+	Tue, 26 Aug 2025 11:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207851; cv=none; b=kytu74Qmi0Gy/rMi/iITnTJGagUs4tYWG3PpDp7xhT+bO2gK83pZWeeI8ibu3Np5ukHMLW/nras//Xy7YgClN2IhH2mHK9Qyb92MB4Q8/JN4opHtzLZtZ+yVch+1nLYk7Luwjja/dLWvcsAlkAjz8veD+FL+ix7prZPLF/Gz9Q8=
+	t=1756207854; cv=none; b=IRPd7DPkG+wn5G7L3sVK/m6+eGPZFjbWG0Hiygu8a2Ir/I9XjAxmmhYQlA81uLkiWgMjD8wZHdMz9lkRXRN+6aZUBTHZuI6C4BSLG4PAQ0cQxym2YONnTZtltaEvC7IpHlRwvoV5IhzrjSlU/dpTbSNTyJOSoykT+A/18dkVYHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207851; c=relaxed/simple;
-	bh=oECuGxCD+SUJAAWIukqhtvp23tmTXMDYNKEQbZmL7Pg=;
+	s=arc-20240116; t=1756207854; c=relaxed/simple;
+	bh=ZSUYJ8aENkf92YnKTO0Bcj/GuBUOsyuQiw1hZv7UCK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSFOAoDg/1RFKD9KtZvMLrdhri1uw2Nil81qfHwvlMPQdEiEJ1wu0sXFfA8occa88VZciAG8NrkhQ7su0CEtXXGStFvopsay2gNFWPVsPxes3FU39/D7RihS0EDCdfsC+gsdF0D9xJkzQfBl5Jt79gXcLvlhnLMq0KjJQQl0E8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szTGFyuN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E8uouQDNo/px9ZmqE8+aU1K7J5SOEMLDSVhpApalgQ7W/Qia4mjbPq+9VPDUpMhYQCby1hH0+rnFQ/VThQxW507/reB+m7rZYVb/NUJlT6kZRHyjoMzwEmsxcck3axRRtot2VQSEsNlT5w5mbhRLZw1HxgQR8gBop52LGyzRVUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGsDDn20; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szTGFyuN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47887C4CEF1;
-	Tue, 26 Aug 2025 11:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGsDDn20"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2E4C4CEF1;
+	Tue, 26 Aug 2025 11:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207851;
-	bh=oECuGxCD+SUJAAWIukqhtvp23tmTXMDYNKEQbZmL7Pg=;
+	s=korg; t=1756207854;
+	bh=ZSUYJ8aENkf92YnKTO0Bcj/GuBUOsyuQiw1hZv7UCK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szTGFyuNvoAVX0vrslK9z/L2yO9yCorfbI1xNVVAZAIaOBvC73vwqSPBeIX/HQwZE
-	 6DE9yZyJ4gC1A3M4UM+82180tmU2GW1F09b7ESECLYvkTszLS99KTEDoQ8NF1BAwOj
-	 GyOEG9aMJ+iLJ31DgZFdv2lH9aSX9MIycr9nE5/M=
+	b=yGsDDn20qrzn+awb4kuzvskTtfJ+In1rzsfRO7luP9UpcY2NhSdmHtes9gF/tg/5q
+	 1vm+Yh5gSg1lL28pHDpRWExXZ6KW0T5NVmCgeTHu+ycfASdR2Xg+F9+sJaCJIaK+2b
+	 fClLunJzBR2kjtd4ATIK+j1a/l8yQYrVSmZ81z54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Sean Nyekjaer <sean@geanix.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 341/457] iio: imu: inv_icm42600: change invalid data error to -EBUSY
-Date: Tue, 26 Aug 2025 13:10:25 +0200
-Message-ID: <20250826110945.760600053@linuxfoundation.org>
+Subject: [PATCH 6.16 342/457] spi: spi-qpic-snand: use correct CW_PER_PAGE value for OOB write
+Date: Tue, 26 Aug 2025 13:10:26 +0200
+Message-ID: <20250826110945.785036039@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,46 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit dfdc31e7ccf3ac1d5ec01d5120c71e14745e3dd8 ]
+[ Upstream commit 6bc829220b33da8522572cc50fdf5067c51d3bf3 ]
 
-Temperature sensor returns the temperature of the mechanical parts
-of the chip. If both accel and gyro are off, the temperature sensor is
-also automatically turned off and returns invalid data.
+The qcom_spi_program_oob() function uses only the last codeword to write
+the OOB data into the flash, but it sets the CW_PER_PAGE field in the
+CFG0 register as it would use all codewords.
 
-In this case, returning -EBUSY error code is better then -EINVAL and
-indicates userspace that it needs to retry reading temperature in
-another context.
+It seems that this confuses the hardware somehow, and any access to the
+flash fails with a timeout error after the function is called. The problem
+can be easily reproduced with the following commands:
 
-Fixes: bc3eb0207fb5 ("iio: imu: inv_icm42600: add temperature sensor support")
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Reviewed-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250808-inv-icm42600-change-temperature-error-code-v1-1-986fbf63b77d@tdk.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+    # dd if=/dev/zero bs=2176 count=1 > /tmp/test.bin
+    1+0 records in
+    1+0 records out
+    # flash_erase /dev/mtd4 0 0
+    Erasing 128 Kibyte @ 0 -- 100 % complete
+    # nandwrite -O /dev/mtd4 /tmp/test.bin
+    Writing data to block 0 at offset 0x0
+    # nanddump -o /dev/mtd4 >/dev/null
+    ECC failed: 0
+    ECC corrected: 0
+    Number of bad blocks: 0
+    Number of bbt blocks: 0
+    Block size 131072, page size 2048, OOB size 128
+    Dumping data starting at 0x00000000 and ending at 0x00020000...
+    [   33.197605] qcom_snand 79b0000.spi: failure to read oob
+    libmtd: error!: MEMREADOOB64 ioctl failed for mtd4, offset 0 (eraseblock 0)
+            error 110 (Operation timed out)
+    [   35.277582] qcom_snand 79b0000.spi: failure in submitting cmd descriptor
+    libmtd: error!: cannot read 2048 bytes from mtd4 (eraseblock 0, offset 2048)
+            error 110 (Operation timed out)
+    nanddump: error!: mtd_read
+
+Change the code to use the correct CW_PER_PAGE value to avoid this.
+
+Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://patch.msgid.link/20250801-qpic-snand-oob-cwpp-fix-v1-1-f5a41b86af2e@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/spi/spi-qpic-snand.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c
-@@ -32,8 +32,12 @@ static int inv_icm42600_temp_read(struct
- 		goto exit;
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 3b757e3d00c0..722ab60d616f 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -1185,7 +1185,7 @@ static int qcom_spi_program_oob(struct qcom_nand_controller *snandc,
+ 	u32 cfg0, cfg1, ecc_bch_cfg, ecc_buf_cfg;
  
- 	*temp = (s16)be16_to_cpup(raw);
-+	/*
-+	 * Temperature data is invalid if both accel and gyro are off.
-+	 * Return -EBUSY in this case.
-+	 */
- 	if (*temp == INV_ICM42600_DATA_INVALID)
--		ret = -EINVAL;
-+		ret = -EBUSY;
- 
- exit:
- 	mutex_unlock(&st->lock);
+ 	cfg0 = (ecc_cfg->cfg0 & ~CW_PER_PAGE_MASK) |
+-	       FIELD_PREP(CW_PER_PAGE_MASK, num_cw - 1);
++	       FIELD_PREP(CW_PER_PAGE_MASK, 0);
+ 	cfg1 = ecc_cfg->cfg1;
+ 	ecc_bch_cfg = ecc_cfg->ecc_bch_cfg;
+ 	ecc_buf_cfg = ecc_cfg->ecc_buf_cfg;
+-- 
+2.50.1
+
 
 
