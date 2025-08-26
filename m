@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9549B1EF39E;
-	Tue, 26 Aug 2025 13:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D770733EAF9;
+	Tue, 26 Aug 2025 13:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214501; cv=none; b=jsqdci2A90jEL5NzpVqoAh3qlmhsr3kGBqpJbXqXgkG/KiJVbpiFnVX7IxdwanTADwQ4mM2kafKEe85KOFP9a4wQv85GWMQk8hS/g7ggFt1Tq4IbuyTTg53DvDWEk3Hb1DfWbq2K7mqjC1mhvQf7xfEhX1SYfqZakyuLPjcngp4=
+	t=1756214503; cv=none; b=TD2cUNrfaIIIeWdtHWKQo9+8mOWyD5fJJLYZ+Y/DT8NY9ZHU0pfYFO+Y1IwYTjvFAbAssxJD1tiPbd9qd4xyyp/NpQfinheo9oPtmrQlq2UKWjvx0zn76HwFA3AuXiTHeWLcHV+AZLYTy9QDT3dLLJjiTqYns2GF9uaa82fFxrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214501; c=relaxed/simple;
-	bh=i3QSRhmrr8wAJpbEE9yzvs4rTj01GRqYZMDJl8j8tRA=;
+	s=arc-20240116; t=1756214503; c=relaxed/simple;
+	bh=r2KeabzwCcFLy1g+XYz71rGoyZy6jej7D/bc0q3uFng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/z5Nq5bdNdLIdzIMmX3nhtGnT6wjUFF50QspY9InpudHdzYduraj8iYqWhrv8UqbWitQwKkucYBC0CYuDLXTKdglDRHU9UCaunkusXRo2Cj6dqjDFavUdQCMN3kMqHTKq11W8poR1iXleQ6WC3GyCFf7pr+72lAKXfNR3I73Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCLKqQ21; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LLhCC3yxH+pxZI8of6e9XIUpC6HGLtMzSzj8ZvEqx/2ZtutoenAPPAFwDaztI/Kot3Hw9Mqf8uW1h8V/Q2DMivxs0iNhJxddQeK7AqjWfghdY2VEMXw0qLdDilmoEdxmDkyJqhIRrjb+rOxlwm5wCdgjbedRSmM9R5H7LTtcKt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19/zS+ba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCLKqQ21"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04FDC4CEF1;
-	Tue, 26 Aug 2025 13:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19/zS+ba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A21FC4CEF1;
+	Tue, 26 Aug 2025 13:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214501;
-	bh=i3QSRhmrr8wAJpbEE9yzvs4rTj01GRqYZMDJl8j8tRA=;
+	s=korg; t=1756214503;
+	bh=r2KeabzwCcFLy1g+XYz71rGoyZy6jej7D/bc0q3uFng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCLKqQ21ax4fqUKKjB/vY61EZ8HdGM58AaAkfunh5fdaPa8x3ng8yj07RDp2g2fJO
-	 pY5DtTErJHl+xEWKTLyGA+slSph6CwBJXlwjBSL1GRN4YcdbpxsNnLbvRYDih7XZi1
-	 npXtURS2386Fv0RusTsakHDzY4tamCjKqS1m1n0U=
+	b=19/zS+ba6gbdp1DzcpFnbgSvLMhQnw2HXjymz+C1k1MfIutjuPnrxry7PNhh7ypv4
+	 Bi9vqnXkJ+mlnuT7HaribfAjmoBb+vGkgSyWqNaH2F1tnOhi9nee1jWanY015njS+h
+	 /CdQgxq4Azo8iweu2W5VrYMBFDy+mj4bhmvHbvqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/482] ptp: Use ratelimite for freerun error message
-Date: Tue, 26 Aug 2025 13:06:55 +0200
-Message-ID: <20250826110934.812902150@linuxfoundation.org>
+Subject: [PATCH 6.1 163/482] wifi: rtlwifi: fix possible skb memory leak in _rtl_pci_init_one_rxdesc()
+Date: Tue, 26 Aug 2025 13:06:56 +0200
+Message-ID: <20250826110934.838822896@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,37 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit e9a7795e75b78b56997fb0070c18d6e1057b6462 ]
+[ Upstream commit 76b3e5078d76f0eeadb7aacf9845399f8473da0d ]
 
-Replace pr_err() with pr_err_ratelimited() in ptp_clock_settime() to
-prevent log flooding when the physical clock is free running, which
-happens on some of my hosts. This ensures error messages are
-rate-limited and improves kernel log readability.
+When `dma_mapping_error()` is true, if a new `skb` has been allocated,
+then it must be de-allocated.
 
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250613-ptp-v1-1-ee44260ce9e2@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Compile tested only
+
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250613074014.69856-2-fourier.thomas@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_clock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index 642c939d4523..e6bcccf87cd6 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -79,7 +79,7 @@ static int ptp_clock_settime(struct posix_clock *pc, const struct timespec64 *tp
- 	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
- 
- 	if (ptp_clock_freerun(ptp)) {
--		pr_err("ptp: physical clock is free running\n");
-+		pr_err_ratelimited("ptp: physical clock is free running\n");
- 		return -EBUSY;
- 	}
- 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index f796b16eac53..4029e4e590fa 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -573,8 +573,11 @@ static int _rtl_pci_init_one_rxdesc(struct ieee80211_hw *hw,
+ 		dma_map_single(&rtlpci->pdev->dev, skb_tail_pointer(skb),
+ 			       rtlpci->rxbuffersize, DMA_FROM_DEVICE);
+ 	bufferaddress = *((dma_addr_t *)skb->cb);
+-	if (dma_mapping_error(&rtlpci->pdev->dev, bufferaddress))
++	if (dma_mapping_error(&rtlpci->pdev->dev, bufferaddress)) {
++		if (!new_skb)
++			kfree_skb(skb);
+ 		return 0;
++	}
+ 	rtlpci->rx_ring[rxring_idx].rx_buf[desc_idx] = skb;
+ 	if (rtlpriv->use_new_trx_flow) {
+ 		/* skb->cb may be 64 bit address */
 -- 
 2.39.5
 
