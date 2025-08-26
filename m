@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40DD322A03;
-	Tue, 26 Aug 2025 11:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E66321459;
+	Tue, 26 Aug 2025 11:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207969; cv=none; b=b4cpRAwUsYLN4Z8oEsYyv2ghAR6Z1Mg+wbrkbOKikvuP9RDu8VIlZujvywXO9Optrhog4WVqOXMaeiFeXVReXB5fy/VQ249HY3G+ZyWsfjT35CApiaH7L/Y9adORJludg8nID+fJfu/xDtRIxuoekS37649sPbHNWGU6ZOc1UJ4=
+	t=1756207972; cv=none; b=ujMEtQtJPfqAr3ku4s52HTGN/+0rw/LlOgIjJzgdb9PQ5oX2fkPCxpLVwPfWEEBa61dPqjjH7mGZT4qllt8Y2bzyxNyCL3DWWYHUk0ONbiADVdZN15fYapoV7PZDOWe91z7vUvKyfuJ/os55VnbtkxxNrIMIqsqz8YGWjATWLMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207969; c=relaxed/simple;
-	bh=k7PaaNhdxJ7GgtYVjI08AXc3UY1cq+Pedh8vyCt68xk=;
+	s=arc-20240116; t=1756207972; c=relaxed/simple;
+	bh=5JDp/tiXFmwCBEiWr7AqnosU9OEn/t9NOuxUYJGLfjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDGtKi/sIWmrZqyoGY2fOoek7CKdNu8ijZ+PWtrs9g04CRxiqYBFWm3yyLsZXGO9Qpg5/Vi2q4m5PBQKP3EFIE4tzaZHobAvLGjo24xBCR8Q38DlOxAcnaFcr91B6rNrLRcNWlLIuW9TWMi6a1ffOUxDESGALjIqSvGm8YP8dJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSbfCuXJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ndq8ioBmfw5T09I3wz17csFO36YDXWoYFs8Qmqwik57/AJ26D1e4m3pmARJoUIlW4WYORN7T+t82DvplL/l2Qyh7DXTIE61U22RJD9j+5DHtW83j9w5iCbYiGaW4z/Cpw29srxqhh3l4H2/b2XbRWav/+atz/gMtqeVjclRROO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/4j4/b1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSbfCuXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45532C4CEF1;
-	Tue, 26 Aug 2025 11:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/4j4/b1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAACC4CEF1;
+	Tue, 26 Aug 2025 11:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207969;
-	bh=k7PaaNhdxJ7GgtYVjI08AXc3UY1cq+Pedh8vyCt68xk=;
+	s=korg; t=1756207972;
+	bh=5JDp/tiXFmwCBEiWr7AqnosU9OEn/t9NOuxUYJGLfjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BSbfCuXJXaMotlVxkPvAeRJVcB9RRmV1Zx4wB7R8fXeZ+07E0RqubZALM68Brqtmy
-	 0/pibc7aRnT2DUXliQV7loKUdIcMrKHP4SrL2QZ4DpnPbOI27dgGMnqj/oESxHebwm
-	 r1/X/ZJCQbu/icHD/HlTdLSXLb2yTB2aZteFWgWg=
+	b=D/4j4/b1C71lRJhryMSOWVUuSH5fVVdu0o50fc64Xs7o8WXX8WLvfnWPMDNkII3+Q
+	 tOOaaW95FpfpAWuCoKsKGljFhKHscLlqi0mtQf05zIPuK6DKCe0B+8oJBMf3BA+iqt
+	 ZZN5nyVhvEhrdHQ4cghbCVu5XWQI3lrl9xnw1ChM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 346/457] cgroup/cpuset: Use static_branch_enable_cpuslocked() on cpusets_insane_config_key
-Date: Tue, 26 Aug 2025 13:10:30 +0200
-Message-ID: <20250826110945.879753293@linuxfoundation.org>
+Subject: [PATCH 6.16 381/457] Bluetooth: hci_core: Fix not accounting for BIS/CIS/PA links separately
+Date: Tue, 26 Aug 2025 13:11:05 +0200
+Message-ID: <20250826110946.712477643@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,70 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 65f97cc81b0adc5f49cf6cff5d874be0058e3f41 ]
+[ Upstream commit 9d4b01a0bf8d2163ae129c9c537cb0753ad5a2aa ]
 
-The following lockdep splat was observed.
+This fixes the likes of hci_conn_num(CIS_LINK) returning the total of
+ISO connection which includes BIS_LINK as well, so this splits the
+iso_num into each link type and introduces hci_iso_num that can be used
+in places where the total number of ISO connection still needs to be
+used.
 
-[  812.359086] ============================================
-[  812.359089] WARNING: possible recursive locking detected
-[  812.359097] --------------------------------------------
-[  812.359100] runtest.sh/30042 is trying to acquire lock:
-[  812.359105] ffffffffa7f27420 (cpu_hotplug_lock){++++}-{0:0}, at: static_key_enable+0xe/0x20
-[  812.359131]
-[  812.359131] but task is already holding lock:
-[  812.359134] ffffffffa7f27420 (cpu_hotplug_lock){++++}-{0:0}, at: cpuset_write_resmask+0x98/0xa70
-     :
-[  812.359267] Call Trace:
-[  812.359272]  <TASK>
-[  812.359367]  cpus_read_lock+0x3c/0xe0
-[  812.359382]  static_key_enable+0xe/0x20
-[  812.359389]  check_insane_mems_config.part.0+0x11/0x30
-[  812.359398]  cpuset_write_resmask+0x9f2/0xa70
-[  812.359411]  cgroup_file_write+0x1c7/0x660
-[  812.359467]  kernfs_fop_write_iter+0x358/0x530
-[  812.359479]  vfs_write+0xabe/0x1250
-[  812.359529]  ksys_write+0xf9/0x1d0
-[  812.359558]  do_syscall_64+0x5f/0xe0
-
-Since commit d74b27d63a8b ("cgroup/cpuset: Change cpuset_rwsem
-and hotplug lock order"), the ordering of cpu hotplug lock
-and cpuset_mutex had been reversed. That patch correctly
-used the cpuslocked version of the static branch API to enable
-cpusets_pre_enable_key and cpusets_enabled_key, but it didn't do the
-same for cpusets_insane_config_key.
-
-The cpusets_insane_config_key can be enabled in the
-check_insane_mems_config() which is called from update_nodemask()
-or cpuset_hotplug_update_tasks() with both cpu hotplug lock and
-cpuset_mutex held. Deadlock can happen with a pending hotplug event that
-tries to acquire the cpu hotplug write lock which will block further
-cpus_read_lock() attempt from check_insane_mems_config(). Fix that by
-switching to use static_branch_enable_cpuslocked().
-
-Fixes: d74b27d63a8b ("cgroup/cpuset: Change cpuset_rwsem and hotplug lock order")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 23205562ffc8 ("Bluetooth: separate CIS_LINK and BIS_LINK link types")
+Fixes: a7bcffc673de ("Bluetooth: Add PA_LINK to distinguish BIG sync and PA sync connections")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/bluetooth/hci_core.h | 30 +++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 3bc4301466f3..77396bab071a 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -280,7 +280,7 @@ static inline void check_insane_mems_config(nodemask_t *nodes)
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 459f26d63451..439bc124ce70 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -129,7 +129,9 @@ struct hci_conn_hash {
+ 	struct list_head list;
+ 	unsigned int     acl_num;
+ 	unsigned int     sco_num;
+-	unsigned int     iso_num;
++	unsigned int     cis_num;
++	unsigned int     bis_num;
++	unsigned int     pa_num;
+ 	unsigned int     le_num;
+ 	unsigned int     le_num_peripheral;
+ };
+@@ -1014,9 +1016,13 @@ static inline void hci_conn_hash_add(struct hci_dev *hdev, struct hci_conn *c)
+ 		h->sco_num++;
+ 		break;
+ 	case CIS_LINK:
++		h->cis_num++;
++		break;
+ 	case BIS_LINK:
++		h->bis_num++;
++		break;
+ 	case PA_LINK:
+-		h->iso_num++;
++		h->pa_num++;
+ 		break;
+ 	}
+ }
+@@ -1042,9 +1048,13 @@ static inline void hci_conn_hash_del(struct hci_dev *hdev, struct hci_conn *c)
+ 		h->sco_num--;
+ 		break;
+ 	case CIS_LINK:
++		h->cis_num--;
++		break;
+ 	case BIS_LINK:
++		h->bis_num--;
++		break;
+ 	case PA_LINK:
+-		h->iso_num--;
++		h->pa_num--;
+ 		break;
+ 	}
+ }
+@@ -1061,9 +1071,11 @@ static inline unsigned int hci_conn_num(struct hci_dev *hdev, __u8 type)
+ 	case ESCO_LINK:
+ 		return h->sco_num;
+ 	case CIS_LINK:
++		return h->cis_num;
+ 	case BIS_LINK:
++		return h->bis_num;
+ 	case PA_LINK:
+-		return h->iso_num;
++		return h->pa_num;
+ 	default:
+ 		return 0;
+ 	}
+@@ -1073,7 +1085,15 @@ static inline unsigned int hci_conn_count(struct hci_dev *hdev)
  {
- 	if (!cpusets_insane_config() &&
- 		movable_only_nodes(nodes)) {
--		static_branch_enable(&cpusets_insane_config_key);
-+		static_branch_enable_cpuslocked(&cpusets_insane_config_key);
- 		pr_info("Unsupported (movable nodes only) cpuset configuration detected (nmask=%*pbl)!\n"
- 			"Cpuset allocations might fail even with a lot of memory available.\n",
- 			nodemask_pr_args(nodes));
+ 	struct hci_conn_hash *c = &hdev->conn_hash;
+ 
+-	return c->acl_num + c->sco_num + c->le_num + c->iso_num;
++	return c->acl_num + c->sco_num + c->le_num + c->cis_num + c->bis_num +
++		c->pa_num;
++}
++
++static inline unsigned int hci_iso_count(struct hci_dev *hdev)
++{
++	struct hci_conn_hash *c = &hdev->conn_hash;
++
++	return c->cis_num + c->bis_num;
+ }
+ 
+ static inline bool hci_conn_valid(struct hci_dev *hdev, struct hci_conn *conn)
 -- 
 2.50.1
 
