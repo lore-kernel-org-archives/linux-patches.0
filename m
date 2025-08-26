@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CB32AD04;
-	Tue, 26 Aug 2025 13:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24B12139C9;
+	Tue, 26 Aug 2025 13:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215491; cv=none; b=RgedlMSQQ7URR2fP5bIe4QhsHpr2PXPdzhtXnIY6LqdMASN0SzyNDZZpRtPXTSsYUl8xeUqMzs6bzMbuA5D9UhFIEqB1ZvD9Ib0d7I9Y+1rZdoeluXzjUm9oPY1+hIQFM9gvxqElm0aMUGFI6a3Pf28gbqryJo2lOf06shCQDms=
+	t=1756215493; cv=none; b=FIvxSzD4h9FLlgBbdLzTp6wqjmoSj6w7CIelnvupkDA7N/+lj6vZV9nnEV1LoN9XpkzhAXKjapgJu4LXHwtZ/diLUoTNXbOe3p8JaP5j1PHitEBa8wCSapR9cGYTF7O0/Isqej1LdXZxCTAUq2C19ZWIpIHQ7qsyodJpomgQmzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215491; c=relaxed/simple;
-	bh=QlmBmNAeA6HbBGhR2V3qV13SQUE/3JDVmqg7VnG1kjE=;
+	s=arc-20240116; t=1756215493; c=relaxed/simple;
+	bh=dF/m9L1DnmuYvQS0GbhFyphxVFBTYKy4IEQImwmItgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odw7k7yzYOcZfhoq3LNa0eG9Fwf/YC4hO/JG0ra0K89V4yyDnCbTcqIM3UWBKuVmTN0xUhx9W3NAIk/+19WrYOH54JentvE6SXLCqrFg2ZrxCSgoq3Y7kPUSZ7K4DL3r5nViovAemkTxmYu5+o3ifk730pT17Z2wM+g7hDa6lkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAQlaCTm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYDy679fkNHTTPTcbCthPy7HOm6+8gd+DES69j6lzB68Sl5kjGgfRLDF0gnaoKdxH/G245Gd5lkkNcG7tLq333onMBVBXG6El5lF8nRpKnj1JE9DPeT3R1z6ZWkwpzBuqTLZzXhsx6MhGnFLN8xTd0DdCIqEiXw0crHQa9Hy91s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oo2xkYkX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAQlaCTm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2719C4CEF1;
-	Tue, 26 Aug 2025 13:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oo2xkYkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FA1C4CEF1;
+	Tue, 26 Aug 2025 13:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215491;
-	bh=QlmBmNAeA6HbBGhR2V3qV13SQUE/3JDVmqg7VnG1kjE=;
+	s=korg; t=1756215493;
+	bh=dF/m9L1DnmuYvQS0GbhFyphxVFBTYKy4IEQImwmItgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAQlaCTmRuSnFHqkl3JdZdG07HHKwyYkDIxy5uh4VmAWFVF90cS9IncSdc7TEWWTN
-	 XqkGsjcy9xLwJkx9xmOAOkTCyxJdUO9UiHUZ3ZdrG9ewej75L2WwEq5N+wzHNylxpq
-	 xfzAbNL7o9cOKPPbr5ziOuFabjWqasiAftnrRlBI=
+	b=Oo2xkYkX7wSaS0iw1TdEbi9YIOCZ4CNqa1cd45j7/+0j+bUccZ5fQ+uzmCP4DTn1Q
+	 s2Nvo/OXFIgul559DVSfgbQeod2ueL5vH4R/uHkbYAxSYacoTl34WYzHpXEsHkre4X
+	 wcO86PYgpSpmaGNNkqgNplXSP9ueD/Gy0ikE8Sj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@openai.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/644] net/mlx5: Correctly set gso_size when LRO is used
-Date: Tue, 26 Aug 2025 13:02:24 +0200
-Message-ID: <20250826110947.816039776@linuxfoundation.org>
+	Fabio Estevam <festevam@denx.de>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 027/644] iio: adc: max1363: Reorder mode_list[] entries
+Date: Tue, 26 Aug 2025 13:01:58 +0200
+Message-ID: <20250826110947.181048115@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,84 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Paasch <cpaasch@openai.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 531d0d32de3e1b6b77a87bd37de0c2c6e17b496a ]
+commit 8d8d7c1dbc46aa07a76acab7336a42ddd900be10 upstream.
 
-gso_size is expected by the networking stack to be the size of the
-payload (thus, not including ethernet/IP/TCP-headers). However, cqe_bcnt
-is the full sized frame (including the headers). Dividing cqe_bcnt by
-lro_num_seg will then give incorrect results.
+The IIO core issues warnings when a scan mask is a subset of a previous
+entry in the available_scan_masks array.
 
-For example, running a bpftrace higher up in the TCP-stack
-(tcp_event_data_recv), we commonly have gso_size set to 1450 or 1451 even
-though in reality the payload was only 1448 bytes.
+On a board using a MAX11601, the following warning is observed:
 
-This can have unintended consequences:
-- In tcp_measure_rcv_mss() len will be for example 1450, but. rcv_mss
-will be 1448 (because tp->advmss is 1448). Thus, we will always
-recompute scaling_ratio each time an LRO-packet is received.
-- In tcp_gro_receive(), it will interfere with the decision whether or
-not to flush and thus potentially result in less gro'ed packets.
+max1363 1-0064: available_scan_mask 7 subset of 6. Never used
 
-So, we need to discount the protocol headers from cqe_bcnt so we can
-actually divide the payload by lro_num_seg to get the real gso_size.
+This occurs because the entries in the max11607_mode_list[] array are not
+ordered correctly. To fix this, reorder the entries so that no scan mask is
+a subset of an earlier one.
 
-v2:
- - Use "(unsigned char *)tcp + tcp->doff * 4 - skb->data)" to compute header-len
-   (Tariq Toukan <tariqt@nvidia.com>)
- - Improve commit-message (Gal Pressman <gal@nvidia.com>)
+While at it, reorder the mode_list[] arrays for other supported chips as
+well, to prevent similar warnings on different variants.
 
-Fixes: e586b3b0baee ("net/mlx5: Ethernet Datapath files")
-Signed-off-by: Christoph Paasch <cpaasch@openai.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20250715-cpaasch-pf-925-investigate-incorrect-gso_size-on-cx-7-nic-v2-1-e06c3475f3ac@openai.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note fixes tag dropped as these were introduced over many commits a long
+time back and the side effect until recently was a reduction in sampling
+rate due to reading too many channels when only a few were desired.
+Now we have a sanity check that reports this error but that is not
+where the issue was introduced.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Acked-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://patch.msgid.link/20250516173900.677821-2-festevam@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/iio/adc/max1363.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index d2de1e6c514c1..2f6d3473bcbf1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -788,8 +788,9 @@ static void mlx5e_lro_update_tcp_hdr(struct mlx5_cqe64 *cqe, struct tcphdr *tcp)
- 	}
- }
+--- a/drivers/iio/adc/max1363.c
++++ b/drivers/iio/adc/max1363.c
+@@ -534,23 +534,23 @@ static const struct iio_chan_spec max136
+ /* Applies to max1236, max1237 */
+ static const enum max1363_modes max1236_mode_list[] = {
+ 	_s0, _s1, _s2, _s3,
+-	s0to1, s0to2, s0to3,
++	s0to1, s0to2, s2to3, s0to3,
+ 	d0m1, d2m3, d1m0, d3m2,
+ 	d0m1to2m3, d1m0to3m2,
+-	s2to3,
+ };
  
--static void mlx5e_lro_update_hdr(struct sk_buff *skb, struct mlx5_cqe64 *cqe,
--				 u32 cqe_bcnt)
-+static unsigned int mlx5e_lro_update_hdr(struct sk_buff *skb,
-+					 struct mlx5_cqe64 *cqe,
-+					 u32 cqe_bcnt)
- {
- 	struct ethhdr	*eth = (struct ethhdr *)(skb->data);
- 	struct tcphdr	*tcp;
-@@ -840,6 +841,8 @@ static void mlx5e_lro_update_hdr(struct sk_buff *skb, struct mlx5_cqe64 *cqe,
- 		tcp->check = csum_ipv6_magic(&ipv6->saddr, &ipv6->daddr, payload_len,
- 					     IPPROTO_TCP, check);
- 	}
-+
-+	return (unsigned int)((unsigned char *)tcp + tcp->doff * 4 - skb->data);
- }
+ /* Applies to max1238, max1239 */
+ static const enum max1363_modes max1238_mode_list[] = {
+ 	_s0, _s1, _s2, _s3, _s4, _s5, _s6, _s7, _s8, _s9, _s10, _s11,
+ 	s0to1, s0to2, s0to3, s0to4, s0to5, s0to6,
++	s6to7, s6to8, s6to9, s6to10, s6to11,
+ 	s0to7, s0to8, s0to9, s0to10, s0to11,
+ 	d0m1, d2m3, d4m5, d6m7, d8m9, d10m11,
+ 	d1m0, d3m2, d5m4, d7m6, d9m8, d11m10,
+-	d0m1to2m3, d0m1to4m5, d0m1to6m7, d0m1to8m9, d0m1to10m11,
+-	d1m0to3m2, d1m0to5m4, d1m0to7m6, d1m0to9m8, d1m0to11m10,
+-	s6to7, s6to8, s6to9, s6to10, s6to11,
+-	d6m7to8m9, d6m7to10m11, d7m6to9m8, d7m6to11m10,
++	d0m1to2m3, d0m1to4m5, d0m1to6m7, d6m7to8m9,
++	d0m1to8m9, d6m7to10m11, d0m1to10m11, d1m0to3m2,
++	d1m0to5m4, d1m0to7m6, d7m6to9m8, d1m0to9m8,
++	d7m6to11m10, d1m0to11m10,
+ };
  
- static inline void mlx5e_skb_set_hash(struct mlx5_cqe64 *cqe,
-@@ -1055,8 +1058,9 @@ static inline void mlx5e_build_rx_skb(struct mlx5_cqe64 *cqe,
- 		mlx5e_ipsec_offload_handle_rx_skb(netdev, skb, cqe);
+ #define MAX1363_12X_CHANS(bits) {				\
+@@ -586,16 +586,15 @@ static const struct iio_chan_spec max123
  
- 	if (lro_num_seg > 1) {
--		mlx5e_lro_update_hdr(skb, cqe, cqe_bcnt);
--		skb_shinfo(skb)->gso_size = DIV_ROUND_UP(cqe_bcnt, lro_num_seg);
-+		unsigned int hdrlen = mlx5e_lro_update_hdr(skb, cqe, cqe_bcnt);
-+
-+		skb_shinfo(skb)->gso_size = DIV_ROUND_UP(cqe_bcnt - hdrlen, lro_num_seg);
- 		/* Subtract one since we already counted this as one
- 		 * "regular" packet in mlx5e_complete_rx_cqe()
- 		 */
--- 
-2.39.5
-
+ static const enum max1363_modes max11607_mode_list[] = {
+ 	_s0, _s1, _s2, _s3,
+-	s0to1, s0to2, s0to3,
+-	s2to3,
++	s0to1, s0to2, s2to3,
++	s0to3,
+ 	d0m1, d2m3, d1m0, d3m2,
+ 	d0m1to2m3, d1m0to3m2,
+ };
+ 
+ static const enum max1363_modes max11608_mode_list[] = {
+ 	_s0, _s1, _s2, _s3, _s4, _s5, _s6, _s7,
+-	s0to1, s0to2, s0to3, s0to4, s0to5, s0to6, s0to7,
+-	s6to7,
++	s0to1, s0to2, s0to3, s0to4, s0to5, s0to6, s6to7, s0to7,
+ 	d0m1, d2m3, d4m5, d6m7,
+ 	d1m0, d3m2, d5m4, d7m6,
+ 	d0m1to2m3, d0m1to4m5, d0m1to6m7,
 
 
