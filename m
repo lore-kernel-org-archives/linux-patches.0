@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B3135E4DF;
-	Tue, 26 Aug 2025 14:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFF620DD51;
+	Tue, 26 Aug 2025 14:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218998; cv=none; b=a8MQHedhY6BCQBJxOKdCez7Z0I7whkiQT+fB09iWY2v2SCTmHxEaNeomZS0MgnUMuPCElbkrbKrLIdVwxomAjGdlFjz2QysyZClvO4b6iq+bFjfUM6FCLpSxIYQBOfwpKXKY99KIxRJf31Pu+umNcWiA2lbbcuKne9wsN+ebcoc=
+	t=1756219001; cv=none; b=ruRu9aQh0B6Dnxk58FKOH+wL+NOhMzDtIhCjduuItfoDGt87mXLbS1RrkNhHzFVQQT+W0wbgKMx/161onimybrPbrzQ7esxwZXZNiD1veXipB1dyc4KUYt3IycC7P5eLxarVB4iM6jWGbeIEjQNZTsRgxLYvOdCXdJmpkOsoI/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218998; c=relaxed/simple;
-	bh=iQr7XKlmi0fhQL2WlHh/e1/B34U70D5K1HH1T4GP5Jg=;
+	s=arc-20240116; t=1756219001; c=relaxed/simple;
+	bh=LP4vPknJyOKLlt/b1nH8s0W0BLPFl6pGWK4SVT/INz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGGRxljxPA4khHGwM3r/SKjRsOT6BiAqw66HyCX3lPuKD9H2aOy8IzTXxgZIAmMkTQtElRPwod5WJPN+k1HswhT7ESws2DdESvBTCA+oDaL6Rb00Gn/0hHG3cApgT502/1jcmaWrO0IlGbr3jGRCKIm3LI50R13W856XSovzEsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhMLERAL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dozY3r0SEVkklEbruVK57HSBCMb+bugAI+F3fdT66rcYtYa6WghH3+4DsQ10kwny5doVDCbU+AYgjlCLA6t6zuE2nq4AZHDTlxpLN+HoYOmD5ndccAOsiFznI0R4GVL3I/LQW6IPflmTuMdoPQwbjcCMZt5r5Mvexq7nbO9Es/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iybEHxAe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhMLERAL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4ABC4CEF1;
-	Tue, 26 Aug 2025 14:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iybEHxAe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1ADC4CEF1;
+	Tue, 26 Aug 2025 14:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218998;
-	bh=iQr7XKlmi0fhQL2WlHh/e1/B34U70D5K1HH1T4GP5Jg=;
+	s=korg; t=1756219000;
+	bh=LP4vPknJyOKLlt/b1nH8s0W0BLPFl6pGWK4SVT/INz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhMLERALyxT0kEBNxqSRxVkrhAnKHm5vXYIT3UmRY/EY2o6Mx7/GsWnET2aAvjOfR
-	 sqdERTLGs63QemOOxu6UqZlj3p/6ePD9mLOcA9vmqe4g8FOcy0AbaMRBCIajd3UgP5
-	 IGq8y2hd1ZP3PQ6p+RMregeY86mQNHA968OUukQc=
+	b=iybEHxAeSYsQ5RNJ79WIN7reEqmZrFX/anuMWUc1bXFJivxCWxqfEC0s2ICk4JerW
+	 wyTu0MSkPm2zE1oG36njvRN1k41W+sZVHcgn0zhuj+XcAJsQJlB08PmZPYwgRwIYs4
+	 C9NNUsqM7TptcWBRsg4m+m0ic/5KCObRtLHFAT28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 212/403] rcu: Protect ->defer_qs_iw_pending from data race
-Date: Tue, 26 Aug 2025 13:08:58 +0200
-Message-ID: <20250826110912.697124453@linuxfoundation.org>
+Subject: [PATCH 5.4 213/403] wifi: cfg80211: Fix interface type validation
+Date: Tue, 26 Aug 2025 13:08:59 +0200
+Message-ID: <20250826110912.723390281@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,95 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 90c09d57caeca94e6f3f87c49e96a91edd40cbfd ]
+[ Upstream commit 14450be2332a49445106403492a367412b8c23f4 ]
 
-On kernels built with CONFIG_IRQ_WORK=y, when rcu_read_unlock() is
-invoked within an interrupts-disabled region of code [1], it will invoke
-rcu_read_unlock_special(), which uses an irq-work handler to force the
-system to notice when the RCU read-side critical section actually ends.
-That end won't happen until interrupts are enabled at the soonest.
+Fix a condition that verified valid values of interface types.
 
-In some kernels, such as those booted with rcutree.use_softirq=y, the
-irq-work handler is used unconditionally.
-
-The per-CPU rcu_data structure's ->defer_qs_iw_pending field is
-updated by the irq-work handler and is both read and updated by
-rcu_read_unlock_special().  This resulted in the following KCSAN splat:
-
-------------------------------------------------------------------------
-
-BUG: KCSAN: data-race in rcu_preempt_deferred_qs_handler / rcu_read_unlock_special
-
-read to 0xffff96b95f42d8d8 of 1 bytes by task 90 on cpu 8:
- rcu_read_unlock_special+0x175/0x260
- __rcu_read_unlock+0x92/0xa0
- rt_spin_unlock+0x9b/0xc0
- __local_bh_enable+0x10d/0x170
- __local_bh_enable_ip+0xfb/0x150
- rcu_do_batch+0x595/0xc40
- rcu_cpu_kthread+0x4e9/0x830
- smpboot_thread_fn+0x24d/0x3b0
- kthread+0x3bd/0x410
- ret_from_fork+0x35/0x40
- ret_from_fork_asm+0x1a/0x30
-
-write to 0xffff96b95f42d8d8 of 1 bytes by task 88 on cpu 8:
- rcu_preempt_deferred_qs_handler+0x1e/0x30
- irq_work_single+0xaf/0x160
- run_irq_workd+0x91/0xc0
- smpboot_thread_fn+0x24d/0x3b0
- kthread+0x3bd/0x410
- ret_from_fork+0x35/0x40
- ret_from_fork_asm+0x1a/0x30
-
-no locks held by irq_work/8/88.
-irq event stamp: 200272
-hardirqs last  enabled at (200272): [<ffffffffb0f56121>] finish_task_switch+0x131/0x320
-hardirqs last disabled at (200271): [<ffffffffb25c7859>] __schedule+0x129/0xd70
-softirqs last  enabled at (0): [<ffffffffb0ee093f>] copy_process+0x4df/0x1cc0
-softirqs last disabled at (0): [<0000000000000000>] 0x0
-
-------------------------------------------------------------------------
-
-The problem is that irq-work handlers run with interrupts enabled, which
-means that rcu_preempt_deferred_qs_handler() could be interrupted,
-and that interrupt handler might contain an RCU read-side critical
-section, which might invoke rcu_read_unlock_special().  In the strict
-KCSAN mode of operation used by RCU, this constitutes a data race on
-the ->defer_qs_iw_pending field.
-
-This commit therefore disables interrupts across the portion of the
-rcu_preempt_deferred_qs_handler() that updates the ->defer_qs_iw_pending
-field.  This suffices because this handler is not a fast path.
-
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709233537.7ad199ca5939.I0ac1ff74798bf59a87a57f2e18f2153c308b119b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_plugin.h | 3 +++
- 1 file changed, 3 insertions(+)
+ include/net/cfg80211.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
-index 1d9f2831b54e..197fefa82d18 100644
---- a/kernel/rcu/tree_plugin.h
-+++ b/kernel/rcu/tree_plugin.h
-@@ -582,10 +582,13 @@ static void rcu_preempt_deferred_qs(struct task_struct *t)
-  */
- static void rcu_preempt_deferred_qs_handler(struct irq_work *iwp)
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 2dfa3331604e..3a550544dd9f 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -433,7 +433,7 @@ ieee80211_get_sband_iftype_data(const struct ieee80211_supported_band *sband,
  {
-+	unsigned long flags;
- 	struct rcu_data *rdp;
+ 	int i;
  
- 	rdp = container_of(iwp, struct rcu_data, defer_qs_iw);
-+	local_irq_save(flags);
- 	rdp->defer_qs_iw_pending = false;
-+	local_irq_restore(flags);
- }
+-	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
++	if (WARN_ON(iftype >= NUM_NL80211_IFTYPES))
+ 		return NULL;
  
- /*
+ 	if (iftype == NL80211_IFTYPE_AP_VLAN)
 -- 
 2.39.5
 
