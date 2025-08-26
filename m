@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23713345732;
-	Tue, 26 Aug 2025 13:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE84523FC41;
+	Tue, 26 Aug 2025 13:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214562; cv=none; b=HiE3c9AAZgCUvPAAxiBOZHP6NXB4pugl0MoMaJm2RybAjXnU+JkhEIAWKwyHokD/2t3qj+/MMkXUaDfPciYSaa+aHngbJ2JvTmseSn+etYIlEXAfZqsGPOyp6Ah7vWo8+Oan9Rnux/Dvl38cUL2s8BXyJ0Y6zN4Nge41vzU89ro=
+	t=1756214564; cv=none; b=DXp4SL//rpo45On8iKUmEeXEfrKHdfOv5NmB3ucaW7OLlYvTTkEa21WNRYNihi809zk+ykjbwGqdqGGw9TbsYu00CVKEqZ5QtOPtHexL9mcHDy9nxuxPIF9o4VwUUr0ITINg9jUmt/Gd69vinU+aXlpruJzcBYQ7yWOx+I3UpHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214562; c=relaxed/simple;
-	bh=boFL3UX8WK4VmwjIFFH6lzt+6nXSF+ebCN7ANebjsnQ=;
+	s=arc-20240116; t=1756214564; c=relaxed/simple;
+	bh=x4Dr+7pGJ7c8giGaG//OZQMwtLiMgXT212npDpmicVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tt5dx6m2lGCSTbtTrP7JCe2ZS2Dui1lJyW1Imsm25R7ihgTcwAHbwD7YPEpyywNTNS1KZ/i/d1603ZZPtUiMgmowBBERjKhBAUjQiHWXQwj2WUzE/NBIoUxcwNIYJCXCSp9N5BNW3sCbrIgchFfMjOtcfn6C8nvCA8iODJJKtrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3REiTct; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iGVUktD8uJITiT9JzSsStNn/+jbcV3zbERnB+/ATMExnrXSlCCD8NuOSoNizgPdfLff3PnkSPtynGd1hxWbQ4AGsFnm06SEEYTL9hXy6YAGejzrATev1L68YaGLpaTFBh2zza/tEyU4qI6Y/rfJ+HLEXvkaOeonnshWY7FqpZ4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvSo10a/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3REiTct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A391FC4CEF1;
-	Tue, 26 Aug 2025 13:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvSo10a/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDD6C4CEF1;
+	Tue, 26 Aug 2025 13:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214562;
-	bh=boFL3UX8WK4VmwjIFFH6lzt+6nXSF+ebCN7ANebjsnQ=;
+	s=korg; t=1756214564;
+	bh=x4Dr+7pGJ7c8giGaG//OZQMwtLiMgXT212npDpmicVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3REiTctzv6jEO/BdVJqw2B3RMVeNU5/5DDoDnAFFIDWqPmJ5LOBHshCoqWRn/Gyx
-	 6m8/j3k8e+Of+DjG4f1IHBBj0pQ9LP4Blay0HzXLrTrr+A/7jnJzHBFT7I3XZvo04Z
-	 NqsuFyh1svGxdN4tMCPB8aCa9PJNCROIxwszwVws=
+	b=xvSo10a/iSf+hKAm5X6X7JlF6gq8QFrJqU3YSgu1W/5XklSnZBuJFyeipi3JP1aA9
+	 eez9Nh5pqR3rzfTCG6hNCZ++wxon1btT1hfOHZnO8zWL9IN44rpIT3wL2vPIXGi5VL
+	 zai5N9YNSm/4V3vJcT+pvT2UmoJ/aLt6lV5n/Dnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
+	Vicki Pfau <vi@endrift.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/482] dpaa_eth: dont use fixed_phy_change_carrier
-Date: Tue, 26 Aug 2025 13:06:47 +0200
-Message-ID: <20250826110934.619008585@linuxfoundation.org>
+Subject: [PATCH 6.1 155/482] drm/amd: Allow printing VanGogh OD SCLK levels without setting dpm to manual
+Date: Tue, 26 Aug 2025 13:06:48 +0200
+Message-ID: <20250826110934.643769619@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,44 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit d8155c1df5c8b717052567b188455d41fa7a8908 ]
+[ Upstream commit 2d1ec1e955414e8e8358178011c35afca1a1c0b1 ]
 
-This effectively reverts 6e8b0ff1ba4c ("dpaa_eth: Add change_carrier()
-for Fixed PHYs"). Usage of fixed_phy_change_carrier() requires that
-fixed_phy_register() has been called before, directly or indirectly.
-And that's not the case in this driver.
+Several other ASICs allow printing OD SCLK levels without setting DPM
+control to manual.  When OD is disabled it will show the range the
+hardware supports. When OD is enabled it will show what values have
+been programmed. Adjust VanGogh to work the same.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/7eb189b3-d5fd-4be6-8517-a66671a4e4e3@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
+Reported-by: Vicki Pfau <vi@endrift.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/r/20250609031227.479079-1-superm1@kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa/dpaa_eth.c | 2 --
- 1 file changed, 2 deletions(-)
+ .../gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c  | 37 ++++++++-----------
+ 1 file changed, 15 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-index 6f5c22861dc9..5cf12c27553d 100644
---- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-@@ -27,7 +27,6 @@
- #include <linux/percpu.h>
- #include <linux/dma-mapping.h>
- #include <linux/sort.h>
--#include <linux/phy_fixed.h>
- #include <linux/bpf.h>
- #include <linux/bpf_trace.h>
- #include <soc/fsl/bman.h>
-@@ -3179,7 +3178,6 @@ static const struct net_device_ops dpaa_ops = {
- 	.ndo_stop = dpaa_eth_stop,
- 	.ndo_tx_timeout = dpaa_tx_timeout,
- 	.ndo_get_stats64 = dpaa_get_stats64,
--	.ndo_change_carrier = fixed_phy_change_carrier,
- 	.ndo_set_mac_address = dpaa_set_mac_address,
- 	.ndo_validate_addr = eth_validate_addr,
- 	.ndo_set_rx_mode = dpaa_set_rx_mode,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
+index c9c0aa6376e3..e2fa0ee0dc92 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
+@@ -681,7 +681,6 @@ static int vangogh_print_clk_levels(struct smu_context *smu,
+ {
+ 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
+ 	SmuMetrics_t metrics;
+-	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
+ 	int i, idx, size = 0, ret = 0;
+ 	uint32_t cur_value = 0, value = 0, count = 0;
+ 	bool cur_value_match_level = false;
+@@ -697,31 +696,25 @@ static int vangogh_print_clk_levels(struct smu_context *smu,
+ 
+ 	switch (clk_type) {
+ 	case SMU_OD_SCLK:
+-		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
+-			size += sysfs_emit_at(buf, size, "%s:\n", "OD_SCLK");
+-			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
+-			(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
+-			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
+-			(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
+-		}
++		size += sysfs_emit_at(buf, size, "%s:\n", "OD_SCLK");
++		size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
++		(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
++		size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
++		(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
+ 		break;
+ 	case SMU_OD_CCLK:
+-		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
+-			size += sysfs_emit_at(buf, size, "CCLK_RANGE in Core%d:\n",  smu->cpu_core_id_select);
+-			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
+-			(smu->cpu_actual_soft_min_freq > 0) ? smu->cpu_actual_soft_min_freq : smu->cpu_default_soft_min_freq);
+-			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
+-			(smu->cpu_actual_soft_max_freq > 0) ? smu->cpu_actual_soft_max_freq : smu->cpu_default_soft_max_freq);
+-		}
++		size += sysfs_emit_at(buf, size, "CCLK_RANGE in Core%d:\n",  smu->cpu_core_id_select);
++		size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
++		(smu->cpu_actual_soft_min_freq > 0) ? smu->cpu_actual_soft_min_freq : smu->cpu_default_soft_min_freq);
++		size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
++		(smu->cpu_actual_soft_max_freq > 0) ? smu->cpu_actual_soft_max_freq : smu->cpu_default_soft_max_freq);
+ 		break;
+ 	case SMU_OD_RANGE:
+-		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
+-			size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
+-			size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
+-				smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
+-			size += sysfs_emit_at(buf, size, "CCLK: %7uMhz %10uMhz\n",
+-				smu->cpu_default_soft_min_freq, smu->cpu_default_soft_max_freq);
+-		}
++		size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
++		size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
++			smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
++		size += sysfs_emit_at(buf, size, "CCLK: %7uMhz %10uMhz\n",
++			smu->cpu_default_soft_min_freq, smu->cpu_default_soft_max_freq);
+ 		break;
+ 	case SMU_SOCCLK:
+ 		/* the level 3 ~ 6 of socclk use the same frequency for vangogh */
 -- 
 2.39.5
 
