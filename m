@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB7A3469EC;
-	Tue, 26 Aug 2025 13:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB8B34A301;
+	Tue, 26 Aug 2025 13:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213973; cv=none; b=cE17ywxlrG0GUsp3wgwgzD3Fs9+yToa8l36/PVOIV2ZQDWJgm2sm8C3blng8NlMg3w1v37ZJTvk+MziRbwxUN42ygDaLtc78ReHWphnaOZZh6JV72OBBm3Fj96IDU3pMAGoJiCw9nCntL3Zca/cfI8t0/m+htdWZeq23WKMCEKg=
+	t=1756213975; cv=none; b=ZsOS+eFh62GXe13lsahH1Q/F6Ssi2e979WHlmxp/zMAB93Bozr6x25iGuf0U8tHBTFNYHDShUSCryw/KksuScyL84jsjaTxxntXDAJLEx9q1gvD1kkgrZ0Hdi8eILMEZ76JIiYYrzrhG5b0xRfpE6Kp3uKJxIopEtRrePvWkDSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213973; c=relaxed/simple;
-	bh=5aYy8jbJv5fJSCTvfdVT3kfT2ezTzWspFJAwSXxhhx4=;
+	s=arc-20240116; t=1756213975; c=relaxed/simple;
+	bh=bnT4b4TyKLoKLCueXhdGmeQB6s9DzOTllPVyUM7TFpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7FqSGJ99WK1VdBGKmEC96y1pWDf9mFIyds+KTVc1o0OHBLYrOy62NE7+C24Nkc5DK+jKs6qyM41d+EDKmEoAI+9WmVBdICaWj2XgbxQT/kf8JwC51xJERa+lBAnDUCrKly0iWQsPRjKQzRqTwq353Xdg1jqd/qcFXgOplF/Mds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USeyVYGJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qiDMY4iFdq/NKPXNg3o1TFyBNwDEiClRHHkyt/C7lys71GhEq1TvukDHeSd0zR1glRmjdKwdHEcD8AhJL4uYAR6Nk3ASvtjZWuxEVEZO2t9PvG1lRJbOt2sFTuYzOYDZAA3ZpGcsIFs04bYImABuJIdyJ3VfBoDPXhxqhoK8kWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVYweZAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USeyVYGJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5D3C113CF;
-	Tue, 26 Aug 2025 13:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVYweZAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD94C4CEF1;
+	Tue, 26 Aug 2025 13:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213972;
-	bh=5aYy8jbJv5fJSCTvfdVT3kfT2ezTzWspFJAwSXxhhx4=;
+	s=korg; t=1756213975;
+	bh=bnT4b4TyKLoKLCueXhdGmeQB6s9DzOTllPVyUM7TFpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USeyVYGJHTPo50QJIJu1pHq0fkAj6Al2oru0/XFBC9EXCheZNSc+RD4TSNIJ9le4g
-	 fz6nL03PCM3UrC+wtgU0QR9585nUgQkITOpOur+bc9LOtTdWS0pBbwh77xuWSzks/x
-	 AUpn4MjtoHe8ujjAi35sUxCIOQFgM35sMEGiKm+0=
+	b=dVYweZAqeLroo3iZoG2+TUViQci5H/uLdHhqE81IpM6vnop+o46tCUzzFJPmDHbML
+	 EPsrTE97pVmC3RnJDMxnWsi3B8Jp9URG2aClEOkbsL0+4QNpTHUpfWmwE/X7Yz3phW
+	 H1u9ut5B2axIQ8hg33yDLzmhBaABznna1G3na6J8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thorsten Blum <thorsten.blum@linux.dev>
-Subject: [PATCH 6.6 518/587] cdx: Fix off-by-one error in cdx_rpmsg_probe()
-Date: Tue, 26 Aug 2025 13:11:07 +0200
-Message-ID: <20250826111006.173402439@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 519/587] usb: quirks: Add DELAY_INIT quick for another SanDisk 3.2Gen1 Flash Drive
+Date: Tue, 26 Aug 2025 13:11:08 +0200
+Message-ID: <20250826111006.199145450@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,43 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Miao Li <limiao@kylinos.cn>
 
-commit 300a0cfe9f375b2843bcb331bcfa7503475ef5dd upstream.
+commit e664036cf36480414936cd91f4cfa2179a3d8367 upstream.
 
-In cdx_rpmsg_probe(), strscpy() is incorrectly called with the length of
-the source string (excluding the NUL terminator) rather than the size of
-the destination buffer. This results in one character less being copied
-from 'cdx_rpmsg_id_table[0].name' to 'chinfo.name'.
+Another SanDisk 3.2Gen1 Flash Drive also need DELAY_INIT quick,
+or it will randomly work incorrectly on Huawei hisi platforms
+when doing reboot test.
 
-Use the destination buffer size instead to ensure the name is copied
-correctly.
-
+Signed-off-by: Miao Li <limiao@kylinos.cn>
 Cc: stable <stable@kernel.org>
-Fixes: 2a226927d9b8 ("cdx: add rpmsg communication channel for CDX")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://lore.kernel.org/r/20250806090512.121260-2-thorsten.blum@linux.dev
+Link: https://lore.kernel.org/r/20250801082728.469406-1-limiao870622@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cdx/controller/cdx_rpmsg.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/core/quirks.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cdx/controller/cdx_rpmsg.c b/drivers/cdx/controller/cdx_rpmsg.c
-index 04b578a0be17..61f1a290ff08 100644
---- a/drivers/cdx/controller/cdx_rpmsg.c
-+++ b/drivers/cdx/controller/cdx_rpmsg.c
-@@ -129,8 +129,7 @@ static int cdx_rpmsg_probe(struct rpmsg_device *rpdev)
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -371,6 +371,7 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0781, 0x5591), .driver_info = USB_QUIRK_NO_LPM },
  
- 	chinfo.src = RPMSG_ADDR_ANY;
- 	chinfo.dst = rpdev->dst;
--	strscpy(chinfo.name, cdx_rpmsg_id_table[0].name,
--		strlen(cdx_rpmsg_id_table[0].name));
-+	strscpy(chinfo.name, cdx_rpmsg_id_table[0].name, sizeof(chinfo.name));
+ 	/* SanDisk Corp. SanDisk 3.2Gen1 */
++	{ USB_DEVICE(0x0781, 0x5596), .driver_info = USB_QUIRK_DELAY_INIT },
+ 	{ USB_DEVICE(0x0781, 0x55a3), .driver_info = USB_QUIRK_DELAY_INIT },
  
- 	cdx_mcdi->ept = rpmsg_create_ept(rpdev, cdx_rpmsg_cb, NULL, chinfo);
- 	if (!cdx_mcdi->ept) {
--- 
-2.50.1
-
+ 	/* SanDisk Extreme 55AE */
 
 
