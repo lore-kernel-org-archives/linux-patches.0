@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D2F139579;
-	Tue, 26 Aug 2025 13:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6FA2B2DA;
+	Tue, 26 Aug 2025 13:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214712; cv=none; b=fSYCunCa10tKbOLmFaZsfkej4xkoJ/u8v4m5et0KUm9JUMyWNxo8lyVN/SAfLgmHIcEQ8bTtEvXS2juXEwwNBypMggRsQW8SVSAvPGMM/BMzTRHtQU84LhaYD6pZBOCH9HoxT0+cVixCaakdnkRbO66KalqPvI6lsM8my+m2M68=
+	t=1756214714; cv=none; b=sdt3vjBiWmMLuhvS3onbMNh08aTUPNG5U5Q6VSdoT9VzXD07XNwbpuZ9ovUefg5vPjSKu51wgPu3PNcOnq35tj0Elpq0xJA1WLAvxwA8COBKB6W0w+1tK8APgdOEkeNuRHOcjBjAYlIrsFSIKtpGGCcgAJWAD2Aj5XYhF6lncZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214712; c=relaxed/simple;
-	bh=+0pWM7yYAX9DGKHGlJmMuHMtOjGo03zTENSFcHB0ajQ=;
+	s=arc-20240116; t=1756214714; c=relaxed/simple;
+	bh=bfIaJvX4HxM8XKGKZNX25zt9kF0NoLICv9nNCk668xA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXBA+NUjEmMpWx7UDPqYFT6L+mPjU/jSeu6vjTbKj/1UbjtsOBHkLKUojLmGXKi6gNrlooyx7yuReBOezhW0KkBs2VjWlR7OVuVu4qiEJYjcA0q6a3Z8qBC9Ftr1fi7yGGa/G3W0e6PqJlZVCrCtAGtR2rgqxD91E0RrQV144zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkP7THET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GlQ9Dq8t04UvjP1ePxtozf1fCxzcD3UJStn6L+h8roks3+m7iLiHJIt8nJO+F+BVJUzpJOhObxADSg9nOF3eHEzlZvVaZscD7084zQozsZNsbirN5LFrrYxNXlBabOuN0MTCqUcgbPzm27Ku7TIpf9/4t0Oz2ZTA2v4NIhRdg10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/1buINX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkP7THET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D985C4CEF1;
-	Tue, 26 Aug 2025 13:25:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/1buINX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237E0C116B1;
+	Tue, 26 Aug 2025 13:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214711;
-	bh=+0pWM7yYAX9DGKHGlJmMuHMtOjGo03zTENSFcHB0ajQ=;
+	s=korg; t=1756214714;
+	bh=bfIaJvX4HxM8XKGKZNX25zt9kF0NoLICv9nNCk668xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rkP7THET7sVqmUZe0/kIpq33rsS/dVstlZX45cF67VQYtiSJfG0dLPsrO4Zsf9CGi
-	 gkVAL63qJ6z889ic9fMJ2CqFurzofRf5wkOsokbsyfENi/BRs4xfQc3Y4RLhzM2o1T
-	 +gkboXFGRXxH/i/9MWv4q03F0rxKwbAclBugGTuo=
+	b=j/1buINX+qs1e5C0NPlaSgmgvJWSsZ81yp7Hhvr5nYIS1dF0H3cyShIzoFzcV9eaS
+	 emgWMH4papWg++b3Rk6Y9PIS8WaARu1kzABwNt23f4wBvI4knCTBsbSDuDV10hYlsb
+	 vvgk2AjDP0V4Qt9+qvtSFCtWfGGH8BwTz+78yA0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 240/482] ASoC: soc-dai.h: merge DAI call back functions into ops
-Date: Tue, 26 Aug 2025 13:08:13 +0200
-Message-ID: <20250826110936.699914174@linuxfoundation.org>
+Subject: [PATCH 6.1 241/482] ASoC: fsl: merge DAI call back functions into ops
+Date: Tue, 26 Aug 2025 13:08:14 +0200
+Message-ID: <20250826110936.724810533@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,207 +53,351 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 3e8bcec0787d1a73703c915c31cb00a2fd18ccbf ]
+[ Upstream commit 5e5f68ca836e740c1d788f04efa84b37ed185606 ]
 
-snd_soc_dai_driver has .ops for call back functions (A), but it also
-has other call back functions (B). It is duplicated and confusable.
-
-	struct snd_soc_dai_driver {
-		...
- ^		int (*probe)(...);
- |		int (*remove)(...);
-(B)		int (*compress_new)(...);
- |		int (*pcm_new)(...);
- v		...
-(A)		const struct snd_soc_dai_ops *ops;
-		...
-	}
-
-This patch merges (B) into (A).
+ALSA SoC merges DAI call backs into .ops.
+This patch merge these into one.
 
 Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87v8dpb0w6.wl-kuninori.morimoto.gx@renesas.com
+Link: https://lore.kernel.org/r/87jzu5b0ue.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 0e270f32975f ("ASoC: fsl_sai: replace regmap_write with regmap_update_bits")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-dai.h              | 13 ++++++++
- sound/soc/generic/audio-graph-card.c |  2 +-
- sound/soc/soc-core.c                 | 25 ++++++++++++++++
- sound/soc/soc-dai.c                  | 44 ++++++++++++++++------------
- 4 files changed, 64 insertions(+), 20 deletions(-)
+ sound/soc/fsl/fsl_asrc.c    | 16 ++++++++--------
+ sound/soc/fsl/fsl_aud2htx.c | 10 +++++-----
+ sound/soc/fsl/fsl_easrc.c   | 16 ++++++++--------
+ sound/soc/fsl/fsl_esai.c    | 20 ++++++++++----------
+ sound/soc/fsl/fsl_micfil.c  | 14 +++++++-------
+ sound/soc/fsl/fsl_sai.c     | 24 ++++++++++++------------
+ sound/soc/fsl/fsl_spdif.c   | 17 ++++++++---------
+ sound/soc/fsl/fsl_ssi.c     |  3 +--
+ sound/soc/fsl/fsl_xcvr.c    | 16 ++++++++--------
+ 9 files changed, 67 insertions(+), 69 deletions(-)
 
-diff --git a/include/sound/soc-dai.h b/include/sound/soc-dai.h
-index ea7509672086..9fece4e37828 100644
---- a/include/sound/soc-dai.h
-+++ b/include/sound/soc-dai.h
-@@ -272,6 +272,15 @@ int snd_soc_dai_compr_get_metadata(struct snd_soc_dai *dai,
- 				   struct snd_compr_metadata *metadata);
- 
- struct snd_soc_dai_ops {
-+	/* DAI driver callbacks */
-+	int (*probe)(struct snd_soc_dai *dai);
-+	int (*remove)(struct snd_soc_dai *dai);
-+	/* compress dai */
-+	int (*compress_new)(struct snd_soc_pcm_runtime *rtd, int num);
-+	/* Optional Callback used at pcm creation*/
-+	int (*pcm_new)(struct snd_soc_pcm_runtime *rtd,
-+		       struct snd_soc_dai *dai);
-+
- 	/*
- 	 * DAI clocking configuration, all optional.
- 	 * Called by soc_card drivers, normally in their hw_params.
-@@ -353,6 +362,10 @@ struct snd_soc_dai_ops {
- 	u64 *auto_selectable_formats;
- 	int num_auto_selectable_formats;
- 
-+	/* probe ordering - for components with runtime dependencies */
-+	int probe_order;
-+	int remove_order;
-+
- 	/* bit field */
- 	unsigned int no_capture_mute:1;
- };
-diff --git a/sound/soc/generic/audio-graph-card.c b/sound/soc/generic/audio-graph-card.c
-index 5daa824a4ffc..e5481142c6c4 100644
---- a/sound/soc/generic/audio-graph-card.c
-+++ b/sound/soc/generic/audio-graph-card.c
-@@ -114,7 +114,7 @@ static bool soc_component_is_pcm(struct snd_soc_dai_link_component *dlc)
- 	struct snd_soc_dai *dai = snd_soc_find_dai_with_mutex(dlc);
- 
- 	if (dai && (dai->component->driver->pcm_construct ||
--		    dai->driver->pcm_new))
-+		    (dai->driver->ops && dai->driver->ops->pcm_new)))
- 		return true;
- 
- 	return false;
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 1ff7a0b0a236..80192b089f25 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -2426,6 +2426,7 @@ struct snd_soc_dai *snd_soc_register_dai(struct snd_soc_component *component,
- {
- 	struct device *dev = component->dev;
- 	struct snd_soc_dai *dai;
-+	struct snd_soc_dai_ops *ops; /* REMOVE ME */
- 
- 	dev_dbg(dev, "ASoC: dynamically register DAI %s\n", dev_name(dev));
- 
-@@ -2456,6 +2457,30 @@ struct snd_soc_dai *snd_soc_register_dai(struct snd_soc_component *component,
- 	if (!dai->name)
- 		return NULL;
- 
-+	/* REMOVE ME */
-+	if (dai_drv->probe		||
-+	    dai_drv->remove		||
-+	    dai_drv->compress_new	||
-+	    dai_drv->pcm_new		||
-+	    dai_drv->probe_order	||
-+	    dai_drv->remove_order) {
-+
-+		ops = devm_kzalloc(dev, sizeof(struct snd_soc_dai_ops), GFP_KERNEL);
-+		if (!ops)
-+			return NULL;
-+		if (dai_drv->ops)
-+			memcpy(ops, dai_drv->ops, sizeof(struct snd_soc_dai_ops));
-+
-+		ops->probe		= dai_drv->probe;
-+		ops->remove		= dai_drv->remove;
-+		ops->compress_new	= dai_drv->compress_new;
-+		ops->pcm_new		= dai_drv->pcm_new;
-+		ops->probe_order	= dai_drv->probe_order;
-+		ops->remove_order	= dai_drv->remove_order;
-+
-+		dai_drv->ops = ops;
-+	}
-+
- 	dai->component = component;
- 	dai->dev = dev;
- 	dai->driver = dai_drv;
-diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
-index 5eac6a7559c7..8e12f1059e72 100644
---- a/sound/soc/soc-dai.c
-+++ b/sound/soc/soc-dai.c
-@@ -460,8 +460,9 @@ int snd_soc_dai_compress_new(struct snd_soc_dai *dai,
- 			     struct snd_soc_pcm_runtime *rtd, int num)
- {
- 	int ret = -ENOTSUPP;
--	if (dai->driver->compress_new)
--		ret = dai->driver->compress_new(rtd, num);
-+	if (dai->driver->ops &&
-+	    dai->driver->ops->compress_new)
-+		ret = dai->driver->ops->compress_new(rtd, num);
- 	return soc_dai_ret(dai, ret);
+diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
+index c541e2a0202a..3ec5b88bd9a2 100644
+--- a/sound/soc/fsl/fsl_asrc.c
++++ b/sound/soc/fsl/fsl_asrc.c
+@@ -781,13 +781,6 @@ static int fsl_asrc_dai_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	return 0;
  }
  
-@@ -545,19 +546,20 @@ int snd_soc_pcm_dai_probe(struct snd_soc_pcm_runtime *rtd, int order)
- 	int i;
- 
- 	for_each_rtd_dais(rtd, i, dai) {
--		if (dai->driver->probe_order != order)
--			continue;
+-static const struct snd_soc_dai_ops fsl_asrc_dai_ops = {
+-	.startup      = fsl_asrc_dai_startup,
+-	.hw_params    = fsl_asrc_dai_hw_params,
+-	.hw_free      = fsl_asrc_dai_hw_free,
+-	.trigger      = fsl_asrc_dai_trigger,
+-};
 -
- 		if (dai->probed)
- 			continue;
+ static int fsl_asrc_dai_probe(struct snd_soc_dai *dai)
+ {
+ 	struct fsl_asrc *asrc = snd_soc_dai_get_drvdata(dai);
+@@ -798,12 +791,19 @@ static int fsl_asrc_dai_probe(struct snd_soc_dai *dai)
+ 	return 0;
+ }
  
--		if (dai->driver->probe) {
--			int ret = dai->driver->probe(dai);
-+		if (dai->driver->ops) {
-+			if (dai->driver->ops->probe_order != order)
-+				continue;
++static const struct snd_soc_dai_ops fsl_asrc_dai_ops = {
++	.probe		= fsl_asrc_dai_probe,
++	.startup	= fsl_asrc_dai_startup,
++	.hw_params	= fsl_asrc_dai_hw_params,
++	.hw_free	= fsl_asrc_dai_hw_free,
++	.trigger	= fsl_asrc_dai_trigger,
++};
++
+ #define FSL_ASRC_FORMATS	(SNDRV_PCM_FMTBIT_S24_LE | \
+ 				 SNDRV_PCM_FMTBIT_S16_LE | \
+ 				 SNDRV_PCM_FMTBIT_S24_3LE)
  
--			if (ret < 0)
--				return soc_dai_ret(dai, ret);
--		}
-+			if (dai->driver->ops->probe) {
-+				int ret = dai->driver->ops->probe(dai);
+ static struct snd_soc_dai_driver fsl_asrc_dai = {
+-	.probe = fsl_asrc_dai_probe,
+ 	.playback = {
+ 		.stream_name = "ASRC-Playback",
+ 		.channels_min = 1,
+diff --git a/sound/soc/fsl/fsl_aud2htx.c b/sound/soc/fsl/fsl_aud2htx.c
+index 1e421d9a03fb..402d9bbdbab5 100644
+--- a/sound/soc/fsl/fsl_aud2htx.c
++++ b/sound/soc/fsl/fsl_aud2htx.c
+@@ -49,10 +49,6 @@ static int fsl_aud2htx_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	return 0;
+ }
  
-+				if (ret < 0)
-+					return soc_dai_ret(dai, ret);
-+			}
-+		}
- 		dai->probed = 1;
- 	}
+-static const struct snd_soc_dai_ops fsl_aud2htx_dai_ops = {
+-	.trigger	= fsl_aud2htx_trigger,
+-};
+-
+ static int fsl_aud2htx_dai_probe(struct snd_soc_dai *cpu_dai)
+ {
+ 	struct fsl_aud2htx *aud2htx = dev_get_drvdata(cpu_dai->dev);
+@@ -84,8 +80,12 @@ static int fsl_aud2htx_dai_probe(struct snd_soc_dai *cpu_dai)
+ 	return 0;
+ }
  
-@@ -570,16 +572,19 @@ int snd_soc_pcm_dai_remove(struct snd_soc_pcm_runtime *rtd, int order)
- 	int i, r, ret = 0;
++static const struct snd_soc_dai_ops fsl_aud2htx_dai_ops = {
++	.probe		= fsl_aud2htx_dai_probe,
++	.trigger	= fsl_aud2htx_trigger,
++};
++
+ static struct snd_soc_dai_driver fsl_aud2htx_dai = {
+-	.probe = fsl_aud2htx_dai_probe,
+ 	.playback = {
+ 		.stream_name = "CPU-Playback",
+ 		.channels_min = 1,
+diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
+index 84e6f9eb784d..210ca7199ada 100644
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -1531,13 +1531,6 @@ static int fsl_easrc_hw_free(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
  
- 	for_each_rtd_dais(rtd, i, dai) {
--		if (dai->driver->remove_order != order)
-+		if (!dai->probed)
- 			continue;
+-static const struct snd_soc_dai_ops fsl_easrc_dai_ops = {
+-	.startup = fsl_easrc_startup,
+-	.trigger = fsl_easrc_trigger,
+-	.hw_params = fsl_easrc_hw_params,
+-	.hw_free = fsl_easrc_hw_free,
+-};
+-
+ static int fsl_easrc_dai_probe(struct snd_soc_dai *cpu_dai)
+ {
+ 	struct fsl_asrc *easrc = dev_get_drvdata(cpu_dai->dev);
+@@ -1548,8 +1541,15 @@ static int fsl_easrc_dai_probe(struct snd_soc_dai *cpu_dai)
+ 	return 0;
+ }
  
--		if (dai->probed &&
--		    dai->driver->remove) {
--			r = dai->driver->remove(dai);
--			if (r < 0)
--				ret = r; /* use last error */
--		}
-+		if (dai->driver->ops) {
-+			if (dai->driver->ops->remove_order != order)
-+				continue;
++static const struct snd_soc_dai_ops fsl_easrc_dai_ops = {
++	.probe		= fsl_easrc_dai_probe,
++	.startup	= fsl_easrc_startup,
++	.trigger	= fsl_easrc_trigger,
++	.hw_params	= fsl_easrc_hw_params,
++	.hw_free	= fsl_easrc_hw_free,
++};
++
+ static struct snd_soc_dai_driver fsl_easrc_dai = {
+-	.probe = fsl_easrc_dai_probe,
+ 	.playback = {
+ 		.stream_name = "ASRC-Playback",
+ 		.channels_min = 1,
+diff --git a/sound/soc/fsl/fsl_esai.c b/sound/soc/fsl/fsl_esai.c
+index 17fefd27ec90..c7f4c1734825 100644
+--- a/sound/soc/fsl/fsl_esai.c
++++ b/sound/soc/fsl/fsl_esai.c
+@@ -785,15 +785,6 @@ static int fsl_esai_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	return 0;
+ }
  
-+			if (dai->driver->ops->remove) {
-+				r = dai->driver->ops->remove(dai);
-+				if (r < 0)
-+					ret = r; /* use last error */
-+			}
-+		}
- 		dai->probed = 0;
- 	}
+-static const struct snd_soc_dai_ops fsl_esai_dai_ops = {
+-	.startup = fsl_esai_startup,
+-	.trigger = fsl_esai_trigger,
+-	.hw_params = fsl_esai_hw_params,
+-	.set_sysclk = fsl_esai_set_dai_sysclk,
+-	.set_fmt = fsl_esai_set_dai_fmt,
+-	.set_tdm_slot = fsl_esai_set_dai_tdm_slot,
+-};
+-
+ static int fsl_esai_dai_probe(struct snd_soc_dai *dai)
+ {
+ 	struct fsl_esai *esai_priv = snd_soc_dai_get_drvdata(dai);
+@@ -804,8 +795,17 @@ static int fsl_esai_dai_probe(struct snd_soc_dai *dai)
+ 	return 0;
+ }
  
-@@ -592,8 +597,9 @@ int snd_soc_pcm_dai_new(struct snd_soc_pcm_runtime *rtd)
- 	int i;
++static const struct snd_soc_dai_ops fsl_esai_dai_ops = {
++	.probe		= fsl_esai_dai_probe,
++	.startup	= fsl_esai_startup,
++	.trigger	= fsl_esai_trigger,
++	.hw_params	= fsl_esai_hw_params,
++	.set_sysclk	= fsl_esai_set_dai_sysclk,
++	.set_fmt	= fsl_esai_set_dai_fmt,
++	.set_tdm_slot	= fsl_esai_set_dai_tdm_slot,
++};
++
+ static struct snd_soc_dai_driver fsl_esai_dai = {
+-	.probe = fsl_esai_dai_probe,
+ 	.playback = {
+ 		.stream_name = "CPU-Playback",
+ 		.channels_min = 1,
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 8ee6f41563ea..1b6f5e33ff93 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -358,12 +358,6 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
  
- 	for_each_rtd_dais(rtd, i, dai) {
--		if (dai->driver->pcm_new) {
--			int ret = dai->driver->pcm_new(rtd, dai);
-+		if (dai->driver->ops &&
-+		    dai->driver->ops->pcm_new) {
-+			int ret = dai->driver->ops->pcm_new(rtd, dai);
- 			if (ret < 0)
- 				return soc_dai_ret(dai, ret);
- 		}
+-static const struct snd_soc_dai_ops fsl_micfil_dai_ops = {
+-	.startup = fsl_micfil_startup,
+-	.trigger = fsl_micfil_trigger,
+-	.hw_params = fsl_micfil_hw_params,
+-};
+-
+ static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
+ {
+ 	struct fsl_micfil *micfil = dev_get_drvdata(cpu_dai->dev);
+@@ -400,8 +394,14 @@ static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
+ 	return 0;
+ }
+ 
++static const struct snd_soc_dai_ops fsl_micfil_dai_ops = {
++	.probe		= fsl_micfil_dai_probe,
++	.startup	= fsl_micfil_startup,
++	.trigger	= fsl_micfil_trigger,
++	.hw_params	= fsl_micfil_hw_params,
++};
++
+ static struct snd_soc_dai_driver fsl_micfil_dai = {
+-	.probe = fsl_micfil_dai_probe,
+ 	.capture = {
+ 		.stream_name = "CPU-Capture",
+ 		.channels_min = 1,
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 27ad825c78f2..33d01a5e9b31 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -883,17 +883,6 @@ static int fsl_sai_startup(struct snd_pcm_substream *substream,
+ 	return ret;
+ }
+ 
+-static const struct snd_soc_dai_ops fsl_sai_pcm_dai_ops = {
+-	.set_bclk_ratio	= fsl_sai_set_dai_bclk_ratio,
+-	.set_sysclk	= fsl_sai_set_dai_sysclk,
+-	.set_fmt	= fsl_sai_set_dai_fmt,
+-	.set_tdm_slot	= fsl_sai_set_dai_tdm_slot,
+-	.hw_params	= fsl_sai_hw_params,
+-	.hw_free	= fsl_sai_hw_free,
+-	.trigger	= fsl_sai_trigger,
+-	.startup	= fsl_sai_startup,
+-};
+-
+ static int fsl_sai_dai_probe(struct snd_soc_dai *cpu_dai)
+ {
+ 	struct fsl_sai *sai = dev_get_drvdata(cpu_dai->dev);
+@@ -919,6 +908,18 @@ static int fsl_sai_dai_probe(struct snd_soc_dai *cpu_dai)
+ 	return 0;
+ }
+ 
++static const struct snd_soc_dai_ops fsl_sai_pcm_dai_ops = {
++	.probe		= fsl_sai_dai_probe,
++	.set_bclk_ratio	= fsl_sai_set_dai_bclk_ratio,
++	.set_sysclk	= fsl_sai_set_dai_sysclk,
++	.set_fmt	= fsl_sai_set_dai_fmt,
++	.set_tdm_slot	= fsl_sai_set_dai_tdm_slot,
++	.hw_params	= fsl_sai_hw_params,
++	.hw_free	= fsl_sai_hw_free,
++	.trigger	= fsl_sai_trigger,
++	.startup	= fsl_sai_startup,
++};
++
+ static int fsl_sai_dai_resume(struct snd_soc_component *component)
+ {
+ 	struct fsl_sai *sai = snd_soc_component_get_drvdata(component);
+@@ -937,7 +938,6 @@ static int fsl_sai_dai_resume(struct snd_soc_component *component)
+ }
+ 
+ static struct snd_soc_dai_driver fsl_sai_dai_template = {
+-	.probe = fsl_sai_dai_probe,
+ 	.playback = {
+ 		.stream_name = "CPU-Playback",
+ 		.channels_min = 1,
+diff --git a/sound/soc/fsl/fsl_spdif.c b/sound/soc/fsl/fsl_spdif.c
+index fb6806b2db85..d89963b8171d 100644
+--- a/sound/soc/fsl/fsl_spdif.c
++++ b/sound/soc/fsl/fsl_spdif.c
+@@ -761,14 +761,6 @@ static int fsl_spdif_trigger(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
+ 
+-static const struct snd_soc_dai_ops fsl_spdif_dai_ops = {
+-	.startup = fsl_spdif_startup,
+-	.hw_params = fsl_spdif_hw_params,
+-	.trigger = fsl_spdif_trigger,
+-	.shutdown = fsl_spdif_shutdown,
+-};
+-
+-
+ /*
+  * FSL SPDIF IEC958 controller(mixer) functions
+  *
+@@ -1279,8 +1271,15 @@ static int fsl_spdif_dai_probe(struct snd_soc_dai *dai)
+ 	return 0;
+ }
+ 
++static const struct snd_soc_dai_ops fsl_spdif_dai_ops = {
++	.probe		= fsl_spdif_dai_probe,
++	.startup	= fsl_spdif_startup,
++	.hw_params	= fsl_spdif_hw_params,
++	.trigger	= fsl_spdif_trigger,
++	.shutdown	= fsl_spdif_shutdown,
++};
++
+ static struct snd_soc_dai_driver fsl_spdif_dai = {
+-	.probe = &fsl_spdif_dai_probe,
+ 	.playback = {
+ 		.stream_name = "CPU-Playback",
+ 		.channels_min = 2,
+diff --git a/sound/soc/fsl/fsl_ssi.c b/sound/soc/fsl/fsl_ssi.c
+index 6af00b62a60f..17887359dca1 100644
+--- a/sound/soc/fsl/fsl_ssi.c
++++ b/sound/soc/fsl/fsl_ssi.c
+@@ -1152,6 +1152,7 @@ static int fsl_ssi_dai_probe(struct snd_soc_dai *dai)
+ }
+ 
+ static const struct snd_soc_dai_ops fsl_ssi_dai_ops = {
++	.probe = fsl_ssi_dai_probe,
+ 	.startup = fsl_ssi_startup,
+ 	.shutdown = fsl_ssi_shutdown,
+ 	.hw_params = fsl_ssi_hw_params,
+@@ -1162,7 +1163,6 @@ static const struct snd_soc_dai_ops fsl_ssi_dai_ops = {
+ };
+ 
+ static struct snd_soc_dai_driver fsl_ssi_dai_template = {
+-	.probe = fsl_ssi_dai_probe,
+ 	.playback = {
+ 		.stream_name = "CPU-Playback",
+ 		.channels_min = 1,
+@@ -1187,7 +1187,6 @@ static const struct snd_soc_component_driver fsl_ssi_component = {
+ 
+ static struct snd_soc_dai_driver fsl_ssi_ac97_dai = {
+ 	.symmetric_channels = 1,
+-	.probe = fsl_ssi_dai_probe,
+ 	.playback = {
+ 		.stream_name = "CPU AC97 Playback",
+ 		.channels_min = 2,
+diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
+index c043efe4548d..4c5864e8267d 100644
+--- a/sound/soc/fsl/fsl_xcvr.c
++++ b/sound/soc/fsl/fsl_xcvr.c
+@@ -864,13 +864,6 @@ static struct snd_kcontrol_new fsl_xcvr_tx_ctls[] = {
+ 	},
+ };
+ 
+-static const struct snd_soc_dai_ops fsl_xcvr_dai_ops = {
+-	.prepare = fsl_xcvr_prepare,
+-	.startup = fsl_xcvr_startup,
+-	.shutdown = fsl_xcvr_shutdown,
+-	.trigger = fsl_xcvr_trigger,
+-};
+-
+ static int fsl_xcvr_dai_probe(struct snd_soc_dai *dai)
+ {
+ 	struct fsl_xcvr *xcvr = snd_soc_dai_get_drvdata(dai);
+@@ -887,8 +880,15 @@ static int fsl_xcvr_dai_probe(struct snd_soc_dai *dai)
+ 	return 0;
+ }
+ 
++static const struct snd_soc_dai_ops fsl_xcvr_dai_ops = {
++	.probe		= fsl_xcvr_dai_probe,
++	.prepare	= fsl_xcvr_prepare,
++	.startup	= fsl_xcvr_startup,
++	.shutdown	= fsl_xcvr_shutdown,
++	.trigger	= fsl_xcvr_trigger,
++};
++
+ static struct snd_soc_dai_driver fsl_xcvr_dai = {
+-	.probe  = fsl_xcvr_dai_probe,
+ 	.ops = &fsl_xcvr_dai_ops,
+ 	.playback = {
+ 		.stream_name = "CPU-Playback",
 -- 
 2.50.1
 
