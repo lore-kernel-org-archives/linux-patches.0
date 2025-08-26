@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FEB23026B;
-	Tue, 26 Aug 2025 13:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88462253F3;
+	Tue, 26 Aug 2025 13:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213854; cv=none; b=J8V2YRML4bmLw1XXBoG2lKUdOxN+TpC/+j8v/tUUoMYXj+pAIb8rO7c9lp0scTPhzhmxY/FvAVInzGGShJoJ5o/ip9+T+8a4C0kTnS7TQhU3xDmHCkDn1kiscoSnkL1Y2jXzI5oTreyJig4BUEIobtz8rC5hnVF+g+u3EamxCU0=
+	t=1756213856; cv=none; b=InhhqXwhMKyTAxBbbNlqglPB3f2OkUzX0y6CAfXgb/CVO0oIXjVY4n8Q1AKR0GEp/N75dtiYU8wTbHSsel1dkcpx35Oen3+qlRrdbwHjG3bbSa8hcGYEqCIvGUv8SUEg7eBqSufXsWrvwu2oYMtn6Ybdr47O2xlESG8nQY81WJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213854; c=relaxed/simple;
-	bh=IBpqPrFfgAPL6L/pMPYVNk9psdJNFdazFAVWMhAW7qQ=;
+	s=arc-20240116; t=1756213856; c=relaxed/simple;
+	bh=sh1blfkJ80X4K2xgKoZZ/0cDJA7myiYXNV9Ym8u/fLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEi12AL3lCenot7+o5O/A8b2yz7GAkiy+gZXXmbf7TRgBPakBUkwJimViEmv956333v1XKjB3+S+u2xRUgt5BZZei0Rxk2ZPw+30/VjXZPqDGxzZljqczI3mBbh8gv3PuLJqGm/dtGiaL8WZMdXYR+VZHcZpxJzIvDYjFfBidKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILwkjN+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mmN1SYPvvoqtgfw/JWQfbcg8BBC9Xf34OVMQ9cp5EZabmjWZ9bamqT+Qr8FdK1vj1gQanTa2uJcELq5J41YBVVKDm+O6NOLMD4BjiEDWHrqOmQjSjILfAnmeHsMU6exVtuyJrHDw+Xx+KlSSaxSSMNGvpp5XYVVCPbIn6IxFCQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLA8TOtI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILwkjN+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86F4C4CEF1;
-	Tue, 26 Aug 2025 13:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLA8TOtI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA3FC4CEF1;
+	Tue, 26 Aug 2025 13:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213854;
-	bh=IBpqPrFfgAPL6L/pMPYVNk9psdJNFdazFAVWMhAW7qQ=;
+	s=korg; t=1756213856;
+	bh=sh1blfkJ80X4K2xgKoZZ/0cDJA7myiYXNV9Ym8u/fLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILwkjN+CqgDP2OiTOwnAR2PA6pamN33cB9WO24y9/zCYwwVqJTp+oTvhMYdjuMayN
-	 Wbod1LDEvodqhCIo+BxT7OWFesqJIhpnh+TmDBioPuRRbbWgGM3JkIOir+gOr3uj0P
-	 x2WtUahTq+hUL8hgSQSdwkZOarHc3DbhckcPZbxg=
+	b=xLA8TOtIn3HoMNrRGVfTgtqq/E0WnkbByWHO17xNnqNsyJBtSzq85jNwg4YcmepCL
+	 Q4PYd/ReF4EtIsbUi1cAgjuKVa+fKu/3P7tuRCT1Z2r+U+UzM0x07GS6H1UxdVnmQ8
+	 /CTIAgkTMGHSD9Is2ItALSukpCxMq+BkTz7hf9g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Vagin <avagin@gmail.com>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 504/587] use uniform permission checks for all mount propagation changes
-Date: Tue, 26 Aug 2025 13:10:53 +0200
-Message-ID: <20250826111005.807146772@linuxfoundation.org>
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 505/587] mptcp: remove duplicate sk_reset_timer call
+Date: Tue, 26 Aug 2025 13:10:54 +0200
+Message-ID: <20250826111005.832236504@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,103 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit cffd0441872e7f6b1fce5e78fb1c99187a291330 ]
+commit 5d13349472ac8abcbcb94407969aa0fdc2e1f1be upstream.
 
-do_change_type() and do_set_group() are operating on different
-aspects of the same thing - propagation graph.  The latter
-asks for mounts involved to be mounted in namespace(s) the caller
-has CAP_SYS_ADMIN for.  The former is a mess - originally it
-didn't even check that mount *is* mounted.  That got fixed,
-but the resulting check turns out to be too strict for userland -
-in effect, we check that mount is in our namespace, having already
-checked that we have CAP_SYS_ADMIN there.
+sk_reset_timer() was called twice in mptcp_pm_alloc_anno_list.
 
-What we really need (in both cases) is
-	* only touch mounts that are mounted.  That's a must-have
-constraint - data corruption happens if it get violated.
-	* don't allow to mess with a namespace unless you already
-have enough permissions to do so (i.e. CAP_SYS_ADMIN in its userns).
+Simplify the code by using a 'goto' statement to eliminate the
+duplication.
 
-That's an equivalent of what do_set_group() does; let's extract that
-into a helper (may_change_propagation()) and use it in both
-do_set_group() and do_change_type().
+Note that this is not a fix, but it will help backporting the following
+patch. The same "Fixes" tag has been added for this reason.
 
-Fixes: 12f147ddd6de "do_change_type(): refuse to operate on unmounted/not ours mounts"
-Acked-by: Andrei Vagin <avagin@gmail.com>
-Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Tested-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 93f323b9cccc ("mptcp: add a new sysctl add_addr_timeout")
+Cc: stable@vger.kernel.org
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-4-521fe9957892@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Before commit e4c28e3d5c09 ("mptcp: pm: move generic PM helpers to
+  pm.c"), mptcp_pm_alloc_anno_list() was in pm_netlink.c. The same patch
+  can be applied there without conflicts. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ net/mptcp/pm_netlink.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 6a9c53c800c4..f79226472251 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2526,6 +2526,19 @@ static int graft_tree(struct mount *mnt, struct mount *p, struct mountpoint *mp)
- 	return attach_recursive_mnt(mnt, p, mp, 0);
- }
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -373,9 +373,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 		if (WARN_ON_ONCE(mptcp_pm_is_kernel(msk)))
+ 			return false;
  
-+static int may_change_propagation(const struct mount *m)
-+{
-+        struct mnt_namespace *ns = m->mnt_ns;
-+
-+	 // it must be mounted in some namespace
-+	 if (IS_ERR_OR_NULL(ns))         // is_mounted()
-+		 return -EINVAL;
-+	 // and the caller must be admin in userns of that namespace
-+	 if (!ns_capable(ns->user_ns, CAP_SYS_ADMIN))
-+		 return -EPERM;
-+	 return 0;
-+}
-+
- /*
-  * Sanity check the flags to change_mnt_propagation.
-  */
-@@ -2562,10 +2575,10 @@ static int do_change_type(struct path *path, int ms_flags)
- 		return -EINVAL;
+-		sk_reset_timer(sk, &add_entry->add_timer,
+-			       jiffies + mptcp_get_add_addr_timeout(net));
+-		return true;
++		goto reset_timer;
+ 	}
  
- 	namespace_lock();
--	if (!check_mnt(mnt)) {
--		err = -EINVAL;
-+	err = may_change_propagation(mnt);
-+	if (err)
- 		goto out_unlock;
--	}
-+
- 	if (type == MS_SHARED) {
- 		err = invent_group_ids(mnt, recurse);
- 		if (err)
-@@ -2960,18 +2973,11 @@ static int do_set_group(struct path *from_path, struct path *to_path)
+ 	add_entry = kmalloc(sizeof(*add_entry), GFP_ATOMIC);
+@@ -389,6 +387,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 	add_entry->retrans_times = 0;
  
- 	namespace_lock();
+ 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
++reset_timer:
+ 	sk_reset_timer(sk, &add_entry->add_timer,
+ 		       jiffies + mptcp_get_add_addr_timeout(net));
  
--	err = -EINVAL;
--	/* To and From must be mounted */
--	if (!is_mounted(&from->mnt))
--		goto out;
--	if (!is_mounted(&to->mnt))
--		goto out;
--
--	err = -EPERM;
--	/* We should be allowed to modify mount namespaces of both mounts */
--	if (!ns_capable(from->mnt_ns->user_ns, CAP_SYS_ADMIN))
-+	err = may_change_propagation(from);
-+	if (err)
- 		goto out;
--	if (!ns_capable(to->mnt_ns->user_ns, CAP_SYS_ADMIN))
-+	err = may_change_propagation(to);
-+	if (err)
- 		goto out;
- 
- 	err = -EINVAL;
--- 
-2.50.1
-
 
 
