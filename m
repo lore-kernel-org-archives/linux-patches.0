@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C2539FD9;
-	Tue, 26 Aug 2025 13:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E357E27A455;
+	Tue, 26 Aug 2025 13:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215001; cv=none; b=f7jQy7r/or3L4YkBnMW1NEhdwx5GBRU7fKRCoLYEzW81x7XRiYMrCSKrmgdRfb5B77briosGoKWYkeJHuxvpMoF+GztF5DEwFOqqAR3KHLMfEchILGnzYMzsrPQCVI4iq8nA1lqaoDnkTAhkA1KFDw/hYuP+P2ZTF8Ega95SxZ8=
+	t=1756215004; cv=none; b=d+sfB+UcZH86VQaNvMPbNUghzUiGfyuvkjsfWjaN5ZbmdLrG5mRSf1yPVrqEAbGVoqQhGR3G/OeZVJalwCz2h4A9YfCc3pNaJTfaXNvdydAY6ZMJj3q+4cZmpI9uSA3EV11nmi8E/xiHCqMAs2Nj8h9fMzMtD7M4gimnHekWOYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215001; c=relaxed/simple;
-	bh=TsnNPpMXTr2UFvsC2hH8o+MnUrWBtIwhDfruU3jKQdM=;
+	s=arc-20240116; t=1756215004; c=relaxed/simple;
+	bh=xdelo/lVKSV/CI8/eiCOt0xjNrHV9wH5pI2/BZKgaS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K39JfelvrNCenutD0QlhqVT2CAZUM7Ur4N2b+wA8wsUoQGa9jkl543lRgOKKUle784imBsHboCaMVZD2ils5k4nwX5fUrTSbDmwN8X1sMTd2KNaEy0GijuO0Qu4VnKeoP7QIKx99dw9uhTu/5Q1UThMfl3rwY6mwHPW90REtSqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JanHe1vi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hf3ym+p0964K29r5TvHoqNgF7yVZynkjB4Io19DhqnpgOkO1Dj8YGyboWwWcJtprhHSeMscbWzKsXuUcltYL6jxqbHVrPmRAzEazBF1tPN0YoFe/Zeee8VyEUHu6qDEOZ0qXpyW3MZM4rGENvm4MqfmxrlbopIRVdikc8LbREsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQ60TcbJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JanHe1vi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C197C4CEF1;
-	Tue, 26 Aug 2025 13:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQ60TcbJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5142CC4CEF1;
+	Tue, 26 Aug 2025 13:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215001;
-	bh=TsnNPpMXTr2UFvsC2hH8o+MnUrWBtIwhDfruU3jKQdM=;
+	s=korg; t=1756215003;
+	bh=xdelo/lVKSV/CI8/eiCOt0xjNrHV9wH5pI2/BZKgaS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JanHe1viPEisDBdmcKgPwVHzEIOqUrlAZfuOih/6+sq+Q1LroS6d+uwq6wpS5JUPj
-	 Q6OdW9lJW9CWzri+y0QQvy5qwHWVdIwWNFa1eDUtGIN75WH7QYQ0lepCtRsa8FyX9t
-	 nVyfxEMNid3NO4nRFNo0gNb18dwwadKb2G93L5Vc=
+	b=hQ60TcbJKovxBD8c5iel4C/il992GqhtkV6csiZOoIodlF3wDzjjoHMMO0aoH9Swk
+	 mHV88J+Qn3Q+lcBTsdaMiNbI1dmUpM832b9ur7ERNejey4BwVnUsFiC76QBnk3Ic/A
+	 uTDgPjutn539SUtfZBd9/OcoDVEALNSjU4x/ohH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sumanth Gavini <sumanth.gavini@yahoo.com>
-Subject: [PATCH 6.1 348/482] net: add netdev_lockdep_set_classes() to virtual drivers
-Date: Tue, 26 Aug 2025 13:10:01 +0200
-Message-ID: <20250826110939.429106131@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 349/482] btrfs: fix qgroup reservation leak on failure to allocate ordered extent
+Date: Tue, 26 Aug 2025 13:10:02 +0200
+Message-ID: <20250826110939.455285465@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,285 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 0bef512012b1cd8820f0c9ec80e5f8ceb43fdd59 upstream.
+[ Upstream commit 1f2889f5594a2bc4c6a52634c4a51b93e785def5 ]
 
-Based on a syzbot report, it appears many virtual
-drivers do not yet use netdev_lockdep_set_classes(),
-triggerring lockdep false positives.
+If we fail to allocate an ordered extent for a COW write we end up leaking
+a qgroup data reservation since we called btrfs_qgroup_release_data() but
+we didn't call btrfs_qgroup_free_refroot() (which would happen when
+running the respective data delayed ref created by ordered extent
+completion or when finishing the ordered extent in case an error happened).
 
-WARNING: possible recursive locking detected
-6.8.0-rc4-next-20240212-syzkaller #0 Not tainted
+So make sure we call btrfs_qgroup_free_refroot() if we fail to allocate an
+ordered extent for a COW write.
 
-syz-executor.0/19016 is trying to acquire lock:
- ffff8880162cb298 (_xmit_ETHER#2){+.-.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
- ffff8880162cb298 (_xmit_ETHER#2){+.-.}-{2:2}, at: __netif_tx_lock include/linux/netdevice.h:4452 [inline]
- ffff8880162cb298 (_xmit_ETHER#2){+.-.}-{2:2}, at: sch_direct_xmit+0x1c4/0x5f0 net/sched/sch_generic.c:340
-
-but task is already holding lock:
- ffff8880223db4d8 (_xmit_ETHER#2){+.-.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
- ffff8880223db4d8 (_xmit_ETHER#2){+.-.}-{2:2}, at: __netif_tx_lock include/linux/netdevice.h:4452 [inline]
- ffff8880223db4d8 (_xmit_ETHER#2){+.-.}-{2:2}, at: sch_direct_xmit+0x1c4/0x5f0 net/sched/sch_generic.c:340
-
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-  lock(_xmit_ETHER#2);
-  lock(_xmit_ETHER#2);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-9 locks held by syz-executor.0/19016:
-  #0: ffffffff8f385208 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_lock net/core/rtnetlink.c:79 [inline]
-  #0: ffffffff8f385208 (rtnl_mutex){+.+.}-{3:3}, at: rtnetlink_rcv_msg+0x82c/0x1040 net/core/rtnetlink.c:6603
-  #1: ffffc90000a08c00 ((&in_dev->mr_ifc_timer)){+.-.}-{0:0}, at: call_timer_fn+0xc0/0x600 kernel/time/timer.c:1697
-  #2: ffffffff8e131520 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:298 [inline]
-  #2: ffffffff8e131520 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:750 [inline]
-  #2: ffffffff8e131520 (rcu_read_lock){....}-{1:2}, at: ip_finish_output2+0x45f/0x1360 net/ipv4/ip_output.c:228
-  #3: ffffffff8e131580 (rcu_read_lock_bh){....}-{1:2}, at: local_bh_disable include/linux/bottom_half.h:20 [inline]
-  #3: ffffffff8e131580 (rcu_read_lock_bh){....}-{1:2}, at: rcu_read_lock_bh include/linux/rcupdate.h:802 [inline]
-  #3: ffffffff8e131580 (rcu_read_lock_bh){....}-{1:2}, at: __dev_queue_xmit+0x2c4/0x3b10 net/core/dev.c:4284
-  #4: ffff8880416e3258 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: spin_trylock include/linux/spinlock.h:361 [inline]
-  #4: ffff8880416e3258 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: qdisc_run_begin include/net/sch_generic.h:195 [inline]
-  #4: ffff8880416e3258 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: __dev_xmit_skb net/core/dev.c:3771 [inline]
-  #4: ffff8880416e3258 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: __dev_queue_xmit+0x1262/0x3b10 net/core/dev.c:4325
-  #5: ffff8880223db4d8 (_xmit_ETHER#2){+.-.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
-  #5: ffff8880223db4d8 (_xmit_ETHER#2){+.-.}-{2:2}, at: __netif_tx_lock include/linux/netdevice.h:4452 [inline]
-  #5: ffff8880223db4d8 (_xmit_ETHER#2){+.-.}-{2:2}, at: sch_direct_xmit+0x1c4/0x5f0 net/sched/sch_generic.c:340
-  #6: ffffffff8e131520 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:298 [inline]
-  #6: ffffffff8e131520 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:750 [inline]
-  #6: ffffffff8e131520 (rcu_read_lock){....}-{1:2}, at: ip_finish_output2+0x45f/0x1360 net/ipv4/ip_output.c:228
-  #7: ffffffff8e131580 (rcu_read_lock_bh){....}-{1:2}, at: local_bh_disable include/linux/bottom_half.h:20 [inline]
-  #7: ffffffff8e131580 (rcu_read_lock_bh){....}-{1:2}, at: rcu_read_lock_bh include/linux/rcupdate.h:802 [inline]
-  #7: ffffffff8e131580 (rcu_read_lock_bh){....}-{1:2}, at: __dev_queue_xmit+0x2c4/0x3b10 net/core/dev.c:4284
-  #8: ffff888014d9d258 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: spin_trylock include/linux/spinlock.h:361 [inline]
-  #8: ffff888014d9d258 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: qdisc_run_begin include/net/sch_generic.h:195 [inline]
-  #8: ffff888014d9d258 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: __dev_xmit_skb net/core/dev.c:3771 [inline]
-  #8: ffff888014d9d258 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: __dev_queue_xmit+0x1262/0x3b10 net/core/dev.c:4325
-
-stack backtrace:
-CPU: 1 PID: 19016 Comm: syz-executor.0 Not tainted 6.8.0-rc4-next-20240212-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
-Call Trace:
- <IRQ>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  check_deadlock kernel/locking/lockdep.c:3062 [inline]
-  validate_chain+0x15c1/0x58e0 kernel/locking/lockdep.c:3856
-  __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
-  lock_acquire+0x1e4/0x530 kernel/locking/lockdep.c:5754
-  __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
-  _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
-  spin_lock include/linux/spinlock.h:351 [inline]
-  __netif_tx_lock include/linux/netdevice.h:4452 [inline]
-  sch_direct_xmit+0x1c4/0x5f0 net/sched/sch_generic.c:340
-  __dev_xmit_skb net/core/dev.c:3784 [inline]
-  __dev_queue_xmit+0x1912/0x3b10 net/core/dev.c:4325
-  neigh_output include/net/neighbour.h:542 [inline]
-  ip_finish_output2+0xe66/0x1360 net/ipv4/ip_output.c:235
-  iptunnel_xmit+0x540/0x9b0 net/ipv4/ip_tunnel_core.c:82
-  ip_tunnel_xmit+0x20ee/0x2960 net/ipv4/ip_tunnel.c:831
-  erspan_xmit+0x9de/0x1460 net/ipv4/ip_gre.c:720
-  __netdev_start_xmit include/linux/netdevice.h:4989 [inline]
-  netdev_start_xmit include/linux/netdevice.h:5003 [inline]
-  xmit_one net/core/dev.c:3555 [inline]
-  dev_hard_start_xmit+0x242/0x770 net/core/dev.c:3571
-  sch_direct_xmit+0x2b6/0x5f0 net/sched/sch_generic.c:342
-  __dev_xmit_skb net/core/dev.c:3784 [inline]
-  __dev_queue_xmit+0x1912/0x3b10 net/core/dev.c:4325
-  neigh_output include/net/neighbour.h:542 [inline]
-  ip_finish_output2+0xe66/0x1360 net/ipv4/ip_output.c:235
-  igmpv3_send_cr net/ipv4/igmp.c:723 [inline]
-  igmp_ifc_timer_expire+0xb71/0xd90 net/ipv4/igmp.c:813
-  call_timer_fn+0x17e/0x600 kernel/time/timer.c:1700
-  expire_timers kernel/time/timer.c:1751 [inline]
-  __run_timers+0x621/0x830 kernel/time/timer.c:2038
-  run_timer_softirq+0x67/0xf0 kernel/time/timer.c:2051
-  __do_softirq+0x2bc/0x943 kernel/softirq.c:554
-  invoke_softirq kernel/softirq.c:428 [inline]
-  __irq_exit_rcu+0xf2/0x1c0 kernel/softirq.c:633
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:645
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1076 [inline]
-  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1076
- </IRQ>
- <TASK>
-  asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
- RIP: 0010:resched_offsets_ok kernel/sched/core.c:10127 [inline]
- RIP: 0010:__might_resched+0x16f/0x780 kernel/sched/core.c:10142
-Code: 00 4c 89 e8 48 c1 e8 03 48 ba 00 00 00 00 00 fc ff df 48 89 44 24 38 0f b6 04 10 84 c0 0f 85 87 04 00 00 41 8b 45 00 c1 e0 08 <01> d8 44 39 e0 0f 85 d6 00 00 00 44 89 64 24 1c 48 8d bc 24 a0 00
-RSP: 0018:ffffc9000ee069e0 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffff8880296a9e00
-RDX: dffffc0000000000 RSI: ffff8880296a9e00 RDI: ffffffff8bfe8fa0
-RBP: ffffc9000ee06b00 R08: ffffffff82326877 R09: 1ffff11002b5ad1b
-R10: dffffc0000000000 R11: ffffed1002b5ad1c R12: 0000000000000000
-R13: ffff8880296aa23c R14: 000000000000062a R15: 1ffff92001dc0d44
-  down_write+0x19/0x50 kernel/locking/rwsem.c:1578
-  kernfs_activate fs/kernfs/dir.c:1403 [inline]
-  kernfs_add_one+0x4af/0x8b0 fs/kernfs/dir.c:819
-  __kernfs_create_file+0x22e/0x2e0 fs/kernfs/file.c:1056
-  sysfs_add_file_mode_ns+0x24a/0x310 fs/sysfs/file.c:307
-  create_files fs/sysfs/group.c:64 [inline]
-  internal_create_group+0x4f4/0xf20 fs/sysfs/group.c:152
-  internal_create_groups fs/sysfs/group.c:192 [inline]
-  sysfs_create_groups+0x56/0x120 fs/sysfs/group.c:218
-  create_dir lib/kobject.c:78 [inline]
-  kobject_add_internal+0x472/0x8d0 lib/kobject.c:240
-  kobject_add_varg lib/kobject.c:374 [inline]
-  kobject_init_and_add+0x124/0x190 lib/kobject.c:457
-  netdev_queue_add_kobject net/core/net-sysfs.c:1706 [inline]
-  netdev_queue_update_kobjects+0x1f3/0x480 net/core/net-sysfs.c:1758
-  register_queue_kobjects net/core/net-sysfs.c:1819 [inline]
-  netdev_register_kobject+0x265/0x310 net/core/net-sysfs.c:2059
-  register_netdevice+0x1191/0x19c0 net/core/dev.c:10298
-  bond_newlink+0x3b/0x90 drivers/net/bonding/bond_netlink.c:576
-  rtnl_newlink_create net/core/rtnetlink.c:3506 [inline]
-  __rtnl_newlink net/core/rtnetlink.c:3726 [inline]
-  rtnl_newlink+0x158f/0x20a0 net/core/rtnetlink.c:3739
-  rtnetlink_rcv_msg+0x885/0x1040 net/core/rtnetlink.c:6606
-  netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2543
-  netlink_unicast_kernel net/netlink/af_netlink.c:1341 [inline]
-  netlink_unicast+0x7ea/0x980 net/netlink/af_netlink.c:1367
-  netlink_sendmsg+0xa3c/0xd70 net/netlink/af_netlink.c:1908
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x221/0x270 net/socket.c:745
-  __sys_sendto+0x3a4/0x4f0 net/socket.c:2191
-  __do_sys_sendto net/socket.c:2203 [inline]
-  __se_sys_sendto net/socket.c:2199 [inline]
-  __x64_sys_sendto+0xde/0x100 net/socket.c:2199
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-RIP: 0033:0x7fc3fa87fa9c
-
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240212140700.2795436-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sumanth Gavini <sumanth.gavini@yahoo.com>
+Fixes: 7dbeaad0af7d ("btrfs: change timing for qgroup reserved space for ordered extents to fix reserved space leak")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ adjust to code movements ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dummy.c            |    1 +
- drivers/net/geneve.c           |    1 +
- drivers/net/loopback.c         |    1 +
- drivers/net/veth.c             |    1 +
- drivers/net/vxlan/vxlan_core.c |    1 +
- net/ipv4/ip_tunnel.c           |    1 +
- net/ipv6/ip6_gre.c             |    2 ++
- net/ipv6/ip6_tunnel.c          |    1 +
- net/ipv6/ip6_vti.c             |    1 +
- net/ipv6/sit.c                 |    1 +
- 10 files changed, 11 insertions(+)
+ fs/btrfs/ordered-data.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/net/dummy.c
-+++ b/drivers/net/dummy.c
-@@ -71,6 +71,7 @@ static int dummy_dev_init(struct net_dev
- 	if (!dev->lstats)
- 		return -ENOMEM;
+--- a/fs/btrfs/ordered-data.c
++++ b/fs/btrfs/ordered-data.c
+@@ -173,9 +173,10 @@ int btrfs_add_ordered_extent(struct btrf
+ 	struct btrfs_ordered_extent *entry;
+ 	int ret;
+ 	u64 qgroup_rsv = 0;
++	const bool is_nocow = (flags &
++	       ((1U << BTRFS_ORDERED_NOCOW) | (1U << BTRFS_ORDERED_PREALLOC)));
  
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- }
- 
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -349,6 +349,7 @@ static int geneve_init(struct net_device
- 		gro_cells_destroy(&geneve->gro_cells);
- 		return err;
+-	if (flags &
+-	    ((1 << BTRFS_ORDERED_NOCOW) | (1 << BTRFS_ORDERED_PREALLOC))) {
++	if (is_nocow) {
+ 		/* For nocow write, we can release the qgroup rsv right now */
+ 		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes, &qgroup_rsv);
+ 		if (ret < 0)
+@@ -191,8 +192,13 @@ int btrfs_add_ordered_extent(struct btrf
+ 			return ret;
  	}
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- }
- 
---- a/drivers/net/loopback.c
-+++ b/drivers/net/loopback.c
-@@ -144,6 +144,7 @@ static int loopback_dev_init(struct net_
- 	dev->lstats = netdev_alloc_pcpu_stats(struct pcpu_lstats);
- 	if (!dev->lstats)
+ 	entry = kmem_cache_zalloc(btrfs_ordered_extent_cache, GFP_NOFS);
+-	if (!entry)
++	if (!entry) {
++		if (!is_nocow)
++			btrfs_qgroup_free_refroot(inode->root->fs_info,
++						  btrfs_root_id(inode->root),
++						  qgroup_rsv, BTRFS_QGROUP_RSV_DATA);
  		return -ENOMEM;
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- }
++	}
  
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1373,6 +1373,7 @@ static void veth_free_queues(struct net_
- 
- static int veth_dev_init(struct net_device *dev)
- {
-+	netdev_lockdep_set_classes(dev);
- 	return veth_alloc_queues(dev);
- }
- 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2998,6 +2998,7 @@ static int vxlan_init(struct net_device
- 	if (err)
- 		goto err_free_percpu;
- 
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- 
- err_free_percpu:
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -1298,6 +1298,7 @@ int ip_tunnel_init(struct net_device *de
- 
- 	if (tunnel->collect_md)
- 		netif_keep_dst(dev);
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(ip_tunnel_init);
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1537,6 +1537,7 @@ static int ip6gre_tunnel_init_common(str
- 	ip6gre_tnl_init_features(dev);
- 
- 	netdev_hold(dev, &tunnel->dev_tracker, GFP_KERNEL);
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- 
- cleanup_dst_cache_init:
-@@ -1929,6 +1930,7 @@ static int ip6erspan_tap_init(struct net
- 	ip6erspan_tnl_link_config(tunnel, 1);
- 
- 	netdev_hold(dev, &tunnel->dev_tracker, GFP_KERNEL);
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- 
- cleanup_dst_cache_init:
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1902,6 +1902,7 @@ ip6_tnl_dev_init_gen(struct net_device *
- 	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len - t_hlen;
- 
- 	netdev_hold(dev, &t->dev_tracker, GFP_KERNEL);
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- 
- destroy_dst:
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -937,6 +937,7 @@ static inline int vti6_dev_init_gen(stru
- 	if (!dev->tstats)
- 		return -ENOMEM;
- 	netdev_hold(dev, &t->dev_tracker, GFP_KERNEL);
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- }
- 
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1460,6 +1460,7 @@ static int ipip6_tunnel_init(struct net_
- 		return err;
- 	}
- 	netdev_hold(dev, &tunnel->dev_tracker, GFP_KERNEL);
-+	netdev_lockdep_set_classes(dev);
- 	return 0;
- }
- 
+ 	entry->file_offset = file_offset;
+ 	entry->num_bytes = num_bytes;
 
 
