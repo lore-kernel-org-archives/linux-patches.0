@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A310F34AAFE;
-	Tue, 26 Aug 2025 14:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258622FC89C;
+	Tue, 26 Aug 2025 14:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219060; cv=none; b=AYiLeeSCYptnZZ/y2wGWtAogxooRIsLskPePuYnIphiTR9gGbT5getLHGZnhpADzEGRVCa+aN7YY1UKNrEpSToU6nGaWKcHCcn+mwX2HoS0+ohBWRs7B4KEtFV2N14G6bS8u7VZ0XXWKofEDpRwM/kPPwfhAWpIu3npEe7l2xzM=
+	t=1756219063; cv=none; b=SMG4gH7E5rt21v7XGrKRycb8Nb8syfmhV290Fubk35cV8epGzzpz/BrZWxsIjVUJmKlsqRlnN1JC7uJUhHta7FzUzwFD1/gpBbWVK6t6ntvQESYeznGEZOqOxhvFkGHsMisqhfQTOxO/bysacy4SQHsd+ybBWLNqoB/S7usPE3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219060; c=relaxed/simple;
-	bh=C9ZGHEkOk8Mc0NQK5vx2m/n+Bi5pezH7q5c/TJeNO54=;
+	s=arc-20240116; t=1756219063; c=relaxed/simple;
+	bh=+N8TTiyzbvBN21cRR2sg/RUKXPNmUJyXMqe9JNkzPTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZIjdkvRW5YICeqLqYtb52p1XRS2MgzHxfFUaTVhBaFsZRL63NDq9WghbcIgO7lZRI56k4Lfx4cs2PcAZXn3hT+nT7fSPRkGQ3HFHIGzGUHKNdnpBwih4pucX79kE/kpSWc0ACpHkfe+SKgCBKZMo4L7+Tg5bk4Aa8fHyXKMiwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k12t4zf0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lfJIripSq3XDD3Nh+KrVfk2WEZX4X832FhLQtFNMBWaHholaAStwSuc6cd/io1ZdtMyu56f3xDF078ifWhmtZGPj/YEPOPJu0rnjeVD98Kyv4449QIoJ8xcTeq4/CmZWLr85QXHsNL7vcXuSgKTRGz7y9JNAY0rCmkjOvhdIHPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7Yw6kVi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k12t4zf0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DB2C113D0;
-	Tue, 26 Aug 2025 14:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7Yw6kVi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1CBC113CF;
+	Tue, 26 Aug 2025 14:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219060;
-	bh=C9ZGHEkOk8Mc0NQK5vx2m/n+Bi5pezH7q5c/TJeNO54=;
+	s=korg; t=1756219063;
+	bh=+N8TTiyzbvBN21cRR2sg/RUKXPNmUJyXMqe9JNkzPTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k12t4zf0E/KNsx8kiWt09znp+pTK2POFoH2W7sws4s9Bj7OPIO14+Tj7LSHCwXAJD
-	 XuGgt02SGZv88GldbRSogERisK1Vl/v3DPZTSDcxO4r6R9jibOF4sAVziYCCcrtHwl
-	 dobxQ+s4W2IUkAe3lnVQLyblQK/EDiIrJhbtknM0=
+	b=E7Yw6kVi+z6DTlqggm4ZJo0DWTs6RXtwYPnH+yeU3IDoKkzWJzp058lMcKtbprLZf
+	 2QXXm/Ak14J706q7p1OnPJItAol+Q0Abh0JVzNev6pSotRFQqWA7+J+j1RaDZh6kL6
+	 cxCIgIb2Tbut7AlGTTwp7Fl34xw9zk7QlGdt2X3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	jackysliu <1972843537@qq.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 237/403] MIPS: vpe-mt: add missing prototypes for vpe_{alloc,start,stop,free}
-Date: Tue, 26 Aug 2025 13:09:23 +0200
-Message-ID: <20250826110913.378019655@linuxfoundation.org>
+Subject: [PATCH 5.4 238/403] scsi: bfa: Double-free fix
+Date: Tue, 26 Aug 2025 13:09:24 +0200
+Message-ID: <20250826110913.409457595@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,51 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiji Yang <yangshiji66@outlook.com>
+From: jackysliu <1972843537@qq.com>
 
-[ Upstream commit 844615dd0f2d95c018ec66b943e08af22b62aff3 ]
+[ Upstream commit add4c4850363d7c1b72e8fce9ccb21fdd2cf5dc9 ]
 
-These functions are exported but their prototypes are not defined.
-This patch adds the missing function prototypes to fix the following
-compilation warnings:
+When the bfad_im_probe() function fails during initialization, the memory
+pointed to by bfad->im is freed without setting bfad->im to NULL.
 
-arch/mips/kernel/vpe-mt.c:180:7: error: no previous prototype for 'vpe_alloc' [-Werror=missing-prototypes]
-  180 | void *vpe_alloc(void)
-      |       ^~~~~~~~~
-arch/mips/kernel/vpe-mt.c:198:5: error: no previous prototype for 'vpe_start' [-Werror=missing-prototypes]
-  198 | int vpe_start(void *vpe, unsigned long start)
-      |     ^~~~~~~~~
-arch/mips/kernel/vpe-mt.c:208:5: error: no previous prototype for 'vpe_stop' [-Werror=missing-prototypes]
-  208 | int vpe_stop(void *vpe)
-      |     ^~~~~~~~
-arch/mips/kernel/vpe-mt.c:229:5: error: no previous prototype for 'vpe_free' [-Werror=missing-prototypes]
-  229 | int vpe_free(void *vpe)
-      |     ^~~~~~~~
+Subsequently, during driver uninstallation, when the state machine enters
+the bfad_sm_stopping state and calls the bfad_im_probe_undo() function,
+it attempts to free the memory pointed to by bfad->im again, thereby
+triggering a double-free vulnerability.
 
-Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Set bfad->im to NULL if probing fails.
+
+Signed-off-by: jackysliu <1972843537@qq.com>
+Link: https://lore.kernel.org/r/tencent_3BB950D6D2D470976F55FC879206DE0B9A09@qq.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/vpe.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/bfa/bfad_im.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/mips/include/asm/vpe.h b/arch/mips/include/asm/vpe.h
-index 012731546cf6..3de6b0ff1627 100644
---- a/arch/mips/include/asm/vpe.h
-+++ b/arch/mips/include/asm/vpe.h
-@@ -126,4 +126,12 @@ void cleanup_tc(struct tc *tc);
+diff --git a/drivers/scsi/bfa/bfad_im.c b/drivers/scsi/bfa/bfad_im.c
+index 22f06be2606f..6dcf1094e01b 100644
+--- a/drivers/scsi/bfa/bfad_im.c
++++ b/drivers/scsi/bfa/bfad_im.c
+@@ -707,6 +707,7 @@ bfad_im_probe(struct bfad_s *bfad)
  
- int __init vpe_module_init(void);
- void __exit vpe_module_exit(void);
-+
-+#ifdef CONFIG_MIPS_VPE_LOADER_MT
-+void *vpe_alloc(void);
-+int vpe_start(void *vpe, unsigned long start);
-+int vpe_stop(void *vpe);
-+int vpe_free(void *vpe);
-+#endif /* CONFIG_MIPS_VPE_LOADER_MT */
-+
- #endif /* _ASM_VPE_H */
+ 	if (bfad_thread_workq(bfad) != BFA_STATUS_OK) {
+ 		kfree(im);
++		bfad->im = NULL;
+ 		return BFA_STATUS_FAILED;
+ 	}
+ 
 -- 
 2.39.5
 
