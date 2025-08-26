@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01FD29D28A;
-	Tue, 26 Aug 2025 13:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A93C34164F;
+	Tue, 26 Aug 2025 13:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215146; cv=none; b=sgKecFQT6/eKj+NXapGaXPHTenX5WppEkdkR3a6F1KwbPXZpYDE+TIWW8NUCEPnA8MUJeLdROQ1AqMDPCMZg/X5QdrNGJd9I03XG6WNakLSR3hcTxVyq7W4wmle5sMglHE/cqHl5+TZ1EVO5i8e+VXrBrPNwnpkpUH16kS7cmNw=
+	t=1756215149; cv=none; b=go69KQI97ng0U/prQV5KfYZtGWRS9YZ+OJsYgzx/08emnt9dfN88n2e5gZo3sDGS6kPQSeBVr3d6DZfe8Cx0VhYI5KNf5cWc8EVXXwfU898Uxiy7y4m52JpHMfBDS63MptRlwpRKVba431q1a30eu+R3hycdTrjIe+2KC5KXR8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215146; c=relaxed/simple;
-	bh=iaDzzE/VxwcwhctXqP5aVU/tSZFmurlxKB9lWiwTwLI=;
+	s=arc-20240116; t=1756215149; c=relaxed/simple;
+	bh=B85FnzwlsKW4OQyMgU5haPlcbhzak0Xr80UdtwWKDZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GBU6gP/ACiv0YcvfMf4QB4pL+YsZBJD8i/VICBrA7GV9lAFxwqyQl1BmJbzJq7fY2YEHMYASWzUywwM6x4aTU7O4Es6xCPG3a4Om7H2moSk7sjTGlFQytX/PF/R63XykCfQJIKFY7EbYwF9xez+ZRxQ+Pee17a8Ya+DjGp0AZas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcimXxyL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eFlgn0rLUxegpNonC5+b/LglbRlog8BiVIYbAfYS+8gNFK4KVQkCrOt8/QcVHT7nd5CFHxLIMIGQmnNjmCXUMGb0JraZ0X1xHRtLNa0x7JfN2HkpJLIJZDH8WjAh/BoxkhXHHAZQsJubkzRcvv34qsL/mnt0CfAxAyi5mODYRb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzDcjFN0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcimXxyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B14C4CEF1;
-	Tue, 26 Aug 2025 13:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzDcjFN0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D270DC4CEF1;
+	Tue, 26 Aug 2025 13:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215146;
-	bh=iaDzzE/VxwcwhctXqP5aVU/tSZFmurlxKB9lWiwTwLI=;
+	s=korg; t=1756215149;
+	bh=B85FnzwlsKW4OQyMgU5haPlcbhzak0Xr80UdtwWKDZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcimXxyL+GTRl/vvKn14zxWr6MWJzVhERqgntNpVhX0gftke+xl7tf3vbuo0FXRoH
-	 AUNDBhy1cENLRYJkw+0fCVd5YuGjrcf5VZH+kQ8uGOBrCaTi8o3eIJsD5JLhXKWUUP
-	 5T1Mh0PTnDPUeFErbxaGAePBB3pyrSzzAT9D9FwU=
+	b=hzDcjFN0YkbyfhpY7jKR2SMhDFEYbZojQxTwjTCh9Mjh6ohdiLT52Zgu03iwS2oYx
+	 IRyMXuaYBoCJS8DhNsnhVto8/jqQcQarSfHqFQxaR34bjYqsywtfiRnxSgRnGHmaLh
+	 WIW9xSbfs83KtuKQlZScLKw4ZlNm9g46ZUdoUeFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>
-Subject: [PATCH 6.1 404/482] drm/amd/display: Fill display clock and vblank time in dce110_fill_display_configs
-Date: Tue, 26 Aug 2025 13:10:57 +0200
-Message-ID: <20250826110940.810529929@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 405/482] smb: server: split ksmbd_rdma_stop_listening() out of ksmbd_rdma_destroy()
+Date: Tue, 26 Aug 2025 13:10:58 +0200
+Message-ID: <20250826110940.834059257@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -46,82 +50,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit 7d07140d37f792f01cfdb8ca9a6a792ab1d29126 upstream.
+[ Upstream commit bac7b996d42e458a94578f4227795a0d4deef6fa ]
 
-Also needed by DCE 6.
-This way the code that gathers this info can be shared between
-different DCE versions and doesn't have to be repeated.
+We can't call destroy_workqueue(smb_direct_wq); before stop_sessions()!
 
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8107432dff37db26fcb641b6cebeae8981cd73a0)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Otherwise already existing connections try to use smb_direct_wq as
+a NULL pointer.
+
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce100/dce_clk_mgr.c    |    2 --
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c |   10 +++-------
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c   |    2 --
- 3 files changed, 3 insertions(+), 11 deletions(-)
+ fs/smb/server/connection.c     | 3 ++-
+ fs/smb/server/transport_rdma.c | 5 ++++-
+ fs/smb/server/transport_rdma.h | 4 +++-
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce100/dce_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce100/dce_clk_mgr.c
-@@ -386,8 +386,6 @@ static void dce_pplib_apply_display_requ
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 09e1e7771592..92d8a0d898eb 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -436,7 +436,8 @@ void ksmbd_conn_transport_destroy(void)
  {
- 	struct dm_pp_display_configuration *pp_display_cfg = &context->pp_display_cfg;
+ 	mutex_lock(&init_lock);
+ 	ksmbd_tcp_destroy();
+-	ksmbd_rdma_destroy();
++	ksmbd_rdma_stop_listening();
+ 	stop_sessions();
++	ksmbd_rdma_destroy();
+ 	mutex_unlock(&init_lock);
+ }
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index 7d59ed6e1383..3006d76d8059 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -2188,7 +2188,7 @@ int ksmbd_rdma_init(void)
+ 	return 0;
+ }
  
--	pp_display_cfg->avail_mclk_switch_time_us = dce110_get_min_vblank_time_us(context);
--
- 	dce110_fill_display_configs(context, pp_display_cfg);
- 
- 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-@@ -124,6 +124,9 @@ void dce110_fill_display_configs(
- 	int j;
- 	int num_cfgs = 0;
- 
-+	pp_display_cfg->avail_mclk_switch_time_us = dce110_get_min_vblank_time_us(context);
-+	pp_display_cfg->disp_clk_khz = dc->clk_mgr->clks.dispclk_khz;
-+	pp_display_cfg->avail_mclk_switch_time_in_disp_active_us = 0;
- 	pp_display_cfg->crtc_index = dc->res_pool->res_cap->num_timing_generator;
- 
- 	for (j = 0; j < context->stream_count; j++) {
-@@ -243,13 +246,6 @@ void dce11_pplib_apply_display_requireme
- 	pp_display_cfg->min_engine_clock_deep_sleep_khz
- 			= context->bw_ctx.bw.dce.sclk_deep_sleep_khz;
- 
--	pp_display_cfg->avail_mclk_switch_time_us =
--						dce110_get_min_vblank_time_us(context);
--	/* TODO: dce11.2*/
--	pp_display_cfg->avail_mclk_switch_time_in_disp_active_us = 0;
--
--	pp_display_cfg->disp_clk_khz = dc->clk_mgr->clks.dispclk_khz;
--
- 	dce110_fill_display_configs(context, pp_display_cfg);
- 
- 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-@@ -100,8 +100,6 @@ static void dce60_pplib_apply_display_re
+-void ksmbd_rdma_destroy(void)
++void ksmbd_rdma_stop_listening(void)
  {
- 	struct dm_pp_display_configuration *pp_display_cfg = &context->pp_display_cfg;
+ 	if (!smb_direct_listener.cm_id)
+ 		return;
+@@ -2197,7 +2197,10 @@ void ksmbd_rdma_destroy(void)
+ 	rdma_destroy_id(smb_direct_listener.cm_id);
  
--	pp_display_cfg->avail_mclk_switch_time_us = dce110_get_min_vblank_time_us(context);
--
- 	dce110_fill_display_configs(context, pp_display_cfg);
+ 	smb_direct_listener.cm_id = NULL;
++}
  
- 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
++void ksmbd_rdma_destroy(void)
++{
+ 	if (smb_direct_wq) {
+ 		destroy_workqueue(smb_direct_wq);
+ 		smb_direct_wq = NULL;
+diff --git a/fs/smb/server/transport_rdma.h b/fs/smb/server/transport_rdma.h
+index 77aee4e5c9dc..a2291b77488a 100644
+--- a/fs/smb/server/transport_rdma.h
++++ b/fs/smb/server/transport_rdma.h
+@@ -54,13 +54,15 @@ struct smb_direct_data_transfer {
+ 
+ #ifdef CONFIG_SMB_SERVER_SMBDIRECT
+ int ksmbd_rdma_init(void);
++void ksmbd_rdma_stop_listening(void);
+ void ksmbd_rdma_destroy(void);
+ bool ksmbd_rdma_capable_netdev(struct net_device *netdev);
+ void init_smbd_max_io_size(unsigned int sz);
+ unsigned int get_smbd_max_read_write_size(void);
+ #else
+ static inline int ksmbd_rdma_init(void) { return 0; }
+-static inline int ksmbd_rdma_destroy(void) { return 0; }
++static inline void ksmbd_rdma_stop_listening(void) { }
++static inline void ksmbd_rdma_destroy(void) { }
+ static inline bool ksmbd_rdma_capable_netdev(struct net_device *netdev) { return false; }
+ static inline void init_smbd_max_io_size(unsigned int sz) { }
+ static inline unsigned int get_smbd_max_read_write_size(void) { return 0; }
+-- 
+2.50.1
+
 
 
