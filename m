@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282A9350D45;
-	Tue, 26 Aug 2025 14:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC4F350D50;
+	Tue, 26 Aug 2025 14:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218967; cv=none; b=S7IQNVwX2e5Krtyp37xakHxYIbCTpOaIoc4noPOpAJGQsnI8JiHGFVAN8dC/UmhE/hbK1v8rU40ZSZ7BSmOaJ12QHuOxePMcvcJvOCADdvoMQc523G107jo/CMkBi4Xpxhf7Hh9H2XOfL5A4a2GWNYyd7cAnbcCJBJ6b5kffyG0=
+	t=1756218971; cv=none; b=DFg57Jt8yOc07EvIal0O+QoolonPxk4lZQY5jO53JOMXf+KgS4MO8jPzTPyWImxZ1P1WkPbTLGj8w0xQF1IGA7GSrFaWRtDRt4eLNz2u0sDUTsP7Yjk3E3vK24aiMCjtm11PljvoyaSsK5iFJhIYnnBFeTco9tzJWqV6GmNh98I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218967; c=relaxed/simple;
-	bh=iIsVZq9orTc3WwFy11sJRdidapNc7U4RCmXw8xG2B6k=;
+	s=arc-20240116; t=1756218971; c=relaxed/simple;
+	bh=LdeMQYV+/hmHW6UlrKEHYN6tJXxZHNrCqr/aoF40NmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nuOtfiRsAzCNuT1iqK/fmtL9ypmUDpNi2ooUvkdtgGgYPf/Lhicre41xAbFF/9GFlffYXlJmw1e+N0mzFnmJXeaP/vO361s6ffbXUHS/2zaOiwIF9PfX+RUvTBUfsb3M7c3fvX1Lh6vRZthECw5i+CtY0QoxISAfCpisSg6aiFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhMPbZyA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XbiRbL7RRYkxZXN9ndz6VB2FlR3k/Wg2c27P1Ls0nVNXYrwnfPWPdOUhK53kQz6k4y4vYAhJ/oBduEo6+B4QcEb4UU0Pq8/Hyg8bTykSF+WsY+Ph3jFmzFnkOoefPxuKISHU6623S+LU78FlvfodltRsCTK3jHQnaur+WQbYByk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FC8GJncm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhMPbZyA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B398EC4CEF1;
-	Tue, 26 Aug 2025 14:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FC8GJncm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F04AC4CEF1;
+	Tue, 26 Aug 2025 14:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218967;
-	bh=iIsVZq9orTc3WwFy11sJRdidapNc7U4RCmXw8xG2B6k=;
+	s=korg; t=1756218969;
+	bh=LdeMQYV+/hmHW6UlrKEHYN6tJXxZHNrCqr/aoF40NmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhMPbZyAbwCcADDTu1kaYh8NFz4RZ3XUP427D+ijB41U3us+j5Iow+YgYgNXntgAF
-	 qfIww3sNmM8oaUp79i8WFlxuHWqqZWa3i9qYKsZwVyf9wjrGJXLDHzyblLGsAyCMQX
-	 cgAUP8EMw6fisVol1ppZ2aZ/0kmhvfnhdpDHEjQg=
+	b=FC8GJncmVCqIU4ZZHCXcZVLSYesHD9oy+Hd6xWlQpkbCJusVyZJf1ttEVaam3a5eg
+	 xQ86ShbyUEktUr+FD8a4rZtfqt6X+DGnu0jy6kXKlcT7ygj9eTkFvea/dfVaLLcp24
+	 zlF8nW89gLe4QkRcbJHDOmZSfvLD8RJ3Z3CDLYRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Lucy Thrun <lucy.thrun@digital-rabbithole.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 202/403] platform/x86: thinkpad_acpi: Handle KCOV __init vs inline mismatches
-Date: Tue, 26 Aug 2025 13:08:48 +0200
-Message-ID: <20250826110912.437454137@linuxfoundation.org>
+Subject: [PATCH 5.4 203/403] ALSA: hda/ca0132: Fix buffer overflow in add_tuning_control
+Date: Tue, 26 Aug 2025 13:08:49 +0200
+Message-ID: <20250826110912.462723310@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -45,52 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
 
-[ Upstream commit 6418a8504187dc7f5b6f9d0649c03e362cb0664b ]
+[ Upstream commit a409c60111e6bb98fcabab2aeaa069daa9434ca0 ]
 
-When KCOV is enabled all functions get instrumented, unless the
-__no_sanitize_coverage attribute is used. To prepare for
-__no_sanitize_coverage being applied to __init functions[1], we have
-to handle differences in how GCC's inline optimizations get resolved.
-For thinkpad_acpi routines, this means forcing two functions to be
-inline with __always_inline.
+The 'sprintf' call in 'add_tuning_control' may exceed the 44-byte
+buffer if either string argument is too long. This triggers a compiler
+warning.
+Replaced 'sprintf' with 'snprintf' to limit string lengths to prevent
+overflow.
 
-Link: https://lore.kernel.org/lkml/20250523043935.2009972-11-kees@kernel.org/ [1]
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://lore.kernel.org/r/20250529181831.work.439-kees@kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506100642.95jpuMY1-lkp@intel.com/
+Signed-off-by: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
+Link: https://patch.msgid.link/20250610175012.918-3-lucy.thrun@digital-rabbithole.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_ca0132.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index 9eb74d9e1519..e480fff7142a 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -514,12 +514,12 @@ static unsigned long __init tpacpi_check_quirks(
- 	return 0;
+diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
+index 40f50571ad63..dee38dd872b5 100644
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -4014,7 +4014,7 @@ static int add_tuning_control(struct hda_codec *codec,
+ 	}
+ 	knew.private_value =
+ 		HDA_COMPOSE_AMP_VAL(nid, 1, 0, type);
+-	sprintf(namestr, "%s %s Volume", name, dirstr[dir]);
++	snprintf(namestr, sizeof(namestr), "%s %s Volume", name, dirstr[dir]);
+ 	return snd_hda_ctl_add(codec, nid, snd_ctl_new1(&knew, codec));
  }
  
--static inline bool __pure __init tpacpi_is_lenovo(void)
-+static __always_inline bool __pure __init tpacpi_is_lenovo(void)
- {
- 	return thinkpad_id.vendor == PCI_VENDOR_ID_LENOVO;
- }
- 
--static inline bool __pure __init tpacpi_is_ibm(void)
-+static __always_inline bool __pure __init tpacpi_is_ibm(void)
- {
- 	return thinkpad_id.vendor == PCI_VENDOR_ID_IBM;
- }
 -- 
 2.39.5
 
