@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322C824169D;
-	Tue, 26 Aug 2025 13:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1D62D0606;
+	Tue, 26 Aug 2025 13:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214549; cv=none; b=Szalb4gUz7eAWfhe6RGjKG/ZVwm03oH+NDtt+9JtNogh3a5fZEu0qJ/mjj4l6LrCusIli9ZeayLPYspjefk9MH7TIiArRkx1oA+LYVgp3inu0tKTC9q07MuN2pzYoIakRUBXd+ns2fOTE5J16978Jyrw58bixofON6sacrepggM=
+	t=1756214551; cv=none; b=TYdGbwe6dw8GT5vKWlUXubH62nuxCwbOLK4ObrHy5Fcu/KV70cPeSH8tesIR1lSwL7Qgx8byFPJPsX3YASHFEZsv8937FnOx65lGf0ZMbSzFd1L0OFFq2SvM8Oi4aT51iNiac3fc3Jnct0sDOU9dFm32weY41g1dpQ/5Vg1jXaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214549; c=relaxed/simple;
-	bh=aaAMW922A1rj+pR4DJCtkSKJcMPT0y8SQiEMZILsx3o=;
+	s=arc-20240116; t=1756214551; c=relaxed/simple;
+	bh=17xjPZzrY+aLXbsaYzY+eoqk1btIQsckpgq3onFRIes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxKzMWgN8A/ddjyj+a5oFRlEa3pAxdv+BWyjNsdk+239AUMu55pPQIwuu9RDj8vnxddjixr2GyR7El1/cw63b6xiITf/yiNFaNPK23tsGh91+rm4XkJhYR52KXzroQs2WAoWk7Obq8UPIlzTl3Vb5TfWY+IHupP5O7VUgZH7PY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHVZ9ou+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eUwNrYmJKkPnBRj4/lrHswyZ4gJLBtaUgPAac+qhdq9O0kKLWoqeoXAyvOK6d4s1XDsDviI46Ezq/aCzX4P5SuoeGelDtn46jLq9BOHms7lG0AM5xI4PdpzGwHtML6f19UGW8sYiEwnsid5P6bIk3zvq5XnYj50N56+kvgFbqoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhQ/ifYb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHVZ9ou+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC44C4CEF1;
-	Tue, 26 Aug 2025 13:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhQ/ifYb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F117FC4CEF1;
+	Tue, 26 Aug 2025 13:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214548;
-	bh=aaAMW922A1rj+pR4DJCtkSKJcMPT0y8SQiEMZILsx3o=;
+	s=korg; t=1756214551;
+	bh=17xjPZzrY+aLXbsaYzY+eoqk1btIQsckpgq3onFRIes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KHVZ9ou+BbTerwQXEe0wsfsE+HG21Xf203jQiQ0VaFc6JPSVTFJ5aDm+H+K8Kv9N0
-	 zrZ5QPcLIYjWvcEeWCDXkp0q4gTm5A2Uad40N2r8xrJoz7bUvgDrn1yHaF442+R598
-	 TNDDqqbE+Z1Q9kyd9FpkRNHcDruSHAmo91B8Q3CE=
+	b=lhQ/ifYb2WinwSc9Rd1JDG++8CRRfB/3Kkom0VATg/99fTmH9LioQbnH8MF2l7vf6
+	 wtSGHzD7G5yJv8snYo+DvGJwQfsfXT4F13gRdW7Ceh+u32Iuk8F++ptd3Ca17e1Wdw
+	 GADzruT7hPrOnUnVltGMHpm7cARJCW275l1QsBgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+544248a761451c0df72f@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>,
+	Showrya M N <showrya@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 178/482] ext4: do not BUG when INLINE_DATA_FL lacks system.data xattr
-Date: Tue, 26 Aug 2025 13:07:11 +0200
-Message-ID: <20250826110935.204973064@linuxfoundation.org>
+Subject: [PATCH 6.1 179/482] scsi: libiscsi: Initialize iscsi_conn->dd_data only if memory is allocated
+Date: Tue, 26 Aug 2025 13:07:12 +0200
+Message-ID: <20250826110935.230520177@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,71 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Showrya M N <showrya@chelsio.com>
 
-[ Upstream commit 099b847ccc6c1ad2f805d13cfbcc83f5b6d4bc42 ]
+[ Upstream commit 3ea3a256ed81f95ab0f3281a0e234b01a9cae605 ]
 
-A syzbot fuzzed image triggered a BUG_ON in ext4_update_inline_data()
-when an inode had the INLINE_DATA_FL flag set but was missing the
-system.data extended attribute.
+In case of an ib_fast_reg_mr allocation failure during iSER setup, the
+machine hits a panic because iscsi_conn->dd_data is initialized
+unconditionally, even when no memory is allocated (dd_size == 0).  This
+leads invalid pointer dereference during connection teardown.
 
-Since this can happen due to a maiciouly fuzzed file system, we
-shouldn't BUG, but rather, report it as a corrupted file system.
+Fix by setting iscsi_conn->dd_data only if memory is actually allocated.
 
-Add similar replacements of BUG_ON with EXT4_ERROR_INODE() ii
-ext4_create_inline_data() and ext4_inline_data_truncate().
+Panic trace:
+------------
+ iser: iser_create_fastreg_desc: Failed to allocate ib_fast_reg_mr err=-12
+ iser: iser_alloc_rx_descriptors: failed allocating rx descriptors / data buffers
+ BUG: unable to handle page fault for address: fffffffffffffff8
+ RIP: 0010:swake_up_locked.part.5+0xa/0x40
+ Call Trace:
+  complete+0x31/0x40
+  iscsi_iser_conn_stop+0x88/0xb0 [ib_iser]
+  iscsi_stop_conn+0x66/0xc0 [scsi_transport_iscsi]
+  iscsi_if_stop_conn+0x14a/0x150 [scsi_transport_iscsi]
+  iscsi_if_rx+0x1135/0x1834 [scsi_transport_iscsi]
+  ? netlink_lookup+0x12f/0x1b0
+  ? netlink_deliver_tap+0x2c/0x200
+  netlink_unicast+0x1ab/0x280
+  netlink_sendmsg+0x257/0x4f0
+  ? _copy_from_user+0x29/0x60
+  sock_sendmsg+0x5f/0x70
 
-Reported-by: syzbot+544248a761451c0df72f@syzkaller.appspotmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Showrya M N <showrya@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Link: https://lore.kernel.org/r/20250627112329.19763-1-showrya@chelsio.com
+Reviewed-by: Chris Leech <cleech@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inline.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/scsi/libiscsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
-index 312be3d7cfb3..af2d6e92cb7f 100644
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -299,7 +299,11 @@ static int ext4_create_inline_data(handle_t *handle,
- 	if (error)
- 		goto out;
+diff --git a/drivers/scsi/libiscsi.c b/drivers/scsi/libiscsi.c
+index 6e811d753cb1..ee4e3feedd10 100644
+--- a/drivers/scsi/libiscsi.c
++++ b/drivers/scsi/libiscsi.c
+@@ -3184,7 +3184,8 @@ iscsi_conn_setup(struct iscsi_cls_session *cls_session, int dd_size,
+ 		return NULL;
+ 	conn = cls_conn->dd_data;
  
--	BUG_ON(!is.s.not_found);
-+	if (!is.s.not_found) {
-+		EXT4_ERROR_INODE(inode, "unexpected inline data xattr");
-+		error = -EFSCORRUPTED;
-+		goto out;
-+	}
- 
- 	error = ext4_xattr_ibody_set(handle, inode, &i, &is);
- 	if (error) {
-@@ -350,7 +354,11 @@ static int ext4_update_inline_data(handle_t *handle, struct inode *inode,
- 	if (error)
- 		goto out;
- 
--	BUG_ON(is.s.not_found);
-+	if (is.s.not_found) {
-+		EXT4_ERROR_INODE(inode, "missing inline data xattr");
-+		error = -EFSCORRUPTED;
-+		goto out;
-+	}
- 
- 	len -= EXT4_MIN_INLINE_DATA_SIZE;
- 	value = kzalloc(len, GFP_NOFS);
-@@ -2002,7 +2010,12 @@ int ext4_inline_data_truncate(struct inode *inode, int *has_inline)
- 			if ((err = ext4_xattr_ibody_find(inode, &i, &is)) != 0)
- 				goto out_error;
- 
--			BUG_ON(is.s.not_found);
-+			if (is.s.not_found) {
-+				EXT4_ERROR_INODE(inode,
-+						 "missing inline data xattr");
-+				err = -EFSCORRUPTED;
-+				goto out_error;
-+			}
- 
- 			value_len = le32_to_cpu(is.s.here->e_value_size);
- 			value = kmalloc(value_len, GFP_NOFS);
+-	conn->dd_data = cls_conn->dd_data + sizeof(*conn);
++	if (dd_size)
++		conn->dd_data = cls_conn->dd_data + sizeof(*conn);
+ 	conn->session = session;
+ 	conn->cls_conn = cls_conn;
+ 	conn->c_stage = ISCSI_CONN_INITIAL_STAGE;
 -- 
 2.39.5
 
