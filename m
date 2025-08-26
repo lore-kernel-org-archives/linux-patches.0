@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37CE199FB0;
-	Tue, 26 Aug 2025 13:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557CD101F2;
+	Tue, 26 Aug 2025 13:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213301; cv=none; b=s4pE6lNaL4u6W77nsW8MoO/NzftDRHuZu4815fmbvR8rP3gI1v4IHmi3Gtro3VjTb1qbNYVaIYMP7cHpHKc+rHZNF9oM+Jfc4DnZzQIkgjleba8jm5EmpxFgCzcNM5/GWAV6Krbyz6j1kI4plqEloplzMHtR0Q6YLgklZqneYIk=
+	t=1756213304; cv=none; b=id3KLWwXh57w8FRP2T+RIazm5EAsFu9gVDUfcitOCANNYMu2g2hYr8GgkGMRV3EZuKgbL2dab+zbTQlRxBvEpiRMDOjjqHlmsvaLrDVF8NpLLDvV63vGb2ry5OqpLTWRqOvfT5sBKGYRfRxvT32njU32Djycy8KruzSk3v3GMfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213301; c=relaxed/simple;
-	bh=6dlyKY/1F2WiWluKbh0nvxfPDQxDqMt+WYszcvlNokQ=;
+	s=arc-20240116; t=1756213304; c=relaxed/simple;
+	bh=bGoRBNvDdeTzo/YdZ9OzUTrWiVyKMW7XEyo6xiEiLhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBOUsln6FOiGmmh9KnakIZlNDwkRgcZLFsdLO4OcK6nAs87GpZ+bpV/jUIa4pl6dcGxsUwVp60UMHbhjL74j/Q5LDsurx8m47vLHSv12EPcyaUUo4tCwauWk7JD2HEwu8CX40yvoMjum2SqbQ8bBwN9HkZbS71ZXIe0xX3ovvcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRxFHZG0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=URXQqr7eKi8OvQdS7Coefv6yO7PiGDxS0tevhkHg9doyhjzbxrYhPaPvdlMMUXfRcnkUjxk9wrNUMTmrKFvkrS+PjoxGBX3gA4zIhLYF1Y3/7r6vFX4o8NJPzvW/RQzshx4PWYlwERRYvSsBYXEheHA67CvrWU4sPJBTv2q8CWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5csstKL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRxFHZG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FDAC4CEF1;
-	Tue, 26 Aug 2025 13:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5csstKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4333C4CEF1;
+	Tue, 26 Aug 2025 13:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213301;
-	bh=6dlyKY/1F2WiWluKbh0nvxfPDQxDqMt+WYszcvlNokQ=;
+	s=korg; t=1756213304;
+	bh=bGoRBNvDdeTzo/YdZ9OzUTrWiVyKMW7XEyo6xiEiLhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRxFHZG0OlZhHHYzE1lVvz9K5uToXzDmXYOWmP3tbzfE7elmoGJDkb+hRCz8/Lcc1
-	 aMxTJSE2TiPsVpsOBsHpTTA+awzuhKle/pNrg4D7Gxdze0Sim5SKE9W2f5Cljy5cPs
-	 6pu0/hSM/4lgL1IcFj9Sz1om9QIQsetBeuERcAk4=
+	b=P5csstKLO0dFDsvjGuG23F4D7BjzNfc5OJVNeZrhkUhv7iSHv+KmYSqWT7l7cVOSW
+	 WtDW8uukzlu83r/wRBvLRYsZg5C6GEhTUw10Vwb3fgIp1UhCf7KlkySD3X8oturUxb
+	 xxNkCMm4bcFU6abbAgmbQwJY8SUnAMeRQkT9Iavg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Alex Guo <alexguo1023@gmail.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 264/587] rtc: ds1307: handle oscillator stop flag (OSF) for ds1341
-Date: Tue, 26 Aug 2025 13:06:53 +0200
-Message-ID: <20250826110959.645553281@linuxfoundation.org>
+Subject: [PATCH 6.6 255/587] media: dvb-frontends: dib7090p: fix null-ptr-deref in dib7090p_rw_on_apb()
+Date: Tue, 26 Aug 2025 13:06:44 +0200
+Message-ID: <20250826110959.418510653@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,61 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+From: Alex Guo <alexguo1023@gmail.com>
 
-[ Upstream commit 523923cfd5d622b8f4ba893fdaf29fa6adeb8c3e ]
+[ Upstream commit ce5cac69b2edac3e3246fee03e8f4c2a1075238b ]
 
-In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-kernel time as long as rtc_read_time() succeeds. In some power loss
-situations, our supercapacitor-backed DS1342 RTC comes up with either an
-unpredictable future time or the default 01/01/00 from the datasheet.
-The oscillator stop flag (OSF) is set in these scenarios due to the
-power loss and can be used to determine the validity of the RTC data.
+In dib7090p_rw_on_apb, msg is controlled by user. When msg[0].buf is null and
+msg[0].len is zero, former checks on msg[0].buf would be passed. If accessing
+msg[0].buf[2] without sanity check, null pointer deref would happen. We add
+check on msg[0].len to prevent crash. Similar issue occurs when access
+msg[1].buf[0] and msg[1].buf[1].
 
-This change expands the oscillator stop flag (OSF) handling that has
-already been implemented for some chips to the ds1341 chip (DS1341 and
-DS1342 share a datasheet). This handling manages the validity of the RTC
-data in .read_time and .set_time based on the OSF.
+Similar commit: commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
 
-Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/1749665656-30108-3-git-send-email-meaganlloyd@linux.microsoft.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Alex Guo <alexguo1023@gmail.com>
+Link: https://lore.kernel.org/r/20250616013231.730221-1-alexguo1023@gmail.com
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/media/dvb-frontends/dib7000p.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index e14981383c01..ae115c3fcf19 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -274,6 +274,13 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 		if (tmp & DS1340_BIT_OSF)
- 			return -EINVAL;
- 		break;
-+	case ds_1341:
-+		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
-+		if (ret)
-+			return ret;
-+		if (tmp & DS1337_BIT_OSF)
-+			return -EINVAL;
-+		break;
- 	case ds_1388:
- 		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
- 		if (ret)
-@@ -372,6 +379,10 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
- 		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
- 				   DS1340_BIT_OSF, 0);
- 		break;
-+	case ds_1341:
-+		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
-+				   DS1337_BIT_OSF, 0);
-+		break;
- 	case ds_1388:
- 		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
- 				   DS1388_BIT_OSF, 0);
+diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
+index 444fe1c4bf2d..f94660dd9df0 100644
+--- a/drivers/media/dvb-frontends/dib7000p.c
++++ b/drivers/media/dvb-frontends/dib7000p.c
+@@ -2261,8 +2261,12 @@ static int dib7090p_rw_on_apb(struct i2c_adapter *i2c_adap,
+ 	u16 word;
+ 
+ 	if (num == 1) {		/* write */
++		if (msg[0].len < 3)
++			return -EOPNOTSUPP;
+ 		dib7000p_write_word(state, apb_address, ((msg[0].buf[1] << 8) | (msg[0].buf[2])));
+ 	} else {
++		if (msg[1].len < 2)
++			return -EOPNOTSUPP;
+ 		word = dib7000p_read_word(state, apb_address);
+ 		msg[1].buf[0] = (word >> 8) & 0xff;
+ 		msg[1].buf[1] = (word) & 0xff;
 -- 
 2.39.5
 
