@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966F521D3C0;
-	Tue, 26 Aug 2025 11:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31F8749C;
+	Tue, 26 Aug 2025 11:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208843; cv=none; b=EgwKKYnRtJX0PamScpOXHi171vjql8tkxcfs9WYLeSV2P+nakpwWvd5Chn5/UGgyfiKVq8sK7bH8sY0vvYffMp+uQxSRg93cQTvioIxWgKFsWCei8XUPhYtebeZZ99K3W1GtC/OrXsAL2oH9tMxYmmyPXeNAlNFZPRGCys5WW+A=
+	t=1756208846; cv=none; b=H0fjyG+OYUnShXjRzG6MHaTyjiWlweSBfkP666Ha65drILX+oBYL7NnSkfyrZqPbvbeeVUAtIh3dhantbZVW4DFx6ihUg8aiEfrFAlZ4yt+kELGPMS7VjUVrFefY+URzJtuUAiBPjipjaoYrR1o8ZOFxyhuPub9mz/0kpgk2AQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208843; c=relaxed/simple;
-	bh=uBK1usGmC4ly7g9G3EAzi/2SVFAHcpY4dj0i0PMvzIg=;
+	s=arc-20240116; t=1756208846; c=relaxed/simple;
+	bh=RFMHr6fhGHK9ErDNtHSE1SggSZfCsk6nuyc8sjR/GCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RL2y1ApYHSf93kKleKzPH1PNg3Lss+LlbR2tIq2pmhZym9c7vprg2twosJnOfpZ3Jsbh4ZyLHmOy05Gz36ooZw6yho+PEXjb1NsPFCDaON023dnQty+5+OLK5XhdNDgodzAZMnw8YNlTJPUizrEpO6/g1FQx2h/nKEm962x+sag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeGplWQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0NQtlhelLfcOhPGWi7APYzLM7BzqMkNPuDLnlEktP5e4v5wHBEeCng8BzkqU/SIOsq5oEGkagZqnPWF9foZ1dieaRdwDWrBQHwk9yjKrOF7tOY0qhbBHq/7aRT1eNRNEckkGiObdQaqm8YfuQ1diCrgbCEOhPOc7XW7U/TEwd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M53xr4Zp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeGplWQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21DEC4CEF4;
-	Tue, 26 Aug 2025 11:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M53xr4Zp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FBFC4CEF1;
+	Tue, 26 Aug 2025 11:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208843;
-	bh=uBK1usGmC4ly7g9G3EAzi/2SVFAHcpY4dj0i0PMvzIg=;
+	s=korg; t=1756208845;
+	bh=RFMHr6fhGHK9ErDNtHSE1SggSZfCsk6nuyc8sjR/GCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IeGplWQSeyW8iqn3sL46PoJxuiLzRbo0YO45jIs/v8hgEHKfdTXK3umwPObK2BCTY
-	 QMaVbDeBTBe1AnkKmOVze2r++OUPCavcNe9btru3nScsV2BubwJvaxvnBWZYnSHrKf
-	 8fJjf07ZmBfBJ5+qX3FIMYioXG1PwDs5fsNxTkE0=
+	b=M53xr4ZpASyq5qU4cfvIQCb5qWfWnU6nYjq11RKZsqrPA6wBpN7N7JA3lDXq9toTl
+	 4QOe/Eo/asOZgJNsjgx8IgyoNRDp0+2GkvkzPqtnTkaAW59zIGh50NPtCYHB9/JqJX
+	 xiWHYGJppQ1JWS73jYjOs9vmBsq7cgv2pQDbLa9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wenglianfa <wenglianfa@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 266/322] RDMA/hns: Fix querying wrong SCC context for DIP algorithm
-Date: Tue, 26 Aug 2025 13:11:21 +0200
-Message-ID: <20250826110922.499346343@linuxfoundation.org>
+Subject: [PATCH 6.12 267/322] RDMA/bnxt_re: Fix to do SRQ armena by default
+Date: Tue, 26 Aug 2025 13:11:22 +0200
+Message-ID: <20250826110922.524293522@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,76 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wenglianfa <wenglianfa@huawei.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 085a1b42e52750769a3fa29d4da6c05ab56f18f8 ]
+[ Upstream commit 6296f9a5293ada28558f2867ac54c487e1e2b9f2 ]
 
-When using DIP algorithm, all QPs establishing connections with
-the same destination IP share the same SCC, which is indexed by
-dip_idx, but dip_idx isn't necessarily equal to qpn. Therefore,
-dip_idx should be used to query SCC context instead of qpn.
+Whenever SRQ is created, make sure SRQ arm enable is always
+set. Driver is always ready to receive SRQ ASYNC event.
 
-Fixes: 124a9fbe43aa ("RDMA/hns: Append SCC context to the raw dump of QPC")
-Signed-off-by: wenglianfa <wenglianfa@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250726075345.846957-1-huangjunxian6@hisilicon.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Additional note -
+There is no need to do srq arm enable conditionally.
+See bnxt_qplib_armen_db in bnxt_qplib_create_cq().
+
+Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Link: https://patch.msgid.link/20250805101000.233310-2-kalesh-anakkur.purayil@broadcom.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c    | 4 ++--
- drivers/infiniband/hw/hns/hns_roce_restrack.c | 9 ++++++++-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 53fe0ef3883d..a7b3e4248ebb 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5498,7 +5498,7 @@ static int hns_roce_v2_query_srqc(struct hns_roce_dev *hr_dev, u32 srqn,
- 	return ret;
- }
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 7436ce551579..3170a3e2df24 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -704,8 +704,7 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
+ 	srq->dbinfo.db = srq->dpi->dbr;
+ 	srq->dbinfo.max_slot = 1;
+ 	srq->dbinfo.priv_db = res->dpi_tbl.priv_db;
+-	if (srq->threshold)
+-		bnxt_qplib_armen_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ_ARMENA);
++	bnxt_qplib_armen_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ_ARMENA);
+ 	srq->arm_req = false;
  
--static int hns_roce_v2_query_sccc(struct hns_roce_dev *hr_dev, u32 qpn,
-+static int hns_roce_v2_query_sccc(struct hns_roce_dev *hr_dev, u32 sccn,
- 				  void *buffer)
- {
- 	struct hns_roce_v2_scc_context *context;
-@@ -5510,7 +5510,7 @@ static int hns_roce_v2_query_sccc(struct hns_roce_dev *hr_dev, u32 qpn,
- 		return PTR_ERR(mailbox);
- 
- 	ret = hns_roce_cmd_mbox(hr_dev, 0, mailbox->dma, HNS_ROCE_CMD_QUERY_SCCC,
--				qpn);
-+				sccn);
- 	if (ret)
- 		goto out;
- 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_restrack.c b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-index f637b73b946e..230187dda6a0 100644
---- a/drivers/infiniband/hw/hns/hns_roce_restrack.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-@@ -100,6 +100,7 @@ int hns_roce_fill_res_qp_entry_raw(struct sk_buff *msg, struct ib_qp *ib_qp)
- 		struct hns_roce_v2_qp_context qpc;
- 		struct hns_roce_v2_scc_context sccc;
- 	} context = {};
-+	u32 sccn = hr_qp->qpn;
- 	int ret;
- 
- 	if (!hr_dev->hw->query_qpc)
-@@ -116,7 +117,13 @@ int hns_roce_fill_res_qp_entry_raw(struct sk_buff *msg, struct ib_qp *ib_qp)
- 	    !hr_dev->hw->query_sccc)
- 		goto out;
- 
--	ret = hr_dev->hw->query_sccc(hr_dev, hr_qp->qpn, &context.sccc);
-+	if (hr_qp->cong_type == CONG_TYPE_DIP) {
-+		if (!hr_qp->dip)
-+			goto out;
-+		sccn = hr_qp->dip->dip_idx;
-+	}
-+
-+	ret = hr_dev->hw->query_sccc(hr_dev, sccn, &context.sccc);
- 	if (ret)
- 		ibdev_warn_ratelimited(&hr_dev->ib_dev,
- 				       "failed to query SCCC, ret = %d.\n",
+ 	return 0;
 -- 
 2.50.1
 
