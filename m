@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC3E8635D;
-	Tue, 26 Aug 2025 13:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC9518DB2A;
+	Tue, 26 Aug 2025 13:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213365; cv=none; b=o8cQlf/lUm9nRKFmxS8Ixw4iPhq4gA+mZ6rc3vmH82y1Qr5Gn7Mv5yGlfPkvs9Qi6ZLDFoNgHHsBs774bVVBX6q3LDy/zDjfAgVfsI/sZA6Isgzwf5HOZ45z7YRQtyJgG3kq8vWcvbsRdNObBhbItHEnJsIlylocvqZmrVT/Hsw=
+	t=1756213369; cv=none; b=kMetXA2riaN5jWLjGz2D43/AgKKwfLkFOBnMS/Rz5lLk6m+LxoEVQ2wm8ntt3ie2t/ias7c1SKsJIfhlT/OOThr0CH0BSaYrSzP47l9dqqYKG5/Nd5pIuvLH2aSBXlj+x0r4LOZjCAxfHOfb9RIHnJrqdT7duz1yUz0mh9zE4rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213365; c=relaxed/simple;
-	bh=m6U5lMo/iwurZhWltcAaWwithBWq18pMOvFkke/NgbA=;
+	s=arc-20240116; t=1756213369; c=relaxed/simple;
+	bh=mmSZf7GIgXA6Uo3jjP0AqAaY3PAmSliebh6cR5JnU4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nu3Jp+wAy0LbqVTOxetDz1YWizxOG0mSroSKFm+1tUHa2JmcNgR0aq5m/L+U/y+/ubSLQz+Ns2Tirc/GK4B1JkVU1C2Loy46/68wan70JzQRmuHS6Kt86C2WjUWtBORNqyxfWZahoRrqOwSIxQZRQPCQz/uvX5Texc2VQb4B01c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kavOqKhN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mz9s/gDZF5lN/2wVTp557o5rSmH9Kq46DEp5v/QuVHPqKCG3Wy8fZUKZO7RcnH/RYRHufbRbd3/WOoq4GozkBOrhvNAdJM3YZFT6EeB5h8T6ERpIfWBRWgd51oyL+U4vfK+mcpukMsvSuevKQtAESrzHCmOLmr7LA3LWBoqtP2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uBm7u1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kavOqKhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFD0C4CEF4;
-	Tue, 26 Aug 2025 13:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uBm7u1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7C0C4CEF1;
+	Tue, 26 Aug 2025 13:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213364;
-	bh=m6U5lMo/iwurZhWltcAaWwithBWq18pMOvFkke/NgbA=;
+	s=korg; t=1756213367;
+	bh=mmSZf7GIgXA6Uo3jjP0AqAaY3PAmSliebh6cR5JnU4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kavOqKhNe6RlvWjgwDcSY/q7C4mkixCDTJqbWL26WSCeeVETTxUjylSp2VLk5WC3j
-	 BM+fDK9+jBkOIRB2XnDV3rhTlQDQ+fFLFe4ktciTp12NNNSvi5tTN3CduBORr61Qt5
-	 vZgYRUWeaFpWbiY4tiZhsAAIZdsju9x7VnIKg3dk=
+	b=2uBm7u1UFmyv3Z24Uzo9AMcw8marFUXydma+eOXI+taBFezNUQtqPtEyQRet+DGG1
+	 Ir0fm0eYDIqYj6sgKN9JAeuoVau6WOFfpSupRRlaSlvbK7RFR4QAUQ+NkvQfTdhSJP
+	 m2KcgIzwINVyQHkoHHbYzmsgDjqm2dP/2UW4ctvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 293/587] rtc: ds1307: remove clear of oscillator stop flag (OSF) in probe
-Date: Tue, 26 Aug 2025 13:07:22 +0200
-Message-ID: <20250826111000.380578559@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 320/587] mm/kmemleak: avoid deadlock by moving pr_warn() outside kmemleak_lock
+Date: Tue, 26 Aug 2025 13:07:49 +0200
+Message-ID: <20250826111001.058122499@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,52 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 48458654659c9c2e149c211d86637f1592470da5 ]
+commit 47b0f6d8f0d2be4d311a49e13d2fd5f152f492b2 upstream.
 
-In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-kernel time as long as rtc_read_time() succeeds. In some power loss
-situations, our supercapacitor-backed DS1342 RTC comes up with either an
-unpredictable future time or the default 01/01/00 from the datasheet.
-The oscillator stop flag (OSF) is set in these scenarios due to the
-power loss and can be used to determine the validity of the RTC data.
+When netpoll is enabled, calling pr_warn_once() while holding
+kmemleak_lock in mem_pool_alloc() can cause a deadlock due to lock
+inversion with the netconsole subsystem.  This occurs because
+pr_warn_once() may trigger netpoll, which eventually leads to
+__alloc_skb() and back into kmemleak code, attempting to reacquire
+kmemleak_lock.
 
-Some chip types in the ds1307 driver already have OSF handling to
-determine whether .read_time provides valid RTC data or returns -EINVAL.
+This is the path for the deadlock.
 
-This change removes the clear of the OSF in .probe as the OSF needs to
-be preserved to expand the OSF handling to the ds1341 chip type (note
-that DS1341 and DS1342 share a datasheet).
+mem_pool_alloc()
+  -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
+      -> pr_warn_once()
+          -> netconsole subsystem
+	     -> netpoll
+	         -> __alloc_skb
+		   -> __create_object
+		     -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
 
-Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/1749665656-30108-2-git-send-email-meaganlloyd@linux.microsoft.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by setting a flag and issuing the pr_warn_once() after
+kmemleak_lock is released.
+
+Link: https://lkml.kernel.org/r/20250731-kmemleak_lock-v1-1-728fd470198f@debian.org
+Fixes: c5665868183f ("mm: kmemleak: use the memory pool for early allocations")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-ds1307.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ mm/kmemleak.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index ae115c3fcf19..74aad2b12460 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -1819,10 +1819,8 @@ static int ds1307_probe(struct i2c_client *client)
- 		regmap_write(ds1307->regmap, DS1337_REG_CONTROL,
- 			     regs[0]);
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -452,6 +452,7 @@ static struct kmemleak_object *mem_pool_
+ {
+ 	unsigned long flags;
+ 	struct kmemleak_object *object;
++	bool warn = false;
  
--		/* oscillator fault?  clear flag, and warn */
-+		/* oscillator fault? warn */
- 		if (regs[1] & DS1337_BIT_OSF) {
--			regmap_write(ds1307->regmap, DS1337_REG_STATUS,
--				     regs[1] & ~DS1337_BIT_OSF);
- 			dev_warn(ds1307->dev, "SET TIME!\n");
- 		}
- 		break;
--- 
-2.39.5
-
+ 	/* try the slab allocator first */
+ 	if (object_cache) {
+@@ -469,8 +470,10 @@ static struct kmemleak_object *mem_pool_
+ 	else if (mem_pool_free_count)
+ 		object = &mem_pool[--mem_pool_free_count];
+ 	else
+-		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
++		warn = true;
+ 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
++	if (warn)
++		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
+ 
+ 	return object;
+ }
 
 
