@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D25C293C44;
-	Tue, 26 Aug 2025 11:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65D52264A3;
+	Tue, 26 Aug 2025 11:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207012; cv=none; b=LkQyaBb3/czXejZkoR3xA1MMXeOSZARfb+0EEQ/MY+39RWpn/htMiJ7tHsQxWKyN5ycUe7GgY5adCpcCotuiEqAB+Y38K4haqb9/nWEZ9yt9Z75RRBPmzcr/bny88aRbQSrHRdDMda2A9wzD1aCvplSebGi7/SLsz7vkwms/Upg=
+	t=1756207014; cv=none; b=n+qjeMKSB8pZibmfpJc8U3OTiV9zcLrISYZRd/5zPu08gXDzGsdYukTZZ8CKSDBuqHyzbtSm3w3ABal8QQ3pc72HxnsUjaJ+517/cIiwnDjt/I+ZLPVH8EXOSxbVD8MG8C3SrVOskAUwc1xijfp62K7ACeQPat4hwIt1/ovH1rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207012; c=relaxed/simple;
-	bh=Pa+WcXJzJEEuBD5jkGYKFaGeGBwqq+l3pWSQbFrHn6k=;
+	s=arc-20240116; t=1756207014; c=relaxed/simple;
+	bh=XTPXpdcGmQJdHuEOhveCInpbOOergG6vzUH59KoC808=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S9kLgWmxz2OC+2+3JXScV0JyNRDsjUk3+7/PusmdmTbBSuNLpXNgH++rmjcuHl/8oO8x1fWigpPHEwwKPN9AkcBGnLQMsjZs05mLhfgC7qjfL9PnuLUC3R6bJkZZypxJ0u+xUGNMXWr8FSkrGMvMSRL2tnpGBql5CC6LzguCUcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONFY2wNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yt5/8f4WYmA0gDbuburhEG5bJjkawOvDgE+i1ic2nijXMEkzE5rvEMqZ9lXyn7k7jEHV8uygVpGlgPniWww/ShpXm5Af9NwNwa8ACx+eckpSFSgVeYYBzAyJIzG9pACGuONrpDhSOa/vqfP1SZ9hx4/OvbVVkZ+OzVVihINUdCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6ifuxji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONFY2wNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1949C4CEF1;
-	Tue, 26 Aug 2025 11:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6ifuxji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117B3C4CEF1;
+	Tue, 26 Aug 2025 11:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207012;
-	bh=Pa+WcXJzJEEuBD5jkGYKFaGeGBwqq+l3pWSQbFrHn6k=;
+	s=korg; t=1756207014;
+	bh=XTPXpdcGmQJdHuEOhveCInpbOOergG6vzUH59KoC808=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ONFY2wNuflkunIw+unuac5fLajs5b7eTzOR7d1E+9QczIVCtH53HnizUq4R2bLO38
-	 Far42XzaQPtE0PYTh+oJhGWhHUnK9JMisqXv/hExbUApakpvgCifLK5+90RPvDjinK
-	 PiK1L/Y6Vjz3QVy3c3LuSWdPCc1bfEs6yNV6+MUw=
+	b=S6ifuxjiNPVyp2dVycAALLL7TprKycGH126LXrHJVYcJFkfwCBBCeXQ2tLUFhvDJF
+	 qNPiQxnFrp0LVWxQtVd+NsPEBbUpvUtYl/AXHCteV7FoMf3n7syjnWaDK76kECALdO
+	 dtSFcPWV3ygxeHEoCjZpbEZkT3lWM55YegJQYzqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.16 009/457] iio: adc: ad7173: fix num_slots
-Date: Tue, 26 Aug 2025 13:04:53 +0200
-Message-ID: <20250826110937.541103421@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.16 010/457] usb: atm: cxacru: Merge cxacru_upload_firmware() into cxacru_heavy_init()
+Date: Tue, 26 Aug 2025 13:04:54 +0200
+Message-ID: <20250826110937.567546861@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -46,157 +43,237 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 92c247216918fcaa64244248ee38a0f1d342278c upstream.
+commit 8d1b02e5d7e3a6d2acffb1f4c094678fda9e3456 upstream.
 
-Fix the num_slots value for most chips in the ad7173 driver. The correct
-value is the number of CHANNELx registers on the chip.
+After a recent change in clang to expose uninitialized warnings from
+const variables [1], there is a warning in cxacru_heavy_init():
 
-In commit 4310e15b3140 ("iio: adc: ad7173: don't make copy of
-ad_sigma_delta_info struct"), we refactored struct ad_sigma_delta_info
-to be static const data instead of being dynamically populated during
-driver probe. However, there was an existing bug in commit 76a1e6a42802
-("iio: adc: ad7173: add AD7173 driver") where num_slots was incorrectly
-set to the number of CONFIGx registers instead of the number of
-CHANNELx registers. This bug was partially propagated to the refactored
-code in that the 16-channel chips were only given 8 slots instead of
-16 although we did managed to fix the 8-channel chips and one of the
-4-channel chips in that commit. However, we botched two of the 4-channel
-chips and ended up incorrectly giving them 8 slots during the
-refactoring.
+  drivers/usb/atm/cxacru.c:1104:6: error: variable 'bp' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+   1104 |         if (instance->modem_type->boot_rom_patch) {
+        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/usb/atm/cxacru.c:1113:39: note: uninitialized use occurs here
+   1113 |         cxacru_upload_firmware(instance, fw, bp);
+        |                                              ^~
+  drivers/usb/atm/cxacru.c:1104:2: note: remove the 'if' if its condition is always true
+   1104 |         if (instance->modem_type->boot_rom_patch) {
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/usb/atm/cxacru.c:1095:32: note: initialize the variable 'bp' to silence this warning
+   1095 |         const struct firmware *fw, *bp;
+        |                                       ^
+        |                                        = NULL
 
-This patch fixes that mistake on the 4-channel chips and also
-corrects the 16-channel chips to have 16 slots.
+While the warning is technically correct that bp is conditionally passed
+uninitialized to cxacru_upload_firmware(), it is ultimately a false
+positive warning on the uninitialized use of bp because the same
+condition that initializes bp, instance->modem_type->boot_rom_patch, is
+the same one that gates the use of bp within cxacru_upload_firmware().
+As this warning occurs in clang's frontend before inlining occurs, it
+cannot know that these conditions are indentical to avoid the warning.
 
-Fixes: 4310e15b3140 ("iio: adc: ad7173: don't make copy of ad_sigma_delta_info struct")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250706-iio-adc-ad7173-fix-num_slots-on-most-chips-v3-1-d1f5453198a7@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Manually inline cxacru_upload_firmware() into cxacru_heavy_init(), as
+that is its only callsite, so that clang can see that bp is initialized
+and used under the same condition, clearing up the warning without any
+functional changes to the code (LLVM was already doing this inlining
+later).
+
+Cc: stable@vger.kernel.org
+Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2102
+Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250722-usb-cxacru-fix-clang-21-uninit-warning-v2-1-6708a18decd2@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7173.c |   36 ++++++++++++++++++++++++++----------
- 1 file changed, 26 insertions(+), 10 deletions(-)
+ drivers/usb/atm/cxacru.c |  106 +++++++++++++++++++++--------------------------
+ 1 file changed, 49 insertions(+), 57 deletions(-)
 
---- a/drivers/iio/adc/ad7173.c
-+++ b/drivers/iio/adc/ad7173.c
-@@ -772,10 +772,26 @@ static const struct ad_sigma_delta_info
- 	.num_slots = 8,
- };
+--- a/drivers/usb/atm/cxacru.c
++++ b/drivers/usb/atm/cxacru.c
+@@ -980,25 +980,60 @@ cleanup:
+ 	return ret;
+ }
  
-+static const struct ad_sigma_delta_info ad7173_sigma_delta_info_16_slots = {
-+	.set_channel = ad7173_set_channel,
-+	.append_status = ad7173_append_status,
-+	.disable_all = ad7173_disable_all,
-+	.disable_one = ad7173_disable_one,
-+	.set_mode = ad7173_set_mode,
-+	.has_registers = true,
-+	.has_named_irqs = true,
-+	.addr_shift = 0,
-+	.read_mask = BIT(6),
-+	.status_ch_mask = GENMASK(3, 0),
-+	.data_reg = AD7173_REG_DATA,
-+	.num_resetclks = 64,
-+	.num_slots = 16,
-+};
+-static void cxacru_upload_firmware(struct cxacru_data *instance,
+-				   const struct firmware *fw,
+-				   const struct firmware *bp)
 +
- static const struct ad7173_device_info ad4111_device_info = {
- 	.name = "ad4111",
- 	.id = AD4111_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_16_slots,
- 	.num_voltage_in_div = 8,
- 	.num_channels = 16,
- 	.num_configs = 8,
-@@ -797,7 +813,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad4112_device_info = {
- 	.name = "ad4112",
- 	.id = AD4112_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_16_slots,
- 	.num_voltage_in_div = 8,
- 	.num_channels = 16,
- 	.num_configs = 8,
-@@ -818,7 +834,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad4113_device_info = {
- 	.name = "ad4113",
- 	.id = AD4113_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_16_slots,
- 	.num_voltage_in_div = 8,
- 	.num_channels = 16,
- 	.num_configs = 8,
-@@ -837,7 +853,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad4114_device_info = {
- 	.name = "ad4114",
- 	.id = AD4114_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_16_slots,
- 	.num_voltage_in_div = 16,
- 	.num_channels = 16,
- 	.num_configs = 8,
-@@ -856,7 +872,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad4115_device_info = {
- 	.name = "ad4115",
- 	.id = AD4115_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_16_slots,
- 	.num_voltage_in_div = 16,
- 	.num_channels = 16,
- 	.num_configs = 8,
-@@ -875,7 +891,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad4116_device_info = {
- 	.name = "ad4116",
- 	.id = AD4116_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_16_slots,
- 	.num_voltage_in_div = 11,
- 	.num_channels = 16,
- 	.num_configs = 8,
-@@ -894,7 +910,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad7172_2_device_info = {
- 	.name = "ad7172-2",
- 	.id = AD7172_2_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_4_slots,
- 	.num_voltage_in = 5,
- 	.num_channels = 4,
- 	.num_configs = 4,
-@@ -927,7 +943,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad7173_8_device_info = {
- 	.name = "ad7173-8",
- 	.id = AD7173_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_16_slots,
- 	.num_voltage_in = 17,
- 	.num_channels = 16,
- 	.num_configs = 8,
-@@ -944,7 +960,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad7175_2_device_info = {
- 	.name = "ad7175-2",
- 	.id = AD7175_2_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_4_slots,
- 	.num_voltage_in = 5,
- 	.num_channels = 4,
- 	.num_configs = 4,
-@@ -961,7 +977,7 @@ static const struct ad7173_device_info a
- static const struct ad7173_device_info ad7175_8_device_info = {
- 	.name = "ad7175-8",
- 	.id = AD7175_8_ID,
--	.sd_info = &ad7173_sigma_delta_info_8_slots,
-+	.sd_info = &ad7173_sigma_delta_info_16_slots,
- 	.num_voltage_in = 17,
- 	.num_channels = 16,
- 	.num_configs = 8,
++static int cxacru_find_firmware(struct cxacru_data *instance,
++				char *phase, const struct firmware **fw_p)
+ {
+-	int ret;
++	struct usbatm_data *usbatm = instance->usbatm;
++	struct device *dev = &usbatm->usb_intf->dev;
++	char buf[16];
++
++	sprintf(buf, "cxacru-%s.bin", phase);
++	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
++
++	if (request_firmware(fw_p, buf, dev)) {
++		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
++		return -ENOENT;
++	}
++
++	usb_info(usbatm, "found firmware %s\n", buf);
++
++	return 0;
++}
++
++static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
++			     struct usb_interface *usb_intf)
++{
++	const struct firmware *fw, *bp;
++	struct cxacru_data *instance = usbatm_instance->driver_data;
+ 	struct usbatm_data *usbatm = instance->usbatm;
+ 	struct usb_device *usb_dev = usbatm->usb_dev;
+ 	__le16 signature[] = { usb_dev->descriptor.idVendor,
+ 			       usb_dev->descriptor.idProduct };
+ 	__le32 val;
++	int ret;
++
++	ret = cxacru_find_firmware(instance, "fw", &fw);
++	if (ret) {
++		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
++		return ret;
++	}
+ 
+-	usb_dbg(usbatm, "%s\n", __func__);
++	if (instance->modem_type->boot_rom_patch) {
++		ret = cxacru_find_firmware(instance, "bp", &bp);
++		if (ret) {
++			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
++			release_firmware(fw);
++			return ret;
++		}
++	}
+ 
+ 	/* FirmwarePllFClkValue */
+ 	val = cpu_to_le32(instance->modem_type->pll_f_clk);
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLFCLK_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "FirmwarePllFClkValue failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* FirmwarePllBClkValue */
+@@ -1006,7 +1041,7 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLBCLK_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "FirmwarePllBClkValue failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Enable SDRAM */
+@@ -1014,7 +1049,7 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SDRAMEN_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "Enable SDRAM failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Firmware */
+@@ -1022,7 +1057,7 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, FW_ADDR, fw->data, fw->size);
+ 	if (ret) {
+ 		usb_err(usbatm, "Firmware upload failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Boot ROM patch */
+@@ -1031,7 +1066,7 @@ static void cxacru_upload_firmware(struc
+ 		ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, BR_ADDR, bp->data, bp->size);
+ 		if (ret) {
+ 			usb_err(usbatm, "Boot ROM patching failed: %d\n", ret);
+-			return;
++			goto done;
+ 		}
+ 	}
+ 
+@@ -1039,7 +1074,7 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SIG_ADDR, (u8 *) signature, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "Signature storing failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	usb_info(usbatm, "starting device\n");
+@@ -1051,7 +1086,7 @@ static void cxacru_upload_firmware(struc
+ 	}
+ 	if (ret) {
+ 		usb_err(usbatm, "Passing control to firmware failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Delay to allow firmware to start up. */
+@@ -1065,53 +1100,10 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_cm(instance, CM_REQUEST_CARD_GET_STATUS, NULL, 0, NULL, 0);
+ 	if (ret < 0) {
+ 		usb_err(usbatm, "modem failed to initialize: %d\n", ret);
+-		return;
+-	}
+-}
+-
+-static int cxacru_find_firmware(struct cxacru_data *instance,
+-				char *phase, const struct firmware **fw_p)
+-{
+-	struct usbatm_data *usbatm = instance->usbatm;
+-	struct device *dev = &usbatm->usb_intf->dev;
+-	char buf[16];
+-
+-	sprintf(buf, "cxacru-%s.bin", phase);
+-	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
+-
+-	if (request_firmware(fw_p, buf, dev)) {
+-		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
+-		return -ENOENT;
++		goto done;
+ 	}
+ 
+-	usb_info(usbatm, "found firmware %s\n", buf);
+-
+-	return 0;
+-}
+-
+-static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
+-			     struct usb_interface *usb_intf)
+-{
+-	const struct firmware *fw, *bp;
+-	struct cxacru_data *instance = usbatm_instance->driver_data;
+-	int ret = cxacru_find_firmware(instance, "fw", &fw);
+-
+-	if (ret) {
+-		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
+-		return ret;
+-	}
+-
+-	if (instance->modem_type->boot_rom_patch) {
+-		ret = cxacru_find_firmware(instance, "bp", &bp);
+-		if (ret) {
+-			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
+-			release_firmware(fw);
+-			return ret;
+-		}
+-	}
+-
+-	cxacru_upload_firmware(instance, fw, bp);
+-
++done:
+ 	if (instance->modem_type->boot_rom_patch)
+ 		release_firmware(bp);
+ 	release_firmware(fw);
 
 
