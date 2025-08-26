@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D28E239573;
-	Tue, 26 Aug 2025 11:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84361239573;
+	Tue, 26 Aug 2025 11:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207622; cv=none; b=V7iGPO+hPWZEYkik+8iJ7YaVODzxmUHoAIyms35FXNjKKjnb/wH0DPSs/XAZ/weF0iRLDwBu1MjHHtQ0Tq0K/Maq5wA+d4Zzo/uOxsMy7mkiMYc5OjeREkM+xLJLX7sEet5/aALjjFZ33zVwKF51Meyc8/XoTtn+8qKmBVgjDYo=
+	t=1756207624; cv=none; b=q74ILI5fLYX9Xcma5dJ54o9lYNQmQPkmDjaHjdvoxPvb/zVj6oJHpMxhEzUIgKASYgkfI3NU5FyF4KnI+jK+NvKfoGx2l8/RcBn8P7Ofy41XRIWaf8VmEkLU4SOpoAx7hHKu5O533fu5yMqUoZkktTxW50SLZ99/9VIZAoO5Fb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207622; c=relaxed/simple;
-	bh=EtNRuL9KuMyTV+z6+yR/sYxzjA3fSceERA2JvpbhqBk=;
+	s=arc-20240116; t=1756207624; c=relaxed/simple;
+	bh=IaVmGZe8xFTaBLtbP8/27tW2j2NZ3DEGHFf0/yasHoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWBFAc27ai0z37hnzpnfTBl667VLeqUO0iiMohPxKtcFRpT0/cQuW5a+qzNV9f4HHdw06DVkxekEL/MLPjHFNA2Zm+U6nqcp5XxfuHtjvIyczytdX8zMM8zawc9evSEvM1diYKrZlMQjeaZ7D1Kp38oPiNemd/Wh1ASJS59/HPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKFSi4OK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BbF7ieYejjSTzzPpbkPk0G2uydEj+FePNMc0hpVLIcfCTu3mpp+0wIzqjNU74Et4+S7n8bGze8SOb8YL+7BVzjh8wNwLi6cMk3B6D6n5lY/eFnQlIc+EXMCFQMr2HpHW+WKSTjSrb66cs2w+/FYMQHxGdbI+Md5CeCNH4COOYUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQrDPEee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKFSi4OK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B880EC4CEF1;
-	Tue, 26 Aug 2025 11:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQrDPEee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBA4C4CEF1;
+	Tue, 26 Aug 2025 11:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207622;
-	bh=EtNRuL9KuMyTV+z6+yR/sYxzjA3fSceERA2JvpbhqBk=;
+	s=korg; t=1756207624;
+	bh=IaVmGZe8xFTaBLtbP8/27tW2j2NZ3DEGHFf0/yasHoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKFSi4OK1SqYSEs/n/V/gT8GZG0tvOeIihlOPqfKvcNwoUXXqzKFOrIf/6tIQyNa6
-	 vaJtI6hvqeoI5RFmSvecy74h7KibcFdFJaXgj7GjI4H7D14kP23n2+l8CGsg8Iy3dY
-	 s2a1n5mILMoBdlaYBeblY30yPI6Lu6+gJj/IgguU=
+	b=rQrDPEeeECGYLWj7yLVhrkeXz/gEj5+Kz6+gTM6KttUN4jaNYXenQdwk17/MI6UXj
+	 xI9sRGH0cGKOjk6/BwnTiuyUMO2kIRyB0lEaCy2RvjsfCzJgoQfjvwou3EZHD1Ksac
+	 7ZlW7uNlG4kCk94v7xud5MZARK7tzuYt3Y/rhLAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 213/457] btrfs: always abort transaction on failure to add block group to free space tree
-Date: Tue, 26 Aug 2025 13:08:17 +0200
-Message-ID: <20250826110942.626180290@linuxfoundation.org>
+	"Herton R. Krzesinski" <herton@redhat.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Gavin Shan <gshan@redhat.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 247/457] mm/debug_vm_pgtable: clear page table entries at destroy_args()
+Date: Tue, 26 Aug 2025 13:08:51 +0200
+Message-ID: <20250826110943.473383635@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,75 +54,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Herton R. Krzesinski <herton@redhat.com>
 
-[ Upstream commit 1f06c942aa709d397cf6bed577a0d10a61509667 ]
+commit dde30854bddfb5d69f30022b53c5955a41088b33 upstream.
 
-Only one of the callers of __add_block_group_free_space() aborts the
-transaction if the call fails, while the others don't do it and it's
-either never done up the call chain or much higher in the call chain.
+The mm/debug_vm_pagetable test allocates manually page table entries for
+the tests it runs, using also its manually allocated mm_struct.  That in
+itself is ok, but when it exits, at destroy_args() it fails to clear those
+entries with the *_clear functions.
 
-So make sure we abort the transaction at __add_block_group_free_space()
-if it fails, which brings a couple benefits:
+The problem is that leaves stale entries.  If another process allocates an
+mm_struct with a pgd at the same address, it may end up running into the
+stale entry.  This is happening in practice on a debug kernel with
+CONFIG_DEBUG_VM_PGTABLE=y, for example this is the output with some extra
+debugging I added (it prints a warning trace if pgtables_bytes goes
+negative, in addition to the warning at check_mm() function):
 
-1) If some call chain never aborts the transaction, we avoid having some
-   metadata inconsistency because BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE is
-   cleared when we enter __add_block_group_free_space() and therefore
-   __add_block_group_free_space() is never called again to add the block
-   group items to the free space tree, since the function is only called
-   when that flag is set in a block group;
+[    2.539353] debug_vm_pgtable: [get_random_vaddr         ]: random_vaddr is 0x7ea247140000
+[    2.539366] kmem_cache info
+[    2.539374] kmem_cachep 0x000000002ce82385 - freelist 0x0000000000000000 - offset 0x508
+[    2.539447] debug_vm_pgtable: [init_args                ]: args->mm is 0x000000002267cc9e
+(...)
+[    2.552800] WARNING: CPU: 5 PID: 116 at include/linux/mm.h:2841 free_pud_range+0x8bc/0x8d0
+[    2.552816] Modules linked in:
+[    2.552843] CPU: 5 UID: 0 PID: 116 Comm: modprobe Not tainted 6.12.0-105.debug_vm2.el10.ppc64le+debug #1 VOLUNTARY
+[    2.552859] Hardware name: IBM,9009-41A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW910.00 (VL910_062) hv:phyp pSeries
+[    2.552872] NIP:  c0000000007eef3c LR: c0000000007eef30 CTR: c0000000003d8c90
+[    2.552885] REGS: c0000000622e73b0 TRAP: 0700   Not tainted  (6.12.0-105.debug_vm2.el10.ppc64le+debug)
+[    2.552899] MSR:  800000000282b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 24002822  XER: 0000000a
+[    2.552954] CFAR: c0000000008f03f0 IRQMASK: 0
+[    2.552954] GPR00: c0000000007eef30 c0000000622e7650 c000000002b1ac00 0000000000000001
+[    2.552954] GPR04: 0000000000000008 0000000000000000 c0000000007eef30 ffffffffffffffff
+[    2.552954] GPR08: 00000000ffff00f5 0000000000000001 0000000000000048 0000000000004000
+[    2.552954] GPR12: 00000003fa440000 c000000017ffa300 c0000000051d9f80 ffffffffffffffdb
+[    2.552954] GPR16: 0000000000000000 0000000000000008 000000000000000a 60000000000000e0
+[    2.552954] GPR20: 4080000000000000 c0000000113af038 00007fffcf130000 0000700000000000
+[    2.552954] GPR24: c000000062a6a000 0000000000000001 8000000062a68000 0000000000000001
+[    2.552954] GPR28: 000000000000000a c000000062ebc600 0000000000002000 c000000062ebc760
+[    2.553170] NIP [c0000000007eef3c] free_pud_range+0x8bc/0x8d0
+[    2.553185] LR [c0000000007eef30] free_pud_range+0x8b0/0x8d0
+[    2.553199] Call Trace:
+[    2.553207] [c0000000622e7650] [c0000000007eef30] free_pud_range+0x8b0/0x8d0 (unreliable)
+[    2.553229] [c0000000622e7750] [c0000000007f40b4] free_pgd_range+0x284/0x3b0
+[    2.553248] [c0000000622e7800] [c0000000007f4630] free_pgtables+0x450/0x570
+[    2.553274] [c0000000622e78e0] [c0000000008161c0] exit_mmap+0x250/0x650
+[    2.553292] [c0000000622e7a30] [c0000000001b95b8] __mmput+0x98/0x290
+[    2.558344] [c0000000622e7a80] [c0000000001d1018] exit_mm+0x118/0x1b0
+[    2.558361] [c0000000622e7ac0] [c0000000001d141c] do_exit+0x2ec/0x870
+[    2.558376] [c0000000622e7b60] [c0000000001d1ca8] do_group_exit+0x88/0x150
+[    2.558391] [c0000000622e7bb0] [c0000000001d1db8] sys_exit_group+0x48/0x50
+[    2.558407] [c0000000622e7be0] [c00000000003d810] system_call_exception+0x1e0/0x4c0
+[    2.558423] [c0000000622e7e50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec
+(...)
+[    2.558892] ---[ end trace 0000000000000000 ]---
+[    2.559022] BUG: Bad rss-counter state mm:000000002267cc9e type:MM_ANONPAGES val:1
+[    2.559037] BUG: non-zero pgtables_bytes on freeing mm: -6144
 
-2) If the call chain already aborts the transaction, then we get a better
-   trace that points to the exact step from __add_block_group_free_space()
-   which failed, which is better for analysis.
+Here the modprobe process ended up with an allocated mm_struct from the
+mm_struct slab that was used before by the debug_vm_pgtable test.  That is
+not a problem, since the mm_struct is initialized again etc., however, if
+it ends up using the same pgd table, it bumps into the old stale entry
+when clearing/freeing the page table entries, so it tries to free an entry
+already gone (that one which was allocated by the debug_vm_pgtable test),
+which also explains the negative pgtables_bytes since it's accounting for
+not allocated entries in the current process.
 
-So abort the transaction at __add_block_group_free_space() if any of its
-steps fails.
+As far as I looked pgd_{alloc,free} etc.  does not clear entries, and
+clearing of the entries is explicitly done in the free_pgtables->
+free_pgd_range->free_p4d_range->free_pud_range->free_pmd_range->
+free_pte_range path.  However, the debug_vm_pgtable test does not call
+free_pgtables, since it allocates mm_struct and entries manually for its
+test and eg.  not goes through page faults.  So it also should clear
+manually the entries before exit at destroy_args().
 
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This problem was noticed on a reboot X number of times test being done on
+a powerpc host, with a debug kernel with CONFIG_DEBUG_VM_PGTABLE enabled.
+Depends on the system, but on a 100 times reboot loop the problem could
+manifest once or twice, if a process ends up getting the right mm->pgd
+entry with the stale entries used by mm/debug_vm_pagetable.  After using
+this patch, I couldn't reproduce/experience the problems anymore.  I was
+able to reproduce the problem as well on latest upstream kernel (6.16).
+
+I also modified destroy_args() to use mmput() instead of mmdrop(), there
+is no reason to hold mm_users reference and not release the mm_struct
+entirely, and in the output above with my debugging prints I already had
+patched it to use mmput, it did not fix the problem, but helped in the
+debugging as well.
+
+Link: https://lkml.kernel.org/r/20250731214051.4115182-1-herton@redhat.com
+Fixes: 3c9b84f044a9 ("mm/debug_vm_pgtable: introduce struct pgtable_debug_args")
+Signed-off-by: Herton R. Krzesinski <herton@redhat.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Gavin Shan <gshan@redhat.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/free-space-tree.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ mm/debug_vm_pgtable.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -1431,12 +1431,17 @@ static int __add_block_group_free_space(
- 	set_bit(BLOCK_GROUP_FLAG_FREE_SPACE_ADDED, &block_group->runtime_flags);
+--- a/mm/debug_vm_pgtable.c
++++ b/mm/debug_vm_pgtable.c
+@@ -1041,29 +1041,34 @@ static void __init destroy_args(struct p
  
- 	ret = add_new_free_space_info(trans, block_group, path);
--	if (ret)
-+	if (ret) {
-+		btrfs_abort_transaction(trans, ret);
- 		return ret;
-+	}
- 
--	return __add_to_free_space_tree(trans, block_group, path,
--					block_group->start,
--					block_group->length);
-+	ret = __add_to_free_space_tree(trans, block_group, path,
-+				       block_group->start, block_group->length);
-+	if (ret)
-+		btrfs_abort_transaction(trans, ret);
-+
-+	return 0;
- }
- 
- int add_block_group_free_space(struct btrfs_trans_handle *trans,
-@@ -1461,9 +1466,6 @@ int add_block_group_free_space(struct bt
+ 	/* Free page table entries */
+ 	if (args->start_ptep) {
++		pmd_clear(args->pmdp);
+ 		pte_free(args->mm, args->start_ptep);
+ 		mm_dec_nr_ptes(args->mm);
  	}
  
- 	ret = __add_block_group_free_space(trans, block_group, path);
--	if (ret)
--		btrfs_abort_transaction(trans, ret);
--
- out:
- 	btrfs_free_path(path);
- 	mutex_unlock(&block_group->free_space_lock);
+ 	if (args->start_pmdp) {
++		pud_clear(args->pudp);
+ 		pmd_free(args->mm, args->start_pmdp);
+ 		mm_dec_nr_pmds(args->mm);
+ 	}
+ 
+ 	if (args->start_pudp) {
++		p4d_clear(args->p4dp);
+ 		pud_free(args->mm, args->start_pudp);
+ 		mm_dec_nr_puds(args->mm);
+ 	}
+ 
+-	if (args->start_p4dp)
++	if (args->start_p4dp) {
++		pgd_clear(args->pgdp);
+ 		p4d_free(args->mm, args->start_p4dp);
++	}
+ 
+ 	/* Free vma and mm struct */
+ 	if (args->vma)
+ 		vm_area_free(args->vma);
+ 
+ 	if (args->mm)
+-		mmdrop(args->mm);
++		mmput(args->mm);
+ }
+ 
+ static struct page * __init
 
 
