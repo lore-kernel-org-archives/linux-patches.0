@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C541494D9;
-	Tue, 26 Aug 2025 14:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CCE2B9A7;
+	Tue, 26 Aug 2025 14:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217314; cv=none; b=QyjQlfiIRrEcQGqw5bRIf1zsfKvBy3SSSYPZAPMz3pfVKArdBDI+i3dJSC5p5+NkgnHZz0lRnToS0uieR+juPj85HaVJjDEj0MAiq1BuBQuqr5Kki9vou22/TXbZUyT4anWPzI5LBkPYVZ3bekoOKJLbuAYvEiLiDGigKGdn+2o=
+	t=1756217316; cv=none; b=D7yjOS2SLrIi/roLhUlD2HSdTa5fgcXD6J7pbZmZPK7mYNclxSXdV+bpUgddo1EbWd0s1++GsRTJKEPnFehBoVOm0vCXFxT3yklwjzd77rTY+hQECxFw7Y+MCnyhhzD1NlMx3Go9HvgKCh0/evZG+/6xMjJG+Ri83+M0ifKRw68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217314; c=relaxed/simple;
-	bh=/aa0rD8vACv4TlthYqE+kUVjMqXNtzbFfWgfHGOsaGU=;
+	s=arc-20240116; t=1756217316; c=relaxed/simple;
+	bh=MJYOqetB+qlIWyhXDF742keveYj1/KVMNVmqDYiB6zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QebOcOMzVT5uf5sildF1hFGPjNuyzmHmIgNYJfd8ksEn/ORAHCAPjcSFWzj4SCCEtCSHNmObJZjmivz0gtYLOLrgJxFLGiFTnchwcRdshv61jE9hmMVFeVvsGO5tIj8cdwFfi4MSo6P4YRPt5QtiCE1CR1y01enc7y9Xjuj7VAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNued1ft; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ijeJsiEWOxxOJD97NE54CqkCGL2SanKl/9NMR5u5PjNN0lb/ajk8XssQLWt57dMlJVJZ+ZbfHbJFn6Ar/yXYjgwlRZ7mvOvDZ+oDscRrvzFRgmKb0VrjthNs+++htO6+nS+zKAiU0pXAdhKD71lHbCGSF6lfHtjaaeyVLDiBjYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hg9ITMjj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNued1ft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4789C4CEF1;
-	Tue, 26 Aug 2025 14:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hg9ITMjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EAB1C116D0;
+	Tue, 26 Aug 2025 14:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217314;
-	bh=/aa0rD8vACv4TlthYqE+kUVjMqXNtzbFfWgfHGOsaGU=;
+	s=korg; t=1756217316;
+	bh=MJYOqetB+qlIWyhXDF742keveYj1/KVMNVmqDYiB6zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FNued1ft0KYAMCgi+6wVyIYOpk6Fr/fe769MxizYzrEwgCQFbBx9jttzDsj8+92Mh
-	 JqSlMwENEkkmJ8LBvUYXvmR4h70eK7UO5qp5/4gDrrI2hgHI2ssFMJa+2eob7A5Ba+
-	 /HBgfnKkyQp35yxHP1e31DFUPROznn/HUiPVUJDw=
+	b=hg9ITMjjWpLM4eeaVUNuCwIH2SBCfWUPjh5Q4NfoRItikU3BXnIbOyjKoRLtrS4nx
+	 kGLUsubqVXhUyJpBxTcRLzF0lg0GduyC/1Mh9ijWU5GmRUU2voVFI1uqFM+mKHFpbb
+	 F5UF8Ghp70cRLbifEB0fnsv5UAFUTmzQZSgpMoTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Quentin Monnet <qmo@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/523] bpf, ktls: Fix data corruption when using bpf_msg_pop_data() in ktls
-Date: Tue, 26 Aug 2025 13:05:05 +0200
-Message-ID: <20250826110926.889978319@linuxfoundation.org>
+Subject: [PATCH 5.10 096/523] bpftool: Fix memory leak in dump_xx_nlmsg on realloc failure
+Date: Tue, 26 Aug 2025 13:05:06 +0200
+Message-ID: <20250826110926.912975531@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,57 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 178f6a5c8cb3b6be1602de0964cd440243f493c9 ]
+[ Upstream commit 99fe8af069a9fa5b09140518b1364e35713a642e ]
 
-When sending plaintext data, we initially calculated the corresponding
-ciphertext length. However, if we later reduced the plaintext data length
-via socket policy, we failed to recalculate the ciphertext length.
+In function dump_xx_nlmsg(), when realloc() fails to allocate memory,
+the original pointer to the buffer is overwritten with NULL. This causes
+a memory leak because the previously allocated buffer becomes unreachable
+without being freed.
 
-This results in transmitting buffers containing uninitialized data during
-ciphertext transmission.
-
-This causes uninitialized bytes to be appended after a complete
-"Application Data" packet, leading to errors on the receiving end when
-parsing TLS record.
-
-Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
-Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/bpf/20250609020910.397930-2-jiayuan.chen@linux.dev
+Fixes: 7900efc19214 ("tools/bpf: bpftool: improve output format for bpftool net")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/r/20250620012133.14819-1-chenyuan_fl@163.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ tools/bpf/bpftool/net.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 7a448fd96f81..e519a0160668 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -825,6 +825,19 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 		delta = msg->sg.size;
- 		psock->eval = sk_psock_msg_verdict(sk, psock, msg);
- 		delta -= msg->sg.size;
-+
-+		if ((s32)delta > 0) {
-+			/* It indicates that we executed bpf_msg_pop_data(),
-+			 * causing the plaintext data size to decrease.
-+			 * Therefore the encrypted data size also needs to
-+			 * correspondingly decrease. We only need to subtract
-+			 * delta to calculate the new ciphertext length since
-+			 * ktls does not support block encryption.
-+			 */
-+			struct sk_msg *enc = &ctx->open_rec->msg_encrypted;
-+
-+			sk_msg_trim(sk, enc, enc->sg.size - delta);
-+		}
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index ff3aa0cf3997..7f0421713e1c 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -353,17 +353,18 @@ static int dump_link_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ {
+ 	struct bpf_netdev_t *netinfo = cookie;
+ 	struct ifinfomsg *ifinfo = msg;
++	struct ip_devname_ifindex *tmp;
+ 
+ 	if (netinfo->filter_idx > 0 && netinfo->filter_idx != ifinfo->ifi_index)
+ 		return 0;
+ 
+ 	if (netinfo->used_len == netinfo->array_len) {
+-		netinfo->devices = realloc(netinfo->devices,
+-			(netinfo->array_len + 16) *
+-			sizeof(struct ip_devname_ifindex));
+-		if (!netinfo->devices)
++		tmp = realloc(netinfo->devices,
++			(netinfo->array_len + 16) * sizeof(struct ip_devname_ifindex));
++		if (!tmp)
+ 			return -ENOMEM;
+ 
++		netinfo->devices = tmp;
+ 		netinfo->array_len += 16;
  	}
- 	if (msg->cork_bytes && msg->cork_bytes > msg->sg.size &&
- 	    !enospc && !full_record) {
+ 	netinfo->devices[netinfo->used_len].ifindex = ifinfo->ifi_index;
+@@ -382,6 +383,7 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ {
+ 	struct bpf_tcinfo_t *tcinfo = cookie;
+ 	struct tcmsg *info = msg;
++	struct tc_kind_handle *tmp;
+ 
+ 	if (tcinfo->is_qdisc) {
+ 		/* skip clsact qdisc */
+@@ -393,11 +395,12 @@ static int dump_class_qdisc_nlmsg(void *cookie, void *msg, struct nlattr **tb)
+ 	}
+ 
+ 	if (tcinfo->used_len == tcinfo->array_len) {
+-		tcinfo->handle_array = realloc(tcinfo->handle_array,
++		tmp = realloc(tcinfo->handle_array,
+ 			(tcinfo->array_len + 16) * sizeof(struct tc_kind_handle));
+-		if (!tcinfo->handle_array)
++		if (!tmp)
+ 			return -ENOMEM;
+ 
++		tcinfo->handle_array = tmp;
+ 		tcinfo->array_len += 16;
+ 	}
+ 	tcinfo->handle_array[tcinfo->used_len].handle = info->tcm_handle;
 -- 
 2.39.5
 
