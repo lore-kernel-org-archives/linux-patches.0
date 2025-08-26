@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033A1350D46;
-	Tue, 26 Aug 2025 14:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8735D34F46F;
+	Tue, 26 Aug 2025 14:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219417; cv=none; b=pR4uBhUXb6ZnW7esQbFSCs3tDXLqi14VhLiDjU/qV/hWYUeiSnzuAlZDSbOya8irNg3e3gjbKOcO8zHt1jdA9BwTQP6cXvcJpAA2KpOmCUqVI2VCU8ZLSjBfWm00rCZ0J977s0Y+ZiSJfpYyFTHYEMOjxeuEjc5KbyYOmOK9ARc=
+	t=1756219419; cv=none; b=CEdmryMkKQ2oT0e3m4JnNkpDxWdiSk8v5FIEvPa/3X3n/Wb2TZt4iy5n3GHOIL18j1Ru9eW+pkXMhmRt2oz01uNZOA1x0CiZFfTfKn2i/gbUEUwZcStaKgSeGVXFT0K1F33UEL3wBy56UDP+HWitjZE2YL9iwftoOAYcUpoRCGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219417; c=relaxed/simple;
-	bh=J6zaCaLxDN2mID9zVUMdixePf0Twx3m5butJTvaMa/Y=;
+	s=arc-20240116; t=1756219419; c=relaxed/simple;
+	bh=QoLsqdeDtuz/rmlvEDKX7R/XWANnDzpLkZ4ghvmQdwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIK4dt+o38tbRyzvW8LB8z3MzGhWYnQXFlgBNF/jH/6juxREjv8U63ifjMwy1WtycGyddbGZEPXo36ju9zXxcOdOq2WSjdHG6fS9pMr11YrfPJikDuFZF8YieC+rjCT275VAtMHAz98ruM+Tp0l0e9QdcGb6wyL7IhK8cOryJLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Shw5+v8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EH8qMwWtw6qeW38KfSm0QRFSx4AdIEhZ4O3BvWZa3rtsAvrnbZ663UR2G2YLkmWPdFVVl9h879p6QapilP1vKQwZ/D27CKVTkWOtZKdmedyQmyMyMZLPu9JK0+FKwkH2B0LO366i8sYZDAkkN84DfYTEkpfvvwXN9lfjrjkyw84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9JWtJ1Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Shw5+v8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3A9C4CEF1;
-	Tue, 26 Aug 2025 14:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9JWtJ1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABB9C113D0;
+	Tue, 26 Aug 2025 14:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219416;
-	bh=J6zaCaLxDN2mID9zVUMdixePf0Twx3m5butJTvaMa/Y=;
+	s=korg; t=1756219419;
+	bh=QoLsqdeDtuz/rmlvEDKX7R/XWANnDzpLkZ4ghvmQdwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Shw5+v8xn9pcjS4ttQUcZB7RwQ48nHfhrfcWW9qAROqQUMPIZB0hi0WB3kqP1/Bfh
-	 gYbFYgYYDMbzC7UbozQR2ZQoS3/FzFQ2+b32AS6kzqfPAluz6StDc3d0eXQMqOsjYX
-	 c9QqgPWeHh5y2wBspZDMCCGmGvGd15XFgIpgQiwE=
+	b=F9JWtJ1YWxxHM75XJ+llnA6tvV3scfJndo0H/8qQwwVMJCrD7CIYMbaWtWSrlLgq0
+	 MPS9Ho2k5pEzhX/mu9MZHVqpHf6lrMRg4YsX+mKU90rL4aW2VoBl716fXyK3pYvJs3
+	 3IE/S2qjiQWGallm2wpG3WlgvjNEIJaNKs8fsGb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 373/403] media: venus: hfi: explicitly release IRQ during teardown
-Date: Tue, 26 Aug 2025 13:11:39 +0200
-Message-ID: <20250826110917.321043179@linuxfoundation.org>
+Subject: [PATCH 5.4 374/403] btrfs: populate otime when logging an inode item
+Date: Tue, 26 Aug 2025 13:11:40 +0200
+Message-ID: <20250826110917.349701160@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -54,40 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 640803003cd903cea73dc6a86bf6963e238e2b3f ]
+[ Upstream commit 1ef94169db0958d6de39f9ea6e063ce887342e2d ]
 
-Ensure the IRQ is disabled - and all pending handlers completed - before
-dismantling the interrupt routing and clearing related pointers.
+[TEST FAILURE WITH EXPERIMENTAL FEATURES]
+When running test case generic/508, the test case will fail with the new
+btrfs shutdown support:
 
-This prevents any possibility of the interrupt triggering after the
-handler context has been invalidated.
+generic/508       - output mismatch (see /home/adam/xfstests/results//generic/508.out.bad)
+#    --- tests/generic/508.out	2022-05-11 11:25:30.806666664 +0930
+#    +++ /home/adam/xfstests/results//generic/508.out.bad	2025-07-02 14:53:22.401824212 +0930
+#    @@ -1,2 +1,6 @@
+#     QA output created by 508
+#     Silence is golden
+#    +Before:
+#    +After : stat.btime = Thu Jan  1 09:30:00 1970
+#    +Before:
+#    +After : stat.btime = Wed Jul  2 14:53:22 2025
+#    ...
+#    (Run 'diff -u /home/adam/xfstests/tests/generic/508.out /home/adam/xfstests/results//generic/508.out.bad'  to see the entire diff)
+Ran: generic/508
+Failures: generic/508
+Failed 1 of 1 tests
 
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Dikshita Agarwal <quic_dikshita@quicinc.com> # RB5
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[ Adjust context ]
+Please note that the test case requires shutdown support, thus the test
+case will be skipped using the current upstream kernel, as it doesn't
+have shutdown ioctl support.
+
+[CAUSE]
+The direct cause the 0 time stamp in the log tree:
+
+leaf 30507008 items 2 free space 16057 generation 9 owner TREE_LOG
+leaf 30507008 flags 0x1(WRITTEN) backref revision 1
+checksum stored e522548d
+checksum calced e522548d
+fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
+chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
+	item 0 key (257 INODE_ITEM 0) itemoff 16123 itemsize 160
+		generation 9 transid 9 size 0 nbytes 0
+		block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+		sequence 1 flags 0x0(none)
+		atime 1751432947.492000000 (2025-07-02 14:39:07)
+		ctime 1751432947.492000000 (2025-07-02 14:39:07)
+		mtime 1751432947.492000000 (2025-07-02 14:39:07)
+		otime 0.0 (1970-01-01 09:30:00) <<<
+
+But the old fs tree has all the correct time stamp:
+
+btrfs-progs v6.12
+fs tree key (FS_TREE ROOT_ITEM 0)
+leaf 30425088 items 2 free space 16061 generation 5 owner FS_TREE
+leaf 30425088 flags 0x1(WRITTEN) backref revision 1
+checksum stored 48f6c57e
+checksum calced 48f6c57e
+fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
+chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
+	item 0 key (256 INODE_ITEM 0) itemoff 16123 itemsize 160
+		generation 3 transid 0 size 0 nbytes 16384
+		block group 0 mode 40755 links 1 uid 0 gid 0 rdev 0
+		sequence 0 flags 0x0(none)
+		atime 1751432947.0 (2025-07-02 14:39:07)
+		ctime 1751432947.0 (2025-07-02 14:39:07)
+		mtime 1751432947.0 (2025-07-02 14:39:07)
+		otime 1751432947.0 (2025-07-02 14:39:07) <<<
+
+The root cause is that fill_inode_item() in tree-log.c is only
+populating a/c/m time, not the otime (or btime in statx output).
+
+Part of the reason is that, the vfs inode only has a/c/m time, no native
+btime support yet.
+
+[FIX]
+Thankfully btrfs has its otime stored in btrfs_inode::i_otime_sec and
+btrfs_inode::i_otime_nsec.
+
+So what we really need is just fill the otime time stamp in
+fill_inode_item() of tree-log.c
+
+There is another fill_inode_item() in inode.c, which is doing the proper
+otime population.
+
+Fixes: 94edf4ae43a5 ("Btrfs: don't bother committing delayed inode updates when fsyncing")
+CC: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ adapted token-based API and timespec64 field structure ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/tree-log.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1608,6 +1608,7 @@ void venus_hfi_destroy(struct venus_core
- 	mutex_destroy(&hdev->lock);
- 	kfree(hdev);
- 	core->priv = NULL;
-+	disable_irq(core->irq);
- 	core->ops = NULL;
- }
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -3953,6 +3953,11 @@ static void fill_inode_item(struct btrfs
+ 	btrfs_set_token_timespec_nsec(leaf, &item->ctime,
+ 				      inode->i_ctime.tv_nsec, &token);
+ 
++	btrfs_set_token_timespec_sec(leaf, &item->otime,
++				     BTRFS_I(inode)->i_otime.tv_sec, &token);
++	btrfs_set_token_timespec_nsec(leaf, &item->otime,
++				      BTRFS_I(inode)->i_otime.tv_nsec, &token);
++
+ 	btrfs_set_token_inode_nbytes(leaf, item, inode_get_bytes(inode),
+ 				     &token);
  
 
 
