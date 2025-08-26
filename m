@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6047C34DCCB;
-	Tue, 26 Aug 2025 14:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8083568E9;
+	Tue, 26 Aug 2025 14:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219505; cv=none; b=jDmXXktUY2yTZDPctxjmQpJ3irglKdVn5nhVpyLfy5P+6lrMeNDNA6Jrc+HcwwbmHQZiMWhg2Zn9fGiOXxjzV4MK4LqA88xuh/xjFU650iYJraKXl7KiJOfwK8vP31+WMM+x2XhN/1FgGQ6w8k6jtp/qjj2JX5A7jyuo/QnQ2GM=
+	t=1756219508; cv=none; b=OU4uy2DyK8jzA6jGj3ItVxm+Mbztk5cTVCn4LOiBmwgrMpxjIG6LJSyvj19H5A62DkxQiBt0onnW2ljgVHKns5BocY6ahbq9RPvP+k3BrVhkgPc6zrFLT3mZGwwS80xIpWxaSFqcRSwD9TThCDoydhF9R4oU8L5nmKjzno/6JSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219505; c=relaxed/simple;
-	bh=nw9HV5/VjEVDQbJunmZz4WIhjLMLnZTkChuKTRpIv5E=;
+	s=arc-20240116; t=1756219508; c=relaxed/simple;
+	bh=3Au6NSmyIHgl5ZXOD9+x3otRWyWGyfGl838cmtt4qpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r450cdBsT9PENQH3H8n/GibTQdaTTYsJEcrvM8EVCwBGddJLgs9b7AwL2Iz2Skj8X8qz8DBY4vKazy407d+InQaDfiqLHRGbplyBf50OfRqZpa8ZMSXQGFNiyfyCXadSrae2yEggc80zOHpQ2o0ysx7zCq3nnwAeyOfNyFsdzIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ge1BJGXW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tifnkthwBJyTOHo/9lrroDLrCm5wGe7ltJECqBj+nqRcBFh579DKLMVls67XRYphSHmE/9kK1QUhxZeRGJoopU03m/SILXhezzDOyP3sPY94YNq0p/ZtPYx/1P5TOQl1M5gzgmjWD0motvOnTlHNx/oPk5RPxDF7uwFPxBXIqZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewovIPkf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ge1BJGXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4253C4CEF1;
-	Tue, 26 Aug 2025 14:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewovIPkf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FD4C4CEF1;
+	Tue, 26 Aug 2025 14:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219505;
-	bh=nw9HV5/VjEVDQbJunmZz4WIhjLMLnZTkChuKTRpIv5E=;
+	s=korg; t=1756219507;
+	bh=3Au6NSmyIHgl5ZXOD9+x3otRWyWGyfGl838cmtt4qpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ge1BJGXWeyV8vCWZDrLgpvTBZnmzAGLcaI9V/ahfEGqgzHxcXn39hn+su64LYrmQv
-	 J63tybCk8I2rHZ6l7E1HpigrP7kjkbxSbyDGaAe7pkSAOQWP4LspFEqQ5pIj+9UY6E
-	 iTk+GzwVV+piAuVU7fvOIrqnXAY9UCfIiRbafP/4=
+	b=ewovIPkfG3jCAdTwsfuLSRsTdla1nWWJuA/vWh4goJ9mWNinNsUHiR0QFy5s8BbrM
+	 2NeWpLzrdPEGHbBBn/Ew7sZHaxPaJMu0EvDEz7KUEdbdOY/oQA2JHjueuyBLzeTXZ6
+	 MmqYoPeTvu4AwEV6Kt5qqQnDrBZ2NFs4PIa5GpeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Chanho Min <chanho.min@lge.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 390/403] Bluetooth: fix use-after-free in device_for_each_child()
-Date: Tue, 26 Aug 2025 13:11:56 +0200
-Message-ID: <20250826110917.807051830@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
+	He Zhe <zhe.he@windriver.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	Chanho Min <chanho.min@lge.com>
+Subject: [PATCH 5.4 391/403] cifs: Fix UAF in cifs_demultiplex_thread()
+Date: Tue, 26 Aug 2025 13:11:57 +0200
+Message-ID: <20250826110917.832508077@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,149 +54,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-commit 27aabf27fd014ae037cc179c61b0bee7cff55b3d upstream.
+commit d527f51331cace562393a8038d870b3e9916686f upstream.
 
-Syzbot has reported the following KASAN splat:
+There is a UAF when xfstests on cifs:
 
-BUG: KASAN: slab-use-after-free in device_for_each_child+0x18f/0x1a0
-Read of size 8 at addr ffff88801f605308 by task kbnepd bnep0/4980
+  BUG: KASAN: use-after-free in smb2_is_network_name_deleted+0x27/0x160
+  Read of size 4 at addr ffff88810103fc08 by task cifsd/923
 
-CPU: 0 UID: 0 PID: 4980 Comm: kbnepd bnep0 Not tainted 6.12.0-rc4-00161-gae90f6a6170d #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x100/0x190
- ? device_for_each_child+0x18f/0x1a0
- print_report+0x13a/0x4cb
- ? __virt_addr_valid+0x5e/0x590
- ? __phys_addr+0xc6/0x150
- ? device_for_each_child+0x18f/0x1a0
- kasan_report+0xda/0x110
- ? device_for_each_child+0x18f/0x1a0
- ? __pfx_dev_memalloc_noio+0x10/0x10
- device_for_each_child+0x18f/0x1a0
- ? __pfx_device_for_each_child+0x10/0x10
- pm_runtime_set_memalloc_noio+0xf2/0x180
- netdev_unregister_kobject+0x1ed/0x270
- unregister_netdevice_many_notify+0x123c/0x1d80
- ? __mutex_trylock_common+0xde/0x250
- ? __pfx_unregister_netdevice_many_notify+0x10/0x10
- ? trace_contention_end+0xe6/0x140
- ? __mutex_lock+0x4e7/0x8f0
- ? __pfx_lock_acquire.part.0+0x10/0x10
- ? rcu_is_watching+0x12/0xc0
- ? unregister_netdev+0x12/0x30
- unregister_netdevice_queue+0x30d/0x3f0
- ? __pfx_unregister_netdevice_queue+0x10/0x10
- ? __pfx_down_write+0x10/0x10
- unregister_netdev+0x1c/0x30
- bnep_session+0x1fb3/0x2ab0
- ? __pfx_bnep_session+0x10/0x10
- ? __pfx_lock_release+0x10/0x10
- ? __pfx_woken_wake_function+0x10/0x10
- ? __kthread_parkme+0x132/0x200
- ? __pfx_bnep_session+0x10/0x10
- ? kthread+0x13a/0x370
- ? __pfx_bnep_session+0x10/0x10
- kthread+0x2b7/0x370
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x48/0x80
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+  CPU: 1 PID: 923 Comm: cifsd Not tainted 6.1.0-rc4+ #45
+  ...
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   print_report+0x171/0x472
+   kasan_report+0xad/0x130
+   kasan_check_range+0x145/0x1a0
+   smb2_is_network_name_deleted+0x27/0x160
+   cifs_demultiplex_thread.cold+0x172/0x5a4
+   kthread+0x165/0x1a0
+   ret_from_fork+0x1f/0x30
+   </TASK>
 
-Allocated by task 4974:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0xaa/0xb0
- __kmalloc_noprof+0x1d1/0x440
- hci_alloc_dev_priv+0x1d/0x2820
- __vhci_create_device+0xef/0x7d0
- vhci_write+0x2c7/0x480
- vfs_write+0x6a0/0xfc0
- ksys_write+0x12f/0x260
- do_syscall_64+0xc7/0x250
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  Allocated by task 923:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   __kasan_slab_alloc+0x54/0x60
+   kmem_cache_alloc+0x147/0x320
+   mempool_alloc+0xe1/0x260
+   cifs_small_buf_get+0x24/0x60
+   allocate_buffers+0xa1/0x1c0
+   cifs_demultiplex_thread+0x199/0x10d0
+   kthread+0x165/0x1a0
+   ret_from_fork+0x1f/0x30
 
-Freed by task 4979:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x4f/0x70
- kfree+0x141/0x490
- hci_release_dev+0x4d9/0x600
- bt_host_release+0x6a/0xb0
- device_release+0xa4/0x240
- kobject_put+0x1ec/0x5a0
- put_device+0x1f/0x30
- vhci_release+0x81/0xf0
- __fput+0x3f6/0xb30
- task_work_run+0x151/0x250
- do_exit+0xa79/0x2c30
- do_group_exit+0xd5/0x2a0
- get_signal+0x1fcd/0x2210
- arch_do_signal_or_restart+0x93/0x780
- syscall_exit_to_user_mode+0x140/0x290
- do_syscall_64+0xd4/0x250
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  Freed by task 921:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   kasan_save_free_info+0x2a/0x40
+   ____kasan_slab_free+0x143/0x1b0
+   kmem_cache_free+0xe3/0x4d0
+   cifs_small_buf_release+0x29/0x90
+   SMB2_negotiate+0x8b7/0x1c60
+   smb2_negotiate+0x51/0x70
+   cifs_negotiate_protocol+0xf0/0x160
+   cifs_get_smb_ses+0x5fa/0x13c0
+   mount_get_conns+0x7a/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-In 'hci_conn_del_sysfs()', 'device_unregister()' may be called when
-an underlying (kobject) reference counter is greater than 1. This
-means that reparenting (happened when the device is actually freed)
-is delayed and, during that delay, parent controller device (hciX)
-may be deleted. Since the latter may create a dangling pointer to
-freed parent, avoid that scenario by reparenting to NULL explicitly.
+The UAF is because:
 
-Reported-by: syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com
-Tested-by: syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6cf5652d3df49fae2e3f
-Fixes: a85fb91e3d72 ("Bluetooth: Fix double free in hci_conn_cleanup")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ chanho: Backported from v5.10.y to v5.4.y. device_find_any_child() is not
-supported in v5.4.y, so changed to use device_find_child() with __match_any ]
+ mount(pid: 921)               | cifsd(pid: 923)
+-------------------------------|-------------------------------
+                               | cifs_demultiplex_thread
+SMB2_negotiate                 |
+ cifs_send_recv                |
+  compound_send_recv           |
+   smb_send_rqst               |
+    wait_for_response          |
+     wait_event_state      [1] |
+                               |  standard_receive3
+                               |   cifs_handle_standard
+                               |    handle_mid
+                               |     mid->resp_buf = buf;  [2]
+                               |     dequeue_mid           [3]
+     KILL the process      [4] |
+    resp_iov[i].iov_base = buf |
+ free_rsp_buf              [5] |
+                               |   is_network_name_deleted [6]
+                               |   callback
+
+1. After send request to server, wait the response until
+    mid->mid_state != SUBMITTED;
+2. Receive response from server, and set it to mid;
+3. Set the mid state to RECEIVED;
+4. Kill the process, the mid state already RECEIVED, get 0;
+5. Handle and release the negotiate response;
+6. UAF.
+
+It can be easily reproduce with add some delay in [3] - [6].
+
+Only sync call has the problem since async call's callback is
+executed in cifsd process.
+
+Add an extra state to mark the mid state to READY before wakeup the
+waitter, then it can get the resp safely.
+
+Fixes: ec637e3ffb6b ("[CIFS] Avoid extra large buffer allocation (and memcpy) in cifs_readpages")
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[fs/cifs was moved to fs/smb/client since
+38c8a9a52082 ("smb: move client and server files to common directory fs/smb").
+We apply the patch to fs/cifs with some minor context changes.]
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+[ chanho: Backported to v5.4.y ]
 Signed-off-by: Chanho Min <chanho.min@lge.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sysfs.c |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ fs/cifs/cifsglob.h  |    1 +
+ fs/cifs/transport.c |   34 +++++++++++++++++++++++-----------
+ 2 files changed, 24 insertions(+), 11 deletions(-)
 
---- a/net/bluetooth/hci_sysfs.c
-+++ b/net/bluetooth/hci_sysfs.c
-@@ -19,14 +19,9 @@ static const struct device_type bt_link
- 	.release = bt_link_release,
- };
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -1722,6 +1722,7 @@ static inline bool is_retryable_error(in
+ #define   MID_RETRY_NEEDED      8 /* session closed while this request out */
+ #define   MID_RESPONSE_MALFORMED 0x10
+ #define   MID_SHUTDOWN		 0x20
++#define   MID_RESPONSE_READY 0x40 /* ready for other process handle the rsp */
  
--/*
-- * The rfcomm tty device will possibly retain even when conn
-- * is down, and sysfs doesn't support move zombie device,
-- * so we should move the device before conn device is destroyed.
-- */
--static int __match_tty(struct device *dev, void *data)
-+static int __match_any(struct device *dev, void *unused)
+ /* Flags */
+ #define   MID_WAIT_CANCELLED	 1 /* Cancelled while waiting for response */
+--- a/fs/cifs/transport.c
++++ b/fs/cifs/transport.c
+@@ -47,6 +47,8 @@
+ void
+ cifs_wake_up_task(struct mid_q_entry *mid)
  {
--	return !strncmp(dev_name(dev), "rfcomm", 6);
-+	return 1;
++	if (mid->mid_state == MID_RESPONSE_RECEIVED)
++		mid->mid_state = MID_RESPONSE_READY;
+ 	wake_up_process(mid->callback_data);
  }
  
- void hci_conn_init_sysfs(struct hci_conn *conn)
-@@ -71,10 +66,12 @@ void hci_conn_del_sysfs(struct hci_conn
- 		return;
+@@ -99,7 +101,8 @@ static void _cifs_mid_q_entry_release(st
+ 	struct TCP_Server_Info *server = midEntry->server;
+ 
+ 	if (midEntry->resp_buf && (midEntry->mid_flags & MID_WAIT_CANCELLED) &&
+-	    midEntry->mid_state == MID_RESPONSE_RECEIVED &&
++	    (midEntry->mid_state == MID_RESPONSE_RECEIVED ||
++	     midEntry->mid_state == MID_RESPONSE_READY) &&
+ 	    server->ops->handle_cancelled_mid)
+ 		server->ops->handle_cancelled_mid(midEntry->resp_buf, server);
+ 
+@@ -737,7 +740,8 @@ wait_for_response(struct TCP_Server_Info
+ 	int error;
+ 
+ 	error = wait_event_freezekillable_unsafe(server->response_q,
+-				    midQ->mid_state != MID_REQUEST_SUBMITTED);
++				    midQ->mid_state != MID_REQUEST_SUBMITTED &&
++				    midQ->mid_state != MID_RESPONSE_RECEIVED);
+ 	if (error < 0)
+ 		return -ERESTARTSYS;
+ 
+@@ -889,7 +893,7 @@ cifs_sync_mid_result(struct mid_q_entry
+ 
+ 	spin_lock(&GlobalMid_Lock);
+ 	switch (mid->mid_state) {
+-	case MID_RESPONSE_RECEIVED:
++	case MID_RESPONSE_READY:
+ 		spin_unlock(&GlobalMid_Lock);
+ 		return rc;
+ 	case MID_RETRY_NEEDED:
+@@ -987,6 +991,9 @@ cifs_compound_callback(struct mid_q_entr
+ 	credits.instance = server->reconnect_instance;
+ 
+ 	add_credits(server, &credits, mid->optype);
++
++	if (mid->mid_state == MID_RESPONSE_RECEIVED)
++		mid->mid_state = MID_RESPONSE_READY;
+ }
+ 
+ static void
+@@ -1150,7 +1157,8 @@ compound_send_recv(const unsigned int xi
+ 			send_cancel(server, &rqst[i], midQ[i]);
+ 			spin_lock(&GlobalMid_Lock);
+ 			midQ[i]->mid_flags |= MID_WAIT_CANCELLED;
+-			if (midQ[i]->mid_state == MID_REQUEST_SUBMITTED) {
++			if (midQ[i]->mid_state == MID_REQUEST_SUBMITTED ||
++			    midQ[i]->mid_state == MID_RESPONSE_RECEIVED) {
+ 				midQ[i]->callback = cifs_cancelled_callback;
+ 				cancelled_mid[i] = true;
+ 				credits[i].value = 0;
+@@ -1171,7 +1179,7 @@ compound_send_recv(const unsigned int xi
+ 		}
+ 
+ 		if (!midQ[i]->resp_buf ||
+-		    midQ[i]->mid_state != MID_RESPONSE_RECEIVED) {
++		    midQ[i]->mid_state != MID_RESPONSE_READY) {
+ 			rc = -EIO;
+ 			cifs_dbg(FYI, "Bad MID state?\n");
+ 			goto out;
+@@ -1348,7 +1356,8 @@ SendReceive(const unsigned int xid, stru
+ 	if (rc != 0) {
+ 		send_cancel(server, &rqst, midQ);
+ 		spin_lock(&GlobalMid_Lock);
+-		if (midQ->mid_state == MID_REQUEST_SUBMITTED) {
++		if (midQ->mid_state == MID_REQUEST_SUBMITTED ||
++		    midQ->mid_state == MID_RESPONSE_RECEIVED) {
+ 			/* no longer considered to be "in-flight" */
+ 			midQ->callback = DeleteMidQEntry;
+ 			spin_unlock(&GlobalMid_Lock);
+@@ -1365,7 +1374,7 @@ SendReceive(const unsigned int xid, stru
  	}
  
-+	/* If there are devices using the connection as parent reset it to NULL
-+	 * before unregistering the device.
-+	 */
- 	while (1) {
- 		struct device *dev;
--
--		dev = device_find_child(&conn->dev, NULL, __match_tty);
-+		dev = device_find_child(&conn->dev, NULL, __match_any);
- 		if (!dev)
- 			break;
- 		device_move(dev, NULL, DPM_ORDER_DEV_LAST);
+ 	if (!midQ->resp_buf || !out_buf ||
+-	    midQ->mid_state != MID_RESPONSE_RECEIVED) {
++	    midQ->mid_state != MID_RESPONSE_READY) {
+ 		rc = -EIO;
+ 		cifs_server_dbg(VFS, "Bad MID state?\n");
+ 		goto out;
+@@ -1485,13 +1494,15 @@ SendReceiveBlockingLock(const unsigned i
+ 
+ 	/* Wait for a reply - allow signals to interrupt. */
+ 	rc = wait_event_interruptible(server->response_q,
+-		(!(midQ->mid_state == MID_REQUEST_SUBMITTED)) ||
++		(!(midQ->mid_state == MID_REQUEST_SUBMITTED ||
++		   midQ->mid_state == MID_RESPONSE_RECEIVED)) ||
+ 		((server->tcpStatus != CifsGood) &&
+ 		 (server->tcpStatus != CifsNew)));
+ 
+ 	/* Were we interrupted by a signal ? */
+ 	if ((rc == -ERESTARTSYS) &&
+-		(midQ->mid_state == MID_REQUEST_SUBMITTED) &&
++		(midQ->mid_state == MID_REQUEST_SUBMITTED ||
++		 midQ->mid_state == MID_RESPONSE_RECEIVED) &&
+ 		((server->tcpStatus == CifsGood) ||
+ 		 (server->tcpStatus == CifsNew))) {
+ 
+@@ -1521,7 +1532,8 @@ SendReceiveBlockingLock(const unsigned i
+ 		if (rc) {
+ 			send_cancel(server, &rqst, midQ);
+ 			spin_lock(&GlobalMid_Lock);
+-			if (midQ->mid_state == MID_REQUEST_SUBMITTED) {
++			if (midQ->mid_state == MID_REQUEST_SUBMITTED ||
++			    midQ->mid_state == MID_RESPONSE_RECEIVED) {
+ 				/* no longer considered to be "in-flight" */
+ 				midQ->callback = DeleteMidQEntry;
+ 				spin_unlock(&GlobalMid_Lock);
+@@ -1539,7 +1551,7 @@ SendReceiveBlockingLock(const unsigned i
+ 		return rc;
+ 
+ 	/* rcvd frame is ok */
+-	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_RECEIVED) {
++	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_READY) {
+ 		rc = -EIO;
+ 		cifs_tcon_dbg(VFS, "Bad MID state?\n");
+ 		goto out;
 
 
