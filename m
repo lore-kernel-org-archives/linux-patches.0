@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD7020B7EE;
-	Tue, 26 Aug 2025 11:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8464021D00E;
+	Tue, 26 Aug 2025 11:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207032; cv=none; b=Wpr9DHnIQ2Gwh9UqRNuGmU8YAv1Sf5Ir6Y4V3JR3T3vAsEPAJNjxs8VUbyGAr5/85obgPnYJInVPJej9igqYB3SXX0gpRIZHDRS9rdF3RY3CvhlNo21F55vvC8H/5bjh8I0g3UqSMlzltyuc/5MBWKp+2hBMdnoiijB9TxqIPek=
+	t=1756207036; cv=none; b=J60nlEfzF9HA3s5Cf1z1rUAUTggg9pl5Poia3V5bMvJ9bw2a9J7fpxk4oj04Og/2k6clih7PSQ05NcQoQx5/TRye1U96mwCJtK2PMQ0X2pkOQWxwFejlMAcZw4EMNGvRrvRH8wMTPRUIn8lV2fmrh6TnifvOGj4quAj3cuczdWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207032; c=relaxed/simple;
-	bh=0nJlYRwWWB6G+OakE5RUTbhUh3e4TOnC3coRX6sGhTs=;
+	s=arc-20240116; t=1756207036; c=relaxed/simple;
+	bh=X5QCYkTA6Zwt0RVIhMbvwDB3I6kILR27xGm0RgdQo9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMI7WBIonsR+8NS+fJQpSWNa8rslvsZAaPHhaNmenr+AqNAMjIEUzxi41ixVO2PATHNwk136tRqVHm6lDChiTkKraFLiW4KlZj5Kru0875Ex9KudhcZU+Z049rbTq9y7tQWkCff7fGyDuij6MaGuYT1oBML1ScEGhzDQ3RI55IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MulpDoGp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b2ISPv9Ml/K/GKvPdp2NlShLLttQY6IGj/Nh5h7GHMrr7DbaYclsLOuYtZ0dKFSp6FnCQRZrPfrg4LfvlrVhngR6s3yAizhgHQyP48zQhLXxgmBDAE1ZadY0JLyK+tPtshKhPzJAG9EikJklntTRSNK4hPc2dNrDJ0cEaFG5Al4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+sX8ISr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MulpDoGp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18386C4CEF1;
-	Tue, 26 Aug 2025 11:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+sX8ISr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6782C4CEF1;
+	Tue, 26 Aug 2025 11:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207032;
-	bh=0nJlYRwWWB6G+OakE5RUTbhUh3e4TOnC3coRX6sGhTs=;
+	s=korg; t=1756207035;
+	bh=X5QCYkTA6Zwt0RVIhMbvwDB3I6kILR27xGm0RgdQo9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MulpDoGpFBwtCZdZmobf9/Qh9wMIDKbDaE9F3NwZf7n/PFL1TPnsrCxOj311GqJjo
-	 kafBylCeuRF/r2Dny9lk0Ud1mr9WH/CcLUof9iWrTrLDVdarXAxHRmg5xQcVF55/tH
-	 7xjrtiu88RZHPXkVlikYO6d5tx6zuirl+qZrkGIM=
+	b=0+sX8ISrzjpmpVPKE1yDOCY7uhJFSRZ1HhJLFJssxx7TrztaG9Nlq/0wBTp6EC5kw
+	 sjR0IEqT1h4/j5V4a34o4u2LBChLB2vpvtKencFx0T7moa8QwdqhrXGDolkRwtDcjL
+	 wcoB9DaEivfTd8u1KJfvoxntBOI/mgz/0MQ4GxCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ernberg <john.ernberg@actia.se>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	stable@kernel.org
-Subject: [PATCH 6.16 025/457] crypto: caam - Prevent crash on suspend with iMX8QM / iMX8ULP
-Date: Tue, 26 Aug 2025 13:05:09 +0200
-Message-ID: <20250826110937.956335961@linuxfoundation.org>
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.16 026/457] crypto: qat - flush misc workqueue during device shutdown
+Date: Tue, 26 Aug 2025 13:05:10 +0200
+Message-ID: <20250826110937.982296312@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,116 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ernberg <john.ernberg@actia.se>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit 5ffc47feddcf8eb4d8ac7b42111a02c8e8146512 upstream.
+commit 3d4df408ba9bad2b205c7fb8afc1836a6a4ca88a upstream.
 
-Since the CAAM on these SoCs is managed by another ARM core, called the
-SECO (Security Controller) on iMX8QM and Secure Enclave on iMX8ULP, which
-also reserves access to register page 0 suspend operations cannot touch
-this page.
+Repeated loading and unloading of a device specific QAT driver, for
+example qat_4xxx, in a tight loop can lead to a crash due to a
+use-after-free scenario. This occurs when a power management (PM)
+interrupt triggers just before the device-specific driver (e.g.,
+qat_4xxx.ko) is unloaded, while the core driver (intel_qat.ko) remains
+loaded.
 
-This is similar to when running OPTEE, where OPTEE will reserve page 0.
+Since the driver uses a shared workqueue (`qat_misc_wq`) across all
+devices and owned by intel_qat.ko, a deferred routine from the
+device-specific driver may still be pending in the queue. If this
+routine executes after the driver is unloaded, it can dereference freed
+memory, resulting in a page fault and kernel crash like the following:
 
-Track this situation using a new state variable no_page0, reflecting if
-page 0 is reserved elsewhere, either by other management cores in SoC or
-by OPTEE.
+    BUG: unable to handle page fault for address: ffa000002e50a01c
+    #PF: supervisor read access in kernel mode
+    RIP: 0010:pm_bh_handler+0x1d2/0x250 [intel_qat]
+    Call Trace:
+      pm_bh_handler+0x1d2/0x250 [intel_qat]
+      process_one_work+0x171/0x340
+      worker_thread+0x277/0x3a0
+      kthread+0xf0/0x120
+      ret_from_fork+0x2d/0x50
 
-Replace the optee_en check in suspend/resume with the new check.
+To prevent this, flush the misc workqueue during device shutdown to
+ensure that all pending work items are completed before the driver is
+unloaded.
 
-optee_en cannot go away as it's needed elsewhere to gate OPTEE specific
-situations.
+Note: This approach may slightly increase shutdown latency if the
+workqueue contains jobs from other devices, but it ensures correctness
+and stability.
 
-Fixes the following splat at suspend:
-
-    Internal error: synchronous external abort: 0000000096000010 [#1] SMP
-    Hardware name: Freescale i.MX8QXP ACU6C (DT)
-    pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-    pc : readl+0x0/0x18
-    lr : rd_reg32+0x18/0x3c
-    sp : ffffffc08192ba20
-    x29: ffffffc08192ba20 x28: ffffff8025190000 x27: 0000000000000000
-    x26: ffffffc0808ae808 x25: ffffffc080922338 x24: ffffff8020e89090
-    x23: 0000000000000000 x22: ffffffc080922000 x21: ffffff8020e89010
-    x20: ffffffc080387ef8 x19: ffffff8020e89010 x18: 000000005d8000d5
-    x17: 0000000030f35963 x16: 000000008f785f3f x15: 000000003b8ef57c
-    x14: 00000000c418aef8 x13: 00000000f5fea526 x12: 0000000000000001
-    x11: 0000000000000002 x10: 0000000000000001 x9 : 0000000000000000
-    x8 : ffffff8025190870 x7 : ffffff8021726880 x6 : 0000000000000002
-    x5 : ffffff80217268f0 x4 : ffffff8021726880 x3 : ffffffc081200000
-    x2 : 0000000000000001 x1 : ffffff8020e89010 x0 : ffffffc081200004
-    Call trace:
-     readl+0x0/0x18
-     caam_ctrl_suspend+0x30/0xdc
-     dpm_run_callback.constprop.0+0x24/0x5c
-     device_suspend+0x170/0x2e8
-     dpm_suspend+0xa0/0x104
-     dpm_suspend_start+0x48/0x50
-     suspend_devices_and_enter+0x7c/0x45c
-     pm_suspend+0x148/0x160
-     state_store+0xb4/0xf8
-     kobj_attr_store+0x14/0x24
-     sysfs_kf_write+0x38/0x48
-     kernfs_fop_write_iter+0xb4/0x178
-     vfs_write+0x118/0x178
-     ksys_write+0x6c/0xd0
-     __arm64_sys_write+0x14/0x1c
-     invoke_syscall.constprop.0+0x64/0xb0
-     do_el0_svc+0x90/0xb0
-     el0_svc+0x18/0x44
-     el0t_64_sync_handler+0x88/0x124
-     el0t_64_sync+0x150/0x154
-    Code: 88dffc21 88dffc21 5ac00800 d65f03c0 (b9400000)
-
-Fixes: d2835701d93c ("crypto: caam - i.MX8ULP donot have CAAM page0 access")
-Cc: stable@kernel.org # v6.10+
-Signed-off-by: John Ernberg <john.ernberg@actia.se>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: e5745f34113b ("crypto: qat - enable power management for QAT GEN4")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/caam/ctrl.c   |    5 +++--
- drivers/crypto/caam/intern.h |    1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_common_drv.h |    1 +
+ drivers/crypto/intel/qat/qat_common/adf_init.c       |    1 +
+ drivers/crypto/intel/qat/qat_common/adf_isr.c        |    5 +++++
+ 3 files changed, 7 insertions(+)
 
---- a/drivers/crypto/caam/ctrl.c
-+++ b/drivers/crypto/caam/ctrl.c
-@@ -831,7 +831,7 @@ static int caam_ctrl_suspend(struct devi
+--- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
++++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
+@@ -189,6 +189,7 @@ void adf_exit_misc_wq(void);
+ bool adf_misc_wq_queue_work(struct work_struct *work);
+ bool adf_misc_wq_queue_delayed_work(struct delayed_work *work,
+ 				    unsigned long delay);
++void adf_misc_wq_flush(void);
+ #if defined(CONFIG_PCI_IOV)
+ int adf_sriov_configure(struct pci_dev *pdev, int numvfs);
+ void adf_disable_sriov(struct adf_accel_dev *accel_dev);
+--- a/drivers/crypto/intel/qat/qat_common/adf_init.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
+@@ -404,6 +404,7 @@ static void adf_dev_shutdown(struct adf_
+ 		hw_data->exit_admin_comms(accel_dev);
+ 
+ 	adf_cleanup_etr_data(accel_dev);
++	adf_misc_wq_flush();
+ 	adf_dev_restore(accel_dev);
+ }
+ 
+--- a/drivers/crypto/intel/qat/qat_common/adf_isr.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_isr.c
+@@ -407,3 +407,8 @@ bool adf_misc_wq_queue_delayed_work(stru
  {
- 	const struct caam_drv_private *ctrlpriv = dev_get_drvdata(dev);
- 
--	if (ctrlpriv->caam_off_during_pm && !ctrlpriv->optee_en)
-+	if (ctrlpriv->caam_off_during_pm && !ctrlpriv->no_page0)
- 		caam_state_save(dev);
- 
- 	return 0;
-@@ -842,7 +842,7 @@ static int caam_ctrl_resume(struct devic
- 	struct caam_drv_private *ctrlpriv = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (ctrlpriv->caam_off_during_pm && !ctrlpriv->optee_en) {
-+	if (ctrlpriv->caam_off_during_pm && !ctrlpriv->no_page0) {
- 		caam_state_restore(dev);
- 
- 		/* HW and rng will be reset so deinstantiation can be removed */
-@@ -908,6 +908,7 @@ static int caam_probe(struct platform_de
- 
- 		imx_soc_data = imx_soc_match->data;
- 		reg_access = reg_access && imx_soc_data->page0_access;
-+		ctrlpriv->no_page0 = !reg_access;
- 		/*
- 		 * CAAM clocks cannot be controlled from kernel.
- 		 */
---- a/drivers/crypto/caam/intern.h
-+++ b/drivers/crypto/caam/intern.h
-@@ -115,6 +115,7 @@ struct caam_drv_private {
- 	u8 blob_present;	/* Nonzero if BLOB support present in device */
- 	u8 mc_en;		/* Nonzero if MC f/w is active */
- 	u8 optee_en;		/* Nonzero if OP-TEE f/w is active */
-+	u8 no_page0;		/* Nonzero if register page 0 is not controlled by Linux */
- 	bool pr_support;        /* RNG prediction resistance available */
- 	int secvio_irq;		/* Security violation interrupt number */
- 	int virt_en;		/* Virtualization enabled in CAAM */
+ 	return queue_delayed_work(adf_misc_wq, work, delay);
+ }
++
++void adf_misc_wq_flush(void)
++{
++	flush_workqueue(adf_misc_wq);
++}
 
 
