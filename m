@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F2E749C;
-	Tue, 26 Aug 2025 11:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23FF29D29B;
+	Tue, 26 Aug 2025 11:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208962; cv=none; b=XEgqSMeKb2nvfay+RjQtU9/cKx8cHYOQ/oLhhWP++EWjI+eV7p276nK83x/Iv3B8+uLkWi0jOh4AE7GLuoMQHlSiMBe3DJI4Ncg0u9D1K5b7/PMRyeVhe2yHMbPEtwVMhSZM3wDe7Op93ZFKGNc7pQQdJO+hm2hTPbQWQfyha/Q=
+	t=1756208964; cv=none; b=i9HWd9w+9eG4xKGh0oxzz6fgF4CExNM3qopd3UZqzhDU+IhTzBxlSCI3YCGY8w9I7FOdR1DVjdzVN9OU+eaOAtw+j04sw931qB7mpkdPEyT0ekOyXcFsWYsH9gAWnLtR8UEqbWs4zdf1jxV/WfgH62chdUtwbwVia2aQ5V3ouZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208962; c=relaxed/simple;
-	bh=g2ugz56UH4UxpyF6377pVLx93r8msBeVDQi7osjDABQ=;
+	s=arc-20240116; t=1756208964; c=relaxed/simple;
+	bh=BbO5BAu8P0i/btuABEEThguCfOKrdsw6qP3wIjemXb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ol1m1vczf5T84HmpOUF607UX3p1w5QMzkR9upq6WhBlVkqZTK/9rfgPDvZDs0OGioX9SupDdPJfvBd9Tty8f/PenrVS3naydaeh0sYry9RcSSfM3btE1BkNIeXdWlceDjKEknWCH7G0xeBWu3dnhY4Zf6VD9r/Tm6kCPEIQ2ufc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcQ+aosM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2b/VLtr+7Gy4AxOpG6Y0SEr1Y3M8p3MvIppYpCJiLgEnrY2hb1Ze581YwxLnI+5hxm2WzrS0UqZQc6ke3LuKbvnhIWYsYRRlSZv1V4EsFmkNCBavogtkPES1rTPeUDfWXl595wzG8bwwfNmeDtUv24M2SnpfiyCktS47qdCbtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmlIX7VJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcQ+aosM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FA7C4CEF4;
-	Tue, 26 Aug 2025 11:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmlIX7VJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D599C4CEF1;
+	Tue, 26 Aug 2025 11:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208961;
-	bh=g2ugz56UH4UxpyF6377pVLx93r8msBeVDQi7osjDABQ=;
+	s=korg; t=1756208963;
+	bh=BbO5BAu8P0i/btuABEEThguCfOKrdsw6qP3wIjemXb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gcQ+aosM5S+xe1tDDHSFzj3sFQwLYQN95VFlkE+bepZrIPBtVbPDUfTviniccmFTp
-	 aPpPWDvkAoXRo6JxftIcLWMyBJ3of4Cmx3hwqX7fLoZkDv0df5vHQHitkrrxGKjlPx
-	 ajUb50ALRbZcvnqXiSxQXmayhwRxBxaNKCqRbZCU=
+	b=AmlIX7VJgUZVNx9GUcOU0gs75Qf+IVsVYLfb9+HgHiTLc3D/nBrjJQl1RZVoI58P2
+	 Nb+RphaSnE9XbUxgxSIYdYckjZGkPgBuuY0FkDrBpTINmtfT5QYy8iYHRLkjYLmRNd
+	 h0J0ta8EHg6UWzbyehSJnpwDjp2OMZqKiwqcGlxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 280/322] Bluetooth: hci_event: fix MTU for BN == 0 in CIS Established
-Date: Tue, 26 Aug 2025 13:11:35 +0200
-Message-ID: <20250826110922.836716480@linuxfoundation.org>
+Subject: [PATCH 6.12 281/322] Bluetooth: hci_conn: do return error from hci_enhanced_setup_sync()
+Date: Tue, 26 Aug 2025 13:11:36 +0200
+Message-ID: <20250826110922.861619417@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,57 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 0b3725dbf61b51e7c663834811b3691157ae17d6 ]
+[ Upstream commit 0eaf7c7e85da7495c0e03a99375707fc954f5e7b ]
 
-BN == 0x00 in CIS Established means no isochronous data for the
-corresponding direction (Core v6.1 pp. 2394). In this case SDU MTU
-should be 0.
+The commit e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to
+hci_sync") missed to update the *return* statement under the *case* of
+BT_CODEC_TRANSPARENT in hci_enhanced_setup_sync(), which led to returning
+success (0) instead of the negative error code (-EINVAL).  However, the
+result of hci_enhanced_setup_sync() seems to be ignored anyway, since NULL
+gets passed to hci_cmd_sync_queue() as the last argument in that case and
+the only function interested in that result is specified by that argument.
 
-However, the specification does not say the Max_PDU_C_To_P or P_To_C are
-then zero.  Intel AX210 in Framed CIS mode sets nonzero Max_PDU for
-direction with zero BN.  This causes failure later when we try to LE
-Setup ISO Data Path for disabled direction, which is disallowed (Core
-v6.1 pp. 2750).
-
-Fix by setting SDU MTU to 0 if BN == 0.
-
-Fixes: 2be22f1941d5f ("Bluetooth: hci_event: Fix parsing of CIS Established Event")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_conn.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 38643ffa65a9..768bd5fd808f 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6725,8 +6725,8 @@ static void hci_le_cis_estabilished_evt(struct hci_dev *hdev, void *data,
- 		qos->ucast.out.latency =
- 			DIV_ROUND_CLOSEST(get_unaligned_le24(ev->p_latency),
- 					  1000);
--		qos->ucast.in.sdu = le16_to_cpu(ev->c_mtu);
--		qos->ucast.out.sdu = le16_to_cpu(ev->p_mtu);
-+		qos->ucast.in.sdu = ev->c_bn ? le16_to_cpu(ev->c_mtu) : 0;
-+		qos->ucast.out.sdu = ev->p_bn ? le16_to_cpu(ev->p_mtu) : 0;
- 		qos->ucast.in.phy = ev->c_phy;
- 		qos->ucast.out.phy = ev->p_phy;
- 		break;
-@@ -6740,8 +6740,8 @@ static void hci_le_cis_estabilished_evt(struct hci_dev *hdev, void *data,
- 		qos->ucast.in.latency =
- 			DIV_ROUND_CLOSEST(get_unaligned_le24(ev->p_latency),
- 					  1000);
--		qos->ucast.out.sdu = le16_to_cpu(ev->c_mtu);
--		qos->ucast.in.sdu = le16_to_cpu(ev->p_mtu);
-+		qos->ucast.out.sdu = ev->c_bn ? le16_to_cpu(ev->c_mtu) : 0;
-+		qos->ucast.in.sdu = ev->p_bn ? le16_to_cpu(ev->p_mtu) : 0;
- 		qos->ucast.out.phy = ev->c_phy;
- 		qos->ucast.in.phy = ev->p_phy;
- 		break;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index c6c1232db4e2..dad902047414 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -338,7 +338,8 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
+ 	case BT_CODEC_TRANSPARENT:
+ 		if (!find_next_esco_param(conn, esco_param_msbc,
+ 					  ARRAY_SIZE(esco_param_msbc)))
+-			return false;
++			return -EINVAL;
++
+ 		param = &esco_param_msbc[conn->attempt - 1];
+ 		cp.tx_coding_format.id = 0x03;
+ 		cp.rx_coding_format.id = 0x03;
 -- 
 2.50.1
 
