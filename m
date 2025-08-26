@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3D0352FCB;
-	Tue, 26 Aug 2025 14:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064C8352FC2;
+	Tue, 26 Aug 2025 14:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217145; cv=none; b=jsgTV6hOe0nD2If+4xgENnXCWA6vYVpgKCRND5kt8/fR5NEXcJ/vg45GXEhrcJzbJA0Yvf8nEJkuSqTxHjB5hfZRYJlzjnUmmVlUB9k8nImYvJn/VDhbmZWKUs4isr958i2Ibfwfc8U7KbBgtIkkge8NTj86bbjyx2BIMt1amrY=
+	t=1756217148; cv=none; b=WWJvqzbyFvpPAIHLnRcms7pwpPAu5Quqw9lrtBKlUW/mdGk4z4NFFBlEw2h9ul9YjUt8bjAKSFXrKM0FVDcHZb/xUzOkO1TjTjPdcG8Lp6bvHSmxFPnK9Lzv9Vm31tBtNFDh93oOOvBDRHybr7tLVE+AHUIt0VEwScdH4IukGMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217145; c=relaxed/simple;
-	bh=jhFk0oSQkGEJJSYDH20MRw2ov9m2goSGxUTmKoz93IY=;
+	s=arc-20240116; t=1756217148; c=relaxed/simple;
+	bh=nV+P/9zyps6fSl4L1SNie630NIfFb+7VSM5rnRQtZac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CPCX1BgUwi4oe04QJn9sQakUlOUe1tdzRPY+TYcnbdW8bS/g99B211aObhfzWKmAPW2NkJuNhMBJkm/LXNP0LU/Rxpq6olEoUQI7rUT/Wc6e1067FFk4tcZujpRJDgp2M+VflCti8rk2BqIDl2y9SmuTLDIBnCIBPIB9wD0a5C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JzA4xKr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kew/0Jws0vzMYkd3H1QzNrPkAyx6oEzv3ZV+89lbcwId0A+CxW8ZddglvNaXnlYXKS8PsJ15msogmZhEgJuhg7+FkI1AxcGc396II9i8goJ+QFkusOa9liW+tK0s/oO60J8pzsFEZbk7MgyHEoCieqHA+fV5VHNr6fejGTMB/Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWye1wVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JzA4xKr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0235AC113D0;
-	Tue, 26 Aug 2025 14:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWye1wVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87934C113CF;
+	Tue, 26 Aug 2025 14:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217145;
-	bh=jhFk0oSQkGEJJSYDH20MRw2ov9m2goSGxUTmKoz93IY=;
+	s=korg; t=1756217147;
+	bh=nV+P/9zyps6fSl4L1SNie630NIfFb+7VSM5rnRQtZac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0JzA4xKrK5XlmgMHxmDshJv2Kdu9QqC+zY9jqfpl33eZ9v4//s6mGJZtrTt59pr4F
-	 AWNWi4LYqTCwB34vhq0A7fWrCeU1LJXwzFXWGCvEpLKGPQoIx74pqJigZkp7caJM5z
-	 i2Bx+crNooVUYHKtxffwUHLdITa54x0VnU3LYl2Q=
+	b=MWye1wVx56vcWb5ZQO+23RiV1cuCS0pzuq67PCibhqTB1ms3lSOIfEdxyxxMM1EWX
+	 DrfrL+B4U+UJZ6f3eOFAovmBi847JQtJryjDaJ9Ek3Qe88xjUQT3yrHOcMXkqHJghq
+	 HfuKLMnh+boyYbbS88ggJ0zWuvOv1lKyHybBLKAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.10 007/523] thunderbolt: Fix bit masking in tb_dp_port_set_hops()
-Date: Tue, 26 Aug 2025 13:03:37 +0200
-Message-ID: <20250826110924.758243494@linuxfoundation.org>
+	Vicki Pfau <vi@endrift.com>,
+	Nilton Perim Neto <niltonperimneto@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 008/523] Input: xpad - set correct controller type for Acer NGR200
+Date: Tue, 26 Aug 2025 13:03:38 +0200
+Message-ID: <20250826110924.782363238@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,35 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Nilton Perim Neto <niltonperimneto@gmail.com>
 
-commit 2cdde91c14ec358087f43287513946d493aef940 upstream.
+commit bcce05041b21888f10b80ea903dcfe51a25c586e upstream.
 
-The tb_dp_port_set_hops() function was incorrectly clearing
-ADP_DP_CS_1_AUX_RX_HOPID_MASK twice. According to the function's
-purpose, it should clear both TX and RX AUX HopID fields.  Replace the
-first instance with ADP_DP_CS_1_AUX_TX_HOPID_MASK to ensure proper
-configuration of both AUX directions.
+The controller should have been set as XTYPE_XBOX360 and not XTYPE_XBOX.
+Also the entry is in the wrong place. Fix it.
 
-Fixes: 98176380cbe5 ("thunderbolt: Convert DP adapter register names to follow the USB4 spec")
+Reported-by: Vicki Pfau <vi@endrift.com>
+Signed-off-by: Nilton Perim Neto <niltonperimneto@gmail.com>
+Link: https://lore.kernel.org/r/20250708033126.26216-2-niltonperimneto@gmail.com
+Fixes: 22c69d786ef8 ("Input: xpad - support Acer NGR 200 Controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/switch.c |    2 +-
+ drivers/input/joystick/xpad.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -1179,7 +1179,7 @@ int tb_dp_port_set_hops(struct tb_port *
- 		return ret;
- 
- 	data[0] &= ~ADP_DP_CS_0_VIDEO_HOPID_MASK;
--	data[1] &= ~ADP_DP_CS_1_AUX_RX_HOPID_MASK;
-+	data[1] &= ~ADP_DP_CS_1_AUX_TX_HOPID_MASK;
- 	data[1] &= ~ADP_DP_CS_1_AUX_RX_HOPID_MASK;
- 
- 	data[0] |= (video << ADP_DP_CS_0_VIDEO_HOPID_SHIFT) &
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -142,12 +142,12 @@ static const struct xpad_device {
+ 	{ 0x046d, 0xca88, "Logitech Compact Controller for Xbox", 0, XTYPE_XBOX },
+ 	{ 0x046d, 0xca8a, "Logitech Precision Vibration Feedback Wheel", 0, XTYPE_XBOX },
+ 	{ 0x046d, 0xcaa3, "Logitech DriveFx Racing Wheel", 0, XTYPE_XBOX360 },
++	{ 0x0502, 0x1305, "Acer NGR200", 0, XTYPE_XBOX360 },
+ 	{ 0x056e, 0x2004, "Elecom JC-U3613M", 0, XTYPE_XBOX360 },
+ 	{ 0x05fd, 0x1007, "Mad Catz Controller (unverified)", 0, XTYPE_XBOX },
+ 	{ 0x05fd, 0x107a, "InterAct 'PowerPad Pro' X-Box pad (Germany)", 0, XTYPE_XBOX },
+ 	{ 0x05fe, 0x3030, "Chic Controller", 0, XTYPE_XBOX },
+ 	{ 0x05fe, 0x3031, "Chic Controller", 0, XTYPE_XBOX },
+-	{ 0x0502, 0x1305, "Acer NGR200", 0, XTYPE_XBOX },
+ 	{ 0x062a, 0x0020, "Logic3 Xbox GamePad", 0, XTYPE_XBOX },
+ 	{ 0x062a, 0x0033, "Competition Pro Steering Wheel", 0, XTYPE_XBOX },
+ 	{ 0x06a3, 0x0200, "Saitek Racing Wheel", 0, XTYPE_XBOX },
 
 
