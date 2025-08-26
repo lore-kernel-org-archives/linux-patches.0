@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B7D13FD86;
-	Tue, 26 Aug 2025 13:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8A71DE4CD;
+	Tue, 26 Aug 2025 13:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215346; cv=none; b=Ax8o3G1eKYKN/a5tnJNdUAN2ZQU3CzJIPDCn6GQF2kAZ4TN4gBwKvDJQijeK66MvTJCv5yGL+Ya6xASzSnXc4Sk5vRALnpa3gjTDFuV+wTh+VgzimmuJXadDQx6SVz123gCTJtxNvAHDU7D+U8Kjaf86uW6sVhQ9n1i0V0rhsvs=
+	t=1756215349; cv=none; b=e9qCTGQKoIE3ewRNkEG7TI+f0whxcVfWeEN1rLwEQnv1jS2jSZKrVmqYXir3ZwqXjsqV11pvy/k2ZNhsp+E5gL81dB+V9cGhoVKnp1ZaEG3Fo8OP6Wh8+o2Ae3gM+13VcqniW8Ij5+6vJEkHGSEfXV0qvFK2jlSKmg8JKG1YLQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215346; c=relaxed/simple;
-	bh=BePGml9hq//1sdL/+57hH/dWzyo04arw92lhHseqpTw=;
+	s=arc-20240116; t=1756215349; c=relaxed/simple;
+	bh=9adnISnqjJDlVb8ggPxg3x/G0UAyNTULsqgkWMT7WEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWPfHdWhk0SyVFUfK5QfRLauxUFR9zJjW/wODSuOtG3mut9gbCW2vocNf3ZTt5Z+4MdyIi+7TLFq8/nahi74d/A9rOJWUtqlURBSs4MTpyf+9JaY0IPW3ARcSJkJAn06znqken95udM3rebCFkXQe3WQcAZsjrvCK/HEilBO3Js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jf2e+jfs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PcVpQoygKWcakwf3BnYpkaBVJI3KAt8k8Kg3z5KnCFJckMK/j6oC3mGj3Wo5FMnq3P73hhSJzxSHB3NFWy+0+XFuB2iC8hpl4K7pqvs3DSa2ba1XcjtN+ruMusApwQRfNQVE95zYZxUrS3TS4+COByJp4io+qQIMta69mmwsDok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/r2NlnT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jf2e+jfs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A93C4CEF1;
-	Tue, 26 Aug 2025 13:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/r2NlnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705D4C4CEF1;
+	Tue, 26 Aug 2025 13:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215346;
-	bh=BePGml9hq//1sdL/+57hH/dWzyo04arw92lhHseqpTw=;
+	s=korg; t=1756215348;
+	bh=9adnISnqjJDlVb8ggPxg3x/G0UAyNTULsqgkWMT7WEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jf2e+jfso22VRBSFdwBshpPsxKqPyEJYnrVj+RUaZRsbbvUCdD+frKtWMhJmcIup6
-	 /8goHCeodoojrboWLFRFDy0VYpOEcKvxiy98KwljGn5MTdq+/+190TUaod8LzW/Thj
-	 R7/jIuDzFyoRjAUowSvDTUVyWWR+PmHOS2nZzXRI=
+	b=j/r2NlnTrc9QHOnF4/Ve+hzU1myUpY4Robw+aEf3bLXYG0uJjFYljeiUCfanY/Fl1
+	 2+DZ7ZVfcKl7IStjNyiLxHYXWReuk9Kwh8sZ2Oe8sYak/5hTmdLqPWq8VbcCAyXmhL
+	 bTYTJAUFNFH+F68wqLO43dorjkOXcmpLsk6XUPDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Waiman Long <longman@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 479/482] ALSA: usb-audio: Use correct sub-type for UAC3 feature unit validation
-Date: Tue, 26 Aug 2025 13:12:12 +0200
-Message-ID: <20250826110942.649674693@linuxfoundation.org>
+Subject: [PATCH 6.1 453/482] cgroup/cpuset: Use static_branch_enable_cpuslocked() on cpusets_insane_config_key
+Date: Tue, 26 Aug 2025 13:11:46 +0200
+Message-ID: <20250826110942.020015554@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,35 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 8410fe81093ff231e964891e215b624dabb734b0 ]
+[ Upstream commit 65f97cc81b0adc5f49cf6cff5d874be0058e3f41 ]
 
-The entry of the validators table for UAC3 feature unit is defined
-with a wrong sub-type UAC_FEATURE (= 0x06) while it should have been
-UAC3_FEATURE (= 0x07).  This patch corrects the entry value.
+The following lockdep splat was observed.
 
-Fixes: 57f8770620e9 ("ALSA: usb-audio: More validations of descriptor units")
-Link: https://patch.msgid.link/20250821150835.8894-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[  812.359086] ============================================
+[  812.359089] WARNING: possible recursive locking detected
+[  812.359097] --------------------------------------------
+[  812.359100] runtest.sh/30042 is trying to acquire lock:
+[  812.359105] ffffffffa7f27420 (cpu_hotplug_lock){++++}-{0:0}, at: static_key_enable+0xe/0x20
+[  812.359131]
+[  812.359131] but task is already holding lock:
+[  812.359134] ffffffffa7f27420 (cpu_hotplug_lock){++++}-{0:0}, at: cpuset_write_resmask+0x98/0xa70
+     :
+[  812.359267] Call Trace:
+[  812.359272]  <TASK>
+[  812.359367]  cpus_read_lock+0x3c/0xe0
+[  812.359382]  static_key_enable+0xe/0x20
+[  812.359389]  check_insane_mems_config.part.0+0x11/0x30
+[  812.359398]  cpuset_write_resmask+0x9f2/0xa70
+[  812.359411]  cgroup_file_write+0x1c7/0x660
+[  812.359467]  kernfs_fop_write_iter+0x358/0x530
+[  812.359479]  vfs_write+0xabe/0x1250
+[  812.359529]  ksys_write+0xf9/0x1d0
+[  812.359558]  do_syscall_64+0x5f/0xe0
+
+Since commit d74b27d63a8b ("cgroup/cpuset: Change cpuset_rwsem
+and hotplug lock order"), the ordering of cpu hotplug lock
+and cpuset_mutex had been reversed. That patch correctly
+used the cpuslocked version of the static branch API to enable
+cpusets_pre_enable_key and cpusets_enabled_key, but it didn't do the
+same for cpusets_insane_config_key.
+
+The cpusets_insane_config_key can be enabled in the
+check_insane_mems_config() which is called from update_nodemask()
+or cpuset_hotplug_update_tasks() with both cpu hotplug lock and
+cpuset_mutex held. Deadlock can happen with a pending hotplug event that
+tries to acquire the cpu hotplug write lock which will block further
+cpus_read_lock() attempt from check_insane_mems_config(). Fix that by
+switching to use static_branch_enable_cpuslocked().
+
+Fixes: d74b27d63a8b ("cgroup/cpuset: Change cpuset_rwsem and hotplug lock order")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/validate.c | 2 +-
+ kernel/cgroup/cpuset.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/validate.c b/sound/usb/validate.c
-index 4f4e8e87a14c..a0d55b77c994 100644
---- a/sound/usb/validate.c
-+++ b/sound/usb/validate.c
-@@ -285,7 +285,7 @@ static const struct usb_desc_validator audio_validators[] = {
- 	/* UAC_VERSION_3, UAC3_EXTENDED_TERMINAL: not implemented yet */
- 	FUNC(UAC_VERSION_3, UAC3_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_3, UAC3_SELECTOR_UNIT, validate_selector_unit),
--	FUNC(UAC_VERSION_3, UAC_FEATURE_UNIT, validate_uac3_feature_unit),
-+	FUNC(UAC_VERSION_3, UAC3_FEATURE_UNIT, validate_uac3_feature_unit),
- 	/*  UAC_VERSION_3, UAC3_EFFECT_UNIT: not implemented yet */
- 	FUNC(UAC_VERSION_3, UAC3_PROCESSING_UNIT, validate_processing_unit),
- 	FUNC(UAC_VERSION_3, UAC3_EXTENSION_UNIT, validate_processing_unit),
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 370a6bce20a8..216bdebd9426 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -455,7 +455,7 @@ static inline void check_insane_mems_config(nodemask_t *nodes)
+ {
+ 	if (!cpusets_insane_config() &&
+ 		movable_only_nodes(nodes)) {
+-		static_branch_enable(&cpusets_insane_config_key);
++		static_branch_enable_cpuslocked(&cpusets_insane_config_key);
+ 		pr_info("Unsupported (movable nodes only) cpuset configuration detected (nmask=%*pbl)!\n"
+ 			"Cpuset allocations might fail even with a lot of memory available.\n",
+ 			nodemask_pr_args(nodes));
 -- 
 2.50.1
 
