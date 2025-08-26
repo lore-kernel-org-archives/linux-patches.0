@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3032BE7D1;
-	Tue, 26 Aug 2025 13:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91F5219300;
+	Tue, 26 Aug 2025 13:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215011; cv=none; b=PejOKLJ03aAKe3Jc8WFAAR8FgZVTROGEGWJh0KXVktE7YphndLU5ArQjuWqjH+jHqe5NUpn5A0daBeryvTsRDghH0L7VbOVbo6FMCWwTouM44wrpQfCAyIfsHpZCoZo52A4oxCTvZRJ80+6kiBtbjos7tQzzRQgJsTDWese/bgo=
+	t=1756215014; cv=none; b=DbVReEC0kkCosH+ztXSqX/ciCZW1+OjyI1QBCqDFZfAP8KNGQ6lTNcmV1LVq1Y6qD++wj7DZp8dWhwJb/BuEjtQNXJ1T7DBduFwoY3cgkseO8xlQae+TQki8hpuF+j4essw4jjaTwvyYxWgQc1KhxKC7No/ZHE8DCDpnjLBr7RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215011; c=relaxed/simple;
-	bh=auKGtMx+m6u8++31PZx+XFH2eldrIJFwakN/iwkk+ls=;
+	s=arc-20240116; t=1756215014; c=relaxed/simple;
+	bh=gVdMEv9x56O2xWyM7ZXFwzq73G8bO7VECjkTfxNBUvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNEfpEAYsfPKnP3g+fhCaUL6xtb4ejTJGWm+6uiVBGzE+FVqS8l9vKJqt9U9NWvlSuLq80EL6FH/HLu9M3o+CqfQr7i9fDNM25+Y5MZPQ+TLtuh1Bgawharn3pr58nE857gmksn1kGOsRLNdylDPk6Zh58GnD0Xdv/FCebpZQ6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxh+YbEp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AHFSz9ijDv6oyd4baboqfR3ghk0m9GtcRuL1xGzlzn4IYtc9NTWHmZeUYBH2xHKQ5Je047UET9940FEU1LFmwTLIXVzR3jzrSlKdFz1nuOl82bhDfXSD0w0CQedfsyCOOjwW6I+8YtyNzfDfhshPbufC1sxpS7BOpYZJJbagC9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KivGwKOD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxh+YbEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F1AC4CEF1;
-	Tue, 26 Aug 2025 13:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KivGwKOD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF1CC4CEF1;
+	Tue, 26 Aug 2025 13:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215011;
-	bh=auKGtMx+m6u8++31PZx+XFH2eldrIJFwakN/iwkk+ls=;
+	s=korg; t=1756215014;
+	bh=gVdMEv9x56O2xWyM7ZXFwzq73G8bO7VECjkTfxNBUvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxh+YbEpBCXSfBA3NTXrqb60G2kQwGf+6kW4ze2b9nq7AKKIreNyNm14ycgpw/IdV
-	 Z8U9IGDHWrxHj2eP8NCNwzuPXffhOk5zQR95GATwy95pEcoZQ8l5ld7BXdQ2Y5qAWQ
-	 vuOi6VMncO9xnVX6Y3UYZjA5rhto0VjJdMQibxNY=
+	b=KivGwKODXFHGMRfHwxdAOg5MsrPcDi7Qy8LU1qAtGPkQvfRq/tmrAiq4KSzwwAlaA
+	 qfOryr9ZFRC5A2eD2j5Wozf2OCXLRuQTS2nvSbn+bdI4nLFzw0p3C9/ZMyNIDGwE+s
+	 uWNTh0Pb37rIcMJ7ZEQtaq9L6WUkbbUG8Oesn4Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.1 322/482] media: vivid: fix wrong pixel_array control size
-Date: Tue, 26 Aug 2025 13:09:35 +0200
-Message-ID: <20250826110938.765929445@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 6.1 323/482] media: v4l2-ctrls: Dont reset handlers error in v4l2_ctrl_handler_free()
+Date: Tue, 26 Aug 2025 13:09:36 +0200
+Message-ID: <20250826110938.789701779@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,52 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 3e43442d4994c9e1e202c98129a87e330f7faaed upstream.
+commit 5a0400aca5fa7c6b8ba456c311a460e733571c88 upstream.
 
-The pixel_array control size was calculated incorrectly:
-the dimensions were swapped (dims[0] should be the height), and the
-values should be the width or height divided by PIXEL_ARRAY_DIV
-and rounded up. So don't use roundup, but use DIV_ROUND_UP instead.
+It's a common pattern in drivers to free the control handler's resources
+and then return the handler's error code on drivers' error handling paths.
+Alas, the v4l2_ctrl_handler_free() function also zeroes the error field,
+effectively indicating successful return to the caller.
 
-This bug is harmless in the sense that nothing will break, except that
-it consumes way too much memory for this control.
+There's no apparent need to touch the error field while releasing the
+control handler's resources and cleaning up stale pointers. Not touching
+the handler's error field is a more certain way to address this problem
+than changing all the users, in which case the pattern would be likely to
+re-emerge in new drivers.
 
-Fixes: 6bc7643d1b9c ("media: vivid: add pixel_array test control")
-Cc: <stable@vger.kernel.org>
+Do just that, don't touch the control handler's error field in
+v4l2_ctrl_handler_free().
+
+Fixes: 0996517cf8ea ("V4L/DVB: v4l2: Add new control handling framework")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vivid/vivid-ctrls.c   |    3 ++-
- drivers/media/test-drivers/vivid/vivid-vid-cap.c |    4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/media/test-drivers/vivid/vivid-ctrls.c
-+++ b/drivers/media/test-drivers/vivid/vivid-ctrls.c
-@@ -238,7 +238,8 @@ static const struct v4l2_ctrl_config viv
- 	.min = 0x00,
- 	.max = 0xff,
- 	.step = 1,
--	.dims = { 640 / PIXEL_ARRAY_DIV, 360 / PIXEL_ARRAY_DIV },
-+	.dims = { DIV_ROUND_UP(360, PIXEL_ARRAY_DIV),
-+		  DIV_ROUND_UP(640, PIXEL_ARRAY_DIV) },
- };
- 
- static const char * const vivid_ctrl_menu_strings[] = {
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -475,8 +475,8 @@ void vivid_update_format_cap(struct vivi
- 	if (keep_controls)
- 		return;
- 
--	dims[0] = roundup(dev->src_rect.width, PIXEL_ARRAY_DIV);
--	dims[1] = roundup(dev->src_rect.height, PIXEL_ARRAY_DIV);
-+	dims[0] = DIV_ROUND_UP(dev->src_rect.height, PIXEL_ARRAY_DIV);
-+	dims[1] = DIV_ROUND_UP(dev->src_rect.width, PIXEL_ARRAY_DIV);
- 	v4l2_ctrl_modify_dimensions(dev->pixel_array, dims);
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -1327,7 +1327,6 @@ void v4l2_ctrl_handler_free(struct v4l2_
+ 	kvfree(hdl->buckets);
+ 	hdl->buckets = NULL;
+ 	hdl->cached = NULL;
+-	hdl->error = 0;
+ 	mutex_unlock(hdl->lock);
+ 	mutex_destroy(&hdl->_lock);
  }
- 
 
 
