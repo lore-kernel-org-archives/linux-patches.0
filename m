@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AD8283FDF;
-	Tue, 26 Aug 2025 11:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5913202F7B;
+	Tue, 26 Aug 2025 11:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208561; cv=none; b=X/gMA8IxL5zWLhONwg9c29sb/pCJR7pFfuk4RbrbcxreY9wHroluUxKS7PyJvDLxQH7A/r7rbvLLh9z9t4nr2VUkA9YvCzuI3CJ+s23qx7OOPW1ml9T2Zgw3GjhxygXMBIiXY4K7mEYZdijAqdC0gPUx0tNopmG1mR+jO69BV9Y=
+	t=1756208564; cv=none; b=eGpoTOWBmqupiz2ICNvI+7rFySetuc4gvxEmCCYelRGca+tCVM+3qyX4vJxFDe0wVqybyABnLT/+9ai7V9Vo5V0XflJS01/d+zrHd8kSgRJZozbFaQWC9HLDrjgxGPSt+xrTqUqKmSIl4AbT1y7oXc6/AIXfeif0UJTaAD7MyEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208561; c=relaxed/simple;
-	bh=O4ilg1ofWDSjuj/rNuWc7ORpM+wszMRU9S7La3OFnpk=;
+	s=arc-20240116; t=1756208564; c=relaxed/simple;
+	bh=OMPrHNTvZx1B9W1MPxv/m7RQdqxP3DJoP2e5nk2bUaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uiHtvUTx6PMp1mF1VdyNErgPrSSEUsz9BH/pSO1dy33aPXTF7FBS7FO9MXlspdp4zZqShuyiq0KVLFOiASAtvfGfWnnbvfWHjFedZW+6+nFwie4cL5b86BSyL7JIMJC2qYFkj6YP+5QEqy2LlNg72FInN7MWhCVQ0xW0n9p9G/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IcShUiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4dQZPZ+ZP1n4rk9EXHcfd+PkXulTUrLYb+I50ruCY0DS0ti0wN/to4pSnUnJ0cVUxxQfGGti8Gh/BwXdgUY0TpCAnuax2U0ahMyGStI5txKVQo2PNQt5vM3VvCbThQ6e1Q8U41BrYzuWGdeSQPgqqaqdhjJMwaxiz0MDC1EL+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8gIKcsK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IcShUiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C137BC113CF;
-	Tue, 26 Aug 2025 11:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8gIKcsK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5D8C4CEF4;
+	Tue, 26 Aug 2025 11:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208561;
-	bh=O4ilg1ofWDSjuj/rNuWc7ORpM+wszMRU9S7La3OFnpk=;
+	s=korg; t=1756208563;
+	bh=OMPrHNTvZx1B9W1MPxv/m7RQdqxP3DJoP2e5nk2bUaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0IcShUiIAk3SHPTiazIopS5Q6E30InM7jNMhlYO8I96FtIvWD522ACrrIJ9IjdaAB
-	 K9ZQ2Lq1TGM1b4902VAJ7/WFCc9NkGnzGdOn2h/qWXjMAVXObtxw8eghabtqnQD+fi
-	 u2zTR/SG/lVGyhnq39B31ZOrRoElmoAvGn3tabws=
+	b=u8gIKcsKTxDjolEtW6TupbiuSx5apjW3XoEBd0UYxPrVt7QieK81ZxYWNLSfIf5/F
+	 Fg/WWIH3FWw7Xw3C/SJlY13XqYdwxbGeLErf8bb6OcI06GkQv7xYL1+X8nHAB2ATuX
+	 BPWmcGQELLWxxeG2rRV5PJeOHGCqKTk9jOGL12IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoli Feng <fengxiaoli0714@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Steve French <sfrench@samba.org>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	netfs@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 158/322] netfs: Fix unbuffered write error handling
-Date: Tue, 26 Aug 2025 13:09:33 +0200
-Message-ID: <20250826110919.721484270@linuxfoundation.org>
+	pt x <superman.xpt@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 159/322] io_uring/net: commit partial buffers on retry
+Date: Tue, 26 Aug 2025 13:09:34 +0200
+Message-ID: <20250826110919.746897136@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -58,150 +50,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit a3de58b12ce074ec05b8741fa28d62ccb1070468 ]
+commit 41b70df5b38bc80967d2e0ed55cc3c3896bba781 upstream.
 
-If all the subrequests in an unbuffered write stream fail, the subrequest
-collector doesn't update the stream->transferred value and it retains its
-initial LONG_MAX value.  Unfortunately, if all active streams fail, then we
-take the smallest value of { LONG_MAX, LONG_MAX, ... } as the value to set
-in wreq->transferred - which is then returned from ->write_iter().
+Ring provided buffers are potentially only valid within the single
+execution context in which they were acquired. io_uring deals with this
+and invalidates them on retry. But on the networking side, if
+MSG_WAITALL is set, or if the socket is of the streaming type and too
+little was processed, then it will hang on to the buffer rather than
+recycle or commit it. This is problematic for two reasons:
 
-LONG_MAX was chosen as the initial value so that all the streams can be
-quickly assessed by taking the smallest value of all stream->transferred -
-but this only works if we've set any of them.
+1) If someone unregisters the provided buffer ring before a later retry,
+   then the req->buf_list will no longer be valid.
 
-Fix this by adding a flag to indicate whether the value in
-stream->transferred is valid and checking that when we integrate the
-values.  stream->transferred can then be initialised to zero.
+2) If multiple sockers are using the same buffer group, then multiple
+   receives can consume the same memory. This can cause data corruption
+   in the application, as either receive could land in the same
+   userspace buffer.
 
-This was found by running the generic/750 xfstest against cifs with
-cache=none.  It splices data to the target file.  Once (if) it has used up
-all the available scratch space, the writes start failing with ENOSPC.
-This causes ->write_iter() to fail.  However, it was returning
-wreq->transferred, i.e. LONG_MAX, rather than an error (because it thought
-the amount transferred was non-zero) and iter_file_splice_write() would
-then try to clean up that amount of pipe bufferage - leading to an oops
-when it overran.  The kernel log showed:
+Fix this by disallowing partial retries from pinning a provided buffer
+across multiple executions, if ring provided buffers are used.
 
-    CIFS: VFS: Send error in write = -28
-
-followed by:
-
-    BUG: kernel NULL pointer dereference, address: 0000000000000008
-
-with:
-
-    RIP: 0010:iter_file_splice_write+0x3a4/0x520
-    do_splice+0x197/0x4e0
-
-or:
-
-    RIP: 0010:pipe_buf_release (include/linux/pipe_fs_i.h:282)
-    iter_file_splice_write (fs/splice.c:755)
-
-Also put a warning check into splice to announce if ->write_iter() returned
-that it had written more than it was asked to.
-
-Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Reported-by: Xiaoli Feng <fengxiaoli0714@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220445
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/915443.1755207950@warthog.procyon.org.uk
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: Steve French <sfrench@samba.org>
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: netfs@lists.linux.dev
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[ Dropped read_collect.c hunk ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: pt x <superman.xpt@gmail.com>
+Fixes: c56e022c0a27 ("io_uring: add support for user mapped provided buffer ring")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/write_collect.c |   10 ++++++++--
- fs/netfs/write_issue.c   |    4 ++--
- fs/splice.c              |    3 +++
- include/linux/netfs.h    |    1 +
- 4 files changed, 14 insertions(+), 4 deletions(-)
+ io_uring/net.c |   27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/fs/netfs/write_collect.c
-+++ b/fs/netfs/write_collect.c
-@@ -433,6 +433,7 @@ reassess_streams:
- 			if (front->start + front->transferred > stream->collected_to) {
- 				stream->collected_to = front->start + front->transferred;
- 				stream->transferred = stream->collected_to - wreq->start;
-+				stream->transferred_valid = true;
- 				notes |= MADE_PROGRESS;
- 			}
- 			if (test_bit(NETFS_SREQ_FAILED, &front->flags)) {
-@@ -538,6 +539,7 @@ void netfs_write_collection_worker(struc
- 	struct netfs_io_request *wreq = container_of(work, struct netfs_io_request, work);
- 	struct netfs_inode *ictx = netfs_inode(wreq->inode);
- 	size_t transferred;
-+	bool transferred_valid = false;
- 	int s;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -498,6 +498,15 @@ static int io_bundle_nbufs(struct io_asy
+ 	return nbufs;
+ }
  
- 	_enter("R=%x", wreq->debug_id);
-@@ -568,12 +570,16 @@ void netfs_write_collection_worker(struc
- 			netfs_put_request(wreq, false, netfs_rreq_trace_put_work);
- 			return;
++static int io_net_kbuf_recyle(struct io_kiocb *req,
++			      struct io_async_msghdr *kmsg, int len)
++{
++	req->flags |= REQ_F_BL_NO_RECYCLE;
++	if (req->flags & REQ_F_BUFFERS_COMMIT)
++		io_kbuf_commit(req, req->buf_list, len, io_bundle_nbufs(kmsg, len));
++	return -EAGAIN;
++}
++
+ static inline bool io_send_finish(struct io_kiocb *req, int *ret,
+ 				  struct io_async_msghdr *kmsg,
+ 				  unsigned issue_flags)
+@@ -566,8 +575,7 @@ int io_sendmsg(struct io_kiocb *req, uns
+ 			kmsg->msg.msg_controllen = 0;
+ 			kmsg->msg.msg_control = NULL;
+ 			sr->done_io += ret;
+-			req->flags |= REQ_F_BL_NO_RECYCLE;
+-			return -EAGAIN;
++			return io_net_kbuf_recyle(req, kmsg, ret);
  		}
--		if (stream->transferred < transferred)
-+		if (stream->transferred_valid &&
-+		    stream->transferred < transferred) {
- 			transferred = stream->transferred;
-+			transferred_valid = true;
-+		}
- 	}
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
+@@ -664,8 +672,7 @@ retry_bundle:
+ 			sr->len -= ret;
+ 			sr->buf += ret;
+ 			sr->done_io += ret;
+-			req->flags |= REQ_F_BL_NO_RECYCLE;
+-			return -EAGAIN;
++			return io_net_kbuf_recyle(req, kmsg, ret);
+ 		}
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
+@@ -1068,8 +1075,7 @@ retry_multishot:
+ 		}
+ 		if (ret > 0 && io_net_retry(sock, flags)) {
+ 			sr->done_io += ret;
+-			req->flags |= REQ_F_BL_NO_RECYCLE;
+-			return -EAGAIN;
++			return io_net_kbuf_recyle(req, kmsg, ret);
+ 		}
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
+@@ -1211,8 +1217,7 @@ retry_multishot:
+ 			sr->len -= ret;
+ 			sr->buf += ret;
+ 			sr->done_io += ret;
+-			req->flags |= REQ_F_BL_NO_RECYCLE;
+-			return -EAGAIN;
++			return io_net_kbuf_recyle(req, kmsg, ret);
+ 		}
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
+@@ -1441,8 +1446,7 @@ int io_send_zc(struct io_kiocb *req, uns
+ 			zc->len -= ret;
+ 			zc->buf += ret;
+ 			zc->done_io += ret;
+-			req->flags |= REQ_F_BL_NO_RECYCLE;
+-			return -EAGAIN;
++			return io_net_kbuf_recyle(req, kmsg, ret);
+ 		}
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
+@@ -1502,8 +1506,7 @@ int io_sendmsg_zc(struct io_kiocb *req,
  
- 	/* Okay, declare that all I/O is complete. */
--	wreq->transferred = transferred;
-+	if (transferred_valid)
-+		wreq->transferred = transferred;
- 	trace_netfs_rreq(wreq, netfs_rreq_trace_write_done);
- 
- 	if (wreq->io_streams[1].active &&
---- a/fs/netfs/write_issue.c
-+++ b/fs/netfs/write_issue.c
-@@ -115,12 +115,12 @@ struct netfs_io_request *netfs_create_wr
- 	wreq->io_streams[0].prepare_write	= ictx->ops->prepare_write;
- 	wreq->io_streams[0].issue_write		= ictx->ops->issue_write;
- 	wreq->io_streams[0].collected_to	= start;
--	wreq->io_streams[0].transferred		= LONG_MAX;
-+	wreq->io_streams[0].transferred		= 0;
- 
- 	wreq->io_streams[1].stream_nr		= 1;
- 	wreq->io_streams[1].source		= NETFS_WRITE_TO_CACHE;
- 	wreq->io_streams[1].collected_to	= start;
--	wreq->io_streams[1].transferred		= LONG_MAX;
-+	wreq->io_streams[1].transferred		= 0;
- 	if (fscache_resources_valid(&wreq->cache_resources)) {
- 		wreq->io_streams[1].avail	= true;
- 		wreq->io_streams[1].active	= true;
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -744,6 +744,9 @@ iter_file_splice_write(struct pipe_inode
- 		sd.pos = kiocb.ki_pos;
- 		if (ret <= 0)
- 			break;
-+		WARN_ONCE(ret > sd.total_len - left,
-+			  "Splice Exceeded! ret=%zd tot=%zu left=%zu\n",
-+			  ret, sd.total_len, left);
- 
- 		sd.num_spliced += ret;
- 		sd.total_len -= ret;
---- a/include/linux/netfs.h
-+++ b/include/linux/netfs.h
-@@ -150,6 +150,7 @@ struct netfs_io_stream {
- 	bool			active;		/* T if stream is active */
- 	bool			need_retry;	/* T if this stream needs retrying */
- 	bool			failed;		/* T if this stream failed */
-+	bool			transferred_valid; /* T is ->transferred is valid */
- };
- 
- /*
+ 		if (ret > 0 && io_net_retry(sock, flags)) {
+ 			sr->done_io += ret;
+-			req->flags |= REQ_F_BL_NO_RECYCLE;
+-			return -EAGAIN;
++			return io_net_kbuf_recyle(req, kmsg, ret);
+ 		}
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
 
 
