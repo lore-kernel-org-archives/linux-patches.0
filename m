@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EB935AAA5;
-	Tue, 26 Aug 2025 14:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8767C35AAA4;
+	Tue, 26 Aug 2025 14:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218377; cv=none; b=C5qDQLVfz9wwi5GIgW3IREGYUo5Xozm8iWLsSR8XLry9TvSMIFTvLQ4vmpuwyj3aHZBGtwNZB2M4AL/ctGZXlAzm+JK+JbwbqfRfuJclFxLI+tAeP4DCpiZuCI7LYJZjEzzbPREiAsxER+V9BxOBz8c8EP5voPtcqeAq08XArUA=
+	t=1756218379; cv=none; b=a9OHUfx6N5RUTRNt+TbebjES0PhdCvX5nly9JOTz76ceUxy0d0OS5OM2D5eppCgathC5Z4wEl85csESZpP7koPhQaJp+bE77a1GjZBXMU4jUAotNafSC03VgZPKa6m6ZKwyWgfhZwXl6tld6cyFYNTKyJ1Wb4jfmfqFk2PQpR1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218377; c=relaxed/simple;
-	bh=38rHCAXM8dE9qU5aPnu3mdHwoHEdzmNhfDbw//xNWCU=;
+	s=arc-20240116; t=1756218379; c=relaxed/simple;
+	bh=Dn4NUXDNDlymFDHZTdGIMe0KMQB+WLYSC3mOd0chLp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bp64jM+Sp0RSaN7SN2Og0bl4ZJ/12bT11oJ/TtehxKPpFPpruGR9oEJPgMxw2NMoyJnq0QzMoSXXOlexE+vXUeKbJpYpwxA3SKu9EUTkFCBD/UIJlsVVq/XdZLzbyFfQbKD9E+kw/JcghcvNxkS0XukeJ8za/u+e/t7ct/SiIgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Atk2iQCx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r2W8efFesZ3TPitqAeTD3u1XgJOljbnjGbd3E83U7e3iWatHlES17kEOHAM3MwIW1xVF8fIs2F3DTJ+C8kJ/hg/nNnUFwMYHcuDsD/ninmdQGKN1sLhdL8RqJVuoxMvtSGbuTM7vW7ChfAZ9V52ra3StFwSuxacTf1QpVJt701Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dM27IgeY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Atk2iQCx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7345FC4CEF1;
-	Tue, 26 Aug 2025 14:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dM27IgeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17962C4CEF1;
+	Tue, 26 Aug 2025 14:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218376;
-	bh=38rHCAXM8dE9qU5aPnu3mdHwoHEdzmNhfDbw//xNWCU=;
+	s=korg; t=1756218379;
+	bh=Dn4NUXDNDlymFDHZTdGIMe0KMQB+WLYSC3mOd0chLp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Atk2iQCxx8o29tDTcx5dBhiiAETerVqNif/T7T7khCVcGCoxnrKizTpwEBnPT9R8q
-	 t7LdS04WKfjPpKZcxlmWsm7Oh/r2hab5BhqgnDPPmGpx9k/wertCA133IfqWD2pLZZ
-	 GCswrdqvgXhX51kX/Se1YDJHnL6Un/qQKcx/PNGY=
+	b=dM27IgeYwUXqYV3SqDtaqjE29X318v5oc6BXNd/4vT9tNFmrvvihGgSJJe6h3JT/+
+	 Ti2ZzbFlv1iUGfiQ5/2W21pFw9O+aRA7lFHjd1iA3E+kAiPStPmsdUoLXOwWWi24Xx
+	 pbrt7BeQX9m1J6N9uOtvrB9lNXATjqyHni7i5+AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Pavel Machek <pavel@denx.de>
-Subject: [PATCH 5.10 498/523] gpio: rcar: Use raw_spinlock to protect register access
-Date: Tue, 26 Aug 2025 13:11:48 +0200
-Message-ID: <20250826110936.726116230@linuxfoundation.org>
+	Guenter Roeck <groeck@chromium.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Lee Jones <lee.jones@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 472/523] platform/chrome: cros_ec: Make cros_ec_unregister() return void
+Date: Tue, 26 Aug 2025 13:11:22 +0200
+Message-ID: <20250826110936.087227769@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,167 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit f02c41f87cfe61440c18bf77d1ef0a884b9ee2b5 upstream.
+[ Upstream commit afb0a80e63d67e957b5d0eb4ade301aff6e13c8c ]
 
-Use raw_spinlock in order to fix spurious messages about invalid context
-when spinlock debugging is enabled. The lock is only used to serialize
-register access.
+Up to now cros_ec_unregister() returns zero unconditionally. Make it
+return void instead which makes it easier to see in the callers that
+there is no error to handle.
 
-    [    4.239592] =============================
-    [    4.239595] [ BUG: Invalid wait context ]
-    [    4.239599] 6.13.0-rc7-arm64-renesas-05496-gd088502a519f #35 Not tainted
-    [    4.239603] -----------------------------
-    [    4.239606] kworker/u8:5/76 is trying to lock:
-    [    4.239609] ffff0000091898a0 (&p->lock){....}-{3:3}, at: gpio_rcar_config_interrupt_input_mode+0x34/0x164
-    [    4.239641] other info that might help us debug this:
-    [    4.239643] context-{5:5}
-    [    4.239646] 5 locks held by kworker/u8:5/76:
-    [    4.239651]  #0: ffff0000080fb148 ((wq_completion)async){+.+.}-{0:0}, at: process_one_work+0x190/0x62c
-    [    4.250180] OF: /soc/sound@ec500000/ports/port@0/endpoint: Read of boolean property 'frame-master' with a value.
-    [    4.254094]  #1: ffff80008299bd80 ((work_completion)(&entry->work)){+.+.}-{0:0}, at: process_one_work+0x1b8/0x62c
-    [    4.254109]  #2: ffff00000920c8f8
-    [    4.258345] OF: /soc/sound@ec500000/ports/port@1/endpoint: Read of boolean property 'bitclock-master' with a value.
-    [    4.264803]  (&dev->mutex){....}-{4:4}, at: __device_attach_async_helper+0x3c/0xdc
-    [    4.264820]  #3: ffff00000a50ca40 (request_class#2){+.+.}-{4:4}, at: __setup_irq+0xa0/0x690
-    [    4.264840]  #4:
-    [    4.268872] OF: /soc/sound@ec500000/ports/port@1/endpoint: Read of boolean property 'frame-master' with a value.
-    [    4.273275] ffff00000a50c8c8 (lock_class){....}-{2:2}, at: __setup_irq+0xc4/0x690
-    [    4.296130] renesas_sdhi_internal_dmac ee100000.mmc: mmc1 base at 0x00000000ee100000, max clock rate 200 MHz
-    [    4.304082] stack backtrace:
-    [    4.304086] CPU: 1 UID: 0 PID: 76 Comm: kworker/u8:5 Not tainted 6.13.0-rc7-arm64-renesas-05496-gd088502a519f #35
-    [    4.304092] Hardware name: Renesas Salvator-X 2nd version board based on r8a77965 (DT)
-    [    4.304097] Workqueue: async async_run_entry_fn
-    [    4.304106] Call trace:
-    [    4.304110]  show_stack+0x14/0x20 (C)
-    [    4.304122]  dump_stack_lvl+0x6c/0x90
-    [    4.304131]  dump_stack+0x14/0x1c
-    [    4.304138]  __lock_acquire+0xdfc/0x1584
-    [    4.426274]  lock_acquire+0x1c4/0x33c
-    [    4.429942]  _raw_spin_lock_irqsave+0x5c/0x80
-    [    4.434307]  gpio_rcar_config_interrupt_input_mode+0x34/0x164
-    [    4.440061]  gpio_rcar_irq_set_type+0xd4/0xd8
-    [    4.444422]  __irq_set_trigger+0x5c/0x178
-    [    4.448435]  __setup_irq+0x2e4/0x690
-    [    4.452012]  request_threaded_irq+0xc4/0x190
-    [    4.456285]  devm_request_threaded_irq+0x7c/0xf4
-    [    4.459398] ata1: link resume succeeded after 1 retries
-    [    4.460902]  mmc_gpiod_request_cd_irq+0x68/0xe0
-    [    4.470660]  mmc_start_host+0x50/0xac
-    [    4.474327]  mmc_add_host+0x80/0xe4
-    [    4.477817]  tmio_mmc_host_probe+0x2b0/0x440
-    [    4.482094]  renesas_sdhi_probe+0x488/0x6f4
-    [    4.486281]  renesas_sdhi_internal_dmac_probe+0x60/0x78
-    [    4.491509]  platform_probe+0x64/0xd8
-    [    4.495178]  really_probe+0xb8/0x2a8
-    [    4.498756]  __driver_probe_device+0x74/0x118
-    [    4.503116]  driver_probe_device+0x3c/0x154
-    [    4.507303]  __device_attach_driver+0xd4/0x160
-    [    4.511750]  bus_for_each_drv+0x84/0xe0
-    [    4.515588]  __device_attach_async_helper+0xb0/0xdc
-    [    4.520470]  async_run_entry_fn+0x30/0xd8
-    [    4.524481]  process_one_work+0x210/0x62c
-    [    4.528494]  worker_thread+0x1ac/0x340
-    [    4.532245]  kthread+0x10c/0x110
-    [    4.535476]  ret_from_fork+0x10/0x20
+Also the return value of i2c, platform and spi remove callbacks is
+ignored anyway.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250121135833.3769310-1-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-[PL: manullay applied the changes]
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Pavel Machek <pavel@denx.de> # for 5.10-stable
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Link: https://lore.kernel.org/r/20211020071753.wltjslmimb6wtlp5@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Lee Jones <lee.jones@linaro.org>
+Link: https://lore.kernel.org/r/20220123175201.34839-5-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: e23749534619 ("platform/chrome: cros_ec: Unregister notifier in cros_ec_unregister()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rcar.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/platform/chrome/cros_ec.c     |    4 +---
+ drivers/platform/chrome/cros_ec.h     |    2 +-
+ drivers/platform/chrome/cros_ec_i2c.c |    4 +++-
+ drivers/platform/chrome/cros_ec_lpc.c |    4 +++-
+ drivers/platform/chrome/cros_ec_spi.c |    4 +++-
+ 5 files changed, 11 insertions(+), 7 deletions(-)
 
---- a/drivers/gpio/gpio-rcar.c
-+++ b/drivers/gpio/gpio-rcar.c
-@@ -34,7 +34,7 @@ struct gpio_rcar_bank_info {
+--- a/drivers/platform/chrome/cros_ec.c
++++ b/drivers/platform/chrome/cros_ec.c
+@@ -285,13 +285,11 @@ EXPORT_SYMBOL(cros_ec_register);
+  *
+  * Return: 0 on success or negative error code.
+  */
+-int cros_ec_unregister(struct cros_ec_device *ec_dev)
++void cros_ec_unregister(struct cros_ec_device *ec_dev)
+ {
+ 	if (ec_dev->pd)
+ 		platform_device_unregister(ec_dev->pd);
+ 	platform_device_unregister(ec_dev->ec);
+-
+-	return 0;
+ }
+ EXPORT_SYMBOL(cros_ec_unregister);
  
- struct gpio_rcar_priv {
- 	void __iomem *base;
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- 	struct device *dev;
- 	struct gpio_chip gpio_chip;
- 	struct irq_chip irq_chip;
-@@ -114,7 +114,7 @@ static void gpio_rcar_config_interrupt_i
- 	 * "Setting Level-Sensitive Interrupt Input Mode"
- 	 */
+--- a/drivers/platform/chrome/cros_ec.h
++++ b/drivers/platform/chrome/cros_ec.h
+@@ -9,7 +9,7 @@
+ #define __CROS_EC_H
  
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
+ int cros_ec_register(struct cros_ec_device *ec_dev);
+-int cros_ec_unregister(struct cros_ec_device *ec_dev);
++void cros_ec_unregister(struct cros_ec_device *ec_dev);
  
- 	/* Configure positive or negative logic in POSNEG */
- 	gpio_rcar_modify_bit(p, POSNEG, hwirq, !active_high_rising_edge);
-@@ -133,7 +133,7 @@ static void gpio_rcar_config_interrupt_i
- 	if (!level_trigger)
- 		gpio_rcar_write(p, INTCLR, BIT(hwirq));
+ int cros_ec_suspend(struct cros_ec_device *ec_dev);
+ int cros_ec_resume(struct cros_ec_device *ec_dev);
+--- a/drivers/platform/chrome/cros_ec_i2c.c
++++ b/drivers/platform/chrome/cros_ec_i2c.c
+@@ -313,7 +313,9 @@ static int cros_ec_i2c_remove(struct i2c
+ {
+ 	struct cros_ec_device *ec_dev = i2c_get_clientdata(client);
  
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
+-	return cros_ec_unregister(ec_dev);
++	cros_ec_unregister(ec_dev);
++
++	return 0;
  }
  
- static int gpio_rcar_irq_set_type(struct irq_data *d, unsigned int type)
-@@ -226,7 +226,7 @@ static void gpio_rcar_config_general_inp
- 	 * "Setting General Input Mode"
- 	 */
+ #ifdef CONFIG_PM_SLEEP
+--- a/drivers/platform/chrome/cros_ec_lpc.c
++++ b/drivers/platform/chrome/cros_ec_lpc.c
+@@ -439,7 +439,9 @@ static int cros_ec_lpc_remove(struct pla
+ 		acpi_remove_notify_handler(adev->handle, ACPI_ALL_NOTIFY,
+ 					   cros_ec_lpc_acpi_notify);
  
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
- 
- 	/* Configure positive logic in POSNEG */
- 	gpio_rcar_modify_bit(p, POSNEG, gpio, false);
-@@ -241,7 +241,7 @@ static void gpio_rcar_config_general_inp
- 	if (p->has_outdtsel && output)
- 		gpio_rcar_modify_bit(p, OUTDTSEL, gpio, false);
- 
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
+-	return cros_ec_unregister(ec_dev);
++	cros_ec_unregister(ec_dev);
++
++	return 0;
  }
  
- static int gpio_rcar_request(struct gpio_chip *chip, unsigned offset)
-@@ -310,9 +310,9 @@ static void gpio_rcar_set(struct gpio_ch
- 	struct gpio_rcar_priv *p = gpiochip_get_data(chip);
- 	unsigned long flags;
+ static const struct acpi_device_id cros_ec_lpc_acpi_device_ids[] = {
+--- a/drivers/platform/chrome/cros_ec_spi.c
++++ b/drivers/platform/chrome/cros_ec_spi.c
+@@ -791,7 +791,9 @@ static int cros_ec_spi_remove(struct spi
+ {
+ 	struct cros_ec_device *ec_dev = spi_get_drvdata(spi);
  
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
- 	gpio_rcar_modify_bit(p, OUTDT, offset, value);
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
+-	return cros_ec_unregister(ec_dev);
++	cros_ec_unregister(ec_dev);
++
++	return 0;
  }
  
- static void gpio_rcar_set_multiple(struct gpio_chip *chip, unsigned long *mask,
-@@ -329,12 +329,12 @@ static void gpio_rcar_set_multiple(struc
- 	if (!bankmask)
- 		return;
- 
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
- 	val = gpio_rcar_read(p, OUTDT);
- 	val &= ~bankmask;
- 	val |= (bankmask & bits[0]);
- 	gpio_rcar_write(p, OUTDT, val);
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
- }
- 
- static int gpio_rcar_direction_output(struct gpio_chip *chip, unsigned offset,
-@@ -454,7 +454,7 @@ static int gpio_rcar_probe(struct platfo
- 		return -ENOMEM;
- 
- 	p->dev = dev;
--	spin_lock_init(&p->lock);
-+	raw_spin_lock_init(&p->lock);
- 
- 	/* Get device configuration from DT node */
- 	ret = gpio_rcar_parse_dt(p, &npins);
+ #ifdef CONFIG_PM_SLEEP
 
 
