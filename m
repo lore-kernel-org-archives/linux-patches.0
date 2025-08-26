@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B916533439F;
-	Tue, 26 Aug 2025 11:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5794D319858;
+	Tue, 26 Aug 2025 11:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208168; cv=none; b=Wc1e28+DLtxpYWwp8flAnRcRYqsD4co8oomT0eimy4lceMPobx1Hjku8emiEWp6gwExCX9L2GhV2eNvDIgEx5JZ0oN+NeBYwaVGYQWnRWZXBSpv0a0Ljf04QGzvArAzWWJBD3W3XDy1PRE0+bqAK+WE0nsiYIcFgknz7HjkRWBg=
+	t=1756208171; cv=none; b=nZ9VChVmE7yvp9eB9KXeDTzmWVddYrOJAfQNLJr9EXHyVcckvf1PB6hwvd1VDrMvpePYKhU/ZYBRNUZS3qdnur+0LaxXfmxBQFZqFtwIqJEWndNgo7ZFY9ZbHBxsSs3K59VGZ3SiVbdESbOUZ9ipf1OZ1srgs5NExcFSUae4PjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208168; c=relaxed/simple;
-	bh=H2dVqXWRGJTTdSs7mWUw57YBqYd1xTiJv65KxHizUY0=;
+	s=arc-20240116; t=1756208171; c=relaxed/simple;
+	bh=f17BPTL3u/zuW9pO3EU0cWGpb67SRntIuAHbaOGjzMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsPQLdQGFJOUosqAmPZN+R9fBsOsQZwj/CB0wsWRoRfIJZSDUkS9ZAWLi/ogyU62qioV6Nh5qj9OpwCCBK/nuc3XQVJtweEHdsd+8or0Kh8JHqDlWV1CGQjXyzDXmjd65oIwgu7bJSF5i66zneZscTk+lHD8jpnrkhWDExcx0Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLYfM0p5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IhWllpORBfSoJq2621M77vhRnIUFNalFlwFcjt69B0AF9v4UMqqdYEn8dwmCDYlvkrWiScYjPqs2776xuY8mFw5e0uTQdPkEZlZD8b/ecnoBP7Au6Y8VyiQsHyNCxAdfdORSpnU5DwNNbtFFRNxZPhTnroK8PREXZjp75eiOeC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHNhuTVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLYfM0p5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0557BC4CEF1;
-	Tue, 26 Aug 2025 11:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHNhuTVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90724C4CEF1;
+	Tue, 26 Aug 2025 11:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208168;
-	bh=H2dVqXWRGJTTdSs7mWUw57YBqYd1xTiJv65KxHizUY0=;
+	s=korg; t=1756208170;
+	bh=f17BPTL3u/zuW9pO3EU0cWGpb67SRntIuAHbaOGjzMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLYfM0p5befjPNm8TiJawZTT2VRUj3ocCgDpMZFF/1noCY73imIf1/m1fhnz5cbI9
-	 QZ0ktYELzEgol7wN8YKAG1Q6msfzxDTzyInepyxrZCn5vWHwY3I3oOlRTlQUbAjHOY
-	 GFLMA6DDlknI2yIas1SlT8+Rd52fFfhzRqa1vJBI=
+	b=tHNhuTVuQ3ETb922qrNDC2sBjO9r5e01VNMAQ1qZJpj5VoSqD/5+B36QRPi/yKcPa
+	 32l3a8qDJ9KCZgcvG+wt/PatRafTBxMgSUBDoE43H4arDwMUKGAQjClhgKm9wMli9o
+	 7miuxtyyNVnaj5+rlD/BkiwPJ1PeRTmgRjeweY1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 455/457] netfilter: nf_reject: dont leak dst refcount for loopback packets
-Date: Tue, 26 Aug 2025 13:12:19 +0200
-Message-ID: <20250826110948.530140056@linuxfoundation.org>
+Subject: [PATCH 6.16 456/457] drm/xe: Move ASID allocation and user PT BO tracking into xe_vm_create
+Date: Tue, 26 Aug 2025 13:12:20 +0200
+Message-ID: <20250826110948.554716426@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -45,92 +47,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Piotr Piórkowski <piotr.piorkowski@intel.com>
 
-[ Upstream commit 91a79b792204313153e1bdbbe5acbfc28903b3a5 ]
+[ Upstream commit 8a30114073639fd97f2c7390abbc34fb8711327a ]
 
-recent patches to add a WARN() when replacing skb dst entry found an
-old bug:
+Currently, ASID assignment for user VMs and page-table BO accounting for
+client memory tracking are performed in xe_vm_create_ioctl.
+To consolidate VM object initialization, move this logic to
+xe_vm_create.
 
-WARNING: include/linux/skbuff.h:1165 skb_dst_check_unset include/linux/skbuff.h:1164 [inline]
-WARNING: include/linux/skbuff.h:1165 skb_dst_set include/linux/skbuff.h:1210 [inline]
-WARNING: include/linux/skbuff.h:1165 nf_reject_fill_skb_dst+0x2a4/0x330 net/ipv4/netfilter/nf_reject_ipv4.c:234
-[..]
-Call Trace:
- nf_send_unreach+0x17b/0x6e0 net/ipv4/netfilter/nf_reject_ipv4.c:325
- nft_reject_inet_eval+0x4bc/0x690 net/netfilter/nft_reject_inet.c:27
- expr_call_ops_eval net/netfilter/nf_tables_core.c:237 [inline]
- ..
+v2:
+ - removed unnecessary duplicate BO tracking code
+ - using the local variable xef to verify whether the VM is being created
+   by userspace
 
-This is because blamed commit forgot about loopback packets.
-Such packets already have a dst_entry attached, even at PRE_ROUTING stage.
-
-Instead of checking hook just check if the skb already has a route
-attached to it.
-
-Fixes: f53b9b0bdc59 ("netfilter: introduce support for reject at prerouting stage")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20250820123707.10671-1-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 658a1c8e0a66 ("drm/xe: Assign ioctl xe file handler to vm in xe_vm_create")
+Suggested-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://lore.kernel.org/r/20250811104358.2064150-3-piotr.piorkowski@intel.com
+Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+(cherry picked from commit 30e0c3f43a414616e0b6ca76cf7f7b2cd387e1d4)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[Rodrigo: Added fixes tag]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 6 ++----
- net/ipv6/netfilter/nf_reject_ipv6.c | 5 ++---
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/xe/xe_vm.c | 34 +++++++++++++++-------------------
+ 1 file changed, 15 insertions(+), 19 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 87fd945a0d27..0d3cb2ba6fc8 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -247,8 +247,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	if (!oth)
- 		return;
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index 7251f23b919c..3135de124c18 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -1767,6 +1767,20 @@ struct xe_vm *xe_vm_create(struct xe_device *xe, u32 flags, struct xe_file *xef)
+ 	if (number_tiles > 1)
+ 		vm->composite_fence_ctx = dma_fence_context_alloc(1);
  
--	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
--	    nf_reject_fill_skb_dst(oldskb) < 0)
-+	if (!skb_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
- 		return;
++	if (xef && xe->info.has_asid) {
++		u32 asid;
++
++		down_write(&xe->usm.lock);
++		err = xa_alloc_cyclic(&xe->usm.asid_to_vm, &asid, vm,
++				      XA_LIMIT(1, XE_MAX_ASID - 1),
++				      &xe->usm.next_asid, GFP_KERNEL);
++		up_write(&xe->usm.lock);
++		if (err < 0)
++			goto err_unlock_close;
++
++		vm->usm.asid = asid;
++	}
++
+ 	trace_xe_vm_create(vm);
  
- 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
-@@ -321,8 +320,7 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (iph->frag_off & htons(IP_OFFSET))
- 		return;
+ 	return vm;
+@@ -2034,9 +2048,8 @@ int xe_vm_create_ioctl(struct drm_device *dev, void *data,
+ 	struct xe_device *xe = to_xe_device(dev);
+ 	struct xe_file *xef = to_xe_file(file);
+ 	struct drm_xe_vm_create *args = data;
+-	struct xe_tile *tile;
+ 	struct xe_vm *vm;
+-	u32 id, asid;
++	u32 id;
+ 	int err;
+ 	u32 flags = 0;
  
--	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
--	    nf_reject_fill_skb_dst(skb_in) < 0)
-+	if (!skb_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
+@@ -2076,23 +2089,6 @@ int xe_vm_create_ioctl(struct drm_device *dev, void *data,
+ 	if (IS_ERR(vm))
+ 		return PTR_ERR(vm);
  
- 	if (skb_csum_unnecessary(skb_in) ||
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index 9ae2b2725bf9..c3d64c4b69d7 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -293,7 +293,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	fl6.fl6_sport = otcph->dest;
- 	fl6.fl6_dport = otcph->source;
- 
--	if (hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) {
-+	if (!skb_dst(oldskb)) {
- 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
- 		if (!dst)
- 			return;
-@@ -397,8 +397,7 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
- 
--	if ((hooknum == NF_INET_PRE_ROUTING || hooknum == NF_INET_INGRESS) &&
--	    nf_reject6_fill_skb_dst(skb_in) < 0)
-+	if (!skb_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
- 
- 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
+-	if (xe->info.has_asid) {
+-		down_write(&xe->usm.lock);
+-		err = xa_alloc_cyclic(&xe->usm.asid_to_vm, &asid, vm,
+-				      XA_LIMIT(1, XE_MAX_ASID - 1),
+-				      &xe->usm.next_asid, GFP_KERNEL);
+-		up_write(&xe->usm.lock);
+-		if (err < 0)
+-			goto err_close_and_put;
+-
+-		vm->usm.asid = asid;
+-	}
+-
+-	/* Record BO memory for VM pagetable created against client */
+-	for_each_tile(tile, xe, id)
+-		if (vm->pt_root[id])
+-			xe_drm_client_add_bo(vm->xef->client, vm->pt_root[id]->bo);
+-
+ #if IS_ENABLED(CONFIG_DRM_XE_DEBUG_MEM)
+ 	/* Warning: Security issue - never enable by default */
+ 	args->reserved[0] = xe_bo_main_addr(vm->pt_root[0]->bo, XE_PAGE_SIZE);
 -- 
 2.50.1
 
