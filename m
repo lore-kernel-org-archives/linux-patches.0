@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CA438DD8;
-	Tue, 26 Aug 2025 12:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F3042AA4;
+	Tue, 26 Aug 2025 12:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212696; cv=none; b=MIkF28/PL4wq/JZnDLsIPyN8NNur23ytrOcJvDwVI0G8r7tRkRUhtElE4FI3o6CPlr0WcCIbZVxIyDykGJmzIXHsnJ5QvAWy/wbuXDYFUrFsPes7JPQwiHBHRrmpcxx0c7MEGS350vhBETgUcFtDzlNehNGGw7xvlGPbJORTbLU=
+	t=1756212699; cv=none; b=VhJqV+qxvbFzakUqNHdzzH9Gm3bBmtCa/fUfKalGW5zTCxyqdoUZL6ldOOf8UU+RkMKEeVOQzY7PfYTSPWVM2A0/SJhZ5ikA15h31v3qyVH0+030NuOvq7Q4bB/+VJfs2NXD/88tN41IlJcDKUrKETHICTwgXcJ6ygDz9fqsOC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212696; c=relaxed/simple;
-	bh=A1juVJRsVfOilUgpx7M6rxSTVXVmEnyxoikVGiIn4tI=;
+	s=arc-20240116; t=1756212699; c=relaxed/simple;
+	bh=FEbGbljXCwzX69Zf4I4LFjfaW8nxzOq2mfDIOmWUWvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M28XPwwal3dXPdGJLSHieuVfIfONCQybTNHWM9N9Ef2DA+z9AEmZXU34t2jryeDTIiZ+/Sa4PaXKMjO0X8TvzjQ8F+S7batDkB9kV9xt7jN8YUZy9ZrQSzlPR718p8zutU0rtuN4H/rPJAU0Ct2hg0yql/RyqvskU9z2UF0ddKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvP5bfWa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QERNFEXHD4m1vcOmhZWS7lYxlHvospY9NUroaFxHA08hkcSXX47iO4kS0J2IIwLagAwZWm1ruIb21d1RyPKqlsF6GGCgb9lLDGA2+LLbjfnMKyl1Y1GN5Zy9W1DcMl9kbX9AJURVzqrrgrcbbtlNqLF06+CCjR6AT2MxtW2BUGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16xYOPRh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvP5bfWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C1FC4CEF1;
-	Tue, 26 Aug 2025 12:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16xYOPRh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7498BC4CEF4;
+	Tue, 26 Aug 2025 12:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212696;
-	bh=A1juVJRsVfOilUgpx7M6rxSTVXVmEnyxoikVGiIn4tI=;
+	s=korg; t=1756212698;
+	bh=FEbGbljXCwzX69Zf4I4LFjfaW8nxzOq2mfDIOmWUWvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvP5bfWaORfZa89GbM4vFXcNJkgoKfPFQ8RQEl75+gT6iFZM4wiT4/WWgJ2Hv8KID
-	 VmxMoGfG8/NTKKxEwoK+XAih9QFC2wZ7/tMn5q70AROs/8gOuQFS6k/TmLwrIShFMd
-	 ZnmyfaGvfaVu0hDQ5WcZprF2NuSxSBZHJvf5mPSI=
+	b=16xYOPRh9zmt7C9OHJB/j2aezd2HVgGDT4o3sugn4iq40V7dUKHAHS4cCzVf4DZPO
+	 ywTF4NhAGPDY2d4q2yhps/w8IbsF93xA4vWogO/lng4XYOHsEaxtYmEWN0UZ9+hCRZ
+	 2fWZbvuyQNIY4rqY72bsfQ4zK8wmxWvYq2IeKcBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/587] smb/server: avoid deadlock when linking with ReplaceIfExists
-Date: Tue, 26 Aug 2025 13:03:37 +0200
-Message-ID: <20250826110954.665029058@linuxfoundation.org>
+Subject: [PATCH 6.6 069/587] nvme-pci: try function level reset on init failure
+Date: Tue, 26 Aug 2025 13:03:38 +0200
+Message-ID: <20250826110954.689882131@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,80 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit d5fc1400a34b4ea5e8f2ce296ea12bf8c8421694 ]
+[ Upstream commit 5b2c214a95942f7997d1916a4c44017becbc3cac ]
 
-If smb2_create_link() is called with ReplaceIfExists set and the name
-does exist then a deadlock will happen.
+NVMe devices from multiple vendors appear to get stuck in a reset state
+that we can't get out of with an NVMe level Controller Reset. The kernel
+would report these with messages that look like:
 
-ksmbd_vfs_kern_path_locked() will return with success and the parent
-directory will be locked.  ksmbd_vfs_remove_file() will then remove the
-file.  ksmbd_vfs_link() will then be called while the parent is still
-locked.  It will try to lock the same parent and will deadlock.
+  Device not ready; aborting reset, CSTS=0x1
 
-This patch moves the ksmbd_vfs_kern_path_unlock() call to *before*
-ksmbd_vfs_link() and then simplifies the code, removing the file_present
-flag variable.
+These have historically required a power cycle to make them usable
+again, but in many cases, a PCIe FLR is sufficient to restart operation
+without a power cycle. Try it if the initial controller reset fails
+during any nvme reset attempt.
 
-Signed-off-by: NeilBrown <neil@brown.name>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ drivers/nvme/host/pci.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index d3dd3b9b4005..85e7bc3a2bd3 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6011,7 +6011,6 @@ static int smb2_create_link(struct ksmbd_work *work,
- {
- 	char *link_name = NULL, *target_name = NULL, *pathname = NULL;
- 	struct path path, parent_path;
--	bool file_present = false;
- 	int rc;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 97ab91a479d1..136dba6221d8 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1755,8 +1755,28 @@ static int nvme_pci_configure_admin_queue(struct nvme_dev *dev)
+ 	 * might be pointing at!
+ 	 */
+ 	result = nvme_disable_ctrl(&dev->ctrl, false);
+-	if (result < 0)
+-		return result;
++	if (result < 0) {
++		struct pci_dev *pdev = to_pci_dev(dev->dev);
++
++		/*
++		 * The NVMe Controller Reset method did not get an expected
++		 * CSTS.RDY transition, so something with the device appears to
++		 * be stuck. Use the lower level and bigger hammer PCIe
++		 * Function Level Reset to attempt restoring the device to its
++		 * initial state, and try again.
++		 */
++		result = pcie_reset_flr(pdev, false);
++		if (result < 0)
++			return result;
++
++		pci_restore_state(pdev);
++		result = nvme_disable_ctrl(&dev->ctrl, false);
++		if (result < 0)
++			return result;
++
++		dev_info(dev->ctrl.device,
++			"controller reset completed after pcie flr\n");
++	}
  
- 	if (buf_len < (u64)sizeof(struct smb2_file_link_info) +
-@@ -6044,11 +6043,8 @@ static int smb2_create_link(struct ksmbd_work *work,
- 	if (rc) {
- 		if (rc != -ENOENT)
- 			goto out;
--	} else
--		file_present = true;
--
--	if (file_info->ReplaceIfExists) {
--		if (file_present) {
-+	} else {
-+		if (file_info->ReplaceIfExists) {
- 			rc = ksmbd_vfs_remove_file(work, &path);
- 			if (rc) {
- 				rc = -EINVAL;
-@@ -6056,21 +6052,17 @@ static int smb2_create_link(struct ksmbd_work *work,
- 					    link_name);
- 				goto out;
- 			}
--		}
--	} else {
--		if (file_present) {
-+		} else {
- 			rc = -EEXIST;
- 			ksmbd_debug(SMB, "link already exists\n");
- 			goto out;
- 		}
-+		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
- 	}
--
- 	rc = ksmbd_vfs_link(work, target_name, link_name);
- 	if (rc)
- 		rc = -EINVAL;
- out:
--	if (file_present)
--		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
- 
- 	if (!IS_ERR(link_name))
- 		kfree(link_name);
+ 	result = nvme_alloc_queue(dev, 0, NVME_AQ_DEPTH);
+ 	if (result)
 -- 
 2.39.5
 
