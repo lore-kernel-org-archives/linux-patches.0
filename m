@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BA434320F;
-	Tue, 26 Aug 2025 13:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2562F0671;
+	Tue, 26 Aug 2025 13:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215995; cv=none; b=WUfbbAXlq+3ohhZe5DyJejAEGg8A2mOPY4CpVmirQ3JWehm8BgbWdi8H1iZOp9xQJa7pg79D3U29++oFBejWQoDei8MhQZ5pVjHh56hW95UvrnnwP3NS3K42Gz+sEcvoIG4Fg8dwSxxcYWGQ9Ex2vrKsKfkxr5XBenHJU6u8PQU=
+	t=1756215998; cv=none; b=RisqPkRMtjDZX60p+5t2WGBPYzpMN8mqRBb9I+lF0/nQhfv4bUFh55o8ygt3LtDMfSFv9uPKjUMM0wMZMaphG/gLrJbBLMIkx3irHWfmpI1cb+41J1rbl782Lv8o9ikz9chficFI//4K+Zf9/IveHIIy6CcWVxZ4y8W3kD9Qk7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215995; c=relaxed/simple;
-	bh=BkP6ahwJZ6AnBHIWGan7uxgmAq6V3xFaND3N084RaZs=;
+	s=arc-20240116; t=1756215998; c=relaxed/simple;
+	bh=/sp1+kAdxVk576aATu0PNy9cNdpcIlDsTdJ9nDkhqeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXacJpZ92wKB/16GZRNkw60XVB6UDKZlx/yipXTRfy/V+DQ7E4UskvAs2eclCPzqXkofMNBiwWCpg+Xw4fsdMf5bzRDuFaDRT10Vtih3XuabV6FeWRdqObP9bkVwNxiV6wiUSrZa8Ei1TQo3jUSIymsHw3zgVmvC5CCoCeCfnN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjjRSVoL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EaKf42tK/w3+du6TTtOZ5fWgg5ZvQUPeI0Xp1RAHzcxKQKvBZ+h8u7hFdJCHhI7+Ixanv0QaJHph+Dah40YsspQ1l05L8M8RUu2eMJdDKIFuBQtiLgmLgA7BvgYPaqERxylWFwZvWTy92/snVz++cCX+iSXpFcSjQTzu78cl+W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SQV0AHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjjRSVoL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454A9C113CF;
-	Tue, 26 Aug 2025 13:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SQV0AHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF10C4CEF1;
+	Tue, 26 Aug 2025 13:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215995;
-	bh=BkP6ahwJZ6AnBHIWGan7uxgmAq6V3xFaND3N084RaZs=;
+	s=korg; t=1756215998;
+	bh=/sp1+kAdxVk576aATu0PNy9cNdpcIlDsTdJ9nDkhqeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjjRSVoLYWHK7quClrNOllYoLK4RLb4ADNfNYOdoioud39ERvtLvcLzMeoeW5sPJg
-	 BAumsVtDzN5ZusCbeCsKUbXCGxw+A7/QlUDW8f/qrYk4CQhkuBnOlIdi02kDIQO/c+
-	 pxj2Buz08BAIt4xh3VkbFXZ3h5nyJy6/sSmbG7qY=
+	b=2SQV0AHRb3/4mWrbAovevGBQftYlmKDXDpW1/WJe4QjrL1HXKd1HX5knuAW9/lOLs
+	 lXgyse7OERaIn3D5MEg/Ti7xS7/wk4sJMYWkdMPHJtlxf/RekqLuVOdbgc/zMknC0S
+	 M4S45heZ081eSpvOUkGF/nJWchW328WCz/+vO4ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Subject: [PATCH 5.15 245/644] perf/core: Dont leak AUX buffer refcount on allocation failure
-Date: Tue, 26 Aug 2025 13:05:36 +0200
-Message-ID: <20250826110952.463987809@linuxfoundation.org>
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 228/644] NFSv4.2: another fix for listxattr
+Date: Tue, 26 Aug 2025 13:05:19 +0200
+Message-ID: <20250826110952.066195598@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,54 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-commit 5468c0fbccbb9d156522c50832244a8b722374fb upstream.
+[ Upstream commit 9acb237deff7667b0f6b10fe6b1b70c4429ea049 ]
 
-Failure of the AUX buffer allocation leaks the reference count.
+Currently, when the server supports NFS4.1 security labels then
+security.selinux label in included twice. Instead, only add it
+when the server doesn't possess security label support.
 
-Set the reference count to 1 only when the allocation succeeds.
-
-Fixes: 45bfb2e50471 ("perf/core: Add AUX area to ring buffer for raw data streams")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 243fea134633 ("NFSv4.2: fix listxattr to return selinux security label")
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Link: https://lore.kernel.org/r/20250722205641.79394-1-okorniev@redhat.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/nfs/nfs4proc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6477,9 +6477,7 @@ static int perf_mmap(struct file *file,
- 			goto unlock;
- 		}
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 9d4e4146efef..528e904f5475 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -10528,7 +10528,7 @@ const struct nfs4_minor_version_ops *nfs_v4_minor_ops[] = {
  
--		atomic_set(&rb->aux_mmap_count, 1);
- 		user_extra = nr_pages;
--
- 		goto accounting;
+ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ {
+-	ssize_t error, error2, error3, error4;
++	ssize_t error, error2, error3, error4 = 0;
+ 	size_t left = size;
+ 
+ 	error = generic_listxattr(dentry, list, left);
+@@ -10556,9 +10556,11 @@ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ 		left -= error3;
  	}
  
-@@ -6581,8 +6579,10 @@ accounting:
- 	} else {
- 		ret = rb_alloc_aux(rb, event, vma->vm_pgoff, nr_pages,
- 				   event->attr.aux_watermark, flags);
--		if (!ret)
-+		if (!ret) {
-+			atomic_set(&rb->aux_mmap_count, 1);
- 			rb->aux_mmap_locked = extra;
-+		}
- 	}
+-	error4 = security_inode_listsecurity(d_inode(dentry), list, left);
+-	if (error4 < 0)
+-		return error4;
++	if (!nfs_server_capable(d_inode(dentry), NFS_CAP_SECURITY_LABEL)) {
++		error4 = security_inode_listsecurity(d_inode(dentry), list, left);
++		if (error4 < 0)
++			return error4;
++	}
  
- unlock:
-@@ -6592,6 +6592,7 @@ unlock:
- 
- 		atomic_inc(&event->mmap_count);
- 	} else if (rb) {
-+		/* AUX allocation failed */
- 		atomic_dec(&rb->mmap_count);
- 	}
- aux_unlock:
+ 	error += error2 + error3 + error4;
+ 	if (size && error > size)
+-- 
+2.39.5
+
 
 
