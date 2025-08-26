@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC8F22DFA7;
-	Tue, 26 Aug 2025 14:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2563A22DFA7;
+	Tue, 26 Aug 2025 14:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217150; cv=none; b=q4/vRTZ6i84IQhaeLr8LttELj35F1TVq3YxWAsy8GS+kpFVTlq0m+TAmM76naYJk+zh3O0U6T4i3VtpP3quLJjC0HasKxrNDu9fRJQDmtYnQatuv2V7Ms+A43K90tW6ee+w2pSrAGSS8jNrs4T7zhnl7hYR/UTRQoKNq97PZ8hk=
+	t=1756217153; cv=none; b=SEXbUZDTHe0NPa2zo9c++RyniTPj2t/hz27AtkMInq7Fa42cJMv62witEbIu756yaxiVYVnyhhiwDU41FYYsIdkRvT7RERk2Xj0dIHD09Zc0V6UpIoGNAYG0gG9XEpEE4NbPTmWEp6vWVl+eky0oy3GXQhBnjw8mDxkO0Tmnut0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217150; c=relaxed/simple;
-	bh=a87FbD+mwRrrnnctClYEhYfT6wxIHq4pDOa3hf52ZLA=;
+	s=arc-20240116; t=1756217153; c=relaxed/simple;
+	bh=tnoxT/UjLfWKQ1og+KhiQZTeQeRU6IxUGlMRtt+mt4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1s0vCElZnYEr6ZmnRz1TymC94CglBSZbW+RR0koaG0OlWsSK8+DJNe//07HQtZyXbnyuUMzypwaedp3Vuw1JH7KDhhPybfy49ZVCnFvdN3BtQU/2qrIWlFqdTS8pZ7h2tbA0SZJ9/ckVlbaYDN1R0SPK+bkGrz8vbBJrXES4Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBFR2ctO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TrPl8kdWpEGzUJS0MjVzUXyZ2+KFWS+N570fzdhs9q8ave589dtBe/zQ35Kgo6yMhIDYNRQf/4DVvE4LSBKqrRT5yiLFml6m4E+z7TQcFpSxZJz7d+igX0kVPnWEimRaj3eWE1eqQvR6js9x/nqiANUpPi+2WLxlU82tiex4in4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUFgYrPe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBFR2ctO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FAFC113D0;
-	Tue, 26 Aug 2025 14:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUFgYrPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8692C4CEF1;
+	Tue, 26 Aug 2025 14:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217150;
-	bh=a87FbD+mwRrrnnctClYEhYfT6wxIHq4pDOa3hf52ZLA=;
+	s=korg; t=1756217153;
+	bh=tnoxT/UjLfWKQ1og+KhiQZTeQeRU6IxUGlMRtt+mt4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBFR2ctOjjNp4YsfL8PSA/Rj3oZGvNJo08dKmmKrgIm0pkGZd7F14bQPW1lLPOU22
-	 bRWouiEs2l1kT8jSwoa2J7YvfJ+mHJOXC76IVUK+JCBEYPoPizSqpV8scYXTZXP3VE
-	 FmEHYUwEpSl3IUlWv+AsonomCUMD9IiNAExsah5Q=
+	b=VUFgYrPePHg+lfdswCCJQG99tGa2859btASPyFSV19Ri/6hSHrvoLdnpDFADqNQdl
+	 RdyJLyUY9Sq4KT+AcgKykzNLFqqgu+RPdnjKLplaT61//yzimFUrIC+W+qaCADj09V
+	 EH3YnmPXofzkMfZ/XMhGFSOtW9x0mce+GTP805Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 5.10 009/523] pch_uart: Fix dma_sync_sg_for_device() nents value
-Date: Tue, 26 Aug 2025 13:03:39 +0200
-Message-ID: <20250826110924.808691838@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 5.10 010/523] HID: core: ensure the allocated report buffer can contain the reserved report ID
+Date: Tue, 26 Aug 2025 13:03:40 +0200
+Message-ID: <20250826110924.834196417@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,36 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-commit 6c0e9f05c9d7875995b0e92ace71be947f280bbd upstream.
+commit 4f15ee98304b96e164ff2340e1dfd6181c3f42aa upstream.
 
-The dma_sync_sg_for_device() functions should be called with the same
-nents as the dma_map_sg(), not the value the map function returned
-according to the documentation in Documentation/core-api/dma-api.rst:450:
-	With the sync_sg API, all the parameters must be the same
-	as those passed into the sg mapping API.
+When the report ID is not used, the low level transport drivers expect
+the first byte to be 0. However, currently the allocated buffer not
+account for that extra byte, meaning that instead of having 8 guaranteed
+bytes for implement to be working, we only have 7.
 
-Fixes: da3564ee027e ("pch_uart: add multi-scatter processing")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250701113452.18590-2-fourier.thomas@gmail.com
+Reported-by: Alan Stern <stern@rowland.harvard.edu>
+Closes: https://lore.kernel.org/linux-input/c75433e0-9b47-4072-bbe8-b1d14ea97b13@rowland.harvard.edu/
+Cc: stable@vger.kernel.org
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20250710-report-size-null-v2-1-ccf922b7c4e5@kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/pch_uart.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -1018,7 +1018,7 @@ static unsigned int dma_handle_tx(struct
- 			__func__);
- 		return 0;
- 	}
--	dma_sync_sg_for_device(port->dev, priv->sg_tx_p, nent, DMA_TO_DEVICE);
-+	dma_sync_sg_for_device(port->dev, priv->sg_tx_p, num, DMA_TO_DEVICE);
- 	priv->desc_tx = desc;
- 	desc->callback = pch_dma_tx_complete;
- 	desc->callback_param = priv;
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1662,9 +1662,12 @@ u8 *hid_alloc_report_buf(struct hid_repo
+ 	/*
+ 	 * 7 extra bytes are necessary to achieve proper functionality
+ 	 * of implement() working on 8 byte chunks
++	 * 1 extra byte for the report ID if it is null (not used) so
++	 * we can reserve that extra byte in the first position of the buffer
++	 * when sending it to .raw_request()
+ 	 */
+ 
+-	u32 len = hid_report_len(report) + 7;
++	u32 len = hid_report_len(report) + 7 + (report->id == 0);
+ 
+ 	return kzalloc(len, flags);
+ }
 
 
