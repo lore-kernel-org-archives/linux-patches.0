@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD4B2BE643;
-	Tue, 26 Aug 2025 13:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742CE8635D;
+	Tue, 26 Aug 2025 13:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214453; cv=none; b=e7pygR8r7ZRedldNaPDQQfLajfhMoAYRbPwBIUu//wJXiR1IPSZbC7xRZ10itWfPu7tfOfeZwfVivqO+ESeBebw2hfeqMmhUBqXcbQ5oZJPKdlosJai+I5aZXZ20D7dFACycgBF+rLPfLLBBuUUE41qrXIYRGjg6K8wsnnIfe+I=
+	t=1756214456; cv=none; b=hdMAshOLSLyUHRZpSCQw3eMZ2moHtwV8ijZA5xNItFUis2+xczQGwTcf9inddlA4Fx+SDl4RmUjc/G2i2qvdZibiwyYiH6DuoW3BEA0vADVaL5x7HnE78Ji5Aokkcl6V2xRAvnQyrpXowgzFgbCyi+lljM+46tQRTLbVXsP5CXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214453; c=relaxed/simple;
-	bh=lWLj21lEnzFfo7t6GBlour637Hm7HCSmjpPvhj9TX5k=;
+	s=arc-20240116; t=1756214456; c=relaxed/simple;
+	bh=PgPghhWnL5IHVTfhrUlHAWCCPzy2KgpXgWof/SFxPFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKqtYJMjXquSg6nKW/6iOPh21h7sP4PFGmFI+D72RhPIKBu4WmWLJfG7FGugX0AjLtbmepK6rSryBh8qx0OBmMPo3WPs1LI6RiiO8XP0Tu+JPOq6oTMv/2/wn3uaYVdd1HfgX3fub4PzYYu2qykU+UzLS93gG7tOEyxUpbs/DMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB/IpiAC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WgxO3T/UpPEWPUDL5wJVSUuYLz0Rg2f0aR4Kq/cocuAC8ZH93MCvnwrA6DjqVq+8CRlbbG3qq2Y4wmfkA75oIXNkvOUhgQF0q6Lj2fffooTmc5YChdXFqnM8G0S9O8CiQuepcwjEJ7vsdOgC8pHm61nA/T4MeBG9NjFZeFrjBM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJZuV8rX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB/IpiAC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599FEC4CEF1;
-	Tue, 26 Aug 2025 13:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJZuV8rX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074B2C113CF;
+	Tue, 26 Aug 2025 13:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214453;
-	bh=lWLj21lEnzFfo7t6GBlour637Hm7HCSmjpPvhj9TX5k=;
+	s=korg; t=1756214456;
+	bh=PgPghhWnL5IHVTfhrUlHAWCCPzy2KgpXgWof/SFxPFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JB/IpiACpyF3z9N4IJhrWRnkjedcMlDqSqxITB7/7bz9MiqYeYGWSvRuD9wtxH+Lq
-	 24jL+eCr7oxu8ExKKFq7XykgK/OJIHeAoSAFkv6f/BpRp+On5ombEPim9oTHhcT5a1
-	 LGvnKmGH0bET0DCP4H5iaANVMVWG3cVfJJUp3Igw=
+	b=tJZuV8rXz2zz9Y0KFCpC8zGjSTwGki1Mtsm7gOsDgp5wQBWndqGckrtLTCs4XAkDw
+	 cEqBUodS5jYEJHXlgkuIV6I64nvoFsIzYH6Qp54oV/p5A96OwVFjjaYvyil+LzSIfN
+	 FPjOjTO1+UPQEbkkKCnxkxw3pKc05V6fT9WaPduo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/482] wifi: cfg80211: reject HTC bit for management frames
-Date: Tue, 26 Aug 2025 13:06:09 +0200
-Message-ID: <20250826110933.690669628@linuxfoundation.org>
+Subject: [PATCH 6.1 143/482] net: fec: allow disable coalescing
+Date: Tue, 26 Aug 2025 13:06:36 +0200
+Message-ID: <20250826110934.349813093@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,36 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jonas Rebmann <jre@pengutronix.de>
 
-[ Upstream commit be06a8c7313943109fa870715356503c4c709cbc ]
+[ Upstream commit b7ad21258f9e9a7f58b19595d5ceed2cde3bed68 ]
 
-Management frames sent by userspace should never have the
-order/HTC bit set, reject that. It could also cause some
-confusion with the length of the buffer and the header so
-the validation might end up wrong.
+In the current implementation, IP coalescing is always enabled and
+cannot be disabled.
 
-Link: https://patch.msgid.link/20250718202307.97a0455f0f35.I1805355c7e331352df16611839bc8198c855a33f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+As setting maximum frames to 0 or 1, or setting delay to zero implies
+immediate delivery of single packets/IRQs, disable coalescing in
+hardware in these cases.
+
+This also guarantees that coalescing is never enabled with ICFT or ICTT
+set to zero, a configuration that could lead to unpredictable behaviour
+according to i.MX8MP reference manual.
+
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250626-fec_deactivate_coalescing-v2-1-0b217f2e80da@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/mlme.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/fec_main.c | 34 +++++++++++------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index e7fa0608341d..e0246ed9f66f 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -700,7 +700,8 @@ int cfg80211_mlme_mgmt_tx(struct cfg80211_registered_device *rdev,
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 4a513dba8f53..d10db5d6d226 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -2831,27 +2831,25 @@ static int fec_enet_us_to_itr_clock(struct net_device *ndev, int us)
+ static void fec_enet_itr_coal_set(struct net_device *ndev)
+ {
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
+-	int rx_itr, tx_itr;
++	u32 rx_itr = 0, tx_itr = 0;
++	int rx_ictt, tx_ictt;
  
- 	mgmt = (const struct ieee80211_mgmt *)params->buf;
+-	/* Must be greater than zero to avoid unpredictable behavior */
+-	if (!fep->rx_time_itr || !fep->rx_pkts_itr ||
+-	    !fep->tx_time_itr || !fep->tx_pkts_itr)
+-		return;
+-
+-	/* Select enet system clock as Interrupt Coalescing
+-	 * timer Clock Source
+-	 */
+-	rx_itr = FEC_ITR_CLK_SEL;
+-	tx_itr = FEC_ITR_CLK_SEL;
++	rx_ictt = fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr);
++	tx_ictt = fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr);
  
--	if (!ieee80211_is_mgmt(mgmt->frame_control))
-+	if (!ieee80211_is_mgmt(mgmt->frame_control) ||
-+	    ieee80211_has_order(mgmt->frame_control))
- 		return -EINVAL;
+-	/* set ICFT and ICTT */
+-	rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
+-	rx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr));
+-	tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
+-	tx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr));
++	if (rx_ictt > 0 && fep->rx_pkts_itr > 1) {
++		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
++		rx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
++		rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
++		rx_itr |= FEC_ITR_ICTT(rx_ictt);
++	}
  
- 	stype = le16_to_cpu(mgmt->frame_control) & IEEE80211_FCTL_STYPE;
+-	rx_itr |= FEC_ITR_EN;
+-	tx_itr |= FEC_ITR_EN;
++	if (tx_ictt > 0 && fep->tx_pkts_itr > 1) {
++		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
++		tx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
++		tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
++		tx_itr |= FEC_ITR_ICTT(tx_ictt);
++	}
+ 
+ 	writel(tx_itr, fep->hwp + FEC_TXIC0);
+ 	writel(rx_itr, fep->hwp + FEC_RXIC0);
 -- 
 2.39.5
 
