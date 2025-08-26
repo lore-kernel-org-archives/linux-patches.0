@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BE92BF3E2;
-	Tue, 26 Aug 2025 11:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8A62C15A8;
+	Tue, 26 Aug 2025 11:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207566; cv=none; b=qYsXWE49ouC22cEGXIfPYXyK1a/xMwUaQNXmNhXNP5V2Qxzckf+iZMcuSkbLidhWK4jn6YB4CEwJaplYu2N1ptZrWaaKs/IFiRexvzoKdYe+Wi83L9/T9SWV6gEUgcw0ADsgZE4LZSD8zGQBofs1fOyPoHUFue2wIwfKz3LILdQ=
+	t=1756207569; cv=none; b=tsnsvYkpZYi5UzL3uhO3/PvZ/ZBCmI4fr/NpHIfKhzmjq8+4QWYJJ6usXWbBQLUgla3MOtVJpXOFajjnzqb1gkpG1ETaFfmbdD4gwc2ABxZmOAltCljFBTG5Rz8ccFE2+10qIibyEEF/nd19o0pHybMwwt1qFA++OzafL0//fy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207566; c=relaxed/simple;
-	bh=4b3FkIYgmB4wDnklzmm79XiMdXRWIKbc1915vplQWHM=;
+	s=arc-20240116; t=1756207569; c=relaxed/simple;
+	bh=pI3ksxWmEVmlzSzZkWnNqZU9mEsMTl+aKXQdwg3EmZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=besRYu/Mh9fsqphIkNbc2cjxxwrVKdTTNQefhcdfLfWwS2qSXbAJ73P8vCRhzZrrat1+1YmeX/rCTZZe1sKaO/oiS+XXNzgns3ewH0vU5XCGzzJM/0nPh8TBgUHYLAFoSPAfjkF5sQeAReTZFvh/7txnNDT+2HbtZxDiPlxEpbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xurVA0sq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bB0Iqcvd7P5VhJBukvc0TJGfqKvvalGvJApG4liTRy/GYXbeRg0Adq81dbsI+8+PrUmohas9jC9xcjtJL5CihBlQim/tRE5ApTJeMcJUJtrQDrKFhF1JIafb32P+vYAiLkr5e4GVEt8inMIXY7HTaQ/w2hI+yt7TdBajiZ1haCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWwSZcS4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xurVA0sq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D802C4CEF1;
-	Tue, 26 Aug 2025 11:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWwSZcS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E25AC4CEF1;
+	Tue, 26 Aug 2025 11:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207565;
-	bh=4b3FkIYgmB4wDnklzmm79XiMdXRWIKbc1915vplQWHM=;
+	s=korg; t=1756207568;
+	bh=pI3ksxWmEVmlzSzZkWnNqZU9mEsMTl+aKXQdwg3EmZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xurVA0sqwHxJYCkLDAKIC2Pug1vxuRVHUHI5nF9CeI0Lw0Y+WjiKdnVyPOMg3PZiH
-	 CoCjz8XBjZv0MBHJCG3JBWNSYLobssg2ompFpeemZDQJ0RiXH8QuU2ijif8LTA0SiW
-	 Mns6CI9Elg5BBJfJUYg405r+CV56/Ou6+MVWJ05o=
+	b=IWwSZcS4iZ+/OH0TQaqsNTEIKfBFBT8vSQw7D+hHycukyz/m42XsIhfnbAfxftg/u
+	 oeuSrL+hGX2hRL1ceeBXGbFLiZ7cwMup9gdGWzT8Mi+EjhyNzlj3KR7sGrMXdJV9hH
+	 QNTjQq7V5xe9i/iMjyS7tieFHDW0yx9BOQvSgfDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Maximilian Bosch <maximilian@mbosch.me>,
-	Ryan Lahfa <ryan@lahfa.xyz>,
-	Christian Theune <ct@flyingcircus.io>,
-	Arnout Engelen <arnout@bzzt.net>,
-	David Howells <dhowells@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 232/457] iov_iter: iterate_folioq: fix handling of offset >= folio size
-Date: Tue, 26 Aug 2025 13:08:36 +0200
-Message-ID: <20250826110943.106915181@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 215/457] btrfs: reorganize logic at free_extent_buffer() for better readability
+Date: Tue, 26 Aug 2025 13:08:19 +0200
+Message-ID: <20250826110942.678676088@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -58,82 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 808471ddb0fa785559c3e7aee59be20a13b46ef5 upstream.
+[ Upstream commit 71c086b30d4373a01bd5627f54516a72891a026a ]
 
-It's apparently possible to get an iov advanced all the way up to the end
-of the current page we're looking at, e.g.
+It's hard to read the logic to break out of the while loop since it's a
+very long expression consisting of a logical or of two composite
+expressions, each one composed by a logical and. Further each one is also
+testing for the EXTENT_BUFFER_UNMAPPED bit, making it more verbose than
+necessary.
 
-(gdb) p *iter
-$24 = {iter_type = 4 '\004', nofault = false, data_source = false, iov_offset = 4096, {__ubuf_iovec = {
-      iov_base = 0xffff88800f5bc000, iov_len = 655}, {{__iov = 0xffff88800f5bc000, kvec = 0xffff88800f5bc000,
-        bvec = 0xffff88800f5bc000, folioq = 0xffff88800f5bc000, xarray = 0xffff88800f5bc000,
-        ubuf = 0xffff88800f5bc000}, count = 655}}, {nr_segs = 2, folioq_slot = 2 '\002', xarray_start = 2}}
+So change from this:
 
-Where iov_offset is 4k with 4k-sized folios
+    if ((!test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags) && refs <= 3)
+        || (test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags) &&
+            refs == 1))
+       break;
 
-This should have been fine because we're only in the 2nd slot and there's
-another one after this, but iterate_folioq should not try to map a folio
-that skips the whole size, and more importantly part here does not end up
-zero (because 'PAGE_SIZE - skip % PAGE_SIZE' ends up PAGE_SIZE and not
-zero..), so skip forward to the "advance to next folio" code
+To this:
 
-Link: https://lkml.kernel.org/r/20250813-iot_iter_folio-v3-0-a0ffad2b665a@codewreck.org
-Link: https://lkml.kernel.org/r/20250813-iot_iter_folio-v3-1-a0ffad2b665a@codewreck.org
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Fixes: db0aa2e9566f ("mm: Define struct folio_queue and ITER_FOLIOQ to handle a sequence of folios")
-Reported-by: Maximilian Bosch <maximilian@mbosch.me>
-Reported-by: Ryan Lahfa <ryan@lahfa.xyz>
-Reported-by: Christian Theune <ct@flyingcircus.io>
-Reported-by: Arnout Engelen <arnout@bzzt.net>
-Link: https://lkml.kernel.org/r/D4LHHUNLG79Y.12PI0X6BEHRHW@mbosch.me/
-Acked-by: David Howells <dhowells@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>	[6.12+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+    if (test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags)) {
+        if (refs == 1)
+            break;
+    } else if (refs <= 3) {
+            break;
+    }
+
+At least on x86_64 using gcc 9.3.0, this doesn't change the object size.
+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: ad580dfa388f ("btrfs: fix subpage deadlock in try_release_subpage_extent_buffer()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/iov_iter.h |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ fs/btrfs/extent_io.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/include/linux/iov_iter.h
-+++ b/include/linux/iov_iter.h
-@@ -160,7 +160,7 @@ size_t iterate_folioq(struct iov_iter *i
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -3486,10 +3486,13 @@ void free_extent_buffer(struct extent_bu
  
- 	do {
- 		struct folio *folio = folioq_folio(folioq, slot);
--		size_t part, remain, consumed;
-+		size_t part, remain = 0, consumed;
- 		size_t fsize;
- 		void *base;
- 
-@@ -168,14 +168,16 @@ size_t iterate_folioq(struct iov_iter *i
+ 	refs = atomic_read(&eb->refs);
+ 	while (1) {
+-		if ((!test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags) && refs <= 3)
+-		    || (test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags) &&
+-			refs == 1))
++		if (test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags)) {
++			if (refs == 1)
++				break;
++		} else if (refs <= 3) {
  			break;
- 
- 		fsize = folioq_folio_size(folioq, slot);
--		base = kmap_local_folio(folio, skip);
--		part = umin(len, PAGE_SIZE - skip % PAGE_SIZE);
--		remain = step(base, progress, part, priv, priv2);
--		kunmap_local(base);
--		consumed = part - remain;
--		len -= consumed;
--		progress += consumed;
--		skip += consumed;
-+		if (skip < fsize) {
-+			base = kmap_local_folio(folio, skip);
-+			part = umin(len, PAGE_SIZE - skip % PAGE_SIZE);
-+			remain = step(base, progress, part, priv, priv2);
-+			kunmap_local(base);
-+			consumed = part - remain;
-+			len -= consumed;
-+			progress += consumed;
-+			skip += consumed;
 +		}
- 		if (skip >= fsize) {
- 			skip = 0;
- 			slot++;
++
+ 		if (atomic_try_cmpxchg(&eb->refs, &refs, refs - 1))
+ 			return;
+ 	}
 
 
