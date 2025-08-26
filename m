@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E129235208F;
-	Tue, 26 Aug 2025 14:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CDB3314DF;
+	Tue, 26 Aug 2025 14:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216848; cv=none; b=I3lqMlz6RyG86kfvV+iOkqKtpWxzNdDbKtXi5XHljvHbfTuqUfr8djM753z6nEgecgmUsn7+8ZBML2vvaJCF4GVXo4CjlXE8QtvxFyxmyvpMyo4aSPTygh3hWJgMBpbsaptWy9Kk9ypaBdcJ+bneCsEk3LdGzYIYKP3nbW2cS6g=
+	t=1756216850; cv=none; b=nPo1WghzDK27bWcb7LRQM2wWwm60l5gF9hZHFSGVGYAAayPnYKHshKCIlWu5Fa0DuvU5+sX+T4WZPL79omKaZSFcMtFEV4mxzkCGeFTHrbkDx+HLscBEzhmXTKwjsJ5Uwn3OhtEl/Gt/yJXkXMi22UlZqLrloFU+cuevj8Mc13U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216848; c=relaxed/simple;
-	bh=ghC3mzWSkhiQdCv3/Q1GxYRWPHmCCgw3VhDaeN6LVS0=;
+	s=arc-20240116; t=1756216850; c=relaxed/simple;
+	bh=cX69JnvKQWbvuJ2JfwM8unpzn33zr1fpG9nQY5+l+jY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dVFBHTOPevVm84qwtWmTW1xn5Vccx37memj9fGEBmx2VeZIYihlokT1XZYSLP+8ABUEPG2oQhHz4ED/bRik4upMiMZB63A1ANgKBH+WNxJtLT/1PejsDnUtISJ/l3AlaTHvlgpQ8vLF14edO1KxZmsOmGN5zG5iaydTRq++tQwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJDiGyxD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jq1/URLMjZT2Hl2Hj3fG04lAW+Jd+qmLYP9ePzSzjYqgEETbvBwnCw5EepZOCnTUgfgxZ03M258OgyEVUUh1VaiQoFTNcmlW7j00WdTQV3BHPm4K2XpauJNti0JDG4N2y06uuOettuyyMzLb9SX6eKpgTQUeEY7TPF0gwh+aw9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1/BLPkz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJDiGyxD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73166C4CEF1;
-	Tue, 26 Aug 2025 14:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1/BLPkz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12848C4CEF1;
+	Tue, 26 Aug 2025 14:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216847;
-	bh=ghC3mzWSkhiQdCv3/Q1GxYRWPHmCCgw3VhDaeN6LVS0=;
+	s=korg; t=1756216850;
+	bh=cX69JnvKQWbvuJ2JfwM8unpzn33zr1fpG9nQY5+l+jY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJDiGyxDCQi0IImxUXkbLZQxw+iq307VomJrZk2Z2LyUPI1P6kvXauGP2EGjkLtdh
-	 1A3uydVfApz2N75Z7PnJnaRfX5hpdikZ3z3fpdudGhTCwrcY+L2M+pOAs+DOLe12wD
-	 b3Oxdk41a6ypDhUFX7B8tAw7nAdXw6zyl/h8cROc=
+	b=H1/BLPkzZ9u8iw2hwzALhbIwSJCeOeJDnhp9eKr/eeXDMrGGsXRb6xMEc9KQwqCjv
+	 mtaKePd5f12Z+Ls9NZUXU6DR+xxbYg+NNCHvJOLWcKczhAkRWvNaYfBrnA7n/7ffwa
+	 lDZLMmoFkH9HusPBZ6gq+NxcL9mJzOUZsdhfyP7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
+	Victor Shih <victor.shih@genesyslogic.com.tw>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 564/644] memstick: Fix deadlock by moving removing flag earlier
-Date: Tue, 26 Aug 2025 13:10:55 +0200
-Message-ID: <20250826111000.507311054@linuxfoundation.org>
+Subject: [PATCH 5.15 565/644] mmc: sdhci-pci-gli: GL9763e: Rename the gli_set_gl9763e() for consistency
+Date: Tue, 26 Aug 2025 13:10:56 +0200
+Message-ID: <20250826111000.532963533@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,80 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: Victor Shih <victor.shih@genesyslogic.com.tw>
 
-commit 99d7ab8db9d8230b243f5ed20ba0229e54cc0dfa upstream.
+commit 293ed0f5f34e1e9df888456af4b0a021f57b5f54 upstream.
 
-The existing memstick core patch: commit 62c59a8786e6 ("memstick: Skip
-allocating card when removing host") sets host->removing in
-memstick_remove_host(),but still exists a critical time window where
-memstick_check can run after host->eject is set but before removing is set.
+In preparation to fix replay timer timeout, rename the
+gli_set_gl9763e() to gl9763e_hw_setting() for consistency.
 
-In the rtsx_usb_ms driver, the problematic sequence is:
-
-rtsx_usb_ms_drv_remove:          memstick_check:
-  host->eject = true
-  cancel_work_sync(handle_req)     if(!host->removing)
-  ...                              memstick_alloc_card()
-                                     memstick_set_rw_addr()
-                                       memstick_new_req()
-                                         rtsx_usb_ms_request()
-                                           if(!host->eject)
-                                           skip schedule_work
-                                       wait_for_completion()
-  memstick_remove_host:                [blocks indefinitely]
-    host->removing = true
-    flush_workqueue()
-    [block]
-
-1. rtsx_usb_ms_drv_remove sets host->eject = true
-2. cancel_work_sync(&host->handle_req) runs
-3. memstick_check work may be executed here <-- danger window
-4. memstick_remove_host sets removing = 1
-
-During this window (step 3), memstick_check calls memstick_alloc_card,
-which may indefinitely waiting for mrq_complete completion that will
-never occur because rtsx_usb_ms_request sees eject=true and skips
-scheduling work, memstick_set_rw_addr waits forever for completion.
-
-This causes a deadlock when memstick_remove_host tries to flush_workqueue,
-waiting for memstick_check to complete, while memstick_check is blocked
-waiting for mrq_complete completion.
-
-Fix this by setting removing=true at the start of rtsx_usb_ms_drv_remove,
-before any work cancellation. This ensures memstick_check will see the
-removing flag immediately and exit early, avoiding the deadlock.
-
-Fixes: 62c59a8786e6 ("memstick: Skip allocating card when removing host")
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
+Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
+Fixes: 1ae1d2d6e555 ("mmc: sdhci-pci-gli: Add Genesys Logic GL9763E support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250804013604.1311218-1-lijiayi@kylinos.cn
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250731065752.450231-3-victorshihgli@gmail.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/core/memstick.c    |    1 -
- drivers/memstick/host/rtsx_usb_ms.c |    1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-gli.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/memstick/core/memstick.c
-+++ b/drivers/memstick/core/memstick.c
-@@ -548,7 +548,6 @@ EXPORT_SYMBOL(memstick_add_host);
-  */
- void memstick_remove_host(struct memstick_host *host)
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -860,7 +860,7 @@ static void sdhci_gl9763e_reset(struct s
+ 	sdhci_reset(host, mask);
+ }
+ 
+-static void gli_set_gl9763e(struct sdhci_pci_slot *slot)
++static void gl9763e_hw_setting(struct sdhci_pci_slot *slot)
  {
--	host->removing = 1;
- 	flush_workqueue(workqueue);
- 	mutex_lock(&host->lock);
- 	if (host->card)
---- a/drivers/memstick/host/rtsx_usb_ms.c
-+++ b/drivers/memstick/host/rtsx_usb_ms.c
-@@ -812,6 +812,7 @@ static int rtsx_usb_ms_drv_remove(struct
- 	int err;
+ 	struct pci_dev *pdev = slot->chip->pdev;
+ 	u32 value;
+@@ -918,7 +918,7 @@ static int gli_probe_slot_gl9763e(struct
+ 	gli_pcie_enable_msi(slot);
+ 	host->mmc_host_ops.hs400_enhanced_strobe =
+ 					gl9763e_hs400_enhanced_strobe;
+-	gli_set_gl9763e(slot);
++	gl9763e_hw_setting(slot);
+ 	sdhci_enable_v4_mode(host);
  
- 	host->eject = true;
-+	msh->removing = true;
- 	cancel_work_sync(&host->handle_req);
- 	cancel_delayed_work_sync(&host->poll_card);
- 
+ 	return 0;
 
 
