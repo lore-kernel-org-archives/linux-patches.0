@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7706188000;
-	Tue, 26 Aug 2025 12:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E08B1FF1C4;
+	Tue, 26 Aug 2025 12:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212780; cv=none; b=LNPcEkLmg2yCOrxYJ67+v7ZZhC3EP+l1B9cAdIRJo6nm8soCY4AP7i65/y+pVMa9BxGTcsbCrSDEzJoFMfvXnqvhDFoTz9e7gIsszClxOLnPmMgFTFIoI8AxMaYegI6v8LlcCNi+6qCGMnQIbNnPWQSvEwDK7i/v/ZK32WoyEZc=
+	t=1756212783; cv=none; b=ZaPzJxiDQ2bNvA4KagQUQJdepBIVx+lErbnSf94/4cvqwb/2K89Ni0/Riryt+BpiniYmeqnnBVtnnfkmngWfC3nJwJWK0mHyj/a8uc1evsmqTXN6GqWyFO7BvYhmbOfTI/DQzmLa9Yd7Xm1KtH5M6DFkd2gU0ngHKwzkfMN1AT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212780; c=relaxed/simple;
-	bh=8kH1M4sMlEflfySN+BkxVyeSyfBLRpddDwgfp1v8reM=;
+	s=arc-20240116; t=1756212783; c=relaxed/simple;
+	bh=jc24UHJUWxcZnnHCpAmjIR7gZgUwXg5xWJV8X7FiVsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zeb+ZE8PW/lSzgKwkrCWhEcnrWPNeHaTxYQwU+WHoC1OLqoYDNFw8mzqXnSsMvmKZOFR/IEAwj75pMgerj+EVLl1PrMPmfM+iPEFmOde9WXhSxkzvFNsweKgh6UFQ288eLvpa39xoM/6SAM6P4qtfQL77rbuxn2bbSMM/n3HVqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puCJB9vZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VTZouhQMFz8OOMTIMqncswC1pi+IhvkeLkQgdHDcImL5blddR+A5jeaf+NKsB4bpze+qKGMRklv76pSTKNYJ/qLzJVT3jpQ5QDH+PeimDxVHp6TmyZvIIjQneDHtG0YspKkm8jfNjIPARFu1U/kNFei5Xo3kMYHmLEnFyhTtrzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNyCRhDA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puCJB9vZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D126FC4CEF1;
-	Tue, 26 Aug 2025 12:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNyCRhDA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75864C113CF;
+	Tue, 26 Aug 2025 12:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212780;
-	bh=8kH1M4sMlEflfySN+BkxVyeSyfBLRpddDwgfp1v8reM=;
+	s=korg; t=1756212782;
+	bh=jc24UHJUWxcZnnHCpAmjIR7gZgUwXg5xWJV8X7FiVsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puCJB9vZPuGR7vvpXuZNxLXvRR5+HYNCWS7o6GpX2FYC7saIWj+emdKL4cqTK5kCh
-	 g18p1ww3xgkUCGL96fkkmpRqydwHVNmUnTmu9W8hl/FwgjlHPZosgEWbwhGT7QYgWo
-	 HL/wbUCrm/2Gnot6l/Ng1CnU9rxOuIRVFg5coOYc=
+	b=LNyCRhDAa334+cqezW9UO/7SDscUCAjgpgfZNPu4uI0P+PON3fNcD9jy2CC0Oa6W6
+	 kbjN/+2Qq97DFHZB2VbC4OOoN4+6dEH8M32Ppiloxu6DN4Q+fA/FGIydPsgXbqX9yy
+	 zwGrpObtBwP/CV9m/WCxhypDSTmPQAWdUza2Aasw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Collins <david.collins@oss.qualcomm.com>,
-	Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/587] thermal/drivers/qcom-spmi-temp-alarm: Enable stage 2 shutdown when required
-Date: Tue, 26 Aug 2025 13:04:09 +0200
-Message-ID: <20250826110955.487150578@linuxfoundation.org>
+Subject: [PATCH 6.6 101/587] tools/nolibc: define time_t in terms of __kernel_old_time_t
+Date: Tue, 26 Aug 2025 13:04:10 +0200
+Message-ID: <20250826110955.511066167@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -46,159 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Collins <david.collins@oss.qualcomm.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit f8e157ff2df46ddabd930815d196895976227831 ]
+[ Upstream commit d5094bcb5bfdfea2cf0de8aaf77cc65db56cbdb5 ]
 
-Certain TEMP_ALARM GEN2 PMIC peripherals need over-temperature stage 2
-automatic PMIC partial shutdown. This will ensure that in the event of
-reaching the hotter stage 3 over-temperature threshold, repeated faults
-will be avoided during the automatic PMIC hardware full shutdown.
-Modify the stage 2 shutdown control logic to ensure that stage 2
-shutdown is enabled on all affected PMICs. Read the digital major
-and minor revision registers to identify these PMICs.
+Nolibc assumes that the kernel ABI is using a time values that are as
+large as a long integer. For most ABIs this holds true.
+But for x32 this is not correct, as it uses 32bit longs but 64bit times.
 
-Signed-off-by: David Collins <david.collins@oss.qualcomm.com>
-Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250710224555.3047790-2-anjelique.melendez@oss.qualcomm.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Also the 'struct stat' implementation of nolibc relies on timespec::tv_sec
+and time_t being the same type. While timespec::tv_sec comes from the
+kernel and is of type __kernel_old_time_t, time_t is defined within nolibc.
+
+Switch to the __kernel_old_time_t to always get the correct type.
+
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20250712-nolibc-x32-v1-1-6d81cb798710@weissschuh.net
+Acked-by: Willy Tarreau <w@1wt.eu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 43 ++++++++++++++++-----
- 1 file changed, 34 insertions(+), 9 deletions(-)
+ tools/include/nolibc/std.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index 78c5cfe6a0c0..eeccf905f83e 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-  * Copyright (c) 2011-2015, 2017, 2020, The Linux Foundation. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
+diff --git a/tools/include/nolibc/std.h b/tools/include/nolibc/std.h
+index 933bc0be7e1c..a9d8b5b51f37 100644
+--- a/tools/include/nolibc/std.h
++++ b/tools/include/nolibc/std.h
+@@ -20,6 +20,8 @@
  
- #include <linux/bitops.h>
-@@ -16,6 +17,7 @@
+ #include "stdint.h"
  
- #include "../thermal_hwmon.h"
- 
-+#define QPNP_TM_REG_DIG_MINOR		0x00
- #define QPNP_TM_REG_DIG_MAJOR		0x01
- #define QPNP_TM_REG_TYPE		0x04
- #define QPNP_TM_REG_SUBTYPE		0x05
-@@ -31,7 +33,7 @@
- #define STATUS_GEN2_STATE_MASK		GENMASK(6, 4)
- #define STATUS_GEN2_STATE_SHIFT		4
- 
--#define SHUTDOWN_CTRL1_OVERRIDE_S2	BIT(6)
-+#define SHUTDOWN_CTRL1_OVERRIDE_STAGE2	BIT(6)
- #define SHUTDOWN_CTRL1_THRESHOLD_MASK	GENMASK(1, 0)
- 
- #define SHUTDOWN_CTRL1_RATE_25HZ	BIT(3)
-@@ -79,6 +81,7 @@ struct qpnp_tm_chip {
- 	/* protects .thresh, .stage and chip registers */
- 	struct mutex			lock;
- 	bool				initialized;
-+	bool				require_stage2_shutdown;
- 
- 	struct iio_channel		*adc;
- 	const long			(*temp_map)[THRESH_COUNT][STAGE_COUNT];
-@@ -221,13 +224,13 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- {
- 	long stage2_threshold_min = (*chip->temp_map)[THRESH_MIN][1];
- 	long stage2_threshold_max = (*chip->temp_map)[THRESH_MAX][1];
--	bool disable_s2_shutdown = false;
-+	bool disable_stage2_shutdown = false;
- 	u8 reg;
- 
- 	WARN_ON(!mutex_is_locked(&chip->lock));
- 
- 	/*
--	 * Default: S2 and S3 shutdown enabled, thresholds at
-+	 * Default: Stage 2 and Stage 3 shutdown enabled, thresholds at
- 	 * lowest threshold set, monitoring at 25Hz
- 	 */
- 	reg = SHUTDOWN_CTRL1_RATE_25HZ;
-@@ -242,12 +245,12 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- 		chip->thresh = THRESH_MAX -
- 			((stage2_threshold_max - temp) /
- 			 TEMP_THRESH_STEP);
--		disable_s2_shutdown = true;
-+		disable_stage2_shutdown = true;
- 	} else {
- 		chip->thresh = THRESH_MAX;
- 
- 		if (chip->adc)
--			disable_s2_shutdown = true;
-+			disable_stage2_shutdown = true;
- 		else
- 			dev_warn(chip->dev,
- 				 "No ADC is configured and critical temperature %d mC is above the maximum stage 2 threshold of %ld mC! Configuring stage 2 shutdown at %ld mC.\n",
-@@ -256,8 +259,8 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- 
- skip:
- 	reg |= chip->thresh;
--	if (disable_s2_shutdown)
--		reg |= SHUTDOWN_CTRL1_OVERRIDE_S2;
-+	if (disable_stage2_shutdown && !chip->require_stage2_shutdown)
-+		reg |= SHUTDOWN_CTRL1_OVERRIDE_STAGE2;
- 
- 	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
- }
-@@ -371,8 +374,8 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- {
- 	struct qpnp_tm_chip *chip;
- 	struct device_node *node;
--	u8 type, subtype, dig_major;
--	u32 res;
-+	u8 type, subtype, dig_major, dig_minor;
-+	u32 res, dig_revision;
- 	int ret, irq;
- 
- 	node = pdev->dev.of_node;
-@@ -424,6 +427,11 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, ret,
- 				     "could not read dig_major\n");
- 
-+	ret = qpnp_tm_read(chip, QPNP_TM_REG_DIG_MINOR, &dig_minor);
-+	if (ret < 0)
-+		return dev_err_probe(&pdev->dev, ret,
-+				     "could not read dig_minor\n");
++#include <linux/types.h>
 +
- 	if (type != QPNP_TM_TYPE || (subtype != QPNP_TM_SUBTYPE_GEN1
- 				     && subtype != QPNP_TM_SUBTYPE_GEN2)) {
- 		dev_err(&pdev->dev, "invalid type 0x%02x or subtype 0x%02x\n",
-@@ -437,6 +445,23 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- 	else
- 		chip->temp_map = &temp_map_gen1;
+ /* those are commonly provided by sys/types.h */
+ typedef unsigned int          dev_t;
+ typedef unsigned long         ino_t;
+@@ -31,6 +33,6 @@ typedef unsigned long       nlink_t;
+ typedef   signed long         off_t;
+ typedef   signed long     blksize_t;
+ typedef   signed long      blkcnt_t;
+-typedef   signed long        time_t;
++typedef __kernel_old_time_t  time_t;
  
-+	if (chip->subtype == QPNP_TM_SUBTYPE_GEN2) {
-+		dig_revision = (dig_major << 8) | dig_minor;
-+		/*
-+		 * Check if stage 2 automatic partial shutdown must remain
-+		 * enabled to avoid potential repeated faults upon reaching
-+		 * over-temperature stage 3.
-+		 */
-+		switch (dig_revision) {
-+		case 0x0001:
-+		case 0x0002:
-+		case 0x0100:
-+		case 0x0101:
-+			chip->require_stage2_shutdown = true;
-+			break;
-+		}
-+	}
-+
- 	/*
- 	 * Register the sensor before initializing the hardware to be able to
- 	 * read the trip points. get_temp() returns the default temperature
+ #endif /* _NOLIBC_STD_H */
 -- 
 2.39.5
 
