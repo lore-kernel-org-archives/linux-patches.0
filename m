@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19958223338;
-	Tue, 26 Aug 2025 14:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040991F4C90;
+	Tue, 26 Aug 2025 14:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217976; cv=none; b=Frq/8hW1CsRQYL6R07Y0Rskzha6/Cea8LDxoMluM6Jmw7V/5DKc0WCokL4DpUElLHZzc+AdioEbmWQfFMNsFmounVNxnh2mO92x1KO00GZCcbRrb7GFo4hvP4IY6V6mzrYo+FIoJ3DMaiMqL0gxiIBed7f1OyPSbUK/nchPd6MM=
+	t=1756217979; cv=none; b=XozPtyZjYXTUQldXUNtB3af1shn0OCP6yphfUulX9WMVEFJYEOPsFnKDHy9cliLIAhArGkHcg/p2UiE6IXY4iEB0JSFimf3LeZxcXeLFrhlgYwxhsBkvhZtJqVKFl/OMQfLeGuAlCochmx9a2xjAvZzSz6OeQk46vyeZwK0hMJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217976; c=relaxed/simple;
-	bh=go3AzjVbv6MRKBiY6KYTphkt6TB9GXG7pUQPsi8jCkc=;
+	s=arc-20240116; t=1756217979; c=relaxed/simple;
+	bh=WCweZV1UhqYsivpIVCT11b9Qsi1QTpTLV1FHkZSdP6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/5CIheGIqCflezWSjqLOeky6ylrA9WvQWByGtb1tPEPgISBwMsZfhBMQnME3Uh9TwQmm8kljNbJVEYz7jkhnW1tFeRli3yoAbN0SQ9VdqnqabSzQQfd+lPyj5YCRmn1PSML8iThFUo4F0LFdunm7OPhr+PZmhasyJUig1hy0/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4Nzb+wP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XYBRx1v1mzqpfAE+6Nx5E6mStAGRY5lRmL0qhGXoWZGmNtKbMuwVAJ/KupH+x+WqIbqZMhDLyezpC+Aqz+wAODjkWuoaSikHxd8B+5QEwC7n/h4H/x1KuTfCeMqt1S6fAhIf4+yEdr638Mm7B60JBT8YtHakaiLmuApyodqNQ98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1t74WD2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4Nzb+wP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD9DC113CF;
-	Tue, 26 Aug 2025 14:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1t74WD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F2CC4CEF1;
+	Tue, 26 Aug 2025 14:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217976;
-	bh=go3AzjVbv6MRKBiY6KYTphkt6TB9GXG7pUQPsi8jCkc=;
+	s=korg; t=1756217978;
+	bh=WCweZV1UhqYsivpIVCT11b9Qsi1QTpTLV1FHkZSdP6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4Nzb+wPwVg33cZt5EGec7XQJEfljqUsW5hyAXchv3+AGdNTcGgBNpYHI8a6t57BD
-	 czGofjJm5xnJyEjSIy6onyHgmdyxJw01UPtW1W+AMr3FIdcXUZFppkoLwq+cyOulko
-	 wN+I2udy4mzf72W17KjxiJFAymgHGQQItSUkk6mA=
+	b=n1t74WD2okidBlvMJjmy9V9sJnce+mPykQvC35YTO5tdwX+8tZBbWDbD1LK3qzhyl
+	 FRX0c2+QKEYhFZzN8axZ9hbcX+2IzOfdZs+Kldoro2zX3M+2idrMqcNdEFIaTXEBwH
+	 735T/bTZpZiFFfZTWNzkAP0CX9NSh4YPl3iR6Azk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	linux-parisc@vger.kernel.org
-Subject: [PATCH 5.10 347/523] parisc: Makefile: fix a typo in palo.conf
-Date: Tue, 26 Aug 2025 13:09:17 +0200
-Message-ID: <20250826110933.027297519@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 348/523] mm/kmemleak: avoid soft lockup in __kmemleak_do_cleanup()
+Date: Tue, 26 Aug 2025 13:09:18 +0200
+Message-ID: <20250826110933.052375199@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,35 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Waiman Long <longman@redhat.com>
 
-commit 963f1b20a8d2a098954606b9725cd54336a2a86c upstream.
+commit d1534ae23c2b6be350c8ab060803fbf6e9682adc upstream.
 
-Correct "objree" to "objtree". "objree" is not defined.
+A soft lockup warning was observed on a relative small system x86-64
+system with 16 GB of memory when running a debug kernel with kmemleak
+enabled.
 
-Fixes: 75dd47472b92 ("kbuild: remove src and obj from the top Makefile")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Helge Deller <deller@gmx.de>
-Cc: linux-parisc@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.3+
+  watchdog: BUG: soft lockup - CPU#8 stuck for 33s! [kworker/8:1:134]
+
+The test system was running a workload with hot unplug happening in
+parallel.  Then kemleak decided to disable itself due to its inability to
+allocate more kmemleak objects.  The debug kernel has its
+CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE set to 40,000.
+
+The soft lockup happened in kmemleak_do_cleanup() when the existing
+kmemleak objects were being removed and deleted one-by-one in a loop via a
+workqueue.  In this particular case, there are at least 40,000 objects
+that need to be processed and given the slowness of a debug kernel and the
+fact that a raw_spinlock has to be acquired and released in
+__delete_object(), it could take a while to properly handle all these
+objects.
+
+As kmemleak has been disabled in this case, the object removal and
+deletion process can be further optimized as locking isn't really needed.
+However, it is probably not worth the effort to optimize for such an edge
+case that should rarely happen.  So the simple solution is to call
+cond_resched() at periodic interval in the iteration loop to avoid soft
+lockup.
+
+Link: https://lkml.kernel.org/r/20250728190248.605750-1-longman@redhat.com
+Signed-off-by: Waiman Long <longman@redhat.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/kmemleak.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/parisc/Makefile
-+++ b/arch/parisc/Makefile
-@@ -141,7 +141,7 @@ palo lifimage: vmlinuz
- 	fi
- 	@if test ! -f "$(PALOCONF)"; then \
- 		cp $(srctree)/arch/parisc/defpalo.conf $(objtree)/palo.conf; \
--		echo 'A generic palo config file ($(objree)/palo.conf) has been created for you.'; \
-+		echo 'A generic palo config file ($(objtree)/palo.conf) has been created for you.'; \
- 		echo 'You should check it and re-run "make palo".'; \
- 		echo 'WARNING: the "lifimage" file is now placed in this directory by default!'; \
- 		false; \
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -1851,6 +1851,7 @@ static const struct file_operations kmem
+ static void __kmemleak_do_cleanup(void)
+ {
+ 	struct kmemleak_object *object, *tmp;
++	unsigned int cnt = 0;
+ 
+ 	/*
+ 	 * Kmemleak has already been disabled, no need for RCU list traversal
+@@ -1859,6 +1860,10 @@ static void __kmemleak_do_cleanup(void)
+ 	list_for_each_entry_safe(object, tmp, &object_list, object_list) {
+ 		__remove_object(object);
+ 		__delete_object(object);
++
++		/* Call cond_resched() once per 64 iterations to avoid soft lockup */
++		if (!(++cnt & 0x3f))
++			cond_resched();
+ 	}
+ }
+ 
 
 
