@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18ECA33CEB0;
-	Tue, 26 Aug 2025 13:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E022083;
+	Tue, 26 Aug 2025 13:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216557; cv=none; b=EjC8V3XVyBR8FUHcr/Hf+/6jJ8SjvQ2S5A00WS6hCdB3QSwJI7l6yEvo0SdAKXDnbkD6XbEkHbe2FcvDxWVw0B0y4kvWkDIUbh2UIysuR2alcPCCjFH6Vnmwf4gzFSxU4Ox/xleG4angTAMUW+kLl5sJNKb5fe+n19CwvaUojUY=
+	t=1756216559; cv=none; b=k/zunCQxsLLSmQF4Wm1edWbAMnl7OIHcknO3Vg0oH7nHniV4J8Dx2vpNlbt2y77dLh5pQXViPLwEsLKwZWD5eOFMxlIWUZCO8hQSfADBtMg+9FKEzeDte48qdL+8nsaqKfyLumnujuAHvwHQLT9SqiFG+2oP2ywT++LqPdO4wCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216557; c=relaxed/simple;
-	bh=B3OZEYpX773bZTkwd5jj40c5DOHtA9sWqcne/JqMlRE=;
+	s=arc-20240116; t=1756216559; c=relaxed/simple;
+	bh=vnU0OpZ4FEmZAHsne9XsmpC/VUEqitOjhmH4Eqa+GJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3I0Nqsp++WoOlMcEVL+8jcxCtHLyG7Gz1Jp3/Iu9GMotoAmvUP8+liYHIIG3Wfrqj8pRxrFiL5dSv1WGZmPU4uAB8Nk0gBTsJrrZcT0kbJpj/QN+oasqSjt3GH8mcJMJQV719eZUFlkACT9f3mwWeg9+JSYeKkdwTqmWfHYSII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWk8ZWuE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hubP+bXnOIkHACFuFL22KepikWcn3N8yTK2Y7iBaPNW1mwvs6sfbC9P6fSt20+1l/rexp1suHoDVFQOvkvo4rFT6WLfMaouphOpisV/Vkq2w1/SWm6RrPwt1py607+WungPHKXOunRRd4L1Ud37G5Z8kmK4Ex/BWO0I7isY3IGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4/QoOuQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWk8ZWuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A27FC4CEF1;
-	Tue, 26 Aug 2025 13:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4/QoOuQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BDBC4CEF1;
+	Tue, 26 Aug 2025 13:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216556;
-	bh=B3OZEYpX773bZTkwd5jj40c5DOHtA9sWqcne/JqMlRE=;
+	s=korg; t=1756216559;
+	bh=vnU0OpZ4FEmZAHsne9XsmpC/VUEqitOjhmH4Eqa+GJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWk8ZWuEgZB2flrtP3Rm9wwNy9NJrPJVO3+EFPg+yDC8jyU2huZs0RRWiKiIoQyEy
-	 bcMFB/TYmanSzeVDVUjgYqmBRLXFAaWubp4MndHE3f536RPxoPCbfJfPxLVi+JC0di
-	 /+3wyGf6MXMWjSSDzPO02okqGfCKZrywPdGzOJtY=
+	b=k4/QoOuQHcP31SJ8abaip2Q7gPCi9UFAU9/mlnoPvXMNnG2sNX+BzXdlsaj7BSQr3
+	 Zgl5WvI70KUTXz1Db0pgv4YzfOYERO+XM0JymfUfIldii00KYOw6aOw6J/5/MT41sm
+	 jCHqeNT/qK0rBFEo+G3YY9OrlmqNrmJBEvqSs+hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya08@live.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 455/644] HID: magicmouse: avoid setting up battery timer when not needed
-Date: Tue, 26 Aug 2025 13:09:06 +0200
-Message-ID: <20250826110957.751970544@linuxfoundation.org>
+	Yunhui Cui <cuiyunhui@bytedance.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	stable <stable@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 456/644] serial: 8250: fix panic due to PSLVERR
+Date: Tue, 26 Aug 2025 13:09:07 +0200
+Message-ID: <20250826110957.776429706@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,121 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Yunhui Cui <cuiyunhui@bytedance.com>
 
-commit 9bdc30e35cbc1aa78ccf01040354209f1e11ca22 upstream.
+commit 7f8fdd4dbffc05982b96caf586f77a014b2a9353 upstream.
 
-Currently, the battery timer is set up for all devices using
-hid-magicmouse, irrespective of whether they actually need it or not.
+When the PSLVERR_RESP_EN parameter is set to 1, the device generates
+an error response if an attempt is made to read an empty RBR (Receive
+Buffer Register) while the FIFO is enabled.
 
-The current implementation requires the battery timer for Magic Mouse 2
-and Magic Trackpad 2 when connected via USB only. Add checks to ensure
-that the battery timer is only set up when they are connected via USB.
+In serial8250_do_startup(), calling serial_port_out(port, UART_LCR,
+UART_LCR_WLEN8) triggers dw8250_check_lcr(), which invokes
+dw8250_force_idle() and serial8250_clear_and_reinit_fifos(). The latter
+function enables the FIFO via serial_out(p, UART_FCR, p->fcr).
+Execution proceeds to the serial_port_in(port, UART_RX).
+This satisfies the PSLVERR trigger condition.
 
-Fixes: 0b91b4e4dae6 ("HID: magicmouse: Report battery level over USB")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+When another CPU (e.g., using printk()) is accessing the UART (UART
+is busy), the current CPU fails the check (value & ~UART_LCR_SPAR) ==
+(lcr & ~UART_LCR_SPAR) in dw8250_check_lcr(), causing it to enter
+dw8250_force_idle().
+
+Put serial_port_out(port, UART_LCR, UART_LCR_WLEN8) under the port->lock
+to fix this issue.
+
+Panic backtrace:
+[    0.442336] Oops - unknown exception [#1]
+[    0.442343] epc : dw8250_serial_in32+0x1e/0x4a
+[    0.442351]  ra : serial8250_do_startup+0x2c8/0x88e
+...
+[    0.442416] console_on_rootfs+0x26/0x70
+
+Fixes: c49436b657d0 ("serial: 8250_dw: Improve unwritable LCR workaround")
+Link: https://lore.kernel.org/all/84cydt5peu.fsf@jogness.linutronix.de/T/
+Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20250723023322.464-2-cuiyunhui@bytedance.com
+[ Applied fix to serial8250_do_startup() instead of serial8250_initialize() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-magicmouse.c |   53 ++++++++++++++++++++++++++++++-------------
- 1 file changed, 37 insertions(+), 16 deletions(-)
+ drivers/tty/serial/8250/8250_port.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -741,15 +741,29 @@ static void magicmouse_enable_mt_work(st
- 		hid_err(msc->hdev, "unable to request touch data (%d)\n", ret);
- }
- 
-+static bool is_usb_magicmouse2(__u32 vendor, __u32 product)
-+{
-+	if (vendor != USB_VENDOR_ID_APPLE)
-+		return false;
-+	return product == USB_DEVICE_ID_APPLE_MAGICMOUSE2;
-+}
-+
-+static bool is_usb_magictrackpad2(__u32 vendor, __u32 product)
-+{
-+	if (vendor != USB_VENDOR_ID_APPLE)
-+		return false;
-+	return product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2;
-+}
-+
- static int magicmouse_fetch_battery(struct hid_device *hdev)
- {
- #ifdef CONFIG_HID_BATTERY_STRENGTH
- 	struct hid_report_enum *report_enum;
- 	struct hid_report *report;
- 
--	if (!hdev->battery || hdev->vendor != USB_VENDOR_ID_APPLE ||
--	    (hdev->product != USB_DEVICE_ID_APPLE_MAGICMOUSE2 &&
--	     hdev->product != USB_DEVICE_ID_APPLE_MAGICTRACKPAD2))
-+	if (!hdev->battery ||
-+	    (!is_usb_magicmouse2(hdev->vendor, hdev->product) &&
-+	     !is_usb_magictrackpad2(hdev->vendor, hdev->product)))
- 		return -1;
- 
- 	report_enum = &hdev->report_enum[hdev->battery_report_type];
-@@ -811,14 +825,17 @@ static int magicmouse_probe(struct hid_d
- 		return ret;
- 	}
- 
--	timer_setup(&msc->battery_timer, magicmouse_battery_timer_tick, 0);
--	mod_timer(&msc->battery_timer,
--		  jiffies + msecs_to_jiffies(USB_BATTERY_TIMEOUT_MS));
--	magicmouse_fetch_battery(hdev);
--
--	if (id->vendor == USB_VENDOR_ID_APPLE &&
--	    (id->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
--	     (id->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2 && hdev->type != HID_TYPE_USBMOUSE)))
-+	if (is_usb_magicmouse2(id->vendor, id->product) ||
-+	    is_usb_magictrackpad2(id->vendor, id->product)) {
-+		timer_setup(&msc->battery_timer, magicmouse_battery_timer_tick, 0);
-+		mod_timer(&msc->battery_timer,
-+			  jiffies + msecs_to_jiffies(USB_BATTERY_TIMEOUT_MS));
-+		magicmouse_fetch_battery(hdev);
-+	}
-+
-+	if (is_usb_magicmouse2(id->vendor, id->product) ||
-+	    (is_usb_magictrackpad2(id->vendor, id->product) &&
-+	     hdev->type != HID_TYPE_USBMOUSE))
- 		return 0;
- 
- 	if (!msc->input) {
-@@ -873,7 +890,10 @@ static int magicmouse_probe(struct hid_d
- 
- 	return 0;
- err_stop_hw:
--	del_timer_sync(&msc->battery_timer);
-+	if (is_usb_magicmouse2(id->vendor, id->product) ||
-+	    is_usb_magictrackpad2(id->vendor, id->product))
-+		del_timer_sync(&msc->battery_timer);
-+
- 	hid_hw_stop(hdev);
- 	return ret;
- }
-@@ -884,7 +904,9 @@ static void magicmouse_remove(struct hid
- 
- 	if (msc) {
- 		cancel_delayed_work_sync(&msc->work);
--		del_timer_sync(&msc->battery_timer);
-+		if (is_usb_magicmouse2(hdev->vendor, hdev->product) ||
-+		    is_usb_magictrackpad2(hdev->vendor, hdev->product))
-+			del_timer_sync(&msc->battery_timer);
- 	}
- 
- 	hid_hw_stop(hdev);
-@@ -901,9 +923,8 @@ static __u8 *magicmouse_report_fixup(str
- 	 *   0x05, 0x01,       // Usage Page (Generic Desktop)        0
- 	 *   0x09, 0x02,       // Usage (Mouse)                       2
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2332,9 +2332,8 @@ int serial8250_do_startup(struct uart_po
+ 	/*
+ 	 * Now, initialize the UART
  	 */
--	if (hdev->vendor == USB_VENDOR_ID_APPLE &&
--	    (hdev->product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
--	     hdev->product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2) &&
-+	if ((is_usb_magicmouse2(hdev->vendor, hdev->product) ||
-+	     is_usb_magictrackpad2(hdev->vendor, hdev->product)) &&
- 	    *rsize == 83 && rdesc[46] == 0x84 && rdesc[58] == 0x85) {
- 		hid_info(hdev,
- 			 "fixing up magicmouse battery report descriptor\n");
+-	serial_port_out(port, UART_LCR, UART_LCR_WLEN8);
+-
+ 	spin_lock_irqsave(&port->lock, flags);
++	serial_port_out(port, UART_LCR, UART_LCR_WLEN8);
+ 	if (up->port.flags & UPF_FOURPORT) {
+ 		if (!up->port.irq)
+ 			up->port.mctrl |= TIOCM_OUT1;
 
 
