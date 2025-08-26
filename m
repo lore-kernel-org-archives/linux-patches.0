@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7E28635C;
-	Tue, 26 Aug 2025 11:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7D0283FDF;
+	Tue, 26 Aug 2025 11:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208361; cv=none; b=AVfFOi+vIpnDV/FM/jedbOu4dyS1x+ylLnlVjLTIZgNaJcib3iv96/GCrsrLh8aXL2+yBHF94u1jInMusvLm/pW0nsv4NWa6gRu7R9T32PA6hHDAgHbbebuHA459sQcdwFlmDlToQq1LvJJi+YfFl/RNfdsNZ7zR1FuurXJUpRY=
+	t=1756208363; cv=none; b=Re8d0EbPv1T4jaey6O9OZ7TOxHjdY4x0PoQU2WzCGMrVMJktWlzNJdZXt1rOsXyKyls9uIe+/98ryZjEEUF+TFoxxmKelYQdo9Mfsl/5nqAQd594RWN537b8uPZxfRalxiHayWoQUzCorhI3xweyV2j7UyhB9Atm6uawB/hUfCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208361; c=relaxed/simple;
-	bh=jonD0Xxs6DimcgJBtQK6RfEcBWUehrsqzVl9Y0z6Ss4=;
+	s=arc-20240116; t=1756208363; c=relaxed/simple;
+	bh=CWbQgXMgImhs5k6V44Lp9nl3VE9DCFbS5/DqZ3j6xo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ay9ydUjtykEZWALP8kMRD92B7jlmraeP5Ce+Ea0GV1Ou9oXTyXSTWb1Ku/ysAujlVj9+nJWyZgPO4+qs6rQmhg11EpjrtcN1iEe+iRX/AcO4iUjFrMAq003mek91RA6a5v+IAzrpy2iP4pRcwK08cgKYHtnmcGq/MIRSrjY+q8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxhawe/t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eOt1K7YGnkMDdFk2TEV45CN4HvUwDk0Xr3dFFuCvWV7Ww9mf2X9jA54sYj4DdR6Xhp7PLYl4xRrh1Br/tuER0Rj8OL0W3/DTRfyWMcdL6X/2v1yeyObxalCjSy0aD4/KOPtmvCj//FXRrnIYOnlTSNxyLeykTo5U3VR2sK+gXXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxMshh/e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxhawe/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A665AC4CEF1;
-	Tue, 26 Aug 2025 11:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxMshh/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F928C4CEF1;
+	Tue, 26 Aug 2025 11:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208361;
-	bh=jonD0Xxs6DimcgJBtQK6RfEcBWUehrsqzVl9Y0z6Ss4=;
+	s=korg; t=1756208363;
+	bh=CWbQgXMgImhs5k6V44Lp9nl3VE9DCFbS5/DqZ3j6xo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxhawe/tIGHQY81H9nPyV5NVE7ovfg1bPb2BAgGcaom1KPkpndib4SFiJP8sT3OTA
-	 fHxlM/7nf8xZ6Cj4IczAKIUDCx2Ywa8RqDfTOvR/dqfEALH2zEFD3f+NPoSrKHaATJ
-	 f88M/EDXkjj7x7xcogtsE3rPBiabM8She7H2+ufs=
+	b=xxMshh/eN9SMjunLDbamVE4Kmme4q7XHOwqC+Glx9HQ5Iy9AXzw8Q2vPI8U4BVZZ/
+	 cdbK3G5Tj7uHocFfranEtPKOLSCVve88RoftvWhxCF8Na7+zHZ0y0vh9hmvUl8aQke
+	 tbzn/S+uzlvgtLq35d+9+oJWkwkqNcbBo2EV2SPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 082/322] phy: qcom: phy-qcom-m31: Update IPQ5332 M31 USB phy initialization sequence
-Date: Tue, 26 Aug 2025 13:08:17 +0200
-Message-ID: <20250826110917.647830193@linuxfoundation.org>
+	Xaver Hugl <xaver.hugl@kde.org>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 083/322] amdgpu/amdgpu_discovery: increase timeout limit for IFWI init
+Date: Tue, 26 Aug 2025 13:08:18 +0200
+Message-ID: <20250826110917.675657761@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,71 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+From: Xaver Hugl <xaver.hugl@kde.org>
 
-commit 4a3556b81b99f0c8c0358f7cc6801a62b4538fe2 upstream.
+commit 928587381b54b1b6c62736486b1dc6cb16c568c2 upstream.
 
-The current configuration used for the IPQ5332 M31 USB PHY fails the
-Near End High Speed Signal Quality compliance test. To resolve this,
-update the initialization sequence as specified in the Hardware Design
-Document.
+With a timeout of only 1 second, my rx 5700XT fails to initialize,
+so this increases the timeout to 2s.
 
-Fixes: 08e49af50701 ("phy: qcom: Introduce M31 USB PHY driver")
-Cc: stable@kernel.org
-Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250630-ipq5332_hsphy_complaince-v2-1-63621439ebdb@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3697
+Signed-off-by: Xaver Hugl <xaver.hugl@kde.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9ed3d7bdf2dcdf1a1196630fab89a124526e9cc2)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-m31.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-m31.c
-+++ b/drivers/phy/qualcomm/phy-qcom-m31.c
-@@ -58,14 +58,16 @@
-  #define USB2_0_TX_ENABLE		BIT(2)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -273,7 +273,7 @@ static int amdgpu_discovery_read_binary_
+ 	int i, ret = 0;
  
- #define USB2PHY_USB_PHY_M31_XCFGI_4	0xc8
-- #define HSTX_SLEW_RATE_565PS		GENMASK(1, 0)
-+ #define HSTX_SLEW_RATE_400PS		GENMASK(2, 0)
-  #define PLL_CHARGING_PUMP_CURRENT_35UA	GENMASK(4, 3)
-  #define ODT_VALUE_38_02_OHM		GENMASK(7, 6)
+ 	if (!amdgpu_sriov_vf(adev)) {
+-		/* It can take up to a second for IFWI init to complete on some dGPUs,
++		/* It can take up to two second for IFWI init to complete on some dGPUs,
+ 		 * but generally it should be in the 60-100ms range.  Normally this starts
+ 		 * as soon as the device gets power so by the time the OS loads this has long
+ 		 * completed.  However, when a card is hotplugged via e.g., USB4, we need to
+@@ -281,7 +281,7 @@ static int amdgpu_discovery_read_binary_
+ 		 * continue.
+ 		 */
  
- #define USB2PHY_USB_PHY_M31_XCFGI_5	0xcc
-- #define ODT_VALUE_45_02_OHM		BIT(2)
-  #define HSTX_PRE_EMPHASIS_LEVEL_0_55MA	BIT(0)
- 
-+#define USB2PHY_USB_PHY_M31_XCFGI_9	0xdc
-+ #define HSTX_CURRENT_17_1MA_385MV	BIT(1)
-+
- #define USB2PHY_USB_PHY_M31_XCFGI_11	0xe4
-  #define XCFG_COARSE_TUNE_NUM		BIT(1)
-  #define XCFG_FINE_TUNE_NUM		BIT(3)
-@@ -164,7 +166,7 @@ static struct m31_phy_regs m31_ipq5332_r
- 	},
- 	{
- 		USB2PHY_USB_PHY_M31_XCFGI_4,
--		HSTX_SLEW_RATE_565PS | PLL_CHARGING_PUMP_CURRENT_35UA | ODT_VALUE_38_02_OHM,
-+		HSTX_SLEW_RATE_400PS | PLL_CHARGING_PUMP_CURRENT_35UA | ODT_VALUE_38_02_OHM,
- 		0
- 	},
- 	{
-@@ -174,10 +176,14 @@ static struct m31_phy_regs m31_ipq5332_r
- 	},
- 	{
- 		USB2PHY_USB_PHY_M31_XCFGI_5,
--		ODT_VALUE_45_02_OHM | HSTX_PRE_EMPHASIS_LEVEL_0_55MA,
-+		HSTX_PRE_EMPHASIS_LEVEL_0_55MA,
- 		4
- 	},
- 	{
-+		USB2PHY_USB_PHY_M31_XCFGI_9,
-+		HSTX_CURRENT_17_1MA_385MV,
-+	},
-+	{
- 		USB_PHY_UTMI_CTRL5,
- 		0x0,
- 		0
+-		for (i = 0; i < 1000; i++) {
++		for (i = 0; i < 2000; i++) {
+ 			msg = RREG32(mmMP0_SMN_C2PMSG_33);
+ 			if (msg & 0x80000000)
+ 				break;
 
 
