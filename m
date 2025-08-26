@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF01393DD1;
-	Tue, 26 Aug 2025 11:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9615F284B5B;
+	Tue, 26 Aug 2025 11:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208567; cv=none; b=lcnQV0C9l1t8VdBa226iIJsRTLK86EET74ON9dATaSP0Y6vkOeO4J1Bzj5vG9T3wPftyjRpW+pTqTo76p8E6ibyTm0VClJ0a1KFBiJKTWAAxIhIT0wvoBPtL55++hhd4W3M6I2y2IkSNF4MtM9vY+/NLTIf3UuC3eG/ftqlD5bQ=
+	t=1756208569; cv=none; b=CdZsfu7aOZTs/OaVgJNZm+fNJ7xXA9D/4s+zzf6n6VRAMFYUNpkI6FkEOznQfzauE7/1iWjx2eZPqpb2ZCSiBE/qHwT3C9sY+mssE0cTgLOtHZCvlwlaTFMtPpileRQIL4GbVACWqJRW3o9KOHIrOzcW8gxYvDC9WcxvFgo86p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208567; c=relaxed/simple;
-	bh=6UMVWvmxOP5e+qYLz3EIOqScWQuKYYwiq+Ra+HG+ZV8=;
+	s=arc-20240116; t=1756208569; c=relaxed/simple;
+	bh=TbTZtA8AjrTp7ucGMuN/oi9v/115u1Df6QYuTCkmmaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gb3t9BLAfON6sfP19Aeb7dPljCPxdpOH9e+1A5kxrima/tKPTt89MkWbfH54uZhRNKsL+4wncOZZMgfXjBT4Ut02iY2DuG6rdyjIzWawXSaR070I9LyQfnf9x8jKEQNx+SgqeCNhsgIPs7Fi5dYGM7U31B2nGLbIHudVeJoEeK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIzCl93S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ic1VsVUc8aLr7dOnrbYdLlymyiNFkI+iOwSVRPJInEHa2deti94SFNn2BtOkSlRO+psrXnv29OK4OnzQbsZCMDLsYEaFE51l9y3tTlbE+xHk6nMPQklsgsnjLJAhXhRgefWimgRWzkfVYHGhW9xdgrzVbjiU8El/HMQFxYGjbVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcnMT47t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIzCl93S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75147C4CEF1;
-	Tue, 26 Aug 2025 11:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcnMT47t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21690C4CEF1;
+	Tue, 26 Aug 2025 11:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208566;
-	bh=6UMVWvmxOP5e+qYLz3EIOqScWQuKYYwiq+Ra+HG+ZV8=;
+	s=korg; t=1756208569;
+	bh=TbTZtA8AjrTp7ucGMuN/oi9v/115u1Df6QYuTCkmmaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIzCl93SDPd4janP+GmM6+bmRix8ar7GYJQDG8D596VQcq4yV7C4krf7W6CfBb3+y
-	 x4T/kSwy6IP1nNjpy9MQGFxDiJYYxnxQmPM3WO5ixjxS6uLJw/vxSBrorqKWYH1Pew
-	 +nb7PyXKS7ikogMmhXB+rdJ/q5Al4UBMSJxHycSM=
+	b=pcnMT47tTDJRKiv3e+J4wJAFmdTcLpLc2FvYKOrkbLcgLwnuvDKcC+dygJlMSV5b0
+	 i0gStO/8mx6N5j0YPoiXUizLzkjOytynVXkH6rmzXAvlZso8lcAM2G/jzOURf8HgNK
+	 4JVPhRERm2hH/XjzkNuy4JywZLq230Mm+dZDuRcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 160/322] ata: libata-scsi: Return aborted command when missing sense and result TF
-Date: Tue, 26 Aug 2025 13:09:35 +0200
-Message-ID: <20250826110919.773177603@linuxfoundation.org>
+	Andrea Righi <arighi@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.12 161/322] sched_ext: initialize built-in idle state before ops.init()
+Date: Tue, 26 Aug 2025 13:09:36 +0200
+Message-ID: <20250826110919.799414880@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,83 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Andrea Righi <arighi@nvidia.com>
 
-commit d2be9ea9a75550a35c5127a6c2633658bc38c76b upstream.
+commit f0c6eab5e45c529f449fbc595873719e00de6d79 upstream.
 
-ata_gen_ata_sense() is always called for a failed qc missing sense data
-so that a sense key, code and code qualifier can be generated using
-ata_to_sense_error() from the qc status and error fields of its result
-task file. However, if the qc does not have its result task file filled,
-ata_gen_ata_sense() returns early without setting a sense key.
+A BPF scheduler may want to use the built-in idle cpumasks in ops.init()
+before the scheduler is fully initialized, either directly or through a
+BPF timer for example.
 
-Improve this by defaulting to returning ABORTED COMMAND without any
-additional sense code, since we do not know the reason for the failure.
-The same fix is also applied in ata_gen_passthru_sense() with the
-additional check that the qc failed (qc->err_mask is set).
+However, this would result in an error, since the idle state has not
+been properly initialized yet.
 
-Fixes: 816be86c7993 ("ata: libata-scsi: Check ATA_QCFLAG_RTF_FILLED before using result_tf")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+This can be easily verified by modifying scx_simple to call
+scx_bpf_get_idle_cpumask() in ops.init():
+
+$ sudo scx_simple
+
+DEBUG DUMP
+===========================================================================
+
+scx_simple[121] triggered exit kind 1024:
+  runtime error (built-in idle tracking is disabled)
+...
+
+Fix this by properly initializing the idle state before ops.init() is
+called. With this change applied:
+
+$ sudo scx_simple
+local=2 global=0
+local=19 global=11
+local=23 global=11
+...
+
+Fixes: d73249f88743d ("sched_ext: idle: Make idle static keys private")
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ Backport to 6.12:
+  - Original commit doesn't apply cleanly to 6.12 since d73249f88743d is
+    not present.
+  - This backport applies the same logical fix to prevent BPF scheduler
+    failures while accessing idle cpumasks from ops.init(). ]
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |   27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ kernel/sched/ext.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -934,6 +934,8 @@ static void ata_gen_passthru_sense(struc
- 	if (!(qc->flags & ATA_QCFLAG_RTF_FILLED)) {
- 		ata_dev_dbg(dev,
- 			    "missing result TF: can't generate ATA PT sense data\n");
-+		if (qc->err_mask)
-+			ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0, 0);
- 		return;
- 	}
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5220,6 +5220,13 @@ static int scx_ops_enable(struct sched_e
+ 	for_each_possible_cpu(cpu)
+ 		cpu_rq(cpu)->scx.cpuperf_target = SCX_CPUPERF_ONE;
  
-@@ -991,8 +993,8 @@ static void ata_gen_ata_sense(struct ata
- 
- 	if (!(qc->flags & ATA_QCFLAG_RTF_FILLED)) {
- 		ata_dev_dbg(dev,
--			    "missing result TF: can't generate sense data\n");
--		return;
-+			    "Missing result TF: reporting aborted command\n");
-+		goto aborted;
- 	}
- 
- 	/* Use ata_to_sense_error() to map status register bits
-@@ -1003,19 +1005,20 @@ static void ata_gen_ata_sense(struct ata
- 		ata_to_sense_error(tf->status, tf->error,
- 				   &sense_key, &asc, &ascq);
- 		ata_scsi_set_sense(dev, cmd, sense_key, asc, ascq);
--	} else {
--		/* Could not decode error */
--		ata_dev_warn(dev, "could not decode error status 0x%x err_mask 0x%x\n",
--			     tf->status, qc->err_mask);
--		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0, 0);
--		return;
--	}
- 
--	block = ata_tf_read_block(&qc->result_tf, dev);
--	if (block == U64_MAX)
-+		block = ata_tf_read_block(&qc->result_tf, dev);
-+		if (block != U64_MAX)
-+			scsi_set_sense_information(sb, SCSI_SENSE_BUFFERSIZE,
-+						   block);
- 		return;
++	if (!ops->update_idle || (ops->flags & SCX_OPS_KEEP_BUILTIN_IDLE)) {
++		reset_idle_masks();
++		static_branch_enable(&scx_builtin_idle_enabled);
++	} else {
++		static_branch_disable(&scx_builtin_idle_enabled);
 +	}
++
+ 	/*
+ 	 * Keep CPUs stable during enable so that the BPF scheduler can track
+ 	 * online CPUs by watching ->on/offline_cpu() after ->init().
+@@ -5287,13 +5294,6 @@ static int scx_ops_enable(struct sched_e
+ 	if (scx_ops.cpu_acquire || scx_ops.cpu_release)
+ 		static_branch_enable(&scx_ops_cpu_preempt);
  
--	scsi_set_sense_information(sb, SCSI_SENSE_BUFFERSIZE, block);
-+	/* Could not decode error */
-+	ata_dev_warn(dev,
-+		"Could not decode error 0x%x, status 0x%x (err_mask=0x%x)\n",
-+		tf->error, tf->status, qc->err_mask);
-+aborted:
-+	ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0, 0);
- }
- 
- void ata_scsi_sdev_config(struct scsi_device *sdev)
+-	if (!ops->update_idle || (ops->flags & SCX_OPS_KEEP_BUILTIN_IDLE)) {
+-		reset_idle_masks();
+-		static_branch_enable(&scx_builtin_idle_enabled);
+-	} else {
+-		static_branch_disable(&scx_builtin_idle_enabled);
+-	}
+-
+ 	/*
+ 	 * Lock out forks, cgroup on/offlining and moves before opening the
+ 	 * floodgate so that they don't wander into the operations prematurely.
 
 
