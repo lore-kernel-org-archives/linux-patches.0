@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D551B87E8;
-	Tue, 26 Aug 2025 13:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E671C4609;
+	Tue, 26 Aug 2025 13:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214843; cv=none; b=ZIL1TDYQrrQILkx3fTV28g7qHuG87/6zzNmfSb542/iaFgdiH+fn76M29WiGaayLbjIXAxd200F4cw7Kvp0j0FC1L+N99k/axuYr/ETpeqHg3LjVMh6ef5J9ccriUFlQTeUJPYsF/OT2VMfM1n69pG0ZTcz2dLTbrSqBu0dxnqg=
+	t=1756214846; cv=none; b=U93+vacB+y4/qamAam61OiENx2q92I4J6W8QTOMn0pzmX0dpH7Un/Dq1r5poxjy/RdxGXAr20f7K8X30CTWKH5V4MGxxncO7xnU/5e/FmmIUNX+Jgpy6rsc/uR6mUxYi/RLdZI5TARFxLs8q2rmR9tZ0iyuDnx9pvGkkn6ws7UQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214843; c=relaxed/simple;
-	bh=Xlwh5gH0hIHPNopa+81bkq2h0umSmxAuIPR7ZBZ9hjc=;
+	s=arc-20240116; t=1756214846; c=relaxed/simple;
+	bh=iY+bZYGKfSchmggfVc0HkMmIae9i6kZU4jsLZVeVvEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=he718KFe+1hDkS2LkQVrJDOJSkpiSEDs7zjZIiV8LV/VwpJPwQ8mkiOBO/FkNpWDhIpD2CZO3cGBN22dsPHIUhD7yCiXo4LjBYCpo0CAkCA71SznXmttRPPcP6KyFdnnEx433AWAgNVWuBp2dan5vLIG4QIsEAI05diXnyKKRao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLu6tpll; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CGRb8fM4ZfC3dGmihDLZ6lmkldo0hYo7SMKfNhuf7iwTvjq6HG538XESJrVp07mNNv/2dYdRNcOXxceZ8SkbZvQEJ+3hUaNQ479mVTqV+wYwXnmpvhvTf/4YyzgtEl83bYCwQYCdvcXWVeckzEPVwXd3+miWpWzkuDhMd7kmU5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUv9hhz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLu6tpll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E73C4CEF1;
-	Tue, 26 Aug 2025 13:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUv9hhz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6A2C4CEF1;
+	Tue, 26 Aug 2025 13:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214843;
-	bh=Xlwh5gH0hIHPNopa+81bkq2h0umSmxAuIPR7ZBZ9hjc=;
+	s=korg; t=1756214846;
+	bh=iY+bZYGKfSchmggfVc0HkMmIae9i6kZU4jsLZVeVvEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JLu6tpllzmxh5FnsF+PDW7FJmm9YYR6PgiEfaQk3mq+v1IzJYXpp+8UZ+5WYfmLXc
-	 wbu4RaZgF6bQUf3Wh+ABk2vM5/WBsXThzrhvOqEtOsK16ugRgtb4eDr5mfUV8FPEt2
-	 FE8HRwtZXtU11vMdGXkgyBjyINmf9IddmOHgjmtI=
+	b=yUv9hhz9GxYID4N+YFM2pHsq/RaMvy9yquPAWKzmjDNf8pOUqS9mF3oBuLWxlepef
+	 3k324WkAPjakGCHNOMFxS8z+pmkCunLGxtskls30TYEgg/bSvXPt7jZXUK4+neZh0X
+	 dzVeh0AqLNYUKGfCGXk3lBdgl4A+FmvrGFlCXchY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 283/482] ext4: dont try to clear the orphan_present feature block device is r/o
-Date: Tue, 26 Aug 2025 13:08:56 +0200
-Message-ID: <20250826110937.775768055@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 6.1 292/482] zynq_fpga: use sgtable-based scatterlist wrappers
+Date: Tue, 26 Aug 2025 13:09:05 +0200
+Message-ID: <20250826110938.005309828@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,48 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit c5e104a91e7b6fa12c1dc2d8bf84abb7ef9b89ad upstream.
+commit 37e00703228ab44d0aacc32a97809a4f6f58df1b upstream.
 
-When the file system is frozen in preparation for taking an LVM
-snapshot, the journal is checkpointed and if the orphan_file feature
-is enabled, and the orphan file is empty, we clear the orphan_present
-feature flag.  But if there are pending inodes that need to be removed
-the orphan_present feature flag can't be cleared.
+Use common wrappers operating directly on the struct sg_table objects to
+fix incorrect use of statterlists related calls. dma_unmap_sg() function
+has to be called with the number of elements originally passed to the
+dma_map_sg() function, not the one returned in sgtable's nents.
 
-The problem comes if the block device is read-only.  In that case, we
-can't process the orphan inode list, so it is skipped in
-ext4_orphan_cleanup().  But then in ext4_mark_recovery_complete(),
-this results in the ext4 error "Orphan file not empty on read-only fs"
-firing and the file system mount is aborted.
-
-Fix this by clearing the needs_recovery flag in the block device is
-read-only.  We do this after the call to ext4_load_and_init-journal()
-since there are some error checks need to be done in case the journal
-needs to be replayed and the block device is read-only, or if the
-block device containing the externa journal is read-only, etc.
-
-Cc: stable@kernel.org
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1108271
-Cc: stable@vger.kernel.org
-Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+CC: stable@vger.kernel.org
+Fixes: 425902f5c8e3 ("fpga zynq: Use the scatterlist interface")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20250616120932.1090614-1-m.szyprowski@samsung.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/fpga/zynq-fpga.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5295,6 +5295,8 @@ static int __ext4_fill_super(struct fs_c
- 		err = ext4_load_and_init_journal(sb, es, ctx);
- 		if (err)
- 			goto failed_mount3a;
-+		if (bdev_read_only(sb->s_bdev))
-+		    needs_recovery = 0;
- 	} else if (test_opt(sb, NOLOAD) && !sb_rdonly(sb) &&
- 		   ext4_has_feature_journal_needs_recovery(sb)) {
- 		ext4_msg(sb, KERN_ERR, "required journal recovery "
+--- a/drivers/fpga/zynq-fpga.c
++++ b/drivers/fpga/zynq-fpga.c
+@@ -406,7 +406,7 @@ static int zynq_fpga_ops_write(struct fp
+ 	}
+ 
+ 	priv->dma_nelms =
+-	    dma_map_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
++	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
+ 	if (priv->dma_nelms == 0) {
+ 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
+ 		return -ENOMEM;
+@@ -478,7 +478,7 @@ out_clk:
+ 	clk_disable(priv->clk);
+ 
+ out_free:
+-	dma_unmap_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
++	dma_unmap_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
+ 	return err;
+ }
+ 
 
 
