@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DB714B950;
-	Tue, 26 Aug 2025 13:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8A414B950;
+	Tue, 26 Aug 2025 13:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214961; cv=none; b=A1wyiieh/InVeMI57Dz5Q92zkylblrmtLrUh+7hBSu8BsSUVWS39x/mWhdAZKhiuknoq6GL/Gx0k9qhXbHI8x9uqVS10ce/ltSGROdTIEy/bBiXeS+MU/tRoqHex+3ECjr4jOtdyKIjhV0scXhDXniqSCopy72HTm/h/CkFWPVw=
+	t=1756214964; cv=none; b=F7YMgm+9buQy+KdEVTWQo8lIPqg5NEknn7g/BCp9QNnvihr9JuZC+ZteNuGmJenlvPXzne3reoJ5ZRCQbw7xFQN4S1XkjIqX4vHwkafrhadNSsm+aKFaV1bl5NnuQGD9Djy3ltXrsBARgfJQ/lUUV/j16zOGrEdPyr6x7elEIFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214961; c=relaxed/simple;
-	bh=QFCQB+1bNHRU/olRviaUXGzutbpIgu6PTdb2TbFLRJE=;
+	s=arc-20240116; t=1756214964; c=relaxed/simple;
+	bh=om4111jzoXro2ajr8Dub5TLNVCLPmoaKPANUkU2zMCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/q9oQui6olVcSdxXpYkNc3kOrNIoMFanTxsnZBZNx0gRGq732x3JYKaoyXQ/GfRF+69f4nPm0MeJXbh0urmS+jvLOzoz8ay6y9aK8/ehkMwWSIBty+AdngDaIL9a22tsq5UIge33nnBWn8CyiywtRT9mq4pHmCP2bkIO9wLcpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdtVzOSf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=akKquwITjizMdcTgaVB8fuhfK7UD4kIi+34/kPsNY29BtMmrPi+C+YYWV2qCkEomiLQdccFW9xbPOrCcWZAl/DDB/kfIZHSOQhHWa0MlkR+/x42UIqWS6IILtIFMZPn2BuWlACtyt5314rbD8vERX0v8cS231e08SB7+4lZfclg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3NskA+w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdtVzOSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6A9C4CEF1;
-	Tue, 26 Aug 2025 13:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3NskA+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05276C4CEF1;
+	Tue, 26 Aug 2025 13:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214961;
-	bh=QFCQB+1bNHRU/olRviaUXGzutbpIgu6PTdb2TbFLRJE=;
+	s=korg; t=1756214964;
+	bh=om4111jzoXro2ajr8Dub5TLNVCLPmoaKPANUkU2zMCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DdtVzOSfNhkQxskLpxFBuVaGC0mrYrpVvxYy/DSiVnZHoxmvAfF7ti5LrP7LTJNWW
-	 BlmfaGPv5mTSMOr3Be/FYaXK+vMorb9MZsr3+pp8IsgP4feayCfghVTLBJP+wbZ710
-	 4skmXJKCR73dB6CJPQ52DTbLNIBxWLzwHyqAq1IU=
+	b=m3NskA+w8vl0jynDQf+gwL1AWEkc0g90p33Rfh0SrHk8hbABlqMRmf1xYSQqvHHyG
+	 821J3ykFbqZz9pkh9tiwD6cAJ5lhbp3mxMqygyi7k/UIXqrXNaSnj7PRy15KvfCcWi
+	 19rGTm1BlxWfY2O8FFIRrF1oQ7VmTTeWAMSNVpKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 318/482] parisc: Update comments in make_insert_tlb
-Date: Tue, 26 Aug 2025 13:09:31 +0200
-Message-ID: <20250826110938.663322101@linuxfoundation.org>
+	Amber Lin <Amber.Lin@amd.com>,
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 336/482] drm/amdkfd: Destroy KFD debugfs after destroy KFD wq
+Date: Tue, 26 Aug 2025 13:09:49 +0200
+Message-ID: <20250826110939.127157607@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,98 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave.anglin@bell.net>
+From: Amber Lin <Amber.Lin@amd.com>
 
-commit cb22f247f371bd206a88cf0e0c05d80b8b62fb26 upstream.
+commit 2e58401a24e7b2d4ec619104e1a76590c1284a4c upstream.
 
-The following testcase exposed a problem with our read access checks
-in get_user() and raw_copy_from_user():
+Since KFD proc content was moved to kernel debugfs, we can't destroy KFD
+debugfs before kfd_process_destroy_wq. Move kfd_process_destroy_wq prior
+to kfd_debugfs_fini to fix a kernel NULL pointer problem. It happens
+when /sys/kernel/debug/kfd was already destroyed in kfd_debugfs_fini but
+kfd_process_destroy_wq calls kfd_debugfs_remove_process. This line
+    debugfs_remove_recursive(entry->proc_dentry);
+tries to remove /sys/kernel/debug/kfd/proc/<pid> while
+/sys/kernel/debug/kfd is already gone. It hangs the kernel by kernel
+NULL pointer.
 
-#include <stdint.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/mman.h>
-#include <sys/types.h>
-
-int main(int argc, char **argv)
-{
-  unsigned long page_size = sysconf(_SC_PAGESIZE);
-  char *p = malloc(3 * page_size);
-  char *p_aligned;
-
-  /* initialize memory region. If not initialized, write syscall below will correctly return EFAULT. */
-  if (1)
-	memset(p, 'X', 3 * page_size);
-
-  p_aligned = (char *) ((((uintptr_t) p) + (2*page_size - 1)) & ~(page_size - 1));
-  /* Drop PROT_READ protection. Kernel and userspace should fault when accessing that memory region */
-  mprotect(p_aligned, page_size, PROT_NONE);
-
-  /* the following write() should return EFAULT, since PROT_READ was dropped by previous mprotect() */
-  int ret = write(2, p_aligned, 1);
-  if (!ret || errno != EFAULT)
-	printf("\n FAILURE: write() did not returned expected EFAULT value\n");
-
-  return 0;
-}
-
-Because of the way _PAGE_READ is handled, kernel code never generates
-a read access fault when it access a page as the kernel privilege level
-is always less than PL1 in the PTE.
-
-This patch reworks the comments in the make_insert_tlb macro to try
-to make this clearer.
-
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.12+
+Signed-off-by: Amber Lin <Amber.Lin@amd.com>
+Reviewed-by: Eric Huang <jinhuieric.huang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0333052d90683d88531558dcfdbf2525cc37c233)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/entry.S |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_module.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/parisc/kernel/entry.S
-+++ b/arch/parisc/kernel/entry.S
-@@ -486,6 +486,12 @@
- 	 * this happens is quite subtle, read below */
- 	.macro		make_insert_tlb	spc,pte,prot,tmp
- 	space_to_prot   \spc \prot        /* create prot id from space */
-+
-+#if _PAGE_SPECIAL_BIT == _PAGE_DMB_BIT
-+	/* need to drop DMB bit, as it's used as SPECIAL flag */
-+	depi		0,_PAGE_SPECIAL_BIT,1,\pte
-+#endif
-+
- 	/* The following is the real subtlety.  This is depositing
- 	 * T <-> _PAGE_REFTRAP
- 	 * D <-> _PAGE_DIRTY
-@@ -498,17 +504,18 @@
- 	 * Finally, _PAGE_READ goes in the top bit of PL1 (so we
- 	 * trigger an access rights trap in user space if the user
- 	 * tries to read an unreadable page */
--#if _PAGE_SPECIAL_BIT == _PAGE_DMB_BIT
--	/* need to drop DMB bit, as it's used as SPECIAL flag */
--	depi		0,_PAGE_SPECIAL_BIT,1,\pte
--#endif
- 	depd            \pte,8,7,\prot
- 
- 	/* PAGE_USER indicates the page can be read with user privileges,
- 	 * so deposit X1|11 to PL1|PL2 (remember the upper bit of PL1
--	 * contains _PAGE_READ) */
-+	 * contains _PAGE_READ). While the kernel can't directly write
-+	 * user pages which have _PAGE_WRITE zero, it can read pages
-+	 * which have _PAGE_READ zero (PL <= PL1). Thus, the kernel
-+	 * exception fault handler doesn't trigger when reading pages
-+	 * that aren't user read accessible */
- 	extrd,u,*=      \pte,_PAGE_USER_BIT+32,1,%r0
- 	depdi		7,11,3,\prot
-+
- 	/* If we're a gateway page, drop PL2 back to zero for promotion
- 	 * to kernel privilege (so we can execute the page as kernel).
- 	 * Any privilege promotion page always denys read and write */
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_module.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
+@@ -78,8 +78,8 @@ err_ioctl:
+ static void kfd_exit(void)
+ {
+ 	kfd_cleanup_processes();
+-	kfd_debugfs_fini();
+ 	kfd_process_destroy_wq();
++	kfd_debugfs_fini();
+ 	kfd_procfs_shutdown();
+ 	kfd_topology_shutdown();
+ 	kfd_chardev_exit();
 
 
