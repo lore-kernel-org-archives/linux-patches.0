@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E502BEC2B;
-	Tue, 26 Aug 2025 11:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5805317332C;
+	Tue, 26 Aug 2025 11:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207441; cv=none; b=FZIqJiCzUMzUvIJ7h5JEIpG1aOar2cddr1nLgaQbJnlNV0jHQqeVzafPskxrgGqxtNLwCR61ecDJ+lziJ/ir5Zc92K2kFfWX449wKyeFP7k8A/yjMm11ovlVJ9VoVc53rms7xe1W7rxd372LVUA6Qng0o01ursGtNamD+3iU6kQ=
+	t=1756207443; cv=none; b=ppGz3LL6iqRWt6KjJ5kRrYpGVc0O7VCqVEDMSIJkhTcztBLDoi+yzJs3uk60xccb8xMrrIECBBPnNoK/gFEuUrMuSW1xS64eWv42ubiV1mGHFt75vZkpTbT5mlcw7OFekmxdVxIZZIjlEnTrnmRQ23HQckb67kC/lIBz14/np7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207441; c=relaxed/simple;
-	bh=6bzFszY9fq93FbzYlmvg6DZoHg3AsexLR2h75Q3x5W8=;
+	s=arc-20240116; t=1756207443; c=relaxed/simple;
+	bh=ebRAafDNC6ZFUmsaZK/yiIMn5DSEyqbDJtN/Q7HjNkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vADenSzl9YHpvMNma8jzI6NbCsl0RyXedrJ6erXQ9ztwX7X6j0DeUVNf8Y2fqk+rzTd+rV0zKGonBUAQFW08NIYxUkzNCl+0u1wJfwkvuxKycuiMYTKfIx7jEajnCScNGcbqcFnItnyEQoqpotW2OT2xRp2QkP1KKsYMlnENVa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeBpQJJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AnDDmHx1EJJwHSHLyUe03pTNeAFmL69jrBvLpwQrA0FCsW0HoASTBlDuDu7PwKxFsGrgXFWeS5tYKeO+YuzX44zDBQRUG5Ev1dmD7eM4YoepaET43PrQxiYbVmI7Fg8csnuKKwsLQSesgWukxQk84fF5w57oFhojW9QZeF5g+Xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+uIIbAc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeBpQJJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CA1C4CEF4;
-	Tue, 26 Aug 2025 11:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+uIIbAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC704C4CEF4;
+	Tue, 26 Aug 2025 11:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207440;
-	bh=6bzFszY9fq93FbzYlmvg6DZoHg3AsexLR2h75Q3x5W8=;
+	s=korg; t=1756207443;
+	bh=ebRAafDNC6ZFUmsaZK/yiIMn5DSEyqbDJtN/Q7HjNkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qeBpQJJTUhGDu+lfxKR3RpC5KETRGin06ftkP0PHSkQ8JggZ13DX/Zsb0r+ZxTezo
-	 P++/s76kFozOf1baGTm3hd9K4VoCA8QlvD5yQDoeBx+REIey7ViZvJvUqCH4Dx43nn
-	 pam7DvZ8rPm1BX/wkm8kVdlVUd7nkAy54BmybTe4=
+	b=a+uIIbAcRQDolOU1TaiKWAipGmkp2WgeETyYrtlPT1ddpIU9LJvJnUAucoPAeweFV
+	 aERr8vHGolR8yhEU9vsLTBNyWgRix76/Yif8ZsmyP4ZYc7XDKfqrkt34VKuHnYQf0r
+	 9BBpeF/SNfcbpKgklAshAV4kiKM+GATpYC3CqD+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Bryan ODonoghue <bod@kernel.org>
-Subject: [PATCH 6.16 151/457] media: venus: venc: Clamp param smaller than 1fps and bigger than 240
-Date: Tue, 26 Aug 2025 13:07:15 +0200
-Message-ID: <20250826110941.103886370@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>
+Subject: [PATCH 6.16 152/457] media: iris: Avoid updating frame size to firmware during reconfig
+Date: Tue, 26 Aug 2025 13:07:16 +0200
+Message-ID: <20250826110941.129011120@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,45 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-commit 417c01b92ec278a1118a05c6ad8a796eaa0c9c52 upstream.
+commit caf2055487694b6cb52f2ecb161c6c5de660dd72 upstream.
 
-The driver uses "whole" fps in all its calculations (e.g. in
-load_per_instance()). Those calculation expect an fps bigger than 1, and
-not big enough to overflow.
+During reconfig, the firmware sends the resolution aligned to 8 bytes.
+If the driver sends the same resolution back to the firmware the resolution
+will be aligned to 16 bytes not 8.
 
-Clamp the param if the user provides a value that will result in an invalid
-fps.
+The alignment mismatch would then subsequently cause the firmware to
+send another redundant sequence change event.
 
-Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
-Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
-Fixes: aaaa93eda64b ("[media] media: venus: venc: add video encoder files")
+Fix this by not setting the resolution property during reconfig.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-[bod: Change "parm" to "param"]
+Fixes: 3a19d7b9e08b ("media: iris: implement set properties to firmware during streamon")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # on sa8775p-ride
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/venc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c |   15 ++++++++-------
+ drivers/media/platform/qcom/iris/iris_state.c            |    2 +-
+ drivers/media/platform/qcom/iris/iris_state.h            |    1 +
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -411,11 +411,10 @@ static int venc_s_parm(struct file *file
- 	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
- 	do_div(us_per_frame, timeperframe->denominator);
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+@@ -546,14 +546,15 @@ static int iris_hfi_gen1_set_resolution(
+ 	struct hfi_framesize fs;
+ 	int ret;
  
--	if (!us_per_frame)
--		return -EINVAL;
+-	fs.buffer_type = HFI_BUFFER_INPUT;
+-	fs.width = inst->fmt_src->fmt.pix_mp.width;
+-	fs.height = inst->fmt_src->fmt.pix_mp.height;
 -
-+	us_per_frame = clamp(us_per_frame, 1, USEC_PER_SEC);
- 	fps = (u64)USEC_PER_SEC;
- 	do_div(fps, us_per_frame);
-+	fps = min(VENUS_MAX_FPS, fps);
+-	ret = hfi_gen1_set_property(inst, ptype, &fs, sizeof(fs));
+-	if (ret)
+-		return ret;
++	if (!iris_drc_pending(inst)) {
++		fs.buffer_type = HFI_BUFFER_INPUT;
++		fs.width = inst->fmt_src->fmt.pix_mp.width;
++		fs.height = inst->fmt_src->fmt.pix_mp.height;
  
- 	inst->timeperframe = *timeperframe;
- 	inst->fps = fps;
++		ret = hfi_gen1_set_property(inst, ptype, &fs, sizeof(fs));
++		if (ret)
++			return ret;
++	}
+ 	fs.buffer_type = HFI_BUFFER_OUTPUT2;
+ 	fs.width = inst->fmt_dst->fmt.pix_mp.width;
+ 	fs.height = inst->fmt_dst->fmt.pix_mp.height;
+--- a/drivers/media/platform/qcom/iris/iris_state.c
++++ b/drivers/media/platform/qcom/iris/iris_state.c
+@@ -245,7 +245,7 @@ int iris_inst_sub_state_change_pause(str
+ 	return iris_inst_change_sub_state(inst, 0, set_sub_state);
+ }
+ 
+-static inline bool iris_drc_pending(struct iris_inst *inst)
++bool iris_drc_pending(struct iris_inst *inst)
+ {
+ 	return inst->sub_state & IRIS_INST_SUB_DRC &&
+ 		inst->sub_state & IRIS_INST_SUB_DRC_LAST;
+--- a/drivers/media/platform/qcom/iris/iris_state.h
++++ b/drivers/media/platform/qcom/iris/iris_state.h
+@@ -140,5 +140,6 @@ int iris_inst_sub_state_change_drain_las
+ int iris_inst_sub_state_change_drc_last(struct iris_inst *inst);
+ int iris_inst_sub_state_change_pause(struct iris_inst *inst, u32 plane);
+ bool iris_allow_cmd(struct iris_inst *inst, u32 cmd);
++bool iris_drc_pending(struct iris_inst *inst);
+ 
+ #endif
 
 
