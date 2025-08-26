@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224A5FBF0;
-	Tue, 26 Aug 2025 13:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF858462;
+	Tue, 26 Aug 2025 13:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213312; cv=none; b=MwgQFtxJx0jDbXnB7d3gHFMBznnpxxuvN9Pcqy99fAi6Y1u7MCm+/rYjtL11d79RECrSwu7BRlxkQ8CS1fSBZugxRDjS5i0kEGShSoXrXsiQdbHrtYViP7y7Pn/pQDehKdrbbVTSAGNgB9p6b98rxPG7yIs9XCQqBPlbNWevHmI=
+	t=1756213314; cv=none; b=ZWfOIwCVU5vSMKezNHvfelKQs246mCswTvy9hsgs/VP5gf/SkDaVyEdHKGg9m7WqAxmX/XcZqkoOSr/KG2lER0q96r5sakgTtYlzNi+79tF7qO71n1GmJ6Cw6j2itvg6rvlW/c9NA/RtvCEiuSxPbZ9DiG+9gj8dNbAdQLIeWw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213312; c=relaxed/simple;
-	bh=2LmbMOscTbLWCMjl+XUdg7bJpMeD7Nh+1/0itVsRUkw=;
+	s=arc-20240116; t=1756213314; c=relaxed/simple;
+	bh=FLiRaPlRMMME2TVvN9RH+5RT51qyevcvCcjuqf3ZbLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntukDY3oVj75rcxHpT+cQUFWxjgtfuYhrrSh2PXxaO8Gy7CJcx0neeL5CJmbN2TH/LAQENr6MhLDos9vsVDsVid16QXVWmncstLc4ebvzx3EZs2GqG9U/8cpHp5X1N5yq+OehEcQKbCuFVVFVAFukYI3JB3kJZmbM7YCGpjZRq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNksoAyo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9F6liq8XOIedq2FtBQqH0mNf8zb4RCsT6CFdO8BnOywZjafZHBjE7MXoDYh7dNtsRuTvjr8J+2nrDhfoSze6TxAdBiTZDprjkVT8zRswwhffi8s1GAcASbXzPxw4r18nHSA1y9j9TMPV/7peXWtVdD1zWBQk8aHcZj/lnY5sq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeaSI9Ai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNksoAyo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA917C4CEF1;
-	Tue, 26 Aug 2025 13:01:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeaSI9Ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50977C4CEF1;
+	Tue, 26 Aug 2025 13:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213312;
-	bh=2LmbMOscTbLWCMjl+XUdg7bJpMeD7Nh+1/0itVsRUkw=;
+	s=korg; t=1756213314;
+	bh=FLiRaPlRMMME2TVvN9RH+5RT51qyevcvCcjuqf3ZbLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNksoAyoCmYXmEgHT19kecoVZQs7/Sw5ksNu9mTW1dmBdCQgxRTB1oRvHxCIDIOmH
-	 8Iz427HiEbIbTdulLqoHHS79xP7tRPrgMiRynKCH6y6CgnKHajtn02bQgM1v6UnI0z
-	 tR1z6g3F6aZy5MMlSDD6jK+vAuxE4kJ0+/WAKz50=
+	b=eeaSI9AiSK1Ul+jFsG9iw/rpASKhUWjWwvGzQ5VS0dxquGeqaxDhdqjVDkz/SSlcR
+	 cr0yp1dCBx6x8dkCfcz/xIlvdwr0b00d6265WsFvrXmcxIUzeGtpiDcCkRDiQRH0+3
+	 8mEzSOZgbVhdIcPr9lL6Kdjh6FeI5wVnbJEmN6YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
 	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.6 301/587] ext4: fix zombie groups in average fragment size lists
-Date: Tue, 26 Aug 2025 13:07:30 +0200
-Message-ID: <20250826111000.582052700@linuxfoundation.org>
+Subject: [PATCH 6.6 302/587] ext4: fix largest free orders lists corruption on mb_optimize_scan switch
+Date: Tue, 26 Aug 2025 13:07:31 +0200
+Message-ID: <20250826111000.606830623@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -54,83 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-commit 1c320d8e92925bb7615f83a7b6e3f402a5c2ca63 upstream.
+commit 7d345aa1fac4c2ec9584fbd6f389f2c2368671d5 upstream.
 
-Groups with no free blocks shouldn't be in any average fragment size list.
-However, when all blocks in a group are allocated(i.e., bb_fragments or
-bb_free is 0), we currently skip updating the average fragment size, which
-means the group isn't removed from its previous s_mb_avg_fragment_size[old]
-list.
+The grp->bb_largest_free_order is updated regardless of whether
+mb_optimize_scan is enabled. This can lead to inconsistencies between
+grp->bb_largest_free_order and the actual s_mb_largest_free_orders list
+index when mb_optimize_scan is repeatedly enabled and disabled via remount.
 
-This created "zombie" groups that were always skipped during traversal as
-they couldn't satisfy any block allocation requests, negatively impacting
-traversal efficiency.
+For example, if mb_optimize_scan is initially enabled, largest free
+order is 3, and the group is in s_mb_largest_free_orders[3]. Then,
+mb_optimize_scan is disabled via remount, block allocations occur,
+updating largest free order to 2. Finally, mb_optimize_scan is re-enabled
+via remount, more block allocations update largest free order to 1.
 
-Therefore, when a group becomes completely full, bb_avg_fragment_size_order
-is now set to -1. If the old order was not -1, a removal operation is
-performed; if the new order is not -1, an insertion is performed.
+At this point, the group would be removed from s_mb_largest_free_orders[3]
+under the protection of s_mb_largest_free_orders_locks[2]. This lock
+mismatch can lead to list corruption.
+
+To fix this, whenever grp->bb_largest_free_order changes, we now always
+attempt to remove the group from its old order list. However, we only
+insert the group into the new order list if `mb_optimize_scan` is enabled.
+This approach helps prevent lock inconsistencies and ensures the data in
+the order lists remains reliable.
 
 Fixes: 196e402adf2e ("ext4: improve cr 0 / cr 1 group scanning")
 CC: stable@vger.kernel.org
+Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250714130327.1830534-11-libaokun1@huawei.com
+Link: https://patch.msgid.link/20250714130327.1830534-12-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ fs/ext4/mballoc.c |   33 ++++++++++++++-------------------
+ 1 file changed, 14 insertions(+), 19 deletions(-)
 
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -841,30 +841,30 @@ static void
- mb_update_avg_fragment_size(struct super_block *sb, struct ext4_group_info *grp)
+@@ -1150,33 +1150,28 @@ static void
+ mb_set_largest_free_order(struct super_block *sb, struct ext4_group_info *grp)
  {
  	struct ext4_sb_info *sbi = EXT4_SB(sb);
--	int new_order;
-+	int new, old;
+-	int i;
++	int new, old = grp->bb_largest_free_order;
  
--	if (!test_opt2(sb, MB_OPTIMIZE_SCAN) || grp->bb_fragments == 0)
-+	if (!test_opt2(sb, MB_OPTIMIZE_SCAN))
- 		return;
- 
--	new_order = mb_avg_fragment_size_order(sb,
--					grp->bb_free / grp->bb_fragments);
--	if (new_order == grp->bb_avg_fragment_size_order)
-+	old = grp->bb_avg_fragment_size_order;
-+	new = grp->bb_fragments == 0 ? -1 :
-+	      mb_avg_fragment_size_order(sb, grp->bb_free / grp->bb_fragments);
+-	for (i = MB_NUM_ORDERS(sb) - 1; i >= 0; i--)
+-		if (grp->bb_counters[i] > 0)
++	for (new = MB_NUM_ORDERS(sb) - 1; new >= 0; new--)
++		if (grp->bb_counters[new] > 0)
+ 			break;
++
+ 	/* No need to move between order lists? */
+-	if (!test_opt2(sb, MB_OPTIMIZE_SCAN) ||
+-	    i == grp->bb_largest_free_order) {
+-		grp->bb_largest_free_order = i;
 +	if (new == old)
  		return;
+-	}
  
--	if (grp->bb_avg_fragment_size_order != -1) {
--		write_lock(&sbi->s_mb_avg_fragment_size_locks[
--					grp->bb_avg_fragment_size_order]);
-+	if (old >= 0) {
-+		write_lock(&sbi->s_mb_avg_fragment_size_locks[old]);
- 		list_del(&grp->bb_avg_fragment_size_node);
--		write_unlock(&sbi->s_mb_avg_fragment_size_locks[
--					grp->bb_avg_fragment_size_order]);
-+		write_unlock(&sbi->s_mb_avg_fragment_size_locks[old]);
-+	}
-+
-+	grp->bb_avg_fragment_size_order = new;
-+	if (new >= 0) {
-+		write_lock(&sbi->s_mb_avg_fragment_size_locks[new]);
-+		list_add_tail(&grp->bb_avg_fragment_size_node,
-+				&sbi->s_mb_avg_fragment_size[new]);
-+		write_unlock(&sbi->s_mb_avg_fragment_size_locks[new]);
+-	if (grp->bb_largest_free_order >= 0) {
+-		write_lock(&sbi->s_mb_largest_free_orders_locks[
+-					      grp->bb_largest_free_order]);
++	if (old >= 0 && !list_empty(&grp->bb_largest_free_order_node)) {
++		write_lock(&sbi->s_mb_largest_free_orders_locks[old]);
+ 		list_del_init(&grp->bb_largest_free_order_node);
+-		write_unlock(&sbi->s_mb_largest_free_orders_locks[
+-					      grp->bb_largest_free_order]);
++		write_unlock(&sbi->s_mb_largest_free_orders_locks[old]);
  	}
--	grp->bb_avg_fragment_size_order = new_order;
--	write_lock(&sbi->s_mb_avg_fragment_size_locks[
--					grp->bb_avg_fragment_size_order]);
--	list_add_tail(&grp->bb_avg_fragment_size_node,
--		&sbi->s_mb_avg_fragment_size[grp->bb_avg_fragment_size_order]);
--	write_unlock(&sbi->s_mb_avg_fragment_size_locks[
--					grp->bb_avg_fragment_size_order]);
+-	grp->bb_largest_free_order = i;
+-	if (grp->bb_largest_free_order >= 0 && grp->bb_free) {
+-		write_lock(&sbi->s_mb_largest_free_orders_locks[
+-					      grp->bb_largest_free_order]);
++
++	grp->bb_largest_free_order = new;
++	if (test_opt2(sb, MB_OPTIMIZE_SCAN) && new >= 0 && grp->bb_free) {
++		write_lock(&sbi->s_mb_largest_free_orders_locks[new]);
+ 		list_add_tail(&grp->bb_largest_free_order_node,
+-		      &sbi->s_mb_largest_free_orders[grp->bb_largest_free_order]);
+-		write_unlock(&sbi->s_mb_largest_free_orders_locks[
+-					      grp->bb_largest_free_order]);
++			      &sbi->s_mb_largest_free_orders[new]);
++		write_unlock(&sbi->s_mb_largest_free_orders_locks[new]);
+ 	}
  }
  
- /*
 
 
