@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448F4FBF0;
-	Tue, 26 Aug 2025 13:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE049186E40;
+	Tue, 26 Aug 2025 13:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214070; cv=none; b=VlIM0QirlG/EgcC5w39rbqhnDviHFG6mfhGLtPItLDyMb+Hp6Y70s0foROQJO2LzkKWcKXITDJ6InOXjqopEbRHL8fA5Dq8gELqzAeWkCjFhBQtB2kOuMjvA9eMMRkEBNWu9I9SzZmCs1wG8mfkM4CAJGcptTmGNOND3QoXkQag=
+	t=1756214073; cv=none; b=Y/VRiGkch8AdpJ1uClrKleeMb5zj843PR05lma/ZfYPHyeiDZtzdGA8teLqNOuBEldn+OQDTEbjZR4zwepTiCFAFRIemTjyakxRnOH14mRr2Zchni4gOGcHmw0mS9MVGMh+1+C9DJNdcnxXcsyDCsVXABGKEj08WBsrf/VPLKF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214070; c=relaxed/simple;
-	bh=zIJxxQZo2Zs/dRXAhWD5L/7UuKB9befc3dcrKLa3rcE=;
+	s=arc-20240116; t=1756214073; c=relaxed/simple;
+	bh=53QjcfJoVj0jE8EzvIUJcE5hF6avBdqNGbpygTwFcTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gvQo1JeOfwx5NY2THpz39jUAs42sBfScJMdlc+to7nQD6EGP1FQXvL/sdUjUTM+Ul0s/G/F121Nb4RgpS/41Fr8MRyG/ywfhtsW0FJV/56+pmtKJCVubODmBt5x4Fsap4Sw7cVaqPzZBTxom95Arb8926s+O1voz7LshSGvI8KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+7nRRnM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avbBOmluTVrz0yST/H0vgWZ/8dL2Jz4LLrDlt0Gkf03d/bGnkCKfd0xsVRKQq0juoEnMQiMpWLzQTaEFkodBxju4MbUE7KKEpH+8018LRBh6qcCZOk5ZDlPuU82R6w+qOcksHROnP8E6TSq3/PYw28zkbb4DV9ZUo9UF5gr8n9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHLQuk8c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+7nRRnM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2CDC113CF;
-	Tue, 26 Aug 2025 13:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHLQuk8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707CAC4CEF1;
+	Tue, 26 Aug 2025 13:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214070;
-	bh=zIJxxQZo2Zs/dRXAhWD5L/7UuKB9befc3dcrKLa3rcE=;
+	s=korg; t=1756214072;
+	bh=53QjcfJoVj0jE8EzvIUJcE5hF6avBdqNGbpygTwFcTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+7nRRnM9K58Y5APtqow5mH5jPdFsrMm5w4tM2ITeiu6EYFQrjSvbO4PedP+jk0SZ
-	 5SL0ir1XiWCgweQsGYy3NngXEC+pu1zYa2ryl9tJ0DmawSQ+qZOy2GFQuzVXE6RXFs
-	 uCh1BTpZKPIrhUBIMBnB9PpvP6ce1vOgWJr4dZTo=
+	b=zHLQuk8cmkekZpuADEJJm3smIK3TnFUSyiTIEDIY01GO/MVUD3FJ4h2rU+vyIAnxV
+	 1cHoNAg2XcEBnYYHI8c+DVTWcAtKbMX54O5E4m3zuWL0an/6BvWi7qKePrIcWxkUH3
+	 2SFgj2MgoIlXv/4W7G/YgBmn3RY+N5vyuxcnk738=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	stable <stable@kernel.org>,
+	Amit Sunil Dhamne <amitsd@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 554/587] RDMA/bnxt_re: Fix to remove workload check in SRQ limit path
-Date: Tue, 26 Aug 2025 13:11:43 +0200
-Message-ID: <20250826111007.116554626@linuxfoundation.org>
+Subject: [PATCH 6.6 545/587] usb: typec: maxim_contaminant: re-enable cc toggle if cc is open and port is clean
+Date: Tue, 26 Aug 2025 13:11:34 +0200
+Message-ID: <20250826111006.882532061@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,131 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-[ Upstream commit 666bce0bd7e771127cb0cda125cc9d32d9f9f15d ]
+[ Upstream commit a381c6d6f646226924809d0ad01a9465786da463 ]
 
-There should not be any checks of current workload to set
-srq_limit value to SRQ hw context.
+Presently in `max_contaminant_is_contaminant()` if there's no
+contaminant detected previously, CC is open & stopped toggling and no
+contaminant is currently present, TCPC.RC would be programmed to do DRP
+toggling. However, it didn't actively look for a connection. This would
+lead to Type-C not detect *any* new connections. Hence, in the above
+situation, re-enable toggling & program TCPC to look for a new
+connection.
 
-Remove all such workload checks and make a direct call to
-set srq_limit via doorbell SRQ_ARM.
+Also, return early if TCPC was looking for connection as this indicates
+TCPC has neither detected a potential connection nor a change in
+contaminant state.
 
-Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Link: https://patch.msgid.link/20250805101000.233310-3-kalesh-anakkur.purayil@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+In addition, once dry detection is complete (port is dry), restart
+toggling.
+
+Fixes: 02b332a06397e ("usb: typec: maxim_contaminant: Implement check_contaminant callback")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://lore.kernel.org/r/20250815-fix-upstream-contaminant-v2-2-6c8d6c3adafb@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c |  8 ++-----
- drivers/infiniband/hw/bnxt_re/qplib_fp.c | 27 ------------------------
- drivers/infiniband/hw/bnxt_re/qplib_fp.h |  2 --
- 3 files changed, 2 insertions(+), 35 deletions(-)
+ drivers/usb/typec/tcpm/maxim_contaminant.c |   48 +++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index f7345e4890a1..31fff5885f1a 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1823,7 +1823,6 @@ int bnxt_re_modify_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr,
- 	struct bnxt_re_srq *srq = container_of(ib_srq, struct bnxt_re_srq,
- 					       ib_srq);
- 	struct bnxt_re_dev *rdev = srq->rdev;
--	int rc;
+--- a/drivers/usb/typec/tcpm/maxim_contaminant.c
++++ b/drivers/usb/typec/tcpm/maxim_contaminant.c
+@@ -322,6 +322,34 @@ static int max_contaminant_enable_dry_de
+ 	return 0;
+ }
  
- 	switch (srq_attr_mask) {
- 	case IB_SRQ_MAX_WR:
-@@ -1835,11 +1834,8 @@ int bnxt_re_modify_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr,
- 			return -EINVAL;
- 
- 		srq->qplib_srq.threshold = srq_attr->srq_limit;
--		rc = bnxt_qplib_modify_srq(&rdev->qplib_res, &srq->qplib_srq);
--		if (rc) {
--			ibdev_err(&rdev->ibdev, "Modify HW SRQ failed!");
--			return rc;
--		}
-+		bnxt_qplib_srq_arm_db(&srq->qplib_srq.dbinfo, srq->qplib_srq.threshold);
++static int max_contaminant_enable_toggling(struct max_tcpci_chip *chip)
++{
++	struct regmap *regmap = chip->data.regmap;
++	int ret;
 +
- 		/* On success, update the shadow */
- 		srq->srq_limit = srq_attr->srq_limit;
- 		/* No need to Build and send response back to udata */
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 8dc707f98fff..c19dd732c235 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -686,7 +686,6 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
- 	srq->dbinfo.max_slot = 1;
- 	srq->dbinfo.priv_db = res->dpi_tbl.priv_db;
- 	bnxt_qplib_armen_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ_ARMENA);
--	srq->arm_req = false;
- 
- 	return 0;
- fail:
-@@ -696,24 +695,6 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
- 	return rc;
- }
- 
--int bnxt_qplib_modify_srq(struct bnxt_qplib_res *res,
--			  struct bnxt_qplib_srq *srq)
--{
--	struct bnxt_qplib_hwq *srq_hwq = &srq->hwq;
--	u32 count;
--
--	count = __bnxt_qplib_get_avail(srq_hwq);
--	if (count > srq->threshold) {
--		srq->arm_req = false;
--		bnxt_qplib_srq_arm_db(&srq->dbinfo, srq->threshold);
--	} else {
--		/* Deferred arming */
--		srq->arm_req = true;
--	}
--
--	return 0;
--}
--
- int bnxt_qplib_query_srq(struct bnxt_qplib_res *res,
- 			 struct bnxt_qplib_srq *srq)
++	/* Disable dry detection if enabled. */
++	ret = regmap_update_bits(regmap, TCPC_VENDOR_CC_CTRL2, CCLPMODESEL_MASK,
++				 ULTRA_LOW_POWER_MODE);
++	if (ret)
++		return ret;
++
++	ret = regmap_update_bits(regmap, TCPC_VENDOR_CC_CTRL1, CCCONNDRY, 0);
++	if (ret)
++		return ret;
++
++	ret = max_tcpci_write8(chip, TCPC_ROLE_CTRL, TCPC_ROLE_CTRL_DRP | 0xA);
++	if (ret)
++		return ret;
++
++	ret = regmap_update_bits(regmap, TCPC_TCPC_CTRL,
++				 TCPC_TCPC_CTRL_EN_LK4CONN_ALRT,
++				 TCPC_TCPC_CTRL_EN_LK4CONN_ALRT);
++	if (ret)
++		return ret;
++
++	return max_tcpci_write8(chip, TCPC_COMMAND, TCPC_CMD_LOOK4CONNECTION);
++}
++
+ bool max_contaminant_is_contaminant(struct max_tcpci_chip *chip, bool disconnect_while_debounce)
  {
-@@ -755,7 +736,6 @@ int bnxt_qplib_post_srq_recv(struct bnxt_qplib_srq *srq,
- 	struct bnxt_qplib_hwq *srq_hwq = &srq->hwq;
- 	struct rq_wqe *srqe;
- 	struct sq_sge *hw_sge;
--	u32 count = 0;
- 	int i, next;
+ 	u8 cc_status, pwr_cntl;
+@@ -335,6 +363,12 @@ bool max_contaminant_is_contaminant(stru
+ 	if (ret < 0)
+ 		return false;
  
- 	spin_lock(&srq_hwq->lock);
-@@ -787,15 +767,8 @@ int bnxt_qplib_post_srq_recv(struct bnxt_qplib_srq *srq,
- 
- 	bnxt_qplib_hwq_incr_prod(&srq->dbinfo, srq_hwq, srq->dbinfo.max_slot);
- 
--	spin_lock(&srq_hwq->lock);
--	count = __bnxt_qplib_get_avail(srq_hwq);
--	spin_unlock(&srq_hwq->lock);
- 	/* Ring DB */
- 	bnxt_qplib_ring_prod_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ);
--	if (srq->arm_req == true && count > srq->threshold) {
--		srq->arm_req = false;
--		bnxt_qplib_srq_arm_db(&srq->dbinfo, srq->threshold);
--	}
- 
- 	return 0;
- }
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index 55fd840359ef..288196facfd7 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -519,8 +519,6 @@ int bnxt_qplib_enable_nq(struct pci_dev *pdev, struct bnxt_qplib_nq *nq,
- 			 srqn_handler_t srq_handler);
- int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
- 			  struct bnxt_qplib_srq *srq);
--int bnxt_qplib_modify_srq(struct bnxt_qplib_res *res,
--			  struct bnxt_qplib_srq *srq);
- int bnxt_qplib_query_srq(struct bnxt_qplib_res *res,
- 			 struct bnxt_qplib_srq *srq);
- void bnxt_qplib_destroy_srq(struct bnxt_qplib_res *res,
--- 
-2.50.1
-
++	if (cc_status & TCPC_CC_STATUS_TOGGLING) {
++		if (chip->contaminant_state == DETECTED)
++			return true;
++		return false;
++	}
++
+ 	if (chip->contaminant_state == NOT_DETECTED || chip->contaminant_state == SINK) {
+ 		if (!disconnect_while_debounce)
+ 			msleep(100);
+@@ -367,6 +401,12 @@ bool max_contaminant_is_contaminant(stru
+ 				max_contaminant_enable_dry_detection(chip);
+ 				return true;
+ 			}
++
++			ret = max_contaminant_enable_toggling(chip);
++			if (ret)
++				dev_err(chip->dev,
++					"Failed to enable toggling, ret=%d",
++					ret);
+ 		}
+ 		return false;
+ 	} else if (chip->contaminant_state == DETECTED) {
+@@ -375,6 +415,14 @@ bool max_contaminant_is_contaminant(stru
+ 			if (chip->contaminant_state == DETECTED) {
+ 				max_contaminant_enable_dry_detection(chip);
+ 				return true;
++			} else {
++				ret = max_contaminant_enable_toggling(chip);
++				if (ret) {
++					dev_err(chip->dev,
++						"Failed to enable toggling, ret=%d",
++						ret);
++					return true;
++				}
+ 			}
+ 		}
+ 	}
 
 
