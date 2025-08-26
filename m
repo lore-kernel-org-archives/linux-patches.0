@@ -1,109 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE473469FC;
-	Tue, 26 Aug 2025 14:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B264B229B02;
+	Tue, 26 Aug 2025 14:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219521; cv=none; b=X1Lyxyi7gJM8oPTUcxnrHO33rxbSwI8tF557zt0rDYJME2VYP/H+O1i7DezQgoUdZ94/gE6U6zCNLpywnWcl+qO5WIohVxsmVpInSETRuQhYQr751k/MOSzkWqL8+WrQebVinzMoxJe5Tx0IOGU6Yo4ltztTCn3CdL7cJQPAL8o=
+	t=1756219540; cv=none; b=a6S/fTOYdcH85V9zTAzGbmeQNC0Lo2N9sj98N3NUFhndPcFBN9YBxq1zlIrpJJhhtg2fAUy+8fis3B17aVTcX0m6v4Uqhz/snwi4GAInLBX3q+bp4oi29VzFv29qF8CA6ZbVA56LVxH1MJcN+x3IfrpTksBlAXEVeCwmqsYa5Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219521; c=relaxed/simple;
-	bh=2fjsl71zFKbXs3ws16pco+vp93pc2Qs+5PISA74aiUI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VehOJ0fUjSkSSnk7Hoy/vnpXClML6FIDnEl79W1VcuQ3Y+DJnDNM+jn4r6oLV0UbV7iKyx901Wo7Bj3jdsjKGm/CXXmoLb3x7GV6WE09mEh+r1qW9ZhHddxdXFjO19fDC8Id+wA1LdPw7pCZbAY09wsGH8o/VGx5wnbty5pLQO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3R+aij1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756219540; c=relaxed/simple;
+	bh=pHvdiww41qjOcxOEVjcfcQ7mwE8MnxtZUWKvkmRLJF0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=d3jgrUeY6InHRYRDRWbiBEfqqCh8jrIKy7DvYAct0ziDpVbP+KmnHhnqPbOKp6hrn0iJLmizkeVJ766w8X80joCb5uIgEOprgor0EuZRX9wSjKpoizajcxowPP03VaCLRqhRJ/zBUxyg4OFYkAxe35DMC9WjcpO+Z59tZ1Lu1SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fYcN0Qgf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3R+aij1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C4BC113CF;
-	Tue, 26 Aug 2025 14:45:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219521;
-	bh=2fjsl71zFKbXs3ws16pco+vp93pc2Qs+5PISA74aiUI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y3R+aij1aGBJdGAHoAvaLVaVHo3OsAEERdumuBbMQx9Afo2EKHbZGXh3bBZp1qOTU
-	 6OGYULvDxm3rH0YZ3F3rCvnZ/rWuiZJx4oMRls2/vzUEbbJccEb263T6prDFHLgC66
-	 DvdOd5WnNmRNoMQZA7iKNDoXp/Xd15KyfAUHfjMc=
-Date: Tue, 26 Aug 2025 14:51:30 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	Ben Copeland <benjamin.copeland@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-	Linux ARM <linux-arm-kernel@lists.infradead.org>,
-	srinivas.kandagatla@oss.qualcomm.com
-Subject: Re: [PATCH 6.15 000/515] 6.15.11-rc1 review
-Message-ID: <2025082612-energetic-lair-ee26@gregkh>
-References: <20250818124458.334548733@linuxfoundation.org>
- <CA+G9fYt5sknJ3jbebYZrqMRhbcLZKLCvTDHfg5feNnOpj-j9Wg@mail.gmail.com>
- <CA+G9fYt6SAsPo6TvfgtnDWHPHO2q7xfppGbCaW0JxpL50zqWew@mail.gmail.com>
- <CACMJSeu_DTVK=XtvaSD3Fj3aTXBJ5d-MpQMuysJYEFBNwznDqQ@mail.gmail.com>
- <2025081931-chump-uncurled-656b@gregkh>
- <CACMJSesMDcUM+bvmT76m2s05a+-T7NxGQwe72yS03zkEJ-KzCw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fYcN0Qgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D44C116B1;
+	Tue, 26 Aug 2025 14:45:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756219540;
+	bh=pHvdiww41qjOcxOEVjcfcQ7mwE8MnxtZUWKvkmRLJF0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=fYcN0QgfPWZS1aNbzJlBkVeaqxFvKDMdNGlLFfw9w0RR0+SZQRIGjS5QJpmL6wYRn
+	 AvlIygddy4ZjHmOhknsViNrcNpCopT7fo07rXKguEh2nLVcDSwRMDpxJ6PmLxSHwZE
+	 XQnHiLpuKaRC09HiD+VziQUJ3/vZN9lZoDpLnpUTLQZFq8vYWRzYYsgsi7i8f2Azct
+	 G5CLZR9I+gx28Q/U2poq0htiKIiFNMb3/VtD9dy8xc80zd84FxMpSCygcTlj0JGz0K
+	 i9smCUps5/WAXhRlt/+TPhcnJr3b7yUnRYolXzIO6xzq3NyJoSsI7SK1HrqsibmxG0
+	 hzhTBXiW51Ouw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.16 000/457] 6.16.4-rc1 review
+Date: Tue, 26 Aug 2025 16:45:27 +0200
+Message-ID: <20250826144527.712511-1-ojeda@kernel.org>
+In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
+References: <20250826110937.289866482@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACMJSesMDcUM+bvmT76m2s05a+-T7NxGQwe72yS03zkEJ-KzCw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 26, 2025 at 02:06:04PM +0200, Bartosz Golaszewski wrote:
-> On Tue, 19 Aug 2025 at 13:52, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Tue, Aug 19, 2025 at 01:30:46PM +0200, Bartosz Golaszewski wrote:
-> > > On Tue, 19 Aug 2025 at 12:02, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > > >
-> > > > On Tue, 19 Aug 2025 at 00:18, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > > > >
-> > > > >
-> > > > > Boot regression: stable-rc 6.15.11-rc1 arm64 Qualcomm Dragonboard 410c
-> > > > > Unable to handle kernel NULL pointer dereference
-> > > > > qcom_scm_shm_bridge_enable
-> > > >
-> > > > I have reverted the following patch and the regression got fixed.
-> > > >
-> > > > firmware: qcom: scm: initialize tzmem before marking SCM as available
-> > > >     [ Upstream commit 87be3e7a2d0030cda6314d2ec96b37991f636ccd ]
-> > > >
-> > >
-> > > Hi! I'm on vacation, I will look into this next week. I expect there
-> > > to be a fix on top of this commit.
-> >
-> > Ok, I'll go and drop this one from the queues now, thanks.
-> >
-> > greg k-h
-> 
-> Hi!
-> 
-> The issue was caused by only picking up commit 7ab36b51c6bee
-> ("firmware: qcom: scm: request the waitqueue irq *after* initializing
-> SCM") into stable, while the following four must be applied instead:
-> 
-> 23972da96e1ee ("firmware: qcom: scm: remove unused arguments from SHM
-> bridge routines")
-> dc3f4e75c54c1 ("firmware: qcom: scm: take struct device as argument in
-> SHM bridge enable")
-> 87be3e7a2d003 ("firmware: qcom: scm: initialize tzmem before marking
-> SCM as available")
-> 7ab36b51c6bee ("firmware: qcom: scm: request the waitqueue irq *after*
-> initializing SCM")
+On Tue, 26 Aug 2025 13:04:44 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.16.4 release.
+> There are 457 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 28 Aug 2025 11:08:27 +0000.
+> Anything received after that time might be too late.
 
-6.15.y is long end-of-life, so is anything still to be done here?
+Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
+for loongarch64:
 
-thanks,
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-greg k-h
+(By the way, this one builds cleanly for arm 32-bit too -- I normally
+don't report on it since it is not clean, but it is nice to see it may
+be getting there).
+
+Thanks!
+
+Cheers,
+Miguel
