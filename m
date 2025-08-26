@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60035350D78;
-	Tue, 26 Aug 2025 13:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5D835209A;
+	Tue, 26 Aug 2025 13:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216585; cv=none; b=VqV9LJ9Vl9EciZn7g0uWlyLF6QTHrksg6WyEYscmhIqK5USKeCkNTQpOmVdI1Xe8NhZsyDLoq/Gp5DxsCw0hqcb0aAVdEVPULBoZ3kgxOjxacOkvdQ9irhn+XYJefkvWUcWzZC9Giia22UnfWQ1GTBcEpnumZNf9i7DRRo0TOsk=
+	t=1756216588; cv=none; b=iegAaDijvtjASMmfx+VOmYZEow4ZeGCsQWhMHdmxrrfdCNJYnQJThg7pNAZxEZhXL6OUXZDKEWnNmkU8Fi6J8z2qkLAzwrWiIWW8+4cognUMtEm4fJXWSibDIlzPnQs5eZfui6EJkLKRI0wDnURntFo8tvuDJfYZR3OrhGmxsU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216585; c=relaxed/simple;
-	bh=wSnbrnv26xUJHddkrNDbfaO/lMJaz/zszDXCRdBN7ow=;
+	s=arc-20240116; t=1756216588; c=relaxed/simple;
+	bh=peOZqkruYxmKEeRsYTXTgsR6DdlAs5Y+Ozum/I/8vn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTNRlZesQ5MnjaXfabJS8M75iZadqQpAVIdRigfhRDnRzbX8xKA+Rx4jYEF7mT0K6/9riIPqH7p0G38CPZ6hiB2km+wTOoF6fKnrNVvuNA3YZhq9rryQJjdHbaWmpxt4PK8PtbDyf96vzMdutEOY9+E09c8F1g4g6A+3AqHWqpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4VHZp28; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nVb69oIyRPTvini30Pri53m1T95QqeAmCASgt2yCKvkMVtQTQKUl7ORh+F48UIhmtOsh98o7pWANLvLwbxp/3si2oeVuEtMMj/9D28aLqwLhRX2O4LHee5DYiIoIwi8Rc5bOpKdxyjNTtaBVUyfOVpRNtUrrFkLBSiSzH6q+tI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJQOySIx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4VHZp28"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA968C4CEF1;
-	Tue, 26 Aug 2025 13:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJQOySIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C306C4CEF1;
+	Tue, 26 Aug 2025 13:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216585;
-	bh=wSnbrnv26xUJHddkrNDbfaO/lMJaz/zszDXCRdBN7ow=;
+	s=korg; t=1756216587;
+	bh=peOZqkruYxmKEeRsYTXTgsR6DdlAs5Y+Ozum/I/8vn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4VHZp28AiBcECya71WzApSwjoIP7li7xR+RrMqHLYJapvHBX/pSFIKLi41cK03RI
-	 wADR7VQYviKeHrSNcl/mdo3v2+pJ5ZU3+6rWXu98JXYrLU8os72pXFl50umPv68iX+
-	 iufSGtXnctiDNBvOlXkGAfIWXS/urkrc1mjEfcyQ=
+	b=qJQOySIxPgq4H20wIiEKXNNAbvcNWZx8Jq59LWGPCENe60sP5KevqCmQSMSlLIz9+
+	 2UrwgfGskr2AVReoL/+T7+yakalpRlOiZJhTvD4pC2KH2pyKCcFslswlqBWDjpzbGP
+	 0V7z6WGM5EEvO7veeLcfxMzmXeAAwKicOZsI87Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 5.15 465/644] lib/crypto: mips/chacha: Fix clang build and remove unneeded byteswap
-Date: Tue, 26 Aug 2025 13:09:16 +0200
-Message-ID: <20250826110958.003403010@linuxfoundation.org>
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 436/644] ASoC: soc-dai.c: add missing flag check at snd_soc_pcm_dai_probe()
+Date: Tue, 26 Aug 2025 13:08:47 +0200
+Message-ID: <20250826110957.270893307@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,104 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit 22375adaa0d9fbba9646c8e2b099c6e87c97bfae upstream.
+[ Upstream commit 5c5a7521e9364a40fe2c1b67ab79991e3e9085df ]
 
-The MIPS32r2 ChaCha code has never been buildable with the clang
-assembler.  First, clang doesn't support the 'rotl' pseudo-instruction:
+dai->probed is used at snd_soc_pcm_dai_probe/remove(),
+and used to call real remove() function only when it was probed.
 
-    error: unknown instruction, did you mean: rol, rotr?
+	int snd_soc_pcm_dai_probe(...)
+	{
+		...
+		for_each_rtd_dais(rtd, i, dai) {
+			...
 
-Second, clang requires that both operands of the 'wsbh' instruction be
-explicitly given:
+			if (dai->driver->probe) {
+(A)				int ret = dai->driver->probe(dai);
 
-    error: too few operands for instruction
+				if (ret < 0)
+					return soc_dai_ret(dai, ret);
+			}
 
-To fix this, align the code with the real instruction set by (1) using
-the real instruction 'rotr' instead of the nonstandard pseudo-
-instruction 'rotl', and (2) explicitly giving both operands to 'wsbh'.
+=>			dai->probed = 1;
+		}
+		...
+	}
 
-To make removing the use of 'rotl' a bit easier, also remove the
-unnecessary special-casing for big endian CPUs at
-.Lchacha_mips_xor_bytes.  The tail handling is actually
-endian-independent since it processes one byte at a time.  On big endian
-CPUs the old code byte-swapped SAVED_X, then iterated through it in
-reverse order.  But the byteswap and reverse iteration canceled out.
+	int snd_soc_pcm_dai_remove(...)
+	{
+		...
+		for_each_rtd_dais(rtd, i, dai) {
+			...
+=>			if (dai->probed &&
+			    ...) {
+				...
+			}
 
-Tested with chacha20poly1305-selftest in QEMU using "-M malta" with both
-little endian and big endian mips32r2 kernels.
+=>			dai->probed = 0;
+		}
+		...
+	}
 
-Fixes: 49aa7c00eddf ("crypto: mips/chacha - import 32r2 ChaCha code from Zinc")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202505080409.EujEBwA0-lkp@intel.com/
-Link: https://lore.kernel.org/r/20250619225535.679301-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But on probe() case, we need to check dai->probed before calling
+real probe() function at (A), otherwise real probe() might be called
+multi times (but real remove() will be called only once).
+This patch checks it at probe().
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87wn3u64e6.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0e270f32975f ("ASoC: fsl_sai: replace regmap_write with regmap_update_bits")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/crypto/chacha-core.S |   20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ sound/soc/soc-dai.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/mips/crypto/chacha-core.S
-+++ b/arch/mips/crypto/chacha-core.S
-@@ -55,17 +55,13 @@
- #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
- #define MSB 0
- #define LSB 3
--#define ROTx rotl
--#define ROTR(n) rotr n, 24
- #define	CPU_TO_LE32(n) \
--	wsbh	n; \
-+	wsbh	n, n; \
- 	rotr	n, 16;
- #else
- #define MSB 3
- #define LSB 0
--#define ROTx rotr
- #define CPU_TO_LE32(n)
--#define ROTR(n)
- #endif
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index 8165f5537043..703aa9a76d03 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -561,6 +561,9 @@ int snd_soc_pcm_dai_probe(struct snd_soc_pcm_runtime *rtd, int order)
+ 		if (dai->driver->probe_order != order)
+ 			continue;
  
- #define FOR_EACH_WORD(x) \
-@@ -192,10 +188,10 @@ CONCAT3(.Lchacha_mips_xor_aligned_, PLUS
- 	xor	X(W), X(B); \
- 	xor	X(Y), X(C); \
- 	xor	X(Z), X(D); \
--	rotl	X(V), S;    \
--	rotl	X(W), S;    \
--	rotl	X(Y), S;    \
--	rotl	X(Z), S;
-+	rotr	X(V), 32 - S; \
-+	rotr	X(W), 32 - S; \
-+	rotr	X(Y), 32 - S; \
-+	rotr	X(Z), 32 - S;
++		if (dai->probed)
++			continue;
++
+ 		if (dai->driver->probe) {
+ 			int ret = dai->driver->probe(dai);
  
- .text
- .set	reorder
-@@ -372,21 +368,19 @@ chacha_crypt_arch:
- 	/* First byte */
- 	lbu	T1, 0(IN)
- 	addiu	$at, BYTES, 1
--	CPU_TO_LE32(SAVED_X)
--	ROTR(SAVED_X)
- 	xor	T1, SAVED_X
- 	sb	T1, 0(OUT)
- 	beqz	$at, .Lchacha_mips_xor_done
- 	/* Second byte */
- 	lbu	T1, 1(IN)
- 	addiu	$at, BYTES, 2
--	ROTx	SAVED_X, 8
-+	rotr	SAVED_X, 8
- 	xor	T1, SAVED_X
- 	sb	T1, 1(OUT)
- 	beqz	$at, .Lchacha_mips_xor_done
- 	/* Third byte */
- 	lbu	T1, 2(IN)
--	ROTx	SAVED_X, 8
-+	rotr	SAVED_X, 8
- 	xor	T1, SAVED_X
- 	sb	T1, 2(OUT)
- 	b	.Lchacha_mips_xor_done
+-- 
+2.50.1
+
 
 
