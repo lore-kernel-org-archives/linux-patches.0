@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A8F35A283;
-	Tue, 26 Aug 2025 14:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758D235A29D;
+	Tue, 26 Aug 2025 14:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219464; cv=none; b=a7v6RiamyHx/NAUP5t5rkIl5OINHGl/z/b0yBGp3FlJ4ipouxMR1a4cc83Yy0fSs/L2Xsl/AU1tlrqAgBokAuzEHcB/SDS6JGK55HYnczUrGVH7BK6XYEspUeuWI7cWRKuzGaXGdCICSTmB22R3id+mw1RAzv9zSRnr2Ixcu36s=
+	t=1756219466; cv=none; b=BgSy4Ob9AewrY7fdwcns8SfhaTaOCYaJAhVM+dH0LvS/QlJeFNFa556ZxjF1aSTlb0Y19knbmEaCS3H8jlrREiqmA/w8X2s6ZFiLta2usIKrisWcN4Q1YI51kZZKoAa4aCGQh6+/lNu2fVHgeQH4zoH+g8BFS0vMiYa6Gqv132M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219464; c=relaxed/simple;
-	bh=kQgXb7vPRG/Dr0TULDBZZ3eYbnCm4e7Y/NPQ6GGYs2s=;
+	s=arc-20240116; t=1756219466; c=relaxed/simple;
+	bh=DGZdmFNC2BI6h7U0G6V3UmKZ7yLXIuyFYtVPr2+SnTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmYKqBEWPt6kERnZSZXotTxFD552/nif2bLor2QECDidytQD8a1xPWRN+52a4NweNQxZXd5D8I1BLOJK7ZVkaB3JeIz00OKFcLpvWN74L3wyMo20uZuQx2T3O++RnVO3mzOWVPUW8jmFQyrMsByPBKaOE9LVDoyQNM7zOr4nq7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nxwq0Hk6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUH3d/P/tWGP+QSZxrkcpbBlgexQYWz6CF0x4Dv47glZQowwXWg+BJKgG8FC+YLtIOxF3uarBj4uHJBJetkHpYvjpGzIhDjX+CCMnGss7PAN1B0YF4KhoGkT3IGtXmnmHtAUCjJXf1vTLRpWI4vDsnQlQKEXb3rJ8Ulbx593DJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2c5NoQx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nxwq0Hk6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F073C113CF;
-	Tue, 26 Aug 2025 14:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2c5NoQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070E4C113CF;
+	Tue, 26 Aug 2025 14:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219463;
-	bh=kQgXb7vPRG/Dr0TULDBZZ3eYbnCm4e7Y/NPQ6GGYs2s=;
+	s=korg; t=1756219466;
+	bh=DGZdmFNC2BI6h7U0G6V3UmKZ7yLXIuyFYtVPr2+SnTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nxwq0Hk6ezjwwzV+mGLSBgwX79jbe9QfUG7BC5KMFbUj5QzIeAiR17Wg96QSOEE/k
-	 G+KnvBJMrVzhjI/dEjBB3v5Jo4ykiB7SaocLiEe9qtyOJkRuhe3dT10lvXD0zK+/JN
-	 ayw4lCK2Mdz5bYIYBQUvkKfL/I0qsIUlptEehlu4=
+	b=l2c5NoQx0WxYxSnrKPZYlNB1mE6CSbc6tpmopri9LCvZX3J2CKxdOTEVzFRso3WuV
+	 mCTvqhJhanoBpzMUO06SMPGg/xKHffQj9YiupLdhzfG9IQV9p0LqeR6vGVzywht4Gw
+	 hoaLWGSmRy7OHo5BCQI42qz5c6VCypr1xgY7o45E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 351/403] mm/kmemleak: avoid deadlock by moving pr_warn() outside kmemleak_lock
-Date: Tue, 26 Aug 2025 13:11:17 +0200
-Message-ID: <20250826110916.573300869@linuxfoundation.org>
+	Vlad Buslov <vladbu@mellanox.com>,
+	Jiri Pirko <jiri@mellanox.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Shubham Kulkarni <skulkarni@mvista.com>
+Subject: [PATCH 5.4 385/403] net: sched: dont expose action qstats to skb_tc_reinsert()
+Date: Tue, 26 Aug 2025 13:11:51 +0200
+Message-ID: <20250826110917.656579846@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,65 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Vlad Buslov <vladbu@mellanox.com>
 
-[ Upstream commit 47b0f6d8f0d2be4d311a49e13d2fd5f152f492b2 ]
+[ Upstream commit ef816f3c49c1c404ababc50e10d4cbe5109da678 ]
 
-When netpoll is enabled, calling pr_warn_once() while holding
-kmemleak_lock in mem_pool_alloc() can cause a deadlock due to lock
-inversion with the netconsole subsystem.  This occurs because
-pr_warn_once() may trigger netpoll, which eventually leads to
-__alloc_skb() and back into kmemleak code, attempting to reacquire
-kmemleak_lock.
+Previous commit introduced helper function for updating qstats and
+refactored set of actions to use the helpers, instead of modifying qstats
+directly. However, one of the affected action exposes its qstats to
+skb_tc_reinsert(), which then modifies it.
 
-This is the path for the deadlock.
+Refactor skb_tc_reinsert() to return integer error code and don't increment
+overlimit qstats in case of error, and use the returned error code in
+tcf_mirred_act() to manually increment the overlimit counter with new
+helper function.
 
-mem_pool_alloc()
-  -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
-      -> pr_warn_once()
-          -> netconsole subsystem
-	     -> netpoll
-	         -> __alloc_skb
-		   -> __create_object
-		     -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
-
-Fix this by setting a flag and issuing the pr_warn_once() after
-kmemleak_lock is released.
-
-Link: https://lkml.kernel.org/r/20250731-kmemleak_lock-v1-1-728fd470198f@debian.org
-Fixes: c5665868183f ("mm: kmemleak: use the memory pool for early allocations")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Vlad Buslov <vladbu@mellanox.com>
+Acked-by: Jiri Pirko <jiri@mellanox.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ skulkarni: Adjusted patch for file 'sch_generic.h' wrt the mainline commit ]
+Stable-dep-of: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
+Signed-off-by: Shubham Kulkarni <skulkarni@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/net/sch_generic.h |   12 ++----------
+ net/sched/act_mirred.c    |    4 ++--
+ 2 files changed, 4 insertions(+), 12 deletions(-)
 
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -417,6 +417,7 @@ static struct kmemleak_object *mem_pool_
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -1320,17 +1320,9 @@ void mini_qdisc_pair_swap(struct mini_Qd
+ void mini_qdisc_pair_init(struct mini_Qdisc_pair *miniqp, struct Qdisc *qdisc,
+ 			  struct mini_Qdisc __rcu **p_miniq);
+ 
+-static inline void skb_tc_reinsert(struct sk_buff *skb, struct tcf_result *res)
++static inline int skb_tc_reinsert(struct sk_buff *skb, struct tcf_result *res)
  {
- 	unsigned long flags;
- 	struct kmemleak_object *object;
-+	bool warn = false;
- 
- 	/* try the slab allocator first */
- 	if (object_cache) {
-@@ -434,8 +435,10 @@ static struct kmemleak_object *mem_pool_
- 	else if (mem_pool_free_count)
- 		object = &mem_pool[--mem_pool_free_count];
- 	else
--		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
-+		warn = true;
- 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
-+	if (warn)
-+		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
- 
- 	return object;
+-	struct gnet_stats_queue *stats = res->qstats;
+-	int ret;
+-
+-	if (res->ingress)
+-		ret = netif_receive_skb(skb);
+-	else
+-		ret = dev_queue_xmit(skb);
+-	if (ret && stats)
+-		qstats_overlimit_inc(res->qstats);
++	return res->ingress ? netif_receive_skb(skb) : dev_queue_xmit(skb);
  }
+ 
+ /* Make sure qdisc is no longer in SCHED state. */
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -295,8 +295,8 @@ static int tcf_mirred_act(struct sk_buff
+ 		/* let's the caller reinsert the packet, if possible */
+ 		if (use_reinsert) {
+ 			res->ingress = want_ingress;
+-			res->qstats = this_cpu_ptr(m->common.cpu_qstats);
+-			skb_tc_reinsert(skb, res);
++			if (skb_tc_reinsert(skb, res))
++				tcf_action_inc_overlimit_qstats(&m->common);
+ 			__this_cpu_dec(mirred_rec_level);
+ 			return TC_ACT_CONSUMED;
+ 		}
 
 
