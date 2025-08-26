@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3772F352FEE;
-	Tue, 26 Aug 2025 14:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD74352FDB;
+	Tue, 26 Aug 2025 14:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219378; cv=none; b=GiJjVIoIf0DaWjicVrj0zSR4Ip9OZZF1F7DfRq6JWN8LbDWGeFxwk0vRhaT20esJz1naWN/y5WVmv+wHwET19HzRZEdtD/ygaxK3mBk/rtREz0F6MJULP/dEJVf9DsLrxIqYFDxur4iyEhY/Yy/Rp8TQuhUrpM8DdP/xUEyLeaM=
+	t=1756219380; cv=none; b=IgV2IPkmy8NAkh/CQ4hK3QhxaO+HAezYlLXtya3yUVkH8+RXVaTX/OcpEwDxRSgShcclG8/k/x2HJkBaDu6ynBeYyX7ZhAzz545SJT1/Up/oL/uH5c/wgSw70Z86Ws7/q7JjaDXh5pPKIVJ4jgbpdNZ+PIz54qQPf7pqxgvNFmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219378; c=relaxed/simple;
-	bh=Vb3LMFbrP5l0jDPoACsk+nu6jsceIB9jLAprf62dZJU=;
+	s=arc-20240116; t=1756219380; c=relaxed/simple;
+	bh=13qFPfiizwk9UdmEXZR9Vg1zhh8J3tnEbu2ngnKDNSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VC0Iy33MrktvnCOupfogxaIrBjqcYIyMkMGI3wEIvJdqJ9LrQ9BzNhcYqAOlhnbc1pCC3qT8mj/ZOFSAByk7pSFS7OrGnUBeRYE9hH0eALbB0WAvh3GnzQGVDxpVcH96DqWsndHZIGKpsurv3VdTNI2e3WySbdi5jXR3eE43EaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ElNUd/2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DBchz/KI4rUIO+Xe0Ap9MLt0FRrk0Yp5HGDQmX8VyyVVcMPweeayr1inNqHbzQNrwlOQyphTSwkSaL23OVR+mL0qHV5vO0RLUyA2Vs8NeteiHFxmgsBCsVSzO0Hfk94nrJ16q7CvaiA7upVbMZYxXX8YtbM9/64LBIuazEr/TJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rndpkoB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ElNUd/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F11DC4CEF1;
-	Tue, 26 Aug 2025 14:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rndpkoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D0FC4CEF1;
+	Tue, 26 Aug 2025 14:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219377;
-	bh=Vb3LMFbrP5l0jDPoACsk+nu6jsceIB9jLAprf62dZJU=;
+	s=korg; t=1756219380;
+	bh=13qFPfiizwk9UdmEXZR9Vg1zhh8J3tnEbu2ngnKDNSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ElNUd/2Pm49ZgW7AbOWjSUqjw4P2gj6Bli8GFuY5Yhw9HDBAaXNKQsbyKSbLdviY
-	 NRx/jfuq8H/LmtwAc8iH3VaLouChfeWBWFn4AM2wEtVJ6bFGwwkLTdoaWmu8qno1l8
-	 TaasavCKxjmBFTLYWVAUy7XJm4EdkS9U/apPBLBU=
+	b=0rndpkoBe1A+Ck3O1+uAL+siJBfA+uVQtehwJdVvY0aGWdoJV7YZollUlx1RJEER+
+	 eHdhvXY5moB6W9M7xp9ABp7LpS21tRy/CyEQqDJpXsufaeJHr9gw9WfVRkgyxnQXjq
+	 3belR6KTdpOI+b1D4gwc6jbkr1cNz8jLpjopP3Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 317/403] iio: proximity: isl29501: fix buffered read on big-endian systems
-Date: Tue, 26 Aug 2025 13:10:43 +0200
-Message-ID: <20250826110915.570500958@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 352/403] USB: cdc-acm: do not log successful probe on later errors
+Date: Tue, 26 Aug 2025 13:11:18 +0200
+Message-ID: <20250826110916.601147813@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,52 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit de18e978d0cda23e4c102e18092b63a5b0b3a800 upstream.
+[ Upstream commit 79579411826647fd573dbe301c4d933bc90e4be7 ]
 
-Fix passing a u32 value as a u16 buffer scan item. This works on little-
-endian systems, but not on big-endian systems.
+Do not log the successful-probe message until the tty device has been
+registered.
 
-A new local variable is introduced for getting the register value and
-the array is changed to a struct to make the data layout more explicit
-rather than just changing the type and having to recalculate the proper
-length needed for the timestamp.
-
-Fixes: 1c28799257bc ("iio: light: isl29501: Add support for the ISL29501 ToF sensor.")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250722-iio-use-more-iio_declare_buffer_with_ts-7-v2-1-d3ebeb001ed3@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20210322155318.9837-9-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 64690a90cd7c ("cdc-acm: fix race between initial clearing halt and open")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/isl29501.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/usb/class/cdc-acm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/proximity/isl29501.c
-+++ b/drivers/iio/proximity/isl29501.c
-@@ -938,12 +938,18 @@ static irqreturn_t isl29501_trigger_hand
- 	struct iio_dev *indio_dev = pf->indio_dev;
- 	struct isl29501_private *isl29501 = iio_priv(indio_dev);
- 	const unsigned long *active_mask = indio_dev->active_scan_mask;
--	u32 buffer[4] __aligned(8) = {}; /* 1x16-bit + naturally aligned ts */
-+	u32 value;
-+	struct {
-+		u16 data;
-+		aligned_s64 ts;
-+	} scan = { };
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1520,8 +1520,6 @@ skip_countries:
+ 	acm->nb_index = 0;
+ 	acm->nb_size = 0;
  
--	if (test_bit(ISL29501_DISTANCE_SCAN_INDEX, active_mask))
--		isl29501_register_read(isl29501, REG_DISTANCE, buffer);
-+	if (test_bit(ISL29501_DISTANCE_SCAN_INDEX, active_mask)) {
-+		isl29501_register_read(isl29501, REG_DISTANCE, &value);
-+		scan.data = value;
-+	}
+-	dev_info(&intf->dev, "ttyACM%d: USB ACM device\n", minor);
+-
+ 	acm->line.dwDTERate = cpu_to_le32(9600);
+ 	acm->line.bDataBits = 8;
+ 	acm_set_line(acm, &acm->line);
+@@ -1541,6 +1539,8 @@ skip_countries:
+ 		usb_clear_halt(usb_dev, acm->out);
+ 	}
  
--	iio_push_to_buffers_with_timestamp(indio_dev, buffer, pf->timestamp);
-+	iio_push_to_buffers_with_timestamp(indio_dev, &scan, pf->timestamp);
- 	iio_trigger_notify_done(indio_dev->trig);
- 
- 	return IRQ_HANDLED;
++	dev_info(&intf->dev, "ttyACM%d: USB ACM device\n", minor);
++
+ 	return 0;
+ alloc_fail6:
+ 	if (!acm->combined_interfaces) {
 
 
