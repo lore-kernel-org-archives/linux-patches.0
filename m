@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EB63451AA;
-	Tue, 26 Aug 2025 13:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF040343219;
+	Tue, 26 Aug 2025 13:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215902; cv=none; b=F6/eS/RX6+fCySHCAQupp4bqJWMqW5UQynUPWoUq9Q9BhWdCT3JFv27dhQzIjP5JE1CwUnNCDX1YNOnFTcdOSF2lJ+R8ezUcVkvyDfxvEecq2V2k3MmYB7yLgfFD4EKWTZOEJExJHgnnTmhJ1WchWoPTCKC1zYQMqHoTbMLFud4=
+	t=1756215906; cv=none; b=JD7L6w88GPzsVsXO6c4t0gF+HCjF80UP1qGzS4t1jUDYuNNlVrWvIhRKJOgnjHmWS7qiUaZdRUmCXKaQCg+YaaRevzvN70u5ixQ8GTQzTRW4ARvnlhgZC6KuRLyvH1Qmb/PgEbCNsrihWG8u8FBKxmmhrWiQTmlPUuRpSo2K+Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215902; c=relaxed/simple;
-	bh=cOWwH2KSJauK+zlP3M5lW7xbbvhgkF7YNsFD+BlO9FM=;
+	s=arc-20240116; t=1756215906; c=relaxed/simple;
+	bh=iN/uTxgqu5098RxegTUldWC6T5YaFUgLecyAEmbGo3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yl0s4ZgtwETIyhLdQeQgzOW9F7BuJ7BvdU8QHStj3A69dAVk8FxtdXXMY4q254xNAR0GcEAZ2mtfq8q0jCS+UCeh+FQm1qwsRhByfzf3M1FFdk7+FoRKF4lpkQ93dCgID+TNIZWGqpT3NeRyTdyVWn8VPgPvls8AeXc9kMVrdKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9bwJdnt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LMhBsrfIMEec1LFjZXoKsCwTQxrn6v8g2TkB4rsmvH5tYIZ0BNhy43/P9vMmqyhzy+m+x4NZgfk7Fa3ybxUCrz5JKBBYkhyghrdHnsS57X2kamRlaBeLmLt4ETlFieOXfoXZ6hLd94MJqFHOISWSv9/g2fme45jHs+d3dW7avWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCewOloz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9bwJdnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B5CC116B1;
-	Tue, 26 Aug 2025 13:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCewOloz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF9AC116B1;
+	Tue, 26 Aug 2025 13:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215902;
-	bh=cOWwH2KSJauK+zlP3M5lW7xbbvhgkF7YNsFD+BlO9FM=;
+	s=korg; t=1756215905;
+	bh=iN/uTxgqu5098RxegTUldWC6T5YaFUgLecyAEmbGo3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9bwJdntf9MOFamnPCctVoXhnjHj+WUV1D1dwRFLtNEtMR0kbiwg3RZuuREYiGA6R
-	 YWAZsIZjwMO3/ph5mR2Oox0eZASprY8jO+h8LPgtNW85/fyoFnru8Y+6O3e8HJZUau
-	 fV9VXRi6L0gVF4vMEMoGmCxHOU5hv6HMtJGothQU=
+	b=OCewOlozJ8GMF4vgPmdkN42aYJaI8aSfUoXqtRaVMt8zZibSwHXmmoQMEj+DS6HUJ
+	 QYDYhdXj+arAJo938jFUCM06GS5qE7seyZOevIOY8zLp+yUyNxgSv9/PIxI37aGNUy
+	 K2HYoa42bnBgdZCMpWdP/ic1XMGcikh1x2rB7BQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Brian Masney <bmasney@redhat.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 210/644] rtc: pcf8563: fix incorrect maximum clock rate handling
-Date: Tue, 26 Aug 2025 13:05:01 +0200
-Message-ID: <20250826110951.644181405@linuxfoundation.org>
+Subject: [PATCH 5.15 211/644] rtc: rv3028: fix incorrect maximum clock rate handling
+Date: Tue, 26 Aug 2025 13:05:02 +0200
+Message-ID: <20250826110951.667030335@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,28 +53,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 906726a5efeefe0ef0103ccff5312a09080c04ae ]
+[ Upstream commit b574acb3cf7591d2513a9f29f8c2021ad55fb881 ]
 
-When pcf8563_clkout_round_rate() is called with a requested rate higher
+When rv3028_clkout_round_rate() is called with a requested rate higher
 than the highest supported rate, it currently returns 0, which disables
 the clock. According to the clk API, round_rate() should instead return
 the highest supported rate. Update the function to return the maximum
 supported rate in this case.
 
-Fixes: a39a6405d5f94 ("rtc: pcf8563: add CLKOUT to common clock framework")
+Fixes: f583c341a515f ("rtc: rv3028: add clkout support")
 Signed-off-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-5-33140bb2278e@redhat.com
+Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-6-33140bb2278e@redhat.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf8563.c | 2 +-
+ drivers/rtc/rtc-rv3028.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf8563.c b/drivers/rtc/rtc-pcf8563.c
-index c8bddfb94129..7d47d1f4802a 100644
---- a/drivers/rtc/rtc-pcf8563.c
-+++ b/drivers/rtc/rtc-pcf8563.c
-@@ -399,7 +399,7 @@ static long pcf8563_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
+diff --git a/drivers/rtc/rtc-rv3028.c b/drivers/rtc/rtc-rv3028.c
+index 12c807306893..fdcca4bf1ce2 100644
+--- a/drivers/rtc/rtc-rv3028.c
++++ b/drivers/rtc/rtc-rv3028.c
+@@ -669,7 +669,7 @@ static long rv3028_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
  		if (clkout_rates[i] <= rate)
  			return clkout_rates[i];
  
@@ -82,7 +82,7 @@ index c8bddfb94129..7d47d1f4802a 100644
 +	return clkout_rates[0];
  }
  
- static int pcf8563_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
+ static int rv3028_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.39.5
 
