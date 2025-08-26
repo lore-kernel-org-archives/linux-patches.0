@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF6A1E500C;
-	Tue, 26 Aug 2025 14:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9A31E500C;
+	Tue, 26 Aug 2025 14:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219453; cv=none; b=N/5rkjuGGntc0xxh68G8exR0Qy6y4OWo3LSv2EMtiq3mkLtx9MwvzGZrOtDoinNyDhz28Ew43CQy4TwnUpwKfNNA3LS/KC+d8+gRJqwo7bAFpo0lsVMcnriVGqBhmj7KPFNbheFCsVZsj5SIfjXzqiIhnqrkkAv0/ubs0ZQE3v0=
+	t=1756219456; cv=none; b=hcOWKAAZfpDWWmoFuahjrW46M/PYc0uhleohS/xfNPxYaqFkcCu+dCzTSkDZZwIwYP88/EaplSUaGZgtq9LAH4UZvDlmRWd37puTDEx9ERCFnNBGxCb5tB/BaNZOBA60zmlZI/6S8EGiIf7dBwYzSkDEo/JDsZ2bYrca6M/t6jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219453; c=relaxed/simple;
-	bh=FNIqsqg+eUE2m4z9MxHW4GkZdrNOAv87nriPdPr4P2s=;
+	s=arc-20240116; t=1756219456; c=relaxed/simple;
+	bh=mFv9DMMQvUq3/ztyOE7UxKa3bI/3lbOVen4bdZUTbjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wn3aFWpaeZ0bXmQdmllQsrKivMwIsYO4MMorIfKU7YZTYhHsQBNGUZDSBm3L4ovsegN0dNqSbkAntscTk33D6bZ9BG7M21Yjg1sa6F+uJLhy9D4aOXb2lfoqRwpq/hQj+ssPQGQKRyqua6RBo984WNoB/+YLD1BvhFiR9Vcv+/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7lCfC+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RlBvXbJ56LJqFx++giq+unP+VWhWA9+coe0zhjXoBSfNQ4Yy/HnlAVlqJv8XSmvsRQaXdFmbn+D1qz7hxGC1OATuHrgweosKNJyk/qz4UfoA/eYRG+8Bhe/hDY64uLsCnDY+cLr3mAHOVEHYU+7wr3kdDYC6SumhIz5fxIbyfKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCjRBBFn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7lCfC+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1202DC4CEF1;
-	Tue, 26 Aug 2025 14:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCjRBBFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EB1C4CEF1;
+	Tue, 26 Aug 2025 14:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219453;
-	bh=FNIqsqg+eUE2m4z9MxHW4GkZdrNOAv87nriPdPr4P2s=;
+	s=korg; t=1756219456;
+	bh=mFv9DMMQvUq3/ztyOE7UxKa3bI/3lbOVen4bdZUTbjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7lCfC+M3TuMD00ZFLvwztYEKpnGiKz7zVy2aq6/s8TQseFDYiLokHHscWn8/rOAO
-	 NwHYUXDz7kWfknGEYYNrYrhfdXbSrNOtk6aJwiJrNxXWg1q1GxR7RpISPXG2gFGgix
-	 kjyN7IjQM4voyiAtNKsiT7QCeCncGXKR+Xy5uDHM=
+	b=PCjRBBFnGmdXc8MurlF9pmwohkfR84Bse0jYIUUisryAFkWl20OGmLbQjfOucJyua
+	 fWjbVxpJE9bFEKXdSRYy3TT/UMA5ZXDYo/ZSZLVvXZQn7etm9JMbBMz91VDjLAqKj6
+	 jL+Zm/2T/saP5hLt5CZtavAyYaPALAvbspZ3f+uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 357/403] NFS: Fix the setting of capabilities when automounting a new filesystem
-Date: Tue, 26 Aug 2025 13:11:23 +0200
-Message-ID: <20250826110916.742674655@linuxfoundation.org>
+Subject: [PATCH 5.4 358/403] usb: musb: omap2430: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:11:24 +0200
+Message-ID: <20250826110916.880308413@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,151 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit b01f21cacde9f2878492cf318fee61bf4ccad323 ]
+[ Upstream commit 1473e9e7679bd4f5a62d1abccae894fb86de280f ]
 
-Capabilities cannot be inherited when we cross into a new filesystem.
-They need to be reset to the minimal defaults, and then probed for
-again.
+Make sure to drop the reference to the control device taken by
+of_find_device_by_node() during probe when the driver is unbound.
 
-Fixes: 54ceac451598 ("NFS: Share NFS superblocks per-protocol per-server per-FSID")
-Cc: stable@vger.kernel.org
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-[ adapted to older fs_context-less API structures ]
+Fixes: 8934d3e4d0e7 ("usb: musb: omap2430: Don't use omap_get_control_dev()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-5-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Removed populate_irqs-related goto changes ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/client.c     |   44 ++++++++++++++++++++++++++++++++++++++++----
- fs/nfs/internal.h   |    1 +
- fs/nfs/nfs4client.c |   13 +------------
- fs/nfs/nfs4proc.c   |    2 ++
- 4 files changed, 44 insertions(+), 16 deletions(-)
+ drivers/usb/musb/omap2430.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -646,6 +646,42 @@ struct nfs_client *nfs_init_client(struc
- }
- EXPORT_SYMBOL_GPL(nfs_init_client);
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -476,13 +476,13 @@ static int omap2430_probe(struct platfor
+ 			ARRAY_SIZE(musb_resources));
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add resources\n");
+-		goto err2;
++		goto err_put_control_otghs;
+ 	}
  
-+static void nfs4_server_set_init_caps(struct nfs_server *server)
-+{
-+#if IS_ENABLED(CONFIG_NFS_V4)
-+	/* Set the basic capabilities */
-+	server->caps = server->nfs_client->cl_mvops->init_caps;
-+	if (server->flags & NFS_MOUNT_NORDIRPLUS)
-+		server->caps &= ~NFS_CAP_READDIRPLUS;
-+
-+	/*
-+	 * Don't use NFS uid/gid mapping if we're using AUTH_SYS or lower
-+	 * authentication.
-+	 */
-+	if (nfs4_disable_idmapping &&
-+	    server->client->cl_auth->au_flavor == RPC_AUTH_UNIX)
-+		server->caps |= NFS_CAP_UIDGID_NOMAP;
-+#endif
-+}
-+
-+void nfs_server_set_init_caps(struct nfs_server *server)
-+{
-+	switch (server->nfs_client->rpc_ops->version) {
-+	case 2:
-+		server->caps = NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS;
-+		break;
-+	case 3:
-+		server->caps = NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS;
-+		if (!(server->flags & NFS_MOUNT_NORDIRPLUS))
-+			server->caps |= NFS_CAP_READDIRPLUS;
-+		break;
-+	default:
-+		nfs4_server_set_init_caps(server);
-+		break;
-+	}
-+}
-+EXPORT_SYMBOL_GPL(nfs_server_set_init_caps);
-+
- /*
-  * Create a version 2 or 3 client
-  */
-@@ -683,9 +719,6 @@ static int nfs_init_server(struct nfs_se
- 	/* Initialise the client representation from the mount data */
- 	server->flags = data->flags;
- 	server->options = data->options;
--	server->caps |= NFS_CAP_HARDLINKS|NFS_CAP_SYMLINKS|NFS_CAP_FILEID|
--		NFS_CAP_MODE|NFS_CAP_NLINK|NFS_CAP_OWNER|NFS_CAP_OWNER_GROUP|
--		NFS_CAP_ATIME|NFS_CAP_CTIME|NFS_CAP_MTIME;
+ 	ret = platform_device_add_data(musb, pdata, sizeof(*pdata));
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add platform_data\n");
+-		goto err2;
++		goto err_put_control_otghs;
+ 	}
  
- 	if (data->rsize)
- 		server->rsize = nfs_block_size(data->rsize, NULL);
-@@ -710,6 +743,8 @@ static int nfs_init_server(struct nfs_se
- 	if (error < 0)
- 		goto error;
+ 	pm_runtime_enable(glue->dev);
+@@ -497,7 +497,9 @@ static int omap2430_probe(struct platfor
  
-+	nfs_server_set_init_caps(server);
-+
- 	/* Preserve the values of mount_server-related mount options */
- 	if (data->mount_server.addrlen) {
- 		memcpy(&server->mountd_address, &data->mount_server.address,
-@@ -834,7 +869,6 @@ void nfs_server_copy_userdata(struct nfs
- 	target->acregmax = source->acregmax;
- 	target->acdirmin = source->acdirmin;
- 	target->acdirmax = source->acdirmax;
--	target->caps = source->caps;
- 	target->options = source->options;
- 	target->auth_info = source->auth_info;
- 	target->port = source->port;
-@@ -1042,6 +1076,8 @@ struct nfs_server *nfs_clone_server(stru
- 	if (error < 0)
- 		goto out_free_server;
- 
-+	nfs_server_set_init_caps(server);
-+
- 	/* probe the filesystem info for this server filesystem */
- 	error = nfs_probe_fsinfo(server, fh, fattr_fsinfo);
- 	if (error < 0)
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -172,6 +172,7 @@ nfs4_find_client_sessionid(struct net *,
- 				struct nfs4_sessionid *, u32);
- extern struct nfs_server *nfs_create_server(struct nfs_mount_info *,
- 					struct nfs_subversion *);
-+extern void nfs_server_set_init_caps(struct nfs_server *);
- extern struct nfs_server *nfs4_create_server(
- 					struct nfs_mount_info *,
- 					struct nfs_subversion *);
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -1011,18 +1011,7 @@ static int nfs4_server_common_setup(stru
- 	if (error < 0)
- 		goto out;
- 
--	/* Set the basic capabilities */
--	server->caps |= server->nfs_client->cl_mvops->init_caps;
--	if (server->flags & NFS_MOUNT_NORDIRPLUS)
--			server->caps &= ~NFS_CAP_READDIRPLUS;
--	/*
--	 * Don't use NFS uid/gid mapping if we're using AUTH_SYS or lower
--	 * authentication.
--	 */
--	if (nfs4_disable_idmapping &&
--			server->client->cl_auth->au_flavor == RPC_AUTH_UNIX)
--		server->caps |= NFS_CAP_UIDGID_NOMAP;
+ err3:
+ 	pm_runtime_disable(glue->dev);
 -
-+	nfs_server_set_init_caps(server);
++err_put_control_otghs:
++	if (!IS_ERR(glue->control_otghs))
++		put_device(glue->control_otghs);
+ err2:
+ 	platform_device_put(musb);
  
- 	/* Probe the root fh to retrieve its FSID and filehandle */
- 	error = nfs4_get_rootfh(server, mntfh, auth_probe);
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -3884,6 +3884,8 @@ int nfs4_server_capabilities(struct nfs_
- 		.interruptible = true,
- 	};
- 	int err;
-+
-+	nfs_server_set_init_caps(server);
- 	do {
- 		err = nfs4_handle_exception(server,
- 				_nfs4_server_capabilities(server, fhandle),
+@@ -511,6 +513,8 @@ static int omap2430_remove(struct platfo
+ 
+ 	platform_device_unregister(glue->musb);
+ 	pm_runtime_disable(glue->dev);
++	if (!IS_ERR(glue->control_otghs))
++		put_device(glue->control_otghs);
+ 
+ 	return 0;
+ }
 
 
