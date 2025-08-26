@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63819322A1E;
-	Tue, 26 Aug 2025 13:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4535C2857D2;
+	Tue, 26 Aug 2025 13:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214522; cv=none; b=V6hyDyFjl8URqH8FEXr1MUm+otNZ8z8buKUC17IxT2cZlSAS6HFCX4lhIlHauNhmlKaUdijusxA9sAwYxA/pLVQVdxZCbO9QdwTaz5XddhK22xcpaWOhnMpU2P2zH2scU4Y0NeUh1G7eY3phuqdZpnTexL2exKf2qtVwmvpnKfk=
+	t=1756214525; cv=none; b=f2CZ4MCLj0ReFauHqI2jzJWP1CfBMIrNH+/+yF7dMNMYVtP8pjAgGhzqjxSnbmk+BSBz7B7/zxO5MAiXcSCADc4+6JnHihLUy2nxIDqUiuxS4wrL7KQOK26F7iO0CfonRt5sdUOC61EyOYIK7j2SaWcVt16DOl8aMX9gyDM6yNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214522; c=relaxed/simple;
-	bh=+NcZmecy0kUWG56/viLpnzJqLLwN09pEaM7b0CQhxw8=;
+	s=arc-20240116; t=1756214525; c=relaxed/simple;
+	bh=4/chsS10Kmo9gNqGHOyZ4EWH2AdGedx1cZJMe0pq59E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dQ+uoDc1RtswaIztnKfBYhy5wyp+pINDeBvMMpG77P5xJyhn3WFHcV5L83E9KEoPHsHOT9BN2J+nGmVi6OVbTbLv30f5pzKzWXQSFAPV/vy4SRabVTl/LoGiI8YGfPf1MwJ+owdMZC0h2F2C4WCfr5GdUl7zptHitEaL81GyR1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEzJWets; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OlilzPYNJxrvPFB5E6hYVOPkVeyITi+lLzT/89vVvESNyh2tiuqyXfNRUjr+Get/yUIrKVPmJWa/SZ4ViTCxCpheihu1xlOhha+VBXsHt5u12PDnO/qexOM8KGDyy2dCzxYz9y7/cEluxxLg97dF7h1mIfheiPuqFQbWb1ln1SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pGP/Oca; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEzJWets"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC93C113CF;
-	Tue, 26 Aug 2025 13:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pGP/Oca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877AAC113CF;
+	Tue, 26 Aug 2025 13:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214522;
-	bh=+NcZmecy0kUWG56/viLpnzJqLLwN09pEaM7b0CQhxw8=;
+	s=korg; t=1756214524;
+	bh=4/chsS10Kmo9gNqGHOyZ4EWH2AdGedx1cZJMe0pq59E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vEzJWetsrC/U44cZCevtkJOzHp1EobekKxiw6FQTXPhG4d2FyCgrAu6knwHn/JjpT
-	 DqmOOVR/J/Ot+XIYj4XzOIAOJoirx4jD/S3PqI8kge9l/os8Sn8epmeOpkCHV2Jzod
-	 TYZSshLDFhF0yRMQQu+9+i8IE/FSdl+mNMtDzoEM=
+	b=1pGP/OcaUgXSzOM2tvNrVab1PFNF8/uld4j57bAFUAurFV3CuaQuPTJWeMEWVPiiZ
+	 CaerZGrGE7G8lgvKqGFw1F61MH7rhmjuEQ5jBnMt3jzcTE2kvmtjc75s7gehdp3Vtf
+	 fpf/XoEIR+uJcWr89eD2u2NtzQnKvOVq8Wjcgdao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 169/482] drm/ttm: Respect the shrinker core free target
-Date: Tue, 26 Aug 2025 13:07:02 +0200
-Message-ID: <20250826110934.986358578@linuxfoundation.org>
+Subject: [PATCH 6.1 170/482] net: dsa: b53: fix IP_MULTICAST_CTRL on BCM5325
+Date: Tue, 26 Aug 2025 13:07:03 +0200
+Message-ID: <20250826110935.010390290@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -54,71 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit eac21f8ebeb4f84d703cf41dc3f81d16fa9dc00a ]
+[ Upstream commit 044d5ce2788b165798bfd173548e61bf7b6baf4d ]
 
-Currently the TTM shrinker aborts shrinking as soon as it frees pages from
-any of the page order pools and by doing so it can fail to respect the
-freeing target which was configured by the shrinker core.
+BCM5325 doesn't implement B53_UC_FWD_EN, B53_MC_FWD_EN or B53_IPMC_FWD_EN.
 
-We use the wording "can fail" because the number of freed pages will
-depend on the presence of pages in the pools and the order of the pools on
-the LRU list. For example if there are no free pages in the high order
-pools the shrinker core may require multiple passes over the TTM shrinker
-before it will free the default target of 128 pages (assuming there are
-free pages in the low order pools). This inefficiency can be compounded by
-the pool LRU where multiple further calls into the TTM shrinker are
-required to end up looking at the pool with pages.
-
-Improve this by never freeing less than the shrinker core has requested.
-
-At the same time we start reporting the number of scanned pages (freed in
-this case), which prevents the core shrinker from giving up on the TTM
-shrinker too soon and moving on.
-
-v2:
- * Simplify loop logic. (Christian)
- * Improve commit message.
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20250603112750.34997-2-tvrtko.ursulin@igalia.com
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Link: https://patch.msgid.link/20250614080000.1884236-9-noltari@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 18 +++++++++++-------
+ drivers/net/dsa/b53/b53_regs.h   |  1 +
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
-index 393b97b4a991..a223208b83e0 100644
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -592,7 +592,6 @@ void ttm_pool_fini(struct ttm_pool *pool)
- 	synchronize_shrinkers();
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 3a1266f535e2..b0e283bc3efb 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -344,14 +344,18 @@ static void b53_set_forwarding(struct b53_device *dev, int enable)
+ 		b53_read8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, &mgmt);
+ 		mgmt |= B53_MII_DUMB_FWDG_EN;
+ 		b53_write8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, mgmt);
+-	}
+ 
+-	/* Look at B53_UC_FWD_EN and B53_MC_FWD_EN to decide whether
+-	 * frames should be flooded or not.
+-	 */
+-	b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
+-	mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IPMC_FWD_EN;
+-	b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
++		/* Look at B53_UC_FWD_EN and B53_MC_FWD_EN to decide whether
++		 * frames should be flooded or not.
++		 */
++		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
++		mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IPMC_FWD_EN;
++		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
++	} else {
++		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
++		mgmt |= B53_IP_MCAST_25;
++		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
++	}
  }
  
--/* As long as pages are available make sure to release at least one */
- static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
- 					    struct shrink_control *sc)
- {
-@@ -600,9 +599,12 @@ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
+ static void b53_enable_vlan(struct b53_device *dev, int port, bool enable,
+diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
+index e5776545a8a0..77fb7ae660b8 100644
+--- a/drivers/net/dsa/b53/b53_regs.h
++++ b/drivers/net/dsa/b53/b53_regs.h
+@@ -104,6 +104,7 @@
  
- 	do
- 		num_freed += ttm_pool_shrink();
--	while (!num_freed && atomic_long_read(&allocated_pages));
-+	while (num_freed < sc->nr_to_scan &&
-+	       atomic_long_read(&allocated_pages));
- 
--	return num_freed;
-+	sc->nr_scanned = num_freed;
-+
-+	return num_freed ?: SHRINK_STOP;
- }
- 
- /* Return the number of pages available or SHRINK_EMPTY if we have none */
+ /* IP Multicast control (8 bit) */
+ #define B53_IP_MULTICAST_CTRL		0x21
++#define  B53_IP_MCAST_25		BIT(0)
+ #define  B53_IPMC_FWD_EN		BIT(1)
+ #define  B53_UC_FWD_EN			BIT(6)
+ #define  B53_MC_FWD_EN			BIT(7)
 -- 
 2.39.5
 
