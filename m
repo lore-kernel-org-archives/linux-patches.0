@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38351345741;
-	Tue, 26 Aug 2025 14:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8808D22128B;
+	Tue, 26 Aug 2025 14:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217190; cv=none; b=gUQhRVrENmL8SwndWD6PlvEZWAc6P9aSgbwFeLL9AUubSzc2F7gWHjW7G5cTTmy4Xq1IBqvzOrO4pcBznY/kDLV1f0iWyFiuNs3Py9zJ0c2lKD0/nWUpR8/ej0xGic38NwU4FgHu1FXWfTojk3uux2JU6Fui+PEJlW7DfhE/U7Q=
+	t=1756217192; cv=none; b=ORIlZwf1t1zUTd3yXGKbky4SWtwFgaXHUDXSRdIsoeDeAGgDPZcLLDYlG4kodEPfeuXr90jG9v6sWUSNrXMATBZodUj2V1aE7C0hhUt6xmwFOjT8hxuE2ZrRBNtdDgJmmroRPxk2ITufguAqMG+JD+VuvlbPWX3mBGG02ZlLXBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217190; c=relaxed/simple;
-	bh=OBzCbM90SzCMGmJR7P/3nkSqEMMR3meC8t/xGRm2lLk=;
+	s=arc-20240116; t=1756217192; c=relaxed/simple;
+	bh=ZaLREzbC7iZl2TMpIVVpVjkvoTG/RGvMQ1OF2ARt6a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuXw1GJqVBXF5JVotxOfhaQ2eeVfNIVmLgEKzCiE+zcZvTelya1jsmYq0LCriZTxKYlRcPBjYV98d3Om8nCmzk0vPnThj7xMzkqhLopzR/iGgrA2x+Y2OfbsALKKpUJnblOTc2JT0lMrU44hc7O/R/sxMiQaSHlqHPI22krotwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izzDlsGi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y0BTAj4crJyZ0KW/PMBLArqIHai1DJ/2YQDVLY5lh+YkERCGi3GMSAcUXEtZtq8u9P5uLeTCltKPrjj71z6KDPFL3DpSJowQ4S+Zl2Ss8qxkWpFGuarqGBtQb+b9N8Y94HtoZqmfhT60J0icW1x5pUgAH/OIdkNarg5xhK3TUaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZQ1hiYw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izzDlsGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C31C4CEF1;
-	Tue, 26 Aug 2025 14:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZQ1hiYw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B91DC4CEF1;
+	Tue, 26 Aug 2025 14:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217189;
-	bh=OBzCbM90SzCMGmJR7P/3nkSqEMMR3meC8t/xGRm2lLk=;
+	s=korg; t=1756217192;
+	bh=ZaLREzbC7iZl2TMpIVVpVjkvoTG/RGvMQ1OF2ARt6a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=izzDlsGiruqolTZP+BVXxg8EmYtGa1pWiMqrHkF5/h+LUvPHYm0wd4WPGlqhfzbg2
-	 kF9LWhxS+UIX1UMwxrZubxm25yh/sVKViDv2gp7OV9lSboQYDs1AD6RIFOLRvd3Vwg
-	 4RviH3eUpo06htRoxgCmp1V6MVSxcmv0xel7Oocw=
+	b=jZQ1hiYwU1VrxL8uWORklKqTVSLGCu6LZ2JDGPHI6rHMX3TGemwy+o3GRKkYSGUx7
+	 oP4NRVl/pGAn3pGxHdMfArRC81KD9eq3ifbopUJ5E+37FMO4V30NXEx/OcS3Ct4Oe7
+	 UN/wmp2mveXJ/EYSxCU+KVK8Y3mbTllErRGWLHGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cb96ec476fb4914445c9@syzkaller.appspotmail.com,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.10 032/523] comedi: Fix use of uninitialized data in insn_rw_emulate_bits()
-Date: Tue, 26 Aug 2025 13:04:02 +0200
-Message-ID: <20250826110925.392306474@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 050/523] usb: dwc3: qcom: Dont leave BCR asserted
+Date: Tue, 26 Aug 2025 13:04:20 +0200
+Message-ID: <20250826110925.833286139@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,59 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
 
-commit e9cb26291d009243a4478a7ffb37b3a9175bfce9 upstream.
+commit ef8abc0ba49ce717e6bc4124e88e59982671f3b5 upstream.
 
-For Comedi `INSN_READ` and `INSN_WRITE` instructions on "digital"
-subdevices (subdevice types `COMEDI_SUBD_DI`, `COMEDI_SUBD_DO`, and
-`COMEDI_SUBD_DIO`), it is common for the subdevice driver not to have
-`insn_read` and `insn_write` handler functions, but to have an
-`insn_bits` handler function for handling Comedi `INSN_BITS`
-instructions.  In that case, the subdevice's `insn_read` and/or
-`insn_write` function handler pointers are set to point to the
-`insn_rw_emulate_bits()` function by `__comedi_device_postconfig()`.
+Leaving the USB BCR asserted prevents the associated GDSC to turn on. This
+blocks any subsequent attempts of probing the device, e.g. after a probe
+deferral, with the following showing in the log:
 
-For `INSN_WRITE`, `insn_rw_emulate_bits()` currently assumes that the
-supplied `data[0]` value is a valid copy from user memory.  It will at
-least exist because `do_insnlist_ioctl()` and `do_insn_ioctl()` in
-"comedi_fops.c" ensure at lease `MIN_SAMPLES` (16) elements are
-allocated.  However, if `insn->n` is 0 (which is allowable for
-`INSN_READ` and `INSN_WRITE` instructions, then `data[0]` may contain
-uninitialized data, and certainly contains invalid data, possibly from a
-different instruction in the array of instructions handled by
-`do_insnlist_ioctl()`.  This will result in an incorrect value being
-written to the digital output channel (or to the digital input/output
-channel if configured as an output), and may be reflected in the
-internal saved state of the channel.
+[    1.332226] usb30_prim_gdsc status stuck at 'off'
 
-Fix it by returning 0 early if `insn->n` is 0, before reaching the code
-that accesses `data[0]`.  Previously, the function always returned 1 on
-success, but it is supposed to be the number of data samples actually
-read or written up to `insn->n`, which is 0 in this case.
+Leave the BCR deasserted when exiting the driver to avoid this issue.
 
-Reported-by: syzbot+cb96ec476fb4914445c9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cb96ec476fb4914445c9
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Cc: stable@vger.kernel.org # 5.13+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707153355.82474-1-abbotti@mev.co.uk
+Cc: stable <stable@kernel.org>
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250709132900.3408752-1-krishna.kurapati@oss.qualcomm.com
+[ adapted to individual clock management API instead of bulk clock operations ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/drivers.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/dwc3/dwc3-qcom.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/staging/comedi/drivers.c
-+++ b/drivers/staging/comedi/drivers.c
-@@ -615,6 +615,9 @@ static int insn_rw_emulate_bits(struct c
- 	unsigned int _data[2];
- 	int ret;
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -786,13 +786,13 @@ static int dwc3_qcom_probe(struct platfo
+ 	ret = reset_control_deassert(qcom->resets);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to deassert resets, err=%d\n", ret);
+-		goto reset_assert;
++		return ret;
+ 	}
  
-+	if (insn->n == 0)
-+		return 0;
-+
- 	memset(_data, 0, sizeof(_data));
- 	memset(&_insn, 0, sizeof(_insn));
- 	_insn.insn = INSN_BITS;
+ 	ret = dwc3_qcom_clk_init(qcom, of_clk_get_parent_count(np));
+ 	if (ret) {
+ 		dev_err(dev, "failed to get clocks\n");
+-		goto reset_assert;
++		return ret;
+ 	}
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+@@ -892,8 +892,6 @@ clk_disable:
+ 		clk_disable_unprepare(qcom->clks[i]);
+ 		clk_put(qcom->clks[i]);
+ 	}
+-reset_assert:
+-	reset_control_assert(qcom->resets);
+ 
+ 	return ret;
+ }
+@@ -921,7 +919,6 @@ static int dwc3_qcom_remove(struct platf
+ 	qcom->num_clocks = 0;
+ 
+ 	dwc3_qcom_interconnect_exit(qcom);
+-	reset_control_assert(qcom->resets);
+ 
+ 	pm_runtime_allow(dev);
+ 	pm_runtime_disable(dev);
 
 
