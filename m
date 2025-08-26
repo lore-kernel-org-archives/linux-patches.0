@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BE22FC008;
-	Tue, 26 Aug 2025 13:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF013090CD;
+	Tue, 26 Aug 2025 13:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214000; cv=none; b=NM3sfLdX6b5B8pRdwnVh9b48en3bsbFWYYW+NgdY2Gkjfz7wMCFaAjwEgLg4HC1q6r1FlrQn1ARbcy3qH/yWOb473i+zqKI5j7JKIvYmm/EB9Cdfab8r5ZrXWmZeUqyl3d2SHoKZc8BBFLJjoVSjcFeakQaPxPnlJgZZ4ASZAbU=
+	t=1756214002; cv=none; b=qo23W65cWIr3SZzCeENtClY5v3UELE5S2nDGii3n0GNrX9aK3kMHrD0Kmt61TDZD7DQAmccvZ5mXYSf24QpfgopLct7JNP8ueDa/RQhWPNaVeY25soQEaqSi5zPDACHS+KsiDAYMN6jEyxWrievF8pLP0/DVAqWznGQOjhHwijE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214000; c=relaxed/simple;
-	bh=ZF68WFhbV/N9jTABDhp/eUqfL8brNiyuGay/6dhPv0U=;
+	s=arc-20240116; t=1756214002; c=relaxed/simple;
+	bh=Rg8yv+1GbMGNf3M/siZ/3MgwdBkAYwGYjpTWGevUnLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVuNBvPr4vKWI69v03eGiXfdH76nL2YJdHXzRtx8xrro5Q6vbq9l5cs0619XgGUQKW0bxP5WkzhK0qCFFUJPQdZ2lHusVNOTlwaAmc8rSxMT7w3rjg3XDRrJkRbFVY79bnMMbsRTkSlydWSLq4GBP6+qYSoTWuFEF0pmpimgloU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHeuztCB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SwL7ainoZhyoH0rujq6E83VqF3Ix6ASvZ/Rqmgg2gBtH61v6viqdEhBP2L3zrrwtd0EzStTC9y1pPXyJSniEciVnX/JYBWIQgGC4x8aIuCQ+diuGdBOC4IBtS4ZM8timdqjzO2Ue8eLc/FLOp7M7TK1zj/fcJfU5lThSEbocylg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jf8wzqo+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHeuztCB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D108AC4CEF1;
-	Tue, 26 Aug 2025 13:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jf8wzqo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71AC0C4CEF1;
+	Tue, 26 Aug 2025 13:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213999;
-	bh=ZF68WFhbV/N9jTABDhp/eUqfL8brNiyuGay/6dhPv0U=;
+	s=korg; t=1756214001;
+	bh=Rg8yv+1GbMGNf3M/siZ/3MgwdBkAYwGYjpTWGevUnLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHeuztCBKGwVCd5oSF978TMvwrKqBEVQ6QZ4huc+F3lkCa355AUu7S55SQr9MkApk
-	 i4LorDg1Q6wjhyPcMdktnRlCvW/IpPj3KHsSqaHwiL2ahbzHId/ISWe/tRO8kQpbmK
-	 XViWnTzAiGwkN8ueOtNiQvlO0QR56rwRi1Dacnew=
+	b=Jf8wzqo+qWNp3Hyec/hwuJpR6wAE46dAhJg9jYI9u2zXv1aCk63pgwoIfv7C46aLW
+	 Ot/kJcVUmhOhINuT1F0sow9NLW9WdLysWcR8uKMLfXvALLA8jgM7FsorXrBfpaECwB
+	 w7iloU0L1rCnC2d7AV47yekxNUAE1w8Ka4jS1Zz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zoey Mertes <zoey@cloudflare.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 560/587] Bluetooth: hci_conn: do return error from hci_enhanced_setup_sync()
-Date: Tue, 26 Aug 2025 13:11:49 +0200
-Message-ID: <20250826111007.271239821@linuxfoundation.org>
+Subject: [PATCH 6.6 561/587] mlxsw: spectrum: Forward packets with an IPv4 link-local source IP
+Date: Tue, 26 Aug 2025 13:11:50 +0200
+Message-ID: <20250826111007.296722672@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,41 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 0eaf7c7e85da7495c0e03a99375707fc954f5e7b ]
+[ Upstream commit f604d3aaf64ff0d90cc875295474d3abf4155629 ]
 
-The commit e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to
-hci_sync") missed to update the *return* statement under the *case* of
-BT_CODEC_TRANSPARENT in hci_enhanced_setup_sync(), which led to returning
-success (0) instead of the negative error code (-EINVAL).  However, the
-result of hci_enhanced_setup_sync() seems to be ignored anyway, since NULL
-gets passed to hci_cmd_sync_queue() as the last argument in that case and
-the only function interested in that result is specified by that argument.
+By default, the device does not forward IPv4 packets with a link-local
+source IP (i.e., 169.254.0.0/16). This behavior does not align with the
+kernel which does forward them.
 
-Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix by instructing the device to forward such packets instead of
+dropping them.
+
+Fixes: ca360db4b825 ("mlxsw: spectrum: Disable DIP_LINK_LOCAL check in hardware pipeline")
+Reported-by: Zoey Mertes <zoey@cloudflare.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/6721e6b2c96feb80269e72ce8d0b426e2f32d99c.1755174341.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum.c | 2 ++
+ drivers/net/ethernet/mellanox/mlxsw/trap.h     | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 549ee9e87d63..ff9d2520ba74 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -339,7 +339,8 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
- 	case BT_CODEC_TRANSPARENT:
- 		if (!find_next_esco_param(conn, esco_param_msbc,
- 					  ARRAY_SIZE(esco_param_msbc)))
--			return false;
-+			return -EINVAL;
-+
- 		param = &esco_param_msbc[conn->attempt - 1];
- 		cp.tx_coding_format.id = 0x03;
- 		cp.rx_coding_format.id = 0x03;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+index 9dbd5edff0b0..51f49510826a 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+@@ -2528,6 +2528,8 @@ static const struct mlxsw_listener mlxsw_sp_listener[] = {
+ 			     ROUTER_EXP, false),
+ 	MLXSW_SP_RXL_NO_MARK(DISCARD_ING_ROUTER_DIP_LINK_LOCAL, FORWARD,
+ 			     ROUTER_EXP, false),
++	MLXSW_SP_RXL_NO_MARK(DISCARD_ING_ROUTER_SIP_LINK_LOCAL, FORWARD,
++			     ROUTER_EXP, false),
+ 	/* Multicast Router Traps */
+ 	MLXSW_SP_RXL_MARK(ACL1, TRAP_TO_CPU, MULTICAST, false),
+ 	MLXSW_SP_RXL_L3_MARK(ACL2, TRAP_TO_CPU, MULTICAST, false),
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/trap.h b/drivers/net/ethernet/mellanox/mlxsw/trap.h
+index 83477c8e6971..5bfc1499347a 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/trap.h
++++ b/drivers/net/ethernet/mellanox/mlxsw/trap.h
+@@ -95,6 +95,7 @@ enum {
+ 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_IPV4_SIP_BC = 0x16A,
+ 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_IPV4_DIP_LOCAL_NET = 0x16B,
+ 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_DIP_LINK_LOCAL = 0x16C,
++	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_SIP_LINK_LOCAL = 0x16D,
+ 	MLXSW_TRAP_ID_DISCARD_ROUTER_IRIF_EN = 0x178,
+ 	MLXSW_TRAP_ID_DISCARD_ROUTER_ERIF_EN = 0x179,
+ 	MLXSW_TRAP_ID_DISCARD_ROUTER_LPM4 = 0x17B,
 -- 
 2.50.1
 
