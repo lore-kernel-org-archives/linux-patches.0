@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6CE1DB127;
-	Tue, 26 Aug 2025 12:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5C31D88AC;
+	Tue, 26 Aug 2025 12:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212741; cv=none; b=hqcWpKRK1Jj1sgReCju5ttA1+17VfpzmXcVR+JigO/cBHY5633kR0YDcDJauvV8Tx/HsBRGvLk8wlfva9R4Smn5Y3cc2bEljFrxY3CT5Y8JtUdOn4BXkZQwqc5QBOP/CmZTk/VXeaQ3GlfgNeXXFthDgapL4yiXTvwNeM0EIWa8=
+	t=1756212743; cv=none; b=AUNVroNDIAMXAIHQrUJw0RyZ+fCtuotyxgK2PJq/WRdbOtg1kpTBZQ3+UNL02/G8aSj3sBJEVnCUlW01TUvgEBG1zMAPbQRsS8uN5tyUsplUngBYnolkxGyRZxOSYpefvt7jV0TcQ+438U4ST4yhjtg1fzJV/cNe033FCt7S99c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212741; c=relaxed/simple;
-	bh=ysSPrRbkpSCKZ4W41NTNNp8qu+xxZuIFjYQ1g/JkI/Y=;
+	s=arc-20240116; t=1756212743; c=relaxed/simple;
+	bh=IYFCfQxkJg+qKCK27YcMaL4AYns0X/w3zZY870kHxIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z/KNYoBB9ze4gQPucVhRZpiyXn9UiQOmFpRXtjZwv3f2BjcnPoSgnxuIcsl7BDyIr2LjmL9+rGDJJE2Ci1BAmiQVv9UF8PBIs5XDulXEXfSpvwy7Fm6kE1cURZCL3A/yh71F3xyrRHDiSLm6tUexBtZp7LUoK34QhkVRkeewms0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXf+1BQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S1vNxmLUDvS/4qikbNWTCDiaWH5ZUuUGPGfChfI4yb+t8VuENS9KbWKTMpQf5Unhonu3tB3v/8WDnHR9Hxi1rohjEv4MQX64LDpf95mORHGXmhn/ELYZ4kB9iU//825ERY2g+8sRexr1bDTvJQiihBhjYwmY39I/ubXRV3wuWRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bx+FVuma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXf+1BQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4500C4CEF1;
-	Tue, 26 Aug 2025 12:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bx+FVuma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE77C4CEF1;
+	Tue, 26 Aug 2025 12:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212741;
-	bh=ysSPrRbkpSCKZ4W41NTNNp8qu+xxZuIFjYQ1g/JkI/Y=;
+	s=korg; t=1756212743;
+	bh=IYFCfQxkJg+qKCK27YcMaL4AYns0X/w3zZY870kHxIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXf+1BQSAD0vyzvmfwya6Q4lt9qq7GjG4hkIQNbh2bpbkWQSNRR9iP0+DKyBhdW4e
-	 SALsLkg2FJMRk6iP5ns5nF/EQKDPWJunKVKO/gMxcGfoct0xkphTIWr8+iWAWeL7Mq
-	 2k4Y7Z6eR4vX0iy9NYX4zARqg+nRynEYYOwroEwE=
+	b=Bx+FVumabaAKdz4av2+OCsGz1Ws54wcjxirFexPW7L4qFfBvuIBSvZIRznoE3SK0K
+	 61FPlV8DWSoVdP+ZB1IXk3+dCjGG74hCrm6xWjjdBocXVNY7bxNwBww+RaTQ2qMcco
+	 wzbYQH05+kmE0LjqtwEzsb7f/GW2EnG3rbIwgpUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com,
-	syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Adam Berglund <adam.f.berglund@hotmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hansg@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/587] sctp: linearize cloned gso packets in sctp_rcv
-Date: Tue, 26 Aug 2025 13:03:26 +0200
-Message-ID: <20250826110954.389974706@linuxfoundation.org>
+Subject: [PATCH 6.6 084/587] platform/x86/amd: pmc: Add Lenovo Yoga 6 13ALC6 to pmc quirk list
+Date: Tue, 26 Aug 2025 13:03:53 +0200
+Message-ID: <20250826110955.071221690@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -48,79 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit fd60d8a086191fe33c2d719732d2482052fa6805 ]
+[ Upstream commit 4ff3aeb664f7dfe824ba91ffb0b203397a8d431e ]
 
-A cloned head skb still shares these frag skbs in fraglist with the
-original head skb. It's not safe to access these frag skbs.
+The Lenovo Yoga 6 13ACL6 82ND has a similar BIOS problem as other Lenovo
+laptops from that vintage that causes a rather long resume from suspend.
 
-syzbot reported two use-of-uninitialized-memory bugs caused by this:
+Add it to the quirk list that manipulates the scratch register to avoid
+the issue.
 
-  BUG: KMSAN: uninit-value in sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
-   sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
-   sctp_assoc_bh_rcv+0x1a7/0xc50 net/sctp/associola.c:998
-   sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
-   sctp_backlog_rcv+0x397/0xdb0 net/sctp/input.c:331
-   sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1122
-   __release_sock+0x1da/0x330 net/core/sock.c:3106
-   release_sock+0x6b/0x250 net/core/sock.c:3660
-   sctp_wait_for_connect+0x487/0x820 net/sctp/socket.c:9360
-   sctp_sendmsg_to_asoc+0x1ec1/0x1f00 net/sctp/socket.c:1885
-   sctp_sendmsg+0x32b9/0x4a80 net/sctp/socket.c:2031
-   inet_sendmsg+0x25a/0x280 net/ipv4/af_inet.c:851
-   sock_sendmsg_nosec net/socket.c:718 [inline]
-
-and
-
-  BUG: KMSAN: uninit-value in sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
-   sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
-   sctp_inq_push+0x2a3/0x350 net/sctp/inqueue.c:88
-   sctp_backlog_rcv+0x3c7/0xda0 net/sctp/input.c:331
-   sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
-   __release_sock+0x1d3/0x330 net/core/sock.c:3213
-   release_sock+0x6b/0x270 net/core/sock.c:3767
-   sctp_wait_for_connect+0x458/0x820 net/sctp/socket.c:9367
-   sctp_sendmsg_to_asoc+0x223a/0x2260 net/sctp/socket.c:1886
-   sctp_sendmsg+0x3910/0x49f0 net/sctp/socket.c:2032
-   inet_sendmsg+0x269/0x2a0 net/ipv4/af_inet.c:851
-   sock_sendmsg_nosec net/socket.c:712 [inline]
-
-This patch fixes it by linearizing cloned gso packets in sctp_rcv().
-
-Fixes: 90017accff61 ("sctp: Add GSO support")
-Reported-by: syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com
-Reported-by: syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/dd7dc337b99876d4132d0961f776913719f7d225.1754595611.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Adam Berglund <adam.f.berglund@hotmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4434
+Tested-by: Adam Berglund <adam.f.berglund@hotmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250718172307.1928744-1-superm1@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index a8a254a5008e..032a10d82302 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -117,7 +117,7 @@ int sctp_rcv(struct sk_buff *skb)
- 	 * it's better to just linearize it otherwise crc computing
- 	 * takes longer.
- 	 */
--	if ((!is_gso && skb_linearize(skb)) ||
-+	if (((!is_gso || skb_cloned(skb)) && skb_linearize(skb)) ||
- 	    !pskb_may_pull(skb, sizeof(struct sctphdr)))
- 		goto discard_it;
- 
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index 7ed12c1d3b34..04686ae1e976 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -189,6 +189,15 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
+ 		}
+ 	},
++	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
++	{
++		.ident = "Lenovo Yoga 6 13ALC6",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
++		}
++	},
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
+ 	{
+ 		.ident = "HP Laptop 15s-eq2xxx",
 -- 
-2.50.1
+2.39.5
 
 
 
