@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67626350820;
-	Tue, 26 Aug 2025 13:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DBB29D28A;
+	Tue, 26 Aug 2025 13:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216394; cv=none; b=qhzSXWicKHWA5iN6QivarFBzGVhiBIYY9vDViqRZNrWbc6vqqhBNxfYIAHxlxn6U076snSV//i7IIGZjgVeVToOGUFPAZn/T6ypEpPQ60elTFpXB0DDkBfnKfO7mZF3XKYQj/UNG551cQdAr9+GAOCmuPqTNpFt7YSM+tOZkXRY=
+	t=1756216397; cv=none; b=niwa0AUT8Ei30tkzG7MMXKQKkAEtAtasleUBRdl38MW/GdINfIJNDkXlkGImMhkehNJqjX0aPiDJxg3lqh2LZ5rfwWVx2FcMoU9UD1atetJy24y4P0hGN/D2QB4xcGRsYTN4GmdX5Ouq6xrQdQT7jGo90ytkk30N0t2rN6fjZTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216394; c=relaxed/simple;
-	bh=vYCvYM6KMa3Uw/kbhgHZ6ty6khDEjT7RN79eAzQmgFY=;
+	s=arc-20240116; t=1756216397; c=relaxed/simple;
+	bh=RRlgXmb3sZuVmNHJAlHhUaZy2avo6ercDmaVVHogegs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxaYrEGXWMLbFzStg686aiPBWnP7Xng0LQzck+HW8aMWJszBWYz6ku9MKyxbTuGMQBHvIVrD6Cc8pYB9gCwgO7iQXuRFrj7GnUsmeDAUhvRZF7740iXWQUtAwFICtXnD3eHDqLLmDe/i8TAvGPd4/KPwCHz9qWVrmVt9Y+x3veU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Txnm0KcB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aLYIvOhMuhhHtl+Ak9AXvmAdnBqm0PC7sFQ5ON327H+So+wQVNLnKQJAM1y78mxI3MxyRLHB6gWYfP4rDlD43V7gW1ABJgUTXxc6JTcdFMI4D46tk3l/yxg2IOPOneTsEAJAUS5HUkiT+0NyZN1A4rYlmlwMQTrrgoI/3xK7dN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyxDaluV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Txnm0KcB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3F5C4CEF1;
-	Tue, 26 Aug 2025 13:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyxDaluV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9777EC4CEF1;
+	Tue, 26 Aug 2025 13:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216394;
-	bh=vYCvYM6KMa3Uw/kbhgHZ6ty6khDEjT7RN79eAzQmgFY=;
+	s=korg; t=1756216397;
+	bh=RRlgXmb3sZuVmNHJAlHhUaZy2avo6ercDmaVVHogegs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Txnm0KcBUQMutUHfqdvIZuqrlMJ9R0ipG7JbghcDIHQ0kirzojjPTsVXTpkJj1qyX
-	 htEM4L7EBcqVKiZBokoR7Pgks/lMnzuWruoWKA31RLkWnuCLQfj8E0antLElC9XkZu
-	 86I638DBdjc98L7z+H3jPWu8CHJ0sL8h5M+yy5G8=
+	b=fyxDaluVx8DesnXddCn9yxuZfbv9t1US5APprO3fj8OSPO/bJqWjJ+h9hPET91uSu
+	 X4M7QMOD8PfQiMI89JwSX4z12k33KkyHvJTjEqy4a/YVmnuaTwRXx0+mjrm5echSwZ
+	 ZWhfF2pj0mcF/0q2y1VoPabZn2UcP41JvHSGr61A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcel Ziswiler <marcel.ziswiler@codethink.co.uk>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Avraham Stern <avraham.stern@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 351/644] sched/deadline: Fix accounting after global limits change
-Date: Tue, 26 Aug 2025 13:07:22 +0200
-Message-ID: <20250826110955.096261203@linuxfoundation.org>
+Subject: [PATCH 5.15 352/644] wifi: iwlwifi: mvm: fix scan request validation
+Date: Tue, 26 Aug 2025 13:07:23 +0200
+Message-ID: <20250826110955.120907166@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,68 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juri Lelli <juri.lelli@redhat.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 440989c10f4e32620e9e2717ca52c3ed7ae11048 ]
+[ Upstream commit 7c2f3ec7707188d8d5269ae2dce97d7be3e9f261 ]
 
-A global limits change (sched_rt_handler() logic) currently leaves stale
-and/or incorrect values in variables related to accounting (e.g.
-extra_bw).
+The scan request validation function uses bitwise and instead
+of logical and. Fix it.
 
-Properly clean up per runqueue variables before implementing the change
-and rebuild scheduling domains (so that accounting is also properly
-restored) after such a change is complete.
-
-Reported-by: Marcel Ziswiler <marcel.ziswiler@codethink.co.uk>
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Marcel Ziswiler <marcel.ziswiler@codethink.co.uk> # nuc & rock5b
-Link: https://lore.kernel.org/r/20250627115118.438797-4-juri.lelli@redhat.com
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709230308.3fbc1f27871b.I7a8ee91f463c1a2d9d8561c8232e196885d02c43@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 4 +++-
- kernel/sched/rt.c       | 6 ++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 66eb68c59f0b..708c3960bd06 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2661,6 +2661,9 @@ void sched_dl_do_global(void)
- 	if (global_rt_runtime() != RUNTIME_INF)
- 		new_bw = to_ratio(global_rt_period(), global_rt_runtime());
- 
-+	for_each_possible_cpu(cpu)
-+		init_dl_rq_bw_ratio(&cpu_rq(cpu)->dl);
-+
- 	for_each_possible_cpu(cpu) {
- 		rcu_read_lock_sched();
- 
-@@ -2676,7 +2679,6 @@ void sched_dl_do_global(void)
- 		raw_spin_unlock_irqrestore(&dl_b->lock, flags);
- 
- 		rcu_read_unlock_sched();
--		init_dl_rq_bw_ratio(&cpu_rq(cpu)->dl);
- 	}
- }
- 
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 5fc99dce5145..9720b3c19ab9 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2861,6 +2861,12 @@ int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
- 	}
- 	mutex_unlock(&mutex);
- 
-+	/*
-+	 * After changing maximum available bandwidth for DEADLINE, we need to
-+	 * recompute per root domain and per cpus variables accordingly.
-+	 */
-+	rebuild_sched_domains();
-+
- 	return ret;
- }
- 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index 16818dcdae22..3d0396b8afaa 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -832,7 +832,7 @@ static inline bool iwl_mvm_scan_fits(struct iwl_mvm *mvm, int n_ssids,
+ 				     int n_channels)
+ {
+ 	return ((n_ssids <= PROBE_OPTION_MAX) &&
+-		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &
++		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &&
+ 		(ies->common_ie_len +
+ 		 ies->len[NL80211_BAND_2GHZ] + ies->len[NL80211_BAND_5GHZ] +
+ 		 ies->len[NL80211_BAND_6GHZ] <=
 -- 
 2.39.5
 
