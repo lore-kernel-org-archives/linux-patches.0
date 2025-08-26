@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8A5352FCE;
-	Tue, 26 Aug 2025 14:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F336D35690D;
+	Tue, 26 Aug 2025 14:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218580; cv=none; b=u6f+b5gJpcvQo1Xd/1T92RxmKeyElY40ajrvdQjkOA6RJe/xNlfYVw7xQ/07xEWlEW5NnI1B4raHD5IVO0SFXuRtVkykPWnm3XB5lhmbDqpxQd+nPDdwK4ZdEPji1xdV6CtGOWFaTPkqE39Fv2eZ8U6opOmgQC747CoqZmZm8Og=
+	t=1756218583; cv=none; b=JaaRn+mK0adY7kzd9TUACTbYGt58iob5YFTig++ROmU3qMeR9M3b0QQOJuhUS/oBzpqxlxAh5nZ4DwR5s2HKYZtkLOatfweABpwuJ2P/2J6ZYR4VvxBxF+kCU6b8RVv3oJ/BnLJPMOJ91JiVILjlmybO9i5lbykrKmB2L+gTU5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218580; c=relaxed/simple;
-	bh=4mSnkWYzGcpDXrXza/A13wb37h9ieH9cPulwMCPflHg=;
+	s=arc-20240116; t=1756218583; c=relaxed/simple;
+	bh=vmYZNKVtSpBzizZZgpCjTqDksBn1HFliqqyU9Pm36aY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bud85dzZh27p12NQNUX7u1uUlWfRZq3Mcp5Qb3vvNOjm2h6o7Nd6GKzClVEg2m0uFJrf6GYkGOVk8uIyrEGcsC++2ndIng9cCmfm38hApHcZhLFJ7ln2rpOok4XtXFq9BfNNhG+N7dJUIVKevCGgW+KSheYM6jL/qFZoWl5tA7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSTzlw7s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y9+Ae3XDgQDR4N4EbJ9G0FXq8FCs8VVLZWj13SHzg/w4n1YgWypg8LuZa2d68IXtjpjEHpeHay2p/Xrw0IGxWg8IP3Jvd3kiP43/uyUGD6/jnLh8BC/Nf9JGiLIwknWkd1e7sjo/w/VBoGIA2JBWICMFisouaM6Yv2jpy6D4wqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiVvJnZY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSTzlw7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3710C4CEF1;
-	Tue, 26 Aug 2025 14:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiVvJnZY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B155C113CF;
+	Tue, 26 Aug 2025 14:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218580;
-	bh=4mSnkWYzGcpDXrXza/A13wb37h9ieH9cPulwMCPflHg=;
+	s=korg; t=1756218582;
+	bh=vmYZNKVtSpBzizZZgpCjTqDksBn1HFliqqyU9Pm36aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uSTzlw7sl2OM0KFOD8/1O6ScSKODF+3zOVAfC6dPznxWBomjuKeibtCgfoLUFT7ml
-	 07VJgtPmqXjq798XCtBl31Njvyocie90gpaWlA7pMDU36FdfPattwSa5cmHgdoMiIW
-	 k5IM5/avg20AA4WupWMlVrri2itvQTVc8eWTgVsU=
+	b=jiVvJnZY9xQHgC2gqETzxV2QBA1WYjUIYVsEuU0y3UshAwClcAAYGDppMuOeU18Pv
+	 u8zJcej/a20YajbqPejoedbX2LZ0VxFnJasCuYrvVa8dEMY41zCHCSTRuhxiVc/fey
+	 x62XPrYu5MGHUSRr8DZuK8vClPNK5UfIMMAm1yHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Shubham Kulkarni <skulkarni@mvista.com>
-Subject: [PATCH 5.4 047/403] power: supply: bq24190: Fix use after free bug in bq24190_remove due to race condition
-Date: Tue, 26 Aug 2025 13:06:13 +0200
-Message-ID: <20250826110907.138621565@linuxfoundation.org>
+	Alessandro Carminati <acarmina@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 056/403] regulator: core: fix NULL dereference on unbind due to stale coupling data
+Date: Tue, 26 Aug 2025 13:06:22 +0200
+Message-ID: <20250826110907.416027491@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,51 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Alessandro Carminati <acarmina@redhat.com>
 
-[ Upstream commit 47c29d69212911f50bdcdd0564b5999a559010d4 ]
+[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
 
-In bq24190_probe, &bdi->input_current_limit_work is bound
-with bq24190_input_current_limit_work. When external power
-changed, it will call bq24190_charger_external_power_changed
- to start the work.
+Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
+lead to NULL pointer dereference when regulators are accessed post-unbind.
 
-If we remove the module which will call bq24190_remove to make
-cleanup, there may be a unfinished work. The possible
-sequence is as follows:
+This can happen during runtime PM or other regulator operations that rely
+on coupling metadata.
 
-CPU0                  CPUc1
+For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
+a panic in regulator_lock_recursive() due to stale coupling state.
 
-                    |bq24190_input_current_limit_work
-bq24190_remove      |
-power_supply_unregister  |
-device_unregister   |
-power_supply_dev_release|
-kfree(psy)          |
-                    |
-                    | power_supply_get_property_from_supplier
-                    |   //use
+Ensure n_coupled is set to 0 to prevent access to invalid pointers.
 
-Fix it by finishing the work before cleanup in the bq24190_remove
-
-Fixes: 97774672573a ("power_supply: Initialize changed_work before calling device_add")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Shubham Kulkarni <skulkarni@mvista.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
+Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq24190_charger.c |    1 +
+ drivers/regulator/core.c | 1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/power/supply/bq24190_charger.c
-+++ b/drivers/power/supply/bq24190_charger.c
-@@ -1845,6 +1845,7 @@ static int bq24190_remove(struct i2c_cli
- 	struct bq24190_dev_info *bdi = i2c_get_clientdata(client);
- 	int error;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index a01a769b2f2d1..e5ce97dc32158 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5062,6 +5062,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
+ 				 err);
+ 	}
  
-+	cancel_delayed_work_sync(&bdi->input_current_limit_work);
- 	error = pm_runtime_resume_and_get(bdi->dev);
- 	if (error < 0)
- 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", error);
++	rdev->coupling_desc.n_coupled = 0;
+ 	kfree(rdev->coupling_desc.coupled_rdevs);
+ 	rdev->coupling_desc.coupled_rdevs = NULL;
+ }
+-- 
+2.39.5
+
 
 
