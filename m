@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98CB2459F3;
-	Tue, 26 Aug 2025 14:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D702BEC45;
+	Tue, 26 Aug 2025 14:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218402; cv=none; b=U77EnfsbWIRJy9sS6c9lTmiKtCLcDEfjMsuR3MF3UbWF3W/gmPOK4rlTJp79zPgkIjvltGjg4z6oR1NAmNi8PN/RMTsRTjljVK1QFBwtOSVifMiWyUPtNcRbjaH6qbnRNsG4sukcGheOwfjr8Kpv23vO5f8peMbMm+1/2wV1gog=
+	t=1756218405; cv=none; b=oVWIMVchosT2Jc5WqfqE6JU7qbebHY+8vwtM6TNG3DAAfBJxP8hkTTQQu6+BUgMhxM+D4it4FJGiGMKsjThBxK1ZSXMUKoob3BTHETDa/fJSfTzJXyA6NRhlfVT8kUXNVSVKV8wXdX4igKNSKZX3HETTqhZEyMlSQFQwCWNMVqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218402; c=relaxed/simple;
-	bh=/maB5Ie5NbBWKSGqlb1Ed1lggQU4NGjctZh86HKJ4QE=;
+	s=arc-20240116; t=1756218405; c=relaxed/simple;
+	bh=OTufjo6raQUQTU0xQrcmM6sWhewervq9yivdOFD6tLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QOl7yVzRR9wxlIRM9v1Cn1++VUC/yFVYf5HKegnDXd/bilaJwY/xrgTKJC8mmapb2irDOg6geew09HVReBPBgvyqu1YBKfoanHdhZ4pk7HCjdaTNfwB/kB0aR4S2yhHspBjLjMzF5768aIINvuu/AS0QV/4yzMO19wbxj1eL/aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyMikoeY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cc8McbNnQfvEzsb38yFQ2x03hWGTkmVosUiBlg/6eff+y1dOTqt4HBUce/NMvzS+6pQX0Ga/3mtXaNrFvDGu1eJxpD6MMkc0u4aOZ83QsSiv/PoT5803nAaerfjyxh9T2FouRhLR3XT9JolE4jx2jb+s66KD4LcQqEcTKpzJpok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPUVWiv4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyMikoeY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340E4C4CEF1;
-	Tue, 26 Aug 2025 14:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPUVWiv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA4AC4CEF1;
+	Tue, 26 Aug 2025 14:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218402;
-	bh=/maB5Ie5NbBWKSGqlb1Ed1lggQU4NGjctZh86HKJ4QE=;
+	s=korg; t=1756218405;
+	bh=OTufjo6raQUQTU0xQrcmM6sWhewervq9yivdOFD6tLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iyMikoeYfE60QsHx87isXOHm60oW4j7Omt2m+bkYC1TRyIyAm1uB5BRjgQuXSy2ic
-	 NexzjyksJLkMMSfveE2xGlGWxcTfXxkZJFpgSx/eLee7c3NkEW+Rk5Hb14YpFk/rin
-	 d222LPQ1aVMgFLaW4k4dU2Yuw9npSBXH/c6X0KPU=
+	b=OPUVWiv4IIkAaHsBc0HEfxRDioROaLgYvgsna9gZt15F4tcITQZJQsCbn+ciKaGu6
+	 JMFDt7fGXCPxIavf4e4OG9337hRson7LFuFlcnKwioqBLtED1Z35hR//f0CDXRzAM2
+	 BUslTMA0LygNWYdj+nZavQlob8CqY51oMa/0JJtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 478/523] pwm: mediatek: Fix duty and period setting
-Date: Tue, 26 Aug 2025 13:11:28 +0200
-Message-ID: <20250826110936.235988510@linuxfoundation.org>
+	Li Zhong <floridsleeves@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Teddy Astie <teddy.astie@vates.tech>,
+	Yann Sionneau <yann.sionneau@vates.tech>,
+	Dillon C <dchan@dchan.tech>
+Subject: [PATCH 5.10 469/523] ACPI: processor: idle: Check acpi_fetch_acpi_dev() return value
+Date: Tue, 26 Aug 2025 13:11:19 +0200
+Message-ID: <20250826110936.012873723@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -46,86 +47,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Li Zhong <floridsleeves@gmail.com>
 
-[ Upstream commit f21d136caf8171f94159d975ea4620c164431bd9 ]
+commit 2437513a814b3e93bd02879740a8a06e52e2cf7d upstream.
 
-The period generated by the hardware is
+The return value of acpi_fetch_acpi_dev() could be NULL, which would
+cause a NULL pointer dereference to occur in acpi_device_hid().
 
-	(PWMDWIDTH + 1) << CLKDIV) / freq
-
-according to my tests with a signal analyser and also the documentation.
-
-The current algorithm doesn't consider the `+ 1` part and so configures
-slightly too high periods. The same issue exists for the duty cycle
-setting. So subtract 1 from both the register values for period and
-duty cycle. If period is 0, bail out, if duty_cycle is 0, just disable
-the PWM which results in a constant low output.
-
-Fixes: caf065f8fd58 ("pwm: Add MediaTek PWM support")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/6d1fa87a76f8020bfe3171529b8e19baffceab10.1753717973.git.u.kleine-koenig@baylibre.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Li Zhong <floridsleeves@gmail.com>
+[ rjw: Subject and changelog edits, added empty line after if () ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Teddy Astie <teddy.astie@vates.tech>
+Signed-off-by: Yann Sionneau <yann.sionneau@vates.tech>
+Reported-by: Dillon C <dchan@dchan.tech>
+Tested-by: Dillon C <dchan@dchan.tech>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-mediatek.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/acpi/processor_idle.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/pwm/pwm-mediatek.c
-+++ b/drivers/pwm/pwm-mediatek.c
-@@ -169,7 +169,10 @@ static int pwm_mediatek_config(struct pw
- 	do_div(resolution, clk_rate);
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -1128,7 +1128,9 @@ static int acpi_processor_get_lpi_info(s
  
- 	cnt_period = DIV_ROUND_CLOSEST_ULL((u64)period_ns * 1000, resolution);
--	while (cnt_period > 8191) {
-+	if (!cnt_period)
-+		return -EINVAL;
+ 	status = acpi_get_parent(handle, &pr_ahandle);
+ 	while (ACPI_SUCCESS(status)) {
+-		acpi_bus_get_device(pr_ahandle, &d);
++		if (acpi_bus_get_device(pr_ahandle, &d))
++			break;
 +
-+	while (cnt_period > 8192) {
- 		resolution *= 2;
- 		clkdiv++;
- 		cnt_period = DIV_ROUND_CLOSEST_ULL((u64)period_ns * 1000,
-@@ -192,9 +195,16 @@ static int pwm_mediatek_config(struct pw
- 	}
+ 		handle = pr_ahandle;
  
- 	cnt_duty = DIV_ROUND_CLOSEST_ULL((u64)duty_ns * 1000, resolution);
-+
- 	pwm_mediatek_writel(pc, pwm->hwpwm, PWMCON, BIT(15) | clkdiv);
--	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period);
--	pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty);
-+	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period - 1);
-+
-+	if (cnt_duty) {
-+		pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty - 1);
-+		pwm_mediatek_enable(chip, pwm);
-+	} else {
-+		pwm_mediatek_disable(chip, pwm);
-+	}
- 
- out:
- 	pwm_mediatek_clk_disable(chip, pwm);
-@@ -223,11 +233,8 @@ static int pwm_mediatek_apply(struct pwm
- 	if (err)
- 		return err;
- 
--	if (!pwm->state.enabled) {
-+	if (!pwm->state.enabled)
- 		err = pwm_mediatek_clk_enable(chip, pwm);
--		if (!err)
--			pwm_mediatek_enable(chip, pwm);
--	}
- 
- 	return err;
- }
+ 		if (strcmp(acpi_device_hid(d), ACPI_PROCESSOR_CONTAINER_HID))
 
 
