@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1E934AB0D;
-	Tue, 26 Aug 2025 14:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED26034DCC9;
+	Tue, 26 Aug 2025 14:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218099; cv=none; b=qxCBt9XRmxQ3gzh0+2TAAvowgJQurcLao4M5T0swBiN4bHGrY+g/V/Dqjgf0MBGTd+H06KGZ2KbpS5SJVfSqsiMOD8Ys1KzGjQJnOsMWgw1DpoDpBvCzUEduCAy3h+547LcE+yuE9rx/a5se+Kje4NVOaUJd5Fg96bGh7at++n0=
+	t=1756218099; cv=none; b=C0QvNSOaLXeZvDZmOsTnt2enkBinipMlWPvdtEogub26p914h4GmRlN0dtLZRbynl1xEuoHaUPvMcdO7bkh3hQKXZxpxcTzjKnVV6ELxBnZy9AiugZPRAeQ9ETQFGPEbhTkUkhX0UGQ1dT850WYYHeP0MQUW3yGXUzm2Pe9fyzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756218099; c=relaxed/simple;
-	bh=QWw42alUumDb3XOLVRfiZ8V0j3jDQbvJFkZbdsZ9zVI=;
+	bh=0p0RlrsNX8+GFwraUg5XN82EjZWkzyk3luyerQhHa34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGEvSLZZo0S5aHNTDX6yyP+48QcKEGhoA5vvp41gbF4YEYbKi8xh5PRxOdh92KKYkkc0AZ3VpmC58GaZDObiN3pPkMWYHTC6T70IvR+hHQkHf3HHckYwobLGd+B8G6H3ddbs03oAjq4tNhH0Wc4njCVCoI81meRfdyuCoZ9gI9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyGtmW2J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r4LkRXd6l5/Sf+tavH1n7HRU2sL6YwA6dczNutJzUX0CxLaZs77R2+Pm+Sp0EPbLVUYXsTZtuzbZ/QGSWcgK3edrn5K812mXT6haHZFsLXSOCSfQAIzcIpIJuzhZ+GbQTdHG1mKYTWts7+B9vmdzk/mXh1h3qvRSXmNH0+SMs1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9j12VJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyGtmW2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28857C113CF;
-	Tue, 26 Aug 2025 14:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9j12VJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613BFC4CEF1;
+	Tue, 26 Aug 2025 14:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218098;
-	bh=QWw42alUumDb3XOLVRfiZ8V0j3jDQbvJFkZbdsZ9zVI=;
+	s=korg; t=1756218095;
+	bh=0p0RlrsNX8+GFwraUg5XN82EjZWkzyk3luyerQhHa34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tyGtmW2JMARF7OWE8eTDCkIYU65d+sYuppEef55x21XfqfTFkmAUK3R2F4caXxoSo
-	 sJnLt/4KJKK2LeJLDvQdQUDJmn+86YgXWjUZn8wL4Zq8hha4CBEva9QTCOVgoBiRZ9
-	 VE+Dy0BbR+/noBAFtBiRQ8sQGmFP7j/XmxtuG6lA=
+	b=r9j12VJwKfLelP0wWdfoAzBKQbLhN5ilNKuUyMVhggkyDp5zVye2nCSbEQ8KdVoLO
+	 zqAot7EMlMXrEnQ3syZNIOtbShotnwzdFttmJ+ncLOnw652DRVp0mwYuZzfAzNQcXK
+	 up3s2OVHJklduAj5wVDleo6GfZ48/Dlo3w7Kbgj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 392/523] memstick: Fix deadlock by moving removing flag earlier
-Date: Tue, 26 Aug 2025 13:10:02 +0200
-Message-ID: <20250826110934.128907118@linuxfoundation.org>
+	"Alan J. Wylie" <alan@wylie.me.uk>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Subject: [PATCH 5.10 391/523] sch_htb: make htb_deactivate() idempotent
+Date: Tue, 26 Aug 2025 13:10:01 +0200
+Message-ID: <20250826110934.104886137@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,80 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-commit 99d7ab8db9d8230b243f5ed20ba0229e54cc0dfa upstream.
+commit 3769478610135e82b262640252d90f6efb05be71 upstream.
 
-The existing memstick core patch: commit 62c59a8786e6 ("memstick: Skip
-allocating card when removing host") sets host->removing in
-memstick_remove_host(),but still exists a critical time window where
-memstick_check can run after host->eject is set but before removing is set.
+Alan reported a NULL pointer dereference in htb_next_rb_node()
+after we made htb_qlen_notify() idempotent.
 
-In the rtsx_usb_ms driver, the problematic sequence is:
+It turns out in the following case it introduced some regression:
 
-rtsx_usb_ms_drv_remove:          memstick_check:
-  host->eject = true
-  cancel_work_sync(handle_req)     if(!host->removing)
-  ...                              memstick_alloc_card()
-                                     memstick_set_rw_addr()
-                                       memstick_new_req()
-                                         rtsx_usb_ms_request()
-                                           if(!host->eject)
-                                           skip schedule_work
-                                       wait_for_completion()
-  memstick_remove_host:                [blocks indefinitely]
-    host->removing = true
-    flush_workqueue()
-    [block]
+htb_dequeue_tree():
+  |-> fq_codel_dequeue()
+    |-> qdisc_tree_reduce_backlog()
+      |-> htb_qlen_notify()
+        |-> htb_deactivate()
+  |-> htb_next_rb_node()
+  |-> htb_deactivate()
 
-1. rtsx_usb_ms_drv_remove sets host->eject = true
-2. cancel_work_sync(&host->handle_req) runs
-3. memstick_check work may be executed here <-- danger window
-4. memstick_remove_host sets removing = 1
+For htb_next_rb_node(), after calling the 1st htb_deactivate(), the
+clprio[prio]->ptr could be already set to  NULL, which means
+htb_next_rb_node() is vulnerable here.
 
-During this window (step 3), memstick_check calls memstick_alloc_card,
-which may indefinitely waiting for mrq_complete completion that will
-never occur because rtsx_usb_ms_request sees eject=true and skips
-scheduling work, memstick_set_rw_addr waits forever for completion.
+For htb_deactivate(), although we checked qlen before calling it, in
+case of qlen==0 after qdisc_tree_reduce_backlog(), we may call it again
+which triggers the warning inside.
 
-This causes a deadlock when memstick_remove_host tries to flush_workqueue,
-waiting for memstick_check to complete, while memstick_check is blocked
-waiting for mrq_complete completion.
+To fix the issues here, we need to:
 
-Fix this by setting removing=true at the start of rtsx_usb_ms_drv_remove,
-before any work cancellation. This ensures memstick_check will see the
-removing flag immediately and exit early, avoiding the deadlock.
+1) Make htb_deactivate() idempotent, that is, simply return if we
+   already call it before.
+2) Make htb_next_rb_node() safe against ptr==NULL.
 
-Fixes: 62c59a8786e6 ("memstick: Skip allocating card when removing host")
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250804013604.1311218-1-lijiayi@kylinos.cn
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Many thanks to Alan for testing and for the reproducer.
+
+Fixes: 5ba8b837b522 ("sch_htb: make htb_qlen_notify() idempotent")
+Reported-by: Alan J. Wylie <alan@wylie.me.uk>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://patch.msgid.link/20250428232955.1740419-2-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/core/memstick.c    |    1 -
- drivers/memstick/host/rtsx_usb_ms.c |    1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_htb.c |   15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
---- a/drivers/memstick/core/memstick.c
-+++ b/drivers/memstick/core/memstick.c
-@@ -550,7 +550,6 @@ EXPORT_SYMBOL(memstick_add_host);
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -331,7 +331,8 @@ static void htb_add_to_wait_tree(struct
   */
- void memstick_remove_host(struct memstick_host *host)
+ static inline void htb_next_rb_node(struct rb_node **n)
  {
--	host->removing = 1;
- 	flush_workqueue(workqueue);
- 	mutex_lock(&host->lock);
- 	if (host->card)
---- a/drivers/memstick/host/rtsx_usb_ms.c
-+++ b/drivers/memstick/host/rtsx_usb_ms.c
-@@ -812,6 +812,7 @@ static int rtsx_usb_ms_drv_remove(struct
- 	int err;
+-	*n = rb_next(*n);
++	if (*n)
++		*n = rb_next(*n);
+ }
  
- 	host->eject = true;
-+	msh->removing = true;
- 	cancel_work_sync(&host->handle_req);
- 	cancel_delayed_work_sync(&host->poll_card);
+ /**
+@@ -573,8 +574,8 @@ static inline void htb_activate(struct h
+  */
+ static inline void htb_deactivate(struct htb_sched *q, struct htb_class *cl)
+ {
+-	WARN_ON(!cl->prio_activity);
+-
++	if (!cl->prio_activity)
++		return;
+ 	htb_deactivate_prios(q, cl);
+ 	cl->prio_activity = 0;
+ }
+@@ -1173,8 +1174,6 @@ static void htb_qlen_notify(struct Qdisc
+ {
+ 	struct htb_class *cl = (struct htb_class *)arg;
  
+-	if (!cl->prio_activity)
+-		return;
+ 	htb_deactivate(qdisc_priv(sch), cl);
+ }
+ 
+@@ -1282,8 +1281,7 @@ static int htb_delete(struct Qdisc *sch,
+ 	if (cl->parent)
+ 		cl->parent->children--;
+ 
+-	if (cl->prio_activity)
+-		htb_deactivate(q, cl);
++	htb_deactivate(q, cl);
+ 
+ 	if (cl->cmode != HTB_CAN_SEND)
+ 		htb_safe_rb_erase(&cl->pq_node,
+@@ -1408,8 +1406,7 @@ static int htb_change_class(struct Qdisc
+ 			/* turn parent into inner node */
+ 			qdisc_purge_queue(parent->leaf.q);
+ 			parent_qdisc = parent->leaf.q;
+-			if (parent->prio_activity)
+-				htb_deactivate(q, parent);
++			htb_deactivate(q, parent);
+ 
+ 			/* remove from evt list because of level change */
+ 			if (parent->cmode != HTB_CAN_SEND) {
 
 
