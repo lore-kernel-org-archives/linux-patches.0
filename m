@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B2F337688;
-	Tue, 26 Aug 2025 11:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C9D2F6564;
+	Tue, 26 Aug 2025 11:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207662; cv=none; b=u7zaOtgFV9aCT+QbjUopsGQZoYSuKCTVCjs8upagyQOUDIsHZHBeSvHKTZZGCtjp/tzE4pzp4zyUaJAKSbahza0uzPjOE26DUtFDgnC5M2LSMjcQ+4VrYRzr2hMb0Mz+sbxJvxaxdyJtG28/Vyf/cce/nQ64cKHJkZvlmjoPziM=
+	t=1756207665; cv=none; b=HdnwPm7/HqLpgKH18QLBguvAXhiJmsmtY3dOBdYJ3BgcpbVoA3PViV+kKqSVPzQ8fJ/zum3z0besUl/zJU9v8Dp1zcKUiCiiZiIzT5OhKtE9xwICo2157jLgc69X/vw5q0Qp7SstzZLjCzREpZQayfNc8LqjTB/08TtK/p+rkT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207662; c=relaxed/simple;
-	bh=CrASDGBaaxR1UBuukgLmrrouJfyLJEBA4DhMPtpx3NI=;
+	s=arc-20240116; t=1756207665; c=relaxed/simple;
+	bh=WOFXqdY4Y7FoDlOGM9sZ25iq4TDdf+f9ZPUejcBNH+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WOmcXToCfB2tkDZGoM94aD6QCgb44t3283bSIMVLnxaxnWILp1CU4zl89IcBmNsgmFiOjtrqT7S/xQEpo3bjuuDbnsGtWnq6eWUsfzKHg2WyJnIilcd4Z+Y+8OwRmur5P5MxTc/LveN09BY9T2cExaGdoq3PHucFNGYOCWQT/bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fLe7nZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fcCJYy4VojNZ73BkxJYtVVw8lX15jRUjrzljFbzlO7nneJiGE4pJiqHm9HFdh0M8Bu6ES6N0llJ1p67SzwsgAlrlh8qc/NLtGYwqFtd09wsKcl/jPdguk0w34JPILZEMKL63XNbn7Snu76i/D8eEUJKdDabuyuleQO0f/TaaSV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeYpaUKe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fLe7nZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00BAC113CF;
-	Tue, 26 Aug 2025 11:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeYpaUKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB11C4CEF1;
+	Tue, 26 Aug 2025 11:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207662;
-	bh=CrASDGBaaxR1UBuukgLmrrouJfyLJEBA4DhMPtpx3NI=;
+	s=korg; t=1756207664;
+	bh=WOFXqdY4Y7FoDlOGM9sZ25iq4TDdf+f9ZPUejcBNH+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fLe7nZDgh/p9ULmv0WCwfJgEQ154alR4IAHUkfNVQeYCtCcVbFhPYjaku0mcctfX
-	 HzBIwJZQ2Q+6EW/biouaiE3+o+v/tWQl/660qvnonZdU9Zzrgkny3Q6ylCvJmb20Xq
-	 REagnCm7te9bCezRv2KR1ImUWg83+QaSSUh+zqiQ=
+	b=WeYpaUKeT+Mx1eAGbAuc+Q8mjMbuMRWZUFILEE4Rfap33QaqH7eyX+JMZ0E9p5qsb
+	 UXFet/u556zZ4tJI1/GauPkx0NW2Yco3NXEscsAzxjMNVZzy41z/tKJSGXCvPMTHOe
+	 Nwjq0qm2T7rkbOhNqBPF7eE7Yox7JKRnHf47qxns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	"Sun peng (Leo) Li" <sunpeng.li@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.16 269/457] drm/amd/display: Fix Xorg desktop unresponsive on Replay panel
-Date: Tue, 26 Aug 2025 13:09:13 +0200
-Message-ID: <20250826110944.024264673@linuxfoundation.org>
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
+Subject: [PATCH 6.16 270/457] drm/amd/display: Fix DP audio DTO1 clock source on DCE 6.
+Date: Tue, 26 Aug 2025 13:09:14 +0200
+Message-ID: <20250826110944.052022429@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -48,68 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 66af73a1c319336694a8610fe4c2943f7b33066c upstream.
+commit 297a4833a68aac3316eb808b4123eb016ef242d7 upstream.
 
-[WHY & HOW]
-IPS & self-fresh feature can cause vblank counter resets between
-vblank disable and enable.
-It may cause system stuck due to wait the vblank counter.
+On DCE 6, DP audio was not working. However, it worked when an
+HDMI monitor was also plugged in.
 
-Call the drm_crtc_vblank_restore() during vblank enable to estimate
-missed vblanks by using timestamps and update the vblank counter in
-DRM.
+Looking at dce_aud_wall_dto_setup it seems that the main
+difference is that we use DTO1 when only DP is plugged in.
 
-It can make the vblank counter increase smoothly and resolve this issue.
+When programming DTO1, it uses audio_dto_source_clock_in_khz
+which is set from get_dp_ref_freq_khz
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Sun peng (Leo) Li <sunpeng.li@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+The dce60_get_dp_ref_freq_khz implementation looks incorrect,
+because DENTIST_DISPCLK_CNTL seems to be always zero on DCE 6,
+so it isn't usable.
+I compared dce60_get_dp_ref_freq_khz to the legacy display code,
+specifically dce_v6_0_audio_set_dto, and it turns out that in
+case of DCE 6, it needs to use the display clock. With that,
+DP audio started working on Pitcairn, Oland and Cape Verde.
+
+However, it still didn't work on Tahiti. Despite having the
+same DCE version, Tahiti seems to have a different audio device.
+After some trial and error I realized that it works with the
+default display clock as reported by the VBIOS, not the current
+display clock.
+
+The patch was tested on all four SI GPUs:
+
+* Pitcairn (DCE 6.0)
+* Oland (DCE 6.4)
+* Cape Verde (DCE 6.0)
+* Tahiti (DCE 6.0 but different)
+
+The testing was done on Samsung Odyssey G7 LS28BG700EPXEN on
+each of the above GPUs, at the following settings:
+
+* 4K 60 Hz
+* 1080p 60 Hz
+* 1080p 144 Hz
+
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 34d66bc7ff10e146a4cec76cf286979740a10954)
+(cherry picked from commit 645cc7863da5de700547d236697dffd6760cf051)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   19 +++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c |   21 +++--------
+ 1 file changed, 6 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -299,6 +299,25 @@ static inline int amdgpu_dm_crtc_set_vbl
- 	irq_type = amdgpu_display_crtc_idx_to_irq_type(adev, acrtc->crtc_id);
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
+@@ -83,22 +83,13 @@ static const struct state_dependent_cloc
+ static int dce60_get_dp_ref_freq_khz(struct clk_mgr *clk_mgr_base)
+ {
+ 	struct clk_mgr_internal *clk_mgr = TO_CLK_MGR_INTERNAL(clk_mgr_base);
+-	int dprefclk_wdivider;
+-	int dp_ref_clk_khz;
+-	int target_div;
++	struct dc_context *ctx = clk_mgr_base->ctx;
++	int dp_ref_clk_khz = 0;
  
- 	if (enable) {
-+		struct dc *dc = adev->dm.dc;
-+		struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
-+		struct psr_settings *psr = &acrtc_state->stream->link->psr_settings;
-+		struct replay_settings *pr = &acrtc_state->stream->link->replay_settings;
-+		bool sr_supported = (psr->psr_version != DC_PSR_VERSION_UNSUPPORTED) ||
-+								pr->config.replay_supported;
-+
-+		/*
-+		 * IPS & self-refresh feature can cause vblank counter resets between
-+		 * vblank disable and enable.
-+		 * It may cause system stuck due to waiting for the vblank counter.
-+		 * Call this function to estimate missed vblanks by using timestamps and
-+		 * update the vblank counter in DRM.
-+		 */
-+		if (dc->caps.ips_support &&
-+			dc->config.disable_ips != DMUB_IPS_DISABLE_ALL &&
-+			sr_supported && vblank->config.disable_immediate)
-+			drm_crtc_vblank_restore(crtc);
-+
- 		/* vblank irq on -> Only need vupdate irq in vrr mode */
- 		if (amdgpu_dm_crtc_vrr_active(acrtc_state))
- 			rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, true);
+-	/* DCE6 has no DPREFCLK_CNTL to read DP Reference Clock source */
+-
+-	/* Read the mmDENTIST_DISPCLK_CNTL to get the currently
+-	 * programmed DID DENTIST_DPREFCLK_WDIVIDER*/
+-	REG_GET(DENTIST_DISPCLK_CNTL, DENTIST_DPREFCLK_WDIVIDER, &dprefclk_wdivider);
+-
+-	/* Convert DENTIST_DPREFCLK_WDIVIDERto actual divider*/
+-	target_div = dentist_get_divider_from_did(dprefclk_wdivider);
+-
+-	/* Calculate the current DFS clock, in kHz.*/
+-	dp_ref_clk_khz = (DENTIST_DIVIDER_RANGE_SCALE_FACTOR
+-		* clk_mgr->base.dentist_vco_freq_khz) / target_div;
++	if (ASIC_REV_IS_TAHITI_P(ctx->asic_id.hw_internal_rev))
++		dp_ref_clk_khz = ctx->dc_bios->fw_info.default_display_engine_pll_frequency;
++	else
++		dp_ref_clk_khz = clk_mgr_base->clks.dispclk_khz;
+ 
+ 	return dce_adjust_dp_ref_freq_for_ss(clk_mgr, dp_ref_clk_khz);
+ }
 
 
