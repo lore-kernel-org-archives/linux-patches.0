@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DB721D00E;
-	Tue, 26 Aug 2025 11:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65BA321F53;
+	Tue, 26 Aug 2025 11:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207216; cv=none; b=uJfSvx0I8wRqO+6hgrx+EFxNWZKytBTnvwkGjIoC03AQhLXNRwABMr5TRriVXk8s0QwcIygVJuM7GDzI+RtOWAJt1d1sas6Z4ld24ElzlR7Wi5F2FEgjfvHUjzNXdKP9MCKWf6R/6Ua1EkcfLDZoKsYoZRbe81anLUMFgtfVbfc=
+	t=1756207219; cv=none; b=h4/IEx0HY1KKNKa402VStj97P72LZXNoxIs0WLHyq3jsrSHcdFHtdpbYZPFnzlBT2gqqCdlwpd02NNpF9QGj0ucMYOJ5Gm2nSygIW9aK1zAbRob0wYfYBtim77sHwa6WROvpjRndhuJQbcHxoh4LG1/egX3yH81YIq2tGDhQwHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207216; c=relaxed/simple;
-	bh=/sY/2tpCN6npTnUy18LW9l8yytKwSGP9G4A83O7+x9Q=;
+	s=arc-20240116; t=1756207219; c=relaxed/simple;
+	bh=Ii8292jv9XiyK5YH1oMO3L5Ps/6ZqnZoV/k7b+LOxW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tMcfW21FPOVEe9NW7xaLwJIvbTtkEG4b1nyOgmcs69d43LIxMc+VdxG1nuNaSmjUIxeO98ecn3/jM/+UjxftnSAZF/WRUOoVzMozuMhE2wQQArIprQ4dJ8rsh0+yyQoTgMqR4NTIwTJPHsvZNth7Jqc7BOpxqsZ+ZU8Ulx/iwJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPL5wAOB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OU1IZzdXRUdX5mR+jpoghiTHBCwaI+5F3OBtviD83efAdDXS9FqqBkSJAkT9Brk8o5H+YeRATG2hOqAbanri/oWKdrQpq7zQxZDF1AyLvCWVrbuzf3ptzsI86HutibDjfi1qSBJEc048zfmJYOaPAg1TyKO6xPGJVvZ5v9hlItw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vr4prnu0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPL5wAOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A20FC4CEF1;
-	Tue, 26 Aug 2025 11:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vr4prnu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B231C4CEF1;
+	Tue, 26 Aug 2025 11:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207216;
-	bh=/sY/2tpCN6npTnUy18LW9l8yytKwSGP9G4A83O7+x9Q=;
+	s=korg; t=1756207218;
+	bh=Ii8292jv9XiyK5YH1oMO3L5Ps/6ZqnZoV/k7b+LOxW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPL5wAOB001IyppZ8tuNZSv5/4zsz4UuTyJTKv9ecFwLzxJpefnOjSF2mvimgo4xY
-	 gClD0KgKfVMEHclg6jUIO0jaiqsai2BrE3sc9kA+6IOC1VHdrH3qfVKdL+TxHBpV69
-	 DnG2rVpAD+qJUI6h393GxLOuDi89ZEE78hVWSdDM=
+	b=Vr4prnu0uy2eBlyjAXBWMrW4FUrSHdoeiRIln0OLoOKY7A8Nll3ThH/7HSgUB1ip8
+	 WHDADO8cToZTmLO5cqMpRyiZwpITP+Q/+UTX67S4bD93Y9k874wUOHALwWELz+nV4m
+	 QWto08ZCyoe05Awno2etZh+2dE1woXtP400M2R5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Zhiling <chizhiling@kylinos.cn>,
-	Jan Kara <jack@suse.cz>,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 096/457] readahead: fix return value of page_cache_next_miss() when no hole is found
-Date: Tue, 26 Aug 2025 13:06:20 +0200
-Message-ID: <20250826110939.749740107@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.16 097/457] PCI/portdrv: Use is_pciehp instead of is_hotplug_bridge
+Date: Tue, 26 Aug 2025 13:06:21 +0200
+Message-ID: <20250826110939.773865325@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,44 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chi Zhiling <chizhiling@kylinos.cn>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit bbcaee20e03ecaeeecba32a703816a0d4502b6c4 upstream.
+commit 1d60796a62f327cd9e0a6a0865ded7656d2c67f9 upstream.
 
-max_scan in page_cache_next_miss always decreases to zero when no hole is
-found, causing the return value to be index + 0.
+The PCIe port driver erroneously creates a subdevice for hotplug on ACPI
+slots which are handled by the ACPI hotplug driver.
 
-Fix this by preserving the max_scan value throughout the loop.
+Avoid by checking the is_pciehp flag instead of is_hotplug_bridge when
+deciding whether to create a subdevice.  The latter encompasses ACPI slots
+whereas the former doesn't.
 
-Jan said "From what I know and have seen in the past, wrong responses
-from page_cache_next_miss() can lead to readahead window reduction and
-thus reduced read speeds."
+The superfluous subdevice has no real negative impact, it occupies memory
+and interrupt resources but otherwise just sits there waiting for
+interrupts from the slot that are never signaled.
 
-Link: https://lkml.kernel.org/r/20250605054935.2323451-1-chizhiling@163.com
-Fixes: 901a269ff3d5 ("filemap: fix page_cache_next_miss() when no hole found")
-Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f8415222837b ("PCI: Use cached copy of PCI_EXP_SLTCAP_HPC bit")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org # v4.7+
+Link: https://patch.msgid.link/40d5a5fe8d40595d505949c620a067fa110ee85e.1752390102.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/pcie/portdrv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -1778,8 +1778,9 @@ pgoff_t page_cache_next_miss(struct addr
- 			     pgoff_t index, unsigned long max_scan)
- {
- 	XA_STATE(xas, &mapping->i_pages, index);
-+	unsigned long nr = max_scan;
+--- a/drivers/pci/pcie/portdrv.c
++++ b/drivers/pci/pcie/portdrv.c
+@@ -220,7 +220,7 @@ static int get_port_device_capability(st
+ 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
+ 	int services = 0;
  
--	while (max_scan--) {
-+	while (nr--) {
- 		void *entry = xas_next(&xas);
- 		if (!entry || xa_is_value(entry))
- 			return xas.xa_index;
+-	if (dev->is_hotplug_bridge &&
++	if (dev->is_pciehp &&
+ 	    (pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT ||
+ 	     pci_pcie_type(dev) == PCI_EXP_TYPE_DOWNSTREAM) &&
+ 	    (pcie_ports_native || host->native_pcie_hotplug)) {
 
 
