@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB8C27A917;
-	Tue, 26 Aug 2025 11:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B1D239573;
+	Tue, 26 Aug 2025 11:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207523; cv=none; b=uHsNrY/L+PCwRhDotKx/GlCdAalqRcLuDYx/lHRcCNxy3q2x0mgZ9jWJVPKNm2OP3JzOIJoeB0DUK7YrccEn2SOkw31jxCRIBcBZKlmEKRkpPucSl8ImXX26Q0EsKubWQvSp4gY0wv85BMWCrn9McNQVcNmtp2XijdydC0T9KTM=
+	t=1756207525; cv=none; b=WYlzsnjfSN4lx3OS2T3e0N5abZrDuYOFNwzcwO4HBuefqXyTgnm/eiFmB9LTWn/jekgzJ462WleAewUQ7SxZXtTQEXYuTkTO7U6IcCa4XAnDDpAPeI03nAkvtl1/Htc2tCR3DA/N7/szwmewMbDF8w52ra1vfH2+HcbXUSTwUD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207523; c=relaxed/simple;
-	bh=jT5f7Fj35mChPeSKA+E+ea2PUy2q8bGCE0biwjoDMVY=;
+	s=arc-20240116; t=1756207525; c=relaxed/simple;
+	bh=lzMXDcnzhnvnFcAfm2Fv2h+pKdXWAYvJyf4wOpi7//Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6oLjW6ZWxDSMzjxi6q3ldHq5v/5hF/XqY47goB+gSDu4tvujFTSdbb/SgXYSXk3SW2Nue9W6Iec6hudYNsJFCBhQkrySMr7awKCAIawPlrTiCfFRAW9WL9jfEIA9CqFVdDfbiaSj2fMcoKOjgIJpNHN0S76MuYjw2pvwyazyXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmBzSKf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gPrOLeH/7pswyzDnnzUVNrq58QLk65CReSrfbc6bVhiiiWPP4Cae2w8Osc/Xvtj8X3ZfShaPMxHhY5vwgMOMwpO95v2sLqO3L2YXyeQqkPgRZJ8LE4awqJRJXbVCrkiLKYLhs9h/WDOo58rdJmLg58wXodvo2NfZCN7EMF1E2s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTWQOx67; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmBzSKf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D02C4CEF1;
-	Tue, 26 Aug 2025 11:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTWQOx67"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBB2C4CEF1;
+	Tue, 26 Aug 2025 11:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207522;
-	bh=jT5f7Fj35mChPeSKA+E+ea2PUy2q8bGCE0biwjoDMVY=;
+	s=korg; t=1756207525;
+	bh=lzMXDcnzhnvnFcAfm2Fv2h+pKdXWAYvJyf4wOpi7//Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OmBzSKf862V+pnqUPZIAUNrRJV7bvHWb6avTbEdXeudHC4WiEJ3/rDziB2YW2w/Yc
-	 +tDXf/R5g4l1zqYWnYHsAWjOeZ88nlsiS2tY8/PaEEJBESolPRMbGktHINCHVXJoxw
-	 vXBmpg2qV4OLPMdYd2ajnn9jf4lCFbGWu9GK2Q0c=
+	b=QTWQOx67c83f1Te2cGCBKDOMSUXIfu9AwxR8Nj9w8GWLWXUdmS82i/oSfdrv0hOR7
+	 YAUZZbw1PP8O2ikZytM0GzF9f/vP3bSfSOs0M4RvNP+lQbA6QylpFlnpaqKp69aOwC
+	 fii/v831mNtoVWIeAeBeF+7FF837IPlVLGkDnsgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Mangesh Gadre <Mangesh.Gadre@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.16 183/457] drm/amdgpu: update mmhub 4.1.0 client id mappings
-Date: Tue, 26 Aug 2025 13:07:47 +0200
-Message-ID: <20250826110941.895534794@linuxfoundation.org>
+Subject: [PATCH 6.16 184/457] drm/amdgpu: Update supported modes for GC v9.5.0
+Date: Tue, 26 Aug 2025 13:07:48 +0200
+Message-ID: <20250826110941.919860841@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,76 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit a0b34e4c8663b13e45c78267b4de3004b1a72490 upstream.
+commit 389d79a195a9f71a103b39097ee8341a7ca60927 upstream.
 
-Update the client id mapping so the correct clients
-get printed when there is a mmhub page fault.
+For GC v9.5.0 SOCs, both CPX and QPX compute modes are also supported in
+NPS2 mode.
 
-Tested-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
-Reviewed-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Acked-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9d1ac25c7f830e0132aa816393b1e9f140e71148)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c |   34 +++++++++++-------------------
- 1 file changed, 13 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
-@@ -37,39 +37,31 @@
- static const char *mmhub_client_ids_v4_1_0[][2] = {
- 	[0][0] = "VMC",
- 	[4][0] = "DCEDMC",
--	[5][0] = "DCEVGA",
- 	[6][0] = "MP0",
- 	[7][0] = "MP1",
- 	[8][0] = "MPIO",
--	[16][0] = "HDP",
--	[17][0] = "LSDMA",
--	[18][0] = "JPEG",
--	[19][0] = "VCNU0",
--	[21][0] = "VSCH",
--	[22][0] = "VCNU1",
--	[23][0] = "VCN1",
--	[32+20][0] = "VCN0",
--	[2][1] = "DBGUNBIO",
-+	[16][0] = "LSDMA",
-+	[17][0] = "JPEG",
-+	[19][0] = "VCNU",
-+	[22][0] = "VSCH",
-+	[23][0] = "HDP",
-+	[32+23][0] = "VCNRD",
- 	[3][1] = "DCEDWB",
- 	[4][1] = "DCEDMC",
--	[5][1] = "DCEVGA",
- 	[6][1] = "MP0",
- 	[7][1] = "MP1",
- 	[8][1] = "MPIO",
- 	[10][1] = "DBGU0",
- 	[11][1] = "DBGU1",
--	[12][1] = "DBGU2",
--	[13][1] = "DBGU3",
-+	[12][1] = "DBGUNBIO",
- 	[14][1] = "XDP",
- 	[15][1] = "OSSSYS",
--	[16][1] = "HDP",
--	[17][1] = "LSDMA",
--	[18][1] = "JPEG",
--	[19][1] = "VCNU0",
--	[20][1] = "VCN0",
--	[21][1] = "VSCH",
--	[22][1] = "VCNU1",
--	[23][1] = "VCN1",
-+	[16][1] = "LSDMA",
-+	[17][1] = "JPEG",
-+	[18][1] = "VCNWR",
-+	[19][1] = "VCNU",
-+	[22][1] = "VSCH",
-+	[23][1] = "HDP",
- };
+--- a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
++++ b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
+@@ -453,6 +453,7 @@ static int __aqua_vanjaram_get_px_mode_i
+ 					    uint16_t *nps_modes)
+ {
+ 	struct amdgpu_device *adev = xcp_mgr->adev;
++	uint32_t gc_ver = amdgpu_ip_version(adev, GC_HWIP, 0);
  
- static uint32_t mmhub_v4_1_0_get_invalidate_req(unsigned int vmid,
+ 	if (!num_xcp || !nps_modes || !(xcp_mgr->supp_xcp_modes & BIT(px_mode)))
+ 		return -EINVAL;
+@@ -476,12 +477,14 @@ static int __aqua_vanjaram_get_px_mode_i
+ 		*num_xcp = 4;
+ 		*nps_modes = BIT(AMDGPU_NPS1_PARTITION_MODE) |
+ 			     BIT(AMDGPU_NPS4_PARTITION_MODE);
++		if (gc_ver == IP_VERSION(9, 5, 0))
++			*nps_modes |= BIT(AMDGPU_NPS2_PARTITION_MODE);
+ 		break;
+ 	case AMDGPU_CPX_PARTITION_MODE:
+ 		*num_xcp = NUM_XCC(adev->gfx.xcc_mask);
+ 		*nps_modes = BIT(AMDGPU_NPS1_PARTITION_MODE) |
+ 			     BIT(AMDGPU_NPS4_PARTITION_MODE);
+-		if (amdgpu_sriov_vf(adev))
++		if (gc_ver == IP_VERSION(9, 5, 0))
+ 			*nps_modes |= BIT(AMDGPU_NPS2_PARTITION_MODE);
+ 		break;
+ 	default:
 
 
