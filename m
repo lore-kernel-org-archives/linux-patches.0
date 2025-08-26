@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C22352FDF;
-	Tue, 26 Aug 2025 14:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1356D35335B;
+	Tue, 26 Aug 2025 14:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217803; cv=none; b=iwGlt5Ovnh213BaTMgdWuMVe7xqYfOQIUwlpIGCkDY/lFmP9XsSkigFy8yv5fp6nVR4XsiSLSACGqfenNsW11JVetg6sJ7VtThSBgZrSsW6/WQyIMdndO7xmx6AcoHowrtPJv2f4Nc1yyAXlHo8YaW57yzkGm64G0qWGTu8ghMU=
+	t=1756217806; cv=none; b=tVeIKngbu8NcxGyeHsKkdybBtardROApsiC0NWtzjXQuqAnLo0w5TYUERW6l+y6Cw+r3J0LuaqQ2DvOzAuoFzTBYsBagohCCNmtoTVifjuCujPLqlcv1w4QHKzIiFSKUpGiJEDCzwjxMWk9JAiqcvJHWbpUWTj8AVRvlSq97xsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217803; c=relaxed/simple;
-	bh=aKXPoLXFkmCVvOKdW0rUmlrFnQ0F3QEQWD/Jdtk0oa0=;
+	s=arc-20240116; t=1756217806; c=relaxed/simple;
+	bh=J/4+S7lQXpq/nLBzx6O3wC7SwWC8Frv4t0DSdFs0W7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUKSGIX800TiUFJtX76rlXeuXFeqeD3gXP/pTdJy3RL3O89QZvIgGrvv0uqvZKThuGxkm5ubtGW2PvttK+1j4yoY3jH1rjq3Y8gk5e4t8GxJAVhDZc6JRxPh0rfup6qrDUF1SDSwIQct0U1tWYE2A+MBSCdtBnVB1fIBnzolRfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qS016TDD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tzKp/xjJD+kSe/tW7Pp0lENjg+JuNTxjdO9mgpxtnV7FBOGAAcWgRnvsKVOhhTgzqyL2XV5DK16GPYSB4CkZljlNDmOeVeYpAA5oSYrww7J4UoA2wmfq9V9333TbZarc+E75Xp2LfKMDNf/uR4vMma74kN4Dn9/PKI4DBvTASvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEoUiL7D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qS016TDD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE15C4CEF1;
-	Tue, 26 Aug 2025 14:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEoUiL7D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE53C4CEF1;
+	Tue, 26 Aug 2025 14:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217803;
-	bh=aKXPoLXFkmCVvOKdW0rUmlrFnQ0F3QEQWD/Jdtk0oa0=;
+	s=korg; t=1756217805;
+	bh=J/4+S7lQXpq/nLBzx6O3wC7SwWC8Frv4t0DSdFs0W7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qS016TDDsuTFCLGWPuNlNRrVg0bkZ8/1q7YhBSGbBsShvTfnjgyVDRVLlQiq1QyUJ
-	 Iq+JwkO+cVYf5z4LhT0AA7uZzERK5fN6avV9tbhGUSbUOxaFpb0yg51HjDuuYGfzec
-	 aboiz1syX7W6fHRVOfh+a4+Hb/QasA/aO054XXzE=
+	b=yEoUiL7D/PLQrzXA3ku1i+vZWKslONFZtlK9ePwe1oI09Z8Kuxy1NSLOEnC6y2vFq
+	 lvetbbIiaUIUCpdtW6oig2kikxbQatCvt5j+AosKoj6O6Dp7yoODp/zhp34XFJgBKv
+	 /UJyWBQ6c9ZUTm1qtXdYZmflMO3BB3apdZq3Dixk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 281/523] gve: Return error for unknown admin queue command
-Date: Tue, 26 Aug 2025 13:08:11 +0200
-Message-ID: <20250826110931.368269989@linuxfoundation.org>
+Subject: [PATCH 5.10 282/523] net: dsa: b53: fix b53_imp_vlan_setup for BCM5325
+Date: Tue, 26 Aug 2025 13:08:12 +0200
+Message-ID: <20250826110931.392910885@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -45,45 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit b11344f63fdd9e8c5121148a6965b41079071dd2 ]
+[ Upstream commit c00df1018791185ea398f78af415a2a0aaa0c79c ]
 
-In gve_adminq_issue_cmd(), return -EINVAL instead of 0 when an unknown
-admin queue command opcode is encountered.
+CPU port should be B53_CPU_PORT instead of B53_CPU_PORT_25 for
+B53_PVLAN_PORT_MASK register.
 
-This prevents the function from silently succeeding on invalid input
-and prevents undefined behavior by ensuring the function fails gracefully
-when an unrecognized opcode is provided.
-
-These changes improve error handling.
-
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250616054504.1644770-2-alok.a.tiwari@oracle.com
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Link: https://patch.msgid.link/20250614080000.1884236-14-noltari@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_adminq.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/dsa/b53/b53_common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_adminq.c b/drivers/net/ethernet/google/gve/gve_adminq.c
-index 67f2b9a61463..f02b3f01a557 100644
---- a/drivers/net/ethernet/google/gve/gve_adminq.c
-+++ b/drivers/net/ethernet/google/gve/gve_adminq.c
-@@ -246,6 +246,7 @@ static int gve_adminq_issue_cmd(struct gve_priv *priv,
- 		break;
- 	default:
- 		dev_err(&priv->pdev->dev, "unknown AQ command opcode %d\n", opcode);
-+		return -EINVAL;
- 	}
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 39a56cedbc1f..971c134cd71a 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -504,6 +504,10 @@ void b53_imp_vlan_setup(struct dsa_switch *ds, int cpu_port)
+ 	unsigned int i;
+ 	u16 pvlan;
  
- 	return 0;
++	/* BCM5325 CPU port is at 8 */
++	if ((is5325(dev) || is5365(dev)) && cpu_port == B53_CPU_PORT_25)
++		cpu_port = B53_CPU_PORT;
++
+ 	/* Enable the IMP port to be in the same VLAN as the other ports
+ 	 * on a per-port basis such that we only have Port i and IMP in
+ 	 * the same VLAN.
 -- 
 2.39.5
 
