@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0840734320F;
-	Tue, 26 Aug 2025 13:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E1534DCCE;
+	Tue, 26 Aug 2025 13:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216001; cv=none; b=TA+MT7o5y+T4Dkx1vQgKXpsH9DO8RYCwRERCW0D3KeVcHSs1WKa+dplzOBreUymyE9e9bMTeEMwKK/2UKuqdQiS4G7fcjoIWC8hK9VqjBahkBW2mx+p1ym01LHd2YsC2m4TcYlJRZPSRxHIS8CFTHnFO9o8ZQ9V71m9ETyrdyCI=
+	t=1756216003; cv=none; b=oHeW/aZsGM5EcQJAjRiTuNz7/e1xHq9HmGbJQVY3h48LFh5c+7+8fPoRo9A3frNHlq5F/leGlJ5poXHqXkLfCt3sUAlpgWF4RRcDPuTNLDPRayDeIkdPb5owAS7AxaHor1LpcTB4iV5srfQbyRTHgzmFV0FvqLubImf1hmbrdKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216001; c=relaxed/simple;
-	bh=47xnqZlebzd1oD3/pJpCaXJ9JKDGBr5T/XMKYtuFs6Q=;
+	s=arc-20240116; t=1756216003; c=relaxed/simple;
+	bh=w1/R2J2yv7+sPykg/5zVUIvk+KjZBY068iPp87FGgA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KmPScN3PpKZaB8pUY3lCZuVHHU7rBeQNfR96aH1omxstroofEz63oSZeHerW/IsYA/E2dUcKesnZ2C785TA4/AH1GdevGbiHxZXUbzxguGX1A56zoDWpGnRdbbtH2MJnG9VZtbkIV7WDMj5aUmZBF3WTnZ8MxEGNKo+oealtea0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkapVUv1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IKTK9ip66cloBGdVa4pzO4doqsgVW+qNvwRB9l+6rS/0FVmar27QD8jv1LvD0u+2NTyC0ToxMacYz6BTZY1uaAYGXUCJHBhlAi51QSfA1ITB6Q85+A5Bt3hDGDypXjHVzKOzDun+mRC1NDhNREsXbgHDGgdvcqaSVDVcEAFevKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MC55IFXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkapVUv1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E74C116D0;
-	Tue, 26 Aug 2025 13:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MC55IFXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34059C113CF;
+	Tue, 26 Aug 2025 13:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216000;
-	bh=47xnqZlebzd1oD3/pJpCaXJ9JKDGBr5T/XMKYtuFs6Q=;
+	s=korg; t=1756216003;
+	bh=w1/R2J2yv7+sPykg/5zVUIvk+KjZBY068iPp87FGgA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mkapVUv1Sojl3ARQ3BlEyoMSqGA8uQW3glJAXImuBKlaWIh2XQKGnHlqanvB6hNCX
-	 MoyNdZ7gz7Jq4kKNoCMYbADoRMNDh1DjeHRBm/0h6vwhDFcqyBHQEn9diQeCwOEWiB
-	 h+dKBTS1rNjOhqUz1iYtsUyJNDje/9ALra+9TLBI=
+	b=MC55IFXP9ln6kWGglSs01/BLtgWNwtDpOaPgc0OFnLKm6qilpKR/rSiVtM7Q6biO2
+	 YMCZwF142GDr6MsZ8LTBYi2eutLA5iVmCdfS+wKcV8508y1BQQxVMbCU39RC/sQ/X3
+	 WqZcT7bx54MrKqdZXzcPM8qO4P6YIvs/Pa6ih4+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Subject: [PATCH 5.15 246/644] perf/core: Exit early on perf_mmap() fail
-Date: Tue, 26 Aug 2025 13:05:37 +0200
-Message-ID: <20250826110952.487730091@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 5.15 247/644] perf/core: Prevent VMA split of buffer mappings
+Date: Tue, 26 Aug 2025 13:05:38 +0200
+Message-ID: <20250826110952.512721393@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,35 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 07091aade394f690e7b655578140ef84d0e8d7b0 upstream.
+commit b024d7b56c77191cde544f838debb7f8451cd0d6 upstream.
 
-When perf_mmap() fails to allocate a buffer, it still invokes the
-event_mapped() callback of the related event. On X86 this might increase
-the perf_rdpmc_allowed reference counter. But nothing undoes this as
-perf_mmap_close() is never called in this case, which causes another
-reference count leak.
+The perf mmap code is careful about mmap()'ing the user page with the
+ringbuffer and additionally the auxiliary buffer, when the event supports
+it. Once the first mapping is established, subsequent mapping have to use
+the same offset and the same size in both cases. The reference counting for
+the ringbuffer and the auxiliary buffer depends on this being correct.
 
-Return early on failure to prevent that.
+Though perf does not prevent that a related mapping is split via mmap(2),
+munmap(2) or mremap(2). A split of a VMA results in perf_mmap_open() calls,
+which take reference counts, but then the subsequent perf_mmap_close()
+calls are not longer fulfilling the offset and size checks. This leads to
+reference count leaks.
 
-Fixes: 1e0fb9ec679c ("perf/core: Add pmu callbacks to track event mapping and unmapping")
+As perf already has the requirement for subsequent mappings to match the
+initial mapping, the obvious consequence is that VMA splits, caused by
+resizing of a mapping or partial unmapping, have to be prevented.
+
+Implement the vm_operations_struct::may_split() callback and return
+unconditionally -EINVAL.
+
+That ensures that the mapping offsets and sizes cannot be changed after the
+fact. Remapping to a different fixed address with the same size is still
+possible as it takes the references for the new mapping and drops those of
+the old mapping.
+
+Fixes: 45bfb2e50471 ("perf/core: Add AUX area to ring buffer for raw data streams")
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-27504
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>Cc: stable@vger.kernel.org
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/events/core.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -6600,6 +6600,9 @@ aux_unlock:
- 		mutex_unlock(aux_mutex);
- 	mutex_unlock(&event->mmap_mutex);
+@@ -6381,11 +6381,21 @@ out_put:
+ 	ring_buffer_put(rb); /* could be last */
+ }
  
-+	if (ret)
-+		return ret;
++static int perf_mmap_may_split(struct vm_area_struct *vma, unsigned long addr)
++{
++	/*
++	 * Forbid splitting perf mappings to prevent refcount leaks due to
++	 * the resulting non-matching offsets and sizes. See open()/close().
++	 */
++	return -EINVAL;
++}
 +
- 	/*
- 	 * Since pinned accounting is per vm we cannot allow fork() to copy our
- 	 * vma.
+ static const struct vm_operations_struct perf_mmap_vmops = {
+ 	.open		= perf_mmap_open,
+ 	.close		= perf_mmap_close, /* non mergeable */
+ 	.fault		= perf_mmap_fault,
+ 	.page_mkwrite	= perf_mmap_fault,
++	.may_split	= perf_mmap_may_split,
+ };
+ 
+ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
 
 
