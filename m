@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F369435A299;
-	Tue, 26 Aug 2025 14:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B632FDC44;
+	Tue, 26 Aug 2025 14:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218757; cv=none; b=m1JpVHdC7Y1+vGtZzkx2gX0cEwruSQx3SCw1pyzIul4hvIwG3AP2jei7aNu6ZBhqCvsQhBXddKesUZjkRmMK/sWC6BifRl5ZkxVsExQoBowLWjyUEBrH2Na7VNnZzo4+eTQkglJVw120Ueb8BouU+U/gOEHJdccv5+9rtXInUao=
+	t=1756218759; cv=none; b=ewNQL0rHgS5gDmRhbZtb6jmgvU+0ofT4QXx5Ed/t7zccb6+yVtotQCalOpMuLJfD+PRLAEEy8Qc1sZBZP/znT5kJjCg2aDIqgnI52xlesb0cev1JY7+6WuyR2paE1xfGb+X/GFI2R2Yti5K+ixAajGcpkqeJn7EMRJLfokdPhIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218757; c=relaxed/simple;
-	bh=VbpUXZF1LZ9yGeh4PJWMHgL8n1QEUGSD3551q/HjqyI=;
+	s=arc-20240116; t=1756218759; c=relaxed/simple;
+	bh=8wk8llX61pCpUN+jW9Fq1lhk4DefMDj2gs6EOyU2wCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/2uJ4ueNdbe6BYP3AfrXRd/SCWbgadToCh5IBftd/5WpyWRDvYz8//4z2UUm5Rbs2+PHhhhgD/HOYJHqRGIQ+fMSwMlz0voPupq1FZZWMEvIJm33z+QA7Xcaj/e5vNTUcCcu7fM5yK7HpDARLs50Kh3D/8tgu3TvTsYVobUhww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igc2RYNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjdXaGgxhEiV7r7PBDmAwk9uFhypI9bkmXrDdbbCSfNaWIFcFbSJr89HhFp7SmHeUgVdAzTFhVUyhQDcjqr9qMZaKL0PT81t3kyxn/3yUVSN8n5od8xvxmUSjSQmEDTQEF2sYUTGC2qzajy47sq8Of6TOicMIU6lt49UCS6Ohco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPNXxOFo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igc2RYNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8481FC4CEF1;
-	Tue, 26 Aug 2025 14:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPNXxOFo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351DEC4CEF1;
+	Tue, 26 Aug 2025 14:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218756;
-	bh=VbpUXZF1LZ9yGeh4PJWMHgL8n1QEUGSD3551q/HjqyI=;
+	s=korg; t=1756218759;
+	bh=8wk8llX61pCpUN+jW9Fq1lhk4DefMDj2gs6EOyU2wCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igc2RYNWJ9rekJIgameIm9T593vo3EKkuhmKV4NYSxX4r1ZRoq7H7Vrz4LtAjKmzl
-	 fsjuX55PkYdaIjtbLnM1yz3H22QrNMvepMn1jOoWICfwXoRK/U5Xb604HWevjO9sqB
-	 E2Z4cBf0nowNesXj+icv6nyoHK0oUyBqCaPz3dfs=
+	b=XPNXxOFoTSV02u7HUpq/AA8ehrsvCm73nP+3NnoIj7kCdBvQgjoObNgDKSE+cNIrR
+	 72U9AKUVjqZQepKh4Y+TZdPNgY3pgU+t5yuV8VrYzPkuOqbVRa76hkwxkqO1RX+jAW
+	 jOL2vn3y0zDgexjun7ayvgcrSbhgw/IDfFoLlh6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Annette Kobou <annette.kobou@kontron.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 080/403] ARM: dts: imx6ul-kontron-bl-common: Fix RTS polarity for RS485 interface
-Date: Tue, 26 Aug 2025 13:06:46 +0200
-Message-ID: <20250826110908.691117094@linuxfoundation.org>
+Subject: [PATCH 5.4 115/403] scsi: mvsas: Fix dma_unmap_sg() nents value
+Date: Tue, 26 Aug 2025 13:07:21 +0200
+Message-ID: <20250826110909.909402940@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,35 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Annette Kobou <annette.kobou@kontron.de>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 47ef5256124fb939d8157b13ca048c902435cf23 ]
+[ Upstream commit 0141618727bc929fe868153d21797f10ce5bef3f ]
 
-The polarity of the DE signal of the transceiver is active-high for
-sending. Therefore rs485-rts-active-low is wrong and needs to be
-removed to make RS485 transmissions work.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Signed-off-by: Annette Kobou <annette.kobou@kontron.de>
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Fixes: 1ea4b76cdfde ("ARM: dts: imx6ul-kontron-n6310: Add Kontron i.MX6UL N6310 SoM and boards")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: b5762948263d ("[SCSI] mvsas: Add Marvell 6440 SAS/SATA driver")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://lore.kernel.org/r/20250627134822.234813-2-fourier.thomas@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6ul-kontron-n6310-s.dts | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/mvsas/mv_sas.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6ul-kontron-n6310-s.dts b/arch/arm/boot/dts/imx6ul-kontron-n6310-s.dts
-index 4e99e6c79a68..9b347029c2f6 100644
---- a/arch/arm/boot/dts/imx6ul-kontron-n6310-s.dts
-+++ b/arch/arm/boot/dts/imx6ul-kontron-n6310-s.dts
-@@ -168,7 +168,6 @@ &uart2 {
- 	pinctrl-0 = <&pinctrl_uart2>;
- 	linux,rs485-enabled-at-boot-time;
- 	rs485-rx-during-tx;
--	rs485-rts-active-low;
- 	uart-has-rtscts;
- 	status = "okay";
- };
+diff --git a/drivers/scsi/mvsas/mv_sas.c b/drivers/scsi/mvsas/mv_sas.c
+index 3e0b8ebe257f..68caeaf9e636 100644
+--- a/drivers/scsi/mvsas/mv_sas.c
++++ b/drivers/scsi/mvsas/mv_sas.c
+@@ -831,7 +831,7 @@ static int mvs_task_prep(struct sas_task *task, struct mvs_info *mvi, int is_tmf
+ 	dev_printk(KERN_ERR, mvi->dev, "mvsas prep failed[%d]!\n", rc);
+ 	if (!sas_protocol_ata(task->task_proto))
+ 		if (n_elem)
+-			dma_unmap_sg(mvi->dev, task->scatter, n_elem,
++			dma_unmap_sg(mvi->dev, task->scatter, task->num_scatter,
+ 				     task->data_dir);
+ prep_out:
+ 	return rc;
+@@ -882,7 +882,7 @@ static void mvs_slot_task_free(struct mvs_info *mvi, struct sas_task *task,
+ 	if (!sas_protocol_ata(task->task_proto))
+ 		if (slot->n_elem)
+ 			dma_unmap_sg(mvi->dev, task->scatter,
+-				     slot->n_elem, task->data_dir);
++				     task->num_scatter, task->data_dir);
+ 
+ 	switch (task->task_proto) {
+ 	case SAS_PROTOCOL_SMP:
 -- 
 2.39.5
 
