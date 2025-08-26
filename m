@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581DE1ACEDE;
-	Tue, 26 Aug 2025 12:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A38C1C54A9;
+	Tue, 26 Aug 2025 12:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213069; cv=none; b=sWLoauaaPOW4/SF+uQ4Ue7CYY06YblpLGYJNlHui3ECBfv+v1qdX8Y9k2XzXn3Irg9Fos28PWGGdThRLm7lUA2jz54agCGYifxaI8VudDp4rZO1SnIesV30W9XMh3krMBEL3RMyhU1Y4Wy5jSoWt56eE0HoEqTCE/loQ+vinfUs=
+	t=1756213072; cv=none; b=I2ql74wP7g/5Bchm6Yg1XjpR/8EFFavUdDTwn90PHyeq9tfRHl4TiDcYWczEnqLDnAcbyA/+lKzwzTJKZORoRfBrxywhcgSDgXyCfZS57TdbAGreOaN1/Et7vbEMf/0l0spVZDFYuP2/Lsrtm/VTqHWOhlbGfe1AVy8fsMHB7G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213069; c=relaxed/simple;
-	bh=SSHR8omCJ3ZqFae/j5ZlnPsLx7LobKpvJrk3Teh6XOM=;
+	s=arc-20240116; t=1756213072; c=relaxed/simple;
+	bh=hOkVl3HO0QM8p+sQ6QA1vaU0spbDdcnc7dua39ZNEWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdtTMwJZHV9k2ddNqNdmr35ySdv7exa5gdZoJgix0gWzcJu2h1ehE8uN10KQT66KxivukXi5jn4DujgERQBMDMBpGF7iPMrPajMTnP/pvy9p5MwUNr1UIw9JdFLnOpfLfLX4L0pUyfQp2HthdLo1VghcA5QoBBOqYSh9khZxUWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szCjlizh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mGG4tUUZVBKHi5MRZiep+aUlsGLrS/WK2k/yxIhbhij31BKttXo7JDZVTUz2f3p24eFputm+OhyhdqOYRHrU5Tnh6PYbT+eDnGM8a+afSEiSsL3wHvMntdLIPUUy1D91IHr2h17Ri/HcakPlsIvpC4cW2Hy4aCYBFPekEiRc+aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mt+7tXHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szCjlizh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05DBC4CEF1;
-	Tue, 26 Aug 2025 12:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mt+7tXHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814F0C4CEF1;
+	Tue, 26 Aug 2025 12:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213069;
-	bh=SSHR8omCJ3ZqFae/j5ZlnPsLx7LobKpvJrk3Teh6XOM=;
+	s=korg; t=1756213071;
+	bh=hOkVl3HO0QM8p+sQ6QA1vaU0spbDdcnc7dua39ZNEWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szCjlizhsv0+jXMww2oUeDOT6FNwW+dDzLnPZPFCiZ1TXTjVwq2NjFwpCk59refXs
-	 PMqA//rwUM9WVh4V8E1XwmzfBHnhEZja2PG3e3faaIy1An/IhjV7Zmm/UISXSM25BH
-	 m23EIpipf0u9PZrOjsvp+AmdcPtWFyycf9SEmYtc=
+	b=mt+7tXHv9I23kIV4PkRdh8CNMCo3a0jcF4VLjYJTneplXaFV5iTHIB71K0ns1jc5Y
+	 FN2Ic9vlAIeBdu6zqjH7YqHpbUvYkUdC/wxaWY1oBt6s9he/OmcocjBG9puVZUTCWQ
+	 7xrYwkNhJr230FKHvSeXBE/1rbwhCZkKF9U+O9aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ihor Solodrai <isolodrai@meta.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 209/587] bpf: Make reg_not_null() true for CONST_PTR_TO_MAP
-Date: Tue, 26 Aug 2025 13:05:58 +0200
-Message-ID: <20250826110958.254390301@linuxfoundation.org>
+Subject: [PATCH 6.6 210/587] selftests/bpf: Fix a user_ringbuf failure with arm64 64KB page size
+Date: Tue, 26 Aug 2025 13:05:59 +0200
+Message-ID: <20250826110958.279756911@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,63 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ihor Solodrai <isolodrai@meta.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 5534e58f2e9bd72b253d033ee0af6e68eb8ac96b ]
+[ Upstream commit bbc7bd658ddc662083639b9e9a280b90225ecd9a ]
 
-When reg->type is CONST_PTR_TO_MAP, it can not be null. However the
-verifier explores the branches under rX == 0 in check_cond_jmp_op()
-even if reg->type is CONST_PTR_TO_MAP, because it was not checked for
-in reg_not_null().
+The ringbuf max_entries must be PAGE_ALIGNED. See kernel function
+ringbuf_map_alloc(). So for arm64 64KB page size, adjust max_entries
+properly.
 
-Fix this by adding CONST_PTR_TO_MAP to the set of types that are
-considered non nullable in reg_not_null().
-
-An old "unpriv: cmp map pointer with zero" selftest fails with this
-change, because now early out correctly triggers in
-check_cond_jmp_op(), making the verification to pass.
-
-In practice verifier may allow pointer to null comparison in unpriv,
-since in many cases the relevant branch and comparison op are removed
-as dead code. So change the expected test result to __success_unpriv.
-
-Signed-off-by: Ihor Solodrai <isolodrai@meta.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250609183024.359974-2-isolodrai@meta.com
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20250607013626.1553001-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                               | 3 ++-
- tools/testing/selftests/bpf/progs/verifier_unpriv.c | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/user_ringbuf.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 1f9ae600e445..7d6ee41f4b4f 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -460,7 +460,8 @@ static bool reg_not_null(const struct bpf_reg_state *reg)
- 		type == PTR_TO_MAP_KEY ||
- 		type == PTR_TO_SOCK_COMMON ||
- 		(type == PTR_TO_BTF_ID && is_trusted_reg(reg)) ||
--		type == PTR_TO_MEM;
-+		type == PTR_TO_MEM ||
-+		type == CONST_PTR_TO_MAP;
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
+index dfff6feac12c..7e9a508c1571 100644
+--- a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
++++ b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
+@@ -21,8 +21,7 @@
+ #include "../progs/test_user_ringbuf.h"
  
- static bool type_is_ptr_alloc_obj(u32 type)
-diff --git a/tools/testing/selftests/bpf/progs/verifier_unpriv.c b/tools/testing/selftests/bpf/progs/verifier_unpriv.c
-index 7ea535bfbacd..e4ef82a6ee38 100644
---- a/tools/testing/selftests/bpf/progs/verifier_unpriv.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_unpriv.c
-@@ -619,7 +619,7 @@ __naked void pass_pointer_to_tail_call(void)
+ static const long c_sample_size = sizeof(struct sample) + BPF_RINGBUF_HDR_SZ;
+-static const long c_ringbuf_size = 1 << 12; /* 1 small page */
+-static const long c_max_entries = c_ringbuf_size / c_sample_size;
++static long c_ringbuf_size, c_max_entries;
  
- SEC("socket")
- __description("unpriv: cmp map pointer with zero")
--__success __failure_unpriv __msg_unpriv("R1 pointer comparison")
-+__success __success_unpriv
- __retval(0)
- __naked void cmp_map_pointer_with_zero(void)
+ static void drain_current_samples(void)
  {
+@@ -424,7 +423,9 @@ static void test_user_ringbuf_loop(void)
+ 	uint32_t remaining_samples = total_samples;
+ 	int err;
+ 
+-	BUILD_BUG_ON(total_samples <= c_max_entries);
++	if (!ASSERT_LT(c_max_entries, total_samples, "compare_c_max_entries"))
++		return;
++
+ 	err = load_skel_create_user_ringbuf(&skel, &ringbuf);
+ 	if (err)
+ 		return;
+@@ -686,6 +687,9 @@ void test_user_ringbuf(void)
+ {
+ 	int i;
+ 
++	c_ringbuf_size = getpagesize(); /* 1 page */
++	c_max_entries = c_ringbuf_size / c_sample_size;
++
+ 	for (i = 0; i < ARRAY_SIZE(success_tests); i++) {
+ 		if (!test__start_subtest(success_tests[i].test_name))
+ 			continue;
 -- 
 2.39.5
 
