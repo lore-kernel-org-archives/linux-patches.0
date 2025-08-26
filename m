@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F94280CC9;
-	Tue, 26 Aug 2025 14:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DA413C3F2;
+	Tue, 26 Aug 2025 14:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219297; cv=none; b=noK8jFLlRT6X+4ukhd/cKKzX49cYF1ncc3VkLP9oyQ1fnD3rh39tjS7cLxUtpi8dkKt1uDYP09M1/6xCOeGwrIdp8m6hphKMvh0lF4nqvWIh9L6Zi6ZklSImtq582ticTXjjJPoYiNjAiINtu3waQcDypoSr+mUboRRRpp2/D6E=
+	t=1756219299; cv=none; b=JschTl12EpHj1Qc7B7zxNU7v3rIbvtaz3G0chNjSY535Npk1sJk6nHUBSNNmvGgeKNQtojNcYen0PzR5UJ6VHdFtMH2t7sa4NW+9hkn8AswNBJpby5kG+j+l+TruSRLm1iZMVFKuIw72qZqEXHe8Wek6e2NOJpHrV5/g3Oaf9pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219297; c=relaxed/simple;
-	bh=ZO/QK1a9EvOT5zkinLRjXWeEpGFVcs/lDTMqfO+Rab4=;
+	s=arc-20240116; t=1756219299; c=relaxed/simple;
+	bh=2oMM552oD3avaM71C9/A69GgI8qVXQvnPmCUqONu1b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hyarffEsBPLTVXRM7Qezj3rByqS+rWohEhSAcMMLhuAvf9OckUxsaxWhsQcmCBCyAW+3oh/LVtnS3xBs/TsMEjBaNEKcTXO92h96RWJJUyqvT2mUmTzmTmmBRgwWC8zw4s1lODKAtbDTROVoo6VDcTotwoSui5+4cxoTadt/Z+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vC6ibowQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZBMTQxYqQeYzlPWexu4QYeGjmp2Vi5vbK4RkvxpaJ38lDdm4rp498OJcYERDQurMsolJeYL0O8mh32mQHdka1yOolctlqtlqTX03T9R/oeYbxCobGP+2PUh6xQiU3o5csTYsAs+ZfYC2pLwL6fgQrTUVSuEXwXmfioaERjyvPkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V35JHJGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vC6ibowQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DCCC4CEF1;
-	Tue, 26 Aug 2025 14:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V35JHJGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2758AC4CEF1;
+	Tue, 26 Aug 2025 14:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219296;
-	bh=ZO/QK1a9EvOT5zkinLRjXWeEpGFVcs/lDTMqfO+Rab4=;
+	s=korg; t=1756219299;
+	bh=2oMM552oD3avaM71C9/A69GgI8qVXQvnPmCUqONu1b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vC6ibowQohNUu5WPKUdaak+A/iERb+7pm9fMJ3A06Pwdck3v4/vWcy6YFPcBJ1ssv
-	 QiQ0NcHVyigR8qTDijAtYMLzVYv2Cq7gGAw8VABbxzCZCJDv8Lbi7lpoNGNO8oLQKY
-	 kYVC0DS0hwUxBSuSW2hbyJ9zAmbvc66gtCArog1o=
+	b=V35JHJGneU7FcWk72dzgLsANy9jPAojyIBzaLTgAIiRX1/AZaKB569IFEl+bihuVz
+	 HT75FMnMgpM41D+Vt9g98pXxpzuJhHI8RuLeowhZHPZSgW9hn86HBWIYHJuiM1wLei
+	 0Z7uUQNafICijH6D9d68ouyFyjdIh7Ii9XwJb1ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.4 328/403] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
-Date: Tue, 26 Aug 2025 13:10:54 +0200
-Message-ID: <20250826110915.889248637@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.4 329/403] comedi: Fix initialization of data for instructions that write to subdevice
+Date: Tue, 26 Aug 2025 13:10:55 +0200
+Message-ID: <20250826110915.919222653@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,58 +49,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 43fc0a99906e04792786edf8534d8d58d1e9de0c upstream.
+[ Upstream commit 46d8c744136ce2454aa4c35c138cc06817f92b8e ]
 
-After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
-KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
-assembly files with clang:
+Some Comedi subdevice instruction handlers are known to access
+instruction data elements beyond the first `insn->n` elements in some
+cases.  The `do_insn_ioctl()` and `do_insnlist_ioctl()` functions
+allocate at least `MIN_SAMPLES` (16) data elements to deal with this,
+but they do not initialize all of that.  For Comedi instruction codes
+that write to the subdevice, the first `insn->n` data elements are
+copied from user-space, but the remaining elements are left
+uninitialized.  That could be a problem if the subdevice instruction
+handler reads the uninitialized data.  Ensure that the first
+`MIN_SAMPLES` elements are initialized before calling these instruction
+handlers, filling the uncopied elements with 0.  For
+`do_insnlist_ioctl()`, the same data buffer elements are used for
+handling a list of instructions, so ensure the first `MIN_SAMPLES`
+elements are initialized for each instruction that writes to the
+subdevice.
 
-  arch/powerpc/lib/copypage_power7.S: Assembler messages:
-  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
-  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
-  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
-  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
-  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
-  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
-
-as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
-KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
-result of those missing flags, the host target
-will be tested during as-option calls and likely fail, meaning necessary
-flags may not get added when building assembly files, resulting in
-errors like seen above.
-
-Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
-This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
-assembler calls to use proper flags and language target"), which
-switched from using the assembler target to the assembler-with-cpp
-target, so flags that affect preprocessing are passed along in all
-relevant tests. as-option now mirrors cc-option.
-
-Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Cc: stable@vger.kernel.org # 5.13+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250707161439.88385-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Reworked for before commit bac42fb21259 ("comedi: get rid of compat_alloc_user_space() mess in COMEDI_CMD{,TEST} compat") ]
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Kbuild.include |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+v2: Fixed a patch application error due to fixing up the wrong commit.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/staging/comedi/comedi_fops.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/scripts/Kbuild.include
-+++ b/scripts/Kbuild.include
-@@ -102,7 +102,7 @@ try-run = $(shell set -e;		\
- # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
+--- a/drivers/staging/comedi/comedi_fops.c
++++ b/drivers/staging/comedi/comedi_fops.c
+@@ -1584,21 +1584,27 @@ static int do_insnlist_ioctl(struct come
+ 	}
  
- as-option = $(call try-run,\
--	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
-+	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
- 
- # as-instr
- # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+ 	for (i = 0; i < insnlist.n_insns; ++i) {
++		unsigned int n = insns[i].n;
++
+ 		if (insns[i].insn & INSN_MASK_WRITE) {
+ 			if (copy_from_user(data, insns[i].data,
+-					   insns[i].n * sizeof(unsigned int))) {
++					   n * sizeof(unsigned int))) {
+ 				dev_dbg(dev->class_dev,
+ 					"copy_from_user failed\n");
+ 				ret = -EFAULT;
+ 				goto error;
+ 			}
++			if (n < MIN_SAMPLES) {
++				memset(&data[n], 0, (MIN_SAMPLES - n) *
++						    sizeof(unsigned int));
++			}
+ 		}
+ 		ret = parse_insn(dev, insns + i, data, file);
+ 		if (ret < 0)
+ 			goto error;
+ 		if (insns[i].insn & INSN_MASK_READ) {
+ 			if (copy_to_user(insns[i].data, data,
+-					 insns[i].n * sizeof(unsigned int))) {
++					 n * sizeof(unsigned int))) {
+ 				dev_dbg(dev->class_dev,
+ 					"copy_to_user failed\n");
+ 				ret = -EFAULT;
+@@ -1665,6 +1671,10 @@ static int do_insn_ioctl(struct comedi_d
+ 			ret = -EFAULT;
+ 			goto error;
+ 		}
++		if (insn.n < MIN_SAMPLES) {
++			memset(&data[insn.n], 0,
++			       (MIN_SAMPLES - insn.n) * sizeof(unsigned int));
++		}
+ 	}
+ 	ret = parse_insn(dev, &insn, data, file);
+ 	if (ret < 0)
 
 
