@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFAB302CA6;
-	Tue, 26 Aug 2025 13:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C864D1E519;
+	Tue, 26 Aug 2025 13:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216352; cv=none; b=XPc4E9U5ZUgEgGVJep16n5SZje3efXjFtorBzFd8thkqb3xAa4OuDH7VVLz1qiRLsHeoDqNWXPtsc3hhIruZKiFOAT7BNqPj+O/phULIESlXB1Uf+tr/m+Z+YpzCSmdkOJXryOBN+6ULLHpwjYEMf2WwPYuN7Vmx7QK9CQTkTHc=
+	t=1756216357; cv=none; b=A/wHcnQdvSd/5e5eNbanA2TRhtr63a9XtTVlHWhjX7KTJQJk/L3TdwIEa3CPUfZ9vg0iu4q1kIQH4w4qkXBGYK35FyDTpM9ObHmLnHHLAKjUCTu5kkEYI6H2uv3rL2l41GSZkvsD9u7Gy2EV0TeVCyEXn0NATKMIyunmTweCDY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216352; c=relaxed/simple;
-	bh=wRBi6UOqPD47LsN93uQu6yXGrvaLL40ofvMMb0umr3A=;
+	s=arc-20240116; t=1756216357; c=relaxed/simple;
+	bh=rCvU0wuEuaE7QPNS5jxnQNj9tx6ezM+i+ir55MCxKTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rboWSRFN6wiYrNXWhUHYdWJnrUOMds0WGpYcsVv3Q1BA3uo31q0GpgewGjiRlmVXot0Uzw68BTIgY+Zhts77L1wh7BdUxzVrYn7qNNv0ELQwUOrRfN7NcNQYGu47F1sksfT8XUZGoafl5U4suvr6SWFR2+xw9SbNILEsJFPm8rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S69ls6A4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mXjVF06QSMNCOhOJ7IbjxuvkKE4141nhq6FqE3DLnFCsUT6b815Jf8rhjtshVAe+5aZ3I7hFRmsTU6aWHHwboR8U33VNSB3JspUfdCUwHmT0ahpe7cSwLanD9npduZtOcmgvSwwJ3Q8O2PP6sbuFXiYdgRtEmsubiRbKpT9il7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7iDzbD3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S69ls6A4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABB8C4CEF1;
-	Tue, 26 Aug 2025 13:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7iDzbD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A194C113CF;
+	Tue, 26 Aug 2025 13:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216352;
-	bh=wRBi6UOqPD47LsN93uQu6yXGrvaLL40ofvMMb0umr3A=;
+	s=korg; t=1756216357;
+	bh=rCvU0wuEuaE7QPNS5jxnQNj9tx6ezM+i+ir55MCxKTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S69ls6A4hlNfpOThJRIYAV0I+oaQ2v3QdUcmw3kCCChIVreq9w5Ga8b31Z7Y3UzUS
-	 zsqbFvDAP1UVYYaM+5ptI/RBwxcfLa5CmTs8w1r5YjSMTl2stZ5ar1DStJ69WyHOBC
-	 rl/yb/e35NDFeEvdNoT8CJL8IGCpsRbzTXTVSI4E=
+	b=F7iDzbD38gJCvQIaBR65ZptiWifw0a4X9+qTBcQYZb5ukDk06lWxgC1i5iI6M9WnV
+	 LoStHEZq39S+SLmVPFkkjGVo5HUwII1Mm6YCuxRWALv3FllC5oM06f4y/pg3ptI+HJ
+	 jMtJBIsCigK7sObfGhMeWRo6FYHhZuCLkknb0hnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emily Deng <Emily.Deng@amd.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 378/644] drm/ttm: Should to return the evict error
-Date: Tue, 26 Aug 2025 13:07:49 +0200
-Message-ID: <20250826110955.789647801@linuxfoundation.org>
+Subject: [PATCH 5.15 380/644] drm/ttm: Respect the shrinker core free target
+Date: Tue, 26 Aug 2025 13:07:51 +0200
+Message-ID: <20250826110955.844315504@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,40 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emily Deng <Emily.Deng@amd.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit 4e16a9a00239db5d819197b9a00f70665951bf50 ]
+[ Upstream commit eac21f8ebeb4f84d703cf41dc3f81d16fa9dc00a ]
 
-For the evict fail case, the evict error should be returned.
+Currently the TTM shrinker aborts shrinking as soon as it frees pages from
+any of the page order pools and by doing so it can fail to respect the
+freeing target which was configured by the shrinker core.
 
-v2: Consider ENOENT case.
+We use the wording "can fail" because the number of freed pages will
+depend on the presence of pages in the pools and the order of the pools on
+the LRU list. For example if there are no free pages in the high order
+pools the shrinker core may require multiple passes over the TTM shrinker
+before it will free the default target of 128 pages (assuming there are
+free pages in the low order pools). This inefficiency can be compounded by
+the pool LRU where multiple further calls into the TTM shrinker are
+required to end up looking at the pool with pages.
 
-v3: Abort directly when the eviction failed for some reason (except for -ENOENT)
- and not wait for the move to finish
+Improve this by never freeing less than the shrinker core has requested.
 
-Signed-off-by: Emily Deng <Emily.Deng@amd.com>
+At the same time we start reporting the number of scanned pages (freed in
+this case), which prevents the core shrinker from giving up on the TTM
+shrinker too soon and moving on.
+
+v2:
+ * Simplify loop logic. (Christian)
+ * Improve commit message.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20250603091154.3472646-1-Emily.Deng@amd.com
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20250603112750.34997-2-tvrtko.ursulin@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_resource.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/ttm/ttm_pool.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_resource.c b/drivers/gpu/drm/ttm/ttm_resource.c
-index 2c590b4c46cb..9a8f565aa6ad 100644
---- a/drivers/gpu/drm/ttm/ttm_resource.c
-+++ b/drivers/gpu/drm/ttm/ttm_resource.c
-@@ -150,6 +150,9 @@ int ttm_resource_manager_evict_all(struct ttm_device *bdev,
+diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
+index 346db24719f9..69968b3cb73d 100644
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -588,7 +588,6 @@ void ttm_pool_fini(struct ttm_pool *pool)
  	}
- 	spin_unlock(&bdev->lru_lock);
+ }
  
-+	if (ret && ret != -ENOENT)
-+		return ret;
+-/* As long as pages are available make sure to release at least one */
+ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
+ 					    struct shrink_control *sc)
+ {
+@@ -596,9 +595,12 @@ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
+ 
+ 	do
+ 		num_freed += ttm_pool_shrink();
+-	while (!num_freed && atomic_long_read(&allocated_pages));
++	while (num_freed < sc->nr_to_scan &&
++	       atomic_long_read(&allocated_pages));
+ 
+-	return num_freed;
++	sc->nr_scanned = num_freed;
 +
- 	spin_lock(&man->move_lock);
- 	fence = dma_fence_get(man->move);
- 	spin_unlock(&man->move_lock);
++	return num_freed ?: SHRINK_STOP;
+ }
+ 
+ /* Return the number of pages available or SHRINK_EMPTY if we have none */
 -- 
 2.39.5
 
