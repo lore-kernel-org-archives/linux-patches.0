@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8353481CD;
-	Tue, 26 Aug 2025 14:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2F71D5CD4;
+	Tue, 26 Aug 2025 14:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217852; cv=none; b=sUF+52jJZ+XsyHKC91jeR9HhE3H6VsEpPiCGwYpl8SCh3X4Wru4UIF7aZKy1XY4HTg26ttyfkDACYW5zNWcw224FijQ++iHcJbfPjkR+O3mmncnYOB+3GbVMq1o0ZN58YP+oJIFxQSpxesh5Tem/R5zDimk5KqYmyIXwWure2F0=
+	t=1756217855; cv=none; b=ftgr8cxvrpcWuNtGLkBVtxgIcgg+BacyagajxR1p8SsyqXLgtwii/DfvKDaeHNPibNqSAiAw5tuCyFb1TEkFvUTnX2dReQP2fp4ageplizcp94goookU4prTzw91qSO6K9JPuehDpiEbZ5yVxPoShnB9fpSBPofgMX8pNPedONI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217852; c=relaxed/simple;
-	bh=7pGwjk6C7AJo/suB88KE4xommi2UEEFgrr8args7egg=;
+	s=arc-20240116; t=1756217855; c=relaxed/simple;
+	bh=a1I6qpCqi+ocYvuzt3G79MfjsN/jU/ptdIPJLg1Cp9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gzifydF7xBaExpWnfO3u0q+tlykPndehEsMyXei1EHgE+oDUpFluu1N22jGMkeH185vpn2Ur4cKEvzuksJ/Ml152RGXtDiQ4Q43gWfzmqQK+u93vCQrxnUDRwF+TlS+ceU9P7cu8FM62xhJZm6SmOo/7/N2SgTd6n3pIIWmtB10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ghxs+Wib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XHWf1De6oeCH4Xvd2a90q55FRhSA2PbchR4b2Hj14t+aIcD7zCEKEkNDlQq92BZlGE6ZKBGiFASiaDpmTAt8zqeppgnI70TRqI9zM0rkPPxzun0NXYBf+BkaJEiwsctU/IJx+9rKoAssB5getTtHvrA/RDZSXed48fQ3THHCtSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLO/QAM/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ghxs+Wib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588BEC4CEF1;
-	Tue, 26 Aug 2025 14:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLO/QAM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04ACBC4CEF1;
+	Tue, 26 Aug 2025 14:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217852;
-	bh=7pGwjk6C7AJo/suB88KE4xommi2UEEFgrr8args7egg=;
+	s=korg; t=1756217855;
+	bh=a1I6qpCqi+ocYvuzt3G79MfjsN/jU/ptdIPJLg1Cp9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ghxs+WibIJGJM1td5gW9WEFrC0tCsW+0TVGKsUxh6Tz5zhg1R6HcRAI77N+kHv1pC
-	 XaOoL691gJgup3uRZGmB6V0epVJ7GiqBKqQUZ6HF99RmqiSQ5f21jvqz3Le9xVl8Ug
-	 TOqAPg1pOHZ0bfgLmcSDbo2UCKIkjGwoC4JX9dQ0=
+	b=wLO/QAM/YnemoHDCRyAjrYL3/Q3QDzawsz/g+QgK8GxngFXe7nCDiiily64D0Aitp
+	 RWry4RX+RPivFGa3TjfTXBqWr/gWQOVVs4GEggd74D3aJYh1QENm+yF0Uu8riPGgFa
+	 RG4KwwJCqWw8wqLJGW5kOlPCj6j+PwBC0MR3ZSIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6e516bb515d93230bc7b@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
+	syzbot+630f6d40b3ccabc8e96e@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 298/523] jfs: truncate good inode pages when hard link is 0
-Date: Tue, 26 Aug 2025 13:08:28 +0200
-Message-ID: <20250826110931.801504202@linuxfoundation.org>
+Subject: [PATCH 5.10 299/523] jfs: Regular file corruption check
+Date: Tue, 26 Aug 2025 13:08:29 +0200
+Message-ID: <20250826110931.827826432@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,39 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 2d91b3765cd05016335cd5df5e5c6a29708ec058 ]
+[ Upstream commit 2d04df8116426b6c7b9f8b9b371250f666a2a2fb ]
 
-The fileset value of the inode copy from the disk by the reproducer is
-AGGR_RESERVED_I. When executing evict, its hard link number is 0, so its
-inode pages are not truncated. This causes the bugon to be triggered when
-executing clear_inode() because nrpages is greater than 0.
+The reproducer builds a corrupted file on disk with a negative i_size value.
+Add a check when opening this file to avoid subsequent operation failures.
 
-Reported-by: syzbot+6e516bb515d93230bc7b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6e516bb515d93230bc7b
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Reported-by: syzbot+630f6d40b3ccabc8e96e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=630f6d40b3ccabc8e96e
+Tested-by: syzbot+630f6d40b3ccabc8e96e@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/file.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/jfs/inode.c b/fs/jfs/inode.c
-index 980aa3300f10..2472b33e3a2d 100644
---- a/fs/jfs/inode.c
-+++ b/fs/jfs/inode.c
-@@ -145,9 +145,9 @@ void jfs_evict_inode(struct inode *inode)
- 	if (!inode->i_nlink && !is_bad_inode(inode)) {
- 		dquot_initialize(inode);
+diff --git a/fs/jfs/file.c b/fs/jfs/file.c
+index 930d2701f206..44872daeca01 100644
+--- a/fs/jfs/file.c
++++ b/fs/jfs/file.c
+@@ -44,6 +44,9 @@ static int jfs_open(struct inode *inode, struct file *file)
+ {
+ 	int rc;
  
-+		truncate_inode_pages_final(&inode->i_data);
- 		if (JFS_IP(inode)->fileset == FILESYSTEM_I) {
- 			struct inode *ipimap = JFS_SBI(inode->i_sb)->ipimap;
--			truncate_inode_pages_final(&inode->i_data);
++	if (S_ISREG(inode->i_mode) && inode->i_size < 0)
++		return -EIO;
++
+ 	if ((rc = dquot_file_open(inode, file)))
+ 		return rc;
  
- 			if (test_cflag(COMMIT_Freewmap, inode))
- 				jfs_free_zero_link(inode);
 -- 
 2.39.5
 
