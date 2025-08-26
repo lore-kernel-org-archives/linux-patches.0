@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4231F4C90;
-	Tue, 26 Aug 2025 14:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C5634DCDA;
+	Tue, 26 Aug 2025 14:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218437; cv=none; b=FgfkeWANS64N6Cg7qC/x98N0JWFGYvcuHRrpT3OQ7XWzmlGslrWs/f8JY6qU2fRGLW64dcrYuZixwIc3VR+oihaCq3WYXwpkMxfI7Sp8lb6Eb2+QyKAT4BK0R2g3Q1F5IUZ3ESn0qpfDnPeRasI1vNV3u76vpYYCg56pUH68O88=
+	t=1756218439; cv=none; b=MWrJC6Xu6CQtXlS+J1vylXsIzvAx6dkdk9Flo8a4Te5/hWvznDKakFsXLxPmGExWUIq7N0hQ+aaa5NEemZdRuI4MIesUeWxCWOJOT/TyQPD6zKbP0t0Fn0W5hEtF4DbStJxadLUpRDETfGBcj0meGBCBP876NAV8lRoFflPuZJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218437; c=relaxed/simple;
-	bh=w1TuPsVismq2PfJXiGDg2UjZFD9Q7Piyb6ziBjrzvkw=;
+	s=arc-20240116; t=1756218439; c=relaxed/simple;
+	bh=OGgLaBDo/HMDGIkh/B4gNMONaOALpWYuE/8Gsyb3b48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwxFTpJKAfX6R3NIpfd6/VfAVg5EZJnGwBI75c/MRMmXCTQPR+IWPGVYModTRu7lze/B8A8bawaIM3vUkQR0OdPCktOxj/NQb3NQRdk+iM34KAG8ltaMIHgIyxjk/whsvx+NdUYmQApHqMqmbalJKwbRrbea01q7Eurgm9AJuZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7kmI802; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=njsxDC8bJUeKy8DmyE8q/CrtSYkuV8gLvn6+ujq55fbY7g2iE04XQFKFKj5WVL0ZZF6cHgSgZuc+WVKVIcrxNrvQAiKElOk2UxlAt6+PZWVFlAraNCEwaO/aKXC9cRuCSP4Q/7Q8e6XXSMzVc/uvy736PAqfhX3XbgopLGTI1Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+g85wFn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7kmI802"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ED4C4CEF1;
-	Tue, 26 Aug 2025 14:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+g85wFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAE5C4CEF1;
+	Tue, 26 Aug 2025 14:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218436;
-	bh=w1TuPsVismq2PfJXiGDg2UjZFD9Q7Piyb6ziBjrzvkw=;
+	s=korg; t=1756218439;
+	bh=OGgLaBDo/HMDGIkh/B4gNMONaOALpWYuE/8Gsyb3b48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7kmI802RFSsILYXhtA23NJ1gJW2jvYYpHv4Bh4byPcjCGkX1xN+GABKvQPnLCrdL
-	 fAJO+8tbIfAmL3gk9Vo2dM5GGR60J/V39RgfS1QBJXwmdsZ0TmvewMxfn+MYFeqKdq
-	 WY3LfmhojSBuxCKd0Hju28yWAhsfkeSSzjbe3agc=
+	b=Q+g85wFnnX0lOybwaxZ9FNAIpHN0ZRK6oBeD72BpchxzL6YQ+r6SZoEla7Uc17bBm
+	 9LUZmjAOk6z8U82DKLGCbHha9fShyAvYV3AbQMEqBEtR1w6+DQl7c1VU2pp41bQy3r
+	 Rk++AWxyPmVFlNazFCIhuMdaDeRcBWI6wZekIF7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 504/523] tracing: Remove unneeded goto out logic
-Date: Tue, 26 Aug 2025 13:11:54 +0200
-Message-ID: <20250826110936.871533700@linuxfoundation.org>
+Subject: [PATCH 5.10 522/523] netfilter: nft_reject_inet: allow to use reject from inet ingress
+Date: Tue, 26 Aug 2025 13:12:12 +0200
+Message-ID: <20250826110937.315767952@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,146 +50,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit c89504a703fb779052213add0e8ed642f4a4f1c8 ]
+[ Upstream commit 117ca1f8920cf4087bf82f44bd2a51b49d6aae63 ]
 
-Several places in the trace.c file there's a goto out where the out is
-simply a return. There's no reason to jump to the out label if it's not
-doing any more logic but simply returning from the function.
+Enhance validation to support for reject from inet ingress chains.
 
-Replace the goto outs with a return and remove the out labels.
+Note that, reject from inet ingress and netdev ingress differ.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/20250801203857.538726745@kernel.org
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reject packets from inet ingress are sent through ip_local_out() since
+inet reject emulates the IP layer receive path. So the reject packet
+follows to classic IP output and postrouting paths.
+
+The reject action from netdev ingress assumes the packet not yet entered
+the IP layer, so the reject packet is sent through dev_queue_xmit().
+Therefore, reject packets from netdev ingress do not follow the classic
+IP output and postrouting paths.
+
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 91a79b792204 ("netfilter: nf_reject: don't leak dst refcount for loopback packets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   37 ++++++++++++++-----------------------
- 1 file changed, 14 insertions(+), 23 deletions(-)
+ net/ipv4/netfilter/nf_reject_ipv4.c |  6 ++++--
+ net/ipv6/netfilter/nf_reject_ipv6.c |  5 +++--
+ net/netfilter/nft_reject_inet.c     | 14 +++++++++++++-
+ 3 files changed, 20 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -1613,7 +1613,7 @@ int trace_get_user(struct trace_parser *
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index efe14a6a5d9b..d232e0251142 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -125,7 +125,8 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	if (!oth)
+ 		return;
  
- 	ret = get_user(ch, ubuf++);
- 	if (ret)
--		goto out;
-+		return ret;
+-	if (hook == NF_INET_PRE_ROUTING && nf_reject_fill_skb_dst(oldskb))
++	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
++	    nf_reject_fill_skb_dst(oldskb) < 0)
+ 		return;
  
- 	read++;
- 	cnt--;
-@@ -1627,7 +1627,7 @@ int trace_get_user(struct trace_parser *
- 		while (cnt && isspace(ch)) {
- 			ret = get_user(ch, ubuf++);
- 			if (ret)
--				goto out;
-+				return ret;
- 			read++;
- 			cnt--;
- 		}
-@@ -1637,8 +1637,7 @@ int trace_get_user(struct trace_parser *
- 		/* only spaces were written */
- 		if (isspace(ch) || !ch) {
- 			*ppos += read;
--			ret = read;
--			goto out;
-+			return read;
- 		}
- 	}
+ 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
+@@ -193,7 +194,8 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
+ 	if (iph->frag_off & htons(IP_OFFSET))
+ 		return;
  
-@@ -1646,13 +1645,12 @@ int trace_get_user(struct trace_parser *
- 	while (cnt && !isspace(ch) && ch) {
- 		if (parser->idx < parser->size - 1)
- 			parser->buffer[parser->idx++] = ch;
--		else {
--			ret = -EINVAL;
--			goto out;
--		}
-+		else
-+			return -EINVAL;
+-	if (hook == NF_INET_PRE_ROUTING && nf_reject_fill_skb_dst(skb_in))
++	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
++	    nf_reject_fill_skb_dst(skb_in) < 0)
+ 		return;
+ 
+ 	if (skb_csum_unnecessary(skb_in) || !nf_reject_verify_csum(proto)) {
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index df572724f254..b396559f68b4 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -161,7 +161,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	fl6.fl6_sport = otcph->dest;
+ 	fl6.fl6_dport = otcph->source;
+ 
+-	if (hook == NF_INET_PRE_ROUTING) {
++	if (hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) {
+ 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
+ 		if (!dst)
+ 			return;
+@@ -259,7 +259,8 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
+ 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
+ 		skb_in->dev = net->loopback_dev;
+ 
+-	if (hooknum == NF_INET_PRE_ROUTING && nf_reject6_fill_skb_dst(skb_in))
++	if ((hooknum == NF_INET_PRE_ROUTING || hooknum == NF_INET_INGRESS) &&
++	    nf_reject6_fill_skb_dst(skb_in) < 0)
+ 		return;
+ 
+ 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
+diff --git a/net/netfilter/nft_reject_inet.c b/net/netfilter/nft_reject_inet.c
+index 115aa446f6d5..554caf967baa 100644
+--- a/net/netfilter/nft_reject_inet.c
++++ b/net/netfilter/nft_reject_inet.c
+@@ -60,6 +60,18 @@ static void nft_reject_inet_eval(const struct nft_expr *expr,
+ 	regs->verdict.code = NF_DROP;
+ }
+ 
++static int nft_reject_inet_validate(const struct nft_ctx *ctx,
++				    const struct nft_expr *expr,
++				    const struct nft_data **data)
++{
++	return nft_chain_validate_hooks(ctx->chain,
++					(1 << NF_INET_LOCAL_IN) |
++					(1 << NF_INET_FORWARD) |
++					(1 << NF_INET_LOCAL_OUT) |
++					(1 << NF_INET_PRE_ROUTING) |
++					(1 << NF_INET_INGRESS));
++}
 +
- 		ret = get_user(ch, ubuf++);
- 		if (ret)
--			goto out;
-+			return ret;
- 		read++;
- 		cnt--;
- 	}
-@@ -1667,15 +1665,11 @@ int trace_get_user(struct trace_parser *
- 		/* Make sure the parsed string always terminates with '\0'. */
- 		parser->buffer[parser->idx] = 0;
- 	} else {
--		ret = -EINVAL;
--		goto out;
-+		return -EINVAL;
- 	}
+ static struct nft_expr_type nft_reject_inet_type;
+ static const struct nft_expr_ops nft_reject_inet_ops = {
+ 	.type		= &nft_reject_inet_type,
+@@ -67,7 +79,7 @@ static const struct nft_expr_ops nft_reject_inet_ops = {
+ 	.eval		= nft_reject_inet_eval,
+ 	.init		= nft_reject_init,
+ 	.dump		= nft_reject_dump,
+-	.validate	= nft_reject_validate,
++	.validate	= nft_reject_inet_validate,
+ };
  
- 	*ppos += read;
--	ret = read;
--
--out:
--	return ret;
-+	return read;
- }
- 
- /* TODO add a seq_buf_to_buffer() */
-@@ -2139,10 +2133,10 @@ int __init register_tracer(struct tracer
- 	mutex_unlock(&trace_types_lock);
- 
- 	if (ret || !default_bootup_tracer)
--		goto out_unlock;
-+		return ret;
- 
- 	if (strncmp(default_bootup_tracer, type->name, MAX_TRACER_SIZE))
--		goto out_unlock;
-+		return 0;
- 
- 	printk(KERN_INFO "Starting tracer '%s'\n", type->name);
- 	/* Do we want this tracer to start on bootup? */
-@@ -2154,8 +2148,7 @@ int __init register_tracer(struct tracer
- 	/* disable other selftests, since this will break it. */
- 	disable_tracing_selftest("running a tracer");
- 
-- out_unlock:
--	return ret;
-+	return 0;
- }
- 
- static void tracing_reset_cpu(struct array_buffer *buf, int cpu)
-@@ -8240,11 +8233,10 @@ ftrace_trace_snapshot_callback(struct tr
-  out_reg:
- 	ret = tracing_alloc_snapshot_instance(tr);
- 	if (ret < 0)
--		goto out;
-+		return ret;
- 
- 	ret = register_ftrace_function_probe(glob, tr, ops, count);
- 
-- out:
- 	return ret < 0 ? ret : 0;
- }
- 
-@@ -9746,7 +9738,7 @@ __init static int tracer_alloc_buffers(v
- 	BUILD_BUG_ON(TRACE_ITER_LAST_BIT > TRACE_FLAGS_MAX_SIZE);
- 
- 	if (!alloc_cpumask_var(&tracing_buffer_mask, GFP_KERNEL))
--		goto out;
-+		return -ENOMEM;
- 
- 	if (!alloc_cpumask_var(&global_trace.tracing_cpumask, GFP_KERNEL))
- 		goto out_free_buffer_mask;
-@@ -9857,7 +9849,6 @@ out_free_cpumask:
- 	free_cpumask_var(global_trace.tracing_cpumask);
- out_free_buffer_mask:
- 	free_cpumask_var(tracing_buffer_mask);
--out:
- 	return ret;
- }
- 
+ static struct nft_expr_type nft_reject_inet_type __read_mostly = {
+-- 
+2.50.1
+
 
 
