@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DD92BDC3B;
-	Tue, 26 Aug 2025 11:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6A8340DAE;
+	Tue, 26 Aug 2025 11:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207815; cv=none; b=OXxHSy0Q/3r46Ke5vemsZ0YYqvAbafaxRiEspnOVq/tCZgNPWYU0Zv8D5PjGGofJNCccIpB3QzxzIHH1JGkyb9WVXT9HTN2AiY9XULFL26aZJouGsx7f2zYNyMC9KzPV51UFfCcLqWOQhnpFmwrt750Bt8ELXxb6vmLoss3UzlM=
+	t=1756207818; cv=none; b=m8J3xUayZ13u5szehN9ppYUV0+Gd4pYS+D9jH57vsRCSkZ6zuaBYQMstjHcrEqCoj4Xzq08/gEGImw1CzxFj4iheTuuglczdEM84nFI+FtPpqRiJ/+6D/WTmOEEfTiKdn7T0H6nRVBlpctDt6C0HS3o6qr2EipnASWUI1V0gSQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207815; c=relaxed/simple;
-	bh=qZ8cNq5y2K09BLxyvebjhct7sNS8HeVcwJQssQ/bJz4=;
+	s=arc-20240116; t=1756207818; c=relaxed/simple;
+	bh=qf79HUoOgwzwCNMvRLcWl3iSfHZ3kHMw1gESj4+PmNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGKQGpBpxYbZfOrzAhS7TZ3XT73yMLDfgDcBcRgOkXeuA4Sppd9ocCfgyjlJJOG7yQPzUpixhDIcj2tFTNKDmE54qactPX7Uftm7KWYi0bsWCswIfOaRzcrJJMJGsv9+MklQEgLZ7ciZgsq/N22ddhu2LJPXs31iCs99lo/szTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gs2uOl4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VtKApwhZDjMvqkdMH098qFD4pTYdX2fIqNxwMgLlqssTxcJlE+rwwbCJFW0nV6zkUs+mLZdQe2HL2rDz9kPltboXbBjI0+zWRnx1upUzE/s96+zA+cWJ0NnzHdWicRaTfJ+PcxOCcgEP5gnASgvIvYsxnWRspHhhbuCLsNSx+vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9WC6JK0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gs2uOl4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA56C4CEF1;
-	Tue, 26 Aug 2025 11:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9WC6JK0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C136C4CEF1;
+	Tue, 26 Aug 2025 11:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207815;
-	bh=qZ8cNq5y2K09BLxyvebjhct7sNS8HeVcwJQssQ/bJz4=;
+	s=korg; t=1756207817;
+	bh=qf79HUoOgwzwCNMvRLcWl3iSfHZ3kHMw1gESj4+PmNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gs2uOl4IwKR/J7cruVPk8jisL+3fRnKoUpundpCKB968CRpo8vqHEVwoQqed3hKiT
-	 kYCYNjMigIYIiv7ePeOcALuRlNPSRxoxK1+UFDd7Yivx3l8G+3uyfeNHCl2JX1ViL0
-	 m+3oiEifzinDV2acJQ+S15/A2NoXo0ITH1pPR2u0=
+	b=L9WC6JK0TxCYkkF9rAmvFCGYZjMJLojtxauxhhKXIYMybljA9bO2oq1jyRy0seBpW
+	 CjkdOtr8U4MWBhSG4k3ob4iCtToh1Fs3x5PdIdlQOF2FhDwguJCQUVje60beixGEs0
+	 JC/mzMWusvksGTqS5nexU3Hl9SnPc6vwp4D+VpJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7836a68852a10ec3d790@syzkaller.appspotmail.com,
-	NeilBrown <neil@brown.name>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.16 328/457] ovl: use I_MUTEX_PARENT when locking parent in ovl_create_temp()
-Date: Tue, 26 Aug 2025 13:10:12 +0200
-Message-ID: <20250826110945.451585411@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: [PATCH 6.16 329/457] PCI: dwc: Ensure that dw_pcie_wait_for_link() waits 100 ms after link up
+Date: Tue, 26 Aug 2025 13:10:13 +0200
+Message-ID: <20250826110945.474899014@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,46 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 5f1c8965e748c150d580a2ea8fbee1bd80d07a24 upstream.
+commit 80dc18a0cba8dea42614f021b20a04354b213d86 upstream.
 
-ovl_create_temp() treats "workdir" as a parent in which it creates an
-object so it should use I_MUTEX_PARENT.
+As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link speeds
+greater than 5.0 GT/s, software must wait a minimum of 100 ms after Link
+training completes before sending a Configuration Request.
 
-Prior to the commit identified below the lock was taken by the caller
-which sometimes used I_MUTEX_PARENT and sometimes used I_MUTEX_NORMAL.
-The use of I_MUTEX_NORMAL was incorrect but unfortunately copied into
-ovl_create_temp().
+Add this delay in dw_pcie_wait_for_link(), after the link is reported as
+up. The delay will only be performed in the success case where the link
+came up.
 
-Note to backporters: This patch only applies after the last Fixes given
-below (post v6.16).  To fix the bug in v6.7 and later the
-inode_lock() call in ovl_copy_up_workdir() needs to nest using
-I_MUTEX_PARENT.
+DWC glue drivers that have a link up IRQ (drivers that set
+use_linkup_irq = true) do not call dw_pcie_wait_for_link(), instead they
+perform this delay in their threaded link up IRQ handler.
 
-Link: https://lore.kernel.org/all/67a72070.050a0220.3d72c.0022.GAE@google.com/
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+7836a68852a10ec3d790@syzkaller.appspotmail.com
-Tested-by: syzbot+7836a68852a10ec3d790@syzkaller.appspotmail.com
-Fixes: c63e56a4a652 ("ovl: do not open/llseek lower file with upper sb_writers held")
-Fixes: d2c995581c7c ("ovl: Call ovl_create_temp() without lock held.")
-Signed-off-by: NeilBrown <neil@brown.name>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Link: https://patch.msgid.link/20250625102347.1205584-14-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-designware.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -779,7 +779,7 @@ static int ovl_copy_up_workdir(struct ov
- 		return err;
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -714,6 +714,14 @@ int dw_pcie_wait_for_link(struct dw_pcie
+ 		return -ETIMEDOUT;
+ 	}
  
- 	ovl_start_write(c->dentry);
--	inode_lock(wdir);
-+	inode_lock_nested(wdir, I_MUTEX_PARENT);
- 	temp = ovl_create_temp(ofs, c->workdir, &cattr);
- 	inode_unlock(wdir);
- 	ovl_end_write(c->dentry);
++	/*
++	 * As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link
++	 * speeds greater than 5.0 GT/s, software must wait a minimum of 100 ms
++	 * after Link training completes before sending a Configuration Request.
++	 */
++	if (pci->max_link_speed > 2)
++		msleep(PCIE_RESET_CONFIG_WAIT_MS);
++
+ 	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+ 	val = dw_pcie_readw_dbi(pci, offset + PCI_EXP_LNKSTA);
+ 
 
 
