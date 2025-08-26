@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C548341ABD;
-	Tue, 26 Aug 2025 14:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A5D3568F8;
+	Tue, 26 Aug 2025 14:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217522; cv=none; b=ZyUPDF25fxyU92H2VGr//mnuoV0mE0eqCuF8m8fMCa59H//4tUiyRxiys/6G8GUcVCJFxapAgUmicLrmEgIbImGY7k6EA3qJbx58P9vwke7gOvI9PTNZmQ1lkNFVjmwITBYA93zH+4Rtq13GXtNVhBR9y/l1kpeFpqGMWAlVYIY=
+	t=1756217524; cv=none; b=ai+71gxmizRH3bL2+xWZlAyePVgu/rVcnGFmW2owFbrp8aQ/dOcsgIfUtqaTYtWTA+CW4/DdtNMtTU0K8/8yft1azuZf2n6c7YxTEjNaC1v6+yeQ3f7rBIWCrjDal9dd0qQPnM4j+i0BK8ukVU5IosaIIqZvf6quk+QYxu63Tug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217522; c=relaxed/simple;
-	bh=ou1CpRk05wXi8bPjPZs1XGOac/+VcZc6m8T/jBFFhlM=;
+	s=arc-20240116; t=1756217524; c=relaxed/simple;
+	bh=k9KDNcDVmyEUUe/3ZinkO6u9leQxos2+50D0nLP32FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrvG9AzA1nXWbkxrez2SJZOxOR8vYLvctEijo1Zjfj9WCJz4XE9meVRtL+Rgfv4vgsjVZGvSvEM8RC5rQDnkRQikJqI7cLIibxGdbrnVEkOmpW2H96M+0Z9WGa6nLe9EdmR6YIl0ZF7r61RMaymg1KdxLJzsXBMjLxgkiUssX6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2FpaKKk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tqy0ffFIsDfJFJX3ff7NZBDMHQv4w6SHvmbU0d2vbbgcKQUwCg8X3vP4QA6a4lvok7TfgynXXlho9Bp7mAreWwtGEGOFYJEGmVZZonoQ+HDr3CQkRUUi2OEZEKcpB9Lwva8uEU9PjeBlMHzIJ2W3zTgZmlDvIt6oIUVpSm9LPPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axUP+D0M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2FpaKKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB9EC4CEF1;
-	Tue, 26 Aug 2025 14:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axUP+D0M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50229C4CEF1;
+	Tue, 26 Aug 2025 14:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217522;
-	bh=ou1CpRk05wXi8bPjPZs1XGOac/+VcZc6m8T/jBFFhlM=;
+	s=korg; t=1756217524;
+	bh=k9KDNcDVmyEUUe/3ZinkO6u9leQxos2+50D0nLP32FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2FpaKKkhZxnl6ZWpvo+0qhvgw/PjE88NhX0tiQ8xnG8kX4GFd9pCp8BKzmUCGPfl
-	 DiiDjbY8YyU8MYFtVdtK4BEdLH0voZi3ntVDoJtySJcTZ8a5lM0w7Hnc9VUHvdXiGI
-	 edh0xsFFuZ+VpmAqHILi1rVOkpFRuanORyP2rgNc=
+	b=axUP+D0MQLTmhL+t3/2fmPtes9ie44ma31ajB3rs3yfsc7GLrY7MNhxiPQ9KHpIyL
+	 lSrVtNIKKnDC6YEBEvrIjgwV50sJ3oOd/bQdOmeOQicwsIpdIjFVO96NXuIsYvC5bN
+	 UwR7mqOxdRz72JzPn+Ltn6Rix62pTIqda9Mc8mNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 167/523] pNFS/flexfiles: Avoid spurious layout returns in ff_layout_choose_ds_for_read
-Date: Tue, 26 Aug 2025 13:06:17 +0200
-Message-ID: <20250826110928.587889143@linuxfoundation.org>
+Subject: [PATCH 5.10 176/523] pptp: ensure minimal skb length in pptp_xmit()
+Date: Tue, 26 Aug 2025 13:06:26 +0200
+Message-ID: <20250826110928.800394014@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,43 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9bfffea3524b49d0268d01f8e7967f06c4d0a942 ]
+[ Upstream commit de9c4861fb42f0cd72da844c3c34f692d5895b7b ]
 
-The callers of ff_layout_choose_ds_for_read() should decide whether or
-not they want to return the layout on error. Sometimes, we may just want
-to retry from the beginning.
+Commit aabc6596ffb3 ("net: ppp: Add bound checking for skb data
+on ppp_sync_txmung") fixed ppp_sync_txmunge()
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS errors")
+We need a similar fix in pptp_xmit(), otherwise we might
+read uninit data as reported by syzbot.
+
+BUG: KMSAN: uninit-value in pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
+  pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
+  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2290 [inline]
+  ppp_input+0x1d6/0xe60 drivers/net/ppp/ppp_generic.c:2314
+  pppoe_rcv_core+0x1e8/0x760 drivers/net/ppp/pppoe.c:379
+  sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
+  __release_sock+0x1d3/0x330 net/core/sock.c:3213
+  release_sock+0x6b/0x270 net/core/sock.c:3767
+  pppoe_sendmsg+0x15d/0xcb0 drivers/net/ppp/pppoe.c:904
+  sock_sendmsg_nosec net/socket.c:712 [inline]
+  __sock_sendmsg+0x330/0x3d0 net/socket.c:727
+  ____sys_sendmsg+0x893/0xd80 net/socket.c:2566
+  ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
+  __sys_sendmmsg+0x2d9/0x7c0 net/socket.c:2709
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68887d86.a00a0220.b12ec.00cd.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Link: https://patch.msgid.link/20250729080207.1863408-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/ppp/pptp.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index f8962eaec87b..a053dd05057f 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -740,16 +740,12 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
- 	struct nfs4_ff_layout_segment *fls = FF_LAYOUT_LSEG(lseg);
- 	struct nfs4_ff_layout_mirror *mirror;
- 	struct nfs4_pnfs_ds *ds;
--	bool fail_return = false;
- 	u32 idx;
- 
- 	/* mirrors are initially sorted by efficiency */
- 	for (idx = start_idx; idx < fls->mirror_array_cnt; idx++) {
--		if (idx+1 == fls->mirror_array_cnt)
--			fail_return = !check_device;
+diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
+index 05a75b5a8b68..1b306562f916 100644
+--- a/drivers/net/ppp/pptp.c
++++ b/drivers/net/ppp/pptp.c
+@@ -159,9 +159,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ 	int len;
+ 	unsigned char *data;
+ 	__u32 seq_recv;
 -
- 		mirror = FF_LAYOUT_COMP(lseg, idx);
--		ds = nfs4_ff_layout_prepare_ds(lseg, mirror, fail_return);
-+		ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
- 		if (!ds)
- 			continue;
+-
+-	struct rtable *rt;
++	struct rtable *rt = NULL;
+ 	struct net_device *tdev;
+ 	struct iphdr  *iph;
+ 	int    max_headroom;
+@@ -179,16 +177,20 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
  
+ 	if (skb_headroom(skb) < max_headroom || skb_cloned(skb) || skb_shared(skb)) {
+ 		struct sk_buff *new_skb = skb_realloc_headroom(skb, max_headroom);
+-		if (!new_skb) {
+-			ip_rt_put(rt);
++
++		if (!new_skb)
+ 			goto tx_error;
+-		}
++
+ 		if (skb->sk)
+ 			skb_set_owner_w(new_skb, skb->sk);
+ 		consume_skb(skb);
+ 		skb = new_skb;
+ 	}
+ 
++	/* Ensure we can safely access protocol field and LCP code */
++	if (!pskb_may_pull(skb, 3))
++		goto tx_error;
++
+ 	data = skb->data;
+ 	islcp = ((data[0] << 8) + data[1]) == PPP_LCP && 1 <= data[2] && data[2] <= 7;
+ 
+@@ -262,6 +264,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ 	return 1;
+ 
+ tx_error:
++	ip_rt_put(rt);
+ 	kfree_skb(skb);
+ 	return 1;
+ }
 -- 
 2.39.5
 
