@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE071B87E8;
-	Tue, 26 Aug 2025 13:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D551B87E8;
+	Tue, 26 Aug 2025 13:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214841; cv=none; b=IUvwnVwXizq1IyKRuAkCbiPeaA1OSqbSh7KV4bIDRg4ci/WpAYvGf+cYcbIfD0L9TC3gCaCvRMWzDHWQ+0PLl4LqSndnVIixWxQ4I/3haT5aVjuzyxR3asrF9jsnMNlhomxQEfn94KLdD4Bnq6ve6vWcVyRx82mgjvikwsWgtKM=
+	t=1756214843; cv=none; b=ZIL1TDYQrrQILkx3fTV28g7qHuG87/6zzNmfSb542/iaFgdiH+fn76M29WiGaayLbjIXAxd200F4cw7Kvp0j0FC1L+N99k/axuYr/ETpeqHg3LjVMh6ef5J9ccriUFlQTeUJPYsF/OT2VMfM1n69pG0ZTcz2dLTbrSqBu0dxnqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214841; c=relaxed/simple;
-	bh=nS3boUq2Pn6FoDAYog0bwnczl/VLPN/smx04u5kYB5w=;
+	s=arc-20240116; t=1756214843; c=relaxed/simple;
+	bh=Xlwh5gH0hIHPNopa+81bkq2h0umSmxAuIPR7ZBZ9hjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WazhLblxPpte9MvdtAZjq1fmAskd2WmiKM4H6ggDFX2nNxeY3L2vobu9bP33LzT0+j47bhdeNyklfAWjZHUcvcVTg8lLu4UZG1AbjmqF/gi5aQwx5TePbS2AaqOl+BE0VOp3Q86X6H8ndIGVZWHva06m5h/2RgI2+eMJu8sBngI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKQO92C2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=he718KFe+1hDkS2LkQVrJDOJSkpiSEDs7zjZIiV8LV/VwpJPwQ8mkiOBO/FkNpWDhIpD2CZO3cGBN22dsPHIUhD7yCiXo4LjBYCpo0CAkCA71SznXmttRPPcP6KyFdnnEx433AWAgNVWuBp2dan5vLIG4QIsEAI05diXnyKKRao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLu6tpll; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKQO92C2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449F3C4CEF1;
-	Tue, 26 Aug 2025 13:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLu6tpll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E73C4CEF1;
+	Tue, 26 Aug 2025 13:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214840;
-	bh=nS3boUq2Pn6FoDAYog0bwnczl/VLPN/smx04u5kYB5w=;
+	s=korg; t=1756214843;
+	bh=Xlwh5gH0hIHPNopa+81bkq2h0umSmxAuIPR7ZBZ9hjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CKQO92C2tlQpRIvHLN1UCVmpyk1Qx4Q6vOVyibzRT71h+MAOGdSVI5OSERCp1Blrw
-	 48Z2tq3tDjG7DMtAQPTyX7higucntjlb79yETqnm0SFmn8cPYguS+uNv+FiltvD+M+
-	 iyG9t5daZcn5hV6DVl1MxAtvcRvBx9pLoQzYq3+g=
+	b=JLu6tpllzmxh5FnsF+PDW7FJmm9YYR6PgiEfaQk3mq+v1IzJYXpp+8UZ+5WYfmLXc
+	 wbu4RaZgF6bQUf3Wh+ABk2vM5/WBsXThzrhvOqEtOsK16ugRgtb4eDr5mfUV8FPEt2
+	 FE8HRwtZXtU11vMdGXkgyBjyINmf9IddmOHgjmtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 248/482] usb: typec: ucsi: Update power_supply on power role change
-Date: Tue, 26 Aug 2025 13:08:21 +0200
-Message-ID: <20250826110936.895443081@linuxfoundation.org>
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 283/482] ext4: dont try to clear the orphan_present feature block device is r/o
+Date: Tue, 26 Aug 2025 13:08:56 +0200
+Message-ID: <20250826110937.775768055@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,37 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 7616f006db07017ef5d4ae410fca99279aaca7aa upstream.
+commit c5e104a91e7b6fa12c1dc2d8bf84abb7ef9b89ad upstream.
 
-The current power direction of an USB-C port also influences the
-power_supply's online status, so a power role change should also update
-the power_supply.
+When the file system is frozen in preparation for taking an LVM
+snapshot, the journal is checkpointed and if the orphan_file feature
+is enabled, and the orphan file is empty, we clear the orphan_present
+feature flag.  But if there are pending inodes that need to be removed
+the orphan_present feature flag can't be cleared.
 
-Fixes an issue on some systems where plugging in a normal USB device in
-for the first time after a reboot will cause upower to erroneously
-consider the system to be connected to AC power.
+The problem comes if the block device is read-only.  In that case, we
+can't process the orphan inode list, so it is skipped in
+ext4_orphan_cleanup().  But then in ext4_mark_recovery_complete(),
+this results in the ext4 error "Orphan file not empty on read-only fs"
+firing and the file system mount is aborted.
 
-Cc: stable <stable@kernel.org>
-Fixes: 0e6371fbfba3 ("usb: typec: ucsi: Report power supply changes")
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250721-fix-ucsi-pwr-dir-notify-v1-1-e53d5340cb38@qtmlabs.xyz
+Fix this by clearing the needs_recovery flag in the block device is
+read-only.  We do this after the call to ext4_load_and_init-journal()
+since there are some error checks need to be done in case the journal
+needs to be replayed and the block device is read-only, or if the
+block device containing the externa journal is read-only, etc.
+
+Cc: stable@kernel.org
+Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1108271
+Cc: stable@vger.kernel.org
+Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/super.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -806,6 +806,7 @@ static void ucsi_handle_connector_change
- 
- 	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
- 		typec_set_pwr_role(con->port, role);
-+		ucsi_port_psy_changed(con);
- 
- 		/* Complete pending power role swap */
- 		if (!completion_done(&con->complete))
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5295,6 +5295,8 @@ static int __ext4_fill_super(struct fs_c
+ 		err = ext4_load_and_init_journal(sb, es, ctx);
+ 		if (err)
+ 			goto failed_mount3a;
++		if (bdev_read_only(sb->s_bdev))
++		    needs_recovery = 0;
+ 	} else if (test_opt(sb, NOLOAD) && !sb_rdonly(sb) &&
+ 		   ext4_has_feature_journal_needs_recovery(sb)) {
+ 		ext4_msg(sb, KERN_ERR, "required journal recovery "
 
 
