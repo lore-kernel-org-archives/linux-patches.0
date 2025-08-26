@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C0C35A28A;
-	Tue, 26 Aug 2025 14:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6087835E4EC;
+	Tue, 26 Aug 2025 14:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218728; cv=none; b=fLHaNdbVtT2NG3S0shTVXu+bK/RITZ4Jci76hvRhc8BF+8hwuHcD96FYwdPHCePS4PmQFA+6y8c53bS2ITdPNCdFobjGYnqVxxVeI2KODmXg+LOIHFE4iRFbc0ix+sBWO6n21xwb6zU+AXzLuEiDci/6G7EsV59MsaoaqME6xqg=
+	t=1756218731; cv=none; b=nP/nCYLQx67rbZyxtNEz00eWYIyxNZ2jTwUsVcmWaFAbZgfOVWiZNxsfs0La4zm/+9slVQQ0oIgi6U6nRZmy1KLmbx7fxF//TgmJuNTo54MaTji8u2R8BQJqXpGzrOuIJcDvIi0VGyUOrY8SQCNC3suBv4+VmUtoI/JrgcORhNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218728; c=relaxed/simple;
-	bh=R+y+uewviSNgkgIUDs24gt6Tk98aDQqLeAQEK+IsNKs=;
+	s=arc-20240116; t=1756218731; c=relaxed/simple;
+	bh=rWo3uozOukjiDTGfF1mQEu5Yu3rhDX7wopu3HjPbEBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UufXwBhLEVwqGrsUie4rdRDJ5oIFuu4wh7gP+rgo2RSaW34JRfI0WnF7Ww/kR6vtCnD5iM/PDQSQqJ+DsypT2tQsRpN6Dxoq6pz3eBagpQJBtIfOf4yHJ8JIdY2lExTl7bAcNChfsSidnSisE5rTY0bUeiYeArtBU++BGgNDcJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PC303Ybj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AdtYqjveUW+GBH2l/qLtilOpQKp9XRP03KYyyFSG3e/saY7gTm8uxvUdzWyAjvqsOER5qvrX3lTNN8gjyevveFzikUqe38KkFpK9moQfnHy3+LZ+6XEDueNycqJWsfRPt8d2+zXt8IuG9iUq+ffGs5ZQokM6XVzk0flimGaqWbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObbeAMdZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PC303Ybj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134F6C4CEF1;
-	Tue, 26 Aug 2025 14:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObbeAMdZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F4FC4CEF1;
+	Tue, 26 Aug 2025 14:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218728;
-	bh=R+y+uewviSNgkgIUDs24gt6Tk98aDQqLeAQEK+IsNKs=;
+	s=korg; t=1756218731;
+	bh=rWo3uozOukjiDTGfF1mQEu5Yu3rhDX7wopu3HjPbEBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PC303YbjIhhElNoYA8sZwYf9XoZ5Ubwx8hPkl/Q1wOOes8g+e3ri+KwlRb2fqlPej
-	 nsuTkxVO+HEMJ3Q4loaRNKEZspkL4tZ6fgGsykyfrVK8YvU4X1qo71mshwQbjUnWxW
-	 YUebOJ7uZ75yMFQyZC2EsrSWqnT6ofbOMVFZvDpk=
+	b=ObbeAMdZpBfrYbjGC4g7bywpAU6a5eQh5UMdUHpo3d1HmnOqNd0DvaUyGJL5n9QY7
+	 RlB21lemF+hfiWDKMVwO6WdknWrvT5Bz8vtZkXBT9t9flu1soKhwMW8WG22uqeiz9p
+	 tdPZHQNbLSH5hdumXOx2GecDzB2WhvmTwGdG3EXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 083/403] staging: nvec: Fix incorrect null termination of battery manufacturer
-Date: Tue, 26 Aug 2025 13:06:49 +0200
-Message-ID: <20250826110908.951298969@linuxfoundation.org>
+Subject: [PATCH 5.4 110/403] pinctrl: sunxi: Fix memory leak on krealloc failure
+Date: Tue, 26 Aug 2025 13:07:16 +0200
+Message-ID: <20250826110909.725497750@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,39 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit a8934352ba01081c51d2df428e9d540aae0e88b5 ]
+[ Upstream commit e3507c56cbb208d4f160942748c527ef6a528ba1 ]
 
-The battery manufacturer string was incorrectly null terminated using
-bat_model instead of bat_manu. This could result in an unintended
-write to the wrong field and potentially incorrect behavior.
+In sunxi_pctrl_dt_node_to_map(), when krealloc() fails to resize
+the pinctrl_map array, the function returns -ENOMEM directly
+without freeing the previously allocated *map buffer. This results
+in a memory leak of the original kmalloc_array allocation.
 
-fixe the issue by correctly null terminating the bat_manu string.
-
-Fixes: 32890b983086 ("Staging: initial version of the nvec driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20250719080755.3954373-1-alok.a.tiwari@oracle.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e11dee2e98f8 ("pinctrl: sunxi: Deal with configless pins")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Link: https://lore.kernel.org/20250620012708.16709-1-chenyuan_fl@163.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/nvec/nvec_power.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/sunxi/pinctrl-sunxi.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/nvec/nvec_power.c b/drivers/staging/nvec/nvec_power.c
-index 0e861c4bfcbf..590b801c5992 100644
---- a/drivers/staging/nvec/nvec_power.c
-+++ b/drivers/staging/nvec/nvec_power.c
-@@ -194,7 +194,7 @@ static int nvec_power_bat_notifier(struct notifier_block *nb,
- 		break;
- 	case MANUFACTURER:
- 		memcpy(power->bat_manu, &res->plc, res->length - 2);
--		power->bat_model[res->length - 2] = '\0';
-+		power->bat_manu[res->length - 2] = '\0';
- 		break;
- 	case MODEL:
- 		memcpy(power->bat_model, &res->plc, res->length - 2);
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+index 8c41f8b818b2..83775dd12cfa 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+@@ -327,6 +327,7 @@ static int sunxi_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	const char *function, *pin_prop;
+ 	const char *group;
+ 	int ret, npins, nmaps, configlen = 0, i = 0;
++	struct pinctrl_map *new_map;
+ 
+ 	*map = NULL;
+ 	*num_maps = 0;
+@@ -401,9 +402,13 @@ static int sunxi_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	 * We know have the number of maps we need, we can resize our
+ 	 * map array
+ 	 */
+-	*map = krealloc(*map, i * sizeof(struct pinctrl_map), GFP_KERNEL);
+-	if (!*map)
+-		return -ENOMEM;
++	new_map = krealloc(*map, i * sizeof(struct pinctrl_map), GFP_KERNEL);
++	if (!new_map) {
++		ret = -ENOMEM;
++		goto err_free_map;
++	}
++
++	*map = new_map;
+ 
+ 	return 0;
+ 
 -- 
 2.39.5
 
