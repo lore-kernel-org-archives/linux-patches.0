@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB248352FC2;
-	Tue, 26 Aug 2025 14:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D9B35CEB7;
+	Tue, 26 Aug 2025 14:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219427; cv=none; b=sBMXb87zfdvNwszbXfwSeOpRp6Wn4FNp7uKmbFNnGRzTKB2PA1zWx0Emk3Hp1K/HOcgyJYfOgpABk6TsINxIJrQ8dSgS/TV5jzErZrRCYhlrk52GpVApCMUJ9rRkBdJKc8oUp5PHqYH2IzmMm7c8Q0eX5rs4O+E4VLekICIIGfw=
+	t=1756219430; cv=none; b=ng/u39EH99lGzdv2noTvBUcilXcK1XRe6tMxrWcPSDrcIs0YGT/TcXeEIz0Y29wULSQobPjCKvUJymqGmDfNwcgrpWWu5wjh+mC+L+eVL94nEfiUZXL0O007xFPzMKGNLlDlpZ5ENN3PYnKEFcRO2D0ECso4HgnRrImHjnxreNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219427; c=relaxed/simple;
-	bh=sTYwLo+jVaKAq3PJB5BO2CTBQ1fbQLu9Z+ejsWG2cbY=;
+	s=arc-20240116; t=1756219430; c=relaxed/simple;
+	bh=WG8Wni87ldT3sV5IProCi1bLLCs5vzkBg9z5dj2XoF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzbctJUfdkstj4DwuhptVKrDUJL5HIm2aGLI4u4pjoy+L86sewkOXUoI1Ow6L3MrILdiYmf7qo5/kt58V1DUEQFhX8gxvi+VfMH9HsXSKlUdlr3CcEwOKUJaSyVMW/LwfbdzSl6FehxRxKX/iA44zQe/LVUIKlzqXLS/NFfKPpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOgL7l30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dRdumGAkvHcoVaLuHRf5l+dnh70aM+4F0H9XJrAPm0/3YSXpAaNF7nltaJcxlL5ZcUJlO0mD3BxddFcQ9fbMBmHUlHNBenSEQkPrDE8URQfU8qlJ8JQOLwXRiEJEDB0ZbLcxw9qguATRhpKRnhsJU7kUMDZmXUvIOzvdjQYgBNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIS8RQIg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOgL7l30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7D1C4CEF1;
-	Tue, 26 Aug 2025 14:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIS8RQIg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E91DC4CEF1;
+	Tue, 26 Aug 2025 14:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219427;
-	bh=sTYwLo+jVaKAq3PJB5BO2CTBQ1fbQLu9Z+ejsWG2cbY=;
+	s=korg; t=1756219430;
+	bh=WG8Wni87ldT3sV5IProCi1bLLCs5vzkBg9z5dj2XoF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOgL7l30vXyI2ceX7bcmGMkB7UEgJCRIOzxgExT03SKjv2FfEeURDJOD3UdubkRpH
-	 L9o6KSJ9RZ69TQbSiIJ4zw5QKdkeA1MgnN1f5NLNnuLuestNJSVTf8iJPkpdUojiRU
-	 5/47V+P2Ouyw2DwM2mB/PgPORq6Ly5Cjf62gnADM=
+	b=eIS8RQIgemXgALVfPH/t6cNTRpmOX+8M0GnNJak2Udumm7mFtbagyAleBhlHAc/1k
+	 xH5HaxFmcKIfgotfCgQcadHKjXlnz4YBd3HUafd4orYjR94K40hS5k20wTP99Ca7Gc
+	 BguMkjg+ebPNmFJoH1rkyjzg/rkm8TF3n/aAk1lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Subject: [PATCH 5.4 377/403] sch_qfq: make qfq_qlen_notify() idempotent
-Date: Tue, 26 Aug 2025 13:11:43 +0200
-Message-ID: <20250826110917.435503588@linuxfoundation.org>
+Subject: [PATCH 5.4 378/403] codel: remove sch->q.qlen check before qdisc_tree_reduce_backlog()
+Date: Tue, 26 Aug 2025 13:11:44 +0200
+Message-ID: <20250826110917.462248859@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -56,65 +56,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Cong Wang <xiyou.wangcong@gmail.com>
 
-commit 55f9eca4bfe30a15d8656f915922e8c98b7f0728 upstream.
+commit 342debc12183b51773b3345ba267e9263bdfaaef upstream.
 
-qfq_qlen_notify() always deletes its class from its active list
-with list_del_init() _and_ calls qfq_deactivate_agg() when the whole list
-becomes empty.
-
-To make it idempotent, just skip everything when it is not in the active
-list.
-
-Also change other list_del()'s to list_del_init() just to be extra safe.
+After making all ->qlen_notify() callbacks idempotent, now it is safe to
+remove the check of qlen!=0 from both fq_codel_dequeue() and
+codel_qdisc_dequeue().
 
 Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
 Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250403211033.166059-5-xiyou.wangcong@gmail.com
+Link: https://patch.msgid.link/20250403211636.166257-1-xiyou.wangcong@gmail.com
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_qfq.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/sched/sch_codel.c    |    5 +----
+ net/sched/sch_fq_codel.c |    6 ++----
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -348,7 +348,7 @@ static void qfq_deactivate_class(struct
- 	struct qfq_aggregate *agg = cl->agg;
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -95,10 +95,7 @@ static struct sk_buff *codel_qdisc_deque
+ 			    &q->stats, qdisc_pkt_len, codel_get_enqueue_time,
+ 			    drop_func, dequeue_func);
  
- 
--	list_del(&cl->alist); /* remove from RR queue of the aggregate */
-+	list_del_init(&cl->alist); /* remove from RR queue of the aggregate */
- 	if (list_empty(&agg->active)) /* agg is now inactive */
- 		qfq_deactivate_agg(q, agg);
- }
-@@ -482,6 +482,7 @@ static int qfq_change_class(struct Qdisc
- 
- 	cl->common.classid = classid;
- 	cl->deficit = lmax;
-+	INIT_LIST_HEAD(&cl->alist);
- 
- 	cl->qdisc = qdisc_create_dflt(sch->dev_queue, &pfifo_qdisc_ops,
- 				      classid, NULL);
-@@ -1001,7 +1002,7 @@ static struct sk_buff *agg_dequeue(struc
- 	cl->deficit -= (int) len;
- 
- 	if (cl->qdisc->q.qlen == 0) /* no more packets, remove from list */
--		list_del(&cl->alist);
-+		list_del_init(&cl->alist);
- 	else if (cl->deficit < qdisc_pkt_len(cl->qdisc->ops->peek(cl->qdisc))) {
- 		cl->deficit += agg->lmax;
- 		list_move_tail(&cl->alist, &agg->active);
-@@ -1433,6 +1434,8 @@ static void qfq_qlen_notify(struct Qdisc
- 	struct qfq_sched *q = qdisc_priv(sch);
- 	struct qfq_class *cl = (struct qfq_class *)arg;
- 
-+	if (list_empty(&cl->alist))
-+		return;
- 	qfq_deactivate_class(q, cl);
- }
- 
+-	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
+-	 * or HTB crashes. Defer it for next round.
+-	 */
+-	if (q->stats.drop_count && sch->q.qlen) {
++	if (q->stats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->stats.drop_count, q->stats.drop_len);
+ 		q->stats.drop_count = 0;
+ 		q->stats.drop_len = 0;
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -315,10 +315,8 @@ begin:
+ 	}
+ 	qdisc_bstats_update(sch, skb);
+ 	flow->deficit -= qdisc_pkt_len(skb);
+-	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
+-	 * or HTB crashes. Defer it for next round.
+-	 */
+-	if (q->cstats.drop_count && sch->q.qlen) {
++
++	if (q->cstats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->cstats.drop_count,
+ 					  q->cstats.drop_len);
+ 		q->cstats.drop_count = 0;
 
 
