@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E771F2FDC44;
-	Tue, 26 Aug 2025 13:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9012E30146A;
+	Tue, 26 Aug 2025 13:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216221; cv=none; b=ssbs5SVZgvgXyVQsvR9MGOe+salKT8FF2B2FVQB4jncCbp7xe/H/bI+bmQB+kQ77TU6gMRCJzqsIw1jkMTj7ZPsL4Ex71vrU8FVamJ4yswfK7IkZRQyA17ytdZTusijhcvLYVYEdeQM0uqYHdyA7bc7LNfFKDhgtuWV0CsB6z7Y=
+	t=1756216223; cv=none; b=QMO9e/aSc73L5NsV8f+NOkksfCTeFpxwKCE9441XXEZH9yp5qgS3WZC7BGubHBDqfewsdvPfMywl1K2lDCHk201DUGjKEnj9fM+tYSIFxUd3zDLw4qxJkj4VqU3gfI0gUrGV+mWjvs3sak8Nr5lSTk+mCevVw3Lh24cu6pSd+U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216221; c=relaxed/simple;
-	bh=8ktEa3Gd25hQlWA7ZbnLUyM9JVCPiGnqBfRjKXNMk2Y=;
+	s=arc-20240116; t=1756216223; c=relaxed/simple;
+	bh=YUlF677zbDRk7Ye0C4XNk30QvBbjc1CpYXkitdWsAhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cd3LUqEKevI0NWt+vf6mL+2zKEJU5TcgJhm16Da5kbBjqcss3oSljPuY45ZjDZSNYuHqN60RrWrM8DcSQWxWf8tk01N/hmfaTyE52OBhM4N04ix/cXKzH6zl3uR8koGwVu3zMOHxxKySG14VZflO4wKzPez1AfGa909weu4qLbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaxEioqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mg/LddR6gpH6Q7ShfFoCvO5HLpdpAFkESYZgRh6zwIKafBE0bCHOf+R3JyFYUbCl2nGpicRh57UVupqPjYonexZLf6ALjXdvmP8At30JNNBNKnFnBmIT/bPHljNc+hg90lRZg6qpMc3UBU9wayC51XcLwHfXPpGrxlmMiqE4Da8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UCkz/Jm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaxEioqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7939AC4CEF1;
-	Tue, 26 Aug 2025 13:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UCkz/Jm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B614C4CEF1;
+	Tue, 26 Aug 2025 13:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216220;
-	bh=8ktEa3Gd25hQlWA7ZbnLUyM9JVCPiGnqBfRjKXNMk2Y=;
+	s=korg; t=1756216223;
+	bh=YUlF677zbDRk7Ye0C4XNk30QvBbjc1CpYXkitdWsAhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HaxEioqH4ihLbrx1QDoZlOY8gBHjyjDnbh4g4RLZxwTKanS48yKxJelWqOcUC9/Cc
-	 sIdGo9zmDYqvpYoqCtWzmyV7Kxb9sydnUj6kPik42h4wpXmDYFqw+co4c65EBrM1Sa
-	 A2tWY/wFtSYtQjIxDwts1NBwn+DGQujadPXwC3oI=
+	b=0UCkz/JmVCXwUJG3U0IWYhRJXNqkq3fKAdlashiQaEI6xdIpEjW4xPI+BZBxMdIqd
+	 Q9mvWdtnPLyBp7AVXi9B85xESG7sRfLLo5BGFrgQAQvY8octzOu1iD0tv9liL8K8YY
+	 MbuZ6I2UPaCc2O4ndiVhhhOwwMMv3Z2Imsms3MUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 328/644] usb: core: usb_submit_urb: downgrade type check
-Date: Tue, 26 Aug 2025 13:06:59 +0200
-Message-ID: <20250826110954.514251761@linuxfoundation.org>
+Subject: [PATCH 5.15 329/644] pm: cpupower: Fix the snapshot-order of tsc,mperf, clock in mperf_stop()
+Date: Tue, 26 Aug 2025 13:07:00 +0200
+Message-ID: <20250826110954.539404498@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,38 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 503bbde34cc3dd2acd231f277ba70c3f9ed22e59 ]
+[ Upstream commit cda7ac8ce7de84cf32a3871ba5f318aa3b79381e ]
 
-Checking for the endpoint type is no reason for a WARN, as that can
-cause a reboot. A driver not checking the endpoint type must not cause a
-reboot, as there is just no point in this.  We cannot prevent a device
-from doing something incorrect as a reaction to a transfer. Hence
-warning for a mere assumption being wrong is not sensible.
+In the function mperf_start(), mperf_monitor snapshots the time, tsc
+and finally the aperf,mperf MSRs. However, this order of snapshotting
+in is reversed in mperf_stop(). As a result, the C0 residency (which
+is computed as delta_mperf * 100 / delta_tsc) is under-reported on
+CPUs that is 100% busy.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250612122149.2559724-1-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by snapshotting time, tsc and then aperf,mperf in
+mperf_stop() in the same order as in mperf_start().
+
+Link: https://lore.kernel.org/r/20250612122355.19629-2-gautham.shenoy@amd.com
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/urb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/power/cpupower/utils/idle_monitor/mperf_monitor.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/core/urb.c b/drivers/usb/core/urb.c
-index 33d62d7e3929..201f8519d9d6 100644
---- a/drivers/usb/core/urb.c
-+++ b/drivers/usb/core/urb.c
-@@ -499,7 +499,7 @@ int usb_submit_urb(struct urb *urb, gfp_t mem_flags)
+diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+index 08a399b0be28..6ab9139f16af 100644
+--- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
++++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+@@ -240,9 +240,9 @@ static int mperf_stop(void)
+ 	int cpu;
  
- 	/* Check that the pipe's type matches the endpoint's type */
- 	if (usb_pipe_type_check(urb->dev, urb->pipe))
--		dev_WARN(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
-+		dev_warn_once(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
- 			usb_pipetype(urb->pipe), pipetypes[xfertype]);
+ 	for (cpu = 0; cpu < cpu_count; cpu++) {
+-		mperf_measure_stats(cpu);
+-		mperf_get_tsc(&tsc_at_measure_end[cpu]);
+ 		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
++		mperf_get_tsc(&tsc_at_measure_end[cpu]);
++		mperf_measure_stats(cpu);
+ 	}
  
- 	/* Check against a simple/standard policy */
+ 	return 0;
 -- 
 2.39.5
 
