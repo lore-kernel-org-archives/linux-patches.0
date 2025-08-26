@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BF2195FE8;
-	Tue, 26 Aug 2025 13:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68922101F2;
+	Tue, 26 Aug 2025 13:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213240; cv=none; b=p6orAg20Jj6Qvlw5FctaP4dHqQrGdBvQcIVWnzaJTkudWdFYVQl4F/BSG8I/JO+YeY0w0PXwhw8jh0Au8Dmhf5VZciA6Dz0xUAmSX63I01pHrrMu2xpKoDsf6oK25C5eIubT8Q0k2bmm5tq3u3LQMbCVdzqyomaY79OMA8mdQV8=
+	t=1756213243; cv=none; b=tZd+FweIgENBxtYZd13a+9zmhG9I+0lJoQWrAm11DyO6bKHsby9CnJDVR4DOTDbaEJ/dUgW4XO7QWM65E2P2TFv4Qyt1dDmNkj8ks0s5NtHZq1mIies0NvCSlUOlAcrJdh7lKvpRVKtgmKQrdZsrRzeNd3SOyoYbSSBw9bod+3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213240; c=relaxed/simple;
-	bh=yAnHOfRxjxc939EedaK8Pixwn3yHDCH3HU4NsOm5s+E=;
+	s=arc-20240116; t=1756213243; c=relaxed/simple;
+	bh=yn0zCl9RecvZXRUvCIHmjpdH2hE8bABn9iwkIQHSoQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMTnZwF4fkhNEPDQQoPqOD1h/k3jO3R2zaYIZumsmIoRwHfZjIjUDNrPSij0jJ6BFVNgvdbGOfdN07zlyG5bWTXiP/HB5BhYDtXlihRCYywVcUD4eDvV7hGnGf5qVu4HIpIGERXvbiKK9OIMb7aGcot675JZWFol4JJLjMM3Lus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqTIIEfr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g53VfLqd7u/BJt1m4AGI+ozvNePzUx+0HDMu8Mel2SXt9JzYKsERRLsUIfMkFUkMRIUBebadnsVFh7AwIdk+Ja3RJ7fTXFAsTZAmeBveZ3QUlttNljq1jMwy8sK5+yILNs9Y7SkMcXHuf92GS8lWbmzW1fcvmmczy6gbenDuoYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWZwZxMe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqTIIEfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F4BC4CEF4;
-	Tue, 26 Aug 2025 13:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWZwZxMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE2CC4CEF1;
+	Tue, 26 Aug 2025 13:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213240;
-	bh=yAnHOfRxjxc939EedaK8Pixwn3yHDCH3HU4NsOm5s+E=;
+	s=korg; t=1756213243;
+	bh=yn0zCl9RecvZXRUvCIHmjpdH2hE8bABn9iwkIQHSoQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqTIIEfrQlcQ9093vN6lh1O0VenQJZ46pHD22RkYKIDi/YO2S2jGcOz1vn9V3C7gr
-	 qLAw91yLJtU79TpIYnc3E+/FUO5edGuD9fyDXlAZbwTGVFWlZouhLTP4PWmc7I+bnN
-	 RPq/mlTvG7sJiy3ir/yuGhlGjO8E3o6gJc1nsAjc=
+	b=UWZwZxMe3yenXo+iF91XLTh8w/TH0BakVeb+hslJSpQgLU8UzYItPfeLM5xGdsOc/
+	 arnLUHq7JJrdmuviuatkXPe6zIBvGNmXTQuSK43fTMCgj7fEw+BvAKavu2Z1l7IXXI
+	 gzPXxNxRAez6NT+7MX4nh6271yX1vdi6HmvQv+YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suchit Karunakaran <suchitkarunakaran@gmail.com>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	chenchangcheng <chenchangcheng@kylinos.cn>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 274/587] kconfig: lxdialog: replace strcpy() with strncpy() in inputbox.c
-Date: Tue, 26 Aug 2025 13:07:03 +0200
-Message-ID: <20250826110959.897587065@linuxfoundation.org>
+Subject: [PATCH 6.6 257/587] media: uvcvideo: Fix bandwidth issue for Alcor camera
+Date: Tue, 26 Aug 2025 13:06:46 +0200
+Message-ID: <20250826110959.470242022@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,39 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suchit Karunakaran <suchitkarunakaran@gmail.com>
+From: chenchangcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit 5ac726653a1029a2eccba93bbe59e01fc9725828 ]
+[ Upstream commit 9764401bf6f8a20eb11c2e78470f20fee91a9ea7 ]
 
-strcpy() performs no bounds checking and can lead to buffer overflows if
-the input string exceeds the destination buffer size. This patch replaces
-it with strncpy(), and null terminates the input string.
+Some broken device return wrong dwMaxPayloadTransferSize fields as
+follows:
 
-Signed-off-by: Suchit Karunakaran <suchitkarunakaran@gmail.com>
-Reviewed-by: Nicolas Schier <nicolas.schier@linux.dev>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+[  218.632537] uvcvideo: Device requested 2752512 B/frame bandwidth.
+[  218.632598] uvcvideo: No fast enough alt setting for requested bandwidth.
+
+When dwMaxPayloadTransferSize is greater than maxpsize, it will prevent
+the camera from starting. So use the bandwidth of maxpsize.
+
+Signed-off-by: chenchangcheng <chenchangcheng@kylinos.cn>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250510061803.811433-1-ccc194101@163.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/lxdialog/inputbox.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/scripts/kconfig/lxdialog/inputbox.c b/scripts/kconfig/lxdialog/inputbox.c
-index 1dcfb288ee63..327b60cdb8da 100644
---- a/scripts/kconfig/lxdialog/inputbox.c
-+++ b/scripts/kconfig/lxdialog/inputbox.c
-@@ -39,8 +39,10 @@ int dialog_inputbox(const char *title, const char *prompt, int height, int width
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index 9572fdfe74f2..83abca42c5f1 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -258,6 +258,15 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
  
- 	if (!init)
- 		instr[0] = '\0';
--	else
--		strcpy(instr, init);
-+	else {
-+		strncpy(instr, init, sizeof(dialog_input_result) - 1);
-+		instr[sizeof(dialog_input_result) - 1] = '\0';
+ 		ctrl->dwMaxPayloadTransferSize = bandwidth;
+ 	}
++
++	if (stream->intf->num_altsetting > 1 &&
++	    ctrl->dwMaxPayloadTransferSize > stream->maxpsize) {
++		dev_warn_ratelimited(&stream->intf->dev,
++				     "UVC non compliance: the max payload transmission size (%u) exceeds the size of the ep max packet (%u). Using the max size.\n",
++				     ctrl->dwMaxPayloadTransferSize,
++				     stream->maxpsize);
++		ctrl->dwMaxPayloadTransferSize = stream->maxpsize;
 +	}
+ }
  
- do_resize:
- 	if (getmaxy(stdscr) <= (height - INPUTBOX_HEIGTH_MIN))
+ static size_t uvc_video_ctrl_size(struct uvc_streaming *stream)
 -- 
 2.39.5
 
