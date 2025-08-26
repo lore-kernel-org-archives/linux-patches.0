@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EBB352067;
-	Tue, 26 Aug 2025 14:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867302FFDEB;
+	Tue, 26 Aug 2025 14:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217638; cv=none; b=KW5xWirvFCXMAFOlCQVobSV74n9zgbh48pAhWa/EI+y2lb8wu2M31KmnOrwAA8GVQjfaXl4JOJymeiK07iOIK1UvT5hX7XVkMBY3aXmmFgmfiXVMcHvJ1yN/r4PW2CAN1oWN46CzhX8MJ5rTOJta/aOr+I6zRobWrp8f5IMgxow=
+	t=1756217640; cv=none; b=nsIiVc2R/+LWcyHXrGmpNu+rLt4El4StZ5Nl2w0iQjSs5clUuLPZ+7ppYOIB9KZJ+Ec8gAykFIZ8skXMml0yikBRRZFNuhVu+83nvCllw3ARNATS1jMxakzRqlEuQ5kAqXnAVX6spYYHPdO0zSUQ36htkx0rzyVyo5R8gQb0H9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217638; c=relaxed/simple;
-	bh=64ODnQjZBbRtoG8DlDXUpFJsIvwVLkRH7eI1Aza1r/E=;
+	s=arc-20240116; t=1756217640; c=relaxed/simple;
+	bh=QbzpfgI4qYbHQpy25vVQWZnHnrQ92hqj+48j1avSg8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4dU8Mqzl8ZROvVCw+vQ0hd3FDI/O80uNi/rdCgvW6C5aJAR5ItlWpMDLtrvmItxlQudV44Bq0kkL1nDrW6wLAPPPyey7xIBfNoMeReXrqk79owX+YYA3RhDHqVhrRQima+daz2eshWW2Unb0Jz98tDb5avuKgYwtNS6hyc58HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kj7KNJo8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fdSsEw3BrOnf/DwgH77lMEU7mag4VIOoQQKkTCYeYm3yzo5TudGamYlEucAIv5SkH3hVModAsFak9U4C36Qpk86hbN8PCHqxDb2B6W3dPggA8S8oQcx2C3TysAhqTDgTs9yXePCk4fiKbKGMCvuoYkO6icdFiEX6u3Hzz5F3cEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIn1nIIq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kj7KNJo8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A05C113CF;
-	Tue, 26 Aug 2025 14:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIn1nIIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19232C113CF;
+	Tue, 26 Aug 2025 14:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217637;
-	bh=64ODnQjZBbRtoG8DlDXUpFJsIvwVLkRH7eI1Aza1r/E=;
+	s=korg; t=1756217640;
+	bh=QbzpfgI4qYbHQpy25vVQWZnHnrQ92hqj+48j1avSg8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kj7KNJo85eUH/Eug8UdDqIHJHcxsg5w9UaDzBJf/nu8/n4vROSgBKC6TUlZGLix2c
-	 VXsAQ0qNcujSm4bWbs40Dc5n3hRwJIjuq9knxb0kKU2KgDKP/yBAVjFJdb26qZluqE
-	 QGA7LfvCmAWZ2UhTLhCOePrdvOyA6RzqtH2K3VLU=
+	b=RIn1nIIqsS1cWNLoopmAgX7vAFjbcQcwmPx0COl3XXoiDvvZfD4xjQtQoS74LzTmf
+	 oMDDHDQ4wyY38QYq/KSpek0D7DoMcD3bA8TRcTEiBb9dCP9ne7gizCFkK1lO6SW0fk
+	 GoCwkV8ulN5Vs0AYadK1v1EdYEqxXrNRVq1coK+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 219/523] ata: libata-sata: Disallow changing LPM state if not supported
-Date: Tue, 26 Aug 2025 13:07:09 +0200
-Message-ID: <20250826110929.862581334@linuxfoundation.org>
+	Yevhen Kondrashyn <e.kondrashyn@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 202/523] Documentation: ACPI: Fix parent device references
+Date: Tue, 26 Aug 2025 13:06:52 +0200
+Message-ID: <20250826110929.430614857@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,42 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 413e800cadbf67550d76c77c230b2ecd96bce83a ]
+commit e65cb011349e653ded541dddd6469c2ca813edcf upstream.
 
-Modify ata_scsi_lpm_store() to return an error if a user attempts to set
-a link power management policy for a port that does not support LPM,
-that is, ports flagged with ATA_FLAG_NO_LPM.
+The _CRS resources in many cases want to have ResourceSource field
+to be a type of ACPI String. This means that to compile properly
+we need to enclosure the name path into double quotes. This will
+in practice defer the interpretation to a run-time stage, However,
+this may be interpreted differently on different OSes and ACPI
+interpreter implementations. In particular ACPICA might not correctly
+recognize the leading '^' (caret) character and will not resolve
+the relative name path properly. On top of that, this piece may be
+used in SSDTs which are loaded after the DSDT and on itself may also
+not resolve relative name paths outside of their own scopes.
+With this all said, fix documentation to use fully-qualified name
+paths always to avoid any misinterpretations, which is proven to
+work.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://lore.kernel.org/r/20250701125321.69496-6-dlemoal@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8eb5c87a92c0 ("i2c: add ACPI support for I2C mux ports")
+Reported-by: Yevhen Kondrashyn <e.kondrashyn@gmail.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20250710170225.961303-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-sata.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/firmware-guide/acpi/i2c-muxes.rst |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-index 45656067c547..d5c97dba2dd4 100644
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -815,6 +815,11 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
+--- a/Documentation/firmware-guide/acpi/i2c-muxes.rst
++++ b/Documentation/firmware-guide/acpi/i2c-muxes.rst
+@@ -14,7 +14,7 @@ Consider this topology::
+     |      |   | 0x70 |--CH01--> i2c client B (0x50)
+     +------+   +------+
  
- 	spin_lock_irqsave(ap->lock, flags);
+-which corresponds to the following ASL::
++which corresponds to the following ASL (in the scope of \_SB)::
  
-+	if (ap->flags & ATA_FLAG_NO_LPM) {
-+		count = -EOPNOTSUPP;
-+		goto out_unlock;
-+	}
-+
- 	ata_for_each_link(link, ap, EDGE) {
- 		ata_for_each_dev(dev, &ap->link, ENABLED) {
- 			if (dev->horkage & ATA_HORKAGE_NOLPM) {
--- 
-2.39.5
-
+     Device (SMB1)
+     {
+@@ -24,7 +24,7 @@ which corresponds to the following ASL::
+             Name (_HID, ...)
+             Name (_CRS, ResourceTemplate () {
+                 I2cSerialBus (0x70, ControllerInitiated, I2C_SPEED,
+-                            AddressingMode7Bit, "^SMB1", 0x00,
++                            AddressingMode7Bit, "\\_SB.SMB1", 0x00,
+                             ResourceConsumer,,)
+             }
+ 
+@@ -37,7 +37,7 @@ which corresponds to the following ASL::
+                     Name (_HID, ...)
+                     Name (_CRS, ResourceTemplate () {
+                         I2cSerialBus (0x50, ControllerInitiated, I2C_SPEED,
+-                                    AddressingMode7Bit, "^CH00", 0x00,
++                                    AddressingMode7Bit, "\\_SB.SMB1.CH00", 0x00,
+                                     ResourceConsumer,,)
+                     }
+                 }
+@@ -52,7 +52,7 @@ which corresponds to the following ASL::
+                     Name (_HID, ...)
+                     Name (_CRS, ResourceTemplate () {
+                         I2cSerialBus (0x50, ControllerInitiated, I2C_SPEED,
+-                                    AddressingMode7Bit, "^CH01", 0x00,
++                                    AddressingMode7Bit, "\\_SB.SMB1.CH01", 0x00,
+                                     ResourceConsumer,,)
+                     }
+                 }
 
 
