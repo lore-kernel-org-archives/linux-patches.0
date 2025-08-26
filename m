@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2850350851;
-	Tue, 26 Aug 2025 14:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F79B350D4D;
+	Tue, 26 Aug 2025 14:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219151; cv=none; b=tFwb+nEfvhfYNWTv+5A0mM/jtjaDqet8IWGXmTEfqQSC5I4f3I2gc/mjGNjip0W6phxWgqQcp2DPJstlj10qhLjYNH677roVhIhDgfRNnOUmvKKVpYvGX3ffHjS7UleyrQ4PNIu+FJuAwMAdhV/bJ70VnYRNjw57IBE74nR5uGA=
+	t=1756219154; cv=none; b=b0RkO+GrQx87QU7TGsyEHWK4ujspHQyK9gUH7b/E0dHby05ZR7HHoGW38JuHBaT7ube8qxodyVN+PJwulEbpT9ibbxjW9RvGy3EZ9EDnTvt7T67TdRUkdE4yzcJHTHe+nikFYpVvQdfTg26TLzeDWNs6xoWagzs8PXtGRtM4jk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219151; c=relaxed/simple;
-	bh=BwuEV/LUHjhNKK3UJTNbGAF/6HQ6CsrJ5VHtQSMb2Tg=;
+	s=arc-20240116; t=1756219154; c=relaxed/simple;
+	bh=tYGdkpdPsOaEneMUYRbASqaZpnKrzJngt7IjhF+GfCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AgqfDZoAiEh+YC0N490bulKT0jdMq0joT7wHPStN8K5n2TLuWG/hK8L4x2JTv3BC+SUEUE/tQoBVv2PueMLRiL1Bb3g13VXnyjV243MgO63i8BqVSLezh8Z+Wbs8O6cClnAXFzx7N8PmJJ81nWtJnCuq6YllW244AFdefLHyvgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Kp2DujO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SVw85jZMXBu7MxHfQdxBDGuLHCprOhQ1yLKJKXcRq2VSqln5mGDawFIaS2w2K7yDFWplwnXtVNlqnkOk5x++29DwdAz6O/N/YoeCwPgIxbV7eUm11C3offKEfiaS+m/H3Z67r3iEnH/N8JmJ1Mqax3/so4UfFykLntGjkZ8UgkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBn7CeTR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Kp2DujO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56478C4CEF1;
-	Tue, 26 Aug 2025 14:39:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBn7CeTR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28E6C113D0;
+	Tue, 26 Aug 2025 14:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219151;
-	bh=BwuEV/LUHjhNKK3UJTNbGAF/6HQ6CsrJ5VHtQSMb2Tg=;
+	s=korg; t=1756219154;
+	bh=tYGdkpdPsOaEneMUYRbASqaZpnKrzJngt7IjhF+GfCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Kp2DujOmVRY5+ndBVAeWW1PQ/YdYBU/t2qRXI5Yq525S7O4blBB7j8uS1DTahgnf
-	 lMtHGJ35LMO5Sf1e7qJSpYRa1sdeZEnlptlL4vu+8DZ36pSqGHoRLe3Ca3hK8oHPrr
-	 PF00/JgVmg8ltumx57wxVomdz7Kj9h9NywloNFXs=
+	b=kBn7CeTRpL7kE9Mz6ta017URXx/hb9KjmzQgjhqRpjv5kjvQuZ24sDWNnEfyPvZTW
+	 0t6S5th8kc0bS1Nzk7tMLYJTn2EcbTLYfWRWsALPPFv1cC84+kkZQ7Cum60KR48oI4
+	 LiK497eOB/OPKvh2844gOuDbDmjXYL6lAt2kiPA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jack Xiao <Jack.Xiao@amd.com>,
+	Likun Gao <Likun.Gao@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 272/403] scsi: lpfc: Remove redundant assignment to avoid memory leak
-Date: Tue, 26 Aug 2025 13:09:58 +0200
-Message-ID: <20250826110914.317869789@linuxfoundation.org>
+Subject: [PATCH 5.4 273/403] drm/amdgpu: fix incorrect vm flags to map bo
+Date: Tue, 26 Aug 2025 13:09:59 +0200
+Message-ID: <20250826110914.343656035@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,37 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Jack Xiao <Jack.Xiao@amd.com>
 
-[ Upstream commit eea6cafb5890db488fce1c69d05464214616d800 ]
+[ Upstream commit 040bc6d0e0e9c814c9c663f6f1544ebaff6824a8 ]
 
-Remove the redundant assignment if kzalloc() succeeds to avoid memory
-leak.
+It should use vm flags instead of pte flags
+to specify bo vm attributes.
 
-Fixes: bd2cdd5e400f ("scsi: lpfc: NVME Initiator: Add debugfs support")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://lore.kernel.org/r/20250801185202.42631-1-jiashengjiangcool@gmail.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 7946340fa389 ("drm/amdgpu: Move csa related code to separate file")
+Signed-off-by: Jack Xiao <Jack.Xiao@amd.com>
+Reviewed-by: Likun Gao <Likun.Gao@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b08425fa77ad2f305fe57a33dceb456be03b653f)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_debugfs.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
-index 291fccf02d45..f75431a948f3 100644
---- a/drivers/scsi/lpfc/lpfc_debugfs.c
-+++ b/drivers/scsi/lpfc/lpfc_debugfs.c
-@@ -5886,7 +5886,6 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
- 			}
- 			phba->nvmeio_trc_on = 1;
- 			phba->nvmeio_trc_output_idx = 0;
--			phba->nvmeio_trc = NULL;
- 		} else {
- nvmeio_off:
- 			phba->nvmeio_trc_size = 0;
--- 
-2.50.1
-
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+@@ -94,8 +94,8 @@ int amdgpu_map_static_csa(struct amdgpu_
+ 	}
+ 
+ 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
+-			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
+-			     AMDGPU_PTE_EXECUTABLE);
++			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
++			     AMDGPU_VM_PAGE_EXECUTABLE);
+ 
+ 	if (r) {
+ 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
 
 
