@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C285D31985C;
-	Tue, 26 Aug 2025 14:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839162AE7F;
+	Tue, 26 Aug 2025 14:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218033; cv=none; b=j0Zsv41DfQS5ZsxQDf0OqEAuFBGAGcC7L0euD2MUh/xtuc0H6mHX5fr6r/mUW1yMKEucsdR8ELY7Cnq4hHM61Mbd/MS65Cu1WT/CE7umQ6/b2MKxzZV0wbY8Qal06/1hUPObYi6KpI9JnZKVI9sKJ5WjJacq0wD0kuloOyzGx7c=
+	t=1756218036; cv=none; b=H65qMaFKfbZpwRBgBG99A2b2CxdMQ/hinKjZO3VSSuzdSc5fkcokpBVB3pYmE1dfc4kRKF2srkf20Gko1Z8PSqZ4+mP0hPX3oZpXC5OQ0JNwr5ETne0mmareH1WK++T7qYFjJl56EPfJbWxUdIcBEjWw7TPsdTdYlW3ep9p6fTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218033; c=relaxed/simple;
-	bh=tl416Ah0lDjYbk5M6fNQ0SRXampkSE2J6GyKlT0HPn4=;
+	s=arc-20240116; t=1756218036; c=relaxed/simple;
+	bh=4YSpal2R1eQmsg1En29N6SV28ybkWMDoM/doLkF0dCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OfM+p7jnv8FsuKdI65RsXInFp0EcCfXtAGgqYO9nA0oLxXfYZE5IQ/LLApmaV/B9luMJWn04mBy/q0dabTs5ysl30atFeICHyZ0kiK/sv8afNlBMaDQWTi7vFZwQ2WgWf60B4aziVJsOxUH0soV6Gbzm3kk1l8qMTBvbj3Phceo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzjMirnQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZetsScgLIFo98EAVrkK9qgToBl8p0AtyntnVDiE0ACkcPHZtPKWfz7IPZ3knXxKj0qLMl4gFa+Lbwn9OCNZ9BSJPu9JpMg3BlhzsKdgPRDO+Cc4GwZdiv4yx6zwYe5W2ravvxLB3fUbmnntn7UE4791eRn1KhPpEJxgUrIaKVao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9HoMX2l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzjMirnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5283DC4CEF1;
-	Tue, 26 Aug 2025 14:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9HoMX2l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F18C4CEF1;
+	Tue, 26 Aug 2025 14:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218033;
-	bh=tl416Ah0lDjYbk5M6fNQ0SRXampkSE2J6GyKlT0HPn4=;
+	s=korg; t=1756218036;
+	bh=4YSpal2R1eQmsg1En29N6SV28ybkWMDoM/doLkF0dCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FzjMirnQwaqiX0ztfWwt30GshnfLJtt+38lGNcNvzrBP0uSe8Ik9hNBsZI6g6XFTu
-	 Co1GHHtSw6Dfzywl1mfQ/qRQ+zblitqPDCnxuEanJ18lWy4YM/c5rULJ+l74fzUfJD
-	 qTnFdHubpFB4CVNhjoyGm6iWzYiEZOmivcAo9Wek=
+	b=m9HoMX2lGa3Rla96TPdpHkzrWA/GOYzrPNXbmSAKT82RtFtHLOoqCgM0FKIf9TH0x
+	 UGcyUezg46MuDoW/z6MbCZj0HyYATXD5CNgflM1r92rSgBFbWYns1ZsDhfeUpqG7Cc
+	 X9Yr09UTUUtEuBWTy6XRbqKWDLK7Bca7YIY7MBHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 5.10 367/523] zynq_fpga: use sgtable-based scatterlist wrappers
-Date: Tue, 26 Aug 2025 13:09:37 +0200
-Message-ID: <20250826110933.520441847@linuxfoundation.org>
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 338/523] ASoC: soc-dai.c: add missing flag check at snd_soc_pcm_dai_probe()
+Date: Tue, 26 Aug 2025 13:09:08 +0200
+Message-ID: <20250826110932.809360025@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,46 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit 37e00703228ab44d0aacc32a97809a4f6f58df1b upstream.
+[ Upstream commit 5c5a7521e9364a40fe2c1b67ab79991e3e9085df ]
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of statterlists related calls. dma_unmap_sg() function
-has to be called with the number of elements originally passed to the
-dma_map_sg() function, not the one returned in sgtable's nents.
+dai->probed is used at snd_soc_pcm_dai_probe/remove(),
+and used to call real remove() function only when it was probed.
 
-CC: stable@vger.kernel.org
-Fixes: 425902f5c8e3 ("fpga zynq: Use the scatterlist interface")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20250616120932.1090614-1-m.szyprowski@samsung.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	int snd_soc_pcm_dai_probe(...)
+	{
+		...
+		for_each_rtd_dais(rtd, i, dai) {
+			...
+
+			if (dai->driver->probe) {
+(A)				int ret = dai->driver->probe(dai);
+
+				if (ret < 0)
+					return soc_dai_ret(dai, ret);
+			}
+
+=>			dai->probed = 1;
+		}
+		...
+	}
+
+	int snd_soc_pcm_dai_remove(...)
+	{
+		...
+		for_each_rtd_dais(rtd, i, dai) {
+			...
+=>			if (dai->probed &&
+			    ...) {
+				...
+			}
+
+=>			dai->probed = 0;
+		}
+		...
+	}
+
+But on probe() case, we need to check dai->probed before calling
+real probe() function at (A), otherwise real probe() might be called
+multi times (but real remove() will be called only once).
+This patch checks it at probe().
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87wn3u64e6.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0e270f32975f ("ASoC: fsl_sai: replace regmap_write with regmap_update_bits")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/zynq-fpga.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/soc-dai.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/fpga/zynq-fpga.c
-+++ b/drivers/fpga/zynq-fpga.c
-@@ -406,7 +406,7 @@ static int zynq_fpga_ops_write(struct fp
- 	}
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index e2db2ad219b8..583b18d0f446 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -488,6 +488,9 @@ int snd_soc_pcm_dai_probe(struct snd_soc_pcm_runtime *rtd, int order)
+ 		if (dai->driver->probe_order != order)
+ 			continue;
  
- 	priv->dma_nelms =
--	    dma_map_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
-+	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
- 	if (priv->dma_nelms == 0) {
- 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
- 		return -ENOMEM;
-@@ -478,7 +478,7 @@ out_clk:
- 	clk_disable(priv->clk);
++		if (dai->probed)
++			continue;
++
+ 		if (dai->driver->probe) {
+ 			int ret = dai->driver->probe(dai);
  
- out_free:
--	dma_unmap_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
-+	dma_unmap_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
- 	return err;
- }
- 
+-- 
+2.50.1
+
 
 
