@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451811DAC95;
-	Tue, 26 Aug 2025 12:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB231E5718;
+	Tue, 26 Aug 2025 12:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212827; cv=none; b=H2BTpfSFmluaCTeUOIYHymE9YU09s26CrVMuIypnreeGLTMEebglaCH0EO4SPfBq6ag9Q8uvIFCMf+I0BO5yIW0/9uubQMow0oWuGQiEGVIvDKog2BmfXWFsZv/lkNGOOVg9WIuaJbmLhV+Iw1lM2f8lJretbW2ysHQW+p5foTQ=
+	t=1756212829; cv=none; b=erzZNYJPgiBuFRCUX1q02EHyG+URbnMyI6Qp3SK5U7JwcxZGRTa1YISD7eoBKDlWgCBYDCWAIwp4SKg4Vqt9l51YEycYDnQmai7WMfxYUGUjRPnlwWsJDNd9fZOvTezDq8DbizHmejVQvOsB8ZPHtWcI6n+sHEpmd6jsWoXNnno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212827; c=relaxed/simple;
-	bh=3ykhaF4IneAHc++dLfr6jVHmvQlaPWF0dp7eW5oV2Ew=;
+	s=arc-20240116; t=1756212829; c=relaxed/simple;
+	bh=FNHyEi10fpSX6LJVlgIrObT2IkcHnp1tvvDcGto4MAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJPbNNuDuayI9JKYvLEwJjaln8e9VFfrjtB1/kYdMIw64uPfzhEXxvBdu9sPgeUvkNf/gmp3r/SyE3Mi34s+6Ts26ESrHZMUQTOSFcatnWTO7EYtgHOADJTaSngsDzIBAsYxAjFy9XFfxbMlA8lE0XRuFBY8t0fCTTuXdguVahE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwS334xJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgsQXcuMDITXm/Tp2y8GTQB5MkHB0GLzGj5GU+Do2eho+DZrHdLLA7KxdKGVtY5SXLbkz0GrS2z5zjI6EpXXIcp1QkT/8l7nnXhkUsEGuCbXLLHlHJHJxSsmDWxzwQJHj8kCdy75PYRevxXkR/KdYtKz65td0lQ+LYnkLO8jdSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUDdJbO2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwS334xJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0B1C4CEF1;
-	Tue, 26 Aug 2025 12:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUDdJbO2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FBA6C4CEF1;
+	Tue, 26 Aug 2025 12:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212827;
-	bh=3ykhaF4IneAHc++dLfr6jVHmvQlaPWF0dp7eW5oV2Ew=;
+	s=korg; t=1756212829;
+	bh=FNHyEi10fpSX6LJVlgIrObT2IkcHnp1tvvDcGto4MAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gwS334xJ68jQwUVk82AZyr/nKp/zD+TyYXzRBRm9POymmon65/kwpjDttaCWGhmhJ
-	 kNmJxp8Aipx45x5nDKglLb07bawvSHwAwSEmYhI7JtKtr9Is4kBTIQ1uluv7gA9ilL
-	 7UXzcRrdKMCTKU6SWHaw6nV1Ur9zaVkEWfj/y4g0=
+	b=mUDdJbO2uTws4HWR4yCymCCF3wvyRJleqgcSeEa/GVOHf5H4sFbm+pxJ6ON5mv/7t
+	 Zd6/ksdXWX8WPbPc/BFeitad2W2hAYfrnghZSsIBD/FCK3of1KokTiI/l0I6vP7KKm
+	 wvKQaDJUYMoU2kRYHkKKcz/hBXWen2wFcm0ND0Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/587] usb: xhci: Avoid showing errors during surprise removal
-Date: Tue, 26 Aug 2025 13:03:59 +0200
-Message-ID: <20250826110955.223806841@linuxfoundation.org>
+Subject: [PATCH 6.6 117/587] char: misc: Fix improper and inaccurate error code returned by misc_init()
+Date: Tue, 26 Aug 2025 13:04:26 +0200
+Message-ID: <20250826110955.944808810@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,57 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 4b9c60e440525b729ac5f071e00bcee12e0a7e84 ]
+[ Upstream commit 0ef1fe4bc38673db72e39b700b29c50dfcc5a415 ]
 
-When a USB4 dock is unplugged from a system it won't respond to ring
-events. The PCI core handles the surprise removal event and notifies
-all PCI drivers. The XHCI PCI driver sets a flag that the device is
-being removed as well.
+misc_init() returns -EIO for __register_chrdev() invocation failure, but:
 
-When that flag is set don't show messages in the cleanup path for
-marking the controller dead.
+- -EIO is for I/O error normally, but __register_chrdev() does not do I/O.
+- -EIO can not cover various error codes returned by __register_chrdev().
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250717073107.488599-2-mathias.nyman@linux.intel.com
+Fix by returning error code of __register_chrdev().
+
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250620-fix_mischar-v1-3-6c2716bbf1fa@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/char/misc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index c6d89b51c678..2a74a47a1c76 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1338,12 +1338,15 @@ static void xhci_kill_endpoint_urbs(struct xhci_hcd *xhci,
-  */
- void xhci_hc_died(struct xhci_hcd *xhci)
- {
-+	bool notify;
- 	int i, j;
+diff --git a/drivers/char/misc.c b/drivers/char/misc.c
+index dda466f9181a..30178e20d962 100644
+--- a/drivers/char/misc.c
++++ b/drivers/char/misc.c
+@@ -314,8 +314,8 @@ static int __init misc_init(void)
+ 	if (err)
+ 		goto fail_remove;
  
- 	if (xhci->xhc_state & XHCI_STATE_DYING)
- 		return;
- 
--	xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
-+	notify = !(xhci->xhc_state & XHCI_STATE_REMOVING);
-+	if (notify)
-+		xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
- 	xhci->xhc_state |= XHCI_STATE_DYING;
- 
- 	xhci_cleanup_command_queue(xhci);
-@@ -1357,7 +1360,7 @@ void xhci_hc_died(struct xhci_hcd *xhci)
- 	}
- 
- 	/* inform usb core hc died if PCI remove isn't already handling it */
--	if (!(xhci->xhc_state & XHCI_STATE_REMOVING))
-+	if (notify)
- 		usb_hc_died(xhci_to_hcd(xhci));
- }
+-	err = -EIO;
+-	if (__register_chrdev(MISC_MAJOR, 0, MINORMASK + 1, "misc", &misc_fops))
++	err = __register_chrdev(MISC_MAJOR, 0, MINORMASK + 1, "misc", &misc_fops);
++	if (err < 0)
+ 		goto fail_printk;
+ 	return 0;
  
 -- 
 2.39.5
