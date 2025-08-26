@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9242520DD51;
-	Tue, 26 Aug 2025 14:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B327356906;
+	Tue, 26 Aug 2025 14:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218809; cv=none; b=njC5pQvQsIm//1pyTCEdz7zJ6nwbucNT+PTVhSichYp7rmQg2rQ25aQsDXroJdzPHfrddof8+/3hqMrCe2J84vtGMz+ZTQ40urGp+dt+26N9BL6wlp+M4oS5hG+9aZFk+Chrgss95Ugu/zO/hWtDBB3oKC4G62KURGhwHZMrv6g=
+	t=1756218812; cv=none; b=KG8TScMpywLxxqBOdUO2hFtWuhNh4JFF0F59xkkbOi/3B4onuBUEdEgj0Zl2G5/DmnxQvNLpr2gl6wMrHWdwWJ/6oE40eDEol15iNFnwlNhA1mECnyer+fGiFIeREf7kCZr/6hBcpsjU4WKy7aSdw7oAat8UGtyhahy+6L6SzPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218809; c=relaxed/simple;
-	bh=zKbpOFfVAaEraczKG0tcC9RxmgN8WLOxbA4jPbIlQyA=;
+	s=arc-20240116; t=1756218812; c=relaxed/simple;
+	bh=mzIR4N/pvl8NuhoT8iAm6ZJRrDMrjeXz8bLqHivyba8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssjNo/9oDrs3GccLle5ghnVlBVEQD3o7mgFwfpPl+LgC2sHEbzefj538QRe5wBdhT1sNSS4iPcu8TYSSfA813ZyCvW4C67q5+iEDhFS21MPzzivLihdS1ABP31GCiliB+OTuTtL7kVSIKIfPh27Ug+/t4id1s7LjjxTNr3XNwsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmkW8a+j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kvcChyaURpb1wChFUCGJgS8DixkxfJ5WiZgoNtfGmD0ieeQTV6BoqZuyB+MzkZ3T5KeXivord+PkHcMQzZq4/lEkX5YLTeVew/5Hfsr06f+1eaQMEqhKLgZfnIRszN/qCHhU1j/+B+qzRwRGBDiNch2bqn78B7N07fD+xfMCl/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XK7j2zJd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmkW8a+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EE0C113D0;
-	Tue, 26 Aug 2025 14:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XK7j2zJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9163C4CEF1;
+	Tue, 26 Aug 2025 14:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218809;
-	bh=zKbpOFfVAaEraczKG0tcC9RxmgN8WLOxbA4jPbIlQyA=;
+	s=korg; t=1756218812;
+	bh=mzIR4N/pvl8NuhoT8iAm6ZJRrDMrjeXz8bLqHivyba8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmkW8a+jCjbUiTivhi8vppQ9RYIgYDRCq4UZ7axnMm9y5dpZ8QpUTG+4L+XWnYwqR
-	 JdfuKbCL7iLgtbGNAig0f0AhPRm57LTEAJOOalQ8sx3VHwaSl+YB5XvngC+xQYPuJp
-	 PT3T2c2zKuMIMJhAWEyQLds02v/6O5MB0bNca2cY=
+	b=XK7j2zJdVkgmdwv27kI3YL31glwpCnLrqd0FCHSOQGRenX4Qnxj1zwpZCJGN4rqcc
+	 2qqOBBHlsPnQauXZ2kV6bSeZo7hjWleSzor4TZm6HELLULe/m+7Q4A7T0GSXpY2kLj
+	 efI4jWquw3Tp8oZm6lznDh9vyvPzZoYXhmNSdk2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 141/403] netpoll: prevent hanging NAPI when netcons gets enabled
-Date: Tue, 26 Aug 2025 13:07:47 +0200
-Message-ID: <20250826110910.652263331@linuxfoundation.org>
+Subject: [PATCH 5.4 142/403] pptp: ensure minimal skb length in pptp_xmit()
+Date: Tue, 26 Aug 2025 13:07:48 +0200
+Message-ID: <20250826110910.683150903@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,93 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2da4def0f487f24bbb0cece3bb2bcdcb918a0b72 ]
+[ Upstream commit de9c4861fb42f0cd72da844c3c34f692d5895b7b ]
 
-Paolo spotted hangs in NIPA running driver tests against virtio.
-The tests hang in virtnet_close() -> virtnet_napi_tx_disable().
+Commit aabc6596ffb3 ("net: ppp: Add bound checking for skb data
+on ppp_sync_txmung") fixed ppp_sync_txmunge()
 
-The problem is only reproducible if running multiple of our tests
-in sequence (I used TEST_PROGS="xdp.py ping.py netcons_basic.sh \
-netpoll_basic.py stats.py"). Initial suspicion was that this is
-a simple case of double-disable of NAPI, but instrumenting the
-code reveals:
+We need a similar fix in pptp_xmit(), otherwise we might
+read uninit data as reported by syzbot.
 
- Deadlocked on NAPI ffff888007cd82c0 (virtnet_poll_tx):
-   state: 0x37, disabled: false, owner: 0, listed: false, weight: 64
-
-The NAPI was not in fact disabled, owner is 0 (rather than -1),
-so the NAPI "thinks" it's scheduled for CPU 0 but it's not listed
-(!list_empty(&n->poll_list) => false). It seems odd that normal NAPI
-processing would wedge itself like this.
-
-Better suspicion is that netpoll gets enabled while NAPI is polling,
-and also grabs the NAPI instance. This confuses napi_complete_done():
-
-  [netpoll]                                   [normal NAPI]
-                                        napi_poll()
-                                          have = netpoll_poll_lock()
-                                            rcu_access_pointer(dev->npinfo)
-                                              return NULL # no netpoll
-                                          __napi_poll()
-					    ->poll(->weight)
-  poll_napi()
-    cmpxchg(->poll_owner, -1, cpu)
-      poll_one_napi()
-        set_bit(NAPI_STATE_NPSVC, ->state)
-                                              napi_complete_done()
-                                                if (NAPIF_STATE_NPSVC)
-                                                  return false
-                                           # exit without clearing SCHED
-
-This feels very unlikely, but perhaps virtio has some interactions
-with the hypervisor in the NAPI ->poll that makes the race window
-larger?
-
-Best I could to to prove the theory was to add and trigger this
-warning in napi_poll (just before netpoll_poll_unlock()):
-
-      WARN_ONCE(!have && rcu_access_pointer(n->dev->npinfo) &&
-                napi_is_scheduled(n) && list_empty(&n->poll_list),
-                "NAPI race with netpoll %px", n);
-
-If this warning hits the next virtio_close() will hang.
-
-This patch survived 30 test iterations without a hang (without it
-the longest clean run was around 10). Credit for triggering this
-goes to Breno's recent netconsole tests.
+BUG: KMSAN: uninit-value in pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
+  pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
+  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2290 [inline]
+  ppp_input+0x1d6/0xe60 drivers/net/ppp/ppp_generic.c:2314
+  pppoe_rcv_core+0x1e8/0x760 drivers/net/ppp/pppoe.c:379
+  sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
+  __release_sock+0x1d3/0x330 net/core/sock.c:3213
+  release_sock+0x6b/0x270 net/core/sock.c:3767
+  pppoe_sendmsg+0x15d/0xcb0 drivers/net/ppp/pppoe.c:904
+  sock_sendmsg_nosec net/socket.c:712 [inline]
+  __sock_sendmsg+0x330/0x3d0 net/socket.c:727
+  ____sys_sendmsg+0x893/0xd80 net/socket.c:2566
+  ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
+  __sys_sendmmsg+0x2d9/0x7c0 net/socket.c:2709
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/c5a93ed1-9abe-4880-a3bb-8d1678018b1d@redhat.com
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://patch.msgid.link/20250726010846.1105875-1-kuba@kernel.org
+Reported-by: syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68887d86.a00a0220.b12ec.00cd.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Link: https://patch.msgid.link/20250729080207.1863408-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ppp/pptp.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 940d371f5f3b..09ae2fc41fa9 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -807,6 +807,13 @@ int netpoll_setup(struct netpoll *np)
- 		goto put;
+diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
+index e1fabb3e3246..5e2f4702aa2b 100644
+--- a/drivers/net/ppp/pptp.c
++++ b/drivers/net/ppp/pptp.c
+@@ -141,9 +141,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ 	int len;
+ 	unsigned char *data;
+ 	__u32 seq_recv;
+-
+-
+-	struct rtable *rt;
++	struct rtable *rt = NULL;
+ 	struct net_device *tdev;
+ 	struct iphdr  *iph;
+ 	int    max_headroom;
+@@ -165,16 +163,20 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
  
- 	rtnl_unlock();
+ 	if (skb_headroom(skb) < max_headroom || skb_cloned(skb) || skb_shared(skb)) {
+ 		struct sk_buff *new_skb = skb_realloc_headroom(skb, max_headroom);
+-		if (!new_skb) {
+-			ip_rt_put(rt);
 +
-+	/* Make sure all NAPI polls which started before dev->npinfo
-+	 * was visible have exited before we start calling NAPI poll.
-+	 * NAPI skips locking if dev->npinfo is NULL.
-+	 */
-+	synchronize_rcu();
++		if (!new_skb)
+ 			goto tx_error;
+-		}
 +
- 	return 0;
+ 		if (skb->sk)
+ 			skb_set_owner_w(new_skb, skb->sk);
+ 		consume_skb(skb);
+ 		skb = new_skb;
+ 	}
  
- put:
++	/* Ensure we can safely access protocol field and LCP code */
++	if (!pskb_may_pull(skb, 3))
++		goto tx_error;
++
+ 	data = skb->data;
+ 	islcp = ((data[0] << 8) + data[1]) == PPP_LCP && 1 <= data[2] && data[2] <= 7;
+ 
+@@ -248,6 +250,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ 	return 1;
+ 
+ tx_error:
++	ip_rt_put(rt);
+ 	kfree_skb(skb);
+ 	return 1;
+ }
 -- 
 2.39.5
 
