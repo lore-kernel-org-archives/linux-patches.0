@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C847D352080;
-	Tue, 26 Aug 2025 13:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4973D34F496;
+	Tue, 26 Aug 2025 13:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216700; cv=none; b=LJaRDmcAR3eWX8wpi9uVK+TxSKeYhC64a3OemLy0USEu5t4JI4RhnkXdBlsdqHgKJIO0xXyiQbg7B1nzwieusiBjYUJkek8PBHs8f2SorJN9xoyN02rAJD6IZX9EOVwvlhFkzCtX2TJQJZ/b5cYAsQUfdxf42ceZdPRbADo9GHo=
+	t=1756216703; cv=none; b=mn5qc3sBxQ8jcbCsvFkFrehI+pdvpPidQ2B/gW36lBqg8LQk/wAYRjRAgwEImlJeNn/5JKiueMto/kG5NOHGVHxe/DQ9KsiWQGhwpkE9bzquFcWs1vXInIZAkd3/RkLZYP0mu6GGkBQt5EfameaWPVnOY8NguoXGl5vv/awLZDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216700; c=relaxed/simple;
-	bh=Md3e/sl1W3EZz7imY3uHTr8hfat6SkfsCRy1e6TYt5s=;
+	s=arc-20240116; t=1756216703; c=relaxed/simple;
+	bh=uQaVvn5h/i0aMJIG2meQFHW+dD1BFzMucTo9ITd2SG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B/PVeKl8HEv8nl6kVRrU3ZK4jegZtT/NCzf/GHCRDCLah7sSY/QmsBSrfP26bgJWJ4PxGfOBfzBTfcHtnnoMHaj9F1Qt83YPpATdqvyO9DIPyJx6ot6e06MpBCK1TNvQC/+f8XIVkPJsTma1SFVC+iRuqYwFdAPk3QupKScGu9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJ2CUxML; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k7D+c1LMipc/+oIuqPD/ZREfsTN9LuL3wu3c4W62JeAPb3VTKXNDwPlwi3F8OVRuZ2hSojWRzno5DTl/l+Y5AHh6Pq6etyGZ+kskzax6myE9gYCcEGERcMrW018tY+X7HZmKi6qLa2dKv9fJM1yxkC2/ptgk169Ur0TtK3dc4HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjosET8P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJ2CUxML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557EBC4CEF1;
-	Tue, 26 Aug 2025 13:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjosET8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AC6C4CEF1;
+	Tue, 26 Aug 2025 13:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216700;
-	bh=Md3e/sl1W3EZz7imY3uHTr8hfat6SkfsCRy1e6TYt5s=;
+	s=korg; t=1756216703;
+	bh=uQaVvn5h/i0aMJIG2meQFHW+dD1BFzMucTo9ITd2SG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJ2CUxML/gyVD2Rts6JiyVjuDX3V5nFyDtBsrujE4MnEAFm7wHSgGkehn6Wr9Y5X5
-	 zbdX84w049opQ8mrexpGEjO4uJ2nAKXGJlAl7h5YpthdpL7HNw1MkY6mvHjv2r+t6O
-	 RwRIaPZD82Xo5JfD0/jHda1CR8TcCkTFlM6ppuTM=
+	b=PjosET8P+wCN4G+rN/7U+9E8PJJ0gVZ6AACsWDjoPSckFZDx1t+GQ1seWxZU3LKQf
+	 7FkeYdVnr/LoYeTAg11wEMKlQmgR8MjyE7wTTyZgaVv+q1NgSp9/lt2mDejssEJQJC
+	 QlFWQ1d2n9DFy5qt+YxyQXJypO9ySgxSBtFsSEzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin.Cao" <lincao12@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Philipp Stanner <phasta@kernel.org>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Cristian Prundeanu <cpru@amazon.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 511/644] drm/sched: Remove optimization that causes hang when killing dependent jobs
-Date: Tue, 26 Aug 2025 13:10:02 +0200
-Message-ID: <20250826110959.168031726@linuxfoundation.org>
+Subject: [PATCH 5.15 512/644] arm64/entry: Mask DAIF in cpu_switch_to(), call_on_irq_stack()
+Date: Tue, 26 Aug 2025 13:10:03 +0200
+Message-ID: <20250826110959.192489956@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -46,93 +46,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Lin.Cao" <lincao12@amd.com>
+From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 
-[ Upstream commit 15f77764e90a713ee3916ca424757688e4f565b9 ]
+[ Upstream commit d42e6c20de6192f8e4ab4cf10be8c694ef27e8cb ]
 
-When application A submits jobs and application B submits a job with a
-dependency on A's fence, the normal flow wakes up the scheduler after
-processing each job. However, the optimization in
-drm_sched_entity_add_dependency_cb() uses a callback that only clears
-dependencies without waking up the scheduler.
+`cpu_switch_to()` and `call_on_irq_stack()` manipulate SP to change
+to different stacks along with the Shadow Call Stack if it is enabled.
+Those two stack changes cannot be done atomically and both functions
+can be interrupted by SErrors or Debug Exceptions which, though unlikely,
+is very much broken : if interrupted, we can end up with mismatched stacks
+and Shadow Call Stack leading to clobbered stacks.
 
-When application A is killed before its jobs can run, the callback gets
-triggered but only clears the dependency without waking up the scheduler,
-causing the scheduler to enter sleep state and application B to hang.
+In `cpu_switch_to()`, it can happen when SP_EL0 points to the new task,
+but x18 stills points to the old task's SCS. When the interrupt handler
+tries to save the task's SCS pointer, it will save the old task
+SCS pointer (x18) into the new task struct (pointed to by SP_EL0),
+clobbering it.
 
-Remove the optimization by deleting drm_sched_entity_clear_dep() and its
-usage, ensuring the scheduler is always woken up when dependencies are
-cleared.
+In `call_on_irq_stack()`, it can happen when switching from the task stack
+to the IRQ stack and when switching back. In both cases, we can be
+interrupted when the SCS pointer points to the IRQ SCS, but SP points to
+the task stack. The nested interrupt handler pushes its return addresses
+on the IRQ SCS. It then detects that SP points to the task stack,
+calls `call_on_irq_stack()` and clobbers the task SCS pointer with
+the IRQ SCS pointer, which it will also use !
 
-Fixes: 777dbd458c89 ("drm/amdgpu: drop a dummy wakeup scheduler")
-Cc: stable@vger.kernel.org # v4.6+
-Signed-off-by: Lin.Cao <lincao12@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://lore.kernel.org/r/20250717084453.921097-1-lincao12@amd.com
-[ Changed drm_sched_wakeup_if_can_queue() calls to drm_sched_wakeup() ]
+This leads to tasks returning to addresses on the wrong SCS,
+or even on the IRQ SCS, triggering kernel panics via CONFIG_VMAP_STACK
+or FPAC if enabled.
+
+This is possible on a default config, but unlikely.
+However, when enabling CONFIG_ARM64_PSEUDO_NMI, DAIF is unmasked and
+instead the GIC is responsible for filtering what interrupts the CPU
+should receive based on priority.
+Given the goal of emulating NMIs, pseudo-NMIs can be received by the CPU
+even in `cpu_switch_to()` and `call_on_irq_stack()`, possibly *very*
+frequently depending on the system configuration and workload, leading
+to unpredictable kernel panics.
+
+Completely mask DAIF in `cpu_switch_to()` and restore it when returning.
+Do the same in `call_on_irq_stack()`, but restore and mask around
+the branch.
+Mask DAIF even if CONFIG_SHADOW_CALL_STACK is not enabled for consistency
+of behaviour between all configurations.
+
+Introduce and use an assembly macro for saving and masking DAIF,
+as the existing one saves but only masks IF.
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Reported-by: Cristian Prundeanu <cpru@amazon.com>
+Fixes: 59b37fe52f49 ("arm64: Stash shadow stack pointer in the task struct on interrupt")
+Tested-by: Cristian Prundeanu <cpru@amazon.com>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250718142814.133329-1-ada.coupriediaz@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+[ removed duplicate save_and_disable_daif macro ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |   27 ++++-----------------------
- 1 file changed, 4 insertions(+), 23 deletions(-)
+ arch/arm64/kernel/entry.S |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -317,21 +317,8 @@ void drm_sched_entity_destroy(struct drm
- EXPORT_SYMBOL(drm_sched_entity_destroy);
- 
- /*
-- * drm_sched_entity_clear_dep - callback to clear the entities dependency
-- */
--static void drm_sched_entity_clear_dep(struct dma_fence *f,
--				       struct dma_fence_cb *cb)
--{
--	struct drm_sched_entity *entity =
--		container_of(cb, struct drm_sched_entity, cb);
--
--	entity->dependency = NULL;
--	dma_fence_put(f);
--}
--
--/*
-- * drm_sched_entity_clear_dep - callback to clear the entities dependency and
-- * wake up scheduler
-+ * drm_sched_entity_wakeup - callback to clear the entity's dependency and
-+ * wake up the scheduler
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -833,6 +833,7 @@ SYM_CODE_END(__bp_harden_el1_vectors)
+  *
   */
- static void drm_sched_entity_wakeup(struct dma_fence *f,
- 				    struct dma_fence_cb *cb)
-@@ -339,7 +326,8 @@ static void drm_sched_entity_wakeup(stru
- 	struct drm_sched_entity *entity =
- 		container_of(cb, struct drm_sched_entity, cb);
+ SYM_FUNC_START(cpu_switch_to)
++	save_and_disable_daif x11
+ 	mov	x10, #THREAD_CPU_CONTEXT
+ 	add	x8, x0, x10
+ 	mov	x9, sp
+@@ -856,6 +857,7 @@ SYM_FUNC_START(cpu_switch_to)
+ 	ptrauth_keys_install_kernel x1, x8, x9, x10
+ 	scs_save x0
+ 	scs_load_current
++	restore_irq x11
+ 	ret
+ SYM_FUNC_END(cpu_switch_to)
+ NOKPROBE(cpu_switch_to)
+@@ -882,6 +884,7 @@ NOKPROBE(ret_from_fork)
+  * Calls func(regs) using this CPU's irq stack and shadow irq stack.
+  */
+ SYM_FUNC_START(call_on_irq_stack)
++	save_and_disable_daif x9
+ #ifdef CONFIG_SHADOW_CALL_STACK
+ 	get_current_task x16
+ 	scs_save x16
+@@ -896,8 +899,10 @@ SYM_FUNC_START(call_on_irq_stack)
  
--	drm_sched_entity_clear_dep(f, cb);
-+	entity->dependency = NULL;
-+	dma_fence_put(f);
- 	drm_sched_wakeup(entity->rq->sched);
- }
+ 	/* Move to the new stack and call the function there */
+ 	add	sp, x16, #IRQ_STACK_SIZE
++	restore_irq x9
+ 	blr	x1
  
-@@ -395,13 +383,6 @@ static bool drm_sched_entity_add_depende
- 		fence = dma_fence_get(&s_fence->scheduled);
- 		dma_fence_put(entity->dependency);
- 		entity->dependency = fence;
--		if (!dma_fence_add_callback(fence, &entity->cb,
--					    drm_sched_entity_clear_dep))
--			return true;
--
--		/* Ignore it when it is already scheduled */
--		dma_fence_put(fence);
--		return false;
- 	}
- 
- 	if (!dma_fence_add_callback(entity->dependency, &entity->cb,
++	save_and_disable_daif x9
+ 	/*
+ 	 * Restore the SP from the FP, and restore the FP and LR from the frame
+ 	 * record.
+@@ -905,6 +910,7 @@ SYM_FUNC_START(call_on_irq_stack)
+ 	mov	sp, x29
+ 	ldp	x29, x30, [sp], #16
+ 	scs_load_current
++	restore_irq x9
+ 	ret
+ SYM_FUNC_END(call_on_irq_stack)
+ NOKPROBE(call_on_irq_stack)
 
 
