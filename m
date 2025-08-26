@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4C1239573;
-	Tue, 26 Aug 2025 11:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D0F239573;
+	Tue, 26 Aug 2025 11:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207499; cv=none; b=Vxp53XQnjyVEWOSNM5HpSGxt4cAMKNBthjMovDJQfZ5xNjlXRFlex2UvchgCBO1xUuqnheATr70xedh4NnWnw7lCUZQ/NoiVudcCU9KVw07ZSsl8yDQS3uv0+s3UsvI85khOKqg6ZOGfqRi9Xp1c7/vfe4yVkqDoBXQyh5OPOD8=
+	t=1756207502; cv=none; b=dT5+uhFFK+uq6QSgn6NMSA0l1ceMONcGe/1fSkRDXon0zEzwiZ+ibHH5tI2YbvvwAs1uXHR47bW8Ay4MJwRqNHu0RYDO1YBCBhUC9oFWYoWDIE2sYnBvb8p0EWetyDVWjzW6G+F2fSDIB+SXhwy0dS+J1nrBEdwjnLf63eUm3qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207499; c=relaxed/simple;
-	bh=xj61u2AEqs6UKFrPXvq1/FNiTB3k5nxJ2cTsvjSzvd8=;
+	s=arc-20240116; t=1756207502; c=relaxed/simple;
+	bh=gjPhH0Sa1Qvx7xDLI47JopOrwOb60odI+I0DSPdKeBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMRyco9O6D561fX433lvzfmtpDJs3u7zC8gAiZXEdkVBo16YoTmNxAk7Gey65D8wRARUNUVPFYTZuyDbeAqDNHCnBf2yU78eRhlhiuEv4gx2mj1TKDKU2F1+b1U93omOwPgj+nePZl1pTTToSr0gSHyEIw1Nv/hgrYAzHJnVFdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGq6mLIF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AFcus9VxLhLyH1r4cV+JA6U9eIH45EmtIztKEdrz69oKh7GJ3vhV1YG/ORbeA+84BwKToCaTmQgk9fKdc344Q5RRTqvtqrox2uzy97/mGgqaKoLay7KgZBWJRsTRGGdpg/oqa3OzE/4jcEUvsXvdjWr+34cDeaf3Qat6JJYlrMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXb5vXAS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGq6mLIF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E03C4CEF1;
-	Tue, 26 Aug 2025 11:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXb5vXAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72F4C4CEF1;
+	Tue, 26 Aug 2025 11:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207499;
-	bh=xj61u2AEqs6UKFrPXvq1/FNiTB3k5nxJ2cTsvjSzvd8=;
+	s=korg; t=1756207502;
+	bh=gjPhH0Sa1Qvx7xDLI47JopOrwOb60odI+I0DSPdKeBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGq6mLIFYswExEvJUvghFK/O7smS41aueOyGCAH7ON9y67dFDAK4PTrAEFyR7bYvn
-	 jRk+Jv0XAp2N6z+U4uA2QH6hGFGzF/tJH5yPES2VbTvK42tKodJ/mJUvjlfj/4F25t
-	 p38mjGfwd2NmHd1DzkbnoCBtQ35fr7ZnqxV3TAh8=
+	b=QXb5vXASzFIWa1CSMgTJ9IrQp/AWHRx8f6KMVVFHWHMRp/UHwW7TxPvQWmAefDL6e
+	 g4Qv8h4Y0UPfTov/PoFgAG51CzP0UtDN5Ae7q8Qdatr6V9l4QZOdV4iex7yo1nohO1
+	 v2atdU4f8xiOtFIQI+DVi98srvGKoafwu6zZ+gGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Dreibholz <dreibh@simula.no>,
-	Mat Martineau <martineau@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 205/457] mptcp: pm: kernel: flush: do not reset ADD_ADDR limit
-Date: Tue, 26 Aug 2025 13:08:09 +0200
-Message-ID: <20250826110942.431681397@linuxfoundation.org>
+Subject: [PATCH 6.16 206/457] mptcp: remove duplicate sk_reset_timer call
+Date: Tue, 26 Aug 2025 13:08:10 +0200
+Message-ID: <20250826110942.456511834@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,40 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit 68fc0f4b0d25692940cdc85c68e366cae63e1757 upstream.
+commit 5d13349472ac8abcbcb94407969aa0fdc2e1f1be upstream.
 
-A flush of the MPTCP endpoints should not affect the MPTCP limits. In
-other words, 'ip mptcp endpoint flush' should not change 'ip mptcp
-limits'.
+sk_reset_timer() was called twice in mptcp_pm_alloc_anno_list.
 
-But it was the case: the MPTCP_PM_ATTR_RCV_ADD_ADDRS (add_addr_accepted)
-limit was reset by accident. Removing the reset of this counter during a
-flush fixes this issue.
+Simplify the code by using a 'goto' statement to eliminate the
+duplication.
 
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
+Note that this is not a fix, but it will help backporting the following
+patch. The same "Fixes" tag has been added for this reason.
+
+Fixes: 93f323b9cccc ("mptcp: add a new sysctl add_addr_timeout")
 Cc: stable@vger.kernel.org
-Reported-by: Thomas Dreibholz <dreibh@simula.no>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/579
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-2-521fe9957892@kernel.org
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-4-521fe9957892@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_kernel.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/mptcp/pm.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/net/mptcp/pm_kernel.c
-+++ b/net/mptcp/pm_kernel.c
-@@ -1085,7 +1085,6 @@ static void __flush_addrs(struct list_he
- static void __reset_counters(struct pm_nl_pernet *pernet)
- {
- 	WRITE_ONCE(pernet->add_addr_signal_max, 0);
--	WRITE_ONCE(pernet->add_addr_accept_max, 0);
- 	WRITE_ONCE(pernet->local_addr_max, 0);
- 	pernet->addrs = 0;
- }
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -353,9 +353,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 		if (WARN_ON_ONCE(mptcp_pm_is_kernel(msk)))
+ 			return false;
+ 
+-		sk_reset_timer(sk, &add_entry->add_timer,
+-			       jiffies + mptcp_get_add_addr_timeout(net));
+-		return true;
++		goto reset_timer;
+ 	}
+ 
+ 	add_entry = kmalloc(sizeof(*add_entry), GFP_ATOMIC);
+@@ -369,6 +367,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 	add_entry->retrans_times = 0;
+ 
+ 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
++reset_timer:
+ 	sk_reset_timer(sk, &add_entry->add_timer,
+ 		       jiffies + mptcp_get_add_addr_timeout(net));
+ 
 
 
