@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1677334F48D;
-	Tue, 26 Aug 2025 13:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528E635207B;
+	Tue, 26 Aug 2025 13:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216277; cv=none; b=i1h8LtP3sY8vgQR+iNvDzQ8di40lJ+5HROpC3facJTD3x2XE1QlrxXIH2fpgQF3PXoy24XhyO+kgnPhtJEoPtdAR9NzWFx962uuOBKhy6KNZ86tBIi9Hy20jiZ4r+6lD2Dff6vfhpEcAOYYJU4MuNtkeG3aZr84Yp4deVTNrNIc=
+	t=1756216279; cv=none; b=qy/w4cJLqSH/qlxgVTadCWy2ElzU9k2/4o5MfKs1q1pyTegty06TR39sl0onFsubUDOGT8yUwz4UwoGle8Q2KTM7ehm7zwYtVr+wnvF2Ku8GRG5rZHtfVT0mMdtFgwvwnxkV1+U0JwYJH/VG3FCd8C2em0a8GUdIjKIz4NOj/sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216277; c=relaxed/simple;
-	bh=uYryhlWsEqysnaAi+AFpbKQPNVmBUTm460B3tCDSNiY=;
+	s=arc-20240116; t=1756216279; c=relaxed/simple;
+	bh=8IaX/BrJdnBokqVvQrdYZIFFPNUWwFSpRmjvpgNrO7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J67+u0blNqkJHFWsUrgX2wvsrs8EfnOekkGmdMiXaH5B9hg5611OnVo6FclyFd+eZuhKFdfcUj2xKDGFCvSTm3OqacUgIgC37S6U5xQue+5ICtesGb8uBHHVM4tE2hiOaRy6u32QtKZc7MAy/ipn/Fk5avHoBtQmWQnjbAJV0rE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHVOCvPm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kOt9MN5LIorxaFJO8hX2blvjNHuhpBT129FrY8zkAMfoOwWhX+AYETsh8y6JBPjbJtsTAx3DAWDXoLC7AiRUoFDmhmQvHqyFO//kngdie8GLX+ovXhGn3nVuk1w3MJrdRlpBvlxm9GLWrgJ3ws1jeYsuHEyC69hMR7IVS0Ewys0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZE+zJvl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHVOCvPm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40806C4CEF1;
-	Tue, 26 Aug 2025 13:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZE+zJvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1407C113CF;
+	Tue, 26 Aug 2025 13:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216276;
-	bh=uYryhlWsEqysnaAi+AFpbKQPNVmBUTm460B3tCDSNiY=;
+	s=korg; t=1756216279;
+	bh=8IaX/BrJdnBokqVvQrdYZIFFPNUWwFSpRmjvpgNrO7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHVOCvPm8wtgzmnEXEwzH82ty18BMZRSiG5SQpPJckfusPu210a1Hqxj8fZFbIXxZ
-	 9Yf1Z9zUqLIDjsITOvbHvKQMl7FLgLM3wBKUIVkqWeYbNoDixqaJ8uQy8rk5RDyXnr
-	 q0H3aDbSyJz5KVJ0UFOyAa1Dkck2pYhqAM57myqQ=
+	b=XZE+zJvlmST5vUIaWbA7uXUDYZeT2nySbodmEHOjf03E5z5I90wEcgk/IibTXV2d6
+	 fU6gr+sYisjEFVyj51THU3lqnDYZelJ1VRzVbbzBgq1fG+qrfmwCqDtdG0vOdguDNr
+	 Nk6z8lp0VHOaiKnbZlWQTJCH1zfnPq6274bZImrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kochetkov <al.kochet@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 304/644] ARM: rockchip: fix kernel hang during smp initialization
-Date: Tue, 26 Aug 2025 13:06:35 +0200
-Message-ID: <20250826110953.916971011@linuxfoundation.org>
+Subject: [PATCH 5.15 305/644] PM / devfreq: governor: Replace sscanf() with kstrtoul() in set_freq_store()
+Date: Tue, 26 Aug 2025 13:06:36 +0200
+Message-ID: <20250826110953.942553536@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,68 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Kochetkov <al.kochet@gmail.com>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit 7cdb433bb44cdc87dc5260cdf15bf03cc1cd1814 ]
+[ Upstream commit 914cc799b28f17d369d5b4db3b941957d18157e8 ]
 
-In order to bring up secondary CPUs main CPU write trampoline
-code to SRAM. The trampoline code is written while secondary
-CPUs are powered on (at least that true for RK3188 CPU).
-Sometimes that leads to kernel hang. Probably because secondary
-CPU execute trampoline code while kernel doesn't expect.
+Replace sscanf() with kstrtoul() in set_freq_store() and check the result
+to avoid invalid input.
 
-The patch moves SRAM initialization step to the point where all
-secondary CPUs are powered down.
-
-That fixes rarely hangs on RK3188:
-[    0.091568] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
-[    0.091996] rockchip_smp_prepare_cpus: ncores 4
-
-Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
-Link: https://lore.kernel.org/r/20250703140453.1273027-1-al.kochet@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://lore.kernel.org/lkml/20250421030020.3108405-2-zhenglifeng1@huawei.com/
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-rockchip/platsmp.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/devfreq/governor_userspace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-rockchip/platsmp.c b/arch/arm/mach-rockchip/platsmp.c
-index d60856898d97..17aee4701e81 100644
---- a/arch/arm/mach-rockchip/platsmp.c
-+++ b/arch/arm/mach-rockchip/platsmp.c
-@@ -279,11 +279,6 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
- 	}
+diff --git a/drivers/devfreq/governor_userspace.c b/drivers/devfreq/governor_userspace.c
+index d69672ccacc4..8d057cea09d5 100644
+--- a/drivers/devfreq/governor_userspace.c
++++ b/drivers/devfreq/governor_userspace.c
+@@ -9,6 +9,7 @@
+ #include <linux/slab.h>
+ #include <linux/device.h>
+ #include <linux/devfreq.h>
++#include <linux/kstrtox.h>
+ #include <linux/pm.h>
+ #include <linux/mutex.h>
+ #include <linux/module.h>
+@@ -39,10 +40,13 @@ static ssize_t set_freq_store(struct device *dev, struct device_attribute *attr,
+ 	unsigned long wanted;
+ 	int err = 0;
  
- 	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
--		if (rockchip_smp_prepare_sram(node)) {
--			of_node_put(node);
--			return;
--		}
--
- 		/* enable the SCU power domain */
- 		pmu_set_power_domain(PMU_PWRDN_SCU, true);
- 
-@@ -316,11 +311,19 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
- 		asm ("mrc p15, 1, %0, c9, c0, 2\n" : "=r" (l2ctlr));
- 		ncores = ((l2ctlr >> 24) & 0x3) + 1;
- 	}
--	of_node_put(node);
- 
- 	/* Make sure that all cores except the first are really off */
- 	for (i = 1; i < ncores; i++)
- 		pmu_set_power_domain(0 + i, false);
++	err = kstrtoul(buf, 0, &wanted);
++	if (err)
++		return err;
 +
-+	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
-+		if (rockchip_smp_prepare_sram(node)) {
-+			of_node_put(node);
-+			return;
-+		}
-+	}
-+
-+	of_node_put(node);
- }
+ 	mutex_lock(&devfreq->lock);
+ 	data = devfreq->governor_data;
  
- static void __init rk3036_smp_prepare_cpus(unsigned int max_cpus)
+-	sscanf(buf, "%lu", &wanted);
+ 	data->user_frequency = wanted;
+ 	data->valid = true;
+ 	err = update_devfreq(devfreq);
 -- 
 2.39.5
 
