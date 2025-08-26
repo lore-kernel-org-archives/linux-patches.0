@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8A71DE4CD;
-	Tue, 26 Aug 2025 13:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34432797A1;
+	Tue, 26 Aug 2025 13:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215349; cv=none; b=e9qCTGQKoIE3ewRNkEG7TI+f0whxcVfWeEN1rLwEQnv1jS2jSZKrVmqYXir3ZwqXjsqV11pvy/k2ZNhsp+E5gL81dB+V9cGhoVKnp1ZaEG3Fo8OP6Wh8+o2Ae3gM+13VcqniW8Ij5+6vJEkHGSEfXV0qvFK2jlSKmg8JKG1YLQ4=
+	t=1756215352; cv=none; b=oKznl926N4WcKVCXuMTdnt8pxjQmsqwMUq6ABEYfjvyEh5JsbTrjwbO9Zsff3ayLQzecuuGMdryHhC5lo1sFL034IfrIZoNRoZ2/KFdEibvs8i6HQc9cwkv0L7Bvbj08284aul09aFh9YDlyPjlBm7jDlA3HQmWedFzHpjvND8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215349; c=relaxed/simple;
-	bh=9adnISnqjJDlVb8ggPxg3x/G0UAyNTULsqgkWMT7WEQ=;
+	s=arc-20240116; t=1756215352; c=relaxed/simple;
+	bh=LCtHvhaZ7K9d3Fhu8YHwhcevIY6yMoI8FXjrQZtl/3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PcVpQoygKWcakwf3BnYpkaBVJI3KAt8k8Kg3z5KnCFJckMK/j6oC3mGj3Wo5FMnq3P73hhSJzxSHB3NFWy+0+XFuB2iC8hpl4K7pqvs3DSa2ba1XcjtN+ruMusApwQRfNQVE95zYZxUrS3TS4+COByJp4io+qQIMta69mmwsDok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/r2NlnT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RpUqYwbkIY56HKpFsdtZBG5QNCEMGxV7hE8l1upoXOQuOT8etYEDoLRuFsbCLQTzeiUnDuSk0EwhePIPbrIG3yqpkyXWL/fbhPSswgQrEsbKnHtNOqPoxDVuJEiyHLFIsG39z4E88mSMU5V3BF/tlleeM3zIzGiIjwTulQFL5GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZ6o9MXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/r2NlnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705D4C4CEF1;
-	Tue, 26 Aug 2025 13:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZ6o9MXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12425C4CEF1;
+	Tue, 26 Aug 2025 13:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215348;
-	bh=9adnISnqjJDlVb8ggPxg3x/G0UAyNTULsqgkWMT7WEQ=;
+	s=korg; t=1756215351;
+	bh=LCtHvhaZ7K9d3Fhu8YHwhcevIY6yMoI8FXjrQZtl/3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/r2NlnTrc9QHOnF4/Ve+hzU1myUpY4Robw+aEf3bLXYG0uJjFYljeiUCfanY/Fl1
-	 2+DZ7ZVfcKl7IStjNyiLxHYXWReuk9Kwh8sZ2Oe8sYak/5hTmdLqPWq8VbcCAyXmhL
-	 bTYTJAUFNFH+F68wqLO43dorjkOXcmpLsk6XUPDc=
+	b=fZ6o9MXVX0K6WMiUs99wjHEmWpYFxSxlDu31Dtfk5xOC/0pu6oKmR3kvZG+W5AI8P
+	 RPr71d3KQb2cg/BcLnGYFpkctKDuiLNyqR/2JKPUPYzWjRej1VXSPvbgEJ0LutwSny
+	 +wOGzhsGKMDO5RUUc8JjGb0YSNH5qp7Rt/Otg0Mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Mete Durlu <meted@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 453/482] cgroup/cpuset: Use static_branch_enable_cpuslocked() on cpusets_insane_config_key
-Date: Tue, 26 Aug 2025 13:11:46 +0200
-Message-ID: <20250826110942.020015554@linuxfoundation.org>
+Subject: [PATCH 6.1 480/482] s390/hypfs: Avoid unnecessary ioctl registration in debugfs
+Date: Tue, 26 Aug 2025 13:12:13 +0200
+Message-ID: <20250826110942.673385301@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,70 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-[ Upstream commit 65f97cc81b0adc5f49cf6cff5d874be0058e3f41 ]
+[ Upstream commit fec7bdfe7f8694a0c39e6c3ec026ff61ca1058b9 ]
 
-The following lockdep splat was observed.
+Currently, hypfs registers ioctl callbacks for all debugfs files,
+despite only one file requiring them. This leads to unintended exposure
+of unused interfaces to user space and can trigger side effects such as
+restricted access when kernel lockdown is enabled.
 
-[  812.359086] ============================================
-[  812.359089] WARNING: possible recursive locking detected
-[  812.359097] --------------------------------------------
-[  812.359100] runtest.sh/30042 is trying to acquire lock:
-[  812.359105] ffffffffa7f27420 (cpu_hotplug_lock){++++}-{0:0}, at: static_key_enable+0xe/0x20
-[  812.359131]
-[  812.359131] but task is already holding lock:
-[  812.359134] ffffffffa7f27420 (cpu_hotplug_lock){++++}-{0:0}, at: cpuset_write_resmask+0x98/0xa70
-     :
-[  812.359267] Call Trace:
-[  812.359272]  <TASK>
-[  812.359367]  cpus_read_lock+0x3c/0xe0
-[  812.359382]  static_key_enable+0xe/0x20
-[  812.359389]  check_insane_mems_config.part.0+0x11/0x30
-[  812.359398]  cpuset_write_resmask+0x9f2/0xa70
-[  812.359411]  cgroup_file_write+0x1c7/0x660
-[  812.359467]  kernfs_fop_write_iter+0x358/0x530
-[  812.359479]  vfs_write+0xabe/0x1250
-[  812.359529]  ksys_write+0xf9/0x1d0
-[  812.359558]  do_syscall_64+0x5f/0xe0
+Restrict ioctl registration to only those files that implement ioctl
+functionality to avoid interface clutter and unnecessary access
+restrictions.
 
-Since commit d74b27d63a8b ("cgroup/cpuset: Change cpuset_rwsem
-and hotplug lock order"), the ordering of cpu hotplug lock
-and cpuset_mutex had been reversed. That patch correctly
-used the cpuslocked version of the static branch API to enable
-cpusets_pre_enable_key and cpusets_enabled_key, but it didn't do the
-same for cpusets_insane_config_key.
-
-The cpusets_insane_config_key can be enabled in the
-check_insane_mems_config() which is called from update_nodemask()
-or cpuset_hotplug_update_tasks() with both cpu hotplug lock and
-cpuset_mutex held. Deadlock can happen with a pending hotplug event that
-tries to acquire the cpu hotplug write lock which will block further
-cpus_read_lock() attempt from check_insane_mems_config(). Fix that by
-switching to use static_branch_enable_cpuslocked().
-
-Fixes: d74b27d63a8b ("cgroup/cpuset: Change cpuset_rwsem and hotplug lock order")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Tested-by: Mete Durlu <meted@linux.ibm.com>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 5496197f9b08 ("debugfs: Restrict debugfs when the kernel is locked down")
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/hypfs/hypfs_dbfs.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 370a6bce20a8..216bdebd9426 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -455,7 +455,7 @@ static inline void check_insane_mems_config(nodemask_t *nodes)
+diff --git a/arch/s390/hypfs/hypfs_dbfs.c b/arch/s390/hypfs/hypfs_dbfs.c
+index f4c7dbfaf8ee..c5f53dc3dbbc 100644
+--- a/arch/s390/hypfs/hypfs_dbfs.c
++++ b/arch/s390/hypfs/hypfs_dbfs.c
+@@ -64,24 +64,28 @@ static long dbfs_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	long rc;
+ 
+ 	mutex_lock(&df->lock);
+-	if (df->unlocked_ioctl)
+-		rc = df->unlocked_ioctl(file, cmd, arg);
+-	else
+-		rc = -ENOTTY;
++	rc = df->unlocked_ioctl(file, cmd, arg);
+ 	mutex_unlock(&df->lock);
+ 	return rc;
+ }
+ 
+-static const struct file_operations dbfs_ops = {
++static const struct file_operations dbfs_ops_ioctl = {
+ 	.read		= dbfs_read,
+ 	.llseek		= no_llseek,
+ 	.unlocked_ioctl = dbfs_ioctl,
+ };
+ 
++static const struct file_operations dbfs_ops = {
++	.read		= dbfs_read,
++};
++
+ void hypfs_dbfs_create_file(struct hypfs_dbfs_file *df)
  {
- 	if (!cpusets_insane_config() &&
- 		movable_only_nodes(nodes)) {
--		static_branch_enable(&cpusets_insane_config_key);
-+		static_branch_enable_cpuslocked(&cpusets_insane_config_key);
- 		pr_info("Unsupported (movable nodes only) cpuset configuration detected (nmask=%*pbl)!\n"
- 			"Cpuset allocations might fail even with a lot of memory available.\n",
- 			nodemask_pr_args(nodes));
+-	df->dentry = debugfs_create_file(df->name, 0400, dbfs_dir, df,
+-					 &dbfs_ops);
++	const struct file_operations *fops = &dbfs_ops;
++
++	if (df->unlocked_ioctl)
++		fops = &dbfs_ops_ioctl;
++	df->dentry = debugfs_create_file(df->name, 0400, dbfs_dir, df, fops);
+ 	mutex_init(&df->lock);
+ }
+ 
 -- 
 2.50.1
 
