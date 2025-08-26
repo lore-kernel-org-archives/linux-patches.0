@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FA2345758;
-	Tue, 26 Aug 2025 13:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D72350D4C;
+	Tue, 26 Aug 2025 13:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216011; cv=none; b=dGO7VzWHR5cxWrpUoCpmrFxDPgRDnbmyNrs00nhWBWkEIg9y0j7Dh1Guc6YDiTI61vJ2qXmFayliIF3NKmihxJvC0wcGRjKDUWLIOBskChwbZdT43QC+pTXuhxrrojZh5vMZEMSl+a1btqN+/a+UU0/nLd3gY/iYjbi0Pv+yCHc=
+	t=1756216014; cv=none; b=OHRGingpxDj7JXgVnTYH2Uq9pBSCU7b/qg7dnjG7ndNRo9VB2scmfSQrXsc2NglMt8CLToRw8a38grt/5tMHCcvKtiPa6smhViEMP8WxJyGA1wjfFJD2lJzFPAGC0ebNwBxsG8XerEEbCKMNuFXKWFGY3U8vxG0xZRdn6FEoC3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216011; c=relaxed/simple;
-	bh=hDYs+ju9iQLbH1FEAsxCAsS+uBluifoVMPdaFBY+IY8=;
+	s=arc-20240116; t=1756216014; c=relaxed/simple;
+	bh=cFACm39CypCmsD+Po1evb/m1TL7+tmRQ/79PzVD2qgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AL7YiH1Gwuc9f4knXBI2iJbTfbqsnAbx/Os04q3qTStMQVGTy7SzoiUgPIzlvivnk06XjIXsT/rub1+8+6j7EjVlkOB+RIK9PHq/xrFESY5LxDL4LbTHkIx+vQ4um3K5MirujcgTg4+9JrUQte6KbKbTPCXPNtzwk1ZZzfjJssk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJooRzhe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aUao9eNumzb0d7tUAA1tX3VGyMTcDLeTQ/vKkhNOyIwPVt2hPdLi996T5CE2C2cYd2ub9zPDk3TBcinBTHfU2v7zfzfDnioADvWM+XWU06yz28FVIuI1FEUD2vDWngysmeBCp31tKLElel2H0aCtcO+FNsG25YrrSQQUQPEAqH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1VmxyMC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJooRzhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1DAC113CF;
-	Tue, 26 Aug 2025 13:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1VmxyMC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE71C113CF;
+	Tue, 26 Aug 2025 13:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216011;
-	bh=hDYs+ju9iQLbH1FEAsxCAsS+uBluifoVMPdaFBY+IY8=;
+	s=korg; t=1756216013;
+	bh=cFACm39CypCmsD+Po1evb/m1TL7+tmRQ/79PzVD2qgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJooRzhe1pMiZnlHin9pe3Zz5EeQJrLdR1a8fnEQnBqvG3meGPQIndbEnvb5Z2StT
-	 Nbgu2zVVo5cb3emh+OjpB8gmG7FctVT/za3IdesiFlDTFc6y3H2owvh/5Ak9lTCiIO
-	 CPrQN/3sneLuhIXhBSZY2IUeTwzCi33wam50iMFY=
+	b=o1VmxyMC49BaSbnw+AtSFs+YtDmR2n9wSoeH7GgcfuYCwFklvpS+1ypQ1swqWIp6T
+	 1P8Bj797DCgIddSsyzWdC9DA40zo9hxlw1BbpMfLifoXhWz+XYSeLuGKVORqVkwZky
+	 VD4iojU54RsEsq3q52Hd2bzHtIqX6Cc3nT1gA9Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 250/644] vsock: Do not allow binding to VMADDR_PORT_ANY
-Date: Tue, 26 Aug 2025 13:05:41 +0200
-Message-ID: <20250826110952.584407943@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 251/644] USB: serial: option: add Foxconn T99W709
+Date: Tue, 26 Aug 2025 13:05:42 +0200
+Message-ID: <20250826110952.606745642@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,42 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Budimir Markovic <markovicbudimir@gmail.com>
+From: Slark Xiao <slark_xiao@163.com>
 
-commit aba0c94f61ec05315fa7815d21aefa4c87f6a9f4 upstream.
+commit ad1244e1ce18f8c1a5ebad8074bfcf10eacb0311 upstream.
 
-It is possible for a vsock to autobind to VMADDR_PORT_ANY. This can
-cause a use-after-free when a connection is made to the bound socket.
-The socket returned by accept() also has port VMADDR_PORT_ANY but is not
-on the list of unbound sockets. Binding it will result in an extra
-refcount decrement similar to the one fixed in fcdd2242c023 (vsock: Keep
-the binding until socket destruction).
+T99W709 is designed based on MTK T300(5G redcap) chip. There are
+7 serial ports to be enumerated: AP_LOG, GNSS, AP_META, AT,
+MD_META, NPT, DBG. RSVD(5) for ADB port.
 
-Modify the check in __vsock_bind_connectible() to also prevent binding
-to VMADDR_PORT_ANY.
+test evidence as below:
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e15f Rev=00.01
+S:  Manufacturer=MediaTek Inc.
+S:  Product=USB DATA CARD
+S:  SerialNumber=355511220000399
+C:  #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+I:  If#=0x6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:  If#=0x9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Budimir Markovic <markovicbudimir@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20250807041811.678-1-markovicbudimir@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/af_vsock.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -683,7 +683,8 @@ static int __vsock_bind_connectible(stru
- 		unsigned int i;
- 
- 		for (i = 0; i < MAX_PORT_RETRIES; i++) {
--			if (port <= LAST_RESERVED_PORT)
-+			if (port == VMADDR_PORT_ANY ||
-+			    port <= LAST_RESERVED_PORT)
- 				port = LAST_RESERVED_PORT + 1;
- 
- 			new_addr.svm_port = port++;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
+ 	  .driver_info = RSVD(5) | RSVD(6) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
++	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
 
 
