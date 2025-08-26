@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF02341650;
-	Tue, 26 Aug 2025 14:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2562F341650;
+	Tue, 26 Aug 2025 14:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217981; cv=none; b=ocA2YZYZsXfu4SFMYjnSl/vFBTSc2AJYTa5MmZgQ/BGqbb7aamhea86/D7HbojKFexnbX5r5mcxuvDNFc1lqkFCZ8hWui3trIJEhx8bpKOCrz0u2O909bo4AeGiHrEt2F/nNEqSbqflqYgM91QyvCxZNlaBAmQ9Ti9BjIB1V0Wg=
+	t=1756217984; cv=none; b=nfiHBYewhdCcGNQAyv2BEVO1501Ps5Cp97UnH/oo8M/wU+EZ4a1lVJXAfleXaxv4CeJbEhVqh4tOJsMEeb7cP/QNXdZTYh51xKd3kWuUZx5EpGyCbAN6sVHcm9VcqELB8eGh1tj7Mj2L9LHGx2Ng+6O+LO3k1u7bKBUBLos/Rcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217981; c=relaxed/simple;
-	bh=1Vf9zAVJcOLZGh0/u4v+Tfe+BPmnh/AjU0W422XYezA=;
+	s=arc-20240116; t=1756217984; c=relaxed/simple;
+	bh=nHEN4nC1v/VqOY0YWD47ApmovhUvOUeHOZ9ChXqFdqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eh0IJaDDH7eMNm60XH8NvYXQiSs3AG0bXonnN4eR3xoHk+jdAsTmd9nU87qcEVKiyjCYi5E2bIkL7AC1Ga1J8Zr8INOd+4e0LGHnAQS5nSEONYVPxQxt9ENz3IYwGXEgfJog8WVQ0OruA9IT0SFs20C6Lkyhcy/gmjT0igfv91w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUwyTMo2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ix5wgbRHIBdFSkyyMZFCPCltpo4jwaBttHxVSt9rwe93sOii6XCh6T3wDQoiwKjq1PPZcBRdGoaRqed/K6iP3px0DpQ5FxERU8fJ2VWxCU3j0HB1VbWCC1EZ8fQ0r75yrTjwrUd9t9BxmFuM2E8p4JQIddhByuoKjRlEf5smD3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fw+7OArd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUwyTMo2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD66C4CEF1;
-	Tue, 26 Aug 2025 14:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fw+7OArd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBDEC4CEF1;
+	Tue, 26 Aug 2025 14:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217981;
-	bh=1Vf9zAVJcOLZGh0/u4v+Tfe+BPmnh/AjU0W422XYezA=;
+	s=korg; t=1756217984;
+	bh=nHEN4nC1v/VqOY0YWD47ApmovhUvOUeHOZ9ChXqFdqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUwyTMo26eaMnb8t6hIOjO3BG/HqglgO36f8Co/czyVM18aA34n20nMtYyo/efdP8
-	 UXJZ495bB6tw3ofZcaiDnBrTOHYGiXHJXQAhMiy+cp3M/YcjMSl4qUhBPl9xnDwfFE
-	 N+RKKfgZ+jwcRWSPRAudjhkEXywXAszhvxPG88d0=
+	b=fw+7OArdGkKSR6hjLOix+2821Im22iBKgMUIj7tlYgC9mTn1Zf4ZBpgmBgJ1pdhfs
+	 g5omPk0Q0AfTeViv5BZFXAHUnbWrqIBub0kbcuiE/Q1cVH/gCuni53mSKoooxDxb48
+	 GxYVJfROwSVu5iHklcGIIIeUc56QMfiXFbfZmsN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 349/523] mm/kmemleak: avoid deadlock by moving pr_warn() outside kmemleak_lock
-Date: Tue, 26 Aug 2025 13:09:19 +0200
-Message-ID: <20250826110933.075409993@linuxfoundation.org>
+	Youngjun Lee <yjjuny.lee@samsung.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.10 350/523] media: uvcvideo: Fix 1-byte out-of-bounds read in uvc_parse_format()
+Date: Tue, 26 Aug 2025 13:09:20 +0200
+Message-ID: <20250826110933.100196915@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,64 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Youngjun Lee <yjjuny.lee@samsung.com>
 
-commit 47b0f6d8f0d2be4d311a49e13d2fd5f152f492b2 upstream.
+commit 782b6a718651eda3478b1824b37a8b3185d2740c upstream.
 
-When netpoll is enabled, calling pr_warn_once() while holding
-kmemleak_lock in mem_pool_alloc() can cause a deadlock due to lock
-inversion with the netconsole subsystem.  This occurs because
-pr_warn_once() may trigger netpoll, which eventually leads to
-__alloc_skb() and back into kmemleak code, attempting to reacquire
-kmemleak_lock.
+The buffer length check before calling uvc_parse_format() only ensured
+that the buffer has at least 3 bytes (buflen > 2), buf the function
+accesses buffer[3], requiring at least 4 bytes.
 
-This is the path for the deadlock.
+This can lead to an out-of-bounds read if the buffer has exactly 3 bytes.
 
-mem_pool_alloc()
-  -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
-      -> pr_warn_once()
-          -> netconsole subsystem
-	     -> netpoll
-	         -> __alloc_skb
-		   -> __create_object
-		     -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
+Fix it by checking that the buffer has at least 4 bytes in
+uvc_parse_format().
 
-Fix this by setting a flag and issuing the pr_warn_once() after
-kmemleak_lock is released.
-
-Link: https://lkml.kernel.org/r/20250731-kmemleak_lock-v1-1-728fd470198f@debian.org
-Fixes: c5665868183f ("mm: kmemleak: use the memory pool for early allocations")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Youngjun Lee <yjjuny.lee@samsung.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20250610124107.37360-1-yjjuny.lee@samsung.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_driver.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -417,6 +417,7 @@ static struct kmemleak_object *mem_pool_
- {
- 	unsigned long flags;
- 	struct kmemleak_object *object;
-+	bool warn = false;
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -511,6 +511,9 @@ static int uvc_parse_format(struct uvc_d
+ 	unsigned int i, n;
+ 	u8 ftype;
  
- 	/* try the slab allocator first */
- 	if (object_cache) {
-@@ -434,8 +435,10 @@ static struct kmemleak_object *mem_pool_
- 	else if (mem_pool_free_count)
- 		object = &mem_pool[--mem_pool_free_count];
- 	else
--		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
-+		warn = true;
- 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
-+	if (warn)
-+		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
++	if (buflen < 4)
++		return -EINVAL;
++
+ 	format->type = buffer[2];
+ 	format->index = buffer[3];
  
- 	return object;
- }
 
 
