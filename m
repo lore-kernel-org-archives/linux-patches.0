@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73831DF75A;
-	Tue, 26 Aug 2025 14:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808892C0F9C;
+	Tue, 26 Aug 2025 14:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218297; cv=none; b=d0UXEJqGUTvbayHFC7in4QPM7PKcAomi1J5zz61Beqr+F1hfV0grZt2HJwgeKp8QOjaAHOX6doSi07YRGYzkqdse6wDuYGq4TSXB+oCJXayT8gQCW5pCxTpneOJ0uzzCrHZdHtgG/OQkvEsmubgtuyK0nNSfmwZO+qbCD3l8dlA=
+	t=1756218299; cv=none; b=kCNNK1dT1U0EqQ0mu6KGws9N3bHHRG/yd0JBvCQ1h0eV1jeKQ2Z2RmID9KrW+jJiej+jw2dE+NEGZ1OQ1qxrYcyWfZF3rA3O6xRgSND/giakSyKfUUKv6WPoC7TyPQenY5zN5PtaxBAHJNPV0leg6rABbaf56AK6xETImgroWTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218297; c=relaxed/simple;
-	bh=mwkbWIzGJfeNK4g14Sn/0eAT1AT1wkOMaubhU4iSfr4=;
+	s=arc-20240116; t=1756218299; c=relaxed/simple;
+	bh=SUXJ+YTaIXbVAeEvfyKLMqhNlZHdYRqdCmwQvR7utwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t97vQGbZK76yoafbDhcC2Qp6PswAhum3TmGQpva/ehG3PQA13FMyqZk/uZGxIdpYFo6VSsw+bJMkO5Hx5wk+5YGtMNHPSrW5Cz1HuRJP31FusGgPSWoEqPwdqkuaHygNqRU0e5QlEgGdJB6n6njNUkbp+MRgzEiYlFaIIoZASmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rikKzIf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LXAtxtvd0sqkYdtp9j4mWt3KOkStcsiMUV9dVazJTILnjbUrY/nVYje4RF5E2+6X7Adenizof8+gSfEJRx6Wj+ZTdV0DFi0r7U6IWH+sCLABVtPrumdNI2L1TUF2dcOQEKFMowkj3rxRz41/+AfhRqxzcqo73W076Oq/zhHHvNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09LZuJYA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rikKzIf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717CFC4CEF1;
-	Tue, 26 Aug 2025 14:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09LZuJYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135DBC4CEF1;
+	Tue, 26 Aug 2025 14:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218296;
-	bh=mwkbWIzGJfeNK4g14Sn/0eAT1AT1wkOMaubhU4iSfr4=;
+	s=korg; t=1756218299;
+	bh=SUXJ+YTaIXbVAeEvfyKLMqhNlZHdYRqdCmwQvR7utwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rikKzIf9cvL2h0ibUfbU4wcCnWikzNdgIiTi2YtZfMbgZTIqvOudGhcodKr7siiCb
-	 rq5G7avvnWMtq8rVLx7dbQ9o9baUCpSyvFxdOya/4Sje3KrN21JXjB1CsvsAP7ThzF
-	 2xwy9iONeWq/AxGW+xkBOVsHPzjcdbpEr80eIQ88=
+	b=09LZuJYAmdPpARUPXeDRlGaorXuhyIyqaR4xNcsndVLtWKHXM0DVFYgvAZBXS5JQc
+	 mNbcuBQXzTng13suqR6D9zDluXSuiAkVUcXcZ2Dedq7NtTt3OZsVWPMrvzXYGpbuhl
+	 IRDa4xAbsX9H47icCaCq2NlA3aA4eOhApDc2KJ6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 467/523] usb: musb: omap2430: fix device leak at unbind
-Date: Tue, 26 Aug 2025 13:11:17 +0200
-Message-ID: <20250826110935.963394045@linuxfoundation.org>
+Subject: [PATCH 5.10 468/523] btrfs: populate otime when logging an inode item
+Date: Tue, 26 Aug 2025 13:11:18 +0200
+Message-ID: <20250826110935.988237996@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,63 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 1473e9e7679bd4f5a62d1abccae894fb86de280f ]
+[ Upstream commit 1ef94169db0958d6de39f9ea6e063ce887342e2d ]
 
-Make sure to drop the reference to the control device taken by
-of_find_device_by_node() during probe when the driver is unbound.
+[TEST FAILURE WITH EXPERIMENTAL FEATURES]
+When running test case generic/508, the test case will fail with the new
+btrfs shutdown support:
 
-Fixes: 8934d3e4d0e7 ("usb: musb: omap2430: Don't use omap_get_control_dev()")
-Cc: stable@vger.kernel.org	# 3.13
-Cc: Roger Quadros <rogerq@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20250724091910.21092-5-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Removed populate_irqs-related goto changes ]
+generic/508       - output mismatch (see /home/adam/xfstests/results//generic/508.out.bad)
+#    --- tests/generic/508.out	2022-05-11 11:25:30.806666664 +0930
+#    +++ /home/adam/xfstests/results//generic/508.out.bad	2025-07-02 14:53:22.401824212 +0930
+#    @@ -1,2 +1,6 @@
+#     QA output created by 508
+#     Silence is golden
+#    +Before:
+#    +After : stat.btime = Thu Jan  1 09:30:00 1970
+#    +Before:
+#    +After : stat.btime = Wed Jul  2 14:53:22 2025
+#    ...
+#    (Run 'diff -u /home/adam/xfstests/tests/generic/508.out /home/adam/xfstests/results//generic/508.out.bad'  to see the entire diff)
+Ran: generic/508
+Failures: generic/508
+Failed 1 of 1 tests
+
+Please note that the test case requires shutdown support, thus the test
+case will be skipped using the current upstream kernel, as it doesn't
+have shutdown ioctl support.
+
+[CAUSE]
+The direct cause the 0 time stamp in the log tree:
+
+leaf 30507008 items 2 free space 16057 generation 9 owner TREE_LOG
+leaf 30507008 flags 0x1(WRITTEN) backref revision 1
+checksum stored e522548d
+checksum calced e522548d
+fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
+chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
+	item 0 key (257 INODE_ITEM 0) itemoff 16123 itemsize 160
+		generation 9 transid 9 size 0 nbytes 0
+		block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+		sequence 1 flags 0x0(none)
+		atime 1751432947.492000000 (2025-07-02 14:39:07)
+		ctime 1751432947.492000000 (2025-07-02 14:39:07)
+		mtime 1751432947.492000000 (2025-07-02 14:39:07)
+		otime 0.0 (1970-01-01 09:30:00) <<<
+
+But the old fs tree has all the correct time stamp:
+
+btrfs-progs v6.12
+fs tree key (FS_TREE ROOT_ITEM 0)
+leaf 30425088 items 2 free space 16061 generation 5 owner FS_TREE
+leaf 30425088 flags 0x1(WRITTEN) backref revision 1
+checksum stored 48f6c57e
+checksum calced 48f6c57e
+fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
+chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
+	item 0 key (256 INODE_ITEM 0) itemoff 16123 itemsize 160
+		generation 3 transid 0 size 0 nbytes 16384
+		block group 0 mode 40755 links 1 uid 0 gid 0 rdev 0
+		sequence 0 flags 0x0(none)
+		atime 1751432947.0 (2025-07-02 14:39:07)
+		ctime 1751432947.0 (2025-07-02 14:39:07)
+		mtime 1751432947.0 (2025-07-02 14:39:07)
+		otime 1751432947.0 (2025-07-02 14:39:07) <<<
+
+The root cause is that fill_inode_item() in tree-log.c is only
+populating a/c/m time, not the otime (or btime in statx output).
+
+Part of the reason is that, the vfs inode only has a/c/m time, no native
+btime support yet.
+
+[FIX]
+Thankfully btrfs has its otime stored in btrfs_inode::i_otime_sec and
+btrfs_inode::i_otime_nsec.
+
+So what we really need is just fill the otime time stamp in
+fill_inode_item() of tree-log.c
+
+There is another fill_inode_item() in inode.c, which is doing the proper
+otime population.
+
+Fixes: 94edf4ae43a5 ("Btrfs: don't bother committing delayed inode updates when fsyncing")
+CC: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ Adapted token-based API calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/omap2430.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/btrfs/tree-log.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/musb/omap2430.c
-+++ b/drivers/usb/musb/omap2430.c
-@@ -403,13 +403,13 @@ static int omap2430_probe(struct platfor
- 			ARRAY_SIZE(musb_resources));
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to add resources\n");
--		goto err2;
-+		goto err_put_control_otghs;
- 	}
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -3921,6 +3921,11 @@ static void fill_inode_item(struct btrfs
+ 	btrfs_set_token_timespec_nsec(&token, &item->ctime,
+ 				      inode->i_ctime.tv_nsec);
  
- 	ret = platform_device_add_data(musb, pdata, sizeof(*pdata));
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to add platform_data\n");
--		goto err2;
-+		goto err_put_control_otghs;
- 	}
++	btrfs_set_token_timespec_sec(&token, &item->otime,
++				     BTRFS_I(inode)->i_otime.tv_sec);
++	btrfs_set_token_timespec_nsec(&token, &item->otime,
++				      BTRFS_I(inode)->i_otime.tv_nsec);
++
+ 	btrfs_set_token_inode_nbytes(&token, item, inode_get_bytes(inode));
  
- 	pm_runtime_enable(glue->dev);
-@@ -424,7 +424,9 @@ static int omap2430_probe(struct platfor
- 
- err3:
- 	pm_runtime_disable(glue->dev);
--
-+err_put_control_otghs:
-+	if (!IS_ERR(glue->control_otghs))
-+		put_device(glue->control_otghs);
- err2:
- 	platform_device_put(musb);
- 
-@@ -438,6 +440,8 @@ static int omap2430_remove(struct platfo
- 
- 	platform_device_unregister(glue->musb);
- 	pm_runtime_disable(glue->dev);
-+	if (!IS_ERR(glue->control_otghs))
-+		put_device(glue->control_otghs);
- 
- 	return 0;
- }
+ 	btrfs_set_token_inode_sequence(&token, item, inode_peek_iversion(inode));
 
 
