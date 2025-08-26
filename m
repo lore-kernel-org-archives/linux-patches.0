@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B16034DCF5;
-	Tue, 26 Aug 2025 13:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204CD34F47E;
+	Tue, 26 Aug 2025 13:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216674; cv=none; b=gm03iEB7l7822F5ShpfQMtx3kw62x3/FsY47Yg+L6BuugBuBKQVII0nyQt9irNWPrZisW0XL8mlrkzGiVmBXtNjUoVDhtTRpodTq1Clp1LJDJIhRPdfQWbfM1Cux5RYBrMlFsZ7PY9nCpQob0BIKtqAOZAy2fK/e/A5FALCEPNM=
+	t=1756216677; cv=none; b=HSQifJN1BA3FRvBVRZL3T+u80iYKN//B2PIGEVC8EQwGmKIU04amJRUOzUW3TDBFXlTg0I9i9fOEyp3B1xzT4DYBxuPKDJ+TCeT/AXSXf0wU+Pc5pWtydI0+yvgQ82S7E/uOx4GPMdMNDd1ByuJMFxlwZTTLtI421PkjtL+hxoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216674; c=relaxed/simple;
-	bh=oSgF4o/Tu8p6jmkoGRL8E2FcbHiBf6Gfj1iXq/QP25g=;
+	s=arc-20240116; t=1756216677; c=relaxed/simple;
+	bh=3LumM3OukdiUQMV2h2n+pE51f+4YfurPYD3zpSAODiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ERFVSW5M+q33o491KSVFAUYpLjXc2LrKlZKktI4Ps1twJfM1eqH4x7QgJVxkmsD6OmPGXk4rBvJ7XxvwyBWzt6pXC1yMijK/G0DAbQFFdFuouMUu3ljXkbyfT9C2WTn+3ahqQXWmhDyip6ujoGiOfMKjJWGpvYV7Rz+bxktiuS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exm7peat; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQLIWYTIa0Xn7R9HhyMtSNh6msiNJZGYTODUuqVuKNs+h01+rfBLOkJtSOn1/2Da/9LcsZJYWprrKG7EYpEYOeXla14B5XETMmdYU62Y+VRvkNWq6g01YtYqLprKUmxsCJhO+KyOL4fsg/sJ/xVnyk+jxIgHhZ6aXYuMmYmwMg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIgXkvgB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exm7peat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B297C4CEF1;
-	Tue, 26 Aug 2025 13:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIgXkvgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A827FC4CEF1;
+	Tue, 26 Aug 2025 13:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216674;
-	bh=oSgF4o/Tu8p6jmkoGRL8E2FcbHiBf6Gfj1iXq/QP25g=;
+	s=korg; t=1756216677;
+	bh=3LumM3OukdiUQMV2h2n+pE51f+4YfurPYD3zpSAODiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=exm7peatI2QEt0KcWSOGI5wKJ+gfIkmcbufAAlV+iO3nn9d/iN1TcGIkXDkBvMHbK
-	 K9CjVPZK7QVmhqsWf18i2x8agyLjb/R8aL9rk4FMvFT9S7wBvKy2d6M4RMCMAxnBed
-	 KwUfWTJYS7dIkhzvfTKa2EjZaFfjbx65xTCAQSd0=
+	b=xIgXkvgB69/36qf9U0c1IO0EhsxajohFtQ4typtPdLtj7o6pI5NVshhFg2kAXygUh
+	 oRQgzd8qtiCXlJ2duW/BdDUWTDGIA7xyTnlt5hlJMF+bdk6WonQlYy+dP4TxQpNT33
+	 Bzh9PrSZCJDglQnOp7mqnckRCJhTP5M0wAy9UnaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+a81f2759d022496b40ab@syzkaller.appspotmail.com,
-	Jakub Acs <acsjakub@amazon.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 499/644] net, hsr: reject HSR frame if skb cant hold tag
-Date: Tue, 26 Aug 2025 13:09:50 +0200
-Message-ID: <20250826110958.861385773@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 470/644] ext4: dont try to clear the orphan_present feature block device is r/o
+Date: Tue, 26 Aug 2025 13:09:21 +0200
+Message-ID: <20250826110958.128952567@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -47,193 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Acs <acsjakub@amazon.de>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 7af76e9d18a9fd6f8611b3313c86c190f9b6a5a7 upstream.
+commit c5e104a91e7b6fa12c1dc2d8bf84abb7ef9b89ad upstream.
 
-Receiving HSR frame with insufficient space to hold HSR tag in the skb
-can result in a crash (kernel BUG):
+When the file system is frozen in preparation for taking an LVM
+snapshot, the journal is checkpointed and if the orphan_file feature
+is enabled, and the orphan file is empty, we clear the orphan_present
+feature flag.  But if there are pending inodes that need to be removed
+the orphan_present feature flag can't be cleared.
 
-[   45.390915] skbuff: skb_under_panic: text:ffffffff86f32cac len:26 put:14 head:ffff888042418000 data:ffff888042417ff4 tail:0xe end:0x180 dev:bridge_slave_1
-[   45.392559] ------------[ cut here ]------------
-[   45.392912] kernel BUG at net/core/skbuff.c:211!
-[   45.393276] Oops: invalid opcode: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
-[   45.393809] CPU: 1 UID: 0 PID: 2496 Comm: reproducer Not tainted 6.15.0 #12 PREEMPT(undef)
-[   45.394433] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[   45.395273] RIP: 0010:skb_panic+0x15b/0x1d0
+The problem comes if the block device is read-only.  In that case, we
+can't process the orphan inode list, so it is skipped in
+ext4_orphan_cleanup().  But then in ext4_mark_recovery_complete(),
+this results in the ext4 error "Orphan file not empty on read-only fs"
+firing and the file system mount is aborted.
 
-<snip registers, remove unreliable trace>
-
-[   45.402911] Call Trace:
-[   45.403105]  <IRQ>
-[   45.404470]  skb_push+0xcd/0xf0
-[   45.404726]  br_dev_queue_push_xmit+0x7c/0x6c0
-[   45.406513]  br_forward_finish+0x128/0x260
-[   45.408483]  __br_forward+0x42d/0x590
-[   45.409464]  maybe_deliver+0x2eb/0x420
-[   45.409763]  br_flood+0x174/0x4a0
-[   45.410030]  br_handle_frame_finish+0xc7c/0x1bc0
-[   45.411618]  br_handle_frame+0xac3/0x1230
-[   45.413674]  __netif_receive_skb_core.constprop.0+0x808/0x3df0
-[   45.422966]  __netif_receive_skb_one_core+0xb4/0x1f0
-[   45.424478]  __netif_receive_skb+0x22/0x170
-[   45.424806]  process_backlog+0x242/0x6d0
-[   45.425116]  __napi_poll+0xbb/0x630
-[   45.425394]  net_rx_action+0x4d1/0xcc0
-[   45.427613]  handle_softirqs+0x1a4/0x580
-[   45.427926]  do_softirq+0x74/0x90
-[   45.428196]  </IRQ>
-
-This issue was found by syzkaller.
-
-The panic happens in br_dev_queue_push_xmit() once it receives a
-corrupted skb with ETH header already pushed in linear data. When it
-attempts the skb_push() call, there's not enough headroom and
-skb_push() panics.
-
-The corrupted skb is put on the queue by HSR layer, which makes a
-sequence of unintended transformations when it receives a specific
-corrupted HSR frame (with incomplete TAG).
-
-Fix it by dropping and consuming frames that are not long enough to
-contain both ethernet and hsr headers.
-
-Alternative fix would be to check for enough headroom before skb_push()
-in br_dev_queue_push_xmit().
-
-In the reproducer, this is injected via AF_PACKET, but I don't easily
-see why it couldn't be sent over the wire from adjacent network.
-
-Further Details:
-
-In the reproducer, the following network interface chain is set up:
-
-┌────────────────┐   ┌────────────────┐
-│ veth0_to_hsr   ├───┤  hsr_slave0    ┼───┐
-└────────────────┘   └────────────────┘   │
-                                          │ ┌──────┐
-                                          ├─┤ hsr0 ├───┐
-                                          │ └──────┘   │
-┌────────────────┐   ┌────────────────┐   │            │┌────────┐
-│ veth1_to_hsr   ┼───┤  hsr_slave1    ├───┘            └┤        │
-└────────────────┘   └────────────────┘                ┌┼ bridge │
-                                                       ││        │
-                                                       │└────────┘
-                                                       │
-                                        ┌───────┐      │
-                                        │  ...  ├──────┘
-                                        └───────┘
-
-To trigger the events leading up to crash, reproducer sends a corrupted
-HSR frame with incomplete TAG, via AF_PACKET socket on 'veth0_to_hsr'.
-
-The first HSR-layer function to process this frame is
-hsr_handle_frame(). It and then checks if the
-protocol is ETH_P_PRP or ETH_P_HSR. If it is, it calls
-skb_set_network_header(skb, ETH_HLEN + HSR_HLEN), without checking that
-the skb is long enough. For the crashing frame it is not, and hence the
-skb->network_header and skb->mac_len fields are set incorrectly,
-pointing after the end of the linear buffer.
-
-I will call this a BUG#1 and it is what is addressed by this patch. In
-the crashing scenario before the fix, the skb continues to go down the
-hsr path as follows.
-
-hsr_handle_frame() then calls this sequence
-hsr_forward_skb()
-  fill_frame_info()
-    hsr->proto_ops->fill_frame_info()
-      hsr_fill_frame_info()
-
-hsr_fill_frame_info() contains a check that intends to check whether the
-skb actually contains the HSR header. But the check relies on the
-skb->mac_len field which was erroneously setup due to BUG#1, so the
-check passes and the execution continues  back in the hsr_forward_skb():
-
-hsr_forward_skb()
-  hsr_forward_do()
-    hsr->proto_ops->get_untagged_frame()
-      hsr_get_untagged_frame()
-        create_stripped_skb_hsr()
-
-In create_stripped_skb_hsr(), a copy of the skb is created and is
-further corrupted by operation that attempts to strip the HSR tag in a
-call to __pskb_copy().
-
-The skb enters create_stripped_skb_hsr() with ethernet header pushed in
-linear buffer. The skb_pull(skb_in, HSR_HLEN) thus pulls 6 bytes of
-ethernet header into the headroom, creating skb_in with a headroom of
-size 8. The subsequent __pskb_copy() then creates an skb with headroom
-of just 2 and skb->len of just 12, this is how it looks after the copy:
-
-gdb) p skb->len
-$10 = 12
-(gdb) p skb->data
-$11 = (unsigned char *) 0xffff888041e45382 "\252\252\252\252\252!\210\373",
-(gdb) p skb->head
-$12 = (unsigned char *) 0xffff888041e45380 ""
-
-It seems create_stripped_skb_hsr() assumes that ETH header is pulled
-in the headroom when it's entered, because it just pulls HSR header on
-top. But that is not the case in our code-path and we end up with the
-corrupted skb instead. I will call this BUG#2
-
-*I got confused here because it seems that under no conditions can
-create_stripped_skb_hsr() work well, the assumption it makes is not true
-during the processing of hsr frames - since the skb_push() in
-hsr_handle_frame to skb_pull in hsr_deliver_master(). I wonder whether I
-missed something here.*
-
-Next, the execution arrives in hsr_deliver_master(). It calls
-skb_pull(ETH_HLEN), which just returns NULL - the SKB does not have
-enough space for the pull (as it only has 12 bytes in total at this
-point).
-
-*The skb_pull() here further suggests that ethernet header is meant
-to be pushed through the whole hsr processing and
-create_stripped_skb_hsr() should pull it before doing the HSR header
-pull.*
-
-hsr_deliver_master() then puts the corrupted skb on the queue, it is
-then picked up from there by bridge frame handling layer and finally
-lands in br_dev_queue_push_xmit where it panics.
+Fix this by clearing the needs_recovery flag in the block device is
+read-only.  We do this after the call to ext4_load_and_init-journal()
+since there are some error checks need to be done in case the journal
+needs to be replayed and the block device is read-only, or if the
+block device containing the externa journal is read-only, etc.
 
 Cc: stable@kernel.org
-Fixes: 48b491a5cc74 ("net: hsr: fix mac_len checks")
-Reported-by: syzbot+a81f2759d022496b40ab@syzkaller.appspotmail.com
-Signed-off-by: Jakub Acs <acsjakub@amazon.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250819082842.94378-1-acsjakub@amazon.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1108271
+Cc: stable@vger.kernel.org
+Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/hsr/hsr_slave.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/ext4/super.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -62,8 +62,14 @@ static rx_handler_result_t hsr_handle_fr
- 	skb_push(skb, ETH_HLEN);
- 	skb_reset_mac_header(skb);
- 	if ((!hsr->prot_version && protocol == htons(ETH_P_PRP)) ||
--	    protocol == htons(ETH_P_HSR))
-+	    protocol == htons(ETH_P_HSR)) {
-+		if (!pskb_may_pull(skb, ETH_HLEN + HSR_HLEN)) {
-+			kfree_skb(skb);
-+			goto finish_consume;
-+		}
-+
- 		skb_set_network_header(skb, ETH_HLEN + HSR_HLEN);
-+	}
- 	skb_reset_mac_len(skb);
- 
- 	hsr_forward_skb(skb, port);
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -4669,6 +4669,8 @@ static int ext4_fill_super(struct super_
+ 		err = ext4_load_journal(sb, es, parsed_opts.journal_devnum);
+ 		if (err)
+ 			goto failed_mount3a;
++		if (bdev_read_only(sb->s_bdev))
++		    needs_recovery = 0;
+ 	} else if (test_opt(sb, NOLOAD) && !sb_rdonly(sb) &&
+ 		   ext4_has_feature_journal_needs_recovery(sb)) {
+ 		ext4_msg(sb, KERN_ERR, "required journal recovery "
 
 
