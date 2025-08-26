@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAC01A5BBC;
-	Tue, 26 Aug 2025 12:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFBC216E1B;
+	Tue, 26 Aug 2025 12:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213192; cv=none; b=rFyMlQBL2OCg0vGjoiqVY9ZBTATerewZ50mKbFpCRYvFkaLxc+b87NrXrkGik7C4bRR1LXYR2tN8W9dYm0ijpYVM+x8TT82KgR+sWxPs4CWH6MfhiU9A5NCt+mAvxe89Jss6spIf4vPVtrqSJUg9z4B8t3KyJbn9GE5IHULWuK4=
+	t=1756213195; cv=none; b=DASwwdyUtCc4fyI6WTixpqG0UET3bz6z8jOjRVqW8kSwEeBUqPgSNMNfv2til8DPEygcaz/Mg89EAWiM4lnULdlTcNPS/DPJS4qozNKDthmo25IJGQ6Z35/GhgzUgV2vUU3Hu4Dk3tlwa6NrjD70Fz2+MgbOvV3CzcDfC4cXHMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213192; c=relaxed/simple;
-	bh=q/xXOUejIXHFQqAzmmtRBWLgIHDAzgZGRJkowdSZ89I=;
+	s=arc-20240116; t=1756213195; c=relaxed/simple;
+	bh=wSlwFxX0TDAMIonkgj2XYgGaMzISJ99Xq2VqXl+z/hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHH2gzE0WoV3EP1sxP3mD9UJEOcKZB2gT6LaAsN2JkW2/1mnwm+3VnAlWJ8+5DOB8sf123up/rjD06qRQpiohZGL3cZYU5Ph12Ayed8HjceC7vuNH4r+ppZT0Z92y+NRyv68Rv3b6IIj2Wi5Gq1XYZTjm3GrlX6e8XUtp90idKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ah9FBMe/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bOIpTje5cLEO1Zkqzbrcx57yuCrRVZ7wGoE7SVw7s9nadIKzOYL0myBNk4Vo6khnyaX7ffYlYhC6uhDWuz34Fa/PIGRRtfUGBJjWsIG2I0mwdZw6R5XjLCLJZa+ABh1qMxuvFbKS1s0cGhWSdA+v4AImzNa4kau0qXNoyeXf1Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJRFFCCv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ah9FBMe/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E26C4CEF1;
-	Tue, 26 Aug 2025 12:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJRFFCCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D554C4CEF4;
+	Tue, 26 Aug 2025 12:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213192;
-	bh=q/xXOUejIXHFQqAzmmtRBWLgIHDAzgZGRJkowdSZ89I=;
+	s=korg; t=1756213195;
+	bh=wSlwFxX0TDAMIonkgj2XYgGaMzISJ99Xq2VqXl+z/hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ah9FBMe/Ees9lMbSP24tZINTAG+gjdH7gxTvT7H1HfObRg0P+1rWQfrHFXj1RFSlp
-	 ksWYyHmGmTBhs5ddL0xsD+XlRy2mIk1K+VezzAU6cn2uHSJKU95RybIkhsuKuRyHHS
-	 RGOYM7mpFv3EBx3OUW/QsR84P+EzHAABNrFdoU48=
+	b=tJRFFCCvIHmee9CGSIQvEY5ZSmvgEwNuVprY7WMb0Tl7XUu0s1KcBCkhoMf7oM6eE
+	 glMDOPf1yY0ORT8SD2j/oWJOYPd68E/8mZIYUZviZkSRR559I5n4m6YkUnhHhGQfzg
+	 7kJz20ypNWfaE+yMmitmyjkrc7dTnm65PeDn3WXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 254/587] media: usb: hdpvr: disable zero-length read messages
-Date: Tue, 26 Aug 2025 13:06:43 +0200
-Message-ID: <20250826110959.393697594@linuxfoundation.org>
+Subject: [PATCH 6.6 225/587] mfd: axp20x: Set explicit ID for AXP313 regulator
+Date: Tue, 26 Aug 2025 13:06:14 +0200
+Message-ID: <20250826110958.659723222@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,44 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit b5ae5a79825ba8037b0be3ef677a24de8c063abf ]
+[ Upstream commit 88828c7e940dd45d139ad4a39d702b23840a37c5 ]
 
-This driver passes the length of an i2c_msg directly to
-usb_control_msg(). If the message is now a read and of length 0, it
-violates the USB protocol and a warning will be printed. Enable the
-I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
-read messages altogether.
+On newer boards featuring the A523 SoC, the AXP323 (related to the
+AXP313) is paired with the AXP717 and serves as a secondary PMIC
+providing additional regulator outputs. However the MFD cells are all
+registered with PLATFORM_DEVID_NONE, which causes the regulator cells
+to conflict with each other.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Commit e37ec3218870 ("mfd: axp20x: Allow multiple regulators") attempted
+to fix this by switching to PLATFORM_DEVID_AUTO so that the device names
+would all be different, however that broke IIO channel mapping, which is
+also tied to the device names. As a result the change was later reverted.
+
+Instead, here we attempt to make sure the AXP313/AXP323 regulator cell
+does not conflict by explicitly giving it an ID number. This was
+previously done for the AXP809+AXP806 pair used with the A80 SoC.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20250619173207.3367126-1-wens@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/hdpvr/hdpvr-i2c.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mfd/axp20x.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/hdpvr/hdpvr-i2c.c b/drivers/media/usb/hdpvr/hdpvr-i2c.c
-index 070559b01b01..54956a8ff15e 100644
---- a/drivers/media/usb/hdpvr/hdpvr-i2c.c
-+++ b/drivers/media/usb/hdpvr/hdpvr-i2c.c
-@@ -165,10 +165,16 @@ static const struct i2c_algorithm hdpvr_algo = {
- 	.functionality = hdpvr_functionality,
+diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
+index 87603eeaa277..2b85da0fcf27 100644
+--- a/drivers/mfd/axp20x.c
++++ b/drivers/mfd/axp20x.c
+@@ -936,7 +936,8 @@ static const struct mfd_cell axp152_cells[] = {
  };
  
-+/* prevent invalid 0-length usb_control_msg */
-+static const struct i2c_adapter_quirks hdpvr_quirks = {
-+	.flags = I2C_AQ_NO_ZERO_LEN_READ,
-+};
-+
- static const struct i2c_adapter hdpvr_i2c_adapter_template = {
- 	.name   = "Hauppauge HD PVR I2C",
- 	.owner  = THIS_MODULE,
- 	.algo   = &hdpvr_algo,
-+	.quirks = &hdpvr_quirks,
+ static struct mfd_cell axp313a_cells[] = {
+-	MFD_CELL_NAME("axp20x-regulator"),
++	/* AXP323 is sometimes paired with AXP717 as sub-PMIC */
++	MFD_CELL_BASIC("axp20x-regulator", NULL, NULL, 0, 1),
+ 	MFD_CELL_RES("axp313a-pek", axp313a_pek_resources),
  };
  
- static int hdpvr_activate_ir(struct hdpvr_device *dev)
 -- 
 2.39.5
 
