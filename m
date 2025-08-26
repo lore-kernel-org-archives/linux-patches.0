@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9519E239E8B;
-	Tue, 26 Aug 2025 14:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6E2343218;
+	Tue, 26 Aug 2025 14:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218951; cv=none; b=ripykCfL5CL9L4TVjn4IZvBwBoVqei41NX9QQAwW4jV2LKvLp99oHZd+FulAK8D3DxbyL4ocff3PpH9KlCBfPwFkyOopH/iQw9dGDKmcYXQ7taDh8kqHzelvJasQOAsauKL0e/3bnurKofbhqNCvXQJS6pR0O1fv3JMswVo4+LQ=
+	t=1756218954; cv=none; b=mZ8ztkUMJsZVyNblzUNjwmYCQQgWNABNvo6YzlMb2utNSj8q4/2n04IvplGoCuSX2V6pYbFRX5o8loPHSr/vSEC3FQASIZmVGnI2rLsC8yyPjVUlpjeBLz04CkvRIGwqRgMfl2/1hT6P/FAxDNwzVD9eo/1kBtgdZpzFlKwMANk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218951; c=relaxed/simple;
-	bh=AgQ0C0vnPcWnvuJgmYEZ9jw5t5eNFGjr1WxQ2JI2P/U=;
+	s=arc-20240116; t=1756218954; c=relaxed/simple;
+	bh=07sqLu1k4ODsoZEsOn/o5gP0H1kbb8JkNxSlsHJqiRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXWv9m24u4XTyStqK5zx9/7LSvwX3M/KY/nDpfFt4mkz0fWoThOBRrjarccLawBD643dD0OGHCKy8/iFDxcqIhi6QUgbzaWVNszMNNVEykq3sTuPFngvr4RgQQQ5V60ol2C49SPeuYBZx6YximihwBEV9hylCN4BJ3NFo/DGTN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVp8CSC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCgNVJ6tqATYuDwRZAwweJVca9AFFTbum0r1eM2MfISXU7W+93+Mxm71AcqoW49PbWKsdiLmIUJFfKlPE7i5UJ3j/FphjutjL1sHNczVeWnk5H9eEXS1itkZEaJy3uGSdrbW7R3IeuIv520ttgPmM0N/gMkIukR4rMGhfdiCuXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKZqN4fp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVp8CSC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23679C4CEF1;
-	Tue, 26 Aug 2025 14:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKZqN4fp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2534C4CEF1;
+	Tue, 26 Aug 2025 14:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218951;
-	bh=AgQ0C0vnPcWnvuJgmYEZ9jw5t5eNFGjr1WxQ2JI2P/U=;
+	s=korg; t=1756218954;
+	bh=07sqLu1k4ODsoZEsOn/o5gP0H1kbb8JkNxSlsHJqiRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVp8CSC8iT7ajOTarab5v1pZrCXH1GQpjgkhuWowPM7gfbyh92FAQJgu1eUHXbC3I
-	 h4XL6n8DZtoUrwDmX4SglXyo2kk47aDfz8j4lJCaK9r7R75Vq5S71h4s4UdWW42lLn
-	 sZfELVjV4TE07MPlMXBJqRoPR5qOcZ7W1c30m4LA=
+	b=XKZqN4fpUitwpG4ACfyjqzqNCpHfNdCeIg2ziRrHLeaTe3n0K+xlxLof6EQ7z+/kx
+	 CEpSA6zWtB2Xzl/Vz+hlWjHSKeqoIqnaUWnF+Vo7IK4pym3W1Cq+/Rpe2toiQMTe2h
+	 v9+S000fr4JmhFdwUI2kqMyf7q9l6fRcVxkPNKG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@sandisk.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Ricky Wu <ricky_wu@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 197/403] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
-Date: Tue, 26 Aug 2025 13:08:43 +0200
-Message-ID: <20250826110912.309063387@linuxfoundation.org>
+Subject: [PATCH 5.4 198/403] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
+Date: Tue, 26 Aug 2025 13:08:44 +0200
+Message-ID: <20250826110912.334382443@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,38 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
+[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
 
-In the error path of sd_set_power_mode() we don't update host->power_mode,
-which could lead to an imbalance of the runtime PM usage count. Fix this by
-always updating host->power_mode.
+We currently log parse failures for ELD data and some disconnection events
+as errors without rate limiting. These log messages can be triggered very
+frequently in some situations, especially ELD parsing when there is nothing
+connected to a HDMI port which will generate:
 
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Ricky Wu <ricky_wu@realtek.com>
-Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
+hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
+
+While there's doubtless work that could be done on reducing the number of
+connection notification callbacks it's possible these may be legitimately
+generated by poor quality physical connections so let's use rate limiting
+to mitigate the log spam for the parse errors and lower the severity for
+disconnect logging to debug level.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 3261560bede4..581bec5c4caf 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1038,9 +1038,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
- 		err = sd_power_on(host);
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 78d5b4d31bb6..71d13b413418 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -1231,7 +1231,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 						>> DRM_ELD_VER_SHIFT;
+ 
+ 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
+-		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: Unknown ELD version %d\n", ver);
+ 		return -EINVAL;
  	}
  
--	if (!err)
--		host->power_mode = power_mode;
--
-+	host->power_mode = power_mode;
- 	return err;
- }
+@@ -1239,7 +1240,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
  
+ 	if (mnl > ELD_MAX_MNL) {
+-		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: MNL Invalid %d\n", mnl);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1293,8 +1295,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
+ 
+ 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
+ 
+-		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
+-						__func__, pin->nid, port->id);
++		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
++			__func__, pin->nid, port->id);
+ 
+ 		/*
+ 		 * PCMs are not registered during device probe, so don't
 -- 
 2.39.5
 
