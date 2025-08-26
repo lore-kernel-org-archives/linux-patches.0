@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5794D319858;
-	Tue, 26 Aug 2025 11:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDB63090E1;
+	Tue, 26 Aug 2025 11:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208171; cv=none; b=nZ9VChVmE7yvp9eB9KXeDTzmWVddYrOJAfQNLJr9EXHyVcckvf1PB6hwvd1VDrMvpePYKhU/ZYBRNUZS3qdnur+0LaxXfmxBQFZqFtwIqJEWndNgo7ZFY9ZbHBxsSs3K59VGZ3SiVbdESbOUZ9ipf1OZ1srgs5NExcFSUae4PjE=
+	t=1756208173; cv=none; b=VozRPto0lqVArCKLsFPhkTxpBe1CvYe/vMS2wVFkIbLNX9yNH1gMwzZK64ud/K3aeG/P2UxpPWID1GhdXyJ3xwAVOEtm97HD5LFauxxwwfXR23a+Ni49EslNvDYxkmMwwCQywWnqRb9O2D7BZ0FpDcpGpGsSyXD41XtQmG65WaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208171; c=relaxed/simple;
-	bh=f17BPTL3u/zuW9pO3EU0cWGpb67SRntIuAHbaOGjzMM=;
+	s=arc-20240116; t=1756208173; c=relaxed/simple;
+	bh=P2E8mxXKmL/zLHvA5axU9XtaC7GW3eYXV4wrVxc/K6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IhWllpORBfSoJq2621M77vhRnIUFNalFlwFcjt69B0AF9v4UMqqdYEn8dwmCDYlvkrWiScYjPqs2776xuY8mFw5e0uTQdPkEZlZD8b/ecnoBP7Au6Y8VyiQsHyNCxAdfdORSpnU5DwNNbtFFRNxZPhTnroK8PREXZjp75eiOeC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHNhuTVu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HlFLlqs646Cq6DLJuIZFw6RUS5BWRcCfVEWnbgsBS6JJPPX0L6JytTLIoGHAsid33hOvE9VeD24R5BtTeq2GuG1j7+p26eq+IGbRIl7ADUmI5yCAQTESPPUSuhGDbzRolzP99s9T45U+mI0mHDb/Quz6Mj5PnKp6vJWDjmfMxbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xN2AwFPo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHNhuTVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90724C4CEF1;
-	Tue, 26 Aug 2025 11:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xN2AwFPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A914C4CEF1;
+	Tue, 26 Aug 2025 11:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208170;
-	bh=f17BPTL3u/zuW9pO3EU0cWGpb67SRntIuAHbaOGjzMM=;
+	s=korg; t=1756208173;
+	bh=P2E8mxXKmL/zLHvA5axU9XtaC7GW3eYXV4wrVxc/K6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHNhuTVuQ3ETb922qrNDC2sBjO9r5e01VNMAQ1qZJpj5VoSqD/5+B36QRPi/yKcPa
-	 32l3a8qDJ9KCZgcvG+wt/PatRafTBxMgSUBDoE43H4arDwMUKGAQjClhgKm9wMli9o
-	 7miuxtyyNVnaj5+rlD/BkiwPJ1PeRTmgRjeweY1s=
+	b=xN2AwFPo5IW74DqMaATS4TxKclJOdc9mhOd1slGRpuasMq9VNRODRiFFyWoTrlECi
+	 ghcvnvqxok4D7Nspq++6355ikCRXHvvgdAP85h2GO2/nhW7UUbRVsn8JDkv6taUpFB
+	 Os4YAwBYEmuVVhUWWZzwQ/vB3w9GMDJODQoLENtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 456/457] drm/xe: Move ASID allocation and user PT BO tracking into xe_vm_create
-Date: Tue, 26 Aug 2025 13:12:20 +0200
-Message-ID: <20250826110948.554716426@linuxfoundation.org>
+Subject: [PATCH 6.16 447/457] Octeontx2-af: Skip overlap check for SPI field
+Date: Tue, 26 Aug 2025 13:12:11 +0200
+Message-ID: <20250826110948.333385254@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -47,101 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Piotr Piórkowski <piotr.piorkowski@intel.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 8a30114073639fd97f2c7390abbc34fb8711327a ]
+[ Upstream commit 8c5d95988c34f0aeba1f34cd5e4ba69494c90c5f ]
 
-Currently, ASID assignment for user VMs and page-table BO accounting for
-client memory tracking are performed in xe_vm_create_ioctl.
-To consolidate VM object initialization, move this logic to
-xe_vm_create.
+Octeontx2/CN10K silicon supports generating a 256-bit key per packet.
+The specific fields to be extracted from a packet for key generation
+are configurable via a Key Extraction (MKEX) Profile.
 
-v2:
- - removed unnecessary duplicate BO tracking code
- - using the local variable xef to verify whether the VM is being created
-   by userspace
+The AF driver scans the configured extraction profile to ensure that
+fields from upper layers do not overwrite fields from lower layers in
+the key.
 
-Fixes: 658a1c8e0a66 ("drm/xe: Assign ioctl xe file handler to vm in xe_vm_create")
-Suggested-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://lore.kernel.org/r/20250811104358.2064150-3-piotr.piorkowski@intel.com
-Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
-(cherry picked from commit 30e0c3f43a414616e0b6ca76cf7f7b2cd387e1d4)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[Rodrigo: Added fixes tag]
+Example Packet Field Layout:
+LA: DMAC + SMAC
+LB: VLAN
+LC: IPv4/IPv6
+LD: TCP/UDP
+
+Valid MKEX Profile Configuration:
+
+LA   -> DMAC   -> key_offset[0-5]
+LC   -> SIP    -> key_offset[20-23]
+LD   -> SPORT  -> key_offset[30-31]
+
+Invalid MKEX profile configuration:
+
+LA   -> DMAC   -> key_offset[0-5]
+LC   -> SIP    -> key_offset[20-23]
+LD   -> SPORT  -> key_offset[2-3]  // Overlaps with DMAC field
+
+In another scenario, if the MKEX profile is configured to extract
+the SPI field from both AH and ESP headers at the same key offset,
+the driver rejecting this configuration. In a regular traffic,
+ipsec packet will be having either AH(LD) or ESP (LE). This patch
+relaxes the check for the same.
+
+Fixes: 12aa0a3b93f3 ("octeontx2-af: Harden rule validation.")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Link: https://patch.msgid.link/20250820063919.1463518-1-hkelam@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c | 34 +++++++++++++++-------------------
- 1 file changed, 15 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index 7251f23b919c..3135de124c18 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -1767,6 +1767,20 @@ struct xe_vm *xe_vm_create(struct xe_device *xe, u32 flags, struct xe_file *xef)
- 	if (number_tiles > 1)
- 		vm->composite_fence_ctx = dma_fence_context_alloc(1);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+index 1b765045aa63..b56395ac5a74 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+@@ -606,8 +606,8 @@ static void npc_set_features(struct rvu *rvu, int blkaddr, u8 intf)
+ 		if (!npc_check_field(rvu, blkaddr, NPC_LB, intf))
+ 			*features &= ~BIT_ULL(NPC_OUTER_VID);
  
-+	if (xef && xe->info.has_asid) {
-+		u32 asid;
-+
-+		down_write(&xe->usm.lock);
-+		err = xa_alloc_cyclic(&xe->usm.asid_to_vm, &asid, vm,
-+				      XA_LIMIT(1, XE_MAX_ASID - 1),
-+				      &xe->usm.next_asid, GFP_KERNEL);
-+		up_write(&xe->usm.lock);
-+		if (err < 0)
-+			goto err_unlock_close;
-+
-+		vm->usm.asid = asid;
-+	}
-+
- 	trace_xe_vm_create(vm);
+-	/* Set SPI flag only if AH/ESP and IPSEC_SPI are in the key */
+-	if (npc_check_field(rvu, blkaddr, NPC_IPSEC_SPI, intf) &&
++	/* Allow extracting SPI field from AH and ESP headers at same offset */
++	if (npc_is_field_present(rvu, NPC_IPSEC_SPI, intf) &&
+ 	    (*features & (BIT_ULL(NPC_IPPROTO_ESP) | BIT_ULL(NPC_IPPROTO_AH))))
+ 		*features |= BIT_ULL(NPC_IPSEC_SPI);
  
- 	return vm;
-@@ -2034,9 +2048,8 @@ int xe_vm_create_ioctl(struct drm_device *dev, void *data,
- 	struct xe_device *xe = to_xe_device(dev);
- 	struct xe_file *xef = to_xe_file(file);
- 	struct drm_xe_vm_create *args = data;
--	struct xe_tile *tile;
- 	struct xe_vm *vm;
--	u32 id, asid;
-+	u32 id;
- 	int err;
- 	u32 flags = 0;
- 
-@@ -2076,23 +2089,6 @@ int xe_vm_create_ioctl(struct drm_device *dev, void *data,
- 	if (IS_ERR(vm))
- 		return PTR_ERR(vm);
- 
--	if (xe->info.has_asid) {
--		down_write(&xe->usm.lock);
--		err = xa_alloc_cyclic(&xe->usm.asid_to_vm, &asid, vm,
--				      XA_LIMIT(1, XE_MAX_ASID - 1),
--				      &xe->usm.next_asid, GFP_KERNEL);
--		up_write(&xe->usm.lock);
--		if (err < 0)
--			goto err_close_and_put;
--
--		vm->usm.asid = asid;
--	}
--
--	/* Record BO memory for VM pagetable created against client */
--	for_each_tile(tile, xe, id)
--		if (vm->pt_root[id])
--			xe_drm_client_add_bo(vm->xef->client, vm->pt_root[id]->bo);
--
- #if IS_ENABLED(CONFIG_DRM_XE_DEBUG_MEM)
- 	/* Warning: Security issue - never enable by default */
- 	args->reserved[0] = xe_bo_main_addr(vm->pt_root[0]->bo, XE_PAGE_SIZE);
 -- 
 2.50.1
 
