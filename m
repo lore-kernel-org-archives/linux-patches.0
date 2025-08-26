@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CD52135B8;
-	Tue, 26 Aug 2025 11:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356AB318146;
+	Tue, 26 Aug 2025 11:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208079; cv=none; b=OgcxaSW9YT8JcmVjrgAOi8P2bVqaCWhrun4x2Hi1UTY9higjWgelzJSfVf7FMe1EFBnH+euFfkU+hwi7nBaJz80E8sbDlb3OTUDxbTHUQsASop34rAdpWSdf748Nqae7nmck5HynBSBW9zHEJ+ehVUZ7cyDJE5mrooMgTynOkZE=
+	t=1756208082; cv=none; b=TG8FZqIGQ2wUasiZuP+WrnA5lAZVgQdFPSwRcPZwAnevw+JOuHe2bEWh6Aa4dqDSRNPc+DVhvxhC0FIjKxKnJ0N+pIAWTsDSF1s/sNgDeHCpSEU6WlSERyObJygXxkaMYPrhJH+VZ15tCGo1tHAZJ5+IO56tmCM2mtfuFlnM1d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208079; c=relaxed/simple;
-	bh=nSfsrQ0GoofU90GV03H9uxwRdhRxvB0XyoC0Gwkdlvc=;
+	s=arc-20240116; t=1756208082; c=relaxed/simple;
+	bh=uTBDAE8OztauwlBmyjhc7xnkL/x6ery0roKXbuPXVyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Akx74MvTPXZXwnZzztChLkglDJD5BK1omLkdP55vMfInGk7Piqgt/q97cGhH/E5zD6+k3LLniyF63525zueYbUjb0OG43sexzANiQjBwwy0bJFJA1v70qu6FoLnutbvgAbVVs6q83Gk3BMpdpKwm5pqO1RVPxLmsWE7518QpayM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crUh2VJK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lHJXM/I4lsJnxbPyRyxvv2ndj8vA5De/eZZJecBW0BSL8VZLoBq0PLf45pu8ZKIgMbQZOua81FPN34QfFfZjPQQDeFvXQQ9EYThbJ72pKXnKHTtv6YrrOSSKDDgBLemhsDP+1OZ6TJI3nLwNpHLRIvb2VyDLDb9CBqzBVaNrMoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RORuohGN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crUh2VJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E9CC4CEF1;
-	Tue, 26 Aug 2025 11:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RORuohGN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B6FC4CEF4;
+	Tue, 26 Aug 2025 11:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208079;
-	bh=nSfsrQ0GoofU90GV03H9uxwRdhRxvB0XyoC0Gwkdlvc=;
+	s=korg; t=1756208082;
+	bh=uTBDAE8OztauwlBmyjhc7xnkL/x6ery0roKXbuPXVyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crUh2VJKCNTefdZ3ITPKJPmERzjuPHMnSUf5z9Fx9KTTyJ1dRiJMGWuIFfiTGL2no
-	 U9YRHa+Gr4vM3CiEafTPf8BtAL/jU4+K4RbV/TC6ZKG2IYydXj768qY1ZxpiuEJWLb
-	 wJgKiTgKqKujbqcYMko/c2EkJOK3Bn2ZyvxO6Ts8=
+	b=RORuohGNxZvO1l2aFMtP9wRS1n8cWd0QSth4sCyBQQMcl9RKL2ucLVbkAZ4WDrbEp
+	 BZFBsyVu6u0QHY8nIJcFYjic26G79aoa/qNiLyQNv4Mwhu76CSvbpwg6N8lBN63ynL
+	 zlLPdn4dSw7+KAJL5/og11yjO3MkYspSfeW7zzb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanteng Si <siyanteng@cqsoftware.com.cm>,
-	Song Gao <gaosong@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Jason Xing <kernelxing@tencent.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Priya Singh <priyax.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 430/457] LoongArch: KVM: Use kvm_get_vcpu_by_id() instead of kvm_get_vcpu()
-Date: Tue, 26 Aug 2025 13:11:54 +0200
-Message-ID: <20250826110947.915979060@linuxfoundation.org>
+Subject: [PATCH 6.16 431/457] ixgbe: xsk: resolve the negative overflow of budget in ixgbe_xmit_zc
+Date: Tue, 26 Aug 2025 13:11:55 +0200
+Message-ID: <20250826110947.942181170@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,55 +56,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Gao <gaosong@loongson.cn>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 0dfd9ea7bf80fabe11f5b775d762a5cd168cdf41 ]
+[ Upstream commit 4d4d9ef9dfee877d494e5418f68a1016ef08cad6 ]
 
-Since using kvm_get_vcpu() may fail to retrieve the vCPU context,
-kvm_get_vcpu_by_id() should be used instead.
+Resolve the budget negative overflow which leads to returning true in
+ixgbe_xmit_zc even when the budget of descs are thoroughly consumed.
 
-Fixes: 8e3054261bc3 ("LoongArch: KVM: Add IPI user mode read and write function")
-Fixes: 3956a52bc05b ("LoongArch: KVM: Add EIOINTC read and write functions")
-Reviewed-by: Yanteng Si <siyanteng@cqsoftware.com.cm>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Before this patch, when the budget is decreased to zero and finishes
+sending the last allowed desc in ixgbe_xmit_zc, it will always turn back
+and enter into the while() statement to see if it should keep processing
+packets, but in the meantime it unexpectedly decreases the value again to
+'unsigned int (0--)', namely, UINT_MAX. Finally, the ixgbe_xmit_zc returns
+true, showing 'we complete cleaning the budget'. That also means
+'clean_complete = true' in ixgbe_poll.
+
+The true theory behind this is if that budget number of descs are consumed,
+it implies that we might have more descs to be done. So we should return
+false in ixgbe_xmit_zc to tell napi poll to find another chance to start
+polling to handle the rest of descs. On the contrary, returning true here
+means job done and we know we finish all the possible descs this time and
+we don't intend to start a new napi poll.
+
+It is apparently against our expectations. Please also see how
+ixgbe_clean_tx_irq() handles the problem: it uses do..while() statement
+to make sure the budget can be decreased to zero at most and the negative
+overflow never happens.
+
+The patch adds 'likely' because we rarely would not hit the loop condition
+since the standard budget is 256.
+
+Fixes: 8221c5eba8c1 ("ixgbe: add AF_XDP zero-copy Tx support")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Priya Singh <priyax.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20250819222000.3504873-4-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kvm/intc/eiointc.c | 7 ++++++-
- arch/loongarch/kvm/intc/ipi.c     | 2 +-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kvm/intc/eiointc.c b/arch/loongarch/kvm/intc/eiointc.c
-index 3cf9894999da..0207cfe1dbd6 100644
---- a/arch/loongarch/kvm/intc/eiointc.c
-+++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -45,7 +45,12 @@ static void eiointc_update_irq(struct loongarch_eiointc *s, int irq, int level)
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
+index ac58964b2f08..7b941505a9d0 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
+@@ -398,7 +398,7 @@ static bool ixgbe_xmit_zc(struct ixgbe_ring *xdp_ring, unsigned int budget)
+ 	dma_addr_t dma;
+ 	u32 cmd_type;
+ 
+-	while (budget-- > 0) {
++	while (likely(budget)) {
+ 		if (unlikely(!ixgbe_desc_unused(xdp_ring))) {
+ 			work_done = false;
+ 			break;
+@@ -433,6 +433,8 @@ static bool ixgbe_xmit_zc(struct ixgbe_ring *xdp_ring, unsigned int budget)
+ 		xdp_ring->next_to_use++;
+ 		if (xdp_ring->next_to_use == xdp_ring->count)
+ 			xdp_ring->next_to_use = 0;
++
++		budget--;
  	}
  
- 	cpu = s->sw_coremap[irq];
--	vcpu = kvm_get_vcpu(s->kvm, cpu);
-+	vcpu = kvm_get_vcpu_by_id(s->kvm, cpu);
-+	if (unlikely(vcpu == NULL)) {
-+		kvm_err("%s: invalid target cpu: %d\n", __func__, cpu);
-+		return;
-+	}
-+
- 	if (level) {
- 		/* if not enable return false */
- 		if (!test_bit(irq, (unsigned long *)s->enable.reg_u32))
-diff --git a/arch/loongarch/kvm/intc/ipi.c b/arch/loongarch/kvm/intc/ipi.c
-index 6a13d2f44575..4859e320e3a1 100644
---- a/arch/loongarch/kvm/intc/ipi.c
-+++ b/arch/loongarch/kvm/intc/ipi.c
-@@ -318,7 +318,7 @@ static int kvm_ipi_regs_access(struct kvm_device *dev,
- 	cpu = (attr->attr >> 16) & 0x3ff;
- 	addr = attr->attr & 0xff;
- 
--	vcpu = kvm_get_vcpu(dev->kvm, cpu);
-+	vcpu = kvm_get_vcpu_by_id(dev->kvm, cpu);
- 	if (unlikely(vcpu == NULL)) {
- 		kvm_err("%s: invalid target cpu: %d\n", __func__, cpu);
- 		return -EINVAL;
+ 	if (tx_desc) {
 -- 
 2.50.1
 
